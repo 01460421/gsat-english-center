@@ -2127,7 +2127,7 @@
               "kind": "image",
               "caption": null,
               "question_no": 41,
-              "description": "第41題題幹右側的黑白線條插圖：一雙穿著繫帶涼鞋的腳（正面俯視）。涼鞋為平底鞋底，腳踝處有一圈環狀繫帶，兩條直帶由腳踝沿腳背向下延伸，與橫跨腳背的橫帶在圓環處交會，再由一條趾帶向下穿過腳趾之間固定；趾帶位於第二趾與第三趾之間（非大拇趾與第二趾之間）。圖中沒有任何文字。",
+              "description": "第41題題幹右側的黑白線條插圖：一雙穿著繫帶涼鞋的腳（由前上方俯視）。涼鞋為平底鞋底；腳踝處有一圈繫帶，數條繫帶由腳踝沿腳背向下連到前腳掌上的一個小圓環，圓環再分出橫帶連到鞋底兩側，以及一條向前的趾帶夾在腳趾之間；兩隻腳的趾帶都位於第二趾與第三趾之間（不是大拇趾與第二趾之間）。圖中沒有任何文字。",
               "rows": null
             }
           ],
@@ -3039,10 +3039,7 @@
             }
           ],
           "tags": {
-            "topic": "peer pressure",
-            "sdgs": [
-              3
-            ]
+            "topic": "peer pressure"
           }
         }
       ]
@@ -3260,12 +3257,7 @@
             }
           ],
           "tags": {
-            "topic": "department store anniversary sale",
-            "genre": "news",
-            "sdgs": [
-              12
-            ],
-            "text_format": "mixed"
+            "topic": "department store anniversary sale crowds"
           }
         }
       ]
@@ -3273,7 +3265,20 @@
   ],
   "extraction": {
     "method": "題本文字以 Word 版 paper-2.docx（python-docx）為主，與 pdftotext（paper-1.pdf）逐字比對一致；Read 看 PDF 頁面影像（第41題涼鞋插圖、英文作文兩張新聞圖片、各頁版面）確認；答案取自 answer.pdf（pdftotext）；評分原則取自 scoring.pdf（pdftotext）逐字摘錄；統計取自 stats-1.xls（答對率 P、高分組 Ph、低分組 Pl、鑑別度 D）、stats-2.xls（選項分析 T／H／L 列）、stats-3.xls（非選擇題分數人數統計），以 xlrd 讀取並程式交叉核對（選項分析標 * 的選項＝官方答案、其比例＝P）。",
-    "issues": [],
+    "issues": [
+      "結構核對：與 gsat-spec.json legacy_gsat 期別「94–110」一致——詞彙題 1–15（15分）、綜合測驗 16–30（3篇×5題，15分）、文意選填 31–40（A–J，10分）、閱讀測驗 41–56（4篇×4題，每題2分，32分）、中譯英 2題×4分、英文作文 20分；第壹部分單選題 72分＋第貳部分非選擇題 28分＝100分。無差異。",
+      "validator warning「題號重複 [1, 2]」為預期：中譯英兩題題本編為 1.、2.，英文作文沒有題號（no 填 1）；no 必須是整數，故沿用題本編號，並以 label「中譯英1」「中譯英2」「作文」區分，label 無重複。",
+      "中譯英：評分原則只公布關鍵字的可接受譯法（「違背」go against／violate、「意願」will／willingness、「取悅」to please；「同儕壓力」peer pressure、「堅持」stick to、「原則」principle），沒有公布完整參考譯文，故 answer 與 accepted_answers 皆為 null，關鍵字說明逐字放在 scoring_notes。",
+      "中譯英第2題：評分原則引用題目時寫作「其實，面對同儕壓力的時候，…」（少了「在」），stem 以題本「其實，在面對同儕壓力的時候，…」為準；scoring_notes 照評分原則原文。",
+      "英文作文：說明寫「文長至少120個單詞（words）」，提示卻寫「文長約120個單詞」，題本前後不一；tags.word_requirement 依說明與評分原則（「至少 120 個單詞」）填 \"at least 120 words\"。作文沒有官方範文，answer 為 null。",
+      "非選擇題統計：stats-3.xls 只有「第一題（中譯英，滿分8分，兩小題合計）」與「第二題（英文作文，滿分20分）」的分數人數分布，無法拆到中譯英各小題，因此放在 sections[s5].stats 與 sections[s6].stats 的 score_distribution（schema 未定義此欄位，為本檔新增）；rate 以報考人數 133,128（含缺考 2,074）為分母，與原表百分比欄一致；分數區間有小數是因為兩位委員評分平均。小題層級 stats 為 null。",
+      "選擇題統計：除 schema 欄位外，另存 option_rates_high／option_rates_low（stats-2.xls 選項分析的高分組 H、低分組 L 列）與 omit_rate（未答比例）；stats-1.xls 的五組通過率 Pa–Pe 與 D1–D4 未收錄。已程式核對全部 56 題：選項分析中標 * 的選項＝官方答案，且其 T／H／L 比例＝答對率 P／Ph／Pl，題號對齊無誤。各題 option_rates 加總因四捨五入可能為 0.99–1.01。",
+      "低答對率題目已複核非對齊錯誤：第9題 P=0.23、D=0.08（47% 選 D milestone）；第14題 P=0.23（55% 選 D noticeable）；第19題 P=0.16、D=0.02；第30題 P=0.20（44% 選 D results in）。皆為大考中心原始數據。",
+      "格式：題本中第44、54題的 NOT 為粗體，第47題與第45–48題選文中的 a crucial time、第56題與第53–56題選文中的 the unforgiving nature of tons of onrushing rolling stock 為粗體，第41–44題選文的 zōris 為斜體；依 schema 不保留粗斜體（題目以引號指稱，非「畫底線的字」，故未加 <u>）。",
+      "第41題插圖（題組 s4g1 figures）：黑白線條畫的繫帶涼鞋，經放大頁面影像判讀，趾帶位於第二趾與第三趾之間，與選文 Roman sandals 的描述及官方答案 (D) 一致。英文作文兩張新聞圖片以文字描述放在 s6g1 figures；左圖中文字幕「玻璃門一推開」逐字記錄。",
+      "本檔新增的非 schema 欄位：section.part_title／part_instructions（第壹、貳部分標題與第貳部分共同說明，放在該部分的第一個大題 s1、s5）、group.group_label（「第16至20題為題組」等題本原文）、figure.question_no、figure.label、sources.paper_word。",
+      "文字來源：Word 版 paper-2.docx 與 PDF pdftotext 逐詞比對一致（PDF 的「3-secondlong」為跨行斷字造成，頁面影像與 Word 版皆為「3-second-long」）。評分原則 PDF 內含 CJK 相容表意字（如「兩」「年」「句」），已以 Unicode NFC 正規化為一般漢字後逐字比對、摘錄。"
+    ],
     "verified_by": null
   }
 }

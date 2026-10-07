@@ -1,0 +1,35 @@
+{
+  // 全 repo 共用的 TypeScript 設定。各 workspace 的 tsconfig.json 只補「執行環境」相關的差異
+  // （DOM 或 Workers 的 lib／types、要檢查哪些檔案），嚴格程度一律由這裡決定，避免各包各自放寬。
+  "compilerOptions": {
+    "target": "ES2023",
+    "lib": ["ES2023"],
+    "module": "preserve",
+    // 打包工具（Vite、wrangler 內建的 esbuild）負責解析與輸出，tsc 只做型別檢查，
+    // 所以用 bundler 解析規則：支援 package.json 的 exports，也允許 workspace 套件直接指到 .ts 原始檔。
+    "moduleResolution": "bundler",
+    "moduleDetection": "force",
+    "resolveJsonModule": true,
+    "noEmit": true,
+
+    // 嚴格模式全開：題目 JSON 的欄位多、可為 null 的地方也多，寧可在編譯期就逼自己處理。
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "useUnknownInCatchVariables": true,
+
+    // 每個檔案都要能被單檔轉譯（Vite／esbuild 都是逐檔轉譯，不做跨檔型別分析）。
+    "isolatedModules": true,
+    "verbatimModuleSyntax": true,
+    "forceConsistentCasingInFileNames": true,
+    // 第三方 .d.ts 的錯誤不是我們能修的，略過以加快檢查；自己的程式碼仍完整檢查。
+    "skipLibCheck": true,
+    // 預設不自動載入任何 @types；各 workspace 明確列出需要的環境型別，
+    // 才不會讓 Node 的全域（例如 process）混進瀏覽器或 Worker 的程式碼裡。
+    "types": []
+  }
+}

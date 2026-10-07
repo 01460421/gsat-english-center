@@ -1,0 +1,19 @@
+{
+  "name": "@gsat/shared",
+  "version": "0.1.0",
+  "private": true,
+  "description": "前端與 Worker 共用的型別與常數（題目 JSON gsat-exam/v1、詞彙表條目、API 回應格式）",
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.5",
+    "vitest": "^5.0.3"
+  }
+}
