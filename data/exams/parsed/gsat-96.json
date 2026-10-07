@@ -2045,7 +2045,7 @@
               ],
               "points": 4,
               "stats": null,
-              "scoring_notes": "本題型測驗目標為評量考生將中文句子譯成正確、通順、達意英文的能力。第一句主要在於測驗考生使用高中生常用字詞（比如only/merely/solely、live for ourselves、really、feel、happy等）寫出含有條件子句句子之能力（if）。\n(一) 參考答案（官方以括號樹狀圖列出可替換字詞，此處以 {a|b} 表示擇一）：見 accepted_answers。\n(二) 評分標準：\n1. 本大題總分8分，每小題滿分4分。\n2. 每題分兩半部，每半部總分2分。\n3. 每個錯誤扣0.5分，各半獨立，扣完為止。\n4. 相同之拼字錯誤只扣一次；各半部之拼字錯誤最多扣1分。\n5. 每題大小寫、標點最多扣0.5分。",
+              "scoring_notes": "本題型測驗目標為評量考生將中文句子譯成正確、通順、達意英文的能力。第一句主要在於測驗考生使用高中生常用字詞（比如only/merely/solely、live for ourselves、really、feel、happy等）寫出含有條件子句句子之能力（if）；而第二句在測驗考生利用高中常用字詞（比如start to、think、naturally/automatically、open等）寫出一個包含「when」的時間子句句子的能力。\n(二) 評分標準：\n1. 本大題總分8分，每小題滿分4分。\n2. 每題分兩半部，每半部總分2分。\n3. 每個錯誤扣0.5分，各半獨立，扣完為止。\n4. 相同之拼字錯誤只扣一次；各半部之拼字錯誤最多扣1分。\n5. 每題大小寫、標點最多扣0.5分。",
               "tags": {
                 "patterns": [
                   "if 條件子句"
@@ -2066,7 +2066,7 @@
               ],
               "points": 4,
               "stats": null,
-              "scoring_notes": "本題型測驗目標為評量考生將中文句子譯成正確、通順、達意英文的能力。第二句在測驗考生利用高中常用字詞（比如start to、think、naturally/automatically、open等）寫出一個包含「when」的時間子句句子的能力。\n(一) 參考答案（官方以括號樹狀圖列出可替換字詞，此處以 {a|b} 表示擇一）：見 accepted_answers。\n(二) 評分標準：\n1. 本大題總分8分，每小題滿分4分。\n2. 每題分兩半部，每半部總分2分。\n3. 每個錯誤扣0.5分，各半獨立，扣完為止。\n4. 相同之拼字錯誤只扣一次；各半部之拼字錯誤最多扣1分。\n5. 每題大小寫、標點最多扣0.5分。",
+              "scoring_notes": "本題型測驗目標為評量考生將中文句子譯成正確、通順、達意英文的能力。第一句主要在於測驗考生使用高中生常用字詞（比如only/merely/solely、live for ourselves、really、feel、happy等）寫出含有條件子句句子之能力（if）；而第二句在測驗考生利用高中常用字詞（比如start to、think、naturally/automatically、open等）寫出一個包含「when」的時間子句句子的能力。\n(二) 評分標準：\n1. 本大題總分8分，每小題滿分4分。\n2. 每題分兩半部，每半部總分2分。\n3. 每個錯誤扣0.5分，各半獨立，扣完為止。\n4. 相同之拼字錯誤只扣一次；各半部之拼字錯誤最多扣1分。\n5. 每題大小寫、標點最多扣0.5分。",
               "tags": {
                 "patterns": [
                   "when 時間子句",
@@ -2145,7 +2145,18 @@
   ],
   "extraction": {
     "method": "Word 版 (paper-2.doc → soffice 轉 docx → python-docx) 為主要文字來源，與 pdftotext -layout 題本逐段比對；Read 看題本 PDF 第 1–7 頁影像確認版面、底線與作文圖畫；答案取自 answer.pdf（pdftotext）；翻譯參考答案為評分說明 PDF 中的括號樹狀圖，以 pdftoppm 300dpi 放大後人工轉錄；統計取自 stats-1.xls（P/Ph/Pl/D）與 stats-2.xls（全體考生 T 列選項比例），並程式核對 stats-2 標星號選項＝官方答案、其比例＝P。",
-    "issues": [],
+    "issues": [
+      "結構核對：與 gsat-spec.json legacy_gsat 94–110 期別一致（詞彙15題15分、綜合測驗15題15分、文意選填10題10分、閱讀測驗16題32分；翻譯題2題8分、英文作文20分；選擇題72分／非選擇題28分），作文文長「120個單詞(words)左右」亦與 essay_length_by_year 相符，無不一致。",
+      "題號：題本翻譯題印為 1、2，作文無題號；為避免與選擇題第1、2題重複，no 依序接續為 57、58（翻譯）、59（作文），題本原編號保留在 label「翻譯1」「翻譯2」「作文」。57–59 並非題本印刷題號。",
+      "大題標題：Word 版翻譯題標題缺「一、」，以 PDF 題本「一 、 翻 譯 題 (8%)」為準寫成「一、翻譯題(8%)」。part 取題本「第壹部分：單一選擇題」「第貳部分：非選擇題」的部分名稱。",
+      "底線標記：題本 49–52 選文的 a new chapter 與 53–56 選文的 cling to 為粗體加底線（第50、56題問其意義），已於 passage 以 <u>…</u> 標記；第50、56題題幹中的同字串在題本同樣粗體底線、以引號標出，題幹未另加 <u>。第50題「line 2, paragraph 1」指題本排版行數。",
+      "翻譯參考答案：評分說明 PDF 中的參考答案是括號樹狀圖（圖片，pdftotext 抓不到），以 300dpi 放大人工轉錄。accepted_answers 以 {a|b|c} 表示「同一個括號內擇一」（第1題 one lives／himself, herself／he/she 為同一分支，需搭配使用）；第2題替代句中的 start/begin 斜線為官方原文。answer 取各括號第一個選項組成的句子（非官方逐字句）；第1題官方另以完整句列出 If we lived only for ourselves, we would not feel really happy.，放在 accepted_answers 最後一項。",
+      "翻譯 scoring_notes：測驗目標段落與評分標準逐字取自評分說明，兩題共用（原文為一段同時說明兩題），已去除 PDF 排版在中英文與頓號間插入的空白。作文 scoring_notes 為評分說明中英文作文部分的兩段原文。",
+      "統計：correct_rate／high_group／low_group／discrimination 取自 stats-1.xls（P、Ph、Pl、D），option_rates 取自 stats-2.xls 全體考生（T 列）。已程式核對 stats-2 標星號選項皆等於官方答案。第21、22題 stats-1 的 P（15%、52%）與 stats-2 答案選項比例（16%、53%）差 1 個百分點，應為四捨五入差異，correct_rate 採 stats-1。option_rates 不含「未答」欄（0–2%），故部分題目加總為 0.98–1.02。stats-2 另有高分組／低分組各選項比例（H、L 列）與 stats-1 五等分組 Pa–Pe、D1–D4，schema 無對應欄位未收錄。",
+      "非選擇題（翻譯、作文）本年度來源檔無得分分布統計，stats 填 null。",
+      "作文圖畫：四格圖以文字描述放在 s6g1.figures（kind=picture），為人工看圖描述；第(4)圖地上黑點無法確定是腳印或排泄物，描述中並列。",
+      "標註判斷：s2g3（Rwanda）為第一人稱旅遊描寫，genre 暫標 expository，sdgs 標 16（文中提及 1994 部族衝突後和解復原）；第15題 amazed 標為 adjective（分詞形容詞）；第48題需由 industry leader 推知 NBC 收視最高，標 inference。"
+    ],
     "verified_by": null
   }
 }
