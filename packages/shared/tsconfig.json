@@ -1,0 +1,10 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    // 共用套件同時給瀏覽器與 Worker 用，原始碼本身不能依賴任何執行環境的全域；
+    // 只有測試檔需要 Node（讀 data/ 下的 JSON），所以這裡載入 node 型別。
+    // 若哪天 src/ 不小心用了 Node API，前端或 Worker 的 typecheck 會在匯入時抓到。
+    "types": ["node"]
+  },
+  "include": ["src", "vitest.config.ts"]
+}

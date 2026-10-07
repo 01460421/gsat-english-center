@@ -1,0 +1,10 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    // Workers 執行環境不是瀏覽器也不是 Node：不載入 DOM lib，全域型別只用 workers-types，
+    // 這樣誤用 window、document 或 Node 的 process 時 tsc 會直接報錯。
+    "lib": ["ES2023"],
+    "types": ["@cloudflare/workers-types"]
+  },
+  "include": ["src", "test", "vitest.config.ts"]
+}

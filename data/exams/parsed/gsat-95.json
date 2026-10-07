@@ -2144,8 +2144,25 @@
     }
   ],
   "extraction": {
-    "method": "tmp",
-    "issues": [],
+    "method": "題本：paper-2.doc 以 soffice 轉 docx 後用 python-docx 讀取（含底線 run 判斷空格與畫底線字）為主要文字來源，與 pdftotext -layout paper-1.pdf 做英文字詞逐一比對（除作文說明中的 words/gorilla 與圖片中的雜訊字元外完全一致），並用 Read 看題本 PDF 第 2–8 頁影像確認版面、空格、底線/粗體與作文連環圖（pdftoppm 250dpi 裁切三格放大描述）；答案：pdftotext answer.pdf（五科合併檔，只取「英文考科選擇題參考答案」頁）；評分標準：pdftotext scoring.pdf 取文字段落，翻譯參考答案為大括號樹狀圖（圖片），以 pdftoppm 300dpi 放大後人工轉錄；統計：xlrd 讀 stats-1.xls「英文」工作表（P/Ph/Pl/D）與 stats-2.xls「英文」工作表（選項分析 T 列），並以程式核對選項分析標星號的選項＝answer.pdf 官方答案、且該選項比例＝P（56 題全部一致）。",
+    "issues": [
+      "結構核對：與 gsat-spec.json legacy_gsat「94–110」期別一致——詞彙 1–15（15題×1分）、綜合測驗 16–30（3篇×5題×1分）、文意選填 31–40（A–J，10題×1分）、閱讀測驗 41–56（4篇×4題×2分＝32分）、翻譯題 2題×4分、英文作文 20分；第壹部分單選題 72分＋第貳部分非選擇題 28分＝100分。作文文長「100個單詞(words)左右」與 essay_length_by_year 的 95 年記載相符。無不一致。",
+      "題號：題本翻譯題印「1.」「2.」、作文無題號；為避免與選擇題第1、2題重複（validator 要求 no 為整數且 label 不重複），no 依序編為 57、58（翻譯）、59（作文），題本原編號保留在 label「翻譯1」「翻譯2」「作文」。57–59 不是題本印刷題號（answer.pdf 的 57–60 欄空白）。",
+      "大題標題：Word 版翻譯題標題「翻譯題（佔8分）」缺「一、」（Word 自動編號轉檔遺失），依 PDF 題本「一 、 翻 譯 題 （ 佔 8分 ）」寫成「一、翻譯題（佔8分）」；其餘標題依 Word 原文。part 取自「第壹部分：單選題（佔72分）」「第貳部分：非選擇題（佔28分）」。說明文字中的冒號照 Word 原檔保留（詞彙、綜合、閱讀、作文為「︰」U+FE30，文意選填、翻譯為「：」U+FF1A）；翻譯／作文說明第2點前的全形縮排空白已移除並以換行分隔。",
+      "空格：第13、15題題本的空格是畫底線的空白（不是底線字元），已統一寫成「______」，與其他詞彙題一致。綜合測驗第18題 Word 原檔空格被拆成兩個底線 run，已合併為 [[18]]。第21–25題選文第一段在 Word 原檔於空格21後被斷成兩個段落，依 PDF 版面合併為同一段。",
+      "畫底線字：第42題 ulcer、第50題 conduct 在選文中加底線、在題幹中為粗體加底線，選文與題幹都以 <u>…</u> 標出。第42題題幹 particular 與第41–44題選文、第44題選項(C) 的書名 Learn to Lighten Up and Live Longer 為斜體，依原則不保留格式。",
+      "逐字保留的原文瑕疵：第43題與第46題題幹作「which of following」（缺 the），照題本保留。第53–56題選文以 He 指稱神經科學家 Joy Hirsch（實際為女性學者），照題本保留，非抽取錯誤。",
+      "題本各題組前的「41-44 為題組」「45-48 為題組」等標示未放入 passage（題組範圍可由 questions 題號得知）。第16–20題書信的署名「Love,」「Mom」在題本為右側縮排，passage 中各自獨立成行。",
+      "翻譯參考答案：scoring.pdf（選才通訊第139期〈95學測非選擇題評分標準說明〉，英文考科部分）中的參考答案是大括號樹狀圖（圖片，pdftotext 抓不到），以 300dpi 放大人工轉錄為 accepted_answers：{a|b} 表示同一個大括號內擇一，( ) 表示原圖的括號（可省略字詞）；「({their|his/her})」表示原圖兩個分支分別為 (their)、(his/her)，皆可省略。answer 取各大括號第一個選項組成的句子（含可省略字詞 that／often／their），並非官方逐字整句；官方未另外提供完整參考句。",
+      "翻譯1 樹狀圖的轉錄判斷：主詞分支為 Everyone/Everybody knows/understands/is aware、People (all)、Most people、We all，其中 know／understand／are aware 的小括號在圖上緊接 Most people，但依文法應同樣適用於 People (all) 與 We all，故第二條 accepted_answers 把三種複數主詞合併；後半 is good for/to、is helpful for/to 的斜線展開為 is good for|is good to|is helpful for|is helpful to。",
+      "翻譯2 樹狀圖的轉錄判斷：should 之後兩個分支——(often) encourage (their)/(his/her) students，與 encourage (their)/(his/her) students more/more often/more frequently；後半兩個分支——to borrow/check out books from the library./libraries.，與 to go to the library to/libraries borrow/check out books.。原圖「to go to … libraries」分支後沒有 to（字面上為 to go to libraries borrow books），照原圖轉錄未補字，推測是排版省略。原圖未限定 Teachers 搭配 their、A teacher 搭配 his/her，accepted_answers 未加限制。",
+      "翻譯 scoring_notes：測驗目標段落與（二）評分標準逐字取自 scoring.pdf，兩題共用（原文為一段同時說明兩題）；原文中英文與括號間的空白不一致（如「字詞 (比如people」與「字詞(比如encourage」）照原文保留。作文 scoring_notes 為 scoring.pdf 英文作文部分的評分說明段落（本年度未附其他閱卷說明）。",
+      "作文圖畫：題本提示下方為三格連環圖（格與格之間以箭頭連接，圖上無編號與文字），以文字描述放在 s6g1.figures（kind=picture，caption 為 null 因題本未印圖號）；描述為人工看圖，第2格小狗是在吃地上打翻的食物，依圖判斷。pdftotext 在圖片區域抽出的「B」字元為圖片雜訊，未收錄。",
+      "統計：correct_rate／high_group／low_group／discrimination 取自 stats-1.xls（P、Ph=前33%、Pl=後33%、D=Ph−Pl），option_rates 取自 stats-2.xls 全體考生（T 列）；原表為整數百分比，已除以 100。option_rates 不含「未答」欄（0–1%），加總因四捨五入介於 0.98–1.01。stats-2 的高分組／低分組各選項比例（H、L 列）與 stats-1 五等分組 Pa–Pe、D1–D4 schema 無對應欄位，未收錄。報考 161,567 人、到考 157,745 人。",
+      "統計異常照錄：第17題（indulge in）答對率 0.14、鑑別度 −0.01，全體 61% 選 (C) attend to（高分組 74% 也選 C）；第12題（command）鑑別度僅 0.11。答案仍以 answer.pdf 官方答案 A、C 為準，數值照原表。",
+      "非選擇題（翻譯、作文）本年度來源檔沒有得分分布統計，stats 填 null。",
+      "標註判斷：s4g1（stress）雖以推銷書籍作結（第41題官方答案為 To promote a book about reducing stress），全文主體為說明文，genre 標 expository；第46題由 Most international tea trading is in black tea 推得最受歡迎的茶，視為細節改寫標 detail；第51題為 NOT true 型細節判斷，標 detail 而非 not_mentioned；第18題 Regarding 為介系詞用法、干擾選項為 regard 的各種動詞形式，標 grammar／preposition，grammar_point 不確定未標；第24題 what 引導名詞子句，grammar_point 標 noun_clause。"
+    ],
     "verified_by": null
   }
 }
