@@ -95,6 +95,10 @@ vercel.json            Vercel 部署設定（前端）
 
 **1. Worker（Cloudflare）**
 
+建議用 GitHub Actions 自動部署（`.github/workflows/worker-deploy.yml`）：在 repo 的 Settings → Secrets and variables → Actions 加上 `CLOUDFLARE_API_TOKEN`（「Edit Cloudflare Workers」範本＋D1: Edit）與 `CLOUDFLARE_ACCOUNT_ID`，之後 main 上 `apps/api` 有變動就會自動建立／找到 D1、套用遷移、部署並檢查 `/api/health`。還沒設定 secrets 時 workflow 只會略過。
+
+也可以在自己的電腦手動部署：
+
 ```bash
 npx wrangler login
 npx wrangler d1 create gsat-english          # 把輸出的 database_id 填進 apps/api/wrangler.toml
