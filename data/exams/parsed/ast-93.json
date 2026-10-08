@@ -2128,7 +2128,7 @@
     }
   ],
   "extraction": {
-    "method": "Word 版 paper-2.doc（soffice 轉 docx + python-docx）為主要文字來源，選文空格 __n__ 改寫為 [[n]]，連續空白／Tab 壓成單一空白、去除尾端空白與不換行空白；以 pdftotext -layout 擷取 paper-1.pdf，將全部選文、題幹、選項、選項庫依題本順序以程式逐詞比對（2,476 個英文詞與標點，除題號、頁首頁碼與中文說明外完全一致），中文大題標題、說明、翻譯題目、作文提示先把 PDF 文字層的舊版相容字（㈻㆒㊜㊠㉃㆗ 等）換回一般字、去除空白後逐字比對一致；以 Read 逐頁檢視題本 PDF 全部 8 頁影像確認段落、空格位置、粗體與上標；docx run 格式核對粗體／上標位置；答案取自 answer-1.pdf 第 2 頁「英文考科選擇題參考答案」（多科合併檔，pdftotext＋頁面影像核對）；統計以 xlrd 讀取 stats-1.xls 與 stats-2.xls 的「英文」工作表，並以程式核對 stats-2 標「*」選項＝官方答案、T／H／L 列答案選項比例＝stats-1 的 P／Ph／Pl、D＝Ph−Pl（56 題全部一致）。本年沒有評分原則檔，非選擇題答案與 scoring_notes 填 null。",
+    "method": "Word 版 paper-2.doc（soffice 轉 docx + python-docx）為主要文字來源，選文空格 __n__ 改寫為 [[n]]，連續空白／Tab 壓成單一空白、去除尾端空白與不換行空白；以 pdftotext -layout 擷取 paper-1.pdf，將全部選文、題幹、選項、選項庫依題本順序以程式逐詞比對（2,476 個英文詞與標點，除題號、頁首頁碼與中文說明外完全一致），中文大題標題、說明、翻譯題目、作文提示先把 PDF 文字層的舊版相容字（㈻㆒㊜㊠㉃㆗ 等）換回一般字、去除空白後逐字比對一致；以 Read 逐頁檢視題本 PDF 全部 8 頁影像確認段落、空格位置、粗體與上標；docx run 格式核對粗體／上標位置；答案取自 answer-1.pdf 第 2 頁「英文考科選擇題參考答案」（多科合併檔，pdftotext＋頁面影像核對）；統計以 xlrd 讀取 stats-1.xls 與 stats-2.xls 的「英文」工作表，並以程式核對 stats-2 標「*」選項＝官方答案、T／H／L 列答案選項比例＝stats-1 的 P／Ph／Pl、D＝Ph−Pl（56 題全部一致）。本年沒有評分原則檔，非選擇題答案與 scoring_notes 填 null。；查證（verifier）：以程式將 56 題答案與 answer-1.pdf 英文頁逐題比對（並看頁面影像），41 題選項與兩個選項庫依 PDF 擷取結果逐字完全比對，全部題幹、8 篇選文逐段與 PDF（pdftotext -layout）及 Word 版雙來源比對一致，段落數依頁面影像核對；統計 56 題 P／Ph／Pl／D 與 T 列選項比例全數對照 xls 重算一致。",
     "issues": [
       "結構核對：與 gsat-spec.json legacy_ast「93」期別完全一致：詞彙與慣用語 1–15（15×1）、綜合測驗 16–30（3篇×5題×1＝15）、文意選填 31–40（選項 A–J 共10個，10×1）、篇章結構 41–45（選項 A–E 共5個，5×2）、閱讀測驗 46–56（3篇：3＋4＋4題，11×2＝22）、英文翻譯 2題共8分、英文作文 20分（文長至少120個單詞）；選擇題 72、非選擇題 28，合計 100。倒扣規則（1/3、1/3、1/9、1/2、2/3）已逐字保留在各大題說明。考試時間 80 分鐘取自封面。",
       "翻譯題配分：題本只印「一、英文翻譯(8%)」，沒有寫每題幾分，本年也沒有評分原則檔；兩題 points 各填 4（8 分平分兩題，與 legacy_ast 94–97 期別 points_each 4 及 95 年起評分原則「每小題滿分4分」一致），屬推定。",
@@ -2144,6 +2144,6 @@
       "統計：correct_rate／high_group／low_group／discrimination 取自 stats-1.xls「英文」工作表（P、Ph、Pl、D；報考 117,705、缺考 6,211、到考 111,494 人）；option_rates 取自 stats-2.xls「英文」工作表選項分析的 T（全體）列。程式核對：56 題 stats-2 標「*」的選項全部等於官方答案，T／H／L 列答案選項比例全部等於 stats-1 的 P／Ph／Pl，D＝Ph−Pl 全部成立。option_rates 不含「未答」，所以各題加總為 0.70–0.96（未答比例高的如第56題 29%、第48題 25%、第54題 24%；加上未答後皆約為 1）。stats-2 閱讀測驗列有 E 欄（全為 0），未放入 option_rates；stats-1 的五等分組 Pa–Pe、D1–D4 與 stats-2 的 H／L 各選項比例，schema 沒有對應欄位，未收錄。",
       "標註說明（屬判斷）：第17題 by soaking … and then tearing 為對等的動名詞，grammar_point 記 parallel_structure；第19題 Another（另一個建議，且 Other 不能接單數名詞）記 discourse、不填 answer_pos（限定詞不在 answer_pos 允許值內）；第27題 can 記 grammar／modal；第38題需由後文 Each program 推知複數名詞 programs，記 discourse。篇章結構：第41題 (D) 的 Its 回指 Chinese brush painting、第44題 (A) Another genre 與後句 this genre 呼應，記 pronoun_reference；第42題 However 與第45題 As a result 記 transition_word；第43題 (E) two separate styles 對應後句兩種山水畫風格，記 lexical_cohesion。閱讀：第46題記 main_idea；第49題（文章出處）與第56題（需把 symphony of triangles, ovals… 與 geometric design 的敘述歸納為重要性）記 inference。題組 sdgs：s2g1 舊報紙再利用 [12]、s2g2 兒童詩歌教育 [4]、s2g3 禽流感 [3]、s3g1 青少年企業實作教育 [4, 8]、翻譯（科技犯罪、網路詐騙）[16]，其餘為空陣列。"
     ],
-    "verified_by": null
+    "verified_by": "verifier"
   }
 }

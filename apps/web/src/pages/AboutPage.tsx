@@ -107,7 +107,7 @@ export default function AboutPage() {
   return (
     <article>
       <PageHeader page={page} />
-      <div className="grid gap-4">
+      <div className="grid grid-cols-1 gap-4">
         <InfoSection title={`關於${APP_NAME}`}>
           <p>
             {APP_NAME}是為台灣高中生打造的學測英文備考網頁 App，涵蓋單字、各題型練習、歷屆試題與模擬考。AI 功能（出題、批改、詳解與範文）使用 Anthropic 的 Claude。

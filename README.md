@@ -48,14 +48,15 @@ npm run dev:api    # 只啟動 Worker
 |---|---|
 | `npm run typecheck` | 所有 workspace 的 `tsc`（strict） |
 | `npm run lint` | 目前等同 `typecheck` |
-| `npm test` | Vitest：共用型別對 `data/` 實際資料的執行期檢查、Worker 的 CORS／Origin 檢查、前端元件與路由 |
+| `npm test` | Vitest：共用型別的型別守衛與小工具、Worker 的 CORS／Origin 檢查、前端元件與路由。只測程式碼，不讀 `data/` |
 | `npm run build` | Vite 建置前端；`wrangler deploy --dry-run` 打包 Worker（不會部署） |
-| `npm run test:e2e` | 先建置前端，再用 Playwright 在桌機（1280×900）與手機（390×844）尺寸跑全部路由的煙霧測試：無 console error、標題正確、沒有水平捲動 |
+| `npm run test:e2e` | 先建置前端，再用 Playwright 在桌機（1280×900）與手機（375×667，另外在 320px 再檢查一次溢出）尺寸跑全部路由的煙霧測試：無 console error、標題正確、沒有水平捲動、手機導覽可用 |
 | `npm run validate:exams` | 檢查 `data/exams/parsed/*.json` 是否符合 `gsat-exam/v1`（`docs/exam-json-schema.md`） |
+| `npm run test:data` | 拿 `data/` 的實際 JSON（歷屆試題、詞彙表）檢查能不能安全地當成 `@gsat/shared` 的型別使用 |
 
 - 第一次在自己的電腦跑煙霧測試前，先執行 `npx playwright install chromium`（CI 會自動安裝）。如果環境已預裝版本不同的 Chromium（例如 `/opt/pw-browsers`），`apps/web/playwright.config.ts` 會自動改用它，也可以用環境變數 `PLAYWRIGHT_CHROMIUM_PATH` 指定執行檔。
 - 煙霧測試用 `page.route` 假造後端，不需要啟動 `wrangler dev`。
-- CI（`.github/workflows/ci.yml`）在 push 到 main 與每個 PR 執行上面全部項目；題庫檢查是獨立的 job，資料有錯不會蓋掉程式碼的檢查結果。
+- CI（`.github/workflows/ci.yml`）在 push 到 main 與每個 PR 執行上面全部項目，分成兩個 job：`app` 只看程式碼（typecheck、test、build、煙霧測試），`exams` 只看資料（`validate:exams`、`test:data`）。題庫由另一條流程陸續寫入，資料有錯不會蓋掉程式碼的檢查結果，反之亦然。
 
 ### 套件版本
 
@@ -102,7 +103,7 @@ npx wrangler secret put ANTHROPIC_API_KEY    # 機密一律用 secret put；接�
 npm run deploy -w @gsat/api                  # 部署後網址是 https://gsat-english-api.<帳號子網域>.workers.dev
 ```
 
-部署前把 `apps/api/wrangler.toml` 的 `ALLOWED_ORIGINS` 裡的 `REPLACE_WITH_VERCEL_PROJECT` 換成 Vercel 專案的網址。
+部署前把 `apps/api/wrangler.toml` 的 `ALLOWED_ORIGINS` 裡的 `REPLACE_WITH_VERCEL_PROJECT` 換成 Vercel 專案的網址。這份清單會跟著部署到正式環境，所以刻意不放 localhost；本機開發經 Vite proxy 是同源請求，不需要它（理由寫在 `wrangler.toml`）。
 
 **2. 前端（Vercel）**
 
@@ -121,9 +122,9 @@ npm run deploy -w @gsat/api                  # 部署後網址是 https://gsat-e
 1. 在 Cloudflare 購買網域（名稱不能含 `ceec` 或「大考中心」，見 `docs/research/04-data-sources-licensing.md` §0）。
 2. 主網域與 `www` → Vercel：在 Vercel 加入網域，再到 Cloudflare DNS 加上 Vercel 指定的 A／CNAME 記錄，**Proxy 關閉（DNS only）**。
 3. `api.<網域>` → Worker：取消 `apps/api/wrangler.toml` 中 `[[routes]]`（`custom_domain = true`）的註解後重新部署，DNS 記錄與憑證會自動建立。
-4. `ALLOWED_ORIGINS` 加上 `https://<網域>` 與 `https://www.<網域>`。
+4. 把 `ALLOWED_ORIGINS` 裡的 `REPLACE_WITH_DOMAIN`（主網域與 `www` 兩處）換成實際網域後重新部署 Worker。
 5. 前端可以繼續走 `vercel.json` 的 rewrites（目的地改成 `https://api.<網域>`），或在 Vercel 設定建置環境變數 `VITE_API_BASE=https://api.<網域>` 改成直接呼叫；兩種做法前端程式碼都不用改。
 
 ## 資料與著作權
 
-歷屆試題著作權屬大學入學考試中心，本專案僅供個人學習使用。原始 PDF 不納入版本控制（`data/raw/` 已排除），可用 `tools/fetch_ceec.py` 依清單重新下載。
+歷屆試題本身依《著作權法》第 9 條第 1 項第 5 款不得為著作權之標的，但試題引用的第三方文章、非選擇題評分原則、考生作文佳作與《高中英文參考詞彙表》仍受保護（詳見 `docs/research/04-data-sources-licensing.md` §0；App 內的標示見「關於」頁）。「大考中心」「CEEC」是註冊商標，網域與 App 名稱都不能使用。原始 PDF 不納入版本控制（`data/raw/` 已排除），可用 `tools/fetch_ceec.py` 依清單重新下載。

@@ -19,6 +19,7 @@
     "build": "npm run build --workspaces --if-present",
     "typecheck": "npm run typecheck --workspaces --if-present",
     "test": "npm run test --workspaces --if-present",
+    "test:data": "npm run test:data -w @gsat/shared",
     "test:e2e": "npm run build -w @gsat/web && npm run test:e2e -w @gsat/web",
     "lint": "npm run typecheck",
     "validate:exams": "python3 tools/validate_exam.py --all"

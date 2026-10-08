@@ -44,7 +44,7 @@ function systemPrefersDark(): boolean {
 const THEME_COLORS: Record<ResolvedTheme, string> = { light: '#ffffff', dark: '#171c23' };
 
 /** 把偏好套用到 <html>：跟隨系統時移除 data-theme，讓 CSS 的媒體查詢接手。 */
-export function applyThemePreference(pref: ThemePreference) {
+function applyThemePreference(pref: ThemePreference) {
   const root = document.documentElement;
   if (pref === 'system') delete root.dataset['theme'];
   else root.dataset['theme'] = pref;
@@ -57,6 +57,9 @@ export function applyThemePreference(pref: ThemePreference) {
 }
 
 let preference: ThemePreference = readStoredPreference();
+// 載入時套用一次：index.html 的繪製前腳本只設 data-theme（避免閃爍），theme-color 留到這裡同步。
+// 少了這一步，系統是深色、使用者選淺色時，每次重新整理後手機網址列都會變回深色。
+applyThemePreference(preference);
 const listeners = new Set<() => void>();
 
 function emit() {
@@ -74,7 +77,7 @@ export function setThemePreference(pref: ThemePreference) {
   emit();
 }
 
-export function resolveTheme(pref: ThemePreference): ResolvedTheme {
+function resolveTheme(pref: ThemePreference): ResolvedTheme {
   if (pref === 'system') return systemPrefersDark() ? 'dark' : 'light';
   return pref;
 }

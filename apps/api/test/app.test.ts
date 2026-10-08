@@ -64,8 +64,8 @@ describe('CORS', () => {
   it('不在清單內的 origin：不發 Allow-Origin（由瀏覽器擋下）', async () => {
     const res = await request('/api/health', { headers: { Origin: EVIL } });
     expect(res.headers.get('access-control-allow-origin')).toBeNull();
-    // 帶 credentials 時絕對不能用萬用字元
-    expect(res.headers.get('access-control-allow-origin')).not.toBe('*');
+    // 被拒的回應也要 Vary: Origin，CDN 才不會把「沒有 Allow-Origin」的版本快取給允許的來源。
+    expect(res.headers.get('vary')).toMatch(/Origin/);
   });
 
   it('不接受前綴或子字串相似的 origin', async () => {
@@ -125,6 +125,25 @@ describe('非 GET 請求的 Origin 檢查', () => {
   it('Worker 自己的 origin 通過檢查', async () => {
     const res = await request('/api/health', { method: 'POST', headers: { Origin: SELF } });
     expect(res.status).toBe(404);
+  });
+
+  it('經 Vite proxy 的同源請求：Host 不變，即使 localhost 不在允許清單也放行', async () => {
+    // vite.config.ts 用 changeOrigin: false，Worker 看到的網址就是瀏覽器的網址；
+    // wrangler.toml 因此不必（也不應該）把 localhost 列進正式環境的 ALLOWED_ORIGINS。
+    const res = await app.request(
+      'http://localhost:5173/api/health',
+      { method: 'POST', headers: { Origin: 'http://localhost:5173' } },
+      { ...env, ALLOWED_ORIGINS: 'https://gsat.example' },
+    );
+    expect(res.status).toBe(404);
+    // 同一個 localhost 頁面直連另一個 port 的 Worker 就是跨來源，照樣擋下。
+    await expectBadOrigin(
+      await app.request(
+        'http://127.0.0.1:8787/api/health',
+        { method: 'POST', headers: { Origin: 'http://localhost:5173' } },
+        { ...env, ALLOWED_ORIGINS: 'https://gsat.example' },
+      ),
+    );
   });
 
   it('GET 不檢查 Origin（唯讀請求不改變狀態）', async () => {

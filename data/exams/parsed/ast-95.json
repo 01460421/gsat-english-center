@@ -2145,7 +2145,7 @@
     }
   ],
   "extraction": {
-    "method": "Word 版 paper-2.doc（soffice 轉 docx + python-docx）為主文字來源，選文空格（全形空白包住的題號）改寫為 [[題號]]；以 pdftotext -layout 擷取 paper-1.pdf，將所有選文、題幹、選項依題本順序做英文字詞與標點逐一比對（除題號、頁首頁碼外完全一致），中文說明／翻譯題目／作文提示去除空白後逐字比對一致；以 Read 逐頁檢視題本 PDF 第2–8頁影像確認段落、空格位置與格式（粗體、斜體）；答案取自 answer.pdf 英文考科頁（pdftotext）；非選擇題評分原則以 pdftotext 擷取 scoring.pdf 文字，英文翻譯參考答案（大括號樹狀圖，圖片）以 pdftoppm 300 dpi 放大裁切後人工逐格轉寫，作文分項式評分指標依第2–3頁影像逐格轉寫；統計以 xlrd 讀取 stats-1.xls、stats-2.xls 英文科工作表（工作表 2），並以程式核對選項分析標「*」的選項與官方答案一致、且其比例與 P 一致。",
+    "method": "Word 版 paper-2.doc（soffice 轉 docx + python-docx）為主文字來源，選文空格（全形空白包住的題號）改寫為 [[題號]]；以 pdftotext -layout 擷取 paper-1.pdf，將所有選文、題幹、選項依題本順序做英文字詞與標點逐一比對（除題號、頁首頁碼外完全一致），中文說明／翻譯題目／作文提示去除空白後逐字比對一致；以 Read 逐頁檢視題本 PDF 第2–8頁影像確認段落、空格位置與格式（粗體、斜體）；答案取自 answer.pdf 英文考科頁（pdftotext）；非選擇題評分原則以 pdftotext 擷取 scoring.pdf 文字，英文翻譯參考答案（大括號樹狀圖，圖片）以 pdftoppm 300 dpi 放大裁切後人工逐格轉寫，作文分項式評分指標依第2–3頁影像逐格轉寫；統計以 xlrd 讀取 stats-1.xls、stats-2.xls 英文科工作表（工作表 2），並以程式核對選項分析標「*」的選項與官方答案一致、且其比例與 P 一致。　查證（verifier）：答案 56 題與 answer.pdf 第3頁英文考科（文字層＋頁面影像）逐題比對；全部選文、題幹、選項、選項庫以程式逐字比對 Word 版（docx）並以 token 序列比對 pdftotext -layout 擷取結果（含標點、大小寫、空格題號位置），段落數依頁面影像核對；中文標題／說明／翻譯題目／作文提示去空白後比對 PDF；統計 56 題全部以 xlrd 重新讀取 stats-1／stats-2 英文科工作表比對；翻譯樹狀圖以 300 dpi 放大影像、作文評分指標表以頁面影像逐格核對。",
     "issues": [
       "結構與 gsat-spec.json legacy_ast「94–97」期別一致：詞彙 1–10（10×1）、綜合測驗 11–30（4篇×5題×1＝20）、文意選填 31–40（選項 A–J 共10個，10×1）、篇章結構 41–45（選項 A–E 共5個，5×2）、閱讀測驗 46–56（3篇：3＋4＋4題，11×2＝22）、英文翻譯 2題×4＝8、英文作文 20（文長至少120個單詞）；選擇題 72、非選擇題 28，合計 100。本年仍有倒扣（各大題說明已逐字保留）。考試時間 80 分鐘取自封面。",
       "大題標題照本年題本原文寫成「一、詞彙(10%)」「二、綜合測驗(20%)」…「一、英文翻譯(8%)」「二、英文作文(20%)」（本年題本以百分比標示配分、半形括號），與 97 年起「（10分）」的寫法不同，未統一。第壹部分原文為「第壹部分：選擇題(佔72分)」、第貳部分為「第貳部分：非選擇題(佔28分)」，part 依 schema 只寫「選擇題」「非選擇題」。第一、二大題說明與作文提示的冒號在題本為「︰」(U+FE30)，其餘為「：」，照原文保留。",
@@ -2162,8 +2162,9 @@
       "統計：答對率 P、高分組 Ph、低分組 Pl、鑑別度 D 取自 stats-1.xls 英文科工作表（工作表 2；報考 109,770、缺考 5,265、到考 104,505 人）；option_rates 取自 stats-2.xls 選項分析的「T」（全體）列，未含「未答」比例，所以各題 option_rates 加總小於 1（例如第5題未答 38%、第54、56題 25%）。stats-2 的高／低分組各選項比例（H／L 列）沒有放入（schema 無對應欄位）。",
       "統計交叉核對：56 題選項分析標「*」的選項與官方答案全部一致；stats-2 標「*」選項的 T／H／L 與 stats-1 的 P／Ph／Pl 只有第35題 T 差 1 個百分點（stats-2 54% vs stats-1 P 53%），推測為四捨五入差異，correct_rate 以 stats-1 為準（0.53），option_rates 的 I 照 stats-2 填 0.54。",
       "本年只有 stats-1（答對率及鑑別指數）與 stats-2（選擇題選項分析），沒有非選擇題得分分布檔，因此翻譯與作文的 stats 填 null。",
-      "標註說明：第12題 Before（Before using …）是介系詞＋動名詞，記為 connective／preposition；第19題 If not 為省略的條件子句，answer_pos 記 phrase；第22題 even 修飾比較級 shorter，記 grammar／comparison；第46題（文章出處）與第50題（作者立場）沒有對應的 item_type，記 inference；第54題需綜合 Anne Carp、Geoff Brodie、美國反應等多處敘述歸納「全部以不信與輕蔑回應」，記 inference。篇章結構：第41題以 “take time … through actual space” 對應 “The time and distance”、第45題以 “profundity” 對應 “something deeper”，皆記 lexical_cohesion；第44題後一句 “this kind of writing and sending” 回指 (D) 的 zap a message，記 pronoun_reference。第53–56題組 sdgs 記 [3, 5]（生育健康與女性選擇權的爭議），屬判斷。"
+      "標註說明：第12題 Before（Before using …）是介系詞＋動名詞，記為 connective／preposition；第19題 If not 為省略的條件子句，answer_pos 記 phrase；第22題 even 修飾比較級 shorter，記 grammar／comparison；第46題（文章出處）與第50題（作者立場）沒有對應的 item_type，記 inference；第54題需綜合 Anne Carp、Geoff Brodie、美國反應等多處敘述歸納「全部以不信與輕蔑回應」，記 inference。篇章結構：第41題以 “take time … through actual space” 對應 “The time and distance”、第45題以 “profundity” 對應 “something deeper”，皆記 lexical_cohesion；第44題後一句 “this kind of writing and sending” 回指 (D) 的 zap a message，記 pronoun_reference。第53–56題組 sdgs 記 [3, 5]（生育健康與女性選擇權的爭議），屬判斷。",
+      "作文 scoring_notes 末段「並且與研究小組註共同挑選」中的「註」在 scoring.pdf 第3頁是上標的註腳記號（對應文末「註：大考中心之94指定科目考試…研究成員…」），不是正文用字；依文字層原樣保留，顯示時可視為註腳標記。"
     ],
-    "verified_by": null
+    "verified_by": "verifier"
   }
 }

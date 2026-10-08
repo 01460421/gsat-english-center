@@ -3,8 +3,9 @@
  * （docs/research/05-sekai-center-patterns.md §2.5），改寫成 Hono 中介層：
  *
  * 1. CORS 只放行 ALLOWED_ORIGINS 裡的 origin，並帶 credentials（之後 session 用 cookie）。
- *    帶 credentials 時瀏覽器拒絕 `*`，所以一定回「具體的」Allow-Origin；不允許的 origin 連標頭都不發，
- *    由瀏覽器自己擋。回應帶 Vary: Origin，避免 CDN 把 A 站的標頭快取給 B 站。
+ *    帶 credentials 時瀏覽器拒絕 `*`，所以一定回「具體的」Allow-Origin；不允許的 origin 拿不到
+ *    Access-Control-Allow-Origin，瀏覽器就不讓頁面讀回應（Hono 仍會附上 Allow-Credentials、Allow-Methods 等，
+ *    少了 Allow-Origin 這些都不生效，所以不另外移除）。回應帶 Vary: Origin，避免 CDN 把 A 站的標頭快取給 B 站。
  * 2. 會改變狀態的請求（GET／HEAD／OPTIONS 以外）一律要求 Origin 是允許清單裡的站或 Worker 自己。
  *    CORS 只管「瀏覽器能不能讀回應」，管不到「請求有沒有送到」；SameSite=Lax 也擋不住同站子網域
  *    發出的 POST（主網域與 api. 子網域是同站）。沒有 Origin 的（非瀏覽器）也拒絕。

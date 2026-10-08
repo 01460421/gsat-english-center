@@ -14,6 +14,7 @@
     <!--
       在第一次繪製前套用使用者選的主題，避免「先閃一下系統主題再跳成深色」。
       必須是同步的行內腳本（module 腳本會延後執行）。鍵名與 src/lib/theme.ts 的 THEME_STORAGE_KEY 相同。
+      這裡只設 data-theme；上面兩個 theme-color 由 theme.ts 載入時同步（網址列晚一點變色不影響閱讀，邏輯只寫一份）。
       之後若加上 Content-Security-Policy，要把這段腳本的 sha256 雜湊加進 script-src。
     -->
     <script>

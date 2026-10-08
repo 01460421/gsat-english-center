@@ -43,8 +43,12 @@ migrations_dir = "migrations"
 
 [vars]
 # CORS 與 Origin 檢查的允許清單（逗號分隔，必須是完整的 origin：協定＋主機＋連接埠，結尾不加斜線）。
-# - localhost：本機 Vite 開發伺服器（5173）與 preview（4173）
 # - REPLACE_WITH_VERCEL_PROJECT.vercel.app：買網域前的 Vercel 網址（rewrites 代理時，瀏覽器送的 Origin 是它）
 # - REPLACE_WITH_DOMAIN：買網域後的主網域與 www
-# 上線後若不想讓正式環境接受 localhost，可以另開 [env.production] 覆寫這個值。
-ALLOWED_ORIGINS = "http://localhost:5173,http://127.0.0.1:5173,http://localhost:4173,https://REPLACE_WITH_VERCEL_PROJECT.vercel.app,https://REPLACE_WITH_DOMAIN,https://www.REPLACE_WITH_DOMAIN"
+#
+# 刻意不放 localhost：這裡的值會跟著部署到正式環境，放了就等於讓任何跑在學生電腦 localhost:5173 的網頁
+# 都能帶 cookie 呼叫正式 API。本機開發也用不到：Vite proxy 不改 Host（apps/web/vite.config.ts 的
+# changeOrigin: false），Worker 看到的網址就是 http://localhost:5173/…，同源請求會被當成「Worker 自己」放行
+# （src/security.ts 的 originGuard）。若真的要讓本機頁面跨來源直連 Worker，把含 localhost 的清單寫進
+# apps/api/.dev.vars，它只在 wrangler dev 生效，會覆寫這裡的值。
+ALLOWED_ORIGINS = "https://REPLACE_WITH_VERCEL_PROJECT.vercel.app,https://REPLACE_WITH_DOMAIN,https://www.REPLACE_WITH_DOMAIN"

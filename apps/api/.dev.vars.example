@@ -4,3 +4,7 @@
 ANTHROPIC_API_KEY=sk-ant-REPLACE_ME
 SESSION_SECRET=REPLACE_WITH_LONG_RANDOM_STRING
 GOOGLE_CLIENT_SECRET=REPLACE_ME
+
+# 選用：只在本機覆寫 wrangler.toml 的 ALLOWED_ORIGINS。經 Vite proxy 開發時不需要（同源）；
+# 只有讓本機頁面跨來源直連 http://127.0.0.1:8787 時才取消註解。
+# ALLOWED_ORIGINS=http://localhost:5173,http://127.0.0.1:5173

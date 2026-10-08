@@ -10,7 +10,8 @@
   },
   "scripts": {
     "typecheck": "tsc -p tsconfig.json",
-    "test": "vitest run"
+    "test": "vitest run --project unit",
+    "test:data": "vitest run --project data"
   },
   "devDependencies": {
     "@types/node": "^22.20.5",

@@ -2,14 +2,14 @@
  * 煙霧測試：每個路由在桌機與手機各開一次（專案設定見 playwright.config.ts），檢查：
  *   1. 沒有 console error 與未捕捉的例外（pageerror）；
  *   2. 頁面標題（<title> 與 <h1>）存在且正確；
- *   3. 沒有水平捲動（手機最常見的版面問題：長字串、固定寬度的表格把頁面撐寬）。
+ *   3. 沒有水平捲動（手機最常見的版面問題：長字串、固定寬度的表格把頁面撐寬）；手機專案另外在 320px 再檢查一次。
  * 標準沿用 Sekai Center 的 tests/smoke.mjs（docs/research/05-sekai-center-patterns.md §2.9）。
  *
  * 後端一律用 page.route 假造：煙霧測試不能依賴 wrangler 或線上 API，
  * 否則後端一出問題前端的 CI 就跟著紅（05 文件 §3.5 第 7 點）。
  */
 import { expect, test, type Page } from '@playwright/test';
-import { APP_NAME, PAGES, documentTitle } from '../src/modules';
+import { APP_NAME, BOTTOM_NAV_PATHS, PAGES, documentTitle, getPage } from '../src/modules';
 
 const HEALTH = { ok: true, service: 'gsat-english-api', version: '0.0.0-smoke', time: '2026-10-07T00:00:00.000Z' };
 
@@ -55,6 +55,11 @@ async function horizontalOverflow(page: Page) {
   });
 }
 
+async function expectNoHorizontalOverflow(page: Page) {
+  const { scrollWidth, viewport, offenders } = await horizontalOverflow(page);
+  expect(scrollWidth, `頁面寬 ${scrollWidth}px 超出視窗 ${viewport}px：\n${offenders.join('\n')}`).toBeLessThanOrEqual(viewport);
+}
+
 test.describe('每個路由', () => {
   for (const meta of PAGES) {
     test(`${meta.title}（${meta.path}）`, async ({ page }, testInfo) => {
@@ -77,10 +82,12 @@ test.describe('每個路由', () => {
       }
 
       await page.waitForLoadState('networkidle');
-      const overflow = await horizontalOverflow(page);
-      expect(overflow.scrollWidth, `頁面寬 ${overflow.scrollWidth}px 超出視窗 ${overflow.viewport}px：\n${overflow.offenders.join('\n')}`).toBeLessThanOrEqual(
-        overflow.viewport,
-      );
+      await expectNoHorizontalOverflow(page);
+      if (testInfo.project.name === 'mobile') {
+        // 再縮到 320px：WCAG 1.4.10（重排）的基準寬度，等同 1280px 螢幕放大 400%，也涵蓋小尺寸 Android 手機。
+        await page.setViewportSize({ width: 320, height: 667 });
+        await expectNoHorizontalOverflow(page);
+      }
       expect(errors).toEqual([]);
     });
   }
@@ -115,21 +122,37 @@ test('選擇的主題在重新整理後仍然生效（index.html 的繪製前腳
   await page.reload();
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
   await expect(page.getByRole('radio', { name: /^深色/ })).toBeChecked();
+  // 手機網址列顏色也要跟著選定的主題，而不是系統主題（瀏覽器預設是淺色，這裡選了深色）。
+  for (const meta of await page.locator('meta[name="theme-color"]').all()) {
+    await expect(meta).toHaveAttribute('content', '#171c23');
+  }
   await page.getByRole('radio', { name: /^跟隨系統/ }).check();
   await expect(page.locator('html')).not.toHaveAttribute('data-theme', /.*/);
 });
 
-test('手機：從「更多」面板切換到其他頁面', async ({ page }, testInfo) => {
-  test.skip(testInfo.project.name !== 'mobile', '「更多」面板只在手機版面出現');
+test('手機導覽：底部導覽每一項都能點，「更多」面板列出全部頁面且最後一項點得到', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'mobile', '底部導覽與「更多」面板只在手機版面出現');
   const errors = collectErrors(page);
   await mockBackend(page);
-  await page.goto('/');
-  await page.getByRole('button', { name: '更多' }).click();
+  await page.goto('/settings');
+
+  const nav = page.getByRole('navigation', { name: '主要導覽' });
+  for (const path of BOTTOM_NAV_PATHS) {
+    const meta = getPage(path);
+    await nav.getByRole('link', { name: meta.navLabel }).click();
+    await expect(page.getByRole('heading', { level: 1, name: meta.title })).toBeVisible();
+  }
+
+  await nav.getByRole('button', { name: '更多' }).click();
   const dialog = page.getByRole('dialog', { name: '全部功能' });
   await expect(dialog).toBeVisible();
-  await dialog.getByRole('link', { name: '英文作文' }).click();
-  await expect(page).toHaveURL(/\/composition$/);
-  await expect(page.getByRole('heading', { level: 1, name: '英文作文' })).toBeVisible();
+  for (const meta of PAGES) await expect(dialog.getByRole('link', { name: meta.navLabel })).toHaveCount(1);
+  // 最後一項在矮螢幕（667px）上要捲動面板才看得到；Playwright 點擊前會自動捲入視窗，點不到代表面板沒辦法捲動。
+  const last = PAGES[PAGES.length - 1];
+  if (!last) throw new Error('PAGES 是空的');
+  await dialog.getByRole('link', { name: last.navLabel }).click();
+  await expect(page).toHaveURL(new RegExp(`${last.path}$`));
+  await expect(page.getByRole('heading', { level: 1, name: last.title })).toBeVisible();
   await expect(dialog).toBeHidden();
   expect(errors).toEqual([]);
 });

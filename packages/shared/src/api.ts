@@ -50,14 +50,15 @@ export interface ApiErrorBody {
   };
 }
 
-/** 判斷一個未知的 JSON 值是不是統一格式的錯誤回應。 */
+/**
+ * 判斷一個未知的 JSON 值是不是統一格式的錯誤回應。
+ * code 必須是 API_ERROR_CODES 裡的值，不能只檢查是字串：型別守衛宣稱 code 是 ApiErrorCode，
+ * 前端會拿它去查文案對照表；收到不認得的代碼（例如後端先部署了新代碼）就當成「不是統一格式」，
+ * 由呼叫端退回用 HTTP 狀態碼處理，而不是查表查到 undefined。
+ */
 export function isApiErrorBody(value: unknown): value is ApiErrorBody {
   if (typeof value !== 'object' || value === null || !('error' in value)) return false;
-  const err = (value as { error: unknown }).error;
-  return (
-    typeof err === 'object' &&
-    err !== null &&
-    typeof (err as { code?: unknown }).code === 'string' &&
-    typeof (err as { message?: unknown }).message === 'string'
-  );
+  const err: unknown = value.error;
+  if (typeof err !== 'object' || err === null || !('code' in err) || !('message' in err)) return false;
+  return (API_ERROR_CODES as readonly unknown[]).includes(err.code) && typeof err.message === 'string';
 }

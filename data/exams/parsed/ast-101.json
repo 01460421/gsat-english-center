@@ -2567,7 +2567,7 @@
               "kind": "map",
               "caption": null,
               "label": "the following diagram（第50題）",
-              "description": "第50題題幹右側的方框示意圖（平面配置圖），右上角有指北方位標：上 N、下 S、左 W、右 E。中央為長方形的「The Target Building」；其正北方（上方）為梯形的「Department Store」，正南方（下方）為長方形的「Cleared Area」；東側（右方）為橢圓形的「School」；西側（左方）由北到南依序為圓角方框「Park」「Church」「Post Office」，其中「Church」在 The Target Building 正西方。方位標位於 Department Store 東側、School 上方。",
+              "description": "第50題題幹右側的方框示意圖（平面配置圖），右上角有指北方位標：上 N、下 S、左 W、右 E。中央為長方形的「The Target Building」；其正北方（上方）為上寬下窄梯形的「Department Store」，正南方（下方）為長方形的「Cleared Area」；東側（右方）為橢圓形的「School」；西側（左方）由北到南依序為圓角方框「Park」「Church」「Post Office」，其中「Church」在 The Target Building 正西方。方位標位於 Department Store 東側、School 上方。",
               "rows": [
                 [
                   "",
@@ -3126,7 +3126,7 @@
     }
   ],
   "extraction": {
-    "method": "python-docx 讀 Word 版題本（paper-2.doc 經 soffice 轉 docx）為主，pdftotext -layout 擷取 paper-1.pdf 交叉比對（217 段選文段落、題幹、選項、選項庫去除空白後逐一確認為 PDF 文字的子字串），並用 Read 逐頁看 PDF 頁面影像（第 1–8 頁，含第 7 頁第 50 題示意圖 300dpi 放大）核對版面、段落、粗斜體與圖；答案 pdftotext answer.pdf＋頁面影像核對；評分原則 scoring-1.pdf、scoring-2.pdf 以 pdftotext -layout／-raw＋頁面影像核對（中譯英參考答案為大括號分歧圖，200dpi 放大逐字抄錄）；統計以 xlrd 讀 stats-1.xls（英：P/Ph/Pl/D）、stats-2.xls（英：T/H/L 選項分析）、stats-3.xls（工作表 2：英文科非選擇題分數人數統計）；建檔腳本放 scratchpad，未進 repo",
+    "method": "python-docx 讀 Word 版題本（paper-2.doc 經 soffice 轉 docx）為主，pdftotext -layout 擷取 paper-1.pdf 交叉比對（217 段選文段落、題幹、選項、選項庫去除空白後逐一確認為 PDF 文字的子字串），並用 Read 逐頁看 PDF 頁面影像（第 1–8 頁，含第 7 頁第 50 題示意圖 300dpi 放大）核對版面、段落、粗斜體與圖；答案 pdftotext answer.pdf＋頁面影像核對；評分原則 scoring-1.pdf、scoring-2.pdf 以 pdftotext -layout／-raw＋頁面影像核對（中譯英參考答案為大括號分歧圖，200dpi 放大逐字抄錄）；統計以 xlrd 讀 stats-1.xls（英：P/Ph/Pl/D）、stats-2.xls（英：T/H/L 選項分析）、stats-3.xls（工作表 2：英文科非選擇題分數人數統計）；建檔腳本放 scratchpad，未進 repo；查證者（verifier）獨立重做：answer.pdf 頁面影像逐題核對 51 題答案；全部題幹、選項、選項庫、選文段落以程式比對 pdftotext 文字（去空白）與 Word 版（保留空白）兩個來源，並以 Read 看題本第 1–8 頁影像核對段落、粗斜體與第50題示意圖（300dpi 裁切）；選文字數以 wc 方式與 pdftotext 擷取比較；stats-1／stats-2 51 題 P、Ph、Pl、D、T/H/L 各選項與未答比例、stats-3 兩題分數分布全部以 xlrd 重新讀取比對；評分原則以 pdftotext -raw＋頁面影像核對",
     "issues": [
       "結構與 gsat-spec.json legacy_ast「98–110」期別一致：詞彙 1–10（各1分；101 題本大題標題為「一、詞彙（占10分）」，非「詞彙題」，與 spec 註記「100及107–110題本標為詞彙題」相符）、綜合測驗 11–20（2篇×5題）、文意選填 21–30（12個選項 A–L）、篇章結構 31–35（6個選項 A–F，各2分）、閱讀測驗 36–51（4篇×4題，各2分）、中譯英 2題各4分、英文作文 20分（至少120個單詞，文分兩段）；選擇題 72分＋非選擇題 28分＝100分；考試時間 80分鐘（封面）；不倒扣（各大題說明：答錯、未作答或畫記多於一個選項者，該題以零分計算）。評分原則寫明作文依「內容、組織、文法句構、字彙拼字、體例五個項目給分」，與 spec changes「105 起改為四項」一致（101 仍為五項）。",
       "題號重複 [1, 2]（validator warning）：題本中譯英子題編為 1、2，英文作文不編號；因 schema 要求 no 為整數，中譯英填 no=1、2（label「中譯英1」「中譯英2」），作文填 no=1（label「英文作文」），label 皆不重複，屬合理（同 ast-100、ast-103 慣例）。",
@@ -3135,7 +3135,7 @@
       "評分原則原文錯字照錄未更正：scoring-1「譯成英文時為應為 “ingredients (that are) harmful to human bodies”」（多一個「為」）、「組織連慣性」（應為連貫性）。兩份文件列舉運動時用字不同：scoring-1 作「慢跑、登山、騎單車、做瑜珈」，scoring-2 作「慢跑、爬山、騎單車、做瑜珈」，各依原文。",
       "英文作文 scoring_notes：scoring-1 中屬於作文的分句（首段「第二大題是引導式的作文…作文滿分為二十分。」、評分標準句「作文的評分標準是依據…字數明顯不足則扣總分 1 分。」、第2頁作文段落全文）＋ scoring-2「評分原則說明」兩段、表一（轉成「項目｜優｜可｜差｜劣」逐列文字；「體例」列的「優」「可」兩欄在原表是合併儲存格（2 分），已註明）及最後兩段（佳作刊登與評分樣例說明；註腳 2 的網址未收錄）。表一「文法、句構／優」格原文「全文幾無文法錯誤， 文句結構富變化。」全形逗號後有一個空白，已去除。scoring-2 用 pdftotext -layout 會輸出字距空白（如「101 學 年 度 …」），改以 -raw 與頁面影像核對後去除。answer 為 null（評分原則沒有範文）。",
       "非選擇題統計：stats-3.xls 工作表「2」只提供「第一題（中譯英兩小題合計，滿分8分）」與「第二題（英文作文，滿分20分）」的分數人數分布，無逐子題資料，也沒有答對率／鑑別度；因此放在 s6、s7 section 層級的 stats（schema 未定義的延伸欄位：source、max_score、registered、absent、examinees、percent_base、score_distribution，同 ast-103），題目層級 stats 為 null。原表百分比以報名總人數 75,839（含缺考 3,677；到考 72,162，與 stats-1 表頭一致，程式核對各區間人數加總＋缺考＝75,839）為分母，已換成 0–1 小數；分數區間標籤去除空白（如「9.00- 9.99」→「9.00-9.99」），只收錄有數值的列。作文「20.00-20.99」一列原表明列人數 0，照錄。",
-      "選擇題 stats：correct_rate／high_group／low_group／discrimination 取自 stats-1.xls「英」的 P、Ph、Pl、D；另加延伸欄位 omit_rate（未答比例，本卷 51 題皆為 0）、option_rates_high／option_rates_low（高分組／低分組各選項選答比例），與 option_rates 同取自 stats-2.xls 的 T/H/L 列（同 ast-103、ast-105）。程式核對：stats-2 標 * 的選項＝answer.pdf 官方答案（51題全部一致）；51題 P＝T列正答比例、Ph＝H列、Pl＝L列正答比例，且 D＝Ph−Pl 全部成立，無差異。原表為整數百分比，option_rates 加總因四捨五入略偏離 1。",
+      "選擇題 stats：correct_rate／high_group／low_group／discrimination 取自 stats-1.xls「英」的 P、Ph、Pl、D；另加延伸欄位 omit_rate（stats-2「未答」欄 T 列的未答比例；本卷第 21、25、26、27、28、30、40、48、50、51 題為 0.01，其餘 41 題為 0）、option_rates_high／option_rates_low（高分組／低分組各選項選答比例），與 option_rates 同取自 stats-2.xls 的 T/H/L 列（同 ast-103、ast-105）。程式核對：stats-2 標 * 的選項＝answer.pdf 官方答案（51題全部一致）；51題 P＝T列正答比例、Ph＝H列、Pl＝L列正答比例，且 D＝Ph−Pl 全部成立，無差異。原表為整數百分比，option_rates 加總因四捨五入略偏離 1。",
       "頂層 parts 為延伸欄位（同 ast-103、ast-110），保存「第壹部分：選擇題（占72分）」「第貳部分：非選擇題（占28分）」標題與第貳部分說明文字（逐字）；封面「作答注意事項」未收錄。",
       "Word 檔處理：Word 版在版面換行處多處斷成獨立段落，依 PDF 頁面影像（下一行無首行縮排）併回同一段：s2g1「…celebrations to [[11]] / Norway’s centenary…」、s3g1「…The main purpose of Budaixi is to / [[30]] and offer thanks…」、s4g1「…an idea or a person. / [[32]] Although…」（第二段，非新段落；第三段才由 [[35]] 開始）、s5g3「The Israeli comedy / A Wonderful Country…」；s2g2 第一段內的手動換行亦去除。第51題 Word 檔選項為自動編號清單、遺失 (A)–(D) 代號，依 PDF 補上。選文空格（底線＋題號）改寫為 [[題號]]，段落間以換行分隔，段首 tab、行尾空白已去除。pdftotext 中第50題題幹與右側示意圖標籤交錯，已對照頁面影像確認題幹文字。",
       "空格底線照原樣保留：第9題為 6 個底線「______」、第10題為 8 個底線「________」，其餘詞彙題為 5 個。",
@@ -3144,6 +3144,6 @@
       "第50題示意圖（s5g4 figures[0]）：無標題，caption 為 null；依 300dpi 頁面影像轉成文字描述，kind 標 map。rows 為解析者整理的方位格（列＝北／中／南，欄＝西／中／東），原圖並非表格：Department Store 在目標建築北方、Cleared Area 在南方、School 在東方、Park／Church／Post Office 在西側由北到南排列，方位標在右上角。題組 text_format 標 mixed（連續文本＋配置圖）。其餘頁面（第 1–8 頁）皆無圖表。",
       "標註（tags）為解析者判讀：詞彙題皆標 word_meaning，僅第8題 be held accountable for 標 collocation；第11題 mark（celebrations to mark Norway’s centenary）標 collocation；第12題 as well as 標 connective（answer_pos phrase）；第13題 related to（四個選項都是可接 to 的過去分詞，考詞義）標 word_meaning；第14、17、19題標 phrase；第18題 their 標 grammar／pronoun；第20題 resulted from people being trampled（介系詞後動名詞被動、帶意義上主詞）grammar_point 標 infinitive_gerund。篇章結構 clue：31 transition_word（To put it another way 換句話說，承接 All advertising includes an attempt to persuade）、32 example（Political advertising is one example 舉例承接 an idea or a person，下文談 political ads）、33 pronoun_reference（They ← political ads，下句 A Bush campaign ad 為例）、34 lexical_cohesion（campaign advertising ↔ Bush campaign ad；support or oppose proposals ↔ defeat the government’s plan）、35 example（下句 For instance, Greenpeace 需前句提到 environmental groups）；C 為誘答選項。閱讀：39 main_idea、41／44 purpose、43 inference（由 we、our 等推知作者為機師）、45 vocab_in_context、50 application（依文中「要往北倒就先炸北側」與圖中空地在南方推論），其餘 detail／main_idea 依題意。SDGs：s2g1 [16]（和平）、s2g2 [16]（16.1 減少暴力）、s5g1 [3]（憂鬱、焦慮與身心健康）、s5g2 [8]（8.8 安全工作環境、員工受威嚇）、s6g1 [3]（食品安全與健康）；s3g1、s4g1、s5g3、s5g4、s7g1 無明確對應，為空陣列。s5g2 選文為機師團體向大眾呼籲的文字，genre 標 opinion；s2g2 為事件敘述，標 narrative。"
     ],
-    "verified_by": null
+    "verified_by": "verifier"
   }
 }

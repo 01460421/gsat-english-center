@@ -2312,7 +2312,7 @@
               "caption": null,
               "label": null,
               "question_no": null,
-              "description": "第45至48題選文第二段右側的黑白照片（無標題、圖中無文字），為配圖，題目不需依圖作答：草地上豎立著五根北美西北海岸原住民的圖騰柱，背景為空白天空。由左至右：最左邊緣一根被裁切、只露出一部分的細長圖騰柱；一根最高的圖騰柱，頂端是一隻向兩側展開雙翼的鳥形雕像，柱身由多個上下疊起的人臉／動物臉雕刻組成；一根頂端為展翅鳥形人像的圖騰柱，柱身同樣刻滿疊起的圖案；中間偏右一根細長高聳的圖騰柱；最右邊一根較矮的圖騰柱，上半部有一對向左右水平伸展的翅膀，下方刻有人臉與蹲坐的人像。",
+              "description": "第45至48題選文第二段右側的黑白照片（無標題、圖中無文字），為配圖，題目不需依圖作答：草地上豎立著五根北美西北海岸原住民的圖騰柱，背景為空白天空。由左至右：最左邊一根較矮、較細的圖騰柱（位於最高那根的左後方，右側部分被它遮住）；一根最高的圖騰柱，頂端是一隻向兩側展開雙翼的鳥形雕像，柱身由多個上下疊起的人臉／動物臉雕刻組成；一根頂端為展翅鳥形人像的圖騰柱，柱身同樣刻滿疊起的圖案；中間偏右一根細長高聳的圖騰柱；最右邊一根較矮的圖騰柱，上半部有一對向左右水平伸展的翅膀，下方刻有人臉與蹲坐的人像。",
               "rows": null
             }
           ],
@@ -3244,10 +3244,10 @@
       "validator warning「題號重複 [1, 2]」為預期：中譯英兩題題本編為 1.、2.，英文作文沒有題號（no 填 1）；no 必須是整數，故沿用題本編號，並以 label「中譯英1」「中譯英2」「作文」區分，label 無重複。",
       "中譯英：評分原則沒有公布完整參考譯文或可接受譯法清單，只說明考點（第一句「自……以來」主要子句須用現在完成式、「最便利、最快速」須用最高級；第二句「職場效率」為 workplace efficiency、「首選」應為 first choice），故 answer 與 accepted_answers 皆為 null；scoring_notes 逐字收錄評分原則的中譯英評分標準、共通說明段落與該句的考點說明。",
       "英文作文：評分原則稱「今年為主題寫作」，tags.essay_type 填 topic（題目同時要求兩段，paragraphs=2）；說明與評分原則皆為「至少120個單詞」，word_requirement 填 \"at least 120 words\"。作文沒有官方範文，answer 為 null。",
-      "第44題選項中的箭號：Word 版以 Wingdings 符號字型（w:sym，char F0E0）呈現，python-docx 的 paragraph.text 與 pdftotext 都會漏掉這個字元（只剩兩個空格）；經 PDF 頁面影像確認為右箭號，以 Unicode「→」寫入，例如「Size → behavior → color → stripes.」。",
+      "第44題選項中的箭號：Word 版以 Wingdings 符號字型（w:sym，char F0E0）呈現，python-docx 的 paragraph.text 會漏掉這個字元（只剩兩個空格），pdftotext 則輸出私用區字元 U+F0E0（顯示為空白或方塊）；經 PDF 頁面影像確認為右箭號，以 Unicode「→」寫入，例如「Size → behavior → color → stripes.」。",
       "格式：題本中第45–48題選文末段與第48題題幹的 encroachment、第49–52題選文第一段與第50題題幹的 subject、第51題的 NOT 為粗體；依 schema 不保留粗體（題目以引號指稱，非「畫底線的字」，故未加 <u>）。",
       "文意選填說明與選項：PDF 排版為「( J )」「( I )」（括號內有空格），Word 版為「(J)」「(I)」，採 Word 版文字。",
-      "第45–48題選文第二段右側有一張黑白圖騰柱照片（無標題、圖中無文字、題目未引用），以文字描述放在 s4g2 figures（kind=photo）；以 pdftoppm 250dpi 放大裁切判讀，共五根圖騰柱（最左一根被裁切）。其餘頁面無圖表。",
+      "第45–48題選文第二段右側有一張黑白圖騰柱照片（無標題、圖中無文字、題目未引用），以文字描述放在 s4g2 figures（kind=photo）；以 pdftoppm 250dpi 放大裁切判讀，共五根圖騰柱（最左一根較矮，部分被最高的一根遮住，並未被圖框裁切）。其餘頁面無圖表。",
       "選擇題統計：除 schema 欄位外，另存 option_rates_high／option_rates_low（stats-2.xls 選項分析的高分組 H、低分組 L 列）與 omit_rate（T 列未答比例）；stats-1.xls 的五組通過率 Pa–Pe 與 D1–D4 未收錄。已程式核對全部 56 題：選項分析中標 * 的選項＝官方答案。全卷 T 列未答皆為 0%；L 列未答為 1% 的有第45、55、56題（未另存）。",
       "統計表不一致：第39題 stats-1.xls 低分組通過率 Pl=14，但 stats-2.xls 選項分析 L 列正答 (I) 為 15；兩者皆為大考中心原始數值（推測四捨五入差異），low_group 依 stats-1 填 0.14，option_rates_low.I 依 stats-2 填 0.15，未更動。其餘 55 題 P／Ph／Pl 與選項分析 T／H／L 正答比例完全一致。",
       "低答對率題目已複核非對齊錯誤：第17題 P=0.29（56% 選 (B) continuing）；第19題 P=0.32、D=0.09（39% 選 (C) put in service，高分組選 B、C 各 39%）；第27題 P=0.35（43% 選 (C) some）；第30題 P=0.36；第45題 P=0.35（42% 選 (C) Totem Poles, Symbols of Historical Resistance）。皆為大考中心原始數據。",
@@ -3255,8 +3255,9 @@
       "評分原則文字：取自 scoring.pdf 的 pdftotext 輸出（PDF 無 CJK 相容表意字，NFC 正規化前後相同），並以頁面影像核對。中文與英文／數字之間的空格依 pdftotext 行內輸出保留（如「每小題總分 4 分」「convenient 及 transportation」），跨行處英文與中文相接時補一個空格以與行內一致；PDF 無法確定這些是實際空白字元還是 Word 的中英文自動間距。",
       "文字來源：Word 版 paper-2.docx 與 PDF pdftotext 逐詞比對一致（差異只有封面作答注意事項在 Word 版位於檔尾、選項代號 ( I )／( J ) 的排版空格）。",
       "標註判斷：s2g3（diet-glasses）為研究成果報導，genre 標 news；sdgs 為主觀判斷——鳳梨葉纖維皮革 [12]、減重眼鏡 [3]、神仙魚（珊瑚礁海洋生物）[14]、圖騰柱（原住民文化資產，比照 gsat-114 巴黎聖母院鐘聲標 11）[11]、殺蟲噴霧的毒性與健康風險 [3]；愚人節、父親健忘、耳蟲為 []。",
-      "本檔新增的非 schema 欄位（比照 gsat-109）：section.part_title／part_instructions（第壹、貳部分標題與第貳部分共同說明，放在該部分的第一個大題 s1、s5）、section.stats（非選擇題分數分布）、group.group_label（「第16至20題為題組」等題本原文）、figure.question_no、figure.label、sources.paper_word、question.stats.option_rates_high／option_rates_low／omit_rate。"
+      "本檔新增的非 schema 欄位（比照 gsat-109）：section.part_title／part_instructions（第壹、貳部分標題與第貳部分共同說明，放在該部分的第一個大題 s1、s5）、section.stats（非選擇題分數分布）、group.group_label（「第16至20題為題組」等題本原文）、figure.question_no、figure.label、sources.paper_word、question.stats.option_rates_high／option_rates_low／omit_rate。",
+      "查證（verifier）：獨立對照原始檔逐項核對——(1) 答案：56題逐題對照 answer.pdf（pdftotext 與頁面影像）全部一致；(2) 選項與題幹：56題全部選項、題幹以程式逐字比對 Word 版（含 w:sym 箭號）完全一致，並與 pdftotext 做全卷 token 序列比對，除標題／說明／題組標示與箭號字元外無差異；(3) 選文：8篇選文段落數、首末句、字數與 Word 版逐字相同，且與 PDF 全文逐詞比對一致，空格 [[16]]–[[40]] 位置與 PDF 相符；(4) 圖表：看全部頁面影像，唯一圖片為第45–48題圖騰柱照片，放大判讀後修正描述（最左一根並非被裁切）；(5) 統計：以 xlrd 對全部56題核對 P／Ph／Pl／D 與選項分析 T／H／L（含未答）均正確且為 0–1 小數，非選擇題分數分布兩組逐列一致；(6) 非選擇題：題目、說明、評分原則摘錄逐字為 scoring.pdf 內容；(7) 標註逐題檢視，未發現明顯錯誤（第23題 other 為限定詞，answer_pos 無合適值故省略）。"
     ],
-    "verified_by": null
+    "verified_by": "verifier"
   }
 }

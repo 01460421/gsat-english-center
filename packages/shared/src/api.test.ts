@@ -26,6 +26,12 @@ describe('isApiErrorBody', () => {
   it('拒絕其他形狀', () => {
     expect(isApiErrorBody({ error: 'not_found' })).toBe(false);
     expect(isApiErrorBody({ message: '找不到' })).toBe(false);
+    expect(isApiErrorBody({ error: { code: 'not_found' } })).toBe(false);
     expect(isApiErrorBody(undefined)).toBe(false);
+  });
+
+  it('拒絕不在 API_ERROR_CODES 裡的代碼（型別守衛不能說謊）', () => {
+    expect(isApiErrorBody({ error: { code: 'teapot', message: '?' } })).toBe(false);
+    expect(isApiErrorBody({ error: { code: 42, message: '?' } })).toBe(false);
   });
 });

@@ -3299,7 +3299,7 @@
     }
   ],
   "extraction": {
-    "method": "python-docx 讀 Word 版題本（paper-2.docx）取文字，與 pdftotext -layout 的 PDF 題本逐詞比對一致；Read 看 PDF 頁面影像確認第36題圖片選項、混合題論壇版面、作文對比圖片與評分原則大括號參考答案；答案取自 answer.pdf；統計以 xlrd 讀 stats-1/2/3.xls（並核對選項分析中標 * 的選項與官方答案一致）；人工校對。",
+    "method": "python-docx 讀 Word 版題本（paper-2.docx）取文字，與 pdftotext -layout 的 PDF 題本逐詞比對一致；Read 看 PDF 頁面影像確認第36題圖片選項、混合題論壇版面、作文對比圖片與評分原則大括號參考答案；答案取自 answer.pdf；統計以 xlrd 讀 stats-1/2/3.xls（並核對選項分析中標 * 的選項與官方答案一致）；人工校對。；查證者另以程式逐字比對 JSON 與 PDF 文字層／Word 版、逐題比對答案與統計 xls，並以 Read 看頁面影像核對圖片描述與評分原則。",
     "issues": [
       "第36題四個選項皆為照片（無文字），options 以中文描述圖片內容並加註「（圖片）」，完整描述另見 s5g1.figures；官方答案 C。",
       "第47、48題在題本中共用同一段指示與句子（「47-48 請根據選文內容…」），兩題的 stem 都放入完整指示與句子，空格以 [[47]]、[[48]] 標示；配分依評分原則每格2分。",
@@ -3308,13 +3308,14 @@
       "中譯英的 answer 為評分原則參考答案中每個大括號取第一個選項組成的句子；accepted_answers 是大括號內其他選項的所有組合（第1題 3×2×2×3=36 種、第2題 2^5=32 種，扣掉 answer 本身）；原始大括號格式保留在 scoring_notes。第1題參考答案列有 “Human’s imagination”，照錄。",
       "翻譯題沿用題本題號 1、2（label 為「中譯英1」「中譯英2」），作文題本無題號，填 no=1、label「英文作文」，因此會與詞彙題1、2題號重複（validator warning），label 皆不重複。",
       "非選擇題部分的總說明（「說明：本部分共有二大題…作答時不必抄題。」）併入 s7（中譯英）instructions 的第一行。",
-      "stats 除 schema 的欄位外另加：option_rates_high／option_rates_low（高分組前33%、低分組後33%的選項選答比例）、no_answer_rate（未答比例）、five_groups（Pa–Pe 五個能力組答對率）；數值皆已由百分比換成 0–1 小數。",
+      "stats 除 schema 的欄位外另加：option_rates_high／option_rates_low（高分組前33%、低分組後33%的選項選答比例）、no_answer_rate（全體到考考生 T 組的未答比例；高分組／低分組的未答比例未收錄，例如第35題低分組未答1%、第49題低分組未答4%）、five_groups（Pa–Pe 五個能力組答對率）；數值皆已由百分比換成 0–1 小數。",
       "s7、s8 另加 section 層級 score_distribution，取自 stats-3.xls（英文科非選擇題分數人數統計表）：「第一題（滿分8分）」對應中譯英兩題合計、「第二題（滿分20分）」對應英文作文；rate 為人數占選考人數 120,695 的比例。",
       "原文照錄、未更正：第31–34題選文 “providing only the essential elements for a good night sleep”（一般寫作 a good night’s sleep）；第47–50題 George 的留言 “Zoos have an educational aspect to it.”。",
       "混合題題末的配分標示（「（填充，4分）」「（多選題，4 分）」「（簡答題，2 分）」）照 PDF 題本原樣保留在 stem 中（Word 版沒有「4 分」中間的空格）；第49題 options 只放留言者姓名，留言全文在 s6g1.passage_parts。",
       "作文評分原則提到「考生根據作答提示以及二個圖片的文字說明」，但題本的兩張圖片並沒有文字說明；圖片內容依頁面影像描述於 s8g1.figures。",
-      "結構與 gsat-spec.json current 期別（111–）一致：選擇題 46 題 62 分（詞彙10、綜合10、文意選填10、篇章結構4題8分且4選項、閱讀12題24分）、混合題 47–50 共 10 分（47–48 填充各2分、49 多選4分且10選項、50 簡答2分）、非選擇題 28 分（中譯英2題8分、作文20分）。"
+      "結構與 gsat-spec.json current 期別（111–）一致：選擇題 46 題 62 分（詞彙10、綜合10、文意選填10、篇章結構4題8分且4選項、閱讀12題24分）、混合題 47–50 共 10 分（47–48 填充各2分、49 多選4分且10選項、50 簡答2分）、非選擇題 28 分（中譯英2題8分、作文20分）。",
+      "查證（verifier）：第1–46、49題答案逐題對照 answer.pdf 全部一致；第47、48、50題與中譯英參考答案對照 scoring.pdf 頁面影像一致（中譯英 accepted_answers 經程式展開大括號核對，第1題35種、第2題31種完整無缺漏）；全部選文、題幹、選項、選項庫逐字（含標點）對照 PDF 文字層與 Word 版皆一致，段落數與 PDF 頁面影像一致；第36題四張圖片與作文兩張照片的描述經 200–250dpi 頁面影像核對無誤；第1–46、49題 P／Ph／Pl／D／Pa–Pe／T 與選項分析 T／H／L 全部以程式對照 stats-1、stats-2.xls 一致，stats-3.xls 兩題得分分布各組人數與百分比一致。評分原則中的漢字在 PDF 文字層為 CJK 相容字（如 U+F9xx 的「兩」「句」「切」），JSON 已採標準字形。"
     ],
-    "verified_by": null
+    "verified_by": "verifier"
   }
 }

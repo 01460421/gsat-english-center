@@ -50,7 +50,11 @@ export function ModulePage({ page, children }: { page: PageMeta; children: React
           這個模組還在開發中，目前只有功能說明，練習功能會陸續上線。
         </p>
       )}
-      <div className="grid gap-4">{children}</div>
+      {/*
+        grid-cols-1 是 minmax(0, 1fr)：預設的隱含欄寬是 auto，會被內容的最小寬度撐開（例如模擬考頁的配分表），
+        區塊裡的 overflow-x-auto 就失效，整頁在 320px 寬（WCAG 1.4.10 重排的基準）出現水平捲動。
+      */}
+      <div className="grid grid-cols-1 gap-4">{children}</div>
     </article>
   );
 }

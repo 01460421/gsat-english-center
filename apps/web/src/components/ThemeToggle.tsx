@@ -6,7 +6,7 @@
 import { Moon, Sun } from 'lucide-react';
 import { setThemePreference, useResolvedTheme } from '../lib/theme';
 
-export function ThemeToggle({ className = '' }: { className?: string }) {
+export function ThemeToggle() {
   const resolved = useResolvedTheme();
   const next = resolved === 'dark' ? 'light' : 'dark';
   const label = next === 'dark' ? '切換為深色主題' : '切換為淺色主題';
@@ -16,7 +16,7 @@ export function ThemeToggle({ className = '' }: { className?: string }) {
       onClick={() => setThemePreference(next)}
       aria-label={label}
       title={label}
-      className={`inline-flex size-10 items-center justify-center rounded-full text-muted hover:bg-surface-2 hover:text-fg ${className}`}
+      className="inline-flex size-10 items-center justify-center rounded-full text-muted hover:bg-surface-2 hover:text-fg"
     >
       {resolved === 'dark' ? <Sun aria-hidden="true" className="size-5" /> : <Moon aria-hidden="true" className="size-5" />}
     </button>

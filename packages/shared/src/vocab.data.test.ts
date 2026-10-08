@@ -2,7 +2,7 @@
  * 用實際的 data/vocab/ceec-wordlist.json 檢查 vocab.ts 的型別。
  * 詞彙表由 tools/parse_wordlist.py 重新產生時，如果出現新的詞類寫法或條目型態，
  * 這裡會先紅，提醒同步更新 VOCAB_POS／VOCAB_ENTRY_TAGS，而不是讓前端拿到型別以外的值。
- * 檔案不存在時略過。
+ * 屬於 vitest 的 data 專案（`npm run test:data`，見 vitest.config.ts）；檔案不存在時略過。
  */
 import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';

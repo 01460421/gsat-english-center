@@ -49,7 +49,7 @@ export default function SettingsPage() {
   return (
     <article>
       <PageHeader page={page} />
-      <div className="grid gap-4">
+      <div className="grid grid-cols-1 gap-4">
         <InfoSection title="外觀主題">
           <ThemeSetting />
           <p className="text-sm text-muted">這個設定只存在目前使用的瀏覽器。</p>

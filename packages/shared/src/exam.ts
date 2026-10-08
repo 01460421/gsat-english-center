@@ -156,12 +156,20 @@ export type OptionMap = Partial<Record<OptionLetter, string>>;
 
 /** 多文本選文的一段，例如閱讀測驗的文本 A／B。 */
 export interface PassagePart {
-  label: string;
+  /**
+   * 題本印的段落代號（"A"、"B"）。規格只舉例 "A"；有些題本的多文本沒有印代號（例如 gsat-93 的書目、
+   * gsat-113、ast-94），依「逐字」原則不自己編，所以是 null。畫面上要顯示代號時，用陣列順序補。
+   */
+  label: string | null;
   title: string | null;
   text: string;
 }
 
-/** 圖表種類：規格只舉例 table 並說明「圖、表、地圖、海報」，解析資料另外出現 image／picture／photo。 */
+/**
+ * 圖表種類。規格只舉例 table 並說明「圖、表、地圖、海報」，沒有封閉的值域；
+ * 解析資料實際還用了 image、picture、photo、illustration、diagram、advertisement、other 等，
+ * 所以是開放值域。前端依 kind 決定排版時，要有「其他」的預設分支。
+ */
 export type FigureKind = OpenString<'table' | 'chart' | 'map' | 'poster' | 'image' | 'picture' | 'photo'>;
 
 /** 圖、表、地圖、海報：一律用文字完整描述，表格要轉成 rows。 */
@@ -239,8 +247,12 @@ interface QuestionBase {
   stats: QuestionStats | null;
   /** 非選擇題：評分原則中與本題相關的逐字內容。 */
   scoring_notes: string | null;
-  /** 小題標註。原則是「不確定就省略、不要猜」，validate_exam.py 也接受整個省略，所以是選填。 */
-  tags?: QuestionTags | null;
+  /**
+   * 小題標註。規格的範例一律寫出 `"tags": { }`，「不確定就省略」指的是省略 tags 裡的「欄位」，
+   * 不是整個物件，所以這裡是必填（可以是空物件），讀 q.tags.test_point 時不必先判斷 tags 存不存在。
+   * （題組的 tags 不同：實際資料有省略或 null 的，見 QuestionGroup.tags。）
+   */
+  tags: QuestionTags;
 }
 
 /** 單選題、共用選項庫的選擇題：答案是一個選項代號。 */

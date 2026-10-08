@@ -17,8 +17,13 @@ export default defineConfig({
   server: {
     port: 5173,
     strictPort: true,
+    // 關掉 Vite 自己的 CORS 中介層：它預設會替 localhost 來源直接回應 OPTIONS preflight，
+    // 請求根本到不了 proxy，開發時看到的 CORS 標頭就不是 Worker 發的，和線上（Vercel 原樣轉送給 Worker）不一致。
+    // 前端與 /api 同源，本來就不需要 Vite 發 CORS 標頭。
+    cors: false,
     proxy: {
-      // 不改 Host（changeOrigin: false），Worker 看到的請求網址與瀏覽器一致，Origin 檢查才對得上。
+      // 不改 Host（changeOrigin: false），Worker 看到的請求網址與瀏覽器一致（http://localhost:5173/…），
+      // 同源的 POST 會被 Origin 檢查當成「Worker 自己」放行，所以 wrangler.toml 的 ALLOWED_ORIGINS 不必列 localhost。
       '/api': { target: API_TARGET, changeOrigin: false },
       '/auth': { target: API_TARGET, changeOrigin: false },
     },

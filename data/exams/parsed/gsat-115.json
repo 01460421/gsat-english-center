@@ -329,7 +329,7 @@
               "tags": {
                 "test_point": "collocation",
                 "answer_pos": "verb",
-                "key_phrase": "elbow one’s way"
+                "key_phrase": "elbow one's way"
               }
             },
             {
@@ -1740,7 +1740,7 @@
               "no": 47,
               "label": "47",
               "mode": "fill_in_blank",
-              "stem": "47-48 下列簡短敘述摘記上方文章重點。請從文章中找出兩個單詞，分別填入下列句子空格中，並視句型結構需要做適當的字形變化，使句子語意完整、語法正確，並符合全文文意。每格限填一個單詞（word）。（填充題，4分）\nWonder Village, a famous tourist site, is characterized by its diversity and uniqueness. It is a place where the old meets the new—where tradition coexists harmoniously with [[47]], and local features are perfectly [[48]] with foreign elements.",
+              "stem": "下列簡短敘述摘記上方文章重點。請從文章中找出兩個單詞，分別填入下列句子空格中，並視句型結構需要做適當的字形變化，使句子語意完整、語法正確，並符合全文文意。每格限填一個單詞（word）。（填充題，4分）\nWonder Village, a famous tourist site, is characterized by its diversity and uniqueness. It is a place where the old meets the new—where tradition coexists harmoniously with [[47]], and local features are perfectly [[48]] with foreign elements.",
               "options": null,
               "answer": "innovation",
               "accepted_answers": null,
@@ -1755,7 +1755,7 @@
               "no": 48,
               "label": "48",
               "mode": "fill_in_blank",
-              "stem": "47-48 下列簡短敘述摘記上方文章重點。請從文章中找出兩個單詞，分別填入下列句子空格中，並視句型結構需要做適當的字形變化，使句子語意完整、語法正確，並符合全文文意。每格限填一個單詞（word）。（填充題，4分）\nWonder Village, a famous tourist site, is characterized by its diversity and uniqueness. It is a place where the old meets the new—where tradition coexists harmoniously with [[47]], and local features are perfectly [[48]] with foreign elements.",
+              "stem": "下列簡短敘述摘記上方文章重點。請從文章中找出兩個單詞，分別填入下列句子空格中，並視句型結構需要做適當的字形變化，使句子語意完整、語法正確，並符合全文文意。每格限填一個單詞（word）。（填充題，4分）\nWonder Village, a famous tourist site, is characterized by its diversity and uniqueness. It is a place where the old meets the new—where tradition coexists harmoniously with [[47]], and local features are perfectly [[48]] with foreign elements.",
               "options": null,
               "answer": "blended",
               "accepted_answers": null,
@@ -2222,12 +2222,12 @@
     }
   ],
   "extraction": {
-    "method": "pdftotext -layout（題本 paper-1.pdf、answer.pdf、scoring.pdf、答題卷 other-1.pdf）＋ python-docx 讀 Word 版題本 paper-2.docx 取段落與空格（底線 run）並與 PDF 逐字比對（英文字詞序列無差異）＋ Read 看頁面影像確認第38題四張航線地圖、第41題箭號、混合題街區插圖、作文三張圖片與評分原則（含表一）＋ xlrd 讀 stats-1/2/3.xls（答對率、選項分析、非選擇題分數分布），並以程式比對選項分析中標「*」的選項與官方答案一致、單選題答對率 P 與正確選項選答率一致、D＝Ph−Pl",
+    "method": "pdftotext -layout（題本 paper-1.pdf、answer.pdf、scoring.pdf、答題卷 other-1.pdf）＋ python-docx 讀 Word 版題本 paper-2.docx 取段落與空格（底線 run）並與 PDF 逐字比對（英文字詞序列無差異）＋ Read 看頁面影像確認第38題四張航線地圖、第41題箭號、混合題街區插圖、作文三張圖片與評分原則（含表一）＋ xlrd 讀 stats-1/2/3.xls（答對率、選項分析、非選擇題分數分布），並以程式比對選項分析中標「*」的選項與官方答案一致、單選題答對率 P 與正確選項選答率一致、D＝Ph−Pl；查證者（verifier）另以 python-docx 重新擷取 Word 版、pdftotext 重新擷取 PDF，逐字串比對全部題幹／選項／選文／說明（含標點，NFKC 正規化後比對評分原則中文），英文詞元序列與 PDF 文字層逐詞 diff 無差異；各選文字數與 pdftotext 一致；Read／pdftoppm 高解析影像複核第38題四張航線圖箭頭方向、第41題箭號、混合題街區插圖、作文三張圖片、評分原則表一與答案檔；xlrd 逐題比對 stats-1/2/3 全部數值",
     "issues": [
       "結構核對：與 gsat-spec.json current（111學年度起現制、115學年度考試說明）一致——選擇題62分（詞彙1–10、綜合11–20、文意選填21–30、篇章結構31–34 每題2分且選項(A)–(E)共5個含1個干擾句、閱讀35–46 每題2分）、混合題10分（47–48填充各2分、49多選4分、50簡答2分）、非選擇題28分（中譯英2題各4分、作文20分）；選擇題答案亦與 spec verification_115.answers_115_mc 相符。",
       "第41題：PDF 與 Word 的文字層都遺失選項中的箭號（符號字型），依頁面影像補為「→」；選項(B) 原文為「stone → wood→ iron → steel」，wood 與箭號之間沒有空格，照原樣保留。",
       "第38題：四個選項皆為航線地圖，options 以文字描述各圖航線（依頁面影像判讀箭頭方向），共同底圖與四條航線的完整描述放在題組 figures；官方答案為 C（航線止於威德爾海西北部、未到 Elephant Island）。",
-      "第47–48題：兩題共用同一段作答說明與摘要句，兩題的 stem 都放入完整說明與摘要句（空格寫成 [[47]]、[[48]]）；題本題號列印為「47-48」。評分原則只列滿分參考答案 innovation、blended，沒有列其他可接受答案，accepted_answers 為 null。",
+      "第47–48題：兩題共用同一段作答說明與摘要句，兩題的 stem 都放入完整說明與摘要句（空格寫成 [[47]]、[[48]]）；題本題號列印為「47-48」，與第49、50題一樣不放進 stem（題號由 no／label 表示）。評分原則只列滿分參考答案 innovation、blended，沒有列其他可接受答案，accepted_answers 為 null。",
       "第49題：答題卷（other-1.pdf）該題劃記區為 A–F，對應文中六家商店代號，options 以商店名稱填入；官方答案 ADE。統計依大考中心註記，多選題的 P 為「得分率」而非答對率，correct_rate 填得分率 0.55，另以擴充欄位 full_correct_rate 記錄全對率 T＝0.36；option_rates 為各選項被劃記的比例（可複選），加總 2.50 > 1 屬正常（validator 的加總 warning 由此而來）。",
       "第47、48、50題（混合題非選擇作答）與中譯英、作文：大考中心沒有公布逐題答對率／鑑別度，stats 為 null。stats-3.xls 只提供「第一題＝中譯英兩小題合計（滿分8分）」與「第二題＝英文作文（滿分20分）」的分數人數分布，因無法拆到小題，以擴充欄位放在大題層級 sections[s7].stats、sections[s8].stats（score_distribution：range／count／percent／cum_count／cum_percent，百分比已換成 0–1）；分母為報考人數 120,959（含缺考 2,790）。",
       "中譯英題號：題本將中譯英印為 1.、2.，作文沒有題號；schema 要求 no 為整數，故中譯英 no＝1、2，作文 no＝1，label 改為「中譯英1」「中譯英2」「英文作文」以免與詞彙題 1、2 重複。validator 的「題號重複 [1, 2]」warning 由此而來，屬預期。",
@@ -2237,8 +2237,10 @@
       "說明文字的冒號照題本原樣：多數為「︰」(U+FE30)，文意選填、第參部分與中譯英的說明為「：」(U+FF1A)。第49題中文作答說明依 Word 版寫作「（如A、B、C等）」「（多選題，4分）」，PDF 文字層在中英數字間多出的空格屬排版造成，未保留。",
       "原文保留：43–46 題組選文「Ample evidences from the Old Testament」（evidence 一般不加 s）、第42題「the Medieval Ages」、43–46 選文第五段破折號只有前半「maps—the use of GPS systems on our phones and in our cars, directions…」皆照題本原樣，未修正。粗體（exacerbated the situation、them、this、a blip）與斜體（dim sum、dakshina）不保留格式；題目未問畫底線的字，故無 <u> 標記。",
       "統計：第19題官方鑑別度為負（D＝−0.07，高分組 0.28 低於低分組 0.35，高分組有 51% 選 C（by then）），照官方數值填入。第35題低分組有 1% 未作答，因 option_rates 只記全體考生（T 列）且全體未答為 0%，未另列。",
-      "標註：sdgs 只在主題明確相關時填（犀牛 15、午睡與健康 3、混合題原住民聚落特色商店 8/11/12）；第38題 item_type 用 chart_reading（地圖判讀）；篇章結構第34題 clue 用 conclusion（結論句，以 thus 總結前文各因素）。"
+      "標註：sdgs 只在主題明確相關時填（犀牛 15、午睡與健康 3、混合題原住民聚落特色商店 8/11/12）；第38題 item_type 用 chart_reading（地圖判讀）；篇章結構第34題 clue 用 conclusion（結論句，以 thus 總結前文各因素）。",
+      "第49題：選項分析中全體考生未作答（未答）為 2%（高分組 0%、低分組 3%）；option_rates 只記選項比例，未另列未答。",
+      "查證（verifier）：選擇題 1–46、49 答案逐題對照 answer.pdf 影像全部相符；統計 1–46、49 的 P／Ph／Pl／D 與選項比例逐題對照 xls 全部相符（含「*」正確選項＝官方答案）；stats-3 兩題分數分布逐列相符。修正：(1) 第47、48題 stem 原本以題號「47-48 」開頭，已刪除，與第49、50題一致；(2) 第9題 key_phrase 的彎引號改為直引號「elbow one's way」，與 schema 範例一致以利跨年比對。其餘文字、選項、圖表描述、評分原則經逐字比對無誤。"
     ],
-    "verified_by": null
+    "verified_by": "verifier"
   }
 }

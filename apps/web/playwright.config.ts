@@ -5,8 +5,10 @@
  * （CI 的順序是 build → 煙霧測試；本機用根目錄的 `npm run test:e2e` 會自動先建置）。
  * 測建置產物而不是 dev server，是因為按需載入的 chunk、資產路徑這類問題只會在建置後出現。
  *
- * 桌機 1280×900、手機 390×844 各跑一次，沿用 Sekai Center 煙霧測試的標準
- * （docs/research/05-sekai-center-patterns.md §2.9）。
+ * 桌機 1280×900、手機 375×667 各跑一次，判斷標準沿用 Sekai Center 的煙霧測試
+ * （docs/research/05-sekai-center-patterns.md §2.9）。手機寬度比 Sekai 的 390 窄：375 是 iPhone SE 與
+ * 舊款 iPhone 的寬度，學生手上仍很常見；在 375 不溢出，390 以上自然也不會。高度用 667 是為了讓
+ * 「更多」面板在矮螢幕上也要能捲動到最後一項。
  */
 import { existsSync } from 'node:fs';
 import { chromium, defineConfig } from '@playwright/test';
@@ -53,7 +55,7 @@ export default defineConfig({
       name: 'mobile',
       use: {
         browserName: 'chromium',
-        viewport: { width: 390, height: 844 },
+        viewport: { width: 375, height: 667 },
         deviceScaleFactor: 3,
         isMobile: true,
         hasTouch: true,
