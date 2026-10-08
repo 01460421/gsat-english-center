@@ -1,0 +1,10 @@
+# 複製成 apps/api/.dev.vars 後填入本機開發用的值（.dev.vars 已列入 .gitignore，不會被提交）。
+# 正式環境不要用這個檔案，改用 `npx wrangler secret put <名稱>`。
+# 目前的骨架還沒有用到下列機密；先列出來，之後接 AI 與登入時才知道要準備哪些。
+ANTHROPIC_API_KEY=sk-ant-REPLACE_ME
+SESSION_SECRET=REPLACE_WITH_LONG_RANDOM_STRING
+GOOGLE_CLIENT_SECRET=REPLACE_ME
+
+# 選用：只在本機覆寫 wrangler.toml 的 ALLOWED_ORIGINS。經 Vite proxy 開發時不需要（同源）；
+# 只有讓本機頁面跨來源直連 http://127.0.0.1:8787 時才取消註解。
+# ALLOWED_ORIGINS=http://localhost:5173,http://127.0.0.1:5173

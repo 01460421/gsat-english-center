@@ -1,0 +1,11 @@
+{
+  // 瀏覽器端程式碼（src/）。設定檔與 Playwright 測試在 Node 執行，另見 tsconfig.node.json。
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "lib": ["ES2023", "DOM", "DOM.Iterable"],
+    "jsx": "react-jsx",
+    // vite/client：import.meta.env、靜態資源與 CSS 匯入的型別。不載入 node，避免在瀏覽器程式碼誤用 process 等全域。
+    "types": ["vite/client"]
+  },
+  "include": ["src"]
+}

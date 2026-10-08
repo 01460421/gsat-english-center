@@ -1,0 +1,615 @@
+# 03 大考中心《高中英文參考詞彙表》：版本、格式與結構化
+
+> 撰寫日期：2026-10-07。這份文件記錄詞彙表的來源與版本、原表格式、各級字數、解析方法與驗證結果，並提出單字模組的設計建議。
+> 產出檔：`data/vocab/ceec-wordlist.json`（由 `tools/parse_wordlist.py` 產生）。原始檔放在 `data/raw/vocab/`，這個目錄不進版本控制。
+> 來源代號（例如 [V111]）對應第 10 節的網址。標「本專案計算」的數字是腳本跑出來的結果，不是官方數字。
+> 2026-10-08 已做過一輪對抗式查證：JSON 用另一套解析器（poppler `pdftotext -raw`）全量重解析比對，所有引文回原檔核對，並修正和補充了幾處內容。查證紀錄見 §11。
+
+## 0. 重點摘要
+
+1. **目前適用版本只有一版**：《高中英文參考詞彙表（111 學年度起適用）》，民國 109 年 7 月公告。大考中心的詞彙表頁面只列這一份，日期是 109-07-31（2026-10-08 重新抓線上頁面，仍只有這 1 筆）[V111-page]。學測考試說明也寫「大學入學考試中心高中英文參考詞彙表（111 學年度起適用）於 109 年 7 月 31 日公告。」[spec115 p.2 註 3]
+2. **舊版是《91 參考詞彙表》**（2002-06-30，共 6,480 詞，每級 1,080 詞）。原檔還留在大考中心網站的 `/SourceUse/ce37/`。舊版考試說明引用的 `/Research/paper_doc/ce37/ce37.htm` 已經失效 [V91] [V91-abs]。
+3. **新版官方說法是「每級約 1,000 詞條、共約 6,000 詞條」**[V111 p.II]。本專案解析出**每級 1,002 筆、共 6,012 筆**。PDF 裡有「依級別排序」和「依字母排序」兩份排列，兩份逐筆交叉比對後 **6,012 筆的級別與詞類全部一致**，沒有任何一筆只出現在其中一份。
+4. **Level 3–5 共 3,006 筆**。依第一個詞類計：名詞 1,822（60.6%）、形容詞 616（20.5%）、動詞 514（17.1%）、副詞 39，其他 15。`pos` 有兩個以上標記的有 806 筆（26.8%），其中 31 筆是 `v./(n.)`，這裡的 `(n.)` 是 -ment 衍生名詞，不是同一個字兼當名詞。扣掉這 31 筆，真正兼有兩種以上詞類的是 775 筆（25.8%）（本專案計算）。
+5. **新舊版差異**（本專案計算）：新版 6,012 筆中有 5,747 筆在舊版找得到，新增 265 筆（4.4%），官方說法是「約有95%詞條保留自《91年版》，而新增詞條約占5%」[V111 p.III]。兩版都有的詞中，68.5% 級別不變。舊版第 5、6 級的字大量互換：舊 L5→新 L6 有 392 筆，舊 L6→新 L5 有 375 筆。
+6. **原表本身的異常**有兩處，都已經對照頁面影像確認：`calm v./adj./n` 的詞類少一個句點；`sportsman/sportswoman` 被排版從字中間斷行。舊版另有兩列的級別欄是空白（`express (2)`、`O.K./OK/okay`）。另外，舊版正表（4.pdf）和附錄一分級表（5.pdf）對 `detergent` 的級別不一致（L5 對 L6）。用附錄一補正後推算，舊版每級剛好 1,080 詞，原本「多 1 列」的差異也就解釋得通了（§2.2）。
+7. **著作權**：封面寫「僅供非營利目的使用，轉載請註明出處。若作為營利目的使用，應事前經由財團法人大學入學考試中心基金會書面同意授權。」[V111 封面]。App 若要收費，需要先取得大考中心的書面授權（見 §9.8）。
+
+---
+
+## 1. 版本與來源
+
+### 1.1 現行版：111 學年度起適用（108 參考詞彙表）
+
+| 項目 | 內容 | 來源 |
+|---|---|---|
+| 正式名稱 | 《高中英文參考詞彙表－111 學年度起適用－》，封面「中華民國 109 年 7 月」 | [V111 封面] |
+| 公告頁 | 「高中英文參考詞彙表」列表只有 1 筆：109-07-31「高中英文參考詞彙表(111學年度起適用)」 | [V111-page] |
+| 檔案 | PDF 共 116 頁，A4。HTTP `Last-Modified: Fri, 31 Jul 2020 07:51:46 GMT`。PDF 中繼資料：Creator「Acrobat PDFMaker 17 Word 版」，ModDate 2020-07-31 | 2026-10-07 下載實測 |
+| SHA-256 | `27b010f8230b2e8763653ddb35783fe9e0140c143b0040f13839046aebb2a126` | 本地 `data/raw/vocab/ceec-wordlist-111.pdf` |
+| 內文結構 | 編修說明（頁 I–VII）→「依級別排序」（印刷頁 1–51）→「依字母排序」（印刷頁 53–103）→ 附錄（頁 104） | [V111 目錄] |
+| 官方簡稱 | 《108參考詞彙表》或《108年版》 | [V111 p.II] |
+| 同內容的電子報 | 選才電子報第 312 期〈高中英文參考詞彙表（111學年度起適用）編修說明〉（109-08-17），文字與 PDF 編修說明相同 | [EP312] |
+| 適用考試 | 前言寫的是：「111學年度起，學科能力測驗英文考科（簡稱學測英文）與高中英語聽力測驗（簡稱英聽），即依據108學年度實施之…「英語文課綱」命題」，並說詞彙表「長期以來做為大學入學考試中心英文科相關測驗的命題參考資料之一」。原文沒有直接寫「本表適用於學測與英聽」，這是從前後文推論的；學測考試說明則明確引用本表 [spec115 p.2] | [V111 p.I] |
+| 官方對詞頻的但書 | 註 4：「詞彙頻率（frequency）代表該詞彙在使用上的頻率統計結果，未必代表該詞彙的學習難易度。」 | [V111 p.II 註 4] |
+
+**是否有更新的修訂版**：到 2026-10-07 為止，大考中心詞彙表頁面的年度篩選只有「109」一個選項，列表也只有上面那 1 筆 [V111-page]。2026-10-08 再抓一次線上頁面，結果一樣。115 學年度起適用的學測英文考試說明（113 年 7 月公告）仍然引用這一版 [spec115 p.2 註 3]。我們沒有找到任何勘誤或後續修訂的公告（未驗證是否存在未上網的勘誤）。
+
+### 1.2 舊版：91 參考詞彙表（2002）
+
+| 項目 | 內容 | 來源 |
+|---|---|---|
+| 目前可下載位置 | `https://www.ceec.edu.tw/SourceUse/ce37/ce37.htm`。頁面列出 8 項，**每一項都連到 PDF**（`1.pdf`–`8.pdf`；2026-10-08 實測 7.pdf、8.pdf 也回 200 `application/pdf`）：1 目錄、2 摘要、3 前言、4 高中英文參考詞彙表、5 附錄一 英文詞彙分級表、6 附錄二 英文詞類分類表、7 參與座談會英文老師名錄、8 回覆問卷學校及老師名錄。7、8 是人名清單，和詞彙無關，所以沒有下載（原稿寫「1–6 項有 PDF」，有誤，已更正） | [V91] |
+| 舊網址（已失效） | 102、107 學年度的考試說明註腳寫 `http://www.ceec.edu.tw/Research/paper_doc/ce37/ce37.htm`。2026-10-07 實測只會回到「Oops」錯誤頁 | [leg-gsat-102 註 2] [leg-gsat-107 註 1] |
+| 規模 | 摘要原文：「This English reference word list contains 6,480 words in American English…」「Appendix I classifies the 6,480 words into six levels, each level with 1,080 words」 | [V91-abs] |
+| 日期與版權 | 第 1 項（目錄）頁：「©財團法人大學入學考試中心基金會(民國九十一年六月三十日)」「College Entrance Examination Center, Taiwan (June 30, 2002)」「版權所有 不准翻印 (All rights reserved)」。摘要寫研究期間是「between September 1, 2000 and June 30, 2002」。（原稿把這段版權文字的出處標成摘要頁，有誤；實際在 1.pdf） | [V91-toc] [V91-abs] |
+| 原設計的適用範圍 | 「The words of levels 1-4 are supposed to be appropriate for SAET, and the words of levels 1-6, for DRET.」（SAET＝學測，DRET＝指考） | [V91-abs] |
+| 範圍但書 | 摘要：「本詞彙表僅供台灣高中英文教學及編製學科能力測驗與指定科目考試英文試卷參考之用，大學入學考試的英文詞彙範圍並不一定限於本英文參考詞彙表之內。」 | [V91-abs] |
+| 編製過程 | 前言：第一年先編「學科能力測驗英文參考詞彙表，共 4,320 個詞彙」，第二年擴大到 6,480 個；「全部六級之 6,480 個英文詞彙為指定科目考試之範圍，而其中第一至四級之 4,320 個詞彙為學科能力測驗範圍」。前言也引用 Cobuild 的詞頻統計，說「最初級之二千英文詞彙(大約等於本《高中英文參考詞彙表》之第一至二級詞彙)，其使用頻率佔所有英文詞彙使用量之 75%左右」 | [V91-pre] |
+| 附錄一各級標題 | 「LEVEL 1 (1,080 words)」…「LEVEL 6 (1,080 words)」 | [V91-app1] |
+| 本地檔案 | `data/raw/vocab/legacy-91/{1..6}.pdf`。4.pdf 的 SHA-256 為 `8bcfc733695c094569e2a845cabdab83dafdf8c282e38f112b4fe98a271f7b1b`。PDF 建立日期 2004-05-18 | 2026-10-07 下載 |
+
+**更早的字表**：ce37.htm 索引頁的說明文字（不是第 3 項「前言」PDF）列出大考中心更早的研究成果，包括黃自來等（民82）《高中英文5000基本單詞》、張武昌等（民87）《高中常用字彙表》、黃春騰等（民89）《字彙表》[V91]。學測 83–90 學年度的試題比《91 參考詞彙表》更早。這幾份字表我們沒有取得，也沒有找到線上版本（未驗證）。
+
+### 1.3 歷年考試說明怎麼引用詞彙表
+
+這張表可以用來判斷：分析某一年的考題時，應該拿哪一版字表、哪個級別範圍來比對。
+
+| 考試說明 | 詞彙範圍（原文摘錄） | 對應字表版本 | 來源 |
+|---|---|---|---|
+| 95 暫綱（98 學年度施測）學測、指考（96 年 9 月） | **完全沒有提到詞彙表，也沒有寫詞彙範圍**。全文只在測驗目標寫「高中常用實詞詞彙（content words）」；作文字數學測寫「約 100 至 120 個單詞（words）」，指考寫「約 120 至 150 個單詞」（2026-10-08 補查）。97-09-30 的修訂公告只改學測總說明、指考數學和公民與社會，沒有動到英文 | 未指定 | [leg-gsat-95] [leg-ast-95] [ks-rev97] |
+| 102 學年度起 學測（99 課綱） | 「詞彙範圍以高中英文課程常用 4500 個單詞為主（可參考大考中心高中英文參考詞彙表第一至四級）」 | 91 年版 | [leg-gsat-102] |
+| 102 學年度起 指考（99 課綱） | 「詞彙範圍不但涵蓋高中英文課程常用 4500 個單詞（可參考…第一至四級），並擴及高中常用 4500~7000 個單詞（可參考…第一至六級）」 | 91 年版 | [leg-ast-102] |
+| 107 學年度起 學測 | 「詞彙範圍以高中英文課程常用字詞為主，可參考大考中心高中英文參考詞彙表第一至五級」 | 91 年版 | [leg-gsat-107] |
+| 107 學年度起 指考 | 「詞彙範圍以高中英文課程常用字詞，可參考大考中心高中英文參考詞彙表第一至六級」 | 91 年版 | [leg-ast-107] |
+| 111 學年度起 學測 | 「詞彙範圍以高中英文常用 4,500 字詞為主，可參考大考中心高中英文參考詞彙表第一至第五級，為保留真實語言的使用，偶爾會有第六級（含）以上詞彙。」並有註 3「大學入學考試中心高中英文參考詞彙表（111 學年度起適用）於 109 年 7 月 31 日公告。」封面寫 108 年 9 月，但現行線上 PDF 是之後改版的：PDF 建立於 2020-07-31、修改於 2022-09-12，HTTP Last-Modified 2022-09-20，所以已經帶有註 3 | 111 年版 | [spec111] |
+| 115 學年度起 學測 | 文字和 111 版相同，也有同一個註 3（原稿寫成「115 版才加註 3」，有誤；兩版現行 PDF 都有）。公告說明還寫：「原考試說明於 108 年 9 月公告，因應高中參考詞彙表則於 109 年 7 月方公告，因此調整部分試題示例使符合現行之命題概念或命題原則。」 | 111 年版 | [spec115 p.2、公告說明] |
+| 115 學測實際命題 | 「整卷標的詞彙符合大考中心詞彙表一至五級字詞，且大多用字在四級以下」 | 111 年版 | [ep351-features] |
+| 115 學測中譯英 | 標的詞彙「大都為參考詞彙表四級內之字詞」 | 111 年版 | [ep351-scoring] |
+| 108 課綱課程手冊 4-V-1-2 | 「能拼寫高中階段基本常用字詞（參考大考中心公佈之「高中英文參考字彙表」第一至第四級詞彙）」。手冊出版於 107 年 12 月，當時指的是 91 年版 | 91 年版 | [S3]（印刷頁 p.109，見 01 文件） |
+
+**對分析歷屆考題的意義**：
+- 102、107 學年度起的學測與指考考試說明都指向 91 年版（註腳就是 ce37 網址）[leg-gsat-102] [leg-gsat-107]。
+- 91 年版完成於 2002-06-30 [V91-toc]。91 學年度學測在 2002 年 1 月舉行，早於字表完成。
+- 98 學年度起適用的 95 暫綱考試說明（96 年 9 月）**沒有引用任何詞彙表** [leg-gsat-95] [leg-ast-95]。大考中心考試說明列表上最早的就是這一份（96-10-05 公告、97-09-30 修訂），沒有更早的 [ks-list]，所以 92–97 學年度沒有可查的考試說明。
+- 不過 91 年版自己寫明是為「編製學科能力測驗與指定科目考試英文試卷參考之用」，學測範圍是第一至四級 [V91-abs] [V91-pre]。111 年版編修說明也說 91 年版「至今業已使用多年」[V111 p.I]。所以 92–110 學年度拿 91 年版來比對有根據；只是 92–101 學年度沒有考試說明逐年明文引用它（102 學年度起才在註腳寫出 ce37 網址）。
+- 學測的參考級別隨考試說明改變：102 起是第一至四級，107 起是第一至五級 [leg-gsat-102] [leg-gsat-107]。107 年版的公告頁同時寫到「民國107年開始…學科能力測驗…英文考科增加測驗範圍至第五學期」[ks-107]。兩件事應該有關，但公告沒有明講因果。
+- 學測 111–115 學年度參考的是 111 年版。
+
+所以做「歷屆出現頻率／重要度」時，應該同時記錄每個字在兩版的級別（§9.5）。
+
+---
+
+## 2. 新舊版差異
+
+### 2.1 官方說明（逐字摘錄）
+
+- 編修歷程：「本中心於104年…以《91參考詞彙表》的6,480詞條（entries）為基礎，完成5,280個單詞之參考詞彙表。107年4月教育部公告「108英語文課綱」後…酌予納入英語文課綱之參考字彙表（2,000字詞），重新編輯《高中英文參考詞彙表》…仍分為六級，每一級收錄約1,000詞條，六個級別共計約6,000詞條。」[V111 p.II] [EP312]
+- 篩選依據：「語料庫字表、專家編輯之字表、字典及其詞頻表、高中教科書與英語分級讀本語料、歷年學測與指考試題字表等五大類參考資料」；參考書目「共計約30餘種」[V111 p.I–II]
+- 刪除的類別：「《91參考詞彙表》中所含括之口語型詞彙（如：yummy）遂不予列入，另外，《91年版》列入之部分專有名詞（如：DVD/digital video disk），由於已不再時興；以及少數之縮寫字（如：km）、片語（如：according to）…於《108年版》皆不再列入。」[V111 p.II]
+- 新增的例子：「collaboration, compulsory, database, emission, forum, indigenous, legacy, orientation, scenario, striking等」；另外也舉了近年常見的「custody, icon, incredible, ongoing, online, portfolio, sensor, terrorism, venue, workout等」[V111 p.I–II]
+- 移到附錄：宗教名、國家名、數字、月份、季節等「另外表列於附錄」[V111 p.II]
+- 級別調整：「二個版本中之各級別詞彙差異並未過大，保留的詞條大致維持原《91年版》之前後級別，例如：《108年版》第一級包含《91年版》之第一、二、三級大部分詞彙，依此類推。《108年版》中約有95%詞條保留自《91年版》，而新增詞條約占5%。」[V111 p.II–III]
+
+### 2.2 本專案計算的差異
+
+執行 `python3 tools/parse_wordlist.py --legacy91 data/raw/vocab/legacy-91/4.pdf` 會重現下列數字。比對方式：新版每筆的主要詞形或任一變體，只要出現在舊版任一筆的詞形集合中，就算「舊版有」。舊版的同形異義編號 (1)(2) 會先拿掉；同形異義各筆級別不同時取最低級。
+
+**舊版解析結果**：正表（4.pdf）共 6,481 列。級別分布為 L1 1,079、L2 1,080、L3 1,080、L4 1,080、L5 1,081、L6 1,079，另有 2 列級別欄空白。官方聲明是 6,480 詞、每級 1,080 [V91-abs]。
+
+**差異原因（2026-10-08 查證）**：拿正表和附錄一「英文詞彙分級表」（5.pdf，依級別分頁列字）逐字對照，找到三處：
+
+| 條目 | 正表（4.pdf） | 附錄一（5.pdf） | 影響 |
+|---|---|---|---|
+| `detergent n.` | 級別 **5**（4.pdf 第 20 頁） | 列在 **LEVEL 6** 頁（5.pdf 第 49 頁） | 原表內部不一致，已看過兩頁的頁面影像確認。依附錄一算，L5 少 1、L6 多 1 |
+| `O.K./OK/okay` | 級別欄空白 | 列在 **LEVEL 1** | 依附錄一算，L1 多 1 |
+| `express (2) adj./adv./n.` | 級別欄空白，和 `express (1) v. 2` 分成兩列 | 附錄一只列一次 `express`（LEVEL 2），沒有 (1)(2) 編號 | 這一列就是多出來的第 6,481 列 |
+
+依附錄一補正後，L1–L6 剛好各 1,080 詞，合計 6,480，加上 `express (2)` 這一列就是 6,481 列，數字完全對得上。附錄一是用 pdfplumber 依欄位座標粗略切出來的（跨行的長條目會被切成兩段，所以各級切出的項數不是剛好 1,080），再和正表逐詞比對級別。扣掉跨行切割造成的假差異（例如 `ATM/automatic teller machine` 被切開，看起來像 machine 有 L4），真正級別不同的只有 detergent 和 O.K. 兩筆。所以「每級 1,080」是本次查證依這三筆推算的結果，不是附錄一逐筆精確計數。哪一份才是大考中心的本意（例如 detergent 到底是 5 級還是 6 級），原文沒有說明（未驗證）。
+
+用附錄一的級別重跑比對，只有下面「級別對照矩陣」的三格各差 1：舊 L1→新 L1 由 777 變 778（O.K.），舊 L5→新 L6 由 392 變 391，舊 L6→新 L6 由 408 變 409（detergent）。級別不變變成 3,938 ／ 5,747（68.5%），變高變成 972，變低仍是 837。下面兩張表保留腳本的原始輸出（以 4.pdf 為準）。
+
+| 指標 | 數字 |
+|---|---|
+| 新版條目 | 6,012 |
+| 其中在舊版找得到 | 5,747（95.6%） |
+| 新版新增（舊版沒有） | 265（4.4%）。新版級別分布：L1 18、L2 19、L3 5、L4 7、L5 101、L6 115 |
+| 舊版列在新版找不到對應 | 579。其中：數字、月份、星期、季節移到附錄 46；縮寫或多字詞（according to、ought to、used to、AI/…、DVD/…、ping-pong/table tennis 等）18；其他單字 515（舊級別 L5 175、L6 265、L1–L4 共 75） |
+| 兩版都有的詞，級別不變 | 3,936 ／ 5,746（68.5%）（另 1 筆舊版級別空白） |
+| 新版級別變低（變簡單） | 837 |
+| 新版級別變高（變難） | 973 |
+
+**級別對照矩陣**（列是舊版級別，欄是新版級別）：
+
+| 舊＼新 | L1 | L2 | L3 | L4 | L5 | L6 |
+|---|---:|---:|---:|---:|---:|---:|
+| L1 | **777** | 166 | 2 | 0 | 0 | 1 |
+| L2 | 189 | **626** | 201 | 5 | 0 | 1 |
+| L3 | 12 | 179 | **761** | 85 | 0 | 14 |
+| L4 | 4 | 12 | 32 | **873** | 35 | 71 |
+| L5 | 1 | 0 | 0 | 14 | **491** | 392 |
+| L6 | 0 | 0 | 1 | 18 | 375 | **408** |
+
+觀察（本專案計算，例子取自差異明細）：
+
+- 新版 L1 有 777 筆來自舊 L1、189 筆來自舊 L2、12 筆來自舊 L3，符合官方「第一級包含…第一、二、三級大部分詞彙」的說法。
+- 舊 L5 與舊 L6 大量互換。舊 L5→新 L6 的例子：abide、academy、accustom、acne、admiral、adolescence；舊 L6→新 L5 的例子：abnormal、abuse、accelerate、accessible、accommodate、activist。**這會直接影響「以級別估難度」的歷年比較**，分析 110 學年度以前的考題時必須用舊版級別。
+- 新版 L1–L2 的新增詞主要是課綱 2,000 字表中，舊版依編輯原則沒有收的字，例如 -ed／-ing 形容詞（bored、boring、excited、interested、surprised、tired）、-ly 副詞（finally、probably、really、usually）、online、classmate、headache。新版 L5–L6 的新增詞主要是學術或時事詞彙，例如 collaboration、emission、indigenous、infrastructure、sustainable、surveillance。
+- 被拿掉的低級字也不少，例如 candy、kitten、trousers、turkey、winner、yummy、grandson、granddaughter、chick。其中不少字其實在 108 課綱 2,000 字表內，見 §6.6。
+
+**比對方法的限制**：自動比對只看拼寫，不看詞義。同形異義、拼法合併（例如舊版 `movie/motion picture/film/cinema` 對新版 `movie/film`）可能造成少量誤配。已確認的兩個例子：
+
+- **march**：舊版有兩筆，`March/Mar. n. 1`（月份）和 `march v./n. 3`（行進）。比對時先轉小寫，同形異義又取最低級，所以新版 `march n./v. 3` 被算成「舊 L1→新 L3」。實際上這個字是 L3→L3（原稿寫「舊版 L1 的可能是月份」，查證後確定就是月份）。
+- **candy**：舊版是 `candy/sweet n. 1`。新版有 `sweet adj. 1`，比對時用任一詞形配對，這筆舊條目就被當成「新版有對應」，所以 **candy 不在 579 筆「找不到對應」裡**，雖然新版確實沒有 candy。
+
+上面的數字可以用來看趨勢，要引用個別字時請回原檔確認。
+
+### 2.3 格式差異（影響解析與資料模型）
+
+| 面向 | 91 年版 | 111 年版 |
+|---|---|---|
+| 排版 | 表格（詞彙／詞類／級別三欄，左右兩欄） | 三欄文字流，詞彙粗體、詞類斜體、級別數字 |
+| 同形異義 | 分列並編號，例如 `account (1) n. 3`、`account (2) v. 3`、`bank (1)`／`bank (2)` | 合併成一筆，例如 `account n./v. 2` |
+| 助動詞 | `v.(aux.)`，例如 `can (1) v.(aux.) 1` | `aux.`，例如 `can aux./n./v. 1` |
+| 多字詞 | 有，例如 `according to`、`ought to`、`ping-pong/table tennis`、縮寫全稱 | 沒有多字詞條（只有 `T-shirt` 帶連字號） |
+| 數字、月份等 | 在正表內 | 移到附錄，沒有級別 |
+
+---
+
+## 3. 原表格式說明（111 年版）
+
+### 3.1 版面
+
+- 「依級別排序」：每頁三欄，每一級從欄內標題「第一級」…「第六級」開始，條目只有「詞彙＋詞類」。依本專案解析，各級的印刷頁範圍是：L1 p.1–9、L2 p.9–17、L3 p.17–26、L4 p.26–34、L5 p.34–43、L6 p.43–51（級與級的交界頁兩級並存）。
+- 「依字母排序」：每頁三欄，每筆是「詞彙＋詞類＋級別數字」。官方說明的例子：「broadcast v./n. 3，表示 broadcast 一字可當動詞（v.）與名詞（n.），屬於第三級詞彙。」[V111 p.III]
+- 字型：詞彙本體用 Arial 粗體 12pt，詞類用 Times New Roman 斜體 11pt，級別用 Times New Roman 11pt，級別標題用標楷體。三欄左緣固定在 x≈63.8／229.9／396.0 pt。條目太長會換行，續行有懸掛縮排（以上為本專案以 pdfplumber 量測）。
+- 附錄（p.104）：Cardinal Numbers、Ordinal Numbers、Days of the Week、Months、Seasons、Countries and Areas、Continents、The Principal Oceans of the World、Religions、Parts of Speech。**附錄詞沒有級別**，所以沒有收進主 JSON [V111 p.104]。編輯原則（21）也寫明這些「另列於附錄，以供參考」[V111 p.V]。附錄的完整內容見 §6.5。
+
+### 3.2 編輯原則與標記法（依 [V111 p.III–V]，括號內是原則編號）
+
+| 標記 | 意義 | 例子 | JSON 處理 |
+|---|---|---|---|
+| `a/b`（15）（16）（17） | 斜線並列。可能是不同拼法、正式／非正式（原詞在前，非正式在後）、同義詞或性別對應。「斜線後之詞彙不再另外列舉」 | `bicycle/bike`、`railroad/railway`、`hero/heroine`、`advertise(ment)/ad` | `word`＝斜線前第一個形式；其餘放進 `variants`；`tags` 加 `slash-forms` |
+| `v./(n.)` 與 `(ment)`（10） | 動詞可加 -ment 變成名詞；若加 -ment 後拼法改變，就把整個字寫進括號；若加 -ment 後意義不同，則另列一筆 | `agree(ment) v./(n.)`、`argue(argument) v./(n.)`；`commit`、`commitment` 分列 | 括號展開成完整詞形放進 `variants`；`pos` 保留 `["v.", "(n.)"]`，其中 `(n.)` 指的是衍生詞 |
+| `(s)`（19） | 名詞通常以複數形出現 | `chopstick(s)`、`shoe(s)`、`wood(s)` | `variants` 放複數形；`tags` 加 `paren-plural` |
+| 多詞類（2）（3） | 同一個詞兼有多種詞類、意義相同時合併為一筆，「以最常用之詞類置於最前面」 | `after prep./conj./adv.`、`increase v./n.` | `pos` 保留原順序（第一個＝最常用） |
+| 代名詞括號 | 列出格變化 | `we (us, our, ours, ourselves) pron. 1` | `variants` 放格變化；`tags` 加 `pronoun-forms` |
+| 不收錄的衍生形式（4）–（9）（14） | 規則 -ly 副詞（意義不同才收，如 roughly、scarcely）、-ness 名詞、否定字首 in-/im-/ir-/il-/un-、non-（只收 nonsense、nonprofit）、-less 形容詞、re- 動詞、規則 -ing／-ed 形容詞（意義不同才收，如 promising、learned） | `happy` 有，`happiness`／`unhappy` 沒有 | 見 §9.3 |
+| 會收錄的衍生形式（11）（12）（13） | -er／-or／-ant 名詞、-ful 形容詞、-able／-ible／-iable 形容詞 | `respectable`、`respectful`、`admirable` | 各自是一筆，有自己的級別 |
+| 複合詞（18） | 儘量不收，除非無法從組成字推知意義 | `greenhouse`、`homework`、`household` | — |
+| 專有名詞（20） | 不收 | — | — |
+| 不收感嘆詞（1） | 「不包含感嘆詞（interjection）如： gee, oh, ouch, uh-huh, oops 等」 | — | — |
+| 拼法（1） | 「以美式拼法為主」 | — | — |
+
+**詞類縮寫**：原則（1）列出 n.、v.、adj.、adv.、art.、pron.、prep.、conj. 八種 [V111 p.III]。實際表中另外用了 `aux.`（共 10 筆，例如 `be v./aux.`、`can aux./n./v.`、`dare aux./v. 3`）。附錄的 Parts of Speech 也列了「auxiliary/aux.」[V111 p.104]。
+
+**特殊字元**（本專案計算）：彎引號 `’`（`o’clock`、`madam/ma’am`）；重音字母（`café/cafe`、`fiancé/fiance`）；句點（`Mr./Mister`、`Mrs.`、`Ms.`、`O.K./OK/okay`、`am/a.m.`、`pm/p.m.`）；大寫開頭（`I`、`Internet`、`Celsius`、`Fahrenheit`、`T-shirt`，以及變體裡的 `Coke`（`cola/Coke`）、`TV`（`television/TV`）、`Mister`、`OK`）。
+
+---
+
+## 4. 各級字數
+
+| 級別 | 官方聲明 [V111 p.II] | 依字母排序（本專案解析） | 依級別排序（本專案解析） | 兩份交叉比對 |
+|---|---|---:|---:|---|
+| 1 | 約 1,000 | 1,002 | 1,002 | 一致 |
+| 2 | 約 1,000 | 1,002 | 1,002 | 一致 |
+| 3 | 約 1,000 | 1,002 | 1,002 | 一致 |
+| 4 | 約 1,000 | 1,002 | 1,002 | 一致 |
+| 5 | 約 1,000 | 1,002 | 1,002 | 一致 |
+| 6 | 約 1,000 | 1,002 | 1,002 | 一致 |
+| 合計 | 約 6,000（「共計收錄約6,000個英文詞條」[V111 p.III]） | **6,012** | **6,012** | 6,012 筆級別與詞類全部一致 |
+
+補充數字（本專案計算）：
+
+- 不重複的主要詞形有 6,003 個，因為有 9 個字各出現在兩筆（§6.3）。主要詞形加上所有變體，不分大小寫共 6,191 個不重複詞形；區分大小寫的話是 6,192 個，差別在 `Internet/internet`。
+- 學測考試說明的「4,500 字詞」對應「第一至第五級」[spec115 p.2]。但 L1–L5 實際上有 5,010 筆，兩個數字並不相等。考試說明沒有解釋差異，App 一律以第 1–5 級的 5,010 筆為準。
+
+---
+
+## 5. 解析方法
+
+### 5.1 為什麼不用純文字
+
+`pdftotext -layout` 會把三欄排在同一行，換行的條目也會被拆散，例如 `sportsman/sportswoma` 和 `n n. 6` 分在兩行，`they (them, their,` 的下半段跑到別處。所以這次改用 **pdfplumber 的字元座標與字型**，依字型判斷每個 token 的角色：
+
+| 字型 | 角色 |
+|---|---|
+| `Arial-BoldMT` 12pt | 詞彙本體（含括號、斜線、逗號、句點） |
+| `TimesNewRomanPS-ItalicMT` 11pt | 詞類（包含 `(n.)`） |
+| `TimesNewRomanPSMT` 11pt 的單一數字 1–6 | 級別（只在依字母排序出現） |
+| `DFKaiShu` 12pt「第X級」 | 依級別排序的級別標題 |
+| `Arial-Black` 12pt 單一字母 | 依字母排序的字母分隔 |
+| 其他字型的 `/` | 有 1 個斜線用了 PMingLiU（印刷頁 9），依位置歸入詞彙或詞類 |
+
+### 5.2 流程（`tools/parse_wordlist.py`）
+
+1. 依頁首「依級別排序」「依字母排序」「附錄」切出兩段（PDF index 12–63 與 64–114；印刷頁碼＝index − 11）。頁首（top < 55pt）和頁碼（top ≥ 790pt）不讀。
+2. 用 x0 把每個 token 分到三欄（欄界 225／391pt），欄內依 top 分行（容差 4pt）。
+3. 切條目：
+   - 依字母排序：一筆條目以級別數字結尾。如果在級別數字出現之前又遇到從欄左緣開始的粗體行，記為異常。
+   - 依級別排序：行首 x 貼齊欄左緣（容差 2pt）且第一個 token 是粗體，就是新條目；有縮排的行是續行；遇到「第X級」標題就切換目前級別。
+4. 還原原文：同一行內 token 間距大於 1pt 補空白。跨行時：前一段以 `/` 結尾就直接接上；前後都是粗體字母，視為排版從字中間斷行，直接接上並記錄異常；其他情況補一個空白。
+5. 拆欄位：見 §3.2 的「JSON 處理」欄。括號內容的前三個字母和詞幹相同時，視為完整詞形（`argue(argument)` → `argument`）；否則視為字尾並接在詞幹後（`agree(ment)` → `agreement`、`capital(ism)` → `capitalism`、`wood(s)` → `woods`）。
+6. 交叉比對：以「詞彙原文＋詞類原文」為鍵，逐筆比對兩份排序的級別。只要有任何不一致，或有條目只出現在一邊，結束碼就是 1。
+7. 輸出：依原表字母順序，一筆一行的 JSON 陣列（方便 git diff）。重複執行兩次，輸出的 SHA-256 相同（`7f92bb90c878dea1df3971674e557cbcfed1803974c47e1feb2085cd6e9f320d`，845,117 bytes）。
+
+執行方式：
+
+```bash
+python3 tools/parse_wordlist.py                         # 產生 data/vocab/ceec-wordlist.json
+python3 tools/parse_wordlist.py --sample 30 --seed 115  # 加印 30 筆隨機抽樣
+python3 tools/parse_wordlist.py --legacy91 data/raw/vocab/legacy-91/4.pdf  # 加做新舊版差異
+```
+
+只依賴 Python 標準庫和 pdfplumber（本機版本 0.11.10）。整份 PDF 約 20 秒跑完。
+
+### 5.3 JSON 格式
+
+```json
+{"word": "advertise", "level": 3, "pos": ["v.", "(n.)"], "variants": ["advertisement", "ad"],
+ "raw": "advertise(ment)/ad v./(n.) 3", "pages": {"alpha": 53, "level": 18}, "tags": ["paren-ment", "slash-forms"]}
+```
+
+| 欄位 | 說明 |
+|---|---|
+| `word` | 主要詞形，也就是斜線前、括號外的第一個形式。**不是唯一鍵**，見 §6.3 |
+| `level` | 1–6，取自依字母排序的級別數字；已和依級別排序逐筆核對一致 |
+| `pos` | 詞類陣列，照原表順序與寫法，例如 `["v.", "(n.)"]`。唯一的修正是 `calm` 原表漏掉的句點（§6.1） |
+| `variants` | 其他形式：括號展開形式在前，斜線後的形式在後，再來是代名詞格變化 |
+| `raw` | 依字母排序中該條目的原文（詞彙 詞類 級別），排版換行已還原 |
+| `pages` | `alpha`＝依字母排序的印刷頁碼，`level`＝依級別排序的印刷頁碼，方便回 PDF 核對 |
+| `tags` | 條目型態：`slash-forms` 78、`paren-ment` 60、`paren-plural` 22、`pronoun-forms` 7、`paren-suffix` 1（capital(ism)）、`paren-full-form` 1（argue(argument)） |
+
+### 5.4 驗證結果
+
+| 檢查 | 結果 |
+|---|---|
+| `python3 -m json.tool data/vocab/ceec-wordlist.json` | 通過 |
+| 各級字數與官方聲明比對 | 官方只寫「約 1,000／約 6,000」；解析結果每級 1,002、共 6,012，與官方說法一致 |
+| 兩種排序交叉比對（獨立的兩段版面） | 6,012／6,012 一致；級別不一致 0 筆；只出現在一邊 0 筆 |
+| 用 poppler `pdftotext`（和 pdfplumber 是不同的解析器）逐筆搜尋 `raw` | 6,001 筆原文可直接找到。另外 11 筆是跨行條目（afterward/afterwards、anywhere/anyplace、discourage(ment)、everyone/everybody、hippopotamus/hippo、mankind/humankind、she (…)、someone/somebody、spacecraft/spaceship、sportsman/sportswoman、they (…)），pdftotext 把它們的續行放到別處，人工核對後確認是 pdftotext 的問題，不是我們解析錯 |
+| 隨機抽 30 筆（`--sample 30 --seed 115`）回 PDF 頁面影像核對 | 30／30 相符。做法是把每筆在兩份排序中的位置裁成圖片，逐一目視核對級別數字、詞類，以及依級別排序的所在頁 |
+| **獨立重解析（2026-10-08 查證）**：不用 pdfplumber、不用 `parse_wordlist.py`，改用 poppler `pdftotext -raw`（照內容串流順序輸出，三欄會依序讀出），另寫一段腳本切條目 | 依字母排序：切出 6,012 筆，各級 1,002。和 JSON 的 `raw` 逐筆依序比對（詞彙＋詞類＋級別），**6,012 筆全部相同**，唯一差別是 7 筆跨行條目的空白（例如 `chairperson/chair/ chairman/ chairwoman`、`sportsman/sportswoma n`），JSON 都已正確接回。依級別排序：切出 6,012 筆，（級別, 詞彙＋詞類）多重集合與 JSON 完全相同 |
+| 欄位一致性（2026-10-08 查證） | 6,012 筆的 `pos` 用 `/` 接起來都等於 `raw` 裡的詞類（只有 `calm` 例外，是刻意補的句點）；`level` 都等於 `raw` 最後的數字；`word` 都是 `raw` 的開頭 |
+| 頁碼（2026-10-08 查證） | 6,012 筆的詞頭都能在 `pages.alpha`、`pages.level` 指的印刷頁上找到（印刷頁＝PDF 第 N 頁 − 12），0 筆不符 |
+| 原表錯誤目視（2026-10-08 查證） | 重新裁圖確認：依字母 p.59 是 `calm v./adj./n 2`（n 後面沒有句點）；p.95 是 `sportsman/sportswoma` 換行 `n n. 6` |
+
+隨機抽樣 30 筆明細（頁碼為印刷頁碼）：
+
+| 詞 | 級別 | 詞類 | 依字母頁 | 依級別頁 | 核對 |
+|---|---:|---|---:|---:|---|
+| genuine | 4 | adj. | 72 | 30 | 相符 |
+| distant | 2 | adj. | 66 | 11 | 相符 |
+| cleaner | 3 | n. | 60 | 19 | 相符 |
+| regional | 3 | adj. | 90 | 23 | 相符 |
+| classic | 2 | adj./n. | 60 | 10 | 相符 |
+| indoors | 3 | adv. | 76 | 21 | 相符 |
+| respective | 6 | adj. | 90 | 49 | 相符 |
+| grandfather | 1 | n. | 73 | 4 | 相符 |
+| train | 1 | n./v. | 99 | 8 | 相符 |
+| suggestion | 4 | n. | 97 | 34 | 相符 |
+| giant | 1 | adj./n. | 72 | 3 | 相符 |
+| tuna | 5 | n. | 100 | 42 | 相符 |
+| innocence | 4 | n. | 76 | 30 | 相符 |
+| pin | 1 | n./v. | 86 | 6 | 相符 |
+| berry | 3 | n. | 57 | 18 | 相符 |
+| reside | 6 | v. | 90 | 49 | 相符 |
+| retain | 4 | v. | 90 | 33 | 相符 |
+| context | 4 | n. | 62 | 28 | 相符 |
+| courtesy | 4 | n. | 63 | 28 | 相符 |
+| atom | 4 | n. | 55 | 26 | 相符 |
+| gigantic | 4 | adj. | 72 | 30 | 相符 |
+| deer | 2 | n. | 64 | 11 | 相符 |
+| plea | 5 | n. | 86 | 39 | 相符 |
+| shock | 2 | n./v. | 93 | 16 | 相符 |
+| exterior | 5 | n./adj. | 69 | 37 | 相符 |
+| custody | 5 | n. | 64 | 36 | 相符 |
+| determination | 4 | n. | 65 | 28 | 相符 |
+| control | 2 | n./v. | 63 | 11 | 相符 |
+| realistic | 4 | adj. | 89 | 32 | 相符 |
+| elder | 2 | n./adj. | 68 | 12 | 相符 |
+
+---
+
+## 6. 已知異常與注意事項
+
+### 6.1 原表錯誤（已看過頁面影像確認）
+
+| 條目 | 位置 | 狀況 | 處理 |
+|---|---|---|---|
+| `calm v./adj./n 2` | 依級別 p.10、依字母 p.59 | 兩處的最後一個詞類都少了句點 | `pos` 補成 `["v.", "adj.", "n."]`；`raw` 保留原文 `calm v./adj./n 2` |
+| `sportsman/sportswoman n. 6` | 依級別 p.50、依字母 p.95 | 排版在 `sportswoma` 和 `n` 之間斷行，沒有連字號 | 接回 `sportswoman` |
+
+### 6.2 舊版（91 年版 4.pdf）
+
+- `express (2) adj./adv./n.`（p.25）和 `O.K./OK/okay adj./adv./n./v.`（p.46）的級別欄是空白，已看過頁面影像確認。
+- 解析出 6,481 列，比官方聲明的 6,480 多 1 列。2026-10-08 查證時已找到原因：多出的是 `express (2)` 這一列；另外 `detergent` 在正表和附錄一的級別不一致（詳見 §2.2）。
+- 部分詞類欄跨兩行且漏斜線，例如 `as` 寫成「adv./conj./prep.」換行「pron.」。腳本會補上斜線。
+
+### 6.3 同一個字出現在兩筆（不能用 `word` 當主鍵）
+
+有 9 個字各出現在兩筆（本專案計算）。其中三組級別不同，用粗體標出：
+
+| 字 | 條目一 | 條目二 |
+|---|---|---|
+| backward | `backward adj. 2` | `backward/backwards adv. 2` |
+| **capital** | `capital n./adj. 2` | `capital(ism) n. 4` |
+| content | `content n./adj. 4` | `content(ment) v./(n.) 4` |
+| downward | `downward adj. 6` | `downward/downwards adv. 6` |
+| forward | `forward adj./n./v. 2` | `forward/forwards adv. 2` |
+| **measure** | `measure(ment) v./(n.) 2` | `measure(s) n. 4` |
+| **medium** | `medium adj. 1` | `medium/media n. 3` |
+| outward | `outward adj. 6` | `outward/outwards adv. 6` |
+| upward | `upward adj. 6` | `upward/upwards adv. 6` |
+
+**注意 capital、measure 這兩組**：`capital(ism) n. 4` 和 `measure(s) n. 4` 的 `word` 依解析規則取括號外的詞幹，所以是 `capital`、`measure`。但從括號規則（原則 10、19）和詞類來看，這兩筆的 L4 條目指的其實是 **capitalism**（資本主義）和 **measures**（常以複數出現的「措施」），不是 L2 的 capital、measure。所以「capital 有兩個級別」是解析慣例造成的表象。介面顯示和出題時，這兩筆建議改用 `variants[0]`（`capitalism`、`measures`）當顯示詞形；JSON 保持腳本輸出不變，因為 `tools/exam_stats.py`、`tools/build_vocab.py` 都直接讀這個 JSON。
+
+另外有幾個**詞形落在多筆**的情況，用詞形查詢時要回傳多筆：`chair`（`chair n./v. 1`，也是 `chairperson/chair/chairman/chairwoman n. 6` 的變體）、`mine`（`mine n./v. 1`，也是 `I (me, my, mine, myself)` 的格變化）、`media`（`media n. 1`，也是 `medium/media n. 3` 的變體）、`refreshment`（`refresh(ment)` 的衍生，也是 `refreshment(s) n. 6` 的主要詞形）。
+
+### 6.4 主要詞形的取捨
+
+- `am/a.m.` 和 `pm/p.m.` 依規則取斜線前的形式，`word` 會是 `am`、`pm`。`am` 容易和 be 動詞的 am 混淆（be 動詞沒有獨立條目，只有 `be v./aux. 1`）。介面顯示時建議用 `a.m.`／`p.m.`。
+- `O.K./OK/okay` 的 `word` 是 `O.K.`。
+- 彎引號（`o’clock`、`ma’am`）和重音字母（`café`、`fiancé`）都照原表保留。建索引時請另外做一份正規化鍵（轉成 ASCII 撇號、去掉重音、轉小寫）。
+
+### 6.5 附錄詞沒有級別
+
+數字、星期、月份、季節、國家、洲、海洋、宗教、詞類名稱都放在附錄（p.104），**沒有級別，所以不在主 JSON 裡**。附錄裡的 Countries and Areas、Religions、Parts of Speech 三個清單最後都寫「etc.」，代表並未列完（原稿只提到國家清單，已補）[V111 p.104]。建議 App 另外建一個「附錄詞」集合，當作第 1 級等級的基礎詞（見 §9.1）。
+
+`parse_wordlist.py` 沒有輸出附錄詞，所以這裡把 p.104 的內容照原文抄錄（2026-10-08 以 `pdftotext -layout` 抽出後逐項對照），之後建「附錄詞」集合時可以直接用：
+
+| 類別 | 原文內容 |
+|---|---|
+| Cardinal Numbers | one, two, three, four, five, six, seven, eight, nine, ten, eleven, twelve, thirteen, fourteen, fifteen, sixteen, seventeen, eighteen, nineteen, twenty, twenty-one, twenty-two, twenty-three, twenty-four, twenty-five, thirty, thirty-one, thirty-two, thirty-three, thirty-four, forty, fifty, sixty, seventy, eighty, ninety, one hundred, one thousand, one million, one billion |
+| Ordinal Numbers | first, second, third, fourth, fifth, sixth, seventh, eighth, ninth, tenth, eleventh, twelfth, thirteenth, fourteenth, fifteenth, sixteenth, seventeenth, eighteenth, nineteenth, twentieth, twenty-first, twenty-second, twenty-third, twenty-fourth, twenty-fifth, thirtieth, fortieth, fiftieth, sixtieth, seventieth, eightieth, ninetieth, hundredth, thousandth, millionth, billionth |
+| Days of the Week | Monday/Mon., Tuesday/Tue., Wednesday/Wed., Thursday/Thu., Friday/Fri., Saturday/Sat., Sunday/Sun. |
+| Months | January/Jan., February/Feb., March/Mar., April/Apr., May, June/Jun., July/Jul., August/Aug., September/Sep., October/Oct., November/Nov., December/Dec. |
+| Seasons | spring, summer, autumn/fall, winter |
+| Countries and Areas | Argentina, Australia, Brazil, Canada, China, France, Germany, India, Indonesia, Italy, Japan, Malaysia, Mexico, (the) Philippines, Republic of China, Russia, Saudi Arabia, Singapore, South Africa, South Korea, Spain, Taiwan, Thailand, Turkey, (the) United Kingdom, (the) United States, Vietnam, etc. |
+| Continents | Africa, Antarctica, Asia, Australia, Europe, North America, South America |
+| The Principal Oceans of the World | (the) Arctic Ocean, (the) Atlantic Ocean, (the) Indian Ocean, (the) Pacific Ocean |
+| Religions | Buddhism/Buddhist, Catholicism/Catholic, Christianity/Christian, Eastern Orthodoxy/Eastern Orthodox, Hinduism/Hindu, Islam/Muslim, Judaism/Jewish, Taoism/Taoist, etc. |
+| Parts of Speech | adjective/adj., adverb/adv., article/art., auxiliary/aux., conjunction/conj., noun/n., preposition/prep., pronoun/pron., verb/v., etc. |
+
+使用時要注意的地方：
+
+- **附錄詞和正表會重疊**（本專案計算）：`spring n./v. 1`、`fall n./v. 1`、`first n./adv./adj. 1`、`second adj./n./adv. 1`、`third adj./n./adv. 1`、`hundred n./adj. 1`、`thousand n./adj. 1`、`million n. 1`、`billion n. 2`、`article n. 2` 都在正表、有級別。`summer`、`winter`、`autumn`、`one`…`ninety`、`fourth` 以後的序數、星期、月份、國名、宗教名則只在附錄。正表雖然也有 `march`、`may`、`china`，但意思不同，見下一點。建「附錄詞」集合時，正表已有的字要以正表的級別為準，不要重複建條目。
+- 同形不同義：正表有 `march n./v. 3`（行進），附錄有月份 `March/Mar.`；正表有 `may aux. 1`，附錄有月份 `May`；正表有 `china n. 2`（瓷器），附錄有國名 `China`。比對考題時要分大小寫或看詞義。
+- 附錄的 `Turkey`（國家）和火雞 turkey 不同；火雞 turkey 不在新版正表（§6.6）。
+- 附錄的星期縮寫是 `Tue.`、`Thu.`，舊版是 `Tuesday/Tues./Tue.`、`Thursday/Thurs./Thur.`；月份縮寫新版用 `Sep.`，舊版用 `September/Sept.`。
+
+### 6.6 和 108 課綱 2,000 字表的覆蓋落差（初步比對，未逐筆人工核對）
+
+官方說新版「酌予納入英語文課綱之參考字彙表（2,000字詞）」[V111 p.II]。我們用一段臨時腳本，拿 108 課綱附錄五（表一 基本 1,200 字＋表二 其他常用 800 字，課綱印刷頁 p.54 起）[S1 附錄五] 和新版詞彙表做初步比對。這段腳本沒有納入 `parse_wordlist.py`。2026-10-08 查證時另寫一段腳本重算（從 `data/raw/curriculum/curriculum-layout.txt` 切項目，再查 JSON 的 `word`＋`variants`，括號內的替代形式也算），得到 2,005 項，其中 1,876 項找得到、129 項找不到。多出來的 1 項是 `a/an`：重算的腳本沒有拆斜線，所以沒找到。修正這點後兩次結果一致。結果如下：
+
+- 抽出約 2,005 個項目，其中約 1,877 個在詞彙表找得到。級別分布：L1 1,000、L2 658、L3 185、L4 20、L5 6、L6 8。
+- 約 128 個找不到：
+  - 46 個是數字、月份、星期、季節（在附錄）。
+  - 11 個是專有名詞或縮寫（America、Taiwan、Christmas、MRT…）。
+  - 34 個是多字詞或帶連字號（a few、living room、post office、ice cream…）。
+  - 37 個是單字。其中一部分是編輯原則排除的形式：un-／im- 否定（unhappy、impossible、impolite）、-less（careless）、-ed／-ing（crowded、pleased、freezing、beginning）、情態動詞的過去式（could、should）、感嘆詞（hi、hey、yummy）。另一部分是真的沒收的單字，例如 **candy、kitten、trousers、turkey、winner、birthday、classroom、grandson、granddaughter、armchair、overpass、snowman、softball、wok**。重算時也看到 **actually**（-ly 副詞，原則 4）、**everywhere**、**oneself**、**goodness**、**childlike** 不在詞彙表。`sports`、`stairs` 則因為詞彙表只收單數 `sport`、`stair` 而沒有對上，屬於比對方式的問題。
+- 課綱寫成 `father (dad, daddy)`、`mother (mom, mommy)`，但新版詞彙表只有 `father`、`mother`，**沒有 dad、mom**。
+
+結論：只用詞彙表 L1–2 當「基礎層」，會漏掉一些國中常用字。
+
+---
+
+## 7. Level 3–5 字數與詞性分布（本專案計算）
+
+### 7.1 總覽
+
+| 範圍 | 筆數 | 名詞 | 形容詞 | 動詞 | 副詞 | 介系詞 | 其他 | 兼多詞類 |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| **L3–5 合計** | **3,006** | 1,822（60.6%） | 616（20.5%） | 514（17.1%） | 39（1.3%） | 11 | 4（conj. 2、aux. 1、pron. 1） | 806（26.8%） |
+| L3 | 1,002 | 631 | 193 | 152 | 20 | 4 | 2（aux. 1、pron. 1） | 288 |
+| L4 | 1,002 | 582 | 222 | 184 | 10 | 4 | 0 | 240 |
+| L5 | 1,002 | 609 | 201 | 178 | 9 | 3 | 2（conj.） | 278 |
+| 對照：L1–2 | 2,004 | 1,166 | 354 | 293 | 95 | 39 | 57（pron. 29、conj. 19、aux. 7、art. 2） | 809 |
+| 對照：L6 | 1,002 | 581 | 205 | 202 | 12 | 2 | 0 | 240 |
+
+上表的詞類依每筆**第一個（最常用的）詞類**計。「兼多詞類」是 `pos` 有兩個以上標記的筆數，**包含 `v./(n.)` 的 -ment 條目**（L3 8、L4 19、L5 4，共 31 筆）。如果不把 `(n.)` 算成另一個詞類，L3–5 真正兼有多種詞類的是 775 筆（L3 280、L4 221、L5 274），L1–2 是 790 筆，L6 是 229 筆（2026-10-08 查證補充）。如果改成「任一詞類」來算，L3–5 的名詞用法有 2,079 筆（其中 2,048 筆標 `n.`，31 筆是 `(n.)` 衍生名詞）、動詞 1,018、形容詞 683、副詞 66。
+
+### 7.2 L3–5 常見詞類組合（前 10）
+
+| 組合 | 筆數 |
+|---|---:|
+| n. | 1,310 |
+| adj. | 486 |
+| n./v. | 456 |
+| v. | 361 |
+| v./n. | 110 |
+| adj./n. | 75 |
+| n./adj. | 44 |
+| adv. | 33 |
+| v./(n.) | 31 |
+| adj./v. | 15 |
+
+### 7.3 L3–5 的特殊條目
+
+- `-ment` 衍生（`v./(n.)`）：L3 8、L4 19、L5 4，共 31 筆。
+- 斜線並列：L3 9、L4 3、L5 1。
+- `(s)` 常用複數：L3 3、L4 4、L5 2。
+- 平均詞長：L1 5.02、L2 6.17、L3 6.22、L4 7.68、L5 7.53、L6 7.57 個字元。L4 起明顯變長；L4、L5、L6 三級的平均詞長差不多，所以 L5 和 L6 的分界不是由字長決定。
+- **詞族常常跨級**，例如：`admire v. 3`、`admirable adj. 4`、`admiration n. 4`；`accurate adj. 3`、`accuracy n. 4`；`accuse v. 4`、`accusation n. 6`；`analyze v. 4`、`analysis n. 4`、`analyst n. 5`、`analytical adj. 6`；`adolescent adj./n. 5`、`adolescence n. 6`。也有整個詞族同級的，例如 `compete v. 3` 以外的 competition、competitive、competitor 都在 L4；`economy`、`economic`、`economical`、`economist`、`economics` 全在 L4。
+
+---
+
+## 8. 和其他文件的關係
+
+- 01 文件已指出「課綱沒有附高中字表」，高中字詞只寫成 Ac-Ⅴ-3「字頻最高的4,500字詞」[S1 p.17]，所以 App 的高中字表以本詞彙表為準。
+- 02 文件的學測規格整理中，難度設計（例如「穩定基礎」以 1–4 級為主）也引用了本詞彙表的級別。兩份文件使用的級別數字都以本文件的 JSON 為準。
+- 04 文件 §2.2 整理了 Cambridge Dictionary 的使用條件：只能外連，不能爬取、快取或用 iframe 嵌入。§9.4 的連結格式要和它一起看。
+- **下游程式直接讀 `ceec-wordlist.json`**（2026-10-08 查證時確認）：
+  - `tools/build_vocab.py` 用它產生 `data/vocab/lexicon.json`、`data/vocab/forms-index.json`（詞形→條目反查表，含 ECDICT 屈折形，共 17,162 個詞形）和詞族。說明見 `data/vocab/lexicon-report.md`。
+  - `tools/exam_stats.py` 用它統計每個條目在歷屆試題的出現次數（分正解、選項、選文），輸出 `data/exams/stats/word-frequency.json`。這就是 §9.5「歷屆出現次數」的實作。
+  - 所以 JSON 的欄位結構（7 個欄位、陣列順序）不要手動更動。要調整顯示詞形（例如 §6.3 的 capitalism），請在下游處理。
+
+---
+
+## 9. 對單字模組的建議
+
+### 9.1 分層
+
+| 層 | 內容 | 筆數 | 定位 | 依據 |
+|---|---|---:|---|---|
+| 基礎 | L1–2，加上附錄詞（數字、月份等），再補上 108 課綱 2,000 字表中詞彙表沒收的單字（§6.6） | 2,004＋附錄＋約數十字 | 快速檢測、補洞；不排進每日主進度 | 課綱附錄五 [S1]；§6.5、§6.6 |
+| **主力** | **L3–5** | **3,006** | 每日新字的主要來源 | 學測範圍是第 1–5 級 [spec115 p.2] |
+| 挑戰 | L6 | 1,002 | 只要求認得（閱讀時看得懂），不要求拼寫；也可當「超越頂標」難度的額外字 | 「偶爾會有第六級（含）以上詞彙」[spec115 p.2] |
+
+**主力層內部再分「會用」和「認得」兩種精熟度**：
+
+- L3–4 要求**會拼、會用**。依據是課程手冊 4-V-1-2 把拼寫範圍定在「第一至第四級」[S3]（當時指 91 年版），以及 115 中譯英的標的詞彙「大都為參考詞彙表四級內之字詞」[ep351-scoring]。
+- L5 以**認得**為主（閱讀理解、選項辨識）。
+- 115 試題特色也建議「單字教學應多聚焦四級以下詞彙」，並指出難度「並非基於詞彙級別及句構難度，而是對閱讀理解及篇章文意的掌握」[ep351-features]。所以單字模組不應該只追求字量，**每個字都要搭配情境例句和搭配詞練習**。
+
+時程試算（純算術）：L3–5 共 3,006 筆，每天 10 個新字約需 301 天；每天 15 個約需 201 天。
+
+### 9.2 資料模型
+
+- **主鍵用條目，不用字**：`entry_id` 用穩定的序號，或用 `{word}|{pos原文}|{level}`。§6.3 的 9 個字證明 `word` 不唯一。
+- **另建詞形索引表**，例如 `vocab_form(form_norm, entry_id, form_type)`。`form_type` 可以是 `lemma`、`spelling`（拼法變體）、`informal`（非正式）、`gender`（性別對應）、`synonym`（同義並列）、`derived_ment`、`plural_usual`、`pronoun_case`。原表的斜線並沒有區分這幾種關係（原則 15–17），所以 78 筆 `slash-forms` 需要人工或 Claude 批次標註後，再由人工抽查。
+- `pos` 保留原順序。第一個詞類是「最常用」[V111 p.III 原則 (2)]，出題時可以依此決定預設詞類。
+- 保留 `raw` 和 `pages`，畫面上可以提供「回原表第 N 頁查看」。
+- D1 的資料量很小（6,012 筆條目，加上約 6,200 個詞形）。可以一次匯入，以 `level`、`form_norm` 建索引。
+
+### 9.3 詞性變化與衍生字
+
+1. **屈折變化（複數、時態、比較級）**：原表都不列。要對應考題原文時，必須先做詞形還原（lemmatization），不規則形式（went、children、better）要另外查表。後續的 `tools/build_vocab.py` 已用 ECDICT 的詞形欄位產生 `data/vocab/forms-index.json` 當反查表（§8），`tools/exam_stats.py` 會優先用它。表外的詞形要用哪一個 lemmatizer 套件，還沒有評估（未驗證）。
+2. **原表刻意不列的規則衍生字**（原則 4–9、14）：-ly、-ness、un-／in-／im-／ir-／il-、non-、-less、re-，以及規則的 -ing／-ed 形容詞。建議：
+   - 掛在**原字的詞族**底下，標成「衍生（原表未列）」，**級別沿用原字**，在 UI 上和原表條目分開顯示。
+   - 衍生形式可以先由 Claude 產生，再用詞典確認確實存在（例如用 Cambridge 查得到）才收錄，避免造出不存在的字（例如 happy → happiness／unhappy 可以收）。
+   - 出題時可以把這些當「構詞」題型：課程手冊 4-V-1-1 提到用「字首、字根、字尾等構詞規則」來拼寫字詞 [S3]。
+   - **分量要節制**：115 試題特色的教學建議寫「教師應避免僅提供中英對應字詞，及補充過多詞類變化與延伸字詞，而是透過上下語境，引導學生認識字詞的搭配與用法」，並建議「找出該字詞常見的搭配語」「從前後文句中找出相關線索，例如同義、近義、反義等相關字詞」[ep351-features]。所以衍生字和詞類變化應該放在學習卡的次要區塊，主畫面以情境例句、搭配詞和上下文推測為主。
+3. **原表有收、而且常常跨級的衍生字**（§7.3）：建立 `family_id`，把同詞族串起來，一起出現在學習卡上。複習時可以出「同詞族換詞性」題，例如 accurate→accuracy。
+4. **`v./(n.)` 條目**：`(n.)` 屬於 `variants` 裡的 -ment 形式，級別和原字相同。
+5. **`(s)` 條目**：教學時以複數形為主，例如 `chopsticks`、`congratulations`。
+
+### 9.4 多義、同義、片語、例句
+
+詞彙表只有「詞彙＋詞類＋級別」，**沒有字義、片語、例句**。原表也不收片語（官方舉的例子是 `according to`）[V111 p.II]。這些層要另外建：
+
+- 字義與多義：以 Claude 產生繁中釋義，按考題語境排序義項。學測常考的「非第一義」（例如 *address* 當動詞「處理」）應該從考題語料統計，不要只靠模型判斷。
+- 同義詞、近義詞、片語、搭配詞：從歷屆試題語料抽出實際用例，用 Claude 整理後人工抽查；限制只能從詞彙表 L1–6 中挑同義詞，讓練習留在高中範圍內。
+- Cambridge 辭典連結（2026-10-07 實測回應 200）：
+  - 英英：`https://dictionary.cambridge.org/dictionary/english/{slug}`
+  - 英漢（繁體）：`https://dictionary.cambridge.org/dictionary/english-chinese-traditional/{slug}`
+  - slug 規則（實測）：轉小寫、撇號改成連字號（`o-clock`）、去掉重音（`cafe`）、去掉句點（`mr`、`ok`）、`T-shirt` 寫成 `t-shirt`。
+  - 複數形會自動導向原形，例如 `chopsticks` 會 302 到 `chopstick?q=chopsticks`；帶重音的 `café` 也會 302 到 `cafe`。所以直接用 `word` 產生連結大多可行。上線前仍應對全部 6,191 個詞形跑一次連結檢查。
+  - **連結檢查不能只看 HTTP 狀態碼**（2026-10-08 實測）：查不到的字不會回 404。例如 `english/zzzqqqx` 和 `english/p-m` 會轉到辭典首頁 `…/dictionary/english/`，最後回 200；`english/a-m` 會 302 到不相干的 `m-and-a`，`english-chinese-traditional/a-m` 則轉到 `i-m-a-dutchman`。檢查時要跟著轉址走，確認最後網址的 slug 和預期詞形一致（或頁面 `<title>` 是該字），不一致的才另外處理。`pm` 會開到 P.M. 條目；`am` 開到的頁面同時列出 be 動詞的 am、a.m. 和 AM（調幅），a.m. 不是第一個義項，介面上最好提示使用者往下看。
+  - 使用條件（只外連、開新分頁、不爬取不嵌入）見 04 文件 §2.2。
+
+### 9.5 重要度分析
+
+建議把重要度拆成以下特徵，**不要只用級別**：
+
+1. 現行級別（111 年版，1–6）。
+2. 舊版級別（91 年版；新增詞沒有舊版級別），用來分析 110 學年度以前的考題。舊 L5／L6 大量互換（§2.2），同一個字在兩個時期的「難度標籤」可能不同。
+3. 歷屆出現次數。依考試（學測／指考）、年度、題型（詞彙題、綜合測驗、文意選填、篇章結構、閱讀、混合題、翻譯、作文）分開統計，並區分「出現在選項」「是正解」「只出現在文章」。
+4. 時間加權：111 學年度以後（108 課綱）的權重較高。
+5. 「舊版有、新版刪除」的字（例如 §2.2 的 579 筆）在舊考題出現時，標成「已不在現行詞彙表」，不排進主力層。注意 579 筆是自動比對的結果，會漏掉 `candy` 這類被斜線配對掩蓋的字（§2.2），所以最好用「考題詞形查不到 111 年版任何條目」來判定，不要只靠這份清單。
+6. 舊版級別有內部矛盾時（例如 `detergent` 在 4.pdf 是 5 級、附錄一是 6 級，§2.2），兩個值都保留並加註，不要靜默擇一。
+
+解讀時的三個但書：
+
+- 級別主要依詞頻排，但大考中心自己註明「詞彙頻率…未必代表該詞彙的學習難易度」[V111 p.II 註 4]。
+- 考試用字不限於詞彙表：91 年版摘要寫「大學入學考試的英文詞彙範圍並不一定限於本英文參考詞彙表之內」[V91-abs]，111 起的考試說明也說「偶爾會有第六級（含）以上詞彙」[spec115 p.2]。所以要另外統計「表外字」的出現次數，不能直接丟掉。
+- 115 試題特色指出，難度「並非基於詞彙級別及句構難度，而是對閱讀理解及篇章文意的掌握」[ep351-features]。級別只是重要度的一個特徵。
+
+### 9.6 測驗型態與級別搭配（初步）
+
+- 詞彙題（單題四選一）：正解和干擾選項取同一級、同詞類。考試說明的測驗目標一是評量「高中常用實詞詞彙（content words）的構詞、語意、字詞搭配（collocation）」（見 01 文件 §5.2）。可以先依級別和詞類組卷，再讓 Claude 檢查是否只有一個正解。
+- 拼字題、中譯英：限 L1–4。
+- 認讀題（看英選中、例句填空）：L3–6 都可用。
+
+### 9.7 資料維護
+
+- 詞彙表只有一版（§1.1），但腳本可以重跑。之後如果大考中心公告新版，只要更新 `--pdf`，再看交叉比對的結束碼和異常清單即可。
+- 建議在 CI 加一步 `python3 tools/parse_wordlist.py --quiet && git diff --exit-code data/vocab/ceec-wordlist.json`，確保 JSON 一定是由腳本產生。前提是 CI 環境有原始 PDF；PDF 不進版控，可以在 CI 裡重新下載。
+
+### 9.8 著作權
+
+- 現行版封面原文：「著作權屬財團法人大學入學考試中心基金會所有，僅供非營利目的使用，轉載請註明出處。若作為營利目的使用，應事前經由財團法人大學入學考試中心基金會書面同意授權。」[V111 封面]
+- 91 年版：「版權所有 不准翻印 (All rights reserved)」，出處是第 1 項目錄頁，不是摘要（原稿標錯，已更正）[V91-toc]。我們只拿它做差異統計，不收進產品資料。
+- 大考中心試題與網站內容的著作權分析（著作權法第 9 條等）見 04 文件 §4。
+- 建議：
+  1. App 內和 repo 的 README 都要註明「詞彙與級別取自大學入學考試中心《高中英文參考詞彙表（111 學年度起適用）》」，並附上公告頁連結。
+  2. **只要 App 有付費功能，就應該先向大考中心申請書面授權**。
+  3. 把 `ceec-wordlist.json`（完整字表加級別）放在**公開** GitHub repo，算不算「非營利轉載」，請使用者自行判斷，或洽詢大考中心（未驗證）。比較保守的做法是 repo 設為私有，或公開 repo 只放腳本，JSON 由 CI 產生後直接匯入 D1。
+
+---
+
+## 10. 來源
+
+- **[V111]** 大學入學考試中心，《高中英文參考詞彙表－111 學年度起適用－》（中華民國 109 年 7 月）。<https://www.ceec.edu.tw/files/file_pool/1/0k213571061045122620/%e9%ab%98%e4%b8%ad%e8%8b%b1%e6%96%87%e5%8f%83%e8%80%83%e8%a9%9e%e5%bd%99%e8%a1%a8%28111%e5%ad%b8%e5%b9%b4%e5%ba%a6%e8%b5%b7%e9%81%a9%e7%94%a8%29.pdf>（本地 `data/raw/vocab/ceec-wordlist-111.pdf`；文中「p.」為印刷頁碼，羅馬數字為編修說明頁碼）
+- **[V111-page]** 大考中心「高中英文參考詞彙表」公告列表頁：<https://www.ceec.edu.tw/xmdoc?xsmsid=0K213553204833715309>（本地 `data/raw/vocab/list.html`）
+- **[EP312]** 陳浩然、游春琪、林秀慧、彭怡寧，〈高中英文參考詞彙表（111學年度起適用）編修說明〉，選才電子報第 312 期（109-08-17）。<https://www.ceec.edu.tw/xcepaper/cont?xsmsid=0J066588036013658199&qunit=0J066616104134302815&sid=0K227548677326460907>（本地 `data/raw/vocab/epaper_wordlist_111.html`）
+- **[V91]** 大考中心〈高中英文參考詞彙表〉（91 年版）索引頁：<https://www.ceec.edu.tw/SourceUse/ce37/ce37.htm>（本地 `data/raw/vocab/legacy-91/ce37.htm`）
+- **[V91-toc]** 同上，第 1 項「目錄」（含版權頁文字與日期）：<https://www.ceec.edu.tw/SourceUse/ce37/1.pdf>（本地 `data/raw/vocab/legacy-91/1.pdf`）
+- **[V91-abs]** 同上，第 2 項「摘要」：<https://www.ceec.edu.tw/SourceUse/ce37/2.pdf>
+- **[V91-pre]** 同上，第 3 項「前言」：<https://www.ceec.edu.tw/SourceUse/ce37/3.pdf>（本地 `data/raw/vocab/legacy-91/3.pdf`）
+- **[V91-list]** 同上，第 4 項「高中英文參考詞彙表」（依字母，含詞類與級別；差異比對用）：<https://www.ceec.edu.tw/SourceUse/ce37/4.pdf>
+- **[V91-app1]** 同上，第 5 項「附錄一：英文詞彙分級表」：<https://www.ceec.edu.tw/SourceUse/ce37/5.pdf>
+- **[spec115]** 大考中心，《學科能力測驗英文考科考試說明－115 學年度起適用－》（113 年 07 月）。<https://www.ceec.edu.tw/files/file_pool/1/0P091472305863258925/01_115%E5%AD%B8%E5%B9%B4%E5%BA%A6%E8%B5%B7%E9%81%A9%E7%94%A8%E5%AD%B8%E6%B8%AC%E8%8B%B1%E6%96%87%E8%80%83%E7%A7%91%E8%80%83%E8%A9%A6%E8%AA%AA%E6%98%8E.pdf>
+- **[spec111]** 大考中心，《學科能力測驗英文考科考試說明－111 學年度起適用－》（108 年 9 月）。<https://www.ceec.edu.tw/files/file_pool/1/0M263605645292734329/111%E5%AD%B8%E5%B9%B4%E5%BA%A6%E8%B5%B7%E9%81%A9%E7%94%A8%E5%AD%B8%E6%B8%AC%E8%8B%B1%E6%96%87%E8%80%83%E7%A7%91%E8%80%83%E8%A9%A6%E8%AA%AA%E6%98%8E.pdf>
+- **[leg-gsat-95]** 大考中心，《學科能力測驗英文考科考試說明》（中華民國九十六年九月；95 暫綱，98 年施測）。<https://www.ceec.edu.tw/files/file_pool/1/0J052527726150560462/02-95%E5%AD%B8%E6%B8%AC%E8%8B%B1%E6%96%87%E8%80%83%E8%A9%A6%E8%AA%AA%E6%98%8E_%E5%AE%9A%E7%A8%BF_.pdf>（本地 `data/raw/vocab/verify/gsat95_eng_spec.pdf`，2026-10-08 下載，SHA-256 `184596289ed2b55e750c4ea9c4cae2948bb5f16044c1ed73e0b034b117fd5f33`）
+- **[leg-ast-95]** 大考中心，《指定科目考試英文考科考試說明》（中華民國九十六年九月；95 暫綱）。<https://www.ceec.edu.tw/files/file_pool/1/0J052543439644685307/02-95%E6%8C%87%E8%80%83%E8%8B%B1%E6%96%87%E8%80%83%E8%A9%A6%E8%AA%AA%E6%98%8E_%E5%AE%9A%E7%A8%BF_.pdf>（本地 `data/raw/vocab/verify/ast95_eng_spec.pdf`，SHA-256 `da56465c46b7d2746c7a067570e667b58f8d943e84a472ffc5b5f4c52889d69c`）
+- **[ks-list]** 大考中心「學科能力測驗 考試說明」公告列表（年度篩選只有 108、105、104、102、100、99、97、96）：<https://www.ceec.edu.tw/xmdoc?xsmsid=0J018585845010094026>（本地 `data/raw/spec/gsat_kaoshishuoming.html`）；其中 95 課綱公告頁：<https://www.ceec.edu.tw/xmdoc/cont?xsmsid=0J018585845010094026&sid=0J052497432777706815>（本地 `data/raw/vocab/verify/ks95.html`）
+- **[ks-rev97]** 大考中心〈95課綱(98年施測)考試說明修訂公告〉（97-09-30）：<https://www.ceec.edu.tw/files/file_pool/1/0j052573208185999261/970930%e8%80%83%e8%a9%a6%e8%aa%aa%e6%98%8e%e4%bf%ae%e6%ad%a3.pdf>（本地 `data/raw/vocab/verify/rev970930.pdf`）
+- **[ks-107]** 大考中心〈107年起施測之學科能力測驗暨指定科目考試國文考科（含國寫）、英文考科考試說明公告〉（105-09-30）：<https://www.ceec.edu.tw/xmdoc/cont?xsmsid=0J018585845010094026&sid=0J052602649957008833>（本地 `data/raw/spec/kaoshishuoming_107.html`）
+- **[leg-gsat-102]** 大考中心，102 學年度起學測英文考科考試說明（適用於 99 課綱）。<https://www.ceec.edu.tw/files/file_pool/1/0J052612403508121253/02-102%E5%AD%B8%E6%B8%AC%E8%8B%B1%E6%96%87%E8%80%83%E8%A9%A6%E8%AA%AA%E6%98%8E_%E5%AE%9A%E7%A8%BF_.pdf>
+- **[leg-ast-102]** 大考中心，102 學年度起指考英文考科考試說明。<https://www.ceec.edu.tw/files/file_pool/1/0J052612403964252236/02-102%E6%8C%87%E8%80%83%E8%8B%B1%E6%96%87%E8%80%83%E8%A9%A6%E8%AA%AA%E6%98%8E_%E5%AE%9A%E7%A8%BF_.pdf>
+- **[leg-gsat-107]** 大考中心，107 學年度起學測英文考科考試說明。<https://www.ceec.edu.tw/files/file_pool/1/0J052605777209194600/107%E5%AD%B8%E6%B8%AC%E8%8B%B1%E6%96%87%E8%80%83%E8%A9%A6%E8%AA%AA%E6%98%8E%E5%AE%9A%E7%A8%BF.pdf>
+- **[leg-ast-107]** 大考中心，107 學年度起指考英文考科考試說明。<https://www.ceec.edu.tw/files/file_pool/1/0J052605777021346555/107%E6%8C%87%E8%80%83%E8%8B%B1%E6%96%87%E8%80%83%E8%A9%A6%E8%AA%AA%E6%98%8E%E5%AE%9A%E7%A8%BF.pdf>
+- **[ep351-features]** 選才電子報〈115學年度學科能力測驗試題特色－【英文】〉（第 351 期）。<https://www.ceec.edu.tw/xcepaper/cont?xsmsid=0J066588036013658199&qunit=0Q105367191322447606&sid=0Q105583094870257539>
+- **[ep351-scoring]** 選才電子報〈115學年度學科能力測驗非選擇題評分原則說明－【英文】〉。<https://www.ceec.edu.tw/xcepaper/cont?xsmsid=0J066588036013658199&qunit=0Q105367598596417147&sid=0Q111569514236767793>
+- **[S1]** 國家教育研究院，《十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校 語文領域-英語文》（107 年 4 月），附錄五「參考字彙表（2,000 字）」。<https://www.naer.edu.tw/upload/1/16/doc/812/%28%E7%99%BC%E5%B8%83%E7%89%88%29%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E5%AD%B8%E6%A0%A1-%E8%AA%9E%E6%96%87%E9%A0%98%E5%9F%9F-%E8%8B%B1%E8%AA%9E%E6%96%87%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81.pdf>
+- **[S3]** 國家教育研究院，《語文領域-英語文課程手冊》（107 年 12 月），學習表現 4-Ⅴ-1 重點解析 4-V-1-1、4-V-1-2。<https://www.naer.edu.tw/upload/1/16/doc/2075/%E8%AA%9E%E6%96%87%E9%A0%98%E5%9F%9F-%E8%8B%B1%E8%AA%9E%E6%96%87%E8%AA%B2%E7%A8%8B%E6%89%8B%E5%86%8A.pdf>
+- Cambridge Dictionary（連結格式實測）：<https://dictionary.cambridge.org/dictionary/english/abandon>、<https://dictionary.cambridge.org/dictionary/english-chinese-traditional/abandon>。轉址行為（2026-10-08 實測）：<https://dictionary.cambridge.org/dictionary/english/a-m>（→ `m-and-a`）、<https://dictionary.cambridge.org/dictionary/english/zzzqqqx>（→ 辭典首頁）、<https://dictionary.cambridge.org/dictionary/english/am>
+- **[lexicon-report]** 本專案 `data/vocab/lexicon-report.md`（`tools/build_vocab.py build` 產生）；下游統計 `tools/exam_stats.py`。
+
+---
+
+## 11. 查證紀錄（2026-10-08）
+
+這一節記錄對抗式查證時做了什麼、改了什麼。`ceec-wordlist.json` 經查證**內容正確，沒有修改**（SHA-256 仍是 `7f92bb90…e320d`）。
+
+**獨立驗證（都通過）**
+
+- `python3 -m json.tool` 可解析；6,012 筆、7 個欄位一致；各級 1,002 筆。
+- 原始檔 SHA-256 和 §1.1、§1.2 記載的相同。
+- 用 poppler `pdftotext -raw` 另寫解析器全量重解析，兩份排序都和 JSON 完全一致（§5.4）。
+- `calm`、`sportsman/sportswoman` 兩處原表錯誤重新裁圖目視確認。
+- §0、§4、§7 的統計數字（3,006 筆、詞類分布、6,003 個不重複詞頭、5,010 筆 L1–5、平均詞長、tags 計數、詞族例子）逐項重算，結果相同。
+- §2.2 新舊版差異（5,747／265／579、46／18／515、級別矩陣、例字）重跑後相同。
+- §6.6 課綱 2,000 字比對用另一段腳本重算，結果一致。
+- 所有引文回 PDF 或 HTML 原檔逐字核對；§10 的網址 2026-10-08 全部回 200。
+- 線上詞彙表頁面 2026-10-08 仍只有 109-07-31 那 1 筆。
+
+**更正**
+
+1. ce37 索引頁 8 項都有 PDF，不是只有 1–6 項（§1.2）。
+2. 91 年版「June 30, 2002」「All rights reserved」的出處是 1.pdf 目錄頁，不是 2.pdf 摘要（§1.2、§9.8）。
+3. 111 學年度考試說明的現行 PDF 也有註 3，不是 115 版才加（§1.3）。
+4. ce37 的更早字表清單出自索引頁說明文字，不是「前言」（§1.2）。
+5. 兼多詞類 806 筆包含 31 筆 `v./(n.)`；嚴格計算是 775 筆（§0、§7.1）。
+6. 6,191 個詞形是不分大小寫的數字（§4）。
+7. march 的誤配從「可能是月份」改成確定的說明；另外補上 candy 被斜線配對掩蓋的例子（§2.2）。
+
+**補充**
+
+1. 舊版 6,481 列對 6,480 詞的差異已經查明：`detergent` 在正表和附錄一級別不一致，`O.K./OK/okay` 在附錄一是 L1，`express (2)` 是多出的一列（§2.2）。
+2. 95 暫綱（98 學年度施測）考試說明沒有引用詞彙表（§1.3）。
+3. 91 年版的範圍但書、4,320 詞學測表、L1–2 約佔 75% 用量的說法（§1.2）；111 年版的詞頻但書（§1.1）。
+4. 附錄 p.104 全文抄錄，以及和正表重疊、同形不同義的提醒（§6.5）。
+5. `capital(ism)`、`measure(s)` 的 L4 條目實際上是 capitalism、measures（§6.3）。
+6. Cambridge 查不到的字會轉址而不是回 404，連結檢查的方法要跟著改（§9.4）。
+7. 115 試題特色對「詞類變化與延伸字詞」的教學提醒（§9.3），以及重要度分析的三個但書（§9.5）。
+8. 下游 `build_vocab.py`、`exam_stats.py` 直接讀 JSON，所以欄位結構不能隨意改（§8）。
+
+**仍未驗證**
+
+- 92–97 學年度沒有可查的考試說明；98–101 學年度的考試說明沒有引用詞彙表。這些年度的考題用 91 年版比對，依據是字表自己的用途聲明，而不是考試說明。
+- 學測 83–91 學年度用的更早字表（黃自來民 82、張武昌民 87、黃春騰民 89）沒有取得。
+- detergent 到底是 5 級還是 6 級，大考中心沒有說明；附錄一只做了粗略的全量切分，沒有精確計數每級 1,080。
+- 111 年版是否有沒上網的勘誤。
+- 把完整 JSON 放在公開 repo 算不算「非營利轉載」。

@@ -1,0 +1,26 @@
+{
+  "name": "@gsat/api",
+  "version": "0.1.0",
+  "private": true,
+  "description": "學測英文中心後端：Cloudflare Worker（Hono）＋ D1",
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "build": "wrangler deploy --dry-run --outdir dist",
+    "deploy": "wrangler deploy",
+    "typecheck": "tsc -p tsconfig.json",
+    "test": "vitest run",
+    "db:migrations:create": "wrangler d1 migrations create gsat-english",
+    "db:migrate:local": "wrangler d1 migrations apply gsat-english --local",
+    "db:migrate:remote": "wrangler d1 migrations apply gsat-english --remote"
+  },
+  "dependencies": {
+    "@gsat/shared": "*",
+    "hono": "^4.13.13"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^5.20261008.1",
+    "vitest": "^5.0.3",
+    "wrangler": "4.148.0"
+  }
+}

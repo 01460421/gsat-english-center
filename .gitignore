@@ -1,3 +1,23 @@
 data/raw/
 node_modules/
 .DS_Store
+__pycache__/
+*.pyc
+
+# 建置產物（Vite 輸出、wrangler 的打包結果與本機 D1／KV 模擬資料）
+dist/
+.wrangler/
+*.tsbuildinfo
+
+# 機密：wrangler 本機開發的 .dev.vars 與各種 .env 一律不進版控（Cloudflare 文件要求，見 docs/research/05 §3.5）。
+# 範例檔只放變數名稱與假值，所以例外放行。
+.dev.vars*
+!.dev.vars.example
+.env*
+!.env.example
+
+# Playwright 測試輸出
+playwright-report/
+test-results/
+blob-report/
+playwright/.cache/

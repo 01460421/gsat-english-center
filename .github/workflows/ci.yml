@@ -1,0 +1,96 @@
+# CI：每個 PR 與 push 到 main 都會跑，不需要任何 secrets。
+#
+# 分成兩個 job：
+#   app    前端與 Worker 的型別檢查、單元測試（含 Worker 的 CORS／Origin 安全測試）、建置、Playwright 煙霧測試。
+#          `npm test` 不讀 data/（讀 data/ 的測試放在 packages/shared 的 vitest data 專案）；
+#          例外是建置：apps/web 的 prebuild（scripts/build-data.mjs）會把 data/vocab、data/exams 轉成前端資料檔，
+#          資料不符合前端契約時「建置」這一步會失敗，但排在它前面的型別檢查與單元測試結果不受影響。
+#   exams  data/ 的檢查：tools/validate_exam.py（gsat-exam/v1 格式）與 `npm run test:data`
+#          （實際 JSON 能不能安全地當成 @gsat/shared 的 TypeScript 型別使用）。
+# 分開的理由：題庫資料由另一條流程陸續寫入，資料有錯不該蓋掉程式碼的檢查結果，反之亦然
+# （沿用 Sekai Center「失敗隔離」的做法，見 docs/research/05-sekai-center-patterns.md §2.7）。
+# Worker 的安全測試放在每個 PR 都跑，而不是只在部署時跑（05 文件 §3.5 第 6 點）。
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  app:
+    name: 型別檢查、測試、建置、煙霧測試
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: 安裝套件（依 package-lock.json）
+        run: npm ci
+
+      - name: 型別檢查
+        run: npm run typecheck
+
+      - name: 單元測試
+        run: npm test
+
+      # 建置前端（Vite）並用 wrangler 打包 Worker（--dry-run，不會部署）。
+      - name: 建置
+        run: npm run build
+
+      # 本機開發環境可能有預裝的 Chromium（見 apps/web/playwright.config.ts）；CI 上照 Playwright 版本安裝。
+      - name: 安裝 Playwright 的 Chromium
+        working-directory: apps/web
+        run: npx playwright install --with-deps chromium
+
+      # 測的是上一步建置好的 apps/web/dist；後端用 page.route 假造，不需要啟動 wrangler。
+      - name: 煙霧測試
+        run: npm run test:e2e -w @gsat/web
+
+      - name: 上傳 Playwright 報告
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: playwright-report
+          path: apps/web/playwright-report/
+          retention-days: 7
+
+  exams:
+    name: 題庫 JSON 檢查
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+
+      # 只用 Python 標準函式庫，ubuntu-latest 內建的 python3 就夠。
+      # data/exams/parsed/ 沒有任何檔案時，檢查工具會印「沒有找到要檢查的檔案」並以 0 結束，不會讓 CI 失敗；
+      # 有檔案時，任何一份出現 error 就失敗（warning 不影響結果）。
+      - name: 檢查 data/exams/parsed/*.json（validate_exam.py）
+        run: python3 tools/validate_exam.py --all
+
+      - uses: actions/setup-node@v7
+        if: ${{ !cancelled() }}
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: 安裝套件（依 package-lock.json）
+        if: ${{ !cancelled() }}
+        run: npm ci
+
+      # 上一步失敗也照跑（!cancelled()）：兩種檢查抓的問題不同，一次看到全部比修一個跑一次快。
+      - name: 檢查資料符合 @gsat/shared 的型別（npm run test:data）
+        if: ${{ !cancelled() }}
+        run: npm run test:data

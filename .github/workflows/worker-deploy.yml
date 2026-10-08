@@ -1,0 +1,116 @@
+# 把 apps/api 部署到 Cloudflare Workers（沿用 Sekai Center 的 worker-deploy 做法）。
+# 觸發：main 上 apps/api 或 packages/shared 有變動時自動跑；也可以在 Actions 頁手動按「Run workflow」。
+#
+# 一次性設定（repo → Settings → Secrets and variables → Actions → New repository secret）：
+#   CLOUDFLARE_API_TOKEN   Cloudflare → My Profile → API Tokens → Create Token → 範本「Edit Cloudflare Workers」，
+#                          再加上 Account 權限「D1: Edit」（第一次部署要建立資料庫、之後要套用遷移）。
+#   CLOUDFLARE_ACCOUNT_ID  Cloudflare 儀表板 → Workers & Pages 右側欄的 Account ID。
+# 還沒設定時這個 workflow 只印出提示並略過，不會失敗：後端要等 AI 批改與登入那一批才用得到，
+# 在那之前 main 不該因為缺設定而一直紅。
+# Worker 自己的機密（ANTHROPIC_API_KEY、SESSION_SECRET、GOOGLE_CLIENT_SECRET）用 wrangler secret put 存在
+# Cloudflare，不放進 GitHub；部署不會動到它們。
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'apps/api/**'
+      - 'packages/shared/**'
+      - '.github/workflows/worker-deploy.yml'
+
+permissions:
+  contents: read
+
+# 同一時間只跑一個部署，後到的排隊、不取消前一個，免得遷移套用到一半被砍掉。
+concurrency:
+  group: worker-deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+    steps:
+      - name: 確認已設定 Cloudflare 金鑰
+        id: creds
+        run: |
+          if [ -z "$CLOUDFLARE_API_TOKEN" ] || [ -z "$CLOUDFLARE_ACCOUNT_ID" ]; then
+            echo "::notice::還沒設定 CLOUDFLARE_API_TOKEN／CLOUDFLARE_ACCOUNT_ID（見本檔開頭說明），這次略過部署。"
+            echo "ok=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "ok=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/checkout@v7
+        if: steps.creds.outputs.ok == 'true'
+
+      - uses: actions/setup-node@v7
+        if: steps.creds.outputs.ok == 'true'
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: 安裝套件
+        if: steps.creds.outputs.ok == 'true'
+        run: npm ci
+
+      # 部署前再跑一次 Worker 的型別檢查與測試（含 CORS／Origin 安全測試），壞掉的版本不上線。
+      - name: 部署前檢查
+        if: steps.creds.outputs.ok == 'true'
+        run: |
+          npm run typecheck -w @gsat/api
+          npm test -w @gsat/api
+
+      # wrangler.toml 裡的 database_id 是占位字串。這一步找出（或第一次建立）名為 gsat-english 的 D1，
+      # 只在 runner 上把 id 填進 wrangler.toml，不提交回 repo：id 不是機密，但讓 repo 保持與帳號無關，
+      # 換帳號或重建資料庫時不必改程式碼。
+      - name: 準備 D1 資料庫
+        if: steps.creds.outputs.ok == 'true'
+        working-directory: apps/api
+        run: |
+          id=$(npx wrangler d1 list --json | node -e '
+            let s = ""; process.stdin.on("data", d => s += d).on("end", () => {
+              const db = JSON.parse(s).find(d => d.name === "gsat-english");
+              process.stdout.write(db ? db.uuid : "");
+            });')
+          if [ -z "$id" ]; then
+            echo "第一次部署：建立 D1 資料庫 gsat-english"
+            npx wrangler d1 create gsat-english
+            id=$(npx wrangler d1 list --json | node -e '
+              let s = ""; process.stdin.on("data", d => s += d).on("end", () => {
+                const db = JSON.parse(s).find(d => d.name === "gsat-english");
+                process.stdout.write(db ? db.uuid : "");
+              });')
+          fi
+          if [ -z "$id" ]; then
+            echo "::error::找不到也建立不了 D1 資料庫 gsat-english（API token 是否有 D1: Edit 權限？）"
+            exit 1
+          fi
+          sed -i "s/REPLACE_WITH_D1_DATABASE_ID/$id/" wrangler.toml
+          echo "D1 gsat-english = $id"
+
+      # migrations/ 只有 README 時 wrangler 會回報沒有可套用的遷移，照樣成功。
+      - name: 套用 D1 遷移
+        if: steps.creds.outputs.ok == 'true'
+        working-directory: apps/api
+        run: npx wrangler d1 migrations apply gsat-english --remote
+
+      - name: 部署
+        id: deploy
+        if: steps.creds.outputs.ok == 'true'
+        working-directory: apps/api
+        run: |
+          npx wrangler deploy | tee deploy.log
+          url=$(grep -oE 'https://[a-z0-9.-]+\.workers\.dev' deploy.log | head -n 1)
+          echo "url=$url" >> "$GITHUB_OUTPUT"
+          echo "::notice::Worker 網址：$url（vercel.json 的 rewrites 要指向這裡）"
+
+      - name: 部署後確認
+        if: steps.creds.outputs.ok == 'true' && steps.deploy.outputs.url != ''
+        run: |
+          sleep 5
+          curl -fsS "${{ steps.deploy.outputs.url }}/api/health"
+          echo
