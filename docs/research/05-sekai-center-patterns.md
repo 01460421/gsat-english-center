@@ -410,7 +410,7 @@ Sekai 的做法：
 | 計價表：快取寫入 | `pricing.js` 的第三欄是「快取寫入（5 分鐘）」單價（`worker/src/pricing.js:1-2`），但 `chatClaude` 用的是 `ttl:'1h'`（`worker/src/admin.js:323`、`342`） | 1 小時快取寫入是 base input 的 2 倍，5 分鐘是 1.25 倍 [ANT-PRICE]。結果帳面會**低估**快取寫入成本 | 依 `usage.cache_creation` 裡 5 分鐘和 1 小時的明細分開計價 |
 | 計價表：新模型 | 用前綴比對（`worker/src/pricing.js:30-41`），表裡沒有 `claude-opus-5-5` | `claude-opus-5-5` 會比對到 `claude-opus-5` 的 $5／$25，但實際是 $4／$20，快取讀取 $0.20 [ANT-PRICE]。結果帳面會**高估** | 每個模型 id 都明確列出單價；認不得的 id 記 0 並發出警示（沿用 `pricing.js:38-40` 的理念） |
 | 呼叫方式 | Worker 用 `fetch` 直接打 `/v1/messages`，標頭用 `x-api-key`（`worker/src/admin.js:212-238`） | `x-api-key` 仍然支援，但官方已改稱它是 `Authorization: Bearer` 的 legacy fallback [ANT-API]。官方 TypeScript SDK 支援 Cloudflare Workers runtime [ANT-TS]，型別、重試和串流都已經內建 | 用 `@anthropic-ai/sdk` |
-| 串流 | 沒有，最多等 120 秒（`worker/src/admin.js:348`） | 作文詳解和範文的輸出比較長。Workers 付費方案不限制 duration，等待 fetch 的時間也不算 CPU 時間 [CF-WLIMIT]、[CF-WPRICE] | 長輸出用 SSE 串流給前端 |
+| 串流 | 沒有，最多等 120 秒（`worker/src/admin.js:348`） | 作文詳解和範文的輸出比較長。HTTP 觸發的 Worker 不分方案都沒有 duration 上限，等待 fetch 的時間也不算 CPU 時間；但用戶端一斷線，請求相關的工作就可能被取消，`ctx.waitUntil()` 最多只能再延 30 秒 [CF-WLIMIT] | 長輸出用 SSE 串流給前端（連線保持住，也能邊產生邊顯示）；批改結果在串流結束時由 Worker 寫進 D1，不依賴用戶端回傳 |
 | 雙供應商 | `gemini.js` 的 `runLanes` 雙路並行（`worker/src/api.js:795-797`） | 使用者指定 AI 一律用 Claude | 不搬 `gemini.js`、`runLanes`、`dual` 參數 |
 | 控制台網址 | 錯誤提示寫 `console.anthropic.com`（`worker/src/admin.js:361-364`） | 官方文件現在把 Console 寫成 `platform.claude.com` [ANT-API] | 更新文案 |
 
