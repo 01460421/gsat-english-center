@@ -479,7 +479,8 @@ STATS_RULES = [
     # 成績標準（頂標／前標／均標／後標／底標）：「超越頂標」等難度分級的校準依據。
     # 指考 91–96 的標籤是「學科成績標準一覽表」（不含「各科」），所以不套科目篩選。
     (re.compile(r"成績標準一覽表"), "score_standard",
-     "各科成績標準（頂標、前標、均標、後標、底標）", False),
+     "各科成績標準（名稱依年度而異：學測 84–88 為全均標／後均標，指考 91–92 為高標／均標／"
+     "低標，其餘多為頂標、前標、均標、後標、底標）", False),
     # 學測原始分數（111 起稱「原得總分」）與級分對照：練習成績換算級分用（指考沒有級分）
     (re.compile(r"(?:原始分數|原得總分)與級分對照表"), "score_conversion",
      "原始分數／原得總分與級分對照", False),
@@ -697,7 +698,7 @@ def build_manifest(items):
             "target": "reference 專用：gsat 或 ast",
             "kind": "paper|answer|scoring|stats|other",
             "subkind": "paper, paper_word, answer, scoring, pd_table, option_analysis, "
-                       "nonmc_score_dist, score_standard（各科成績標準：頂／前／均／後／底標）, "
+                       "nonmc_score_dist, score_standard（各科成績標準，如頂／前／均／後／底標）, "
                        "score_conversion（學測原始分數／原得總分與級分對照）, cover, "
                        "answer_sheet, answer_sheet_a4, paper_note, analysis, exam_spec, "
                        "essay_sample",
