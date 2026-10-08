@@ -31,7 +31,7 @@ import { entriesById, fetchLevels } from '../lib/vocabData';
 import { getMistakeStore } from '../state';
 import { SpeakButton, WordLink } from '../ui/common';
 import { ExampleAttribution, ExampleSentence, HighlightedSentence } from '../ui/ExampleSentence';
-import { btnPrimary, btnSecondary, btnText, cardCls, fieldCls, labelCls, sectionTitleCls } from '../ui/styles';
+import { btnPrimary, btnSecondary, btnText, cardCls, fieldBaseCls, labelCls, sectionTitleCls } from '../ui/styles';
 
 // ---------------------------------------------------------------------------
 // 出題
@@ -299,7 +299,7 @@ function SpellingInput({ q, answer, onSubmit }: { q: SpellingQuestion; answer: A
           autoCorrect="off"
           spellCheck={false}
           enterKeyHint="done"
-          className={`${fieldCls} flex-1 basis-48 scroll-mt-20 scroll-mb-24 text-lg ${answer ? (answer.correct ? 'border-ok' : 'border-bad') : ''}`}
+          className={`${fieldBaseCls} flex-1 basis-48 scroll-mt-20 scroll-mb-24 text-lg ${answer ? (answer.correct ? 'border-2 border-ok' : 'border-2 border-bad') : 'border-line'}`}
         />
         {!answer && (
           <div className="flex gap-2">

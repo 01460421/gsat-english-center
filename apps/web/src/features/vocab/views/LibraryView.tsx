@@ -3,7 +3,7 @@
  *
  * 不用虛擬捲動：虛擬化會讓瀏覽器的頁內搜尋、螢幕閱讀器的清單導覽失效。改成每次顯示 PAGE_SIZE 筆，
  * 捲到接近底部時自動再補一批（IntersectionObserver），旁邊也有「顯示更多」按鈕給鍵盤使用者與不支援的瀏覽器。
- * 每列加 content-visibility: auto，畫面外的列不排版，手機上捲動幾百列仍然順。
+ * 每 CHUNK_SIZE 列一段加 content-visibility: auto，畫面外的段不排版，手機上捲動幾千列仍然順（見 WordChunk）。
  */
 import { ChevronDown, Search, SlidersHorizontal, X } from 'lucide-react';
 import { memo, useDeferredValue, useEffect, useEffectEvent, useId, useMemo, useRef, useState } from 'react';
@@ -25,6 +25,11 @@ import { btnSecondary, btnText, cardCls, fieldCls, labelCls } from '../ui/styles
 import { useLoad } from '../ui/useLoad';
 
 const PAGE_SIZE = 50;
+/**
+ * content-visibility 的單位（見 WordChunk）。比 PAGE_SIZE 小：一段進入畫面時要一次排版整段，段越小卡頓越短。
+ * 必須是偶數：桌機排兩欄，每段是獨立的格線，奇數筆會在每段最後留下一格空白。
+ */
+const CHUNK_SIZE = 24;
 
 function FilterSelect<T extends string>({
   label,
@@ -94,6 +99,36 @@ const WordRow = memo(function WordRow({ entry }: { entry: VocabIndexEntry }) {
         {entry.exam_total > 0 && <span className="text-xs whitespace-nowrap text-muted">歷屆 {formatCount(entry.exam_total)} 次</span>}
       </span>
     </WordLink>
+  );
+});
+
+function chunk<T>(items: readonly T[], size: number): T[][] {
+  const out: T[][] = [];
+  for (let i = 0; i < items.length; i += size) out.push(items.slice(i, i + size));
+  return out;
+}
+
+/**
+ * 一段（CHUNK_SIZE 筆）單字。content-visibility: auto 加在「每一段」而不是每一列：
+ * 加在每一列時，瀏覽器每捲一格都要檢查每一列是否進入畫面，實測（4 倍降速的手機模擬）清單長到 1,500 列時
+ * 捲動的 p90 影格間隔約 200 ms、3,000 列時中位數 133 ms，越捲越卡；完全不加又會讓每補一批都要重排整張清單
+ * （400 列時就要約 460 ms）。以段為單位，要檢查的元素少二十幾倍，畫面外的段照樣跳過排版與繪製；
+ * 改了之後 3,000 列時補一批約 65 ms、捲動 p90 影格 17 ms，只在新的一段進入畫面時偶爾頓一下。
+ * contain-intrinsic-size 是還沒畫過的段的預估高度（手機一欄約 24 × 84px、桌機兩欄約 12 × 84px），畫過一次後 auto 會記住實際高度。
+ * 外層用 role="list"／"listitem"、中間這層 role="none"：螢幕閱讀器看到的仍是同一張清單，而不是好幾張小清單。
+ */
+const WordChunk = memo(function WordChunk({ rows }: { rows: VocabIndexEntry[] }) {
+  return (
+    <div
+      role="none"
+      className="grid gap-2 [contain-intrinsic-size:auto_2000px] [content-visibility:auto] sm:grid-cols-2 sm:[contain-intrinsic-size:auto_1000px]"
+    >
+      {rows.map((entry) => (
+        <div key={entry.id} role="listitem" className="min-w-0">
+          <WordRow entry={entry} />
+        </div>
+      ))}
+    </div>
   );
 });
 
@@ -237,13 +272,11 @@ export function LibraryView({ active }: { active: boolean }) {
               )}
             </EmptyState>
           ) : (
-            <ul className="grid gap-2 sm:grid-cols-2">
-              {result.entries.slice(0, limit).map((entry) => (
-                <li key={entry.id} className="min-w-0 [contain-intrinsic-size:auto_5rem] [content-visibility:auto]">
-                  <WordRow entry={entry} />
-                </li>
+            <div role="list" aria-label="單字列表" className="space-y-2">
+              {chunk(result.entries.slice(0, limit), CHUNK_SIZE).map((rows) => (
+                <WordChunk key={rows[0]?.id} rows={rows} />
               ))}
-            </ul>
+            </div>
           )}
           {hasMore && (
             <div className="flex flex-col items-center gap-2">

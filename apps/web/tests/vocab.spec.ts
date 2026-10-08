@@ -38,6 +38,12 @@ test('單字庫 → 單字卡 → 同義詞 → 返回', async ({ page }, testIn
   await page.goto('/words');
   const search = page.getByRole('searchbox', { name: '搜尋單字' });
   await expect(page.getByText(/^共 [\d,]+ 筆$/)).toBeVisible();
+  // 清單分段加 content-visibility（LibraryView 的 WordChunk），輔助科技看到的仍是同一張清單；按「顯示更多」至少再補 50 筆
+  // （點按鈕時頁面捲到底部，接近底部的自動補載也可能一起觸發，所以只檢查下限）。
+  const list = page.getByRole('list', { name: '單字列表' });
+  await expect(list.getByRole('listitem')).toHaveCount(50);
+  await page.getByRole('button', { name: /^顯示更多/ }).click();
+  await expect.poll(() => list.getByRole('listitem').count()).toBeGreaterThanOrEqual(100);
   await search.fill('abandon');
   const link = page.getByRole('link', { name: /^abandon/ });
   await expect(link).toBeVisible();
