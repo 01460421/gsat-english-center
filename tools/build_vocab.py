@@ -43,18 +43,19 @@
   * 同字多筆（§6.3：backward、capital、content、downward、forward、measure、medium、outward、upward）：
     - WordNet 義項只取「條目詞類」對應的詞性（adj.→a/s、adv.→r、n.→n、v.→v），兩筆因此各自得到不同義項；
     - ECDICT 中文逐行標 match（該行詞性是否屬於條目詞類），介面可只顯示 match=true 的行；
-    - Tatoeba 例句：兩筆的候選句相同時，後一筆優先避開前一筆已選的句子；(s)、(ism) 這類條目優先挑含
-      該衍生形（measures、capitalism）的句子；
+    - Tatoeba 例句：依前後文把共用詞形的每次出現分給詞類相符的那一筆（sibling_ok：a backward step 是 adj.、
+      go backward 是 adv.；medium size 是 adj.；content oneself with 是 v.；safety measures 是 n.），兩筆不共用
+      同一句；(s)、(ism) 這類條目優先挑含該衍生形（measures、capitalism）的句子；
     - forms-index 同一詞形列出兩個 entry_id；兩筆的 cambridge_url 相同（Cambridge 不分詞類）。
   * 斜線條目（a/b，78 筆）：word 取斜線前的形式，其餘在 variants；ECDICT／OEWN／CEFR 查不到 word 時依序改查
-    variants；所有 variants 及其屈折形都進 forms-index（type=slash）。原表的斜線不區分拼法變體、非正式、
+    variants；所有 variants 及其（變體詞類能產生的）屈折形都進 forms-index（type=slash）。原表的斜線不區分拼法變體、非正式、
     性別對應、同義並列（原則 15–17），所以不自動細分。
     am/a.m.、pm/p.m. 依原則取 am、pm 當 word，但查 ECDICT／OEWN 時改用 a.m.、p.m.（LOOKUP_OVERRIDES），
     例句只比對 a.m.／p.m.（避免把 be 動詞 am 當成例句）。
   * 括號條目：(ment) 與 argue(argument) 的衍生名詞（type=derived_ment）、capital(ism)（derived_suffix）、
     (s) 常用複數（plural_usual）、代名詞格變化（pronoun_case）都在 variants；另在 variant_info 給每個變體的
-    ECDICT 音標與中文，因為 v./(n.) 的 (n.) 指的就是這個衍生名詞。代名詞格（mine、her…）在 forms-index 會和
-    同形的其他條目（mine n./v.）並列，不建立詞族關係。
+    ECDICT 音標與中文（只取變體詞類的行），因為 v./(n.) 的 (n.) 指的就是這個衍生名詞。代名詞格（mine、her…）
+    在 forms-index 會和同形的其他條目（mine n./v.）並列，不帶屈折形，也不建立詞族關係。
   * 片語條目：111 年版詞彙表沒有多字詞條（03 文件 §2.3，唯一帶連字號的是 T-shirt）。程式仍支援含空白的詞形：
     Cambridge slug 把空白換成連字號（04 文件 §2.2），Tatoeba 比對改成連續 token 序列比對。
   * 縮寫、撇號、重音：Mr.、Mrs.、Ms.、O.K.、a.m. 的句點保留在 forms-index 鍵中（tokenizer 會把 "Mr." 視為一個 token）；
@@ -64,11 +65,17 @@
 其他規則
   * IPA：ECDICT 的音標用 Cyrillic ә（U+04D9）、є（U+0454）和 ASCII 符號表示 IPA，這裡統一字元：
     ә→ə、є→ɛ、g→ɡ（U+0261，ECDICT 兩種混用）、'→ˈ（主重音）、緊接音標的 , 與 . →ˌ（次重音）、:→ː；
-    ". "、", "、兩段都有主重音的 "." 視為「多種讀法」的分隔，統一輸出為 ", "。結果再用 IPA 字元白名單檢查。
+    ". "、", "、兩段都有主重音或兩段都沒有重音記號的 "."（bæθ.bɑ:θ）、後一段以 - 開頭或結尾的 ","，視為「多種讀法」
+    的分隔，統一輸出為 ", "。重複或後接空白的重音記號合併。結果再用 IPA 字元白名單檢查。
     含有無法判讀字元（\\、^ 等 ECDICT 編碼損壞）的音標不採用，改用 OEWN 的發音（ipa_source 標 oewn）。
     只統一字元，不改音標體系（ECDICT 是舊式英式標音，例如 ɡəu；OEWN 是美式）。
-  * 中文：ECDICT translation 依原本的換行分行，每行拆出詞性標記（vt.、n.…）或領域標記（[計]、[醫]…），
-    文字用 OpenCC s2twp 轉成台灣繁體用語。標點維持原樣。
+  * 屈折形（forms）：ECDICT exchange 不分詞性，只收條目詞類能產生的形式（名詞才有複數、動詞才有時態變化、
+    形容詞／副詞才有比較級；v./(n.) 的 (n.) 不算），其餘在 forms-index 標 extra_pos（見 licensed_form）。
+    ECDICT 的錯誤形式在 FORM_FIXES 修正；-l 結尾、重音不在字尾的動詞改用美式拼法（traveled），英式仍可查。
+  * 中文：ECDICT translation 依原本的換行（含字面的 \n、\r）分行，每行拆出詞性標記（vt.、n.…）或領域標記
+    （[計]、[醫]…），文字用 OpenCC s2twp 轉成台灣繁體用語，再套 TW_PHRASES（簡體原文的大陸用語）、KEEP_PHRASES
+    （不讓 OpenCC 把 程序、文件、對象 改成電腦用語）、VARIANT_CHARS（日文新字體、異體字），並刪除轉換後重複的義項。
+    沒有任何一行詞性相符時，有詞性的行標 match=true、fallback=true。少數 ECDICT 明顯錯誤的條目在 ZH_OVERRIDES 補寫。
   * en_def：優先取 OEWN 第一個（依條目詞類順序）義項的定義；沒有時退回 ECDICT 英文釋義中詞性相符的第一行。
   * 詞族（family）：以 union-find 合併 (1) 同字多筆、(2) 括號衍生形或拼法相近的斜線變體等於另一筆的詞形、
     (3) OEWN 義項的衍生類關係（derivation、pertainym、participle、agent／event／result… 等 morphosemantic 關係）
@@ -77,7 +84,8 @@
     （避免 die→death 這類跨字根連結），另有少數同形異義的黑名單（FAMILY_BLOCKLIST）。
     family_id 取詞族中最短（同長取級別低、再依字母）的條目 entry_id。
   * wordnet.derivations：OEWN derivation／pertainym 的目標詞中也在詞彙表、且詞類相符的條目（不要求共同字首）。
-    synonyms／antonyms 標記是否在詞彙表時，優先對應詞類相符的條目。
+    synonyms／antonyms 只有詞類相符的條目才算 in_list（給 level）；拼法相同但詞類不同的列在 other_pos_entry_ids。
+    同一個字的轉類（capital n.↔adj.）不列為 derivation。
   * 例句：Tatoeba 中有中文翻譯的英文句，句長 6–20 個 token，含該條目任一詞形（原形、變體、屈折形）。
     排序：(1) 句中其他字都在詞彙表且級別 ≤ 該條目級別+1（人名、數字、附錄詞不扣分；附錄詞＝詞彙表 p.104
     的數字、星期、月份、季節，視為第 1 級）；(2) 超出級別的字越少越前面；(3) 句長越接近 10 越前面；(4) 句子 ID。
@@ -85,7 +93,9 @@
     或目標詞前後文相同的句子，不足 5 句時第二輪補回。作者為空（孤兒句）且不是 CC0 的句子不採用，
     因為 CC BY 需要標示作者。中文翻譯有多句時取有作者、ID 最小的一句。
     同形異詞：條目原形同時是另一個級別不高於它的條目的屈折形時（saw／see、found／find、lay／lie），只靠這個
-    詞形命中、而且前一個字（限定詞、連綴動詞、to／助動詞）無法判斷詞類的句子不採用；細節見選例句的程式註解。
+    詞形命中、而且前一個字（限定詞、連綴動詞、to／助動詞）無法判斷詞類的句子不採用；反方向（本條目的屈折形是
+    另一筆的原形：wed 的 wedding、bore 的 bored）也要前後文顯示是屈折用法才採用（shadow_ok）；to prep. 排除
+    不定詞。細節見選例句的程式註解。
     內容過濾：含粗話、色情、自殘字眼的句子不採用（SENSITIVE_RE；命中的字就是條目本身時例外）。
   * 決定性：所有集合在輸出前排序；不輸出建置時間；JSON 一筆一行、鍵順序固定。
 """
