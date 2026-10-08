@@ -541,7 +541,7 @@ if (b.processing_status === "ended") {
    - 長邊超過 2576 px 會被 API 自動縮小，只是白白增加上傳量 [ANT-VISION]。
    - 壓縮太重會讓文字看不清楚 [ANT-VISION]。
 2. **Worker**
-   - 把照片暫存到 R2，批改完成後依保存期限刪除。R2 的費用與限制沒有查證（未驗證）。
+   - 把照片暫存到 R2，批改完成後依保存期限刪除。R2 的費用見 §4.2（2026-10-08 查證）。
    - 呼叫 OCR：**Opus 5.5，effort `low`，結構化輸出**。規則如下：
      - 逐字轉錄，**保留拼字和文法錯誤，不要修正**。
      - 看不清楚的地方用 `[[?]]` 標記，並提供候選字。
@@ -803,11 +803,13 @@ if (b.processing_status === "ended") {
 - Sekai 是直接用 `fetch` 呼叫 `/v1/messages`（`worker/src/admin.js:211-249`、`302-379`），也能用，但重試、串流解析和錯誤分類都要自己寫。
 - **建議改用 SDK**。
 - 如果使用 Zod，Cloudflare 建議用 4.5.0 以後的版本，舊版每個 schema 會用掉多很多記憶體 [CF-LIMITS]。
-- 用法：`env` 在每個請求才拿得到，所以在請求內建立 client：
+- 用法：在請求內用 handler 收到的 `env` 建立 client：
 
   ```ts
   new Anthropic({ apiKey: env.ANTHROPIC_API_KEY, maxRetries: 2 })
   ```
+
+  原稿寫「`env` 在每個請求才拿得到」，這不正確（2026-10-08 查證）。Cloudflare 文件說明可以 `import { env } from "cloudflare:workers"`，在 handler 外面（包括模組頂層）讀取 secret [CF-SECRET]。所以也可以在模組頂層建立一個共用的 client。兩種寫法都可以；在請求內建立比較單純，也方便每個任務設定不同的 `timeout`。
 
 ### 4.2 逾時和執行時間
 
@@ -837,6 +839,9 @@ if (b.processing_status === "ended") {
 
 - 一則 Queue 訊息最大 128 KB，所以只傳工作 id，照片放 R2 [CF-Q-LIMIT]。
 - Queues 的免費方案每天有 10,000 次操作；付費方案每月 1,000,000 次，超過的部分每百萬次 $0.40 [CF-Q-PRICE]。
+- Queue consumer 的 CPU 時間預設 30 秒，可以用 `limits.cpu_ms` 調到 5 分鐘；牆鐘時間上限 15 分鐘 [CF-Q-LIMIT]。等待 Claude 回應不算 CPU 時間 [CF-LIMITS]。
+- **並行上限（2026-10-08 查證，原稿列為未驗證）**：consumer 預設會自動擴充到最多 250 個並行呼叫。要限制的話，在 Wrangler 設定的 `[[queues.consumers]]` 加上 `max_concurrency`（1–250）[CF-Q-CONC] [CF-Q-LIMIT]。可以用它控制同時呼叫 Claude 的批改數，不必另外用 D1 計數。
+- **R2 費用（2026-10-08 查證，原稿列為未驗證）**：Standard 儲存 $0.015／GB-月，Class A 操作每百萬次 $4.50，Class B 每百萬次 $0.36，流出流量免費；每月免費額度是 10 GB-月、Class A 100 萬次、Class B 1,000 萬次 [CF-R2]。照片每張 ≤2 MB、批改完就刪，初期應該落在免費額度內（本文件推估）。
 
 **SDK 的 timeout：**
 
