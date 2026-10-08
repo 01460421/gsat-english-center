@@ -398,7 +398,7 @@
 - [CEEC-P115] 115 學測英文試卷：<https://www.ceec.edu.tw/files/file_pool/1/0q054532302653501476/02-115%e5%ad%b8%e6%b8%ac%e8%8b%b1%e6%96%87%e8%a9%a6%e5%8d%b7.pdf>
 - [CEEC-P110] 110 學測英文試卷：<https://www.ceec.edu.tw/files/file_pool/1/0l069608312283063557/110%e5%ad%b8%e6%b8%ac%e8%8b%b1%e6%96%87%e8%a9%a6%e5%8d%b7%20.pdf>
 - [CEEC-P94] 94 學測英文試卷：<https://www.ceec.edu.tw/files/file_pool/1/0j076565680353985442/94english.pdf>
-- [CEEC-P93] 93 學測英文試卷：見 [CEEC-GSAT-LIST] 93 學年度列（逐檔網址在 `data/exams/manifest.json`）
+- [CEEC-P93] 93 學測英文試卷：<https://www.ceec.edu.tw/files/file_pool/1/0j076565053189025902/93english.pdf>
 - [CEEC-P83] 83 學測英文試卷：<https://www.ceec.edu.tw/files/file_pool/1/0j076559780922930721/83%e5%b9%b4%e5%ad%b8%e6%b8%ac%e8%8b%b1%e6%96%87%e7%a7%91.pdf>
 - [CEEC-AST91] 91 指考英文試卷：<https://www.ceec.edu.tw/files/file_pool/1/0j075805182752018845/91english.pdf>
 - [CEEC-AST99] 99 指考英文試卷：<https://www.ceec.edu.tw/files/file_pool/1/0j075810590583175055/02-99%e6%8c%87%e8%80%83%e8%8b%b1%e6%96%87%e8%a9%a6%e5%8d%b7%e5%ae%9a%e7%a8%bf.pdf>
