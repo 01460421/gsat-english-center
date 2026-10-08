@@ -1054,6 +1054,11 @@
               "label": "44",
               "mode": "single_choice",
               "stem": "As used in the passage, “navigation” clearly means ______.",
+              "refers_to": {
+                "text": "navigation",
+                "occurrence": 1,
+                "note": "原卷底線（選文 and navigation, in which we first had…）"
+              },
               "options": {
                 "A": "going to a summer school",
                 "B": "the practice of sailing a boat",
@@ -1170,6 +1175,11 @@
               "label": "49",
               "mode": "single_choice",
               "stem": "What is “the Seine” mentioned in the passage?",
+              "refers_to": {
+                "text": "the Seine",
+                "occurrence": 1,
+                "note": "原卷底線（選文 notably along the banks of the Seine）"
+              },
               "options": {
                 "A": "A tall monument.",
                 "B": "The name of the new tower.",
@@ -1457,6 +1467,11 @@
               "label": "短詩2",
               "mode": "short_answer",
               "stem": "Which word in the poem is closest in meaning to sleep-song?",
+              "refers_to": {
+                "text": "sleep-song",
+                "occurrence": 1,
+                "note": "詩第二節第三行 The rain plays a little sleep-song on our roof at night；原卷無強調"
+              },
               "options": null,
               "answer": null,
               "accepted_answers": null,
@@ -1472,6 +1487,11 @@
               "label": "短詩3",
               "mode": "short_answer",
               "stem": "What does the phrase silver liquid drops refer to?",
+              "refers_to": {
+                "text": "silver liquid drops",
+                "occurrence": 1,
+                "note": "詩第一節第二行 Let the rain beat upon your head with silver liquid drops.；原卷無強調"
+              },
               "options": null,
               "answer": null,
               "accepted_answers": null,
@@ -1487,6 +1507,11 @@
               "label": "短詩4",
               "mode": "short_answer",
               "stem": "Which word in the poem is opposite in meaning to running?",
+              "refers_to": {
+                "text": "running",
+                "occurrence": 1,
+                "note": "詩第二節第二行 The rain makes running pools in the gutter.；原卷無強調"
+              },
               "options": null,
               "answer": null,
               "accepted_answers": null,
@@ -1579,7 +1604,7 @@
       "結構核對：gsat-spec.json legacy_gsat 83–87 期別只有粗略描述（「87單一選擇題60題（1~50題及61~70題）」、非選擇題兩大題），與本卷一致。本卷實際結構：壹 選擇題（第一部分）—一、字彙、片語與語法 1–20（每題1分，20分）、二、綜合測驗 21–40（每題1分，20分）、三、閱讀測驗 41–50（每題2分，20分）；貳 選擇題（第二部分）61–70（每題1分，10分）；參 非選擇題—一、短詩閱讀 5題×2分（10分）、二、英文作文（20分）；合計100分，考試時間100分鐘（封面）。",
       "第16–20題為兩人對話形式的單題（各題獨立，不是題組），放在詞彙大題 s1g1，stem 以換行分隔每位說話者的台詞。",
       "空格位置：第22、32、39題的空格在題本緊接前面的標點（word--(22)、alone.”(32)、infection.(39)，之間無空格；Word 版底線 run 也證實），依原樣寫成 word--[[22]]、alone.”[[32]]、infection.[[39]]。第21–30題選文第2段、第4段在 Word 版因排版被硬換行拆成多個段落，對照 PDF 頁面影像（縮排位置）合併回原本的段落。",
-      "畫底線的字：第44題問 “navigation”、第49題問 “the Seine”，兩者在題本選文中畫底線，passage 以 <u>navigation</u>、<u>the Seine</u> 標記；題幹中同字串在題本以引號表示、無底線，照原樣。第42、45題的 NOT 在題本為粗體，短詩第5題的 boring、harsh 等六個形容詞為斜體，依規則不保留格式。",
+      "畫底線的字：第44題問 “navigation”、第49題問 “the Seine”，兩者在題本選文中畫底線，passage 以 <u>navigation</u>、<u>the Seine</u> 標記（v1.1 判讀：Word 檔 run 底線屬性與 PDF 第5、6頁影像確認是底線，維持 <u>，並填 refers_to）；題幹中同字串在題本以引號表示、無底線，照原樣。第42、45題的 NOT 在題本為粗體，短詩第5題的 boring、harsh 等六個形容詞為斜體，依規則不保留格式。",
       "逐字保留：短詩第6行行末為全形破折號「－」（U+FF0D），照題本保留；第47–50題選文的 the year 2,000（含千分位逗號，第47題選項 (D) 亦同）、Champs Elysees（無重音符號）、PARIS, Dec. 9 -- Paris 照題本保留。Word 版句號後的雙空格已壓成單一空格。",
       "短詩 passage：首兩行為詩名 April Rain Song 與作者 by Langston Hughes（題本分別置中、靠右），之後空一行接詩文，三節之間以空行分隔。各題組前的「21-30題為題組」等說明列未存入。",
       "標註：grammar_point 中的 enough_to（第18題）、indirect_question（第20題）、noun_clause（題本第65、70題，即 label 65、70）為 schema 範例以外的值；第16、18、37、38題答案為非詞類單位（不定詞／副詞片語／比較結構／分詞），未填 answer_pos。"

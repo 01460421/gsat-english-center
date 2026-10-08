@@ -1,0 +1,23 @@
+[
+  {
+    "kind": "refers_to",
+    "location": "s4g4/54",
+    "status": "resolved",
+    "action": "選文最後一段 forming a “fairy ring” of trees 的 fairy ring 加上 <b>fairy ring</b>（引號在標記外），填 refers_to {text: \"fairy ring\", occurrence: 1}；題幹以引號指稱，不另加標記；extraction.issues[11] 改寫。",
+    "evidence": "paper-1.pdf 第7頁（題本第6頁）頁面影像：選文與第54題題幹的 fairy ring 為粗體、沒有底線；paper-2.doc 轉 docx 後 run 屬性 bold=True。"
+  },
+  {
+    "kind": "answer_segments",
+    "location": "s5g1/中譯英1",
+    "status": "resolved",
+    "action": "兩組述語的動詞與後接結構相依（regarded／thought of 只接 as…，thought 只接 to…），把「動詞＋as…／to…」攤平成一段 27 種寫法（5×3＋4×3，含 as a (good) symbol of、to (well)／(be able to) represent 的展開），主詞、{our|the} 各一段；另發現原圖 long／already 外框是大圓括號（可省略）而不是大括號，該段寫成 [long / already / 空字串]，accepted_answers 兩條改記為 have ({long|already}) been；answer 不變（等於各段第一寫法），answer_is_composite: true；extraction.issues[2] 補記。",
+    "evidence": "scoring.pdf 第2頁內嵌原圖（pdfimages 取出 2224×1358 原圖並裁切放大）：long／already 兩側為對稱圓括號、無中間尖角，與其他大括號不同；註1「（ ）則表示可省略之字詞」；展開 486 句，抽 10 句檢查。"
+  },
+  {
+    "kind": "answer_segments",
+    "location": "s5g1/中譯英2",
+    "status": "resolved",
+    "action": "各大括號互不相依，填 answer_segments；(night)、(coming)、(many) 以空字串表示可省略（the (night) markets 展開為 the night markets / the markets）；answer 不含可省略字詞、等於各段第一寫法，answer_is_composite: true。",
+    "evidence": "scoring.pdf 第3頁內嵌原圖（pdfimages 取出 2359×1019 原圖）；展開 864 句，抽 10 句檢查。"
+  }
+]

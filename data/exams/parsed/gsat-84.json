@@ -1034,6 +1034,11 @@
               "label": "41",
               "mode": "single_choice",
               "stem": "The preceding passage refers to the word 'hacking' in the context of",
+              "refers_to": {
+                "text": "hacking",
+                "occurrence": 1,
+                "note": "第一段 Breaking into the computer codes (known as 'hacking')… 的 hacking（同段引語 “Hacking is just intellectual” 是句首大寫的另一處）；原卷無粗體／底線，題幹以單引號引用，未加標記"
+              },
               "options": {
                 "A": "climbing Mount Everest.",
                 "B": "a game for young individuals.",
@@ -1141,6 +1146,10 @@
               "accepted_answers": [
                 "C"
               ],
+              "scoring_exception": {
+                "type": "multiple_correct",
+                "note": "答案檔 answer.pdf（84學年度學科能力測驗參考答案，英文欄第45題）原文「B或C」：B、C 皆給分"
+              },
               "points": 2,
               "stats": null,
               "scoring_notes": "答案檔原文：「B或C」",
@@ -1460,7 +1469,7 @@
     "method": "官方 Word 版（paper-2.doc → soffice 轉 docx → python-docx）取文字，並以 run 的底線屬性核對每個空格位置、斜體屬性核對舞台說明；與 pdftotext -layout 題本逐段比對；以 Read 逐頁檢視題本 PDF 影像（8 頁，含封面）確認版面、段落、斜體／底線與作文提示中的回信格式方框；答案檔為五科合併的掃描檔（無文字層），以 pdftoppm 200dpi 轉圖、裁切英文欄放大，用 Read 看影像逐題抄錄，再以整頁影像複核。；查證（verifier）：答案檔第1頁以 200dpi 重新轉圖、裁切英文欄（1–30、31–50 兩欄）逐題核對 50 題答案（含第45題「B或C」，並看第2頁確認只有社會、自然）；以 python 將全部 50 題的選項（200 個）、題幹、各大題說明、9 篇選文／對話（含 [[題號]] 位置）、中譯英 5 句與作文提示，分別和 Word 版（python-docx）及 pdftotext -layout 逐詞比對，全部一致；以 Read 逐頁看題本 PDF 影像（第2–8頁）複核段落數、空格位置與作文回信格式方框（另由 docx 內嵌圖放大確認「Dear George:」為冒號）。",
     "issues": [
       "答案來源：answer.pdf（units.json 標 quality \"none\"）為無文字層的掃描檔，標題「八十四學年度大學入學考試中心學科能力測驗參考答案」，第1頁為國文、英文、數學合併答案表，第2頁為社會、自然；以 pdftoppm 200dpi 轉圖並裁切英文欄，用 Read 看影像逐題抄錄第1–50題，再以 100dpi 整頁影像複核一次（確認抄的是「英文」欄）。",
-      "第45題官方答案為「B或C」（兩者皆給分）：answer 填答案檔先列的 B，accepted_answers 填 [\"C\"]，scoring_notes 逐字記「答案檔原文：「B或C」」。統計分析或判分時須把 B、C 都視為正確。",
+      "第45題答案檔原文為「B或C」，B、C 兩個選項都算正確：answer 填答案檔先列的 B，accepted_answers 填 [\"C\"]，scoring_exception 填 multiple_correct，scoring_notes 逐字記「答案檔原文：「B或C」」。統計分析或判分時須把 B、C 都視為正確。",
       "無統計與評分原則：units.json 中84學年度只有題本 PDF、Word 版與選擇題答案，沒有 stats（答對率／鑑別度／選項分析）與 scoring 檔，所有小題 stats 為 null，sources.scoring／stats 為空陣列（validator「整份考卷沒有任何統計資料」warning 屬實）。中譯英第1–5題大考中心未公布參考譯文，answer／accepted_answers／scoring_notes 填 null；作文 answer 依 schema 為 null，作文評分標準（內容5、組織5、文法4、用字拼字4、體例2）印在題本說明中，已逐字放在 s6.instructions。",
       "結構核對：gsat-spec.json legacy_gsat 83–87 期別只有粗略描述（「84與85選擇題50題」、非選擇題兩大題），與本卷封面「選擇題共50題／非選擇題共兩大題」一致。本卷實際結構：第一部分 單一選擇題—一、對話 1–10（每題1分，10分）、二、詞彙 11–20（每題1分，10分）、三、綜合測驗 21–40（每題1分，20分）、四、閱讀測驗 41–50（每題2分，20分）；第二部分 非選擇題—一、中譯英 5句×4分（20分）、二、英文作文（20分）；合計100分，考試時間100分鐘（封面）。各大題標題題本沒有印配分，title 照原文不加；points_total 依說明文字「每題答對得1分／2分」「每句4分」計算，作文20分依評分標準5+5+4+4+2加總。",
       "「一、對話」（第1–10題）：四則對話（1–3、4–5、6–8、9–10題為題組），對話中挖空、每空各有4個選項，結構與綜合測驗相同，因此 section.type 標為 cloze（title 保留「一、對話」以便與一般綜合測驗區分），每則對話為一個 group，passage 逐行保留說話者與斜體舞台說明（如「(Julia and May are sitting on the sofa talking.)」「(twenty minutes later)」），空格寫成 [[題號]]。這類題目不屬於詞彙／文法，tags 只標 test_point（多為 discourse），answer_pos 一律省略。",

@@ -1,0 +1,37 @@
+[
+  {
+    "kind": "refers_to",
+    "location": "s5g2/42",
+    "status": "resolved",
+    "action": "選文中原本的 <u>it</u> 改為 <b>it</b>（原卷是粗體、沒有底線），填 refers_to {text: \"it\", occurrence: 2}：選文共有 3 個 it（Is it possible／make it possible／doing it right），被指涉的是 make it possible 的 it；extraction.issues[11] 改寫。",
+    "evidence": "paper-1.pdf 第7頁（題本第6頁）頁面影像；paper-2.docx 以 python-docx 讀出選文該 run 與第42題題幹的 it 皆 bold=True、underline=None；以 validator 的 find_occurrences 計數。"
+  },
+  {
+    "kind": "answer_segments",
+    "location": "s7g1/中譯英1",
+    "status": "resolved",
+    "action": "四組大括號互不相依，填 answer_segments；展開 24 句恰為 answer＋accepted_answers 的 23 句（程式比對一致）；answer_is_composite: true；extraction.issues[6] 補記。",
+    "evidence": "scoring.pdf 第2頁頁面影像「（一）滿分參考答案 1.」；24 句抽 10 句檢查。"
+  },
+  {
+    "kind": "answer_segments",
+    "location": "s7g1/中譯英2",
+    "status": "resolved",
+    "action": "{To avoid / Avoiding} 與 {ensure / ensuring} 是平行結構、必須同時換，改填 answer_variants 兩句（To avoid … and ensure …／Avoiding … and ensuring …），不填 answer_segments；answer_is_composite: true。",
+    "evidence": "scoring.pdf 第2頁頁面影像「2.」兩組大括號並列。"
+  },
+  {
+    "kind": "image_options",
+    "location": "s5g3/44",
+    "status": "resolved",
+    "action": "題本選項只印 (A) A～(D) D，改為「［圖］地圖上圓圈 X 的位置：…」的文字描述（只寫圖上可見的相對位置，不寫國名）；地圖 figure description 依影像重新核對（C 在孟加拉灣內、B 以馬達加斯加島為參照、註明圖上沒有國界與經緯線），補 question_no: 44；extraction.issues[10] 補記。",
+    "evidence": "paper-1.pdf 第9頁（題本第8頁）300dpi 頁面影像裁切地圖：A 在直布羅陀海峽外大西洋側、B 在非洲東岸馬達加斯加島西北方、C 在印度東側孟加拉灣內、D 在非洲最南端東南外海。"
+  },
+  {
+    "kind": "other",
+    "location": "extraction.issues[6]",
+    "status": "resolved",
+    "action": "判定第2題兩組大括號必須平行配對：交叉組合（To avoid … and ensuring／Avoiding … and ensure）以 and 連接的主詞片語形式不一致，屬文法錯誤，不列為可接受譯文；以 answer_variants 列出兩句，issues[6] 補記判定理由。",
+    "evidence": "scoring.pdf 第2頁頁面影像（版面只並列兩組大括號，沒有標示配對）。"
+  }
+]

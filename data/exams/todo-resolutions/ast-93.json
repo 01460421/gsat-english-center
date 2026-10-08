@@ -1,0 +1,30 @@
+[
+  {
+    "kind": "refers_to",
+    "location": "s5g1/47",
+    "status": "resolved",
+    "action": "refers_to={text:\"them\", occurrence:1, note:原卷粗體、原卷印刷版選文第 5 行行首}；選文 “where other hikers can use them” 的 them 加 <b>。extraction.issues[7] 改寫為已標出。",
+    "evidence": "Read 看 paper-1.pdf 第5頁（題本第4頁）影像：選文第 5 行行首「them, along with a global positioning system (GPS)…」，them 粗體；第6頁（題本第5頁）第47題題幹 them 粗體。soffice 轉 paper-2.doc 為 docx 後 python-docx 讀第107段 run「them」bold=True、第112段題幹 them bold=True。選文中 them 只出現 1 次。"
+  },
+  {
+    "kind": "refers_to",
+    "location": "s5g2/51",
+    "status": "resolved",
+    "action": "refers_to={text:\"it\", occurrence:3, note:原卷粗體}；第四段 “Cindy identifies it as one of 70 preprogrammed commands” 的 it 加 <b>（選文 it 共 4 次：第三段 human nature it could breathe、第四段 it’s a multistep process、identifies it、If it’s a match；被指涉的是第 3 次）。extraction.issues[8] 改寫。",
+    "evidence": "paper-2.docx（soffice 轉檔）第125段只有 identifies 後的 run「it」bold=True，第137段題幹 it bold=True；Read 看 paper-1.pdf 第6頁（題本第5頁）影像確認 Cindy identifies it 的 it 為粗體，其他 it 非粗體；官方答案 D the request 與此 it 吻合。"
+  },
+  {
+    "kind": "refers_to",
+    "location": "s5g2/52",
+    "status": "not_needed",
+    "action": "不填 refers_to：題幹 how can Cindy “see”? 的引號表示比喻用法（娃娃並非真的看得見），問的是第四段描述的辨識機制（細節題，答案 B 內建相機掃描文字），不是指涉選文某一處的字詞；see 在選文出現 3 次（can see, think／trying to see how much／actually see?）皆無粗體或底線，硬選其一沒有依據。",
+    "evidence": "Read 看 paper-1.pdf 第6頁（題本第5頁）影像：選文與第52題題幹 see 皆無粗體／底線；paper-2.docx 第125段等段落 see 無 bold／underline run。"
+  },
+  {
+    "kind": "other",
+    "location": "extraction.issues[6]",
+    "status": "resolved",
+    "action": "確認 1995 為原卷文字（實際落成為 1959），第53–56題皆不涉及落成年份、不影響作答與答案；依逐字原則選文照錄不改。其他列出的 various intensity of ink、their subject matters、a firewood or charcoal substitute、section of Bronx 也都是原文。在 extraction.issues[6] 末尾補上判讀結果與前端加註建議。",
+    "evidence": "pdftotext paper-1.pdf 第7頁第16行「building’s 1995 completion」；Read 看 paper-1.pdf 第6–7頁影像；paper-2.docx（soffice 轉檔）第147段同為 1995，第51、95、99、164段其他片語與 JSON 一致。"
+  }
+]

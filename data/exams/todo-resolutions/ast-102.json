@@ -1,0 +1,30 @@
+[
+  {
+    "kind": "refers_to",
+    "location": "s5g1/39",
+    "status": "resolved",
+    "action": "填 refers_to {text: \"success is still a long shot\", occurrence: 1}；原卷為粗體＋底線，選文與題幹原有的 <u> 標記正確，保留不改（底線已足以定位，未另加 <b>）。",
+    "evidence": "paper-1.pdf 第5頁（題本第4頁）頁面影像：選文第四段與第39題題幹該片語為粗體＋底線；paper-2.doc 轉 docx 後 run 屬性 bold=True、underline=True。"
+  },
+  {
+    "kind": "refers_to",
+    "location": "s5g2/42",
+    "status": "resolved",
+    "action": "填 refers_to {text: \"that\", occurrence: 4}：選文共有 5 個 that，被指涉的是最後一段 would not eventually lead to that 的 that（第 4 個）；選文與題幹原有 <u>that</u> 位置正確，保留。",
+    "evidence": "paper-1.pdf 第6頁（題本第5頁）頁面影像：最後一段 lead to that 的 that 為粗體＋底線；docx run 屬性 bold=True、underline=True；用 validator 的 find_occurrences 計數。"
+  },
+  {
+    "kind": "refers_to",
+    "location": "s5g4/50",
+    "status": "resolved",
+    "action": "填 refers_to {text: \"the euphoria is fleeting\", occurrence: 1}；選文與題幹原有 <u> 標記正確，保留；extraction.issues[2] 補記。",
+    "evidence": "paper-1.pdf 第8頁（題本第7頁）頁面影像：最後一段與第50題題幹該句為粗體＋底線；docx run 屬性 bold=True、underline=True。"
+  },
+  {
+    "kind": "answer_segments",
+    "location": "s6g1/中譯英1",
+    "status": "resolved",
+    "action": "三組大括號互不相依，填 answer_segments（[today, / nowadays,]、[schoolwork / academic work]、[great / big]，其餘為固定段）；answer 等於各段第一寫法，官方沒有印出整句，answer_is_composite: true；extraction.issues[6] 補記。",
+    "evidence": "scoring-2.pdf 第1頁頁面影像「（一）參考答案 第1題」；展開 8 句全數檢查。"
+  }
+]

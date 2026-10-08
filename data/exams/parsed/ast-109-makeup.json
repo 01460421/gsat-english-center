@@ -1053,7 +1053,7 @@
         },
         {
           "id": "s5g3",
-          "passage": "Deep within the Yukon, one of the most densely wooded areas of Canada, sits a patch of land that is unlike any other forest on the planet. Instead of a canopy of treetops spreading across the horizon, tens of thousands of signposts perch haphazardly one on top of the other. They are all part of the Signpost Forest, the largest collection of signs from places around the world. At last count, the Signpost Forest in Watson Lake, located about 10 miles north of the U.S.-Canadian border, contains 91,000 signs from spots near and far, including Berlin, Moscow, Dublin, and Hawaii.\nThe tradition began during the Alaska Highway Project in 1942, when U.S. soldier Carl K. Lindley spent time in Watson Lake recovering from an injury. A commanding officer asked him to repair and erect the directional signposts, and while completing the job, the homesick soldier added a sign that indicated the direction and mileage to his hometown: “Danville, Illinois, 2,835 miles.” Others followed suit, and the trend caught on. Each year, an average of 1,000 new signs are being added to the collection. Lindley’s original sign has since been lost to time. Fifty years later, in 1992, Lindley and his wife Elinor made the pilgrimage back to Watson Lake to place a replica, which is still there.\nThe Signpost Forest takes up a couple of acres, with huge panels snaking through the trees. There are street signs, welcome signs, signatures on dinner plates, and license plates from around the world. There are also a lot of familial signs; for example, a grandfather will put up a sign and then years later family will come back and try to find it. A lot of these are personal signs to literally say that they are here. Though the visitor center has wood and paints on hand to help create a sign, many people opt to bring their own signs, though illegally, by snatching a metal sign from their hometown and nailing it to one of the wood posts. The forest has grown so vast that the visitor center no longer tries to keep a detailed list of the signs.",
+          "passage": "Deep within the Yukon, one of the most densely wooded areas of Canada, sits a patch of land that is unlike any other forest on the planet. Instead of a canopy of treetops spreading across the horizon, tens of thousands of signposts perch haphazardly one on top of the other. They are all part of the Signpost Forest, the largest collection of signs from places around the world. At last count, the Signpost Forest in Watson Lake, located about 10 miles north of the U.S.-Canadian border, contains 91,000 signs from spots near and far, including Berlin, Moscow, Dublin, and Hawaii.\n<b>The tradition</b> began during the Alaska Highway Project in 1942, when U.S. soldier Carl K. Lindley spent time in Watson Lake recovering from an injury. A commanding officer asked him to repair and erect the directional signposts, and while completing the job, the homesick soldier added a sign that indicated the direction and mileage to his hometown: “Danville, Illinois, 2,835 miles.” Others followed suit, and the trend caught on. Each year, an average of 1,000 new signs are being added to the collection. Lindley’s original sign has since been lost to time. Fifty years later, in 1992, Lindley and his wife Elinor made the pilgrimage back to Watson Lake to place a <b>replica</b>, which is still there.\nThe Signpost Forest takes up a couple of acres, with huge panels snaking through the trees. There are street signs, welcome signs, signatures on dinner plates, and license plates from around the world. There are also a lot of familial signs; for example, a grandfather will put up a sign and then years later family will come back and try to find it. A lot of these are personal signs to literally say that they are here. Though the visitor center has wood and paints on hand to help create a sign, many people opt to bring their own signs, though illegally, by snatching a metal sign from their hometown and nailing it to one of the wood posts. The forest has grown so vast that the visitor center no longer tries to keep a detailed list of the signs.",
           "passage_parts": null,
           "figures": [],
           "options_bank": null,
@@ -1063,6 +1063,11 @@
               "label": "44",
               "mode": "single_choice",
               "stem": "What does “The tradition” in the second paragraph refer to?",
+              "refers_to": {
+                "text": "The tradition",
+                "occurrence": 1,
+                "note": "原卷粗體（第二段開頭）"
+              },
               "options": {
                 "A": "Counting the number of signs in the Signpost Forest.",
                 "B": "Replacing the natural forest with signs of different kinds.",
@@ -1103,6 +1108,11 @@
               "label": "46",
               "mode": "single_choice",
               "stem": "Which of the following is closest in meaning to the word “replica” in the second paragraph?",
+              "refers_to": {
+                "text": "replica",
+                "occurrence": 1,
+                "note": "原卷粗體（第二段）"
+              },
               "options": {
                 "A": "List.",
                 "B": "Trunk.",
@@ -1358,7 +1368,7 @@
       "評分原則（scoring-2.pdf）只列出字詞譯法，沒有公布中譯英的完整參考譯文，所以兩題 answer 填 null、accepted_answers 填 null；scoring_notes 逐字收錄評分原則的通則（每個錯誤扣 0.5 分，相同的錯誤只扣一次）、該句的用字重點（第1句：no longer、limited to、formal/regular education、non-formal/informal learning；第2句：volunteer/voluntary services/work、different backgrounds and ages、interact with），以及末句「考生必須句法使用正確，且用字、拼字皆正確才能得到滿分。」，三段之間以換行分隔。作文 answer 依規定填 null，scoring_notes 收錄評分原則的作文段落全文。",
       "scoring-2.pdf 的文字層含 CJK 相容表意字（如 U+F98E 年、U+F978 兩、U+F967 不、U+F969 數、U+F96F 說），scoring_notes 已以 Unicode NFC 正規化為標準字形，並核對頁面影像；PDF 換行處在英文字詞之間補一個空格（如 formal/regular education、different backgrounds and ages）。",
       "第貳部分（非選擇題）有一段總說明（「本部分共有二題…不得使用鉛筆。」），schema 沒有對應欄位，比照 ast-109.json 放在 s6 的 part_instructions（擴充欄位）。中譯英、作文說明的第 2 點在題本中以縮排換行，這裡寫成「\\n2.…」。作文 stem 去掉題本開頭的「提示：」。",
-      "題本中的粗體（第39題 NOT、第44題與選文第二段開頭的 The tradition、第46題與選文中的 replica）依規定不保留格式；第36–39題選文的 20th、“13th” 原為上標 th，這裡寫成一般文字。",
+      "題本中的粗體：第39題 NOT 依規定不保留格式；第44題與選文第二段開頭的 The tradition、第46題與選文中的 replica 是題目所問的粗體字，選文對應處以 <b>…</b> 標出並填 refers_to（題幹以引號指稱，不另加標記）。第36–39題選文的 20th、“13th” 原為上標 th，這裡寫成一般文字。",
       "篇章結構選項 (A)、(F) 的 nomarks（一般拼法為 nomarchs，古埃及州長）照題本原文保留，Word 版與 PDF 版拼法相同。",
       "第16–20題選文第三段在 Word 版中 [[19]] 後有一個段內換行（soft line break），PDF 頁面影像顯示是同一段文字自然換行，所以合併為同一段（「…from its sun? [[19]] researchers are not completely sure, …」）。",
       "文意選填選項 (I)、(J) 在 PDF 中印作「( I ) expanded」「( J ) accidental」，Word 版為「(I)expanded」，僅排版差異，選項內容相同。",

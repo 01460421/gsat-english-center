@@ -1,0 +1,23 @@
+[
+  {
+    "kind": "refers_to",
+    "location": "s5g4/54",
+    "status": "resolved",
+    "action": "refers_to={text:\"it\", occurrence:2, note:原卷粗體、題幹 the last line 指原卷印刷版選文最後一行}；選文末句 “contributing to it on the outside” 的 it 加 <b>（選文 it 共 2 次，第 1 次是 where it is stored）。extraction.issues[6] 改寫為已標出。",
+    "evidence": "Read 看 paper-3.pdf 第7頁（題本第6頁）影像：選文最後一行「inside of hospitals and contributing to it on the outside.」的 it 為粗體，第54題題幹 it 也是粗體；soffice 轉 paper-4.doc 為 docx 後 python-docx 讀第134段 run「it」bold=True、第143段題幹 bold=True。"
+  },
+  {
+    "kind": "refers_to",
+    "location": "s6g1/簡答4",
+    "status": "resolved",
+    "action": "refers_to={text:\"hard times\", occurrence:1, note:原卷粗體}；簡答題選文第三段 “In such hard times” 的 hard times 加 <b>（題幹以引號表示、不加標記）。",
+    "evidence": "Read 看 paper-3.pdf 第8頁（題本第7頁）影像：選文第三段 hard times 粗體；paper-4.docx（soffice 轉檔）第158段 run「hard times」bold=True；選文中只出現 1 次。"
+  },
+  {
+    "kind": "other",
+    "location": "extraction.issues[7]",
+    "status": "resolved",
+    "action": "逐項核對原卷：turkey loaf 重複、you [[25]] with you classmates、handouts and , more importantly、gave it to Mama、felt--lonely、the atom of health food、work with—and 皆為原卷文字（PDF 與 Word 版相同），不是轉錄錯誤；相關題目（第25題答案 D will share、41–47 各題）作答不受影響，依逐字原則照錄不改，在 extraction.issues[7] 末尾補上判讀結果。",
+    "evidence": "pdftotext paper-3.pdf 第105、108、109、184、185、221、337行；Read 看 paper-3.pdf 第3頁（題本第2頁，綜合測驗21–25）、第5–6頁（題本第4–5頁，41–47選文）、第8頁（題本第7頁，簡答選文）影像；paper-4.docx（soffice 轉檔）第54、55、83、99、157段文字相同。"
+  }
+]

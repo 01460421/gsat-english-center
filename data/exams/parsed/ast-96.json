@@ -1917,6 +1917,11 @@
               "label": "53",
               "mode": "single_choice",
               "stem": "Why are diamonds from some areas called “blood diamonds”?",
+              "refers_to": {
+                "text": "blood diamonds",
+                "occurrence": 1,
+                "note": "第一段 “sometimes called blood diamonds”（原卷無粗體／底線，題幹以引號引用）"
+              },
               "options": {
                 "A": "They resemble blood in color.",
                 "B": "They cause loss of human lives.",
@@ -2071,6 +2076,45 @@
               "stem": "大眾運輸的快速發展已逐漸縮短了都市和鄉村的距離。",
               "options": null,
               "answer": "The rapid development of mass transportation has gradually shortened the distance between cities and countries.",
+              "answer_segments": [
+                [
+                  "The"
+                ],
+                [
+                  "rapid",
+                  "fast",
+                  "speedy"
+                ],
+                [
+                  "development of"
+                ],
+                [
+                  "mass",
+                  "public"
+                ],
+                [
+                  "transportation",
+                  "transport"
+                ],
+                [
+                  "has gradually"
+                ],
+                [
+                  "shortened",
+                  "decreased",
+                  "reduced"
+                ],
+                [
+                  "the distance between"
+                ],
+                [
+                  "cities and countries.",
+                  "urban and rural areas.",
+                  "the urban and rural areas.",
+                  "the urban and the rural areas."
+                ]
+              ],
+              "answer_is_composite": true,
               "accepted_answers": [
                 "The rapid/fast/speedy development of mass/public transportation/transport has gradually shortened/decreased/reduced the distance between cities and countries / (the) urban and (the) rural areas."
               ],
@@ -2093,6 +2137,61 @@
               "stem": "有了高速鐵路，我們可以在半天內往返台灣南北兩地。",
               "options": null,
               "answer": "With the High-Speed Rail system, we can travel back and forth between the south and north of Taiwan in half a day.",
+              "answer_segments": [
+                [
+                  "With"
+                ],
+                [
+                  "the High-Speed Rail system",
+                  "the High-Speed Rail network",
+                  "the High-Speed Rail link",
+                  "the High-Speed Rail Service",
+                  "the High-Speed Rail",
+                  "the High-Speed Railway system",
+                  "the High-Speed Railway network",
+                  "the High-Speed Railway link",
+                  "the High-Speed Railway Service",
+                  "the High-Speed Railway",
+                  "high-speed rail",
+                  "high-speed railway",
+                  "HSR"
+                ],
+                [
+                  ","
+                ],
+                [
+                  "we"
+                ],
+                [
+                  "can",
+                  "are able to"
+                ],
+                [
+                  "travel"
+                ],
+                [
+                  "back and forth",
+                  "to and fro"
+                ],
+                [
+                  "between"
+                ],
+                [
+                  "the south and north of Taiwan",
+                  "northern Taiwan and southern Taiwan",
+                  "the south and the north of Taiwan",
+                  "the south of Taiwan and the north of Taiwan"
+                ],
+                [
+                  "in",
+                  "within"
+                ],
+                [
+                  "half a day.",
+                  "a half day."
+                ]
+              ],
+              "answer_is_composite": true,
               "accepted_answers": [
                 "With the High-Speed Rail(way) / high-speed rail(way) / HSR (system/network/link/Service), we can / are able to travel back and forth / to and fro between the south and north of Taiwan / northern Taiwan and southern Taiwan / the south (of Taiwan) and the north of Taiwan in/within half a day / a half day."
               ],
@@ -2178,7 +2277,7 @@
       "題本原文照錄未改：第16–20題組首句「The northern lights, ... is one of nature’s most dazzling spectacles.」（複數主詞配 is）；第50–52題組「their child’s academic performance and social life is suffering」與「AD/HD (Attention Deficit/ Hyperactivity Disorder)」（斜線後有空格）；第7題「Our class won the first place last year」。",
       "題本格式未保留（依 schema 不保留粗斜體）：第53–56題組選文與第55題 (B) 的片名 Blood Diamond 為斜體。本卷沒有問畫底線字的題目，也沒有圖表。",
       "英文翻譯第1題：評分標準 PDF 引用的題目為「大眾運輸的快速發展已經逐漸縮短了都市和鄉村的距離。」（多一個「經」字），題本與 Word 版皆為「已逐漸縮短」，stem 以題本為準。參考答案樹狀圖中「cities and countries.」照原圖照錄（依中文「鄉村」語意應為 countryside，但官方原文如此，未更正）。",
-      "英文翻譯參考答案在評分標準 PDF（選才通訊第156期文章第4頁）中是大括號樹狀圖，以 pdftoppm 250dpi 放大逐格轉寫，完整轉寫放在 scoring_notes（以 [ ] 表示一個大括號）。answer 為每個括號取第一個選項組成的一句：第2題「Rail(way)」取 Rail、「in/within」取 in；原圖以大圓括號括住的 system／network／link／Service 一欄（依註1「( )（括弧）表示該字詞可省略」）保留第一項 system。accepted_answers 以斜線列出同位置可替換字詞，前後有空格的「 / 」表示整個片語替換；Service 在原圖中首字大寫，照錄。",
+      "英文翻譯參考答案在評分標準 PDF（選才通訊第156期文章第4頁）中是大括號樹狀圖，以 pdftoppm 250dpi 放大逐格轉寫，完整轉寫放在 scoring_notes（以 [ ] 表示一個大括號）。answer 為每個括號取第一個選項組成的一句：第2題「Rail(way)」取 Rail、「in/within」取 in；原圖以大圓括號括住的 system／network／link／Service 一欄（依註1「( )（括弧）表示該字詞可省略」）保留第一項 system。accepted_answers 以斜線列出同位置可替換字詞，前後有空格的「 / 」表示整個片語替換；Service 在原圖中首字大寫，照錄。v1.1：兩題已依原圖填 answer_segments，answer_is_composite 為 true（官方只印樹狀圖、沒有印整句）；第1題「(the) urban and (the) rural areas.」展開為 urban and rural areas.／the urban and rural areas.／the urban and the rural areas. 三種（只省略前一個 the 的「urban and the rural areas」不通順，未列入）；第2題 Rail(way) 展開為 Rail／Railway，in/within 拆成兩個寫法；可省略的 system／network／link／Service 一欄只接在有冠詞的 the High-Speed Rail／the High-Speed Railway 之後（與「不接」合為同一段的 10 種寫法），沒有冠詞的 high-speed rail／high-speed railway／HSR 只收不接名詞的寫法——「With high-speed railway network」「With HSR system」這類可數名詞缺冠詞的組合不通順，未列入（原圖各欄獨立排列，accepted_answers 與 scoring_notes 的原圖轉寫照舊）。",
       "作文：評分標準表1 的體例列為優、可兩欄合併（格式、標點、大小寫幾無錯誤。(2分)），差、劣各一欄，scoring_notes 照圖轉寫並註明合併欄。評分說明另有「寫三段，不扣分。不一定要使用假設語氣，只要整篇時態一致，內容切合題意，就不扣分。」已逐字收錄。官方未公布範文，answer 為 null。評分標準 PDF 中作文提示的括號為全形「（electricity）」，stem 以題本半形「(electricity)」為準。",
       "統計：答對率 P、高分組 Ph、低分組 Pl、鑑別度 D 取自 stats-1.xls 英文科工作表（工作表「2」，報考 100,059、缺考 4,953、到考 95,106）；option_rates 取自 stats-2.xls 選項分析的「T」（全體）列，未含「未答」比例，所以各題 option_rates 加總小於 1（未答最高為第18題 25%）。stats-1 的五等組 Pa–Pe、D1–D4 與 stats-2 的高／低分組各選項比例（H／L 列）沒有放入（schema 無對應欄位）。本年沒有非選擇題得分分布檔，翻譯與作文的 stats 填 null。",
       "統計交叉核對：56 題選項分析標「*」的選項與 answer.pdf 官方答案全部一致；兩檔只有兩處差 1 個百分點：第38題高分組（stats-1 Ph 73、stats-2 H 列 * 選項 74），第39題答對率（stats-1 P 27、stats-2 T 列 (A)* 28），推測為四捨五入差異。correct_rate／high_group 以 stats-1 為準，option_rates 照 stats-2，因此第39題 option_rates.A＝0.28 與 correct_rate＝0.27 不同。另第1題（D＝0.02，P＝0.30，(D) concerned 選答 31% 多於正答）與第15題（P＝0.12，D＝0.07，(C) before 選答 32%）鑑別度極低，數值已與原始檔再次核對無誤。",

@@ -1,0 +1,44 @@
+[
+  {
+    "kind": "refers_to",
+    "location": "s4g1/44",
+    "status": "resolved",
+    "action": "refers_to={text:\"Maggie\", occurrence:1, note:原卷粗體加底線}；原卷是粗體加底線而非單純底線，選文 “Just tie it to Maggie’s leg” 與題幹的 <u>Maggie</u> 改為 <b><u>Maggie</u></b>（同 gsat-101 第46題寫法）。extraction.issues[8] 改寫。",
+    "evidence": "soffice 轉 paper-2.doc 為 docx 後 python-docx 讀第178段與第96段題幹 run「Maggie」bold=True、underline=True；Read 看 paper-1.pdf 第5頁（題本第4頁）信件第三段 Maggie 粗體加底線（手寫斜體字型）、第44題題幹 Maggie 粗體加底線；選文中只出現 1 次。"
+  },
+  {
+    "kind": "refers_to",
+    "location": "s4g2/48",
+    "status": "resolved",
+    "action": "refers_to={text:\"the project\", occurrence:1, note:原卷粗體加底線}；選文第二段 “to complete the project by 2009” 與題幹的 <u>the project</u> 改為 <b><u>the project</u></b>。",
+    "evidence": "paper-2.docx 第103段 run「the 」「project」bold=True、underline=True，第115段題幹同；Read 看 paper-1.pdf 第6頁（題本第5頁）選文第二段與第48題題幹 the project 粗體加底線；選文中只出現 1 次。"
+  },
+  {
+    "kind": "refers_to",
+    "location": "s4g4/55",
+    "status": "resolved",
+    "action": "refers_to={text:\"erratic\", occurrence:1, note:原卷粗體加底線}；選文末句 “By exposing young children to erratic dieting habits” 與題幹的 <u>erratic</u> 改為 <b><u>erratic</u></b>。",
+    "evidence": "paper-2.docx 第139段 run「erratic」bold=True、underline=True，第148段題幹同；Read 看 paper-1.pdf 第8頁（題本第7頁）選文末句與第55題題幹 erratic 粗體加底線；選文中只出現 1 次，位於最後一句，與題幹 in the last sentence 相符。"
+  },
+  {
+    "kind": "answer_segments",
+    "location": "s5g1/翻譯1",
+    "status": "resolved",
+    "action": "填 answer_segments 7 段：Most students are not／used to|in the habit of／solving problems by themselves／;|and（分號獨立成段，串接時分號前不留空格）／they always expect their teachers to provide／them with|空字串（圓括號＝可省略，見 extraction.issues[2] 判讀）／standard answers.，共 8 種，各段互不相依。answer 由帶大括號記號的字串改為完整句子 Most students are not used to solving problems by themselves; they always expect their teachers to provide them with standard answers.，answer_is_composite: true（官方只印大括號版面）。extraction.issues[2] 改寫。",
+    "evidence": "Read 看 scoring.pdf 第2頁「參考答案：第1題」大括號版面（pdftoppm 200dpi 輸出；本頁為向量排版，pdfimages 無圖片），並以 pdftotext -layout 核對文字。程式展開全部 8 句逐句檢查皆通順、與原圖一致；validator 0 error。"
+  },
+  {
+    "kind": "answer_segments",
+    "location": "s5g1/翻譯2",
+    "status": "resolved",
+    "action": "填 answer_segments 6 段：In addition to|Besides／studying hard to／gain|obtain|get／knowledge,／students should also develop／independent thinking skills.|independent thinking abilities.|the ability to think independently.（原圖 skills/abilities 斜線展開成兩個寫法），共 18 種，各段互不相依。answer 由帶大括號記號的字串改為完整句子 In addition to studying hard to gain knowledge, students should also develop independent thinking skills.，answer_is_composite: true。",
+    "evidence": "Read 看 scoring.pdf 第2頁「參考答案：第2題」大括號版面與 pdftotext -layout 文字。程式展開 18 句，抽樣 10 句（如 Besides studying hard to obtain knowledge, students should also develop the ability to think independently.）皆通順、與原圖一致。"
+  },
+  {
+    "kind": "other",
+    "location": "extraction.issues[2]",
+    "status": "resolved",
+    "action": "判定「(them with)」的圓括號為可省略之字詞：本年度註腳只定義大括弧，但大考中心其他年度（gsat-95、gsat-97、gsat-100 的評分原則註1）明文「（ ）則表示可省略之字詞」，且 provide standard answers／provide them with standard answers 都通順達意，因此在 answer_segments 寫成 [\"them with\", \"\"]；{; / and} 與 skills/abilities 的處理同 answer_segments 兩項。extraction.issues[2] 改寫為最終判讀（移除「官方未明文」的待決措辭）。",
+    "evidence": "Read 看 scoring.pdf 第2頁版面與註1「{ }（大括弧）表示皆為可使用之字詞。」；比對 data/exams/parsed/gsat-95.json、gsat-97.json、gsat-100.json 評分原則中「（ ）則表示可省略之字詞」的註記。"
+  }
+]

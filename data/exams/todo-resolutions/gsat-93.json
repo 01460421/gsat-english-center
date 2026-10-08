@@ -1,0 +1,51 @@
+[
+  {
+    "kind": "refers_to",
+    "location": "s4g1/44",
+    "status": "resolved",
+    "action": "refers_to = {text: \"I’m 15 minutes older than him, but now I’m younger because of my heart\", occurrence: 1, note: 原卷粗體}；選文第二段 Alfred 引語開頭該句加 <b>…</b>（粗體不含開引號，也不含後面的 and I’m not going to respect him）；extraction.issues[8] 改寫為已標出",
+    "evidence": "paper-2.doc 以 soffice 轉 docx：第85段 run「I’m 15 minutes older than him, but now I’m younger because of my heart」bold=True，其餘同段文字非粗體（第93段題幹引號內亦粗體）；Read 看 paper-1.pdf 第4頁（印第3頁）選文、第5頁（印第4頁）第44題影像確認；選文中只出現 1 次"
+  },
+  {
+    "kind": "refers_to",
+    "location": "s4g2/46",
+    "status": "resolved",
+    "action": "refers_to = {text: \"countries of origin\", occurrence: 1, note: 原卷粗體}；選文第一段該片語加 <b>…</b>；選文原本沒有這處的 <u>，不需改標記種類",
+    "evidence": "docx 第100段 run「countries of origin」bold=True、無底線（第107段題幹亦粗體）；Read 看 paper-1.pdf 第5頁（印第4頁）選文與第6頁（印第5頁）第46題題幹影像確認；選文中只出現 1 次"
+  },
+  {
+    "kind": "refers_to",
+    "location": "s4g2/47",
+    "status": "resolved",
+    "action": "refers_to = {text: \"the world\", occurrence: 3, note: 原卷粗體加底線}：末段引語 which is to show the world to the world 中的第一個 the world（選文 the world 共 4 處：the world’s leading museums、all over the world、本處、句末 to the world）。原卷整個 show the world to the world 是粗體、第一個 the world 另加底線，選文的標記由 show <u>the world</u> to the world 改成 <b>show <u>the world</u> to the world</b>（<u> 確實是底線，保留）；題幹原有的 <u>the world</u> 不變",
+    "evidence": "docx 第101段 runs：「show 」bold、「the world」bold+underline、「 to the world」bold；第109段題幹 runs 同樣是第一個 the world 粗體加底線、整句粗體；Read 看 paper-1.pdf 第5頁（印第4頁）影像確認只有 show 後面的 the world 有底線"
+  },
+  {
+    "kind": "chart_reading",
+    "location": "s4g4/52",
+    "status": "not_needed",
+    "action": "維持 detail：答案（Tuck Everlasting，180 pages）出自書目行文字，passage_parts[1].title 已有，不是讀圖表。figure（書目方框）description 末尾加註「此框是選文本身的版面…不是圖表；第52–55題作答所需資訊在文字中，不需依圖作答」，日後重跑 normalize 不再列出（figure 保留，text_format 仍為 mixed）",
+    "evidence": "paper-1.pdf 第7頁（印第6頁）影像：52–55 題組只是一個外框框住四則書目（作者. 書名. 出版社, 年. ISBN. 頁數）與簡介，以虛線分隔，沒有任何圖、表、地圖或照片"
+  },
+  {
+    "kind": "chart_reading",
+    "location": "s4g4/53",
+    "status": "not_needed",
+    "action": "維持 detail：出版年 1990 印在 Everywhere 的書目行（passage_parts[0].title），讀文字即可作答",
+    "evidence": "paper-1.pdf 第7頁（印第6頁）影像，同上"
+  },
+  {
+    "kind": "chart_reading",
+    "location": "s4g4/54",
+    "status": "not_needed",
+    "action": "維持 detail：由 Beyond the Ridge 簡介 “based on the customs of the Plains Indians in America… beliefs about dying” 與書目行作者 Goble, Paul 作答，全是文字",
+    "evidence": "paper-1.pdf 第7頁（印第6頁）影像，同上"
+  },
+  {
+    "kind": "chart_reading",
+    "location": "s4g4/55",
+    "status": "not_needed",
+    "action": "維持 inference：由 The Table Where Rich People Sit 簡介（poor family is rich in things that matter in life）推論，作者 Baylor, Byrd 在書目行，全是文字",
+    "evidence": "paper-1.pdf 第7頁（印第6頁）影像，同上"
+  }
+]

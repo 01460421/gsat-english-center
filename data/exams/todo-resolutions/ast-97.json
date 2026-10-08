@@ -1,0 +1,23 @@
+[
+  {
+    "kind": "refers_to",
+    "location": "s5g2/50",
+    "status": "resolved",
+    "action": "refers_to={text:\"anorexia nervosa\", occurrence:1, note:原卷粗體加底線}；選文第一段既有的 <u>anorexia nervosa</u> 經核對原卷為粗體＋底線，維持 <u>（不改成 <b>）；題幹的 <u> 也維持。extraction.issues[3] 補註。",
+    "evidence": "paper-2.doc 以 soffice 轉 docx 後 python-docx：第112段選文 run「anorexia nervosa」bold+underline，第115段題幹同字 bold+underline；選文只出現 1 次（第51題題幹的同字不在選文）。"
+  },
+  {
+    "kind": "answer_segments",
+    "location": "s6g1/英文翻譯1",
+    "status": "resolved",
+    "action": "填 answer_segments 9 段：The global|The world|The worldwide|Global|World|Worldwide（原圖 (The) 可省略＋{global/world(wide)}，合併以保持句首大寫）／food crisis has／already|空字串／created|caused|led to|given rise to|resulted in／serious|critical|severe／social problems in many／parts|areas|regions／of|around／the world.，共 1080 種；各括號互不相依，不需 answer_variants。answer 不變（＝各段第一個寫法串接），answer_is_composite: true（官方只印樹狀圖）。extraction.issues[7] 補註。",
+    "evidence": "pdftoppm 200dpi 轉 scoring.pdf 第4頁，Read 看「參考答案：第 1 題」大括號樹狀圖影像；程式展開後以 seed 7 抽樣 10 句（例：Worldwide food crisis has led to severe social problems in many parts around the world.）文法通順、皆屬原圖寫法；各段第一個寫法串接＝原 answer。"
+  },
+  {
+    "kind": "answer_segments",
+    "location": "s6g1/英文翻譯2",
+    "status": "resolved",
+    "action": "跨段相依：原圖第二列分兩支（not take {受詞} for granted any {more./longer.} 與 no longer take {受詞} for granted.），受詞括號夾在兩支之間，無法以獨立段落表示，改填 answer_variants 14 句（原圖可推得 2×3×2×2×2×12＝576 種，貪婪選取讓每個寫法至少出現一次再隨機補足），不填 answer_segments；warn(ed) 展開為 warned／warn，(us)(that) 可省略，low-price(d) 展開為 low-price／low-priced。answer 不變（第一句），answer_is_composite: true；完整原圖仍在 accepted_answers 與 scoring_notes 的逐格轉寫。",
+    "evidence": "Read 看 scoring.pdf 第4頁（200dpi 轉檔）「參考答案：第 2 題」樹狀圖影像：not take／no longer take 由同一個大括號分支，any {more./longer.} 只接在 not take 分支、no longer take 分支直接接 for granted.；程式檢查 answer_variants 每句都屬原圖組合、涵蓋所有寫法。"
+  }
+]

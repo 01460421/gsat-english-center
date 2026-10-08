@@ -915,6 +915,11 @@
               "label": "38",
               "mode": "single_choice",
               "stem": "What does “self-talk” refer to in this passage?",
+              "refers_to": {
+                "text": "self-talk",
+                "occurrence": 1,
+                "note": "題幹問整篇文章中的 “self-talk”；選文共出現 3 次（都在第二段、都加引號），標第 1 次出現處；原卷沒有粗體或底線"
+              },
               "options": {
                 "A": "Remembering something.",
                 "B": "Actually talking to oneself.",
@@ -1372,7 +1377,7 @@
       "作文 scoring_notes：收錄考試說明 other-1.pdf「指定科目考試英文考科考試說明」（中華民國九十六年九月，適用九五課綱）的「英文作文評分指標」表（內容、組織各5分，文法句構、字彙拼字各4分，體例2分；看頁面影像確認，表格依「項目：等級（分數）＝描述」轉成文字，「體例」列優、可兩欄在原表合併；原表「全文幾無文法錯誤， 文句結構富變化」逗號後的多餘空格已去除），並註明這是考試說明的一般評分指標，不是本卷專屬的評分原則，與 ref-102 的做法相同。",
       "來源檔：other-1.pdf 與 other-2.pdf 是同一份檔案（md5 相同，都是「指定科目考試英文考科考試說明」），只列 other-1.pdf；other-3.pdf／other-4.pdf（學測考試說明，兩檔相同）用於 ref-98-b。考試說明的「試題舉例」全部取自歷屆試題（94／95指考、92／93指考改編、英文寫作能力測驗規劃研究 VI），沒有收錄本參考試卷的任何題目，所以無法用來核對本卷答案。",
       "沿用的歷屆試題（以 8-gram 比對 data/raw/ceec 下學測83–115、指考91–110全部題本 paper-1.pdf 與 parsed JSON）：只有第2題改寫自 gsat-89 第3題（Jonathan had qualified as a doctor but later gave up the ______ of medicine…，原答案 C practice；本卷題幹與選項都改寫，答案 B practice），以擴充欄位 reused_from 標示並寫明差異（比照 ref-102、ref-111、ref-115）；tags 與 gsat-89 原題一致（collocation／noun）。其餘選文與題目在 repo 的歷屆題本中都沒有找到。",
-      "選文原文疑義（照題本保留）：第16–20題選文第二句「if it doesn’t, either it is bad art or we are not abnormally blind」——依上下文（下一句說我們對建築「insensitive」、第17題答案 blinded）語意上較像應為「or we are abnormally blind」，但文字層與頁面影像都印「not abnormally blind」，依逐字原則保留，僅在此註記，不修改。",
+      "選文原文疑義（照題本保留）：第16–20題選文第二句「if it doesn’t, either it is bad art or we are not abnormally blind」——依上下文（下一句說我們對建築「insensitive」、第17題答案 blinded）語意上較像應為「or we are abnormally blind」，但文字層與頁面影像都印「not abnormally blind」，依逐字原則保留，僅在此註記，不修改。（v1.1 判定）再看 PDF 第3頁影像，確認印的是「or we are not abnormally blind」；第16–20題的答案都不受這個 not 影響；是否為誤植無法從官方資料確認，依逐字原則維持原文、不修改。",
       "空格與排版：克漏字類選文的空格在 PDF 是底線加題號，轉成 [[題號]] 後去除底線排版造成的多餘空白，空格後緊接標點時不留空格（例如「by [[21]]—first」「By [[22]], that is」「[[12]], fossil fuels」「were [[23]]. He」）；第18題在題本中底線緊接在 and 之後（「and__18__ we」），統一寫成「and [[18]] we」。題組前的「第 11 至 15 題爲題組」等標示（影像為「爲」、文字層為「為」）沒有放進 passage。詞彙題空格照文字層為7個底線、閱讀題幹空格為8個底線。段落依頁面影像的首行縮排切分，以換行分隔（第31–35題、第36–39題各2段，第44–47題3段，第48–51題4段，其餘1段）。",
       "格式：本卷沒有粗體、斜體或畫底線的題目文字（第36題的 NOT 為一般大寫），也沒有任何圖表。",
       "說明文字：大題標題在 PDF 中是字距加寬排版（如「一 、 詞 彙 題 （ 佔 10 分 ）」），title 去除了這些排版空白，並照題本用「佔」字。各大題說明的冒號為「：」(U+FF1A)；文意選填與篇章結構說明「(A) 到 (J)」「(A) 到 (E)」前後的空白照文字層保留。中譯英、作文說明的兩點以換行分開，作文說明「1. 依提示」「2. 文長」數字後的空格照題本保留；作文提示「約 120 至 150 個單詞」數字前後的空格照文字層保留。第壹、第貳部分標題放在擴充欄位 parts（與 ref-102、ast-103 相同做法）。",

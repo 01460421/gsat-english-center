@@ -1,0 +1,65 @@
+[
+  {
+    "kind": "refers_to",
+    "location": "s5g1/37",
+    "status": "resolved",
+    "action": "refers_to = {text: \"this group\", occurrence: 1, note: 原卷粗體}；選文第四段 members of this group 的 this group 加 <b>…</b>；extraction.issues[10] 改寫為已標出",
+    "evidence": "paper-2.docx 第81段 run「 this group 」bold=True（第93段題幹亦粗體）；Read 看 paper-1.pdf 第6頁（印第5頁）影像確認；選文中只出現 1 次"
+  },
+  {
+    "kind": "refers_to",
+    "location": "s5g2/41",
+    "status": "resolved",
+    "action": "refers_to = {text: \"a rags-to-riches myth\", occurrence: 1, note: 原卷粗體}；選文末段該片語加 <b>…</b>",
+    "evidence": "paper-2.docx 第104段 runs「a rags-to-riches」「myth 」bold=True（第116段題幹亦粗體）；Read 看 paper-1.pdf 第7頁（印第6頁）影像確認；選文中只出現 1 次"
+  },
+  {
+    "kind": "refers_to",
+    "location": "s5g3/44",
+    "status": "resolved",
+    "action": "refers_to = {text: \"pronounced\", occurrence: 1, note: 原卷粗體}；選文第三段 more pronounced among the poor 的 pronounced 加 <b>…</b>",
+    "evidence": "paper-2.docx 第127段 run「pronounced 」bold=True（第153段題幹亦粗體）；Read 看 paper-1.pdf 第8頁（印第7頁）選文與第9頁（印第8頁）第44題題幹影像確認；選文中只出現 1 次"
+  },
+  {
+    "kind": "refers_to",
+    "location": "s6g1/48",
+    "status": "resolved",
+    "action": "refers_to = {text: \"his unfriendly former ally\", occurrence: 1, note: 原卷粗體}；混合題選文第二段該片語加 <b>…</b>",
+    "evidence": "paper-2.docx 第167段 run「his unfriendly former ally」bold=True（第172段題幹亦粗體）；Read 看 paper-1.pdf 第10頁（印第9頁）影像確認；選文中只出現 1 次"
+  },
+  {
+    "kind": "refers_to",
+    "location": "s6g1/49",
+    "status": "not_needed",
+    "action": "（原清單沒有這一項：選文加了第48題的 <b> 之後，normalize 的「Which word in the passage means …」排除規則因題組有標記而不再適用，重跑時會新列出。）不填 refers_to：本題要考生自己在選文中找出符合定義的字（答案 mint），引號內是定義、不是選文字串；標出 mint 等於直接給答案。資料未修改",
+    "evidence": "paper-1.pdf 第10頁（印第9頁）影像：第49題題幹 “a place where coins, medals, or tokens are made” 無粗體，選文 the Austrian mint 也沒有強調；scoring.pdf 第2頁滿分參考答案 mint/Mint."
+  },
+  {
+    "kind": "answer_segments",
+    "location": "s7g1/中譯英1",
+    "status": "resolved",
+    "action": "有跨段相依（兩種句型；句型二的 public speaking. / , / ; 與 They / and (they) / and they 依列對應），不填 answer_segments，改填 answer_variants；answer_is_composite: true（官方只印大括號版面，answer 取句型一各括號第一個寫法）；scoring_notes 末尾加解析註；extraction.issues[5] 補記。對抗式查證修正：評分原則前言明列「發抖」為 tremble/shiver，句型一已並列 trembling／shivering，但句型二版面只印 tremble，原本的 36 句漏了句型二的 shiver 寫法；已補 24 句（Many people {are afraid of|are scared of|are fearful of} {public speaking. They|public speaking, and they|public speaking, and|public speaking; and they} often shiver and feel dizzy before {going|getting} on stage.），answer_variants 共 60 句（句型一 12、句型二 48），accepted_answers 同步改為 60 句扣掉 answer 的 59 條；scoring_notes 解析註與 extraction.issues[5] 一併改寫",
+    "evidence": "scoring.pdf 第2頁「一、中譯英 (一) 參考答案 1.」大括號版面（pdftoppm 影像）：句型一、「或」、句型二；句型二第二、三組括號三列逐列對齊（交叉組合如 public speaking. and they 不合語法）。scoring.pdf 第1頁前言（pdftotext）：「發抖」為 tremble/shiver。程式展開 60 句，與 answer＋accepted_answers 集合完全相同、無重複，抽樣 10 句文法通順"
+  },
+  {
+    "kind": "answer_segments",
+    "location": "s7g1/中譯英2",
+    "status": "resolved",
+    "action": "填 answer_segments，answer_is_composite: true（answer 取各段第一個寫法並保留可省略的 on，與原 answer 相同）；scoring_notes 末尾加解析註。對抗式查證修正：評分原則前言明列「持續練習」為 keep practicing/practice continuously，原本 27 種沒有 practice continuously；把「keep on／keep／continue」與後面的 practicing, 併成同一段 [keep on practicing, | keep practicing, | continue practicing, | practice continuously,]，段落改為 As long as／we have confidence|we have faith|we are confident／in ourselves and／（上述 4 種）／we can／overcome|conquer|beat／the problem of stage fright.，互不相依，共 36 種；accepted_answers 同步改為展開扣掉 answer 的 35 條；scoring_notes 解析註與 extraction.issues[5]（原本寫「practice continuously 不在大括號中，所以沒有加進 accepted_answers」）一併改寫",
+    "evidence": "scoring.pdf 第2頁「2.」大括號版面影像；scoring.pdf 第1頁前言（pdftotext）「持續練習」為 keep practicing/practice continuously（other-3.pdf 試題解析同）。程式展開 36 句，與 answer＋accepted_answers 集合完全相同，抽樣 10 句文法通順，各段第一個寫法串接＝answer"
+  },
+  {
+    "kind": "image_options",
+    "location": "s5g3/43",
+    "status": "resolved",
+    "action": "保留文字描述作為前端呈現：四個選項由「（地圖）…」改為「［圖］印度時區地圖：…」開頭（比照 gsat-115 第38題），內容核對無誤：(A) 全境一個時區 7 a.m.；(B) 兩區 7／8 a.m.，Calcutta 在 8 a.m.；(C) 三區 7／8／9 a.m.；(D) 三區 7／7:30／8 a.m.，C、D 的 Bombay 都在西側一小片、Calcutta 在中間時區東緣。文字足以依選文（Bombay Time 1955 年停用後全國單一 IST）作答（答案 A）。題組 figure（rows 列出各選項時區數與城市所在時區）補 label「第43題選項 (A)–(D)」與 question_no 43；extraction.issues[11] 同步更新",
+    "evidence": "paper-1.pdf 第8頁（印第7頁）以 pdftoppm 250dpi 輸出並裁切第43題四張地圖，逐一核對分界線位置、時間標示與 Bombay／Calcutta 黑點所在區；answer.pdf 第43題答案 A"
+  },
+  {
+    "kind": "other",
+    "location": "extraction.issues[8]",
+    "status": "not_needed",
+    "action": "核對後維持原樣：題本確實印 Warren Buffet（第31–34題選文）與 competition with other species often result in（第35–38題選文第四段），依逐字原則照錄；試題解析第34題的 donate as least half 是解析本身的筆誤，題本選項 (B) 為 at least half，資料以題本為準。三處都不影響作答與答案。issue 末尾補記查證結果",
+    "evidence": "paper-1.pdf 文字層第5、6頁與第6頁（印第5頁）影像；paper-2.docx 同段文字；other-3.pdf（試題解析）第34題解析文字「donate as least half」"
+  }
+]

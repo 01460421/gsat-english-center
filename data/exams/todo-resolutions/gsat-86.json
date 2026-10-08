@@ -1,0 +1,51 @@
+[
+  {
+    "kind": "refers_to",
+    "location": "s4g1/41",
+    "status": "resolved",
+    "action": "refers_to={text:\"dispose of\", occurrence:1, note:原卷選文畫底線}；選文既有 <u>dispose of</u> 經核對確為底線（非粗體），維持；題幹的 dispose of 原卷為粗體，依規則不加標記。extraction.issues[9] 補註。",
+    "evidence": "paper-2.doc（soffice 轉 docx）python-docx：第125段 run「dispose of」underline、第129段題幹 bold；Read 看 paper-1.pdf 第5頁（印第4頁）影像，第一段 dispose of 畫底線、第41題題幹粗體。"
+  },
+  {
+    "kind": "refers_to",
+    "location": "s4g2/44",
+    "status": "resolved",
+    "action": "refers_to={text:\"rescued\", occurrence:1, note:原卷選文畫底線}；選文第二段既有 <u>rescued</u> 經核對確為底線，維持（本題組選文只出現 1 次；第52–55題組的 rescued 不同題組、不計）。",
+    "evidence": "paper-2.doc（soffice 轉 docx）python-docx：第143段 run「rescued」underline；Read 看 paper-1.pdf 第6頁（印第5頁）影像，第二段 things rescued by the Disk Doctor 畫底線，第44題題幹一般字體。"
+  },
+  {
+    "kind": "refers_to",
+    "location": "s4g2/47",
+    "status": "resolved",
+    "action": "refers_to={text:\"But,” says Jack, “most people don’t take any notice of the doctor’s advice!\", occurrence:1}：題幹「From the statement “But … most people don’t take any notice of the doctor's advice!”」以刪節號略去 says Jack 引用第三段末句，refers_to 取選文中從 But 到 advice! 的整段（選文用彎撇號 doctor’s，題幹為直撇號，照選文）。原卷無格式，不加標記。",
+    "evidence": "Read 看 paper-1.pdf 第6頁（印第5頁）影像：第三段末 “But,” says Jack, “most people don’t take any notice of the doctor’s advice!” 一般字體；validator find_occurrences 計數 1 次。"
+  },
+  {
+    "kind": "refers_to",
+    "location": "s4g3/49",
+    "status": "resolved",
+    "action": "refers_to={text:\"tips\", occurrence:1, note:原卷選文畫底線}；選文第二段既有 <u>tips</u> 經核對確為底線，維持；題幹的 tips 原卷為粗體，不加標記。",
+    "evidence": "paper-2.doc（soffice 轉 docx）python-docx：第164段 run「tips」underline、第170段題幹 bold；Read 看 paper-1.pdf 第6頁（印第5頁）影像第二段 a few tips 畫底線、第7頁第49題題幹 tips 粗體。"
+  },
+  {
+    "kind": "refers_to",
+    "location": "s4g4/54",
+    "status": "not_needed",
+    "action": "不加 refers_to：題幹 “Kawasaki” 只是沿用選文對船名的引號來指稱這艘帆船，題目問的是航程中第一次出狀況的時間（第三段 four days ago 主帆被吹壞，對照 8 月 18 日出發、11 月 24 日電頭推算），不是指涉選文某一處字詞；船名在選文出現 2 次（第三段、末段），也沒有特定一處被指涉。原卷無粗體或底線。",
+    "evidence": "Read 看 paper-1.pdf 第7頁（印第6頁）選文影像與第8頁第54題題幹：“Kawasaki” 兩處皆一般字體加引號。"
+  },
+  {
+    "kind": "refers_to",
+    "location": "s5g1/簡答3",
+    "status": "resolved",
+    "action": "refers_to={text:\"infectious\", occurrence:1, note:選文第三段 infectious laughter is often catching 中的 infectious，原卷無強調}；不加 <u>／<b>。（查證改判：原記 not_needed。題幹引號內的 infectious 就是選文中的字，題目以它為錨點要考生另找意思最接近的字；schema 的工作清單規則只在引號字串不在選文中時才排除找字題，且同型的 gsat-87 短詩2「Which word in the poem is closest in meaning to sleep-song?」、短詩4 已填 refers_to，為讓出題模式分析一致，比照辦理。選文只有五句，前端高亮 infectious 不會比原卷多透露答案。）",
+    "evidence": "Read 看 paper-1.pdf 第8頁（印第7頁）影像：簡答題選文第三段 …and infectious laughter is often catching.，infectious 一般字體，題幹以彎單引號引用；paper-2.doc（soffice 轉 docx）python-docx 該段無粗體／底線 run；validator find_occurrences 計數 1 次。"
+  },
+  {
+    "kind": "refers_to",
+    "location": "s5g1/簡答5",
+    "status": "resolved",
+    "action": "refers_to={text:\"depart\", occurrence:1, note:詩第2行行末 Some ills will soon depart;，原卷整首詩為斜體、depart 無另外強調}；不加標記。（查證改判：原記 not_needed。題目問的是詩中與 depart 押韻的字，depart 是詩第2行的行末字，題目以它指出要比對的那一行；與簡答3、gsat-87 短詩2／4 一致處理。）",
+    "evidence": "Read 看 paper-1.pdf 第8頁（印第7頁）影像：四行詩斜體、第2行 Some ills will soon depart; 無粗體或底線；題幹以彎單引號引用；docx 該段無粗體／底線 run；depart 在選文只出現 1 次。"
+  }
+]

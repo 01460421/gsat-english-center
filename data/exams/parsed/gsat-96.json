@@ -1774,6 +1774,11 @@
               "label": "50",
               "mode": "single_choice",
               "stem": "What does “a new chapter” in line 2, paragraph 1 mean?",
+              "refers_to": {
+                "text": "a new chapter",
+                "occurrence": 1,
+                "note": "原卷第2行（第一段排版第2行）；粗體加底線，以 <u> 標出"
+              },
               "options": {
                 "A": "A new unit of a book.",
                 "B": "The beginning of a new trend.",
@@ -1979,6 +1984,11 @@
               "label": "56",
               "mode": "single_choice",
               "stem": "What does the phrase “cling to” in the first paragraph mean?",
+              "refers_to": {
+                "text": "cling to",
+                "occurrence": 1,
+                "note": "原卷粗體加底線（第一段），以 <u> 標出"
+              },
               "options": {
                 "A": "maintain",
                 "B": "abandon",
@@ -2039,6 +2049,25 @@
               "stem": "如果我們只為自己而活，就不會真正地感到快樂。",
               "options": null,
               "answer": "If we live only for ourselves, we will not feel really happy.",
+              "answer_variants": [
+                "If we live only for ourselves, we will not feel really happy.",
+                "If one lives just for himself, he can not feel really contented.",
+                "If one lives solely for herself, she could not feel truly happy.",
+                "If we live merely for ourselves, we may not feel truly contented.",
+                "If we live only for ourselves, we might not feel real happiness.",
+                "If we live only for ourselves, we would not feel true happiness.",
+                "If we live only for ourselves, we will not feel genuine happiness.",
+                "If we lived only for ourselves, we would not feel really happy.",
+                "If one lives only for herself, she may not feel genuine happiness.",
+                "If one lives solely for herself, she may not feel truly contented.",
+                "If we live solely for ourselves, we will not feel real happiness.",
+                "If one lives just for herself, she might not feel genuine happiness.",
+                "If one lives merely for herself, she can not feel real happiness.",
+                "If we live only for ourselves, we can not feel real happiness.",
+                "If we live just for ourselves, we could not feel really contented.",
+                "If one lives just for herself, she would not feel truly happy."
+              ],
+              "answer_is_composite": true,
               "accepted_answers": [
                 "If we live {only|just|solely|merely} for ourselves, we {will|can|could|may|might|would} not feel {really|truly} {happy|contented}.",
                 "If we live {only|just|solely|merely} for ourselves, we {will|can|could|may|might|would} not feel {real|true|genuine} happiness.",
@@ -2063,6 +2092,24 @@
               "stem": "當我們開始為他人著想，快樂之門自然會開啟。",
               "options": null,
               "answer": "When we begin to think for others, the gate to happiness will open naturally.",
+              "answer_variants": [
+                "When we begin to think for others, the gate to happiness will open naturally.",
+                "When we start to take others into consideration, the gateway of happiness will be open automatically.",
+                "When we begin to show concern for others, the door to happiness will be opened by itself.",
+                "Only when we start to think for others will the door to happiness open naturally.",
+                "Only when we begin to think for others will the door to happiness be open automatically.",
+                "Only when we start to think for others will the door to happiness be opened by itself.",
+                "When we begin to put ourselves in others’ shoes, the gate to happiness will open naturally.",
+                "When we start to show concern for others, the gate to happiness will be opened by itself.",
+                "When we start to show concern for others, the door of happiness will open naturally.",
+                "When we start to put ourselves in others’ shoes, the door of happiness will be opened automatically.",
+                "When we begin to show concern for others, the door to happiness will open naturally.",
+                "When we start to think for others, the gateway to happiness will be open automatically.",
+                "When we start to think for others, the door of happiness will be opened naturally.",
+                "When we begin to show concern for others, the gateway of happiness will be opened by itself.",
+                "When we start to take others into consideration, the door of happiness will open automatically."
+              ],
+              "answer_is_composite": true,
               "accepted_answers": [
                 "When we {begin|start} to {think for others|take others into consideration|show concern for others|put ourselves in others’ shoes}, the {gate|gateway|door} {to|of} happiness will {open|be open|be opened} {naturally|automatically|by itself}.",
                 "Only when we start/begin to think for others will the door to happiness {open|be open|be opened} {naturally|automatically|by itself}."
@@ -2155,10 +2202,10 @@
     "method": "Word 版 (paper-2.doc → soffice 轉 docx → python-docx) 為主要文字來源，與 pdftotext -layout 題本逐段比對；Read 看題本 PDF 第 1–7 頁影像確認版面、底線與作文圖畫；答案取自 answer.pdf（pdftotext）；翻譯參考答案為評分說明 PDF 中的括號樹狀圖，以 pdftoppm 300dpi 放大後人工轉錄；統計取自 stats-1.xls（P/Ph/Pl/D）與 stats-2.xls（全體考生 T 列選項比例），並程式核對 stats-2 標星號選項＝官方答案、其比例＝P。；查證時另以 Read 看題本第 2–8 頁、answer.pdf、scoring.pdf 第 3–4 頁影像，作文四格圖以 pdftoppm 500dpi 放大檢視。",
     "issues": [
       "結構核對：與 gsat-spec.json legacy_gsat 94–110 期別一致（詞彙15題15分、綜合測驗15題15分、文意選填10題10分、閱讀測驗16題32分；翻譯題2題8分、英文作文20分；選擇題72分／非選擇題28分），作文文長「120個單詞(words)左右」亦與 essay_length_by_year 相符，無不一致。",
-      "題號：題本翻譯題印為 1、2，作文無題號；為避免與選擇題第1、2題重複，no 依序接續為 57、58（翻譯）、59（作文），題本原編號保留在 label「翻譯1」「翻譯2」「作文」。57–59 並非題本印刷題號。",
+      "題號：題本翻譯題印為 1、2，作文無題號。v1.1 起翻譯與作文的 no 用大題內序號：翻譯 1、2，作文 1；label 為「翻譯1」「翻譯2」「英文作文」（v1 曾把 no 接續選擇題寫成 57、58、59，已由 normalize 改掉）。",
       "大題標題：Word 版翻譯題標題缺「一、」，以 PDF 題本「一 、 翻 譯 題 (8%)」為準寫成「一、翻譯題(8%)」。part 取題本「第壹部分：單一選擇題」「第貳部分：非選擇題」的部分名稱。",
-      "底線標記：題本 49–52 選文的 a new chapter 與 53–56 選文的 cling to 為粗體加底線（第50、56題問其意義），已於 passage 以 <u>…</u> 標記；第50、56題題幹中的同字串在題本同樣粗體底線、以引號標出，題幹未另加 <u>。第50題「line 2, paragraph 1」指題本排版行數。",
-      "翻譯參考答案：評分說明 PDF 中的參考答案是括號樹狀圖（圖片，pdftotext 抓不到），以 300dpi 放大人工轉錄。accepted_answers 以 {a|b|c} 表示「同一個括號內擇一」（第1題 one lives／himself, herself／he/she 為同一分支，需搭配使用）；第2題替代句中的 start/begin 斜線為官方原文。answer 取各括號第一個選項組成的句子（非官方逐字句）；第1題官方另以完整句列出 If we lived only for ourselves, we would not feel really happy.，放在 accepted_answers 最後一項。 查證補充：樹狀圖中 only/just/solely/merely 的括號只畫在 we live 那一行，one lives 分支是否同樣要加副詞，圖上沒有明示；accepted_answers 依中文「只為」把同一組副詞套用到 one lives 分支。圖上 for himself／herself 後面沒有逗號，accepted_answers 依 for ourselves, 的寫法補上逗號。",
+      "底線標記：題本 49–52 選文的 a new chapter 與 53–56 選文的 cling to 為粗體加底線（第50、56題問其意義），已於 passage 以 <u>…</u> 標記；第50、56題題幹中的同字串在題本同樣粗體底線、以引號標出，題幹未另加 <u>。第50題「line 2, paragraph 1」指題本排版行數。第50、56題已填 refers_to（第50題「line 2」經核對題本第5頁排版，第一段第2行即 “fur-free statement on the runway, marking a new chapter for the fashion industry and animal protection.” 那一行）。",
+      "翻譯參考答案：評分說明 PDF（scoring.pdf 第3–4頁）中的參考答案是括號樹狀圖（圖片，pdftotext 抓不到），以 300dpi 放大人工轉錄。accepted_answers 以 {a|b|c} 表示「同一個括號內擇一」（第1題 one lives／himself, herself／he/she 為同一分支，需搭配使用）；第2題替代句中的 start/begin 斜線為官方原文。answer 取各括號第一個選項組成的句子（非官方逐字句，answer_is_composite: true）；第1題官方另以完整句列出 If we lived only for ourselves, we would not feel really happy.，放在 accepted_answers 最後一項。第1題樹狀圖中 only/just/solely/merely 的括號畫在 we live 那一行，one lives 那一行同一位置留白，兩行共用後面的 for 括號；判斷這組副詞由兩個分支共用（中文「只為」必須譯出），accepted_answers 與 answer_variants 都把副詞套用到 one lives 分支，不列沒有副詞的 If one lives for himself… 寫法。圖上 for himself／herself 後面沒有逗號，比照 for ourselves, 補上逗號（條件子句在前，逗號為標點慣例）。v1.1：兩題都有跨括號的連動（第1題主詞 we／one 與 ourselves／himself、herself 及 we／he、she 一起換，另有 lived…would 的獨立整句；第2題 When… 與 Only when… 倒裝兩種句構），改填 answer_variants（第1題 16 句、第2題 15 句，分別從原圖可推得的 505、450 種中選出，每個寫法至少出現一次），不填 answer_segments；he/she 依 himself／herself 配對展開。",
       "翻譯 scoring_notes：測驗目標段落與評分標準逐字取自評分說明，兩題共用（原文為一段同時說明兩題），已去除 PDF 排版在中英文與頓號間插入的空白。作文 scoring_notes 為評分說明中英文作文部分的兩段原文。",
       "統計：correct_rate／high_group／low_group／discrimination 取自 stats-1.xls（P、Ph、Pl、D），option_rates 取自 stats-2.xls 全體考生（T 列）。已程式核對 stats-2 標星號選項皆等於官方答案。第21、22題 stats-1 的 P（15%、52%）與 stats-2 答案選項比例（16%、53%）差 1 個百分點，應為四捨五入差異，correct_rate 採 stats-1。option_rates 不含「未答」欄（0–2%），故部分題目加總為 0.98–1.02。stats-2 另有高分組／低分組各選項比例（H、L 列）與 stats-1 五等分組 Pa–Pe、D1–D4，schema 無對應欄位未收錄。",
       "非選擇題（翻譯、作文）本年度來源檔無得分分布統計，stats 填 null。",

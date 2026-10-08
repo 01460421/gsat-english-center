@@ -1,0 +1,23 @@
+[
+ {
+  "kind": "refers_to",
+  "location": "s4g2/47",
+  "status": "resolved",
+  "action": "refers_to={text:\"an engineering feat\", occurrence:1, note:原卷粗體加底線；位於選文第二段}；選文第二段 “The road is considered an engineering feat.” 與第47題題幹引號內的片語改為 <b><u>an engineering feat</u></b>（粗體加底線的寫法同 gsat-98、gsat-101）。",
+  "evidence": "paper-2.doc（soffice 轉 docx）第101段（選文）與第113段（題幹）run「an engineering feat」皆 bold=True、underline=True；Read 看 paper-1.pdf 第5頁（題本第4頁）選文與第6頁（題本第5頁）第47題影像，皆為粗體加底線；選文中只出現 1 次。"
+ },
+ {
+  "kind": "answer_segments",
+  "location": "s5g1/翻譯1",
+  "status": "resolved",
+  "action": "各大括弧互不相依，填 answer_segments [[Listening to music is],[a hobby|an interest|a pastime],[which|that|空字串],[you can enjoy],[all of your life.|all your life.|for a lifetime.|a lifetime.|your whole life.|for life.]]（54 種；({which/that}) 外層圓括號＝可省略，all (of)、(for) 展開）；answer 原為帶大括號記號的轉寫，改為完整句子 Listening to music is a hobby which you can enjoy all of your life.，answer_is_composite: true。extraction.issues[2] 改寫。",
+  "evidence": "pdftoppm 150dpi 轉 scoring.pdf 第5頁，Read 看「參考答案：第1題」大括弧圖與原註 1「( )（括弧）表示該字詞可省略」；程式展開 54 句、抽樣 10 句（seed 971）文法通順。"
+ },
+ {
+  "kind": "answer_segments",
+  "location": "s5g1/翻譯2",
+  "status": "resolved",
+  "action": "原圖有兩種句型（But {being able to play/playing} … 與「OR」之後的 But if you can play …,），主詞與動詞部分結構不同、跨段相依，改填 answer_variants 35 句（兩種句型各以全取第一寫法為基準，逐一替換每個位置，另加多處同時替換；每個寫法至少出現一次；完整範圍兩種各 324 種、共 648 種），不填 answer_segments；answer 由大括號轉寫改為完整句子 But being able to play a musical instrument can give you even more joy.，answer_is_composite: true；accepted_answers 改為兩種句型的原圖大括號轉寫（原 answer 移入 [0]、原 OR 句型為 [1]）；scoring_notes 末尾加解析註保留原圖意義；extraction.issues[2] 改寫。查證補充：本題評分說明寫「基本句型（如：連接詞 But/Yet/However 為首的句子）」，但大括弧圖只印 But，原 35 句沒有涵蓋 Yet／However 開頭的寫法；answer_variants 另補 4 句（兩種句型各一句 Yet …、However, …），共 39 句；scoring_notes 解析註與 extraction.issues[2] 同步改寫，註明這 4 句的依據。",
+  "evidence": "scoring.pdf 第5頁 150dpi 影像「參考答案：第2題」：上半 But {being able to play/playing} {a musical instrument/musical instruments/an instrument} {{can/will}{give/bring} you / {gives/brings} you} {(even/much) more {joy./pleasure./enjoyment.}}，OR，下半 But if you can play {…,} {you {can/will}{give/bring} yourself / it {can/will}{give/bring} you / you {will/can}{have/get}} {(even/much) more {…}}；35 句逐句檢查文法通順（it 指 a musical instrument／能彈奏這件事，照原圖不限單複數）。查證：scoring.pdf 第4頁評分說明「而第二句在測驗考生利用高中常用詞彙…及基本句型（如：連接詞 But/Yet/However 為首的句子）」；第5頁 220dpi 影像再核對兩種句型版面，兩種句型各 324 種；程式確認原 35 句都在官方 648 種之內、每個寫法至少出現一次。"
+ }
+]

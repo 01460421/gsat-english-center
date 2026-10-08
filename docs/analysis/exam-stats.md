@@ -235,7 +235,7 @@
 | ast|word_bank | 22 | 252.5（222.0–299.25） | 0.02 | expository 21、biography 1 | continuous 22 |
 | gsat-current|cloze | 10 | 196.0（189.75–209.75） | 0.028 | expository 9、narrative 1 | continuous 10 |
 | gsat-current|mixed | 5 | 394（332.5–398.0） | 0.028 | opinion 2、expository 2、biography 1 | mixed 3、multi_text 2 |
-| gsat-current|reading | 15 | 337（320.0–346.0） | 0.032 | expository 13、biography 1、narrative 1 | continuous 10、mixed 5 |
+| gsat-current|reading | 15 | 337（320.0–346.0） | 0.033 | expository 13、biography 1、narrative 1 | continuous 10、mixed 5 |
 | gsat-current|structure | 5 | 278（246.5–297.5） | 0.031 | expository 5 | continuous 5 |
 | gsat-current|word_bank | 5 | 293（279.5–305.0） | 0.033 | expository 5 | continuous 5 |
 | gsat-legacy|cloze | 81 | 150（126.0–177.5） | 0.019 | expository 55、narrative 10、dialogue 6、news 3、advertisement 3 | continuous 81 |
@@ -243,7 +243,7 @@
 | gsat-legacy|other | 1 | 61（61–61） | 0.033 | poem 1 | continuous 1 |
 | gsat-legacy|reading | 117 | 267（218.5–300.0） | 0.02 | expository 79、news 16、narrative 8、biography 7、opinion 2 | continuous 113、mixed 4 |
 | gsat-legacy|short_answer | 8 | 177.0（126.75–229.75） | 0.021 | expository 6、advertisement 1、news 1 | continuous 7、mixed 1 |
-| gsat-legacy|translation | 1 | 99（99–99） | 0.051 | expository 1 | continuous 1 |
+| gsat-legacy|translation | 1 | 89（89–89） | 0.056 | expository 1 | continuous 1 |
 | gsat-legacy|vocabulary | 2 | 116.0（115–117） | 0.009 | dialogue 2 | continuous 2 |
 | gsat-legacy|word_bank | 25 | 210（180.5–268.5） | 0.014 | expository 17、narrative 6、biography 1、opinion 1 | continuous 25 |
 

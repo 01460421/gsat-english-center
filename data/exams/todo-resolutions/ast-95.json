@@ -1,0 +1,30 @@
+[
+  {
+    "kind": "refers_to",
+    "location": "s5g1/48",
+    "status": "resolved",
+    "action": "選文第二段 its shelf-mates 的 shelf-mates 加上 <b>shelf-mates</b>，填 refers_to {text: \"shelf-mates\", occurrence: 1}；題幹以引號指稱，不另加標記；extraction.issues[5] 改寫為已標記。",
+    "evidence": "paper-1.pdf 第6頁（題本第5頁）頁面影像：選文與第48題題幹的 shelf-mates 為粗體、沒有底線；paper-2.doc 轉 docx 後 run 屬性 bold=True。"
+  },
+  {
+    "kind": "answer_segments",
+    "location": "s6g1/英文翻譯1",
+    "status": "resolved",
+    "action": "dining environment／environment for dining 兩支只差在同一位置，攤平成一段 [dining environment, / eating environment, / environment for dining, / environment for eating,]，其他大括號各一段；answer 等於各段第一寫法，answer_is_composite: true；extraction.issues[9] 補記。",
+    "evidence": "scoring.pdf 第1頁頁面影像（150dpi）「句1之參考答案」樹狀圖；展開 32 句，抽 10 句檢查。"
+  },
+  {
+    "kind": "answer_segments",
+    "location": "s6g1/英文翻譯2",
+    "status": "resolved",
+    "action": "前半兩支結構不同（In spite of/Despite objections from/of many [chain/heavy] smokers, 與 Although many [chain/heavy] smokers are against/object to/oppose this,），為避免跨段相依攤平成一段 21 種寫法（2×2×3＋3×3）；後半 this/it、indeed/definitely/certainly/really、good/great 各一段；chain／heavy 依 other 項判定可省略；answer 等於各段第一寫法，answer_is_composite: true。",
+    "evidence": "scoring.pdf 第2頁頁面影像（400dpi 裁切放大）「句2之參考答案」樹狀圖；展開 336 句，抽 10 句檢查。"
+  },
+  {
+    "kind": "other",
+    "location": "extraction.issues[10]",
+    "status": "resolved",
+    "action": "判定方括號 [chain/heavy] 表示可省略：answer_segments 中寫成 [chain / heavy / 空字串]（另一支 Although many … smokers 同樣處理），answer 仍取 chain；accepted_answers 與 scoring_notes 的原圖記法不改；extraction.issues[10] 補記判定依據，並註明這是判讀、官方沒有說明方括號。",
+    "evidence": "scoring.pdf 第2頁 400dpi 裁切影像：chain／heavy 外有大括號、內有方括號，沒有圖例；對照同期評分說明：ast-94 scoring.pdf 與 gsat-95 scoring.pdf 的樹狀圖以圓括號標可省略字詞（(,)、(try to)、(that)、People (all)），ast-96 scoring.pdf 與 gsat-97 scoring.pdf 註記「( )（括弧）表示該字詞可省略」；外層大括號已表示二選一，內層方括號只有表示可省略才有作用。"
+  }
+]
