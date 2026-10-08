@@ -410,7 +410,7 @@ Sekai 的做法：
 | 計價表：快取寫入 | `pricing.js` 的第三欄是「快取寫入（5 分鐘）」單價（`worker/src/pricing.js:1-2`），但 `chatClaude` 用的是 `ttl:'1h'`（`worker/src/admin.js:323`、`342`） | 1 小時快取寫入是 base input 的 2 倍，5 分鐘是 1.25 倍 [ANT-PRICE]。結果帳面會**低估**快取寫入成本 | 依 `usage.cache_creation` 裡 5 分鐘和 1 小時的明細分開計價 |
 | 計價表：新模型 | 用前綴比對（`worker/src/pricing.js:30-41`），表裡沒有 `claude-opus-5-5` | `claude-opus-5-5` 會比對到 `claude-opus-5` 的 $5／$25，但實際是 $4／$20，快取讀取 $0.20 [ANT-PRICE]。結果帳面會**高估** | 每個模型 id 都明確列出單價；認不得的 id 記 0 並發出警示（沿用 `pricing.js:38-40` 的理念） |
 | 呼叫方式 | Worker 用 `fetch` 直接打 `/v1/messages`，標頭用 `x-api-key`（`worker/src/admin.js:212-238`） | `x-api-key` 仍然支援，但官方已改稱它是 `Authorization: Bearer` 的 legacy fallback [ANT-API]。官方 TypeScript SDK 支援 Cloudflare Workers runtime [ANT-TS]，型別、重試和串流都已經內建 | 用 `@anthropic-ai/sdk` |
-| 串流 | 沒有，最多等 120 秒（`worker/src/admin.js:348`） | 作文詳解和範文的輸出比較長。HTTP 觸發的 Worker 不分方案都沒有 duration 上限，等待 fetch 的時間也不算 CPU 時間；但用戶端一斷線，請求相關的工作就可能被取消，`ctx.waitUntil()` 最多只能再延 30 秒 [CF-WLIMIT] | 長輸出用 SSE 串流給前端（連線保持住，也能邊產生邊顯示）；批改結果在串流結束時由 Worker 寫進 D1，不依賴用戶端回傳 |
+| 串流 | 沒有，最多等 120 秒（`worker/src/admin.js:348`） | 作文詳解和範文的輸出比較長。HTTP 觸發的 Worker 不分方案都沒有 duration 上限，等待 fetch 的時間也不算 CPU 時間；但用戶端一斷線，請求相關的工作就可能被取消，`ctx.waitUntil()` 最多只能再延 30 秒 [CF-WLIMIT] | 長輸出用 SSE 串流給前端（連線保持住，也能邊產生邊顯示）；批改結果在串流結束時由 Worker 寫進 D1，不依賴用戶端回傳。用戶端中途斷線時這筆可能沒寫進去，前端要能重新查詢狀態或重送（額度不要重複扣） |
 | 雙供應商 | `gemini.js` 的 `runLanes` 雙路並行（`worker/src/api.js:795-797`） | 使用者指定 AI 一律用 Claude | 不搬 `gemini.js`、`runLanes`、`dual` 參數 |
 | 控制台網址 | 錯誤提示寫 `console.anthropic.com`（`worker/src/admin.js:361-364`） | 官方文件現在把 Console 寫成 `platform.claude.com` [ANT-API] | 更新文案 |
 
@@ -431,6 +431,11 @@ Sekai 的做法：
     - 稽核表只存 token 數、任務種類和題目 id，不存全文，也不存圖片。
     - 照片放 R2 或者用完即丟，不要放進 D1。D1 單列上限是 2 MB [CF-D1LIMIT]。
     - 隱私權政策等法遵細節不在本文範圍，要另外處理（未驗證）。
+13. **設定變數改名後沒有同步**：額度單位從「次」改成「操作」時，程式改讀 `AI_OPS_AUTO`，`wrangler.toml` 卻還留著 `AI_CAP_AUTO`，所以自動核准帳號的試用額度實際上沒有生效（見第 2.2 節）。新專案把所有設定集中在一個有型別的 `config.ts`，啟動時驗證必要的鍵，未知或過時的鍵就在健康檢查裡標出來，並寫一支測試確認「自動核准帳號的額度確實比較低」。
+14. **手寫作文照片的上傳限制**：Sekai 的 `/api/chat` body 上限是 4 MB（`worker/src/api.js:768-771`），手機原圖常常超過。相關上限如下：
+    - Claude API：直接呼叫時每張圖最多 10 MB（base64 後），單一請求最多 32 MB；超過模型解析度（Claude 4.7 以後長邊 2,576 px）的圖會先被縮小 [ANT-VISION]。
+    - Worker：請求 body 上限看 Cloudflare 帳號方案，Free 和 Pro 都是 100 MB [CF-WLIMIT]。
+    - 建議：前端先把照片縮到長邊 2,576 px 以內，再轉成 JPEG 上傳。Worker 只檢查大小和 MIME，存進 R2（或不存），再交給 Claude。這樣既省 visual token，也不會撞到上面的上限。
 12. **收費與 Vercel 方案**：Sekai 有點數 beta，用人工對帳，不接金流（`worker/sql/008_ai_credits.sql:3-7`）。如果新專案要收費，Vercel Hobby 只限非商業、個人使用，任何商業用途都要 Pro 以上 [VC-HOBBY]、[VC-FAIR]。
 
 ### 3.6 題庫資料量較大：資料放在哪裡
@@ -453,7 +458,9 @@ Sekai 的做法：
      所以批次匯入要分段處理。
   3. **使用者資料**：D1；照片放 R2。
 - **AI 生成題的保護：** Sekai 保護「時間過了就補不回來」的資料。新專案對應的是「重新生成要花錢」的 AI 題目和經過人工審核的成果。沿用「只增不減」的守門思路：題目只能新增版本或標成下架，不直接覆寫，而且每筆都記錄 model、prompt 版本和審核人。
-- **頻繁部署的問題：** 如果資料管線改成寫進 D1，就不會因為提交資料而觸發 Vercel 重新部署。Sekai 用的 `[skip ci]` 能不能阻止 Vercel 部署，這裡沒有查證（未驗證）。
+- **頻繁部署的問題：** 如果資料管線改成寫進 D1，就不會因為提交資料而觸發 Vercel 重新部署。
+  - Vercel 文件寫的是「預設每個推上來的 commit 都會建立新部署」，沒有提到 `[skip ci]`。官方提供的跳過方式是專案設定裡的 **Ignored Build Step**，例如「Only build if there are changes in a folder」只在前端目錄有變動時才建置。被這個設定取消的建置仍然算進部署配額 [VC-IGNORE]。
+  - 所以 Sekai 的 `[skip ci]`（`tools/commit-data.sh:33`、`57`）能不能擋住 Vercel 部署，文件查不到（未驗證）。新專案如果還要提交資料檔，就用 Ignored Build Step 限定只有 `web/` 有變動才建置。
 
 ---
 
@@ -465,7 +472,7 @@ Sekai 的做法：
 |---|---|---|---|---|---|
 | 1 | **Cloudflare 帳號** | Worker、D1、網域、DNS | `worker/README.md:16-35` | 建議開 **Workers Paid**（每個帳號每月最低 US$5）[CF-WPRICE] | 免費方案每次呼叫只有 10 ms CPU，付費方案預設 30 秒、最高 5 分鐘 [CF-WLIMIT]。D1 免費上限 500 MB，付費 10 GB [CF-D1LIMIT]。Sekai 也是因為 CPU 不夠才升級付費（`worker/README.md:25-27`） |
 | 2 | **網域** | 正式網址 | `project-sekai-center.com` | Cloudflare Registrar 購買後一定使用 Cloudflare nameserver [CF-REG] | 名稱不能含 `ceec` 或「大考中心」（見 04 文件） |
-| 3 | **Cloudflare API token＋Account ID** | GitHub Actions 部署 Worker、套用 D1 遷移 | `.github/workflows/worker-deploy.yml:5-9` | 用「Edit Cloudflare Workers」範本建立 token [CF-TOKEN]，Account 選自己的帳戶、Zone 選新網域；**另外加 D1 編輯權限**（因為部署時要跑遷移）。存成 repo secrets：`CLOUDFLARE_API_TOKEN`、`CLOUDFLARE_ACCOUNT_ID` | Account ID 在儀表板 Workers & Pages 的右側欄（`worker-deploy.yml:8`） |
+| 3 | **Cloudflare API token＋Account ID** | GitHub Actions 部署 Worker、套用 D1 遷移 | `.github/workflows/worker-deploy.yml:5-9` | 用「Edit Cloudflare Workers」範本建立 token [CF-TOKEN]，Account 選自己的帳戶、Zone 選新網域；**另外加 D1 編輯權限**（因為部署時要跑遷移）。這個範本的權限是 Workers Routes、Workers Scripts、Workers KV、Workers Tail、Workers R2、Account Settings 等，沒有 D1 [CF-TPL]。存成 repo secrets：`CLOUDFLARE_API_TOKEN`、`CLOUDFLARE_ACCOUNT_ID` | Account ID 在儀表板 Workers & Pages 的右側欄（`worker-deploy.yml:8`） |
 | 4 | **D1 資料庫** | 使用者、作答、題庫 | `worker/wrangler.toml:29-33` | `npx wrangler d1 create <名稱>` [CF-WRD1]，把 `database_id` 填進 `wrangler.toml` | Sekai 把 `database_id` 直接提交在 `wrangler.toml` 裡（`worker/wrangler.toml:33`） |
 | 5 | **Worker secrets** | 機密設定 | `worker/wrangler.toml:35-37`；`worker/SETUP.md:7-11` | 用 `wrangler secret put` 設定：`SESSION_SECRET`（長隨機字串）、`GOOGLE_CLIENT_ID`、`GOOGLE_CLIENT_SECRET`、`ANTHROPIC_API_KEY`、`ADMIN_EMAIL`；選用的有 `DISCORD_CLIENT_ID`／`DISCORD_CLIENT_SECRET`、`RESEND_API_KEY`、`VAPID_*` | 非機密的放 `[vars]`：`SITE_BASE`、`OAUTH_BASE`、AI 模型和額度（見 `wrangler.toml:38-106`）。本機開發的值放 `.dev.vars`，不能提交 [CF-SECRET]。Sekai 的 `[vars]` 裡沒有 `GOOGLE_CLIENT_ID` 和 `ADMIN_EMAIL`，推定是用 secret 或儀表板設定的 |
 | 6 | **Vercel 專案** | 前端 | `README.md:50-52` | 匯入 GitHub repo，Framework preset 選 Vite [VC-VITE]，在 Domains 加上主網域和 www [VC-DOMAIN] | **Hobby 只限非商業、個人使用**，要收費就要 Pro [VC-HOBBY]、[VC-FAIR] |
