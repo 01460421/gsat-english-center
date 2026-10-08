@@ -213,7 +213,7 @@
 - 詞彙範圍：107 版指考說明「可參考…詞彙表第一至六級」（同期學測為第一至五級）。[leg-ast-107] [leg-gsat-107]
 - 中譯英句型：107 版指考說明「以結構較為複雜之句型（如合句、複句、複合句等）為主」；同期學測為「結構較為簡單之句型」。[leg-ast-107] [leg-gsat-107]
 - 成績：指考為百分制（原始分數），學測為級分制。[ep215]
-- 111 起指考改為分科測驗，分科測驗考科不含英文。[spec-announce]
+- 111 起指考改為分科測驗，分科測驗考科不含英文（116 簡章：數學甲、數學乙、歷史、地理、公民與社會、物理、化學、生物共 8 科）。[spec-announce] [brochure116]
 
 舊指考變動年份：92（篇章結構改 5×2）、93（新增英文翻譯 8%；閱讀減為 11 題）、94（詞彙 10、綜合 20）、98（綜合 10、閱讀 16、改稱中譯英）、100（取消倒扣；文意選填 12 選項、篇章結構 6 選項）、105（作文評分改四項）。[ast91]…[ast105-s]
 
@@ -234,7 +234,7 @@
 | 倒扣 | 無 | 99 前有，100 起無 | 無；多選題部分給分 | 同左 |
 | 選文長度（說明） | 150–300 字（107 版） | 180–300 字（107 版） | 180–400 字 | 180–400 字 |
 | 作文評分 | 95–105 五項含體例；106 起四項 | 95–104 五項；105 起四項 | 四項，五等級（特優～劣） | 四項，表一未列分數區間 |
-| 成績 | 15 級分（級距取至小數第二位） | 百分制 | 15 級分（級距取至小數第五位） | 同左；116 簡章另列 60 級分（分發入學） |
+| 成績 | 15 級分（級距取至小數第二位） | 百分制 | 15 級分（級距取至小數第五位）；分發入學另以 60 級分表示（至遲 111 起） | 同左 |
 
 來源：§2、§3.1、§3.2 各列來源；作文評分見 §4.4。
 
@@ -545,7 +545,7 @@
 
 ### 6.6 資料檔使用方式
 
-- `gsat-spec.json → current`：模擬考藍圖與題型定義；`scoring`：計分規則與逐字評分原則（可直接放進 Claude 系統提示）；`grading.english_by_year`：五年級距、原得總分範圍、五標、各級分人數；`legacy_gsat`／`legacy_ast`：匯入舊題時的題型對照。
+- `gsat-spec.json → current`：模擬考藍圖與題型定義（另含 `exam_schedule_116`、`english_exam_dates_111_115`、`copyright_notice`、`official_exemplar_essays`）；`scoring`：計分規則與逐字評分原則（可直接放進 Claude 系統提示）；`grading.english_by_year`：五年級距、原得總分範圍、五標、各級分人數、選考／缺考人數與考試日；`grading.english_item_stats_official`：111–115 逐題官方 P／D 等原始值；`legacy_gsat`／`legacy_ast`：匯入舊題時的題型對照。
 - 每年 2 月學測成績公布後，需新增當年 `grading.english_by_year`（統計表格式固定，可由 GitHub Actions 抓取 xls 並轉換）。[gsat-stats-list]
 
 ---
@@ -681,6 +681,22 @@
 - `[stats115-42]` 115學年度學測統計：各科答對率及鑑別度表 — <https://www.ceec.edu.tw/files/file_pool/1/0Q110276786224904029/42-46_%E5%90%84%E7%A7%91%E7%AD%94%E5%B0%8D%E7%8E%87%E5%8F%8A%E9%91%91%E5%88%A5%E5%BA%A6%E8%A1%A8115.xls>
 - `[gsat-stats-list]` 學科能力測驗 統計資料列表 — <https://www.ceec.edu.tw/xmdoc?xsmsid=0J018604485538810196>
 
+以下為 2026-10-08 查證時新增的一手來源：
+
+- `[ep-ast111-levels]` 選才電子報〈111分科測驗 你知道級分是如何計算嗎？〉（111-06-15） — <https://www.ceec.edu.tw/xcepaper/cont?xsmsid=0J066588036013658199&sid=0M165387892118130818>
+- `[jiazuo-ast]` 分科測驗(110前指考)－佳作（列表；含104–110學年度指考英文作文佳作） — <https://www.ceec.edu.tw/xmdoc?xsmsid=0J071646661300229964>
+- `[jiazuo-gsat]` 學科能力測驗－佳作（列表；含111–115學年度英文作文佳作） — <https://www.ceec.edu.tw/xmdoc?xsmsid=0J071624926253508127>
+- `[jiazuo-gsat-115]` 115學年度學科能力測驗英文作文佳作（115-03-31；原卷影像10篇＋評分說明） — <https://www.ceec.edu.tw/xmdoc/cont?xsmsid=0J071624926253508127&sid=0Q077622448864496628>
+- `[p90-cover]` 90學年度學科能力測驗－英文｜封面（90學測_englishcov.pdf） — <https://www.ceec.edu.tw/files/file_pool/1/0j076563009957008833/90%e5%ad%b8%e6%b8%ac_englishcov.pdf>
+- `[p91-cover]` 91學年度學科能力測驗－英文｜封面（91學測_englishcov.pdf） — <https://www.ceec.edu.tw/files/file_pool/1/0j076563502037320815/91%e5%ad%b8%e6%b8%ac_englishcov.pdf>
+- `[s100]` 100學年度學科能力測驗－英文｜非選擇題評分標準（100年學科能力測驗英文考科非選擇題評分說明.pdf） — <https://www.ceec.edu.tw/files/file_pool/1/0j204496801635770142/100%e5%b9%b4%e5%ad%b8%e7%a7%91%e8%83%bd%e5%8a%9b%e6%b8%ac%e9%a9%97%e8%8b%b1%e6%96%87%e8%80%83%e7%a7%91%e9%9d%9e%e9%81%b8%e6%93%87%e9%a1%8c%e8%a9%95%e5%88%86%e8%aa%aa%e6%98%8e.pdf>
+- `[s98]` 98學年度學科能力測驗－英文｜非選擇題評分標準（98學測英文考科非選擇題評分標準說明.pdf） — <https://www.ceec.edu.tw/files/file_pool/1/0j199417512785404281/98%e5%ad%b8%e6%b8%ac%e8%8b%b1%e6%96%87%e8%80%83%e7%a7%91%e9%9d%9e%e9%81%b8%e6%93%87%e9%a1%8c%e8%a9%95%e5%88%86%e6%a8%99%e6%ba%96%e8%aa%aa%e6%98%8e.pdf>
+- `[stats-ast111]` 111學年度分科測驗統計圖表（含「111學測使用於分發入學(60級分制)各科級分人數百分比累計表」） — <https://www.ceec.edu.tw/xmdoc/cont?xsmsid=0J018611000723433352&sid=0M208342795156414778>
+- `[stats111-14]` 111學年度學測統計：缺考人數統計總表（各考區、各節實到／缺考人數與考試日期） — <https://www.ceec.edu.tw/files/file_pool/1/0M132343525211681532/14_%E7%BC%BA%E8%80%83%E4%BA%BA%E6%95%B8%E7%B5%B1%E8%A8%88%E7%B8%BD%E8%A1%A8111.xls>
+- `[stats111-31]` 111學年度學測統計：國語文寫作能力測驗及英文科非選擇題各題題分及需第三閱差分表 — <https://www.ceec.edu.tw/files/file_pool/1/0M132343528381913513/31_%E5%9C%8B%E8%AA%9E%E6%96%87%E5%AF%AB%E4%BD%9C%E8%83%BD%E5%8A%9B%E6%B8%AC%E9%A9%97%E5%8F%8A%E8%8B%B1%E6%96%87%E7%A7%91%E9%9D%9E%E9%81%B8%E6%93%87%E9%A1%8C%E5%90%84%E9%A1%8C%E9%A1%8C%E5%88%86%E5%8F%8A%E9%9C%80%E7%AC%AC%E4%B8%89%E9%96%B1%E5%B7%AE%E5%88%86%E8%A1%A8111.xls>
+- `[stats115-14]` 115學年度學測統計：缺考人數統計總表（各考區、各節實到／缺考人數與考試日期） — <https://www.ceec.edu.tw/files/file_pool/1/0Q110276771887086958/14_%E7%BC%BA%E8%80%83%E4%BA%BA%E6%95%B8%E7%B5%B1%E8%A8%88%E7%B8%BD%E8%A1%A8115.xls>
+- `[stats115-51]` 115學年度學測統計：各科選擇題選項分析（各選項全體／高分組／低分組選答率） — <https://www.ceec.edu.tw/files/file_pool/1/0Q110276786869873056/51-55_%E5%90%84%E7%A7%91%E9%81%B8%E6%93%87%E9%A1%8C%E9%81%B8%E9%A0%85%E5%88%86%E6%9E%90115.xls>
+
 [ref-note-115]: https://www.ceec.edu.tw/files/file_pool/1/0O211576052915694894/02_01_%E5%AD%B8%E6%B8%AC%E8%8B%B1%E6%96%87%E8%80%83%E7%A7%91115%E8%B5%B7%E9%81%A9%E7%94%A8%E5%8F%83%E8%80%83%E8%A9%A6%E5%8D%B7%E8%AA%AA%E6%98%8E%E6%96%87%E5%AD%97.pdf "學科能力測驗（115學年度起適用）英文考科參考試卷說明"
 [p115]: https://www.ceec.edu.tw/files/file_pool/1/0q054532302653501476/02-115%e5%ad%b8%e6%b8%ac%e8%8b%b1%e6%96%87%e8%a9%a6%e5%8d%b7.pdf "115學年度學科能力測驗－英文｜試題內容（02-115學測英文試卷.pdf）"
 [p111]: https://www.ceec.edu.tw/files/file_pool/1/0m053357638065462325/02-111%e5%ad%b8%e6%b8%ac%e8%8b%b1%e6%96%87%e8%a9%a6%e5%8d%b7.pdf "111學年度學科能力測驗－英文｜試題內容（02-111學測英文試卷.pdf）"
@@ -783,3 +799,16 @@
 [stats111-42]: https://www.ceec.edu.tw/files/file_pool/1/0M132343520748519513/42-46_%E5%90%84%E7%A7%91%E7%AD%94%E5%B0%8D%E7%8E%87%E5%8F%8A%E9%91%91%E5%88%A5%E5%BA%A6%E8%A1%A8111.xls "111學年度學測統計：各科答對率及鑑別度表"
 [stats115-42]: https://www.ceec.edu.tw/files/file_pool/1/0Q110276786224904029/42-46_%E5%90%84%E7%A7%91%E7%AD%94%E5%B0%8D%E7%8E%87%E5%8F%8A%E9%91%91%E5%88%A5%E5%BA%A6%E8%A1%A8115.xls "115學年度學測統計：各科答對率及鑑別度表"
 [gsat-stats-list]: https://www.ceec.edu.tw/xmdoc?xsmsid=0J018604485538810196 "學科能力測驗 統計資料列表"
+[ep-ast111-levels]: https://www.ceec.edu.tw/xcepaper/cont?xsmsid=0J066588036013658199&sid=0M165387892118130818 "選才電子報〈111分科測驗 你知道級分是如何計算嗎？〉（111-06-15）"
+[jiazuo-ast]: https://www.ceec.edu.tw/xmdoc?xsmsid=0J071646661300229964 "分科測驗(110前指考)－佳作（列表；含104–110學年度指考英文作文佳作）"
+[jiazuo-gsat]: https://www.ceec.edu.tw/xmdoc?xsmsid=0J071624926253508127 "學科能力測驗－佳作（列表；含111–115學年度英文作文佳作）"
+[jiazuo-gsat-115]: https://www.ceec.edu.tw/xmdoc/cont?xsmsid=0J071624926253508127&sid=0Q077622448864496628 "115學年度學科能力測驗英文作文佳作（115-03-31；原卷影像10篇＋評分說明）"
+[p90-cover]: https://www.ceec.edu.tw/files/file_pool/1/0j076563009957008833/90%e5%ad%b8%e6%b8%ac_englishcov.pdf "90學年度學科能力測驗－英文｜封面（90學測_englishcov.pdf）"
+[p91-cover]: https://www.ceec.edu.tw/files/file_pool/1/0j076563502037320815/91%e5%ad%b8%e6%b8%ac_englishcov.pdf "91學年度學科能力測驗－英文｜封面（91學測_englishcov.pdf）"
+[s100]: https://www.ceec.edu.tw/files/file_pool/1/0j204496801635770142/100%e5%b9%b4%e5%ad%b8%e7%a7%91%e8%83%bd%e5%8a%9b%e6%b8%ac%e9%a9%97%e8%8b%b1%e6%96%87%e8%80%83%e7%a7%91%e9%9d%9e%e9%81%b8%e6%93%87%e9%a1%8c%e8%a9%95%e5%88%86%e8%aa%aa%e6%98%8e.pdf "100學年度學科能力測驗－英文｜非選擇題評分標準（100年學科能力測驗英文考科非選擇題評分說明.pdf）"
+[s98]: https://www.ceec.edu.tw/files/file_pool/1/0j199417512785404281/98%e5%ad%b8%e6%b8%ac%e8%8b%b1%e6%96%87%e8%80%83%e7%a7%91%e9%9d%9e%e9%81%b8%e6%93%87%e9%a1%8c%e8%a9%95%e5%88%86%e6%a8%99%e6%ba%96%e8%aa%aa%e6%98%8e.pdf "98學年度學科能力測驗－英文｜非選擇題評分標準（98學測英文考科非選擇題評分標準說明.pdf）"
+[stats-ast111]: https://www.ceec.edu.tw/xmdoc/cont?xsmsid=0J018611000723433352&sid=0M208342795156414778 "111學年度分科測驗統計圖表（含「111學測使用於分發入學(60級分制)各科級分人數百分比累計表」）"
+[stats111-14]: https://www.ceec.edu.tw/files/file_pool/1/0M132343525211681532/14_%E7%BC%BA%E8%80%83%E4%BA%BA%E6%95%B8%E7%B5%B1%E8%A8%88%E7%B8%BD%E8%A1%A8111.xls "111學年度學測統計：缺考人數統計總表（各考區、各節實到／缺考人數與考試日期）"
+[stats111-31]: https://www.ceec.edu.tw/files/file_pool/1/0M132343528381913513/31_%E5%9C%8B%E8%AA%9E%E6%96%87%E5%AF%AB%E4%BD%9C%E8%83%BD%E5%8A%9B%E6%B8%AC%E9%A9%97%E5%8F%8A%E8%8B%B1%E6%96%87%E7%A7%91%E9%9D%9E%E9%81%B8%E6%93%87%E9%A1%8C%E5%90%84%E9%A1%8C%E9%A1%8C%E5%88%86%E5%8F%8A%E9%9C%80%E7%AC%AC%E4%B8%89%E9%96%B1%E5%B7%AE%E5%88%86%E8%A1%A8111.xls "111學年度學測統計：國語文寫作能力測驗及英文科非選擇題各題題分及需第三閱差分表"
+[stats115-14]: https://www.ceec.edu.tw/files/file_pool/1/0Q110276771887086958/14_%E7%BC%BA%E8%80%83%E4%BA%BA%E6%95%B8%E7%B5%B1%E8%A8%88%E7%B8%BD%E8%A1%A8115.xls "115學年度學測統計：缺考人數統計總表（各考區、各節實到／缺考人數與考試日期）"
+[stats115-51]: https://www.ceec.edu.tw/files/file_pool/1/0Q110276786869873056/51-55_%E5%90%84%E7%A7%91%E9%81%B8%E6%93%87%E9%A1%8C%E9%81%B8%E9%A0%85%E5%88%86%E6%9E%90115.xls "115學年度學測統計：各科選擇題選項分析（各選項全體／高分組／低分組選答率）"
