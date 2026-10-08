@@ -349,8 +349,16 @@ VARIANT_CHARS = str.maketrans({"髪": "髮", "頬": "頰", "敍": "敘", "絶": 
 ALWAYS_PHRASES = {"大坂": "大阪"}
 # 不在 Big5 但台灣也照用的字（擬聲詞、專業用字），自動檢查時不列為問題
 NON_BIG5_OK = set("咔擀嵴鯿酶顬")
-_TW_KEYS = sorted(TW_PHRASES, key=lambda k: (-len(k), k))
-_TW_RE = re.compile("|".join(map(re.escape, _TW_KEYS)))
+# OpenCC s2twp 的 TWPhrases 主要是電腦用語（程序→程式、文件→檔案、對象→物件、循環→迴圈、項目→專案、聲明→宣告），
+# 套在一般文字上會出錯（法律程序→法律程式、結婚對象→結婚物件、血液循環→血液迴圈、比賽項目→比賽專案）。這些詞在
+# 台灣一般用法就是原詞，所以不論原文簡繁都保留（2026-10-08 統計輸出中實際被改寫的 TWPhrases 後列出）。
+KEEP_PHRASES = ["聲明", "文件", "支持", "循環", "項目", "進程", "程序", "設備", "連接", "對象", "運行", "局部", "刷新",
+                "溢出", "保存", "高級", "觸摸", "發佈", "類型", "函數", "設置", "性能", "菜單"]
+
+
+def _protect_re(keys) -> re.Pattern:
+    return re.compile("|".join(map(re.escape, sorted(keys, key=lambda k: (-len(k), k)))))
+
 
 
 class Converter:
@@ -380,6 +388,16 @@ class Converter:
             ver = None
         self.package = f"{'OpenCC（官方 Python 綁定）' if official else 'opencc-python-reimplemented'} {ver or '?'}"
         self.cache: dict[tuple[str, bool], str] = {}
+        # KEEP_PHRASES 的簡體寫法用 OpenCC 的 t2s 求得（例如 聲明→声明、發佈→发布）
+        t2s = opencc.OpenCC(cfg.replace("s2twp", "t2s"))
+        keep = {}
+        for t in KEEP_PHRASES:
+            keep[t] = t
+            keep[t2s.convert(t)] = t
+        self.keep_map = keep
+        self.keep_re = _protect_re(keep)
+        self.tw_map = {**keep, **TW_PHRASES}
+        self.tw_re = _protect_re(self.tw_map)
 
     def is_simplified(self, s: str) -> bool:
         """原文是否為簡體（s2t 會改變文字）。"""
@@ -392,17 +410,15 @@ class Converter:
         key = (s, simplified_source)
         r = self.cache.get(key)
         if r is None:
-            if simplified_source and _TW_RE.search(s):
-                found = []
+            table, rx = (self.tw_map, self.tw_re) if simplified_source else (self.keep_map, self.keep_re)
+            found = []
 
-                def mark(m):
-                    found.append(TW_PHRASES[m.group(0)])
-                    return chr(0xE000 + len(found) - 1)
-                r = self.cc.convert(_TW_RE.sub(mark, s))
-                for i, t in enumerate(found):
-                    r = r.replace(chr(0xE000 + i), t)
-            else:
-                r = self.cc.convert(s)
+            def mark(m):
+                found.append(table[m.group(0)])
+                return chr(0xE000 + len(found) - 1)
+            r = self.cc.convert(rx.sub(mark, s))
+            for i, t in enumerate(found):
+                r = r.replace(chr(0xE000 + i), t)
             # 「箇」在台灣只用於「箇中」；Tatoeba 部分繁體句（多為轉換工具產生）把「個」寫成「箇」
             r = re.sub(r"箇(?!中)", "個", r).translate(VARIANT_CHARS)
             for a, b in ALWAYS_PHRASES.items():
@@ -473,6 +489,13 @@ FORM_FIXES = {
     "up": {"third_person": "ups"},                                   # ECDICT：up
 }
 PLURAL_MIN_ATTEST = 3                      # 規則複數至少要在 Tatoeba 英文句出現幾次才收
+# ECDICT 中文明顯錯誤、而且沒有其他詞性相符的行的條目：補一行本專案撰寫的釋義（fixed=true），排在最前面。
+# download 的 ECDICT 中文只有「[计] 卸载, 下栽」（卸載＝移除程式，下栽是錯字），轉成台灣用語後變成「解除安裝」。
+ZH_OVERRIDES = {
+    "download|v.|2": [{"pos": "v.", "text": "下載"}],
+    "upload|v.|2": [{"pos": "v.", "text": "上傳"}],
+    "online|adj.|1": [{"pos": "a.", "text": "線上的, 連線的"}],
+}
 EXCHANGE_TYPES = [("s", "plural"), ("p", "past"), ("d", "past_participle"), ("i", "present_participle"),
                   ("3", "third_person"), ("r", "comparative"), ("t", "superlative")]
 
@@ -1142,6 +1165,11 @@ def build(outdir: Path, *, verify: bool = True) -> dict:
                 form_stats["american_l"] += 1
         # zh
         rec["zh"] = zh_lines(row, e["pos"], conv) if row is not None else []
+        if eid in ZH_OVERRIDES:
+            for z in rec["zh"]:
+                if z.pop("fallback", None):
+                    z["match"] = False
+            rec["zh"] = [dict(z, match=True, fixed=True) for z in ZH_OVERRIDES[eid]] + rec["zh"]
         # variant_info：每個變體的音標與中文（v./(n.) 的 (n.) 就是衍生名詞）。中文只取變體詞類的行（代名詞格 mine
         # 只取 pron. 行，不取「礦」；斜線變體 chair 只取 n. 行）；其他詞類沒有相符的行時，斜線與衍生變體退回全部的行，
         # 代名詞格則留空。屈折形同樣只收變體詞類的（代名詞格不收，否則 mine→mined、her→hering 會對到代名詞）。
@@ -2067,7 +2095,7 @@ def credits_md(sources: list[dict], conv: Converter) -> str:
 
 - 欄位：`forms`、`ipa`（`ipa_source.source = "ecdict"`）、`zh`、`variant_info`、`en_def`（`en_def_source = "ecdict"`）、`freq`、`internal_core_flag`、`internal_star`。
 - 來源：{dl("ecdict")}
-- 授權：MIT License。修改：中文以 OpenCC s2twp 轉成台灣繁體，再以本專案的對照表（`tools/build_vocab.py` 的 `TW_PHRASES`，例如 土豆→馬鈴薯、计算机→電腦、声明→聲明）補正、刪除轉換後重複的義項；音標字元統一為 IPA（ә→ə、є→ɛ、g→ɡ、'→ˈ、:→ː 等）；屈折形只保留條目詞類能產生的形式；只取詞彙表需要的列與欄。
+- 授權：MIT License。修改：中文以 OpenCC s2twp 轉成台灣繁體，再以本專案的對照表補正（`tools/build_vocab.py` 的 `TW_PHRASES`，例如 土豆→馬鈴薯、计算机→電腦；`KEEP_PHRASES` 保留 程序、文件、對象、循環 等一般用詞，不套用 OpenCC 的電腦用語改寫），並刪除轉換後重複的義項；音標字元統一為 IPA（ә→ə、є→ɛ、g→ɡ、'→ˈ、:→ː 等）；屈折形只保留條目詞類能產生的形式；只取詞彙表需要的列與欄。
 - 中文釋義依 04 文件 §2.1 的建議，上線前還要由 Claude 改成台灣用語並人工抽查。
 
 ```
@@ -2100,7 +2128,7 @@ def credits_md(sources: list[dict], conv: Converter) -> str:
 - 授權：句子預設 CC BY 2.0 FR（https://creativecommons.org/licenses/by/2.0/fr/），列在 CC0 匯出檔中的句子為 CC0 1.0。
   CC BY 句子使用時「必須標示作者」（Tatoeba Terms of Use §6.2），所以每句都保存作者名稱與句子 ID；作者為空（孤兒句）的 CC BY 句子不採用。
 - 顯示格式：`Tatoeba #{{tatoeba_id}} by {{author}}`（連到 `url`），中文翻譯 `Tatoeba #{{zh_id}} by {{zh_author}}`。
-- 修改：中文句用 OpenCC s2twp 轉成台灣繁體；原文是簡體的句子另以 `TW_PHRASES` 補正大陸用語，所有句子再把日文新字體或異體字（髪、説、産…）與「箇」換成台灣通行字（`zh_converted = true` 表示文字有變動），應標示「中文經轉換為台灣繁體」。
+- 修改：中文句用 OpenCC s2twp 轉成台灣繁體；原文是簡體的句子另以 `TW_PHRASES` 補正大陸用語，所有句子都以 `KEEP_PHRASES` 保留一般用詞（不改成 程式、檔案、物件…），再把日文新字體或異體字（髪、説、産…）與「箇」換成台灣通行字（`zh_converted = true` 表示文字有變動），應標示「中文經轉換為台灣繁體」。
 - 不使用 Tatoeba 音檔（音檔授權依錄音者而定）。
 
 ## 5. CEFR-J Wordlist 與 Octanove Vocabulary Profile
@@ -2129,7 +2157,7 @@ def credits_md(sources: list[dict], conv: Converter) -> str:
 | 欄位 | 來源 | 授權 |
 |---|---|---|
 | entry_id, word, level, pos, variants, raw, tags | 大考中心詞彙表 | 非營利使用、註明出處 |
-| forms, ipa, zh, variant_info, freq, internal_core_flag, internal_star | ECDICT | MIT |
+| forms, ipa, zh, variant_info, freq, internal_core_flag, internal_star | ECDICT（`zh` 中 `fixed: true` 的行是本專案補寫的釋義，見 `ZH_OVERRIDES`） | MIT |
 | en_def | OEWN（優先）或 ECDICT | CC BY 4.0／MIT |
 | wordnet | OEWN 2025（`in_list`、`level`、`entry_ids` 由本專案比對詞彙表） | CC BY 4.0（標示 Princeton WordNet 與 OEWN） |
 | family, family_id | 本專案計算（詞彙表＋OEWN derivation） | CC BY 4.0 部分 |
