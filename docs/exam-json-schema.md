@@ -379,6 +379,8 @@ TypeScript 端的 `expectedTextFormat()` 實作同一個規則。
 
 重跑 normalize 會重新產生這份清單；填好的欄位（例如已有 `refers_to`、`answer_segments`、`scoring_exception`，或 `item_type` 已是 `chart_reading`）就不會再列出。
 
+**處理紀錄（`data/exams/todo-resolutions/<考卷 id>.json`）**：看過原卷後，每一項都寫一筆 `{ "kind", "location", "status", "action", "evidence" }`。`status` 是 `resolved`（已修正資料）、`not_needed`（看過原卷，確定不需要改）或 `unresolvable`（原始資料無法判定，例如原卷損壞，或官方沒有說明的給分方式）。normalize 產生清單時以 `(id, kind, location)` 對照處理紀錄：`resolved`／`not_needed` 不再列出；`unresolvable` 仍列出，並加上 `status` 與 `resolution`（處理說明），讓待決事項看得到。`other` 的 location 是 `extraction.issues` 的索引，所以修改 issues 時只能改寫內容，不要刪除或調整順序。CI 會跑 `python3 tools/normalize_exams.py --check`：題庫要維持正規化後的狀態，清單也要是最新的。
+
 ## v1.1 變更一覽
 
 | 位置 | 變更 | v1 → v1.1 |

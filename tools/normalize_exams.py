@@ -36,6 +36,9 @@ ROOT = Path(__file__).resolve().parent.parent
 PARSED = ROOT / 'data' / 'exams' / 'parsed'
 MANIFEST = ROOT / 'data' / 'exams' / 'manifest.json'
 TODO = ROOT / 'data' / 'exams' / 'normalize-todo.json'
+# 看過原卷後的處理紀錄：每份考卷一個檔，內容是 [{kind, location, status, action, evidence}]。
+# status 為 resolved／not_needed 的項目不再列進工作清單；unresolvable 仍列出並標 status，讓待決事項看得到。
+RESOLUTIONS = ROOT / 'data' / 'exams' / 'todo-resolutions'
 DEFAULT_BACKUP = Path(tempfile.gettempdir()) / 'gsat-exam-normalize-backup'
 
 SCHEMA_ID = 'gsat-exam/v1.1'
@@ -860,6 +863,33 @@ def todo_for_exam(d):
 KIND_ORDER = ['refers_to', 'answer_segments', 'scoring_exception', 'chart_reading', 'image_options', 'other']
 
 
+def load_resolutions():
+    """(考卷 id, kind, location) → 處理紀錄。同一個 key 出現兩次表示紀錄重複，直接報錯。"""
+    out = {}
+    for f in sorted(RESOLUTIONS.glob('*.json')) if RESOLUTIONS.exists() else []:
+        for r in json.loads(f.read_text(encoding='utf-8')):
+            key = (f.stem, r['kind'], r['location'])
+            if key in out:
+                raise NormalizeError(f'{f.name}: {r["kind"]} {r["location"]} 有兩筆處理紀錄')
+            if r.get('status') not in ('resolved', 'not_needed', 'unresolvable'):
+                raise NormalizeError(f'{f.name}: {r["kind"]} {r["location"]} 的 status={r.get("status")!r} 不在允許值內')
+            out[key] = r
+    return out
+
+
+def apply_resolutions(todo):
+    """拿掉已處理（resolved／not_needed）的項目；unresolvable 保留並附上處理說明。"""
+    res = load_resolutions()
+    out = []
+    for t in todo:
+        r = res.get((t['id'], t['kind'], t['location']))
+        if r is None:
+            out.append(t)
+        elif r['status'] == 'unresolvable':
+            out.append(dict(t, status='unresolvable', resolution=r.get('action', '')))
+    return out
+
+
 # ---------------------------------------------------------------------------
 
 def dump(obj):
@@ -896,6 +926,7 @@ def main(argv):
     todo = []
     for p in paths:
         todo += todo_for_exam(json.loads(results[p]))
+    todo = apply_resolutions(todo)
     todo.sort(key=lambda t: (KIND_ORDER.index(t['kind']), t['id'], t['location']))
     todo_text = dump(todo)
 

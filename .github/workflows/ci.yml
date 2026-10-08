@@ -85,6 +85,11 @@ jobs:
         if: ${{ !cancelled() }}
         run: python3 tools/link_grammar_refs.py --check
 
+      # 題庫要維持 normalize 後的狀態，normalize-todo.json 也要是最新的（已處理的項目記在 data/exams/todo-resolutions/）。
+      - name: 檢查題庫已正規化、工作清單是最新的（normalize_exams.py --check）
+        if: ${{ !cancelled() }}
+        run: python3 tools/normalize_exams.py --check
+
       - uses: actions/setup-node@v7
         if: ${{ !cancelled() }}
         with:
