@@ -100,7 +100,7 @@
   - Opus 5.5、Sonnet 5.5（以及 Haiku 5.5）的最小可快取長度是 **512 tokens**，不到這個長度就不會快取，也不會報錯 [ANT-CACHE]。
 - **長 context 不加價**：Claude 4.6 以後的模型，整個 1M context 都是標準價，900k tokens 的請求和 9k tokens 的請求單價相同 [ANT-PRICE]。**例外是 Haiku 5.5**：prompt 超過 100,000 tokens 時，所有單價都變成 5 倍（見上表）[ANT-PRICE]。
 - **`inference_geo: "us"`** 會讓所有 token 價格乘以 1.1 [ANT-PRICE]。本專案不需要，維持預設的 global。
-- **工具的額外成本**：請求裡只要有 `tools`，Opus 5.5 和 Sonnet 5.5 就會自動加上 286 tokens 的系統提示（`tool_choice` 為 auto 或 none 時）[ANT-PRICE]。結構化輸出也會自動加一段系統提示，但長度沒有公開 [ANT-SO]。
+- **工具的額外成本**：請求裡只要有 `tools`，Opus 5.5 和 Sonnet 5.5 就會自動加上 286 tokens 的系統提示（`tool_choice` 為 auto 或 none 時；Haiku 5.5 也是 286，強制 any／tool 時 406）[ANT-PRICE]。結構化輸出也會自動加一段系統提示，但長度沒有公開 [ANT-SO]。
 - **網路工具**：
   - Web search 每 1,000 次 $10，另外計算搜尋結果的 token。
   - Web fetch 不另外收費，只算 token。一般 10 kB 的網頁約 2,500 tokens [ANT-PRICE]。
@@ -162,7 +162,8 @@
 - 每個請求上限 32 MB、600 頁；如果請求的 context window 小於 1M，上限是 100 頁 [ANT-PDF]。
 - 每一頁會同時當作文字和圖片處理：文字每頁約 1,500–3,000 tokens，再加上圖片 token [ANT-PDF]。
 - 本專案的做法：
-  - 09 文件的 manifest 顯示，57 份學測／指考題本 PDF 全部可以抽出文字（學測 35 份、指考 22 份，`text_extractable=true`）。
+  - 09 文件的 manifest 顯示，57 份學測／指考題本 PDF 全部可以抽出文字（學測 35 份、指考 22 份，`text_extractable=true`）。2026-10-08 以 `data/exams/manifest.json` 重新計數，結果相同；加上 9 份參考試卷或試辦試卷，共 66 份。
+  - 例外（09 文件 §6）：學測 90、92、92 補考、93 和指考 92、93 的中文字會抽成「㈻」「㆗」這類括號字，要先做 NFKC 等正規化；指考 91 第 1 頁的中文說明是亂碼。英文本文不受影響。
   - 所以結構化歷屆題本時**送抽出的文字，不送 PDF**，省掉每頁的圖片 token。
   - 只有含圖的頁面（看圖作文、圖表題）才把那一頁轉成 PNG，走視覺。
 
@@ -177,16 +178,17 @@
 | 5 | **強制 `tool_choice`（`any`／`tool`）會回 400**。Messages、Batches、count_tokens 都一樣 | 出題和批改不能靠強制工具呼叫拿 JSON | 改用 `output_config.format`（JSON schema） | [ANT-O55-MIG] |
 | 6 | `temperature`、`top_p`、`top_k` 設成非預設值會回 400 | 02 文件 §6.5 的「用不同 temperature 雙閱」做不到 | 第二位評分者改用不同模型，或用不同的評分框架 | [ANT-O55-MIG] |
 | 7 | 不能在 `messages` 最後放 assistant 預填（prefill） | 不能用預填 `{` 的方式逼模型輸出 JSON | 用結構化輸出 | [ANT-O55-MIG] |
-| 8 | **拒答**：HTTP 200，`stop_reason:"refusal"`，`stop_details.category` 標出類別（Opus 5.5 有 `cyber`、`bio`、`reasoning_extraction`） | 先檢查 `stop_reason`，再讀 `content` | 同步呼叫加上 `fallbacks:"default"`，並帶 beta 標頭 `server-side-fallback-2026-07-01`。**Batch 不支援 fallbacks**，帶了那一筆會變成 errored；要自己收集被拒的項目，換模型重送 | [ANT-REFUSAL] [ANT-O55-MIG] |
-| 9 | 要求模型把內部推理寫進回答，可能被判定為 `reasoning_extraction` 而拒答 | schema 不要有「逐步推理」這種欄位 | 欄位取名 `explanation_zh`，內容是「簡短解析」 | [ANT-SO] |
+| 8 | **拒答**：HTTP 200，`stop_reason:"refusal"`，`stop_details.category` 標出類別（Opus 5.5 有 `cyber`、`bio`、`reasoning_extraction`） | 先檢查 `stop_reason`，再讀 `content` | 同步呼叫加上 `fallbacks:"default"`，並帶 beta 標頭 `server-side-fallback-2026-07-01`。**Batch 不支援 fallbacks**，帶了那一筆會變成 errored；要自己收集被拒的項目，換模型重送。**Haiku 5.5 沒有 server-side fallback**，只能自己重送 [ANT-H55-NEW] | [ANT-REFUSAL] [ANT-O55-MIG] |
+| 8a | **拒答也可能收費**（2026-10-08 查證補充）：輸出前就拒答時，類別是 `bio`、`frontier_llm`、`reasoning_extraction` 的會照一般請求計費，其他類別不收費；中途拒答則收輸入和已串流的輸出。用了 fallback 時，觸發 fallback 的那次拒答（符合上述條件時）和 fallback 請求都要付費 | 帳本和點數退還規則要依類別處理，不能一律當成 0 元 | 依實際 `usage`（有 fallback 時看 `usage.iterations`，見 §5.2(d)）結算成本；給學生的點數可以照退，但站內成本照記 | [ANT-REFUSAL] |
+| 9 | 要求模型把內部推理寫進回答，可能被判定為 `reasoning_extraction` 而拒答（這一類在輸出前拒答也會收費，見 #8a；官方說這一類沒有建議的 fallback 模型，要改提示詞而不是重送） | schema 不要有「逐步推理」這種欄位 | 欄位取名 `explanation_zh`，內容是「簡短解析」 | [ANT-SO] [ANT-REFUSAL] |
 | 10 | **Preserved thinking**：思考區塊只在 `system`、`tools` 和之前的訊息都沒改動時有效。2026-08-31 00:00 UTC 之後建立的帳號預設強制檢查，改了就回 400 | 本專案的 Anthropic 帳號如果是新開的，就一定受影響 | 對話紀錄只往後加；assistant 回傳的 `content`（含思考區塊）原樣存、原樣送回 | [ANT-THINK] [ANT-PT] [ANT-ERR] |
 | 11 | **結構化輸出的限制**：不支援 `minLength`、`maxLength`、`minimum`、`maximum`、遞迴 schema；`minItems` 只能是 0 或 1；整個請求的可選參數總共最多 24 個、union 型別最多 16 個；物件都必須設 `additionalProperties:false`；`enum` 的大小寫不保證；第一次用某個 schema 會有編譯延遲，編譯結果快取 24 小時；不能和 citations 一起用；可以用在 Batch | 題目的「空格數」「選項數」不能交給 schema 強制 | 欄位一律列為 required；數量和長度用程式驗證；`enum` 比對不分大小寫 | [ANT-SO] |
-| 12 | Haiku 4.5 退役日期是「不早於 2026-10-15」 | 不要建立新的依賴 | Sekai 的審核功能用的是 `claude-haiku-4-5-20251001`（`worker/wrangler.toml:94`），搬過來時要換掉 | [ANT-DEPR] |
+| 12 | Haiku 4.5 退役日期是「不早於 2026-10-15」 | 不要建立新的依賴 | Sekai 的審核功能用的是 `claude-haiku-4-5-20251001`（`worker/wrangler.toml:94`），搬過來時要換掉。同級的後繼是 `claude-haiku-5-5`，但換過去會碰到這些破壞性變更：`budget_tokens`、非預設 `temperature`、assistant 預填都會回 400；思考預設開啟，`max_tokens` 要把思考算進去；同一段文字的 token 數約多 30%。另外 Haiku 5.5 仍接受強制 `tool_choice`，只是那次回應不會思考 | [ANT-DEPR] [ANT-H55-NEW] [ANT-H55-MIG] |
 | 13 | 對話中途要加指示時，可以在 `messages` 裡加一則 `role:"system"` 訊息，不用改最上層的 `system`。Opus 5.5 和 Sonnet 5.5 都支援，不需要 beta 標頭 | 例如切換「提示模式／詳解模式」 | 用中途 system 訊息，快取和思考區塊都不會失效 | [ANT-MIDSYS] |
 
 ### 1.7 速率上限和花費上限
 
-**Messages API 的速率上限**（Opus 5.5 和 Sonnet 5.5 的數字相同，各自獨立計算，不共用額度）[ANT-RL]：
+**Messages API 的速率上限**（Opus 5.5 和 Sonnet 5.5 的數字相同，各自獨立計算，不共用額度；2026-10-08 版加入的 Haiku 5.5 在各級距也是同樣的數字）[ANT-RL]：
 
 | 用量級距 | RPM | ITPM（輸入 tokens／分） | OTPM（輸出 tokens／分） | 每月花費上限 |
 |---|---|---|---|---|
