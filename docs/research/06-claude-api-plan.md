@@ -617,7 +617,7 @@ if (b.processing_status === "ended") {
 
 **串流：**
 
-- Worker 用 SDK 的 `client.messages.stream()`，把 `text_delta` 轉成 SSE 送給瀏覽器（§4.3）。
+- Worker 用 SDK 的 `client.beta.messages.stream()`（為了帶 `fallbacks`，要走 beta 命名空間），把 `text_delta` 轉成 SSE 送給瀏覽器（§4.3）。
 - 串流中途可能收到 `event: error`（例如 `overloaded_error`），也可能收到任意數量的 `ping`。程式要能處理不認得的事件類型 [ANT-STREAM]。
 - 思考區塊預設不顯示內容（`display:"omitted"`）[ANT-THINK]，前端顯示「思考中」就好。
 
@@ -636,6 +636,7 @@ if (b.processing_status === "ended") {
     - 間隔常常超過 1 小時，就維持預設的 5 分鐘。
   - 上線後用 D1 的 `chat_messages` 時間戳記統計間隔分布，再決定。Sekai 也是用實際紀錄做決定的（§5.1）。
 - **讓快取失效的操作**：在對話中途改最上層的 `effort` 或 `output_config.format`，都會讓訊息快取失效 [ANT-CACHE] [ANT-SO]。
+  - 真的要在對話中途調整 effort 時，Opus 5.5 支援 per-message effort（beta 標頭 `mid-conversation-output-config-2026-07-01`），不會讓快取失效 [ANT-EFFORT]（2026-10-08 查證補充）。
 - **切換模式**（例如「只給提示」切換成「完整詳解」）：在對話中加一則 `role:"system"` 訊息，不要改最上層的 system [ANT-MIDSYS]。
 
 **對話紀錄只能往後加**（[ANT-PT]）：
@@ -763,6 +764,8 @@ if (b.processing_status === "ended") {
 | 單字增補只做 Level 3–5（3,006 筆） | −US$95 |
 | 出題和驗證全面改用 Sonnet 5.5（不建議在評測前這樣做） | 那兩項約減半 |
 
+（2026-10-08 查證：基準 US$1,166.15 和題庫小計 US$782.23 重算完全一致。思考 token 減半／加倍重算為 US$899／1,701，和上表差幾美元，差在「中譯英和作文的複核 US$15.29」這筆估計值要不要跟著思考量縮放，不影響結論。）
+
 **注意 Anthropic 的每月花費上限：**
 
 - Start 級距每月上限 $500，Build 是 $1,000 [ANT-RL]。
@@ -780,7 +783,7 @@ if (b.processing_status === "ended") {
 （2026-10-08 查證：最後一欄依 Sonnet 5.5 新的快取讀取價 $0.10 重算；原稿依 $0.20 算出的是 1.64／3.54／8.84。）
 
 - 「一般」用量如果作文全部改走「慢速批改」（Batch）：約 US$3.68（約 NT$117）。
-- 敏感度（一般用量，思考 token 減半到加倍）：US$3.56–6.31（約 NT$113–200）。2026-10-08 重算結果相同。一次性合計的敏感度重算是 US$899–1,701，和原稿的 902–1,695 差幾美元，差在「中譯英和作文複核 US$15.29」要不要跟著思考量縮放。
+- 敏感度（一般用量，思考 token 減半到加倍）：US$3.56–6.31（約 NT$113–200）。2026-10-08 重算結果相同。
 - 做題、看資料庫裡的解析都**不花 token**，不列入計算。
 
 **換算成可以服務的學生人數**（以一般用量 US$4.47／月計，本文件計算）：
