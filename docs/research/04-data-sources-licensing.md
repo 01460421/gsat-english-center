@@ -143,7 +143,7 @@
 | 名稱 | 內容 | 授權／條款重點 | 轉載 | 改寫／挖空 | 商用 | 標示 | API 與額度 | 本專案建議 |
 |---|---|---|---|---|---|---|---|---|
 | **VOA（voanews.com）** | 國際新聞 | 「All text, audio and video material produced exclusively by the Voice of America is in the public domain. Credit … should be given to voanews.com, Voice of America, or VOA.」但 AFP、AP、Reuters 的素材「shall not be published, broadcast, **rewritten** for broadcast or publication」[VOA-TOU]。「Voice of America」是商標，未經許可不得用於商業目的 [VOA-TOU] | 自製內容可 | 自製內容可 | 自製內容可 | 依 VOA 要求 credit | RSS | 只採用「完全由 VOA 自製」的文章，並排除照片 |
-| **VOA Learning English** | 分級新聞、Words in This Story 字彙表 | 條款同 VOA，第三方段落只列 AP [VOALE-TOU]。另外，USAGM 在 2025-03-13 宣布終止 VOA 與 AP、Reuters、AFP 的供稿合約 [SAVEVOA]，但這不會讓舊稿變成公有領域。**實例**：小行星文章署名「Daniel Lawler with Issam Ahmed reported this story for Agence France-Presse. Jill Robbins adapted it for Learning English.」[VOALE-ART]。這類 AFP／AP 改寫稿**不屬於「produced exclusively by VOA」**，風險高 | 只限非通訊社稿 | 只限非通訊社稿 | 只限非通訊社稿 | credit VOA | RSS `https://learningenglish.voanews.com/api/` | 篩選標準：文末沒有「reported this story for AFP／AP／Reuters」字樣。主要拿來當作「分級英文寫法」的風格參考 |
+| **VOA Learning English** | 分級新聞、Words in This Story 字彙表 | 條款同 VOA，第三方段落只列 AP [VOALE-TOU]。另外，SaveVOA 時間軸記載，Kari Lake 在 2025-03-13 宣布終止 VOA 與 AP、Reuters、AFP 的供稿合約 [SAVEVOA]，但這不會讓舊稿變成公有領域。**實例**：小行星文章署名「Daniel Lawler with Issam Ahmed reported this story for Agence France-Presse. Jill Robbins adapted it for Learning English.」[VOALE-ART]。這類 AFP／AP 改寫稿**不屬於「produced exclusively by VOA」**，風險高 | 只限非通訊社稿 | 只限非通訊社稿 | 只限非通訊社稿 | credit VOA | RSS `https://learningenglish.voanews.com/api/` | 篩選標準：文末沒有「reported this story for AFP／AP／Reuters」字樣。主要拿來當作「分級英文寫法」的風格參考 |
 | **UN News／un.org（含 SDGs 頁面）** | 聯合國新聞、SDGs 說明 | UN 網站條款：只允許「personal, non-commercial use, without any right to resell or redistribute them or to compile or create derivative works therefrom」[UN-TOU]。著作權頁：「News-related material can be used as long as the appropriate credit is given and the United Nations is advised.」[UN-COPY]。UN News 的 footer 直接連到這兩頁 [UNNEWS] | 新聞類，標示並通知 UN 後可以 | **不可**（衍生作品）| 不可 | 要標示 | RSS | **只當事實素材與主題來源**，改寫成原創文章並附連結 |
 | **SDG 標誌與 17 個圖示** | 色輪、圖示 | 非 UN 單位可依指引使用，但要加連結和這段聲明：「The content of this publication has not been approved by the United Nations and does not reflect the views of the United Nations or its officials or Member States」。募款與商業用途要先取得書面許可，也不得暗示聯合國背書 [SDG-COMM] | 依指引 | 不得變形 | 商業用途需許可 | 加連結與聲明 | 下載 | 題目卡用 SDG 編號文字標籤（例如「SDG 13 氣候行動」），不使用官方圖示，避免觸及商業限制。若要用圖示，就照指引加聲明 |
 | **UN SDG Global Database API** | 官方 SDG 指標資料（75 個端點，例如 `/v1/sdg/Goal/List`、`/v1/sdg/Series/Data`）[SDG-API]。**沒有台灣資料**：台灣在 `/v1/sdg/GeoArea/List` 是 158「Other non-specified areas in Eastern Asia」，`SI_POV_DAY1`、`SP_DYN_IMRT`、`EN_ATM_CO2` 查 `areaCode=158` 都是 0 筆（2026-10-08 本專案實測） | API 頁面沒有授權聲明。同為 UNSD 的 UNdata 條款寫「may be copied freely, duplicated and further distributed provided that UNdata is cited as the reference」[UNDATA]，但是否同樣適用於 SDG API **未驗證** | 數據可（推定） | 數據可（推定） | 推定可 | 引用 UNSD 與資料保管機構 | 免金鑰（本專案實測 200）| 用於圖表題的跨國數據來源，標示「UN SDG Global Database」與指標代碼。台灣數據另找政府開放資料 |
@@ -350,12 +350,25 @@ share_alike (bool), commercial_ok (bool), retrieved_at
 - 不把 VOA Learning English 的通訊社改寫稿當作公有領域。
 - 不在介面顯示 Lexile、Collins、Oxford 3000 等品牌指標。
 - 網域、App 名稱、Logo 不使用「大考中心」「CEEC」。
+- 不用 CI 腳本到 mdbg.net 自動下載 CC-CEDICT（網站禁止自動化存取）。
+- 不把 Global Voices 的合作媒體轉載稿當成 CC BY。
+
+### 7.5 未成年使用者與使用者上傳內容（本次補充）
+
+使用者主要是 15–18 歲的高中生，作文批改還會收手寫照片，這兩件事有額外的條款與法規要求：
+
+| 項目 | 依據 | 本專案做法 |
+|---|---|---|
+| Anthropic 的未成年人規定 | Usage Policy（2025-09-15 生效）：「Products serving minors … must comply with the additional guidelines outlined in our Help Center article」；minor 指「any individual under the age of 18 years old, regardless of jurisdiction」[ANT-AUP]。Help Center 指引（2026-03-16 版）要求的措施包括：年齡驗證、內容審查與過濾、監控與回報機制、安全使用說明；要遵守當地兒少與隱私法規，並「clearly stated on the organization's website」；必須告知使用者「they are interacting with an AI system rather than a human」。Anthropic 會定期稽核，違規率高又不改善可能停權 [ANT-MINORS] | 登入時確認身分與年齡層；所有 AI 回覆過濾後才顯示；AI 對話頁開頭固定顯示「你正在和 AI 對話」；隱私權政策頁寫明遵循的法規；若 Anthropic 提供 child-safety system prompt 就套用 |
+| 消費者聊天介面 | Usage Policy：「All consumer-facing chatbots … must disclose to users that they are interacting with AI rather than a human」，至少每個對話開頭要告知 [ANT-AUP] | 同上 |
+| 個人資料（作文內容、手寫照片、帳號）| 《個人資料保護法》第 8 條：向當事人蒐集時要告知機關名稱、目的、資料類別、利用期間／地區／對象／方式、當事人權利等；第 19 條：非公務機關蒐集要有特定目的，並符合契約關係或當事人同意等要件；第 20-1 條：要做安全維護；第 21 條：國際傳輸可能被主管機關限制 [TW-PDPA] | 上傳前顯示告知事項（會傳給 Anthropic 的 API 處理；資料處理地點推定在台灣境外，**未驗證**，第 21 條的國際傳輸問題要一併評估）；照片 OCR 後預設刪除原圖，只留文字；作文文字不放進 AI 稽核日誌全文。未成年人同意是否需要法定代理人一併同意，屬民法與個資法交錯問題，**未驗證**，上線前請律師確認 |
+| 學生作文的著作權 | 學生自己寫的作文是學生的著作（《著作權法》第 10 條：「著作人於著作完成時享有著作權」）[TW-CA] | 服務條款取得「為批改、統計與改進服務而儲存與處理」的非專屬授權；未經另外同意，不把學生作文當範文公開 |
 
 ---
 
 ## 8. 待決事項與未驗證清單
 
-1. Cambridge 網站條款全文（cambridge.org 被 Cloudflare 擋下 403），以及舊 API 的申請流程與費用。目前只有搜尋引擎摘錄，原頁已失效。
+1. ~~Cambridge 網站條款全文~~：2026-10-08 已用 Wayback 封存頁（2026-10-04）逐字核對，見 §2.1 [CAM-TOU]。直連仍是 403，正式上線前建議再用瀏覽器人工看一次現行版。舊 API 的試用條款也已用封存頁核對 [CAM-API-WB]；**正式授權的費率仍未知**，要寄信詢價。
 2. Princeton WordNet 授權頁（Cloudflare 驗證擋下）。本文改用 OEWN repo 裡附的 WordNet 授權全文。
 3. 大考中心是否同意本專案在付費 App 中使用《參考詞彙表》，以及說明文字中提到「大學入學考試中心」是否算商標使用。建議寄信詢問大考中心。
 4. 國家教育研究院樂詞網的「政府網站資料開放宣告」和另一頁的「版權聲明」互相矛盾，要函詢確認。
@@ -365,12 +378,17 @@ share_alike (bool), commercial_ok (bool), retrieved_at
 8. NGSL 的 CC 授權版本、EVP 授權、Deepgram 條款、Piper 各聲音模型的授權、UNICEF Data 條款（403）都還沒逐條核對。
 9. 美國政府著作（VOA、NASA）在台灣是否同樣不受保護（17 U.S.C. §105 只適用於美國境內），**未驗證**。本專案以「來源自己宣告為公有領域」和「事實素材化」兩層方式降低風險。
 10. 三種難度的詞彙覆蓋率門檻（§5.4），要等歷屆題本結構化後逐篇校準。
+11. 純 AI 生成的題目、範文、詳解在我國是否受著作權保護：目前依據是智慧局網站上講座講義引用的電子郵件 1111031，函釋原文還沒開啟核對 [TIPO-AI]。智慧局是否已正式發布生成式 AI 著作權指引，**未驗證**。
+12. 本專案是否落在 Anthropic Usage Policy 的 High-Risk Use Cases（「Academic testing, accreditation and admissions」「Media or professional journalistic content」）：本專案判斷不屬於，**未驗證**，可寫信向 Anthropic 確認（§7.2 第 8 步）。
+13. 未成年人使用與個資：法定代理人同意的要件、資料傳到境外處理的評估、隱私權政策內容，都要請律師確認（§7.5）。
+14. 大考中心已註冊商標是否包含純文字字樣（聲明 PDF 只列出設計字樣與圖形）：可在智慧局商標檢索系統查詢。
+15. Taiwan Today 沒有找到開放授權聲明（首頁直連 403，第二次取得的頁尾只有「Copyright © 2026 Ministry of Foreign Affairs」）。
 
 ---
 
 ## 9. 來源
 
-所有網址都是 2026-10-07 存取；原始檔在 `data/raw/licensing/`。
+所有網址都是 2026-10-07 存取（標 2026-10-08 者為查證時新增或重測）；原始檔在 `data/raw/licensing/`，查證時新增的檔案在 `data/raw/licensing/verify04/`。
 
 **辭典與詞彙**
 - **[CAM-TC]** Cambridge Dictionary 英漢繁體條目：<https://dictionary.cambridge.org/dictionary/english-chinese-traditional/abandon>
@@ -380,7 +398,8 @@ share_alike (bool), commercial_ok (bool), retrieved_at
 - **[CAM-WIDGET]** Free widgets：<https://dictionary.cambridge.org/freesearch.html>
 - **[CAM-API]** <http://dictionary-api.cambridge.org>（實測 301 → <https://dictionary.cambridge.org/>）
 - **[CAM-API-SNIP]** 舊 API 頁（搜尋引擎索引，現已 301）：<https://dictionary-api.cambridge.org/api/faq>、<https://dictionary-api.cambridge.org/api/terms-and-conditions>
-- **[CAM-TOU]** Cambridge Website Terms of Use：<https://www.cambridge.org/legal/website-terms-of-use>（403，內容依搜尋引擎摘錄）
+- **[CAM-API-WB]** 舊 API 頁的 Wayback 封存（2026-04-10，2026-10-08 存取）：FAQ <https://web.archive.org/web/20260410090719/https://dictionary-api.cambridge.org/api/faq>、Terms <https://web.archive.org/web/20260410083528/https://dictionary-api.cambridge.org/api/terms-and-conditions>、About <https://web.archive.org/web/20260410084154/https://dictionary-api.cambridge.org/api/about>（本地 `verify04/cam_api_*_wb*.txt`）
+- **[CAM-TOU]** Cambridge Website Terms：<https://www.cambridge.org/legal/website-terms-of-use>（直連 403）。逐字核對用的是 Wayback 封存 <https://web.archive.org/web/20261004132417/https://www.cambridge.org/legal/website-terms-of-use>（2026-10-08 存取，本地 `verify04/cam_tou_wb20261004.txt`）。辭典頁尾連結 <https://www.cambridge.org/about-us/terms-use/> 會 301 轉到這一頁（依 Wayback 2026-10-03 紀錄）
 - **[ECDICT]** <https://github.com/skywind3000/ECDICT>（README、LICENSE、ecdict.csv）
 - **[ECDICT-LEMMA]** <https://raw.githubusercontent.com/skywind3000/ECDICT/master/lemma.en.txt>
 - **[OEWN]** <https://github.com/globalwordnet/english-wordnet>、<https://en-word.net/>
@@ -428,6 +447,8 @@ share_alike (bool), commercial_ok (bool), retrieved_at
 - **[CONV]** <https://theconversation.com/us/republishing-guidelines>
 - **[WP-COPY]** <https://en.wikipedia.org/wiki/Wikipedia:Copyrights>；**[WP-REUSE]** <https://en.wikipedia.org/wiki/Wikipedia:Reusing_Wikipedia_content>；**[SIMPLEWP]** <https://simple.wikipedia.org/wiki/Wikipedia:Copyrights>；**[WM-UA]** <https://foundation.wikimedia.org/wiki/Policy:Wikimedia_Foundation_User-Agent_Policy>
 - **[GV]** <https://globalvoices.org/about/global-voices-attribution-policy/>
+- **[GV-RSS]** Global Voices RSS：<https://globalvoices.org/feed/>（2026-10-08 存取）
+- **[TW-ODL]** 政府資料開放授權條款－第1版：<https://data.gov.tw/license>（2026-10-08 存取，本地 `verify04/datagov_license.txt`）
 - **[FYM]** <https://kids.frontiersin.org/articles/10.3389/frym.2026.1664406>（文章頁授權聲明）；**[FYM-ABOUT]** <https://kids.frontiersin.org/about/journal>
 - **[PLOS]** <https://plos.org/open-science-publishing/>（由 <https://plos.org/license/> 轉址）
 - **[OWID-FAQ]** <https://ourworldindata.org/faqs>
@@ -448,7 +469,9 @@ share_alike (bool), commercial_ok (bool), retrieved_at
 - **[CEEC-TM]** 大學入學考試中心商標使用管理聲明：<https://www.ceec.edu.tw/files/file_pool/1/0Q245474553537345169/%E5%A4%A7%E5%AD%B8%E5%85%A5%E5%AD%B8%E8%80%83%E8%A9%A6%E4%B8%AD%E5%BF%83%E5%95%86%E6%A8%99%E4%BD%BF%E7%94%A8%E7%AE%A1%E7%90%86%E8%81%B2%E6%98%8E.pdf>
 - **[CEEC-ESSAY115]** 115 學測英文作文佳作：<https://www.ceec.edu.tw/xmdoc/cont?xsmsid=0J071624926253508127&sid=0Q077622448864496628>
 - **[CEEC-EP351]** 選才電子報〈115學年度學科能力測驗試題特色－【英文】〉：<https://www.ceec.edu.tw/xcepaper/cont?xsmsid=0J066588036013658199&qunit=0Q105367191322447606&sid=0Q105583094870257539>
-- **[V111]** 《高中英文參考詞彙表（111 學年度起適用）》封面，見 `03-vocab-list.md` §10
+- **[V111]** 《高中英文參考詞彙表（111 學年度起適用）》封面，網址見 `03-vocab-list.md` §10（本地 `data/raw/vocab/ceec-wordlist-111.pdf`）
+- **[TIPO-AI]** 賴文智律師〈AI人工智慧相關著作權議題〉，113 年度經濟部智慧財產局著作權講座講義（智慧局網站附件），引用智慧局電子郵件 1111031、1121229：<https://www.tipo.gov.tw/wSite/public/Attachment/0/f1747358373643.pdf>（2026-10-08 存取，本地 `verify04/tipo_f1747358373643.pdf`）
+- **[TW-PDPA]** 《個人資料保護法》（全國法規資料庫，最新修正 114-11-11）：<https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=I0050021>（2026-10-08 存取）
 
 **可讀性**
 - **[TEXTSTAT]** <https://github.com/textstat/textstat>（LICENSE：MIT；公式見 `textstat/textstat.py`）
@@ -466,4 +489,6 @@ share_alike (bool), commercial_ok (bool), retrieved_at
 - **[KOKORO]** <https://huggingface.co/hexgrad/Kokoro-82M>
 - **[PIPER]** <https://github.com/OHF-Voice/piper1-gpl>（COPYING：GPL-3.0）；舊 repo <https://github.com/rhasspy/piper>
 - **[GCP-TTS]** <https://cloud.google.com/text-to-speech/pricing>
-- **[ANT-CTOS]** Anthropic Commercial Terms of Service（Effective June 17, 2025）：<https://www.anthropic.com/legal/commercial-terms>
+- **[ANT-CTOS]** Anthropic Commercial Terms of Service（Effective June 17, 2025）：<https://www.anthropic.com/legal/commercial-terms>（引用條款：B 段 Outputs 歸屬、D.3、K.1、K.3）
+- **[ANT-AUP]** Anthropic Usage Policy（Effective September 15, 2025）：<https://www.anthropic.com/legal/aup>（2026-10-08 存取）
+- **[ANT-MINORS]** Claude Help Center〈Responsible Use of Anthropic's Models: Guidelines for Organizations Serving Minors〉（頁面日期 2026-03-16）：<https://support.claude.com/en/articles/9307344-responsible-use-of-anthropic-s-models-guidelines-for-organizations-serving-minors>（2026-10-08 存取）
