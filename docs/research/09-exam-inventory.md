@@ -229,7 +229,7 @@ manifest 每一筆都有以下欄位：`exam`、`year`、`kind`、`title`、`url
   - 學測 90、92、92 補考、93，指考 92、93 的試題，學測 90 封面，以及學測 94 答案：中文字會被擷取成「㈻」「㆗」「㆒」這類括號字或漢文訓讀符號（例如「大㈻入㈻考試㆗心」），需要做正規化（例如 NFKC 後去掉單字括號、「学」換回「學」）。英文本文不受影響。（2026-10-08 以字元範圍 U+3190–U+33FF 全檔掃描確認；原稿漏列學測 90 試題與封面。）
   - 指考 91 試題：第 1 頁的中文說明與題型標題是亂碼，第 2 頁之後的英文題目正常。
   - 參考答案、評分原則裡的大括號選項（例如 `reference/107/answer-2.pdf` 的翻譯參考答案）會被擷取成 U+F0xx 的 Symbol 字型字元。判斷品質時已把這些字元排除在亂碼之外，但後續解析需要另外處理。
-- **環境需求**：舊 PDF 使用的是 Adobe-CNS1 CID 字型。沒有安裝 `poppler-data` 時，pdftotext 會出現「Missing language pack for 'Adobe-CNS1'」，擷取結果是空的（本次學測 92 與 92 補考的答案，在安裝前就是這樣）。安裝 `poppler-data` 之後就能正確擷取。GitHub Actions 或其他機器請安裝 `poppler-utils poppler-data`。
+- **環境需求**：舊 PDF 使用的是 Adobe-CNS1 CID 字型。沒有安裝 `poppler-data` 時，pdftotext 會出現「Missing language pack for 'Adobe-CNS1'」，擷取結果是空的（本次學測 92 與 92 補考的答案，在安裝前就是這樣；此錯誤訊息為研究員當時觀察，查證時環境已裝好 poppler-data 0.4.12，未重現）。安裝 `poppler-data` 之後就能正確擷取。GitHub Actions 或其他機器請安裝 `poppler-utils poppler-data`（`pdffonts`、`pdfimages` 也在 poppler-utils 內，工具用它們區分掃描檔與向量亂碼檔）。本次查證環境：pdftotext 24.02.0、poppler-data 0.4.12、Python 3.13.16。
 
 ## 7. 多科合併檔
 
