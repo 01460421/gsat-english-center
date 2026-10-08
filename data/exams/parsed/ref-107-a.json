@@ -132,7 +132,7 @@
        "stats": null,
        "scoring_notes": null,
        "tags": {
-        "test_point": "collocation",
+        "test_point": "word_meaning",
         "answer_pos": "noun",
         "key_phrase": "hot spring resort"
        },
@@ -239,7 +239,7 @@
        "stats": null,
        "scoring_notes": null,
        "tags": {
-        "test_point": "collocation",
+        "test_point": "word_meaning",
         "answer_pos": "adjective",
         "key_phrase": "preliminary screening"
        },
@@ -667,7 +667,7 @@
        "stats": null,
        "scoring_notes": null,
        "tags": {
-        "test_point": "collocation",
+        "test_point": "word_meaning",
         "answer_pos": "verb",
         "key_phrase": "be accompanied by"
        },
@@ -819,7 +819,7 @@
        "stats": null,
        "scoring_notes": null,
        "tags": {
-        "test_point": "collocation",
+        "test_point": "word_meaning",
         "answer_pos": "noun",
         "key_phrase": "happy occasions"
        },
@@ -1106,8 +1106,10 @@
      ],
      "tags": {
       "topic": "crowd-funding music acts through an online record label",
-      "genre": "news",
-      "sdgs": [],
+      "genre": "expository",
+      "sdgs": [
+       8
+      ],
       "text_format": "continuous"
      }
     },
@@ -1666,7 +1668,7 @@
   }
  ],
  "extraction": {
-  "method": "pdftotext -layout 與 pdftotext（無 -layout）擷取題本、答案檔與考試說明文字；選文段落依 -layout 縮排切分，空格編號改寫為 [[題號]]；Read 看題本全部8頁頁面影像，並以 pdftoppm 300／600dpi 放大裁切確認版面、粗斜體、題組標示、圖片；答案檔2頁看頁面影像核對選擇題答案與中譯英大括號版面；以程式把每段選文、題幹、選項、選項庫去空白後與 PDF 文字層逐段比對（差異只有頁首頁尾、圖中標籤、上標與行尾連字號，已逐一以頁面影像確認）；另以程式將每題與原出處考卷（data/raw/ceec 下各年 paper-1.pdf 的 pdftotext 文字）及原卷答案檔比對，標出 reused_from；建檔腳本放 scratchpad，未進 repo（本卷：paper-1.pdf、answer-1.pdf、考試說明 other-1.pdf；第44–47題圓網示意圖另以 300dpi 裁切判讀）",
+  "method": "pdftotext -layout 與 pdftotext（無 -layout）擷取題本、答案檔與考試說明文字；選文段落依 -layout 縮排切分，空格編號改寫為 [[題號]]；Read 看題本全部8頁頁面影像，並以 pdftoppm 300／600dpi 放大裁切確認版面、粗斜體、題組標示、圖片；答案檔2頁看頁面影像核對選擇題答案與中譯英大括號版面；以程式把每段選文、題幹、選項、選項庫去空白後與 PDF 文字層逐段比對（差異只有頁首頁尾、圖中標籤、上標與行尾連字號，已逐一以頁面影像確認）；另以程式將每題與原出處考卷（data/raw/ceec 下各年 paper-1.pdf 的 pdftotext 文字）及原卷答案檔比對，標出 reused_from；建檔腳本放 scratchpad，未進 repo（本卷：paper-1.pdf、answer-1.pdf、考試說明 other-1.pdf；第44–47題圓網示意圖另以 300dpi 裁切判讀）；查證：答案、選項、選文以程式對 pdftotext -layout 逐字比對，並以 Read 看題本第2–8頁、答案檔2頁影像，pdftoppm 裁切圓網圖核對",
   "issues": [
    "同年兩份參考試卷：units.json 的 ref-107 含兩份題本——paper-1.pdf「指定科目考試參考試卷（107學年度起適用）英文考科」與 paper-2.pdf「學科能力測驗參考試卷（107學年度起適用）英文考科」，依任務規則分別輸出 ref-107-a（指考參考試卷：paper-1.pdf、answer-1.pdf、考試說明 other-1.pdf）與 ref-107-b（學測參考試卷：paper-2.pdf、answer-2.pdf、考試說明 other-3.pdf）。other-1.pdf 與 other-2.pdf 是同一個檔案（md5 相同，皆為「107指考英文考試說明」），other-3.pdf 與 other-4.pdf 亦同（「107學測英文考試說明」），sources.other 兩個都列。",
    "結構核對：本卷是指考參考試卷，對照 gsat-spec.json legacy_ast 期別「98–110」（本卷不屬學測期別）：詞彙題 1–10（各1分，題本標為「詞彙題」，與 spec 註記 107–110 題本稱「詞彙題」相符）、綜合測驗 11–20（2篇×5題，各1分）、文意選填 21–30（12個選項 A–L，各1分）、篇章結構 31–35（6個選項 A–F，各2分）、閱讀測驗 36–51（4篇×4題，各2分）、中譯英 2題各4分、英文作文 20分（至少120個單詞，文分兩段）；第壹部分單選題 72分＋第貳部分非選擇題 28分＝100分；考試時間 80分鐘（封面作答注意事項）；不倒扣（「答錯、未作答或畫記多於一個選項者，該題以零分計算」，與 spec penalty_by_year 100–110 相同）。無差異。",
@@ -1678,8 +1680,9 @@
    "統計：參考試卷不是正式施測的考卷，大考中心沒有發布統計（units.json 也沒有 stats 檔），所有小題 stats 為 null、sources.stats 為空陣列；validator「整份考卷沒有任何統計資料」warning 屬預期。沿用題在原考試年度有統計，但那不是本試卷的數據，沒有搬過來（要用可依 reused_from 回查原卷）。",
    "validator「題號重複 [1, 2]」warning 屬預期：中譯英兩題題本編為 1.、2.，英文作文沒有題號（no 填 1）；no 必須是整數，故沿用題本編號，以 label「中譯英1」「中譯英2」「英文作文」區分，label 無重複（同 ast-104、gsat-106 慣例）。",
    "沿用歷屆試題：本卷全部由100–105學年度指考試題組成（考試說明 other-1.pdf 的試題舉例也標出第31–35題出自103學年度指考、第44–47題出自100學年度指考、第48–51題出自103學年度指考）。以擴充欄位 reused_from {exam, no} 標在小題上（同 ref-111、ref-115 慣例），有改動的另加 modified 說明。對應：1←ast-105第8題、2←ast-103第3題、3←ast-104第2題、4←ast-101第7題、5←ast-102第1題、6←ast-103第10題、7←ast-101第6題、8←ast-102第7題、9←ast-101第8題、10←ast-105第5題；11–15←ast-101第11–15題；16–20←ast-105第16–20題；21–30←ast-101第21–30題；31–35←ast-103第31–35題；36–39←ast-102第36–39題；40–43←ast-104第36–39題；44–47←ast-100第44–47題；48–51←ast-103第48–51題；中譯英1、2←ast-101中譯英1、2；英文作文←ast-102英文作文。以程式逐題比對原卷 pdftotext 文字（題幹、選項、選文、選項庫）並對照原卷答案檔：有改動的是第4題（題幹與選項順序）、第6題（一個選項）、第7題（選項順序）、第21–30題（選文刪去 processions and）、第39題（引號）、第44–47題（附圖改為灰階），細節見各題 reused_from.modified；其餘逐字相同（空格底線長度不同不計），答案以選項內容計全部與原卷相同。中譯英作答說明 ast-101 為「…並標明子題號（1、2）。」，本卷為「…並標明子題號。」；英文作文提示 ast-102 用「提示：」，本卷用「提示︰」，其餘文字相同。",
-   "標註：沿用題的 tags 與已解析的 ast-100、ast-103、ast-104、ast-105 對應題保持一致（例：第17題 test_point=discourse、第18題 grammar/tense、第31–35題 clue、第40–43題 item_type）；ast-101、ast-102 尚未解析，相關題目依本卷內容自行判斷。第11–15題（諾貝爾和平中心）sdgs 標 16（和平、衝突解決），第36–39題 genre 標 news（報導 MMC 群眾募資唱片公司的新聞特稿）。"
+   "標註：沿用題的分類欄位（test_point、answer_pos、grammar_point、clue、item_type，以及題組的 genre、sdgs、text_format）與已查證的原卷對應題（ast-100–105）一致；key_phrase、topic、patterns 等描述性欄位的用字可能和原卷略有不同。查證時依已查證的 ast-101、ast-102 統一：第4、8、22、29題 test_point 由 collocation 改為 word_meaning（同 ast-101 第7題、ast-102 第7題、ast-101 第22、29題），第36–39題組 genre 由 news 改為 expository、sdgs 由 [] 改為 [8]（同 ast-102 第36–39題組）。第11–15題（諾貝爾和平中心）sdgs 標 16（和平、衝突解決），與 ast-101 相同。",
+   "查證（verifier）：(1) 選擇題51題答案逐題對照 answer-1.pdf 文字層與頁面影像，全部相符。(2) 每題每個選項、選項庫12個、篇章結構6個選項，以程式在 pdftotext -layout 文字中逐題逐選項比對（含選項代號與完整句尾），全部逐字相符。(3) 8篇選文以 -layout 文字去頁首頁尾、去圖中標籤後逐字（含 [[題號]] 空格位置與數字）比對，全部相符；段落數（1、3、4、4、4、4、2、4段）與頁面影像一致；字數（不含空格編號）161／208／265／228／332／279／290／270 words，與 -layout 擷取段落逐詞一致。另以頁面影像完整比對第36–39、44–47（附圖）、48–51題三篇選文。(4) 第44–47題圓網示意圖以 250dpi 裁切影像核對 description 與 rows；英文作文兩個產品說明框逐字核對。(5) 本卷無統計資料（參考試卷），stats 全為 null。(6) 中譯英兩題與 answer-1.pdf 第2頁大括號版面逐字核對，scoring_notes 記號正確，answer 與 accepted_answers 每句都在版面允許的寫法內；英文作文分項式評分標準與 other-1.pdf 第13頁表格逐格核對。(7) reused_from 對應以程式與已解析的 ast-100–105 逐題比對（題幹、選項、選文、選項庫、答案內容），modified 說明與實際差異一致。"
   ],
-  "verified_by": null
+  "verified_by": "verifier"
  }
 }

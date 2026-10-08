@@ -108,7 +108,7 @@
        "stats": null,
        "scoring_notes": null,
        "tags": {
-        "test_point": "word_meaning",
+        "test_point": "collocation",
         "answer_pos": "verb",
         "key_phrase": "replace A as B"
        },
@@ -466,7 +466,7 @@
        "scoring_notes": null,
        "tags": {
         "test_point": "grammar",
-        "answer_pos": "phrase",
+        "answer_pos": "adjective",
         "grammar_point": "comparison",
         "key_phrase": "the + 比較級 ..., the + 比較級 ..."
        },
@@ -2721,6 +2721,11 @@
         "essay_type": "picture",
         "word_requirement": "at least 120 words",
         "topic": "students absorbed in phones and music while walking: a girl walks into a tree and a boy steps in front of a car (story with an imagined ending)"
+       },
+       "reused_from": {
+        "exam": "gsat-103",
+        "no": null,
+        "modified": "提示與作答說明逐字相同；四格漫畫是同一張圖，gsat-103 人物的書包背帶為淡綠色，本卷為灰階"
        }
       }
      ],
@@ -2732,19 +2737,20 @@
   }
  ],
  "extraction": {
-  "method": "pdftotext -layout 與 pdftotext（無 -layout）擷取題本、答案檔與考試說明文字；選文段落依 -layout 縮排切分，空格編號改寫為 [[題號]]；Read 看題本全部8頁頁面影像，並以 pdftoppm 300／600dpi 放大裁切確認版面、粗斜體、題組標示、圖片；答案檔2頁看頁面影像核對選擇題答案與中譯英大括號版面；以程式把每段選文、題幹、選項、選項庫去空白後與 PDF 文字層逐段比對（差異只有頁首頁尾、圖中標籤、上標與行尾連字號，已逐一以頁面影像確認）；另以程式將每題與原出處考卷（data/raw/ceec 下各年 paper-1.pdf 的 pdftotext 文字）及原卷答案檔比對，標出 reused_from；建檔腳本放 scratchpad，未進 repo（本卷：paper-2.pdf、answer-2.pdf、考試說明 other-3.pdf；英文作文四格漫畫另以 600dpi 逐格裁切判讀）",
+  "method": "pdftotext -layout 與 pdftotext（無 -layout）擷取題本、答案檔與考試說明文字；選文段落依 -layout 縮排切分，空格編號改寫為 [[題號]]；Read 看題本全部8頁頁面影像，並以 pdftoppm 300／600dpi 放大裁切確認版面、粗斜體、題組標示、圖片；答案檔2頁看頁面影像核對選擇題答案與中譯英大括號版面；以程式把每段選文、題幹、選項、選項庫去空白後與 PDF 文字層逐段比對（差異只有頁首頁尾、圖中標籤、上標與行尾連字號，已逐一以頁面影像確認）；另以程式將每題與原出處考卷（data/raw/ceec 下各年 paper-1.pdf 的 pdftotext 文字）及原卷答案檔比對，標出 reused_from；建檔腳本放 scratchpad，未進 repo（本卷：paper-2.pdf、answer-2.pdf、考試說明 other-3.pdf；英文作文四格漫畫另以 600dpi 逐格裁切判讀）；查證：答案、選項、選文以程式對 pdftotext -layout 逐字比對，並以 Read 看題本第2–4、8頁、答案檔2頁影像，pdftoppm 400dpi 逐格裁切四格漫畫，並與 gsat-103 題本第8頁比對",
   "issues": [
    "同年兩份參考試卷：units.json 的 ref-107 含兩份題本——paper-1.pdf「指定科目考試參考試卷（107學年度起適用）英文考科」與 paper-2.pdf「學科能力測驗參考試卷（107學年度起適用）英文考科」，依任務規則分別輸出 ref-107-a（指考參考試卷：paper-1.pdf、answer-1.pdf、考試說明 other-1.pdf）與 ref-107-b（學測參考試卷：paper-2.pdf、answer-2.pdf、考試說明 other-3.pdf）。other-1.pdf 與 other-2.pdf 是同一個檔案（md5 相同，皆為「107指考英文考試說明」），other-3.pdf 與 other-4.pdf 亦同（「107學測英文考試說明」），sources.other 兩個都列。",
    "結構核對：本卷是學測參考試卷，對照 gsat-spec.json legacy_gsat 期別「94–110」：詞彙題 1–15（15分）、綜合測驗 16–30（3篇×5題，題組標示16–20、21–25、26–30，15分）、文意選填 31–40（A–J，10分）、閱讀測驗 41–56（4篇×4題，每題2分，32分）、中譯英 2題×4分、英文作文 20分（至少120個單詞）；第壹部分單選題 72分＋第貳部分非選擇題 28分＝100分；考試時間 100分鐘（封面作答注意事項）；沒有篇章結構（spec：舊制學測無篇章結構）。無差異。",
    "答案來源：answer-2.pdf（標題印作「大學入學考試中心 學測能力測驗參考試卷 英文考科參考答案」，「學測能力測驗」為原檔用字）——第1頁選擇題答案表（56題，pdftotext＋頁面影像逐題核對）、第2頁中譯英參考答案（大括號版面，看頁面影像轉寫，並與考試說明 other-3.pdf 第9頁「試題舉例二（105 年學測）」的參考答案核對一致）。本卷沒有評分原則檔、也沒有作文範文，sources.scoring 為空陣列，英文作文 answer 為 null。",
    "中譯英：兩題沿用 gsat-105 中譯英（ref-111 也沿用同兩題），參考答案版面與 ref-111 相同。依大括號逐列對應完整展開：第1題 252 種、第2題 768 種寫法（answer 1 句＋accepted_answers 其餘），以程式與 ref-111.json 對應題逐句比對，集合完全相同，answer 也取同一句。原版面 {the generation | their parents'} 與 {of their parents, | generation,} 是兩組並排、依列對應的大括號，只展開 the generation of their parents, 與 their parents' generation, 兩種；{today's | {now(,) | nowadays(,) | today(,)}} 與後面的大括號、第2題最後三組大括號也都依列對應。scoring_notes 放大括號記號原文，加上考試說明 other-3.pdf 對該題的說明（逐字，含原文「本題測驗於考生能否…」的用字）。",
-   "英文作文：scoring_notes 放考試說明 other-3.pdf 第10頁（PDF 第14頁）的「英文作文分項式評分標準」（105年7月修訂版），這是考試說明列出的通用標準，不是本題專屬的評分原則，已在 scoring_notes 開頭註明。題目沒有規定段數，tags 不填 paragraphs。四格漫畫依 300／600dpi 頁面影像逐格判讀；圖1 女學生手上的物品很小，只看得出是手持小型電子裝置，description 寫作「手機（或隨身電子產品）」。本題圖片在本機學測 99–106 題本中找不到（99、100、102、106 學測同為「三幅連環圖片」看圖寫作，但圖都不同），出處不明，未標 reused_from。",
+   "英文作文：scoring_notes 放考試說明 other-3.pdf 第10頁（PDF 第14頁）的「英文作文分項式評分標準」（105年7月修訂版），這是考試說明列出的通用標準，不是本題專屬的評分原則，已在 scoring_notes 開頭註明。題目沒有規定段數，tags 不填 paragraphs。四格漫畫依 300／600dpi 頁面影像逐格判讀；圖1 女學生手上的物品很小，只看得出是手持小型電子裝置，description 寫作「手機（或隨身電子產品）」。本題沿用 gsat-103（103學年度學測）英文作文：提示「請仔細觀察以下三幅連環圖片的內容，並想像第四幅圖片可能的發展，寫一篇涵蓋所有連環圖片內容且有完整結局的故事。」與作答說明逐字相同，四格漫畫是同一張圖（gsat-103 書包背帶為淡綠色，本卷為灰階），已標 reused_from {exam: gsat-103, no: null}。原解析記為「在學測 99–106 題本中找不到、出處不明」，查證時以 gsat-103 題本第8頁影像比對後更正。",
    "格式與符號：第6題空格在 PDF 是畫出來的底線（文字層沒有底線字元），依頁面影像寫成「______」。第16–20題選文「early 20th century」的 th 為上標（pdftotext 會把 th 擠到上一行），寫成 20th。第14題 hard-／working 在行尾斷開，依頁面影像為複合詞 hard-working（pdftotext 會吃掉連字號）。第46題 NOT 為粗體；第43、45、50、51、56題題幹引號內字詞在選文中為粗體；第53–56題選文中 Harper’s Weekly 為斜體——題目都不是問「畫底線的字」，依 schema 不保留格式。文意選填選項代號 ( I )、( J ) 在題本中括號內有空格，依 schema 寫成 I、J。",
    "統計：參考試卷不是正式施測的考卷，大考中心沒有發布統計（units.json 也沒有 stats 檔），所有小題 stats 為 null、sources.stats 為空陣列；validator「整份考卷沒有任何統計資料」warning 屬預期。沿用題在原考試年度有統計，但那不是本試卷的數據，沒有搬過來（要用可依 reused_from 回查原卷）。",
    "validator「題號重複 [1, 2]」warning 屬預期：中譯英兩題題本編為 1.、2.，英文作文沒有題號（no 填 1）；no 必須是整數，故沿用題本編號，以 label「中譯英1」「中譯英2」「英文作文」區分，label 無重複（同 ast-104、gsat-106 慣例）。",
-   "沿用歷屆試題：本卷大多由101–106學年度學測（另有兩題改寫自103、104學年度指考詞彙題）組成。以擴充欄位 reused_from {exam, no} 標在小題上（同 ref-111、ref-115 慣例），有改動的另加 modified 說明。對應：1←gsat-101第8題、2←gsat-103第11題、3←gsat-102第2題、4←gsat-103第6題、5←ast-104第1題、6←gsat-102第7題、7←ast-103第2題、8←gsat-104第6題、9←gsat-101第10題、10←gsat-103第14題、11←gsat-103第4題、12←gsat-102第5題、13←gsat-104第5題、15←gsat-102第13題；16–20←gsat-102第21–25題；21–25←gsat-104第21–25題；26–30←gsat-105第26–30題；31–40←gsat-105第31–40題；41–44←gsat-104第45–48題；45–48←gsat-103第49–52題；49–52←gsat-105第49–52題；53–56←gsat-106第49–52題；中譯英1、2←gsat-105中譯英1、2。第14題（Brian is widely ______ to be an outstanding employee…）在本機學測83–115、指考91–110題本文字中都找不到，可能為原創或出自研究用試卷，未標 reused_from。以程式逐題比對原卷 pdftotext 文字並對照原卷答案檔：有改動的是第1、2、5、6、7、8、10、12、24、48題（人名代名詞、選項替換或重排、題幹改寫，細節見各題 reused_from.modified）；其餘逐字相同（空格底線長度不同不計），答案以選項內容計全部與原卷相同。",
-   "標註：沿用題的 tags 與已解析的 gsat-104、gsat-105、gsat-106、ast-103、ast-104 對應題保持一致（例：第23題 grammar/participle、第26題 grammar/pronoun、第29題 grammar/subjunctive、第41–44題 item_type、第53題 inference）；gsat-101、gsat-102、gsat-103 尚未解析，相關題目依本卷內容自行判斷（第17題 the ___ of a coin 要靠下一句 thousand-year-old coins 才能判斷，標 discourse；第20題 the latter 標 discourse，詞性不確定未填 answer_pos）。"
+   "沿用歷屆試題：本卷大多由101–106學年度學測（另有兩題改寫自103、104學年度指考詞彙題）組成。以擴充欄位 reused_from {exam, no} 標在小題上（同 ref-111、ref-115 慣例），有改動的另加 modified 說明。對應：1←gsat-101第8題、2←gsat-103第11題、3←gsat-102第2題、4←gsat-103第6題、5←ast-104第1題、6←gsat-102第7題、7←ast-103第2題、8←gsat-104第6題、9←gsat-101第10題、10←gsat-103第14題、11←gsat-103第4題、12←gsat-102第5題、13←gsat-104第5題、15←gsat-102第13題；16–20←gsat-102第21–25題；21–25←gsat-104第21–25題；26–30←gsat-105第26–30題；31–40←gsat-105第31–40題；41–44←gsat-104第45–48題；45–48←gsat-103第49–52題；49–52←gsat-105第49–52題；53–56←gsat-106第49–52題；中譯英1、2←gsat-105中譯英1、2；英文作文←gsat-103英文作文（查證時補上）。第14題（Brian is widely ______ to be an outstanding employee…）在本機學測83–115、指考91–110題本文字中都找不到，可能為原創或出自研究用試卷，未標 reused_from。以程式逐題比對原卷 pdftotext 文字並對照原卷答案檔：有改動的是第1、2、5、6、7、8、10、12、24、48題（人名代名詞、選項替換或重排、題幹改寫，細節見各題 reused_from.modified）；其餘逐字相同（空格底線長度不同不計），答案以選項內容計全部與原卷相同。",
+   "標註：沿用題的分類欄位（test_point、answer_pos、grammar_point、item_type，以及題組的 genre、sdgs、text_format）與已查證的原卷對應題（gsat-101–106、ast-103、ast-104）一致；key_phrase、topic、patterns 等描述性欄位的用字可能和原卷略有不同。查證時依已查證的 gsat-102 統一：第3題 test_point 由 word_meaning 改為 collocation（replace A as B，同 gsat-102 第2題），第16題 answer_pos 由 phrase 改為 adjective（The rarer，同 gsat-102 第21題）。第14題沒有出處，依本卷內容判斷；第17題 the ___ of a coin 要靠下一句 thousand-year-old coins 才能判斷，標 discourse；第20題 the latter 標 discourse，詞性不確定未填 answer_pos（同 gsat-102 第25題）。",
+   "查證（verifier）：(1) 選擇題56題答案逐題對照 answer-2.pdf 文字層與頁面影像，全部相符。(2) 每題每個選項與文意選填選項庫，以程式在 pdftotext -layout 文字中逐題逐選項比對（含選項代號與完整句尾），全部逐字相符；第6題空格為畫線，已看頁面影像。(3) 8篇選文以 -layout 文字去頁首頁尾、還原 20th 上標後逐字（含 [[題號]] 空格位置與數字）比對，全部相符；段落數（1、1、3、4、3、3、4、4段）與頁面影像一致；字數（不含空格編號）143／144／181／263／286／286／272／276 words，與 -layout 擷取段落逐詞一致。另以頁面影像完整比對第16–20、21–25、31–40題三篇選文。(4) 四格漫畫以 400dpi 逐格裁切影像核對 description。(5) 本卷無統計資料（參考試卷），stats 全為 null。(6) 中譯英兩題以程式依 answer-2.pdf 第2頁大括號版面重新展開（252、768 句），與 answer＋accepted_answers 集合完全相同；scoring_notes 引用的考試說明 other-3.pdf 說明文字與英文作文分項式評分標準逐字核對。(7) reused_from 對應以程式與已解析的原卷逐題比對（題幹、選項、選文、選項庫、答案內容），modified 說明與實際差異一致；並找到英文作文出處 gsat-103（見上）。第14題在所有已解析考卷中都找不到相同題目，維持沒有 reused_from。"
   ],
-  "verified_by": null
+  "verified_by": "verifier"
  }
 }

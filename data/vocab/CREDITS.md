@@ -30,7 +30,7 @@
 
 - 欄位：`forms`、`ipa`（`ipa_source.source = "ecdict"`）、`zh`、`variant_info`、`en_def`（`en_def_source = "ecdict"`）、`freq`、`internal_core_flag`、`internal_star`。
 - 來源：https://raw.githubusercontent.com/skywind3000/ECDICT/bc015ed2e24a7abef49fc6dbbb7fe32c1dadaf8b/ecdict.csv（git bc015ed2e24a7abef49fc6dbbb7fe32c1dadaf8b；2026-10-07 下載；sha256 `1a6947e04785db63…`）
-- 授權：MIT License。修改：OpenCC s2twp 轉換中文、音標字元統一為 IPA（ә→ə、є→ɛ、g→ɡ、'→ˈ、:→ː 等）、只取詞彙表需要的列與欄。
+- 授權：MIT License。修改：中文以 OpenCC s2twp 轉成台灣繁體，再以本專案的對照表補正（`tools/build_vocab.py` 的 `TW_PHRASES`，例如 土豆→馬鈴薯、计算机→電腦；`KEEP_PHRASES` 保留 程序、文件、對象、循環 等一般用詞，不套用 OpenCC 的電腦用語改寫），並刪除轉換後重複的義項；音標字元統一為 IPA（ә→ə、є→ɛ、g→ɡ、'→ˈ、:→ː 等）；屈折形只保留條目詞類能產生的形式；只取詞彙表需要的列與欄。
 - 中文釋義依 04 文件 §2.1 的建議，上線前還要由 Claude 改成台灣用語並人工抽查。
 
 ```
@@ -112,23 +112,24 @@ Princeton University and LICENSEE agrees to preserve same.
 - 授權：句子預設 CC BY 2.0 FR（https://creativecommons.org/licenses/by/2.0/fr/），列在 CC0 匯出檔中的句子為 CC0 1.0。
   CC BY 句子使用時「必須標示作者」（Tatoeba Terms of Use §6.2），所以每句都保存作者名稱與句子 ID；作者為空（孤兒句）的 CC BY 句子不採用。
 - 顯示格式：`Tatoeba #{tatoeba_id} by {author}`（連到 `url`），中文翻譯 `Tatoeba #{zh_id} by {zh_author}`。
-- 修改：中文句用 OpenCC s2twp 轉成台灣繁體（`zh_converted = true` 表示文字有變動），應標示「中文經轉換為台灣繁體」。
+- 修改：中文句用 OpenCC s2twp 轉成台灣繁體；原文是簡體的句子另以 `TW_PHRASES` 補正大陸用語，所有句子都以 `KEEP_PHRASES` 保留一般用詞（不改成 程式、檔案、物件…），再把日文新字體或異體字（髪、説、産…）與「箇」換成台灣通行字（`zh_converted = true` 表示文字有變動），應標示「中文經轉換為台灣繁體」。
 - 不使用 Tatoeba 音檔（音檔授權依錄音者而定）。
 
 ## 5. CEFR-J Wordlist 與 Octanove Vocabulary Profile
 
 - 欄位：`cefr`（`source` 標示來自 CEFR-J 1.6 或 Octanove C1/C2 1.0）。
 - CEFR-J（A1–B2）來源：https://www.cefr-j.org/data/CEFRJ_wordlist_ver1.6.zip（CEFR-J Wordlist Version 1.6 (xlsx dated 2020-03-24)；2026-10-07 下載；sha256 `c837d2c00ab8954e…`）
-  - 條件：可免費用於研究與商業用途，但必須依指定格式引用。本專案的引用（依官方英文格式；日期照 Open Language Profiles README 的 月/日/年 寫法）：
-    The CEFR-J Wordlist Version 1.6. Compiled by Yukio Tono, Tokyo University of Foreign Studies. Retrieved from https://www.cefr-j.org/download.html on 10/7/2026.
-  - 日文格式：『CEFR-J Wordlist Version 1.6』 東京外国語大学投野由紀夫研究室. （URL: https://www.cefr-j.org/download.html より 2026年10月ダウンロード）
+  - 條件：可免費用於研究與商業用途，但必須依指定格式引用（Ver1.6 活頁簿 README 工作表：「The citation should be made as follows: The CEFR-J Wordlist Version 1.6. Compiled by Yukio Tono, Tokyo University of Foreign Studies. Retrieved from http:XXX on dd/mm/yy.」）。本專案的引用（日期依指定的 dd/mm/yy）：
+    The CEFR-J Wordlist Version 1.6. Compiled by Yukio Tono, Tokyo University of Foreign Studies. Retrieved from https://www.cefr-j.org/download.html on 07/10/26.
+  - 日文格式（同一份 README 的「引用の仕方」）：『CEFR-J Wordlist Version 1.6』 東京外国語大学投野由紀夫研究室. （URL: https://www.cefr-j.org/download.html より2026年10月ダウンロード）
+  - 商用時的附帶條件（同一份 README 免責事項 2）：商用且需要監修等服務時，另行洽談並支付必要費用。
 - Octanove（C1–C2）來源：https://raw.githubusercontent.com/openlanguageprofiles/olp-en-cefrj/d4e45b75b38f27b30dfc5c44d8c571aec7e7092f/octanove-vocabulary-profile-c1c2-1.0.csv（Octanove Vocabulary Profile C1/C2 ver 1.0 (olp-en-cefrj git d4e45b75b38f27b30dfc5c44d8c571aec7e7092f)；2026-10-07 下載；sha256 `18c33a407f2f89f7…`）
   - 授權：CC BY-SA 4.0（https://creativecommons.org/licenses/by-sa/4.0/）。Octanove Vocabulary Profile C1/C2 (ver 1.0), created by Octanove Labs, distributed by Open Language Profiles (https://github.com/openlanguageprofiles/olp-en-cefrj).
   - **相同方式分享**：`cefr.source` 含 Octanove 的值屬於 CC BY-SA 4.0 素材。若把這些值連同資料一起再散布，該部分要以 CC BY-SA 4.0 釋出並標示；04 文件 §7.3 的 `share_alike` 欄位應設為 true。
 
 ## 6. OpenCC
 
-- 用途：簡體→台灣繁體（s2twp）轉換工具，本次使用 opencc 1.4.2。Apache License 2.0（https://github.com/BYVoid/OpenCC）。轉換結果不另受 OpenCC 授權限制。
+- 用途：簡體→台灣繁體（s2twp）轉換工具，本次使用 OpenCC（官方 Python 綁定） 1.4.2。Apache License 2.0（https://github.com/BYVoid/OpenCC）。轉換結果不另受 OpenCC 授權限制。
 
 ## 7. Cambridge Dictionary
 
@@ -140,9 +141,9 @@ Princeton University and LICENSEE agrees to preserve same.
 | 欄位 | 來源 | 授權 |
 |---|---|---|
 | entry_id, word, level, pos, variants, raw, tags | 大考中心詞彙表 | 非營利使用、註明出處 |
-| forms, ipa, zh, variant_info, freq, internal_core_flag, internal_star | ECDICT | MIT |
+| forms, ipa, zh, variant_info, freq, internal_core_flag, internal_star | ECDICT（`zh` 中 `fixed: true` 的行是本專案補寫的釋義，見 `ZH_OVERRIDES`） | MIT |
 | en_def | OEWN（優先）或 ECDICT | CC BY 4.0／MIT |
-| wordnet | OEWN 2025 | CC BY 4.0（標示 Princeton WordNet 與 OEWN） |
+| wordnet | OEWN 2025（`in_list`、`level`、`entry_ids` 由本專案比對詞彙表） | CC BY 4.0（標示 Princeton WordNet 與 OEWN） |
 | family, family_id | 本專案計算（詞彙表＋OEWN derivation） | CC BY 4.0 部分 |
 | examples | Tatoeba | CC BY 2.0 FR／CC0（逐句標示） |
 | cefr | CEFR-J 1.6／Octanove C1–C2 | CEFR-J 條款／CC BY-SA 4.0 |

@@ -7,14 +7,15 @@
 
 | 檔案 | 大小 | sha256 |
 |---|---:|---|
-| `data/vocab/CREDITS.md` | 11,162 bytes | `860efa669b60895bb64781b99bf643f3e72f9b60c3c6e6ebf73a95a8ee0fa1ae` |
-| `data/vocab/forms-index.json` | 1,247,429 bytes | `e4ccc9507755989b6c05cd9f1cb5688751be46b7f02824333772ee68e669389f` |
-| `data/vocab/lexicon.json` | 22,431,541 bytes | `b1c6336dcc4cbb5e7f4c167e650f1af0a0a8c7a68fc8e0eaf1f482582fa169a0` |
+| `data/vocab/CREDITS.md` | 12,287 bytes | `e05c8fe4ee3c37cee6d69c0aa933296d81b50bb1eda146940e90ce91962b0eda` |
+| `data/vocab/forms-index.json` | 1,247,013 bytes | `99b05ec70d86eca8131e5488672c8e076568339a4261e7878085f3f0fcb94102` |
+| `data/vocab/lexicon.json` | 22,337,058 bytes | `7deecb7dbb0a969a9d7f2a830e5f08610201f64ec3ffcc66ec298d0009021764` |
 
-- 條目數 6,012；forms-index 詞形數 17,162。lexicon.json 上限 25 MB，未超過，輸出單一檔。
-- forms-index 各型態的（詞形, 條目）組數：comparative 270、derived_ment 61、derived_suffix 1、lemma 6,012、past 2,675、past_participle 2,648、plural 4,182、plural_rule 320、plural_usual 22、present 3、present_participle 2,714、pronoun_case 24、slash 85、superlative 219、third_person 2,604。其中 `plural_rule` 是 ECDICT 沒列複數的 320 筆名詞依規則補上的複數。
-- forms-index 中對應到多個條目的詞形：136 個（例如 accounting, advanced, am, armed, arms, backward, basics, bathed, being, best, better, bit）。
-- OpenCC：opencc 1.4.2（s2twp）。重跑一致性：`python3 tools/build_vocab.py check` 會在暫存目錄重建並逐位元比對，上表 sha256 也可以直接比對。
+- 條目數 6,012；forms-index 詞形數 16,953。lexicon.json 上限 25 MB，未超過，輸出單一檔。
+- forms-index 各型態的（詞形, 條目）組數：comparative 259、derived_ment 61、derived_suffix 1、lemma 6,012、past 2,661、past_participle 2,630、plural 4,081、plural_rule 96、plural_usual 22、present 3、present_participle 2,671、pronoun_case 24、slash 85、superlative 216、third_person 2,141。其中 `plural_rule` 是 ECDICT 沒列複數、規則複數在 Tatoeba 英文句出現至少 3 次的 95 筆名詞；另有 225 筆名詞的規則複數沒有語料證據，不收（例如 accordances、accountings、acnes、advices、agricultures、aircrafts、aluminums、applauses、archaeologies、assistances、asthmas、astronomies，多為不可數名詞或拼法錯誤）。
+- 屈折形只收條目詞類能產生的形式：ECDICT exchange 中 2,529 個屈折形不屬於條目詞類（名詞 fee 的過去式 feed、名詞 ox 的比較級 oxer、形容詞 abnormal 的複數 abnormals…），不放進 `forms`；其中可當詞形還原線索的 1,368 組（例如名詞 angle 的 angled）在 forms-index 標 `extra_pos: true`，比較級／最高級、等於任何條目原形或變體的（feed、wedding、shorts）則完全不收。變體列的屈折形同樣依變體詞類過濾，代名詞格（mine、her）不帶屈折形，共略過 69 個（原本 mined、mining、hering 會對到代名詞 I、she）。ECDICT 的錯誤形式依 `FORM_FIXES` 修正 11 個（sheep 的複數 sheeps→sheep）。
+- forms-index 中對應到多個條目的詞形：120 個（例如 accounting, advanced, am, armed, arms, backward, bathed, being, best, better, bit, blessing）。
+- OpenCC：OpenCC（官方 Python 綁定） 1.4.2（s2twp）。重跑一致性：`python3 tools/build_vocab.py check` 會在暫存目錄重建並逐位元比對，上表 sha256 也可以直接比對。
 
 ## 2. 各欄位非空比例（依級別）
 
@@ -22,27 +23,27 @@
 |---|---:|---:|---:|---:|---:|---:|---:|---:|
 | 條目數 | 1,002 | 1,002 | 1,002 | 1,002 | 1,002 | 1,002 | 3,006 | 6,012 |
 | variants（有變體） | 3.6% | 4.5% | 1.9% | 2.7% | 0.7% | 3.4% | 1.8% | 2.8% |
-| forms（ECDICT 屈折形） | 80.6% | 86.5% | 86.5% | 83.6% | 84.2% | 80.6% | 84.8% | 83.7% |
+| forms（ECDICT 屈折形） | 78.2% | 82.4% | 82.6% | 78.7% | 81.4% | 77.2% | 80.9% | 80.1% |
 | ipa | 99.8% | 99.8% | 99.9% | 99.8% | 99.9% | 99.5% | 99.9% | 99.8% |
 | 　ipa 來自 ECDICT | 99.5% | 99.5% | 99.8% | 99.6% | 99.9% | 99.0% | 99.8% | 99.6% |
 | zh（ECDICT 中文） | 100.0% | 100.0% | 100.0% | 100.0% | 100.0% | 100.0% | 100.0% | 100.0% |
-| 　zh 有詞性相符的行 | 99.4% | 99.5% | 99.9% | 100.0% | 100.0% | 99.5% | 100.0% | 99.7% |
+| 　zh 有詞性相符的行 | 100.0% | 100.0% | 100.0% | 100.0% | 100.0% | 100.0% | 100.0% | 100.0% |
 | en_def | 95.6% | 98.7% | 99.7% | 99.4% | 99.6% | 99.8% | 99.6% | 98.8% |
 | 　en_def 來自 OEWN | 95.1% | 98.6% | 99.7% | 99.3% | 99.6% | 99.4% | 99.5% | 98.6% |
 | wordnet（依條目詞類有義項） | 95.1% | 98.6% | 99.7% | 99.3% | 99.6% | 99.4% | 99.5% | 98.6% |
 | 　≥1 義項有例句 | 81.2% | 77.6% | 73.1% | 80.3% | 74.9% | 70.4% | 76.1% | 76.2% |
 | 　≥1 義項有同義詞 | 88.2% | 89.7% | 87.9% | 89.4% | 88.2% | 87.4% | 88.5% | 88.5% |
-| 　同義詞中有詞彙表內的字 | 71.2% | 69.2% | 65.1% | 66.6% | 63.0% | 58.9% | 64.9% | 65.6% |
+| 　同義詞中有詞彙表內的字 | 70.6% | 68.5% | 64.0% | 65.3% | 62.0% | 57.4% | 63.7% | 64.6% |
 | 　antonyms | 31.5% | 24.3% | 19.7% | 22.3% | 17.8% | 14.1% | 19.9% | 21.6% |
 | 　hypernyms | 76.9% | 84.4% | 81.5% | 80.0% | 83.5% | 81.8% | 81.7% | 81.4% |
-| 　derivations（詞彙表內） | 21.2% | 30.3% | 28.1% | 44.1% | 31.8% | 26.1% | 34.7% | 30.3% |
+| 　derivations（詞彙表內） | 21.1% | 30.3% | 28.1% | 43.9% | 31.8% | 26.1% | 34.6% | 30.2% |
 | family（有同詞族條目） | 23.1% | 32.5% | 29.1% | 45.0% | 31.5% | 26.1% | 35.2% | 31.2% |
-| examples ≥1 | 99.9% | 97.2% | 90.8% | 82.0% | 65.9% | 50.0% | 79.6% | 81.0% |
-| examples ≥3 | 99.3% | 87.4% | 66.0% | 47.3% | 23.6% | 10.8% | 45.6% | 55.7% |
-| examples =5 | 97.6% | 77.5% | 45.3% | 28.0% | 8.6% | 2.9% | 27.3% | 43.3% |
-| 　例句全部在級別內（≤level+1） | 92.6% | 65.0% | 55.6% | 52.1% | 41.4% | 33.6% | 49.7% | 56.7% |
-| Tatoeba 候選句 ≥1（tatoeba_count） | 100.0% | 98.5% | 95.4% | 90.7% | 78.5% | 65.4% | 88.2% | 88.1% |
-| Tatoeba 候選句 ≥3 | 99.8% | 93.8% | 79.4% | 63.8% | 39.9% | 23.0% | 61.0% | 66.6% |
+| examples ≥1 | 99.9% | 97.0% | 90.6% | 81.9% | 65.9% | 49.8% | 79.5% | 80.9% |
+| examples ≥3 | 99.3% | 87.1% | 65.5% | 46.9% | 23.5% | 10.8% | 45.3% | 55.5% |
+| examples =5 | 97.6% | 77.0% | 44.9% | 27.8% | 8.6% | 2.9% | 27.1% | 43.1% |
+| 　例句全部在級別內（≤level+1） | 92.6% | 64.8% | 55.5% | 52.1% | 41.4% | 33.5% | 49.7% | 56.7% |
+| Tatoeba 候選句 ≥1（tatoeba_count） | 100.0% | 98.5% | 95.4% | 90.7% | 78.5% | 65.3% | 88.2% | 88.1% |
+| Tatoeba 候選句 ≥3 | 99.8% | 93.7% | 79.4% | 63.8% | 39.8% | 22.9% | 61.0% | 66.6% |
 | cefr | 99.4% | 96.0% | 88.8% | 88.1% | 73.8% | 51.6% | 83.6% | 83.0% |
 | freq.frq | 98.8% | 99.0% | 99.2% | 99.5% | 99.8% | 99.3% | 99.5% | 99.3% |
 | freq.bnc | 98.8% | 98.8% | 99.2% | 99.7% | 99.2% | 98.0% | 99.4% | 99.0% |
@@ -63,16 +64,16 @@
 | ECDICT | 有 Collins 星級 | 2,843（94.6%） | 2,843（94.6%） | 欄位改名 `internal_star` |
 | ECDICT | `oxford`=1 | 1,003（33.4%） | 1,003（33.4%） | 欄位改名 `internal_core_flag` |
 | ECDICT | 有 `frq` | 2,991（99.5%） | 2,991（99.5%） | 0 視為缺值 |
-| ECDICT | 有 `exchange` | 2,557（85.1%） | 2,549（84.8%） | 本次只算詞頭（或第一個查得到的變體）那一列 |
+| ECDICT | 有 `exchange` | 2,557（85.1%） | 2,433（80.9%） | 本次只算詞頭（或第一個查得到的變體）那一列 |
 | OEWN 2025 | 收錄 | 2,996（99.7%） | 2,992（99.5%） | 本次限條目詞類；不限詞類見下一列 |
 | OEWN 2025 | 收錄（不限詞類） | 2,996（99.7%） | 2,996（99.7%） | |
 | OEWN 2025 | 至少一個 synset 有其他成員 | 2,690（89.5%） | 2,661（88.5%） | 限條目詞類 |
 | OEWN 2025 | 有上位詞 | 2,547（84.7%） | 2,456（81.7%） | 限條目詞類 |
 | OEWN 2025 | synset 附例句 | 2,369（78.8%） | 2,287（76.1%） | 限條目詞類 |
 | Tatoeba 英中對照 | ≥1 句含該詞（含屈折形） | 2,652（88.2%） | 2,652（88.2%） | |
-| Tatoeba 英中對照 | ≥3 句 | 1,840（61.2%） | 1,835（61.0%） | |
-| Tatoeba（收錄） | examples ≥1 | — | 2,392（79.6%） | 句長 6–20、作者必填 |
-| Tatoeba（收錄） | examples ≥3 | — | 1,371（45.6%） | |
+| Tatoeba 英中對照 | ≥3 句 | 1,840（61.2%） | 1,834（61.0%） | |
+| Tatoeba（收錄） | examples ≥1 | — | 2,389（79.5%） | 句長 6–20、作者必填 |
+| Tatoeba（收錄） | examples ≥3 | — | 1,361（45.3%） | |
 
 ## 4. CEFR 對照分布（與 04 文件 §5.3 比較）
 
@@ -102,21 +103,23 @@
 ## 6. 例句（Tatoeba）
 
 - 匯出檔：有中文連結的英文句 72,933 句（實際載入 72,768），對應中文句 66,251 句；CC0 清單 41,513 句。
-- 收錄例句 17,706 句次（不重複英文句 12,310）；英文 CC0 97 句次；中文經 s2twp 改變文字的 9,927 句次；全句在級別內（其他字 ≤ level+1）的 15,597 句次。
-- 同形異詞處理：59 筆條目的原形同時是另一個（級別不高於它的）條目的屈折形，例如 saw／see、found／find、lay／lie、rose／rise、learned／learn。只靠這種詞形命中、而且前一個字無法判斷詞類的句子不採用，共排除 1,892 句次。排除最多的條目：thought（264）、left（242）、used（202）、saw（187）、found（174）、being（165）、broke（79）、learning（62）、evening（55）、means（46）、bit（42）、building（37）。規則見 `tools/build_vocab.py`。
+- 收錄例句 17,646 句次（不重複英文句 12,293）；英文 CC0 96 句次；中文經 s2twp 改變文字的 9,880 句次；全句在級別內（其他字 ≤ level+1）的 15,549 句次。
+- 同形異詞處理：58 筆條目的原形同時是另一個（級別不高於它的）條目的屈折形，例如 saw／see、found／find、lay／lie、rose／rise、learned／learn。只靠這種詞形命中、而且前一個字無法判斷詞類的句子不採用，共排除 1,880 句次。排除最多的條目：thought（264）、left（242）、used（202）、saw（187）、found（174）、being（165）、broke（79）、learning（62）、evening（55）、means（46）、bit（42）、building（37）。規則見 `tools/build_vocab.py`。
+- 反方向的同形異詞：73 筆條目有屈折形同時是另一筆的原形或變體（wed 的 wedding、bore 的 bored／boring、grind 的 ground、clothe 的 clothes、find 的 found）。只靠這種詞形命中、而且前後文看不出是本條目屈折用法的句子不採用，共排除 2,797 句次。排除最多的條目：good（564）、use（152）、interest（147）、bite（139）、leave（128）、marry（122）、tire（118）、meet（113）、be（97）、clothe（97）、bear（88）、late（86）。
+- 同字多筆（§6.3 的 9 組）依前後文分配句子（`sibling_ok`），排除 168 句次；`to prep.` 排除不定詞用法（to＋動詞原形）6,985 句次。
 - 內容過濾：含粗話、色情或自殘字眼（`SENSITIVE_RE`）的句子不採用，共排除 329 句次（命中的字是條目本身時例外，例如 suicide、sexy 的例句）。
-- 英文句作者前 10：CK（5,099）、CM（1,581）、sharris123（445）、eastasiastudent（421）、sundown（420）、Zifre（350）、LeviHighway（308）、AlanF_US（303）、CN（282）、Amastan（252）
+- 英文句作者前 10：CK（5,087）、CM（1,583）、sharris123（443）、eastasiastudent（419）、sundown（416）、Zifre（351）、LeviHighway（309）、AlanF_US（302）、CN（282）、Amastan（250）
 
 例句數分布（依級別）：
 
 | 級別 | 0 句 | 1–2 句 | 3–4 句 | 5 句 |
 |---|---:|---:|---:|---:|
 | L1 | 1 | 6 | 17 | 978 |
-| L2 | 28 | 98 | 99 | 777 |
-| L3 | 92 | 249 | 207 | 454 |
-| L4 | 180 | 348 | 193 | 281 |
-| L5 | 342 | 424 | 150 | 86 |
-| L6 | 501 | 393 | 79 | 29 |
+| L2 | 30 | 99 | 101 | 772 |
+| L3 | 94 | 252 | 206 | 450 |
+| L4 | 181 | 351 | 191 | 279 |
+| L5 | 342 | 425 | 149 | 86 |
+| L6 | 503 | 391 | 79 | 29 |
 
 ## 7. 詞族
 
@@ -138,15 +141,15 @@
 
 | 條目 | entry_id | ipa | 第一行中文 | WordNet 義項數 | 例句數 | 詞族 |
 |---|---|---|---|---:|---:|---|
-| `backward adj. 2` | `backward|adj.|2` | ˈbækwəd | a. 向後的, 相反的 | 4 | 2 | backward |
+| `backward adj. 2` | `backward|adj.|2` | ˈbækwəd | a. 向後的, 相反的 | 4 | 0 | backward |
 | `backward/backwards adv. 2` | `backward|adv.|2` | ˈbækwəd | adv. 向後地, 相反地 | 3 | 5 | backward |
 | `capital n./adj. 2` | `capital|n./adj.|2` | ˈkæpitəl | n. 首都, 大寫字母, 資本 | 9 | 5 | capital、capitalist |
-| `capital(ism) n. 4` | `capital|n.|4` | ˈkæpitəl | n. 首都, 大寫字母, 資本 | 6 | 5 | capital、capitalist |
+| `capital(ism) n. 4` | `capital|n.|4` | ˈkæpitəl | n. 首都, 大寫字母, 資本 | 6 | 2 | capital、capitalist |
 | `content n./adj. 4` | `content|n./adj.|4` | kənˈtent | n. 內容, 滿足, 意義, 要旨 | 8 | 5 | contain、container、content |
-| `content(ment) v./(n.) 4` | `content|v./(n.)|4` | kənˈtent | vt. 使...滿足, 使...安心 | 2 | 5 | contain、container、content |
+| `content(ment) v./(n.) 4` | `content|v./(n.)|4` | kənˈtent | vt. 使...滿足, 使...安心 | 2 | 3 | contain、container、content |
 | `measure(ment) v./(n.) 2` | `measure|v./(n.)|2` | ˈmeʒə | vt. 測量, 測度, 估量, 權衡, 調節, 拿(自己或自 | 4 | 5 | measurable、measure |
 | `measure(s) n. 4` | `measure|n.|4` | ˈmeʒə | n. 尺寸, 量度器, 量度標準, 測量, 量具, 程度,  | 9 | 5 | measure、measurable |
-| `medium adj. 1` | `medium|adj.|1` | ˈmiːdiəm | a. 半生熟的, 中間的 | 2 | 4 | media、medium |
+| `medium adj. 1` | `medium|adj.|1` | ˈmiːdiəm | a. 半生熟的, 中間的 | 2 | 3 | media、medium |
 | `medium/media n. 3` | `medium|n.|3` | ˈmiːdiəm | n. 媒體, 方法, 媒介 | 11 | 5 | media、medium |
 | `am/a.m. adv. 1` | `am|adv.|1` | — | 上午, 午前 | 1 | 5 | — |
 | `pm/p.m. adv. 1` | `pm|adv.|1` | — | 下午, 午後 | 1 | 5 | — |
@@ -162,7 +165,32 @@
 
 處理規則見 `tools/build_vocab.py` 檔頭註解。
 
-## 9. 來源版本
+## 9. 自動查核（全量）
+
+`build` 每次都對輸出做下列檢查；標「必須為 0」的項目只要不是 0，`python3 tools/build_vocab.py check` 就失敗。
+
+| 檢查 | 結果 | 必須為 0 | 例子／說明 |
+|---|---:|---|---|
+| entry_id 重複 | 0 | 是 |  |
+| entry_id 不等於 word\|pos\|level | 0 | 是 |  |
+| 中文欄位含 Big5 以外的漢字（殘留簡體或日文字形） | 0 | 是 | （例外：咔嵴擀酶顬鯿） |
+| 音標含白名單以外的字元或重音記號錯置 | 0 | 是 |  |
+| 音標殘留 Cyrillic ә／є 或 ASCII ' : g | 0 | 是 |  |
+| forms 含條目詞類以外的屈折形 | 0 | 是 |  |
+| forms-index 詞類不符的對應 | 0 | 是 |  |
+| 例句缺作者、句子 ID 或連結（CC0 例外） | 0 | 是 |  |
+| 例句授權值不是 CC-BY-2.0-FR／CC0-1.0 | 0 | 是 |  |
+| 例句不含該條目的任何詞形 | 0 | 是 |  |
+| 同義詞標為詞彙表內、但詞彙表條目的詞類不同 | 0 | 是 |  |
+| 欄位名稱含品牌字樣（Collins、Oxford…） | 0 | 是 | （cambridge_url 是外連欄位，不算） |
+| cambridge_url 不符合 slug 規則 | 0 | 是 |  |
+| 沒有音標的條目 | 13 | 否 | am/a.m. adv. 1；basics n. 2；chairperson/chair/chairman/chairwoman n. 6；cosmetics n. 6 |
+| 中文沒有詞性相符的行、改用 fallback | 12 | 否 | affiliate\|n.\|6；Celsius\|n.\|6；downward\|adv.\|6；goodbye\|n.\|1 |
+
+- 中文用 Big5（cp950）字集檢查：台灣通行的繁體字都在 Big5 內，殘留的簡體字（们、这、说…）與日文新字體（髪、説）都不在。用 OpenCC 反向轉換（t2s 或對已轉換文字再跑一次 s2tw）比對會把 說明了→說明瞭、里約→裡約 這類正確的繁體也算成差異，所以不採用。
+- 人工抽查用 `python3 tools/build_vocab.py sample --seed 20261008` 列出每級 10 筆（共 60 筆）的完整內容；每級優先抽同字多筆、斜線條目、括號條目、不規則變化與帶符號的條目各一筆，其餘隨機。
+
+## 10. 來源版本
 
 | id | 檔案 | 版本 | 下載日 | sha256 |
 |---|---|---|---|---|
