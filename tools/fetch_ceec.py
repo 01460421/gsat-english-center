@@ -476,9 +476,10 @@ STATS_RULES = [
     (re.compile(r"選擇題選項分析"), "option_analysis", "選擇題各選項選答比例分析", True),
     (re.compile(r"非選擇題(?:各題)?分數人數統計表"), "nonmc_score_dist",
      "非選擇題各題得分人數分布", True),
-    # 成績標準（頂標／前標／均標／後標／底標）：「超越頂標」等難度分級的校準依據
+    # 成績標準（頂標／前標／均標／後標／底標）：「超越頂標」等難度分級的校準依據。
+    # 指考 91–96 的標籤是「學科成績標準一覽表」（不含「各科」），所以不套科目篩選。
     (re.compile(r"成績標準一覽表"), "score_standard",
-     "各科成績標準（頂標、前標、均標、後標、底標）", True),
+     "各科成績標準（頂標、前標、均標、後標、底標）", False),
     # 學測原始分數（111 起稱「原得總分」）與級分對照：練習成績換算級分用（指考沒有級分）
     (re.compile(r"(?:原始分數|原得總分)與級分對照表"), "score_conversion",
      "原始分數／原得總分與級分對照", False),
@@ -517,8 +518,11 @@ def discover_stats(exam: str):
             for rx, sub, desc, need_subject in STATS_RULES:
                 if not rx.search(label):
                     continue
-                # 只要英文科專屬或「各科」合併檔（級分對照表標籤不寫科目，一律收）
+                # 只要英文科專屬或「各科」合併檔（成績標準、級分對照表的標籤不一定寫科目，
+                # 一律收，但排除術科）
                 if need_subject and not ("英文" in label or "各科" in label):
+                    continue
+                if "術科" in label:
                     continue
                 note = desc + ("；各科合併檔，英文為其中一個工作表／區段"
                                if (("各科" in label) or not need_subject) else "") + span

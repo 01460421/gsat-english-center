@@ -4,13 +4,14 @@
 > 查證方式：直接下載各來源的授權頁、服務條款、API 文件（原始檔在 `data/raw/licensing/`，不進版控），引用條文盡量保留原文。方括號代號（例如 [ECDICT]）對應第 9 節的網址。
 > 標「本專案計算」的數字是我們用腳本算出來的結果，不是官方數字。標「（未驗證）」的項目沒能用一手來源確認。
 > **本文件不是法律意見。** 涉及營利、大量轉載或爭議時，請另外諮詢律師或直接向權利人取得書面授權。
+> **對抗式查證（2026-10-08）**：逐條回到原始檔或重新連線核對。Cambridge 網站條款與舊 API 條款改以 Wayback Machine 封存頁核對；新下載的佐證檔放在 `data/raw/licensing/verify04/`。修正與補充處都已直接改寫在內文，第 8 節更新了仍未驗證的清單。
 
 ---
 
 ## 0. 重點摘要
 
-1. **大考中心歷屆試題本身不受著作權保護，但周邊資料受保護。** 《著作權法》第 9 條第 1 項第 5 款規定「依法令舉行之各類考試試題及其備用試題」不得為著作權之標的 [TW-CA]。智慧局函釋說明，連高中自辦的學測／指考模擬考題都屬於這一類，「任何人均得利用」[TIPO-1111221]。不過以下內容仍受保護：**解答**（具原創性的解答仍受保護）[TIPO-1111221]、試題裡引用的**第三方文章**[LEEANDLI]、非選擇題評分原則、選才電子報、《試題與解析》出版品、考生作文佳作，以及《高中英文參考詞彙表》（封面寫明營利使用要先取得書面同意）[V111]。
-2. **大考中心商標**：「大考中心」「大學入學考試中心」「CEEC」和圖形標誌都已註冊。大考中心聲明，未經書面同意，這些商標不得用於商業活動，**也不得當作網域名稱、社群帳號名稱或識別圖示** [CEEC-TM]。之後接 Cloudflare 付費網域時，網域和 App 名稱都不能含 `ceec` 或「大考中心」。
+1. **大考中心歷屆試題本身不受著作權保護，但周邊資料受保護。** 《著作權法》第 9 條第 1 項第 5 款規定「依法令舉行之各類考試試題及其備用試題」不得為著作權之標的 [TW-CA]。智慧局函釋說明，連高中自辦的學測／指考模擬考題都屬於這一類，「任何人均得利用」[TIPO-1111221]。不過以下內容仍受保護：**解答**（具原創性的解答仍受保護）[TIPO-1111221]、試題裡引用的**第三方文章**[LEEANDLI]、《高中英文參考詞彙表》（封面寫明「著作權屬財團法人大學入學考試中心基金會所有」，營利使用要先取得書面同意）[V111]。非選擇題評分原則、選才電子報文章、考生作文佳作則是本專案依著作權法一般原則推論為受保護的語文著作（評分原則可能屬於智慧局所說的「解答」；沒有找到直接針對這幾項的函釋）。
+2. **大考中心商標**：「大考中心」「大學入學考試中心」「CEEC」和圖形標誌都已註冊（聲明 PDF 列出的是書法字體／設計字樣與圖形，純文字字樣的註冊範圍未在智慧局商標檢索核對，**未驗證**）。大考中心聲明，未經書面同意，這些商標不得用於商業活動，**也不得當作網域名稱、社群帳號名稱或識別圖示** [CEEC-TM]。之後接 Cloudflare 付費網域時，網域和 App 名稱都不能含 `ceec` 或「大考中心」。
 3. **單字資料的主幹可以完全用開放授權資料組成**（本專案計算，以詞彙表 Level 3–5 共 3,006 筆為準）：
    - ECDICT（MIT）收錄全部 3,006 筆，都有中文釋義；有 Collins 星級的 2,843 筆，有詞形變化的 2,557 筆。
    - Open English WordNet 2025（CC BY 4.0）收錄 2,996 筆，其中有同義詞的 2,690 筆。
@@ -18,20 +19,22 @@
 4. **Cambridge Dictionary 只能外連，不能爬取、不能嵌入。**
    - 英漢繁體網址格式是 `https://dictionary.cambridge.org/dictionary/english-chinese-traditional/{slug}`，已實測可用；片語的空白要換成連字號，例如 `give-up`。
    - 頁面送出 `X-Frame-Options: SAMEORIGIN`，所以無法用 iframe 嵌入。
-   - 官方 API 入口 `dictionary-api.cambridge.org` 在 2026-10-07 實測會 301 轉回首頁。資料授權要另外透過「License Data」頁面聯絡洽談 [CAM-LIC]。
+   - Cambridge 網站條款（Wayback 2026-10-04 封存）只允許「personal, non-commercial purposes」，並禁止「'Scrape' or store content from the Site … or create an electronic database」；外連則允許，但連結不得誤導、要能看出目的地、不得暗示 Cambridge 背書 [CAM-TOU]。
+   - 官方 API 入口 `dictionary-api.cambridge.org` 在 2026-10-07／10-08 實測會 301 轉回首頁。封存的舊 API 條款只發「evaluation」用的試用 key（30 天、3,000 次），正式開發要另簽合約 [CAM-API-WB]。資料授權要另外透過「License Data」頁面聯絡洽談 [CAM-LIC]。
 5. **CC BY-SA 資料（Wiktionary、kaikki.org、Free Dictionary API、Wikipedia、CC-CEDICT）可以用，但改作後也要用相容授權釋出**（姓名標示＋相同方式分享），並附連結、註明有修改 [WIKT] [WP-REUSE]。建議把這類內容和原創題庫分開存放，每筆都記錄授權。
 6. **新聞、期刊類文章能直接「挖空改作」的很少**：
    - **Guardian**：禁止編輯改寫，也禁止任何 AI 用途 [GUARDIAN-TOU]。
    - **The Conversation**：CC BY-ND，不得改作 [CONV]。
    - **聯合國、UNICEF、UNESCO 網站**：限個人或非商業使用，不得做衍生作品，或需要事先許可 [UN-TOU] [UNICEF] [UNESCO-TOU]。
    - **WHO 出版品**：CC BY-NC-SA 3.0 IGO [WHO-COPY]。
-   - **VOA**：自製內容屬公有領域，但 Learning English 很多文章是改寫自 AFP、AP、Reuters 的稿件，而 VOA 條款明文禁止改寫這些通訊社的稿件 [VOA-TOU]。VOA Learning English 自 2025 年 3 月起實際上已停止更新 [VOALE-RSS]。
-   - **可以改作、也可以商用的開放文字來源**（只要標示出處並註明修改）：Global Voices（CC BY 3.0）[GV]、Frontiers for Young Minds（CC BY 4.0，寫給 8–15 歲讀者）[FYM]、PLOS 期刊（CC BY）[PLOS]，以及 Wikipedia／Simple English Wikipedia（CC BY-SA 4.0）。
-7. **主策略：「以多來源事實為素材，由 Claude 寫成原創文章，再附上參考連結」。** 大考中心自己描述的命題方式也是這樣：「題材大多來自網路文章或新聞報導等……將數篇文章資訊精簡與融合後，進行改寫」[CEEC-EP351]。事實本身不受著作權保護（《著作權法》第 10-1 條；第 9 條第 1 項第 4 款「單純為傳達事實之新聞報導」）[TW-CA]，但必須避免和原文的表達方式實質相似。另外要注意：Anthropic 的智財賠償條款**不涵蓋**因客戶提供的 Inputs 所引起的主張 [ANT-CTOS]。所以不要把受保護的全文丟給 Claude「改寫一下」就上線。
+   - **VOA**：自製內容屬公有領域，但 Learning English 很多文章是改寫自 AFP、AP、Reuters 的稿件，而 VOA 條款明文禁止改寫這些通訊社的稿件 [VOA-TOU]。VOA Learning English 實際上已停止更新：「As It Is」最新一則是 2025-03-12，RSS 最新項目是 2025-04-29（2026-10-08 重測相同）[VOALE-ASITIS] [VOALE-RSS]。
+   - **可以改作、也可以商用的開放文字來源**（只要標示出處並註明修改）：Global Voices（CC BY 3.0；但合作媒體轉載稿不適用）[GV]、Frontiers for Young Minds（CC BY 4.0，由 8–15 歲青少年審稿）[FYM]、PLOS 期刊（CC BY）[PLOS]，以及 Wikipedia／Simple English Wikipedia（CC BY-SA 4.0）。
+7. **主策略：「以多來源事實為素材，由 Claude 寫成原創文章，再附上參考連結」。** 大考中心自己描述的命題方式也是這樣：「題材大多來自網路文章或新聞報導等……將數篇文章資訊精簡與融合後，進行改寫」[CEEC-EP351]。事實本身不受著作權保護（《著作權法》第 10-1 條；第 9 條第 1 項第 4 款「單純為傳達事實之新聞報導」）[TW-CA]，但必須避免和原文的表達方式實質相似。另外要注意：Anthropic 的智財賠償條款**不涵蓋**因客戶提供的 Inputs、客戶對 Outputs 的修改、或把 Outputs 和非 Anthropic 提供的內容結合所引起的主張（K.3），而且只涵蓋付費使用（K.1）[ANT-CTOS]。所以不要把受保護的全文丟給 Claude「改寫一下」就上線。
 8. **數據與圖表**：
    - World Bank 資料集預設 CC BY 4.0，API 不需要金鑰，但 WDI 查不到台灣（TWN 查詢結果為 0 筆，本專案實測）[WB-DS] [WB-API]。
    - Our World in Data 的自製圖表與資料是 CC BY 4.0，第三方資料要依原授權，有台灣資料；不過它的**文章不得編輯** [OWID-FAQ]。
-   - UN SDG API 免金鑰可用 [SDG-API]。
+   - UN SDG API 免金鑰可用 [SDG-API]，但**沒有台灣資料**：台灣在 GeoArea 清單裡是代碼 158「Other non-specified areas in Eastern Asia」，抽測 3 個指標序列都是 0 筆（本專案實測）。
+   - 台灣數據改用我國政府開放資料：「政府資料開放授權條款－第1版」允許不限目的利用（含改作），要依「顯名聲明」標示，並和 CC BY 4.0 相容 [TW-ODL]。
    - WHO 資料集只授權用於「public health purposes」[WHO-DATA]，不建議當作主要來源。
 9. **NewsAPI 類服務只能當作「找題材的索引」。** 免費方案只能在開發環境使用，`content` 欄位截斷為 200 字元 [NEWSAPI-TOU] [NEWSAPI-DOC]。
 10. **難度分級**：
@@ -41,7 +44,10 @@
     - 主要指標用「大考詞彙表級數覆蓋率」。115 學測英文全卷的覆蓋率是 L1–4 約 90.9%、L1–6 約 95.2%（本專案計算），可以當作校準點。
 11. **TTS 發音**：
     - 預設用瀏覽器 Web Speech API，免費，但聲音取決於使用者的裝置 [MDN-SS]。
-    - 預錄音檔用 Cloudflare Workers AI 的 MeloTTS：模型是 MIT 授權，價格 $0.0002／音訊分鐘，每日免費 10,000 Neurons，約可產生 536 分鐘（本專案計算）[CF-PRICE] [MELO-LIC]。
+    - 預錄音檔用 Cloudflare Workers AI 的 MeloTTS：模型是 MIT 授權，價格 $0.0002／音訊分鐘（定價總表；模型頁寫 $0.000205），每日免費 10,000 Neurons，約可產生 536 分鐘（本專案計算）[CF-PRICE] [CF-MELO] [MELO-LIC]。
+12. **使用者是未成年的高中生，而且會上傳作文與手寫照片**（原版本遺漏，本次補上，詳見 §7.5）：
+    - Anthropic Usage Policy（2025-09-15 生效）規定，讓未成年人直接使用 API 產品的組織，必須遵守 Help Center 的未成年人指引（年齡驗證、內容過濾、監控回報、安全使用說明、公開聲明法規遵循、告知使用者對方是 AI）[ANT-AUP] [ANT-MINORS]。
+    - 上傳的作文與照片屬於個人資料，要依《個人資料保護法》第 8 條告知、第 19 條取得蒐集依據（契約或同意）[TW-PDPA]。
 
 ---
 
@@ -52,11 +58,12 @@
 | 公有領域（PD） | 可 | 可 | 可 | 法律上不需要，但來源常要求標示（例如 VOA 要求 credit） | 無 | VOA 自製內容 [VOA-TOU]、NASA 媒體（限美國境內）[NASA] |
 | CC0 | 可 | 可 | 可 | 不需要 | 無 | Tatoeba 部分句子 [TATOEBA-DL] |
 | CC BY（2.0／3.0／4.0） | 可 | 可 | 可 | 需要：作者、來源連結、授權連結，並註明修改 | 無 | Tatoeba（2.0 FR）、Global Voices（3.0）、FYM／World Bank／OWID／OEWN（4.0）、Google Books Ngram（3.0）、PLOS（CC BY，版本依各文章標示） |
-| CC BY-SA | 可 | 可 | 可 | 需要 | **改作要用相同或相容授權釋出** | Wiktionary、Wikipedia、CC-CEDICT、Free Dictionary API 回傳資料 |
+| CC BY-SA | 可 | 可 | 可 | 需要 | **改作要用相同或相容授權釋出** | Wiktionary、Wikipedia、CC-CEDICT、Free Dictionary API 回傳資料、Octanove C1–C2 字表、wordfreq 資料 |
 | CC BY-ND | 可（原樣） | **不可**（法律意義上的改作都不行；The Conversation 另外明訂不得編輯）| 可，但 The Conversation 表示非新聞性的商業使用可能要付費 | 需要 | 不可分享改作 | The Conversation [CONV] [CC-BYND] |
 | CC BY-NC-SA 3.0 IGO | 可 | 可 | **不可** | 需要，且要加 WHO 規定的免責聲明 | 相同方式分享 | WHO 出版品 [WHO-COPY] |
 | MIT／Apache-2.0 | 可 | 可 | 可 | 保留版權聲明 | 無 | ECDICT、OpenCC、textstat、MeloTTS、Kokoro |
 | 政府網站資料開放宣告（台灣） | 可 | 可 | 可 | 需要註明出處 | 無 | 國家教育研究院樂詞網 [NAER-OPEN] |
+| 政府資料開放授權條款－第1版（台灣） | 可 | 可 | 可 | 需要，依「顯名聲明」格式 | 無；和 CC BY 4.0 相容 | 政府資料開放平臺上的資料集 [TW-ODL] |
 | 個別條款（非 CC） | 依條款 | 多半不可 | 多半不可 | — | — | 聯合國、UNICEF、UNESCO、Guardian、Cambridge |
 
 > CC 授權裡的「改作」（Adapted Material）定義是：以授權素材為基礎，經「translated, altered, arranged, transformed, or otherwise modified」而需要權利人許可的素材 [CC-BYND]。CC 官方 FAQ 說明，修改是否構成改作，主要取決於適用的著作權法 [CC-FAQ]。挖空、刪改字詞、重組段落都很可能落在改作範圍，所以本文一律把挖空視為改作。
@@ -69,25 +76,25 @@
 
 | 名稱 | 內容 | 授權／條款重點 | 轉載 | 改寫／挖空 | 商用 | 標示 | API 與額度 | 本專案建議 |
 |---|---|---|---|---|---|---|---|---|
-| **Cambridge Dictionary 網站**（英漢繁體） | 英英釋義、繁中翻譯、例句、CEFR 等級標記、英美音 | 關於頁寫明「Material on these pages is copyright Cambridge University Press or reproduced with permission」[CAM-ABOUT]。cambridge.org 網站條款禁止「Scrape」或儲存網站內容、建立電子資料庫（搜尋引擎摘錄；原頁被 Cloudflare 擋下 403，無法逐字核對，**部分未驗證**）[CAM-TOU] | 不可 | 不可 | 不可 | — | 無公開免費 API；robots.txt 對 `User-agent: *` 禁止 `/search/`、`/browse/`、`/autocomplete/` 等路徑，沒有禁止 `/dictionary/`。但 robots.txt 不等於授權 [CAM-ROBOTS] | **只做外連**（新分頁開啟）。不要爬取、不要快取、不要 iframe |
-| **Cambridge Dictionary API／License Data** | 英式、國際、美式、商務英語資料集，以及發音資料、音檔 | License Data 頁：「We're happy to discuss a pricing model…」，需填表聯絡 [CAM-LIC]。footer 的「Dictionary API」連到 `http://dictionary-api.cambridge.org`，**2026-10-07 實測該網域與 `/api/terms-and-conditions` 都會 301 轉到首頁** [CAM-API]。舊版 API 說明（搜尋引擎摘錄）：要先聯絡說明用途，核准後才發 key；有 30 天評估 key；不提供研究或原型的免費存取；依瀏覽次數計費（**未驗證，原頁已失效**）[CAM-API-SNIP] | 依合約 | 依合約 | 依合約（付費） | 依合約 | 需洽談 | MVP 不用。之後若有預算再寄信詢價 |
-| **ECDICT** | 約 77 萬詞條（ecdict.csv 共 770,611 列，本專案計算）。欄位：`word, phonetic, definition（英）, translation（中）, pos, collins, oxford, tag, bnc, frq, exchange, detail, audio` [ECDICT] | **MIT**（Copyright (c) 2025 Linwei）[ECDICT]。README 自述音標有部分是爬蟲取得，資料來源包括 EDictAZ、cdict，部分中文釋義標有「[网络]」。上游來源的權利是否乾淨，作者沒有說明（**未驗證**） | 可 | 可 | 可 | 保留 MIT 聲明 | 離線 CSV（65.9 MB）；附 Python 存取程式 | **單字主表的種子資料**。中文是簡體和中國用語，要先用 OpenCC `s2twp` 轉換，再讓 Claude 改成台灣用語，最後人工抽查。`collins`、`oxford`、`bnc`、`frq` 只當作內部的重要度特徵，**不在介面顯示 Collins 或 Oxford 品牌標籤** |
+| **Cambridge Dictionary 網站**（英漢繁體） | 英英釋義、繁中翻譯、例句、CEFR 等級標記、英美音 | 關於頁寫明「Material on these pages is copyright Cambridge University Press or reproduced with permission」[CAM-ABOUT]。辭典頁尾的「Terms of Use」連到 `cambridge.org/about-us/terms-use/`，該網址 301 轉到 Website Terms（條款自述適用於「any other Cambridge websites which link to this page」）。原頁直連仍被 Cloudflare 擋下 403，改用 Wayback 2026-10-04 封存頁逐字核對（條款末註「We last updated these Website Terms in August 2022」）：「Only use the Site and its content for personal, non-commercial purposes」；Do not「'Scrape' or store content from the Site on a server or other storage device or create an electronic database by downloading and storing the Site's content」；外連要「not misleading」「fairly indicates its destination」「not imply that we endorse you」[CAM-TOU] | 不可 | 不可 | 不可 | — | 無公開免費 API；robots.txt 對 `User-agent: *` 禁止 `/search/`、`/browse/`、`/autocomplete/` 等路徑，沒有禁止 `/dictionary/`。但 robots.txt 不等於授權 [CAM-ROBOTS] | **只做外連**（新分頁開啟）。不要爬取、不要快取、不要 iframe |
+| **Cambridge Dictionary API／License Data** | 英式、國際、美式、商務英語資料集，以及發音資料、音檔 | License Data 頁：「We're happy to discuss a pricing model…」，需填表聯絡 [CAM-LIC]。footer 的「Dictionary API」連到 `http://dictionary-api.cambridge.org`，**2026-10-07／10-08 實測 `https://dictionary-api.cambridge.org`、`/api/faq`、`/api/terms-and-conditions` 都會 301 轉到首頁** [CAM-API]。Wayback 2026-04-10 封存的舊 API 頁 [CAM-API-WB]：FAQ 說要先寄信說明用途，核准後才發 key；一般條款不允許儲存資料（Cambridge 要記錄每次請求），離線或研究用途要另談授權。條款寫試用 key「for evaluation purposes only」，「limited to 3,000 free calls for a period of 30 days」，30 天後自動失效；要正式開發得另申請「API Development Key」並簽 Application Development Agreement。封存頁裡**找不到**費率；先前搜尋摘錄說的「依瀏覽次數計費」「不提供研究或原型的免費存取」都無法證實（**未驗證**）[CAM-API-SNIP] | 依合約 | 依合約 | 依合約（付費） | 依合約 | 試用 3,000 次／30 天；正式需簽約 | MVP 不用。之後若有預算再寄信詢價 |
+| **ECDICT** | 約 77 萬詞條（ecdict.csv 共 770,611 列，本專案計算）。欄位：`word, phonetic, definition（英）, translation（中）, pos, collins, oxford, tag, bnc, frq, exchange, detail, audio` [ECDICT] | **MIT**（Copyright (c) 2025 Linwei）[ECDICT]。README 自述音標有部分是爬蟲取得，資料來源包括 EDictAZ、cdict。另外 ecdict.csv 有 42,042 列的中文釋義帶「[网络]」標記（本專案計算；這個標記出現在資料裡，README 沒有說明）。上游來源的權利是否乾淨，作者沒有說明（**未驗證**） | 可 | 可 | 可 | 保留 MIT 聲明 | 離線 CSV（65.9 MB）；附 Python 存取程式 | **單字主表的種子資料**。中文是簡體和中國用語，要先用 OpenCC `s2twp` 轉換，再讓 Claude 改成台灣用語，最後人工抽查。`collins`、`oxford`、`bnc`、`frq` 只當作內部的重要度特徵，**不在介面顯示 Collins 或 Oxford 品牌標籤** |
 | **ECDICT lemma.en.txt** | 186,523 個詞形對應 84,487 個詞元（檔頭自述）| 檔頭寫「free to use for any research and/or educational purposes」，和 repo 的 MIT 不同 [ECDICT-LEMMA] | 可（教育用途） | 可 | 商用有疑義（**未驗證**）| 註明出處 | 離線 | 用於文章詞元還原、難度計算。若之後轉為商用，改用 ECDICT 的 `exchange` 欄位（MIT）自行產生對照表 |
 | **Princeton WordNet 3.1** | 同義詞集、上下位關係等 | 「Permission to use, copy, modify and distribute this software and database … for any purpose and without fee or royalty is hereby granted」，條件是保留版權聲明，且不得用 Princeton 名義做廣告 [OEWN-WNDB]。官方授權頁有 Cloudflare 驗證，無法直接下載 [PWN] | 可 | 可 | 可 | 保留聲明 | 離線 | 改用 OEWN |
 | **Open English WordNet 2025** | 2025 版（2025-12-31 釋出）：core 135,969 詞、107,519 個 synset。關係有 hypernymy、antonymy、meronymy、similar、derivation 等；synset 附定義與例句 [OEWN] | **CC BY 4.0**，衍生自 Princeton WordNet。「You may share and adapt this resource providing attribution is given to both Princeton WordNet and the Open English Wordnet team.」[OEWN-LIC] | 可 | 可 | 可 | 要同時標示 Princeton WordNet 與 OEWN | JSON 壓縮檔 10 MB（解壓後 72 MB，本專案實測）；另有 JSON API，文件在 https://en-word.net/api/docs | **同義詞、近義、上下位、多義（sense 數）的主資料**。在 GitHub Actions 離線處理後寫入 D1 |
 | **Wiktionary** | 釋義、詞源、發音、片語、派生詞、各語言翻譯（含中文） | 文字採 **CC BY-SA 4.0** 與 GFDL 雙授權。重用時「your materials have to be licensed under the same, similar, or compatible license」；附上醒目連結回原條目即可滿足 GFDL 的標示要求 [WIKT] | 可 | 可（改作要 SA） | 可 | 要標示，並連回條目 | 透過 kaikki 下載 | 用於片語、多義、派生詞的**補充參考**。顯示原文時一定要附連結與 CC BY-SA 標示 |
-| **kaikki.org（wiktextract）** | 英文版 Wiktionary 的結構化 JSONL，從 2026-09-02 dump 擷取（2.8 GB gz）；欄位含 glosses、translations、hypernyms、hyponyms、derived、related、sounds 等 [KAIKKI] [WIKTEXTRACT]。另有中文版 Wiktionary 擷取（zh-extract，gz 223.6 MB），含英文詞條的中文釋義 [KAIKKI-RAW] | 「made available under the same licenses as Wiktionary - both CC-BY-SA and GFDL」[KAIKKI]。學術使用請引用 Ylonen (LREC 2022)。wiktextract 程式本身是 MIT | 可 | 可（SA） | 可 | 要標示 | 每週更新的大型離線檔 | 只在 CI 裡篩選 L1–6 約 6,000 詞的子集，不要整包放進 D1 |
-| **Free Dictionary API**（dictionaryapi.dev） | 英英釋義、音標、例句、同反義詞、部分音檔 | 回傳資料內含 `"license":{"name":"CC BY-SA 3.0"}` 與 `sourceUrls`（指向 Wiktionary），音檔來自 Wikimedia Commons（BY-SA 3.0）[FDA-SAMPLE]。程式碼是 GPL-3.0 [FDA] | 可（SA） | 可（SA） | 可 | 要標示 | 免金鑰。回應標頭 `x-ratelimit-limit: 450`（時間窗未公開，本專案實測）。README 自述每月超過 1,000 萬次請求，伺服器費用靠贊助支撐，沒有 SLA [FDA] | **不要在正式環境即時呼叫**。需要的話在 CI 批次抓一次，連同授權一起存 |
+| **kaikki.org（wiktextract）** | 英文版 Wiktionary 的結構化 JSONL，2026-10-03 從 2026-09-02 的 enwiktionary dump 擷取（全部語言的原始資料 2.8 GB gz，解壓 23.9 GB）；欄位含 glosses、translations、hypernyms、hyponyms、derived、related、sounds 等 [KAIKKI] [WIKTEXTRACT]。另有中文版 Wiktionary 擷取（zh-extract，gz 223.6 MB），含英文詞條的中文釋義 [KAIKKI-RAW] | 「made available under the same licenses as Wiktionary - both CC-BY-SA and GFDL」[KAIKKI]。學術使用請引用 Ylonen (LREC 2022)。wiktextract 程式本身是 MIT | 可 | 可（SA） | 可 | 要標示 | 大型離線檔，「usually at least once a week」更新 [KAIKKI-RAW] | 只在 CI 裡篩選 L1–6 約 6,000 詞的子集，不要整包放進 D1 |
+| **Free Dictionary API**（dictionaryapi.dev） | 英英釋義、音標、例句、同反義詞、部分音檔 | 回傳資料內含 `"license":{"name":"CC BY-SA 3.0"}` 與 `sourceUrls`（指向 Wiktionary），音檔來自 Wikimedia Commons（BY-SA 3.0）[FDA-SAMPLE]。程式碼 repo 的 LICENSE 是 GPL-3.0，但 `package.json` 寫 ISC（兩者不一致；我們只用回傳資料，不用程式碼）[FDA] | 可（SA） | 可（SA） | 可 | 要標示 | 免金鑰。回應標頭 `x-ratelimit-limit: 450`（時間窗未公開，本專案實測）。README 自述每月超過 1,000 萬次請求，伺服器費用靠贊助支撐，沒有 SLA [FDA] | **不要在正式環境即時呼叫**。需要的話在 CI 批次抓一次，連同授權一起存 |
 | **Merriam-Webster API** | 英英／學習者辭典 | 「If your app is considered "commercial"… you will be required to pay」；非商業使用免費，上限每把 key 每日 1,000 次 [MW] | 依條款 | 依條款 | 需付費 | — | 每日 1,000 次 | 不需要 |
-| **CC-CEDICT** | 中→英辭典，125,215 筆（2026-10-07 版），繁簡並列 [CEDICT] | **CC BY-SA 4.0**：商用、非商用都可以，要標示，改善後要相同方式分享 [CEDICT] | 可 | 可（SA） | 可 | 要標示 | 離線 | 中譯英模組可以用來做「中文詞→英文候選詞」的反查提示 |
+| **CC-CEDICT** | 中→英辭典，125,215 筆（2026-10-07 版），繁簡並列 [CEDICT] | **CC BY-SA 4.0**：商用、非商用都可以，要標示，改善後要相同方式分享 [CEDICT]。MDBG 網站頁尾寫「Automated or scripted access is prohibited」[CEDICT] | 可 | 可（SA） | 可 | 要標示 | 離線；**不能用 CI 腳本自動到 mdbg.net 下載**，要人工下載後放進私有儲存 | 中譯英模組可以用來做「中文詞→英文候選詞」的反查提示 |
 | **OpenCC** | 簡繁轉換；`s2tw`（台灣正體）、`s2twp`（含台灣慣用詞彙）[OPENCC] | **Apache-2.0** | — | — | 可 | 保留聲明 | 函式庫 | ECDICT、Tatoeba 中文都先用 `s2twp` 轉換 |
 | **國家教育研究院 樂詞網** | 學術名詞、雙語詞彙、教科書名詞、兩岸對照名詞（下載區有 29 個雙語詞彙檔）[NAER-DL] | 「政府網站資料開放宣告」：「以無償、非專屬，得再授權之方式提供公眾使用……重製、改作、編輯、公開傳輸……使用時，應註明出處」，但機關特別聲明須經同意的部分除外 [NAER-OPEN]。另一頁的「版權聲明」又寫「任何形式之轉載，請先與本院聯繫」[NAER-PRIV]，**兩份聲明互相矛盾** | 依開放宣告可 | 可 | 可 | 要註明出處 | 下載區 | SDGs 主題的專有名詞（環境、衛生）用來對照台灣譯名。大量使用前，先寫信向國教院確認是否適用開放宣告 |
 | **Oxford Collocations Dictionary** | 搭配詞 | OUP 的商業辭典，在 Oxford Learner's Dictionaries 網站上提供 [OCD]。Oxford Dictionaries API 是付費訂閱制 [OXAPI]。沒有找到開放授權（**未驗證**是否能透過 API 取得搭配詞資料）| 不可 | 不可 | 不可 | — | 付費 | **不使用**。改用下面的開放替代方案 |
-| **Datamuse API** | `rel_jja`／`rel_jjb`（形容詞與名詞的搭配）、`rel_bga`／`rel_bgb`（常見後接詞、前接詞，例如 wreak → havoc），這幾種都依 Google Books Ngrams；另有 `lc`／`rc` 左右文脈參數、`rel_syn`／`rel_ant`（依 WordNet）、`rel_trg`、IPA [DATAMUSE] | 「Until January 1, 2027, you can use this service without restriction and without an API key for up to 100,000 requests per day」。頁首公告又寫「starting February 1, 2027, an API key will be required」（兩個日期不一致）。要用在面對使用者的應用，需要先寫信說明；公開 App 要在文件中致謝 [DATAMUSE] | 未明定 | 未明定 | 未明定（**未驗證**）| 在文件中致謝 | 每日 10 萬次；2027 起需要金鑰 | **只在 CI 離線**取得 L3–5 詞的搭配候選，交給 Claude 篩選、加例句，再人工抽查。不要讓前端直接呼叫 |
+| **Datamuse API** | `rel_jja`／`rel_jjb`（形容詞與名詞的搭配）、`rel_bga`／`rel_bgb`（常見後接詞、前接詞，例如 wreak → havoc），這幾種都依 Google Books Ngrams；另有 `lc`／`rc` 左右文脈參數、`rel_syn`／`rel_ant`（依 WordNet）、`rel_trg`、IPA [DATAMUSE] | 「Until January 1, 2027, you can use this service without restriction and without an API key for up to 100,000 requests per day」。頁首公告又寫「starting February 1, 2027, an API key will be required」（兩個日期不一致）。要用在面對使用者的應用，需要先寫信說明；公開 App 要在文件中致謝 [DATAMUSE] | 未明定 | 未明定 | 未明定（**未驗證**）| 在文件中致謝 | 每日 10 萬次；2027 起需要金鑰 | **只在 CI 離線**取得 L3–5 詞的搭配候選，交給 Claude 篩選、加例句，再人工抽查。不要讓前端直接呼叫。只用 `rel_jja/jjb/bga/bgb/syn/ant`；不用 `ml`，因為 `ml` 也用了「dozens of online dictionaries crawled by OneLook」，來源權利不明 [DATAMUSE] |
 | **Google Books Ngram 資料集** | 1–5 gram 次數 | 「This compilation is licensed under a Creative Commons Attribution 3.0 Unported License.」[NGRAM] | 可 | 可 | 可 | 要標示 | 離線（檔案非常大） | 搭配詞強度（logDice、PMI）的自算來源。若算力有限，先用 Datamuse |
 | **wordfreq** | 多語詞頻 | 程式 Apache；資料 CC BY-SA 4.0；資料只到約 2021 年，「unlikely to be updated again」[WORDFREQ] | 可 | 可（SA） | 可 | 要標示 | 函式庫 | 選用。ECDICT 的 `frq` 已經足夠 |
 | **Tatoeba** | 例句與翻譯（英文 2,038,137 句；中文 89,177 句；有中文翻譯的英文句 72,751 句；英文 CC0 句 41,512 句。皆為 2026-10-03 匯出檔，本專案計算）| 句子「released under CC BY 2.0 FR」，部分句子是 CC0。音檔授權由各錄音者決定；授權欄空白者「you may not reuse the audio outside the Tatoeba project」[TATOEBA-DL]。依條款，使用 CC BY 句子時必須標示作者 [TATOEBA-TOU] | 可 | 可 | 可（個別錄音另計）| **逐句標示作者**（作者名稱在 `sentences_detailed` 匯出檔） | 每週六 06:30 UTC 更新匯出檔 | **例句主來源之一**。存句子 ID、作者、授權；中文用 `s2twp` 轉換。音檔不使用 |
-| **CEFR-J Wordlist 1.6／Octanove C1–C2** | 英文詞彙的 CEFR A1–C2 分級 | CEFR-J：「can be used for both research and commercial purposes with a proper acknowledgement of the source」，著作權屬東京外國語大學投野研究室 [CEFRJ] [OLP]。Octanove C1–C2 是 CC BY-SA 4.0 [OLP] | 可 | 可 | 可 | 要依指定格式引用 | 離線 CSV | CEFR 對照（§5.3） |
+| **CEFR-J Wordlist／Octanove C1–C2** | 英文詞彙的 CEFR A1–C2 分級。官方最新版是 1.6（2020-03-24）[CEFRJ]；§5.3 的計算用的是 OLP repo 的 1.5 CSV [OLP] | CEFR-J：「can be used for both research and commercial purposes with a proper acknowledgement of the source」，著作權屬東京外國語大學投野研究室 [CEFRJ] [OLP]。Octanove C1–C2 是 **CC BY-SA 4.0** [OLP] | 可 | 可 | 可 | 要依指定格式引用 | 離線 CSV | CEFR 對照（§5.3）。C1／C2 標籤來自 Octanove，要記 `share_alike=true`；若不想讓詞表帶 SA 義務，介面只顯示 CEFR-J 的 A1–B2，C1 以上顯示「B2 以上」 |
 | **NGSL** | 通用核心字表 | 官網寫「Free under Creative Commons, including commercial use」，但沒有標明是哪一種 CC 授權（**版本未驗證**）[NGSL] | 可 | 依授權 | 可 | 要標示 | 離線 | 選用 |
 | **English Vocabulary Profile（EVP）** | 依 CEFR 分級的詞義與片語 | englishprofile.org 的字表頁與條款頁 2026-10-07 都是 404，**授權未驗證** | — | — | — | — | — | 不使用 |
 
@@ -96,16 +103,17 @@
 - **網址格式**（2026-10-07 實測，HTTP 200，canonical 一致）[CAM-TC]：
   - 單字：`https://dictionary.cambridge.org/dictionary/english-chinese-traditional/abandon`
   - 片語：空白換成連字號，例如 `…/english-chinese-traditional/give-up`、`…/look-forward-to`。網站會自動把 `give%20up` 轉成 `give-up`。
-  - 查不到的字（例如 `qwertyzzx`）**不會回 404**，而是 200 轉到英漢繁體辭典首頁。所以不能用 HTTP 狀態碼判斷有沒有這個字。
-  - 屈折形可以改用搜尋網址：`https://dictionary.cambridge.org/search/direct/?datasetsearch=english-chinese-traditional&q={詞}`，實測 `q=gave` 會自動轉到條目頁。這個路徑在 robots.txt 對爬蟲是禁止的，但使用者自己點擊不受影響 [CAM-ROBOTS]。
+  - 查不到的字（例如 `qwertyzzx`）**不會回 404**，而是回 302 轉到英漢繁體辭典首頁（`…/english-chinese-traditional/`，最後是 200）。所以不能用 HTTP 狀態碼判斷有沒有這個字（2026-10-08 重測）。
+  - 屈折形可以改用搜尋網址：`https://dictionary.cambridge.org/search/direct/?datasetsearch=english-chinese-traditional&q={詞}`，實測 `q=gave` 會 302 轉到 `…/english-chinese-traditional/gave` 條目頁。這個路徑在 robots.txt 對爬蟲是禁止的，但使用者自己點擊不受影響 [CAM-ROBOTS]。
   - 隨機抽測 8 個 L5 詞，都有英漢繁體條目：entity、viewpoint、collector、generate、progressive、apt、ballot、statistical。另外測了表外詞 exacerbate 和 well-being，也都有條目（本專案實測）。
-- **不能嵌入**：回應標頭是 `x-frame-options: SAMEORIGIN` 和 `content-security-policy: frame-ancestors 'self' *.cambridge.org`（本專案實測），所以一律用 `target="_blank" rel="noopener"` 開新分頁。
+- **不能嵌入**：回應標頭是 `x-frame-options: SAMEORIGIN` 和 `content-security-policy: frame-ancestors 'self' *.cambridge.org`（本專案實測，2026-10-08 重測相同），所以一律用 `target="_blank" rel="noopener"` 開新分頁。
+- **外連的寫法**：依網站條款的外連規定 [CAM-TOU]，按鈕文字要清楚寫出目的地（例如「在 Cambridge Dictionary 查看（另開新分頁）」），不用 Cambridge 標誌，也不寫「Cambridge 推薦」之類暗示背書的文字。
 - **官方免費小工具**：Cambridge 提供免費的「Search Box Widget」HTML 表單，還有 Double-Click Lookup [CAM-WIDGET]。這些是 Cambridge 自己提供的嵌入方式，比自建連結更沒有條款疑慮，但介面比較受限。
 - **不要做的事**：不抓取頁面文字或例句來充實自家資料庫，不快取 Cambridge 的音檔，不用 Cambridge 的 CEFR 標記做分級（改用 CEFR-J）。
 
 ### 2.3 開放資料對大考詞彙表 Level 3–5 的覆蓋率（本專案計算）
 
-依 `data/vocab/ceec-wordlist.json` 的 Level 3–5 共 3,006 筆比對；比對時同時用詞頭和並列拼法（variants）。
+依 `data/vocab/ceec-wordlist.json` 的 Level 3–5 共 3,006 筆比對。ECDICT 比對時同時用詞頭和並列拼法（variants），而且不分大小寫（ECDICT 的 conservative、core、fax、polish 等 7 詞只有大寫開頭的詞條）。OEWN 的數字只用詞頭比對；若加上 variants，「有同義詞」是 2,691 筆、「synset 附例句」是 2,372 筆（78.9%）。以上數字 2026-10-08 用同一批原始檔重算後確認（本專案計算）。
 
 | 資料 | 指標 | 筆數 | 比例 |
 |---|---|---|---|
@@ -135,26 +143,26 @@
 | 名稱 | 內容 | 授權／條款重點 | 轉載 | 改寫／挖空 | 商用 | 標示 | API 與額度 | 本專案建議 |
 |---|---|---|---|---|---|---|---|---|
 | **VOA（voanews.com）** | 國際新聞 | 「All text, audio and video material produced exclusively by the Voice of America is in the public domain. Credit … should be given to voanews.com, Voice of America, or VOA.」但 AFP、AP、Reuters 的素材「shall not be published, broadcast, **rewritten** for broadcast or publication」[VOA-TOU]。「Voice of America」是商標，未經許可不得用於商業目的 [VOA-TOU] | 自製內容可 | 自製內容可 | 自製內容可 | 依 VOA 要求 credit | RSS | 只採用「完全由 VOA 自製」的文章，並排除照片 |
-| **VOA Learning English** | 分級新聞、Words in This Story 字彙表 | 條款同 VOA，第三方段落只列 AP [VOALE-TOU]。**實例**：小行星文章署名「Daniel Lawler with Issam Ahmed reported this story for Agence France-Presse. Jill Robbins adapted it for Learning English.」[VOALE-ART]。這類 AFP／AP 改寫稿**不屬於「produced exclusively by VOA」**，風險高 | 只限非通訊社稿 | 只限非通訊社稿 | 只限非通訊社稿 | credit VOA | RSS `https://learningenglish.voanews.com/api/` | 篩選標準：文末沒有「reported this story for AFP／AP／Reuters」字樣。主要拿來當作「分級英文寫法」的風格參考 |
+| **VOA Learning English** | 分級新聞、Words in This Story 字彙表 | 條款同 VOA，第三方段落只列 AP [VOALE-TOU]。另外，USAGM 在 2025-03-13 宣布終止 VOA 與 AP、Reuters、AFP 的供稿合約 [SAVEVOA]，但這不會讓舊稿變成公有領域。**實例**：小行星文章署名「Daniel Lawler with Issam Ahmed reported this story for Agence France-Presse. Jill Robbins adapted it for Learning English.」[VOALE-ART]。這類 AFP／AP 改寫稿**不屬於「produced exclusively by VOA」**，風險高 | 只限非通訊社稿 | 只限非通訊社稿 | 只限非通訊社稿 | credit VOA | RSS `https://learningenglish.voanews.com/api/` | 篩選標準：文末沒有「reported this story for AFP／AP／Reuters」字樣。主要拿來當作「分級英文寫法」的風格參考 |
 | **UN News／un.org（含 SDGs 頁面）** | 聯合國新聞、SDGs 說明 | UN 網站條款：只允許「personal, non-commercial use, without any right to resell or redistribute them or to compile or create derivative works therefrom」[UN-TOU]。著作權頁：「News-related material can be used as long as the appropriate credit is given and the United Nations is advised.」[UN-COPY]。UN News 的 footer 直接連到這兩頁 [UNNEWS] | 新聞類，標示並通知 UN 後可以 | **不可**（衍生作品）| 不可 | 要標示 | RSS | **只當事實素材與主題來源**，改寫成原創文章並附連結 |
 | **SDG 標誌與 17 個圖示** | 色輪、圖示 | 非 UN 單位可依指引使用，但要加連結和這段聲明：「The content of this publication has not been approved by the United Nations and does not reflect the views of the United Nations or its officials or Member States」。募款與商業用途要先取得書面許可，也不得暗示聯合國背書 [SDG-COMM] | 依指引 | 不得變形 | 商業用途需許可 | 加連結與聲明 | 下載 | 題目卡用 SDG 編號文字標籤（例如「SDG 13 氣候行動」），不使用官方圖示，避免觸及商業限制。若要用圖示，就照指引加聲明 |
-| **UN SDG Global Database API** | 官方 SDG 指標資料（75 個端點，例如 `/v1/sdg/Goal/List`、`/v1/sdg/Series/Data`）[SDG-API] | API 頁面沒有授權聲明。同為 UNSD 的 UNdata 條款寫「may be copied freely, duplicated and further distributed provided that UNdata is cited as the reference」[UNDATA]，但是否同樣適用於 SDG API **未驗證** | 數據可（推定） | 數據可（推定） | 推定可 | 引用 UNSD 與資料保管機構 | 免金鑰（本專案實測 200）| 用於圖表題的數據來源，標示「UN SDG Global Database」與指標代碼 |
+| **UN SDG Global Database API** | 官方 SDG 指標資料（75 個端點，例如 `/v1/sdg/Goal/List`、`/v1/sdg/Series/Data`）[SDG-API]。**沒有台灣資料**：台灣在 `/v1/sdg/GeoArea/List` 是 158「Other non-specified areas in Eastern Asia」，`SI_POV_DAY1`、`SP_DYN_IMRT`、`EN_ATM_CO2` 查 `areaCode=158` 都是 0 筆（2026-10-08 本專案實測） | API 頁面沒有授權聲明。同為 UNSD 的 UNdata 條款寫「may be copied freely, duplicated and further distributed provided that UNdata is cited as the reference」[UNDATA]，但是否同樣適用於 SDG API **未驗證** | 數據可（推定） | 數據可（推定） | 推定可 | 引用 UNSD 與資料保管機構 | 免金鑰（本專案實測 200）| 用於圖表題的跨國數據來源，標示「UN SDG Global Database」與指標代碼。台灣數據另找政府開放資料 |
 | **SDG Report 2025（PDF）** | 年度進度報告 | PDF 全文用 pdftotext 檢索，找不到 CC 授權聲明（本專案檢索），所以回歸 UN 網站條款；封面照片 © UNICEF [SDGR2025] | 不可 | 不可 | 不可 | — | — | 只引用數字，並附連結 |
 | **UNICEF** | 新聞、報告、照片 | 「The UNICEF Web Site is provided by UNICEF for personal use and educational purposes only. Any other use, including reproduction or translation of anything more than a de minimis portion … requires the express prior written permission」[UNICEF] | 不可 | 不可 | 不可 | — | — | 只當事實素材 |
 | **WHO 出版品** | 報告、指引 | WHO 出版品採 **CC BY-NC-SA 3.0 IGO**，改編時要加 WHO 指定的免責聲明；商業用途要先申請許可 [WHO-COPY] | 非商業可 | 非商業可（SA）| **不可** | 要依指定格式引用 | — | App 若會收費就不要用；否則只當事實素材 |
 | **WHO 資料集** | GHO 等統計 | 授權用途限「for public health purposes」，除了調整格式外不得修改，也不得用於推廣商業產品 [WHO-DATA] | 限公衛目的 | 小幅可 | 不可 | 指定格式 | — | 英語教學是否算公衛目的有疑義，改用 OWID 或 World Bank 的同類指標 |
-| **UNESCO** | 網站、出版品 | 網站條款：個別素材可以「on an occasional and individual basis, for personal use and for non-commercial educational and research purposes」引用、翻譯、重製。禁止商業使用、自動化爬取、大量下載與 **AI 訓練**。AI 即時擷取（含 RAG）有條件允許：要標示 UNESCO 並附連結，不得留存 [UNESCO-TOU]。出版品依開放取用政策個別採用 CC BY-SA、BY-NC-SA、BY-NC-ND、BY-ND 等 IGO 授權 [UNESCO-OA] | 偶發、個別可 | 依個別授權 | 不可 | 要標示 | 禁止自動化爬取 | 不納入 CI 爬取。需要時由人工閱讀後當作事實參考 |
+| **UNESCO** | 網站、出版品 | 網站條款：個別素材可以「on an occasional and individual basis, for personal use and for non-commercial educational and research purposes」引用、翻譯、重製。引用上限是 1,000 字或原文 25%（取較少者）。禁止商業使用、自動化爬取、大量下載與 **AI 訓練**。AI 即時擷取（含 RAG）有條件允許：要標示 UNESCO 並附連結，不得留存 [UNESCO-TOU]。出版品依開放取用政策個別採用 CC BY-SA、BY-NC-SA、BY-NC-ND、BY-ND 等 IGO 授權 [UNESCO-OA] | 偶發、個別可 | 依個別授權 | 不可 | 要標示 | 禁止自動化爬取 | 不納入 CI 爬取。需要時由人工閱讀後當作事實參考 |
 | **The Guardian Open Platform** | 全文 API | Developer key 限非商業，「Up to 500 calls per day」、每秒 1 次 [GUARDIAN-ACCESS]。條款：24 小時內必須刪除或更新內容；**不得「Edit, adapt, translate or otherwise alter」**；不得把內容用於「any machine learning … artificial intelligence-related purposes」，也不得「with any machine learning and/or artificial intelligence technologies to generate any data or content」；重刊時要掛「Powered by The Guardian」標誌 [GUARDIAN-TOU] | 依條款原樣 | **不可** | 要另購商業 key | 要掛標誌 | 500 次／日 | **完全不用**，連「AI 擷取事實」都不行。最多只能放外部連結 |
 | **The Conversation** | 學者撰寫的評論與科普 | **CC BY-ND**。「You can't edit our material, except to reflect relative changes in time, location and editorial style」；翻譯也算衍生，要作者同意；不得系統性轉載全部文章；「Commercial, non-journalism usage: license fees may apply」[CONV] | 原樣可 | **不可**（要作者同意）| 可能要付費 | 作者、機構、連結、page counter | — | 只當事實素材與外部延伸閱讀連結 |
 | **Wikipedia／Simple English Wikipedia** | 百科全文 | **CC BY-SA 4.0**（加 GFDL）。標示方式：附超連結或作者名單；修改時要註明，並以 CC BY-SA 4.0 或更新版本授權，附授權連結 [WP-COPY] [WP-REUSE]。Simple English 頁尾同樣連到 CC BY-SA 4.0 [SIMPLEWP] | 可 | 可（SA）| 可 | 連結＋授權＋註明修改 | REST API；腳本要帶有聯絡方式的 User-Agent，否則可能 403 [WM-UA] | 適合「穩定基礎」難度的素材。改作出來的文章與題目**整筆標示 CC BY-SA 4.0**，存在獨立的 SA 題庫 |
-| **Global Voices** | 世界各地公民新聞（含亞洲、SDG 議題）| 「all content created by Global Voices is published under a Creative Commons Attribution-Only license」（CC BY 3.0）；要在文章頂端附原文連結與作者名；第三方照片和影音另計 [GV] | 可 | 可 | 可 | 作者、連結、註明修改 | RSS | **可挖空改作的新聞來源首選**。只用文字，不用照片 |
-| **Frontiers for Young Minds** | 科學家為 8–15 歲讀者寫的科普文章，由青少年審稿 [FYM-ABOUT] | 文章頁：「distributed under the terms of the Creative Commons Attribution License (CC BY)」，連到 CC BY 4.0 [FYM] | 可 | 可 | 可 | 作者、期刊、連結 | 網站 | **SDGs 科學類（SDG 3／6／13／14／15）閱讀與克漏字的優質來源**，語言難度接近高中 |
+| **Global Voices** | 世界各地公民新聞（含亞洲、SDG 議題）| 「Unless otherwise stated, all content created by Global Voices is published under a Creative Commons Attribution-Only license」（CC BY 3.0）；要在文章頂端附原文連結與作者名；第三方照片和影音另計 [GV]。**注意**：RSS 裡有合作媒體的轉載稿，文末寫「republished here with permission」「published on Global Voices as part of a content-sharing agreement」「republished here under a partnership agreement」（2026-10-08 實測 RSS 15 則中就有 3 則）[GV-RSS]，這些不是 GV 自製內容，不適用 CC BY | 可（限 GV 自製）| 可（限 GV 自製）| 可 | 作者、連結、註明修改 | RSS | **可挖空改作的新聞來源首選**。只用文字，不用照片；CI 遇到上述轉載字樣就排除 |
+| **Frontiers for Young Minds** | 科學家寫給年輕讀者的科普文章，由 8–15 歲的青少年在科學導師協助下審稿 [FYM-ABOUT] | 文章頁：「distributed under the terms of the Creative Commons Attribution License (CC BY)」，連到 CC BY 4.0 [FYM] | 可 | 可 | 可 | 作者、期刊、連結 | 網站 | **SDGs 科學類（SDG 3／6／13／14／15）閱讀與克漏字的優質來源**，語言難度接近高中 |
 | **PLOS 期刊** | 開放取用論文 | 「published immediately and freely under a CC-BY license … reuse and remix without restriction, as long as the author and the original source are properly attributed」[PLOS] | 可 | 可 | 可 | 要標示 | — | 論文太難，當作「超越頂標」的事實素材與改寫來源 |
-| **Our World in Data** | 圖表、資料、文章 | 自製圖表與資料：CC BY（連到 4.0），引用即可；第三方資料「subject to the license terms of those providers」；文章可以轉載，但「You must not edit the material」[OWID-FAQ] | 圖表、資料可 | 圖表、資料可；文章不可 | 可 | 要依 FAQ 格式引用 | Chart Data API：在 grapher 網址後加 `.csv`、`.metadata.json`，免金鑰（本專案實測 200，有台灣資料）| **圖表題主來源**。每個圖表都存 `citationShort`，並檢查原始資料的授權 |
+| **Our World in Data** | 圖表、資料、文章 | 自製圖表與資料：CC BY（連到 4.0），引用即可；第三方資料「subject to the license terms of those providers」；文章可以轉載，但「You must not edit the material」[OWID-FAQ] | 圖表、資料可 | 圖表、資料可；文章不可 | 可 | 要依 FAQ 格式引用 | Chart Data API：在 grapher 網址後加 `.csv`、`.metadata.json`，免金鑰（本專案實測 200，有台灣資料）| **圖表題主來源**。每個圖表都存 `citationShort`，並檢查原始資料的授權。OWID 的 Grapher 程式碼「not freely licensed for reuse without permission」[OWID-FAQ]，所以前端自己畫圖，不複製 Grapher 程式碼 |
 | **World Bank Open Data** | WDI 等指標 | 資料集預設「Creative Commons Attribution 4.0 International license (CC-BY 4.0)」，商用也可以，要標示並註明修改 [WB-DS]。網站其他素材限非商業 [WB-TOU] | 可 | 可 | 可 | 要標示 | Indicators API v2：「API keys … are no longer necessary」[WB-API] | 跨國比較圖表。**WDI 查不到台灣**，台灣數據改用 OWID 或我國政府開放資料 |
 | **Project Gutenberg** | 公版書 | 在美國不受著作權限制；「If you are not located in the United States, you'll have to check the laws of the country」；Project Gutenberg 商標另有授權條件，把商標與授權文字全部移除後的純文字可以自由使用 [PG-LIC]。網站「intended for human users only」，批次下載要用鏡像站或 harvest 端點 [PG-ROBOT]。台灣著作財產權存續期間是著作人終身加死亡後 50 年 [TW-CA 第 30 條] | 可（需確認作者卒年）| 可 | 可（不使用商標）| 不需要 | 鏡像站 | 只做「超越頂標」的文學選文。著作財產權存續到著作人死亡後 50 年當年年底（第 30、35 條）[TW-CA]，所以 2026 年只能用 1975 年以前（含）過世作者的作品（**本專案推算**）。去掉 PG 標頭再使用 |
 | **NewsAPI** | 新聞索引 | 免費 Developer 方案：「may be used for development and testing in a development environment only」；每日 100 次、文章延遲 24 小時、只能查一個月內 [NEWSAPI-TOU] [NEWSAPI-PRICE]。`content` 欄位「truncated to 200 chars」[NEWSAPI-DOC]。條款禁止「use the service to reproduce or republish copyrighted material」[NEWSAPI-TOU]。Business 方案每月 $449 | 不可 | 不可 | 需 Business 方案 | — | 100 次／日（開發用）| 不需要。找題材改用各媒體的 RSS 標題 |
-| **NASA**（補充） | 科學新聞、影像 | NASA 媒體在美國一般不受著作權保護，教育用途不需許可。AI 應用另有規定：「attribution of the information directly to NASA is not permitted」，AI 產品裡**禁止**出現「according to NASA」等說法；只能以事實陳述說明工具包含 NASA 的素材，而且不得暗示 NASA 審閱過 [NASA] | 可 | 可 | 可（不得暗示背書）| 標示為「資料來源之一」| — | 可以當事實素材，但 AI 改寫的文章裡**不寫**「according to NASA」 |
+| **NASA**（補充） | 科學新聞、影像 | NASA 媒體在美國一般不受著作權保護，教育用途不需許可。AI 應用另有規定：「attribution of the information directly to NASA is not permitted」，AI 產品裡**禁止**出現「according to NASA」等說法；只能以事實陳述說明工具包含 NASA 的素材，而且不得暗示 NASA 審閱過；NASA 也「strongly encourages」AI 產物標示為 AI 生成 [NASA] | 可 | 可 | 可（不得暗示背書）| 標示為「資料來源之一」| — | 可以當事實素材，但 AI 改寫的文章裡**不寫**「according to NASA」 |
 | **Taiwan Today**（外交部，補充）| 台灣主題英文報導 | 頁尾「Copyright © 2026 Ministry of Foreign Affairs」，沒有找到開放授權聲明 [TT]。《著作權法》第 50 條允許在合理範圍內重製「以中央或地方機關或公法人之名義公開發表之著作」[TW-CA] | 合理範圍 | **未驗證** | **未驗證** | 要標示 | — | 當作台灣在地題材的事實參考；正式使用前先函詢外交部 |
 
 ### 3.2 VOA 與 VOA Learning English 的營運狀況（截至 2026-10-07）
@@ -164,16 +172,17 @@
 - **2026-03**：哥倫比亞特區聯邦地方法院（Senior Judge Royce Lamberth）認定 USAGM 停止播出違反《行政程序法》，命令「operations, staffing and broadcasting activities to be fully restored」（JURIST，2026-03-19 報導）[JURIST]。
 - **2026-10-05**：SaveVOA 時間軸記載，VOANews.com 恢復發文，內容是各語言服務精選報導的英文翻譯，但「It has not resumed any broadcasting in English」[SAVEVOA]。本專案 2026-10-07 實測，voanews.com 首頁確實以各語言服務的報導為主。
 - **Learning English 實測**（2026-10-07）：
-  - RSS 的 `lastBuildDate` 是 2026-10-07，但 20 則項目中最新的 `pubDate` 是 **2025-04-29**（Everyday Grammar Video）[VOALE-RSS]。
-  - 「As It Is」欄目的最新日期是 **2025-03-12** [VOALE-ASITIS]。
-  - 科學類別頁最新是 2025-03-17 的文章，目前仍可正常開啟（HTTP 200）[VOALE-ART]。
+  - RSS 的 `lastBuildDate` 是 2026-10-07，但 20 則項目中最新的 `pubDate` 是 **2025-04-29**（Everyday Grammar Video）[VOALE-RSS]。2026-10-08 重測：`lastBuildDate` 更新為 2026-10-08，最新項目仍是 2025-04-29。
+  - 「As It Is」欄目的最新日期是 **2025-03-12**（2026-10-08 重測相同）[VOALE-ASITIS]。
+  - 科學與科技（Science & Technology）類別頁最新是 2025-03-17 的文章；2025-03-12 的小行星文章目前仍可正常開啟（HTTP 200）[VOALE-ART]。
 - **結論**：舊文仍可取得，但 VOA Learning English 已經一年半沒有新內容。條款上的公有領域聲明還在，不過很多文章是通訊社稿件的改寫。本專案不把 VOA 當主要文章來源。
 
 ### 3.3 圖表題資料的實測
 
-- **OWID**：`https://ourworldindata.org/grapher/annual-co2-emissions-per-country.csv?v=1&csvType=filtered&useColumnShortNames=true&time=2020..latest&country=TWN~OWID_WRL` 回傳台灣 2020–2023 年的排放量。`.metadata.json` 提供 `citationShort`：「Global Carbon Budget (2025) – with major processing by Our World in Data」（本專案實測）。
+- **OWID**：`https://ourworldindata.org/grapher/annual-co2-emissions-per-country.csv?v=1&csvType=filtered&useColumnShortNames=true&time=2020..latest&country=TWN~OWID_WRL` 回傳台灣與全球 2020–2024 年的排放量（`data/raw/licensing/owid_co2.csv`；例如台灣 2024 年 262,344,820 噸）。`.metadata.json` 提供 `citationShort`：「Global Carbon Budget (2025) – with major processing by Our World in Data」（本專案實測）。
 - **World Bank**：`https://api.worldbank.org/v2/country/TWN/indicator/SP.POP.TOTL?format=json` 回傳 `total: 0`；同一個查詢換成 JPN 則正常（本專案實測）。
-- **UN SDG API**：`/v1/sdg/Goal/List?includechildren=false` 與 `/v1/sdg/Series/Data?seriesCode=SI_POV_DAY1&areaCode=1` 都回 200，不需要金鑰（本專案實測）。
+- **UN SDG API**：`/v1/sdg/Goal/List?includechildren=false` 與 `/v1/sdg/Series/Data?seriesCode=SI_POV_DAY1&areaCode=1` 都回 200，不需要金鑰（本專案實測）。`areaCode=158`（台灣所在的「Other non-specified areas in Eastern Asia」）查 3 個序列都是 `totalElements: 0`（2026-10-08 本專案實測）。
+- **台灣數據**：政府資料開放平臺的資料集採「政府資料開放授權條款－第1版」：「不限目的、時間及地域、非專屬、不可撤回、免授權金」，可以改作；要依附件「顯名聲明」標示提供機關；條款和 CC BY 4.0 相容 [TW-ODL]。個別資料集若另有授權要逐一確認。
 
 ---
 
@@ -206,11 +215,11 @@
 
 | 資料 | 狀態 | 本專案做法 |
 |---|---|---|
-| 歷屆試題（題幹、選項、閱讀選文、翻譯與作文題目） | 不受著作權保護（§9-1-5）。選文若是第三方原文的近似重製，原作者的權利仍在 | 可以結構化存進 D1 並在 App 內顯示。**慣例上仍標示**「試題來源：大學入學考試中心 OOO 學年度學科能力測驗」，並連到官方 PDF。不使用大考中心的商標圖形 |
+| 歷屆試題（題幹、選項、閱讀選文、翻譯與作文題目） | 不受著作權保護（§9-1-5）。選文若是第三方原文的近似重製，原作者的權利仍在；試卷裡若有取自第三方的照片或圖表，依同一邏輯也保留原權利（本專案依 [LEEANDLI] 推論）| 可以結構化存進 D1 並在 App 內顯示。圖片類題目優先改用文字描述或自繪圖。**慣例上仍標示**「試題來源：大學入學考試中心 OOO 學年度學科能力測驗」，並連到官方 PDF。不使用大考中心的商標圖形 |
 | 選擇題答案（A／B／C／D） | 單純的答案代號沒有創作性，推定不受保護（**本專案推論，未驗證**） | 可以存 |
 | 非選擇題參考答案與評分原則、選才電子報的試題分析、《試題與解析》出版品 | 受保護（解答或語文著作）[TIPO-1111221] | 不轉載全文。內部可以做 AI 分析的輸入，App 內只摘要重點（依 §52 合理引用短句並標示出處），並附連結 |
 | 考生作文佳作 | 著作權屬考生 | 只提供連結；不拿來當 RAG 檢索的原文；範文由 Claude 原創 |
-| 詳解 | 本專案自己撰寫 | 由 Claude 生成，著作權屬本專案（依 [ANT-CTOS] 的 Outputs 條款）|
+| 詳解、範文、AI 出的題目 | 本專案自己產生 | 依 [ANT-CTOS]，「As between the parties」Customer「owns its Outputs」，Anthropic 也把它對 Outputs 的權利「(if any)」讓給客戶。但這只是雙方之間的約定，不代表這些內容在我國一定受著作權保護。智慧局電子郵件 1111031 指出，「人工智慧獨立創作」，也就是人類沒有實際創意投入的成果，「原則上無法享有著作權」；把 AI 當輔助工具、由人實際投入創意的成果才受保護（引自智慧局網站上的 113 年度著作權講座講義，函釋原文未開啟，**原文未驗證**）[TIPO-AI]。所以純 AI 產出的題庫可能**無法阻止他人複製**。要主張權利，就要保留人工選題、編修、審稿的紀錄 |
 | 《高中英文參考詞彙表》 | 非營利可用並註明出處；營利需書面同意 | 標示出處。只要 App 有任何收費或廣告，就先向大考中心申請書面授權 |
 | 商標（大考中心、CEEC） | 註冊商標，禁止用於網域名稱、帳號、識別圖示與商業活動 | 網域、App 名稱、Logo、社群帳號都不含這些字。說明文字裡用「大學入學考試中心公告之試題」敘述來源，屬於說明性質的使用（是否完全不涉及商標使用，**未驗證**）|
 
@@ -220,19 +229,19 @@
 
 ### 5.1 Flesch-Kincaid
 
-- 公式：FKGL = 0.39 ×（平均句長）＋ 11.8 ×（平均每字音節數）− 15.59。textstat 原始碼第 581 行的註解是 `(.39*avg sentence length)+(11.8*avg syllables per word)-15.59` [TEXTSTAT]。原始出處是 Kincaid et al. (1975) 的美國海軍技術報告，DTIC 編號 ADA006655 [KINCAID1975]（2026-10-07 DTIC 網站維護中，未能開啟）。
+- 公式：FKGL = 0.39 ×（平均句長）＋ 11.8 ×（平均每字音節數）− 15.59。textstat 原始碼（本地 `data/raw/licensing/ts_textstat.py`）第 581 行的 docstring 是 `(.39*avg\ sentence\ length)+(11.8*avg\ syllables\ per\ word)-15.59` [TEXTSTAT]。原始出處是 Kincaid et al. (1975) 的美國海軍技術報告，DTIC 編號 ADA006655 [KINCAID1975]（2026-10-07 DTIC 網站維護中；2026-10-08 重試被擋，Wayback 封存頁是 JS 動態載入、看不到內容，**編號未驗證**）。
 - 授權：公式屬於「方法」，不受著作權保護（§10-1）[TW-CA]。textstat 是 MIT 授權 [TEXTSTAT]。可以在 CI 用 Python 計算，也可以在 Worker 用 TypeScript 自己實作（音節計算可用 CMUdict 或規則法）。
 - 限制：FK 是為英語母語讀者設計，對 EFL 讀者只能當作輔助指標。
 
 ### 5.2 Lexile
 
-- Lexile Hub FAQ：「Results from the Lexile Analyzer are intended for classroom and instructional use only. They provide an estimated Lexile measure … and are not certified Lexile measures. They should not be used or represented as official, certified Lexile measures.」[LEXILE-FAQ]
+- Lexile Hub FAQ（本地檔名 `lexile_hubsupport.html`，canonical 是 <https://hub.lexile.com/faqs/>）：「Results from the Lexile Analyzer are intended for classroom and instructional use only. They provide an estimated Lexile measure … and are not certified Lexile measures. They should not be used or represented as official, certified Lexile measures.」[LEXILE-FAQ]
 - 搜尋引擎摘錄的免費版限制：每次最多 500 字、每月 50 次；結果「not for commercial use」、不得公開散布（**未驗證**，原頁 403）[LEXILE-SNIP]。
 - 結論：Lexile 是 MetaMetrics 的專有演算法與註冊商標，無法自行計算，也**不應自稱 Lexile**。App 不顯示 Lexile。
 
 ### 5.3 CEFR 對照
 
-- 用 CEFR-J Wordlist 1.5（A1–B2）加 Octanove C1–C2 對照大考詞彙表級數。同一個詞有多個詞性時取最低級，查不到的歸為 none（本專案計算）：
+- 用 CEFR-J Wordlist 1.5（A1–B2，OLP repo 的 CSV；官方最新是 1.6）加 Octanove C1–C2 對照大考詞彙表級數。同一個詞有多個詞性時取最低級，查不到的歸為 none（本專案計算）。2026-10-08 用同一批檔案重算，L5、L6 兩列完全一致，L1–L4 各格差 1–4 筆（斜線並列詞的拆法不同），結論不變；改用 1.6 並限條目詞類的版本見 `data/vocab/lexicon-report.md` §4：
 
 | 大考級數 | 筆數 | A1 | A2 | B1 | B2 | C1 | C2 | 無對照 |
 |---|---|---|---|---|---|---|---|---|
@@ -250,8 +259,8 @@
 1. **詞元還原**：用 ECDICT 的 `exchange` 欄位或 `lemma.en.txt`，把屈折形還原為詞元，例如 gave→give、teeth→tooth [ECDICT] [ECDICT-LEMMA]。再加上簡單的詞族規則：-ly 副詞對應到形容詞；would、could 對應到 will、can；數字詞歸入 L1。
 2. **排除**專有名詞（句中大寫且不在字典中）、數字與單一字母。
 3. **計算 token 覆蓋率**：L1–2、L3–4、L5–6、表外詞（off-list）的比例，並列出表外詞清單。
-4. **門檻參考**：Laufer & Ravenhorst-Kalovski (2010) 提出，98% 覆蓋率是理想門檻，95% 是最低門檻（含專有名詞）[LR2010]。
-5. **校準點**（本專案計算）：115 學測英文全卷（含題幹與選項，不含中文）共 3,281 個 token，各級覆蓋率如下：
+4. **門檻參考**：Laufer & Ravenhorst-Kalovski (2010) 提出兩個門檻：理想門檻是認識 8,000 個詞族、覆蓋率 98%；最低門檻是 4,000–5,000 個詞族、覆蓋率 95%（兩者都含專有名詞）[LR2010]。注意大考詞彙表的 6,000 筆是「詞」不是「詞族」，不能直接比較。
+5. **校準點**（本專案計算）：115 學測英文全卷（含題幹與選項，不含中文）共 3,281 個 token，各級覆蓋率如下。2026-10-08 用簡化腳本獨立重算（專有名詞與數字詞規則較粗），得到 3,321 個 token、L1–4 90.6%、L1–6 94.6%，和下表差距在 1 個百分點內：
 
    | 級數 | L1 | L2 | L3 | L4 | L5 | L6 | 表外 |
    |---|---|---|---|---|---|---|---|
