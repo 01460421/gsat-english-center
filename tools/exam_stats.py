@@ -42,6 +42,9 @@ WORDLIST = ROOT / 'data' / 'vocab' / 'ceec-wordlist.json'
 FORMS = ROOT / 'data' / 'vocab' / 'forms-index.json'
 
 WORD_RE = re.compile(r"[A-Za-z]+(?:['’-][A-Za-z]+)*")
+# 題本文字裡的強調標記（<u>…</u>、<b>…</b>，見 docs/exam-json-schema.md〈文字規則〉）。斷詞前要先拿掉，
+# 不然 <b>so</b> 會被切成 b、so、b，選文字數與詞彙統計都會多算。
+MARKUP_RE = re.compile(r'</?[bu]>')
 BLANK_RE = re.compile(r'\[\[\d+\]\]')
 CHOICE_TYPES = ('vocabulary', 'cloze', 'word_bank')
 SCHEMA_ID = 'gsat-exam/v1.1'
@@ -49,6 +52,11 @@ TAG_FIELDS = ('test_point', 'answer_pos', 'answer_function', 'grammar_point', 'i
 # 詞類全是這些的條目算功能詞（介系詞、代名詞、連接詞、助動詞、冠詞）。它們在片語答案裡大量出現，
 # 但對「哪些實詞常考」沒有參考價值，所以排名時放到最後，數字照樣保留。
 FUNCTION_POS = {'prep.', 'pron.', 'conj.', 'aux.', 'art.'}
+
+
+def words_of(text):
+    """把題本文字切成英文單字；先去掉強調標記。"""
+    return WORD_RE.findall(MARKUP_RE.sub('', text or ''))
 
 
 def era_of(exam):
@@ -71,27 +79,23 @@ class Lexicon:
                 self.by_form[w.lower()].add(i)
         self.mode = 'suffix-rules'
         if FORMS.exists():
+            # forms-index.json 由 tools/build_vocab.py 產生：{"_meta": …, "forms": {詞形: [{"entry_id", "types"}…]}}。
+            # entry_id = "{word}|{詞類以 / 連接}|{level}"（同一支腳本的定義），由 ceec-wordlist.json 的條目算回索引。
             data = json.loads(FORMS.read_text(encoding='utf-8'))
-            # forms-index 的格式由 build_vocab.py 決定；接受 {form: [entry_id…]} 或 {form: entry_id}
-            id_to_idx = {}
-            for i, e in enumerate(entries):
-                if 'entry_id' in e:
-                    id_to_idx[e['entry_id']] = i
-            if isinstance(data, dict):
-                ok = 0
-                for form, ids in data.items():
-                    ids = ids if isinstance(ids, list) else [ids]
-                    for eid in ids:
-                        if isinstance(eid, dict):
-                            eid = eid.get('entry_id')
-                        idx = id_to_idx.get(eid) if id_to_idx else None
-                        if idx is None and isinstance(eid, int) and 0 <= eid < len(entries):
-                            idx = eid
-                        if idx is not None:
-                            self.by_form[form.lower()].add(idx)
-                            ok += 1
-                if ok:
-                    self.mode = 'forms-index'
+            id_to_idx = {f"{e['word']}|{'/'.join(e['pos'])}|{e['level']}": i for i, e in enumerate(entries)}
+            ok = missing = 0
+            for form, refs in (data.get('forms') or {}).items():
+                for ref in refs:
+                    idx = id_to_idx.get(ref.get('entry_id'))
+                    if idx is None:
+                        missing += 1
+                        continue
+                    self.by_form[form.lower()].add(idx)
+                    ok += 1
+            if missing:
+                raise SystemExit(f'forms-index.json 有 {missing} 個 entry_id 對不回 ceec-wordlist.json（兩份檔案版本不一致？）')
+            if ok:
+                self.mode = 'forms-index'
 
     def lookup(self, token):
         t = token.lower().replace('’', "'")
@@ -132,7 +136,7 @@ class Lexicon:
     def level_of_text(self, text):
         """單字回傳其級數；片語回傳片語中最高的級數（找不到的字略過）。"""
         levels = []
-        for tok in WORD_RE.findall(text or ''):
+        for tok in words_of(text or ''):
             idxs = self.lookup(tok)
             if idxs:
                 levels.append(min(self.entries[i]['level'] for i in idxs))
@@ -211,7 +215,7 @@ def build(exams, lex):
 
     def count_words(text, role, tag, exclude=()):
         seen = set()
-        for tok in WORD_RE.findall(text or ''):
+        for tok in words_of(text or ''):
             for idx in lex.lookup(tok):
                 if idx in exclude:
                     continue
@@ -237,7 +241,7 @@ def build(exams, lex):
             for g in s.get('groups', []):
                 bank = g.get('options_bank')
                 text = group_text(g)
-                words = WORD_RE.findall(text)
+                words = words_of(text)
                 if words:
                     known = [w for w in words if lex.lookup(w)]
                     levels = [min(lex.entries[i]['level'] for i in lex.lookup(w)) for w in known]
@@ -269,7 +273,7 @@ def build(exams, lex):
                     })
                     if s['type'] in CHOICE_TYPES and at:
                         # 片語答案（in addition to、pass through）裡的字分開計，免得 in、to 這類字灌爆「正解」排名
-                        role = 'answer' if len(WORD_RE.findall(at)) == 1 else 'answer_in_phrase'
+                        role = 'answer' if len(words_of(at)) == 1 else 'answer_in_phrase'
                         count_words(at, role, tag)
                     opts = q.get('options') or {}
                     for k, v in opts.items():

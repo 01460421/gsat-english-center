@@ -1,0 +1,23 @@
+[
+  {
+    "kind": "refers_to",
+    "location": "s3g1/42",
+    "status": "resolved",
+    "action": "填 refers_to {text: \"Scrabble\", occurrence: 1}（信中 playing Scrabble with your friends，只出現 1 次）；原卷沒有粗體或底線，不加標記。",
+    "evidence": "paper-1.pdf 第4–5頁（題本第3–4頁）頁面影像；paper-2.doc 轉 docx 後該段與第42題沒有任何 bold／underline run。"
+  },
+  {
+    "kind": "other",
+    "location": "extraction.issues[3]",
+    "status": "unresolvable",
+    "action": "維持原樣（stem 保留 “Times New Roman ;”），在 extraction.issues[3] 補記重查結果，並建議前端顯示時加註原卷損壞。",
+    "evidence": "paper-2.doc 原始位元組：“Times New Roman ;” 前只有欄位起始字元 0x13，其後沒有欄位分隔 0x14／結束 0x15，原字詞不在檔案中；paper-1.pdf 第2頁 200dpi 影像同樣印「‼Times New Roman ;」；answer.pdf 只有選項代號；沒有其他官方來源。"
+  },
+  {
+    "kind": "other",
+    "location": "extraction.issues[7]",
+    "status": "resolved",
+    "action": "確認原卷兩處都印「西元 1939 年」，依逐字原則保留原文、不修改資料；issues[7] 補記查證結果，並註明前端可加註應為 6939 年。",
+    "evidence": "paper-1.pdf 第7頁（題本第6頁）頁面影像「背景提示」第一段；pdftotext -layout 文字層相同。"
+  }
+]

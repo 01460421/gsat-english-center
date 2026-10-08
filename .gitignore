@@ -6,6 +6,9 @@ __pycache__/
 
 # 建置產物（Vite 輸出、wrangler 的打包結果與本機 D1／KV 模擬資料）
 dist/
+# 前端資料檔：apps/web/scripts/build-data.mjs 在 predev／prebuild 時由 data/ 產生，來源已在版控裡，不重複存一份。
+apps/web/public/data/
+apps/web/public/data.tmp-*/
 .wrangler/
 *.tsbuildinfo
 

@@ -97,7 +97,11 @@ function BottomNav({
     (p): p is (typeof PAGES)[number] => p !== undefined,
   );
   // 目前所在頁不在底部的 4 個常用頁裡時，「更多」要亮起來，使用者才知道自己在哪一區。
-  const inMore = !(BOTTOM_NAV_PATHS as readonly string[]).includes(location.pathname);
+  // 用前綴比對而不是完全相同：子頁（/exams/gsat-115）屬於「歷屆試題」，NavLink 已經把它標成目前頁，
+  // 完全比對的話「更多」也會一起亮，畫面上同時有兩個「目前位置」。首頁 '/' 是所有路徑的前綴，要另外判斷。
+  const inMore = !BOTTOM_NAV_PATHS.some((p) =>
+    p === '/' ? location.pathname === '/' : location.pathname === p || location.pathname.startsWith(`${p}/`),
+  );
   return (
     <nav
       aria-label="主要導覽"

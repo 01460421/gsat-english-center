@@ -1843,6 +1843,11 @@
               "label": "51",
               "mode": "single_choice",
               "stem": "David Smith refers to himself as having been “a clothes addict,” because _________.",
+              "refers_to": {
+                "text": "a clothes addict",
+                "occurrence": 1,
+                "note": "題幹引用第一段 David Smith 自稱的 “I was a clothes addict,”；原卷無粗體或底線"
+              },
               "options": {
                 "A": "he often wore khaki pants and a sports shirt",
                 "B": "he couldn’t stand a clean appearance",
@@ -2158,7 +2163,7 @@
       "time_minutes：gsat-spec.json 把 90、91 學年度列為「題本未印考試時間（未驗證）」，但本卷封面（other-1.pdf，Word 版 paper-2.doc 開頭亦同）印有「考試時間：100 分鐘」「第壹部分 單一選擇題共55題」「第貳部分 非選擇題共2大題」「選擇題答錯不倒扣」，故 time_minutes 填 100。題本內頁（paper-1.pdf 第1–7頁）本身確實沒有印考試時間。",
       "答案：answer-1.pdf 為「九十一學年度學科能力測驗國文、英文及數學考科答案」（第2頁為社會、自然），文字層是亂碼，以頁面影像逐題抄錄英文欄 1–55 題；抄錄結果與 stats-2.pdf 標星號的標準答案 55 題全部一致，並逐題與題意核對無矛盾。",
       "評分原則與非選擇題統計：units.json 中本年度沒有 scoring 檔（大考中心未公布簡答題參考答案／評分原則），簡答題 (1)–(5) 的 answer／accepted_answers／scoring_notes 一律填 null（未自行作答）；作文 answer、scoring_notes 亦為 null。統計檔只有選擇題，沒有非選擇題得分分布，簡答題與作文 stats 填 null。",
-      "非選擇題題號：簡答題題本印為 (1)–(5)，與選擇題第1–5題重號；比照 gsat-88／89／90／92 慣例，no 保留 1–5、label 為「簡答1」–「簡答5」；英文作文題本未編號，no 填 1、label 為「作文」。validator 的「題號重複 [1, 2, 3, 4, 5]」warning 由此而來，屬合理。",
+      "非選擇題題號：簡答題題本印為 (1)–(5)，與選擇題第1–5題重號；比照 gsat-88／89／90／92 慣例，no 保留 1–5、label 為「簡答1」–「簡答5」；英文作文題本未編號，no 填 1、label 為「英文作文」（v1.1 規則：簡答、作文各自從 1 編號）。v1.1 的 validator 不再對簡答、作文的題號發「題號重複」warning。",
       "統計：correct_rate／high_group／low_group／discrimination 取自 stats-1.pdf（P、Ph、Pl、D；報考 146,627、到考 142,972），option_rates 取自 stats-2.pdf 全體考生 T 列，句子配合題與文意選填收 A–J 十個選項。已程式核對：D＝Ph−Pl 與 D1–D4 全部成立；stats-2 答案選項比例與 stats-1 僅有三處 1 個百分點的四捨五入差異——第18題 P 74% vs T 列 A 75%、第43題 Pl 33% vs L 列 A 34%、第49題 Pl 31% vs L 列 C 32%，一律採 stats-1。option_rates 不含「未答」欄（全體考生只有第55題為 1%，其餘 0%），四捨五入後部分題目加總為 0.99–1.02。stats-1 另有五等分組 Pa–Pe、D1–D4，stats-2 另有高／低分組各選項比例（H、L 列），schema 無對應欄位未收錄。",
       "統計特殊值（官方原始數據，非抄錄錯誤）：第15題（out of place）鑑別度 D＝−0.20（Ph 8%、Pl 28%；高分組 71% 選 (C) out of politeness），第14題 D＝0.06、第26題 D＝0.04、第6題 D＝0.11 亦偏低，已看 stats-1／stats-2 頁面影像確認。",
       "原始檔：data/raw/ceec/gsat/91/ 目錄中另有 paper-3.pdf、paper-4.doc、answer-2.pdf、other-2.pdf，經檢查為「九十一學年度學科能力測驗（補考）」題本、答案與封面（paper-3 第1題為 “The teacher loved to teach young students, ________ those who were smart.”），不屬本卷，未使用（units.json 的 gsat-91 也未列入）。",

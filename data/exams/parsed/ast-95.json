@@ -9,6 +9,9 @@
   "full_score": 100,
   "sources": {
     "paper": "data/raw/ceec/ast/95/paper-1.pdf",
+    "paper_word": [
+      "data/raw/ceec/ast/95/paper-2.doc"
+    ],
     "answer": [
       "data/raw/ceec/ast/95/answer.pdf"
     ],
@@ -1639,7 +1642,7 @@
       "groups": [
         {
           "id": "s5g1",
-          "passage": "Rice balls with folded plastic wrappers separating the rice from the seaweed; a dozen kinds of cold tea in a dozen different bottles―enter any convenience store in Japan, and you’re immediately struck by the great variety and quality of the packaging!\nJapanese companies have been accused of over-packaging; but within the Japanese cultural context, that’s not really true. The Japanese tend to use more packaging because of a cultural emphasis on freshness and a lack of storage space at home. Moreover, they believe nice packaging adds value because it’s a strong signal of quality. What’s more, compared with Westerners, the Japanese are more connected with packaging as a symbol of appreciation, love and care. Packaging has, therefore, attained an important place in Japan’s economy. The packaging market is worth over ￥7.4 trillion. New packaging is introduced to Japanese store shelves at a rate of 20 percent per year, the highest rate in the world. In such an environment, a product has to have more than just a nice graphic design to differentiate it from its shelf-mates. The product has to speak to the consumer’s needs with both personality and practical value. In this changing industry, nothing is really certain except one thing. You can be sure that the goods out there on display on the shelves of the convenience store will soon be looking rather different.",
+          "passage": "Rice balls with folded plastic wrappers separating the rice from the seaweed; a dozen kinds of cold tea in a dozen different bottles―enter any convenience store in Japan, and you’re immediately struck by the great variety and quality of the packaging!\nJapanese companies have been accused of over-packaging; but within the Japanese cultural context, that’s not really true. The Japanese tend to use more packaging because of a cultural emphasis on freshness and a lack of storage space at home. Moreover, they believe nice packaging adds value because it’s a strong signal of quality. What’s more, compared with Westerners, the Japanese are more connected with packaging as a symbol of appreciation, love and care. Packaging has, therefore, attained an important place in Japan’s economy. The packaging market is worth over ￥7.4 trillion. New packaging is introduced to Japanese store shelves at a rate of 20 percent per year, the highest rate in the world. In such an environment, a product has to have more than just a nice graphic design to differentiate it from its <b>shelf-mates</b>. The product has to speak to the consumer’s needs with both personality and practical value. In this changing industry, nothing is really certain except one thing. You can be sure that the goods out there on display on the shelves of the convenience store will soon be looking rather different.",
           "passage_parts": null,
           "figures": [],
           "options_bank": null,
@@ -1711,6 +1714,11 @@
               "label": "48",
               "mode": "single_choice",
               "stem": "The word “shelf-mates” in the second paragraph most likely refers to ________.",
+              "refers_to": {
+                "text": "shelf-mates",
+                "occurrence": 1,
+                "note": "原卷粗體（選文第二段）；Word 版該 run 為粗體"
+              },
               "options": {
                 "A": "co-workers on the job",
                 "B": "other products in the store",
@@ -2054,6 +2062,36 @@
               "stem": "為提供一個無煙的用餐環境，許多餐廳不允許室內抽煙。",
               "options": null,
               "answer": "To provide a smoke-free dining environment, many restaurants do not allow smoking inside.",
+              "answer_segments": [
+                [
+                  "To provide a"
+                ],
+                [
+                  "smoke-free",
+                  "non-smoking"
+                ],
+                [
+                  "dining environment,",
+                  "eating environment,",
+                  "environment for dining,",
+                  "environment for eating,"
+                ],
+                [
+                  "many restaurants do not"
+                ],
+                [
+                  "allow",
+                  "permit"
+                ],
+                [
+                  "smoking"
+                ],
+                [
+                  "inside.",
+                  "indoors."
+                ]
+              ],
+              "answer_is_composite": true,
               "accepted_answers": [
                 "To provide a smoke-free/non-smoking dining/eating environment, many restaurants do not allow/permit smoking inside/indoors.",
                 "To provide a smoke-free/non-smoking environment for dining/eating, many restaurants do not allow/permit smoking inside/indoors."
@@ -2076,6 +2114,52 @@
               "stem": "雖然遭到許多癮君子的反對，這對不抽煙的人的確是一大福音。",
               "options": null,
               "answer": "In spite of objections from many chain smokers, this is indeed good news for non-smokers.",
+              "answer_segments": [
+                [
+                  "In spite of objections from many chain smokers,",
+                  "In spite of objections from many heavy smokers,",
+                  "In spite of objections from many smokers,",
+                  "In spite of objections of many chain smokers,",
+                  "In spite of objections of many heavy smokers,",
+                  "In spite of objections of many smokers,",
+                  "Despite objections from many chain smokers,",
+                  "Despite objections from many heavy smokers,",
+                  "Despite objections from many smokers,",
+                  "Despite objections of many chain smokers,",
+                  "Despite objections of many heavy smokers,",
+                  "Despite objections of many smokers,",
+                  "Although many chain smokers are against this,",
+                  "Although many chain smokers object to this,",
+                  "Although many chain smokers oppose this,",
+                  "Although many heavy smokers are against this,",
+                  "Although many heavy smokers object to this,",
+                  "Although many heavy smokers oppose this,",
+                  "Although many smokers are against this,",
+                  "Although many smokers object to this,",
+                  "Although many smokers oppose this,"
+                ],
+                [
+                  "this",
+                  "it"
+                ],
+                [
+                  "is"
+                ],
+                [
+                  "indeed",
+                  "definitely",
+                  "certainly",
+                  "really"
+                ],
+                [
+                  "good",
+                  "great"
+                ],
+                [
+                  "news for non-smokers."
+                ]
+              ],
+              "answer_is_composite": true,
               "accepted_answers": [
                 "In spite of/Despite objections from/of many [chain/heavy] smokers, this/it is indeed/definitely/certainly/really good/great news for non-smokers.",
                 "Although many [chain/heavy] smokers are against/object to/oppose this, this/it is indeed/definitely/certainly/really good/great news for non-smokers."
@@ -2157,12 +2241,12 @@
       "題號重複警告（validator: 題號重複 [1, 2]）是刻意的：英文翻譯在題本中編為 1.、2.，作文沒有題號；validator 要求 no 必須是整數，因此翻譯用 no=1、2（label「翻譯1」「翻譯2」），作文用 no=1（label「作文」），label 皆不重複。",
       "詞彙題空格照題本印的底線字元長度保留（第1、4、5、6、7、10題 7 個、第8題 8 個、第2、3、9題 9 個；Word 與 PDF 一致），未統一長度。閱讀題幹的空格同樣照原文（第46、48、49、50題 8 個、第52題 7 個）。",
       "第11–15題組：題本空格13後面直接接 for（“__13__for your activity”，無空格），寫成 “[[13]] for”。Word 版第13、16、21、40題空格前的軟換行已併回同一段。",
-      "第46–48題組：選文 “bottles―enter” 的破折號在 Word 與 PDF 文字層都是 U+2015（―，horizontal bar），不是本卷其他地方用的 em dash（—），照原文保留；“￥7.4 trillion” 的 ￥ 為全形日圓符號，照原文保留。選文中的 shelf-mates 與第48題題幹的 “shelf-mates” 在題本為粗體（無底線），第48題以引號標出該字，依原則粗體不保留、也不加 <u>。",
+      "第46–48題組：選文 “bottles―enter” 的破折號在 Word 與 PDF 文字層都是 U+2015（―，horizontal bar），不是本卷其他地方用的 em dash（—），照原文保留；“￥7.4 trillion” 的 ￥ 為全形日圓符號，照原文保留。選文中的 shelf-mates 與第48題題幹的 “shelf-mates” 在題本為粗體（無底線），第48題指涉此字，選文以 <b>shelf-mates</b> 標出並填 refers_to（題幹以引號指稱，不另加標記；原卷無底線，故不用 <u>）。",
       "第49–52題組：Word 版 “stamina.  Plains” 有兩個空白（PDF 在此換行），已改為一個空白。",
       "其他格式未保留：第16–20題組的 Medicine Man、第53–56題組的 Guardian 與 American Prospect、第55題 (D) 的 American Prospect 在題本為斜體。Word 版選項／題幹的尾端空白（第10題題幹、第20題 (C)、第25題 (C)、第46題 (D)、第49題 (B)、第50題 (D)、第55題題幹與 (A)(C)、第56題 (B)、文意選填 (A)）已去除。",
       "答案檔 answer.pdf 合併數學乙、國文、英文、數學甲四科，只取第3頁「英文考科選擇題參考答案」56 題。",
-      "英文翻譯參考答案在 scoring.pdf（選才通訊第144期「95指考非選擇題評分原則說明～國、英」，英文部分）中是大括號樹狀圖（圖片）。answer 取每個括號的第一個選項組成的句子（第1題第一支 “To provide a smoke-free dining environment, many restaurants do not allow smoking inside.”；第2題第一支 “In spite of objections from many chain smokers, this is indeed good news for non-smokers.”）；accepted_answers 以斜線列出同一位置可替換的字詞，兩題的樹狀圖都分兩支（第1題 dining environment／environment for dining；第2題 In spite of/Despite objections … 與 Although many … smokers … this），各列一句；scoring_notes 另附逐格轉寫、評分重點與評分標準原文。",
-      "第2題樹狀圖中 chain／heavy 的大括號裡另有一層方括號 [ ]，評分原則沒有說明其意義（97 年用圓括號表示可省略），推測表示 chain／heavy 可省略（即 “many smokers” 亦可）。answer 依「取第一個選項」的做法保留 chain，accepted_answers 寫成 “[chain/heavy]” 保留方括號，scoring_notes 註明此推測。",
+      "英文翻譯參考答案在 scoring.pdf（選才通訊第144期「95指考非選擇題評分原則說明～國、英」，英文部分）中是大括號樹狀圖（圖片）。answer 取每個括號的第一個選項組成的句子（第1題第一支 “To provide a smoke-free dining environment, many restaurants do not allow smoking inside.”；第2題第一支 “In spite of objections from many chain smokers, this is indeed good news for non-smokers.”）；accepted_answers 以斜線列出同一位置可替換的字詞，兩題的樹狀圖都分兩支（第1題 dining environment／environment for dining；第2題 In spite of/Despite objections … 與 Although many … smokers … this），各列一句；scoring_notes 另附逐格轉寫、評分重點與評分標準原文。（v1.1 結構化）兩題改以 answer_segments 表示，answer_is_composite: true（官方只有樹狀圖、沒有印出整句）。第1題 dining environment／environment for dining 兩支只差在同一位置，攤平成一段四種寫法；第2題前半兩支（In spite of/Despite … 與 Although … this）結構不同，攤平成一段 21 種寫法（2×2×3＋3×3），後半 this/it、indeed/definitely/certainly/really、good/great 各為一段，彼此不相依。",
+      "第2題樹狀圖中 chain／heavy 的大括號裡另有一層方括號 [ ]，評分原則沒有說明其意義（97 年用圓括號表示可省略），推測表示 chain／heavy 可省略（即 “many smokers” 亦可）。answer 依「取第一個選項」的做法保留 chain，accepted_answers 寫成 “[chain/heavy]” 保留方括號，scoring_notes 註明此推測。（v1.1 判定）answer_segments 把 chain／heavy 那一段寫成 [chain / heavy / 空字串]，即採「方括號＝可省略」的解讀。依據：①外層大括號已表示二選一，內層方括號若不是表示可省略就沒有作用；②同期評分說明（94 指考、95 學測、96 指考、97 學測）都另有符號表示可省略字詞（圓括號），96 指考與 97 學測並明文註記「( ) 表示該字詞可省略」；③「癮君子」譯為 smokers 已達意。官方本身沒有說明方括號，這仍是判讀而非官方明文。",
       "英文作文：官方沒有範文，answer 為 null；scoring_notes 收錄評分項目說明、評分標準全文、分項式評分指標表（依第2–3頁影像逐格轉寫；體例列的優、可兩欄在原表為合併儲存格）、評分樣例出處與研究小組註。本年內容「劣」欄為「文不對題（凡文不對題，其他各項均以零分計算）。」，與 97 年「文不對題或沒寫」不同，照原文。說明與提示都寫「至少120」，tags.word_requirement 記為 “at least 120 words”；essay_type 依題目指定兩段內容標為 two_paragraph。",
       "統計：答對率 P、高分組 Ph、低分組 Pl、鑑別度 D 取自 stats-1.xls 英文科工作表（工作表 2；報考 109,770、缺考 5,265、到考 104,505 人）；option_rates 取自 stats-2.xls 選項分析的「T」（全體）列，未含「未答」比例，所以各題 option_rates 加總小於 1（例如第5題未答 38%、第54、56題 25%）。stats-2 的高／低分組各選項比例（H／L 列）沒有放入（schema 無對應欄位）。",
       "統計交叉核對：56 題選項分析標「*」的選項與官方答案全部一致；stats-2 標「*」選項的 T／H／L 與 stats-1 的 P／Ph／Pl 只有第35題 T 差 1 個百分點（stats-2 54% vs stats-1 P 53%），推測為四捨五入差異，correct_rate 以 stats-1 為準（0.53），option_rates 的 I 照 stats-2 填 0.54。",

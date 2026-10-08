@@ -26,7 +26,9 @@ describe('路由', () => {
   for (const page of PAGES) {
     it(`${page.path} 顯示「${page.title}」`, async () => {
       renderAt(page.path);
-      expect(await screen.findByRole('heading', { level: 1, name: page.title })).toBeInTheDocument();
+      // 逾時放寬到 5 秒：完成的模組（/words 約百 KB）第一次按需載入要先轉譯一大串模組，
+      // 整套平行跑時偶爾超過預設的 1 秒，變成和程式無關的偶發失敗。
+      expect(await screen.findByRole('heading', { level: 1, name: page.title }, { timeout: 5000 })).toBeInTheDocument();
       expect(document.title).toBe(documentTitle(page));
     });
   }

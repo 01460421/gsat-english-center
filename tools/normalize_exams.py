@@ -36,6 +36,9 @@ ROOT = Path(__file__).resolve().parent.parent
 PARSED = ROOT / 'data' / 'exams' / 'parsed'
 MANIFEST = ROOT / 'data' / 'exams' / 'manifest.json'
 TODO = ROOT / 'data' / 'exams' / 'normalize-todo.json'
+# 看過原卷後的處理紀錄：每份考卷一個檔，內容是 [{kind, location, status, action, evidence}]。
+# status 為 resolved／not_needed 的項目不再列進工作清單；unresolvable 仍列出並標 status，讓待決事項看得到。
+RESOLUTIONS = ROOT / 'data' / 'exams' / 'todo-resolutions'
 DEFAULT_BACKUP = Path(tempfile.gettempdir()) / 'gsat-exam-normalize-backup'
 
 SCHEMA_ID = 'gsat-exam/v1.1'
@@ -231,10 +234,15 @@ def normalize_passage(text, poem):
 # 標註
 # ---------------------------------------------------------------------------
 
-def parse_word_requirement(raw):
+def parse_word_requirement(raw, instructions=''):
+    """instructions 是作文大題的說明。原值只寫「120 words」時，說明若寫「至少120個單詞」就以下限計，
+    不當成「約 120」（學測 111–115 與參考試卷的 v1 檔都是這樣漏掉「至少」的）。"""
     s = raw.strip()
     if s in WORD_COUNT_MANUAL:
         return dict(WORD_COUNT_MANUAL[s])
+    m = re.fullmatch(r'(\d+) words', s)
+    if m and re.search(rf'至少\s*{m.group(1)}\s*個?單詞', instructions or ''):
+        return {'min': int(m.group(1)), 'max': None, 'approx': None}
     m = re.fullmatch(r'at least (\d+) words', s)
     if m:
         return {'min': int(m.group(1)), 'max': None, 'approx': None}
@@ -542,7 +550,7 @@ def normalize_exam(d, ctx):
                             raise NormalizeError(f'{qw}: two_paragraph 但 paragraphs={tags["paragraphs"]}')
                     if 'word_requirement' in tags:
                         raw = tags.pop('word_requirement')
-                        tags['word_count'] = parse_word_requirement(raw)
+                        tags['word_count'] = parse_word_requirement(raw, s.get('instructions'))
                         tags['word_requirement_raw'] = raw
                         stats['word_count'] += 1
                 if map_closed(tags, 'grammar_point', GRAMMAR_POINTS, GRAMMAR_MAP, qw):
@@ -855,6 +863,33 @@ def todo_for_exam(d):
 KIND_ORDER = ['refers_to', 'answer_segments', 'scoring_exception', 'chart_reading', 'image_options', 'other']
 
 
+def load_resolutions():
+    """(考卷 id, kind, location) → 處理紀錄。同一個 key 出現兩次表示紀錄重複，直接報錯。"""
+    out = {}
+    for f in sorted(RESOLUTIONS.glob('*.json')) if RESOLUTIONS.exists() else []:
+        for r in json.loads(f.read_text(encoding='utf-8')):
+            key = (f.stem, r['kind'], r['location'])
+            if key in out:
+                raise NormalizeError(f'{f.name}: {r["kind"]} {r["location"]} 有兩筆處理紀錄')
+            if r.get('status') not in ('resolved', 'not_needed', 'unresolvable'):
+                raise NormalizeError(f'{f.name}: {r["kind"]} {r["location"]} 的 status={r.get("status")!r} 不在允許值內')
+            out[key] = r
+    return out
+
+
+def apply_resolutions(todo):
+    """拿掉已處理（resolved／not_needed）的項目；unresolvable 保留並附上處理說明。"""
+    res = load_resolutions()
+    out = []
+    for t in todo:
+        r = res.get((t['id'], t['kind'], t['location']))
+        if r is None:
+            out.append(t)
+        elif r['status'] == 'unresolvable':
+            out.append(dict(t, status='unresolvable', resolution=r.get('action', '')))
+    return out
+
+
 # ---------------------------------------------------------------------------
 
 def dump(obj):
@@ -891,6 +926,7 @@ def main(argv):
     todo = []
     for p in paths:
         todo += todo_for_exam(json.loads(results[p]))
+    todo = apply_resolutions(todo)
     todo.sort(key=lambda t: (KIND_ORDER.index(t['kind']), t['id'], t['location']))
     todo_text = dump(todo)
 

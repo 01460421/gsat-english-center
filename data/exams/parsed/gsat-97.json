@@ -1747,7 +1747,7 @@
         },
         {
           "id": "s4g2",
-          "passage": "After the creation of the Glacier National Park in Montana, the growing number of park visitors increased the need for roads. Eventually, the demand for a road across the mountains led to the building of the Going-to-the-Sun Road.\nThe construction of the Going-to-the-Sun Road was a huge task. After 11 years of work, the final section of the road was completed in 1932. The road is considered an engineering feat. Even today, visitors to the park marvel at how such a road could have been built. It is one of the most scenic roads in North America. The construction of the road has changed the way visitors experience the Glacier National Park. Visitors now can drive over sections of the park that previously took days of horseback riding to see.\nJust across the border, in Canada, is the Waterton Lakes National Park. In 1931, members of the Rotary Clubs of Alberta and Montana suggested joining the two parks as a symbol of peace and friendship between the two countries. In 1932, the United States and Canadian governments renamed the parks the Waterton-Glacier International Peace Park, the world’s first. More recently, the parks have received several international honors. They were named as a World Heritage Site in 1995. This international recognition highlights the importance of this area, not just to the United States and Canada, but to the entire world.",
+          "passage": "After the creation of the Glacier National Park in Montana, the growing number of park visitors increased the need for roads. Eventually, the demand for a road across the mountains led to the building of the Going-to-the-Sun Road.\nThe construction of the Going-to-the-Sun Road was a huge task. After 11 years of work, the final section of the road was completed in 1932. The road is considered <b><u>an engineering feat</u></b>. Even today, visitors to the park marvel at how such a road could have been built. It is one of the most scenic roads in North America. The construction of the road has changed the way visitors experience the Glacier National Park. Visitors now can drive over sections of the park that previously took days of horseback riding to see.\nJust across the border, in Canada, is the Waterton Lakes National Park. In 1931, members of the Rotary Clubs of Alberta and Montana suggested joining the two parks as a symbol of peace and friendship between the two countries. In 1932, the United States and Canadian governments renamed the parks the Waterton-Glacier International Peace Park, the world’s first. More recently, the parks have received several international honors. They were named as a World Heritage Site in 1995. This international recognition highlights the importance of this area, not just to the United States and Canada, but to the entire world.",
           "passage_parts": null,
           "figures": [],
           "options_bank": null,
@@ -1818,7 +1818,12 @@
               "no": 47,
               "label": "47",
               "mode": "single_choice",
-              "stem": "What does “an engineering feat” mean?",
+              "stem": "What does “<b><u>an engineering feat</u></b>” mean?",
+              "refers_to": {
+                "text": "an engineering feat",
+                "occurrence": 1,
+                "note": "原卷粗體加底線；位於選文第二段"
+              },
               "options": {
                 "A": "A big success in construction.",
                 "B": "A magical building machine.",
@@ -2269,7 +2274,34 @@
               "mode": "translation",
               "stem": "聽音樂是一個你可以終生享受的嗜好。",
               "options": null,
-              "answer": "Listening to music is {a hobby / an interest / a pastime} ({which / that}) you can enjoy {all (of) your life. / (for) a lifetime. / your whole life. / for life.}",
+              "answer": "Listening to music is a hobby which you can enjoy all of your life.",
+              "answer_segments": [
+                [
+                  "Listening to music is"
+                ],
+                [
+                  "a hobby",
+                  "an interest",
+                  "a pastime"
+                ],
+                [
+                  "which",
+                  "that",
+                  ""
+                ],
+                [
+                  "you can enjoy"
+                ],
+                [
+                  "all of your life.",
+                  "all your life.",
+                  "for a lifetime.",
+                  "a lifetime.",
+                  "your whole life.",
+                  "for life."
+                ]
+              ],
+              "answer_is_composite": true,
               "accepted_answers": null,
               "points": 4,
               "stats": null,
@@ -2288,13 +2320,56 @@
               "mode": "translation",
               "stem": "但能彈奏樂器可以為你帶來更多的喜悅。",
               "options": null,
-              "answer": "But {being able to play / playing} {a musical instrument / musical instruments / an instrument} {{can / will} {give / bring} you / {gives / brings} you} {(even/much) more {joy. / pleasure. / enjoyment.}}",
+              "answer": "But being able to play a musical instrument can give you even more joy.",
+              "answer_variants": [
+                "But being able to play a musical instrument can give you even more joy.",
+                "But playing a musical instrument can give you even more joy.",
+                "But being able to play musical instruments can give you even more joy.",
+                "But being able to play an instrument can give you even more joy.",
+                "But being able to play a musical instrument can bring you even more joy.",
+                "But being able to play a musical instrument will give you even more joy.",
+                "But being able to play a musical instrument will bring you even more joy.",
+                "But being able to play a musical instrument gives you even more joy.",
+                "But being able to play a musical instrument brings you even more joy.",
+                "But being able to play a musical instrument can give you much more joy.",
+                "But being able to play a musical instrument can give you more joy.",
+                "But being able to play a musical instrument can give you even more pleasure.",
+                "But being able to play a musical instrument can give you even more enjoyment.",
+                "But playing musical instruments brings you much more pleasure.",
+                "But playing an instrument will give you more enjoyment.",
+                "Yet being able to play a musical instrument can give you even more joy.",
+                "However, being able to play a musical instrument can give you even more joy.",
+                "But if you can play a musical instrument, you can give yourself even more joy.",
+                "But if you can play musical instruments, you can give yourself even more joy.",
+                "But if you can play an instrument, you can give yourself even more joy.",
+                "But if you can play a musical instrument, you will give yourself even more joy.",
+                "But if you can play a musical instrument, you can bring yourself even more joy.",
+                "But if you can play a musical instrument, you will bring yourself even more joy.",
+                "But if you can play a musical instrument, it can give you even more joy.",
+                "But if you can play a musical instrument, it will give you even more joy.",
+                "But if you can play a musical instrument, it can bring you even more joy.",
+                "But if you can play a musical instrument, it will bring you even more joy.",
+                "But if you can play a musical instrument, you will have even more joy.",
+                "But if you can play a musical instrument, you will get even more joy.",
+                "But if you can play a musical instrument, you can have even more joy.",
+                "But if you can play a musical instrument, you can get even more joy.",
+                "But if you can play a musical instrument, you can give yourself much more joy.",
+                "But if you can play a musical instrument, you can give yourself more joy.",
+                "But if you can play a musical instrument, you can give yourself even more pleasure.",
+                "But if you can play a musical instrument, you can give yourself even more enjoyment.",
+                "But if you can play an instrument, you will have much more pleasure.",
+                "But if you can play musical instruments, it will bring you more enjoyment.",
+                "Yet if you can play a musical instrument, you can give yourself even more joy.",
+                "However, if you can play a musical instrument, you can give yourself even more joy."
+              ],
+              "answer_is_composite": true,
               "accepted_answers": [
+                "But {being able to play / playing} {a musical instrument / musical instruments / an instrument} {{can / will} {give / bring} you / {gives / brings} you} {(even/much) more {joy. / pleasure. / enjoyment.}}",
                 "But if you can play {a musical instrument, / musical instruments, / an instrument,} {you {can / will} {give / bring} yourself / it {can / will} {give / bring} you / you {will / can} {have / get}} {(even/much) more {joy. / pleasure. / enjoyment.}}"
               ],
               "points": 4,
               "stats": null,
-              "scoring_notes": "本題型測驗目標為評量考生將中文句子譯成正確、通順、達意英文的能力。而第二句在測驗考生利用高中常用詞彙（例如：being able to/play a musical instrument/bring/give/(much) more/joy 等）及基本句型（如：連接詞 But/Yet/However 為首的句子）。\n評分標準：\n1. 本大題總分 8 分，每小題滿分 4 分。\n2. 每個錯誤扣 0.5 分，各半獨立，扣完為止。\n3. 相同之拼字錯誤只扣一次；各半部之拼字錯誤最多扣 1 分。\n4. 每題大小寫、標點最多扣 0.5 分。\n註1：{ }（大括弧）表示皆為可使用之字詞；( )（括弧）表示該字詞可省略。",
+              "scoring_notes": "本題型測驗目標為評量考生將中文句子譯成正確、通順、達意英文的能力。而第二句在測驗考生利用高中常用詞彙（例如：being able to/play a musical instrument/bring/give/(much) more/joy 等）及基本句型（如：連接詞 But/Yet/However 為首的句子）。\n評分標準：\n1. 本大題總分 8 分，每小題滿分 4 分。\n2. 每個錯誤扣 0.5 分，各半獨立，扣完為止。\n3. 相同之拼字錯誤只扣一次；各半部之拼字錯誤最多扣 1 分。\n4. 每題大小寫、標點最多扣 0.5 分。\n註1：{ }（大括弧）表示皆為可使用之字詞；( )（括弧）表示該字詞可省略。\n（解析註：參考答案原為大括弧圖，含兩種句型，以「OR」分隔。第一種 But {being able to play / playing} {a musical instrument / musical instruments / an instrument} {{can / will} {give / bring} you / {gives / brings} you} {(even/much) more {joy. / pleasure. / enjoyment.}}；第二種 But if you can play {a musical instrument, / musical instruments, / an instrument,} {you {can / will} {give / bring} yourself / it {can / will} {give / bring} you / you {will / can} {have / get}} {(even/much) more {joy. / pleasure. / enjoyment.}}，兩種逐格轉寫依序列在 accepted_answers。兩種句型的主詞與動詞部分結構不同、不能任意交叉組合，所以不用 answer_segments；answer_variants 列出 39 句代表性的完整句子：35 句取自大括弧圖（兩種句型各以全取第一寫法為基準，逐一替換每個位置的其他寫法，另加幾句多處同時替換），每個寫法至少出現一次；大括弧圖兩種句型各 324 種、共 648 種。另 4 句把句首 But 換成 Yet 或 However,（兩種句型各 2 句），依據是本題評分說明「基本句型（如：連接詞 But/Yet/However 為首的句子）」；大括弧圖本身只印 But。）",
               "tags": {
                 "patterns": [
                   "動名詞當主詞（being able to / playing ...）",
@@ -2523,7 +2598,7 @@
     "issues": [
       "結構與 gsat-spec.json legacy_gsat 94–110 期別一致：詞彙 1–15（各1分）、綜合測驗 16–30（3篇×5題，各1分）、文意選填 31–40（A–J，各1分）、閱讀測驗 41–56（4篇×4題，各2分）、翻譯題 2題×4分、英文作文 20分；選擇題 72 分＋非選擇題 28 分＝100 分。",
       "翻譯題與作文的題號：題本第貳部分翻譯題印「1.」「2.」，作文沒有題號；為避免與選擇題 1、2 重複（validator 要求 no 為整數、label 不可重複），no 依序編為 57、58、59（非題本題號），label 用「翻譯1」「翻譯2」「作文」。",
-      "翻譯參考答案在 scoring.pdf 第 5 頁是大括弧排列的圖片，已人工轉成一行文字：{ } 內以「 / 」分隔可互換的字詞，( ) 表示可省略（依原註 1「{ }（大括弧）表示皆為可使用之字詞；( )（括弧）表示該字詞可省略」），只有一個選項的外層大括弧照原圖保留為分組；翻譯2「OR」之後的另一種參考譯法（But if you can play ...）放在 accepted_answers。",
+      "翻譯參考答案在 scoring.pdf 第 5 頁是大括弧排列的圖片（依原註 1「{ }（大括弧）表示皆為可使用之字詞；( )（括弧）表示該字詞可省略」）。翻譯1 各大括弧互不相依，填 answer_segments：({which/that}) 寫成 [which / that / 空字串]，all (of) your life. 與 (for) a lifetime. 展開為 all of your life.／all your life.／for a lifetime.／a lifetime.，加上 your whole life.／for life.，共 54 種；answer 原為帶大括號記號的轉寫，改為各段第一個寫法串接的完整句子 “Listening to music is a hobby which you can enjoy all of your life.”，answer_is_composite: true。翻譯2 有兩種句型（「OR」之後是 But if you can play …），主詞與動詞部分結構不同，改填 answer_variants 39 句（35 句取自大括弧圖；另 4 句依評分說明「連接詞 But/Yet/However 為首的句子」把句首 But 換成 Yet／However,）；answer 改為 “But being able to play a musical instrument can give you even more joy.”（第一種句型各括弧取第一個寫法），answer_is_composite: true；原本的兩種大括號轉寫（{ } 內以「 / 」分隔可互換的字詞，( ) 表示可省略）依序放在 accepted_answers，scoring_notes 末尾加解析註說明。",
       "scoring.pdf 中重抄的題目文字與題本略有出入（翻譯說明作「請將以下兩個中文句子譯成正確、通順、達意的英文」；作文提示作「第一段說明遺失的經過」），JSON 的 instructions／stem 一律以題本為準。",
       "非選擇題統計（stats-3.xls）只有大題層級的分數人數分布（第一題＝翻譯題兩小題合計，滿分 8；第二題＝作文，滿分 20），放在 s5、s6 的 score_distribution（schema 未定義的延伸欄位，percent 已換成 0–1 小數），小題 stats 為 null。",
       "選擇題 stats：correct_rate＝P、high_group＝Ph（前33%）、low_group＝Pl（後33%）、discrimination＝D（stats-1.xls）；option_rates 取 stats-2.xls 選項分析的 T（全體）列，原表為整數百分比，加總因四捨五入不一定等於 1，未答比例（0–2%）未收錄。已程式核對每題選項分析標星號的選項與 answer.pdf 一致，且該選項比例等於 P。",

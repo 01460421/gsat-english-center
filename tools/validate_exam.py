@@ -803,6 +803,15 @@ def check_exam(path):
             r.err(sw, 'part 必須是字串或 null')
         if not isinstance(s.get('instructions'), str):
             r.err(sw, 'instructions 必須是字串')
+        elif stype == 'composition':
+            # 大題說明寫「至少 N 個單詞」時，word_count 必須是下限 N，不是「約 N」。
+            m = re.search(r'至少\s*(\d+)\s*個?單詞', s['instructions'])
+            if m:
+                for g in s.get('groups') or []:
+                    for q in (g.get('questions') if isinstance(g, dict) else None) or []:
+                        wc = ((q.get('tags') if isinstance(q, dict) else None) or {}).get('word_count')
+                        if isinstance(wc, dict) and wc.get('min') != int(m.group(1)):
+                            r.err(sw, f'說明寫「至少{m.group(1)}個單詞」，但 tags.word_count 是 {wc}（min 應為 {m.group(1)}）')
         if is_num(s.get('points_total')):
             total_points += s['points_total']
         else:

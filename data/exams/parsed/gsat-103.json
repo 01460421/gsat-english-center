@@ -2335,6 +2335,11 @@
               "label": "45",
               "mode": "single_choice",
               "stem": "What does Zeke Emanuel have in mind when saying “What did Mom put in the cereal?”",
+              "refers_to": {
+                "text": "What did Mom put in the cereal?",
+                "occurrence": 1,
+                "note": "題幹引用 Zeke 第一段回答中的這一句；原卷無粗體或底線"
+              },
               "options": {
                 "A": "The secret to bringing up successful kids.",
                 "B": "The recipe for a breakfast food.",
@@ -2517,7 +2522,7 @@
         {
           "id": "s4g3",
           "group_label": "第49至52題為題組",
-          "passage": "MOOC, a massive open online course, aims at providing large-scale interactive participation and open access via the web. In addition to traditional course materials such as videos, readings, and problem sets, MOOCs provide interactive user forums that help build a community for the students, professors, and teaching assistants.\nMOOCs first made waves in the fall of 2011, when Professor Sebastian Thrun from Stanford University opened his graduate-level artificial intelligence course up to any student anywhere, and 160,000 students in more than 190 countries signed up. This new breed of online classes is shaking up the higher education world in many ways. Since the courses can be taken by hundreds of thousands of students at the same time, the number of universities might decrease dramatically. Professor Thrun has even envisioned a future in which there will only need to be 10 universities in the world. Perhaps the most striking thing about MOOCs, many of which are being taught by professors at prestigious universities, is that they’re free. This is certainly good news for cash-strapped students.\nThere is a lot of excitement and fear surrounding MOOCs. While some say free online courses are a great way to increase the enrollment of minority students, others have said they will leave many students behind. Some critics have said that MOOCs promote an unrealistic one-size-fits-all model of higher education and that there is no replacement for true dialogues between professors and their students. After all, a brain is not a computer. We are not blank hard drives waiting to be filled with data. People learn from people they love and remember the things that arouse emotion. Some critics worry that online students will miss out on the social aspects of college.",
+          "passage": "MOOC, a massive open online course, aims at providing large-scale interactive participation and open access via the web. In addition to traditional course materials such as videos, readings, and problem sets, MOOCs provide interactive user forums that help build a community for the students, professors, and teaching assistants.\nMOOCs first made waves in the fall of 2011, when Professor Sebastian Thrun from Stanford University opened his graduate-level artificial intelligence course up to any student anywhere, and 160,000 students in more than 190 countries signed up. This new breed of online classes is shaking up the higher education world in many ways. Since the courses can be taken by hundreds of thousands of students at the same time, the number of universities might decrease dramatically. Professor Thrun has even envisioned a future in which there will only need to be 10 universities in the world. Perhaps the most striking thing about MOOCs, many of which are being taught by professors at prestigious universities, is that they’re free. This is certainly good news for <b>cash-strapped</b> students.\nThere is a lot of excitement and fear surrounding MOOCs. While some say free online courses are a great way to increase the enrollment of minority students, others have said they will leave many students behind. Some critics have said that MOOCs promote an unrealistic one-size-fits-all model of higher education and that there is no replacement for true dialogues between professors and their students. After all, a brain is not a computer. We are not blank hard drives waiting to be filled with data. People learn from people they love and remember the things that arouse emotion. Some critics worry that online students will miss out on the social aspects of college.",
           "passage_parts": null,
           "figures": [],
           "options_bank": null,
@@ -2527,6 +2532,11 @@
               "label": "49",
               "mode": "single_choice",
               "stem": "What does the word “cash-strapped” in the second paragraph mean?",
+              "refers_to": {
+                "text": "cash-strapped",
+                "occurrence": 1,
+                "note": "原卷粗體（第二段末句 good news for cash-strapped students）"
+              },
               "options": {
                 "A": "Making a lot of money.",
                 "B": "Being short of money.",
@@ -2765,6 +2775,11 @@
               "label": "54",
               "mode": "single_choice",
               "stem": "What does “infrastructure” in Vehicle-to-Infrastructure refer to?",
+              "refers_to": {
+                "text": "Infrastructure",
+                "occurrence": 1,
+                "note": "題幹以粗體小寫 infrastructure 指第一段 Vehicle-to-Infrastructure communication 中的 Infrastructure；原卷選文該字沒有粗體，未加標記"
+              },
               "options": {
                 "A": "Traffic facilities and information systems.",
                 "B": "The basic structure of roads and bridges.",
@@ -3270,7 +3285,7 @@
     "method": "題本文字以 Word 版 paper-2.docx 為主（以 lxml 走訪 document.xml 的全部 w:r，底線 run 內的數字轉成 [[題號]]，只有底線空白的 run 轉成 _____），再以程式將全部 282 個文字欄位（大題與部分標題、說明、題組標示、選文各段、題幹、選項、選項庫）與 pdftotext -layout（paper-1.pdf，NFC 正規化後）逐段比對（英文比對連續詞序列、中文去空白後比對子字串），除空格與其後標點之間的排版空白外全部一致；Read 看 PDF 全部 8 頁頁面影像確認段落切分、首行縮排、粗體／斜體／底線與方框，英文作文的四格漫畫另以 pdftoppm -r 250 放大裁切逐格判讀；答案取自 answer.pdf（pdftotext -layout）；評分原則取自 scoring.pdf（pdftotext 與 -layout，並以 Read 看頁面影像核對）逐字摘錄；統計以 xlrd 讀 stats-1.xls（英文工作表：答對率 P、高分組 Ph、低分組 Pl、鑑別度 D）、stats-2.xls（英文工作表：選項分析 T／H／L 列、未答）、stats-3.xls（英文科非選擇題分數人數統計表），並以程式交叉核對（選項分析 T 列標 * 的選項＝官方答案，56 題全部；T／H／L 列正答比例＝P／Ph／Pl，56 題全部；D＝Ph−Pl，56 題全部；非選擇題兩題各分數段人數加總＝到考人數 145,575）。",
     "issues": [
       "結構核對：與 gsat-spec.json legacy_gsat 期別「94–110」一致——詞彙題 1–15（15分）、綜合測驗 16–30（3篇×5題，題組標示16–20、21–25、26–30，15分）、文意選填 31–40（A–J，10分）、閱讀測驗 41–56（4篇×4題，每題2分，32分）、中譯英 2題×4分、英文作文 20分（文長至少120個單詞，與 essay_length_by_year「101-110」相符）；第壹部分單選題 72分＋第貳部分非選擇題 28分＝100分；封面「考試時間：100 分鐘」「單選題共 56 題」「非選擇題共二大題」。無差異。",
-      "validator warning「題號重複 [1, 2]」為預期：中譯英兩題題本編為 1.、2.，英文作文沒有題號（no 填 1）；no 必須是整數，故沿用題本編號（與 gsat-104／106 相同做法），並以 label「中譯英1」「中譯英2」「作文」區分，label 無重複。",
+      "題號：中譯英兩題題本編為 1.、2.，英文作文沒有題號（no 填 1）；依 v1.1 編號規則，翻譯與作文用大題內序號（與 gsat-104／106 相同做法），label 為「中譯英1」「中譯英2」「英文作文」，無重複；v1.1 的 validator 不再對翻譯、作文的題號發「題號重複」warning。",
       "中譯英：評分原則沒有公布完整參考譯文，只舉出片段譯法（「辭掉都市裡的高薪工作」若譯成 (have) quit high-paying/well-paid job/jobs in the city 即可得分；「藉由決心與努力」可譯為 through/with/because of determination and effort/efforts）與常見錯誤（backed to home、success／successed、healthier 少寫 i、vegetables 拼錯）；這些不是整句譯文，故 answer 與 accepted_answers 皆為 null，片段譯法保留在 scoring_notes 原文中。評分原則的中譯英段落同時談兩句，無法逐句切開而不破壞原文，故兩題的 scoring_notes 都放：第一段「第一大題是「中譯英」…兩題合計為 8 分。」、評分標準句「評分標準與歷年相同…原則上是每個錯誤扣 0.5 分。」（本年沒有「相同的錯誤只扣一次」一句）、整段中譯英說明（逐字），以換行分隔。評分原則原文「考生能否能運用常用的詞彙」多一個「能」，依逐字原則保留。",
       "英文作文：評分原則沒有官方範文，answer 為 null；題目沒有規定段數，tags 不填 paragraphs（與 gsat-106 同為看圖寫作，essay_type 標 picture）。scoring_notes 由評分原則三處逐字摘錄組成（「英文作文」評分標準句、第一段中「第二大題是「英文作文」，考生須從三幅連環圖片…完整結局的故事。」、最後一段作文說明），以換行分隔。本年評分項目為五項（內容、組織、文法句構、詞彙拼字、體例），與 spec 所記 106 年起才改為四項一致。",
       "英文作文圖（s6g1 figures）：Word 版只有一張圖片、PDF 文字層沒有圖中文字，四格內容依 250dpi 頁面影像逐格描述（圖中唯一文字為車牌「8888」與中央的格子編號 1–4）。圖1 女生手上的裝置依評分原則「圖片二裡的女生忙著滑手機」寫作手機，男生手上的是隨身音樂播放器（頭戴耳罩式耳機、頭上有音符），評分原則稱「圖片三裡的男生沉迷於耳機裡的音樂中」。圖2 女生撞到樹、手機掉落，遠處的媽媽一手牽小孩、一手垂在身側，母子都張著嘴面露驚訝（查證時依 pdfimages 取出的原圖放大確認，媽媽並沒有用手摀嘴）；圖3 駕駛對走在車前的男生猛按喇叭——此為依影像的描述，不是官方文字。",
@@ -3278,7 +3293,7 @@
       "第45–48題選文：題本先以一行「Below is an excerpt from an interview with Zeke Emanuel, a health-policy expert, on his famous brothers.」（方框外）引出，訪談內容印在方框內，說話者首次標「Interviewer:」「Zeke:」，之後縮寫為「I:」「Z:」。passage 第一行放這句引言，其後每個說話輪次各一行，說話者標示照題本原文。",
       "第11、12題題本的空格是一段加底線的空白（Word 版為 5 個加底線空格，PDF 影像上是一條短底線，沒有底線字元），統一寫成「_____」（5 個底線）；其他詞彙題題幹的底線長度照題本原樣保留（5–8 個 _）。",
       "題組標示：Word 版寫「第16至20 題為題組」、pdftotext 為「第 16 至 20 題為題組」（中英混排字距），group_label 統一寫成「第16至20題為題組」（與 gsat-104 等檔一致）。",
-      "格式：題本中 The Snows of Kilimanjaro（21–25 選文）、The Bluest Eye（41–44 選文與第42題 (A)）、Song of Solomon、Brothers Emanuel（45–48 選文）為斜體；cash-strapped（49–52 選文與第49題）、第50與55題的 NOT、第54題的 infrastructure 為粗體；題組標示有底線；45–48 訪談在方框內。依 schema 不保留粗斜體（題目以引號指稱，非「畫底線的字」，故未加 <u>）。",
+      "格式：題本中 The Snows of Kilimanjaro（21–25 選文）、The Bluest Eye（41–44 選文與第42題 (A)）、Song of Solomon、Brothers Emanuel（45–48 選文）為斜體，依 schema 不保留；第50與55題的 NOT 為粗體，不保留；cash-strapped（49–52 選文與第49題題幹）為粗體，是題目指涉的字，選文中以 <b> 標出並填 refers_to（題幹照原文以引號表示、不另加標記）；第54題題幹的 infrastructure 為粗體，但選文 Vehicle-to-Infrastructure 中的 Infrastructure 沒有粗體，選文不加標記，只填 refers_to；題組標示有底線；45–48 訪談在方框內。",
       "逐字保留的原文寫法：第21–25題選文「Earnest Hemingway’s」（作家名常拼作 Ernest）；第45–48題選文「pina colada」（無 ñ）與「I don’t write a book about how great my family is」（現在式）；第44題 (C)「What she wrote in her novels are true stories of African Americans.」（主詞子句配 are）；第31–40題選文「the first born son」。皆照題本，未更正。",
       "文字來源細節：PDF 選項庫印作「( I ) respect」「( J ) unique」（括號內有空白），代號統一為 I／J。第16、19、20、22、29題等空格後的標點依題本緊接空格（例「[[16]], the man answered」「soon [[22]]. According」），PDF 版面在空格與標點間的空白不保留。pdftotext 的題本文字層有 CJK 相容表意字（例「連」U+F99A），JSON 以 Word 版文字為準，已確認整份 JSON 為 NFC 正規形式、無相容表意字。Word 版第49–52、53–56題選文有 5 處不換行空白（U+00A0，例「others have said they」「road signs or traffic signals」），PDF 為一般空白，查證時已全部換成一般空白。",
       "評分原則 PDF：文字層把第一句提到的字母寫成「“i ”」（右引號前多一個空白），頁面影像上是「“i”」，已依影像改為「“i”」。跨行接合時，一側是英文字母或數字的位置補一個空白（例「扣 / 0.5 分」→「扣 0.5 分」、「success 或 / successed」→「success 或 successed」），中文與中文、全形標點處直接接合；「vegetables 這個字」的空白為文字層原有。",

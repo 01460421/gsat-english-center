@@ -1,0 +1,58 @@
+[
+  {
+    "kind": "refers_to",
+    "location": "s5g3/45",
+    "status": "resolved",
+    "action": "refers_to={text:\"so\", occurrence:1, note:原卷粗體}；選文第一段 “In order to do so,” 的 so 加 <b>。extraction.issues[5] 改寫為已標出。",
+    "evidence": "paper-2.docx（soffice 轉檔）第136段 run「so」bold=True，第143段題幹的 so 也是粗體；Read 看 paper-1.pdf 第6頁（題本第5頁）影像確認選文 “In order to do so,” 的 so 為粗體；選文中 so 只出現 1 次（also 等不計）。"
+  },
+  {
+    "kind": "refers_to",
+    "location": "s5g4/49",
+    "status": "resolved",
+    "action": "refers_to={text:\"churned out\", occurrence:1, note:原卷粗體}；選文第二段 “has churned out about 46% more PhDs” 加 <b>。",
+    "evidence": "paper-2.docx 第158段 run「churned out」bold=True（第163段題幹亦粗體）；Read 看 paper-1.pdf 第7頁（題本第6頁）影像確認粗體；選文中只出現 1 次。"
+  },
+  {
+    "kind": "answer_segments",
+    "location": "s6g1/中譯英1",
+    "status": "resolved",
+    "action": "後半兩個分支結構不同（{global/worldwide}{concerns/worries}…{the safety of nuclear energy./nuclear safety.} 與 {concerns/safety concerns}…{the safety of nuclear energy/nuclear power}{around/all over {the globe./the world.}/worldwide.}），跨段相依，改填 answer_variants 20 句（每個寫法至少出現一次，全部組合 13,440 種不窮舉），不填 answer_segments；answer 由「…nuclear (power) plant…」改成完整句子 The explosion of the nuclear power plant in Japan has caused global concerns for the safety of nuclear energy.，answer_is_composite: true；完整原圖保留在 accepted_answers[0]，extraction.issues[2] 改寫說明。",
+    "evidence": "Read 看 scoring.pdf 第2頁「（一）參考答案 第1題」樹狀圖影像，逐分支核對；pdftotext 該頁為圖片無文字。程式檢查 20 句皆屬於樹狀圖展開的 13,440 種組合。"
+  },
+  {
+    "kind": "answer_segments",
+    "location": "s6g1/中譯英2",
+    "status": "resolved",
+    "action": "填 answer_segments 12 段（展開 12,096 種）：(source(s)) → 省略／sources，(in order) to → in order to／to，demand(s)/need(s)/requirement(s) 拆單複數；不定詞組（aiming to／in order to／to／so as to＋satisfy/meet/fulfill）與動名詞組（with an aim of／for the purpose of／with a view to＋satisfying/meeting/fulfilling）相依，合併為同一段 21 種寫法。answer 改為各段第一個寫法：Scientists are seeking safe, clean, and inexpensive green energy aiming to satisfy our demand for electricity.，answer_is_composite: true。單數 energy source 缺冠詞不通順未列入（extraction.issues[2] 註明）。",
+    "evidence": "Read 看 scoring.pdf 第2頁「第2題」樹狀圖影像；程式展開後隨機抽樣 10 句（seed 100），文法通順、各段寫法皆出自樹狀圖。"
+  },
+  {
+    "kind": "chart_reading",
+    "location": "s5g3/44",
+    "status": "not_needed",
+    "action": "維持 item_type=main_idea：問全文主旨（orb web 的構造），由文字即可作答，圖只是插圖。 圖的 description 末尾補註「此圖為選文配圖：第44–47題作答所需資訊在文字中，不需依圖作答」（與沿用同一篇選文的 ref-107-a 寫法一致），日後重跑 normalize 不再列出。",
+    "evidence": "Read 看 paper-1.pdf 第6頁（題本第5頁）影像：圓網示意圖附在第一段右側，標示 frame thread／radius／capture spiral／anchor thread 等；選文第二段已用文字說明所有部位。"
+  },
+  {
+    "kind": "chart_reading",
+    "location": "s5g3/45",
+    "status": "not_needed",
+    "action": "維持 item_type=reference：問粗體 so 指涉 intercept and hold flying prey，與圖無關。 圖的 description 末尾補註「此圖為選文配圖：第44–47題作答所需資訊在文字中，不需依圖作答」（與沿用同一篇選文的 ref-107-a 寫法一致），日後重跑 normalize 不再列出。",
+    "evidence": "paper-1.pdf 第6頁影像；答案 A 依第一段文字。"
+  },
+  {
+    "kind": "chart_reading",
+    "location": "s5g3/46",
+    "status": "not_needed",
+    "action": "維持 item_type=detail：支撐整張網的是 anchor threads，第二段文字 “The whole web is in tension and held in place by anchor threads, which connect the frame to the surrounding vegetation or objects.” 已寫明，不必讀圖。 圖的 description 末尾補註「此圖為選文配圖：第44–47題作答所需資訊在文字中，不需依圖作答」（與沿用同一篇選文的 ref-107-a 寫法一致），日後重跑 normalize 不再列出。",
+    "evidence": "paper-1.pdf 第6–7頁影像；答案 C（The anchor threads）。"
+  },
+  {
+    "kind": "chart_reading",
+    "location": "s5g3/47",
+    "status": "not_needed",
+    "action": "維持 item_type=detail：絲線的性質（至少撐一天、兩種絲線一黏一硬）都在第一、二段文字中，圖沒有這些資訊。 圖的 description 末尾補註「此圖為選文配圖：第44–47題作答所需資訊在文字中，不需依圖作答」（與沿用同一篇選文的 ref-107-a 寫法一致），日後重跑 normalize 不再列出。",
+    "evidence": "paper-1.pdf 第6–7頁影像；答案 B 依第一段 “for at least a day in most cases”。"
+  }
+]

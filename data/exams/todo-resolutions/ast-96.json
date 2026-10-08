@@ -1,0 +1,30 @@
+[
+  {
+    "kind": "refers_to",
+    "location": "s5g3/53",
+    "status": "resolved",
+    "action": "refers_to = {text: \"blood diamonds\", occurrence: 1}：題目問這個稱呼的由來，指涉第一段 “Conflict diamonds, sometimes called blood diamonds” 的 blood diamonds（選文中複數小寫形式僅此 1 處；第三段 blood diamond sales、第四段片名 Blood Diamond 不算）。原卷無粗體／底線，不加標記",
+    "evidence": "paper-1.pdf 第7頁（印第6頁）影像：53–56 題選文第一段 blood diamonds 為一般字體，僅片名 Blood Diamond 斜體；第8頁第53題題幹以引號引用"
+  },
+  {
+    "kind": "answer_segments",
+    "location": "s6g1/英文翻譯1",
+    "status": "resolved",
+    "action": "填 answer_segments 9 段（The／rapid|fast|speedy／development of／mass|public／transportation|transport／has gradually／shortened|decreased|reduced／the distance between／cities and countries.|urban and rural areas.|the urban and rural areas.|the urban and the rural areas.），共 144 種組合（3×2×2×3×4；原記 180 種有誤，查證時更正）；answer_is_composite: true（官方只印樹狀圖，answer 是各段第一個寫法）。「(the) urban and (the) rural areas」只省略前一個 the 的組合不通順，未列入（已記在 extraction.issues[7]）。各段互不相依，不需 answer_variants",
+    "evidence": "scoring.pdf 第4頁「參考答案：第1題」大括號樹狀圖（pdftoppm 200dpi 放大確認）；程式展開抽樣 10 句皆通順，各段第一個寫法串接＝原 answer"
+  },
+  {
+    "kind": "answer_segments",
+    "location": "s6g1/英文翻譯2",
+    "status": "resolved",
+    "action": "填 answer_segments 11 段（With／名詞片語 13 種：the High-Speed Rail|the High-Speed Railway 各接 system|network|link|Service|不接（原圖大圓括號＝可省略）共 10 種，加上 high-speed rail|high-speed railway|HSR 不接名詞 3 種／,／we／can|are able to／travel／back and forth|to and fro／between／三種南北說法＋(of Taiwan) 展開共 4 種／in|within／half a day.|a half day.），共 832 種；answer_is_composite: true。查證更正：原本把冠詞與 system 一欄拆成兩段各自獨立（1600 種），會產生「With high-speed railway network,」「With HSR system,」這類可數名詞缺冠詞、不通順的句子；比照第1題刪去不通順組合的作法，改成同一段只收有冠詞的寫法接名詞，已記在 extraction.issues[7]。accepted_answers 與 scoring_notes 的原圖轉寫不動",
+    "evidence": "scoring.pdf 第4頁「參考答案：第2題」樹狀圖影像（system/network/link/Service 一欄以大圓括號括住，註1：( ) 表示可省略）；程式展開抽樣 10 句，各段第一個寫法串接＝原 answer；查證：重看 scoring.pdf 第4頁 130dpi 影像與第5頁註1「( )（括弧）表示該字詞可省略」，程式展開 832 句全部檢查冠詞，各段第一個寫法串接＝原 answer"
+  },
+  {
+    "kind": "other",
+    "location": "extraction.issues[6]",
+    "status": "not_needed",
+    "action": "核對後維持原樣：stem 依題本「已逐漸縮短」正確（評分標準引題多一「經」字）；參考答案「cities and countries.」確為官方原圖文字，依逐字原則照錄，answer_segments 亦保留此寫法",
+    "evidence": "paper-1.pdf 文字層第1題「大眾運輸的快速發展已逐漸縮短了都市和鄉村的距離。」；scoring.pdf 第4頁題目引文「已經逐漸縮短」與樹狀圖影像「cities and countries.」"
+  }
+]

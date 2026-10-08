@@ -9,6 +9,9 @@
   "full_score": 100,
   "sources": {
     "paper": "data/raw/ceec/ast/97/paper-1.pdf",
+    "paper_word": [
+      "data/raw/ceec/ast/97/paper-2.doc"
+    ],
     "answer": [
       "data/raw/ceec/ast/97/answer.pdf"
     ],
@@ -1888,6 +1891,11 @@
               "label": "50",
               "mode": "single_choice",
               "stem": "What is “<u>anorexia nervosa</u>” as mentioned in the first paragraph?",
+              "refers_to": {
+                "text": "anorexia nervosa",
+                "occurrence": 1,
+                "note": "原卷粗體加底線（第一段），以 <u> 標出"
+              },
               "options": {
                 "A": "It is an inability to express one’s feelings.",
                 "B": "It describes a situation of feeling insecure.",
@@ -2151,6 +2159,51 @@
               "stem": "全球糧食危機已經在世界許多地區造成嚴重的社會問題。",
               "options": null,
               "answer": "The global food crisis has already created serious social problems in many parts of the world.",
+              "answer_segments": [
+                [
+                  "The global",
+                  "The world",
+                  "The worldwide",
+                  "Global",
+                  "World",
+                  "Worldwide"
+                ],
+                [
+                  "food crisis has"
+                ],
+                [
+                  "already",
+                  ""
+                ],
+                [
+                  "created",
+                  "caused",
+                  "led to",
+                  "given rise to",
+                  "resulted in"
+                ],
+                [
+                  "serious",
+                  "critical",
+                  "severe"
+                ],
+                [
+                  "social problems in many"
+                ],
+                [
+                  "parts",
+                  "areas",
+                  "regions"
+                ],
+                [
+                  "of",
+                  "around"
+                ],
+                [
+                  "the world."
+                ]
+              ],
+              "answer_is_composite": true,
               "accepted_answers": [
                 "(The) global/world(wide) food crisis has (already) created/caused/led to/given rise to/resulted in serious/critical/severe social problems in many parts/areas/regions of/around the world."
               ],
@@ -2172,6 +2225,23 @@
               "stem": "專家警告我們不應該再將食物價格低廉視為理所當然。",
               "options": null,
               "answer": "Experts warned us that we should not take low food prices for granted any more.",
+              "answer_variants": [
+                "Experts warned us that we should not take low food prices for granted any more.",
+                "Specialists warn we can not take low-price food for granted any longer.",
+                "Experts have warned us that we should no longer take low-priced food for granted.",
+                "Experts warned us that we should not take the low cost of food for granted any more.",
+                "Experts warn us we should no longer take low food prices for granted.",
+                "Specialists have warned that we should not take low food prices for granted any longer.",
+                "Experts have warned we can no longer take low-priced food for granted.",
+                "Specialists warn us we can not take low-price food for granted any more.",
+                "Experts have warned us we should not take low food prices for granted any longer.",
+                "Experts warn us we should not take low-priced food for granted any more.",
+                "Experts warn that we can no longer take low-priced food for granted.",
+                "Specialists have warned us that we should not take low-price food for granted any longer.",
+                "Specialists warned us we can no longer take low-price food for granted.",
+                "Specialists have warned that we should no longer take the low cost of food for granted."
+              ],
+              "answer_is_composite": true,
               "accepted_answers": [
                 "Experts/Specialists warn(ed)/have warned (us) (that) we should/can not take low food prices/low-price(d) food/the low cost of food for granted any more/longer.",
                 "Experts/Specialists warn(ed)/have warned (us) (that) we should/can no longer take low food prices/low-price(d) food/the low cost of food for granted."
@@ -2251,11 +2321,11 @@
       "結構與 gsat-spec.json legacy_ast「94–97」期別一致：詞彙 1–10（10×1）、綜合測驗 11–30（4篇×5題×1＝20）、文意選填 31–40（選項 A–J 共10個，10×1）、篇章結構 41–45（選項 A–E 共5個，5×2）、閱讀測驗 46–56（3篇：4＋4＋3題，11×2＝22）、英文翻譯 2題×4＝8、英文作文 20（至少120個單詞）；選擇題 72、非選擇題 28，合計 100。本年仍有倒扣（各大題說明已逐字保留）。考試時間 80 分鐘取自封面。",
       "題號重複警告（validator: 題號重複 [1, 2]）是刻意的：英文翻譯在題本中編為 1.、2.，作文沒有題號；validator 要求 no 必須是整數，因此翻譯用 no=1、2（label「翻譯1」「翻譯2」），作文用 no=1（label「作文」），label 皆不重複。",
       "第11–15題組：PDF 題本印作 “very different— they may not even be”（破折號後有一個空格，同段其他破折號都沒有空格），Word 版為 “different—they”。依印刷題本保留空格；這是本卷 Word 與 PDF 唯一的文字差異（其餘全文逐詞含標點比對一致）。",
-      "第50–53題組：選文第一段的 anorexia nervosa 與第50題題幹的 “anorexia nervosa” 在題本中為粗體＋底線，第50題即在問這個詞的意思，因此以 <u>anorexia nervosa</u> 標出（粗體不保留）；第51題題幹的 anorexia nervosa 無格式，未標。其他格式未保留：第46–49題組選文的 Leg、Godt 與第46題題幹的 Lego 為斜體；28th、18th、20th、50th 的 th 為上標。",
+      "第50–53題組：選文第一段的 anorexia nervosa 與第50題題幹的 “anorexia nervosa” 在題本中為粗體＋底線，第50題即在問這個詞的意思，因此以 <u>anorexia nervosa</u> 標出（粗體不保留）；第51題題幹的 anorexia nervosa 無格式，未標。其他格式未保留：第46–49題組選文的 Leg、Godt 與第46題題幹的 Lego 為斜體；28th、18th、20th、50th 的 th 為上標。第50題 refers_to 指向選文第一段這一處（原卷粗體加底線，維持 <u>）。",
       "詞彙題空格：第4、8題題本直接印 6 個底線字元「______」；其他詞彙題在 Word 版是 6 個加底線的空白，統一寫成「______」。",
       "選文段落以空行（\\n\\n）分隔；Word 版選文中的軟換行（第11題空格前、第29題與第37題空格後）已併回同一段。選項文字中 Word 版的尾端空白（第15題 (B) “As yet ”、第20題 (A) “obviously ”）已去除；文意選填選項 (I) 題本印作「(I ) at risk」，只是代號排版，options_bank 鍵為 I。",
       "題本原文保留：第47題題幹 “When did the Lego brick become as a creative form of toy?”（become as 文法不通順）、第52題 (A) “controlling her tempers”、第26–30題組 “who Lawrence was happy to say goodbye to” 照題本，未修改。",
-      "英文翻譯參考答案在 scoring.pdf（選才通訊 168 期「97指考國文、英文考科非選擇題評分標準說明」，第1–3頁為國文，英文在第4–5頁）中是大括號樹狀圖（圖片）。answer 取每個括號的第一個選項組成的句子，圓括號內可省略的字詞（The、already、us、that）一律保留，第2題「warn(ed)」取 warned；accepted_answers 以斜線列出同一位置可替換的字詞並保留圓括號；第2題樹狀圖分兩支（not take … for granted any more/longer 與 no longer take … for granted），各列一句；scoring_notes 另附逐格轉寫、評分重點與評分標準原文。圖下註腳「1.{ 表示皆為可使用的字詞。」已放入 scoring_notes。",
+      "英文翻譯參考答案在 scoring.pdf（選才通訊 168 期「97指考國文、英文考科非選擇題評分標準說明」，第1–3頁為國文，英文在第4–5頁）中是大括號樹狀圖（圖片）。answer 取每個括號的第一個選項組成的句子，圓括號內可省略的字詞（The、already、us、that）一律保留，第2題「warn(ed)」取 warned；accepted_answers 以斜線列出同一位置可替換的字詞並保留圓括號；第2題樹狀圖分兩支（not take … for granted any more/longer 與 no longer take … for granted），各列一句；scoring_notes 另附逐格轉寫、評分重點與評分標準原文。圖下註腳「1.{ 表示皆為可使用的字詞。」已放入 scoring_notes。v1.1：第1題各括號互不相依，以 answer_segments 表示（9 段，共 1080 種；可省略的 The 與 global／world／worldwide 合併成第一段，句首大寫才正確）；第2題 not take … any more/longer 與 no longer take … for granted 兩分支共用中間的受詞括號，改填 answer_variants（14 句，原圖可推得的 576 種中每個寫法至少出現一次；low-price(d) 展開為 low-price、low-priced）；兩題 answer_is_composite: true。",
       "英文作文：官方沒有範文，answer 為 null；scoring_notes 收錄評分項目配分、評分標準全文、表一（依第5頁影像逐格轉寫）與評分樣例出處。說明寫「文長至少120個單詞」，提示寫「大約120-150字」，tags.word_requirement 記為 “at least 120 words (about 120-150)”；essay_type 依題目指定兩段內容標為 two_paragraph（與 ast-99、ast-100 一致）。",
       "答案檔 answer.pdf 合併數學乙、國文、英文、數學甲四科，只取第3頁「英文考科選擇題參考答案」56 題。",
       "統計：答對率 P、高分組 Ph、低分組 Pl、鑑別度 D 取自 stats-1.xls 英文科工作表（工作表 2；報考 93,595、缺考 4,893、到考 88,702 人）；option_rates 取自 stats-2.xls 選項分析的「T」（全體）列，未含「未答」比例，所以各題 option_rates 加總小於 1（例如第28題未答 24%、第23題 23%）。stats-2 的高／低分組各選項比例（H／L 列）沒有放入（schema 無對應欄位）。",

@@ -1570,6 +1570,11 @@
               "label": "43",
               "mode": "single_choice",
               "stem": "The expression “constantly on the move” in the passage refers to the fact that __________.",
+              "refers_to": {
+                "text": "constantly on the move",
+                "occurrence": 1,
+                "note": "第二段 “I am constantly on the move”（原卷無粗體／底線，題幹以引號引用）"
+              },
               "options": {
                 "A": "the author always calls out floors very clearly",
                 "B": "the author seldom stays in one place for a long while",
@@ -2035,7 +2040,7 @@
       "groups": [
         {
           "id": "s6g1",
-          "passage": "The guitar is one of the oldest instruments known to man. It probably originated in the vicinity of China. There were guitars in ancient Egypt and Greece as well, but the written history of the guitar starts in Spain in the 13th century. By 1500 the guitar was popular in Italy, France, and Spain. A French document of that time concludes that many people were playing the guitar. Stradivarius, the undeniable king of violin makers, could not resist creating a variety of guitars. Also, there was no lack of music written for the instrument. Haydn, Schubert, and others wrote guitar music. When the great Beethoven was asked to compose music for the guitar, he went into a rage and refused, but eventually even Beethoven could not ignore the challenge. Legend tells us he finally called the guitar a miniature orchestra. Indeed the guitar does sound like a little orchestra! Perhaps that is why in rural areas around the world the guitar has been a source of music for millions to enjoy.",
+          "passage": "The guitar is one of the oldest instruments known to man. It probably originated in the vicinity of China. There were guitars in ancient Egypt and Greece as well, but the written history of the guitar starts in Spain in the 13th century. By 1500 the guitar was popular in Italy, France, and Spain. A French document of that time concludes that many people were playing the guitar. Stradivarius, the undeniable king of violin makers, could not resist creating a variety of guitars. Also, there was no lack of music written for the instrument. Haydn, Schubert, and others wrote guitar music. When the great Beethoven was asked to compose music for the guitar, he went into a rage and refused, but eventually even Beethoven could not ignore the challenge. Legend tells us he finally called the guitar a miniature orchestra. Indeed the guitar does sound like a little orchestra! Perhaps that is why in rural areas around the world the guitar has been a source of music for <b>millions</b> to enjoy.",
           "passage_parts": null,
           "figures": [],
           "options_bank": null,
@@ -2090,6 +2095,11 @@
               "label": "簡答4",
               "mode": "short_answer",
               "stem": "What was the challenge that Beethoven could not ignore?",
+              "refers_to": {
+                "text": "the challenge",
+                "occurrence": 1,
+                "note": "題幹未加引號，指 “even Beethoven could not ignore the challenge” 的 the challenge（原卷無粗體／底線）"
+              },
               "options": null,
               "answer": null,
               "accepted_answers": null,
@@ -2105,6 +2115,11 @@
               "label": "簡答5",
               "mode": "short_answer",
               "stem": "What does “millions” in the last line refer to?",
+              "refers_to": {
+                "text": "millions",
+                "occurrence": 1,
+                "note": "原卷粗體；題幹 the last line 指原卷選文最後一行 “of music for millions to enjoy.”"
+              },
               "options": null,
               "answer": null,
               "accepted_answers": null,
@@ -2179,7 +2194,7 @@
       "非選擇題題號：簡答題題本印為 1.–5.，與選擇題第1–5題重號；比照 gsat-88／89／90 慣例，no 保留 1–5、label 改為「簡答1」–「簡答5」；英文作文題本未編號，no 填 1、label 為「作文」。validator 的「題號重複 [1, 2, 3, 4, 5]」warning 由此而來，屬合理。",
       "原始檔：data/raw/ceec/gsat/92/ 目錄中另有 paper-3.pdf、paper-4.doc、answer-2.pdf，經檢查為「九十二學年度學科能力測驗(補考)」題本與答案，不屬本卷，未使用（units.json 的 gsat-92 也未列入）。answer-1.pdf 為國文、英文、數學、社會等多科合併答案表，只取第 2 頁英文考科 1–55 題，pdftotext 與頁面影像一致，並逐題與題意核對無矛盾。",
       "文字來源比對：Word 版（paper-2.doc → soffice 轉 docx）與 pdftotext 題本以程式逐詞比對，英文內容完全一致（僅封面與句子配合題表格的版面位置不同），並以頁面影像確認。part 取自題本「第壹部分：單一選擇題」「第貳部分：非選擇題」。說明文字的冒號照原文保留：一、二、三、五大題、簡答題、作文與「提示︰」為 U+FE30「︰」，文意選填說明與簡答題「注意：」為全形「：」。",
-      "空白與格式正規化：排版造成的連續空白、Tab、不換行空白壓成單一空白（例如 44–47 選文「or the king.  He was」）；上標序數 19th、4th、13th 寫成一般文字；第49題題幹的 NOT、簡答題選文末與第5題中的 millions 在題本為粗體（非底線），依 schema 不保留格式、未加 <u>；各題組前「41-43 為題組」等標示為版面標題，未放入 passage。克漏字空格原文寫法不一（21–25 為「_(21)_」、26–40 為「__(26)__」），一律轉為 [[題號]]。第43題選項原文「(A)the author …」代號後無空格，不影響選項內容。",
+      "空白與格式正規化：排版造成的連續空白、Tab、不換行空白壓成單一空白（例如 44–47 選文「or the king.  He was」）；上標序數 19th、4th、13th 寫成一般文字；第49題題幹的 NOT、簡答題選文末與第5題中的 millions 在題本為粗體（非底線），未加 <u>（v1.1 已在選文的 millions 加 <b> 並填 refers_to，題幹不標）；各題組前「41-43 為題組」等標示為版面標題，未放入 passage。克漏字空格原文寫法不一（21–25 為「_(21)_」、26–40 為「__(26)__」），一律轉為 [[題號]]。第43題選項原文「(A)the author …」代號後無空格，不影響選項內容。",
       "照原文保留：52–55 選文的 Today's、Rap's、teens' 與 \"virginity\" 在 PDF 與 Word 版都是直引號／直撇號（其他選文為彎引號 ’ “ ”）；31–40 選文「causes of death— heart disease」破折號後有空格；26–30 選文「95 % … 94 %」數字與 % 之間有空格；句子配合題右欄選項保留開頭的「… 」（左欄題幹原文無省略號）。",
       "統計：correct_rate／high_group／low_group／discrimination 取自 stats-1.xls 英文工作表（P、Ph、Pl、D；到考人數 161,599），option_rates 取自 stats-2.xls 英文工作表全體考生（T 列），句子配合題與文意選填收 A–J 十個選項。已程式核對：stats-2 標星號選項 55 題全部等於官方答案；D＝Ph−Pl 全部成立；答案選項比例除第33題外皆等於 P——第33題 stats-1 的 P 為 29%、stats-2 答案選項 H 為 30%，應為四捨五入差異，correct_rate 採 stats-1（0.29）。option_rates 不含「未答」欄（全體考生 0–1%），四捨五入後部分題目加總為 0.98–1.01。stats-1 另有五等分組 Pa–Pe、D1–D4，stats-2 另有高／低分組各選項比例（H、L 列），schema 無對應欄位未收錄。",
       "標註補充：schema 未定義 sentence_matching 與 short_answer 小題的 tags，比照 gsat-90 慣例，句子配合題標 test_point／grammar_point／key_phrase（16 依 Since 因果關係標 connective；20 的關鍵是主詞帶 who 關係子句後仍需主要動詞，誘答 (H) and is… 選答率 34%，grammar_point 標 relative_clause），簡答題標 item_type（4、5 題問 the challenge 與 millions 所指，標 reference）。第22題 This problem 標 grammar／determiner（比照 ast-97、gsat-89 慣例）；第28題 has been isolated 同時涉及 Since then 的現在完成式與被動語態，grammar_point 標 tense、key_phrase 註明現在完成被動；第47題需由 1700 BC 推算約 3,700 年前、第53題需由「each exceed that amount」推得兩者合計超過 10 億美元，皆標 inference；第49題問 health spas「NOT used」的項目（herbs 屬 folk medicine），標 not_mentioned。s5g3（三種醫療）與 s4g1（壓力與健康）sdgs 標 3；其餘選文與健康、環境等 SDG 無直接關聯，sdgs 為空陣列。作文為命題式寫作（給定題目 “Music Is An Important Part of Our Life”），essay_type 標 topic，題本未要求段數，tags 不填 paragraphs。",

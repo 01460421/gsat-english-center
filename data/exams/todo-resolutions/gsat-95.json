@@ -1,0 +1,37 @@
+[
+  {
+    "kind": "refers_to",
+    "location": "s4g1/42",
+    "status": "resolved",
+    "action": "refers_to={text:\"ulcer\", occurrence:1, note:原卷選文畫底線}；選文原有的 <u>ulcer</u> 經核對確為底線（非粗體），保留不改；題幹的 <u>ulcer</u> 原卷為粗體加底線，題幹本來就寫 The underlined word，維持 <u>。",
+    "evidence": "paper-2.docx（soffice 轉檔）第108段 run「ulcer」underline=True、bold 無；第116段題幹 run「ulcer」bold+underline；Read 看 paper-1.pdf 第5頁（題本第4頁）影像，選文第二段 ulcer 為一般字重加底線；選文中只出現 1 次。"
+  },
+  {
+    "kind": "refers_to",
+    "location": "s4g3/50",
+    "status": "resolved",
+    "action": "refers_to={text:\"conduct\", occurrence:1, note:原卷選文畫底線}；選文原有的 <u>conduct</u> 經核對確為底線，保留；題幹維持 <u>conduct</u>。",
+    "evidence": "paper-2.docx 第150段 run「conduct」underline=True（第157段題幹 bold+underline）；Read 看 paper-1.pdf 第6頁（題本第5頁）影像，選文第一段 astronauts conduct experiments 的 conduct 畫底線；選文中只出現 1 次。"
+  },
+  {
+    "kind": "answer_segments",
+    "location": "s5g1/翻譯1",
+    "status": "resolved",
+    "action": "填 answer_segments 5 段（展開 360 種）：主詞與動詞單複數連動（Everyone/Everybody＋knows/understands/is aware；People／People all／Most people／We all＋know/understand/are aware），合併成第一段 18 種寫法；(that) → that／省略；is good for/to、is helpful for/to、is beneficial to；children./kids.。answer 不變（＝各段第一個寫法），answer_is_composite: true。extraction.issues[7] 補充說明。",
+    "evidence": "以 pdftoppm 220dpi 轉 scoring.pdf 第1頁並裁切「(一)參考答案 1.」樹狀圖（Read 看影像）；程式展開後抽樣 10 句（seed 95）文法通順、皆屬原圖寫法。"
+  },
+  {
+    "kind": "answer_segments",
+    "location": "s5g1/翻譯2",
+    "status": "resolved",
+    "action": "跨段相依（should 後 (often) encourage … students 與 encourage … students more/more often/more frequently 兩分支；後半 to borrow/check out books from … 與 to go to … borrow/check out books 兩分支；主詞 Teachers 不配 his/her），改填 answer_variants 20 句（每個寫法至少出現一次；合文法的全部組合 240 種），不填 answer_segments；answer 不變（第一句），answer_is_composite: true；完整原圖仍在 accepted_answers[0–3]。",
+    "evidence": "Read 看 scoring.pdf 第2頁（220dpi 轉檔）樹狀圖影像；程式檢查 20 句皆屬 240 種合法組合並涵蓋每個寫法。"
+  },
+  {
+    "kind": "other",
+    "location": "extraction.issues[9]",
+    "status": "resolved",
+    "action": "看原圖確認「to go to {the library to / libraries}」的 libraries 分支後確實沒有 to（字面 to go to libraries borrow books 不合文法），判斷為排版漏印：accepted_answers 照原圖轉錄不改，answer_variants 寫成 to go to libraries to borrow/check out books。另決定 answer_variants 不列「Teachers … his/her」主詞與所有格不一致的組合，(his/her) 依本圖斜線＝擇一展開為 his、her。extraction.issues[9] 改寫為最終判斷（移除「推測」措辭）。",
+    "evidence": "scoring.pdf 第2頁以 pdftoppm 220dpi 轉檔後 Read 看影像：下半樹狀圖 to go to 的兩個分支為「the library to」與「libraries」，後接 {borrow/check out} books.；同頁上半 (their)/(his/her) 與 Teachers／A teacher 之間沒有對應標示。"
+  }
+]

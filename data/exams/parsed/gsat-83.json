@@ -938,6 +938,11 @@
               "label": "39",
               "mode": "single_choice",
               "stem": "According to the passage, the use of movable type was considered as a \"great step forward\" because",
+              "refers_to": {
+                "text": "great step forward",
+                "occurrence": 1,
+                "note": "題幹以引號引用第三段首句 A great step forward was the use of movable type；原卷無粗體或底線，不加標記"
+              },
               "options": {
                 "A": "it did not need a lot of wood.",
                 "B": "it required less skill and patience.",
@@ -1022,6 +1027,10 @@
               "options": null,
               "answer": "I",
               "accepted_answers": null,
+              "scoring_exception": {
+                "type": "all_credit",
+                "note": "answer.pdf 表下官方附註：「英文科第二部分第1題無適當選項，所有考生一律得一分。」"
+              },
               "points": 1,
               "stats": null,
               "scoring_notes": "英文科第二部分第1題無適當選項，所有考生一律得一分。",
@@ -1361,7 +1370,7 @@
     "method": "官方 Word 版（paper-2.doc → soffice 轉 docx → python-docx，依 run 的底線屬性辨識空格位置與畫底線字）取文字，與 pdftotext -layout 題本逐段比對（以程式檢查每個題幹、選項、選文句子都能在兩個來源中找到）；以 Read 逐頁檢視題本 PDF 影像（8 頁，含封面）確認段落、縮排、底線與版面；答案檔為五科合併的掃描影像（無文字層），以 pdfimages 取出原始 150dpi JPEG 並裁切英文欄放大，用 Read 看影像逐題抄錄，再對照整頁影像複核。",
     "issues": [
       "【validator error，刻意保留，未竄改官方選項代號】文意閱讀選填（第二部分第1–10題）題本印有十五個選項 (A)–(O)，官方答案中第6題為 N（teenage）、第10題為 O（public）。tools/validate_exam.py 以 re.fullmatch(r'[A-L]', k) 檢查選項代號，對 options_bank 的 M、N、O 三個鍵在每個 bank_choice 小題各報一次「選項代號應為單一大寫字母」，共 30 個 error，全部是同一原因。若為了通過檢查而改代號或刪選項，會與題本、官方答案、答案卡全部對不上，因此照題本保留 A–O。建議把 validator 的選項代號規則放寬為 [A-O]（或 [A-Z]）；放寬後本檔即為 0 error。",
-      "第二部分第1題（[[1]]，官方答案 I damages）：答案檔表格印 I，但表下另有官方附註「英文科第二部分第1題無適當選項，所有考生一律得一分。」answer 照答案表填 \"I\"，附註原文逐字放在該題 scoring_notes。匯入題庫或給學生作答時，這一題應視為送分題（不論選什麼都算對），不宜當作一般單選題計分或用於能力估計。",
+      "第二部分第1題（[[1]]，官方答案 I damages）：答案檔表格印 I，但表下另有官方附註，說明本題沒有合適的選項、全體考生給予該題分數（附註原文逐字放在該題 scoring_notes 與 scoring_exception.note）。answer 照答案表填 \"I\"，並以 scoring_exception {type: all_credit} 標出；匯入題庫或給學生作答時依 scoring_exception 處理：作答內容不影響該題得分，也不用於能力估計。",
       "答案來源：answer.pdf（units.json 標 quality \"none\"）為無文字層的掃描檔，單頁同時列國文、英文、數學、社會、自然五科答案；以 pdfimages 取出內嵌的 1239×1745 JPEG，裁切英文欄（第一部分 1–40、第二部分 1–10）放大，用 Read 看影像逐題抄錄，再對照整頁影像複核，並逐題與題意核對一致。",
       "無統計與評分原則：units.json 中83學年度只有題本 PDF、Word 版與選擇題答案，沒有 stats（答對率／鑑別度／選項分析）與 scoring 檔，所有小題 stats 為 null，sources.scoring／stats 為空陣列（validator「整份考卷沒有任何統計資料」warning 屬實）。中譯英第1–5題大考中心未公布參考譯文，answer／accepted_answers／scoring_notes 填 null；作文 answer 依 schema 為 null，題本說明中的評分標準（內容5、組織5、文法4、用字與拼字4、體例2）已逐字放在 s6.instructions。",
       "結構核對：gsat-spec.json legacy_gsat 83–87 期別只有粗略描述（「83選擇題40+10題」、非選擇題兩大題），與本卷一致。本卷實際結構：選擇題第一部分—Ⅰ. 詞彙 1–10（每題1分，10分）、Ⅱ. 綜合測驗 11–30（兩篇各10空，每題1分，20分）、Ⅲ. 閱讀測驗 31–40（3+3+4題，每題2分，20分）；選擇題第二部分—文意閱讀選填 1–10（15個選項 A–O，每題1分，10分）；非選擇題—Ⅰ. 中譯英 5題×4分（20分）、Ⅱ. 英文作文（20分）；合計100分，考試時間100分鐘（封面）。",
@@ -1374,7 +1383,7 @@
       "段落：第11–20題選文在 Word 版因硬換行被拆成六段（「men 13」／「use them.」、「umbrellas 18」／「the rain.」），對照 PDF 影像的縮排合併回四段；其餘選文段落與 PDF 影像一致，passage 以 \\n 分段。",
       "作文：題目與提示整段放在 stem（「題目：」行、中文提示、指定的開頭兩句各一行）；題本說明「文章可以分段，也可以不分段」，未要求段數，因此 tags 不填 paragraphs；字數要求為「至少一百二十個單字」，word_requirement 記為 at least 120 words。essay_type 標 topic（指定開頭兩句、以親身經驗發揮的主題作文）。",
       "標註為解析者判讀：grammar_point 中的 noun_clause（第27題）、causative（選填第8題）為 schema 範例以外的值；第15題（saw the Aztec kings using umbrellas，感官動詞 + O + V-ing）grammar_point 標 participle（查證時由 perception_verb 改為與其他年份一致的 participle，key_phrase 保留 see + O + V-ing）；第13題 wouldn't 為情態助動詞（schema 無此詞類），未填 answer_pos，test_point 標 discourse（依下句 They believed umbrellas were only for women 判斷須用否定、過去式）；第17題 where 為關係副詞，answer_pos 記 adverb；選填第9題 close by 的 by 為副詞。第34題需由 6:30 a.m. 加三個半小時推算到達時間，item_type 標 inference。",
-      "【查證（verifier）】獨立對照原始檔逐項核對：(1) 答案：以 pdfimages 取出 answer.pdf 內嵌 JPEG，裁切英文欄放大用 Read 看影像，第一部分 1–40 與第二部分 1–10 共 50 題逐題比對，全部與 JSON 一致（1–10 CDAABCBABC、11–20 BACBDADCBA、21–30 CDABDCDCDA、31–40 DCACACBDCD、選填 1–10 IJHECNGBLO），表下附註「英文科第二部分第1題無適當選項，所有考生一律得一分。」逐字相符。(2) 選項：1–40 每題 A–D 與選填 A–O 選項庫逐字比對 Word 版（程式比對 0 差異）並與 PDF 文字層、頁面影像相符。(3) 選文：6 篇選文全部逐字比對 Word 版（空白正規化後完全相同），段落數（4／1／4／3／4／3）與 PDF 頁面影像縮排一致，字數與 pdftotext 相符（差 1–2 字皆因 PDF 把空格題號與其後標點拆成兩個 token），[[題號]] 位置與題本一致。(4) 本卷沒有圖表。(5) 本年無統計檔，不適用。(6) 中譯英 5 題、作文題目與提示、說明中的評分標準逐字相符。(7) 標註：僅將第15題 grammar_point 由 perception_verb 改為 participle，其餘標註判讀合理未改。validator 的 30 個 error 全部來自選項代號 M、N、O（見第一條），內容本身無誤；validator 與 packages/shared/src/exam.ts 的 OPTION_LETTERS 都只接受 A–L，需由 repo 端放寬為 A–O 後本檔才會 0 error（已在暫存副本確認放寬 regex 後 0 error）。"
+      "【查證（verifier）】獨立對照原始檔逐項核對：(1) 答案：以 pdfimages 取出 answer.pdf 內嵌 JPEG，裁切英文欄放大用 Read 看影像，第一部分 1–40 與第二部分 1–10 共 50 題逐題比對，全部與 JSON 一致（1–10 CDAABCBABC、11–20 BACBDADCBA、21–30 CDABDCDCDA、31–40 DCACACBDCD、選填 1–10 IJHECNGBLO），表下附註（第二部分第1題的計分例外，原文逐字見該題 scoring_notes 與 scoring_exception.note）逐字相符。(2) 選項：1–40 每題 A–D 與選填 A–O 選項庫逐字比對 Word 版（程式比對 0 差異）並與 PDF 文字層、頁面影像相符。(3) 選文：6 篇選文全部逐字比對 Word 版（空白正規化後完全相同），段落數（4／1／4／3／4／3）與 PDF 頁面影像縮排一致，字數與 pdftotext 相符（差 1–2 字皆因 PDF 把空格題號與其後標點拆成兩個 token），[[題號]] 位置與題本一致。(4) 本卷沒有圖表。(5) 本年無統計檔，不適用。(6) 中譯英 5 題、作文題目與提示、說明中的評分標準逐字相符。(7) 標註：僅將第15題 grammar_point 由 perception_verb 改為 participle，其餘標註判讀合理未改。validator 的 30 個 error 全部來自選項代號 M、N、O（見第一條），內容本身無誤；validator 與 packages/shared/src/exam.ts 的 OPTION_LETTERS 都只接受 A–L，需由 repo 端放寬為 A–O 後本檔才會 0 error（已在暫存副本確認放寬 regex 後 0 error）。"
     ],
     "verified_by": "verifier"
   }

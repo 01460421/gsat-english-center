@@ -1,0 +1,37 @@
+[
+  {
+    "kind": "refers_to",
+    "location": "s5g2/40",
+    "status": "resolved",
+    "action": "refers_to = {text: \"learning vicariously\", occurrence: 1}；選文第二段 “viewers are learning vicariously this way” 處加 <b>learning vicariously</b>",
+    "evidence": "paper-2.docx（python-docx）第二段 run「learning vicariously」bold=True，第40題題幹引文亦粗體；paper-1.pdf 第8頁（pdftotext）該片語位於39–42題選文第二段，選文中僅 1 處"
+  },
+  {
+    "kind": "refers_to",
+    "location": "s5g3/45",
+    "status": "resolved",
+    "action": "refers_to = {text: \"This\", occurrence: 1}（第四段 “This soon filled the state treasury”；選文大寫 This 僅此 1 處）；該處加 <b>This</b>",
+    "evidence": "paper-2.docx 第四段 run「This」bold=True，第45題題幹的 This 亦粗體；paper-1.pdf 第9頁（pdftotext）該句在43–46題選文第四段"
+  },
+  {
+    "kind": "answer_segments",
+    "location": "s7g1/中譯英1",
+    "status": "resolved",
+    "action": "填 answer_segments 7 段（Human’s|Human|Mankind’s／imagination and creativity is the／biggest|strongest／driving／force|power／for technological／advancement.|advances.|advance.），共 36 種；answer_is_composite: true（官方只印大括號圖）。展開結果與既有 answer＋35 條 accepted_answers 完全相同，accepted_answers 保留。官方的 Human’s 照錄",
+    "evidence": "scoring.pdf 第2頁「中譯英 一、滿分參考答案 1.」大括號圖影像；程式展開 36 句＝{answer}∪accepted_answers，抽樣 10 句通順"
+  },
+  {
+    "kind": "answer_segments",
+    "location": "s7g1/中譯英2",
+    "status": "resolved",
+    "action": "填 answer_segments 8 段（Amazing|Fantastic／things|objects／that appeared in／science-fiction|sci-fi／movies|films／in the past are now becoming／reality|real／one by one.），共 32 種；answer_is_composite: true。展開結果與 answer＋31 條 accepted_answers 完全相同",
+    "evidence": "scoring.pdf 第2頁「2.」大括號圖影像；程式展開 32 句＝{answer}∪accepted_answers，抽樣 10 句通順"
+  },
+  {
+    "kind": "image_options",
+    "location": "s5g1/36",
+    "status": "resolved",
+    "action": "保留文字描述（四個選項只有照片），選項開頭由「（圖片）」改為「［圖］」；描述改為只寫看得到的外觀：拿掉 (B)「類似鐵路臂板號誌」與 (C)「兩臂向下斜約45度」這兩個借用選文用語、會影響作答的判讀（(C) 臂板中線實際約與水平成 30 度；查證時以 300dpi 影像量測更正原記的 20 度）。figure 補 label「第36題選項 (A)–(D)」與 question_no 36，description 補上柱身、支架、(B) 沒有燈等細節，足以只看文字作答（選文：臂板號誌＋夜間紅綠燈＝(C) 有臂板又有燈）。查證補充：選項 (A) 文字補「沒有臂板」、(B) 補「柱上沒有燈」（figure description 的 (A) 也補「沒有臂板」），讓只看文字的考生能明確分辨「只有燈」「只有臂板」「臂板加燈」三種外觀",
+    "evidence": "paper-1.pdf 第7頁（印第6頁）2×2 照片表格，pdftoppm 250dpi 放大逐張核對；查證：pdftoppm 300dpi 裁切 (C) 格，兩支臂板暗像素主軸與水平約 32 度"
+  }
+]

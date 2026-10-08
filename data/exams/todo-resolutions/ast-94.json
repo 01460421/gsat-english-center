@@ -1,0 +1,30 @@
+[
+ {
+  "kind": "refers_to",
+  "location": "s5g1/49",
+  "status": "resolved",
+  "action": "refers_to={text:\"upset\", occurrence:1, note:原卷粗體}；選文最後一段 “when the Eiffel Tower upset the 43-century reign” 的 upset 加 <b>。extraction.issues[6] 改寫為已標出。",
+  "evidence": "本卷沒有 Word 版；Read 看 paper-1.pdf 第6頁（題本第5頁）80dpi 影像：選文末段 upset 與第49題題幹 upset 皆為粗體、無底線；選文中 upset 只出現 1 次，位於最後一段（第三段）。"
+ },
+ {
+  "kind": "refers_to",
+  "location": "s5g2/53",
+  "status": "resolved",
+  "action": "refers_to={text:\"had them on the edge of their seats\", occurrence:1, note:原卷粗體；位於選文最後一句}；選文最後一句 “you’d have had them on the edge of their seats!” 的片語加 <b>。",
+  "evidence": "Read 看 paper-1.pdf 第7頁（題本第6頁）影像：選文最後一句 had them on the edge of their seats 粗體（驚嘆號不粗體），第53題題幹引號內同一片語亦粗體；選文中只出現 1 次。"
+ },
+ {
+  "kind": "answer_segments",
+  "location": "s6g1/英文翻譯1",
+  "status": "resolved",
+  "action": "填 answer_segments [[As members of the global village, we should not],[limit|confine|restrict],[ourselves to this small island.]]（3 種，無相依）；answer 不變（＝各段第一寫法），answer_is_composite: true（官方只印大括號圖）；accepted_answers 由斜線記法一條改為展開後其餘 2 句完整句子；extraction.issues[10] 改寫。",
+  "evidence": "pdftoppm 110dpi 轉 scoring.pdf 第5頁（期刊第12頁），Read 看「(一) 參考答案」第1題大括號圖：limit／confine／restrict 三選一；程式展開全部 3 句檢查通順。"
+ },
+ {
+  "kind": "answer_segments",
+  "location": "s6g1/英文翻譯2",
+  "status": "resolved",
+  "action": "填 answer_segments [[We should not only participate in international activities],[空字串|,],[but also],[空字串|try to],[show|promote],[our own cultural],[characteristics.|features.]]（16 種，各括號獨立）；圓括號 (,)、(try to) 依同期評分說明慣例視為可省略，空字串放第一個使 answer 不變；answer_is_composite: true；accepted_answers 改為展開後其餘 15 句。",
+  "evidence": "scoring.pdf 第5頁影像：We should not only participate in international activities(,) but also (try to) {show/promote} our own cultural {characteristics./features.}；圓括號意義依 gsat-97／ast-96 評分說明「( )（括弧）表示該字詞可省略」；程式展開 16 句、抽樣 10 句（seed 94）文法通順。"
+ }
+]

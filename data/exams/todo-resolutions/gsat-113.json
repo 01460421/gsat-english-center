@@ -1,0 +1,79 @@
+[
+  {
+    "kind": "refers_to",
+    "location": "s5g1/36",
+    "status": "resolved",
+    "action": "選文第一段 feeling a lightbulb moment coming on 加上 <b>a lightbulb moment</b>，填 refers_to {text: \"a lightbulb moment\", occurrence: 1}；題幹以引號指稱，不另加標記。",
+    "evidence": "paper-1.pdf 第6頁（題本第5頁）頁面影像：選文該片語為粗體；paper-2.docx run 屬性 bold=True。"
+  },
+  {
+    "kind": "refers_to",
+    "location": "s5g2/40",
+    "status": "resolved",
+    "action": "選文第二段加上 <b>the blackened heart</b>，填 refers_to {text: \"the blackened heart\", occurrence: 1}；原 extraction.issues[12] 漏列此粗體，已補。",
+    "evidence": "paper-1.pdf 第8頁（題本第7頁）頁面影像：選文第二段與第40題題幹 the blackened heart 為粗體；paper-2.docx run 屬性 bold=True。"
+  },
+  {
+    "kind": "refers_to",
+    "location": "s5g3/44",
+    "status": "resolved",
+    "action": "選文第二段加上 <b>this pioneering procedure</b>，填 refers_to {text: \"this pioneering procedure\", occurrence: 1}。",
+    "evidence": "paper-1.pdf 第9頁（題本第8頁）頁面影像：選文第二段與第44題題幹該片語為粗體；paper-2.docx run 屬性 bold=True。"
+  },
+  {
+    "kind": "refers_to",
+    "location": "s6g1/50",
+    "status": "resolved",
+    "action": "題幹的 “disturbance” 指引言段粗體的 disturbances（複數；選文中沒有單數 disturbance），引言段加上 <b>disturbances</b>，填 refers_to {text: \"disturbances\", occurrence: 1}，note 註明題幹用單數；extraction.issues[12] 改寫。",
+    "evidence": "paper-1.pdf 第10頁（題本第9頁）頁面影像：引言段 disturbances 為粗體；第11頁第50題題幹 disturbance 為粗體；paper-2.docx 兩處 run 皆 bold=True。"
+  },
+  {
+    "kind": "answer_segments",
+    "location": "s7g1/中譯英1",
+    "status": "resolved",
+    "action": "四組大括號互不相依，填 answer_segments；展開 24 句恰為 answer＋accepted_answers 23 句（程式比對一致）；answer_is_composite: true；extraction.issues[8] 補記。",
+    "evidence": "scoring.pdf 第2頁頁面影像「（一）滿分參考答案 1.」；24 句抽 10 句檢查。"
+  },
+  {
+    "kind": "answer_segments",
+    "location": "s7g1/中譯英2",
+    "status": "resolved",
+    "action": "兩組大括號互不相依，填 answer_segments；展開 8 句恰為 answer＋accepted_answers 7 句；answer_is_composite: true。",
+    "evidence": "scoring.pdf 第2頁頁面影像「2.」；8 句全數檢查。"
+  },
+  {
+    "kind": "chart_reading",
+    "location": "s6g1/47",
+    "status": "not_needed",
+    "action": "不需讀圖：答案 group／collective 來自文字（as a group、By working collectively）；item_type 維持 synthesis。兩張照片 description 加註「為配圖，作答所需資訊在文字中。」，issues[11] 補記判定。",
+    "evidence": "paper-1.pdf 第10–11頁（題本第9–10頁）頁面影像：照片只呈現兩隻寒鴉與三隻龜蟻的外觀，沒有任何文字、數據或標示。"
+  },
+  {
+    "kind": "chart_reading",
+    "location": "s6g1/48",
+    "status": "not_needed",
+    "action": "不需讀圖：答案 adapting 來自龜蟻欄 adapt to their ever-changing environment；item_type 維持 synthesis。",
+    "evidence": "同上，paper-1.pdf 第10–11頁頁面影像。"
+  },
+  {
+    "kind": "chart_reading",
+    "location": "s6g1/49",
+    "status": "not_needed",
+    "action": "不需讀圖：答案 C、F（share information、system of communication）都要比對兩欄文字；照片不提供任何作答資訊；item_type 維持 synthesis。",
+    "evidence": "同上，paper-1.pdf 第10–11頁頁面影像。"
+  },
+  {
+    "kind": "chart_reading",
+    "location": "s6g1/50",
+    "status": "not_needed",
+    "action": "不需讀圖：答案 a predator／a fox 來自寒鴉欄文字 if a predator (such as a fox) is present；item_type 維持 reference（另以 refers_to 標出 disturbances）。",
+    "evidence": "同上，paper-1.pdf 第10–11頁頁面影像。"
+  },
+  {
+    "kind": "image_options",
+    "location": "s5g1/35",
+    "status": "resolved",
+    "action": "四個選項的文字描述開頭由「（圖片）」改為「［圖］」；依影像再次核對描述（扣件種類、手部動作、特寫小圖位置 A／C 右下、B／D 左下）完整、足以作答；figure 補 question_no: 35；extraction.issues[1] 補記。",
+    "evidence": "paper-1.pdf 第7頁（題本第6頁）頁面影像：2×2 表格四張黑白照片各附一張特寫小圖，無文字說明。"
+  }
+]

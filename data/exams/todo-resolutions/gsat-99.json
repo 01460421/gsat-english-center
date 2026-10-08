@@ -1,0 +1,30 @@
+[
+  {
+    "kind": "refers_to",
+    "location": "s4g1/44",
+    "status": "resolved",
+    "action": "refers_to={text:\"its\", occurrence:1, note:原卷粗體}；選文末段 “unaccustomed to its presence” 的 its 加 <b>。extraction.issues[15] 改寫為已標出。",
+    "evidence": "paper-2.docx（soffice 轉檔）第94段 run「its」bold=True（第104段題幹亦粗體）；Read 看 paper-1.pdf 第5頁（題本第4頁）影像確認粗體；選文中 its 只出現 1 次（validator 的英數字邊界規則，不計 visits 等字內的 its）。"
+  },
+  {
+    "kind": "refers_to",
+    "location": "s4g3/50",
+    "status": "resolved",
+    "action": "refers_to={text:\"bills\", occurrence:1, note:原卷粗體}；選文第二段 “this company bills itself as…” 的 bills 加 <b>。",
+    "evidence": "paper-2.docx 第133段 run「bills」bold=True（第143段題幹亦粗體）；Read 看 paper-1.pdf 第6頁（題本第5頁）影像確認粗體；選文中只出現 1 次。"
+  },
+  {
+    "kind": "answer_segments",
+    "location": "s5g1/翻譯1",
+    "status": "resolved",
+    "action": "填 answer_segments [[In the past,|In the old days,],[bicycles|bikes],[served|were used],[mainly|primarily|chiefly],[as a means of transportation.]]（24 種，各括號獨立）；answer 由帶大括號記號的字串改為完整句子 In the past, bicycles served mainly as a means of transportation.，answer_is_composite: true。extraction.issues[2] 改寫。",
+    "evidence": "以 pdftoppm 200dpi 轉 scoring.pdf 第2頁，Read 看「參考答案：第1題」大括弧影像；程式展開抽樣 10 句（seed 99）文法通順。"
+  },
+  {
+    "kind": "answer_segments",
+    "location": "s5g1/翻譯2",
+    "status": "resolved",
+    "action": "填 answer_segments [[However,|But],[riding bicycles|bicycle-riding|cycling|bicycling],[has become a popular],[leisure|recreational],[activity],[today.|now.|nowadays.]]（48 種；However 帶逗號、But 不帶，照原圖）；answer 改為完整句子 However, riding bicycles has become a popular leisure activity today.，answer_is_composite: true。",
+    "evidence": "scoring.pdf 第2頁「參考答案：第2題」影像（200dpi）；程式展開抽樣 10 句文法通順。"
+  }
+]

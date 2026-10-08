@@ -2528,7 +2528,7 @@
         {
           "id": "s4g3",
           "group_label": "第49至52題為題組",
-          "passage": "Ongoing conflicts across the Middle East have prevented more than 13 million children from attending school, according to a report published by UNICEF, the United Nations Children’s Fund.\nThe report states that 40% of all children across the region are currently not receiving an education, which is a result of two consequences of violence: structural damage to schools and the displacement of populations, also called “forced migration.” Both issues result from the tide of violence that has crossed the region in recent years. The report examines nine countries where a state of war has become the norm. Across these countries, violence has made 8,500 schools unusable. In certain cases, communities have relied on school buildings to function as shelters for the displaced, with up to nine families living in a single classroom in former schools across Iraq.\nThe report pays particularly close attention to Syria, where a bloody civil war has displaced at least nine million people since the war began in 2011. With the crisis now in its fifth year, basic public services, including education, inside Syria have been stretched to breaking point. Within the country, the quality and availability of education depends on whether a particular region is suffering violence.\nThe report concludes with an earnest request to international policymakers to distribute financial and other resources to ease the regional crisis. With more than 13 million children already driven from classrooms by conflict, it is no exaggeration to say that the educational prospects of a generation of children are in the balance. The forces that are crushing individual lives and futures are also destroying the prospects for an entire region.",
+          "passage": "Ongoing conflicts across the Middle East have prevented more than 13 million children from attending school, according to a report published by UNICEF, the United Nations Children’s Fund.\nThe report states that 40% of all children across the region are currently not receiving an education, which is a result of two consequences of violence: structural damage to schools and the displacement of populations, also called “forced migration.” Both issues result from the tide of violence that has crossed the region in recent years. The report examines nine countries where a state of war has become the norm. Across these countries, violence has made 8,500 schools unusable. In certain cases, communities have relied on school buildings to function as shelters for the displaced, with up to nine families living in a single classroom in former schools across <b>Iraq</b>.\nThe report pays particularly close attention to Syria, where a bloody civil war has displaced at least nine million people since the war began in 2011. With the crisis now in its fifth year, basic public services, including education, inside Syria have been stretched to breaking point. Within the country, the quality and availability of education depends on whether a particular region is suffering violence.\nThe report concludes with an earnest request to international policymakers to distribute financial and other resources to ease the regional crisis. With more than 13 million children already driven from classrooms by conflict, it is no exaggeration to say that the educational prospects of a generation of children are <b>in the balance</b>. The forces that are crushing individual lives and futures are also destroying the prospects for an entire region.",
           "passage_parts": null,
           "figures": [],
           "options_bank": null,
@@ -2582,6 +2582,11 @@
               "label": "50",
               "mode": "single_choice",
               "stem": "Why is “Iraq” mentioned in the second paragraph?",
+              "refers_to": {
+                "text": "Iraq",
+                "occurrence": 1,
+                "note": "原卷粗體（選文第二段末 in former schools across Iraq）"
+              },
               "options": {
                 "A": "To convince people that temporary housing can be easily found.",
                 "B": "To prove that classrooms there are big enough to host many families.",
@@ -2626,6 +2631,11 @@
               "label": "51",
               "mode": "single_choice",
               "stem": "What does the phrase “in the balance” in the last paragraph most likely mean?",
+              "refers_to": {
+                "text": "in the balance",
+                "occurrence": 1,
+                "note": "原卷粗體（選文最後一段 are in the balance）"
+              },
               "options": {
                 "A": "Being well taken care of.",
                 "B": "In an uncertain situation.",
@@ -3277,8 +3287,8 @@
       "非選擇題統計：stats-3.xls 只有「第一題（中譯英，滿分8分，兩小題合計）」與「第二題（英文作文，滿分20分）」的分數人數分布，無法拆到中譯英各小題，因此放在 sections[s5].stats 與 sections[s6].stats 的 score_distribution（schema 未定義此欄位，沿用 gsat-106/107/109 的做法）；rate 為原表百分比÷100，分母是報名人數 135,583（含缺考 2,399；到考 133,184），已核對兩題各分數段人數加總＝到考人數 133,184。原表分數區間「9.00- 9.99」等的空白已去除；作文最高分段「20.00-20.99」僅 1 人，原表百分比 0.00，rate 照原表填 0.0。小題層級 stats 為 null。",
       "選擇題統計：除 schema 欄位外，另存 option_rates_high／option_rates_low（stats-2.xls 選項分析的高分組 H、低分組 L 列）與 omit_rate（全體未答比例，T 列；第45、56題 T 列未答 1%）；stats-1.xls 的五組通過率 Pa–Pe 與 D1–D4 未收錄。已程式核對全部 56 題：選項分析中標 * 的選項＝官方答案、D＝Ph−Pl、題號對齊無誤。兩表有 3 處相差 1 個百分點（四捨五入差異）：第16題低分組 stats-1 Pl=57、stats-2 L 列正答 58；第39題低分組 Pl=12、L 列 13；第55題高分組 Ph=66、H 列 67。correct_rate／high_group／low_group／discrimination 一律取 stats-1，option_rates*／omit_rate 一律取 stats-2，未互相改動。各題 T／H／L 列選項比例加未答因四捨五入加總為 0.98–1.02。",
       "低答對率／低鑑別度題目已複核非對齊錯誤（皆為大考中心原始數據）：第24題 P=0.26、D=0.20（45% 選 B would be，高分組 40% 選 B）；第30題 P=0.30（37% 選 B pulling）；第41題 P=0.46、D=0.15（官方答案 C Objective，30% 選 A Negative，高分組 39% 選 A）；第43題 P=0.32（31% 選 D）；第53題 P=0.31（41% 選 B）；第51題 P=0.37、D=0.27；第55題 P=0.37；第26題 D=0.31（35% 選 A them）。",
-      "第43題題幹寫「Prime Minister Ryu Matsumoto」，但選文寫的是「a minister, Ryu Matsumoto」（選文另提到的 prime minister 是「One former prime minister」，另一人）；題本原文如此，照錄未改，官方答案 B。",
-      "格式：題本中第41–44題選文的 bura-hara 為斜體；第42題的 LEAST、第44題的 NOT、第49–52題選文與第50題的 Iraq、選文與第51題的 in the balance 為粗體；「第16至20題為題組」等題組標示有底線。依 schema 不保留粗斜體（第50、51題以引號指稱粗體字，非「畫底線的字」，故未加 <u>）。",
+      "第43題題幹寫「Prime Minister Ryu Matsumoto」，但選文寫的是「a minister, Ryu Matsumoto」（選文另提到的 prime minister 是「One former prime minister」，另一人）；題本原文如此，照錄未改，官方答案 B。v1.1 判讀：看 PDF 第5頁（題本第4頁）影像與 Word 檔，第43題題幹確實印「Prime Minister Ryu Matsumoto」、選文第三段印「a minister, Ryu Matsumoto」，屬命題用字不一致；依逐字原則不改。題目仍可作答（問的是辭職原因，選文 a bad-tempered encounter with local officials was televised 對應 (B)），答案檔沒有任何更正或附註，不需 scoring_exception；前端如需加註，可說明選文中的 Ryu Matsumoto 是 minister（大臣）。",
+      "格式：題本中第41–44題選文的 bura-hara 為斜體；第42題的 LEAST、第44題的 NOT、第49–52題選文與第50題的 Iraq、選文與第51題的 in the balance 為粗體；「第16至20題為題組」等題組標示有底線。斜體、題幹的粗體與題組標示底線依 schema 不保留；第50、51題問的是選文中的粗體字，v1.1 判讀在選文以 <b>Iraq</b>、<b>in the balance</b> 標出並填 refers_to（Word 檔 run 粗體屬性與 PDF 第6、7頁影像一致）。",
       "文字來源與正規化：Word 版第8題「are so」與第21–25題選文第一段段末含不換行空白（U+00A0），已改為一般空白／去除；Word 版選文內有僅供排版的強制換行（w:br，位於 [[29]]、[[33]]、[[37]]、[[39]] 前），頁面影像確認為同一段落，已改為空白。Word 版第5、11、14題題號、第26–30題選項列題號、第41–56題題號、第43題 (A)–(D) 為自動編號，不在文字中，依 PDF 補齊對應。pdftotext 把第39題所在句的 piece 拆成「piec e」（字距排版造成），Word 版與頁面影像皆為 piece。PDF 選項庫 I、J 印作「( I ) dry」「( J ) true」（括號內有空白），代號統一為 I、J。英文作文提示「應該是誰的責任?請寫」的問號為半形（Word 與 PDF 皆同），照錄。",
       "評分原則逐行接合時，只有一處行尾中文接行首英文：「有不少考生翻譯為」＋「efficiently」，依全文中英文之間留一空白的排版慣例接為「翻譯為 efficiently」；其餘數字與中文之間的空白（如「每小題總分 4 分」）照 pdftotext 輸出保留。評分原則與題本文字皆無 CJK 相容表意字（NFC 正規化前後相同）。",
       "標註判斷：第19題 what 在「what a troublemaker his son was」中作限定詞（感嘆句型名詞子句），不是代名詞，故只標 grammar／noun_clause、不填 answer_pos；第29題「Without international trade, nations would be limited…」標 grammar／subjunctive（含意假設語氣）；第26題虛受詞 it 依 gsat-85、gsat-87 的做法標 grammar_point=pronoun；第48題（哪句諺語最能表達故事精神）標 main_idea。題組 sdgs 只標明顯相關者（國際貿易→8、17；造林→15；血型歧視→10；中東兒童失學→4、16；海蛇與海洋→14），其餘為空陣列。",

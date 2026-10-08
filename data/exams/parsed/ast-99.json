@@ -9,6 +9,9 @@
   "full_score": 100,
   "sources": {
     "paper": "data/raw/ceec/ast/99/paper-1.pdf",
+    "paper_word": [
+      "data/raw/ceec/ast/99/paper-2.doc"
+    ],
     "answer": [
       "data/raw/ceec/ast/99/answer.pdf"
     ],
@@ -1655,7 +1658,7 @@
         },
         {
           "id": "s5g3",
-          "passage": "Coffee experts are willing to pay large sums of money for high-quality coffee beans. The high-end beans, such as Kona or Blue Mountain, are known to cost extraordinary sums of money. Then there is Kopi Lowak (translated as “Civet Coffee”), the world’s most expensive coffee, which sells for as much as US $50 per quarter-pound.\nThis isn’t particularly surprising, given that approximately 500 pounds a year of Kopi Lowak constitute the entire world supply. What is surprising is why this particular coffee is so rare. In fact, it’s not the plants that are rare. It’s the civet droppings. That’s right, the civet droppings—the body waste of the palm civet. Coffee beans aren’t Kopi Lowak until they’ve been digested and come out in the body waste of the palm civet.\nPalm civets are tree-dwelling, raccoon-like little animals, native to Southeast Asia and the Indonesian islands. They also have a love for coffee cherries. According to Kopi Lowak suppliers, palm civets eat the fruit whole, but only digest the outer fruit, leaving the beans intact. While the beans are not destroyed, they undergo a transformation in the animal’s body. A chemical substance in the digestive system of the palm civet causes some changes to the beans to give them a unique flavor. However, this is not the only explanation why coffee beans retrieved from civet droppings have a special flavor all their own. Another possible reason is that palm civets have an unfailing instinct for picking the coffee cherries at the peak of their ripeness.\nKopi Lowak is reported to have a character in taste unlike any other coffee, complex with caramel undertones and an earthy or gamey flavor. Currently, most of the world’s supply of Kopi Lowak is sold in Japan, though a few US markets are also starting to stock up on Kopi Lowak.",
+          "passage": "Coffee experts are willing to pay large sums of money for high-quality coffee beans. The high-end beans, such as Kona or Blue Mountain, are known to cost extraordinary sums of money. Then there is Kopi Lowak (translated as “Civet Coffee”), the world’s most expensive coffee, which sells for as much as US $50 per quarter-pound.\n<b>This</b> isn’t particularly surprising, given that approximately 500 pounds a year of Kopi Lowak constitute the entire world supply. What is surprising is why this particular coffee is so rare. In fact, it’s not the plants that are rare. It’s the civet droppings. That’s right, the civet droppings—the body waste of the palm civet. Coffee beans aren’t Kopi Lowak until they’ve been digested and come out in the body waste of the palm civet.\nPalm civets are tree-dwelling, raccoon-like little animals, native to Southeast Asia and the Indonesian islands. They also have a love for coffee cherries. According to Kopi Lowak suppliers, palm civets eat the fruit whole, but only digest the outer fruit, leaving the beans intact. While the beans are not destroyed, they undergo a transformation in the animal’s body. A chemical substance in the digestive system of the palm civet causes some changes to the beans to give them a unique flavor. However, this is not the only explanation why coffee beans retrieved from civet droppings have a special flavor all their own. Another possible reason is that palm civets have an unfailing instinct for picking the coffee cherries at the peak of their ripeness.\nKopi Lowak is reported to have a character in taste unlike any other coffee, complex with caramel undertones and an earthy or gamey flavor. Currently, most of the world’s supply of Kopi Lowak is sold in Japan, though a few US markets are also starting to stock up on Kopi Lowak.",
           "passage_parts": null,
           "figures": [],
           "options_bank": null,
@@ -1665,6 +1668,11 @@
               "label": "44",
               "mode": "single_choice",
               "stem": "What does “This” in the second paragraph refer to?",
+              "refers_to": {
+                "text": "This",
+                "occurrence": 1,
+                "note": "原卷粗體（第二段段首 This isn’t particularly surprising）"
+              },
               "options": {
                 "A": "Civet Coffee.",
                 "B": "Blue Mountain coffee.",
@@ -1835,6 +1843,11 @@
               "label": "49",
               "mode": "single_choice",
               "stem": "Why has Grass been praised as “the conscience of the nation”?",
+              "refers_to": {
+                "text": "the conscience of the nation",
+                "occurrence": 1,
+                "note": "題幹引用第一段末句的稱號 has won him praise as “the conscience of the nation.”；原卷無粗體或底線"
+              },
               "options": {
                 "A": "He victimized the Poles and criticized the Nazis.",
                 "B": "He has been a strong advocate of peace and justice.",
@@ -1955,6 +1968,75 @@
               "stem": "近二十年來我國的出生率快速下滑。",
               "options": null,
               "answer": "For the past twenty years, our country’s birthrate has been declining rapidly.",
+              "answer_segments": [
+                [
+                  "For",
+                  "Over",
+                  "In"
+                ],
+                [
+                  "the"
+                ],
+                [
+                  "past",
+                  "last"
+                ],
+                [
+                  "twenty years,",
+                  "two decades,"
+                ],
+                [
+                  "our country’s",
+                  "our nation’s",
+                  "Taiwan’s"
+                ],
+                [
+                  "birthrate"
+                ],
+                [
+                  "has been declining rapidly.",
+                  "has been declining sharply.",
+                  "has been declining dramatically.",
+                  "has been declining steeply.",
+                  "has been declining drastically.",
+                  "has been declining quickly.",
+                  "has been dropping rapidly.",
+                  "has been dropping sharply.",
+                  "has been dropping dramatically.",
+                  "has been dropping steeply.",
+                  "has been dropping drastically.",
+                  "has been dropping quickly.",
+                  "has been falling rapidly.",
+                  "has been falling sharply.",
+                  "has been falling dramatically.",
+                  "has been falling steeply.",
+                  "has been falling drastically.",
+                  "has been falling quickly.",
+                  "has been decreasing rapidly.",
+                  "has been decreasing sharply.",
+                  "has been decreasing dramatically.",
+                  "has been decreasing steeply.",
+                  "has been decreasing drastically.",
+                  "has been decreasing quickly.",
+                  "has rapidly declined.",
+                  "has rapidly dropped.",
+                  "has rapidly fallen.",
+                  "has rapidly decreased.",
+                  "has sharply declined.",
+                  "has sharply dropped.",
+                  "has sharply fallen.",
+                  "has sharply decreased.",
+                  "has dramatically declined.",
+                  "has dramatically dropped.",
+                  "has dramatically fallen.",
+                  "has dramatically decreased.",
+                  "has quickly declined.",
+                  "has quickly dropped.",
+                  "has quickly fallen.",
+                  "has quickly decreased."
+                ]
+              ],
+              "answer_is_composite": true,
               "accepted_answers": [
                 "For/Over/In the past/last twenty years/two decades, our country’s/our nation’s/Taiwan’s birthrate has been declining/dropping/falling/decreasing rapidly/sharply/dramatically/steeply/drastically/quickly.",
                 "For/Over/In the past/last twenty years/two decades, our country’s/our nation’s/Taiwan’s birthrate has rapidly/sharply/dramatically/quickly declined/dropped/fallen/decreased."
@@ -1977,6 +2059,41 @@
               "stem": "這可能導致我們未來人力資源的嚴重不足。",
               "options": null,
               "answer": "This may lead to a severe shortage of manpower in the future.",
+              "answer_segments": [
+                [
+                  "This"
+                ],
+                [
+                  "may",
+                  "can"
+                ],
+                [
+                  "lead to",
+                  "cause",
+                  "result in",
+                  "bring about"
+                ],
+                [
+                  "a severe shortage",
+                  "a severe lack",
+                  "a serious shortage",
+                  "a serious lack",
+                  "severe deficiency",
+                  "severe scarcity"
+                ],
+                [
+                  "of"
+                ],
+                [
+                  "manpower",
+                  "human resources",
+                  "workforce"
+                ],
+                [
+                  "in the future."
+                ]
+              ],
+              "answer_is_composite": true,
               "accepted_answers": [
                 "This may/can lead to/cause/result in/bring about a severe/serious shortage/lack of manpower/human resources/workforce in the future.",
                 "This may/can lead to/cause/result in/bring about severe deficiency/scarcity of manpower/human resources/workforce in the future."
@@ -2051,11 +2168,11 @@
     "method": "Word 版 paper-2.doc（soffice 轉 docx + python-docx）為主文字來源，pdftotext -layout 擷取 paper-1.pdf 對照，並以 Read 逐頁檢視題本 PDF 頁面影像核對；答案取自 answer.pdf（pdftotext）；中譯英參考答案以 pdftoppm 放大評分標準第2頁圖片後人工轉寫；作文評分表以 Read 檢視第3頁影像核對；統計以 xlrd 讀取 stats-1／2／3.xls 英文科工作表並與答案交叉核對。",
     "issues": [
       "結構與 gsat-spec.json legacy_ast「98–110」期別一致：詞彙 1–10（10×1）、綜合測驗 11–20（2篇×5題×1）、文意選填 21–30（10選項，10×1）、篇章結構 31–35（5選項，5×2）、閱讀測驗 36–51（4篇×4題×2＝32）、中譯英 2題×4＝8、英文作文 20（至少120個單詞）；選擇題 72、非選擇題 28，合計 100。本年仍有倒扣（各大題說明已逐字保留）。",
-      "題號重複警告（validator: 題號重複 [1, 2]）是刻意的：中譯英在題本中編為 1.、2.，作文沒有題號；validator 要求 no 必須是整數，因此中譯英用 no=1、2（label「中譯英1」「中譯英2」），作文用 no=1（label「作文」），label 皆不重複。",
+      "題號：中譯英在題本中編為 1.、2.，作文沒有題號；依 v1.1 編號規則，中譯英用大題內序號 no=1、2（label「中譯英1」「中譯英2」），英文作文用 no=1（label「英文作文」），label 皆不重複；v1.1 的 validator 不再對翻譯、作文的題號發「題號重複」警告。",
       "題本原文拼寫保留：第44–47題組通篇作「Kopi Lowak」（一般拼法為 Kopi Luwak）；第48–51題組作「Gunter Grass」（德文原名 Günter Grass）。tags.topic 用一般拼法，選文與選項照題本。",
-      "題本格式未保留：第44題題幹與第二段段首的 “This” 為粗體；第40–43題組 Le Figaro 為斜體。依 schema 不保留粗斜體（本題組沒有問畫底線的字）。",
+      "題本格式：第44題題幹與第二段段首的 “This” 為粗體，是題目指涉的字，選文中這個 This 以 <b> 標出並填 refers_to（題幹照原文以引號表示、不另加標記）；第40–43題組 Le Figaro 為斜體，依 schema 不保留。",
       "選文段落以空行（\\n\\n）分隔；題本 PDF 中第28、30題空格後的換行（Word 版為軟換行）已併回同一段。選文文字以 Word 版（paper-2.doc）為主，並與 PDF 頁面影像逐頁核對一致。",
-      "中譯英參考答案在評分標準 PDF 中是大括號樹狀圖（圖片）。answer 取每個括號的第一個選項組成的句子；accepted_answers 用斜線列出同位置可替換的字詞（依圖逐格轉寫，第1題「the」在圖中位於 For 之後、括號之外，視為三個介系詞共用；第2題「severe deficiency/scarcity」一列前面沒有 a，照圖保留）；scoring_notes 另附逐格轉寫與評分原則原文。",
+      "中譯英參考答案在評分標準 PDF 中是大括號樹狀圖（圖片）。answer 取每個括號的第一個選項組成的句子；accepted_answers 用斜線列出同位置可替換的字詞（依圖逐格轉寫，第1題「the」在圖中位於 For 之後、括號之外，視為三個介系詞共用；第2題「severe deficiency/scarcity」一列前面沒有 a，照圖保留）；scoring_notes 另附逐格轉寫與評分原則原文。 結構化：兩題依原圖填 answer_segments。第1題「has been＋{declining…}＋{rapidly.…}」與「has＋{rapidly…}＋{declined.…}」兩支語序不同，攤平成同一段 40 種寫法（dramatically/steeply/drastically 拆成三個寫法），our {country’s/nation’s}／Taiwan’s 攤平成一段，the 為三個介系詞共用，共 1,440 種；第2題「a {severe/serious} {shortage/lack}」與「severe deficiency/scarcity」冠詞與名詞相依，攤平成一段 6 種寫法，共 144 種。官方只印樹狀圖、沒有整句，answer 為各段第一個寫法，answer_is_composite 為 true；accepted_answers 的斜線轉寫保留。",
       "統計：答對率 P、高分組 Ph、低分組 Pl、鑑別度 D 取自 stats-1.xls 英文科工作表（工作表 2）；option_rates 取自 stats-2.xls 選項分析的「T」（全體）列，未含「未答」比例，所以各題 option_rates 加總小於 1（例如第51題未答 21%）。stats-2 的高／低分組各選項比例（H／L 列）沒有放入（schema 無對應欄位）。",
       "統計交叉核對：51題選項分析標「*」的選項與官方答案全部一致；stats-1 與 stats-2 的高低分組通過率僅有 3 處差 1 個百分點（第29題低分組 18 vs 19、第42題低分組 14 vs 15、第50題高分組 86 vs 87），推測為四捨五入差異，以 stats-1 為準。",
       "非選擇題統計（stats-3.xls）只有各大題得分分布（中譯英 0–8 分、作文 0–20 分，到考 78,970 人、缺考 4,957 人），不是逐題答對率，schema 沒有對應欄位，因此中譯英與作文的 stats 填 null。",

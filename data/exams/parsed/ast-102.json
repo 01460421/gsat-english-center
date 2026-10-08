@@ -2118,6 +2118,11 @@
               "label": "39",
               "mode": "single_choice",
               "stem": "What does the author mean by <u>success is still a long shot</u> in the fourth paragraph?",
+              "refers_to": {
+                "text": "success is still a long shot",
+                "occurrence": 1,
+                "note": "原卷粗體＋底線（選文第四段），選文與題幹以 <u> 標示"
+              },
               "options": {
                 "A": "Success is everlasting in effect.",
                 "B": "Success is not easy to achieve.",
@@ -2267,6 +2272,11 @@
               "label": "42",
               "mode": "single_choice",
               "stem": "What does <u>that</u> in the last paragraph refer to?",
+              "refers_to": {
+                "text": "that",
+                "occurrence": 4,
+                "note": "原卷粗體＋底線（最後一段 would not eventually lead to that 的 that），選文與題幹以 <u> 標示"
+              },
               "options": {
                 "A": "Transferring a massive amount of energy.",
                 "B": "Making science fiction programs and movies.",
@@ -2654,6 +2664,11 @@
               "label": "50",
               "mode": "single_choice",
               "stem": "What does <u>the euphoria is fleeting</u> in the last paragraph mean?",
+              "refers_to": {
+                "text": "the euphoria is fleeting",
+                "occurrence": 1,
+                "note": "原卷粗體＋底線（最後一段），選文與題幹以 <u> 標示"
+              },
               "options": {
                 "A": "The feeling of triumph will last forever.",
                 "B": "The race is incomprehensibly difficult to finish.",
@@ -2860,6 +2875,33 @@
               "stem": "對現今的許多學生而言，在課業與課外活動間取得平衡是一大挑戰。",
               "options": null,
               "answer": "For many students today, striking a balance between schoolwork and extracurricular activities is a great challenge.",
+              "answer_segments": [
+                [
+                  "For many students"
+                ],
+                [
+                  "today,",
+                  "nowadays,"
+                ],
+                [
+                  "striking a balance between"
+                ],
+                [
+                  "schoolwork",
+                  "academic work"
+                ],
+                [
+                  "and extracurricular activities is a"
+                ],
+                [
+                  "great",
+                  "big"
+                ],
+                [
+                  "challenge."
+                ]
+              ],
+              "answer_is_composite": true,
               "accepted_answers": [
                 "For many students {today, / nowadays,} striking a balance between {schoolwork / academic work} and extracurricular activities is a {great / big} challenge."
               ],
@@ -3176,11 +3218,11 @@
     "issues": [
       "結構核對：與 gsat-spec.json legacy_ast 98–110 期別一致——一、詞彙 1–10（每題1分，4選項）；二、綜合測驗 11–20（2篇×5題，每題1分）；三、文意選填 21–30（12個選項 A–L，每題1分）；四、篇章結構 31–35（6個選項 A–F，每題2分）；五、閱讀測驗 36–51（4篇×4題，每題2分）；選擇題共72分；非選擇題28分：一、中譯英2題×4分、二、英文作文20分（文長至少120個單詞）；考試時間80分鐘（封面）；不倒扣（各大題說明：答錯、未作答或畫記多於一個選項者，該題以零分計算）。",
       "validator warning「題號重複 [1, 2]」：中譯英兩題（label 中譯英1／中譯英2）與英文作文（label 英文作文）依題本子題號編 no 1、2、1，與選擇題第1、2題的 no 重複，但 label 都不同；與 ast-103／ast-104 等同期檔案的慣例一致，屬合理。",
-      "格式：第39題 success is still a long shot、第42題 that、第50題 the euphoria is fleeting 在題本選文與題幹中都是「粗體＋底線」，題目問的就是這幾個畫底線的字句，所以依 schema 在選文與題幹中都以 <u>...</u> 標出（粗體不保留）。第4題題幹的 Harry Potter 原為斜體，不保留格式。",
+      "格式：第39題 success is still a long shot、第42題 that、第50題 the euphoria is fleeting 在題本選文與題幹中都是「粗體＋底線」，題目問的就是這幾個畫底線的字句，所以依 schema 在選文與題幹中都以 <u>...</u> 標出（粗體不保留）。第4題題幹的 Harry Potter 原為斜體，不保留格式。（v1.1）第39、42、50題已填 refers_to（第42題的 that 是選文中第 4 個 that）；原卷為粗體＋底線，<u> 已足以定位，未另加 <b>。",
       "第2題題幹空格為 7 個底線「_______」，其他詞彙題為 5 個「_____」，照題本原樣保留。",
       "Word 檔處理：paper-2.doc 以 soffice 轉 docx 後讀取；選文空格（底線＋題號）改寫為 [[題號]]，段落間以換行分隔。Word 把第11–15題選文第二段拆成三個段落（在 “scare off” 與 “talkative.” 前硬斷行），PDF 頁面影像確認是同一段（無首行縮排），已以一個空白接回；第28題空格前 Word 有手動換行，已接回同一行；[[32]]、[[34]] 位於段首，PDF 確認為新段落（有首行縮排）。選項間的定位字元與多餘空白（如第37題 “(A)  £10.”）已正規化，行尾空白已去除；PDF 的 “( I ) purpose”“( J ) sufficient” 只是排版空白，代號記為 I、J。選擇題部分英文 3,392 個詞（含標點）與 pdftotext -layout 擷取的 PDF 文字逐詞比對完全一致。",
       "英文作文：Word 檔中兩個產品說明框是文字方塊（重複出現多次，屬圖形備援文字），只取一次；stem 收錄「提示」、兩個產品框的文字與題目說明，產品框的版面（左右並排、橢圓標題、披風與眼鏡小圖示）另以 figures 描述並轉成 rows。產品名稱括號照 Word 版用全形「（invisibility cloak）」「（smart glasses）」（PDF 影像看起來也是括號）；「掃瞄」「紀錄」照題本用字；PDF 中「至少 120」的空白是排版造成，依 Word 版寫成「至少120個單詞」。",
-      "中譯英參考答案取自 scoring-2.pdf（評分標準說明）：第1題原檔以大括號並列可用字詞（today, / nowadays,；schoolwork / academic work；great / big），answer 取每組第一個選項組成一句，accepted_answers 以 {a / b} 記法逐字保留全部組合；第2題只有一個參考答案，accepted_answers 為 null。scoring_notes 收錄 scoring-2 的評量說明與評分原則（4條）及 scoring-1 中譯英相關段落；scoring-1 列舉的考生錯誤（挑戰、平衡、「對現今的許多學生而言」、「許多」、「一大挑戰」）都屬第1題，故只放在第1題，第2題只放該段的一般說明。scoring-1 原文「考生能否能運用」照錄。",
+      "中譯英參考答案取自 scoring-2.pdf（評分標準說明）：第1題原檔以大括號並列可用字詞（today, / nowadays,；schoolwork / academic work；great / big），answer 取每組第一個選項組成一句（answer_is_composite: true，官方未印出整句），accepted_answers 以 {a / b} 記法逐字保留全部組合，answer_segments 為同一樹狀圖的結構化寫法（三組大括號互不相依）；第2題只有一個參考答案，accepted_answers 為 null。scoring_notes 收錄 scoring-2 的評量說明與評分原則（4條）及 scoring-1 中譯英相關段落；scoring-1 列舉的考生錯誤（挑戰、平衡、「對現今的許多學生而言」、「許多」、「一大挑戰」）都屬第1題，故只放在第1題，第2題只放該段的一般說明。scoring-1 原文「考生能否能運用」照錄。",
       "英文作文 scoring_notes：收錄 scoring-1 的非選擇題概述、作文評分項目句、作文段落，以及 scoring-2 的「評分原則說明」與表一（表格轉為「項目｜優｜可｜差｜劣」文字列，體例列「優」「可」兩欄在原表中合併）與評分樣例說明；scoring-1 的閱卷籌備、試閱會議、雙閱流程段落與 scoring-2 的佳作公告段落、註腳網址屬流程說明，未收錄。作文 answer 為 null（官方未公布範文）。",
       "統計：選擇題取 stats-1.xls 工作表「英」的 P、Ph、Pl、D（百分比÷100），選項分析取 stats-2.xls 工作表「英」的 T（全體）、H（高分組）、L（低分組）與「未答」欄；stats-2 中以 * 標示的正答選項 51 題全部與官方答案一致，且 T 列正答比例與 stats-1 的 P 一致。stats-1 另有五組通過率 Pa–Pe 與 D1–D4，schema 無對應欄位，未收錄。非選擇題分數分布取 stats-3.xls 工作表「2」（英文科），放在 s6／s7 的 stats；百分比以報名總人數 65,966（含缺考 3,018）為分母，到考 62,948；分數區間字串去除空白（“9.00- 9.99” → “9.00-9.99”）；作文 20.00-20.99 有 3 人，原表百分比顯示 0.00%。",
       "標註為解析者判讀：第12題 threatening 為主動意義的現在分詞作形容詞，標 grammar／participle、answer_pos adjective；第16題 starting + 日期（自…起）功能近似介系詞，標 grammar／participle 並省略 answer_pos；第17題 Unless forbidden… 為副詞子句省略主詞與 be 動詞，標 connective／conjunction；第19題 with 表「隨著（原因）」，標 word_meaning／preposition；第21題 check in、第27題 warm up 為片語動詞，標 phrase／phrase；第26題 offer…protection 標 collocation。篇章結構第33–35題的線索標 lexical_cohesion（no customer↔unsold cookies／Saint Nicholas；dream↔awoke；twelve cookies—and one more↔counted thirteen as a dozen）。閱讀第36、44題問最佳標題標 title；第51題需由 1982 年加「a year later」推得 1983，仍標 detail。題組 sdgs 為判讀（群眾募資 8；牽引光束醫療研究與科技創新 3、9；非洲數位教育 4；魚類 14）；作文題組因是提示框而非閱讀文本，未標 text_format；essay_type 依二擇一主題寫作標 topic（同 gsat-104）。",
