@@ -42,6 +42,17 @@ npm run dev:api    # 只啟動 Worker
 
 前端一律用相對路徑呼叫 `/api/*`、`/auth/*`，由 Vite 的 `server.proxy` 轉到 `wrangler dev`。瀏覽器看到的是同源，不必處理 CORS，之後 host-only 的 session cookie 也才送得出去（理由見 `docs/research/05-sekai-center-patterns.md` §1.3）。
 
+### 前端資料檔（單字、歷屆試題）
+
+單字與歷屆試題模組不需要後端：`apps/web/scripts/build-data.mjs`（Node 22 內建模組，零依賴）把 `data/vocab/lexicon.json`、`data/exams/stats/word-frequency.json`、`data/exams/parsed/*.json`、`data/exams/manifest.json` 轉成靜態 JSON，輸出到 `apps/web/public/data/`（不進版控，Vite 建置時原樣複製到 `dist/data/`）。
+
+- `npm run dev`、`npm run build` 會透過 `predev`／`prebuild` 自動執行；改了 `data/` 想立刻更新，執行 `npm run build:data -w @gsat/web`。
+- 輸出：`meta.json`（資料版本＝輸入檔與腳本的內容雜湊、筆數、各檔大小）、`vocab/index.json`（全部條目的精簡索引，gzip 後必須小於 300 KB，超過會讓建置失敗）、`vocab/L1.json`…`L6.json`（各級完整條目）、`exams/index.json`（考卷摘要）、`exams/{id}.json`（完整考卷）。
+- 前端的型別與載入函式在 `apps/web/src/data/`（`vocab.ts`、`exams.ts`、`client.ts`）；改輸出格式時兩邊要一起改，改完跑 `npm run check:data -w @gsat/web`（約 15 秒）：把實際輸出的 JSON 寫成帶型別註記的 TypeScript 交給 tsc，確認每一筆都符合 UI 用的那份型別。腳本本身以 JSDoc 標型別，`npm run typecheck` 會用 `checkJs` 一起檢查。
+- 不輸出的內容：詞彙資料中 ECDICT 的 Oxford／Collins 欄位（只當內部特徵，04 文件 §7.4）；試題的 `sources`（內部路徑，改成大考中心官方檔案網址 `official_files`）、`extraction`（解析紀錄）與 `scoring_notes`（評分原則全文受著作權保護、不轉載，04 文件 §4）。
+- **中譯英不含官方參考譯文**（站主決定 D8，`docs/ROADMAP.md` 決策表）：`mode` 為 `translation` 的小題刪掉 `answer`、`accepted_answers`、`answer_segments`、`answer_variants`、`answer_is_composite`。靜態檔任何人都能直接下載，所以不是只在畫面上藏起來，而是資料檔本身就沒有；作答頁看完作答後只顯示「本題官方參考譯文請見大考中心評分原則」並連到官方檔案。選擇題的代號答案、混合題填充／簡答的官方答案照常輸出。原始資料 `data/exams/parsed/` 不變（之後只在後端當 AI 批改的參考）。
+- 腳本會檢查輸出契約（例句一定有作者與連結、試題是 `gsat-exam/v1.1`、`word-frequency.json` 和 `lexicon.json` 對得上…），不符就以錯誤結束並指出是哪個檔案、哪一題。寫檔前還會直接檢查要輸出的 `exams/*.json`：中譯英小題含上述任一欄位，或原始資料裡的官方譯文整句出現在輸出的任何地方（例如被搬進新欄位），建置就失敗。
+
 ### 檢查與測試
 
 | 指令 | 內容 |
@@ -49,14 +60,14 @@ npm run dev:api    # 只啟動 Worker
 | `npm run typecheck` | 所有 workspace 的 `tsc`（strict） |
 | `npm run lint` | 目前等同 `typecheck` |
 | `npm test` | Vitest：共用型別的型別守衛與小工具、Worker 的 CORS／Origin 檢查、前端元件與路由。只測程式碼，不讀 `data/` |
-| `npm run build` | Vite 建置前端；`wrangler deploy --dry-run` 打包 Worker（不會部署） |
+| `npm run build` | 先產生前端資料檔（`prebuild`，見上一節），再 Vite 建置前端；`wrangler deploy --dry-run` 打包 Worker（不會部署） |
 | `npm run test:e2e` | 先建置前端，再用 Playwright 在桌機（1280×900）與手機（375×667，另外在 320px 再檢查一次溢出）尺寸跑全部路由的煙霧測試：無 console error、標題正確、沒有水平捲動、手機導覽可用 |
 | `npm run validate:exams` | 檢查 `data/exams/parsed/*.json` 是否符合 `gsat-exam/v1`（`docs/exam-json-schema.md`） |
 | `npm run test:data` | 拿 `data/` 的實際 JSON（歷屆試題、詞彙表）檢查能不能安全地當成 `@gsat/shared` 的型別使用 |
 
 - 第一次在自己的電腦跑煙霧測試前，先執行 `npx playwright install chromium`（CI 會自動安裝）。如果環境已預裝版本不同的 Chromium（例如 `/opt/pw-browsers`），`apps/web/playwright.config.ts` 會自動改用它，也可以用環境變數 `PLAYWRIGHT_CHROMIUM_PATH` 指定執行檔。
 - 煙霧測試用 `page.route` 假造後端，不需要啟動 `wrangler dev`。
-- CI（`.github/workflows/ci.yml`）在 push 到 main 與每個 PR 執行上面全部項目，分成兩個 job：`app` 只看程式碼（typecheck、test、build、煙霧測試），`exams` 只看資料（`validate:exams`、`test:data`）。題庫由另一條流程陸續寫入，資料有錯不會蓋掉程式碼的檢查結果，反之亦然。
+- CI（`.github/workflows/ci.yml`）在 push 到 main 與每個 PR 執行上面全部項目，分成兩個 job：`app` 看程式碼（typecheck、test、build、煙霧測試），`exams` 只看資料（`validate:exams`、`test:data`）。題庫由另一條流程陸續寫入，資料有錯不會蓋掉程式碼的檢查結果，反之亦然。例外是 `app` 的 build：前端資料檔在 `prebuild` 由 `data/vocab`、`data/exams` 產生，資料不符合前端契約時 build 會失敗（typecheck、test 在它之前，結果不受影響）。
 
 ### 套件版本
 
@@ -74,7 +85,9 @@ apps/
     src/pages/           各頁面（除首頁外都按需載入）
     src/components/      版面（側邊欄／底部導覽）、後端狀態、主題切換
     src/lib/             API 呼叫、主題設定
-    public/              PWA manifest 與圖示（service worker 之後再做）
+    src/data/            前端靜態資料（單字、歷屆試題）的型別與載入函式（fetch＋記憶體快取＋錯誤處理）
+    scripts/build-data.mjs  由 data/ 產生 public/data/ 的資料管線（predev／prebuild 自動執行）
+    public/              PWA manifest 與圖示（service worker 之後再做）；public/data/ 是產生的資料檔，不進版控
     tests/smoke.spec.ts  Playwright 煙霧測試
   api/                 後端：Cloudflare Worker（Hono）＋D1
     src/app.ts           路由與中介層（CORS、非 GET 的 Origin 檢查、統一錯誤格式）
@@ -116,9 +129,9 @@ npm run deploy -w @gsat/api                  # 部署後網址是 https://gsat-e
 
 `vercel.json` 的設定與理由：
 
-- **rewrites**：`/api/*`、`/auth/*` 反向代理到 Worker。買網域前 `*.vercel.app` 與 `*.workers.dev` 彼此跨站，cookie 登入行不通，代理後瀏覽器看起來是同源。其餘路徑 SPA fallback 到 `/index.html`，但**排除 `/assets/`**：重新部署後舊的 chunk 檔名已不存在，應該回 404，而不是回 HTML 讓瀏覽器當成 JavaScript 執行；前端的錯誤邊界會提示使用者重新整理。
+- **rewrites**：`/api/*`、`/auth/*` 反向代理到 Worker。買網域前 `*.vercel.app` 與 `*.workers.dev` 彼此跨站，cookie 登入行不通，代理後瀏覽器看起來是同源。其餘路徑 SPA fallback 到 `/index.html`，但**排除 `/assets/` 與 `/data/`**：重新部署後舊的 chunk 檔名已不存在，應該回 404，而不是回 HTML 讓瀏覽器當成 JavaScript 執行；前端的錯誤邊界會提示使用者重新整理。`/data/` 下的資料檔同理，找不到時回 404，`src/data/client.ts` 才能顯示「找不到資料檔」而不是 JSON 解析錯誤。資料檔名不帶雜湊，沿用 HTML 的 `max-age=0, must-revalidate`（每次以 ETag 重新驗證，部署後立刻拿到新版）。
 - **headers**：`X-Content-Type-Options: nosniff`、`Referrer-Policy`、`X-Frame-Options`、`Permissions-Policy`。其中 `camera=(self)` 是為了在網頁內直接開相機拍手寫作文（`camera=()` 會讓 `getUserMedia()` 被拒絕）；麥克風、定位、付款都關閉。`/assets/*` 的檔名帶內容雜湊，給一年 `immutable` 快取；HTML 每次重新驗證，部署後才會立刻拿到新版。
-- **ignoreCommand**：只有前端會用到的路徑（`apps/web`、`packages`、`vercel.json`、根目錄的 `package*.json`）有變動才重新建置；`exit 0` 代表略過。資料管線與研究文件更新很頻繁，每次都重建只會浪費建置時間。之後前端開始讀取 `data/` 下的檔案時，要把那些路徑加進這個清單。
+- **ignoreCommand**：只有前端會用到的路徑有變動才重新建置；`exit 0` 代表略過。清單是 `apps/web`、`packages`、`vercel.json`、根目錄的 `package*.json`，以及前端資料檔的來源 `data/vocab`、`data/exams/parsed`、`data/exams/stats`、`data/exams/manifest.json`（`apps/web/scripts/build-data.mjs` 讀這些檔案）。其他資料（`data/curriculum`、`data/exams/gsat-spec.json`、`data/exams/normalize-todo.json`）與研究文件更新很頻繁，改了不必重建。之後 `build-data.mjs` 若開始讀新的路徑，要一起加進這個清單。
 - 還沒實測的部分（05 文件 §1.3）：經 Vercel 代理時 `Set-Cookie` 能否原樣傳回、長時間的 AI 請求會不會逾時。
 - Vercel 的預覽部署每次網址不同，不在 `ALLOWED_ORIGINS` 裡，預覽站送出的 POST 會被 Worker 的 Origin 檢查擋下（GET 不受影響）。
 

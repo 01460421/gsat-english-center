@@ -5,7 +5,11 @@
   "description": "學測英文中心前端：Vite＋React＋TypeScript＋React Router＋Tailwind CSS",
   "type": "module",
   "scripts": {
+    "build:data": "node scripts/build-data.mjs",
+    "check:data": "node scripts/check-data-contract.mjs",
+    "predev": "npm run build:data",
     "dev": "vite",
+    "prebuild": "npm run build:data",
     "build": "vite build",
     "preview": "vite preview",
     "typecheck": "tsc -p tsconfig.json && tsc -p tsconfig.node.json",
@@ -17,7 +21,8 @@
     "lucide-react": "^1.52.0",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
-    "react-router": "^8.4.0"
+    "react-router": "^8.4.0",
+    "ts-fsrs": "^5.4.2"
   },
   "devDependencies": {
     "@playwright/test": "^1.64.0",

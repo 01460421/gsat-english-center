@@ -1,9 +1,13 @@
 {
-  // 在 Node 執行的檔案：Vite 設定、Playwright 設定與煙霧測試。
+  // 在 Node 執行的檔案：Vite 設定、Playwright 設定與煙霧測試，以及建置前的資料管線（scripts/*.mjs）。
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "lib": ["ES2023", "DOM"],
-    "types": ["node"]
+    "types": ["node"],
+    // scripts/build-data.mjs 要能不經編譯直接用 node 執行（Vercel 的 prebuild），所以寫成 JS＋JSDoc 型別，
+    // 再由 checkJs 用同一套嚴格設定檢查，資料管線的型別錯誤一樣會讓 npm run typecheck 失敗。
+    "allowJs": true,
+    "checkJs": true
   },
-  "include": ["vite.config.ts", "playwright.config.ts", "tests"]
+  "include": ["vite.config.ts", "playwright.config.ts", "tests", "scripts"]
 }

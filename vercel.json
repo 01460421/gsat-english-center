@@ -4,7 +4,7 @@
   "installCommand": "npm ci",
   "buildCommand": "npm run build -w @gsat/web",
   "outputDirectory": "apps/web/dist",
-  "ignoreCommand": "git diff --quiet HEAD^ HEAD -- apps/web packages vercel.json package.json package-lock.json",
+  "ignoreCommand": "git diff --quiet HEAD^ HEAD -- apps/web packages vercel.json package.json package-lock.json data/vocab data/exams/parsed data/exams/stats data/exams/manifest.json",
   "rewrites": [
     {
       "source": "/api/:path*",
@@ -15,7 +15,7 @@
       "destination": "https://gsat-english-api.REPLACE_WITH_SUBDOMAIN.workers.dev/auth/:path*"
     },
     {
-      "source": "/((?!api/|auth/|assets/).*)",
+      "source": "/((?!api/|auth/|assets/|data/).*)",
       "destination": "/index.html"
     }
   ],

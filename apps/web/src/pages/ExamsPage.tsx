@@ -1,22 +1,48 @@
-import { InfoSection, ModulePage } from '../components/ModulePage';
+/**
+ * 歷屆試題列表頁。考卷清單（/data/exams/index.json）用 use() 載入；頁首不放在 Suspense 裡，
+ * 資料還在下載或下載失敗時，標題與說明照樣顯示。
+ * 作答頁在 features/exams/ExamPaperPage.tsx（/exams/:examId）。
+ */
+import { Suspense, useMemo, useState } from 'react';
+import { PageHeader } from '../components/ModulePage';
+import { ExamList } from '../features/exams/ExamList';
+import { DataErrorBoundary } from '../features/exams/components/DataErrorBoundary';
+import { forgetFailedLoads } from '../data/client';
+import { loadExamIndex } from '../data/exams';
 import { getPage } from '../modules';
 
 export default function ExamsPage() {
+  const page = getPage('/exams');
+  const [retry, setRetry] = useState(0);
+  // 失敗的請求留在快取裡，「再試一次」要先 forgetFailedLoads() 才會重新下載（理由見 data/client.ts 檔頭）。
+  const indexPromise = useMemo(() => loadExamIndex(), [retry]);
+  const handleRetry = () => {
+    forgetFailedLoads();
+    setRetry((n) => n + 1);
+  };
   return (
-    <ModulePage page={getPage('/exams')}>
-      <InfoSection title="收錄範圍">
-        <p>
-          學科能力測驗英文考科 83–115 學年度，以及指定科目考試英文考科 91–110 學年度（含補考與參考試卷）。題目、選項與答案依大學入學考試中心公告的試題與答案整理成結構化資料，並標註考點與題型。
+    <article>
+      <PageHeader page={page} />
+      <div className="grid grid-cols-1 gap-4">
+        <p className="text-[0.95rem]">
+          點選考卷開始作答：<strong>練習模式</strong>每題寫完就能看答案與全國答對率；<strong>考試模式</strong>依考卷時間倒數計時，交卷後計分。進度會自動存在這台裝置。
         </p>
-      </InfoSection>
-      <InfoSection title="規劃中的功能">
-        <ul>
-          <li>依年度整份作答，或依題型（詞彙、綜合測驗、文意選填……）跨年度練習。</li>
-          <li>顯示官方公布的答對率與鑑別度，知道哪些題目是多數人都會錯的。</li>
-          <li>每題標註考點，錯題可以加入複習清單。</li>
-          <li>每份試題都標示出處年度並連到大學入學考試中心的官方 PDF。</li>
-        </ul>
-      </InfoSection>
-    </ModulePage>
+        <DataErrorBoundary key={retry} onRetry={handleRetry}>
+          <Suspense
+            fallback={
+              <p role="status" className="py-10 text-center text-muted">
+                考卷清單載入中…
+              </p>
+            }
+          >
+            <ExamList indexPromise={indexPromise} />
+          </Suspense>
+        </DataErrorBoundary>
+        <footer className="rounded-2xl border border-line bg-surface p-4 text-sm text-muted">
+          試題來源：大學入學考試中心 83–115 學年度學科能力測驗、91–110 學年度指定科目考試英文考科，以及各學年度參考試卷。
+          題目、選項與答案依官方公告的試題與答案整理；每份考卷頁都附有官方 PDF 連結，內容如有出入以官方檔案為準。
+        </footer>
+      </div>
+    </article>
   );
 }
