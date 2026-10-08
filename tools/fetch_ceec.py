@@ -49,6 +49,7 @@ import sys
 import tempfile
 import threading
 import time
+import unicodedata
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -96,6 +97,8 @@ SUBKIND_ORDER = {
     "pd_table": 5, "option_analysis": 6, "nonmc_score_dist": 7,
     "cover": 8, "answer_sheet": 9, "answer_sheet_a4": 10, "paper_note": 11,
     "analysis": 12, "exam_spec": 13, "essay_sample": 14,
+    # 2026-10-08 新增；排在既有 stats 子類之後，既有檔案的 stats-N 編號不會變動
+    "score_standard": 15, "score_conversion": 16,
 }
 FORMAT_ORDER = {"pdf": 0, "docx": 1, "doc": 2, "xls": 3, "xlsx": 4, "jpg": 5,
                 "png": 6}
@@ -120,9 +123,12 @@ def _ssl_context() -> ssl.SSLContext:
             break
     if ctx is None:
         ctx = ssl.create_default_context()
-    # Python 3.13 起預設開啟 VERIFY_X509_STRICT，會拒絕缺少 Subject Key Identifier
-    # 等擴充欄位的憑證鏈（部分企業代理 CA 如此）。這裡只關掉「嚴格 RFC 5280 檢查」，
-    # 憑證鏈與主機名稱驗證仍照常進行（與 curl、requests 的行為一致）。
+    # Python 3.13 起 ssl.create_default_context() 預設開啟 VERIFY_X509_STRICT
+    # （https://docs.python.org/3.13/library/ssl.html#ssl.create_default_context），
+    # 會拒絕缺少 Subject Key Identifier 等擴充欄位的憑證鏈（部分企業／沙箱代理 CA 如此，
+    # 錯誤訊息為「Missing Subject Key Identifier」）。這裡只關掉「嚴格 RFC 5280 檢查」，
+    # 憑證鏈與主機名稱驗證仍照常進行。註：curl 預設不做這項嚴格檢查；requests（urllib3 2.x）
+    # 在 Python 3.13 上同樣會開啟它，因此在同一代理環境下 requests 也會失敗（2026-10-08 實測）。
     if hasattr(ssl, "VERIFY_X509_STRICT"):
         ctx.verify_flags &= ~ssl.VERIFY_X509_STRICT
     return ctx
@@ -464,12 +470,23 @@ def discover_exam_papers(exam: str):
 
 
 STATS_RULES = [
+    # (標籤規則, subkind, 說明, 是否要求標籤含「英文」或「各科」)
     (re.compile(r"答對率及鑑別(?:度|指數)表"), "pd_table",
-     "選擇題各題答對率（P）與鑑別度／鑑別指數（D）"),
-    (re.compile(r"選擇題選項分析"), "option_analysis", "選擇題各選項選答比例分析"),
+     "選擇題各題答對率（P）與鑑別度／鑑別指數（D）", True),
+    (re.compile(r"選擇題選項分析"), "option_analysis", "選擇題各選項選答比例分析", True),
     (re.compile(r"非選擇題(?:各題)?分數人數統計表"), "nonmc_score_dist",
-     "非選擇題各題得分人數分布"),
+     "非選擇題各題得分人數分布", True),
+    # 成績標準（頂標／前標／均標／後標／底標）：「超越頂標」等難度分級的校準依據
+    (re.compile(r"成績標準一覽表"), "score_standard",
+     "各科成績標準（頂標、前標、均標、後標、底標）", True),
+    # 學測原始分數（111 起稱「原得總分」）與級分對照：練習成績換算級分用（指考沒有級分）
+    (re.compile(r"(?:原始分數|原得總分)與級分對照表"), "score_conversion",
+     "原始分數／原得總分與級分對照", False),
 ]
+
+# 「83至89學年度」這類合併條目：年度改由附檔標籤開頭的學年度決定
+_RANGE_TITLE = re.compile(r"\s*(\d{2,3})\s*[至~～－-]\s*(\d{2,3})\s*學年度")
+_LABEL_YEAR = re.compile(r"\s*(\d{2,3})(?:\s*[至~～－-]\s*(\d{2,3}))?\s*學年度")
 
 
 def discover_stats(exam: str):
@@ -479,7 +496,8 @@ def discover_stats(exam: str):
     items = []
     for e in crawl_xmdoc_list(sid):
         year = _roc_year(e["title"])
-        if not _in_range(exam, year):
+        ranged = year is None and _RANGE_TITLE.match(e["title"])
+        if not ranged and not _in_range(exam, year):
             continue
         if exam == "ast" and "分科" in e["title"]:
             continue
@@ -488,15 +506,24 @@ def discover_stats(exam: str):
             label = f["label"]
             if "初複閱" in label:
                 continue
-            for rx, sub, desc in STATS_RULES:
+            fyear, span = year, ""
+            lm = _LABEL_YEAR.match(label)
+            if lm:
+                fyear = int(lm.group(1))
+                if lm.group(2):
+                    span = f"；本檔涵蓋 {lm.group(1)}–{lm.group(2)} 學年度"
+            if not _in_range(exam, fyear):
+                continue
+            for rx, sub, desc, need_subject in STATS_RULES:
                 if not rx.search(label):
                     continue
-                # 只要英文科專屬或「各科」合併檔
-                if not ("英文" in label or "各科" in label):
+                # 只要英文科專屬或「各科」合併檔（級分對照表標籤不寫科目，一律收）
+                if need_subject and not ("英文" in label or "各科" in label):
                     continue
-                note = desc + ("；各科合併檔，英文為其中一個工作表／區段" if "各科" in label else "")
+                note = desc + ("；各科合併檔，英文為其中一個工作表／區段"
+                               if (("各科" in label) or not need_subject) else "") + span
                 items.append(_item(
-                    exam=exam, year=year, kind="stats", subkind=sub,
+                    exam=exam, year=fyear, kind="stats", subkind=sub,
                     title=f"{e['title']}｜{label}", label=label, url=f["url"],
                     source_page=e["url"], note=note))
                 break
@@ -653,8 +680,9 @@ def build_manifest(items):
     return {
         "generated_at": _dt.date.today().isoformat(),
         "description": "大考中心學測（83–115）與指考（91–110）英文考科歷屆試題、答案、"
-                       "非選擇題評分原則、試題統計（答對率／鑑別度等），以及參考試卷、"
-                       "試辦考試、考試說明與英文作文佳作之下載清單。",
+                       "非選擇題評分原則、試題統計（答對率／鑑別度、選項分析、非選擇題得分、"
+                       "成績標準、原始分數與級分對照），以及參考試卷、試辦考試、考試說明與"
+                       "英文作文佳作之下載清單。",
         "source_site": BASE,
         "tool": "tools/fetch_ceec.py",
         "path_rule": "local_path 相對於專案根目錄：data/raw/ceec/{exam}/{year}/{kind}[-n].{format}",
@@ -665,14 +693,17 @@ def build_manifest(items):
             "target": "reference 專用：gsat 或 ast",
             "kind": "paper|answer|scoring|stats|other",
             "subkind": "paper, paper_word, answer, scoring, pd_table, option_analysis, "
-                       "nonmc_score_dist, cover, answer_sheet, answer_sheet_a4, paper_note, "
-                       "analysis, exam_spec, essay_sample",
+                       "nonmc_score_dist, score_standard（各科成績標準：頂／前／均／後／底標）, "
+                       "score_conversion（學測原始分數／原得總分與級分對照）, cover, "
+                       "answer_sheet, answer_sheet_a4, paper_note, analysis, exam_spec, "
+                       "essay_sample",
             "text_extractable": "PDF 前兩頁以 pdftotext 擷取到 ≥80 個有效字元（英數、漢字）"
                                 "且不是亂碼時為 true（前兩頁不足時擴大到前五頁再判斷一次，"
                                 "避免封面＋目錄被誤判）；非 PDF 為 null",
             "text_chars": "上述判斷所擷取到的有效字元數",
-            "text_quality": "ok｜none（幾乎無文字層，多為掃描影像）｜garbled（有文字層但字型"
-                            "對應錯亂，擷取結果為亂碼）",
+            "text_quality": "ok｜none（幾乎無文字層，掃描影像）｜garbled（有文字層但字型"
+                            "對應錯亂或缺 Unicode 對應，擷取結果為亂碼或空白；有內嵌字型而"
+                            "無影像的 PDF 也歸此類）",
             "duplicate_of": "內容（sha256）與另一項目完全相同時，指向該項目的 local_path",
             "subjects_detected": "答案／評分原則 PDF 全文中出現的「○○考科」科目（多於一科"
                                  "代表多科合併檔）；無文字層或亂碼時不提供",
@@ -716,7 +747,8 @@ def check_magic(path, fmt):
         return True
     with open(path, "rb") as f:
         head = f.read(1024)
-    # 部分 PDF 前面有少量垃圾位元組，PDF 規格允許 %PDF 出現在前 1024 bytes 內
+    # 部分 PDF 前面有少量垃圾位元組；ISO 32000 要求檔頭在第一行，但 Acrobat 等閱讀器
+    # 實作上容許 %PDF 出現在前 1024 bytes 內（未驗證是否所有閱讀器皆然），這裡採寬鬆判斷
     if fmt == "pdf":
         return b"%PDF" in head
     return any(head.startswith(s) for s in sigs)
@@ -735,11 +767,29 @@ def _pdftotext(exe, path, first, last):
     return r.stdout.decode("utf-8", errors="replace")
 
 
+def _vector_text_without_unicode(path) -> bool:
+    """PDF 有內嵌字型、卻沒有任何點陣影像：代表頁面是「向量文字」而不是掃描檔，
+    pdftotext 擷取不到字只是因為字型缺少 Unicode 對應（例如指考 91 統計表的
+    CID 字型字元集「Adobe-WinCharSetFFFF」、指考 91 封面的 Type 3 字型）。
+    需要 poppler-utils 的 pdffonts／pdfimages；不存在時回傳 False。"""
+    fonts_exe, imgs_exe = shutil.which("pdffonts"), shutil.which("pdfimages")
+    if not (fonts_exe and imgs_exe):
+        return False
+    try:
+        f = subprocess.run([fonts_exe, path], capture_output=True, timeout=60)
+        i = subprocess.run([imgs_exe, "-list", path], capture_output=True, timeout=60)
+    except (subprocess.TimeoutExpired, OSError):
+        return False
+    n_fonts = len(f.stdout.decode("utf-8", "replace").splitlines()[2:])
+    n_imgs = len(i.stdout.decode("utf-8", "replace").splitlines()[2:])
+    return n_fonts > 0 and n_imgs == 0
+
+
 def pdf_text_probe(path):
     """用 pdftotext 擷取前兩頁，回傳 (text_extractable, 有效字元數, text_quality)。
     前兩頁有效字元不足 80（常見於封面＋目錄頁）時，再擴大到前五頁判斷一次。
     text_quality：ok＝可用文字；none＝幾乎沒有文字層（多為掃描影像）；
-    garbled＝有文字層但字型對應錯亂、擷取結果是亂碼。pdftotext 不存在時回傳 None。"""
+    garbled＝有文字層但字型對應錯亂、擷取結果是亂碼或空白。pdftotext 不存在時回傳 None。"""
     exe = shutil.which("pdftotext")
     if not exe:
         return None, None, None
@@ -752,7 +802,9 @@ def pdf_text_probe(path):
     except (subprocess.TimeoutExpired, OSError):
         return None, None, None
     if n < 80:
-        return False, n, "none"
+        # 有字型、沒有影像 → 向量文字但缺 Unicode 對應，歸為 garbled（要用視覺讀取），
+        # 不是掃描檔
+        return False, n, ("garbled" if _vector_text_without_unicode(path) else "none")
     bad = len(_GARBAGE.findall(text))
     punct = len(_PUNCT.findall(text))
     total = n + bad + punct
@@ -775,7 +827,13 @@ def detect_subjects(path):
                            capture_output=True, timeout=120)
     except (subprocess.TimeoutExpired, OSError):
         return None
-    text = re.sub(r"[ \t]+", "", r.stdout.decode("utf-8", errors="replace"))
+    text = r.stdout.decode("utf-8", errors="replace")
+    # 舊 PDF（如學測 90–94、指考 92–93）的中文會擷取成「㈻」「㆗」「㈥」等相容字元，
+    # 先以 NFKC 正規化（㈻→(学)），再去掉單字括號並把簡體「学」換回「學」，
+    # 否則「數㈻考科」「㈳會考科」會被漏判。
+    text = unicodedata.normalize("NFKC", text)
+    text = re.sub(r"\((\S)\)", r"\1", text).replace("学", "學")
+    text = re.sub(r"[ \t]+", "", text)
     found = []
     for m in _SUBJECT_RX.finditer(text):
         if m.group(1) not in found:
