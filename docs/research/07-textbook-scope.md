@@ -310,19 +310,21 @@ L1 The Heart of a Champion／L2 My Mouth's in Airplane Mode!／L3 The Birthmark�
 | 句構家族 | 出現句數（含可選寫法） | 其中必要／首選寫法 | 其中有大考中心文件或參考答案佐證 | 題號（* 為可選寫法） |
 |---|---|---|---|---|
 | 現在完成式（含完成被動） | 10 | 9 | 7 | 94-1, 99-2, 100-1, 101-1, 102-1, 106-2, 107-1, 108-1, 112-1*, 115-1 |
-| 比較級／最高級（含 more and more、one of the + 最高級） | 9 | 9 | 4 | 97-2, 103-2, 104-1, 105-1, 106-2, 107-1, 108-1, 114-1, 115-1 |
-| 分詞（分詞構句、分詞片語修飾、連接詞＋分詞） | 8 | 6 | 5 | 101-1, 105-1, 106-1, 107-1*, 109-2, 111-2, 112-2, 115-2* |
-| 動名詞／不定詞片語當主詞 | 7 | 7 | 5 | 95-1, 97-1, 97-2, 99-2, 106-2, 111-1, 112-2 |
-| 副詞子句（時間／條件／讓步） | 6 | 6 | 1 | 93-1, 93-2, 96-1, 96-2, 107-2, 111-2 |
+| 比較級／最高級（含 more and more、one of the + 最高級） | 9 | 8 | 5 | 97-2, 103-2, 104-1*, 105-1, 106-2, 107-1, 108-1, 114-1, 115-1 |
+| 分詞（分詞構句、分詞片語修飾、連接詞＋分詞） | 8 | 4 | 6 | 101-1*, 105-1, 106-1, 107-1*, 109-2, 111-2*, 112-2, 115-2* |
+| 動名詞／不定詞片語當主詞 | 7 | 7 | 7 | 95-1, 97-1, 97-2, 99-2, 106-2, 111-1, 112-2 |
+| 副詞子句（時間／條件／讓步） | 6 | 6 | 3 | 93-1, 93-2, 96-1, 96-2, 107-2, 111-2 |
 | 關係子句（含關係副詞、省略關代） | 6 | 4 | 5 | 97-1, 101-2, 107-1*, 108-2, 111-2*, 114-2 |
-| 被動語態 | 6 | 6 | 5 | 99-1, 100-1, 101-2, 106-1, 110-2, 113-1 |
-| 不定詞表目的 | 5 | 5 | 1 | 102-2, 103-1, 104-2, 109-1, 110-2 |
-| 動詞＋受詞＋to V／補語（enable、encourage、expect、make） | 4 | 4 | 0 | 94-2, 95-2, 98-1, 106-1 |
+| 被動語態 | 6 | 5 | 6 | 99-1*, 100-1, 101-2, 106-1, 110-2, 113-1 |
+| 不定詞表目的 | 5 | 5 | 3 | 102-2, 103-1, 104-2, 109-1, 110-2 |
+| 動詞＋受詞＋to V／補語（enable、encourage、expect、make） | 4 | 4 | 2 | 94-2, 95-2, 98-1, 106-1 |
 | 介系詞＋V-ing（besides、be used to、responsibility of） | 4 | 4 | 4 | 98-1, 98-2, 111-2, 113-2 |
-| 名詞子句（that／wh-） | 3 | 3 | 1 | 93-2, 95-1, 112-1 |
-| 對等並列（並列動詞、平行結構） | 3 | 3 | 1 | 103-1, 107-2, 112-2 |
+| 對等並列（並列動詞、平行結構） | 4 | 4 | 2 | 103-1, 107-2, 112-2, 115-2 |
+| 名詞子句（that／wh-） | 3 | 3 | 2 | 93-2, 95-1, 112-1 |
 | 現在進行式 | 2 | 2 | 2 | 102-2, 114-2 |
 | 關聯連接詞（not only…but also、not…but） | 2 | 2 | 1 | 103-2, 111-1 |
+
+說明：本表由 §5.2 的「主要句構（依據）」欄逐格計算；「必要／首選」＝未標「可選」；「佐證」＝依據為官或參。2026-10-08 查證時依 95、96、98、101、102、104、106、108、110 學測評分文件、115 參考試卷解析與 111–115 選才電子報評分原則說明，把多筆原標「析」的依據改為「官」或「參」，並把 99-1 被動、101-1 分詞、104-1 最高級、111-2 分詞改標為「可選」。
 
 無特定句構家族的句子： 100-2、105-2、110-1（以基本句構 S＋V＋O 搭配片語即可，例如 105-2 的 learn (how) to、fast-changing）
 
@@ -332,9 +334,9 @@ L1 The Heart of a Champion／L2 My Mouth's in Airplane Mode!／L3 The Birthmark�
    - 現在完成式、被動語態、動名詞主詞、比較級、不定詞，都列在課綱附錄六的國中基礎文法表 [S-curr]。
    - 分詞構句與分詞片語是龍騰 B1 L9、B4 L5、B4 L9 的重點。
    - 關係子句是 B1 L4 與 B4 L6、L7 的重點。
-2. **課本的高階句型完全沒有成為必要寫法。** 倒裝（Not until／Only／Never…）、假設語氣（If…had p.p.／But for／It is high time）、It is…that 強調句、No sooner…than、lest，在 46 句中都不是必要寫法。這和 115 試題特色「捨棄過難及罕見的文法句型」的建議一致 [S-ceec-ep351]。
-3. **有一個課本句型直接成為參考答案。** 113 學測第 1 題的參考答案用了「can be seen making visits to」〔參〕，這正是龍騰 B3 L5「be seen/heard + V-ing」〔S-csghs-111-1-g11〕的句型。
-4. **時態判斷是主要失分點。** 115 評分原則明示第一句要用現在完成式〔官〕。媒體報導閱卷結果時也說「第一題需使用現在完成式描述現況，卻有考生未能正確掌握時態」，並舉出拼字錯誤（devide、sinior）與用字錯誤（hear／listen、talk／speak）[S-news-1111-115]。這篇報導是二手資料，引述的閱卷說法未逐字對照官方文件。
+2. **課本的高階句型完全沒有成為必要寫法。** 倒裝（Not until／Only／Never…）、假設語氣（If…had p.p.／But for／It is high time）、It is…that 強調句、No sooner…than、lest，在 46 句中都不是必要寫法。唯一的例外是 96-2 參考答案並列了 Only when … will … 的倒裝寫法，但它不是首列寫法〔參〕。這和 115 試題特色「捨棄過難及罕見的文法句型」的建議一致 [S-ceec-ep351]。
+3. **有一個課本句型直接成為參考答案。** 113 學測第 1 題的參考答案用了「can be seen making visits to」，評分原則說明也點名「被動型態can/will be seen」〔官〕[S-ceec-s113]，這正是龍騰 B3 L5「be seen/heard + V-ing」[S-csghs-111-1-g11] 的句型。
+4. **時態判斷是主要失分點。** 115 評分原則明示第一句要用現在完成式〔官〕。大考中心 115 評分原則說明（選才電子報 351 期）也寫「初步從考生作答樣本可知，考生第1題未用現在完成式」，並列出用字錯誤（「增加」誤譯為 raise、「百分比」誤用為 percent、「聽、說」誤譯 hearing and talking 等）與拼字錯誤（separate 拼為 seperate、divide 拼為 devide）〔官〕[S-ceec-s115]。媒體報導另提到 senior 拼成 sinior、以 hear 取代 listen、talk 取代 speak [S-news-1111-115]；這幾例在官方說明中找不到原文，屬二手資料。108 學測閱卷說明也指出「自……以來」的主要子句「必須是現在完成式」〔官〕（§9 gsat108 評分）。
 5. **中文的「觸發詞」很固定**，App 可以據此自動判斷句型〔析〕：
    - 「已經、近年來、自…以來、一直」→ 現在完成式
    - 「被認為、覆蓋著、必須（被）執行、總會看到」→ 被動
@@ -349,14 +351,14 @@ L1 The Heart of a Champion／L2 My Mouth's in Airplane Mode!／L3 The Birthmark�
 
 指考的定位是「結構較為複雜」[leg-ast-107]。實際題目比學測多了下列句構〔析〕：
 - 非限定關係子句：106-1、107-1
-- 句尾分詞構句表結果：105-2（例：…, causing deaths far beyond what we can imagine）、107-2
-- 讓步：95-2 Despite／Although、110-2 No matter what／Whatever
-- whether 名詞子句：110-1
+- 句尾分詞構句表結果：105-2、107-2。105-2 的閱卷說明舉例「造成的死亡遠超乎我們所能想像」可譯 causing death that is far beyond our imagination，也可譯 …the death they cause is far beyond what we can imagine〔官〕（§9 ast105 評分）
+- 讓步：95-2 評分說明明列「轉折語Although或In spite of」〔官〕；110-2 閱卷說明「不論」為 no matter what 或 whatever〔官〕
+- whether 名詞子句：110-1 閱卷說明「是否」為 whether〔官〕
 - once 子句：105-1
 - 關係子句內含插入句：101-1（例：Some packaged foods that we think are safe…）
 - take…for granted 加 not…any more：97-2，評分說明列 experts、warn、take for granted、not any more，並提到「含有名詞子句」〔官〕（§9 表 ast97 評分文件）
 
-即使是指考，93–110 的 38 句（含 109 補考 2 句）同樣**沒有一句必須用倒裝或假設語氣**〔析〕。完整題幹見各年題本（§9）。
+即使是指考，93–110 的 38 句（含 109 補考 2 句）同樣**沒有一句必須用倒裝或假設語氣**〔析〕。另有 93 學年度「敏督利颱風受災地區考生補救考試」的 2 句（關渡賞鳥：be located in、one of the + 最高級；…some of which are extremely rare），沒有列入 38 句，也不需要倒裝或假設語氣〔析〕（§9 ast93m）。91、92 學年度指考的非選擇題只有英文作文，沒有翻譯（§9 ast91、ast92 題本）。完整題幹見各年題本（§9）。
 
 ### 5.5 校訂選修課的「翻譯句型」清單（旁證）
 
@@ -502,7 +504,7 @@ L1 The Heart of a Champion／L2 My Mouth's in Airplane Mode!／L3 The Birthmark�
 | gsat113 | 113 學年度學測 | [題本](https://www.ceec.edu.tw/files/file_pool/1/0o051427482769341323/02-113%e5%ad%b8%e6%b8%ac%e8%8b%b1%e6%96%87%e7%a7%91%e5%ae%9a%e7%a8%bf.pdf) | [評分](https://www.ceec.edu.tw/files/file_pool/1/0o051427944026947323/03-113%e5%ad%b8%e6%b8%ac%e8%8b%b1%e6%96%87%e8%80%83%e7%a7%91%e9%9d%9e%e9%81%b8%e6%93%87%e9%a1%8c%e5%8f%83%e8%80%83%e7%ad%94%e6%a1%88%e8%88%87%e8%a9%95%e5%88%86%e5%8e%9f%e5%89%87.pdf) |
 | gsat114 | 114 學年度學測 | [題本](https://www.ceec.edu.tw/files/file_pool/1/0p056425554473267580/02-114%e5%ad%b8%e6%b8%ac%e8%8b%b1%e6%96%87%e8%a9%a6%e9%a1%8c.pdf) | [評分](https://www.ceec.edu.tw/files/file_pool/1/0p055378620142741052/03-114%e5%ad%b8%e6%b8%ac%e8%8b%b1%e6%96%87%e8%80%83%e7%a7%91%e9%9d%9e%e9%81%b8%e6%93%87%e9%a1%8c%e5%8f%83%e8%80%83%e7%ad%94%e6%a1%88%e8%88%87%e8%a9%95%e5%88%86%e5%8e%9f%e5%89%87.pdf) |
 | gsat115 | 115 學年度學測 | [題本](https://www.ceec.edu.tw/files/file_pool/1/0q054532302653501476/02-115%e5%ad%b8%e6%b8%ac%e8%8b%b1%e6%96%87%e8%a9%a6%e5%8d%b7.pdf) | [評分](https://www.ceec.edu.tw/files/file_pool/1/0q054335046832331817/115%e5%ad%b8%e6%b8%ac%e8%8b%b1%e6%96%87%e8%80%83%e7%a7%91%e9%9d%9e%e9%81%b8%e6%93%87%e9%a1%8c%e5%8f%83%e8%80%83%e7%ad%94%e6%a1%88%e8%88%87%e8%a9%95%e5%88%86%e5%8e%9f%e5%89%87.pdf) |
-| ref115 | 115 學年度參考試卷 | [題本](https://www.ceec.edu.tw/files/file_pool/1/0O211576602559573811/02_02_%E5%AD%B8%E6%B8%AC%E8%8B%B1%E6%96%87%E8%80%83%E7%A7%91115%E8%B5%B7%E9%81%A9%E7%94%A8%E5%8F%83%E8%80%83%E8%A9%A6%E5%8D%B7.pdf) | [評分](https://www.ceec.edu.tw/files/file_pool/1/0O211577274372290893/02_03_%E5%AD%B8%E6%B8%AC%E8%8B%B1%E6%96%87%E8%80%83%E7%A7%91115%E8%B5%B7%E9%81%A9%E7%94%A8%E5%8F%83%E8%80%83%E8%A9%A6%E5%8D%B7%E5%8F%83%E8%80%83%E7%AD%94%E6%A1%88%E5%8F%8A%E8%A9%95%E5%88%86%E5%8E%9F%E5%89%87.pdf) |
+| ref115 | 115 學年度參考試卷（中譯英兩句與 110 學測相同） | [題本](https://www.ceec.edu.tw/files/file_pool/1/0O211576602559573811/02_02_%E5%AD%B8%E6%B8%AC%E8%8B%B1%E6%96%87%E8%80%83%E7%A7%91115%E8%B5%B7%E9%81%A9%E7%94%A8%E5%8F%83%E8%80%83%E8%A9%A6%E5%8D%B7.pdf) | [評分](https://www.ceec.edu.tw/files/file_pool/1/0O211577274372290893/02_03_%E5%AD%B8%E6%B8%AC%E8%8B%B1%E6%96%87%E8%80%83%E7%A7%91115%E8%B5%B7%E9%81%A9%E7%94%A8%E5%8F%83%E8%80%83%E8%A9%A6%E5%8D%B7%E5%8F%83%E8%80%83%E7%AD%94%E6%A1%88%E5%8F%8A%E8%A9%95%E5%88%86%E5%8E%9F%E5%89%87.pdf)、[試題解析](https://www.ceec.edu.tw/files/file_pool/1/0O211577504916169811/02_06_%E5%AD%B8%E6%B8%AC%E8%8B%B1%E6%96%87%E8%80%83%E7%A7%91115%E8%B5%B7%E9%81%A9%E7%94%A8%E5%8F%83%E8%80%83%E8%A9%A6%E5%8D%B7%E8%A7%A3%E6%9E%90.pdf) |
 | ast93 | 93 學年度指考 | [題本](https://www.ceec.edu.tw/files/file_pool/1/0j075806499546533816/93english.pdf) | （本專案清單無） |
 | ast94 | 94 學年度指考 | [題本](https://www.ceec.edu.tw/files/file_pool/1/0j075807645706288959/94english.pdf) | [評分](https://www.ceec.edu.tw/files/file_pool/1/0j198542498340692232/94%e5%9c%8b%e6%96%87%e5%8f%8a%e8%8b%b1%e6%96%87%e9%9d%9e%e9%81%b8%e6%93%87%e9%a1%8c%e8%a9%95%e5%88%86%e6%a8%99%e6%ba%96%e8%aa%aa%e6%98%8e.pdf) |
 | ast95 | 95 學年度指考 | [題本](https://www.ceec.edu.tw/files/file_pool/1/0j075808109886501931/95%e8%8b%b1%e6%96%87%e8%a9%a6%e5%8d%b7.pdf) | [評分](https://www.ceec.edu.tw/files/file_pool/1/0j205600154098180038/95%e6%8c%87%e8%80%83%e9%9d%9e%e9%81%b8%e6%93%87%e9%a1%8c%e8%a9%95%e5%88%86%e5%8e%9f%e5%89%87%e8%aa%aa%e6%98%8e%ef%bd%9e%e8%8b%b1.pdf) |
@@ -524,6 +526,17 @@ L1 The Heart of a Champion／L2 My Mouth's in Airplane Mode!／L3 The Birthmark�
 | ast110 | 110 學年度指考 | [題本](https://www.ceec.edu.tw/files/file_pool/1/0l251623650717537197/02-110%e6%8c%87%e8%80%83%e8%8b%b1%e6%96%87%e7%a7%91%e8%a9%a6%e5%8d%b7%e5%ae%9a%e7%a8%bf.pdf) | [評分](https://www.ceec.edu.tw/files/file_pool/1/0l266472648655955440/01-110%e6%8c%87%e8%80%83%e8%8b%b1%e6%96%87%e8%80%83%e7%a7%91%e9%9d%9e%e9%81%b8%e6%93%87%e9%a1%8c%e9%96%b1%e5%8d%b7%e8%a9%95%e5%88%86%e5%8e%9f%e5%89%87%e8%aa%aa%e6%98%8e.pdf) |
 | gsat84 | 84 學年度學測 | [題本](https://www.ceec.edu.tw/files/file_pool/1/0j076560158185999261/84%e5%b9%b4%e5%ad%b8%e6%b8%ac%e8%8b%b1%e6%96%87%e7%a7%91.pdf) | （本專案清單無） |
 | gsat85 | 85 學年度學測 | [題本](https://www.ceec.edu.tw/files/file_pool/1/0j076560475359959792/85%e5%b9%b4%e5%ad%b8%e6%b8%ac%e8%8b%b1%e6%96%87%e7%a7%91.pdf) | （本專案清單無） |
+| gsat83 | 83 學年度學測（中譯英 5 句，20 分） | [題本](https://www.ceec.edu.tw/files/file_pool/1/0j076559780922930721/83%e5%b9%b4%e5%ad%b8%e6%b8%ac%e8%8b%b1%e6%96%87%e7%a7%91.pdf) | （本專案清單無） |
+| gsat86 | 86 學年度學測（非選：簡答題＋作文） | [題本](https://www.ceec.edu.tw/files/file_pool/1/0j076560803522828233/86%e5%b9%b4%e5%ad%b8%e6%b8%ac%e8%8b%b1%e6%96%87%e7%a7%91.pdf) | ─ |
+| gsat87 | 87 學年度學測（非選：短詩閱讀＋作文） | [題本](https://www.ceec.edu.tw/files/file_pool/1/0j076561150896887763/87%e5%b9%b4%e5%ad%b8%e6%b8%ac%e8%8b%b1%e6%96%87%e7%a7%91.pdf) | ─ |
+| gsat88 | 88 學年度學測（非選：簡答題＋作文） | [題本](https://www.ceec.edu.tw/files/file_pool/1/0j076561958069847304/88%e5%b9%b4%e5%ad%b8%e6%b8%ac%e8%8b%b1%e6%96%87%e7%a7%91.pdf) | ─ |
+| gsat89 | 89 學年度學測（非選：簡答題＋作文） | [題本](https://www.ceec.edu.tw/files/file_pool/1/0j076562611149169375/89%e5%b9%b4%e5%ad%b8%e6%b8%ac%e8%8b%b1%e6%96%87%e7%a7%91.pdf) | ─ |
+| gsat90 | 90 學年度學測（非選：簡答題＋作文） | [題本](https://www.ceec.edu.tw/files/file_pool/1/0j076563008313129816/90%e5%ad%b8%e6%b8%ac_english.pdf) | ─ |
+| gsat91 | 91 學年度學測（非選：簡答題＋作文；補考同） | [題本](https://www.ceec.edu.tw/files/file_pool/1/0j076563501493451887/91%e5%ad%b8%e6%b8%ac_english.pdf)、[補考題本](https://www.ceec.edu.tw/files/file_pool/1/0j076563954562774869/91%e5%ad%b8%e6%b8%ac%e8%a3%9c%e8%80%83_english.pdf) | ─ |
+| gsat92 | 92 學年度學測（非選：簡答題＋作文；補考同） | [題本](https://www.ceec.edu.tw/files/file_pool/1/0j076564378742097931/92%e5%ad%b8%e6%b8%ac_english.pdf)、[補考題本](https://www.ceec.edu.tw/files/file_pool/1/0j076564655916066461/92%e5%ad%b8%e6%b8%ac%e8%a3%9c%e8%80%83_english.pdf) | ─ |
+| ast91 | 91 學年度指考（非選：只有作文） | [題本](https://www.ceec.edu.tw/files/file_pool/1/0j075805182752018845/91english.pdf) | ─ |
+| ast92 | 92 學年度指考（非選：只有作文） | [題本](https://www.ceec.edu.tw/files/file_pool/1/0j075805846477210834/92english.pdf) | ─ |
+| ast93m | 93 學年度指考「敏督利颱風受災地區考生補救考試」 | [題本](https://www.ceec.edu.tw/files/file_pool/1/0j075807012626956988/93%e6%8c%87%e8%80%83%e8%8b%b1%e6%96%87%e8%a3%9c%e8%80%83%e8%a9%a6%e5%8d%b7.pdf) | （本專案清單無） |
 
 
 [S-curr]: https://www.naer.edu.tw/upload/1/16/doc/812/%28%E7%99%BC%E5%B8%83%E7%89%88%29%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E5%AD%B8%E6%A0%A1-%E8%AA%9E%E6%96%87%E9%A0%98%E5%9F%9F-%E8%8B%B1%E8%AA%9E%E6%96%87%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81.pdf
