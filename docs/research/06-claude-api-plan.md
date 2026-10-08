@@ -55,6 +55,10 @@
     - 單位從「次數」改成「依成本加權的點數」。
     - 全站上限改成**以實際 usage 換算的美元預算**。
     - 最後一道防線是 Anthropic workspace 的 spend limit [ANT-WS]。
+13. **拒答和 fallback 的帳務**（2026-10-08 查證補充）：
+    - `bio`、`frontier_llm`、`reasoning_extraction` 類別即使在輸出前拒答也會收費。
+    - 開了 `fallbacks` 時，要加總 `usage.iterations` 的每一次嘗試，最上層的 `usage` 只算最後那次 [ANT-REFUSAL]。
+    - 帳本和點數退還要照這個規則設計（§1.6 #8a、§5.2(d)）。
 
 ---
 
@@ -1142,6 +1146,9 @@ AI_OP_TTL = "1800"
 12. **難度標籤的校正**：要靠上線後學生的作答資料。
 13. **未成年學生資料的保存與告知規範。**
 14. **Anthropic 新組織的初始級距**：可能是 Evaluation tier；實際額度要在 Console 確認 [ANT-RL]。
+15. **Haiku 5.5 的品質**（2026-10-08 新增）：用在單字增補、第三位盲解者是否合格，以及它在各 effort 下的思考 token 量，都沒有實測。
+16. **價格會變動**（2026-10-08 新增）：Sonnet 5.5 的快取讀取在 2026-10-07 到 10-08 之間從 $0.20 降為 $0.10。程式裡的價格表要有更新日期，對帳差異（§5.2(g)）也可以用來發現價格變動。
+17. **「低 effort 先跑、失敗才用高 effort 重跑」用在出題的效果**（2026-10-08 新增）：官方數據來自程式評測（§2.2.3），用在出題上要自己實測。
 
 ---
 
@@ -1174,7 +1181,16 @@ AI_OP_TTL = "1800"
 - [ANT-USAGE] Usage and Cost API：https://platform.claude.com/docs/en/manage-claude/usage-cost-api
 - [ANT-WS] Workspaces：https://platform.claude.com/docs/en/manage-claude/workspaces
 - [ANT-TS] Claude SDK for TypeScript（README，支援的執行環境）：https://github.com/anthropics/anthropic-sdk-typescript
-- [SKILL] Claude Code 內建的 `claude-api` 技能（模型表快取日期 2026-09-25）。內容來自上列官方文件。沒有逐字對應到官方頁面的說法，本文都標註 [SKILL]。
+- [SKILL] Claude Code 內建的 `claude-api` 技能（原稿使用的版本，模型表快取日期 2026-09-25；2026-10-08 查證時的版本快取日期是 2026-10-06，已列入 Haiku 5.5）。內容來自上列官方文件。沒有逐字對應到官方頁面的說法，本文都標註 [SKILL]。
+
+**Anthropic（2026-10-08 查證時新下載，存於 `data/raw/anthropic-docs/recheck-2026-10-08/`；[ANT-MODELS]、[ANT-PRICE]、[ANT-RL]、[ANT-DEPR]、[ANT-O55]、[ANT-S55]、[ANT-SO]、[ANT-CACHE] 也在此重新下載）**
+
+- [ANT-H55] Claude Haiku 5.5：https://platform.claude.com/docs/en/models/haiku-5-5/overview
+- [ANT-H55-NEW] What's new in Claude Haiku 5.5：https://platform.claude.com/docs/en/models/haiku-5-5/whats-new-haiku-5-5
+- [ANT-H55-MIG] Migrating to Claude Haiku 5.5：https://platform.claude.com/docs/en/models/haiku-5-5/migration-guide
+- [ANT-WEBSEARCH] Web search tool：https://platform.claude.com/docs/en/agents-and-tools/tool-use/web-search-tool
+- [ANT-WEBFETCH] Web fetch tool：https://platform.claude.com/docs/en/agents-and-tools/tool-use/web-fetch-tool
+- [ANT-COSTINTEL] Optimizing for cost and intelligence（2026-10-07 已下載，存於 `data/raw/anthropic-docs/`，原稿未引用）：https://platform.claude.com/docs/en/about-claude/models/optimizing-for-cost-and-intelligence
 
 **Cloudflare（2026-10-07 下載，存於 `data/raw/cloudflare-docs/`）**
 
@@ -1186,6 +1202,14 @@ AI_OP_TTL = "1800"
 - [CF-Q-PRICE] Queues pricing：https://developers.cloudflare.com/queues/platform/pricing/
 - [CF-AIG] AI Gateway：Anthropic：https://developers.cloudflare.com/ai-gateway/usage/providers/anthropic/
 
+**Cloudflare（2026-10-08 查證時新下載，存於 `data/raw/cloudflare-docs/recheck-2026-10-08/`）**
+
+- [CF-Q-CONC] Queues：Consumer concurrency：https://developers.cloudflare.com/queues/configuration/consumer-concurrency/
+- [CF-R2] R2 pricing：https://developers.cloudflare.com/r2/pricing/
+- [CF-AIG-PRICE] AI Gateway pricing：https://developers.cloudflare.com/ai-gateway/reference/pricing/
+- [CF-AIG-CACHE] AI Gateway caching：https://developers.cloudflare.com/ai-gateway/features/caching/
+- [CF-AIG-RL] AI Gateway rate limiting：https://developers.cloudflare.com/ai-gateway/features/rate-limiting/
+
 **其他**
 
 - [GH-LIMITS] GitHub Actions limits：https://docs.github.com/en/actions/reference/limits
@@ -1193,5 +1217,5 @@ AI_OP_TTL = "1800"
 
 **本機檔案（唯讀參考）**
 
-- Sekai Center：`/home/user/project-sekai-center/worker/wrangler.toml`、`worker/src/api.js`、`worker/src/admin.js`、`worker/src/db.js`、`worker/src/review.js`
+- Sekai Center：`/home/user/project-sekai-center/worker/wrangler.toml`、`worker/src/api.js`、`worker/src/admin.js`、`worker/src/db.js`、`worker/src/review.js`、`worker/src/pricing.js`
 - 本專案研究文件：`docs/research/01-curriculum-108.md`、`02-gsat-english-spec.md`、`03-vocab-list.md`、`04-data-sources-licensing.md`、`05-sekai-center-patterns.md`、`09-exam-inventory.md`
