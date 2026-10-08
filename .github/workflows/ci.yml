@@ -2,7 +2,9 @@
 #
 # 分成兩個 job：
 #   app    前端與 Worker 的型別檢查、單元測試（含 Worker 的 CORS／Origin 安全測試）、建置、Playwright 煙霧測試。
-#          只看程式碼：`npm test` 不讀 data/（讀 data/ 的測試放在 packages/shared 的 vitest data 專案）。
+#          `npm test` 不讀 data/（讀 data/ 的測試放在 packages/shared 的 vitest data 專案）；
+#          例外是建置：apps/web 的 prebuild（scripts/build-data.mjs）會把 data/vocab、data/exams 轉成前端資料檔，
+#          資料不符合前端契約時「建置」這一步會失敗，但排在它前面的型別檢查與單元測試結果不受影響。
 #   exams  data/ 的檢查：tools/validate_exam.py（gsat-exam/v1 格式）與 `npm run test:data`
 #          （實際 JSON 能不能安全地當成 @gsat/shared 的 TypeScript 型別使用）。
 # 分開的理由：題庫資料由另一條流程陸續寫入，資料有錯不該蓋掉程式碼的檢查結果，反之亦然
