@@ -9,13 +9,14 @@
 
 ## 0. 重點摘要
 
-1. **108 課綱的部定必修英文只有五冊，沒有「第六冊」。** 國教院 115-1 審定清冊裡，普高英文第一～五冊的出版者是「三民、三民(乙版)、翰林、龍騰」四套 [S-naer-list]。必修學分是高一、高二每學期 4 學分，高三上 2 學分，合計 18 學分。高三下沒有部定必修課本，只有加深加廣選修（英語聽講、英文閱讀與寫作、英文作文）[S-curr]。所以需求中的「第一至第六冊」，本文改為 B1–B5，再加上一節說明高三下的情況。
+1. **108 課綱的部定必修英文只有五冊，沒有「第六冊」。** 國教院 115-1 審定清冊裡，普高英文第一～五冊的出版者是「三民、三民(乙版)、翰林、龍騰」四套 [S-naer-list]。必修學分是高一、高二每學期 4 學分，高三上 2 學分，合計 18 學分。高三下沒有部定必修課本；加深加廣選修（英語聽講、英文閱讀與寫作、英文作文，各 2 學分）的建議授課年級是「高一至高三皆適用」，不是專屬高三下的課 [S-curr]。所以需求中的「第一至第六冊」，本文改為 B1–B5，再加上一節說明高三下的情況。附帶一提：同一份清冊中，**技術型高中**的英文才有第一～六冊（例如「技術型高中 英文 第六冊 技審字第110132」）[S-naer-list]，普高沒有。
 2. **課綱沒有列出高中要教的文法清單。** 第五學習階段的學習內容只寫「Ad-Ⅴ-1 高中階段所學的結構」；附錄六只列國中基礎文法 [S-curr]。所以高中實際教哪些句型，是由各家教科書決定的。課綱另外把句型分成兩類：較常用、需要會用的「應用結構」，以及較複雜、只需理解的「認識結構」[S-curr]。JSON 的設計呼應這個區分〔析〕：`typical_use` 為 `translation`／`all` 的高頻句型要練到會用；高二以後的倒裝、假設等 `composition` 句型，大多數學生先求看懂，有餘力再用在作文裡。
-3. **逐課句型只取得龍騰版。** 龍騰 B1（113–114 學年度版）、B3（111 版）、B4（111 版）、B5（112 版）的逐課句型，可以從中山女高、師大附中、金甌女中公開的課程計畫核對 [S-cogsh-114-1-g10][S-csghs-111-1-g11][S-hsnu-111-1-g11][S-csghs-111-2-g11][S-csghs-112-1-g12]。B2 只取得課名。三民甲版、乙版只有各課課名，翰林沒有任何課次資料（未驗證）。
-4. **龍騰的進度大致如下**：B1 教名詞子句、關係子句、使役動詞、so/such…that、the + 比較級、分詞構句；B3 教虛受詞 it、完成式被動、感官動詞被動、It is not until…that、介系詞＋關代、否定倒裝；B4 集中教假設語氣（與現在、過去事實相反、But for、意志動詞＋should）、Not until 和 Only 倒裝、倍數比較、關係副詞；B5 教複合關代、lest、倍數、as if、省略 if 的倒裝，並加入篇章概念（指涉、同義重述、轉承詞、平行結構）。
+3. **逐課句型只取得龍騰版。** 龍騰 B1（113–114 學年度版）、B3（111 版）、B4（111 版）、B5（112 版）的逐課句型，可以從中山女高、師大附中、金甌女中公開的課程計畫核對 [S-cogsh-114-1-g10][S-csghs-111-1-g11][S-hsnu-111-1-g11][S-csghs-111-2-g11][S-csghs-112-1-g12]。B2 只取得課名（花蓮女中 111-2 學習成果文件明寫「龍騰版第二冊」L1 The Heart of a Champion、L6 No Wonder He's Special，可確認出版社）[S-hlgs-111-2-g10]。B4 換成 The Bet 的新版（114-2）只有中山女高計畫的「功能描述」，沒有句型名稱 [S-csghs-114-2-g11]。三民甲版、乙版只有各課課名，翰林沒有任何課次資料（未驗證）。
+4. **龍騰的進度大致如下**：B1 教名詞子句、關係子句、使役動詞、so/such…that（計畫稱為「強調句」）、the + 比較級、分詞構句；B3 教虛受詞 it、完成式被動、感官動詞被動、It is not until…that、介系詞＋關代、否定倒裝；B4 集中教假設語氣（與現在、過去事實相反、But for、意志動詞＋should）、Not until 和 Only 倒裝、倍數比較、關係副詞；B5 教複合關代、lest、倍數、as if、省略 if 的倒裝，並加入篇章概念（指涉、同義重述、轉承詞、平行結構）。
 5. **學測中譯英常用的句型其實很基礎。** 本文逐題分析 93–115 學年度學測的 46 個中譯英句子（§5）：
-   - 最常用的是現在完成式（10 句，其中 7 句有大考中心佐證）、比較級／最高級（9 句）、分詞片語或分詞構句（8 句）、動名詞主詞（7 句）、關係子句（6 句）、被動語態（6 句）、副詞子句（6 句）、不定詞表目的（5 句）。
-   - **沒有任何一句必須用倒裝、假設語氣、It is…that 強調句或 No sooner…than。**
+   - 最常用的是現在完成式（10 句，其中 7 句有大考中心佐證）、比較級／最高級（9 句，5 句有佐證）、分詞片語或分詞構句（8 句，但只有 4 句是必要／首選寫法）、動名詞主詞（7 句，7 句都有佐證）、關係子句（6 句）、被動語態（6 句）、副詞子句（6 句）、不定詞表目的（5 句）。
+   - **沒有任何一句必須用倒裝、假設語氣、It is…that 強調句或 No sooner…than。** 唯一出現倒裝的是 96 學測第 2 題參考答案的「替代寫法」Only when we start to think for others will the door to happiness open…，首列寫法仍是 When … 子句 [§9 gsat96 評分]。
+   - 83–85 學年度學測也有中譯英，但是 5 句一組、每句 4 分（共 20 分）的段落翻譯，格式不同，沒有列入統計；86–92 學年度學測的非選擇題是簡答題（87 年為短詩閱讀）＋作文，沒有中譯英（§5.2）。
    - 大考中心考試說明寫的是「高中階段所學之基本句型（例如：單句、合句、複句）」[S-ceec-115-spec]。115 學測試題特色也說，中譯英「多使用基礎文法句構與觀念即能作答」，並建議教師「考慮捨棄課本或教材中過難及罕見的文法句型」[S-ceec-ep351]。
 6. **對 App 的建議**：中譯英命題的主軸放在上述高頻句型。課本高二下到高三的倒裝和假設語氣，留給「超越頂標」難度的題目和作文範文使用。轉承詞依功能（遞進、轉折、因果、舉例、結論…）均衡使用，讓範文看得出文章結構（§6）。
 
@@ -35,15 +36,15 @@
 | 翰林執照號碼 | B1 108005、B2 108120、B3 109049、B4 109092、B5 110032 | [S-naer-list] |
 | 三民甲、乙版主編 | 甲版：車畇庭；乙版：劉宇挺（二手資料） | [S-blog-sm] |
 | 必修學分 | 第十、十一年級每學期 4 學分，第十二年級上學期 2 學分 | [S-curr] |
-| 高三下 | 沒有部定必修英文。加深加廣選修有英語聽講、英文閱讀與寫作、英文作文（各 2 學分），學測只考部定必修範圍 | [S-curr]；另見 [01-curriculum-108.md](01-curriculum-108.md) |
+| 高三下 | 沒有部定必修英文。加深加廣選修有英語聽講、英文閱讀與寫作、英文作文（各 2 學分；課綱的建議授課年級為「高一至高三皆適用」）。學測「以英語文領綱普通型高級中等學校部定必修課程為測驗範圍」 | [S-curr]；[S-ceec-115-spec]；另見 [01-curriculum-108.md](01-curriculum-108.md) |
 
-清冊上的執照號碼和出版者是分行排版的，本文依「出版者名稱的上下行」對應到序號。龍騰 B1＝108032 也與師大附中 114-1 的版本明細表一致（附中檔案網址未保存，未另列來源）。
+清冊上的執照號碼和出版者是分行排版的，本文依「出版者名稱的上下行」對應到序號。龍騰 B1＝108032 也與師大附中「114學年度第1學期高一教科書版本明細表」（114.05.05）一致：表中「英文(第一冊)Book1｜龍騰文化｜普審字第108032」。本機副本在 `data/raw/curriculum/textbooks/hsntnu_textbook_list.pdf`，但下載網址沒有保存，所以不列入來源清單（未驗證線上網址）。
 
 ### 1.2 取得了哪些資料、缺了哪些
 
 | 出版社 | 課次目錄 | 逐課文法／句型 | 主要來源 |
 |---|---|---|---|
-| 龍騰 | B1–B5 全部 | B1（113–114 版）、B3（111 版）、B4（111 版）、B5（112 版，114-1 內容相同）；**B2 未取得** | 金甌、中山、附中課程計畫；部落格課次表 |
+| 龍騰 | B1–B5 全部 | B1（113–114 版）、B3（111 版）、B4（111 版；114-2 新版只有功能描述）、B5（112 版，114-1 內容相同）；**B2 未取得** | 金甌、中山、附中、花蓮女中課程計畫；部落格課次表 |
 | 三民（甲版） | B1–B5 課名 | **未取得** | 部落格（二手） |
 | 三民（乙版） | B1–B5 課名（B1 經均一核對、B3 經金甌計畫核對） | **未取得** | 部落格、均一、金甌 |
 | 翰林 | **未取得**（只確認清冊上有第一～五冊） | **未取得** | 清冊 |
@@ -57,8 +58,8 @@
 | B1 | L1 | Freshman Zit Girl（109-1、112-1 仍使用） | Firsts in Life（附中 113-1 起） | [S-dcsh-109-1][S-csghs-112-1-g10][S-hsnu-113-1-g10][S-cogsh-114-1-g10] |
 | B1 | L7 | The White Envelope | From Trash to Triumph | 同上 |
 | B2 | L3 | Mammon and the Archer（110-2、112-2） | The Birthmark（114-2） | [S-csghs-110-2-g10][S-hsnu-112-2-g10][S-hsnu-114-2-g10] |
-| B3 | L6 | My Life in Your Hands（110-1、111-1） | The Country of the Blind（114-1） | [S-csghs-110-1-g11][S-csghs-111-1-g11][S-hsnu-114-1-g11][S-csghs-114-1-g11] |
-| B4 | L1 | The Lady or the Tiger?（111-2） | The Bet（114-2） | [S-csghs-111-2-g11][S-hsnu-114-2-g11] |
+| B3 | L6 | My Life in Your Hands（110-1、111-1、113-1） | The Country of the Blind（114-1） | [S-csghs-110-1-g11][S-csghs-111-1-g11][S-csghs-113-1-g11][S-hsnu-114-1-g11][S-csghs-114-1-g11] |
+| B4 | L1 | The Lady or the Tiger?（111-2） | The Bet（114-2） | [S-csghs-111-2-g11][S-hsnu-114-2-g11][S-csghs-114-2-g11]。附中 114-1 高二進度表第 21 週（115 年 1 月補課）仍寫「第四冊 Lesson 1 The Lady of the Tiger?」（原文如此）[S-hsnu-114-1-g11]，114-2 進度表才改為 The Bet，可見換課從 114-2 學期的課本開始 |
 | B5 | L1 | Life Lessons in Rudyard Kipling's "If—"（111–114） | The Road Not Taken（部落格稱 115 起更新，未驗證） | [S-hsnu-111-1-g12][S-csghs-114-1-g12][S-blog-lt] |
 | 三民乙版 B1 | Unit 2 | I See You, Taiwan | 部落格留言稱 115 學年度更換（未驗證） | [S-blog-sm] |
 
@@ -94,7 +95,7 @@
 | R1 | When Shocked in Rome | （未列） | ─ |
 | L4 | Sniffing Out More Than Just Bones | 形容詞子句限定與非限定用法 | 人類與動物（嗅聞犬）；說明文 |
 | L5 | The Life of a Plastic Bag | 使役動詞；because 與 because of | 海洋資源與永續；童話／寓言摘要 |
-| L6 | Built for Freedom: The Statue of Liberty | 強調句型；so/such…that… | 多元文化與國際理解；空間記敘文 |
+| L6 | Built for Freedom: The Statue of Liberty | 「觀察如何使用強調句型」；「觀察並歸納強調句（so/such...that...）」。計畫把 so/such…that 稱為「強調句」，沒有說明前一項是否為 It is…that 分裂句（未驗證） | 多元文化與國際理解；空間記敘文 |
 | R2 | Having Fun with Change | （未列） | ─ |
 | L7 | From Trash to Triumph | S + have + O + p.p.…；間接問句的簡化 | 生命教育／社會關懷；Story Mountain 記敘 |
 | L8 | Convenience Stores: Where Our Wallets Are Always Open | 比較級「愈……愈……」；so that 表示因果關係 | 商業與經濟（行銷策略）；活動規劃短文 |
@@ -107,7 +108,7 @@ R 課課名來自部落格 [S-blog-lt]。
 
 L1 The Heart of a Champion／L2 My Mouth's in Airplane Mode!／L3 The Birthmark（舊版 Mammon and the Archer）／R1 How Do You Take Your Tea, High or Low?／L4 Malala: Stronger Than Violence／L5 Walt Disney's Inspirational Message: Dare to Dream／L6 No Wonder He's Special／R2 Note How to Really Learn／L7 TED Talks: Spreading Ideas for a Better World／L8 Ban-Doh: The Most Authentic Taiwanese Eating Experience／L9 The Story behind Eponyms／R3 Living above the Earth—and Beyond [S-csghs-110-2-g10][S-hsnu-114-2-g10][S-blog-lt]。
 
-附中 114-2 進度表記載的主題：L1 運動員面對困難的堅毅、L2 環境對飲食的影響（學習因果關係）、L3 改編自 Hawthorne 的 The Birthmark、L4 馬拉拉爭取受教權、L5 迪士尼創業、L6 改編自小說 Wonder 的校園霸凌、L7 TED Talks、L8 辦桌文化、L9 Eponyms [S-hsnu-114-2-g10]。**逐課句型未取得（未驗證）。**
+附中 114-2 進度表記載的主題：L1 運動員面對困難的堅毅、L2 環境對飲食的影響（學習因果關係）、L3 改編自 Hawthorne 的 The Birthmark、L4 馬拉拉爭取受教權、L5 迪士尼創業、L6 改編自小說 Wonder 的校園霸凌、L7 TED Talks、L8 辦桌文化、L9 Eponyms [S-hsnu-114-2-g10]。花蓮女中 111-2 課程學習成果文件明寫「對應單元 龍騰版第二冊」，L1 The Heart of a Champion 搭配經驗寫作（5W1H）、L6 No Wonder He's Special 搭配電影摘要（Freytag's Pyramid）[S-hlgs-111-2-g10]。中山女高 112-2 計畫只列閱讀與寫作策略（5W1H、問題與解決、新聞與專題文本結構、舉例、觀點、主題句、感官描寫、上下文猜字義…），不是文法句型 [S-csghs-112-2-g10]。**逐課句型未取得（未驗證）。**
 
 #### B3（高二上；111 學年度版）[S-csghs-111-1-g11]＋附中 [S-hsnu-111-1-g11]
 
@@ -119,12 +120,12 @@ L1 The Heart of a Champion／L2 My Mouth's in Airplane Mode!／L3 The Birthmark�
 | R1 | 3-D Printing | 從前後文判斷代名詞指涉 | Pronoun: They | 科技新知 |
 | L4 | Day of the Dead | S + be + thought/said/believed + to VR/have + p.p. | would rather…than…；轉承詞 Instead | 生命教育、節慶 |
 | L5 | Kyoto: The Heart of Japan | be seen/heard + V-ing/to VR；雙重否定 | no/not/never…without + V-ing/N | 異國文化 |
-| L6 | My Life in Your Hands（114 版換為 The Country of the Blind） | It isn't/wasn't until… + that + S + V… | either…or… / neither…nor… | 手足之情 |
-| R2 | The Mystery of the Disappearing Bees | 辨識因果關係的字詞 | ─ | 生態 |
+| L6 | My Life in Your Hands（114 版換為 The Country of the Blind） | It isn't/wasn't until… + that + S + V… | Cleft Sentence and the Pattern "not... until...."；either…or… / neither…nor… | 手足之情 |
+| R2 | The Mystery of the Disappearing Bees | 辨識因果關係的字詞 | Transitional Words and Phrases: Causal Relation | 生態 |
 | L7 | Bodies Speak Louder Than Words | …N(,) prep. + which/whom + S + V…；can't help but + VR／can't help + V-ing | the belief/news/fact…that + S + V；In Contrast | 身體語言 |
 | L8 | Elephant Abuse | N, all/most/some/… of which/whom (+ S) + V…；It is high time… | What's More / Worse Still | 環境倫理 |
-| L9 | Mazu Mania | Never/Seldom/Hardly/Rarely/Barely + be/aux. + S…；「It is no + V-ing」（原文） | It is no exaggeration to say that… / It is not too much to say that… | 宗教文化 |
-| R3 | Fast Fashion, but at What Cost? | ─ | ─ | 永續發展 |
+| L9 | Mazu Mania | Never/Seldom/Hardly/Rarely/Barely + be/aux. + S…；「It is no + V-ing」（原文） | Negative Inversion（附中列 Never/Seldom/Hardly/Barely）；It is no exaggeration to say that… / It is not too much to say that… | 宗教文化 |
+| R3 | Fast Fashion, but at What Cost? | 篇章結構：以回顧、摘要為結論段 | Summarizing in the Conclusion | 永續發展 |
 
 #### B4（高二下；111 學年度版）[S-csghs-111-2-g11]
 
@@ -142,6 +143,8 @@ L1 The Heart of a Champion／L2 My Mouth's in Airplane Mode!／L3 The Birthmark�
 | L8 | Too Much of a Good Thing—Overtourism in Barcelona | Only…be/aux. + S…；倍數比較 | 過度觀光、SDGs；抱怨信 |
 | L9 | To Kill a Mockingbird | S + must/may/might/could + VR/have + p.p.；分詞片語描述人事物 | 小說、歧視；小說摘要 |
 | R3 | Marathons | 口說：介紹競速比賽 | 運動 |
+
+**114-2 新版（L1 換為 The Bet）**：中山女高 114-2 高二計畫只用「功能」描述各課的語言重點，沒有寫句型名稱 [S-csghs-114-2-g11]：U1 The Bet「Highlighting a condition and introducing an unexpected outcome」、U2「Expressing an opinion」、U3「Adding more information to a statement / Asking questions indirectly」、U4「Adding more information about a person/thing」、U5「Offering background information, reasons, or explanations」、U6「Modifying a person/thing vs. providing extra information」、U7「Modifying a place/time vs. providing extra information」、U8「Comparing people, things, places, etc.」、U9「Describing a person/thing」。U3、U6–U9 的描述和 111 版的間接問句、形容詞子句、關係副詞、倍數比較、分詞片語可以對得上；U1 的「introducing an unexpected outcome」近似 111 版 L1 的「(As) + adj./adv. + as… 帶出讓人意料之外的訊息」。但這只是依功能描述推測，新版 L1 的實際句型仍未取得（未驗證）。
 
 #### B5（高三上；112 學年度版，114-1 計畫內容相同）[S-csghs-112-1-g12][S-csghs-114-1-g12]
 
@@ -193,7 +196,7 @@ L1 The Heart of a Champion／L2 My Mouth's in Airplane Mode!／L3 The Birthmark�
 | 比較 | L8（the + 比較級） | ─ | L8（倍數） | L3（倍數 the N of） | |
 | 分詞 | L9（分詞構句） | L3（形容詞片語置首） | L4（with + O + OC）、L5（分詞構句）、L9（分詞片語） | L4（複合形容詞） | |
 | 連接詞 | L5（because/because of）、L6（so/such…that）、L8（so that）、L9（while/whereas） | L3（not only…but also）、L6（either/neither） | ─ | L2（lest/for fear that） | |
-| 強調 | L6（強調句型） | L6（It is not until…that）、L9（It is no exaggeration…） | ─ | ─ | |
+| 強調 | L6（「強調句型」，未指明是否為分裂句） | L6（It is not until…that；附中列 Cleft Sentence）、L9（It is no exaggeration…） | ─ | ─ | |
 | 倒裝 | ─ | L9（否定副詞） | L6（Not until）、L8（Only） | L6（省略 if 倒裝） | 高二起才出現 |
 | 假設 | ─ | L8（It is high time） | L1（意志動詞 should）、L2（現在）、L3（It is essential that）、L5（過去）、L7（But for） | L5（as if）、L6（省略 if） | 集中在 B4 |
 | 助動詞 | ─ | ─ | L4（seem to have p.p.）、L9（must have p.p.） | ─ | |
@@ -224,7 +227,7 @@ L1 The Heart of a Champion／L2 My Mouth's in Airplane Mode!／L3 The Birthmark�
 
 **啟示**〔析〕：
 
-1. **閱讀選材（SDGs 主題）和課本高度重疊。** 三套課本都大量選用環境、人權、科技倫理的文章。App 依 SDGs 改寫閱讀文章時，可以優先選課本「沒有寫過的角度」，避免和課文雷同。課綱學習內容也列了「C-Ⅴ-4 國際議題（如全球暖化、人工智慧、氣候變遷等）」[S-curr]。
+1. **閱讀選材（SDGs 主題）和課本高度重疊。** 三套課本都大量選用環境、人權、科技倫理的文章。App 依 SDGs 改寫閱讀文章時，可以優先選課本「沒有寫過的角度」，避免和課文雷同。課綱學習內容也列了「*C-Ⅴ-4 國際議題（如全球暖化、人工智慧、氣候變遷等）」和「C-Ⅴ-5 地球村觀點、生命及全球永續發展的關注」[S-curr]；C-Ⅴ-4 前面的星號表示「較高階的學習內容」，各校可依學生程度選用 [S-curr]。
 2. **作文體裁對應課本的寫作任務。** 龍騰各課的寫作任務涵蓋書信（B1 L2、B4 L7 公開信、L8 抱怨信）、記敘（B1 L7 Story Mountain）、說明文（B1 L4、B5 L1）、意見文（B1 L9 OREO）、比較對比（B5 L3）、問題解決（B5 L2）。這些和學測作文的信函、看圖、主題寫作題型一致 [S-ceec-115-spec]。範文生成時可以標示「這篇用的是哪一課的寫作框架」。
 3. **台灣在地與節慶題材**（辦桌、媽祖、達悟族、珍奶）適合用在中譯英命題。學測中譯英多是台灣生活情境，例如玉山、高鐵、夜市、選舉廟宇、颱風（見 §5 題幹）。
 4. **文學經典題材**（神話、短篇小說、詩）沒有出現在 93–115 學測中譯英的題幹中（§5.2）。App 可以把這類題材放在閱讀模組，不必用於翻譯命題。
@@ -242,15 +245,16 @@ L1 The Heart of a Champion／L2 My Mouth's in Airplane Mode!／L3 The Birthmark�
 | 107 學年度起適用指考考試說明（舊制） | 「內容以結構較為複雜之句型（如合句、複句、複合句等）為主」 | [leg-ast-107] |
 | 115 學測試題特色 | 「混合題組非選擇題及中譯英句子等試題設計，也多使用基礎文法句構與觀念即能作答。因此在讀寫教學上，教師可以考慮捨棄課本或教材中過難及罕見的文法句型」；「使用句構也屬高中常見，並無過於複雜及罕見的句型應用」 | [S-ceec-ep351] |
 | 106–108、110 學測閱卷說明 | 反覆出現「所測驗之句型亦為高中生熟悉的範圍」 | 見 §9 表 gsat106–gsat110 評分文件 |
-| 112–115 學測評分原則 | 「所評量的字詞大致都以詞彙表一至四級詞彙為主」 | 見 §9 表 gsat112–gsat115 評分文件 |
+| 112–115 學測評分原則 | 112–114：「所評量的字詞大致都以詞彙表一至四級詞彙為主」；115：「所評量的標的詞彙（target words）大致都以詞彙表一至四級詞彙為主」 | 見 §9 表 gsat112–gsat115 評分文件 |
+| 111–115 選才電子報〈非選擇題評分原則說明〉 | 111：第 2 題「評量 When/While ving,… 或時間副詞 When S +V… 的句構」；112：第 2 題「評量以動名詞或不定詞作主語，並使用對等連接詞and的平行結構」；113：第 1 題「被動型態can/will be seen，若用S+V，則要特別注意不能省略主詞」；114：第 1 題「必須使用最高級的用法（『最大的』the biggest/strongest）」；115：「兩題作答只須使用基本句型（S＋V）」，第 1 題「應該使用現在完成式」，第 2 題「需要使用連接詞（and）或者分詞構句」 | [S-ceec-s111][S-ceec-s112][S-ceec-s113][S-ceec-s114][S-ceec-s115] |
 
 ### 5.2 93–115 學年度學測中譯英逐題句構（46 句）
 
 說明：
-- 題幹取自大考中心各年題本（§9）。學測 86–92 年的非選擇題只有作文；84、85 年是 5 句一組的翻譯，格式不同，不列入統計。
-- 「依據」欄：官＝大考中心考試說明、評分原則或閱卷說明明示；參＝大考中心參考答案使用；析＝本文分析的自然譯法（非官方）。
-- 一句可以有多個句構，「可選」表示參考答案或常見正確譯法之一，但不是唯一寫法。
-- 105、108 學測的句型說明見 111 學年度起適用考試說明的試題舉例 [S-ceec-111-spec]；109、111 學測見 115 學年度起適用考試說明 [S-ceec-115-spec]；110 試辦考試見 [S-ceec-110-trial]；其餘年度見 §9 各年評分文件。
+- 題幹取自大考中心各年題本（§9）。學測 83–85 年是 5 句一組、每句 4 分（共 20 分）的段落翻譯（83 年題本：「請用最適當的句型將下列五個文義連貫的句子譯成通順而達意的英文」），格式不同，不列入統計。學測 86–92 年（含 91、92 補考）的非選擇題是「簡答題」＋英文作文（87 年是「短詩閱讀」＋英文作文），沒有中譯英；已逐年核對題本（§9 gsat83、gsat86–gsat92）。
+- 「依據」欄：官＝大考中心考試說明、評分原則、閱卷說明或選才電子報評分原則說明明示；參＝大考中心參考答案使用；析＝本文分析的自然譯法（非官方）。
+- 一句可以有多個句構，「可選」表示參考答案或官方說明並列了其他寫法，且這個句構不是參考答案首列的寫法。
+- 105、108 學測的句型說明見 111 學年度起適用考試說明的試題舉例 [S-ceec-111-spec]；109、111 學測見 115 學年度起適用考試說明 [S-ceec-115-spec]；111–115 學測另見選才電子報評分原則說明 [S-ceec-s111]–[S-ceec-s115]；110 學測的兩句在「115 學年度起適用參考試卷」重出，附參考答案與試題解析（§9 ref115）；110 試辦考試見 [S-ceec-110-trial]；其餘年度見 §9 各年評分文件。
 
 | 年度-題 | 中文題幹 | 主要句構（依據） | 備註 |
 |---|---|---|---|
@@ -258,48 +262,48 @@ L1 The Heart of a Champion／L2 My Mouth's in Airplane Mode!／L3 The Birthmark�
 | 93-2 | 她的故事證明了，我們只要努力必能成功。 | 名詞子句（析）；副詞子句（析） | prove that…；as long as… |
 | 94-1 | 人類對外太空所知非常有限，但長久以來我們對它卻很感興趣。 | 現在完成式（析） | know little about…, but … have long been interested in… |
 | 94-2 | 太空科技的快速發展，使我們得以探索它的奧秘。 | 動詞＋受詞＋to V／補語（析） | The rapid development of … enables us to … |
-| 95-1 | 一般人都知道閱讀對孩子有益。 | 名詞子句（析）；動名詞／不定詞片語當主詞（析） | 評分說明列 good for、beneficial to |
-| 95-2 | 老師應該多鼓勵學生到圖書館借書。 | 動詞＋受詞＋to V／補語（析） | encourage sb to V |
-| 96-1 | 如果我們只為自己而活，就不會真正地感到快樂。 | 副詞子句（析） | if 條件子句（直說法） |
-| 96-2 | 當我們開始為他人著想，快樂之門自然會開啟。 | 副詞子句（析） | when 時間子句 |
+| 95-1 | 一般人都知道閱讀對孩子有益。 | 名詞子句（官）；動名詞／不定詞片語當主詞（參） | 評分說明：第一句「寫出一個複句 (complex sentence)」，列 good for、beneficial to；參考答案 Everyone knows (that) reading is good for children. |
+| 95-2 | 老師應該多鼓勵學生到圖書館借書。 | 動詞＋受詞＋to V／補語（官） | 評分說明：「包含不定詞片語 (encourage someone to do something)」 |
+| 96-1 | 如果我們只為自己而活，就不會真正地感到快樂。 | 副詞子句（官） | 評分說明：「含有條件子句句子之能力（if）」（直說法） |
+| 96-2 | 當我們開始為他人著想，快樂之門自然會開啟。 | 副詞子句（官） | 評分說明：「包含『when』的時間子句」；參考答案另列 Only when we start/begin to think for others will the door to happiness open…（倒裝，非首列寫法） |
 | 97-1 | 聽音樂是一個你可以終生享受的嗜好。 | 動名詞／不定詞片語當主詞（官）；關係子句（參） | 評分說明：以動名詞（Ving）為主詞的句子 |
 | 97-2 | 但能彈奏樂器可以為你帶來更多的喜悅。 | 動名詞／不定詞片語當主詞（參）；比較級／最高級（官） | 評分說明：(much) more 等詞彙、連接詞 But/Yet/However 為首的句子 |
-| 98-1 | 大部分學生不習慣自己解決問題，他們總是期待老師提供標準答案。 | 介系詞＋V-ing（參）；動詞＋受詞＋to V／補語（析） | 評分說明：以 Most students 為主詞的基本句型；參考答案含 used to |
+| 98-1 | 大部分學生不習慣自己解決問題，他們總是期待老師提供標準答案。 | 介系詞＋V-ing（參）；動詞＋受詞＋to V／補語（參） | 評分說明：以 Most students 為主詞的基本句型；參考答案含 not used to / in the habit of solving、expect their teachers to provide |
 | 98-2 | 除了用功讀書獲取知識外，學生也應該培養獨立思考的能力。 | 介系詞＋V-ing（官） | 評分說明：Besides + Ving, S + V |
-| 99-1 | 在過去，腳踏車主要是作為一種交通工具。 | 被動語態（官） | 評分說明：served as / were used as、in the past |
+| 99-1 | 在過去，腳踏車主要是作為一種交通工具。 | 被動語態（官，可選） | 評分說明：served as / were used as、in the past（首列的 served as 是主動） |
 | 99-2 | 然而，騎腳踏車現在已經成為一種熱門的休閒活動。 | 現在完成式（官）；動名詞／不定詞片語當主詞（官） | 評分說明：riding bicycles/cycling、has become |
 | 100-1 | 臺灣的夜市早已被認為足以代表我們的在地文化。 | 現在完成式（官）；被動語態（官） | 評分說明：have long been regarded as |
 | 100-2 | 每年它們都吸引了成千上萬來自不同國家的觀光客。 | 基本句構 S＋V＋O | 簡單現在式＋介系詞片語後位修飾；評分說明：hundreds and thousands of |
-| 101-1 | 近年來，許多臺灣製作的影片已經受到國際的重視。 | 現在完成式（官）；分詞（析） | 評分說明：現在完成式 have + p.p.；films made in Taiwan |
+| 101-1 | 近年來，許多臺灣製作的影片已經受到國際的重視。 | 現在完成式（官）；分詞（參，可選） | 評分說明：現在完成式 have + p.p.；參考答案首列 Taiwan-produced movies，也接受 movies produced/made in Taiwan |
 | 101-2 | 拍攝這些電影的地點也成為熱門的觀光景點。 | 關係子句（官）；被動語態（官） | 評分說明：關係子句與被動式；shot (p.p.) |
 | 102-1 | 都會地區的高房價對社會產生了嚴重的影響。 | 現在完成式（官） | 評分說明：介系詞片語、現在完成式 |
-| 102-2 | 政府正推出新的政策，以滿足人們的住房需求。 | 現在進行式（官）；不定詞表目的（析） | 評分說明：現在進行式 is + Ving |
+| 102-2 | 政府正推出新的政策，以滿足人們的住房需求。 | 現在進行式（官）；不定詞表目的（參） | 評分說明：現在進行式 is + Ving；參考答案 to satisfy/meet |
 | 103-1 | 有些年輕人辭掉都市裡的高薪工作，返回家鄉種植有機蔬菜。 | 對等並列（析）；不定詞表目的（析） | quit … and return … to grow … |
 | 103-2 | 藉由決心與努力，很多人成功了，不但獲利更多，還過著更健康的生活。 | 關聯連接詞（析）；比較級／最高級（析） | not only … but also …＋比較級 |
-| 104-1 | 一個成功的企業不應該把獲利當作最主要的目標。 | 比較級／最高級（析） | regard/see A as B；the most important/main goal |
+| 104-1 | 一個成功的企業不應該把獲利當作最主要的目標。 | 比較級／最高級（析，可選） | 閱卷說明範例：should not regard making profit as its primary goal（未用最高級），並指出 the most main goal「重複了最高級的概念」 |
 | 104-2 | 它應該負起社會責任，以增進大眾的福祉。 | 不定詞表目的（析） | take social responsibility to … |
 | 105-1 | 相較於他們父母的世代，現今年輕人享受較多的自由和繁榮。 | 分詞（參）；比較級／最高級（參） | 參考答案：Compared to/with …, … enjoy more freedom |
 | 105-2 | 但是在這個快速改變的世界中，他們必須學習如何有效地因應新的挑戰。 | 基本句構 S＋V＋O | 參考答案：fast-changing（複合形容詞）、learn (how) to |
 | 106-1 | 玉山(Jade Mountain)在冬天常常覆蓋著厚厚的積雪，使整個山頂閃耀如玉。 | 被動語態（官）；分詞（析）；動詞＋受詞＋to V／補語（析） | 閱卷說明：不少考生「覆蓋著」未用被動語態；…, making the peak shine like jade |
-| 106-2 | 征服玉山一直是國內外登山者最困難的挑戰之一。 | 動名詞／不定詞片語當主詞（析）；現在完成式（析）；比較級／最高級（析） | Conquering … has always been one of the most difficult … |
+| 106-2 | 征服玉山一直是國內外登山者最困難的挑戰之一。 | 動名詞／不定詞片語當主詞（官）；現在完成式（析）；比較級／最高級（析） | 閱卷說明：很多學生「征服」「未用動名詞的形式 conquering」，「挑戰」未用複數（因為是「最困難的挑戰之一」）；Conquering … has always been one of the most difficult … |
 | 107-1 | 近年來，有越來越多超級颱風，通常造成嚴重災害。 | 現在完成式（析）；比較級／最高級（析）；關係子句（析，可選）；分詞（析，可選） | there have been more and more …, which often cause / often causing … |
 | 107-2 | 颱風來襲時，我們應準備足夠的食物，並待在室內，若有必要，應迅速移動至安全的地方。 | 副詞子句（析）；對等並列（析） | When …, we should V1, V2, and (if necessary) V3 |
-| 108-1 | 自2007年營運以來，高鐵（the High Speed Rail）已成為臺灣最便利、最快速的交通工具之一。 | 現在完成式（官）；比較級／最高級（析） | 考試說明：現在完成式 have + p.p. |
+| 108-1 | 自2007年營運以來，高鐵（the High Speed Rail）已成為臺灣最便利、最快速的交通工具之一。 | 現在完成式（官）；比較級／最高級（官） | 考試說明：現在完成式 have + p.p.；108 閱卷說明：「自……以來」後的主要子句「必須是現在完成式」，「最便利、最快速」「必須要用最高級的形式」 |
 | 108-2 | 對於強調職場效率的人而言，高鐵當然是商務旅行的首選。 | 關係子句（官） | 考試說明：關係代名詞 who 子句 |
 | 109-1 | 我們有時會違背自己的意願去做某些事情，就只為了要取悅朋友。 | 不定詞表目的（參） | 參考答案：… against our will only/just/simply to please our friends |
 | 109-2 | 其實，在面對同儕壓力的時候，我們應該學習堅持自己的原則。 | 分詞（參） | 參考答案：when faced with / when facing / in face of peer pressure |
-| 110-1 | 根據新聞報導，每年全球有超過百萬人在道路事故中喪失性命。 | 基本句構 S＋V＋O | According to …；more than a million；lose their lives |
-| 110-2 | 因此，交通法規必須嚴格執行，以確保所有用路人的安全。 | 被動語態（析）；不定詞表目的（析） | must be enforced strictly to ensure … |
+| 110-1 | 根據新聞報導，每年全球有超過百萬人在道路事故中喪失性命。 | 基本句構 S＋V＋O | 閱卷說明列 according to、a million、accidents；115 參考試卷重出本題，試題解析為「基本句構（S+V）」，參考答案 … lost their lives / died / were killed |
+| 110-2 | 因此，交通法規必須嚴格執行，以確保所有用路人的安全。 | 被動語態（官）；不定詞表目的（參） | 110 閱卷說明：「第二句的句構要用被動式」；115 參考試卷重出本題，試題解析「基本句構（被動語態）」，參考答案 must be enforced strictly to ensure … |
 | 111-1 | 飼養寵物並非一項短暫的人生體驗，而是一個對動物的終生承諾。 | 動名詞／不定詞片語當主詞（官）；關聯連接詞（官） | 考試說明：動名詞片語作主詞、not…but… |
-| 111-2 | 在享受寵物所帶來的歡樂時，我們不該忽略要善盡照顧他們的責任。 | 副詞子句（官）；分詞（官）；關係子句（參，可選）；介系詞＋V-ing（參） | 考試說明：時間副詞子句、should；評分原則：while enjoying / when we enjoy |
+| 111-2 | 在享受寵物所帶來的歡樂時，我們不該忽略要善盡照顧他們的責任。 | 副詞子句（官）；分詞（官，可選）；關係子句（參，可選）；介系詞＋V-ing（參） | 考試說明：時間副詞子句、should；評分原則：while enjoying / when we enjoy（首列 When we enjoy）；評分原則說明：「When/While ving,… 或時間副詞 When S +V…」；參考答案 the responsibility of taking（也接受 to take） |
 | 112-1 | 歷史一再證明，戰爭會造成極為可怕的災難。 | 名詞子句（參）；現在完成式（參，可選） | 參考答案：History proves/has proven time and again that … |
-| 112-2 | 避免衝突、確保世界和平應該是所有人類追求的目標。 | 動名詞／不定詞片語當主詞（參）；分詞（參）；對等並列（參） | 參考答案：To avoid … and ensure … should be the goal pursued by … |
-| 113-1 | 每逢選舉季節，總會看到政治人物造訪各地著名廟宇。 | 被動語態（參） | 參考答案：politicians can be seen making visits to … |
+| 112-2 | 避免衝突、確保世界和平應該是所有人類追求的目標。 | 動名詞／不定詞片語當主詞（官）；分詞（參）；對等並列（官） | 評分原則說明：「以動名詞或不定詞作主語，並使用對等連接詞and的平行結構」；參考答案：To avoid … and ensure … should be the goal pursued by … |
+| 113-1 | 每逢選舉季節，總會看到政治人物造訪各地著名廟宇。 | 被動語態（官） | 參考答案：politicians can be seen making visits to …；評分原則說明：「被動型態can/will be seen，若用S+V，則要特別注意不能省略主詞」 |
 | 113-2 | 除了祈求好的選舉結果，他們也希望展現對在地文化與習俗的尊重。 | 介系詞＋V-ing（官） | 評分原則：besides/aside from/apart from/in addition to |
-| 114-1 | 人類的想像和創意是科技進步最大的驅動力。 | 比較級／最高級（官） | 評分原則：第一句要使用比較級（參考答案為 the biggest/strongest） |
+| 114-1 | 人類的想像和創意是科技進步最大的驅動力。 | 比較級／最高級（官） | 評分原則 PDF 寫「第一句要使用比較級」，但參考答案是 the biggest/strongest；選才電子報評分原則說明則寫「必須使用最高級的用法」 |
 | 114-2 | 過去在科幻電影中出現的神奇物件，現在正逐一成真。 | 關係子句（官）；現在進行式（官） | 評分原則：關係子句、過去式、現在進行式 |
-| 115-1 | 現在越來越多高中英文老師已經增加在課堂上使用英文的百分比。 | 現在完成式（官）；比較級／最高級（參） | 評分原則：第一句要使用現在完成式 |
-| 115-2 | 他們將學生依英語能力分成不同組別，進行多樣的聽、說活動。 | 分詞（官，可選） | 評分原則：基本句構（S＋V），後半句可用分詞構句 |
+| 115-1 | 現在越來越多高中英文老師已經增加在課堂上使用英文的百分比。 | 現在完成式（官）；比較級／最高級（參） | 評分原則：第一句要使用現在完成式；參考答案 more and more |
+| 115-2 | 他們將學生依英語能力分成不同組別，進行多樣的聽、說活動。 | 對等並列（官）；分詞（官，可選） | 評分原則：基本句構（S＋V），後半句可用分詞構句；評分原則說明：「需要使用連接詞（and）或者分詞構句」；參考答案 They divide … and conduct … |
 
 ### 5.3 統計：哪些句型最常被用到
 
