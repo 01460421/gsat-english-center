@@ -1131,8 +1131,8 @@ def build(outdir: Path, *, verify: bool = True) -> dict:
         # 美式拼法：ECDICT 對 -l 結尾的動詞一律用英式雙寫（travelled、cancelled、modelled）。詞彙表以美式拼法為主，
         # 重音不在最後一個音節時（音標以 ˈ 開頭、至少兩個母音組）forms 改用美式（traveled），英式拼法仍列在 forms-index。
         w = e["word"]
-        american_l = bool(re.fullmatch(r"[a-z]*[aeiou]l", w)) and len(re.findall(r"[aeiouy]+", w)) >= 2 \
-            and bool(ipa) and ipa.startswith("\u02c8")
+        american_l = bool(re.fullmatch(r"[a-z]*[aeiou]l", w)) and bool(ipa) and ipa.startswith("\u02c8") \
+            and (len(re.findall(r"[aeiouy]+", w)) >= 2 or bool(re.search(r"(?:ia|ua|ue|io)l$", w)))
         for name, f in list(forms.items()):
             add_form(f, eid, name, None if row_form == e["word"] else row_form)
             if american_l and name in ("past", "past_participle", "present_participle") \
@@ -1575,13 +1575,15 @@ def build(outdir: Path, *, verify: bool = True) -> dict:
                 infl_of[k].append((i, t))
 
     def homograph_conflict(k: str, eid: str) -> tuple[bool, bool]:
-        """(是否有級別不高於本條目的其他條目把 k 當屈折形, 是否為需要上下文判斷的強衝突)"""
+        """(是否有級別不高於本條目的其他條目把 k 當屈折形, 是否為需要上下文判斷的強衝突)。同字多筆的另一筆
+        （measure(s) n. 的 measures 也是 measure v. 的第三人稱）不算，改由 sibling_ok 依前後文分配。"""
         e = by_id[eid]
         epos = set(e["pos"])
         base = bool(set(form_map[k][eid]["types"]) & BASE_TYPES)
+        sibs = set(head_ids.get(fold(e["word"]), []))
         weak = strong = False
         for f, t in infl_of.get(k, []):
-            if f == eid or by_id[f]["level"] > e["level"]:
+            if f == eid or f in sibs or by_id[f]["level"] > e["level"]:
                 continue
             weak = True
             if not base or epos & {"prep.", "conj."} or t & {"plural", "plural_rule"}:
@@ -1721,10 +1723,17 @@ def build(outdir: Path, *, verify: bool = True) -> dict:
             return k in ("capitalism", "capitalisms") or any(t in zh for t in ("資本", "資金", "本錢", "資產", "本金"))
         return True
 
+    OBJ_START = DETERMINERS | set("me you him her it us them this that".split())
+
     def infinitive_to(norms, i) -> bool:
-        """to prep. 的例句排除不定詞：to 後面是第一詞類為動詞的條目原形（to be、to get、to play）。"""
+        """to prep. 的例句排除不定詞：to 後面是第一詞類為動詞的條目原形（to be、to get、to play），或是兼作動詞、
+        後面又直接接受詞的字（to park your car、to answer the phone）。"""
         nxt = norms[i + 1] if i + 1 < len(norms) else ""
-        return any(by_id[j]["pos"][0] in ("v.", "aux.") for j in word_entries.get(nxt, []))
+        nxt2 = norms[i + 2] if i + 2 < len(norms) else ""
+        ents = [by_id[j] for j in word_entries.get(nxt, [])]
+        if any(x["pos"][0] in ("v.", "aux.") for x in ents):
+            return True
+        return nxt2 in OBJ_START and any("v." in x["pos"] for x in ents)
 
     homograph_stats = collections.Counter()
     homograph_examples: dict[str, int] = {}
@@ -1849,6 +1858,9 @@ def build(outdir: Path, *, verify: bool = True) -> dict:
             only_ambiguous = not clean
             has_pref = bool(hit & prefer) if prefer else True
             reused = sid in used_by_word[hw]
+            if reused and siblings:               # 同字多筆不共用同一句
+                homograph_stats["sibling_dropped"] += 1
+                continue
             ctx = (norms[pos_t[0] - 1] if pos_t[0] > 0 else "^",
                    norms[pos_t[0] + 1] if pos_t[0] + 1 < n else "$")
             key = (reused, only_ambiguous, not has_pref, unknown > 0, unknown, abs(n - 10), sid)
@@ -2518,7 +2530,8 @@ def report_md(out, findex, sources, conv, tstats, ipa_issues, ipa_examples, fam_
     for a in extra["audits"]:
         ex = "；".join(a["examples"][:4]).replace("|", "\\|")
         note = a["note"]
-        w(f"| {a['name']} | {a['count']:,} | {'是' if a['hard'] else '否'} | {ex}{('（' + note + '）') if note else ''} |")
+        name = a["name"].replace("|", "\\|")
+        w(f"| {name} | {a['count']:,} | {'是' if a['hard'] else '否'} | {ex}{('（' + note + '）') if note else ''} |")
     w("")
     w("- 中文用 Big5（cp950）字集檢查：台灣通行的繁體字都在 Big5 內，殘留的簡體字（们、这、说…）與日文新字體（髪、説）"
       "都不在。用 OpenCC 反向轉換（t2s 或對已轉換文字再跑一次 s2tw）比對會把 說明了→說明瞭、里約→裡約 這類正確的繁體"
