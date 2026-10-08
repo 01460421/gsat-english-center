@@ -853,7 +853,7 @@ if (b.processing_status === "ended") {
 - 一則 Queue 訊息最大 128 KB，所以只傳工作 id，照片放 R2 [CF-Q-LIMIT]。
 - Queues 的免費方案每天有 10,000 次操作；付費方案每月 1,000,000 次，超過的部分每百萬次 $0.40 [CF-Q-PRICE]。
 - Queue consumer 的 CPU 時間預設 30 秒，可以用 `limits.cpu_ms` 調到 5 分鐘；牆鐘時間上限 15 分鐘 [CF-Q-LIMIT]。等待 Claude 回應不算 CPU 時間 [CF-LIMITS]。
-- **並行上限（2026-10-08 查證，原稿列為未驗證）**：consumer 預設會自動擴充到最多 250 個並行呼叫。要限制的話，在 Wrangler 設定的 `[[queues.consumers]]` 加上 `max_concurrency`（1–250）[CF-Q-CONC] [CF-Q-LIMIT]。可以用它控制同時呼叫 Claude 的批改數，不必另外用 D1 計數。
+- **並行上限（2026-10-08 查證，原稿列為未驗證）**：consumer 預設會自動擴充到最多 250 個並行呼叫。要限制的話，在 Wrangler 設定的 `[[queues.consumers]]` 加上 `max_concurrency`（1–250）[CF-Q-CONC] [CF-Q-LIMIT]。可以用它控制同時呼叫 Claude 的批改數，不過每次呼叫會收到一批訊息（每批最多 100 則 [CF-Q-LIMIT]），所以實際的並行數約是 `max_concurrency` 乘上每次呼叫平行處理的訊息數。批次大小的設定參數沒有查證（未驗證）；最簡單的做法是在 consumer 裡逐則依序處理。
 - **R2 費用（2026-10-08 查證，原稿列為未驗證）**：Standard 儲存 $0.015／GB-月，Class A 操作每百萬次 $4.50，Class B 每百萬次 $0.36，流出流量免費；每月免費額度是 10 GB-月、Class A 100 萬次、Class B 1,000 萬次 [CF-R2]。照片每張 ≤2 MB、批改完就刪，初期應該落在免費額度內（本文件推估）。
 
 **SDK 的 timeout：**
