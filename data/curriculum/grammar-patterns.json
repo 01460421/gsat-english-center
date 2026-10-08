@@ -13,7 +13,8 @@
     "patterns[].school_course_refs": "學校校訂選修課程單元（非部定教科書），用來佐證該句型在高中翻譯／文法課實際教授",
     "connectives[].register": "正式＝適合正式寫作；中性＝口說寫作皆可；口語＝作文中少用",
     "phrases[].exam_refs": "同 exam_translation_refs；ref115-題號＝115 學年度起適用參考試卷",
-    "patterns[].exam_translation_refs.note": "note 記錄依據原文；「可選」表示官方或參考答案並列其他寫法，且此句型不是首列寫法"
+    "patterns[].exam_translation_refs.note": "note 記錄依據原文；「可選」表示官方或參考答案並列其他寫法，且此句型不是首列寫法",
+    "exam_id_no": "exam_id＋no：tools/link_grammar_refs.py 由 item 代碼換算出的題庫 id（data/exams/parsed/<exam_id>.json）與翻譯大題內題號，用來和題庫 join；item 保留原代碼"
   },
   "stats": {
     "patterns": 108,
@@ -1281,44 +1282,64 @@
       "exam_translation_refs": [
         {
           "item": "gsat-94-1",
-          "basis": "analysis"
+          "basis": "analysis",
+          "exam_id": "gsat-94",
+          "no": 1
         },
         {
           "item": "gsat-99-2",
-          "basis": "ceec"
+          "basis": "ceec",
+          "exam_id": "gsat-99",
+          "no": 2
         },
         {
           "item": "gsat-100-1",
-          "basis": "ceec"
+          "basis": "ceec",
+          "exam_id": "gsat-100",
+          "no": 1
         },
         {
           "item": "gsat-101-1",
-          "basis": "ceec"
+          "basis": "ceec",
+          "exam_id": "gsat-101",
+          "no": 1
         },
         {
           "item": "gsat-102-1",
-          "basis": "ceec"
+          "basis": "ceec",
+          "exam_id": "gsat-102",
+          "no": 1
         },
         {
           "item": "gsat-106-2",
-          "basis": "analysis"
+          "basis": "analysis",
+          "exam_id": "gsat-106",
+          "no": 2
         },
         {
           "item": "gsat-107-1",
-          "basis": "analysis"
+          "basis": "analysis",
+          "exam_id": "gsat-107",
+          "no": 1
         },
         {
           "item": "gsat-108-1",
-          "basis": "ceec"
+          "basis": "ceec",
+          "exam_id": "gsat-108",
+          "no": 1
         },
         {
           "item": "gsat-115-1",
-          "basis": "ceec"
+          "basis": "ceec",
+          "exam_id": "gsat-115",
+          "no": 1
         },
         {
           "item": "gsat-112-1",
           "basis": "ref_answer",
-          "note": "可選：參考答案 History {proves / has proven / has proved} …"
+          "note": "可選：參考答案 History {proves / has proven / has proved} …",
+          "exam_id": "gsat-112",
+          "no": 1
         }
       ],
       "school_course_refs": [
@@ -1346,7 +1367,9 @@
       "exam_translation_refs": [
         {
           "item": "ast-99-1",
-          "basis": "analysis"
+          "basis": "analysis",
+          "exam_id": "ast-99",
+          "no": 1
         }
       ],
       "school_course_refs": [
@@ -1405,15 +1428,21 @@
       "exam_translation_refs": [
         {
           "item": "gsat-102-2",
-          "basis": "ceec"
+          "basis": "ceec",
+          "exam_id": "gsat-102",
+          "no": 2
         },
         {
           "item": "gsat-114-2",
-          "basis": "ceec"
+          "basis": "ceec",
+          "exam_id": "gsat-114",
+          "no": 2
         },
         {
           "item": "ast-100-2",
-          "basis": "analysis"
+          "basis": "analysis",
+          "exam_id": "ast-100",
+          "no": 2
         }
       ],
       "notes": "102 學測評分說明列『現在進行式 is + Ving』；114 學測評分原則指出第二句主要子句『涉及現在進行式是否使用正確』。"
@@ -1446,28 +1475,40 @@
         {
           "item": "gsat-99-1",
           "basis": "ceec",
-          "note": "評分說明列 served as / were used as；首列 served as 為主動，被動為可選寫法"
+          "note": "評分說明列 served as / were used as；首列 served as 為主動，被動為可選寫法",
+          "exam_id": "gsat-99",
+          "no": 1
         },
         {
           "item": "gsat-101-2",
-          "basis": "ceec"
+          "basis": "ceec",
+          "exam_id": "gsat-101",
+          "no": 2
         },
         {
           "item": "gsat-106-1",
-          "basis": "ceec"
+          "basis": "ceec",
+          "exam_id": "gsat-106",
+          "no": 1
         },
         {
           "item": "gsat-110-2",
           "basis": "ceec",
-          "note": "110 閱卷說明：「第二句的句構要用被動式」；115 參考試卷解析：「基本句構（被動語態）」"
+          "note": "110 閱卷說明：「第二句的句構要用被動式」；115 參考試卷解析：「基本句構（被動語態）」",
+          "exam_id": "gsat-110",
+          "no": 2
         },
         {
           "item": "ast-93-1",
-          "basis": "analysis"
+          "basis": "analysis",
+          "exam_id": "ast-93",
+          "no": 1
         },
         {
           "item": "ast-106-1",
-          "basis": "analysis"
+          "basis": "analysis",
+          "exam_id": "ast-106",
+          "no": 1
         }
       ],
       "school_course_refs": [
@@ -1509,7 +1550,9 @@
       "exam_translation_refs": [
         {
           "item": "gsat-100-1",
-          "basis": "ceec"
+          "basis": "ceec",
+          "exam_id": "gsat-100",
+          "no": 1
         }
       ],
       "notes": "100 學測評分說明舉例『have long been regarded as』。"
@@ -1541,7 +1584,9 @@
         {
           "item": "gsat-113-1",
           "basis": "ceec",
-          "note": "113 評分原則說明（S-ceec-s113）：「被動型態can/will be seen，若用S+V，則要特別注意不能省略主詞」"
+          "note": "113 評分原則說明（S-ceec-s113）：「被動型態can/will be seen，若用S+V，則要特別注意不能省略主詞」",
+          "exam_id": "gsat-113",
+          "no": 1
         }
       ],
       "notes": "113 學測參考答案：politicians can be seen making visits to famous temples …；主動改被動時，原形動詞要還原為 to VR。"
@@ -1612,11 +1657,15 @@
       "exam_translation_refs": [
         {
           "item": "ast-93-1",
-          "basis": "analysis"
+          "basis": "analysis",
+          "exam_id": "ast-93",
+          "no": 1
         },
         {
           "item": "ast-98-2",
-          "basis": "analysis"
+          "basis": "analysis",
+          "exam_id": "ast-98",
+          "no": 2
         }
       ],
       "school_course_refs": [
@@ -1726,21 +1775,29 @@
       "exam_translation_refs": [
         {
           "item": "gsat-94-2",
-          "basis": "analysis"
+          "basis": "analysis",
+          "exam_id": "gsat-94",
+          "no": 2
         },
         {
           "item": "gsat-95-2",
           "basis": "ceec",
-          "note": "95 評分說明：「包含不定詞片語 (encourage someone to do something)」"
+          "note": "95 評分說明：「包含不定詞片語 (encourage someone to do something)」",
+          "exam_id": "gsat-95",
+          "no": 2
         },
         {
           "item": "gsat-98-1",
           "basis": "ref_answer",
-          "note": "參考答案：expect their teachers to provide"
+          "note": "參考答案：expect their teachers to provide",
+          "exam_id": "gsat-98",
+          "no": 1
         },
         {
           "item": "ast-107-1",
-          "basis": "analysis"
+          "basis": "analysis",
+          "exam_id": "ast-107",
+          "no": 1
         }
       ]
     },
@@ -1761,11 +1818,15 @@
       "exam_translation_refs": [
         {
           "item": "gsat-98-1",
-          "basis": "ref_answer"
+          "basis": "ref_answer",
+          "exam_id": "gsat-98",
+          "no": 1
         },
         {
           "item": "gsat-99-1",
-          "basis": "ceec"
+          "basis": "ceec",
+          "exam_id": "gsat-99",
+          "no": 1
         }
       ],
       "school_course_refs": [
@@ -1822,12 +1883,16 @@
       "exam_translation_refs": [
         {
           "item": "gsat-100-1",
-          "basis": "ceec"
+          "basis": "ceec",
+          "exam_id": "gsat-100",
+          "no": 1
         },
         {
           "item": "gsat-104-1",
           "basis": "ceec",
-          "note": "104 閱卷說明範例：should not regard making profit as its primary goal"
+          "note": "104 閱卷說明範例：should not regard making profit as its primary goal",
+          "exam_id": "gsat-104",
+          "no": 1
         }
       ]
     },
@@ -1847,7 +1912,9 @@
       "exam_translation_refs": [
         {
           "item": "gsat-107-1",
-          "basis": "analysis"
+          "basis": "analysis",
+          "exam_id": "gsat-107",
+          "no": 1
         }
       ],
       "notes": "國中附錄六列「以 there 為主的引介句」；107 學測「近年來，有越來越多超級颱風」自然譯法為 there have been more and more …。"
@@ -1977,7 +2044,9 @@
       "exam_translation_refs": [
         {
           "item": "ast-108-2",
-          "basis": "analysis"
+          "basis": "analysis",
+          "exam_id": "ast-108",
+          "no": 2
         }
       ]
     },
@@ -1999,37 +2068,53 @@
         {
           "item": "gsat-95-1",
           "basis": "ref_answer",
-          "note": "參考答案：Everyone knows (that) reading is good for children."
+          "note": "參考答案：Everyone knows (that) reading is good for children.",
+          "exam_id": "gsat-95",
+          "no": 1
         },
         {
           "item": "gsat-97-1",
-          "basis": "ceec"
+          "basis": "ceec",
+          "exam_id": "gsat-97",
+          "no": 1
         },
         {
           "item": "gsat-97-2",
-          "basis": "ref_answer"
+          "basis": "ref_answer",
+          "exam_id": "gsat-97",
+          "no": 2
         },
         {
           "item": "gsat-99-2",
-          "basis": "ceec"
+          "basis": "ceec",
+          "exam_id": "gsat-99",
+          "no": 2
         },
         {
           "item": "gsat-106-2",
           "basis": "ceec",
-          "note": "106 閱卷說明：「征服」未用動名詞的形式 conquering"
+          "note": "106 閱卷說明：「征服」未用動名詞的形式 conquering",
+          "exam_id": "gsat-106",
+          "no": 2
         },
         {
           "item": "gsat-111-1",
-          "basis": "ceec"
+          "basis": "ceec",
+          "exam_id": "gsat-111",
+          "no": 1
         },
         {
           "item": "gsat-112-2",
           "basis": "ceec",
-          "note": "112 評分原則說明（S-ceec-s112）：「以動名詞或不定詞作主語」"
+          "note": "112 評分原則說明（S-ceec-s112）：「以動名詞或不定詞作主語」",
+          "exam_id": "gsat-112",
+          "no": 2
         },
         {
           "item": "ast-103-1",
-          "basis": "analysis"
+          "basis": "analysis",
+          "exam_id": "ast-103",
+          "no": 1
         }
       ],
       "notes": "動名詞片語主詞後的動詞用單數；111 學測考試說明解析明列『動名詞片語作為句子的主詞 Ving is…』。"
@@ -2052,33 +2137,47 @@
         {
           "item": "gsat-102-2",
           "basis": "ref_answer",
-          "note": "參考答案：to satisfy/meet"
+          "note": "參考答案：to satisfy/meet",
+          "exam_id": "gsat-102",
+          "no": 2
         },
         {
           "item": "gsat-103-1",
-          "basis": "analysis"
+          "basis": "analysis",
+          "exam_id": "gsat-103",
+          "no": 1
         },
         {
           "item": "gsat-104-2",
-          "basis": "analysis"
+          "basis": "analysis",
+          "exam_id": "gsat-104",
+          "no": 2
         },
         {
           "item": "gsat-109-1",
-          "basis": "ref_answer"
+          "basis": "ref_answer",
+          "exam_id": "gsat-109",
+          "no": 1
         },
         {
           "item": "gsat-110-2",
           "basis": "ref_answer",
-          "note": "115 參考試卷重出本題，參考答案：must be enforced strictly to ensure …"
+          "note": "115 參考試卷重出本題，參考答案：must be enforced strictly to ensure …",
+          "exam_id": "gsat-110",
+          "no": 2
         },
         {
           "item": "ast-95-1",
           "basis": "ceec",
-          "note": "95 指考評分說明：「運用To+動詞句型的能力」"
+          "note": "95 指考評分說明：「運用To+動詞句型的能力」",
+          "exam_id": "ast-95",
+          "no": 1
         },
         {
           "item": "ast-100-2",
-          "basis": "analysis"
+          "basis": "analysis",
+          "exam_id": "ast-100",
+          "no": 2
         }
       ],
       "notes": "學測中譯英『以…、為了…、就只為了…』幾乎都用 to VR；國中附錄六未明列此用法。"
@@ -2144,11 +2243,15 @@
       "exam_translation_refs": [
         {
           "item": "gsat-105-2",
-          "basis": "ref_answer"
+          "basis": "ref_answer",
+          "exam_id": "gsat-105",
+          "no": 2
         },
         {
           "item": "ast-109m-2",
-          "basis": "analysis"
+          "basis": "analysis",
+          "exam_id": "ast-109-makeup",
+          "no": 2
         }
       ]
     },
@@ -2169,25 +2272,35 @@
       "exam_translation_refs": [
         {
           "item": "gsat-98-2",
-          "basis": "ceec"
+          "basis": "ceec",
+          "exam_id": "gsat-98",
+          "no": 2
         },
         {
           "item": "gsat-113-2",
-          "basis": "ceec"
+          "basis": "ceec",
+          "exam_id": "gsat-113",
+          "no": 2
         },
         {
           "item": "ast-104-2",
-          "basis": "analysis"
+          "basis": "analysis",
+          "exam_id": "ast-104",
+          "no": 2
         },
         {
           "item": "gsat-98-1",
           "basis": "ref_answer",
-          "note": "參考答案：not used to / in the habit of solving problems"
+          "note": "參考答案：not used to / in the habit of solving problems",
+          "exam_id": "gsat-98",
+          "no": 1
         },
         {
           "item": "gsat-111-2",
           "basis": "ref_answer",
-          "note": "參考答案：the responsibility of taking（也接受 to take）"
+          "note": "參考答案：the responsibility of taking（也接受 to take）",
+          "exam_id": "gsat-111",
+          "no": 2
         }
       ],
       "notes": "98 學測評分說明：『寫出 Besides + Ving, S + V 的基本句型』；113 學測評分原則列『除了』= besides/aside from/apart from/in addition to。"
@@ -2355,24 +2468,34 @@
       "exam_translation_refs": [
         {
           "item": "gsat-93-2",
-          "basis": "analysis"
+          "basis": "analysis",
+          "exam_id": "gsat-93",
+          "no": 2
         },
         {
           "item": "gsat-95-1",
           "basis": "ceec",
-          "note": "95 評分說明：第一句「寫出一個複句 (complex sentence)」"
+          "note": "95 評分說明：第一句「寫出一個複句 (complex sentence)」",
+          "exam_id": "gsat-95",
+          "no": 1
         },
         {
           "item": "gsat-112-1",
-          "basis": "ref_answer"
+          "basis": "ref_answer",
+          "exam_id": "gsat-112",
+          "no": 1
         },
         {
           "item": "ast-97-2",
-          "basis": "ceec"
+          "basis": "ceec",
+          "exam_id": "ast-97",
+          "no": 2
         },
         {
           "item": "ast-110-2",
-          "basis": "analysis"
+          "basis": "analysis",
+          "exam_id": "ast-110",
+          "no": 2
         }
       ],
       "school_course_refs": [
@@ -2418,7 +2541,9 @@
         {
           "item": "ast-110-1",
           "basis": "ceec",
-          "note": "110 指考閱卷說明：「是否」為 whether"
+          "note": "110 指考閱卷說明：「是否」為 whether",
+          "exam_id": "ast-110",
+          "no": 1
         }
       ],
       "school_course_refs": [
@@ -2452,7 +2577,9 @@
         {
           "item": "ast-105-2",
           "basis": "ceec",
-          "note": "105 指考閱卷說明舉例：…the death they cause is far beyond what we can imagine"
+          "note": "105 指考閱卷說明舉例：…the death they cause is far beyond what we can imagine",
+          "exam_id": "ast-105",
+          "no": 2
         }
       ]
     },
@@ -2536,7 +2663,9 @@
         {
           "item": "ast-110-2",
           "basis": "ceec",
-          "note": "110 指考閱卷說明：「不論」為 no matter what 或 whatever"
+          "note": "110 指考閱卷說明：「不論」為 no matter what 或 whatever",
+          "exam_id": "ast-110",
+          "no": 2
         }
       ]
     },
@@ -2575,31 +2704,45 @@
       "exam_translation_refs": [
         {
           "item": "gsat-97-1",
-          "basis": "ref_answer"
+          "basis": "ref_answer",
+          "exam_id": "gsat-97",
+          "no": 1
         },
         {
           "item": "gsat-101-2",
-          "basis": "ceec"
+          "basis": "ceec",
+          "exam_id": "gsat-101",
+          "no": 2
         },
         {
           "item": "gsat-108-2",
-          "basis": "ceec"
+          "basis": "ceec",
+          "exam_id": "gsat-108",
+          "no": 2
         },
         {
           "item": "gsat-111-2",
-          "basis": "ref_answer"
+          "basis": "ref_answer",
+          "exam_id": "gsat-111",
+          "no": 2
         },
         {
           "item": "gsat-114-2",
-          "basis": "ceec"
+          "basis": "ceec",
+          "exam_id": "gsat-114",
+          "no": 2
         },
         {
           "item": "ast-101-1",
-          "basis": "analysis"
+          "basis": "analysis",
+          "exam_id": "ast-101",
+          "no": 1
         },
         {
           "item": "ast-102-2",
-          "basis": "analysis"
+          "basis": "analysis",
+          "exam_id": "ast-102",
+          "no": 2
         }
       ],
       "notes": "中文「……的＋名詞」是最常見的觸發點；108 學測考試說明解析明列『關係代名詞 who 子句』，114 學測評分原則指第二句『要用關係子句』。"
@@ -2620,7 +2763,9 @@
       "exam_translation_refs": [
         {
           "item": "gsat-108-2",
-          "basis": "ceec"
+          "basis": "ceec",
+          "exam_id": "gsat-108",
+          "no": 2
         }
       ]
     },
@@ -2650,15 +2795,21 @@
       "exam_translation_refs": [
         {
           "item": "gsat-107-1",
-          "basis": "analysis"
+          "basis": "analysis",
+          "exam_id": "gsat-107",
+          "no": 1
         },
         {
           "item": "ast-106-1",
-          "basis": "analysis"
+          "basis": "analysis",
+          "exam_id": "ast-106",
+          "no": 1
         },
         {
           "item": "ast-107-1",
-          "basis": "analysis"
+          "basis": "analysis",
+          "exam_id": "ast-107",
+          "no": 1
         }
       ],
       "notes": "非限定子句不可用 that，且前後要有逗號。"
@@ -2738,7 +2889,9 @@
       "exam_translation_refs": [
         {
           "item": "gsat-101-2",
-          "basis": "ceec"
+          "basis": "ceec",
+          "exam_id": "gsat-101",
+          "no": 2
         }
       ],
       "notes": "101 學測評分說明列『關係子句與被動式』；「拍攝這些電影的地點」可譯 the places where these films were shot。"
@@ -2760,19 +2913,27 @@
         {
           "item": "gsat-96-2",
           "basis": "ceec",
-          "note": "96 評分說明：「包含『when』的時間子句」"
+          "note": "96 評分說明：「包含『when』的時間子句」",
+          "exam_id": "gsat-96",
+          "no": 2
         },
         {
           "item": "gsat-107-2",
-          "basis": "analysis"
+          "basis": "analysis",
+          "exam_id": "gsat-107",
+          "no": 2
         },
         {
           "item": "gsat-111-2",
-          "basis": "ceec"
+          "basis": "ceec",
+          "exam_id": "gsat-111",
+          "no": 2
         },
         {
           "item": "ast-105-1",
-          "basis": "analysis"
+          "basis": "analysis",
+          "exam_id": "ast-105",
+          "no": 1
         }
       ],
       "notes": "111 學測考試說明解析列『表達時間副詞子句』。表未來的時間子句用現在式（× when it will rain）。"
@@ -2793,16 +2954,22 @@
       "exam_translation_refs": [
         {
           "item": "gsat-93-2",
-          "basis": "analysis"
+          "basis": "analysis",
+          "exam_id": "gsat-93",
+          "no": 2
         },
         {
           "item": "gsat-96-1",
           "basis": "ceec",
-          "note": "96 評分說明：「含有條件子句句子之能力（if）」"
+          "note": "96 評分說明：「含有條件子句句子之能力（if）」",
+          "exam_id": "gsat-96",
+          "no": 1
         },
         {
           "item": "gsat-110t-2",
-          "basis": "ref_answer"
+          "basis": "ref_answer",
+          "exam_id": "ref-110",
+          "no": 2
         }
       ],
       "notes": "國中附錄六：條件子句 if（不包含假設語氣）。110 試辦考試第 2 題參考答案以 As long as … 起句。"
@@ -2823,12 +2990,16 @@
       "exam_translation_refs": [
         {
           "item": "gsat-93-1",
-          "basis": "analysis"
+          "basis": "analysis",
+          "exam_id": "gsat-93",
+          "no": 1
         },
         {
           "item": "ast-95-2",
           "basis": "ceec",
-          "note": "95 指考評分說明：「轉折語Although或In spite of」"
+          "note": "95 指考評分說明：「轉折語Although或In spite of」",
+          "exam_id": "ast-95",
+          "no": 2
         }
       ],
       "notes": "中文「雖然…但是…」英文只能二選一：although 與 but 不可並用。"
@@ -2850,7 +3021,9 @@
         {
           "item": "ast-95-2",
           "basis": "ceec",
-          "note": "95 指考評分說明：「轉折語Although或In spite of」"
+          "note": "95 指考評分說明：「轉折語Although或In spite of」",
+          "exam_id": "ast-95",
+          "no": 2
         }
       ],
       "notes": "despite 後不加 of；後面不能直接接子句（要用 despite the fact that …）。"
@@ -3087,11 +3260,15 @@
       "exam_translation_refs": [
         {
           "item": "gsat-103-2",
-          "basis": "analysis"
+          "basis": "analysis",
+          "exam_id": "gsat-103",
+          "no": 2
         },
         {
           "item": "ast-94-2",
-          "basis": "analysis"
+          "basis": "analysis",
+          "exam_id": "ast-94",
+          "no": 2
         }
       ],
       "school_course_refs": [
@@ -3119,7 +3296,9 @@
       "exam_translation_refs": [
         {
           "item": "gsat-111-1",
-          "basis": "ceec"
+          "basis": "ceec",
+          "exam_id": "gsat-111",
+          "no": 1
         }
       ],
       "notes": "111 學測評分原則：『並非…而是…』為 not…but…。"
@@ -3183,21 +3362,29 @@
       "exam_translation_refs": [
         {
           "item": "gsat-103-1",
-          "basis": "analysis"
+          "basis": "analysis",
+          "exam_id": "gsat-103",
+          "no": 1
         },
         {
           "item": "gsat-107-2",
-          "basis": "analysis"
+          "basis": "analysis",
+          "exam_id": "gsat-107",
+          "no": 2
         },
         {
           "item": "gsat-112-2",
           "basis": "ceec",
-          "note": "112 評分原則說明（S-ceec-s112）：「使用對等連接詞and的平行結構」"
+          "note": "112 評分原則說明（S-ceec-s112）：「使用對等連接詞and的平行結構」",
+          "exam_id": "gsat-112",
+          "no": 2
         },
         {
           "item": "gsat-115-2",
           "basis": "ceec",
-          "note": "115 評分原則說明（S-ceec-s115）：第2題「需要使用連接詞（and）或者分詞構句」"
+          "note": "115 評分原則說明（S-ceec-s115）：第2題「需要使用連接詞（and）或者分詞構句」",
+          "exam_id": "gsat-115",
+          "no": 2
         }
       ]
     },
@@ -3710,23 +3897,33 @@
       "exam_translation_refs": [
         {
           "item": "gsat-95-2",
-          "basis": "analysis"
+          "basis": "analysis",
+          "exam_id": "gsat-95",
+          "no": 2
         },
         {
           "item": "gsat-104-1",
-          "basis": "analysis"
+          "basis": "analysis",
+          "exam_id": "gsat-104",
+          "no": 1
         },
         {
           "item": "gsat-107-2",
-          "basis": "analysis"
+          "basis": "analysis",
+          "exam_id": "gsat-107",
+          "no": 2
         },
         {
           "item": "gsat-109-2",
-          "basis": "ref_answer"
+          "basis": "ref_answer",
+          "exam_id": "gsat-109",
+          "no": 2
         },
         {
           "item": "gsat-111-2",
-          "basis": "ceec"
+          "basis": "ceec",
+          "exam_id": "gsat-111",
+          "no": 2
         }
       ],
       "notes": "111 學測考試說明解析列『語氣助動詞 should』；國中附錄六列情態助動詞 should、have to。"
@@ -3748,41 +3945,59 @@
       "exam_translation_refs": [
         {
           "item": "gsat-97-2",
-          "basis": "ceec"
+          "basis": "ceec",
+          "exam_id": "gsat-97",
+          "no": 2
         },
         {
           "item": "gsat-103-2",
-          "basis": "analysis"
+          "basis": "analysis",
+          "exam_id": "gsat-103",
+          "no": 2
         },
         {
           "item": "gsat-104-1",
           "basis": "analysis",
-          "note": "可選：104 閱卷說明範例用 primary goal（未用最高級），並指出 the most main goal 重複最高級"
+          "note": "可選：104 閱卷說明範例用 primary goal（未用最高級），並指出 the most main goal 重複最高級",
+          "exam_id": "gsat-104",
+          "no": 1
         },
         {
           "item": "gsat-105-1",
-          "basis": "ref_answer"
+          "basis": "ref_answer",
+          "exam_id": "gsat-105",
+          "no": 1
         },
         {
           "item": "gsat-106-2",
-          "basis": "analysis"
+          "basis": "analysis",
+          "exam_id": "gsat-106",
+          "no": 2
         },
         {
           "item": "gsat-108-1",
           "basis": "ceec",
-          "note": "108 閱卷說明：「最便利、最快速」必須要用最高級的形式"
+          "note": "108 閱卷說明：「最便利、最快速」必須要用最高級的形式",
+          "exam_id": "gsat-108",
+          "no": 1
         },
         {
           "item": "gsat-114-1",
-          "basis": "ceec"
+          "basis": "ceec",
+          "exam_id": "gsat-114",
+          "no": 1
         },
         {
           "item": "ast-98-1",
-          "basis": "analysis"
+          "basis": "analysis",
+          "exam_id": "ast-98",
+          "no": 1
         },
         {
           "item": "ast-104-1",
-          "basis": "analysis"
+          "basis": "analysis",
+          "exam_id": "ast-104",
+          "no": 1
         }
       ],
       "school_course_refs": [
@@ -3834,11 +4049,15 @@
       "exam_translation_refs": [
         {
           "item": "gsat-107-1",
-          "basis": "analysis"
+          "basis": "analysis",
+          "exam_id": "gsat-107",
+          "no": 1
         },
         {
           "item": "gsat-115-1",
-          "basis": "ref_answer"
+          "basis": "ref_answer",
+          "exam_id": "gsat-115",
+          "no": 1
         }
       ]
     },
@@ -3919,7 +4138,9 @@
       "exam_translation_refs": [
         {
           "item": "gsat-105-1",
-          "basis": "ref_answer"
+          "basis": "ref_answer",
+          "exam_id": "gsat-105",
+          "no": 1
         }
       ]
     },
@@ -3981,11 +4202,15 @@
       "exam_translation_refs": [
         {
           "item": "gsat-110t-1",
-          "basis": "ceec"
+          "basis": "ceec",
+          "exam_id": "ref-110",
+          "no": 1
         },
         {
           "item": "gsat-115-2",
-          "basis": "ceec"
+          "basis": "ceec",
+          "exam_id": "gsat-115",
+          "no": 2
         }
       ],
       "notes": "分詞構句的意義主詞必須與主要子句主詞相同（避免 dangling participle）。115 學測評分原則：第二句『後半句可使用分詞構句形式』。"
@@ -4006,20 +4231,28 @@
       "exam_translation_refs": [
         {
           "item": "gsat-106-1",
-          "basis": "analysis"
+          "basis": "analysis",
+          "exam_id": "gsat-106",
+          "no": 1
         },
         {
           "item": "gsat-107-1",
-          "basis": "analysis"
+          "basis": "analysis",
+          "exam_id": "gsat-107",
+          "no": 1
         },
         {
           "item": "ast-105-2",
           "basis": "ceec",
-          "note": "105 指考閱卷說明舉例：causing death that is far beyond our imagination"
+          "note": "105 指考閱卷說明舉例：causing death that is far beyond our imagination",
+          "exam_id": "ast-105",
+          "no": 2
         },
         {
           "item": "ast-107-2",
-          "basis": "analysis"
+          "basis": "analysis",
+          "exam_id": "ast-107",
+          "no": 2
         }
       ]
     },
@@ -4039,12 +4272,16 @@
       "exam_translation_refs": [
         {
           "item": "gsat-109-2",
-          "basis": "ref_answer"
+          "basis": "ref_answer",
+          "exam_id": "gsat-109",
+          "no": 2
         },
         {
           "item": "gsat-111-2",
           "basis": "ceec",
-          "note": "111 評分原則：while enjoying / when we enjoy；評分原則說明：「When/While ving,… 或時間副詞 When S +V…」（首列 When we enjoy，分詞為可選）"
+          "note": "111 評分原則：while enjoying / when we enjoy；評分原則說明：「When/While ving,… 或時間副詞 When S +V…」（首列 When we enjoy，分詞為可選）",
+          "exam_id": "gsat-111",
+          "no": 2
         }
       ],
       "notes": "109 學測參考答案：when facing / when faced with / in face of peer pressure；111 學測評分原則：『在享受…時』譯為 while enjoying / when we enjoy。"
@@ -4076,19 +4313,27 @@
         {
           "item": "gsat-101-1",
           "basis": "ref_answer",
-          "note": "參考答案首列 Taiwan-produced movies，也接受 movies produced/made in Taiwan（可選）"
+          "note": "參考答案首列 Taiwan-produced movies，也接受 movies produced/made in Taiwan（可選）",
+          "exam_id": "gsat-101",
+          "no": 1
         },
         {
           "item": "gsat-111-2",
-          "basis": "ref_answer"
+          "basis": "ref_answer",
+          "exam_id": "gsat-111",
+          "no": 2
         },
         {
           "item": "gsat-112-2",
-          "basis": "ref_answer"
+          "basis": "ref_answer",
+          "exam_id": "gsat-112",
+          "no": 2
         },
         {
           "item": "ast-104-2",
-          "basis": "analysis"
+          "basis": "analysis",
+          "exam_id": "ast-104",
+          "no": 2
         }
       ],
       "notes": "112 學測參考答案：the goal pursued by all human beings；111 學測參考答案：the fun brought by pets。"
@@ -4182,12 +4427,16 @@
       "exam_translation_refs": [
         {
           "item": "gsat-105-2",
-          "basis": "ref_answer"
+          "basis": "ref_answer",
+          "exam_id": "gsat-105",
+          "no": 2
         },
         {
           "item": "ast-95-1",
           "basis": "ref_answer",
-          "note": "95 指考參考答案：a smoke-free dining environment"
+          "note": "95 指考參考答案：a smoke-free dining environment",
+          "exam_id": "ast-95",
+          "no": 1
         }
       ],
       "notes": "數字＋名詞作形容詞時名詞用單數（× a 300-words essay）。"
@@ -4354,11 +4603,15 @@
       "exam_translation_refs": [
         {
           "item": "ast-97-2",
-          "basis": "ceec"
+          "basis": "ceec",
+          "exam_id": "ast-97",
+          "no": 2
         },
         {
           "item": "ast-109m-1",
-          "basis": "analysis"
+          "basis": "analysis",
+          "exam_id": "ast-109-makeup",
+          "no": 1
         }
       ],
       "notes": "97 指考評分說明列 not any more 為標的用語之一。"
@@ -5608,7 +5861,9 @@
         {
           "item": "gsat-109-1",
           "basis": "ceec",
-          "note": "109 閱卷說明：「違背」譯成 go against 或 violate 皆可；115 考試說明參考答案作 do certain things against our will"
+          "note": "109 閱卷說明：「違背」譯成 go against 或 violate 皆可；115 考試說明參考答案作 do certain things against our will",
+          "exam_id": "gsat-109",
+          "no": 1
         }
       ]
     },
@@ -5651,7 +5906,9 @@
         {
           "item": "gsat-109-2",
           "basis": "ref_answer",
-          "note": "參考答案：stick to/hold on to/stand firm on"
+          "note": "參考答案：stick to/hold on to/stand firm on",
+          "exam_id": "gsat-109",
+          "no": 2
         }
       ]
     },
@@ -5669,7 +5926,9 @@
       "exam_refs": [
         {
           "item": "ast-109m-2",
-          "basis": "analysis"
+          "basis": "analysis",
+          "exam_id": "ast-109-makeup",
+          "no": 2
         }
       ]
     },
@@ -5687,11 +5946,15 @@
       "exam_refs": [
         {
           "item": "ast-99-2",
-          "basis": "analysis"
+          "basis": "analysis",
+          "exam_id": "ast-99",
+          "no": 2
         },
         {
           "item": "ast-103-1",
-          "basis": "analysis"
+          "basis": "analysis",
+          "exam_id": "ast-103",
+          "no": 1
         }
       ]
     },
@@ -5956,7 +6219,9 @@
         {
           "item": "gsat-109-2",
           "basis": "ref_answer",
-          "note": "參考答案"
+          "note": "參考答案",
+          "exam_id": "gsat-109",
+          "no": 2
         }
       ]
     },
@@ -5987,7 +6252,9 @@
         {
           "item": "gsat-111-2",
           "basis": "ceec",
-          "note": "評分原則：take good care of them"
+          "note": "評分原則：take good care of them",
+          "exam_id": "gsat-111",
+          "no": 2
         }
       ]
     },
@@ -6036,7 +6303,9 @@
         {
           "item": "ast-97-2",
           "basis": "ceec",
-          "note": "評分說明列 take for granted"
+          "note": "評分說明列 take for granted",
+          "exam_id": "ast-97",
+          "no": 2
         }
       ]
     },
@@ -6109,7 +6378,9 @@
         {
           "item": "gsat-115-2",
           "basis": "ref_answer",
-          "note": "評分原則參考答案：They divide students into different groups…"
+          "note": "評分原則參考答案：They divide students into different groups…",
+          "exam_id": "gsat-115",
+          "no": 2
         }
       ]
     },
@@ -6140,7 +6411,9 @@
         {
           "item": "gsat-100-1",
           "basis": "ceec",
-          "note": "評分說明：have long been regarded as"
+          "note": "評分說明：have long been regarded as",
+          "exam_id": "gsat-100",
+          "no": 1
         }
       ]
     },
@@ -6158,7 +6431,9 @@
       "exam_refs": [
         {
           "item": "ast-109m-1",
-          "basis": "analysis"
+          "basis": "analysis",
+          "exam_id": "ast-109-makeup",
+          "no": 1
         }
       ]
     },
@@ -6171,7 +6446,9 @@
         {
           "item": "gsat-102-1",
           "basis": "ceec",
-          "note": "102 閱卷說明：「對社會的嚴重影響」則可翻譯為 serious effects on society；參考答案 have produced serious effects on society"
+          "note": "102 閱卷說明：「對社會的嚴重影響」則可翻譯為 serious effects on society；參考答案 have produced serious effects on society",
+          "exam_id": "gsat-102",
+          "no": 1
         }
       ]
     },
@@ -6274,7 +6551,9 @@
         {
           "item": "gsat-93-1",
           "basis": "analysis",
-          "note": "「從來不氣餒」可譯 never lose heart，本文分析"
+          "note": "「從來不氣餒」可譯 never lose heart，本文分析",
+          "exam_id": "gsat-93",
+          "no": 1
         }
       ]
     },
@@ -6293,7 +6572,9 @@
         {
           "item": "ref115-1",
           "basis": "ref_answer",
-          "note": "115 起適用參考試卷參考答案：lost their lives；題目與 110 學測中譯英第 1 題相同"
+          "note": "115 起適用參考試卷參考答案：lost their lives；題目與 110 學測中譯英第 1 題相同",
+          "exam_id": "ref-115",
+          "no": 1
         }
       ]
     },
@@ -6318,7 +6599,9 @@
         {
           "item": "gsat-104-2",
           "basis": "analysis",
-          "note": "本文分析之自然譯法"
+          "note": "本文分析之自然譯法",
+          "exam_id": "gsat-104",
+          "no": 2
         }
       ]
     },
@@ -6391,7 +6674,9 @@
         {
           "item": "gsat-110t-1",
           "basis": "ref_answer",
-          "note": "試辦考試參考答案"
+          "note": "試辦考試參考答案",
+          "exam_id": "ref-110",
+          "no": 1
         }
       ]
     },
@@ -6428,7 +6713,9 @@
         {
           "item": "gsat-106-1",
           "basis": "ceec",
-          "note": "106 學測閱卷說明指出不少考生「覆蓋著」未用被動語態 is covered"
+          "note": "106 學測閱卷說明指出不少考生「覆蓋著」未用被動語態 is covered",
+          "exam_id": "gsat-106",
+          "no": 1
         }
       ]
     },
@@ -6459,7 +6746,9 @@
         {
           "item": "gsat-85-2",
           "basis": "analysis",
-          "note": "本文分析之自然譯法"
+          "note": "本文分析之自然譯法",
+          "exam_id": "gsat-85",
+          "no": 2
         }
       ]
     },
@@ -6490,7 +6779,9 @@
         {
           "item": "gsat-95-1",
           "basis": "ceec",
-          "note": "評分說明列 good for、beneficial to"
+          "note": "評分說明列 good for、beneficial to",
+          "exam_id": "gsat-95",
+          "no": 1
         }
       ]
     },
@@ -6508,7 +6799,9 @@
       "exam_refs": [
         {
           "item": "ast-98-1",
-          "basis": "analysis"
+          "basis": "analysis",
+          "exam_id": "ast-98",
+          "no": 1
         }
       ]
     },
@@ -6532,7 +6825,9 @@
       "exam_refs": [
         {
           "item": "ast-109m-1",
-          "basis": "analysis"
+          "basis": "analysis",
+          "exam_id": "ast-109-makeup",
+          "no": 1
         }
       ]
     },
@@ -6545,7 +6840,9 @@
         {
           "item": "gsat-85-4",
           "basis": "analysis",
-          "note": "本文分析之自然譯法"
+          "note": "本文分析之自然譯法",
+          "exam_id": "gsat-85",
+          "no": 4
         }
       ]
     },
@@ -6569,7 +6866,9 @@
       "exam_refs": [
         {
           "item": "ast-110-1",
-          "basis": "analysis"
+          "basis": "analysis",
+          "exam_id": "ast-110",
+          "no": 1
         }
       ]
     },
@@ -6612,7 +6911,9 @@
         {
           "item": "gsat-98-1",
           "basis": "ref_answer",
-          "note": "評分說明參考答案列 used to"
+          "note": "評分說明參考答案列 used to",
+          "exam_id": "gsat-98",
+          "no": 1
         }
       ]
     },
@@ -6655,7 +6956,9 @@
         {
           "item": "gsat-94-1",
           "basis": "analysis",
-          "note": "本文分析之自然譯法"
+          "note": "本文分析之自然譯法",
+          "exam_id": "gsat-94",
+          "no": 1
         }
       ]
     },
@@ -6668,7 +6971,9 @@
         {
           "item": "ast-101-1",
           "basis": "analysis",
-          "note": "本文分析之自然譯法"
+          "note": "本文分析之自然譯法",
+          "exam_id": "ast-101",
+          "no": 1
         }
       ]
     },
@@ -6681,12 +6986,16 @@
         {
           "item": "ref115-1",
           "basis": "ref_answer",
-          "note": "115 起適用參考試卷參考答案以 According to … 起句；題目與 110 學測中譯英第 1 題相同"
+          "note": "115 起適用參考試卷參考答案以 According to … 起句；題目與 110 學測中譯英第 1 題相同",
+          "exam_id": "ref-115",
+          "no": 1
         },
         {
           "item": "gsat-110-1",
           "basis": "ceec",
-          "note": "110 閱卷說明：「根據」according to"
+          "note": "110 閱卷說明：「根據」according to",
+          "exam_id": "gsat-110",
+          "no": 1
         }
       ]
     },
@@ -6705,7 +7014,9 @@
         {
           "item": "gsat-113-2",
           "basis": "ceec",
-          "note": "評分原則列 apart from"
+          "note": "評分原則列 apart from",
+          "exam_id": "gsat-113",
+          "no": 2
         }
       ]
     },
@@ -6790,7 +7101,9 @@
         {
           "item": "ast-109-1",
           "basis": "analysis",
-          "note": "本文分析之自然譯法"
+          "note": "本文分析之自然譯法",
+          "exam_id": "ast-109",
+          "no": 1
         }
       ]
     },
@@ -6820,7 +7133,9 @@
       "exam_refs": [
         {
           "item": "ast-109-2",
-          "basis": "analysis"
+          "basis": "analysis",
+          "exam_id": "ast-109",
+          "no": 2
         }
       ]
     },
@@ -6857,7 +7172,9 @@
         {
           "item": "gsat-109-2",
           "basis": "ref_answer",
-          "note": "參考答案：in face of peer pressure"
+          "note": "參考答案：in face of peer pressure",
+          "exam_id": "gsat-109",
+          "no": 2
         }
       ]
     },
@@ -6894,7 +7211,9 @@
         {
           "item": "ast-104-1",
           "basis": "analysis",
-          "note": "本文分析之自然譯法"
+          "note": "本文分析之自然譯法",
+          "exam_id": "ast-104",
+          "no": 1
         }
       ]
     },
@@ -6967,12 +7286,16 @@
         {
           "item": "gsat-101-1",
           "basis": "ref_answer",
-          "note": "參考答案首列 In recent years"
+          "note": "參考答案首列 In recent years",
+          "exam_id": "gsat-101",
+          "no": 1
         },
         {
           "item": "gsat-107-1",
           "basis": "ceec",
-          "note": "107 閱卷說明：「近年來」的 in recent years 的 years 沒有用複數形"
+          "note": "107 閱卷說明：「近年來」的 in recent years 的 years 沒有用複數形",
+          "exam_id": "gsat-107",
+          "no": 1
         }
       ]
     },
@@ -6985,12 +7308,16 @@
         {
           "item": "gsat-99-1",
           "basis": "ceec",
-          "note": "評分說明列 in the past"
+          "note": "評分說明列 in the past",
+          "exam_id": "gsat-99",
+          "no": 1
         },
         {
           "item": "gsat-114-2",
           "basis": "ref_answer",
-          "note": "參考答案：appeared in science-fiction movies in the past"
+          "note": "參考答案：appeared in science-fiction movies in the past",
+          "exam_id": "gsat-114",
+          "no": 2
         }
       ]
     },
@@ -7045,7 +7372,9 @@
         {
           "item": "gsat-112-1",
           "basis": "ceec",
-          "note": "評分原則：time and again/repeatedly"
+          "note": "評分原則：time and again/repeatedly",
+          "exam_id": "gsat-112",
+          "no": 1
         }
       ]
     },
@@ -7064,7 +7393,9 @@
         {
           "item": "gsat-114-2",
           "basis": "ref_answer",
-          "note": "評分原則參考答案"
+          "note": "評分原則參考答案",
+          "exam_id": "gsat-114",
+          "no": 2
         }
       ]
     },
@@ -7094,7 +7425,9 @@
       "exam_refs": [
         {
           "item": "ast-96-2",
-          "basis": "analysis"
+          "basis": "analysis",
+          "exam_id": "ast-96",
+          "no": 2
         }
       ]
     },
@@ -7149,7 +7482,9 @@
         {
           "item": "gsat-100-2",
           "basis": "ceec",
-          "note": "評分說明：hundreds and thousands of"
+          "note": "評分說明：hundreds and thousands of",
+          "exam_id": "gsat-100",
+          "no": 2
         }
       ]
     },
@@ -7162,7 +7497,9 @@
         {
           "item": "gsat-99-1",
           "basis": "ceec",
-          "note": "評分說明：a means of transportation"
+          "note": "評分說明：a means of transportation",
+          "exam_id": "gsat-99",
+          "no": 1
         }
       ]
     },
@@ -7187,7 +7524,9 @@
         {
           "item": "gsat-98-2",
           "basis": "ref_answer",
-          "note": "參考答案：the ability to think independently"
+          "note": "參考答案：the ability to think independently",
+          "exam_id": "gsat-98",
+          "no": 2
         }
       ]
     },
@@ -7200,7 +7539,9 @@
         {
           "item": "gsat-85-5",
           "basis": "analysis",
-          "note": "本文分析之自然譯法"
+          "note": "本文分析之自然譯法",
+          "exam_id": "gsat-85",
+          "no": 5
         }
       ]
     },

@@ -169,6 +169,8 @@
 
 ### 3.3 發現但沒有修改（屬其他工作線的資料或程式，附修法）
 
+> **2026-10-08 已修正（三項都已處理）**：(1) 8 份作文 `word_count` 改為 `{min:120}`；`tools/normalize_exams.py` 會讀大題說明的「至少 N 個單詞」，`tools/validate_exam.py` 新增檢查，說明寫「至少」而 `word_count.min` 不符時報錯。(2) `tools/exam_stats.py` 改讀 `forms-index.json` 的 `forms`，用 `entry_id` 對回條目，詞形還原改為 `forms-index`（不規則變化 went→go、children→child、mice→mouse 都對得到），統計已重跑。(3) 新增 `tools/link_grammar_refs.py`，在 `grammar-patterns.json` 每個翻譯題 ref 加上題庫的 `exam_id`＋`no`（170 筆全部對上），CI 以 `--check` 檢查。以下保留原始紀錄。
+
 1. **作文字數要求被誤標為「約」**：`data/exams/parsed/gsat-111`～`gsat-115`、`ref-110`、`ref-111`、`ref-115` 共 8 份的作文 `tags.word_count` 是 `{min:null, max:null, approx:120}`，但題本與大題說明都寫「文長至少120個單詞（words）」[CEEC-P115]，應為 `{min:120, max:null, approx:null}`。原因是 v1 檔的 `word_requirement` 只寫了 `"120 words"`，`tools/normalize_exams.py` 依規則轉成 approx。連帶 `docs/analysis/exam-stats.md` 的「gsat-current|composition word_count：≈120 5」也是錯的。修法：把這 8 份的原值改成 `at least 120 words`，或讓 normalize 讀大題 `instructions` 的「至少」。其他 58 份核對後沒有問題。
 2. **歷屆詞頻沒有用到 ECDICT 詞形索引**：`tools/exam_stats.py` 的 `Lexicon` 預期 `{詞形: [條目 id]}` 的平面格式，但 `forms-index.json` 的實際結構是 `{"_meta":…, "forms":{詞形:[{"entry_id":"abandon|v.|4","types":[…]}]}}`，`ceec-wordlist.json` 也沒有 `entry_id` 欄位，所以對應數為 0、退回 suffix-rules（`word-frequency.json`、`summary.json` 的 `lemmatizer` 欄都是 `suffix-rules`）。不規則變化（went、children、better）因此可能沒算到原形。修法：讀 `data["forms"]`，用 `entry_id`（`word|pos原文|level`）對回條目後重跑統計。03 §9.3 已加註。
 3. **題號代碼兩套**：`grammar-patterns.json` 的 `exam_translation_refs` 用 `ast-109m-1`、`gsat-110t-1`、`ref115-1`；題庫 id 是 `ast-109-makeup`、`ref-110`、`ref-115`，翻譯題號在題庫是大題內序號 `no`。兩邊要能 join 才能做「句型 × 年度」交叉分析。建議在 grammar-patterns 加一個 `exam_id`＋`no` 欄位（或寫一張對照表），不要靠字串猜。

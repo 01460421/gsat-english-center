@@ -1,6 +1,6 @@
 # 歷屆試題統計摘要
 
-由 `tools/exam_stats.py` 自動產生，請勿手改。考卷 66 份、題目 3285 題、選文 457 篇；詞形還原：suffix-rules。
+由 `tools/exam_stats.py` 自動產生，請勿手改。考卷 66 份、題目 3285 題、選文 457 篇；詞形還原：forms-index。
 
 時期：gsat-legacy＝學測 83–110、gsat-current＝學測 111 起、ast＝指考 91–110。
 
@@ -85,7 +85,7 @@
 - **answer_pos**：phrase 90、verb 45、noun 37、adverb 35、adjective 28、preposition 17、pronoun 12、conjunction 10
 - **answer_function**：verb 11、preposition 9、conjunction 3、noun 1
 - **grammar_point**：participle 11、relative_clause 10、infinitive_gerund 4、modal 4、tense 4、passive 3、pronoun 3、comparison 3、subjunctive 2、adverb_clause 2、agreement 2、determiner 2
-- **answer_level**：1 138、2 62、3 25、4 18、5 12、6 4
+- **answer_level**：1 147、2 59、3 24、4 18、5 12、6 4
 - **答對率**：平均 0.51、中位數 0.51、四分位 0.39–0.63（n=255）
 
 ### ast|composition
@@ -111,7 +111,7 @@
 
 - **test_point**：word_meaning 170、collocation 51、phrase 19
 - **answer_pos**：noun 68、verb 66、adjective 57、adverb 33、phrase 16
-- **answer_level**：1 10、2 14、3 15、4 46、5 76、6 30
+- **answer_level**：1 10、2 14、3 15、4 47、5 76、6 30
 - **答對率**：平均 0.527、中位數 0.53、四分位 0.42–0.65（n=215）
 
 ### ast|word_bank
@@ -120,7 +120,7 @@
 - **answer_pos**：noun 68、verb 66、adjective 55、phrase 20、adverb 8、conjunction 2、preposition 1
 - **grammar_point**：infinitive_gerund 3、participle 2、tense 1、comparison 1
 - **answer_function**：noun 1
-- **answer_level**：1 46、2 61、3 32、4 34、5 20、6 3
+- **answer_level**：1 48、2 61、3 33、4 33、5 20、6 3
 - **答對率**：平均 0.505、中位數 0.51、四分位 0.41–0.61（n=200）
 
 ### gsat-current|cloze
@@ -129,13 +129,13 @@
 - **answer_pos**：phrase 28、verb 13、adjective 4、noun 3、preposition 1、adverb 1
 - **answer_function**：verb 4
 - **grammar_point**：tense 2、modal 2、participle 1、relative_clause 1、substitution 1
-- **answer_level**：1 12、2 13、3 6、4 10、5 6、6 1
+- **answer_level**：1 14、2 11、3 6、4 10、5 6、6 1
 - **答對率**：平均 0.469、中位數 0.5、四分位 0.328–0.57（n=50）
 
 ### gsat-current|composition
 
 - **essay_type**：picture 5
-- **word_count**：≈120 5
+- **word_count**：≥120 5
 
 ### gsat-current|mixed
 
@@ -176,7 +176,7 @@
 - **answer_pos**：phrase 117、verb 82、adverb 57、preposition 47、adjective 46、noun 36、conjunction 33、pronoun 21、clause 18
 - **grammar_point**：participle 22、tense 13、noun_clause 11、pronoun 11、relative_clause 10、comparison 6、passive 5、infinitive_gerund 5、subjunctive 4、determiner 4、agreement 4、inversion 4
 - **answer_function**：verb 18、conjunction 7、preposition 3、adjective 2、adverb 1、pronoun 1
-- **answer_level**：1 242、2 103、3 40、4 34、5 8、6 2
+- **answer_level**：1 265、2 100、3 41、4 30、5 6、6 2
 - **答對率**：平均 0.523、中位數 0.53、四分位 0.407–0.64（n=290）
 
 ### gsat-legacy|composition
@@ -213,7 +213,7 @@
 - **answer_pos**：verb 120、noun 115、adjective 101、adverb 63、phrase 60、conjunction 1、clause 1、preposition 1
 - **answer_function**：verb 4、preposition 2
 - **grammar_point**：tense 4、existential 2、modal 2、degree 2、passive 2、participle 1、infinitive_gerund 1、subjunctive 1、noun_clause 1、emphasis 1
-- **answer_level**：1 63、2 57、3 92、4 148、5 30、6 9
+- **answer_level**：1 67、2 58、3 92、4 147、5 30、6 9
 - **答對率**：平均 0.579、中位數 0.59、四分位 0.48–0.69（n=300）
 
 ### gsat-legacy|word_bank
@@ -222,7 +222,7 @@
 - **answer_pos**：verb 72、noun 56、adjective 55、adverb 27、phrase 22、preposition 10、pronoun 5、conjunction 2
 - **grammar_point**：infinitive_gerund 3、comparison 3、noun_clause 2、pronoun 2、passive 1、subjunctive 1、causative 1、participle 1、determiner 1、relative_clause 1、tense 1
 - **answer_function**：conjunction 3
-- **answer_level**：1 93、2 57、3 33、4 36、5 6、6 5
+- **answer_level**：1 101、2 52、3 33、4 35、5 6、6 5
 - **答對率**：平均 0.505、中位數 0.52、四分位 0.41–0.6（n=200）
 
 ## 選文
@@ -232,7 +232,7 @@
 | ast|cloze | 55 | 148（130.0–172.0） | 0.024 | expository 41、news 6、biography 4、narrative 3、opinion 1 | continuous 55 |
 | ast|reading | 81 | 303（276.5–329.5） | 0.03 | expository 58、news 9、narrative 5、opinion 4、biography 4 | continuous 76、mixed 4、multi_text 1 |
 | ast|structure | 23 | 207（192.0–229.0） | 0.024 | expository 15、biography 4、narrative 3、news 1 | continuous 23 |
-| ast|word_bank | 22 | 252.5（222.0–299.25） | 0.02 | expository 21、biography 1 | continuous 22 |
+| ast|word_bank | 22 | 252.5（222.0–299.25） | 0.019 | expository 21、biography 1 | continuous 22 |
 | gsat-current|cloze | 10 | 196.0（189.75–209.75） | 0.028 | expository 9、narrative 1 | continuous 10 |
 | gsat-current|mixed | 5 | 394（332.5–398.0） | 0.028 | opinion 2、expository 2、biography 1 | mixed 3、multi_text 2 |
 | gsat-current|reading | 15 | 337（320.0–346.0） | 0.033 | expository 13、biography 1、narrative 1 | continuous 10、mixed 5 |
@@ -240,7 +240,7 @@
 | gsat-current|word_bank | 5 | 293（279.5–305.0） | 0.033 | expository 5 | continuous 5 |
 | gsat-legacy|cloze | 81 | 150（126.0–177.5） | 0.019 | expository 55、narrative 10、dialogue 6、news 3、advertisement 3 | continuous 81 |
 | gsat-legacy|composition | 1 | 2（2–2） | 0.5 |  |  |
-| gsat-legacy|other | 1 | 61（61–61） | 0.033 | poem 1 | continuous 1 |
+| gsat-legacy|other | 1 | 61（61–61） | 0.016 | poem 1 | continuous 1 |
 | gsat-legacy|reading | 117 | 267（218.5–300.0） | 0.02 | expository 79、news 16、narrative 8、biography 7、opinion 2 | continuous 113、mixed 4 |
 | gsat-legacy|short_answer | 8 | 177.0（126.75–229.75） | 0.021 | expository 6、advertisement 1、news 1 | continuous 7、mixed 1 |
 | gsat-legacy|translation | 1 | 89（89–89） | 0.056 | expository 1 | continuous 1 |
@@ -252,25 +252,29 @@
 | 詞 | 級 | 正解 | 干擾 | 選文 | 出現考卷數 |
 |---|---|---|---|---|---|
 | where | 1 | 10 | 29 | 111 | 54 |
-| what | 1 | 9 | 52 | 133 | 57 |
+| what | 1 | 9 | 50 | 129 | 57 |
 | however | 1 | 9 | 3 | 148 | 56 |
 | as | 1 | 8 | 115 | 730 | 57 |
-| even | 1 | 8 | 9 | 150 | 55 |
+| even | 1 | 8 | 11 | 158 | 55 |
 | while | 1 | 7 | 10 | 116 | 52 |
 | replace | 3 | 7 | 12 | 23 | 33 |
-| that | 1 | 6 | 78 | 1131 | 57 |
-| other | 1 | 5 | 55 | 272 | 56 |
+| that | 1 | 6 | 75 | 1113 | 57 |
+| be | 1 | 5 | 754 | 4025 | 57 |
+| have | 1 | 5 | 241 | 1035 | 57 |
+| make | 1 | 5 | 79 | 283 | 57 |
+| other | 1 | 5 | 54 | 270 | 56 |
 | without | 1 | 5 | 11 | 60 | 49 |
 | survive | 2 | 5 | 5 | 19 | 22 |
 | amaze | 3 | 5 | 6 | 8 | 18 |
 | in | 1 | 4 | 523 | 2378 | 57 |
+| can | 1 | 4 | 70 | 535 | 57 |
 | which | 1 | 4 | 20 | 235 | 57 |
 | like | 1 | 4 | 32 | 155 | 57 |
-| make | 1 | 4 | 52 | 183 | 56 |
 | likely | 2 | 4 | 9 | 33 | 43 |
-| few | 1 | 4 | 7 | 68 | 38 |
 | practice | 1 | 4 | 12 | 35 | 36 |
+| offer | 2 | 4 | 10 | 35 | 35 |
 | therefore | 2 | 4 | 6 | 36 | 32 |
+| low | 1 | 4 | 3 | 30 | 25 |
 | release | 3 | 4 | 7 | 26 | 25 |
 | promote | 3 | 4 | 12 | 15 | 25 |
 | similar | 2 | 4 | 3 | 20 | 25 |
@@ -281,15 +285,11 @@
 | identify | 4 | 4 | 1 | 12 | 15 |
 | privilege | 4 | 4 | 1 | 3 | 8 |
 | by | 1 | 3 | 155 | 520 | 57 |
-| can | 1 | 3 | 57 | 407 | 57 |
+| do | 1 | 3 | 69 | 297 | 57 |
+| good | 1 | 3 | 50 | 184 | 56 |
 | so | 1 | 3 | 27 | 190 | 56 |
 | also | 1 | 3 | 6 | 253 | 55 |
 | how | 1 | 3 | 52 | 114 | 55 |
-| need | 1 | 3 | 29 | 113 | 53 |
-| being | 2 | 3 | 37 | 83 | 51 |
-| between | 1 | 3 | 17 | 86 | 51 |
-| found | 2 | 3 | 14 | 108 | 47 |
-| another | 1 | 3 | 8 | 64 | 46 |
-| increase | 2 | 3 | 11 | 49 | 36 |
+| come | 1 | 3 | 30 | 136 | 53 |
 
-詞彙表中從未出現在任何考卷的條目：1012 個。
+詞彙表中從未出現在任何考卷的條目：1010 個。

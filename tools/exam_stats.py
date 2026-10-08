@@ -79,27 +79,23 @@ class Lexicon:
                 self.by_form[w.lower()].add(i)
         self.mode = 'suffix-rules'
         if FORMS.exists():
+            # forms-index.json 由 tools/build_vocab.py 產生：{"_meta": …, "forms": {詞形: [{"entry_id", "types"}…]}}。
+            # entry_id = "{word}|{詞類以 / 連接}|{level}"（同一支腳本的定義），由 ceec-wordlist.json 的條目算回索引。
             data = json.loads(FORMS.read_text(encoding='utf-8'))
-            # forms-index 的格式由 build_vocab.py 決定；接受 {form: [entry_id…]} 或 {form: entry_id}
-            id_to_idx = {}
-            for i, e in enumerate(entries):
-                if 'entry_id' in e:
-                    id_to_idx[e['entry_id']] = i
-            if isinstance(data, dict):
-                ok = 0
-                for form, ids in data.items():
-                    ids = ids if isinstance(ids, list) else [ids]
-                    for eid in ids:
-                        if isinstance(eid, dict):
-                            eid = eid.get('entry_id')
-                        idx = id_to_idx.get(eid) if id_to_idx else None
-                        if idx is None and isinstance(eid, int) and 0 <= eid < len(entries):
-                            idx = eid
-                        if idx is not None:
-                            self.by_form[form.lower()].add(idx)
-                            ok += 1
-                if ok:
-                    self.mode = 'forms-index'
+            id_to_idx = {f"{e['word']}|{'/'.join(e['pos'])}|{e['level']}": i for i, e in enumerate(entries)}
+            ok = missing = 0
+            for form, refs in (data.get('forms') or {}).items():
+                for ref in refs:
+                    idx = id_to_idx.get(ref.get('entry_id'))
+                    if idx is None:
+                        missing += 1
+                        continue
+                    self.by_form[form.lower()].add(idx)
+                    ok += 1
+            if missing:
+                raise SystemExit(f'forms-index.json 有 {missing} 個 entry_id 對不回 ceec-wordlist.json（兩份檔案版本不一致？）')
+            if ok:
+                self.mode = 'forms-index'
 
     def lookup(self, token):
         t = token.lower().replace('’', "'")

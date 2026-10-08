@@ -80,6 +80,11 @@ jobs:
       - name: 檢查 data/exams/parsed/*.json（validate_exam.py）
         run: python3 tools/validate_exam.py --all
 
+      # grammar-patterns.json 的歷屆翻譯題代碼要能對上題庫的 exam id 與題號（tools/link_grammar_refs.py 補上 exam_id／no）。
+      - name: 檢查句型資料的翻譯題代碼都對得上題庫（link_grammar_refs.py --check）
+        if: ${{ !cancelled() }}
+        run: python3 tools/link_grammar_refs.py --check
+
       - uses: actions/setup-node@v7
         if: ${{ !cancelled() }}
         with:

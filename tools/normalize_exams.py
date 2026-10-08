@@ -231,10 +231,15 @@ def normalize_passage(text, poem):
 # 標註
 # ---------------------------------------------------------------------------
 
-def parse_word_requirement(raw):
+def parse_word_requirement(raw, instructions=''):
+    """instructions 是作文大題的說明。原值只寫「120 words」時，說明若寫「至少120個單詞」就以下限計，
+    不當成「約 120」（學測 111–115 與參考試卷的 v1 檔都是這樣漏掉「至少」的）。"""
     s = raw.strip()
     if s in WORD_COUNT_MANUAL:
         return dict(WORD_COUNT_MANUAL[s])
+    m = re.fullmatch(r'(\d+) words', s)
+    if m and re.search(rf'至少\s*{m.group(1)}\s*個?單詞', instructions or ''):
+        return {'min': int(m.group(1)), 'max': None, 'approx': None}
     m = re.fullmatch(r'at least (\d+) words', s)
     if m:
         return {'min': int(m.group(1)), 'max': None, 'approx': None}
@@ -542,7 +547,7 @@ def normalize_exam(d, ctx):
                             raise NormalizeError(f'{qw}: two_paragraph 但 paragraphs={tags["paragraphs"]}')
                     if 'word_requirement' in tags:
                         raw = tags.pop('word_requirement')
-                        tags['word_count'] = parse_word_requirement(raw)
+                        tags['word_count'] = parse_word_requirement(raw, s.get('instructions'))
                         tags['word_requirement_raw'] = raw
                         stats['word_count'] += 1
                 if map_closed(tags, 'grammar_point', GRAMMAR_POINTS, GRAMMAR_MAP, qw):
