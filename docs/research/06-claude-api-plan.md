@@ -600,7 +600,7 @@ if (b.processing_status === "ended") {
 - 預設 Opus 5.5，effort `low`。
 - 同時和 Sonnet 5.5 做 A/B 測試：Sonnet 5.5 的延遲等級是 Fast，Opus 5.5 是 Moderate [ANT-MODELS]。官方對 Sonnet 5.5 的建議是：聊天這類講求延遲的工作，effort 從 `medium` 或 `low` 開始 [ANT-S55-NEW]。
 - 比較的是首字延遲、學生滿意度和成本。
-- **A/B 要以「整個工作階段」為單位分組，不能在同一段對話中途換模型**（2026-10-08 查證補充）：思考區塊綁定產生它的模型，Opus 5.5 的思考區塊只有 Fable 5.1／Mythos 5.1 讀得到 [ANT-O55-MIG]，Sonnet 5.5 的思考區塊其他模型都讀不到 [ANT-S55-NEW]。換模型後，之前的推理就失效了，快取也是依模型分開的 [SKILL]。
+- **A/B 要以「整個工作階段」為單位分組，不能在同一段對話中途換模型**（2026-10-08 查證補充）：思考區塊綁定產生它的模型。在 Claude API 上，Opus 5.5 的思考區塊只有 Fable 5.1／Mythos 5.1 讀得到 [ANT-O55-MIG]；Sonnet 5.5 的思考區塊只有 Opus 5.5 讀得到，Sonnet 5.5 則讀不到 Opus 5.5 的區塊 [ANT-S55-NEW]。所以從 Opus 5.5 換到 Sonnet 5.5，之前的推理就失效了；快取也是依模型分開的 [SKILL]。
 
 **錯題講解先用資料庫裡的解析：**
 
@@ -622,6 +622,11 @@ if (b.processing_status === "ended") {
 | 後續對話 | 學生和 AI 的往返 | 在請求最上層加 `cache_control:{type:"ephemeral"}`（自動快取），斷點會跟著對話往後移；它會占用 4 個斷點名額中的 1 個 |
 
 - **TTL**：學生通常幾分鐘內就會追問，用 5 分鐘 TTL 就夠，每次讀取都會重新計時。只有在常見間隔落在 5–60 分鐘之間時，才值得用 1 小時 TTL [SKILL] [ANT-CACHE]。
+  - 官方成本指南的具體門檻（2026-10-08 查證補充）[ANT-COSTINTEL]：
+    - 同一段對話裡，相鄰兩次請求的間隔大約每 20 次有超過 1 次落在 5–60 分鐘，而且很少超過 1 小時，就改用 1 小時 TTL。
+    - Opus 5.5 有例外：如果 20 次裡只有 1–2 次落在這個範圍，而且都不超過約 30 分鐘，官方建議繼續用 5 分鐘 TTL，另外送 keep-alive 請求保溫。
+    - 間隔常常超過 1 小時，就維持預設的 5 分鐘。
+  - 上線後用 D1 的 `chat_messages` 時間戳記統計間隔分布，再決定。Sekai 也是用實際紀錄做決定的（§5.1）。
 - **讓快取失效的操作**：在對話中途改最上層的 `effort` 或 `output_config.format`，都會讓訊息快取失效 [ANT-CACHE] [ANT-SO]。
 - **切換模式**（例如「只給提示」切換成「完整詳解」）：在對話中加一則 `role:"system"` 訊息，不要改最上層的 system [ANT-MIDSYS]。
 
