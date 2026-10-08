@@ -245,7 +245,7 @@ Worker 放一支只在過渡期開啟的 `/auth/probe`：
 
 ### 6.1 任務設定表
 
-寫在 Worker 程式（`apps/api/src/ai/tasks.ts`），前端只能指定任務代號。點數是固定價（1 點約 US$0.025，06 §5.2）；美元依每次呼叫的 `usage` 實算。估計成本來自 06 §3.2；最壞情況是預扣美元（§6.4）。
+寫在 Worker 程式（`apps/api/src/ai/tasks.ts`），前端只能指定任務代號。點數是固定價（1 點約 US$0.025，06 §5.2）；美元依每次呼叫的 `usage` 實算。估計成本來自 06 §3.2 的試算（每次的思考 token 量是假設值，06 §3.1、§6 第 2 點未驗證；Phase 3 用實際 `usage` 校正）；最壞情況是預扣美元（§6.4）。
 
 | 任務代號 | 階段 | 模型 | effort | `max_tokens` | 評分者 | 點數 | 估計平均成本 | 預扣（最壞） |
 |---|---|---|---|---|---|---|---|---|
@@ -299,7 +299,7 @@ Worker 放一支只在過渡期開啟的 `/auth/probe`：
 | `ANTHROPIC_ONLINE_SPEND_LIMIT_USD` | 450 | 在 Anthropic Console 設的 `online` workspace 每月上限（這裡填同一個數字，讓程式可以檢查） |
 | `ANTHROPIC_PIPELINE_SPEND_LIMIT_USD` | 0（Phase 5 前） | `pipeline` workspace 每月上限 |
 | `ANTHROPIC_DEV_SPEND_LIMIT_USD` | 50（正式開放後）；Phase 3 校準月份 250 | `dev` workspace 每月上限（校準集與評測，§0 第 2 點） |
-| `ANTHROPIC_TIER_LIMIT_USD` | 500 | 組織目前的用量級距每月上限（Start 500、Build 1,000，06 §1.7） |
+| `ANTHROPIC_TIER_LIMIT_USD` | 500 | 組織目前的用量級距每月上限（Start 500、Build 1,000，06 §1.7）；新組織可能先在 Evaluation tier、上限更低（06 §1.7、§6 第 14 點，未驗證），以 Console 顯示的值為準 |
 | `AI_APPROVAL_CAP` | 自動計算（§6.6） | 核准名額 |
 
 **啟動檢查**（Worker 的 `/api/admin/health` 每次呼叫時算，CI 也對 `wrangler.toml` 跑一次）：

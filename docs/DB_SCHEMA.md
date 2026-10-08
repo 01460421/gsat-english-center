@@ -1718,4 +1718,14 @@ Phase 1 的驗收項是在**遠端 D1** 跑 `tools/d1_feature_check.sql`（ROADM
 | `lexicon.json` 例句 → `vocab_examples` | 原種子授權缺 `CC0-1.0`，96 列外鍵失敗；原 id 規則 `tatoeba:{句號}` 會讓 5,355 列互相覆蓋；中文譯句作者沒有欄位（CC BY 標示不完整）。修正後 17,646 列全部匯入 |
 | 學生檢視表 | 原 `v_items_student` 不篩狀態，檢核卷與待審題組的答案查得到；修正後 0 列 |
 
+**第二次匯入草稿複驗**（2026-10-08，對抗式審查；另寫一支獨立的匯入→匯出程式，不進 repo；刻意選和上一輪不同的 3 份考卷）：
+
+| 項目 | 結果 |
+|---|---|
+| `ref-111`（參考試卷：`table_completion`＋`answer_table`、45 題 `reused_from`、表格 `rows`）、`gsat-112`（現制：`passage_parts`、`multi_select`、`fill_in_blank`、`answer_variants`）、`gsat-84`（舊制：`scoring_exception`） | 3／3 匯入→匯出逐字相同（兩邊 `json.dumps(sort_keys=True)` 比較）；再跑全部 66 份也是 66／66；`PRAGMA foreign_key_check` 0 列 |
+| 受保護欄位 | 需要 `restricted_json` 的小題 167 個（和上一輪相同）；中譯英 `answer_json` 全為 NULL；用 973 個 ≥30 字元的評分原則與官方譯文片段掃描 `v_items_student`、`v_groups_student` 的全部內容，命中 0 |
+| 單句 SQL 長度 | 以字面值序列化量測最長 79,974 位元組（`ref-107-b` 中譯英 2，評分原則很長）；>90 KB 的 0 句。和上一輪的 80,007 差在序列化方式，結論相同：接近 100 KB 上限，產生器必須保留拆句機制 |
+| `ceec-wordlist.json` → `vocab_entries` | 6,012／6,012 相同；依 `{word}\|{pos 以 / 相接}\|{level}` 算出的 id 和 `lexicon.json` 的 `entry_id` 逐筆相同、無重複；依 03 §9.4 的 slug 規則（小寫、去重音、撇號換連字號、去句點）算出的 `cambridge_slug` 和 `lexicon.json` 的 `cambridge_url` 6,012／6,012 相同 |
+| 發現並修正 | (1) SPEC §4.2 說逐格回饋、詞性預判「不計入校正」，但 `attempts` 沒有欄位可篩：新增 `attempts.scaffold`（每列約多 1 位元組，§8 的容量估算不受影響）；(2) §5.4 原對照漏了 OEWN 的反義、上位詞、衍生與例句（資料只留在 `wordnet_json`，詞頁查不到反義）：補上對照；(3) 參考試卷沿用歷屆題的 214 小題會讓「首次接觸」判斷與難度校正重複計算：§5.1 補規則 |
+
 D1 上要再實測一次（Phase 1 驗收項，§9）。
