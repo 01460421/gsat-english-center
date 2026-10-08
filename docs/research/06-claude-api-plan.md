@@ -5,6 +5,10 @@
 > 金額一律是美元，換算新臺幣用中央銀行公布的 2026/10/07 新臺幣對美元銀行間收盤匯率 **31.795** [CBC-FX]。
 > 文中所有「token 量」都是本文件的估算，不是官方數字。上線前要用 token counting API（免費）[ANT-TOKEN] 和實際回應的 `usage` 欄位校正。
 > 來源代號（例如 [ANT-PRICE]）對應文末「參考來源」的網址。
+> **對抗式查證（2026-10-08）**：逐條回到 `data/raw/` 的原始檔核對，並重新下載官方頁面，新檔放在 `data/raw/anthropic-docs/recheck-2026-10-08/`、`data/raw/cloudflare-docs/recheck-2026-10-08/`。重新下載時發現兩項官方變動，已改寫進內文：
+> - **Claude Haiku 5.5 於 2026-10-07 發布**（`claude-haiku-5-5`），原稿撰寫時的官方頁面還沒有它 [ANT-H55]。
+> - **Sonnet 5.5 的快取讀取從 $0.20 降為 $0.10／MTok（0.05 倍）**。2026-10-07 下載的價目表還是 $0.20，2026-10-08 的版本已改 [ANT-PRICE] [ANT-S55]。
+> 其他修正與補充直接寫在內文，標有「（2026-10-08 查證）」。
 
 ---
 
@@ -14,10 +18,12 @@
    - 2026-09-22 發布，價格 $4／$20 per MTok（輸入／輸出），1M context，最大輸出 128K [ANT-O55] [ANT-PRICE]。
    - 官方建議多數工作從它開始 [ANT-MODELS]。
 2. **獨立驗證的第二位解題者用 Claude Sonnet 5.5**，API ID 是 `claude-sonnet-5-5`。
-   - 價格 $2／$10，2026-09-28 發布 [ANT-S55]。
+   - 價格 $2／$10，快取讀取 $0.10（2026-10-08 起，原為 $0.20），2026-09-28 發布 [ANT-S55] [ANT-PRICE]。
    - 用它的理由是「換一個模型才算獨立」，不是為了省錢。
 3. **不用 Haiku 4.5**：官方只承諾退役日期「不早於 2026-10-15」[ANT-DEPR]，離今天只剩 8 天。
-4. **Fable 5.1 先不用**：價格 $10／$50。只有在 Opus 5.5 調到最高 effort 仍過不了評測時才考慮 [ANT-MODELS]。
+   - **Haiku 5.5（2026-10-08 查證補充）**：`claude-haiku-5-5` 於 2026-10-07 發布。價格 $0.10／$0.50（prompt 不超過 100,000 tokens；超過則 $0.50／$2.50），1M context，最大輸出 128K，adaptive thinking 預設 `medium`，支援結構化輸出，**沒有 server-side fallback** [ANT-H55] [ANT-H55-NEW] [ANT-SO]。
+   - 官方定位是「分類、擷取、路由等大量、講求低延遲的工作」[ANT-H55]。本文件把它列為大量、低風險任務的**候選**，例如單字增補、題目初篩。單價約是 Opus 5.5 的 1/40，但品質沒有評測過，要先評測，再由使用者決定（§2.4、§3.3）。
+4. **Fable 5.1 先不用**：價格 $10／$50。只有在 Opus 5.5 調高 effort 仍過不了評測時才考慮（官方原文是「at higher effort still fall short」）[ANT-MODELS]。
 5. **共用題庫一律走 Message Batches API，再搭配結構化輸出（`output_config.format`）。**
    - Batch 的輸入和輸出都打五折 [ANT-BATCH]。
    - Opus 5.5 和 Sonnet 5.5 不接受強制 `tool_choice`（`any`／`tool`），會回 400 [ANT-O55-MIG]。所以不要沿用「強制呼叫工具取得 JSON」的舊寫法（Sekai 的審核功能就是這樣寫的）。
@@ -61,14 +67,15 @@
 | Claude Fable 5.1 | `claude-fable-5-1` | — | 不早於 2027-09-01 | 1M | 128K | Adaptive（一律開啟） | `high` | Slower | 不預設使用 |
 | **Claude Opus 5.5** | `claude-opus-5-5` | 2026-09-22 | 不早於 2027-09-22 | 1M | 128K | Adaptive（一律開啟） | **`medium`** | Moderate | **預設** |
 | **Claude Sonnet 5.5** | `claude-sonnet-5-5` | 2026-09-28 | 不早於 2027-09-28 | 1M | 128K | Adaptive（可用 `between_tools` 關掉預先思考） | `high` | Fast | 第二解題者；低成本選項 |
-| Claude Haiku 4.5 | `claude-haiku-4-5`（`claude-haiku-4-5-20251001`） | — | **不早於 2026-10-15** | 200K | 64K | Extended（`budget_tokens`） | 不支援 | Fastest | 不使用 |
+| Claude Haiku 5.5（2026-10-08 查證補列） | `claude-haiku-5-5` | 2026-10-07 | 不早於 2027-10-07 | 1M | 128K | Adaptive（`disabled` 只能搭配 `high` 以下的 effort） | `medium` | Fastest | 候選：大量擷取、分類（要先評測） |
+| Claude Haiku 4.5 | `claude-haiku-4-5`（`claude-haiku-4-5-20251001`） | — | **不早於 2026-10-15** | 200K | 64K | Extended（`budget_tokens`） | 不支援 | — | 不使用 |
 
-來源：[ANT-MODELS] [ANT-O55] [ANT-S55] [ANT-DEPR]。
+來源：[ANT-MODELS] [ANT-O55] [ANT-S55] [ANT-H55] [ANT-H55-NEW] [ANT-DEPR]。2026-10-08 的官方比較表已經改列 Haiku 5.5（Fastest），Haiku 4.5 移到 legacy 清單，所以 Haiku 4.5 的延遲欄改成「—」。
 
 - 舊模型仍可使用，包括 Opus 5（$5／$25）、Sonnet 5（$2／$10）、Opus 4.8 等 [ANT-MODELS] [ANT-PRICE]。新專案沒有理由選它們。
 - 所有現行模型都支援文字和圖片輸入、文字輸出、多語言、視覺和工具呼叫 [ANT-MODELS]。
 - 所有 active 模型都支援 PDF [ANT-PDF] 和 Message Batches [ANT-BATCH]。
-- Opus 5.5 和 Sonnet 5.5 都支援結構化輸出 [ANT-SO]。
+- Opus 5.5 和 Sonnet 5.5 都支援結構化輸出 [ANT-SO]。2026-10-08 版的支援清單也列入了 `claude-haiku-5-5`。
 - 在 Batches API 加上 `output-300k-2026-03-24` beta 標頭，Opus 5.5 和 Sonnet 5.5 的輸出上限可到 300K [ANT-MODELS]。本專案用不到。
 - 模型的能力可以用 Models API（`GET /v1/models/{id}`）即時查詢，回傳的 `max_input_tokens`、`max_tokens`、`capabilities` 都是即時值 [ANT-MODELS]。
 
@@ -78,18 +85,20 @@
 |---|---|---|---|---|---|---|---|
 | Fable 5.1 | 10 | 50 | 12.50 | 20 | 0.25 | 5 | 25 |
 | **Opus 5.5** | **4** | **20** | 5 | 8 | **0.20**（0.05 倍） | **2** | **10** |
-| **Sonnet 5.5** | **2** | **10** | 2.50 | 4 | 0.20（0.1 倍） | **1** | **5** |
+| **Sonnet 5.5** | **2** | **10** | 2.50 | 4 | **0.10**（0.05 倍；2026-10-07 版為 0.20） | **1** | **5** |
+| Haiku 5.5（prompt ≤100K tokens） | 0.10 | 0.50 | 0.125 | 0.20 | 0.01 | 0.05 | 0.25 |
+| Haiku 5.5（prompt >100K tokens） | 0.50 | 2.50 | 0.625 | 1 | 0.05 | 0.25 | 1.25 |
 | Haiku 4.5 | 1 | 5 | 1.25 | 2 | 0.10 | 0.50 | 2.50 |
 | Opus 5（對照） | 5 | 25 | 6.25 | 10 | 0.50 | 2.50 | 12.50 |
 
-來源：[ANT-PRICE]。
+來源：[ANT-PRICE]（Sonnet 5.5 快取讀取與 Haiku 5.5 兩列依 2026-10-08 重新下載的版本）。
 
 **計價規則：**
 
-- **快取倍率**：寫入 5 分鐘版是基本輸入價的 1.25 倍，1 小時版是 2 倍；讀取一般是 0.1 倍，但 Opus 5.5 是 0.05 倍、Fable 5.1 是 0.025 倍。
+- **快取倍率**：寫入 5 分鐘版是基本輸入價的 1.25 倍，1 小時版是 2 倍；讀取一般是 0.1 倍，但 Opus 5.5 和 Sonnet 5.5 是 0.05 倍（2026-10-08 版起 Sonnet 5.5 也適用），Fable 5.1 是 0.025 倍。
   - 這些倍率可以和 Batch 折扣疊加 [ANT-PRICE]。
-  - Opus 5.5 和 Sonnet 5.5 的最小可快取長度是 **512 tokens**，不到這個長度就不會快取，也不會報錯 [ANT-CACHE]。
-- **長 context 不加價**：Claude 4.6 以後的模型，整個 1M context 都是標準價，900k tokens 的請求和 9k tokens 的請求單價相同 [ANT-PRICE]。
+  - Opus 5.5、Sonnet 5.5（以及 Haiku 5.5）的最小可快取長度是 **512 tokens**，不到這個長度就不會快取，也不會報錯 [ANT-CACHE]。
+- **長 context 不加價**：Claude 4.6 以後的模型，整個 1M context 都是標準價，900k tokens 的請求和 9k tokens 的請求單價相同 [ANT-PRICE]。**例外是 Haiku 5.5**：prompt 超過 100,000 tokens 時，所有單價都變成 5 倍（見上表）[ANT-PRICE]。
 - **`inference_geo: "us"`** 會讓所有 token 價格乘以 1.1 [ANT-PRICE]。本專案不需要，維持預設的 global。
 - **工具的額外成本**：請求裡只要有 `tools`，Opus 5.5 和 Sonnet 5.5 就會自動加上 286 tokens 的系統提示（`tool_choice` 為 auto 或 none 時）[ANT-PRICE]。結構化輸出也會自動加一段系統提示，但長度沒有公開 [ANT-SO]。
 - **網路工具**：
