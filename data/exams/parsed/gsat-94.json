@@ -1,5 +1,5 @@
 {
-  "schema": "gsat-exam/v1",
+  "schema": "gsat-exam/v1.1",
   "id": "gsat-94",
   "exam": "gsat",
   "year": 94,
@@ -9,7 +9,9 @@
   "full_score": 100,
   "sources": {
     "paper": "data/raw/ceec/gsat/94/paper-1.pdf",
-    "paper_word": "data/raw/ceec/gsat/94/paper-2.doc",
+    "paper_word": [
+      "data/raw/ceec/gsat/94/paper-2.doc"
+    ],
     "answer": [
       "data/raw/ceec/gsat/94/answer.pdf"
     ],
@@ -569,7 +571,8 @@
               "scoring_notes": null,
               "tags": {
                 "test_point": "grammar",
-                "answer_pos": "verb",
+                "answer_pos": "phrase",
+                "answer_function": "verb",
                 "grammar_point": "infinitive_gerund",
                 "key_phrase": "dare to V"
               }
@@ -931,7 +934,8 @@
               "scoring_notes": null,
               "tags": {
                 "test_point": "connective",
-                "answer_pos": "conjunction",
+                "answer_pos": "phrase",
+                "answer_function": "conjunction",
                 "key_phrase": "so that"
               }
             },
@@ -1401,7 +1405,8 @@
               "scoring_notes": null,
               "tags": {
                 "test_point": "connective",
-                "answer_pos": "conjunction",
+                "answer_pos": "phrase",
+                "answer_function": "conjunction",
                 "key_phrase": "as long as"
               }
             },
@@ -2036,7 +2041,7 @@
           "options_bank": null,
           "questions": [
             {
-              "no": 57,
+              "no": 1,
               "label": "翻譯1",
               "mode": "translation",
               "stem": "人類對外太空所知非常有限，但長久以來我們對它卻很感興趣。",
@@ -2056,7 +2061,7 @@
               }
             },
             {
-              "no": 58,
+              "no": 2,
               "label": "翻譯2",
               "mode": "translation",
               "stem": "太空科技的快速發展，使我們得以探索它的奧秘。",
@@ -2114,8 +2119,8 @@
           "options_bank": null,
           "questions": [
             {
-              "no": 59,
-              "label": "作文",
+              "no": 1,
+              "label": "英文作文",
               "mode": "composition",
               "stem": "提示：請根據以下三張連環圖畫的內容，以 “In the English class last week, …” 開頭，將圖中主角所經歷的事件作一合理的敘述。",
               "options": null,
@@ -2125,9 +2130,14 @@
               "stats": null,
               "scoring_notes": null,
               "tags": {
+                "topic": "a student dozing off in English class and dreaming of becoming an English teacher (three-picture sequence)",
                 "essay_type": "picture",
-                "word_requirement": "120 words左右",
-                "topic": "a student dozing off in English class and dreaming of becoming an English teacher (three-picture sequence)"
+                "word_count": {
+                  "min": null,
+                  "max": null,
+                  "approx": 120
+                },
+                "word_requirement_raw": "120 words左右"
               }
             }
           ],

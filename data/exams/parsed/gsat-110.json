@@ -1,5 +1,5 @@
 {
-  "schema": "gsat-exam/v1",
+  "schema": "gsat-exam/v1.1",
   "id": "gsat-110",
   "exam": "gsat",
   "year": 110,
@@ -9,7 +9,9 @@
   "full_score": 100,
   "sources": {
     "paper": "data/raw/ceec/gsat/110/paper-1.pdf",
-    "paper_word": "data/raw/ceec/gsat/110/paper-2.docx",
+    "paper_word": [
+      "data/raw/ceec/gsat/110/paper-2.docx"
+    ],
     "answer": [
       "data/raw/ceec/gsat/110/answer.pdf"
     ],
@@ -24,7 +26,7 @@
   },
   "parts": [
     {
-      "name": "第壹部分：單選題（占72分）",
+      "title": "第壹部分：單選題（占72分）",
       "points": 72,
       "instructions": null,
       "sections": [
@@ -35,7 +37,7 @@
       ]
     },
     {
-      "name": "第貳部分：非選擇題（占28分）",
+      "title": "第貳部分：非選擇題（占28分）",
       "points": 28,
       "instructions": "說明：本部分共有二大題，請依各題指示作答，答案必須寫在「答案卷」上，並標明大題號（一、二），若因字跡潦草、未標示題號、標錯題號等原因，致評閱人員無法清楚辨識者，該部分不予計分。作答使用筆尖較粗之黑色墨水的筆書寫，且不得使用鉛筆。",
       "sections": [
@@ -835,7 +837,8 @@
               "scoring_notes": null,
               "tags": {
                 "test_point": "word_meaning",
-                "answer_pos": "adjective",
+                "answer_pos": "phrase",
+                "answer_function": "adjective",
                 "key_phrase": "be fearful of"
               }
             },
@@ -901,7 +904,8 @@
               "scoring_notes": null,
               "tags": {
                 "test_point": "grammar",
-                "answer_pos": "verb",
+                "answer_pos": "phrase",
+                "answer_function": "verb",
                 "grammar_point": "subjunctive"
               }
             }
@@ -1802,7 +1806,8 @@
               },
               "scoring_notes": null,
               "tags": {
-                "item_type": "synthesis"
+                "item_type": "chart_reading",
+                "item_type_raw": "synthesis"
               }
             },
             {
@@ -1903,7 +1908,7 @@
             "topic": "Benjamin Franklin's invention of the glass armonica",
             "genre": "expository",
             "sdgs": [],
-            "text_format": "continuous"
+            "text_format": "mixed"
           }
         },
         {
@@ -2059,59 +2064,79 @@
       "points_total": 8,
       "stats": {
         "source": "data/raw/ceec/gsat/110/stats-3.xls",
-        "note": "英文科非選擇題分數人數統計表「第一題(滿分:8分)」：中譯英兩小題合計之分數分布；percent 為占報考人數之比例（0–1）。",
         "registered": 128228,
         "absent": 2233,
+        "note": "英文科非選擇題分數人數統計表「第一題(滿分:8分)」：中譯英兩小題合計之分數分布；percent 為占報考人數之比例（0–1）。",
         "score_distribution": [
           {
             "range": "8.00-8.99",
+            "min": 8.0,
+            "max": 8.99,
             "count": 503,
-            "percent": 0.0039
+            "rate": 0.0039
           },
           {
             "range": "7.00-7.99",
+            "min": 7.0,
+            "max": 7.99,
             "count": 7665,
-            "percent": 0.0598
+            "rate": 0.0598
           },
           {
             "range": "6.00-6.99",
+            "min": 6.0,
+            "max": 6.99,
             "count": 17500,
-            "percent": 0.1365
+            "rate": 0.1365
           },
           {
             "range": "5.00-5.99",
+            "min": 5.0,
+            "max": 5.99,
             "count": 22422,
-            "percent": 0.1749
+            "rate": 0.1749
           },
           {
             "range": "4.00-4.99",
+            "min": 4.0,
+            "max": 4.99,
             "count": 21739,
-            "percent": 0.1695
+            "rate": 0.1695
           },
           {
             "range": "3.00-3.99",
+            "min": 3.0,
+            "max": 3.99,
             "count": 17759,
-            "percent": 0.1385
+            "rate": 0.1385
           },
           {
             "range": "2.00-2.99",
+            "min": 2.0,
+            "max": 2.99,
             "count": 12816,
-            "percent": 0.0999
+            "rate": 0.0999
           },
           {
             "range": "1.00-1.99",
+            "min": 1.0,
+            "max": 1.99,
             "count": 9817,
-            "percent": 0.0766
+            "rate": 0.0766
           },
           {
             "range": "0.01-0.99",
+            "min": 0.01,
+            "max": 0.99,
             "count": 4947,
-            "percent": 0.0386
+            "rate": 0.0386
           },
           {
             "range": "0.00-0.00",
+            "min": 0.0,
+            "max": 0.0,
             "count": 10827,
-            "percent": 0.0844
+            "rate": 0.0844
           }
         ]
       },
@@ -2178,119 +2203,163 @@
       "points_total": 20,
       "stats": {
         "source": "data/raw/ceec/gsat/110/stats-3.xls",
-        "note": "英文科非選擇題分數人數統計表「第二題(滿分:20分)」：英文作文分數分布；percent 為占報考人數之比例（0–1）。",
         "registered": 128228,
         "absent": 2233,
+        "note": "英文科非選擇題分數人數統計表「第二題(滿分:20分)」：英文作文分數分布；percent 為占報考人數之比例（0–1）。",
         "score_distribution": [
           {
             "range": "20.00-20.00",
+            "min": 20.0,
+            "max": 20.0,
             "count": 7,
-            "percent": 0.0001
+            "rate": 0.0001
           },
           {
             "range": "19.00-19.99",
+            "min": 19.0,
+            "max": 19.99,
             "count": 90,
-            "percent": 0.0007
+            "rate": 0.0007
           },
           {
             "range": "18.00-18.99",
+            "min": 18.0,
+            "max": 18.99,
             "count": 405,
-            "percent": 0.0032
+            "rate": 0.0032
           },
           {
             "range": "17.00-17.99",
+            "min": 17.0,
+            "max": 17.99,
             "count": 1168,
-            "percent": 0.0091
+            "rate": 0.0091
           },
           {
             "range": "16.00-16.99",
+            "min": 16.0,
+            "max": 16.99,
             "count": 2472,
-            "percent": 0.0193
+            "rate": 0.0193
           },
           {
             "range": "15.00-15.99",
+            "min": 15.0,
+            "max": 15.99,
             "count": 4561,
-            "percent": 0.0356
+            "rate": 0.0356
           },
           {
             "range": "14.00-14.99",
+            "min": 14.0,
+            "max": 14.99,
             "count": 6917,
-            "percent": 0.0539
+            "rate": 0.0539
           },
           {
             "range": "13.00-13.99",
+            "min": 13.0,
+            "max": 13.99,
             "count": 8523,
-            "percent": 0.0665
+            "rate": 0.0665
           },
           {
             "range": "12.00-12.99",
+            "min": 12.0,
+            "max": 12.99,
             "count": 9214,
-            "percent": 0.0719
+            "rate": 0.0719
           },
           {
             "range": "11.00-11.99",
+            "min": 11.0,
+            "max": 11.99,
             "count": 9709,
-            "percent": 0.0757
+            "rate": 0.0757
           },
           {
             "range": "10.00-10.99",
+            "min": 10.0,
+            "max": 10.99,
             "count": 9685,
-            "percent": 0.0755
+            "rate": 0.0755
           },
           {
             "range": "9.00-9.99",
+            "min": 9.0,
+            "max": 9.99,
             "count": 9540,
-            "percent": 0.0744
+            "rate": 0.0744
           },
           {
             "range": "8.00-8.99",
+            "min": 8.0,
+            "max": 8.99,
             "count": 9545,
-            "percent": 0.0744
+            "rate": 0.0744
           },
           {
             "range": "7.00-7.99",
+            "min": 7.0,
+            "max": 7.99,
             "count": 8952,
-            "percent": 0.0698
+            "rate": 0.0698
           },
           {
             "range": "6.00-6.99",
+            "min": 6.0,
+            "max": 6.99,
             "count": 7799,
-            "percent": 0.0608
+            "rate": 0.0608
           },
           {
             "range": "5.00-5.99",
+            "min": 5.0,
+            "max": 5.99,
             "count": 6159,
-            "percent": 0.048
+            "rate": 0.048
           },
           {
             "range": "4.00-4.99",
+            "min": 4.0,
+            "max": 4.99,
             "count": 5054,
-            "percent": 0.0394
+            "rate": 0.0394
           },
           {
             "range": "3.00-3.99",
+            "min": 3.0,
+            "max": 3.99,
             "count": 4180,
-            "percent": 0.0326
+            "rate": 0.0326
           },
           {
             "range": "2.00-2.99",
+            "min": 2.0,
+            "max": 2.99,
             "count": 3748,
-            "percent": 0.0292
+            "rate": 0.0292
           },
           {
             "range": "1.00-1.99",
+            "min": 1.0,
+            "max": 1.99,
             "count": 4341,
-            "percent": 0.0339
+            "rate": 0.0339
           },
           {
             "range": "0.01-0.99",
+            "min": 0.01,
+            "max": 0.99,
             "count": 1906,
-            "percent": 0.0149
+            "rate": 0.0149
           },
           {
             "range": "0.00-0.00",
+            "min": 0.0,
+            "max": 0.0,
             "count": 12020,
-            "percent": 0.0937
+            "rate": 0.0937
           }
         ]
       },
@@ -2321,10 +2390,15 @@
               "stats": null,
               "scoring_notes": "第二大題是「英文作文」，今年為引導寫作，考生必須根據所提供的圖片以及作答提示文字，描述圖片並表達看法，文長至少 120 個單詞。\n「英文作文」的評分標準是依據內容、組織、文法句構、詞彙拼字四個項目給分，字數明顯不足的作文則扣總分 1 分。\n今年英文作文屬引導寫作類型，提供考生一張圖片，寫作任務要求考生寫一篇文長至少 120 個單詞的作文，文分兩段，第一段需描述圖片中的人、事、物以及發生的事情，第二段以遊客或場所主人的立場，表達對這件事情的看法。考生可以依據圖片的提示發揮，並提出自己的看法，完成寫作任務。考生只要能依作答提示，運用所學之詞彙、句構，全篇作文將會根據內容是否具體完整、組織是否重點分明有連貫性、句構語法及用字是否適切、以及拼字與標點符號是否使用得當作為評閱的標準。",
               "tags": {
+                "topic": "tourists trampling a flower field to take photos despite a warning sign",
                 "essay_type": "picture",
                 "paragraphs": 2,
-                "word_requirement": "at least 120 words",
-                "topic": "tourists trampling a flower field to take photos despite a warning sign"
+                "word_count": {
+                  "min": 120,
+                  "max": null,
+                  "approx": null
+                },
+                "word_requirement_raw": "at least 120 words"
               }
             }
           ],

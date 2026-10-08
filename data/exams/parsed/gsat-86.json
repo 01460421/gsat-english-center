@@ -1,5 +1,5 @@
 {
-  "schema": "gsat-exam/v1",
+  "schema": "gsat-exam/v1.1",
   "id": "gsat-86",
   "exam": "gsat",
   "year": 86,
@@ -9,7 +9,9 @@
   "full_score": 100,
   "sources": {
     "paper": "data/raw/ceec/gsat/86/paper-1.pdf",
-    "paper_word": "data/raw/ceec/gsat/86/paper-2.doc",
+    "paper_word": [
+      "data/raw/ceec/gsat/86/paper-2.doc"
+    ],
     "answer": [
       "data/raw/ceec/gsat/86/answer.pdf"
     ],
@@ -223,7 +225,8 @@
               "scoring_notes": null,
               "tags": {
                 "test_point": "phrase",
-                "answer_pos": "preposition",
+                "answer_pos": "phrase",
+                "answer_function": "preposition",
                 "key_phrase": "except for"
               }
             },
@@ -245,7 +248,8 @@
               "scoring_notes": null,
               "tags": {
                 "test_point": "phrase",
-                "answer_pos": "preposition",
+                "answer_pos": "phrase",
+                "answer_function": "preposition",
                 "key_phrase": "as a result of"
               }
             },
@@ -267,7 +271,9 @@
               "scoring_notes": null,
               "tags": {
                 "test_point": "grammar",
-                "grammar_point": "existential_there",
+                "answer_pos": "phrase",
+                "grammar_point": "existential",
+                "grammar_point_raw": "existential_there",
                 "key_phrase": "see if there is ..."
               }
             },
@@ -333,6 +339,7 @@
               "scoring_notes": null,
               "tags": {
                 "test_point": "grammar",
+                "answer_pos": "phrase",
                 "grammar_point": "participle",
                 "key_phrase": "there is ... left"
               }
@@ -355,8 +362,10 @@
               "scoring_notes": null,
               "tags": {
                 "test_point": "grammar",
-                "answer_pos": "verb",
-                "grammar_point": "modal_perfect",
+                "answer_pos": "phrase",
+                "answer_function": "verb",
+                "grammar_point": "modal",
+                "grammar_point_raw": "modal_perfect",
                 "key_phrase": "might have + p.p."
               }
             }
@@ -649,6 +658,7 @@
               "scoring_notes": null,
               "tags": {
                 "test_point": "discourse",
+                "answer_pos": "phrase",
                 "key_phrase": "Not too bad"
               }
             },
@@ -670,6 +680,7 @@
               "scoring_notes": null,
               "tags": {
                 "test_point": "discourse",
+                "answer_pos": "clause",
                 "key_phrase": "What a pity!"
               }
             },
@@ -691,6 +702,7 @@
               "scoring_notes": null,
               "tags": {
                 "test_point": "phrase",
+                "answer_pos": "phrase",
                 "key_phrase": "How on earth ...?"
               }
             },
@@ -712,7 +724,8 @@
               "scoring_notes": null,
               "tags": {
                 "test_point": "phrase",
-                "answer_pos": "adverb",
+                "answer_pos": "phrase",
+                "answer_function": "adverb",
                 "key_phrase": "after all"
               }
             },
@@ -734,6 +747,7 @@
               "scoring_notes": null,
               "tags": {
                 "test_point": "discourse",
+                "answer_pos": "clause",
                 "key_phrase": "That's nothing"
               }
             }
@@ -835,7 +849,8 @@
               "scoring_notes": null,
               "tags": {
                 "test_point": "phrase",
-                "answer_pos": "verb",
+                "answer_pos": "phrase",
+                "answer_function": "verb",
                 "key_phrase": "turn down"
               }
             },
@@ -1128,7 +1143,8 @@
               "stats": null,
               "scoring_notes": null,
               "tags": {
-                "item_type": "detail"
+                "item_type": "not_mentioned",
+                "item_type_raw": "detail"
               }
             },
             {
@@ -1243,7 +1259,8 @@
               "stats": null,
               "scoring_notes": null,
               "tags": {
-                "item_type": "detail"
+                "item_type": "not_mentioned",
+                "item_type_raw": "detail"
               }
             }
           ],
@@ -1361,7 +1378,7 @@
       "groups": [
         {
           "id": "s5g1",
-          "passage": "Do you know that happy folks recover from illness much more readily than people who are depressed and always complaining?\nThe old sages always used to say that laughter was the best medicine—indeed, better than medicine.\nSomeone else remarked that “a merry heart does good, like medicine”—and infectious laughter is often catching. Don’t you find it so? I like the anonymous verse which sums it all up:\n\nWhen wholesome laughter fills the air,\nSome ills will soon depart;\nFor laughter is good medicine\nThat helps to cheer the heart.",
+          "passage": "Do you know that happy folks recover from illness much more readily than people who are depressed and always complaining?\nThe old sages always used to say that laughter was the best medicine—indeed, better than medicine.\nSomeone else remarked that “a merry heart does good, like medicine”—and infectious laughter is often catching. Don’t you find it so? I like the anonymous verse which sums it all up:\nWhen wholesome laughter fills the air,\nSome ills will soon depart;\nFor laughter is good medicine\nThat helps to cheer the heart.",
           "passage_parts": null,
           "figures": [],
           "options_bank": null,
@@ -1468,7 +1485,7 @@
           "questions": [
             {
               "no": 1,
-              "label": "作文",
+              "label": "英文作文",
               "mode": "composition",
               "stem": "提示：\n你同意 “Laughter is better than medicine” 這種說法嗎？以你自己或親朋好友的經驗或你所知道的故事為例，加以說明。你的論點無論是正面或是反面都不會影響你的得分。",
               "options": null,
@@ -1478,9 +1495,14 @@
               "stats": null,
               "scoring_notes": null,
               "tags": {
+                "topic": "whether one agrees that “Laughter is better than medicine,” illustrated with one’s own or friends’/relatives’ experiences or a known story",
                 "essay_type": "topic",
-                "word_requirement": "about 120 words",
-                "topic": "whether one agrees that “Laughter is better than medicine,” illustrated with one’s own or friends’/relatives’ experiences or a known story"
+                "word_count": {
+                  "min": null,
+                  "max": null,
+                  "approx": 120
+                },
+                "word_requirement_raw": "about 120 words"
               }
             }
           ],

@@ -1,5 +1,5 @@
 {
-  "schema": "gsat-exam/v1",
+  "schema": "gsat-exam/v1.1",
   "id": "gsat-115",
   "exam": "gsat",
   "year": 115,
@@ -9,7 +9,9 @@
   "full_score": 100,
   "sources": {
     "paper": "data/raw/ceec/gsat/115/paper-1.pdf",
-    "paper_word": "data/raw/ceec/gsat/115/paper-2.docx",
+    "paper_word": [
+      "data/raw/ceec/gsat/115/paper-2.docx"
+    ],
     "answer": [
       "data/raw/ceec/gsat/115/answer.pdf"
     ],
@@ -21,10 +23,41 @@
       "data/raw/ceec/gsat/115/stats-2.xls",
       "data/raw/ceec/gsat/115/stats-3.xls"
     ],
-    "other": [
+    "answer_sheet": [
       "data/raw/ceec/gsat/115/other-1.pdf"
     ]
   },
+  "parts": [
+    {
+      "title": null,
+      "points": 62,
+      "instructions": null,
+      "sections": [
+        "s1",
+        "s2",
+        "s3",
+        "s4",
+        "s5"
+      ]
+    },
+    {
+      "title": null,
+      "points": 10,
+      "instructions": null,
+      "sections": [
+        "s6"
+      ]
+    },
+    {
+      "title": null,
+      "points": 28,
+      "instructions": "說明：本部分共有二大題，請依各題指示作答，答案必須寫在「答題卷」標示題號之作答區內，作答時不必抄題。",
+      "sections": [
+        "s7",
+        "s8"
+      ]
+    }
+  ],
   "sections": [
     {
       "id": "s1",
@@ -1236,7 +1269,8 @@
               },
               "scoring_notes": null,
               "tags": {
-                "clue": "conclusion"
+                "clue": "summary",
+                "clue_raw": "conclusion"
               }
             }
           ],
@@ -1400,7 +1434,7 @@
             "topic": "Shackleton’s Endurance expedition and the 2022 discovery of the shipwreck",
             "genre": "narrative",
             "sdgs": [],
-            "text_format": "continuous"
+            "text_format": "mixed"
           }
         },
         {
@@ -1544,7 +1578,7 @@
         },
         {
           "id": "s5g3",
-          "passage": "Have you ever wondered why north comes at the top of a map? Well, north may seem a natural choice for the top spot today, but that wasn’t always the case.\nDocuments from ancient times indicate that many maps in early ages were pointing to the east, where the sun rose. In ancient India, for example, maps were most likely oriented to the east. Though there is no physical evidence to support this, the word dakshina “south” in Indian languages also means “right,” suggesting that ancient Indians were oriented toward the east, and therefore south was on their right-hand side. Ample evidences from the Old Testament also suggest that east was at the top of maps in pre-Biblical and Biblical eras, a reason why east is still referred to as the “Orient” today.\nIn the oldest surviving maps, south is at the top, and north points down. Early Egyptian maps showed south on top, most likely because the Nile, vital to Egyptian livelihood, originated in the south. As rivers were believed to flow downward, “up” was therefore south. Map makers in Arabia also drew maps with south on top since the earliest Muslims lived north of Mecca, and a south-oriented map would show the followers looking up toward their holy city.\nThe preference for north arose during the European age of exploration. At the time, sailors relied on the North Star to find their way across the Mediterranean and later the Atlantic. By the 16th century, when Europe’s search for trading routes was at its peak, maps became Eurocentric, with north on top. The expansion of European imperialism in the following centuries further established the “north up” practice as the standard.\nToday, map orientation is taking on a new perspective. In perhaps our most common interaction with maps—the use of GPS systems on our phones and in our cars, directions have ceased to be as important. The layouts are dynamic, oriented toward our travel path.\nSo, perhaps the north-on-top practice is less a rule and more a blip. After centuries of technological advancements, it seems we’ve ended up right where we began in ancient times: with ourselves in the middle, and our destinations at the top.",
+          "passage": "Have you ever wondered why north comes at the top of a map? Well, north may seem a natural choice for the top spot today, but that wasn’t always the case.\nDocuments from ancient times indicate that many maps in early ages were pointing to the east, where the sun rose. In ancient India, for example, maps were most likely oriented to the east. Though there is no physical evidence to support this, the word dakshina “south” in Indian languages also means “right,” suggesting that ancient Indians were oriented toward the east, and therefore south was on their right-hand side. Ample evidences from the Old Testament also suggest that east was at the top of maps in pre-Biblical and Biblical eras, a reason why east is still referred to as the “Orient” today.\nIn the oldest surviving maps, south is at the top, and north points down. Early Egyptian maps showed south on top, most likely because the Nile, vital to Egyptian livelihood, originated in the south. As rivers were believed to flow downward, “up” was therefore south. Map makers in Arabia also drew maps with south on top since the earliest Muslims lived north of Mecca, and a south-oriented map would show the followers looking up toward their holy city.\nThe preference for north arose during the European age of exploration. At the time, sailors relied on the North Star to find their way across the Mediterranean and later the Atlantic. By the 16th century, when Europe’s search for trading routes was at its peak, maps became Eurocentric, with north on top. The expansion of European imperialism in the following centuries further established the “north up” practice as the standard.\nToday, map orientation is taking on a new perspective. In perhaps our most common interaction with maps—the use of GPS systems on our phones and in our cars, directions have ceased to be as important. The layouts are dynamic, oriented toward our travel path.\nSo, perhaps the north-on-top practice is less a rule and more a blip. After centuries of technological advancements, it seems we’ve ended up right where we began in ancient times: with ourselves in the middle, and our destinations at the top.",
           "passage_parts": null,
           "figures": [],
           "options_bank": null,
@@ -1840,9 +1874,114 @@
       "type": "translation",
       "title": "一、中譯英（占8分）",
       "part": "非選擇題",
-      "part_instructions": "說明：本部分共有二大題，請依各題指示作答，答案必須寫在「答題卷」標示題號之作答區內，作答時不必抄題。",
       "instructions": "說明：依題號將以下中文句子譯成正確、通順、達意的英文。每題4分，共8分。",
       "points_total": 8,
+      "stats": {
+        "source": "stats-3.xls（英文科非選擇題分數人數統計表，第一題＝中譯英兩小題合計，滿分8分）",
+        "max_score": 8,
+        "registered": 120959,
+        "score_distribution": [
+          {
+            "range": "8.00-8.99",
+            "min": 8.0,
+            "max": 8.99,
+            "count": 256,
+            "rate": 0.0021,
+            "cumulative_count": 256,
+            "cumulative_rate": 0.0021
+          },
+          {
+            "range": "7.00-7.99",
+            "min": 7.0,
+            "max": 7.99,
+            "count": 5995,
+            "rate": 0.0496,
+            "cumulative_count": 6251,
+            "cumulative_rate": 0.0517
+          },
+          {
+            "range": "6.00-6.99",
+            "min": 6.0,
+            "max": 6.99,
+            "count": 14523,
+            "rate": 0.1201,
+            "cumulative_count": 20774,
+            "cumulative_rate": 0.1717
+          },
+          {
+            "range": "5.00-5.99",
+            "min": 5.0,
+            "max": 5.99,
+            "count": 16517,
+            "rate": 0.1366,
+            "cumulative_count": 37291,
+            "cumulative_rate": 0.3083
+          },
+          {
+            "range": "4.00-4.99",
+            "min": 4.0,
+            "max": 4.99,
+            "count": 15188,
+            "rate": 0.1256,
+            "cumulative_count": 52479,
+            "cumulative_rate": 0.4339
+          },
+          {
+            "range": "3.00-3.99",
+            "min": 3.0,
+            "max": 3.99,
+            "count": 13907,
+            "rate": 0.115,
+            "cumulative_count": 66386,
+            "cumulative_rate": 0.5488
+          },
+          {
+            "range": "2.00-2.99",
+            "min": 2.0,
+            "max": 2.99,
+            "count": 14980,
+            "rate": 0.1238,
+            "cumulative_count": 81366,
+            "cumulative_rate": 0.6727
+          },
+          {
+            "range": "1.00-1.99",
+            "min": 1.0,
+            "max": 1.99,
+            "count": 16439,
+            "rate": 0.1359,
+            "cumulative_count": 97805,
+            "cumulative_rate": 0.8086
+          },
+          {
+            "range": "0.01-0.99",
+            "min": 0.01,
+            "max": 0.99,
+            "count": 7121,
+            "rate": 0.0589,
+            "cumulative_count": 104926,
+            "cumulative_rate": 0.8675
+          },
+          {
+            "range": "0.00-0.00",
+            "min": 0.0,
+            "max": 0.0,
+            "count": 13243,
+            "rate": 0.1095,
+            "cumulative_count": 118169,
+            "cumulative_rate": 0.9769
+          },
+          {
+            "range": "缺考",
+            "min": null,
+            "max": null,
+            "count": 2790,
+            "rate": 0.0231,
+            "cumulative_count": 120959,
+            "cumulative_rate": 1.0
+          }
+        ]
+      },
       "groups": [
         {
           "id": "s7g1",
@@ -1906,91 +2045,7 @@
             "topic": "English-medium instruction in high school English classes"
           }
         }
-      ],
-      "stats": {
-        "source": "stats-3.xls（英文科非選擇題分數人數統計表，第一題＝中譯英兩小題合計，滿分8分）",
-        "max_score": 8,
-        "examinees_registered": 120959,
-        "score_distribution": [
-          {
-            "range": "8.00-8.99",
-            "count": 256,
-            "percent": 0.0021,
-            "cum_count": 256,
-            "cum_percent": 0.0021
-          },
-          {
-            "range": "7.00-7.99",
-            "count": 5995,
-            "percent": 0.0496,
-            "cum_count": 6251,
-            "cum_percent": 0.0517
-          },
-          {
-            "range": "6.00-6.99",
-            "count": 14523,
-            "percent": 0.1201,
-            "cum_count": 20774,
-            "cum_percent": 0.1717
-          },
-          {
-            "range": "5.00-5.99",
-            "count": 16517,
-            "percent": 0.1366,
-            "cum_count": 37291,
-            "cum_percent": 0.3083
-          },
-          {
-            "range": "4.00-4.99",
-            "count": 15188,
-            "percent": 0.1256,
-            "cum_count": 52479,
-            "cum_percent": 0.4339
-          },
-          {
-            "range": "3.00-3.99",
-            "count": 13907,
-            "percent": 0.115,
-            "cum_count": 66386,
-            "cum_percent": 0.5488
-          },
-          {
-            "range": "2.00-2.99",
-            "count": 14980,
-            "percent": 0.1238,
-            "cum_count": 81366,
-            "cum_percent": 0.6727
-          },
-          {
-            "range": "1.00-1.99",
-            "count": 16439,
-            "percent": 0.1359,
-            "cum_count": 97805,
-            "cum_percent": 0.8086
-          },
-          {
-            "range": "0.01-0.99",
-            "count": 7121,
-            "percent": 0.0589,
-            "cum_count": 104926,
-            "cum_percent": 0.8675
-          },
-          {
-            "range": "0.00-0.00",
-            "count": 13243,
-            "percent": 0.1095,
-            "cum_count": 118169,
-            "cum_percent": 0.9769
-          },
-          {
-            "range": "缺考",
-            "count": 2790,
-            "percent": 0.0231,
-            "cum_count": 120959,
-            "cum_percent": 1.0
-          }
-        ]
-      }
+      ]
     },
     {
       "id": "s8",
@@ -1999,12 +2054,225 @@
       "part": "非選擇題",
       "instructions": "說明︰依提示寫一篇英文作文，文長至少120個單詞（words）。",
       "points_total": 20,
+      "stats": {
+        "source": "stats-3.xls（英文科非選擇題分數人數統計表，第二題＝英文作文，滿分20分）",
+        "max_score": 20,
+        "registered": 120959,
+        "score_distribution": [
+          {
+            "range": "20.00-20.99",
+            "min": 20.0,
+            "max": 20.99,
+            "count": 1,
+            "rate": 0.0,
+            "cumulative_count": 1,
+            "cumulative_rate": 0.0
+          },
+          {
+            "range": "19.00-19.99",
+            "min": 19.0,
+            "max": 19.99,
+            "count": 50,
+            "rate": 0.0004,
+            "cumulative_count": 51,
+            "cumulative_rate": 0.0004
+          },
+          {
+            "range": "18.00-18.99",
+            "min": 18.0,
+            "max": 18.99,
+            "count": 316,
+            "rate": 0.0026,
+            "cumulative_count": 367,
+            "cumulative_rate": 0.003
+          },
+          {
+            "range": "17.00-17.99",
+            "min": 17.0,
+            "max": 17.99,
+            "count": 897,
+            "rate": 0.0074,
+            "cumulative_count": 1264,
+            "cumulative_rate": 0.0104
+          },
+          {
+            "range": "16.00-16.99",
+            "min": 16.0,
+            "max": 16.99,
+            "count": 1815,
+            "rate": 0.015,
+            "cumulative_count": 3079,
+            "cumulative_rate": 0.0255
+          },
+          {
+            "range": "15.00-15.99",
+            "min": 15.0,
+            "max": 15.99,
+            "count": 3209,
+            "rate": 0.0265,
+            "cumulative_count": 6288,
+            "cumulative_rate": 0.052
+          },
+          {
+            "range": "14.00-14.99",
+            "min": 14.0,
+            "max": 14.99,
+            "count": 5279,
+            "rate": 0.0436,
+            "cumulative_count": 11567,
+            "cumulative_rate": 0.0956
+          },
+          {
+            "range": "13.00-13.99",
+            "min": 13.0,
+            "max": 13.99,
+            "count": 6781,
+            "rate": 0.0561,
+            "cumulative_count": 18348,
+            "cumulative_rate": 0.1517
+          },
+          {
+            "range": "12.00-12.99",
+            "min": 12.0,
+            "max": 12.99,
+            "count": 7985,
+            "rate": 0.066,
+            "cumulative_count": 26333,
+            "cumulative_rate": 0.2177
+          },
+          {
+            "range": "11.00-11.99",
+            "min": 11.0,
+            "max": 11.99,
+            "count": 8445,
+            "rate": 0.0698,
+            "cumulative_count": 34778,
+            "cumulative_rate": 0.2875
+          },
+          {
+            "range": "10.00-10.99",
+            "min": 10.0,
+            "max": 10.99,
+            "count": 8709,
+            "rate": 0.072,
+            "cumulative_count": 43487,
+            "cumulative_rate": 0.3595
+          },
+          {
+            "range": "9.00-9.99",
+            "min": 9.0,
+            "max": 9.99,
+            "count": 8770,
+            "rate": 0.0725,
+            "cumulative_count": 52257,
+            "cumulative_rate": 0.432
+          },
+          {
+            "range": "8.00-8.99",
+            "min": 8.0,
+            "max": 8.99,
+            "count": 9134,
+            "rate": 0.0755,
+            "cumulative_count": 61391,
+            "cumulative_rate": 0.5075
+          },
+          {
+            "range": "7.00-7.99",
+            "min": 7.0,
+            "max": 7.99,
+            "count": 9029,
+            "rate": 0.0746,
+            "cumulative_count": 70420,
+            "cumulative_rate": 0.5822
+          },
+          {
+            "range": "6.00-6.99",
+            "min": 6.0,
+            "max": 6.99,
+            "count": 8452,
+            "rate": 0.0699,
+            "cumulative_count": 78872,
+            "cumulative_rate": 0.6521
+          },
+          {
+            "range": "5.00-5.99",
+            "min": 5.0,
+            "max": 5.99,
+            "count": 7376,
+            "rate": 0.061,
+            "cumulative_count": 86248,
+            "cumulative_rate": 0.713
+          },
+          {
+            "range": "4.00-4.99",
+            "min": 4.0,
+            "max": 4.99,
+            "count": 5743,
+            "rate": 0.0475,
+            "cumulative_count": 91991,
+            "cumulative_rate": 0.7605
+          },
+          {
+            "range": "3.00-3.99",
+            "min": 3.0,
+            "max": 3.99,
+            "count": 4440,
+            "rate": 0.0367,
+            "cumulative_count": 96431,
+            "cumulative_rate": 0.7972
+          },
+          {
+            "range": "2.00-2.99",
+            "min": 2.0,
+            "max": 2.99,
+            "count": 3873,
+            "rate": 0.032,
+            "cumulative_count": 100304,
+            "cumulative_rate": 0.8292
+          },
+          {
+            "range": "1.00-1.99",
+            "min": 1.0,
+            "max": 1.99,
+            "count": 4346,
+            "rate": 0.0359,
+            "cumulative_count": 104650,
+            "cumulative_rate": 0.8652
+          },
+          {
+            "range": "0.01-0.99",
+            "min": 0.01,
+            "max": 0.99,
+            "count": 1704,
+            "rate": 0.0141,
+            "cumulative_count": 106354,
+            "cumulative_rate": 0.8793
+          },
+          {
+            "range": "0.00-0.00",
+            "min": 0.0,
+            "max": 0.0,
+            "count": 11815,
+            "rate": 0.0977,
+            "cumulative_count": 118169,
+            "cumulative_rate": 0.9769
+          },
+          {
+            "range": "缺考",
+            "min": null,
+            "max": null,
+            "count": 2790,
+            "rate": 0.0231,
+            "cumulative_count": 120959,
+            "cumulative_rate": 1.0
+          }
+        ]
+      },
       "groups": [
         {
           "id": "s8g1",
           "passage": null,
           "passage_parts": null,
-          "options_bank": null,
           "figures": [
             {
               "kind": "photo",
@@ -2025,6 +2293,7 @@
               "rows": null
             }
           ],
+          "options_bank": null,
           "questions": [
             {
               "no": 1,
@@ -2038,10 +2307,15 @@
               "stats": null,
               "scoring_notes": "一、評分原則：\n英文作文依考生在內容、組織、文法句構、字彙拼字之表現評分，各項得分加總後給予一個整體分數（holistic score）。閱卷委員在評閱考生的作答內容後，再依其內容是否切題、組織是否具連貫性、句子結構與文法、用字是否適切表達文意，及拼字與標點符號使用是否正確等要項，進行評分；為確保評分一致性，試閱時，閱卷委員皆須完全熟悉及理解各分項的評分標準（分項說明詳見表一）。字數明顯不足者，扣總分1分；未分段者，亦扣總分1分。\n表一、英文作文評分指標（等級：優／可／差／劣）\n內容：優＝主題(句)清楚切題，並有具體、完整的相關細節支持。／可＝主題不夠清楚或突顯，部分相關敘述發展不全。／差＝主題不明，大部分相關敘述發展不全或與主題無關。／劣＝幾乎沒有內容或文意難辨。\n組織：優＝重點分明，有開頭、發展、結尾，前後連貫，轉承語使用得當。／可＝重點安排不妥，前後發展比例與轉承語使用欠妥。／差＝重點不明、前後連貫性差。／劣＝毫無重點、前後不連貫。\n文法、句構：優＝文法、格式、標點幾乎無誤，文句結構富變化。／可＝文法、格式、標點偶有錯誤，但不影響文意表達。／差＝文法、格式、標點錯誤多，明顯影響文意表達。／劣＝文法、格式、標點幾乎全錯，嚴重影響文意表達。\n字彙、拼字：優＝用字精確、得宜，拼字、大小寫幾乎無誤。／可＝字詞單調、重複，用字偶有不當，拼字、大小寫偶有錯誤，但不影響文意表達。／差＝用字、拼字、大小寫錯誤多，明顯影響文意表達。／劣＝用字、拼字幾乎全錯，嚴重影響文意表達。\n0分：空白、完全文不對題或離題、完全抄襲選文、文句完全錯誤或文字不足成句。\n（評分原則前言：英文作文部分，主題為寵物在人們生活中的角色，屬於生活情境，貼近考生的生活範疇，考生可依自己的經驗或在生活中的觀察，進行寫作任務。考生根據作答提示說明以及所提供的圖片，寫一篇文長至少120個單詞的作文，文分兩段。第一段描述下列圖片所呈現的現象，而第二段則根據自身的經驗或觀察，說明此現象的原因以及可能的影響。英文作文評分重點在於內容須符合題目要求，提供充分、具體之細節，句構語法及用字適切，拼字與標點符號使用得當；內容充實以及語言表達得宜，應是考生得分之重要元素。請參閱本中心將於4月15日出刊的第351期《選才電子報》。）",
               "tags": {
+                "topic": "the changing role of pets in people’s lives (pets treated as family members/children)",
                 "essay_type": "picture",
                 "paragraphs": 2,
-                "word_requirement": "120 words",
-                "topic": "the changing role of pets in people’s lives (pets treated as family members/children)"
+                "word_count": {
+                  "min": null,
+                  "max": null,
+                  "approx": 120
+                },
+                "word_requirement_raw": "120 words"
               }
             }
           ],
@@ -2050,175 +2324,7 @@
             "sdgs": []
           }
         }
-      ],
-      "stats": {
-        "source": "stats-3.xls（英文科非選擇題分數人數統計表，第二題＝英文作文，滿分20分）",
-        "max_score": 20,
-        "examinees_registered": 120959,
-        "score_distribution": [
-          {
-            "range": "20.00-20.99",
-            "count": 1,
-            "percent": 0.0,
-            "cum_count": 1,
-            "cum_percent": 0.0
-          },
-          {
-            "range": "19.00-19.99",
-            "count": 50,
-            "percent": 0.0004,
-            "cum_count": 51,
-            "cum_percent": 0.0004
-          },
-          {
-            "range": "18.00-18.99",
-            "count": 316,
-            "percent": 0.0026,
-            "cum_count": 367,
-            "cum_percent": 0.003
-          },
-          {
-            "range": "17.00-17.99",
-            "count": 897,
-            "percent": 0.0074,
-            "cum_count": 1264,
-            "cum_percent": 0.0104
-          },
-          {
-            "range": "16.00-16.99",
-            "count": 1815,
-            "percent": 0.015,
-            "cum_count": 3079,
-            "cum_percent": 0.0255
-          },
-          {
-            "range": "15.00-15.99",
-            "count": 3209,
-            "percent": 0.0265,
-            "cum_count": 6288,
-            "cum_percent": 0.052
-          },
-          {
-            "range": "14.00-14.99",
-            "count": 5279,
-            "percent": 0.0436,
-            "cum_count": 11567,
-            "cum_percent": 0.0956
-          },
-          {
-            "range": "13.00-13.99",
-            "count": 6781,
-            "percent": 0.0561,
-            "cum_count": 18348,
-            "cum_percent": 0.1517
-          },
-          {
-            "range": "12.00-12.99",
-            "count": 7985,
-            "percent": 0.066,
-            "cum_count": 26333,
-            "cum_percent": 0.2177
-          },
-          {
-            "range": "11.00-11.99",
-            "count": 8445,
-            "percent": 0.0698,
-            "cum_count": 34778,
-            "cum_percent": 0.2875
-          },
-          {
-            "range": "10.00-10.99",
-            "count": 8709,
-            "percent": 0.072,
-            "cum_count": 43487,
-            "cum_percent": 0.3595
-          },
-          {
-            "range": "9.00-9.99",
-            "count": 8770,
-            "percent": 0.0725,
-            "cum_count": 52257,
-            "cum_percent": 0.432
-          },
-          {
-            "range": "8.00-8.99",
-            "count": 9134,
-            "percent": 0.0755,
-            "cum_count": 61391,
-            "cum_percent": 0.5075
-          },
-          {
-            "range": "7.00-7.99",
-            "count": 9029,
-            "percent": 0.0746,
-            "cum_count": 70420,
-            "cum_percent": 0.5822
-          },
-          {
-            "range": "6.00-6.99",
-            "count": 8452,
-            "percent": 0.0699,
-            "cum_count": 78872,
-            "cum_percent": 0.6521
-          },
-          {
-            "range": "5.00-5.99",
-            "count": 7376,
-            "percent": 0.061,
-            "cum_count": 86248,
-            "cum_percent": 0.713
-          },
-          {
-            "range": "4.00-4.99",
-            "count": 5743,
-            "percent": 0.0475,
-            "cum_count": 91991,
-            "cum_percent": 0.7605
-          },
-          {
-            "range": "3.00-3.99",
-            "count": 4440,
-            "percent": 0.0367,
-            "cum_count": 96431,
-            "cum_percent": 0.7972
-          },
-          {
-            "range": "2.00-2.99",
-            "count": 3873,
-            "percent": 0.032,
-            "cum_count": 100304,
-            "cum_percent": 0.8292
-          },
-          {
-            "range": "1.00-1.99",
-            "count": 4346,
-            "percent": 0.0359,
-            "cum_count": 104650,
-            "cum_percent": 0.8652
-          },
-          {
-            "range": "0.01-0.99",
-            "count": 1704,
-            "percent": 0.0141,
-            "cum_count": 106354,
-            "cum_percent": 0.8793
-          },
-          {
-            "range": "0.00-0.00",
-            "count": 11815,
-            "percent": 0.0977,
-            "cum_count": 118169,
-            "cum_percent": 0.9769
-          },
-          {
-            "range": "缺考",
-            "count": 2790,
-            "percent": 0.0231,
-            "cum_count": 120959,
-            "cum_percent": 1.0
-          }
-        ]
-      }
+      ]
     }
   ],
   "extraction": {

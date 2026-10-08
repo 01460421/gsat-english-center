@@ -1,5 +1,5 @@
 {
-  "schema": "gsat-exam/v1",
+  "schema": "gsat-exam/v1.1",
   "id": "gsat-92",
   "exam": "gsat",
   "year": 92,
@@ -956,7 +956,8 @@
               "scoring_notes": null,
               "tags": {
                 "test_point": "grammar",
-                "answer_pos": "pronoun",
+                "answer_pos": "phrase",
+                "answer_function": "pronoun",
                 "grammar_point": "pronoun",
                 "key_phrase": "intermix with one another"
               }
@@ -1024,7 +1025,8 @@
               "scoring_notes": null,
               "tags": {
                 "test_point": "grammar",
-                "answer_pos": "verb",
+                "answer_pos": "phrase",
+                "answer_function": "verb",
                 "grammar_point": "tense",
                 "key_phrase": "Since then + has been p.p.（現在完成被動）"
               }
@@ -2140,7 +2142,7 @@
           "questions": [
             {
               "no": 1,
-              "label": "作文",
+              "label": "英文作文",
               "mode": "composition",
               "stem": "提示︰請以 “Music Is An Important Part of Our Life” 為題，說明音樂（例如古典音樂、流行歌曲、搖滾音樂等）在生活中的重要性，並以你或他人的經驗為例，敘述音樂所帶來的好處。",
               "options": null,
@@ -2150,9 +2152,14 @@
               "stats": null,
               "scoring_notes": null,
               "tags": {
+                "topic": "the importance of music in our life and the benefits it brings, illustrated with personal or others’ experiences",
                 "essay_type": "topic",
-                "word_requirement": "about 120 words",
-                "topic": "the importance of music in our life and the benefits it brings, illustrated with personal or others’ experiences"
+                "word_count": {
+                  "min": null,
+                  "max": null,
+                  "approx": 120
+                },
+                "word_requirement_raw": "about 120 words"
               }
             }
           ],

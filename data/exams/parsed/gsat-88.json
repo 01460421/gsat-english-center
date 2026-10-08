@@ -1,5 +1,5 @@
 {
-  "schema": "gsat-exam/v1",
+  "schema": "gsat-exam/v1.1",
   "id": "gsat-88",
   "exam": "gsat",
   "year": 88,
@@ -9,7 +9,9 @@
   "full_score": 100,
   "sources": {
     "paper": "data/raw/ceec/gsat/88/paper-1.pdf",
-    "paper_word": "data/raw/ceec/gsat/88/paper-2.doc",
+    "paper_word": [
+      "data/raw/ceec/gsat/88/paper-2.doc"
+    ],
     "answer": [
       "data/raw/ceec/gsat/88/answer.pdf"
     ],
@@ -385,7 +387,8 @@
               "scoring_notes": null,
               "tags": {
                 "test_point": "grammar",
-                "answer_pos": "verb",
+                "answer_pos": "phrase",
+                "answer_function": "verb",
                 "grammar_point": "passive",
                 "key_phrase": "be woken up by"
               }
@@ -408,7 +411,8 @@
               "scoring_notes": null,
               "tags": {
                 "test_point": "grammar",
-                "answer_pos": "verb",
+                "answer_pos": "phrase",
+                "answer_function": "verb",
                 "grammar_point": "tense",
                 "key_phrase": "this is the second time (that) + 現在完成式"
               }
@@ -432,7 +436,8 @@
               "tags": {
                 "test_point": "grammar",
                 "answer_pos": "adverb",
-                "grammar_point": "degree_adverb",
+                "grammar_point": "degree",
+                "grammar_point_raw": "degree_adverb",
                 "key_phrase": "most (= very) + adj."
               }
             },
@@ -454,7 +459,8 @@
               "scoring_notes": null,
               "tags": {
                 "test_point": "grammar",
-                "grammar_point": "there_be",
+                "grammar_point": "existential",
+                "grammar_point_raw": "there_be",
                 "key_phrase": "there should be"
               }
             },
@@ -477,7 +483,8 @@
               "tags": {
                 "test_point": "grammar",
                 "answer_pos": "verb",
-                "grammar_point": "emphatic_do",
+                "grammar_point": "emphasis",
+                "grammar_point_raw": "emphatic_do",
                 "key_phrase": "I do apologize"
               }
             }
@@ -937,7 +944,8 @@
               "tags": {
                 "test_point": "grammar",
                 "answer_pos": "preposition",
-                "grammar_point": "not_until",
+                "grammar_point": "inversion",
+                "grammar_point_raw": "not_until",
                 "key_phrase": "It was not until ... that ..."
               }
             },
@@ -1195,7 +1203,8 @@
               "stats": null,
               "scoring_notes": null,
               "tags": {
-                "item_type": "detail"
+                "item_type": "not_mentioned",
+                "item_type_raw": "detail"
               }
             },
             {
@@ -1470,7 +1479,7 @@
             "sdgs": [
               8
             ],
-            "text_format": "multi_text"
+            "text_format": "mixed"
           }
         }
       ]
@@ -1492,7 +1501,7 @@
           "questions": [
             {
               "no": 1,
-              "label": "作文",
+              "label": "英文作文",
               "mode": "composition",
               "stem": "根據以上四則求職廣告，寫一篇英文作文。文分兩段：第一段寫出你認為這四種工作中那一種對你而言是最好的工作，並說明理由；第二段則寫出四種工作中你最不可能選擇的工作，也說明理由。假如這四種工作你都不喜歡，則在第一段說明都不喜歡的理由，在第二段寫你喜歡什麼工作，並說明理由。",
               "options": null,
@@ -1502,10 +1511,15 @@
               "stats": null,
               "scoring_notes": null,
               "tags": {
-                "essay_type": "two_paragraph",
+                "topic": "which of the four advertised jobs is best for you and which you would be least likely to choose, with reasons (or, if none appeals, why, and what job you like)",
+                "essay_type": "topic",
                 "paragraphs": 2,
-                "word_requirement": "about 120 words",
-                "topic": "which of the four advertised jobs is best for you and which you would be least likely to choose, with reasons (or, if none appeals, why, and what job you like)"
+                "word_count": {
+                  "min": null,
+                  "max": null,
+                  "approx": 120
+                },
+                "word_requirement_raw": "about 120 words"
               }
             }
           ],

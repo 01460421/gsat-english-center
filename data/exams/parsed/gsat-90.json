@@ -1,5 +1,5 @@
 {
-  "schema": "gsat-exam/v1",
+  "schema": "gsat-exam/v1.1",
   "id": "gsat-90",
   "exam": "gsat",
   "year": 90,
@@ -9,14 +9,14 @@
   "full_score": 100,
   "sources": {
     "paper": "data/raw/ceec/gsat/90/paper-1.pdf",
+    "paper_word": [
+      "data/raw/ceec/gsat/90/paper-2.doc"
+    ],
     "answer": [
       "data/raw/ceec/gsat/90/answer.pdf"
     ],
     "scoring": [],
     "stats": [],
-    "paper_word": [
-      "data/raw/ceec/gsat/90/paper-2.doc"
-    ],
     "other": [
       "data/raw/ceec/gsat/90/other.pdf"
     ]
@@ -1421,7 +1421,7 @@
           "questions": [
             {
               "no": 1,
-              "label": "作文",
+              "label": "英文作文",
               "mode": "composition",
               "stem": "提示︰請以 “Something Interesting about a Classmate of Mine” 為題，寫出有關你一位同學的一件趣事。這位同學可以是你任何時期的同學，例如中學、小學或幼稚園的同學。",
               "options": null,
@@ -1431,9 +1431,14 @@
               "stats": null,
               "scoring_notes": null,
               "tags": {
+                "topic": "an interesting incident involving a classmate from any stage of school (secondary school, elementary school or kindergarten)",
                 "essay_type": "topic",
-                "word_requirement": "about 120 words",
-                "topic": "an interesting incident involving a classmate from any stage of school (secondary school, elementary school or kindergarten)"
+                "word_count": {
+                  "min": null,
+                  "max": null,
+                  "approx": 120
+                },
+                "word_requirement_raw": "about 120 words"
               }
             }
           ],

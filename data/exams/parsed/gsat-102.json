@@ -1,5 +1,5 @@
 {
-  "schema": "gsat-exam/v1",
+  "schema": "gsat-exam/v1.1",
   "id": "gsat-102",
   "exam": "gsat",
   "year": 102,
@@ -9,7 +9,9 @@
   "full_score": 100,
   "sources": {
     "paper": "data/raw/ceec/gsat/102/paper-1.pdf",
-    "paper_word": "data/raw/ceec/gsat/102/paper-2.doc",
+    "paper_word": [
+      "data/raw/ceec/gsat/102/paper-2.doc"
+    ],
     "answer": [
       "data/raw/ceec/gsat/102/answer.pdf"
     ],
@@ -23,14 +25,34 @@
       "data/raw/ceec/gsat/102/stats-3.xls"
     ]
   },
+  "parts": [
+    {
+      "title": "第壹部分：單選題（占72分）",
+      "points": 72,
+      "instructions": null,
+      "sections": [
+        "s1",
+        "s2",
+        "s3",
+        "s4"
+      ]
+    },
+    {
+      "title": "第貳部分：非選擇題（占28分）",
+      "points": 28,
+      "instructions": null,
+      "sections": [
+        "s5",
+        "s6"
+      ]
+    }
+  ],
   "sections": [
     {
       "id": "s1",
       "type": "vocabulary",
       "title": "一、詞彙題（占15分）",
       "part": "單選題",
-      "part_title": "第壹部分：單選題（占72分）",
-      "part_instructions": null,
       "instructions": "說明︰第1題至第15題，每題有4個選項，其中只有一個是正確或最適當的選項，請畫記在答案卡之「選擇題答案區」。各題答對者，得1分；答錯、未作答或畫記多於一個選項者，該題以零分計算。",
       "points_total": 15,
       "groups": [
@@ -785,7 +807,8 @@
               "scoring_notes": null,
               "tags": {
                 "test_point": "grammar",
-                "answer_pos": "verb",
+                "answer_pos": "phrase",
+                "answer_function": "verb",
                 "grammar_point": "participle"
               }
             },
@@ -1029,7 +1052,8 @@
               "scoring_notes": null,
               "tags": {
                 "test_point": "grammar",
-                "answer_pos": "adjective",
+                "answer_pos": "phrase",
+                "answer_function": "adjective",
                 "grammar_point": "comparison",
                 "key_phrase": "the + 比較級 ..., the + 比較級 ..."
               }
@@ -1455,7 +1479,8 @@
               "tags": {
                 "test_point": "grammar",
                 "answer_pos": "verb",
-                "grammar_point": "with_absolute_construction",
+                "grammar_point": "with_construction",
+                "grammar_point_raw": "with_absolute_construction",
                 "key_phrase": "with + O + V-ing"
               }
             }
@@ -2384,7 +2409,8 @@
               },
               "scoring_notes": null,
               "tags": {
-                "item_type": "detail"
+                "item_type": "not_mentioned",
+                "item_type_raw": "detail"
               }
             },
             {
@@ -2878,8 +2904,6 @@
       "type": "translation",
       "title": "一、中譯英（占8分）",
       "part": "非選擇題",
-      "part_title": "第貳部分：非選擇題（占28分）",
-      "part_instructions": null,
       "instructions": "說明：1.請將以下中文句子譯成正確、通順、達意的英文，並將答案寫在「答案卷」上。\n2.請依序作答，並標明子題號。每題4分，共8分。",
       "points_total": 8,
       "stats": {
@@ -3200,29 +3224,29 @@
           "figures": [
             {
               "kind": "picture",
-              "caption": "1",
               "label": "連環圖片第1幅",
+              "caption": "1",
               "description": "車廂內（上方有拉環）。右側座位上方貼著標示「博愛座 Priority Seats」，標示下有四個圖示：拄拐杖的老人、孕婦、腿打石膏拄拐杖的傷者、抱著小孩的大人。一名穿制服（胸前有名牌）的男學生坐在博愛座上，低頭看著手上的手機，書包靠在身旁的座位上；他旁邊坐著一位捲髮、戴眼鏡（掛著眼鏡鍊）、眉頭緊皺面露愁容的老婦人，一手扶著拐杖。男學生面前站著一位頭頂禿、留白色八字鬍的老先生，一手拄著拐杖（另一手似拉著上方拉環），腿部有發抖的線條，轉頭瞪著男學生；老先生身後站著兩位乘客（一位齊耳短髮者、一位繫領帶並提著公事包的男子），也皺眉瞪著男學生。",
               "rows": null
             },
             {
               "kind": "picture",
-              "caption": "2",
               "label": "連環圖片第2幅",
+              "caption": "2",
               "description": "晴天的戶外籃球場，背景有大樓輪廓、太陽、籃球架和幾個正在打球的人影。穿 77 號球衣的男學生（即圖1的男學生）跌坐在地上，表情痛苦，一隻球鞋掉落、腳踝處畫有疼痛的記號（扭傷）；一旁穿 3 號球衣、戴眼鏡的球員張開雙臂、一臉驚嚇；籃球滾落在地上。",
               "rows": null
             },
             {
               "kind": "picture",
-              "caption": "3",
               "label": "連環圖片第3幅",
+              "caption": "3",
               "description": "同樣的車廂與「博愛座 Priority Seats」標示。男學生腳踝包著繃帶、腋下夾著拐杖、斜背著書包，一手拉著拉環站著，皺眉、一臉不高興；他身後站著一位長髮女子和一位戴眼鏡、背著背包的男子。博愛座上坐著一位綁雙馬尾、頭上有蝴蝶結的女孩，正面帶微笑地看書，以及一位閉著眼睛、皺著眉（像在睡覺）、雙手扶著一支彎柄手杖（或長柄傘）的男子；兩人都沒有讓座。",
               "rows": null
             },
             {
               "kind": "picture",
-              "caption": "4",
               "label": "連環圖片第4幅",
+              "caption": "4",
               "description": "空白的方框，中央只有一個大問號，表示要考生自行想像故事的發展與結局。",
               "rows": null
             }
@@ -3231,7 +3255,7 @@
           "questions": [
             {
               "no": 1,
-              "label": "作文",
+              "label": "英文作文",
               "mode": "composition",
               "stem": "提示︰請仔細觀察以下三幅連環圖片的內容，並想像第四幅圖片可能的發展，寫出一個涵蓋連環圖片內容並有完整結局的故事。",
               "options": null,
@@ -3241,9 +3265,14 @@
               "stats": null,
               "scoring_notes": "第二大題是「英文作文」，考生須從三幅連環圖片的內容，想像第四幅圖片可能的發展，再以至少 120 個單詞寫出一個涵蓋連環圖片內容並有完整結局的故事。\n「英文作文」的評分標準是依據內容、組織、文法句構、詞彙拼字、體例五個項目給分，字數明顯不足的作文則扣總分 1 分。\n今年的「英文作文」主題與考生的生活經驗息息相關，大部分的考生應有不錯的發揮。根據作答提示，考生必須根據三幅連環圖片的內容，想像第四幅「空白圖片」可能的發展，寫出一個涵蓋連環圖片內容並有完整結局的故事，文長至少 120 個單詞。評分的考量重點為作文內容應切題，組織具連慣性、句子結構及用字適切、拼字與標點符號的使用正確得當。\n（二）英文作文則是引導寫作，今年採用的是看圖寫作的題型，占20分；考生必須依所提供之三幅圖片內容，並想像第四幅圖片可能的發展，寫出一個涵蓋連環圖片內容並有完整結局的故事，文長至少120個字詞。\n（二）評分說明\n英文作文依考生在內容、組織、文法句構、字彙拼字及體例之表現評分，各項得分加總後給予一個整體分數（holistic score），再依總分1至20分，分為下述五等級：特優（19-20分）、優（15-18分）、可（10-14分）、差（5-9分）、劣（0-4分）。閱卷委員仔細評估考生的作答內容後，再依其內容是否切題、組織是否具連貫性、句子結構與用字是否能妥適表達文意，以及拼字與標點符號是否使用正確等要項進行評分；為確保評分之一致性，在試閱時，閱卷委員皆必須完全熟悉及理解各分項的評分標準（分項說明詳見表1）。字數嚴重不足，扣總分1分；多寫，不扣分；未分段，亦不扣分。\n表1：英文作文分項式評分指標（等級：優／可／差／劣）\n內容｜優：主題(句)清楚切題，並有具體、完整的相關細節支持。(5-4分)｜可：主題不夠清楚或突顯，部分相關敘述發展不全。(3分)｜差：主題不明，大部分相關敘述發展不全或與主題無關。(2-1分)｜劣：文不對題或沒寫(凡文不對題或沒寫者，其他各項均以零分計算)。(0分)\n組織｜優：重點分明，有開頭、發展、結尾，前後連貫，轉承語使用得當。(5-4分)｜可：重點安排不妥，前後發展比例與轉承語使用欠妥。(3分)｜差：重點不明、前後不連貫。(2-1分)｜劣：全文毫無組織或未按提示寫作。(0分)\n文法、句構｜優：全文幾無文法錯誤，文句結構富變化。(4分)｜可：文法錯誤少，且未影響文意之表達。(3分)｜差：文法錯誤多，且明顯影響文意之表達。(2-1分)｜劣：全文文法錯誤嚴重，導致文意不明。(0分)\n字彙、拼字｜優：用字精確、得宜，且幾無拼字錯誤。(4分)｜可：字詞單調、重複，用字偶有不當，少許拼字錯誤，但不影響文意之表達。(3分)｜差：用字、拼字錯誤多，明顯影響文意之表達。(2-1分)｜劣：只寫出或抄襲與題意有關的零碎字詞。(0分)\n體例｜優、可（合併一格）：格式、標點、大小寫幾無錯誤。(2分)｜差：格式、標點、大小寫等有錯誤，但不影響文意之表達。(1分)｜劣：違背基本的寫作體例或格式，標點、大小寫等錯誤甚多。(0分)",
               "tags": {
+                "topic": "a four-panel comic about priority seats: a student who would not give up his seat later gets injured and needs one; write the ending",
                 "essay_type": "picture",
-                "word_requirement": "at least 120 words",
-                "topic": "a four-panel comic about priority seats: a student who would not give up his seat later gets injured and needs one; write the ending"
+                "word_count": {
+                  "min": 120,
+                  "max": null,
+                  "approx": null
+                },
+                "word_requirement_raw": "at least 120 words"
               }
             }
           ],

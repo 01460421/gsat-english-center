@@ -1,5 +1,5 @@
 {
-  "schema": "gsat-exam/v1",
+  "schema": "gsat-exam/v1.1",
   "id": "ast-91",
   "exam": "ast",
   "year": 91,
@@ -1346,7 +1346,8 @@
               "scoring_notes": null,
               "tags": {
                 "test_point": "word_meaning",
-                "answer_pos": "noun",
+                "answer_pos": "phrase",
+                "answer_function": "noun",
                 "key_phrase": "snail mail"
               }
             },
@@ -2074,7 +2075,8 @@
               },
               "scoring_notes": null,
               "tags": {
-                "item_type": "detail"
+                "item_type": "not_mentioned",
+                "item_type_raw": "detail"
               }
             },
             {
@@ -2338,7 +2340,7 @@
           "questions": [
             {
               "no": 1,
-              "label": "作文",
+              "label": "英文作文",
               "mode": "composition",
               "stem": "提示：文章請以“If I won two million dollars in the lottery, I would help …”開始，敘述如果你或妳贏得台灣樂透彩新台幣兩百萬元之後，最想把全數金額拿去幫助的人、機構或組織，並寫出理由。",
               "options": null,
@@ -2348,9 +2350,14 @@
               "stats": null,
               "scoring_notes": null,
               "tags": {
+                "topic": "If I won two million dollars in the lottery, I would help …: the people, institution or organization you would give all the prize money to, and why",
                 "essay_type": "topic",
-                "word_requirement": "about 120 to 150 words",
-                "topic": "If I won two million dollars in the lottery, I would help …: the people, institution or organization you would give all the prize money to, and why"
+                "word_count": {
+                  "min": 120,
+                  "max": 150,
+                  "approx": null
+                },
+                "word_requirement_raw": "about 120 to 150 words"
               }
             }
           ],

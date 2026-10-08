@@ -1,5 +1,5 @@
 {
-  "schema": "gsat-exam/v1",
+  "schema": "gsat-exam/v1.1",
   "id": "gsat-99",
   "exam": "gsat",
   "year": 99,
@@ -24,13 +24,34 @@
       "data/raw/ceec/gsat/99/stats-3.xls"
     ]
   },
+  "parts": [
+    {
+      "title": "第壹部分：選擇題（佔72分）",
+      "points": 72,
+      "instructions": null,
+      "sections": [
+        "s1",
+        "s2",
+        "s3",
+        "s4"
+      ]
+    },
+    {
+      "title": "第貳部分：非選擇題（佔28分）",
+      "points": 28,
+      "instructions": null,
+      "sections": [
+        "s5",
+        "s6"
+      ]
+    }
+  ],
   "sections": [
     {
       "id": "s1",
       "type": "vocabulary",
       "title": "一、詞彙（佔15分）",
       "part": "選擇題",
-      "part_title": "第壹部分：選擇題（佔72分）",
       "instructions": "說明︰第1至15題，每題選出最適當的一個選項，標示在答案卡之「選擇題答案區」。每題答對得1分，答錯不倒扣。",
       "points_total": 15,
       "groups": [
@@ -967,7 +988,8 @@
               "tags": {
                 "test_point": "grammar",
                 "answer_pos": "pronoun",
-                "grammar_point": "dummy_it",
+                "grammar_point": "pronoun",
+                "grammar_point_raw": "dummy_it",
                 "key_phrase": "make it easier for sb to V"
               }
             },
@@ -1114,7 +1136,8 @@
               "tags": {
                 "test_point": "grammar",
                 "answer_pos": "verb",
-                "grammar_point": "parallelism",
+                "grammar_point": "parallel_structure",
+                "grammar_point_raw": "parallelism",
                 "key_phrase": "can be absorbed ... and cause"
               }
             },
@@ -2175,66 +2198,85 @@
       "type": "translation",
       "title": "一、翻譯題（佔8分）",
       "part": "非選擇題",
-      "part_title": "第貳部分：非選擇題（佔28分）",
       "instructions": "說明：1.請將以下兩題中文譯成正確而通順達意的英文，並將答案寫在「答案卷」上。\n2.請依序作答，並標明題號。每題4分，共8分。",
       "points_total": 8,
-      "score_distribution": {
+      "stats": {
         "source": "stats-3.xls 第一題(滿分:8分)，翻譯題兩小題合計",
-        "full_marks": 8,
-        "examinees_registered": 142129,
-        "examinees_present": 140054,
+        "max_score": 8,
+        "registered": 142129,
         "absent": 2075,
-        "percent_base": "報名總人數 142129（含缺考）",
-        "bins": [
+        "examinees": 140054,
+        "rate_base": "報名總人數 142129（含缺考）",
+        "score_distribution": [
           {
             "range": "8.00-8.99",
+            "min": 8.0,
+            "max": 8.99,
             "count": 620,
-            "percent": 0.0044
+            "rate": 0.0044
           },
           {
             "range": "7.00-7.99",
+            "min": 7.0,
+            "max": 7.99,
             "count": 5268,
-            "percent": 0.0371
+            "rate": 0.0371
           },
           {
             "range": "6.00-6.99",
+            "min": 6.0,
+            "max": 6.99,
             "count": 12615,
-            "percent": 0.0888
+            "rate": 0.0888
           },
           {
             "range": "5.00-5.99",
+            "min": 5.0,
+            "max": 5.99,
             "count": 18798,
-            "percent": 0.1323
+            "rate": 0.1323
           },
           {
             "range": "4.00-4.99",
+            "min": 4.0,
+            "max": 4.99,
             "count": 23049,
-            "percent": 0.1622
+            "rate": 0.1622
           },
           {
             "range": "3.00-3.99",
+            "min": 3.0,
+            "max": 3.99,
             "count": 23088,
-            "percent": 0.1624
+            "rate": 0.1624
           },
           {
             "range": "2.00-2.99",
+            "min": 2.0,
+            "max": 2.99,
             "count": 20526,
-            "percent": 0.1444
+            "rate": 0.1444
           },
           {
             "range": "1.00-1.99",
+            "min": 1.0,
+            "max": 1.99,
             "count": 16552,
-            "percent": 0.1165
+            "rate": 0.1165
           },
           {
             "range": "0.01-0.99",
+            "min": 0.01,
+            "max": 0.99,
             "count": 4381,
-            "percent": 0.0308
+            "rate": 0.0308
           },
           {
             "range": "0.00-0.00",
+            "min": 0.0,
+            "max": 0.0,
             "count": 15157,
-            "percent": 0.1066
+            "rate": 0.1066
           }
         ]
       },
@@ -2247,7 +2289,7 @@
           "options_bank": null,
           "questions": [
             {
-              "no": 57,
+              "no": 1,
               "label": "翻譯1",
               "mode": "translation",
               "stem": "在過去，腳踏車主要是作為一種交通工具。",
@@ -2268,7 +2310,7 @@
               }
             },
             {
-              "no": 58,
+              "no": 2,
               "label": "翻譯2",
               "mode": "translation",
               "stem": "然而，騎腳踏車現在已經成為一種熱門的休閒活動。",
@@ -2299,123 +2341,167 @@
       "part": "非選擇題",
       "instructions": "說明︰1.依提示在「答案卷」上寫一篇英文作文。\n2.文長至少120個單詞(words)。",
       "points_total": 20,
-      "score_distribution": {
+      "stats": {
         "source": "stats-3.xls 第二題(滿分:20分)",
-        "full_marks": 20,
-        "examinees_registered": 142129,
-        "examinees_present": 140054,
+        "max_score": 20,
+        "registered": 142129,
         "absent": 2075,
-        "percent_base": "報名總人數 142129（含缺考）",
-        "bins": [
+        "examinees": 140054,
+        "rate_base": "報名總人數 142129（含缺考）",
+        "score_distribution": [
           {
             "range": "20.00-20.00",
+            "min": 20.0,
+            "max": 20.0,
             "count": 2,
-            "percent": 0.0
+            "rate": 0.0
           },
           {
             "range": "19.00-19.99",
+            "min": 19.0,
+            "max": 19.99,
             "count": 40,
-            "percent": 0.0003
+            "rate": 0.0003
           },
           {
             "range": "18.00-18.99",
+            "min": 18.0,
+            "max": 18.99,
             "count": 226,
-            "percent": 0.0016
+            "rate": 0.0016
           },
           {
             "range": "17.00-17.99",
+            "min": 17.0,
+            "max": 17.99,
             "count": 579,
-            "percent": 0.0041
+            "rate": 0.0041
           },
           {
             "range": "16.00-16.99",
+            "min": 16.0,
+            "max": 16.99,
             "count": 1397,
-            "percent": 0.0098
+            "rate": 0.0098
           },
           {
             "range": "15.00-15.99",
+            "min": 15.0,
+            "max": 15.99,
             "count": 2756,
-            "percent": 0.0194
+            "rate": 0.0194
           },
           {
             "range": "14.00-14.99",
+            "min": 14.0,
+            "max": 14.99,
             "count": 4559,
-            "percent": 0.0321
+            "rate": 0.0321
           },
           {
             "range": "13.00-13.99",
+            "min": 13.0,
+            "max": 13.99,
             "count": 6144,
-            "percent": 0.0432
+            "rate": 0.0432
           },
           {
             "range": "12.00-12.99",
+            "min": 12.0,
+            "max": 12.99,
             "count": 7865,
-            "percent": 0.0553
+            "rate": 0.0553
           },
           {
             "range": "11.00-11.99",
+            "min": 11.0,
+            "max": 11.99,
             "count": 8662,
-            "percent": 0.0609
+            "rate": 0.0609
           },
           {
             "range": "10.00-10.99",
+            "min": 10.0,
+            "max": 10.99,
             "count": 9995,
-            "percent": 0.0703
+            "rate": 0.0703
           },
           {
             "range": "9.00-9.99",
+            "min": 9.0,
+            "max": 9.99,
             "count": 10811,
-            "percent": 0.0761
+            "rate": 0.0761
           },
           {
             "range": "8.00-8.99",
+            "min": 8.0,
+            "max": 8.99,
             "count": 11601,
-            "percent": 0.0816
+            "rate": 0.0816
           },
           {
             "range": "7.00-7.99",
+            "min": 7.0,
+            "max": 7.99,
             "count": 11480,
-            "percent": 0.0808
+            "rate": 0.0808
           },
           {
             "range": "6.00-6.99",
+            "min": 6.0,
+            "max": 6.99,
             "count": 10875,
-            "percent": 0.0765
+            "rate": 0.0765
           },
           {
             "range": "5.00-5.99",
+            "min": 5.0,
+            "max": 5.99,
             "count": 9548,
-            "percent": 0.0672
+            "rate": 0.0672
           },
           {
             "range": "4.00-4.99",
+            "min": 4.0,
+            "max": 4.99,
             "count": 8217,
-            "percent": 0.0578
+            "rate": 0.0578
           },
           {
             "range": "3.00-3.99",
+            "min": 3.0,
+            "max": 3.99,
             "count": 6824,
-            "percent": 0.048
+            "rate": 0.048
           },
           {
             "range": "2.00-2.99",
+            "min": 2.0,
+            "max": 2.99,
             "count": 5625,
-            "percent": 0.0396
+            "rate": 0.0396
           },
           {
             "range": "1.00-1.99",
+            "min": 1.0,
+            "max": 1.99,
             "count": 4938,
-            "percent": 0.0347
+            "rate": 0.0347
           },
           {
             "range": "0.01-0.99",
+            "min": 0.01,
+            "max": 0.99,
             "count": 2387,
-            "percent": 0.0168
+            "rate": 0.0168
           },
           {
             "range": "0.00-0.00",
+            "min": 0.0,
+            "max": 0.0,
             "count": 15523,
-            "percent": 0.1092
+            "rate": 0.1092
           }
         ]
       },
@@ -2427,38 +2513,38 @@
           "figures": [
             {
               "kind": "picture",
-              "caption": "1",
               "label": "連環圖片第1幅",
-              "rows": null,
-              "description": "麵店內。左上方招牌寫「麵店」，右上方價目表寫「擔擔麵 35／陽春麵 30／乾拌麵 35」（第一行上緣被畫框切掉一部分）。櫃台後方一位捲髮（別著髮夾）、穿圍裙的老闆娘低頭在煮麵，手持裝著麵條的撈麵濾杓。櫃台前三張圓凳：左邊坐著一個穿短袖上衣、短褲的男孩，正在櫃台上的筆記本裡寫字；右邊坐著一位頭髮往後梳、戴眼鏡、身材壯碩的男子（背對畫面），捧著一碗冒著熱氣的麵、手拿筷子在吃麵；兩人中間的圓凳上放著一個有提把的包包。"
+              "caption": "1",
+              "description": "麵店內。左上方招牌寫「麵店」，右上方價目表寫「擔擔麵 35／陽春麵 30／乾拌麵 35」（第一行上緣被畫框切掉一部分）。櫃台後方一位捲髮（別著髮夾）、穿圍裙的老闆娘低頭在煮麵，手持裝著麵條的撈麵濾杓。櫃台前三張圓凳：左邊坐著一個穿短袖上衣、短褲的男孩，正在櫃台上的筆記本裡寫字；右邊坐著一位頭髮往後梳、戴眼鏡、身材壯碩的男子（背對畫面），捧著一碗冒著熱氣的麵、手拿筷子在吃麵；兩人中間的圓凳上放著一個有提把的包包。",
+              "rows": null
             },
             {
               "kind": "picture",
-              "caption": "2",
               "label": "連環圖片第2幅",
-              "rows": null,
-              "description": "同一家麵店（右上角可見價目表的「35」），吃麵的男子已經不在。男孩張著嘴、一臉驚訝（對話框「!!」），用手指著一個被打開的包包，包包裡塞滿一疊疊面額「1000」的鈔票；老闆娘站在男孩旁邊，低頭看著包包。左下角是空著的圓凳。"
+              "caption": "2",
+              "description": "同一家麵店（右上角可見價目表的「35」），吃麵的男子已經不在。男孩張著嘴、一臉驚訝（對話框「!!」），用手指著一個被打開的包包，包包裡塞滿一疊疊面額「1000」的鈔票；老闆娘站在男孩旁邊，低頭看著包包。左下角是空著的圓凳。",
+              "rows": null
             },
             {
               "kind": "picture",
-              "caption": "3",
               "label": "連環圖片第3幅",
-              "rows": null,
-              "description": "火車站內，上方標示「新竹火車站」「售票處」。圖1中吃麵的那位戴眼鏡男子穿著西裝、打領帶，滿頭大汗、張大嘴巴、一臉驚慌（頭旁畫有表示驚嚇的爆炸記號），雙手撐在台面上；他的想像泡泡裡是那個有提把的包包和「!?」，表示他發現包包不見了。背景有旅客走動，其中一人拖著行李箱。"
+              "caption": "3",
+              "description": "火車站內，上方標示「新竹火車站」「售票處」。圖1中吃麵的那位戴眼鏡男子穿著西裝、打領帶，滿頭大汗、張大嘴巴、一臉驚慌（頭旁畫有表示驚嚇的爆炸記號），雙手撐在台面上；他的想像泡泡裡是那個有提把的包包和「!?」，表示他發現包包不見了。背景有旅客走動，其中一人拖著行李箱。",
+              "rows": null
             },
             {
               "kind": "picture",
-              "caption": "4",
               "label": "連環圖片第4幅",
-              "rows": null,
-              "description": "空白的方框，中央只有一個大問號，表示要考生自行想像故事的發展與結局。"
+              "caption": "4",
+              "description": "空白的方框，中央只有一個大問號，表示要考生自行想像故事的發展與結局。",
+              "rows": null
             }
           ],
           "options_bank": null,
           "questions": [
             {
-              "no": 59,
-              "label": "作文",
+              "no": 1,
+              "label": "英文作文",
               "mode": "composition",
               "stem": "提示：請仔細觀察以下三幅連環圖片的內容，並想像第四幅圖片可能的發展，寫出一個涵蓋連環圖片內容並有完整結局的故事。",
               "options": null,
@@ -2468,9 +2554,14 @@
               "stats": null,
               "scoring_notes": "評分標準：\n本大題總分20分。今年回復到多圖的看圖寫作題型，與去年學測的單圖看圖寫作略有不同，但四格圖片中只畫了三格，並沒有提供結局，希望給考生更多的寫作發揮空間。英文作文主要在於評量考生掌握語法能力及使用適當詞彙、句型以寫出一篇具連貫性、統一性的英文作文。目前，英文科主要採整體式評分（holistic scoring），分為五等級：特優（19-20分）、優（15-18分）、可（10-14分）、差（5-9分）、劣（0-4分）；為確認評分之一致性，在試閱時，閱卷委員皆被要求完全理解評分標準。本中心的分項式評分指標包含下列5項：內容（5分）、組織（5分）、文法句構（4分）、字彙拼字（4分），及體例（2分）（詳見表1）。在經過試閱階段的共識建立後，閱卷委員皆能掌握整體的評分方式，因此達成評分的一致性。根據作答說明，文長至少120個字詞，若字數不足，扣1分。\n表1：英文作文分項式評分指標\n項目＼等級｜優｜可｜差｜劣\n內容｜優：主題(句)清楚切題，並有具體、完整的相關細節支持。(5-4分)｜可：主題不夠清楚或突顯，部分相關敘述發展不全。(3分)｜差：主題不明，大部分相關敘述發展不全或與主題無關。(2-1分)｜劣：文不對題或沒寫(凡文不對題或沒寫者，其他各項均以零分計算)。(0分)\n組織｜優：重點分明，有開頭、發展、結尾，前後連貫，轉承語使用得當。(5-4分)｜可：重點安排不妥，前後發展比例與轉承語使用欠妥。(3分)｜差：重點不明、前後不連貫。(2-1分)｜劣：全文毫無組織或未按提示寫作。(0分)\n文法、句構｜優：全文幾無文法錯誤，文句結構富變化。(4分)｜可：文法錯誤少，且未影響文意之表達。(3分)｜差：文法錯誤多，且明顯影響文意之表達。(2-1分)｜劣：全文文法錯誤嚴重，導致文意不明。(0分)\n字彙、拼字｜優：用字精確、得宜，且幾無拼字錯誤。(4分)｜可：字詞單調、重複，用字偶有不當，少許拼字錯誤，但不影響文意之表達。(3分)｜差：用字、拼字錯誤多，明顯影響文意之表達。(2-1分)｜劣：只寫出或抄襲與題意有關的零碎字詞。(0分)\n體例｜優、可（合併一格）：格式、標點、大小寫幾無錯誤。(2分)｜差：格式、標點、大小寫等有錯誤，但不影響文意之表達。(1分)｜劣：違背基本的寫作體例或格式，標點、大小寫等錯誤甚多。(0分)",
               "tags": {
+                "topic": "a man leaves a bag full of cash at a noodle shop and a boy finds it; write the ending of the four-panel story",
                 "essay_type": "picture",
-                "word_requirement": "at least 120 words",
-                "topic": "a man leaves a bag full of cash at a noodle shop and a boy finds it; write the ending of the four-panel story"
+                "word_count": {
+                  "min": 120,
+                  "max": null,
+                  "approx": null
+                },
+                "word_requirement_raw": "at least 120 words"
               }
             }
           ],

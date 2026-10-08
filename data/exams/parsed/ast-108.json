@@ -1,5 +1,5 @@
 {
-  "schema": "gsat-exam/v1",
+  "schema": "gsat-exam/v1.1",
   "id": "ast-108",
   "exam": "ast",
   "year": 108,
@@ -9,7 +9,9 @@
   "full_score": 100,
   "sources": {
     "paper": "data/raw/ceec/ast/108/paper-1.pdf",
-    "paper_word": "data/raw/ceec/ast/108/paper-2.docx",
+    "paper_word": [
+      "data/raw/ceec/ast/108/paper-2.docx"
+    ],
     "answer": [
       "data/raw/ceec/ast/108/answer.pdf"
     ],
@@ -22,6 +24,29 @@
       "data/raw/ceec/ast/108/stats-3.xls"
     ]
   },
+  "parts": [
+    {
+      "title": null,
+      "points": 72,
+      "instructions": null,
+      "sections": [
+        "s1",
+        "s2",
+        "s3",
+        "s4",
+        "s5"
+      ]
+    },
+    {
+      "title": null,
+      "points": 28,
+      "instructions": "說明：本部分共有二題，請依各題指示作答，答案必須寫在「答案卷」上，並標明大題號（一、二），若因字跡潦草、未標示題號、標錯題號等原因，致評閱人員無法清楚辨識，其後果由考生自行承擔。作答使用筆尖較粗之黑色墨水的筆書寫，且不得使用鉛筆。",
+      "sections": [
+        "s6",
+        "s7"
+      ]
+    }
+  ],
   "sections": [
     {
       "id": "s1",
@@ -1741,9 +1766,9 @@
             {
               "kind": "illustration",
               "caption": "第48題選項 (A)–(D) 圖片",
-              "question_no": 48,
               "description": "第48題的四個選項都是黑白的動物寫實圖（同一姿勢、頭朝左的站立側面像），沒有文字，差別在頭上有沒有角與條紋的位置。(A) 頭上有像鹿一樣分叉的大角；全身深色，只有軀幹中段有數道白色直條紋，四肢無條紋，腳踝以下白色。(B) 頭上沒有角、耳朵大；全身深色，臀部、後腿上段及前腿上段有白色橫條紋，腳踝白色。(C) 頭上沒有角；肩胸部（軀幹前半）有白色直條紋，後半身為無條紋的淺灰色，前腿有條紋，腳踝白色。(D) 頭上有像鹿一樣分叉的大角；軀幹中段淺灰色，臀部、後腿及前腿有白色橫條紋，腳踝白色。",
-              "rows": null
+              "rows": null,
+              "question_no": 48
             }
           ],
           "options_bank": null,
@@ -1776,7 +1801,8 @@
               },
               "scoring_notes": null,
               "tags": {
-                "item_type": "synthesis"
+                "item_type": "chart_reading",
+                "item_type_raw": "synthesis"
               }
             },
             {
@@ -1879,7 +1905,7 @@
             "sdgs": [
               15
             ],
-            "text_format": "continuous"
+            "text_format": "mixed"
           }
         }
       ]
@@ -1889,88 +1915,109 @@
       "type": "translation",
       "title": "一、中譯英（占8分）",
       "part": "非選擇題",
-      "part_instructions": "說明：本部分共有二題，請依各題指示作答，答案必須寫在「答案卷」上，並標明大題號（一、二），若因字跡潦草、未標示題號、標錯題號等原因，致評閱人員無法清楚辨識，其後果由考生自行承擔。作答使用筆尖較粗之黑色墨水的筆書寫，且不得使用鉛筆。",
       "instructions": "說明：1.請將以下中文句子譯成正確、通順、達意的英文，並將答案寫在「答案卷」上。\n2.請依序作答，並標明子題號（1、2）。每題4分，共8分。",
       "points_total": 8,
       "stats": {
-        "score_distribution_base": "報考人數 48,992（含缺考 2,282）；第一題（滿分 8 分）為中譯英兩小題合計",
+        "rate_base": "報考人數 48,992（含缺考 2,282）；第一題（滿分 8 分）為中譯英兩小題合計",
         "score_distribution": [
           {
-            "score_range": "8.00-8.99",
+            "range": "8.00-8.99",
+            "min": 8.0,
+            "max": 8.99,
             "count": 1,
-            "percent": 0.0,
+            "rate": 0.0,
             "cumulative_count": 1,
-            "cumulative_percent": 0.0
+            "cumulative_rate": 0.0
           },
           {
-            "score_range": "7.00-7.99",
+            "range": "7.00-7.99",
+            "min": 7.0,
+            "max": 7.99,
             "count": 435,
-            "percent": 0.0089,
+            "rate": 0.0089,
             "cumulative_count": 436,
-            "cumulative_percent": 0.0089
+            "cumulative_rate": 0.0089
           },
           {
-            "score_range": "6.00-6.99",
+            "range": "6.00-6.99",
+            "min": 6.0,
+            "max": 6.99,
             "count": 2642,
-            "percent": 0.0539,
+            "rate": 0.0539,
             "cumulative_count": 3078,
-            "cumulative_percent": 0.0628
+            "cumulative_rate": 0.0628
           },
           {
-            "score_range": "5.00-5.99",
+            "range": "5.00-5.99",
+            "min": 5.0,
+            "max": 5.99,
             "count": 5589,
-            "percent": 0.1141,
+            "rate": 0.1141,
             "cumulative_count": 8667,
-            "cumulative_percent": 0.1769
+            "cumulative_rate": 0.1769
           },
           {
-            "score_range": "4.00-4.99",
+            "range": "4.00-4.99",
+            "min": 4.0,
+            "max": 4.99,
             "count": 7377,
-            "percent": 0.1506,
+            "rate": 0.1506,
             "cumulative_count": 16044,
-            "cumulative_percent": 0.3275
+            "cumulative_rate": 0.3275
           },
           {
-            "score_range": "3.00-3.99",
+            "range": "3.00-3.99",
+            "min": 3.0,
+            "max": 3.99,
             "count": 7755,
-            "percent": 0.1583,
+            "rate": 0.1583,
             "cumulative_count": 23799,
-            "cumulative_percent": 0.4858
+            "cumulative_rate": 0.4858
           },
           {
-            "score_range": "2.00-2.99",
+            "range": "2.00-2.99",
+            "min": 2.0,
+            "max": 2.99,
             "count": 7099,
-            "percent": 0.1449,
+            "rate": 0.1449,
             "cumulative_count": 30898,
-            "cumulative_percent": 0.6307
+            "cumulative_rate": 0.6307
           },
           {
-            "score_range": "1.00-1.99",
+            "range": "1.00-1.99",
+            "min": 1.0,
+            "max": 1.99,
             "count": 6346,
-            "percent": 0.1295,
+            "rate": 0.1295,
             "cumulative_count": 37244,
-            "cumulative_percent": 0.7602
+            "cumulative_rate": 0.7602
           },
           {
-            "score_range": "0.01-0.99",
+            "range": "0.01-0.99",
+            "min": 0.01,
+            "max": 0.99,
             "count": 3280,
-            "percent": 0.0669,
+            "rate": 0.0669,
             "cumulative_count": 40524,
-            "cumulative_percent": 0.8272
+            "cumulative_rate": 0.8272
           },
           {
-            "score_range": "0.00-0.00",
+            "range": "0.00-0.00",
+            "min": 0.0,
+            "max": 0.0,
             "count": 6186,
-            "percent": 0.1263,
+            "rate": 0.1263,
             "cumulative_count": 46710,
-            "cumulative_percent": 0.9534
+            "cumulative_rate": 0.9534
           },
           {
-            "score_range": "缺考",
+            "range": "缺考",
+            "min": null,
+            "max": null,
             "count": 2282,
-            "percent": 0.0466,
+            "rate": 0.0466,
             "cumulative_count": 48992,
-            "cumulative_percent": 1.0
+            "cumulative_rate": 1.0
           }
         ]
       },
@@ -1991,7 +2038,7 @@
           "questions": [
             {
               "no": 1,
-              "label": "翻譯1",
+              "label": "中譯英1",
               "mode": "translation",
               "stem": "創意布條最近在夜市成了有效的廣告工具，也刺激了買氣的成長。",
               "options": null,
@@ -2011,7 +2058,7 @@
             },
             {
               "no": 2,
-              "label": "翻譯2",
+              "label": "中譯英2",
               "mode": "translation",
               "stem": "其中有些看似無意義，但卻相當引人注目，且常能帶給人們會心的一笑。",
               "options": null,
@@ -2042,168 +2089,214 @@
       "instructions": "說明︰1.依提示在「答案卷」上寫一篇英文作文。\n2.文長至少120個單詞（words）。",
       "points_total": 20,
       "stats": {
-        "score_distribution_base": "報考人數 48,992（含缺考 2,282）",
+        "rate_base": "報考人數 48,992（含缺考 2,282）",
         "score_distribution": [
           {
-            "score_range": "20.00-20.99",
+            "range": "20.00-20.99",
+            "min": 20.0,
+            "max": 20.99,
             "count": 0,
-            "percent": 0.0,
+            "rate": 0.0,
             "cumulative_count": 0,
-            "cumulative_percent": 0.0
+            "cumulative_rate": 0.0
           },
           {
-            "score_range": "19.00-19.99",
+            "range": "19.00-19.99",
+            "min": 19.0,
+            "max": 19.99,
             "count": 5,
-            "percent": 0.0001,
+            "rate": 0.0001,
             "cumulative_count": 5,
-            "cumulative_percent": 0.0001
+            "cumulative_rate": 0.0001
           },
           {
-            "score_range": "18.00-18.99",
+            "range": "18.00-18.99",
+            "min": 18.0,
+            "max": 18.99,
             "count": 58,
-            "percent": 0.0012,
+            "rate": 0.0012,
             "cumulative_count": 63,
-            "cumulative_percent": 0.0013
+            "cumulative_rate": 0.0013
           },
           {
-            "score_range": "17.00-17.99",
+            "range": "17.00-17.99",
+            "min": 17.0,
+            "max": 17.99,
             "count": 246,
-            "percent": 0.005,
+            "rate": 0.005,
             "cumulative_count": 309,
-            "cumulative_percent": 0.0063
+            "cumulative_rate": 0.0063
           },
           {
-            "score_range": "16.00-16.99",
+            "range": "16.00-16.99",
+            "min": 16.0,
+            "max": 16.99,
             "count": 559,
-            "percent": 0.0114,
+            "rate": 0.0114,
             "cumulative_count": 868,
-            "cumulative_percent": 0.0177
+            "cumulative_rate": 0.0177
           },
           {
-            "score_range": "15.00-15.99",
+            "range": "15.00-15.99",
+            "min": 15.0,
+            "max": 15.99,
             "count": 1147,
-            "percent": 0.0234,
+            "rate": 0.0234,
             "cumulative_count": 2015,
-            "cumulative_percent": 0.0411
+            "cumulative_rate": 0.0411
           },
           {
-            "score_range": "14.00-14.99",
+            "range": "14.00-14.99",
+            "min": 14.0,
+            "max": 14.99,
             "count": 1856,
-            "percent": 0.0379,
+            "rate": 0.0379,
             "cumulative_count": 3871,
-            "cumulative_percent": 0.079
+            "cumulative_rate": 0.079
           },
           {
-            "score_range": "13.00-13.99",
+            "range": "13.00-13.99",
+            "min": 13.0,
+            "max": 13.99,
             "count": 2503,
-            "percent": 0.0511,
+            "rate": 0.0511,
             "cumulative_count": 6374,
-            "cumulative_percent": 0.1301
+            "cumulative_rate": 0.1301
           },
           {
-            "score_range": "12.00-12.99",
+            "range": "12.00-12.99",
+            "min": 12.0,
+            "max": 12.99,
             "count": 2828,
-            "percent": 0.0577,
+            "rate": 0.0577,
             "cumulative_count": 9202,
-            "cumulative_percent": 0.1878
+            "cumulative_rate": 0.1878
           },
           {
-            "score_range": "11.00-11.99",
+            "range": "11.00-11.99",
+            "min": 11.0,
+            "max": 11.99,
             "count": 2895,
-            "percent": 0.0591,
+            "rate": 0.0591,
             "cumulative_count": 12097,
-            "cumulative_percent": 0.2469
+            "cumulative_rate": 0.2469
           },
           {
-            "score_range": "10.00-10.99",
+            "range": "10.00-10.99",
+            "min": 10.0,
+            "max": 10.99,
             "count": 3087,
-            "percent": 0.063,
+            "rate": 0.063,
             "cumulative_count": 15184,
-            "cumulative_percent": 0.3099
+            "cumulative_rate": 0.3099
           },
           {
-            "score_range": "9.00-9.99",
+            "range": "9.00-9.99",
+            "min": 9.0,
+            "max": 9.99,
             "count": 3095,
-            "percent": 0.0632,
+            "rate": 0.0632,
             "cumulative_count": 18279,
-            "cumulative_percent": 0.3731
+            "cumulative_rate": 0.3731
           },
           {
-            "score_range": "8.00-8.99",
+            "range": "8.00-8.99",
+            "min": 8.0,
+            "max": 8.99,
             "count": 3123,
-            "percent": 0.0637,
+            "rate": 0.0637,
             "cumulative_count": 21402,
-            "cumulative_percent": 0.4368
+            "cumulative_rate": 0.4368
           },
           {
-            "score_range": "7.00-7.99",
+            "range": "7.00-7.99",
+            "min": 7.0,
+            "max": 7.99,
             "count": 2995,
-            "percent": 0.0611,
+            "rate": 0.0611,
             "cumulative_count": 24397,
-            "cumulative_percent": 0.498
+            "cumulative_rate": 0.498
           },
           {
-            "score_range": "6.00-6.99",
+            "range": "6.00-6.99",
+            "min": 6.0,
+            "max": 6.99,
             "count": 2972,
-            "percent": 0.0607,
+            "rate": 0.0607,
             "cumulative_count": 27369,
-            "cumulative_percent": 0.5586
+            "cumulative_rate": 0.5586
           },
           {
-            "score_range": "5.00-5.99",
+            "range": "5.00-5.99",
+            "min": 5.0,
+            "max": 5.99,
             "count": 2845,
-            "percent": 0.0581,
+            "rate": 0.0581,
             "cumulative_count": 30214,
-            "cumulative_percent": 0.6167
+            "cumulative_rate": 0.6167
           },
           {
-            "score_range": "4.00-4.99",
+            "range": "4.00-4.99",
+            "min": 4.0,
+            "max": 4.99,
             "count": 2667,
-            "percent": 0.0544,
+            "rate": 0.0544,
             "cumulative_count": 32881,
-            "cumulative_percent": 0.6712
+            "cumulative_rate": 0.6712
           },
           {
-            "score_range": "3.00-3.99",
+            "range": "3.00-3.99",
+            "min": 3.0,
+            "max": 3.99,
             "count": 2345,
-            "percent": 0.0479,
+            "rate": 0.0479,
             "cumulative_count": 35226,
-            "cumulative_percent": 0.719
+            "cumulative_rate": 0.719
           },
           {
-            "score_range": "2.00-2.99",
+            "range": "2.00-2.99",
+            "min": 2.0,
+            "max": 2.99,
             "count": 2193,
-            "percent": 0.0448,
+            "rate": 0.0448,
             "cumulative_count": 37419,
-            "cumulative_percent": 0.7638
+            "cumulative_rate": 0.7638
           },
           {
-            "score_range": "1.00-1.99",
+            "range": "1.00-1.99",
+            "min": 1.0,
+            "max": 1.99,
             "count": 2439,
-            "percent": 0.0498,
+            "rate": 0.0498,
             "cumulative_count": 39858,
-            "cumulative_percent": 0.8136
+            "cumulative_rate": 0.8136
           },
           {
-            "score_range": "0.01-0.99",
+            "range": "0.01-0.99",
+            "min": 0.01,
+            "max": 0.99,
             "count": 889,
-            "percent": 0.0181,
+            "rate": 0.0181,
             "cumulative_count": 40747,
-            "cumulative_percent": 0.8317
+            "cumulative_rate": 0.8317
           },
           {
-            "score_range": "0.00-0.00",
+            "range": "0.00-0.00",
+            "min": 0.0,
+            "max": 0.0,
             "count": 5963,
-            "percent": 0.1217,
+            "rate": 0.1217,
             "cumulative_count": 46710,
-            "cumulative_percent": 0.9534
+            "cumulative_rate": 0.9534
           },
           {
-            "score_range": "缺考",
+            "range": "缺考",
+            "min": null,
+            "max": null,
             "count": 2282,
-            "percent": 0.0466,
+            "rate": 0.0466,
             "cumulative_count": 48992,
-            "cumulative_percent": 1.0
+            "cumulative_rate": 1.0
           }
         ]
       },
@@ -2253,7 +2346,7 @@
           "questions": [
             {
               "no": 1,
-              "label": "作文",
+              "label": "英文作文",
               "mode": "composition",
               "stem": "右表顯示美國18至29歲的青年對不同類別之新聞的關注度統計。請依據圖表內容寫一篇英文作文，文長至少120個單詞。文分二段，第一段描述圖表內容，並指出關注度較高及偏低的類別；第二段則描述在這六個新聞類別中，你自己較為關注及較不關注的新聞主題分別為何，並說明理由。",
               "options": null,
@@ -2263,10 +2356,15 @@
               "stats": null,
               "scoring_notes": "「英文作文」的評分標準是依據內容、組織、文法句構、字彙拼字四個項目給分，字數明顯不足則扣總分 1 分。\n今年作文題目測試比較少見的圖表描述，考生可見一顯示美國 18 至 29 歲的青年對不同類別之新聞關注度的統計圖表，題目要求考生根據此圖表寫一篇英文作文，第一段需描述圖表內容，並指出關注度較高及偏低的類別，第二段則描述在這六類新聞當中，自己較為關注及較不關注的新聞主題，並說明理由。根據題目要求，需先正確描述此圖表之性質乃針對美國 18 至 29 歲青年其不同類別新聞關注度的調查，接著，需正確指出最為關注的新聞類別乃「環境與天然災害」，較不關注的有「學校與教育」，而最不關注的為「藝術與文化」，本段落亦可測試出考生是否能正確地將圖表的大部分類別以英文表達。相較於第一段的描述圖表，第二段考生發揮的空間比較大，首先需指出其最為關注的新聞類型為何，並充分說明理由，接著需再指出其不關心的主題為何，亦需說明理由。英文作文評分重點仍在於內容是否達到題目的要求、是否就自己提出之觀點，提供充分、具體之說明、句構語法及用字是否適切、以及拼字與標點符號是否使用得當。語言能力表現佳、充分說明應是考生得分之重要元素。",
               "tags": {
+                "topic": "news categories young Americans pay attention to",
                 "essay_type": "chart",
                 "paragraphs": 2,
-                "word_requirement": "at least 120 words",
-                "topic": "news categories young Americans pay attention to"
+                "word_count": {
+                  "min": 120,
+                  "max": null,
+                  "approx": null
+                },
+                "word_requirement_raw": "at least 120 words"
               }
             }
           ],

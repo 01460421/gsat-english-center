@@ -1,5 +1,5 @@
 {
-  "schema": "gsat-exam/v1",
+  "schema": "gsat-exam/v1.1",
   "id": "gsat-83",
   "exam": "gsat",
   "year": 83,
@@ -9,7 +9,9 @@
   "full_score": 100,
   "sources": {
     "paper": "data/raw/ceec/gsat/83/paper-1.pdf",
-    "paper_word": "data/raw/ceec/gsat/83/paper-2.doc",
+    "paper_word": [
+      "data/raw/ceec/gsat/83/paper-2.doc"
+    ],
     "answer": [
       "data/raw/ceec/gsat/83/answer.pdf"
     ],
@@ -797,7 +799,8 @@
               "stats": null,
               "scoring_notes": null,
               "tags": {
-                "item_type": "detail"
+                "item_type": "not_mentioned",
+                "item_type_raw": "detail"
               }
             }
           ],
@@ -1325,7 +1328,7 @@
           "questions": [
             {
               "no": 1,
-              "label": "作文",
+              "label": "英文作文",
               "mode": "composition",
               "stem": "題目：Things Are Not As Difficult As They Appear\n在成長的過程中，有些事情在開始的時候你可能覺得很難，但經過一番努力後就不再認為因難了。請寫一篇至少一百二十個單字的英文作文，描述一個親身的經驗。文章的頭兩句必須是：\nThings are not as difficult as they appear. I have a personal experience to prove this.",
               "options": null,
@@ -1335,9 +1338,14 @@
               "stats": null,
               "scoring_notes": null,
               "tags": {
+                "topic": "a personal experience of something that seemed difficult at first but became easy after effort",
                 "essay_type": "topic",
-                "word_requirement": "at least 120 words",
-                "topic": "a personal experience of something that seemed difficult at first but became easy after effort"
+                "word_count": {
+                  "min": 120,
+                  "max": null,
+                  "approx": null
+                },
+                "word_requirement_raw": "at least 120 words"
               }
             }
           ],

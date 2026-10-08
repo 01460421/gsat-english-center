@@ -1,5 +1,5 @@
 {
-  "schema": "gsat-exam/v1",
+  "schema": "gsat-exam/v1.1",
   "id": "gsat-105",
   "exam": "gsat",
   "year": 105,
@@ -9,7 +9,9 @@
   "full_score": 100,
   "sources": {
     "paper": "data/raw/ceec/gsat/105/paper-1.pdf",
-    "paper_word": "data/raw/ceec/gsat/105/paper-2.docx",
+    "paper_word": [
+      "data/raw/ceec/gsat/105/paper-2.docx"
+    ],
     "answer": [
       "data/raw/ceec/gsat/105/answer.pdf"
     ],
@@ -22,14 +24,34 @@
       "data/raw/ceec/gsat/105/stats-3.xls"
     ]
   },
+  "parts": [
+    {
+      "title": "第壹部分：單選題（占72分）",
+      "points": 72,
+      "instructions": null,
+      "sections": [
+        "s1",
+        "s2",
+        "s3",
+        "s4"
+      ]
+    },
+    {
+      "title": "第貳部分：非選擇題（占28分）",
+      "points": 28,
+      "instructions": "說明：本部分共有二題，請依各題指示作答，答案必須寫在「答案卷」上，並標明大題號（一、二）。作答務必使用筆尖較粗之黑色墨水的筆書寫，且不得使用鉛筆。",
+      "sections": [
+        "s5",
+        "s6"
+      ]
+    }
+  ],
   "sections": [
     {
       "id": "s1",
       "type": "vocabulary",
       "title": "一、詞彙題（占15分）",
       "part": "單選題",
-      "part_title": "第壹部分：單選題（占72分）",
-      "part_instructions": null,
       "instructions": "說明︰第1題至第15題，每題有4個選項，其中只有一個是正確或最適當的選項，請畫記在答案卡之「選擇題答案區」。各題答對者，得1分；答錯、未作答或畫記多於一個選項者，該題以零分計算。",
       "points_total": 15,
       "groups": [
@@ -1171,7 +1193,8 @@
               "scoring_notes": null,
               "tags": {
                 "test_point": "grammar",
-                "answer_pos": "verb",
+                "answer_pos": "phrase",
+                "answer_function": "verb",
                 "grammar_point": "tense",
                 "key_phrase": "was being truthful（過去進行式）"
               }
@@ -2898,8 +2921,6 @@
       "type": "translation",
       "title": "一、中譯英（占8分）",
       "part": "非選擇題",
-      "part_title": "第貳部分：非選擇題（占28分）",
-      "part_instructions": "說明：本部分共有二題，請依各題指示作答，答案必須寫在「答案卷」上，並標明大題號（一、二）。作答務必使用筆尖較粗之黑色墨水的筆書寫，且不得使用鉛筆。",
       "instructions": "說明：1.請將以下中文句子譯成正確、通順、達意的英文，並將答案寫在「答案卷」上。\n2.請依序作答，並標明子題號。每題4分，共8分。",
       "points_total": 8,
       "stats": {
@@ -3217,7 +3238,7 @@
           "questions": [
             {
               "no": 1,
-              "label": "作文",
+              "label": "英文作文",
               "mode": "composition",
               "stem": "提示︰你認為家裡生活環境的維持應該是誰的責任?請寫一篇短文說明你的看法。文分兩段，第一段說明你對家事該如何分工的看法及理由，第二段舉例說明你家中家事分工的情形，並描述你自己做家事的經驗及感想。",
               "options": null,
@@ -3227,10 +3248,15 @@
               "stats": null,
               "scoring_notes": "「英文作文」的評分標準是依據內容、組織、文法句構、詞彙拼字、體例五個項目給分，字數明顯不足的作文則扣總分 1 分。\n第二大題是「英文作文」，以至少 120 個單詞寫 2 段，第一段寫對家事分工的看法及理由，第二段說明自己家中家事分工及做家事的經驗及感想。\n今年的「英文作文」為主題式引導寫作，有 2 個寫作任務，跳脫「看圖寫作」的模式，雖與過去幾年的看四格漫畫敘述故事之命題方式不同，但家事分工與考生生活貼近，要考生第一段寫對家事分工的看法及理由，第二段說明自己家中家事分工及做家事的經驗及感想，有點提醒年輕人在家裡要分擔家事的期許。寫作內容必須完成提示中要求的 2 項寫作任務才算內容完整，有些考生只寫出對家事分工的看法及理由，未寫自己做家事的經驗及感想；有些考生只描述自己做家事的經驗及感想，未說明對家事分工的看法及理由，這樣就是未完成提示中要求的寫作任務，內容及組織均會扣分。大致只要寫作任務能完整完成，條理說明看法與理由，同時敘述自己的經驗及感想，就能拿到不錯的分數。評分的考量重點為作文內容是否切題並有足夠的細節、組織是否具連貫性、句子結構及用字是否適切、以及拼字與標點符號的使用是否正確得當。",
               "tags": {
+                "topic": "who should be responsible for housework: views on dividing household chores, and one’s own family’s division of chores and experience doing them",
                 "essay_type": "topic",
                 "paragraphs": 2,
-                "word_requirement": "at least 120 words",
-                "topic": "who should be responsible for housework: views on dividing household chores, and one’s own family’s division of chores and experience doing them"
+                "word_count": {
+                  "min": 120,
+                  "max": null,
+                  "approx": null
+                },
+                "word_requirement_raw": "at least 120 words"
               }
             }
           ],

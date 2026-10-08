@@ -1,5 +1,5 @@
 {
-  "schema": "gsat-exam/v1",
+  "schema": "gsat-exam/v1.1",
   "id": "ast-109-makeup",
   "exam": "ast",
   "year": 109,
@@ -9,7 +9,9 @@
   "full_score": 100,
   "sources": {
     "paper": "data/raw/ceec/ast/109/paper-3.pdf",
-    "paper_word": "data/raw/ceec/ast/109/paper-4.docx",
+    "paper_word": [
+      "data/raw/ceec/ast/109/paper-4.docx"
+    ],
     "answer": [
       "data/raw/ceec/ast/109/answer-2.pdf"
     ],
@@ -18,6 +20,29 @@
     ],
     "stats": []
   },
+  "parts": [
+    {
+      "title": null,
+      "points": 72,
+      "instructions": null,
+      "sections": [
+        "s1",
+        "s2",
+        "s3",
+        "s4",
+        "s5"
+      ]
+    },
+    {
+      "title": null,
+      "points": 28,
+      "instructions": "說明：本部分共有二題，請依各題指示作答，答案必須寫在「答案卷」上，並標明大題號（一、二），若因字跡潦草、未標示題號、標錯題號等原因，致評閱人員無法清楚辨識，其後果由考生自行承擔。作答使用筆尖較粗之黑色墨水的筆書寫，且不得使用鉛筆。",
+      "sections": [
+        "s6",
+        "s7"
+      ]
+    }
+  ],
   "sections": [
     {
       "id": "s1",
@@ -330,7 +355,8 @@
               "scoring_notes": null,
               "tags": {
                 "test_point": "phrase",
-                "answer_pos": "preposition",
+                "answer_pos": "phrase",
+                "answer_function": "preposition",
                 "key_phrase": "instead of"
               }
             },
@@ -457,7 +483,8 @@
               "scoring_notes": null,
               "tags": {
                 "test_point": "connective",
-                "answer_pos": "preposition",
+                "answer_pos": "phrase",
+                "answer_function": "preposition",
                 "key_phrase": "thanks to"
               }
             },
@@ -750,7 +777,8 @@
               "stats": null,
               "scoring_notes": null,
               "tags": {
-                "clue": "lexical_link"
+                "clue": "lexical_cohesion",
+                "clue_raw": "lexical_link"
               }
             },
             {
@@ -1220,7 +1248,6 @@
       "type": "translation",
       "title": "一、中譯英（占8分）",
       "part": "非選擇題",
-      "part_instructions": "說明：本部分共有二題，請依各題指示作答，答案必須寫在「答案卷」上，並標明大題號（一、二），若因字跡潦草、未標示題號、標錯題號等原因，致評閱人員無法清楚辨識，其後果由考生自行承擔。作答使用筆尖較粗之黑色墨水的筆書寫，且不得使用鉛筆。",
       "instructions": "說明：1.請將以下中文句子譯成正確、通順、達意的英文，並將答案寫在「答案卷」上。\n2.請依序作答，並標明子題號（1、2）。每題4分，共8分。",
       "points_total": 8,
       "groups": [
@@ -1233,7 +1260,7 @@
           "questions": [
             {
               "no": 1,
-              "label": "翻譯1",
+              "label": "中譯英1",
               "mode": "translation",
               "stem": "學習不再侷限於學校內的正規教育，非正式學習已開始扮演重要的角色。",
               "options": null,
@@ -1254,7 +1281,7 @@
             },
             {
               "no": 2,
-              "label": "翻譯2",
+              "label": "中譯英2",
               "mode": "translation",
               "stem": "例如，志工服務讓學生學到如何與不同背景及不同年齡層的人互動。",
               "options": null,
@@ -1296,7 +1323,7 @@
           "questions": [
             {
               "no": 1,
-              "label": "作文",
+              "label": "英文作文",
               "mode": "composition",
               "stem": "每個人或多或少都曾有不經意得罪他人或冒犯他人的經驗，請以個人或親友的經驗為例，寫一篇英文作文。文分兩段，第一段描述事件發生的始末，第二段說明自己或親友如何彌補這個失誤所造成的傷害，並探討這個事件對你的影響或啟示。",
               "options": null,
@@ -1306,10 +1333,15 @@
               "stats": null,
               "scoring_notes": "作文主題為「不經意得罪他人或冒犯他人的經驗」，英文作文的評分標準是依據內容、組織、文法句構、字彙拼字四個項目給分，字數明顯不足則扣總分 1 分。依作答提示第一段描述事件發生的始末，第二段說明自己或親友如何彌補這個失誤所造成的傷害，並探討這個事件對你的影響或啟示。英文作文評分重點仍在於內容須符合題目要求，提供充分、具體之說明，句構語法及用字適切，以及拼字與標點符號使用得當；內容充實以及語言能力表現佳應是考生得分之重要元素。",
               "tags": {
+                "topic": "an experience of unintentionally offending someone and making amends",
                 "essay_type": "topic",
                 "paragraphs": 2,
-                "word_requirement": "at least 120 words",
-                "topic": "an experience of unintentionally offending someone and making amends"
+                "word_count": {
+                  "min": 120,
+                  "max": null,
+                  "approx": null
+                },
+                "word_requirement_raw": "at least 120 words"
               }
             }
           ],

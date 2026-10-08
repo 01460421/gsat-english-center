@@ -1,5 +1,5 @@
 {
-  "schema": "gsat-exam/v1",
+  "schema": "gsat-exam/v1.1",
   "id": "gsat-96",
   "exam": "gsat",
   "year": 96,
@@ -9,7 +9,9 @@
   "full_score": 100,
   "sources": {
     "paper": "data/raw/ceec/gsat/96/paper-1.pdf",
-    "paper_word": "data/raw/ceec/gsat/96/paper-2.doc",
+    "paper_word": [
+      "data/raw/ceec/gsat/96/paper-2.doc"
+    ],
     "answer": [
       "data/raw/ceec/gsat/96/answer.pdf"
     ],
@@ -1826,7 +1828,8 @@
               },
               "scoring_notes": null,
               "tags": {
-                "item_type": "detail"
+                "item_type": "not_mentioned",
+                "item_type_raw": "detail"
               }
             },
             {
@@ -2030,7 +2033,7 @@
           "options_bank": null,
           "questions": [
             {
-              "no": 57,
+              "no": 1,
               "label": "翻譯1",
               "mode": "translation",
               "stem": "如果我們只為自己而活，就不會真正地感到快樂。",
@@ -2054,7 +2057,7 @@
               }
             },
             {
-              "no": 58,
+              "no": 2,
               "label": "翻譯2",
               "mode": "translation",
               "stem": "當我們開始為他人著想，快樂之門自然會開啟。",
@@ -2121,8 +2124,8 @@
           "options_bank": null,
           "questions": [
             {
-              "no": 59,
-              "label": "作文",
+              "no": 1,
+              "label": "英文作文",
               "mode": "composition",
               "stem": "提示︰請以下面編號1至4的四張圖畫內容為藍本，依序寫一篇文章，描述女孩與貓之間的故事。你也可以發揮想像力，自己選定一個順序，編寫故事。請注意，故事內容務必涵蓋四張圖意，力求情節完整、前後發展合理。",
               "options": null,
@@ -2132,9 +2135,14 @@
               "stats": null,
               "scoring_notes": "本題型主要在評量考生運用所學詞彙、句法寫出切合主題，並具有統一性與聯貫性短文的能力。本大題總分20分，評分標準包含下列5項：內容（5分）、組織（5分）、文法、句構（4分）、字彙、拼字（4分），及體例（2分）。字數不足，扣1分。\n今年的看圖作文有一個特色即是，考生可以依自己的解釋將四張圖畫編序書寫，考生有較多的創意空間得以發揮，而考生今年英文作文大致的表現也相當的不錯。但在閱卷時也發現考生抄襲選擇題試題的選文內容，或因寫作能力不佳而以中文書寫等現象。",
               "tags": {
+                "topic": "a story about a girl and cats (four-picture sequence)",
                 "essay_type": "picture",
-                "word_requirement": "about 120 words",
-                "topic": "a story about a girl and cats (four-picture sequence)"
+                "word_count": {
+                  "min": null,
+                  "max": null,
+                  "approx": 120
+                },
+                "word_requirement_raw": "about 120 words"
               }
             }
           ],

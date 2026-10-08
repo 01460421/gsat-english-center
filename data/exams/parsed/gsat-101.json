@@ -1,5 +1,5 @@
 {
-  "schema": "gsat-exam/v1",
+  "schema": "gsat-exam/v1.1",
   "id": "gsat-101",
   "exam": "gsat",
   "year": 101,
@@ -9,7 +9,9 @@
   "full_score": 100,
   "sources": {
     "paper": "data/raw/ceec/gsat/101/paper-1.pdf",
-    "paper_word": "data/raw/ceec/gsat/101/paper-2.doc",
+    "paper_word": [
+      "data/raw/ceec/gsat/101/paper-2.doc"
+    ],
     "answer": [
       "data/raw/ceec/gsat/101/answer.pdf"
     ],
@@ -22,14 +24,34 @@
       "data/raw/ceec/gsat/101/stats-3.xls"
     ]
   },
+  "parts": [
+    {
+      "title": "第壹部分：單選題（占72分）",
+      "points": 72,
+      "instructions": null,
+      "sections": [
+        "s1",
+        "s2",
+        "s3",
+        "s4"
+      ]
+    },
+    {
+      "title": "第貳部分：非選擇題（占28分）",
+      "points": 28,
+      "instructions": null,
+      "sections": [
+        "s5",
+        "s6"
+      ]
+    }
+  ],
   "sections": [
     {
       "id": "s1",
       "type": "vocabulary",
       "title": "一、詞彙（占15分）",
       "part": "單選題",
-      "part_title": "第壹部分：單選題（占72分）",
-      "part_instructions": null,
       "instructions": "說明︰第1題至第15題，每題有4個選項，其中只有一個是正確或最適當的選項，請畫記在答案卡之「選擇題答案區」。各題答對者，得1分；答錯、未作答或畫記多於一個選項者，該題以零分計算。",
       "points_total": 15,
       "groups": [
@@ -1324,7 +1346,8 @@
               "scoring_notes": null,
               "tags": {
                 "test_point": "grammar",
-                "answer_pos": "verb",
+                "answer_pos": "phrase",
+                "answer_function": "verb",
                 "grammar_point": "tense",
                 "key_phrase": "Since then, ... has been observed"
               }
@@ -2740,7 +2763,8 @@
               },
               "scoring_notes": null,
               "tags": {
-                "item_type": "detail"
+                "item_type": "not_mentioned",
+                "item_type_raw": "detail"
               }
             },
             {
@@ -2890,8 +2914,6 @@
       "type": "translation",
       "title": "一、中譯英（占8分）",
       "part": "非選擇題",
-      "part_title": "第貳部分：非選擇題（占28分）",
-      "part_instructions": null,
       "instructions": "說明：1.請將以下中文句子譯成正確、通順、達意的英文，並將答案寫在「答案卷」上。\n2.請依序作答，並標明題號。每題4分，共8分。",
       "points_total": 8,
       "stats": {
@@ -3212,7 +3234,7 @@
           "questions": [
             {
               "no": 1,
-              "label": "作文",
+              "label": "英文作文",
               "mode": "composition",
               "stem": "提示︰你最好的朋友最近迷上電玩，因此常常熬夜，疏忽課業，並受到父母的責罵。你（英文名字必須假設為Jack或Jill）打算寫一封信給他/她（英文名字必須假設為Ken或Barbie），適當地給予勸告。\n請注意：必須使用上述的Jack或Jill在信末署名，不得使用自己的真實中文或英文名字。",
               "options": null,
@@ -3222,9 +3244,14 @@
               "stats": null,
               "scoring_notes": "【前言】（二）英文作文則是引導式寫作，採用的是簡函寫作的題型，滿分20分；考生必須根據作答提示，寫出一篇至少120個字詞的信函，對沉迷電玩、常熬夜、疏忽課業、並受到父母責罵的朋友，提出適當的勸告。今年的非選擇題試題命題得宜，選材內容貼近一般高中生的實際生活經驗，並兼顧時事，考生不難發揮。\n【二、英文作文（二）評分說明】\n英文作文採分項式評分（analytic scoring）（參見下表），分項得分加總之後，給予一個整體分數（holistic score），再依總分1至20分，分為下述五等級：特優（19～20分）、優（15～18分）、可（10～14分）、差（5～9分）、劣（0～4分）。評分主要依據為考生的作答內容，閱卷委員仔細評估其內容是否切題、組織是否具連貫性、句子結構與用字是否妥適表達文意，以及拼字與標點符號是否使用正確等。為確保評分之一致性，閱卷委員在試閱時皆必須完全熟悉及理解各分項的評分標準。分項式評分指標包含下列5項：內容（5分）、組織（5分）、文法句構（4分）、字彙拼字（4分），及體例（2分）。字數嚴重不足，扣總分1分；多寫，不扣分。若考生未按規定使用英文名字，扣總分1分；書信格式使用不當（如未書寫稱呼語及信末署名），扣總分1分（但日期非必要）。\n表1：英文作文分項式評分指標（項目＼等級｜優｜可｜差｜劣）\n內容｜主題(句)清楚切題，並有具體、完整的相關細節支持。(5-4分)｜主題不夠清楚或突顯，部分相關敘述發展不全。(3分)｜主題不明，大部分相關敘述發展不全或與主題無關。(2-1分)｜文不對題或沒寫(凡文不對題或沒寫者，其他各項均以零分計算)。(0分)\n組織｜重點分明，有開頭、發展、結尾，前後連貫，轉承語使用得當。(5-4分)｜重點安排不妥，前後發展比例與轉承語使用欠妥。(3分)｜重點不明、前後不連貫。(2-1分)｜全文毫無組織或未按提示寫作。(0分)\n文法、句構｜全文幾無文法錯誤，文句結構富變化。(4分)｜文法錯誤少，且未影響文意之表達。(3分)｜文法錯誤多，且明顯影響文意之表達。(2-1分)｜全文文法錯誤嚴重，導致文意不明。(0分)\n字彙、拼字｜用字精確、得宜，且幾無拼字錯誤。(4分)｜字詞單調、重複，用字偶有不當，少許拼字錯誤，但不影響文意之表達。(3分)｜用字、拼字錯誤多，明顯影響文意之表達。(2-1分)｜只寫出或抄襲與題意有關的零碎字詞。(0分)\n體例｜格式、標點、大小寫幾無錯誤。(2分)（「優」「可」兩欄合併）｜格式、標點、大小寫等有錯誤，但不影響文意之表達。(1分)｜違背基本的寫作體例或格式，標點、大小寫等錯誤甚多。(0分)\n註：改編自張武昌等（民93）「英文寫作能力測驗規劃研究（VI）」研究報告。台北：大考中心。後經「95學年度學科能力測驗人工閱卷英文考科評分標準訂定會議」修改。",
               "tags": {
+                "topic": "a letter advising a best friend who is hooked on video games (staying up late, neglecting schoolwork, scolded by parents)",
                 "essay_type": "letter",
-                "word_requirement": "at least 120 words",
-                "topic": "a letter advising a best friend who is hooked on video games (staying up late, neglecting schoolwork, scolded by parents)"
+                "word_count": {
+                  "min": 120,
+                  "max": null,
+                  "approx": null
+                },
+                "word_requirement_raw": "at least 120 words"
               }
             }
           ],

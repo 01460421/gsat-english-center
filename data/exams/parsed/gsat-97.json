@@ -1,5 +1,5 @@
 {
-  "schema": "gsat-exam/v1",
+  "schema": "gsat-exam/v1.1",
   "id": "gsat-97",
   "exam": "gsat",
   "year": 97,
@@ -712,7 +712,8 @@
               "scoring_notes": null,
               "tags": {
                 "test_point": "grammar",
-                "answer_pos": "verb",
+                "answer_pos": "phrase",
+                "answer_function": "verb",
                 "grammar_point": "tense",
                 "key_phrase": "have been V-ing for + 時間"
               }
@@ -961,7 +962,8 @@
               "scoring_notes": null,
               "tags": {
                 "test_point": "grammar",
-                "answer_pos": "verb",
+                "answer_pos": "phrase",
+                "answer_function": "verb",
                 "grammar_point": "subjunctive"
               }
             },
@@ -2173,63 +2175,83 @@
       "part": "非選擇題",
       "instructions": "說明： 1.請將以下兩句中文譯成正確而通順達意的英文，並將答案寫在「答案卷」上。\n2.請依序作答，並標明題號。每題4分，共8分。",
       "points_total": 8,
-      "score_distribution": {
+      "stats": {
         "source": "stats-3.xls 第一題(滿分:8分)，翻譯題兩小題合計",
-        "full_marks": 8,
-        "examinees_registered": 150014,
-        "examinees_present": 147085,
+        "max_score": 8,
+        "registered": 150014,
         "absent": 2929,
-        "percent_base": "報名總人數 150014（含缺考）",
-        "bins": [
+        "examinees": 147085,
+        "rate_base": "報名總人數 150014（含缺考）",
+        "score_distribution": [
           {
             "range": "8.00-8.99",
+            "min": 8.0,
+            "max": 8.99,
             "count": 4216,
-            "percent": 0.0281
+            "rate": 0.0281
           },
           {
             "range": "7.00-7.99",
+            "min": 7.0,
+            "max": 7.99,
             "count": 16470,
-            "percent": 0.1098
+            "rate": 0.1098
           },
           {
             "range": "6.00-6.99",
+            "min": 6.0,
+            "max": 6.99,
             "count": 24668,
-            "percent": 0.1644
+            "rate": 0.1644
           },
           {
             "range": "5.00-5.99",
+            "min": 5.0,
+            "max": 5.99,
             "count": 24911,
-            "percent": 0.1661
+            "rate": 0.1661
           },
           {
             "range": "4.00-4.99",
+            "min": 4.0,
+            "max": 4.99,
             "count": 19066,
-            "percent": 0.1271
+            "rate": 0.1271
           },
           {
             "range": "3.00-3.99",
+            "min": 3.0,
+            "max": 3.99,
             "count": 13806,
-            "percent": 0.092
+            "rate": 0.092
           },
           {
             "range": "2.00-2.99",
+            "min": 2.0,
+            "max": 2.99,
             "count": 11599,
-            "percent": 0.0773
+            "rate": 0.0773
           },
           {
             "range": "1.00-1.99",
+            "min": 1.0,
+            "max": 1.99,
             "count": 11685,
-            "percent": 0.0779
+            "rate": 0.0779
           },
           {
             "range": "0.01-0.99",
+            "min": 0.01,
+            "max": 0.99,
             "count": 5004,
-            "percent": 0.0334
+            "rate": 0.0334
           },
           {
             "range": "0.00-0.00",
+            "min": 0.0,
+            "max": 0.0,
             "count": 15660,
-            "percent": 0.1044
+            "rate": 0.1044
           }
         ]
       },
@@ -2242,7 +2264,7 @@
           "options_bank": null,
           "questions": [
             {
-              "no": 57,
+              "no": 1,
               "label": "翻譯1",
               "mode": "translation",
               "stem": "聽音樂是一個你可以終生享受的嗜好。",
@@ -2261,7 +2283,7 @@
               }
             },
             {
-              "no": 58,
+              "no": 2,
               "label": "翻譯2",
               "mode": "translation",
               "stem": "但能彈奏樂器可以為你帶來更多的喜悅。",
@@ -2295,123 +2317,167 @@
       "part": "非選擇題",
       "instructions": "說明︰1.依提示在「答案卷」上寫一篇英文作文。\n2.文長120個單詞(words)左右。",
       "points_total": 20,
-      "score_distribution": {
+      "stats": {
         "source": "stats-3.xls 第二題(滿分:20分)",
-        "full_marks": 20,
-        "examinees_registered": 150014,
-        "examinees_present": 147085,
+        "max_score": 20,
+        "registered": 150014,
         "absent": 2929,
-        "percent_base": "報名總人數 150014（含缺考）",
-        "bins": [
+        "examinees": 147085,
+        "rate_base": "報名總人數 150014（含缺考）",
+        "score_distribution": [
           {
             "range": "20.00-20.00",
+            "min": 20.0,
+            "max": 20.0,
             "count": 4,
-            "percent": 0.0
+            "rate": 0.0
           },
           {
             "range": "19.00-19.99",
+            "min": 19.0,
+            "max": 19.99,
             "count": 23,
-            "percent": 0.0002
+            "rate": 0.0002
           },
           {
             "range": "18.00-18.99",
+            "min": 18.0,
+            "max": 18.99,
             "count": 166,
-            "percent": 0.0011
+            "rate": 0.0011
           },
           {
             "range": "17.00-17.99",
+            "min": 17.0,
+            "max": 17.99,
             "count": 626,
-            "percent": 0.0042
+            "rate": 0.0042
           },
           {
             "range": "16.00-16.99",
+            "min": 16.0,
+            "max": 16.99,
             "count": 1411,
-            "percent": 0.0094
+            "rate": 0.0094
           },
           {
             "range": "15.00-15.99",
+            "min": 15.0,
+            "max": 15.99,
             "count": 2757,
-            "percent": 0.0184
+            "rate": 0.0184
           },
           {
             "range": "14.00-14.99",
+            "min": 14.0,
+            "max": 14.99,
             "count": 4676,
-            "percent": 0.0312
+            "rate": 0.0312
           },
           {
             "range": "13.00-13.99",
+            "min": 13.0,
+            "max": 13.99,
             "count": 6401,
-            "percent": 0.0427
+            "rate": 0.0427
           },
           {
             "range": "12.00-12.99",
+            "min": 12.0,
+            "max": 12.99,
             "count": 8217,
-            "percent": 0.0548
+            "rate": 0.0548
           },
           {
             "range": "11.00-11.99",
+            "min": 11.0,
+            "max": 11.99,
             "count": 8946,
-            "percent": 0.0596
+            "rate": 0.0596
           },
           {
             "range": "10.00-10.99",
+            "min": 10.0,
+            "max": 10.99,
             "count": 10522,
-            "percent": 0.0701
+            "rate": 0.0701
           },
           {
             "range": "9.00-9.99",
+            "min": 9.0,
+            "max": 9.99,
             "count": 11346,
-            "percent": 0.0756
+            "rate": 0.0756
           },
           {
             "range": "8.00-8.99",
+            "min": 8.0,
+            "max": 8.99,
             "count": 12468,
-            "percent": 0.0831
+            "rate": 0.0831
           },
           {
             "range": "7.00-7.99",
+            "min": 7.0,
+            "max": 7.99,
             "count": 12282,
-            "percent": 0.0819
+            "rate": 0.0819
           },
           {
             "range": "6.00-6.99",
+            "min": 6.0,
+            "max": 6.99,
             "count": 11463,
-            "percent": 0.0764
+            "rate": 0.0764
           },
           {
             "range": "5.00-5.99",
+            "min": 5.0,
+            "max": 5.99,
             "count": 10215,
-            "percent": 0.0681
+            "rate": 0.0681
           },
           {
             "range": "4.00-4.99",
+            "min": 4.0,
+            "max": 4.99,
             "count": 8587,
-            "percent": 0.0572
+            "rate": 0.0572
           },
           {
             "range": "3.00-3.99",
+            "min": 3.0,
+            "max": 3.99,
             "count": 7176,
-            "percent": 0.0478
+            "rate": 0.0478
           },
           {
             "range": "2.00-2.99",
+            "min": 2.0,
+            "max": 2.99,
             "count": 5943,
-            "percent": 0.0396
+            "rate": 0.0396
           },
           {
             "range": "1.00-1.99",
+            "min": 1.0,
+            "max": 1.99,
             "count": 4998,
-            "percent": 0.0333
+            "rate": 0.0333
           },
           {
             "range": "0.01-0.99",
+            "min": 0.01,
+            "max": 0.99,
             "count": 2690,
-            "percent": 0.0179
+            "rate": 0.0179
           },
           {
             "range": "0.00-0.00",
+            "min": 0.0,
+            "max": 0.0,
             "count": 16168,
-            "percent": 0.1078
+            "rate": 0.1078
           }
         ]
       },
@@ -2424,8 +2490,8 @@
           "options_bank": null,
           "questions": [
             {
-              "no": 59,
-              "label": "作文",
+              "no": 1,
+              "label": "英文作文",
               "mode": "composition",
               "stem": "提示︰你（英文名字必須假設為George或Mary）向朋友（英文名字必須假設為Adam或Eve）借了一件相當珍貴的物品，但不慎遺失，一時又買不到替代品。請寫一封信，第一段說明物品遺失的經過，第二段則表達歉意並提出可能的解決方案。\n請注意：為避免評分困擾，請使用上述提示的George或Mary在信末署名，不得使用自己真實的中文或英文姓名。",
               "options": null,
@@ -2435,10 +2501,15 @@
               "stats": null,
               "scoring_notes": "評分標準：\n本大題總分 20 分，主要評量考生是否有能力撰寫一篇語法正確、語意通順，並且內容統一、組織連貫的英文作文。採整體式評分，分為五等級：特優（19-20 分）、優（15-18 分）、可（10-14 分）、差（5-9 分）、劣（0-4 分），閱卷委員於閱讀完考生試卷後，於腦海裡產生一個整體（holistic）分數，再以分項式評分標準檢閱是否符合整體印象分數，分項式評分指標包含下列 5 項：內容（5 分）、組織（5 分）、文法、句構（4 分）、字彙、拼字（4 分），及體例（2 分）（詳見表 1）。另外，字數不足，扣 1 分；未分兩段在體例部分，扣 1 分；未使用適當書信格式（如未書寫稱呼語及信末署名），扣 1 分。\n表 1：英文作文分項式評分指標\n項目＼等級｜優｜可｜差｜劣\n內容｜優：主題(句)清楚切題，並有具體、完整的相關細節支持。(5-4 分)｜可：主題不夠清楚或突顯，部分相關敘述發展不全。(3 分)｜差：主題不明，大部分相關敘述發展不全或與主題無關。(2-1 分)｜劣：文不對題或沒寫(凡文不對題或沒寫者，其他各項均以零分計算)。(0 分)\n組織｜優：重點分明，有開頭、發展、結尾，前後連貫，轉承語使用得當。(5-4 分)｜可：重點安排不妥，前後發展比例與轉承語使用欠妥。(3 分)｜差：重點不明、前後不連貫。(2-1 分)｜劣：全文毫無組織或未按提示寫作。(0 分)\n文法、句構｜優：全文幾無文法錯誤，文句結構富變化。(4 分)｜可：文法錯誤少，且未影響文意之表達。(3 分)｜差：文法錯誤多，且明顯影響文意之表達。(2-1 分)｜劣：全文文法錯誤嚴重，導致文意不明。(0 分)\n字彙、拼字｜優：用字精確、得宜，且幾無拼字錯誤。(4 分)｜可：字詞單調、重複，用字偶有不當，少許拼字錯誤，但不影響文意之表達。(3 分)｜差：用字、拼字錯誤多，明顯影響文意之表達。(2-1 分)｜劣：只寫出或抄襲與題意有關的零碎字詞。(0 分)\n體例｜優、可（合併一格）：格式、標點、大小寫幾無錯誤。(2 分)｜差：格式、標點、大小寫等有錯誤，但不影響文意之表達。(1 分)｜劣：違背基本的寫作體例或格式，標點、大小寫等錯誤甚多。(0 分)\n註2：改編自張武昌等（民 93）「英文寫作能力測驗規劃研究（VI）」研究報告。台北：大考中心。95 年學測在「項目」部份再行修改、定稿。",
               "tags": {
+                "topic": "apologizing to a friend for losing a valuable borrowed item and proposing solutions",
                 "essay_type": "letter",
                 "paragraphs": 2,
-                "word_requirement": "about 120 words",
-                "topic": "apologizing to a friend for losing a valuable borrowed item and proposing solutions"
+                "word_count": {
+                  "min": null,
+                  "max": null,
+                  "approx": 120
+                },
+                "word_requirement_raw": "about 120 words"
               }
             }
           ],

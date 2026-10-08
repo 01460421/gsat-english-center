@@ -1,5 +1,5 @@
 {
-  "schema": "gsat-exam/v1",
+  "schema": "gsat-exam/v1.1",
   "id": "gsat-85",
   "exam": "gsat",
   "year": 85,
@@ -9,7 +9,9 @@
   "full_score": 100,
   "sources": {
     "paper": "data/raw/ceec/gsat/85/paper-1.pdf",
-    "paper_word": "data/raw/ceec/gsat/85/paper-2.doc",
+    "paper_word": [
+      "data/raw/ceec/gsat/85/paper-2.doc"
+    ],
     "answer": [
       "data/raw/ceec/gsat/85/answer.pdf"
     ],
@@ -886,7 +888,8 @@
               "scoring_notes": null,
               "tags": {
                 "test_point": "grammar",
-                "answer_pos": "verb",
+                "answer_pos": "phrase",
+                "answer_function": "verb",
                 "grammar_point": "passive"
               }
             },
@@ -1148,7 +1151,8 @@
               "stats": null,
               "scoring_notes": null,
               "tags": {
-                "item_type": "application"
+                "item_type": "not_mentioned",
+                "item_type_raw": "application"
               }
             },
             {
@@ -1370,9 +1374,14 @@
               "stats": null,
               "scoring_notes": null,
               "tags": {
+                "topic": "two items to put in a time capsule that best represent present-day life in Taiwan (1996), with reasons",
                 "essay_type": "topic",
-                "word_requirement": "120字為原則",
-                "topic": "two items to put in a time capsule that best represent present-day life in Taiwan (1996), with reasons"
+                "word_count": {
+                  "min": null,
+                  "max": null,
+                  "approx": 120
+                },
+                "word_requirement_raw": "120字為原則"
               }
             }
           ],

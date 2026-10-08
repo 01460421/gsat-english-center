@@ -1,5 +1,5 @@
 {
-  "schema": "gsat-exam/v1",
+  "schema": "gsat-exam/v1.1",
   "id": "gsat-89",
   "exam": "gsat",
   "year": 89,
@@ -9,7 +9,9 @@
   "full_score": 100,
   "sources": {
     "paper": "data/raw/ceec/gsat/89/paper-1.pdf",
-    "paper_word": "data/raw/ceec/gsat/89/paper-2.doc",
+    "paper_word": [
+      "data/raw/ceec/gsat/89/paper-2.doc"
+    ],
     "answer": [
       "data/raw/ceec/gsat/89/answer.pdf"
     ],
@@ -475,7 +477,8 @@
               "scoring_notes": null,
               "tags": {
                 "test_point": "grammar",
-                "answer_pos": "verb",
+                "answer_pos": "phrase",
+                "answer_function": "verb",
                 "grammar_point": "passive",
                 "key_phrase": "be told to V"
               }
@@ -545,6 +548,7 @@
               "scoring_notes": null,
               "tags": {
                 "test_point": "grammar",
+                "answer_pos": "phrase",
                 "grammar_point": "determiner",
                 "key_phrase": "one ... the other"
               }
@@ -722,7 +726,8 @@
               "scoring_notes": null,
               "tags": {
                 "test_point": "connective",
-                "answer_pos": "preposition",
+                "answer_pos": "phrase",
+                "answer_function": "preposition",
                 "key_phrase": "due to"
               }
             }
@@ -1484,7 +1489,7 @@
           "questions": [
             {
               "no": 1,
-              "label": "作文",
+              "label": "英文作文",
               "mode": "composition",
               "stem": "請寫一篇英文作文，主題為 “Weight Loss”：以你個人或你熟悉的人(朋友、親戚)為例，說明造成這個人體重過重的原因，並提出你認為理想的解決之道。",
               "options": null,
@@ -1494,9 +1499,14 @@
               "stats": null,
               "scoring_notes": null,
               "tags": {
+                "topic": "weight loss: causes of a person’s being overweight and ideal solutions",
                 "essay_type": "topic",
-                "word_requirement": "about 120 words",
-                "topic": "weight loss: causes of a person’s being overweight and ideal solutions"
+                "word_count": {
+                  "min": null,
+                  "max": null,
+                  "approx": 120
+                },
+                "word_requirement_raw": "about 120 words"
               }
             }
           ],

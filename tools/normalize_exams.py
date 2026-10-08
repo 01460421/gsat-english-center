@@ -40,7 +40,6 @@ DEFAULT_BACKUP = Path(tempfile.gettempdir()) / 'gsat-exam-normalize-backup'
 
 SCHEMA_ID = 'gsat-exam/v1.1'
 CHOICE_MODES = {'single_choice', 'multi_select', 'bank_choice'}
-CHOICE_TAG_SECTIONS = {'vocabulary', 'cloze', 'word_bank', 'sentence_matching'}
 ITEM_TYPE_SECTIONS = {'reading', 'mixed', 'short_answer', 'other'}
 NOT_RULE_SECTIONS = {'reading', 'mixed'}          # 「閱讀／混合題」
 NO_TEXT_FORMAT_SECTIONS = {'translation', 'composition'}
@@ -175,7 +174,8 @@ def rename_keys(obj, mapping, where):
 # 文字
 # ---------------------------------------------------------------------------
 
-# 看起來像空格的字元一律換成一般空格；零寬字元直接刪除。全形空白 U+3000 只在旁邊是中文（全形）字元時保留。
+# 看起來像空格的字元（含所有 Unicode Zs 類空白）一律換成一般空格；零寬字元與其他格式字元（Cf）直接刪除；
+# 全形空白 U+3000 只在旁邊是中文（全形）字元時保留。validator 的 check_text 用同一個定義。
 SPACE_LIKE = set('\u00a0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u202f\u205f\t')
 ZERO_WIDTH = set('\u200b\u200c\u200d\u2060\ufeff\u00ad')
 
@@ -187,12 +187,17 @@ def is_wide(ch):
 def clean_text(s):
     out = []
     for i, ch in enumerate(s):
-        if ch in SPACE_LIKE:
+        cat = unicodedata.category(ch)
+        if ch in SPACE_LIKE or (cat == 'Zs' and ch not in ' \u3000'):
             out.append(' ')
-        elif ch in ZERO_WIDTH:
+        elif ch in ZERO_WIDTH or cat == 'Cf':     # 格式字元（零寬、方向標記、軟連字號…）直接刪除
             continue
+        elif cat in ('Zl', 'Zp'):                  # U+2028／U+2029 行、段落分隔符 → 一般換行
+            out.append('\n')
         elif ch == '\r':
             out.append('\n' if i + 1 >= len(s) or s[i + 1] != '\n' else '')
+        elif cat == 'Cc' and ch != '\n':           # 其他控制字元（\v、\f…）→ 一般空格
+            out.append(' ')
         elif ch == '\u3000':
             prev = s[i - 1] if i else ''
             nxt = s[i + 1] if i + 1 < len(s) else ''
@@ -264,7 +269,8 @@ def answer_text(q, bank):
 
 FIG_WORD_RE = re.compile(r'\b(pictures?|maps?|diagrams?|charts?|graphs?|tables?|illustrations?|photos?|'
                          r'photographs?|figures?|images?|drawings?)\b', re.I)
-DECORATIVE_RE = re.compile(r'配圖|裝飾|不需依圖作答|不需看圖')
+# 解析者在 description 註明「只是配圖」的圖不算讀圖（注意不能只比對「裝飾」：gsat-114 的描述裡有「裝飾華麗的柱子」）
+DECORATIVE_RE = re.compile(r'僅為裝飾|為配圖|僅為插圖|不需依圖作答|不需看圖|作答所需資訊(?:都)?在文字中')
 NOT_RE = re.compile(r'\b(NOT|EXCEPT)\b')
 
 
@@ -591,17 +597,29 @@ def normalize_exam(d, ctx):
 # 下一階段工作清單
 # ---------------------------------------------------------------------------
 
+ORDINAL = r'(?:first|second|third|fourth|fifth|sixth|seventh|last|final|\d+(?:st|nd|rd|th))'
 REFER_RE = re.compile(
     r"\b(?:bold|boldface|boldfaced|underlined|underline|italic|italicized|italics|highlighted)\b"
     r"|\blines?\s+\d+"
     r"|\bthe\s+(?:word|words|phrase|expression|term|sentence|pronoun)\b"
+    # 指涉選文某一句：from the last sentence in the passage（「as the final sentence」是插入句題的位置，不算）
+    r"|\b(?:in|from)\s+the\s+(?:first|second|third|fourth|fifth|last|opening)\s+sentence\b"
     r"|\b(?:it|they|them|this|that|these|those|he|she|him|her|its|their|one|ones|so|such|we|us)\s+in\s+"
     r"(?:the\s+)?(?:first|second|third|fourth|fifth|sixth|last|final|line|paragraph|\d)", re.I)
-QUOTE_RE = re.compile(r'[“"]\s*([^”"]{1,80}?)\s*[”"]')
+# 引號：彎雙引號、直雙引號、彎單引號（‘infectious’；開頭的 ‘ 不會是撇號）
+QUOTE_RES = [re.compile(r'“\s*([^”]{1,250}?)\s*”'), re.compile(r'"\s*([^"]{1,250}?)\s*"'),
+             re.compile(r"(?<![A-Za-z])‘([^’]{1,60}?)’(?![A-Za-z])")]
 UNQUOTED_RES = [re.compile(r"\b(?:word|pronoun|phrase)\s+([A-Za-z][A-Za-z’'-]*)"),
-                re.compile(r"\b(?:does|do)\s+(it|they|them|this|that|these|those|he|she|its|their|one|so)\s+in\b")]
+                re.compile(r"\b(?:does|do)\s+(it|they|them|this|that|these|those|he|she|its|their|one|so)\s+in\b"),
+                # Which of the following words from the passage is closest in meaning to surge?
+                re.compile(r"\b(?:closest|nearest|similar|opposite)\s+in\s+meaning\s+to\s+([A-Za-z][A-Za-z’'-]*)\s*\??\s*$")]
+# 沒加引號、但點名某段的名詞片語：the expected improvements in the second paragraph（只取冠詞／指示詞之後的部分）
+NP_IN_PARAGRAPH_RE = re.compile(
+    r"\b(?:the|a|an|this|that|these|those)\s+((?:[A-Za-z’'-]+\s+){0,4}[A-Za-z’'-]+)\s+in\s+"
+    r"(?:(?:the\s+)?" + ORDINAL + r"\s+paragraph|paragraph\s+\d+)", re.I)
 STOPWORDS = {'in', 'on', 'from', 'is', 'which', 'used', 'the', 'a', 'an', 'of', 'here', 'most', 'means',
-             'mean', 'refers', 'best', 'closest', 'carries', 'does', 'did', 'can', 'would', 'could'}
+             'mean', 'refers', 'best', 'closest', 'carries', 'does', 'did', 'can', 'would', 'could',
+             'following', 'passage', 'author', 'information', 'idea', 'ideas', 'sentence', 'sentences'}
 FIND_WORD_RE = re.compile(r'\s*Which\s+(?:word|phrase|set of words|of the following words)\b', re.I)
 MARK_RE = re.compile(r'<(u|b)>(.*?)</\1>', re.S)
 TAG_RE = re.compile(r'</?[a-z][^>]*>')
@@ -609,7 +627,7 @@ EMPH_ISSUE_RE = re.compile(r'粗體|底線|斜體|粗斜體')
 SCORING_EXC_RE = re.compile(r'送分|一律給分|一律得\s*\d*\s*分|皆給分|均給分|都給分|皆可得分|皆得分|都算對|無適當選項|兩者皆|[A-O]\s*或\s*[A-O]')
 OTHER_ISSUE_RE = re.compile(
     r'人工決定|無法還原|損壞|未查證|誤植|原文如此|原文錯誤|錯字|拼字錯誤|推測|無法確定|不確定|官方沒有說明|官方未明文|'
-    r'未明文|沒有明示|未明示|內部矛盾|應視為|不宜|待確認|待查|無法判定|無法分辨')
+    r'未明文|沒有明示|未明示|內部矛盾|應視為|不宜|待確認|待查|無法判定|無法分辨|疑義')
 # 只是在說明「已依規定處理、不需再判斷」的 issue（例如統計表 1 個百分點的四捨五入差異）
 OTHER_ISSUE_SKIP_RE = re.compile(r'推測[是為]?四捨五入差異|四捨五入差異')
 # 關鍵字命中、但逐條看過確定不需要人再判斷的 issue：(考卷 id, issue 中的一段原文)。用原文片段而不是索引，
@@ -650,6 +668,22 @@ def count_occurrences(text, needle):
     if re.fullmatch(r"[A-Za-z][A-Za-z'’-]*", needle):
         return len(re.findall(r'(?<![A-Za-z])' + re.escape(needle) + r'(?![A-Za-z])', text))
     return text.count(needle)
+
+
+def _loose(s):
+    """比對引文用：彎直引號、撇號、刪節號一視同仁（題幹常把選文的 doctor’s 寫成 doctor's）。"""
+    return (s.replace('’', "'").replace('‘', "'").replace('“', '"').replace('”', '"').replace('…', '...'))
+
+
+def quote_count(text, needle):
+    """題幹引用的字串在選文出現幾次。引文中間有刪節號時（“But … most people don’t …”），
+    每一段都要在選文找得到，次數取最少的一段。"""
+    t, n = _loose(text), _loose(needle).strip(' .,;:!?"\'')
+    pieces = [p.strip(' .,;:!?"\'') for p in n.split('...')]
+    pieces = [p for p in pieces if p]
+    if not pieces:
+        return 0
+    return min(count_occurrences(t, p) for p in pieces)
 
 
 def issue_question_nos(issue):
@@ -695,11 +729,25 @@ def todo_for_exam(d):
                     if m:
                         triggers.append(f'題幹提到「{m.group(0)}」')
                     plain = TAG_RE.sub('', stem)
-                    quoted = [x for x in QUOTE_RE.findall(plain) if count_occurrences(text, x.strip(' .,…'))]
-                    # 沒加引號的被問字詞：The word mourned here means…、The pronoun them in line 5…、What does it in…
+                    quoted = []
+                    for rx in QUOTE_RES:
+                        quoted += [x for x in rx.findall(plain) if quote_count(text, x) and x not in quoted]
+                    # 沒加引號的被問字詞：The word mourned here means…、The pronoun them in line 5…、What does it in…、
+                    # …closest in meaning to surge?
                     for rx in UNQUOTED_RES:
                         quoted += [x for x in rx.findall(plain)
                                    if x.lower() not in STOPWORDS and count_occurrences(text, x) and x not in quoted]
+                    # 點名某段的名詞片語：the expected improvements in the second paragraph（取在選文找得到的最長尾段）；
+                    # 已經有引號、標記或其他規則找到的字串時不再猜
+                    for np_ in ([] if quoted or '<u>' in stem or '<b>' in stem else NP_IN_PARAGRAPH_RE.findall(plain)):
+                        ws_ = np_.split()
+                        for k in range(len(ws_)):
+                            cand = ' '.join(ws_[k:])
+                            if all(w.lower() in STOPWORDS for w in ws_[k:]):
+                                break
+                            if count_occurrences(text, cand) and cand not in quoted:
+                                quoted.append(cand)
+                                break
                     if quoted and not triggers:
                         triggers.append('題幹引用選文字串')
                     if '<u>' in stem or '<b>' in stem:
@@ -711,7 +759,7 @@ def todo_for_exam(d):
                         cands = []
                         for x in quoted:
                             x = x.strip(' .,…')
-                            cands.append(f'「{x}」在選文出現 {count_occurrences(text, x)} 次')
+                            cands.append(f'「{x}」在選文出現 {quote_count(text, x)} 次')
                         for x in marks:
                             if x and (x.lower() in stem.lower() or not quoted):
                                 cands.append(f'選文已用標記標出「{x}」')

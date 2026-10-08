@@ -1,5 +1,5 @@
 {
-  "schema": "gsat-exam/v1",
+  "schema": "gsat-exam/v1.1",
   "id": "ast-93",
   "exam": "ast",
   "year": 93,
@@ -1946,7 +1946,8 @@
               },
               "scoring_notes": null,
               "tags": {
-                "item_type": "detail"
+                "item_type": "not_mentioned",
+                "item_type_raw": "detail"
               }
             },
             {
@@ -2038,7 +2039,7 @@
           "questions": [
             {
               "no": 1,
-              "label": "翻譯(a)",
+              "label": "英文翻譯(a)",
               "mode": "translation",
               "stem": "科技讓我們的生活更舒適，然而它也被利用來犯罪。",
               "options": null,
@@ -2058,7 +2059,7 @@
             },
             {
               "no": 2,
-              "label": "翻譯(b)",
+              "label": "英文翻譯(b)",
               "mode": "translation",
               "stem": "根據最近的新聞報導，最常見的例子是網際網路詐財(Internet scams)。",
               "options": null,
@@ -2102,7 +2103,7 @@
           "questions": [
             {
               "no": 1,
-              "label": "作文",
+              "label": "英文作文",
               "mode": "composition",
               "stem": "提示︰請以“Travel Is The Best Teacher”為主題，寫一篇至少120個字的英文作文。第一段針對文章主題，說明旅行的優點，並在第二段舉自己在國內或國外的旅行經驗，以印證第一段的說明。",
               "options": null,
@@ -2112,10 +2113,15 @@
               "stats": null,
               "scoring_notes": null,
               "tags": {
-                "essay_type": "two_paragraph",
+                "topic": "Travel Is The Best Teacher: the advantages of travel, supported by a personal domestic or overseas travel experience",
+                "essay_type": "topic",
                 "paragraphs": 2,
-                "word_requirement": "at least 120 words",
-                "topic": "Travel Is The Best Teacher: the advantages of travel, supported by a personal domestic or overseas travel experience"
+                "word_count": {
+                  "min": 120,
+                  "max": null,
+                  "approx": null
+                },
+                "word_requirement_raw": "at least 120 words"
               }
             }
           ],

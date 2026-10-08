@@ -12,11 +12,17 @@
     data/exams/stats/word-frequency.json 詞彙表每個條目在歷屆試題中的出現次數（分正解、選項、選文）
     docs/analysis/exam-stats.md          人看的摘要表
 
+只讀 gsat-exam/v1.1 的檔案（v1 檔案請先跑 tools/normalize_exams.py）。
+
 「時期」把考卷分成三組，因為題型與詞彙表版本在這些時間點改變：
     gsat-legacy  學測 83–110（舊制，詞彙表 91 年版或更早）
     gsat-current 學測 111 起（108 課綱新制，詞彙表 111 年版）
     ast          指考 91–110（難度較高，當「超越頂標」的參考）
-參考試卷（ref-*）只列在 summary，不算進統計，避免和正式考試混在一起。
+參考試卷（ref-*）只列在 summary，不算進統計，避免和正式考試混在一起；另外任何帶 reused_from
+（沿用歷屆試題）的小題也一律排除，同一題才不會被算兩次。
+
+作文字數用 tags.word_count（{min, max, approx}，例如「≥120」「≈120」「120–150」）；片語答案的功能詞性
+用 tags.answer_function（answer_pos 為 phrase 時的原詞性）。
 
 詞形還原：有 data/vocab/forms-index.json（tools/build_vocab.py 產生）就用它；
 沒有的話退回簡單的字尾規則，結果會略有誤差，報告中會註明用了哪一種。
@@ -38,6 +44,8 @@ FORMS = ROOT / 'data' / 'vocab' / 'forms-index.json'
 WORD_RE = re.compile(r"[A-Za-z]+(?:['’-][A-Za-z]+)*")
 BLANK_RE = re.compile(r'\[\[\d+\]\]')
 CHOICE_TYPES = ('vocabulary', 'cloze', 'word_bank')
+SCHEMA_ID = 'gsat-exam/v1.1'
+TAG_FIELDS = ('test_point', 'answer_pos', 'answer_function', 'grammar_point', 'item_type', 'clue', 'essay_type')
 # 詞類全是這些的條目算功能詞（介系詞、代名詞、連接詞、助動詞、冠詞）。它們在片語答案裡大量出現，
 # 但對「哪些實詞常考」沒有參考價值，所以排名時放到最後，數字照樣保留。
 FUNCTION_POS = {'prep.', 'pron.', 'conj.', 'aux.', 'art.'}
@@ -141,7 +149,8 @@ def load_exams():
         except Exception as e:  # noqa: BLE001 — 寫到一半的檔案直接略過並回報
             print(f'略過無法解析的 {p.name}：{e}', file=sys.stderr)
             continue
-        if d.get('schema') != 'gsat-exam/v1':
+        if d.get('schema') != SCHEMA_ID:
+            print(f'略過 {p.name}：schema 不是 {SCHEMA_ID}（請先跑 tools/normalize_exams.py）', file=sys.stderr)
             continue
         exams.append(d)
     return exams
@@ -155,6 +164,22 @@ def answer_text(q, bank):
     if isinstance(ans, list):
         return ' / '.join(pool.get(a, a) for a in ans)
     return ans if isinstance(ans, str) else None
+
+
+def word_count_label(wc):
+    """tags.word_count → 人看的字數要求，例如 {min:120} → "≥120"、{approx:120} → "≈120"、{min:120,max:150} → "120–150"。"""
+    if not isinstance(wc, dict):
+        return None
+    lo, hi, approx = wc.get('min'), wc.get('max'), wc.get('approx')
+    if approx:
+        return f'≈{approx}'
+    if lo and hi:
+        return f'{lo}–{hi}'
+    if lo:
+        return f'≥{lo}'
+    if hi:
+        return f'≤{hi}'
+    return None
 
 
 def group_text(g):
@@ -182,6 +207,7 @@ def build(exams, lex):
     items, passages, summary_exams = [], [], []
     word_freq = defaultdict(lambda: Counter())          # 條目索引 → {role: count}
     word_years = defaultdict(set)                       # 條目索引 → {exam-year}
+    excluded = Counter()                                # 排除在統計外的題數（reference 考卷、reused_from）
 
     def count_words(text, role, tag, exclude=()):
         seen = set()
@@ -205,6 +231,8 @@ def build(exams, lex):
                          'range': [min((q['no'] for q in qs if isinstance(q.get('no'), int)), default=None),
                                    max((q['no'] for q in qs if isinstance(q.get('no'), int)), default=None)]})
             if era == 'reference':
+                excluded['reference_items'] += len(qs)
+                excluded['reference_reused_items'] += sum(1 for q in qs if q.get('reused_from'))
                 continue
             for g in s.get('groups', []):
                 bank = g.get('options_bank')
@@ -226,6 +254,9 @@ def build(exams, lex):
                     })
                     count_words(text, 'passage', tag)
                 for q in g.get('questions', []):
+                    if q.get('reused_from'):
+                        excluded['reused_items'] += 1
+                        continue
                     at = answer_text(q, bank)
                     tags = q.get('tags') or {}
                     st = q.get('stats') or {}
@@ -261,10 +292,13 @@ def build(exams, lex):
     ans_levels = defaultdict(Counter)
     for it in items:
         key = f"{it['era']}|{it['section']}"
-        for k in ('test_point', 'answer_pos', 'grammar_point', 'item_type', 'clue', 'essay_type'):
+        for k in TAG_FIELDS:
             v = it['tags'].get(k)
             if v:
                 by[key][k][v] += 1
+        wc = word_count_label(it['tags'].get('word_count'))
+        if wc:
+            by[key]['word_count'][wc] += 1
         for k in ('patterns',):
             for v in it['tags'].get(k) or []:
                 by[key][k][v] += 1
@@ -317,7 +351,8 @@ def build(exams, lex):
     return {
         'summary': {'exams': summary_exams, 'distributions': dist, 'passages': passage_dist,
                     'lemmatizer': lex.mode, 'counts': {'exams': len(summary_exams), 'items': len(items),
-                                                       'passages': len(passages)}},
+                                                       'passages': len(passages)},
+                    'excluded': {k: excluded[k] for k in ('reference_items', 'reference_reused_items', 'reused_items')}},
         'items': items, 'passages': passages,
         'word_frequency': {'lemmatizer': lex.mode, 'entries': freq, 'never_seen': unseen},
     }
@@ -328,7 +363,10 @@ def render_md(res):
     lines = ['# 歷屆試題統計摘要', '',
              f"由 `tools/exam_stats.py` 自動產生，請勿手改。考卷 {s['counts']['exams']} 份、"
              f"題目 {s['counts']['items']} 題、選文 {s['counts']['passages']} 篇；詞形還原：{s['lemmatizer']}。", '',
-             '時期：gsat-legacy＝學測 83–110、gsat-current＝學測 111 起、ast＝指考 91–110。', '']
+             '時期：gsat-legacy＝學測 83–110、gsat-current＝學測 111 起、ast＝指考 91–110。', '',
+             f"參考試卷不算進統計（{s['excluded']['reference_items']} 題，其中 {s['excluded']['reference_reused_items']} 題沿用歷屆試題）；"
+             f"正式考卷中帶 reused_from 的題目另外排除 {s['excluded']['reused_items']} 題。"
+             '作文字數取自 tags.word_count（≥＝至少、≈＝大約）；answer_function 是片語答案（answer_pos＝phrase）的功能詞性。', '']
     lines += ['## 考卷清單', '', '| 考卷 | 時期 | 大題（題數） | 已查證 |', '|---|---|---|---|']
     for e in s['exams']:
         secs = '、'.join(f"{x['type']}({x['questions']})" for x in e['sections'])

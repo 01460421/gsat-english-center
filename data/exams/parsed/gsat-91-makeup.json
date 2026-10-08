@@ -1,5 +1,5 @@
 {
-  "schema": "gsat-exam/v1",
+  "schema": "gsat-exam/v1.1",
   "id": "gsat-91-makeup",
   "exam": "gsat",
   "year": 91,
@@ -989,7 +989,8 @@
               "stats": null,
               "scoring_notes": null,
               "tags": {
-                "item_type": "detail"
+                "item_type": "not_mentioned",
+                "item_type_raw": "detail"
               }
             },
             {
@@ -1216,7 +1217,8 @@
               "stats": null,
               "scoring_notes": null,
               "tags": {
-                "item_type": "detail"
+                "item_type": "not_mentioned",
+                "item_type_raw": "detail"
               }
             },
             {
@@ -1256,7 +1258,8 @@
               "stats": null,
               "scoring_notes": null,
               "tags": {
-                "item_type": "inference"
+                "item_type": "not_mentioned",
+                "item_type_raw": "inference"
               }
             },
             {
@@ -1426,7 +1429,7 @@
           "questions": [
             {
               "no": 1,
-              "label": "作文",
+              "label": "英文作文",
               "mode": "composition",
               "stem": "提示︰以“Growing up is a/an _____ experience”為題寫一篇英文作文，描述你成長的經驗是令人興奮的(exciting)，令人困惑的(confusing)，快樂的(happy)或是痛苦的 (painful)。除了這些形容詞之外，你也可以用其他的形容詞來描述你成長的經驗。請務必提出具體的例子以描述你成長的經驗。(注意︰如果你用的形容詞以子音起始，請選擇冠詞“a”，如“a confusing experience”；如果你用的形容詞以母音起始，請選擇冠詞“an”，如“an exciting experience”。)",
               "options": null,
@@ -1436,9 +1439,14 @@
               "stats": null,
               "scoring_notes": null,
               "tags": {
+                "topic": "describe whether growing up has been an exciting, confusing, happy, painful (or otherwise described) experience for you, with concrete examples",
                 "essay_type": "topic",
-                "word_requirement": "about 120 words",
-                "topic": "describe whether growing up has been an exciting, confusing, happy, painful (or otherwise described) experience for you, with concrete examples"
+                "word_count": {
+                  "min": null,
+                  "max": null,
+                  "approx": 120
+                },
+                "word_requirement_raw": "about 120 words"
               }
             }
           ],

@@ -1,5 +1,5 @@
 {
-  "schema": "gsat-exam/v1",
+  "schema": "gsat-exam/v1.1",
   "id": "gsat-95",
   "exam": "gsat",
   "year": 95,
@@ -887,7 +887,8 @@
               "scoring_notes": null,
               "tags": {
                 "test_point": "connective",
-                "answer_pos": "conjunction",
+                "answer_pos": "phrase",
+                "answer_function": "conjunction",
                 "key_phrase": "even if"
               }
             }
@@ -1837,7 +1838,8 @@
               },
               "scoring_notes": null,
               "tags": {
-                "item_type": "detail"
+                "item_type": "not_mentioned",
+                "item_type_raw": "detail"
               }
             },
             {
@@ -2036,7 +2038,7 @@
           "options_bank": null,
           "questions": [
             {
-              "no": 57,
+              "no": 1,
               "label": "翻譯1",
               "mode": "translation",
               "stem": "一般人都知道閱讀對孩子有益。",
@@ -2058,7 +2060,7 @@
               }
             },
             {
-              "no": 58,
+              "no": 2,
               "label": "翻譯2",
               "mode": "translation",
               "stem": "老師應該多鼓勵學生到圖書館借書。",
@@ -2121,8 +2123,8 @@
           "options_bank": null,
           "questions": [
             {
-              "no": 59,
-              "label": "作文",
+              "no": 1,
+              "label": "英文作文",
               "mode": "composition",
               "stem": "提示：根據下列連環圖畫的內容，將圖中女子、小狗與大猩猩 (gorilla) 之間所發生的事件作一合理的敘述。",
               "options": null,
@@ -2132,9 +2134,14 @@
               "stats": null,
               "scoring_notes": "本題型主要在評量考生運用所學詞彙、句法寫出切合主題，並具有統一性與聯貫性短文的能力。本大題總分20分，評分標準包含下列5項：內容 (5分)、組織 (5分)、文法、句構 (4分)、字彙、拼字 (4分)，及體例 (2分)。字數不足，扣1分。",
               "tags": {
+                "topic": "a story about a woman, her dog and a \"gorilla\" (three-picture sequence)",
                 "essay_type": "picture",
-                "word_requirement": "100 words左右",
-                "topic": "a story about a woman, her dog and a \"gorilla\" (three-picture sequence)"
+                "word_count": {
+                  "min": null,
+                  "max": null,
+                  "approx": 100
+                },
+                "word_requirement_raw": "100 words左右"
               }
             }
           ],

@@ -1,5 +1,5 @@
 {
-  "schema": "gsat-exam/v1",
+  "schema": "gsat-exam/v1.1",
   "id": "gsat-87",
   "exam": "gsat",
   "year": 87,
@@ -9,7 +9,9 @@
   "full_score": 100,
   "sources": {
     "paper": "data/raw/ceec/gsat/87/paper-1.pdf",
-    "paper_word": "data/raw/ceec/gsat/87/paper-2.doc",
+    "paper_word": [
+      "data/raw/ceec/gsat/87/paper-2.doc"
+    ],
     "answer": [
       "data/raw/ceec/gsat/87/answer.pdf"
     ],
@@ -377,6 +379,7 @@
               "scoring_notes": null,
               "tags": {
                 "test_point": "grammar",
+                "answer_pos": "phrase",
                 "grammar_point": "infinitive_gerund",
                 "key_phrase": "ask someone to V"
               }
@@ -422,7 +425,9 @@
               "scoring_notes": null,
               "tags": {
                 "test_point": "grammar",
-                "grammar_point": "enough_to",
+                "answer_pos": "phrase",
+                "grammar_point": "degree",
+                "grammar_point_raw": "enough_to",
                 "key_phrase": "early enough to"
               }
             },
@@ -467,7 +472,8 @@
               "tags": {
                 "test_point": "grammar",
                 "answer_pos": "clause",
-                "grammar_point": "indirect_question"
+                "grammar_point": "noun_clause",
+                "grammar_point_raw": "indirect_question"
               }
             }
           ],
@@ -803,7 +809,8 @@
               "scoring_notes": null,
               "tags": {
                 "test_point": "grammar",
-                "answer_pos": "verb",
+                "answer_pos": "phrase",
+                "answer_function": "verb",
                 "grammar_point": "tense",
                 "key_phrase": "by 1980 + past perfect"
               }
@@ -870,6 +877,7 @@
               "scoring_notes": null,
               "tags": {
                 "test_point": "grammar",
+                "answer_pos": "phrase",
                 "grammar_point": "comparison",
                 "key_phrase": "as much good as"
               }
@@ -1002,7 +1010,8 @@
               "stats": null,
               "scoring_notes": null,
               "tags": {
-                "item_type": "detail"
+                "item_type": "not_mentioned",
+                "item_type_raw": "detail"
               }
             },
             {
@@ -1077,7 +1086,8 @@
               "stats": null,
               "scoring_notes": null,
               "tags": {
-                "item_type": "detail"
+                "item_type": "not_mentioned",
+                "item_type_raw": "detail"
               }
             },
             {
@@ -1529,7 +1539,7 @@
           "questions": [
             {
               "no": 1,
-              "label": "作文",
+              "label": "英文作文",
               "mode": "composition",
               "stem": "提示：\n每個人在不同的情況下對雨可能有不同的感受。請寫一篇短文，敘述你在某一個下雨天的實際經歷或看到的景象，並據此敘述你對雨的感覺。",
               "options": null,
@@ -1539,9 +1549,14 @@
               "stats": null,
               "scoring_notes": null,
               "tags": {
+                "topic": "a real rainy-day experience or scene and one’s feelings about rain",
                 "essay_type": "topic",
-                "word_requirement": "120字左右",
-                "topic": "a real rainy-day experience or scene and one’s feelings about rain"
+                "word_count": {
+                  "min": null,
+                  "max": null,
+                  "approx": 120
+                },
+                "word_requirement_raw": "120字左右"
               }
             }
           ],

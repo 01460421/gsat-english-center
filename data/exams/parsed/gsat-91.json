@@ -1,5 +1,5 @@
 {
-  "schema": "gsat-exam/v1",
+  "schema": "gsat-exam/v1.1",
   "id": "gsat-91",
   "exam": "gsat",
   "year": 91,
@@ -2122,7 +2122,7 @@
           "questions": [
             {
               "no": 1,
-              "label": "作文",
+              "label": "英文作文",
               "mode": "composition",
               "stem": "提示︰以“The Most Precious Thing in My Room”為題寫一篇英文作文，描述你的房間內一件你最珍愛的物品，同時並說明珍愛的理由。(這一件你最珍愛的物品不一定是貴重的，但對你來說卻是最有意義或是最值得紀念的。)",
               "options": null,
@@ -2132,9 +2132,14 @@
               "stats": null,
               "scoring_notes": null,
               "tags": {
+                "topic": "describe the most precious thing in your room and explain why you treasure it (it need not be valuable, but meaningful or memorable to you)",
                 "essay_type": "topic",
-                "word_requirement": "about 120 words",
-                "topic": "describe the most precious thing in your room and explain why you treasure it (it need not be valuable, but meaningful or memorable to you)"
+                "word_count": {
+                  "min": null,
+                  "max": null,
+                  "approx": 120
+                },
+                "word_requirement_raw": "about 120 words"
               }
             }
           ],

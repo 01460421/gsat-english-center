@@ -1,5 +1,5 @@
 {
-  "schema": "gsat-exam/v1",
+  "schema": "gsat-exam/v1.1",
   "id": "ast-92",
   "exam": "ast",
   "year": 92,
@@ -917,7 +917,8 @@
               "scoring_notes": null,
               "tags": {
                 "test_point": "connective",
-                "answer_pos": "preposition",
+                "answer_pos": "phrase",
+                "answer_function": "preposition",
                 "key_phrase": "because of + N"
               }
             },
@@ -1016,7 +1017,8 @@
               "scoring_notes": null,
               "tags": {
                 "test_point": "grammar",
-                "answer_pos": "verb",
+                "answer_pos": "phrase",
+                "answer_function": "verb",
                 "grammar_point": "passive"
               }
             },
@@ -2148,7 +2150,7 @@
           "questions": [
             {
               "no": 1,
-              "label": "作文",
+              "label": "英文作文",
               "mode": "composition",
               "stem": "提示︰小考、段考、複習考、畢業考、甚至校外其它各種大大小小的考試，已成為高中學生生活中不可或缺的一部份。請寫一篇120至150個單詞左右的英文作文，文分兩段，第一段以Exams of all kinds have become a necessary part of my high school life.為主題句；第二段則以The most unforgettable exam I have ever taken is…為開頭並加以發展。",
               "options": null,
@@ -2158,10 +2160,15 @@
               "stats": null,
               "scoring_notes": null,
               "tags": {
-                "essay_type": "two_paragraph",
+                "topic": "exams as a necessary part of high school life, and the most unforgettable exam I have ever taken",
+                "essay_type": "topic",
                 "paragraphs": 2,
-                "word_requirement": "about 120 to 150 words",
-                "topic": "exams as a necessary part of high school life, and the most unforgettable exam I have ever taken"
+                "word_count": {
+                  "min": 120,
+                  "max": 150,
+                  "approx": null
+                },
+                "word_requirement_raw": "about 120 to 150 words"
               }
             }
           ],

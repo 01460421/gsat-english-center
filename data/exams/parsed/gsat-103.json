@@ -1,5 +1,5 @@
 {
-  "schema": "gsat-exam/v1",
+  "schema": "gsat-exam/v1.1",
   "id": "gsat-103",
   "exam": "gsat",
   "year": 103,
@@ -9,7 +9,9 @@
   "full_score": 100,
   "sources": {
     "paper": "data/raw/ceec/gsat/103/paper-1.pdf",
-    "paper_word": "data/raw/ceec/gsat/103/paper-2.docx",
+    "paper_word": [
+      "data/raw/ceec/gsat/103/paper-2.docx"
+    ],
     "answer": [
       "data/raw/ceec/gsat/103/answer.pdf"
     ],
@@ -22,14 +24,34 @@
       "data/raw/ceec/gsat/103/stats-3.xls"
     ]
   },
+  "parts": [
+    {
+      "title": "第壹部分：單選題（占72分）",
+      "points": 72,
+      "instructions": null,
+      "sections": [
+        "s1",
+        "s2",
+        "s3",
+        "s4"
+      ]
+    },
+    {
+      "title": "第貳部分：非選擇題（占28分）",
+      "points": 28,
+      "instructions": "說明：本部分共有二題，請依各題指示作答，答案必須寫在「答案卷」上，並標明大題號（一、二）。作答務必使用筆尖較粗之黑色墨水的筆書寫，且不得使用鉛筆。",
+      "sections": [
+        "s5",
+        "s6"
+      ]
+    }
+  ],
   "sections": [
     {
       "id": "s1",
       "type": "vocabulary",
       "title": "一、詞彙題（占15分）",
       "part": "單選題",
-      "part_title": "第壹部分：單選題（占72分）",
-      "part_instructions": null,
       "instructions": "說明︰第1題至第15題，每題有4個選項，其中只有一個是正確或最適當的選項，請畫記在答案卡之「選擇題答案區」。各題答對者，得1分；答錯、未作答或畫記多於一個選項者，該題以零分計算。",
       "points_total": 15,
       "groups": [
@@ -2889,8 +2911,6 @@
       "type": "translation",
       "title": "一、中譯英（占8分）",
       "part": "非選擇題",
-      "part_title": "第貳部分：非選擇題（占28分）",
-      "part_instructions": "說明：本部分共有二題，請依各題指示作答，答案必須寫在「答案卷」上，並標明大題號（一、二）。作答務必使用筆尖較粗之黑色墨水的筆書寫，且不得使用鉛筆。",
       "instructions": "說明：1.請將以下中文句子譯成正確、通順、達意的英文，並將答案寫在「答案卷」上。\n2.請依序作答，並標明子題號。每題4分，共8分。",
       "points_total": 8,
       "stats": {
@@ -3205,8 +3225,8 @@
           "figures": [
             {
               "kind": "image",
-              "caption": null,
               "label": "四格連環圖片",
+              "caption": null,
               "description": "黑白手繪四格漫畫（人物的書包背帶塗成淡綠色），排成2×2方格，中央小圓圈標示閱讀順序「1 2／3 4」（左上1、右上2、左下3、右下4）。圖1（左上）：兩名穿制服、斜背書包的學生並肩走在彎曲的道路上。左邊綁馬尾的女生低著頭，雙手拿著手機專心看螢幕；右邊的男生戴著大耳罩式耳機，閉著眼睛、面帶笑容，一手高舉隨身音樂播放器，邊走邊陶醉在音樂裡（頭上畫著音符）。遠處路上有一位媽媽牽著小孩走路。圖2（右上）：女生一頭撞上路邊的大樹（樹幹旁畫著表示撞擊的鋸齒狀爆炸線），閉眼、張嘴露出痛苦表情，手機從手中掉落；男生仍戴著耳機、閉著眼睛微笑，舉著音樂播放器繼續往前走（頭上畫著音符），完全沒注意到；遠處的媽媽仍牽著小孩（另一手垂在身側），母子兩人都張著嘴，一臉驚訝地看著這一幕。圖3（左下）：戴耳機的男生閉著眼睛、面帶笑容，揮著手走到一輛車子前方；車上的駕駛皺眉、咬牙，一臉怒氣（頭旁畫著冒氣的符號），正猛按喇叭（畫著喇叭與表示巨響的鋸齒狀爆炸線），車牌號碼為「8888」。圖4（右下）：空白，只畫了一個大問號「?」，由考生想像故事的後續發展與結局。圖中除了車牌「8888」與格子編號外沒有其他文字。",
               "rows": null
             }
@@ -3215,7 +3235,7 @@
           "questions": [
             {
               "no": 1,
-              "label": "作文",
+              "label": "英文作文",
               "mode": "composition",
               "stem": "提示︰請仔細觀察以下三幅連環圖片的內容，並想像第四幅圖片可能的發展，寫一篇涵蓋所有連環圖片內容且有完整結局的故事。",
               "options": null,
@@ -3225,9 +3245,14 @@
               "stats": null,
               "scoring_notes": "「英文作文」的評分標準是依據內容、組織、文法句構、詞彙拼字、體例五個項目給分，字數明顯不足的作文則扣總分 1 分。\n第二大題是「英文作文」，考生須從三幅連環圖片的內容，想像第四幅圖片可能的發展，再以至少 120 個單詞寫出一個涵蓋連環圖片內容並有完整結局的故事。\n今年的「英文作文」主題與考生日常生活經驗相關，重點在於說明青少年若過度使用 3C 電子產品，甚至在走路時還像圖片二裡的女生忙著滑手機或像圖片三裡的男生沉迷於耳機裡的音樂中，將會造成意外，嚴重時還可能危及性命。大部分的考生應能從不同的角度發揮想像力，寫出一個涵蓋連環圖片內容並有完整結局的故事。評分的考量重點為作文內容是否切題，組織是否具連貫性、句子結構及用字是否適切、以及拼字與標點符號的使用是否正確得當。",
               "tags": {
+                "topic": "accidents caused by using a phone or listening to music while walking (story with an imagined ending)",
                 "essay_type": "picture",
-                "word_requirement": "at least 120 words",
-                "topic": "accidents caused by using a phone or listening to music while walking (story with an imagined ending)"
+                "word_count": {
+                  "min": 120,
+                  "max": null,
+                  "approx": null
+                },
+                "word_requirement_raw": "at least 120 words"
               }
             }
           ],

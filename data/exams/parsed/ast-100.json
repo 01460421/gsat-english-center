@@ -1,5 +1,5 @@
 {
-  "schema": "gsat-exam/v1",
+  "schema": "gsat-exam/v1.1",
   "id": "ast-100",
   "exam": "ast",
   "year": 100,
@@ -412,7 +412,8 @@
               "scoring_notes": null,
               "tags": {
                 "test_point": "grammar",
-                "answer_pos": "verb",
+                "answer_pos": "phrase",
+                "answer_function": "verb",
                 "grammar_point": "subjunctive",
                 "key_phrase": "requests that + S + (should) be p.p."
               }
@@ -625,7 +626,8 @@
               "tags": {
                 "test_point": "grammar",
                 "answer_pos": "preposition",
-                "grammar_point": "with_absolute_construction",
+                "grammar_point": "with_construction",
+                "grammar_point_raw": "with_absolute_construction",
                 "key_phrase": "with + O + adj. (with the teacher present)"
               }
             },
@@ -658,7 +660,8 @@
               "scoring_notes": null,
               "tags": {
                 "test_point": "grammar",
-                "answer_pos": "verb",
+                "answer_pos": "phrase",
+                "answer_function": "verb",
                 "grammar_point": "passive",
                 "key_phrase": "were being taped (過去進行被動)"
               }
@@ -1292,7 +1295,8 @@
               },
               "scoring_notes": null,
               "tags": {
-                "clue": "keyword_repetition"
+                "clue": "lexical_cohesion",
+                "clue_raw": "keyword_repetition"
               }
             }
           ],
@@ -1925,56 +1929,74 @@
       "stats": {
         "source": "stats-3.xls 工作表「2」英文科非選擇題各題分數人數統計表",
         "max_score": 8,
+        "registered": 82164,
+        "absent": 4228,
+        "note": "人數依大題（非逐小題）統計；rate 為占報名總人數 82,164（含缺考）的比例",
         "score_distribution": [
           {
             "range": "8.00-8.99",
+            "min": 8.0,
+            "max": 8.99,
             "count": 483,
             "rate": 0.0059
           },
           {
             "range": "7.00-7.99",
+            "min": 7.0,
+            "max": 7.99,
             "count": 3090,
             "rate": 0.0376
           },
           {
             "range": "6.00-6.99",
+            "min": 6.0,
+            "max": 6.99,
             "count": 6552,
             "rate": 0.0797
           },
           {
             "range": "5.00-5.99",
+            "min": 5.0,
+            "max": 5.99,
             "count": 9002,
             "rate": 0.1096
           },
           {
             "range": "4.00-4.99",
+            "min": 4.0,
+            "max": 4.99,
             "count": 10185,
             "rate": 0.124
           },
           {
             "range": "3.00-3.99",
+            "min": 3.0,
+            "max": 3.99,
             "count": 11423,
             "rate": 0.139
           },
           {
             "range": "2.00-2.99",
+            "min": 2.0,
+            "max": 2.99,
             "count": 12876,
             "rate": 0.1567
           },
           {
             "range": "1.00-1.99",
+            "min": 1.0,
+            "max": 1.99,
             "count": 12872,
             "rate": 0.1567
           },
           {
             "range": "0.00-0.99",
+            "min": 0.0,
+            "max": 0.99,
             "count": 11453,
             "rate": 0.1394
           }
-        ],
-        "absent": 4228,
-        "registered": 82164,
-        "note": "人數依大題（非逐小題）統計；rate 為占報名總人數 82,164（含缺考）的比例"
+        ]
       },
       "groups": [
         {
@@ -2047,116 +2069,158 @@
       "stats": {
         "source": "stats-3.xls 工作表「2」英文科非選擇題各題分數人數統計表",
         "max_score": 20,
+        "registered": 82164,
+        "absent": 4228,
+        "note": "人數依大題（非逐小題）統計；rate 為占報名總人數 82,164（含缺考）的比例",
         "score_distribution": [
           {
             "range": "20.00-20.99",
+            "min": 20.0,
+            "max": 20.99,
             "count": 3,
             "rate": 0.0
           },
           {
             "range": "19.00-19.99",
+            "min": 19.0,
+            "max": 19.99,
             "count": 32,
             "rate": 0.0004
           },
           {
             "range": "18.00-18.99",
+            "min": 18.0,
+            "max": 18.99,
             "count": 160,
             "rate": 0.0019
           },
           {
             "range": "17.00-17.99",
+            "min": 17.0,
+            "max": 17.99,
             "count": 444,
             "rate": 0.0054
           },
           {
             "range": "16.00-16.99",
+            "min": 16.0,
+            "max": 16.99,
             "count": 934,
             "rate": 0.0114
           },
           {
             "range": "15.00-15.99",
+            "min": 15.0,
+            "max": 15.99,
             "count": 1648,
             "rate": 0.0201
           },
           {
             "range": "14.00-14.99",
+            "min": 14.0,
+            "max": 14.99,
             "count": 2619,
             "rate": 0.0319
           },
           {
             "range": "13.00-13.99",
+            "min": 13.0,
+            "max": 13.99,
             "count": 3393,
             "rate": 0.0413
           },
           {
             "range": "12.00-12.99",
+            "min": 12.0,
+            "max": 12.99,
             "count": 3889,
             "rate": 0.0473
           },
           {
             "range": "11.00-11.99",
+            "min": 11.0,
+            "max": 11.99,
             "count": 4378,
             "rate": 0.0533
           },
           {
             "range": "10.00-10.99",
+            "min": 10.0,
+            "max": 10.99,
             "count": 4845,
             "rate": 0.059
           },
           {
             "range": "9.00-9.99",
+            "min": 9.0,
+            "max": 9.99,
             "count": 5137,
             "rate": 0.0625
           },
           {
             "range": "8.00-8.99",
+            "min": 8.0,
+            "max": 8.99,
             "count": 5758,
             "rate": 0.0701
           },
           {
             "range": "7.00-7.99",
+            "min": 7.0,
+            "max": 7.99,
             "count": 5667,
             "rate": 0.069
           },
           {
             "range": "6.00-6.99",
+            "min": 6.0,
+            "max": 6.99,
             "count": 5717,
             "rate": 0.0696
           },
           {
             "range": "5.00-5.99",
+            "min": 5.0,
+            "max": 5.99,
             "count": 5213,
             "rate": 0.0634
           },
           {
             "range": "4.00-4.99",
+            "min": 4.0,
+            "max": 4.99,
             "count": 4759,
             "rate": 0.0579
           },
           {
             "range": "3.00-3.99",
+            "min": 3.0,
+            "max": 3.99,
             "count": 4421,
             "rate": 0.0538
           },
           {
             "range": "2.00-2.99",
+            "min": 2.0,
+            "max": 2.99,
             "count": 3961,
             "rate": 0.0482
           },
           {
             "range": "1.00-1.99",
+            "min": 1.0,
+            "max": 1.99,
             "count": 3710,
             "rate": 0.0452
           },
           {
             "range": "0.00-0.99",
+            "min": 0.0,
+            "max": 0.99,
             "count": 11248,
             "rate": 0.1369
           }
-        ],
-        "absent": 4228,
-        "registered": 82164,
-        "note": "人數依大題（非逐小題）統計；rate 為占報名總人數 82,164（含缺考）的比例"
+        ]
       },
       "groups": [
         {
@@ -2168,7 +2232,7 @@
           "questions": [
             {
               "no": 1,
-              "label": "作文",
+              "label": "英文作文",
               "mode": "composition",
               "stem": "提示：你認為畢業典禮應該是個溫馨感人、活潑熱鬧、或是嚴肅傷感的場景？請寫一篇英文作文說明你對畢業典禮的看法，第一段寫出畢業典禮對你而言意義是什麼，第二段說明要如何安排或進行活動才能呈現出這個意義。",
               "options": null,
@@ -2178,10 +2242,15 @@
               "stats": null,
               "scoring_notes": "（一）評分原則說明\n本題型主要測驗考生是否能運用詞彙、語法、修辭知識、寫出切合主題、具統一性、聯貫性之短文。本次作文「畢業典禮」是每個考生均有的經驗，考生依個人經驗說明畢業典禮對自身的意義，有些認為是喜悅的，也有些認為是悲傷的；至於所安排的活動，有戲劇表演、播放影片、送師長鮮花等等。\n本大題總分 20 分，採整體式評分，分為五等級：特優（19-20 分）、優（15-18 分）、可（10-14 分）、差（5-9 分）、劣（0-4 分），閱卷委員於閱讀完考生試卷後，初步決定一個分數，再以各分項評分標準（詳見表一）檢閱是否符合此分數。另外，字數明顯不足，扣 1 分；未分段，扣 1 分；寫多段，不扣分。\n表一　英文作文分項式評分指標（項目｜優｜可｜差｜劣）\n內容｜主題(句)清楚切題，並有具體、完整的相關細節支持。(5-4 分)｜主題不夠清楚或突顯，部分相關敘述發展不全。(3 分)｜主題不明，大部分相關敘述發展不全或與主題無關。(2-1 分)｜文不對題或沒寫（凡文不對題或沒寫者，其他各項均以零分計算）。(0 分)\n組織｜重點分明，有開頭、發展、結尾，前後連貫，轉承語使用得當。(5-4 分)｜重點安排不妥，前後發展比例與轉承語使用欠妥。(3 分)｜重點不明、前後不連貫。(2-1 分)｜全文毫無組織或未按提示寫作。(0 分)\n文法、句構｜全文幾無文法錯誤，文句結構富變化。(4 分)｜文法錯誤少，且未影響文意之表達。(3 分)｜文法錯誤多，且明顯影響文意之表達。(2-1 分)｜全文文法錯誤嚴重，導致文意不明。(0 分)\n字彙、拼字｜用字精確、得宜，且幾無拼字錯誤。(4 分)｜字詞單調、重複，用字偶有不當，少許拼字錯誤，但不影響文意之表達。(3 分)｜用字、拼字錯誤多，明顯影響文意之表達。(2-1 分)｜只寫出或抄襲與題意有關的零碎字詞。(0 分)\n體例｜格式、標點、大小寫幾無錯誤。(2 分)（「優」「可」兩欄合併）｜格式、標點、大小寫等有錯誤，但不影響文意之表達。(1 分)｜違背基本的寫作體例或格式，標點、大小寫等錯誤甚多。(0 分)\n有關各等級之評分樣例，可參閱選才電子報第 142 期「學測與指考英文作文評分樣例」說明（http://www.ceec.edu.tw/CeecMag/Articles/142/142-2.htm），該文以 93 年學測與指考英文作文題為例，提供評分樣例。",
               "tags": {
-                "essay_type": "two_paragraph",
+                "topic": "the meaning of a graduation ceremony and how to arrange its activities",
+                "essay_type": "topic",
                 "paragraphs": 2,
-                "word_requirement": "at least 120 words",
-                "topic": "the meaning of a graduation ceremony and how to arrange its activities"
+                "word_count": {
+                  "min": 120,
+                  "max": null,
+                  "approx": null
+                },
+                "word_requirement_raw": "at least 120 words"
               }
             }
           ],

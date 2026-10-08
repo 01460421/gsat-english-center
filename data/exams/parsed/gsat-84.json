@@ -1,5 +1,5 @@
 {
-  "schema": "gsat-exam/v1",
+  "schema": "gsat-exam/v1.1",
   "id": "gsat-84",
   "exam": "gsat",
   "year": 84,
@@ -9,7 +9,9 @@
   "full_score": 100,
   "sources": {
     "paper": "data/raw/ceec/gsat/84/paper-1.pdf",
-    "paper_word": "data/raw/ceec/gsat/84/paper-2.doc",
+    "paper_word": [
+      "data/raw/ceec/gsat/84/paper-2.doc"
+    ],
     "answer": [
       "data/raw/ceec/gsat/84/answer.pdf"
     ],
@@ -71,6 +73,7 @@
               "scoring_notes": null,
               "tags": {
                 "test_point": "phrase",
+                "answer_pos": "clause",
                 "key_phrase": "Where were we?"
               }
             },
@@ -92,6 +95,7 @@
               "scoring_notes": null,
               "tags": {
                 "test_point": "connective",
+                "answer_pos": "clause",
                 "key_phrase": "but I'm afraid"
               }
             }
@@ -128,6 +132,7 @@
               "scoring_notes": null,
               "tags": {
                 "test_point": "discourse",
+                "answer_pos": "clause",
                 "key_phrase": "How about you?"
               }
             },
@@ -149,6 +154,7 @@
               "scoring_notes": null,
               "tags": {
                 "test_point": "phrase",
+                "answer_pos": "clause",
                 "key_phrase": "What do you do?"
               }
             }
@@ -184,7 +190,8 @@
               "stats": null,
               "scoring_notes": null,
               "tags": {
-                "test_point": "discourse"
+                "test_point": "discourse",
+                "answer_pos": "clause"
               }
             },
             {
@@ -205,6 +212,7 @@
               "scoring_notes": null,
               "tags": {
                 "test_point": "collocation",
+                "answer_pos": "clause",
                 "key_phrase": "take a message"
               }
             },
@@ -225,7 +233,8 @@
               "stats": null,
               "scoring_notes": null,
               "tags": {
-                "test_point": "discourse"
+                "test_point": "discourse",
+                "answer_pos": "clause"
               }
             }
           ],
@@ -261,6 +270,7 @@
               "scoring_notes": null,
               "tags": {
                 "test_point": "discourse",
+                "answer_pos": "clause",
                 "key_phrase": "All we have to do is ..."
               }
             },
@@ -281,7 +291,8 @@
               "stats": null,
               "scoring_notes": null,
               "tags": {
-                "test_point": "discourse"
+                "test_point": "discourse",
+                "answer_pos": "clause"
               }
             }
           ],
@@ -1253,7 +1264,8 @@
               "stats": null,
               "scoring_notes": null,
               "tags": {
-                "item_type": "detail"
+                "item_type": "not_mentioned",
+                "item_type_raw": "detail"
               }
             }
           ],
@@ -1414,7 +1426,7 @@
           "questions": [
             {
               "no": 1,
-              "label": "作文",
+              "label": "英文作文",
               "mode": "composition",
               "stem": "提示：\n1. 高中生王治平收到美國筆友George的來信，告訴治平他要隨父母到台灣來住兩年左右，並問治平： \"Can you give me some advice and suggestions so that I know what I should do and what I should not do when I am in Taiwan?\" 現在請你以治平的身份，擬一封適當的回信給George，歡迎他來台灣，並且針對他的問題，提出一些具體的建議。\n2. 回信的上下款應依下列方式寫出。",
               "options": null,
@@ -1424,9 +1436,14 @@
               "stats": null,
               "scoring_notes": null,
               "tags": {
+                "topic": "reply to an American pen pal moving to Taiwan for two years: welcome him and give concrete advice on what to do and not to do in Taiwan",
                 "essay_type": "letter",
-                "word_requirement": "100至150字",
-                "topic": "reply to an American pen pal moving to Taiwan for two years: welcome him and give concrete advice on what to do and not to do in Taiwan"
+                "word_count": {
+                  "min": 100,
+                  "max": 150,
+                  "approx": null
+                },
+                "word_requirement_raw": "100至150字"
               }
             }
           ],

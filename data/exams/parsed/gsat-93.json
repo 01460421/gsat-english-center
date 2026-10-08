@@ -1,5 +1,5 @@
 {
-  "schema": "gsat-exam/v1",
+  "schema": "gsat-exam/v1.1",
   "id": "gsat-93",
   "exam": "gsat",
   "year": 93,
@@ -9,7 +9,9 @@
   "full_score": 100,
   "sources": {
     "paper": "data/raw/ceec/gsat/93/paper-1.pdf",
-    "paper_word": "data/raw/ceec/gsat/93/paper-2.doc",
+    "paper_word": [
+      "data/raw/ceec/gsat/93/paper-2.doc"
+    ],
     "answer": [
       "data/raw/ceec/gsat/93/answer.pdf"
     ],
@@ -707,7 +709,8 @@
               "scoring_notes": null,
               "tags": {
                 "test_point": "connective",
-                "answer_pos": "conjunction",
+                "answer_pos": "phrase",
+                "answer_function": "conjunction",
                 "key_phrase": "rather than"
               }
             }
@@ -886,7 +889,8 @@
               "scoring_notes": null,
               "tags": {
                 "test_point": "grammar",
-                "answer_pos": "verb",
+                "answer_pos": "phrase",
+                "answer_function": "verb",
                 "grammar_point": "infinitive_gerund",
                 "key_phrase": "To V ..., 祈使句（表目的）"
               }
@@ -1004,7 +1008,8 @@
               "tags": {
                 "test_point": "grammar",
                 "answer_pos": "conjunction",
-                "grammar_point": "correlative_conjunction",
+                "grammar_point": "conjunction",
+                "grammar_point_raw": "correlative_conjunction",
                 "key_phrase": "both A and B"
               }
             },
@@ -1243,7 +1248,8 @@
               "scoring_notes": null,
               "tags": {
                 "test_point": "connective",
-                "answer_pos": "conjunction",
+                "answer_pos": "phrase",
+                "answer_function": "conjunction",
                 "key_phrase": "as well as"
               }
             },
@@ -2065,7 +2071,7 @@
             "topic": "annotated list of four children’s books about life, death and what matters in life",
             "genre": "other",
             "sdgs": [],
-            "text_format": "multi_text"
+            "text_format": "mixed"
           }
         }
       ]
@@ -2086,7 +2092,7 @@
           "options_bank": null,
           "questions": [
             {
-              "no": 56,
+              "no": 1,
               "label": "翻譯1",
               "mode": "translation",
               "stem": "雖然Lily生來又瞎又聾，但她從來不氣餒。",
@@ -2106,7 +2112,7 @@
               }
             },
             {
-              "no": 57,
+              "no": 2,
               "label": "翻譯2",
               "mode": "translation",
               "stem": "她的故事證明了，我們只要努力必能成功。",
@@ -2165,8 +2171,8 @@
           "options_bank": null,
           "questions": [
             {
-              "no": 58,
-              "label": "作文",
+              "no": 1,
+              "label": "英文作文",
               "mode": "composition",
               "stem": "提示︰請根據以下三張連環圖畫的內容，以“One evening,…”開頭，寫一篇文章，描述圖中主角所經歷的事件，並提供合理的解釋與結局。",
               "options": null,
@@ -2176,9 +2182,14 @@
               "stats": null,
               "scoring_notes": null,
               "tags": {
+                "topic": "a man drinks at a wedding banquet, hails a vehicle at night, and wakes up in a police station the next morning (three-picture sequence, with explanation and ending)",
                 "essay_type": "picture",
-                "word_requirement": "120 words左右",
-                "topic": "a man drinks at a wedding banquet, hails a vehicle at night, and wakes up in a police station the next morning (three-picture sequence, with explanation and ending)"
+                "word_count": {
+                  "min": null,
+                  "max": null,
+                  "approx": 120
+                },
+                "word_requirement_raw": "120 words左右"
               }
             }
           ],

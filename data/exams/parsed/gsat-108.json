@@ -1,5 +1,5 @@
 {
-  "schema": "gsat-exam/v1",
+  "schema": "gsat-exam/v1.1",
   "id": "gsat-108",
   "exam": "gsat",
   "year": 108,
@@ -9,7 +9,9 @@
   "full_score": 100,
   "sources": {
     "paper": "data/raw/ceec/gsat/108/paper-1.pdf",
-    "paper_word": "data/raw/ceec/gsat/108/paper-2.docx",
+    "paper_word": [
+      "data/raw/ceec/gsat/108/paper-2.docx"
+    ],
     "answer": [
       "data/raw/ceec/gsat/108/answer.pdf"
     ],
@@ -22,14 +24,34 @@
       "data/raw/ceec/gsat/108/stats-3.xls"
     ]
   },
+  "parts": [
+    {
+      "title": "第壹部分：單選題（占72分）",
+      "points": 72,
+      "instructions": null,
+      "sections": [
+        "s1",
+        "s2",
+        "s3",
+        "s4"
+      ]
+    },
+    {
+      "title": "第貳部分：非選擇題（占28分）",
+      "points": 28,
+      "instructions": "說明：本部分共有二大題，請依各題指示作答，答案必須寫在「答案卷」上，並標明大題號（一、二），若因字跡潦草、未標示題號、標錯題號等原因，致評閱人員無法清楚辨識，其後果由考生自行承擔。作答使用筆尖較粗之黑色墨水的筆書寫，且不得使用鉛筆。",
+      "sections": [
+        "s5",
+        "s6"
+      ]
+    }
+  ],
   "sections": [
     {
       "id": "s1",
       "type": "vocabulary",
       "title": "一、詞彙題（占15分）",
       "part": "單選題",
-      "part_title": "第壹部分：單選題（占72分）",
-      "part_instructions": null,
       "instructions": "說明︰第1題至第15題，每題有4個選項，其中只有一個是正確或最適當的選項，請畫記在答案卡之「選擇題答案區」。各題答對者，得1分；答錯、未作答或畫記多於一個選項者，該題以零分計算。",
       "points_total": 15,
       "groups": [
@@ -1214,7 +1236,8 @@
               "scoring_notes": null,
               "tags": {
                 "test_point": "phrase",
-                "answer_pos": "preposition",
+                "answer_pos": "phrase",
+                "answer_function": "preposition",
                 "key_phrase": "due to"
               }
             }
@@ -2309,11 +2332,11 @@
           "figures": [
             {
               "kind": "photo",
-              "caption": null,
               "label": null,
-              "question_no": null,
+              "caption": null,
               "description": "第45至48題選文第二段右側的黑白照片（無標題、圖中無文字），為配圖，題目不需依圖作答：草地上豎立著五根北美西北海岸原住民的圖騰柱，背景為空白天空。由左至右：最左邊一根較矮、較細的圖騰柱（位於最高那根的左後方，右側部分被它遮住）；一根最高的圖騰柱，頂端是一隻向兩側展開雙翼的鳥形雕像，柱身由多個上下疊起的人臉／動物臉雕刻組成；一根頂端為展翅鳥形人像的圖騰柱，柱身同樣刻滿疊起的圖案；中間偏右一根細長高聳的圖騰柱；最右邊一根較矮的圖騰柱，上半部有一對向左右水平伸展的翅膀，下方刻有人臉與蹲坐的人像。",
-              "rows": null
+              "rows": null,
+              "question_no": null
             }
           ],
           "options_bank": null,
@@ -2501,7 +2524,7 @@
             "sdgs": [
               11
             ],
-            "text_format": "continuous"
+            "text_format": "mixed"
           }
         },
         {
@@ -2897,8 +2920,6 @@
       "type": "translation",
       "title": "一、中譯英（占8分）",
       "part": "非選擇題",
-      "part_title": "第貳部分：非選擇題（占28分）",
-      "part_instructions": "說明：本部分共有二大題，請依各題指示作答，答案必須寫在「答案卷」上，並標明大題號（一、二），若因字跡潦草、未標示題號、標錯題號等原因，致評閱人員無法清楚辨識，其後果由考生自行承擔。作答使用筆尖較粗之黑色墨水的筆書寫，且不得使用鉛筆。",
       "instructions": "說明：1.請將以下中文句子譯成正確、通順、達意的英文，並將答案寫在「答案卷」上。\n2.請依序作答，並標明子題號。每題4分，共8分。",
       "points_total": 8,
       "stats": {
@@ -3213,7 +3234,7 @@
           "questions": [
             {
               "no": 1,
-              "label": "作文",
+              "label": "英文作文",
               "mode": "composition",
               "stem": "提示︰身為臺灣的一份子，臺灣最讓你感到驕傲的是什麼？請以此為題，寫一篇英文作文，談臺灣最讓你引以為榮的二個面向或事物（例如：人、事、物、文化、制度等）。第一段描述這二個面向或事物，並說明它們為何讓你引以為榮；第二段則說明你認為可以用什麼方式來介紹或行銷這些臺灣特色，讓世人更了解臺灣。",
               "options": null,
@@ -3223,10 +3244,15 @@
               "stats": null,
               "scoring_notes": "第二大題是「英文作文」，今年為主題寫作，考生必須根據所提供作答提示文字，以描述兩項最讓自己覺得引以為榮的臺灣事物以及可以如何介紹或行銷這些特色為題寫一篇英文作文，文長至少 120 個單詞。\n「英文作文」的評分標準是依據內容、組織、文法句構、詞彙拼字四個項目給分，字數明顯不足的作文則扣總分 1 分。\n今年英文作文的寫作任務要求考生敘述最感到驕傲的臺灣之人、事、物、文化、制度等，第一段要提出二個面向或事物並說明引以為榮的理由；第二段需要說明如何介紹或行銷這些臺灣特色。考生可以以自我的生活經驗或認知發揮，完成寫作任務。考生只要能依作答提示，運用所學之詞彙、句構，若內容清楚切題，且組織發展完整，文字使用沒有太多錯誤，應能拿到不錯的分數。",
               "tags": {
+                "topic": "two things about Taiwan that make me proud and how to promote them to the world",
                 "essay_type": "topic",
                 "paragraphs": 2,
-                "word_requirement": "at least 120 words",
-                "topic": "two things about Taiwan that make me proud and how to promote them to the world"
+                "word_count": {
+                  "min": 120,
+                  "max": null,
+                  "approx": null
+                },
+                "word_requirement_raw": "at least 120 words"
               }
             }
           ],

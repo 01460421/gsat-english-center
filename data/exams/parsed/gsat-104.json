@@ -1,5 +1,5 @@
 {
-  "schema": "gsat-exam/v1",
+  "schema": "gsat-exam/v1.1",
   "id": "gsat-104",
   "exam": "gsat",
   "year": 104,
@@ -9,7 +9,9 @@
   "full_score": 100,
   "sources": {
     "paper": "data/raw/ceec/gsat/104/paper-1.pdf",
-    "paper_word": "data/raw/ceec/gsat/104/paper-2.doc",
+    "paper_word": [
+      "data/raw/ceec/gsat/104/paper-2.doc"
+    ],
     "answer": [
       "data/raw/ceec/gsat/104/answer.pdf"
     ],
@@ -22,14 +24,34 @@
       "data/raw/ceec/gsat/104/stats-3.xls"
     ]
   },
+  "parts": [
+    {
+      "title": "第壹部分：單選題（占72分）",
+      "points": 72,
+      "instructions": null,
+      "sections": [
+        "s1",
+        "s2",
+        "s3",
+        "s4"
+      ]
+    },
+    {
+      "title": "第貳部分：非選擇題（占28分）",
+      "points": 28,
+      "instructions": "說明：本部分共有二題，請依各題指示作答，答案必須寫在「答案卷」上，並標明大題號（一、二）。作答務必使用筆尖較粗之黑色墨水的筆書寫，且不得使用鉛筆。",
+      "sections": [
+        "s5",
+        "s6"
+      ]
+    }
+  ],
   "sections": [
     {
       "id": "s1",
       "type": "vocabulary",
       "title": "一、詞彙題（占15分）",
       "part": "單選題",
-      "part_title": "第壹部分：單選題（占72分）",
-      "part_instructions": null,
       "instructions": "說明︰第1題至第15題，每題有4個選項，其中只有一個是正確或最適當的選項，請畫記在答案卡之「選擇題答案區」。各題答對者，得1分；答錯、未作答或畫記多於一個選項者，該題以零分計算。",
       "points_total": 15,
       "groups": [
@@ -1322,7 +1344,8 @@
               "tags": {
                 "test_point": "grammar",
                 "answer_pos": "preposition",
-                "grammar_point": "with_absolute_construction"
+                "grammar_point": "with_construction",
+                "grammar_point_raw": "with_absolute_construction"
               }
             },
             {
@@ -1412,7 +1435,8 @@
               "scoring_notes": null,
               "tags": {
                 "test_point": "grammar",
-                "answer_pos": "verb",
+                "answer_pos": "phrase",
+                "answer_function": "verb",
                 "grammar_point": "passive"
               }
             },
@@ -2883,8 +2907,6 @@
       "type": "translation",
       "title": "一、中譯英（占8分）",
       "part": "非選擇題",
-      "part_title": "第貳部分：非選擇題（占28分）",
-      "part_instructions": "說明：本部分共有二題，請依各題指示作答，答案必須寫在「答案卷」上，並標明大題號（一、二）。作答務必使用筆尖較粗之黑色墨水的筆書寫，且不得使用鉛筆。",
       "instructions": "說明：1.請將以下中文句子譯成正確、通順、達意的英文，並將答案寫在「答案卷」上。\n2.請依序作答，並標明子題號。每題4分，共8分。",
       "points_total": 8,
       "stats": {
@@ -3197,8 +3219,8 @@
           "figures": [
             {
               "kind": "image",
-              "caption": null,
               "label": "兩本書的封面",
+              "caption": null,
               "description": "題目下方並排畫著兩本立體書本（可見左側書脊與下方書頁），為黑白灰階圖。左邊一本：封面上方以粗體字印著書名「EVERYONE IS BEAUTIFUL:」，下一行為副標「Respect Others & Be Yourself」；中央是一棵枝葉茂盛的樹，樹幹中段印著作者名「Caroline Strong」，樹的下方有一個上下顛倒、逐漸淡出的倒影（像水中倒影）。右邊一本：封面上方是一組由左至右逐漸升高的長條形階梯（類似長條圖），最高的一根顏色最深，頂端架著一把往右上方延伸的梯子，一個小人正沿著梯子往上爬；下方以粗體字印著書名「LEADERSHIP IS A CHOICE:」，接著兩行副標「Conquer Your Fears &」「You Can Be a Leader Too」；最下方白色框內印著作者名「Austin Young」。",
               "rows": null
             }
@@ -3207,7 +3229,7 @@
           "questions": [
             {
               "no": 1,
-              "label": "作文",
+              "label": "英文作文",
               "mode": "composition",
               "stem": "提示︰下面兩本書是學校建議的暑假閱讀書籍，請依書名想想看該書的內容，並思考你會選擇哪一本書閱讀，為什麼？請在第一段說明你會選哪一本書及你認為該書的內容大概會是什麼，第二段提出你選擇該書的理由。",
               "options": null,
@@ -3217,10 +3239,15 @@
               "stats": null,
               "scoring_notes": "「英文作文」的評分標準是依據內容、組織、文法句構、詞彙拼字、體例五個項目給分，字數明顯不足的作文則扣總分 1 分。\n第二大題是「英文作文」，以至少 120 個單詞，從兩本書當中選擇其中一本設想該書可能的內容，再說明為什麼選擇該本書的理由。\n今年的「英文作文」主題是要考生從兩本書擇一作答，一本是 EVERYBODY IS BEAUTIFUL: Respect Others & Be Yourself，另外一本是 LEADERSHIP IS A CHOICE: Conquer Your Fears & You Can Be a Leader Too，考生要根據書名猜測該書的內容並說明為什麼選擇該本書，跳脫「看圖寫作」的模式。這種命題方式雖與過去四格漫畫敘述故事之方式不同，但本質仍為引導式寫作，以書名及副標作為提示，引導考生思考、寫作。題目要考生省思欣賞尊重他人，同時看重肯定自己，或者克服恐懼及培養領導能力的重要性，很符合社會對年輕人的正面期許。不論選擇哪本書，考生若能從不同的角度發揮想像力，清楚描述自己認為書中可能的內容，同時條理說明選擇的理由，就能拿到不錯的分數。評分的考量重點為作文內容與所選書籍之間關聯性是否緊密，並有足夠的細節支持，組織是否連貫合理，句構、語法及用字是否適切，以及拼字與標點符號是否正確得當。",
               "tags": {
+                "topic": "choosing one of two recommended summer reading books by its title, imagining its content and explaining the choice",
                 "essay_type": "topic",
                 "paragraphs": 2,
-                "word_requirement": "at least 120 words",
-                "topic": "choosing one of two recommended summer reading books by its title, imagining its content and explaining the choice"
+                "word_count": {
+                  "min": 120,
+                  "max": null,
+                  "approx": null
+                },
+                "word_requirement_raw": "at least 120 words"
               }
             }
           ],
