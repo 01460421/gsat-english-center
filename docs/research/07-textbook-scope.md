@@ -244,6 +244,14 @@ L1 The Heart of a Champion／L2 My Mouth's in Airplane Mode!／L3 The Birthmark�
 | 107 學年度起適用學測考試說明（舊制） | 「內容以結構較為簡單之句型（如單句、合句、複句）為主」 | [leg-gsat-107] |
 | 107 學年度起適用指考考試說明（舊制） | 「內容以結構較為複雜之句型（如合句、複句、複合句等）為主」 | [leg-ast-107] |
 | 115 學測試題特色 | 「混合題組非選擇題及中譯英句子等試題設計，也多使用基礎文法句構與觀念即能作答。因此在讀寫教學上，教師可以考慮捨棄課本或教材中過難及罕見的文法句型」；「使用句構也屬高中常見，並無過於複雜及罕見的句型應用」 | [S-ceec-ep351] |
+| [S-csghs-112-2-g10] | 中山女高 112-2 高一英文教學計畫（龍騰 B2 課名與閱讀策略，無句型）（臺北市立中山女子高級中學） | <https://www.csghs.tp.edu.tw/wp-content/uploads/doc/zs222/112-2%E9%AB%98%E4%B8%80%E8%8B%B1%E6%96%87%E6%95%99%E5%AD%B8%E8%A8%88%E7%95%AB.pdf> |
+| [S-csghs-114-2-g11] | 中山女高 114-2 高二英文課程計畫（龍騰 B4 新版，U1 The Bet；只有功能描述）（臺北市立中山女子高級中學） | <https://www.csghs.tp.edu.tw/wp-content/uploads/doc/zs222/114-2%E8%AA%B2%E7%A8%8B%E8%A8%88%E7%95%AB%E8%A1%A8%28%E9%AB%98%E4%BA%8C%E8%8B%B1%E6%96%87%29.pdf> |
+| [S-hlgs-111-2-g10] | 花蓮女中 111 學年度英語文課程學習成果建議（高一下，「龍騰版第二冊」L1、L6）（國立花蓮女子高級中學） | <https://www.hlgs.hlc.edu.tw/wp-content/uploads/sites/74/2023/03/111-2%E8%AA%B2%E7%A8%8B%E5%AD%B8%E7%BF%92%E6%88%90%E6%9E%9C%E8%AA%AA%E6%98%8E%E5%8F%8A%E8%A9%95%E9%87%8F%E8%A1%A8102.109_%E6%9E%97%E6%AF%93%E6%B7%B5%E8%80%81%E5%B8%AB.pdf> |
+| [S-ceec-s111] | 選才電子報〈111年學科能力測驗非選擇題評分原則說明－【英文】〉（大學入學考試中心） | <https://www.ceec.edu.tw/xcepaper/cont?xsmsid=0J066588036013658199&qperoid=0M096363415298462880&sid=0M102340734727041623> |
+| [S-ceec-s112] | 選才電子報〈112年學科能力測驗非選擇題評分原則說明－【英文】〉（大學入學考試中心） | <https://www.ceec.edu.tw/xcepaper/cont?xsmsid=0J066588036013658199&qperoid=0N101514301867326634&sid=0N107357247202165569> |
+| [S-ceec-s113] | 選才電子報〈113學年度學科能力測驗非選擇題評分原則說明－【英文】〉（大學入學考試中心） | <https://www.ceec.edu.tw/xcepaper/cont?xsmsid=0J066588036013658199&qperoid=0O100341978545177938&sid=0O106355008783677725> |
+| [S-ceec-s114] | 選才電子報〈114學年度學科能力測驗非選擇題評分原則說明－【英文】〉（大學入學考試中心） | <https://www.ceec.edu.tw/xcepaper/cont?xsmsid=0J066588036013658199&qunit=0P118433308122532391&sid=0P115553575111070723> |
+| [S-ceec-s115] | 選才電子報〈115學年度學科能力測驗非選擇題評分原則說明－【英文】〉（第 351 期；大學入學考試中心） | <https://www.ceec.edu.tw/xcepaper/cont?xsmsid=0J066588036013658199&qunit=0Q105367598596417147&sid=0Q111569514236767793> |
 | 106–108、110 學測閱卷說明 | 反覆出現「所測驗之句型亦為高中生熟悉的範圍」 | 見 §9 表 gsat106–gsat110 評分文件 |
 | 112–115 學測評分原則 | 112–114：「所評量的字詞大致都以詞彙表一至四級詞彙為主」；115：「所評量的標的詞彙（target words）大致都以詞彙表一至四級詞彙為主」 | 見 §9 表 gsat112–gsat115 評分文件 |
 | 111–115 選才電子報〈非選擇題評分原則說明〉 | 111：第 2 題「評量 When/While ving,… 或時間副詞 When S +V… 的句構」；112：第 2 題「評量以動名詞或不定詞作主語，並使用對等連接詞and的平行結構」；113：第 1 題「被動型態can/will be seen，若用S+V，則要特別注意不能省略主詞」；114：第 1 題「必須使用最高級的用法（『最大的』the biggest/strongest）」；115：「兩題作答只須使用基本句型（S＋V）」，第 1 題「應該使用現在完成式」，第 2 題「需要使用連接詞（and）或者分詞構句」 | [S-ceec-s111][S-ceec-s112][S-ceec-s113][S-ceec-s114][S-ceec-s115] |
@@ -458,7 +466,7 @@ L1 The Heart of a Champion／L2 My Mouth's in Airplane Mode!／L3 The Birthmark�
 | [S-cogsh-114-1-g10] | 金甌女中普一忠班 114 學年度第一學期英文科授課計畫（龍騰 B1，逐課句型）（臺北市私立金甌女子高級中學） | <https://www.cogsh.tp.edu.tw/ischool/wr/file/1/4227/4ff431b7a0a6519d3e4dce5a6f08c8a8.pdf> |
 | [S-cogsh-114-1-g11] | 金甌女中 114 學年度第一學期普二忠英文科授課計畫（三民乙版 B3 課名，無逐課句型）（臺北市私立金甌女子高級中學） | <https://www.cogsh.tp.edu.tw/ischool/wr/file/1/4227/6a0b64f60f41d1a727289c8b5cf474c1.pdf> |
 | [S-cogsh-114-1-grammar] | 金甌女中英二壹班 114 學年度第一學期英文文法與句型課授課計畫（校訂選修）（臺北市私立金甌女子高級中學） | <https://www.cogsh.tp.edu.tw/ischool/wr/file/1/4227/d61670e918717404135d144f62056b0c.pdf> |
-| [S-cogsh-114-1-trans] | 金甌女中英二壹班 114 學年度第一學期中英翻譯練習課授課計畫（校訂選修，Unit 1–48 句型）（臺北市私立金甌女子高級中學） | <https://www.cogsh.tp.edu.tw/ischool/wr/file/1/4227/4422693db80a8b46b47d25aa3ad955b5.pdf> |
+| [S-cogsh-114-1-trans] | 金甌女中英二壹班 114 學年度第一學期中英翻譯練習課授課計畫（校訂選修；計畫排入 Unit 1–10、23–27、29–48 的句型）（臺北市私立金甌女子高級中學） | <https://www.cogsh.tp.edu.tw/ischool/wr/file/1/4227/4422693db80a8b46b47d25aa3ad955b5.pdf> |
 | [S-csghs-110-2-g10] | 中山女高 110-2 課程計畫表 高一英文（龍騰 B2 課名；檔內表頭誤植為 110-1）（臺北市立中山女子高級中學） | <https://www.csghs.tp.edu.tw/wp-content/uploads/110-2%E8%AA%B2%E7%A8%8B%E8%A8%88%E7%95%AB%E8%A1%A8%E9%AB%98%E4%B8%80%E8%8B%B1%E6%96%87.pdf> |
 | [S-csghs-110-1-g11] | 中山女高 110-1 高二英文課程計畫表（龍騰 B3 課名）（臺北市立中山女子高級中學） | <https://www.csghs.tp.edu.tw/wp-content/uploads/%E9%AB%98%E4%BA%8C%E8%8B%B1%E6%96%87%E8%AA%B2%E7%A8%8B%E8%A8%88%E7%95%AB%E8%A1%A8.pdf> |
 | [S-csghs-111-1-g11] | 中山女高 111-1 課程計畫表（高二英文）（龍騰 B3，逐課句型）（臺北市立中山女子高級中學） | <https://www.csghs.tp.edu.tw/wp-content/uploads/doc/zs2222/111-1%E8%AA%B2%E7%A8%8B%E8%A8%88%E7%95%AB%E8%A1%A8%28%E9%AB%98%E4%BA%8C%E8%8B%B1%E6%96%87%29.pdf> |
@@ -597,5 +605,13 @@ L1 The Heart of a Champion／L2 My Mouth's in Airplane Mode!／L3 The Birthmark�
 [S-ceec-110-trial]: https://www.ceec.edu.tw/files/file_pool/1/0L273571052052407166/02-110%E5%B9%B4%E8%A9%A6%E8%BE%A6%E8%80%83%E8%A9%A6%E8%8B%B1%E6%96%87%E8%A7%A3%E6%9E%90.pdf
 [S-news-1111-115]: https://www.1111.com.tw/news/jobns/164351
 [S-ceec-ep351]: https://www.ceec.edu.tw/xcepaper/cont?xsmsid=0J066588036013658199&qunit=0Q105367191322447606&sid=0Q105583094870257539
+[S-csghs-112-2-g10]: https://www.csghs.tp.edu.tw/wp-content/uploads/doc/zs222/112-2%E9%AB%98%E4%B8%80%E8%8B%B1%E6%96%87%E6%95%99%E5%AD%B8%E8%A8%88%E7%95%AB.pdf
+[S-csghs-114-2-g11]: https://www.csghs.tp.edu.tw/wp-content/uploads/doc/zs222/114-2%E8%AA%B2%E7%A8%8B%E8%A8%88%E7%95%AB%E8%A1%A8%28%E9%AB%98%E4%BA%8C%E8%8B%B1%E6%96%87%29.pdf
+[S-hlgs-111-2-g10]: https://www.hlgs.hlc.edu.tw/wp-content/uploads/sites/74/2023/03/111-2%E8%AA%B2%E7%A8%8B%E5%AD%B8%E7%BF%92%E6%88%90%E6%9E%9C%E8%AA%AA%E6%98%8E%E5%8F%8A%E8%A9%95%E9%87%8F%E8%A1%A8102.109_%E6%9E%97%E6%AF%93%E6%B7%B5%E8%80%81%E5%B8%AB.pdf
+[S-ceec-s111]: https://www.ceec.edu.tw/xcepaper/cont?xsmsid=0J066588036013658199&qperoid=0M096363415298462880&sid=0M102340734727041623
+[S-ceec-s112]: https://www.ceec.edu.tw/xcepaper/cont?xsmsid=0J066588036013658199&qperoid=0N101514301867326634&sid=0N107357247202165569
+[S-ceec-s113]: https://www.ceec.edu.tw/xcepaper/cont?xsmsid=0J066588036013658199&qperoid=0O100341978545177938&sid=0O106355008783677725
+[S-ceec-s114]: https://www.ceec.edu.tw/xcepaper/cont?xsmsid=0J066588036013658199&qunit=0P118433308122532391&sid=0P115553575111070723
+[S-ceec-s115]: https://www.ceec.edu.tw/xcepaper/cont?xsmsid=0J066588036013658199&qunit=0Q105367598596417147&sid=0Q111569514236767793
 [leg-gsat-107]: https://www.ceec.edu.tw/files/file_pool/1/0J052605777209194600/107%E5%AD%B8%E6%B8%AC%E8%8B%B1%E6%96%87%E8%80%83%E8%A9%A6%E8%AA%AA%E6%98%8E%E5%AE%9A%E7%A8%BF.pdf
 [leg-ast-107]: https://www.ceec.edu.tw/files/file_pool/1/0J052605777021346555/107%E6%8C%87%E8%80%83%E8%8B%B1%E6%96%87%E8%80%83%E8%A9%A6%E8%AA%AA%E6%98%8E%E5%AE%9A%E7%A8%BF.pdf
