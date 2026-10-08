@@ -8,6 +8,8 @@
 > - 標「本文件試算」的數字是用官方單價自己算出來的，不是官方數字。
 > - 標「（未驗證）」的項目沒能用一手來源確認。
 > - 標「建議」的段落是對新專案的提案，不是 Sekai 現況。
+>
+> 查證紀錄（2026-10-08，對抗式查證）：抽查 Sekai 原始碼的「檔案:行號」引用約 120 處，並重新打開第 6 節的外部來源逐條核對（Anthropic、Cloudflare、Vercel、Google、GitHub、MDN、PSL、Resend 都是 2026-10-08 抓取的版本）。修正處包括：自動核准帳號的試用額度實際上沒有生效（第 2.2 節）、SQL 不只兩個例外（第 2.4 節）、Google OAuth「Testing 只能 100 人」對只要求 openid/email/profile 的 App 不適用（第 0 節、第 4.1 節）、Workers 的 duration 不分方案（第 3.4 節）、試算漏算 thinking token（第 3.3 節）。另外補上 Batch 的限制、照片上傳限制、Anthropic Console 的支出上限，以及 Vercel 跳過部署的官方做法。
 
 ---
 
@@ -49,7 +51,7 @@
 9. **使用者要自己準備的東西**（第 4 節有完整清單和設定順序）：
    - Cloudflare 帳號（建議 Workers Paid，每月 US$5）[CF-WPRICE] 和 API token。
    - Vercel 專案。Hobby 方案只限非商業用途 [VC-HOBBY]。
-   - Google OAuth client。在「Testing」狀態下最多只能有 100 位測試使用者 [G-AUD]。
+   - Google OAuth client。「Testing」狀態一般限 100 位測試使用者，但只要求 openid、email、profile（也就是 Sign in with Google）的 App 不受測試名單限制，授權也不會 7 天過期 [G-AUD]。新專案只用這三個 scope，正式上線前仍建議按「Publish app」（見第 4.1 節第 8 項）。
    - Anthropic API key 和儲值。
    - 網域，以及 GitHub repo secrets。
 
@@ -174,7 +176,7 @@ GitHub Actions
 | 無狀態 session | `worker/src/auth.js:1-9`、`38-50`、`52-57`、`79-85` | cookie 內容是 `base64url(payload).HMAC-SHA256`，payload 為 `{u, v, e}`，有效 30 天，`HttpOnly; Secure; SameSite=Lax`。驗簽時用定時比較（`safeEq`，`auth.js:30-36`） | 原樣沿用 |
 | 撤銷機制 | `worker/src/auth.js:65-77`、`worker/sql/017_session_ver.sql`、`worker/src/db.js:37-44` | 每次請求都比對 `users.session_ver`。改密碼或解綁時把版本 +1，舊 cookie 全部失效 | 沿用，改成「登出所有裝置」功能 |
 | 登入 CSRF 防護 | `worker/src/auth.js:87-97`、`222-234`、`245-250` | state 簽章裡放一個 nonce，同一個 nonce 也種進只屬於這個瀏覽器的 `oauth_n` cookie（Path=/auth/，10 分鐘），回呼時兩者要對得上；最多保留 3 個 nonce，可以同時開多個分頁登入 | 原樣沿用（SETUP 也有說明：`worker/SETUP.md:178-179`） |
-| 回跳安全 | `worker/src/auth.js:174-209` | `safePath` 只接受單一斜線開頭、白名單字元的相對路徑，擋掉開放轉址；回跳頁用嚴格 CSP（`default-src 'none'`），所有插值都會跳脫；用 HTML 頁而不是 302，是為了在同一個回應裡種 cookie | 原樣沿用 |
+| 回跳安全 | `worker/src/auth.js:163-209` | `safePath` 只接受單一斜線開頭、白名單字元的相對路徑，擋掉開放轉址；回跳頁用嚴格 CSP（`default-src 'none'`），所有插值都會跳脫；用 HTML 頁而不是 302，是為了在同一個回應裡種 cookie | 原樣沿用 |
 | Google 交換 | `worker/src/auth.js:101-128`、`257` | scope 為 `openid email profile`，帶 `prompt=select_account`；信箱沒驗證就拒絕 | 沿用。學生常有學校帳號和個人帳號，`select_account` 很重要 |
 | Discord | `worker/src/auth.js:132-159`、`215-235`、`263-281` | 沒登入時直接用 Discord 建帳號；已登入時改為綁定，被別的帳號綁走就拒絕，不會把對方清成孤兒帳號 | 選用。scope 建議只要 `identify`，不需要 Sekai 的 `guilds`（`auth.js:137`） |
 | 供應商錯誤不回顯 | `worker/src/auth.js:240-242`、`282-286` | 供應商回傳的 error 只比對代碼後顯示自己的文案；例外細節只寫進 log | 原樣沿用 |
@@ -188,7 +190,7 @@ GitHub Actions
 | 狀態機 | `worker/sql/002_approval.sql`、`worker/sql/schema.sql:18-47` | `status`：`pending`→`approved`／`rejected`；另有 `reviewed_by`、`reviewed_at` |
 | 核准閘門 | `worker/src/api.js:405-406`、`569-571` | 沒登入回 401。沒核准就一律回 403 加固定錯誤碼 `pending_approval`，前端看到就切到「等待審核」畫面（註解在 `569-570`）。解綁身分、對話存檔、申請這幾支放在閘門之前 |
 | 申請端點的防帳單措施 | `worker/src/api.js:441-509`、`44-50` | 冷卻 60 秒、每個帳號最多送 10 次、同一個 IP 一天最多 8 次（`014_apply_ip.sql`）；格式驗證通過才扣次數 |
-| 自動核准＋試用額度 | `worker/wrangler.toml:84-96`、`worker/src/api.js:100-102` | `AUTO_APPROVE=1`：外部查證通過就當場核准，`reviewed_by='system:auto'`；這類帳號套用較低的 `AI_OPS_AUTO` 試用額度，等管理員覆核後才升到一般額度 |
+| 自動核准＋試用額度 | `worker/wrangler.toml:84-96`、`worker/src/api.js:95-102` | `AUTO_APPROVE=1`：外部查證通過就當場核准，`reviewed_by='system:auto'`。程式設計成這類帳號改用 `AI_OPS_AUTO` 試用額度，等管理員覆核後才回到一般額度。**但目前的設定沒有生效**：程式只讀 `AI_OPS_AUTO`，而且「有設才生效」（`api.js:99-101`）；`wrangler.toml` 裡只有改名前的 `AI_CAP_AUTO = "20"`（`wrangler.toml:91-96`），整個 repo 沒有任何程式讀它。所以自動核准的帳號和一般帳號一樣是每日 20 次（`AI_OPS_USER`，`wrangler.toml:58`）。儀表板上有沒有另外設 `AI_OPS_AUTO`，repo 看不出來（未驗證） |
 | 背景審核 | `worker/src/api.js:502-506`、`worker/src/index.js:342-374`、`worker/src/review.js:342-` | 需要 AI 判斷的工作排進 `tasks`，由 Cron 跑；失敗看得見，也可以重試 |
 | 通知管理員的格式 | `worker/src/review.js:228-305` | 先寫「程式碼產生的事實」，再寫「AI 意見（僅供參考）」，最後附「申請者原文（不可信）」；標題只用樣板產生，不讓申請者的字串流進管理員 AI 的快照（二階注入防護） |
 | 對申請者只透露粗略狀態 | `worker/src/api.js:148-158`、`178-180` | 不告訴申請者是哪一條標記擋住他，免得他照著改寫 |
@@ -233,7 +235,7 @@ GitHub Actions
 | 遷移檔用三位數編號（`002_approval.sql` … `017_session_ver.sql`），檔頭用中文說明為什麼要做這次遷移，以及要怎麼執行 | `worker/sql/*.sql`（例如 `008_ai_credits.sql:1-10`、`017_session_ver.sql:1-5`） |
 | 一律寫 `IF NOT EXISTS`；註解直接寫出 `ADD COLUMN` 不能重跑 | `worker/sql/017_session_ver.sql:4`；`worker/sql/schema.sql:6-9` |
 | **測試會實際套用**：先在空的 `node:sqlite` 上跑一次快照，再逐句套上每支遷移，只允許出現 duplicate column 或 already exists 錯誤。這樣快照和遷移檔就不會走鐘 | `worker/test/security.mjs:28-46` |
-| SQL 全部放在 `db.js`，其他模組不自己拼 SQL；只有兩個有理由的例外（`chats.js` 的 IDOR 綁定、`dashboard.js` 的報表） | `worker/src/db.js:1-10`；`worker/src/chats.js:1-12`；`worker/src/dashboard.js:1-15` |
+| 規矩是 SQL 全部放在 `db.js`，其他模組不自己拼 SQL。檔頭寫明的例外有兩個（`chats.js` 的 IDOR 綁定、`dashboard.js` 的報表），但實際上還有兩處：`admin.js` 的 `siteStats` 等唯讀快照查詢，以及 `push.js` 的 `ensurePushSchema` 在執行期跑 DDL（見第 3.5 節第 3 點）。新專案要把例外寫進 lint 規則或測試，不要只靠註解 | `worker/src/db.js:1-10`；`worker/src/chats.js:1-12`；`worker/src/dashboard.js:1-15`；`worker/src/admin.js:54-117`；`worker/src/push.js:14-30` |
 | 時間一律存「秒」（INTEGER），id 用 `crypto.randomUUID()` | `worker/src/db.js:1-6` |
 | 每一句都帶 `AND user_id = ?`（防 IDOR）。查得到但不是你的，一律當作 not_found | `worker/src/chats.js:9-12` |
 | 用條件式 UPDATE 當鎖（任務租約、扣點、操作輪數），再搭配租約過期回收 | `worker/src/db.js:183-202`、`358-365`、`490-503` |
