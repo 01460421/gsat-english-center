@@ -23,7 +23,9 @@
   python3 tools/build_vocab.py fetch        # 下載全部來源並更新 sources.json（網路失敗會以指數退避重試）
   python3 tools/build_vocab.py fetch --reuse-local   # 本地檔 sha256 和 sources.json 相符的就不重新下載
   python3 tools/build_vocab.py build        # 由本地原始檔產生輸出（預設子命令）
-  python3 tools/build_vocab.py check        # 在暫存目錄重建一次，和現有輸出逐位元比對（不同則結束碼 1，可放 CI）
+  python3 tools/build_vocab.py check        # 在暫存目錄重建一次，和現有輸出逐位元比對；不同、或自動查核（報告 §9）
+                                            # 有必須為 0 的項目不是 0，結束碼都是 1（可放 CI）
+  python3 tools/build_vocab.py sample [--seed N]     # 印出每級 10 筆的分層抽樣，供人工逐欄核對
   選項：--no-verify  不核對原始檔 sha256（例如剛換了新版 Tatoeba 匯出檔、還沒重跑 fetch 時）
 
 依賴
@@ -328,39 +330,84 @@ def fold(s: str) -> str:
     return s.lower()
 
 
+# OpenCC s2twp 沒有處理、或處理後不是台灣常用說法的大陸詞（2026-10-08 逐條檢查輸出後列出）。只套用在「原文是簡體」的
+# 字串上（ECDICT 全部；Tatoeba 只限 s2t 會改變文字的句子），因為「土豆」「快餐」這類詞在繁體原文裡可能是台灣作者的
+# 本意（台灣的土豆是花生）。做法：轉換前把原文中的這些詞換成私用區字元，轉換後再換成右邊的台灣說法，避免 OpenCC
+# 再改一次（例如 TWPhrases 會把「聲明」改成「宣告」）。長的詞先比對。
+TW_PHRASES = {
+    "声明": "聲明", "土豆": "馬鈴薯", "冰激凌": "冰淇淋", "冰激淋": "冰淇淋", "冰淇凌": "冰淇淋",
+    "三文鱼": "鮭魚", "金枪鱼": "鮪魚", "西兰花": "花椰菜", "西红柿": "番茄", "酸奶": "優格", "曲奇": "餅乾",
+    "摩托车": "機車", "空调": "冷氣", "因特网": "網際網路", "联机": "連線", "计算机": "電腦", "计算器": "計算機",
+    "营销": "行銷", "宇航员": "太空人", "航天飞机": "太空梭", "航天飞船": "太空船", "航天": "航太",
+    "磁带": "錄音帶", "洗发水": "洗髮精", "薯片": "洋芋片", "快餐": "速食", "导弹": "飛彈", "公交车": "公車",
+    "公交": "公車", "意面": "義大利麵", "渠道": "管道", "澳大利亚": "澳洲", "菠萝": "鳳梨", "小区": "社區",
+}
+# 不分原文簡繁都套用的修正：Tatoeba 中文句裡混入的日文新字體與異體字（OpenCC 不轉換、也不在台灣常用的 Big5 字集），
+# 以及「大坂」（大阪的舊寫法）。這些字是在輸出中檢查「不在 Big5（cp950）的漢字」時找到的。
+VARIANT_CHARS = str.maketrans({"髪": "髮", "頬": "頰", "敍": "敘", "絶": "絕", "覚": "覺", "説": "說", "産": "產",
+                               "鉄": "鐵", "円": "圓", "兿": "藝", "貭": "質", "幚": "幫"})
+ALWAYS_PHRASES = {"大坂": "大阪"}
+# 不在 Big5 但台灣也照用的字（擬聲詞、專業用字），自動檢查時不列為問題
+NON_BIG5_OK = set("咔擀嵴鯿酶顬")
+_TW_KEYS = sorted(TW_PHRASES, key=lambda k: (-len(k), k))
+_TW_RE = re.compile("|".join(map(re.escape, _TW_KEYS)))
+
+
 class Converter:
-    """OpenCC s2twp（簡→繁台灣用語）。優先用官方 opencc 綁定，否則用 opencc-python-reimplemented。"""
+    """OpenCC s2twp（簡→繁台灣用語），再補 TW_PHRASES 與「箇→個」。優先用官方 opencc 綁定，否則用
+    opencc-python-reimplemented（兩個套件的模組名稱都是 opencc，裝在同一個目錄時以最後安裝的 __init__.py 為準）。"""
 
     def __init__(self):
         import importlib.metadata as md
         import opencc  # noqa: 兩個套件的模組名稱都是 opencc
-        self.cc = None
+        self.cc = self.s2t = None
         for cfg in ("s2twp.json", "s2twp"):
             try:
                 self.cc = opencc.OpenCC(cfg)
                 self.cc.convert("测试")
+                self.s2t = opencc.OpenCC(cfg.replace("s2twp", "s2t"))
                 break
             except Exception:
                 self.cc = None
         if self.cc is None:
             raise SystemExit("OpenCC s2twp unavailable")
-        self.package = "?"
-        for dist in ("opencc", "OpenCC", "opencc-python-reimplemented"):
-            try:
-                ver = md.version(dist)
-            except md.PackageNotFoundError:
-                continue
-            files = [str(f) for f in (md.files(dist) or [])]
-            if any(f.startswith("opencc/") for f in files):
-                self.package = f"{dist} {ver}"
-                break
-        self.cache: dict[str, str] = {}
+        # 實際載入的是哪個套件：官方綁定有 C 擴充模組 opencc_clib 與 __version__，reimplemented 沒有
+        official = hasattr(opencc, "opencc_clib") or "clib" in str(getattr(opencc, "__file__", ""))
+        dist = "opencc" if official else "opencc-python-reimplemented"
+        try:
+            ver = getattr(opencc, "__version__", None) if official else md.version(dist)
+        except md.PackageNotFoundError:
+            ver = None
+        self.package = f"{'OpenCC（官方 Python 綁定）' if official else 'opencc-python-reimplemented'} {ver or '?'}"
+        self.cache: dict[tuple[str, bool], str] = {}
 
-    def __call__(self, s: str) -> str:
-        r = self.cache.get(s)
+    def is_simplified(self, s: str) -> bool:
+        """原文是否為簡體（s2t 會改變文字）。"""
+        return self.s2t.convert(s) != s
+
+    def __call__(self, s: str, simplified_source: bool | None = None) -> str:
+        """simplified_source=None 時自動判斷（Tatoeba）；ECDICT 傳 True。"""
+        if simplified_source is None:
+            simplified_source = self.is_simplified(s)
+        key = (s, simplified_source)
+        r = self.cache.get(key)
         if r is None:
-            r = self.cc.convert(s)
-            self.cache[s] = r
+            if simplified_source and _TW_RE.search(s):
+                found = []
+
+                def mark(m):
+                    found.append(TW_PHRASES[m.group(0)])
+                    return chr(0xE000 + len(found) - 1)
+                r = self.cc.convert(_TW_RE.sub(mark, s))
+                for i, t in enumerate(found):
+                    r = r.replace(chr(0xE000 + i), t)
+            else:
+                r = self.cc.convert(s)
+            # 「箇」在台灣只用於「箇中」；Tatoeba 部分繁體句（多為轉換工具產生）把「個」寫成「箇」
+            r = re.sub(r"箇(?!中)", "個", r).translate(VARIANT_CHARS)
+            for a, b in ALWAYS_PHRASES.items():
+                r = r.replace(a, b)
+            self.cache[key] = r
         return r
 
 
@@ -412,6 +459,20 @@ SUPPLEMENTARY_FORMS = {
     "can": [("could", "past")], "will": [("would", "past")], "shall": [("should", "past")],
     "may": [("might", "past")],
 }
+# ECDICT exchange 的資料錯誤（2026-10-08 逐筆檢查詞彙表條目的不規則形後列出）：值為 None 表示刪掉這個形式。
+FORM_FIXES = {
+    "sheep": {"plural": "sheep"},                                    # ECDICT：sheeps
+    "picnic": {"third_person": "picnics"},                           # ECDICT：picnic
+    "number": {"third_person": "numbers"},                           # ECDICT：numbs（numb 的變化）
+    "ground": {"present_participle": "grounding", "third_person": "grounds"},   # ECDICT：grinding、grinds（grind 的）
+    "clothe": {"present_participle": "clothing"},                    # ECDICT：cloathing
+    "enroll": {"third_person": "enrolls"},                           # ECDICT：英式 enrols（詞彙表以美式拼法為主）
+    "ski": {"past_participle": "skied"},                             # ECDICT：ski'd
+    "stride": {"past_participle": "stridden"},                       # ECDICT：strode
+    "can": {"third_person": "cans"},                                 # ECDICT：can（情態動詞）；can v.＝裝罐
+    "up": {"third_person": "ups"},                                   # ECDICT：up
+}
+PLURAL_MIN_ATTEST = 3                      # 規則複數至少要在 Tatoeba 英文句出現幾次才收
 EXCHANGE_TYPES = [("s", "plural"), ("p", "past"), ("d", "past_participle"), ("i", "present_participle"),
                   ("3", "third_person"), ("r", "comparative"), ("t", "superlative")]
 
@@ -481,29 +542,45 @@ def normalize_ipa(raw: str) -> tuple[str | None, list[str]]:
     s = raw.strip()
     if not s:
         return None, []
-    if any(c in IPA_BAD for c in s):
+    if any(c in IPA_BAD for c in s):                   # \\、^ 是編碼損壞
         return None, ["corrupt"]
+    s = re.sub(r"'\s+", "'", s)                        # 主重音後誤加空白（outsider 的 "' aut'said…"）
+    s = re.sub(r"'{2,}", "'", s)                       # 重複的主重音（vacuum 的 "''væk…"）
     for a, b in IPA_MAP.items():
         s = s.replace(a, b)
     # 多種讀法的分隔：". "、", "
     parts = re.split(r"\.\s+|,\s+", s)
     out_parts = []
     for p in parts:
-        # 沒有空白的 "."：兩邊都有主重音 ' 才是分隔（ә'bju:s.ә'bju:z），否則是次重音（.ækә'demik）
+        # 沒有空白的 "."：兩邊都有主重音 '（abuse 的兩讀），或兩邊都沒有重音記號（單音節的兩種讀法，例如
+        # bath、live、brass）時是分隔；否則是次重音（academic、accommodation、kindergarten）
         segs = p.split(".")
         cur = segs[0]
         sub = []
         for seg in segs[1:]:
-            if "'" in cur and "'" in seg:
+            lh, rh = "'" in cur, "'" in seg
+            if (lh and rh) or (not lh and not rh and cur and seg):
                 sub.append(cur)
                 cur = seg
             else:
                 cur = cur + "\u02cc" + seg
         sub.append(cur)
         for q in sub:
-            q = q.replace(",", "\u02cc").replace("'", "\u02c8")
-            out_parts.append(q)
-    s = ", ".join(x for x in out_parts if x)
+            # 沒有空白的 ","：一般是次重音（T-shirt、upload）；後面那段以 - 開頭或結尾時，是只寫出不同部分的第二讀法
+            pieces = q.split(",")
+            cur2 = pieces[0]
+            for piece in pieces[1:]:
+                if piece.startswith("-") or piece.endswith("-"):
+                    out_parts.append(cur2.replace("'", "\u02c8"))
+                    cur2 = piece
+                else:
+                    cur2 = cur2 + "\u02cc" + piece
+            out_parts.append(cur2.replace("'", "\u02c8"))
+    # 含 jj 的讀法是打字錯誤（yourselves 的第二讀法 "jjә-"），只丟掉那一段
+    kept = [x for x in out_parts if x and "jj" not in x]
+    if not kept:
+        return None, ["corrupt"]
+    s = ", ".join(kept)
     issues = sorted({c for c in s if c not in IPA_OK})
     if issues:
         return None, ["unexpected:" + "".join(issues)]
@@ -511,8 +588,8 @@ def normalize_ipa(raw: str) -> tuple[str | None, list[str]]:
 
 
 ZH_LINE = re.compile(r"^(?:(?P<pos>[a-z]{1,6}\.)\s*|\[(?P<dom>[^\]]{1,8})\]\s*)?(?P<text>.*)$")
-ECDICT_POS = {   # 詞彙表詞類 → ECDICT translation 行首詞性
-    "n.": {"n.", "pl."}, "v.": {"v.", "vt.", "vi."}, "adj.": {"a.", "adj.", "s."},
+ECDICT_POS = {   # 詞彙表詞類 → ECDICT translation 行首詞性（num. 是數詞，billion n.、third adj./n./adv. 用得到）
+    "n.": {"n.", "pl.", "num."}, "v.": {"v.", "vt.", "vi."}, "adj.": {"a.", "adj.", "s.", "num."},
     "adv.": {"ad.", "adv.", "r."}, "prep.": {"prep."}, "conj.": {"conj."}, "pron.": {"pron."},
     "art.": {"art."}, "aux.": {"aux.", "v.", "modal."},
 }
@@ -520,10 +597,27 @@ ECDICT_DEF_POS = {"n.": {"n"}, "v.": {"v"}, "adj.": {"a", "s"}, "adv.": {"r"}}
 
 
 def split_lines(field: str) -> list[str]:
-    return [x.strip() for x in re.split(r"\\n|\n", field or "") if x.strip()]
+    """ECDICT 欄位以字面的 \n 分行；少數列還有字面的 \r（a 的中文「第一的\r」）。"""
+    return [x.strip() for x in re.split(r"\\r\\n|\\n|\\r|\r?\n|\r", field or "") if x.strip()]
 
 
-def zh_lines(row: dict, entry_pos: list[str], conv: Converter) -> list[dict]:
+def clean_zh(text: str) -> str:
+    """去掉 ECDICT 的「+」前綴（gym 的「+體育館」），並刪掉轉換後重複的義項（數據／資料 → 資料, 資料）。"""
+    text = re.sub(r"(^|[,;，；]\s*)\+", r"\1", text).strip()
+    for sep in (", ", "; ", "；", "，"):
+        if sep in text:
+            items = []
+            for it in text.split(sep):
+                if it.strip() and it not in items:
+                    items.append(it)
+            text = sep.join(items)
+    return text
+
+
+def zh_lines(row: dict, entry_pos: list[str], conv: Converter, *, fallback: bool = True) -> list[dict]:
+    """ECDICT 中文逐行。match＝該行詞性屬於條目詞類（領域行 [計]、[醫]… 一律 False）。沒有任何一行相符時
+    （hello n. 只有 interj. 行、Internet n. 只有 [計] 行、terrorist adj. 只有 n. 行），fallback=True 會把有詞性
+    或沒標詞性的行（都沒有時改用領域行）標成 match=true 並加上 fallback=true，介面仍可只顯示 match=true 的行。"""
     allowed = set()
     for p in entry_pos:
         allowed |= ECDICT_POS.get(p, set())
@@ -531,18 +625,24 @@ def zh_lines(row: dict, entry_pos: list[str], conv: Converter) -> list[dict]:
     for line in split_lines(row.get("translation", "")):
         m = ZH_LINE.match(line)
         pos, dom, text = m.group("pos"), m.group("dom"), m.group("text").strip()
+        text = clean_zh(conv(text, True)) if text else ""
         if not text:
             continue
         rec = {}
         if dom:
-            rec["domain"] = conv(dom)
-            rec["text"] = conv(text)
+            rec["domain"] = conv(dom, True)
+            rec["text"] = text
             rec["match"] = False
         else:
             rec["pos"] = pos
-            rec["text"] = conv(text)
+            rec["text"] = text
             rec["match"] = (pos in allowed) if pos else True
         out.append(rec)
+    if fallback and out and not any(r["match"] for r in out):
+        cand = [r for r in out if "domain" not in r] or out
+        for r in cand:
+            r["match"] = True
+            r["fallback"] = True
     return out
 
 
@@ -817,7 +917,8 @@ def read_tsv_bz2(path: Path):
             yield line.rstrip("\n").split("\t")
 
 
-def load_tatoeba(conv: Converter):
+def load_tatoeba(conv: Converter, attest_words: set[str] = frozenset()):
+    """讀 Tatoeba 匯出檔。attest_words：要在「全部」英文句（不限有中文翻譯的）計算出現次數的小寫詞（規則複數用）。"""
     links = collections.defaultdict(list)
     for row in read_tsv_bz2(RAW / "tatoeba/eng-cmn_links.tsv.bz2"):
         if len(row) >= 2 and row[0].isdigit() and row[1].isdigit():
@@ -829,17 +930,24 @@ def load_tatoeba(conv: Converter):
             user = None if row[3] in ("\\N", "") else row[3]
             cmn[int(row[0])] = (row[2], user)
     eng = {}
+    attest = collections.Counter()
+    word_re = re.compile(r"[a-z]+")
     for row in read_tsv_bz2(RAW / "tatoeba/eng_sentences_detailed.tsv.bz2"):
-        if len(row) >= 4 and row[0].isdigit() and int(row[0]) in links:
-            user = None if row[3] in ("\\N", "") else row[3]
-            eng[int(row[0])] = (row[2], user)
+        if len(row) >= 4 and row[0].isdigit():
+            if attest_words:
+                for t in word_re.findall(row[2].lower()):
+                    if t in attest_words:
+                        attest[t] += 1
+            if int(row[0]) in links:
+                user = None if row[3] in ("\\N", "") else row[3]
+                eng[int(row[0])] = (row[2], user)
     cc0 = set()
     for fn in ("tatoeba/eng_sentences_CC0.tsv.bz2", "tatoeba/cmn_sentences_CC0.tsv.bz2"):
         for row in read_tsv_bz2(RAW / fn):
             if row and row[0].isdigit():
                 cc0.add(int(row[0]))
     stats = {"eng_with_cmn_links": len(links), "eng_loaded": len(eng), "cmn_loaded": len(cmn), "cc0": len(cc0)}
-    return links, eng, cmn, cc0, stats
+    return links, eng, cmn, cc0, stats, attest
 
 
 def lic(sid: int, cc0: set) -> str:
@@ -894,6 +1002,9 @@ def cambridge_url(word: str) -> str:
     return "https://dictionary.cambridge.org/dictionary/english-chinese-traditional/" + urllib.parse.quote(s)
 
 
+LAST_AUDIT: list[dict] = []        # 最近一次 build 的自動查核結果（check 用）
+
+
 def build(outdir: Path, *, verify: bool = True) -> dict:
     t0 = time.time()
     sources = verify_sources() if verify else json.loads(SOURCES_JSON.read_text(encoding="utf-8"))["sources"]
@@ -912,14 +1023,45 @@ def build(outdir: Path, *, verify: bool = True) -> dict:
     ipa_examples = collections.defaultdict(list)
     lex = {}
     form_map: dict[str, dict[str, dict]] = collections.defaultdict(dict)   # fold(form) → entry_id → {types, base}
+    # 條目詞類以外的屈折形（ECDICT 給名詞 angle 列了 angled、給形容詞列了複數…）：不放進 lexicon.forms、不用來比對
+    # 例句，只在 forms-index 標 extra_pos=true，供詞形還原（angled→angle）。見 licensed_form 的說明。
+    extra_map: dict[str, dict[str, dict]] = collections.defaultdict(dict)
+    form_stats = collections.Counter()
 
-    def add_form(form, eid, typ, base=None):
+    def add_form(form, eid, typ, base=None, target=None):
         k = fold(form)
-        rec = form_map[k].setdefault(eid, {"types": [], "bases": []})
+        rec = (form_map if target is None else target)[k].setdefault(eid, {"types": [], "bases": []})
         if typ not in rec["types"]:
             rec["types"].append(typ)
         if base and base not in rec["bases"]:
             rec["bases"].append(base)
+
+    def licensed_form(name: str, pos: set[str]) -> bool:
+        """ECDICT exchange 的屈折形是否屬於條目（或變體）的詞類。ECDICT 的 exchange 不分詞性，名詞 fee 會帶出
+        動詞過去式 feed、形容詞 abnormal 會帶出複數 abnormals、名詞 ox 會帶出比較級 oxer。aux. 不算：情態動詞
+        沒有屈折，will 的 willing、willed 屬於實義動詞 will（詞彙表沒有收），can 的 canned 由 can v. 授權。"""
+        if name == "plural":
+            return "n." in pos
+        if name in ("past", "past_participle", "present_participle", "third_person"):
+            return "v." in pos
+        if name in ("comparative", "superlative"):
+            return bool(pos & {"adj.", "adv."})
+        return True
+
+    def variant_pos(e: dict, vt: str) -> set[str]:
+        """變體的詞類：括號衍生（-ment、-ism）與 (s) 複數是名詞；代名詞格是代名詞；斜線變體沿用條目詞類
+        （v./(n.) 的 (n.) 指衍生名詞，斜線變體 ad 之類算名詞）。"""
+        if vt in ("derived_ment", "derived_suffix", "plural_usual"):
+            return {"n."}
+        if vt == "pronoun_case":
+            return {"pron."}
+        return {"n." if p == "(n.)" else p for p in e["pos"]}
+
+    def restore_case(word: str, form: str) -> str:
+        """ECDICT 把 T-shirt 的複數寫成 t-shirts；條目有大寫時把相同字首換回原本的大小寫。"""
+        if word != word.lower() and form == form.lower() and form.startswith(word.lower()):
+            return word + form[len(word):]
+        return form
 
     for e in entries:
         eid = e["entry_id"]
@@ -934,16 +1076,34 @@ def build(outdir: Path, *, verify: bool = True) -> dict:
                     break
         rec = {"entry_id": eid, "word": e["word"], "level": e["level"], "pos": e["pos"],
                "variants": e["variants"], "raw": e["raw"], "tags": e["tags"]}
-        # forms
-        forms = parse_exchange(row["exchange"]) if row is not None else {}
+        # forms：只收條目詞類能產生的屈折形（v./(n.) 的 (n.) 不算，那是 -ment 名詞的詞類）
+        head_pos = set(e["pos"]) - {"(n.)"}
+        all_forms = parse_exchange(row["exchange"]) if row is not None else {}
+        forms = {}
+        for name, f in all_forms.items():
+            f = restore_case(e["word"], f)
+            fix = FORM_FIXES.get(e["word"], {})
+            if name in fix:
+                f = fix[name]
+                if f is None:
+                    form_stats["fixed_drop"] += 1
+                    continue
+                form_stats["fixed"] += 1
+            if licensed_form(name, head_pos):
+                if f == e["word"] and name in ("comparative", "superlative", "third_person", "present_participle"):
+                    form_stats["self_drop"] += 1          # best 的比較級 best、underlying 的 -ing 形 underlying 之類
+                    continue
+                forms[name] = f
+            else:
+                form_stats["pos_drop"] += 1
+                if name not in ("comparative", "superlative") and f != e["word"]:
+                    add_form(f, eid, name, None if row_form == e["word"] else row_form, target=extra_map)
         rec["forms"] = forms
         add_form(e["word"], eid, "lemma")
         for v, vt in zip(e["variants"], e["variant_types"]):
             add_form(v, eid, vt)
         if key_form != e["word"]:
             add_form(key_form, eid, "slash")
-        for name, f in forms.items():
-            add_form(f, eid, name, None if row_form == e["word"] else row_form)
         # IPA
         # 依詞形順序（原形 → 拼法變體），每個詞形先查 ECDICT、再查 OEWN。只有「去掉標點後拼法相同」的變體
         # （O.K.→OK、café→cafe）才能代用；chairperson 不能拿 chair、seagull 不能拿 gull 的音標，查不到就留 null
@@ -968,19 +1128,40 @@ def build(outdir: Path, *, verify: bool = True) -> dict:
         rec["ipa"] = ipa
         rec["ipa_source"] = None if ipa is None else (
             {"source": ipa_src} if ipa_form == e["word"] else {"source": ipa_src, "form": ipa_form})
+        # 美式拼法：ECDICT 對 -l 結尾的動詞一律用英式雙寫（travelled、cancelled、modelled）。詞彙表以美式拼法為主，
+        # 重音不在最後一個音節時（音標以 ˈ 開頭、至少兩個母音組）forms 改用美式（traveled），英式拼法仍列在 forms-index。
+        w = e["word"]
+        american_l = bool(re.fullmatch(r"[a-z]*[aeiou]l", w)) and len(re.findall(r"[aeiouy]+", w)) >= 2 \
+            and bool(ipa) and ipa.startswith("\u02c8")
+        for name, f in list(forms.items()):
+            add_form(f, eid, name, None if row_form == e["word"] else row_form)
+            if american_l and name in ("past", "past_participle", "present_participle") \
+                    and f in (w + "led", w + "ling"):
+                forms[name] = w + f[len(w) + 1:]
+                add_form(forms[name], eid, name)
+                form_stats["american_l"] += 1
         # zh
         rec["zh"] = zh_lines(row, e["pos"], conv) if row is not None else []
-        # variant_info：每個變體的音標與中文（v./(n.) 的 (n.) 就是衍生名詞）
+        # variant_info：每個變體的音標與中文（v./(n.) 的 (n.) 就是衍生名詞）。中文只取變體詞類的行（代名詞格 mine
+        # 只取 pron. 行，不取「礦」；斜線變體 chair 只取 n. 行）；其他詞類沒有相符的行時，斜線與衍生變體退回全部的行，
+        # 代名詞格則留空。屈折形同樣只收變體詞類的（代名詞格不收，否則 mine→mined、her→hering 會對到代名詞）。
         vinfo = []
         for v, vt in zip(e["variants"], e["variant_types"]):
             r = ec.get(v)
             vi = {"form": v, "type": vt, "ipa": None, "zh": []}
             if r is not None:
+                vpos = variant_pos(e, vt)
                 vi["ipa"] = normalize_ipa(r["phonetic"])[0]
+                lines = zh_lines(r, sorted(vpos), conv, fallback=(vt != "pronoun_case"))
+                lines = [x for x in lines if x["match"]]
                 vi["zh"] = [(f"{x['pos']} " if x.get("pos") else (f"[{x['domain']}] " if x.get("domain") else ""))
-                            + x["text"] for x in zh_lines(r, [], conv)]
-                for name, f in parse_exchange(r["exchange"]).items():
-                    add_form(f, eid, name, v)
+                            + x["text"] for x in lines]
+                if vt != "pronoun_case":
+                    for name, f in parse_exchange(r["exchange"]).items():
+                        if licensed_form(name, vpos) and f != v:
+                            add_form(restore_case(v, f), eid, name, v)
+                        else:
+                            form_stats["variant_drop"] += 1
             vinfo.append(vi)
         rec["variant_info"] = vinfo
         rec["_row"] = row
@@ -993,11 +1174,34 @@ def build(outdir: Path, *, verify: bool = True) -> dict:
                 for f, typ in extra:
                     add_form(f, e["entry_id"], typ)
 
-    # 規則複數：ECDICT exchange 沒列複數的名詞（cookie、calorie、campus、counselor…）在 forms-index 補上規則複數
-    # （type=plural_rule；lexicon 的 forms 仍只放 ECDICT 資料），供歷屆試題詞頻統計與例句比對。不可數名詞也會
-    # 產生（advices），這些鍵不會出現在真實文本中，對查詢無害。只處理全小寫的單一字；以 s 結尾的（athletics、
-    # diabetes、arms）除了 -us（campus→campuses）以外都略過。
-    rule_plurals = 0
+    # 規則複數：ECDICT 沒列複數的名詞（cookie、calorie、campus、counselor…）依拼字規則產生候選（-s／-es／-ies、
+    # quiz→quizzes、-o→-os／-oes、-f(e)→-ves、-man→-men、-child→-children），但只收在 Tatoeba 全部英文句
+    # （約 200 萬句）中出現至少 PLURAL_MIN_ATTEST 次的拼法，排除不可數或不存在的形式（advices、aircrafts、
+    # datas、deers、stepchilds、quizes、whies）。type=plural_rule；lexicon 的 forms 仍只放 ECDICT 資料。
+    # 只處理全小寫的單一字；以 s 結尾的（athletics、diabetes、arms）除了 -us（campus→campuses）以外都略過。
+    def plural_candidates(w: str) -> list[str]:
+        if w.endswith("child"):
+            return [w + "ren"]
+        out = []
+        if w.endswith("man") and len(w) > 4:
+            out.append(w[:-3] + "men")
+        if re.search(r"[^aeiou][aeiou]z$", w):
+            out.append(w + "zes")
+        if re.search(r"(?:s|x|z|ch|sh)$", w):
+            out.append(w + "es")
+        elif re.search(r"[^aeiou]y$", w):
+            out.append(w[:-1] + "ies")
+        elif re.search(r"[^aeiou]o$", w):
+            out += [w + "es", w + "s"]
+        elif w.endswith("fe"):
+            out += [w[:-2] + "ves", w + "s"]
+        elif w.endswith("f"):
+            out += [w[:-1] + "ves", w + "s"]
+        else:
+            out.append(w + "s")
+        return out
+
+    plural_cands: dict[str, list[str]] = {}
     for e in entries:
         eid = e["entry_id"]
         if "n." not in e["pos"] or "plural" in lex[eid]["forms"] or "plural_usual" in e["variant_types"]:
@@ -1005,19 +1209,42 @@ def build(outdir: Path, *, verify: bool = True) -> dict:
         w = e["word"]
         if not re.fullmatch(r"[a-z]+", w) or (w.endswith("s") and not w.endswith("us")):
             continue
-        if re.search(r"(?:s|x|z|ch|sh)$", w):
-            pl = w + "es"
-        elif re.search(r"[^aeiou]y$", w):
-            pl = w[:-1] + "ies"
-        else:
-            pl = w + "s"
-        add_form(pl, eid, "plural_rule")
-        rule_plurals += 1
+        plural_cands[eid] = plural_candidates(w)
 
-    # 詞形 → 級別（例句難度判斷用；含屈折形）
+    # ---------------- Tatoeba（先讀：規則複數要用英文語料確認拼法存在） ----------------
+    links, eng, cmn, cc0, tstats, attest = load_tatoeba(
+        conv, {c for v in plural_cands.values() for c in v})
+    log(f"tatoeba: {tstats} ({time.time() - t0:.0f}s)")
+    rule_plurals = rule_plural_rejected = 0
+    rule_rejected_examples = []
+    for eid, cands in plural_cands.items():
+        ok = [c for c in cands if attest.get(c, 0) >= PLURAL_MIN_ATTEST]
+        for c in ok:
+            add_form(c, eid, "plural_rule")
+        if ok:
+            rule_plurals += 1
+        else:
+            rule_plural_rejected += 1
+            rule_rejected_examples.append(cands[0])
+
+    # extra_pos：同一條目已有的詞形，以及任何條目的原形或變體（feed、wedding、shorts、crossing…）都不另列
+    base_forms = {k for k, ids in form_map.items()
+                  if any({"lemma", "slash", "derived_ment", "derived_suffix", "plural_usual", "pronoun_case"}
+                         & set(r["types"]) for r in ids.values())}
+    for k in list(extra_map):
+        for i in list(extra_map[k]):
+            if k in base_forms or i in form_map.get(k, {}):
+                del extra_map[k][i]
+        if not extra_map[k]:
+            del extra_map[k]
+
+    # 詞形 → 級別（例句難度判斷用；含屈折形與 extra_pos 詞形）
     level_of: dict[str, int] = {}
     for k, ids in form_map.items():
         level_of[k] = min(by_id[i]["level"] for i in ids)
+    for k, ids in extra_map.items():
+        if k not in level_of:
+            level_of[k] = min(by_id[i]["level"] for i in ids)
     word_entries: dict[str, list[str]] = collections.defaultdict(list)   # 原形／變體（不含屈折）→ entry_ids
     for k, ids in form_map.items():
         for i, r in ids.items():
@@ -1033,16 +1260,19 @@ def build(outdir: Path, *, verify: bool = True) -> dict:
         return set(entry_wn_pos(by_id[i]["pos"]))
 
     def vocab_ref(lemma: str, wpos: str | None = None) -> dict:
-        """OEWN 的詞是否也在詞彙表（比對原形與原表變體，不比對屈折形）。wpos（n／v／a／r）有值時只留詞類相符的條目，
-        都不相符才退回全部，例如形容詞 synset 裡的 present 指向 present adj./n./v.，而不是其他同形條目。"""
-        ids = word_entries.get(fold(lemma), [])
-        if wpos:
-            ids = [i for i in ids if wpos in form_wn_pos(i, lemma)] or ids
+        """OEWN 的詞是否也在詞彙表（比對原形與原表變體，不比對屈折形）。wpos（n／v／a／r）有值時只算詞類相符的條目，
+        例如形容詞 synset 裡的 present 指向 present adj./n./v.。拼法相同但詞類不符的（abide 的同義詞 stomach 是動詞，
+        詞彙表的 stomach 是名詞 L3）不算 in_list、不給 level，只在 other_pos_entry_ids 列出，避免把動詞 stomach
+        標成「L3 單字」。"""
+        all_ids = word_entries.get(fold(lemma), [])
+        ids = [i for i in all_ids if wpos in form_wn_pos(i, lemma)] if wpos else list(all_ids)
         ids = sorted(ids, key=lambda i: (by_id[i]["level"], i))
         d = {"word": lemma.replace("_", " "), "in_list": bool(ids)}
         if ids:
             d["level"] = by_id[ids[0]]["level"]
             d["entry_ids"] = ids
+        elif all_ids:
+            d["other_pos_entry_ids"] = sorted(all_ids, key=lambda i: (by_id[i]["level"], i))
         return d
 
     def linked_entries(src_lemma: str, senses: list[dict], rels: tuple, self_id: str, *,
@@ -1132,6 +1362,9 @@ def build(outdir: Path, *, verify: bool = True) -> dict:
             # 所以 die→death 這類 OEWN 認定的衍生也會列出；詞族 family 才另外要求共同字首）
             der = {}
             for tl, i, _ in linked_entries(lemma, senses, ("derivation", "pertainym"), eid):
+                # 同一個字的轉類（capital n.↔capital adj.、measure v.↔measure n.）不是衍生詞，同字多筆另在 family 處理
+                if fold(tl) in (fold(lemma), fold(e["word"])):
+                    continue
                 der.setdefault(tl, []).append(i)
             der_refs = []
             for tl, ids in der.items():
@@ -1220,8 +1453,6 @@ def build(outdir: Path, *, verify: bool = True) -> dict:
         lex[e["entry_id"]]["cefr"] = cefr_for(e, cefr, cefr_lower)
 
     # ---------------- Tatoeba ----------------
-    links, eng, cmn, cc0, tstats = load_tatoeba(conv)
-    log(f"tatoeba: {tstats} ({time.time() - t0:.0f}s)")
     # 人名：句中（非句首）以大寫出現、而且小寫形從未出現在語料中的 token
     lower_seen, cap_mid = set(), set()
     sent_tokens = {}
@@ -1233,7 +1464,8 @@ def build(outdir: Path, *, verify: bool = True) -> dict:
                 lower_seen.add(fold(t))
             elif i > 0 and t[:1].isupper():
                 cap_mid.add(t)
-    names = {t for t in cap_mid if fold(t) not in lower_seen and fold(t) not in level_of}
+    # I'm、I'll、I've、I'd 永遠大寫、小寫形不會出現，但不是人名
+    names = {t for t in cap_mid if fold(t) not in lower_seen and fold(t) not in level_of and not t.startswith("I'")}
 
     def base_level(norm: str) -> int | None:
         if norm in level_of:
@@ -1393,8 +1625,110 @@ def build(outdir: Path, *, verify: bool = True) -> dict:
             return True
         return False
 
+    # 屈折形被別筆當原形（反方向的同形異詞）：本條目的屈折形同時是另一筆的原形或變體，例如 wed 的 wedding（婚禮 n.）、
+    # bore 的 bored／boring（形容詞條目）、grind 的 ground（地面）、clothe 的 clothes、bind 的 bound、excite 的 excited、
+    # build 的 building、find 的 found。只靠這種詞形命中的句子，要前後文顯示確實是本條目的屈折用法才採用：
+    #   -ing：前一個字是 by／without／avoid／keep／stop 這類接動名詞的字；或是 be 動詞（is building），但對方是
+    #         形容詞條目時不算（is interesting、is boring 是形容詞）
+    #   過去式／過去分詞：前一個字是主詞代名詞、人名或 have 類（I found、Tom married、had bound）
+    #   第三人稱單數：前一個字是 he／she／it／who／which／that 或人名（he measures）
+    #   複數：前一個字是數字或數量詞（two glasses）
+    #   比較級／最高級：不採用（good 的 better／best 自己是條目）
+    SUBJECTS = set("i you he she it we they who which that".split())
+    SUBJ_3SG = set("he she it who which that this".split())
+    HAVE_CUES = set("have has had 've 'd i've you've we've they've i'd you'd he'd she'd we'd they'd haven't "
+                    "hasn't hadn't never just already".split())
+    GERUND_CUES = set("by without avoid avoids avoided avoiding enjoy enjoys enjoyed keep keeps kept stop stops "
+                      "stopped start starts started begin begins began finish finishes finished mind quit consider "
+                      "considered suggest suggested practice practiced".split())
+    NUMBER_CUES = set("two three four five six seven eight nine ten twenty hundred thousand some many few several "
+                      "these those both all various numerous".split())
+
+    def shadow_ok(norms, toks, i, types_here, others_pos) -> bool:
+        prev = norms[i - 1] if i > 0 else ""
+        prev2 = norms[i - 2] if i > 1 else ""
+        # 人名當主詞（Tom married…）；前面還有限定詞的大寫字是專有形容詞（the African ground squirrel）
+        is_name = i > 0 and toks[i - 1] in names and prev2 not in DETERMINERS
+        if prev2 in BE_FORMS and prev in SUBJECTS:      # 問句 are you scared、were they surprised：形容詞
+            return False
+        if "present_participle" in types_here:
+            if prev in GERUND_CUES:
+                return True
+            if "adj." not in others_pos and (prev in BE_FORMS or prev.endswith(("'m", "'re"))
+                                              or prev in S_CONTRACTIONS):
+                return True
+        if types_here & {"past", "past_participle", "present"} and (prev in SUBJECTS or prev in HAVE_CUES or is_name):
+            return True
+        if "third_person" in types_here and (prev in SUBJ_3SG or is_name):
+            return True
+        if types_here & {"plural", "plural_rule"} and (prev in NUMBER_CUES or prev[:1].isdigit()):
+            return True
+        return False
+
+    # 同字多筆（03 文件 §6.3）：兩筆共用同一個詞形，依前後文把每次出現分給詞類相符的那一筆，不再兩筆共用同一句。
+    # 規則只針對這 9 組 18 筆，寫在 sibling_ok：
+    #   backward／downward／forward／outward／upward：前面是限定詞或所有格（a backward step、the upward trend）才算
+    #     形容詞那筆，其餘（go backward、look forward to）算副詞那筆；forward adj./n./v. 另收動詞用法（please forward）
+    #   medium：後面接名詞（medium size）或「be＋medium」結尾才算 adj.，其餘算 medium/media n.
+    #   content：後面接反身代名詞（content oneself with）或前面是 to／助動詞才算動詞 content(ment)，加上 contentment；
+    #     其餘（be content with、the content of）算 content n./adj.
+    #   measure：measured／measuring／measurement、或前面是主詞／to／助動詞的 measure(s) 算 measure(ment) v.；
+    #     其餘（safety measures、a measure of）算 measure(s) n.
+    #   capital：capital(ism) n. 4 只收 capitalism，或中文翻譯是「資本／資金」的 capital；capital n./adj. 2 全收
+    FUNCTION_NEXT = set("is are was were be been am and or but nor of in on at to for with by from into onto than as "
+                        "so that which who whom not it this these those the a an his her their its our my your".split())
+    REFLEXIVE = set("oneself myself yourself himself herself itself ourselves yourselves themselves".split())
+
+    def sibling_ok(eid, norms, toks, i, k, zh) -> bool:
+        e = by_id[eid]
+        w = fold(e["word"])
+        prev = norms[i - 1] if i > 0 else ""
+        nxt = norms[i + 1] if i + 1 < len(norms) else ""
+        poss = prev.endswith("'s") and prev not in S_CONTRACTIONS
+        det = prev in DETERMINERS or poss
+        is_name = i > 0 and toks[i - 1] in names
+        if w in ("backward", "downward", "forward", "outward", "upward"):
+            if e["pos"] == ["adv."]:
+                return k != w or not det
+            if k == w and det:
+                return True
+            if "v." in e["pos"]:                     # forward adj./n./v.
+                if k in ("forwarded", "forwarding") or (k == w and (prev in VERB_CUES or prev in SUBJECTS)):
+                    return True
+                if k == "forwards" and (prev in SUBJ_3SG or is_name):
+                    return True
+            return k == w and prev in LINKERS and nxt == ""   # the country is backward.
+        if w == "medium":
+            adj_cue = k == "medium" and ((nxt and nxt.isalpha() and nxt not in FUNCTION_NEXT)
+                                         or (prev in LINKERS and nxt == ""))
+            return adj_cue if "adj." in e["pos"] else not adj_cue
+        if w == "content":
+            verb_cue = (k in ("content", "contents") and (nxt in REFLEXIVE or prev in VERB_CUES)) \
+                or (k == "contents" and (prev in SUBJ_3SG or is_name))
+            if "v." in e["pos"]:
+                return verb_cue or k in ("contentment", "contentments", "contented", "contenting")
+            return not verb_cue
+        if w == "measure":
+            verb_cue = k in ("measured", "measuring") \
+                or (k == "measure" and (prev in VERB_CUES or prev in SUBJECTS)) \
+                or (k == "measures" and (prev in SUBJ_3SG or is_name))
+            if "v." in e["pos"]:
+                return verb_cue or k in ("measurement", "measurements")
+            return not verb_cue
+        if w == "capital":
+            if "adj." in e["pos"]:
+                return True
+            return k in ("capitalism", "capitalisms") or any(t in zh for t in ("資本", "資金", "本錢", "資產", "本金"))
+        return True
+
+    def infinitive_to(norms, i) -> bool:
+        """to prep. 的例句排除不定詞：to 後面是第一詞類為動詞的條目原形（to be、to get、to play）。"""
+        nxt = norms[i + 1] if i + 1 < len(norms) else ""
+        return any(by_id[j]["pos"][0] in ("v.", "aux.") for j in word_entries.get(nxt, []))
+
     homograph_stats = collections.Counter()
     homograph_examples: dict[str, int] = {}
+    shadow_examples: dict[str, int] = {}
     used_by_word = collections.defaultdict(set)   # 同字多筆：前一筆用過的句子
     for e in entries:
         eid = e["entry_id"]
@@ -1416,8 +1750,18 @@ def build(outdir: Path, *, verify: bool = True) -> dict:
                 strong.add(k)
         if strong:
             homograph_stats["entries"] += 1
-        # 偏好詞形：(s) 常用複數、(ism) 衍生；同字多筆時，只屬於本條目的斜線變體（backwards 之於 backward adv.）
         siblings = [i for i in head_ids.get(hw, []) if i != eid]
+        shadowed: dict[str, tuple[set, set]] = {}
+        for k in tforms:
+            mine_t = set(form_map[k][eid]["types"])
+            if mine_t & (BASE_TYPES | {"pronoun_case"}):
+                continue
+            others = (set(word_entries.get(k, [])) | pron_of[k]) - {eid} - set(siblings)
+            if others:
+                shadowed[k] = (mine_t, set().union(*(set(by_id[o]["pos"]) for o in others)))
+        if shadowed:
+            homograph_stats["shadow_entries"] += 1
+        # 偏好詞形：(s) 常用複數、(ism) 衍生；同字多筆時，只屬於本條目的斜線變體（backwards 之於 backward adv.）
         sib_forms = set()
         for i in siblings:
             sib_forms.update(entry_forms[i])
@@ -1467,6 +1811,27 @@ def build(outdir: Path, *, verify: bool = True) -> dict:
             if bad and any(not set(fold(t) for t in tokenize(b)) & tset for b in bad):
                 homograph_stats["sensitive_dropped"] += 1
                 continue
+            toks = sent_tokens[sid]
+            zh_src = cmn[c][0]
+            passed = []
+            for i in pos_t:
+                k = norms[i]
+                if siblings and not sibling_ok(eid, norms, toks, i, k, conv(zh_src)):
+                    continue
+                if eid == "to|prep.|1" and infinitive_to(norms, i):
+                    continue
+                if k in shadowed and not shadow_ok(norms, toks, i, *shadowed[k]):
+                    continue
+                passed.append(i)
+            if not passed:
+                reason = ("sibling_dropped" if siblings else "to_infinitive_dropped" if eid == "to|prep.|1"
+                          else "shadow_dropped")
+                homograph_stats[reason] += 1
+                if reason == "shadow_dropped":
+                    shadow_examples[eid] = shadow_examples.get(eid, 0) + 1
+                continue
+            pos_t = passed
+            hit = {norms[i] for i in pos_t}
             clean, strong_only = False, True
             for i in pos_t:
                 k = norms[i]
@@ -1584,24 +1949,34 @@ def build(outdir: Path, *, verify: bool = True) -> dict:
             p.write_text(b, encoding="utf-8")
             files[p.name] = p
 
-    # forms-index
+    # forms-index：同一鍵對應多筆時依（級別、extra_pos 在後、原形／變體在前、entry_id）排序，所以 evening 先列
+    # evening n. 再列 even 的 -ing、interesting 先列 interesting adj.；saw、found 仍先列級別較低的 see、find。
     findex = {}
-    for k in sorted(form_map):
+    base_t = {"lemma", "slash", "derived_ment", "derived_suffix", "plural_usual", "pronoun_case"}
+    for k in sorted(set(form_map) | set(extra_map)):
+        recs = [(i, r, False) for i, r in form_map.get(k, {}).items()] + \
+               [(i, r, True) for i, r in extra_map.get(k, {}).items()]
         lst = []
-        for i in sorted(form_map[k], key=lambda i: (by_id[i]["level"], i)):
-            r = form_map[k][i]
+        for i, r, extra in sorted(recs, key=lambda t: (by_id[t[0]]["level"], t[2],
+                                                       not (set(t[1]["types"]) & base_t), t[0])):
             d = {"entry_id": i, "types": sorted(r["types"])}
             if r["bases"]:
                 d["base"] = sorted(r["bases"])
+            if extra:
+                d["extra_pos"] = True
             lst.append(d)
         findex[k] = lst
     meta = {
         "description": "詞形 → 詞彙表條目。鍵為正規化詞形（小寫、彎引號轉 '、去重音，保留句點與連字號）。"
-                       "同形對應多筆時全部列出（依級別排序）。types：lemma＝條目主要詞形；slash／derived_ment／"
+                       "同形對應多筆時全部列出（排序方式見最後）。types：lemma＝條目主要詞形；slash／derived_ment／"
                        "derived_suffix／plural_usual／pronoun_case＝原表的變體；plural／past／past_participle／"
                        "present_participle／third_person／comparative／superlative＝ECDICT exchange 的屈折形"
                        "（base 表示是某個變體的屈折形）；present／past 另含 be、can、will 等 ECDICT 沒列的不規則形；"
-                       "plural_rule＝ECDICT 沒列複數的名詞依規則產生的複數（不可數名詞也會產生，查詢時無害）。",
+                       "plural_rule＝ECDICT 沒列複數的名詞依規則產生、且在 Tatoeba 英文句出現至少 "
+                       f"{PLURAL_MIN_ATTEST} 次的複數。屈折形只收條目詞類能產生的（名詞才有複數、動詞才有時態變化、"
+                       "形容詞與副詞才有比較級）；extra_pos=true 表示 ECDICT 列出、但不屬於大考詞彙表所列詞類的屈折形"
+                       "（例如名詞 angle 的 angled），只供詞形還原，不是條目的詞形變化。同鍵多筆依級別、非 extra_pos、"
+                       "原形或變體優先排序。",
         "entry_count": len(entries), "form_count": len(findex),
         "generated_by": "tools/build_vocab.py",
     }
@@ -1617,8 +1992,16 @@ def build(outdir: Path, *, verify: bool = True) -> dict:
     files["CREDITS.md"] = outdir / "CREDITS.md"
 
     homograph_stats["rule_plurals"] = rule_plurals
+    audits = audit(out_entries, findex, entries)
+    LAST_AUDIT[:] = audits
+    for a in audits:
+        if a["hard"] and a["count"]:
+            log(f"AUDIT FAIL: {a['name']}: {a['count']} " + "; ".join(a["examples"][:3]))
+    extra = {"form_stats": form_stats, "extra_pos_pairs": sum(len(v) for v in extra_map.values()),
+             "rule_plural_rejected": rule_plural_rejected, "rule_rejected_examples": sorted(rule_rejected_examples),
+             "shadow_examples": shadow_examples, "audits": audits}
     report = report_md(out_entries, findex, sources, conv, tstats, ipa_issues, ipa_examples, fam_edges,
-                       fam_sizes, files, set(oewn_any), homograph_stats, homograph_examples)
+                       fam_sizes, files, set(oewn_any), homograph_stats, homograph_examples, extra)
     (outdir / "lexicon-report.md").write_text(report, encoding="utf-8")
     files["lexicon-report.md"] = outdir / "lexicon-report.md"
     log(f"done in {time.time() - t0:.0f}s")
@@ -1672,7 +2055,7 @@ def credits_md(sources: list[dict], conv: Converter) -> str:
 
 - 欄位：`forms`、`ipa`（`ipa_source.source = "ecdict"`）、`zh`、`variant_info`、`en_def`（`en_def_source = "ecdict"`）、`freq`、`internal_core_flag`、`internal_star`。
 - 來源：{dl("ecdict")}
-- 授權：MIT License。修改：OpenCC s2twp 轉換中文、音標字元統一為 IPA（ә→ə、є→ɛ、g→ɡ、'→ˈ、:→ː 等）、只取詞彙表需要的列與欄。
+- 授權：MIT License。修改：中文以 OpenCC s2twp 轉成台灣繁體，再以本專案的對照表（`tools/build_vocab.py` 的 `TW_PHRASES`，例如 土豆→馬鈴薯、计算机→電腦、声明→聲明）補正、刪除轉換後重複的義項；音標字元統一為 IPA（ә→ə、є→ɛ、g→ɡ、'→ˈ、:→ː 等）；屈折形只保留條目詞類能產生的形式；只取詞彙表需要的列與欄。
 - 中文釋義依 04 文件 §2.1 的建議，上線前還要由 Claude 改成台灣用語並人工抽查。
 
 ```
@@ -1705,16 +2088,17 @@ def credits_md(sources: list[dict], conv: Converter) -> str:
 - 授權：句子預設 CC BY 2.0 FR（https://creativecommons.org/licenses/by/2.0/fr/），列在 CC0 匯出檔中的句子為 CC0 1.0。
   CC BY 句子使用時「必須標示作者」（Tatoeba Terms of Use §6.2），所以每句都保存作者名稱與句子 ID；作者為空（孤兒句）的 CC BY 句子不採用。
 - 顯示格式：`Tatoeba #{{tatoeba_id}} by {{author}}`（連到 `url`），中文翻譯 `Tatoeba #{{zh_id}} by {{zh_author}}`。
-- 修改：中文句用 OpenCC s2twp 轉成台灣繁體（`zh_converted = true` 表示文字有變動），應標示「中文經轉換為台灣繁體」。
+- 修改：中文句用 OpenCC s2twp 轉成台灣繁體；原文是簡體的句子另以 `TW_PHRASES` 補正大陸用語，所有句子再把日文新字體或異體字（髪、説、産…）與「箇」換成台灣通行字（`zh_converted = true` 表示文字有變動），應標示「中文經轉換為台灣繁體」。
 - 不使用 Tatoeba 音檔（音檔授權依錄音者而定）。
 
 ## 5. CEFR-J Wordlist 與 Octanove Vocabulary Profile
 
 - 欄位：`cefr`（`source` 標示來自 CEFR-J 1.6 或 Octanove C1/C2 1.0）。
 - CEFR-J（A1–B2）來源：{dl("cefrj")}
-  - 條件：可免費用於研究與商業用途，但必須依指定格式引用。本專案的引用（依官方英文格式；日期照 Open Language Profiles README 的 月/日/年 寫法）：
-    The CEFR-J Wordlist Version 1.6. Compiled by Yukio Tono, Tokyo University of Foreign Studies. Retrieved from https://www.cefr-j.org/download.html on {cefr_date.month}/{cefr_date.day}/{cefr_date.year}.
-  - 日文格式：『CEFR-J Wordlist Version 1.6』 東京外国語大学投野由紀夫研究室. （URL: https://www.cefr-j.org/download.html より {cefr_date.year}年{cefr_date.month}月ダウンロード）
+  - 條件：可免費用於研究與商業用途，但必須依指定格式引用（Ver1.6 活頁簿 README 工作表：「The citation should be made as follows: The CEFR-J Wordlist Version 1.6. Compiled by Yukio Tono, Tokyo University of Foreign Studies. Retrieved from http:XXX on dd/mm/yy.」）。本專案的引用（日期依指定的 dd/mm/yy）：
+    The CEFR-J Wordlist Version 1.6. Compiled by Yukio Tono, Tokyo University of Foreign Studies. Retrieved from https://www.cefr-j.org/download.html on {cefr_date.strftime("%d/%m/%y")}.
+  - 日文格式（同一份 README 的「引用の仕方」）：『CEFR-J Wordlist Version 1.6』 東京外国語大学投野由紀夫研究室. （URL: https://www.cefr-j.org/download.html より{cefr_date.year}年{cefr_date.month}月ダウンロード）
+  - 商用時的附帶條件（同一份 README 免責事項 2）：商用且需要監修等服務時，另行洽談並支付必要費用。
 - Octanove（C1–C2）來源：{dl("octanove")}
   - 授權：CC BY-SA 4.0（https://creativecommons.org/licenses/by-sa/4.0/）。Octanove Vocabulary Profile C1/C2 (ver 1.0), created by Octanove Labs, distributed by Open Language Profiles (https://github.com/openlanguageprofiles/olp-en-cefrj).
   - **相同方式分享**：`cefr.source` 含 Octanove 的值屬於 CC BY-SA 4.0 素材。若把這些值連同資料一起再散布，該部分要以 CC BY-SA 4.0 釋出並標示；04 文件 §7.3 的 `share_alike` 欄位應設為 true。
@@ -1735,7 +2119,7 @@ def credits_md(sources: list[dict], conv: Converter) -> str:
 | entry_id, word, level, pos, variants, raw, tags | 大考中心詞彙表 | 非營利使用、註明出處 |
 | forms, ipa, zh, variant_info, freq, internal_core_flag, internal_star | ECDICT | MIT |
 | en_def | OEWN（優先）或 ECDICT | CC BY 4.0／MIT |
-| wordnet | OEWN 2025 | CC BY 4.0（標示 Princeton WordNet 與 OEWN） |
+| wordnet | OEWN 2025（`in_list`、`level`、`entry_ids` 由本專案比對詞彙表） | CC BY 4.0（標示 Princeton WordNet 與 OEWN） |
 | family, family_id | 本專案計算（詞彙表＋OEWN derivation） | CC BY 4.0 部分 |
 | examples | Tatoeba | CC BY 2.0 FR／CC0（逐句標示） |
 | cefr | CEFR-J 1.6／Octanove C1–C2 | CEFR-J 條款／CC BY-SA 4.0 |
@@ -1746,12 +2130,146 @@ def credits_md(sources: list[dict], conv: Converter) -> str:
 # ---------------------------------------------------------------------------
 # 報告
 # ---------------------------------------------------------------------------
+AUDIT_BRAND_RE = re.compile(r"collins|oxford|longman|merriam|webster|lexile|cambridge", re.I)
+AUDIT_SKIP_KEYS = {"cambridge_url"}        # 外部辭典連結（03 文件 §9.4、04 文件 §2.2 允許外連），不是品牌標籤欄位
+
+
+def audit(out: list[dict], findex: dict, entries: list[dict]) -> list[dict]:
+    """對輸出做全量自動查核。hard=True 的項目必須是 0，否則 `check` 失敗。"""
+    res = []
+
+    def add(name, bad, hard=True, note=""):
+        res.append({"name": name, "count": len(bad), "examples": bad[:8], "hard": hard, "note": note})
+
+    # entry_id：唯一、且等於「word|詞類|級別」（由原表內容組成，重排或重新解析不會改變）
+    ids = [o["entry_id"] for o in out]
+    add("entry_id 重複", sorted(i for i, n in collections.Counter(ids).items() if n > 1))
+    add("entry_id 不等於 word|pos|level", [o["entry_id"] for o, e in zip(out, entries)
+                                           if o["entry_id"] != f"{e['word']}|{'/'.join(e['pos'])}|{e['level']}"])
+    # 漢字：不在 Big5（cp950）的字多半是殘留的簡體字或日文新字體
+    def strings(o):
+        for z in o["zh"]:
+            yield z["text"]
+            if z.get("domain"):
+                yield z["domain"]
+        for v in o.get("variant_info", []):
+            yield from v["zh"]
+        for x in o["examples"]:
+            yield x["zh"]
+    nonbig5 = collections.Counter()
+    for o in out:
+        for t in strings(o):
+            for ch in t:
+                if ("㐀" <= ch <= "鿿" or "豈" <= ch <= "﫿") and ch not in NON_BIG5_OK:
+                    try:
+                        ch.encode("cp950")
+                    except UnicodeEncodeError:
+                        nonbig5[ch] += 1
+    add("中文欄位含 Big5 以外的漢字（殘留簡體或日文字形）", [f"{c}×{n}" for c, n in nonbig5.most_common()],
+        note="例外：" + "".join(sorted(NON_BIG5_OK)))
+    # IPA
+    bad_ipa, leftover = [], []
+    for o in out:
+        for name, v in [("ipa", o["ipa"])] + [(vi["form"], vi["ipa"]) for vi in o.get("variant_info", [])]:
+            if not v:
+                continue
+            if any(c not in IPA_OK for c in v):
+                bad_ipa.append(f"{o['entry_id']} {name}={v}")
+            if any(c in v for c in "әє':g"):
+                leftover.append(f"{o['entry_id']} {name}={v}")
+            if re.search(r"[ˈˌ]\s|[ˈˌ]$|[ˈˌ]{2}|ˌ,|\s{2}", v):
+                bad_ipa.append(f"{o['entry_id']} {name}={v}（重音記號位置）")
+    add("音標含白名單以外的字元或重音記號錯置", bad_ipa)
+    add("音標殘留 Cyrillic ә／є 或 ASCII ' : g", leftover)
+    # forms：只收條目詞類能產生的屈折形
+    verb = {"past", "past_participle", "present_participle", "third_person"}
+    bad_forms = []
+    for o in out:
+        pos = set(o["pos"]) - {"(n.)"}
+        for t, f in o["forms"].items():
+            if (t == "plural" and "n." not in pos) or (t in verb and "v." not in pos) or \
+                    (t in ("comparative", "superlative") and not pos & {"adj.", "adv."}):
+                bad_forms.append(f"{o['entry_id']} {t}={f}")
+    add("forms 含條目詞類以外的屈折形", bad_forms)
+    # forms-index：代名詞格不帶屈折形（mine→mined）、比較級只掛在形容詞／副詞條目
+    pos_of = {o["entry_id"]: set(o["pos"]) for o in out}
+    bad_fi = []
+    for k, lst in findex.items():
+        for d in lst:
+            if d.get("extra_pos"):
+                continue
+            t = set(d["types"])
+            if t & {"comparative", "superlative"} and not pos_of[d["entry_id"]] & {"adj.", "adv."}:
+                bad_fi.append(f"{k}→{d['entry_id']} {sorted(t)}")
+            if "pron." in pos_of[d["entry_id"]] and d.get("base") and t & (verb | {"plural"}):
+                bad_fi.append(f"{k}→{d['entry_id']} {sorted(t)} base={d['base']}")
+    add("forms-index 詞類不符的對應", bad_fi)
+    # 例句：作者與 ID、含該條目詞形、授權值
+    keys_of = collections.defaultdict(set)
+    for k, lst in findex.items():
+        for d in lst:
+            if not d.get("extra_pos"):
+                keys_of[d["entry_id"]].add(k)
+    no_author, no_form, bad_lic = [], [], []
+    for o in out:
+        for x in o["examples"]:
+            if not isinstance(x["tatoeba_id"], int) or not isinstance(x["zh_id"], int) \
+                    or (not x["author"] and x["license"] != "CC0-1.0") \
+                    or (not x["zh_author"] and x["zh_license"] != "CC0-1.0") \
+                    or x["url"] != f"https://tatoeba.org/en/sentences/show/{x['tatoeba_id']}":
+                no_author.append(f"{o['entry_id']} #{x['tatoeba_id']}")
+            if x["license"] not in ("CC-BY-2.0-FR", "CC0-1.0") or x["zh_license"] not in ("CC-BY-2.0-FR", "CC0-1.0"):
+                bad_lic.append(f"{o['entry_id']} #{x['tatoeba_id']}")
+            if not {fold(t) for t in tokenize(x["en"])} & keys_of[o["entry_id"]]:
+                no_form.append(f"{o['entry_id']} #{x['tatoeba_id']} {x['en']}")
+    add("例句缺作者、句子 ID 或連結（CC0 例外）", no_author)
+    add("例句授權值不是 CC-BY-2.0-FR／CC0-1.0", bad_lic)
+    add("例句不含該條目的任何詞形", no_form)
+    # WordNet：同義詞／反義詞標了 in_list 但詞類不符（ref 只在詞類相符時才給 level）
+    wn_bad = []
+    tag = {"n": {"n."}, "v": {"v.", "aux."}, "a": {"adj."}, "s": {"adj."}, "r": {"adv."}}
+    for o in out:
+        for sn in (o["wordnet"] or {}).get("senses", []):
+            want = tag.get(sn["pos"], set())
+            for x in sn["synonyms"]:
+                if x["in_list"] and not any(want & (pos_of[i] | ({"n."} if "(n.)" in pos_of[i] else set()))
+                                            for i in x["entry_ids"]):
+                    wn_bad.append(f"{o['entry_id']} {x['word']}")
+    add("同義詞標為詞彙表內、但詞彙表條目的詞類不同", wn_bad)
+    # 欄位名稱不含品牌字樣
+    keys = set()
+
+    def walk(v):
+        if isinstance(v, dict):
+            for k2, v2 in v.items():
+                keys.add(k2)
+                walk(v2)
+        elif isinstance(v, list):
+            for v2 in v:
+                walk(v2)
+    walk(out)
+    walk(findex)
+    add("欄位名稱含品牌字樣（Collins、Oxford…）", sorted(k for k in keys if AUDIT_BRAND_RE.search(k)
+                                                         and k not in AUDIT_SKIP_KEYS),
+        note="cambridge_url 是外連欄位，不算")
+    # Cambridge 連結規則
+    add("cambridge_url 不符合 slug 規則", [o["entry_id"] for o in out if o["cambridge_url"] != cambridge_url(o["word"])
+                                         or not re.fullmatch(r"https://dictionary\.cambridge\.org/dictionary/"
+                                                             r"english-chinese-traditional/[a-z0-9-]+",
+                                                             o["cambridge_url"])])
+    # 軟性項目（列出供人工判斷，不讓 check 失敗）
+    add("沒有音標的條目", [o["raw"] for o in out if not o["ipa"]], hard=False)
+    add("中文沒有詞性相符的行、改用 fallback", [o["entry_id"] for o in out
+                                             if any(z.get("fallback") for z in o["zh"])], hard=False)
+    return res
+
+
 def pct(n, d):
     return f"{n / d * 100:.1f}%" if d else "—"
 
 
 def report_md(out, findex, sources, conv, tstats, ipa_issues, ipa_examples, fam_edges, fam_sizes, files,
-              oewn_any, homograph_stats, homograph_examples) -> str:
+              oewn_any, homograph_stats, homograph_examples, extra) -> str:
     groups = [("L1", lambda o: o["level"] == 1), ("L2", lambda o: o["level"] == 2),
               ("L3", lambda o: o["level"] == 3), ("L4", lambda o: o["level"] == 4),
               ("L5", lambda o: o["level"] == 5), ("L6", lambda o: o["level"] == 6),
@@ -1809,8 +2327,17 @@ def report_md(out, findex, sources, conv, tstats, ipa_issues, ipa_examples, fam_
     w(f"- 條目數 {len(out):,}；forms-index 詞形數 {len(findex):,}。"
       f"lexicon.json 上限 25 MB，{'未超過，輸出單一檔' if 'lexicon.json' in files else '超過，已依級別拆檔'}。")
     tcount = collections.Counter(t for v in findex.values() for x in v for t in x["types"])
+    fs = extra["form_stats"]
     w("- forms-index 各型態的（詞形, 條目）組數：" + "、".join(f"{t} {n:,}" for t, n in sorted(tcount.items())) + "。"
-      f"其中 `plural_rule` 是 ECDICT 沒列複數的 {homograph_stats['rule_plurals']:,} 筆名詞依規則補上的複數。")
+      f"其中 `plural_rule` 是 ECDICT 沒列複數、規則複數在 Tatoeba 英文句出現至少 {PLURAL_MIN_ATTEST} 次的 "
+      f"{homograph_stats['rule_plurals']:,} 筆名詞；另有 {extra['rule_plural_rejected']:,} 筆名詞的規則複數沒有語料證據，"
+      "不收（例如 " + "、".join(extra["rule_rejected_examples"][:12]) + "，多為不可數名詞或拼法錯誤）。")
+    w(f"- 屈折形只收條目詞類能產生的形式：ECDICT exchange 中 {fs['pos_drop']:,} 個屈折形不屬於條目詞類（名詞 fee 的過去式 "
+      f"feed、名詞 ox 的比較級 oxer、形容詞 abnormal 的複數 abnormals…），不放進 `forms`；其中可當詞形還原線索的 "
+      f"{extra['extra_pos_pairs']:,} 組（例如名詞 angle 的 angled）在 forms-index 標 `extra_pos: true`，"
+      "比較級／最高級、等於任何條目原形或變體的（feed、wedding、shorts）則完全不收。變體列的屈折形同樣依變體詞類過濾，"
+      f"代名詞格（mine、her）不帶屈折形，共略過 {fs['variant_drop']:,} 個（原本 mined、mining、hering 會對到代名詞 I、she）。"
+      f"ECDICT 的錯誤形式依 `FORM_FIXES` 修正 {fs['fixed']} 個（sheep 的複數 sheeps→sheep）。")
     multi = sum(1 for v in findex.values() if len({x['entry_id'] for x in v}) > 1)
     w(f"- forms-index 中對應到多個條目的詞形：{multi:,} 個（例如 {', '.join(sorted(k for k, v in findex.items() if len(v) > 1)[:12])}）。")
     w(f"- OpenCC：{conv.package}（s2twp）。重跑一致性：`python3 tools/build_vocab.py check` 會在暫存目錄重建並逐位元比對，"
@@ -1911,6 +2438,13 @@ def report_md(out, findex, sources, conv, tstats, ipa_issues, ipa_examples, fam_
       f"不採用，共排除 {homograph_stats['sentences_dropped']:,} 句次。排除最多的條目："
       + "、".join(f"{k.split('|')[0]}（{v}）" for k, v in sorted(homograph_examples.items(), key=lambda t: (-t[1], t[0]))[:12])
       + "。規則見 `tools/build_vocab.py`。")
+    w(f"- 反方向的同形異詞：{homograph_stats['shadow_entries']} 筆條目有屈折形同時是另一筆的原形或變體（wed 的 wedding、"
+      "bore 的 bored／boring、grind 的 ground、clothe 的 clothes、find 的 found）。只靠這種詞形命中、而且前後文看不出是"
+      f"本條目屈折用法的句子不採用，共排除 {homograph_stats['shadow_dropped']:,} 句次。排除最多的條目："
+      + "、".join(f"{k.split('|')[0]}（{v}）" for k, v in sorted(extra["shadow_examples"].items(),
+                                                              key=lambda t: (-t[1], t[0]))[:12]) + "。")
+    w(f"- 同字多筆（§6.3 的 9 組）依前後文分配句子（`sibling_ok`），排除 {homograph_stats['sibling_dropped']:,} 句次；"
+      f"`to prep.` 排除不定詞用法（to＋動詞原形）{homograph_stats['to_infinitive_dropped']:,} 句次。")
     w(f"- 內容過濾：含粗話、色情或自殘字眼（`SENSITIVE_RE`）的句子不採用，共排除 {homograph_stats['sensitive_dropped']:,} 句次"
       "（命中的字是條目本身時例外，例如 suicide、sexy 的例句）。")
     authors = collections.Counter(x["author"] for x in exs)
@@ -1975,7 +2509,24 @@ def report_md(out, findex, sources, conv, tstats, ipa_issues, ipa_examples, fam_
     w("處理規則見 `tools/build_vocab.py` 檔頭註解。")
     w("")
 
-    w("## 9. 來源版本")
+    w("## 9. 自動查核（全量）")
+    w("")
+    w("`build` 每次都對輸出做下列檢查；標「必須為 0」的項目只要不是 0，`python3 tools/build_vocab.py check` 就失敗。")
+    w("")
+    w("| 檢查 | 結果 | 必須為 0 | 例子／說明 |")
+    w("|---|---:|---|---|")
+    for a in extra["audits"]:
+        ex = "；".join(a["examples"][:4]).replace("|", "\\|")
+        note = a["note"]
+        w(f"| {a['name']} | {a['count']:,} | {'是' if a['hard'] else '否'} | {ex}{('（' + note + '）') if note else ''} |")
+    w("")
+    w("- 中文用 Big5（cp950）字集檢查：台灣通行的繁體字都在 Big5 內，殘留的簡體字（们、这、说…）與日文新字體（髪、説）"
+      "都不在。用 OpenCC 反向轉換（t2s 或對已轉換文字再跑一次 s2tw）比對會把 說明了→說明瞭、里約→裡約 這類正確的繁體"
+      "也算成差異，所以不採用。")
+    w("- 人工抽查用 `python3 tools/build_vocab.py sample --seed 20261008` 列出每級 10 筆（共 60 筆）的完整內容；每級優先"
+      "抽同字多筆、斜線條目、括號條目、不規則變化與帶符號的條目各一筆，其餘隨機。")
+    w("")
+    w("## 10. 來源版本")
     w("")
     w("| id | 檔案 | 版本 | 下載日 | sha256 |")
     w("|---|---|---|---|---|")
@@ -1998,21 +2549,81 @@ def cmd_check(args) -> int:
             cur = VOCAB / name
             if not cur.exists() or sha256_file(cur) != sha256_file(p):
                 bad.append(name)
+        failed = [a["name"] for a in LAST_AUDIT if a["hard"] and a["count"]]
         if bad:
             log("DIFFERENT: " + ", ".join(bad))
-            return 1
-        log("identical: " + ", ".join(sorted(files)))
-        return 0
+        else:
+            log("identical: " + ", ".join(sorted(files)))
+        if failed:
+            log("AUDIT FAILED: " + "；".join(failed))
+        return 1 if bad or failed else 0
+
+
+def cmd_sample(args) -> int:
+    """人工抽查：每級 10 筆（共 60 筆），每級優先抽同字多筆、斜線條目、括號／代名詞條目、不規則變化（2 筆）、
+    帶符號（連字號、句點）的條目各一筆，其餘隨機；印出各欄位供逐項核對。只讀現有輸出，不重建。"""
+    lex = []
+    for name in ["lexicon.json"] + [f"lexicon-L{i}.json" for i in range(1, 7)]:
+        if (VOCAB / name).exists():
+            lex += json.loads((VOCAB / name).read_text(encoding="utf-8"))
+    rnd = random.Random(args.seed)
+    same = {"backward", "capital", "content", "downward", "forward", "measure", "medium", "outward", "upward"}
+
+    def irregular(o):
+        w = o["word"].lower()
+        reg = {w + "s", w + "es", w[:-1] + "ies", w + "ed", w + "d", w[:-1] + "ied", w + w[-1:] + "ed", w + "ing",
+               w[:-1] + "ing", w + w[-1:] + "ing", w[:-2] + "ying", w + "er", w + "r", w + "est", w + "st",
+               w[:-1] + "ier", w[:-1] + "iest", w + w[-1:] + "er", w + w[-1:] + "est"}
+        return any(f.lower() not in reg and not f.startswith(("more ", "most ")) for f in o["forms"].values())
+    picks = [lambda o: o["word"] in same, lambda o: "slash-forms" in o["tags"],
+             lambda o: any(t.startswith("paren") or t == "pronoun-forms" for t in o["tags"]),
+             irregular, irregular, lambda o: bool(re.search(r"[-. ’]", o["word"]))]
+    for lvl in range(1, 7):
+        pool = [o for o in lex if o["level"] == lvl]
+        rnd.shuffle(pool)
+        chosen = []
+        for pred in picks:
+            for o in pool:
+                if o not in chosen and pred(o):
+                    chosen.append(o)
+                    break
+        for o in pool:
+            if len(chosen) >= 10:
+                break
+            if o not in chosen:
+                chosen.append(o)
+        for o in chosen[:10]:
+            print("=" * 100)
+            print(f"[{o['entry_id']}] raw={o['raw']!r} variants={o['variants']} forms={o['forms']}")
+            print(f"  ipa={o['ipa']} {o['ipa_source']}  cefr={o['cefr'] and o['cefr']['level']}  url={o['cambridge_url']}")
+            for z in o["zh"]:
+                print(f"  zh: {z}")
+            for vi in o.get("variant_info", []):
+                print(f"  variant: {vi}")
+            wn_ = o["wordnet"]
+            if wn_:
+                print(f"  wordnet lemma={wn_['lemma']} senses={wn_['sense_count']}")
+                for sn in wn_["senses"][:4]:
+                    syn = ", ".join(x["word"] + (f"(L{x['level']})" if x["in_list"] else "") for x in sn["synonyms"])
+                    print(f"    {sn['pos']} {sn['definition'][:70]} | {syn}")
+                print(f"    antonyms={[(x['word'], x.get('level')) for x in wn_['antonyms']]} "
+                      f"derivations={[(x['word'], x['level']) for x in wn_['derivations']]}")
+            print(f"  family={[(f['word'], f['level']) for f in o['family']]}")
+            for x in o["examples"]:
+                print(f"  ex #{x['tatoeba_id']} {x['author']} {x['license']} | {x['en']} | {x['zh']} "
+                      f"(#{x['zh_id']} {x['zh_author']})")
+    return 0
 
 
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
-    ap.add_argument("cmd", nargs="?", default="build", choices=["fetch", "build", "check"])
+    ap.add_argument("cmd", nargs="?", default="build", choices=["fetch", "build", "check", "sample"])
+    ap.add_argument("--seed", type=int, default=20261008, help="sample：亂數種子")
     ap.add_argument("--no-verify", action="store_true", help="不核對原始檔 sha256")
     ap.add_argument("--reuse-local", action="store_true",
                     help="fetch：本地檔的 sha256 和 sources.json 相同時不重新下載（只更新 sources.json 的其他欄位）")
     args = ap.parse_args()
-    return {"fetch": cmd_fetch, "build": cmd_build, "check": cmd_check}[args.cmd](args)
+    return {"fetch": cmd_fetch, "build": cmd_build, "check": cmd_check, "sample": cmd_sample}[args.cmd](args)
 
 
 if __name__ == "__main__":

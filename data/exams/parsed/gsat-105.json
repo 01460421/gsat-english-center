@@ -3242,7 +3242,7 @@
     }
   ],
   "extraction": {
-    "method": "題本文字以 Word 版 paper-2.docx 為主（以程式走訪 document.xml 所有 w:r，含巢狀於其他元素內的 run；有底線的數字 run 合併後轉成 [[題號]]），再以程式將全部 276 個文字欄位（大題標題、部分標題、說明、題組標示、選文各段、題幹、選項、選項庫）去空白後與 pdftotext -layout（paper-1.pdf）比對，全部為 PDF 原文子字串；反向檢查 PDF 扣除上述欄位後只剩封面、頁首頁尾與題號，確認無遺漏；Read 看 PDF 全部 8 頁頁面影像確認版面、粗體／斜體與底線，並確認本卷沒有任何圖表；答案取自 answer.pdf（pdftotext -layout，並看頁面影像核對）；評分原則取自 scoring.pdf（pdftotext 逐行接合，並以兩頁頁面影像核對）逐字摘錄；統計以 xlrd 讀 stats-1.xls（英文工作表：答對率 P、高分組 Ph、低分組 Pl、鑑別度 D）、stats-2.xls（英文工作表：選項分析 T／H／L 列、未答）、stats-3.xls（英文科非選擇題分數人數統計表），並以程式交叉核對（選項分析標 * 的選項＝官方答案；其 T／H／L 比例與 P／Ph／Pl 相符或差 1 個百分點；D＝Ph−Pl；非選擇題各分數段人數加總＝到考人數）。",
+    "method": "題本文字以 Word 版 paper-2.docx 為主（以程式走訪 document.xml 所有 w:r，含巢狀於其他元素內的 run；有底線的數字 run 合併後轉成 [[題號]]），再以程式將全部 276 個文字欄位（大題標題、部分標題、說明、題組標示、選文各段、題幹、選項、選項庫）去空白後與 pdftotext -layout（paper-1.pdf）比對，全部為 PDF 原文子字串；反向檢查 PDF 扣除上述欄位後只剩封面、頁首頁尾與題號，確認無遺漏；Read 看 PDF 全部 8 頁頁面影像確認版面、粗體／斜體與底線，並確認本卷沒有任何圖表；答案取自 answer.pdf（pdftotext -layout，並看頁面影像核對）；評分原則取自 scoring.pdf（pdftotext 逐行接合，並以兩頁頁面影像核對）逐字摘錄；統計以 xlrd 讀 stats-1.xls（英文工作表：答對率 P、高分組 Ph、低分組 Pl、鑑別度 D）、stats-2.xls（英文工作表：選項分析 T／H／L 列、未答）、stats-3.xls（英文科非選擇題分數人數統計表），並以程式交叉核對（選項分析標 * 的選項＝官方答案；其 T／H／L 比例與 P／Ph／Pl 相符或差 1 個百分點；D＝Ph−Pl；非選擇題各分數段人數加總＝到考人數）。；查證（verifier，獨立重做）：answer.pdf 頁面影像逐題核對 56 題答案全部相符；以程式將全部 276 個文字欄位（含每個選項、題幹、選文各段、選項庫、說明）逐 token 比對 pdftotext 與 Word 版，皆為原文；反向檢查 PDF 扣除 JSON 欄位後只剩封面與題號；8 篇選文段落數、首末句、字數（扣除 PDF 拆開的「16 ,」與「bura- hara」）與 PDF 一致，並以 Word 版段落逐段精確比對；Read 看題本 8 頁頁面影像確認無圖表與 [[題號]] 位置；評分原則以頁面影像與文字逐字核對；stats-1／stats-2／stats-3 以 xlrd 重新讀取，程式比對全部 56 題 P／Ph／Pl／D、T／H／L 選項比例與未答、標 * 選項，以及兩題分數分布，全部相符；未發現需修正之處",
     "issues": [
       "結構核對：與 gsat-spec.json legacy_gsat 期別「94–110」一致——詞彙題 1–15（15分）、綜合測驗 16–30（3篇×5題，題組標示16–20、21–25、26–30，15分）、文意選填 31–40（A–J，10分）、閱讀測驗 41–56（4篇×4題，每題2分，32分）、中譯英 2題×4分、英文作文 20分（文長至少120個單詞）；第壹部分單選題 72分＋第貳部分非選擇題 28分＝100分；封面「考試時間：100 分鐘」「單選題共 56 題」「非選擇題共二大題」。無差異。",
       "validator warning「題號重複 [1, 2]」為預期：中譯英兩題題本編為 1.、2.，英文作文沒有題號（no 填 1）；no 必須是整數，故沿用題本編號，並以 label「中譯英1」「中譯英2」「作文」區分，label 無重複（與 gsat-106 等檔做法相同）。",
@@ -3258,6 +3258,6 @@
       "標註判斷：第19題 what 在「what a troublemaker his son was」中作限定詞（感嘆句型名詞子句），不是代名詞，故只標 grammar／noun_clause、不填 answer_pos；第29題「Without international trade, nations would be limited…」標 grammar／subjunctive（含意假設語氣）；第26題虛受詞 it 依 gsat-85、gsat-87 的做法標 grammar_point=pronoun；第48題（哪句諺語最能表達故事精神）標 main_idea。題組 sdgs 只標明顯相關者（國際貿易→8、17；造林→15；血型歧視→10；中東兒童失學→4、16；海蛇與海洋→14），其餘為空陣列。",
       "本檔新增的非 schema 欄位：section.part_title／part_instructions（第壹、貳部分標題與第貳部分共同說明，放在該部分的第一個大題 s1、s5）、section.stats（非選擇題分數分布）、group.group_label（「第16至20題為題組」等題本原文）、sources.paper_word、question.stats.option_rates_high／option_rates_low／omit_rate。"
     ],
-    "verified_by": null
+    "verified_by": "verifier"
   }
 }

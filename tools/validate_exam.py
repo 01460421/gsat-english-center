@@ -131,7 +131,7 @@ def check_question(r, where, q, section_type, bank):
             r.err(where, 'options 必須是物件 {"A": "..."}')
             pool = {}
         for k, v in pool.items():
-            if not re.fullmatch(r'[A-L]', k):
+            if not re.fullmatch(r'[A-Z]', k):
                 r.err(where, f'選項代號 {k!r} 應為單一大寫字母')
             if not nonempty_str(v):
                 r.err(where, f'選項 {k} 是空的')

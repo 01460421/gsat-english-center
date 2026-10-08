@@ -3250,8 +3250,9 @@
       "文字來源：Word 版第41–44題選文第2、3段被放在同一個段落（中間以換行分隔），依 PDF 版面拆成兩段；選文共 4 段。PDF 選項庫印作「(F) protest」「( I ) associated with」「( J ) historical」（括號內有空白），代號統一為 F／I／J。第21、28、32、39題空格後的逗號依題本緊接空格（例「[[21]], a woodpecker」「great [[28]], however」）。第12題 Word 版題幹中有一個粗體空白 run，不影響文字。",
       "評分原則 PDF：pdftotext 把「以增進大眾福祉」的「福祉」輸出成「福 祉」（跨行時的字距），頁面影像上沒有空白，已改為「福祉」；跨行接合時，前後都是英文或數字的位置補一個空白（例「or to / enhance」「EVERYBODY / IS」「扣總分 / 1 分」），中文與全形標點處直接接合（例「well-being/welfare」＋「，也不是 benefits」）。評分原則與題本文字經 NFC 正規化前後相同（無 CJK 相容表意字）。",
       "標註判斷：第44題（Camake 在莫拉克颱風後體悟到什麼）答案需由引言「We could not take the forest… but we were able to bring our culture along」推得，標 inference；第43、47題依 repo 慣例（What does “…” refer to）標 reference；s4g1 為附直接引語的人物報導，genre 標 news，sdgs 標 [4, 11]（文化多樣性教育、文化資產保存）；第27題「with over 7,000 different kinds in existence」標 grammar／with_absolute_construction（沿用其他年份的 grammar_point 名稱）。",
-      "本檔新增的非 schema 欄位：section.part_title／part_instructions（第壹、貳部分標題與第貳部分共同說明，放在該部分的第一個大題 s1、s5）、section.stats（非選擇題分數分布）、group.group_label（「第16至20題為題組」等題本原文）、figure.label、sources.paper_word、question.stats.option_rates_high／option_rates_low／omit_rate。"
+      "本檔新增的非 schema 欄位：section.part_title／part_instructions（第壹、貳部分標題與第貳部分共同說明，放在該部分的第一個大題 s1、s5）、section.stats（非選擇題分數分布）、group.group_label（「第16至20題為題組」等題本原文）、figure.label、sources.paper_word、question.stats.option_rates_high／option_rates_low／omit_rate。",
+      "查證者（verifier）獨立核對結果：(1) 答案：56 題逐題對照 answer.pdf 文字層與頁面影像，全部一致。(2) 題本文字：全部大題標題／說明、題組標示、8 篇選文（每段）、56 題題幹與全部選項、選項庫、中譯英兩題與作文提示，以連續 token 序列（含大小寫、標點、破折號種類）與 pdftotext -layout（paper-1.pdf）逐一比對，並另與 Word 版（paper-2.doc 轉 docx）比對，全部一致；各篇選文段落數（3／1／2／3／4／3／7／4）、首末句與字數皆與題本相符（綜合測驗與文意選填的字數差 1–2 是題本空格後逗號被 pdftotext 拆成獨立 token 所致）；空格 [[16]]–[[40]] 位置與頁面影像相符；字串中無多餘空白、全形空白或私用區字元。(3) 作文圖以 300dpi 頁面影像核對，書名、副標、作者與圖案描述正確。(4) 統計：56 題 P／Ph／Pl／D 與 T／H／L 三列選項比例全部以程式對照 stats-1.xls、stats-2.xls（含第 1、16、23、32、34、39、40、46、55、56 題人工抽看），皆對準題號且已換成 0–1；非選擇題分數分布 32 列與 stats-3.xls 一致。(5) 評分原則 scoring_notes 各段逐字為 scoring.pdf 的子字串（僅跨行接合處的空白有別，例如「扣總分 1 分」）。(6) tags 逐題檢視，未發現明顯錯誤，未修改。補充：stats-2.xls 的 L 列（低分組）在第 35、40、45、53、54、55、56 題各有未答 1%，本檔 omit_rate 只收 T 列，L／H 列未答比例未收錄。"
     ],
-    "verified_by": null
+    "verified_by": "verifier"
   }
 }
