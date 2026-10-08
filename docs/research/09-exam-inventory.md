@@ -340,6 +340,15 @@ manifest 每一筆都有以下欄位：`exam`、`year`、`kind`、`title`、`url
 
 同名考試說明的比對結果見 5.4。
 
+**2026-10-08 對抗式查證（全量，不是抽樣）**
+
+- 重新爬全部列表與條目頁（[gsat-list] 19 頁 189 列、[ast-list] 25 頁 249 列、特殊試題 10 頁 98 列／7 頁 67 列、統計、佳作、參考試卷、試辦、考試說明），得到的 761 個網址與原 manifest 完全相同，`exam`、`year`、`kind`、`subkind`、`session`、`target`、`title` 逐欄一致。
+- 761 個檔案全部重算 sha256 與大小，0 筆不符。
+- 所有 `text_quality=ok` 的學測／指考 PDF（不含 reference），前三頁都同時含該學年度（阿拉伯或國字）與「英文」字樣；試題 PDF 第 1 頁全數是「○○學年度…英文考科」（學測 90、91 與 91 補考試題本身沒有標題頁，標題在另附的封面檔；91 補考試題 `gsat/91/paper-3.pdf` 本身未印「補考」，內容與正式場次不同，例如第 1 題不同，補考身分只能由列表與封面 `gsat/91/other-2.pdf` 判斷）。
+- 多科合併答案逐頁看頁首：學測 92–95 第 2 頁、指考 93、94 第 2 頁、指考 95–97 第 3 頁是英文；以影像確認學測 86（第 1 頁國英數）、學測 90（國英數）、指考 92 第 2 頁（英文）、指考 91 答對率表（英文，向量文字）。
+- 文件內 41 個參考連結全部可開啟，頁面標題與連結說明一致（[trial110-entry]、[trial109-entry]、[ref-gsat-111] 的官方標題後面另有「答題卷更新作答說明文字」字樣）。
+- 作文佳作的考生同意說明、網站版權頁尾、研究用試題頁「目前暫無公告內容」，都在官網原頁確認。
+
 ## 10. 使用與更新
 
 ```bash
@@ -349,15 +358,17 @@ python3 tools/fetch_ceec.py discover
 python3 tools/fetch_ceec.py fetch --workers 2
 python3 tools/fetch_ceec.py fetch --exam gsat --year 116      # 只抓新年度
 python3 tools/fetch_ceec.py fetch --skip-essays               # 不抓作文佳作（省約 269 MiB）
-python3 tools/fetch_ceec.py fetch --reprobe                   # 安裝 poppler-data 後重判文字層
+python3 tools/fetch_ceec.py fetch --reprobe                   # 安裝 poppler-data 後重判文字層（不重新下載）
+python3 tools/fetch_ceec.py summary                           # 印出 exam × kind 筆數與總大小
 python3 tools/fetch_ceec.py verify                            # 只驗雜湊、不連網
 ```
 
 - 116 學測的檔案公布後，執行 `discover` 就會自動納入。各列表的 `xsmsid` 寫在 `SITES` 常數裡；如果官網改版，需要更新這些常數。
 - 安全方面：
   - 下載檔一律視為不可信資料。工具只做三件事：寫檔、計算 sha256、呼叫 pdftotext。
-  - 每個檔案都會檢查檔頭是否符合副檔名（PDF、OLE、ZIP、JPEG）。不符時會寫入 `error` 欄位。本次 761 個檔案都沒有錯誤。
-- 憑證：Python 3.13 起預設開啟 `VERIFY_X509_STRICT`，會拒絕本環境代理 CA 的憑證鏈（錯誤訊息是「Missing Subject Key Identifier」）。工具只關閉這一項嚴格檢查，憑證鏈與主機名稱驗證照常進行，行為與 curl、requests 一致。
+  - 每個檔案都會檢查檔頭是否符合副檔名（PDF、OLE、ZIP、JPEG）。不符時會寫入 `error` 欄位。本次 841 個檔案都沒有錯誤。
+- 憑證：Python 3.13 起 `ssl.create_default_context()` 預設開啟 `VERIFY_X509_STRICT`（[py-ssl]：「Changed in version 3.13: The context now uses VERIFY_X509_PARTIAL_CHAIN and VERIFY_X509_STRICT in its default verify flags.」），會拒絕本環境代理 CA 的憑證鏈；2026-10-08 實測錯誤訊息是「certificate verify failed: Missing Subject Key Identifier」。工具只關閉這一項嚴格檢查，憑證鏈與主機名稱驗證照常進行。**原稿寫「行為與 curl、requests 一致」有誤**：curl 在同一環境可正常連線，但 requests（urllib3 2.7.0）在 Python 3.13 上同樣預設開啟 `VERIFY_X509_STRICT`，實測一樣失敗。之後若改用 requests，也要自行處理這個旗標。
+- 分類規則若要調整：`STATS_RULES`（統計檔）、`classify_exam_file`／`classify_ref_file`（試題與參考資料）。新增子類時請把它排在 `SUBKIND_ORDER` 既有同 kind 子類之後，以免既有檔案的 `-N` 編號改變（`data/exams/parsed/*.json` 直接引用這些路徑）。
 
 ## 11. 著作權與使用注意
 
@@ -367,6 +378,22 @@ python3 tools/fetch_ceec.py verify                            # 只驗雜湊、�
   - 範文分析
 
   不要在 App 內公開重製原卷影像（未驗證是否可以重製；需由授權研究另行確認）。
+
+## 12. 查證修正紀錄（2026-10-08）
+
+| # | 原稿 | 修正 | 依據 |
+|---|---|---|---|
+| 1 | 指考 91 答對率表、選項分析標為「有（掃描）」「無文字層」，封面也列為掃描或無文字層 | 三者都是向量文字、沒有影像，改為「亂碼」（`garbled`）；manifest 同步更正，工具新增判斷規則 | `pdffonts`／`pdfimages -list` 逐檔檢查；pdftotext 報「Unknown character collection 'Adobe-WinCharSetFFFF'」 |
+| 2 | 「分科測驗 111–115 的科目有數學甲、數學乙…」 | 111–113 沒有數學乙（7 科），114–115 才有（8 科） | 重爬 [ast-list] |
+| 3 | 括號字問題只列學測 92、93、94 答案與指考 92、93 | 補上學測 90 試題與封面 | U+3190–U+33FF 全檔掃描 |
+| 4 | 學測 94 答案 `subjects_detected` 只有國文、英文 | 工具正規化後更正為五科 | 逐頁 pdftotext |
+| 5 | 「學測 99–101 列印版會誤抓國文」 | 只有 99、100、102（第 2 份）；101 沒有 | manifest `subjects_detected` |
+| 6 | 憑證處理「行為與 curl、requests 一致」 | requests（urllib3 2.7.0）在 Python 3.13 同樣開啟嚴格檢查而失敗；只有 curl 不受影響 | [py-ssl]；本環境實測 |
+| 7 | 重試「最多 6 次」 | 最多重試 6 次、共 7 次嘗試；列出實際間隔與不重試的情況 | `tools/fetch_ceec.py` `http_get` |
+| 8 | 數量表 gsat other 166.9、ast other 104.0 MiB | 166.96→167.0、104.08→104.1（四捨五入誤差） | manifest `bytes` 加總 |
+| 9 | 署名舉例「學測 98 林秀慧、指考 99–102 游春琪」 | 補為完整範圍：林秀慧學測 95–102（第 2 份）、游春琪指考 94–102（第 2 份），並列閱卷召集人 | 逐檔 pdftotext |
+| 10 | 成績標準、級分對照列為不納入 | 補收 80 個檔案（學測成績標準 27、級分對照 33；指考成績標準 20），見 5.5 | 各學年統計頁 |
+| 11 | `check_magic` 註解「PDF 規格允許 %PDF 出現在前 1024 bytes 內」 | 改為「ISO 32000 要求在第一行，Acrobat 等實作容許前 1024 bytes（未驗證是否所有閱讀器皆然）」 | — |
 
 ---
 
@@ -411,3 +438,4 @@ python3 tools/fetch_ceec.py verify                            # 只驗雜湊、�
 [gsat-research]: https://www.ceec.edu.tw/xmdoc/cont?xsmsid=0J018586337911578043 "學測 研究用試題（目前暫無公告內容）"
 [ast-research]: https://www.ceec.edu.tw/xmdoc/cont?xsmsid=0J018610105920483308 "指考 研究用試題（目前暫無公告內容）"
 [ep-115-eng-scoring]: https://www.ceec.edu.tw/xcepaper/cont?xsmsid=0J066588036013658199&qunit=0Q105367598596417147&sid=0Q111569514236767793 "選才電子報：115學年度學科能力測驗非選擇題評分原則說明－【英文】"
+[py-ssl]: https://docs.python.org/3.13/library/ssl.html#ssl.create_default_context "Python 3.13 ssl.create_default_context 文件"
