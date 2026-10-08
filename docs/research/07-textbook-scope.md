@@ -422,7 +422,7 @@ L1 The Heart of a Champion／L2 My Mouth's in Airplane Mode!／L3 The Birthmark�
 | 欄位 | 說明 |
 |---|---|
 | `patterns[].textbook_refs` | 只列在學校公開計畫核對過的龍騰課次，並附 `edition_seen` 與 `source`。空陣列只代表「本次取得的資料未見」，不代表課本沒教 |
-| `patterns[].exam_translation_refs` | 題號格式 `gsat-年-題`、`ast-年-題`、`ast-109m-題`（補考）、`gsat-110t-題`（110 試辦）、`ref115-題`（115 參考試卷）；`basis` 為 ceec／ref_answer／analysis |
+| `patterns[].exam_translation_refs` | 題號格式 `gsat-年-題`、`ast-年-題`、`ast-109m-題`（補考）、`gsat-110t-題`（110 試辦）、`ref115-題`（115 參考試卷）；`basis` 為 ceec（考試說明、評分原則、閱卷說明、選才電子報評分原則說明或參考試卷解析明示）／ref_answer／analysis；`note` 記錄依據原文，寫「可選」者表示不是首列寫法 |
 | `patterns[].school_course_refs` | 金甌女中校訂選修單元（旁證） |
 | `patterns[].junior_high_base` | 是否列於課綱附錄六 |
 | `connectives[]` | `function`（遞進、轉折、讓步、原因、結果、舉例、強調、換句話說、相似、時間順序、列舉、結論、條件、目的、表達意見…）、`register`、`grammar_type`（對等連接詞、從屬連接詞、連接副詞、介系詞片語…）、`note`（常見錯誤） |
