@@ -515,6 +515,38 @@ IPA_MAP = {"\u04d9": "\u0259",   # Cyrillic schwa ә → IPA ə
            ":": "\u02d0"}        # length mark
 IPA_OK = set("abdefhijklmnoprstuvwxzæðŋɑɒɔəɚɛɜɝɪʃʊʌʒθɡɹɾʔːˈˌ()-, ̩̃")
 IPA_BAD = set("\\^")
+# ECDICT 音標的錯字（2026-10-08 用 ipa_skeleton 和 OEWN 發音逐筆比對子音後確認；shut 是抽查發現）。值是正規化後
+# 的 IPA，維持 ECDICT 的英式標音，只補正錯的音段；ipa_source 會標 fixed=true。
+IPA_FIXES = {
+    "shut": "ʃʌt",                    # ECDICT：ʃʌʃ
+    "consider": "kənˈsidə",           # kәn'sidŋ
+    "electric": "iˈlektrik",          # i'lektik
+    "liberty": "ˈlibəti",             # 'libәli
+    "maximum": "ˈmæksiməm",           # 'mæksimәn
+    "splendid": "ˈsplendid",          # 'spendid
+    "influential": "ˌinfluˈenʃəl",    # .infu'enʃәl
+    "assault": "əˈsɒːlt",             # ә'sɒ:t
+    "celebrity": "siˈlebriti",        # si'lebrti
+    "convenience": "kənˈviːnjəns",    # kә'vi:njәns
+    "translator": "trænsˈleitə",      # træn'leitә
+    "homosexual": "ˌhɒməuˈsekʃuəl",   # .hɒmәu'sekjuәl
+    "soften": "ˈsɒfn",                # 'sɒftn（t 不發音）
+}
+
+
+def ipa_skeleton(ipa: str) -> str:
+    """比對 ECDICT（英式）與 OEWN（美式）音標用的子音骨架：取第一種讀法、去掉可省略的 (…) 與重音、母音，
+    只留母音前的 r，並把清濁、閃音、ŋ／n 等英美差異合併。骨架不同多半是其中一方漏了或打錯音段。"""
+    vow = "aeiouæɑɒɔəɛɜɪʊʌɚɝ"
+    t = re.sub(r"\([^)]*\)", "", ipa.split(",")[0])
+    t = t.replace("ɹ", "r").replace("ɚ", "ər").replace("ɝ", "ər")
+    t = re.sub(r"[ˈˌː\u0329\u0303]", "", t)
+    t = re.sub(r"r(?![" + vow + "])", "", t)
+    for a, b in (("dʒ", "tʃ"), ("ʒ", "ʃ"), ("ð", "θ"), ("ŋ", "n"), ("ɡ", "k"), ("d", "t"), ("z", "s"), ("ɾ", "t"),
+                 ("b", "p"), ("v", "f")):
+        t = t.replace(a, b)
+    t = re.sub(r"[jwh]", "", t)
+    return "".join(c for c in t if c in "ptkfθsʃmnlr")
 
 
 def ecdict_lookup_keys(form: str) -> list[str]:
@@ -1060,6 +1092,8 @@ def build(outdir: Path, *, verify: bool = True) -> dict:
     # 例句，只在 forms-index 標 extra_pos=true，供詞形還原（angled→angle）。見 licensed_form 的說明。
     extra_map: dict[str, dict[str, dict]] = collections.defaultdict(dict)
     form_stats = collections.Counter()
+    ipa_mismatch: list[str] = []
+    ipa_checked = [0]
 
     def add_form(form, eid, typ, base=None, target=None):
         k = fold(form)
@@ -1152,6 +1186,9 @@ def build(outdir: Path, *, verify: bool = True) -> dict:
                     ipa_examples[i].append(f"{r['word']} {r['phonetic']}")
                 if val:
                     ipa, ipa_src, ipa_form = val, "ecdict", form
+                    if r["word"] in IPA_FIXES:
+                        ipa = IPA_FIXES[r["word"]]
+                        form_stats["ipa_fixed"] += 1
                     break
             lemma = wn.find(form)
             p = wn.pronunciation(lemma) if lemma else None
@@ -1161,6 +1198,17 @@ def build(outdir: Path, *, verify: bool = True) -> dict:
         rec["ipa"] = ipa
         rec["ipa_source"] = None if ipa is None else (
             {"source": ipa_src} if ipa_form == e["word"] else {"source": ipa_src, "form": ipa_form})
+        if ipa and ipa_src == "ecdict" and ec.get(ipa_form)["word"] in IPA_FIXES:
+            rec["ipa_source"]["fixed"] = True
+        # 與 OEWN 發音交叉比對（只記錄，列在報告；確認是 ECDICT 錯字的已收進 IPA_FIXES）
+        if ipa and ipa_src == "ecdict":
+            lm = wn.find(key_form)
+            us = wn.pronunciation(lm) if lm else None
+            if us:
+                ipa_checked[0] += 1
+                if ipa_skeleton(ipa) != ipa_skeleton(us) and \
+                        ipa_skeleton(ipa).replace("ʃ", "") != ipa_skeleton(us).replace("ʃ", ""):
+                    ipa_mismatch.append(f"{e['word']} {ipa}／{us}")
         # 美式拼法：ECDICT 對 -l 結尾的動詞一律用英式雙寫（travelled、cancelled、modelled）。詞彙表以美式拼法為主，
         # 重音不在最後一個音節時（音標以 ˈ 開頭、至少兩個母音組）forms 改用美式（traveled），英式拼法仍列在 forms-index。
         w = e["word"]
@@ -1816,6 +1864,10 @@ def build(outdir: Path, *, verify: bool = True) -> dict:
         for v, vt in zip(e["variants"], e["variant_types"]):
             if vt in ("plural_usual", "derived_suffix") or (siblings and vt == "slash" and fold(v) not in sib_forms):
                 prefer.add(fold(v))
+        dnames = {v for v, vt in zip(e["variants"], e["variant_types"]) if vt == "derived_ment"}
+        derived_forms = {k for k in tforms if "derived_ment" in form_map[k][eid]["types"]
+                         or set(form_map[k][eid]["bases"]) & dnames} if dnames else set()
+        derived_sids: set[int] = set()
         single = [f for f in tforms if " " not in f]
         multi = [f.split() for f in tforms if " " in f]
         cand = set()
@@ -1903,12 +1955,19 @@ def build(outdir: Path, *, verify: bool = True) -> dict:
                    norms[pos_t[0] + 1] if pos_t[0] + 1 < n else "$")
             key = (reused, only_ambiguous, not has_pref, unknown > 0, unknown, abs(n - 10), sid)
             scored.append((key, sid, c, ctx, unknown))
+            if derived_forms and hit <= derived_forms:
+                derived_sids.add(sid)
         scored.sort()
+        # v./(n.) 條目：第一輪最多 3 句只含 -ment 衍生名詞（appointment），留位置給原形動詞（appoint）的句子
         chosen, skipped, skels, zhs = [], [], set(), set()
+        n_derived = 0
         for key, sid, c, ctx, unknown in scored:
             sk = skeleton(sid)
             zh = conv(cmn[c][0])
             if sk in skels or zh in zhs:
+                continue
+            if sid in derived_sids and n_derived >= 3:
+                skipped.append((key, sid, c, ctx, set(sent_info[sid][0]) - tset, unknown))
                 continue
             tokset = set(sent_info[sid][0]) - tset
             item = (key, sid, c, ctx, tokset, unknown)
@@ -1926,6 +1985,7 @@ def build(outdir: Path, *, verify: bool = True) -> dict:
             chosen.append(item)
             skels.add(sk)
             zhs.add(zh)
+            n_derived += sid in derived_sids
             if len(chosen) == 5:
                 break
         if len(chosen) < 5:
@@ -2043,6 +2103,10 @@ def build(outdir: Path, *, verify: bool = True) -> dict:
 
     homograph_stats["rule_plurals"] = rule_plurals
     audits = audit(out_entries, findex, entries)
+    audits.append({"name": f"ECDICT 音標與 OEWN 發音的子音不一致（比對 {ipa_checked[0]:,} 筆）", "count": len(ipa_mismatch),
+                   "examples": ipa_mismatch[:8], "hard": False,
+                   "note": "其餘多為英美讀法差異或可省略音（buffet、lieutenant、picture）；已確認的 ECDICT 錯字 "
+                           f"{len(IPA_FIXES)} 個收在 IPA_FIXES"})
     LAST_AUDIT[:] = audits
     for a in audits:
         if a["hard"] and a["count"]:
@@ -2136,7 +2200,7 @@ def credits_md(sources: list[dict], conv: Converter) -> str:
   - {src['tatoeba-links']['url']}
   - {src['tatoeba-eng-cc0']['url']}、{src['tatoeba-cmn-cc0']['url']}
 - 授權：句子預設 CC BY 2.0 FR（https://creativecommons.org/licenses/by/2.0/fr/），列在 CC0 匯出檔中的句子為 CC0 1.0。
-  CC BY 句子使用時「必須標示作者」（Tatoeba Terms of Use §6.2），所以每句都保存作者名稱與句子 ID；作者為空（孤兒句）的 CC BY 句子不採用。
+  CC BY 句子使用時「必須標示作者」（Tatoeba Terms of Use §6.2「only allowed if the name of the author is cited」、§6.5），所以每句都保存作者名稱與句子 ID；作者為空（孤兒句）的 CC BY 句子不採用。
 - 顯示格式：`Tatoeba #{{tatoeba_id}} by {{author}}`（連到 `url`），中文翻譯 `Tatoeba #{{zh_id}} by {{zh_author}}`。
 - 修改：中文句用 OpenCC s2twp 轉成台灣繁體；原文是簡體的句子另以 `TW_PHRASES` 補正大陸用語，所有句子都以 `KEEP_PHRASES` 保留一般用詞（不改成 程式、檔案、物件…），再把日文新字體或異體字（髪、説、産…）與「箇」換成台灣通行字（`zh_converted = true` 表示文字有變動），應標示「中文經轉換為台灣繁體」。
 - 不使用 Tatoeba 音檔（音檔授權依錄音者而定）。
@@ -2404,7 +2468,9 @@ def report_md(out, findex, sources, conv, tstats, ipa_issues, ipa_examples, fam_
     w("說明：")
     w("- `wordnet` 只算條目詞類對應的 WordNet 詞性（n.、v.、adj.、adv.；aux. 視為 v.）。prep.、conj.、pron.、art. 在 WordNet 沒有對應，"
       "所以 L1–2 的功能詞比例較低。")
-    w("- `zh 有詞性相符的行`：ECDICT 中文的行首詞性（vt.、n.、a.…）屬於條目詞類，介面可預設只顯示這些行。")
+    w("- `zh 有詞性相符的行`：ECDICT 中文的行首詞性（vt.、n.、a.…）屬於條目詞類，介面可預設只顯示這些行；"
+      f"沒有任何一行相符的 {sum(1 for o in out if any(z.get('fallback') for z in o['zh']))} 筆改標 `fallback`（見 §9），"
+      f"{sum(1 for o in out if any(z.get('fixed') for z in o['zh']))} 筆 ECDICT 中文明顯錯誤的條目補了 `fixed` 行（`ZH_OVERRIDES`）。")
     w("- `Tatoeba 候選句`：含該條目任一詞形（原形、變體、屈折形）且有中文翻譯的英文句數，未套用句長與作者條件；"
       "`examples` 是套用句長 6–20、作者必填（CC0 例外）、去重後實際收錄的句子（最多 5 句）。")
     w("")
@@ -2424,7 +2490,8 @@ def report_md(out, findex, sources, conv, tstats, ipa_issues, ipa_examples, fam_
     w(f"| ECDICT | 有 Collins 星級 | 2,843（94.6%） | {c(lambda o: o['internal_star'] is not None)} | 欄位改名 `internal_star` |")
     w(f"| ECDICT | `oxford`=1 | 1,003（33.4%） | {c(lambda o: o['internal_core_flag'] is True)} | 欄位改名 `internal_core_flag` |")
     w(f"| ECDICT | 有 `frq` | 2,991（99.5%） | {c(lambda o: o['freq']['frq'] is not None)} | 0 視為缺值 |")
-    w(f"| ECDICT | 有 `exchange` | 2,557（85.1%） | {c(lambda o: bool(o['forms']))} | 本次只算詞頭（或第一個查得到的變體）那一列 |")
+    w(f"| ECDICT | 有 `exchange` | 2,557（85.1%） | {c(lambda o: bool(o['forms']))} | 本次只算詞頭（或第一個查得到的變體）那一列，"
+      "而且只算條目詞類能產生的屈折形（名詞 tension 的 tensioned 這類不算） |")
     w(f"| OEWN 2025 | 收錄 | 2,996（99.7%） | {c(lambda o: o['wordnet'] is not None)} | 本次限條目詞類；不限詞類見下一列 |")
     w(f"| OEWN 2025 | 收錄（不限詞類） | 2,996（99.7%） | {c(lambda o: o['entry_id'] in oewn_any)} | |")
     w(f"| OEWN 2025 | 至少一個 synset 有其他成員 | 2,690（89.5%） | {c(lambda o: any(s['synonyms'] for s in wn(o).get('senses', [])))} | 限條目詞類 |")
@@ -2464,12 +2531,16 @@ def report_md(out, findex, sources, conv, tstats, ipa_issues, ipa_examples, fam_
     w(f"- 殘留的 Cyrillic ә／є、ASCII `'`、`:`、`g`：{'無' if not leftovers else ' '.join(leftovers)}；"
       f"白名單以外的字元：{'無' if not nonipa else ' '.join(nonipa)}。")
     w("- 對應：`ә`(U+04D9)→`ə`(U+0259)、`є`(U+0454)→`ɛ`(U+025B)、ASCII `g`→`ɡ`(U+0261)、`'`→`ˈ`、`:`→`ː`、"
-      "緊接音標的 `,`／`.`→`ˌ`；`. `、`, ` 與兩段都有主重音的 `.` 視為多種讀法，輸出成 `, `。"
+      "緊接音標的 `,`／`.`→`ˌ`；`. `、`, `、兩段都有主重音或兩段都沒有重音記號的 `.`（`bæθ.bɑ:θ`），以及後一段以 `-` "
+      "開頭或結尾的 `,` 視為多種讀法，輸出成 `, `；重複的 `''` 與 `'` 後的空白合併。"
       "OEWN 補的發音本來就是 IPA（美式，例如 `ɹ`、`ɚ`），只做同樣的 `g`→`ɡ` 與白名單檢查。")
     w("- 只統一字元，不改標音體系：ECDICT 是舊式英式標音（`əu`、`ai`、`e`），OEWN 是美式寬式標音（`oʊ`、`aɪ`、`ɛ`），"
       "介面若要一致的體系需另行轉寫。`(r)`、`(ə)` 表示可省略的音，`-dəkt` 這類只寫出不同部分的第二讀法照原樣保留。")
     for k in sorted(ipa_issues):
         w(f"- 不採用的 ECDICT 音標（{k}）：{ipa_issues[k]} 次，例如 " + "；".join(f"`{x}`" for x in sorted(set(ipa_examples[k]))[:8]))
+    w(f"- ECDICT 音標錯字：和 OEWN 發音逐筆比對子音（`ipa_skeleton`）後確認 {len(IPA_FIXES)} 個，依 `IPA_FIXES` 修正"
+      f"（{'、'.join(f'{k} {v}' for k, v in sorted(IPA_FIXES.items()))}），`ipa_source.fixed = true`。"
+      "沒有 OEWN 發音可比對的條目（約四成）無法用這個方法檢查。")
     missing = [o["raw"] for o in out if not o["ipa"]]
     w(f"- 沒有音標的條目（{len(missing)}）：" + "、".join(missing))
     w("")
@@ -2552,7 +2623,8 @@ def report_md(out, findex, sources, conv, tstats, ipa_issues, ipa_examples, fam_
             continue
         z = next((x for x in o["zh"] if x["match"]), o["zh"][0] if o["zh"] else None)
         zt = (z.get("pos") or "") + " " + z["text"] if z else ""
-        w(f"| `{r}` | `{o['entry_id']}` | {o['ipa'] or '—'} | {zt.strip()[:30]} | "
+        eid_md = o["entry_id"].replace("|", "\\|")
+        w(f"| `{r}` | `{eid_md}` | {o['ipa'] or '—'} | {zt.strip()[:30]} | "
           f"{o['wordnet']['sense_count'] if o['wordnet'] else 0} | {len(o['examples'])} | "
           f"{'、'.join(m['word'] for m in o['family']) or '—'} |")
     w("")

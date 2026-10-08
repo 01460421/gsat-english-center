@@ -110,7 +110,7 @@ Princeton University and LICENSEE agrees to preserve same.
   - https://downloads.tatoeba.org/exports/per_language/eng/eng-cmn_links.tsv.bz2
   - https://downloads.tatoeba.org/exports/per_language/eng/eng_sentences_CC0.tsv.bz2、https://downloads.tatoeba.org/exports/per_language/cmn/cmn_sentences_CC0.tsv.bz2
 - 授權：句子預設 CC BY 2.0 FR（https://creativecommons.org/licenses/by/2.0/fr/），列在 CC0 匯出檔中的句子為 CC0 1.0。
-  CC BY 句子使用時「必須標示作者」（Tatoeba Terms of Use §6.2），所以每句都保存作者名稱與句子 ID；作者為空（孤兒句）的 CC BY 句子不採用。
+  CC BY 句子使用時「必須標示作者」（Tatoeba Terms of Use §6.2「only allowed if the name of the author is cited」、§6.5），所以每句都保存作者名稱與句子 ID；作者為空（孤兒句）的 CC BY 句子不採用。
 - 顯示格式：`Tatoeba #{tatoeba_id} by {author}`（連到 `url`），中文翻譯 `Tatoeba #{zh_id} by {zh_author}`。
 - 修改：中文句用 OpenCC s2twp 轉成台灣繁體；原文是簡體的句子另以 `TW_PHRASES` 補正大陸用語，所有句子都以 `KEEP_PHRASES` 保留一般用詞（不改成 程式、檔案、物件…），再把日文新字體或異體字（髪、説、産…）與「箇」換成台灣通行字（`zh_converted = true` 表示文字有變動），應標示「中文經轉換為台灣繁體」。
 - 不使用 Tatoeba 音檔（音檔授權依錄音者而定）。

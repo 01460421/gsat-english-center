@@ -7,9 +7,9 @@
 
 | 檔案 | 大小 | sha256 |
 |---|---:|---|
-| `data/vocab/CREDITS.md` | 12,287 bytes | `e05c8fe4ee3c37cee6d69c0aa933296d81b50bb1eda146940e90ce91962b0eda` |
+| `data/vocab/CREDITS.md` | 12,348 bytes | `cc123ad96e4172d3015bf1da057cb872e1488037fdaf634bee4c1f82e228f137` |
 | `data/vocab/forms-index.json` | 1,247,013 bytes | `99b05ec70d86eca8131e5488672c8e076568339a4261e7878085f3f0fcb94102` |
-| `data/vocab/lexicon.json` | 22,337,058 bytes | `7deecb7dbb0a969a9d7f2a830e5f08610201f64ec3ffcc66ec298d0009021764` |
+| `data/vocab/lexicon.json` | 22,337,236 bytes | `6e9346caff04fc48d824e79b3708c3e35d5303b732576f33e3b7f8f9744f612e` |
 
 - 條目數 6,012；forms-index 詞形數 16,953。lexicon.json 上限 25 MB，未超過，輸出單一檔。
 - forms-index 各型態的（詞形, 條目）組數：comparative 259、derived_ment 61、derived_suffix 1、lemma 6,012、past 2,661、past_participle 2,630、plural 4,081、plural_rule 96、plural_usual 22、present 3、present_participle 2,671、pronoun_case 24、slash 85、superlative 216、third_person 2,141。其中 `plural_rule` 是 ECDICT 沒列複數、規則複數在 Tatoeba 英文句出現至少 3 次的 95 筆名詞；另有 225 筆名詞的規則複數沒有語料證據，不收（例如 accordances、accountings、acnes、advices、agricultures、aircrafts、aluminums、applauses、archaeologies、assistances、asthmas、astronomies，多為不可數名詞或拼法錯誤）。
@@ -53,7 +53,7 @@
 
 說明：
 - `wordnet` 只算條目詞類對應的 WordNet 詞性（n.、v.、adj.、adv.；aux. 視為 v.）。prep.、conj.、pron.、art. 在 WordNet 沒有對應，所以 L1–2 的功能詞比例較低。
-- `zh 有詞性相符的行`：ECDICT 中文的行首詞性（vt.、n.、a.…）屬於條目詞類，介面可預設只顯示這些行。
+- `zh 有詞性相符的行`：ECDICT 中文的行首詞性（vt.、n.、a.…）屬於條目詞類，介面可預設只顯示這些行；沒有任何一行相符的 12 筆改標 `fallback`（見 §9），3 筆 ECDICT 中文明顯錯誤的條目補了 `fixed` 行（`ZH_OVERRIDES`）。
 - `Tatoeba 候選句`：含該條目任一詞形（原形、變體、屈折形）且有中文翻譯的英文句數，未套用句長與作者條件；`examples` 是套用句長 6–20、作者必填（CC0 例外）、去重後實際收錄的句子（最多 5 句）。
 
 ## 3. 與 04 文件 §2.3（Level 3–5 共 3,006 筆）比較
@@ -64,7 +64,7 @@
 | ECDICT | 有 Collins 星級 | 2,843（94.6%） | 2,843（94.6%） | 欄位改名 `internal_star` |
 | ECDICT | `oxford`=1 | 1,003（33.4%） | 1,003（33.4%） | 欄位改名 `internal_core_flag` |
 | ECDICT | 有 `frq` | 2,991（99.5%） | 2,991（99.5%） | 0 視為缺值 |
-| ECDICT | 有 `exchange` | 2,557（85.1%） | 2,433（80.9%） | 本次只算詞頭（或第一個查得到的變體）那一列 |
+| ECDICT | 有 `exchange` | 2,557（85.1%） | 2,433（80.9%） | 本次只算詞頭（或第一個查得到的變體）那一列，而且只算條目詞類能產生的屈折形（名詞 tension 的 tensioned 這類不算） |
 | OEWN 2025 | 收錄 | 2,996（99.7%） | 2,992（99.5%） | 本次限條目詞類；不限詞類見下一列 |
 | OEWN 2025 | 收錄（不限詞類） | 2,996（99.7%） | 2,996（99.7%） | |
 | OEWN 2025 | 至少一個 synset 有其他成員 | 2,690（89.5%） | 2,661（88.5%） | 限條目詞類 |
@@ -95,15 +95,16 @@
 - 來源：ECDICT 5,985 筆，OEWN 補 14 筆，仍缺 13 筆。
 - 輸出音標使用的字元：`␠` `(` `)` `,` `-` `a` `b` `d` `e` `f` `h` `i` `j` `k` `l` `m` `n` `o` `p` `r` `s` `t` `u` `v` `w` `z` `æ` `ð` `ŋ` `ɑ` `ɒ` `ɔ` `ə` `ɚ` `ɛ` `ɡ` `ɪ` `ɹ` `ʃ` `ʊ` `ʌ` `ʒ` `ˈ` `ˌ` `ː` `θ`
 - 殘留的 Cyrillic ә／є、ASCII `'`、`:`、`g`：無；白名單以外的字元：無。
-- 對應：`ә`(U+04D9)→`ə`(U+0259)、`є`(U+0454)→`ɛ`(U+025B)、ASCII `g`→`ɡ`(U+0261)、`'`→`ˈ`、`:`→`ː`、緊接音標的 `,`／`.`→`ˌ`；`. `、`, ` 與兩段都有主重音的 `.` 視為多種讀法，輸出成 `, `。OEWN 補的發音本來就是 IPA（美式，例如 `ɹ`、`ɚ`），只做同樣的 `g`→`ɡ` 與白名單檢查。
+- 對應：`ә`(U+04D9)→`ə`(U+0259)、`є`(U+0454)→`ɛ`(U+025B)、ASCII `g`→`ɡ`(U+0261)、`'`→`ˈ`、`:`→`ː`、緊接音標的 `,`／`.`→`ˌ`；`. `、`, `、兩段都有主重音或兩段都沒有重音記號的 `.`（`bæθ.bɑ:θ`），以及後一段以 `-` 開頭或結尾的 `,` 視為多種讀法，輸出成 `, `；重複的 `''` 與 `'` 後的空白合併。OEWN 補的發音本來就是 IPA（美式，例如 `ɹ`、`ɚ`），只做同樣的 `g`→`ɡ` 與白名單檢查。
 - 只統一字元，不改標音體系：ECDICT 是舊式英式標音（`əu`、`ai`、`e`），OEWN 是美式寬式標音（`oʊ`、`aɪ`、`ɛ`），介面若要一致的體系需另行轉寫。`(r)`、`(ə)` 表示可省略的音，`-dəkt` 這類只寫出不同部分的第二讀法照原樣保留。
 - 不採用的 ECDICT 音標（corrupt）：8 次，例如 `God ^ɔd`；`chairperson 'tʃeәp\\\\:s(e)n`；`goodwill ^jd'wil`；`guava '^wɑ:vә`；`photographer fә'tɔ^rәfә`；`seagull 'si:^ʌl`；`workbook 'w\\\\:kbjk`；`yogurt 'jɔ^әt`
+- ECDICT 音標錯字：和 OEWN 發音逐筆比對子音（`ipa_skeleton`）後確認 13 個，依 `IPA_FIXES` 修正（assault əˈsɒːlt、celebrity siˈlebriti、consider kənˈsidə、convenience kənˈviːnjəns、electric iˈlektrik、homosexual ˌhɒməuˈsekʃuəl、influential ˌinfluˈenʃəl、liberty ˈlibəti、maximum ˈmæksiməm、shut ʃʌt、soften ˈsɒfn、splendid ˈsplendid、translator trænsˈleitə），`ipa_source.fixed = true`。沒有 OEWN 發音可比對的條目（約四成）無法用這個方法檢查。
 - 沒有音標的條目（13）：am/a.m. adv. 1、basics n. 2、chairperson/chair/chairman/chairwoman n. 6、cosmetics n. 6、customs n. 5、firework n. 3、including prep. 4、pm/p.m. adv. 1、seagull/gull n. 6、telecommunications n. 6、workbook n. 2、workforce n. 6、workplace n. 4
 
 ## 6. 例句（Tatoeba）
 
 - 匯出檔：有中文連結的英文句 72,933 句（實際載入 72,768），對應中文句 66,251 句；CC0 清單 41,513 句。
-- 收錄例句 17,646 句次（不重複英文句 12,293）；英文 CC0 96 句次；中文經 s2twp 改變文字的 9,880 句次；全句在級別內（其他字 ≤ level+1）的 15,549 句次。
+- 收錄例句 17,646 句次（不重複英文句 12,291）；英文 CC0 96 句次；中文經 s2twp 改變文字的 9,880 句次；全句在級別內（其他字 ≤ level+1）的 15,549 句次。
 - 同形異詞處理：58 筆條目的原形同時是另一個（級別不高於它的）條目的屈折形，例如 saw／see、found／find、lay／lie、rose／rise、learned／learn。只靠這種詞形命中、而且前一個字無法判斷詞類的句子不採用，共排除 1,880 句次。排除最多的條目：thought（264）、left（242）、used（202）、saw（187）、found（174）、being（165）、broke（79）、learning（62）、evening（55）、means（46）、bit（42）、building（37）。規則見 `tools/build_vocab.py`。
 - 反方向的同形異詞：73 筆條目有屈折形同時是另一筆的原形或變體（wed 的 wedding、bore 的 bored／boring、grind 的 ground、clothe 的 clothes、find 的 found）。只靠這種詞形命中、而且前後文看不出是本條目屈折用法的句子不採用，共排除 2,797 句次。排除最多的條目：good（564）、use（152）、interest（147）、bite（139）、leave（128）、marry（122）、tire（118）、meet（113）、be（97）、clothe（97）、bear（88）、late（86）。
 - 同字多筆（§6.3 的 9 組）依前後文分配句子（`sibling_ok`），排除 168 句次；`to prep.` 排除不定詞用法（to＋動詞原形）6,985 句次。
@@ -141,27 +142,27 @@
 
 | 條目 | entry_id | ipa | 第一行中文 | WordNet 義項數 | 例句數 | 詞族 |
 |---|---|---|---|---:|---:|---|
-| `backward adj. 2` | `backward|adj.|2` | ˈbækwəd | a. 向後的, 相反的 | 4 | 0 | backward |
-| `backward/backwards adv. 2` | `backward|adv.|2` | ˈbækwəd | adv. 向後地, 相反地 | 3 | 5 | backward |
-| `capital n./adj. 2` | `capital|n./adj.|2` | ˈkæpitəl | n. 首都, 大寫字母, 資本 | 9 | 5 | capital、capitalist |
-| `capital(ism) n. 4` | `capital|n.|4` | ˈkæpitəl | n. 首都, 大寫字母, 資本 | 6 | 2 | capital、capitalist |
-| `content n./adj. 4` | `content|n./adj.|4` | kənˈtent | n. 內容, 滿足, 意義, 要旨 | 8 | 5 | contain、container、content |
-| `content(ment) v./(n.) 4` | `content|v./(n.)|4` | kənˈtent | vt. 使...滿足, 使...安心 | 2 | 3 | contain、container、content |
-| `measure(ment) v./(n.) 2` | `measure|v./(n.)|2` | ˈmeʒə | vt. 測量, 測度, 估量, 權衡, 調節, 拿(自己或自 | 4 | 5 | measurable、measure |
-| `measure(s) n. 4` | `measure|n.|4` | ˈmeʒə | n. 尺寸, 量度器, 量度標準, 測量, 量具, 程度,  | 9 | 5 | measure、measurable |
-| `medium adj. 1` | `medium|adj.|1` | ˈmiːdiəm | a. 半生熟的, 中間的 | 2 | 3 | media、medium |
-| `medium/media n. 3` | `medium|n.|3` | ˈmiːdiəm | n. 媒體, 方法, 媒介 | 11 | 5 | media、medium |
-| `am/a.m. adv. 1` | `am|adv.|1` | — | 上午, 午前 | 1 | 5 | — |
-| `pm/p.m. adv. 1` | `pm|adv.|1` | — | 下午, 午後 | 1 | 5 | — |
-| `O.K./OK/okay adj./adv./n./v. 1` | `O.K.|adj./adv./n./v.|1` | ˈəuˈkei | a. 好, 可以, 行, 對, 好嗎, 很好 | 3 | 5 | — |
-| `o’clock adv. 1` | `o’clock|adv.|1` | əˈklɔk | n. ...點鐘, 鐘頭 | 1 | 5 | — |
-| `café/cafe n. 2` | `café|n.|2` | kɑːˈfei | n. 咖啡館, 酒店 | 1 | 5 | — |
-| `T-shirt n. 1` | `T-shirt|n.|1` | ˈtiːˌʃəːt | n. 圓領汗衫, T恤 | 1 | 5 | — |
-| `Mr./Mister n. 1` | `Mr.|n.|1` | ˈmistə(r) | 閣下, 先生 | 1 | 5 | — |
-| `I (me, my, mine, myself) pron. 1` | `I|pron.|1` | ai | pron. 我 | 0 | 5 | — |
-| `advertise(ment)/ad v./(n.) 3` | `advertise|v./(n.)|3` | ˈædvətaiz | vt. 做廣告, 通知, 公佈 | 2 | 5 | — |
-| `chairperson/chair/chairman/chairwoman n. 6` | `chairperson|n.|6` | — | n. 主席 | 1 | 5 | chair |
-| `calm v./adj./n 2` | `calm|v./adj./n.|2` | kɑːm | n. 平穩, 風平浪靜 | 8 | 5 | — |
+| `backward adj. 2` | `backward\|adj.\|2` | ˈbækwəd | a. 向後的, 相反的 | 4 | 0 | backward |
+| `backward/backwards adv. 2` | `backward\|adv.\|2` | ˈbækwəd | adv. 向後地, 相反地 | 3 | 5 | backward |
+| `capital n./adj. 2` | `capital\|n./adj.\|2` | ˈkæpitəl | n. 首都, 大寫字母, 資本 | 9 | 5 | capital、capitalist |
+| `capital(ism) n. 4` | `capital\|n.\|4` | ˈkæpitəl | n. 首都, 大寫字母, 資本 | 6 | 2 | capital、capitalist |
+| `content n./adj. 4` | `content\|n./adj.\|4` | kənˈtent | n. 內容, 滿足, 意義, 要旨 | 8 | 5 | contain、container、content |
+| `content(ment) v./(n.) 4` | `content\|v./(n.)\|4` | kənˈtent | vt. 使...滿足, 使...安心 | 2 | 3 | contain、container、content |
+| `measure(ment) v./(n.) 2` | `measure\|v./(n.)\|2` | ˈmeʒə | vt. 測量, 測度, 估量, 權衡, 調節, 拿(自己或自 | 4 | 5 | measurable、measure |
+| `measure(s) n. 4` | `measure\|n.\|4` | ˈmeʒə | n. 尺寸, 量度器, 量度標準, 測量, 量具, 程度,  | 9 | 5 | measure、measurable |
+| `medium adj. 1` | `medium\|adj.\|1` | ˈmiːdiəm | a. 半生熟的, 中間的 | 2 | 3 | media、medium |
+| `medium/media n. 3` | `medium\|n.\|3` | ˈmiːdiəm | n. 媒體, 方法, 媒介 | 11 | 5 | media、medium |
+| `am/a.m. adv. 1` | `am\|adv.\|1` | — | 上午, 午前 | 1 | 5 | — |
+| `pm/p.m. adv. 1` | `pm\|adv.\|1` | — | 下午, 午後 | 1 | 5 | — |
+| `O.K./OK/okay adj./adv./n./v. 1` | `O.K.\|adj./adv./n./v.\|1` | ˈəuˈkei | a. 好, 可以, 行, 對, 好嗎, 很好 | 3 | 5 | — |
+| `o’clock adv. 1` | `o’clock\|adv.\|1` | əˈklɔk | n. ...點鐘, 鐘頭 | 1 | 5 | — |
+| `café/cafe n. 2` | `café\|n.\|2` | kɑːˈfei | n. 咖啡館, 酒店 | 1 | 5 | — |
+| `T-shirt n. 1` | `T-shirt\|n.\|1` | ˈtiːˌʃəːt | n. 圓領汗衫, T恤 | 1 | 5 | — |
+| `Mr./Mister n. 1` | `Mr.\|n.\|1` | ˈmistə(r) | 閣下, 先生 | 1 | 5 | — |
+| `I (me, my, mine, myself) pron. 1` | `I\|pron.\|1` | ai | pron. 我 | 0 | 5 | — |
+| `advertise(ment)/ad v./(n.) 3` | `advertise\|v./(n.)\|3` | ˈædvətaiz | vt. 做廣告, 通知, 公佈 | 2 | 5 | — |
+| `chairperson/chair/chairman/chairwoman n. 6` | `chairperson\|n.\|6` | — | n. 主席 | 1 | 5 | chair |
+| `calm v./adj./n 2` | `calm\|v./adj./n.\|2` | kɑːm | n. 平穩, 風平浪靜 | 8 | 5 | — |
 
 處理規則見 `tools/build_vocab.py` 檔頭註解。
 
@@ -186,6 +187,7 @@
 | cambridge_url 不符合 slug 規則 | 0 | 是 |  |
 | 沒有音標的條目 | 13 | 否 | am/a.m. adv. 1；basics n. 2；chairperson/chair/chairman/chairwoman n. 6；cosmetics n. 6 |
 | 中文沒有詞性相符的行、改用 fallback | 12 | 否 | affiliate\|n.\|6；Celsius\|n.\|6；downward\|adv.\|6；goodbye\|n.\|1 |
+| ECDICT 音標與 OEWN 發音的子音不一致（比對 3,757 筆） | 26 | 否 | actual ˈæktʃuəl／ˈæk(t)ʃ(əw)əl；buffet ˈbʌfit／ˈbʊfeɪ；character ˈkærəktə／ˈkɛɹ(ə)ktɚ；clothes kləuðz／kləʊ(ð)z（其餘多為英美讀法差異或可省略音（buffet、lieutenant、picture）；已確認的 ECDICT 錯字 13 個收在 IPA_FIXES） |
 
 - 中文用 Big5（cp950）字集檢查：台灣通行的繁體字都在 Big5 內，殘留的簡體字（们、这、说…）與日文新字體（髪、説）都不在。用 OpenCC 反向轉換（t2s 或對已轉換文字再跑一次 s2tw）比對會把 說明了→說明瞭、里約→裡約 這類正確的繁體也算成差異，所以不採用。
 - 人工抽查用 `python3 tools/build_vocab.py sample --seed 20261008` 列出每級 10 筆（共 60 筆）的完整內容；每級優先抽同字多筆、斜線條目、括號條目、不規則變化與帶符號的條目各一筆，其餘隨機。
