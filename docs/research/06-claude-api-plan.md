@@ -866,14 +866,23 @@ export default {
     const { readable, writable } = new TransformStream();
     const writer = writable.getWriter();
     const enc = new TextEncoder();
-    const send = (o: unknown) => writer.write(enc.encode(`data: ${JSON.stringify(o)}\n\n`));
+    let clientGone = false;
+    // 學生關掉分頁後，寫入可能失敗。這裡吞掉錯誤、停止轉送，但繼續把回應收完，
+    // 才能在 waitUntil 的 30 秒內存檔和結算（否則 send 一失敗就會跳出迴圈，什麼都沒存）
+    const send = async (o: unknown) => {
+      if (clientGone) return;
+      try { await writer.write(enc.encode(`data: ${JSON.stringify(o)}\n\n`)); }
+      catch { clientGone = true; }
+    };
 
     const run = (async () => {
       try {
-        const stream = client.messages.stream({
+        const stream = client.beta.messages.stream({
           model: env.AI_MODEL_CHAT,            // "claude-opus-5-5"
           max_tokens: 4000,                    // 思考＋回覆
           output_config: { effort: "low" },
+          betas: ["server-side-fallback-2026-07-01"],
+          fallbacks: "default",                // 拒答時由伺服器改用建議的模型重試（§1.6 #8）
           cache_control: { type: "ephemeral" }, // 自動快取：斷點跟著對話往後移
           system: [{ type: "text", text: TUTOR_SYSTEM, cache_control: { type: "ephemeral" } }],
           messages: history,                   // messages[0] 的第一個區塊是題目上下文，另設 cache_control
@@ -884,13 +893,14 @@ export default {
           }
         }
         const msg = await stream.finalMessage();
-        if (msg.stop_reason === "refusal") { /* 回覆固定文字，退還點數 */ }
-        // msg.content 原樣（含 thinking 區塊）存進 D1；依 msg.usage 結算點數
+        if (msg.stop_reason === "refusal") { /* 整條 fallback 鏈都拒答：回覆固定文字，退還學生點數，但成本照記（§1.6 #8a） */ }
+        // msg.content 原樣（含 thinking、fallback 區塊）存進 D1；
+        // 依 msg.usage.iterations（有 fallback 時每次嘗試各一筆，各用自己模型的單價）結算（§5.2(d)）
         await send({ done: true });
       } catch (e) {
         await send({ error: "ai_unavailable" }); // 退還預扣點數；Anthropic.RateLimitError 等分開處理（§4.5）
       } finally {
-        await writer.close();
+        try { await writer.close(); } catch { /* 用戶端已斷線 */ }
       }
     })();
     ctx.waitUntil(run); // 用戶端中途斷線時，多給 30 秒把已完成的部分寫進 D1
@@ -901,11 +911,12 @@ export default {
 };
 ```
 
-寫法依據：`claude-api` 技能的 TypeScript 串流範例 [SKILL]，以及 Cloudflare 的 waitUntil 說明 [CF-CTX]。
+寫法依據：`claude-api` 技能的 TypeScript 串流範例 [SKILL]，Cloudflare 的 waitUntil 說明 [CF-CTX]，以及官方 fallback 文件的 TypeScript 範例 [ANT-REFUSAL]。
 
 - 用戶端還在接收串流時，Worker 的執行會持續，不需要靠 waitUntil [CF-CTX]。
-- 學生中途關掉分頁時，Anthropic 那邊已經產生的 token 怎麼計費，沒有查證（未驗證）。
-- `fallbacks:"default"` 要走 `client.beta.messages` 並帶 beta 標頭 `server-side-fallback-2026-07-01` [ANT-REFUSAL]。SDK 的型別是否支援 `"default"` 這種字串寫法，沒有查證（未驗證）；不支援的話，照官方 raw HTTP 的格式送。
+- 學生中途關掉分頁時，Anthropic 那邊已經產生的 token 怎麼計費，沒有查證（未驗證）。上面的寫法選擇「繼續收完」，代價是學生沒看到的部分也照付；如果改成斷線就中止串流，要另外處理「沒有完整回應可以存」的狀況。
+- `fallbacks:"default"` 要走 `client.beta.messages`，並帶 beta 標頭 `server-side-fallback-2026-07-01` [ANT-REFUSAL]。原稿把「SDK 型別是否支援 `"default"`」列為未驗證。2026-10-08 查證：官方文件的 TypeScript 範例就是直接在 `client.beta.messages.create({ ..., fallbacks: "default", betas: [...] })` 裡傳字串 [ANT-REFUSAL]，串流請求也支援 fallback（在同一條串流上重試）。需要的最低 SDK 版本，官方沒有寫（未驗證），升級到最新版即可。
+- 串流中途發生 fallback 時，原本開著的內容區塊會先結束，接著出現一個 `fallback` 區塊當分界，接手的模型從已輸出的文字繼續寫 [ANT-REFUSAL]。上面的程式只轉送 `text_delta`，可以照常運作；但前端不應該把 `message_start` 的 `model` 當成實際回答的模型。
 
 ### 4.4 金鑰保管
 
@@ -945,7 +956,7 @@ export default {
 |---|---|---|---|---|
 | 400 | `invalid_request_error` | 請求格式錯誤；**也包括碰到自己設的 spend limit** | 不重試；記錄 request-id 並通知管理員；spend limit 用完就顯示「AI 功能暫停」 | [ANT-ERR] [ANT-RL] |
 | 401 | `authentication_error` | key 錯誤、被撤銷或過期 | 通知管理員 | [ANT-ERR] |
-| 402 | `billing_error` | 帳單或付款問題 | 通知管理員去儲值。**Sekai 把 403 當成餘額不足**（`admin.js:359-364`），但官方文件把餘額問題列為 402 | [ANT-ERR] |
+| 402 | `billing_error` | 帳單或付款問題 | 通知管理員去儲值。Sekai 只在 HTTP 403 時才檢查 `billing_error` 並提示「餘額不足」，類型不明的 403 也提示「通常是餘額用完或金鑰權限不足」（`admin.js:359-364`）。但官方文件把 `billing_error` 列在 402，所以真正的 402 在 Sekai 裡不會出現任何提示。本專案要依 HTTP 狀態碼和 `error.type` 分開處理 | [ANT-ERR] |
 | 403 | `permission_error` | key 沒有權限使用這個資源 | 檢查 workspace 和模型權限 | [ANT-ERR] |
 | 413 | `request_too_large` | 超過 32 MB；在 Claude API 直連時由 Cloudflare 直接擋下 | 前端限制圖片大小 | [ANT-ERR] |
 | 429 | `rate_limit_error` | 超過速率上限：有 `retry-after` | SDK 會自動重試 | [ANT-RL] |
@@ -970,7 +981,7 @@ export default {
 - 估算 Start 級距的容量（本文件計算）：
   - OTPM 是 400k。作文批改一份約 6,000 個輸出 tokens，所以**每分鐘約可處理 66 份**。
   - 追問每輪約 700 個輸出 tokens，每分鐘約可處理 570 輪。
-- 在 Worker 端加一道並行上限：用 D1 或 Durable Object 記錄「處理中的批改數」。Queue consumer 的並行數或許也能設上限，但參數名稱和用法沒有查證（未驗證）。
+- 在 Worker 端加一道並行上限：批改走 Queue 時，用 consumer 的 `max_concurrency`（1–250）限制同時處理的批次數 [CF-Q-CONC]。每次呼叫實際處理幾則訊息，還要看 batch size 設定。即時任務（OCR、追問）不經過 Queue，仍要用 D1 或 Durable Object 記錄「處理中的請求數」。
 - 流量要逐步放大，避免觸發 acceleration limit [ANT-RL]。
 
 ### 4.7 其他
