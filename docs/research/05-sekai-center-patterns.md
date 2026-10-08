@@ -398,7 +398,7 @@ Sekai 的做法：
 
 - 一批最多 100,000 筆請求或 256 MB，先到者為準。大多數批次 1 小時內完成；24 小時內沒處理完的請求會過期，不收費。結果只保留 29 天，要在期限內取回並寫進 D1 或 repo [ANT-BATCH]。
 - 伺服器端 fallback（`fallbacks` 參數，Sekai 的 `admin.js:228-231` 有用）不能用在 Batch 裡，帶了該筆會回 errored。被拒答的項目會以 `succeeded`＋`stop_reason: "refusal"` 回來，要自己挑出來重送 [ANT-REFUSAL]。
-- 強制 `tool_choice` 在 Opus 5.5 上一樣會 400，所以批次出題要用 `output_config.format` 拿結構化結果 [ANT-O55]、[ANT-SO]。
+- Opus 5.5 不支援強制 `tool_choice`。這是模型層級的限制，文件明寫 token counting 端點也一樣會擋；Batch 端點文件沒有另外寫，推定相同（未驗證）。所以批次出題直接用 `output_config.format` 拿結構化結果 [ANT-O55]、[ANT-SO]。
 - 如果改用 Worker 的 Cron 去收批次結果：付費方案下 Cron 觸發的 CPU 上限是 30 秒（間隔小於 1 小時）或 15 分鐘（間隔 1 小時以上），免費方案只有 10 ms；wall-clock 上限 15 分鐘 [CF-WLIMIT]。大批結果建議分頁取回、分次寫入。
 
 ### 3.4 Claude API 參數與計價需要更新
