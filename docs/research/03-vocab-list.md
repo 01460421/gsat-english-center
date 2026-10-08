@@ -163,7 +163,7 @@
 - 「依級別排序」：每頁三欄，每一級從欄內標題「第一級」…「第六級」開始，條目只有「詞彙＋詞類」。依本專案解析，各級的印刷頁範圍是：L1 p.1–9、L2 p.9–17、L3 p.17–26、L4 p.26–34、L5 p.34–43、L6 p.43–51（級與級的交界頁兩級並存）。
 - 「依字母排序」：每頁三欄，每筆是「詞彙＋詞類＋級別數字」。官方說明的例子：「broadcast v./n. 3，表示 broadcast 一字可當動詞（v.）與名詞（n.），屬於第三級詞彙。」[V111 p.III]
 - 字型：詞彙本體用 Arial 粗體 12pt，詞類用 Times New Roman 斜體 11pt，級別用 Times New Roman 11pt，級別標題用標楷體。三欄左緣固定在 x≈63.8／229.9／396.0 pt。條目太長會換行，續行有懸掛縮排（以上為本專案以 pdfplumber 量測）。
-- 附錄（p.104）：Cardinal Numbers、Ordinal Numbers、Days of the Week、Months、Seasons、Countries and Areas、Continents、The Principal Oceans of the World、Religions、Parts of Speech。**附錄詞沒有級別**，所以沒有收進主 JSON [V111 p.104]。
+- 附錄（p.104）：Cardinal Numbers、Ordinal Numbers、Days of the Week、Months、Seasons、Countries and Areas、Continents、The Principal Oceans of the World、Religions、Parts of Speech。**附錄詞沒有級別**，所以沒有收進主 JSON [V111 p.104]。編輯原則（21）也寫明這些「另列於附錄，以供參考」[V111 p.V]。附錄的完整內容見 §6.5。
 
 ### 3.2 編輯原則與標記法（依 [V111 p.III–V]，括號內是原則編號）
 
@@ -201,7 +201,7 @@
 
 補充數字（本專案計算）：
 
-- 不重複的主要詞形有 6,003 個，因為有 9 個字各出現在兩筆（§6.3）。主要詞形加上所有變體，共 6,191 個不重複詞形。
+- 不重複的主要詞形有 6,003 個，因為有 9 個字各出現在兩筆（§6.3）。主要詞形加上所有變體，不分大小寫共 6,191 個不重複詞形；區分大小寫的話是 6,192 個，差別在 `Internet/internet`。
 - 學測考試說明的「4,500 字詞」對應「第一至第五級」[spec115 p.2]。但 L1–L5 實際上有 5,010 筆，兩個數字並不相等。考試說明沒有解釋差異，App 一律以第 1–5 級的 5,010 筆為準。
 
 ---
