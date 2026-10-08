@@ -1262,7 +1262,7 @@
               },
               "scoring_notes": null,
               "tags": {
-                "clue": "lexical_link"
+                "clue": "lexical_cohesion"
               }
             },
             {
@@ -1983,7 +1983,7 @@
             {
               "kind": "photo",
               "caption": "中譯英題目右側的照片（無說明文字）",
-              "description": "黑白街景照片：兩家相鄰的店面。左邊店家的招牌是「公益彩券」，招牌下的橫布條寫著「推薦 隔壁很好吃」，旁邊畫一個指向右邊（隔壁）的箭頭；店門左側另有一條直式布條「買彩券做公益積功德」。右邊店家的招牌是「蚵仔煎」（招牌上另印有訂購專線電話），招牌下的橫布條寫著「隔壁很會中」，前面畫一個指向左邊（彩券行）的箭頭，布條右端有「中獎祝」字樣；店前立著兩面直式旗幟，都寫「蚵仔煎」。兩店騎樓前停著幾輛機車。照片呈現兩家店用創意布條互相推薦對方的情景，對應中譯英題目所說的「創意布條」。",
+              "description": "黑白街景照片：兩家相鄰的店面。左邊店家的招牌是「公益彩券」，招牌下的橫布條左端直排小字「推薦」，接著寫「隔壁很好吃」，後面畫一個指向右邊（隔壁）的箭頭；店門左側另有一條直式布條「買彩券做公益積功德」。右邊店家的招牌是「蚵仔煎」（招牌上另印有訂購專線電話），招牌下的橫布條寫著「隔壁很會中」，前面畫一個指向左邊（彩券行）的箭頭，布條右端有小字「祝中獎」（「祝」一行、「中獎」直排一行）；另有兩面寫著「蚵仔煎」的直式旗幟（一面立在兩店之間、一面立在右邊店門前）。兩店騎樓前停著幾輛機車。照片呈現兩家店用創意布條互相推薦對方的情景，對應中譯英題目所說的「創意布條」。",
               "rows": null
             }
           ],
@@ -2276,7 +2276,7 @@
     }
   ],
   "extraction": {
-    "method": "python-docx 讀 Word 版題本（paper-2.docx）為主＋pdftotext -layout 擷取 PDF 題本文字逐段比對＋Read 看 PDF 頁面影像（含 pdftoppm 高解析度裁切第48題選項圖、中譯英照片、作文圖表）人工校對；答案取自 answer.pdf（pdftotext）；評分原則取自 scoring.pdf（pdftotext＋頁面影像，NFC 正規化）；統計以 xlrd 讀 stats-1/2/3.xls",
+    "method": "python-docx 讀 Word 版題本（paper-2.docx）為主＋pdftotext -layout 擷取 PDF 題本文字逐段比對＋Read 看 PDF 頁面影像（含 pdftoppm 高解析度裁切第48題選項圖、中譯英照片、作文圖表）人工校對；答案取自 answer.pdf（pdftotext）；評分原則取自 scoring.pdf（pdftotext＋頁面影像，NFC 正規化）；統計以 xlrd 讀 stats-1/2/3.xls；verifier 查證：python-docx／pdftotext 程式逐字比對、xlrd 統計全數重比、pdfimages 擷取原圖放大核對照片與圖表",
     "issues": [
       "結構與 gsat-spec.json legacy_ast「98–110」期別一致：詞彙題 1–10（10 分）、綜合測驗 11–20（2 篇×5 題，10 分）、文意選填 21–30（12 個選項 A–L，10 分）、篇章結構 31–35（6 個選項 A–F，每題 2 分）、閱讀測驗 36–51（4 篇×4 題，32 分）、中譯英 2 題×4 分、英文作文 20 分（至少 120 個單詞），選擇題 72 分＋非選擇題 28 分＝100 分；考試時間 80 分鐘。",
       "中譯英兩小題與英文作文在題本中沒有接續選擇題的題號：中譯英依題本子題號填 no 1、2（label「翻譯1」「翻譯2」），作文 no 填 1（label「作文」），因此 validator 會出現「題號重複 [1, 2]」warning，屬預期（與 ast-109 等檔案的處理方式相同）。",
@@ -2289,11 +2289,12 @@
       "第38題選項的箭頭在 Word 與 PDF 中都是 Wingdings 符號（U+F0E0，私用區），轉成 Unicode「→」（U+2192），例如「Origin → nutrition → cuisine.」。",
       "第48題四個選項都是圖片（沒有文字），options 以「［圖］」開頭的文字描述各圖（格式同 gsat-110 第49題），s5g4 的 figures 另有完整描述（question_no 48）。依高解析度頁面影像判讀：(A)(D) 頭上有鹿一樣分叉的大角、(C) 只有前半身有條紋且後半身淺灰色、(B) 無角且臀部與四肢有白色橫條紋＝官方答案 B。",
       "中譯英題目右側有一張無說明文字的照片（兩家相鄰店面用「隔壁很好吃」「隔壁很會中」布條互相推薦），已在 s6g1 figures 以文字描述；招牌上的訂購專線電話未抄錄。作文提示右側的橫條圖「美國青年關注之新聞類別」已轉成 rows（六個類別與百分比）。",
-      "題本的斜體（tempeh、tempe、kimchi、miso、batik、De Revolutionibus）與粗體（第45題題幹的 want、第50題題幹的 whiff 及第48–51題選文第三段的 whiff）依規定不保留格式；第48–51題選文的 20th 原為上標 th。",
+      "題本的斜體（第36–39題選文與第37–39題題幹、選項中的 tempeh、tempe、kimchi、miso、batik，以及第31–35題選文的 De Revolutionibus）與粗體（第44–47題選文第一段 For want of 的 want 與第45題題幹的 want、第50題題幹的 whiff 及第48–51題選文第三段的 whiff）依規定不保留格式；第48–51題選文的 20th 原為上標 th。",
       "文字以 Word 版（paper-2.docx）為主，並與 pdftotext 擷取的 PDF 文字及 PDF 頁面影像逐段比對（所有題幹、選項、選文、選項庫比對一致）；空格（底線＋題號）改寫為 [[題號]]，段落間以換行分隔。Word 檔中的不換行空格（U+00A0，第21–30題選文 a museum、第31–35題選文 work to／Revolutionibus, and）改為一般空格；第5題題幹 Word 內的軟換行以空格接起；選項尾端多餘空格（第5題 portable、第17題 then、第18題 Vitally）已去除。第16–20題選文的 fiber-optic 在 PDF 中正好斷在行尾連字號，Word 版確認原字為 fiber-optic。第11–15題選文 Folake Folarin–Coker 的連接號為 en dash（U+2013「–」）而非一般連字號，照原文保留。",
       "中譯英兩題在題本中換行（「…也刺激了買氣的／成長。」「…且常能帶給人們／會心的一笑。」），已直接接起不加空格。作文 stem 取自 Word 版的「提示：」內容（去掉「提示：」前綴，同 ast-109）；PDF 文字層在數字前後有空格（「美國 18 至 29 歲」「至少 120 個單詞」），Word 版沒有，屬排版差異，採 Word 版。",
-      "標註說明：第12題 where 為關係副詞（answer_pos 標 adverb、grammar_point relative_clause）；第31–35題 clue 依接續線索判斷（31 段落主題句、32 however 轉折、33 This 指前句主張、34 Other ministers 呼應 Martin Luther、35 this act 指獻書給教宗）；第48題圖片辨識需整合選文多處外觀描述，item_type 標 synthesis（同 gsat-110 第49題）。"
+      "標註說明：第12題 where 為關係副詞（answer_pos 標 adverb、grammar_point relative_clause）；第31–35題 clue 依接續線索判斷（31 段落主題句、32 however 轉折、33 This 指前句主張、34 Other ministers 呼應 Martin Luther、35 this act 指獻書給教宗）；第48題圖片辨識需整合選文多處外觀描述，item_type 標 synthesis（同 gsat-110 第49題）。",
+      "查證（verifier）：答案 51 題逐題對照 answer.pdf 文字層與頁面影像，全部相符；題幹、選項、選文、選項庫、各大題說明以程式逐字比對 Word 版（paper-2.docx）與 PDF 文字層（pdftotext），只有空格題號與標點間的排版空白差異，並以頁面影像核對第2–7頁；8篇選文段落數（3／3／5／4／5／4／4／4）與字數（177／170／342／271／321／320／289／354）與 PDF 一致（PDF 的 fiber-optic 斷在行尾，wc -w 多算 1 字）；51 題統計（P、Ph、Pl、D 與 T 列各選項比例）以 xlrd 全數重新比對，非選擇題得分分布 34 列全部相符；評分原則 scoring_notes 以 NFC 正規化後逐段比對 scoring.pdf 文字層與影像相符。修正：中譯英照片描述中右側布條的小字由「中獎祝」改為依直排由右至左的讀法「祝中獎」，並補述左側布條的「推薦」為布條左端的直排小字、兩面「蚵仔煎」旗幟的位置；第34題 clue 由 lexical_link 改為其他檔案通用的 lexical_cohesion（Martin Luther ↔ Other ministers 的詞彙銜接）。"
     ],
-    "verified_by": null
+    "verified_by": "verifier"
   }
 }

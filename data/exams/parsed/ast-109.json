@@ -2224,14 +2224,15 @@
       "中譯英兩小題與英文作文在題本中沒有接續選擇題的題號：中譯英依題本子題號填 no 1、2（label「翻譯1」「翻譯2」），作文 no 填 1（label「作文」），因此 validator 會出現「題號重複 [1, 2]」warning，屬預期。",
       "評分原則（scoring-1.pdf）未公布中譯英參考譯文，兩題 answer 填 null；scoring_notes 逐字收錄評分原則中的通則（每個錯誤扣 0.5 分）與該句的用字／時態重點（如 upper-middle class、beforehand 或 in advance、apply for、online tour、explore、cultural treasure）。作文 answer 依規定填 null。",
       "非選擇題得分分布（stats-3.xls 工作表「2」）是以大題為單位：「第一題(滿分:8分)」為中譯英兩小題合計、「第二題(滿分:20分)」為作文，無法拆到小題，所以放在 s6、s7 的 section 層級 stats.score_distribution（schema 未定義此欄位，屬擴充）；percent 為除以報考人數 43,609（含缺考 2,058 人）後的 0–1 小數。",
-      "選擇題統計：correct_rate／high_group／low_group／discrimination 取自 stats-1.xls「英」工作表的 P、Ph、Pl、D 欄；option_rates 取自 stats-2.xls「英」的 T（全體）列。已逐題核對 stats-2 標 * 的選項＝官方答案、T 列答對選項百分比＝P。未答比例（0–2%）未放入 option_rates，所以各題加總可能略小於 1。",
+      "選擇題統計：correct_rate／high_group／low_group／discrimination 取自 stats-1.xls「英」工作表的 P、Ph、Pl、D 欄；option_rates 取自 stats-2.xls「英」的 T（全體）列。已逐題核對 stats-2 標 * 的選項＝官方答案、T 列答對選項百分比＝P。未答比例未放入 option_rates：只有第25、40、48、50、51題的 T 列未答為 1%，其餘題目都是 0%，所以這 5 題的選項加總約為 0.99。",
       "第貳部分（非選擇題）有一段總說明（「本部分共有二題…不得使用鉛筆。」），schema 沒有對應欄位，放在 s6 的 part_instructions（擴充欄位）。",
       "題本中的粗體（第37題 NOT、選文中的 POP-riddled、practice、dilemma）與斜體（Nature Ecology & Evolution、hordearii、Ka Mate、Kapa o Pango、第51題插入句）依規定不保留格式；第36題選文的 mid-19th 原為上標 th。",
       "scoring-1.pdf 的文字層含 CJK 相容表意字（如 U+F98E 年、U+F978 兩、U+FA2C 館），scoring_notes 已以 Unicode NFC 正規化為標準字形，並核對頁面影像。",
       "題本第44題題號後缺空格（印為「44.Which」），不影響 stem 內容。第21–30題選文中的年份區間使用全形連字號「－」（1890－1963、1912－1942），照原文保留。",
       "文字以 Word 版（paper-2.docx）為主，並與 pdftotext -layout 擷取的 PDF 文字及 PDF 頁面影像逐段比對；空格（底線＋題號）改寫為 [[題號]]，段落間以換行分隔。",
-      "結構與 gsat-spec.json legacy_ast「98–110」期別一致：詞彙 1–10（10 分）、綜合測驗 11–20（2 篇×5 題，10 分）、文意選填 21–30（12 選項，10 分）、篇章結構 31–35（6 選項，每題 2 分）、閱讀測驗 36–51（4 篇×4 題，32 分）、中譯英 2 題×4 分、英文作文 20 分（至少 120 個單詞），選擇題 72 分＋非選擇題 28 分＝100 分。"
+      "結構與 gsat-spec.json legacy_ast「98–110」期別一致：詞彙 1–10（10 分）、綜合測驗 11–20（2 篇×5 題，10 分）、文意選填 21–30（12 選項，10 分）、篇章結構 31–35（6 選項，每題 2 分）、閱讀測驗 36–51（4 篇×4 題，32 分）、中譯英 2 題×4 分、英文作文 20 分（至少 120 個單詞），選擇題 72 分＋非選擇題 28 分＝100 分。",
+      "查證（verifier）：51 題答案逐題對照 answer-1.pdf 頁面影像；全部選項、題幹、選項庫與 8 篇選文都和 paper-2.docx 逐字比對，並以 pdftotext 4-gram 全覆蓋與字數（156/192/288/229/295/293/346/363）核對 PDF；也看過 paper-1.pdf 第 2–8 頁影像，本卷沒有圖表；51 題的 P/Ph/Pl/D 與 option_rates 全部對照 stats-1/2；stats-3 兩大題的分布逐列核對；scoring_notes 逐句核對 scoring-1.pdf。raw 目錄中的 paper-3.pdf、paper-4.docx、answer-2.pdf、scoring-2.pdf 是 109 補考的檔案，本卷沒有使用。"
     ],
-    "verified_by": null
+    "verified_by": "verifier"
   }
 }

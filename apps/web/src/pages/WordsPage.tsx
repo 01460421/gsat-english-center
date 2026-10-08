@@ -6,9 +6,7 @@ export default function WordsPage() {
     <ModulePage page={getPage('/words')}>
       <InfoSection title="詞表範圍">
         <p>
-          以大學入學考試中心《高中英文參考詞彙表（111 學年度起適用）》為主表，共 6,012 筆，Level 1–6 各約 1,000 筆。
-          學測以高中常用 4,500 字詞（Level 1–5）為命題範圍，本站以 Level 3–5 為練習主力，Level 1–2 當作基礎複習，Level 6
-          當作進階挑戰。
+          以大學入學考試中心《高中英文參考詞彙表（111 學年度起適用）》為主表，共 6,012 筆，Level 1–6 各約 1,000 筆。學測以高中常用 4,500 字詞（Level 1–5）為命題範圍，本站以 Level 3–5 為練習主力，Level 1–2 當作基礎複習，Level 6 當作進階挑戰。
         </p>
       </InfoSection>
       <InfoSection title="規劃中的功能">

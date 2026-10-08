@@ -2251,8 +2251,9 @@
    "統計：答對率 P、高分組 Ph、低分組 Pl、鑑別度 D 取自 stats-1.xls 英文科工作表（工作表 2；報考 93,595、缺考 4,893、到考 88,702 人）；option_rates 取自 stats-2.xls 選項分析的「T」（全體）列，未含「未答」比例，所以各題 option_rates 加總小於 1（例如第28題未答 24%、第23題 23%）。stats-2 的高／低分組各選項比例（H／L 列）沒有放入（schema 無對應欄位）。",
    "統計交叉核對：56 題選項分析標「*」的選項與官方答案全部一致；stats-1 與 stats-2 只有 2 處差 1 個百分點（第24題答對率 42 vs 43、第48題低分組 40 vs 41），推測為四捨五入差異，以 stats-1 為準。",
    "非選擇題統計（stats-3.xls 英文科工作表）只有各大題得分分布（第一題＝翻譯 0–8 分、第二題＝作文 0–20 分；例如翻譯 0–0.99 分 18,973 人、作文 0–0.99 分 13,544 人），不是逐題答對率，schema 沒有對應欄位，因此翻譯與作文的 stats 填 null。",
-   "標註說明：第24題 Such（such a + N）屬限定詞，answer_pos 無對應值故省略，grammar_point 記 determiner；第19題 more（more of these … than）answer_pos 記 pronoun；第49題題幹雖問 most likely，選文明寫 “that is probably the reason”，item_type 記 detail；第52題由第三段 “I am a valuable person who strives to achieve and accomplish” 推得，記 inference。"
+   "標註說明：第24題 Such（such a + N）屬限定詞，answer_pos 無對應值故省略，grammar_point 記 determiner；第19題 more（more of these … than）answer_pos 記 pronoun；第49題題幹雖問 most likely，選文明寫 “that is probably the reason”，item_type 記 detail；第52題由第三段 “I am a valuable person who strives to achieve and accomplish” 推得，記 inference。",
+   "查證（verifier）：獨立重新核對，未發現需要修正的內容。核對範圍：(1) 56 題選擇題答案逐題比對 answer.pdf 第3頁英文考科（pdftotext 文字層＋頁面影像），全部一致；(2) 第1–56題全部題幹、選項（含選項代號與文字的對應）、文意選填選項庫 A–J、篇章結構選項庫 A–E 與 9 篇選文，和 pdftotext -layout 擷取結果逐詞（含標點、大小寫）以 difflib 比對，差異只有空格寫法（[[題號]]、______）與第50題 <u> 標記；另與自行 soffice 轉 docx 後以 python-docx 重抽的 Word 文字比對，唯一差異就是第11–15題組 “different— they”，以 400 dpi 影像確認 PDF 確實在破折號後有空格；(3) 9 篇選文段落數（1／3／1／1／2／3／4／3／3）與詞數（124／142／139／129／235／209／296／304／203，[[題號]] 計為一詞；pdftotext 為 126／144／139／130／235／209／296／304／203，差額是空格題號與後接標點被拆開的 5 處）一致，空格位置與原文相符；第46–49題組末句 “out of favor.” 在低解析影像像逗號，放大確認為句點；本卷沒有圖表；(4) 統計 56 題全部以程式比對：P／Ph／Pl／D 與 stats-1.xls 英文科工作表、option_rates 與 stats-2.xls T 列逐題逐選項一致且已換成 0–1，標「*」選項＝官方答案；stats-1 與 stats-2 只有第24題 P（42／43）與第48題低分組（40／41）差 1，已如上說明；stats-3 確認只有翻譯（第一題 0–8 分）與作文（第二題 0–20 分）的得分分布；(5) 翻譯題目、作文說明與提示、評分標準與表一，逐字對照 scoring.pdf 第4–5頁文字層與影像，翻譯參考答案大括號圖以 300 dpi 放大逐格核對轉寫無誤；(6) tags 逐題檢視，未見明顯錯誤。"
   ],
-  "verified_by": null
+  "verified_by": "verifier"
  }
 }

@@ -1440,7 +1440,7 @@
     }
   ],
   "extraction": {
-    "method": "官方 Word 版（paper-2.doc → soffice 轉 docx → python-docx）取文字，並以 run 的底線屬性核對每個空格位置、斜體屬性核對舞台說明；與 pdftotext -layout 題本逐段比對；以 Read 逐頁檢視題本 PDF 影像（8 頁，含封面）確認版面、段落、斜體／底線與作文提示中的回信格式方框；答案檔為五科合併的掃描檔（無文字層），以 pdftoppm 200dpi 轉圖、裁切英文欄放大，用 Read 看影像逐題抄錄，再以整頁影像複核。",
+    "method": "官方 Word 版（paper-2.doc → soffice 轉 docx → python-docx）取文字，並以 run 的底線屬性核對每個空格位置、斜體屬性核對舞台說明；與 pdftotext -layout 題本逐段比對；以 Read 逐頁檢視題本 PDF 影像（8 頁，含封面）確認版面、段落、斜體／底線與作文提示中的回信格式方框；答案檔為五科合併的掃描檔（無文字層），以 pdftoppm 200dpi 轉圖、裁切英文欄放大，用 Read 看影像逐題抄錄，再以整頁影像複核。；查證（verifier）：答案檔第1頁以 200dpi 重新轉圖、裁切英文欄（1–30、31–50 兩欄）逐題核對 50 題答案（含第45題「B或C」，並看第2頁確認只有社會、自然）；以 python 將全部 50 題的選項（200 個）、題幹、各大題說明、9 篇選文／對話（含 [[題號]] 位置）、中譯英 5 句與作文提示，分別和 Word 版（python-docx）及 pdftotext -layout 逐詞比對，全部一致；以 Read 逐頁看題本 PDF 影像（第2–8頁）複核段落數、空格位置與作文回信格式方框（另由 docx 內嵌圖放大確認「Dear George:」為冒號）。",
     "issues": [
       "答案來源：answer.pdf（units.json 標 quality \"none\"）為無文字層的掃描檔，標題「八十四學年度大學入學考試中心學科能力測驗參考答案」，第1頁為國文、英文、數學合併答案表，第2頁為社會、自然；以 pdftoppm 200dpi 轉圖並裁切英文欄，用 Read 看影像逐題抄錄第1–50題，再以 100dpi 整頁影像複核一次（確認抄的是「英文」欄）。",
       "第45題官方答案為「B或C」（兩者皆給分）：answer 填答案檔先列的 B，accepted_answers 填 [\"C\"]，scoring_notes 逐字記「答案檔原文：「B或C」」。統計分析或判分時須把 B、C 都視為正確。",
@@ -1453,6 +1453,6 @@
       "文字來源與正規化：以官方 Word 版為主要文字來源，與 pdftotext -layout 及題本 PDF 影像逐段比對，三者文字一致。pdftotext 把第31–40題選文末行「some of which offer good food and gorgeous views.」因左右對齊拆成逐字母、把「[[33]] ,」拆到兩行，皆以 Word 版與影像確認。句間兩個空白一律改為一個；詞彙題空格一律寫成 ______（前後各一空格、標點前不留空格）；第1–3、4–5、6–8、9–10、21–30、31–40、41–43、44–46、47–50「題為題組」標題為題本中的分組標示，以 group 呈現，未另存文字。斜體（舞台說明、署名）不保留格式。",
       "標註：第24題（Few children ...）、第35題（a number of）的正確選項為限定詞／冠詞，schema 無此詞類，未填 answer_pos。第34題 For those who ... 的 test_point 以介系詞語意（as for）標為 word_meaning。閱讀第50題為「NOT true」題，依其他年度慣例標 detail。各題組 sdgs 依主題判斷：飲酒（3）、電腦犯罪（16）、大型車的交通死亡與耗油污染壅塞（3、11、12）、領航鯨擱淺救援（14），其餘為空陣列。"
     ],
-    "verified_by": null
+    "verified_by": "verifier"
   }
 }

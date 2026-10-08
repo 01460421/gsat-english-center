@@ -142,8 +142,13 @@ export interface ExamSection {
 // group（題組）
 // ---------------------------------------------------------------------------
 
-/** 選項代號：單一大寫字母。檢查工具接受 A–L（文意選填 10 個、句子配合題最多 12 個）。 */
-export const OPTION_LETTERS = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L'] as const;
+/**
+ * 選項代號：單一大寫字母。規格文件沒有限制上限，這裡列到實際題本出現過的最大值：
+ * 現制文意選填 A–J、句子配合題最多 12 個，83 學年度學測的「文意閱讀選填」印了 15 個選項（A–O，
+ * 見 data/exams/parsed/gsat-83.json 的 extraction.issues）。
+ * tools/validate_exam.py 目前只接受 A–L，要放寬成 A–O 才會和這裡一致；之後若有題本超過 O，兩邊一起擴充。
+ */
+export const OPTION_LETTERS = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O'] as const;
 export type OptionLetter = (typeof OPTION_LETTERS)[number];
 
 /** `{ "A": "hasty", "B": "tight", ... }`。不是每個字母都會出現，所以用 Partial。 */
@@ -182,8 +187,11 @@ export interface QuestionGroup {
   /** word_bank／structure／sentence_matching 的共用選項庫；其他類型為 null。 */
   options_bank: OptionMap | null;
   questions: Question[];
-  /** 題組層級標註；詞彙題等沒有選文的題組可能是 null。 */
-  tags: GroupTags | null;
+  /**
+   * 題組層級標註。沒有選文的題組（詞彙題、翻譯、作文）沒有可標的主題與文體，可能整個省略或為 null；
+   * tools/validate_exam.py 也接受省略，所以型別標成選填，使用時要處理 undefined。
+   */
+  tags?: GroupTags | null;
 }
 
 // ---------------------------------------------------------------------------
@@ -231,7 +239,8 @@ interface QuestionBase {
   stats: QuestionStats | null;
   /** 非選擇題：評分原則中與本題相關的逐字內容。 */
   scoring_notes: string | null;
-  tags: QuestionTags;
+  /** 小題標註。原則是「不確定就省略、不要猜」，validate_exam.py 也接受整個省略，所以是選填。 */
+  tags?: QuestionTags | null;
 }
 
 /** 單選題、共用選項庫的選擇題：答案是一個選項代號。 */

@@ -36,7 +36,7 @@ export function InfoSection({ title, children }: { title: string; children: Reac
   return (
     <section className="rounded-2xl border border-line bg-surface p-5 lg:p-6">
       <h2 className="text-lg font-semibold">{title}</h2>
-      <div className="mt-2 space-y-2 text-[0.95rem] [&_li]:ml-5 [&_li]:list-disc [&_ul]:space-y-1">{children}</div>
+      <div className="mt-2 space-y-2 text-[0.95rem] [&_ol]:space-y-1 [&_ol>li]:ml-5 [&_ol>li]:list-decimal [&_ul]:space-y-1 [&_ul>li]:ml-5 [&_ul>li]:list-disc">{children}</div>
     </section>
   );
 }

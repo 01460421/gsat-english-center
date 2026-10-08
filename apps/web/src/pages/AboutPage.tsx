@@ -110,8 +110,7 @@ export default function AboutPage() {
       <div className="grid gap-4">
         <InfoSection title={`關於${APP_NAME}`}>
           <p>
-            {APP_NAME}是為台灣高中生打造的學測英文備考網頁 App，涵蓋單字、各題型練習、歷屆試題與模擬考。
-            AI 功能（出題、批改、詳解與範文）使用 Anthropic 的 Claude。
+            {APP_NAME}是為台灣高中生打造的學測英文備考網頁 App，涵蓋單字、各題型練習、歷屆試題與模擬考。AI 功能（出題、批改、詳解與範文）使用 Anthropic 的 Claude。
           </p>
           <p className="text-sm text-muted">
             本站與大學入學考試中心沒有任何關係，也未經其授權或背書。「大考中心」「大學入學考試中心」「CEEC」為財團法人大學入學考試中心基金會的註冊商標。

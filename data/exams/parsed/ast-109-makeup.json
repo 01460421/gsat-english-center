@@ -1319,9 +1319,9 @@
     }
   ],
   "extraction": {
-    "method": "python-docx 讀 Word 版題本（paper-4.docx）為主，以底線 run 定位空格；pdftotext -layout 擷取 PDF 題本（paper-3.pdf）文字逐段交叉比對；Read 看 PDF 全部頁面影像人工校對（粗體、上標、段落、空格位置）；答案取自 answer-2.pdf（pdftotext＋頁面影像核對）；評分原則取自 scoring-2.pdf（pdftotext，Unicode NFC 正規化，並核對頁面影像）",
+    "method": "python-docx 讀 Word 版題本（paper-4.docx）為主，以底線 run 定位空格；pdftotext -layout 擷取 PDF 題本（paper-3.pdf）文字逐段交叉比對；Read 看 PDF 全部頁面影像人工校對（粗體、上標、段落、空格位置）；答案取自 answer-2.pdf（pdftotext＋頁面影像核對）；評分原則取自 scoring-2.pdf（pdftotext，Unicode NFC 正規化，並核對頁面影像）；查證者（verifier）另以 answer-2.pdf 頁面影像逐題核對 51 題答案、以 pdftotext token 序列與 python-docx 逐字比對全部選文／題幹／選項（含空格位置），並看 PDF 全部 8 頁影像確認無圖表",
     "issues": [
-      "大考中心未公布 109 學年度指考補考的統計資料：units.json 的這份考卷沒有 stats 檔，ast/109 目錄中的 stats-1/2/3.xls 是正式考試的資料（標題「109學年度指定科目考試」，國文報考人數 42,709），不適用於補考。所以全部小題 stats 填 null，sources.stats 為空陣列；validator 的「整份考卷沒有任何統計資料」warning 屬預期。",
+      "大考中心未公布 109 學年度指考補考的統計資料：units.json 的這份考卷沒有 stats 檔，ast/109 目錄中的 stats-1/2/3.xls 是正式考試的資料（標題「109學年度指定科目考試」，國文報考人數 42,709），不適用於補考（查證：stats-2.xls 英文科選項分析的星號正答與 ast-109 正式考試 51 題答案 51/51 全部相同，與本補考答案只有 7/51 相同，確認是正式考試的統計）。所以全部小題 stats 填 null，sources.stats 為空陣列；validator 的「整份考卷沒有任何統計資料」warning 屬預期。",
       "中譯英兩小題與英文作文在題本中沒有接續選擇題的題號：中譯英依題本子題號填 no 1、2（label「翻譯1」「翻譯2」），作文 no 填 1（label「作文」），與 ast-109.json 的做法相同，因此 validator 會出現「題號重複 [1, 2]」warning，屬預期。",
       "評分原則（scoring-2.pdf）只列出字詞譯法，沒有公布中譯英的完整參考譯文，所以兩題 answer 填 null、accepted_answers 填 null；scoring_notes 逐字收錄評分原則的通則（每個錯誤扣 0.5 分，相同的錯誤只扣一次）、該句的用字重點（第1句：no longer、limited to、formal/regular education、non-formal/informal learning；第2句：volunteer/voluntary services/work、different backgrounds and ages、interact with），以及末句「考生必須句法使用正確，且用字、拼字皆正確才能得到滿分。」，三段之間以換行分隔。作文 answer 依規定填 null，scoring_notes 收錄評分原則的作文段落全文。",
       "scoring-2.pdf 的文字層含 CJK 相容表意字（如 U+F98E 年、U+F978 兩、U+F967 不、U+F969 數、U+F96F 說），scoring_notes 已以 Unicode NFC 正規化為標準字形，並核對頁面影像；PDF 換行處在英文字詞之間補一個空格（如 formal/regular education、different backgrounds and ages）。",
@@ -1333,6 +1333,6 @@
       "文字以 Word 版（paper-4.docx）為主，空格（底線＋題號）以底線 run 定位後改寫為 [[題號]]，段落間以換行分隔；全文與 pdftotext -layout 擷取的 PDF 文字逐字比對一致，並核對 PDF 全部頁面影像。答案 51 題取自 answer-2.pdf，並看頁面影像核對。",
       "結構與 gsat-spec.json legacy_ast「98–110」期別（該期別列的是正式考試，scope_note 註明不含補考）完全一致：詞彙題 1–10（10 分）、綜合測驗 11–20（2 篇×5 題，10 分）、文意選填 21–30（12 個選項 A–L，10 分）、篇章結構 31–35（6 個選項 A–F，每題 2 分）、閱讀測驗 36–51（4 篇×4 題，32 分）、中譯英 2 題×4 分、英文作文 20 分（至少 120 個單詞），選擇題 72 分＋非選擇題 28 分＝100 分；考試時間 80 分鐘（題本封面）。"
     ],
-    "verified_by": null
+    "verified_by": "verifier"
   }
 }

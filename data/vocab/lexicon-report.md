@@ -1,0 +1,182 @@
+# 單字資料管線報告（lexicon）
+
+> 本檔由 `tools/build_vocab.py build` 產生，請勿手動修改。數字全部是本專案計算。
+> 輸入：`data/vocab/ceec-wordlist.json`（6,012 筆）與 `data/vocab/sources.json` 列出的原始檔。
+
+## 1. 輸出檔
+
+| 檔案 | 大小 | sha256 |
+|---|---:|---|
+| `data/vocab/CREDITS.md` | 11,162 bytes | `860efa669b60895bb64781b99bf643f3e72f9b60c3c6e6ebf73a95a8ee0fa1ae` |
+| `data/vocab/forms-index.json` | 1,247,429 bytes | `e4ccc9507755989b6c05cd9f1cb5688751be46b7f02824333772ee68e669389f` |
+| `data/vocab/lexicon.json` | 22,431,541 bytes | `b1c6336dcc4cbb5e7f4c167e650f1af0a0a8c7a68fc8e0eaf1f482582fa169a0` |
+
+- 條目數 6,012；forms-index 詞形數 17,162。lexicon.json 上限 25 MB，未超過，輸出單一檔。
+- forms-index 各型態的（詞形, 條目）組數：comparative 270、derived_ment 61、derived_suffix 1、lemma 6,012、past 2,675、past_participle 2,648、plural 4,182、plural_rule 320、plural_usual 22、present 3、present_participle 2,714、pronoun_case 24、slash 85、superlative 219、third_person 2,604。其中 `plural_rule` 是 ECDICT 沒列複數的 320 筆名詞依規則補上的複數。
+- forms-index 中對應到多個條目的詞形：136 個（例如 accounting, advanced, am, armed, arms, backward, basics, bathed, being, best, better, bit）。
+- OpenCC：opencc 1.4.2（s2twp）。重跑一致性：`python3 tools/build_vocab.py check` 會在暫存目錄重建並逐位元比對，上表 sha256 也可以直接比對。
+
+## 2. 各欄位非空比例（依級別）
+
+| 欄位 | L1 | L2 | L3 | L4 | L5 | L6 | **L3–5** | 全部 |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| 條目數 | 1,002 | 1,002 | 1,002 | 1,002 | 1,002 | 1,002 | 3,006 | 6,012 |
+| variants（有變體） | 3.6% | 4.5% | 1.9% | 2.7% | 0.7% | 3.4% | 1.8% | 2.8% |
+| forms（ECDICT 屈折形） | 80.6% | 86.5% | 86.5% | 83.6% | 84.2% | 80.6% | 84.8% | 83.7% |
+| ipa | 99.8% | 99.8% | 99.9% | 99.8% | 99.9% | 99.5% | 99.9% | 99.8% |
+| 　ipa 來自 ECDICT | 99.5% | 99.5% | 99.8% | 99.6% | 99.9% | 99.0% | 99.8% | 99.6% |
+| zh（ECDICT 中文） | 100.0% | 100.0% | 100.0% | 100.0% | 100.0% | 100.0% | 100.0% | 100.0% |
+| 　zh 有詞性相符的行 | 99.4% | 99.5% | 99.9% | 100.0% | 100.0% | 99.5% | 100.0% | 99.7% |
+| en_def | 95.6% | 98.7% | 99.7% | 99.4% | 99.6% | 99.8% | 99.6% | 98.8% |
+| 　en_def 來自 OEWN | 95.1% | 98.6% | 99.7% | 99.3% | 99.6% | 99.4% | 99.5% | 98.6% |
+| wordnet（依條目詞類有義項） | 95.1% | 98.6% | 99.7% | 99.3% | 99.6% | 99.4% | 99.5% | 98.6% |
+| 　≥1 義項有例句 | 81.2% | 77.6% | 73.1% | 80.3% | 74.9% | 70.4% | 76.1% | 76.2% |
+| 　≥1 義項有同義詞 | 88.2% | 89.7% | 87.9% | 89.4% | 88.2% | 87.4% | 88.5% | 88.5% |
+| 　同義詞中有詞彙表內的字 | 71.2% | 69.2% | 65.1% | 66.6% | 63.0% | 58.9% | 64.9% | 65.6% |
+| 　antonyms | 31.5% | 24.3% | 19.7% | 22.3% | 17.8% | 14.1% | 19.9% | 21.6% |
+| 　hypernyms | 76.9% | 84.4% | 81.5% | 80.0% | 83.5% | 81.8% | 81.7% | 81.4% |
+| 　derivations（詞彙表內） | 21.2% | 30.3% | 28.1% | 44.1% | 31.8% | 26.1% | 34.7% | 30.3% |
+| family（有同詞族條目） | 23.1% | 32.5% | 29.1% | 45.0% | 31.5% | 26.1% | 35.2% | 31.2% |
+| examples ≥1 | 99.9% | 97.2% | 90.8% | 82.0% | 65.9% | 50.0% | 79.6% | 81.0% |
+| examples ≥3 | 99.3% | 87.4% | 66.0% | 47.3% | 23.6% | 10.8% | 45.6% | 55.7% |
+| examples =5 | 97.6% | 77.5% | 45.3% | 28.0% | 8.6% | 2.9% | 27.3% | 43.3% |
+| 　例句全部在級別內（≤level+1） | 92.6% | 65.0% | 55.6% | 52.1% | 41.4% | 33.6% | 49.7% | 56.7% |
+| Tatoeba 候選句 ≥1（tatoeba_count） | 100.0% | 98.5% | 95.4% | 90.7% | 78.5% | 65.4% | 88.2% | 88.1% |
+| Tatoeba 候選句 ≥3 | 99.8% | 93.8% | 79.4% | 63.8% | 39.9% | 23.0% | 61.0% | 66.6% |
+| cefr | 99.4% | 96.0% | 88.8% | 88.1% | 73.8% | 51.6% | 83.6% | 83.0% |
+| freq.frq | 98.8% | 99.0% | 99.2% | 99.5% | 99.8% | 99.3% | 99.5% | 99.3% |
+| freq.bnc | 98.8% | 98.8% | 99.2% | 99.7% | 99.2% | 98.0% | 99.4% | 99.0% |
+| internal_core_flag = true | 92.4% | 78.3% | 49.4% | 38.3% | 12.4% | 2.0% | 33.4% | 45.5% |
+| internal_star 有值 | 97.9% | 95.6% | 95.4% | 92.7% | 95.6% | 88.0% | 94.6% | 94.2% |
+| cambridge_url | 100.0% | 100.0% | 100.0% | 100.0% | 100.0% | 100.0% | 100.0% | 100.0% |
+
+說明：
+- `wordnet` 只算條目詞類對應的 WordNet 詞性（n.、v.、adj.、adv.；aux. 視為 v.）。prep.、conj.、pron.、art. 在 WordNet 沒有對應，所以 L1–2 的功能詞比例較低。
+- `zh 有詞性相符的行`：ECDICT 中文的行首詞性（vt.、n.、a.…）屬於條目詞類，介面可預設只顯示這些行。
+- `Tatoeba 候選句`：含該條目任一詞形（原形、變體、屈折形）且有中文翻譯的英文句數，未套用句長與作者條件；`examples` 是套用句長 6–20、作者必填（CC0 例外）、去重後實際收錄的句子（最多 5 句）。
+
+## 3. 與 04 文件 §2.3（Level 3–5 共 3,006 筆）比較
+
+| 資料 | 指標 | 04 文件 | 本次 | 差異說明 |
+|---|---|---:|---:|---|
+| ECDICT | 收錄且有中文釋義 | 3,006（100%） | 3,006（100.0%） | |
+| ECDICT | 有 Collins 星級 | 2,843（94.6%） | 2,843（94.6%） | 欄位改名 `internal_star` |
+| ECDICT | `oxford`=1 | 1,003（33.4%） | 1,003（33.4%） | 欄位改名 `internal_core_flag` |
+| ECDICT | 有 `frq` | 2,991（99.5%） | 2,991（99.5%） | 0 視為缺值 |
+| ECDICT | 有 `exchange` | 2,557（85.1%） | 2,549（84.8%） | 本次只算詞頭（或第一個查得到的變體）那一列 |
+| OEWN 2025 | 收錄 | 2,996（99.7%） | 2,992（99.5%） | 本次限條目詞類；不限詞類見下一列 |
+| OEWN 2025 | 收錄（不限詞類） | 2,996（99.7%） | 2,996（99.7%） | |
+| OEWN 2025 | 至少一個 synset 有其他成員 | 2,690（89.5%） | 2,661（88.5%） | 限條目詞類 |
+| OEWN 2025 | 有上位詞 | 2,547（84.7%） | 2,456（81.7%） | 限條目詞類 |
+| OEWN 2025 | synset 附例句 | 2,369（78.8%） | 2,287（76.1%） | 限條目詞類 |
+| Tatoeba 英中對照 | ≥1 句含該詞（含屈折形） | 2,652（88.2%） | 2,652（88.2%） | |
+| Tatoeba 英中對照 | ≥3 句 | 1,840（61.2%） | 1,835（61.0%） | |
+| Tatoeba（收錄） | examples ≥1 | — | 2,392（79.6%） | 句長 6–20、作者必填 |
+| Tatoeba（收錄） | examples ≥3 | — | 1,371（45.6%） | |
+
+## 4. CEFR 對照分布（與 04 文件 §5.3 比較）
+
+本次用 CEFR-J **1.6**（ALL_sep 工作表，斜線並列已拆開）加 Octanove C1–C2；04 文件用的是 1.5。同一詞多個詞性時，先取和條目詞類相符的詞性中最低級，沒有相符的才取全部詞性中最低級。
+
+| 大考級數 | 筆數 | A1 | A2 | B1 | B2 | C1 | C2 | 無對照 |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| L1 | 1,002 | 741 | 202 | 44 | 9 | 0 | 0 | 6 |
+| L2 | 1,002 | 129 | 412 | 320 | 99 | 2 | 0 | 40 |
+| L3 | 1,002 | 28 | 248 | 412 | 194 | 7 | 1 | 112 |
+| L4 | 1,002 | 10 | 95 | 461 | 292 | 24 | 1 | 119 |
+| L5 | 1,002 | 1 | 16 | 216 | 416 | 76 | 14 | 263 |
+| L6 | 1,002 | 2 | 19 | 115 | 272 | 89 | 20 | 485 |
+
+04 文件 §5.3 的「無對照」：L1 7、L2 40、L3 112、L4 119、L5 263、L6 483。
+
+## 5. 音標字元統一
+
+- 來源：ECDICT 5,985 筆，OEWN 補 14 筆，仍缺 13 筆。
+- 輸出音標使用的字元：`␠` `(` `)` `,` `-` `a` `b` `d` `e` `f` `h` `i` `j` `k` `l` `m` `n` `o` `p` `r` `s` `t` `u` `v` `w` `z` `æ` `ð` `ŋ` `ɑ` `ɒ` `ɔ` `ə` `ɚ` `ɛ` `ɡ` `ɪ` `ɹ` `ʃ` `ʊ` `ʌ` `ʒ` `ˈ` `ˌ` `ː` `θ`
+- 殘留的 Cyrillic ә／є、ASCII `'`、`:`、`g`：無；白名單以外的字元：無。
+- 對應：`ә`(U+04D9)→`ə`(U+0259)、`є`(U+0454)→`ɛ`(U+025B)、ASCII `g`→`ɡ`(U+0261)、`'`→`ˈ`、`:`→`ː`、緊接音標的 `,`／`.`→`ˌ`；`. `、`, ` 與兩段都有主重音的 `.` 視為多種讀法，輸出成 `, `。OEWN 補的發音本來就是 IPA（美式，例如 `ɹ`、`ɚ`），只做同樣的 `g`→`ɡ` 與白名單檢查。
+- 只統一字元，不改標音體系：ECDICT 是舊式英式標音（`əu`、`ai`、`e`），OEWN 是美式寬式標音（`oʊ`、`aɪ`、`ɛ`），介面若要一致的體系需另行轉寫。`(r)`、`(ə)` 表示可省略的音，`-dəkt` 這類只寫出不同部分的第二讀法照原樣保留。
+- 不採用的 ECDICT 音標（corrupt）：8 次，例如 `God ^ɔd`；`chairperson 'tʃeәp\\\\:s(e)n`；`goodwill ^jd'wil`；`guava '^wɑ:vә`；`photographer fә'tɔ^rәfә`；`seagull 'si:^ʌl`；`workbook 'w\\\\:kbjk`；`yogurt 'jɔ^әt`
+- 沒有音標的條目（13）：am/a.m. adv. 1、basics n. 2、chairperson/chair/chairman/chairwoman n. 6、cosmetics n. 6、customs n. 5、firework n. 3、including prep. 4、pm/p.m. adv. 1、seagull/gull n. 6、telecommunications n. 6、workbook n. 2、workforce n. 6、workplace n. 4
+
+## 6. 例句（Tatoeba）
+
+- 匯出檔：有中文連結的英文句 72,933 句（實際載入 72,768），對應中文句 66,251 句；CC0 清單 41,513 句。
+- 收錄例句 17,706 句次（不重複英文句 12,310）；英文 CC0 97 句次；中文經 s2twp 改變文字的 9,927 句次；全句在級別內（其他字 ≤ level+1）的 15,597 句次。
+- 同形異詞處理：59 筆條目的原形同時是另一個（級別不高於它的）條目的屈折形，例如 saw／see、found／find、lay／lie、rose／rise、learned／learn。只靠這種詞形命中、而且前一個字無法判斷詞類的句子不採用，共排除 1,892 句次。排除最多的條目：thought（264）、left（242）、used（202）、saw（187）、found（174）、being（165）、broke（79）、learning（62）、evening（55）、means（46）、bit（42）、building（37）。規則見 `tools/build_vocab.py`。
+- 內容過濾：含粗話、色情或自殘字眼（`SENSITIVE_RE`）的句子不採用，共排除 329 句次（命中的字是條目本身時例外，例如 suicide、sexy 的例句）。
+- 英文句作者前 10：CK（5,099）、CM（1,581）、sharris123（445）、eastasiastudent（421）、sundown（420）、Zifre（350）、LeviHighway（308）、AlanF_US（303）、CN（282）、Amastan（252）
+
+例句數分布（依級別）：
+
+| 級別 | 0 句 | 1–2 句 | 3–4 句 | 5 句 |
+|---|---:|---:|---:|---:|
+| L1 | 1 | 6 | 17 | 978 |
+| L2 | 28 | 98 | 99 | 777 |
+| L3 | 92 | 249 | 207 | 454 |
+| L4 | 180 | 348 | 193 | 281 |
+| L5 | 342 | 424 | 150 | 86 |
+| L6 | 501 | 393 | 79 | 29 |
+
+## 7. 詞族
+
+- 有 2 個以上條目的詞族 835 個，涵蓋 1,878 筆條目。合併依據（實際造成合併的連結數）：同字多筆 9、變體等於另一筆詞形 3、OEWN 衍生類義項關係 999、OEWN synset attribute 32。
+- 規則：OEWN 連結兩端的「義項詞性」都要能代表各自條目的詞類（詞性相同，或 OEWN 標了同字轉類，例如 war n.↔war v.），而且兩個詞要有共同字首；另以黑名單排除 bet–better、let–letter、life–liver、live–liver、lively–liver、stock–stocking、tow–tower（OEWN 連到的是同形異義的少見義項）。
+- 已知限制：OEWN 沒有連結的衍生詞不會成為詞族，例如 admire–admirable、except–exception（except 在詞彙表只是 prep./conj.）。曾試過用字尾規則補（-able、-ion…），但 apple–apply、corn–corner、list–listen 這類誤判太多，所以沒有採用。
+- 詞族大小分布：2 筆×667、3 筆×137、4 筆×24、5 筆×5、6 筆×2
+- 最大的詞族：create(2)、creative(3)、creator(3)、creature(3)、creation(4)、creativity(4)；sense(2)、sensitive(2)、sensible(3)、sensation(5)、sensitivity(5)、sensor(5)；act(1)、action(1)、actor(1)、active(2)、activity(2)；economic(4)、economical(4)、economics(4)、economist(4)、economy(4)；operate(2)、operator(2)、operation(3)、operational(5)、operative(6)
+- 03 文件 §7.3 的例子：
+  - admire（L3）→ admiration(L4)
+  - accurate（L3）→ accuracy(L4)
+  - accuse（L4）→ accusation(L6)
+  - analyze（L4）→ analysis(L4)、analyst(L5)、analytical(L6)
+  - adolescent（L5）→ adolescence(L6)
+  - compete（L3）→ competition(L4)、competitive(L4)、competitor(L4)
+  - economy（L4）→ economic(L4)、economical(L4)、economics(L4)、economist(L4)
+
+## 8. 特殊條目抽樣
+
+| 條目 | entry_id | ipa | 第一行中文 | WordNet 義項數 | 例句數 | 詞族 |
+|---|---|---|---|---:|---:|---|
+| `backward adj. 2` | `backward|adj.|2` | ˈbækwəd | a. 向後的, 相反的 | 4 | 2 | backward |
+| `backward/backwards adv. 2` | `backward|adv.|2` | ˈbækwəd | adv. 向後地, 相反地 | 3 | 5 | backward |
+| `capital n./adj. 2` | `capital|n./adj.|2` | ˈkæpitəl | n. 首都, 大寫字母, 資本 | 9 | 5 | capital、capitalist |
+| `capital(ism) n. 4` | `capital|n.|4` | ˈkæpitəl | n. 首都, 大寫字母, 資本 | 6 | 5 | capital、capitalist |
+| `content n./adj. 4` | `content|n./adj.|4` | kənˈtent | n. 內容, 滿足, 意義, 要旨 | 8 | 5 | contain、container、content |
+| `content(ment) v./(n.) 4` | `content|v./(n.)|4` | kənˈtent | vt. 使...滿足, 使...安心 | 2 | 5 | contain、container、content |
+| `measure(ment) v./(n.) 2` | `measure|v./(n.)|2` | ˈmeʒə | vt. 測量, 測度, 估量, 權衡, 調節, 拿(自己或自 | 4 | 5 | measurable、measure |
+| `measure(s) n. 4` | `measure|n.|4` | ˈmeʒə | n. 尺寸, 量度器, 量度標準, 測量, 量具, 程度,  | 9 | 5 | measure、measurable |
+| `medium adj. 1` | `medium|adj.|1` | ˈmiːdiəm | a. 半生熟的, 中間的 | 2 | 4 | media、medium |
+| `medium/media n. 3` | `medium|n.|3` | ˈmiːdiəm | n. 媒體, 方法, 媒介 | 11 | 5 | media、medium |
+| `am/a.m. adv. 1` | `am|adv.|1` | — | 上午, 午前 | 1 | 5 | — |
+| `pm/p.m. adv. 1` | `pm|adv.|1` | — | 下午, 午後 | 1 | 5 | — |
+| `O.K./OK/okay adj./adv./n./v. 1` | `O.K.|adj./adv./n./v.|1` | ˈəuˈkei | a. 好, 可以, 行, 對, 好嗎, 很好 | 3 | 5 | — |
+| `o’clock adv. 1` | `o’clock|adv.|1` | əˈklɔk | n. ...點鐘, 鐘頭 | 1 | 5 | — |
+| `café/cafe n. 2` | `café|n.|2` | kɑːˈfei | n. 咖啡館, 酒店 | 1 | 5 | — |
+| `T-shirt n. 1` | `T-shirt|n.|1` | ˈtiːˌʃəːt | n. 圓領汗衫, T恤 | 1 | 5 | — |
+| `Mr./Mister n. 1` | `Mr.|n.|1` | ˈmistə(r) | 閣下, 先生 | 1 | 5 | — |
+| `I (me, my, mine, myself) pron. 1` | `I|pron.|1` | ai | pron. 我 | 0 | 5 | — |
+| `advertise(ment)/ad v./(n.) 3` | `advertise|v./(n.)|3` | ˈædvətaiz | vt. 做廣告, 通知, 公佈 | 2 | 5 | — |
+| `chairperson/chair/chairman/chairwoman n. 6` | `chairperson|n.|6` | — | n. 主席 | 1 | 5 | chair |
+| `calm v./adj./n 2` | `calm|v./adj./n.|2` | kɑːm | n. 平穩, 風平浪靜 | 8 | 5 | — |
+
+處理規則見 `tools/build_vocab.py` 檔頭註解。
+
+## 9. 來源版本
+
+| id | 檔案 | 版本 | 下載日 | sha256 |
+|---|---|---|---|---|
+| ecdict | `ecdict/ecdict.csv` | git bc015ed2e24a7abef49fc6dbbb7fe32c1dadaf8b | 2026-10-07 | `1a6947e04785db63…` |
+| ecdict-license | `ecdict/LICENSE` | git bc015ed2e24a7abef49fc6dbbb7fe32c1dadaf8b | 2026-10-07 | `f8552dd246f61a4e…` |
+| oewn | `oewn/english-wordnet-2025-json.zip` | Open English WordNet 2025 Edition (released 2025-12-31; git tag 2025-edition = dc343f2683279ecbb13fab4e2fd778d7b162d287) | 2026-10-07 | `7d749f6e2c39e697…` |
+| oewn-license | `oewn/LICENSE.md` | git tag 2025-edition | 2026-10-07 | `672cc8b5663e8dc7…` |
+| oewn-wndb-license | `oewn/WNDB_License.txt` | git tag 2025-edition | 2026-10-07 | `df30ec18fbabcdaf…` |
+| tatoeba-eng | `tatoeba/eng_sentences_detailed.tsv.bz2` | Tatoeba weekly export (see http_last_modified) | 2026-10-07 | `d2c8fc271db70967…` |
+| tatoeba-cmn | `tatoeba/cmn_sentences_detailed.tsv.bz2` | Tatoeba weekly export (see http_last_modified) | 2026-10-07 | `934fdfad76366c10…` |
+| tatoeba-links | `tatoeba/eng-cmn_links.tsv.bz2` | Tatoeba weekly export (see http_last_modified) | 2026-10-07 | `634ededd116a92f1…` |
+| tatoeba-eng-cc0 | `tatoeba/eng_sentences_CC0.tsv.bz2` | Tatoeba weekly export (see http_last_modified) | 2026-10-07 | `a51307f6eccb2ca5…` |
+| tatoeba-cmn-cc0 | `tatoeba/cmn_sentences_CC0.tsv.bz2` | Tatoeba weekly export (see http_last_modified) | 2026-10-07 | `72c6ac699497cbc9…` |
+| cefrj | `cefrj/CEFRJ_wordlist_ver1.6.zip` | CEFR-J Wordlist Version 1.6 (xlsx dated 2020-03-24) | 2026-10-07 | `c837d2c00ab8954e…` |
+| olp-cefrj | `cefrj/cefrj-vocabulary-profile-1.5.csv` | CEFR-J Wordlist 1.5 CSV (olp-en-cefrj git d4e45b75b38f27b30dfc5c44d8c571aec7e7092f); reference only, build uses 1.6 | 2026-10-07 | `b0dd3c635f1c9a4f…` |
+| octanove | `cefrj/octanove-vocabulary-profile-c1c2-1.0.csv` | Octanove Vocabulary Profile C1/C2 ver 1.0 (olp-en-cefrj git d4e45b75b38f27b30dfc5c44d8c571aec7e7092f) | 2026-10-07 | `18c33a407f2f89f7…` |
+| olp-readme | `cefrj/olp-README.md` | olp-en-cefrj git d4e45b75b38f27b30dfc5c44d8c571aec7e7092f | 2026-10-07 | `8b69f7366fa3c7be…` |

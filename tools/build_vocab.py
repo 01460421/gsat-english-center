@@ -14,12 +14,14 @@
 
 輸出（全部由本腳本產生，重跑結果逐位元相同）
   data/vocab/lexicon.json                   每筆詞彙表條目一筆（超過 25 MB 時改為 lexicon-L1.json … lexicon-L6.json）
-  data/vocab/forms-index.json               詞形 → entry_id（原形、拼法變體、括號衍生、代名詞格、屈折形）
+  data/vocab/forms-index.json               詞形 → entry_id（原形、拼法變體、括號衍生、代名詞格、屈折形；
+                                            ECDICT 沒列複數的名詞另補規則複數 plural_rule）
   data/vocab/CREDITS.md                     各來源授權與標示文字
   data/vocab/lexicon-report.md              各欄位覆蓋率（依級別）、與 04 文件 §2.3 的比較、特殊條目處理
 
 用法
   python3 tools/build_vocab.py fetch        # 下載全部來源並更新 sources.json（網路失敗會以指數退避重試）
+  python3 tools/build_vocab.py fetch --reuse-local   # 本地檔 sha256 和 sources.json 相符的就不重新下載
   python3 tools/build_vocab.py build        # 由本地原始檔產生輸出（預設子命令）
   python3 tools/build_vocab.py check        # 在暫存目錄重建一次，和現有輸出逐位元比對（不同則結束碼 1，可放 CI）
   選項：--no-verify  不核對原始檔 sha256（例如剛換了新版 Tatoeba 匯出檔、還沒重跑 fetch 時）
@@ -59,21 +61,30 @@
 
 其他規則
   * IPA：ECDICT 的音標用 Cyrillic ә（U+04D9）、є（U+0454）和 ASCII 符號表示 IPA，這裡統一字元：
-    ә→ə、є→ɛ、'→ˈ（主重音）、緊接音標的 , 與 . →ˌ（次重音）、:→ː；". "、", "、兩段都有主重音的 "." 視為
-    「多種讀法」的分隔，統一輸出為 ", "。含有無法判讀字元（\\、^ 等 ECDICT 編碼損壞）的音標不採用，
-    改用 OEWN 的發音（ipa_source 標 oewn）。只統一字元，不改音標體系（ECDICT 是舊式英式標音，例如 gou）。
+    ә→ə、є→ɛ、g→ɡ（U+0261，ECDICT 兩種混用）、'→ˈ（主重音）、緊接音標的 , 與 . →ˌ（次重音）、:→ː；
+    ". "、", "、兩段都有主重音的 "." 視為「多種讀法」的分隔，統一輸出為 ", "。結果再用 IPA 字元白名單檢查。
+    含有無法判讀字元（\\、^ 等 ECDICT 編碼損壞）的音標不採用，改用 OEWN 的發音（ipa_source 標 oewn）。
+    只統一字元，不改音標體系（ECDICT 是舊式英式標音，例如 ɡəu；OEWN 是美式）。
   * 中文：ECDICT translation 依原本的換行分行，每行拆出詞性標記（vt.、n.…）或領域標記（[計]、[醫]…），
     文字用 OpenCC s2twp 轉成台灣繁體用語。標點維持原樣。
   * en_def：優先取 OEWN 第一個（依條目詞類順序）義項的定義；沒有時退回 ECDICT 英文釋義中詞性相符的第一行。
   * 詞族（family）：以 union-find 合併 (1) 同字多筆、(2) 括號衍生形或拼法相近的斜線變體等於另一筆的詞形、
-    (3) OEWN derivation／pertainym 關係（兩端都在詞彙表，且有共同字首，避免 die→death 這類跨字根連結）。
+    (3) OEWN 義項的衍生類關係（derivation、pertainym、participle、agent／event／result… 等 morphosemantic 關係）
+    與 synset 的 attribute 關係（accurate↔accuracy）。OEWN 連結兩端的義項詞性都要能代表各自條目的詞類
+    （contain v. 連到的是 continent 的形容詞義項「自制的」，不能算到 continent n.「大陸」），兩個詞要有共同字首
+    （避免 die→death 這類跨字根連結），另有少數同形異義的黑名單（FAMILY_BLOCKLIST）。
     family_id 取詞族中最短（同長取級別低、再依字母）的條目 entry_id。
+  * wordnet.derivations：OEWN derivation／pertainym 的目標詞中也在詞彙表、且詞類相符的條目（不要求共同字首）。
+    synonyms／antonyms 標記是否在詞彙表時，優先對應詞類相符的條目。
   * 例句：Tatoeba 中有中文翻譯的英文句，句長 6–20 個 token，含該條目任一詞形（原形、變體、屈折形）。
     排序：(1) 句中其他字都在詞彙表且級別 ≤ 該條目級別+1（人名、數字、附錄詞不扣分；附錄詞＝詞彙表 p.104
     的數字、星期、月份、季節，視為第 1 級）；(2) 超出級別的字越少越前面；(3) 句長越接近 10 越前面；(4) 句子 ID。
     去重：句型骨架（人名→NAME、數字→NUM）相同者只留一句；第一輪再避開和已選句 token 集合 Jaccard≥0.6
     或目標詞前後文相同的句子，不足 5 句時第二輪補回。作者為空（孤兒句）且不是 CC0 的句子不採用，
     因為 CC BY 需要標示作者。中文翻譯有多句時取有作者、ID 最小的一句。
+    同形異詞：條目原形同時是另一個級別不高於它的條目的屈折形時（saw／see、found／find、lay／lie），只靠這個
+    詞形命中、而且前一個字（限定詞、連綴動詞、to／助動詞）無法判斷詞類的句子不採用；細節見選例句的程式註解。
+    內容過濾：含粗話、色情、自殘字眼的句子不採用（SENSITIVE_RE；命中的字就是條目本身時例外）。
   * 決定性：所有集合在輸出前排序；不輸出建置時間；JSON 一筆一行、鍵順序固定。
 """
 from __future__ import annotations
@@ -90,7 +101,6 @@ import json
 import os
 import random
 import re
-import shutil
 import ssl
 import sys
 import tempfile
@@ -109,7 +119,6 @@ VOCAB = ROOT / "data/vocab"
 WORDLIST = VOCAB / "ceec-wordlist.json"
 SOURCES_JSON = VOCAB / "sources.json"
 SPLIT_LIMIT = 25 * 1024 * 1024          # lexicon.json 超過 25 MB 改依級別拆檔
-FAMILY_MAX_SENSE_RANK = int(os.environ.get("VOCAB_FAMILY_RANK", "3"))
 USER_AGENT = "gsat-english-center-vocab-pipeline/1.0 (educational project; python-urllib)"
 
 # ---------------------------------------------------------------------------
@@ -254,14 +263,26 @@ def http_get(url: str, dest: Path, *, retries: int = 6, base_delay: float = 2.0,
 
 def cmd_fetch(args) -> int:
     today = dt.date.today().isoformat()
+    prev = {}
+    if SOURCES_JSON.exists():
+        for r in json.loads(SOURCES_JSON.read_text(encoding="utf-8")).get("sources", []):
+            prev[r["id"]] = r
     out = []
     for s in SOURCES:
         dest = RAW / s["file"]
-        log(f"GET {s['url']}")
-        meta = http_get(s["url"], dest)
+        old = prev.get(s["id"])
+        if args.reuse_local and old and dest.exists() and sha256_file(dest) == old.get("sha256"):
+            # 本地檔和 sources.json 記錄的 sha256 相同：沿用原本的下載日期與 HTTP 標頭，不重新下載
+            log(f"keep {s['file']} (sha256 matches sources.json, retrieved {old.get('retrieved_at')})")
+            meta = {k: old.get(k) for k in ("bytes", "sha256", "http_last_modified", "http_etag")}
+            retrieved = old.get("retrieved_at")
+        else:
+            log(f"GET {s['url']}")
+            meta = http_get(s["url"], dest)
+            retrieved = today
         rec = {k: s[k] for k in ("id", "group", "file", "url", "version", "license", "license_url")}
         rec["file"] = f"data/raw/vocab-sources/{s['file']}"
-        rec.update(retrieved_at=today, **meta)
+        rec.update(retrieved_at=retrieved, **meta)
         out.append(rec)
         log(f"  -> {rec['file']} {meta['bytes']:,} bytes sha256={meta['sha256'][:12]}…")
     doc = {
@@ -350,6 +371,12 @@ class Converter:
 LOOKUP_OVERRIDES = {"am|adv.|1": "a.m.", "pm|adv.|1": "p.m."}
 # 例句只比對這些詞形（am、pm 本身太容易誤配）
 EXAMPLE_FORM_OVERRIDES = {"am|adv.|1": ["a.m."], "pm|adv.|1": ["p.m."]}
+
+# 詞族黑名單：OEWN 的衍生連結落在「同形但不同字」的少見義項上，例如 letter「出租的人」← let、better「打賭的人」
+# ← bet、tower「拖曳者」← tow、liver「生活者」← live、stocking「進貨」← stock。詞彙表收的是信件、更好的、塔、
+# 肝臟、長襪，所以這些連結不算詞族（逐筆檢查 OEWN 連結後列出；詞性不符的 contain→continent 等已由詞性檢查排除）。
+FAMILY_BLOCKLIST = {frozenset(p) for p in [("let", "letter"), ("bet", "better"), ("tow", "tower"), ("live", "liver"),
+                                           ("life", "liver"), ("lively", "liver"), ("stock", "stocking")]}
 
 PAREN_TYPES = {"paren-ment": "derived_ment", "paren-full-form": "derived_ment",
                "paren-suffix": "derived_suffix", "paren-plural": "plural_usual"}
@@ -590,20 +617,16 @@ class Wordnet:
         self.sense_lemma: dict[str, str] = {}
         self.sense_pos: dict[str, str] = {}       # sense id → n／v／a／r（衛星形容詞 s 併入 a）
         self.sense_by_id: dict[str, dict] = {}
-        self.sense_rank: dict[str, int] = {}
         self.lemma_synset_sense: dict[tuple[str, str], str] = {}
         self.lower: dict[str, list[str]] = collections.defaultdict(list)
         for lemma in sorted(self.entries):
             self.lower[lemma.lower()].append(lemma)
             for pkey, e in self.entries[lemma].items():
-                rank = 1      # 義項在同一個詞性鍵（n、n-1、v…）中的順序；OEWN 大致依使用頻率排列
                 for s in e.get("sense", []):
                     self.sense_lemma[s["id"]] = lemma
                     self.sense_pos[s["id"]] = wn_base_pos(pkey)
                     self.sense_by_id[s["id"]] = s
-                    self.sense_rank[s["id"]] = rank
                     self.lemma_synset_sense[(lemma, s["synset"])] = s["id"]
-                    rank += 1
 
     def find(self, form: str) -> str | None:
         for k in ecdict_lookup_keys(form):
@@ -776,6 +799,12 @@ thursday friday saturday sunday january february march april may june july augus
 november december spring summer autumn fall winter
 """.split())
 NEUTRAL = -1      # 人名、數字、附屬詞素：不影響難度判斷
+# 例句的內容過濾（App 對象是高中生）：粗話、色情、自殘字眼的句子不當例句；若命中的字就是條目本身的詞形
+# （詞彙表有 sexy、suicide 等字），仍可採用。naked eye、breast cancer、drunk driver 這類中性用法不受影響。
+SENSITIVE_RE = re.compile(
+    r"\b(?:fuck\w*|shit\w*|bitch\w*|bastards?|assholes?|cunts?|whores?|sluts?|porn\w*|penis\w*|vagina\w*|"
+    r"orgasm\w*|masturbat\w*|sexy|nigg(?:er|a)s?|faggots?|suicid\w*|rap(?:e|es|ed|ing|ist|ists)|"
+    r"(?:kill|hang)(?:s|ed|ing)? (?:my|your|him|her|them|our)sel(?:f|ves))\b", re.I)
 
 
 def tokenize(text: str) -> list[str]:
@@ -916,25 +945,26 @@ def build(outdir: Path, *, verify: bool = True) -> dict:
         for name, f in forms.items():
             add_form(f, eid, name, None if row_form == e["word"] else row_form)
         # IPA
+        # 依詞形順序（原形 → 拼法變體），每個詞形先查 ECDICT、再查 OEWN。只有「去掉標點後拼法相同」的變體
+        # （O.K.→OK、café→cafe）才能代用；chairperson 不能拿 chair、seagull 不能拿 gull 的音標，查不到就留 null
+        # （變體自己的音標在 variant_info）。
         ipa, ipa_src, ipa_form = None, None, None
-        cands = [(key_form, ec.get(key_form))] + [(v, ec.get(v)) for v in e["variants"]]
-        for form, r in cands:
-            if r is None or not r["phonetic"].strip():
-                continue
-            val, issues = normalize_ipa(r["phonetic"])
-            for i in issues:
-                ipa_issues[i] += 1
-                ipa_examples[i].append(f"{r['word']} {r['phonetic']}")
-            if val:
-                ipa, ipa_src, ipa_form = val, "ecdict", form
-                break
-        if ipa is None:
-            for form in [key_form, *e["variants"]]:
-                lemma = wn.find(form)
-                p = wn.pronunciation(lemma) if lemma else None
-                if p:
-                    ipa, ipa_src, ipa_form = p, "oewn", form
+        letters = lambda x: re.sub(r"[^a-z]", "", fold(x))
+        for form in [key_form] + [v for v in e["variants"] if letters(v) in (letters(e["word"]), letters(key_form))]:
+            r = ec.get(form)
+            if r is not None and r["phonetic"].strip():
+                val, issues = normalize_ipa(r["phonetic"])
+                for i in issues:
+                    ipa_issues[i] += 1
+                    ipa_examples[i].append(f"{r['word']} {r['phonetic']}")
+                if val:
+                    ipa, ipa_src, ipa_form = val, "ecdict", form
                     break
+            lemma = wn.find(form)
+            p = wn.pronunciation(lemma) if lemma else None
+            if p:
+                ipa, ipa_src, ipa_form = p, "oewn", form
+                break
         rec["ipa"] = ipa
         rec["ipa_source"] = None if ipa is None else (
             {"source": ipa_src} if ipa_form == e["word"] else {"source": ipa_src, "form": ipa_form})
@@ -962,6 +992,27 @@ def build(outdir: Path, *, verify: bool = True) -> dict:
             if e["word"] == base and not ({"aux.", "v."}.isdisjoint(e["pos"])):
                 for f, typ in extra:
                     add_form(f, e["entry_id"], typ)
+
+    # 規則複數：ECDICT exchange 沒列複數的名詞（cookie、calorie、campus、counselor…）在 forms-index 補上規則複數
+    # （type=plural_rule；lexicon 的 forms 仍只放 ECDICT 資料），供歷屆試題詞頻統計與例句比對。不可數名詞也會
+    # 產生（advices），這些鍵不會出現在真實文本中，對查詢無害。只處理全小寫的單一字；以 s 結尾的（athletics、
+    # diabetes、arms）除了 -us（campus→campuses）以外都略過。
+    rule_plurals = 0
+    for e in entries:
+        eid = e["entry_id"]
+        if "n." not in e["pos"] or "plural" in lex[eid]["forms"] or "plural_usual" in e["variant_types"]:
+            continue
+        w = e["word"]
+        if not re.fullmatch(r"[a-z]+", w) or (w.endswith("s") and not w.endswith("us")):
+            continue
+        if re.search(r"(?:s|x|z|ch|sh)$", w):
+            pl = w + "es"
+        elif re.search(r"[^aeiou]y$", w):
+            pl = w[:-1] + "ies"
+        else:
+            pl = w + "s"
+        add_form(pl, eid, "plural_rule")
+        rule_plurals += 1
 
     # 詞形 → 級別（例句難度判斷用；含屈折形）
     level_of: dict[str, int] = {}
@@ -995,8 +1046,7 @@ def build(outdir: Path, *, verify: bool = True) -> dict:
         return d
 
     def linked_entries(src_lemma: str, senses: list[dict], rels: tuple, self_id: str, *,
-                       attribute: bool = False, morph: bool = False,
-                       max_rank: int | None = None) -> list[tuple[str, str, str]]:
+                       attribute: bool = False, morph: bool = False) -> list[tuple[str, str, str]]:
         """沿 OEWN 義項關係 rels（以及 synset 的 attribute 關係）找也在詞彙表的條目，回傳 [(目標詞, 條目 id, 關係)]。
         只收「目標義項的詞性」和目標條目詞類相符的連結：OEWN 的 contain(v.) 有 derivation 連到 continent 的
         形容詞義項（自制的），不能因此把 continent n.（大陸）算成 contain 的衍生詞。morph=True 時另外要求兩個詞
@@ -1015,10 +1065,8 @@ def build(outdir: Path, *, verify: bool = True) -> dict:
                         targets += [(m, tp, wn.lemma_synset_sense.get((m, T)), "attribute")
                                     for m in wn.synsets[T].get("members", [])]
             for tl, tp, tsid, r in targets:
-                if max_rank and (wn.sense_rank.get(s["id"], 99) > max_rank
-                                 or (tsid and wn.sense_rank.get(tsid, 99) > max_rank)):
-                    continue
-                if morph and not morph_related(src_lemma, tl):
+                if morph and (not morph_related(src_lemma, tl)
+                              or frozenset((fold(src_lemma), fold(tl))) in FAMILY_BLOCKLIST):
                     continue
                 for i in sorted(word_entries.get(fold(tl), [])):
                     ok = tp in form_wn_pos(i, tl) if tsid is None else wn.represents(tsid, form_wn_pos(i, tl))
@@ -1146,8 +1194,7 @@ def build(outdir: Path, *, verify: bool = True) -> dict:
     for e in entries:
         eid = e["entry_id"]
         for src_lemma, senses in family_sources[eid]:
-            for tl, other, r in linked_entries(src_lemma, senses, MORPH_RELS, eid, attribute=True, morph=True,
-                                               max_rank=FAMILY_MAX_SENSE_RANK):
+            for tl, other, r in linked_entries(src_lemma, senses, MORPH_RELS, eid, attribute=True, morph=True):
                 if uf.find(other) != uf.find(eid):
                     uf.union(eid, other)
                     fam_edges["oewn_attribute" if r == "attribute" else "oewn_derivation"] += 1
@@ -1285,8 +1332,8 @@ def build(outdir: Path, *, verify: bool = True) -> dict:
     # 例外（視為同一個字，不算衝突）：條目是介系詞或連接詞（including、regarding）；比較級／最高級本身就是
     # 形容詞或副詞條目（better、later、further）；對方只有名詞複數這種衝突（glasses、arms，只降低排序）；
     # 對方不是動詞卻被 ECDICT 列出動詞變化（engineer→engineering）。
-    INFL_TYPES = {"plural", "past", "past_participle", "present_participle", "third_person", "comparative",
-                  "superlative", "present"}
+    INFL_TYPES = {"plural", "plural_rule", "past", "past_participle", "present_participle", "third_person",
+                  "comparative", "superlative", "present"}
     BASE_TYPES = {"lemma", "slash", "derived_ment", "derived_suffix", "plural_usual"}
     infl_of: dict[str, list[tuple[str, set]]] = collections.defaultdict(list)
     for k in sorted(form_map):
@@ -1305,7 +1352,7 @@ def build(outdir: Path, *, verify: bool = True) -> dict:
             if f == eid or by_id[f]["level"] > e["level"]:
                 continue
             weak = True
-            if not base or epos & {"prep.", "conj."} or "plural" in t:
+            if not base or epos & {"prep.", "conj."} or t & {"plural", "plural_rule"}:
                 continue
             if t <= {"comparative", "superlative"} and epos & {"adj.", "adv."}:
                 continue
@@ -1416,6 +1463,10 @@ def build(outdir: Path, *, verify: bool = True) -> dict:
             if not pos_t:
                 continue
             hit = {norms[i] for i in pos_t}
+            bad = [m.group(0) for m in SENSITIVE_RE.finditer(eng[sid][0])]
+            if bad and any(not set(fold(t) for t in tokenize(b)) & tset for b in bad):
+                homograph_stats["sensitive_dropped"] += 1
+                continue
             clean, strong_only = False, True
             for i in pos_t:
                 k = norms[i]
@@ -1549,7 +1600,8 @@ def build(outdir: Path, *, verify: bool = True) -> dict:
                        "同形對應多筆時全部列出（依級別排序）。types：lemma＝條目主要詞形；slash／derived_ment／"
                        "derived_suffix／plural_usual／pronoun_case＝原表的變體；plural／past／past_participle／"
                        "present_participle／third_person／comparative／superlative＝ECDICT exchange 的屈折形"
-                       "（base 表示是某個變體的屈折形）。",
+                       "（base 表示是某個變體的屈折形）；present／past 另含 be、can、will 等 ECDICT 沒列的不規則形；"
+                       "plural_rule＝ECDICT 沒列複數的名詞依規則產生的複數（不可數名詞也會產生，查詢時無害）。",
         "entry_count": len(entries), "form_count": len(findex),
         "generated_by": "tools/build_vocab.py",
     }
@@ -1564,8 +1616,9 @@ def build(outdir: Path, *, verify: bool = True) -> dict:
     (outdir / "CREDITS.md").write_text(credits_md(sources, conv), encoding="utf-8")
     files["CREDITS.md"] = outdir / "CREDITS.md"
 
+    homograph_stats["rule_plurals"] = rule_plurals
     report = report_md(out_entries, findex, sources, conv, tstats, ipa_issues, ipa_examples, fam_edges,
-                       fam_sizes, files, set(oewn_any))
+                       fam_sizes, files, set(oewn_any), homograph_stats, homograph_examples)
     (outdir / "lexicon-report.md").write_text(report, encoding="utf-8")
     files["lexicon-report.md"] = outdir / "lexicon-report.md"
     log(f"done in {time.time() - t0:.0f}s")
@@ -1619,7 +1672,7 @@ def credits_md(sources: list[dict], conv: Converter) -> str:
 
 - 欄位：`forms`、`ipa`（`ipa_source.source = "ecdict"`）、`zh`、`variant_info`、`en_def`（`en_def_source = "ecdict"`）、`freq`、`internal_core_flag`、`internal_star`。
 - 來源：{dl("ecdict")}
-- 授權：MIT License。修改：OpenCC s2twp 轉換中文、音標字元統一為 IPA（ә→ə、є→ɛ、'→ˈ、:→ː 等）、只取詞彙表需要的列與欄。
+- 授權：MIT License。修改：OpenCC s2twp 轉換中文、音標字元統一為 IPA（ә→ə、є→ɛ、g→ɡ、'→ˈ、:→ː 等）、只取詞彙表需要的列與欄。
 - 中文釋義依 04 文件 §2.1 的建議，上線前還要由 Claude 改成台灣用語並人工抽查。
 
 ```
@@ -1659,8 +1712,8 @@ def credits_md(sources: list[dict], conv: Converter) -> str:
 
 - 欄位：`cefr`（`source` 標示來自 CEFR-J 1.6 或 Octanove C1/C2 1.0）。
 - CEFR-J（A1–B2）來源：{dl("cefrj")}
-  - 條件：可免費用於研究與商業用途，但必須依指定格式引用。本專案的引用（依官方英文格式）：
-    The CEFR-J Wordlist Version 1.6. Compiled by Yukio Tono, Tokyo University of Foreign Studies. Retrieved from https://www.cefr-j.org/download.html on {cefr_date.strftime('%d/%m/%y')}.
+  - 條件：可免費用於研究與商業用途，但必須依指定格式引用。本專案的引用（依官方英文格式；日期照 Open Language Profiles README 的 月/日/年 寫法）：
+    The CEFR-J Wordlist Version 1.6. Compiled by Yukio Tono, Tokyo University of Foreign Studies. Retrieved from https://www.cefr-j.org/download.html on {cefr_date.month}/{cefr_date.day}/{cefr_date.year}.
   - 日文格式：『CEFR-J Wordlist Version 1.6』 東京外国語大学投野由紀夫研究室. （URL: https://www.cefr-j.org/download.html より {cefr_date.year}年{cefr_date.month}月ダウンロード）
 - Octanove（C1–C2）來源：{dl("octanove")}
   - 授權：CC BY-SA 4.0（https://creativecommons.org/licenses/by-sa/4.0/）。Octanove Vocabulary Profile C1/C2 (ver 1.0), created by Octanove Labs, distributed by Open Language Profiles (https://github.com/openlanguageprofiles/olp-en-cefrj).
@@ -1698,7 +1751,7 @@ def pct(n, d):
 
 
 def report_md(out, findex, sources, conv, tstats, ipa_issues, ipa_examples, fam_edges, fam_sizes, files,
-              oewn_any) -> str:
+              oewn_any, homograph_stats, homograph_examples) -> str:
     groups = [("L1", lambda o: o["level"] == 1), ("L2", lambda o: o["level"] == 2),
               ("L3", lambda o: o["level"] == 3), ("L4", lambda o: o["level"] == 4),
               ("L5", lambda o: o["level"] == 5), ("L6", lambda o: o["level"] == 6),
@@ -1755,6 +1808,9 @@ def report_md(out, findex, sources, conv, tstats, ipa_issues, ipa_examples, fam_
     w("")
     w(f"- 條目數 {len(out):,}；forms-index 詞形數 {len(findex):,}。"
       f"lexicon.json 上限 25 MB，{'未超過，輸出單一檔' if 'lexicon.json' in files else '超過，已依級別拆檔'}。")
+    tcount = collections.Counter(t for v in findex.values() for x in v for t in x["types"])
+    w("- forms-index 各型態的（詞形, 條目）組數：" + "、".join(f"{t} {n:,}" for t, n in sorted(tcount.items())) + "。"
+      f"其中 `plural_rule` 是 ECDICT 沒列複數的 {homograph_stats['rule_plurals']:,} 筆名詞依規則補上的複數。")
     multi = sum(1 for v in findex.values() if len({x['entry_id'] for x in v}) > 1)
     w(f"- forms-index 中對應到多個條目的詞形：{multi:,} 個（例如 {', '.join(sorted(k for k, v in findex.items() if len(v) > 1)[:12])}）。")
     w(f"- OpenCC：{conv.package}（s2twp）。重跑一致性：`python3 tools/build_vocab.py check` 會在暫存目錄重建並逐位元比對，"
@@ -1826,10 +1882,15 @@ def report_md(out, findex, sources, conv, tstats, ipa_issues, ipa_examples, fam_
     w(f"- 來源：ECDICT {src_cnt['ecdict']:,} 筆，OEWN 補 {src_cnt['oewn']:,} 筆，仍缺 {src_cnt['none']:,} 筆。")
     chars = collections.Counter(ch for o in out if o["ipa"] for ch in o["ipa"])
     w("- 輸出音標使用的字元：" + " ".join(f"`{ch}`" if ch != " " else "`␠`" for ch in sorted(chars)))
-    leftovers = sorted(ch for ch in chars if ch in "\u04d9\u0454':")
-    w(f"- 殘留的 Cyrillic ә／є、ASCII ' 或 :：{'無' if not leftovers else ' '.join(leftovers)}。")
-    w("- 對應：`ә`(U+04D9)→`ə`(U+0259)、`є`(U+0454)→`ɛ`(U+025B)、`'`→`ˈ`、`:`→`ː`、緊接音標的 `,`／`.`→`ˌ`；"
-      "`. `、`, ` 與兩段都有主重音的 `.` 視為多種讀法，輸出成 `, `。ASCII `g` 保留（IPA 認可 g 與 ɡ 兩種字形）。")
+    leftovers = sorted(ch for ch in chars if ch in "\u04d9\u0454':g")
+    nonipa = sorted(ch for ch in chars if ch not in IPA_OK)
+    w(f"- 殘留的 Cyrillic ә／є、ASCII `'`、`:`、`g`：{'無' if not leftovers else ' '.join(leftovers)}；"
+      f"白名單以外的字元：{'無' if not nonipa else ' '.join(nonipa)}。")
+    w("- 對應：`ә`(U+04D9)→`ə`(U+0259)、`є`(U+0454)→`ɛ`(U+025B)、ASCII `g`→`ɡ`(U+0261)、`'`→`ˈ`、`:`→`ː`、"
+      "緊接音標的 `,`／`.`→`ˌ`；`. `、`, ` 與兩段都有主重音的 `.` 視為多種讀法，輸出成 `, `。"
+      "OEWN 補的發音本來就是 IPA（美式，例如 `ɹ`、`ɚ`），只做同樣的 `g`→`ɡ` 與白名單檢查。")
+    w("- 只統一字元，不改標音體系：ECDICT 是舊式英式標音（`əu`、`ai`、`e`），OEWN 是美式寬式標音（`oʊ`、`aɪ`、`ɛ`），"
+      "介面若要一致的體系需另行轉寫。`(r)`、`(ə)` 表示可省略的音，`-dəkt` 這類只寫出不同部分的第二讀法照原樣保留。")
     for k in sorted(ipa_issues):
         w(f"- 不採用的 ECDICT 音標（{k}）：{ipa_issues[k]} 次，例如 " + "；".join(f"`{x}`" for x in sorted(set(ipa_examples[k]))[:8]))
     missing = [o["raw"] for o in out if not o["ipa"]]
@@ -1845,6 +1906,13 @@ def report_md(out, findex, sources, conv, tstats, ipa_issues, ipa_examples, fam_
     w(f"- 收錄例句 {len(exs):,} 句次（不重複英文句 {len({x['tatoeba_id'] for x in exs}):,}）；"
       f"英文 CC0 {sum(1 for x in exs if x['license'] == 'CC0-1.0'):,} 句次；中文經 s2twp 改變文字的 {sum(1 for x in exs if x['zh_converted']):,} 句次；"
       f"全句在級別內（其他字 ≤ level+1）的 {sum(1 for x in exs if x['within_level']):,} 句次。")
+    w(f"- 同形異詞處理：{homograph_stats['entries']} 筆條目的原形同時是另一個（級別不高於它的）條目的屈折形，"
+      f"例如 saw／see、found／find、lay／lie、rose／rise、learned／learn。只靠這種詞形命中、而且前一個字無法判斷詞類的句子"
+      f"不採用，共排除 {homograph_stats['sentences_dropped']:,} 句次。排除最多的條目："
+      + "、".join(f"{k.split('|')[0]}（{v}）" for k, v in sorted(homograph_examples.items(), key=lambda t: (-t[1], t[0]))[:12])
+      + "。規則見 `tools/build_vocab.py`。")
+    w(f"- 內容過濾：含粗話、色情或自殘字眼（`SENSITIVE_RE`）的句子不採用，共排除 {homograph_stats['sensitive_dropped']:,} 句次"
+      "（命中的字是條目本身時例外，例如 suicide、sexy 的例句）。")
     authors = collections.Counter(x["author"] for x in exs)
     w("- 英文句作者前 10：" + "、".join(f"{a}（{n:,}）" for a, n in sorted(authors.items(), key=lambda t: (-t[1], str(t[0])))[:10]))
     w("")
@@ -1865,8 +1933,13 @@ def report_md(out, findex, sources, conv, tstats, ipa_issues, ipa_examples, fam_
         if o["family_id"]:
             multi_fams[o["family_id"]].append(o)
     w(f"- 有 2 個以上條目的詞族 {len(multi_fams):,} 個，涵蓋 {sum(len(v) for v in multi_fams.values()):,} 筆條目。"
-      f"合併依據（union 次數）：同字多筆 {fam_edges['same_headword']}、變體等於另一筆詞形 {fam_edges['variant_is_headword']}、"
-      f"OEWN derivation／pertainym {fam_edges['oewn_derivation']}。")
+      f"合併依據（實際造成合併的連結數）：同字多筆 {fam_edges['same_headword']}、變體等於另一筆詞形 {fam_edges['variant_is_headword']}、"
+      f"OEWN 衍生類義項關係 {fam_edges['oewn_derivation']}、OEWN synset attribute {fam_edges['oewn_attribute']}。")
+    w("- 規則：OEWN 連結兩端的「義項詞性」都要能代表各自條目的詞類（詞性相同，或 OEWN 標了同字轉類，例如 war n.↔war v.），"
+      "而且兩個詞要有共同字首；另以黑名單排除 " + "、".join("–".join(sorted(p)) for p in sorted(FAMILY_BLOCKLIST, key=sorted))
+      + "（OEWN 連到的是同形異義的少見義項）。")
+    w("- 已知限制：OEWN 沒有連結的衍生詞不會成為詞族，例如 admire–admirable、except–exception（except 在詞彙表只是 prep./conj.）。"
+      "曾試過用字尾規則補（-able、-ion…），但 apple–apply、corn–corner、list–listen 這類誤判太多，所以沒有採用。")
     w("- 詞族大小分布：" + "、".join(f"{k} 筆×{v}" for k, v in sorted(fam_sizes.items()) if k > 1))
     big = sorted(multi_fams.values(), key=lambda v: (-len(v), v[0]["family_id"]))[:5]
     w("- 最大的詞族：" + "；".join("、".join(f"{o['word']}({o['level']})" for o in sorted(v, key=lambda o: (o['level'], o['word']))) for v in big))
@@ -1936,6 +2009,8 @@ def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("cmd", nargs="?", default="build", choices=["fetch", "build", "check"])
     ap.add_argument("--no-verify", action="store_true", help="不核對原始檔 sha256")
+    ap.add_argument("--reuse-local", action="store_true",
+                    help="fetch：本地檔的 sha256 和 sources.json 相同時不重新下載（只更新 sources.json 的其他欄位）")
     args = ap.parse_args()
     return {"fetch": cmd_fetch, "build": cmd_build, "check": cmd_check}[args.cmd](args)
 

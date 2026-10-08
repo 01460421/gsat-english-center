@@ -3097,7 +3097,7 @@
     }
   ],
   "extraction": {
-    "method": "python-docx 讀 Word 版題本 paper-2.docx 為主（不換行、無斷字），pdftotext -layout 抽 paper-1.pdf 對照，並用 Read 逐頁看 PDF 頁面影像（第 1–8 頁）核對版面、粗斜體與上標；答案 pdftotext answer.pdf；評分原則 pdftotext＋頁面影像核對，並以程式比對摘錄句與 PDF 原文一致；統計以 xlrd 讀 stats-1.xls（英：P/Ph/Pl/D）、stats-2.xls（英：T/H/L 選項分析，*號選項與官方答案逐題比對一致）、stats-3.xls（工作表 2：英文科非選擇題分數分布）；建檔腳本放 scratchpad，未進 repo",
+    "method": "python-docx 讀 Word 版題本 paper-2.docx 為主（不換行、無斷字），pdftotext -layout 抽 paper-1.pdf 對照，並用 Read 逐頁看 PDF 頁面影像（第 1–8 頁）核對版面、粗斜體與上標；答案 pdftotext answer.pdf；評分原則 pdftotext＋頁面影像核對，並以程式比對摘錄句與 PDF 原文一致；統計以 xlrd 讀 stats-1.xls（英：P/Ph/Pl/D）、stats-2.xls（英：T/H/L 選項分析，*號選項與官方答案逐題比對一致）、stats-3.xls（工作表 2：英文科非選擇題分數分布）；建檔腳本放 scratchpad，未進 repo；查證者獨立複核：answer.pdf 以 pdftotext 與 Read 頁面影像逐題核對 51 題答案並程式比對 JSON；paper-2.docx 以 python-docx 重新讀出，與 JSON 全部 162 個選項（含文意選填 12 個、篇章結構 6 個選項）、26 題題幹、8 篇選文（含 [[題號]] 空格位置）、各大題標題與說明程式逐字比對；pdftotext paper-1.pdf 與 JSON 的英文 token 序列全卷比對（含彎引號、破折號、連字號）；Read 看題本第 1–8 頁影像確認段落、粗斜體與無圖表（pdfimages 無圖片）；stats-1／stats-2「英」工作表 51 題 P/Ph/Pl/D 與 T/H/L 列（含未答）全部以程式比對，stats-3 工作表「2」兩份分數分布逐列比對；scoring.pdf 以 NFC 正規化後比對 scoring_notes 並看頁面影像",
     "issues": [
       "結構與 gsat-spec.json legacy_ast「98–110」期別一致：詞彙題 1–10（各1分）、綜合測驗 11–20（2篇×5題）、文意選填 21–30（12個選項 A–L）、篇章結構 31–35（6個選項 A–F，各2分）、閱讀測驗 36–51（4篇×4題，各2分）、中譯英 2題各4分、英文作文 20分；選擇題 72分、非選擇題 28分；考試時間 80分鐘。",
       "非選擇題題號：題本中譯英子題編為 1、2，英文作文不編號；因 schema 要求 no 為整數，中譯英填 no=1、2（label「中譯英1」「中譯英2」），作文填 no=1（label「英文作文」），因此 validator 會出現「題號重複 [1, 2]」warning，label 皆不重複，屬合理。",
@@ -3109,8 +3109,9 @@
       "評分原則 PDF 的文字層使用 CJK 相容表意文字（如 U+F969 數、U+F978 兩、U+F98E 年、U+F906 句），scoring_notes 一律寫成標準字（NFC 正規化後與 PDF 逐字比對一致）。",
       "題本原文照錄：閱讀測驗說明寫「第36題至51題」（少一個「第」）；詞彙題、綜合測驗、閱讀測驗、英文作文的「說明︰」用 U+FE30 冒號，文意選填、篇章結構、中譯英與第貳部分用全形「：」，均照 Word 檔原字元保留。",
       "Word 檔中的不換行空白（U+00A0，閱讀 36–39 選文第3段兩處）改為一般空白；上標（20th、15th）、斜體（meteoroid、halal 等）、粗體（36 題 NOT、41 題片語）不保留格式；41 題問的是粗體片語而非底線，故未加 <u>。",
-      "標註（tags）為解析者判讀：篇章結構 clue 使用 lexical_cohesion（31 rebelliousness↔rejected values、nervous breakdown↔therapy；34 the garden↔The Tarot Garden）、pronoun_reference（32 A 句提供 these sculptures 的指涉；33 these joyful and powerful images 回指前句）、transition_word（35 Instead）；17 題 grammar_point 用 modal（不在範例清單內）；15、30 題標為 participle（keep + O + p.p.；make + O + p.p. as）。"
+      "標註（tags）為解析者判讀：篇章結構 clue 使用 lexical_cohesion（31 rebelliousness↔rejected values、nervous breakdown↔therapy；34 the garden↔The Tarot Garden）、pronoun_reference（32 A 句提供 these sculptures 的指涉；33 these joyful and powerful images 回指前句）、transition_word（35 Instead）；17 題 grammar_point 用 modal（不在範例清單內）；15、30 題標為 participle（keep + O + p.p.；make + O + p.p. as）。",
+      "查證（verifier）：51 題答案與 answer.pdf（文字層與頁面影像）逐題一致；全部選項、題幹、選文與 Word 版逐字一致，與 PDF 文字層逐詞一致；8 篇選文段落數（3／2／3／3／4／4／4／2）與字數（166／208／256／202／338／315／375／323，空格編號計為 1 字）與 pdftotext 擷取結果一致，首末句與空格位置正確；題本沒有任何圖表；51 題統計（答對率、高低分組、鑑別度、各選項與未答比例，皆為 0–1 小數）與 stats-1、stats-2 全部一致，僅第22、29題兩表差 1 個百分點（已於上方說明）；中譯英兩題與作文題目、說明與題本一致，scoring_notes 與評分原則 PDF 逐字一致；tags 逐題檢視後未發現明顯錯誤，未修改。本次查證未修正任何題目內容。"
     ],
-    "verified_by": null
+    "verified_by": "verifier"
   }
 }

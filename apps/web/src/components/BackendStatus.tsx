@@ -59,7 +59,7 @@ export function BackendStatus() {
       {state.status === 'online' && (
         <span>
           後端已連線
-          <span className="ml-1 text-muted">
+          <span className="text-muted">
             （{state.health.service} v{state.health.version}）
           </span>
         </span>

@@ -6,8 +6,7 @@ export default function TranslationPage() {
     <ModulePage page={getPage('/translation')}>
       <InfoSection title="學測怎麼考">
         <p>
-          第參部分非選擇題，共 2 題、每題 4 分。把中文句子翻成正確、通順、達意的英文，以高中基本句型與 Level 1–4 的詞彙為主。
-          評分原則上每個錯誤扣 0.5 分，相同的錯誤只扣一次。
+          第參部分非選擇題，共 2 題、每題 4 分。把中文句子翻成正確、通順、達意的英文，以高中基本句型與 Level 1–4 的詞彙為主。評分原則上每個錯誤扣 0.5 分，相同的錯誤只扣一次。
         </p>
       </InfoSection>
       <InfoSection title="規劃中的功能">

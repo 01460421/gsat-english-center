@@ -3134,8 +3134,9 @@
       "說明文字照 Word 檔原字元保留：詞彙題、綜合測驗、閱讀測驗、英文作文的「說明︰」用 U+FE30 冒號，文意選填、篇章結構、中譯英與第貳部分用全形「：」；中譯英與英文作文說明第2點在 Word 檔前面有三個全形空白（U+3000）作縮排對齊，已去除並以換行分隔。英文作文 stem 去掉開頭的「提示：」標籤（同 ast-110）；Word 檔寫「文長至少120個單詞」，PDF 排版顯示為「至少 120 個單詞」（自動中英間距），照 Word 檔。",
       "選文原文照錄、未更正：第21–30題選文 over fishing（一般拼為 overfishing）；第40–43題選文 Li-Fi enabled applications（後文另作 Li-Fi-enabled）、electromagnetic sensitive areas；第31–35題選項 F 的 two most essential elements（少 the）；第49題選項 C 的 gene modified crops。",
       "評分原則 PDF 的文字層使用 CJK 相容表意文字（如 U+F98E 年、U+F978 兩、U+F969 數、U+F906 句），scoring_notes 一律以 Unicode NFC 正規化為標準字並與頁面影像核對；PDF 換行處中文直接相接、英文詞之間補一個空白。",
-      "標註（tags）為解析者判讀：第16題 grammar_point 用 auxiliary_substitution（isn't 代替 isn't serious）、第18題用 modal（may have + p.p. 推測過去）、第19題用 concessive_clause（Whatever the source…，不在範例清單內）；篇章結構 clue：31 topic_sentence（F 句把前句的 food 具體化為 bread and salt，並預告後兩段）、32 lexical_cohesion（麵包價格漲到工資 88%→買不起足夠食物→挨餓）、33 pronoun_reference（下一句 this tax on salt consumption 回指 the gabelle）、34 lexical_cohesion（blamed the ruling class→anger→riots→The results）、35 contrast（calm was restored ↔ Yet…remained…unsettling）；第42題「NOT true」依本 repo 慣例標 not_mentioned。"
+      "標註（tags）為解析者判讀：第16題 grammar_point 用 auxiliary_substitution（isn't 代替 isn't serious）、第18題用 modal（may have + p.p. 推測過去）、第19題用 concessive_clause（Whatever the source…，不在範例清單內）；篇章結構 clue：31 topic_sentence（F 句把前句的 food 具體化為 bread and salt，並預告後兩段）、32 lexical_cohesion（麵包價格漲到工資 88%→買不起足夠食物→挨餓）、33 pronoun_reference（下一句 this tax on salt consumption 回指 the gabelle）、34 lexical_cohesion（blamed the ruling class→anger→riots→The results）、35 contrast（calm was restored ↔ Yet…remained…unsettling）；第42題「NOT true」依本 repo 慣例標 not_mentioned。",
+      "查證者（verifier）獨立核對：答案 51 題逐題對照 answer.pdf 文字層與頁面影像，全部一致；8 篇選文、51 題題幹與全部選項（含文意選填 A–L、篇章結構 A–F）以 pdftotext 逐詞 diff 及自行以 python-docx 重抽的 Word 文字比對，唯一差異是 PDF 行尾斷字（Wi-/Fi、600,000-/specimen），JSON 已正確接回；段落數、空格 [[題號]] 位置皆與題本相同；用 Read 看第 1–7 頁影像確認 37、41、45、51 題為粗體非底線、插圖描述與 pdfimages 抽出的原圖相符；統計 51 題 P/Ph/Pl/D、T/H/L 各選項比例、未答比例全數以 xlrd 重新比對（皆已換成 0–1），stats-3 兩大題分數分布 11＋23 列全數比對無誤；中譯英、作文題目與 scoring_notes 與 Word 檔、scoring.pdf（NFC 後）逐字一致；未發現需要修正之處。"
     ],
-    "verified_by": null
+    "verified_by": "verifier"
   }
 }

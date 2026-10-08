@@ -605,6 +605,7 @@
               "scoring_notes": null,
               "tags": {
                 "test_point": "grammar",
+                "answer_pos": "preposition",
                 "grammar_point": "participle",
                 "key_phrase": "including"
               }
@@ -819,7 +820,7 @@
               "scoring_notes": null,
               "tags": {
                 "test_point": "phrase",
-                "answer_pos": "verb",
+                "answer_pos": "phrase",
                 "key_phrase": "blend with"
               }
             },
@@ -908,7 +909,7 @@
               "tags": {
                 "test_point": "grammar",
                 "answer_pos": "pronoun",
-                "grammar_point": "reflexive_pronoun"
+                "grammar_point": "pronoun"
               }
             },
             {
@@ -1384,7 +1385,7 @@
     }
   ],
   "extraction": {
-    "method": "官方 Word 版（paper-2.doc → soffice 轉 docx → python-docx，依 run 的底線屬性辨識空格與劃線字）取文字，與 pdftotext -layout 題本逐段比對；以 Read 逐頁檢視題本 PDF 影像（7 頁，含封面）確認版面、段落與底線，第7題另以 300dpi 裁切放大確認；答案檔為國文、英文、數學合併的掃描檔（無文字層），以 pdftoppm 200dpi 轉圖並裁切英文欄，用 Read 看影像逐題抄錄。",
+    "method": "官方 Word 版（paper-2.doc → soffice 轉 docx → python-docx，依 run 的底線屬性辨識空格與劃線字）取文字，與 pdftotext -layout 題本逐段比對；以 Read 逐頁檢視題本 PDF 影像（7 頁，含封面）確認版面、段落與底線，第7題另以 300dpi 裁切放大確認；答案檔為國文、英文、數學合併的掃描檔（無文字層），以 pdftoppm 200dpi 轉圖並裁切英文欄，用 Read 看影像逐題抄錄。；查證（verifier）：答案檔第1頁以 300dpi 重新轉圖、裁切英文欄（1–30、31–50 兩欄及 21–30 延伸欄）逐題核對 50 題答案；以 python 將全部題幹、選項、說明與選文和 Word 版（python-docx）及 pdftotext -layout 逐字／逐詞比對，並以 Read 逐頁看題本 PDF 影像（第2–7頁）複核版面、底線與段落。",
     "issues": [
       "答案來源：answer.pdf（units.json 標 quality \"none\"）為無文字層的掃描檔，第1頁為國文、英文、數學合併答案表，第2頁為社會、自然；以 pdftoppm 200dpi 轉圖並裁切英文欄，用 Read 看影像逐題抄錄第1–50題答案，再對照未裁切的整頁影像複核一次。",
       "無統計與評分原則：units.json 中85學年度只有題本 PDF、Word 版與選擇題答案，沒有 stats（答對率／鑑別度／選項分析）與 scoring 檔，所有小題 stats 為 null，sources.scoring／stats 為空陣列（validator「整份考卷沒有任何統計資料」warning 屬實）。中譯英第1–5題大考中心未公布參考譯文，answer／accepted_answers／scoring_notes 填 null；作文 answer 依 schema 為 null，作文評分標準（內容5、組織5、文法4、用字拼字4、體例2）印在題本說明中，已逐字放在 s5.instructions。",
@@ -1394,10 +1395,10 @@
       "中譯英：題本為一篇短文，其中五個劃線的中文句子即第1–5題。group passage 保留整篇短文，劃線句子以 <u>...</u> 標出（含句首題號與句末標點，與 Word 版底線範圍一致）；各題 stem 為去掉題號的中文句子，標點照原文（第1題句末為半形 “?”，第5題句末為半形逗號 “,”，與後面英文接續）。",
       "題號：中譯英題本印 1.–5.，與選擇題第1–5題重號，依 gsat-87／88／89 慣例 no 保留 1–5、label 為「中譯英1」–「中譯英5」；作文題本未編號，no 填 1、label 為「作文」。validator 的「題號重複 [1, 2, 3, 4, 5]」warning 因此產生，屬合理。",
       "作文：題本的「背景提示」兩段放在 group passage（含「背景提示：」標頭），「提示：」框內文字放在 stem。背景提示中「要等到西元1939年才打開，以便讓五千年後的人知道」照原文保留——依上下文應為西元6939年（1939年紐約世博時間膠囊預定5000年後開啟），屬原卷誤植。說明「請依下列提示寫一篇英文作文在「答案卷」上寫。」語句重複「寫」字，照原文保留；Word 版把「文長以120字為／原則。」與「體例／（格式、標點、大小寫）2分。」因排版硬斷行，已合併。開頭句引號照原文為 “ The two things I would like to put in the time capsule are...”（左引號後有空格）。",
-      "其他照原文保留的錯誤或特殊寫法：第22題 (D) “looking into\\\"” 末尾多一個直引號；第42題題幹「\\\" Scrabble\\\" is」引號內有空格；第43題「On the basis of the letter, is the most likely relationship ...」缺 what；第45題 (A)、第48題 (B) 句末無句點；第41–43題信件「a gift that I'm sure you will find. useful—an unabridged dictionary」find 後多一個句點；第47–50題選文「concentrate on memorizing les and lists」的 les 應為 rules；第31–40題選文「Lizards, [[33]] can change」空格後無逗號；第18題 (C) 題本印成「(C)raised」（無空格），選項文字記為 raised。",
+      "其他照原文保留的錯誤或特殊寫法：第22題 (D) “looking into\"” 末尾多一個直引號；第42題題幹「\" Scrabble\" is」引號內有空格；第43題「On the basis of the letter, is the most likely relationship ...」缺 what；第45題 (A)、第48題 (B) 句末無句點；第41–43題信件「a gift that I'm sure you will find. useful—an unabridged dictionary」find 後多一個句點；第47–50題選文「concentrate on memorizing les and lists」的 les 應為 rules；第31–40題選文「Lizards, [[33]] can change」空格後無逗號；第18題 (C) 題本印成「(C)raised」（無空格），選項文字記為 raised。",
       "文字來源與排版：以官方 Word 版為主要文字來源（Word 原檔 .doc 經 soffice 轉 docx，以 python-docx 讀 run 的底線屬性辨識空格與劃線字），與 pdftotext -layout 逐段比對、並以 Read 逐頁看題本 PDF 影像確認。pdftotext 的「a ho le」「hemisphere — play」為 PDF 排版字距造成，依 Word 版與影像記為 hole、hemisphere—play。第21–30題選文 Word 版因排版被硬換行拆成多段，依 PDF 影像（縮排位置）合併回兩段（第二段由 [[24]] 開始）。第41–43題信件日期在 PDF 因靠右對齊被折成「Oct.」/「6, 1996」兩行，依 Word 版記為「Oct. 6, 1996」；信件結尾 Love, / Sally 各占一行。Word 版句號後的雙空格已壓成單一空格；直引號、直撇號（ABC's、doesn't 等）照 Word 版保留。各題組前的「21-30題為題組」等說明列未存入。",
-      "標註：grammar_point 中的 pronoun（第26、31題）、reflexive_pronoun（第38題）為 schema 範例以外的值；第25題（including）選項測分詞形式，未填 answer_pos。第11–20題同義替換題的 test_point 以「劃線部分」的性質判斷：單字為 word_meaning，片語／慣用語為 phrase。第46–48題閱讀標註、作文 essay_type（以指定開頭句的主題式短文，歸 topic）為判斷值，跨年分析時可再統一。"
+      "標註：grammar_point 中的 pronoun（第26、31、38題）為 schema 範例以外的值，但與其他年度（gsat-87、gsat-92、gsat-105 等）用法一致；第38題（themselves）原標 reflexive_pronoun，查證時改為 pronoun 以與全庫一致。第25題（including）選項測分詞形式，test_point 為 grammar／participle，answer_pos 依 including 在句中的詞性（介系詞，同 gsat-96 第18題）填 preposition。第34題（blend with）answer_pos 由 verb 改為 phrase，與第13、15、22題及全庫「動詞＋介副詞」答案一致。第11–20題同義替換題的 test_point 以「劃線部分」的性質判斷：單字為 word_meaning，片語／慣用語為 phrase；answer_pos 以正確選項的詞性標註。第46–48題閱讀標註、第47–50題選文 sdgs [4]（教師依學習風格協助學生）、作文 essay_type（以指定開頭句的主題式短文，歸 topic）為判斷值，跨年分析時可再統一。"
     ],
-    "verified_by": null
+    "verified_by": "verifier"
   }
 }

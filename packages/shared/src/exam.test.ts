@@ -4,7 +4,8 @@
  * tsc 只保證程式碼和型別一致，管不到執行期讀進來的 JSON：檔案少一個欄位、列舉值打錯字、
  * 答案形狀和 mode 對不上，型別照樣會通過，直到前端渲染時才爆掉。這裡逐檔檢查：
  *   1. 檔案能被 JSON.parse 解析；
- *   2. 規格文件（docs/exam-json-schema.md）列出的欄位都存在，基本型別正確；
+ *   2. 規格文件（docs/exam-json-schema.md）列出的欄位都存在，基本型別正確
+ *      （例外：tags 依規格「不確定就省略」，與 validate_exam.py 一樣允許整個省略）；
  *   3. 列舉值都在 exam.ts 匯出的常數陣列裡（也就是在 TS 字面值聯集裡）；
  *   4. 型別表達不了的關聯：answer 形狀依 mode 而定、選項代號要存在、[[題號]] 空格要對上題號。
  *
@@ -73,9 +74,11 @@ class Problems {
   }
 }
 
+/** tags 可以省略或為 null（「不確定就省略」，validate_exam.py 也接受）；有值時才檢查內容。 */
 function checkQuestionTags(p: Problems, where: string, tags: unknown) {
+  if (tags === undefined || tags === null) return;
   if (!isObject(tags)) {
-    p.add(where, 'tags 必須是物件');
+    p.add(where, 'tags 必須是物件、null 或省略');
     return;
   }
   p.enumValue(where, 'tags.test_point', tags['test_point'], TEST_POINTS);
@@ -90,9 +93,9 @@ function checkQuestionTags(p: Problems, where: string, tags: unknown) {
 }
 
 function checkGroupTags(p: Problems, where: string, tags: unknown) {
-  if (tags === null) return;
+  if (tags === undefined || tags === null) return;
   if (!isObject(tags)) {
-    p.add(where, 'tags 必須是物件或 null');
+    p.add(where, 'tags 必須是物件、null 或省略');
     return;
   }
   p.enumValue(where, 'tags.genre', tags['genre'], GENRES);
@@ -115,7 +118,7 @@ function checkOptionMap(p: Problems, where: string, field: string, value: unknow
     return;
   }
   for (const [key, text] of Object.entries(value)) {
-    p.check(where, includes(OPTION_LETTERS, key), `${field} 的代號 ${key} 不是 A–L`);
+    p.check(where, includes(OPTION_LETTERS, key), `${field} 的代號 ${key} 不在 OPTION_LETTERS（${OPTION_LETTERS.join('')}）裡`);
     p.check(where, typeof text === 'string', `${field}.${key} 必須是字串`);
   }
 }
@@ -132,7 +135,6 @@ function checkQuestion(p: Problems, where: string, q: Json, bank: unknown) {
     'points',
     'stats',
     'scoring_notes',
-    'tags',
   ]);
   p.check(where, Number.isInteger(q['no']), 'no 必須是整數');
   p.check(where, typeof q['label'] === 'string', 'label 必須是字串');
@@ -235,7 +237,7 @@ function checkExam(file: string, data: unknown): string[] {
     groups.forEach((g: unknown, gi) => {
       const gw = `${sw}.groups[${gi}]`;
       if (!isObject(g)) return p.add(gw, '必須是物件');
-      p.requireKeys(gw, g, ['id', 'passage', 'passage_parts', 'figures', 'options_bank', 'questions', 'tags']);
+      p.requireKeys(gw, g, ['id', 'passage', 'passage_parts', 'figures', 'options_bank', 'questions']);
       p.check(gw, isStringOrNull(g['passage']), 'passage 必須是字串或 null');
       p.check(gw, g['passage_parts'] === null || Array.isArray(g['passage_parts']), 'passage_parts 必須是陣列或 null');
       p.check(gw, Array.isArray(g['figures']), 'figures 必須是陣列');
