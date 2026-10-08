@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- viewport-fit=cover：讓底部導覽可以用 env(safe-area-inset-bottom) 避開 iPhone 的主畫面指示條。 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>學測英文中心｜學測英文備考</title>
+    <meta name="description" content="為台灣高中生打造的學測英文備考 App：單字、各題型練習、歷屆試題與模擬考。" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#171c23" media="(prefers-color-scheme: dark)" />
+    <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <!--
+      在第一次繪製前套用使用者選的主題，避免「先閃一下系統主題再跳成深色」。
+      必須是同步的行內腳本（module 腳本會延後執行）。鍵名與 src/lib/theme.ts 的 THEME_STORAGE_KEY 相同。
+      之後若加上 Content-Security-Policy，要把這段腳本的 sha256 雜湊加進 script-src。
+    -->
+    <script>
+      try {
+        var t = localStorage.getItem('gsat-theme');
+        if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+      } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <noscript>這個網站需要啟用 JavaScript 才能使用。</noscript>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

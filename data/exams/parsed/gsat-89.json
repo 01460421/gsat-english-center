@@ -372,7 +372,7 @@
               "no": 16,
               "label": "16",
               "mode": "single_choice",
-              "stem": "Joe: I see you’re busy right now, Sue. As soon as you ______, I’d like to talk to you for a few minutes.",
+              "stem": "As soon as you ______, I’d like to talk to you for a few minutes.",
               "options": {
                 "A": "finish",
                 "B": "finished",
@@ -395,7 +395,7 @@
               "no": 17,
               "label": "17",
               "mode": "single_choice",
-              "stem": "Joe: Oh, no, I don’t want to interrupt you. I can wait. I’ll come back ______.",
+              "stem": "I’ll come back ______.",
               "options": {
                 "A": "later",
                 "B": "late",
@@ -417,7 +417,7 @@
               "no": 18,
               "label": "18",
               "mode": "single_choice",
-              "stem": "Sue: I’m afraid it’s going to be a long wait! I’m working ______ my history paper.",
+              "stem": "I’m working ______ my history paper.",
               "options": {
                 "A": "by",
                 "B": "in",
@@ -439,7 +439,7 @@
               "no": 19,
               "label": "19",
               "mode": "single_choice",
-              "stem": "Joe: History paper? I thought you’d finished it. ______ you turn it in on Friday?",
+              "stem": "______ you turn it in on Friday?",
               "options": {
                 "A": "Mustn’t",
                 "B": "Needn’t",
@@ -461,7 +461,7 @@
               "no": 20,
               "label": "20",
               "mode": "single_choice",
-              "stem": "Sue: Uh-huh. But the professor just returned it to me. I ______ to add 10 more pages.",
+              "stem": "I ______ to add 10 more pages.",
               "options": {
                 "A": "told",
                 "B": "was told",
@@ -1511,17 +1511,17 @@
     }
   ],
   "extraction": {
-    "method": "官方 Word 版（paper-2.doc → soffice 轉 docx → python-docx）取文字，與 pdftotext -layout 逐段比對，並以 Read 逐頁檢視題本 PDF 影像（8 頁）確認版面、空格位置與段落；答案檔為多科合併的掃描檔，以 Read 看第 2 頁「八十九學年學科能力測驗英文考科答案」影像並以 150dpi 放大逐題抄錄。",
+    "method": "官方 Word 版（paper-2.doc → soffice 轉 docx → python-docx）取文字，與 pdftotext -layout 逐段比對，並以 Read 逐頁檢視題本 PDF 影像（8 頁）確認版面、空格位置與段落；答案檔為多科合併的掃描檔，以 Read 看第 2 頁「八十九學年學科能力測驗英文考科答案」影像並以 150dpi 放大逐題抄錄。；查證（verifier）：答案以 Read 看答案檔第 2 頁影像並另以 200dpi 裁切放大，55 題逐題比對；選項、題幹、選文以 Word 版（soffice 轉 docx）逐段程式比對，並與 pdftotext -layout 全文逐詞比對（2828 詞完全一致）；Read 逐頁看題本 8 頁影像確認段落數、詩節空行、粗體／斜體與空格位置。",
     "issues": [
       "無統計資料：units.json 中 89 學年度只有題本與選擇題答案，沒有 stats（答對率／鑑別度／選項分析）與 scoring 檔，所有小題 stats 為 null，sources.scoring／stats 為空陣列（validator 的「整份考卷沒有任何統計資料」warning 屬實）。",
       "簡答題第1–5題：大考中心未公布簡答題參考答案或評分原則（答案檔只有選擇題），answer／accepted_answers／scoring_notes 均填 null。",
-      "第16–20題：題本將一篇對話克漏字放在「一、詞彙與語法(20%)」大題內（16-20題為題組），各題只有選項、沒有題幹。為維持題本大題結構（第1–20題同一大題、20分），放在 vocabulary 大題的第二個題組 s1g2，對話原文放 passage 並以 [[16]]–[[20]] 標空格；但 validator 規定 vocabulary 大題的單選題必須有 stem，所以 stem 填入該空格所在的那一句對話（含說話者，空格改為 ______），這是從選文複製的原句，不是題本另外印的題幹。",
+      "第16–20題：題本將一篇對話克漏字放在「一、詞彙與語法(20%)」大題內（16-20題為題組），各題只有選項、沒有題幹。為維持題本大題結構（第1–20題同一大題、20分），放在 vocabulary 大題的第二個題組 s1g2，對話原文放 passage 並以 [[16]]–[[20]] 標空格；但 validator 規定 vocabulary 大題的單選題必須有 stem，所以 stem 填入該空格所在的那一句（不含說話者與同一段發言的其他句子，空格改為 ______），這是從選文複製的原句，不是題本另外印的題幹。（查證時由「整段發言＋說話者」改為只取空格所在的單句，與 gsat-88 第16–20題的作法一致；作答時請搭配 passage 顯示，例如第19題需要前一句 I thought you’d finished it. 的語境。）",
       "非選擇題題號：簡答題題本印為 1.–5.，與選擇題第1–5題重號，因此 no 保留 1–5、label 改為「簡答1」–「簡答5」；英文作文題本未編號，no 填 1、label 為「作文」。validator 的「題號重複 [1, 2, 3, 4, 5]」warning 因此產生，屬合理。",
       "結構與 gsat-spec.json legacy_gsat 88–89 期別一致：詞彙與語法 1–20（20分）、綜合測驗 21–40（20分）、閱讀測驗 41–55（每題2分，30分）、簡答題 5題×2分（10分）、英文作文 20分（文長120字左右）；合計 100 分。第壹部份標題原文為「第壹部份：單一選擇題」，part 填「單一選擇題」。",
       "綜合測驗 31–35 題為對話題組（選項為整句回應），36–40 題選項為子句／片語，皆依題本放在 cloze 大題。",
       "格式：第44題題幹的 NOT 在題本為粗體；簡答題選文中的 shed 在題本為斜體（第2題以引號問該字）；依規則不保留格式。第48–49題詩的兩節之間題本有空行，passage 中以空行（\\n\\n）分隔；題本未標詩名與作者（為 Wordsworth〈I Wandered Lonely as a Cloud〉前兩節，僅寫在 tags.topic）。",
       "逐字保留題本的直撇號：第41–43題選文 “That's not mine,” 與第48–49題詩 o'er 在 PDF 與 Word 版都是直撇號（其餘為彎引號 ’），照原樣保留。"
     ],
-    "verified_by": null
+    "verified_by": "verifier"
   }
 }

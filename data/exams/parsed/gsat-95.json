@@ -2102,7 +2102,7 @@
             {
               "kind": "picture",
               "caption": null,
-              "description": "第1格（左，箭頭指向第2格）：廚房裡，一位長捲髮、繫著圍裙的女子站在爐台前，面帶微笑，一手拿鍋鏟、一手把平底鍋裡的菜倒進面前的大碗。一隻小狗坐在她身後的地上，吐著舌頭望向她。背景有冰箱、吊櫃、牆上的相框、放著盒子與蔬果的流理台，左側門外可見客廳。",
+              "description": "第1格（左，箭頭指向第2格）：廚房裡，一位長捲髮、繫著圍裙的女子站在爐台前，面帶微笑，手持一只盛著菜的平底鍋，把鍋裡的菜倒進面前的大碗（大鍋）中。一隻小狗吐著舌頭坐在她身後左側的地上（冰箱旁）。背景有冰箱、吊櫃、牆上的相框、放著盒子與蔬果的流理台，左側門外可見客廳。",
               "rows": null
             },
             {
@@ -2161,8 +2161,9 @@
       "統計：correct_rate／high_group／low_group／discrimination 取自 stats-1.xls（P、Ph=前33%、Pl=後33%、D=Ph−Pl），option_rates 取自 stats-2.xls 全體考生（T 列）；原表為整數百分比，已除以 100。option_rates 不含「未答」欄（0–1%），加總因四捨五入介於 0.98–1.01。stats-2 的高分組／低分組各選項比例（H、L 列）與 stats-1 五等分組 Pa–Pe、D1–D4 schema 無對應欄位，未收錄。報考 161,567 人、到考 157,745 人。",
       "統計異常照錄：第17題（indulge in）答對率 0.14、鑑別度 −0.01，全體 61% 選 (C) attend to（高分組 74% 也選 C）；第12題（command）鑑別度僅 0.11。答案仍以 answer.pdf 官方答案 A、C 為準，數值照原表。",
       "非選擇題（翻譯、作文）本年度來源檔沒有得分分布統計，stats 填 null。",
-      "標註判斷：s4g1（stress）雖以推銷書籍作結（第41題官方答案為 To promote a book about reducing stress），全文主體為說明文，genre 標 expository；第46題由 Most international tea trading is in black tea 推得最受歡迎的茶，視為細節改寫標 detail；第51題為 NOT true 型細節判斷，標 detail 而非 not_mentioned；第18題 Regarding 為介系詞用法、干擾選項為 regard 的各種動詞形式，標 grammar／preposition，grammar_point 不確定未標；第24題 what 引導名詞子句，grammar_point 標 noun_clause。"
+      "標註判斷：s4g1（stress）雖以推銷書籍作結（第41題官方答案為 To promote a book about reducing stress），全文主體為說明文，genre 標 expository；第46題由 Most international tea trading is in black tea 推得最受歡迎的茶，視為細節改寫標 detail；第51題為 NOT true 型細節判斷，標 detail 而非 not_mentioned；第18題 Regarding 為介系詞用法、干擾選項為 regard 的各種動詞形式，標 grammar／preposition，grammar_point 不確定未標；第24題 what 引導名詞子句，grammar_point 標 noun_clause。",
+      "查證（verifier）：獨立以 docx 逐字比對全部 46 題題幹與選項、文意選填選項庫、8 篇選文（段落數、首末句、空格位置），並以 pdftotext 做全卷英文字詞序列比對（全部一致）；用 Read 看題本第 2–8 頁影像確認段落與底線；56 題答案與 answer.pdf 英文頁逐題比對一致；56 題 P/Ph/Pl/D 與 T 列選項比例全部以程式比對 stats-1／stats-2 一致；翻譯樹狀圖以 200dpi 重新看圖核對 accepted_answers 無誤。修正：作文第1格圖片描述原寫「一手拿鍋鏟」「小狗望向她」，放大看圖後女子是手持平底鍋把菜倒進大碗、看不出鍋鏟，小狗是面向前方吐舌坐著，已改寫。"
     ],
-    "verified_by": null
+    "verified_by": "verifier"
   }
 }

@@ -1217,7 +1217,7 @@
       "groups": [
         {
           "id": "s4g1",
-          "passage": "People in the United States [[61]] tell stories a lot more than they do today. In earlier days, people were [[62]] by the stories they told and the stories that were told [[63]] them. Storytelling was a [[64]] of passing on family history, of giving meaning to experience, of understanding [[65]] happens in people’s lives and of passing that [[66]] on.\n[[67]], television, movies, and books have taken over the once personal and [[68]] activity of storytelling. We have [[69]] believe that storytelling is just for children. However, recent studies have shown [[70]] interest in storytelling for adults is returning.",
+          "passage": "People in the United States [[51]] tell stories a lot more than they do today. In earlier days, people were [[52]] by the stories they told and the stories that were told [[53]] them. Storytelling was a [[54]] of passing on family history, of giving meaning to experience, of understanding [[55]] happens in people’s lives and of passing that [[56]] on.\n[[57]], television, movies, and books have taken over the once personal and [[58]] activity of storytelling. We have [[59]] believe that storytelling is just for children. However, recent studies have shown [[60]] interest in storytelling for adults is returning.",
           "passage_parts": null,
           "figures": [],
           "options_bank": {
@@ -1236,7 +1236,7 @@
           },
           "questions": [
             {
-              "no": 61,
+              "no": 51,
               "label": "61",
               "mode": "bank_choice",
               "stem": null,
@@ -1253,7 +1253,7 @@
               }
             },
             {
-              "no": 62,
+              "no": 52,
               "label": "62",
               "mode": "bank_choice",
               "stem": null,
@@ -1270,7 +1270,7 @@
               }
             },
             {
-              "no": 63,
+              "no": 53,
               "label": "63",
               "mode": "bank_choice",
               "stem": null,
@@ -1287,7 +1287,7 @@
               }
             },
             {
-              "no": 64,
+              "no": 54,
               "label": "64",
               "mode": "bank_choice",
               "stem": null,
@@ -1304,7 +1304,7 @@
               }
             },
             {
-              "no": 65,
+              "no": 55,
               "label": "65",
               "mode": "bank_choice",
               "stem": null,
@@ -1321,7 +1321,7 @@
               }
             },
             {
-              "no": 66,
+              "no": 56,
               "label": "66",
               "mode": "bank_choice",
               "stem": null,
@@ -1337,7 +1337,7 @@
               }
             },
             {
-              "no": 67,
+              "no": 57,
               "label": "67",
               "mode": "bank_choice",
               "stem": null,
@@ -1353,7 +1353,7 @@
               }
             },
             {
-              "no": 68,
+              "no": 58,
               "label": "68",
               "mode": "bank_choice",
               "stem": null,
@@ -1369,7 +1369,7 @@
               }
             },
             {
-              "no": 69,
+              "no": 59,
               "label": "69",
               "mode": "bank_choice",
               "stem": null,
@@ -1386,7 +1386,7 @@
               }
             },
             {
-              "no": 70,
+              "no": 60,
               "label": "70",
               "mode": "bank_choice",
               "stem": null,
@@ -1554,9 +1554,9 @@
     }
   ],
   "extraction": {
-    "method": "官方 Word 版（paper-2.doc → soffice 轉 docx → python-docx，依 run 的底線屬性辨識空格與畫底線字）取文字，與 pdftotext -layout 題本逐段比對；以 Read 逐頁檢視題本 PDF 影像（8 頁，含封面）確認版面、段落、粗體／斜體／底線；答案檔為國文、英文、數學合併的掃描檔（無文字層），以 pdftoppm 200dpi 轉圖並裁切英文欄，用 Read 看影像逐題抄錄。",
+    "method": "官方 Word 版（paper-2.doc → soffice 轉 docx → python-docx，依 run 的底線屬性辨識空格與畫底線字）取文字，與 pdftotext -layout 題本逐段比對；以 Read 逐頁檢視題本 PDF 影像（8 頁，含封面）確認版面、段落、粗體／斜體／底線；答案檔為國文、英文、數學合併的掃描檔（無文字層），以 pdftoppm 200dpi 轉圖並裁切英文欄，用 Read 看影像逐題抄錄。查證者：60題選擇題答案以 Read 看答案檔 300dpi 英文欄影像逐題重新比對；題幹、選項、選文以 docx 文字與 pdftotext 全文逐字（含標點）比對，並以 Read 檢視題本全部頁面影像確認段落、底線與空格位置。",
     "issues": [
-      "【validator error，刻意保留】題號跳號：題本封面印「單一選擇題共60題（1~50題及61~70題）」，選擇題第一部分為第1–50題、第二部分為第61–70題，第51–60題在題本中本來就不存在（答案檔英文欄同樣是 1–50、61–70，說明文字也要求畫在答案卡「選擇題第二部分」）。no 依題本保留 61–70，選文空格 [[61]]–[[70]] 與官方答案對齊，因此 validator 報「numbering: 題號缺少 [51…60]」error。這是 validator「題號須從 1 連續」的規則不適用於本卷，不是解析錯誤；若改號為 51–60 會與題本、答案檔、答題卡全部對不上，故未改。建議 validator 對本卷（或對 extraction 宣告的跳號）加例外。",
+      "題號跳號（查證者修正）：題本封面印「單一選擇題共60題（1~50題及61~70題）」，選擇題第一部分為第1–50題、第二部分為第61–70題，題本本來就沒有第51–60題（答案檔英文欄同樣是 1–50、61–70）。為符合 schema「題號從 1 連續」的規則（validator 不允許跳號，不能留 error），第二部分10題的 no 改為內部連續序號 51–60，label 保留題本／答案檔的原題號 \"61\"–\"70\"；選文空格依 schema 規定對齊 no，寫成 [[51]]–[[60]]（[[51]] 即題本的 (61)，依此類推至 [[60]] 即 (70)）。答案依原題號對照官方答案檔：61 I、62 K、63 F、64 L、65 H、66 B、67 C、68 J、69 A、70 E，與 no 51–60 一一對應。instructions 仍逐字保留「第61至70題」。前端顯示題號與選文空格時應使用 label（no→label 對照），不要直接顯示 no。",
       "第61–70題：題本此大題沒有「文意選填」等名稱，標題只有「貳：選擇題（第二部分）　（10%）」（中間為全形空格，照 Word 版保留）；格式為一篇短文10個空格搭配 (A)–(L) 12個共用選項（其中 (D) Therefore、(G) interested 未被使用），依格式歸為 word_bank，小題 mode 為 bank_choice。",
       "短詩閱讀（非選擇題一）：依 schema type 表「舊卷的信函、短詩閱讀」歸為 other，小題 mode 為 short_answer，並加 item_type 標註。題本印題號 1.–5.，與選擇題第1–5題重號，因此 no 保留 1–5、label 改為「短詩1」–「短詩5」；英文作文題本未編號，no 填 1、label 為「作文」（同 gsat-89／gsat-90 慣例）。validator 的「題號重複 [1, 2, 3, 4, 5]」warning 因此產生，屬合理。",
       "非選擇題答案：答案檔（answer.pdf，國文、英文、數學合併的掃描檔）只有選擇題答案；大考中心未公布短詩閱讀第1–5題的參考答案或評分原則，也沒有作文評分說明，answer／accepted_answers／scoring_notes 均填 null。",
@@ -1567,8 +1567,8 @@
       "畫底線的字：第44題問 “navigation”、第49題問 “the Seine”，兩者在題本選文中畫底線，passage 以 <u>navigation</u>、<u>the Seine</u> 標記；題幹中同字串在題本以引號表示、無底線，照原樣。第42、45題的 NOT 在題本為粗體，短詩第5題的 boring、harsh 等六個形容詞為斜體，依規則不保留格式。",
       "逐字保留：短詩第6行行末為全形破折號「－」（U+FF0D），照題本保留；第47–50題選文的 the year 2,000（含千分位逗號，第47題選項 (D) 亦同）、Champs Elysees（無重音符號）、PARIS, Dec. 9 -- Paris 照題本保留。Word 版句號後的雙空格已壓成單一空格。",
       "短詩 passage：首兩行為詩名 April Rain Song 與作者 by Langston Hughes（題本分別置中、靠右），之後空一行接詩文，三節之間以空行分隔。各題組前的「21-30題為題組」等說明列未存入。",
-      "標註：grammar_point 中的 enough_to（第18題）、indirect_question（第20題）、noun_clause（第65、70題）為 schema 範例以外的值；第16、18、37、38題答案為非詞類單位（不定詞／副詞片語／比較結構／分詞），未填 answer_pos。"
+      "標註：grammar_point 中的 enough_to（第18題）、indirect_question（第20題）、noun_clause（題本第65、70題，即 label 65、70）為 schema 範例以外的值；第16、18、37、38題答案為非詞類單位（不定詞／副詞片語／比較結構／分詞），未填 answer_pos。"
     ],
-    "verified_by": null
+    "verified_by": "verifier"
   }
 }

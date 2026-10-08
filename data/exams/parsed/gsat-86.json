@@ -1479,7 +1479,7 @@
               "scoring_notes": null,
               "tags": {
                 "essay_type": "topic",
-                "word_requirement": "120字左右",
+                "word_requirement": "about 120 words",
                 "topic": "whether one agrees that “Laughter is better than medicine,” illustrated with one’s own or friends’/relatives’ experiences or a known story"
               }
             }
@@ -1495,7 +1495,7 @@
     }
   ],
   "extraction": {
-    "method": "官方 Word 版（paper-2.doc → soffice 轉 docx → python-docx，依 run 的底線屬性辨識空格與畫底線字）取文字，與 pdftotext -layout 題本逐字比對（除換行外完全一致）；以 Read 逐頁檢視題本 PDF 影像（8 頁，含封面）確認版面、段落、粗體／斜體／底線；答案檔為國文、英文、數學合併的掃描檔（無文字層），以 pdftoppm 250dpi 轉圖並裁切英文欄，用 Read 看影像逐題抄錄。",
+    "method": "官方 Word 版（paper-2.doc → soffice 轉 docx → python-docx，依 run 的底線屬性辨識空格與畫底線字）取文字，與 pdftotext -layout 題本逐字比對（除換行外完全一致）；以 Read 逐頁檢視題本 PDF 影像（8 頁，含封面）確認版面、段落、粗體／斜體／底線；答案檔為國文、英文、數學合併的掃描檔（無文字層），以 pdftoppm 250dpi 轉圖並裁切英文欄，用 Read 看影像逐題抄錄。；查證者獨立複核：answer.pdf 以 pdftoppm 300dpi 轉圖裁切英文欄，用 Read 看影像重新逐題抄錄第1–55題並與 JSON 程式比對（55/55 一致）；Word 版轉 docx 後以 python-docx 讀出（含底線／粗體 run），與 JSON 的全部選項（55題×4）、題幹、8 段選文逐字程式比對；pdftotext 與 docx 的英文 token 序列全文比對一致；以 Read 檢視題本 PDF 第1–8頁影像確認段落、畫底線字與空格位置。",
     "issues": [
       "無統計資料、無評分原則：units.json 中 86 學年度只有題本（PDF、Word）與選擇題答案，沒有 stats（答對率／鑑別度／選項分析）與 scoring 檔，所有小題 stats 為 null，sources.scoring／stats 為空陣列（validator 的「整份考卷沒有任何統計資料」warning 屬實）。",
       "答案檔（answer.pdf）為國文、英文、數學合併的掃描影像（第1頁「八十六學年學科能力測驗國文考科、英文考科及數學考科答案」，第2頁為社會、自然），無文字層；以 pdftoppm 250dpi 轉圖、裁切英文欄放大，用 Read 看影像逐題抄錄第1–55題，每題答案皆與題意核對一致。",
@@ -1509,8 +1509,9 @@
       "畫底線的字：第41題問 dispose of、第44題問 rescued、第49題問 tips，三者在題本選文中畫底線，passage 以 <u>dispose of</u>、<u>rescued</u>、<u>tips</u> 標記；題幹中同字在題本為粗體（41、49）或一般字體（44），依規則不保留格式。",
       "格式未保留：第45題題幹的 blank、第46題的 NOT、第51題的 EXCEPT、第52–55題選文電頭「Penghu, Nov.24」為粗體；簡答題選文的四行詩為斜體，第2、4行題本有額外縮排；英文作文提示中「以你自己或親朋好友的經驗或你所知道的故事為例」畫底線（強調，非考畫底線的字）。依規則皆不保留格式。",
       "引號依題本逐字保留（PDF 與 Word 版一致）：第2、3、4、8、14、15題題幹、第26、30題選項、第43題選項 (A)(C)、第45題選項 (C)(D) 用直撇號 '；第44–47題選文中「Thatcher's office」為直撇號、「Thatcher’s travel plan」「doctor’s advice」為彎撇號；第47題題幹引用同句時寫成「doctor's advice」（直撇號），照原樣保留。第45題選項 (A)–(D) 句末無句點，照原樣。",
-      "標註：grammar_point 中的 existential_there（第11題）、modal（第12題）、modal_perfect（第15題）為 schema 範例以外的值；第11、14題答案為非單一詞類（there is、any left），第24題 All 為限定詞（schema 無此詞類），第26–28、30題為對話應答語，均未填 answer_pos。第39題選項同時涉及主詞動詞一致（Much of your success 為單數，排除 C、D）與語意，標為 grammar/agreement。簡答第5題（找出與 depart 押韻的字）無適合的 item_type，未標。"
+      "標註：grammar_point 中的 existential_there（第11題）、modal（第12題）、modal_perfect（第15題）為 schema 範例以外的值；第11、14題答案為非單一詞類（there is、any left），第24題 All 為限定詞（schema 無此詞類），第26–28、30題為對話應答語，均未填 answer_pos。第39題選項同時涉及主詞動詞一致（Much of your success 為單數，排除 C、D）與語意，標為 grammar/agreement。簡答第5題（找出與 depart 押韻的字）無適合的 item_type，未標。",
+      "查證（verifier）：答案 55/55 與官方答案檔影像一致；全部選項、題幹、選文與 Word 版／PDF 逐字一致（差異僅為已說明的空格正規化：第2、3、4題空格前後空白、第34題補空格、[[29]]?／[[31]]. 等空格與標點相鄰；第21–25題 Word 版在「smoothly and quietly」後的斷段與第37–38題斷段經 PDF 影像確認為同段，合併正確；簡答選文「The old sages…」在 PDF 為短行後另起一行（未縮排），保留為獨立段落；詩前空一行沿用 gsat-87 慣例）。各選文 wc -w 與 pdftotext 擷取結果一致（112／164／217／149／300／301／210／89，扣除頁首頁尾與空格標點黏字）。本卷無圖表、無統計檔、無評分原則（manifest 中 86 學年度只有 paper、paper_word、answer 三項），stats 全為 null 屬實。標註：作文 word_requirement 由「120字左右」改為 schema 範例格式「about 120 words」（與 gsat-88～90 一致）；其餘 tags 逐題檢查無明顯錯誤，未更動。"
     ],
-    "verified_by": null
+    "verified_by": "verifier"
   }
 }

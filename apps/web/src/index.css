@@ -1,0 +1,117 @@
+@import 'tailwindcss';
+
+/*
+ * 主題：所有顏色都是 CSS 變數，元件只用語意化的 Tailwind 類別（bg-surface、text-muted…），
+ * 不直接寫 bg-white／text-gray-500。這樣切換主題只要換變數，不必在每個元件加 dark: 變體。
+ *
+ * 三種狀態：
+ *   - 跟隨系統：<html> 沒有 data-theme，由 prefers-color-scheme 決定。不需要 JavaScript，首次繪製就正確。
+ *   - 淺色／深色：<html data-theme="light|dark">，由 lib/theme.ts 設定並記在 localStorage；
+ *     index.html 裡有一小段同步腳本在繪製前套用，避免先閃一下系統主題。
+ *
+ * 深色變數寫了兩次（媒體查詢與 data-theme="dark"），是因為 CSS 沒辦法讓兩個選擇器共用一個區塊又各自有條件。
+ * 曾考慮用 light-dark() 只寫一次，但它要 Safari 17.5 以上，學生的舊 iPhone 不一定支援，所以不用。
+ * 修改深色配色時兩處要一起改。
+ */
+:root {
+  color-scheme: light;
+  --bg: #f6f7f9;
+  --surface: #ffffff;
+  --surface-2: #eef1f5;
+  --fg: #1a1f26;
+  --muted: #566170;
+  --line: #dde2e8;
+  --primary: #3149a8;
+  --primary-soft: #e6ebfb;
+  --on-primary: #ffffff;
+  --badge-bg: #fdf0c8;
+  --badge-fg: #7a4508;
+  --ok: #1b7a3d;
+  --bad: #b42318;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    color-scheme: dark;
+    --bg: #0f1318;
+    --surface: #171c23;
+    --surface-2: #202731;
+    --fg: #e5e9ef;
+    --muted: #9ba6b4;
+    --line: #2b3440;
+    --primary: #9db0ff;
+    --primary-soft: #232c4a;
+    --on-primary: #0f1318;
+    --badge-bg: #3a2c0c;
+    --badge-fg: #f6d270;
+    --ok: #5ad48a;
+    --bad: #ff8a80;
+  }
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --bg: #0f1318;
+  --surface: #171c23;
+  --surface-2: #202731;
+  --fg: #e5e9ef;
+  --muted: #9ba6b4;
+  --line: #2b3440;
+  --primary: #9db0ff;
+  --primary-soft: #232c4a;
+  --on-primary: #0f1318;
+  --badge-bg: #3a2c0c;
+  --badge-fg: #f6d270;
+  --ok: #5ad48a;
+  --bad: #ff8a80;
+}
+
+/* inline：產生的工具類別直接寫 var(--surface)，執行期切換 data-theme 就會生效。 */
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-primary: var(--primary);
+  --color-primary-soft: var(--primary-soft);
+  --color-on-primary: var(--on-primary);
+  --color-badge-bg: var(--badge-bg);
+  --color-badge-fg: var(--badge-fg);
+  --color-ok: var(--ok);
+  --color-bad: var(--bad);
+}
+
+@theme {
+  /*
+   * 字體堆疊：英文字形放前面（這是英文學習 App，選文、選項的英文要好讀），中文字形依平台接在後面：
+   * macOS／iOS 的蘋方、Android／Linux 的思源黑體（Noto Sans TC）、Windows 的微軟正黑體。
+   * 不載入網路字型：中文字型檔動輒數 MB，學生常用行動網路，而且系統字型已經夠用。
+   * 不用 system-ui：部分 Windows 中文環境會把它對應到英文字形較差的字型。
+   */
+  --font-sans:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'PingFang TC', 'Noto Sans TC',
+    'Microsoft JhengHei', 'Heiti TC', sans-serif;
+}
+
+@layer base {
+  html {
+    /* 手機旋轉時不要自動放大字級；中文行高比英文需要的大一點。 */
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    line-height: 1.7;
+  }
+
+  body {
+    background-color: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-sans);
+  }
+
+  /* 鍵盤操作時的焦點框要看得到（Tailwind 的 preflight 會清掉部分預設樣式）。 */
+  :focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+  }
+}

@@ -1432,18 +1432,21 @@
               "scoring_notes": null,
               "tags": {
                 "essay_type": "topic",
-                "word_requirement": "120字左右",
-                "topic": "something interesting about a classmate"
+                "word_requirement": "about 120 words",
+                "topic": "an interesting incident involving a classmate from any stage of school (secondary school, elementary school or kindergarten)"
               }
             }
           ],
-          "tags": null
+          "tags": {
+            "topic": "something interesting about a classmate",
+            "sdgs": []
+          }
         }
       ]
     }
   ],
   "extraction": {
-    "method": "pdftotext -layout（題本 paper-1.pdf、封面 other.pdf）＋ python-docx 讀官方 Word 版（paper-2.doc 以 soffice 轉 docx）並與 PDF 文字逐詞比對（除空白外無差異）＋ Read 看頁面影像（題本第1、2、7頁；答案檔第1頁另以 pdftoppm 250dpi 裁切英文欄）＋ 人工校對",
+    "method": "pdftotext -layout（題本 paper-1.pdf、封面 other.pdf）＋ python-docx 讀官方 Word 版（paper-2.doc 以 soffice 轉 docx）並與 PDF 文字逐詞比對（除空白外無差異）＋ Read 看頁面影像（題本第1、2、7頁；答案檔第1頁另以 pdftoppm 250dpi 裁切英文欄）＋ 人工校對；查證：pdftoppm 300dpi 重新算圖答案檔並裁切英文欄逐題重抄、Read 看題本 1–7 頁全部頁面影像、400dpi 裁切配合題右欄確認 G／I／J 代號寫法、python 以空白正規化整串比對全部題幹選項與選文（PDF 文字層與 Word 版）",
     "issues": [
       "答案檔 answer.pdf 為國文、英文、數學三科合併表，且文字層亂碼（PSCRIPT 轉檔），以頁面影像（250dpi 裁切英文欄）逐題抄錄英文 1–55 題答案；每題均與題意核對無矛盾。",
       "本年度沒有 scoring（非選擇題評分原則）與 stats（統計）檔：簡答題 1–5 官方參考答案未公布，answer 填 null；全卷各題 stats 填 null（validator 的「整份考卷沒有任何統計資料」warning 屬合理）。",
@@ -1452,11 +1455,14 @@
       "結構與 gsat-spec.json legacy_gsat 90 期別一致：詞彙與慣用語 1–15（15 分）、綜合測驗 16–25（10 分，單篇 10 空格）、配合題 26–30（5 分，右欄選項 A–J）、文意選填 31–40（10 分，選項 A–J）、閱讀測驗 41–55（4 篇 3+3+4+5 題，每題 2 分，30 分）、簡答題 5 題×2 分、英文作文 20 分（文長 120 字左右）；合計 100 分。",
       "pdftotext 輸出的 Big5 相容字形（㆒㆓㆔㆕㆖㆘㆗）一律改為一二三四上下中（與 Word 版及頁面影像一致）；大題標題、說明照題本／Word 版原文，「說明︰」（U+FE30）與文意選填的「說明：」（全形冒號）兩種寫法照原文保留。",
       "簡答題選文末與第 1 題之間，PDF 第 7 頁有一個孤立的「.」（頁面影像可見，Word 版沒有），判斷為排版殘留，未收入 passage。",
-      "配合題（26–30）右欄選項代號原卷寫法不一：G 作「G…since」、I 作「I…. and」（代號後無句點），I、J 的省略號後有空格；options_bank 只收選項內容並保留開頭的「…」。Word 版 I、J 寫成「I…...and」「J.…..he」，以 PDF 頁面影像為準。左欄題幹保留結尾「…」。",
+      "配合題（26–30）右欄選項代號原卷寫法不一：G 在影像與文字層皆為「G…since」（代號後無句點，只有三點）；I、J 在 PDF 文字層為「I…. and」「J.… he」（I 的句點排在省略號之後），但頁面影像上與 A–F、H 一樣都是代號後四點，視為「代號＋句點＋…」；I、J 的省略號後有空格。options_bank 只收選項內容並保留開頭的「…」（I＝「… and it certainly hurts.」、J＝「… he found a job in a computer company.」）。Word 版 I、J 寫成「I…...and」「J.…..he」，以 PDF 頁面影像為準。左欄題幹保留結尾「…」。",
       "照原文保留：44–46 選文作 \"Alexander Dumas\"（法文原名為 Alexandre Dumas），且所有格 \"Dumas’\" 與 \"Dumas’s\" 混用；47(A) \"Tsavo National park\" 的 park 小寫；第 4 題 \"__________of\" 空格與 of 之間無空格。",
       "詞彙題與閱讀題題幹的空格底線長度照 PDF 文字層（長短不一）；選文段落以 Word 版為底（段落分隔用 \\n），書名等斜體未保留格式。",
-      "標註補充：schema 未定義 sentence_matching 與 short_answer 小題的 tags，本檔比照選擇題（test_point／grammar_point／key_phrase）與閱讀題（item_type）標註，供跨年分析參考；16 題 \"given (that)\" 標為 connective／conjunction。"
+      "標註補充：schema 未定義 sentence_matching 與 short_answer 小題的 tags，本檔比照選擇題（test_point／grammar_point／key_phrase）與閱讀題（item_type）標註，供跨年分析參考；16 題 \"given (that)\" 標為 connective／conjunction。",
+      "文意選填第 40 格：PDF 文字層「me___(40)__ more」與 Word 版（底線空白緊接在 me 之後）都沒有在 me 與空格之間留空白；passage 寫成「me [[40]] more」，只是讓 [[40]] 與前後字分開，未改動任何字詞。第 4 題「__________of」則照原文保留不加空白（Word 版底線後也是直接接 of）。",
+      "查證（verifier）：答案 1–55 由查證者另以 300dpi 重新算圖、裁切答案檔英文欄逐題重抄，與 JSON 全部一致；1–55 每題題幹＋四個選項（含底線長度）、配合題 26–30 左欄與右欄 A–J、文意選填選項 A–J、簡答題 5 題題幹，皆以「空白正規化後整串比對」與 PDF 文字層完全相符；7 篇選文（綜合測驗、文意選填、閱讀 4 篇、簡答題）全文逐字比對 PDF 文字層完全相符，字數 180／195／310／204／270／304／151 與 PDF 擷取一致，段落數 2／1／1／4／4／2／1 與頁面影像縮排一致；中文大題標題、說明、作文提示去空白後與 PDF 及 Word 版皆一致。7 頁頁面影像全部看過，全卷沒有任何圖表。本年度沒有統計檔，無法抽查答對率。",
+      "查證修正：作文 tags.word_requirement 由「120字左右」改為「about 120 words」（比照 schema 範例與 88、89、91、92 年寫法），tags.topic 改寫得更具體，並補上作文題組 tags（topic、sdgs）。"
     ],
-    "verified_by": null
+    "verified_by": "verifier"
   }
 }

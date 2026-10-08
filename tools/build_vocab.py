@@ -109,6 +109,7 @@ VOCAB = ROOT / "data/vocab"
 WORDLIST = VOCAB / "ceec-wordlist.json"
 SOURCES_JSON = VOCAB / "sources.json"
 SPLIT_LIMIT = 25 * 1024 * 1024          # lexicon.json 超過 25 MB 改依級別拆檔
+FAMILY_MAX_SENSE_RANK = int(os.environ.get("VOCAB_FAMILY_RANK", "3"))
 USER_AGENT = "gsat-english-center-vocab-pipeline/1.0 (educational project; python-urllib)"
 
 # ---------------------------------------------------------------------------
@@ -389,8 +390,9 @@ EXCHANGE_TYPES = [("s", "plural"), ("p", "past"), ("d", "past_participle"), ("i"
 
 IPA_MAP = {"\u04d9": "\u0259",   # Cyrillic schwa ә → IPA ə
            "\u0454": "\u025b",   # Cyrillic ie є → IPA ɛ
+           "g": "\u0261",        # ASCII g → IPA ɡ（ECDICT 兩種混用：多數用 g，arrogant、diagram 等少數用 ɡ）
            ":": "\u02d0"}        # length mark
-IPA_OK = set("abdefghijklmnoprstuvwxzæðŋɑɒɔəɛɜɪʃʊʌʒθɡɹɾʔːˈˌ()-, ̩̃")
+IPA_OK = set("abdefhijklmnoprstuvwxzæðŋɑɒɔəɚɛɜɝɪʃʊʌʒθɡɹɾʔːˈˌ()-, ̩̃")
 IPA_BAD = set("\\^")
 
 
@@ -557,6 +559,21 @@ def int_or_none(x: str) -> int | None:
 WN_POS = {"n.": ["n"], "v.": ["v"], "adj.": ["a"], "adv.": ["r"], "aux.": ["v"]}
 
 
+def wn_base_pos(p: str) -> str:
+    """OEWN 詞性鍵／synset partOfSpeech → n／v／a／r（n-1、n-2 這類同形異義鍵去掉編號；衛星形容詞 s 併入 a）。"""
+    b = p.split("-")[0]
+    return "a" if b == "s" else b
+
+
+def entry_wn_pos(entry_pos: list[str]) -> list[str]:
+    out = []
+    for p in entry_pos:
+        for q in WN_POS.get(p, []):
+            if q not in out:
+                out.append(q)
+    return out
+
+
 class Wordnet:
     def __init__(self, zpath: Path):
         z = zipfile.ZipFile(zpath)
@@ -571,12 +588,22 @@ class Wordnet:
             else:
                 self.synsets.update(data)
         self.sense_lemma: dict[str, str] = {}
+        self.sense_pos: dict[str, str] = {}       # sense id → n／v／a／r（衛星形容詞 s 併入 a）
+        self.sense_by_id: dict[str, dict] = {}
+        self.sense_rank: dict[str, int] = {}
+        self.lemma_synset_sense: dict[tuple[str, str], str] = {}
         self.lower: dict[str, list[str]] = collections.defaultdict(list)
         for lemma in sorted(self.entries):
             self.lower[lemma.lower()].append(lemma)
             for pkey, e in self.entries[lemma].items():
+                rank = 1      # 義項在同一個詞性鍵（n、n-1、v…）中的順序；OEWN 大致依使用頻率排列
                 for s in e.get("sense", []):
                     self.sense_lemma[s["id"]] = lemma
+                    self.sense_pos[s["id"]] = wn_base_pos(pkey)
+                    self.sense_by_id[s["id"]] = s
+                    self.sense_rank[s["id"]] = rank
+                    self.lemma_synset_sense[(lemma, s["synset"])] = s["id"]
+                    rank += 1
 
     def find(self, form: str) -> str | None:
         for k in ecdict_lookup_keys(form):
@@ -603,13 +630,29 @@ class Wordnet:
                             out.append(s)
         return out
 
+    def represents(self, sid: str, wpos: set[str]) -> bool:
+        """義項 sid 能不能代表詞類為 wpos 的條目：詞性相符；或是同一個字的轉類（OEWN 有 derivation 把這個義項連到
+        同一個 lemma、詞性相符的義項，例如 war v.「打仗」↔ war n.）。continent 的形容詞義項「自制的」和名詞「大陸」
+        之間沒有這種連結，所以不能代表 continent n.。"""
+        if self.sense_pos.get(sid) in wpos:
+            return True
+        lemma = self.sense_lemma.get(sid)
+        return any(self.sense_lemma.get(t) == lemma and self.sense_pos.get(t) in wpos
+                   for t in self.sense_by_id.get(sid, {}).get("derivation", []))
+
+    def all_senses(self, lemma: str) -> list[dict]:
+        ent = self.entries.get(lemma, {})
+        return [s for k in sorted(ent) for s in ent[k].get("sense", []) if s["synset"] in self.synsets]
+
     def pronunciation(self, lemma: str) -> str | None:
+        """OEWN 發音（優先 US）。OEWN 已是 IPA，只把 ASCII g 換成 ɡ，並用同一份字元白名單檢查。"""
         ent = self.entries.get(lemma, {})
         for k in sorted(ent):
             prons = ent[k].get("pronunciation") or []
             if prons:
                 us = [p["value"] for p in prons if p.get("variety") == "US"]
-                return us[0] if us else prons[0]["value"]
+                val = (us[0] if us else prons[0]["value"]).replace("g", "\u0261")
+                return val if all(c in IPA_OK for c in val) else None
         return None
 
 
@@ -930,24 +973,67 @@ def build(outdir: Path, *, verify: bool = True) -> dict:
             if {"lemma", "slash", "derived_ment", "derived_suffix", "plural_usual"} & set(r["types"]):
                 word_entries[k].append(i)
 
-    def vocab_ref(lemma: str) -> dict:
-        ids = sorted(word_entries.get(fold(lemma), []), key=lambda i: (by_id[i]["level"], i))
+    def form_wn_pos(i: str, form: str) -> set[str]:
+        """條目 i 的詞形 form 對應的 WordNet 詞性：括號衍生（-ment、-ism）與 (s) 複數是名詞（v./(n.) 的 (n.)），
+        其餘沿用條目詞類。"""
+        types = set(form_map.get(fold(form), {}).get(i, {}).get("types", []))
+        if "lemma" not in types and types & {"derived_ment", "derived_suffix", "plural_usual"}:
+            return {"n"}
+        return set(entry_wn_pos(by_id[i]["pos"]))
+
+    def vocab_ref(lemma: str, wpos: str | None = None) -> dict:
+        """OEWN 的詞是否也在詞彙表（比對原形與原表變體，不比對屈折形）。wpos（n／v／a／r）有值時只留詞類相符的條目，
+        都不相符才退回全部，例如形容詞 synset 裡的 present 指向 present adj./n./v.，而不是其他同形條目。"""
+        ids = word_entries.get(fold(lemma), [])
+        if wpos:
+            ids = [i for i in ids if wpos in form_wn_pos(i, lemma)] or ids
+        ids = sorted(ids, key=lambda i: (by_id[i]["level"], i))
         d = {"word": lemma.replace("_", " "), "in_list": bool(ids)}
         if ids:
             d["level"] = by_id[ids[0]]["level"]
             d["entry_ids"] = ids
         return d
 
+    def linked_entries(src_lemma: str, senses: list[dict], rels: tuple, self_id: str, *,
+                       attribute: bool = False, morph: bool = False,
+                       max_rank: int | None = None) -> list[tuple[str, str, str]]:
+        """沿 OEWN 義項關係 rels（以及 synset 的 attribute 關係）找也在詞彙表的條目，回傳 [(目標詞, 條目 id, 關係)]。
+        只收「目標義項的詞性」和目標條目詞類相符的連結：OEWN 的 contain(v.) 有 derivation 連到 continent 的
+        形容詞義項（自制的），不能因此把 continent n.（大陸）算成 contain 的衍生詞。morph=True 時另外要求兩個詞
+        有共同字首（morph_related），排除 die→death 這類跨字根的連結。"""
+        out, seen = [], set()
+        for s in senses:
+            targets = []
+            for r in rels:
+                for t in s.get(r, []):
+                    if t in wn.sense_lemma:
+                        targets.append((wn.sense_lemma[t], wn.sense_pos[t], t, r))
+            if attribute:
+                for T in wn.synsets[s["synset"]].get("attribute", []):
+                    if T in wn.synsets:
+                        tp = wn_base_pos(wn.synsets[T]["partOfSpeech"])
+                        targets += [(m, tp, wn.lemma_synset_sense.get((m, T)), "attribute")
+                                    for m in wn.synsets[T].get("members", [])]
+            for tl, tp, tsid, r in targets:
+                if max_rank and (wn.sense_rank.get(s["id"], 99) > max_rank
+                                 or (tsid and wn.sense_rank.get(tsid, 99) > max_rank)):
+                    continue
+                if morph and not morph_related(src_lemma, tl):
+                    continue
+                for i in sorted(word_entries.get(fold(tl), [])):
+                    ok = tp in form_wn_pos(i, tl) if tsid is None else wn.represents(tsid, form_wn_pos(i, tl))
+                    if i != self_id and ok and (tl, i) not in seen:
+                        seen.add((tl, i))
+                        out.append((tl, i, r))
+        return out
+
     # ---------------- WordNet ----------------
     oewn_any = {}
+    family_sources: dict[str, list[tuple[str, list[dict]]]] = {}   # 詞族連結用：(OEWN lemma, 依詞類篩過的義項)
     for e in entries:
         eid = e["entry_id"]
         rec = lex[eid]
-        wn_pos = []
-        for p in e["pos"]:
-            for q in WN_POS.get(p, []):
-                if q not in wn_pos:
-                    wn_pos.append(q)
+        wn_pos = entry_wn_pos(e["pos"])
         key_form = LOOKUP_OVERRIDES.get(eid, e["word"])
         lemma = None
         senses = []
@@ -961,43 +1047,60 @@ def build(outdir: Path, *, verify: bool = True) -> dict:
             if ss:
                 lemma, senses = lm, ss
                 break
+        # 詞族另外收「轉類」義項（war n. 的動詞義項 → warrior、project n. 的動詞義項 → projection）
+        fam_lemma = lemma or oewn_any.get(eid)
+        fam_senses = [x for x in wn.all_senses(fam_lemma) if wn.represents(x["id"], set(wn_pos))] if fam_lemma else []
+        fam_src = [(fam_lemma, fam_senses)] if fam_senses else []
+        # v./(n.) 的 -ment 名詞、capital(ism)、(s) 複數：用名詞義項找詞族（advertisement、capitalism…）
+        for v, vt in zip(e["variants"], e["variant_types"]):
+            if vt in ("derived_ment", "derived_suffix", "plural_usual"):
+                lm = wn.find(v)
+                ss = wn.senses(lm, ["n"]) if lm else []
+                if ss and lm != fam_lemma:
+                    fam_src.append((lm, ss))
+        family_sources[eid] = fam_src
         en_def, en_src = None, None
         if senses:
-            out_senses, antonyms, hyper, derivs = [], [], [], []
+            out_senses, antonyms, hyper = [], [], []
             for s in senses:
                 syn = wn.synsets[s["synset"]]
+                spos = wn_base_pos(syn.get("partOfSpeech", ""))
                 members = [m for m in syn.get("members", []) if m != lemma]
                 out_senses.append({
                     "synset_id": s["synset"],
                     "pos": syn.get("partOfSpeech"),
                     "definition": (syn.get("definition") or [""])[0],
                     "examples": [example_text(x) for x in syn.get("example", [])][:2],
-                    "synonyms": [vocab_ref(m) for m in members],
+                    "synonyms": [vocab_ref(m, spos) for m in members],
                 })
                 for a in s.get("antonym", []):
                     al = wn.sense_lemma.get(a)
-                    if al and al not in antonyms:
-                        antonyms.append(al)
+                    if al and (al, wn.sense_pos[a]) not in antonyms:
+                        antonyms.append((al, wn.sense_pos[a]))
                 for h in syn.get("hypernym", []) + syn.get("instance_hypernym", []):
                     if h not in hyper:
                         hyper.append(h)
-                for d in s.get("derivation", []) + s.get("pertainym", []):
-                    dl = wn.sense_lemma.get(d)
-                    if dl and dl not in derivs:
-                        derivs.append(dl)
+            # derivations：OEWN derivation／pertainym 的目標詞中也在詞彙表、且詞類相符的條目（不要求共同字首，
+            # 所以 die→death 這類 OEWN 認定的衍生也會列出；詞族 family 才另外要求共同字首）
+            der = {}
+            for tl, i, _ in linked_entries(lemma, senses, ("derivation", "pertainym"), eid):
+                der.setdefault(tl, []).append(i)
             der_refs = []
-            for dl in derivs:
-                ref = vocab_ref(dl)
-                if ref["in_list"]:
-                    ref["entry_ids"] = [i for i in ref["entry_ids"] if i != eid]
-                    if ref["entry_ids"]:
-                        ref["level"] = min(by_id[i]["level"] for i in ref["entry_ids"])
-                        der_refs.append(ref)
+            for tl, ids in der.items():
+                ids = sorted(set(ids), key=lambda i: (by_id[i]["level"], i))
+                der_refs.append({"word": tl.replace("_", " "), "in_list": True, "level": by_id[ids[0]]["level"],
+                                 "entry_ids": ids})
+            seen_ant = set()
+            ant_refs = []
+            for al, ap in antonyms:
+                if al not in seen_ant:
+                    seen_ant.add(al)
+                    ant_refs.append(vocab_ref(al, ap))
             rec["wordnet"] = {
                 "lemma": lemma,
                 "sense_count": len(senses),
                 "senses": out_senses,
-                "antonyms": [vocab_ref(a) for a in antonyms],
+                "antonyms": ant_refs,
                 "hypernyms": [{"synset_id": h, "words": wn.synsets[h].get("members", [])[:4],
                                "definition": (wn.synsets[h].get("definition") or [""])[0]}
                               for h in hyper[:3] if h in wn.synsets],
@@ -1015,6 +1118,12 @@ def build(outdir: Path, *, verify: bool = True) -> dict:
     log(f"wordnet done ({time.time() - t0:.0f}s)")
 
     # ---------------- 詞族 ----------------
+    # union-find 合併：(1) 同字多筆（§6.3）；(2) 括號衍生形、或拼法相近的斜線變體等於另一筆的詞形；
+    # (3) OEWN 義項的衍生類關係（derivation、pertainym、participle 與 agent／event／result… 等 morphosemantic 關係）
+    #     以及 synset 的 attribute 關係（accurate↔accuracy），兩端詞類都要相符、而且要有共同字首。
+    MORPH_RELS = ("derivation", "pertainym", "participle", "agent", "event", "result", "state", "undergoer",
+                  "instrument", "by_means_of", "property", "location", "material", "vehicle", "body_part",
+                  "destination", "uses")
     uf = UnionFind([e["entry_id"] for e in entries])
     fam_edges = collections.Counter()
     head_ids = collections.defaultdict(list)
@@ -1031,23 +1140,17 @@ def build(outdir: Path, *, verify: bool = True) -> dict:
             if vt == "slash" and not morph_related(e["word"], v):
                 continue
             for other in head_ids.get(fold(v), []):
-                if other != e["entry_id"]:
+                if other != e["entry_id"] and uf.find(other) != uf.find(e["entry_id"]):
                     uf.union(e["entry_id"], other)
                     fam_edges["variant_is_headword"] += 1
     for e in entries:
-        lm = oewn_any.get(e["entry_id"])
-        if not lm:
-            continue
-        for pkey, ent in wn.entries[lm].items():
-            for s in ent.get("sense", []):
-                for d in s.get("derivation", []) + s.get("pertainym", []):
-                    dl = wn.sense_lemma.get(d)
-                    if not dl or not morph_related(lm, dl):
-                        continue
-                    for other in head_ids.get(fold(dl), []):
-                        if other != e["entry_id"] and uf.find(other) != uf.find(e["entry_id"]):
-                            uf.union(e["entry_id"], other)
-                            fam_edges["oewn_derivation"] += 1
+        eid = e["entry_id"]
+        for src_lemma, senses in family_sources[eid]:
+            for tl, other, r in linked_entries(src_lemma, senses, MORPH_RELS, eid, attribute=True, morph=True,
+                                               max_rank=FAMILY_MAX_SENSE_RANK):
+                if uf.find(other) != uf.find(eid):
+                    uf.union(eid, other)
+                    fam_edges["oewn_attribute" if r == "attribute" else "oewn_derivation"] += 1
     groups = collections.defaultdict(list)
     for e in entries:
         groups[uf.find(e["entry_id"])].append(e["entry_id"])
@@ -1173,6 +1276,78 @@ def build(outdir: Path, *, verify: bool = True) -> dict:
             if "pronoun_case" in r["types"]:
                 pron_of[k].add(i)
 
+    # 同形異詞（homograph）：條目的原形同時是另一個「級別不高於它」的條目的屈折形，例如 saw（鋸）＝see 的過去式、
+    # found（建立）＝find 的過去式、lay＝lie 的過去式、rose＝rise 的過去式、learned（有學問的）＝learn 的過去式。
+    # Tatoeba 裡這些詞形幾乎都是另一個字的用法，所以只靠這種詞形命中、而且前一個字不能判斷詞類的句子不採用：
+    #   名詞：前一個字是限定詞或所有格（a saw、the rose、my thought、Tom's）
+    #   形容詞：限定詞、連綴動詞、程度副詞或 I'm／it's 這類縮寫（is broke、a learned man、very promising）
+    #   動詞原形：前一個字是 to 或助動詞（to found、will lay）
+    # 例外（視為同一個字，不算衝突）：條目是介系詞或連接詞（including、regarding）；比較級／最高級本身就是
+    # 形容詞或副詞條目（better、later、further）；對方只有名詞複數這種衝突（glasses、arms，只降低排序）；
+    # 對方不是動詞卻被 ECDICT 列出動詞變化（engineer→engineering）。
+    INFL_TYPES = {"plural", "past", "past_participle", "present_participle", "third_person", "comparative",
+                  "superlative", "present"}
+    BASE_TYPES = {"lemma", "slash", "derived_ment", "derived_suffix", "plural_usual"}
+    infl_of: dict[str, list[tuple[str, set]]] = collections.defaultdict(list)
+    for k in sorted(form_map):
+        for i in sorted(form_map[k]):
+            t = set(form_map[k][i]["types"])
+            if t <= INFL_TYPES:
+                infl_of[k].append((i, t))
+
+    def homograph_conflict(k: str, eid: str) -> tuple[bool, bool]:
+        """(是否有級別不高於本條目的其他條目把 k 當屈折形, 是否為需要上下文判斷的強衝突)"""
+        e = by_id[eid]
+        epos = set(e["pos"])
+        base = bool(set(form_map[k][eid]["types"]) & BASE_TYPES)
+        weak = strong = False
+        for f, t in infl_of.get(k, []):
+            if f == eid or by_id[f]["level"] > e["level"]:
+                continue
+            weak = True
+            if not base or epos & {"prep.", "conj."} or "plural" in t:
+                continue
+            if t <= {"comparative", "superlative"} and epos & {"adj.", "adv."}:
+                continue
+            if t <= {"past", "past_participle", "present_participle", "third_person", "present"} \
+                    and not ({"v.", "aux."} & set(by_id[f]["pos"])):
+                continue
+            strong = True
+        return weak, strong
+
+    # this／that／which／what／one 常當代名詞或關係詞（"this means"、"the sister that broke"、"no one saw"），不算限定詞；
+    # already／just／never 與 I'd 後面常接完成式（"had already left"、"I'd found"），也不當作判斷依據。
+    DETERMINERS = set("a an the these those my your his her its our their every each some any no another whose".split())
+    S_CONTRACTIONS = set("it's that's he's she's what's there's here's who's where's let's how's when's why's".split())
+    BE_FORMS = set("is are am was were be been being isn't aren't wasn't weren't".split())
+    LINKERS = BE_FORMS | set("seem seems seemed look looks looked feel feels felt get gets got gotten become becomes "
+                             "became".split())
+    INTENSIFIERS = set("very so too really quite more most less least extremely pretty rather how as".split())
+    VERB_CUES = set("to will would can could shall should may might must do does did don't doesn't didn't won't "
+                    "can't cannot couldn't wouldn't shouldn't mustn't i'll you'll he'll she'll we'll they'll "
+                    "please let's".split())
+    # be＋這些詞形幾乎都是被動語態、而且意思和條目不同（be learned＝被學會、be left＝被留下），所以形容詞用法
+    # 只接受限定詞或程度副詞（a learned man、very learned、on your left）。
+    HOMOGRAPH_STRICT = {"learned|adj.|4", "left|adj./n./adv.|1"}
+
+    def context_ok(norms: list[str], i: int, k: str, e: dict, types: list[str]) -> bool:
+        prev = norms[i - 1] if i > 0 else ""
+        poss = prev.endswith("'s") and prev not in S_CONTRACTIONS
+        epos = set(e["pos"])
+        if ("n." in epos or set(types) & {"derived_ment", "derived_suffix", "plural_usual"}) \
+                and (prev in DETERMINERS or poss):
+            return True
+        if "adj." in epos:
+            if prev in DETERMINERS or prev in INTENSIFIERS or poss:
+                return True
+            if e["entry_id"] not in HOMOGRAPH_STRICT and (prev in LINKERS or prev.endswith(("'m", "'re", "'s"))):
+                return True
+        if {"v.", "aux."} & epos and k == fold(e["word"]) and prev in VERB_CUES:
+            return True
+        return False
+
+    homograph_stats = collections.Counter()
+    homograph_examples: dict[str, int] = {}
     used_by_word = collections.defaultdict(set)   # 同字多筆：前一筆用過的句子
     for e in entries:
         eid = e["entry_id"]
@@ -1184,11 +1359,16 @@ def build(outdir: Path, *, verify: bool = True) -> dict:
         else:
             tforms = entry_forms[eid]
         tset = set(tforms)
-        ambiguous = set()
+        ambiguous, strong = set(), set()
         for k in tforms:
             mine = form_map[k][eid]["types"]
-            if (pron_of[k] - {eid}) or ("lemma" not in mine and (lemma_of[k] - {eid})):
+            weak, st = homograph_conflict(k, eid)
+            if (pron_of[k] - {eid}) or ("lemma" not in mine and (lemma_of[k] - {eid})) or weak:
                 ambiguous.add(k)
+            if st:
+                strong.add(k)
+        if strong:
+            homograph_stats["entries"] += 1
         # 偏好詞形：(s) 常用複數、(ism) 衍生；同字多筆時，只屬於本條目的斜線變體（backwards 之於 backward adv.）
         siblings = [i for i in head_ids.get(hw, []) if i != eid]
         sib_forms = set()
@@ -1236,7 +1416,21 @@ def build(outdir: Path, *, verify: bool = True) -> dict:
             if not pos_t:
                 continue
             hit = {norms[i] for i in pos_t}
-            only_ambiguous = hit <= ambiguous
+            clean, strong_only = False, True
+            for i in pos_t:
+                k = norms[i]
+                if k in strong:
+                    if context_ok(norms, i, k, e, form_map[k][eid]["types"]):
+                        clean = True
+                    continue
+                strong_only = False
+                if k not in ambiguous:
+                    clean = True
+            if strong_only and not clean:
+                homograph_stats["sentences_dropped"] += 1
+                homograph_examples[eid] = homograph_examples.get(eid, 0) + 1
+                continue
+            only_ambiguous = not clean
             has_pref = bool(hit & prefer) if prefer else True
             reused = sid in used_by_word[hw]
             ctx = (norms[pos_t[0] - 1] if pos_t[0] > 0 else "^",

@@ -15,6 +15,17 @@ export interface HealthResponse {
 }
 
 /**
+ * 判斷一個未知的 JSON 值是不是健康檢查回應。
+ * 前端不能只靠型別斷言：買網域前 /api 經過 Vercel rewrites 轉送，設定錯誤時可能拿到 SPA 的
+ * index.html 或代理的錯誤頁，形狀不對就要當成「後端未連線」，而不是在畫面上印出 undefined。
+ */
+export function isHealthResponse(value: unknown): value is HealthResponse {
+  if (typeof value !== 'object' || value === null) return false;
+  const v = value as Record<string, unknown>;
+  return v['ok'] === true && typeof v['service'] === 'string' && typeof v['version'] === 'string' && typeof v['time'] === 'string';
+}
+
+/**
  * 錯誤代碼。前端依代碼決定要顯示什麼文案，不直接顯示 message（message 只給開發者看）。
  * 之後加新的錯誤情境時，在這裡補代碼，前端的對照表就會被 tsc 要求補齊。
  */

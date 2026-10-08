@@ -2108,13 +2108,13 @@
             {
               "kind": "picture",
               "caption": "(3)",
-              "description": "一位戴眼鏡、留著蓬鬆捲髮的成年女性（看似媽媽）與抱著條紋小貓的女孩面對面說話，兩人頭上各有一個對話框（內容以點表示，無文字）。",
+              "description": "一位戴眼鏡、留著蓬鬆捲髮、身上繫著圍裙（腰後打蝴蝶結）的成年女性（看似媽媽）與懷裡抱著條紋小貓的女孩面對面說話，兩人頭上各有一個對話框（內容只以點和短線表示，沒有文字）。",
               "rows": null
             },
             {
               "kind": "picture",
               "caption": "(4)",
-              "description": "室內一團亂：沙發被抓破，布面有爪痕、彈簧和線頭外露；沙發上下有五、六隻貓（有的趴在椅背上、有的坐在椅墊上），一隻貓在地上玩衛生紙捲；地上有倒下的掃把、拉開的衛生紙、魚骨頭和一些黑色污點（腳印或排泄物）。女孩站在一旁看著這個景象。",
+              "description": "室內一團亂：沙發被抓破，布面有爪痕和破洞，彈簧、線頭外露，椅背上有貓掌印，椅背頂端垂著一塊被扯下的布。沙發上有四隻貓：一隻條紋貓趴在椅背頂端，一隻有黑色斑點的貓坐在左側椅墊上，一隻條紋貓從中間椅墊後探出頭，一隻長毛貓坐在右側椅墊上；地上另有一隻貓站在被拉開的衛生紙捲旁。地上還有倒下的長柄掃把（柄端連著一條帶插頭的電線）、一副魚骨頭，以及好幾個黑色的貓掌印。女孩站在右側看著這個景象。",
               "rows": null
             }
           ],
@@ -2133,7 +2133,7 @@
               "scoring_notes": "本題型主要在評量考生運用所學詞彙、句法寫出切合主題，並具有統一性與聯貫性短文的能力。本大題總分20分，評分標準包含下列5項：內容（5分）、組織（5分）、文法、句構（4分）、字彙、拼字（4分），及體例（2分）。字數不足，扣1分。\n今年的看圖作文有一個特色即是，考生可以依自己的解釋將四張圖畫編序書寫，考生有較多的創意空間得以發揮，而考生今年英文作文大致的表現也相當的不錯。但在閱卷時也發現考生抄襲選擇題試題的選文內容，或因寫作能力不佳而以中文書寫等現象。",
               "tags": {
                 "essay_type": "picture",
-                "word_requirement": "120 words左右",
+                "word_requirement": "about 120 words",
                 "topic": "a story about a girl and cats (four-picture sequence)"
               }
             }
@@ -2144,19 +2144,20 @@
     }
   ],
   "extraction": {
-    "method": "Word 版 (paper-2.doc → soffice 轉 docx → python-docx) 為主要文字來源，與 pdftotext -layout 題本逐段比對；Read 看題本 PDF 第 1–7 頁影像確認版面、底線與作文圖畫；答案取自 answer.pdf（pdftotext）；翻譯參考答案為評分說明 PDF 中的括號樹狀圖，以 pdftoppm 300dpi 放大後人工轉錄；統計取自 stats-1.xls（P/Ph/Pl/D）與 stats-2.xls（全體考生 T 列選項比例），並程式核對 stats-2 標星號選項＝官方答案、其比例＝P。",
+    "method": "Word 版 (paper-2.doc → soffice 轉 docx → python-docx) 為主要文字來源，與 pdftotext -layout 題本逐段比對；Read 看題本 PDF 第 1–7 頁影像確認版面、底線與作文圖畫；答案取自 answer.pdf（pdftotext）；翻譯參考答案為評分說明 PDF 中的括號樹狀圖，以 pdftoppm 300dpi 放大後人工轉錄；統計取自 stats-1.xls（P/Ph/Pl/D）與 stats-2.xls（全體考生 T 列選項比例），並程式核對 stats-2 標星號選項＝官方答案、其比例＝P。；查證時另以 Read 看題本第 2–8 頁、answer.pdf、scoring.pdf 第 3–4 頁影像，作文四格圖以 pdftoppm 500dpi 放大檢視。",
     "issues": [
       "結構核對：與 gsat-spec.json legacy_gsat 94–110 期別一致（詞彙15題15分、綜合測驗15題15分、文意選填10題10分、閱讀測驗16題32分；翻譯題2題8分、英文作文20分；選擇題72分／非選擇題28分），作文文長「120個單詞(words)左右」亦與 essay_length_by_year 相符，無不一致。",
       "題號：題本翻譯題印為 1、2，作文無題號；為避免與選擇題第1、2題重複，no 依序接續為 57、58（翻譯）、59（作文），題本原編號保留在 label「翻譯1」「翻譯2」「作文」。57–59 並非題本印刷題號。",
       "大題標題：Word 版翻譯題標題缺「一、」，以 PDF 題本「一 、 翻 譯 題 (8%)」為準寫成「一、翻譯題(8%)」。part 取題本「第壹部分：單一選擇題」「第貳部分：非選擇題」的部分名稱。",
       "底線標記：題本 49–52 選文的 a new chapter 與 53–56 選文的 cling to 為粗體加底線（第50、56題問其意義），已於 passage 以 <u>…</u> 標記；第50、56題題幹中的同字串在題本同樣粗體底線、以引號標出，題幹未另加 <u>。第50題「line 2, paragraph 1」指題本排版行數。",
-      "翻譯參考答案：評分說明 PDF 中的參考答案是括號樹狀圖（圖片，pdftotext 抓不到），以 300dpi 放大人工轉錄。accepted_answers 以 {a|b|c} 表示「同一個括號內擇一」（第1題 one lives／himself, herself／he/she 為同一分支，需搭配使用）；第2題替代句中的 start/begin 斜線為官方原文。answer 取各括號第一個選項組成的句子（非官方逐字句）；第1題官方另以完整句列出 If we lived only for ourselves, we would not feel really happy.，放在 accepted_answers 最後一項。",
+      "翻譯參考答案：評分說明 PDF 中的參考答案是括號樹狀圖（圖片，pdftotext 抓不到），以 300dpi 放大人工轉錄。accepted_answers 以 {a|b|c} 表示「同一個括號內擇一」（第1題 one lives／himself, herself／he/she 為同一分支，需搭配使用）；第2題替代句中的 start/begin 斜線為官方原文。answer 取各括號第一個選項組成的句子（非官方逐字句）；第1題官方另以完整句列出 If we lived only for ourselves, we would not feel really happy.，放在 accepted_answers 最後一項。 查證補充：樹狀圖中 only/just/solely/merely 的括號只畫在 we live 那一行，one lives 分支是否同樣要加副詞，圖上沒有明示；accepted_answers 依中文「只為」把同一組副詞套用到 one lives 分支。圖上 for himself／herself 後面沒有逗號，accepted_answers 依 for ourselves, 的寫法補上逗號。",
       "翻譯 scoring_notes：測驗目標段落與評分標準逐字取自評分說明，兩題共用（原文為一段同時說明兩題），已去除 PDF 排版在中英文與頓號間插入的空白。作文 scoring_notes 為評分說明中英文作文部分的兩段原文。",
       "統計：correct_rate／high_group／low_group／discrimination 取自 stats-1.xls（P、Ph、Pl、D），option_rates 取自 stats-2.xls 全體考生（T 列）。已程式核對 stats-2 標星號選項皆等於官方答案。第21、22題 stats-1 的 P（15%、52%）與 stats-2 答案選項比例（16%、53%）差 1 個百分點，應為四捨五入差異，correct_rate 採 stats-1。option_rates 不含「未答」欄（0–2%），故部分題目加總為 0.98–1.02。stats-2 另有高分組／低分組各選項比例（H、L 列）與 stats-1 五等分組 Pa–Pe、D1–D4，schema 無對應欄位未收錄。",
       "非選擇題（翻譯、作文）本年度來源檔無得分分布統計，stats 填 null。",
-      "作文圖畫：四格圖以文字描述放在 s6g1.figures（kind=picture），為人工看圖描述；第(4)圖地上黑點無法確定是腳印或排泄物，描述中並列。",
-      "標註判斷：s2g3（Rwanda）為第一人稱旅遊描寫，genre 暫標 expository，sdgs 標 16（文中提及 1994 部族衝突後和解復原）；第15題 amazed 標為 adjective（分詞形容詞）；第48題需由 industry leader 推知 NBC 收視最高，標 inference。"
+      "作文圖畫：四格圖以文字描述放在 s6g1.figures（kind=picture），為人工看圖描述。查證時以 500dpi 放大確認：第(4)圖地上的黑點是貓掌印（一個肉墊加三個趾印），不是排泄物，已改寫；第(4)圖共五隻貓（沙發上四隻、地上一隻），已寫明位置；第(3)圖女性繫著圍裙，已補上。",
+      "標註判斷：s2g3（Rwanda）為第一人稱旅遊描寫，genre 暫標 expository，sdgs 標 16（文中提及 1994 部族衝突後和解復原）；第15題 amazed 標為 adjective（分詞形容詞）；第48題需由 industry leader 推知 NBC 收視最高，標 inference。",
+      "查證（verifier）：56 題答案逐題對照 answer.pdf（文字與頁面影像）全部相符；56 題題幹與選項逐字對照 Word 版與 pdftotext 題本全部相符；文意選填選項庫 A–J 相符；8 篇選文以字詞序列與 pdftotext 題本全文比對（含標點、空格題號位置）完全一致，段落數以頁面影像確認；56 題 stats（P、Ph、Pl、D 與 T 列各選項比例）以程式全數對照 stats-1／stats-2 相符，且 stats-2 標星號選項皆等於官方答案；翻譯題目、評分標準、作文提示與評分說明逐字對照 scoring.pdf 相符。作文 word_requirement 由「120 words左右」統一成與 gsat-88–92、97 相同寫法的 about 120 words。"
     ],
-    "verified_by": null
+    "verified_by": "verifier"
   }
 }
