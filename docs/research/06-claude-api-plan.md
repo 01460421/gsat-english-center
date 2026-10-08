@@ -988,7 +988,10 @@ export default {
 
 - **Cloudflare AI Gateway**：可以選擇讓請求經過它。
   - 端點是 `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/anthropic`，官方說明的用途是「可觀測性與控制」[CF-AIG]。
-  - 本文件沒有查證它的快取、限流、費用等細節（未驗證）。
+  - 2026-10-08 查證（原稿列為未驗證）：
+    - **費用**：核心功能（儀表板分析、快取、限流）免費，所有方案都能用。2026-09-24 以後才建立第一個 gateway 的新客戶，日誌改照 Workers Logs 計價 [CF-AIG-PRICE]。
+    - **快取**：預設關閉，只支援文字和圖片回應，而且**只有完全相同的請求**才會命中 [CF-AIG-CACHE]。本專案每次請求的上下文都不同，幫助不大；它也和 Anthropic 自己的 prompt caching 是兩回事。
+    - **限流**：以「一段時間內的請求數」設定，可選 fixed 或 sliding 視窗，超過回 429 [CF-AIG-RL]。它算的是請求數，不是成本；頁面上只有 gateway 層級的設定，沒有提到依使用者分開計算（是否有其他機制，未驗證）。所以取代不了 §5.2 的點數與美元預算。
   - 初期先不用，少一個轉手環節。
 - **Sekai 的 403 診斷端點**（`admin.js:642-749`）：用二分法排查 Workers 呼叫 Anthropic 時偶爾出現的 403。
   - Sekai 的註解說這是「已知會發生的情形」，但本文件沒有在官方文件找到對應的說明（未驗證）。
@@ -1055,12 +1058,16 @@ export default {
 - 呼叫前，用 D1 的條件式 UPDATE 預扣「估計點數」，避免多個請求同時扣點時出錯（沿用 Sekai 的做法，見 05 文件）。
 - 呼叫後，依實際的 `usage` 結算：
   - 快取寫入要分開計算 5 分鐘版和 1 小時版，數字在 `usage.cache_creation.ephemeral_5m_input_tokens` 和 `ephemeral_1h_input_tokens` [ANT-CACHE]。
-- 失敗就全額退還。
+  - **開了 `fallbacks` 時，不能只看最上層的 `usage`**（2026-10-08 查證補充）：最上層的 `usage` 只描述「產生這則回應的那次嘗試」。被拒的嘗試如果有產生輸出，或屬於會收費的類別，也要付費。每一次嘗試的明細在 `usage.iterations`，各自用自己模型的單價計費 [ANT-REFUSAL]。帳本要逐筆加總 `usage.iterations`，並依每筆的模型查價。
+- 失敗就全額退還給學生。但拒答的成本仍要記進站內帳本（§1.6 #8a）。
 
 **(e) 價格表明確列出每個模型 ID**
 
 - 不要用前綴比對。Sekai 的 `pricing.js` 會把 `claude-opus-5-5` 算成 Opus 5 的價格，帳面因此高估（見 05 文件 §3.4）。
-- 遇到不認得的模型 ID，就**拒絕呼叫並發出警示**（fail closed），不要記成 0 元。
+  - 2026-10-08 查證補充：同樣的前綴比對，也會把 `claude-sonnet-5-5` 套成 Sonnet 5 的快取讀取價 $0.20，但 Sonnet 5.5 現在是 $0.10。
+  - `claude-haiku-5-5` 則對不到任何鍵。Sekai 的 `priceOf` 這時會退回 `env.AI_MODEL`（`claude-opus-5`）的價格（`worker/src/pricing.js:30-41`），不是註解說的「記 0」，所以 Haiku 5.5 會被高估約 50 倍。
+- 遇到不認得的模型 ID，就**拒絕呼叫並發出警示**（fail closed），不要記成 0 元，也不要退回預設模型的價格。
+- 開了 `fallbacks:"default"` 時，接手的模型由伺服器依拒答類別決定，事先不知道是哪一個 [ANT-REFUSAL]。價格表要涵蓋所有可能接手的模型。查不到價格時，帳本先記為「待補價」並發出警示；這個記帳情境不能拒絕，因為呼叫已經完成。
 
 **(f) Anthropic 端的最後防線**
 
