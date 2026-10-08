@@ -147,7 +147,7 @@
 | 4 | Level 5 的難度定位：02 §2.6「Level 5 作為超越頂標延伸」；02 §6.4 表「進階練習：詞彙 3–5 級」；01 §7.2「Level 5 放在進階練習／超越頂標」 | 02 §2.6 | 02 內部不一致（設計建議）。統一為「L3–4 三種難度都要會、L5 從進階練習起加入、在超越頂標加重」 | 02 §2.6 改寫 |
 | 5 | 113 學年度英文考試日的一手來源：08 寫「只有 1111 報導可證，沒有大考中心一手來源」；02 §2.1 已用缺考人數統計總表列出 | 08 §3.3 標題、§7 | **02 正確**。`113_14_absent.xls` 表頭「1月21日」下第一欄就是英文 [CEEC-ST113-14]（本次用 xlrd 讀檔確認） | 08 改用官方統計表為一手來源，並在參考來源補 [st113-14] |
 | 6 | 115〈試題特色〉的 3-V-12：02 §2.6 列為官方引用；01 §5.5 的 115 列只有 3-V-11、3-V-13、3-V-14、5-V-10 | 01 §5.5 | **02 正確**。原文「（三）試題設計多元…1. 閱讀技巧的使用」逐一列出 3-V-11～3-V-14 [CEEC-EP351F]；01 的 JSON 已收這一筆，只是 md 表漏列 | 01 §5.5 補一列 |
-| 7 | `billing_error` 的狀態碼：05 §4.1 寫「403 `billing_error` 代表沒有餘額」；06 §4.5 寫官方是 402 | 05 §2.6 表、§4.1 第 10 項 | **06 正確**。官方錯誤碼表「402 - `billing_error`」「403 - `permission_error`」[ANT-ERR]；claude-api 技能的錯誤碼表也相同。05 描述的是 Sekai 程式的寫法，但讀起來像事實 | 05 兩處補註 |
+| 7 | `billing_error` 的狀態碼：05 §4.1 寫「403 `billing_error` 代表沒有餘額」；06 §4.5 寫官方是 402 | 05 §2.3 表、§4.1 第 10 項 | **06 正確**。官方錯誤碼表「402 - `billing_error`」「403 - `permission_error`」[ANT-ERR]；claude-api 技能的錯誤碼表也相同。05 描述的是 Sekai 程式的寫法，但讀起來像事實 | 05 兩處補註 |
 | 8 | 詞形索引數：03 §8 寫 17,162 個詞形；`forms-index.json` 與 `lexicon-report.md` 是 16,953 | 03 §8 | **資料檔正確**。03 撰寫於 02:19，`forms-index.json` 在 02:29 重新產生 | 03 改為 16,953，並註明原因 |
 | 9 | 篇章結構難度建議：08 §6 第 4 點「一律採 4 空格 5 選項」，同節第 9 點又把「5 選 4 篇章結構」列為進階練習才加入 | 08 §6 第 9 點 | 08 內部不一致（設計建議）。現制 115 起固定 4 空格 5 選項，三種難度都應一致，改用誘答句相似度調整難度 | 08 §6 第 9 點改寫 |
 
@@ -464,7 +464,7 @@
 | `docs/research/02-gsat-english-spec.md` | §0 第 10 點、§1 表與著作權註記、§2.6、§4.6、§6.5、§7 修訂紀錄、來源標題 |
 | `data/exams/gsat-spec.json` | `current.official_exemplar_essays.text` 與兩筆佳作列表 sources 標題（`python3 -m json.tool` 驗證通過） |
 | `docs/research/03-vocab-list.md` | §8 詞形數 17,162→16,953；§9.3 註明 `exam_stats.py` 實際退回 suffix-rules |
-| `docs/research/05-sekai-center-patterns.md` | §2.6 表與 §4.1 第 10 項補註 `billing_error` 為 HTTP 402 |
+| `docs/research/05-sekai-center-patterns.md` | §2.3 表與 §4.1 第 10 項補註 `billing_error` 為 HTTP 402 |
 | `docs/research/06-claude-api-plan.md` | §0 第 7 點加註 02 已改寫 |
 | `docs/research/08-exam-commentary.md` | §3.3 標題與 §7 改用官方統計表證明 113 考試日；新增來源 [st113-14]；§6 第 9 點與第 4 點一致 |
 | `docs/research/00-research-index.md` | 本文件（新增） |
