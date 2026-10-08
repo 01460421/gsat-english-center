@@ -241,7 +241,7 @@
 
 ### 5.3 CEFR 對照
 
-- 用 CEFR-J Wordlist 1.5（A1–B2，OLP repo 的 CSV；官方最新是 1.6）加 Octanove C1–C2 對照大考詞彙表級數。同一個詞有多個詞性時取最低級，查不到的歸為 none（本專案計算）。2026-10-08 用同一批檔案重算，L5、L6 兩列完全一致，L1–L4 各格差 1–4 筆（斜線並列詞的拆法不同），結論不變；改用 1.6 並限條目詞類的版本見 `data/vocab/lexicon-report.md` §4：
+- 用 CEFR-J Wordlist 1.5（A1–B2，OLP repo 的 CSV；官方最新是 1.6）加 Octanove C1–C2 對照大考詞彙表級數。同一個詞有多個詞性時取最低級，查不到的歸為 none（本專案計算）。2026-10-08 用同一批檔案重算，L5、L6 兩列完全一致，L1–L4 部分格子差 1–3 筆（斜線並列詞的拆法不同），結論不變；改用 1.6 並限條目詞類的版本見 `data/vocab/lexicon-report.md` §4：
 
 | 大考級數 | 筆數 | A1 | A2 | B1 | B2 | C1 | C2 | 無對照 |
 |---|---|---|---|---|---|---|---|---|
@@ -281,7 +281,7 @@
 | 方案 | 內容 | 授權／條款 | 額度與價格 | 本專案建議 |
 |---|---|---|---|---|
 | **Web Speech API**（`speechSynthesis`）| 瀏覽器內建語音合成 | 瀏覽器標準，沒有授權問題。MDN 標為「Baseline Widely available」，「available across browsers since September 2018」；`getVoices()` 回傳的是「available on the current device」的聲音 [MDN-SS] | 免費 | **預設發音**。聲音品質因裝置而異，要提供選擇聲音的介面，並在 `voiceschanged` 事件後重新載入聲音清單 |
-| **Workers AI：MeloTTS**（`@cf/myshell-ai/melotts`）| 多語 TTS，輸出 MP3 | 模型是 MIT（Copyright (c) 2024 MyShell.ai）[MELO-LIC]；Cloudflare 託管 [CF-MELO] | $0.0002／音訊分鐘，約 18.63 Neurons／分鐘 [CF-PRICE]。免費方案與付費方案都含**每日 10,000 Neurons** [CF-PRICE]，約 536 分鐘／日（本專案計算）| **預錄單字與例句音檔**。估算：6,012 個單字每個約 1.5 秒，共約 150 分鐘，費用約 $0.03；3,006 句例句每句約 5 秒，共約 250 分鐘，費用約 $0.05（本專案估算）。在 GitHub Actions 批次產生後存 R2，前端走 CDN |
+| **Workers AI：MeloTTS**（`@cf/myshell-ai/melotts`）| 多語 TTS，輸出 MP3；`lang` 參數預設 `en` [CF-MELO] | 模型是 MIT（Copyright (c) 2024 MyShell.ai）[MELO-LIC]；Cloudflare 託管 [CF-MELO] | $0.0002／音訊分鐘，約 18.63 Neurons／分鐘 [CF-PRICE]（模型頁寫 $0.000205／音訊分鐘 [CF-MELO]，兩頁略有出入，以帳單為準）。免費方案與付費方案都含**每日 10,000 Neurons** [CF-PRICE]，約 536 分鐘／日（本專案計算）| **預錄單字與例句音檔**。估算：6,012 個單字每個約 1.5 秒，共約 150 分鐘，費用約 $0.03；3,006 句例句每句約 5 秒，共約 250 分鐘，費用約 $0.05（本專案估算）。在 GitHub Actions 批次產生後存 R2，前端走 CDN |
 | **Workers AI：Deepgram Aura-1／Aura-2-en** | 自然語調英文 TTS，有多種聲音 | 屬於 Partner 模型，條款連到 Deepgram Terms [CF-AURA1] [CF-AURA2]（Deepgram 條款內容未逐條檢視，**未驗證**）| Aura-1 $0.015／千字元；Aura-2-en $0.030／千字元 [CF-PRICE]。每日免費額度約可合成 7,333 字元（Aura-1）或 3,667 字元（Aura-2）（本專案計算）| 文章朗讀（閱讀測驗全文）的高品質選項，結果要快取 |
 | **Kokoro-82M** | 開放權重 TTS | Apache-2.0；「Kokoro has been deployed in numerous projects and commercial APIs」[KOKORO] | 自己架設 | 離線批次產生的備案（GitHub Actions 的 CPU 可以跑）|
 | **Piper** | 本機 TTS | 開發已移到 `OHF-Voice/piper1-gpl`，授權 GPL-3.0 [PIPER]；各聲音模型授權不同（**未逐一驗證**）| 自己架設 | 不優先 |
@@ -309,7 +309,8 @@
 | SDGs 閱讀（長文、多文本） | Claude 原創；事實來自 UN News、SDG Report、FYM、Global Voices、Wikipedia | OWID、World Bank 數據 | UN、UNICEF、UNESCO、The Conversation、Guardian 只當事實素材或外部連結（Guardian 連 AI 擷取都不行） | 同上；SDG 標籤只用文字，不用官方圖示 |
 | 圖表題、表格題 | OWID Chart Data API（CC BY 4.0，並依原始資料授權）、World Bank（CC BY 4.0）、UN SDG API | 我國政府開放資料（台灣數據；授權**未在本文驗證**）| 圖表由前端自己繪製（不貼 OWID 的圖片）；每張圖存原始資料的 citation | 圖下標示「資料來源：Global Carbon Budget (2025) – with major processing by Our World in Data（CC BY 4.0）」 |
 | 翻譯、作文題目 | 歷屆試題（不受著作權保護）＋ Claude 仿題 | — | 歷屆題標年度；仿題標 AI | — |
-| 範文、詳解、批改評語 | Claude 原創 | 大考中心評分原則只做內部參考 | 不轉載佳作與評分原則全文 | 「AI 生成範文，僅供參考」 |
+| 範文、詳解、批改評語 | Claude 原創 | 大考中心評分原則只做內部參考 | 不轉載佳作與評分原則全文。純 AI 產出可能不受著作權保護（§4.3）| 「AI 生成範文，僅供參考」；批改頁明示「本評分由 AI 產生，非大考中心評分」 |
+| 手寫作文 OCR 與批改（使用者上傳）| 使用者自己的作文與照片 | — | 作文著作權屬學生；照片是個人資料。要在服務條款取得「為批改而儲存、傳給 AI 處理」的授權，並依個資法告知（§7.5）| 上傳頁顯示告知事項與保存期限 |
 | 發音 | Web Speech API；MeloTTS 預錄 | Aura（文章朗讀） | MeloTTS 是 MIT；Aura 依 Deepgram 條款 | Credits 頁列出 |
 
 ### 7.2 「事實素材 → AI 原創文章」流程（降低著作權風險）
@@ -319,11 +320,12 @@
    - 優先使用 PD、CC BY、CC BY-SA 和數據來源（Global Voices、FYM、PLOS、Wikipedia、OWID、World Bank、SDG API、VOA 自製文章）。
    - UN News、UNICEF 等非開放來源，只由人工閱讀後整理成「事實清單」，不讓爬蟲抓全文。
    - 事實清單只保留數字、日期、人名、地名、因果關係，**不保留原句**。
-3. **生成**：Claude 只拿到事實清單和難度規格（字數、級數分布、目標文法點、搭配詞、題型），**不提供原文全文**。這樣做是為了避免輸出和原文表達相似；而且 Anthropic 的智財賠償不涵蓋因 Inputs 引起的主張 [ANT-CTOS]，原文本來就不該當成 Input 交給 Claude 改寫。
+3. **生成**：Claude 只拿到事實清單和難度規格（字數、級數分布、目標文法點、搭配詞、題型），**不提供原文全文**。這樣做是為了避免輸出和原文表達相似；而且 Anthropic 的智財賠償不涵蓋因 Inputs 引起的主張，也不涵蓋因客戶修改 Outputs、或把 Outputs 和非 Anthropic 內容結合所引起的主張（K.3）[ANT-CTOS]，原文本來就不該當成 Input 交給 Claude 改寫。CC BY 改作的文章（人工挖空 Global Voices 原文）屬於「結合」，不在賠償範圍內，要自己確保授權標示正確。
 4. **相似度檢查**：每篇文章和它的每個來源比對，例如 8-gram 重疊率，以及最長共同字串長度。超過門檻就重新生成。門檻值待訂，建議初始設為「沒有任何 12 個字以上的連續相同字串」（**本專案建議**）。
 5. **事實核對**：Worker 把文章裡的數字回查來源。依 Anthropic 條款，必須告知使用者「AI 輸出的事實陳述可能不正確」[ANT-CTOS]。
 6. **標示**：文章頁列出「參考資料」連結。NASA 素材不寫「according to NASA」[NASA]；SDG 圖示照指引加聲明 [SDG-COMM]。
 7. **抽查**：每批文章人工抽查約 10%，確認事實正確、語言自然、難度符合規格。
+8. **Usage Policy 的對照**：Anthropic Usage Policy 把「Media or professional journalistic content」（自動產生內容並對外發布）和「Academic testing, accreditation and admissions」（辦理入學考試的標準化測驗機構，含評分、排名考生）列為 High-Risk Use Cases，要求發布前由合格專業人員審閱，並在每個工作階段開頭告知使用者有用 AI [ANT-AUP]。本專案是練習用 App，不辦理真正的入學考試，文章也不是新聞報導，所以推定不屬於這兩類（**本專案判斷，未驗證**）。不過為了保守起見，仍照做「人工審閱＋AI 標示」：上面第 7 步的抽查由具英文教學背景的人執行，文章頁與批改頁都標示 AI 生成。
 
 ### 7.3 資料庫的授權欄位（建議）
 
@@ -337,6 +339,7 @@ share_alike (bool), commercial_ok (bool), retrieved_at
 
 - `share_alike = true` 的題目放在獨立集合，下載或分享時一併附上 CC BY-SA 授權。
 - `commercial_ok = false` 的資料（例如 WHO 出版品、ECDICT lemma 檔、大考詞彙表的營利用途），在 App 開始收費前要全面清查。
+- Octanove C1–C2 標籤、wordfreq 詞頻、Wiktionary／kaikki 摘錄、CC-CEDICT 都是 CC BY-SA，要記 `share_alike = true`。
 
 ### 7.4 禁止清單
 
