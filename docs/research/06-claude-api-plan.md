@@ -242,7 +242,8 @@
   - 在幾項程式設計評測上，`low` 也接近這個水準。
 - 官方頁面只寫了「預設 effort 是 `medium`，請明確設定並重做 sweep」[ANT-O55-NEW] [ANT-EFFORT]。
 - 所以除了「獨立驗證」需要第二個模型，其他功能都先用 Opus 5.5。
-- Sonnet 5.5 的單價正好是 Opus 5.5 的一半（快取讀取同為 $0.20）[ANT-PRICE]。凡是寫「可改用 Sonnet 5.5」的地方，那一項的成本大約減半；但要先過品質評測才能換。
+- Sonnet 5.5 的單價正好是 Opus 5.5 的一半。原稿寫「快取讀取同為 $0.20」，但 2026-10-08 的價目表已把 Sonnet 5.5 的快取讀取降為 $0.10，所以現在連快取讀取也是一半 [ANT-PRICE]。凡是寫「可改用 Sonnet 5.5」的地方，那一項的成本大約減半；但要先過品質評測才能換。
+- Haiku 5.5 的單價約是 Opus 5.5 的 1/40（prompt ≤100K tokens 時）[ANT-PRICE]。官方建議它用在分類、擷取、路由 [ANT-H55]。本專案可以評測的地方有：單字增補（§2.4）、題目的第三位盲解者（§2.3）、混合題簡答的寬鬆比對。出題、批改、家教對話這些品質敏感的任務，先不考慮。
 
 ### 2.1 共通架構：離線內容管線和線上任務端點
 
@@ -279,7 +280,9 @@
 - 拆成兩支 workflow：
   - **submit**：建立 batch，把 batch id 記錄到 D1 或 repo。
   - **collect**：用 cron 定時檢查，處理完就下載結果。
-- 也可以改用 Worker 的 Cron Trigger 來收結果，執行時間上限是 15 分鐘 [CF-LIMITS]。
+- 也可以改用 Worker 的 Cron Trigger 來收結果。牆鐘時間上限是 15 分鐘，但 **CPU 時間另有上限**（2026-10-08 查證補充）：Workers Paid 的排程間隔小於 1 小時時只有 30 秒，間隔 1 小時以上才有 15 分鐘；免費方案只有 10 ms [CF-LIMITS]。
+  - 所以「每 30 分鐘收一次」如果放在 Worker Cron，解析大批結果的 JSON 可能超過 30 秒 CPU。
+  - 建議收取仍放在 GitHub Actions；要用 Worker Cron 的話，排程改成每小時一次，或每次只處理一部分結果。
 
 **送出前先估成本：**
 
@@ -392,12 +395,19 @@
 - 照 04 文件的主策略：「以多來源的事實為素材，由 Claude 寫成原創文章，再附上參考連結」。
 - 素材建議由程式依授權白名單抓取並整理成事實摘要，再交給 Claude。
 - 也可以讓 Claude 自己用 `web_search`／`web_fetch`，並用 `allowed_domains` 限制網域。費用是每 1,000 次搜尋 $10，加上抓回內容的 token [ANT-PRICE]。
-  - 注意：在 Batch 裡，web search 會依組織被節流，大批次會跑比較久 [ANT-BATCH]。
+  - 注意：在 Batch 裡，web search 會依組織被節流，大批次會跑比較久 [ANT-BATCH] [ANT-WEBSEARCH]。
+  - 工具版本（2026-10-08 查證補充）：`web_search_20260209` 以後的版本（最新是 `web_search_20260318`）和 `web_fetch_20260209` 以後的版本（最新是 `web_fetch_20260318`）有「dynamic filtering」，會先用程式篩掉不相關的內容再放進 context，可以省 token。Claude 4.6 以後的模型都支援 [ANT-WEBSEARCH] [ANT-WEBFETCH]。
+  - `allowed_domains` 和 `blocked_domains` 只能擇一，兩個都給會回 400 [ANT-WEBSEARCH]。
+  - **web fetch 只能抓對話裡出現過的網址**：可以是 user 訊息、工具結果裡的網址。只寫在 system prompt 裡、或只出現在 Claude 自己輸出裡的網址都抓不到。它也會遵守 `robots.txt`，被擋時回 `url_not_allowed` [ANT-WEBFETCH]。所以白名單文章的網址要放在 user 訊息裡。
 
 **effort 的選擇：**
 
 - 官方建議用自己的評測做 effort sweep，不要沿用舊模型的設定 [ANT-EFFORT]。
+- 官方也提醒：同一個 effort 等級下，Opus 5.5 每回合的思考量往往比 Opus 5 多，在 `xhigh`、`max` 最明顯，所以 `max_tokens` 要留空間 [ANT-O55-NEW]。§3 的思考 token 假設要用這個角度實測。
 - 建議做法：每種題型先各出 30 組，分別用 `medium` 和 `high`，比較驗證通過率和人工審核結果，選最便宜而且合格的那一級。
+- **「低 effort 先跑、失敗才用高 effort 重跑」**（2026-10-08 查證補充）：官方的成本指南說，結果能自動檢查的任務，最便宜的做法通常不是固定一個 effort，而是全部先用低 effort 跑，只把失敗的用高 effort 重跑 [ANT-COSTINTEL]。
+  - 官方實測（SWE-bench Pro 子集）：Opus 5.5 全用 `low` 時 13% 失敗；把失敗的用 `high` 重跑，通過率約 97%，每題約 $0.17。全部用 `high` 是 95.3%、每題約 $0.29 [ANT-COSTINTEL]。
+  - 本專案的出題有程式檢查和盲解驗證，結果是可以檢查的，所以適用。§2.3 的「退回重生」可以改成用較高 effort 重生。這是程式評測的數據，用在出題上的效果要自己實測。
 - `xhigh`／`max` 只用在有實測證據的地方 [SKILL]。
 
 #### 2.2.4 程式範例：建立和收取 Batch（Node 22，GitHub Actions 執行）
