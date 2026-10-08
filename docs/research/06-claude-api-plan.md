@@ -1079,6 +1079,8 @@ export default {
 
 - 每天跑一次排程（GitHub Actions），用 Admin API key 呼叫 Usage & Cost API，和 D1 的帳本比對，差異超過 5% 就通知管理員。
   - 用量端點是 `/v1/organizations/usage_report/messages`，可以依 model、workspace、API key 分組 [ANT-USAGE]。
+  - 2026-10-08 查證補充：另有 `/v1/organizations/cost_report`，直接回傳以美元計的成本（以「分」為單位的十進位字串），拿來和 D1 帳本的美元數比對更直接 [ANT-USAGE]。
+  - 用量與成本資料通常在請求完成後 5 分鐘內出現，偶爾更久 [ANT-USAGE]，所以對帳要比對前一天的完整資料。
 - Admin key 只存在 GitHub Actions secret，不放進 Worker。
 
 **(h) Batch 的預算閘**
@@ -1132,9 +1134,9 @@ AI_OP_TTL = "1800"
    - 366 篇佳作都是高分卷。
    - 還需要中低分的樣本（目前沒有）。
 6. **作文批改的實際耗時**：決定 Queue 和前端輪詢的設計。
-7. **學生中途斷線時已產生 token 的計費方式。**
-8. **SDK 的型別是否支援 `fallbacks:"default"`。**
-9. **Cloudflare 的其他細節**：AI Gateway 的快取、限流和費用；Queue consumer 並行數的設定參數；R2 的費用。
+7. **學生中途斷線時已產生 token 的計費方式。**（2026-10-08 在已下載的串流、錯誤、拒答文件裡都沒有找到說明，仍未驗證。）
+8. ~~SDK 的型別是否支援 `fallbacks:"default"`。~~ 2026-10-08 已查證：官方 TypeScript 範例直接傳字串 `"default"`（§4.3）。尚未確認的只剩最低 SDK 版本。
+9. ~~Cloudflare 的其他細節~~ 2026-10-08 已查證：AI Gateway 的費用、快取、限流（§4.7），Queue consumer 的 `max_concurrency`，R2 費用（§4.2）。尚未確認的是 AI Gateway 能不能依使用者分開限流。
 10. **Sekai 註解提到的「Workers 呼叫 Anthropic 回 403」**：官方文件裡沒有找到對應說明。
 11. **看圖作文的圖片來源**（Claude 不能產生圖片）。
 12. **難度標籤的校正**：要靠上線後學生的作答資料。
