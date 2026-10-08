@@ -233,7 +233,7 @@ Worker 放一支只在過渡期開啟的 `/auth/probe`：
 | 登入 CSRF | `state` 簽章內含 nonce 與 `next`；同一個 nonce 放在 `__Host-gsat_oauth` cookie（Path=/，10 分鐘，最多保留 3 個 nonce，可同時開多個分頁登入）；回呼時兩者要相符 | `__Host-` 前綴要求 Path=/，所以不能像 Sekai 用 `Path=/auth/` |
 | 回跳 | `next` 只接受單一斜線開頭、白名單字元的站內路徑（`safePath`）；回呼頁用嚴格 CSP（`default-src 'none'`）的 HTML 跳轉頁，在同一個回應裡種 cookie | 同 Sekai |
 | 帳號鍵 | Google `sub`（不用 email） | 同 Sekai |
-| 管理員 | `ADMIN_EMAIL`（secret）第一次登入時自動設為 admin 並核准 AI；之後以 `sub` 為準；不能撤銷自己的管理員 | 同 Sekai |
+| 管理員 | `ADMIN_EMAIL`（secret）第一次登入時自動設為 admin 並核准 AI；之後以 `sub` 為準；不能撤銷自己的管理員；授予或撤銷其他管理員只有這位 bootstrap 管理員能做；後台寫入動作要求 session 在 12 小時內登入過（§7） | bootstrap 同 Sekai；「設定管理員」限 bootstrap 管理員、後台寫入要近期登入是新增的收緊（05 §2.6 只列出有這個端點） |
 | 首次登入 | 隱私權說明與服務條款同意（`consents`，記版本）、自述年齡區間（`users.age_band`）、可改暱稱 | 新增 |
 | 條款改版 | 最新同意的版本不是現行版本 → 先顯示差異並要求重新同意，才能使用需要登入的功能 | 新增 |
 | 敏感操作 | 刪帳號、匯出資料：session 的 `iat` 必須在 10 分鐘內，否則要求重新登入 | 新增 |
@@ -608,7 +608,7 @@ Workers Logs（`[observability] enabled = true`），每個請求一行 JSON：`
 | GET | `/api/admin/imports` | 2 | 匯入紀錄 |
 | GET | `/api/admin/users?ai_status=` | 2 | 使用者與 AI 申請（不顯示學習內容） |
 | POST | `/api/admin/users/{id}/{approve\|reject\|waitlist\|suspend\|unsuspend}` | 2 | 核准狀態 |
-| PATCH | `/api/admin/users/{id}` | 3 | 額度覆寫、等級、角色 |
+| PATCH | `/api/admin/users/{id}` | 3 | 額度覆寫、等級、角色（角色只有 bootstrap 管理員能改；需 12 小時內登入過） |
 | GET／POST | `/api/admin/invites`、`/api/admin/invites/{hash}/revoke` | 3 | 邀請碼 |
 | GET | `/api/admin/usage?from=&to=&by=` | 3 | AI 用量、每點實際美元、建議名額、對帳結果 |
 | POST | `/api/admin/ai/pause` | 3 | 全站暫停或恢復 |
