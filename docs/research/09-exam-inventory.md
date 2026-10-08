@@ -76,17 +76,17 @@ manifest 每一筆都有以下欄位：`exam`、`year`、`kind`、`title`、`url
 | gsat | paper（PDF 35＋Word 35） | 70 | 62.4 |
 | gsat | answer | 35 | 9.5 |
 | gsat | scoring | 22 | 9.2 |
-| gsat | stats | 69 | 8.5 |
-| gsat | other（佳作 213、封面 3、答題卷 5） | 221 | 166.9 |
+| gsat | stats（答對率 25、選項分析 25、非選得分 19、成績標準 27、級分對照 33） | 129 | 10.5 |
+| gsat | other（佳作 213、封面 3、答題卷 5） | 221 | 167.0 |
 | ast | paper（PDF 22＋Word 21） | 43 | 8.3 |
 | ast | answer | 22 | 2.4 |
 | ast | scoring | 20 | 5.6 |
-| ast | stats | 54 | 11.6 |
-| ast | other（佳作 153、封面 1） | 154 | 104.0 |
+| ast | stats（答對率 20、選項分析 20、非選得分 14、成績標準 20） | 74 | 12.3 |
+| ast | other（佳作 153、封面 1） | 154 | 104.1 |
 | reference | paper / answer / scoring / other | 10 / 8 / 2 / 31 | 5.6 / 0.7 / 0.6 / 20.6 |
-| **合計** | | **761** | **416.1** |
+| **合計** | | **841** | **418.7** |
 
-格式分布：PDF 546、XLS 119、JPG 39、DOC 35、DOCX 22。
+格式分布：PDF 549、XLS 196、JPG 39、DOC 35、DOCX 22。（原 761 筆時 gsat stats 69 筆／8.5 MiB、ast stats 54 筆／11.6 MiB，XLS 119、PDF 546；原表 gsat other 166.9、ast other 104.0 為四捨五入誤差，實際為 166.96、104.08 MiB。）
 
 ## 5. 覆蓋表
 

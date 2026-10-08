@@ -386,12 +386,20 @@ Sekai 的做法：
   - 換成 Opus 5.5 的 $4／$20 [ANT-PRICE]，約 US$0.1108。
 - 新專案一次手寫作文批改：
   - 假設 system 加評分基準 3,000 tokens、照片一張、輸出 2,500 tokens。
-  - Claude 4.7 以後的模型每張圖最多 4,784 個 visual tokens [ANT-VISION]。
+  - Claude 4.7 以後的模型每張圖最多 4,784 個 visual tokens（長邊上限 2,576 px）[ANT-VISION]。
   - 用 Opus 5.5 計算：(3,000＋4,784)×$4 ＋ 2,500×$20，約為 **US$0.081／次**。
+  - **要另外加上 thinking token。** Opus 5.5 的思考不能關閉，thinking token 按 output 計費，即使沒有回傳思考內容也一樣 [ANT-O55]。上面的 2,500 只是「看得到的輸出」。假設思考再用 2,500 tokens，就會變成約 US$0.131／次（本文件試算）。實際用量要用 `effort` 實測。
 - 用 Batches 生成一組克漏字題：
-  - 假設 in 3,000／out 4,000。
+  - 假設 in 3,000／out 4,000（含 thinking）。
   - Opus 5.5 的 Batch 價是 $2／$10 [ANT-PRICE]，約為 **US$0.046／組**。
   - 這組題目之後可以給全站所有學生使用。
+
+**Message Batches 的使用限制**（設計批次出題管線時要注意）：
+
+- 一批最多 100,000 筆請求或 256 MB，先到者為準。大多數批次 1 小時內完成；24 小時內沒處理完的請求會過期，不收費。結果只保留 29 天，要在期限內取回並寫進 D1 或 repo [ANT-BATCH]。
+- 伺服器端 fallback（`fallbacks` 參數，Sekai 的 `admin.js:228-231` 有用）不能用在 Batch 裡，帶了該筆會回 errored。被拒答的項目會以 `succeeded`＋`stop_reason: "refusal"` 回來，要自己挑出來重送 [ANT-REFUSAL]。
+- 強制 `tool_choice` 在 Opus 5.5 上一樣會 400，所以批次出題要用 `output_config.format` 拿結構化結果 [ANT-O55]、[ANT-SO]。
+- 如果改用 Worker 的 Cron 去收批次結果：付費方案下 Cron 觸發的 CPU 上限是 30 秒（間隔小於 1 小時）或 15 分鐘（間隔 1 小時以上），免費方案只有 10 ms；wall-clock 上限 15 分鐘 [CF-WLIMIT]。大批結果建議分頁取回、分次寫入。
 
 ### 3.4 Claude API 參數與計價需要更新
 
