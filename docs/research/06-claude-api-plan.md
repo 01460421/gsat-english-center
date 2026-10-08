@@ -538,7 +538,7 @@ if (b.processing_status === "ended") {
 | Opus 5.5 增補（每字 US$0.025）＋Sonnet 5.5 複核 | 約 **US$190** | 約 US$221 |
 | 全部改用 Sonnet 5.5 | 約 US$115 | — |
 | Haiku 5.5 增補（每字約 US$0.0006）＋Sonnet 5.5 複核（2026-10-08 補列，品質未評測） | 約 US$45（增補本身約 US$3.7） | 約 US$52 |
-| 只做 Level 3–5（3,006 筆），Opus 5.5 增補＋Sonnet 5.5 複核 | 約 US$95 | — |
+| 只做 Level 3–5，Opus 5.5 增補＋Sonnet 5.5 複核 | 約 US$95（只算 3,006 筆） | — |
 
 ### 2.5 作文 OCR 與批改
 
