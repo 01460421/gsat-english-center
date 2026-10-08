@@ -269,6 +269,10 @@ python3 tools/parse_wordlist.py --legacy91 data/raw/vocab/legacy-91/4.pdf  # 加
 | 兩種排序交叉比對（獨立的兩段版面） | 6,012／6,012 一致；級別不一致 0 筆；只出現在一邊 0 筆 |
 | 用 poppler `pdftotext`（和 pdfplumber 是不同的解析器）逐筆搜尋 `raw` | 6,001 筆原文可直接找到。另外 11 筆是跨行條目（afterward/afterwards、anywhere/anyplace、discourage(ment)、everyone/everybody、hippopotamus/hippo、mankind/humankind、she (…)、someone/somebody、spacecraft/spaceship、sportsman/sportswoman、they (…)），pdftotext 把它們的續行放到別處，人工核對後確認是 pdftotext 的問題，不是我們解析錯 |
 | 隨機抽 30 筆（`--sample 30 --seed 115`）回 PDF 頁面影像核對 | 30／30 相符。做法是把每筆在兩份排序中的位置裁成圖片，逐一目視核對級別數字、詞類，以及依級別排序的所在頁 |
+| **獨立重解析（2026-10-08 查證）**：不用 pdfplumber、不用 `parse_wordlist.py`，改用 poppler `pdftotext -raw`（照內容串流順序輸出，三欄會依序讀出），另寫一段腳本切條目 | 依字母排序：切出 6,012 筆，各級 1,002。和 JSON 的 `raw` 逐筆依序比對（詞彙＋詞類＋級別），**6,012 筆全部相同**，唯一差別是 7 筆跨行條目的空白（例如 `chairperson/chair/ chairman/ chairwoman`、`sportsman/sportswoma n`），JSON 都已正確接回。依級別排序：切出 6,012 筆，（級別, 詞彙＋詞類）多重集合與 JSON 完全相同 |
+| 欄位一致性（2026-10-08 查證） | 6,012 筆的 `pos` 用 `/` 接起來都等於 `raw` 裡的詞類（只有 `calm` 例外，是刻意補的句點）；`level` 都等於 `raw` 最後的數字；`word` 都是 `raw` 的開頭 |
+| 頁碼（2026-10-08 查證） | 6,012 筆的詞頭都能在 `pages.alpha`、`pages.level` 指的印刷頁上找到（印刷頁＝PDF 第 N 頁 − 12），0 筆不符 |
+| 原表錯誤目視（2026-10-08 查證） | 重新裁圖確認：依字母 p.59 是 `calm v./adj./n 2`（n 後面沒有句點）；p.95 是 `sportsman/sportswoma` 換行 `n n. 6` |
 
 隨機抽樣 30 筆明細（頁碼為印刷頁碼）：
 
@@ -338,6 +342,8 @@ python3 tools/parse_wordlist.py --legacy91 data/raw/vocab/legacy-91/4.pdf  # 加
 | outward | `outward adj. 6` | `outward/outwards adv. 6` |
 | upward | `upward adj. 6` | `upward/upwards adv. 6` |
 
+**注意 capital、measure 這兩組**：`capital(ism) n. 4` 和 `measure(s) n. 4` 的 `word` 依解析規則取括號外的詞幹，所以是 `capital`、`measure`。但從括號規則（原則 10、19）和詞類來看，這兩筆的 L4 條目指的其實是 **capitalism**（資本主義）和 **measures**（常以複數出現的「措施」），不是 L2 的 capital、measure。所以「capital 有兩個級別」是解析慣例造成的表象。介面顯示和出題時，這兩筆建議改用 `variants[0]`（`capitalism`、`measures`）當顯示詞形；JSON 保持腳本輸出不變，因為 `tools/exam_stats.py`、`tools/build_vocab.py` 都直接讀這個 JSON。
+
 另外有幾個**詞形落在多筆**的情況，用詞形查詢時要回傳多筆：`chair`（`chair n./v. 1`，也是 `chairperson/chair/chairman/chairwoman n. 6` 的變體）、`mine`（`mine n./v. 1`，也是 `I (me, my, mine, myself)` 的格變化）、`media`（`media n. 1`，也是 `medium/media n. 3` 的變體）、`refreshment`（`refresh(ment)` 的衍生，也是 `refreshment(s) n. 6` 的主要詞形）。
 
 ### 6.4 主要詞形的取捨
@@ -348,7 +354,29 @@ python3 tools/parse_wordlist.py --legacy91 data/raw/vocab/legacy-91/4.pdf  # 加
 
 ### 6.5 附錄詞沒有級別
 
-數字、星期、月份、季節、國家、洲、海洋、宗教、詞類名稱都放在附錄（p.104），**沒有級別，所以不在主 JSON 裡**。附錄的國家清單最後寫「etc.」，代表並未列完 [V111 p.104]。建議 App 另外建一個「附錄詞」集合，當作第 1 級等級的基礎詞（見 §9.1）。
+數字、星期、月份、季節、國家、洲、海洋、宗教、詞類名稱都放在附錄（p.104），**沒有級別，所以不在主 JSON 裡**。附錄裡的 Countries and Areas、Religions、Parts of Speech 三個清單最後都寫「etc.」，代表並未列完（原稿只提到國家清單，已補）[V111 p.104]。建議 App 另外建一個「附錄詞」集合，當作第 1 級等級的基礎詞（見 §9.1）。
+
+`parse_wordlist.py` 沒有輸出附錄詞，所以這裡把 p.104 的內容照原文抄錄（2026-10-08 以 `pdftotext -layout` 抽出後逐項對照），之後建「附錄詞」集合時可以直接用：
+
+| 類別 | 原文內容 |
+|---|---|
+| Cardinal Numbers | one, two, three, four, five, six, seven, eight, nine, ten, eleven, twelve, thirteen, fourteen, fifteen, sixteen, seventeen, eighteen, nineteen, twenty, twenty-one, twenty-two, twenty-three, twenty-four, twenty-five, thirty, thirty-one, thirty-two, thirty-three, thirty-four, forty, fifty, sixty, seventy, eighty, ninety, one hundred, one thousand, one million, one billion |
+| Ordinal Numbers | first, second, third, fourth, fifth, sixth, seventh, eighth, ninth, tenth, eleventh, twelfth, thirteenth, fourteenth, fifteenth, sixteenth, seventeenth, eighteenth, nineteenth, twentieth, twenty-first, twenty-second, twenty-third, twenty-fourth, twenty-fifth, thirtieth, fortieth, fiftieth, sixtieth, seventieth, eightieth, ninetieth, hundredth, thousandth, millionth, billionth |
+| Days of the Week | Monday/Mon., Tuesday/Tue., Wednesday/Wed., Thursday/Thu., Friday/Fri., Saturday/Sat., Sunday/Sun. |
+| Months | January/Jan., February/Feb., March/Mar., April/Apr., May, June/Jun., July/Jul., August/Aug., September/Sep., October/Oct., November/Nov., December/Dec. |
+| Seasons | spring, summer, autumn/fall, winter |
+| Countries and Areas | Argentina, Australia, Brazil, Canada, China, France, Germany, India, Indonesia, Italy, Japan, Malaysia, Mexico, (the) Philippines, Republic of China, Russia, Saudi Arabia, Singapore, South Africa, South Korea, Spain, Taiwan, Thailand, Turkey, (the) United Kingdom, (the) United States, Vietnam, etc. |
+| Continents | Africa, Antarctica, Asia, Australia, Europe, North America, South America |
+| The Principal Oceans of the World | (the) Arctic Ocean, (the) Atlantic Ocean, (the) Indian Ocean, (the) Pacific Ocean |
+| Religions | Buddhism/Buddhist, Catholicism/Catholic, Christianity/Christian, Eastern Orthodoxy/Eastern Orthodox, Hinduism/Hindu, Islam/Muslim, Judaism/Jewish, Taoism/Taoist, etc. |
+| Parts of Speech | adjective/adj., adverb/adv., article/art., auxiliary/aux., conjunction/conj., noun/n., preposition/prep., pronoun/pron., verb/v., etc. |
+
+使用時要注意的地方：
+
+- **附錄詞和正表會重疊**（本專案計算）：`spring n./v. 1`、`fall n./v. 1`、`first n./adv./adj. 1`、`second adj./n./adv. 1`、`third adj./n./adv. 1`、`hundred n./adj. 1`、`thousand n./adj. 1`、`million n. 1`、`billion n. 2`、`article n. 2` 都在正表、有級別。`summer`、`winter`、`autumn`、`one`…`ninety`、`fourth` 以後的序數、星期、月份（`march`、`may` 除外，見下一點）、國名、宗教名則只在附錄。建「附錄詞」集合時，正表已有的字要以正表的級別為準，不要重複建條目。
+- 同形不同義：正表有 `march n./v. 3`（行進），附錄有月份 `March/Mar.`；正表有 `may aux. 1`，附錄有月份 `May`；正表有 `china n. 2`（瓷器），附錄有國名 `China`。比對考題時要分大小寫或看詞義。
+- 附錄的 `Turkey`（國家）和火雞 turkey 不同；火雞 turkey 不在新版正表（§6.6）。
+- 附錄的星期縮寫是 `Tue.`、`Thu.`，舊版是 `Tuesday/Tues./Tue.`、`Thursday/Thurs./Thur.`；月份縮寫新版用 `Sep.`，舊版用 `September/Sept.`。
 
 ### 6.6 和 108 課綱 2,000 字表的覆蓋落差（初步比對，未逐筆人工核對）
 
