@@ -150,7 +150,7 @@ GitHub Actions
 
 注意事項：
 
-- **網域一定要在 Cloudflare 的 nameserver 上。** 在 Cloudflare Registrar 買的網域不能改用第三方 nameserver [CF-REG]。Worker Custom Domain 也要求 zone 在 Cloudflare 上是 active，而且主機名稱上不能已經有 CNAME 記錄 [CF-CDOM]。
+- **網域一定要在 Cloudflare 的 nameserver 上。** 在 Cloudflare Registrar 買的網域不能改用第三方 nameserver [CF-REG]。Worker Custom Domain 也要求 zone 在 Cloudflare 上是 active，而且主機名稱上不能已經有 CNAME 記錄 [CF-CDOM]。Vercel 的指南建議改用 Vercel 當 DNS [VC-CF]，但這和 Cloudflare Registrar 的規定衝突，所以本文採用「DNS 留在 Cloudflare，主網域用 A／CNAME 指向 Vercel，並關閉 proxy」。Vercel 文件也接受這種做法：主網域用 A 記錄、子網域用 CNAME [VC-DOMAIN]。
 - **cookie 建議用 host-only。**
   - Sekai 把 session cookie 設成 `Domain=.project-sekai-center.com`（`worker/wrangler.toml:41`、`worker/src/auth.js:52-57`），所以主網域的 Vercel 和 `bot.` 也都會收到這個 cookie。
   - 新專案如果只有 `api.` 需要讀 session，可以不設 `Domain`。這樣 cookie 只會送回發出它的主機 [MDN-COOKIE]，曝露範圍比較小。
@@ -477,9 +477,9 @@ Sekai 的做法：
 | 5 | **Worker secrets** | 機密設定 | `worker/wrangler.toml:35-37`；`worker/SETUP.md:7-11` | 用 `wrangler secret put` 設定：`SESSION_SECRET`（長隨機字串）、`GOOGLE_CLIENT_ID`、`GOOGLE_CLIENT_SECRET`、`ANTHROPIC_API_KEY`、`ADMIN_EMAIL`；選用的有 `DISCORD_CLIENT_ID`／`DISCORD_CLIENT_SECRET`、`RESEND_API_KEY`、`VAPID_*` | 非機密的放 `[vars]`：`SITE_BASE`、`OAUTH_BASE`、AI 模型和額度（見 `wrangler.toml:38-106`）。本機開發的值放 `.dev.vars`，不能提交 [CF-SECRET]。Sekai 的 `[vars]` 裡沒有 `GOOGLE_CLIENT_ID` 和 `ADMIN_EMAIL`，推定是用 secret 或儀表板設定的 |
 | 6 | **Vercel 專案** | 前端 | `README.md:50-52` | 匯入 GitHub repo，Framework preset 選 Vite [VC-VITE]，在 Domains 加上主網域和 www [VC-DOMAIN] | **Hobby 只限非商業、個人使用**，要收費就要 Pro [VC-HOBBY]、[VC-FAIR] |
 | 7 | **DNS 記錄** | 網域指向 | （repo 沒有記錄） | 主網域 A 記錄和 www CNAME 指向 Vercel，**DNS only**；`api.` 由 Worker Custom Domain 自動建立 | [VC-DOMAIN]、[VC-CF]、[CF-CDOM] |
-| 8 | **Google OAuth client** | 登入 | `worker/SETUP.md:10` | Google Cloud Console：建立專案 → 設定 OAuth 同意畫面（Audience）→ Clients → Create Client → 選 **Web application** → Authorized redirect URI 填 `https://api.<網域>/auth/google/callback` [G-WEB] | 「Testing」狀態最多 100 位測試使用者；按下「Publish app」才是 In production [G-AUD]。學生的學校 Google Workspace 帳號可能被管理者限制使用第三方 App [G-AUD] |
+| 8 | **Google OAuth client** | 登入 | `worker/SETUP.md:10` | Google Cloud Console：建立專案 → 設定 OAuth 同意畫面（Audience）→ Clients → Create Client → 選 **Web application** → Authorized redirect URI 填 `https://api.<網域>/auth/google/callback` [G-WEB] | 「Testing」狀態一般最多 100 位測試使用者，測試使用者的授權 7 天後過期；按下「Publish app」才是 In production。**例外**：只要求 name、email、profile（`openid email profile`）或使用 Sign in with Google 的 App，使用者不必在測試名單裡、不會看到警告、授權也不會 7 天過期 [G-AUD]。新專案的 scope 和 Sekai 一樣是這三個（`worker/src/auth.js:106`），所以不受 100 人限制；仍建議上線前按 Publish app。學生的學校 Google Workspace 帳號可能被管理者限制使用第三方 App [G-AUD] |
 | 9 | **Discord OAuth**（選用） | 登入或綁定 | `worker/SETUP.md:40-49` | Discord Developer Portal 建立 application → OAuth2 → Redirects 加上 `https://api.<網域>/auth/discord/callback` | scope 只要 `identify` |
-| 10 | **Anthropic API** | 所有 AI 功能 | `worker/SETUP.md:11`；`worker/src/admin.js:359-364` | Console（`platform.claude.com`）建立帳號 → Billing 儲值或設定付款 → 建立 API key → 存成 Worker secret `ANTHROPIC_API_KEY`。如果批次出題在 GitHub Actions 跑，也存一份到 repo secret | 403 `billing_error` 代表沒有餘額（`admin.js:359-361`）。Console 提供 workspace [ANT-API]；用量上限和告警的具體設定方式未查證（未驗證）。站內再用 `AI_CAP_SITE` 做第二道保護 |
+| 10 | **Anthropic API** | 所有 AI 功能 | `worker/SETUP.md:11`；`worker/src/admin.js:359-364` | Console（`platform.claude.com`）建立帳號 → Billing 儲值或設定付款 → 建立 API key → 存成 Worker secret `ANTHROPIC_API_KEY`。如果批次出題在 GitHub Actions 跑，也存一份到 repo secret | 403 `billing_error` 代表沒有餘額（`admin.js:359-361`）。**支出上限**：Start／Build／Scale 三個用量等級各有每月支出上限（US$500／1,000／200,000）；可以在 Console 的 Settings > Billing 自己設一個更低的上限，也可以替個別 workspace 設支出和速率上限 [ANT-RL]。碰到等級上限時回 429 `rate_limit_error`（`error.details.error_code` 是 `enforced_spend_limit_reached`，沒有 `retry-after`，SDK 自動重試也沒用）；碰到自訂上限時回 400 `invalid_request_error` [ANT-RL]。Sekai 的錯誤翻譯只處理 403、429、401（`admin.js:359-366`），新專案要把這兩種情況也翻成「站方本月 AI 預算已用完」。用量告警（email 通知）的設定方式沒查到（未驗證）。站內再用 `AI_CAP_SITE` 做第二道保護 |
 | 11 | **Resend**（選用） | Email 通知 | `worker/SETUP.md:23-35`；`worker/src/mail.js:1-17` | 註冊後加入網域並完成 DKIM、SPF、MX 驗證 → `RESEND_API_KEY`；`MAIL_FROM` 要和驗證過的網域一致 | 免費方案每月 3,000 封、每日 100 封 [RESEND] |
 | 12 | **Web Push**（選用） | 複習提醒 | `worker/SETUP.md:53-84`；`.github/workflows/worker-push-setup.yml` | 可以照抄 Sekai 的一鍵 workflow | |
 | 13 | **GitHub repo 設定** | CI 與資料管線 | 各 workflow 檔頭 | Secrets 照上面填；資料提交的 workflow 要有 `permissions: contents: write` | 公開 repo 連續 60 天沒有活動，排程會停用 [GH-SCHED] |
@@ -549,6 +549,7 @@ npx wrangler tail
 - [CF-ALARM] Durable Objects Alarms：https://developers.cloudflare.com/durable-objects/api/alarms/
 - [CF-SECRET] Workers Secrets：https://developers.cloudflare.com/workers/configuration/secrets/
 - [CF-TOKEN] Create API token：https://developers.cloudflare.com/fundamentals/api/get-started/create-token/
+- [CF-TPL] API token templates（「Edit Cloudflare Workers」範本的權限清單）：https://developers.cloudflare.com/fundamentals/api/reference/template/
 - [CF-REG] Cloudflare Registrar FAQ：https://developers.cloudflare.com/registrar/faq/
 
 **GitHub**
@@ -564,6 +565,7 @@ npx wrangler tail
 - [VC-VITE] Vite on Vercel：https://vercel.com/docs/frameworks/frontend/vite
 - [VC-JSON] vercel.json：https://vercel.com/docs/project-configuration/vercel-json
 - [VC-CACHE] Cache-Control headers：https://vercel.com/docs/caching/cache-control-headers
+- [VC-IGNORE] Project settings：Ignored Build Step：https://vercel.com/docs/project-configuration/project-settings#ignored-build-step
 
 **Vite**
 
@@ -578,6 +580,9 @@ npx wrangler tail
 - [ANT-CACHE] Prompt caching：https://platform.claude.com/docs/en/build-with-claude/prompt-caching
 - [ANT-VISION] Vision：https://platform.claude.com/docs/en/build-with-claude/vision
 - [ANT-API] API overview：https://platform.claude.com/docs/en/api/overview
+- [ANT-RL] Rate limits（含 Spend limits、Workspace 上限）：https://platform.claude.com/docs/en/api/rate-limits
+- [ANT-BATCH] Batch processing：https://platform.claude.com/docs/en/build-with-claude/batch-processing
+- [ANT-REFUSAL] Refusals and fallback（含「Refusals in Message Batches」）：https://platform.claude.com/docs/en/build-with-claude/refusals-and-fallback
 - [ANT-TS] Anthropic TypeScript SDK：https://github.com/anthropics/anthropic-sdk-typescript
 
 **瀏覽器與網域標準**

@@ -114,6 +114,7 @@ npm run deploy -w @gsat/api                  # 部署後網址是 https://gsat-e
 
 - **rewrites**：`/api/*`、`/auth/*` 反向代理到 Worker。買網域前 `*.vercel.app` 與 `*.workers.dev` 彼此跨站，cookie 登入行不通，代理後瀏覽器看起來是同源。其餘路徑 SPA fallback 到 `/index.html`，但**排除 `/assets/`**：重新部署後舊的 chunk 檔名已不存在，應該回 404，而不是回 HTML 讓瀏覽器當成 JavaScript 執行；前端的錯誤邊界會提示使用者重新整理。
 - **headers**：`X-Content-Type-Options: nosniff`、`Referrer-Policy`、`X-Frame-Options`、`Permissions-Policy`。其中 `camera=(self)` 是為了在網頁內直接開相機拍手寫作文（`camera=()` 會讓 `getUserMedia()` 被拒絕）；麥克風、定位、付款都關閉。`/assets/*` 的檔名帶內容雜湊，給一年 `immutable` 快取；HTML 每次重新驗證，部署後才會立刻拿到新版。
+- **ignoreCommand**：只有前端會用到的路徑（`apps/web`、`packages`、`vercel.json`、根目錄的 `package*.json`）有變動才重新建置；`exit 0` 代表略過。資料管線與研究文件更新很頻繁，每次都重建只會浪費建置時間。之後前端開始讀取 `data/` 下的檔案時，要把那些路徑加進這個清單。
 - 還沒實測的部分（05 文件 §1.3）：經 Vercel 代理時 `Set-Cookie` 能否原樣傳回、長時間的 AI 請求會不會逾時。
 - Vercel 的預覽部署每次網址不同，不在 `ALLOWED_ORIGINS` 裡，預覽站送出的 POST 會被 Worker 的 Origin 檢查擋下（GET 不受影響）。
 
