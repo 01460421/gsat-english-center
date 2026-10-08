@@ -64,7 +64,7 @@
 
 ## 1. 可用模型、價格與能力
 
-### 1.1 模型一覽（2026-10-07）
+### 1.1 模型一覽（2026-10-07；2026-10-08 補上 Haiku 5.5）
 
 | 模型 | API ID | 發布 | 退役承諾 | Context | 最大輸出（同步） | 思考 | 預設 effort | 相對延遲 | 本專案用途 |
 |---|---|---|---|---|---|---|---|---|---|
@@ -244,7 +244,10 @@
 - `claude-api` 技能轉述 Anthropic 的測試結果 [SKILL]（官方頁面上沒有逐字核對到）：
   - 在程式設計和知識工作評測上，Opus 5.5 用 `medium` 超過 Opus 5 用 `high`。
   - 在幾項程式設計評測上，`low` 也接近這個水準。
-- 官方頁面只寫了「預設 effort 是 `medium`，請明確設定並重做 sweep」[ANT-O55-NEW] [ANT-EFFORT]。
+- 原稿寫「官方頁面只寫了『預設 effort 是 `medium`，請明確設定並重做 sweep』」[ANT-O55-NEW] [ANT-EFFORT]。2026-10-08 查證：官方成本指南其實有 Opus 5.5 各 effort 的實測數據 [ANT-COSTINTEL]，只是比較對象是 Opus 5.5 自己的 `high`，不是 Opus 5：
+  - SWE-bench Pro 子集上，`medium` 比 `high` 低約 2.5 分，成本約 70%；`low` 低約 8 分，成本約三分之一；`xhigh` 高約 1.4 分，成本是 `high` 的 2.5 倍。
+  - 同一子集上，Opus 5.5 用預設的 `medium`，和 Fable 5.1 用它的預設值成績相當（92.8% 對 92.3%），每題成本約五分之一。
+  - 這些都是程式評測，套到出題和批改上要自己做 sweep。
 - 所以除了「獨立驗證」需要第二個模型，其他功能都先用 Opus 5.5。
 - Sonnet 5.5 的單價正好是 Opus 5.5 的一半。原稿寫「快取讀取同為 $0.20」，但 2026-10-08 的價目表已把 Sonnet 5.5 的快取讀取降為 $0.10，所以現在連快取讀取也是一半 [ANT-PRICE]。凡是寫「可改用 Sonnet 5.5」的地方，那一項的成本大約減半；但要先過品質評測才能換。
 - Haiku 5.5 的單價約是 Opus 5.5 的 1/40（prompt ≤100K tokens 時）[ANT-PRICE]。官方建議它用在分類、擷取、路由 [ANT-H55]。本專案可以評測的地方有：單字增補（§2.4）、題目的第三位盲解者（§2.3）、混合題簡答的寬鬆比對。出題、批改、家教對話這些品質敏感的任務，先不考慮。
@@ -301,6 +304,7 @@
   - 5 分鐘 TTL：命中率要超過 **21%** 才划算。
   - 1 小時 TTL：命中率要超過 **51%** 才划算。
   - 公式：(1−h)×寫入倍率＋h×0.05 ＜ 1。
+  - 2026-10-08 起 Sonnet 5.5 的快取讀取倍率也是 0.05，損益兩平點相同。讀取倍率 0.1 的模型（例如 Haiku 5.5）分別是約 22% 和 53%（本文件計算）。
 - 出題請求的輸入只占成本約 16%（以綜合測驗為例），所以快取最多省一成多。
 - **建議**：
   - 第一批先用 5 分鐘 TTL，每筆請求的前綴要完全相同，並讓請求連續送入。
@@ -823,7 +827,9 @@ if (b.processing_status === "ended") {
 | 等待 `fetch` 的時間算 CPU 嗎 | 不算 | 不算 | [CF-LIMITS] |
 | HTTP 請求的總執行時間 | 不限，只要用戶端還連著 | 同左 | [CF-LIMITS] |
 | `ctx.waitUntil()` | 回應送出或用戶端斷線後，最多再 30 秒；同一個請求的所有 waitUntil 共用這 30 秒 | 同左 | [CF-CTX] |
-| Cron Trigger／Queue consumer／Durable Object alarm 的執行時間 | 15 分鐘 | 15 分鐘 | [CF-LIMITS] [CF-Q-LIMIT] |
+| Cron Trigger／Queue consumer／Durable Object alarm 的執行時間（牆鐘） | 15 分鐘 | 15 分鐘 | [CF-LIMITS] [CF-Q-LIMIT] |
+| Cron Trigger 的 CPU 時間（2026-10-08 補列） | 10 ms | 間隔 <1 小時：30 秒；間隔 ≥1 小時：15 分鐘 | [CF-LIMITS] |
+| Queue consumer 的 CPU 時間（2026-10-08 補列） | — | 預設 30 秒，`limits.cpu_ms` 最多可調到 5 分鐘 | [CF-Q-LIMIT] |
 | 每次呼叫的 subrequest 數 | 50 | 10,000 | [CF-LIMITS] |
 | 同時等待回應標頭的連線數 | 6 | 6 | [CF-LIMITS] |
 | 記憶體（每個 isolate） | 128 MB | 128 MB | [CF-LIMITS] |
