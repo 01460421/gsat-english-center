@@ -440,7 +440,7 @@ python3 tools/parse_wordlist.py --legacy91 data/raw/vocab/legacy-91/4.pdf  # 加
 - 02 文件的學測規格整理中，難度設計（例如「穩定基礎」以 1–4 級為主）也引用了本詞彙表的級別。兩份文件使用的級別數字都以本文件的 JSON 為準。
 - 04 文件 §2.2 整理了 Cambridge Dictionary 的使用條件：只能外連，不能爬取、快取或用 iframe 嵌入。§9.4 的連結格式要和它一起看。
 - **下游程式直接讀 `ceec-wordlist.json`**（2026-10-08 查證時確認）：
-  - `tools/build_vocab.py` 用它產生 `data/vocab/lexicon.json`、`data/vocab/forms-index.json`（詞形→條目反查表，含 ECDICT 屈折形，共 17,162 個詞形）和詞族。說明見 `data/vocab/lexicon-report.md`。
+  - `tools/build_vocab.py` 用它產生 `data/vocab/lexicon.json`、`data/vocab/forms-index.json`（詞形→條目反查表，含 ECDICT 屈折形；目前版本共 16,953 個詞形，見 `data/vocab/lexicon-report.md` 與 `forms-index.json` 的 `_meta.form_count`。原稿寫 17,162，是 build_vocab.py 較早一次的輸出，2026-10-08 總覽查證更正）和詞族。說明見 `data/vocab/lexicon-report.md`。
   - `tools/exam_stats.py` 用它統計每個條目在歷屆試題的出現次數（分正解、選項、選文），輸出 `data/exams/stats/word-frequency.json`。這就是 §9.5「歷屆出現次數」的實作。
   - 所以 JSON 的欄位結構（7 個欄位、陣列順序）不要手動更動。要調整顯示詞形（例如 §6.3 的 capitalism），請在下游處理。
 
@@ -474,7 +474,7 @@ python3 tools/parse_wordlist.py --legacy91 data/raw/vocab/legacy-91/4.pdf  # 加
 
 ### 9.3 詞性變化與衍生字
 
-1. **屈折變化（複數、時態、比較級）**：原表都不列。要對應考題原文時，必須先做詞形還原（lemmatization），不規則形式（went、children、better）要另外查表。後續的 `tools/build_vocab.py` 已用 ECDICT 的詞形欄位產生 `data/vocab/forms-index.json` 當反查表（§8），`tools/exam_stats.py` 會優先用它。表外的詞形要用哪一個 lemmatizer 套件，還沒有評估（未驗證）。
+1. **屈折變化（複數、時態、比較級）**：原表都不列。要對應考題原文時，必須先做詞形還原（lemmatization），不規則形式（went、children、better）要另外查表。後續的 `tools/build_vocab.py` 已用 ECDICT 的詞形欄位產生 `data/vocab/forms-index.json` 當反查表（§8），`tools/exam_stats.py` 的設計是優先用它。**但 2026-10-08 總覽查證發現目前實際沒有用到**：`exam_stats.py` 預期 `{詞形: [條目 id]}` 的平面格式，而 `forms-index.json` 的實際結構是 `{"_meta": …, "forms": {詞形: [{"entry_id": "abandon|v.|4", "types": […]}]}}`，`ceec-wordlist.json` 也沒有 `entry_id` 欄位，所以對應數為 0、退回 suffix-rules（`data/exams/stats/word-frequency.json` 與 `summary.json` 的 `lemmatizer` 欄、`docs/analysis/exam-stats.md` 開頭都寫 suffix-rules）。要讓歷屆出現次數用到 ECDICT 屈折形，需修正 `Lexicon.__init__` 的讀法後重跑。表外的詞形要用哪一個 lemmatizer 套件，還沒有評估（未驗證）。
 2. **原表刻意不列的規則衍生字**（原則 4–9、14）：-ly、-ness、un-／in-／im-／ir-／il-、non-、-less、re-，以及規則的 -ing／-ed 形容詞。建議：
    - 掛在**原字的詞族**底下，標成「衍生（原表未列）」，**級別沿用原字**，在 UI 上和原表條目分開顯示。
    - 衍生形式可以先由 Claude 產生，再用詞典確認確實存在（例如用 Cambridge 查得到）才收錄，避免造出不存在的字（例如 happy → happiness／unhappy 可以收）。
