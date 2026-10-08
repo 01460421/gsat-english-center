@@ -431,12 +431,12 @@ Sekai 的做法：
     - 稽核表只存 token 數、任務種類和題目 id，不存全文，也不存圖片。
     - 照片放 R2 或者用完即丟，不要放進 D1。D1 單列上限是 2 MB [CF-D1LIMIT]。
     - 隱私權政策等法遵細節不在本文範圍，要另外處理（未驗證）。
+12. **收費與 Vercel 方案**：Sekai 有點數 beta，用人工對帳，不接金流（`worker/sql/008_ai_credits.sql:3-7`）。如果新專案要收費，Vercel Hobby 只限非商業、個人使用，任何商業用途都要 Pro 以上 [VC-HOBBY]、[VC-FAIR]。
 13. **設定變數改名後沒有同步**：額度單位從「次」改成「操作」時，程式改讀 `AI_OPS_AUTO`，`wrangler.toml` 卻還留著 `AI_CAP_AUTO`，所以自動核准帳號的試用額度實際上沒有生效（見第 2.2 節）。新專案把所有設定集中在一個有型別的 `config.ts`，啟動時驗證必要的鍵，未知或過時的鍵就在健康檢查裡標出來，並寫一支測試確認「自動核准帳號的額度確實比較低」。
 14. **手寫作文照片的上傳限制**：Sekai 的 `/api/chat` body 上限是 4 MB（`worker/src/api.js:768-771`），手機原圖常常超過。相關上限如下：
     - Claude API：直接呼叫時每張圖最多 10 MB（base64 後），單一請求最多 32 MB；超過模型解析度（Claude 4.7 以後長邊 2,576 px）的圖會先被縮小 [ANT-VISION]。
     - Worker：請求 body 上限看 Cloudflare 帳號方案，Free 和 Pro 都是 100 MB [CF-WLIMIT]。
     - 建議：前端先把照片縮到長邊 2,576 px 以內，再轉成 JPEG 上傳。Worker 只檢查大小和 MIME，存進 R2（或不存），再交給 Claude。這樣既省 visual token，也不會撞到上面的上限。
-12. **收費與 Vercel 方案**：Sekai 有點數 beta，用人工對帳，不接金流（`worker/sql/008_ai_credits.sql:3-7`）。如果新專案要收費，Vercel Hobby 只限非商業、個人使用，任何商業用途都要 Pro 以上 [VC-HOBBY]、[VC-FAIR]。
 
 ### 3.6 題庫資料量較大：資料放在哪裡
 
