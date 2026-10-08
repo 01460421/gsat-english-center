@@ -1271,7 +1271,7 @@ def build(outdir: Path, *, verify: bool = True) -> dict:
         out = []
         if w.endswith("man") and len(w) > 4:
             out.append(w[:-3] + "men")
-        if re.search(r"[^aeiou][aeiou]z$", w):
+        if re.search(r"(?:^|[^aeiou]|qu)[aeiou]z$", w):      # quiz→quizzes（qu 當子音）
             out.append(w + "zes")
         if re.search(r"(?:s|x|z|ch|sh)$", w):
             out.append(w + "es")
@@ -2451,7 +2451,8 @@ def report_md(out, findex, sources, conv, tstats, ipa_issues, ipa_examples, fam_
       f"{extra['extra_pos_pairs']:,} 組（例如名詞 angle 的 angled）在 forms-index 標 `extra_pos: true`，"
       "比較級／最高級、等於任何條目原形或變體的（feed、wedding、shorts）則完全不收。變體列的屈折形同樣依變體詞類過濾，"
       f"代名詞格（mine、her）不帶屈折形，共略過 {fs['variant_drop']:,} 個（原本 mined、mining、hering 會對到代名詞 I、she）。"
-      f"ECDICT 的錯誤形式依 `FORM_FIXES` 修正 {fs['fixed']} 個（sheep 的複數 sheeps→sheep）。")
+      f"ECDICT 的錯誤形式依 `FORM_FIXES` 修正 {fs['fixed']} 個（sheep 的複數 sheeps→sheep）。"
+      f"-l 結尾的動詞改用美式拼法 {fs['american_l']} 個（traveled，英式 travelled 仍在 forms-index）。")
     multi = sum(1 for v in findex.values() if len({x['entry_id'] for x in v}) > 1)
     w(f"- forms-index 中對應到多個條目的詞形：{multi:,} 個（例如 {', '.join(sorted(k for k, v in findex.items() if len(v) > 1)[:12])}）。")
     w(f"- OpenCC：{conv.package}（s2twp）。重跑一致性：`python3 tools/build_vocab.py check` 會在暫存目錄重建並逐位元比對，"

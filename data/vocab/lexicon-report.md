@@ -8,12 +8,12 @@
 | 檔案 | 大小 | sha256 |
 |---|---:|---|
 | `data/vocab/CREDITS.md` | 12,348 bytes | `cc123ad96e4172d3015bf1da057cb872e1488037fdaf634bee4c1f82e228f137` |
-| `data/vocab/forms-index.json` | 1,247,013 bytes | `99b05ec70d86eca8131e5488672c8e076568339a4261e7878085f3f0fcb94102` |
+| `data/vocab/forms-index.json` | 1,246,993 bytes | `7c814e1f0335037bd1b32a7ccbb66f8723d0ac83ef46e3c1fe075f3d624252ad` |
 | `data/vocab/lexicon.json` | 22,337,236 bytes | `6e9346caff04fc48d824e79b3708c3e35d5303b732576f33e3b7f8f9744f612e` |
 
 - 條目數 6,012；forms-index 詞形數 16,953。lexicon.json 上限 25 MB，未超過，輸出單一檔。
-- forms-index 各型態的（詞形, 條目）組數：comparative 259、derived_ment 61、derived_suffix 1、lemma 6,012、past 2,661、past_participle 2,630、plural 4,081、plural_rule 96、plural_usual 22、present 3、present_participle 2,671、pronoun_case 24、slash 85、superlative 216、third_person 2,141。其中 `plural_rule` 是 ECDICT 沒列複數、規則複數在 Tatoeba 英文句出現至少 3 次的 95 筆名詞；另有 225 筆名詞的規則複數沒有語料證據，不收（例如 accordances、accountings、acnes、advices、agricultures、aircrafts、aluminums、applauses、archaeologies、assistances、asthmas、astronomies，多為不可數名詞或拼法錯誤）。
-- 屈折形只收條目詞類能產生的形式：ECDICT exchange 中 2,529 個屈折形不屬於條目詞類（名詞 fee 的過去式 feed、名詞 ox 的比較級 oxer、形容詞 abnormal 的複數 abnormals…），不放進 `forms`；其中可當詞形還原線索的 1,368 組（例如名詞 angle 的 angled）在 forms-index 標 `extra_pos: true`，比較級／最高級、等於任何條目原形或變體的（feed、wedding、shorts）則完全不收。變體列的屈折形同樣依變體詞類過濾，代名詞格（mine、her）不帶屈折形，共略過 69 個（原本 mined、mining、hering 會對到代名詞 I、she）。ECDICT 的錯誤形式依 `FORM_FIXES` 修正 11 個（sheep 的複數 sheeps→sheep）。
+- forms-index 各型態的（詞形, 條目）組數：comparative 259、derived_ment 61、derived_suffix 1、lemma 6,012、past 2,661、past_participle 2,630、plural 4,081、plural_rule 97、plural_usual 22、present 3、present_participle 2,671、pronoun_case 24、slash 85、superlative 216、third_person 2,140。其中 `plural_rule` 是 ECDICT 沒列複數、規則複數在 Tatoeba 英文句出現至少 3 次的 96 筆名詞；另有 224 筆名詞的規則複數沒有語料證據，不收（例如 accordances、accountings、acnes、advices、agricultures、aircrafts、aluminums、applauses、archaeologies、assistances、asthmas、astronomies，多為不可數名詞或拼法錯誤）。
+- 屈折形只收條目詞類能產生的形式：ECDICT exchange 中 2,529 個屈折形不屬於條目詞類（名詞 fee 的過去式 feed、名詞 ox 的比較級 oxer、形容詞 abnormal 的複數 abnormals…），不放進 `forms`；其中可當詞形還原線索的 1,367 組（例如名詞 angle 的 angled）在 forms-index 標 `extra_pos: true`，比較級／最高級、等於任何條目原形或變體的（feed、wedding、shorts）則完全不收。變體列的屈折形同樣依變體詞類過濾，代名詞格（mine、her）不帶屈折形，共略過 69 個（原本 mined、mining、hering 會對到代名詞 I、she）。ECDICT 的錯誤形式依 `FORM_FIXES` 修正 11 個（sheep 的複數 sheeps→sheep）。-l 結尾的動詞改用美式拼法 67 個（traveled，英式 travelled 仍在 forms-index）。
 - forms-index 中對應到多個條目的詞形：120 個（例如 accounting, advanced, am, armed, arms, backward, bathed, being, best, better, bit, blessing）。
 - OpenCC：OpenCC（官方 Python 綁定） 1.4.2（s2twp）。重跑一致性：`python3 tools/build_vocab.py check` 會在暫存目錄重建並逐位元比對，上表 sha256 也可以直接比對。
 
