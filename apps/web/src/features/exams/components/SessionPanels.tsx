@@ -7,6 +7,7 @@ import { SECTION_TYPE_LABELS, type Exam } from '../../../data/exams';
 import { useAttemptSelector } from '../AttemptContext';
 import type { AttemptMode } from '../attempt';
 import { formatDuration } from '../labels';
+import { useAiGradingOpen } from './AiGrading';
 import { formatPercent, formatPoints, scoreExam } from '../scoring';
 import { sectionAnchorId } from './Paper';
 
@@ -133,6 +134,7 @@ export function ResultSummary({
   const score = useMemo(() => scoreExam(exam, answers), [exam, answers]);
   const titleId = useId();
   const oldAstPenalty = exam.exam === 'ast' && exam.year <= 99;
+  const aiOpen = useAiGradingOpen();
 
   return (
     <section aria-labelledby={titleId} className="rounded-2xl border-2 border-primary bg-surface p-5 lg:p-6">
@@ -153,7 +155,9 @@ export function ResultSummary({
           <div>
             <p className="text-sm text-muted">非選擇題（不自動計分）</p>
             <p className="text-2xl font-semibold tabular-nums">{formatPoints(score.manualMax)} 分</p>
-            <p className="text-sm text-muted">對照參考答案或官方評分原則自行評估；AI 批改即將推出</p>
+            <p className="text-sm text-muted">
+              對照參考答案或官方評分原則自行評估；{aiOpen ? '中譯英與作文可以到「寫作練習」請 AI 批改' : 'AI 批改即將推出'}
+            </p>
           </div>
         )}
         <div>

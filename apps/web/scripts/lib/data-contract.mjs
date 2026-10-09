@@ -7,8 +7,8 @@
  * 這比在 build-data.mjs 裡手寫一份平行的檢查可靠，因為比對的就是 UI 開發者 import 的那份型別。
  * 陣列每 100 筆切一段，否則 6,000 筆的陣列字面值會讓 tsc 放棄計算（TS2590）。
  *
- * parts 可以只挑一部分檢查：單元測試只拿題庫的範例輸出（tests/fixtures/bank-public）來檢查 bank 的型別，
- * 不必先跑完整的建置。
+ * parts 可以只挑一部分檢查：單元測試只拿題庫的範例輸出（tests/fixtures/bank-public）來檢查 bank 的型別、
+ * 拿 data/exams/gsat-spec.json 換算出的級分對照檢查 exams 的 score-scales，不必先跑完整的建置。
  */
 import { spawnSync } from 'node:child_process';
 import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
@@ -17,6 +17,9 @@ import path from 'node:path';
 
 export const CONTRACT_PARTS = /** @type {const} */ (['meta', 'vocab', 'exams', 'bank', 'writing']);
 /** @typedef {(typeof CONTRACT_PARTS)[number]} ContractPart */
+
+/** exams/ 底下不是單份考卷的檔案（和 build-data.mjs 的同名常數一致）。 */
+export const EXAM_DIR_NON_EXAM_FILES = new Set(['index.json', 'score-scales.json']);
 
 /** @param {string} name */
 const ident = (name) => name.replace(/\W/g, '_');
@@ -61,11 +64,17 @@ export function contractSource({ dataDir, srcDir, parts = CONTRACT_PARTS }) {
     summary.push('單字索引', '6 個級別檔');
   }
   if (parts.includes('exams')) {
-    lines.push(`import type { ExamIndex, Exam } from ${JSON.stringify(path.join(srcDir, 'exams'))};`);
+    // exams/ 底下除了 {id}.json，還有列表與模擬考的級分對照（build-data.mjs 的 EXAM_DIR_NON_EXAM_FILES），兩者都不是 Exam。
+    const examFiles = readdirSync(path.join(dataDir, 'exams')).filter((f) => f.endsWith('.json') && !EXAM_DIR_NON_EXAM_FILES.has(f));
+    // 沒有考卷檔時不匯入 Exam（noUnusedLocals，同下面 bank 的 PracticeGroupFile）。
+    lines.push(`import type { ${examFiles.length > 0 ? 'ExamIndex, Exam' : 'ExamIndex'} } from ${JSON.stringify(path.join(srcDir, 'exams'))};`);
     lines.push(`export const examIndex: ExamIndex = ${JSON.stringify(read('exams/index.json'))};`);
-    const examFiles = readdirSync(path.join(dataDir, 'exams')).filter((f) => f.endsWith('.json') && f !== 'index.json');
     for (const f of examFiles) lines.push(`export const exam_${ident(f)}: Exam = ${JSON.stringify(read(`exams/${f}`))};`);
     summary.push('試題索引', `${examFiles.length} 份考卷`);
+    // 級分對照（模擬考成績單用，src/data/scoreScales.ts）。build-data 一定會輸出；缺檔就讓檢查失敗，不要悄悄略過。
+    lines.push(`import type { ScoreScales } from ${JSON.stringify(path.join(srcDir, 'scoreScales'))};`);
+    lines.push(`export const scoreScales: ScoreScales = ${JSON.stringify(read('exams/score-scales.json'))};`);
+    summary.push('級分對照');
   }
   if (parts.includes('bank')) {
     // 還沒有題組時 build-data 不會建立 groups/ 目錄。

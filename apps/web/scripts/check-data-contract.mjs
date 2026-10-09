@@ -6,7 +6,8 @@
  *   npm run check:data -w @gsat/web     （先跑過 build:data）
  *
  * 做法（lib/data-contract.mjs）：把每個資料檔寫成「帶型別註記的 TypeScript 常數」再交給 tsc，
- * 比對的就是 UI 開發者 import 的那份型別。涵蓋 meta、單字、歷屆試題與題庫練習（bank/）。
+ * 比對的就是 UI 開發者 import 的那份型別。涵蓋 meta、單字、歷屆試題（含模擬考用的級分對照 exams/score-scales.json）、
+ * 題庫練習（bank/）與寫作練習（writing/）。
  * 題庫的部分另外有單元測試（lib/data-contract.test.ts）用範例輸出檢查，不必等完整建置。
  *
  * 約 15 秒，所以不放進 prebuild；改了 build-data.mjs 的輸出格式或 src/data/ 的型別時手動跑一次。

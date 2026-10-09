@@ -10,6 +10,7 @@
  *   data/exams/stats/word-frequency.json    每個條目在歷屆試題中的出現次數（tools/exam_stats.py 產生）
  *   data/exams/parsed/*.json                歷屆試題（gsat-exam/v1.1，規格見 docs/exam-json-schema.md）
  *   data/exams/manifest.json                官方檔案清單：把 sources 的本機路徑換成大考中心的官方網址
+ *   data/exams/gsat-spec.json               學測英文官方規格：111–115 的原得總分與級分對照表、五標、級分人數（模擬考換算級分用）
  *   data/bank/v1/{題型}/{難度}/*.json      AI 題庫（gsat-bank/v1，見 data/bank/README.md）；可以不存在
  *   data/bank/facts/{id}.json              題組引用的事實單（閱讀、混合題的「參考資料」從這裡來）
  *   （新增輸入路徑時，根目錄 vercel.json 的 ignoreCommand 要一起加，否則只改那個路徑的提交不會重新建置）
@@ -20,13 +21,20 @@
  *   vocab/L1…L6.json     各級完整條目（只留前端需要的欄位）
  *   exams/index.json     每份考卷的摘要
  *   exams/{id}.json      每份考卷的完整內容（去掉內部欄位與不能公開轉載的欄位）
+ *   exams/score-scales.json  111–115 英文科的級分對照表、五標與級分人數分布（模擬考成績單用，非官方換算的依據）；
+ *                        轉換與檢查規則在 scripts/lib/score-scales.mjs。它不是考卷：exams/ 底下只有它與 index.json
+ *                        不是 {id}.json（EXAM_DIR_NON_EXAM_FILES），D8 檢查、寫作索引與檔案大小統計都靠這個區分
  *   bank/index.json      題庫練習：已通過自動驗證（verified）的 AI 題組摘要；沒有題組時是空陣列
  *   bank/groups/{uid}@{version}.json  一個 AI 題組（題目＋解析＋中譯＋排除法表；不含生成與驗證細節）
  *                        挑選與輸出規則在 scripts/lib/bank-data.mjs
  *   writing/translation.json  寫作練習：每個中譯英題組的中文題目（不含官方譯文）
  *   writing/essay.json        寫作練習：每個作文題的說明、提示、圖的文字描述、字數要求與官方題本連結
  *
- * 前端對應的型別在 apps/web/src/data/vocab.ts、exams.ts、bank.ts、src/features/writing/data.ts；這裡改了輸出格式，那邊要一起改。
+ * 前端對應的型別在 apps/web/src/data/vocab.ts、exams.ts、scoreScales.ts、bank.ts、src/features/writing/data.ts；
+ * 這裡改了輸出格式，那邊要一起改（npm run check:data -w @gsat/web 會用 tsc 比對）。
+ *
+ * 另外檢查 PDF 字型（scripts/font-coverage.mjs）：試題裡的每個字元都要在 src/features/pdf/fonts/ 的字型子集裡有字形，
+ * 否則下載的考試格式 PDF 會出現方框；缺字時建置失敗，修法見 src/features/pdf/fonts/README.md。
  *
  * 為什麼在建置時轉檔，而不是讓前端直接讀 data/：
  *   - lexicon.json 有 22 MB，裡面大半是前端用不到的欄位（WordNet 上位詞、內部重要度特徵、來源旗標）；
@@ -44,7 +52,9 @@ import { existsSync, mkdirSync, readFileSync, readdirSync, renameSync, rmSync, w
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { gzipSync } from 'node:zlib';
+import { checkFontCoverage } from './font-coverage.mjs';
 import { BANK_DATA_SCRIPT, BankDataError, SKIP_REASON_LABELS, buildBankData, practiceGroupPath } from './lib/bank-data.mjs';
+import { SCORE_SCALES_SCRIPT, ScoreScalesError, buildScoreScales } from './lib/score-scales.mjs';
 
 // ---------------------------------------------------------------------------
 // 路徑：一律從這個檔案的位置推算，不依賴目前工作目錄。
@@ -62,6 +72,7 @@ const INPUTS = {
   wordFrequency: path.join(DATA_DIR, 'exams', 'stats', 'word-frequency.json'),
   examsDir: path.join(DATA_DIR, 'exams', 'parsed'),
   manifest: path.join(DATA_DIR, 'exams', 'manifest.json'),
+  gsatSpec: path.join(DATA_DIR, 'exams', 'gsat-spec.json'),
 };
 
 /**
@@ -114,6 +125,18 @@ const TRANSLATION_STRIPPED_FIELDS = ['answer', 'accepted_answers', 'answer_segme
 /** 官方譯文比對的最短長度：太短的片段（"Scientists are"）可能正常出現在別處，比對只會誤判。 */
 const OFFICIAL_TRANSLATION_MIN_MATCH = 20;
 
+/**
+ * 中譯英小題的 tags 裡不輸出的鍵：topic 是整理資料時用英文寫的題意摘要，常常直接抄官方譯文的片段
+ * （ref-102-b 中譯英1 的 topic 和官方譯文有連續 10 個字相同）。畫面用不到，乾脆不輸出。
+ */
+const TRANSLATION_STRIPPED_TAGS = ['topic'];
+
+/**
+ * 輸出的任何字串和官方譯文有這麼多個連續單字相同就算轉載（D8）。整句比對抓不到「改寫一兩個字、其餘照抄」的情況；
+ * 太短（4、5 個字）又會誤判 "it is important for us" 這類常見片語。
+ */
+const OFFICIAL_TRANSLATION_RUN_WORDS = 7;
+
 /** manifest 的 subkind → 畫面上的檔案名稱（manifest 的 label 各年寫法不一，參考試卷甚至只寫「英文」）。 */
 const OFFICIAL_FILE_LABELS = {
   paper: '試題（PDF）',
@@ -132,6 +155,14 @@ const OFFICIAL_FILE_LABELS = {
 };
 
 const EXAM_KIND_ORDER = { gsat: 0, ast: 1, reference: 2 };
+
+/** exams/ 底下不是單份考卷的檔案（列表、級分對照）；其餘 exams/*.json 都是 {id}.json。 */
+const EXAM_DIR_NON_EXAM_FILES = new Set(['index.json', 'score-scales.json']);
+
+/** 輸出路徑是不是單份考卷（exams/{id}.json）。 @param {string} rel */
+function isExamFile(rel) {
+  return rel.startsWith('exams/') && !EXAM_DIR_NON_EXAM_FILES.has(rel.slice('exams/'.length));
+}
 
 // ---------------------------------------------------------------------------
 // 輸入資料的型別（只描述這裡會讀的欄位；完整格式見 data/vocab/lexicon-report.md、docs/exam-json-schema.md）
@@ -540,6 +571,19 @@ function examDetail(raw, manifestByPath, file) {
   const target = exam === 'reference' && (paperItem?.target === 'gsat' || paperItem?.target === 'ast') ? paperItem.target : null;
   const verified = isObject(extraction) && typeof extraction.verified_by === 'string' && extraction.verified_by !== '';
 
+  // 中譯英的句型提示（tags.patterns）偶爾直接抄了官方譯文的片段當例句（ref-102-a 中譯英2）：
+  // 和官方譯文有連續 OFFICIAL_TRANSLATION_RUN_WORDS 個單字相同的提示不輸出（D8），並提醒資料維護者改寫。
+  const officialRuns = new Set(officialTranslationTexts(raw).flatMap((t) => wordRuns(t)));
+  /** @param {JsonObject} q @param {unknown} patterns */
+  const safePatterns = (q, patterns) => {
+    if (!Array.isArray(patterns)) return patterns;
+    return patterns.filter((p) => {
+      if (typeof p !== 'string' || !wordRuns(p).some((r) => officialRuns.has(r))) return true;
+      console.warn(`[build-data] 注意：${at} 第 ${String(q.label)} 題的句型提示含官方譯文片段，不輸出（請改寫資料）：${p.slice(0, 60)}`);
+      return false;
+    });
+  };
+
   const outSections = /** @type {JsonObject[]} */ (sections).map((s) => {
     const { stats, groups, ...sectionRest } = s;
     /** @type {JsonObject} */
@@ -557,7 +601,15 @@ function examDetail(raw, manifestByPath, file) {
         for (const [k, v] of Object.entries(q)) {
           if (STRIPPED_QUESTION_FIELDS.includes(k)) continue;
           if (q.mode === 'translation' && TRANSLATION_STRIPPED_FIELDS.includes(k)) continue;
-          outQ[k] = k === 'tags' && isObject(v) ? Object.fromEntries(Object.entries(v).filter(([tk]) => !isRawTagKey(tk))) : v;
+          const dropTag = (/** @type {string} */ tk) => isRawTagKey(tk) || (q.mode === 'translation' && TRANSLATION_STRIPPED_TAGS.includes(tk));
+          outQ[k] =
+            k === 'tags' && isObject(v)
+              ? Object.fromEntries(
+                  Object.entries(v)
+                    .filter(([tk]) => !dropTag(tk))
+                    .map(([tk, tv]) => [tk, q.mode === 'translation' && tk === 'patterns' ? safePatterns(q, tv) : tv]),
+                )
+              : v;
         }
         return outQ;
       }),
@@ -604,10 +656,52 @@ function officialTranslationTexts(raw) {
   return texts;
 }
 
+/** 英文單字（小寫；彎引號換直引號）。 @param {string} text */
+function englishWords(text) {
+  return text.toLowerCase().replace(/[’‘]/g, "'").match(/[a-z0-9]+(?:'[a-z]+)?/g) ?? [];
+}
+
+/** 連續 n 個單字的片段。 @param {string} text @param {number} n */
+function wordRuns(text, n = OFFICIAL_TRANSLATION_RUN_WORDS) {
+  const words = englishWords(text);
+  /** @type {string[]} */
+  const out = [];
+  for (let i = 0; i + n <= words.length; i += 1) out.push(words.slice(i, i + n).join(' '));
+  return out;
+}
+
+/** JSON 裡所有的字串值（不含鍵）。 @param {unknown} value @param {string[]} [out] */
+function stringValues(value, out = []) {
+  if (typeof value === 'string') out.push(value);
+  else if (Array.isArray(value)) for (const v of value) stringValues(v, out);
+  else if (isObject(value)) for (const v of Object.values(value)) stringValues(v, out);
+  return out;
+}
+
+/**
+ * 輸出的字串和官方譯文共用 OFFICIAL_TRANSLATION_RUN_WORDS 個以上連續單字的地方。
+ * @param {unknown} parsed  輸出的 JSON（物件）
+ * @param {string[]} officialTexts
+ * @returns {string[]}  命中的片段（含是哪一段輸出文字）
+ */
+function sharedWordRuns(parsed, officialTexts) {
+  const runs = new Set(officialTexts.flatMap((t) => wordRuns(t)));
+  if (runs.size === 0) return [];
+  /** @type {string[]} */
+  const hits = [];
+  for (const text of stringValues(parsed)) {
+    const hit = wordRuns(text).find((r) => runs.has(r));
+    if (hit) hits.push(`「${hit}」（${text.slice(0, 40)}…）`);
+  }
+  return hits;
+}
+
 /**
  * 輸出前的最後一道檢查（D8）：直接看「要寫出去的 JSON 字串」，不信任上面的刪除邏輯。
  *   1. 每份考卷的中譯英小題都不能有 TRANSLATION_STRIPPED_FIELDS 或 scoring_notes；
- *   2. 原始資料裡的官方譯文整句不能出現在輸出的任何地方（防止之後有人把譯文搬進 explanation、tags 之類的新欄位）。
+ *   2. 原始資料裡的官方譯文整句不能出現在輸出的任何地方（防止之後有人把譯文搬進 explanation、tags 之類的新欄位）；
+ *   3. 輸出的任何字串都不能和官方譯文有連續 OFFICIAL_TRANSLATION_RUN_WORDS 個單字相同（抓「改幾個字、其餘照抄」）。
+ *      考卷檔對照該份考卷的譯文；彙整型的檔案（寫作練習索引、題庫、試題索引）對照所有考卷的譯文。
  * 任何一項不符就讓建置失敗。
  * @param {Map<string, string>} files  相對路徑 → 輸出內容
  * @param {Map<string, string[]>} officialTextsById  考卷 id → 原始官方譯文
@@ -617,22 +711,27 @@ function assertNoOfficialTranslations(files, officialTextsById) {
   const problems = [];
   const allOfficialTexts = [...officialTextsById.values()].flat();
   for (const [rel, content] of files) {
-    if (rel.startsWith('writing/')) {
-      // 寫作練習的索引彙整了所有考卷，任何一份的官方譯文都不能出現；題目物件也不能帶受保護欄位。
+    if (!isExamFile(rel)) {
+      // 單字檔（vocab/）只有詞彙表與 Tatoeba 例句，又是最大的幾個檔案，不逐句比對。
+      if (rel.startsWith('vocab/')) continue;
+      // 彙整型的檔案（寫作練習的索引、題庫、試題索引、級分對照）：任何一份考卷的官方譯文都不能出現。
       for (const text of allOfficialTexts) {
         if (content.includes(JSON.stringify(text).slice(1, -1))) problems.push(`${rel} 含有官方中譯英參考譯文：「${text.slice(0, 40)}…」`);
       }
-      const banned = [...TRANSLATION_STRIPPED_FIELDS, ...STRIPPED_QUESTION_FIELDS];
-      const parsed = /** @type {JsonObject} */ (JSON.parse(content));
-      for (const set of Array.isArray(parsed.sets) ? /** @type {JsonObject[]} */ (parsed.sets) : []) {
-        for (const item of Array.isArray(set.items) ? /** @type {JsonObject[]} */ (set.items) : []) {
-          const found = banned.filter((k) => Object.hasOwn(item, k));
-          if (found.length > 0) problems.push(`${rel} ${String(set.exam_id)} 第 ${String(item.label)} 題含有不能公開的欄位：${found.join('、')}`);
+      for (const hit of sharedWordRuns(JSON.parse(content), allOfficialTexts)) problems.push(`${rel} 和官方中譯英參考譯文有連續 ${OFFICIAL_TRANSLATION_RUN_WORDS} 個單字相同：${hit}`);
+      if (rel.startsWith('writing/')) {
+        // 寫作練習的題目物件也不能帶受保護欄位。
+        const banned = [...TRANSLATION_STRIPPED_FIELDS, ...STRIPPED_QUESTION_FIELDS];
+        const parsed = /** @type {JsonObject} */ (JSON.parse(content));
+        for (const set of Array.isArray(parsed.sets) ? /** @type {JsonObject[]} */ (parsed.sets) : []) {
+          for (const item of Array.isArray(set.items) ? /** @type {JsonObject[]} */ (set.items) : []) {
+            const found = banned.filter((k) => Object.hasOwn(item, k));
+            if (found.length > 0) problems.push(`${rel} ${String(set.exam_id)} 第 ${String(item.label)} 題含有不能公開的欄位：${found.join('、')}`);
+          }
         }
       }
       continue;
     }
-    if (!rel.startsWith('exams/') || rel === 'exams/index.json') continue;
     const exam = /** @type {JsonObject} */ (JSON.parse(content));
     for (const s of /** @type {JsonObject[]} */ (exam.sections)) {
       for (const g of /** @type {JsonObject[]} */ (s.groups)) {
@@ -643,12 +742,14 @@ function assertNoOfficialTranslations(files, officialTextsById) {
         }
       }
     }
-    for (const text of officialTextsById.get(String(exam.id)) ?? []) {
+    const examOfficial = officialTextsById.get(String(exam.id)) ?? [];
+    for (const text of examOfficial) {
       // 輸出是 JSON.stringify 的結果，比對前把譯文用同樣方式跳脫（引號、反斜線）。
       if (content.includes(JSON.stringify(text).slice(1, -1))) {
         problems.push(`${rel} 含有官方中譯英參考譯文：「${text.slice(0, 40)}…」`);
       }
     }
+    for (const hit of sharedWordRuns(exam, examOfficial)) problems.push(`${rel} 和官方中譯英參考譯文有連續 ${OFFICIAL_TRANSLATION_RUN_WORDS} 個單字相同：${hit}`);
   }
   check(
     problems.length === 0,
@@ -725,6 +826,25 @@ function buildExams() {
       String(a.id).localeCompare(String(b.id)),
   );
   return { files, details, summaries, officialTextsById };
+}
+
+// ---------------------------------------------------------------------------
+// PDF 字型（考試格式 PDF 下載）
+// ---------------------------------------------------------------------------
+
+/**
+ * PDF 字型缺字檢查（scripts/font-coverage.mjs）：輸出的試題字串都要有字形。
+ * @param {ReturnType<typeof examDetail>[]} details
+ */
+function assertFontCoverage(details) {
+  const result = checkFontCoverage(details.map((d) => ({ id: String(d.id), exam: d })));
+  for (const w of result.warnings) console.warn(`[build-data] 注意：${w}`);
+  check(
+    result.errors.length === 0,
+    `PDF 字型缺字（下載的考試格式 PDF 會出現方框）：\n${result.errors.map((e) => `  - ${e}`).join('\n')}\n` +
+      '修法：照 apps/web/src/features/pdf/fonts/README.md 重跑 scripts/fonts/subset_fonts.py（需要 Python 與 fonttools，只在開發機上跑）。',
+  );
+  return result.stats;
 }
 
 // ---------------------------------------------------------------------------
@@ -832,13 +952,17 @@ function main() {
 
   const vocab = buildVocab();
   const exams = buildExams();
+  // 級分對照（模擬考成績單）：轉換與檢查規則在 scripts/lib/score-scales.mjs。
+  const scoreScales = buildScoreScales(readJson(INPUTS.gsatSpec), { label: relative(INPUTS.gsatSpec) });
   const bank = buildBankData(BANK_DIR, { relative });
   const version = contentVersion([
     SCRIPT_PATH,
     BANK_DATA_SCRIPT,
+    SCORE_SCALES_SCRIPT,
     INPUTS.lexicon,
     INPUTS.wordFrequency,
     INPUTS.manifest,
+    INPUTS.gsatSpec,
     ...exams.files,
     ...bank.inputs,
   ]);
@@ -847,12 +971,14 @@ function main() {
   for (const [level, entries] of vocab.byLevel) emit(`vocab/L${level}.json`, { version, level, count: entries.length, entries });
   emit('exams/index.json', { version, count: exams.summaries.length, exams: exams.summaries });
   for (const d of exams.details) emit(`exams/${d.id}.json`, d);
+  emit('exams/score-scales.json', { version, ...scoreScales });
   emit('bank/index.json', { version, count: bank.entries.length, groups: bank.entries });
   for (const g of bank.groups) emit(practiceGroupPath(g), g);
   const writing = buildWriting(exams.details, exams.summaries);
   emit('writing/translation.json', { version, count: writing.translationSets.length, sets: writing.translationSets });
   emit('writing/essay.json', { version, count: writing.essayPrompts.length, prompts: writing.essayPrompts });
   assertNoOfficialTranslations(outputs, exams.officialTextsById);
+  const fontStats = assertFontCoverage(exams.details);
 
   /** @type {Record<string, { bytes: number, gzip_bytes: number }>} */
   const fileSizes = {};
@@ -900,16 +1026,18 @@ function main() {
     ['vocab/index.json', fileSizes['vocab/index.json']],
     ...VOCAB_LEVELS.map((lv) => [`vocab/L${lv}.json`, fileSizes[`vocab/L${lv}.json`]]),
     ['exams/index.json', fileSizes['exams/index.json']],
+    ['exams/score-scales.json', fileSizes['exams/score-scales.json']],
     ['bank/index.json', fileSizes['bank/index.json']],
     ['writing/translation.json', fileSizes['writing/translation.json']],
     ['writing/essay.json', fileSizes['writing/essay.json']],
   ];
-  const examFiles = sum((rel) => rel.startsWith('exams/') && rel !== 'exams/index.json');
+  const examFiles = sum(isExamFile);
   console.log(`[build-data] 版本 ${version}：單字 ${vocab.index.length} 筆、試題 ${exams.summaries.length} 份（${questionCount} 題），輸出到 ${relative(OUT_DIR)}/`);
+  console.log(`[build-data] PDF 字型檢查通過：${fontStats.chars} 種字元都有字形；級分對照 ${scoreScales.years.map((y) => y.year).join('、')} 學年度`);
   for (const [rel, s] of rows) {
-    if (typeof rel === 'string' && s && typeof s === 'object') console.log(`  ${rel.padEnd(18)} ${formatBytes(s.bytes).padStart(10)}  gzip ${formatBytes(s.gzip_bytes).padStart(9)}`);
+    if (typeof rel === 'string' && s && typeof s === 'object') console.log(`  ${rel.padEnd(24)} ${formatBytes(s.bytes).padStart(10)}  gzip ${formatBytes(s.gzip_bytes).padStart(9)}`);
   }
-  console.log(`  ${'exams/{id}.json'.padEnd(18)} ${formatBytes(examFiles.bytes).padStart(10)}  gzip ${formatBytes(examFiles.gzip).padStart(9)}（${exams.details.length} 個檔案合計）`);
+  console.log(`  ${'exams/{id}.json'.padEnd(24)} ${formatBytes(examFiles.bytes).padStart(10)}  gzip ${formatBytes(examFiles.gzip).padStart(9)}（${exams.details.length} 個檔案合計）`);
   logBank(bank);
   console.log(`[build-data] 完成，用時 ${((Date.now() - started) / 1000).toFixed(1)} 秒`);
 }
@@ -933,7 +1061,7 @@ function logBank(bank) {
 try {
   main();
 } catch (err) {
-  if (err instanceof BuildDataError || err instanceof BankDataError) {
+  if (err instanceof BuildDataError || err instanceof BankDataError || err instanceof ScoreScalesError) {
     console.error(`[build-data] 錯誤：${err.message}`);
     process.exit(1);
   }

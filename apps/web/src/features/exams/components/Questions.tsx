@@ -11,6 +11,7 @@ import type { OptionMap, Question, QuestionGroup } from '../../../data/exams';
 import { useAttemptStore, useAttemptSelector, useQuestionState } from '../AttemptContext';
 import { useExam } from '../ExamContext';
 import { useQuestionExtras } from '../QuestionExtras';
+import { useAiGradingOpen } from './AiGrading';
 import { countParagraphs, countWords, questionErratum, wordCountLabel } from '../labels';
 import { isBlankCell } from '../paper';
 import { questionRangeTitle, questionTitle, resolveBlankQuestion } from '../richText';
@@ -25,12 +26,25 @@ export function questionAnchorId(label: string): string {
 
 export const cardClass = 'rounded-2xl border border-line bg-surface p-4 scroll-mt-32';
 
-export function QuestionHeading({ title, points, extra }: { title: string; points: number | null; extra?: ReactNode }) {
+export function QuestionHeading({
+  title,
+  points,
+  extra,
+  labels,
+}: {
+  title: string;
+  points: number | null;
+  extra?: ReactNode;
+  /** 這個區塊的題號；有提供時，題號旁畫 QuestionExtras.renderHeadingAccessory 的附加元件（模擬考的「標記」）。 */
+  labels?: readonly string[];
+}) {
+  const accessory = useQuestionExtras()?.renderHeadingAccessory;
   return (
     <span className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
       <span className="font-semibold text-primary">{title}</span>
       {points !== null && <span className="text-xs text-muted">{formatPoints(points)} 分</span>}
       {extra}
+      {accessory && labels && labels.length > 0 && accessory(labels)}
     </span>
   );
 }
@@ -114,6 +128,7 @@ export function ChoiceQuestionBlock({
           <QuestionHeading
             title={questionTitle(q.label)}
             points={q.points}
+            labels={[q.label]}
             extra={multi ? <span className="rounded-full bg-primary-soft px-2 text-xs font-semibold text-primary">多選</span> : null}
           />
           {q.stem && <RichText text={q.stem} variant="inline" className="mt-1 block break-words" />}
@@ -242,7 +257,7 @@ export function FillClusterBlock({ stem, questions }: { stem: string; questions:
   const points = questions.reduce((acc, q) => acc + (q.points ?? 0), 0);
   return (
     <div id={questionAnchorId(labels[0] ?? '')} className={cardClass}>
-      <QuestionHeading title={questionRangeTitle(labels)} points={points} />
+      <QuestionHeading title={questionRangeTitle(labels)} points={points} labels={labels} />
       <div className="mt-2 break-words leading-loose">
         <RichText
           text={stem}
@@ -271,9 +286,10 @@ export function TextAnswerBlock({ q, multiline }: { q: Question; multiline: bool
   const id = useId();
   const value = typeof answer === 'string' ? answer : '';
   const translation = q.mode === 'translation';
+  const aiOpen = useAiGradingOpen();
   return (
     <div id={questionAnchorId(q.label)} className={cardClass}>
-      <QuestionHeading title={questionTitle(q.label)} points={q.points} />
+      <QuestionHeading title={questionTitle(q.label)} points={q.points} labels={[q.label]} />
       {q.stem && (
         <div className="mt-2 break-words">
           <RichText text={q.stem} />
@@ -290,7 +306,7 @@ export function TextAnswerBlock({ q, multiline }: { q: Question; multiline: bool
       {q.mode === 'fill_in_blank' && <MultiWordWarning questions={[q]} />}
       <p className="mt-2 text-xs text-muted">
         {translation
-          ? '答案只存在這台裝置；AI 批改即將推出。'
+          ? `答案只存在這台裝置；${aiOpen ? '想請 AI 批改，可以到「寫作練習」作答送出。' : 'AI 批改即將推出。'}`
           : extras?.openAnswerNote
             ? extras.openAnswerNote(q)
             : '非選擇題不自動計分，看參考答案後自行對照。'}
@@ -315,9 +331,10 @@ export function CompositionBlock({ q }: { q: Question }) {
   const paragraphs = countParagraphs(value);
   const requirement = wordCountLabel(q.tags.word_count);
   const minWords = q.tags.word_count?.min ?? q.tags.word_count?.approx ?? null;
+  const aiOpen = useAiGradingOpen();
   return (
     <div id={questionAnchorId(q.label)} className={cardClass}>
-      <QuestionHeading title={questionTitle(q.label)} points={q.points} />
+      <QuestionHeading title={questionTitle(q.label)} points={q.points} labels={[q.label]} />
       {q.stem && (
         <div className="mt-2 break-words">
           <RichText text={q.stem} />
@@ -344,7 +361,9 @@ export function CompositionBlock({ q }: { q: Question }) {
       <p id={countId} className="mt-1 text-sm text-muted tabular-nums">
         <span className={minWords !== null && words < minWords ? 'text-bad' : ''}>{words} 個單詞</span>・{paragraphs} 段
       </p>
-      <p className="mt-2 rounded-lg bg-primary-soft px-3 py-2 text-sm text-primary">AI 批改即將推出。作文目前只存在這台裝置，不會上傳。</p>
+      <p className="mt-2 rounded-lg bg-primary-soft px-3 py-2 text-sm text-primary">
+        {aiOpen ? '作文只存在這台裝置，不會上傳；想請 AI 批改，可以到「寫作練習」作答送出。' : 'AI 批改即將推出。作文目前只存在這台裝置，不會上傳。'}
+      </p>
       <RevealButton labels={[q.label]}>看說明</RevealButton>
       {showFeedback && <OpenFeedback q={q} answer={answer} />}
     </div>
@@ -363,7 +382,7 @@ export function TableAnswerBlock({ q, group }: { q: Question; group: QuestionGro
   let blankIndex = 0;
   return (
     <div id={questionAnchorId(q.label)} className={cardClass}>
-      <QuestionHeading title={questionTitle(q.label)} points={q.points} />
+      <QuestionHeading title={questionTitle(q.label)} points={q.points} labels={[q.label]} />
       {q.stem && (
         <div className="mt-2 break-words">
           <RichText text={q.stem} />

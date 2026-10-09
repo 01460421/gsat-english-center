@@ -156,13 +156,18 @@ export function SectionNav() {
   );
 }
 
-export function ExamPaper() {
+/**
+ * 整份考卷，或只畫其中幾個大題（sectionIds；模擬考一次顯示一個大題，用來分段計時）。
+ * 部分標題只在該部分的第一個大題出現時顯示。
+ */
+export function ExamPaper({ sectionIds }: { sectionIds?: readonly string[] } = {}) {
   const exam = useExam();
   // 題本的「部分」標題（第壹部分：選擇題…）印在該部分第一個大題之前。
   const partBySection = new Map((exam.parts ?? []).map((p) => [p.sections[0], p] as const));
+  const sections = sectionIds ? exam.sections.filter((s) => sectionIds.includes(s.id)) : exam.sections;
   return (
     <div className="space-y-10">
-      {exam.sections.map((section) => {
+      {sections.map((section) => {
         const part = partBySection.get(section.id);
         return (
           <div key={section.id} className="space-y-4">

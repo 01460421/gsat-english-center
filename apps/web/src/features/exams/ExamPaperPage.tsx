@@ -9,6 +9,7 @@ import { Link, useLocation, useParams } from 'react-router';
 import { DataLoadError, forgetFailedLoads } from '../../data/client';
 import { examShortName, loadExam, type Exam } from '../../data/exams';
 import { APP_NAME } from '../../modules';
+import { ExamPdfDownload } from '../pdf/ExamPdfDownload';
 import { AttemptContext, useAttemptSelector } from './AttemptContext';
 import { AttemptStore, clearAttempt, loadAttempt, type AttemptMode } from './attempt';
 import { ExamContext } from './ExamContext';
@@ -110,6 +111,7 @@ function ActiveSession({ exam, store, resumed, onClear }: { exam: Exam; store: A
       )}
       <ExamToolbar exam={exam} />
       {submittedAt !== null && <ResultSummary exam={exam} headingRef={resultHeadingRef} onRestart={onClear} />}
+      {submittedAt !== null && <ExamPdfDownload exam={exam} defaultIncludeAnswerKey />}
       <SectionNav />
       <ExamPaper />
       <div className="flex justify-end">{submittedAt === null && <ClearControl onClear={onClear} />}</div>
@@ -142,6 +144,8 @@ function ExamSession({ exam }: { exam: Exam }) {
           <h2 className="mb-3 font-semibold">大題結構</h2>
           <SectionStructure exam={exam} />
         </section>
+        {/* 考試格式 PDF（docs/design/mock-exam-pdf.md）；PDF_DOWNLOAD_ENABLED 為 false 時不顯示。 */}
+        <ExamPdfDownload exam={exam} />
         <ExamSourceNote exam={exam} />
       </div>
     );

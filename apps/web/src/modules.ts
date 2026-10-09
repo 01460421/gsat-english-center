@@ -194,10 +194,10 @@ export const PAGES = [
     path: '/mock',
     title: '模擬考',
     navLabel: '模擬考',
-    summary: '依現行學測題型與配分組卷，100 分鐘計時作答並換算級分。',
+    summary: '111–115 學測與 115 參考試卷整份模考：100 分鐘倒數、級分換算（非官方）與五標對照，也能下載考試格式 PDF。',
     group: 'exam',
     icon: 'mock',
-    status: 'dev',
+    status: 'ready',
     isStudyModule: true,
   },
   {
