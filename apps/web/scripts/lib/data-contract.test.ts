@@ -2,7 +2,7 @@
 /**
  * 資料契約檢查（lib/data-contract.mjs，check-data-contract.mjs 的核心）的題庫部分：
  * 範例題庫的建置輸出（tests/fixtures/bank-public，和 bank-data.test.ts 的 golden 同一份）要符合 src/data/bank.ts 的型別；
- * 欄位值不在型別允許的範圍（難度拼錯、還沒有練習介面的題型、多了型別沒有的欄位）時 tsc 要失敗。
+ * 欄位值不在型別允許的範圍（難度拼錯、還沒有練習介面的題型、圖表類型拼錯、多了型別沒有的欄位）時 tsc 要失敗。
  * 不必先跑完整的 build:data（單字與歷屆試題的部分由 npm run check:data 檢查實際建置結果）。
  */
 import { cpSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
@@ -47,7 +47,7 @@ describe('題庫輸出的型別契約', () => {
     const result = check(GOLDEN, 'ok');
     expect(result.output).toBe('');
     expect(result.ok).toBe(true);
-    expect(result.summary).toEqual(['題庫索引', '4 個 AI 題組']);
+    expect(result.summary).toEqual(['題庫索引', '6 個 AI 題組']);
   }, 60_000);
 
   it('沒有任何題組（空的 index、沒有 groups 目錄）也符合', () => {
@@ -67,7 +67,13 @@ describe('題庫輸出的型別契約', () => {
         if (groups[0]) groups[0]['tier'] = 'expert';
       });
       editJson(path.join(d, 'bank', 'groups', 'ai.wb.0a1b2c@1.json'), (g) => {
-        g['section_type'] = 'reading';
+        g['section_type'] = 'translation';
+      });
+      // 圖表類型拼錯（ChartSpec 的 type 只有 bar／line／stacked_bar／pie）。
+      editJson(path.join(d, 'bank', 'groups', 'ai.rd.0c1d2e@1.json'), (g) => {
+        const figures = (g['group'] as Record<string, unknown>)['figures'] as Record<string, Record<string, unknown>>[];
+        const chart = figures[0]?.['chart'];
+        if (chart) chart['type'] = 'scatter';
       });
       // 多了型別沒有的欄位（例如不該公開的生成紀錄）也要擋。
       editJson(path.join(d, 'bank', 'groups', 'ai.cz.2b3c4d@1.json'), (g) => {
@@ -77,7 +83,8 @@ describe('題庫輸出的型別契約', () => {
     const result = check(dir, 'bad');
     expect(result.ok).toBe(false);
     expect(result.output).toMatch(/"expert"/);
-    expect(result.output).toMatch(/"reading"/);
+    expect(result.output).toMatch(/"translation"/);
+    expect(result.output).toMatch(/"scatter"/);
     expect(result.output).toMatch(/generation/);
   }, 60_000);
 });

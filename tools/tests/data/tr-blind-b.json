@@ -1,0 +1,41 @@
+{
+  "schema": "gsat-bank-blind-translation/v1",
+  "uid": "ai.tr.0b1c2d",
+  "version": 1,
+  "solver": "B",
+  "reviewer": "claude-sonnet-5-5",
+  "session_id": "session_tr_blind_b_example",
+  "created_at": "2026-10-09T08:10:00Z",
+  "answers": {
+    "1": {
+      "translation": "Recently, many students have begun to bring their own water bottles to school.",
+      "confidence": "high",
+      "explanation_zh": "「已經開始」用完成式 have begun；「自己帶」是 bring their own。"
+    },
+    "2": {
+      "translation": "In order to cut down on plastic waste, the school shop has also stopped selling bottled water.",
+      "confidence": "medium",
+      "explanation_zh": "「為了」用 in order to；「不再賣」寫成 has stopped selling。"
+    }
+  },
+  "review": {
+    "1": {
+      "used_patterns": ["PERF"],
+      "used_target_words": ["recent", "start", "bring", "bottle", "school"],
+      "within_accepted": true,
+      "closest_reference": 0,
+      "reference_check": "pass",
+      "parts_check": "pass",
+      "issues_zh": []
+    },
+    "2": {
+      "used_patterns": ["PURP"],
+      "used_target_words": ["reduce", "plastic", "waste", "store", "no longer", "bottled"],
+      "within_accepted": true,
+      "closest_reference": 1,
+      "reference_check": "pass",
+      "parts_check": "pass",
+      "issues_zh": []
+    }
+  }
+}

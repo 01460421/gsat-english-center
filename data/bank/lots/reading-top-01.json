@@ -1,0 +1,421 @@
+{
+  "schema": "gsat-bank-lot/v1",
+  "lot": "reading-top-01",
+  "section_type": "reading",
+  "tier": "top",
+  "label_zh": "閱讀測驗‧超越頂標（第 1 批）",
+  "created_on": "2026-10-09",
+  "count": 8,
+  "questions_per_group": 4,
+  "format_version": "reading-4",
+  "uid_prefix": "ai.rd.",
+  "path": "data/bank/v1/reading/top/",
+  "spec_id": "reading-top@2026-10-08",
+  "spec_file": "data/exams/generation-spec/reading.json",
+  "spec_tier_key": "beyond_top",
+  "spec_status": "draft：由 670 題有官方統計的閱讀題（現制 60、舊制學測 317、指考 293）推得；圖表、表格、多文本是產品延伸，難度未校準；上線後依站內作答資料校正（SPEC §3.6、本檔 RD-CAL-*）",
+  "form_quota": {
+    "continuous": 4,
+    "chart": 2,
+    "table": 1,
+    "multi_text": 1,
+    "basis": "ROADMAP §9.2（閱讀每個難度 8 組：長文 4、圖表 2、表格 1、多文本 1）",
+    "how_counted_zh": "依題組判定（validate_bank.reading_form）：figures 有 chart 物件＝chart；有 kind=table 的表格＝table；passage_parts 兩篇以上＝multi_text；其他＝continuous（看文選圖的配圖不改變分類）。圖表題與表格題也要有選文，所以 tags.text_format 依 v1.1 規則是 mixed",
+    "note_zh": "出題規格書 passage_overrides.text_format_allowed 只列歷屆出現過的形式；圖表、表格、多文本是產品延伸（05-reading.md §2.4，難度未校準），第一批依 ROADMAP 的配額出題",
+    "chart_types": [
+      "bar",
+      "line",
+      "stacked_bar",
+      "pie"
+    ]
+  },
+  "topic_quota": {
+    "origins_evolution": 3,
+    "science_health": 2,
+    "culture_history": 2,
+    "society_issues": 1,
+    "labels_zh": {
+      "origins_evolution": "起源與演變",
+      "science_health": "科普與健康",
+      "culture_history": "文化與歷史",
+      "society_issues": "社會與議題"
+    },
+    "basis": "08 §6.1（每 8 組：起源與演變 3、科普與健康 2–3、文化與歷史 2、社會與議題 1），依組數等比例取整；取材一律從 SDGs 的具體事件或物件切入（SPEC §6.6）"
+  },
+  "sdg_quota": {
+    "focus_sdgs": [
+      3,
+      12,
+      14,
+      15
+    ],
+    "min_groups_with_focus_sdg": 1,
+    "min_share_with_any_sdg": 0.5,
+    "tag": "group.tags.sdgs（SDG 編號陣列）",
+    "rule_zh": "每批至少 1 篇 SDG 3／12／14／15 的具體事件切入（SPEC §5.2 步驟 1、ROADMAP §9.3）；一批中 ≥50% 的篇有 SDG（出題規格書 RD-SDG-01）；寫成具體事件或物件（例如「冰島如何利用整條鱈魚」），不寫成政策宣導"
+  },
+  "answer_letter_share": [
+    0.2,
+    0.3
+  ],
+  "avoid": {
+    "basis": "data/exams/parsed 的 gsat-111、gsat-112、gsat-113、gsat-114、gsat-115、ref-115 同一大題（reading）的正解選項句（避免改寫成同義的正解）與主題",
+    "answer_words": [],
+    "answer_sentences": [
+      "［圖］一名站立的男子，身上披裹一整塊布（在腰間繫住），頸戴串珠項圈、頭戴飾帶、腳踝有串珠環並穿涼鞋；右手持一支長矛，左手持一面繪有幾何圖案的橢圓形大盾牌。",
+      "They have been urged by governments to leave behind their traditions.",
+      "Colorful glass jewelry became popular after the 19th century.",
+      "To emphasize that weapons are an inseparable part of a Maasai warrior’s outfit.",
+      "Their limitations.",
+      "dcab",
+      "The inspiration came from the inventor’s wartime experience.",
+      "a, c, d, f",
+      "What they may offer in medical advancements.",
+      "Lowering GABA levels in the brain can stimulate retina regrowth.",
+      "Reproduced.",
+      "Understanding regeneration in zebrafish may allow humans to regrow their organs.",
+      "How was the word “hula-hooping” derived?",
+      "Ancient Greeks used it as a tool for workout.",
+      "Kicking.",
+      "reed, grapevine, plastic, metal",
+      "To protect tea trees.",
+      "They have difficulties moving around the uneven fields.",
+      "Elephants are unwilling to leave their injured members behind in the tea gardens.",
+      "To create a win-win situation for elephants and tea farms.",
+      "Asian merchants arrived centuries before the African settlers.",
+      "［圖］地圖上圓圈 B 的位置：非洲東岸中段的印度洋沿岸，馬達加斯加島西北方",
+      "Cloves, vanilla, and cinnamon are common spices in Zanzibar.",
+      "archipelago, islands, jewels, destination",
+      "［圖］一隻手的手指把兩片粗糙的布面扣帶撕開（魔鬼氈／黏扣帶）；左下附布面上密集小鉤的特寫小圖。",
+      "A sudden inspiration.",
+      "Cotton was not durable enough to be used as its materials.",
+      "Civil engineering.",
+      "Why Moran started painting Yellowstone.",
+      "The place was severely polluted.",
+      "Americans knew little about its beauty before the 1870s.",
+      "Color photos were not common when Moran started painting Yellowstone.",
+      "To make the most of marine resources.",
+      "Oddsson’s skin transplant.",
+      "Cross-field collaboration has proved to be very fruitful for 100% Fish.",
+      "Paragraph 3.",
+      "The evolution of traffic control systems.",
+      "［圖］裝飾華麗的柱子頂端有一個哥德式尖頂燈罩（燈罩上有一顆圓形燈），燈罩下方左右各伸出一支末端展開的臂板，兩支臂板分別向左下、右下方斜伸。",
+      "Future vehicles may not need traffic lights to cross an intersection.",
+      "Psychology.",
+      "Gaining knowledge through observation.",
+      "Watching horror movies may have a long-term effect on personality.",
+      "By showing opposing views of an issue.",
+      "To argue against the assumption that Russians are born drinkers.",
+      "Vodka production in Russia started in the 15th century.",
+      "The state monopoly.",
+      "By providing further facts.",
+      "A challenging voyage to Antarctica.",
+      "Added fuel to the fire.",
+      "His journey lasted more than two years.",
+      "［圖］地圖航線：由 South Georgia 沿威德爾海東側南下，沿南極洲海岸向西，再北上，終止於威德爾海西北部、南極半島東側的一點；航線未到達 Elephant Island。",
+      "Why is the spiral staircase popular in modern times?",
+      "Stairs.",
+      "stone → iron → steel → glass",
+      "The clockwise design favored right-handed castle defenders.",
+      "How map orientation evolved over time.",
+      "East-orientation of maps.",
+      "A temporary state.",
+      "Old Islamic maps put south at the top for religious purposes.",
+      "Roman.",
+      "Because of the noise it makes.",
+      "The sandals American soldiers brought home from Japan later became modern flip-flops.",
+      "Poor quality.",
+      "A special profession.",
+      "The weather conditions.",
+      "When a ship is waiting to enter the port.",
+      "By summarizing the main points."
+    ],
+    "topics": [
+      "Iceland’s 100% Fish project and full utilization of cod",
+      "Shackleton’s Endurance expedition and the 2022 discovery of the shipwreck",
+      "Thomas Moran’s paintings and the establishment of Yellowstone National Park",
+      "Zanzibar’s history as a trading hub on the Spice Route",
+      "benefits and risks of horror movies",
+      "history and design of spiral staircases",
+      "history of the flip-flop",
+      "marine pilots",
+      "tea plantations in Assam endangering Asian elephants and elephant-friendly tea certification",
+      "the Maasai people: warriors, clothing, and beadwork",
+      "the history of alcohol consumption in Russia",
+      "the history of the hula hoop",
+      "the history of traffic lights",
+      "the invention and development of the hard hat",
+      "the invention of Velcro",
+      "why north is at the top of maps: history of map orientation",
+      "zebrafish retina regeneration and the GABA research",
+      "zebrafish retina regeneration research and possible cures for blindness"
+    ]
+  },
+  "passage_band": {
+    "basis": "SPEC §3.4＋出題規格書 passage_overrides（words、cov_L1_4（取代 SPEC 的區間）、cov_L1_6（取代 SPEC 的區間）、offlist（取代 SPEC 的區間）、beyond_l4_ratio、mean_sent_len（取代 SPEC 的區間））",
+    "spec_3_4": {
+      "word_count": {
+        "min": 340,
+        "max": 420
+      },
+      "coverage_l1_4": {
+        "min": 0.86,
+        "max": 0.91
+      },
+      "coverage_l1_6": {
+        "min": 0.92,
+        "max": null
+      },
+      "offlist_ratio": {
+        "min": null,
+        "max": 0.07
+      },
+      "avg_sentence_length": {
+        "min": 18,
+        "max": 25
+      }
+    },
+    "overrides_note": "比現制中位數長、句子長；現制 7/15 篇全項符合；400 字是上限，不另設更長",
+    "word_count": {
+      "min": 320,
+      "max": 400
+    },
+    "coverage_l1_4": {
+      "min": 0.85,
+      "max": 1
+    },
+    "coverage_l1_6": {
+      "min": 0.87,
+      "max": 1
+    },
+    "offlist_ratio": {
+      "min": 0,
+      "max": 0.125
+    },
+    "avg_sentence_length": {
+      "min": 16.0,
+      "max": 24.0
+    },
+    "beyond_l4_ratio": {
+      "min": 0,
+      "max": 0.065
+    },
+    "advisory": {
+      "paragraphs": {
+        "min": 3,
+        "max": 6
+      },
+      "sentences": {
+        "min": 14,
+        "max": 24
+      },
+      "max_sent_len": {
+        "min": 0,
+        "max": 45
+      },
+      "fk_grade": {
+        "min": 9.5,
+        "max": 14.0
+      },
+      "long_word_ratio": {
+        "min": 0.24,
+        "max": 0.36
+      },
+      "distinct_L5_6": {
+        "min": 0,
+        "max": 19
+      },
+      "note_zh": "出題規格書 warning 級的篇章指標（RD-PAS-02／03），text_metrics 不檢查，生成時參考"
+    },
+    "genre_allowed": [
+      "expository",
+      "news",
+      "opinion",
+      "biography",
+      "narrative"
+    ],
+    "text_format_allowed": [
+      "continuous",
+      "mixed(map_route)",
+      "chart",
+      "multi_text"
+    ]
+  },
+  "item_rules": {
+    "summary_zh": "推論、目的或態度、事實與意見、圖表整合合計 ≥2；≥1 題要整合全文或跨文本",
+    "item_types": {
+      "inference_purpose_attitude_fact_chart": {
+        "min": 2,
+        "max": null
+      }
+    },
+    "multi_sentence_items_min": 1,
+    "whole_text_items_min": 1,
+    "evidence_single_sentence": false
+  },
+  "targets": {
+    "question_types_per_4": {
+      "reference_near_competitor_or_word_set": [
+        0,
+        1
+      ],
+      "structure_development_or_conclusion": [
+        0,
+        1
+      ],
+      "chart_spatial_temporal_integration": [
+        0,
+        1
+      ],
+      "inference_mechanism": [
+        0,
+        1
+      ],
+      "detail_near_miss": [
+        1,
+        2
+      ],
+      "advanced_item": [
+        0,
+        1
+      ]
+    },
+    "evidence_rule": "正解需要跨段整合、排除一個「部分成立」或「更近」的候選；AST 型上緣：論證文立場、文中數字換算、題幹極性（LEAST／LAST CHOICE）",
+    "key_rules": {
+      "verbatim_ngram_max": 3,
+      "paraphrase_required": true,
+      "unique_answer_by_blind_solvers": true,
+      "D1_min": 0.1
+    },
+    "distractor_rules": {
+      "codes_preferred": [
+        "NA（同數同類、距離更近的名詞）",
+        "TN／TI（部分成立的描述）",
+        "VS（把兩段事件混在一起的圖）",
+        "DS 近似錯（oldest surviving vs first）",
+        "OP（與常識一致但與原文相反，ast-96-49）",
+        "LS／SF（assurance→insurance、trusting→trustworthy）"
+      ],
+      "required_strong_distractors": [
+        1,
+        2
+      ],
+      "upper_pull_target": [
+        0.2,
+        0.4
+      ],
+      "key_upper_target": [
+        0.5,
+        0.7
+      ]
+    },
+    "item_recipes_by_type": {
+      "main_idea": "正解是抽象或評價性概括；誘答之一捕捉大多數段落（TN）或範圍過大（OG）。指考例 ast-104-51（P .28）、ast-102-40（P .37）",
+      "detail": "「哪個問題文中有答案」配近似錯（115-39）；原句搬入選項但改掉限定詞（111-36 C）；需換算的數字（gsat-92-53、gsat-94-50）",
+      "inference": "由機制描述推結果（115-42 順時針→利於右手防守者）；誘答與原文局部相反（OP）",
+      "vocab_in_context": "常用字的少見義，誘答是常見義（指考 ast-94-49 upset、學測 95-50 conduct、106-43 venture P .29）",
+      "reference": "同句或前句有更近的同數同類名詞（115-40 P .38；113-44 P .27 帶 challenge）；或指稱同一事物的詞組分散全文（112-46 P .43）",
+      "purpose_tone": "論證文的態度與全文目的（指考 ast-95-53 P .28、ast-96-56 P .29；學測 95-41「推銷書」對「教你減壓」P .31）",
+      "structure": "問發展方式或結尾方式，兩個描述都部分成立（114-42 P .39、114-46 P .40）",
+      "chart_reading": "位置或路線要整合 2 段以上的資訊，誘答把兩段事件合在一起（115-38 P .27、112-44 P .45）",
+      "cross_text": "整合兩則的立場或證據（無閱讀官方題，參考混合題多選）"
+    },
+    "recipe": [
+      "指涉：讓被問的代名詞與先行詞之間出現同數同類的名詞（115-40 them：defenders、attackers）；或問「哪一組詞指同一事物」，候選詞分散全文（112-46）",
+      "結構：問發展方式或結尾方式，兩個描述都部分成立（114-42 cause and effect 對 opposing views；114-46 summarizing 對 further facts），正解要看整篇比重",
+      "讀圖：路線或位置要整合 2 段以上的移動資訊，誘答圖把兩段事件畫在一起（115-38 A 吸走高分組 .41）或放在主題聯想的位置（112-44 C）",
+      "細節近似錯：「哪個問題文中有答案」配一個看似有答的問題（115-39：最古老現存 vs 最早建造）；或把原句搬進選項但改掉時間限定（111-36 C）",
+      "上緣（AST 型）：論證文的立場與態度（ast-95 s5g3 4 題 P .18–.28）、需要換算的數字（gsat-92-53、gsat-94-50）、LEAST／LAST CHOICE 題幹（ast-92-49、gsat-99-41）",
+      "每題都要能用文中一句話說明誘答為何錯；盲解代理全部答對"
+    ],
+    "pitfalls": [
+      "只用冷僻主題字製造難度：現制詞義題目標全是表外字或比喻（6/6），難度仍由選項決定；目標字級別與 P 無關（學測 ρ = +.09）",
+      "寫出雙答案：高分組選某誘答不少於正解的 8 題中，舊制 99-49、指考 109-48 帶 low_upper_discrimination 旗標，不能當錨點",
+      "靠絕對字當誘答：OG 在 94 題超越頂標中只有 5 題是最強誤選，現制正解 1/55 含絕對字",
+      "整篇都用超越頂標寫法：現制 15 篇只有 1 篇（115 第 2 篇）有 3 題超越頂標，模擬卷每卷 1–4 題"
+    ],
+    "ast_like_upper_edge": {
+      "opinion_passages_ast": {
+        "passages": 4,
+        "P_by_passage": {
+          "ast-92 s5g3": 0.396,
+          "ast-95 s5g3": 0.245,
+          "ast-100 s5g2": 0.61,
+          "ast-101 s5g2": 0.58
+        }
+      },
+      "numeric_reasoning": [
+        {
+          "exam": "gsat-92",
+          "no": 53,
+          "P": 0.24
+        },
+        {
+          "exam": "gsat-94",
+          "no": 50,
+          "P": 0.26
+        },
+        {
+          "exam": "gsat-94",
+          "no": 48,
+          "P": 0.28
+        }
+      ],
+      "stem_polarity": [
+        {
+          "exam": "ast-92",
+          "no": 49,
+          "P": 0.21,
+          "flags": [
+            "challenge"
+          ]
+        },
+        {
+          "exam": "gsat-99",
+          "no": 41,
+          "P": 0.33
+        }
+      ],
+      "note": "指考題的級別是相對於指考考生（difficulty-bands §6）；只用來界定上緣，不校準學測目標 P"
+    }
+  },
+  "set_composition": {
+    "basic": [
+      0,
+      0
+    ],
+    "advanced": [
+      0,
+      1
+    ],
+    "top": [
+      3,
+      4
+    ],
+    "default": {
+      "advanced": 1,
+      "top": 3
+    },
+    "ast_like_top_min": 1
+  },
+  "materials": {
+    "derivation": "ai-original-from-facts（SPEC §5.3：生成者只拿到事實單與難度規格，不提供來源原文）",
+    "facts": "data/bank/facts/{id}.json（README §8）；provenance.sources[].source_id 寫 fact:{id}，圖表資料用 role=dataset",
+    "sources_whitelist": "data/bank/sources-whitelist.json",
+    "chart_format": "data/bank/README.md §3.2（figure.chart：type、title、x、y、categories、series、note、source）",
+    "chart_types": [
+      "bar",
+      "line",
+      "stacked_bar",
+      "pie"
+    ],
+    "attribution_text": "本文由 AI 參考下列資料撰寫，非原文轉載"
+  },
+  "verification": {
+    "blind_solvers": 2,
+    "blind_b_different_model": true,
+    "distractor_audit": true,
+    "unique_solution": false,
+    "human_review": "100%（校準期：每個題型 × 提示詞版本的前 30 組全審，SPEC §5.8）"
+  }
+}

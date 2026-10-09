@@ -1,0 +1,606 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.st.058ae4",
+  "version": 1,
+  "section_type": "structure",
+  "format_version": "structure-4x5",
+  "tier": "basic",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": "In Japan, lunch often comes in a neat little box called a bento. Many office workers take one to work, and children carry one on school trips. A typical bento holds rice along with several small side dishes, such as grilled fish, egg, and vegetables. [[1]] Thin walls between the sections also stop everything from sliding around when the box is carried.\nMany parents in Japan get up early to prepare bento for their children, and they put a lot of thought into each one. To begin with, the meal should be healthy, with a good balance of rice, meat or fish, and vegetables. [[2]] Red tomatoes, yellow eggs, and green beans are popular choices for exactly this reason. Finally, the food must still taste good when it is eaten cold several hours later.\n[[3]] Their creations, often called “character bento,” look like animals, flowers, or cartoon figures. A rice ball might become a panda, with dark seaweed for its ears and eyes. Lunches like these take time to make, but they can encourage a child who dislikes vegetables to finish every bite.\nOf course, bento are not only made at home. Convenience stores sell them all day, and train stations offer special boxes filled with local foods. [[4]] In their eyes, a bento from home holds something that no shop can sell: the care of the person who packed it.",
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": {
+      "A": "Some parents go even further and turn lunch into a work of art.",
+      "B": "Most rice in Japan is grown in fields covered with shallow water.",
+      "C": "Each kind of food has its own small section, so the flavors do not mix.",
+      "D": "The box should also look bright and cheerful, so cooks use foods of many colors.",
+      "E": "Still, many people feel that a box from a store is never quite as good as one made at home."
+    },
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "C",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "lexical_cohesion",
+          "clue_raw": "SP|LX|BF|L",
+          "key_phrase": "several small side dishes → Each kind of food; its own small section → Thin walls between the sections also"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "D",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "enumeration",
+          "clue_raw": "SP|CN|BF|L",
+          "key_phrase": "To begin with → also → Finally; foods of many colors → Red tomatoes, yellow eggs, and green beans … for exactly this reason"
+        }
+      },
+      {
+        "no": 3,
+        "label": "3",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "A",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "topic_sentence",
+          "clue_raw": "TS|PR|BF|L",
+          "key_phrase": "put a lot of thought into each one → go even further; Some parents … a work of art → Their creations"
+        }
+      },
+      {
+        "no": 4,
+        "label": "4",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "E",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "contrast",
+          "clue_raw": "CT|LX|BF|L",
+          "key_phrase": "Convenience stores sell them → Still, … a box from a store; not only made at home → one made at home; many people → In their eyes"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "日本的便當文化",
+      "genre": "expository",
+      "sdgs": [],
+      "text_format": "continuous"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "前一句說便當裡有米飯和好幾樣小配菜，(C) 接著說每一種食物（each kind of food）都有自己的小隔間（section），味道才不會混在一起。後一句 Thin walls between the sections also… 的 the sections 回指 (C) 的 section，also 表示隔板除了讓味道不混，「還」能防止食物滑動。選 (C)。",
+          "evidence": [
+            "A typical bento holds rice along with several small side dishes, such as grilled fish, egg, and vegetables.",
+            "Each kind of food has its own small section, so the flavors do not mix.",
+            "Thin walls between the sections also stop everything from sliding around when the box is carried."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "lexical_cohesion",
+          "option_notes_zh": {
+            "A": "(A) 說有些父母更進一步，把午餐變成藝術品，但前文還沒提到父母花心思做便當；後一句的 the sections 也找不到先行詞。(A) 屬於第 3 格。",
+            "B": "多餘句：只讀前一句，前一句剛提到 rice，接「日本的稻米大多種在淺水田裡」好像很順；但後一句 Thin walls between the sections also… 需要空格先提到「隔間」，also 也要先有隔間的第一個作用，(B) 都沒有，所以要靠後一句排除。",
+            "D": "(D) 有 also，說便當也要色彩鮮豔，但「首先」（To begin with）要到第二段才出現，這裡還沒有第一點；後一句的 the sections 也沒有來源。",
+            "E": "(E) 拿店裡買的便當和家裡做的比較，但商店便當要到最後一段才出現；後一句的 the sections 也接不上。"
+          },
+          "strategy_zh": "後一句用 the＋名詞（the sections）時，這個名詞多半就在空格裡第一次出現；also 則提醒你：空格裡已經說過同一樣東西的第一個好處。",
+          "hints": [
+            "後一句的 the sections（那些隔間）在前文出現過嗎？",
+            "哪個選項提到 section，又說明了隔間的第一個作用？",
+            "答案說每種食物都有自己的小隔間，味道才不會混在一起。"
+          ]
+        },
+        "2": {
+          "explanation_zh": "第二段列舉父母做便當要注意的事：To begin with（首先）要健康均衡，Finally（最後）要冷了也好吃。中間的空格需要第二點，(D) 的 also 正好接在 To begin with 之後，說便當也要看起來明亮愉快，所以會用許多顏色的食物。後一句列出紅番茄、黃色的蛋、綠色的豆子，並說 for exactly this reason（正是因為這個原因），回應 (D) 的「用多種顏色」。選 (D)。",
+          "evidence": [
+            "To begin with, the meal should be healthy, with a good balance of rice, meat or fish, and vegetables.",
+            "The box should also look bright and cheerful, so cooks use foods of many colors.",
+            "Red tomatoes, yellow eggs, and green beans are popular choices for exactly this reason."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "enumeration",
+          "option_notes_zh": {
+            "A": "(A) 說有些父母更進一步把午餐變成藝術品，是第三段的開頭；放在這裡會打斷 To begin with…Finally 的列舉，後一句的紅、黃、綠食物也沒有交代原因。",
+            "B": "多餘句：只讀前一句，前一句提到 rice，接「日本稻米多種在淺水田」似乎說得通；但後一句 for exactly this reason 要回指一個「選紅、黃、綠食物的理由」，(B) 沒有提供，所以要靠後一句排除。",
+            "C": "(C) 說每種食物有自己的隔間，雖然和便當有關，但沒有提到顏色，後一句 for exactly this reason 無法解釋為什麼要選紅、黃、綠的食物；(C) 屬於第 1 格。",
+            "E": "(E) 比較店裡的便當和家裡做的，與「父母做便當的講究」這個列舉無關，也沒有提到顏色。"
+          },
+          "strategy_zh": "段落用 To begin with、also、Finally 列舉時，空格常是中間那一點；再看後一句的例子（紅、黃、綠）和 this reason 是在支持哪一點。",
+          "hints": [
+            "這一段用哪些詞列舉做便當的條件？空格是第幾點？",
+            "後一句列出紅、黃、綠的食物，這是為了什麼？",
+            "答案有 also，並提到 many colors。"
+          ]
+        },
+        "3": {
+          "explanation_zh": "第二段說父母準備便當時花了很多心思（健康、色彩、口味）。第三段開頭的 (A) 說「有些父母更進一步」，把午餐變成藝術品，go even further 承接前一段的用心。後一句 Their creations, often called “character bento,” look like animals… 的 Their 指 (A) 的 Some parents，creations（作品）呼應 a work of art。選 (A)。",
+          "evidence": [
+            "Many parents in Japan get up early to prepare bento for their children, and they put a lot of thought into each one.",
+            "Some parents go even further and turn lunch into a work of art.",
+            "Their creations, often called “character bento,” look like animals, flowers, or cartoon figures."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "topic_sentence",
+          "option_notes_zh": {
+            "B": "多餘句：(B) 講稻米種在淺水田，後一句的 Their creations（他們的作品）沒有人可以指，也和藝術品無關。",
+            "C": "(C) 講便當的隔間，是第一段介紹便當構造的內容；後一句的 Their creations 找不到「創作的人」。",
+            "D": "(D) 有 also，是第二段列舉的第二點，放在第三段開頭會讓列舉斷掉；而且 (D) 沒有提到任何作品，後一句的 Their creations 接不上。",
+            "E": "(E) 比較店裡和家裡的便當，與「做成動物或卡通造型」無關；後一句的 Their creations 也接不上。"
+          },
+          "strategy_zh": "段首空格多半是主題句。先看後一句的代名詞（Their creations 是「誰的作品」），再看前一段的內容能不能用 even further（更進一步）接過來。",
+          "hints": [
+            "後一句的 Their creations 是誰的作品？要先出現什麼人？",
+            "前一段說父母做便當很用心，哪個選項說有人「更進一步」？",
+            "答案說有些父母把午餐變成藝術品。"
+          ]
+        },
+        "4": {
+          "explanation_zh": "前兩句說便當不只在家裡做，便利商店和火車站也買得到。(E) 用 Still 轉折：儘管如此，許多人覺得店裡買的便當總比不上家裡做的。a box from a store 呼應前一句的 Convenience stores，made at home 呼應 not only made at home。後一句 In their eyes 的 their 指 (E) 的 many people，a bento from home 也就是 (E) 的 one made at home。選 (E)。",
+          "evidence": [
+            "Convenience stores sell them all day, and train stations offer special boxes filled with local foods.",
+            "Still, many people feel that a box from a store is never quite as good as one made at home.",
+            "In their eyes, a bento from home holds something that no shop can sell: the care of the person who packed it."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "contrast",
+          "option_notes_zh": {
+            "A": "(A) 說有些父母更進一步把午餐變成藝術品，屬於第三段；放在這裡，後一句「在他們眼中，家裡做的便當有店家賣不了的東西」少了「店裡和家裡比較」的前提。",
+            "B": "多餘句：(B) 講稻米怎麼種，和買便當無關；後一句 In their eyes 的 their 也找不到「人」當先行詞。",
+            "C": "只讀前一句，「車站賣裝滿當地美食的特製便當→每種食物各有隔間、味道不混」好像說得通；但後一句 In their eyes 需要先出現「一群人」和他們的看法，(C) 只談食物，their 沒有可指的人，所以要靠後一句排除。(C) 屬於第 1 格。",
+            "D": "(D) 有 also，是第二段列舉做便當條件的第二點；放在這裡沒有比較店裡和家裡的便當，後一句「家裡的便當有店家賣不了的東西」接不上。"
+          },
+          "strategy_zh": "前文先說「也可以買到」，空格用 Still（儘管如此）轉回「家裡做的比較好」；最後用後一句的 their 和 a bento from home 確認先行詞。",
+          "hints": [
+            "前兩句說便當除了在家裡做，還可以在哪裡買到？",
+            "後一句的 their 指誰？「家裡的便當」要和什麼比較？",
+            "答案以 Still, many people feel 開頭。"
+          ]
+        }
+      }
+    },
+    "translation_zh": {
+      "text": "在日本，午餐常常裝在一個整齊的小盒子裡，叫做便當。許多上班族會帶便當去上班，孩子們校外教學時也會帶一個。一般的便當裡有米飯，加上好幾樣小配菜，例如烤魚、蛋和蔬菜。【1】每種食物都有自己的小隔間，所以味道不會混在一起。隔間之間的薄隔板也能讓便當在攜帶時，裡面的東西不會滑來滑去。\n在日本，許多父母會早起替孩子準備便當，而且每一個都花了很多心思。首先，這一餐要健康，米飯、肉或魚和蔬菜要搭配均衡。【2】便當看起來也要明亮、令人開心，所以做便當的人會用許多不同顏色的食物。紅色的番茄、黃色的蛋和綠色的豆子之所以常被選用，正是這個原因。最後，食物放了幾個小時、冷掉以後再吃，仍然要好吃。\n【3】有些父母更進一步，把午餐變成一件藝術品。他們的作品常被稱為「卡通便當」，做成動物、花朵或卡通人物的樣子。一個飯糰可能會變成一隻貓熊，用深色的海苔做牠的耳朵和眼睛。這樣的便當很費工，卻能鼓勵不愛吃蔬菜的孩子把每一口都吃光。\n當然，便當不只是在家裡做。便利商店整天都在賣，火車站也提供裝滿當地美食的特製便當。【4】儘管如此，許多人覺得店裡買的便當總是比不上家裡做的。在他們眼中，家裡帶來的便當裝著一樣店家賣不了的東西：裝便當的那個人的心意。\n（多餘句 (B)：日本的稻米大多種在灌了淺水的田裡。）"
+    },
+    "elimination": {
+      "feasible": {
+        "1": [
+          "C"
+        ],
+        "2": [
+          "D"
+        ],
+        "3": [
+          "A"
+        ],
+        "4": [
+          "E"
+        ]
+      },
+      "perfect_matchings": 1
+    },
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": null,
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "3-V-7",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "7-V-5",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "B-V-8",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": "本文由 AI 撰寫"
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-08-structure-basic-03",
+    "lot": "structure-basic-03",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/structure",
+    "prompt_sha256": "6d23c73cbbdabda68ca8044ab8d8b6186f49d34c0168ead44bb53984d998bc92",
+    "spec_id": "structure-basic@2026-10-08",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 227,
+    "sentences": 14,
+    "avg_sentence_length": 16.21,
+    "denominator": 222,
+    "proper_nouns": [
+      "Japan"
+    ],
+    "numbers": 3,
+    "coverage_l1_4": 0.964,
+    "coverage_l1_6": 0.9685,
+    "offlist_ratio": 0.0315,
+    "beyond_l4_ratio": 0.0045,
+    "level_counts": {
+      "1": 197,
+      "2": 13,
+      "3": 2,
+      "4": 2,
+      "5": 1,
+      "off": 7
+    },
+    "offlist_words": [
+      "bento",
+      "seaweed"
+    ],
+    "band": {
+      "tier": "basic",
+      "basis": "lot structure-basic-03（SPEC §3.4＋出題規格書 passage_overrides（words、coverage_L1_4_min（取代 SPEC 的區間）、coverage_L1_6_min、offlist_max、beyond_l4_ratio_max））",
+      "ok": true,
+      "checks": {
+        "word_count": {
+          "value": 227,
+          "min": 220,
+          "max": 280,
+          "ok": true
+        },
+        "coverage_l1_4": {
+          "value": 0.964,
+          "min": 0.93,
+          "max": null,
+          "ok": true
+        },
+        "coverage_l1_6": {
+          "value": 0.9685,
+          "min": 0.96,
+          "max": null,
+          "ok": true
+        },
+        "offlist_ratio": {
+          "value": 0.0315,
+          "min": null,
+          "max": 0.04,
+          "ok": true
+        },
+        "avg_sentence_length": {
+          "value": 16.21,
+          "min": null,
+          "max": 17,
+          "ok": true
+        },
+        "beyond_l4_ratio": {
+          "value": 0.0045,
+          "min": null,
+          "max": 0.04,
+          "ok": true
+        }
+      }
+    }
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T07:18:54Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T07:07:28Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "answers": {
+          "1": {
+            "answer": "C",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "A typical bento holds rice along with several small side dishes, such as grilled fish, egg, and vegetables.",
+              "Thin walls between the sections also stop everything from sliding around when the box is carried."
+            ],
+            "explanation_zh": "後句 the sections 與 also 需要前面先提到分格及其一項好處，C 說每種食物有自己的小格，味道不會混。",
+            "feasible": [
+              "C"
+            ]
+          },
+          "2": {
+            "answer": "D",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "To begin with, the meal should be healthy, with a good balance of rice, meat or fish, and vegetables.",
+              "Red tomatoes, yellow eggs, and green beans are popular choices for exactly this reason."
+            ],
+            "explanation_zh": "To begin with … also … Finally 的列舉結構中，D 是第二點（外觀要鮮豔），後句紅黃綠食材 for exactly this reason 指多彩。",
+            "feasible": [
+              "D"
+            ]
+          },
+          "3": {
+            "answer": "A",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Their creations, often called “character bento,” look like animals, flowers, or cartoon figures."
+            ],
+            "explanation_zh": "後句 Their creations 需要指某些人做的作品，A 說有些家長更進一步把午餐做成藝術品。",
+            "feasible": [
+              "A"
+            ]
+          },
+          "4": {
+            "answer": "E",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Convenience stores sell them all day, and train stations offer special boxes filled with local foods.",
+              "In their eyes, a bento from home holds something that no shop can sell: the care of the person who packed it."
+            ],
+            "explanation_zh": "E 用 Still 轉折店裡也買得到，後句 In their eyes 的 their 指 E 的 many people，並解釋為何家裡做的比較好。",
+            "feasible": [
+              "E"
+            ]
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T07:18:54Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "answers": {
+          "1": {
+            "answer": "C",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "A typical bento holds rice along with several small side dishes, such as grilled fish, egg, and vegetables.",
+              "Thin walls between the sections also stop everything from sliding around when the box is carried."
+            ],
+            "explanation_zh": "後句 the sections 與 Thin walls 需要先有『分格』的說明；C 講每種食物有自己的小格、味道不會混在一起。",
+            "feasible": [
+              "C"
+            ]
+          },
+          "2": {
+            "answer": "D",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "To begin with, the meal should be healthy, with a good balance of rice, meat or fish, and vegetables.",
+              "Red tomatoes, yellow eggs, and green beans are popular choices for exactly this reason."
+            ],
+            "explanation_zh": "To begin with 之後再補第二個條件（Finally 是第三個）；D 說便當要色彩鮮豔，後句紅黃綠食材就是例子。",
+            "feasible": [
+              "D"
+            ]
+          },
+          "3": {
+            "answer": "A",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Their creations, often called “character bento,” look like animals, flowers, or cartoon figures."
+            ],
+            "explanation_zh": "後句 Their creations 指某些父母做出的造型便當；A 說有些父母更進一步把午餐變成藝術品。",
+            "feasible": [
+              "A"
+            ]
+          },
+          "4": {
+            "answer": "E",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Convenience stores sell them all day, and train stations offer special boxes filled with local foods.",
+              "In their eyes, a bento from home holds something that no shop can sell: the care of the person who packed it."
+            ],
+            "explanation_zh": "前面講店裡也賣便當，後句 In their eyes 指『許多人』覺得家裡做的更好；E 的 Still, many people feel 作轉折並提供 their 的指涉對象。",
+            "feasible": [
+              "E"
+            ]
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "distractor_audit",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T07:20:00Z",
+      "details": {
+        "session_id": null,
+        "items": {
+          "1": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Thin walls between the sections also stop everything from sliding around when the box is carried.",
+              "explanation_zh": "前文還沒提到父母花心思做便當，A 的 go even further 沒有比較基準；A 沒有提到隔間，後一句的 the sections 沒有先行詞。"
+            },
+            "B": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Thin walls between the sections also stop everything from sliding around when the box is carried.",
+              "explanation_zh": "多餘句：只讀前一句（剛提到 rice）接稻米種在淺水田似乎很順，但後一句 Thin walls between the sections also… 需要空格先提到隔間及其第一個作用，B 沒有。"
+            },
+            "D": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Thin walls between the sections also stop everything from sliding around when the box is carried.",
+              "explanation_zh": "D 的 also 前面還沒有第一個條件（To begin with 在第二段），D 也沒有提到隔間，後一句的 the sections 沒有來源。"
+            },
+            "E": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Thin walls between the sections also stop everything from sliding around when the box is carried.",
+              "explanation_zh": "E 的 Still 前面沒有可轉折的內容（商店便當到最後一段才出現）；E 沒有提到隔間，後一句的 the sections 與 also 都接不上。"
+            }
+          },
+          "2": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "Red tomatoes, yellow eggs, and green beans are popular choices for exactly this reason.",
+              "explanation_zh": "A 說有些父母把午餐做成藝術品，打斷 To begin with…Finally 的列舉；後一句 for exactly this reason 要回指「選紅黃綠食物」的理由，A 沒有提到顏色。"
+            },
+            "B": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Red tomatoes, yellow eggs, and green beans are popular choices for exactly this reason.",
+              "explanation_zh": "多餘句：只讀前一句（提到 rice）接稻米種植似乎可接，但後一句 for exactly this reason 要回指選紅、黃、綠食物的理由，B 沒有提供。"
+            },
+            "C": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Red tomatoes, yellow eggs, and green beans are popular choices for exactly this reason.",
+              "explanation_zh": "C 講隔間讓味道不混，沒有提到顏色，後一句 for exactly this reason 無法解釋為什麼特別選紅、黃、綠的食物；C 也不是「父母做便當要注意的條件」。"
+            },
+            "E": {
+              "verdict": "clearly_wrong",
+              "error_type": "off_topic",
+              "evidence": "Red tomatoes, yellow eggs, and green beans are popular choices for exactly this reason.",
+              "explanation_zh": "E 比較店裡與家裡的便當，與父母做便當的列舉條件無關，也沒有提到顏色，後一句 for exactly this reason 接不上。"
+            }
+          },
+          "3": {
+            "B": {
+              "verdict": "clearly_wrong",
+              "error_type": "off_topic",
+              "evidence": "Their creations, often called “character bento,” look like animals, flowers, or cartoon figures.",
+              "explanation_zh": "多餘句：稻米種在淺水田，後一句的 Their creations（他們的作品）沒有人可以指，也和做成動物造型無關。"
+            },
+            "C": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Their creations, often called “character bento,” look like animals, flowers, or cartoon figures.",
+              "explanation_zh": "C 講便當隔間，是第一段介紹構造的內容；C 沒有「創作的人」，後一句的 Their creations 接不上。"
+            },
+            "D": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "Finally, the food must still taste good when it is eaten cold several hours later.",
+              "explanation_zh": "前一句的 Finally 已經是列舉的最後一點，D 的 also 又補一個條件並放在新段段首，列舉結構斷裂；D 講一般便當要色彩鮮豔，也不是「更進一步」做成造型的特殊作品。"
+            },
+            "E": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Their creations, often called “character bento,” look like animals, flowers, or cartoon figures.",
+              "explanation_zh": "E 的 Still 前面沒有可轉折的內容（商店便當最後一段才出現）；E 只是對商店便當的看法，沒有任何作品，後一句 Their creations… look like animals 接不上。"
+            }
+          },
+          "4": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Convenience stores sell them all day, and train stations offer special boxes filled with local foods.",
+              "explanation_zh": "前一句的主詞是便利商店與車站，A 的 go even further 需要前面先描述父母的用心，無從「更進一步」；A 也沒有比較店裡與家裡的便當，後一句「家裡的便當有店家賣不了的東西」缺少前提。"
+            },
+            "B": {
+              "verdict": "clearly_wrong",
+              "error_type": "off_topic",
+              "evidence": "In their eyes, a bento from home holds something that no shop can sell: the care of the person who packed it.",
+              "explanation_zh": "多餘句：稻米怎麼種與買便當無關；後一句 In their eyes 的 their 找不到「人」當先行詞。"
+            },
+            "C": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "In their eyes, a bento from home holds something that no shop can sell: the care of the person who packed it.",
+              "explanation_zh": "只讀前一句「車站賣特製便當→每種食物各有隔間」似乎可接，但後一句 In their eyes 需要先出現一群人和他們的看法，C 只談食物。"
+            },
+            "D": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "In their eyes, a bento from home holds something that no shop can sell: the care of the person who packed it.",
+              "explanation_zh": "D 的 also 在本段沒有並列的條件，D 也沒有比較店裡與家裡的便當；後一句 In their eyes, a bento from home… 缺少「許多人覺得家裡的比較好」這個看法作為前提。"
+            }
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "unique_solution",
+      "reviewer": "record_verification.py",
+      "result": "pass",
+      "created_at": "2026-10-09T07:18:54Z",
+      "details": {
+        "method": "injective_assignment",
+        "perfect_matchings": 1,
+        "matches_key": true,
+        "feasible": {
+          "1": [
+            "C"
+          ],
+          "2": [
+            "D"
+          ],
+          "3": [
+            "A"
+          ],
+          "4": [
+            "E"
+          ]
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

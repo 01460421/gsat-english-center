@@ -1,0 +1,647 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.0b8782",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "basic",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "自從當上班長以來，我已經學會耐心地聽同學說話。",
+        "options": null,
+        "answer": "Since I became class leader, I have learned to listen to my classmates patiently.",
+        "accepted_answers": [
+          "I have learned to listen patiently to my classmates since I became the class leader."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "現在完成式"
+          ],
+          "topic": "擔任班長"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "下課時間，我也會幫忙那些對功課有疑問的同學。",
+        "options": null,
+        "answer": "During breaks, I also help classmates who have questions about their homework.",
+        "accepted_answers": [
+          "I also help the classmates that have questions about their homework during breaks."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "關係代名詞"
+          ],
+          "topic": "擔任班長"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "擔任班長"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「自從當上班長以來」和「已經學會」都表示從過去延續到現在的改變，主要子句用現在完成式 have learned；since 子句說的是過去的起點，用過去式 became。「聽同學說話」是 listen to my classmates（listen 後面要加 to），「耐心地」修飾動詞，用副詞 patiently，可以放在句尾或 listen 後面。",
+          "evidence": [
+            "自從當上班長以來",
+            "已經學會"
+          ],
+          "strategy_zh": "看到「自從…以來」「已經」先想到現在完成式；since 後面的子句用過去式，主要子句用 have/has + p.p.。",
+          "hints": [
+            "切成四段：自從當上班長以來／我已經學會／耐心地／聽同學說話",
+            "標的詞彙：leader（班長（領導者））、learn（學會）、patiently（耐心地）、listen（聽）、classmate（同學）",
+            "句型框架：Since + S + 過去式, S + have/has + p.p. …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「那些對功課有疑問的同學」是放在名詞前面的修飾語，英文要把修飾語移到名詞後面，用關係代名詞 who（或 that）帶出形容詞子句：classmates who have questions about their homework。先行詞 classmates 是複數，子句的動詞用 have。「下課時間」用 during breaks 或 between classes。",
+          "evidence": [
+            "那些對功課有疑問的同學"
+          ],
+          "strategy_zh": "中文「…的＋名詞」的修飾語裡有動詞時，英文先寫名詞，再用 who／that 子句補上說明。",
+          "hints": [
+            "切成四段：下課時間／我也會幫忙／對功課有疑問／（那些…的）同學",
+            "標的詞彙：break（下課休息時間）、help（幫忙）、question（疑問）、homework（功課）、classmate（同學）",
+            "句型框架：S + help + N（人）+ who/that + V …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "Since I became class leader, I have learned to listen to my classmates patiently.",
+            "I have learned to listen patiently to my classmates since I became the class leader."
+          ],
+          "target_words": [
+            {
+              "word": "leader",
+              "zh": "班長（領導者）"
+            },
+            {
+              "word": "learn",
+              "zh": "學會"
+            },
+            {
+              "word": "patiently",
+              "zh": "耐心地",
+              "alternatives": [
+                "patient",
+                "patience"
+              ]
+            },
+            {
+              "word": "listen",
+              "zh": "聽"
+            },
+            {
+              "word": "classmate",
+              "zh": "同學"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PERF",
+              "grammar_id": "gp-present-perfect",
+              "label_zh": "現在完成式（自…以來＋已經）",
+              "frame": "Since + S + 過去式, S + have/has + p.p. …",
+              "zh_trigger": "已經學會"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "自從當上班長以來",
+              "accepted": [
+                "Since I became class leader",
+                "Since I became the class leader",
+                "Ever since I became class leader",
+                "Since becoming class leader",
+                "Since I became our class leader",
+                "Since I was chosen as class leader"
+              ],
+              "targets": [
+                "leader"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Since I become class leader",
+                  "right": "Since I became class leader",
+                  "explanation_zh": "since 子句說的是過去的起點（當上班長那一刻），動詞用過去式 became。"
+                },
+                {
+                  "wrong": "From I became class leader",
+                  "right": "Since I became class leader",
+                  "explanation_zh": "「自從…以來」要用 since；from 是介系詞，後面不能直接接子句。"
+                }
+              ]
+            },
+            {
+              "zh": "我已經學會",
+              "accepted": [
+                "I have learned",
+                "I have learnt",
+                "I've learned"
+              ],
+              "targets": [
+                "learn",
+                "PERF"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "I already learned",
+                  "right": "I have learned",
+                  "explanation_zh": "從當上班長到現在累積的改變，要用現在完成式 have learned，不能只用過去式。"
+                },
+                {
+                  "wrong": "I have learn",
+                  "right": "I have learned",
+                  "explanation_zh": "have 後面接過去分詞 learned（或 learnt）。"
+                }
+              ]
+            },
+            {
+              "zh": "耐心地",
+              "accepted": [
+                "patiently",
+                "with patience"
+              ],
+              "targets": [
+                "patiently"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "listen to my classmates patient",
+                  "right": "listen to my classmates patiently",
+                  "explanation_zh": "修飾動詞 listen 要用副詞 patiently；patient 是形容詞。"
+                }
+              ]
+            },
+            {
+              "zh": "聽同學說話",
+              "accepted": [
+                "listen to my classmates",
+                "listen patiently to my classmates",
+                "listen to what my classmates say",
+                "listen to my classmates' ideas",
+                "listen to my classmates' opinions"
+              ],
+              "targets": [
+                "listen",
+                "classmate"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "listen my classmates",
+                  "right": "listen to my classmates",
+                  "explanation_zh": "listen 是不及物動詞，「聽某人說話」要寫 listen to sb。"
+                },
+                {
+                  "wrong": "listen to my classmate",
+                  "right": "listen to my classmates",
+                  "explanation_zh": "班上的同學不只一位，用複數 classmates。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "tense_trigger",
+              "zh": "已經學會",
+              "literal_error": "Since I became class leader, I already learned to listen to my classmates patiently.",
+              "part": 2,
+              "explanation_zh": "「自從…以來」「已經」表示從過去延續到現在的改變；照中文直接寫過去式 already learned 會在這一部分被扣分。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "Ever since I became class leader, I have learned to be a patient listener.",
+              "explanation_zh": "把「耐心地聽」改寫成名詞片語 a patient listener（有耐心的傾聽者），句子更精簡、用字更有變化。"
+            }
+          ]
+        },
+        "2": {
+          "references": [
+            "During breaks, I also help classmates who have questions about their homework.",
+            "I also help the classmates that have questions about their homework during breaks."
+          ],
+          "target_words": [
+            {
+              "word": "break",
+              "zh": "下課休息時間",
+              "alternatives": [
+                "recess",
+                "between classes",
+                "after class"
+              ]
+            },
+            {
+              "word": "help",
+              "zh": "幫忙"
+            },
+            {
+              "word": "question",
+              "zh": "疑問",
+              "alternatives": [
+                "problem",
+                "trouble"
+              ]
+            },
+            {
+              "word": "homework",
+              "zh": "功課",
+              "alternatives": [
+                "schoolwork"
+              ]
+            },
+            {
+              "word": "classmate",
+              "zh": "同學"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "REL",
+              "grammar_id": "gp-relative-pronoun",
+              "label_zh": "關係代名詞 who／that 引導的形容詞子句",
+              "frame": "N（人）+ who/that + V …",
+              "zh_trigger": "那些對功課有疑問的同學"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "下課時間",
+              "accepted": [
+                "During breaks",
+                "During the breaks",
+                "During break time",
+                "Between classes",
+                "During recess",
+                "At break time",
+                "After class"
+              ],
+              "targets": [
+                "break"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Under class",
+                  "explanation_zh": "「下課」不能逐字翻成 under class；用 during breaks、between classes 或 after class。"
+                }
+              ]
+            },
+            {
+              "zh": "我也會幫忙",
+              "accepted": [
+                "I also help",
+                "I will also help",
+                "I also try to help",
+                "I also often help"
+              ],
+              "targets": [
+                "help"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "I also help to classmates",
+                  "right": "I also help classmates",
+                  "explanation_zh": "help 是及物動詞，後面直接接受詞，不加 to。"
+                }
+              ]
+            },
+            {
+              "zh": "對功課有疑問",
+              "accepted": [
+                "who have questions about their homework",
+                "that have questions about their homework",
+                "who have questions about their schoolwork",
+                "who have problems with their homework",
+                "who have trouble with their homework",
+                "who have questions about homework"
+              ],
+              "targets": [
+                "REL",
+                "question",
+                "homework"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "who has questions about their homework",
+                  "right": "who have questions about their homework",
+                  "explanation_zh": "關係代名詞 who 代替複數的 classmates，子句的動詞跟著用複數 have。"
+                },
+                {
+                  "wrong": "classmates have questions about their homework",
+                  "right": "classmates who have questions about their homework",
+                  "explanation_zh": "少了關係代名詞 who／that，句子會有兩個動詞（help、have）卻沒有連接。"
+                }
+              ]
+            },
+            {
+              "zh": "同學",
+              "accepted": [
+                "classmates",
+                "the classmates",
+                "those classmates",
+                "my classmates"
+              ],
+              "targets": [
+                "classmate"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "the classmate who has questions",
+                  "right": "the classmates who have questions",
+                  "explanation_zh": "「那些…的同學」是複數，classmate 要加 s，子句動詞也用 have。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "plural_countable",
+              "zh": "那些對功課有疑問的同學",
+              "literal_error": "During breaks, I also help the classmate who has questions about his homework.",
+              "part": 4,
+              "explanation_zh": "「那些…的同學」不只一個人，要寫複數 classmates，關係子句的動詞也跟著用 have；寫成單數會在這一部分扣分。"
+            }
+          ],
+          "bonus": []
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-basic-01",
+    "lot": "translation-basic-01",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "5d53cd3325023c20a689f496811202dc08d17408faea3e4eb4c3042ce15b605d",
+    "spec_id": "translation-basic@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T07:53:37Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "warn",
+      "created_at": "2026-10-09T07:20:08Z",
+      "details": {
+        "solver": "A",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Since I became class leader, I have learned to listen to my classmates patiently.",
+            "confidence": "high",
+            "explanation_zh": "「自從…以來…已經」用 since＋過去式子句搭配現在完成式；班長譯 class leader（也可 class president）；耐心地聽用 listen to ... patiently。"
+          },
+          "2": {
+            "translation": "During breaks, I also help those classmates who have questions about their homework.",
+            "confidence": "high",
+            "explanation_zh": "下課時間譯 during breaks；「那些對功課有疑問的同學」用 who 引導的關係子句修飾 classmates；習慣性動作用現在簡單式。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PERF"
+            ],
+            "used_target_words": [
+              "leader",
+              "learn",
+              "patiently",
+              "listen",
+              "classmate"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "「班長」在台灣也常譯成 class president／class monitor：第 1 部分 accepted 只收 class leader 系列，標的詞 leader 也沒有 alternatives；學生寫 Since I became class president 是正確譯文卻可能被扣分，建議補進 accepted，並在 leader 加 alternatives（president、monitor）。",
+              "第 3 部分「耐心地」只有一個副詞，第 4 部分 accepted 又收了 listen patiently to my classmates，兩部分內容重疊、輕重略不均（不影響我的譯文判分）。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "REL"
+            ],
+            "used_target_words": [
+              "break",
+              "help",
+              "question",
+              "homework",
+              "classmate"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "leader",
+              "learn",
+              "patiently",
+              "listen",
+              "classmate"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PERF": true
+            },
+            "program_match": true
+          },
+          "2": {
+            "target_words_found": [
+              "break",
+              "help",
+              "question",
+              "homework",
+              "classmate"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "REL": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 1 題驗證者對4 部分切分有意見（warn）：「班長」在台灣也常譯成 class president／class monitor：第 1 部分 accepted 只收 class leader 系列，標的詞 leader 也沒有 alternatives；學生寫 Since I bec"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T07:25:05Z",
+      "details": {
+        "solver": "B",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Since I became class leader, I have learned to listen to my classmates patiently.",
+            "confidence": "high",
+            "explanation_zh": "「自從……以來」用 since 子句（過去式）搭配主句現在完成式 have learned；「班長」譯 class leader；「耐心地聽同學說話」用 learn to listen to ... patiently。"
+          },
+          "2": {
+            "translation": "During break time, I also help classmates who have questions about their homework.",
+            "confidence": "high",
+            "explanation_zh": "「下課時間」譯 during break time；「對功課有疑問的同學」用關係代名詞 who 子句修飾 classmates；習慣性的事用現在簡單式。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PERF"
+            ],
+            "used_target_words": [
+              "leader",
+              "learn",
+              "patiently",
+              "listen",
+              "classmate"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "REL"
+            ],
+            "used_target_words": [
+              "break",
+              "help",
+              "question",
+              "homework",
+              "classmate"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "leader",
+              "learn",
+              "patiently",
+              "listen",
+              "classmate"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PERF": true
+            },
+            "program_match": true
+          },
+          "2": {
+            "target_words_found": [
+              "break",
+              "help",
+              "question",
+              "homework",
+              "classmate"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "REL": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "rejected",
+  "status_reason": "判定者人工審查（第 1 輪）：評分規準太窄。第 1 題第 1 部分「自從當上班長以來」的 accepted 六種寫法全部是 class leader，標的詞 leader 也沒有 alternatives；「班長」在台灣常見的正確譯法 class president、class monitor（本站詞彙表 monitor〔L4〕的中文義就列「班長」）都不在可接受寫法內，學生自評或對照規準時會被誤扣分（驗證者 A 也指出）。另：第 3 部分「耐心地」與第 4 部分 accepted 的 listen patiently to my classmates 重疊。重生時第 1 部分補 class president／class monitor 系列、leader 加 alternatives，並讓第 3、4 部分不重疊。"
+}

@@ -1,18 +1,20 @@
 /**
  * 交卷結果：答對幾題、得分、用時、用了提示的題目、互換偵測（選項庫題型），以及「再一組」。
- * 計分沿用歷屆試題的 scoreExam（單選、選項庫答對得全分，SPEC §4.6）。
+ * 計分見 scoring.ts（選擇題沿用歷屆試題的 scoreQuestion；混合題的填充、簡答依 SPEC §4.6 自動判分）。
  */
 import { RotateCcw } from 'lucide-react';
 import { useId, useMemo, type RefObject } from 'react';
 import { Link } from 'react-router';
 import type { PracticeGroupFile } from '../../../data/bank';
-import type { ChoiceQuestion, Exam, Question } from '../../../data/exams';
+import type { ChoiceQuestion, Question } from '../../../data/exams';
 import { useAttemptSelector } from '../../exams/AttemptContext';
 import { groupHasStimulus } from '../../exams/components/Passage';
 import { formatDuration } from '../../exams/labels';
-import { formatPercent, formatPoints, scoreExam, type AnswerValue } from '../../exams/scoring';
+import { formatPercent, formatPoints, type AnswerValue } from '../../exams/scoring';
+import { evidencePoints, evidenceRows } from '../chart';
 import { evidenceRanges } from '../evidence';
 import type { PracticeMistakeResult } from '../mistakes';
+import type { PracticeScore } from '../scoring';
 
 /** 錯一格常連帶錯兩格：找出「第 i 格填了第 j 格的答案、第 j 格填了第 i 格的答案」的配對（SPEC §6.4 互換偵測）。 */
 export function swappedPairs(questions: readonly Question[], answers: Readonly<Record<string, AnswerValue>>): [string, string][] {
@@ -38,8 +40,17 @@ export function evidenceGuide(file: Pick<PracticeGroupFile, 'group' | 'annotatio
   const items = Object.values(file.annotations.explanations.items);
   const total = items.reduce((n, item) => n + item.evidence.length, 0);
   const located = groupHasStimulus(file.group) ? items.reduce((n, item) => n + evidenceRanges(file.group, item).length, 0) : 0;
-  if (located === 0) return `${base}，證據句列在每一題的解析卡裡。`;
-  if (located < total) return `${base}；選文裡加底線的是證據句，不在選文裡的證據（例如選項句）只列在解析卡裡。`;
+  // 閱讀的圖表題：證據引用圖表文字版的一行或資料表、表格的一列，交卷後在圖上加粗框、在資料表加底色。
+  const all = items.flatMap((item) => item.evidence);
+  const inFigures = file.group.figures.some(
+    (f) => (f.chart && evidencePoints(f.chart, all).size > 0) || (f.rows && evidenceRows(f.rows, all).size > 0),
+  );
+  if (located === 0) return inFigures ? `${base}；圖表、表格裡標出了解析引用的數據。` : `${base}，證據句列在每一題的解析卡裡。`;
+  if (located < total) {
+    return inFigures
+      ? `${base}；選文裡加底線的是證據句，圖表、表格裡用粗框或底色標出解析引用的數據。`
+      : `${base}；選文裡加底線的是證據句，不在選文裡的證據（例如選項句）只列在解析卡裡。`;
+  }
   return `${base}；選文裡加底線的是證據句。`;
 }
 
@@ -72,7 +83,7 @@ function MistakeNotes({ mistakes }: { mistakes: PracticeMistakeResult }) {
 
 export function ResultPanel({
   file,
-  exam,
+  score,
   headingRef,
   hinted,
   mistakes,
@@ -80,7 +91,8 @@ export function ResultPanel({
   onNext,
 }: {
   file: PracticeGroupFile;
-  exam: Exam;
+  /** 這一組的計分（scoring.ts 的 scorePractice）。 */
+  score: PracticeScore;
   headingRef: RefObject<HTMLHeadingElement | null>;
   /** 用了提示的題號。 */
   hinted: readonly string[];
@@ -92,12 +104,11 @@ export function ResultPanel({
 }) {
   const answers = useAttemptSelector((s) => s.answers);
   const elapsed = useAttemptSelector((s) => s.elapsedSec);
-  const score = useMemo(() => scoreExam(exam, answers), [exam, answers]);
-  const section = score.sections[0];
   const titleId = useId();
   const swaps = useMemo(() => swappedPairs(file.group.questions, answers), [file, answers]);
-  const correct = section?.correctCount ?? 0;
-  const total = section?.autoCount ?? 0;
+  const { correct, total } = score;
+  const partial = Object.values(score.outcomes).filter((o) => o.earned > 0 && o.earned < o.max).length;
+  const hasOpen = file.group.questions.some((q) => q.mode === 'fill_in_blank' || q.mode === 'short_answer');
   const guide = useMemo(() => evidenceGuide(file), [file]);
 
   return (
@@ -113,11 +124,12 @@ export function ResultPanel({
             <span className="text-lg font-normal text-muted">／{total} 題</span>
           </p>
           {total > 0 && <p className="text-sm text-muted">答對率 {formatPercent(correct / total)}</p>}
+          {partial > 0 && <p className="text-sm text-muted">另有 {partial} 題部分給分</p>}
         </div>
         <div>
           <p className="text-sm text-muted">得分</p>
           <p className="text-2xl font-semibold tabular-nums">
-            {formatPoints(score.earned)}／{formatPoints(score.autoMax)} 分
+            {formatPoints(score.earned)}／{formatPoints(score.max)} 分
           </p>
         </div>
         <div>
@@ -137,6 +149,7 @@ export function ResultPanel({
           </li>
         ))}
         <MistakeNotes mistakes={mistakes} />
+        {hasOpen && <li>填充、簡答依可接受答案自動判分：寫對得全分，選字對但字形錯、拼錯一兩個字母給 1 分（每題下方有原因）。</li>}
         <li className="text-muted">{guide}</li>
       </ul>
       <div className="mt-4 flex flex-wrap items-center gap-2">
@@ -153,6 +166,24 @@ export function ResultPanel({
         </Link>
       </div>
       {repeatNotice && <p className="mt-2 text-sm text-muted">{repeatNotice}</p>}
+    </section>
+  );
+}
+
+/**
+ * 交卷後、分數還沒算出來的時候（有填充題、單字索引還在下載）：同一個「交卷結果」標題，說明正在判分。
+ * 拼字錯誤、字形錯誤要查單字索引，下載好之前判分會和之後不同（scoring.ts 檔頭），所以先不顯示分數。
+ */
+export function GradingPanel({ headingRef }: { headingRef: RefObject<HTMLHeadingElement | null> }) {
+  const titleId = useId();
+  return (
+    <section aria-labelledby={titleId} aria-busy="true" className="rounded-2xl border-2 border-primary bg-surface p-5 lg:p-6" data-testid="grading-panel">
+      <h2 id={titleId} ref={headingRef} tabIndex={-1} className="text-xl font-bold">
+        交卷結果
+      </h2>
+      <p role="status" className="mt-2 text-sm text-muted">
+        判分中…正在下載單字索引（填充題的拼字錯誤、字形錯誤要查它），下載好就會顯示分數。
+      </p>
     </section>
   );
 }

@@ -1,0 +1,68 @@
+{
+  "schema": "gsat-bank-facts/v1",
+  "id": "sdg12-0001",
+  "title": "Global food waste in 2022 and SDG target 12.3",
+  "sdgs": [
+    12
+  ],
+  "created_on": "2026-10-09",
+  "created_by": "claude-opus-5-5",
+  "sources": [
+    {
+      "id": "s1",
+      "publisher": "UN Environment Programme (UNEP)",
+      "title": "World squanders over 1 billion meals a day - UN report (press release on the Food Waste Index Report 2024)",
+      "url": "https://www.unep.org/news-and-stories/press-release/world-squanders-over-1-billion-meals-day-un-report",
+      "accessed": "2026-10-09",
+      "license": "UNEP terms of use",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s2",
+      "publisher": "United Nations",
+      "title": "Goal 12: Ensure sustainable consumption and production patterns",
+      "url": "https://sdgs.un.org/goals/goal12",
+      "accessed": "2026-10-09",
+      "license": "UN terms of use",
+      "use": "fact_only",
+      "note": null
+    }
+  ],
+  "facts": [
+    {
+      "id": "f1",
+      "text": "About 1.05 billion tonnes of food, including inedible parts, were wasted worldwide in 2022.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f2",
+      "text": "That amount equals 132 kilograms per person and almost one-fifth of the food available to consumers.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f3",
+      "text": "Of the food wasted in 2022, households were responsible for 60 percent, food services for 28 percent and retail for 12 percent.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f4",
+      "text": "SDG target 12.3 aims to halve per-person food waste at the retail and consumer levels by 2030.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "number"
+    }
+  ],
+  "datasets": [],
+  "notes": "tools/tests 的範例事實單（真實公開資料，2026-10-09 線上查證）；只給單元測試用，不在 data/bank/facts。"
+}

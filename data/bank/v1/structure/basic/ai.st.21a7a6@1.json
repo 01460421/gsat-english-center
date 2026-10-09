@@ -1,0 +1,611 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.st.21a7a6",
+  "version": 1,
+  "section_type": "structure",
+  "format_version": "structure-4x5",
+  "tier": "basic",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": "Walk past a pet shop, and you may see puppies and kittens playing behind the glass. Many people fall in love on the spot and take one home. Animal shelters, however, hope that people will visit them first. Their message is simple: adopt, don’t shop.\nShelters take in dogs and cats that have been lost, left on the streets, or given up by their owners. [[1]] Some of them wait for months, and as more animals keep arriving, space quickly runs out. Every pet that finds a home through a shelter frees up room for another animal in need.\n[[2]] Many pet shops buy their animals from large breeding businesses, sometimes called puppy mills. In the worst of these places, dogs spend their whole lives in small cages and are made to have babies again and again. Each puppy sold from such a place helps keep the business running.\nAdopting has practical benefits as well. [[3]] The fee often covers a health check and the shots the animal needs. Adult animals have another advantage: their personalities are already known, so families can choose a pet that suits their way of life.\n[[4]] After all, a dog or cat often lives for more than ten years, and it needs food, care, and attention every single day. Yet some people adopt in a rush and later return the animal when caring for it becomes too much work. Shelters therefore ask families to make sure they are truly ready before taking an animal home.",
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": {
+      "A": "Still, adopting a pet should never be a quick decision.",
+      "B": "Some people like to dress their dogs in warm sweaters in cold weather.",
+      "C": "Shelters also point out a problem with the way many shop pets are raised.",
+      "D": "For one thing, the adoption fee is usually far lower than the price of buying a pet.",
+      "E": "Sadly, many shelters are already caring for far more animals than they have room for."
+    },
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "E",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "lexical_cohesion",
+          "clue_raw": "SP|LX|BF|L",
+          "key_phrase": "many shelters ← Shelters take in dogs and cats …; far more animals than they have room for → Some of them wait for months … space quickly runs out"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "C",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "topic_sentence",
+          "clue_raw": "TS|LX|BF|L",
+          "key_phrase": "Shelters also ← Every pet that finds a home through a shelter frees up room …; a problem with the way many shop pets are raised → Many pet shops buy their animals from large breeding businesses"
+        }
+      },
+      {
+        "no": 3,
+        "label": "3",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "D",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "enumeration",
+          "clue_raw": "SP|LX|BF|L",
+          "key_phrase": "For one thing ← Adopting has practical benefits as well; the adoption fee → The fee often covers a health check …; Adult animals have another advantage"
+        }
+      },
+      {
+        "no": 4,
+        "label": "4",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "A",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "contrast",
+          "clue_raw": "CT|CN|BF|L",
+          "key_phrase": "Still ← families can choose a pet that suits their way of life; a quick decision → After all, a dog or cat often lives for more than ten years …; adopt in a rush"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "領養代替購買",
+      "genre": "expository",
+      "sdgs": [],
+      "text_format": "continuous"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "前一句說收容所收容走失、被丟棄或被放棄的狗和貓；(E) 接著說遺憾的是，許多收容所照顧的動物遠超過容納得下的數量（more animals than they have room for）。下一句 Some of them wait for months, and as more animals keep arriving, space quickly runs out 的 them 指這些動物，space quickly runs out 呼應 (E) 的 have room for；段末的 frees up room 也再次呼應。選 (E)。",
+          "evidence": [
+            "Shelters take in dogs and cats that have been lost, left on the streets, or given up by their owners.",
+            "Sadly, many shelters are already caring for far more animals than they have room for.",
+            "Some of them wait for months, and as more animals keep arriving, space quickly runs out."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "lexical_cohesion",
+          "option_notes_zh": {
+            "A": "(A) 以 Still 開頭，表示「儘管如此」，但前一句只是在說收容所收容哪些動物，沒有可以轉折的內容；下一句「空間很快就不夠」也接不上。(A) 屬於第 4 格。",
+            "B": "多餘句：(B) 講有人喜歡在天冷時幫狗穿毛衣，與收容所收容動物無關；下一句 Some of them wait for months … space quickly runs out 會變成「穿毛衣的狗等了好幾個月、空間不夠」，說不通。",
+            "C": "只看前一句「收容所收容各種狗和貓」，接 (C)「收容所也指出寵物店的寵物飼養方式有問題」似乎也說得通（同樣以 Shelters 開頭）；但後一句 Some of them wait for months, and as more animals keep arriving, space quickly runs out 講的是收容所空間不夠，和寵物店的問題無關，所以要靠後一句排除。(C) 屬於第 2 格。",
+            "D": "(D) 以 For one thing 開頭，要先有一句「有幾個好處」才能列舉，前一句沒有；下一句講空間不足，也不是在談費用。"
+          },
+          "strategy_zh": "前後句都在談同一件事（收容所的空間）時，找一個選項把前一句的主詞換個說法重複（many shelters），又先說出下一句要接的問題（沒有空間）。",
+          "hints": [
+            "前一句說收容所收容哪些動物，下一句說空間很快就不夠，中間缺了什麼？",
+            "下一句的 space quickly runs out，在哪個選項裡有類似的說法？",
+            "答案提到 have room for。"
+          ]
+        },
+        "2": {
+          "explanation_zh": "第二段講收容所空間不足、領養能空出位置。第三段開頭的 (C) 用 Shelters also point out 帶出收容所提出的另一個理由：許多寵物店的寵物，飼養方式有問題。下一句 Many pet shops buy their animals from large breeding businesses 的 pet shops 呼應 (C) 的 shop pets，breeding 也呼應 raised；接下來整段都在說明這個「問題」。本句是第三段的主題句，選 (C)。",
+          "evidence": [
+            "Every pet that finds a home through a shelter frees up room for another animal in need.",
+            "Shelters also point out a problem with the way many shop pets are raised.",
+            "Many pet shops buy their animals from large breeding businesses, sometimes called puppy mills."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "topic_sentence",
+          "option_notes_zh": {
+            "A": "只看前一句「每有一隻寵物透過收容所找到家，就能空出位置」，接 (A)「不過，領養寵物絕不該是倉促的決定」好像也說得通；但後一句 Many pet shops buy their animals from large breeding businesses 突然改談寵物店的動物從哪裡來，(A) 沒有引出這個話題，所以要靠後一句排除。(A) 屬於第 4 格。",
+            "B": "多餘句：(B) 講幫狗穿毛衣，與領養空出位置、寵物店的問題都無關；下一句的大型繁殖業者也沒有被引出來。",
+            "D": "(D) 以 For one thing 列舉領養的好處，但前一句沒有說「領養有幾個好處」；下一句談的是寵物店的動物從哪裡來、被怎麼對待，不是在比較價錢。(D) 屬於第 3 格。",
+            "E": "(E) 說許多收容所動物多到容納不下，屬於第二段；放在這裡會重複前面講過的空間問題，下一句的寵物店也沒有被引出來。"
+          },
+          "strategy_zh": "段首空格是主題句時，先快速看完這一段在講什麼（寵物店的動物來源、小籠子、一直生小狗），再找能概括它的選項。",
+          "hints": [
+            "第三段的內容都在講什麼地方的動物？",
+            "空格要引出「寵物店的寵物有什麼問題」。",
+            "答案以 Shelters also point out 開頭。"
+          ]
+        },
+        "3": {
+          "explanation_zh": "前一句說領養還有一些實際的好處；(D) 用 For one thing 列出第一個好處：領養費通常比買寵物便宜得多。下一句 The fee often covers a health check and the shots the animal needs 的 The fee 回指 (D) 的 the adoption fee；再下一句 Adult animals have another advantage 則是第二個好處。選 (D)。",
+          "evidence": [
+            "Adopting has practical benefits as well.",
+            "For one thing, the adoption fee is usually far lower than the price of buying a pet.",
+            "The fee often covers a health check and the shots the animal needs."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "enumeration",
+          "option_notes_zh": {
+            "A": "只看前一句「領養還有實際的好處」，接 (A)「不過，領養絕不該倉促決定」好像也是合理的提醒；但後一句 The fee often covers a health check … 的 The fee 需要前面先提到一筆費用，(A) 沒有，所以要靠後一句排除。(A) 屬於第 4 格。",
+            "B": "多餘句：(B) 講幫狗穿毛衣，不是領養的好處；下一句的 The fee 也找不到來源。",
+            "C": "(C) 說寵物店的寵物有「問題」，與前一句的「好處」方向相反；下一句的 The fee 也沒有先行詞。",
+            "E": "(E) 說收容所動物太多、空間不夠，是缺點而不是好處，Sadly 也與前一句的語氣不符；下一句的 The fee 沒有來源。"
+          },
+          "strategy_zh": "前一句說「有好處」時，下一句常用 For one thing、First 開始列舉；再確認後一句用定冠詞 the 提到的東西（The fee），在選項裡已經先出現。",
+          "hints": [
+            "前一句說領養有實際的好處，空格要說出第一個好處。",
+            "下一句的 The fee 表示前面已經提過一筆「費用」。",
+            "答案以 For one thing 開頭。"
+          ]
+        },
+        "4": {
+          "explanation_zh": "第四段結尾說成年動物個性已知，家人可以挑選適合自己生活方式的寵物。最後一段開頭的 (A) 用 Still 轉折：即使如此，領養寵物絕不該是倉促的決定。下一句 After all, a dog or cat often lives for more than ten years … every single day 用 After all 說明原因：養寵物是十幾年、每天的責任；再下一句 some people adopt in a rush 也呼應 (A) 的 quick decision。選 (A)。",
+          "evidence": [
+            "Adult animals have another advantage: their personalities are already known, so families can choose a pet that suits their way of life.",
+            "Still, adopting a pet should never be a quick decision.",
+            "After all, a dog or cat often lives for more than ten years, and it needs food, care, and attention every single day.",
+            "Yet some people adopt in a rush and later return the animal when caring for it becomes too much work."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "contrast",
+          "option_notes_zh": {
+            "B": "多餘句：(B) 講天冷時幫狗穿毛衣，只是一個飼主的小習慣；放在這裡，下一句「狗或貓常活十年以上、每天都要照顧」和再下一句「有人倉促領養又送回」便缺少主題句，整段的重點（要想清楚再領養）沒有被帶出來。",
+            "C": "(C) 說收容所也指出寵物店的問題，屬於第三段；放在最後一段開頭，下一句講寵物壽命長、需要每天照顧，並不是寵物店的問題。",
+            "D": "(D) 以 For one thing 列舉領養的第一個好處，但前一句已經說到 another advantage（第二個好處），順序倒退；下一句也不是在談費用。",
+            "E": "(E) 說許多收容所動物多到容納不下，屬於第二段；下一句 After all, a dog or cat often lives for more than ten years … 用 After all 說明「為什麼不能倉促決定」，不是在說明空間不足，而且前一句剛說完領養的好處，也沒有理由突然回頭講空間問題。"
+          },
+          "strategy_zh": "最後一段開頭若用 Still、However 轉折，通常是在前面說了好處之後提出提醒；確認後面的句子都在支持這個提醒（活很久、每天照顧、有人倉促領養）。",
+          "hints": [
+            "前一段一直在說領養的好處，最後一段的語氣有沒有轉變？",
+            "下一句用 After all 說明寵物會活很久、每天都要照顧，空格要提出什麼提醒？",
+            "答案以 Still 開頭。"
+          ]
+        }
+      }
+    },
+    "translation_zh": {
+      "text": "走過寵物店時，你可能會看到小狗、小貓在玻璃後面玩耍。許多人當場就愛上了，把一隻帶回家。然而，動物收容所希望大家先去收容所看看。他們要傳達的訊息很簡單：以領養代替購買。\n收容所收容走失、被丟在街頭，或被飼主放棄的狗和貓。【1】遺憾的是，許多收容所照顧的動物，都遠遠超過它們容納得下的數量。有些動物一等就是好幾個月，而隨著更多動物不斷送進來，空間很快就不夠了。每一隻透過收容所找到家的寵物，都能為另一隻需要幫助的動物空出位置。\n【2】收容所也指出，許多寵物店的寵物在飼養方式上有問題。許多寵物店向大型繁殖業者購買動物，這些業者有時被稱為「幼犬工廠」。在最糟的這類地方，狗一輩子都被關在小籠子裡，被迫一胎接著一胎地生。從這種地方賣出的每一隻小狗，都在幫助這門生意繼續經營下去。\n領養還有一些實際的好處。【3】首先，領養費通常比買一隻寵物的價錢低得多。這筆費用往往包含健康檢查和動物需要的預防針。成年動物還有另一個優點：牠們的個性已經清楚了，家人可以挑選一隻適合自己生活方式的寵物。\n【4】儘管如此，領養寵物絕不該是倉促的決定。畢竟，一隻狗或貓往往能活十年以上，而且每天都需要食物、照顧和關心。然而有些人一時衝動就領養，等到照顧起來太辛苦時，又把動物送回去。因此，收容所會請每個家庭確定自己真的準備好了，再把動物帶回家。\n（多餘句 (B)：有些人喜歡在天冷時幫自家的狗穿上保暖的毛衣。）"
+    },
+    "elimination": {
+      "feasible": {
+        "1": [
+          "E"
+        ],
+        "2": [
+          "C"
+        ],
+        "3": [
+          "D"
+        ],
+        "4": [
+          "A"
+        ]
+      },
+      "perfect_matchings": 1
+    },
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": null,
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "3-V-7",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "7-V-5",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "B-V-8",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "8-V-7",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": "本文由 AI 撰寫"
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-08-structure-basic-02",
+    "lot": "structure-basic-02",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/structure",
+    "prompt_sha256": "fc59fb227eaa304017a6f0cadebe20a72ed15bc071671d7d70b2beaea16d0ea2",
+    "spec_id": "structure-basic@2026-10-08",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 247,
+    "sentences": 16,
+    "avg_sentence_length": 15.44,
+    "denominator": 245,
+    "proper_nouns": [],
+    "numbers": 2,
+    "coverage_l1_4": 0.9959,
+    "coverage_l1_6": 0.9959,
+    "offlist_ratio": 0.0041,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {
+      "1": 212,
+      "2": 19,
+      "3": 4,
+      "4": 9,
+      "off": 1
+    },
+    "offlist_words": [
+      "kittens"
+    ],
+    "band": {
+      "tier": "basic",
+      "basis": "lot structure-basic-02（SPEC §3.4＋出題規格書 passage_overrides（words、coverage_L1_4_min（取代 SPEC 的區間）、coverage_L1_6_min、offlist_max、beyond_l4_ratio_max））",
+      "ok": true,
+      "checks": {
+        "word_count": {
+          "value": 247,
+          "min": 220,
+          "max": 280,
+          "ok": true
+        },
+        "coverage_l1_4": {
+          "value": 0.9959,
+          "min": 0.93,
+          "max": null,
+          "ok": true
+        },
+        "coverage_l1_6": {
+          "value": 0.9959,
+          "min": 0.96,
+          "max": null,
+          "ok": true
+        },
+        "offlist_ratio": {
+          "value": 0.0041,
+          "min": null,
+          "max": 0.04,
+          "ok": true
+        },
+        "avg_sentence_length": {
+          "value": 15.44,
+          "min": null,
+          "max": 17,
+          "ok": true
+        },
+        "beyond_l4_ratio": {
+          "value": 0.0,
+          "min": null,
+          "max": 0.04,
+          "ok": true
+        }
+      }
+    }
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T07:20:31Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T00:00:00Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "answers": {
+          "1": {
+            "answer": "E",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Some of them wait for months, and as more animals keep arriving, space quickly runs out."
+            ],
+            "explanation_zh": "後句說空間很快不夠用，E 說收容所照顧的動物早已超過容量，語意一致。",
+            "feasible": [
+              "E"
+            ]
+          },
+          "2": {
+            "answer": "C",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Many pet shops buy their animals from large breeding businesses, sometimes called puppy mills."
+            ],
+            "explanation_zh": "段落談寵物店動物的來源（繁殖場），C 說收容所也指出店裡寵物飼養方式的問題，是主題句。",
+            "feasible": [
+              "C"
+            ]
+          },
+          "3": {
+            "answer": "D",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Adopting has practical benefits as well.",
+              "The fee often covers a health check and the shots the animal needs."
+            ],
+            "explanation_zh": "For one thing 列舉實際好處，後句 The fee 指 D 的 adoption fee。",
+            "feasible": [
+              "D"
+            ]
+          },
+          "4": {
+            "answer": "A",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "After all, a dog or cat often lives for more than ten years, and it needs food, care, and attention every single day.",
+              "Shelters therefore ask families to make sure they are truly ready before taking an animal home."
+            ],
+            "explanation_zh": "後文說寵物活十多年、有人衝動領養後退回，A 說領養不該倉促決定，是本段主題句。",
+            "feasible": [
+              "A"
+            ]
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T07:10:35Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "answers": {
+          "1": {
+            "answer": "E",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Shelters take in dogs and cats that have been lost, left on the streets, or given up by their owners.",
+              "Some of them wait for months, and as more animals keep arriving, space quickly runs out.",
+              "Sadly, many shelters are already caring for far more animals than they have room for."
+            ],
+            "explanation_zh": "後句 Some of them wait for months ... space quickly runs out 接續收容所動物過多、空間不足的說法，E 正是這個說法。",
+            "feasible": [
+              "E"
+            ]
+          },
+          "2": {
+            "answer": "C",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Many pet shops buy their animals from large breeding businesses, sometimes called puppy mills.",
+              "Shelters also point out a problem with the way many shop pets are raised."
+            ],
+            "explanation_zh": "本段在談寵物店的動物來源與繁殖場問題，C 以 Shelters also point out a problem 引出此主題。",
+            "feasible": [
+              "C"
+            ]
+          },
+          "3": {
+            "answer": "D",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Adopting has practical benefits as well.",
+              "The fee often covers a health check and the shots the animal needs.",
+              "For one thing, the adoption fee is usually far lower than the price of buying a pet."
+            ],
+            "explanation_zh": "後句 The fee 需要先提到費用，D 以 For one thing 提出領養費用較低，作為實際好處的第一點。",
+            "feasible": [
+              "D"
+            ]
+          },
+          "4": {
+            "answer": "A",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "After all, a dog or cat often lives for more than ten years, and it needs food, care, and attention every single day.",
+              "Yet some people adopt in a rush and later return the animal when caring for it becomes too much work.",
+              "Still, adopting a pet should never be a quick decision."
+            ],
+            "explanation_zh": "後文 After all 解釋養寵物要十年以上的照顧，並說有人倉促領養又退回，A 是主題句：領養不該草率決定。",
+            "feasible": [
+              "A"
+            ]
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "distractor_audit",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T07:30:00Z",
+      "details": {
+        "session_id": null,
+        "items": {
+          "1": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "Some of them wait for months, and as more animals keep arriving, space quickly runs out.",
+              "explanation_zh": "Still（儘管如此）前面沒有可轉折的內容；「領養不可倉促」也引不出下一句的等待與空間不足。"
+            },
+            "B": {
+              "verdict": "clearly_wrong",
+              "error_type": "off_topic",
+              "evidence": "Some of them wait for months, and as more animals keep arriving, space quickly runs out.",
+              "explanation_zh": "多餘句：幫狗穿毛衣與收容所無關；接上下一句會變成「穿毛衣的狗等了好幾個月、空間不夠」。"
+            },
+            "C": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Some of them wait for months, and as more animals keep arriving, space quickly runs out.",
+              "explanation_zh": "只看前一句（收容所收容動物）似乎能接，但下一句講收容所的動物久等、空間用完，與寵物店的飼養問題無關；Shelters also 前面也還沒有收容所提出的第一個論點。"
+            },
+            "D": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "Some of them wait for months, and as more animals keep arriving, space quickly runs out.",
+              "explanation_zh": "For one thing 前面沒有「有幾個好處」的總說；下一句講空間不足，不是在談費用。"
+            }
+          },
+          "2": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "Many pet shops buy their animals from large breeding businesses, sometimes called puppy mills.",
+              "explanation_zh": "只看前一句（領養能空出位置）似乎能接，但下一句突然改談寵物店的動物來源，(A) 沒有引出這個話題；本段整段都在說寵物店的問題。"
+            },
+            "B": {
+              "verdict": "clearly_wrong",
+              "error_type": "off_topic",
+              "evidence": "Many pet shops buy their animals from large breeding businesses, sometimes called puppy mills.",
+              "explanation_zh": "多餘句：幫狗穿毛衣與寵物店的動物來源無關。"
+            },
+            "D": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "Many pet shops buy their animals from large breeding businesses, sometimes called puppy mills.",
+              "explanation_zh": "For one thing 前面沒有「領養有好處」的總說；本段在說寵物店的動物從哪裡來、被怎麼對待，不是比較價錢；下一段的 The fee 也需要 (D)。"
+            },
+            "E": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "Many pet shops buy their animals from large breeding businesses, sometimes called puppy mills.",
+              "explanation_zh": "收容所空間不足在上一段已經說過，這裡重複；下一句的寵物店也沒有被引出。"
+            }
+          },
+          "3": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "The fee often covers a health check and the shots the animal needs.",
+              "explanation_zh": "只看前一句（領養有好處）像一個提醒，但下一句 The fee 需要前面先提到一筆費用，(A) 沒有。"
+            },
+            "B": {
+              "verdict": "clearly_wrong",
+              "error_type": "off_topic",
+              "evidence": "The fee often covers a health check and the shots the animal needs.",
+              "explanation_zh": "多餘句：幫狗穿毛衣不是領養的好處；The fee 也找不到來源。"
+            },
+            "C": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "The fee often covers a health check and the shots the animal needs.",
+              "explanation_zh": "前一句說「好處」，(C) 說寵物店的「問題」，方向不同；下一句 The fee 沒有先行詞。"
+            },
+            "E": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "The fee often covers a health check and the shots the animal needs.",
+              "explanation_zh": "收容所空間不足是問題而不是好處，Sadly 也和前一句的語氣相反；下一句 The fee 沒有來源。"
+            }
+          },
+          "4": {
+            "B": {
+              "verdict": "clearly_wrong",
+              "error_type": "off_topic",
+              "evidence": "After all, a dog or cat often lives for more than ten years, and it needs food, care, and attention every single day.",
+              "explanation_zh": "多餘句：After all 要說明一個主張的理由（寵物活很久、每天要照顧），幫狗穿毛衣不是這樣的主張。"
+            },
+            "C": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "After all, a dog or cat often lives for more than ten years, and it needs food, care, and attention every single day.",
+              "explanation_zh": "寵物店的問題屬於第三段；下一句說寵物壽命長、每天要照顧，不是寵物店的問題。"
+            },
+            "D": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "Adult animals have another advantage: their personalities are already known, so families can choose a pet that suits their way of life.",
+              "explanation_zh": "前一句已經說到 another advantage（第二個好處），再用 For one thing 列第一個好處是順序倒退；下一句也不是在談費用。"
+            },
+            "E": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "After all, a dog or cat often lives for more than ten years, and it needs food, care, and attention every single day.",
+              "explanation_zh": "After all 說明的是「為什麼不能倉促決定」（寵物要照顧十幾年），不是收容所空間不足；本段後面的倉促領養、確定準備好也都在支持「別衝動」。"
+            }
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "unique_solution",
+      "reviewer": "record_verification.py",
+      "result": "pass",
+      "created_at": "2026-10-09T07:20:31Z",
+      "details": {
+        "method": "injective_assignment",
+        "perfect_matchings": 1,
+        "matches_key": true,
+        "feasible": {
+          "1": [
+            "E"
+          ],
+          "2": [
+            "C"
+          ],
+          "3": [
+            "D"
+          ],
+          "4": [
+            "A"
+          ]
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

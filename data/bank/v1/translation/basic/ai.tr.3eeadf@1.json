@@ -1,0 +1,648 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.3eeadf",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "basic",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "奶奶最近學會用手機拍照、傳訊息和視訊。",
+        "options": null,
+        "answer": "My grandmother recently learned to take photos, send messages, and make video calls with her phone.",
+        "accepted_answers": [
+          "Grandma has recently learned to take pictures, send messages, and make video calls on her phone.",
+          "Recently, my grandmother has learned how to use her phone to take photos, send messages, and video chat."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "平行結構"
+          ],
+          "topic": "祖父母學用智慧型手機"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "學用手機對她來說並不容易，但她從來沒有放棄。",
+        "options": null,
+        "answer": "Learning to use a phone was not easy for her, but she never gave up.",
+        "accepted_answers": [
+          "It was not easy for her to learn to use a phone, but she has never given up.",
+          "Learning how to use a smartphone was not easy for her, but she never gave up."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "動名詞主詞"
+          ],
+          "topic": "祖父母學用智慧型手機"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "祖父母學用智慧型手機"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "learn to 後面接三個動作：take photos、send messages、make video calls，形式都要一樣（to 後面的原形動詞），最後一項前面加 and。照片、訊息、視訊通話都不只一次，名詞用複數。「最近學會」用過去式 learned 或現在完成式 has learned 都可以。",
+          "evidence": [
+            "拍照、傳訊息和視訊"
+          ],
+          "strategy_zh": "and 連接的每一項都要同詞性、同形式；先寫第一項，再照樣寫後面幾項。",
+          "hints": [
+            "切成四段：奶奶最近學會／用手機／拍照、傳訊息／和視訊",
+            "標的詞彙：grandmother（奶奶）、learn（學會）、phone（手機）、photo（照片）、message（訊息）、video call（視訊）",
+            "句型框架：S + learned to + V1 …, V2 …, and V3 …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「學用手機」是動作，放在主詞的位置要改成動名詞片語 Learning to use a phone，後面的動詞用單數 was；也可以用虛主詞寫成 It was not easy for her to learn to use a phone。「對她來說」是 for her。「從來沒有放棄」用 never gave up（或 has never given up），never 已經是否定，不要再加 didn't。",
+          "evidence": [
+            "學用手機",
+            "從來沒有放棄"
+          ],
+          "strategy_zh": "中文句子用動作開頭當主詞時，英文改成 V-ing 或 It is … to V；動名詞主詞一律看成單數。",
+          "hints": [
+            "切成四段：學用手機／對她來說並不容易／但她從來沒有／放棄",
+            "標的詞彙：learn（學）、phone（手機）、easy（容易的）、never（從來沒有）、give up（放棄）",
+            "句型框架：V-ing … + was not + adj. + for sb, but S + never + 過去式 …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "My grandmother recently learned to take photos, send messages, and make video calls with her phone.",
+            "Grandma has recently learned to take pictures, send messages, and make video calls on her phone.",
+            "Recently, my grandmother has learned how to use her phone to take photos, send messages, and video chat."
+          ],
+          "target_words": [
+            {
+              "word": "grandmother",
+              "zh": "奶奶",
+              "alternatives": [
+                "grandma"
+              ]
+            },
+            {
+              "word": "learn",
+              "zh": "學會"
+            },
+            {
+              "word": "phone",
+              "zh": "手機",
+              "alternatives": [
+                "smartphone",
+                "cellphone"
+              ]
+            },
+            {
+              "word": "photo",
+              "zh": "照片",
+              "alternatives": [
+                "picture"
+              ]
+            },
+            {
+              "word": "message",
+              "zh": "訊息"
+            },
+            {
+              "word": "video call",
+              "zh": "視訊",
+              "alternatives": [
+                "video chat"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PARA",
+              "grammar_id": "gp-parallelism",
+              "label_zh": "平行結構（三個原形動詞片語：V1 …, V2 …, and V3 …）",
+              "frame": "learn to + V1 …, V2 …, and V3 …",
+              "zh_trigger": "拍照、傳訊息和視訊"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "奶奶最近學會",
+              "accepted": [
+                "My grandmother recently learned",
+                "My grandmother has recently learned",
+                "Grandma recently learned",
+                "Grandma has recently learned",
+                "Recently, my grandmother has learned",
+                "Recently, my grandmother learned",
+                "My grandmother has just learned"
+              ],
+              "targets": [
+                "grandmother",
+                "learn"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "My grandmother recently learn",
+                  "right": "My grandmother recently learned",
+                  "explanation_zh": "「最近學會」是已經發生的事，用過去式 learned 或現在完成式 has learned。"
+                }
+              ]
+            },
+            {
+              "zh": "用手機",
+              "accepted": [
+                "with her phone",
+                "on her phone",
+                "with her cell phone",
+                "on her cell phone",
+                "with her smartphone",
+                "on her smartphone",
+                "use her phone",
+                "with her mobile phone"
+              ],
+              "targets": [
+                "phone"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "by her phone",
+                  "right": "with her phone",
+                  "explanation_zh": "「用（工具）」是 with 或 on（on her phone），不用 by。"
+                }
+              ]
+            },
+            {
+              "zh": "拍照、傳訊息",
+              "accepted": [
+                "take photos, send messages",
+                "take pictures, send messages",
+                "take photos, send text messages",
+                "taking photos, sending messages"
+              ],
+              "targets": [
+                "photo",
+                "message"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "take photo, send message",
+                  "right": "take photos, send messages",
+                  "explanation_zh": "照片、訊息都不只一則，用複數 photos、messages。"
+                }
+              ]
+            },
+            {
+              "zh": "和視訊",
+              "accepted": [
+                "and make video calls",
+                "and video chat",
+                "and have video calls",
+                "and make video calls with us",
+                "and video call"
+              ],
+              "targets": [
+                "PARA",
+                "video call"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "and making video calls",
+                  "right": "and make video calls",
+                  "explanation_zh": "前面是 to take …, send …，最後一項也要用原形動詞 make，保持平行結構。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "plural_countable",
+              "zh": "傳訊息",
+              "literal_error": "My grandmother recently learned to take photo, send message, and make video call with her phone.",
+              "part": 3,
+              "explanation_zh": "拍的照片、傳的訊息不只一則，要用複數 photos、messages；照中文寫單數會在這一部分被扣分。"
+            }
+          ],
+          "bonus": []
+        },
+        "2": {
+          "references": [
+            "Learning to use a phone was not easy for her, but she never gave up.",
+            "It was not easy for her to learn to use a phone, but she has never given up.",
+            "Learning how to use a smartphone was not easy for her, but she never gave up."
+          ],
+          "target_words": [
+            {
+              "word": "learn",
+              "zh": "學"
+            },
+            {
+              "word": "phone",
+              "zh": "手機",
+              "alternatives": [
+                "smartphone",
+                "cellphone"
+              ]
+            },
+            {
+              "word": "easy",
+              "zh": "容易的"
+            },
+            {
+              "word": "never",
+              "zh": "從來沒有"
+            },
+            {
+              "word": "give up",
+              "zh": "放棄"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "NFSUBJ",
+              "grammar_id": "gp-gerund-subject",
+              "label_zh": "動名詞片語當主詞（V-ing … + 單數動詞）",
+              "frame": "V-ing … + was/is + adj. (+ for sb) …",
+              "zh_trigger": "學用手機"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "學用手機",
+              "accepted": [
+                "Learning to use a phone",
+                "Learning how to use a phone",
+                "Learning to use a smartphone",
+                "Learning how to use a smartphone",
+                "Learning to use a cell phone",
+                "to learn to use a phone",
+                "to learn how to use a phone"
+              ],
+              "targets": [
+                "NFSUBJ",
+                "learn",
+                "phone"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Learn to use a phone was",
+                  "right": "Learning to use a phone was",
+                  "explanation_zh": "動作當主詞要改成動名詞 Learning（或用 It was … to learn …），原形動詞不能當主詞。"
+                }
+              ]
+            },
+            {
+              "zh": "對她來說並不容易",
+              "accepted": [
+                "was not easy for her",
+                "wasn't easy for her",
+                "is not easy for her"
+              ],
+              "targets": [
+                "easy"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "were not easy for her",
+                  "right": "was not easy for her",
+                  "explanation_zh": "動名詞片語當主詞視為單數，be 動詞用 was（或 is）。"
+                },
+                {
+                  "wrong": "was not easy to her",
+                  "right": "was not easy for her",
+                  "explanation_zh": "「對某人來說（難易）」用 for sb。"
+                }
+              ]
+            },
+            {
+              "zh": "但她從來沒有",
+              "accepted": [
+                "but she never",
+                "but she has never",
+                "yet she never",
+                "but she still never"
+              ],
+              "targets": [
+                "never"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "but she didn't never",
+                  "right": "but she never",
+                  "explanation_zh": "never 本身就是否定，不能再加 didn't（雙重否定）。"
+                }
+              ]
+            },
+            {
+              "zh": "放棄",
+              "accepted": [
+                "gave up",
+                "given up",
+                "gave it up",
+                "given it up"
+              ],
+              "targets": [
+                "give up"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "give up",
+                  "right": "gave up",
+                  "explanation_zh": "這是過去的事，用過去式 gave up（或 has never given up）。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "verbal_subject",
+              "zh": "學用手機",
+              "literal_error": "Learn to use a phone was not easy for her, but she never gave up.",
+              "part": 1,
+              "explanation_zh": "中文可以直接拿動作當主詞，英文不行：要改成動名詞 Learning …（或 It was not easy for her to learn …），照字面用原形動詞開頭會在這一部分被扣分。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "Although learning to use a phone was not easy for her, she never gave up.",
+              "grammar_id": "gp-concession-clause",
+              "explanation_zh": "用 although 引導讓步子句，取代 but，句子的主從關係更清楚；注意 although 和 but 不能同時用。"
+            }
+          ]
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-basic-01",
+    "lot": "translation-basic-01",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "5d53cd3325023c20a689f496811202dc08d17408faea3e4eb4c3042ce15b605d",
+    "spec_id": "translation-basic@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T07:53:41Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T07:20:08Z",
+      "details": {
+        "solver": "A",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "My grandmother has recently learned how to use her cellphone to take pictures, send messages, and make video calls.",
+            "confidence": "high",
+            "explanation_zh": "「最近學會」用 has recently learned how to；「用手機做…」用 use ... to V，後面三個原形動詞平行；視訊譯 make video calls。"
+          },
+          "2": {
+            "translation": "Learning to use a cellphone was not easy for her, but she never gave up.",
+            "confidence": "high",
+            "explanation_zh": "照中文主題「學用手機」用動名詞當主詞（也可 It was not easy for her to learn...）；「從來沒有放棄」用 never gave up。中文沒標時態，取過去敘事；也可寫 has never given up。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PARA"
+            ],
+            "used_target_words": [
+              "grandmother",
+              "learn",
+              "phone",
+              "photo",
+              "message",
+              "video call"
+            ],
+            "within_accepted": true,
+            "closest_reference": 2,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "NFSUBJ"
+            ],
+            "used_target_words": [
+              "learn",
+              "phone",
+              "easy",
+              "never",
+              "give up"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "grandmother",
+              "learn",
+              "phone",
+              "photo",
+              "message",
+              "video call"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PARA": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "learn",
+              "phone",
+              "easy",
+              "never",
+              "give up"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NFSUBJ": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T07:25:05Z",
+      "details": {
+        "solver": "B",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "My grandmother has recently learned to use her cell phone to take photos, send messages, and make video calls.",
+            "confidence": "high",
+            "explanation_zh": "「最近」搭配現在完成式 has recently learned；「用手機拍照、傳訊息和視訊」用 use her phone to + 三個並列原形動詞；「視訊」譯 make video calls。"
+          },
+          "2": {
+            "translation": "Learning to use a cell phone is not easy for her, but she has never given up.",
+            "confidence": "high",
+            "explanation_zh": "「學用手機」作主詞用動名詞 Learning to use ...；「對她來說不容易」用 not easy for her；「從來沒有放棄」用 has never given up（現在完成式）。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PARA"
+            ],
+            "used_target_words": [
+              "grandmother",
+              "learn",
+              "phone",
+              "photo",
+              "message",
+              "video call"
+            ],
+            "within_accepted": true,
+            "closest_reference": 2,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "NFSUBJ"
+            ],
+            "used_target_words": [
+              "learn",
+              "phone",
+              "easy",
+              "never",
+              "give up"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "grandmother",
+              "learn",
+              "phone",
+              "photo",
+              "message",
+              "video call"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PARA": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "learn",
+              "phone",
+              "easy",
+              "never",
+              "give up"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NFSUBJ": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

@@ -11,6 +11,8 @@
  *   data/exams/parsed/*.json                歷屆試題（gsat-exam/v1.1，規格見 docs/exam-json-schema.md）
  *   data/exams/manifest.json                官方檔案清單：把 sources 的本機路徑換成大考中心的官方網址
  *   data/bank/v1/{題型}/{難度}/*.json      AI 題庫（gsat-bank/v1，見 data/bank/README.md）；可以不存在
+ *   data/bank/facts/{id}.json              題組引用的事實單（閱讀、混合題的「參考資料」從這裡來）
+ *   （新增輸入路徑時，根目錄 vercel.json 的 ignoreCommand 要一起加，否則只改那個路徑的提交不會重新建置）
  *
  * 輸出（apps/web/public/data/，不進版控；Vite 會原樣複製到 dist/data/）：
  *   meta.json            資料版本、產生時間、筆數、各檔大小

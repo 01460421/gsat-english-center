@@ -1,0 +1,601 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.st.4cfe37",
+  "version": 1,
+  "section_type": "structure",
+  "format_version": "structure-4x5",
+  "tier": "basic",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": "If you spend a whole day at the beach, you may notice something strange about the sea. In the morning, the water may come almost up to your towel. A few hours later, it may have moved far back from the shore. [[1]] Surprisingly, the main force behind it is the moon.\nThe moon is far away, but its gravity still pulls on everything on Earth, including the oceans. The pull is strongest on the side of Earth that faces the moon. [[2]] Coasts under this hill of water have high tide, while coasts farther away from it have low tide. Strangely, a second hill forms at the same time on the far side of Earth. As Earth turns, most coasts pass through both hills, so they get two high tides and two low tides each day.\n[[3]] Instead, each high tide comes a little later than it did the day before. The reason is that the moon is also moving slowly around Earth. Our planet must turn a little farther each day to face the moon again.\nThe sun pulls on the oceans too, but its effect is smaller because it is so much farther away. [[4]] When this happens, their pulls work together and produce especially high tides, known as spring tides. The name has nothing to do with the season of spring. Fishermen and sailors watch these changes with great care, since the tide affects when it is safe to go out to sea.",
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": {
+      "A": "Some visitors hunt for crabs and shells on the shore.",
+      "B": "People call this regular rise and fall of the sea the tide.",
+      "C": "However, the tides do not arrive at the same times every day.",
+      "D": "As a result, the ocean on that side rises into a wide, gentle hill of water.",
+      "E": "Twice each month, the sun and the moon line up with Earth in a straight line."
+    },
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "B",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "lexical_cohesion",
+          "clue_raw": "BR|LX|BF|L",
+          "key_phrase": "the water may come almost up to your towel … moved far back → this regular rise and fall of the sea; the tide → the main force behind it"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "D",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "transition_word",
+          "clue_raw": "SP|CN|BF|L",
+          "key_phrase": "The pull is strongest on the side … → As a result, the ocean on that side rises; a wide, gentle hill of water → this hill of water"
+        }
+      },
+      {
+        "no": 3,
+        "label": "3",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "C",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "chronology",
+          "clue_raw": "TS|LX|BF|L",
+          "key_phrase": "two high tides and two low tides each day → do not arrive at the same times every day; do not … → Instead, … a little later than … the day before"
+        }
+      },
+      {
+        "no": 4,
+        "label": "4",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "E",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "pronoun_reference",
+          "clue_raw": "CT|PR|BF|L",
+          "key_phrase": "The sun pulls on the oceans too → the sun and the moon line up; line up → When this happens, their pulls"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "潮汐與月亮",
+      "genre": "expository",
+      "sdgs": [],
+      "text_format": "continuous"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "前兩句描述海水早上幾乎漲到毛巾邊、幾小時後又退得很遠；(B) 用 this regular rise and fall of the sea 把這種「漲上來又退下去」的現象換句話說，並告訴讀者它叫做 the tide（潮汐）。後一句 the main force behind it 的 it 就是 (B) 的 the tide，接著說潮汐的主要成因是月亮。選 (B)。",
+          "evidence": [
+            "A few hours later, it may have moved far back from the shore.",
+            "People call this regular rise and fall of the sea the tide.",
+            "Surprisingly, the main force behind it is the moon."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "definition_restatement",
+          "option_notes_zh": {
+            "A": "多餘句：只讀前一句，「海水退得很遠→有些遊客在岸邊找螃蟹和貝殼」好像說得通；但後一句說「它背後的主要力量是月亮」，it 必須是單數、而且是月亮推動得了的現象，(A) 的螃蟹、貝殼是複數，岸邊也不會「被月亮推動」，所以要靠後一句排除。",
+            "C": "(C) 說潮汐每天到達的時間不一樣，但前面還沒介紹潮汐、也還沒說到每天兩次漲潮，談時間差太早；後一句的 it 也找不到單數的先行詞。(C) 屬於第 3 格。",
+            "D": "(D) 的 As a result 和 on that side 在這裡都沒有依據：前文沒有說明任何原因，也沒有提到「哪一側」。(D) 屬於第 2 格。",
+            "E": "(E) 講太陽和月亮每個月兩次與地球排成一直線，前文完全沒提到太陽，放在這裡太突然；後一句的 it 也無法指 (E) 的任何東西。"
+          },
+          "strategy_zh": "前面先描述一個現象、後面接「它的成因」時，中間常是一句「這個現象叫做……」的定義句；找出用 this＋名詞把前文換句話說的選項。",
+          "hints": [
+            "前兩句描述海水做了什麼？有沒有一個名詞可以概括「漲上來又退回去」？",
+            "後一句的 it 指的是什麼？它要能「被月亮推動」。",
+            "答案告訴我們這個現象叫做 the tide。"
+          ]
+        },
+        "2": {
+          "explanation_zh": "前一句說月亮的拉力在「地球面向月亮的那一側」最強，(D) 用 As a result 帶出結果：那一側（on that side）的海水隆起，形成一座寬而平緩的「水丘」。後一句 Coasts under this hill of water 的 this hill of water 正是 (D) 的 hill of water。原因→結果，再接 this＋同一個名詞，前後都對上，選 (D)。",
+          "evidence": [
+            "The pull is strongest on the side of Earth that faces the moon.",
+            "As a result, the ocean on that side rises into a wide, gentle hill of water.",
+            "Coasts under this hill of water have high tide, while coasts farther away from it have low tide."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "cause_effect",
+          "option_notes_zh": {
+            "A": "多餘句：(A) 講遊客找螃蟹，和月亮的拉力無關；後一句的 this hill of water 也沒有來源。",
+            "B": "(B) 為潮汐下定義，但本段已經在解釋潮汐的成因，再說一次「這叫做潮汐」順序不對；後一句的 this hill of water 也找不到先行詞。",
+            "C": "(C) 說潮汐每天到達的時間不同，跳到了第三段的主題；後一句的 this hill of water 沒有來源。",
+            "E": "(E) 說太陽、月亮與地球排成一直線，但前一句只提到月亮的拉力；(E) 也沒有提到水丘，後一句的 this hill of water 接不上。"
+          },
+          "strategy_zh": "As a result 這類因果連接詞要同時檢查兩件事：前一句是不是原因（拉力最強），後一句有沒有重複結果裡的名詞（hill of water）。",
+          "hints": [
+            "前一句說月亮的拉力在哪一側最強？那一側的海水會怎樣？",
+            "後一句的 this hill of water 要回指哪個選項？",
+            "答案以 As a result 開頭。"
+          ]
+        },
+        "3": {
+          "explanation_zh": "第二段最後說大多數海岸每天有兩次漲潮、兩次退潮。第三段開頭的 (C) 用 However 接著指出：潮汐「並不是每天都在同樣的時間」到來。後一句 Instead, each high tide comes a little later than it did the day before 的 Instead（而是）承接 (C) 的否定句，說明實際情形是每天都晚一點。every day 和 the day before 這組時間線索前後呼應，選 (C)。",
+          "evidence": [
+            "As Earth turns, most coasts pass through both hills, so they get two high tides and two low tides each day.",
+            "However, the tides do not arrive at the same times every day.",
+            "Instead, each high tide comes a little later than it did the day before."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "chronology",
+          "option_notes_zh": {
+            "A": "多餘句：(A) 講遊客找螃蟹和貝殼，與潮汐的時間無關；後一句的 Instead 前面也需要一個否定的說法。",
+            "B": "(B) 為潮汐下定義，但第二段早已在說明潮汐，到這裡才定義太晚；而且 (B) 沒有否定詞，後一句的 Instead 接不上。",
+            "D": "(D) 的 As a result 與 on that side 在段首沒有依據：前一句講的是每天漲退潮的次數，不是月亮那一側的海水；後一句的 Instead 也接不上。",
+            "E": "只讀前一句，「每天兩次漲退潮→每個月兩次太陽、月亮和地球連成一線」好像可以接（each day 對 twice each month）；但後一句 Instead, each high tide comes a little later 必須接在「不是在同樣時間」這種否定說法之後，(E) 沒有否定，所以要靠後一句排除。(E) 屬於第 4 格。"
+          },
+          "strategy_zh": "後一句以 Instead（而是）開頭時，前一句通常是否定句（do not、never）；先找有 not 的選項，再看時間詞（every day、the day before）是否前後呼應。",
+          "hints": [
+            "後一句 Instead 的意思是「而是」，前面通常要有什麼樣的句子？",
+            "前一句說每天有幾次漲潮？哪個選項接著談「時間」？",
+            "答案以 However 開頭，有 do not。"
+          ]
+        },
+        "4": {
+          "explanation_zh": "前一句說太陽也會拉動海洋，只是因為距離遠得多，影響比較小。(E) 接著說每個月有兩次，太陽和月亮會與地球排成一直線。後一句 When this happens, their pulls work together 的 this 指 (E) 描述的「排成一直線」，their 指太陽和月亮：兩者的拉力合在一起，就產生特別高的大潮。選 (E)。",
+          "evidence": [
+            "The sun pulls on the oceans too, but its effect is smaller because it is so much farther away.",
+            "Twice each month, the sun and the moon line up with Earth in a straight line.",
+            "When this happens, their pulls work together and produce especially high tides, known as spring tides."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "pronoun_reference",
+          "option_notes_zh": {
+            "A": "多餘句：(A) 講遊客找螃蟹和貝殼，後一句的 When this happens 和 their pulls 都找不到所指。",
+            "B": "(B) 為潮汐下定義，與太陽的拉力無關；後一句的 their pulls（它們的拉力）也沒有可以指的兩個天體。",
+            "C": "(C) 說潮汐每天到達的時間不同，但後一句 When this happens, their pulls work together 要接的是「太陽和月亮一起拉」的情況，(C) 沒有提到兩者。",
+            "D": "(D) 說面向月亮那一側的海水隆起，和前一句「太陽的影響較小」接不起來；後一句的 their pulls 也找不到兩個施力者。"
+          },
+          "strategy_zh": "後一句出現 When this happens、their 這類回指時，先問「發生了什麼事？」「誰的拉力？」，空格裡必須同時交代那件事和那兩個主角。",
+          "hints": [
+            "前一句說太陽的影響比月亮大還是小？",
+            "後一句的 their pulls 是「誰的」拉力？this 指發生了什麼事？",
+            "答案提到太陽和月亮與地球排成一直線。"
+          ]
+        }
+      }
+    },
+    "translation_zh": {
+      "text": "如果你在海灘待上一整天，可能會注意到大海有件奇怪的事。早上，海水也許幾乎漲到你的毛巾邊。幾個小時後，它可能已經退到離岸邊很遠的地方。【1】人們把海水這種規律的漲落稱為潮汐。令人意外的是，造成潮汐的主要力量是月亮。\n月亮離我們很遠，但它的引力仍然拉動著地球上的一切，包括海洋。這股拉力在地球面向月亮的那一側最強。【2】結果，那一側的海水隆起，形成一座寬闊而平緩的水丘。位在這座水丘底下的海岸會漲潮，離它比較遠的海岸則會退潮。奇怪的是，在地球的另一側，同時也會形成第二座水丘。隨著地球自轉，大多數海岸每天都會經過這兩座水丘，所以一天有兩次漲潮、兩次退潮。\n【3】不過，潮汐並不是每天都在同樣的時間到來。而是每一次漲潮都比前一天晚一點。原因是月亮本身也在慢慢地繞著地球運行。我們的星球每天必須多轉一點點，才能再次面向月亮。\n太陽也會拉動海洋，但因為距離遠得多，影響比較小。【4】每個月有兩次，太陽和月亮會與地球排成一直線。這時，它們的拉力合在一起，產生特別高的潮水，稱為「大潮」（spring tide）。這個名字和春天這個季節一點關係也沒有。漁民和水手會非常留意這些變化，因為潮汐會影響什麼時候出海才安全。\n（多餘句 (A)：有些遊客會在岸邊找螃蟹和貝殼。）"
+    },
+    "elimination": {
+      "feasible": {
+        "1": [
+          "B"
+        ],
+        "2": [
+          "D"
+        ],
+        "3": [
+          "C"
+        ],
+        "4": [
+          "E"
+        ]
+      },
+      "perfect_matchings": 1
+    },
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": null,
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "3-V-7",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "7-V-5",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "B-V-8",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": "本文由 AI 撰寫"
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-08-structure-basic-03",
+    "lot": "structure-basic-03",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/structure",
+    "prompt_sha256": "6d23c73cbbdabda68ca8044ab8d8b6186f49d34c0168ead44bb53984d998bc92",
+    "spec_id": "structure-basic@2026-10-08",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 243,
+    "sentences": 16,
+    "avg_sentence_length": 15.19,
+    "denominator": 241,
+    "proper_nouns": [],
+    "numbers": 2,
+    "coverage_l1_4": 0.9959,
+    "coverage_l1_6": 1.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0041,
+    "level_counts": {
+      "1": 212,
+      "2": 17,
+      "3": 11,
+      "5": 1
+    },
+    "offlist_words": [],
+    "band": {
+      "tier": "basic",
+      "basis": "lot structure-basic-03（SPEC §3.4＋出題規格書 passage_overrides（words、coverage_L1_4_min（取代 SPEC 的區間）、coverage_L1_6_min、offlist_max、beyond_l4_ratio_max））",
+      "ok": true,
+      "checks": {
+        "word_count": {
+          "value": 243,
+          "min": 220,
+          "max": 280,
+          "ok": true
+        },
+        "coverage_l1_4": {
+          "value": 0.9959,
+          "min": 0.93,
+          "max": null,
+          "ok": true
+        },
+        "coverage_l1_6": {
+          "value": 1.0,
+          "min": 0.96,
+          "max": null,
+          "ok": true
+        },
+        "offlist_ratio": {
+          "value": 0.0,
+          "min": null,
+          "max": 0.04,
+          "ok": true
+        },
+        "avg_sentence_length": {
+          "value": 15.19,
+          "min": null,
+          "max": 17,
+          "ok": true
+        },
+        "beyond_l4_ratio": {
+          "value": 0.0041,
+          "min": null,
+          "max": 0.04,
+          "ok": true
+        }
+      }
+    }
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T07:18:54Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T07:07:28Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "answers": {
+          "1": {
+            "answer": "B",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "A few hours later, it may have moved far back from the shore.",
+              "Surprisingly, the main force behind it is the moon."
+            ],
+            "explanation_zh": "前面描述海水漲退，B 把這現象命名為 the tide，後句單數 it 指潮汐，說明其主因是月球。",
+            "feasible": [
+              "B"
+            ]
+          },
+          "2": {
+            "answer": "D",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "The pull is strongest on the side of Earth that faces the moon.",
+              "Coasts under this hill of water have high tide, while coasts farther away from it have low tide."
+            ],
+            "explanation_zh": "D 的 that side 承接面向月球的那一側，As a result 承接引力最強，後句 this hill of water 指 D 的 a wide, gentle hill of water。",
+            "feasible": [
+              "D"
+            ]
+          },
+          "3": {
+            "answer": "C",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "As Earth turns, most coasts pass through both hills, so they get two high tides and two low tides each day.",
+              "Instead, each high tide comes a little later than it did the day before."
+            ],
+            "explanation_zh": "後句 Instead 需要前面一個被否定的說法，C 說潮汐不是每天同時到達，Instead 接「每天晚一點」。",
+            "feasible": [
+              "C"
+            ]
+          },
+          "4": {
+            "answer": "E",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "The sun pulls on the oceans too, but its effect is smaller because it is so much farther away.",
+              "When this happens, their pulls work together and produce especially high tides, known as spring tides."
+            ],
+            "explanation_zh": "後句 When this happens 與 their pulls 需要太陽與月球同時出現的事件，E 說兩者每月兩次排成一直線。",
+            "feasible": [
+              "E"
+            ]
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T07:18:54Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "answers": {
+          "1": {
+            "answer": "B",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "A few hours later, it may have moved far back from the shore.",
+              "Surprisingly, the main force behind it is the moon."
+            ],
+            "explanation_zh": "前面描述海水漲退，B 為這個現象命名為潮汐；後句 the main force behind it 的 it 指這個規律的漲退。",
+            "feasible": [
+              "B"
+            ]
+          },
+          "2": {
+            "answer": "D",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "The pull is strongest on the side of Earth that faces the moon.",
+              "Coasts under this hill of water have high tide, while coasts farther away from it have low tide."
+            ],
+            "explanation_zh": "月球引力在面向月球那側最強，As a result 水面隆成一座水丘，後句 this hill of water 才有所指。",
+            "feasible": [
+              "D"
+            ]
+          },
+          "3": {
+            "answer": "C",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "As Earth turns, most coasts pass through both hills, so they get two high tides and two low tides each day.",
+              "Instead, each high tide comes a little later than it did the day before."
+            ],
+            "explanation_zh": "前段說每天兩次漲退，C 用 However 轉折說時間並不固定；後句 Instead 說每次漲潮晚一點，語氣銜接。",
+            "feasible": [
+              "C"
+            ]
+          },
+          "4": {
+            "answer": "E",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "The sun pulls on the oceans too, but its effect is smaller because it is so much farther away.",
+              "When this happens, their pulls work together and produce especially high tides, known as spring tides."
+            ],
+            "explanation_zh": "後句 When this happens, their pulls work together 的 this 指太陽、月亮與地球排成一直線，所以接 E。",
+            "feasible": [
+              "E"
+            ]
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "distractor_audit",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T07:20:00Z",
+      "details": {
+        "session_id": null,
+        "items": {
+          "1": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "off_topic",
+              "evidence": "Surprisingly, the main force behind it is the moon.",
+              "explanation_zh": "多餘句：只讀前一句「海水退得很遠→遊客在岸邊找螃蟹貝殼」說得通，但後一句說「它背後的主要力量是月亮」，找螃蟹不是月亮推動的現象，it 沒有合適的先行詞。"
+            },
+            "C": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "A few hours later, it may have moved far back from the shore.",
+              "explanation_zh": "前兩句只描述海水漲上來又退下去，沒有任何「每天同一時間」的說法，C 的 However 沒有可轉折的對象；潮汐每天延後是第三段的內容。"
+            },
+            "D": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "A few hours later, it may have moved far back from the shore.",
+              "explanation_zh": "D 的 As a result 前面沒有原因，on that side（那一側）也沒有所指；前文還沒提到月亮的拉力與地球的哪一側。"
+            },
+            "E": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Surprisingly, the main force behind it is the moon.",
+              "explanation_zh": "E 突然談太陽、月亮每月兩次排成一直線，前文沒有太陽；後一句的 it 指不到 E 裡的任何單一現象，「主要力量是月亮」也和 E 的兩個天體並列不合。"
+            }
+          },
+          "2": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "off_topic",
+              "evidence": "Coasts under this hill of water have high tide, while coasts farther away from it have low tide.",
+              "explanation_zh": "多餘句：遊客找螃蟹和月亮的拉力無關，後一句的 this hill of water 沒有來源。"
+            },
+            "B": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Coasts under this hill of water have high tide, while coasts farther away from it have low tide.",
+              "explanation_zh": "B 為潮汐下定義，本段已經在解釋成因，順序不對；B 沒有提到水丘，後一句的 this hill of water 沒有先行詞。"
+            },
+            "C": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Coasts under this hill of water have high tide, while coasts farther away from it have low tide.",
+              "explanation_zh": "C 談潮汐每天到達的時間不同，跳到第三段的主題；後一句的 this hill of water 沒有來源。"
+            },
+            "E": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Coasts under this hill of water have high tide, while coasts farther away from it have low tide.",
+              "explanation_zh": "前一句只講月亮的拉力，E 帶入太陽與排成一直線；E 沒有提到水丘，後一句的 this hill of water 接不上。"
+            }
+          },
+          "3": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "off_topic",
+              "evidence": "Instead, each high tide comes a little later than it did the day before.",
+              "explanation_zh": "多餘句：找螃蟹貝殼與漲潮時間無關，後一句的 Instead（而是）前面也需要一個否定的說法。"
+            },
+            "B": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Instead, each high tide comes a little later than it did the day before.",
+              "explanation_zh": "B 是潮汐的定義，第二段早已在說明潮汐，到這裡才定義太晚；B 沒有否定詞，後一句 Instead 無從承接。"
+            },
+            "D": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Instead, each high tide comes a little later than it did the day before.",
+              "explanation_zh": "D 的 As a result 與 on that side 在段首沒有依據（前一句講每天漲退次數，不是面向月亮的那一側）；D 沒有否定，後一句 Instead 接不上。"
+            },
+            "E": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Instead, each high tide comes a little later than it did the day before.",
+              "explanation_zh": "只讀前一句「每天兩次漲退→每月兩次排成一直線」似乎可接，但後一句 Instead, each high tide comes a little later 必須接在「並非同一時間」這類否定句之後，E 沒有否定。"
+            }
+          },
+          "4": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "off_topic",
+              "evidence": "When this happens, their pulls work together and produce especially high tides, known as spring tides.",
+              "explanation_zh": "多餘句：遊客找螃蟹與太陽、月亮的拉力無關；後一句的 When this happens 與 their pulls 都找不到所指。"
+            },
+            "B": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "When this happens, their pulls work together and produce especially high tides, known as spring tides.",
+              "explanation_zh": "B 為潮汐下定義，與太陽的拉力無關；後一句 their pulls work together 需要兩個施力的天體與一個特定事件，B 都沒有。"
+            },
+            "C": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "When this happens, their pulls work together and produce especially high tides, known as spring tides.",
+              "explanation_zh": "When this happens 要指一個偶爾發生、讓太陽和月亮合力的事件；C 說的是每天的一般現象，沒有提到兩個天體，However 也和前一句「太陽影響較小」沒有轉折關係。"
+            },
+            "D": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "When this happens, their pulls work together and produce especially high tides, known as spring tides.",
+              "explanation_zh": "D 只講面向月亮那一側海水隆起，on that side 在這裡沒有所指（前一句講太陽）；後一句 their pulls work together 需要太陽與月亮同時出現，D 沒有。"
+            }
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "unique_solution",
+      "reviewer": "record_verification.py",
+      "result": "pass",
+      "created_at": "2026-10-09T07:18:54Z",
+      "details": {
+        "method": "injective_assignment",
+        "perfect_matchings": 1,
+        "matches_key": true,
+        "feasible": {
+          "1": [
+            "B"
+          ],
+          "2": [
+            "D"
+          ],
+          "3": [
+            "C"
+          ],
+          "4": [
+            "E"
+          ]
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

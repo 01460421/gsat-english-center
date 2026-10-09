@@ -1,0 +1,668 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.b3f7b7",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "basic",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "在我們學校，每位學生都被要求每天運動至少三十分鐘。",
+        "options": null,
+        "answer": "At our school, every student is asked to exercise for at least thirty minutes every day.",
+        "accepted_answers": [
+          "At our school, all students are required to exercise for at least 30 minutes a day.",
+          "In our school, each student is required to work out for at least thirty minutes daily."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "被動語態"
+          ],
+          "topic": "每天運動三十分鐘"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "我和同學已經維持這個運動習慣快兩年了。",
+        "options": null,
+        "answer": "My classmates and I have kept this exercise habit for almost two years.",
+        "accepted_answers": [
+          "My classmates and I have kept up this habit of exercising for nearly two years."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "現在完成式"
+          ],
+          "topic": "每天運動三十分鐘"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "每天運動三十分鐘"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "學生是「被要求」的一方，用被動語態 be asked／be required，後面接不定詞 to exercise。主詞 every student 是單數，be 動詞用 is（寫 all students 就用 are）。「至少三十分鐘」是 for at least thirty minutes，minute 要加 s；「每天」是分開的兩個字 every day。",
+          "evidence": [
+            "被要求"
+          ],
+          "strategy_zh": "「被要求／被允許／被鼓勵＋做某事」→ be asked／allowed／encouraged + to V。",
+          "hints": [
+            "切成四段：在我們學校／每位學生都被要求／每天／運動至少三十分鐘",
+            "標的詞彙：school（學校）、student（學生）、ask（要求）、exercise（運動）、minute（分鐘）、day（天）",
+            "句型框架：S + is/are + p.p. + to + 原形動詞 …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「已經…快兩年了」表示從過去一直持續到現在，用現在完成式 have kept，加上 for + 一段時間（for almost two years）。主詞是「我和同學」，英文習慣把 I 放最後：My classmates and I，動詞用 have。「運動習慣」是 exercise habit 或 the habit of exercising。",
+          "evidence": [
+            "已經維持",
+            "快兩年了"
+          ],
+          "strategy_zh": "for + 一段時間、since + 起點，常和現在完成式一起出現；先看句子裡有沒有這類時間詞。",
+          "hints": [
+            "切成四段：我和同學／已經維持／這個運動習慣／快兩年了",
+            "標的詞彙：classmate（同學）、keep（維持）、exercise（運動）、habit（習慣）、almost（快（將近））、year（年）",
+            "句型框架：S + have/has + p.p. … for + 一段時間"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "At our school, every student is asked to exercise for at least thirty minutes every day.",
+            "At our school, all students are required to exercise for at least 30 minutes a day.",
+            "In our school, each student is required to work out for at least thirty minutes daily."
+          ],
+          "target_words": [
+            {
+              "word": "school",
+              "zh": "學校"
+            },
+            {
+              "word": "student",
+              "zh": "學生"
+            },
+            {
+              "word": "ask",
+              "zh": "要求",
+              "alternatives": [
+                "require"
+              ]
+            },
+            {
+              "word": "exercise",
+              "zh": "運動",
+              "alternatives": [
+                "work out"
+              ]
+            },
+            {
+              "word": "minute",
+              "zh": "分鐘"
+            },
+            {
+              "word": "day",
+              "zh": "天",
+              "alternatives": [
+                "daily"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PASS",
+              "grammar_id": "gp-passive",
+              "label_zh": "被動語態（be asked/required to V）",
+              "frame": "S + is/are + p.p. + to + 原形動詞 …",
+              "zh_trigger": "被要求"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "在我們學校",
+              "accepted": [
+                "At our school",
+                "In our school"
+              ],
+              "targets": [
+                "school"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "On our school",
+                  "right": "At our school",
+                  "explanation_zh": "「在學校」用 at 或 in，不用 on。"
+                }
+              ]
+            },
+            {
+              "zh": "每位學生都被要求",
+              "accepted": [
+                "every student is asked",
+                "every student is required",
+                "each student is asked",
+                "each student is required",
+                "all students are asked",
+                "all students are required",
+                "all the students are required"
+              ],
+              "targets": [
+                "PASS",
+                "student",
+                "ask"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "every student are asked",
+                  "right": "every student is asked",
+                  "explanation_zh": "every 後面接單數名詞，動詞用單數 is。"
+                },
+                {
+                  "wrong": "every student is asking",
+                  "right": "every student is asked",
+                  "explanation_zh": "學生是「被要求」的一方，用被動語態 is asked，不是進行式 is asking。"
+                }
+              ]
+            },
+            {
+              "zh": "每天",
+              "accepted": [
+                "every day",
+                "a day",
+                "each day",
+                "daily"
+              ],
+              "targets": [
+                "day"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "everyday",
+                  "right": "every day",
+                  "explanation_zh": "everyday 是形容詞（日常的）；當副詞「每天」要分開寫 every day。"
+                }
+              ]
+            },
+            {
+              "zh": "運動至少三十分鐘",
+              "accepted": [
+                "to exercise for at least thirty minutes",
+                "to exercise for at least 30 minutes",
+                "to exercise at least thirty minutes",
+                "to work out for at least thirty minutes",
+                "to work out for at least 30 minutes",
+                "to do at least thirty minutes of exercise"
+              ],
+              "targets": [
+                "exercise",
+                "minute"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "to exercise for at least thirty minute",
+                  "right": "to exercise for at least thirty minutes",
+                  "explanation_zh": "thirty 後面的 minute 要加 s。"
+                },
+                {
+                  "wrong": "exercising for at least thirty minutes",
+                  "right": "to exercise for at least thirty minutes",
+                  "explanation_zh": "be asked／be required 後面接不定詞 to V。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "plural_countable",
+              "zh": "三十分鐘",
+              "literal_error": "At our school, every student is asked to exercise for at least thirty minute every day.",
+              "part": 4,
+              "explanation_zh": "thirty 後面的 minute 要用複數 minutes；照中文寫單數會在這一部分被扣分。"
+            }
+          ],
+          "bonus": []
+        },
+        "2": {
+          "references": [
+            "My classmates and I have kept this exercise habit for almost two years.",
+            "My classmates and I have kept up this habit of exercising for nearly two years."
+          ],
+          "target_words": [
+            {
+              "word": "classmate",
+              "zh": "同學"
+            },
+            {
+              "word": "keep",
+              "zh": "維持",
+              "alternatives": [
+                "maintain",
+                "continue",
+                "stick to"
+              ]
+            },
+            {
+              "word": "exercise",
+              "zh": "運動",
+              "alternatives": [
+                "work out"
+              ]
+            },
+            {
+              "word": "habit",
+              "zh": "習慣"
+            },
+            {
+              "word": "almost",
+              "zh": "快（將近）",
+              "alternatives": [
+                "nearly"
+              ]
+            },
+            {
+              "word": "year",
+              "zh": "年"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PERF",
+              "grammar_id": "gp-present-perfect",
+              "label_zh": "現在完成式（已經…＋for 一段時間）",
+              "frame": "S + have/has + p.p. … for + 一段時間",
+              "zh_trigger": "已經維持"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "我和同學",
+              "accepted": [
+                "My classmates and I",
+                "with my classmates",
+                "together with my classmates"
+              ],
+              "targets": [
+                "classmate"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Me and my classmates",
+                  "right": "My classmates and I",
+                  "explanation_zh": "當主詞要用主格 I，而且習慣把 I 放在最後：My classmates and I。"
+                },
+                {
+                  "wrong": "My classmate and I",
+                  "right": "My classmates and I",
+                  "explanation_zh": "一起運動的同學不只一位，用複數。"
+                }
+              ]
+            },
+            {
+              "zh": "已經維持",
+              "accepted": [
+                "have kept",
+                "have kept up",
+                "have maintained",
+                "have stuck to",
+                "have continued",
+                "have kept on"
+              ],
+              "targets": [
+                "PERF",
+                "keep"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "kept",
+                  "right": "have kept",
+                  "explanation_zh": "「已經…快兩年了」是從過去持續到現在，要用現在完成式。"
+                },
+                {
+                  "wrong": "have keep",
+                  "right": "have kept",
+                  "explanation_zh": "have 後面接過去分詞 kept。"
+                }
+              ]
+            },
+            {
+              "zh": "這個運動習慣",
+              "accepted": [
+                "this exercise habit",
+                "this habit of exercising",
+                "this habit of exercise",
+                "this habit of working out",
+                "the exercise habit",
+                "this exercising habit"
+              ],
+              "targets": [
+                "exercise",
+                "habit"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "this sport habit",
+                  "right": "this exercise habit",
+                  "explanation_zh": "「運動」在這裡指身體活動 exercise；sport 是球類等運動項目。"
+                }
+              ]
+            },
+            {
+              "zh": "快兩年了",
+              "accepted": [
+                "for almost two years",
+                "for nearly two years",
+                "for close to two years",
+                "for almost 2 years"
+              ],
+              "targets": [
+                "almost",
+                "year"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "for almost two year",
+                  "right": "for almost two years",
+                  "explanation_zh": "two 後面接複數 years。"
+                },
+                {
+                  "wrong": "since almost two years",
+                  "right": "for almost two years",
+                  "explanation_zh": "接一段時間用 for；since 後面接起點（例如 since last year）。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "tense_trigger",
+              "zh": "已經維持",
+              "literal_error": "My classmates and I kept this exercise habit for almost two years.",
+              "part": 2,
+              "explanation_zh": "「已經…快兩年了」是從過去持續到現在，要用現在完成式；只寫過去式 kept 會在這一部分被扣分。"
+            }
+          ],
+          "bonus": []
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-basic-01",
+    "lot": "translation-basic-01",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "5d53cd3325023c20a689f496811202dc08d17408faea3e4eb4c3042ce15b605d",
+    "spec_id": "translation-basic@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T07:53:43Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T07:20:08Z",
+      "details": {
+        "solver": "A",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "At our school, every student is required to exercise for at least thirty minutes every day.",
+            "confidence": "high",
+            "explanation_zh": "「被要求」用被動 be required to V；every student 單數配 is；至少三十分鐘用 for at least thirty minutes。"
+          },
+          "2": {
+            "translation": "My classmates and I have kept up this exercise habit for almost two years.",
+            "confidence": "high",
+            "explanation_zh": "「已經維持…快兩年了」用現在完成式＋for 一段時間；維持習慣用 keep up a habit；我和同學依英文禮貌放後面寫 My classmates and I；快兩年用 almost two years。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PASS"
+            ],
+            "used_target_words": [
+              "school",
+              "student",
+              "ask",
+              "exercise",
+              "minute",
+              "day"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PERF"
+            ],
+            "used_target_words": [
+              "classmate",
+              "keep",
+              "exercise",
+              "habit",
+              "almost",
+              "year"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "school",
+              "student",
+              "ask",
+              "exercise",
+              "minute",
+              "day"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PASS": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "classmate",
+              "keep",
+              "exercise",
+              "habit",
+              "almost",
+              "year"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PERF": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T07:25:05Z",
+      "details": {
+        "solver": "B",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "At our school, every student is required to exercise for at least thirty minutes every day.",
+            "confidence": "high",
+            "explanation_zh": "「被要求」用 be required to + 原形動詞（被動）；「每位學生」every student 搭配單數動詞；「至少三十分鐘」for at least thirty minutes。"
+          },
+          "2": {
+            "translation": "My classmates and I have kept up this exercise habit for almost two years.",
+            "confidence": "high",
+            "explanation_zh": "「已經維持……快兩年了」用現在完成式 have kept up ... for almost two years；「我和同學」依慣例把 I 放後面；「習慣」譯 habit。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PASS"
+            ],
+            "used_target_words": [
+              "school",
+              "student",
+              "ask",
+              "exercise",
+              "minute",
+              "day"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PERF"
+            ],
+            "used_target_words": [
+              "classmate",
+              "keep",
+              "exercise",
+              "habit",
+              "almost",
+              "year"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "school",
+              "student",
+              "ask",
+              "exercise",
+              "minute",
+              "day"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PASS": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "classmate",
+              "keep",
+              "exercise",
+              "habit",
+              "almost",
+              "year"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PERF": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

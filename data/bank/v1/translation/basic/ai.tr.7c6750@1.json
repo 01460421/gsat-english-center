@@ -1,0 +1,682 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.7c6750",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "basic",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "在九份（Jiufen），遊客喜歡逛狹窄的老街、喝茶和拍照。",
+        "options": null,
+        "answer": "In Jiufen, visitors enjoy walking through the narrow old streets, drinking tea, and taking pictures.",
+        "accepted_answers": [
+          "In Jiufen, visitors like to walk along the narrow old streets, drink tea, and take photos.",
+          "In Jiufen, tourists love walking around the narrow old streets, drinking tea, and taking photos."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "平行結構"
+          ],
+          "topic": "九份老街"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "對很多遊客來說，在那些小巷子裡迷路其實也很有趣。",
+        "options": null,
+        "answer": "For many visitors, getting lost in those small lanes is actually a lot of fun.",
+        "accepted_answers": [
+          "Getting lost in those narrow lanes is actually fun for many visitors.",
+          "For many tourists, getting lost in those little lanes is actually very interesting."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "動名詞片語當主詞"
+          ],
+          "topic": "九份老街"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "九份老街"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「逛老街、喝茶和拍照」是三個並列的動作，英文用平行結構：A, B, and C 三項的形式要一致。enjoy／love 後面接動名詞，三個都用 V-ing（walking …, drinking tea, and taking pictures）；用 like to 時三個都用原形（walk …, drink tea, and take photos）。最後一項前面加 and，前面各項用逗號隔開。九份是表外地名，照括號寫 Jiufen。",
+          "evidence": [
+            "逛狹窄的老街、喝茶和拍照",
+            "遊客喜歡"
+          ],
+          "strategy_zh": "寫並列的動作時，先決定第一個用什麼形式（V-ing 或原形），後面每一項都照著同一個形式寫。",
+          "hints": [
+            "切成四段：遊客喜歡／逛狹窄的老街／喝茶／和拍照（In Jiufen 放句首）",
+            "標的詞彙：visitor（遊客）、narrow（狹窄的）、street（街道）、tea（茶）、picture／photo（照片）",
+            "句型框架：S + enjoy + V-ing …, V-ing …, and V-ing …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "主詞是「在那些小巷子裡迷路」這個動作，英文要把動詞改成動名詞：Getting lost in those small lanes is …；動名詞片語當主詞視為單數，動詞用 is。「迷路」是 get lost（lost 是形容詞），不是 lose。「對…來說」用 For + 人，放句首加逗號或放句尾都可以。也可以用虛主詞寫成 It is actually fun to get lost in those small lanes（同屬「非限定動詞當主詞」的句構）。",
+          "evidence": [
+            "在那些小巷子裡迷路",
+            "其實也很有趣"
+          ],
+          "strategy_zh": "中文用一整個動作當主詞時（「…迷路很有趣」），英文主詞改成 V-ing 片語，後面的 be 動詞用單數。",
+          "hints": [
+            "切成四段：對很多遊客來說／在那些小巷子裡／迷路／其實也很有趣（英文語序：For many visitors, getting lost in those small lanes is …）",
+            "標的詞彙：visitor（遊客）、lane（小巷）、get lost（迷路）、actually（其實）、fun（樂趣）",
+            "句型框架：V-ing … + is + 形容詞／名詞 …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "In Jiufen, visitors enjoy walking through the narrow old streets, drinking tea, and taking pictures.",
+            "In Jiufen, visitors like to walk along the narrow old streets, drink tea, and take photos.",
+            "In Jiufen, tourists love walking around the narrow old streets, drinking tea, and taking photos."
+          ],
+          "target_words": [
+            {
+              "word": "visitor",
+              "zh": "遊客",
+              "alternatives": [
+                "tourist"
+              ]
+            },
+            {
+              "word": "narrow",
+              "zh": "狹窄的"
+            },
+            {
+              "word": "street",
+              "zh": "老街",
+              "alternatives": [
+                "lane",
+                "road",
+                "alley"
+              ]
+            },
+            {
+              "word": "tea",
+              "zh": "茶"
+            },
+            {
+              "word": "picture",
+              "zh": "照片",
+              "alternatives": [
+                "photo"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PARA",
+              "grammar_id": "gp-parallelism",
+              "label_zh": "平行結構（A、B 和 C 用相同的形式）",
+              "frame": "S + enjoy + V-ing …, V-ing …, and V-ing … ／ like to VR …, VR …, and VR …",
+              "zh_trigger": "喝茶和拍照"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "遊客喜歡",
+              "accepted": [
+                "visitors enjoy",
+                "visitors like",
+                "visitors love",
+                "tourists enjoy",
+                "tourists like",
+                "tourists love"
+              ],
+              "targets": [
+                "visitor"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "visitors enjoy to walk",
+                  "right": "visitors enjoy walking",
+                  "explanation_zh": "enjoy 後面接動名詞 V-ing，不接不定詞。"
+                }
+              ]
+            },
+            {
+              "zh": "逛狹窄的老街",
+              "accepted": [
+                "walking through the narrow old streets",
+                "walking along the narrow old streets",
+                "walking around the narrow old streets",
+                "walking in the narrow old streets",
+                "walk through the narrow old streets",
+                "walk along the narrow old streets",
+                "walk around the narrow old streets",
+                "visiting the narrow old streets",
+                "visit the narrow old streets",
+                "walking along the narrow old street",
+                "walk along the narrow old street",
+                "walking through the narrow old street"
+              ],
+              "targets": [
+                "narrow",
+                "street"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "visiting to the narrow old streets",
+                  "right": "visiting the narrow old streets",
+                  "explanation_zh": "visit 是及物動詞，後面直接接地點，不加 to。"
+                },
+                {
+                  "wrong": "walking through the narrows old streets",
+                  "right": "walking through the narrow old streets",
+                  "explanation_zh": "形容詞沒有複數形，narrow 不加 s。"
+                }
+              ]
+            },
+            {
+              "zh": "喝茶",
+              "accepted": [
+                "drinking tea",
+                "drink tea",
+                "having tea",
+                "have tea"
+              ],
+              "targets": [
+                "tea"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "drinking teas",
+                  "right": "drinking tea",
+                  "explanation_zh": "tea 當「茶」這種飲料時不可數，不加 s。"
+                }
+              ]
+            },
+            {
+              "zh": "和拍照",
+              "accepted": [
+                "and taking pictures",
+                "and take photos",
+                "and taking photos",
+                "and take pictures"
+              ],
+              "targets": [
+                "PARA",
+                "picture"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "enjoy walking …, drinking tea, and take pictures",
+                  "right": "enjoy walking …, drinking tea, and taking pictures",
+                  "explanation_zh": "三個動作要用相同的形式：前面用 V-ing，最後一個也要用 V-ing。"
+                },
+                {
+                  "wrong": "and take picture",
+                  "right": "and take pictures",
+                  "explanation_zh": "「拍照」是 take pictures／take photos，picture 用複數。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "word_form",
+              "zh": "喝茶和拍照",
+              "literal_error": "In Jiufen, visitors enjoy walking through the narrow old streets, drink tea, and take pictures.",
+              "part": 4,
+              "explanation_zh": "中文三個動詞沒有形式變化，照字面寫容易一個 V-ing、後面兩個原形，三項不平行，這一部分扣分。"
+            }
+          ],
+          "bonus": []
+        },
+        "2": {
+          "references": [
+            "For many visitors, getting lost in those small lanes is actually a lot of fun.",
+            "Getting lost in those narrow lanes is actually fun for many visitors.",
+            "For many tourists, getting lost in those little lanes is actually very interesting."
+          ],
+          "target_words": [
+            {
+              "word": "visitor",
+              "zh": "遊客",
+              "alternatives": [
+                "tourist"
+              ]
+            },
+            {
+              "word": "lane",
+              "zh": "小巷子",
+              "alternatives": [
+                "alley",
+                "street"
+              ]
+            },
+            {
+              "word": "get lost",
+              "zh": "迷路"
+            },
+            {
+              "word": "actually",
+              "zh": "其實",
+              "alternatives": [
+                "in fact",
+                "really"
+              ]
+            },
+            {
+              "word": "fun",
+              "zh": "有趣",
+              "alternatives": [
+                "interesting"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "NFSUBJ",
+              "grammar_id": "gp-gerund-subject",
+              "label_zh": "動名詞片語當主詞",
+              "frame": "V-ing … + is/was …（動名詞主詞視為單數）",
+              "zh_trigger": "在那些小巷子裡迷路"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "對很多遊客來說",
+              "accepted": [
+                "For many visitors",
+                "for many tourists",
+                "to many visitors",
+                "to many tourists"
+              ],
+              "targets": [
+                "visitor"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "For many visitor",
+                  "right": "For many visitors",
+                  "explanation_zh": "many 後面接複數名詞。"
+                }
+              ]
+            },
+            {
+              "zh": "在那些小巷子裡",
+              "accepted": [
+                "in those small lanes",
+                "in those narrow lanes",
+                "in those little lanes",
+                "in those alleys",
+                "in those small alleys",
+                "in those lanes",
+                "in the small lanes"
+              ],
+              "targets": [
+                "lane"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "in that small lanes",
+                  "right": "in those small lanes",
+                  "explanation_zh": "「那些」是複數，用 those，不是 that。"
+                }
+              ]
+            },
+            {
+              "zh": "迷路",
+              "accepted": [
+                "getting lost",
+                "being lost",
+                "to get lost"
+              ],
+              "targets": [
+                "NFSUBJ",
+                "get lost"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "get lost in those small lanes is",
+                  "right": "getting lost in those small lanes is",
+                  "explanation_zh": "動詞片語當主詞要改成動名詞 getting lost（或改用 It is fun to get lost …）。"
+                },
+                {
+                  "wrong": "losing in those small lanes",
+                  "right": "getting lost in those small lanes",
+                  "explanation_zh": "「迷路」是 get lost（lost 是形容詞），不是 lose。"
+                }
+              ]
+            },
+            {
+              "zh": "其實也很有趣",
+              "accepted": [
+                "is actually a lot of fun",
+                "is actually fun",
+                "is also a lot of fun",
+                "is also fun",
+                "is actually very interesting",
+                "is also very interesting",
+                "is actually interesting",
+                "it is actually fun",
+                "it is actually a lot of fun",
+                "it is also fun"
+              ],
+              "targets": [
+                "actually",
+                "fun"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "are actually fun",
+                  "right": "is actually fun",
+                  "explanation_zh": "動名詞片語當主詞視為單數，動詞用 is。"
+                },
+                {
+                  "wrong": "is actually very fun",
+                  "right": "is actually a lot of fun",
+                  "explanation_zh": "fun 是名詞，正式寫作用 a lot of fun／great fun，少用 very fun。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "verbal_subject",
+              "zh": "在那些小巷子裡迷路",
+              "literal_error": "For many visitors, get lost in those small lanes is actually a lot of fun.",
+              "part": 3,
+              "explanation_zh": "中文動詞可以直接當主詞，照字面寫成 get lost … is，英文主詞沒有改成動名詞，這一部分扣分。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "For many visitors, getting lost in those winding lanes turns out to be part of the fun.",
+              "explanation_zh": "winding（蜿蜒的）描寫九份的巷弄更生動；turn out to be（結果是）、part of the fun（樂趣的一部分）是道地說法。"
+            }
+          ]
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-basic-02",
+    "lot": "translation-basic-02",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "98fb98485e580f5dcb5c9180ca2577c7306e3aace5410226eade2db68cbe253c",
+    "spec_id": "translation-basic@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 1,
+    "sentences": 1,
+    "avg_sentence_length": 1.0,
+    "denominator": 1,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 1.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {
+      "off": 1
+    },
+    "offlist_words": [
+      "jiufen"
+    ],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T07:49:13Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T07:28:47Z",
+      "details": {
+        "solver": "A",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "In Jiufen, tourists enjoy walking along the narrow old streets, drinking tea, and taking pictures.",
+            "confidence": "high",
+            "explanation_zh": "「喜歡」後接三個並列動作，用 enjoy + V-ing 並保持平行結構（walking…, drinking…, and taking…）；「逛老街」譯 walk along／stroll along the old streets；「遊客」用 tourists（也可 visitors）；一般事實用現在簡單式。"
+          },
+          "2": {
+            "translation": "For many tourists, getting lost in those small alleys is actually fun, too.",
+            "confidence": "medium",
+            "explanation_zh": "「對…來說」用 For many tourists；「在小巷子裡迷路」作主詞，用動名詞 getting lost；也可寫 it is actually fun for many tourists to get lost in those small alleys。「也」譯 too；「很有趣」也可寫 a lot of fun。句構有兩種自然寫法，信心 medium。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PARA"
+            ],
+            "used_target_words": [
+              "visitor",
+              "narrow",
+              "street",
+              "tea",
+              "picture"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "（備註，不影響判定）句首「在九份」沒有落在任何一個部分。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "NFSUBJ"
+            ],
+            "used_target_words": [
+              "visitor",
+              "lane",
+              "get lost",
+              "actually",
+              "fun"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "（備註，不影響判定）「其實也很有趣」的「也」三個參考譯文都沒譯出；這裡的「也」接近語氣詞，不譯可以接受。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "visitor",
+              "narrow",
+              "street",
+              "tea",
+              "picture"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PARA": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "visitor",
+              "lane",
+              "get lost",
+              "actually",
+              "fun"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NFSUBJ": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "fail",
+      "created_at": "2026-10-09T07:49:13Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "In Jiufen, tourists enjoy walking along the narrow old streets, drinking tea, and taking photos.",
+            "confidence": "high",
+            "explanation_zh": "「喜歡逛……、喝茶和拍照」是三個並列的動作，enjoy 後接動名詞並維持平行結構；「老街」譯 old streets。"
+          },
+          "2": {
+            "translation": "For many tourists, getting lost in those small alleys is actually quite fun.",
+            "confidence": "medium",
+            "explanation_zh": "「對很多遊客來說」用 For；「迷路」是動作當主詞，用動名詞 getting lost；「其實也很有趣」用 actually quite fun。「也」在英文裡不一定要譯出，這部分取捨有些主觀。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PARA"
+            ],
+            "used_target_words": [
+              "visitor",
+              "narrow",
+              "street",
+              "tea",
+              "picture"
+            ],
+            "within_accepted": true,
+            "closest_reference": 2,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "NFSUBJ"
+            ],
+            "used_target_words": [
+              "visitor",
+              "lane",
+              "get lost",
+              "actually",
+              "fun"
+            ],
+            "within_accepted": false,
+            "closest_reference": 2,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "第 4 部分「其實也很有趣」的 accepted 沒有「很」對應的 quite／very／really + fun（例如 is actually quite fun、is actually very fun、is really fun），卻有 very interesting；我的譯文 is actually quite fun 語意正確、很自然，卻不在清單內。評分規準偏窄，建議補上程度副詞變體。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "visitor",
+              "narrow",
+              "street",
+              "tea",
+              "picture"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PARA": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "visitor",
+              "lane",
+              "get lost",
+              "actually",
+              "fun"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NFSUBJ": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 2 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義"
+        ]
+      }
+    }
+  ],
+  "status": "rejected",
+  "status_reason": "blind_solver:B 未通過：第 2 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義"
+}

@@ -1,0 +1,2659 @@
+{
+ "schema": "gsat-bank-topic-plan-writing/v1",
+ "created_on": "2026-10-09",
+ "basis_zh": "站主要求：中譯英每個難度 100 句（50 組×2 句，每批 10 組、共 5 批），作文每個難度 10 題（每題附穩健版與頂標版範文）。這份總表指定每一組（lot＋slot）的主題，tools/make_writing_lots.py 依它產生批次規格。主題彼此不重複，也避開 data/bank/topic-plan.json（其他題型第 2 批起的主題與 used_concepts）、data/bank/v1 已用過的主題，以及歷屆學測、指考中譯英與作文的主題（tools/make_writing_lots.py --check-topics）。",
+ "rules_zh": [
+  "group.tags.topic 一律逐字照抄該組的 topic_zh（繁體中文主題名）；angle_en 是切入角度；keywords 是撞題比對用的英文關鍵字。",
+  "中譯英主題依出題規格書 tiers.*.translation.topics：穩定基礎＝校園、家庭、日常生活、台灣在地（節慶、交通、觀光）、健康；進階＝科技、社會現象、文化與節慶、環境、校園與學習；超越頂標＝科技與社會、公共議題、環境與氣候、文化現象、健康與醫療。",
+  "作文依 SPEC §3.5：穩定基礎＝校園生活圖片描述＋個人經驗（附構思圖與句型開頭）；進階＝圖片＋看法、原因或影響（不給句型開頭）；超越頂標＝圖表或多圖比較＋評估、提出方案。圖表的數字是題目設定的假設調查，題目要寫明「某校調查」之類的情境，不冒充真實統計。",
+  "主題不可行時回報站主改這份總表，再用新批號開批次；已開始生成的批次規格不改。改完先跑 python3 tools/make_writing_lots.py --check-topics。"
+ ],
+ "lots": [
+  {
+   "lot": "translation-basic-01",
+   "section": "translation",
+   "tier": "basic",
+   "seq": "01",
+   "count": 10
+  },
+  {
+   "lot": "translation-basic-02",
+   "section": "translation",
+   "tier": "basic",
+   "seq": "02",
+   "count": 10
+  },
+  {
+   "lot": "translation-basic-03",
+   "section": "translation",
+   "tier": "basic",
+   "seq": "03",
+   "count": 10
+  },
+  {
+   "lot": "translation-basic-04",
+   "section": "translation",
+   "tier": "basic",
+   "seq": "04",
+   "count": 10
+  },
+  {
+   "lot": "translation-basic-05",
+   "section": "translation",
+   "tier": "basic",
+   "seq": "05",
+   "count": 10
+  },
+  {
+   "lot": "translation-advanced-01",
+   "section": "translation",
+   "tier": "advanced",
+   "seq": "01",
+   "count": 10
+  },
+  {
+   "lot": "translation-advanced-02",
+   "section": "translation",
+   "tier": "advanced",
+   "seq": "02",
+   "count": 10
+  },
+  {
+   "lot": "translation-advanced-03",
+   "section": "translation",
+   "tier": "advanced",
+   "seq": "03",
+   "count": 10
+  },
+  {
+   "lot": "translation-advanced-04",
+   "section": "translation",
+   "tier": "advanced",
+   "seq": "04",
+   "count": 10
+  },
+  {
+   "lot": "translation-advanced-05",
+   "section": "translation",
+   "tier": "advanced",
+   "seq": "05",
+   "count": 10
+  },
+  {
+   "lot": "translation-top-01",
+   "section": "translation",
+   "tier": "top",
+   "seq": "01",
+   "count": 10
+  },
+  {
+   "lot": "translation-top-02",
+   "section": "translation",
+   "tier": "top",
+   "seq": "02",
+   "count": 10
+  },
+  {
+   "lot": "translation-top-03",
+   "section": "translation",
+   "tier": "top",
+   "seq": "03",
+   "count": 10
+  },
+  {
+   "lot": "translation-top-04",
+   "section": "translation",
+   "tier": "top",
+   "seq": "04",
+   "count": 10
+  },
+  {
+   "lot": "translation-top-05",
+   "section": "translation",
+   "tier": "top",
+   "seq": "05",
+   "count": 10
+  },
+  {
+   "lot": "composition-basic-01",
+   "section": "composition",
+   "tier": "basic",
+   "seq": "01",
+   "count": 10
+  },
+  {
+   "lot": "composition-advanced-01",
+   "section": "composition",
+   "tier": "advanced",
+   "seq": "01",
+   "count": 10
+  },
+  {
+   "lot": "composition-top-01",
+   "section": "composition",
+   "tier": "top",
+   "seq": "01",
+   "count": 10
+  }
+ ],
+ "topics": [
+  {
+   "id": "tr-b01-01",
+   "lot": "translation-basic-01",
+   "slot": 1,
+   "domain_zh": "校園",
+   "topic_zh": "擔任班長",
+   "angle_en": "a student who becomes class leader and learns to help classmates",
+   "keywords": [
+    "class leader"
+   ]
+  },
+  {
+   "id": "tr-b01-02",
+   "lot": "translation-basic-01",
+   "slot": 2,
+   "domain_zh": "校園",
+   "topic_zh": "社團招生",
+   "angle_en": "clubs looking for new members at the start of the school year",
+   "keywords": [
+    "club recruitment"
+   ]
+  },
+  {
+   "id": "tr-b01-03",
+   "lot": "translation-basic-01",
+   "slot": 3,
+   "domain_zh": "校園",
+   "topic_zh": "校慶園遊會",
+   "angle_en": "classes running food stands at the school anniversary fair",
+   "keywords": [
+    "anniversary fair"
+   ]
+  },
+  {
+   "id": "tr-b01-04",
+   "lot": "translation-basic-01",
+   "slot": 4,
+   "domain_zh": "校園",
+   "topic_zh": "期中考前的讀書計畫",
+   "angle_en": "making a study plan a week before the midterm exams",
+   "keywords": [
+    "midterm exam"
+   ]
+  },
+  {
+   "id": "tr-b01-05",
+   "lot": "translation-basic-01",
+   "slot": 5,
+   "domain_zh": "校園",
+   "topic_zh": "畢業旅行",
+   "angle_en": "seniors planning and enjoying their graduation trip",
+   "keywords": [
+    "graduation trip"
+   ]
+  },
+  {
+   "id": "tr-b01-06",
+   "lot": "translation-basic-01",
+   "slot": 6,
+   "domain_zh": "家庭",
+   "topic_zh": "全家一起做晚餐",
+   "angle_en": "family members cooking dinner together on weekends",
+   "keywords": [
+    "family dinner"
+   ]
+  },
+  {
+   "id": "tr-b01-07",
+   "lot": "translation-basic-01",
+   "slot": 7,
+   "domain_zh": "家庭",
+   "topic_zh": "祖父母學用智慧型手機",
+   "angle_en": "grandparents learning to make video calls on smartphones",
+   "keywords": [
+    "grandparents smartphone",
+    "video call"
+   ]
+  },
+  {
+   "id": "tr-b01-08",
+   "lot": "translation-basic-01",
+   "slot": 8,
+   "domain_zh": "日常生活",
+   "topic_zh": "到傳統市場買菜",
+   "angle_en": "shopping for vegetables at a traditional market with a parent",
+   "keywords": [
+    "traditional market"
+   ]
+  },
+  {
+   "id": "tr-b01-09",
+   "lot": "translation-basic-01",
+   "slot": 9,
+   "domain_zh": "家庭",
+   "topic_zh": "搬家",
+   "angle_en": "a family moving to a new apartment and packing boxes",
+   "keywords": [
+    "moving house"
+   ]
+  },
+  {
+   "id": "tr-b01-10",
+   "lot": "translation-basic-01",
+   "slot": 10,
+   "domain_zh": "健康",
+   "topic_zh": "每天運動三十分鐘",
+   "angle_en": "building the habit of exercising for thirty minutes a day",
+   "keywords": [
+    "daily exercise"
+   ]
+  },
+  {
+   "id": "tr-b02-01",
+   "lot": "translation-basic-02",
+   "slot": 1,
+   "domain_zh": "健康",
+   "topic_zh": "少喝含糖飲料",
+   "angle_en": "cutting down on sugary drinks to stay healthy",
+   "keywords": [
+    "sugary drink"
+   ]
+  },
+  {
+   "id": "tr-b02-02",
+   "lot": "translation-basic-02",
+   "slot": 2,
+   "domain_zh": "健康",
+   "topic_zh": "戴口罩預防感冒",
+   "angle_en": "wearing a face mask on crowded buses during flu season",
+   "keywords": [
+    "face mask"
+   ]
+  },
+  {
+   "id": "tr-b02-03",
+   "lot": "translation-basic-02",
+   "slot": 3,
+   "domain_zh": "台灣在地（交通）",
+   "topic_zh": "騎機車戴安全帽",
+   "angle_en": "scooter riders in Taiwan wearing helmets for safety",
+   "keywords": [
+    "scooter helmet"
+   ]
+  },
+  {
+   "id": "tr-b02-04",
+   "lot": "translation-basic-02",
+   "slot": 4,
+   "domain_zh": "台灣在地（觀光）",
+   "topic_zh": "墾丁海邊",
+   "angle_en": "a summer trip to the beaches of Kenting",
+   "keywords": [
+    "kenting"
+   ]
+  },
+  {
+   "id": "tr-b02-05",
+   "lot": "translation-basic-02",
+   "slot": 5,
+   "domain_zh": "台灣在地（觀光）",
+   "topic_zh": "九份老街",
+   "angle_en": "visitors walking through the narrow lanes of Jiufen",
+   "keywords": [
+    "jiufen"
+   ]
+  },
+  {
+   "id": "tr-b02-06",
+   "lot": "translation-basic-02",
+   "slot": 6,
+   "domain_zh": "台灣在地（觀光）",
+   "topic_zh": "帶外國朋友逛台灣",
+   "angle_en": "showing a foreign friend around Taiwan for the first time",
+   "keywords": [
+    "foreign visitor"
+   ]
+  },
+  {
+   "id": "tr-b02-07",
+   "lot": "translation-basic-02",
+   "slot": 7,
+   "domain_zh": "日常生活",
+   "topic_zh": "自助洗衣店",
+   "angle_en": "students washing clothes at a self-service laundromat",
+   "keywords": [
+    "laundromat"
+   ]
+  },
+  {
+   "id": "tr-b02-08",
+   "lot": "translation-basic-02",
+   "slot": 8,
+   "domain_zh": "家庭",
+   "topic_zh": "整理家族老照片",
+   "angle_en": "sorting old family photos with grandparents",
+   "keywords": [
+    "old family photos"
+   ]
+  },
+  {
+   "id": "tr-b02-09",
+   "lot": "translation-basic-02",
+   "slot": 9,
+   "domain_zh": "校園",
+   "topic_zh": "教師節寫卡片",
+   "angle_en": "students writing thank-you cards for Teachers' Day",
+   "keywords": [
+    "teachers' day"
+   ]
+  },
+  {
+   "id": "tr-b02-10",
+   "lot": "translation-basic-02",
+   "slot": 10,
+   "domain_zh": "家庭",
+   "topic_zh": "母親節禮物",
+   "angle_en": "choosing a handmade gift for Mother's Day",
+   "keywords": [
+    "mother's day"
+   ]
+  },
+  {
+   "id": "tr-b03-01",
+   "lot": "translation-basic-03",
+   "slot": 1,
+   "domain_zh": "日常生活",
+   "topic_zh": "陽台種菜",
+   "angle_en": "a family growing vegetables in pots on their balcony",
+   "keywords": [
+    "balcony vegetables"
+   ]
+  },
+  {
+   "id": "tr-b03-02",
+   "lot": "translation-basic-03",
+   "slot": 2,
+   "domain_zh": "健康",
+   "topic_zh": "清晨慢跑",
+   "angle_en": "jogging in the early morning before school",
+   "keywords": [
+    "morning jog"
+   ]
+  },
+  {
+   "id": "tr-b03-03",
+   "lot": "translation-basic-03",
+   "slot": 3,
+   "domain_zh": "校園",
+   "topic_zh": "放學後的讀書會",
+   "angle_en": "friends forming a study group after school",
+   "keywords": [
+    "study group"
+   ]
+  },
+  {
+   "id": "tr-b03-04",
+   "lot": "translation-basic-03",
+   "slot": 4,
+   "domain_zh": "日常生活",
+   "topic_zh": "看影集學英文",
+   "angle_en": "learning English by watching TV shows with English subtitles",
+   "keywords": [
+    "english subtitles"
+   ]
+  },
+  {
+   "id": "tr-b03-05",
+   "lot": "translation-basic-03",
+   "slot": 5,
+   "domain_zh": "日常生活",
+   "topic_zh": "社區志工",
+   "angle_en": "teenagers volunteering at a community center on weekends",
+   "keywords": [
+    "community volunteer"
+   ]
+  },
+  {
+   "id": "tr-b03-06",
+   "lot": "translation-basic-03",
+   "slot": 6,
+   "domain_zh": "日常生活",
+   "topic_zh": "參觀美術館",
+   "angle_en": "visiting an art museum with classmates",
+   "keywords": [
+    "art museum"
+   ]
+  },
+  {
+   "id": "tr-b03-07",
+   "lot": "translation-basic-03",
+   "slot": 7,
+   "domain_zh": "校園",
+   "topic_zh": "參加夏令營",
+   "angle_en": "making new friends at a summer camp",
+   "keywords": [
+    "summer camp"
+   ]
+  },
+  {
+   "id": "tr-b03-08",
+   "lot": "translation-basic-03",
+   "slot": 8,
+   "domain_zh": "日常生活",
+   "topic_zh": "學做蛋糕",
+   "angle_en": "baking a cake for a friend for the first time",
+   "keywords": [
+    "baking a cake"
+   ]
+  },
+  {
+   "id": "tr-b03-09",
+   "lot": "translation-basic-03",
+   "slot": 9,
+   "domain_zh": "台灣在地（交通）",
+   "topic_zh": "第一次搭飛機",
+   "angle_en": "a teenager taking a plane for the first time",
+   "keywords": [
+    "first flight"
+   ]
+  },
+  {
+   "id": "tr-b03-10",
+   "lot": "translation-basic-03",
+   "slot": 10,
+   "domain_zh": "日常生活",
+   "topic_zh": "逛動物園",
+   "angle_en": "a family day at the zoo watching the animals",
+   "keywords": [
+    "zoo"
+   ]
+  },
+  {
+   "id": "tr-b04-01",
+   "lot": "translation-basic-04",
+   "slot": 1,
+   "domain_zh": "校園",
+   "topic_zh": "合唱比賽",
+   "angle_en": "a class practicing hard for the school choir contest",
+   "keywords": [
+    "choir contest"
+   ]
+  },
+  {
+   "id": "tr-b04-02",
+   "lot": "translation-basic-04",
+   "slot": 2,
+   "domain_zh": "日常生活",
+   "topic_zh": "幫助年長鄰居",
+   "angle_en": "helping an elderly neighbor carry groceries",
+   "keywords": [
+    "elderly neighbor"
+   ]
+  },
+  {
+   "id": "tr-b04-03",
+   "lot": "translation-basic-04",
+   "slot": 3,
+   "domain_zh": "台灣在地（觀光）",
+   "topic_zh": "阿里山看日出",
+   "angle_en": "getting up early to watch the sunrise on Alishan",
+   "keywords": [
+    "alishan"
+   ]
+  },
+  {
+   "id": "tr-b04-04",
+   "lot": "translation-basic-04",
+   "slot": 4,
+   "domain_zh": "台灣在地（觀光）",
+   "topic_zh": "搭船去澎湖",
+   "angle_en": "taking a boat to the Penghu islands in summer",
+   "keywords": [
+    "penghu"
+   ]
+  },
+  {
+   "id": "tr-b04-05",
+   "lot": "translation-basic-04",
+   "slot": 5,
+   "domain_zh": "台灣在地（觀光）",
+   "topic_zh": "北投泡溫泉",
+   "angle_en": "relaxing in the hot springs of Beitou in winter",
+   "keywords": [
+    "beitou"
+   ]
+  },
+  {
+   "id": "tr-b04-06",
+   "lot": "translation-basic-04",
+   "slot": 6,
+   "domain_zh": "日常生活",
+   "topic_zh": "逛書店",
+   "angle_en": "spending a weekend afternoon reading in a bookstore",
+   "keywords": [
+    "bookstore"
+   ]
+  },
+  {
+   "id": "tr-b04-07",
+   "lot": "translation-basic-04",
+   "slot": 7,
+   "domain_zh": "日常生活",
+   "topic_zh": "學吉他",
+   "angle_en": "learning to play the guitar by watching online videos",
+   "keywords": [
+    "guitar"
+   ]
+  },
+  {
+   "id": "tr-b04-08",
+   "lot": "translation-basic-04",
+   "slot": 8,
+   "domain_zh": "健康",
+   "topic_zh": "感冒看醫生",
+   "angle_en": "seeing a doctor at a clinic when catching a cold",
+   "keywords": [
+    "clinic visit"
+   ]
+  },
+  {
+   "id": "tr-b04-09",
+   "lot": "translation-basic-04",
+   "slot": 9,
+   "domain_zh": "台灣在地（節慶）",
+   "topic_zh": "清明節掃墓",
+   "angle_en": "families visiting their ancestors' graves on Tomb Sweeping Day",
+   "keywords": [
+    "tomb sweeping"
+   ]
+  },
+  {
+   "id": "tr-b04-10",
+   "lot": "translation-basic-04",
+   "slot": 10,
+   "domain_zh": "台灣在地（節慶）",
+   "topic_zh": "中元普渡",
+   "angle_en": "neighborhoods preparing food offerings for the Ghost Festival",
+   "keywords": [
+    "ghost festival"
+   ]
+  },
+  {
+   "id": "tr-b05-01",
+   "lot": "translation-basic-05",
+   "slot": 1,
+   "domain_zh": "校園",
+   "topic_zh": "班際拔河比賽",
+   "angle_en": "classes cheering for each other in a tug of war contest",
+   "keywords": [
+    "tug of war"
+   ]
+  },
+  {
+   "id": "tr-b05-02",
+   "lot": "translation-basic-05",
+   "slot": 2,
+   "domain_zh": "台灣在地（交通）",
+   "topic_zh": "搭校車上學",
+   "angle_en": "students taking the school bus early in the morning",
+   "keywords": [
+    "school bus"
+   ]
+  },
+  {
+   "id": "tr-b05-03",
+   "lot": "translation-basic-05",
+   "slot": 3,
+   "domain_zh": "台灣在地（觀光）",
+   "topic_zh": "參觀觀光工廠",
+   "angle_en": "a class visiting a tourist factory to see how candy is made",
+   "keywords": [
+    "tourist factory"
+   ]
+  },
+  {
+   "id": "tr-b05-04",
+   "lot": "translation-basic-05",
+   "slot": 4,
+   "domain_zh": "校園",
+   "topic_zh": "雨天的室內體育課",
+   "angle_en": "PE class moving indoors on rainy days",
+   "keywords": [
+    "indoor pe class"
+   ]
+  },
+  {
+   "id": "tr-b05-05",
+   "lot": "translation-basic-05",
+   "slot": 5,
+   "domain_zh": "校園",
+   "topic_zh": "新學期換座位",
+   "angle_en": "changing seats at the start of a new semester",
+   "keywords": [
+    "seat change"
+   ]
+  },
+  {
+   "id": "tr-b05-06",
+   "lot": "translation-basic-05",
+   "slot": 6,
+   "domain_zh": "日常生活",
+   "topic_zh": "寫日記",
+   "angle_en": "keeping a diary in English to record daily life",
+   "keywords": [
+    "keep a diary"
+   ]
+  },
+  {
+   "id": "tr-b05-07",
+   "lot": "translation-basic-05",
+   "slot": 7,
+   "domain_zh": "健康",
+   "topic_zh": "學校健康檢查",
+   "angle_en": "students getting their annual health checkup at school",
+   "keywords": [
+    "health checkup"
+   ]
+  },
+  {
+   "id": "tr-b05-08",
+   "lot": "translation-basic-05",
+   "slot": 8,
+   "domain_zh": "健康",
+   "topic_zh": "出門擦防曬",
+   "angle_en": "putting on sunscreen before outdoor activities",
+   "keywords": [
+    "sunscreen"
+   ]
+  },
+  {
+   "id": "tr-b05-09",
+   "lot": "translation-basic-05",
+   "slot": 9,
+   "domain_zh": "台灣在地（節慶）",
+   "topic_zh": "冬至吃湯圓",
+   "angle_en": "eating sweet rice balls with family on the winter solstice",
+   "keywords": [
+    "tangyuan",
+    "winter solstice"
+   ]
+  },
+  {
+   "id": "tr-b05-10",
+   "lot": "translation-basic-05",
+   "slot": 10,
+   "domain_zh": "台灣在地（節慶）",
+   "topic_zh": "七夕情人節",
+   "angle_en": "young couples celebrating Chinese Valentine's Day",
+   "keywords": [
+    "qixi"
+   ]
+  },
+  {
+   "id": "tr-a01-01",
+   "lot": "translation-advanced-01",
+   "slot": 1,
+   "domain_zh": "科技",
+   "topic_zh": "外送平台",
+   "angle_en": "how food delivery apps have changed the way people eat",
+   "keywords": [
+    "food delivery app"
+   ]
+  },
+  {
+   "id": "tr-a01-02",
+   "lot": "translation-advanced-01",
+   "slot": 2,
+   "domain_zh": "科技",
+   "topic_zh": "共享機車",
+   "angle_en": "shared electric scooters becoming common in big cities",
+   "keywords": [
+    "shared scooter"
+   ]
+  },
+  {
+   "id": "tr-a01-03",
+   "lot": "translation-advanced-01",
+   "slot": 3,
+   "domain_zh": "校園與學習",
+   "topic_zh": "線上課程",
+   "angle_en": "students taking online courses to learn new skills",
+   "keywords": [
+    "online course"
+   ]
+  },
+  {
+   "id": "tr-a01-04",
+   "lot": "translation-advanced-01",
+   "slot": 4,
+   "domain_zh": "科技",
+   "topic_zh": "用 AI 寫作業",
+   "angle_en": "students using AI tools to help with homework and the problems it brings",
+   "keywords": [
+    "ai homework"
+   ]
+  },
+  {
+   "id": "tr-a01-05",
+   "lot": "translation-advanced-01",
+   "slot": 5,
+   "domain_zh": "科技",
+   "topic_zh": "短影音",
+   "angle_en": "teenagers spending hours watching short videos",
+   "keywords": [
+    "short video"
+   ]
+  },
+  {
+   "id": "tr-a01-06",
+   "lot": "translation-advanced-01",
+   "slot": 6,
+   "domain_zh": "社會現象",
+   "topic_zh": "社群媒體上的比較",
+   "angle_en": "young people comparing their lives with what they see on social media",
+   "keywords": [
+    "social media comparison"
+   ]
+  },
+  {
+   "id": "tr-a01-07",
+   "lot": "translation-advanced-01",
+   "slot": 7,
+   "domain_zh": "社會現象",
+   "topic_zh": "少子化",
+   "angle_en": "the falling birth rate and fewer students in rural schools",
+   "keywords": [
+    "low birth rate"
+   ]
+  },
+  {
+   "id": "tr-a01-08",
+   "lot": "translation-advanced-01",
+   "slot": 8,
+   "domain_zh": "社會現象",
+   "topic_zh": "樂齡大學",
+   "angle_en": "retired people going back to school at senior universities",
+   "keywords": [
+    "senior university"
+   ]
+  },
+  {
+   "id": "tr-a01-09",
+   "lot": "translation-advanced-01",
+   "slot": 9,
+   "domain_zh": "社會現象",
+   "topic_zh": "外籍移工",
+   "angle_en": "migrant workers who take care of elderly people in Taiwan",
+   "keywords": [
+    "migrant worker"
+   ]
+  },
+  {
+   "id": "tr-a01-10",
+   "lot": "translation-advanced-01",
+   "slot": 10,
+   "domain_zh": "社會現象",
+   "topic_zh": "青年返鄉",
+   "angle_en": "young people moving back to their rural hometowns to start businesses",
+   "keywords": [
+    "rural hometown"
+   ]
+  },
+  {
+   "id": "tr-a02-01",
+   "lot": "translation-advanced-02",
+   "slot": 1,
+   "domain_zh": "環境",
+   "topic_zh": "自備購物袋",
+   "angle_en": "shoppers bringing reusable bags instead of buying plastic ones",
+   "keywords": [
+    "reusable shopping bag"
+   ]
+  },
+  {
+   "id": "tr-a02-02",
+   "lot": "translation-advanced-02",
+   "slot": 2,
+   "domain_zh": "環境",
+   "topic_zh": "夏季節約用電",
+   "angle_en": "families finding ways to save power during hot summers",
+   "keywords": [
+    "power-saving"
+   ]
+  },
+  {
+   "id": "tr-a02-03",
+   "lot": "translation-advanced-02",
+   "slot": 3,
+   "domain_zh": "環境",
+   "topic_zh": "素食飲食",
+   "angle_en": "more people choosing a vegetarian diet for health and the environment",
+   "keywords": [
+    "vegetarian diet"
+   ]
+  },
+  {
+   "id": "tr-a02-04",
+   "lot": "translation-advanced-02",
+   "slot": 4,
+   "domain_zh": "環境",
+   "topic_zh": "在地食材",
+   "angle_en": "restaurants using local ingredients from nearby farms",
+   "keywords": [
+    "local ingredients"
+   ]
+  },
+  {
+   "id": "tr-a02-05",
+   "lot": "translation-advanced-02",
+   "slot": 5,
+   "domain_zh": "校園與學習",
+   "topic_zh": "學習歷程檔案",
+   "angle_en": "senior high students preparing learning portfolios for college",
+   "keywords": [
+    "learning portfolio"
+   ]
+  },
+  {
+   "id": "tr-a02-06",
+   "lot": "translation-advanced-02",
+   "slot": 6,
+   "domain_zh": "校園與學習",
+   "topic_zh": "分組報告",
+   "angle_en": "the challenges of working on group projects",
+   "keywords": [
+    "group project"
+   ]
+  },
+  {
+   "id": "tr-a02-07",
+   "lot": "translation-advanced-02",
+   "slot": 7,
+   "domain_zh": "校園與學習",
+   "topic_zh": "考試壓力",
+   "angle_en": "how exam pressure affects students and ways to deal with it",
+   "keywords": [
+    "exam pressure"
+   ]
+  },
+  {
+   "id": "tr-a02-08",
+   "lot": "translation-advanced-02",
+   "slot": 8,
+   "domain_zh": "校園與學習",
+   "topic_zh": "職業探索",
+   "angle_en": "students exploring possible careers through job shadowing",
+   "keywords": [
+    "career exploration"
+   ]
+  },
+  {
+   "id": "tr-a02-09",
+   "lot": "translation-advanced-02",
+   "slot": 9,
+   "domain_zh": "文化與節慶",
+   "topic_zh": "藍染工藝",
+   "angle_en": "young people learning traditional indigo dyeing",
+   "keywords": [
+    "indigo dyeing"
+   ]
+  },
+  {
+   "id": "tr-a02-10",
+   "lot": "translation-advanced-02",
+   "slot": 10,
+   "domain_zh": "文化與節慶",
+   "topic_zh": "布袋戲",
+   "angle_en": "glove puppetry finding new fans through TV and games",
+   "keywords": [
+    "glove puppetry"
+   ]
+  },
+  {
+   "id": "tr-a03-01",
+   "lot": "translation-advanced-03",
+   "slot": 1,
+   "domain_zh": "文化與節慶",
+   "topic_zh": "原住民族語",
+   "angle_en": "efforts to keep indigenous languages alive in schools",
+   "keywords": [
+    "indigenous language"
+   ]
+  },
+  {
+   "id": "tr-a03-02",
+   "lot": "translation-advanced-03",
+   "slot": 2,
+   "domain_zh": "科技",
+   "topic_zh": "智慧手錶",
+   "angle_en": "people using smartwatches to track their health",
+   "keywords": [
+    "smartwatch"
+   ]
+  },
+  {
+   "id": "tr-a03-03",
+   "lot": "translation-advanced-03",
+   "slot": 3,
+   "domain_zh": "社會現象",
+   "topic_zh": "遠距工作",
+   "angle_en": "parents working from home and how it changes family life",
+   "keywords": [
+    "remote work"
+   ]
+  },
+  {
+   "id": "tr-a03-04",
+   "lot": "translation-advanced-03",
+   "slot": 4,
+   "domain_zh": "環境",
+   "topic_zh": "雨水回收",
+   "angle_en": "schools collecting rainwater to water their gardens and flush toilets",
+   "keywords": [
+    "rainwater harvesting"
+   ]
+  },
+  {
+   "id": "tr-a03-05",
+   "lot": "translation-advanced-03",
+   "slot": 5,
+   "domain_zh": "校園與學習",
+   "topic_zh": "運動傷害",
+   "angle_en": "teenagers getting hurt in sports because they skip warm-ups",
+   "keywords": [
+    "sports injury"
+   ]
+  },
+  {
+   "id": "tr-a03-06",
+   "lot": "translation-advanced-03",
+   "slot": 6,
+   "domain_zh": "校園與學習",
+   "topic_zh": "學生影展",
+   "angle_en": "students making short films for a school film festival",
+   "keywords": [
+    "student film festival"
+   ]
+  },
+  {
+   "id": "tr-a03-07",
+   "lot": "translation-advanced-03",
+   "slot": 7,
+   "domain_zh": "科技",
+   "topic_zh": "直播",
+   "angle_en": "people selling products through live streaming",
+   "keywords": [
+    "live streaming"
+   ]
+  },
+  {
+   "id": "tr-a03-08",
+   "lot": "translation-advanced-03",
+   "slot": 8,
+   "domain_zh": "社會現象",
+   "topic_zh": "網紅",
+   "angle_en": "teenagers dreaming of becoming online influencers",
+   "keywords": [
+    "influencer"
+   ]
+  },
+  {
+   "id": "tr-a03-09",
+   "lot": "translation-advanced-03",
+   "slot": 9,
+   "domain_zh": "社會現象",
+   "topic_zh": "打工度假",
+   "angle_en": "young Taiwanese going abroad on working holidays",
+   "keywords": [
+    "working holiday"
+   ]
+  },
+  {
+   "id": "tr-a03-10",
+   "lot": "translation-advanced-03",
+   "slot": 10,
+   "domain_zh": "社會現象",
+   "topic_zh": "衝動購物",
+   "angle_en": "advertisements leading to impulse buying online",
+   "keywords": [
+    "impulse buying"
+   ]
+  },
+  {
+   "id": "tr-a04-01",
+   "lot": "translation-advanced-04",
+   "slot": 1,
+   "domain_zh": "校園與學習",
+   "topic_zh": "交換學生",
+   "angle_en": "an exchange student adjusting to life in a new country",
+   "keywords": [
+    "exchange student"
+   ]
+  },
+  {
+   "id": "tr-a04-02",
+   "lot": "translation-advanced-04",
+   "slot": 2,
+   "domain_zh": "文化與節慶",
+   "topic_zh": "公共藝術",
+   "angle_en": "public art in train stations and parks making cities more interesting",
+   "keywords": [
+    "public art"
+   ]
+  },
+  {
+   "id": "tr-a04-03",
+   "lot": "translation-advanced-04",
+   "slot": 3,
+   "domain_zh": "文化與節慶",
+   "topic_zh": "老屋改造",
+   "angle_en": "old houses being turned into bookshops and small studios",
+   "keywords": [
+    "old house renovation"
+   ]
+  },
+  {
+   "id": "tr-a04-04",
+   "lot": "translation-advanced-04",
+   "slot": 4,
+   "domain_zh": "科技",
+   "topic_zh": "電話詐騙",
+   "angle_en": "scammers using phone calls and messages to cheat elderly people",
+   "keywords": [
+    "phone scam"
+   ]
+  },
+  {
+   "id": "tr-a04-05",
+   "lot": "translation-advanced-04",
+   "slot": 5,
+   "domain_zh": "科技",
+   "topic_zh": "語言交換 App",
+   "angle_en": "students practicing foreign languages with partners through language exchange apps",
+   "keywords": [
+    "language exchange app"
+   ]
+  },
+  {
+   "id": "tr-a04-06",
+   "lot": "translation-advanced-04",
+   "slot": 6,
+   "domain_zh": "科技",
+   "topic_zh": "自學程式設計",
+   "angle_en": "teenagers teaching themselves to code",
+   "keywords": [
+    "learn to code"
+   ]
+  },
+  {
+   "id": "tr-a04-07",
+   "lot": "translation-advanced-04",
+   "slot": 7,
+   "domain_zh": "科技",
+   "topic_zh": "機器翻譯",
+   "angle_en": "travelers relying on machine translation apps",
+   "keywords": [
+    "machine translation"
+   ]
+  },
+  {
+   "id": "tr-a04-08",
+   "lot": "translation-advanced-04",
+   "slot": 8,
+   "domain_zh": "科技",
+   "topic_zh": "3D 列印",
+   "angle_en": "schools using 3D printers in science classes",
+   "keywords": [
+    "3d printing"
+   ]
+  },
+  {
+   "id": "tr-a04-09",
+   "lot": "translation-advanced-04",
+   "slot": 9,
+   "domain_zh": "科技",
+   "topic_zh": "無人商店",
+   "angle_en": "unmanned stores where customers pay by scanning their phones",
+   "keywords": [
+    "unmanned store"
+   ]
+  },
+  {
+   "id": "tr-a04-10",
+   "lot": "translation-advanced-04",
+   "slot": 10,
+   "domain_zh": "科技",
+   "topic_zh": "電子發票",
+   "angle_en": "e-invoices replacing paper receipts",
+   "keywords": [
+    "e-invoice"
+   ]
+  },
+  {
+   "id": "tr-a05-01",
+   "lot": "translation-advanced-05",
+   "slot": 1,
+   "domain_zh": "科技",
+   "topic_zh": "雲端備份",
+   "angle_en": "losing a phone and realizing the value of cloud backups",
+   "keywords": [
+    "cloud backup"
+   ]
+  },
+  {
+   "id": "tr-a05-02",
+   "lot": "translation-advanced-05",
+   "slot": 2,
+   "domain_zh": "文化與節慶",
+   "topic_zh": "動漫角色扮演",
+   "angle_en": "young fans dressing up as characters at cosplay events",
+   "keywords": [
+    "cosplay"
+   ]
+  },
+  {
+   "id": "tr-a05-03",
+   "lot": "translation-advanced-05",
+   "slot": 3,
+   "domain_zh": "文化與節慶",
+   "topic_zh": "韓流",
+   "angle_en": "the popularity of Korean dramas and music among teenagers",
+   "keywords": [
+    "korean wave"
+   ]
+  },
+  {
+   "id": "tr-a05-04",
+   "lot": "translation-advanced-05",
+   "slot": 4,
+   "domain_zh": "文化與節慶",
+   "topic_zh": "書法",
+   "angle_en": "students rediscovering Chinese calligraphy",
+   "keywords": [
+    "calligraphy"
+   ]
+  },
+  {
+   "id": "tr-a05-05",
+   "lot": "translation-advanced-05",
+   "slot": 5,
+   "domain_zh": "文化與節慶",
+   "topic_zh": "二十四節氣",
+   "angle_en": "how the traditional solar terms guided farming and daily life",
+   "keywords": [
+    "solar terms"
+   ]
+  },
+  {
+   "id": "tr-a05-06",
+   "lot": "translation-advanced-05",
+   "slot": 6,
+   "domain_zh": "環境",
+   "topic_zh": "環保標章",
+   "angle_en": "shoppers checking eco-labels before buying products",
+   "keywords": [
+    "eco-label"
+   ]
+  },
+  {
+   "id": "tr-a05-07",
+   "lot": "translation-advanced-05",
+   "slot": 7,
+   "domain_zh": "校園與學習",
+   "topic_zh": "學生會",
+   "angle_en": "the student council organizing events and listening to students",
+   "keywords": [
+    "student council"
+   ]
+  },
+  {
+   "id": "tr-a05-08",
+   "lot": "translation-advanced-05",
+   "slot": 8,
+   "domain_zh": "校園與學習",
+   "topic_zh": "自主學習",
+   "angle_en": "students planning their own projects during self-directed learning time",
+   "keywords": [
+    "self-directed learning"
+   ]
+  },
+  {
+   "id": "tr-a05-09",
+   "lot": "translation-advanced-05",
+   "slot": 9,
+   "domain_zh": "校園與學習",
+   "topic_zh": "大學面試",
+   "angle_en": "preparing for university interviews",
+   "keywords": [
+    "university interview"
+   ]
+  },
+  {
+   "id": "tr-a05-10",
+   "lot": "translation-advanced-05",
+   "slot": 10,
+   "domain_zh": "校園與學習",
+   "topic_zh": "跨領域課程",
+   "angle_en": "courses that combine science and art",
+   "keywords": [
+    "interdisciplinary course"
+   ]
+  },
+  {
+   "id": "tr-t01-01",
+   "lot": "translation-top-01",
+   "slot": 1,
+   "domain_zh": "科技與社會",
+   "topic_zh": "演算法推薦",
+   "angle_en": "how recommendation algorithms decide what we see online",
+   "keywords": [
+    "recommendation algorithm"
+   ]
+  },
+  {
+   "id": "tr-t01-02",
+   "lot": "translation-top-01",
+   "slot": 2,
+   "domain_zh": "科技與社會",
+   "topic_zh": "個人資料保護",
+   "angle_en": "apps collecting personal data and the need to protect privacy",
+   "keywords": [
+    "personal data"
+   ]
+  },
+  {
+   "id": "tr-t01-03",
+   "lot": "translation-top-01",
+   "slot": 3,
+   "domain_zh": "科技與社會",
+   "topic_zh": "深偽影片",
+   "angle_en": "deepfake videos making it hard to tell what is real",
+   "keywords": [
+    "deepfake"
+   ]
+  },
+  {
+   "id": "tr-t01-04",
+   "lot": "translation-top-01",
+   "slot": 4,
+   "domain_zh": "科技與社會",
+   "topic_zh": "自動駕駛車",
+   "angle_en": "the promise and risks of self-driving cars",
+   "keywords": [
+    "self-driving car"
+   ]
+  },
+  {
+   "id": "tr-t01-05",
+   "lot": "translation-top-01",
+   "slot": 5,
+   "domain_zh": "科技與社會",
+   "topic_zh": "太空旅遊",
+   "angle_en": "space tourism for the rich and its costs to the planet",
+   "keywords": [
+    "space tourism"
+   ]
+  },
+  {
+   "id": "tr-t01-06",
+   "lot": "translation-top-01",
+   "slot": 6,
+   "domain_zh": "健康與醫療",
+   "topic_zh": "基因檢測",
+   "angle_en": "genetic testing that predicts health risks",
+   "keywords": [
+    "genetic testing"
+   ]
+  },
+  {
+   "id": "tr-t01-07",
+   "lot": "translation-top-01",
+   "slot": 7,
+   "domain_zh": "健康與醫療",
+   "topic_zh": "心理健康與求助",
+   "angle_en": "removing the stigma around seeking help for mental health",
+   "keywords": [
+    "mental health"
+   ]
+  },
+  {
+   "id": "tr-t01-08",
+   "lot": "translation-top-01",
+   "slot": 8,
+   "domain_zh": "健康與醫療",
+   "topic_zh": "久坐的生活",
+   "angle_en": "the health risks of a sedentary lifestyle among office workers and students",
+   "keywords": [
+    "sedentary lifestyle"
+   ]
+  },
+  {
+   "id": "tr-t01-09",
+   "lot": "translation-top-01",
+   "slot": 9,
+   "domain_zh": "健康與醫療",
+   "topic_zh": "超加工食品",
+   "angle_en": "ultra-processed food and its effects on long-term health",
+   "keywords": [
+    "ultra-processed food"
+   ]
+  },
+  {
+   "id": "tr-t01-10",
+   "lot": "translation-top-01",
+   "slot": 10,
+   "domain_zh": "環境與氣候",
+   "topic_zh": "海平面上升",
+   "angle_en": "rising sea levels threatening coastal towns",
+   "keywords": [
+    "sea level rise"
+   ]
+  },
+  {
+   "id": "tr-t02-01",
+   "lot": "translation-top-02",
+   "slot": 1,
+   "domain_zh": "環境與氣候",
+   "topic_zh": "生物多樣性",
+   "angle_en": "the loss of biodiversity and why every species matters",
+   "keywords": [
+    "biodiversity"
+   ]
+  },
+  {
+   "id": "tr-t02-02",
+   "lot": "translation-top-02",
+   "slot": 2,
+   "domain_zh": "環境與氣候",
+   "topic_zh": "循環經濟",
+   "angle_en": "designing products that can be reused instead of thrown away",
+   "keywords": [
+    "circular economy"
+   ]
+  },
+  {
+   "id": "tr-t02-03",
+   "lot": "translation-top-02",
+   "slot": 3,
+   "domain_zh": "公共議題",
+   "topic_zh": "糧食安全",
+   "angle_en": "how countries try to grow enough food in a changing climate",
+   "keywords": [
+    "food security"
+   ]
+  },
+  {
+   "id": "tr-t02-04",
+   "lot": "translation-top-02",
+   "slot": 4,
+   "domain_zh": "公共議題",
+   "topic_zh": "社會企業",
+   "angle_en": "social enterprises that solve problems while making a profit",
+   "keywords": [
+    "social enterprise"
+   ]
+  },
+  {
+   "id": "tr-t02-05",
+   "lot": "translation-top-02",
+   "slot": 5,
+   "domain_zh": "文化現象",
+   "topic_zh": "文化資產保存",
+   "angle_en": "protecting historic buildings while cities keep growing",
+   "keywords": [
+    "heritage preservation"
+   ]
+  },
+  {
+   "id": "tr-t02-06",
+   "lot": "translation-top-02",
+   "slot": 6,
+   "domain_zh": "文化現象",
+   "topic_zh": "文物歸還",
+   "angle_en": "museums returning cultural objects to their countries of origin",
+   "keywords": [
+    "repatriation"
+   ]
+  },
+  {
+   "id": "tr-t02-07",
+   "lot": "translation-top-02",
+   "slot": 7,
+   "domain_zh": "文化現象",
+   "topic_zh": "全球化與在地文化",
+   "angle_en": "globalization and the survival of local traditions",
+   "keywords": [
+    "globalization"
+   ]
+  },
+  {
+   "id": "tr-t02-08",
+   "lot": "translation-top-02",
+   "slot": 8,
+   "domain_zh": "文化現象",
+   "topic_zh": "消費主義",
+   "angle_en": "consumerism and the pressure to keep buying new things",
+   "keywords": [
+    "consumerism"
+   ]
+  },
+  {
+   "id": "tr-t02-09",
+   "lot": "translation-top-02",
+   "slot": 9,
+   "domain_zh": "健康與醫療",
+   "topic_zh": "遠距醫療",
+   "angle_en": "telemedicine bringing doctors to people in remote areas",
+   "keywords": [
+    "telemedicine"
+   ]
+  },
+  {
+   "id": "tr-t02-10",
+   "lot": "translation-top-02",
+   "slot": 10,
+   "domain_zh": "健康與醫療",
+   "topic_zh": "器官捐贈",
+   "angle_en": "encouraging organ donation and the hope it brings to patients",
+   "keywords": [
+    "organ donation"
+   ]
+  },
+  {
+   "id": "tr-t03-01",
+   "lot": "translation-top-03",
+   "slot": 1,
+   "domain_zh": "科技與社會",
+   "topic_zh": "動物實驗",
+   "angle_en": "the debate over using animals in scientific testing",
+   "keywords": [
+    "animal testing"
+   ]
+  },
+  {
+   "id": "tr-t03-02",
+   "lot": "translation-top-03",
+   "slot": 2,
+   "domain_zh": "環境與氣候",
+   "topic_zh": "植物肉",
+   "angle_en": "plant-based meat as a way to cut emissions from farming",
+   "keywords": [
+    "plant-based meat"
+   ]
+  },
+  {
+   "id": "tr-t03-03",
+   "lot": "translation-top-03",
+   "slot": 3,
+   "domain_zh": "環境與氣候",
+   "topic_zh": "垂直農場",
+   "angle_en": "vertical farms growing vegetables inside city buildings",
+   "keywords": [
+    "vertical farming"
+   ]
+  },
+  {
+   "id": "tr-t03-04",
+   "lot": "translation-top-03",
+   "slot": 4,
+   "domain_zh": "公共議題",
+   "topic_zh": "群眾募資",
+   "angle_en": "crowdfunding helping new ideas and community projects",
+   "keywords": [
+    "crowdfunding"
+   ]
+  },
+  {
+   "id": "tr-t03-05",
+   "lot": "translation-top-03",
+   "slot": 5,
+   "domain_zh": "公共議題",
+   "topic_zh": "政府開放資料",
+   "angle_en": "governments sharing open data that citizens can use",
+   "keywords": [
+    "open data"
+   ]
+  },
+  {
+   "id": "tr-t03-06",
+   "lot": "translation-top-03",
+   "slot": 6,
+   "domain_zh": "科技與社會",
+   "topic_zh": "數位排毒",
+   "angle_en": "people taking a break from screens to reconnect with real life",
+   "keywords": [
+    "digital detox"
+   ]
+  },
+  {
+   "id": "tr-t03-07",
+   "lot": "translation-top-03",
+   "slot": 7,
+   "domain_zh": "科技與社會",
+   "topic_zh": "錯失恐懼症",
+   "angle_en": "the fear of missing out driving people to check their phones",
+   "keywords": [
+    "fear of missing out"
+   ]
+  },
+  {
+   "id": "tr-t03-08",
+   "lot": "translation-top-03",
+   "slot": 8,
+   "domain_zh": "健康與醫療",
+   "topic_zh": "完美主義",
+   "angle_en": "perfectionism among high achievers and its hidden costs",
+   "keywords": [
+    "perfectionism"
+   ]
+  },
+  {
+   "id": "tr-t03-09",
+   "lot": "translation-top-03",
+   "slot": 9,
+   "domain_zh": "環境與氣候",
+   "topic_zh": "野火",
+   "angle_en": "wildfires growing larger as summers get hotter and drier",
+   "keywords": [
+    "wildfire"
+   ]
+  },
+  {
+   "id": "tr-t03-10",
+   "lot": "translation-top-03",
+   "slot": 10,
+   "domain_zh": "環境與氣候",
+   "topic_zh": "珊瑚白化",
+   "angle_en": "coral bleaching caused by warmer oceans",
+   "keywords": [
+    "coral bleaching"
+   ]
+  },
+  {
+   "id": "tr-t04-01",
+   "lot": "translation-top-04",
+   "slot": 1,
+   "domain_zh": "環境與氣候",
+   "topic_zh": "氣候移民",
+   "angle_en": "people forced to leave their homes because of climate change",
+   "keywords": [
+    "climate migration"
+   ]
+  },
+  {
+   "id": "tr-t04-02",
+   "lot": "translation-top-04",
+   "slot": 2,
+   "domain_zh": "科技與社會",
+   "topic_zh": "工作自動化",
+   "angle_en": "automation replacing some jobs and creating new ones",
+   "keywords": [
+    "job automation"
+   ]
+  },
+  {
+   "id": "tr-t04-03",
+   "lot": "translation-top-04",
+   "slot": 3,
+   "domain_zh": "公共議題",
+   "topic_zh": "長期照護",
+   "angle_en": "the growing need for long-term care in an aging society",
+   "keywords": [
+    "long-term care"
+   ]
+  },
+  {
+   "id": "tr-t04-04",
+   "lot": "translation-top-04",
+   "slot": 4,
+   "domain_zh": "文化現象",
+   "topic_zh": "跨文化溝通",
+   "angle_en": "misunderstandings in cross-cultural communication and how to avoid them",
+   "keywords": [
+    "cross-cultural communication"
+   ]
+  },
+  {
+   "id": "tr-t04-05",
+   "lot": "translation-top-04",
+   "slot": 5,
+   "domain_zh": "公共議題",
+   "topic_zh": "志工旅遊",
+   "angle_en": "whether short-term voluntourism really helps local communities",
+   "keywords": [
+    "voluntourism"
+   ]
+  },
+  {
+   "id": "tr-t04-06",
+   "lot": "translation-top-04",
+   "slot": 6,
+   "domain_zh": "文化現象",
+   "topic_zh": "名人代言",
+   "angle_en": "how celebrity endorsements influence what young people buy",
+   "keywords": [
+    "celebrity endorsement"
+   ]
+  },
+  {
+   "id": "tr-t04-07",
+   "lot": "translation-top-04",
+   "slot": 7,
+   "domain_zh": "公共議題",
+   "topic_zh": "技職教育",
+   "angle_en": "changing attitudes toward vocational education",
+   "keywords": [
+    "vocational education"
+   ]
+  },
+  {
+   "id": "tr-t04-08",
+   "lot": "translation-top-04",
+   "slot": 8,
+   "domain_zh": "文化現象",
+   "topic_zh": "空檔年",
+   "angle_en": "students taking a gap year before college to explore the world",
+   "keywords": [
+    "gap year"
+   ]
+  },
+  {
+   "id": "tr-t04-09",
+   "lot": "translation-top-04",
+   "slot": 9,
+   "domain_zh": "科技與社會",
+   "topic_zh": "專注力下降",
+   "angle_en": "shrinking attention spans in the age of smartphones",
+   "keywords": [
+    "attention span"
+   ]
+  },
+  {
+   "id": "tr-t04-10",
+   "lot": "translation-top-04",
+   "slot": 10,
+   "domain_zh": "公共議題",
+   "topic_zh": "批判性思考",
+   "angle_en": "why critical thinking helps people judge what they read and hear",
+   "keywords": [
+    "critical thinking"
+   ]
+  },
+  {
+   "id": "tr-t05-01",
+   "lot": "translation-top-05",
+   "slot": 1,
+   "domain_zh": "健康與醫療",
+   "topic_zh": "抗老產業",
+   "angle_en": "the booming anti-aging industry and unrealistic beauty standards",
+   "keywords": [
+    "anti-aging industry"
+   ]
+  },
+  {
+   "id": "tr-t05-02",
+   "lot": "translation-top-05",
+   "slot": 2,
+   "domain_zh": "公共議題",
+   "topic_zh": "都市更新",
+   "angle_en": "urban renewal projects and the residents who must move",
+   "keywords": [
+    "urban renewal"
+   ]
+  },
+  {
+   "id": "tr-t05-03",
+   "lot": "translation-top-05",
+   "slot": 3,
+   "domain_zh": "文化現象",
+   "topic_zh": "數位典藏",
+   "angle_en": "digital archives keeping old photos and documents safe",
+   "keywords": [
+    "digital archive"
+   ]
+  },
+  {
+   "id": "tr-t05-04",
+   "lot": "translation-top-05",
+   "slot": 4,
+   "domain_zh": "科技與社會",
+   "topic_zh": "創客空間",
+   "angle_en": "makerspaces where people share tools to build their own inventions",
+   "keywords": [
+    "makerspace"
+   ]
+  },
+  {
+   "id": "tr-t05-05",
+   "lot": "translation-top-05",
+   "slot": 5,
+   "domain_zh": "環境與氣候",
+   "topic_zh": "碳稅",
+   "angle_en": "carbon taxes making polluters pay for their emissions",
+   "keywords": [
+    "carbon tax"
+   ]
+  },
+  {
+   "id": "tr-t05-06",
+   "lot": "translation-top-05",
+   "slot": 6,
+   "domain_zh": "環境與氣候",
+   "topic_zh": "冰川消融",
+   "angle_en": "melting glaciers and the water supply of millions of people",
+   "keywords": [
+    "glacier"
+   ]
+  },
+  {
+   "id": "tr-t05-07",
+   "lot": "translation-top-05",
+   "slot": 7,
+   "domain_zh": "環境與氣候",
+   "topic_zh": "極端降雨",
+   "angle_en": "extreme rainfall causing sudden floods in cities",
+   "keywords": [
+    "extreme rainfall"
+   ]
+  },
+  {
+   "id": "tr-t05-08",
+   "lot": "translation-top-05",
+   "slot": 8,
+   "domain_zh": "健康與醫療",
+   "topic_zh": "運動禁藥",
+   "angle_en": "athletes using banned drugs and the damage to fair play",
+   "keywords": [
+    "doping"
+   ]
+  },
+  {
+   "id": "tr-t05-09",
+   "lot": "translation-top-05",
+   "slot": 9,
+   "domain_zh": "文化現象",
+   "topic_zh": "電子競技",
+   "angle_en": "esports gaining recognition as a real sport",
+   "keywords": [
+    "esports"
+   ]
+  },
+  {
+   "id": "tr-t05-10",
+   "lot": "translation-top-05",
+   "slot": 10,
+   "domain_zh": "健康與醫療",
+   "topic_zh": "戒菸",
+   "angle_en": "how smokers quit and why it is so hard",
+   "keywords": [
+    "quitting smoking"
+   ]
+  },
+  {
+   "id": "cp-b01-01",
+   "lot": "composition-basic-01",
+   "slot": 1,
+   "domain_zh": "校園生活",
+   "topic_zh": "下課十分鐘的走廊",
+   "angle_en": "what students do in the hallway during a ten-minute break",
+   "keywords": [
+    "class break hallway"
+   ],
+   "prompt_type": "picture_scene",
+   "essay_type": "picture",
+   "figures_hint_zh": "1 張插圖：走廊上聊天、追跑、到飲水機裝水、在布告欄看公告的學生",
+   "moves": [
+    {
+     "paragraph": 1,
+     "code": "describe"
+    },
+    {
+     "paragraph": 2,
+     "code": "personal_experience"
+    },
+    {
+     "paragraph": 2,
+     "code": "preference_reasons"
+    }
+   ]
+  },
+  {
+   "id": "cp-b01-02",
+   "lot": "composition-basic-01",
+   "slot": 2,
+   "domain_zh": "校園生活",
+   "topic_zh": "午餐時間的學生餐廳",
+   "angle_en": "the busy school cafeteria at lunchtime",
+   "keywords": [
+    "school cafeteria"
+   ],
+   "prompt_type": "picture_scene",
+   "essay_type": "picture",
+   "figures_hint_zh": "1 張插圖：排隊取餐、找座位、收拾餐盤的學生",
+   "moves": [
+    {
+     "paragraph": 1,
+     "code": "describe"
+    },
+    {
+     "paragraph": 2,
+     "code": "personal_experience"
+    },
+    {
+     "paragraph": 2,
+     "code": "preference_reasons"
+    }
+   ]
+  },
+  {
+   "id": "cp-b01-03",
+   "lot": "composition-basic-01",
+   "slot": 3,
+   "domain_zh": "校園生活",
+   "topic_zh": "校園植物觀察課",
+   "angle_en": "a biology class observing and drawing plants on campus",
+   "keywords": [
+    "campus plants"
+   ],
+   "prompt_type": "picture_scene",
+   "essay_type": "picture",
+   "figures_hint_zh": "1 張插圖：學生拿放大鏡、做筆記、拍照記錄樹葉與花",
+   "moves": [
+    {
+     "paragraph": 1,
+     "code": "describe"
+    },
+    {
+     "paragraph": 2,
+     "code": "personal_experience"
+    },
+    {
+     "paragraph": 2,
+     "code": "preference_reasons"
+    }
+   ]
+  },
+  {
+   "id": "cp-b01-04",
+   "lot": "composition-basic-01",
+   "slot": 4,
+   "domain_zh": "校園生活",
+   "topic_zh": "體育課跳繩比賽",
+   "angle_en": "a jump rope contest in PE class",
+   "keywords": [
+    "jump rope"
+   ],
+   "prompt_type": "picture_scene",
+   "essay_type": "picture",
+   "figures_hint_zh": "1 張插圖：兩人搖大繩、一群人排隊跳繩、旁邊同學計數加油",
+   "moves": [
+    {
+     "paragraph": 1,
+     "code": "describe"
+    },
+    {
+     "paragraph": 2,
+     "code": "personal_experience"
+    },
+    {
+     "paragraph": 2,
+     "code": "preference_reasons"
+    }
+   ]
+  },
+  {
+   "id": "cp-b01-05",
+   "lot": "composition-basic-01",
+   "slot": 5,
+   "domain_zh": "校園生活",
+   "topic_zh": "班會討論",
+   "angle_en": "a class meeting where students discuss how to spend the class fund",
+   "keywords": [
+    "class meeting"
+   ],
+   "prompt_type": "picture_scene",
+   "essay_type": "picture",
+   "figures_hint_zh": "1 張插圖：主席在台上、同學舉手發言、黑板寫著三個選項",
+   "moves": [
+    {
+     "paragraph": 1,
+     "code": "describe"
+    },
+    {
+     "paragraph": 2,
+     "code": "personal_experience"
+    },
+    {
+     "paragraph": 2,
+     "code": "simple_plan"
+    }
+   ]
+  },
+  {
+   "id": "cp-b01-06",
+   "lot": "composition-basic-01",
+   "slot": 6,
+   "domain_zh": "校園生活",
+   "topic_zh": "科學實驗課",
+   "angle_en": "students doing an experiment in the science lab",
+   "keywords": [
+    "science lab"
+   ],
+   "prompt_type": "picture_scene",
+   "essay_type": "picture",
+   "figures_hint_zh": "1 張插圖：戴護目鏡量液體、記錄數據、老師在旁指導",
+   "moves": [
+    {
+     "paragraph": 1,
+     "code": "describe"
+    },
+    {
+     "paragraph": 2,
+     "code": "personal_experience"
+    },
+    {
+     "paragraph": 2,
+     "code": "preference_reasons"
+    }
+   ]
+  },
+  {
+   "id": "cp-b01-07",
+   "lot": "composition-basic-01",
+   "slot": 7,
+   "domain_zh": "校園生活",
+   "topic_zh": "新生訓練",
+   "angle_en": "first-year students on their first day of freshman orientation",
+   "keywords": [
+    "freshman orientation"
+   ],
+   "prompt_type": "picture_scene",
+   "essay_type": "picture",
+   "figures_hint_zh": "2 張插圖：圖一新生在禮堂聽介紹、圖二學長姐帶新生參觀校園",
+   "moves": [
+    {
+     "paragraph": 1,
+     "code": "compare"
+    },
+    {
+     "paragraph": 2,
+     "code": "personal_experience"
+    },
+    {
+     "paragraph": 2,
+     "code": "preference_reasons"
+    }
+   ]
+  },
+  {
+   "id": "cp-b01-08",
+   "lot": "composition-basic-01",
+   "slot": 8,
+   "domain_zh": "校園生活",
+   "topic_zh": "教室布置比賽",
+   "angle_en": "a class decorating its classroom for a contest",
+   "keywords": [
+    "classroom decoration"
+   ],
+   "prompt_type": "picture_scene",
+   "essay_type": "picture",
+   "figures_hint_zh": "1 張插圖：貼海報、掛彩帶、擺盆栽、畫黑板畫的學生",
+   "moves": [
+    {
+     "paragraph": 1,
+     "code": "describe"
+    },
+    {
+     "paragraph": 2,
+     "code": "personal_experience"
+    },
+    {
+     "paragraph": 2,
+     "code": "simple_plan"
+    }
+   ]
+  },
+  {
+   "id": "cp-b01-09",
+   "lot": "composition-basic-01",
+   "slot": 9,
+   "domain_zh": "校園生活",
+   "topic_zh": "美術課畫壁畫",
+   "angle_en": "students painting a mural on a school wall in art class",
+   "keywords": [
+    "school mural"
+   ],
+   "prompt_type": "picture_scene",
+   "essay_type": "picture",
+   "figures_hint_zh": "1 張插圖：學生踩梯子塗色、調顏料、對照草圖的牆面壁畫",
+   "moves": [
+    {
+     "paragraph": 1,
+     "code": "describe"
+    },
+    {
+     "paragraph": 2,
+     "code": "personal_experience"
+    },
+    {
+     "paragraph": 2,
+     "code": "preference_reasons"
+    }
+   ]
+  },
+  {
+   "id": "cp-b01-10",
+   "lot": "composition-basic-01",
+   "slot": 10,
+   "domain_zh": "校園生活",
+   "topic_zh": "拍畢業照",
+   "angle_en": "seniors taking graduation photos around the campus",
+   "keywords": [
+    "graduation photo"
+   ],
+   "prompt_type": "picture_scene",
+   "essay_type": "picture",
+   "figures_hint_zh": "2 張插圖：圖一全班在校門口拍團體照、圖二三五好友在教室裡拍搞笑照片",
+   "moves": [
+    {
+     "paragraph": 1,
+     "code": "compare"
+    },
+    {
+     "paragraph": 2,
+     "code": "personal_experience"
+    },
+    {
+     "paragraph": 2,
+     "code": "preference_reasons"
+    }
+   ]
+  },
+  {
+   "id": "cp-a01-01",
+   "lot": "composition-advanced-01",
+   "slot": 1,
+   "domain_zh": "生活議題",
+   "topic_zh": "自助點餐機",
+   "angle_en": "self-ordering kiosks replacing cashiers at fast-food restaurants",
+   "keywords": [
+    "self-ordering kiosk"
+   ],
+   "prompt_type": "picture_issue",
+   "essay_type": "picture",
+   "figures_hint_zh": "2 張插圖：圖一櫃台前排隊點餐、圖二顧客在自助點餐機前操作，一位長者看起來不知所措",
+   "moves": [
+    {
+     "paragraph": 1,
+     "code": "compare"
+    },
+    {
+     "paragraph": 2,
+     "code": "opinion"
+    },
+    {
+     "paragraph": 2,
+     "code": "personal_experience"
+    }
+   ]
+  },
+  {
+   "id": "cp-a01-02",
+   "lot": "composition-advanced-01",
+   "slot": 2,
+   "domain_zh": "生活議題",
+   "topic_zh": "到咖啡店讀書",
+   "angle_en": "students choosing to study in cafes instead of at home",
+   "keywords": [
+    "studying in cafes"
+   ],
+   "prompt_type": "picture_issue",
+   "essay_type": "picture",
+   "figures_hint_zh": "1 張插圖：咖啡店裡坐滿戴耳機、開筆電讀書的高中生，店門口貼著「平日限時兩小時」",
+   "moves": [
+    {
+     "paragraph": 1,
+     "code": "describe"
+    },
+    {
+     "paragraph": 2,
+     "code": "reasons"
+    },
+    {
+     "paragraph": 2,
+     "code": "effects"
+    }
+   ]
+  },
+  {
+   "id": "cp-a01-03",
+   "lot": "composition-advanced-01",
+   "slot": 3,
+   "domain_zh": "生活議題",
+   "topic_zh": "插秧體驗",
+   "angle_en": "city students trying rice planting in the countryside",
+   "keywords": [
+    "rice planting"
+   ],
+   "prompt_type": "picture_issue",
+   "essay_type": "picture",
+   "figures_hint_zh": "2 張插圖：圖一學生在教室看稻米影片、圖二學生光腳在田裡插秧",
+   "moves": [
+    {
+     "paragraph": 1,
+     "code": "compare"
+    },
+    {
+     "paragraph": 2,
+     "code": "opinion"
+    },
+    {
+     "paragraph": 2,
+     "code": "reasons"
+    }
+   ]
+  },
+  {
+   "id": "cp-a01-04",
+   "lot": "composition-advanced-01",
+   "slot": 4,
+   "domain_zh": "校園議題",
+   "topic_zh": "失物招領",
+   "angle_en": "piles of unclaimed items at the school lost and found",
+   "keywords": [
+    "lost and found"
+   ],
+   "prompt_type": "picture_issue",
+   "essay_type": "picture",
+   "figures_hint_zh": "1 張插圖：失物招領櫃堆滿水壺、外套、雨具與耳機，旁邊公告「月底將捐出」",
+   "moves": [
+    {
+     "paragraph": 1,
+     "code": "describe"
+    },
+    {
+     "paragraph": 2,
+     "code": "reasons"
+    },
+    {
+     "paragraph": 2,
+     "code": "personal_experience"
+    }
+   ]
+  },
+  {
+   "id": "cp-a01-05",
+   "lot": "composition-advanced-01",
+   "slot": 5,
+   "domain_zh": "消費議題",
+   "topic_zh": "盲盒熱潮",
+   "angle_en": "young people spending a lot on blind boxes",
+   "keywords": [
+    "blind box"
+   ],
+   "prompt_type": "picture_issue",
+   "essay_type": "picture",
+   "figures_hint_zh": "1 張插圖：學生在販售機前連續拆盒，地上一堆空盒，旁邊有人交換重複的公仔",
+   "moves": [
+    {
+     "paragraph": 1,
+     "code": "describe"
+    },
+    {
+     "paragraph": 2,
+     "code": "reasons"
+    },
+    {
+     "paragraph": 2,
+     "code": "effects"
+    }
+   ]
+  },
+  {
+   "id": "cp-a01-06",
+   "lot": "composition-advanced-01",
+   "slot": 6,
+   "domain_zh": "校園議題",
+   "topic_zh": "校園禁用一次性餐具",
+   "angle_en": "a school banning disposable tableware in the cafeteria",
+   "keywords": [
+    "disposable tableware"
+   ],
+   "prompt_type": "picture_issue",
+   "essay_type": "picture",
+   "figures_hint_zh": "2 張插圖：圖一垃圾桶塞滿免洗餐具、圖二學生排隊用自己的餐具取餐",
+   "moves": [
+    {
+     "paragraph": 1,
+     "code": "compare"
+    },
+    {
+     "paragraph": 2,
+     "code": "opinion"
+    },
+    {
+     "paragraph": 2,
+     "code": "personal_experience"
+    }
+   ]
+  },
+  {
+   "id": "cp-a01-07",
+   "lot": "composition-advanced-01",
+   "slot": 7,
+   "domain_zh": "生活議題",
+   "topic_zh": "網美打卡景點",
+   "angle_en": "crowds lining up to take photos at a popular photo spot",
+   "keywords": [
+    "photo spot"
+   ],
+   "prompt_type": "picture_issue",
+   "essay_type": "picture",
+   "figures_hint_zh": "1 張插圖：彩繪階梯前一群人輪流擺姿勢拍照，旁邊居民提菜籃無法通過",
+   "moves": [
+    {
+     "paragraph": 1,
+     "code": "describe"
+    },
+    {
+     "paragraph": 2,
+     "code": "effects"
+    },
+    {
+     "paragraph": 2,
+     "code": "opinion"
+    }
+   ]
+  },
+  {
+   "id": "cp-a01-08",
+   "lot": "composition-advanced-01",
+   "slot": 8,
+   "domain_zh": "校園議題",
+   "topic_zh": "理想的休息空間",
+   "angle_en": "designing an ideal rest area for students on campus",
+   "keywords": [
+    "student rest area"
+   ],
+   "prompt_type": "picture_issue",
+   "essay_type": "picture",
+   "figures_hint_zh": "1 張插圖：午休時學生擠在樓梯間、趴在走廊長椅上休息",
+   "moves": [
+    {
+     "paragraph": 1,
+     "code": "describe"
+    },
+    {
+     "paragraph": 2,
+     "code": "ideal_design"
+    },
+    {
+     "paragraph": 2,
+     "code": "reasons"
+    }
+   ]
+  },
+  {
+   "id": "cp-a01-09",
+   "lot": "composition-advanced-01",
+   "slot": 9,
+   "domain_zh": "生活議題",
+   "topic_zh": "一天沒有網路",
+   "angle_en": "imagining a whole day without the internet",
+   "keywords": [
+    "offline day"
+   ],
+   "prompt_type": "picture_issue",
+   "essay_type": "picture",
+   "figures_hint_zh": "1 張插圖：全家人看著「網路維修中」的手機畫面，桌上放著桌遊和書",
+   "moves": [
+    {
+     "paragraph": 1,
+     "code": "describe"
+    },
+    {
+     "paragraph": 2,
+     "code": "imagined_plan"
+    },
+    {
+     "paragraph": 2,
+     "code": "reasons"
+    }
+   ]
+  },
+  {
+   "id": "cp-a01-10",
+   "lot": "composition-advanced-01",
+   "slot": 10,
+   "domain_zh": "校園議題",
+   "topic_zh": "數位公告看板",
+   "angle_en": "paper notices on campus being replaced by digital screens",
+   "keywords": [
+    "digital notice board"
+   ],
+   "prompt_type": "picture_issue",
+   "essay_type": "picture",
+   "figures_hint_zh": "2 張插圖：圖一布告欄貼滿紙本公告、圖二川堂的電子看板輪播訊息",
+   "moves": [
+    {
+     "paragraph": 1,
+     "code": "compare"
+    },
+    {
+     "paragraph": 2,
+     "code": "effects"
+    },
+    {
+     "paragraph": 2,
+     "code": "opinion"
+    }
+   ]
+  },
+  {
+   "id": "cp-t01-01",
+   "lot": "composition-top-01",
+   "slot": 1,
+   "domain_zh": "科技與生活",
+   "topic_zh": "高中生每日螢幕時間",
+   "angle_en": "a survey of how much time high school students spend on screens each day",
+   "keywords": [
+    "screen time"
+   ],
+   "prompt_type": "chart",
+   "essay_type": "chart",
+   "figures_hint_zh": "1 張長條圖（假設調查）：平日與假日四種用途（課業、社群、影音、遊戲）的平均小時數",
+   "moves": [
+    {
+     "paragraph": 1,
+     "code": "describe_data"
+    },
+    {
+     "paragraph": 1,
+     "code": "compare"
+    },
+    {
+     "paragraph": 2,
+     "code": "evaluate"
+    },
+    {
+     "paragraph": 2,
+     "code": "propose"
+    }
+   ]
+  },
+  {
+   "id": "cp-t01-02",
+   "lot": "composition-top-01",
+   "slot": 2,
+   "domain_zh": "城市與交通",
+   "topic_zh": "學生通勤方式",
+   "angle_en": "how students at one school get to school and how this has changed",
+   "keywords": [
+    "commuting modes"
+   ],
+   "prompt_type": "chart",
+   "essay_type": "chart",
+   "figures_hint_zh": "1 張圓餅圖或長條圖（假設調查）：步行、公車、捷運、家長接送四種方式的比例，兩個年份比較",
+   "moves": [
+    {
+     "paragraph": 1,
+     "code": "describe_data"
+    },
+    {
+     "paragraph": 1,
+     "code": "compare"
+    },
+    {
+     "paragraph": 2,
+     "code": "evaluate"
+    },
+    {
+     "paragraph": 2,
+     "code": "propose"
+    }
+   ]
+  },
+  {
+   "id": "cp-t01-03",
+   "lot": "composition-top-01",
+   "slot": 3,
+   "domain_zh": "閱讀與學習",
+   "topic_zh": "青少年的閱讀形式",
+   "angle_en": "teenagers reading on paper, on screens, or by listening to audiobooks",
+   "keywords": [
+    "reading formats",
+    "audiobook"
+   ],
+   "prompt_type": "chart",
+   "essay_type": "chart",
+   "figures_hint_zh": "1 張堆疊長條圖（假設調查）：國中、高中、大學生使用紙本、電子書、有聲書的比例",
+   "moves": [
+    {
+     "paragraph": 1,
+     "code": "describe_data"
+    },
+    {
+     "paragraph": 1,
+     "code": "compare"
+    },
+    {
+     "paragraph": 2,
+     "code": "evaluate"
+    },
+    {
+     "paragraph": 2,
+     "code": "propose"
+    }
+   ]
+  },
+  {
+   "id": "cp-t01-04",
+   "lot": "composition-top-01",
+   "slot": 4,
+   "domain_zh": "升學與生涯",
+   "topic_zh": "選校系的考量",
+   "angle_en": "what students consider most when choosing a university major",
+   "keywords": [
+    "choosing a major"
+   ],
+   "prompt_type": "chart",
+   "essay_type": "chart",
+   "figures_hint_zh": "1 張長條圖（假設調查）：興趣、未來收入、家人意見、學校排名、離家遠近五個因素的人數比例",
+   "moves": [
+    {
+     "paragraph": 1,
+     "code": "describe_data"
+    },
+    {
+     "paragraph": 2,
+     "code": "compare_self"
+    },
+    {
+     "paragraph": 2,
+     "code": "evaluate"
+    },
+    {
+     "paragraph": 2,
+     "code": "propose"
+    }
+   ]
+  },
+  {
+   "id": "cp-t01-05",
+   "lot": "composition-top-01",
+   "slot": 5,
+   "domain_zh": "旅遊與文化",
+   "topic_zh": "跟團與自助旅行",
+   "angle_en": "joining a group tour versus planning an independent trip",
+   "keywords": [
+    "group tour",
+    "independent travel"
+   ],
+   "prompt_type": "picture_issue_abstract",
+   "essay_type": "picture",
+   "figures_hint_zh": "2 張插圖：圖一導遊舉旗帶團、遊客跟著拍照；圖二背包客自己查地圖、和當地人聊天",
+   "moves": [
+    {
+     "paragraph": 1,
+     "code": "compare"
+    },
+    {
+     "paragraph": 2,
+     "code": "evaluate"
+    },
+    {
+     "paragraph": 2,
+     "code": "propose"
+    }
+   ]
+  },
+  {
+   "id": "cp-t01-06",
+   "lot": "composition-top-01",
+   "slot": 6,
+   "domain_zh": "消費與科技",
+   "topic_zh": "實體店與網路購物",
+   "angle_en": "shopping in physical stores versus shopping online",
+   "keywords": [
+    "brick-and-mortar"
+   ],
+   "prompt_type": "picture_issue_abstract",
+   "essay_type": "picture",
+   "figures_hint_zh": "2 張插圖：圖一店員協助顧客試穿、比較商品；圖二一個人深夜在家用手機下單，門口堆著包裹",
+   "moves": [
+    {
+     "paragraph": 1,
+     "code": "compare"
+    },
+    {
+     "paragraph": 2,
+     "code": "evaluate"
+    },
+    {
+     "paragraph": 2,
+     "code": "propose"
+    }
+   ]
+  },
+  {
+   "id": "cp-t01-07",
+   "lot": "composition-top-01",
+   "slot": 7,
+   "domain_zh": "城市生活",
+   "topic_zh": "不夜城與早睡小鎮",
+   "angle_en": "a city that stays busy all night compared with a quiet town where shops close early",
+   "keywords": [
+    "24-hour city"
+   ],
+   "prompt_type": "picture_issue_abstract",
+   "essay_type": "picture",
+   "figures_hint_zh": "2 張插圖：圖一深夜燈火通明、人潮不斷的街道；圖二晚上八點就熄燈的小鎮街道",
+   "moves": [
+    {
+     "paragraph": 1,
+     "code": "compare"
+    },
+    {
+     "paragraph": 2,
+     "code": "evaluate"
+    },
+    {
+     "paragraph": 2,
+     "code": "propose"
+    }
+   ]
+  },
+  {
+   "id": "cp-t01-08",
+   "lot": "composition-top-01",
+   "slot": 8,
+   "domain_zh": "校園空間",
+   "topic_zh": "學校的三種讀書空間",
+   "angle_en": "three kinds of study spaces at school and which one works best",
+   "keywords": [
+    "study spaces"
+   ],
+   "prompt_type": "picture_issue_abstract",
+   "essay_type": "picture",
+   "figures_hint_zh": "3 張插圖：安靜的自習室、可以討論的小組討論室、戶外樹下的閱讀角",
+   "moves": [
+    {
+     "paragraph": 1,
+     "code": "compare"
+    },
+    {
+     "paragraph": 2,
+     "code": "evaluate"
+    },
+    {
+     "paragraph": 2,
+     "code": "propose"
+    }
+   ]
+  },
+  {
+   "id": "cp-t01-09",
+   "lot": "composition-top-01",
+   "slot": 9,
+   "domain_zh": "社會現象",
+   "topic_zh": "慢活與低慾望生活",
+   "angle_en": "more young people choosing a slower, simpler life",
+   "keywords": [
+    "slow living"
+   ],
+   "prompt_type": "social_phenomenon",
+   "essay_type": "chart",
+   "figures_hint_zh": "1 張折線圖（假設調查）：近十年「寧可少賺、也要有更多自己的時間」的年輕人比例逐年上升",
+   "moves": [
+    {
+     "paragraph": 1,
+     "code": "describe_data"
+    },
+    {
+     "paragraph": 2,
+     "code": "reasons"
+    },
+    {
+     "paragraph": 2,
+     "code": "evaluate"
+    },
+    {
+     "paragraph": 2,
+     "code": "propose"
+    }
+   ]
+  },
+  {
+   "id": "cp-t01-10",
+   "lot": "composition-top-01",
+   "slot": 10,
+   "domain_zh": "社會現象",
+   "topic_zh": "網路評價與消費",
+   "angle_en": "online reviews deciding where people eat and what they buy",
+   "keywords": [
+    "online reviews"
+   ],
+   "prompt_type": "social_phenomenon",
+   "essay_type": "picture",
+   "figures_hint_zh": "2 張插圖：圖一一家評分 4.9 的餐廳大排長龍、圖二隔壁評分很少的老店空無一人",
+   "moves": [
+    {
+     "paragraph": 1,
+     "code": "compare"
+    },
+    {
+     "paragraph": 2,
+     "code": "reasons"
+    },
+    {
+     "paragraph": 2,
+     "code": "evaluate"
+    },
+    {
+     "paragraph": 2,
+     "code": "propose"
+    }
+   ]
+  }
+ ]
+}

@@ -18,7 +18,7 @@ import {
 import { APP_NAME } from '../../modules';
 import { clearAttempt } from '../exams/attempt';
 import { DataErrorBoundary } from '../exams/components/DataErrorBoundary';
-import { cellKey, clearHints, getPracticeHistory, setCurrent, updatePracticeHistory, usePracticeHistory } from './history';
+import { cellKey, clearGroupRecords, getPracticeHistory, setCurrent, updatePracticeHistory, usePracticeHistory } from './history';
 import { PRACTICE_SECTION_LABELS, TIER_LABELS, TIERS, practicePath, sectionFromSlug, tierFromParam } from './labels';
 import { cellEntries, cellProgress, pickGroup, type Pick } from './pick';
 import { GroupSession } from './PracticeSession';
@@ -144,9 +144,9 @@ function CellSession({ indexPromise, section, tier }: { indexPromise: Promise<Ba
     : null;
 
   const next = () => {
-    // 換下一組：清掉這一組的作答紀錄與提示紀錄（成績已經記在「做過」裡），再抽一組。
+    // 換下一組：清掉這一組的作答紀錄、提示紀錄與固定下來的判分（成績已經記在「做過」裡），再抽一組。
     clearAttempt(practiceAttemptId(pick.entry));
-    updatePracticeHistory((h) => clearHints(setCurrent(h, cell, null), finishedKey));
+    updatePracticeHistory((h) => clearGroupRecords(setCurrent(h, cell, null), finishedKey));
     setPick(pickGroup(candidates, getPracticeHistory(), section, tier, { exclude: finishedKey }));
     setRun((n) => n + 1);
     window.scrollTo({ top: 0 });

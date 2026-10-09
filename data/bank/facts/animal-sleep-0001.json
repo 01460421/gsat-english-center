@@ -1,0 +1,178 @@
+{
+  "schema": "gsat-bank-facts/v1",
+  "id": "animal-sleep-0001",
+  "title": "How six animals sleep: sea otters, koalas, dolphins, horses, bats and frigatebirds",
+  "sdgs": [14, 15],
+  "created_on": "2026-10-09",
+  "created_by": "claude-opus-5-5",
+  "sources": [
+    {
+      "id": "s1",
+      "publisher": "U.S. Fish & Wildlife Service",
+      "title": "Southern Sea Otter (Enhydra lutris nereis)",
+      "url": "https://www.fws.gov/species/southern-sea-otter-enhydra-lutris-nereis",
+      "accessed": "2026-10-09",
+      "license": "U.S. government work (public domain)",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s2",
+      "publisher": "NOAA Ocean Today",
+      "title": "Sea Otters 101",
+      "url": "https://oceantoday.noaa.gov/seaotters101/",
+      "accessed": "2026-10-09",
+      "license": "U.S. government work (public domain)",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s3",
+      "publisher": "Queensland Government",
+      "title": "Koala facts",
+      "url": "https://www.qld.gov.au/environment/plants-animals/animals/living-with/koalas/koala-information/koala-facts",
+      "accessed": "2026-10-09",
+      "license": "Queensland Government copyright (facts only)",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s4",
+      "publisher": "Arizona State University, Ask A Biologist",
+      "title": "How Do Other Species Sleep?",
+      "url": "https://askabiologist.asu.edu/sleep-animals",
+      "accessed": "2026-10-09",
+      "license": "ASU Ask A Biologist terms of use (facts only)",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s5",
+      "publisher": "U.S. National Library of Medicine (PubMed Central)",
+      "title": "Recumbency as an Equine Welfare Indicator in Geriatric Horses and Horses with Chronic Orthopaedic Disease",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8614510/",
+      "accessed": "2026-10-09",
+      "license": "CC BY 4.0 (journal article; facts only)",
+      "use": "fact_only",
+      "note": "Animals (MDPI) 2021 的論文，PMC 收錄"
+    },
+    {
+      "id": "s6",
+      "publisher": "University of Minnesota (Open Textbook)",
+      "title": "Large Animal Anatomy: Pelvic Limb",
+      "url": "https://open.lib.umn.edu/largeanimalanatomy/chapter/pelvic-limb/",
+      "accessed": "2026-10-09",
+      "license": "CC BY-NC 4.0 (facts only)",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s7",
+      "publisher": "U.S. Fish & Wildlife Service",
+      "title": "Fun Facts about Bats (bat mask activity sheet)",
+      "url": "https://www.fws.gov/sites/default/files/documents/BatMaskFacts-508.pdf",
+      "accessed": "2026-10-09",
+      "license": "U.S. government work (public domain)",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s8",
+      "publisher": "Max Planck Society",
+      "title": "First evidence of sleep in flight",
+      "url": "https://www.mpg.de/10673637/frigatebirds-sleep",
+      "accessed": "2026-10-09",
+      "license": "Max Planck Society press release (facts only)",
+      "use": "fact_only",
+      "note": "研究：Rattenborg et al., Nature Communications 7:12468 (2016)"
+    }
+  ],
+  "facts": [
+    {
+      "id": "f1",
+      "text": "Sea otters usually rest in groups and wrap themselves in kelp or seagrass so they do not drift while resting.",
+      "source_ids": ["s1"],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f2",
+      "text": "A resting sea otter lies on its back in the water, and kelp across its body keeps it from drifting out to sea.",
+      "source_ids": ["s2"],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f3",
+      "text": "Koalas eat mainly eucalyptus leaves, which are low in energy and hard to break down.",
+      "source_ids": ["s3"],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f4",
+      "text": "Koalas can sleep up to 20 hours a day because of their low-energy diet.",
+      "source_ids": ["s3"],
+      "kind": "number"
+    },
+    {
+      "id": "f5",
+      "text": "Koalas often rest high up in a fork of a gum (eucalyptus) tree.",
+      "source_ids": ["s3"],
+      "kind": "place"
+    },
+    {
+      "id": "f6",
+      "text": "Dolphins sleep with one half of the brain at a time while the other half stays awake; the eye on the awake side can stay open.",
+      "source_ids": ["s4"],
+      "kind": "definition"
+    },
+    {
+      "id": "f7",
+      "text": "Dolphins breathe air and must come up to the surface to breathe, even while resting.",
+      "source_ids": ["s4"],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f8",
+      "text": "Horses can lock the main joints of their legs, so they can stand and doze with very little muscle effort.",
+      "source_ids": ["s6"],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f9",
+      "text": "Horses must lie down to get REM sleep, the deepest stage of sleep.",
+      "source_ids": ["s5"],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f10",
+      "text": "Because horses are prey animals, they lie down only when they feel comfortable and safe.",
+      "source_ids": ["s5"],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f11",
+      "text": "Bats rest upside down in high places; tendons lock their toes, and their body weight keeps them hanging without using much energy.",
+      "source_ids": ["s7"],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f12",
+      "text": "Great frigatebirds can spend weeks flying non-stop over the ocean.",
+      "source_ids": ["s8"],
+      "kind": "number"
+    },
+    {
+      "id": "f13",
+      "text": "Frigatebirds can sleep while flying, with one brain half or both halves asleep at once.",
+      "source_ids": ["s8"],
+      "kind": "event"
+    },
+    {
+      "id": "f14",
+      "text": "In flight, frigatebirds slept only about 42 minutes a day; on land they slept more than 12 hours a day.",
+      "source_ids": ["s8"],
+      "kind": "number"
+    }
+  ],
+  "datasets": [],
+  "notes": "2026-10-09 線上查證。只用文章需要的事實；題組 ai.mx.d202e4 的「少於一小時」由 f14 的 42 分鐘推得，「超過十二小時」直接取自 f14。"
+}

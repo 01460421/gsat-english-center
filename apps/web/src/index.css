@@ -28,6 +28,19 @@
   --badge-fg: #7a4508;
   --ok: #1b7a3d;
   --bad: #b42318;
+  /*
+   * 圖表的類別色（練習頁的 SVG 圖表，依數列順序固定取用，不循環到第 9 色）。
+   * 淺色、深色各自對應背景挑過明度，用 dataviz 的 validate_palette.js 檢查過（相鄰兩色色盲模擬 ΔE ≥ 8.4、
+   * 一般色覺 ΔE ≥ 19）；淺色的 3、4、5 號對白底不到 3:1，所以圖上一定有圖例、數值標籤與資料表，不只靠顏色。
+   */
+  --chart-1: #2a78d6;
+  --chart-2: #eb6834;
+  --chart-3: #1baf7a;
+  --chart-4: #eda100;
+  --chart-5: #e87ba4;
+  --chart-6: #008300;
+  --chart-7: #4a3aa7;
+  --chart-8: #e34948;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -46,6 +59,14 @@
     --badge-fg: #f6d270;
     --ok: #5ad48a;
     --bad: #ff8a80;
+    --chart-1: #3987e5;
+    --chart-2: #d95926;
+    --chart-3: #199e70;
+    --chart-4: #c98500;
+    --chart-5: #d55181;
+    --chart-6: #008300;
+    --chart-7: #9085e9;
+    --chart-8: #e66767;
   }
 }
 
@@ -64,6 +85,14 @@
   --badge-fg: #f6d270;
   --ok: #5ad48a;
   --bad: #ff8a80;
+  --chart-1: #3987e5;
+  --chart-2: #d95926;
+  --chart-3: #199e70;
+  --chart-4: #c98500;
+  --chart-5: #d55181;
+  --chart-6: #008300;
+  --chart-7: #9085e9;
+  --chart-8: #e66767;
 }
 
 /* inline：產生的工具類別直接寫 var(--surface)，執行期切換 data-theme 就會生效。 */

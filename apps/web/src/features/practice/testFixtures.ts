@@ -10,6 +10,8 @@ import czJson from '../../../tests/fixtures/bank-public/bank/groups/ai.cz.2b3c4d
 import stJson from '../../../tests/fixtures/bank-public/bank/groups/ai.st.3a4b5c@1.json';
 import voJson from '../../../tests/fixtures/bank-public/bank/groups/ai.vo.1c2d3e@1.json';
 import wbJson from '../../../tests/fixtures/bank-public/bank/groups/ai.wb.0a1b2c@1.json';
+import rdJson from '../../../tests/fixtures/bank-public/bank/groups/ai.rd.0c1d2e@1.json';
+import mxJson from '../../../tests/fixtures/bank-public/bank/groups/ai.mx.0f1a2b@1.json';
 
 export const BANK_INDEX = indexJson as unknown as BankIndex;
 export const EMPTY_BANK_INDEX: BankIndex = { version: 'empty', count: 0, groups: [] };
@@ -19,6 +21,8 @@ export const GROUPS: Record<string, PracticeGroupFile> = {
   'ai.cz.2b3c4d@1': czJson as unknown as PracticeGroupFile,
   'ai.wb.0a1b2c@1': wbJson as unknown as PracticeGroupFile,
   'ai.st.3a4b5c@1': stJson as unknown as PracticeGroupFile,
+  'ai.rd.0c1d2e@1': rdJson as unknown as PracticeGroupFile,
+  'ai.mx.0f1a2b@1': mxJson as unknown as PracticeGroupFile,
 };
 
 export function group(key: keyof typeof GROUPS | string): PracticeGroupFile {

@@ -1,0 +1,642 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.1b2c4e",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "basic",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "開學第一週是各個社團忙著找新社員的時候。",
+        "options": null,
+        "answer": "The first week of school is the time when clubs are busy looking for new members.",
+        "accepted_answers": [
+          "The first week of the school year is the time when every club is busy finding new members."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "關係副詞"
+          ],
+          "topic": "社團招生"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "到目前為止，五十多位新生已經加入了熱舞社。",
+        "options": null,
+        "answer": "So far, more than fifty new students have joined the dance club.",
+        "accepted_answers": [
+          "Up to now, over fifty new students have already joined the dance club."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "現在完成式"
+          ],
+          "topic": "社團招生"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "社團招生"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「…是…的時候」說的是一段時間，英文用 the time when ＋完整子句；when 在子句裡當時間副詞（等於 in which）。「忙著找」是 be busy + V-ing：are busy looking for。主詞 clubs 是複數，be 動詞用 are；如果寫 every club，就要改成單數 is。",
+          "evidence": [
+            "的時候",
+            "忙著找新社員"
+          ],
+          "strategy_zh": "中文「是…的時候／地方／原因」常對應英文 the time when／the place where／the reason why，後面接完整子句。",
+          "hints": [
+            "切成四段：開學第一週／各個社團／忙著找新社員／（是…）的時候",
+            "標的詞彙：week（週）、club（社團）、busy（忙著）、look for（找）、member（社員）",
+            "句型框架：S + is + the time when + S + V …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「到目前為止」（so far／up to now）加上「已經」，表示從開學到現在累積的結果，要用現在完成式 have joined。「五十多位」是 more than fifty（或 over fifty），名詞用複數 students。join 是及物動詞，直接接社團：join the dance club。",
+          "evidence": [
+            "到目前為止",
+            "已經加入了"
+          ],
+          "strategy_zh": "so far、up to now、already 常和現在完成式一起出現；看到「到目前為止」先檢查動詞是不是 have/has + p.p.。",
+          "hints": [
+            "切成四段：到目前為止／五十多位新生／已經加入了／熱舞社",
+            "標的詞彙：so far（到目前為止）、student（學生（新生））、join（加入）、dance（舞蹈（熱舞））、club（社團）",
+            "句型框架：So far, S + have/has + p.p. …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "The first week of school is the time when clubs are busy looking for new members.",
+            "The first week of the school year is the time when every club is busy finding new members."
+          ],
+          "target_words": [
+            {
+              "word": "week",
+              "zh": "週"
+            },
+            {
+              "word": "club",
+              "zh": "社團"
+            },
+            {
+              "word": "busy",
+              "zh": "忙著"
+            },
+            {
+              "word": "look for",
+              "zh": "找",
+              "alternatives": [
+                "find",
+                "search for"
+              ]
+            },
+            {
+              "word": "member",
+              "zh": "社員"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "REL",
+              "grammar_id": "gp-relative-adverb",
+              "label_zh": "關係副詞 when（the time when …）",
+              "frame": "S + is + the time when + S + V …",
+              "zh_trigger": "的時候"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "開學第一週",
+              "accepted": [
+                "The first week of school",
+                "The first week of the school year",
+                "The first week of the semester",
+                "The first week of the new semester",
+                "The first week after school starts"
+              ],
+              "targets": [
+                "week"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "The first week of school start",
+                  "explanation_zh": "「開學」在這裡是修飾「第一週」，寫 the first week of school（或 of the school year），不要把 start 直接接在後面。"
+                }
+              ]
+            },
+            {
+              "zh": "各個社團",
+              "accepted": [
+                "clubs",
+                "all the clubs",
+                "every club",
+                "each club",
+                "all clubs",
+                "the clubs"
+              ],
+              "targets": [
+                "club"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "every clubs",
+                  "right": "every club",
+                  "explanation_zh": "every 後面接單數名詞，動詞也跟著用單數 is。"
+                }
+              ]
+            },
+            {
+              "zh": "忙著找新社員",
+              "accepted": [
+                "are busy looking for new members",
+                "is busy looking for new members",
+                "are busy finding new members",
+                "is busy finding new members",
+                "are busy trying to find new members",
+                "are busy recruiting new members",
+                "are busy looking for new club members"
+              ],
+              "targets": [
+                "busy",
+                "look for",
+                "member"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "are busy to look for new members",
+                  "right": "are busy looking for new members",
+                  "explanation_zh": "「忙著做某事」是 be busy + V-ing，不接不定詞。"
+                },
+                {
+                  "wrong": "are busy looking for new member",
+                  "right": "are busy looking for new members",
+                  "explanation_zh": "要找的社員不只一位，member 用複數。"
+                }
+              ]
+            },
+            {
+              "zh": "的時候",
+              "accepted": [
+                "the time when",
+                "a time when",
+                "the time that",
+                "the period when"
+              ],
+              "targets": [
+                "REL"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "the time which",
+                  "right": "the time when",
+                  "explanation_zh": "time 在子句裡當時間副詞，要用關係副詞 when（或 that），不用 which。"
+                },
+                {
+                  "wrong": "the time when clubs busy",
+                  "right": "the time when clubs are busy",
+                  "explanation_zh": "when 後面要接完整子句（主詞＋動詞），不能漏掉 be 動詞 are。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "collocation",
+              "zh": "忙著找",
+              "literal_error": "The first week of school is the time when clubs are busy to look for new members.",
+              "part": 3,
+              "explanation_zh": "「忙著做某事」的固定搭配是 be busy + V-ing；照中文字面接 to look for 是常見錯誤，這一部分會被扣分。"
+            }
+          ],
+          "bonus": []
+        },
+        "2": {
+          "references": [
+            "So far, more than fifty new students have joined the dance club.",
+            "Up to now, over fifty new students have already joined the dance club."
+          ],
+          "target_words": [
+            {
+              "word": "so far",
+              "zh": "到目前為止",
+              "alternatives": [
+                "up to now",
+                "until now",
+                "by now"
+              ]
+            },
+            {
+              "word": "student",
+              "zh": "學生（新生）",
+              "alternatives": [
+                "freshman"
+              ]
+            },
+            {
+              "word": "join",
+              "zh": "加入"
+            },
+            {
+              "word": "dance",
+              "zh": "舞蹈（熱舞）"
+            },
+            {
+              "word": "club",
+              "zh": "社團"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PERF",
+              "grammar_id": "gp-present-perfect",
+              "label_zh": "現在完成式（到目前為止＋已經）",
+              "frame": "So far, S + have/has + p.p. …",
+              "zh_trigger": "已經加入了"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "到目前為止",
+              "accepted": [
+                "So far",
+                "Up to now",
+                "Until now",
+                "Up till now",
+                "By now"
+              ],
+              "targets": [
+                "so far"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "To now",
+                  "right": "So far",
+                  "explanation_zh": "「到目前為止」不能逐字翻成 to now，要用 so far 或 up to now。"
+                }
+              ]
+            },
+            {
+              "zh": "五十多位新生",
+              "accepted": [
+                "more than fifty new students",
+                "over fifty new students",
+                "more than 50 new students",
+                "over 50 new students",
+                "more than fifty freshmen",
+                "over fifty freshmen"
+              ],
+              "targets": [
+                "student"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "fifty more new students",
+                  "right": "more than fifty new students",
+                  "explanation_zh": "「五十多位」是「超過五十位」，寫 more than fifty；fifty more 是「再多五十位」。"
+                },
+                {
+                  "wrong": "more than fifty new student",
+                  "right": "more than fifty new students",
+                  "explanation_zh": "fifty 後面的名詞用複數。"
+                }
+              ]
+            },
+            {
+              "zh": "已經加入了",
+              "accepted": [
+                "have joined",
+                "have already joined"
+              ],
+              "targets": [
+                "PERF",
+                "join"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "joined",
+                  "right": "have joined",
+                  "explanation_zh": "「到目前為止…已經」是到現在為止的累計結果，要用現在完成式 have joined。"
+                },
+                {
+                  "wrong": "have joined in",
+                  "right": "have joined",
+                  "explanation_zh": "加入社團是 join + 團體；join in 是「參加（活動）」。"
+                }
+              ]
+            },
+            {
+              "zh": "熱舞社",
+              "accepted": [
+                "the dance club",
+                "the street dance club",
+                "the dancing club",
+                "the hip-hop dance club"
+              ],
+              "targets": [
+                "dance",
+                "club"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "the hot dance club",
+                  "right": "the dance club",
+                  "explanation_zh": "「熱舞」指流行舞蹈，不是 hot dance；寫 dance club 或 street dance club 即可。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "tense_trigger",
+              "zh": "已經加入了",
+              "literal_error": "So far, more than fifty new students joined the dance club.",
+              "part": 3,
+              "explanation_zh": "「到目前為止」「已經」是現在完成式的觸發詞；只寫過去式 joined 會在這一部分被扣分。"
+            }
+          ],
+          "bonus": []
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-basic-01",
+    "lot": "translation-basic-01",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "5d53cd3325023c20a689f496811202dc08d17408faea3e4eb4c3042ce15b605d",
+    "spec_id": "translation-basic@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T07:53:37Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T07:20:08Z",
+      "details": {
+        "solver": "A",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "The first week of school is the time when all the clubs are busy looking for new members.",
+            "confidence": "high",
+            "explanation_zh": "「…的時候」用 the time when 關係副詞子句；「忙著找」用 be busy V-ing；開學第一週譯 the first week of school。"
+          },
+          "2": {
+            "translation": "So far, more than fifty new students have joined the dance club.",
+            "confidence": "high",
+            "explanation_zh": "「到目前為止…已經」用 so far＋現在完成式；五十多位譯 more than fifty；熱舞社取學測程度常見的 the dance club（也可 street dance club）。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "REL"
+            ],
+            "used_target_words": [
+              "week",
+              "club",
+              "busy",
+              "look for",
+              "member"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "（小建議，不影響判定）參考譯文 1 的 busy finding new members：find 偏「找到」，社團招新生用 looking for／recruiting 較貼切；可接受，但不宜當主要示範。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "PERF"
+            ],
+            "used_target_words": [
+              "so far",
+              "student",
+              "join",
+              "dance",
+              "club"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "week",
+              "club",
+              "busy",
+              "look for",
+              "member"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "REL": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "so far",
+              "student",
+              "join",
+              "dance",
+              "club"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PERF": true
+            },
+            "program_match": true
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "warn",
+      "created_at": "2026-10-09T07:25:05Z",
+      "details": {
+        "solver": "B",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "The first week of school is the time when every club is busy looking for new members.",
+            "confidence": "high",
+            "explanation_zh": "「……的時候」用 the time when 帶關係副詞子句修飾 time；「忙著找」用 be busy + V-ing；「各個社團」譯 every club（或 clubs）。"
+          },
+          "2": {
+            "translation": "So far, more than fifty new students have joined the dance club.",
+            "confidence": "medium",
+            "explanation_zh": "「到目前為止」搭配現在完成式 have joined；「五十多位」譯 more than fifty；「熱舞社」中文沒有明確英文社名，保守譯成 the dance club（也可能是 hip-hop dance club），這是主要不確定處。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "REL"
+            ],
+            "used_target_words": [
+              "week",
+              "club",
+              "busy",
+              "look for",
+              "member"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "第 4 部分「的時候」的 accepted 只有 the time when、a time when、the time that、the period when，沒有收 is when 這種寫法（The first week of school is when every club is busy looking for new members.），這是很自然、很常見的說法，學生寫了這一部分會被誤判；另外「是」對應的 is 沒有落在任何一個部分。建議補上 when 或在說明中註明 is when 也可接受。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "PERF"
+            ],
+            "used_target_words": [
+              "so far",
+              "student",
+              "join",
+              "dance",
+              "club"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "week",
+              "club",
+              "busy",
+              "look for",
+              "member"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "REL": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "so far",
+              "student",
+              "join",
+              "dance",
+              "club"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PERF": true
+            },
+            "program_match": true
+          }
+        },
+        "problems": [
+          "第 1 題驗證者對4 部分切分有意見（warn）：第 4 部分「的時候」的 accepted 只有 the time when、a time when、the time that、the period when，沒有收 is when 這種寫法（The first week of scho"
+        ]
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

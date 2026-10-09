@@ -1,0 +1,611 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.st.c7e677",
+  "version": 1,
+  "section_type": "structure",
+  "format_version": "structure-4x5",
+  "tier": "basic",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": "At birthday parties around the world, one song is sung again and again. The candles on the cake are lit, and everyone joins in with “Happy Birthday to You.” It is one of the best-known songs in the English language. Yet few people know where it came from or how it got its words.\n[[1]] Patty was a kindergarten teacher, while Mildred was a skilled piano player. Together they wrote a short song called “Good Morning to All” for Patty’s young students to sing at the start of each school day. They kept the notes simple so that even the smallest children could sing along.\nThe words we sing at birthday parties, however, are not the ones the sisters wrote. [[2]] At some point, people began singing “Happy birthday to you” to the same tune instead. No one knows for sure who made this change, but the new version soon spread far and wide.\nFor many years, the famous song was not free to use. A company claimed that it owned the song and asked for money whenever it was used in films or on television. [[3]] Their workers would gather around a customer’s table and clap along to a different tune.\nIn the end, a court in the United States decided that the company’s claim was not valid. [[4]] Today, the song is free for everyone, whether it is sung at a party, in a film, or on the street. A simple tune written for a classroom has truly become a gift to the whole world.",
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": {
+      "A": "Paying for the music in a film can cost a great deal.",
+      "B": "Their song opened with the line “Good morning to you.”",
+      "C": "After this decision, the company could no longer charge for the song.",
+      "D": "That is one reason some restaurants made up birthday songs of their own.",
+      "E": "The tune was first written by two American sisters, Mildred and Patty Hill."
+    },
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "E",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "enumeration",
+          "clue_raw": "TS|LX|BF|L",
+          "key_phrase": "first written by ← where it came from; two American sisters, Mildred and Patty Hill → Patty was …, while Mildred was …"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "B",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "contrast",
+          "clue_raw": "SP|PR+CN|BF|L",
+          "key_phrase": "Their song ← not the ones the sisters wrote; “Good morning to you” → “Happy birthday to you” … instead"
+        }
+      },
+      {
+        "no": 3,
+        "label": "3",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "D",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "transition_word",
+          "clue_raw": "SP|CN+PR|BF|L",
+          "key_phrase": "That is one reason ← asked for money whenever it was used; some restaurants → Their workers"
+        }
+      },
+      {
+        "no": 4,
+        "label": "4",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "C",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "lexical_cohesion",
+          "clue_raw": "SP|LX|BF|L",
+          "key_phrase": "decided … not valid → this decision; could no longer charge → Today, the song is free for everyone"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "生日快樂歌的故事",
+      "genre": "expository",
+      "sdgs": [],
+      "text_format": "continuous"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "第一段最後說，很少人知道這首歌從哪裡來、歌詞怎麼來的。第二段開頭的 (E) 回答「從哪裡來」：曲子最早是由一對美國姊妹 Mildred 和 Patty Hill 寫的。下一句 Patty was a kindergarten teacher, while Mildred was a skilled piano player 依序介紹這兩位姊妹，再下一句 Together they wrote… 的 they 也指她們。選 (E)。",
+          "evidence": [
+            "Yet few people know where it came from or how it got its words.",
+            "The tune was first written by two American sisters, Mildred and Patty Hill.",
+            "Patty was a kindergarten teacher, while Mildred was a skilled piano player."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "enumeration",
+          "option_notes_zh": {
+            "A": "多餘句：(A) 說在電影裡使用音樂要花很多錢，和「這首歌從哪裡來」接不上；下一句突然出現的 Patty 和 Mildred 也沒有人介紹過。",
+            "B": "(B) 的 Their song 找不到「她們」是誰：前一句只有 few people，若解成「這些人的歌」就說不通；下一句的 Patty、Mildred 也還沒被介紹。(B) 屬於第 2 格。",
+            "C": "(C) 的 this decision 在這裡沒有任何「決定」可指（法院判決在最後一段才出現）；下一句介紹兩姊妹也和公司收費無關。(C) 屬於第 4 格。",
+            "D": "(D) 的 That is one reason… 要指前面某件事，但「很少人知道歌的來歷」不會是餐廳自己編生日歌的原因；下一句的 Patty、Mildred 也沒有被介紹。(D) 屬於第 3 格。"
+          },
+          "strategy_zh": "下一句一口氣出現兩個沒介紹過的人名時，空格通常就是「介紹他們的那一句」；也可以回頭看上一段最後提出的問題（where it came from），找回答它的選項。",
+          "hints": [
+            "上一段最後提出了什麼問題？",
+            "下一句的 Patty 和 Mildred 是誰？前文有沒有介紹過她們？",
+            "答案提到 two American sisters。"
+          ]
+        },
+        "2": {
+          "explanation_zh": "前一句說，我們在生日派對上唱的歌詞，並不是兩姊妹寫的那一版；(B) 接著說出原本的歌詞：她們的歌開頭是 Good morning to you，Their 回指前一句的 the sisters。下一句說後來大家改用同一個曲調唱 Happy birthday to you，句尾的 instead（取而代之）正好和 (B) 的原詞形成對比。選 (B)。",
+          "evidence": [
+            "The words we sing at birthday parties, however, are not the ones the sisters wrote.",
+            "Their song opened with the line “Good morning to you.”",
+            "At some point, people began singing “Happy birthday to you” to the same tune instead."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "contrast",
+          "option_notes_zh": {
+            "A": "多餘句：(A) 說電影用音樂要花大錢，和「歌詞不是姊妹寫的」無關；下一句的 instead（改唱）也找不到被取代的原本歌詞。",
+            "C": "(C) 說這個決定之後公司不能再收費，但這裡沒有任何「決定」，收費的事也還沒出現；下一句的 instead 也沒有被取代的東西。(C) 屬於第 4 格。",
+            "D": "只讀前一句「現在唱的歌詞不是姊妹寫的」，接 (D)「這就是有些餐廳自己編生日歌的原因之一」似乎也有點關係（都提到生日歌）；但下一句 At some point, people began singing “Happy birthday to you” to the same tune instead 的 instead 要有一句「原本的歌詞」來對照，(D) 講的是餐廳另編新歌，接不上，所以要靠後一句排除。(D) 屬於第 3 格。",
+            "E": "(E) 說曲子最早是兩位姊妹寫的，但兩姊妹在第二段已經介紹過了，這裡又用全名再介紹一次是重複；下一句的 instead 也找不到被取代的原詞。(E) 屬於第 1 格。"
+          },
+          "strategy_zh": "句尾的 instead 表示「取代了前面提到的東西」；空格裡要先出現被取代的那一個（原本的歌詞），後一句才說換成什麼。",
+          "hints": [
+            "前一句說現在唱的歌詞「不是」姊妹寫的，那姊妹原本寫的是什麼？",
+            "下一句句尾的 instead，是取代了什麼？",
+            "答案提到 “Good morning to you.”"
+          ]
+        },
+        "3": {
+          "explanation_zh": "前一句說，一家公司聲稱擁有這首歌，只要電影或電視用到就要收錢；(D) 說「這就是有些餐廳自己編生日歌的原因之一」，That 指的就是「唱這首歌要付錢」這件事，前後形成因果。下一句 Their workers would gather around a customer’s table… 的 Their 回指 (D) 的 restaurants，說店員改唱別的曲子。選 (D)。",
+          "evidence": [
+            "A company claimed that it owned the song and asked for money whenever it was used in films or on television.",
+            "That is one reason some restaurants made up birthday songs of their own.",
+            "Their workers would gather around a customer’s table and clap along to a different tune."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "cause_effect",
+          "option_notes_zh": {
+            "A": "多餘句：只讀前一句「公司要收使用費」，接 (A)「在電影裡使用音樂可能要花一大筆錢」似乎順著講費用；但下一句 Their workers would gather around a customer’s table 的 Their 找不到「有員工、有客人桌子」的對象，(A) 只講電影，所以要靠後一句排除。",
+            "B": "(B) 的 Their song 在這裡會變成「公司的歌」，內容又是原本的歌詞 Good morning to you，和收費的話題接不上；下一句的 Their workers 也找不到先行詞。(B) 屬於第 2 格。",
+            "C": "(C) 說「這個決定之後，公司不能再收費」，但前面只有公司的主張，還沒有任何判決，this decision 沒有可指的對象；而且前一句才說公司收費，馬上說不能收費是自相矛盾。(C) 屬於第 4 格。",
+            "E": "(E) 介紹兩位姊妹，但她們早在第二段就出現了；放在收費的段落裡內容不相干，下一句的 Their workers 也對不上姊妹。(E) 屬於第 1 格。"
+          },
+          "strategy_zh": "That is one reason／This is why 這類句子要往前找「原因」，往後找承接的主詞；前一句的收費是原因，後一句的 Their workers 要有一個「有員工的地方」當先行詞。",
+          "hints": [
+            "前一句說公司做了什麼事？這可能造成什麼結果？",
+            "下一句的 Their workers，是誰的員工？他們還會「圍在客人的桌邊」。",
+            "答案提到 some restaurants。"
+          ]
+        },
+        "4": {
+          "explanation_zh": "前一句說，美國的法院最後判定那家公司的主張不成立；(C) 的 this decision 用名詞 decision 重述前一句的動詞 decided，並說明判決的結果：公司不能再為這首歌收費。下一句 Today, the song is free for everyone 也承接「不能再收費」。選 (C)。",
+          "evidence": [
+            "In the end, a court in the United States decided that the company’s claim was not valid.",
+            "After this decision, the company could no longer charge for the song.",
+            "Today, the song is free for everyone, whether it is sung at a party, in a film, or on the street."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "lexical_cohesion",
+          "option_notes_zh": {
+            "A": "多餘句：(A) 說電影用音樂要花很多錢，但前一句才說公司的主張被判無效，下一句又說這首歌現在人人都能免費使用，(A) 和兩句都接不上。",
+            "B": "(B) 說她們的歌原本以 Good morning to you 開頭，但這裡沒有可以指的 Their（前一句是法院和公司）；判決之後再講原本的歌詞也離題。(B) 屬於第 2 格。",
+            "D": "只讀前一句「法院判公司的主張無效」，接 (D)「這就是有些餐廳自己編生日歌的原因之一」似乎也能把 That 解成整件版權風波；但下一句 Today, the song is free for everyone 要先交代判決的結果（不能再收費），而且判決之後歌已經免費，就沒有理由另編新歌，所以要靠後一句排除。(D) 屬於第 3 格。",
+            "E": "(E) 介紹兩位姊妹，但她們早在第二段就出現了；放在判決之後和前後文都不相干。(E) 屬於第 1 格。"
+          },
+          "strategy_zh": "注意動詞與名詞的換說法：前一句的 decided，後一句常用 this decision 承接；再確認結果（不能再收費）和下一句（免費）是否一致。",
+          "hints": [
+            "前一句法院做了什麼？",
+            "下一句說這首歌「現在人人免費使用」，空格要說明為什麼會這樣。",
+            "答案提到 this decision。"
+          ]
+        }
+      }
+    },
+    "translation_zh": {
+      "text": "在世界各地的生日派對上，有一首歌總是一唱再唱。蛋糕上的蠟燭點亮後，大家就一起唱起〈祝你生日快樂〉。這是英語世界裡最為人熟知的歌曲之一，然而很少有人知道它從哪裡來，歌詞又是怎麼來的。\n【1】這首曲子最早是由一對美國姊妹──米爾德瑞．希爾和派蒂．希爾──寫成的。派蒂是幼兒園老師，米爾德瑞則是技巧純熟的鋼琴家。她們一起寫了一首叫做〈大家早安〉的短歌，讓派蒂的幼兒園學生在每天上學開始時唱。她們刻意讓音符保持簡單，好讓年紀最小的孩子也能跟著唱。\n不過，我們在生日派對上唱的歌詞，並不是兩姊妹寫的那一版。【2】她們的歌是以「祝你早安」這一句開頭的。不知從什麼時候開始，人們改用同一個曲調唱「祝你生日快樂」。沒有人確切知道是誰改的，但這個新版本很快就傳遍各地。\n有很多年，這首有名的歌並不能自由使用。一家公司聲稱擁有這首歌，只要電影或電視節目用到它，就要求付費。【3】這就是有些餐廳會自己編生日歌的原因之一。店員會圍在客人的桌邊，跟著另一個曲調拍手歌唱。\n最後，美國一個法院判定那家公司的主張不成立。【4】這項判決之後，那家公司就不能再為這首歌收費了。如今，不論是在派對上、電影裡，還是在街頭，人人都能免費唱這首歌。一首為教室而寫的簡單曲子，真的成了送給全世界的禮物。\n（多餘句 (A)：在電影裡使用一段音樂，可能要花上一大筆錢。）"
+    },
+    "elimination": {
+      "feasible": {
+        "1": [
+          "E"
+        ],
+        "2": [
+          "B"
+        ],
+        "3": [
+          "D"
+        ],
+        "4": [
+          "C"
+        ]
+      },
+      "perfect_matchings": 1
+    },
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": null,
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "3-V-7",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "7-V-5",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "B-V-8",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": "本文由 AI 撰寫"
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-08-structure-basic-05",
+    "lot": "structure-basic-05",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/structure",
+    "prompt_sha256": "2476d9ef55073e78b11f90be14826e969906a0c5fe5c563d4ac5397c3c379ee7",
+    "spec_id": "structure-basic@2026-10-08",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 253,
+    "sentences": 16,
+    "avg_sentence_length": 15.81,
+    "denominator": 244,
+    "proper_nouns": [
+      "Birthday",
+      "English",
+      "Mildred",
+      "Patty",
+      "Patty’s"
+    ],
+    "numbers": 4,
+    "coverage_l1_4": 0.9754,
+    "coverage_l1_6": 0.9836,
+    "offlist_ratio": 0.0164,
+    "beyond_l4_ratio": 0.0082,
+    "level_counts": {
+      "1": 217,
+      "2": 16,
+      "3": 5,
+      "5": 2,
+      "off": 4
+    },
+    "offlist_words": [
+      "birthday",
+      "classroom"
+    ],
+    "band": {
+      "tier": "basic",
+      "basis": "lot structure-basic-05（SPEC §3.4＋出題規格書 passage_overrides（words、coverage_L1_4_min（取代 SPEC 的區間）、coverage_L1_6_min、offlist_max、beyond_l4_ratio_max））",
+      "ok": true,
+      "checks": {
+        "word_count": {
+          "value": 253,
+          "min": 220,
+          "max": 280,
+          "ok": true
+        },
+        "coverage_l1_4": {
+          "value": 0.9754,
+          "min": 0.93,
+          "max": null,
+          "ok": true
+        },
+        "coverage_l1_6": {
+          "value": 0.9836,
+          "min": 0.96,
+          "max": null,
+          "ok": true
+        },
+        "offlist_ratio": {
+          "value": 0.0164,
+          "min": null,
+          "max": 0.04,
+          "ok": true
+        },
+        "avg_sentence_length": {
+          "value": 15.81,
+          "min": null,
+          "max": 17,
+          "ok": true
+        },
+        "beyond_l4_ratio": {
+          "value": 0.0082,
+          "min": null,
+          "max": 0.04,
+          "ok": true
+        }
+      }
+    }
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T07:27:09Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T07:12:04Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "answers": {
+          "1": {
+            "answer": "E",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Yet few people know where it came from or how it got its words.",
+              "Patty was a kindergarten teacher, while Mildred was a skilled piano player."
+            ],
+            "explanation_zh": "前段問這首歌從哪裡來，E 介紹作曲的 Hill 姊妹，後句才能直接用 Patty、Mildred 的名字。",
+            "feasible": [
+              "E"
+            ]
+          },
+          "2": {
+            "answer": "B",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "The words we sing at birthday parties, however, are not the ones the sisters wrote.",
+              "At some point, people began singing “Happy birthday to you” to the same tune instead."
+            ],
+            "explanation_zh": "前句說歌詞不是姊妹寫的那一版，B 說原歌第一句是 Good morning to you，後句再說後來改唱 Happy birthday to you（instead 對照原詞）。",
+            "feasible": [
+              "B"
+            ]
+          },
+          "3": {
+            "answer": "D",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "A company claimed that it owned the song and asked for money whenever it was used in films or on television.",
+              "Their workers would gather around a customer’s table and clap along to a different tune."
+            ],
+            "explanation_zh": "公司要收版權費，D 說這是有些餐廳自編生日歌的原因之一，後句 Their workers 的 Their 指餐廳，唱另一個曲調。",
+            "feasible": [
+              "D"
+            ]
+          },
+          "4": {
+            "answer": "C",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "In the end, a court in the United States decided that the company’s claim was not valid.",
+              "Today, the song is free for everyone, whether it is sung at a party, in a film, or on the street."
+            ],
+            "explanation_zh": "法院判公司主張無效，C 的 this decision 指判決，公司不能再收費，接著說今天大家都能自由使用。",
+            "feasible": [
+              "C"
+            ]
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T07:14:15Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "answers": {
+          "1": {
+            "answer": "E",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Yet few people know where it came from or how it got its words.",
+              "Patty was a kindergarten teacher, while Mildred was a skilled piano player."
+            ],
+            "explanation_zh": "前段說很少人知道這首歌的來歷，後句直接談 Patty 與 Mildred；E 先介紹曲調由 Hill 姊妹寫成，才能接上她們各自的職業。",
+            "feasible": [
+              "E"
+            ]
+          },
+          "2": {
+            "answer": "B",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "The words we sing at birthday parties, however, are not the ones the sisters wrote.",
+              "At some point, people began singing “Happy birthday to you” to the same tune instead."
+            ],
+            "explanation_zh": "前句說生日歌的歌詞不是姊妹寫的，後句說人們改唱 Happy birthday to you；B 說她們原本的歌以 Good morning to you 開頭，補上「原本的詞」。",
+            "feasible": [
+              "B"
+            ]
+          },
+          "3": {
+            "answer": "D",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "A company claimed that it owned the song and asked for money whenever it was used in films or on television.",
+              "Their workers would gather around a customer’s table and clap along to a different tune."
+            ],
+            "explanation_zh": "後句的 Their workers 指餐廳員工；D 說這是有些餐廳自己編生日歌的原因之一，與公司收費的前句呼應。",
+            "feasible": [
+              "D"
+            ]
+          },
+          "4": {
+            "answer": "C",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "In the end, a court in the United States decided that the company’s claim was not valid.",
+              "Today, the song is free for everyone, whether it is sung at a party, in a film, or on the street."
+            ],
+            "explanation_zh": "法院判決公司的主張無效，接著說今天這首歌人人可免費用；C 的 After this decision 說明判決後公司不能再收費。",
+            "feasible": [
+              "C"
+            ]
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "distractor_audit",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T07:26:52Z",
+      "details": {
+        "session_id": null,
+        "items": {
+          "1": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "off_topic",
+              "evidence": "Patty was a kindergarten teacher, while Mildred was a skilled piano player.",
+              "explanation_zh": "多餘句：電影使用音樂的費用和「這首歌從哪裡來」無關；下一句突然出現的 Patty、Mildred 也沒有被介紹。"
+            },
+            "B": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Yet few people know where it came from or how it got its words.",
+              "explanation_zh": "(B) 的 Their 沒有先行詞（前句只有 few people），「這些人的歌」說不通；下一句的 Patty、Mildred 也還沒被介紹。(B) 屬於第 2 格。"
+            },
+            "C": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Yet few people know where it came from or how it got its words.",
+              "explanation_zh": "(C) 的 this decision 無所指，法院判決到最後一段才出現；下一句介紹兩姊妹也和公司收費無關。(C) 屬於第 4 格。"
+            },
+            "D": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "Yet few people know where it came from or how it got its words.",
+              "explanation_zh": "「很少人知道歌的來歷」不會是餐廳自編生日歌的原因，That is one reason 接不上；下一句的 Patty、Mildred 也沒有被介紹。(D) 屬於第 3 格。"
+            }
+          },
+          "2": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "off_topic",
+              "evidence": "At some point, people began singing “Happy birthday to you” to the same tune instead.",
+              "explanation_zh": "多餘句：電影使用音樂的費用和「歌詞不是姊妹寫的」無關；下一句的 instead 也找不到被取代的原本歌詞。"
+            },
+            "C": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "The words we sing at birthday parties, however, are not the ones the sisters wrote.",
+              "explanation_zh": "這裡沒有任何「決定」可讓 this decision 回指，公司收費的事也還沒出現；下一句的 instead 也沒有被取代的東西。(C) 屬於第 4 格。"
+            },
+            "D": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "At some point, people began singing “Happy birthday to you” to the same tune instead.",
+              "explanation_zh": "下一句的 instead 要有一句「原本的歌詞」來對照，(D) 講的是餐廳另編新歌；而且餐廳自編歌的原因（公司收費）到第四段才出現。(D) 屬於第 3 格。"
+            },
+            "E": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "The words we sing at birthday parties, however, are not the ones the sisters wrote.",
+              "explanation_zh": "兩姊妹在第二段已經介紹過，前句也用 the sisters 回指；(E) 又用不定的 two American sisters 加全名重新介紹，重複且不連貫；下一句的 instead 也需要先有原本的歌詞。(E) 屬於第 1 格。"
+            }
+          },
+          "3": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Their workers would gather around a customer’s table and clap along to a different tune.",
+              "explanation_zh": "多餘句：只看前句像是順著講費用，但下一句 Their workers… a customer’s table 需要一個有員工、有客人的地方當先行詞，(A) 只講電影，Their 無所指。"
+            },
+            "B": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Their workers would gather around a customer’s table and clap along to a different tune.",
+              "explanation_zh": "(B) 的 Their song 在這裡只能指公司，內容又是原本的歌詞，和收費話題無關；下一句的 Their workers 也找不到先行詞。(B) 屬於第 2 格。"
+            },
+            "C": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "In the end, a court in the United States decided that the company’s claim was not valid.",
+              "explanation_zh": "法院的判決在下一段才出現，這裡的 this decision 沒有可指的對象；前句剛說公司收費，馬上說公司不能再收費，自相矛盾。(C) 屬於第 4 格。"
+            },
+            "E": {
+              "verdict": "clearly_wrong",
+              "error_type": "off_topic",
+              "evidence": "Their workers would gather around a customer’s table and clap along to a different tune.",
+              "explanation_zh": "兩姊妹早在第二段就介紹過，放在收費段落裡不相干；下一句的 Their workers 也不會是姊妹的員工。(E) 屬於第 1 格。"
+            }
+          },
+          "4": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "Today, the song is free for everyone, whether it is sung at a party, in a film, or on the street.",
+              "explanation_zh": "多餘句：前句說公司的主張被判無效，下一句說這首歌現在人人免費，中間插入「電影用音樂要花大錢」和兩句都相反、接不上。"
+            },
+            "B": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "In the end, a court in the United States decided that the company’s claim was not valid.",
+              "explanation_zh": "(B) 的 Their 無所指（前句是法院和公司）；判決之後再講原本的歌詞也離題。(B) 屬於第 2 格。"
+            },
+            "D": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "Today, the song is free for everyone, whether it is sung at a party, in a film, or on the street.",
+              "explanation_zh": "判決讓公司不能收費、歌變成免費，不會是餐廳自編生日歌的原因；下一句 Today, the song is free 之前也缺少判決的結果。(D) 屬於第 3 格。"
+            },
+            "E": {
+              "verdict": "clearly_wrong",
+              "error_type": "off_topic",
+              "evidence": "In the end, a court in the United States decided that the company’s claim was not valid.",
+              "explanation_zh": "兩姊妹在第二段已介紹過，判決之後重新介紹作曲者和前後文都不相干。(E) 屬於第 1 格。"
+            }
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "unique_solution",
+      "reviewer": "record_verification.py",
+      "result": "pass",
+      "created_at": "2026-10-09T07:27:09Z",
+      "details": {
+        "method": "injective_assignment",
+        "perfect_matchings": 1,
+        "matches_key": true,
+        "feasible": {
+          "1": [
+            "E"
+          ],
+          "2": [
+            "B"
+          ],
+          "3": [
+            "D"
+          ],
+          "4": [
+            "C"
+          ]
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

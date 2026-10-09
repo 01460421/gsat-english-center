@@ -84,12 +84,16 @@ describe('SECTION_FORMATS', () => {
     for (const code of codes) expect(code).toMatch(/^[a-z]{2}$/);
   });
 
-  it('第一批 4 種題型的格式常數：詞彙 10×4、綜合 5×4、文意選填 10 空 10 選、篇章 4 空 5 選（多 1 句）', () => {
-    expect(AI_SECTION_TYPES_WITH_CHECKS).toEqual(['vocabulary', 'cloze', 'word_bank', 'structure']);
+  it('有專屬檢查的題型的格式常數：詞彙 10×4、綜合 5×4、文意選填 10 空 10 選、篇章 4 空 5 選（多 1 句）、閱讀 4×4、混合 4 子題、中譯英 2 句、作文 1 題', () => {
+    expect(AI_SECTION_TYPES_WITH_CHECKS).toEqual(['vocabulary', 'cloze', 'word_bank', 'structure', 'reading', 'mixed', 'translation', 'composition']);
+    expect(SECTION_FORMATS.translation).toMatchObject({ questions: 2, options_per_question: null, bank_options: null, format_version: 'translation-2' });
+    expect(SECTION_FORMATS.composition).toMatchObject({ questions: 1, options_per_question: null, bank_options: null, format_version: 'composition-1' });
     expect(SECTION_FORMATS.vocabulary).toMatchObject({ questions: 10, options_per_question: 4, bank_options: null, uses_blanks: false });
     expect(SECTION_FORMATS.cloze).toMatchObject({ questions: 5, options_per_question: 4, bank_options: null, uses_blanks: true });
     expect(SECTION_FORMATS.word_bank).toMatchObject({ questions: 10, bank_options: 10, extra_bank_options: 0, format_version: 'word_bank-10x10' });
     expect(SECTION_FORMATS.structure).toMatchObject({ questions: 4, bank_options: 5, extra_bank_options: 1, format_version: 'structure-4x5' });
+    expect(SECTION_FORMATS.reading).toMatchObject({ questions: 4, options_per_question: 4, bank_options: null, format_version: 'reading-4' });
+    expect(SECTION_FORMATS.mixed).toMatchObject({ questions: 4, options_per_question: null, bank_options: null, format_version: 'mixed-4' });
     for (const type of ['word_bank', 'structure'] as const) {
       const f = SECTION_FORMATS[type];
       expect(f.bank_options! - f.questions).toBe(f.extra_bank_options);

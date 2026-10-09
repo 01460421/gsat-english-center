@@ -1,0 +1,631 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.433349",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "basic",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "下雨的時候，很多學生會到自助洗衣店烘乾衣服。",
+        "options": null,
+        "answer": "When it rains, many students dry their clothes at a self-service laundry.",
+        "accepted_answers": [
+          "When it is raining, many students go to a self-service laundry to dry their clothes.",
+          "When it rains, a lot of students go to the laundromat to dry their clothes."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "時間副詞子句"
+          ],
+          "topic": "自助洗衣店"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "在那裡，他們的衣服不到一個小時就可以洗好並烘乾。",
+        "options": null,
+        "answer": "Their clothes can be washed and dried there in less than an hour.",
+        "accepted_answers": [
+          "There, their clothes can be washed and dried in under an hour.",
+          "In less than an hour, their clothes can be washed and dried there."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "被動語態"
+          ],
+          "topic": "自助洗衣店"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "自助洗衣店"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「…的時候」用 when 引導時間副詞子句，放句首時後面加逗號；「下雨」要有虛主詞 it（it rains），說的是經常發生的事，用現在式。「衣服」是 clothes（只有複數形），不要寫成 cloth（布）。自助洗衣店可寫 a self-service laundry 或 a laundromat；「烘乾」是 dry。",
+          "evidence": [
+            "下雨的時候",
+            "烘乾衣服"
+          ],
+          "strategy_zh": "時間子句放句首要加逗號；描述經常發生的事，主要子句和 when 子句都用現在式。",
+          "hints": [
+            "切成四段：下雨的時候／很多學生／會到自助洗衣店／烘乾衣服",
+            "標的詞彙：rain（下雨）、student（學生）、laundry／laundromat（自助洗衣店）、dry（烘乾）、clothes（衣服）",
+            "句型框架：When + it + V(現在式), S + V …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "主詞是「他們的衣服」，衣服是被洗、被烘乾的，英文要用被動語態：can be + 過去分詞（can be washed and dried）。中文常常不寫「被」，看到「東西＋可以＋動作」就要想到被動。washed 和 dried 用 and 並列，形式一致；dry 的過去分詞是 dried（y 改 i 加 ed）。「不到一個小時」是 in less than an hour，hour 的 h 不發音，冠詞用 an。",
+          "evidence": [
+            "他們的衣服",
+            "就可以洗好並烘乾"
+          ],
+          "strategy_zh": "先問「主詞是動作的執行者還是承受者」：衣服不會自己洗，用被動 be + p.p.；有助動詞時寫成 can／will／must + be + p.p.。",
+          "hints": [
+            "切成四段：他們的衣服／不到一個小時／就可以洗好／並烘乾（英文語序：Their clothes can be washed and dried there in less than an hour）",
+            "標的詞彙：clothes（衣服）、less／under（不到）、hour（小時）、wash（洗）、dry（烘乾）",
+            "句型框架：S + can be + p.p. (and p.p.) + 時間 …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "When it rains, many students dry their clothes at a self-service laundry.",
+            "When it is raining, many students go to a self-service laundry to dry their clothes.",
+            "When it rains, a lot of students go to the laundromat to dry their clothes."
+          ],
+          "target_words": [
+            {
+              "word": "rain",
+              "zh": "下雨"
+            },
+            {
+              "word": "student",
+              "zh": "學生"
+            },
+            {
+              "word": "laundry",
+              "zh": "自助洗衣店",
+              "alternatives": [
+                "laundromat"
+              ]
+            },
+            {
+              "word": "dry",
+              "zh": "烘乾"
+            },
+            {
+              "word": "clothes",
+              "zh": "衣服"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "ADVCL",
+              "grammar_id": "gp-time-clause",
+              "label_zh": "時間副詞子句（When …, S + V）",
+              "frame": "When + S + V, S + V …",
+              "zh_trigger": "下雨的時候"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "下雨的時候",
+              "accepted": [
+                "When it rains",
+                "When it is raining",
+                "When it is rainy",
+                "Whenever it rains"
+              ],
+              "targets": [
+                "ADVCL",
+                "rain"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "When rains",
+                  "right": "When it rains",
+                  "explanation_zh": "「下雨」要用虛主詞 it：it rains。"
+                },
+                {
+                  "wrong": "When it rain",
+                  "right": "When it rains",
+                  "explanation_zh": "it 是第三人稱單數，現在式動詞加 s。"
+                }
+              ]
+            },
+            {
+              "zh": "很多學生",
+              "accepted": [
+                "many students",
+                "a lot of students",
+                "lots of students"
+              ],
+              "targets": [
+                "student"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "many student",
+                  "right": "many students",
+                  "explanation_zh": "many 後面接複數名詞。"
+                }
+              ]
+            },
+            {
+              "zh": "會到自助洗衣店",
+              "accepted": [
+                "at a self-service laundry",
+                "go to a self-service laundry",
+                "go to the laundromat",
+                "go to a laundromat",
+                "at a laundromat",
+                "at the laundromat",
+                "go to the self-service laundry"
+              ],
+              "targets": [
+                "laundry"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "go to self-service laundry",
+                  "right": "go to a self-service laundry",
+                  "explanation_zh": "laundry（洗衣店）是可數名詞，要加 a／the。"
+                }
+              ]
+            },
+            {
+              "zh": "烘乾衣服",
+              "accepted": [
+                "dry their clothes",
+                "to dry their clothes"
+              ],
+              "targets": [
+                "dry",
+                "clothes"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "dry their cloth",
+                  "right": "dry their clothes",
+                  "explanation_zh": "「衣服」是 clothes（永遠是複數形）；cloth 是「布」。"
+                },
+                {
+                  "wrong": "bake their clothes",
+                  "right": "dry their clothes",
+                  "explanation_zh": "「烘乾」是 dry，bake 是烤麵包、蛋糕。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "plural_countable",
+              "zh": "烘乾衣服",
+              "literal_error": "When it rains, many students dry their cloth at a self-service laundry.",
+              "part": 4,
+              "explanation_zh": "中文「衣服」沒有單複數，容易寫成 cloth（布）或 clothe；衣服一律是 clothes，這一部分扣分。"
+            }
+          ],
+          "bonus": []
+        },
+        "2": {
+          "references": [
+            "Their clothes can be washed and dried there in less than an hour.",
+            "There, their clothes can be washed and dried in under an hour.",
+            "In less than an hour, their clothes can be washed and dried there."
+          ],
+          "target_words": [
+            {
+              "word": "clothes",
+              "zh": "衣服"
+            },
+            {
+              "word": "less",
+              "zh": "不到",
+              "alternatives": [
+                "under",
+                "within"
+              ]
+            },
+            {
+              "word": "hour",
+              "zh": "小時"
+            },
+            {
+              "word": "wash",
+              "zh": "洗"
+            },
+            {
+              "word": "dry",
+              "zh": "烘乾"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PASS",
+              "grammar_id": "gp-passive",
+              "label_zh": "被動語態（情態助動詞＋be＋p.p.）",
+              "frame": "S + can + be + p.p. …",
+              "zh_trigger": "就可以洗好並烘乾"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "他們的衣服",
+              "accepted": [
+                "Their clothes"
+              ],
+              "targets": [
+                "clothes"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Their cloths",
+                  "right": "Their clothes",
+                  "explanation_zh": "cloths 是「布」的複數，衣服是 clothes。"
+                }
+              ]
+            },
+            {
+              "zh": "不到一個小時",
+              "accepted": [
+                "in less than an hour",
+                "in under an hour",
+                "within an hour",
+                "in less than one hour"
+              ],
+              "targets": [
+                "less",
+                "hour"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "in less than one hours",
+                  "right": "in less than an hour",
+                  "explanation_zh": "一個小時用單數 hour。"
+                },
+                {
+                  "wrong": "in less than a hour",
+                  "right": "in less than an hour",
+                  "explanation_zh": "hour 的 h 不發音，冠詞用 an。"
+                }
+              ]
+            },
+            {
+              "zh": "就可以洗好",
+              "accepted": [
+                "can be washed",
+                "can get washed"
+              ],
+              "targets": [
+                "PASS",
+                "wash"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "can wash",
+                  "right": "can be washed",
+                  "explanation_zh": "衣服是「被洗」的，主詞是 clothes 時要用被動 can be + p.p.。"
+                },
+                {
+                  "wrong": "can be wash",
+                  "right": "can be washed",
+                  "explanation_zh": "被動語態是 be + 過去分詞，wash 要加 -ed。"
+                }
+              ]
+            },
+            {
+              "zh": "並烘乾",
+              "accepted": [
+                "and dried",
+                "and then dried"
+              ],
+              "targets": [
+                "dry"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "and dry",
+                  "right": "and dried",
+                  "explanation_zh": "和 washed 並列，同樣用過去分詞 dried（can be washed and dried）。"
+                },
+                {
+                  "wrong": "and dryed",
+                  "right": "and dried",
+                  "explanation_zh": "dry 的過去分詞是 dried（y 改 i 加 ed）。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "word_form",
+              "zh": "就可以洗好",
+              "literal_error": "Their clothes can wash and dry there in less than an hour.",
+              "part": 3,
+              "explanation_zh": "中文沒有「被」字，照字面寫成主動 can wash，衣服變成自己在洗；要用被動 can be washed，這一部分扣分。"
+            }
+          ],
+          "bonus": []
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-basic-02",
+    "lot": "translation-basic-02",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "98fb98485e580f5dcb5c9180ca2577c7306e3aace5410226eade2db68cbe253c",
+    "spec_id": "translation-basic@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T07:49:15Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "warn",
+      "created_at": "2026-10-09T07:28:47Z",
+      "details": {
+        "solver": "A",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "When it rains, many students go to laundromats to dry their clothes.",
+            "confidence": "high",
+            "explanation_zh": "「下雨的時候」用 When it rains；一般習慣用現在簡單式；「到…烘乾衣服」用 go to … to V 表目的；「自助洗衣店」譯 laundromats（也可 self-service laundries）。"
+          },
+          "2": {
+            "translation": "There, their clothes can be washed and dried in less than an hour.",
+            "confidence": "high",
+            "explanation_zh": "衣服是被洗、被烘，用被動 can be washed and dried；「不到一個小時」用 in less than an hour（也可 in under an hour）。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "ADVCL"
+            ],
+            "used_target_words": [
+              "rain",
+              "student",
+              "laundry",
+              "dry",
+              "clothes"
+            ],
+            "within_accepted": true,
+            "closest_reference": 2,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "（備註）我的譯文用複數 go to laundromats，第 3 部分 accepted 只列 go to a／the laundromat 等單數寫法，語意相同，判定落在可接受範圍內，建議補複數寫法。",
+              "（備註）程式的標的詞彙比對抓不到 laundromats（laundromat 的複數），laundry 會被判沒用到；建議 alternatives 補 laundromats、laundries，或讓詞形比對處理不在詞表裡的字的複數。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "PASS"
+            ],
+            "used_target_words": [
+              "clothes",
+              "less",
+              "hour",
+              "wash",
+              "dry"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "rain",
+              "student",
+              "dry",
+              "clothes"
+            ],
+            "target_hit_rate": 0.8,
+            "patterns_detected": {
+              "ADVCL": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "clothes",
+              "less",
+              "hour",
+              "wash",
+              "dry"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PASS": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 1 題驗證者說用了 ['laundry']，程式在譯文裡找不到"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T07:49:15Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "When it rains, many students go to the laundromat to dry their clothes.",
+            "confidence": "high",
+            "explanation_zh": "「下雨的時候」用 When it rains（時間副詞子句用現在式）；「到……烘乾衣服」用 go to 加不定詞表目的；「自助洗衣店」譯 laundromat。"
+          },
+          "2": {
+            "translation": "There, their clothes can be washed and dried in less than an hour.",
+            "confidence": "high",
+            "explanation_zh": "衣服是被洗和烘的，用被動語態 can be washed and dried；「不到一個小時」用 in less than an hour。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "ADVCL"
+            ],
+            "used_target_words": [
+              "rain",
+              "student",
+              "laundry",
+              "dry",
+              "clothes"
+            ],
+            "within_accepted": true,
+            "closest_reference": 2,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PASS"
+            ],
+            "used_target_words": [
+              "clothes",
+              "less",
+              "hour",
+              "wash",
+              "dry"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "rain",
+              "student",
+              "laundry",
+              "dry",
+              "clothes"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "ADVCL": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "clothes",
+              "less",
+              "hour",
+              "wash",
+              "dry"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PASS": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

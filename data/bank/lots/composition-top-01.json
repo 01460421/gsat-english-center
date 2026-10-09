@@ -1,0 +1,693 @@
+{
+  "schema": "gsat-bank-lot/v1",
+  "lot": "composition-top-01",
+  "section_type": "composition",
+  "tier": "top",
+  "label_zh": "英文作文‧超越頂標（第 1 批）",
+  "created_on": "2026-10-09",
+  "count": 10,
+  "questions_per_group": 1,
+  "format_version": "composition-1",
+  "uid_prefix": "ai.cp.",
+  "path": "data/bank/v1/composition/top/",
+  "spec_id": "composition-top@2026-10-09",
+  "spec_file": "data/exams/generation-spec/writing.json",
+  "spec_tier_key": "beyond_top",
+  "spec_status": "draft：寫作沒有逐題統計，只有大題分數分布（非選擇題分數人數統計表；學測 97–115、指考 97–110 共 33 年），中譯英兩句也只有合計。三級參數由年度層級分析、能力組推估與 98 篇官方佳作的轉錄統計推得；範文的中低級參數是設計值。上線後依站內批改分數校正（WRT-CAL-*）。",
+  "site_target": {
+    "items_per_tier": 10,
+    "lots_per_tier": 1,
+    "basis_zh": "站主要求作文每個難度 10 題（每題附穩健版與頂標版範文）；ROADMAP §9.2 原訂每個難度 4 題，依站主要求放大"
+  },
+  "topics": [
+    {
+      "slot": 1,
+      "id": "cp-t01-01",
+      "domain_zh": "科技與生活",
+      "topic_zh": "高中生每日螢幕時間",
+      "angle_en": "a survey of how much time high school students spend on screens each day",
+      "keywords": [
+        "screen time"
+      ],
+      "prompt_type": "chart",
+      "essay_type": "chart",
+      "figures_hint_zh": "1 張長條圖（假設調查）：平日與假日四種用途（課業、社群、影音、遊戲）的平均小時數",
+      "moves": [
+        {
+          "paragraph": 1,
+          "code": "describe_data"
+        },
+        {
+          "paragraph": 1,
+          "code": "compare"
+        },
+        {
+          "paragraph": 2,
+          "code": "evaluate"
+        },
+        {
+          "paragraph": 2,
+          "code": "propose"
+        }
+      ]
+    },
+    {
+      "slot": 2,
+      "id": "cp-t01-02",
+      "domain_zh": "城市與交通",
+      "topic_zh": "學生通勤方式",
+      "angle_en": "how students at one school get to school and how this has changed",
+      "keywords": [
+        "commuting modes"
+      ],
+      "prompt_type": "chart",
+      "essay_type": "chart",
+      "figures_hint_zh": "1 張圓餅圖或長條圖（假設調查）：步行、公車、捷運、家長接送四種方式的比例，兩個年份比較",
+      "moves": [
+        {
+          "paragraph": 1,
+          "code": "describe_data"
+        },
+        {
+          "paragraph": 1,
+          "code": "compare"
+        },
+        {
+          "paragraph": 2,
+          "code": "evaluate"
+        },
+        {
+          "paragraph": 2,
+          "code": "propose"
+        }
+      ]
+    },
+    {
+      "slot": 3,
+      "id": "cp-t01-03",
+      "domain_zh": "閱讀與學習",
+      "topic_zh": "青少年的閱讀形式",
+      "angle_en": "teenagers reading on paper, on screens, or by listening to audiobooks",
+      "keywords": [
+        "reading formats",
+        "audiobook"
+      ],
+      "prompt_type": "chart",
+      "essay_type": "chart",
+      "figures_hint_zh": "1 張堆疊長條圖（假設調查）：國中、高中、大學生使用紙本、電子書、有聲書的比例",
+      "moves": [
+        {
+          "paragraph": 1,
+          "code": "describe_data"
+        },
+        {
+          "paragraph": 1,
+          "code": "compare"
+        },
+        {
+          "paragraph": 2,
+          "code": "evaluate"
+        },
+        {
+          "paragraph": 2,
+          "code": "propose"
+        }
+      ]
+    },
+    {
+      "slot": 4,
+      "id": "cp-t01-04",
+      "domain_zh": "升學與生涯",
+      "topic_zh": "選校系的考量",
+      "angle_en": "what students consider most when choosing a university major",
+      "keywords": [
+        "choosing a major"
+      ],
+      "prompt_type": "chart",
+      "essay_type": "chart",
+      "figures_hint_zh": "1 張長條圖（假設調查）：興趣、未來收入、家人意見、學校排名、離家遠近五個因素的人數比例",
+      "moves": [
+        {
+          "paragraph": 1,
+          "code": "describe_data"
+        },
+        {
+          "paragraph": 2,
+          "code": "compare_self"
+        },
+        {
+          "paragraph": 2,
+          "code": "evaluate"
+        },
+        {
+          "paragraph": 2,
+          "code": "propose"
+        }
+      ]
+    },
+    {
+      "slot": 5,
+      "id": "cp-t01-05",
+      "domain_zh": "旅遊與文化",
+      "topic_zh": "跟團與自助旅行",
+      "angle_en": "joining a group tour versus planning an independent trip",
+      "keywords": [
+        "group tour",
+        "independent travel"
+      ],
+      "prompt_type": "picture_issue_abstract",
+      "essay_type": "picture",
+      "figures_hint_zh": "2 張插圖：圖一導遊舉旗帶團、遊客跟著拍照；圖二背包客自己查地圖、和當地人聊天",
+      "moves": [
+        {
+          "paragraph": 1,
+          "code": "compare"
+        },
+        {
+          "paragraph": 2,
+          "code": "evaluate"
+        },
+        {
+          "paragraph": 2,
+          "code": "propose"
+        }
+      ]
+    },
+    {
+      "slot": 6,
+      "id": "cp-t01-06",
+      "domain_zh": "消費與科技",
+      "topic_zh": "實體店與網路購物",
+      "angle_en": "shopping in physical stores versus shopping online",
+      "keywords": [
+        "brick-and-mortar"
+      ],
+      "prompt_type": "picture_issue_abstract",
+      "essay_type": "picture",
+      "figures_hint_zh": "2 張插圖：圖一店員協助顧客試穿、比較商品；圖二一個人深夜在家用手機下單，門口堆著包裹",
+      "moves": [
+        {
+          "paragraph": 1,
+          "code": "compare"
+        },
+        {
+          "paragraph": 2,
+          "code": "evaluate"
+        },
+        {
+          "paragraph": 2,
+          "code": "propose"
+        }
+      ]
+    },
+    {
+      "slot": 7,
+      "id": "cp-t01-07",
+      "domain_zh": "城市生活",
+      "topic_zh": "不夜城與早睡小鎮",
+      "angle_en": "a city that stays busy all night compared with a quiet town where shops close early",
+      "keywords": [
+        "24-hour city"
+      ],
+      "prompt_type": "picture_issue_abstract",
+      "essay_type": "picture",
+      "figures_hint_zh": "2 張插圖：圖一深夜燈火通明、人潮不斷的街道；圖二晚上八點就熄燈的小鎮街道",
+      "moves": [
+        {
+          "paragraph": 1,
+          "code": "compare"
+        },
+        {
+          "paragraph": 2,
+          "code": "evaluate"
+        },
+        {
+          "paragraph": 2,
+          "code": "propose"
+        }
+      ]
+    },
+    {
+      "slot": 8,
+      "id": "cp-t01-08",
+      "domain_zh": "校園空間",
+      "topic_zh": "學校的三種讀書空間",
+      "angle_en": "three kinds of study spaces at school and which one works best",
+      "keywords": [
+        "study spaces"
+      ],
+      "prompt_type": "picture_issue_abstract",
+      "essay_type": "picture",
+      "figures_hint_zh": "3 張插圖：安靜的自習室、可以討論的小組討論室、戶外樹下的閱讀角",
+      "moves": [
+        {
+          "paragraph": 1,
+          "code": "compare"
+        },
+        {
+          "paragraph": 2,
+          "code": "evaluate"
+        },
+        {
+          "paragraph": 2,
+          "code": "propose"
+        }
+      ]
+    },
+    {
+      "slot": 9,
+      "id": "cp-t01-09",
+      "domain_zh": "社會現象",
+      "topic_zh": "慢活與低慾望生活",
+      "angle_en": "more young people choosing a slower, simpler life",
+      "keywords": [
+        "slow living"
+      ],
+      "prompt_type": "social_phenomenon",
+      "essay_type": "chart",
+      "figures_hint_zh": "1 張折線圖（假設調查）：近十年「寧可少賺、也要有更多自己的時間」的年輕人比例逐年上升",
+      "moves": [
+        {
+          "paragraph": 1,
+          "code": "describe_data"
+        },
+        {
+          "paragraph": 2,
+          "code": "reasons"
+        },
+        {
+          "paragraph": 2,
+          "code": "evaluate"
+        },
+        {
+          "paragraph": 2,
+          "code": "propose"
+        }
+      ]
+    },
+    {
+      "slot": 10,
+      "id": "cp-t01-10",
+      "domain_zh": "社會現象",
+      "topic_zh": "網路評價與消費",
+      "angle_en": "online reviews deciding where people eat and what they buy",
+      "keywords": [
+        "online reviews"
+      ],
+      "prompt_type": "social_phenomenon",
+      "essay_type": "picture",
+      "figures_hint_zh": "2 張插圖：圖一一家評分 4.9 的餐廳大排長龍、圖二隔壁評分很少的老店空無一人",
+      "moves": [
+        {
+          "paragraph": 1,
+          "code": "compare"
+        },
+        {
+          "paragraph": 2,
+          "code": "reasons"
+        },
+        {
+          "paragraph": 2,
+          "code": "evaluate"
+        },
+        {
+          "paragraph": 2,
+          "code": "propose"
+        }
+      ]
+    }
+  ],
+  "topic_rule_zh": "group.tags.topic 逐字照抄 topic_zh；rubric.prompt_type、question tags.essay_type 照 topics；moves 的 code 照抄，zh 寫這個步驟在題目提示裡的寫法",
+  "prompt_type_quota": {
+    "chart": 4,
+    "picture_issue_abstract": 4,
+    "social_phenomenon": 2
+  },
+  "prompt_rules": {
+    "spec_3_5_zh": "圖表或多圖比較＋評估、提出方案（9-Ⅴ-7、9-Ⅴ-8）",
+    "stem_zh": "以「提示：」開頭，寫情境、看圖要求，以及「請…寫一篇英文作文，文分兩段。第一段…；第二段…」（分別指定兩段任務）；tags.word_count = {min: 120, max: null, approx: null}、paragraphs = 2、points = 20",
+    "figures_zh": "1–3 張圖（ROADMAP D9：代理畫簡單的 SVG 示意圖放在 figure.svg，或只用文字描述情境）；每張要有 caption 與完整的 description；圖表題 kind=chart／table，數字寫在 rows（第一列表頭），是題目設定的假設調查（題目寫明「某校調查」），要能讀出 2–3 個明確對比",
+    "prompt_zh_chars": [
+      100,
+      200
+    ],
+    "moves": [
+      4,
+      5
+    ],
+    "p1_tasks": [
+      "describe_data_or_phenomenon",
+      "compare"
+    ],
+    "p2_tasks": [
+      "causes+effects",
+      "evaluate+propose",
+      "compare_self+reasons",
+      "concede+rebut"
+    ],
+    "curriculum": [
+      "9-V-7",
+      "9-V-8"
+    ]
+  },
+  "scaffold": {
+    "kind": "checklist",
+    "required": false,
+    "rule_zh": "只給規劃檢核表（≥3 條，例如「第一段有沒有讀出 2–3 個明確對比」）；不給句型開頭；也可以是 null"
+  },
+  "model_texts": {
+    "steady": {
+      "label_zh": "穩健版",
+      "target_score": [
+        14,
+        17
+      ],
+      "spec": {
+        "role": "穩健版（SPEC §6.9）",
+        "target_score": [
+          14,
+          16
+        ],
+        "words": [
+          160,
+          240
+        ],
+        "paragraphs": 2,
+        "p2_share": [
+          0.4,
+          0.65
+        ],
+        "sentences": [
+          10,
+          18
+        ],
+        "mean_sentence_length": [
+          12,
+          18
+        ],
+        "connectives_per_100w": [
+          2.5,
+          5.5
+        ],
+        "connective_functions_min": 4,
+        "connective_types_min": 5,
+        "non_subject_opener_share_min": 0.25,
+        "L1_4_coverage_min": 0.95,
+        "L5plus_share_max": 0.015,
+        "inversion_max": 0,
+        "errors": 0,
+        "must_show": [
+          "每個題目要求都有對應句子",
+          "兩段各有主題句",
+          "≥2 個具體細節句",
+          "≥1 個個人經驗句",
+          "結尾句回扣題目"
+        ],
+        "basis": "設計值：沒有中段考生的樣本。長度約為下限 120 的 1.3–2 倍，句長與轉承取佳作下緣再往下放寬"
+      }
+    },
+    "top": {
+      "label_zh": "頂標版",
+      "target_score": [
+        18,
+        20
+      ],
+      "spec": {
+        "role": "頂標版（SPEC §6.9）",
+        "target_score": [
+          19,
+          20
+        ],
+        "words": [
+          300,
+          450
+        ],
+        "paragraphs": 2,
+        "p2_share": [
+          0.45,
+          0.63
+        ],
+        "sentences": [
+          14,
+          25
+        ],
+        "mean_sentence_length": [
+          17,
+          24
+        ],
+        "sentence_length_cv_min": 0.28,
+        "connectives_per_100w": [
+          2.5,
+          5.0
+        ],
+        "connective_functions_min": 4,
+        "connective_types_min": 8,
+        "non_subject_opener_share_min": 0.45,
+        "L1_4_coverage": [
+          0.9,
+          0.97
+        ],
+        "L5plus_share": [
+          0.012,
+          0.05
+        ],
+        "mattr50_min": 0.79,
+        "inversion_max": 1,
+        "errors": 0,
+        "must_show": [
+          "第二段「寫深寫廣」：因果鏈，或從自己延伸到他人與社會",
+          "至少 1 個具體例子或數據",
+          "至少 1 組讓步或反面考量",
+          "結尾提出見解而不是重述"
+        ],
+        "basis": "學測 111–115 官方佳作 46 篇約第 10–90 百分位（essay_sample_features）；字數上限 450 約為 P85，避免範文長到學生手寫寫不完；佳作每百字仍有約 2 個錯，範文要求 0 錯"
+      }
+    },
+    "rule_zh": "每題兩篇範文（steady＝穩健版、top＝頂標版），各 ≥120 字、剛好 2 段（段落之間一個換行）；paragraphs 寫段落功能與主題句；notes 標轉承詞（function 涵蓋 sequence／cause_effect／contrast／example／conclusion 至少 4 種）、細節句、個人經驗句、好用句型、片語，text 都要逐字出現在範文；self_assessment 依四項指標給分（穩健版 14–17、頂標版 18–20）。範文 0 錯，不堆砌罕見字或倒裝（07 §4.3）；spec 是出題規格書的篇章指標，不符只列 warning"
+  },
+  "rubric_template": {
+    "criteria": {
+      "content": [
+        {
+          "min": 4,
+          "max": 5,
+          "descriptor_zh": "回應題目的每一項要求，主旨明確；用具體的事例、細節或親身經驗撐起每個重點。"
+        },
+        {
+          "min": 3,
+          "max": 3,
+          "descriptor_zh": "大致回應題目，但有一項要求寫得單薄，或細節偏籠統、說服力不足。"
+        },
+        {
+          "min": 1,
+          "max": 2,
+          "descriptor_zh": "漏掉題目的主要要求或主旨模糊，多數句子空泛、重複或偏離題目。"
+        },
+        {
+          "min": 0,
+          "max": 0,
+          "descriptor_zh": "空白、離題、只抄題目，或內容少到無法判斷要說什麼。"
+        }
+      ],
+      "organization": [
+        {
+          "min": 4,
+          "max": 5,
+          "descriptor_zh": "兩段分工清楚，各有主題句；句與句、段與段的銜接自然，轉承語用得恰當，篇幅分配合理。"
+        },
+        {
+          "min": 3,
+          "max": 3,
+          "descriptor_zh": "段落大致分明，但有的地方跳接或重複，轉承語偏少或用得生硬。"
+        },
+        {
+          "min": 1,
+          "max": 2,
+          "descriptor_zh": "重點排列混亂，前後句常接不起來，讀者不容易跟上。"
+        },
+        {
+          "min": 0,
+          "max": 0,
+          "descriptor_zh": "看不出段落與順序，句子彼此無關。"
+        }
+      ],
+      "grammar": [
+        {
+          "min": 4,
+          "max": 5,
+          "descriptor_zh": "句子幾乎沒有文法、標點錯誤，能交替使用簡單句、複句與不同的句首。"
+        },
+        {
+          "min": 3,
+          "max": 3,
+          "descriptor_zh": "偶有時態、單複數或標點錯誤，但讀得懂意思；句型變化有限。"
+        },
+        {
+          "min": 1,
+          "max": 2,
+          "descriptor_zh": "錯誤多到常讓人誤解意思，句子結構常不完整。"
+        },
+        {
+          "min": 0,
+          "max": 0,
+          "descriptor_zh": "幾乎沒有正確的句子，無法理解。"
+        }
+      ],
+      "vocabulary": [
+        {
+          "min": 4,
+          "max": 5,
+          "descriptor_zh": "用字精準、貼切，搭配自然，少有重複；拼字與大小寫幾乎全對。"
+        },
+        {
+          "min": 3,
+          "max": 3,
+          "descriptor_zh": "字彙範圍偏窄、常重複同幾個字，偶有用字不當或拼錯，但不妨礙理解。"
+        },
+        {
+          "min": 1,
+          "max": 2,
+          "descriptor_zh": "用錯字或拼錯字很多，常讓人看不懂。"
+        },
+        {
+          "min": 0,
+          "max": 0,
+          "descriptor_zh": "幾乎每個字都用錯或拼錯，無法理解。"
+        }
+      ]
+    },
+    "deductions_zh": "字數明顯不足（少於 100 個單詞）或沒有分成兩段，各扣總分 1 分；兩種情形同時發生只扣 1 分。離題或空白以 0 分計。",
+    "rule_zh": "rubric.criteria 的 bands 照抄這裡（本站自己的文字），每項另寫這一題的 focus_zh；不可抄評分原則原文（D8）"
+  },
+  "avoid": {
+    "basis": "data/exams/parsed 的 gsat-111、gsat-112、gsat-113、gsat-114、gsat-115、ref-110、ref-111、ref-115 英文作文主題",
+    "topics": [
+      "gsat-111：different parks and one’s ideal park",
+      "gsat-112：the use of emojis in communication",
+      "gsat-115：the changing role of pets in people’s lives",
+      "ref-110：drought, reservoir depletion and water rationing",
+      "ref-111：daily time allocation of high school students",
+      "ref-115：parks: their features and an ideal park"
+    ],
+    "p2_tasks_recent": {
+      "111": "理想設計＋理由",
+      "112": "親友經驗＋化解方法",
+      "113": "想像幫手的特質與分工",
+      "114": "看法＋經驗",
+      "115": "原因＋影響"
+    },
+    "rule_zh": "不改寫歷屆題；題目提示和歷屆作文題有連續 12 個以上相同漢字列 warning；範文不可和官方內容有 8 字以上相同字串（D8）"
+  },
+  "item_rules": {
+    "summary_zh": "圖表或多圖比較＋評估、提出方案（9-Ⅴ-7、9-Ⅴ-8）",
+    "prompt_kinds": [
+      "chart",
+      "multi_picture",
+      "proposal"
+    ],
+    "scaffold": false,
+    "curriculum": [
+      "9-V-7",
+      "9-V-8"
+    ]
+  },
+  "targets": {
+    "prompt_types": [
+      "picture_issue＋原因、影響與對策（115、ref-110 型）",
+      "chart：圖表描述＋比較＋理由（ast-103、ast-108、ref-111 型）",
+      "social_phenomenon：現象評估＋自己的規劃（ast-105、ast-110 型）"
+    ],
+    "figures": [
+      1,
+      3
+    ],
+    "prompt_zh_chars": [
+      100,
+      200
+    ],
+    "moves": [
+      4,
+      5
+    ],
+    "p1_tasks": [
+      "describe_data_or_phenomenon",
+      "compare"
+    ],
+    "p2_tasks": [
+      "causes+effects",
+      "evaluate+propose",
+      "compare_self+reasons",
+      "concede+rebut"
+    ],
+    "abstract_reasoning": true,
+    "experience_required": "optional",
+    "reference_prompts": [
+      "gsat-115",
+      "ast-108",
+      "ast-103",
+      "ast-105"
+    ],
+    "scaffolds": [
+      "只給規劃檢核表"
+    ],
+    "response_words_target": [
+      200,
+      320
+    ],
+    "target_score_band": [
+      15,
+      18
+    ]
+  },
+  "design": {
+    "distractor_rules": [
+      "每句 2 個誘錯點：1 個抽象名詞或複合概念（照字面直譯會錯，如「驅動力」）＋1 個結構型",
+      "不可為了難而用冷僻詞；L6 字只能出現在題幹括號附的英文裡",
+      "仍要有 ≥3 種可接受譯法",
+      "作文圖表題的數值要能讀出 2–3 個明確對比，避免「讀不出重點」造成的難度"
+    ],
+    "recipe": [
+      "詞彙負荷是主要槓桿：兩句合計 5–7 個 L3 以上詞目，含 ≥2 個抽象名詞",
+      "加 1 個指考型句構",
+      "作文要求因果分析、圖表描述或提出方案，第二段至少兩步推論"
+    ],
+    "common_errors": [
+      "抽象名詞寫成動詞或形容詞",
+      "把中文主題句直譯成 There is…",
+      "句尾分詞的邏輯主詞和主要子句不一致",
+      "作文：堆砌罕見詞或倒裝而內容空泛（佳作只有 20% 用到倒裝）"
+    ]
+  },
+  "format": {
+    "readme": "data/bank/README.md §3.6–3.7",
+    "sample": "tools/tests/data/ai.cp.0e1f2a@1.json",
+    "group_zh": "1 題 mode=composition、label \"1\"、answer null、points 20；stem 是題目提示；figures 1–3 張（可帶 svg）；tags.topic 必填",
+    "annotations_zh": "rubric = {kind: \"composition\", prompt_type, moves, criteria（四項各 bands＋focus_zh）, deductions_zh, scaffold}；model_texts = [steady, top]；explanations 選填（審題重點，evidence 引用題目）"
+  },
+  "verification": {
+    "blind_graders": 2,
+    "blind_b_different_model": true,
+    "distractor_audit": false,
+    "unique_solution": false,
+    "input_schema": "gsat-bank-blind-grading/v1",
+    "score_targets": {
+      "steady": [
+        14,
+        17
+      ],
+      "top": [
+        18,
+        20
+      ]
+    },
+    "max_grader_gap": 2,
+    "flow_zh": "盲評者只看 python3 tools/student_view.py --grading FILE（題目、評分規準、兩篇範文以 E1／E2 呈現，不標版本、不給目標分數），依評分規準給四項分數；兩位都通過才 verified（README §5.6）",
+    "human_review": "100%（校準期：每個題型 × 提示詞版本的前 30 組全審，SPEC §5.8）"
+  },
+  "materials": {
+    "grammar_patterns": "data/curriculum/grammar-patterns.json（轉承詞 connectives、句型 patterns）",
+    "writing_spec": "data/exams/generation-spec/writing.json",
+    "analysis": "docs/analysis/sections/07-writing.md",
+    "d8_zh": "範文全部自己寫；不可重製大考中心官方範文、佳作或評分原則原文（ROADMAP D8；佳作只連結不重製）"
+  }
+}

@@ -1,0 +1,611 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.st.9d8ded",
+  "version": 1,
+  "section_type": "structure",
+  "format_version": "structure-4x5",
+  "tier": "basic",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": "Visitors to Japan often notice a small cat figure sitting near the entrance of shops and restaurants. It has a round face, bright eyes, and one front paw raised beside its ear. [[1]] Many people outside Japan find this name hard to remember and simply call it the “lucky cat.”\nTo many visitors from the West, the cat appears to be waving goodbye. [[2]] That is because in Japan, people call someone over by raising a hand, palm facing out, and moving the fingers up and down. The cat is making exactly this gesture to invite customers into the shop.\n[[3]] In the best-known one, a cat lived at a poor temple in Tokyo. One stormy day, a rich lord was resting under a tree near the temple gate. Seeing the cat raise its paw at him, he left his shelter and followed it inside. Seconds later, lightning struck the tree where he had been standing. Grateful to the cat for saving his life, the lord gave money to the temple, and it soon grew rich.\nToday, lucky cats come in many colors and sizes, and shop owners pay close attention to the details. [[4]] A cat raising its right paw is said to bring in money, while one raising its left paw is said to welcome customers. Some owners even choose a cat with both paws up, hoping for both kinds of luck. Whatever it looks like, the little cat by the door carries a simple wish for good business.",
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": {
+      "A": "Cats have long been popular pets in Japanese homes.",
+      "B": "Several old stories try to explain how this custom began.",
+      "C": "Even the choice of which paw is raised has a special meaning.",
+      "D": "Its Japanese name, maneki-neko, means “the cat that invites people in.”",
+      "E": "In fact, the cat is not saying goodbye at all but asking people to come closer."
+    },
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "D",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "lexical_cohesion",
+          "clue_raw": "SP|LX|BF|L",
+          "key_phrase": "a small cat figure → Its Japanese name；name → find this name hard to remember；Japanese ↔ outside Japan … simply call it the “lucky cat.”"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "E",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "contrast",
+          "clue_raw": "CT|LX|BF|L",
+          "key_phrase": "appears to be waving goodbye → not saying goodbye at all；asking people to come closer → That is because in Japan, people call someone over"
+        }
+      },
+      {
+        "no": 3,
+        "label": "3",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "B",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "topic_sentence",
+          "clue_raw": "TS|PR|BF|L",
+          "key_phrase": "this gesture to invite customers → this custom；Several old stories → In the best-known one"
+        }
+      },
+      {
+        "no": 4,
+        "label": "4",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "C",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "example",
+          "clue_raw": "SP|LX|BF|L",
+          "key_phrase": "pay close attention to the details → Even the choice of which paw is raised；which paw → A cat raising its right paw … its left paw"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "日本的招財貓",
+      "genre": "expository",
+      "sdgs": [],
+      "text_format": "continuous"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "前兩句描述日本店門口的貓咪擺飾，(D) 接著介紹它的日文名字 maneki-neko，Its 指的就是這個擺飾（a small cat figure／It）。後一句說「日本以外的許多人覺得這個名字很難記，乾脆叫它『幸運貓』」，this name 回指 (D) 的 maneki-neko，outside Japan 對應 (D) 的 Japanese name，simply call it 表示這是比較簡單的另一種叫法，必須先有 (D) 的日文名字才說得通。選 (D)。",
+          "evidence": [
+            "It has a round face, bright eyes, and one front paw raised beside its ear.",
+            "Its Japanese name, maneki-neko, means “the cat that invites people in.”",
+            "Many people outside Japan find this name hard to remember and simply call it the “lucky cat.”"
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "lexical_cohesion",
+          "option_notes_zh": {
+            "A": "多餘句：只讀前一句，描述完貓咪擺飾後接「貓一向是日本家庭受歡迎的寵物」好像有關，但看後一句就能排除：find this name hard to remember 的 this name 在 (A) 裡找不到任何名字；simply call it 的 it 是單數，(A) 的 Cats 是複數，而且 (A) 講的是真的貓，不是擺飾。",
+            "B": "(B) 說有好幾個古老故事解釋這個習俗的起源，但這時還沒有說明這個擺飾代表什麼習俗；後一句的 this name 也在 (B) 裡找不到所指的名字。(B) 屬於第 3 格。",
+            "C": "(C) 說「就連舉哪隻腳都有特別意義」，Even 表示前面已經提到「細節很講究」，但第一段只是外觀描述；後一句的 this name 也在 (C) 裡找不到所指的名字。(C) 屬於第 4 格。",
+            "E": "(E) 說這隻貓不是在道別、而是在請人靠近，但前文還沒有人以為它在道別，not saying goodbye 沒有可以更正的對象；後一句的 this name 也找不到所指的名字。(E) 屬於第 2 格。"
+          },
+          "strategy_zh": "後一句出現 this name、simply call it（乾脆叫它）這類「回指名字、改用另一個名字」的說法時，空格常先給出正式名稱；再看 outside Japan 這種對照詞，找出與它相對的 Japanese name。",
+          "hints": [
+            "後一句的 this name 指的是什麼名字？日本以外的人為什麼「乾脆」叫它 lucky cat？",
+            "空格要先出現一個日文名字；Its 指前面描述的貓咪擺飾。",
+            "答案以 Its Japanese name 開頭。"
+          ]
+        },
+        "2": {
+          "explanation_zh": "前一句說西方遊客以為這隻貓在揮手道別；(E) 用 In fact（其實）更正這個印象：牠根本不是在說再見，而是在請人靠近一點，goodbye 前後重複，形成對比。後一句 That is because… 解釋原因：在日本，叫人過來的手勢就是舉手、掌心朝外、手指上下擺動，call someone over 正對應 (E) 的 come closer。選 (E)。",
+          "evidence": [
+            "To many visitors from the West, the cat appears to be waving goodbye.",
+            "In fact, the cat is not saying goodbye at all but asking people to come closer.",
+            "That is because in Japan, people call someone over by raising a hand, palm facing out, and moving the fingers up and down."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "contrast",
+          "option_notes_zh": {
+            "A": "多餘句：(A) 說貓是日本家庭受歡迎的寵物，沒有回應「看起來像在道別」這個誤會；後一句 That is because… 要解釋的是「這個手勢其實是在招呼人」，(A) 沒有這樣的說法可以被解釋。",
+            "B": "(B) 說有好幾個古老故事解釋這個習俗的起源，接在「看起來像道別」之後太突然；後一句 That is because 解釋的是手勢的意思，不是故事。(B) 應放在第三段開頭。",
+            "C": "(C) 說舉哪一隻腳有特別意義，但這一段在談手勢被誤會，還沒談到左右腳；後一句 That is because… 要解釋的是「在請人靠近」，(C) 沒有這個意思。",
+            "D": "(D) 介紹它的日文名字，是第一段的內容；後一句 That is because… 不是在解釋名字，而是在解釋手勢的真正意思，接不上。"
+          },
+          "strategy_zh": "前一句說「某些人以為…」（appears to be）時，空格常用 In fact、Actually 更正；後一句的 That is because 會說明理由，用來確認空格說的是「真正的意思」。",
+          "hints": [
+            "西方遊客以為這隻貓在做什麼？其實是這樣嗎？",
+            "後一句 That is because… 解釋在日本叫人過來的手勢，空格要先說出貓真正的意思。",
+            "答案以 In fact 開頭，提到 come closer。"
+          ]
+        },
+        "3": {
+          "explanation_zh": "上一段說明這隻貓用日本人招呼人的手勢招客進門。第三段開頭的 (B) 是主題句：有好幾個古老的故事試著解釋「這個習俗」怎麼開始，this custom 指的就是擺招手貓招客的做法。後一句 In the best-known one 的 one 指 (B) 的 stories（其中最有名的一個故事），接著整段講寺廟與領主的傳說。選 (B)。",
+          "evidence": [
+            "The cat is making exactly this gesture to invite customers into the shop.",
+            "Several old stories try to explain how this custom began.",
+            "In the best-known one, a cat lived at a poor temple in Tokyo."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "topic_sentence",
+          "option_notes_zh": {
+            "A": "多餘句：(A) 說貓是受歡迎的寵物，和招客的習俗沒有直接關係；後一句 In the best-known one 的 one 必須指某一個「故事」，放 (A) 會變成「在最有名的一個家庭裡，一隻貓住在寺廟」，說不通。",
+            "C": "只讀前一句，「貓用這個手勢招客」接「就連舉哪隻腳都有特別意義」好像順著 paw 談下去，但看後一句就能排除：In the best-known one 的 one 在 (C) 裡找不到可以指的名詞（choice、paw、meaning 都不能接「最有名的一個」再講傳說）。(C) 屬於第 4 格。",
+            "D": "(D) 介紹日文名字，是第一段的內容；後一句的 one 也找不到所指，接下來的寺廟傳說和名字無關。",
+            "E": "(E) 更正「看起來像道別」的誤會，屬於第二段；放在這一段開頭，後一句 In the best-known one 找不到所指的故事。"
+          },
+          "strategy_zh": "後一句用 one、another、the first 這類字指「其中一個」時，空格裡一定先出現一個複數名詞（stories）；段首空格通常是概括整段的主題句。",
+          "hints": [
+            "後一句的 In the best-known one，one 指的是「最有名的一個」什麼？",
+            "這一段整段在講一個傳說，段首應該是什麼樣的句子？",
+            "答案以 Several old stories 開頭。"
+          ]
+        },
+        "4": {
+          "explanation_zh": "前一句說今天的招財貓有各種顏色和大小，店主也很注意細節；(C) 舉出其中一個細節：就連舉的是哪一隻腳都有特別意義，Even 表示「連這麼小的地方也有講究」。後一句接著說明舉右腳、舉左腳各代表什麼，right paw／left paw 正好回應 (C) 的 which paw。選 (C)。",
+          "evidence": [
+            "Today, lucky cats come in many colors and sizes, and shop owners pay close attention to the details.",
+            "Even the choice of which paw is raised has a special meaning.",
+            "A cat raising its right paw is said to bring in money, while one raising its left paw is said to welcome customers."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "example",
+          "option_notes_zh": {
+            "A": "多餘句：(A) 講貓是受歡迎的寵物，沒有說出任何「細節」；後一句說舉右腳、舉左腳的不同意義，在 (A) 裡找不到引出這個話題的句子。",
+            "B": "(B) 說有好幾個古老故事解釋習俗起源，應放在傳說之前；這一段講的是今天的招財貓與細節，後一句也不是在講故事。",
+            "D": "(D) 介紹日文名字，和「店主注意細節」無關；後一句左右腳的意義也接不上。",
+            "E": "(E) 說貓是在請人靠近而不是道別，第二段已經說明過；後一句要區分左右腳，(E) 沒有提到「哪一隻腳」。"
+          },
+          "strategy_zh": "前一句提到一個籠統的名詞（the details）時，空格常舉出其中一個具體例子；再看後一句是否繼續展開這個例子（right paw、left paw）。",
+          "hints": [
+            "前一句說店主很注意「細節」，哪個選項舉出一個細節？",
+            "後一句比較舉右腳和舉左腳的意義。",
+            "答案以 Even the choice of which paw 開頭。"
+          ]
+        }
+      }
+    },
+    "translation_zh": {
+      "text": "到日本的遊客常會注意到，商店和餐廳門口附近坐著一隻小小的貓咪擺飾。它有一張圓臉、一雙明亮的眼睛，還有一隻前腳舉在耳朵旁邊。【1】它的日文名字是 maneki-neko（招き猫），意思是「招呼人進門的貓」。日本以外的許多人覺得這個名字很難記，乾脆叫它「幸運貓」。\n在許多來自西方的遊客眼中，這隻貓看起來像是在揮手道別。【2】其實，這隻貓根本不是在說再見，而是在請人靠近一點。這是因為在日本，人們要叫別人過來時，會舉起手、掌心朝外，手指上下擺動。這隻貓正是用這個手勢招呼客人進店。\n【3】有好幾個古老的故事試著解釋這個習俗是怎麼開始的。在最有名的一個故事裡，東京一座貧窮的寺廟裡住著一隻貓。一個暴風雨的日子，一位有錢的領主在寺門附近的一棵樹下休息。看到貓朝他舉起腳掌，他便離開躲雨的地方，跟著貓走進寺裡。幾秒鐘後，閃電擊中了他剛才站著的那棵樹。領主感謝貓救了他一命，便捐錢給這座寺廟，寺廟很快就富裕起來。\n今天，招財貓有各種顏色和大小，店主們也很注意其中的細節。【4】就連舉的是哪一隻腳，都有特別的意義。據說舉右腳的貓會帶來錢財，舉左腳的貓則會招來客人。有些店主甚至挑選兩隻腳都舉起來的貓，希望兩種好運都能得到。不論長什麼樣子，門邊的這隻小貓都承載著生意興隆的簡單心願。\n（多餘句 (A)：貓長久以來一直是日本家庭裡受歡迎的寵物。）"
+    },
+    "elimination": {
+      "feasible": {
+        "1": [
+          "D"
+        ],
+        "2": [
+          "E"
+        ],
+        "3": [
+          "B"
+        ],
+        "4": [
+          "C"
+        ]
+      },
+      "perfect_matchings": 1
+    },
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": null,
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "3-V-7",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "7-V-5",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "B-V-8",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "C-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": "本文由 AI 撰寫"
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-08-structure-basic-04",
+    "lot": "structure-basic-04",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/structure",
+    "prompt_sha256": "fcea276db57565a5326d3b31f9e54df8e9657c5ba0a93a2a5df380a98641ff97",
+    "spec_id": "structure-basic@2026-10-08",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 247,
+    "sentences": 15,
+    "avg_sentence_length": 16.47,
+    "denominator": 239,
+    "proper_nouns": [
+      "Japan",
+      "Tokyo"
+    ],
+    "numbers": 4,
+    "coverage_l1_4": 1.0,
+    "coverage_l1_6": 1.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {
+      "1": 213,
+      "2": 13,
+      "3": 6,
+      "4": 7
+    },
+    "offlist_words": [],
+    "band": {
+      "tier": "basic",
+      "basis": "lot structure-basic-04（SPEC §3.4＋出題規格書 passage_overrides（words、coverage_L1_4_min（取代 SPEC 的區間）、coverage_L1_6_min、offlist_max、beyond_l4_ratio_max））",
+      "ok": true,
+      "checks": {
+        "word_count": {
+          "value": 247,
+          "min": 220,
+          "max": 280,
+          "ok": true
+        },
+        "coverage_l1_4": {
+          "value": 1.0,
+          "min": 0.93,
+          "max": null,
+          "ok": true
+        },
+        "coverage_l1_6": {
+          "value": 1.0,
+          "min": 0.96,
+          "max": null,
+          "ok": true
+        },
+        "offlist_ratio": {
+          "value": 0.0,
+          "min": null,
+          "max": 0.04,
+          "ok": true
+        },
+        "avg_sentence_length": {
+          "value": 16.47,
+          "min": null,
+          "max": 17,
+          "ok": true
+        },
+        "beyond_l4_ratio": {
+          "value": 0.0,
+          "min": null,
+          "max": 0.04,
+          "ok": true
+        }
+      }
+    }
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T07:25:56Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T00:00:00Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "answers": {
+          "1": {
+            "answer": "D",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "It has a round face, bright eyes, and one front paw raised beside its ear.",
+              "Many people outside Japan find this name hard to remember and simply call it the “lucky cat.”"
+            ],
+            "explanation_zh": "後句 this name 需要前面先出現名字；D 給出日文名 maneki-neko 及其意思。",
+            "feasible": [
+              "D"
+            ]
+          },
+          "2": {
+            "answer": "E",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "To many visitors from the West, the cat appears to be waving goodbye.",
+              "That is because in Japan, people call someone over by raising a hand, palm facing out, and moving the fingers up and down."
+            ],
+            "explanation_zh": "前句說西方人以為貓在揮手道別，E 更正為其實是招人靠近，後句 That is because 解釋日本招手的手勢。",
+            "feasible": [
+              "E"
+            ]
+          },
+          "3": {
+            "answer": "B",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "In the best-known one, a cat lived at a poor temple in Tokyo."
+            ],
+            "explanation_zh": "後句 the best-known one 中的 one 需要指稱複數的故事；B 說有好幾個古老故事試圖解釋這個習俗的由來。",
+            "feasible": [
+              "B"
+            ]
+          },
+          "4": {
+            "answer": "C",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Today, lucky cats come in many colors and sizes, and shop owners pay close attention to the details.",
+              "A cat raising its right paw is said to bring in money, while one raising its left paw is said to welcome customers."
+            ],
+            "explanation_zh": "前句說店家注意細節，C 說連舉哪隻爪都有特別意義，後句說明右爪招財、左爪招客。",
+            "feasible": [
+              "C"
+            ]
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T07:25:56Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "answers": {
+          "1": {
+            "answer": "D",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "It has a round face, bright eyes, and one front paw raised beside its ear.",
+              "Its Japanese name, maneki-neko, means “the cat that invites people in.”",
+              "Many people outside Japan find this name hard to remember and simply call it the “lucky cat.”"
+            ],
+            "explanation_zh": "後句 this name 需要前面先出現名字，D 介紹日文名 maneki-neko 及其意義。",
+            "feasible": [
+              "D"
+            ]
+          },
+          "2": {
+            "answer": "E",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "To many visitors from the West, the cat appears to be waving goodbye.",
+              "In fact, the cat is not saying goodbye at all but asking people to come closer.",
+              "That is because in Japan, people call someone over by raising a hand, palm facing out, and moving the fingers up and down."
+            ],
+            "explanation_zh": "前句說西方人以為在揮手道別，E 糾正其實是招人過來，後句 That is because 解釋日本的招手方式。",
+            "feasible": [
+              "E"
+            ]
+          },
+          "3": {
+            "answer": "B",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Several old stories try to explain how this custom began.",
+              "In the best-known one, a cat lived at a poor temple in Tokyo."
+            ],
+            "explanation_zh": "後句 the best-known one 指的是故事之一，B 先說有數個古老故事解釋這個習俗的由來。",
+            "feasible": [
+              "B"
+            ]
+          },
+          "4": {
+            "answer": "C",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Today, lucky cats come in many colors and sizes, and shop owners pay close attention to the details.",
+              "Even the choice of which paw is raised has a special meaning.",
+              "A cat raising its right paw is said to bring in money, while one raising its left paw is said to welcome customers."
+            ],
+            "explanation_zh": "前句說店家很在意細節，C 說連舉哪隻手都有特別意義，後句舉出右手招財、左手招客的例子。",
+            "feasible": [
+              "C"
+            ]
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "distractor_audit",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T07:25:33Z",
+      "details": {
+        "session_id": null,
+        "items": {
+          "1": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Many people outside Japan find this name hard to remember and simply call it the “lucky cat.”",
+              "explanation_zh": "多餘句：(A) 講真的貓是日本家庭的寵物，不是擺飾；後一句 this name 在 (A) 裡找不到任何名字，單數的 it 也接不上複數的 Cats。"
+            },
+            "B": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Many people outside Japan find this name hard to remember and simply call it the “lucky cat.”",
+              "explanation_zh": "(B) 說有古老故事解釋這個習俗的起源，但還沒說明擺飾代表什麼習俗；後一句的 this name 在 (B) 裡找不到所指的名字。"
+            },
+            "C": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Many people outside Japan find this name hard to remember and simply call it the “lucky cat.”",
+              "explanation_zh": "(C) 只讀前一句（一隻前腳舉起）似乎說得通，但 Even 要先有「細節都有講究」的說法；後一句的 this name 在 (C) 裡找不到所指的名字。"
+            },
+            "E": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "To many visitors from the West, the cat appears to be waving goodbye.",
+              "explanation_zh": "「看起來像在道別」的印象要到第二段才提出；(E) 放在第一段，not saying goodbye 沒有可以更正的對象，後一句的 this name 也找不到名字。"
+            }
+          },
+          "2": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "off_topic",
+              "evidence": "That is because in Japan, people call someone over by raising a hand, palm facing out, and moving the fingers up and down.",
+              "explanation_zh": "多餘句：(A) 說貓是受歡迎的寵物，沒有回應「看起來像道別」的誤會；後一句 That is because… 要解釋的是手勢其實在招呼人，(A) 沒有可被解釋的說法。"
+            },
+            "B": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "That is because in Japan, people call someone over by raising a hand, palm facing out, and moving the fingers up and down.",
+              "explanation_zh": "(B) 說有古老故事解釋習俗的起源；後一句 That is because… 解釋的是日本招手的手勢，不是故事，接不上。(B) 是第三段的主題句。"
+            },
+            "C": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "That is because in Japan, people call someone over by raising a hand, palm facing out, and moving the fingers up and down.",
+              "explanation_zh": "(C) 說舉哪隻腳有特別意義，但這一段在談手勢被誤會；後一句 That is because… 說明的是「叫人過來」的手勢，不是左右腳的差別。"
+            },
+            "D": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Many people outside Japan find this name hard to remember and simply call it the “lucky cat.”",
+              "explanation_zh": "(D) 的日文名字必須出現在第一段：第一段的 this name 只能回指 (D) 的 maneki-neko，(D) 移到這裡第一段就沒有名字可指；而且這一格要直接更正「看起來像道別」的誤解，後一句 That is because 才有說明對象，(D) 只介紹名字，不是更正。"
+            }
+          },
+          "3": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "In the best-known one, a cat lived at a poor temple in Tokyo.",
+              "explanation_zh": "多餘句：(A) 講貓是家庭寵物，和招客習俗的起源無關；後一句 In the best-known one 的 one 要指某一個「故事」，(A) 只有 homes，說不通。"
+            },
+            "C": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "In the best-known one, a cat lived at a poor temple in Tokyo.",
+              "explanation_zh": "(C) 只讀前一句似乎順著 paw 談下去，但後一句 In the best-known one 的 one 在 (C) 裡找不到可指的複數名詞，接下來的寺廟傳說也與左右腳無關。"
+            },
+            "D": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "In the best-known one, a cat lived at a poor temple in Tokyo.",
+              "explanation_zh": "(D) 介紹日文名字，是第一段的內容；後一句的 one 找不到所指，接下來的傳說也和名字無關。"
+            },
+            "E": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "In the best-known one, a cat lived at a poor temple in Tokyo.",
+              "explanation_zh": "(E) 更正「看起來像道別」的誤會，屬於第二段；放在第三段開頭，後一句 In the best-known one 找不到所指的故事。"
+            }
+          },
+          "4": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "off_topic",
+              "evidence": "Today, lucky cats come in many colors and sizes, and shop owners pay close attention to the details.",
+              "explanation_zh": "多餘句：前一句說店主很注意細節，(A) 講貓是家庭寵物，沒有舉出任何細節；後一句左右腳的意義也接不上。"
+            },
+            "B": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "A cat raising its right paw is said to bring in money, while one raising its left paw is said to welcome customers.",
+              "explanation_zh": "(B) 說古老故事解釋習俗起源，應放在傳說之前；後一句比較舉右腳、舉左腳的意義，不是在講故事。"
+            },
+            "D": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "A cat raising its right paw is said to bring in money, while one raising its left paw is said to welcome customers.",
+              "explanation_zh": "(D) 介紹日文名字，和「店主注意細節」無關，也重複第一段；後一句左右腳的意義接不上。"
+            },
+            "E": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "A cat raising its right paw is said to bring in money, while one raising its left paw is said to welcome customers.",
+              "explanation_zh": "(E) 說貓不是在道別而是在招呼人，第二段已說明過；後一句要區分左右腳，(E) 沒有提到「哪一隻腳」。"
+            }
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "unique_solution",
+      "reviewer": "record_verification.py",
+      "result": "pass",
+      "created_at": "2026-10-09T07:25:56Z",
+      "details": {
+        "method": "injective_assignment",
+        "perfect_matchings": 1,
+        "matches_key": true,
+        "feasible": {
+          "1": [
+            "D"
+          ],
+          "2": [
+            "E"
+          ],
+          "3": [
+            "B"
+          ],
+          "4": [
+            "C"
+          ]
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}
