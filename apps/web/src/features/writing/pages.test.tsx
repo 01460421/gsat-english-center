@@ -3,7 +3,9 @@ import { screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { afterEach, describe, expect, it } from 'vitest';
 import { clearDataCache } from '../../data/client';
+import EssayAttemptPage from './EssayAttemptPage';
 import EssayListPage from './EssayListPage';
+import TranslationAttemptPage from './TranslationAttemptPage';
 import TranslationListPage from './TranslationListPage';
 import WritingHomePage from './WritingHomePage';
 import CompositionPage from '../../pages/CompositionPage';
@@ -98,14 +100,83 @@ describe('WritingHomePage', () => {
   });
 });
 
-describe('中譯英、英文作文說明頁', () => {
+describe('中譯英、英文作文題型頁', () => {
   const pages = { '/translation': <TranslationPage />, '/composition': <CompositionPage /> };
+
+  it('中譯英：頁首下面直接列出題目（同 /writing/translation 的列表），點一組到作答頁；說明在列表下面', async () => {
+    const user = userEvent.setup();
+    renderPage('/translation', baseRoutes(FEATURES_OFF), pages);
+    expect(screen.getByRole('heading', { level: 1, name: '中譯英' })).toBeInTheDocument();
+    const gsat = await screen.findByRole('region', { name: /^學測\s*\d+ 組$/ });
+    const cards = within(gsat).getAllByRole('link');
+    expect(cards.map((c) => c.getAttribute('href'))).toEqual(['/writing/translation/gsat-115', '/writing/translation/gsat-84']);
+    expect(cards[0]).toHaveTextContent('現在越來越多高中英文老師已經增加在課堂上使用英文的百分比。');
+    expect(screen.getByRole('region', { name: /^指考\s*\d+ 組$/ })).toHaveTextContent('110 指考');
+    // 只有一個 <h1>；作答與批改方式、學測怎麼考在列表下面。
+    expect(screen.getAllByRole('heading', { level: 1 })).toHaveLength(1);
+    const how = screen.getByRole('region', { name: '作答與批改方式' });
+    expect(gsat.compareDocumentPosition(how) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(screen.getByRole('region', { name: '學測怎麼考' })).toBeInTheDocument();
+    // 篩選一樣放在網址。
+    await user.click(screen.getByRole('radio', { name: /指考/ }));
+    expect(screen.queryByRole('region', { name: /^學測\s*\d+ 組$/ })).not.toBeInTheDocument();
+    expect(screen.getByTestId('location')).toHaveTextContent('/translation?kind=ast');
+    await user.click(within(screen.getByRole('region', { name: /^指考\s*\d+ 組$/ })).getByRole('link', { name: /110 指考/ }));
+    expect(screen.getByTestId('location')).toHaveTextContent('/writing/translation/ast-110');
+  });
+
+  it('英文作文：頁首下面直接列出題目（同 /writing/essay 的列表），點一題到作答頁', async () => {
+    renderPage('/composition', baseRoutes(FEATURES_OFF), pages);
+    expect(screen.getByRole('heading', { level: 1, name: '英文作文' })).toBeInTheDocument();
+    const card = await screen.findByRole('link', { name: /115 學測/ });
+    expect(card).toHaveAttribute('href', '/writing/essay/gsat-115');
+    expect(card).toHaveTextContent('近年來養寵物的風氣在臺灣日漸普遍');
+    expect(screen.getAllByRole('heading', { level: 1 })).toHaveLength(1);
+    const how = screen.getByRole('region', { name: '作答與批改方式' });
+    expect(card.compareDocumentPosition(how) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+  });
+
+  it('從題型頁點進作答頁：返回連結回到題型頁；從寫作練習的列表點進去則回到那個列表', async () => {
+    const user = userEvent.setup();
+    const all = {
+      ...pages,
+      '/writing/translation': <TranslationListPage />,
+      '/writing/translation/:examId': <TranslationAttemptPage />,
+      '/writing/essay': <EssayListPage />,
+      '/writing/essay/:examId': <EssayAttemptPage />,
+    };
+    const first = renderPage('/translation', baseRoutes(FEATURES_OFF), all);
+    await user.click(within(await screen.findByRole('region', { name: /^學測\s*\d+ 組$/ })).getAllByRole('link')[0] as HTMLElement);
+    expect(screen.getByTestId('location')).toHaveTextContent('/writing/translation/gsat-115');
+    expect(screen.getByRole('link', { name: '中譯英' })).toHaveAttribute('href', '/translation');
+    await user.click(screen.getByRole('link', { name: '中譯英' }));
+    expect(screen.getByTestId('location')).toHaveTextContent(/^\/translation$/);
+    first.unmount();
+
+    const second = renderPage('/writing/translation', baseRoutes(FEATURES_OFF), all);
+    await user.click(within(await screen.findByRole('region', { name: /^學測/ })).getAllByRole('link')[0] as HTMLElement);
+    expect(screen.getByRole('link', { name: '中譯英題目' })).toHaveAttribute('href', '/writing/translation');
+    second.unmount();
+
+    renderPage('/composition', baseRoutes(FEATURES_OFF), all);
+    await user.click(await screen.findByRole('link', { name: /115 學測/ }));
+    expect(screen.getByTestId('location')).toHaveTextContent('/writing/essay/gsat-115');
+    expect(screen.getByRole('link', { name: '英文作文' })).toHaveAttribute('href', '/composition');
+  });
+
+  it('題目載入失敗：列表處就地「再試一次」，說明照常顯示', async () => {
+    renderPage('/translation', { ...baseRoutes(FEATURES_OFF), 'GET /data/writing/translation.json': () => new Response('x', { status: 500 }) }, pages);
+    expect(await screen.findByRole('button', { name: '再試一次' })).toBeInTheDocument();
+    expect(screen.getByRole('region', { name: '作答與批改方式' })).toBeInTheDocument();
+  });
 
   it('後端沒部署：不叫學生「登入並通過申請」，說 AI 批改即將開放', async () => {
     renderPage('/translation', baseRoutes(FEATURES_OFF), pages);
     expect(await screen.findByText(/AI 逐句批改即將開放/)).toBeInTheDocument();
     expect(screen.queryByText(/登入並通過申請/)).not.toBeInTheDocument();
-    expect(screen.getByRole('link', { name: '前往中譯英練習' })).toHaveAttribute('href', '/writing/translation');
+    // AI 沒開時沒有「寫作練習」的申請、點數連結。
+    expect(screen.getByRole('region', { name: '作答與批改方式' })).not.toHaveTextContent('剩餘點數');
+    await screen.findByRole('region', { name: /^學測\s*\d+ 組$/ });
   });
 
   it('後端沒部署（作文）：AI 批改與拍照上傳都說即將開放，不出現點數', async () => {
@@ -123,6 +194,7 @@ describe('中譯英、英文作文說明頁', () => {
     expect(screen.queryByText(/即將開放/)).not.toBeInTheDocument();
     expect(screen.queryByText(/規劃/)).not.toBeInTheDocument();
     expect(screen.getByRole('region', { name: '陸續加入' })).toHaveTextContent('仿真中譯英題組');
+    expect(within(screen.getByRole('region', { name: '作答與批改方式' })).getByRole('link', { name: '寫作練習' })).toHaveAttribute('href', '/writing');
   });
 
   it('AI 與辨識開著（作文）：說明 AI 批改、實際的拍照流程與照片保存規則', async () => {

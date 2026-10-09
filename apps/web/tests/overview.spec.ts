@@ -3,9 +3,11 @@
  *
  *   1. 首頁學習進度：沒有紀錄時顯示從哪裡開始；這台裝置有紀錄（先寫進 localStorage）時，三格統計（今日待複習單字、
  *      題庫練習、單字錯題本）的數字正確、各自連到對應的頁面；首頁不下載任何資料檔（單字索引、題庫），只讀 localStorage。
- *   2. 從題型說明頁的「現在就能練習」點進題庫練習、交卷，回到首頁看得到這一組的紀錄（整條路徑接起來）。
- *   3. 六個題型說明頁：標題旁沒有「開發中」、沒有「規劃中的功能」，三種難度的入口連到對的練習網址；閱讀、混合題點得進去。
- *   4. 中譯英、英文作文說明頁（後端功能全開）：說明 AI 批改與實際的拍照流程，沒有「即將開放」。
+ *   2. 在題型頁（詞彙題）直接作答、交卷，回到首頁看得到這一組的紀錄（整條路徑接起來）。
+ *   3. 六個題型頁：標題旁沒有「開發中」、沒有「規劃中的功能」；頁首下面就是練習（三種難度的切換＋抽到的題組），
+ *      下面有題庫練習與歷屆試題的連結、學測怎麼考、收合的「題庫練習有什麼」；閱讀、混合題直接看得到題組，
+ *      從題庫練習選同一格也接著做同一組。
+ *   4. 中譯英、英文作文題型頁（後端功能全開）：頁首下面就是題目列表，說明 AI 批改與實際的拍照流程，沒有「即將開放」。
  * 每個測試都檢查沒有 console error、未捕捉的例外與水平捲動（手機另外縮到 320px 再檢查一次）。
  *
  * localStorage 的鍵與格式照抄各模組（vocab/lib/srs.ts、vocab/lib/mistakes.ts、practice/history.ts）：
@@ -210,15 +212,15 @@ test.describe('首頁學習進度', () => {
     expect(errors).toEqual([]);
   });
 
-  test('從詞彙題說明頁點進題庫練習、交卷，回到首頁看得到這一組', async ({ page }, testInfo) => {
+  test('在詞彙題頁直接作答、交卷，回到首頁看得到這一組', async ({ page }, testInfo) => {
     const errors = collectErrors(page);
     await mockBackend(page);
     await mockBank(page);
     await page.goto('/vocabulary');
-    const now = page.getByRole('region', { name: '現在就能練習' });
-    await now.getByRole('link', { name: /^穩定基礎/ }).click();
-    await expect(page).toHaveURL(/\/practice\/vocabulary\/basic$/);
-    await expect(page.getByText('AI 出題・已通過自動驗證・人工審核中').first()).toBeVisible();
+    const inline = page.getByRole('region', { name: '詞彙題題庫練習' });
+    await expect(inline.getByRole('heading', { level: 2, name: '詞彙題・穩定基礎' })).toBeVisible();
+    await expect(page).toHaveURL(/\/vocabulary\?tier=basic$/);
+    await expect(inline.getByText('AI 出題・已通過自動驗證・人工審核中').first()).toBeVisible();
     await page.getByRole('button', { name: '交卷', exact: true }).click();
     await page.getByRole('button', { name: '確定交卷' }).click();
     await expect(page.getByRole('region', { name: '交卷結果' })).toBeVisible();
@@ -241,11 +243,12 @@ const SECTION_PAGES = [
   { path: '/mixed', title: '混合題', slug: 'mixed' },
 ] as const;
 
-test.describe('題型說明頁的「現在就能練習」', () => {
+test.describe('題型頁：頁首下面就是題庫練習', () => {
   for (const meta of SECTION_PAGES) {
-    test(`${meta.title}：沒有開發中與規劃中，三種難度連到題庫練習`, async ({ page }, testInfo) => {
+    test(`${meta.title}：沒有開發中與規劃中；難度切換、題組、連結與收合的功能說明`, async ({ page }, testInfo) => {
       const errors = collectErrors(page);
       await mockBackend(page);
+      await mockBank(page);
       await page.goto(meta.path);
       const h1 = page.getByRole('heading', { level: 1, name: meta.title });
       await expect(h1).toBeVisible();
@@ -253,12 +256,26 @@ test.describe('題型說明頁的「現在就能練習」', () => {
       await expect(page.getByText('這個模組還在開發中')).toHaveCount(0);
       await expect(page.getByRole('heading', { name: '規劃中的功能' })).toHaveCount(0);
       await expect(page.getByRole('heading', { level: 2, name: '學測怎麼考' })).toBeVisible();
-      const region = page.getByRole('region', { name: '現在就能練習' });
+      const region = page.getByRole('region', { name: `${meta.title}題庫練習` });
+      // 三種難度：連到這一頁的 ?tier=；範例題庫每個題型只有一個難度有題組，其他顯示出題中。
+      const nav = region.getByRole('navigation', { name: `${meta.title}的難度` });
       for (const [tier, label] of TIERS) {
-        await expect(region.getByRole('link', { name: new RegExp(`^${label}`) })).toHaveAttribute('href', `/practice/${meta.slug}/${tier}`);
+        await expect(nav.getByRole('link', { name: new RegExp(`^${label}：`) })).toHaveAttribute('href', `${meta.path}?tier=${tier}`);
       }
+      await expect(nav.getByRole('link', { name: /：1 組，已做 0 組$/ })).toHaveAttribute('aria-current', 'page');
+      await expect(nav.getByRole('link', { name: /：出題中$/ })).toHaveCount(2);
+      // 抽到的題組就在這一頁（題組標題是 <h2>，頁面只有一個 <h1>）。
+      await expect(region.getByRole('heading', { level: 2, name: new RegExp(`^${meta.title}・`) })).toBeVisible();
+      await expect(region.getByRole('button', { name: '交卷', exact: true })).toBeVisible();
+      await expect(page.getByRole('heading', { level: 1 })).toHaveCount(1);
+      await expect(page).toHaveTitle(`${meta.title}｜學測英文中心`);
+      await expect(region.getByRole('link', { name: '題庫練習' })).toHaveAttribute('href', '/practice');
       await expect(region.getByRole('link', { name: '歷屆試題' })).toHaveAttribute('href', '/exams');
-      await expect(region.getByRole('list', { name: '題庫練習有什麼' })).toContainText('AI 出題・已通過自動驗證・人工審核中');
+      // 「題庫練習有什麼」收合在下面，打開才看得到。
+      const offers = page.getByRole('list', { name: '題庫練習有什麼' });
+      await expect(offers).toBeHidden();
+      await page.getByText('題庫練習有什麼', { exact: true }).click();
+      await expect(offers).toContainText('AI 出題・已通過自動驗證・人工審核中');
       await page.waitForLoadState('networkidle');
       await expectFitsWidth(page, testInfo);
       expect(errors).toEqual([]);
@@ -266,28 +283,45 @@ test.describe('題型說明頁的「現在就能練習」', () => {
   }
 
   for (const meta of SECTION_PAGES.filter((m) => m.slug === 'reading' || m.slug === 'mixed')) {
-    test(`${meta.title}：點「穩定基礎」進到練習，看得到題組`, async ({ page }) => {
+    test(`${meta.title}：頁面上直接看得到題組；從題庫練習選同一格接著做同一組`, async ({ page }) => {
       const errors = collectErrors(page);
       await mockBackend(page);
       await mockBank(page);
       await page.goto(meta.path);
-      await page.getByRole('region', { name: '現在就能練習' }).getByRole('link', { name: /^穩定基礎/ }).click();
+      await expect(page).toHaveURL(new RegExp(`${meta.path}\\?tier=basic$`));
+      const region = page.getByRole('region', { name: `${meta.title}題庫練習` });
+      await expect(region.getByRole('heading', { level: 2, name: `${meta.title}・穩定基礎` })).toBeVisible();
+      await expect(region.getByText('AI 出題・已通過自動驗證・人工審核中').first()).toBeVisible();
+      if (meta.slug === 'reading') await expect(region.getByRole('img', { name: /^折線圖：/ })).toBeVisible();
+      else await expect(region.getByRole('tab', { name: 'A' })).toBeVisible();
+      // 在這裡先答一題，再從「全部題型」的題庫練習點同一格：作答頁接著做同一組（同一份練習紀錄與作答紀錄）。
+      const answered =
+        meta.slug === 'reading'
+          ? page.getByRole('radio', { name: /How the death rate of young children has changed since 1990/ })
+          : page.getByRole('textbox', { name: '第 1 題作答' });
+      if (meta.slug === 'reading') await answered.check();
+      else await answered.fill('turns');
+      await region.getByRole('link', { name: '題庫練習' }).click();
+      await page.getByRole('link', { name: `${meta.title}・穩定基礎：1 組，已做 0 組` }).click();
       await expect(page).toHaveURL(new RegExp(`/practice/${meta.slug}/basic$`));
       await expect(page.getByRole('heading', { level: 1, name: `${meta.title}・穩定基礎` })).toBeVisible();
-      await expect(page.getByText('AI 出題・已通過自動驗證・人工審核中').first()).toBeVisible();
+      await expect(page.getByText('已接續上次在這一格做的題組。')).toBeVisible();
+      if (meta.slug === 'reading') await expect(answered).toBeChecked();
+      else await expect(answered).toHaveValue('turns');
       await expect(page.getByRole('button', { name: '交卷', exact: true })).toBeVisible();
       expect(errors).toEqual([]);
     });
   }
 });
 
-test.describe('中譯英、英文作文說明頁（後端功能全開）', () => {
-  test('中譯英：說明 AI 逐句批改與點數，沒有即將開放、規劃中', async ({ page }, testInfo) => {
+test.describe('中譯英、英文作文題型頁（後端功能全開）', () => {
+  test('中譯英：頁首下面就是題目；說明 AI 逐句批改與點數，沒有即將開放、規劃中', async ({ page }, testInfo) => {
     const errors = collectErrors(page);
     await mockBackend(page, FEATURES_ON);
     await page.goto('/translation');
+    await expect(page.getByRole('region', { name: /^學測\s*\d+ 組$/ }).getByRole('link').first()).toHaveAttribute('href', /^\/writing\/translation\//);
     await expect(page.getByText(/登入並通過申請後，由兩位 AI 評分者依大考評分原則逐句給分/)).toBeVisible();
-    await expect(page.getByRole('link', { name: '前往中譯英練習' })).toHaveAttribute('href', '/writing/translation');
+    await expect(page.getByRole('region', { name: '作答與批改方式' }).getByRole('link', { name: '寫作練習' })).toHaveAttribute('href', '/writing');
     await expect(page.getByText(/即將開放|規劃中/)).toHaveCount(0);
     await expect(page.getByText('開發中', { exact: true })).toHaveCount(0);
     await page.waitForLoadState('networkidle');
@@ -295,10 +329,11 @@ test.describe('中譯英、英文作文說明頁（後端功能全開）', () =>
     expect(errors).toEqual([]);
   });
 
-  test('英文作文：拍照上傳的實際流程與照片保存規則', async ({ page }, testInfo) => {
+  test('英文作文：頁首下面就是題目；拍照上傳的實際流程與照片保存規則', async ({ page }, testInfo) => {
     const errors = collectErrors(page);
     await mockBackend(page, FEATURES_ON);
     await page.goto('/composition');
+    await expect(page.getByRole('region', { name: /^學測\s*\d+ 題$/ }).getByRole('link').first()).toHaveAttribute('href', /^\/writing\/essay\//);
     const photo = page.getByRole('region', { name: '拍照上傳手寫作文' });
     await expect(photo.getByRole('listitem').first()).toContainText('拍照上傳手寫稿');
     await expect(photo).toContainText('縮小、轉成 JPEG');

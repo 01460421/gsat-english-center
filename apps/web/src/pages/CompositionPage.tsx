@@ -1,5 +1,6 @@
 /**
- * 英文作文說明頁：學測怎麼考、現在能怎麼練（線上作答在 /writing/essay）、拍照上傳手寫稿的流程與照片隱私。
+ * 英文作文題型頁：頁首下面直接列出題目（和 /writing/essay 同一份列表，features/writing/EssayListPage.tsx 的 EssayPromptList；
+ * 那裡加了新的題目，這裡也會跟著出現），點一題就到作答頁；下面是作答與批改方式、學測怎麼考、拍照上傳手寫稿的流程與照片隱私。
  * 說明要對得上實際功能：
  *   - 拍照流程：features/writing/components/PhotoPicker.tsx（拍照或選照片、前端縮圖、去 EXIF）→ EssayAttemptPage（上傳並辨識）
  *     → components/OcrConfirm.tsx（逐行確認、看不清楚處的候選字）→ 批改；
@@ -9,6 +10,8 @@
 import { AI_TASK_POINTS, PHOTO_MAX_COUNT } from '@gsat/shared';
 import { Link } from 'react-router';
 import { InfoSection, ModulePage } from '../components/ModulePage';
+import { EssayPromptList } from '../features/writing/EssayListPage';
+import { ListOrigin } from '../features/writing/lib/listOrigin';
 import { useFeatures } from '../lib/api';
 import { getPage } from '../modules';
 
@@ -21,8 +24,12 @@ export default function CompositionPage() {
   const photoOpen = aiOpen && features.ocr;
   return (
     <ModulePage page={getPage('/composition')}>
-      <InfoSection title="現在就能練習">
-        <p>歷屆學測、指考（含參考試卷）的作文題目都可以線上作答：</p>
+      {/* 從這裡點進作答頁，返回連結回到這一頁（不是 /writing/essay）。 */}
+      <ListOrigin value="/composition">
+        <EssayPromptList />
+      </ListOrigin>
+      <InfoSection title="作答與批改方式">
+        <p>上面每一題都可以線上作答：</p>
         <ul>
           <li>打字作答：即時顯示字數與段數，草稿自動存在這台裝置；不用登入也能用檢核清單自我檢核，並依四個評分面向替自己打分數。</li>
           <li>
@@ -31,14 +38,18 @@ export default function CompositionPage() {
               : 'AI 批改與拍照上傳手寫稿即將開放。'}
           </li>
         </ul>
-        <p>
-          <Link to="/writing/essay" className={linkCls}>
-            前往英文作文練習
-          </Link>
-        </p>
         {aiOpen && (
           <p className="text-sm text-muted">
             AI 批改每篇扣 {AI_TASK_POINTS.essay_grade} 點{photoOpen ? `，手寫稿辨識另扣 ${AI_TASK_POINTS.essay_ocr} 點` : ''}，失敗全額退還。AI 的分數與改寫僅供參考，不是大考中心的正式評分。
+          </p>
+        )}
+        {aiOpen && (
+          <p>
+            AI 批改的申請、剩餘點數與你的寫作紀錄在
+            <Link to="/writing" className={`mx-0.5 ${linkCls}`}>
+              寫作練習
+            </Link>
+            。
           </p>
         )}
       </InfoSection>

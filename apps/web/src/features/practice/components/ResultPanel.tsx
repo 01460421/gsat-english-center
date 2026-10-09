@@ -89,6 +89,7 @@ export function ResultPanel({
   mistakes,
   repeatNotice,
   onNext,
+  embedded = false,
 }: {
   file: PracticeGroupFile;
   /** 這一組的計分（scoring.ts 的 scorePractice）。 */
@@ -101,6 +102,11 @@ export function ResultPanel({
   /** 「再一組」會不會抽到做過的（這一格都做過了）。 */
   repeatNotice: string | null;
   onNext: () => void;
+  /**
+   * 內嵌在題型頁（/cloze 等）：學生不是從題庫練習進來的，不放「回到題庫練習」
+   * （練習區下面已經有一行連到題庫練習與歷屆試題）。作答頁（/practice/:section/:tier）照常有。
+   */
+  embedded?: boolean;
 }) {
   const answers = useAttemptSelector((s) => s.answers);
   const elapsed = useAttemptSelector((s) => s.elapsedSec);
@@ -161,9 +167,11 @@ export function ResultPanel({
           <RotateCcw aria-hidden="true" className="size-4" />
           再一組
         </button>
-        <Link to="/practice" className="inline-flex min-h-11 items-center rounded-full border border-line px-4 text-sm font-medium hover:border-primary">
-          回到題庫練習
-        </Link>
+        {!embedded && (
+          <Link to="/practice" className="inline-flex min-h-11 items-center rounded-full border border-line px-4 text-sm font-medium hover:border-primary">
+            回到題庫練習
+          </Link>
+        )}
       </div>
       {repeatNotice && <p className="mt-2 text-sm text-muted">{repeatNotice}</p>}
     </section>

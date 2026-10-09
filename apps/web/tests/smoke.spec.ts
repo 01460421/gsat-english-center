@@ -3,6 +3,7 @@
  *   1. 沒有 console error 與未捕捉的例外（pageerror）；
  *   2. 頁面標題（<title> 與 <h1>）存在且正確；
  *   3. 沒有水平捲動（手機最常見的版面問題：長字串、固定寬度的表格把頁面撐寬）；手機專案另外在 320px 再檢查一次。
+ *      題型頁（/cloze 等）內嵌題庫練習、中譯英與作文頁內嵌題目列表，這裡用的是建置產生的真實資料，等它們出現後才檢查。
  * 標準沿用 Sekai Center 的 tests/smoke.mjs（docs/research/05-sekai-center-patterns.md §2.9）。
  *
  * 後端一律用 page.route 假造：煙霧測試不能依賴 wrangler 或線上 API，
@@ -64,6 +65,11 @@ async function expectNoHorizontalOverflow(page: Page) {
   expect(scrollWidth, `頁面寬 ${scrollWidth}px 超出視窗 ${viewport}px：\n${offenders.join('\n')}`).toBeLessThanOrEqual(viewport);
 }
 
+/** 頁首下面直接是題庫練習的六個題型頁（features/practice/SectionPractice.tsx）。 */
+const PRACTICE_SECTION_PATHS: readonly string[] = ['/vocabulary', '/cloze', '/word-bank', '/structure', '/reading', '/mixed'];
+/** 頁首下面直接是題目列表的寫作題型頁 → 作答頁的網址開頭。 */
+const WRITING_LIST_PATHS: Readonly<Record<string, string>> = { '/translation': '/writing/translation/', '/composition': '/writing/essay/' };
+
 test.describe('每個路由', () => {
   for (const meta of PAGES) {
     test(`${meta.title}（${meta.path}）`, async ({ page }, testInfo) => {
@@ -92,6 +98,15 @@ test.describe('每個路由', () => {
       } else {
         await expect(nav.getByRole('link', { name: '關於' })).toBeVisible();
       }
+
+      if (PRACTICE_SECTION_PATHS.includes(meta.path)) {
+        // 練習程式與題庫按需載入：難度切換出現、網址寫回選定的難度（題庫還沒有題組時也一樣，作答區顯示出題中）。
+        await expect(page.getByRole('navigation', { name: `${meta.title}的難度` })).toBeVisible();
+        await expect(page).toHaveURL(/\?tier=(basic|advanced|top)$/);
+        await expect(page.getByRole('heading', { level: 1 })).toHaveCount(1);
+      }
+      const attemptPrefix = WRITING_LIST_PATHS[meta.path];
+      if (attemptPrefix) await expect(page.locator(`main a[href^="${attemptPrefix}"]`).first()).toBeVisible();
 
       await page.waitForLoadState('networkidle');
       await expectNoHorizontalOverflow(page);

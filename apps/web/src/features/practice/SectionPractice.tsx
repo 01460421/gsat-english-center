@@ -1,6 +1,9 @@
 /**
- * 題型說明頁（/vocabulary、/cloze、/word-bank、/structure、/reading、/mixed）的「現在就能練習」：
- * 三種難度的題庫練習入口、歷屆試題入口，以及題庫練習現在實際提供的東西。
+ * 題型頁（/vocabulary、/cloze、/word-bank、/structure、/reading、/mixed）的題庫練習：
+ *   - SectionPractice：頁首下面直接就是這個題型的練習——難度切換（網址 ?tier=basic|advanced|top）與抽到的題組，
+ *     實際的練習程式（BankPractice.tsx，連同作答、圖表、解析卡）按需載入，題型頁本身維持輕量；
+ *     下面一行連到題庫練習（全部題型）與歷屆試題；
+ *   - PracticeOffers：收合的「題庫練習有什麼」，列出題庫練習現在實際提供的東西。
  *
  * 六個題型頁共用這一份，說明文字才不會各自過時。每一項都要對得上實際功能：
  *   - 每組標示 AI_GROUP_LABEL（components/AiNotice.tsx 的 AiGroupBadge）；有參考資料（閱讀全部、混合題一部分）時
@@ -19,11 +22,14 @@
  *   - 做過哪些題組記在這台裝置（history.ts），抽題規則見 pick.ts。
  * 功能改了這裡要一起改。
  */
-import { ChevronRight } from 'lucide-react';
-import { useId, type ReactNode } from 'react';
-import { Link } from 'react-router';
+import { Component, lazy, Suspense, useId, useMemo, type ErrorInfo, type ReactNode } from 'react';
+import { Link, useSearchParams } from 'react-router';
 import type { PracticeSectionType } from '../../data/bank';
-import { AI_GROUP_LABEL, PRACTICE_SECTION_LABELS, TIER_AUDIENCE, TIER_LABELS, TIERS, practicePath } from './labels';
+import type { PracticeEmbed } from './BankPractice';
+import { AI_GROUP_LABEL, PRACTICE_SECTION_LABELS, tierFromParam } from './labels';
+
+/** 練習程式（作答、圖表、解析卡）按需載入：題型頁的外殼（標題、考試說明）先出來，不必等這一大包。 */
+const SectionBankPractice = lazy(() => import('./BankPractice').then((m) => ({ default: m.SectionBankPractice })));
 
 const linkCls = 'font-medium text-primary underline underline-offset-2';
 
@@ -92,49 +98,101 @@ export function practiceOffers(section: PracticeSectionType): ReactNode[] {
   return items;
 }
 
+/**
+ * 練習程式載入失敗（多半是網站剛更新、舊分頁要的 chunk 已經不在，或網路斷了）：只有練習區顯示錯誤，
+ * 頁首與考試說明照常；React.lazy 會記住失敗的載入，所以請學生重新整理。題庫資料載入失敗由 BankPractice 自己處理（可以就地再試）。
+ */
+class PracticeChunkBoundary extends Component<{ children: ReactNode }, { failed: boolean }> {
+  override state = { failed: false };
+
+  static getDerivedStateFromError(): { failed: boolean } {
+    return { failed: true };
+  }
+
+  override componentDidCatch(error: unknown, info: ErrorInfo) {
+    console.error('題庫練習載入失敗', error, info.componentStack);
+  }
+
+  override render() {
+    if (!this.state.failed) return this.props.children;
+    return (
+      <div role="alert" className="rounded-2xl border border-line bg-surface p-5">
+        <p className="font-semibold">題庫練習載入失敗</p>
+        <p className="mt-1 text-muted">可能是網站剛更新或網路不穩。請重新整理頁面再試一次。</p>
+        <button type="button" onClick={() => window.location.reload()} className="mt-3 rounded-full bg-primary px-4 py-2 text-sm font-medium text-on-primary">
+          重新整理
+        </button>
+      </div>
+    );
+  }
+}
+
+/**
+ * 題型頁的練習區：難度切換＋這一格抽到的題組（作答、提示、交卷、解析、再一組）。
+ * 選的難度放在網址 ?tier=，重新整理、返回、分享都對得上；網址沒有（或寫錯）時由 BankPractice 依練習紀錄選一個並寫回網址。
+ * 練習紀錄和 /practice/:section/:tier 是同一份：在這裡做到一半，從題庫練習進去會接著做同一組，反之亦然。
+ */
 export function SectionPractice({ section }: { section: PracticeSectionType }) {
-  const titleId = useId();
-  const offersId = useId();
-  const label = PRACTICE_SECTION_LABELS[section];
+  const [params, setParams] = useSearchParams();
+  const tier = tierFromParam(params.get('tier') ?? undefined);
+  const embed = useMemo<PracticeEmbed>(
+    () => ({
+      tierLink: (t) => ({ search: `?tier=${t}` }),
+      onDefaultTier: (t) =>
+        setParams(
+          (prev) => {
+            const next = new URLSearchParams(prev);
+            next.set('tier', t);
+            return next;
+          },
+          { replace: true },
+        ),
+    }),
+    [setParams],
+  );
   return (
-    <section aria-labelledby={titleId} className="rounded-2xl border border-line bg-surface p-5 lg:p-6">
-      <h2 id={titleId} className="text-lg font-semibold">
-        現在就能練習
-      </h2>
-      <p className="mt-2 text-[0.95rem]">{label}的 AI 題庫分三種難度，選一種開始，每次抽一個題組：</p>
-      <ul className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-3">
-        {TIERS.map((tier) => (
-          <li key={tier} className="min-w-0">
-            <Link
-              to={practicePath(section, tier)}
-              className="group flex h-full items-start gap-2 rounded-xl border border-primary/50 bg-primary-soft p-3 hover:border-primary"
-            >
-              <span className="min-w-0 flex-1">
-                <span className="block font-semibold text-primary">{TIER_LABELS[tier]}</span>
-                <span className="mt-0.5 block text-sm">適合{TIER_AUDIENCE[tier].who}</span>
-              </span>
-              <ChevronRight aria-hidden="true" className="mt-1 size-4 shrink-0 text-primary" />
-            </Link>
-          </li>
-        ))}
-      </ul>
-      <p className="mt-3 text-[0.95rem]">
-        想做真正的考題：
+    <section aria-label={`${PRACTICE_SECTION_LABELS[section]}題庫練習`} className="min-w-0 space-y-4">
+      <PracticeChunkBoundary>
+        <Suspense
+          fallback={
+            <p role="status" className="rounded-2xl border border-line bg-surface py-10 text-center text-muted">
+              題庫練習載入中…
+            </p>
+          }
+        >
+          <SectionBankPractice section={section} tier={tier} embed={embed} />
+        </Suspense>
+      </PracticeChunkBoundary>
+      <p className="border-t border-line pt-4 text-[0.95rem]">
+        六種題型、三種難度一覽：
+        <Link to="/practice" className={`mx-0.5 ${linkCls}`}>
+          題庫練習
+        </Link>
+        。想做真正的考題：
         <Link to="/exams" className={`mx-0.5 ${linkCls}`}>
           歷屆試題
         </Link>
         有學測、指考英文考科可以整份作答，練習模式每題作答後就能看答案；有公布統計的試卷另附全國答對率。
       </p>
-      <h3 id={offersId} className="mt-4 font-semibold">
+    </section>
+  );
+}
+
+/** 收合的「題庫練習有什麼」：放在練習區與考試說明下面，題目才是打開頁面第一眼看到的東西。 */
+export function PracticeOffers({ section }: { section: PracticeSectionType }) {
+  const summaryId = useId();
+  return (
+    <details className="rounded-2xl border border-line bg-surface">
+      <summary id={summaryId} className="cursor-pointer px-5 py-4 text-lg font-semibold lg:px-6">
         題庫練習有什麼
-      </h3>
-      <ul aria-labelledby={offersId} className="mt-2 space-y-1 text-[0.95rem]">
+      </summary>
+      <ul aria-labelledby={summaryId} className="space-y-1 px-5 pb-5 text-[0.95rem] lg:px-6 lg:pb-6">
         {practiceOffers(section).map((item, i) => (
           <li key={i} className="ml-5 list-disc">
             {item}
           </li>
         ))}
       </ul>
-    </section>
+    </details>
   );
 }

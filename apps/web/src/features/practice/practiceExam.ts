@@ -8,7 +8,12 @@ import { PRACTICE_SECTION_LABELS, TIER_LABELS } from './labels';
 
 /** 作答紀錄（features/exams/attempt.ts）的代號；和歷屆試題的考卷 id 不會撞名。 */
 export function practiceAttemptId(file: Pick<PracticeGroupFile, 'uid' | 'version'>): string {
-  return `practice:${groupKey(file)}`;
+  return practiceAttemptIdForKey(groupKey(file));
+}
+
+/** 同上，用練習紀錄裡記的 `uid@version`（history.ts 的 current）。 */
+export function practiceAttemptIdForKey(key: string): string {
+  return `practice:${key}`;
 }
 
 const INSTRUCTIONS: Record<PracticeGroupFile['section_type'], string> = {

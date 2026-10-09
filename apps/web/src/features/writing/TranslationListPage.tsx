@@ -14,11 +14,13 @@ import { BackLink, DataError, Loading } from './components/ui';
 import { isAiGradableTranslation, loadTranslationIndex, type TranslationSet } from './data';
 import { examRefLabel } from './lib/format';
 import { useStaticData } from './lib/hooks';
+import { useListOriginState } from './lib/listOrigin';
 
 function SetCard({ set }: { set: TranslationSet }) {
   const aiReady = isAiGradableTranslation(set);
+  const origin = useListOriginState();
   return (
-    <Link to={`/writing/translation/${encodeURIComponent(set.exam_id)}`} className="group flex h-full flex-col gap-2 rounded-2xl border border-line bg-surface p-4 hover:border-primary">
+    <Link to={`/writing/translation/${encodeURIComponent(set.exam_id)}`} state={origin} className="group flex h-full flex-col gap-2 rounded-2xl border border-line bg-surface p-4 hover:border-primary">
       <span className="flex items-start gap-2">
         <span className="flex min-w-0 flex-1 flex-wrap items-center gap-2">
           <span className="text-lg font-semibold">{examRefLabel(set)}</span>
@@ -43,8 +45,6 @@ function SetCard({ set }: { set: TranslationSet }) {
 }
 
 export default function TranslationListPage() {
-  const data = useStaticData(loadTranslationIndex);
-  const [kind, setKind] = useKindFilter();
   return (
     <article>
       <title>{`中譯英題目｜${APP_NAME}`}</title>
@@ -53,7 +53,17 @@ export default function TranslationListPage() {
       <p className="mt-3 text-muted">
         歷屆學測、指考與參考試卷的中譯英。點選一組開始作答：可以用自我檢核清單自己檢查，或（登入並通過申請後）請 AI 批改。
       </p>
-      <div className="mt-6 space-y-6">
+      <TranslationPromptList className="mt-6" />
+    </article>
+  );
+}
+
+/** 題目列表本體（篩選、各考試的題組卡片、題目來源）：這一頁與中譯英題型頁（pages/TranslationPage.tsx）共用。 */
+export function TranslationPromptList({ className = '' }: { className?: string }) {
+  const data = useStaticData(loadTranslationIndex);
+  const [kind, setKind] = useKindFilter();
+  return (
+      <div className={`space-y-6 ${className}`}>
         {data.status === 'loading' && <Loading>題目載入中…</Loading>}
         {data.status === 'error' && <DataError message={dataErrorMessage(data.error)} onRetry={data.retry} />}
         {data.status === 'ready' && <TranslationLists sets={data.value.sets} kind={kind} onKind={setKind} />}
@@ -61,7 +71,6 @@ export default function TranslationListPage() {
           題目來源：大學入學考試中心歷屆試題。本站只整理中文題目，不轉載官方參考譯文；各題作答頁附有官方題本與評分原則的連結。
         </footer>
       </div>
-    </article>
   );
 }
 

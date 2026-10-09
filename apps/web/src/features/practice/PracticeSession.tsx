@@ -138,11 +138,15 @@ function BankHints({ file }: { file: PracticeGroupFile }) {
   );
 }
 
+const scrollPageToTop = () => window.scrollTo({ top: 0 });
+
 export function GroupSession({
   file,
   notice,
   repeatNotice,
   onNext,
+  embedded = false,
+  scrollToStart = scrollPageToTop,
 }: {
   file: PracticeGroupFile;
   /** 開頭的說明（接續上次、這一格都做過了）。 */
@@ -150,6 +154,13 @@ export function GroupSession({
   /** 「再一組」會不會抽到做過的。 */
   repeatNotice: string | null;
   onNext: () => void;
+  /**
+   * 內嵌在題型頁（/cloze 等，BankPractice.tsx）：題組標題用 <h2>（頁面的 <h1> 是題型名稱），不改分頁標題。
+   * 作答頁（/practice/:section/:tier）是 false：題組標題就是頁面的 <h1> 與 <title>。
+   */
+  embedded?: boolean;
+  /** 交卷後捲回練習區頂端看成績：作答頁捲到頁面頂端，題型頁捲到練習區（上面還有頁首與說明）。 */
+  scrollToStart?: () => void;
 }) {
   const key = groupKey(file);
   const exam = useMemo(() => practiceExam(file), [file]);
@@ -220,13 +231,14 @@ export function GroupSession({
     void recordPracticeMistakes(file, answers).then((result) => {
       if (alive) setMistakes(result);
     });
-    window.scrollTo({ top: 0 });
+    scrollToStart();
     resultHeadingRef.current?.focus({ preventScroll: true });
     focusResultWhenGraded.current = true;
     return () => {
       alive = false;
     };
-  }, [submitted, store, file, hinted.length]);
+    // scrollToStart 要是穩定的函式（呼叫端用 useCallback）：換了函式這個 effect 會重跑，清掉上一次的 alive，錯題本的結果就收不到。
+  }, [submitted, store, file, hinted.length, scrollToStart]);
 
   // 交卷時還在判分（GradingPanel）：判分完換成 ResultPanel，原本在「判分中」標題上的焦點會掉到 body，移到新的標題上。
   // 學生這段時間已經點了別的地方（焦點不在 body）就不搶焦點。
@@ -306,10 +318,18 @@ export function GroupSession({
         <QuestionExtrasContext value={extras}>
           <div className="space-y-5">
             <header className="space-y-2">
-              <title>{`${PRACTICE_SECTION_LABELS[file.section_type]}・${TIER_LABELS[file.tier]}｜題庫練習｜學測英文中心`}</title>
-              <h1 className="text-2xl font-bold tracking-tight lg:text-3xl">
-                {PRACTICE_SECTION_LABELS[file.section_type]}・{TIER_LABELS[file.tier]}
-              </h1>
+              {embedded ? (
+                <h2 className="text-xl font-bold tracking-tight">
+                  {PRACTICE_SECTION_LABELS[file.section_type]}・{TIER_LABELS[file.tier]}
+                </h2>
+              ) : (
+                <>
+                  <title>{`${PRACTICE_SECTION_LABELS[file.section_type]}・${TIER_LABELS[file.tier]}｜題庫練習｜學測英文中心`}</title>
+                  <h1 className="text-2xl font-bold tracking-tight lg:text-3xl">
+                    {PRACTICE_SECTION_LABELS[file.section_type]}・{TIER_LABELS[file.tier]}
+                  </h1>
+                </>
+              )}
               <p className="text-sm text-muted">
                 {topic ? <>主題：{topic}・</> : null}
                 {file.group.questions.length} 題
@@ -323,7 +343,8 @@ export function GroupSession({
                 這個瀏覽器無法儲存作答進度（可能是無痕模式或停用了網站資料），重新整理後答案會遺失。
               </p>
             )}
-            <ExamToolbar exam={exam} modeLabel="題庫練習" />
+            {/* 題型頁打開就抽好一組：只是來看說明、或分頁開著沒動，不能算進用時，第一次作答才開始計時。 */}
+            <ExamToolbar exam={exam} modeLabel="題庫練習" waitForFirstAnswer={embedded} />
             {submitted && !score && <GradingPanel headingRef={resultHeadingRef} />}
             {submitted && score && (
               <ResultPanel
@@ -334,6 +355,7 @@ export function GroupSession({
                 mistakes={mistakes}
                 repeatNotice={repeatNotice}
                 onNext={onNext}
+                embedded={embedded}
               />
             )}
             {submitted && elimination && file.group.options_bank && (

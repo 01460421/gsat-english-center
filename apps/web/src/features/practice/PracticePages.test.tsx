@@ -5,7 +5,7 @@
  *   - 詞彙題：卡片內的提示、你選的為什麼錯、答錯的正解字收進單字錯題本；
  *   - 重新開啟後接續同一組、空的格子、網址不對。
  */
-import { act, render, screen, within, type RenderResult } from '@testing-library/react';
+import { act, render, screen, waitFor, within, type RenderResult } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter, Route, Routes } from 'react-router';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
@@ -218,8 +218,10 @@ describe('文意選填（/practice/word-bank/advanced）', () => {
     await screen.findByRole('heading', { level: 1, name: '文意選填・進階練習' });
     await user.click(screen.getByRole('button', { name: '第 3 題空格，未作答' }));
     await user.click(within(screen.getByRole('group', { name: '第 3 題的選項' })).getByRole('button', { name: /^\(B\) symbol/ }));
-    await submit(user);
+    const result = await submit(user);
     expect(screen.getAllByText(/這一格目前只有這一組/).length).toBeGreaterThan(0);
+    // 作答頁是從題庫練習進來的：結果面板有「回到題庫練習」（題型頁內嵌的沒有，見 SectionPractice.test.tsx）。
+    expect(within(result.closest('section') as HTMLElement).getByRole('link', { name: '回到題庫練習' })).toHaveAttribute('href', '/practice');
     await user.click(screen.getAllByRole('button', { name: '再一組' })[0] as HTMLElement);
     expect(await screen.findByRole('button', { name: '第 3 題空格，未作答' })).toBeInTheDocument();
     expect(screen.queryByRole('heading', { name: '交卷結果' })).not.toBeInTheDocument();
@@ -240,6 +242,64 @@ describe('文意選填（/practice/word-bank/advanced）', () => {
     await renderAt('/practice/word-bank/advanced');
     expect(await screen.findByRole('button', { name: /^第 4 題空格，已填 \(D\)/ })).toBeInTheDocument();
     expect(screen.getByText('已接續上次在這一格做的題組。')).toBeInTheDocument();
+    expect(storedHistory().current).toEqual({ 'word_bank/advanced': 'ai.wb.0a1b2c@1' });
+  });
+
+  it('打開就開始計時（題型頁內嵌的才等第一次作答）', async () => {
+    await renderAt('/practice/word-bank/advanced');
+    await screen.findByRole('heading', { level: 1, name: '文意選填・進階練習' });
+    expect(screen.getByRole('timer')).toHaveAccessibleName('已用時間 0 秒');
+    // 開始計時就好：負載重時計時器的週期可能晚到，跳過 0:01 直接顯示 0:02，不比對確切的秒數。
+    await waitFor(() => expect(screen.getByRole('timer')).toHaveTextContent(/^0:(0[1-9]|[1-5]\d)$/), { timeout: 3000 });
+    expect(window.localStorage.getItem(attemptStorageKey('practice:ai.wb.0a1b2c@1'))).not.toBeNull();
+  });
+
+  it('題組載入失敗：顯示錯誤，「再試一次」後回到同一組（標題、分頁標題、返回連結照常）', async () => {
+    let groupStatus = 500;
+    const base = fetchMock.getMockImplementation() as (url: string) => Promise<Response>;
+    fetchMock.mockImplementation(async (url: string) =>
+      url.includes('/bank/groups/ai.wb.') && groupStatus !== 200 ? new Response('x', { status: groupStatus }) : base(url),
+    );
+    vi.spyOn(console, 'error').mockImplementation(() => {});
+    await renderAt('/practice/word-bank/advanced');
+    expect(await screen.findByRole('alert')).toHaveTextContent('資料載入失敗');
+    expect(screen.getByRole('link', { name: '題庫練習' })).toHaveAttribute('href', '/practice');
+    groupStatus = 200;
+    await act(async () => {
+      screen.getByRole('button', { name: '再試一次' }).click();
+    });
+    expect(await screen.findByRole('heading', { level: 1, name: '文意選填・進階練習' })).toBeInTheDocument();
+    expect(screen.queryByRole('alert')).not.toBeInTheDocument();
+    expect(screen.getByRole('link', { name: '題庫練習' })).toHaveAttribute('href', '/practice');
+    expect(Array.from(document.querySelectorAll('title')).map((t) => t.textContent)).toEqual(['文意選填・進階練習｜題庫練習｜學測英文中心']);
+    expect(storedHistory().current).toEqual({ 'word_bank/advanced': 'ai.wb.0a1b2c@1' });
+  });
+
+  it('題庫索引載入失敗：顯示錯誤，「再試一次」後出現題組', async () => {
+    indexStatus = 500;
+    vi.spyOn(console, 'error').mockImplementation(() => {});
+    await renderAt('/practice/word-bank/advanced');
+    expect(await screen.findByRole('alert')).toHaveTextContent('資料載入失敗');
+    expect(screen.getByRole('link', { name: '題庫練習' })).toHaveAttribute('href', '/practice');
+    indexStatus = 200;
+    await act(async () => {
+      screen.getByRole('button', { name: '再試一次' }).click();
+    });
+    expect(await screen.findByRole('heading', { level: 1, name: '文意選填・進階練習' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: '第 1 題空格，未作答' })).toBeInTheDocument();
+    expect(Array.from(document.querySelectorAll('title')).map((t) => t.textContent)).toEqual(['文意選填・進階練習｜題庫練習｜學測英文中心']);
+  });
+
+  it('只是打開過、一題都沒作答：重新開啟時是同一組，但不說「已接續」', async () => {
+    const first = await renderAt('/practice/word-bank/advanced');
+    await screen.findByRole('heading', { level: 1, name: '文意選填・進階練習' });
+    first.unmount();
+    clearDataCache();
+    resetPracticeHistoryForTests();
+
+    await renderAt('/practice/word-bank/advanced');
+    expect(await screen.findByRole('heading', { level: 1, name: '文意選填・進階練習' })).toBeInTheDocument();
+    expect(screen.queryByText('已接續上次在這一格做的題組。')).not.toBeInTheDocument();
     expect(storedHistory().current).toEqual({ 'word_bank/advanced': 'ai.wb.0a1b2c@1' });
   });
 });
