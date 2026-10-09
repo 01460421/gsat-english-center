@@ -115,7 +115,7 @@ export function MistakesView({ active }: { active: boolean }) {
                   </p>
                   {entry && <p className="text-sm break-words text-muted">{entry.zh}</p>}
                   <p className="text-xs text-muted">
-                    錯 {item.wrong_count} 次 · 最近一次 {dateFormat.format(item.last_wrong_at)}（{quizModeLabel(item.last_mode)}）
+                    錯 {item.wrong_count} 次 · 最近一次 {dateFormat.format(item.last_wrong_at)}（{item.last_source === 'bank_practice' ? '題庫練習' : quizModeLabel(item.last_mode)}）
                   </p>
                 </div>
                 <button

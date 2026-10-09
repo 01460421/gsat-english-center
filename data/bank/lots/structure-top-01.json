@@ -1,0 +1,245 @@
+{
+  "schema": "gsat-bank-lot/v1",
+  "lot": "structure-top-01",
+  "section_type": "structure",
+  "tier": "top",
+  "label_zh": "篇章結構‧超越頂標（第 1 批）",
+  "created_on": "2026-10-08",
+  "count": 5,
+  "questions_per_group": 4,
+  "format_version": "structure-4x5",
+  "uid_prefix": "ai.st.",
+  "path": "data/bank/v1/structure/top/",
+  "spec_id": "structure-top@2026-10-08",
+  "spec_file": "data/exams/generation-spec/structure.json",
+  "spec_tier_key": "beyond_top",
+  "spec_status": "draft：由 125 題有官方統計的篇章結構題（現制 20、指考 105）推得；上線後依站內作答資料校正（SPEC §3.6、本檔 STR-CAL-*）",
+  "topic_quota": {
+    "origins_evolution": 2,
+    "science_health": 1,
+    "culture_history": 1,
+    "society_issues": 1,
+    "labels_zh": {
+      "origins_evolution": "起源與演變",
+      "science_health": "科普與健康",
+      "culture_history": "文化與歷史",
+      "society_issues": "社會與議題"
+    },
+    "basis": "08 §6.1（每 8 組：起源與演變 3、科普與健康 2–3、文化與歷史 2、社會與議題 1），依組數等比例取整"
+  },
+  "answer_letter_share": null,
+  "avoid": {
+    "basis": "data/exams/parsed 的 gsat-111、gsat-112、gsat-113、gsat-114、gsat-115、ref-115 同一大題（structure）的正解（正解句；避免重寫成同義句）",
+    "answer_words": [],
+    "answer_sentences": [
+      "Originating from the Chinese Ghost Festival, this annual event has evolved into a time of family reunion.",
+      "Some people also visit the cemetery to clean up the family graves and pray for their ancestors.",
+      "Obon concludes with another bonfire, okuribi, lighting up the sky to see the ancestors’ spirits off.",
+      "Such festive activities are usually held in parks, temples, and other public places around Japan.",
+      "People with synesthesia used to be accused of making their experiences up.",
+      "This consistency serves as a proof that synesthesia is real.",
+      "Meanwhile, environmental influences seem to shape a person’s synesthesia.",
+      "Some studies even show that people may all be synesthetic to some degree.",
+      "This seems to run counter to the common practice.",
+      "Many suggest that most patients can continue with the sport they love.",
+      "For example, an injured runner might end up cycling and swimming instead of running.",
+      "Over time, researchers have come to realize the importance of exercising when injured.",
+      "Today, they provide low-budget, overnight lodging in commerce centers in large cities worldwide.",
+      "The chambers are stacked side-by-side, two units high, with the upper rooms reached by a ladder.",
+      "In response to rising demands, these hotels are embracing a wave of innovation.",
+      "The room’s thin plastic walls easily transmit the sound of snoring made by neighboring guests.",
+      "For most of recorded human history, the open smile has been deeply unfashionable.",
+      "In fact, there is a well-known Russian proverb that goes, “Smiling with no reason is a sign of stupidity.”",
+      "Another crucial factor is a society’s immigration diversity.",
+      "Various factors have thus contributed to the phenomenon of smiling.",
+      "Building an exciting roller coaster starts with a brilliant design.",
+      "Designers must then consider the space available for the coaster.",
+      "Designers can draw on a number of techniques to provide a memorable ride.",
+      "When the design is complete, detailed calculation and careful testing procedures will follow."
+    ],
+    "topics": [
+      "capsule hotels",
+      "exercising with sports injuries",
+      "how roller coasters are designed",
+      "how smiling varies across history and cultures",
+      "synesthesia: when the senses intermix",
+      "the Obon (Bon) Festival in Japan"
+    ]
+  },
+  "passage_band": {
+    "basis": "SPEC §3.4＋出題規格書 passage_overrides（words、coverage_L1_4_min（取代 SPEC 的區間）、coverage_L1_6_min、offlist_max、beyond_l4_ratio_max）",
+    "spec_3_4": {
+      "word_count": {
+        "min": 280,
+        "max": 330
+      },
+      "coverage_l1_4": {
+        "min": 0.86,
+        "max": 0.91
+      },
+      "coverage_l1_6": {
+        "min": 0.92,
+        "max": null
+      },
+      "offlist_ratio": {
+        "min": null,
+        "max": 0.07
+      },
+      "avg_sentence_length": {
+        "min": 18,
+        "max": 25
+      }
+    },
+    "overrides_note": "不另設較長篇幅；指考 news 體 ast-96 五格全為 top，可作為「論證密度高」的參考",
+    "word_count": {
+      "min": 220,
+      "max": 310
+    },
+    "coverage_l1_4": {
+      "min": 0.9,
+      "max": null
+    },
+    "coverage_l1_6": {
+      "min": 0.94,
+      "max": null
+    },
+    "offlist_ratio": {
+      "min": null,
+      "max": 0.06
+    },
+    "avg_sentence_length": {
+      "min": 18,
+      "max": 25
+    },
+    "beyond_l4_ratio": {
+      "min": null,
+      "max": 0.06
+    }
+  },
+  "item_rules": {
+    "summary_zh": "≥2 格沒有明顯字面線索，要靠段落推理；多餘句看起來能放進 ≥2 格",
+    "all_blanks_have_surface_cue": false,
+    "topic_or_summary_blanks": {
+      "min": 0,
+      "max": null
+    },
+    "no_surface_cue_blanks": {
+      "min": 2,
+      "max": null
+    },
+    "extra_sentence": "fits_two_slots"
+  },
+  "targets": {
+    "blank_recipe": {
+      "cue_strength_max": 1,
+      "direction": "單側錨點（現制 top 4/4：B 2、F 2；合併 18 格中 12 格）",
+      "required_competition_one_of": [
+        "two_keys_compete：兩個正解句在局部都說得通（共用同一個先行詞，或相鄰兩格可互換），只能靠段落框架（begins…／concludes…、Many…Others…Still others）分開（111-32/33、113-32/33）",
+        "forward_frame：只有後面的 however／Yet／They…Others… 能定位本句（112-31、113-32、ast-107-35）",
+        "targeted_extra：多餘句瞄準本格：與前後句共用 ≥3 個實詞且與細節矛盾（CT，ast-104-32），或是替代論點、放在正解線索不透明的段首格（SC，ast-107-33）"
+      ],
+      "blank_types_per_4": {
+        "TS_or_BR": [
+          1,
+          2
+        ],
+        "SP": [
+          1,
+          3
+        ],
+        "SQ": [
+          0,
+          1
+        ],
+        "CT": [
+          0,
+          1
+        ]
+      }
+    },
+    "answer_level_dist": {
+      "observed_current": {
+        "L1-2": 1,
+        "L3-4": 2,
+        "L5-6": 1,
+        "n": 4
+      },
+      "observed_pooled": {
+        "L1-2": 7,
+        "L3-4": 4,
+        "L5-6": 7,
+        "n": 18
+      },
+      "rule": "不靠生字；現制 top 4 格正解最高級別 L2–L5"
+    },
+    "distractor_rules": {
+      "extra_sentence_code_allowed": [
+        "SC",
+        "CT",
+        "FL"
+      ],
+      "extra_overlap_ratio": [
+        0.14,
+        0.6
+      ],
+      "extra_mechanism_one_of": [
+        "CT_lexical_lure：與目標格前後句共用 ≥3 個實詞，內容與文中細節矛盾（ast-104：目標格高分組 0.39）",
+        "SC_thesis_lure：替代論點句，放在正解線索不透明（生詞或只有後指）的段首格（ast-107：高分組 0.44、低分組 0.22）"
+      ],
+      "extra_target_slot_required": true,
+      "extra_upper_pull_slots_max": 1,
+      "upper_group_pull_target_min": 0.15,
+      "distractor_may_rival_key_in_upper_group": true,
+      "require_D1_min_post_hoc": 0.1,
+      "observed_basis": "現制 top 高分組最強誘答中位數 0.23、指考 top 0.2；指考多餘句最強兩例：ast-104 (D) 高分組 0.39、ast-107 (A) 高分組 0.44（高於低分組 0.22）"
+    },
+    "set_composition_4_blanks": {
+      "basic": [
+        0,
+        0
+      ],
+      "advanced": [
+        0,
+        1
+      ],
+      "top": [
+        3,
+        4
+      ],
+      "ast_like_top_min": 1
+    },
+    "recipe": [
+      "每格只留一側錨點；至少 1 格的錨點只在後一句（F）",
+      "讓兩個正解句在局部都說得通（同先行詞或相鄰兩格可互換），靠段落框架才分得開",
+      "多餘句瞄準 1 格（通常是段首主題句格）：寫成「與某個細節相反」且與該格前後句共用 ≥3 個實詞的句子，或寫成替代論點、放在正解線索不透明的段首格",
+      "仍要保證唯一指派：盲解代理全部答對、多餘句在每一格都被判不可行"
+    ],
+    "pitfalls": [
+      "把「沒有任何表層線索」當成難度來源：合併 18 格 top 只有 3 格是 LG，現制 0/4",
+      "多餘句同時像兩格：12/12 篇官方多餘句在高分組都只在 ≤1 格吸到 ≥10%；兩格都像容易變成雙答案",
+      "用冷僻主題詞或生字（gabelle 型）製造難度：ast-107-33 Pa 只有 0.54，接近 challenge"
+    ]
+  },
+  "set_composition": {
+    "basic": [
+      0,
+      0
+    ],
+    "advanced": [
+      0,
+      1
+    ],
+    "top": [
+      3,
+      4
+    ],
+    "ast_like_top_min": 1
+  },
+  "verification": {
+    "blind_solvers": 2,
+    "blind_b_different_model": true,
+    "distractor_audit": true,
+    "unique_solution": true,
+    "human_review": "100%（校準期：每個題型 × 提示詞版本的前 30 組全審，SPEC §5.8）"
+  }
+}

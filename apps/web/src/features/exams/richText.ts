@@ -134,6 +134,10 @@ export interface TextHighlight {
   end: number;
   /** 指涉這段文字的題目 label。 */
   label: string;
+  /** refers_to（預設）：題目所指的字詞；evidence：解析的證據句（題庫練習交卷後加亮）。 */
+  kind?: 'refers_to' | 'evidence';
+  /** 目前選取的（解析卡按了「在文中標出」），加深顏色。 */
+  active?: boolean;
 }
 
 /** 題組中有 refers_to 的題目 → 選文中要高亮的區間。找不到（資料錯誤）就略過，不影響作答。 */

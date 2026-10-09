@@ -19,6 +19,7 @@ import {
 } from '../../../data/exams';
 import { scoringFile, useExam } from '../ExamContext';
 import { CLUE_LABELS, ITEM_TYPE_LABELS, examIdLabel } from '../labels';
+import { useQuestionExtras } from '../QuestionExtras';
 import {
   acceptedLetters,
   formatPercent,
@@ -184,6 +185,7 @@ export function ChoiceFeedback({
   options: OptionMap | null;
   compact?: boolean;
 }) {
+  const extras = useQuestionExtras();
   const outcome = scoreQuestion(q, answer);
   if (outcome.kind !== 'auto') return null;
   const multi = q.mode === 'multi_select';
@@ -268,11 +270,12 @@ export function ChoiceFeedback({
               </div>
             ))}
         </div>
-      ) : (
+      ) : extras?.noOfficialStats ? null : (
         <p className="text-sm text-muted">這題沒有大考中心公布的答對率統計（補考、參考試卷與部分早期試題沒有公布）。</p>
       )}
       <TagLine tags={q.tags} />
       <ReusedNote q={q} />
+      {extras?.renderAfterFeedback?.(q, answer)}
     </div>
   );
 }

@@ -2,7 +2,7 @@
  * 錯題本：測驗答錯的字。存檔格式和每日學習一樣有 schema／version（理由見 srs.ts 檔頭）。
  *
  * 規則：
- *   - 任何測驗答錯：加入錯題本（已在錯題本就把次數加一）；
+ *   - 任何測驗答錯：加入錯題本（已在錯題本就把次數加一）；題庫練習的詞彙題答錯也一樣，正解字收進來（SPEC §6.12）；
  *   - 在「錯題本練習」答對：移出錯題本。一般測驗答對不移除：剛看過正解馬上答對，不代表真的記住了。
  *   - 最多保留 MAX_ITEMS 筆，超過時丟掉最久沒錯的，避免 localStorage 無限長大。
  */
@@ -22,6 +22,11 @@ export interface MistakeItem {
   wrong_count: number;
   last_wrong_at: number;
   last_mode: QuizMode;
+  /**
+   * 最近一次是在哪裡答錯：bank_practice＝題庫練習的詞彙題（四選一填空，last_mode 記成最接近的 cloze）；
+   * 省略＝單字測驗。只影響錯題本上的說明文字。
+   */
+  last_source?: 'bank_practice';
 }
 
 export interface MistakeBook {
@@ -48,7 +53,14 @@ function parseItem(id: string, value: unknown): MistakeItem | null {
   const { word, wrong_count: count, last_wrong_at: at, last_mode: mode } = value;
   if (typeof word !== 'string' || typeof count !== 'number' || typeof at !== 'number' || !isQuizMode(mode)) return null;
   if (!Number.isFinite(count) || !Number.isFinite(at)) return null;
-  return { entry_id: id, word, wrong_count: Math.max(1, Math.floor(count)), last_wrong_at: at, last_mode: mode };
+  return {
+    entry_id: id,
+    word,
+    wrong_count: Math.max(1, Math.floor(count)),
+    last_wrong_at: at,
+    last_mode: mode,
+    ...(value['last_source'] === 'bank_practice' ? { last_source: 'bank_practice' as const } : {}),
+  };
 }
 
 export function parseMistakeBook(raw: string | null, now: number): { book: MistakeBook; status: LoadStatus } {
@@ -80,6 +92,8 @@ export interface AnswerRecord {
   word: string;
   mode: QuizMode;
   correct: boolean;
+  /** 題庫練習的詞彙題（見 MistakeItem.last_source）。 */
+  source?: 'bank_practice';
 }
 
 function trim(items: Record<string, MistakeItem>): Record<string, MistakeItem> {
@@ -104,6 +118,7 @@ export function recordAnswer(book: MistakeBook, answer: AnswerRecord, practice: 
     wrong_count: (existing?.wrong_count ?? 0) + 1,
     last_wrong_at: now,
     last_mode: answer.mode,
+    ...(answer.source ? { last_source: answer.source } : {}),
   };
   return { ...book, items: trim({ ...book.items, [answer.entryId]: item }), updated_at: now };
 }

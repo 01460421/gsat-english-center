@@ -7,6 +7,7 @@ import {
   Archive,
   BookA,
   Blocks,
+  Dumbbell,
   House,
   Info,
   Languages,
@@ -25,6 +26,7 @@ import type { IconKey } from '../modules';
 const ICONS: Record<IconKey, LucideIcon> = {
   home: House,
   words: BookA,
+  practice: Dumbbell,
   vocabulary: SpellCheck,
   cloze: TextCursorInput,
   'word-bank': Blocks,

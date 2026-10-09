@@ -10,11 +10,12 @@
  *     再點它會「搬」到目前的空格，原本的空格清空，不必先手動清除。
  */
 import { X } from 'lucide-react';
-import { useEffect, useId, useMemo, useRef, useState, type DragEvent } from 'react';
+import { useEffect, useId, useRef, useState, type DragEvent } from 'react';
 import type { OptionLetter, OptionMap, Question, QuestionGroup } from '../../../data/exams';
 import { useAttemptStore, useAttemptSelector, useQuestionState } from '../AttemptContext';
 import { bankBlanksInPassage } from '../paper';
-import { questionTitle, refersToHighlights, resolveBlankQuestion } from '../richText';
+import { useGroupHighlights } from '../QuestionExtras';
+import { questionTitle, resolveBlankQuestion } from '../richText';
 import { acceptedLetters } from '../scoring';
 import { PassageView } from './Passage';
 import { ChoiceFeedback, sortedLetters } from './QuestionFeedback';
@@ -158,7 +159,7 @@ function PanelHeader({ title, onClose }: { title: string; onClose: () => void })
 
 export function ClozeGroup({ group }: { group: QuestionGroup }) {
   const [openToken, setOpenToken] = useState<string | null>(null);
-  const highlights = useMemo(() => refersToHighlights(group), [group]);
+  const highlights = useGroupHighlights(group);
   const slots = useRef(new Map<string, HTMLButtonElement | null>());
   const panelId = useId();
   const questions = group.questions.filter(isChoiceQ);
@@ -423,7 +424,7 @@ export function BankGroup({ group }: { group: QuestionGroup }) {
   const inPassage = bankBlanksInPassage(group);
   // 篇章結構、句子配合題的選項是整句，排成一欄；文意選填是單字，排成一列列的晶片。
   const long = letters.some((l) => (bank[l]?.length ?? 0) > 30);
-  const highlights = useMemo(() => refersToHighlights(group), [group]);
+  const highlights = useGroupHighlights(group);
   const slots = useRef(new Map<string, HTMLButtonElement | null>());
   const panelId = useId();
   const [active, setActive] = useState<string | null>(null);

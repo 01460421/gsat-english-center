@@ -8,6 +8,7 @@
 import { useId, useRef, useState, type KeyboardEvent, type ReactNode } from 'react';
 import type { Figure, PassagePart, QuestionGroup } from '../../../data/exams';
 import { figureKindLabel } from '../labels';
+import { useQuestionExtras } from '../QuestionExtras';
 import { groupTextOffsets, type TextHighlight } from '../richText';
 import { RichText } from './RichText';
 
@@ -175,6 +176,7 @@ export function PassageView({
   const offsets = groupTextOffsets(group);
   const poem = group.tags?.genre === 'poem';
   const parts = group.passage_parts ?? [];
+  const footer = useQuestionExtras()?.passageFooter;
   return (
     <div className="space-y-3 leading-relaxed">
       {group.group_label && <p className="text-sm text-muted">{group.group_label}</p>}
@@ -199,6 +201,7 @@ export function PassageView({
       {group.figures.map((figure, i) => (
         <FigureView key={i} figure={figure} />
       ))}
+      {footer}
     </div>
   );
 }

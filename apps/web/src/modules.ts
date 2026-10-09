@@ -13,6 +13,7 @@ export const APP_NAME = '學測英文中心';
 export type IconKey =
   | 'home'
   | 'words'
+  | 'practice'
   | 'vocabulary'
   | 'cloze'
   | 'word-bank'
@@ -72,6 +73,16 @@ export const PAGES = [
     summary: '大考中心參考詞彙表 Level 1–6 共 6,012 字：查詢單字卡、每日間隔重複複習、四種測驗與錯題本。',
     group: 'vocab',
     icon: 'words',
+    status: 'ready',
+    isStudyModule: true,
+  },
+  {
+    path: '/practice',
+    title: '題庫練習',
+    navLabel: '題庫練習',
+    summary: 'AI 出題、通過自動驗證的四種選擇題型題組，分穩定基礎、進階練習、超越頂標三種難度；作答可看提示，交卷後每題都有解析。',
+    group: 'choice',
+    icon: 'practice',
     status: 'ready',
     isStudyModule: true,
   },

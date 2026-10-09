@@ -16,6 +16,7 @@ import HomePage from './pages/HomePage';
 const PAGE_COMPONENTS: Record<PagePath, ComponentType> = {
   '/': HomePage,
   '/words': lazy(() => import('./pages/WordsPage')),
+  '/practice': lazy(() => import('./features/practice/PracticeHome')),
   '/vocabulary': lazy(() => import('./pages/VocabularyPage')),
   '/cloze': lazy(() => import('./pages/ClozePage')),
   '/word-bank': lazy(() => import('./pages/WordBankPage')),
@@ -33,6 +34,8 @@ const PAGE_COMPONENTS: Record<PagePath, ComponentType> = {
 const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
 /** 歷屆試題的作答頁（/exams/:examId）。不在 modules.ts 的 PAGES 裡：它是列表頁的子頁，不出現在導覽列。 */
 const ExamPaperPage = lazy(() => import('./features/exams/ExamPaperPage'));
+/** 題庫練習的作答頁（/practice/:section/:tier）：同上，是 /practice 的子頁。 */
+const PracticeSessionPage = lazy(() => import('./features/practice/PracticeSessionPage'));
 
 export function App() {
   return (
@@ -47,6 +50,7 @@ export function App() {
           );
         })}
         <Route path="exams/:examId" element={<ExamPaperPage />} />
+        <Route path="practice/:section/:tier" element={<PracticeSessionPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>
