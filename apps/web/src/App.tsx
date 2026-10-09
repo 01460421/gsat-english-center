@@ -46,6 +46,9 @@ const PracticeSessionPage = lazy(() => import('./features/practice/PracticeSessi
 const AccountPage = lazy(() => import('./features/account/AccountPage'));
 const WelcomePage = lazy(() => import('./features/account/WelcomePage'));
 const AiApplyPage = lazy(() => import('./features/account/AiApplyPage'));
+// 公開的隱私權說明與服務條款（Google 登入的品牌設定要求可公開讀取的網址）。
+const PrivacyPage = lazy(() => import('./features/account/PolicyPage').then((m) => ({ default: m.PrivacyPage })));
+const TermsPage = lazy(() => import('./features/account/PolicyPage').then((m) => ({ default: m.TermsPage })));
 const AdminPage = lazy(() => import('./features/admin/AdminPage'));
 const TranslationListPage = lazy(() => import('./features/writing/TranslationListPage'));
 const TranslationAttemptPage = lazy(() => import('./features/writing/TranslationAttemptPage'));
@@ -69,6 +72,8 @@ export function App() {
         <Route path="account" element={<AccountPage />} />
         <Route path="account/welcome" element={<WelcomePage />} />
         <Route path="ai/apply" element={<AiApplyPage />} />
+        <Route path="privacy" element={<PrivacyPage />} />
+        <Route path="terms" element={<TermsPage />} />
         <Route path="admin" element={<AdminPage />} />
         <Route path="writing/translation" element={<TranslationListPage />} />
         <Route path="writing/translation/:examId" element={<TranslationAttemptPage />} />
