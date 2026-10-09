@@ -1,0 +1,995 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.d9d076",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "top",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "相較於一般新聞，標題聳動的報導更容易被分享，往往幾小時內就傳遍網路。",
+        "options": null,
+        "answer": "Compared with ordinary news, reports with dramatic headlines are shared more easily, often spreading across the Internet within a few hours.",
+        "accepted_answers": [
+          "Compared to regular news, stories with shocking headlines are more likely to be shared, often spreading all over the Internet within hours.",
+          "Compared with ordinary news, reports with sensational headlines get shared more easily, often going viral online within a few hours."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "相較於…（Compared with + N）",
+            "分詞構句（…, often spreading …）"
+          ],
+          "topic": "批判性思考"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "培養批判性思考很重要，因為已有許多人被這類報導誤導，造成大眾恐慌。",
+        "options": null,
+        "answer": "It is very important to develop critical thinking, because many people have been misled by such reports, causing panic among the public.",
+        "accepted_answers": [
+          "It is important to develop critical thinking skills, since many people have already been misled by such reports, causing public panic.",
+          "Developing critical thinking is very important, because many people have been misled by reports like these, leading to panic among the public."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "虛主詞 It is important to …",
+            "句尾分詞片語表結果（causing …）"
+          ],
+          "topic": "批判性思考"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "批判性思考"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「相較於一般新聞」句首用 Compared with／to ordinary news（Compared 是過去分詞，不寫 Compare）；也可以把比較放進句子裡寫 … more easily than ordinary news。「標題聳動的報導」reports with dramatic／sensational headlines（介系詞片語後位修飾）。「更容易被分享」are shared more easily／are more likely to be shared。「往往幾小時內就傳遍網路」是前面情況的延伸，中文沒有主詞，用分詞構句 , often spreading across the Internet within a few hours。",
+          "evidence": [
+            "相較於一般新聞",
+            "往往幾小時內就傳遍網路"
+          ],
+          "strategy_zh": "句首「相較於…」→ Compared with + N, …（或 … 比較級 + than + N）；句尾沒有主詞的補充說明 → , (often) V-ing …。",
+          "hints": [
+            "切成四段：相較於一般新聞／標題聳動的報導／更容易被分享／往往幾小時內就傳遍網路",
+            "標的詞彙：compare（相較）、ordinary（一般的）、headline（標題）、share（分享）、spread（傳遍）、Internet（網路）",
+            "句型框架：Compared with + N, S + are shared more easily, often V-ing … within a few hours"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「培養批判性思考很重要」主詞是動作，用虛主詞 It is very important to develop critical thinking（或動名詞 Developing critical thinking is …）。「因為已有許多人被這類報導誤導」人是被誤導的一方，「已有」用完成式被動 many people have been misled by such reports（mislead 的 p.p. 是 misled）。「造成大眾恐慌」是前面整件事的結果，中文沒有主詞，用句尾分詞 , causing panic among the public。",
+          "evidence": [
+            "很重要",
+            "造成大眾恐慌"
+          ],
+          "strategy_zh": "「做某事很重要」→ It is important to VR；句尾沒有主詞的「造成…」→ , causing + N。",
+          "hints": [
+            "切成四段：培養批判性思考／很重要／因為已有許多人被這類報導誤導／造成大眾恐慌",
+            "標的詞彙：develop（培養）、critical thinking（批判性思考）、important（重要的）、mislead（誤導）、panic（恐慌）",
+            "句型框架：It is very important to VR …, because S + have been p.p. …, causing + N"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "Compared with ordinary news, reports with dramatic headlines are shared more easily, often spreading across the Internet within a few hours.",
+            "Compared to regular news, stories with shocking headlines are more likely to be shared, often spreading all over the Internet within hours.",
+            "Compared with ordinary news, reports with sensational headlines get shared more easily, often going viral online within a few hours."
+          ],
+          "target_words": [
+            {
+              "word": "compare",
+              "zh": "相較於",
+              "alternatives": [
+                "comparison",
+                "than"
+              ]
+            },
+            {
+              "word": "ordinary",
+              "zh": "一般的",
+              "alternatives": [
+                "regular",
+                "normal",
+                "usual",
+                "common",
+                "everyday",
+                "general"
+              ]
+            },
+            {
+              "word": "headline",
+              "zh": "標題",
+              "alternatives": [
+                "title"
+              ]
+            },
+            {
+              "word": "share",
+              "zh": "分享",
+              "alternatives": [
+                "forward",
+                "pass on",
+                "repost"
+              ]
+            },
+            {
+              "word": "spread",
+              "zh": "傳遍",
+              "alternatives": [
+                "go viral",
+                "reach",
+                "travel",
+                "circulate"
+              ]
+            },
+            {
+              "word": "Internet",
+              "zh": "網路",
+              "alternatives": [
+                "online",
+                "web"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "COMP",
+              "grammar_id": "gp-compared-with",
+              "label_zh": "相較於…（Compared with + N）",
+              "frame": "Compared with／to + N, S + V + 比較級 … ; S + V + 比較級 + than + N",
+              "zh_trigger": "相較於一般新聞"
+            },
+            {
+              "code": "PART",
+              "grammar_id": "gp-participle-clause",
+              "label_zh": "分詞構句（句尾分詞片語補充說明）",
+              "frame": "S + V …, (often) V-ing …",
+              "zh_trigger": "往往幾小時內就傳遍網路"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "相較於一般新聞",
+              "accepted": [
+                "Compared with ordinary news",
+                "Compared to regular news",
+                "Compared to ordinary news",
+                "Compared with regular news",
+                "In comparison with ordinary news",
+                "In comparison to ordinary news",
+                "Compared with normal news",
+                "Compared to normal news",
+                "Compared with everyday news",
+                "Compared with general news",
+                "Compared to general news",
+                "Compared with ordinary news reports",
+                "Compared with regular news stories",
+                "Compared with ordinary reports",
+                "than ordinary news",
+                "than regular news",
+                "than normal news",
+                "than ordinary reports",
+                "than ordinary news reports",
+                "than regular news stories",
+                "than ordinary stories",
+                "than everyday news",
+                "than general news"
+              ],
+              "targets": [
+                "COMP",
+                "compare",
+                "ordinary"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Compare with ordinary news",
+                  "right": "Compared with ordinary news",
+                  "explanation_zh": "句首「相較於…」用過去分詞 Compared with／to；Compare 是原形動詞，會變成祈使句。"
+                },
+                {
+                  "wrong": "Compared with ordinary newses",
+                  "right": "Compared with ordinary news",
+                  "explanation_zh": "news 是不可數名詞，沒有 newses。"
+                }
+              ]
+            },
+            {
+              "zh": "標題聳動的報導",
+              "accepted": [
+                "reports with dramatic headlines",
+                "stories with shocking headlines",
+                "reports with sensational headlines",
+                "news with sensational headlines",
+                "reports with shocking headlines",
+                "stories with sensational headlines",
+                "articles with shocking headlines",
+                "news reports with sensational headlines",
+                "reports with eye-catching headlines",
+                "articles with sensational headlines",
+                "news with shocking headlines",
+                "stories with dramatic headlines",
+                "reports that have sensational headlines",
+                "reports whose headlines are sensational",
+                "articles with dramatic headlines",
+                "posts with sensational headlines",
+                "news reports with shocking headlines",
+                "reports with exaggerated headlines",
+                "news stories with sensational headlines",
+                "reports with attention-grabbing headlines",
+                "reports with alarming headlines",
+                "reports with sensational titles",
+                "reports with shocking titles",
+                "news with sensational titles",
+                "stories with sensational titles",
+                "articles with sensational titles",
+                "news reports with sensational titles",
+                "reports with eye-catching titles",
+                "stories with eye-catching headlines",
+                "news with eye-catching headlines",
+                "articles with eye-catching headlines",
+                "stories with attention-grabbing headlines",
+                "news with dramatic headlines",
+                "stories with exaggerated headlines"
+              ],
+              "targets": [
+                "headline"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "headline-shocking reports",
+                  "right": "reports with shocking headlines",
+                  "explanation_zh": "中文「標題聳動的報導」修飾語在前，英文改成 reports with shocking headlines（介系詞片語後位修飾）；不要硬拼成複合形容詞。"
+                },
+                {
+                  "wrong": "reports with shocked headlines",
+                  "right": "reports with shocking headlines",
+                  "explanation_zh": "形容「令人震驚的」用 shocking；shocked 是「感到震驚的」，用來形容人。"
+                }
+              ]
+            },
+            {
+              "zh": "更容易被分享",
+              "accepted": [
+                "are shared more easily",
+                "are more likely to be shared",
+                "get shared more easily",
+                "are more easily shared",
+                "are shared more often",
+                "are shared more widely",
+                "tend to be shared more",
+                "are more readily shared",
+                "are more likely to get shared",
+                "are shared much more easily",
+                "are much more likely to be shared",
+                "are shared far more easily",
+                "tend to be shared more easily",
+                "are easier to share",
+                "are shared more frequently",
+                "is shared more easily",
+                "is more likely to be shared",
+                "gets shared more easily",
+                "is more easily shared",
+                "is shared more often",
+                "are more easily forwarded",
+                "are forwarded more easily",
+                "are more likely to be forwarded"
+              ],
+              "targets": [
+                "share"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "are more easily to be shared",
+                  "right": "are more likely to be shared",
+                  "explanation_zh": "「更容易被…」用 be more likely to be p.p.，或 be shared more easily；more easily 後面不接不定詞。"
+                },
+                {
+                  "wrong": "are shared more easier",
+                  "right": "are shared more easily",
+                  "explanation_zh": "修飾動詞用副詞 easily，比較級是 more easily。"
+                }
+              ]
+            },
+            {
+              "zh": "往往幾小時內就傳遍網路",
+              "accepted": [
+                "often spreading across the Internet within a few hours",
+                "often spreading across the Internet within hours",
+                "often spreading across the Internet in a few hours",
+                "often spreading across the Internet in just a few hours",
+                "often spreading across the Internet in only a few hours",
+                "often spreading across the Internet in a matter of hours",
+                "often spreading all over the Internet within a few hours",
+                "often spreading all over the Internet within hours",
+                "often spreading all over the Internet in a few hours",
+                "often spreading all over the Internet in just a few hours",
+                "often spreading all over the Internet in only a few hours",
+                "often spreading all over the Internet in a matter of hours",
+                "often spreading throughout the Internet within a few hours",
+                "often spreading throughout the Internet within hours",
+                "often spreading throughout the Internet in a few hours",
+                "often spreading throughout the Internet in just a few hours",
+                "often spreading throughout the Internet in only a few hours",
+                "often spreading throughout the Internet in a matter of hours",
+                "often spreading across the web within a few hours",
+                "often spreading across the web within hours",
+                "often spreading across the web in a few hours",
+                "often spreading across the web in just a few hours",
+                "often spreading across the web in only a few hours",
+                "often spreading across the web in a matter of hours",
+                "often going viral online within a few hours",
+                "often going viral online within hours",
+                "often going viral online in a few hours",
+                "often going viral online in just a few hours",
+                "often going viral online in only a few hours",
+                "often going viral online in a matter of hours",
+                "often going viral on the Internet within a few hours",
+                "often going viral on the Internet within hours",
+                "often going viral on the Internet in a few hours",
+                "often going viral on the Internet in just a few hours",
+                "often going viral on the Internet in only a few hours",
+                "often going viral on the Internet in a matter of hours",
+                "often going viral within a few hours",
+                "often going viral within hours",
+                "often going viral in a few hours",
+                "often going viral in just a few hours",
+                "often going viral in only a few hours",
+                "often going viral in a matter of hours",
+                "often spreading online within a few hours",
+                "often spreading online within hours",
+                "often spreading online in a few hours",
+                "often spreading online in just a few hours",
+                "often spreading online in only a few hours",
+                "often spreading online in a matter of hours",
+                "often spreading across the whole Internet within a few hours",
+                "often spreading across the whole Internet within hours",
+                "often spreading across the whole Internet in a few hours",
+                "often spreading across the whole Internet in just a few hours",
+                "often spreading across the whole Internet in only a few hours",
+                "often spreading across the whole Internet in a matter of hours",
+                "often circulating across the Internet within a few hours",
+                "often circulating across the Internet within hours",
+                "often circulating across the Internet in a few hours",
+                "often circulating across the Internet in just a few hours",
+                "often circulating across the Internet in only a few hours",
+                "often circulating across the Internet in a matter of hours"
+              ],
+              "targets": [
+                "PART",
+                "spread",
+                "Internet"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "often spread across the Internet within a few hours",
+                  "right": "often spreading across the Internet within a few hours",
+                  "explanation_zh": "逗號前已經是完整的句子，逗號後要用分詞 spreading 補充說明；直接接 spread 會變成兩個動詞沒有連接。"
+                },
+                {
+                  "wrong": "often spreading across the Internet after a few hours",
+                  "right": "often spreading across the Internet within a few hours",
+                  "explanation_zh": "「幾小時內」是 within a few hours；after a few hours 是「幾小時之後」。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "abstract_nominal",
+              "zh": "標題聳動的報導",
+              "literal_error": "Compared with ordinary news, title-shocking reports are shared more easily, …",
+              "part": 2,
+              "explanation_zh": "「標題聳動的報導」是複合概念：報導的標題很聳動，英文用 reports with dramatic／sensational headlines；照字面拼成 title-shocking reports 讀者看不懂。"
+            },
+            {
+              "type": "subjectless",
+              "zh": "往往幾小時內就傳遍網路",
+              "literal_error": "…, often it spreads across the Internet in a few hours.",
+              "part": 4,
+              "explanation_zh": "中文後半句省略了主詞，英文不能用逗號再接 it spreads …（逗號連接兩個句子）；用分詞構句 , often spreading across the Internet within a few hours。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "Spreading across the Internet within hours, reports with sensational headlines are shared far more easily than ordinary news.",
+              "grammar_id": "gp-participle-clause",
+              "explanation_zh": "把分詞構句移到句首 Spreading across …，比較改用 far more … than ordinary news；分詞構句的主詞要和主要子句一致（reports）。"
+            }
+          ],
+          "restructuring_zh": "中文「標題聳動的報導」修飾語在前，英文改成 reports with dramatic headlines；後半「往往幾小時內就傳遍網路」沒有主詞，用分詞構句 , often spreading across the Internet … 補充說明。"
+        },
+        "2": {
+          "references": [
+            "It is very important to develop critical thinking, because many people have been misled by such reports, causing panic among the public.",
+            "It is important to develop critical thinking skills, since many people have already been misled by such reports, causing public panic.",
+            "Developing critical thinking is very important, because many people have been misled by reports like these, leading to panic among the public."
+          ],
+          "target_words": [
+            {
+              "word": "develop",
+              "zh": "培養",
+              "alternatives": [
+                "cultivate",
+                "build",
+                "foster",
+                "train",
+                "strengthen",
+                "learn"
+              ]
+            },
+            {
+              "word": "critical",
+              "zh": "批判性的",
+              "alternatives": [
+                "critically"
+              ]
+            },
+            {
+              "word": "thinking",
+              "zh": "思考",
+              "alternatives": [
+                "think"
+              ]
+            },
+            {
+              "word": "important",
+              "zh": "重要的",
+              "alternatives": [
+                "essential",
+                "crucial",
+                "vital"
+              ]
+            },
+            {
+              "word": "mislead",
+              "zh": "誤導",
+              "alternatives": [
+                "misled",
+                "fool",
+                "deceive"
+              ]
+            },
+            {
+              "word": "panic",
+              "zh": "恐慌"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "NFSUBJ",
+              "grammar_id": "gp-it-adj-to",
+              "label_zh": "虛主詞 It is important to …",
+              "frame": "It is + adj. + to VR …",
+              "zh_trigger": "很重要"
+            },
+            {
+              "code": "PART",
+              "grammar_id": "gp-participle-result",
+              "label_zh": "句尾分詞片語表結果（造成…）",
+              "frame": "S + have been p.p. …, causing／leading to + N",
+              "zh_trigger": "造成大眾恐慌"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "培養批判性思考",
+              "accepted": [
+                "to develop critical thinking",
+                "to develop critical thinking skills",
+                "Developing critical thinking",
+                "to cultivate critical thinking",
+                "to build critical thinking skills",
+                "to develop the ability to think critically",
+                "to learn to think critically",
+                "to foster critical thinking",
+                "to train our critical thinking",
+                "to develop our critical thinking",
+                "Developing critical thinking skills",
+                "Cultivating critical thinking",
+                "to cultivate critical thinking skills",
+                "to develop the habit of thinking critically",
+                "Building critical thinking skills",
+                "to strengthen critical thinking",
+                "to develop our critical thinking skills",
+                "Learning to think critically"
+              ],
+              "targets": [
+                "develop",
+                "critical",
+                "thinking"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "to develop criticize thinking",
+                  "right": "to develop critical thinking",
+                  "explanation_zh": "「批判性的」是形容詞 critical；criticize 是動詞「批評」。"
+                },
+                {
+                  "wrong": "to develop critical think",
+                  "right": "to develop critical thinking",
+                  "explanation_zh": "「思考」在這裡當名詞，用 thinking。"
+                }
+              ]
+            },
+            {
+              "zh": "很重要",
+              "accepted": [
+                "It is very important",
+                "It is important",
+                "is very important",
+                "It is essential",
+                "It is crucial",
+                "It is extremely important",
+                "It is vital",
+                "is important",
+                "is essential",
+                "is crucial",
+                "is extremely important",
+                "It is really important",
+                "is really important",
+                "It is quite important",
+                "It's very important",
+                "It's important",
+                "It's essential",
+                "It's crucial"
+              ],
+              "targets": [
+                "NFSUBJ",
+                "important"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Develop critical thinking is very important",
+                  "right": "Developing critical thinking is very important",
+                  "explanation_zh": "原形動詞片語不能當主詞；用動名詞 Developing …，或虛主詞 It is very important to …。"
+                },
+                {
+                  "wrong": "It is very important that develop critical thinking",
+                  "right": "It is very important to develop critical thinking",
+                  "explanation_zh": "It is + 形容詞後面接不定詞 to VR；接 that 的話後面要有完整的子句。"
+                }
+              ]
+            },
+            {
+              "zh": "因為已有許多人被這類報導誤導",
+              "accepted": [
+                "because many people have been misled by such reports",
+                "because many people have already been misled by such reports",
+                "because many people have been misled by reports like these",
+                "because many people have been misled by these reports",
+                "because such reports have misled many people",
+                "because such reports have already misled many people",
+                "because a lot of people have been misled by such reports",
+                "because many people have been misled by this kind of report",
+                "because many people have been misled by these kinds of reports",
+                "because many people have already been misled by reports like these",
+                "because these reports have already misled many people",
+                "because reports like these have misled many people",
+                "because many people have been fooled by such reports",
+                "because lots of people have been misled by such reports",
+                "because many people have been misled by reports of this kind",
+                "because many people have already been misled by these reports",
+                "because many have been misled by such reports",
+                "because many people have already been misled by this kind of report",
+                "since many people have been misled by such reports",
+                "since many people have already been misled by such reports",
+                "since many people have been misled by reports like these",
+                "since many people have been misled by these reports",
+                "since such reports have misled many people",
+                "since such reports have already misled many people",
+                "since a lot of people have been misled by such reports",
+                "since many people have been misled by this kind of report",
+                "since many people have been misled by these kinds of reports",
+                "since many people have already been misled by reports like these",
+                "since these reports have already misled many people",
+                "since reports like these have misled many people",
+                "since many people have been fooled by such reports",
+                "since lots of people have been misled by such reports",
+                "since many people have been misled by reports of this kind",
+                "since many people have already been misled by these reports",
+                "since many have been misled by such reports",
+                "since many people have already been misled by this kind of report",
+                "as many people have been misled by such reports",
+                "as many people have already been misled by such reports",
+                "as many people have been misled by reports like these",
+                "as many people have been misled by these reports",
+                "as such reports have misled many people",
+                "as such reports have already misled many people",
+                "as a lot of people have been misled by such reports",
+                "as many people have been misled by this kind of report",
+                "as many people have been misled by these kinds of reports",
+                "as many people have already been misled by reports like these",
+                "as these reports have already misled many people",
+                "as reports like these have misled many people",
+                "as many people have been fooled by such reports",
+                "as lots of people have been misled by such reports",
+                "as many people have been misled by reports of this kind",
+                "as many people have already been misled by these reports",
+                "as many have been misled by such reports",
+                "as many people have already been misled by this kind of report"
+              ],
+              "targets": [
+                "mislead"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "because many people have misled by such reports",
+                  "right": "because many people have been misled by such reports",
+                  "explanation_zh": "人是「被」誤導的一方，要用被動 have been misled。"
+                },
+                {
+                  "wrong": "because many people have been mislead by such reports",
+                  "right": "because many people have been misled by such reports",
+                  "explanation_zh": "mislead 的過去分詞是 misled。"
+                }
+              ]
+            },
+            {
+              "zh": "造成大眾恐慌",
+              "accepted": [
+                "causing panic among the public",
+                "causing public panic",
+                "leading to panic among the public",
+                "leading to public panic",
+                "resulting in public panic",
+                "resulting in panic among the public",
+                "triggering public panic",
+                "triggering panic among the public",
+                "causing the public to panic",
+                "throwing the public into panic",
+                "creating public panic",
+                "creating panic among the public",
+                "spreading panic among the public",
+                "sparking public panic",
+                "causing panic in society",
+                "causing widespread panic among the public",
+                "causing panic among the general public",
+                "leading to panic in society",
+                "causing people to panic",
+                "causing mass panic"
+              ],
+              "targets": [
+                "PART",
+                "panic"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "caused panic among the public",
+                  "right": "causing panic among the public",
+                  "explanation_zh": "逗號前已經是完整的子句，逗號後不能直接接過去式 caused；表示前面整件事的結果，用句尾分詞 causing。"
+                },
+                {
+                  "wrong": "causing public panicked",
+                  "right": "causing public panic",
+                  "explanation_zh": "panic 在這裡當名詞（恐慌）；panicked 是動詞的過去式。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "abstract_nominal",
+              "zh": "批判性思考",
+              "literal_error": "It is very important to develop criticize thinking, …",
+              "part": 1,
+              "explanation_zh": "「批判性思考」是抽象名詞 critical thinking（形容詞 critical＋名詞 thinking），不要寫成動詞 criticize；也可以說 the ability to think critically。"
+            },
+            {
+              "type": "subjectless",
+              "zh": "造成大眾恐慌",
+              "literal_error": "…, many people have been misled by such reports, it caused panic among the public.",
+              "part": 4,
+              "explanation_zh": "中文「造成大眾恐慌」前面省略了主詞（指前面整件事），英文不能用逗號接 it caused …；用句尾分詞 , causing panic among the public。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "Had more people thought critically before believing such reports, the public panic could have been avoided.",
+              "grammar_id": "gp-inverted-if",
+              "explanation_zh": "用省略 if 的假設倒裝 Had + S + p.p.（與過去事實相反）從反面說明批判性思考的重要；假設語氣與倒裝只當加分寫法。"
+            }
+          ],
+          "restructuring_zh": "中文「培養批判性思考很重要」主詞是動作，英文用虛主詞 It is very important to develop critical thinking；「已有許多人被…誤導」用完成式被動，最後「造成大眾恐慌」沒有主詞，用句尾分詞 , causing panic among the public。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ac-V-3",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-top-04-regen",
+    "lot": "translation-top-04",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "70c894d7855dda9bf4cb99fc8d645915606e8c30052b45ca877e11bf3bddf573",
+    "spec_id": "translation-top@2026-10-09",
+    "regenerated_from": "ai.tr.115f42"
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T18:14:08Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "warn",
+      "created_at": "2026-10-09T17:50:48Z",
+      "details": {
+        "solver": "A",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Compared with ordinary news, reports with sensational headlines are more likely to be shared, often spreading all over the Internet within a few hours.",
+            "confidence": "high",
+            "explanation_zh": "「相較於一般新聞」用分詞片語 Compared with；「更容易被分享」用 be more likely to be shared（被動不定詞）；「往往幾小時內就傳遍網路」以分詞構句 often spreading all over the Internet 補充結果。"
+          },
+          "2": {
+            "translation": "It is important to develop critical thinking because many people have already been misled by such reports, causing panic among the public.",
+            "confidence": "high",
+            "explanation_zh": "「培養…很重要」用虛主詞 It is important to V；「已有許多人被誤導」用現在完成式被動 have already been misled；「造成大眾恐慌」是被誤導的結果，用分詞構句 causing panic among the public（which has caused public panic 亦可）。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "COMP",
+              "PART"
+            ],
+            "used_target_words": [
+              "compare",
+              "ordinary",
+              "headline",
+              "share",
+              "spread",
+              "Internet"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "NFSUBJ",
+              "PART"
+            ],
+            "used_target_words": [
+              "develop",
+              "critical",
+              "thinking",
+              "important",
+              "mislead",
+              "panic"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "warn",
+            "parts_check": "pass",
+            "issues_zh": [
+              "參考譯文 [2] Developing critical thinking is very important, … 本身正確，但用的是動名詞主詞，沒有用到這一句的標的句型 NFSUBJ（虛主詞 It is important to …）；參考譯文和「標的句型都要用到」的要求不一致，第 2 部分 accepted 也收 is very important 等動名詞主詞寫法。建議把 [2] 改成 It is crucial to develop critical thinking, … 之類的虛主詞寫法。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "compare",
+              "ordinary",
+              "headline",
+              "share",
+              "spread",
+              "Internet"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "COMP": true,
+              "PART": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "develop",
+              "critical",
+              "thinking",
+              "important",
+              "mislead",
+              "panic"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NFSUBJ": true,
+              "PART": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 2 題驗證者對參考譯文有意見（warn）：參考譯文 [2] Developing critical thinking is very important, … 本身正確，但用的是動名詞主詞，沒有用到這一句的標的句型 NFSUBJ（虛主詞 It is important to …）；"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T17:50:51Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Compared with ordinary news, reports with sensational headlines are more likely to be shared, often spreading across the Internet within a few hours.",
+            "confidence": "high",
+            "explanation_zh": "「相較於一般新聞」用 Compared with 分詞片語；「更容易被分享」用 be more likely to be shared；「往往幾小時內就傳遍網路」用分詞構句 often spreading ... within a few hours 補充結果。"
+          },
+          "2": {
+            "translation": "It is important to develop critical thinking because many people have been misled by such reports, causing public panic.",
+            "confidence": "high",
+            "explanation_zh": "「培養批判性思考很重要」用虛主詞 It is important to V；「因為已有許多人被……誤導」用現在完成式被動 have been misled by；「造成大眾恐慌」用現在分詞 causing public panic 表結果。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "COMP",
+              "PART"
+            ],
+            "used_target_words": [
+              "compare",
+              "ordinary",
+              "headline",
+              "share",
+              "spread",
+              "Internet"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "NFSUBJ",
+              "PART"
+            ],
+            "used_target_words": [
+              "develop",
+              "critical",
+              "thinking",
+              "important",
+              "mislead",
+              "panic"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "compare",
+              "ordinary",
+              "headline",
+              "share",
+              "spread",
+              "Internet"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "COMP": true,
+              "PART": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "develop",
+              "critical",
+              "thinking",
+              "important",
+              "mislead",
+              "panic"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NFSUBJ": true,
+              "PART": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

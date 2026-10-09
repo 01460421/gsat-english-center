@@ -1,0 +1,739 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.7c5db4",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "basic",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "有了英文字幕（subtitles）的幫助，要聽懂影集裡的對話並不難。",
+        "options": null,
+        "answer": "With the help of English subtitles, it is not hard to understand the conversations in TV shows.",
+        "accepted_answers": [
+          "With the help of English subtitles, it is not difficult to understand the dialogue in TV shows.",
+          "With help from English subtitles, it is not hard to follow the conversations in TV dramas."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "虛主詞 It"
+          ],
+          "topic": "看影集學英文"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "我會把影集裡好用的句子抄下來、大聲唸出來，再用在生活中。",
+        "options": null,
+        "answer": "I write down useful sentences from the shows, read them aloud, and use them in daily life.",
+        "accepted_answers": [
+          "I copy down useful sentences from the shows, read them out loud, and use them in daily life.",
+          "I write down useful sentences from the dramas, say them aloud, and use them in my life."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "平行結構"
+          ],
+          "topic": "看影集學英文"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "看影集學英文"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「要＋做某事＋並不難（很容易、很重要）」是虛主詞句型的典型中文說法：英文先寫 it is not hard，再把真正的主詞「要做的事」寫成不定詞 to understand … 放在後面，中文的「要」正好對應 to。不定詞片語 to understand the conversations in TV shows 很長，放在句首會頭重腳輕，所以用 It 先佔主詞位置。「有了英文字幕的幫助」用介系詞片語帶出（With the help of English subtitles,）；「聽懂」是 understand（listen 只是「聽」）；「影集裡的對話」寫 the conversations in TV shows 或 the dialogue in TV shows；「並不難」也可以寫 not difficult，但不要寫成名詞 difficulty。",
+          "evidence": [
+            "要聽懂影集裡的對話並不難",
+            "有了英文字幕"
+          ],
+          "strategy_zh": "看到「要＋動作＋（並）不難／很容易／很重要」，先寫 It is (not) + 形容詞，再接 to + 原形動詞；「要」就是 to 的位置。",
+          "hints": [
+            "切成四段：有了英文字幕的幫助／要聽懂／影集裡的對話／並不難",
+            "標的詞彙：help（幫助）、understand（聽懂）、conversation（對話）、show（影集）、hard（難的）",
+            "句型框架：With the help of + 名詞, it is not + 形容詞 + to + 原形動詞 …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "這一句有三個連續動作：抄下來、大聲唸出來、用在生活中，英文用平行結構 A, B, and C 連接，三個動詞要用同樣的形式（write／read／use），最後一個前面加 and（也可以寫 and then）。「抄下來」是 write down（或 copy down），「大聲唸出來」是 read … aloud（或 out loud）。句子泛指很多句，用複數 sentences，後面的代名詞用 them；「影集裡的」用 from the shows 放在名詞後面，shows 也可以換成 series、dramas。",
+          "evidence": [
+            "抄下來、大聲唸出來，再用在生活中"
+          ],
+          "strategy_zh": "列出三個動作時，先確認三個動詞的時態、形式一致，再用逗號隔開，最後一個前面加 and。",
+          "hints": [
+            "切成四段：影集裡好用的句子／抄下來／大聲唸出來／再用在生活中",
+            "標的詞彙：write down（寫下）、useful（有用的）、sentence（句子）、show（影集）、read（唸）、aloud（出聲地）、use（使用）、life（生活）",
+            "句型框架：S + V1 …, V2 …, and V3 …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "With the help of English subtitles, it is not hard to understand the conversations in TV shows.",
+            "With the help of English subtitles, it is not difficult to understand the dialogue in TV shows.",
+            "With help from English subtitles, it is not hard to follow the conversations in TV dramas."
+          ],
+          "target_words": [
+            {
+              "word": "help",
+              "zh": "幫助"
+            },
+            {
+              "word": "understand",
+              "zh": "聽懂",
+              "alternatives": [
+                "follow"
+              ]
+            },
+            {
+              "word": "conversation",
+              "zh": "對話",
+              "alternatives": [
+                "dialogue",
+                "dialog"
+              ]
+            },
+            {
+              "word": "show",
+              "zh": "影集",
+              "alternatives": [
+                "series",
+                "drama"
+              ]
+            },
+            {
+              "word": "hard",
+              "zh": "難的",
+              "alternatives": [
+                "difficult"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "NFSUBJ",
+              "grammar_id": "gp-it-adj-to",
+              "label_zh": "虛主詞 It ＋形容詞＋不定詞（要…並不難）",
+              "frame": "It is not + 形容詞 (+ for + 人) + to + 原形動詞 …",
+              "zh_trigger": "要聽懂影集裡的對話並不難"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "有了英文字幕（subtitles）的幫助",
+              "accepted": [
+                "With the help of English subtitles",
+                "With help from English subtitles",
+                "With the help of subtitles in English",
+                "With English subtitles",
+                "Thanks to the help of English subtitles",
+                "Thanks to English subtitles"
+              ],
+              "targets": [
+                "help"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Have the help of English subtitles",
+                  "right": "With the help of English subtitles",
+                  "explanation_zh": "「有了…的幫助」是「靠著…」的意思，用介系詞片語 with the help of … 帶出；have 是動詞，不能直接放在句首修飾後面的句子。"
+                },
+                {
+                  "wrong": "With the help of English subtitle",
+                  "right": "With the help of English subtitles",
+                  "explanation_zh": "字幕是一段一段的文字，用複數 subtitles。"
+                }
+              ]
+            },
+            {
+              "zh": "要聽懂",
+              "accepted": [
+                "to understand",
+                "to follow",
+                "to fully understand"
+              ],
+              "targets": [
+                "understand"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "to understanding",
+                  "right": "to understand",
+                  "explanation_zh": "不定詞 to 後面接原形動詞 understand。"
+                },
+                {
+                  "wrong": "to listen understand",
+                  "right": "to understand",
+                  "explanation_zh": "「聽懂」就是 understand（聽得懂）；listen 只是「聽」，兩個原形動詞不能直接並排。"
+                }
+              ]
+            },
+            {
+              "zh": "影集裡的對話",
+              "accepted": [
+                "the conversations in TV shows",
+                "the dialogue in TV shows",
+                "the conversations in TV dramas",
+                "the conversations in the shows",
+                "the dialogue in the shows",
+                "the dialogues in TV shows",
+                "the conversations in the TV shows",
+                "the dialogue in the TV shows",
+                "the dialogue in TV dramas",
+                "the conversations in TV series",
+                "the dialogue in TV series",
+                "the conversations in the series",
+                "the dialogue in the series",
+                "what people say in TV shows",
+                "what the characters say in TV shows"
+              ],
+              "targets": [
+                "conversation",
+                "show"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "the conversations in TV show",
+                  "right": "the conversations in TV shows",
+                  "explanation_zh": "泛指影集用複數 TV shows（指某一部才寫 the show）；TV show 是可數名詞，不能單獨不加冠詞。"
+                },
+                {
+                  "wrong": "the talks in TV shows",
+                  "right": "the conversations in TV shows",
+                  "explanation_zh": "talk 當名詞多指演講、會談；劇中人物說的話是 conversations 或 dialogue。"
+                }
+              ]
+            },
+            {
+              "zh": "並不難",
+              "accepted": [
+                "it is not hard",
+                "it is not difficult",
+                "it isn't hard",
+                "it isn't difficult",
+                "it's not hard",
+                "it's not difficult",
+                "it is not hard at all",
+                "it is not difficult at all",
+                "it is easy"
+              ],
+              "targets": [
+                "NFSUBJ",
+                "hard"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "understand the conversations in TV shows is not hard",
+                  "right": "it is not hard to understand the conversations in TV shows",
+                  "explanation_zh": "原形動詞片語不能當主詞；先用虛主詞 It 佔主詞位置，把真正的主詞（to + 原形動詞）放到後面。"
+                },
+                {
+                  "wrong": "it is not difficulty",
+                  "right": "it is not difficult",
+                  "explanation_zh": "be 動詞後面要用形容詞 difficult；difficulty 是名詞。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "verbal_subject",
+              "zh": "要聽懂影集裡的對話",
+              "literal_error": "With the help of English subtitles, understand the conversations in TV shows is not hard.",
+              "part": 4,
+              "explanation_zh": "中文把「要聽懂影集裡的對話」放在「並不難」前面當主詞，照字面把原形動詞 understand 放在主詞位置，主詞不成立；英文要用虛主詞 It 開頭：it is not hard to understand …，這一部分扣分。"
+            }
+          ],
+          "bonus": []
+        },
+        "2": {
+          "references": [
+            "I write down useful sentences from the shows, read them aloud, and use them in daily life.",
+            "I copy down useful sentences from the shows, read them out loud, and use them in daily life.",
+            "I write down useful sentences from the dramas, say them aloud, and use them in my life."
+          ],
+          "target_words": [
+            {
+              "word": "write down",
+              "zh": "寫下、抄下",
+              "alternatives": [
+                "copy down",
+                "note down"
+              ]
+            },
+            {
+              "word": "useful",
+              "zh": "有用的"
+            },
+            {
+              "word": "sentence",
+              "zh": "句子"
+            },
+            {
+              "word": "show",
+              "zh": "影集",
+              "alternatives": [
+                "series",
+                "drama"
+              ]
+            },
+            {
+              "word": "read",
+              "zh": "唸",
+              "alternatives": [
+                "say"
+              ]
+            },
+            {
+              "word": "aloud",
+              "zh": "出聲地",
+              "alternatives": [
+                "out loud"
+              ]
+            },
+            {
+              "word": "use",
+              "zh": "使用"
+            },
+            {
+              "word": "life",
+              "zh": "生活"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PARA",
+              "grammar_id": "gp-parallelism",
+              "label_zh": "平行結構（三個動詞片語：A, B, and C）",
+              "frame": "S + V1 …, V2 …, and V3 …（三個動詞形式一致）",
+              "zh_trigger": "抄下來、大聲唸出來，再用在"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "影集裡好用的句子",
+              "accepted": [
+                "useful sentences from the shows",
+                "useful sentences in the shows",
+                "useful sentences from the TV shows",
+                "useful sentences in the TV shows",
+                "useful sentences from the series",
+                "useful sentences in the series",
+                "useful sentences from the TV series",
+                "useful sentences from the dramas",
+                "useful sentences in the dramas",
+                "useful sentences from the TV dramas",
+                "the useful sentences from the shows",
+                "the useful sentences from the series",
+                "the useful sentences from the dramas",
+                "good sentences from the shows",
+                "useful lines from the shows",
+                "useful lines from the series",
+                "useful lines from the dramas"
+              ],
+              "targets": [
+                "useful",
+                "sentence",
+                "show"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "useful sentence from the shows",
+                  "right": "useful sentences from the shows",
+                  "explanation_zh": "句子是可數名詞，好用的句子不只一句，要用複數 sentences。"
+                },
+                {
+                  "wrong": "the shows useful sentences",
+                  "right": "useful sentences from the shows",
+                  "explanation_zh": "「影集裡的句子」要把名詞 sentences 放前面，再用 from／in the shows 修飾。"
+                }
+              ]
+            },
+            {
+              "zh": "抄下來",
+              "accepted": [
+                "write down",
+                "copy down",
+                "note down",
+                "jot down",
+                "take down"
+              ],
+              "targets": [
+                "write down"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "write up",
+                  "right": "write down",
+                  "explanation_zh": "「抄下來、記下來」是 write down；write up 是「把內容整理寫成報告」。"
+                }
+              ]
+            },
+            {
+              "zh": "大聲唸出來",
+              "accepted": [
+                "read them aloud",
+                "read them out loud",
+                "say them aloud",
+                "say them out loud",
+                "read them out"
+              ],
+              "targets": [
+                "read",
+                "aloud"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "read aloud them",
+                  "right": "read them aloud",
+                  "explanation_zh": "代名詞受詞 them 要放在 read 和 aloud 中間：read them aloud。"
+                },
+                {
+                  "wrong": "read them with a big voice",
+                  "right": "read them aloud",
+                  "explanation_zh": "「大聲唸出來」是 read … aloud（或 out loud），不要照字面寫 big voice。"
+                }
+              ]
+            },
+            {
+              "zh": "再用在生活中",
+              "accepted": [
+                "and use them in daily life",
+                "and then use them in daily life",
+                "and use them in my daily life",
+                "and then use them in my daily life",
+                "and use them in my life",
+                "and then use them in my life",
+                "and use them in everyday life",
+                "and then use them in everyday life",
+                "and use them in real life",
+                "and then use them in real life",
+                "and try to use them in my daily life",
+                "and then try to use them in my daily life"
+              ],
+              "targets": [
+                "PARA",
+                "use",
+                "life"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "and using them in daily life",
+                  "right": "and use them in daily life",
+                  "explanation_zh": "平行結構：前面是 write、read，第三個動作也要用同樣的形式 use，不能換成 using。"
+                },
+                {
+                  "wrong": "and use them in my daily lives",
+                  "right": "and use them in my daily life",
+                  "explanation_zh": "my 指一個人的生活，用單數 life。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "plural_countable",
+              "zh": "句子",
+              "literal_error": "I write down useful sentence from the shows, read it aloud, and use it in daily life.",
+              "part": 1,
+              "explanation_zh": "中文「句子」沒有單複數，照字面寫 sentence 會漏掉複數；好用的句子不只一句，要寫 sentences，這一部分扣分（後面的代名詞跟著寫 them，同一個錯誤不在其他部分重複扣分）。"
+            }
+          ],
+          "bonus": []
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-basic-03-regen",
+    "lot": "translation-basic-03",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "0f872ae524d49a58e60e8879cc8b5121088847f52164650ea431d65aabd8698e",
+    "spec_id": "translation-basic@2026-10-09",
+    "regenerated_from": "ai.tr.a5a855"
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 1,
+    "sentences": 1,
+    "avg_sentence_length": 1.0,
+    "denominator": 1,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 1.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {
+      "off": 1
+    },
+    "offlist_words": [
+      "subtitles"
+    ],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T18:19:33Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T17:54:44Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "With the help of English subtitles, it is not difficult to understand the conversations in TV series.",
+            "confidence": "high",
+            "explanation_zh": "「有了……的幫助」譯成介系詞片語 With the help of 放句首；「要聽懂……並不難」是一般性的說法，用虛主詞 it is not difficult to V，現在式；「聽懂」用 understand；「影集」泛指，用 TV series（單複數同形，不加冠詞表示泛指）；「對話」用 conversations（也可用 dialogue）。"
+          },
+          "2": {
+            "translation": "I copy down useful sentences from the TV series, read them aloud, and then use them in my daily life.",
+            "confidence": "medium",
+            "explanation_zh": "三個動作「抄下來、大聲唸出來、再用在生活中」照順序用對等動詞 copy down／read aloud／use 並列，最後一個前面加 and then 表示「再」；「會」在這裡是描述自己學英文的習慣，所以用簡單現在式（寫成 I will 也說得通，這是信心給 medium 的原因）；「生活中」譯成 in my daily life；第二、三個動作用 them 指前面的句子。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "NFSUBJ"
+            ],
+            "used_target_words": [
+              "help",
+              "understand",
+              "conversation",
+              "show",
+              "hard"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PARA"
+            ],
+            "used_target_words": [
+              "write down",
+              "useful",
+              "sentence",
+              "show",
+              "read",
+              "aloud",
+              "use",
+              "life"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "help",
+              "understand",
+              "conversation",
+              "show",
+              "hard"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NFSUBJ": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "write down",
+              "useful",
+              "sentence",
+              "show",
+              "read",
+              "aloud",
+              "use",
+              "life"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PARA": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "warn",
+      "created_at": "2026-10-09T17:55:48Z",
+      "details": {
+        "solver": "B",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "With the help of English subtitles, it is not difficult to understand the dialogue in TV series.",
+            "confidence": "high",
+            "explanation_zh": "「有了……的幫助」直接用 with the help of；「要聽懂……並不難」用虛主詞 it is not difficult to V 最自然；「影集」譯為 TV series，「對話」用 dialogue。"
+          },
+          "2": {
+            "translation": "I copy down the useful sentences from the series, read them out loud, and then use them in my daily life.",
+            "confidence": "medium",
+            "explanation_zh": "「會」在這裡偏向習慣性的做法，所以用簡單現在式；也可能是意願（will），語意上略有模糊。三個動作用平行結構，read aloud／out loud 皆可，useful 對應「好用的」。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "NFSUBJ"
+            ],
+            "used_target_words": [
+              "help",
+              "understand",
+              "conversation",
+              "show",
+              "hard"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "部分 2「要聽懂」與部分 4「並不難」在英文裡必須合成 it is not hard to understand，被拆成兩個部分後，部分 2 只收 to understand／to follow／to fully understand，部分 4 只收 it is (not) hard／difficult 一類。動名詞主詞的寫法（Understanding the conversations in TV shows is not hard.）是正確又自然的英文，卻沒有被任何 accepted 或 common_errors 涵蓋，學生這樣寫可能被兩個部分同時扣分。建議補上動名詞主詞的處理方式，或在題目說明中明確要求虛主詞；另外部分 4 的 accepted 收了 it is easy，語意已經不等於「並不難」（少了否定語氣），建議移除。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "PARA"
+            ],
+            "used_target_words": [
+              "write down",
+              "useful",
+              "sentence",
+              "show",
+              "read",
+              "aloud",
+              "use",
+              "life"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "help",
+              "understand",
+              "conversation",
+              "show",
+              "hard"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NFSUBJ": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "write down",
+              "useful",
+              "sentence",
+              "show",
+              "read",
+              "aloud",
+              "use",
+              "life"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PARA": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 1 題驗證者對4 部分切分有意見（warn）：部分 2「要聽懂」與部分 4「並不難」在英文裡必須合成 it is not hard to understand，被拆成兩個部分後，部分 2 只收 to understand／to follow／to fully understand，部分"
+        ]
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

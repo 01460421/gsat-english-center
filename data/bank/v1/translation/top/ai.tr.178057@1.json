@@ -1,0 +1,960 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.178057",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "top",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "機器人的工作時間可以是人類的三倍，而且從不抱怨，這正是工廠老闆最看重的。",
+        "options": null,
+        "answer": "Robots can work three times as long as human workers without complaining, which is exactly what factory owners value most.",
+        "accepted_answers": [
+          "Robots can work three times longer than humans and never complain, which is precisely what factory owners care about most.",
+          "The working hours of robots can be three times as long as those of humans, and they never complain, which is just what factory owners value most."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "倍數比較（three times as long as）",
+            "what 名詞子句（…正是…最看重的）"
+          ],
+          "topic": "工作自動化"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "然而，無論生產線多麼先進，由機器人製造的產品仍需要員工檢查，以確保品質。",
+        "options": null,
+        "answer": "However, no matter how advanced assembly lines become, products made by robots still need to be inspected by workers to ensure their quality.",
+        "accepted_answers": [
+          "However, no matter how advanced production lines become, products made by robots still have to be checked by employees to make sure of their quality.",
+          "However, no matter how advanced the production line becomes, goods manufactured by robots still need workers to check them in order to ensure quality."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "無論…（no matter how + adj.）",
+            "分詞片語後位修飾（products made by robots）"
+          ],
+          "topic": "工作自動化"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "工作自動化"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「機器人的工作時間可以是人類的三倍」可以直接說 Robots can work three times as long as human workers（倍數放在 as long as 前面），也可以寫 three times longer than humans。「而且從不抱怨」without complaining／and never complain。「這正是工廠老闆最看重的」指前面整件事，用 , which is exactly what factory owners value most：which 代替前面整句，「…最看重的」後面沒有名詞，用 what 名詞子句。",
+          "evidence": [
+            "人類的三倍",
+            "這正是工廠老闆最看重的"
+          ],
+          "strategy_zh": "「是…的 X 倍」→ X times as + adj./adv. + as …；句尾「這正是…所…的」→ , which is exactly what + S + V。",
+          "hints": [
+            "切成四段：機器人的工作時間可以／是人類的三倍／而且從不抱怨／這正是工廠老闆最看重的",
+            "標的詞彙：robot（機器人）、human（人類）、complain（抱怨）、factory（工廠）、owner（老闆）、value（看重）",
+            "句型框架：S + can work + three times as long as …, which is exactly what + S + V + most"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「然而，無論生產線多麼先進」However, no matter how advanced production lines are／become（how 後面先接形容詞，再接主詞和動詞，不加 but）。「由機器人製造的產品」把中文前面的修飾語改成過去分詞片語放在名詞後面：products made by robots（產品是被製造，用 p.p.）。「仍需要員工檢查」產品是被檢查的，用 still need to be inspected by workers；「以確保品質」用不定詞表目的 to ensure their quality。",
+          "evidence": [
+            "無論生產線多麼先進",
+            "由機器人製造的產品"
+          ],
+          "strategy_zh": "「由…＋動詞＋的＋名詞」→ N + p.p. + by …；「無論多麼＋形容詞」→ no matter how + adj. + S + V。",
+          "hints": [
+            "切成四段：然而，無論生產線多麼先進／由機器人製造的產品／仍需要員工檢查／以確保品質",
+            "標的詞彙：robot（機器人）、product（產品）、check／inspect（檢查）、worker（員工）、ensure（確保）、quality（品質）",
+            "句型框架：However, no matter how + adj. + S + be, N + p.p. + by … + still need to be p.p. + to ensure …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "Robots can work three times as long as human workers without complaining, which is exactly what factory owners value most.",
+            "Robots can work three times longer than humans and never complain, which is precisely what factory owners care about most.",
+            "The working hours of robots can be three times as long as those of humans, and they never complain, which is just what factory owners value most."
+          ],
+          "target_words": [
+            {
+              "word": "robot",
+              "zh": "機器人",
+              "alternatives": [
+                "machine"
+              ]
+            },
+            {
+              "word": "human",
+              "zh": "人類",
+              "alternatives": [
+                "people",
+                "person",
+                "worker"
+              ]
+            },
+            {
+              "word": "complain",
+              "zh": "抱怨",
+              "alternatives": [
+                "complaint"
+              ]
+            },
+            {
+              "word": "factory",
+              "zh": "工廠"
+            },
+            {
+              "word": "owner",
+              "zh": "老闆",
+              "alternatives": [
+                "boss",
+                "employer",
+                "manager"
+              ]
+            },
+            {
+              "word": "value",
+              "zh": "看重",
+              "alternatives": [
+                "care about",
+                "appreciate",
+                "prize",
+                "treasure"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "COMP",
+              "grammar_id": "gp-times",
+              "label_zh": "倍數比較：是人類的三倍",
+              "frame": "S + can work + three times as long as … ; three times + 比較級 + than …",
+              "zh_trigger": "人類的三倍"
+            },
+            {
+              "code": "NCL",
+              "grammar_id": "gp-what-clause",
+              "label_zh": "what 引導的名詞子句（這正是…所看重的）",
+              "frame": "…, which is exactly what + S + V (+ most)",
+              "zh_trigger": "這正是工廠老闆最看重的"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "機器人的工作時間可以",
+              "accepted": [
+                "Robots can work",
+                "Robots are able to work",
+                "Robots can keep working",
+                "Robots can operate",
+                "The working hours of robots can be",
+                "Robots' working hours can be",
+                "A robot can work",
+                "The working time of robots can be",
+                "Robots can work for",
+                "Robots are able to operate",
+                "Robots can stay at work",
+                "A robot's working hours can be"
+              ],
+              "targets": [
+                "robot"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Robot can work",
+                  "right": "Robots can work",
+                  "explanation_zh": "泛指機器人用複數 Robots（或 A robot）。"
+                },
+                {
+                  "wrong": "Robots' work time can be",
+                  "right": "Robots' working hours can be",
+                  "explanation_zh": "「工作時間」指工作的時數，用 working hours；work time 不自然。"
+                }
+              ]
+            },
+            {
+              "zh": "是人類的三倍",
+              "accepted": [
+                "three times as long as human workers",
+                "three times longer than humans",
+                "three times as long as those of humans",
+                "three times as long as humans",
+                "three times longer than human workers",
+                "three times as long as people",
+                "three times longer than people",
+                "three times longer than those of humans",
+                "three times as many hours as humans",
+                "three times as many hours as human workers",
+                "three times as many hours as people",
+                "three times as long as humans can",
+                "three times longer than humans can",
+                "three times as long as human beings",
+                "three times longer than human beings",
+                "three times as long as a human",
+                "three times longer than a human worker",
+                "three times as long as human workers do",
+                "three times longer than human workers do",
+                "three times as long as humans do",
+                "three times longer than humans do",
+                "three times the hours of humans",
+                "three times the working hours of humans",
+                "three times as many hours a day as humans",
+                "three times as many hours a day as human workers",
+                "three times longer than people do",
+                "three times as long as workers",
+                "three times longer than workers",
+                "triple the hours of human workers",
+                "three times those of humans",
+                "three times that of humans",
+                "three times as long as people do",
+                "three times as long as a human worker",
+                "three times as long as a person",
+                "three times longer than a person",
+                "for three times as long as humans",
+                "for three times as long as human workers"
+              ],
+              "targets": [
+                "COMP",
+                "human"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "three times long than humans",
+                  "right": "three times longer than humans",
+                  "explanation_zh": "than 前面要用比較級 longer；或改用 three times as long as …。"
+                },
+                {
+                  "wrong": "as long as three times humans",
+                  "right": "three times as long as humans",
+                  "explanation_zh": "倍數要放在 as … as 前面：three times as long as …。"
+                },
+                {
+                  "wrong": "three times of humans",
+                  "right": "three times as long as humans",
+                  "explanation_zh": "「是人類的三倍」不能寫 three times of humans；要說清楚比什麼：three times as long as humans。"
+                }
+              ]
+            },
+            {
+              "zh": "而且從不抱怨",
+              "accepted": [
+                "without complaining",
+                "and never complain",
+                "and they never complain",
+                "without ever complaining",
+                "and never complain about it",
+                "without any complaints",
+                "with no complaints",
+                "and do not complain",
+                "and never make any complaints",
+                "and never complain at all",
+                "and they never complain about it",
+                "and they do not complain",
+                "and never have any complaints",
+                "and they never make any complaints",
+                "and never complains",
+                "and it never complains",
+                "without a single complaint"
+              ],
+              "targets": [
+                "complain"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "and never complaining",
+                  "right": "and never complain",
+                  "explanation_zh": "「從不抱怨」和前面的 can work 並列，要用原形 complain（主詞 robots 複數），不用 V-ing。"
+                },
+                {
+                  "wrong": "without complain",
+                  "right": "without complaining",
+                  "explanation_zh": "介系詞 without 後面接動名詞 complaining。"
+                }
+              ]
+            },
+            {
+              "zh": "這正是工廠老闆最看重的",
+              "accepted": [
+                "which is exactly what factory owners value most",
+                "which is exactly what factory owners value the most",
+                "which is exactly what factory owners care about most",
+                "which is exactly what factory owners care about the most",
+                "which is exactly what factory owners care most about",
+                "which is exactly what factory owners appreciate most",
+                "which is exactly what factory owners value above all",
+                "which is exactly what factory owners prize most",
+                "which is exactly what factory bosses value most",
+                "which is exactly what factory owners most value",
+                "which is precisely what factory owners value most",
+                "which is precisely what factory owners value the most",
+                "which is precisely what factory owners care about most",
+                "which is precisely what factory owners care about the most",
+                "which is precisely what factory owners care most about",
+                "which is precisely what factory owners appreciate most",
+                "which is precisely what factory owners value above all",
+                "which is precisely what factory owners prize most",
+                "which is precisely what factory bosses value most",
+                "which is precisely what factory owners most value",
+                "which is just what factory owners value most",
+                "which is just what factory owners value the most",
+                "which is just what factory owners care about most",
+                "which is just what factory owners care about the most",
+                "which is just what factory owners care most about",
+                "which is just what factory owners appreciate most",
+                "which is just what factory owners value above all",
+                "which is just what factory owners prize most",
+                "which is just what factory bosses value most",
+                "which is just what factory owners most value",
+                "and this is exactly what factory owners value most",
+                "and this is exactly what factory owners value the most",
+                "and this is exactly what factory owners care about most",
+                "and this is exactly what factory owners care about the most",
+                "and this is exactly what factory owners care most about",
+                "and this is exactly what factory owners appreciate most",
+                "and this is exactly what factory owners value above all",
+                "and this is exactly what factory owners prize most",
+                "and this is exactly what factory bosses value most",
+                "and this is exactly what factory owners most value",
+                "exactly what factory owners value most",
+                "exactly what factory owners value the most",
+                "exactly what factory owners care about most",
+                "exactly what factory owners care about the most",
+                "exactly what factory owners care most about",
+                "exactly what factory owners appreciate most",
+                "exactly what factory owners value above all",
+                "exactly what factory owners prize most",
+                "exactly what factory bosses value most",
+                "exactly what factory owners most value",
+                "precisely what factory owners value most",
+                "precisely what factory owners value the most",
+                "precisely what factory owners care about most",
+                "precisely what factory owners care about the most",
+                "precisely what factory owners care most about",
+                "precisely what factory owners appreciate most",
+                "precisely what factory owners value above all",
+                "precisely what factory owners prize most",
+                "precisely what factory bosses value most",
+                "precisely what factory owners most value"
+              ],
+              "targets": [
+                "NCL",
+                "factory",
+                "owner",
+                "value"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "which is exactly factory owners value most",
+                  "right": "which is exactly what factory owners value most",
+                  "explanation_zh": "「…最看重的」後面沒有名詞，要用 what 名詞子句；少了 what，is 後面就沒有補語。"
+                },
+                {
+                  "wrong": "which is exactly what do factory owners value most",
+                  "right": "which is exactly what factory owners value most",
+                  "explanation_zh": "what 名詞子句用直述句語序（主詞＋動詞），不加 do。"
+                },
+                {
+                  "wrong": "it is exactly what factory owners value most",
+                  "right": "which is exactly what factory owners value most",
+                  "explanation_zh": "前面已經是完整的句子，不能用逗號再接 it is …；用 , which is exactly what … 指前面整件事。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "abstract_nominal",
+              "zh": "工作時間",
+              "literal_error": "Robots' work time can be three times of humans, …",
+              "part": 1,
+              "explanation_zh": "「工作時間」是複合概念，指工作的時數（working hours），或直接用動詞 Robots can work three times as long as …；照字面寫 work time 不自然。"
+            },
+            {
+              "type": "prenominal_modifier",
+              "zh": "這正是工廠老闆最看重的",
+              "literal_error": "…, this is exactly factory owners value most.",
+              "part": 4,
+              "explanation_zh": "中文「工廠老闆最看重的」是修飾語、後面省略了名詞；英文沒有先行詞要用 what 名詞子句，而且逗號後不能直接接 this is …，要寫 , which is exactly what factory owners value most。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "Not only can robots work three times as long as humans, but they never complain either, which is exactly what factory owners value most.",
+              "grammar_id": "gp-not-only-inversion",
+              "explanation_zh": "Not only 放句首要倒裝（can + 主詞 + 動詞），把「工作時間長」和「從不抱怨」兩個優點並列，語氣更強；倒裝只當加分寫法。"
+            }
+          ],
+          "restructuring_zh": "中文最後用「這正是…最看重的」總結前面整件事，英文用非限定的 , which is exactly what … 指前面整句，what 子句當 is 的補語；不要用逗號直接接 this is …（會變成逗號連接兩個句子）。"
+        },
+        "2": {
+          "references": [
+            "However, no matter how advanced assembly lines become, products made by robots still need to be inspected by workers to ensure their quality.",
+            "However, no matter how advanced production lines become, products made by robots still have to be checked by employees to make sure of their quality.",
+            "However, no matter how advanced the production line becomes, goods manufactured by robots still need workers to check them in order to ensure quality."
+          ],
+          "target_words": [
+            {
+              "word": "robot",
+              "zh": "機器人",
+              "alternatives": [
+                "machine"
+              ]
+            },
+            {
+              "word": "product",
+              "zh": "產品",
+              "alternatives": [
+                "goods",
+                "item"
+              ]
+            },
+            {
+              "word": "check",
+              "zh": "檢查",
+              "alternatives": [
+                "inspect",
+                "examine",
+                "test",
+                "inspection"
+              ]
+            },
+            {
+              "word": "worker",
+              "zh": "員工",
+              "alternatives": [
+                "employee",
+                "staff",
+                "human",
+                "people",
+                "person"
+              ]
+            },
+            {
+              "word": "ensure",
+              "zh": "確保",
+              "alternatives": [
+                "make sure",
+                "guarantee",
+                "maintain"
+              ]
+            },
+            {
+              "word": "quality",
+              "zh": "品質"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "ADVCL",
+              "grammar_id": "gp-no-matter",
+              "label_zh": "讓步：無論多麼先進（no matter how + adj.）",
+              "frame": "No matter how + adj. + S + be／become, S + V …",
+              "zh_trigger": "無論生產線多麼先進"
+            },
+            {
+              "code": "PART",
+              "grammar_id": "gp-participle-modifier",
+              "label_zh": "過去分詞片語後位修飾名詞（由…製造的產品）",
+              "frame": "N + p.p. + by …（products made by robots）",
+              "zh_trigger": "由機器人製造的產品"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "然而，無論生產線多麼先進",
+              "accepted": [
+                "However, no matter how advanced assembly lines become",
+                "However, no matter how advanced production lines are",
+                "However, no matter how advanced the production line is",
+                "However, no matter how advanced production lines become",
+                "However, no matter how advanced the assembly line is",
+                "However, no matter how advanced assembly lines are",
+                "However, no matter how advanced production lines may be",
+                "However, no matter how advanced the production line becomes",
+                "However, no matter how advanced factory production lines are",
+                "However, no matter how advanced production lines get",
+                "However, no matter how advanced the production lines are",
+                "However advanced production lines are",
+                "However advanced production lines become",
+                "However advanced assembly lines become"
+              ],
+              "targets": [
+                "ADVCL"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "However, no matter how production lines are advanced",
+                  "right": "However, no matter how advanced production lines are",
+                  "explanation_zh": "no matter how 後面要先接形容詞 advanced，再接主詞與動詞。"
+                },
+                {
+                  "wrong": "However, no matter how advanced production lines are, but",
+                  "right": "However, no matter how advanced production lines are,",
+                  "explanation_zh": "no matter how 子句已經表示讓步，主要子句前面不能再加 but。"
+                },
+                {
+                  "wrong": "However, no matter how advanced the producing lines are",
+                  "right": "However, no matter how advanced the production lines are",
+                  "explanation_zh": "「生產線」是固定說法 production line（或 assembly line），不要寫成 producing line。"
+                }
+              ]
+            },
+            {
+              "zh": "由機器人製造的產品",
+              "accepted": [
+                "products made by robots",
+                "goods manufactured by robots",
+                "products manufactured by robots",
+                "products produced by robots",
+                "goods made by robots",
+                "items made by robots",
+                "goods produced by robots",
+                "the products made by robots",
+                "products built by robots",
+                "items produced by robots",
+                "products made by machines",
+                "the goods made by robots",
+                "the products manufactured by robots",
+                "items manufactured by robots",
+                "the items made by robots"
+              ],
+              "targets": [
+                "PART",
+                "robot",
+                "product"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "by robots made products",
+                  "right": "products made by robots",
+                  "explanation_zh": "中文修飾語「由機器人製造的」放在名詞前，英文要改成過去分詞片語放在名詞後面：products made by robots。"
+                },
+                {
+                  "wrong": "products making by robots",
+                  "right": "products made by robots",
+                  "explanation_zh": "產品是「被」製造的，用過去分詞 made，不用現在分詞 making。"
+                }
+              ]
+            },
+            {
+              "zh": "仍需要員工檢查",
+              "accepted": [
+                "still need to be inspected by workers",
+                "still have to be checked by employees",
+                "still need workers to check them",
+                "still need to be checked by workers",
+                "still need to be inspected by employees",
+                "still have to be inspected by workers",
+                "still need to be checked by staff",
+                "still need employees to check them",
+                "still need workers to inspect them",
+                "still require workers to check them",
+                "still need to be checked by human workers",
+                "still need human workers to check them",
+                "still have to be checked by workers",
+                "still need to be examined by workers",
+                "still need staff to inspect them",
+                "still need to be checked by people",
+                "still need people to check them",
+                "still need to be checked by humans",
+                "still need humans to check them",
+                "still need to be inspected by human workers",
+                "still require inspection by workers",
+                "still have to be inspected by employees",
+                "still need employees to inspect them",
+                "still require workers to inspect them",
+                "still require human inspection",
+                "still need human inspection",
+                "still need to be inspected by humans",
+                "still need to be checked by employees",
+                "still require checking by workers",
+                "still need to be checked by staff members"
+              ],
+              "targets": [
+                "check",
+                "worker"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "still need to inspect by workers",
+                  "right": "still need to be inspected by workers",
+                  "explanation_zh": "產品是「被」檢查，要用被動 need to be inspected；或改成 need workers to inspect them。"
+                },
+                {
+                  "wrong": "still needs to be checked by workers",
+                  "right": "still need to be checked by workers",
+                  "explanation_zh": "主詞 products 是複數，動詞用 need。"
+                }
+              ]
+            },
+            {
+              "zh": "以確保品質",
+              "accepted": [
+                "to ensure their quality",
+                "to make sure of their quality",
+                "in order to ensure quality",
+                "to ensure quality",
+                "in order to ensure their quality",
+                "so as to ensure their quality",
+                "to make sure their quality is good",
+                "to guarantee their quality",
+                "to ensure the quality",
+                "to make sure the quality is good",
+                "to maintain their quality",
+                "so that their quality is guaranteed",
+                "to make sure they are of good quality",
+                "to ensure good quality",
+                "to ensure that their quality is good",
+                "to ensure the products' quality",
+                "to make sure of the quality",
+                "in order to make sure of their quality",
+                "to guarantee quality",
+                "to ensure that they are of good quality",
+                "to make sure that they are of good quality",
+                "to ensure that the quality is good",
+                "to make sure the products are of good quality",
+                "to ensure product quality",
+                "to make sure that their quality is good",
+                "so as to ensure quality"
+              ],
+              "targets": [
+                "ensure",
+                "quality"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "to ensure their qualities",
+                  "right": "to ensure their quality",
+                  "explanation_zh": "「品質」在這裡是不可數名詞 quality，不加 s。"
+                },
+                {
+                  "wrong": "to sure their quality",
+                  "right": "to ensure their quality",
+                  "explanation_zh": "sure 是形容詞，不能當動詞；用 ensure 或 make sure。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "abstract_nominal",
+              "zh": "生產線",
+              "literal_error": "However, no matter how advanced the producing lines are, …",
+              "part": 1,
+              "explanation_zh": "「生產線」是固定的複合名詞 production line（或 assembly line），production 是名詞當修飾語；照字面拼成 producing line 不對。"
+            },
+            {
+              "type": "prenominal_modifier",
+              "zh": "由機器人製造的產品",
+              "literal_error": "…, by robots made products still need to be checked by workers …",
+              "part": 2,
+              "explanation_zh": "中文的修飾語「由機器人製造的」放在名詞前，英文要改成過去分詞片語放在名詞後面：products made by robots（產品是被製造，用 p.p.）。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "However advanced production lines become, it is still human workers who must inspect products made by robots to ensure their quality.",
+              "grammar_id": "gp-cleft",
+              "explanation_zh": "However＋形容詞＝no matter how；再用 It is … who … 強調「仍是員工」來檢查，凸顯人力無法完全被取代。強調句只當加分寫法。"
+            }
+          ],
+          "restructuring_zh": "中文「由機器人製造的產品」修飾語在前，英文改成過去分詞片語後位修飾 products made by robots；「仍需要員工檢查」可以用被動 still need to be inspected by workers，也可以用主動 still need workers to inspect them。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ac-V-3",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-top-04-regen",
+    "lot": "translation-top-04",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "70c894d7855dda9bf4cb99fc8d645915606e8c30052b45ca877e11bf3bddf573",
+    "spec_id": "translation-top@2026-10-09",
+    "regenerated_from": "ai.tr.5f5137"
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T18:14:04Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T17:50:48Z",
+      "details": {
+        "solver": "A",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Robots can work three times as long as humans and never complain, which is exactly what factory owners value most.",
+            "confidence": "high",
+            "explanation_zh": "「工作時間是人類的三倍」用倍數句 three times as long as humans；「這正是…最看重的」以非限定 which 指整個前句，接 what 名詞子句 what factory owners value most。"
+          },
+          "2": {
+            "translation": "However, no matter how advanced the production line is, products made by robots still need to be checked by workers to ensure their quality.",
+            "confidence": "high",
+            "explanation_zh": "「無論多麼先進」用 no matter how + 形容詞；「由機器人製造的產品」用過去分詞後位修飾 made by robots；「需要員工檢查」產品是被檢查者，用被動不定詞 need to be checked；「以確保」用表目的的 to ensure。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "COMP",
+              "NCL"
+            ],
+            "used_target_words": [
+              "robot",
+              "human",
+              "complain",
+              "factory",
+              "owner",
+              "value"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "ADVCL",
+              "PART"
+            ],
+            "used_target_words": [
+              "robot",
+              "product",
+              "check",
+              "worker",
+              "ensure",
+              "quality"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "robot",
+              "human",
+              "complain",
+              "factory",
+              "owner",
+              "value"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "COMP": true,
+              "NCL": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "robot",
+              "product",
+              "check",
+              "worker",
+              "ensure",
+              "quality"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "ADVCL": true,
+              "PART": false
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T17:50:51Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Robots can work three times as long as humans and never complain, which is exactly what factory owners value most.",
+            "confidence": "high",
+            "explanation_zh": "「工作時間可以是人類的三倍」用倍數比較 three times as long as；「這正是……」前面是整段敘述，用非限定關係子句 which is exactly what ... 承接；「最看重」用 value most。"
+          },
+          "2": {
+            "translation": "However, no matter how advanced the production line is, products made by robots still need to be checked by employees to ensure quality.",
+            "confidence": "high",
+            "explanation_zh": "「無論……多麼先進」用 no matter how advanced ... is；「由機器人製造的產品」用過去分詞片語 made by robots 修飾；「仍需要員工檢查」用 need to be checked by 被動；「以確保品質」用不定詞表目的。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "COMP",
+              "NCL"
+            ],
+            "used_target_words": [
+              "robot",
+              "human",
+              "complain",
+              "factory",
+              "owner",
+              "value"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "ADVCL",
+              "PART"
+            ],
+            "used_target_words": [
+              "robot",
+              "product",
+              "check",
+              "worker",
+              "ensure",
+              "quality"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "robot",
+              "human",
+              "complain",
+              "factory",
+              "owner",
+              "value"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "COMP": true,
+              "NCL": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "robot",
+              "product",
+              "check",
+              "worker",
+              "ensure",
+              "quality"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "ADVCL": true,
+              "PART": false
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

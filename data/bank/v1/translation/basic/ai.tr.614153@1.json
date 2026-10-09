@@ -1,0 +1,697 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.614153",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "basic",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "這張全家福是在我爺爺的老房子前面拍的。",
+        "options": null,
+        "answer": "This family photo was taken in front of my grandfather's old house.",
+        "accepted_answers": [
+          "This photo of our whole family was taken in front of my grandpa's old house.",
+          "This family picture was taken in front of my grandfather's old home."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "被動語態"
+          ],
+          "topic": "整理家族老照片"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "如果奶奶有時間，她會告訴我每張照片背後的故事。",
+        "options": null,
+        "answer": "If my grandmother has time, she will tell me the story behind each photo.",
+        "accepted_answers": [
+          "If Grandma is free, she'll tell me the story behind every photo.",
+          "If my grandmother has some free time, she will tell me the stories behind each picture."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "條件子句"
+          ],
+          "topic": "整理家族老照片"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "整理家族老照片"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「這張全家福是…拍的」主詞是照片，照片是「被拍」的，所以用被動語態 was taken（過去發生的事用 was）；不要寫成主動的 took，也不要寫 was took（take 的過去分詞是 taken）。「全家福」可寫 family photo 或 a photo of our whole family。「我爺爺的老房子」用所有格 my grandfather's old house；「在…前面」是 in front of（不加 the）。",
+          "evidence": [
+            "這張全家福",
+            "是在我爺爺的老房子前面拍的"
+          ],
+          "strategy_zh": "「東西＋是…V 的」而且沒有說是誰做的，英文用被動 be + p.p.。",
+          "hints": [
+            "切成四段：這張全家福／我爺爺的老房子／前面／拍的（是…拍的）",
+            "標的詞彙：family（家庭）、photo（照片）、old（老的）、house（房子）、front（前面）、take（拍）",
+            "句型框架：S（物）+ was + p.p. + in front of …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「如果…就會…」是真實條件句：If 子句用現在式（If my grandmother has time），主要子句用 will + 原形（she will tell me）；If 子句裡不用 will。主詞 grandmother 是第三人稱單數，動詞用 has。「告訴我」tell me（say 後面不能直接接人）。「每張照片背後的故事」the story behind each photo，each／every 後面接單數名詞。",
+          "evidence": [
+            "如果奶奶有時間",
+            "每張照片背後的故事"
+          ],
+          "strategy_zh": "「如果…會…」：If 子句現在式，主要子句 will + 原形。",
+          "hints": [
+            "切成四段：如果奶奶有時間／她會告訴我／每張照片背後的／故事",
+            "標的詞彙：grandmother（奶奶）、time（時間）、tell（告訴）、photo（照片）、story（故事）",
+            "句型框架：If + S + V(現在式), S + will + VR …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "This family photo was taken in front of my grandfather's old house.",
+            "This photo of our whole family was taken in front of my grandpa's old house.",
+            "This family picture was taken in front of my grandfather's old home."
+          ],
+          "target_words": [
+            {
+              "word": "family",
+              "zh": "家庭（全家）"
+            },
+            {
+              "word": "photo",
+              "zh": "照片",
+              "alternatives": [
+                "picture",
+                "photograph",
+                "portrait"
+              ]
+            },
+            {
+              "word": "old",
+              "zh": "老的"
+            },
+            {
+              "word": "house",
+              "zh": "房子",
+              "alternatives": [
+                "home",
+                "place"
+              ]
+            },
+            {
+              "word": "front",
+              "zh": "前面"
+            },
+            {
+              "word": "take",
+              "zh": "拍（照）",
+              "alternatives": [
+                "shoot",
+                "photograph",
+                "snap"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PASS",
+              "grammar_id": "gp-passive",
+              "label_zh": "被動語態（是…拍的：was + p.p.）",
+              "frame": "S（物）+ was + p.p. + in front of …",
+              "zh_trigger": "拍的"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "這張全家福",
+              "accepted": [
+                "This family photo",
+                "This family picture",
+                "This family photograph",
+                "This family portrait",
+                "This photo of our family",
+                "This photo of my family",
+                "This picture of our family",
+                "This photo of our whole family",
+                "This photo of my whole family",
+                "This picture of our whole family",
+                "This photo of the whole family",
+                "This whole family photo",
+                "This family group photo",
+                "The family photo",
+                "The family picture",
+                "The photo of our whole family"
+              ],
+              "targets": [
+                "family",
+                "photo"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "This all family photo",
+                  "right": "This family photo",
+                  "explanation_zh": "「全家福」是 family photo（或 a photo of our whole family），不是 all family。"
+                }
+              ]
+            },
+            {
+              "zh": "我爺爺的老房子",
+              "accepted": [
+                "my grandfather's old house",
+                "my grandfather's old home",
+                "my grandpa's old house",
+                "my grandpa's old home",
+                "my granddad's old house",
+                "the old house of my grandfather",
+                "my grandfather's old place"
+              ],
+              "targets": [
+                "old",
+                "house"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "my grandfather old house",
+                  "right": "my grandfather's old house",
+                  "explanation_zh": "「爺爺的」要用所有格 grandfather's。"
+                }
+              ]
+            },
+            {
+              "zh": "前面",
+              "accepted": [
+                "in front of",
+                "right in front of",
+                "outside"
+              ],
+              "targets": [
+                "front"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "in the front of",
+                  "right": "in front of",
+                  "explanation_zh": "在某物外面的前方是 in front of；in the front of 是「在…內部的前段」。"
+                }
+              ]
+            },
+            {
+              "zh": "拍的",
+              "accepted": [
+                "was taken",
+                "was shot",
+                "was photographed",
+                "was snapped",
+                "had been taken"
+              ],
+              "targets": [
+                "PASS",
+                "take"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "took",
+                  "right": "was taken",
+                  "explanation_zh": "照片是被拍的，要用被動 was taken。"
+                },
+                {
+                  "wrong": "was took",
+                  "right": "was taken",
+                  "explanation_zh": "be 動詞後面接過去分詞 taken，不是過去式 took。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "word_form",
+              "zh": "拍的",
+              "literal_error": "This family photo took in front of my grandfather's old house.",
+              "part": 4,
+              "explanation_zh": "中文「是…拍的」沒有「被」字，照字面寫成主動 took，照片變成自己在拍照；要用被動 was taken，這一部分扣分。"
+            }
+          ],
+          "bonus": [],
+          "notes_zh": "「全家福」寫 family photo／picture 或 a photo of our (whole) family 都給分；「爺爺」grandfather、grandpa 都可以，「老房子」old house、old home 都可以；「拍的」寫 was taken（或 was shot）。"
+        },
+        "2": {
+          "references": [
+            "If my grandmother has time, she will tell me the story behind each photo.",
+            "If Grandma is free, she'll tell me the story behind every photo.",
+            "If my grandmother has some free time, she will tell me the stories behind each picture."
+          ],
+          "target_words": [
+            {
+              "word": "grandmother",
+              "zh": "奶奶",
+              "alternatives": [
+                "grandma",
+                "granny"
+              ]
+            },
+            {
+              "word": "time",
+              "zh": "時間（有時間）",
+              "alternatives": [
+                "free"
+              ]
+            },
+            {
+              "word": "tell",
+              "zh": "告訴"
+            },
+            {
+              "word": "photo",
+              "zh": "照片",
+              "alternatives": [
+                "picture",
+                "photograph"
+              ]
+            },
+            {
+              "word": "story",
+              "zh": "故事"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "ADVCL",
+              "grammar_id": "gp-condition-real",
+              "label_zh": "條件子句（如果…就會…：If + 現在式, S + will + VR）",
+              "frame": "If + S + V(現在式), S + will + VR …",
+              "zh_trigger": "如果"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "如果奶奶有時間",
+              "accepted": [
+                "If my grandmother has time",
+                "If my grandmother has free time",
+                "If my grandmother has some time",
+                "If my grandmother has some free time",
+                "If my grandmother has the time",
+                "If my grandmother is free",
+                "If my grandmother isn't busy",
+                "If Grandma has time",
+                "If Grandma has free time",
+                "If Grandma has some time",
+                "If Grandma has some free time",
+                "If Grandma has the time",
+                "If Grandma is free",
+                "If Grandma isn't busy",
+                "If my grandma has time",
+                "If my grandma has free time",
+                "If my grandma has some time",
+                "If my grandma has some free time",
+                "If my grandma has the time",
+                "If my grandma is free",
+                "If my grandma isn't busy",
+                "If Grandmother has time",
+                "If my granny has time",
+                "If my grandmother has spare time",
+                "If my grandmother is available"
+              ],
+              "targets": [
+                "ADVCL",
+                "grandmother",
+                "time"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "If my grandmother will have time",
+                  "right": "If my grandmother has time",
+                  "explanation_zh": "條件子句說未來也用現在式，不用 will。"
+                },
+                {
+                  "wrong": "If my grandmother have time",
+                  "right": "If my grandmother has time",
+                  "explanation_zh": "主詞 grandmother 是第三人稱單數，用 has。"
+                }
+              ]
+            },
+            {
+              "zh": "她會告訴我",
+              "accepted": [
+                "she will tell me",
+                "she'll tell me",
+                "she can tell me",
+                "she tells me",
+                "she is going to tell me",
+                "she's going to tell me",
+                "she will tell me about",
+                "she'll tell me about",
+                "she will tell us",
+                "she'll tell us"
+              ],
+              "targets": [
+                "tell"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "she will say me",
+                  "right": "she will tell me",
+                  "explanation_zh": "say 後面不能直接接人；「告訴某人某事」是 tell sb sth。"
+                }
+              ]
+            },
+            {
+              "zh": "每張照片背後的",
+              "accepted": [
+                "behind each photo",
+                "behind each picture",
+                "behind every photo",
+                "behind every picture",
+                "behind each of the photos",
+                "behind each of these photos",
+                "behind all the photos",
+                "behind the photos",
+                "of each photo",
+                "of every photo",
+                "of each picture"
+              ],
+              "targets": [
+                "photo"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "behind each photos",
+                  "right": "behind each photo",
+                  "explanation_zh": "each／every 後面接單數名詞。"
+                }
+              ]
+            },
+            {
+              "zh": "故事",
+              "accepted": [
+                "the story",
+                "the stories",
+                "a story",
+                "stories"
+              ],
+              "targets": [
+                "story"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "the history behind each photo",
+                  "right": "the story behind each photo",
+                  "explanation_zh": "history 是「歷史」；照片背後的「故事」是 story。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "tense_trigger",
+              "zh": "如果",
+              "literal_error": "If my grandmother will have time, she will tell me the story behind each photo.",
+              "part": 1,
+              "explanation_zh": "中文「如果…會…」兩邊都有未來的意思，照字面在 If 子句也寫 will；英文條件子句要用現在式 has，這一部分扣分。"
+            }
+          ],
+          "bonus": [],
+          "notes_zh": "「奶奶」可寫 my grandmother、Grandma 或 my grandma；「有時間」has time、has (some) free time、is free 都給分；「她會告訴我」will tell me、'll tell me、can tell me 都可以；「故事」單數 the story behind each photo 或複數 the stories behind the photos 都可以。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-basic-02-regen",
+    "lot": "translation-basic-02",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "2c5ef77e58a3846b481c3cd32f2468c2e9f8b4421d9d9d23848ce57a9f827d9b",
+    "spec_id": "translation-basic@2026-10-09",
+    "regenerated_from": "ai.tr.62370a"
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T18:19:57Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T18:00:28Z",
+      "details": {
+        "solver": "A",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "This family photo was taken in front of my grandfather's old house.",
+            "confidence": "high",
+            "explanation_zh": "照片是被拍的，中文「是……拍的」對應過去式被動 was taken；「全家福」譯 family photo（family picture 也可）；「在……前面」用 in front of；所有格 my grandfather's old house。"
+          },
+          "2": {
+            "translation": "If my grandmother has time, she will tell me the story behind each photo.",
+            "confidence": "high",
+            "explanation_zh": "「如果……會……」是對未來可能情況的條件句（第一類），if 子句用現在式 has、主要子句用 will tell；「每張照片背後的故事」用 the story behind each photo（each 接單數名詞；寫 the stories behind every photo 也說得通）；tell 接雙受詞 tell me the story。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PASS"
+            ],
+            "used_target_words": [
+              "family",
+              "photo",
+              "old",
+              "house",
+              "front",
+              "take"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "ADVCL"
+            ],
+            "used_target_words": [
+              "grandmother",
+              "time",
+              "tell",
+              "photo",
+              "story"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "family",
+              "photo",
+              "old",
+              "house",
+              "front",
+              "take"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PASS": true
+            },
+            "program_match": true
+          },
+          "2": {
+            "target_words_found": [
+              "grandmother",
+              "time",
+              "tell",
+              "photo",
+              "story"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "ADVCL": true
+            },
+            "program_match": true
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T18:00:31Z",
+      "details": {
+        "solver": "B",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "This family photo was taken in front of my grandfather's old house.",
+            "confidence": "high",
+            "explanation_zh": "照片是「被拍」，用過去被動 was taken；「全家福」用 family photo；「在……前面」用 in front of。"
+          },
+          "2": {
+            "translation": "If Grandma has time, she will tell me the story behind each photo.",
+            "confidence": "medium",
+            "explanation_zh": "「如果奶奶有時間」是對未來可能情況的條件句，用 If + 現在簡單式，主要子句用 will；「每張照片背後的故事」用 the story behind each photo。若把中文視為與現在事實相反，也可用 had / would，所以信心只給 medium。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PASS"
+            ],
+            "used_target_words": [
+              "family",
+              "photo",
+              "old",
+              "house",
+              "front",
+              "take"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "ADVCL"
+            ],
+            "used_target_words": [
+              "grandmother",
+              "time",
+              "tell",
+              "photo",
+              "story"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "family",
+              "photo",
+              "old",
+              "house",
+              "front",
+              "take"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PASS": true
+            },
+            "program_match": true
+          },
+          "2": {
+            "target_words_found": [
+              "grandmother",
+              "time",
+              "tell",
+              "photo",
+              "story"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "ADVCL": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

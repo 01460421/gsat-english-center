@@ -1,0 +1,885 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.395501",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "top",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "垂直農場（vertical farms）在城市大樓裡種植蔬菜，但這種方式是否比傳統農業更環保仍有爭議。",
+        "options": null,
+        "answer": "Vertical farms grow vegetables inside urban buildings, but whether this method is more environmentally friendly than traditional agriculture remains controversial.",
+        "accepted_answers": [
+          "Vertical farms grow vegetables in city buildings, but people still disagree about whether this way of farming is better for the environment than traditional agriculture.",
+          "Vertical farms grow vegetables inside buildings in cities, but it is still debated whether this approach is greener than traditional farming.",
+          "Vertical farms grow vegetables inside city buildings, but whether this method is greener than traditional farming is still under debate."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "間接問句（whether 名詞子句：這種方式是否…）",
+            "比較級（比傳統農業更環保）"
+          ],
+          "topic": "垂直農場"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "這些農場離消費者愈近，蔬菜就能愈快送達，讓城市居民更容易吃到新鮮的蔬菜。",
+        "options": null,
+        "answer": "The closer these farms are to consumers, the faster vegetables can be delivered, making it easier for city residents to eat fresh vegetables.",
+        "accepted_answers": [
+          "The nearer these farms are to consumers, the more quickly vegetables can reach them, making it easier for people in cities to enjoy fresh vegetables.",
+          "The closer these farms are to consumers, the faster the vegetables arrive, allowing city residents to get fresh vegetables more easily."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "句尾分詞片語表結果（…，讓城市居民更容易…）",
+            "愈…愈…（離消費者愈近，蔬菜就能愈快送達）"
+          ],
+          "topic": "垂直農場"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "垂直農場"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "前半句是簡單的主動句 Vertical farms grow vegetables inside urban buildings（「城市大樓」是 urban／city buildings，複數）。後半句「這種方式是否比傳統農業更環保」是名詞子句，用 whether 引導、直述句語序，可以直接當主詞：whether this method is … remains controversial；也可以寫成 it is still debated whether …。「更環保」的「環保」是形容詞概念，寫 more environmentally friendly、greener 或 better for the environment，再接 than traditional agriculture／farming。「仍有爭議」可寫 remains controversial、is still under debate、is still being debated 或 people still disagree about …。",
+          "evidence": [
+            "垂直農場（vertical farms）在城市大樓裡種植蔬菜",
+            "這種方式是否比傳統農業更環保仍有爭議"
+          ],
+          "strategy_zh": "後半句先決定外框（whether … remains controversial 或 it is still debated whether …），再把比較級 more … than … 放進 whether 子句。",
+          "hints": [
+            "切成四段：在城市大樓裡種植蔬菜／這種方式是否／比傳統農業更環保／仍有爭議",
+            "標的詞彙：vegetable（蔬菜）、building（大樓）、environmentally friendly（環保的）、traditional（傳統的）、debate／controversial（爭議）",
+            "句型框架：S + V …, but whether + S + be + more + adj. + than + N + remains controversial"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「愈…愈…」用 The + 比較級 + S + V, the + 比較級 + S + V：The closer these farms are to consumers, the faster vegetables can be delivered。close、fast 是單音節字，比較級是 closer、faster；兩個子句都要有主詞和動詞，蔬菜是被送達的，用被動 can be delivered（或寫 the faster the vegetables arrive）。「讓城市居民更容易吃到新鮮的蔬菜」是前面整件事帶來的結果，用句尾分詞 making it easier for city residents to eat fresh vegetables（或 allowing city residents to …）；easy 不能以人當主詞，要用虛受詞 it（make it easier for sb to VR）。",
+          "evidence": [
+            "這些農場離消費者愈近，蔬菜就能愈快送達",
+            "讓城市居民更容易吃到新鮮的蔬菜"
+          ],
+          "strategy_zh": "先寫出 The closer …, the faster … 的骨架，確認兩個子句都有主詞與動詞；再用逗號加 making it easier for … to … 接上結果。",
+          "hints": [
+            "切成四段：這些農場離消費者愈近／蔬菜就能愈快送達／讓城市居民更容易／吃到新鮮的蔬菜",
+            "標的詞彙：consumer（消費者）、vegetable（蔬菜）、deliver（送達）、easy（容易的）、fresh（新鮮的）",
+            "句型框架：The + 比較級 + S + V, the + 比較級 + S + can be p.p., making it + 比較級 + for + O + to VR …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "Vertical farms grow vegetables inside urban buildings, but whether this method is more environmentally friendly than traditional agriculture remains controversial.",
+            "Vertical farms grow vegetables in city buildings, but people still disagree about whether this way of farming is better for the environment than traditional agriculture.",
+            "Vertical farms grow vegetables inside buildings in cities, but it is still debated whether this approach is greener than traditional farming.",
+            "Vertical farms grow vegetables inside city buildings, but whether this method is greener than traditional farming is still under debate."
+          ],
+          "target_words": [
+            {
+              "word": "vegetable",
+              "zh": "蔬菜"
+            },
+            {
+              "word": "building",
+              "zh": "大樓"
+            },
+            {
+              "word": "environment",
+              "zh": "環境（環保）",
+              "alternatives": [
+                "environmentally",
+                "green",
+                "greener",
+                "eco-friendly"
+              ]
+            },
+            {
+              "word": "traditional",
+              "zh": "傳統的",
+              "alternatives": [
+                "conventional"
+              ]
+            },
+            {
+              "word": "debate",
+              "zh": "爭議",
+              "alternatives": [
+                "disagree",
+                "controversial",
+                "controversy",
+                "argue",
+                "dispute",
+                "debatable"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "NCL",
+              "grammar_id": "gp-wh-clause",
+              "label_zh": "間接問句（whether 名詞子句：這種方式是否…）",
+              "frame": "whether + S + V … + remains controversial ／ it is still debated + whether + S + V …（直述句語序）",
+              "zh_trigger": "這種方式是否"
+            },
+            {
+              "code": "COMP",
+              "grammar_id": "gp-comparative-superlative",
+              "label_zh": "比較級（比傳統農業更環保）",
+              "frame": "S + be + more + adj. + than + N ／ S + be + 形容詞比較級 + than + N",
+              "zh_trigger": "比傳統農業更環保"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "在城市大樓裡種植蔬菜",
+              "accepted": [
+                "grow vegetables inside urban buildings",
+                "grow vegetables in city buildings",
+                "grow vegetables inside buildings in cities",
+                "grow vegetables inside city buildings",
+                "grow vegetables in urban buildings",
+                "grow vegetables in buildings in cities",
+                "grow vegetables in buildings in the city",
+                "grow vegetables inside buildings in the city",
+                "grow vegetables inside buildings in urban areas",
+                "grow vegetables in high-rise buildings in cities",
+                "grow vegetables in city high-rises",
+                "grow vegetables inside tall buildings in cities",
+                "grow vegetables indoors in city buildings"
+              ],
+              "targets": [
+                "vegetable",
+                "building"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "grow vegetable inside urban buildings",
+                  "right": "grow vegetables inside urban buildings",
+                  "explanation_zh": "泛指蔬菜用複數 vegetables。"
+                },
+                {
+                  "wrong": "grows vegetables inside urban buildings",
+                  "right": "grow vegetables inside urban buildings",
+                  "explanation_zh": "主詞 vertical farms 是複數，動詞不加 s。"
+                }
+              ]
+            },
+            {
+              "zh": "這種方式是否",
+              "accepted": [
+                "whether this method is",
+                "whether this way of farming is",
+                "whether this approach is",
+                "whether this way is",
+                "if this method is",
+                "whether this practice is",
+                "whether this kind of farming is",
+                "whether this farming method is",
+                "whether such farming is",
+                "whether this type of farming is",
+                "whether vertical farming is",
+                "whether it is",
+                "whether this is",
+                "whether this way of growing vegetables is",
+                "whether this method of farming is",
+                "if this approach is",
+                "if this way of farming is"
+              ],
+              "targets": [
+                "NCL"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "whether is this method",
+                  "right": "whether this method is",
+                  "explanation_zh": "名詞子句用直述句語序：whether + 主詞 + 動詞。"
+                },
+                {
+                  "wrong": "this method whether is",
+                  "right": "whether this method is",
+                  "explanation_zh": "whether 要放在子句開頭。"
+                }
+              ]
+            },
+            {
+              "zh": "比傳統農業更環保",
+              "accepted": [
+                "more environmentally friendly than traditional agriculture",
+                "better for the environment than traditional agriculture",
+                "greener than traditional farming",
+                "better for the environment than traditional farming",
+                "more environmentally friendly than traditional farming",
+                "greener than traditional agriculture",
+                "more eco-friendly than traditional farming",
+                "more eco-friendly than traditional agriculture",
+                "more environmentally friendly than conventional farming",
+                "more environmentally friendly than conventional agriculture",
+                "better for the environment than conventional farming",
+                "kinder to the environment than traditional farming",
+                "more environmentally friendly than traditional farming methods",
+                "greener than conventional farming"
+              ],
+              "targets": [
+                "COMP",
+                "environment",
+                "traditional"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "more environmental protection than traditional farming",
+                  "right": "more environmentally friendly than traditional farming",
+                  "explanation_zh": "「環保」在這裡是形容詞（對環境友善），不是名詞 environmental protection。"
+                },
+                {
+                  "wrong": "more greener than traditional farming",
+                  "right": "greener than traditional farming",
+                  "explanation_zh": "greener 已經是比較級，不能再加 more。"
+                }
+              ]
+            },
+            {
+              "zh": "仍有爭議",
+              "accepted": [
+                "remains controversial",
+                "people still disagree about",
+                "it is still debated",
+                "is still under debate",
+                "is still a matter of debate",
+                "is still controversial",
+                "is still being debated",
+                "is still debated",
+                "is still debatable",
+                "remains debatable",
+                "remains a matter of debate",
+                "remains under debate",
+                "is still open to debate",
+                "remains open to debate",
+                "is still up for debate",
+                "remains up for debate",
+                "is still in dispute",
+                "is still a controversial issue",
+                "remains a controversial issue",
+                "is still a subject of debate",
+                "is still hotly debated",
+                "remains hotly debated",
+                "people still argue about",
+                "people still debate",
+                "there is still debate about",
+                "there is still debate over",
+                "there is still controversy over",
+                "there is still some debate over",
+                "it is still controversial",
+                "it remains controversial"
+              ],
+              "targets": [
+                "debate"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "still has controversy",
+                  "right": "is still controversial",
+                  "explanation_zh": "「有爭議」用形容詞 controversial 或被動 be debated，不說 have controversy。"
+                },
+                {
+                  "wrong": "it is still debating",
+                  "right": "it is still debated",
+                  "explanation_zh": "「被爭論」要用被動 it is still debated（或 is still being debated）；debating 是主動「正在辯論」。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "abstract_nominal",
+              "zh": "更環保",
+              "literal_error": "this method is more environmental protection than traditional farming",
+              "part": 3,
+              "explanation_zh": "「環保」在這裡當形容詞用（對環境友善），英文用 environmentally friendly、green 或 better for the environment；直譯成名詞 environmental protection 會變成「這種方式是環境保護」。"
+            },
+            {
+              "type": "verbal_subject",
+              "zh": "這種方式是否比傳統農業更環保仍有爭議",
+              "literal_error": "this method whether is more environmentally friendly than traditional farming still has controversy",
+              "part": 2,
+              "explanation_zh": "中文拿整個「是否…」問句當主詞；英文要先用 whether 把問句變成名詞子句（直述句語序），才能當主詞，或放在 it is still debated 後面。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "Vertical farms bring agriculture into the heart of the city, yet whether they are truly kinder to the environment than conventional farming remains hotly debated.",
+              "explanation_zh": "用 bring … into the heart of the city 寫出「把農業帶進市中心」的畫面，yet 表轉折，hotly debated 表「爭論激烈」，比一般寫法更生動。"
+            }
+          ],
+          "restructuring_zh": "「這種方式是否…仍有爭議」以問句當主詞，英文要改成 whether 名詞子句（直述句語序）當主詞，或改用 it is still debated whether … 把子句移到句尾；「更環保」的「環保」要改成形容詞 environmentally friendly（或 greener）。"
+        },
+        "2": {
+          "references": [
+            "The closer these farms are to consumers, the faster vegetables can be delivered, making it easier for city residents to eat fresh vegetables.",
+            "The nearer these farms are to consumers, the more quickly vegetables can reach them, making it easier for people in cities to enjoy fresh vegetables.",
+            "The closer these farms are to consumers, the faster the vegetables arrive, allowing city residents to get fresh vegetables more easily."
+          ],
+          "target_words": [
+            {
+              "word": "consumer",
+              "zh": "消費者",
+              "alternatives": [
+                "customer",
+                "customers",
+                "buyer",
+                "shopper"
+              ]
+            },
+            {
+              "word": "vegetable",
+              "zh": "蔬菜",
+              "alternatives": [
+                "produce"
+              ]
+            },
+            {
+              "word": "deliver",
+              "zh": "送達",
+              "alternatives": [
+                "reach",
+                "arrive",
+                "transport",
+                "ship",
+                "send",
+                "get to"
+              ]
+            },
+            {
+              "word": "easy",
+              "zh": "容易的",
+              "alternatives": [
+                "easier",
+                "easily",
+                "convenient"
+              ]
+            },
+            {
+              "word": "fresh",
+              "zh": "新鮮的"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PART",
+              "grammar_id": "gp-participle-result",
+              "label_zh": "句尾分詞片語表結果（…，讓城市居民更容易…）",
+              "frame": "S + V …, making it easier for + O + to VR … ／ …, allowing + O + to VR …",
+              "zh_trigger": "讓城市居民更容易"
+            },
+            {
+              "code": "COMP",
+              "grammar_id": "gp-the-more",
+              "label_zh": "愈…愈…（離消費者愈近，蔬菜就能愈快送達）",
+              "frame": "The + 比較級 + S + V, the + 比較級 + S + V",
+              "zh_trigger": "愈近，蔬菜就能愈快"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "這些農場離消費者愈近",
+              "accepted": [
+                "The closer these farms are to consumers",
+                "The nearer these farms are to consumers",
+                "The closer the farms are to consumers",
+                "The closer these farms are to the consumers",
+                "The closer these farms are located to consumers",
+                "The closer they are to consumers",
+                "The nearer they are to consumers",
+                "The closer these farms are to their customers",
+                "The closer these farms are to customers",
+                "The closer these vertical farms are to consumers",
+                "The closer to consumers these farms are",
+                "The shorter the distance between these farms and consumers"
+              ],
+              "targets": [
+                "COMP",
+                "consumer"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "The more close these farms are to consumers",
+                  "right": "The closer these farms are to consumers",
+                  "explanation_zh": "close 是單音節形容詞，比較級是 closer，不用 more close。"
+                },
+                {
+                  "wrong": "These farms are closer to consumers, the faster vegetables can be delivered",
+                  "right": "The closer these farms are to consumers, the faster vegetables can be delivered",
+                  "explanation_zh": "「愈…愈…」要用 The + 比較級 …, the + 比較級 … 的句型：兩個子句開頭都要有 the，比較級移到子句最前面。"
+                },
+                {
+                  "wrong": "Closer these farms are to consumers",
+                  "right": "The closer these farms are to consumers",
+                  "explanation_zh": "這個句型兩個比較級前面都要有 the。"
+                }
+              ]
+            },
+            {
+              "zh": "蔬菜就能愈快送達",
+              "accepted": [
+                "the faster vegetables can be delivered",
+                "the more quickly vegetables can reach them",
+                "the faster the vegetables arrive",
+                "the faster the vegetables can be delivered",
+                "the faster vegetables can reach them",
+                "the faster vegetables can reach consumers",
+                "the more quickly vegetables can be delivered",
+                "the faster vegetables are delivered",
+                "the faster the vegetables are delivered",
+                "the more quickly the vegetables arrive",
+                "the faster vegetables arrive",
+                "the faster the vegetables can arrive",
+                "the faster vegetables can arrive",
+                "the faster vegetables can get to them",
+                "the faster vegetables get to them",
+                "the faster the vegetables reach them",
+                "the faster vegetables reach them",
+                "the faster vegetables reach consumers",
+                "the faster vegetables can be sent to them",
+                "the faster vegetables can be transported",
+                "the quicker vegetables can be delivered",
+                "the quicker the vegetables arrive",
+                "the more quickly vegetables can arrive",
+                "the more quickly the vegetables can be delivered",
+                "the faster vegetables can reach their tables",
+                "the faster the vegetables can reach their tables",
+                "the sooner vegetables can be delivered",
+                "the sooner the vegetables arrive",
+                "the sooner vegetables can reach them",
+                "the faster vegetables can be delivered to them",
+                "the faster the vegetables can be delivered to them"
+              ],
+              "targets": [
+                "COMP",
+                "vegetable",
+                "deliver"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "the faster vegetables can deliver",
+                  "right": "the faster vegetables can be delivered",
+                  "explanation_zh": "蔬菜是「被送達」的，要用被動 can be delivered；或改用不及物的 arrive／reach them。"
+                },
+                {
+                  "wrong": "the faster can vegetables be delivered",
+                  "right": "the faster vegetables can be delivered",
+                  "explanation_zh": "The + 比較級後面接直述句語序（主詞＋動詞），不要倒裝。"
+                }
+              ]
+            },
+            {
+              "zh": "讓城市居民更容易",
+              "accepted": [
+                "making it easier for city residents",
+                "allowing city residents",
+                "making it easier for people in cities",
+                "making it easier for people living in cities",
+                "making it easier for urban residents",
+                "making it easier for city dwellers",
+                "allowing people in cities",
+                "allowing urban residents",
+                "enabling city residents",
+                "enabling people in cities",
+                "allowing city dwellers",
+                "making it easier for residents",
+                "making it easier for people in the city",
+                "making it easier for those living in cities",
+                "letting city residents",
+                "helping city residents",
+                "making it more convenient for city residents",
+                "making it easier for urban dwellers",
+                "allowing people who live in cities",
+                "making it easier for people who live in cities"
+              ],
+              "targets": [
+                "PART",
+                "easy"
+              ],
+              "common_errors": [
+                {
+                  "wrong": ", makes it easier for city residents",
+                  "right": ", making it easier for city residents",
+                  "explanation_zh": "逗號後面不能再接一個主要動詞 makes；表示前面整件事造成的結果，用分詞 making。"
+                },
+                {
+                  "wrong": "making city residents easier to eat fresh vegetables",
+                  "right": "making it easier for city residents to eat fresh vegetables",
+                  "explanation_zh": "easy 的主詞是「事情」不是「人」：要寫 make it easier for sb to VR（it 是虛受詞），不能說 make sb easier to VR。"
+                }
+              ]
+            },
+            {
+              "zh": "吃到新鮮的蔬菜",
+              "accepted": [
+                "to eat fresh vegetables",
+                "to enjoy fresh vegetables",
+                "to get fresh vegetables",
+                "to buy fresh vegetables",
+                "to eat fresh produce",
+                "to enjoy fresh produce",
+                "to get fresh produce",
+                "to have fresh vegetables",
+                "to eat fresher vegetables",
+                "to enjoy fresher vegetables",
+                "to get fresher vegetables",
+                "to buy fresher vegetables",
+                "to have access to fresh vegetables",
+                "to access fresh vegetables"
+              ],
+              "targets": [
+                "fresh"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "to eat the fresh vegetable",
+                  "right": "to eat fresh vegetables",
+                  "explanation_zh": "泛指新鮮蔬菜用複數 vegetables，不加 the。"
+                },
+                {
+                  "wrong": "to eat freshly vegetables",
+                  "right": "to eat fresh vegetables",
+                  "explanation_zh": "修飾名詞 vegetables 要用形容詞 fresh，不用副詞 freshly。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "word_form",
+              "zh": "離消費者愈近",
+              "literal_error": "The more close these farms are to consumers, the more fast vegetables can be delivered …",
+              "part": 1,
+              "explanation_zh": "close、fast 是單音節字，比較級直接加 -er：closer、faster；「愈…愈…」的兩個比較級都要移到子句開頭，前面各加 the。"
+            },
+            {
+              "type": "collocation",
+              "zh": "讓城市居民更容易",
+              "literal_error": "…, making city residents easier to eat fresh vegetables.",
+              "part": 3,
+              "explanation_zh": "中文說「讓人更容易做某事」，英文的 easy 不能以人當主詞，要用虛受詞 it：making it easier for city residents to eat fresh vegetables；逗號後面表結果的部分用分詞 making，不能再寫一個主要動詞 makes。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "The closer these farms are to consumers, the sooner their harvest reaches the dinner table, putting fresh produce within easy reach of city residents.",
+              "explanation_zh": "用 put sth within easy reach of sb（讓某人隨手可得）當句尾分詞，搭配 harvest（收成）、the dinner table（餐桌），用字更道地。"
+            }
+          ],
+          "restructuring_zh": "「這些農場離消費者愈近，蔬菜就能愈快送達」要套 The + 比較級 …, the + 比較級 … 的句型，比較級移到各子句開頭；「送達」的主詞是蔬菜，要用被動 can be delivered 或不及物的 arrive／reach。「讓城市居民更容易…」中文沒有主詞，英文不另起子句，用句尾分詞 making it easier for city residents to … 表示前面整件事帶來的結果。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ac-V-3",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "C-V-5",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-top-03-regen",
+    "lot": "translation-top-03",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "574e85d41139a28b4f98592ad73cdc9092bc6fd12629b2416f9d33e15ff161c5",
+    "spec_id": "translation-top@2026-10-09",
+    "regenerated_from": "ai.tr.ffbe20"
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 2,
+    "sentences": 1,
+    "avg_sentence_length": 2.0,
+    "denominator": 2,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.5,
+    "coverage_l1_6": 1.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.5,
+    "level_counts": {
+      "1": 1,
+      "5": 1
+    },
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T18:13:13Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "warn",
+      "created_at": "2026-10-09T17:44:38Z",
+      "details": {
+        "solver": "A",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Vertical farms grow vegetables in city buildings, but whether this method is more environmentally friendly than traditional agriculture is still debated.",
+            "confidence": "high",
+            "explanation_zh": "前半是一般現在式陳述事實（grow）；「是否……仍有爭議」用 whether 名詞子句當主詞，再接 is still debated；「環保」譯成 environmentally friendly 並用比較級 more … than 對應「比傳統農業更」。"
+          },
+          "2": {
+            "translation": "The closer these farms are to consumers, the faster the vegetables can be delivered, making it easier for city residents to eat fresh vegetables.",
+            "confidence": "high",
+            "explanation_zh": "「愈……就愈……」用 the + 比較級, the + 比較級；「送達」用被動 can be delivered；「讓城市居民更容易……」是前面的結果，用句尾分詞 making it easier for … to … 接上，避免兩個主要子句硬接。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "NCL",
+              "COMP"
+            ],
+            "used_target_words": [
+              "vegetable",
+              "building",
+              "environment",
+              "traditional",
+              "debate"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "warn",
+            "parts_check": "pass",
+            "issues_zh": [
+              "加分寫法 Vertical farms bring agriculture into the heart of the city… 把「在城市大樓裡種植蔬菜」改成「把農業帶進市中心」，蔬菜、大樓（標的詞 vegetable、building）都不見了，依本題評分規準第 1 部分會是 0 分，不適合當這一句的加分譯文；建議前半保留 grow vegetables in city buildings，只在後半用 yet、hotly debated 加分。四個參考譯文本身正確。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "PART",
+              "COMP"
+            ],
+            "used_target_words": [
+              "consumer",
+              "vegetable",
+              "deliver",
+              "easy",
+              "fresh"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "第 3 部分「讓城市居民更容易」的 accepted 收了 allowing／enabling／letting／helping city residents，這些寫法本身沒有「更容易」；學生寫 …, allowing city residents to eat fresh vegetables（漏譯「更容易」）四個部分仍全部命中、拿滿分。ref[2] 靠句尾 more easily 補上，但 more easily 不在任何一部分的 accepted 裡。建議第 3 部分只收含「更容易」的寫法（making it easier for …），或把 allowing … 改成連同 more easily 一起比對。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "vegetable",
+              "building",
+              "environment",
+              "traditional",
+              "debate"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NCL": true,
+              "COMP": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "consumer",
+              "vegetable",
+              "deliver",
+              "easy",
+              "fresh"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PART": true,
+              "COMP": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 1 題驗證者對參考譯文有意見（warn）：加分寫法 Vertical farms bring agriculture into the heart of the city… 把「在城市大樓裡種植蔬菜」改成「把農業帶進市中心」，蔬菜、大樓（標的詞 vegetable、building",
+          "第 2 題驗證者對4 部分切分有意見（warn）：第 3 部分「讓城市居民更容易」的 accepted 收了 allowing／enabling／letting／helping city residents，這些寫法本身沒有「更容易」；學生寫 …, allowing city reside"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "fail",
+      "created_at": "2026-10-09T17:48:16Z",
+      "details": {
+        "solver": "B",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Vertical farms grow vegetables in city buildings, but whether this approach is more environmentally friendly than traditional agriculture is still debated.",
+            "confidence": "high",
+            "explanation_zh": "「是否……仍有爭議」把「是否比傳統農業更環保」當成名詞子句放在句中當主詞（whether 子句作主詞），後面接 is still debated 表示仍在爭論；「種植蔬菜」用 grow vegetables，「城市大樓裡」用 in city buildings，「更環保」用 more environmentally friendly than，「傳統農業」用 traditional agriculture。前後兩個分句以 but 連接，語意完整。"
+          },
+          "2": {
+            "translation": "The closer these farms are to consumers, the faster the vegetables can be delivered, which makes it easier for city residents to get fresh vegetables.",
+            "confidence": "high",
+            "explanation_zh": "「愈……愈……」直接用 the + 比較級, the + 比較級：the closer ... the faster ...；「離消費者愈近」是 be close to consumers 的比較級；「送達」用被動 be delivered；最後的「讓城市居民更容易吃到新鮮的蔬菜」用非限定關係子句 which makes it easier for ... to ... 補充說明前面整件事的結果，it 作虛受詞、for city residents to get fresh vegetables 為真受詞。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "NCL",
+              "COMP"
+            ],
+            "used_target_words": [
+              "vegetable",
+              "building",
+              "environment",
+              "traditional",
+              "debate"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "COMP"
+            ],
+            "used_target_words": [
+              "consumer",
+              "vegetable",
+              "deliver",
+              "easy",
+              "fresh"
+            ],
+            "within_accepted": false,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "盲譯者自然寫出非限定關係子句「, which makes it easier for city residents to get fresh vegetables」，沒有用到標的句型 PART（句尾分詞片語 making／allowing …）；中文「，讓城市居民更容易…」並不會強制引出分詞片語，學生很可能和我一樣用 which 子句。",
+              "第 3 部分「讓城市居民更容易」的 accepted 只列 making it easier for…／allowing／enabling／letting／helping 等分詞片語，沒有收 which makes it easier for city residents、and this makes it easier for … 這類同樣正確自然的寫法，所以合格譯文被判在可接受範圍外；建議補進 accepted，或把這一句的標的改成「分詞片語或 which 子句皆可」，或調整中文讓分詞片語成為最自然的寫法。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "vegetable",
+              "building",
+              "environment",
+              "traditional",
+              "debate"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NCL": true,
+              "COMP": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "consumer",
+              "vegetable",
+              "deliver",
+              "easy",
+              "fresh"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "COMP": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 2 題盲譯沒有用到標的句型 ['PART']：中文題目沒有自然引出這個句型（SPEC §5.7）",
+          "第 2 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義",
+          "第 2 題驗證者對4 部分切分有意見（warn）：盲譯者自然寫出非限定關係子句「, which makes it easier for city residents to get fresh vegetables」，沒有用到標的句型 PART（句尾分詞片語 making／allowing "
+        ]
+      }
+    }
+  ],
+  "status": "rejected",
+  "status_reason": "判定者（第 2 輪）確認退回：第 2 題「，讓城市居民更容易吃到新鮮的蔬菜」同樣自然引出非限定關係子句（盲譯 B：, which makes it easier for city residents to get fresh vegetables），但標的句型只設句尾分詞 PART、第 3 部分 accepted 也只收分詞寫法，正確譯文因此被判在可接受寫法外（重生前 ai.tr.ffbe20 也是同一個問題）；另外第 3 部分收了 allowing／enabling／letting／helping city residents 這些沒有「更容易」的寫法，漏譯「更容易」仍能拿滿分，評分規準有漏洞。；blind_solver:B 未通過：第 2 題盲譯沒有用到標的句型 ['PART']：中文題目沒有自然引出這個句型（SPEC §5.7）；第 2 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義；第 2 題驗證者對4 部分切分有意見（warn）：盲譯者自然寫出非限定關係子句「, which makes it easier for city residents to get fresh vegetables」，沒有用到標的句型 PART（句尾分詞片語 making／allowing "
+}

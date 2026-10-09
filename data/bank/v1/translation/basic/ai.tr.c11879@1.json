@@ -1,0 +1,748 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.c11879",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "basic",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "如果沒有人要這些舊書，我們就把它們送給附近的圖書館。",
+        "options": null,
+        "answer": "If nobody wants these old books, we will give them to the nearby library.",
+        "accepted_answers": [
+          "If no one wants these old books, we will donate them to a library nearby.",
+          "If nobody needs these old books, we'll give them to the library near our home."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "條件子句"
+          ],
+          "topic": "搬家"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "其他的書會由搬家公司的工人送到新家。",
+        "options": null,
+        "answer": "The other books will be taken to our new home by workers from the moving company.",
+        "accepted_answers": [
+          "The rest of the books will be carried to our new apartment by the moving company workers.",
+          "Our other books will be moved to the new apartment by workers from the moving company."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "被動語態"
+          ],
+          "topic": "搬家"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "搬家"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「如果…就…」是條件子句：If + S + 現在式, S + will/can + 原形動詞。說的雖然是將來的事，if 子句仍用現在式 wants，不用 will want；nobody 看成單數，動詞加 s，而且本身就是否定，不要再加 not。「這些舊書」是複數 these old books，後面的「它們」用 them。「送給附近的圖書館」是 give them to the nearby library（或 the library nearby），near 不放在名詞前面。",
+          "evidence": [
+            "如果沒有人要",
+            "就把它們送給"
+          ],
+          "strategy_zh": "if、unless、as long as 子句用現在式表示未來，主要子句才用 will／can。",
+          "hints": [
+            "切成四段：如果沒有人要／這些舊書／我們就把它們送給／附近的圖書館",
+            "標的詞彙：nobody（沒有人）、want（要）、book（書）、give（送給，也可用 donate）、library（圖書館）、nearby（附近的）",
+            "句型框架：If + S + V(現在式) …, S + will + 原形動詞 …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "書是「被送」到新家的，用被動語態 will be taken（未來式被動：will be + p.p.），做動作的人用 by 帶出：by workers from the moving company。「其他的書」是複數 the other books（other 當形容詞不加 s）；「搬家公司」是 moving company；「新家」的「家」是住的地方，用 home 或 apartment，不是 family。",
+          "evidence": [
+            "會由搬家公司的工人送到新家"
+          ],
+          "strategy_zh": "主詞是東西、動作是別人做的時候，先想被動語態 be + p.p.；中文的「由」「被」是提示。",
+          "hints": [
+            "切成四段：其他的書／由搬家公司的工人／送到／新家",
+            "標的詞彙：other（其他的）、book（書）、take（送到，也可用 carry、move、deliver）、home（家，也可用 apartment）、worker（工人）、company（公司）",
+            "句型框架：S + will be + p.p. + to … + by …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "If nobody wants these old books, we will give them to the nearby library.",
+            "If no one wants these old books, we will donate them to a library nearby.",
+            "If nobody needs these old books, we'll give them to the library near our home."
+          ],
+          "target_words": [
+            {
+              "word": "nobody",
+              "zh": "沒有人",
+              "alternatives": [
+                "no one",
+                "none"
+              ]
+            },
+            {
+              "word": "want",
+              "zh": "要（想要）",
+              "alternatives": [
+                "need"
+              ]
+            },
+            {
+              "word": "book",
+              "zh": "書"
+            },
+            {
+              "word": "give",
+              "zh": "送給",
+              "alternatives": [
+                "donate",
+                "send",
+                "take"
+              ]
+            },
+            {
+              "word": "library",
+              "zh": "圖書館"
+            },
+            {
+              "word": "nearby",
+              "zh": "附近的",
+              "alternatives": [
+                "near",
+                "local",
+                "neighborhood",
+                "close"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "ADVCL",
+              "grammar_id": "gp-condition-real",
+              "label_zh": "條件子句（If + 現在式, S + will/can + 原形動詞）",
+              "frame": "If + S + V(現在式) …, S + will/can + 原形動詞 …",
+              "zh_trigger": "如果"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "如果沒有人要",
+              "accepted": [
+                "If nobody wants",
+                "If no one wants",
+                "If nobody needs",
+                "If no one needs",
+                "If none of us wants",
+                "If none of us want",
+                "If nobody in our family wants",
+                "If no one in our family wants"
+              ],
+              "targets": [
+                "ADVCL",
+                "nobody",
+                "want"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "If nobody will want",
+                  "right": "If nobody wants",
+                  "explanation_zh": "條件子句說的雖然是將來的事，仍用現在式代替未來式，不用 will。"
+                },
+                {
+                  "wrong": "If nobody want",
+                  "right": "If nobody wants",
+                  "explanation_zh": "nobody、no one 當主詞看成單數，現在式動詞要加 s。"
+                },
+                {
+                  "wrong": "If nobody doesn't want",
+                  "right": "If nobody wants",
+                  "explanation_zh": "nobody 本身就是否定，不要再加 not（雙重否定）。"
+                }
+              ]
+            },
+            {
+              "zh": "這些舊書",
+              "accepted": [
+                "these old books",
+                "the old books",
+                "those old books",
+                "these used books",
+                "these old books of ours"
+              ],
+              "targets": [
+                "book"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "this old books",
+                  "right": "these old books",
+                  "explanation_zh": "「這些」是複數，用 these（單數才用 this）。"
+                },
+                {
+                  "wrong": "these old book",
+                  "right": "these old books",
+                  "explanation_zh": "these 後面接複數名詞 books。"
+                }
+              ]
+            },
+            {
+              "zh": "我們就把它們送給",
+              "accepted": [
+                "we will give them to",
+                "we'll give them to",
+                "we will donate them to",
+                "we'll donate them to",
+                "we can give them to",
+                "we can donate them to",
+                "we will send them to",
+                "we'll send them to",
+                "we will take them to",
+                "we'll take them to",
+                "we are going to give them to",
+                "we are going to donate them to",
+                "we will give them away to"
+              ],
+              "targets": [
+                "give"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "we will give it to",
+                  "right": "we will give them to",
+                  "explanation_zh": "「它們」指前面的 books（複數），代名詞用 them。"
+                },
+                {
+                  "wrong": "we will give them the nearby library",
+                  "right": "we will give them to the nearby library",
+                  "explanation_zh": "少了 to 會變成「把圖書館送給它們」；把東西送到某處是 give sth to + 地方。"
+                }
+              ]
+            },
+            {
+              "zh": "附近的圖書館",
+              "accepted": [
+                "the nearby library",
+                "the library nearby",
+                "a nearby library",
+                "a library nearby",
+                "the library near our home",
+                "the library near our house",
+                "a library near our home",
+                "the library near us",
+                "the local library",
+                "a local library",
+                "the library in our neighborhood",
+                "the neighborhood library",
+                "the library close to our home",
+                "the library in the neighborhood",
+                "a library in the neighborhood",
+                "the library in our area"
+              ],
+              "targets": [
+                "library",
+                "nearby"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "the near library",
+                  "right": "the nearby library",
+                  "explanation_zh": "near 不放在名詞前面當「附近的」；用 nearby（the nearby library、the library nearby）或 the library near our home。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "tense_trigger",
+              "zh": "如果沒有人要",
+              "literal_error": "If nobody will want these old books, we will give them to the nearby library.",
+              "part": 1,
+              "explanation_zh": "中文說的是之後才知道的事，但英文條件子句用現在式代替未來式；寫 if nobody will want 會在這一部分被扣分（只扣這一部分）。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "Unless someone wants these old books, we will give them to the nearby library.",
+              "grammar_id": "gp-condition-real",
+              "explanation_zh": "用 unless（除非）從反面說同一件事：除非有人要，否則就送給圖書館；條件子句一樣用現在式。"
+            }
+          ]
+        },
+        "2": {
+          "references": [
+            "The other books will be taken to our new home by workers from the moving company.",
+            "The rest of the books will be carried to our new apartment by the moving company workers.",
+            "Our other books will be moved to the new apartment by workers from the moving company."
+          ],
+          "target_words": [
+            {
+              "word": "other",
+              "zh": "其他的",
+              "alternatives": [
+                "rest"
+              ]
+            },
+            {
+              "word": "book",
+              "zh": "書"
+            },
+            {
+              "word": "take",
+              "zh": "送（到）",
+              "alternatives": [
+                "carry",
+                "move",
+                "deliver",
+                "bring",
+                "send",
+                "transport"
+              ]
+            },
+            {
+              "word": "home",
+              "zh": "（新）家",
+              "alternatives": [
+                "apartment",
+                "house",
+                "place"
+              ]
+            },
+            {
+              "word": "worker",
+              "zh": "工人",
+              "alternatives": [
+                "mover"
+              ]
+            },
+            {
+              "word": "company",
+              "zh": "公司"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PASS",
+              "grammar_id": "gp-passive",
+              "label_zh": "被動語態（未來式被動 will be + p.p.）",
+              "frame": "S + will be + p.p. (+ to …) + by …",
+              "zh_trigger": "會由"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "其他的書",
+              "accepted": [
+                "The other books",
+                "The rest of the books",
+                "The rest of our books",
+                "Our other books",
+                "All the other books",
+                "The remaining books",
+                "Other books",
+                "The rest"
+              ],
+              "targets": [
+                "other",
+                "book"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "The other book",
+                  "right": "The other books",
+                  "explanation_zh": "前一句的舊書送走以後，剩下的書不只一本，用複數 books。"
+                },
+                {
+                  "wrong": "The others books",
+                  "right": "The other books",
+                  "explanation_zh": "other 放在名詞前面當形容詞，不加 s；others 是代名詞，後面不再接名詞。"
+                }
+              ]
+            },
+            {
+              "zh": "由搬家公司的工人",
+              "accepted": [
+                "by workers from the moving company",
+                "by the workers from the moving company",
+                "by workers from a moving company",
+                "by the moving company's workers",
+                "by the workers of the moving company",
+                "by workers of the moving company",
+                "by the movers",
+                "by movers",
+                "by moving company workers",
+                "by the moving company workers",
+                "by people from the moving company",
+                "by the moving company"
+              ],
+              "targets": [
+                "worker",
+                "company"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "by the move company's workers",
+                  "right": "by the moving company's workers",
+                  "explanation_zh": "「搬家公司」是 moving company（moving 當形容詞），不是 move company。"
+                },
+                {
+                  "wrong": "from workers of the moving company",
+                  "right": "by workers of the moving company",
+                  "explanation_zh": "被動語態裡做動作的人用 by 帶出。"
+                }
+              ]
+            },
+            {
+              "zh": "送到",
+              "accepted": [
+                "will be taken to",
+                "will be carried to",
+                "will be moved to",
+                "will be delivered to",
+                "will be brought to",
+                "will be sent to",
+                "will be transported to",
+                "are going to be taken to",
+                "are going to be moved to",
+                "are going to be carried to",
+                "will be taken over to"
+              ],
+              "targets": [
+                "PASS",
+                "take"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "will take to",
+                  "right": "will be taken to",
+                  "explanation_zh": "書是「被送」的一方，要用被動語態 will be + 過去分詞。"
+                },
+                {
+                  "wrong": "will be take to",
+                  "right": "will be taken to",
+                  "explanation_zh": "被動語態的 be 後面接過去分詞 taken，不是原形 take。"
+                }
+              ]
+            },
+            {
+              "zh": "新家",
+              "accepted": [
+                "our new home",
+                "our new apartment",
+                "our new house",
+                "the new apartment",
+                "the new home",
+                "the new house",
+                "our new place",
+                "the new place"
+              ],
+              "targets": [
+                "home"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "our new family",
+                  "right": "our new home",
+                  "explanation_zh": "這裡的「家」是住的地方，用 home、apartment 或 house；family 是「家人」。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "plural_countable",
+              "zh": "其他的書",
+              "literal_error": "The other book will be taken to our new home by workers from the moving company.",
+              "part": 1,
+              "explanation_zh": "「其他的書」指剩下的很多本書，要寫複數 the other books；中文沒有複數標記，照字面寫 the other book（另一本書）會在這一部分扣分。"
+            }
+          ],
+          "bonus": []
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-basic-01-regen",
+    "lot": "translation-basic-01",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "d7d4b935208193587edc9b7e91774574a5e2aa0a2dd6fc944773ce41ceec7d2b",
+    "spec_id": "translation-basic@2026-10-09",
+    "regenerated_from": "ai.tr.784b04"
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T18:06:50Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T17:35:00Z",
+      "details": {
+        "solver": "A",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "If no one wants these old books, we will donate them to a nearby library.",
+            "confidence": "high",
+            "explanation_zh": "這是可能發生的條件（不是與事實相反的假設），if 子句用現在式 wants 代替未來式，主要子句用 will；「沒有人」用 no one（nobody 亦可），動詞用單數；「送給」是無償捐出，用 donate them to（give them to 亦可）；「附近的圖書館」用 a nearby library。"
+          },
+          "2": {
+            "translation": "The other books will be delivered to our new home by workers from the moving company.",
+            "confidence": "high",
+            "explanation_zh": "「由……送到」主詞是書，用被動語態 will be delivered … by …；「會」指之後要發生的事，用 will；「搬家公司的工人」譯 workers from the moving company（movers 亦可）；「其他的書」指剩下的書，用 The other books（The rest of the books 亦可）；「新家」用 our new home／house。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "ADVCL"
+            ],
+            "used_target_words": [
+              "nobody",
+              "want",
+              "book",
+              "give",
+              "library",
+              "nearby"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PASS"
+            ],
+            "used_target_words": [
+              "other",
+              "book",
+              "take",
+              "home",
+              "worker",
+              "company"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "nobody",
+              "want",
+              "book",
+              "give",
+              "library",
+              "nearby"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "ADVCL": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "other",
+              "book",
+              "take",
+              "home",
+              "worker",
+              "company"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PASS": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T17:32:00Z",
+      "details": {
+        "solver": "B",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "If nobody wants these old books, we will give them to the nearby library.",
+            "confidence": "high",
+            "explanation_zh": "「如果……就……」是對未來情況的條件句，if 子句用現在簡單式 wants（nobody 當單數主詞，動詞加 s），主要子句用 will give。「送給」用 give ... to ...，them 代替 these old books；「附近的圖書館」用 the nearby library。也可以把 give 換成 donate。"
+          },
+          "2": {
+            "translation": "The other books will be delivered to our new home by the workers of the moving company.",
+            "confidence": "medium",
+            "explanation_zh": "原句「其他的書會由……送到新家」有「由……」的字樣，重點在書被送到，所以用被動語態 will be delivered ... by ...。「其他的書」用 The other books（指剩下的那些特定的書）；「搬家公司的工人」可譯成 the workers of the moving company（或 the moving company's workers）。信心降為 medium 是因為「新家」是 our new home 還是 the new house 取決於中文沒有寫出的語境，另外也可以說成 the movers。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "ADVCL"
+            ],
+            "used_target_words": [
+              "nobody",
+              "want",
+              "book",
+              "give",
+              "library",
+              "nearby"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PASS"
+            ],
+            "used_target_words": [
+              "other",
+              "book",
+              "take",
+              "home",
+              "worker",
+              "company"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "（提醒，不影響判定）第 4 部分「新家」中文沒說是房子還是公寓，accepted 已涵蓋 home／apartment／house／place，沒有問題；第 2 部分 by the movers 沒有出現 company，會少一個標的詞彙，但仍在 80% 門檻內。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "nobody",
+              "want",
+              "book",
+              "give",
+              "library",
+              "nearby"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "ADVCL": true
+            },
+            "program_match": true
+          },
+          "2": {
+            "target_words_found": [
+              "other",
+              "book",
+              "take",
+              "home",
+              "worker",
+              "company"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PASS": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

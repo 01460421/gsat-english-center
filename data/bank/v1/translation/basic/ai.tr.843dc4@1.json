@@ -1,0 +1,678 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.843dc4",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "basic",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "下雨天時，體育館就變成我們上體育課的地方。",
+        "options": null,
+        "answer": "On rainy days, the gym becomes the place where we have our PE classes.",
+        "accepted_answers": [
+          "When it rains, the school gym becomes the place where we have PE class.",
+          "On a rainy day, the gym turns into the place where we have PE lessons."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "關係副詞"
+          ],
+          "topic": "雨天的室內體育課"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "體育課一開始，老師就會把我們全班分成兩隊。",
+        "options": null,
+        "answer": "As soon as PE class starts, the teacher divides our whole class into two teams.",
+        "accepted_answers": [
+          "Once PE class begins, our teacher divides the whole class into two teams."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "時間副詞子句"
+          ],
+          "topic": "雨天的室內體育課"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "雨天的室內體育課"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「我們上體育課的地方」是「…的地方」，英文用關係副詞 where 帶出形容詞子句修飾 the place：the place where we have our PE classes。子句 we have PE classes 本身已經完整，缺的是「在那裡」這個地點，所以用 where（＝in which），不用 which。「變成」是 become（也可用 turn into），become 後面要接名詞（或形容詞）當補語，不能直接接 where 子句，所以 the place 不能省略，不能寫成 becomes where …（反過來，where 在口語裡可以省略，寫成 the place we have PE classes 也對，但不能換成 which）。「下雨天時」泛指每逢下雨，可寫 on rainy days（介系詞 on、days 用複數）、on a rainy day 或 when it rains；整句用現在簡單式，主詞 the gym 是單數，所以用 becomes。「上課」是 have class，體育課一週有好幾堂，寫 PE class、PE classes 都可以。",
+          "evidence": [
+            "我們上體育課的地方",
+            "體育館就變成"
+          ],
+          "strategy_zh": "「…的地方」後面要接完整子句時，用 the place where＋S＋V；become 後面不能直接接 where 子句，要先寫 the place。",
+          "hints": [
+            "切成四段：下雨天時／體育館就變成／我們上體育課／的地方",
+            "標的詞彙：rainy（下雨的）、gym（體育館）、become（變成）、place（地方）、class（課）",
+            "句型框架：On rainy days, S + becomes + the place + where + S + V"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「一…就…」用時間副詞子句 As soon as／Once＋S＋V，主要子句接在逗號後面；只寫 when 沒有譯出「一…就」的「馬上」。時間子句用現在式代替未來式：As soon as PE class starts（主詞單數，start 加 s）。「把 A 分成 B」是 divide A into B，介系詞用 into；「兩隊」用複數 two teams。",
+          "evidence": [
+            "體育課一開始",
+            "分成兩隊"
+          ],
+          "strategy_zh": "看到「一…就…」先想 as soon as／once；時間子句裡用現在式，不寫 will。",
+          "hints": [
+            "切成四段：體育課一開始／老師／就會把我們全班分成／兩隊",
+            "標的詞彙：start（開始）、teacher（老師）、divide（分成）、whole（全部的）、team（隊）",
+            "句型框架：As soon as + S + V(現在式), S + V …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "On rainy days, the gym becomes the place where we have our PE classes.",
+            "When it rains, the school gym becomes the place where we have PE class.",
+            "On a rainy day, the gym turns into the place where we have PE lessons."
+          ],
+          "target_words": [
+            {
+              "word": "rainy",
+              "zh": "下雨的",
+              "alternatives": [
+                "rain"
+              ]
+            },
+            {
+              "word": "gym",
+              "zh": "體育館",
+              "alternatives": [
+                "gymnasium"
+              ]
+            },
+            {
+              "word": "become",
+              "zh": "變成",
+              "alternatives": [
+                "turn into"
+              ]
+            },
+            {
+              "word": "place",
+              "zh": "地方"
+            },
+            {
+              "word": "class",
+              "zh": "課",
+              "alternatives": [
+                "lesson"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "REL",
+              "grammar_id": "gp-relative-adverb",
+              "label_zh": "關係副詞 where（the place where …）",
+              "frame": "S + becomes + the place + where + S + V",
+              "zh_trigger": "我們上體育課的地方"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "下雨天時",
+              "accepted": [
+                "On rainy days",
+                "When it rains",
+                "On a rainy day",
+                "When it is raining",
+                "Whenever it rains"
+              ],
+              "targets": [
+                "rainy"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "In rainy day",
+                  "right": "On rainy days",
+                  "explanation_zh": "在某種日子用介系詞 on；泛指下雨的日子用複數 rainy days（或 on a rainy day）。"
+                },
+                {
+                  "wrong": "When rainy day",
+                  "right": "When it rains",
+                  "explanation_zh": "when 後面要接完整子句（when it rains），不能只接名詞。"
+                }
+              ]
+            },
+            {
+              "zh": "體育館就變成",
+              "accepted": [
+                "the gym becomes",
+                "the school gym becomes",
+                "the gym turns into",
+                "our school gym becomes",
+                "the gymnasium becomes",
+                "the school gym turns into"
+              ],
+              "targets": [
+                "gym",
+                "become"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "the gym become",
+                  "right": "the gym becomes",
+                  "explanation_zh": "泛指每逢下雨的情形用現在簡單式，主詞 the gym 是單數，動詞要加 s。"
+                },
+                {
+                  "wrong": "gym becomes",
+                  "right": "the gym becomes",
+                  "explanation_zh": "這裡指學校裡特定的那座體育館，可數名詞 gym 前面要加 the。"
+                }
+              ]
+            },
+            {
+              "zh": "我們上體育課",
+              "accepted": [
+                "we have our PE classes",
+                "we have PE class",
+                "we have PE classes",
+                "we have our PE class",
+                "we have PE lessons",
+                "we have our PE lessons",
+                "we have PE",
+                "we take PE class",
+                "we take PE classes",
+                "we have physical education classes"
+              ],
+              "targets": [
+                "class"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "we go up PE class",
+                  "right": "we have PE class",
+                  "explanation_zh": "「上課」是 have class，不能把「上」翻成 go up。"
+                }
+              ]
+            },
+            {
+              "zh": "的地方",
+              "accepted": [
+                "the place where",
+                "the place in which",
+                "a place where",
+                "the place"
+              ],
+              "targets": [
+                "place",
+                "REL"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "the place which",
+                  "right": "the place where",
+                  "explanation_zh": "子句 we have PE classes 已經完整，缺的是「在那裡」這個地點，所以用關係副詞 where（＝in which），不用 which。"
+                },
+                {
+                  "wrong": "becomes where",
+                  "right": "becomes the place where",
+                  "explanation_zh": "become 後面要接名詞當補語，the place 不能省略；只有 be 動詞後面才能直接接 where 子句（The gym is where …），但那樣就沒有譯出「變成」。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "collocation",
+              "zh": "下雨天時",
+              "literal_error": "In rainy day, the gym becomes the place where we have our PE classes.",
+              "part": 1,
+              "explanation_zh": "「下雨天時」照字面寫成 in rainy day，介系詞和單複數都會錯；某種日子用 on，泛指下雨的日子用複數 on rainy days（或 on a rainy day、when it rains）。"
+            }
+          ],
+          "bonus": []
+        },
+        "2": {
+          "references": [
+            "As soon as PE class starts, the teacher divides our whole class into two teams.",
+            "Once PE class begins, our teacher divides the whole class into two teams."
+          ],
+          "target_words": [
+            {
+              "word": "start",
+              "zh": "開始",
+              "alternatives": [
+                "begin"
+              ]
+            },
+            {
+              "word": "teacher",
+              "zh": "老師"
+            },
+            {
+              "word": "divide",
+              "zh": "分成",
+              "alternatives": [
+                "split",
+                "separate",
+                "put"
+              ]
+            },
+            {
+              "word": "whole",
+              "zh": "全部的（全班 the whole class）",
+              "alternatives": [
+                "entire",
+                "all"
+              ]
+            },
+            {
+              "word": "team",
+              "zh": "隊",
+              "alternatives": [
+                "group"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "ADVCL",
+              "grammar_id": "gp-time-clause",
+              "label_zh": "時間副詞子句（as soon as／once：一…就…）",
+              "frame": "As soon as / Once + S + V(現在式), S + V …",
+              "zh_trigger": "一開始"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "體育課一開始",
+              "accepted": [
+                "As soon as PE class starts",
+                "Once PE class begins",
+                "As soon as PE class begins",
+                "Once PE class starts",
+                "As soon as the PE class starts",
+                "As soon as the PE class begins",
+                "The moment PE class starts",
+                "The moment PE class begins"
+              ],
+              "targets": [
+                "start",
+                "ADVCL"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "As soon as PE class will start",
+                  "right": "As soon as PE class starts",
+                  "explanation_zh": "時間副詞子句用現在式代替未來式，不寫 will。"
+                },
+                {
+                  "wrong": "As soon as PE class start",
+                  "right": "As soon as PE class starts",
+                  "explanation_zh": "主詞 PE class 是單數，動詞加 s。"
+                },
+                {
+                  "wrong": "When PE class starts",
+                  "right": "As soon as PE class starts",
+                  "explanation_zh": "「一…就…」強調前一件事一發生，後一件事馬上跟著發生，要用 as soon as／once／the moment；只寫 when 沒有譯出「一…就」。"
+                }
+              ]
+            },
+            {
+              "zh": "老師",
+              "accepted": [
+                "the teacher",
+                "our teacher",
+                "the PE teacher",
+                "our PE teacher"
+              ],
+              "targets": [
+                "teacher"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "teacher divides",
+                  "right": "the teacher divides",
+                  "explanation_zh": "單數可數名詞 teacher 前面要有冠詞或所有格。"
+                }
+              ]
+            },
+            {
+              "zh": "就會把我們全班分成",
+              "accepted": [
+                "divides our whole class into",
+                "divides the whole class into",
+                "will divide our whole class into",
+                "will divide the whole class into",
+                "splits our whole class into",
+                "splits the whole class into",
+                "divides all of us into",
+                "will divide all of us into"
+              ],
+              "targets": [
+                "divide",
+                "whole"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "divides our whole class to",
+                  "right": "divides our whole class into",
+                  "explanation_zh": "「把 A 分成 B」是 divide A into B，介系詞用 into。"
+                },
+                {
+                  "wrong": "divides our all class into",
+                  "right": "divides our whole class into",
+                  "explanation_zh": "「全班」說 the whole class 或 all of us，all 不放在所有格後面。"
+                }
+              ]
+            },
+            {
+              "zh": "兩隊",
+              "accepted": [
+                "two teams",
+                "two groups"
+              ],
+              "targets": [
+                "team"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "two team",
+                  "right": "two teams",
+                  "explanation_zh": "two 後面接複數 teams。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "collocation",
+              "zh": "分成",
+              "literal_error": "As soon as PE class starts, the teacher divides our whole class to two teams.",
+              "part": 3,
+              "explanation_zh": "「分成」照字面容易寫成 divide … to，正確搭配是 divide A into B。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "The moment PE class starts, the teacher divides our whole class into two teams.",
+              "grammar_id": "gp-time-clause",
+              "explanation_zh": "the moment＋子句也表示「一…就…」，比 as soon as 更強調「就在那一刻」，也是道地的寫法。"
+            }
+          ]
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-basic-05-regen",
+    "lot": "translation-basic-05",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "52b0d1fcf2f62d5b15d4d62e701ce9f1bda4c453dea417830434d130e379459b",
+    "spec_id": "translation-basic@2026-10-09",
+    "regenerated_from": "ai.tr.70bdd1"
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T18:21:07Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T18:05:00Z",
+      "details": {
+        "solver": "A",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "On rainy days, the gym becomes the place where we have our PE classes.",
+            "confidence": "high",
+            "explanation_zh": "「下雨天時」用 On rainy days（也可 When it rains）；描述常態用現在簡單式 becomes；「我們上體育課的地方」用關係副詞 where 修飾 the place。"
+          },
+          "2": {
+            "translation": "As soon as PE class begins, our teacher divides the whole class into two teams.",
+            "confidence": "high",
+            "explanation_zh": "「一……就……」用 As soon as 引導時間子句；「就會」表示每次都如此的習慣，主要子句用現在簡單式（寫 will divide 也可）；「把……分成……」用 divide A into B。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "REL"
+            ],
+            "used_target_words": [
+              "rainy",
+              "gym",
+              "become",
+              "place",
+              "class"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "ADVCL"
+            ],
+            "used_target_words": [
+              "start",
+              "teacher",
+              "divide",
+              "whole",
+              "team"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "rainy",
+              "gym",
+              "become",
+              "place",
+              "class"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "REL": true
+            },
+            "program_match": true
+          },
+          "2": {
+            "target_words_found": [
+              "start",
+              "teacher",
+              "divide",
+              "whole",
+              "team"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "ADVCL": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T18:03:17Z",
+      "details": {
+        "solver": "B",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "On rainy days, the gym becomes the place where we have our P.E. classes.",
+            "confidence": "high",
+            "explanation_zh": "「下雨天時」是泛指習慣，用 On rainy days；「變成」是 become，現在簡單式表示一貫情形；「我們上體育課的地方」用關係副詞 where 修飾 the place（the place where we have P.E. classes）。"
+          },
+          "2": {
+            "translation": "As soon as P.E. class starts, the teacher divides our whole class into two teams.",
+            "confidence": "high",
+            "explanation_zh": "「一開始，就…」對應 As soon as …（也可寫 The moment …）；因為是每次上課的習慣，兩個子句都用現在簡單式，不用未來式；「把…分成兩隊」是 divide … into two teams，「全班」譯成 our whole class。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "REL"
+            ],
+            "used_target_words": [
+              "rainy",
+              "gym",
+              "become",
+              "place",
+              "class"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "ADVCL"
+            ],
+            "used_target_words": [
+              "start",
+              "teacher",
+              "divide",
+              "whole",
+              "team"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "rainy",
+              "gym",
+              "become",
+              "place",
+              "class"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "REL": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "start",
+              "teacher",
+              "divide",
+              "whole",
+              "team"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "ADVCL": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

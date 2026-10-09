@@ -1,0 +1,705 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.f1c44b",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "basic",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "到目前為止，我已經寫了五張教師節感謝卡。",
+        "options": null,
+        "answer": "So far, I have already written five thank-you cards for Teachers' Day.",
+        "accepted_answers": [
+          "Up to now, I have written five Teachers' Day thank-you cards.",
+          "I have already written five thank-you cards for Teachers' Day so far."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "現在完成式"
+          ],
+          "topic": "教師節寫卡片"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "我把其中一張送給了一位下個月就要退休的數學老師。",
+        "options": null,
+        "answer": "I gave one of them to a math teacher who is going to retire next month.",
+        "accepted_answers": [
+          "I gave one of the cards to a math teacher who will retire next month.",
+          "I have given one of them to a math teacher who is retiring next month."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "關係代名詞"
+          ],
+          "topic": "教師節寫卡片"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "教師節寫卡片"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「到目前為止，我已經寫了…」說的是從過去累積到現在的數量，用現在完成式 have (already) written；write 的過去分詞是 written。「到目前為止」so far／up to now，放句首加逗號或放句尾。「五張…感謝卡」數量大於一，card 要加 s：five thank-you cards。「教師節」Teachers' Day（教師們的節日，s 後加撇號），寫 Teacher's Day 也常見。",
+          "evidence": [
+            "到目前為止",
+            "我已經寫了五張"
+          ],
+          "strategy_zh": "看到「到目前為止」「已經」，先想現在完成式 have/has + p.p.。",
+          "hints": [
+            "切成四段：到目前為止／我已經寫了／教師節／（五張）感謝卡",
+            "標的詞彙：so far（到目前為止）、write（寫）、Teachers' Day（教師節）、thank（感謝）、card（卡片）",
+            "句型框架：So far, S + have/has (+ already) + p.p. + 數量 + 複數名詞 …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「下個月就要退休的數學老師」修飾語很長，英文不能放在 teacher 前面，要改成放在名詞後面的關係子句：a math teacher who is going to retire next month；先行詞是人，關係代名詞用 who 或 that。「就要退休」是未來的事，用 is going to retire／will retire／is retiring。「其中一張」one of them（them 指上一句的卡片）；「送給」give sth to sb。",
+          "evidence": [
+            "其中一張",
+            "下個月就要退休的數學老師"
+          ],
+          "strategy_zh": "「…的＋人」修飾語有動詞時，英文寫成「人＋who＋動詞…」放在名詞後面。",
+          "hints": [
+            "切成四段：我把其中一張送給了／下個月／就要退休的（who …）／數學老師",
+            "標的詞彙：give（送給）、month（月）、retire（退休）、math（數學）、teacher（老師）",
+            "句型框架：S + gave … to + a + N(人) + who + V …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "So far, I have already written five thank-you cards for Teachers' Day.",
+            "Up to now, I have written five Teachers' Day thank-you cards.",
+            "I have already written five thank-you cards for Teachers' Day so far."
+          ],
+          "target_words": [
+            {
+              "word": "so far",
+              "zh": "到目前為止",
+              "alternatives": [
+                "up to now",
+                "until now",
+                "by now",
+                "till now",
+                "up till now",
+                "up until now",
+                "to date",
+                "thus far",
+                "as of now"
+              ]
+            },
+            {
+              "word": "write",
+              "zh": "寫",
+              "alternatives": [
+                "make",
+                "finish",
+                "complete"
+              ]
+            },
+            {
+              "word": "Teachers' Day",
+              "zh": "教師節",
+              "alternatives": [
+                "Teacher's Day",
+                "Teachers Day"
+              ]
+            },
+            {
+              "word": "thank",
+              "zh": "感謝（感謝卡 thank-you card）",
+              "alternatives": [
+                "thanks"
+              ]
+            },
+            {
+              "word": "card",
+              "zh": "卡片",
+              "alternatives": [
+                "note"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PERF",
+              "grammar_id": "gp-present-perfect",
+              "label_zh": "現在完成式（到目前為止＋已經：have + p.p.）",
+              "frame": "So far, S + have/has (+ already) + p.p. …",
+              "zh_trigger": "到目前為止"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "到目前為止",
+              "accepted": [
+                "So far",
+                "Up to now",
+                "Up till now",
+                "Up until now",
+                "Until now",
+                "By now",
+                "Till now",
+                "As of now",
+                "To date",
+                "Thus far",
+                "Until today",
+                "Up to today",
+                "By today"
+              ],
+              "targets": [
+                "so far"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "So far as now",
+                  "right": "So far",
+                  "explanation_zh": "「到目前為止」就是 so far（或 up to now），後面不再加 as now。"
+                }
+              ]
+            },
+            {
+              "zh": "我已經寫了",
+              "accepted": [
+                "I have already written",
+                "I have written",
+                "I have already finished writing",
+                "I have already finished",
+                "I have already made",
+                "I have already completed",
+                "I've already written",
+                "I've written",
+                "I've already finished writing",
+                "I've already finished",
+                "I've already made",
+                "I've already completed"
+              ],
+              "targets": [
+                "PERF",
+                "write"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "I already wrote",
+                  "right": "I have already written",
+                  "explanation_zh": "「到目前為止已經…」是累積到現在的結果，要用現在完成式。"
+                },
+                {
+                  "wrong": "I have already wrote",
+                  "right": "I have already written",
+                  "explanation_zh": "have 後面接過去分詞 written，不是過去式 wrote。"
+                }
+              ]
+            },
+            {
+              "zh": "教師節",
+              "accepted": [
+                "for Teachers' Day",
+                "Teachers' Day",
+                "for Teacher's Day",
+                "Teacher's Day",
+                "on Teachers' Day"
+              ],
+              "targets": [
+                "Teachers' Day"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "for Teacher Day",
+                  "right": "for Teachers' Day",
+                  "explanation_zh": "「教師節」是 Teachers' Day，要有所有格。"
+                }
+              ]
+            },
+            {
+              "zh": "感謝卡",
+              "accepted": [
+                "five thank-you cards",
+                "thank-you cards",
+                "five thank-you notes",
+                "thank-you notes",
+                "five Teachers' Day thank-you cards",
+                "five Teachers' Day cards",
+                "five cards to thank",
+                "five cards of thanks",
+                "cards to thank my teachers",
+                "five cards"
+              ],
+              "targets": [
+                "thank",
+                "card"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "five thank-you card",
+                  "right": "five thank-you cards",
+                  "explanation_zh": "五張大於一張，card 要用複數 cards。"
+                },
+                {
+                  "wrong": "five thanks you cards",
+                  "right": "five thank-you cards",
+                  "explanation_zh": "「感謝卡」是 thank-you card（thank 後面接 you，中間可加連字號）。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "plural_countable",
+              "zh": "五張教師節感謝卡",
+              "literal_error": "So far, I have already written five thank-you card for Teachers' Day.",
+              "part": 4,
+              "explanation_zh": "中文「五張…卡」沒有複數標記，照字面寫成 five thank-you card 會漏掉複數，這一部分扣分。"
+            }
+          ],
+          "bonus": [],
+          "notes_zh": "「到目前為止」so far、up to now、until now 都給分，可放句首或句尾；「已經」already 可加可不加（have written 已表達完成）；「教師節感謝卡」thank-you cards for Teachers' Day、Teachers' Day thank-you cards、Teachers' Day cards 都可以，Teacher's Day 也算對。"
+        },
+        "2": {
+          "references": [
+            "I gave one of them to a math teacher who is going to retire next month.",
+            "I gave one of the cards to a math teacher who will retire next month.",
+            "I have given one of them to a math teacher who is retiring next month."
+          ],
+          "target_words": [
+            {
+              "word": "give",
+              "zh": "送給",
+              "alternatives": [
+                "send",
+                "hand",
+                "present"
+              ]
+            },
+            {
+              "word": "month",
+              "zh": "月（下個月）"
+            },
+            {
+              "word": "retire",
+              "zh": "退休"
+            },
+            {
+              "word": "math",
+              "zh": "數學",
+              "alternatives": [
+                "maths",
+                "mathematics"
+              ]
+            },
+            {
+              "word": "teacher",
+              "zh": "老師"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "REL",
+              "grammar_id": "gp-relative-pronoun",
+              "label_zh": "關係代名詞 who／that 引導的形容詞子句（…的老師：a teacher who …）",
+              "frame": "N(人) + who/that + V …",
+              "zh_trigger": "下個月就要退休的"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "我把其中一張送給了",
+              "accepted": [
+                "I gave one of them to",
+                "I gave one of the cards to",
+                "I gave one of these cards to",
+                "I have given one of them to",
+                "I have given one of the cards to",
+                "I have given one of these cards to",
+                "I sent one of them to",
+                "I sent one of the cards to",
+                "I sent one of these cards to",
+                "I've given one of them to",
+                "I handed one of them to",
+                "I presented one of them to",
+                "One of them went to",
+                "One of them is for",
+                "One of them was given to",
+                "One of the cards went to",
+                "One of them will go to"
+              ],
+              "targets": [
+                "give"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "I gave one of it to",
+                  "right": "I gave one of them to",
+                  "explanation_zh": "「其中一張」指上一句好幾張卡片中的一張，寫 one of them。"
+                },
+                {
+                  "wrong": "I gave one of them for",
+                  "right": "I gave one of them to",
+                  "explanation_zh": "「把東西送給某人」是 give sth to sb，介系詞用 to。"
+                }
+              ]
+            },
+            {
+              "zh": "下個月",
+              "accepted": [
+                "next month"
+              ],
+              "targets": [
+                "month"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "in next month",
+                  "right": "next month",
+                  "explanation_zh": "next month 前面不加介系詞 in。"
+                }
+              ]
+            },
+            {
+              "zh": "就要退休的",
+              "accepted": [
+                "who is going to retire",
+                "who will retire",
+                "who is retiring",
+                "who is about to retire",
+                "who will be retiring",
+                "that is going to retire",
+                "that will retire",
+                "that is retiring",
+                "that is about to retire",
+                "that will be retiring",
+                "who's going to retire",
+                "who's retiring",
+                "who'll retire",
+                "who plans to retire",
+                "who is due to retire"
+              ],
+              "targets": [
+                "REL",
+                "retire"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "which is going to retire",
+                  "right": "who is going to retire",
+                  "explanation_zh": "先行詞 teacher 是人，關係代名詞用 who 或 that，不用 which。"
+                },
+                {
+                  "wrong": "a next month retiring math teacher",
+                  "right": "a math teacher who is going to retire next month",
+                  "explanation_zh": "修飾語「下個月就要退休的」很長，要改成放在名詞後面的 who 子句。"
+                }
+              ]
+            },
+            {
+              "zh": "數學老師",
+              "accepted": [
+                "math teacher",
+                "maths teacher",
+                "mathematics teacher",
+                "teacher of math",
+                "teacher of mathematics"
+              ],
+              "targets": [
+                "math",
+                "teacher"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "mathematic teacher",
+                  "right": "math teacher",
+                  "explanation_zh": "「數學」是 math 或 mathematics（字尾有 s），沒有 mathematic 這個名詞。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "prenominal_modifier",
+              "zh": "下個月就要退休的數學老師",
+              "literal_error": "I gave one of them to a next month retiring math teacher.",
+              "part": 3,
+              "explanation_zh": "照中文語序把「下個月就要退休的」放在 teacher 前面，英文名詞前放不下帶時間的動作，要改成後面的 who 子句，這一部分扣分。"
+            }
+          ],
+          "bonus": [],
+          "notes_zh": "關係代名詞用 who 或 that 都給分（不加逗號的限定用法）；「就要退休」is going to retire、will retire、is retiring、is about to retire 都可以；「送給了」gave、have given、sent 都可以；「其中一張」one of them、one of the cards 都可以；「數學」math、maths、mathematics 都可以。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-basic-02-regen",
+    "lot": "translation-basic-02",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "2c5ef77e58a3846b481c3cd32f2468c2e9f8b4421d9d9d23848ce57a9f827d9b",
+    "spec_id": "translation-basic@2026-10-09",
+    "regenerated_from": "ai.tr.fe2ddd"
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T18:19:58Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T18:00:28Z",
+      "details": {
+        "solver": "A",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "So far, I have written five thank-you cards for Teachers' Day.",
+            "confidence": "high",
+            "explanation_zh": "「到目前為止……已經」是從過去延續到現在的累計，用現在完成式 have written，搭配 so far（up to now 也可）；「教師節感謝卡」用 thank-you cards for Teachers' Day（也可寫 Teachers' Day thank-you cards）；Teachers' Day 所有格在複數 s 之後。"
+          },
+          "2": {
+            "translation": "I gave one of them to a math teacher who is going to retire next month.",
+            "confidence": "high",
+            "explanation_zh": "「其中一張」用 one of them（代替前句的卡片）；「送給」用 give A to B，過去式 gave；「下個月就要退休的數學老師」用關係代名詞 who 引導形容詞子句修飾 a math teacher，未來的安排用 is going to retire（is retiring 也可）。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PERF"
+            ],
+            "used_target_words": [
+              "so far",
+              "write",
+              "Teachers' Day",
+              "thank",
+              "card"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "REL"
+            ],
+            "used_target_words": [
+              "give",
+              "month",
+              "retire",
+              "math",
+              "teacher"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "so far",
+              "write",
+              "Teachers' Day",
+              "thank",
+              "card"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PERF": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "give",
+              "month",
+              "retire",
+              "math",
+              "teacher"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "REL": true
+            },
+            "program_match": true
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T18:00:31Z",
+      "details": {
+        "solver": "B",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "So far, I have written five thank-you cards for Teachers' Day.",
+            "confidence": "high",
+            "explanation_zh": "「到目前為止」搭配現在完成式 have written；「教師節感謝卡」用 thank-you cards for Teachers' Day（複數 cards 配 five）。"
+          },
+          "2": {
+            "translation": "I gave one of them to a math teacher who will retire next month.",
+            "confidence": "high",
+            "explanation_zh": "「其中一張」用 one of them；「送給」用 gave ... to；「下個月就要退休的」是修飾老師的關係子句 who will retire next month，未來的事用 will（或 is going to）。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PERF"
+            ],
+            "used_target_words": [
+              "so far",
+              "write",
+              "Teachers' Day",
+              "thank",
+              "card"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "REL"
+            ],
+            "used_target_words": [
+              "give",
+              "month",
+              "retire",
+              "math",
+              "teacher"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "so far",
+              "write",
+              "Teachers' Day",
+              "thank",
+              "card"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PERF": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "give",
+              "month",
+              "retire",
+              "math",
+              "teacher"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "REL": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

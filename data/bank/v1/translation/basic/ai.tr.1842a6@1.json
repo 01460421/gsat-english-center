@@ -1,0 +1,722 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.1842a6",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "basic",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "下雨的時候，我和同學們會去自助洗衣店洗衣服。",
+        "options": null,
+        "answer": "When it rains, my classmates and I go to a self-service laundry to wash our clothes.",
+        "accepted_answers": [
+          "When it is raining, my classmates and I wash our clothes at a laundromat.",
+          "Whenever it rains, my classmates and I go to the laundromat to wash our clothes."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "時間副詞子句"
+          ],
+          "topic": "自助洗衣店"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "在那裡，一大袋髒衣服四十分鐘內就可以洗乾淨。",
+        "options": null,
+        "answer": "There, a big bag of dirty clothes can be washed clean within forty minutes.",
+        "accepted_answers": [
+          "A large bag of dirty clothes can be cleaned there in forty minutes.",
+          "At the laundromat, a big bag of dirty clothes can be washed clean within 40 minutes."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "被動語態"
+          ],
+          "topic": "自助洗衣店"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "自助洗衣店"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「下雨的時候」是時間副詞子句：When + 主詞 + 動詞；天氣要用虛主詞 it（When it rains），不能寫 When rains。說的是習慣，子句和主要子句都用現在式（子句裡不用 will）。「我和同學們」當主詞寫 my classmates and I（I 放最後、用主格）。「自助洗衣店」可寫 self-service laundry 或 laundromat，單數加冠詞（a／the）或泛指的複數（laundromats、self-service laundries）都可以。「洗衣服」wash our clothes 或 do our laundry；衣服是 clothes，不是 cloths。",
+          "evidence": [
+            "下雨的時候",
+            "我和同學們"
+          ],
+          "strategy_zh": "「…的時候」先想 When + S + V；中文沒有主詞的「下雨」，英文要補虛主詞 it。",
+          "hints": [
+            "切成四段：下雨的時候／我和同學們／自助洗衣店／洗衣服（「會去…洗衣服」可寫 go to … to wash our clothes）",
+            "標的詞彙：rain（下雨）、classmate（同學）、laundry／laundromat（自助洗衣店）、wash（洗）、clothes（衣服）",
+            "句型框架：When it rains, S + V …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "主詞「一大袋髒衣服」是被洗的東西，動詞要用被動語態：情態助動詞 can + be + 過去分詞 washed（洗乾淨 washed clean，或 cleaned）；不能照中文寫成 can wash clean（變成衣服自己在洗）。「一大袋」用量詞 a big bag of，後面的 clothes 是複數形；「四十分鐘內」within forty minutes（或 in forty minutes），minute 要用複數。「在那裡」there 可放句首或句尾。",
+          "evidence": [
+            "一大袋髒衣服",
+            "就可以洗乾淨"
+          ],
+          "strategy_zh": "主詞是「東西」、中文說它「可以被怎樣」時，英文用 can + be + p.p.。",
+          "hints": [
+            "切成四段：一大袋／髒衣服／四十分鐘內／就可以洗乾淨（「在那裡」there 放句首或句尾）",
+            "標的詞彙：big／large（大的）、bag（袋）、dirty（髒的）、clothes（衣服）、minute（分鐘）、wash（洗）",
+            "句型框架：S（物）+ can + be + p.p. (+ clean) + within … minutes"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "When it rains, my classmates and I go to a self-service laundry to wash our clothes.",
+            "When it is raining, my classmates and I wash our clothes at a laundromat.",
+            "Whenever it rains, my classmates and I go to the laundromat to wash our clothes."
+          ],
+          "target_words": [
+            {
+              "word": "rain",
+              "zh": "下雨"
+            },
+            {
+              "word": "classmate",
+              "zh": "同學",
+              "alternatives": [
+                "schoolmate"
+              ]
+            },
+            {
+              "word": "laundry",
+              "zh": "自助洗衣店（self-service laundry）",
+              "alternatives": [
+                "laundromat",
+                "laundromats",
+                "launderette",
+                "launderettes",
+                "laundrette",
+                "laundrettes"
+              ]
+            },
+            {
+              "word": "wash",
+              "zh": "洗"
+            },
+            {
+              "word": "clothes",
+              "zh": "衣服",
+              "alternatives": [
+                "clothing",
+                "laundry"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "ADVCL",
+              "grammar_id": "gp-time-clause",
+              "label_zh": "時間副詞子句（下雨的時候：When it rains, S + V …）",
+              "frame": "When/Whenever + S + V(現在式), S + V …",
+              "zh_trigger": "下雨的時候"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "下雨的時候",
+              "accepted": [
+                "When it rains",
+                "Whenever it rains",
+                "When it is raining",
+                "When it's raining",
+                "When it is rainy",
+                "When the weather is rainy",
+                "On days when it rains",
+                "Every time it rains"
+              ],
+              "targets": [
+                "ADVCL",
+                "rain"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "When rains",
+                  "right": "When it rains",
+                  "explanation_zh": "「下雨」英文要有主詞，用虛主詞 it：it rains。"
+                },
+                {
+                  "wrong": "When it will rain",
+                  "right": "When it rains",
+                  "explanation_zh": "時間子句說習慣或未來，都用現在式，不用 will。"
+                }
+              ]
+            },
+            {
+              "zh": "我和同學們",
+              "accepted": [
+                "my classmates and I",
+                "my classmate and I",
+                "my schoolmates and I"
+              ],
+              "targets": [
+                "classmate"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "I and my classmates",
+                  "right": "my classmates and I",
+                  "explanation_zh": "英文習慣把 I 放在最後：my classmates and I。"
+                },
+                {
+                  "wrong": "my classmates and me",
+                  "right": "my classmates and I",
+                  "explanation_zh": "這裡是主詞，要用主格 I，不用 me。"
+                }
+              ]
+            },
+            {
+              "zh": "自助洗衣店",
+              "accepted": [
+                "self-service laundry",
+                "self-service laundries",
+                "laundromat",
+                "laundromats",
+                "self-service laundromat",
+                "self-service laundromats",
+                "coin laundry",
+                "coin laundries",
+                "coin-operated laundry",
+                "coin-operated laundries",
+                "coin-operated laundromat",
+                "coin-operated laundromats",
+                "launderette",
+                "launderettes",
+                "laundrette",
+                "laundry shop",
+                "laundry shops",
+                "self-service laundry shop",
+                "self-service laundry shops",
+                "laundry store",
+                "laundry stores",
+                "self-serve laundromat"
+              ],
+              "targets": [
+                "laundry"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "a self-help laundry",
+                  "right": "a self-service laundry",
+                  "explanation_zh": "「自助（服務）」是 self-service；self-help 是「自己解決問題、自我成長」。"
+                },
+                {
+                  "wrong": "a washing clothes store",
+                  "right": "a laundromat",
+                  "explanation_zh": "「自助洗衣店」是 laundromat 或 self-service laundry，不要逐字翻成 washing clothes store。"
+                }
+              ]
+            },
+            {
+              "zh": "洗衣服",
+              "accepted": [
+                "wash our clothes",
+                "wash clothes",
+                "do our laundry",
+                "do the laundry",
+                "do laundry",
+                "wash our laundry",
+                "wash the clothes",
+                "wash our dirty clothes",
+                "get our clothes washed",
+                "washing our clothes"
+              ],
+              "targets": [
+                "wash",
+                "clothes"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "wash our cloths",
+                  "right": "wash our clothes",
+                  "explanation_zh": "cloth 是「布」，cloths 是好幾塊布；「衣服」是 clothes。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "subjectless",
+              "zh": "下雨的時候",
+              "literal_error": "When rains, my classmates and I go to a self-service laundry to wash our clothes.",
+              "part": 1,
+              "explanation_zh": "中文「下雨」沒有主詞，照字面寫成 When rains 會缺主詞；天氣要用虛主詞 it（When it rains），這一部分扣分。"
+            }
+          ],
+          "bonus": [],
+          "notes_zh": "「自助洗衣店」單數（a／the self-service laundry、a laundromat）或複數泛指（laundromats、self-service laundries）都給分，self-service、coin-operated 可加可不加；「會去…洗衣服」可寫 go to … to wash our clothes，也可直接寫 wash our clothes at …；「洗衣服」wash our clothes、do our laundry 都可以。時間子句 When it rains／When it is raining／Whenever it rains 都可以，也可以放句尾（… when it rains）。"
+        },
+        "2": {
+          "references": [
+            "There, a big bag of dirty clothes can be washed clean within forty minutes.",
+            "A large bag of dirty clothes can be cleaned there in forty minutes.",
+            "At the laundromat, a big bag of dirty clothes can be washed clean within 40 minutes."
+          ],
+          "target_words": [
+            {
+              "word": "big",
+              "zh": "大的（一大袋）",
+              "alternatives": [
+                "large",
+                "huge",
+                "full"
+              ]
+            },
+            {
+              "word": "bag",
+              "zh": "袋"
+            },
+            {
+              "word": "dirty",
+              "zh": "髒的"
+            },
+            {
+              "word": "clothes",
+              "zh": "衣服",
+              "alternatives": [
+                "laundry",
+                "clothing"
+              ]
+            },
+            {
+              "word": "minute",
+              "zh": "分鐘"
+            },
+            {
+              "word": "wash",
+              "zh": "洗",
+              "alternatives": [
+                "clean"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PASS",
+              "grammar_id": "gp-passive",
+              "label_zh": "被動語態（情態助動詞被動：can be + p.p.）",
+              "frame": "S（物）+ can + be + p.p. (+ clean) + within …",
+              "zh_trigger": "就可以洗乾淨"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "一大袋",
+              "accepted": [
+                "a big bag of",
+                "a large bag of",
+                "a huge bag of",
+                "a big bag full of",
+                "a large bag full of",
+                "a whole bag of",
+                "big bags of"
+              ],
+              "targets": [
+                "big",
+                "bag"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "a big bag dirty clothes",
+                  "right": "a big bag of dirty clothes",
+                  "explanation_zh": "量詞 a bag of 的 of 不能省略。"
+                }
+              ]
+            },
+            {
+              "zh": "髒衣服",
+              "accepted": [
+                "dirty clothes",
+                "dirty laundry",
+                "dirty clothing"
+              ],
+              "targets": [
+                "dirty",
+                "clothes"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "dirty cloth",
+                  "right": "dirty clothes",
+                  "explanation_zh": "「衣服」是 clothes；cloth 是「布」。"
+                }
+              ]
+            },
+            {
+              "zh": "四十分鐘內",
+              "accepted": [
+                "within forty minutes",
+                "within 40 minutes",
+                "in forty minutes",
+                "in 40 minutes",
+                "in less than forty minutes",
+                "in less than 40 minutes",
+                "in under forty minutes",
+                "in under 40 minutes",
+                "in just forty minutes",
+                "in only forty minutes"
+              ],
+              "targets": [
+                "minute"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "within forty minute",
+                  "right": "within forty minutes",
+                  "explanation_zh": "四十分鐘大於一，minute 要用複數 minutes。"
+                },
+                {
+                  "wrong": "during forty minutes",
+                  "right": "within forty minutes",
+                  "explanation_zh": "「…分鐘內（完成）」表示期限，用 within 或 in，不用 during。"
+                }
+              ]
+            },
+            {
+              "zh": "就可以洗乾淨",
+              "accepted": [
+                "can be washed clean",
+                "can be cleaned",
+                "can be washed",
+                "can be done",
+                "can get washed clean",
+                "can get cleaned",
+                "can get washed",
+                "can get done",
+                "will be washed clean",
+                "will be cleaned",
+                "will be washed",
+                "will be done",
+                "will get washed clean",
+                "will get cleaned",
+                "will get washed",
+                "will get done",
+                "could be washed clean",
+                "can all be washed clean",
+                "can be completely cleaned",
+                "can be fully cleaned",
+                "can be washed and cleaned"
+              ],
+              "targets": [
+                "PASS",
+                "wash"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "can wash clean",
+                  "right": "can be washed clean",
+                  "explanation_zh": "衣服是「被洗」的，要用被動語態 can be washed (clean)。"
+                },
+                {
+                  "wrong": "can be wash clean",
+                  "right": "can be washed clean",
+                  "explanation_zh": "be 後面接過去分詞 washed，不是原形。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "word_form",
+              "zh": "就可以洗乾淨",
+              "literal_error": "There, a big bag of dirty clothes can wash clean within forty minutes.",
+              "part": 4,
+              "explanation_zh": "中文沒有「被」字，照字面寫成主動 can wash clean，衣服變成自己在洗；要用被動 can be washed clean，這一部分扣分。"
+            }
+          ],
+          "bonus": [],
+          "notes_zh": "「洗乾淨」寫 can be washed clean、can be cleaned、can be washed、can get washed 都給分（重點是被動）；「一大袋」a big／large／huge bag of；「四十分鐘內」within forty minutes、in forty minutes、in less than forty minutes，數字寫 forty 或 40 都可以；「在那裡」there 或 at the laundromat，放句首或句尾都可以。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-basic-02-regen",
+    "lot": "translation-basic-02",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "2c5ef77e58a3846b481c3cd32f2468c2e9f8b4421d9d9d23848ce57a9f827d9b",
+    "spec_id": "translation-basic@2026-10-09",
+    "regenerated_from": "ai.tr.433349"
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T18:19:57Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T18:00:28Z",
+      "details": {
+        "solver": "A",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "When it rains, my classmates and I go to a laundromat to wash our clothes.",
+            "confidence": "medium",
+            "explanation_zh": "「下雨的時候」用 when 引導時間副詞子句，主要子句是習慣性動作，所以兩邊都用現在簡單式（會去＝習慣，不用 will）；「我和同學們」英文要把 I 放後面：my classmates and I；「去……洗衣服」用不定詞表目的 to wash our clothes；「自助洗衣店」用 laundromat（也可寫 self-service laundry），這個字可能超出基礎程度，所以信心給 medium。"
+          },
+          "2": {
+            "translation": "There, a big bag of dirty clothes can be washed clean within forty minutes.",
+            "confidence": "high",
+            "explanation_zh": "主詞是「一大袋髒衣服」，衣服是被洗的，用情態助動詞被動 can be + p.p.；「洗乾淨」用 washed clean（或 cleaned）；「四十分鐘內就」用 within forty minutes（in just forty minutes 也可，just 可帶出「就」的語氣）；「在那裡」用 There 放句首。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "ADVCL"
+            ],
+            "used_target_words": [
+              "rain",
+              "classmate",
+              "laundry",
+              "wash",
+              "clothes"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PASS"
+            ],
+            "used_target_words": [
+              "big",
+              "bag",
+              "dirty",
+              "clothes",
+              "minute",
+              "wash"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "rain",
+              "classmate",
+              "laundry",
+              "wash",
+              "clothes"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "ADVCL": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "big",
+              "bag",
+              "dirty",
+              "clothes",
+              "minute",
+              "wash"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PASS": true
+            },
+            "program_match": true
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "warn",
+      "created_at": "2026-10-09T18:00:31Z",
+      "details": {
+        "solver": "B",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "When it rains, my classmates and I go to a laundromat to wash our clothes.",
+            "confidence": "high",
+            "explanation_zh": "「下雨的時候」是時間副詞子句，用 When it rains（現在簡單式）；「會去」表示習慣，主要子句用現在簡單式 go；「自助洗衣店」用 laundromat（self-service laundry 亦可）；「去……洗衣服」用不定詞 to wash our clothes。"
+          },
+          "2": {
+            "translation": "There, a large bag of dirty clothes can be washed in just forty minutes.",
+            "confidence": "high",
+            "explanation_zh": "「可以洗乾淨」用被動助動詞 can be washed；「四十分鐘內」用 in forty minutes（within forty minutes 也可）；「在那裡」指前一句的自助洗衣店，用 There 開頭。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "ADVCL"
+            ],
+            "used_target_words": [
+              "rain",
+              "classmate",
+              "laundry",
+              "wash",
+              "clothes"
+            ],
+            "within_accepted": true,
+            "closest_reference": 2,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PASS"
+            ],
+            "used_target_words": [
+              "big",
+              "bag",
+              "dirty",
+              "clothes",
+              "minute",
+              "wash"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "「在那裡」沒有被任何一個部分涵蓋，學生漏譯（或誤譯）這個地點也不會被扣分；另外「一大袋」「髒衣服」把同一個名詞片語拆成兩個很小的部分，權重偏輕。建議把「在那裡」併入第 1 部分，或把「一大袋髒衣服」合成一部分。",
+              "（輕微）第 4 部分的 accepted 收了 can be done／can get done／will be done，用在「一袋髒衣服」上不太自然，建議刪掉或改成 can be washed clean 的變化。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "rain",
+              "classmate",
+              "laundry",
+              "wash",
+              "clothes"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "ADVCL": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "big",
+              "bag",
+              "dirty",
+              "clothes",
+              "minute",
+              "wash"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PASS": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 2 題驗證者對4 部分切分有意見（warn）：「在那裡」沒有被任何一個部分涵蓋，學生漏譯（或誤譯）這個地點也不會被扣分；另外「一大袋」「髒衣服」把同一個名詞片語拆成兩個很小的部分，權重偏輕。建議把「在那裡」併入第 1 部分，或把「一大袋髒衣服」合成一部分。；（輕微）第 4 部分的 ac"
+        ]
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}
