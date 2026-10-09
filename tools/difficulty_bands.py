@@ -47,11 +47,14 @@ TIER_ZH = {'basic': '穩定基礎', 'advanced': '進階練習', 'top': '超越�
 GROUPS = ['Pa', 'Pb', 'Pc', 'Pd', 'Pe']   # 依總分由高到低各 20%
 STD_NAMES = ['頂標', '前標', '均標', '後標', '底標']
 STD_PERCENTILE = {'頂標': 88, '前標': 75, '均標': 50, '後標': 25, '底標': 12}
-# 官方〈試題特色〉與 08 §2.4 的「各年最難 3 題」（115 第 3 難兩題同分，共 16 題），以及 08 §6 第 9 點舉的穩定基礎例子
+# 官方〈試題特色〉與 08 §2.4 的「各年最難 3 題」，以及 08 §6 第 9 點舉的穩定基礎例子。
+# 同分規則：第 3 低的 P 有同分時全部收入。115 年第 3 低 P .29 有三題同分（6、9、11）；08 §2.4 只列 6、9，
+# 這裡補上 11，共 17 題。
 OFFICIAL_HARDEST = [('gsat-111', '9'), ('gsat-111', '13'), ('gsat-111', '16'), ('gsat-112', '23'), ('gsat-112', '18'),
                     ('gsat-112', '7'), ('gsat-113', '8'), ('gsat-113', '20'), ('gsat-113', '3'), ('gsat-114', '23'),
                     ('gsat-114', '9'), ('gsat-114', '27'), ('gsat-115', '10'), ('gsat-115', '38'), ('gsat-115', '6'),
-                    ('gsat-115', '9')]
+                    ('gsat-115', '9'), ('gsat-115', '11')]
+OFFICIAL_HARDEST_RULE = ('各年 P 最低的 3 題；第 3 低有同分時全部收入（115 年 6、9、11 同為 P .29，08 §2.4 只列 6、9）')
 OFFICIAL_EASY_EXAMPLE = ('gsat-113', '35')
 
 # 各科成績標準一覽表・英文科：{學年度: {標準: (級分, 達到該級分以上的百分比)}}。
@@ -158,12 +161,20 @@ GROUP_THETA = {g: interval_mean_theta(80 - 20 * i, 100 - 20 * i) for i, g in enu
 GROUP_RANGE = {g: (80 - 20 * i, 100 - 20 * i) for i, g in enumerate(GROUPS)}
 
 
-def success_at(it, theta):
-    """在能力 θ 的預期答對率：五組點（組內平均 θ, logit 答對率）之間線性內插；超出兩端時取端點值。"""
+def success_at(it, theta, extrapolate=False):
+    """在能力 θ 的預期答對率：五組點（組內平均 θ, logit 答對率）之間線性內插。
+    超出兩端時預設取端點值（clamp）：頂標以上帶的 θ 1.548 高於 Pa 點（1.40），所以該帶的值就是 Pa（保守估計）。
+    extrapolate=True 時改為延伸最外側線段（Pb→Pa、Pd→Pe），只拿來和 clamp 值並列對照。"""
     pts = sorted((GROUP_THETA[g], logit(it[g])) for g in GROUPS)
     if theta <= pts[0][0]:
+        if extrapolate:
+            (t0, y0), (t1, y1) = pts[0], pts[1]
+            return ilogit(y0 + (y1 - y0) * (theta - t0) / (t1 - t0))
         return ilogit(pts[0][1])
     if theta >= pts[-1][0]:
+        if extrapolate:
+            (t0, y0), (t1, y1) = pts[-2], pts[-1]
+            return ilogit(y1 + (y1 - y0) * (theta - t1) / (t1 - t0))
         return ilogit(pts[-1][1])
     for (t0, y0), (t1, y1) in zip(pts, pts[1:]):
         if t0 <= theta <= t1:
@@ -393,6 +404,9 @@ def alternatives(items, band_theta, std_theta):
                 nxt = [success_at(i, band_theta[t]) for i in sub if k < 2 and f(i) == TIERS[k + 1]]
                 bs[lab][t] = {'own_tier': r4(statistics.mean(own)) if own else None,
                               'next_tier': r4(statistics.mean(nxt)) if nxt else None}
+                if t == 'top':  # 頂標以上帶 θ 超出 Pa 點：own_tier 是 clamp（= Pa），另列延伸值對照
+                    ext = [success_at(i, band_theta[t], extrapolate=True) for i in sub if f(i) == t]
+                    bs[lab][t]['own_tier_extrapolated'] = r4(statistics.mean(ext)) if ext else None
         r['band_success'] = bs
         res[name] = r
     # P 三等分的切點會隨「拿哪幾年來分」而變；五等分組規則不會
@@ -429,6 +443,8 @@ def calibration(items, band_theta):
             if lab != 'ast':
                 row['band_success_mean'] = {b: r4(statistics.mean(success_at(i, band_theta[b]) for i in ts))
                                             for b in TIERS}
+                row['band_success_mean_top_extrapolated'] = r4(statistics.mean(
+                    success_at(i, band_theta['top'], extrapolate=True) for i in ts))
             out[lab][t] = row
         # 分大題的 P 範圍（出題時依題型校準）
         secs = sorted({i['section'] for i in sub})
@@ -546,6 +562,9 @@ def build():
                        'tools/difficulty_bands.py GSAT_STANDARDS／AST_STANDARDS（各科成績標準一覽表，manifest subkind = score_standard）'],
             'doc': 'docs/analysis/difficulty-bands.md',
             'value_scale': '答對率皆為 0–1；多選題（學測 111–115 第 49 題）的 P、Pa–Pe 是得分率',
+            'success_at': '預期答對率＝五組點（組內平均 θ, logit 答對率）線性內插；θ 超出 Pa 點（1.40）時取 Pa（clamp，保守）。'
+                          '頂標以上帶 θ 1.548 落在 Pa 點之外，所以 band_success 的頂標以上欄就是 Pa 的平均；'
+                          '*_extrapolated 欄位改為延伸 Pb→Pa 的 logit 線段，只供對照',
             'counts': {'items': len(items), 'gsat': len(gsat), 'ast': len(ast),
                        'five_group': sum(1 for i in items if i['method'] == 'five_group'),
                        'imputed': sum(1 for i in items if i['method'] == 'imputed')},
@@ -578,6 +597,7 @@ def build():
         'counts': {'by_section': by_sec, 'by_exam': dict(sorted(by_exam.items(), key=lambda kv: (
             not kv[0].startswith('gsat'), int(kv[0].split('-')[1]))))},
         'official_hardest': hardest,
+        'official_hardest_rule': OFFICIAL_HARDEST_RULE,
         'official_easy_example': {'exam': OFFICIAL_EASY_EXAMPLE[0], 'label': OFFICIAL_EASY_EXAMPLE[1],
                                   'tier': idx[OFFICIAL_EASY_EXAMPLE]['tier'], 'P': idx[OFFICIAL_EASY_EXAMPLE]['P'],
                                   'Pc': idx[OFFICIAL_EASY_EXAMPLE]['Pc']},

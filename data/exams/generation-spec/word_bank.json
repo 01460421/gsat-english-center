@@ -273,10 +273,17 @@
    "evidence": {
     "current": "core 且無近似誘答 20 格：basic 16、advanced 4、top 0",
     "gsat_91_115": "142 格：100／34／8"
+   },
+   "blind_solver": {
+    "locally_plausible_partners": [
+     0,
+     0
+    ],
+    "feasible_in_context": "only_key"
    }
   },
   "advanced": {
-   "sense": "core＋1 個同組近似誘答，或延伸義（ext）但無近似誘答，或意義不透明的片語動詞",
+   "sense": "core＋1 個同組近似誘答（本句也說得通、讀全文才排除），或延伸義（ext）但無近似誘答，或意義要靠上下文推得的片語動詞（字面可解的片語動詞算 basic）",
    "target_P": [
     0.39,
     0.5
@@ -288,6 +295,13 @@
    "evidence": {
     "current": "core＋近似誘答 11 格：2／6／3；延伸義無誘答 5 格：2／1／2",
     "gsat_91_115": "core＋近似誘答 63 格：15／25／23"
+   },
+   "blind_solver": {
+    "locally_plausible_partners": [
+     1,
+     1
+    ],
+    "feasible_in_context": "only_key"
    }
   },
   "top": {
@@ -302,6 +316,13 @@
    "evidence": {
     "current": "延伸義＋近似誘答 14 格：0／6／8",
     "gsat_91_115": "26 格：1／10／15"
+   },
+   "blind_solver": {
+    "locally_plausible_partners": [
+     1,
+     2
+    ],
+    "feasible_in_context": "only_key"
    }
   },
   "definitions": {
@@ -310,7 +331,9 @@
    "conv": "轉品或非主要詞性（even、combat、alert、house 當動詞；faithful、unknown 當名詞）",
    "idiom": "慣用語中不透明的成分（out of necessity、in its own right、do one's share）",
    "same_frame": "空格的句法位置（Nsg／Npl／Vb／V3／Vd／Vn／Vg／Aa／Ap／Acmp／R／F）相同、可以直接填入的其他選項",
-   "confusable_partner": "同句法位置、只讀本句也說得通（或近義）的另一個選項；歷屆資料以「高分組選它 ≥ 5%」認定，生成時以盲解者的「也說得通」集合認定"
+   "confusable_partner": "同句法位置、只讀本句也說得通（或近義）的另一個選項；歷屆資料以「高分組選它 ≥ 5%」認定，生成時以盲解者的 locally_plausible 集合認定（feasible_in_context 必須只含正解）",
+   "phrasal_verb": "字面可解（depend on、try out：動詞＋介副詞照字面就是答案的意思）＝basic；意義要由上下文推得（pass on 訊息、point to 研究結果、called for＝需要）＝advanced",
+   "sense_rule": "core／ext／conv／idiom 依 common_rules.sense_classification（程式初篩＋兩位獨立判讀）"
   }
  },
  "tiers": {
@@ -322,12 +345,12 @@
    "unit": "整篇（10 格）",
    "blank_tier_mix": {
     "basic": [
-     7,
-     9
+     8,
+     10
     ],
     "advanced": [
-     1,
-     3
+     0,
+     2
     ],
     "top": [
      0,
@@ -335,8 +358,8 @@
     ]
    },
    "recipe_example_mix": {
-    "basic": 8,
-    "advanced": 2,
+    "basic": 9,
+    "advanced": 1,
     "top": 0
    },
    "passage_words": [
@@ -344,11 +367,11 @@
     290
    ],
    "expected_correct_rate_for_band_students": {
-    "value": 0.7,
+    "value": 0.73,
     "all_bands": {
-     "basic": 0.7,
-     "advanced": 0.87,
-     "top": 0.95
+     "basic": 0.73,
+     "advanced": 0.88,
+     "top": 0.96
     },
     "per_blank_tier_current": {
      "basic": {
@@ -367,9 +390,10 @@
       "top": 0.71
      }
     },
-    "method": "各級格對三個練習帶的預期答對率（logit 內插五等分組，同 tools/difficulty_bands.py success_at；帶內平均 θ：basic 0.235、advanced 0.781、top 1.548），依 recipe_example_mix 加權"
+    "method": "各級格對三個練習帶的預期答對率（logit 內插五等分組，同 tools/difficulty_bands.py success_at；帶內平均 θ：basic 0.235、advanced 0.781、top 1.548），依 recipe_example_mix 加權",
+    "note": "9／1 配比依各級格的預期答對率加權（.9×.75＋.1×.50）；原 8／2 範例在穩定基礎限制下做不出 2 格進階"
    },
-   "expected_passage_mean_P": 0.55,
+   "expected_passage_mean_P": 0.56,
    "blank_stats_current": {
     "n": 20,
     "P": {
@@ -510,7 +534,7 @@
     "coverage_L1_6_min": 0.91,
     "beyond_l4_ratio_max": 0.035,
     "coverage_method": "forms-index 精確比對",
-    "note": "刻意比現制輕：現制 5 篇中覆蓋率與 beyond-L4 有 3 篇符合（111、112、115），連字數一起只有 115 符合；歷屆易卷 11 篇有 4 篇全部符合。屬閱讀負荷的產品選擇，方向同 SPEC §3.4；資料顯示篇長與整篇難度無關"
+    "note": "刻意比現制輕：現制 5 篇中覆蓋率與 beyond-L4 有 3 篇符合（111、112、115），連字數一起只有 115 符合；學測易卷 7 篇有 3 篇符合（L1–4 中位數 .904；指考易卷 4 篇另列，不當校準）。屬閱讀負荷的產品選擇，方向同 SPEC §3.4；資料顯示篇長與整篇難度無關"
    },
    "sense_mix": {
     "core": [
@@ -529,7 +553,7 @@
      0,
      0
     ],
-    "basis": "類似現制 115（core 9、ext 1）；舊制 11 篇「basic ≥7 且無 top」的卷：延伸義格中位數 0（0–3）"
+    "basis": "類似現制 115（core 9、ext 1）；學測 7 篇「basic ≥7 且無 top」的易卷：非常用義正解中位數 1（0–3）（指考易卷 4 篇是 0（0–1），指考級別相對於指考考生，不當校準）"
    },
    "question_type_mix": {
     "word_meaning": [
@@ -563,7 +587,8 @@
      2,
      4
     ],
-    "note": "空格句法位置的類別（frame），不是選項外觀詞性"
+    "note": "空格句法位置的類別（frame），不是選項外觀詞性",
+    "A_note": "A 是句法位置類別（含由分詞或片語動詞填入的 Ap，例如 113-26 passed on），選項依用法計的形容詞數另受 WB-POS-01 的 2–3 限制"
    },
    "answer_level_dist": {
     "L1-4_min": 8,
@@ -576,7 +601,7 @@
      0,
      2
     ],
-    "phrasal_verb_meaning": "意義透明（depend on、try out）",
+    "phrasal_verb_meaning": "字面可解（depend on、try out）；意義要靠上下文推得的片語動詞只能放在進階格",
     "max_frame_group_size": 4,
     "options_ge_L5_max": 1,
     "conv_options": 0
@@ -588,15 +613,16 @@
     ],
     "near_synonyms_in_same_frame": false,
     "same_frame_competitors": "每格可以有 1–3 個同句法位置的選項，但只讀本句就能排除（語意明顯不合）",
-    "blind_solver_also_plausible": "每格皆為空集合",
     "expected_upper_top_distractor_max": 0.05,
-    "observed_basis": "現制 basic 20 格：高分組最強誘答中位數 0.03（IQR 0.02–0.03），只有 2 格有同組近似誘答；舊制 11 篇易卷的近似誘答對中位數 1（0–2）"
+    "observed_basis": "現制 basic 20 格：高分組最強誘答中位數 0.03（IQR 0.02–0.03），只有 2 格有同組近似誘答；學測易卷 7 篇的同組近似對中位數 0（0–2）、最大同組 3（2–4）、平均 P 中位數 .558",
+    "blind_solver_locally_plausible": "basic 格為空集合；advanced 格（0–2 格，範例 1 格）可有 1 個同組近似誘答，讀全文後必須排除",
+    "blind_solver_feasible_in_context": "每格只含正解"
    },
    "recipe": [
-    "先決定 10 個正解：都用常用義，名詞 3–4、動詞 3–4（片語動詞 0–2，意義要透明）、形容詞 2–4",
-    "每個句法位置可以有 2–4 個選項同組（讓學生練「先看詞性」），但同組選項在彼此的空格裡語意都明顯不合",
+    "先決定 10 個正解：都用常用義，名詞 3–4、動詞 3–4（片語動詞 0–2，意義要字面可解）、形容詞 2–3",
+    "每個句法位置可以有 2–4 個選項同組（讓學生練「先看詞性」），但同組選項在彼此的空格裡語意都明顯不合（locally_plausible 為空）",
     "線索放在本句：搭配（cause health problems）、句型（so ... that、render + O + adj.）或前後語意對比",
-    "至多 1 格用延伸義，而且這一格不要再配同組近似誘答"
+    "進階格 0–2 格（範例 1 格），做法擇一：①常用義＋1 個同組近似誘答（本句也說得通，讀全文才排除）；②延伸義且無近似誘答（學測 91–115 這種格只有約三分之一落在進階）；③意義要靠上下文推得的片語動詞"
    ],
    "pitfalls": [
     "同組放了近義字（survived／retained 這種對子），會把兩格一起推到進階以上",
@@ -858,7 +884,8 @@
      2,
      5
     ],
-    "note": "現制每卷 frame 類別範圍；空格句法位置，不是選項外觀詞性"
+    "note": "現制每卷 frame 類別範圍；空格句法位置，不是選項外觀詞性",
+    "A_note": "A 是句法位置類別（含由分詞或片語動詞填入的 Ap，例如 113-26 passed on），選項依用法計的形容詞數另受 WB-POS-01 的 2–3 限制"
    },
    "answer_level_dist": {
     "L1-2": [
@@ -902,12 +929,13 @@
      "與全文主題相合但不合本句（fateful 放進 manageable 的空格）",
      "字形相近（familiar／faithful）"
     ],
-    "blind_solver_also_plausible": "進階格各有 1 個，且能用本句以外的線索排除",
     "expected_upper_top_distractor": [
      0.04,
      0.12
     ],
-    "observed_basis": "現制 advanced 17 格：高分組最強誘答中位數 0.10（IQR 0.04–0.12），12/17 格有同組近似誘答"
+    "observed_basis": "現制 advanced 17 格：高分組最強誘答中位數 0.10（IQR 0.04–0.12），12/17 格有同組近似誘答",
+    "blind_solver_locally_plausible": "進階格各有 1 個（同組近似誘答），且能用本句以外的線索排除",
+    "blind_solver_feasible_in_context": "每格只含正解"
    },
    "recipe": [
     "照現制模擬卷配比：basic 2–4、advanced 3–5、top 2–3",
@@ -1167,7 +1195,7 @@
    "blank_type_mix": {
     "N": [
      3,
-     5
+     4
     ],
     "V": [
      2,
@@ -1177,7 +1205,8 @@
      2,
      5
     ],
-    "note": "空格句法位置的類別（frame）"
+    "note": "空格句法位置的類別（frame）；N 格數就是名詞選項數，上限 4 與 WB-POS-01 一致",
+    "A_note": "A 是句法位置類別（含由分詞或片語動詞填入的 Ap，例如 113-26 passed on），選項依用法計的形容詞數另受 WB-POS-01 的 2–3 限制"
    },
    "answer_level_dist": {
     "L1-2": [
@@ -1218,12 +1247,13 @@
      4,
      7
     ],
-    "clusters": "≥2 個「難格群」：每群 2–4 個同句法位置、彼此都說得通的選項，且其中 ≥2 個是延伸義或轉品正解",
+    "clusters": "≥2 個「難格群」：每群 2–4 個同句法位置的選項，只讀本句時在彼此的空格都說得通（互在 locally_plausible 集合），讀全文後只有一個可行指派（feasible_in_context 每格只含正解）；群內 ≥2 個延伸義或轉品正解",
     "partner_is_hard_key": true,
-    "blind_solver_also_plausible": "超越頂標格各有 1–2 個，排除線索在前後句或段落",
     "expected_upper_top_distractor_min": 0.12,
     "challenge_max_per_passage": 1,
-    "observed_basis": "現制 top 13 格：高分組最強誘答中位數 0.19（IQR 0.14–0.29），11/13 格有同組近似誘答；top 格中高分組選「其他 top 格正解」的比例 0.093，選易格正解 0.028"
+    "observed_basis": "現制 top 13 格：高分組最強誘答中位數 0.19（IQR 0.14–0.29），11/13 格有同組近似誘答；top 格中高分組選「其他 top 格正解」的比例 0.093，選易格正解 0.028",
+    "blind_solver_locally_plausible": "超越頂標格各有 1–2 個，排除線索在前後句或段落",
+    "blind_solver_feasible_in_context": "每格只含正解"
    },
    "recipe": [
     "先選 2 個難格群：每群用 1 個轉品或延伸義正解（even、housed、the faithful、bear a name）配 1–3 個同句法位置、本句也說得通的選項",
@@ -1339,6 +1369,8 @@
    "id": "WB-FMT-01",
    "stage": "pre",
    "severity": "error",
+   "actor": "program",
+   "tier_scope": "set",
    "description": "1 篇 10 格；模擬卷題號 21–30 連續；[[n]] 與小題一一對應",
    "rule": {
     "metric": "blanks",
@@ -1356,6 +1388,8 @@
    "id": "WB-FMT-02",
    "stage": "pre",
    "severity": "error",
+   "actor": "program",
+   "tier_scope": "set",
    "description": "選項庫恰 10 個 A–J、不重複（不分大小寫）；10 格答案是 A–J 的一個排列（每個選項恰為一格的正解）",
    "rule": {
     "metric": "options_bank",
@@ -1371,6 +1405,8 @@
    "id": "WB-FMT-03",
    "stage": "pre",
    "severity": "warn",
+   "actor": "program",
+   "tier_scope": "set",
    "description": "選項不按字母排序；A–J 依序同詞性最長連續 ≤3；相鄰兩格答案為連續字母的最長連續 ≤2；|ρ(答案字母序, 格序)| ≤ 0.6",
    "rule": {
     "metric": "bank_order",
@@ -1389,6 +1425,8 @@
    "id": "WB-PAS-01",
    "stage": "pre",
    "severity": "error",
+   "actor": "program",
+   "tier_scope": "set",
    "description": "選文字數落在該級 passage.words；模擬卷 265–315",
    "rule": {
     "metric": "passage_words",
@@ -1406,6 +1444,8 @@
    "id": "WB-PAS-02",
    "stage": "pre",
    "severity": "warn",
+   "actor": "program",
+   "tier_scope": "set",
    "description": "3–4 段；15–20 句；平均句長 13.5–22 字",
    "rule": {
     "metric": "paragraphs",
@@ -1440,6 +1480,8 @@
    "id": "WB-LAY-01",
    "stage": "pre",
    "severity": "error",
+   "actor": "program",
+   "tier_scope": "set",
    "description": "第一句不挖空；第一格前至少 20 字",
    "rule": {
     "metric": "words_before_first_blank",
@@ -1458,6 +1500,8 @@
    "id": "WB-LAY-02",
    "stage": "pre",
    "severity": "error",
+   "actor": "program",
+   "tier_scope": "set",
    "description": "一句最多一格；相鄰兩格間距 ≥8 字",
    "rule": {
     "metric": "max_blanks_per_sentence",
@@ -1476,6 +1520,8 @@
    "id": "WB-LAY-03",
    "stage": "pre",
    "severity": "warn",
+   "actor": "program",
+   "tier_scope": "set",
    "description": "每段至少 1 格；第一段 ≤2 格；每段 ≤5 格",
    "rule": {
     "metric": "blanks_per_paragraph",
@@ -1493,6 +1539,8 @@
    "id": "WB-VOC-01",
    "stage": "pre",
    "severity": "error",
+   "actor": "program",
+   "tier_scope": "set",
    "description": "選文 beyond-L4 ≤ 該級上限、L1–4／L1–6 覆蓋率 ≥ 該級下限（forms-index 精確比對）；模擬卷 ≤0.045、≥0.84、≥0.88",
    "rule": {
     "metric": "passage_coverage",
@@ -1511,6 +1559,8 @@
    "id": "WB-VOC-02",
    "stage": "pre",
    "severity": "error",
+   "actor": "program",
+   "tier_scope": "item",
    "description": "每個選項（片語取實詞）在詞彙表 L1–6，或可由表內字加常見詞綴得到（註明原字）；不收真正的表外字",
    "rule": {
     "metric": "option_level",
@@ -1524,6 +1574,8 @@
    "id": "WB-VOC-03",
    "stage": "pre",
    "severity": "warn",
+   "actor": "program",
+   "tier_scope": "set",
    "description": "選項 ≥L5 的個數符合該級（模擬卷 ≤2）；正解級別分布符合該級 answer_level_dist",
    "rule": {
     "metric": "options_ge_L5",
@@ -1538,6 +1590,8 @@
    "id": "WB-OPT-01",
    "stage": "pre",
    "severity": "error",
+   "actor": "program",
+   "tier_scope": "set",
    "description": "任何選項字串（整字、不分大小寫）都不出現在選文其他位置",
    "rule": {
     "metric": "option_in_passage",
@@ -1551,6 +1605,8 @@
    "id": "WB-OPT-02",
    "stage": "pre",
    "severity": "error",
+   "actor": "program",
+   "tier_scope": "set",
    "description": "選項只用實詞（名詞、動詞、形容詞）與 2–3 字的片語動詞；不放功能詞、轉承詞、純副詞；多字選項 ≤2",
    "rule": {
     "metric": "option_pos",
@@ -1574,7 +1630,9 @@
    "id": "WB-POS-01",
    "stage": "pre",
    "severity": "error",
-   "description": "依各選項在自己那一格的用法：名詞 3–4、形容詞 2–4、動詞（含片語動詞）3–5",
+   "actor": "program",
+   "tier_scope": "set",
+   "description": "依各選項在自己那一格的用法：名詞 3–4、形容詞 2–3、動詞（含片語動詞）3–5",
    "rule": {
     "metric": "bank_pos_counts",
     "op": "between",
@@ -1585,7 +1643,7 @@
      ],
      "A": [
       2,
-      4
+      3
      ],
      "V": [
       3,
@@ -1594,12 +1652,14 @@
     }
    },
    "official_111_115_pass": "5/5",
-   "legacy_91_110_pass": "9/22"
+   "legacy_91_110_pass": "8/22（形容詞上限由 4 改 3，gsat-105 的形容詞 4 個不再通過）"
   },
   {
    "id": "WB-POS-02",
    "stage": "pre",
    "severity": "warn",
+   "actor": "program",
+   "tier_scope": "set",
    "description": "10 格的句法位置涵蓋名詞、動詞、形容詞三類；每類 ≤5 格；最大同組數符合該級 bank.max_frame_group_size",
    "rule": {
     "metric": "frame_classes",
@@ -1618,6 +1678,8 @@
    "id": "WB-POS-03",
    "stage": "pre",
    "severity": "warn",
+   "actor": "program",
+   "tier_scope": "set",
    "description": "沒有任何同句法位置選項的格 ≤1",
    "rule": {
     "metric": "blanks_without_same_frame_competitor",
@@ -1631,7 +1693,9 @@
    "id": "WB-ANN-01",
    "stage": "pre",
    "severity": "error",
-   "description": "每格都標：句法位置（frame）、詞義類型（core／ext／conv／idiom）、test_point、同組選項清單、預定級別；有近似誘答的格另標誘答與排除它的線索字串（須逐字在選文中）",
+   "actor": "program",
+   "tier_scope": "item",
+   "description": "每格依 annotation_schema 標：句法位置（frame）、詞義類型（core／extended／conversion／idiom）、test_point、同組選項清單、預定級別 item_tier；有近似誘答的格另標誘答與排除它的線索字串（須逐字在選文中）",
    "rule": {
     "metric": "annotations",
     "op": "complete",
@@ -1640,16 +1704,19 @@
      "sense",
      "test_point",
      "same_frame_options",
-     "target_tier",
+     "item_tier",
      "confusable_partner",
      "exclusion_clue"
-    ]
+    ],
+    "schema": "annotation_schema"
    }
   },
   {
    "id": "WB-MIX-01",
    "stage": "pre",
    "severity": "warn",
+   "actor": "program",
+   "tier_scope": "set",
    "description": "預定的各級格數、詞義類型、test_point、frame 類別符合該級 blank_tier_mix／sense_mix／question_type_mix／blank_type_mix",
    "rule": {
     "metric": "mix",
@@ -1661,7 +1728,9 @@
    "id": "WB-UNQ-01",
    "stage": "pre",
    "severity": "error",
-   "description": "兩位盲解者的「每格可行選項集合」取聯集，完美配對數必須恰為 1 且等於標準答案（SPEC §5.6）",
+   "actor": "blind_solver+program",
+   "tier_scope": "set",
+   "description": "兩位盲解者的每格 feasible_in_context（讀全文後仍可行的選項）取聯集，完美配對數必須恰為 1 且等於標準答案（SPEC §5.6）；locally_plausible 不參與",
    "rule": {
     "metric": "perfect_matchings",
     "op": "==",
@@ -1670,35 +1739,58 @@
      "metric": "matching_equals_key",
      "op": "==",
      "value": true
-    }
+    },
+    "input": "union(blind_solver[A,B].feasible_in_context) → annotations.elimination.feasible"
    }
   },
   {
    "id": "WB-DIS-01",
    "stage": "pre",
    "severity": "error",
-   "description": "近似誘答數符合該級 distractor_rules；穩定基礎每格「也說得通」集合為空；超越頂標的難格群至少 2 個、群內有 ≥2 個延伸義或轉品正解",
+   "actor": "blind_solver+program",
+   "tier_scope": "set",
+   "description": "近似誘答數符合該級（以兩位盲解者的 locally_plausible 聯集計）：basic 格 0 個、advanced 格 1 個、top 格 1–2 個；超越頂標的難格群至少 2 個、群內有 ≥2 個延伸義或轉品正解",
    "rule": {
     "metric": "confusable_pairs",
     "op": "tier_bounds",
-    "value_ref": "tiers.{tier}.distractor_rules"
+    "value_ref": "tiers.{tier}.distractor_rules",
+    "input": "union(blind_solver[A,B].locally_plausible)",
+    "per_blank_tier": {
+     "basic": [
+      0,
+      0
+     ],
+     "advanced": [
+      1,
+      1
+     ],
+     "top": [
+      1,
+      2
+     ]
+    }
    }
   },
   {
    "id": "WB-DIS-02",
    "stage": "pre",
    "severity": "error",
-   "description": "任兩個選項不可在彼此的格裡互換而句意不變（雙向都被盲解者判為可行＝退回）",
+   "actor": "blind_solver+program",
+   "tier_scope": "set",
+   "description": "任兩個選項不可在彼此的格裡互換而句意不變（兩格的 feasible_in_context 互含對方＝退回）；只在本句互通（locally_plausible）不算",
    "rule": {
     "metric": "mutually_feasible_pairs",
     "op": "==",
-    "value": 0
+    "value": 0,
+    "input": "union(blind_solver[A,B].feasible_in_context)"
    }
   },
   {
    "id": "WB-CAL-01",
    "stage": "post",
    "severity": "info",
+   "actor": "cron",
+   "tier_scope": "set",
    "description": "同一版本累積 ≥200 筆合格作答後，以 P、Ph、Pl 推估 Pc、Pb 並重新分級（difficulty-bands 推估式；Ph、Pl 用前／後 33%）",
    "rule": {
     "metric": "eligible_responses",
@@ -1710,6 +1802,8 @@
    "id": "WB-CAL-02",
    "stage": "post",
    "severity": "warn",
+   "actor": "cron",
+   "tier_scope": "item",
    "description": "各格 P 落在預定級別的範圍（basic .53–.66、advanced .39–.50、top .23–.37）",
    "rule": {
     "metric": "P",
@@ -1721,6 +1815,8 @@
    "id": "WB-CAL-03",
    "stage": "post",
    "severity": "warn",
+   "actor": "cron",
+   "tier_scope": "item",
    "description": "高分組最強誘答：basic ≤.05、advanced .04–.12、top ≥.12",
    "rule": {
     "metric": "upper_top_distractor_share",
@@ -1745,6 +1841,8 @@
    "id": "WB-CAL-04",
    "stage": "post",
    "severity": "error",
+   "actor": "cron",
+   "tier_scope": "item",
    "description": "超越頂標格 D1 ≥ .10；任兩格雙向互換都 ≥ .20 高分組時退回檢查是否雙正解",
    "rule": {
     "metric": "D1",
@@ -1761,6 +1859,8 @@
    "id": "WB-CAL-05",
    "stage": "post",
    "severity": "info",
+   "actor": "cron",
+   "tier_scope": "set",
    "description": "整篇低分組答對率約為猜測下限（現制 Pe 中位數 .11）；若 Pl > Ph 或 Pe > .25，檢查答案",
    "rule": {
     "metric": "Pe",
@@ -3039,5 +3139,103 @@
    "ref-98-a/b、ref-102-a/b": "舊制參考卷：10 或 12 選項"
   }
  },
- "checks_validation_note": "official_111_115_pass：把可自動判定的規則套在現制 5 篇選文／50 格的通過數（模擬卷範圍）；legacy_91_110_pass 供參考，舊制格式不同，不作為門檻依據。ANN／MIX／UNQ／DIS 需要生成時的標註與盲解，CAL 需要作答資料"
+ "checks_validation_note": "official_111_115_pass：把可自動判定的規則套在現制 5 篇選文／50 格的通過數（模擬卷範圍）；legacy_91_110_pass 供參考，舊制格式不同，不作為門檻依據。ANN／MIX／UNQ／DIS 需要生成時的標註與盲解，CAL 需要作答資料",
+ "annotation_schema": {
+  "version": 1,
+  "conventions": "common_rules.annotations（位置、級別列舉、盲解輸出欄位）",
+  "item_fields": {
+   "item_tier": {
+    "type": "enum",
+    "location": "annotations.design.items.<n>.item_tier",
+    "required": true,
+    "enum": [
+     "basic",
+     "advanced",
+     "top"
+    ],
+    "desc": "這一題（格）預定的級別；題組級別寫在 gsat-bank/v1 的 tier（同一套列舉）"
+   },
+   "frame": {
+    "type": "enum",
+    "location": "annotations.design.items.<n>.frame",
+    "required": true,
+    "enum": [
+     "Nsg",
+     "Npl",
+     "Vb",
+     "V3",
+     "Vd",
+     "Vn",
+     "Vg",
+     "Aa",
+     "Ap",
+     "Acmp",
+     "R",
+     "F"
+    ]
+   },
+   "sense": {
+    "type": "enum",
+    "location": "annotations.explanations.items.<n>.sense",
+    "required": true,
+    "enum": [
+     "core",
+     "extended",
+     "conversion",
+     "idiom"
+    ],
+    "desc": "依 common_rules.sense_classification"
+   },
+   "test_point": {
+    "type": "enum",
+    "location": "group.questions[<n>].tags.test_point",
+    "required": true,
+    "enum": [
+     "word_meaning",
+     "collocation",
+     "phrase",
+     "grammar",
+     "discourse",
+     "connective"
+    ]
+   },
+   "answer_pos": {
+    "type": "enum",
+    "location": "group.questions[<n>].tags.answer_pos",
+    "required": true,
+    "enum": [
+     "noun",
+     "verb",
+     "adjective",
+     "phrase"
+    ]
+   },
+   "same_frame_options": {
+    "type": "list[letter]",
+    "location": "annotations.design.items.<n>.same_frame_options",
+    "required": true
+   },
+   "confusable_partner": {
+    "type": "letter|null",
+    "location": "annotations.design.items.<n>.confusable_partner",
+    "required": "item_tier != basic",
+    "desc": "預定的同組近似誘答；盲解後須在 locally_plausible 聯集內"
+   },
+   "exclusion_clue": {
+    "type": "string",
+    "location": "annotations.design.items.<n>.exclusion_clue",
+    "required": "confusable_partner != null",
+    "desc": "逐字在選文"
+   }
+  },
+  "enum_aliases": {
+   "sense": {
+    "ext": "extended",
+    "conv": "conversion"
+   }
+  },
+  "notes": [
+   "blank_level_rules.definitions 與 sources 的 core／ext／conv／idiom 是同一套分類的簡寫"
+  ]
+ }
 }
