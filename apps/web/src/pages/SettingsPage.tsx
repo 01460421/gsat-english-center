@@ -1,9 +1,12 @@
 /**
- * 設定頁。目前只有外觀主題可以用；其他設定要等帳號與學習紀錄完成。
+ * 設定頁。外觀主題可以用；帳號區塊連到「我的帳號」與「AI 批改申請」（features/account）；學習偏好還在開發中。
  * 主題設定只存在這台裝置的瀏覽器（localStorage），登入後才會考慮同步到帳號。
  */
 import { useId } from 'react';
+import { Link } from 'react-router';
 import { DevBadge, InfoSection, PageHeader } from '../components/ModulePage';
+import { SoonBadge } from '../features/account/ui';
+import { signedIn, useFeatures, useMe } from '../lib/api';
 import { setThemePreference, useThemePreference, type ThemePreference } from '../lib/theme';
 import { getPage } from '../modules';
 
@@ -44,6 +47,61 @@ function ThemeSetting() {
   );
 }
 
+const linkCls = 'font-medium text-primary underline underline-offset-2';
+
+/**
+ * 帳號：登入功能開放後連到 /account（未登入時那裡就是登入頁）與 /ai/apply；
+ * 後端還沒部署（features.auth 為 false）時只顯示「即將開放」，不出現錯誤。
+ */
+function AccountSetting() {
+  const features = useFeatures();
+  const { me, loading } = useMe();
+  if (loading) return <p className="text-muted">載入中…</p>;
+  if (!features.auth) {
+    return (
+      <p className="flex flex-wrap items-center gap-2">
+        <SoonBadge />
+        <span>使用 Google 帳號登入，保存中譯英與英文作文的作答與批改紀錄；也可以匯出或刪除自己的資料。</span>
+      </p>
+    );
+  }
+  const user = signedIn(me);
+  if (!user) {
+    return (
+      <p>
+        登入後可以保存寫作紀錄、申請 AI 批改。
+        <Link to="/account" className={`ml-1 ${linkCls}`}>
+          前往登入
+        </Link>
+      </p>
+    );
+  }
+  return (
+    <ul>
+      <li>
+        <Link to="/account" className={linkCls}>
+          我的帳號
+        </Link>
+        ：暱稱、年齡區間、登出、匯出或刪除資料。
+      </li>
+      {features.ai && (
+        <li>
+          <Link to="/ai/apply" className={linkCls}>
+            AI 批改申請
+          </Link>
+          ：申請狀態與剩餘點數。
+        </li>
+      )}
+      <li>
+        <Link to="/writing" className={linkCls}>
+          寫作練習
+        </Link>
+        ：我的寫作紀錄。
+      </li>
+    </ul>
+  );
+}
+
 export default function SettingsPage() {
   const page = getPage('/settings');
   return (
@@ -61,10 +119,7 @@ export default function SettingsPage() {
           </p>
         </InfoSection>
         <InfoSection title="帳號">
-          <p className="flex flex-wrap items-center gap-2">
-            <DevBadge />
-            <span>使用 Google 帳號登入，在不同裝置之間同步學習紀錄；也可以刪除自己的作文與批改紀錄。</span>
-          </p>
+          <AccountSetting />
         </InfoSection>
       </div>
     </article>

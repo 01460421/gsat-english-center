@@ -18,6 +18,10 @@ async function mockBackend(page: Page, health: 'ok' | 'down' = 'ok') {
   await page.route(/\/(api|auth)\//, (route) =>
     route.fulfill({ status: 404, json: { error: { code: 'not_found', message: 'smoke test' } } }),
   );
+  // 功能開關：登入與 AI 都關閉（SessionProvider 載入時會讀；回 404 的話瀏覽器會印 console error）。
+  await page.route('**/api/features', (route) =>
+    route.fulfill({ json: { auth: false, ai: false, ocr: false, aiPaused: false } }),
+  );
   await page.route('**/api/health', (route) =>
     health === 'ok'
       ? route.fulfill({ json: HEALTH })

@@ -25,6 +25,7 @@ const PAGE_COMPONENTS: Record<PagePath, ComponentType> = {
   '/mixed': lazy(() => import('./pages/MixedPage')),
   '/translation': lazy(() => import('./pages/TranslationPage')),
   '/composition': lazy(() => import('./pages/CompositionPage')),
+  '/writing': lazy(() => import('./features/writing/WritingHomePage')),
   '/exams': lazy(() => import('./pages/ExamsPage')),
   '/mock': lazy(() => import('./pages/MockExamPage')),
   '/settings': lazy(() => import('./pages/SettingsPage')),
@@ -36,6 +37,21 @@ const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
 const ExamPaperPage = lazy(() => import('./features/exams/ExamPaperPage'));
 /** 題庫練習的作答頁（/practice/:section/:tier）：同上，是 /practice 的子頁。 */
 const PracticeSessionPage = lazy(() => import('./features/practice/PracticeSessionPage'));
+
+/**
+ * 帳號、後台、寫作的子頁（docs/design/ai-auth-mvp.md §6）：不在導覽列，各自按需載入。
+ * 前端路由**不可以用 /auth 開頭**：/auth/* 由 Vercel rewrites 轉給 Worker（OAuth 回呼），SPA 收不到。
+ * 帳號相關放 /account，後台放 /admin（後台 API 在 /api/admin/*）。
+ */
+const AccountPage = lazy(() => import('./features/account/AccountPage'));
+const WelcomePage = lazy(() => import('./features/account/WelcomePage'));
+const AiApplyPage = lazy(() => import('./features/account/AiApplyPage'));
+const AdminPage = lazy(() => import('./features/admin/AdminPage'));
+const TranslationListPage = lazy(() => import('./features/writing/TranslationListPage'));
+const TranslationAttemptPage = lazy(() => import('./features/writing/TranslationAttemptPage'));
+const EssayListPage = lazy(() => import('./features/writing/EssayListPage'));
+const EssayAttemptPage = lazy(() => import('./features/writing/EssayAttemptPage'));
+const SubmissionResultPage = lazy(() => import('./features/writing/SubmissionResultPage'));
 
 export function App() {
   return (
@@ -50,6 +66,15 @@ export function App() {
           );
         })}
         <Route path="exams/:examId" element={<ExamPaperPage />} />
+        <Route path="account" element={<AccountPage />} />
+        <Route path="account/welcome" element={<WelcomePage />} />
+        <Route path="ai/apply" element={<AiApplyPage />} />
+        <Route path="admin" element={<AdminPage />} />
+        <Route path="writing/translation" element={<TranslationListPage />} />
+        <Route path="writing/translation/:examId" element={<TranslationAttemptPage />} />
+        <Route path="writing/essay" element={<EssayListPage />} />
+        <Route path="writing/essay/:examId" element={<EssayAttemptPage />} />
+        <Route path="writing/submissions/:id" element={<SubmissionResultPage />} />
         <Route path="practice/:section/:tier" element={<PracticeSessionPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>

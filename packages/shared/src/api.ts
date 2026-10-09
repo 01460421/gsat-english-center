@@ -39,6 +39,34 @@ export const API_ERROR_CODES = [
   'payload_too_large',
   'rate_limited',
   'internal_error',
+  // ── 帳號與登入（account.ts；ARCHITECTURE §5）──
+  /** 功能所需的機密或設定沒填（例如還沒設 GOOGLE_CLIENT_ID）；前端也把「回應不是 JSON」當成這個代碼。 */
+  'not_configured',
+  /** 骨架階段尚未實作的端點（501）。 */
+  'not_implemented',
+  /** 還沒完成首次同意，或條款改版後尚未重新同意（403）。 */
+  'consent_required',
+  /** 敏感操作（刪帳號、匯出、後台寫入）要求近期登入，session 的 iat 太舊（401）。 */
+  'reauth_required',
+  /** 帳號已停權或刪除中（403）。 */
+  'account_suspended',
+  /** 狀態不允許這個動作，例如提交已在批改中又要修改（409）。 */
+  'conflict',
+  // ── AI 額度與狀態（writing.ts 的 AI_RESERVE_ERROR_CODES；ARCHITECTURE §6.4）──
+  /** 今日點數不足（429）。 */
+  'quota_day',
+  /** 本月點數不足（429）。 */
+  'quota_month',
+  /** 任務家族的每日篇數已滿，例如作文每天 3 篇（429）。 */
+  'daily_limit',
+  /** 同時進行中的 AI 任務已達上限（429）。 */
+  'busy',
+  /** 後台全站暫停中（503）。 */
+  'ai_paused',
+  /** 全站今日或本月美元預算用完（503）。 */
+  'site_budget',
+  /** AI 功能尚未核准（403）。 */
+  'not_approved',
 ] as const;
 export type ApiErrorCode = (typeof API_ERROR_CODES)[number];
 

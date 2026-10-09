@@ -22,6 +22,7 @@ export type IconKey =
   | 'mixed'
   | 'translation'
   | 'composition'
+  | 'writing'
   | 'exams'
   | 'mock'
   | 'settings'
@@ -163,6 +164,19 @@ export const PAGES = [
     summary: '看圖、信函與主題寫作；可拍照上傳手寫作文，由 AI 辨識並批改。',
     group: 'open',
     icon: 'composition',
+    status: 'dev',
+    isStudyModule: true,
+  },
+  {
+    // 線上作答＋AI 批改的入口（docs/design/ai-auth-mvp.md）。子頁 /writing/translation、/writing/essay、
+    // /writing/submissions/:id 不在這份清單裡（不出現在導覽列），路由在 App.tsx。
+    // 標題與說明刻意不含其他頁的標題字串（「中譯英」「英文作文」）：首頁卡片的測試用標題比對連結名稱。
+    path: '/writing',
+    title: '寫作練習',
+    navLabel: '寫作',
+    summary: '翻譯與作文的線上作答；登入並通過申請後，可由 AI 依大考評分原則批改。',
+    group: 'open',
+    icon: 'writing',
     status: 'dev',
     isStudyModule: true,
   },

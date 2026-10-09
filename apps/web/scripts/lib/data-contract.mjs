@@ -15,7 +15,7 @@ import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync
 import { createRequire } from 'node:module';
 import path from 'node:path';
 
-export const CONTRACT_PARTS = /** @type {const} */ (['meta', 'vocab', 'exams', 'bank']);
+export const CONTRACT_PARTS = /** @type {const} */ (['meta', 'vocab', 'exams', 'bank', 'writing']);
 /** @typedef {(typeof CONTRACT_PARTS)[number]} ContractPart */
 
 /** @param {string} name */
@@ -77,6 +77,14 @@ export function contractSource({ dataDir, srcDir, parts = CONTRACT_PARTS }) {
     lines.push(`export const bankIndex: BankIndex = ${JSON.stringify(read('bank/index.json'))};`);
     for (const f of groupFiles) lines.push(`export const bank_${ident(f)}: PracticeGroupFile = ${JSON.stringify(read(`bank/groups/${f}`))};`);
     summary.push('題庫索引', `${groupFiles.length} 個 AI 題組`);
+  }
+  if (parts.includes('writing')) {
+    // 寫作練習的索引（build-data.mjs 的 buildWriting）；型別放在功能資料夾裡，因為只有寫作頁會用到。
+    const writingTypes = path.join(srcDir, '..', 'features', 'writing', 'data');
+    lines.push(`import type { TranslationIndex, EssayIndex } from ${JSON.stringify(writingTypes)};`);
+    lines.push(`export const writingTranslation: TranslationIndex = ${JSON.stringify(read('writing/translation.json'))};`);
+    lines.push(`export const writingEssay: EssayIndex = ${JSON.stringify(read('writing/essay.json'))};`);
+    summary.push('寫作練習的 2 個索引');
   }
   return { source: lines.join('\n'), summary };
 }

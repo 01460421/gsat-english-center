@@ -10,6 +10,8 @@
 import { Ellipsis, X } from 'lucide-react';
 import { Suspense, useCallback, useEffect, useId, useRef, useState, type RefObject } from 'react';
 import { NavLink, Outlet, useLocation } from 'react-router';
+import { LoginButton } from '../features/account/LoginButton';
+import { OnboardingRedirect } from '../features/account/RequireAccount';
 import { APP_NAME, BOTTOM_NAV_PATHS, NAV_GROUPS, PAGES, type PageMeta } from '../modules';
 import { PageIcon } from './icons';
 import { RouteErrorBoundary } from './RouteErrorBoundary';
@@ -48,6 +50,8 @@ function Sidebar() {
         <Brand />
         <ThemeToggle />
       </div>
+      {/* 登入／帳號選單：側邊欄太窄，放在品牌下方獨立一列（features.auth 為 false 時不顯示）。 */}
+      <LoginButton placement="sidebar" />
       <nav aria-label="主要導覽" className="flex-1 overflow-y-auto px-3 pb-6">
         {NAV_GROUPS.map((group) => {
           const pages = PAGES.filter((p) => p.group === group.id);
@@ -73,7 +77,11 @@ function TopBar() {
   return (
     <header className="sticky top-0 z-20 flex h-14 items-center justify-between border-b border-line bg-surface/95 px-4 backdrop-blur lg:hidden">
       <Brand />
-      <ThemeToggle />
+      <div className="flex items-center gap-2">
+        {/* 登入按鈕：features.auth 為 false 時不顯示（features/account/LoginButton.tsx） */}
+        <LoginButton />
+        <ThemeToggle />
+      </div>
     </header>
   );
 }
@@ -246,6 +254,8 @@ export function Layout() {
       >
         跳到主要內容
       </a>
+      {/* 登入後還沒同意條款或沒填年齡區間：導到 /account/welcome（features/account/RequireAccount.tsx）。 */}
+      <OnboardingRedirect />
       <Sidebar />
       <TopBar />
       <main id="main" className="pb-[calc(4.5rem+env(safe-area-inset-bottom))] lg:pb-0 lg:pl-64">

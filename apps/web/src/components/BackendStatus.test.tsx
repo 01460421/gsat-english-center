@@ -20,7 +20,7 @@ describe('BackendStatus', () => {
     expect(screen.getByText('正在檢查後端連線…')).toBeInTheDocument();
     expect(await screen.findByText('後端已連線')).toBeInTheDocument();
     expect(screen.getByText(/gsat-english-api v0\.1\.0/)).toBeInTheDocument();
-    expect(fetchMock).toHaveBeenCalledWith('/api/health', expect.objectContaining({ credentials: 'include' }));
+    expect(fetchMock).toHaveBeenCalledWith('/api/health', expect.objectContaining({ credentials: 'same-origin' }));
   });
 
   it('連不到後端（網路錯誤）：顯示後端未連線', async () => {

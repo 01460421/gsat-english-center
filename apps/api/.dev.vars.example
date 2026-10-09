@@ -1,9 +1,31 @@
 # 複製成 apps/api/.dev.vars 後填入本機開發用的值（.dev.vars 已列入 .gitignore，不會被提交）。
-# 正式環境不要用這個檔案，改用 `npx wrangler secret put <名稱>`。
-# 目前的骨架還沒有用到下列機密；先列出來，之後接 AI 與登入時才知道要準備哪些。
-ANTHROPIC_API_KEY=sk-ant-REPLACE_ME
-SESSION_SECRET=REPLACE_WITH_LONG_RANDOM_STRING
+# 這個檔案只給 `wrangler dev` 用。正式環境的機密放 GitHub repo secrets 由部署 workflow 同步，或在 Cloudflare
+# 儀表板手動設定（docs/SETUP-KEYS.md；名稱清單見 wrangler.toml 檔頭）。本機請用和正式環境不同的值。
+# 沒填的機密對應的功能就是「未啟用」（GET /api/features 回 false），其他功能照常運作。
+
+# ── 登入（ARCHITECTURE §5）──
+# Google Cloud Console 的 OAuth 用戶端；本機的已授權 JavaScript 來源要加 http://localhost:5173、
+# 已授權重新導向 URI 要加 http://localhost:5173/auth/google/callback（建議另建一個本機專用的用戶端）
+GOOGLE_CLIENT_ID=REPLACE_ME.apps.googleusercontent.com
 GOOGLE_CLIENT_SECRET=REPLACE_ME
+# openssl rand -base64 48
+SESSION_SECRET=REPLACE_WITH_LONG_RANDOM_STRING
+# 你自己的 Google 信箱：第一次登入時自動成為管理員並核准 AI
+ADMIN_EMAIL=you@example.com
+# openssl rand -base64 32
+LEDGER_SALT=REPLACE_WITH_RANDOM_STRING
+# 本機經 Vite proxy 開發時，前端與 OAuth 回呼都在 5173（覆寫 wrangler.toml 的正式網址）
+APP_ORIGIN=http://localhost:5173
+
+# ── AI（ARCHITECTURE §6）──
+# 建議用 dev workspace 的 key，不要用正式的 online key
+ANTHROPIC_API_KEY=sk-ant-REPLACE_ME
+
+# ── 測試用端點覆寫（平常不要設；設了就不會打到官方 API）──
+# ANTHROPIC_BASE_URL=http://127.0.0.1:9999
+# GOOGLE_OAUTH_AUTH_URL=http://127.0.0.1:9998/auth
+# GOOGLE_TOKEN_URL=http://127.0.0.1:9998/token
+# GOOGLE_USERINFO_URL=http://127.0.0.1:9998/userinfo
 
 # 選用：只在本機覆寫 wrangler.toml 的 ALLOWED_ORIGINS。經 Vite proxy 開發時不需要（同源）；
 # 只有讓本機頁面跨來源直連 http://127.0.0.1:8787 時才取消註解。

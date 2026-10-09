@@ -5,18 +5,27 @@
   "description": "學測英文中心後端：Cloudflare Worker（Hono）＋ D1",
   "type": "module",
   "scripts": {
+    "prompts": "node scripts/build-writing-prompts.mjs",
+    "predev": "node scripts/build-writing-prompts.mjs",
     "dev": "wrangler dev",
+    "prebuild": "node scripts/build-writing-prompts.mjs",
     "build": "wrangler deploy --dry-run --outdir dist",
+    "predeploy": "node scripts/build-writing-prompts.mjs",
     "deploy": "wrangler deploy",
+    "pretypecheck": "node scripts/build-writing-prompts.mjs",
     "typecheck": "tsc -p tsconfig.json",
+    "pretest": "node scripts/build-writing-prompts.mjs",
     "test": "vitest run",
+    "test:local-e2e": "node scripts/local-e2e.mjs",
     "db:migrations:create": "wrangler d1 migrations create gsat-english",
     "db:migrate:local": "wrangler d1 migrations apply gsat-english --local",
     "db:migrate:remote": "wrangler d1 migrations apply gsat-english --remote"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.132.1",
     "@gsat/shared": "*",
-    "hono": "^4.13.13"
+    "hono": "^4.13.13",
+    "zod": "^4.6.5"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^5.20261008.1",
