@@ -2,7 +2,7 @@
  * 全站版面（手機優先）。
  *
  *   手機（< lg）：頂端列（站名＋主題切換）＋內容＋底部導覽（4 個常用頁＋「更多」）。
- *                 頁面一共 14 個，全部塞進底部會擠到點不準，所以其他頁收進「更多」面板。
+ *                 頁面一共 15 個，全部塞進底部會擠到點不準，所以其他頁收進「更多」面板。
  *   桌機（≥ lg）：左側固定側邊欄列出全部頁面（依 modules.ts 的 NAV_GROUPS 分組），沒有底部導覽。
  *
  * 頁面元件是按需載入的，Suspense 與錯誤邊界只包住內容區：載入中或載入失敗時導覽列仍可操作。
@@ -10,6 +10,8 @@
 import { Ellipsis, X } from 'lucide-react';
 import { Suspense, useCallback, useEffect, useId, useRef, useState, type RefObject } from 'react';
 import { NavLink, Outlet, useLocation } from 'react-router';
+import { LoginButton } from '../features/account/LoginButton';
+import { OnboardingRedirect } from '../features/account/RequireAccount';
 import { APP_NAME, BOTTOM_NAV_PATHS, NAV_GROUPS, PAGES, type PageMeta } from '../modules';
 import { PageIcon } from './icons';
 import { RouteErrorBoundary } from './RouteErrorBoundary';
@@ -48,6 +50,8 @@ function Sidebar() {
         <Brand />
         <ThemeToggle />
       </div>
+      {/* 登入／帳號選單：側邊欄太窄，放在品牌下方獨立一列（features.auth 為 false 時不顯示）。 */}
+      <LoginButton placement="sidebar" />
       <nav aria-label="主要導覽" className="flex-1 overflow-y-auto px-3 pb-6">
         {NAV_GROUPS.map((group) => {
           const pages = PAGES.filter((p) => p.group === group.id);
@@ -73,7 +77,11 @@ function TopBar() {
   return (
     <header className="sticky top-0 z-20 flex h-14 items-center justify-between border-b border-line bg-surface/95 px-4 backdrop-blur lg:hidden">
       <Brand />
-      <ThemeToggle />
+      <div className="flex items-center gap-2">
+        {/* 登入按鈕：features.auth 為 false 時不顯示（features/account/LoginButton.tsx） */}
+        <LoginButton />
+        <ThemeToggle />
+      </div>
     </header>
   );
 }
@@ -213,6 +221,23 @@ function MoreMenu({ onDismiss, onNavigate }: { onDismiss: () => void; onNavigate
   );
 }
 
+/** 每頁底部的條款連結：Google 登入的品牌審查會檢查首頁有沒有連到隱私權政策。 */
+function SiteFooter() {
+  const linkCls = 'inline-flex min-h-11 items-center underline-offset-2 hover:text-fg hover:underline';
+  return (
+    <footer className="mx-auto max-w-5xl border-t border-line px-4 py-2 text-sm text-muted lg:px-10">
+      <nav aria-label="網站資訊" className="flex flex-wrap gap-x-5">
+        <NavLink to="/privacy" className={linkCls}>
+          隱私權說明
+        </NavLink>
+        <NavLink to="/terms" className={linkCls}>
+          服務條款
+        </NavLink>
+      </nav>
+    </footer>
+  );
+}
+
 function PageLoading() {
   return (
     <p role="status" className="py-10 text-center text-muted">
@@ -246,6 +271,8 @@ export function Layout() {
       >
         跳到主要內容
       </a>
+      {/* 登入後還沒同意條款或沒填年齡區間：導到 /account/welcome（features/account/RequireAccount.tsx）。 */}
+      <OnboardingRedirect />
       <Sidebar />
       <TopBar />
       <main id="main" className="pb-[calc(4.5rem+env(safe-area-inset-bottom))] lg:pb-0 lg:pl-64">
@@ -257,6 +284,7 @@ export function Layout() {
             </Suspense>
           </RouteErrorBoundary>
         </div>
+        <SiteFooter />
       </main>
       <BottomNav menuOpen={menuOpen} onOpenMenu={() => setMenuOpen(true)} moreButtonRef={moreButtonRef} />
       {menuOpen && <MoreMenu onDismiss={dismissMenu} onNavigate={closeMenuAfterNavigate} />}

@@ -72,6 +72,16 @@ function passagePartBlock(part: NonNullable<QuestionGroup['passage_parts']>[numb
   return { node: maybeUnbreakable(boxed({ stack }, boxLayout(0.8, { x: 5, y: 3 })), height), height };
 }
 
+/** 多文本各部分框；最後一個框下方留一點距離，框線才不會貼著下一題（gsat-111 第 47 題）。 */
+function passagePartBlocks(group: QuestionGroup, rich: RichOptions): Block[] {
+  const parts = (group.passage_parts ?? []).map((p) => passagePartBlock(p, rich));
+  const last = parts.at(-1);
+  if (last) {
+    parts[parts.length - 1] = { ...last, node: { ...last.node, margin: [0, 0, 0, GAP.group] }, height: last.height + GAP.group };
+  }
+  return parts;
+}
+
 interface GroupContext {
   section: ExamSection;
   group: QuestionGroup;
@@ -125,7 +135,7 @@ export function groupBlocks(section: ExamSection, group: QuestionGroup): Block[]
   const labelText = groupLabelText(section, group);
   const label = labelText ? [groupLabelBlock(labelText)] : [];
   const passage = (group.passage ?? '').trim() !== '' ? paragraphBlocks(group.passage ?? '', rich) : [];
-  const parts = (group.passage_parts ?? []).map((p) => passagePartBlock(p, rich));
+  const parts = passagePartBlocks(group, rich);
 
   // 圖：綁在某一題的放在該題前面；其他放在選文之後（多文本時在引言和各部分之間，同 115 學測），作文放在提示之後。
   const questionNos = new Set(group.questions.map((q) => q.no));
@@ -148,12 +158,20 @@ export function groupBlocks(section: ExamSection, group: QuestionGroup): Block[]
 
   if (layout === 'cloze') {
     const list = group.questions.map((q) => questionBlock(q, { rich, hideStem: true }));
-    const listBlock = keepTogether(list);
-    const optionBlocks = listBlock.height <= CLOZE_LIST_HEIGHT ? [listBlock] : list;
+    const listBlocks = (rows: Block[]): Block[] => {
+      if (rows.length === 0) return [];
+      const together = keepTogether(rows);
+      return together.height <= CLOZE_LIST_HEIGHT ? [together] : rows;
+    };
     const stimulus = [...label, ...passage, ...parts, ...looseFigures];
     const stimulusHeight = stimulus.reduce((s, b) => s + b.height, 0);
-    if (stimulusHeight <= SHORT_PASSAGE_HEIGHT && stimulusHeight + listBlock.height <= KEEP_LIMIT) return [keepTogether([...stimulus, listBlock])];
-    return [...stimulus, ...optionBlocks];
+    const [firstRow, ...restRows] = list;
+    // 短選文連同題組標示與第一題不拆；其餘選項列盡量不拆（§5.11）。兩塊各自不跨頁：整組放得下時 pdfmake 自然排在同一頁，
+    // 放不下時從第二題起換頁，不會整組移到下一頁、在頁底留下半頁空白（ast-110、ref-111）。
+    if (firstRow && stimulusHeight <= SHORT_PASSAGE_HEIGHT && stimulusHeight + firstRow.height <= KEEP_LIMIT) {
+      return [keepTogether([...stimulus, firstRow]), ...listBlocks(restRows)];
+    }
+    return [...stimulus, ...listBlocks(list)];
   }
 
   if (layout === 'bank' && group.options_bank) {

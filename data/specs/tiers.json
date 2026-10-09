@@ -1,0 +1,691 @@
+{
+ "schema": "gsat-tiers/v1",
+ "source": "packages/shared/src/tiers.ts（SPEC §3.4、§3.5）；由 npm run gen:tiers 產生，不要手改",
+ "tiers": [
+  "basic",
+  "advanced",
+  "top"
+ ],
+ "tier_labels": {
+  "basic": "穩定基礎",
+  "advanced": "進階練習",
+  "top": "超越頂標"
+ },
+ "generation_spec_tier_keys": {
+  "foundation": "basic",
+  "advanced": "advanced",
+  "beyond_top": "top"
+ },
+ "bank_section_types": [
+  "vocabulary",
+  "cloze",
+  "word_bank",
+  "structure",
+  "reading",
+  "mixed",
+  "translation",
+  "composition"
+ ],
+ "bank_section_types_with_checks": [
+  "vocabulary",
+  "cloze",
+  "word_bank",
+  "structure"
+ ],
+ "bank_uid_codes": {
+  "vocabulary": "vo",
+  "cloze": "cz",
+  "word_bank": "wb",
+  "structure": "st",
+  "reading": "rd",
+  "mixed": "mx",
+  "translation": "tr",
+  "composition": "cp"
+ },
+ "section_formats": {
+  "vocabulary": {
+   "format_version": "vocabulary-10",
+   "questions": 10,
+   "options_per_question": 4,
+   "bank_options": null,
+   "extra_bank_options": 0,
+   "modes": [
+    "single_choice"
+   ],
+   "uses_blanks": false,
+   "has_passage": false
+  },
+  "cloze": {
+   "format_version": "cloze-5",
+   "questions": 5,
+   "options_per_question": 4,
+   "bank_options": null,
+   "extra_bank_options": 0,
+   "modes": [
+    "single_choice"
+   ],
+   "uses_blanks": true,
+   "has_passage": true
+  },
+  "word_bank": {
+   "format_version": "word_bank-10x10",
+   "questions": 10,
+   "options_per_question": null,
+   "bank_options": 10,
+   "extra_bank_options": 0,
+   "modes": [
+    "bank_choice"
+   ],
+   "uses_blanks": true,
+   "has_passage": true
+  },
+  "structure": {
+   "format_version": "structure-4x5",
+   "questions": 4,
+   "options_per_question": null,
+   "bank_options": 5,
+   "extra_bank_options": 1,
+   "modes": [
+    "bank_choice"
+   ],
+   "uses_blanks": true,
+   "has_passage": true
+  },
+  "reading": {
+   "format_version": "reading-4",
+   "questions": 4,
+   "options_per_question": 4,
+   "bank_options": null,
+   "extra_bank_options": 0,
+   "modes": [
+    "single_choice"
+   ],
+   "uses_blanks": false,
+   "has_passage": true
+  },
+  "mixed": {
+   "format_version": "mixed-4",
+   "questions": 4,
+   "options_per_question": null,
+   "bank_options": null,
+   "extra_bank_options": 0,
+   "modes": [
+    "fill_in_blank",
+    "multi_select",
+    "short_answer",
+    "table_completion"
+   ],
+   "uses_blanks": false,
+   "has_passage": true
+  },
+  "translation": {
+   "format_version": "translation-2",
+   "questions": 2,
+   "options_per_question": null,
+   "bank_options": null,
+   "extra_bank_options": 0,
+   "modes": [
+    "translation"
+   ],
+   "uses_blanks": false,
+   "has_passage": false
+  },
+  "composition": {
+   "format_version": "composition-1",
+   "questions": 1,
+   "options_per_question": null,
+   "bank_options": null,
+   "extra_bank_options": 0,
+   "modes": [
+    "composition"
+   ],
+   "uses_blanks": false,
+   "has_passage": false
+  }
+ },
+ "passage_bands": {
+  "basic": {
+   "coverage_l1_4": {
+    "min": 0.93,
+    "max": null
+   },
+   "coverage_l1_6": {
+    "min": 0.97,
+    "max": null
+   },
+   "offlist_ratio": {
+    "min": null,
+    "max": 0.03
+   },
+   "offlist_gloss": "all",
+   "avg_sentence_length": {
+    "min": null,
+    "max": 17
+   }
+  },
+  "advanced": {
+   "coverage_l1_4": {
+    "min": 0.89,
+    "max": 0.93
+   },
+   "coverage_l1_6": {
+    "min": 0.95,
+    "max": null
+   },
+   "offlist_ratio": {
+    "min": null,
+    "max": 0.05
+   },
+   "offlist_gloss": "all",
+   "avg_sentence_length": {
+    "min": 15,
+    "max": 21
+   }
+  },
+  "top": {
+   "coverage_l1_4": {
+    "min": 0.86,
+    "max": 0.91
+   },
+   "coverage_l1_6": {
+    "min": 0.92,
+    "max": null
+   },
+   "offlist_ratio": {
+    "min": null,
+    "max": 0.07
+   },
+   "offlist_gloss": "about_half",
+   "avg_sentence_length": {
+    "min": 18,
+    "max": 25
+   }
+  }
+ },
+ "passage_words": {
+  "cloze": {
+   "basic": {
+    "min": 140,
+    "max": 180
+   },
+   "advanced": {
+    "min": 180,
+    "max": 215
+   },
+   "top": {
+    "min": 200,
+    "max": 240
+   }
+  },
+  "word_bank": {
+   "basic": {
+    "min": 220,
+    "max": 260
+   },
+   "advanced": {
+    "min": 270,
+    "max": 310
+   },
+   "top": {
+    "min": 290,
+    "max": 340
+   }
+  },
+  "structure": {
+   "basic": {
+    "min": 210,
+    "max": 250
+   },
+   "advanced": {
+    "min": 250,
+    "max": 300
+   },
+   "top": {
+    "min": 280,
+    "max": 330
+   }
+  },
+  "reading": {
+   "basic": {
+    "min": 250,
+    "max": 300
+   },
+   "advanced": {
+    "min": 310,
+    "max": 360
+   },
+   "top": {
+    "min": 340,
+    "max": 420
+   }
+  },
+  "mixed": {
+   "basic": {
+    "min": 290,
+    "max": 340
+   },
+   "advanced": {
+    "min": 360,
+    "max": 410
+   },
+   "top": {
+    "min": 380,
+    "max": 450
+   }
+  }
+ },
+ "current_exam_median_words": {
+  "cloze": 196,
+  "word_bank": 293,
+  "structure": 278,
+  "reading": 337,
+  "mixed": 394
+ },
+ "item_rules": {
+  "vocabulary": {
+   "basic": {
+    "summary_zh": "正解 L2–4；詞義題 ≥70%；干擾選項同詞性、語意明顯不同；線索在同一子句",
+    "answer_levels": {
+     "min": 2,
+     "max": 4
+    },
+    "level6_share_max": null,
+    "word_meaning_share_min": 0.7,
+    "collocation_share_target": null,
+    "extended_or_conversion_share_min": null,
+    "near_synonym_distractors_min": 0,
+    "clue_scope": "same_clause"
+   },
+   "advanced": {
+    "summary_zh": "正解 L3–5；搭配詞題約 35%；至少 1 個干擾和正解語意相近；線索可跨子句（因果、對比）",
+    "answer_levels": {
+     "min": 3,
+     "max": 5
+    },
+    "level6_share_max": null,
+    "word_meaning_share_min": null,
+    "collocation_share_target": 0.35,
+    "extended_or_conversion_share_min": null,
+    "near_synonym_distractors_min": 1,
+    "clue_scope": "cross_clause"
+   },
+   "top": {
+    "summary_zh": "正解 L4–6（L6 ≤20%），或常用字的延伸義、轉品 ≥30%；≥2 個近義干擾；要讀懂整句才能判斷",
+    "answer_levels": {
+     "min": 4,
+     "max": 6
+    },
+    "level6_share_max": 0.2,
+    "word_meaning_share_min": null,
+    "collocation_share_target": null,
+    "extended_or_conversion_share_min": 0.3,
+    "near_synonym_distractors_min": 2,
+    "clue_scope": "whole_sentence"
+   }
+  },
+  "cloze": {
+   "basic": {
+    "summary_zh": "實詞與搭配 ≥3、文法 ≤1 且句內可判斷、轉折 ≤1；正解 L1–4",
+    "content_blanks": {
+     "min": 3,
+     "max": 5
+    },
+    "phrase_collocation_blanks": null,
+    "connective_blanks": {
+     "min": 0,
+     "max": 1
+    },
+    "grammar_blanks": {
+     "min": 0,
+     "max": 1
+    },
+    "cross_sentence_blanks_min": 0,
+    "discourse_blanks_min": 0,
+    "answer_level_max": 4
+   },
+   "advanced": {
+    "summary_zh": "實詞 1–3、片語搭配 1–3、轉承 0–1、文法 0–1；≥1 格要看前後句",
+    "content_blanks": {
+     "min": 1,
+     "max": 3
+    },
+    "phrase_collocation_blanks": {
+     "min": 1,
+     "max": 3
+    },
+    "connective_blanks": {
+     "min": 0,
+     "max": 1
+    },
+    "grammar_blanks": {
+     "min": 0,
+     "max": 1
+    },
+    "cross_sentence_blanks_min": 1,
+    "discourse_blanks_min": 0,
+    "answer_level_max": null
+   },
+   "top": {
+    "summary_zh": "≥2 格要看篇章（線索距離 ≥2 句）；文法題要讀懂上下文才判斷得出（had yet to、could have p.p.）；搭配詞干擾",
+    "content_blanks": {
+     "min": 0,
+     "max": 5
+    },
+    "phrase_collocation_blanks": {
+     "min": 0,
+     "max": 5
+    },
+    "connective_blanks": {
+     "min": 0,
+     "max": 5
+    },
+    "grammar_blanks": {
+     "min": 0,
+     "max": 5
+    },
+    "cross_sentence_blanks_min": 2,
+    "discourse_blanks_min": 2,
+    "answer_level_max": null
+   }
+  },
+  "word_bank": {
+   "basic": {
+    "summary_zh": "選項詞性至少分 3 組；每格「詞性相容的選項」≤3；同詞性近義誘答對 0",
+    "pos_groups_min": 3,
+    "compatible_options_per_blank": {
+     "min": null,
+     "max": 3
+    },
+    "near_synonym_pairs": {
+     "min": 0,
+     "max": 0
+    },
+    "bank_pos_mix": null,
+    "lexical_link_blanks": {
+     "min": 0,
+     "max": null
+    },
+    "phrasal_verb_option_required": false
+   },
+   "advanced": {
+    "summary_zh": "名詞約 3、形容詞約 3、動詞 2–3、片語 0–2；同詞性近義誘答對 1–2；1 格詞彙聯結（同一指涉換說法）",
+    "pos_groups_min": null,
+    "compatible_options_per_blank": {
+     "min": null,
+     "max": null
+    },
+    "near_synonym_pairs": {
+     "min": 1,
+     "max": 2
+    },
+    "bank_pos_mix": {
+     "noun": {
+      "min": 2,
+      "max": 4
+     },
+     "adjective": {
+      "min": 2,
+      "max": 4
+     },
+     "verb": {
+      "min": 2,
+      "max": 3
+     },
+     "phrase": {
+      "min": 0,
+      "max": 2
+     }
+    },
+    "lexical_link_blanks": {
+     "min": 1,
+     "max": 1
+    },
+    "phrasal_verb_option_required": false
+   },
+   "top": {
+    "summary_zh": "同詞性近義誘答對 ≥2；含片語動詞選項；每格詞性相容選項 ≥3；1 格詞彙聯結",
+    "pos_groups_min": null,
+    "compatible_options_per_blank": {
+     "min": 3,
+     "max": null
+    },
+    "near_synonym_pairs": {
+     "min": 2,
+     "max": null
+    },
+    "bank_pos_mix": null,
+    "lexical_link_blanks": {
+     "min": 1,
+     "max": 1
+    },
+    "phrasal_verb_option_required": true
+   }
+  },
+  "structure": {
+   "basic": {
+    "summary_zh": "4 格都有明顯的代名詞或轉折詞線索；多餘句主題明顯偏離",
+    "all_blanks_have_surface_cue": true,
+    "topic_or_summary_blanks": {
+     "min": 0,
+     "max": null
+    },
+    "no_surface_cue_blanks": {
+     "min": 0,
+     "max": 0
+    },
+    "extra_sentence": "off_topic"
+   },
+   "advanced": {
+    "summary_zh": "1 格是主題句或總結句；多餘句主題相關，只差銜接",
+    "all_blanks_have_surface_cue": false,
+    "topic_or_summary_blanks": {
+     "min": 1,
+     "max": 1
+    },
+    "no_surface_cue_blanks": {
+     "min": 0,
+     "max": null
+    },
+    "extra_sentence": "related_cohesion_only"
+   },
+   "top": {
+    "summary_zh": "≥2 格沒有明顯字面線索，要靠段落推理；多餘句看起來能放進 ≥2 格",
+    "all_blanks_have_surface_cue": false,
+    "topic_or_summary_blanks": {
+     "min": 0,
+     "max": null
+    },
+    "no_surface_cue_blanks": {
+     "min": 2,
+     "max": null
+    },
+    "extra_sentence": "fits_two_slots"
+   }
+  },
+  "reading": {
+   "basic": {
+    "summary_zh": "細節 ≥2、主旨 1、上下文詞義或指代 1；依據都在單一句子",
+    "item_types": {
+     "detail": {
+      "min": 2,
+      "max": null
+     },
+     "main_idea": {
+      "min": 1,
+      "max": 1
+     },
+     "vocab_in_context_or_reference": {
+      "min": 1,
+      "max": 1
+     }
+    },
+    "multi_sentence_items_min": 0,
+    "whole_text_items_min": 0,
+    "evidence_single_sentence": true
+   },
+   "advanced": {
+    "summary_zh": "加入指代、推論各 1；≥1 題要整合兩句以上",
+    "item_types": {
+     "reference": {
+      "min": 1,
+      "max": null
+     },
+     "inference": {
+      "min": 1,
+      "max": null
+     }
+    },
+    "multi_sentence_items_min": 1,
+    "whole_text_items_min": 0,
+    "evidence_single_sentence": false
+   },
+   "top": {
+    "summary_zh": "推論、目的或態度、事實與意見、圖表整合合計 ≥2；≥1 題要整合全文或跨文本",
+    "item_types": {
+     "inference_purpose_attitude_fact_chart": {
+      "min": 2,
+      "max": null
+     }
+    },
+    "multi_sentence_items_min": 1,
+    "whole_text_items_min": 1,
+    "evidence_single_sentence": false
+   }
+  },
+  "mixed": {
+   "basic": {
+    "summary_zh": "多選 6 選項；填空 1 格要變字形、1 格原形；簡答 1 個字",
+    "multi_select_options": {
+     "min": 6,
+     "max": 6
+    },
+    "fill_blanks_inflected": {
+     "min": 1,
+     "max": 1
+    },
+    "fill_requires_pos_change": false,
+    "short_answer_words": {
+     "min": 1,
+     "max": 1
+    },
+    "short_answer_keeps_form": false
+   },
+   "advanced": {
+    "summary_zh": "多選 6–8 選項；2 格填空都要變字形；簡答 2–3 字片語",
+    "multi_select_options": {
+     "min": 6,
+     "max": 8
+    },
+    "fill_blanks_inflected": {
+     "min": 2,
+     "max": 2
+    },
+    "fill_requires_pos_change": false,
+    "short_answer_words": {
+     "min": 2,
+     "max": 3
+    },
+    "short_answer_keeps_form": false
+   },
+   "top": {
+    "summary_zh": "多選 8–10 選項；填空要轉詞性（名詞化、形容詞化）；簡答要保留題幹指定的形態（例如動名詞片語）",
+    "multi_select_options": {
+     "min": 8,
+     "max": 10
+    },
+    "fill_blanks_inflected": {
+     "min": 2,
+     "max": 2
+    },
+    "fill_requires_pos_change": true,
+    "short_answer_words": {
+     "min": 2,
+     "max": null
+    },
+    "short_answer_keeps_form": true
+   }
+  },
+  "translation": {
+   "basic": {
+    "summary_zh": "07 §5.3 前八名句型、一句一個核心句構、標的詞彙 L1–4，參考譯文 10–18 字",
+    "structures_per_sentence": {
+     "min": 1,
+     "max": 1
+    },
+    "target_word_level_max": 4,
+    "above_level_words_max": 0,
+    "reference_words": {
+     "min": 10,
+     "max": 18
+    },
+    "patterns": []
+   },
+   "advanced": {
+    "summary_zh": "一句兩個句構，可含 1 個 L5 字，14–24 字",
+    "structures_per_sentence": {
+     "min": 2,
+     "max": 2
+    },
+    "target_word_level_max": 4,
+    "above_level_words_max": 1,
+    "reference_words": {
+     "min": 14,
+     "max": 24
+    },
+    "patterns": []
+   },
+   "top": {
+    "summary_zh": "非限定關係子句、句尾分詞表結果、no matter＋wh-、what 子句；20–30 字；倒裝與假設只放「加分寫法」提示，不設為唯一正解",
+    "structures_per_sentence": {
+     "min": 2,
+     "max": null
+    },
+    "target_word_level_max": 6,
+    "above_level_words_max": 0,
+    "reference_words": {
+     "min": 20,
+     "max": 30
+    },
+    "patterns": [
+     "non-restrictive relative clause",
+     "sentence-final participle (result)",
+     "no matter + wh-",
+     "what-clause"
+    ]
+   }
+  },
+  "composition": {
+   "basic": {
+    "summary_zh": "圖片描述＋個人經驗，校園生活情境；提供構思圖與句型開頭",
+    "prompt_kinds": [
+     "picture",
+     "experience"
+    ],
+    "scaffold": true,
+    "curriculum": []
+   },
+   "advanced": {
+    "summary_zh": "圖片＋看法、原因或影響（學測主流），不提供句型開頭",
+    "prompt_kinds": [
+     "picture",
+     "opinion"
+    ],
+    "scaffold": false,
+    "curriculum": []
+   },
+   "top": {
+    "summary_zh": "圖表或多圖比較＋評估、提出方案（9-Ⅴ-7、9-Ⅴ-8）",
+    "prompt_kinds": [
+     "chart",
+     "multi_picture",
+     "proposal"
+    ],
+    "scaffold": false,
+    "curriculum": [
+     "9-V-7",
+     "9-V-8"
+    ]
+   }
+  }
+ }
+}

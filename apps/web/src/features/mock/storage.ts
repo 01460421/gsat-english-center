@@ -4,6 +4,7 @@
  *   gsat-mock:v1:attempt:{attemptId}  一次模擬考的完整紀錄（作答、期限、各大題用時、標記、自評）
  *   gsat-mock:v1:active:{paperId}     這份卷子作答中的 attemptId（同一份卷子同時只有一筆作答中）
  *   gsat-mock:v1:history              交卷紀錄的摘要（新到舊，最多 30 筆；列表頁不必讀每一筆完整紀錄）
+ *   gsat-mock:v1:claim:{attemptId}    最後接手作答的分頁（「分頁代號:時間」）；只用來觸發別的分頁的 storage 事件
  *
  * 後端還沒上線，所以計時與作答都存在瀏覽器：開考時存下「期限」，關掉分頁時間照走（SPEC §6.11）。
  * 作答（AttemptState）沿用歷屆試題的格式與驗證（features/exams/attempt.ts），只是存到模擬考自己的鍵，
@@ -26,6 +27,10 @@ export function recordKey(attemptId: string): string {
 
 export function activeKey(paperId: string): string {
   return `${MOCK_STORAGE_PREFIX}active:${paperId}`;
+}
+
+export function claimKey(attemptId: string): string {
+  return `${MOCK_STORAGE_PREFIX}claim:${attemptId}`;
 }
 
 export type MockSubmitReason = 'manual' | 'timeout' | 'expired';
@@ -241,6 +246,18 @@ function remove(key: string): void {
   }
 }
 
+/** 這個瀏覽器能不能存模擬考的紀錄（寫入再刪除一個測試鍵；無痕模式、停用網站資料、空間滿時是 false）。 */
+export function canUseStorage(): boolean {
+  const key = `${MOCK_STORAGE_PREFIX}probe`;
+  try {
+    window.localStorage.setItem(key, '1');
+    window.localStorage.removeItem(key);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 export function loadRecord(attemptId: string): MockAttemptRecord | null {
   const raw = readJson(recordKey(attemptId));
   return raw === undefined ? null : parseRecord(raw, attemptId);
@@ -253,6 +270,27 @@ export function saveRecord(record: MockAttemptRecord): boolean {
 
 export function removeRecord(attemptId: string): void {
   remove(recordKey(attemptId));
+  removeClaim(attemptId);
+}
+
+let claimCounter = 0;
+
+/**
+ * 這個分頁接手作答：寫一個每次都不一樣的值（分頁代號＋時間＋流水號）。storage 事件只在值真的改變時才會送到別的分頁，
+ * 接續作答時重寫一次一模一樣的紀錄不會通知任何人，所以另外寫這個鍵。寫不進去回傳 false。
+ */
+export function writeClaim(attemptId: string, tabId: string): boolean {
+  claimCounter += 1;
+  try {
+    window.localStorage.setItem(claimKey(attemptId), `${tabId}:${Date.now()}:${claimCounter}`);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+export function removeClaim(attemptId: string): void {
+  remove(claimKey(attemptId));
 }
 
 export function loadActiveId(paperId: string): string | null {
@@ -311,7 +349,7 @@ export function upsertHistory(entry: MockHistoryEntry): boolean {
 // 建立
 // ---------------------------------------------------------------------------
 
-function newId(): string {
+export function newId(): string {
   try {
     if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') return crypto.randomUUID();
   } catch {

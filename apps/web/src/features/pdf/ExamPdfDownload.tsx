@@ -5,13 +5,13 @@
  *   - 產生中顯示進度（role="status"）與「取消」；完成顯示「已下載」，失敗依原因顯示中文說明與「再試一次」；
  *   - iPhone／iPad：瀏覽器支援分享檔案時多一顆「分享／儲存到檔案」（比 Safari 的下載預覽好找）；
  *   - LINE、Instagram、Facebook 等 App 內建的瀏覽器常擋下載：先提示改用 Safari／Chrome，完成後也提供「在新分頁開啟 PDF」。
- * PDF_DOWNLOAD_ENABLED 為 false、也沒有打開預覽開關（index.ts 的 pdfPreviewEnabled）時，整個區塊不顯示。
+ * PDF_DOWNLOAD_ENABLED 為 false、也沒有打開預覽開關（index.ts 的 pdfDownloadVisible）時，整個區塊不顯示。
  * props 是和頁面之間的約定（歷屆試題作答頁、模擬考），改動要通知模擬考開發者。
  */
 import { Download, ExternalLink, Share2 } from 'lucide-react';
 import { useEffect, useId, useRef, useState } from 'react';
 import type { Exam } from '../../data/exams';
-import { PDF_DOWNLOAD_ENABLED, PdfError, pdfFileName, pdfPreviewEnabled, renderExamPdf, saveBlob, type MockPdfMeta, type PdfErrorKind, type PdfProgress } from './index';
+import { PdfError, pdfDownloadVisible, pdfFileName, renderExamPdf, saveBlob, type MockPdfMeta, type PdfErrorKind, type PdfProgress } from './index';
 
 export interface ExamPdfDownloadProps {
   exam: Exam;
@@ -71,7 +71,7 @@ function canShareFile(file: File): boolean {
 
 export function ExamPdfDownload({ exam, mockMeta, defaultIncludeAnswerKey = false, className = '' }: ExamPdfDownloadProps) {
   const id = useId();
-  const [enabled] = useState(() => PDF_DOWNLOAD_ENABLED || pdfPreviewEnabled());
+  const [enabled] = useState(pdfDownloadVisible);
   const [includeAnswerSheet, setIncludeAnswerSheet] = useState(true);
   const [includeAnswerKey, setIncludeAnswerKey] = useState(defaultIncludeAnswerKey);
   const [status, setStatus] = useState<Status>({ kind: 'idle' });

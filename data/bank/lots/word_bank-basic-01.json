@@ -1,0 +1,292 @@
+{
+  "schema": "gsat-bank-lot/v1",
+  "lot": "word_bank-basic-01",
+  "section_type": "word_bank",
+  "tier": "basic",
+  "label_zh": "文意選填‧穩定基礎（第 1 批）",
+  "created_on": "2026-10-08",
+  "count": 5,
+  "questions_per_group": 10,
+  "format_version": "word_bank-10x10",
+  "uid_prefix": "ai.wb.",
+  "path": "data/bank/v1/word_bank/basic/",
+  "spec_id": "word_bank-basic@2026-10-08",
+  "spec_file": "data/exams/generation-spec/word_bank.json",
+  "spec_tier_key": "foundation",
+  "spec_status": "draft：由 450 格有官方統計的歷屆文意選填推得（現制 50、舊制學測 200、指考 200）；上線後依站內作答資料校正（SPEC §3.6、本檔 WB-CAL-*）",
+  "topic_quota": {
+    "origins_evolution": 2,
+    "science_health": 1,
+    "culture_history": 1,
+    "society_issues": 1,
+    "labels_zh": {
+      "origins_evolution": "起源與演變",
+      "science_health": "科普與健康",
+      "culture_history": "文化與歷史",
+      "society_issues": "社會與議題"
+    },
+    "basis": "08 §6.1（每 8 組：起源與演變 3、科普與健康 2–3、文化與歷史 2、社會與議題 1），依組數等比例取整"
+  },
+  "answer_letter_share": null,
+  "avoid": {
+    "basis": "data/exams/parsed 的 gsat-111、gsat-112、gsat-113、gsat-114、gsat-115、ref-115 同一大題（word_bank）的正解（單字取詞彙表主形，功能詞與 L1 字不列；片語整串列出）",
+    "answer_words": [
+      "absorption",
+      "active",
+      "alert",
+      "atmosphere",
+      "brought forth",
+      "called for",
+      "career",
+      "celebration",
+      "combat",
+      "delay",
+      "depart",
+      "depend on",
+      "dramatic",
+      "effective",
+      "faithful",
+      "familiar",
+      "fateful",
+      "function",
+      "manageable",
+      "mechanism",
+      "minimal",
+      "necessity",
+      "option",
+      "pass through",
+      "passed on",
+      "point to",
+      "professional",
+      "reach for",
+      "reference",
+      "restoration",
+      "retain",
+      "risk",
+      "risky",
+      "sensation",
+      "silent",
+      "sorrow",
+      "status",
+      "survive",
+      "tried out",
+      "unproductive",
+      "witness"
+    ],
+    "answer_sentences": [],
+    "topics": [
+      "benefits of napping and how to nap well",
+      "staying hydrated: when water is (and is not) the best drink",
+      "the bells of Notre-Dame de Paris",
+      "the history of stunt performers in film",
+      "the history of stunt work in the film industry",
+      "the wind phone in Otsuchi, Japan, and coping with grief"
+    ]
+  },
+  "passage_band": {
+    "basis": "SPEC §3.4＋出題規格書 passage_overrides（words、coverage_L1_4_min（取代 SPEC 的區間）、coverage_L1_6_min、offlist_max（＝1 − coverage_L1_6_min）、beyond_l4_ratio_max）",
+    "spec_3_4": {
+      "word_count": {
+        "min": 220,
+        "max": 260
+      },
+      "coverage_l1_4": {
+        "min": 0.93,
+        "max": null
+      },
+      "coverage_l1_6": {
+        "min": 0.97,
+        "max": null
+      },
+      "offlist_ratio": {
+        "min": null,
+        "max": 0.03
+      },
+      "avg_sentence_length": {
+        "min": null,
+        "max": 17
+      }
+    },
+    "overrides_note": "刻意比現制輕：現制 5 篇中覆蓋率與 beyond-L4 有 3 篇符合（111、112、115），連字數一起只有 115 符合；歷屆易卷 11 篇有 4 篇全部符合。屬閱讀負荷的產品選擇，方向同 SPEC §3.4；資料顯示篇長與整篇難度無關",
+    "word_count": {
+      "min": 250,
+      "max": 290
+    },
+    "coverage_l1_4": {
+      "min": 0.88,
+      "max": null
+    },
+    "coverage_l1_6": {
+      "min": 0.91,
+      "max": null
+    },
+    "offlist_ratio": {
+      "min": null,
+      "max": 0.09
+    },
+    "avg_sentence_length": {
+      "min": null,
+      "max": 17
+    },
+    "beyond_l4_ratio": {
+      "min": null,
+      "max": 0.035
+    }
+  },
+  "item_rules": {
+    "summary_zh": "選項詞性至少分 3 組；每格「詞性相容的選項」≤3；同詞性近義誘答對 0",
+    "pos_groups_min": 3,
+    "compatible_options_per_blank": {
+      "min": null,
+      "max": 3
+    },
+    "near_synonym_pairs": {
+      "min": 0,
+      "max": 0
+    },
+    "bank_pos_mix": null,
+    "lexical_link_blanks": {
+      "min": 0,
+      "max": null
+    },
+    "phrasal_verb_option_required": false
+  },
+  "targets": {
+    "unit": "整篇（10 格）",
+    "blank_tier_mix": {
+      "basic": [
+        7,
+        9
+      ],
+      "advanced": [
+        1,
+        3
+      ],
+      "top": [
+        0,
+        0
+      ]
+    },
+    "recipe_example_mix": {
+      "basic": 8,
+      "advanced": 2,
+      "top": 0
+    },
+    "passage_words": [
+      250,
+      290
+    ],
+    "sense_mix": {
+      "core": [
+        9,
+        10
+      ],
+      "ext": [
+        0,
+        1
+      ],
+      "conv": [
+        0,
+        0
+      ],
+      "idiom": [
+        0,
+        0
+      ],
+      "basis": "類似現制 115（core 9、ext 1）；舊制 11 篇「basic ≥7 且無 top」的卷：延伸義格中位數 0（0–3）"
+    },
+    "question_type_mix": {
+      "word_meaning": [
+        5,
+        7
+      ],
+      "collocation": [
+        2,
+        3
+      ],
+      "phrase": [
+        0,
+        2
+      ],
+      "discourse": [
+        0,
+        1
+      ],
+      "basis": "115：word_meaning 6、collocation 2、phrase 2"
+    },
+    "blank_type_mix": {
+      "N": [
+        3,
+        4
+      ],
+      "V": [
+        2,
+        4
+      ],
+      "A": [
+        2,
+        4
+      ],
+      "note": "空格句法位置的類別（frame），不是選項外觀詞性"
+    },
+    "answer_level_dist": {
+      "L1-4_min": 8,
+      "L5-6_max": 1,
+      "off_list": 0,
+      "basis": "現制 basic 格：L1-2 10、L3-4 7、L5-6 3（n=20）；級別與 P 無關（ρ = +0.03），此為閱讀負荷的選擇"
+    },
+    "bank": {
+      "phrasal_verbs": [
+        0,
+        2
+      ],
+      "phrasal_verb_meaning": "意義透明（depend on、try out）",
+      "max_frame_group_size": 4,
+      "options_ge_L5_max": 1,
+      "conv_options": 0
+    },
+    "distractor_rules": {
+      "confusable_same_frame_pairs": [
+        0,
+        1
+      ],
+      "near_synonyms_in_same_frame": false,
+      "same_frame_competitors": "每格可以有 1–3 個同句法位置的選項，但只讀本句就能排除（語意明顯不合）",
+      "blind_solver_also_plausible": "每格皆為空集合",
+      "expected_upper_top_distractor_max": 0.05,
+      "observed_basis": "現制 basic 20 格：高分組最強誘答中位數 0.03（IQR 0.02–0.03），只有 2 格有同組近似誘答；舊制 11 篇易卷的近似誘答對中位數 1（0–2）"
+    },
+    "recipe": [
+      "先決定 10 個正解：都用常用義，名詞 3–4、動詞 3–4（片語動詞 0–2，意義要透明）、形容詞 2–4",
+      "每個句法位置可以有 2–4 個選項同組（讓學生練「先看詞性」），但同組選項在彼此的空格裡語意都明顯不合",
+      "線索放在本句：搭配（cause health problems）、句型（so ... that、render + O + adj.）或前後語意對比",
+      "至多 1 格用延伸義，而且這一格不要再配同組近似誘答"
+    ],
+    "pitfalls": [
+      "同組放了近義字（survived／retained 這種對子），會把兩格一起推到進階以上",
+      "以為片語動詞一定比較難：現制片語動詞正解 8 格 P 中位數 .46，與單字 .48 相近；難在意義是否透明",
+      "把字數或生字比例當成難度槓桿：篇長與整篇平均 P 無關（ρ = +0.17，n = 45）"
+    ]
+  },
+  "set_composition": {
+    "basic": [
+      7,
+      9
+    ],
+    "advanced": [
+      1,
+      3
+    ],
+    "top": [
+      0,
+      0
+    ]
+  },
+  "verification": {
+    "blind_solvers": 2,
+    "blind_b_different_model": true,
+    "distractor_audit": true,
+    "unique_solution": true,
+    "human_review": "100%（校準期：每個題型 × 提示詞版本的前 30 組全審，SPEC §5.8）"
+  }
+}

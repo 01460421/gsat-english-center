@@ -2,7 +2,7 @@
  * 考試格式 PDF（docs/design/mock-exam-pdf.md §4.6、§9.1 P1／P5／P7）：在建置後的產物上真的產生 PDF。
  *   1. 歷屆試題 gsat-115：開始畫面的「下載 PDF」→ download 事件 → 檔案以 %PDF- 開頭、頁數合理；
  *   2. 按下前不載入 PDF 引擎與字型，一般頁面的 JS 不含 pdfmake、字型網址（P5）；
- *   3. 模擬考開考前的「下載 PDF」也能產生；
+ *   3. 模擬考開考前的「下載 PDF」也能產生；模擬考列表展開「下載 PDF（考試格式）」也能產生（ref-115，封面有沿用題提醒）；
  *   4. 下載區塊在手機 375 與 320 px 沒有水平捲動（P7）。
  * PDF_DOWNLOAD_ENABLED 還是 false（等實機驗收 P8），測試用預覽開關（localStorage gsat-pdf-preview）打開按鈕。
  * 非 ASCII 檔名：POSIX 語系的無頭 Chromium 會把檔名改成 download（設計文件 §4.4），所以檔名兩種都接受。
@@ -12,6 +12,9 @@ import { expect, test, type Page } from '@playwright/test';
 
 async function mockBackend(page: Page) {
   await page.route(/\/(api|auth)\//, (route) => route.fulfill({ status: 404, json: { error: { code: 'not_found', message: 'e2e' } } }));
+  // 功能開關：登入與 AI 都關閉（SessionProvider 每一頁都會讀；回 404 的話瀏覽器會印 console error）。
+  // 後註冊的 route 先比對，所以這一條會蓋過上面的 404。模擬考與 PDF 都不需要後端。
+  await page.route('**/api/features', (route) => route.fulfill({ json: { auth: false, ai: false, ocr: false, aiPaused: false } }));
 }
 
 function collectErrors(page: Page): string[] {
@@ -127,5 +130,24 @@ test('模擬考開考前：下載模擬考版 PDF', async ({ page }, testInfo) =
   const pages = await downloadPdf(page, region.getByRole('button', { name: '下載 PDF' }), testInfo.outputPath('mock.pdf'), /^學測英文中心_模擬考_115學測英文\.pdf$/);
   expect(pages).toBeGreaterThanOrEqual(14);
   await expectNoHorizontalOverflow(page, '模擬考開考前');
+  expect(errors).toEqual([]);
+});
+
+test('模擬考列表：展開 115 參考試卷的「下載 PDF（考試格式）」並下載', async ({ page }, testInfo) => {
+  test.setTimeout(90_000);
+  const errors = collectErrors(page);
+  await page.goto('/mock');
+  // 預覽開關打開時，列表的說明與每份卷子的下載按鈕都要出現（和 ExamPdfDownload 用同一個判斷）。
+  await expect(page.getByText('想寫紙本：每份卷子都能下載考試格式 PDF')).toBeVisible();
+  await page.getByRole('button', { name: /^下載 PDF（考試格式）\s*：115 參考試卷$/ }).click();
+  const region = page.getByRole('region', { name: '下載考試格式 PDF' });
+  await expect(region).toBeVisible();
+  const pages = await downloadPdf(page, region.getByRole('button', { name: '下載 PDF' }), testInfo.outputPath('ref-115.pdf'), /^學測英文中心_模擬考_115參考試卷（學測）英文\.pdf$/);
+  expect(pages).toBeGreaterThanOrEqual(14);
+  await expectNoHorizontalOverflow(page, '模擬考列表');
+  if (testInfo.project.name === 'mobile') {
+    await page.setViewportSize({ width: 320, height: 667 });
+    await expectNoHorizontalOverflow(page, '模擬考列表（320px）');
+  }
   expect(errors).toEqual([]);
 });

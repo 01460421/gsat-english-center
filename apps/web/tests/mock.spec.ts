@@ -8,6 +8,9 @@ import { expect, test, type Page } from '@playwright/test';
 
 async function mockBackend(page: Page) {
   await page.route(/\/(api|auth)\//, (route) => route.fulfill({ status: 404, json: { error: { code: 'not_found', message: 'e2e' } } }));
+  // 功能開關：登入與 AI 都關閉（SessionProvider 每一頁都會讀；回 404 的話瀏覽器會印 console error）。
+  // 後註冊的 route 先比對，所以這一條會蓋過上面的 404。模擬考與 PDF 都不需要後端。
+  await page.route('**/api/features', (route) => route.fulfill({ json: { auth: false, ai: false, ocr: false, aiPaused: false } }));
 }
 
 function collectErrors(page: Page): string[] {
@@ -139,9 +142,48 @@ test('實考模式：開考 60 分鐘內交卷鈕停用', async ({ page }) => {
   const submit = page.getByRole('button', { name: '交卷', exact: true });
   await expect(submit).toBeDisabled();
   await expect(submit).toHaveAccessibleDescription(/還要 (1:00:00|59:\d\d)/);
+  // 最後一個大題的「寫完了，準備交卷」也一樣鎖住：不能從這裡繞過交卷鎖。
+  await page.getByRole('navigation', { name: '大題導覽' }).getByRole('button', { name: /^8\. / }).click();
+  const finish = page.getByRole('button', { name: '寫完了，準備交卷' });
+  await expect(finish).toBeDisabled();
+  await expect(finish).toHaveAccessibleDescription(/還要 (1:00:00|59:\d\d)/);
+  // 切換大題後，大題標題不會被固定在上方的工具列蓋住（手機上工具列是兩行）。
+  for (const name of [/^6\. /, /^2\. /]) {
+    await page.getByRole('navigation', { name: '大題導覽' }).getByRole('button', { name }).click();
+    const { headerTop, barBottom } = await page.evaluate(() => {
+      const header = document.activeElement as HTMLElement | null;
+      const bar = document.querySelector('[data-mock-toolbar]');
+      return { headerTop: header?.getBoundingClientRect().top ?? -1, barBottom: bar?.getBoundingClientRect().bottom ?? 0 };
+    });
+    expect(headerTop, `大題標題 top=${headerTop}，工具列 bottom=${barBottom}`).toBeGreaterThanOrEqual(barBottom - 1);
+    expect(headerTop, `大題標題 top=${headerTop}，工具列 bottom=${barBottom}：應該緊接在工具列下方`).toBeLessThanOrEqual(barBottom + 24);
+  }
   // 放棄這次作答：紀錄刪除、回到開考前。
   await page.getByRole('button', { name: '放棄這次作答' }).click();
   await page.getByRole('button', { name: '確定放棄' }).click();
   await expect(page.getByRole('button', { name: '開始作答' })).toBeVisible();
+  expect(errors).toEqual([]);
+});
+
+test('瀏覽器存不進 localStorage（無痕模式、空間滿）：開考前提示，交卷後照樣看得到成績單', async ({ page }) => {
+  const errors = collectErrors(page);
+  // 模擬空間已滿：模擬考的鍵一律寫不進去（其他功能的鍵不受影響）。
+  await page.addInitScript(() => {
+    const setItem = Storage.prototype.setItem;
+    Storage.prototype.setItem = function (key: string, value: string) {
+      if (key.startsWith('gsat-mock:')) throw new DOMException('quota', 'QuotaExceededError');
+      setItem.call(this, key, value);
+    };
+  });
+  await page.goto('/mock/gsat-115');
+  await expect(page.getByText(/這個瀏覽器無法儲存資料/)).toBeVisible();
+  await page.getByRole('button', { name: '不預估，直接開始' }).click();
+  await expect(page.getByText(/這個瀏覽器無法儲存作答進度/)).toBeVisible();
+  await page.locator('#q-1').getByRole('radio', { name: /\(B\) tight/ }).check();
+  await page.getByRole('button', { name: '交卷', exact: true }).click();
+  await page.getByRole('dialog', { name: '確定要交卷嗎？' }).getByRole('button', { name: '確定交卷' }).click();
+  await expect(page.getByRole('heading', { level: 1, name: '115 學測模擬考成績單' })).toBeVisible();
+  await expect(page.getByText(/這個瀏覽器無法儲存成績單.*離開這一頁之後就找不到了/)).toBeVisible();
+  await expect(page.getByRole('region', { name: '原得總分' })).toContainText('1／100');
   expect(errors).toEqual([]);
 });

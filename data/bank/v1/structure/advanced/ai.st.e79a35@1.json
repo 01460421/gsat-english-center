@@ -1,0 +1,617 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.st.e79a35",
+  "version": 1,
+  "section_type": "structure",
+  "format_version": "structure-4x5",
+  "tier": "advanced",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": "Chocolate is one of the most popular sweets in the world, found in everything from candy bars to birthday cakes. For most of its long history, however, chocolate was neither sweet nor solid, and only a small number of people ever got to taste it. Its story stretches across thousands of years and several continents.\n[[1]] The ancient Maya, for example, served a cacao drink at weddings and other important ceremonies, and the Aztecs valued cacao seeds so highly that they even used them as money. To prepare the drink, people roasted the seeds, ground them into a paste, and mixed the paste with water, chili peppers, and spices. [[2]]\nWhen Spanish explorers brought cacao back to Europe, few people there were impressed at first. Many found the drink far too bitter for their taste. [[3]] Before long, it had become a fashionable drink among the rich, served in fine cups in grand homes. Because cacao had to be shipped across the ocean and prepared by hand, though, it remained far too costly for ordinary families.\n[[4]] One such machine could squeeze the fat, known as cocoa butter, out of roasted cacao seeds. Chocolate makers soon learned to mix this butter with sugar and ground cacao, creating solid bars that could be eaten rather than drunk. Later, Swiss makers added milk, which gave chocolate a smoother and milder taste. As factories produced it in large amounts, its price dropped sharply. A drink once enjoyed mainly by kings and nobles had finally become a treat that almost anyone could afford.",
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": {
+      "A": "Once sugar was added, however, the drink quickly won fans.",
+      "B": "Long before it was a candy, chocolate was valued in surprising ways.",
+      "C": "All of this began to change when clever new machines appeared in the 1800s.",
+      "D": "Today, most of the world's cacao is grown by ordinary farmers in West Africa.",
+      "E": "The result was a bitter, foamy drink that tasted nothing like modern chocolate."
+    },
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "B",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "topic_sentence",
+          "clue_raw": "TS|CN|F|L",
+          "key_phrase": "valued in surprising ways → The ancient Maya, for example, … weddings and other important ceremonies … even used them as money"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "E",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "pronoun_reference",
+          "clue_raw": "SP|PR|B|L",
+          "key_phrase": "The result ← roasted the seeds, ground them into a paste, and mixed the paste with water, chili peppers, and spices"
+        }
+      },
+      {
+        "no": 3,
+        "label": "3",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "A",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "contrast",
+          "clue_raw": "SP|CN|BF|L",
+          "key_phrase": "however ← far too bitter; sugar … won fans → Before long, it had become a fashionable drink among the rich"
+        }
+      },
+      {
+        "no": 4,
+        "label": "4",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "C",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "pronoun_reference",
+          "clue_raw": "BR|PR|BF|P",
+          "key_phrase": "All of this ← 第三段整段（漂洋過海、手工製作、一般家庭買不起）; new machines → One such machine"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "how chocolate changed from a bitter drink into an everyday sweet",
+      "genre": "expository",
+      "sdgs": [],
+      "text_format": "continuous"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "第二段開頭的空格要放這一段的主題句。下一句以 for example 舉例：古代馬雅人在婚禮等重要儀式上供應可可飲料，阿茲特克人甚至把可可豆當錢用——這兩件事都在說明「巧克力在變成糖果之前，就以令人意外的方式受到重視」。(B) 本身沒有指回前文的字，要靠下一句的 for example 才能確定位置（後一句指回本句），選 (B)。",
+          "evidence": [
+            "Long before it was a candy, chocolate was valued in surprising ways.",
+            "The ancient Maya, for example, served a cacao drink at weddings and other important ceremonies, and the Aztecs valued cacao seeds so highly that they even used them as money."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "topic_sentence",
+          "option_notes_zh": {
+            "A": "(A) 說加了糖之後飲料大受歡迎，但此時文章還沒提到任何人嫌它苦；下一句 for example 舉的是儀式和貨幣，也不是「受歡迎」的例子。(A) 屬於第 3 格，接在歐洲人嫌它太苦之後。",
+            "C": "(C) 的 All of this began to change 說的是 1800 年代機器出現後的改變；下一句卻回到古代馬雅人，時間順序不對，for example 也舉不出「改變」的例子。",
+            "D": "多餘句：(D) 講今天可可多半由西非的一般農民種植，時間跳到現代；下一句 The ancient Maya, for example 不是西非種植的例子。",
+            "E": "(E) 的 The result 必須接在一個「做法或過程」之後，但前一句只說巧克力的故事橫跨數千年，沒有任何過程；(E) 應放在第 2 格，接在製作方法之後。"
+          },
+          "strategy_zh": "段首空格若下一句以 for example 開頭，空格裡應是一句概括的主題句，而且下一句的內容要能當它的例子。先讀下一句舉了什麼例子，再回頭找能涵蓋這些例子的選項。",
+          "hints": [
+            "下一句以 for example 開頭，舉了馬雅人和阿茲特克人的兩個例子；空格需要一句能被這些例子說明的話。",
+            "在婚禮上喝可可飲料、把可可豆當錢用，這些都在說明巧克力當時有什麼特別之處？",
+            "答案說巧克力在成為糖果之前，就以令人意外的方式受到重視。"
+          ]
+        },
+        "2": {
+          "explanation_zh": "前一句描述可可飲料的做法：把可可豆烘烤、磨成糊，再加入水、辣椒和香料。(E) 的 The result 指的就是這套做法的成品，並說明它又苦又起泡，和現代巧克力完全不同，也呼應第一段的 chocolate was neither sweet nor solid。空格在段尾，線索都在前一句，選 (E)。",
+          "evidence": [
+            "To prepare the drink, people roasted the seeds, ground them into a paste, and mixed the paste with water, chili peppers, and spices.",
+            "The result was a bitter, foamy drink that tasted nothing like modern chocolate."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "pronoun_reference",
+          "option_notes_zh": {
+            "A": "(A) 說加了糖之後才受歡迎，但前一句的配方裡只有水、辣椒和香料，還沒有糖；第三段才說歐洲人嫌它太苦，(A) 放在這裡會讓「加糖」出現在「嫌苦」之前，順序顛倒。",
+            "B": "(B) 是要接例子的概括句，放在段尾後面卻沒有任何例子（下一段講西班牙探險家）；而且第 1 格就缺了這句主題句。",
+            "C": "(C) 說 1800 年代的機器出現後一切開始改變，但下一段才講西班牙人把可可帶到歐洲，那是更早的事，時間順序不對。",
+            "D": "多餘句：(D) 突然跳到今天的西非產地，與本段古代的飲用方式無關，也讓下一段回到西班牙探險家時前後跳躍。"
+          },
+          "strategy_zh": "看到 The result、This process、Such a mixture 這類名詞性回指時，回頭找前一句是否描述了一個過程或做法；如果有，這句通常就是在交代那個過程的結果。",
+          "hints": [
+            "前一句在描述什麼？是一個過程、一個人，還是一個地點？",
+            "哪個選項的開頭能把「烘烤、研磨、混合」這整套做法概括成一個名詞？",
+            "答案以 The result 開頭。"
+          ]
+        },
+        "3": {
+          "explanation_zh": "前一句說許多歐洲人覺得這種飲料太苦；(A) 用 however 轉折，說加了糖之後它很快就有人喜愛（too bitter → sugar）。後一句 Before long, it had become a fashionable drink among the rich 接著說它不久便成為有錢人之間的時髦飲料，承接 won fans。(E) 也有 bitter 和 drink，但 The result 在這裡找不到可指的做法，「又苦又起泡」只是重複前一句，解釋不了它為什麼後來流行。選 (A)。",
+          "evidence": [
+            "Many found the drink far too bitter for their taste.",
+            "Once sugar was added, however, the drink quickly won fans.",
+            "Before long, it had become a fashionable drink among the rich, served in fine cups in grand homes."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "contrast",
+          "option_notes_zh": {
+            "B": "(B) 是要接例子的主題句，放在這裡後面沒有舉例；而且它講的是「變成糖果之前」的古代，與歐洲人嫌苦、後來流行的過程無關。",
+            "C": "(C) 說 1800 年代的機器讓情況開始改變，但下一句說它只在有錢人之間流行、再下一句又說一般家庭仍買不起，與「機器讓巧克力變便宜」互相矛盾；最後一段的 One such machine 也需要 (C) 先引出機器。",
+            "D": "多餘句：(D) 講今天西非的可可農，與前一句「嫌太苦」、後一句「在有錢人間流行」都接不上，時間也跳到現代。",
+            "E": "(E) 和前一句共用 bitter、drink，最容易誤選；但 The result 找不到可回指的做法，「又苦又起泡」也只是重複前一句，接不出後一句「不久就流行起來」的轉變。(E) 屬於第 2 格。"
+          },
+          "strategy_zh": "前一句是負面的情況（太苦），後一句卻變成正面（流行起來）時，空格通常要放一句帶 however／but 的轉折句，交代「是什麼改變了」。只重複前一句關鍵字的選項，不一定能解釋這個轉變。",
+          "hints": [
+            "前一句說歐洲人覺得它太苦，後一句卻說它成了時髦飲料，中間缺了什麼？",
+            "哪個選項用轉折詞說明了讓它「不再那麼苦」的改變？",
+            "答案提到加了糖（sugar）。"
+          ]
+        },
+        "4": {
+          "explanation_zh": "(C) 的 All of this 回指整個第三段描述的情況：可可要漂洋過海、靠手工製作，因此一般家庭買不起；(C) 說這一切在 1800 年代新機器出現後開始改變。下一句 One such machine 的 such machine 正指 (C) 的 new machines，接著說明機器如何壓出可可脂。本句收束前一段、引出最後一段的工業化，是承上啟下句；要看出 All of this 的先行詞是一整段，選 (C)。",
+          "evidence": [
+            "Because cacao had to be shipped across the ocean and prepared by hand, though, it remained far too costly for ordinary families.",
+            "All of this began to change when clever new machines appeared in the 1800s.",
+            "One such machine could squeeze the fat, known as cocoa butter, out of roasted cacao seeds."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "pronoun_reference",
+          "option_notes_zh": {
+            "A": "(A) 說加了糖之後飲料受歡迎，下一句 One such machine 卻找不到任何「機器」可以回指；而且加糖是第三段歐洲人的事，放在這裡順序倒退。",
+            "B": "(B) 是要接例子的主題句，下一句 One such machine 不是它的例子，也沒有先行詞。",
+            "D": "多餘句：(D) 和前一句共用 cacao、ordinary，看起來接得上；但它講的是今天的西非農民，下一句 One such machine 需要先提到「機器」，(D) 沒有，時間也從現代跳回 1800 年代。",
+            "E": "(E) 描述古代那種又苦又起泡的飲料，The result 在這裡沒有可指的做法，下一句的 One such machine 也沒有先行詞。"
+          },
+          "strategy_zh": "段首空格要同時看兩邊：下一句的 such／this＋名詞（One such machine）告訴你空格裡必須先出現哪個名詞；前一段的整體情況則決定這句要怎麼承接（All of this began to change）。",
+          "hints": [
+            "下一句說 One such machine，空格裡必須先提到什麼？",
+            "前一段說巧克力昂貴、靠手工製作；哪個選項能用一句話回指這整段情況，並說它開始改變？",
+            "答案以 All of this 開頭。"
+          ]
+        }
+      }
+    },
+    "translation_zh": {
+      "text": "巧克力是世界上最受歡迎的甜食之一，從糖果棒到生日蛋糕，到處都看得到它。然而，在它漫長歷史的大部分時間裡，巧克力既不甜也不是固體，而且只有少數人嚐過它的滋味。它的故事橫跨數千年和好幾個大陸。\n【1】早在成為糖果之前，巧克力就以令人意外的方式受到重視。例如，古代馬雅人會在婚禮和其他重要儀式上供應可可飲料，而阿茲特克人非常珍視可可豆，甚至把它們當作錢來使用。製作這種飲料時，人們把可可豆烘烤、磨成糊，再把糊和水、辣椒及香料混在一起。【2】做出來的是一種又苦又起泡的飲料，喝起來和現代的巧克力完全不同。\n西班牙探險家把可可帶回歐洲時，起初當地沒有多少人覺得它了不起。許多人覺得這種飲料太苦，不合他們的口味。【3】然而，加了糖之後，這種飲料很快就贏得了許多人的喜愛。不久之後，它成了有錢人之間的時髦飲料，在豪宅裡用精緻的杯子盛裝。不過，因為可可必須漂洋過海運來，又要靠手工製作，它對一般家庭來說仍然貴得負擔不起。\n【4】這一切在 1800 年代巧妙的新機器出現後開始改變。其中一種機器可以把烘烤過的可可豆裡的油脂（稱為可可脂）壓榨出來。巧克力製造商很快就學會把這種可可脂和糖、磨碎的可可混合，做出可以用吃的、而不是用喝的固體巧克力塊。後來，瑞士的製造商加入牛奶，讓巧克力的口感更滑順、味道更溫和。隨著工廠大量生產，巧克力的價格大幅下降。這種過去主要由國王和貴族享用的飲料，終於變成幾乎人人都買得起的點心。\n（多餘句 (D)：今天，世界上大部分的可可是由西非的一般農民種植的。）"
+    },
+    "elimination": {
+      "feasible": {
+        "1": [
+          "B"
+        ],
+        "2": [
+          "E"
+        ],
+        "3": [
+          "A"
+        ],
+        "4": [
+          "C"
+        ]
+      },
+      "perfect_matchings": 1
+    },
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": null,
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "3-V-7",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "7-V-5",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "B-V-8",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "9-V-2",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": "本文由 AI 撰寫"
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-08-structure-advanced-01",
+    "lot": "structure-advanced-01",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/structure",
+    "prompt_sha256": "a04b227d742a87c007f031e68be6b978d576e7910a4123b1904d4bd60fda82eb",
+    "spec_id": "structure-advanced@2026-10-08",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 255,
+    "sentences": 14,
+    "avg_sentence_length": 18.21,
+    "denominator": 248,
+    "proper_nouns": [
+      "Aztecs",
+      "Europe",
+      "Maya",
+      "Spanish",
+      "Swiss"
+    ],
+    "numbers": 2,
+    "coverage_l1_4": 0.9476,
+    "coverage_l1_6": 0.9556,
+    "offlist_ratio": 0.0444,
+    "beyond_l4_ratio": 0.0081,
+    "level_counts": {
+      "1": 193,
+      "2": 26,
+      "3": 14,
+      "4": 2,
+      "5": 1,
+      "6": 1,
+      "off": 11
+    },
+    "offlist_words": [
+      "birthday",
+      "cacao",
+      "candy",
+      "explorers",
+      "makers"
+    ],
+    "band": {
+      "tier": "advanced",
+      "basis": "lot structure-advanced-01（SPEC §3.4＋出題規格書 passage_overrides（words、coverage_L1_4_min（取代 SPEC 的區間）、coverage_L1_6_min、offlist_max、beyond_l4_ratio_max））",
+      "ok": true,
+      "checks": {
+        "word_count": {
+          "value": 255,
+          "min": 220,
+          "max": 310,
+          "ok": true
+        },
+        "coverage_l1_4": {
+          "value": 0.9476,
+          "min": 0.9,
+          "max": null,
+          "ok": true
+        },
+        "coverage_l1_6": {
+          "value": 0.9556,
+          "min": 0.94,
+          "max": null,
+          "ok": true
+        },
+        "offlist_ratio": {
+          "value": 0.0444,
+          "min": null,
+          "max": 0.06,
+          "ok": true
+        },
+        "avg_sentence_length": {
+          "value": 18.21,
+          "min": 15,
+          "max": 21,
+          "ok": true
+        },
+        "beyond_l4_ratio": {
+          "value": 0.0081,
+          "min": null,
+          "max": 0.06,
+          "ok": true
+        }
+      }
+    }
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T01:33:16Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T01:24:34Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "answers": {
+          "1": {
+            "answer": "B",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "The ancient Maya, for example, served a cacao drink at weddings and other important ceremonies, and the Aztecs valued cacao seeds so highly that they even used them as money."
+            ],
+            "explanation_zh": "空格後用 for example 舉馬雅人用於婚禮、阿茲特克人當貨幣，正是 B「在成為糖果之前，巧克力就以令人意外的方式受到重視」的例子。",
+            "feasible": [
+              "B"
+            ]
+          },
+          "2": {
+            "answer": "E",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "To prepare the drink, people roasted the seeds, ground them into a paste, and mixed the paste with water, chili peppers, and spices."
+            ],
+            "explanation_zh": "前句描述烘烤、磨漿、加水與辣椒香料的製作過程，E 的 The result 承接製程，說明成品是苦澀起泡的飲料，也呼應下段歐洲人嫌太苦。",
+            "feasible": [
+              "E"
+            ]
+          },
+          "3": {
+            "answer": "A",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Many found the drink far too bitter for their taste.",
+              "Before long, it had become a fashionable drink among the rich, served in fine cups in grand homes."
+            ],
+            "explanation_zh": "前句說歐洲人嫌太苦，後句說不久就在富人間流行；A 以 however 轉折，加糖後才受歡迎，正好銜接前後。",
+            "feasible": [
+              "A"
+            ]
+          },
+          "4": {
+            "answer": "C",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "One such machine could squeeze the fat, known as cocoa butter, out of roasted cacao seeds."
+            ],
+            "explanation_zh": "空格後 One such machine 需要先提到機器；C 的 clever new machines 提供指涉對象，All of this began to change 也承接上段「一般家庭負擔不起」。",
+            "feasible": [
+              "C"
+            ]
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T01:30:00Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "answers": {
+          "1": {
+            "answer": "B",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Long before it was a candy, chocolate was valued in surprising ways.",
+              "The ancient Maya, for example, served a cacao drink at weddings and other important ceremonies, and the Aztecs valued cacao seeds so highly that they even used them as money."
+            ],
+            "explanation_zh": "本段開頭需要主題句，後面 for example 舉馬雅與阿茲提克重視可可的例子，B 說巧克力在變成糖果之前就以出人意料的方式受重視。",
+            "feasible": [
+              "B"
+            ]
+          },
+          "2": {
+            "answer": "E",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "To prepare the drink, people roasted the seeds, ground them into a paste, and mixed the paste with water, chili peppers, and spices.",
+              "The result was a bitter, foamy drink that tasted nothing like modern chocolate."
+            ],
+            "explanation_zh": "前一句講飲品的調製過程，E 的 The result 承接並點出成品又苦又起泡，也為下段西班牙人覺得太苦鋪路。",
+            "feasible": [
+              "E"
+            ]
+          },
+          "3": {
+            "answer": "A",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Many found the drink far too bitter for their taste.",
+              "Once sugar was added, however, the drink quickly won fans.",
+              "Before long, it had become a fashionable drink among the rich, served in fine cups in grand homes."
+            ],
+            "explanation_zh": "前面說歐洲人嫌太苦，後面說很快成為富人的流行飲品，中間需要加糖帶來轉折，A 的 however 與 quickly won fans 正好銜接。",
+            "feasible": [
+              "A"
+            ]
+          },
+          "4": {
+            "answer": "C",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "All of this began to change when clever new machines appeared in the 1800s.",
+              "One such machine could squeeze the fat, known as cocoa butter, out of roasted cacao seeds."
+            ],
+            "explanation_zh": "後句的 One such machine 需要前面先提到 machines，C 同時承接上段仍然昂貴、只有富人喝得起的情況，帶出十九世紀機器帶來的改變。",
+            "feasible": [
+              "C"
+            ]
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "distractor_audit",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T01:32:00Z",
+      "details": {
+        "session_id": null,
+        "items": {
+          "1": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "The ancient Maya, for example, served a cacao drink at weddings and other important ceremonies, and the Aztecs valued cacao seeds so highly that they even used them as money.",
+              "explanation_zh": "(A) 的 the drink 在第二段開頭沒有先行詞（第一段沒提到飲料），however 也沒有可轉折的對象；下一句 for example 舉的是儀式與貨幣，不是「加糖後受歡迎」的例子。"
+            },
+            "C": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "The ancient Maya, for example, served a cacao drink at weddings and other important ceremonies, and the Aztecs valued cacao seeds so highly that they even used them as money.",
+              "explanation_zh": "(C) 說 1800 年代新機器出現後一切開始改變，下一句卻用 for example 回到古代馬雅人，時間倒退，也舉不出「改變」的例子。"
+            },
+            "D": {
+              "verdict": "clearly_wrong",
+              "error_type": "off_topic",
+              "evidence": "The ancient Maya, for example, served a cacao drink at weddings and other important ceremonies, and the Aztecs valued cacao seeds so highly that they even used them as money.",
+              "explanation_zh": "多餘句 (D) 講今天西非的可可產地，下一句古代馬雅、阿茲特克人的做法不是它的例子，時間也從現代跳回古代。"
+            },
+            "E": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Its story stretches across thousands of years and several continents.",
+              "explanation_zh": "(E) 的 The result 需要前面先有做法或過程，但前一句只說巧克力的故事橫跨數千年與數個大陸；下一句的 for example 也不是「又苦又起泡」的例子。"
+            }
+          },
+          "2": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "Many found the drink far too bitter for their taste.",
+              "explanation_zh": "(A) 說加了糖之後飲料很快受歡迎，但下一段說歐洲人起初嫌它太苦、不以為然，加糖應在嫌苦之後；前一句只描述做法，however 也沒有可轉折的負面內容。"
+            },
+            "B": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "When Spanish explorers brought cacao back to Europe, few people there were impressed at first.",
+              "explanation_zh": "(B) 是需要後接例子的概括句，放在段尾後面直接進入西班牙探險家的新段落，沒有任何例子支撐。"
+            },
+            "C": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "When Spanish explorers brought cacao back to Europe, few people there were impressed at first.",
+              "explanation_zh": "(C) 說 1800 年代機器出現後一切開始改變，下一段卻回到更早的西班牙探險家時代，時序倒退；第四段的 One such machine 也需要 (C) 先提到機器。"
+            },
+            "D": {
+              "verdict": "clearly_wrong",
+              "error_type": "off_topic",
+              "evidence": "To prepare the drink, people roasted the seeds, ground them into a paste, and mixed the paste with water, chili peppers, and spices.",
+              "explanation_zh": "多餘句 (D) 突然跳到今天西非的可可產地，與前一句古代的製作方法無關，也無法銜接下一段的西班牙探險家。"
+            }
+          },
+          "3": {
+            "B": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "Before long, it had become a fashionable drink among the rich, served in fine cups in grand homes.",
+              "explanation_zh": "(B) 講成為糖果前的古代用途，無法說明為什麼嫌苦的飲料不久就在富人間流行，後面也沒有它的例子。"
+            },
+            "C": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "Because cacao had to be shipped across the ocean and prepared by hand, though, it remained far too costly for ordinary families.",
+              "explanation_zh": "若此處已出現 1800 年代的機器，與同段「仍須手工製作、一般家庭買不起」矛盾；All of this 也只能指一句「嫌太苦」，第四段的 One such machine 更會失去先行詞。"
+            },
+            "D": {
+              "verdict": "clearly_wrong",
+              "error_type": "off_topic",
+              "evidence": "Many found the drink far too bitter for their taste.",
+              "explanation_zh": "多餘句 (D) 講今天西非的可可農，與前一句「嫌太苦」、後一句「不久在富人間流行」都接不上，時間也跳到現代。"
+            },
+            "E": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Many found the drink far too bitter for their taste.",
+              "explanation_zh": "(E) 雖與前一句共用 bitter、drink，但 The result 找不到可指的做法，只是重複「苦」；後一句 Before long ... fashionable 的轉變因此沒有原因。"
+            }
+          },
+          "4": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "One such machine could squeeze the fat, known as cocoa butter, out of roasted cacao seeds.",
+              "explanation_zh": "(A) 沒有提到任何機器，下一句 One such machine 沒有先行詞；加糖是第三段歐洲人嫌苦之後的事，放在這裡時序倒退。"
+            },
+            "B": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "One such machine could squeeze the fat, known as cocoa butter, out of roasted cacao seeds.",
+              "explanation_zh": "(B) 講成為糖果前的古代用途，下一句 One such machine 沒有先行詞，也不是它的例子。"
+            },
+            "D": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "One such machine could squeeze the fat, known as cocoa butter, out of roasted cacao seeds.",
+              "explanation_zh": "多餘句 (D) 與前一句共用 cacao、ordinary，但下一句 One such machine 需要先提到機器，(D) 沒有；時間也從現代跳回 1800 年代。"
+            },
+            "E": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "One such machine could squeeze the fat, known as cocoa butter, out of roasted cacao seeds.",
+              "explanation_zh": "(E) 描述古代苦澀的飲料，The result 在此沒有可指的做法，下一句 One such machine 也沒有先行詞。"
+            }
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "unique_solution",
+      "reviewer": "record_verification.py",
+      "result": "pass",
+      "created_at": "2026-10-09T01:33:16Z",
+      "details": {
+        "method": "injective_assignment",
+        "perfect_matchings": 1,
+        "matches_key": true,
+        "feasible": {
+          "1": [
+            "B"
+          ],
+          "2": [
+            "E"
+          ],
+          "3": [
+            "A"
+          ],
+          "4": [
+            "C"
+          ]
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

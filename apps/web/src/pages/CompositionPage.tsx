@@ -1,9 +1,27 @@
+import { Link } from 'react-router';
 import { InfoSection, ModulePage } from '../components/ModulePage';
+import { useFeatures } from '../lib/api';
 import { getPage } from '../modules';
 
 export default function CompositionPage() {
+  // 後端沒部署（或登入、AI 沒開）時沒有登入入口，不能叫學生「登入並通過申請」。
+  const features = useFeatures();
+  const aiOpen = features.auth && features.ai;
   return (
     <ModulePage page={getPage('/composition')}>
+      <InfoSection title="現在就能練習">
+        <p>
+          歷屆學測、指考的作文題目已經可以線上作答：打字作答附即時字數與段數，也能自我檢核與自評；
+          {aiOpen
+            ? `登入並通過申請後，可以請 AI 依四個評分面向批改${features.ocr ? '，或拍照上傳手寫稿' : ''}。`
+            : 'AI 批改與拍照上傳手寫稿即將開放。'}
+        </p>
+        <p>
+          <Link to="/writing/essay" className="font-medium text-primary underline underline-offset-2">
+            前往英文作文練習
+          </Link>
+        </p>
+      </InfoSection>
       <InfoSection title="學測怎麼考">
         <p>
           1 題、20 分，至少 120 個單詞。題型包括看圖寫作、信函寫作與主題寫作；111–115 學年度每年都要求「文分兩段」，並附有圖片或圖示提示。評分看內容、組織、文法句構、字彙拼字四個面向，給一個整體分數；字數明顯不足或未分段會各扣 1 分。

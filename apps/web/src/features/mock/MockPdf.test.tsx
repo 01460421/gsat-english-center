@@ -21,7 +21,7 @@ const pdf = vi.hoisted(() => ({ render: vi.fn(), save: vi.fn() }));
 
 vi.mock('../pdf/index', async (importOriginal) => {
   const actual = await importOriginal<typeof import('../pdf/index')>();
-  return { ...actual, PDF_DOWNLOAD_ENABLED: true, renderExamPdf: pdf.render, saveBlob: pdf.save };
+  return { ...actual, PDF_DOWNLOAD_ENABLED: true, pdfDownloadVisible: () => true, renderExamPdf: pdf.render, saveBlob: pdf.save };
 });
 
 const REF_115: Exam = { ...MINI_EXAM, id: 'ref-115', exam: 'reference', target: 'gsat', title: '學科能力測驗參考試卷（115學年度起適用）英文考科' };

@@ -16,8 +16,9 @@ import { useNow } from '../useNow';
 /** active 為 false（唯讀：別的分頁在作答）時照樣倒數，只是時間到不在這個分頁交卷。 */
 function MockClock({ onTimeout, active }: { onTimeout: () => void; active: boolean }) {
   const deadlineAt = useMockMeta((m) => m.deadlineAt);
+  const durationSec = useMockMeta((m) => m.durationSec);
   const now = useNow();
-  const remaining = remainingSec({ deadlineAt }, now);
+  const remaining = remainingSec({ deadlineAt, durationSec }, now);
   const previous = useRef(remaining);
   const [announcement, setAnnouncement] = useState('');
   const fired = useRef(false);
@@ -47,29 +48,43 @@ function MockClock({ onTimeout, active }: { onTimeout: () => void; active: boole
   );
 }
 
-/** 交卷鈕；實考模式前 60 分鐘停用（只有停用期間每秒重繪）。 */
-function SubmitControl({ onSubmit, disabled, buttonRef }: { onSubmit: () => void; disabled: boolean; buttonRef: Ref<HTMLButtonElement> }) {
+/**
+ * 實考模式還要等幾秒才能交卷（一般模式是 0）。只有鎖住期間每秒重繪，解鎖後不再更新。
+ * 工具列的「交卷」與最後一個大題的「寫完了，準備交卷」都用這個（交卷本身另外由 MockSession.submit 把關）。
+ */
+export function useStrictLockLeft(): number {
   const strict = useMockMeta((m) => m.strict);
   const startedAt = useMockMeta((m) => m.startedAt);
   const [unlocked, setUnlocked] = useState(() => strictLockRemainingSec({ strict, startedAt }, Date.now()) === 0);
   const now = useNow(!unlocked);
-  const lockLeft = strictLockRemainingSec({ strict, startedAt }, now);
+  const lockLeft = unlocked ? 0 : strictLockRemainingSec({ strict, startedAt }, now);
   useEffect(() => {
     if (lockLeft === 0 && !unlocked) setUnlocked(true);
   }, [lockLeft, unlocked]);
+  return lockLeft;
+}
+
+/** 交卷鎖的說明文字（手機寫短一點）；id 給停用的交卷鈕當 aria-describedby。 */
+export function StrictLockText({ id, lockLeft }: { id: string; lockLeft: number }) {
+  return (
+    <span id={id} className="text-xs text-muted">
+      <span className="sm:hidden">
+        還要 <span className="tabular-nums">{formatClock(lockLeft)}</span> 才能交卷
+      </span>
+      <span className="hidden sm:inline">
+        開考 60 分鐘後才能交卷（還要 <span className="tabular-nums">{formatClock(lockLeft)}</span>）
+      </span>
+    </span>
+  );
+}
+
+/** 交卷鈕；實考模式前 60 分鐘停用（只有停用期間每秒重繪）。 */
+function SubmitControl({ onSubmit, disabled, buttonRef }: { onSubmit: () => void; disabled: boolean; buttonRef: Ref<HTMLButtonElement> }) {
+  const lockLeft = useStrictLockLeft();
   const locked = lockLeft > 0;
   return (
     <span className="ml-auto inline-flex flex-wrap items-center justify-end gap-x-2 gap-y-1">
-      {locked && (
-        <span id="mock-submit-lock" className="text-xs text-muted">
-          <span className="sm:hidden">
-            還要 <span className="tabular-nums">{formatClock(lockLeft)}</span> 才能交卷
-          </span>
-          <span className="hidden sm:inline">
-            開考 60 分鐘後才能交卷（還要 <span className="tabular-nums">{formatClock(lockLeft)}</span>）
-          </span>
-        </span>
-      )}
+      {locked && <StrictLockText id="mock-submit-lock" lockLeft={lockLeft} />}
       <button
         ref={buttonRef}
         type="button"
@@ -104,7 +119,7 @@ export function MockToolbar({
   for (const value of Object.values(answers)) if (isAnswered(value)) answered += 1;
 
   return (
-    <div className="sticky top-14 z-10 -mx-4 border-b border-line bg-surface/95 px-4 py-2 backdrop-blur lg:top-0 lg:-mx-10 lg:px-10">
+    <div data-mock-toolbar="" className="sticky top-14 z-10 -mx-4 border-b border-line bg-surface/95 px-4 py-2 backdrop-blur lg:top-0 lg:-mx-10 lg:px-10">
       {/* 手機上收窄間距、模式只寫兩個字：390px 寬時工具列維持一到兩行。 */}
       <div className="flex flex-wrap items-center gap-x-3 gap-y-1 sm:gap-x-4">
         <span className="rounded-full bg-primary-soft px-2.5 py-0.5 text-xs font-semibold text-primary">
@@ -115,9 +130,11 @@ export function MockToolbar({
         <span className="text-sm tabular-nums">
           已答 {answered}／{total}
         </span>
-        <span className="inline-flex items-center gap-1 text-sm tabular-nums" aria-label={`已標記 ${markedCount} 題`}>
+        {/* 一般的 span 不能用 aria-label 命名（螢幕報讀器不唸），所以畫面上的數字藏起來，另外放一段只給報讀器的文字。 */}
+        <span className="inline-flex items-center gap-1 text-sm tabular-nums">
           <Flag aria-hidden="true" className="size-3.5" />
           <span aria-hidden="true">{markedCount}</span>
+          <span className="sr-only">已標記 {markedCount} 題</span>
         </span>
         <SubmitControl onSubmit={onSubmit} disabled={readOnly} buttonRef={submitRef} />
       </div>

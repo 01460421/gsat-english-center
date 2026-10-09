@@ -10,7 +10,8 @@ import { useId, type ReactNode } from 'react';
 import type { OptionMap, Question, QuestionGroup } from '../../../data/exams';
 import { useAttemptStore, useAttemptSelector, useQuestionState } from '../AttemptContext';
 import { useExam } from '../ExamContext';
-import { QuestionAccessorySlot } from '../QuestionAccessoryContext';
+import { useQuestionExtras } from '../QuestionExtras';
+import { useAiGradingOpen } from './AiGrading';
 import { countParagraphs, countWords, questionErratum, wordCountLabel } from '../labels';
 import { isBlankCell } from '../paper';
 import { questionRangeTitle, questionTitle, resolveBlankQuestion } from '../richText';
@@ -34,15 +35,16 @@ export function QuestionHeading({
   title: string;
   points: number | null;
   extra?: ReactNode;
-  /** 這個區塊的題號；有提供時，題號旁畫 QuestionAccessoryContext 的附加元件（模擬考的「標記」）。 */
+  /** 這個區塊的題號；有提供時，題號旁畫 QuestionExtras.renderHeadingAccessory 的附加元件（模擬考的「標記」）。 */
   labels?: readonly string[];
 }) {
+  const accessory = useQuestionExtras()?.renderHeadingAccessory;
   return (
     <span className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
       <span className="font-semibold text-primary">{title}</span>
       {points !== null && <span className="text-xs text-muted">{formatPoints(points)} 分</span>}
       {extra}
-      <QuestionAccessorySlot labels={labels} />
+      {accessory && labels && labels.length > 0 && accessory(labels)}
     </span>
   );
 }
@@ -100,6 +102,7 @@ export function ChoiceQuestionBlock({
 }) {
   const store = useAttemptStore();
   const exam = useExam();
+  const extras = useQuestionExtras();
   const { answer, showFeedback, locked } = useQuestionState(q.label);
   const name = useId();
   const multi = q.mode === 'multi_select';
@@ -173,6 +176,7 @@ export function ChoiceQuestionBlock({
         </div>
       </fieldset>
       <RevealButton labels={[q.label]} />
+      {!showFeedback && extras?.renderWhileAnswering?.(q)}
       {showFeedback && <ChoiceFeedback q={q} answer={answer} options={options} />}
     </div>
   );
@@ -254,6 +258,7 @@ export function TextAnswerBlock({ q, multiline }: { q: Question; multiline: bool
   const id = useId();
   const value = typeof answer === 'string' ? answer : '';
   const translation = q.mode === 'translation';
+  const aiOpen = useAiGradingOpen();
   return (
     <div id={questionAnchorId(q.label)} className={cardClass}>
       <QuestionHeading title={questionTitle(q.label)} points={q.points} labels={[q.label]} />
@@ -271,7 +276,9 @@ export function TextAnswerBlock({ q, multiline }: { q: Question; multiline: bool
         <input id={id} type="text" value={value} disabled={locked} onChange={(e) => store.setAnswer(q.label, e.currentTarget.value)} className={`mt-1 ${textInputClass}`} {...englishInputProps} />
       )}
       <p className="mt-2 text-xs text-muted">
-        {translation ? '答案只存在這台裝置；AI 批改即將推出。' : '非選擇題不自動計分，看參考答案後自行對照。'}
+        {translation
+          ? `答案只存在這台裝置；${aiOpen ? '想請 AI 批改，可以到「寫作練習」作答送出。' : 'AI 批改即將推出。'}`
+          : '非選擇題不自動計分，看參考答案後自行對照。'}
       </p>
       {/* 中譯英不顯示官方參考譯文（D8），按鈕只帶出評分原則的連結，不叫「看參考答案」以免誤會。 */}
       <RevealButton labels={[q.label]}>{translation ? '看說明' : '看參考答案'}</RevealButton>
@@ -291,6 +298,7 @@ export function CompositionBlock({ q }: { q: Question }) {
   const paragraphs = countParagraphs(value);
   const requirement = wordCountLabel(q.tags.word_count);
   const minWords = q.tags.word_count?.min ?? q.tags.word_count?.approx ?? null;
+  const aiOpen = useAiGradingOpen();
   return (
     <div id={questionAnchorId(q.label)} className={cardClass}>
       <QuestionHeading title={questionTitle(q.label)} points={q.points} labels={[q.label]} />
@@ -320,7 +328,9 @@ export function CompositionBlock({ q }: { q: Question }) {
       <p id={countId} className="mt-1 text-sm text-muted tabular-nums">
         <span className={minWords !== null && words < minWords ? 'text-bad' : ''}>{words} 個單詞</span>・{paragraphs} 段
       </p>
-      <p className="mt-2 rounded-lg bg-primary-soft px-3 py-2 text-sm text-primary">AI 批改即將推出。作文目前只存在這台裝置，不會上傳。</p>
+      <p className="mt-2 rounded-lg bg-primary-soft px-3 py-2 text-sm text-primary">
+        {aiOpen ? '作文只存在這台裝置，不會上傳；想請 AI 批改，可以到「寫作練習」作答送出。' : 'AI 批改即將推出。作文目前只存在這台裝置，不會上傳。'}
+      </p>
       <RevealButton labels={[q.label]}>看說明</RevealButton>
       {showFeedback && <OpenFeedback q={q} answer={answer} />}
     </div>

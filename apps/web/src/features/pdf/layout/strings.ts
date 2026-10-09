@@ -10,11 +10,19 @@
  */
 import type { Exam } from '../../../data/exams';
 
-/** 頁首、答題卷用的卷別短名：「115年學測」「110年指考」「109年指考補考」「115參考試卷」。 */
-function examShortTitle(exam: Pick<Exam, 'exam' | 'year' | 'session'>): string {
+type ExamNameFields = Pick<Exam, 'exam' | 'year' | 'session' | 'title'>;
+
+/**
+ * 頁首、答題卷用的卷別短名：「115年學測」「110年指考」「109年指考補考」「115學測參考試卷」「102指考參考試卷」「110試辦考試」。
+ * 參考試卷同一年常有指考、學測兩份（ref-102-a／b），短名要分得出來（印出來的紙張才不會混在一起），所以看標題。
+ */
+function examShortTitle(exam: ExamNameFields): string {
   const makeup = exam.session === 'makeup' ? '補考' : '';
   if (exam.exam === 'gsat') return `${exam.year}年學測${makeup}`;
   if (exam.exam === 'ast') return `${exam.year}年指考${makeup}`;
+  if (/試辦/u.test(exam.title)) return `${exam.year}試辦考試`;
+  if (/指定科目/u.test(exam.title)) return `${exam.year}指考參考試卷`;
+  if (/學科能力/u.test(exam.title)) return `${exam.year}學測參考試卷`;
   return `${exam.year}參考試卷`;
 }
 
@@ -34,16 +42,19 @@ export const PDF_TEXT = {
   howWithSheet: [
     '選擇題請在本卷所附「答題卷」的選擇題答案卡上劃記，或直接寫在題本上。',
     '混合題與非選擇題請寫在「答題卷」標示題號的作答區內，作答時不必抄題。',
-    '作答完畢後，可以到學測英文中心網站輸入選擇題答案，自動計分並對照全國答對率。',
   ],
   howWithoutSheet: [
     '選擇題請把選項代號寫在題本上，或另備答案紙劃記。',
     '混合題與非選擇題請另備答案紙作答，並標明題號（下載時勾選「附答題卷」可取得作答格線）。',
-    '作答完畢後，可以到學測英文中心網站輸入選擇題答案，自動計分並對照全國答對率。',
   ],
+  /** 作答方式的最後一條；這份考卷沒有全國答對率（舊卷、參考試卷）就不提對照。 */
+  howOnline: (withRates: boolean) =>
+    withRates ? '作答完畢後，可以到學測英文中心網站輸入選擇題答案，自動計分並對照全國答對率。' : '作答完畢後，可以到學測英文中心網站輸入選擇題答案，自動計分。',
   scoringTitle: '選擇題計分方式：',
   scoringSingle:
     '單選題：每題有 n 個選項，其中只有一個是正確或最適當的選項。各題答對者，得該題的分數；答錯、未作答或劃記多於一個選項者，該題以零分計算。',
+  /** 原本答錯倒扣的舊卷（指考 91–99、98 指考參考試卷）：各大題說明照原卷印倒扣規則，封面不能再寫「答錯以零分計算」。 */
+  scoringPenaltyNote: '本卷原本的計分方式是答錯倒扣（規則見各大題說明）；在學測英文中心網站作答時依現制計分，答錯不倒扣。',
   scoringMulti:
     '多選題：每題有 n 個選項，其中至少有一個是正確的選項。各題之選項獨立判定，所有選項均答對者，得該題全部的分數；答錯 k 個選項者，得該題 (n−2k)/n 的分數；但得分低於零分或所有選項均未作答者，該題以零分計算。',
   strictMode: '實考模式：開考後 60 分鐘內不交卷（比照正式考試入場後 60 分鐘內不得離場）。',
@@ -56,12 +67,12 @@ export const PDF_TEXT = {
   qrOfficial: '官方試題 PDF',
   qrOnline: '線上作答與計分',
   headerCenter: '學測英文中心重新排版・非官方',
-  examShort: (exam: Pick<Exam, 'exam' | 'year' | 'session'>) => [examShortTitle(exam), '英文考科'] as const,
+  examShort: (exam: ExamNameFields) => [examShortTitle(exam), '英文考科'] as const,
   pageOf: (page: number, total: number) => [`第 ${page} 頁`, `共 ${total} 頁`] as const,
   /** 答題卷、答案頁的頁碼（頁尾置中）。 */
   pageOfShort: (page: number, total: number) => `第 ${page} 頁／共 ${total} 頁`,
-  sheetHeader: (exam: Pick<Exam, 'exam' | 'year' | 'session'>) => `${examShortTitle(exam)}　答題卷`,
-  keyHeader: (exam: Pick<Exam, 'exam' | 'year' | 'session'>) => `${examShortTitle(exam)}　答案`,
+  sheetHeader: (exam: ExamNameFields) => `${examShortTitle(exam)}　答題卷`,
+  keyHeader: (exam: ExamNameFields) => `${examShortTitle(exam)}　答案`,
   partNames: ['第壹部分', '第貳部分', '第參部分', '第肆部分', '第伍部分'],
   partSeparator: '、',
   pointsOf: (points: number) => `（占${points}分）`,
@@ -84,8 +95,12 @@ export const PDF_TEXT = {
   compositionLineHint: '約 120 個單詞',
   compositionContinued: '（英文作文續）',
   answerKeyTitle: '答案',
-  answerKeyChoiceNote: '選擇題答案依大考中心公布之答案；百分比是全國答對率（多選題為得分率），取自大考中心統計資料。',
+  answerKeyChoiceNote: '選擇題答案依大考中心公布之答案。',
+  /** 有全國答對率（答案下方的百分比）時才印。 */
+  answerKeyRateNote: '百分比是全國答對率（多選題為得分率），取自大考中心統計資料。',
+  /** 印出的答案裡有官方答案時才印：只有混合題用 answerKeyMixedNote，其他非選擇題（舊卷的填充、簡答）用 answerKeyOpenAnswerNote。 */
   answerKeyMixedNote: '混合題非選擇題的答案取自大考中心公布之參考答案；部分給分原則見官方評分原則。',
+  answerKeyOpenAnswerNote: '非選擇題答案取自大考中心公布之參考答案；部分給分原則見官方評分原則。',
   answerKeyOpenNote: '非選擇題的評分原則請見大考中心網站：',
   allCredit: '送分',
   alsoAccepted: (answers: readonly string[]) => `（亦可：${answers.join('；')}）`,

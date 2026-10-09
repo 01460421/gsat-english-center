@@ -4,10 +4,13 @@
  *   - 中譯英：不顯示官方參考譯文（D8）；列出檢核項目，學生填錯誤處數，每處 −0.5，句首大寫與句尾標點另扣 0.5（只扣一次）。
  *   - 英文作文：四項各 0–5（本站自己的描述），程式判斷字數與段數。
  * 每次修改立刻存檔，總分、級分與歷史跟著更新。
+ * 登入與 AI 批改開放時（/api/features），另外指向寫作練習的同一份考卷，那裡可以把答案送 AI 批改（分數不帶回成績單）。
  */
 import { ExternalLink, Minus, Plus } from 'lucide-react';
 import { useId } from 'react';
+import { Link } from 'react-router';
 import type { Exam } from '../../../data/exams';
+import { useFeatures } from '../../../lib/api';
 import { scoringFile } from '../../exams/ExamContext';
 import { ScoringSource } from '../../exams/components/QuestionFeedback';
 import { RichText } from '../../exams/components/RichText';
@@ -338,6 +341,14 @@ export function SelfAssessment({
   const mixed = items.filter((i) => i.kind === 'mixed' || i.kind === 'other');
   const translation = items.filter((i) => i.kind === 'translation');
   const composition = items.filter((i) => i.kind === 'composition');
+  // 登入與 AI 批改都開放時，指向寫作練習的同一份考卷（那裡可以送 AI 批改）；沒開放就不提，免得叫學生去做做不到的事。
+  const features = useFeatures();
+  const aiOpen = features.auth && features.ai;
+  const examPath = encodeURIComponent(exam.id);
+  const aiLinks = [
+    ...(translation.length > 0 ? [{ to: `/writing/translation/${examPath}`, label: '這份考卷的中譯英' }] : []),
+    ...(composition.length > 0 ? [{ to: `/writing/essay/${examPath}`, label: '這份考卷的英文作文' }] : []),
+  ];
   const scoring = scoringFile(exam)?.url ?? null;
   const detailOf = <K extends SelfDetail['kind']>(label: string, kind: K) => {
     const d = details[label];
@@ -348,7 +359,21 @@ export function SelfAssessment({
       <h2 id={`${id}-title`} className="text-lg font-semibold">
         非選擇題自評
       </h2>
-      <p className="mt-1 text-sm text-muted">後端與 AI 批改上線前，非選擇題用自評計分；分數一改，總分與級分立刻更新。</p>
+      <p className="mt-1 text-sm text-muted">模擬考的非選擇題用自評計分；分數一改，總分與級分立刻更新。</p>
+      {aiOpen && aiLinks.length > 0 && (
+        <p className="mt-2 rounded-lg bg-primary-soft px-3 py-2 text-sm">
+          想請 AI 批改：到寫作練習的
+          {aiLinks.map((link, i) => (
+            <span key={link.to}>
+              {i > 0 ? '、' : ' '}
+              <Link to={link.to} className="font-medium text-primary underline underline-offset-2">
+                {link.label}
+              </Link>
+            </span>
+          ))}
+          ，貼上你的答案送出（需要登入並通過 AI 申請）。AI 分數不會自動帶回這份成績單，可以參考它再調整下面的自評。
+        </p>
+      )}
       {mixed.length > 0 && (
         <>
           <h3 className="mt-4 font-semibold">混合題：填充與簡答</h3>

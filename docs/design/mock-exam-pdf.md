@@ -3,6 +3,7 @@
 > 版本：2026-10-08（設計與前置工作完成，交給兩位開發者並行實作）。
 > 需求（站主）：「模擬考也要能下載成考試格式的 pdf」；歷屆試題也提供同樣的下載。另依 SPEC §6.11 做模擬考模組，但**後端還沒部署**，所有功能都要以靜態前端完成。
 > 相關文件：`docs/SPEC.md` §6.10、§6.11；`docs/ROADMAP.md` Phase 2 驗收第 7 項；`docs/research/02-gsat-english-spec.md`（格式、計分、級分）；`docs/research/04-data-sources-licensing.md`（授權）；`data/exams/gsat-spec.json`（級距、五標、級分人數）。
+> 2026-10-09 合併 main（登入＋AI 批改、題庫練習）後的調整：後端已部署，但模擬考的非選擇題仍是自評，成績單在登入與 AI 開放時指向寫作練習的同一份考卷送 AI 批改（分數不帶回）；題號旁的「標記」改用 `features/exams/QuestionExtras.ts` 的 `renderHeadingAccessory`（和題庫練習共用同一個擴充點，原本的 `QuestionAccessoryContext` 已刪除）；級分對照的轉換與檢查移到 `apps/web/scripts/lib/score-scales.mjs`，型別契約併入 `scripts/lib/data-contract.mjs` 的 exams 部分；頁面判斷要不要顯示 PDF 下載一律用 `pdfDownloadVisible()`。
 > 標記：「（實測）」＝本文件的 spike 在這個開發環境量到的數字；「（設計值）」＝上線後用資料或實機測試校正。
 
 **目錄**：[0. 決策摘要](#0-決策摘要)｜[1. 範圍與限制](#1-範圍與限制)｜[2. PDF 技術選型](#2-pdf-技術選型spike)｜[3. 字型](#3-字型)｜[4. PDF 模組架構](#4-pdf-模組架構)｜[5. 版面規格](#5-版面規格對照-115-學測題本)｜[6. 模擬考模組](#6-模擬考模組)｜[7. 資料](#7-資料級分對照與建置檢查)｜[8. 檔案所有權](#8-檔案所有權兩位開發者不改同一個檔案)｜[9. 驗收清單](#9-驗收清單)｜[10. 風險與待決事項](#10-風險與待決事項)
@@ -348,10 +349,11 @@ class PdfError extends Error { kind: 'unsupported' | 'network' | 'render' | 'abo
 - **工具列**（sticky，沿用 `ExamToolbar` 的版面但自己寫 `MockToolbar`）：剩餘時間（期限倒數；`role="timer"`、剩 10／5／1 分鐘時 `aria-live` 提醒；剩 5 分鐘變紅）、模式（考試／實考）、已答 n／53、已標記 m、「交卷」。實考模式前 60 分鐘交卷鈕停用並說明「開考 60 分鐘後才能交卷（還要 mm:ss）」。
 - **一次顯示一個大題**：`<ExamPaper sectionIds={[current]} />`（已加的擴充點）。大題導覽列：八個大題按鈕，各顯示已答／題數與標記數；頁面底部「上一大題」「下一大題」。理由：對應翻題本的節奏，也讓「每個大題的用時」可以量（目前顯示的大題才計時）。
 - **題號面板**（展開／收合）：所有題號的方格，已答實心、未答空心、標記加旗號，目前大題外框加粗；點題號 → 切到該大題並捲到 `#q-{label}`（文意選填、篇章結構的題號捲到題組）。
-- **標記**：題號旁的「標記」切換按鈕（`QuestionAccessoryContext`，已加的擴充點；`aria-pressed`）；文意選填、篇章結構的空格沒有題號標題，從題號面板標記。
+- **標記**：題號旁的「標記」切換按鈕（`QuestionExtras` 的 `renderHeadingAccessory`；`aria-pressed`）；文意選填、篇章結構的空格沒有題號標題，從題號面板標記。
 - **練習輔助全關**：AttemptState 的 `mode` 用 `'exam'`，題目元件就不顯示「看答案」與全國統計；之後的點字查詞、提示也要看 `mode` 關閉（SPEC §4.1、§6.11）。
 - **存檔**：`AttemptStore` 每次改答案就寫 localStorage（比 SPEC 要求的「每 30 秒」更即時）；另外每 30 秒、`visibilitychange`（hidden）與 `pagehide` 時寫入計時與目前大題。無法儲存時沿用歷屆試題頁的提示。
-- **多分頁**：監聽 `storage` 事件，同一份紀錄在別的分頁被改時，這個分頁顯示「這份模擬考在另一個分頁作答中」並改成唯讀。
+- **多分頁**：監聽 `storage` 事件，同一份紀錄在別的分頁被改時，這個分頁顯示「這份模擬考在另一個分頁作答中」並改成唯讀。接續作答與「改在這個分頁作答」時另外寫 `gsat-mock:v1:claim:{attemptId}`（分頁代號＋時間，每次都不同）：只重寫一模一樣的紀錄不會觸發別的分頁的 `storage` 事件，最後打開的分頁就不一定優先。交卷、放棄時刪除這個鍵。
+- **存不進 localStorage**（無痕模式、空間滿）：開考前就提示；交卷時紀錄也放進路由的 `state`，成績單讀不到 localStorage 時用它顯示，並提醒離開這一頁就找不到、可以先下載含答案的 PDF 或截圖。
 - **交卷確認**：列出未作答的題號（依大題）與已標記的題號，可以點題號回去；「確定交卷」「繼續作答」。時間到自動交卷（`submitReason: 'timeout'`）；開啟頁面時已超過期限 → 直接以存檔內容交卷（`'expired'`），成績單註明「已超過作答時間，以最後存檔的作答計分」。
 
 ### 6.4 計時
@@ -395,7 +397,7 @@ interface MockAttemptRecord {
 | 題型 | 規則 | 實作 |
 |---|---|---|
 | 單選、選項庫、多選 | 沿用 `scoreQuestion`（多選 (n−2k)/n） | `features/exams/scoring.ts` |
-| 混合題填充、簡答 | 正規化（去頭尾空白、壓縮空白、彎引號換直引號、句尾句點不計、大小寫不計、❶–❼ 視同 1–7）後等於官方答案或 `accepted_answers` → 自動給滿分；空白 → 0；填充寫了兩個字以上 → 0（SPEC §4.6 設計值）；其他 → **自評**：顯示官方答案、可接受答案與 2／1／0 原則（自己的話：完全正確 2 分；選對字但字形或拼字有誤 1 分；錯誤或空白 0 分），長度 ≥ 5 且與答案編輯距離 ≤ 2 時預選 1 分並註明「可能是拼字錯誤」 | 模擬考開發者寫 `features/mock/scoreOpen.ts`＋測資（115 第 47–50 題：innovative、blending → 1；is one of a kind → 0） |
+| 混合題填充、簡答 | 正規化（去頭尾空白、壓縮空白、彎引號換直引號、句尾句點不計、❶–❼ 視同 1–7；簡答不計大小寫，填充要大小寫相同——115 官方閱卷把句中的 Blended 算字形錯誤、扣一半，所以只差大小寫時交給自評、預選一半）後等於官方答案或 `accepted_answers` → 自動給滿分；空白 → 0；填充寫了兩個字以上 → 0（SPEC §4.6 設計值）；其他 → **自評**：顯示官方答案、可接受答案與 2／1／0 原則（自己的話：完全正確 2 分；選對字但字形或拼字有誤 1 分；錯誤或空白 0 分），長度 ≥ 5 且與答案編輯距離 ≤ 2 時預選 1 分並註明「可能是拼字錯誤」 | 模擬考開發者寫 `features/mock/scoreOpen.ts`＋測資（115 第 47–50 題：innovative、blending → 1；is one of a kind → 0） |
 | 中譯英（每題 4 分） | 自評：不顯示官方譯文；列出檢核（時態、主詞動詞一致、冠詞、單複數、用字、漏譯），學生填「錯誤處數」，每處 −0.5；句首未大寫或標點不妥 −0.5、只扣一次（程式先判斷句首大寫與句尾標點，預先勾選）；最低 0。附官方評分原則網址 | `features/mock/` |
 | 英文作文（20 分） | 自評四項（內容、組織、文法句構、字彙拼字）各 0–5，每項旁用本站自己的話描述優（5–4）、可（3）、差（2–1）、劣（0），**不轉載官方評分指標表全文**；程式判斷字數（`countWords`）與段數（`countParagraphs`）：少於 100 字或未分段扣 1，兩者都有只扣 1，少於 120 字提醒；勾「離題」則其他各項 0 | `features/mock/` |
 
@@ -416,7 +418,7 @@ interface MockAttemptRecord {
 
 ### 6.8 重用與不重用
 
-重用：`AttemptStore`／`AttemptContext`／`useAttemptSelector`、`ExamContext`、`ExamPaper`（`sectionIds`）、`QuestionAccessoryContext`、`scoreExam`／`scoreQuestion`／`isAnswered`／`formatPoints`／`formatPercent`、`labels.ts`（`formatClock`、`formatDuration`、`countWords`、`countParagraphs`、`wordCountLabel`、`examIdLabel`）、`SectionStructure`、`ExamSourceNote`、`DataErrorBoundary`、`loadExam`、`loadScoreScales` 與換算函式、`ExamPdfDownload`。
+重用：`AttemptStore`／`AttemptContext`／`useAttemptSelector`、`ExamContext`、`ExamPaper`（`sectionIds`）、`QuestionExtras`（`renderHeadingAccessory`）、`scoreExam`／`scoreQuestion`／`isAnswered`／`formatPoints`／`formatPercent`、`labels.ts`（`formatClock`、`formatDuration`、`countWords`、`countParagraphs`、`wordCountLabel`、`examIdLabel`）、`SectionStructure`、`ExamSourceNote`、`DataErrorBoundary`、`loadExam`、`loadScoreScales` 與換算函式、`ExamPdfDownload`。
 不重用（模擬考自己寫）：`ExamToolbar`（暫停式計時）、`SetupPanel`、`ResultSummary`、`SectionNav`。
 
 ### 6.9 無障礙與手機
@@ -496,7 +498,7 @@ interface YearScale {
 
 ### 8.3 已完成、兩人都不改（要改先協調，並寫在 PR 說明）
 
-`apps/web/src/features/pdf/types.ts`（共用約定）、`apps/web/src/App.tsx`、`apps/web/src/modules.ts`（`/mock` 的 status 以外）、`apps/web/vite.config.ts`、`apps/web/scripts/build-data.mjs`、`apps/web/scripts/check-data-contract.mjs`、`apps/web/src/data/exams.ts`、`apps/web/src/features/exams/**`（`attempt.ts` 的 `AttemptPersistence`、`Paper.tsx` 的 `sectionIds`、`QuestionAccessoryContext.tsx`、`Questions.tsx` 的 `labels`、`ExamPaperPage.tsx` 的 PDF 區塊都已接好；只修 bug）、`vercel.json`、`docs/SPEC.md`、本文件。`data/**`、`docs/research/**`、`tools/**`、`packages/shared/**`、`.github/**` 屬於其他工作線，不改。
+`apps/web/src/features/pdf/types.ts`（共用約定）、`apps/web/src/App.tsx`、`apps/web/src/modules.ts`（`/mock` 的 status 以外）、`apps/web/vite.config.ts`、`apps/web/scripts/build-data.mjs`、`apps/web/scripts/check-data-contract.mjs`、`apps/web/src/data/exams.ts`、`apps/web/src/features/exams/**`（`attempt.ts` 的 `AttemptPersistence`、`Paper.tsx` 的 `sectionIds`、`QuestionExtras.ts` 的 `renderHeadingAccessory`、`Questions.tsx` 的 `labels`、`ExamPaperPage.tsx` 的 PDF 區塊都已接好；只修 bug）、`vercel.json`、`docs/SPEC.md`、本文件。`data/**`、`docs/research/**`、`tools/**`、`packages/shared/**`、`.github/**` 屬於其他工作線，不改。
 
 如果模擬考真的需要歷屆試題元件的新擴充點（例如題目元件要讀新的 context），由模擬考開發者提出、在同一個 PR 裡只改 `features/exams/` 的那一處並加測試，PDF 開發者不碰 `features/exams/`。
 

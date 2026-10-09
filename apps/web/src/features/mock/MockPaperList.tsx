@@ -14,7 +14,7 @@ import { formatClock, formatDuration } from '../exams/labels';
 import { formatPoints } from '../exams/scoring';
 import { DataErrorBoundary } from '../exams/components/DataErrorBoundary';
 import { ExamPdfDownload } from '../pdf/ExamPdfDownload';
-import { PDF_DOWNLOAD_ENABLED } from '../pdf/index';
+import { pdfDownloadVisible } from '../pdf/index';
 import { formatDateTime, signedPoints } from './format';
 import { MOCK_DURATION_MIN, MOCK_PAPERS, findMockPaper, mockPdfMeta, type MockPaper } from './papers';
 import { HISTORY_LIMIT, MOCK_STORAGE_PREFIX, loadActiveRecord, loadHistory, type MockAttemptRecord, type MockHistoryEntry } from './storage';
@@ -85,13 +85,14 @@ function StatusLine({ active, done }: { active: MockAttemptRecord | undefined; d
   );
 }
 
-/** 展開後才下載考卷，交給 PDF 模組的「下載考試格式 PDF」區塊（PDF_DOWNLOAD_ENABLED 為 false 時整段不顯示）。 */
+/** 展開後才下載考卷，交給 PDF 模組的「下載考試格式 PDF」區塊（pdfDownloadVisible() 為 false 時整段不顯示）。 */
 function PaperPdf({ paper }: { paper: MockPaper }) {
   const [open, setOpen] = useState(false);
   const [retry, setRetry] = useState(0);
+  const [visible] = useState(pdfDownloadVisible);
   const id = useId();
   const examPromise = useMemo(() => (open ? loadExam(paper.examId) : null), [open, paper.examId, retry]);
-  if (!PDF_DOWNLOAD_ENABLED) return null;
+  if (!visible) return null;
   return (
     <div className="border-t border-line pt-3">
       <button

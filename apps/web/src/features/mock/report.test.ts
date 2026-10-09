@@ -171,11 +171,18 @@ describe('computeReport：原得總分＝自動計分＋非選擇題（自動、
   });
 
   it('程式能確定的分數（空白、與官方答案相同）不被自評覆蓋', () => {
-    const record = submittedRecord(MINI_EXAM, { '48': 'Blended' }, { selfScores: { '47': 2, '48': 0 } });
+    const record = submittedRecord(MINI_EXAM, { '48': 'blended' }, { selfScores: { '47': 2, '48': 0 } });
     const byLabel = Object.fromEntries(computeReport(MINI_EXAM, record).openItems.map((o) => [o.label, o]));
     expect(byLabel['47']).toMatchObject({ score: 0, source: 'auto' }); // 未作答
     expect(byLabel['48']).toMatchObject({ score: 2, source: 'auto' });
     expect(byLabel['中譯英1']).toMatchObject({ score: 0, source: 'auto' }); // 未作答不必自評
+  });
+
+  it('填充題只差大小寫（Blended）不自動給滿分：預選一半，學生可以自評改分', () => {
+    const suggested = Object.fromEntries(computeReport(MINI_EXAM, submittedRecord(MINI_EXAM, { '48': 'Blended' })).openItems.map((o) => [o.label, o]));
+    expect(suggested['48']).toMatchObject({ score: 1, source: 'suggested', assessment: { kind: 'self', reason: 'capitalization' } });
+    const self = Object.fromEntries(computeReport(MINI_EXAM, submittedRecord(MINI_EXAM, { '48': 'Blended' }, { selfScores: { '48': 2 } })).openItems.map((o) => [o.label, o]));
+    expect(self['48']).toMatchObject({ score: 2, source: 'self' });
   });
 
   it('用時：交卷時間 − 開考時間（不超過 100 分鐘），離開頁面另計', () => {

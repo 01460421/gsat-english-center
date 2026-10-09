@@ -11,14 +11,16 @@
  *   - 用時每秒只記在記憶體，每 30 秒、切換分頁（visibilitychange）、關閉頁面（pagehide）與切大題時才寫入，
  *     答案則是每次修改都立刻寫入（設計文件 §6.3）。
  *
- * 多分頁：別的分頁改了同一筆紀錄（storage 事件），這個分頁就改成唯讀，不再寫入，避免兩邊互相覆蓋；
- * 使用者可以選擇「在這個分頁繼續」，由頁面重新讀取最新紀錄建立新的 session。
+ * 多分頁：別的分頁改了同一筆紀錄或接手作答（storage 事件），這個分頁就改成唯讀，不再寫入，避免兩邊互相覆蓋；
+ * 使用者可以選擇「在這個分頁繼續」，由頁面重新讀取最新紀錄建立新的 session。接續作答時頁面呼叫 claim()：
+ * 寫一個每次都不同的「接手」鍵，舊分頁一定收得到事件（最後打開的分頁優先）——只重寫紀錄的話內容可能一模一樣，
+ * 瀏覽器不會送出事件，兩個分頁都還能寫，舊分頁 30 秒的自動存檔反而會把剛打開的分頁鎖住。
  */
 import type { Exam } from '../../data/exams';
 import { AttemptStore, type AttemptPersistence, type AttemptState } from '../exams/attempt';
 import { scoreExam } from '../exams/scoring';
-import { isExpired, usedSec } from './timer';
-import { clearActiveId, parseRecord, recordKey, removeRecord, saveRecord, type MockAttemptRecord, type MockSubmitReason } from './storage';
+import { canSubmitManually, isExpired, usedSec } from './timer';
+import { claimKey, clearActiveId, newId, parseRecord, recordKey, removeClaim, removeRecord, saveRecord, writeClaim, type MockAttemptRecord, type MockSubmitReason } from './storage';
 
 export type MockMeta = Omit<MockAttemptRecord, 'attempt'>;
 
@@ -40,6 +42,8 @@ export class MockSession {
   private lastTick: number | null = null;
   private conflictState: MockConflict | null = null;
   private discarded = false;
+  /** 這個 session（分頁）的代號，寫在「接手」鍵裡。 */
+  private readonly tabId = newId();
   /** 最近一次寫入是否成功。 */
   persisted: boolean;
 
@@ -96,6 +100,13 @@ export class MockSession {
     return this.writeWith(this.attempt.getState());
   }
 
+  /** 在這個分頁接手作答（接續作答、「改在這個分頁作答」）：通知其他開著同一份的分頁改成唯讀，再寫一次紀錄。 */
+  claim(): boolean {
+    if (this.readOnly) return false;
+    writeClaim(this.meta.id, this.tabId);
+    return this.flush();
+  }
+
   private update(patch: Partial<MockMeta>, { write = true, notify = true } = {}): void {
     this.meta = { ...this.meta, ...patch };
     if (write) this.flush();
@@ -144,10 +155,12 @@ export class MockSession {
   /**
    * 交卷：計分、鎖住作答、記下用時與離開頁面的時間，並清除「作答中」的指標。
    * reason：manual（手動）、timeout（時間到）、expired（打開頁面時已經超過期限，以最後存檔的作答計分）。
-   * 回傳交卷後的完整紀錄；已經交過卷就回傳 null。
+   * 回傳交卷後的完整紀錄；已經交過卷、唯讀，或實考模式開考 60 分鐘內手動交卷就回傳 null
+   * （交卷鎖在這裡把關，畫面上的哪一個按鈕都繞不過去）。
    */
   submit(exam: Exam, reason: MockSubmitReason, now = Date.now()): MockAttemptRecord | null {
     if (this.meta.status === 'submitted' || this.conflictState !== null) return null;
+    if (reason === 'manual' && !canSubmitManually(this.meta, now)) return null;
     if (reason !== 'expired') this.tick(now, true);
     const used = reason === 'manual' ? usedSec(this.meta, now) : this.meta.durationSec;
     const visible = Object.values(this.meta.sectionTimeSec).reduce((a, b) => a + b, 0);
@@ -164,6 +177,7 @@ export class MockSession {
     this.attempt.submit(reason === 'manual' ? 'manual' : 'timeout', { earned: score.earned, autoMax: score.autoMax });
     this.flush();
     clearActiveId(this.meta.paperId, this.meta.id);
+    removeClaim(this.meta.id);
     this.notify();
     return this.toRecord();
   }
@@ -175,11 +189,19 @@ export class MockSession {
   // ---- 多分頁 --------------------------------------------------------------
 
   /**
-   * 處理 storage 事件（只有「別的分頁」寫入時才會收到）。同一筆紀錄被改了就改成唯讀。
+   * 處理 storage 事件（只有「別的分頁」寫入時才會收到）。同一筆紀錄被改了、或別的分頁接手作答，就改成唯讀。
+   * 「接手」鍵被刪掉（別的分頁交卷或放棄時順手清除）不算：紀錄本身的事件會說明是交卷還是放棄。
    * 回傳是否處理了這個事件。
    */
   handleStorageEvent(key: string | null, newValue: string | null): boolean {
-    if (key !== recordKey(this.meta.id) || this.meta.status === 'submitted') return false;
+    if (this.meta.status === 'submitted') return false;
+    if (key === claimKey(this.meta.id)) {
+      if (newValue === null || this.conflictState !== null) return false;
+      this.conflictState = 'other_tab';
+      this.notify();
+      return true;
+    }
+    if (key !== recordKey(this.meta.id)) return false;
     let conflict: MockConflict = 'other_tab';
     if (newValue === null) conflict = 'removed';
     else {

@@ -1,0 +1,311 @@
+{
+  "schema": "gsat-bank-lot/v1",
+  "lot": "word_bank-top-01",
+  "section_type": "word_bank",
+  "tier": "top",
+  "label_zh": "文意選填‧超越頂標（第 1 批）",
+  "created_on": "2026-10-08",
+  "count": 5,
+  "questions_per_group": 10,
+  "format_version": "word_bank-10x10",
+  "uid_prefix": "ai.wb.",
+  "path": "data/bank/v1/word_bank/top/",
+  "spec_id": "word_bank-top@2026-10-08",
+  "spec_file": "data/exams/generation-spec/word_bank.json",
+  "spec_tier_key": "beyond_top",
+  "spec_status": "draft：由 450 格有官方統計的歷屆文意選填推得（現制 50、舊制學測 200、指考 200）；上線後依站內作答資料校正（SPEC §3.6、本檔 WB-CAL-*）",
+  "topic_quota": {
+    "origins_evolution": 2,
+    "science_health": 1,
+    "culture_history": 1,
+    "society_issues": 1,
+    "labels_zh": {
+      "origins_evolution": "起源與演變",
+      "science_health": "科普與健康",
+      "culture_history": "文化與歷史",
+      "society_issues": "社會與議題"
+    },
+    "basis": "08 §6.1（每 8 組：起源與演變 3、科普與健康 2–3、文化與歷史 2、社會與議題 1），依組數等比例取整"
+  },
+  "answer_letter_share": null,
+  "avoid": {
+    "basis": "data/exams/parsed 的 gsat-111、gsat-112、gsat-113、gsat-114、gsat-115、ref-115 同一大題（word_bank）的正解（單字取詞彙表主形，功能詞與 L1 字不列；片語整串列出）",
+    "answer_words": [
+      "absorption",
+      "active",
+      "alert",
+      "atmosphere",
+      "brought forth",
+      "called for",
+      "career",
+      "celebration",
+      "combat",
+      "delay",
+      "depart",
+      "depend on",
+      "dramatic",
+      "effective",
+      "faithful",
+      "familiar",
+      "fateful",
+      "function",
+      "manageable",
+      "mechanism",
+      "minimal",
+      "necessity",
+      "option",
+      "pass through",
+      "passed on",
+      "point to",
+      "professional",
+      "reach for",
+      "reference",
+      "restoration",
+      "retain",
+      "risk",
+      "risky",
+      "sensation",
+      "silent",
+      "sorrow",
+      "status",
+      "survive",
+      "tried out",
+      "unproductive",
+      "witness"
+    ],
+    "answer_sentences": [],
+    "topics": [
+      "benefits of napping and how to nap well",
+      "staying hydrated: when water is (and is not) the best drink",
+      "the bells of Notre-Dame de Paris",
+      "the history of stunt performers in film",
+      "the history of stunt work in the film industry",
+      "the wind phone in Otsuchi, Japan, and coping with grief"
+    ]
+  },
+  "passage_band": {
+    "basis": "SPEC §3.4＋出題規格書 passage_overrides（words、coverage_L1_4_min（取代 SPEC 的區間）、coverage_L1_6_min、offlist_max（＝1 − coverage_L1_6_min）、beyond_l4_ratio_max）",
+    "spec_3_4": {
+      "word_count": {
+        "min": 290,
+        "max": 340
+      },
+      "coverage_l1_4": {
+        "min": 0.86,
+        "max": 0.91
+      },
+      "coverage_l1_6": {
+        "min": 0.92,
+        "max": null
+      },
+      "offlist_ratio": {
+        "min": null,
+        "max": 0.07
+      },
+      "avg_sentence_length": {
+        "min": 18,
+        "max": 25
+      }
+    },
+    "overrides_note": "上限取指考範圍（字數最多 331、beyond-L4 最高 .062、L1–4 最低 .831）；篇長不是難度來源",
+    "word_count": {
+      "min": 290,
+      "max": 330
+    },
+    "coverage_l1_4": {
+      "min": 0.83,
+      "max": null
+    },
+    "coverage_l1_6": {
+      "min": 0.87,
+      "max": null
+    },
+    "offlist_ratio": {
+      "min": null,
+      "max": 0.13
+    },
+    "avg_sentence_length": {
+      "min": 18,
+      "max": 25
+    },
+    "beyond_l4_ratio": {
+      "min": null,
+      "max": 0.06
+    }
+  },
+  "item_rules": {
+    "summary_zh": "同詞性近義誘答對 ≥2；含片語動詞選項；每格詞性相容選項 ≥3；1 格詞彙聯結",
+    "pos_groups_min": null,
+    "compatible_options_per_blank": {
+      "min": 3,
+      "max": null
+    },
+    "near_synonym_pairs": {
+      "min": 2,
+      "max": null
+    },
+    "bank_pos_mix": null,
+    "lexical_link_blanks": {
+      "min": 1,
+      "max": 1
+    },
+    "phrasal_verb_option_required": true
+  },
+  "targets": {
+    "unit": "整篇（10 格）",
+    "blank_tier_mix": {
+      "basic": [
+        0,
+        1
+      ],
+      "advanced": [
+        2,
+        4
+      ],
+      "top": [
+        6,
+        8
+      ]
+    },
+    "recipe_example_mix": {
+      "basic": 0,
+      "advanced": 3,
+      "top": 7
+    },
+    "passage_words": [
+      290,
+      330
+    ],
+    "sense_mix": {
+      "core": [
+        2,
+        5
+      ],
+      "ext": [
+        3,
+        5
+      ],
+      "conv": [
+        1,
+        2
+      ],
+      "idiom": [
+        0,
+        1
+      ],
+      "basis": "現制 top 13 格：ext 5、conv 4、idiom 1、core 3；指考 top 37 格：idiom 4、ext 5、conv 2、core 26"
+    },
+    "question_type_mix": {
+      "word_meaning": [
+        3,
+        5
+      ],
+      "collocation": [
+        3,
+        5
+      ],
+      "phrase": [
+        1,
+        3
+      ],
+      "discourse": [
+        0,
+        1
+      ],
+      "basis": "現制 top：collocation 7、phrase 3、word_meaning 3"
+    },
+    "blank_type_mix": {
+      "N": [
+        3,
+        5
+      ],
+      "V": [
+        2,
+        5
+      ],
+      "A": [
+        2,
+        5
+      ],
+      "note": "空格句法位置的類別（frame）"
+    },
+    "answer_level_dist": {
+      "L1-2": [
+        3,
+        6
+      ],
+      "L3-4": [
+        2,
+        4
+      ],
+      "L5-6": [
+        1,
+        3
+      ],
+      "basis": "現制 top 正解：L1-2 6、L3-4 5、L5-6 2；常用字的延伸義是主要來源"
+    },
+    "bank": {
+      "phrasal_verbs": [
+        0,
+        2
+      ],
+      "max_frame_group_size": [
+        4,
+        6
+      ],
+      "options_ge_L5": [
+        1,
+        3
+      ],
+      "confusable_clusters": [
+        2,
+        3
+      ],
+      "optional_12_option_variant": "可選：加 2 個不用的同組誘答（指考 100–110 格式）；指考 12 選項卷中，不用的選項平均吸 5.7% 考生、2.9% 高分組，是用過選項的 3 倍（高分組）"
+    },
+    "distractor_rules": {
+      "confusable_same_frame_pairs": [
+        4,
+        7
+      ],
+      "clusters": "≥2 個「難格群」：每群 2–4 個同句法位置、彼此都說得通的選項，且其中 ≥2 個是延伸義或轉品正解",
+      "partner_is_hard_key": true,
+      "blind_solver_also_plausible": "超越頂標格各有 1–2 個，排除線索在前後句或段落",
+      "expected_upper_top_distractor_min": 0.12,
+      "challenge_max_per_passage": 1,
+      "observed_basis": "現制 top 13 格：高分組最強誘答中位數 0.19（IQR 0.14–0.29），11/13 格有同組近似誘答；top 格中高分組選「其他 top 格正解」的比例 0.093，選易格正解 0.028"
+    },
+    "recipe": [
+      "先選 2 個難格群：每群用 1 個轉品或延伸義正解（even、housed、the faithful、bear a name）配 1–3 個同句法位置、本句也說得通的選項",
+      "群內每個選項都是某一格的正解：學生放錯一個就連錯兩格（現制 14 組雙向互換，最強的 111-22／30 雙向各 29%）",
+      "易格只留 0–1 格，避免「剩下的選項自動歸位」把難格變簡單（選項被消耗的效應，doc §3.4）",
+      "排除線索放在前後句或段落（例如 each ___ a name 要讀出 10 口鐘各有名字），但必須唯一"
+    ],
+    "pitfalls": [
+      "群內兩個選項可以互換而不改句意：ast-93 第 37 題 firms／programs，56% 高分組選錯，D1 只有 0.09，是瑕疵題",
+      "用冷僻字製造難度：指考 L5-6 正解 23 格只有 7 格是 top；現制 top 有 6/13 是 L1-2 字",
+      "單一難格放在全是易格的選項庫：其他選項都被正確消耗後，剩下的就是答案（延伸義正解在「庫內另有 ≥2 個延伸義正解」時 P .38，否則 .42；ρ = −0.24，p = .045，n = 71）"
+    ]
+  },
+  "set_composition": {
+    "basic": [
+      0,
+      1
+    ],
+    "advanced": [
+      2,
+      4
+    ],
+    "top": [
+      6,
+      8
+    ]
+  },
+  "verification": {
+    "blind_solvers": 2,
+    "blind_b_different_model": true,
+    "distractor_audit": true,
+    "unique_solution": true,
+    "human_review": "100%（校準期：每個題型 × 提示詞版本的前 30 組全審，SPEC §5.8）"
+  }
+}

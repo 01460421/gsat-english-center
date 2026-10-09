@@ -21,7 +21,7 @@ export function submitAttempt(store: AttemptStore, exam: Exam, reason: 'manual' 
   store.submit(reason, { earned: score.earned, autoMax: score.autoMax });
 }
 
-function AttemptTimer({ onTimeout }: { onTimeout: () => void }) {
+export function AttemptTimer({ onTimeout }: { onTimeout: () => void }) {
   const store = useAttemptStore();
   const limit = useAttemptSelector((s) => s.timeLimitSec);
   const submitted = useAttemptSelector((s) => s.submittedAt !== null);
@@ -71,7 +71,8 @@ function AttemptTimer({ onTimeout }: { onTimeout: () => void }) {
   );
 }
 
-export function ExamToolbar({ exam }: { exam: Exam }) {
+/** modeLabel：模式標籤的文字（預設「考試模式／練習模式」；題庫練習頁傳「題庫練習」）。 */
+export function ExamToolbar({ exam, modeLabel }: { exam: Exam; modeLabel?: string }) {
   const store = useAttemptStore();
   const mode = useAttemptSelector((s) => s.mode);
   const submitted = useAttemptSelector((s) => s.submittedAt !== null);
@@ -105,8 +106,12 @@ export function ExamToolbar({ exam }: { exam: Exam }) {
       {/* 手機上收窄間距、模式只寫「考試／練習」：390px 寬時倒數（1:40:00）加交卷鈕原本會擠成兩行，工具列多佔 40px 高。 */}
       <div className="flex flex-wrap items-center gap-x-3 gap-y-1 sm:gap-x-4">
         <span className="rounded-full bg-primary-soft px-2.5 py-0.5 text-xs font-semibold text-primary">
-          {mode === 'exam' ? '考試' : '練習'}
-          <span className="hidden sm:inline">模式</span>
+          {modeLabel ?? (
+            <>
+              {mode === 'exam' ? '考試' : '練習'}
+              <span className="hidden sm:inline">模式</span>
+            </>
+          )}
         </span>
         <AttemptTimer onTimeout={onTimeout} />
         <span className="text-sm tabular-nums">

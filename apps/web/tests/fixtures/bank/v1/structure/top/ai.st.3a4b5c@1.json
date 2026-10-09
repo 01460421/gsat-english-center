@@ -1,0 +1,218 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.st.3a4b5c",
+  "version": 1,
+  "section_type": "structure",
+  "format_version": "structure-4x5",
+  "tier": "top",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": "For centuries, sailors relied on the stars to find their way across the open sea. [[1]] On cloudy nights, however, the stars disappeared, and ships could easily drift off course. [[2]]\nThe magnetic compass changed everything. [[3]] With this simple tool, sailors could keep a steady direction even in bad weather. Still, the compass only showed direction, not location. [[4]] Only in the eighteenth century did accurate clocks finally solve this problem.",
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": {
+      "A": "Its needle always pointed north, whatever the sky looked like.",
+      "B": "By watching the North Star, they could tell which way was north.",
+      "C": "Many sailors also enjoyed telling stories about the stars.",
+      "D": "Such mistakes sometimes cost sailors their lives.",
+      "E": "Knowing exactly how far east or west a ship had traveled remained a challenge."
+    },
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "B",
+        "accepted_answers": null,
+        "points": 1,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "elaboration"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "D",
+        "accepted_answers": null,
+        "points": 1,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "pronoun_reference"
+        }
+      },
+      {
+        "no": 3,
+        "label": "3",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "A",
+        "accepted_answers": null,
+        "points": 1,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "pronoun_reference"
+        }
+      },
+      {
+        "no": 4,
+        "label": "4",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "E",
+        "accepted_answers": null,
+        "points": 1,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "contrast"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "how sailors found their way at sea",
+      "genre": "expository",
+      "sdgs": [],
+      "text_format": "continuous"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "前一句說水手靠星星找方向，B 具體說明怎麼用北極星判斷北方。",
+          "evidence": [
+            "sailors relied on the stars to find their way"
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "elaboration",
+          "option_notes_zh": {
+            "C": "C 談水手講星星的故事，和找方向無關，是多餘句。"
+          },
+          "strategy_zh": "空格緊接在主題句後面，通常是具體說明。",
+          "hints": [
+            "前一句的主題是什麼？",
+            "找一句具體說明「怎麼用星星」的句子。"
+          ]
+        },
+        "2": {
+          "explanation_zh": "Such mistakes 指前一句「船偏離航道」。",
+          "evidence": [
+            "ships could easily drift off course"
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "pronoun_reference",
+          "strategy_zh": "such＋名詞要回頭找前文對應的事。",
+          "hints": [
+            "找有指示詞的選項。",
+            "Such mistakes 指的是哪件事？"
+          ]
+        },
+        "3": {
+          "explanation_zh": "Its needle 的 Its 指前一句的 compass。",
+          "evidence": [
+            "The magnetic compass changed everything."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "pronoun_reference",
+          "strategy_zh": "代名詞所有格要找最近的單數名詞。",
+          "hints": [
+            "Its 指的是什麼？"
+          ]
+        },
+        "4": {
+          "explanation_zh": "前一句說羅盤只能指方向、不能定位置，E 接著說東西方向的距離仍是難題。",
+          "evidence": [
+            "the compass only showed direction, not location"
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "contrast",
+          "strategy_zh": "Still 帶出限制，下一句說明限制的內容。",
+          "hints": [
+            "前一句說羅盤有什麼不足？",
+            "後一句的 this problem 指什麼？"
+          ]
+        }
+      }
+    },
+    "translation_zh": {
+      "text": "幾百年來，水手靠星星在大海上辨別方向。（測試資料：其餘譯文略）"
+    },
+    "elimination": {
+      "feasible": {
+        "1": [
+          "B"
+        ],
+        "2": [
+          "A",
+          "D"
+        ],
+        "3": [
+          "A"
+        ],
+        "4": [
+          "E"
+        ]
+      },
+      "perfect_matchings": 1
+    },
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": null,
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "3-V-12",
+      "weight": "primary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [
+      {
+        "source_id": "fact:fixture-0001",
+        "role": "fact"
+      }
+    ],
+    "license": "original-ai",
+    "derivation": "ai-original-from-facts",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": "本文由 AI 參考下列資料撰寫，非原文轉載"
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-08-st-top-fixture",
+    "lot": "structure-top-01",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/structure",
+    "prompt_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "spec_id": "structure-top@2026-10-08"
+  },
+  "metrics": null,
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-08T08:00:00Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    }
+  ],
+  "status": "verified"
+}

@@ -10,6 +10,8 @@ import { expect, test, type Page } from '@playwright/test';
 
 async function mockBackend(page: Page) {
   await page.route(/\/(api|auth)\//, (route) => route.fulfill({ status: 404, json: { error: { code: 'not_found', message: 'e2e' } } }));
+  // 功能開關：登入與 AI 都關閉（SessionProvider 載入時會讀；回 404 的話瀏覽器會印 console error）。
+  await page.route('**/api/features', (route) => route.fulfill({ json: { auth: false, ai: false, ocr: false, aiPaused: false } }));
 }
 
 function collectErrors(page: Page): string[] {

@@ -21,7 +21,7 @@ const PREVIEW_KEY = 'gsat-pdf-preview';
 /**
  * 預覽開關（PDF_DOWNLOAD_ENABLED 還是 false 時用）：網址加上 `?pdf=preview` 打開、`?pdf=off` 關掉，
  * 記在這個瀏覽器的 localStorage（`gsat-pdf-preview`）。給站主在正式站用 iPhone／Android 實機驗收（設計文件 §9.1 P8）
- * 與 Playwright 測試用；一般使用者看不到按鈕。頁面判斷要不要顯示時用 `PDF_DOWNLOAD_ENABLED || pdfPreviewEnabled()`。
+ * 與 Playwright 測試用；一般使用者看不到按鈕。頁面判斷要不要顯示時用 pdfDownloadVisible()。
  */
 export function pdfPreviewEnabled(): boolean {
   try {
@@ -33,6 +33,14 @@ export function pdfPreviewEnabled(): boolean {
     // 無痕模式或停用網站資料：localStorage 會丟例外，當作沒打開。
     return false;
   }
+}
+
+/**
+ * 頁面上和 PDF 下載有關的按鈕與說明要不要顯示：正式開放（PDF_DOWNLOAD_ENABLED），或這個瀏覽器打開了預覽開關。
+ * ExamPdfDownload、模擬考列表的「下載 PDF」與說明文字都用這一個判斷，預覽時才不會有的地方出現、有的地方沒有。
+ */
+export function pdfDownloadVisible(): boolean {
+  return PDF_DOWNLOAD_ENABLED || pdfPreviewEnabled();
 }
 
 export const renderExamPdf: RenderExamPdf = async (exam, options) => {

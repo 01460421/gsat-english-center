@@ -17,6 +17,11 @@ import { plainInline, richInline, spacedInline, urlInline } from './richInline';
 import { PDF_TEXT } from './strings';
 
 const PER_ROW = 10;
+/** 題號不是數字（gsat-83 文意選填的「選填1」）時一列只排 5 題，答案才不會在格子裡斷行。 */
+const PER_ROW_WIDE_LABEL = 5;
+/** 網址行的可用寬度（留一點餘裕給字寬估計的誤差）。 */
+const URL_WIDTH = CONTENT_WIDTH - 4;
+const URL_FONT_SIZE = 7.5;
 
 /** 選擇題的答案文字：「B」「B或C」「ADE」「送分」。 */
 export function choiceAnswerText(q: Question): string {
@@ -31,6 +36,16 @@ export function rateText(q: Pick<Question, 'stats'>): string | null {
   const rate = q.stats?.correct_rate;
   if (rate === null || rate === undefined || !Number.isFinite(rate)) return null;
   return `${Math.round(rate * 100)}%`;
+}
+
+/** 這份考卷有沒有任何一題有全國答對率（舊卷、補考、參考試卷沒有統計）。 */
+export function hasNationalRates(exam: Pick<Exam, 'sections'>): boolean {
+  return exam.sections.some((s) => s.groups.some((g) => g.questions.some((q) => isAutoScored(q) && rateText(q) !== null)));
+}
+
+/** 這一題印的是不是官方公布的非選擇題答案（填充、簡答、表格；「大考中心未公布參考答案」不算）。 */
+function hasOfficialOpenAnswer(q: Question): boolean {
+  return (q.mode === 'fill_in_blank' || q.mode === 'short_answer' || q.mode === 'table_completion') && q.answer !== null && q.answer.trim() !== '';
 }
 
 /**
@@ -61,22 +76,25 @@ function heading(text: string): PdfNode {
 }
 
 function choiceTable(questions: readonly Question[]): PdfNode {
+  const perRow = questions.every((q) => /^\d+$/.test(q.label)) ? PER_ROW : PER_ROW_WIDE_LABEL;
   const cell = (q: Question | undefined): PdfContent => {
     if (!q) return { text: '' };
     const rate = rateText(q);
+    // 答案不斷行（「送分」「B或C」）：放不下時寧可整個答案換到下一行，也不要拆成兩半。
+    const answer = plainInline(choiceAnswerText(q), { bold: true }).map((run) => ({ ...run, noWrap: true }));
     return {
       stack: [
-        { text: [...plainInline(`${q.label} `), ...plainInline(choiceAnswerText(q), { bold: true })], fontSize: 10, lineHeight: 1.15 },
+        { text: [...plainInline(`${q.label} `), ...answer], fontSize: 10, lineHeight: 1.15 },
         ...(rate ? [{ text: rate, font: 'Tinos' as const, fontSize: 7, color: '#555555', lineHeight: 1 }] : []),
       ],
     };
   };
   const body: PdfContent[][] = [];
-  for (let i = 0; i < questions.length; i += PER_ROW) {
-    body.push(Array.from({ length: PER_ROW }, (_, j) => cell(questions[i + j])));
+  for (let i = 0; i < questions.length; i += perRow) {
+    body.push(Array.from({ length: perRow }, (_, j) => cell(questions[i + j])));
   }
   return {
-    table: { widths: Array.from({ length: PER_ROW }, () => '*'), body, dontBreakRows: true },
+    table: { widths: Array.from({ length: perRow }, () => '*'), body, dontBreakRows: true },
     layout: {
       hLineWidth: (i, node) => (i === 0 || i === node.table.body.length ? 0.6 : 0.3),
       vLineWidth: () => 0,
@@ -113,7 +131,9 @@ export function answerKeyContent(exam: Exam): PdfContent[] {
     { text: spacedInline(PDF_TEXT.answerKeyTitle, { bold: true, spacing: 6 }), fontSize: 18, alignment: 'center', margin: [0, 0, 0, 8] },
   ];
   let hasChoice = false;
-  let hasOpen = false;
+  let hasRates = false;
+  let mixedOfficial = false;
+  let otherOfficial = false;
   for (const section of exam.sections) {
     const questions = sectionQuestions(section);
     if (questions.some((q) => q.mode === 'translation')) {
@@ -122,7 +142,7 @@ export function answerKeyContent(exam: Exam): PdfContent[] {
         stack: [
           heading(section.title),
           { text: plainInline(PDF_TEXT.translationAnswer), fontSize: 10, lineHeight: 1.3 },
-          { text: [urlInline(url, 120)], fontSize: 7.5, lineHeight: 1.25, color: '#333333' },
+          { text: [urlInline(url, URL_WIDTH, URL_FONT_SIZE)], fontSize: URL_FONT_SIZE, lineHeight: 1.25, color: '#333333' },
         ],
         unbreakable: true,
       });
@@ -137,17 +157,24 @@ export function answerKeyContent(exam: Exam): PdfContent[] {
     const stack: PdfContent[] = [heading(section.title)];
     if (choice.length > 0) {
       hasChoice = true;
+      hasRates ||= choice.some((q) => rateText(q) !== null);
       stack.push(choiceTable(choice));
     }
     if (open.length > 0) {
-      hasOpen = true;
+      if (open.some(hasOfficialOpenAnswer)) {
+        if (section.type === 'mixed') mixedOfficial = true;
+        else otherOfficial = true;
+      }
       stack.push(...openList(open));
     }
     if (stack.length > 1) content.push({ stack, unbreakable: true });
   }
-  const notes: PdfContent[] = [];
-  if (hasChoice) notes.push({ text: plainInline(PDF_TEXT.answerKeyChoiceNote), fontSize: 8, color: '#444444', lineHeight: 1.3 });
-  if (hasOpen) notes.push({ text: plainInline(PDF_TEXT.answerKeyMixedNote), fontSize: 8, color: '#444444', lineHeight: 1.3 });
+  // 註記只寫這份答案頁上真的有的東西：沒有統計就不提答對率，官方沒公布非選擇題答案就不說「答案取自參考答案」。
+  const noteTexts: string[] = [];
+  if (hasChoice) noteTexts.push(hasRates ? `${PDF_TEXT.answerKeyChoiceNote}${PDF_TEXT.answerKeyRateNote}` : PDF_TEXT.answerKeyChoiceNote);
+  if (mixedOfficial && !otherOfficial) noteTexts.push(PDF_TEXT.answerKeyMixedNote);
+  else if (otherOfficial) noteTexts.push(PDF_TEXT.answerKeyOpenAnswerNote);
+  const notes: PdfContent[] = noteTexts.map((text) => ({ text: plainInline(text), fontSize: 8, color: '#444444', lineHeight: 1.3 }));
   if (notes.length > 0) content.push({ stack: notes, margin: [0, 10, 0, 0], width: CONTENT_WIDTH });
   return content;
 }

@@ -63,3 +63,11 @@ export function handleError(err: Error, c: Context<AppEnv>) {
 export function handleNotFound(c: Context<AppEnv>) {
   return errorResponse(c, 404, 'not_found', `找不到 ${c.req.method} ${c.req.path}`);
 }
+
+/**
+ * 骨架階段的端點：回 501 `not_implemented`。各模組實作時把對應的 `notImplemented` 換掉即可，
+ * 路徑、方法與中介層先掛好，前端與其他模組可以照契約（docs/design/ai-auth-mvp.md）並行開發。
+ */
+export function notImplemented(c: Context<AppEnv>) {
+  return errorResponse(c, 501, 'not_implemented', `${c.req.method} ${c.req.path} 尚未實作`);
+}

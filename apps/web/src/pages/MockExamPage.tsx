@@ -3,9 +3,10 @@
  * 這台裝置的作答紀錄、考前節奏建議、現行配分與聲明。
  * 作答頁在 features/mock/MockSessionPage.tsx（/mock/:paperId），成績單在 features/mock/MockReportPage.tsx。
  */
+import { useState } from 'react';
 import { InfoSection, ModulePage } from '../components/ModulePage';
 import { MockPaperList } from '../features/mock/MockPaperList';
-import { PDF_DOWNLOAD_ENABLED } from '../features/pdf/index';
+import { pdfDownloadVisible } from '../features/pdf/index';
 import { getPage } from '../modules';
 
 const PARTS = [
@@ -15,6 +16,7 @@ const PARTS = [
 ] as const;
 
 export default function MockExamPage() {
+  const [pdfVisible] = useState(pdfDownloadVisible);
   return (
     <ModulePage page={getPage('/mock')}>
       <p className="text-[0.95rem]">
@@ -27,7 +29,7 @@ export default function MockExamPage() {
           <li>考前 8 週起每 2 週做一份，最後 2 週每週做一份；其他時間用歷屆試題與題型練習補弱。</li>
           <li>建議順序就是上面的卷別順序：115 參考試卷有 49 題沿用歷屆試題（30 題來自 111 學測），先做參考試卷再做 111 學測，111 學測才是沒看過的卷子。</li>
           <li>想模擬正式考試，開考前勾選「實考模式」：開考後 60 分鐘內不能交卷，比照正式考試入場後 60 分鐘內不得離場。</li>
-          {PDF_DOWNLOAD_ENABLED && <li>想寫紙本：每份卷子都能下載考試格式 PDF（附答題卷），列印後計時作答。</li>}
+          {pdfVisible && <li>想寫紙本：每份卷子都能下載考試格式 PDF（附答題卷），列印後計時作答。</li>}
         </ul>
       </InfoSection>
       <InfoSection title="現行學測英文的配分">

@@ -10,9 +10,11 @@ import type { MockAttemptRecord } from './storage';
 
 type Timing = Pick<MockAttemptRecord, 'startedAt' | 'deadlineAt' | 'durationSec'>;
 
-/** 剩餘秒數（不小於 0）。 */
-export function remainingSec(record: Pick<MockAttemptRecord, 'deadlineAt'>, now: number): number {
-  return Math.max(0, Math.ceil((Date.parse(record.deadlineAt) - now) / 1000));
+/**
+ * 剩餘秒數：不小於 0，也不超過作答時間（裝置時間往回調時，100 分鐘的考試不會顯示剩 160 分鐘）。
+ */
+export function remainingSec(record: Pick<MockAttemptRecord, 'deadlineAt' | 'durationSec'>, now: number): number {
+  return Math.min(record.durationSec, Math.max(0, Math.ceil((Date.parse(record.deadlineAt) - now) / 1000)));
 }
 
 /** 已經超過期限（含剛好到期）。 */
@@ -26,11 +28,11 @@ export function usedSec(record: Timing, now: number): number {
   return Math.min(record.durationSec, Math.max(0, Math.round(sec)));
 }
 
-/** 實考模式還要等多久才能交卷（秒）；一般模式或已經過了 60 分鐘是 0。 */
+/** 實考模式還要等多久才能交卷（秒，最多 60 分鐘）；一般模式或已經過了 60 分鐘是 0。 */
 export function strictLockRemainingSec(record: Pick<MockAttemptRecord, 'strict' | 'startedAt'>, now: number): number {
   if (!record.strict) return 0;
   const unlockAt = Date.parse(record.startedAt) + STRICT_LOCK_SEC * 1000;
-  return Math.max(0, Math.ceil((unlockAt - now) / 1000));
+  return Math.min(STRICT_LOCK_SEC, Math.max(0, Math.ceil((unlockAt - now) / 1000)));
 }
 
 /** 現在能不能手動交卷（時間到的自動交卷不受實考模式限制）。 */

@@ -75,10 +75,21 @@ describe('assessOpenAnswer：能確定的自動給分，其他給建議分數（
     expect(assessOpenAnswer(Q115_47, '   ')).toEqual({ kind: 'auto', score: 0, reason: 'blank' });
   });
 
-  it('與官方答案相同（大小寫、句點不計）→ 滿分（自動）', () => {
-    expect(assessOpenAnswer(Q115_47, 'Innovation.')).toEqual({ kind: 'auto', score: 2, reason: 'match' });
+  it('與官方答案相同（句點、頭尾空白不計）→ 滿分（自動）；簡答題不計大小寫', () => {
+    expect(assessOpenAnswer(Q115_47, 'innovation.')).toEqual({ kind: 'auto', score: 2, reason: 'match' });
+    expect(assessOpenAnswer(Q115_48, 'blended')).toEqual({ kind: 'auto', score: 2, reason: 'match' });
     expect(assessOpenAnswer(Q115_50, ' One of a kind ')).toEqual({ kind: 'auto', score: 2, reason: 'match' });
     expect(assessOpenAnswer(Q112_47, 'health')).toEqual({ kind: 'auto', score: 2, reason: 'match' });
+    // 114 學測 50 題：句首大寫、句尾句點是官方可接受答案。
+    expect(assessOpenAnswer(open('50', 'short_answer', 'fostering empathy', ['Fostering empathy.']), 'Fostering empathy.')).toEqual({ kind: 'auto', score: 2, reason: 'match' });
+  });
+
+  it('填充題只差大小寫（115 學測 48 題寫 Blended：句中大寫是字形錯誤、扣一半）→ 自評，預選 1 分', () => {
+    expect(assessOpenAnswer(Q115_48, 'Blended')).toEqual({ kind: 'self', suggested: 1, reason: 'capitalization' });
+    expect(assessOpenAnswer(Q115_48, 'BLENDED')).toEqual({ kind: 'self', suggested: 1, reason: 'capitalization' });
+    expect(assessOpenAnswer(Q115_47, 'Innovation.')).toEqual({ kind: 'self', suggested: 1, reason: 'capitalization' });
+    // 可接受答案也一樣要大小寫相同。
+    expect(assessOpenAnswer(Q112_47, 'Health')).toEqual({ kind: 'self', suggested: 1, reason: 'capitalization' });
   });
 
   it('115 學測測資：innovative、blending → 建議 1 分；is one of a kind → 建議 0 分', () => {

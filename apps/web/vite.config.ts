@@ -42,7 +42,8 @@ export default defineConfig({
   },
   test: {
     environment: 'happy-dom',
-    include: ['src/**/*.test.{ts,tsx}'],
+    // scripts/**：資料管線（build-data 的題庫輸出、資料契約）的測試，檔頭用 @vitest-environment node 在 Node 環境跑。
+    include: ['src/**/*.test.{ts,tsx}', 'scripts/**/*.test.ts'],
     setupFiles: ['./src/test/setup.ts'],
     css: false,
   },

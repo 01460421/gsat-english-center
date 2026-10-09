@@ -1,0 +1,263 @@
+{
+  "schema": "gsat-bank-lot/v1",
+  "lot": "cloze-basic-01",
+  "section_type": "cloze",
+  "tier": "basic",
+  "label_zh": "綜合測驗（克漏字）‧穩定基礎（第 1 批）",
+  "created_on": "2026-10-08",
+  "count": 8,
+  "questions_per_group": 5,
+  "format_version": "cloze-5",
+  "uid_prefix": "ai.cz.",
+  "path": "data/bank/v1/cloze/basic/",
+  "spec_id": "cloze-basic@2026-10-08",
+  "spec_file": "data/exams/generation-spec/cloze.json",
+  "spec_tier_key": "foundation",
+  "spec_status": "draft：由 595 格有官方統計的歷屆綜合測驗推得；上線後依站內作答資料校正（SPEC §3.6、本檔 CLZ-CAL-*）",
+  "topic_quota": {
+    "origins_evolution": 3,
+    "science_health": 2,
+    "culture_history": 2,
+    "society_issues": 1,
+    "labels_zh": {
+      "origins_evolution": "起源與演變",
+      "science_health": "科普與健康",
+      "culture_history": "文化與歷史",
+      "society_issues": "社會與議題"
+    },
+    "basis": "08 §6.1（每 8 組：起源與演變 3、科普與健康 2–3、文化與歷史 2、社會與議題 1），依組數等比例取整"
+  },
+  "answer_letter_share": [
+    0.2,
+    0.3
+  ],
+  "avoid": {
+    "basis": "data/exams/parsed 的 gsat-111、gsat-112、gsat-113、gsat-114、gsat-115、ref-115 同一大題（cloze）的正解（單字取詞彙表主形，功能詞與 L1 字不列；片語整串列出）",
+    "answer_words": [
+      "a joyful social activity",
+      "accommodate",
+      "accompanied by",
+      "as such",
+      "as well",
+      "but not quite",
+      "circulate",
+      "clue",
+      "communicate",
+      "compete for",
+      "could have used",
+      "cultural",
+      "decline",
+      "disrupt",
+      "do not match",
+      "equipped with",
+      "exposure to",
+      "familiar presences",
+      "free of",
+      "gave rise to",
+      "had yet to develop",
+      "have been springing",
+      "home to",
+      "immediate",
+      "improve",
+      "initiate",
+      "intensify",
+      "it turns out",
+      "keep the printed word alive",
+      "left unchecked",
+      "less likely",
+      "match",
+      "meant to be",
+      "multiple",
+      "other than",
+      "personal bias",
+      "physical",
+      "pose as",
+      "preventive measures",
+      "redistribute",
+      "release",
+      "responsive to",
+      "severe",
+      "spell disaster",
+      "strike",
+      "thus",
+      "to which",
+      "tolerate",
+      "used to be",
+      "would spread"
+    ],
+    "answer_sentences": [],
+    "topics": [
+      "book towns (second-hand bookshop towns such as Hay-on-Wye)",
+      "crown shyness in forest trees",
+      "disappearing tropical glaciers in Papua, Indonesia",
+      "effects of reduced gravity on astronauts’ bodies (the “Charlie Brown effect”)",
+      "history and culture of dim sum",
+      "knocker-ups: human alarm clocks in Industrial-Age Britain",
+      "motion sickness",
+      "mystery shoppers",
+      "the origin of the World Café discussion method",
+      "white rhinos communicating through dung piles",
+      "why airplane windows are round"
+    ]
+  },
+  "passage_band": {
+    "basis": "SPEC §3.4＋出題規格書 passage_overrides（words、coverage_L1_4_min（取代 SPEC 的區間）、coverage_L1_6_min、offlist_max、beyond_l4_ratio_max）",
+    "spec_3_4": {
+      "word_count": {
+        "min": 140,
+        "max": 180
+      },
+      "coverage_l1_4": {
+        "min": 0.93,
+        "max": null
+      },
+      "coverage_l1_6": {
+        "min": 0.97,
+        "max": null
+      },
+      "offlist_ratio": {
+        "min": null,
+        "max": 0.03
+      },
+      "avg_sentence_length": {
+        "min": null,
+        "max": 17
+      }
+    },
+    "overrides_note": "刻意比現制輕（現制只有 5/10 篇同時符合字數與 beyond-L4，5/10 符合覆蓋率），屬閱讀負荷的產品選擇，方向同 SPEC §3.4；資料顯示字數與生字比例不決定空格難度（doc §3.3）",
+    "word_count": {
+      "min": 170,
+      "max": 205
+    },
+    "coverage_l1_4": {
+      "min": 0.93,
+      "max": null
+    },
+    "coverage_l1_6": {
+      "min": 0.96,
+      "max": null
+    },
+    "offlist_ratio": {
+      "min": null,
+      "max": 0.04
+    },
+    "avg_sentence_length": {
+      "min": null,
+      "max": 17
+    },
+    "beyond_l4_ratio": {
+      "min": null,
+      "max": 0.04
+    }
+  },
+  "item_rules": {
+    "summary_zh": "實詞與搭配 ≥3、文法 ≤1 且句內可判斷、轉折 ≤1；正解 L1–4",
+    "content_blanks": {
+      "min": 3,
+      "max": 5
+    },
+    "phrase_collocation_blanks": null,
+    "connective_blanks": {
+      "min": 0,
+      "max": 1
+    },
+    "grammar_blanks": {
+      "min": 0,
+      "max": 1
+    },
+    "cross_sentence_blanks_min": 0,
+    "discourse_blanks_min": 0,
+    "answer_level_max": 4
+  },
+  "targets": {
+    "blank_type_mix": {
+      "per_5_recommended": {
+        "L": [
+          2,
+          3
+        ],
+        "C": [
+          1,
+          2
+        ],
+        "G": [
+          0,
+          1
+        ],
+        "D": [
+          0,
+          1
+        ],
+        "R": [
+          0,
+          0
+        ]
+      }
+    },
+    "context_scope_mix": {
+      "rule": "≥3/5 本句可判斷（S）；W 至多 1"
+    },
+    "answer_form_mix": {
+      "rule": "單字或 2–3 字片語；4 字以上語意片段至多 1"
+    },
+    "answer_level_dist": {
+      "rule": "正解 L1–4 ≥ 75%（現制 15/19）；L5–6 可用（現制 4/19），前提是三個誘答與正解語意距離大；不用表外字當正解"
+    },
+    "distractor_rules": {
+      "near_miss_count": 0,
+      "all_distractors": "clearly_wrong：只讀空格所在句就能排除（語意不合或文法不合）",
+      "same_pos_and_form": true,
+      "upper_group_pull_target_max": 0.1,
+      "functional_min_share": 0.05,
+      "observed_basis": "現制 basic：16/19 題沒有任何誘答吸到 ≥10% 高分組；150 個現制誘答全部 ≥5% 全體選答"
+    },
+    "set_composition_5_blanks": {
+      "basic": [
+        3,
+        4
+      ],
+      "advanced": [
+        1,
+        2
+      ],
+      "top": [
+        0,
+        0
+      ]
+    },
+    "recipe": [
+      "先選空格所在句能自足的位置（本句或前一句就有線索），讓會讀懂這一句的學生就能作答",
+      "正解多用實詞：動詞或名詞的核心義、常見搭配（take measures、exposure to）、句內就能判斷的時態（Since… → 完成式）",
+      "正解可以是 L4–L5 字，只要三個誘答在句中語意或文法明顯不通；難度不靠生字，靠誘答的距離",
+      "三個誘答同詞性、同字數，各自明顯不合句意；可以取同主題的字，讓低分組仍會選（每個誘答預期 ≥5% 選答）",
+      "附一句「線索」：指出使正解成立的字串（同句或前一句）"
+    ],
+    "pitfalls": [
+      "誘答之一其實也說得通（會變成進階或雙答案）：誘答稽核要逐一寫出它錯在哪個字",
+      "把正解做成全題唯一的高級字或唯一的長選項，讓學生不讀就猜得到",
+      "以為換成簡單字就是基礎題：現制穩定基礎的正解有 4/19 是 L5–6 字（accommodate、initiated…），簡單字反而常出現在超越頂標",
+      "線索放在兩句以外或下一段（現制穩定基礎 19 題中 13 題本句可判斷）"
+    ]
+  },
+  "set_composition": {
+    "basic": [
+      3,
+      4
+    ],
+    "advanced": [
+      1,
+      2
+    ],
+    "top": [
+      0,
+      0
+    ]
+  },
+  "verification": {
+    "blind_solvers": 2,
+    "blind_b_different_model": true,
+    "distractor_audit": true,
+    "unique_solution": false,
+    "human_review": "100%（校準期：每個題型 × 提示詞版本的前 30 組全審，SPEC §5.8）"
+  }
+}

@@ -10,7 +10,7 @@
  * 中文片段不設 noWrap（中文每個字之間都可以換行）。
  */
 import { parseRichText, type RichNode } from '../../exams/richText';
-import { splitFontRuns, type FontRun } from '../fontRuns';
+import { estimateTextWidth, splitFontRuns, type FontRun } from '../fontRuns';
 import type { PdfInline } from '../engine/docTypes';
 
 const NBSP = ' ';
@@ -86,40 +86,77 @@ export function plainInline(text: string, options: { bold?: boolean } = {}): Pdf
   return splitFontRuns(text, options.bold ?? false).flatMap((run) => runInlines(run));
 }
 
+/** 漢字（不含全形標點）。 */
+const IDEOGRAPH = /\p{Script=Han}/u;
+
 /**
- * 標題用：題本的部分／大題標題字距加寬，但只加在中文上——數字也加的話「62」會變成「6 2」（設計文件 §5.1）。
+ * 標題用：題本的部分／大題標題字距加寬，但只加在「兩個漢字之間」（設計文件 §5.1）：
+ *   - 數字也加的話「62」會變成「6 2」；
+ *   - 標點（、（）「」）本身已經有留白，再加會變成「一 、詞彙題（ 占10分 ）」，pdftotext 與複製貼上也會多出空白，
+ *     在 PDF 裡搜尋「一、詞彙題」就找不到。
+ * pdfmake 的 characterSpacing 加在每個字的後面，所以中文片段拆成單字，只有後面緊接漢字的漢字才加。
  */
 export function spacedInline(text: string, options: { bold?: boolean; spacing?: number } = {}): PdfInline[] {
   const spacing = options.spacing ?? 3;
-  return plainInline(text, options).map((run) => (run.font === 'NotoSerifTC' ? { ...run, characterSpacing: spacing } : run));
+  const units: { run: PdfInline; text: string; han: boolean }[] = [];
+  for (const run of plainInline(text, options)) {
+    if (run.font !== 'NotoSerifTC' || typeof run.text !== 'string') {
+      units.push({ run, text: typeof run.text === 'string' ? run.text : '', han: false });
+      continue;
+    }
+    for (const ch of run.text) units.push({ run, text: ch, han: IDEOGRAPH.test(ch) });
+  }
+  const out: PdfInline[] = [];
+  let prev: { run: PdfInline; spaced: boolean; inline: PdfInline } | null = null;
+  units.forEach((unit, i) => {
+    if (unit.run.font !== 'NotoSerifTC') {
+      out.push(unit.run);
+      prev = null;
+      return;
+    }
+    const spaced = unit.han && units[i + 1]?.han === true;
+    // 同一個原始片段、同樣加不加字距的相鄰字併成一段（片段少，pdfmake 排得快）。
+    if (prev && prev.run === unit.run && prev.spaced === spaced) {
+      prev.inline.text = `${String(prev.inline.text)}${unit.text}`;
+      return;
+    }
+    const inline: PdfInline = { ...unit.run, text: unit.text, ...(spaced ? { characterSpacing: spacing } : {}) };
+    out.push(inline);
+    prev = { run: unit.run, spaced, inline };
+  });
+  return out;
 }
 
 /**
  * 網址：大考中心的檔案網址很長（百分比編碼的中文檔名，150 字元以上、中間沒有可以換行的地方），
- * 直接放進欄位會把欄寬撐開。這裡在「/」之後或每 maxChars 個字元處換行，整段仍是同一個連結。
+ * 直接放進欄位會把欄寬撐開，或被 pdfmake 從中間硬切、最後一兩個字元單獨一行。
+ * 這裡依實際字寬（Tinos 字寬表）換行：優先在「/」之後換，一段本身比一行寬時逐字接（%XX 不拆開），
+ * 每一行都不超過 maxWidth（pt），整段仍是同一個連結。大寫的 %E5 比小寫寬得多，所以不能用字數算。
  */
-export function urlInline(url: string, maxChars = 64): PdfInline {
+export function urlInline(url: string, maxWidth: number, fontSize: number): PdfInline {
+  const width = (text: string) => estimateTextWidth(text, fontSize);
   const pieces = url.match(/[^/]*\/|[^/]+$/g) ?? [url];
   const lines: string[] = [];
   let line = '';
+  const push = () => {
+    if (line !== '') lines.push(line);
+    line = '';
+  };
   for (const piece of pieces) {
-    let rest = piece;
-    while (rest !== '') {
-      const room = maxChars - line.length;
-      if (rest.length <= room) {
-        line += rest;
-        rest = '';
-      } else if (line !== '' && rest.length <= maxChars) {
-        lines.push(line);
-        line = '';
-      } else {
-        line += rest.slice(0, room);
-        rest = rest.slice(room);
-        lines.push(line);
-        line = '';
-      }
+    if (width(line + piece) <= maxWidth) {
+      line += piece;
+      continue;
+    }
+    if (line !== '' && width(piece) <= maxWidth) {
+      push();
+      line = piece;
+      continue;
+    }
+    for (const unit of piece.match(/%[0-9A-Fa-f]{2}|[\s\S]/gu) ?? []) {
+      if (line !== '' && width(line + unit) > maxWidth) push();
+      line += unit;
     }
   }
-  if (line !== '') lines.push(line);
+  push();
   return { text: lines.join('\n'), font: 'Tinos', link: url };
 }

@@ -18,6 +18,8 @@ vi.mock('./index', async (importOriginal) => {
     get PDF_DOWNLOAD_ENABLED() {
       return pdf.enabled.value;
     },
+    // 模組內部讀的是真正的常數，所以判斷函式也要跟著換（預覽開關仍用真的 localStorage）。
+    pdfDownloadVisible: () => pdf.enabled.value || actual.pdfPreviewEnabled(),
     renderExamPdf: pdf.render,
     saveBlob: pdf.save,
   };

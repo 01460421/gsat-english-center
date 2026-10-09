@@ -1,0 +1,599 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.st.47d418",
+  "version": 1,
+  "section_type": "structure",
+  "format_version": "structure-4x5",
+  "tier": "basic",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": "Many students stay up late before a big test, hoping that a few more hours of study will raise their scores. Scientists, however, say this plan often does more harm than good. A good night’s sleep, it turns out, is one of the best ways to help the brain learn.\nWhile we sleep, the brain does not simply switch off. [[1]] During this process, the most important lessons are moved into long-term memory, where they can last for years. Without enough sleep, this work is left unfinished, and much of what we studied may be forgotten. Tired students also find it harder to focus in class the next day.\nTeenagers face a special challenge when it comes to sleep. [[2]] Because of this change, many teens lie awake in bed even when they try to sleep early. School, however, still starts early in the morning, so they often get far less sleep than their bodies need.\n[[3]] Their bright light fools the brain into thinking that the sun is still up, so falling asleep becomes harder. In addition, games and messages keep the mind active long after it should be resting.\n[[4]] The first habit is easy: keep phones out of the bedroom at night. Another is to go to bed and get up at the same time every day, even on weekends. Above all, students should remember that sleep is not wasted time. It is part of learning itself.",
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": {
+      "A": "Luckily, a few simple habits can make a big difference.",
+      "B": "Some animals, like bats and koalas, sleep for most of the day.",
+      "C": "Phones and other screens can make this lack of sleep even worse.",
+      "D": "Instead, it spends the night sorting the information it took in during the day.",
+      "E": "During the teenage years, the body clock changes, so people feel sleepy later at night."
+    },
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "D",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "pronoun_reference",
+          "clue_raw": "SP|PR|BF|L",
+          "key_phrase": "Instead ← does not simply switch off; it ← the brain; sorting the information → During this process"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "E",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "pronoun_reference",
+          "clue_raw": "SP|PR|BF|L",
+          "key_phrase": "teenage years ← Teenagers face a special challenge; changes → Because of this change"
+        }
+      },
+      {
+        "no": 3,
+        "label": "3",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "C",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "pronoun_reference",
+          "clue_raw": "TS|PR|BF|L",
+          "key_phrase": "this lack of sleep ← far less sleep than their bodies need; Phones and other screens → Their bright light"
+        }
+      },
+      {
+        "no": 4,
+        "label": "4",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "A",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "topic_sentence",
+          "clue_raw": "TS|LX|BF|L",
+          "key_phrase": "Luckily ← falling asleep becomes harder / keep the mind active; a few simple habits → The first habit … Another"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "why sleep matters for teenage learners",
+      "genre": "expository",
+      "sdgs": [],
+      "text_format": "continuous"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "前一句說睡覺時大腦並不是單純關機；(D) 用 Instead 帶出實際的情況——大腦整夜都在整理白天吸收的資訊，句中的 it 指的就是 the brain。下一句 During this process 的 this process 回指 (D) 所說的「整理資訊」，說明重要的內容就是在這個過程中進入長期記憶。選 (D)。",
+          "evidence": [
+            "While we sleep, the brain does not simply switch off.",
+            "Instead, it spends the night sorting the information it took in during the day.",
+            "During this process, the most important lessons are moved into long-term memory"
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "pronoun_reference",
+          "option_notes_zh": {
+            "A": "(A) 說「幾個簡單的習慣能帶來很大的改變」，但這裡在講大腦睡覺時做什麼，還沒有談到改善的方法；下一句的 this process 也沒有可指的過程。",
+            "B": "多餘句：(B) 講蝙蝠和無尾熊白天大多在睡覺，與「人腦在睡眠中整理記憶」無關，下一句的 During this process 便沒有來源。",
+            "C": "(C) 的 this lack of sleep 在這裡找不到「睡眠不足」可以回指，前一句只說大腦不會關機。",
+            "E": "(E) 講青少年的生理時鐘改變，與前一句的大腦活動接不上，下一句的 this process 也不是在說生理時鐘；(E) 屬於第 2 格。"
+          },
+          "strategy_zh": "前一句是否定句（does not simply switch off）時，下一句常用 Instead 說出「實際上是怎樣」；再用後一句的 this process 確認選項裡描述了一個過程。",
+          "hints": [
+            "前一句說大腦「不是」單純關機，那它實際上在做什麼？",
+            "下一句的 this process 需要空格裡先描述一個正在進行的動作。",
+            "答案以 Instead 開頭。"
+          ]
+        },
+        "2": {
+          "explanation_zh": "前一句說青少年在睡眠上面臨特別的挑戰，(E) 說明這個挑戰是什麼：青少年時期生理時鐘會改變（changes），要到夜裡更晚才會想睡。下一句 Because of this change 的 this change 回指 (E) 的 changes，接著說許多青少年即使想早睡也睡不著。選 (E)。",
+          "evidence": [
+            "Teenagers face a special challenge when it comes to sleep.",
+            "During the teenage years, the body clock changes, so people feel sleepy later at night.",
+            "Because of this change, many teens lie awake in bed even when they try to sleep early."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "pronoun_reference",
+          "option_notes_zh": {
+            "A": "(A) 直接談改善的習慣，跳過了「挑戰是什麼」，下一句的 this change 也沒有先行詞。",
+            "B": "多餘句：(B) 講動物的睡眠，與青少年無關，下一句的 this change 也找不到「改變」。",
+            "C": "(C) 說手機讓「這種睡眠不足」更嚴重，但此時還沒說到睡眠不足，下一句的 this change 也接不上；(C) 屬於第 3 格。",
+            "D": "(D) 的 Instead 和 it 在這裡都沒有可對應的內容：前一句不是否定句，it 也不能指 challenge。"
+          },
+          "strategy_zh": "後一句的 this change 提示空格裡有 change（改變）這個字或意思；同時確認選項能說明前一句的 a special challenge。",
+          "hints": [
+            "下一句的 this change 指的是什麼改變？",
+            "找一個含有 changes，又和青少年有關的選項。",
+            "答案提到 the body clock。"
+          ]
+        },
+        "3": {
+          "explanation_zh": "第三段最後一句說青少年的睡眠遠少於身體所需，(C) 的 this lack of sleep 正好回指這種睡眠不足，並帶出新段落的主題：手機和其他螢幕會讓情況更糟。下一句 Their bright light 的 Their 指 (C) 的 Phones and other screens，說明螢幕的亮光讓大腦以為太陽還沒下山。選 (C)。",
+          "evidence": [
+            "so they often get far less sleep than their bodies need",
+            "Phones and other screens can make this lack of sleep even worse.",
+            "Their bright light fools the brain into thinking that the sun is still up"
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "pronoun_reference",
+          "option_notes_zh": {
+            "A": "(A) 說「幾個簡單的習慣能帶來很大的改變」，但下一句在講螢幕的亮光，Their 沒有可指的對象；(A) 屬於最後一段。",
+            "B": "多餘句：(B) 講動物白天睡覺，下一句的 Their bright light 不可能指蝙蝠和無尾熊。",
+            "D": "(D) 的 Instead 和 it 都接不上前一句，下一句的 Their 也沒有會發光的複數名詞可指。",
+            "E": "(E) 再解釋一次生理時鐘，下一句 Their bright light 的 Their 找不到會發光的東西。"
+          },
+          "strategy_zh": "段首句常同時「收前段、開新段」：用 this lack of sleep 回指前段結尾，再用下一句的代名詞 Their 確認主詞是會發光的東西。",
+          "hints": [
+            "前一段最後說青少年的睡眠怎麼樣？",
+            "下一句 Their bright light 的 Their 指的是什麼？哪個選項有會發光的東西？",
+            "答案提到 phones 和 screens。"
+          ]
+        },
+        "4": {
+          "explanation_zh": "前一段講螢幕和遊戲讓人更難入睡，最後一段開頭用 (A) 的 Luckily 轉向好消息：幾個簡單的習慣（habits）就能帶來很大的改變。下一句 The first habit is easy 的 The first habit 回應 (A) 的 a few simple habits，接著再用 Another 列出第二個習慣。本句是最後一段的主題句，選 (A)。",
+          "evidence": [
+            "In addition, games and messages keep the mind active long after it should be resting.",
+            "Luckily, a few simple habits can make a big difference.",
+            "The first habit is easy: keep phones out of the bedroom at night."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "topic_sentence",
+          "option_notes_zh": {
+            "B": "多餘句：(B) 講動物的睡眠，沒有提到任何習慣，下一句的 The first habit 便沒有來源。",
+            "C": "(C) 再說一次螢幕讓睡眠不足更糟，與前一段重複，下一句的 The first habit 也接不上。",
+            "D": "(D) 講大腦在夜裡整理資訊，與「改善睡眠的方法」無關，下一句的 The first habit 沒有先行詞。",
+            "E": "(E) 講生理時鐘的改變，屬於第三段的內容，放在這裡無法引出 The first habit。"
+          },
+          "strategy_zh": "下一句用 The first …、Another … 列舉時，空格裡應該先出現一個複數的總稱（a few simple habits），這就是段落的主題句。",
+          "hints": [
+            "下一句的 The first habit 表示前面要先提到「幾個習慣」。",
+            "前一段在講壞消息，這一句應該用什麼語氣轉向好消息？",
+            "答案以 Luckily 開頭。"
+          ]
+        }
+      }
+    },
+    "translation_zh": {
+      "text": "許多學生在大考前熬夜，希望多讀幾個小時就能提高分數。然而科學家說，這個做法往往弊大於利。原來，一夜好眠是幫助大腦學習的最佳方法之一。\n我們睡覺時，大腦並不是單純關機。【1】相反地，它整夜都在整理白天吸收的資訊。在這個過程中，最重要的學習內容會被移入長期記憶，可以保存好幾年。如果睡眠不足，這項工作就無法完成，我們讀過的東西很多可能會被忘掉。睡眠不足的學生隔天上課時也比較難專心。\n青少年在睡眠方面面臨特別的挑戰。【2】在青少年時期，生理時鐘會改變，所以人要到夜裡更晚才會想睡。因為這種改變，許多青少年即使想早點睡，也會躺在床上睡不著。然而學校仍然一大早就上課，所以他們的睡眠常常遠少於身體所需。\n【3】手機和其他螢幕會讓這種睡眠不足更加嚴重。螢幕的亮光會騙過大腦，讓它以為太陽還沒下山，於是更難入睡。此外，遊戲和訊息會讓頭腦在該休息之後很久仍保持活躍。\n【4】幸好，幾個簡單的習慣就能帶來很大的改變。第一個習慣很容易：晚上不要把手機帶進臥室。另一個是每天在相同的時間上床和起床，週末也一樣。最重要的是，學生應該記住，睡覺並不是浪費時間，而是學習的一部分。\n（多餘句 (B)：有些動物，例如蝙蝠和無尾熊，一天中大部分的時間都在睡覺。）"
+    },
+    "elimination": {
+      "feasible": {
+        "1": [
+          "D"
+        ],
+        "2": [
+          "E"
+        ],
+        "3": [
+          "C"
+        ],
+        "4": [
+          "A"
+        ]
+      },
+      "perfect_matchings": 1
+    },
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": null,
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "3-V-7",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "7-V-5",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "B-V-8",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": "本文由 AI 撰寫"
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-08-structure-basic-01",
+    "lot": "structure-basic-01",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/structure",
+    "prompt_sha256": "cba86c4ab7ea3717e493fac37437cc57a242dd5da5754c77abdd9dbb2e680f94",
+    "spec_id": "structure-basic@2026-10-08",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 236,
+    "sentences": 16,
+    "avg_sentence_length": 14.75,
+    "denominator": 235,
+    "proper_nouns": [],
+    "numbers": 1,
+    "coverage_l1_4": 0.9957,
+    "coverage_l1_6": 0.9957,
+    "offlist_ratio": 0.0043,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {
+      "1": 214,
+      "2": 16,
+      "3": 4,
+      "off": 1
+    },
+    "offlist_words": [
+      "unfinished"
+    ],
+    "band": {
+      "tier": "basic",
+      "basis": "lot structure-basic-01（SPEC §3.4＋出題規格書 passage_overrides（words、coverage_L1_4_min（取代 SPEC 的區間）、coverage_L1_6_min、offlist_max、beyond_l4_ratio_max））",
+      "ok": true,
+      "checks": {
+        "word_count": {
+          "value": 236,
+          "min": 220,
+          "max": 280,
+          "ok": true
+        },
+        "coverage_l1_4": {
+          "value": 0.9957,
+          "min": 0.93,
+          "max": null,
+          "ok": true
+        },
+        "coverage_l1_6": {
+          "value": 0.9957,
+          "min": 0.96,
+          "max": null,
+          "ok": true
+        },
+        "offlist_ratio": {
+          "value": 0.0043,
+          "min": null,
+          "max": 0.04,
+          "ok": true
+        },
+        "avg_sentence_length": {
+          "value": 14.75,
+          "min": null,
+          "max": 17,
+          "ok": true
+        },
+        "beyond_l4_ratio": {
+          "value": 0.0,
+          "min": null,
+          "max": 0.04,
+          "ok": true
+        }
+      }
+    }
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T00:50:04Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T00:44:37Z",
+      "details": {
+        "solver": "A",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "answers": {
+          "1": {
+            "answer": "D",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "While we sleep, the brain does not simply switch off.",
+              "During this process, the most important lessons are moved into long-term memory, where they can last for years."
+            ],
+            "explanation_zh": "前句說大腦睡覺時不是關機，D 以 Instead 接著說它整理白天的資訊；後句 this process 指的就是這個整理過程。",
+            "feasible": [
+              "D"
+            ]
+          },
+          "2": {
+            "answer": "E",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Teenagers face a special challenge when it comes to sleep.",
+              "Because of this change, many teens lie awake in bed even when they try to sleep early."
+            ],
+            "explanation_zh": "後句 this change 需先提到某種改變；E 說青春期生理時鐘改變、晚上較晚才想睡，正是青少年的特殊挑戰。",
+            "feasible": [
+              "E"
+            ]
+          },
+          "3": {
+            "answer": "C",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Their bright light fools the brain into thinking that the sun is still up, so falling asleep becomes harder."
+            ],
+            "explanation_zh": "段首，後句 Their bright light 需要先有發光的東西；C 提到手機與螢幕，並以 this lack of sleep 承接上段睡眠不足。",
+            "feasible": [
+              "C"
+            ]
+          },
+          "4": {
+            "answer": "A",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "The first habit is easy: keep phones out of the bedroom at night."
+            ],
+            "explanation_zh": "段首，後句 The first habit 需要先提到習慣；A 說幾個簡單習慣就能有很大幫助。",
+            "feasible": [
+              "A"
+            ]
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T00:50:04Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "answers": {
+          "1": {
+            "answer": "D",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "While we sleep, the brain does not simply switch off.",
+              "During this process, the most important lessons are moved into long-term memory, where they can last for years."
+            ],
+            "explanation_zh": "前句說睡覺時大腦並非關機，後句 During this process 指某個過程；D 的 Instead 轉折並說大腦整理白天的資訊，提供 this process。",
+            "feasible": [
+              "D"
+            ]
+          },
+          "2": {
+            "answer": "E",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Because of this change, many teens lie awake in bed even when they try to sleep early."
+            ],
+            "explanation_zh": "段首說青少年在睡眠上有特殊挑戰，後句 Because of this change 需要先有 change；E 說青少年期生理時鐘改變、晚上才想睡。",
+            "feasible": [
+              "E"
+            ]
+          },
+          "3": {
+            "answer": "C",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Their bright light fools the brain into thinking that the sun is still up, so falling asleep becomes harder."
+            ],
+            "explanation_zh": "後句 Their bright light 的 Their 指螢幕與手機，C 開頭就是 Phones and other screens，且承接前段睡眠不足。",
+            "feasible": [
+              "C"
+            ]
+          },
+          "4": {
+            "answer": "A",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "The first habit is easy: keep phones out of the bedroom at night.",
+              "Another is to go to bed and get up at the same time every day, even on weekends."
+            ],
+            "explanation_zh": "後文接著列出 The first habit、Another 等好習慣，A 說有幾個簡單習慣能帶來大改變，作為總起句。B 談蝙蝠與無尾熊，與主旨無關。",
+            "feasible": [
+              "A"
+            ]
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "distractor_audit",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T00:49:37Z",
+      "details": {
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "items": {
+          "1": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "During this process, the most important lessons are moved into long-term memory, where they can last for years.",
+              "explanation_zh": "這裡在說大腦睡覺時做什麼，還沒有提出任何問題，(A) 的改善習慣來得太早；下一句的 this process 也不能指 habits。"
+            },
+            "B": {
+              "verdict": "clearly_wrong",
+              "error_type": "off_topic",
+              "evidence": "During this process, the most important lessons are moved into long-term memory, where they can last for years.",
+              "explanation_zh": "多餘句：蝙蝠、無尾熊白天睡覺與人腦在睡眠中整理記憶無關，下一句 this process 沒有來源。"
+            },
+            "C": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "While we sleep, the brain does not simply switch off.",
+              "explanation_zh": "前一句只說大腦不會關機，還沒提到睡眠不足，(C) 的 this lack of sleep 沒有先行詞。"
+            },
+            "E": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "During this process, the most important lessons are moved into long-term memory, where they can last for years.",
+              "explanation_zh": "(E) 講青少年生理時鐘改變，下一句的 this process 說的卻是把學習內容移入長期記憶，接不上；(E) 屬於下一段。"
+            }
+          },
+          "2": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Because of this change, many teens lie awake in bed even when they try to sleep early.",
+              "explanation_zh": "(A) 跳到改善習慣，沒有說明挑戰是什麼，下一句的 this change 沒有先行詞。"
+            },
+            "B": {
+              "verdict": "clearly_wrong",
+              "error_type": "off_topic",
+              "evidence": "Because of this change, many teens lie awake in bed even when they try to sleep early.",
+              "explanation_zh": "多餘句：動物的睡眠與青少年無關，下一句 this change 沒有來源。"
+            },
+            "C": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Because of this change, many teens lie awake in bed even when they try to sleep early.",
+              "explanation_zh": "(C) 講螢幕讓睡眠不足更糟，沒有提到任何「改變」，下一句的 this change 接不上；(C) 屬於第 3 格。"
+            },
+            "D": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Teenagers face a special challenge when it comes to sleep.",
+              "explanation_zh": "前一句不是否定句，(D) 的 Instead 沒有可轉折的內容，it 也不能指 challenge 或 sleep；下一句的 this change 同樣沒有來源。"
+            }
+          },
+          "3": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Their bright light fools the brain into thinking that the sun is still up, so falling asleep becomes harder.",
+              "explanation_zh": "放 (A) 時，下一句 Their bright light 的 Their 只能指 habits，習慣不會發光，說不通。"
+            },
+            "B": {
+              "verdict": "clearly_wrong",
+              "error_type": "off_topic",
+              "evidence": "Their bright light fools the brain into thinking that the sun is still up, so falling asleep becomes harder.",
+              "explanation_zh": "多餘句：Their bright light 不可能指蝙蝠和無尾熊。"
+            },
+            "D": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Their bright light fools the brain into thinking that the sun is still up, so falling asleep becomes harder.",
+              "explanation_zh": "(D) 的 Instead 與 it 接不上前一段結尾，下一句的 Their 也沒有會發光的複數名詞可指。"
+            },
+            "E": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Their bright light fools the brain into thinking that the sun is still up, so falling asleep becomes harder.",
+              "explanation_zh": "(E) 重講生理時鐘（第三段內容），下一句 Their bright light 的 Their 找不到會發光的東西。"
+            }
+          },
+          "4": {
+            "B": {
+              "verdict": "clearly_wrong",
+              "error_type": "off_topic",
+              "evidence": "The first habit is easy: keep phones out of the bedroom at night.",
+              "explanation_zh": "多餘句：沒有提到任何習慣，下一句 The first habit 沒有來源。"
+            },
+            "C": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "The first habit is easy: keep phones out of the bedroom at night.",
+              "explanation_zh": "(C) 重複前一段螢幕的問題，下一句 The first habit 沒有可回指的「習慣」。"
+            },
+            "D": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "The first habit is easy: keep phones out of the bedroom at night.",
+              "explanation_zh": "(D) 講大腦夜裡整理資訊，與改善睡眠的方法無關，下一句 The first habit 沒有先行詞。"
+            },
+            "E": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "The first habit is easy: keep phones out of the bedroom at night.",
+              "explanation_zh": "(E) 講生理時鐘改變（第三段內容），無法引出下一句的 The first habit。"
+            }
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "unique_solution",
+      "reviewer": "record_verification.py",
+      "result": "pass",
+      "created_at": "2026-10-09T00:50:04Z",
+      "details": {
+        "method": "injective_assignment",
+        "perfect_matchings": 1,
+        "matches_key": true,
+        "feasible": {
+          "1": [
+            "D"
+          ],
+          "2": [
+            "E"
+          ],
+          "3": [
+            "C"
+          ],
+          "4": [
+            "A"
+          ]
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

@@ -22,6 +22,11 @@ const variants = [
   { includeAnswerSheet: true, includeAnswerKey: false, mockMeta: MOCK_META },
 ];
 
+/** 沒有任何統計的同一份考卷（舊卷、補考、參考試卷）。 */
+function withoutStats(exam: Exam): Exam {
+  return { ...exam, sections: exam.sections.map((s) => ({ ...s, groups: s.groups.map((g) => ({ ...g, questions: g.questions.map((q) => ({ ...q, stats: null })) })) })) };
+}
+
 function sections(options: Parameters<typeof buildExamDocDefinition>[1], exam: Exam = MINI_EXAM) {
   return buildExamDocDefinition(exam, options).content as PdfSection[];
 }
@@ -107,6 +112,36 @@ describe('封面', () => {
     expect(text).toContain(PDF_TEXT.howWithoutSheet[0]);
   });
 
+  it('有全國答對率才說「對照全國答對率」（舊卷、參考試卷沒有統計）', () => {
+    const coverText = (exam: Exam) => allText(sections({ includeAnswerSheet: true, includeAnswerKey: false }, exam)[0]?.section);
+    expect(coverText(MINI_EXAM)).toContain(PDF_TEXT.howOnline(true));
+    expect(coverText(withoutStats(MINI_EXAM))).toContain(PDF_TEXT.howOnline(false));
+    expect(coverText(withoutStats(MINI_EXAM))).not.toContain('全國答對率');
+  });
+
+  it('原卷答錯倒扣（93 指考）：封面不寫「答錯以零分計算」，改說明原卷倒扣、本站線上計分依現制', () => {
+    const ast93: Exam = {
+      ...MINI_EXAM,
+      id: 'ast-93',
+      exam: 'ast',
+      year: 93,
+      title: '93學年度指定科目考試英文考科',
+      sections: MINI_EXAM.sections
+        .filter((s) => s.type !== 'mixed')
+        .map((s) => (s.id === 's1' ? { ...s, instructions: '說明︰第1至15題，每題選出最適當的一個選項，標示在答案卡之「選擇題答案區」。每題答對得1分，答錯倒扣1/3分，倒扣到本大題之實得分數為零為止。未作答者，不給分亦不扣分。' } : s)),
+    };
+    const text = allText(sections({ includeAnswerSheet: false, includeAnswerKey: false }, ast93)[0]?.section);
+    expect(text).toContain(PDF_TEXT.scoringPenaltyNote);
+    expect(text).not.toContain(PDF_TEXT.scoringSingle.slice(0, 20));
+    // 說明框照原卷印倒扣規則
+    expect(allText(sections({ includeAnswerSheet: false, includeAnswerKey: false }, ast93)[1]?.section)).toContain('答錯倒扣1/3分');
+    // 「答錯不倒扣」不是倒扣
+    const noPenalty: Exam = { ...ast93, sections: ast93.sections.map((s) => (s.id === 's1' ? { ...s, instructions: '說明︰每題答對得1分，答錯不倒扣。' } : s)) };
+    const plain = allText(sections({ includeAnswerSheet: false, includeAnswerKey: false }, noPenalty)[0]?.section);
+    expect(plain).toContain(PDF_TEXT.scoringSingle.slice(0, 20));
+    expect(plain).not.toContain(PDF_TEXT.scoringPenaltyNote);
+  });
+
   it('沒有多選題的舊卷只印單選題計分方式', () => {
     const noMulti: Exam = { ...MINI_EXAM, sections: MINI_EXAM.sections.filter((s) => s.type !== 'mixed') };
     const text = allText(sections({ includeAnswerSheet: false, includeAnswerKey: false }, noMulti)[0]?.section);
@@ -174,6 +209,61 @@ describe('答案頁', () => {
     expect(allText(doc.content as PdfContent[])).not.toContain('senior high school English teachers');
   });
 
+  it('註記只寫答案頁上真的有的東西：有統計才說明百分比，有官方混合題答案才說「取自參考答案」', () => {
+    const text = key();
+    expect(text).toContain(PDF_TEXT.answerKeyChoiceNote);
+    expect(text).toContain(PDF_TEXT.answerKeyRateNote);
+    expect(text).toContain(PDF_TEXT.answerKeyMixedNote);
+    expect(text).not.toContain(PDF_TEXT.answerKeyOpenAnswerNote);
+
+    const noStats = key(withoutStats(MINI_EXAM));
+    expect(noStats).toContain(PDF_TEXT.answerKeyChoiceNote);
+    expect(noStats).not.toContain(PDF_TEXT.answerKeyRateNote);
+    expect(noStats).not.toContain('%');
+  });
+
+  it('官方沒公布非選擇題答案（92 學測補考）：不印「答案取自參考答案」；舊卷的非選擇題有答案時用不寫「混合題」的說法', () => {
+    const openOnly = (answer: string | null): Exam => ({
+      ...MINI_EXAM,
+      sections: MINI_EXAM.sections.map((s) =>
+        s.type !== 'mixed'
+          ? s
+          : {
+              ...s,
+              type: 'short_answer',
+              groups: s.groups.map((g) => ({
+                ...g,
+                questions: g.questions
+                  .filter((q) => q.mode === 'fill_in_blank' || q.mode === 'short_answer')
+                  .map((q) => ({ ...q, answer, accepted_answers: null }) as typeof q),
+              })),
+            },
+      ),
+    });
+    const none = key(openOnly(null));
+    expect(none).toContain(PDF_TEXT.noOfficialAnswer);
+    expect(none).not.toContain(PDF_TEXT.answerKeyMixedNote);
+    expect(none).not.toContain(PDF_TEXT.answerKeyOpenAnswerNote);
+    const some = key(openOnly('answer'));
+    expect(some).toContain(PDF_TEXT.answerKeyOpenAnswerNote);
+    expect(some).not.toContain(PDF_TEXT.answerKeyMixedNote);
+  });
+
+  it('答案不在格子裡斷行；題號不是數字（83 學測「選填1」）時一列排 5 題', () => {
+    const doc = sections({ includeAnswerSheet: false, includeAnswerKey: true })[2]?.section;
+    const answers = findNodes(doc, (n) => n.bold === true && n.noWrap === true).map((n) => n.text);
+    expect(answers).toContain('B');
+    expect(answers).toContain(PDF_TEXT.allCredit);
+    const wide: Exam = {
+      ...MINI_EXAM,
+      sections: MINI_EXAM.sections.map((s) => (s.id !== 's3' ? s : { ...s, groups: s.groups.map((g) => ({ ...g, questions: g.questions.map((q) => ({ ...q, label: `選填${q.no - 20}` })) })) })),
+    };
+    const tables = findNodes(sections({ includeAnswerSheet: false, includeAnswerKey: true }, wide)[2]?.section, (n) => 'table' in n && Array.isArray((n.table as { widths?: unknown[] }).widths));
+    const widths = tables.map((t) => (t.table as { widths: unknown[] }).widths.length);
+    expect(widths).toContain(5);
+    expect(widths).toContain(10);
+  });
+
   it('官方公告多個答案皆給分的印全部', () => {
     const exam: Exam = {
       ...MINI_EXAM,
@@ -182,6 +272,23 @@ describe('答案頁', () => {
       ),
     };
     expect(key(exam)).toContain(`1 B${PDF_TEXT.orSeparator}C`);
+  });
+});
+
+describe('參考試卷的頁首', () => {
+  it('同一年的指考、學測參考試卷分得出來（102 指考參考試卷／102 學測參考試卷）；試辦考試另外寫', () => {
+    const ref = (title: string): Exam => ({ ...MINI_EXAM, id: 'ref-102-a', exam: 'reference', year: 102, target: 'ast', title });
+    const ast = ref('指定科目考試參考試卷（適用於99課綱）英文考科');
+    const gsat = ref('學科能力測驗參考試卷（適用於99課綱）英文考科');
+    expect(PDF_TEXT.examShort(ast)[0]).toBe('102指考參考試卷');
+    expect(PDF_TEXT.examShort(gsat)[0]).toBe('102學測參考試卷');
+    expect(PDF_TEXT.sheetHeader(ast)).not.toBe(PDF_TEXT.sheetHeader(gsat));
+    expect(PDF_TEXT.keyHeader(gsat)).toBe('102學測參考試卷　答案');
+    expect(PDF_TEXT.examShort({ ...ast, year: 110, title: '110年試辦考試（適用於108課綱）英文考科' })[0]).toBe('110試辦考試');
+    const doc = buildExamDocDefinition(ast, { includeAnswerSheet: true, includeAnswerKey: false });
+    const pages = renderChrome(doc, [1, 2, 1]);
+    expect(allText(pages[1]?.header)).toContain('102指考參考試卷');
+    expect(allText(pages[3]?.header)).toContain('102指考參考試卷　答題卷');
   });
 });
 

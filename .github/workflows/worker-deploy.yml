@@ -1,14 +1,35 @@
-# 把 apps/api 部署到 Cloudflare Workers（沿用 Sekai Center 的 worker-deploy 做法）。
-# 觸發：main 上 apps/api 或 packages/shared 有變動時自動跑；也可以在 Actions 頁手動按「Run workflow」。
+# 把後端（apps/api）部署到 Cloudflare Workers，並準備好它需要的雲端資源與機密（沿用 Sekai Center 的 worker-deploy 做法）。
+# 站主的逐步說明（每個金鑰去哪裡拿、怎麼觸發、怎麼確認成功、出錯看哪裡）：docs/SETUP-KEYS.md。
 #
-# 一次性設定（repo → Settings → Secrets and variables → Actions → New repository secret）：
-#   CLOUDFLARE_API_TOKEN   Cloudflare → My Profile → API Tokens → Create Token → 範本「Edit Cloudflare Workers」，
-#                          再加上 Account 權限「D1: Edit」（第一次部署要建立資料庫、之後要套用遷移）。
-#   CLOUDFLARE_ACCOUNT_ID  Cloudflare 儀表板 → Workers & Pages 右側欄的 Account ID。
-# 還沒設定時這個 workflow 只印出提示並略過，不會失敗：後端要等 AI 批改與登入那一批才用得到，
-# 在那之前 main 不該因為缺設定而一直紅。
-# Worker 自己的機密（ANTHROPIC_API_KEY、SESSION_SECRET、GOOGLE_CLIENT_SECRET）用 wrangler secret put 存在
-# Cloudflare，不放進 GitHub；部署不會動到它們。
+# 觸發：main 上 apps/api、packages/shared、data/exams/parsed（Worker 會打包中譯英與作文的題目文字）、
+#       package-lock.json 或本檔有變動時自動跑；也可以在 Actions 頁手動按「Run workflow」。
+#
+# 流程（整支可以重跑：已經存在的資源不會重建，已經有的 SESSION_SECRET／LEDGER_SALT 不會覆蓋）：
+#   1. CLOUDFLARE_API_TOKEN 與 CLOUDFLARE_ACCOUNT_ID 都沒設 → 印提示、略過，不失敗（main 不該因為缺設定而一直紅）。
+#      只設了其中一個 → 失敗（多半是名稱打錯）。
+#   2. 部署前檢查：Worker 的型別檢查與測試（含 CORS／Origin 安全測試），壞掉的版本不上線。
+#   3. 檢查 Cloudflare 帳號：token 讀得到帳號的 Workers 設定、帳號已有 workers.dev 子網域（沒有就停下來說明去哪裡設定）。
+#   4. 準備 D1 資料庫 gsat-english（沒有就建立），只在 runner 上把 id 填進 wrangler.toml。
+#   5. 準備 Queue：先建死信佇列 ai-tasks-dlq，再建 ai-tasks（已存在就略過）。
+#   6. 套用 D1 遷移 → 部署 Worker。
+#   7. 同步 Worker 機密（見下）。
+#   8. 部署後確認：/api/health、/api/features（只印「有沒有啟用」），印出 workers.dev 網址、子網域與下一步。
+#
+# 金鑰放哪裡：
+#   GitHub repo secrets（Settings → Secrets and variables → Actions → New repository secret）
+#     CLOUDFLARE_API_TOKEN   必填。範本「Edit Cloudflare Workers」，再加 Account 權限「D1: Edit」與「Queues: Edit」。
+#     CLOUDFLARE_ACCOUNT_ID  必填。
+#     ANTHROPIC_API_KEY、GOOGLE_CLIENT_ID、GOOGLE_CLIENT_SECRET、ADMIN_EMAIL
+#                            選填。有值的才會在每次部署後同步成 Worker 機密（以 GitHub 的值為準）。
+#   Cloudflare 儀表板（Workers & Pages → gsat-english-api → Settings → Variables and Secrets，類型選 Secret）
+#     上面四個也可以不放 GitHub，改在這裡手動設定。GitHub 沒設的名稱，workflow 不會刪除或覆蓋 Worker 上的同名機密。
+#   由 workflow 自動產生（不放 GitHub）
+#     SESSION_SECRET、LEDGER_SALT  Worker 上還沒有時用 openssl rand 產生並設定；已經有就絕不覆蓋
+#                            （換 SESSION_SECRET 所有人都會被登出；LEDGER_SALT 換了，帳本與刪除證明的假名就對不上）。
+# 機密的值只經過環境變數與 runner 上的暫存檔（umask 077、用完即刪），不出現在指令列與 log。
+# Cloudflare token 也只交給需要它的步驟：npm ci（套件的安裝腳本）與測試都看不到。
+name: 部署後端（Cloudflare Worker）
+
 on:
   workflow_dispatch:
   push:
@@ -16,6 +37,8 @@ on:
     paths:
       - 'apps/api/**'
       - 'packages/shared/**'
+      - 'data/exams/parsed/**'
+      - 'package-lock.json'
       - '.github/workflows/worker-deploy.yml'
 
 permissions:
@@ -28,18 +51,30 @@ concurrency:
 
 jobs:
   deploy:
+    name: 部署 Worker
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
+    defaults:
+      run:
+        # 明確寫 bash，GitHub 才會加上 -o pipefail：`wrangler deploy | tee` 這類管線失敗時這一步才會失敗。
+        shell: bash
     env:
-      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      # 與 apps/api/wrangler.toml 的 name 相同。
+      WORKER_NAME: gsat-english-api
+      CF_API: https://api.cloudflare.com/client/v4
     steps:
       - name: 確認已設定 Cloudflare 金鑰
         id: creds
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: |
-          if [ -z "$CLOUDFLARE_API_TOKEN" ] || [ -z "$CLOUDFLARE_ACCOUNT_ID" ]; then
-            echo "::notice::還沒設定 CLOUDFLARE_API_TOKEN／CLOUDFLARE_ACCOUNT_ID（見本檔開頭說明），這次略過部署。"
+          if [ -z "$CLOUDFLARE_API_TOKEN" ] && [ -z "$CLOUDFLARE_ACCOUNT_ID" ]; then
+            echo "::notice::還沒設定 CLOUDFLARE_API_TOKEN 與 CLOUDFLARE_ACCOUNT_ID（見 docs/SETUP-KEYS.md），這次略過部署。"
             echo "ok=false" >> "$GITHUB_OUTPUT"
+          elif [ -z "$CLOUDFLARE_API_TOKEN" ] || [ -z "$CLOUDFLARE_ACCOUNT_ID" ]; then
+            echo "::error::CLOUDFLARE_API_TOKEN 與 CLOUDFLARE_ACCOUNT_ID 只設了一個（名稱有沒有打錯？），兩個都要設。"
+            exit 1
           else
             echo "ok=true" >> "$GITHUB_OUTPUT"
           fi
@@ -64,53 +99,332 @@ jobs:
           npm run typecheck -w @gsat/api
           npm test -w @gsat/api
 
+      # 先確認 token 與帳號設定，錯了就在這裡停下來給清楚的說明，不要等到部署一半才失敗。
+      # workers.dev 子網域：vercel.json 的 rewrites 要指向 https://gsat-english-api.<子網域>.workers.dev；
+      # 帳號還沒註冊子網域時，wrangler deploy 會要求互動式設定，在 CI 上只會失敗。
+      - name: 檢查 Cloudflare 帳號與 workers.dev 子網域
+        id: account
+        if: steps.creds.outputs.ok == 'true'
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        # 讀不到子網域時，會再分辨是 token 無效、Account ID 不符還是權限不足（.github/scripts/cf-check-account.mjs）。
+        run: node .github/scripts/cf-check-account.mjs
+
       # wrangler.toml 裡的 database_id 是占位字串。這一步找出（或第一次建立）名為 gsat-english 的 D1，
       # 只在 runner 上把 id 填進 wrangler.toml，不提交回 repo：id 不是機密，但讓 repo 保持與帳號無關，
       # 換帳號或重建資料庫時不必改程式碼。
       - name: 準備 D1 資料庫
         if: steps.creds.outputs.ok == 'true'
         working-directory: apps/api
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: |
-          id=$(npx wrangler d1 list --json | node -e '
-            let s = ""; process.stdin.on("data", d => s += d).on("end", () => {
-              const db = JSON.parse(s).find(d => d.name === "gsat-english");
-              process.stdout.write(db ? db.uuid : "");
-            });')
+          d1_id() {
+            npx wrangler d1 list --json | node -e '
+              let s = ""; process.stdin.on("data", (d) => (s += d)).on("end", () => {
+                let list;
+                try { list = JSON.parse(s.slice(s.indexOf("["), s.lastIndexOf("]") + 1)); } catch { process.exit(1); }
+                const db = list.find((d) => d.name === "gsat-english");
+                process.stdout.write(db ? db.uuid : "");
+              });'
+          }
+          id=$(d1_id)
           if [ -z "$id" ]; then
             echo "第一次部署：建立 D1 資料庫 gsat-english"
             npx wrangler d1 create gsat-english
-            id=$(npx wrangler d1 list --json | node -e '
-              let s = ""; process.stdin.on("data", d => s += d).on("end", () => {
-                const db = JSON.parse(s).find(d => d.name === "gsat-english");
-                process.stdout.write(db ? db.uuid : "");
-              });')
+            id=$(d1_id)
           fi
           if [ -z "$id" ]; then
-            echo "::error::找不到也建立不了 D1 資料庫 gsat-english（API token 是否有 D1: Edit 權限？）"
+            echo "::error::找不到也建立不了 D1 資料庫 gsat-english（API token 是否有 Account「D1: Edit」權限？）"
             exit 1
           fi
           sed -i "s/REPLACE_WITH_D1_DATABASE_ID/$id/" wrangler.toml
           echo "D1 gsat-english = $id"
 
-      # migrations/ 只有 README 時 wrangler 會回報沒有可套用的遷移，照樣成功。
+      # AI 任務佇列（wrangler.toml 的 [[queues.*]]）。死信佇列要先存在，ai-tasks 的 consumer 才能指向它；
+      # 兩個都要在部署前建立，wrangler deploy 不會自動建 Queue。
+      - name: 準備 Queue（ai-tasks-dlq、ai-tasks）
+        if: steps.creds.outputs.ok == 'true'
+        working-directory: apps/api
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          # wrangler queues list 只有表格輸出（沒有 --json）：先去掉可能的 ANSI 色碼，再找內容「完全等於」
+          # 佇列名稱的儲存格，所以 ai-tasks 不會被 ai-tasks-dlq 誤認。一頁只剩表頭（或什麼都沒有）就代表列完了，
+          # 最多翻 20 頁。回傳 0＝存在、1＝不存在、2＝讀不到清單。
+          queue_exists() {
+            local page out rows
+            for page in $(seq 1 20); do
+              out=$(npx wrangler queues list --page "$page" | sed 's/\x1b\[[0-9;]*m//g') || return 2
+              rows=$(printf '%s\n' "$out" | grep -cE '^(│|\|)' || true)
+              if [ "$rows" -le 1 ]; then return 1; fi
+              if printf '%s\n' "$out" | grep -qE "(│|\|) +$1 +(│|\|)"; then return 0; fi
+            done
+            return 1
+          }
+          ensure_queue() {
+            local status=0 out
+            queue_exists "$1" || status=$?
+            if [ "$status" -eq 0 ]; then
+              echo "Queue $1：已存在"
+              return 0
+            fi
+            if [ "$status" -ne 1 ]; then
+              echo "::error::讀不到 Queue 清單（API token 是否有 Account「Queues: Edit」權限？）"
+              return 1
+            fi
+            echo "Queue $1：還沒有，建立中"
+            if out=$(npx wrangler queues create "$1" 2>&1); then
+              printf '%s\n' "$out"
+              return 0
+            fi
+            printf '%s\n' "$out"
+            # 清單沒列到、但其實已經存在（例如剛好在別的分頁）：建立會回「已存在」，當成成功。
+            if printf '%s\n' "$out" | grep -qi 'already'; then
+              echo "Queue $1：已存在"
+              return 0
+            fi
+            echo "::error::建立 Queue $1 失敗（API token 是否有 Account「Queues: Edit」權限？訊息見上方）"
+            return 1
+          }
+          ensure_queue ai-tasks-dlq
+          ensure_queue ai-tasks
+
+      # 遷移已套用的會記在 d1_migrations 表，wrangler 只套用還沒套用的；CI 上不會詢問確認。
       - name: 套用 D1 遷移
         if: steps.creds.outputs.ok == 'true'
         working-directory: apps/api
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: npx wrangler d1 migrations apply gsat-english --remote
 
       - name: 部署
         id: deploy
         if: steps.creds.outputs.ok == 'true'
         working-directory: apps/api
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          SUBDOMAIN: ${{ steps.account.outputs.subdomain }}
         run: |
-          npx wrangler deploy | tee deploy.log
-          url=$(grep -oE 'https://[a-z0-9.-]+\.workers\.dev' deploy.log | head -n 1)
+          # 中譯英與作文的題目文字（src/generated/writing-prompts.json）由 data/exams/parsed 產生後打包進 Worker；
+          # 部署前檢查已經產生過，這裡再跑一次，確保打包的就是這個 commit 的題目。
+          node scripts/build-writing-prompts.mjs
+          npx wrangler deploy --message "GitHub Actions ${GITHUB_SHA:0:7}" 2>&1 | tee "$RUNNER_TEMP/deploy.log"
+          expected="https://$WORKER_NAME.$SUBDOMAIN.workers.dev"
+          url=$(grep -oE "https://$WORKER_NAME\.[a-z0-9-]+\.workers\.dev" "$RUNNER_TEMP/deploy.log" | head -n 1 || true)
+          if [ -z "$url" ]; then
+            echo "::warning::部署輸出裡沒有 workers.dev 網址（wrangler.toml 的 workers_dev 是不是被關掉了？），改用帳號子網域推算：$expected"
+            url=$expected
+          elif [ "$url" != "$expected" ]; then
+            echo "::warning::部署輸出的網址 $url 和帳號子網域推算的 $expected 不同，以部署輸出為準。"
+          fi
           echo "url=$url" >> "$GITHUB_OUTPUT"
           echo "::notice::Worker 網址：$url（vercel.json 的 rewrites 要指向這裡）"
 
-      - name: 部署後確認
-        if: steps.creds.outputs.ok == 'true' && steps.deploy.outputs.url != ''
+      # 部署之後才同步：第一次部署前 Worker 還不存在，讀不到它的機密清單。
+      # 同步會產生一個新版本並立即生效；機密不會因為之後的 wrangler deploy 而消失。
+      - name: 同步 Worker 機密
+        id: secrets
+        if: steps.creds.outputs.ok == 'true'
+        working-directory: apps/api
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          SYNC_ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          SYNC_GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+          SYNC_GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+          SYNC_ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
         run: |
-          sleep 5
-          curl -fsS "${{ steps.deploy.outputs.url }}/api/health"
-          echo
+          umask 077
+          secrets_file=$(mktemp "$RUNNER_TEMP/worker-secrets.XXXXXX")
+          trap 'rm -f "$secrets_file"' EXIT
+
+          # 只取名稱（wrangler secret list 不會給值）。
+          secret_names() {
+            npx wrangler secret list --format json | node -e '
+              let s = ""; process.stdin.on("data", (d) => (s += d)).on("end", () => {
+                let list;
+                try { list = JSON.parse(s.slice(s.indexOf("["), s.lastIndexOf("]") + 1)); } catch { process.exit(1); }
+                for (const x of list) console.log(x.name);
+              });'
+          }
+
+          # 1. Worker 上已有哪些機密。讀不到就停：不能在「不知道有沒有」的情況下產生新的 SESSION_SECRET，
+          #    否則會把所有人登出。
+          if ! existing=$(secret_names); then
+            echo "::error::讀不到 Worker 的機密清單，這次不同步機密（避免誤把 SESSION_SECRET、LEDGER_SALT 換掉）。"
+            exit 1
+          fi
+
+          # 2. SESSION_SECRET、LEDGER_SALT：Worker 上沒有才產生（值只放在環境變數裡，不印出）。
+          #    沒列在 GitHub secrets 的其他機密（站主在儀表板手動設的）一律不動。
+          for name in SESSION_SECRET LEDGER_SALT; do
+            if printf '%s\n' "$existing" | grep -qxF "$name"; then
+              echo "$name：Worker 上已有，不覆蓋"
+            else
+              if [ "$name" = SESSION_SECRET ]; then bytes=48; else bytes=32; fi
+              value=$(openssl rand -base64 "$bytes" | tr -d '\n')
+              if [ -z "$value" ]; then
+                echo "::error::openssl rand 沒有產生 $name。"
+                exit 1
+              fi
+              export "SYNC_$name=$value"
+              echo "$name：Worker 上還沒有，這次產生新的"
+            fi
+          done
+          unset value
+
+          # 3. 寫成 JSON 檔（只放有值的；檔案權限 600）。格式檢查只印名稱，不印值。
+          to_sync=$(node -e '
+            const fs = require("fs");
+            const NAMES = ["ANTHROPIC_API_KEY", "GOOGLE_CLIENT_ID", "GOOGLE_CLIENT_SECRET", "ADMIN_EMAIL", "SESSION_SECRET", "LEDGER_SALT"];
+            const warn = (name, msg) => console.error("::warning::" + name + " " + msg + "（還是照樣同步；值不會印出）");
+            const out = {};
+            for (const name of NAMES) {
+              const v = (process.env["SYNC_" + name] ?? "").trim();
+              if (!v) continue;
+              out[name] = v;
+              if (/^["\x27]|["\x27]$/.test(v) || /\s/.test(v)) warn(name, "的值含有引號或空白，貼上時是不是多複製了東西？");
+            }
+            const a = out.ANTHROPIC_API_KEY;
+            if (a && a.startsWith("sk-ant-admin")) warn("ANTHROPIC_API_KEY", "看起來是 Admin key；Worker 要用一般的 API key（online workspace）");
+            else if (a && !a.startsWith("sk-ant-")) warn("ANTHROPIC_API_KEY", "看起來不像 Anthropic 的 API key（通常以 sk-ant- 開頭）");
+            const id = out.GOOGLE_CLIENT_ID;
+            if (id && !id.endsWith(".apps.googleusercontent.com")) warn("GOOGLE_CLIENT_ID", "看起來不像 OAuth 用戶端 ID（通常以 .apps.googleusercontent.com 結尾）");
+            const sec = out.GOOGLE_CLIENT_SECRET;
+            if (sec && sec.endsWith(".apps.googleusercontent.com")) warn("GOOGLE_CLIENT_SECRET", "看起來是用戶端 ID，不是用戶端密鑰");
+            const mail = out.ADMIN_EMAIL;
+            if (mail && !/^[^@\s,;]+@[^@\s,;]+\.[^@\s,;]+$/.test(mail)) warn("ADMIN_EMAIL", "不是單一個 email 地址");
+            fs.writeFileSync(process.argv[1], JSON.stringify(out), { mode: 0o600 });
+            for (const name of Object.keys(out)) console.log(name);
+          ' "$secrets_file")
+          unset SYNC_SESSION_SECRET SYNC_LEDGER_SALT
+
+          if [ -z "$to_sync" ]; then
+            echo "沒有要同步的機密（GitHub secrets 沒設，SESSION_SECRET 與 LEDGER_SALT 也都已經有了）。"
+          else
+            echo "同步到 Worker 的機密：$(printf '%s' "$to_sync" | tr '\n' ' ')"
+            npx wrangler secret bulk "$secrets_file"
+          fi
+          rm -f "$secrets_file"
+
+          # 4. 給下一步診斷用：同步後 Worker 上的機密名稱（只有名稱）。重新讀一次，讀不到就用推算的。
+          if ! final=$(secret_names); then
+            final=$(printf '%s\n%s\n' "$existing" "$to_sync")
+          fi
+          names=$(printf '%s\n' "$final" | sed '/^$/d' | sort -u | tr '\n' ' ')
+          echo "Worker 上的機密：${names:-（沒有）}"
+          echo "names=$names" >> "$GITHUB_OUTPUT"
+
+      # 部署後確認：只看公開端點（/api/features 只回布林）。結果也寫進這次執行的 Summary。
+      - name: 部署後確認
+        if: steps.creds.outputs.ok == 'true'
+        env:
+          WORKER_URL: ${{ steps.deploy.outputs.url }}
+          SUBDOMAIN: ${{ steps.account.outputs.subdomain }}
+          SECRET_NAMES: ${{ steps.secrets.outputs.names }}
+        run: |
+          app_url=$(sed -n 's/^APP_ORIGIN = "\(.*\)"/\1/p' apps/api/wrangler.toml | head -n 1)
+          app_url=${app_url:-https://gsat-english-center.vercel.app}
+
+          # 1. /api/health：workers.dev 上新建的 Worker 可能要幾十秒才生效，最多等 2 分鐘。
+          health=""
+          for _ in $(seq 1 24); do
+            if health=$(curl -fsS --max-time 10 "$WORKER_URL/api/health" 2>/dev/null); then break; fi
+            health=""
+            sleep 5
+          done
+          if [ -z "$health" ]; then
+            curl -sS --max-time 10 -o /dev/null -w "最後一次：HTTP %{http_code}\n" "$WORKER_URL/api/health" || true
+            echo "::error::$WORKER_URL/api/health 2 分鐘內都沒有正常回應。請到 Cloudflare 儀表板 → Workers & Pages → $WORKER_NAME → Logs 看錯誤；剛註冊的 workers.dev 子網域可能要再等幾分鐘，稍後重跑這個 workflow。"
+            exit 1
+          fi
+          HEALTH="$health" node -e '
+            let h = null;
+            try { h = JSON.parse(process.env.HEALTH); } catch {}
+            if (!h || h.ok !== true || h.service !== process.env.WORKER_NAME) {
+              console.log("::error::/api/health 的回應不是這支 Worker 的健康檢查：" + process.env.HEALTH.slice(0, 200));
+              process.exit(1);
+            }
+            console.log("/api/health：ok（版本 " + h.version + "）");
+          '
+
+          # 2. /api/features 和「依 Worker 上的機密名稱推算的結果」比對。機密剛同步，新版本要幾秒才到各節點，
+          #    不一致就每 5 秒再問一次，最多 1 分鐘；還是不一致就提出警告（不讓部署失敗）。
+          #    推算規則同 src/config.ts：登入要 GOOGLE_CLIENT_ID、GOOGLE_CLIENT_SECRET、SESSION_SECRET（APP_ORIGIN 在 wrangler.toml）；
+          #    AI 另外要 ANTHROPIC_API_KEY（Queue 綁定在 wrangler.toml）；OCR 跟著 AI。
+          compare='
+            const f = JSON.parse(process.env.FEATURES);
+            const names = new Set((process.env.SECRET_NAMES || "").split(/\s+/).filter(Boolean));
+            const authNeed = ["GOOGLE_CLIENT_ID", "GOOGLE_CLIENT_SECRET", "SESSION_SECRET"];
+            const expAuth = authNeed.every((n) => names.has(n));
+            const expAi = expAuth && names.has("ANTHROPIC_API_KEY");
+            process.exit(f.auth === expAuth && f.ai === expAi && f.ocr === expAi ? 0 : 3);
+          '
+          features=""
+          for _ in $(seq 1 12); do
+            features=$(curl -fsS --max-time 10 "$WORKER_URL/api/features" 2>/dev/null) || features=""
+            if [ -n "$features" ] && FEATURES="$features" node -e "$compare" 2>/dev/null; then break; fi
+            sleep 5
+          done
+          if [ -z "$features" ] || ! FEATURES="$features" node -e 'JSON.parse(process.env.FEATURES)' 2>/dev/null; then
+            echo "::error::$WORKER_URL/api/features 沒有回 JSON：${features:0:200}"
+            exit 1
+          fi
+
+          # 3. 經 Vercel 代理（只是資訊：vercel.json 還沒指向這支 Worker 時一定不通）。
+          proxy=$(curl -fsS --max-time 10 "$app_url/api/health" 2>/dev/null || true)
+          vercel_target=$(grep -oE 'gsat-english-api\.[A-Za-z0-9_-]+\.workers\.dev' vercel.json | head -n 1 || true)
+
+          FEATURES="$features" PROXY="$proxy" VERCEL_TARGET="$vercel_target" APP_URL="$app_url" node -e '
+            const fs = require("fs");
+            const env = process.env;
+            const f = JSON.parse(env.FEATURES);
+            const names = new Set((env.SECRET_NAMES || "").split(/\s+/).filter(Boolean));
+            const missing = (list) => list.filter((n) => !names.has(n));
+            const onOff = (v) => (v ? "啟用" : "未啟用");
+            const authMissing = missing(["GOOGLE_CLIENT_ID", "GOOGLE_CLIENT_SECRET", "SESSION_SECRET"]);
+            const aiMissing = missing(["ANTHROPIC_API_KEY"]);
+            let proxyOk = false;
+            try { proxyOk = JSON.parse(env.PROXY).service === env.WORKER_NAME; } catch {}
+            const workerHost = env.WORKER_NAME + "." + env.SUBDOMAIN + ".workers.dev";
+            const vercelOk = env.VERCEL_TARGET === workerHost;
+
+            const rows = [
+              ["Worker 網址", env.WORKER_URL],
+              ["workers.dev 子網域", env.SUBDOMAIN + ".workers.dev"],
+              ["登入（auth）", onOff(f.auth)],
+              ["AI 批改（ai）", onOff(f.ai)],
+              ["拍照 OCR（ocr）", onOff(f.ocr)],
+              ["AI 全站暫停（aiPaused）", f.aiPaused ? "是" : "否"],
+              ["Worker 上的機密（只列名稱）", [...names].join("、") || "（沒有）"],
+              ["經 Vercel 代理的 " + env.APP_URL + "/api/health", proxyOk ? "已接上" : "還沒接上"],
+            ];
+            for (const [k, v] of rows) console.log(k + "：" + v);
+
+            const warnings = [];
+            if (!f.auth) warnings.push("登入未啟用：Worker 上缺 " + (authMissing.join("、") || "（機密都在，請檢查 wrangler.toml 的 APP_ORIGIN）") + "。");
+            else if (!f.ai) warnings.push("AI 批改未啟用：Worker 上缺 " + (aiMissing.join("、") || "（機密都在，請檢查 wrangler.toml 的 [[queues.producers]]）") + "。");
+            if (f.ai && f.aiPaused) warnings.push("AI 目前是暫停狀態：今天的全站預算用完、管理員在後台按了暫停，或 D1 遷移沒有套用成功。");
+            const expAuth = authMissing.length === 0;
+            const expAi = expAuth && aiMissing.length === 0;
+            if (f.auth !== expAuth || f.ai !== expAi) warnings.push("/api/features 和 Worker 上的機密對不起來（可能是新版本還沒傳到所有節點），幾分鐘後再打開 " + env.WORKER_URL + "/api/features 確認。");
+            for (const w of warnings) console.log("::warning::" + w);
+
+            const next = [];
+            if (!vercelOk) next.push("把根目錄 vercel.json 的 rewrites（/api、/auth 兩條）指向 https://" + workerHost + "（目前是 " + (env.VERCEL_TARGET || "沒有找到") + "），推到 main，Vercel 重新部署後打開 " + env.APP_URL + "/api/health 應該回 ok。");
+            else if (!proxyOk) next.push("vercel.json 已指向這支 Worker，但 " + env.APP_URL + "/api/health 還不通：確認 Vercel 已重新部署（Vercel 儀表板 → Deployments）。");
+            if (f.auth) next.push("Google Cloud Console 的 OAuth 用戶端要有重新導向 URI " + env.APP_URL + "/auth/google/callback；用 ADMIN_EMAIL 的 Google 帳號登入後打開 " + env.APP_URL + "/admin 看健康檢查。");
+            else next.push("設定登入需要的機密（docs/SETUP-KEYS.md），再重跑這個 workflow。");
+            for (const [i, n] of next.entries()) console.log("下一步 " + (i + 1) + "：" + n);
+
+            const md = ["## 後端部署結果", "", "| 項目 | 結果 |", "|---|---|", ...rows.map(([k, v]) => "| " + k + " | " + v + " |"), ""];
+            if (warnings.length) md.push("### 注意", "", ...warnings.map((w) => "- " + w), "");
+            md.push("### 下一步", "", ...next.map((n, i) => (i + 1) + ". " + n), "", "詳細說明見 docs/SETUP-KEYS.md。", "");
+            if (env.GITHUB_STEP_SUMMARY) fs.appendFileSync(env.GITHUB_STEP_SUMMARY, md.join("\n"));
+          '

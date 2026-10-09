@@ -19,6 +19,8 @@ import {
 } from '../../../data/exams';
 import { scoringFile, useExam } from '../ExamContext';
 import { CLUE_LABELS, ITEM_TYPE_LABELS, examIdLabel } from '../labels';
+import { useQuestionExtras } from '../QuestionExtras';
+import { AiGradingLink, useAiGradingOpen } from './AiGrading';
 import {
   acceptedLetters,
   formatPercent,
@@ -184,6 +186,7 @@ export function ChoiceFeedback({
   options: OptionMap | null;
   compact?: boolean;
 }) {
+  const extras = useQuestionExtras();
   const outcome = scoreQuestion(q, answer);
   if (outcome.kind !== 'auto') return null;
   const multi = q.mode === 'multi_select';
@@ -268,11 +271,12 @@ export function ChoiceFeedback({
               </div>
             ))}
         </div>
-      ) : (
+      ) : extras?.noOfficialStats ? null : (
         <p className="text-sm text-muted">這題沒有大考中心公布的答對率統計（補考、參考試卷與部分早期試題沒有公布）。</p>
       )}
       <TagLine tags={q.tags} />
       <ReusedNote q={q} />
+      {extras?.renderAfterFeedback?.(q, answer)}
     </div>
   );
 }
@@ -345,6 +349,7 @@ function AnswerTable({ rows, caption }: { rows: readonly (readonly string[])[]; 
  */
 function TranslationSource() {
   const exam = useExam();
+  const aiOpen = useAiGradingOpen();
   const file = scoringFile(exam) ?? exam.official_files.find((f) => f.kind === 'answer') ?? null;
   return (
     <div className="space-y-1">
@@ -362,7 +367,9 @@ function TranslationSource() {
         )}
         {file?.kind === 'scoring' ? '（含評分標準）' : '（早期試題可能沒有公布參考譯文）'}。
       </p>
-      <p className="text-xs text-muted">官方譯文受著作權保護，本站不轉載；本站自撰的參考譯文與 AI 批改即將推出。</p>
+      <p className="text-xs text-muted">
+        官方譯文受著作權保護，本站不轉載{aiOpen ? '。' : '；本站自撰的參考譯文與 AI 批改即將推出。'}
+      </p>
     </div>
   );
 }
@@ -370,6 +377,9 @@ function TranslationSource() {
 /** 非選擇題（填充、簡答、表格、中譯英、作文）的回饋：不自動計分；填充、簡答、表格附官方參考答案，中譯英只附出處連結。 */
 export function OpenFeedback({ q, answer }: { q: Question; answer: AnswerValue | undefined }) {
   const mine = answer === undefined ? '' : typeof answer === 'string' ? answer : '';
+  // 中譯英與作文可以到寫作練習送 AI 批改（features/writing）；其他非選擇題還沒有。
+  const aiGradable = q.mode === 'translation' || q.mode === 'composition';
+  const aiOpen = useAiGradingOpen();
   // 中譯英的資料檔不含官方答案（型別也沒有這些欄位），其他題型才有參考答案可以比對。
   const official = q.mode === 'translation' || typeof q.answer !== 'string' ? null : q.answer;
   const accepted = q.mode === 'translation' ? [] : (q.accepted_answers ?? []);
@@ -383,7 +393,14 @@ export function OpenFeedback({ q, answer }: { q: Question; answer: AnswerValue |
     <div className="mt-3 space-y-3 border-t border-line pt-3" data-testid="question-feedback">
       <p className="text-sm text-muted">
         非選擇題不自動計分（配分 {formatPoints(q.points ?? 0)} 分），
-        {q.mode === 'translation' ? '請對照官方評分原則自行評估' : '請對照參考答案自行評估'}；AI 批改即將推出。
+        {q.mode === 'translation' ? '請對照官方評分原則自行評估' : '請對照參考答案自行評估'}
+        {aiGradable && aiOpen ? (
+          <>
+            。<AiGradingLink mode={q.mode === 'translation' ? 'translation' : 'composition'} />
+          </>
+        ) : (
+          '；AI 批改即將推出。'
+        )}
       </p>
       {q.mode !== 'table_completion' && q.mode !== 'composition' && (
         <div>

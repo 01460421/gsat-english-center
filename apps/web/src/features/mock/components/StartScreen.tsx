@@ -9,7 +9,7 @@ import { examIdLabel } from '../../exams/labels';
 import { ExamPdfDownload } from '../../pdf/ExamPdfDownload';
 import { APP_NAME } from '../../../modules';
 import { MOCK_DURATION_MIN, SUGGESTED_MINUTES, mockPdfMeta, type MockPaper } from '../papers';
-import { doneExamIds } from '../storage';
+import { canUseStorage, doneExamIds } from '../storage';
 
 export interface StartOptions {
   strict: boolean;
@@ -103,6 +103,7 @@ export function StartScreen({ paper, exam, onStart }: { paper: MockPaper; exam: 
   const [error, setError] = useState(false);
   const count = exam.sections.reduce((acc, s) => acc + s.groups.reduce((n, g) => n + g.questions.length, 0), 0);
   const pdfMeta = useMemo(() => mockPdfMeta(paper, strict), [paper, strict]);
+  const [storageOk] = useState(canUseStorage);
 
   const submit = (e: FormEvent) => {
     e.preventDefault();
@@ -132,6 +133,11 @@ export function StartScreen({ paper, exam, onStart }: { paper: MockPaper; exam: 
         <h2 id={`${id}-title`} className="text-lg font-semibold">
           開考前
         </h2>
+        {!storageOk && (
+          <p role="status" className="mt-3 rounded-xl border border-bad/40 bg-bad/10 px-4 py-2 text-sm text-bad">
+            這個瀏覽器無法儲存資料（可能是無痕模式、停用了網站資料或空間已滿）：作答時重新整理或關掉分頁，答案會遺失；交卷後的成績單只能在交卷當下查看，離開那一頁就找不到了。
+          </p>
+        )}
         <form className="mt-3 space-y-5" onSubmit={submit} noValidate>
           <div>
             <label htmlFor={`${id}-predicted`} className="block font-medium">

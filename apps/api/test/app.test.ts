@@ -9,6 +9,7 @@ import { describe, expect, it } from 'vitest';
 import pkg from '../package.json';
 import type { AppEnv, Env } from '../src/env';
 import { ApiError, handleError, handleNotFound } from '../src/errors';
+import { handleQueue } from '../src/ai/consumer';
 import { app, SERVICE_NAME } from '../src/app';
 import { isAllowedOrigin, parseAllowedOrigins } from '../src/security';
 
@@ -197,7 +198,8 @@ describe('Worker 入口', () => {
   it('主模組只有 default export（其他具名匯出會被 workerd 當成入口點而啟動失敗）', async () => {
     const mod = await import('../src/index');
     expect(Object.keys(mod)).toEqual(['default']);
-    expect(mod.default).toBe(app);
+    expect(mod.default.fetch).toBe(app.fetch);
+    expect(mod.default.queue).toBe(handleQueue);
   });
 });
 

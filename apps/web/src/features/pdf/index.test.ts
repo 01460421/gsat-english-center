@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it } from 'vitest';
 import { MINI_EXAM } from '../exams/testFixtures';
-import { pdfFileName, pdfPreviewEnabled } from './index';
+import { PDF_DOWNLOAD_ENABLED, pdfDownloadVisible, pdfFileName, pdfPreviewEnabled } from './index';
 
 describe('pdfFileName', () => {
   it('歷屆試題：「學測英文中心_115學測英文_題本(_含答案).pdf」', () => {
@@ -25,5 +25,17 @@ describe('pdfPreviewEnabled', () => {
     expect(pdfPreviewEnabled()).toBe(true);
     window.history.replaceState(null, '', '/exams/gsat-115?pdf=off');
     expect(pdfPreviewEnabled()).toBe(false);
+  });
+});
+
+describe('pdfDownloadVisible', () => {
+  afterEach(() => window.history.replaceState(null, '', '/'));
+
+  it('正式開放或打開預覽開關時為 true（模擬考列表、說明文字與下載區塊共用這個判斷）', () => {
+    window.history.replaceState(null, '', '/mock?pdf=off');
+    expect(pdfDownloadVisible()).toBe(PDF_DOWNLOAD_ENABLED);
+    window.history.replaceState(null, '', '/mock?pdf=preview');
+    expect(pdfDownloadVisible()).toBe(true);
+    window.history.replaceState(null, '', '/mock?pdf=off');
   });
 });

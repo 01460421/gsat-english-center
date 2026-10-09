@@ -1,0 +1,598 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.st.16ba2b",
+  "version": 1,
+  "section_type": "structure",
+  "format_version": "structure-4x5",
+  "tier": "basic",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": "Every day, large amounts of food are thrown away around the world, while millions of people do not have enough to eat. Some of the wasted food has gone bad, but much of it is still perfectly safe to eat. This waste happens at almost every step on the way from the farm to the dinner table.\nWaste starts on farms, where many fruits and vegetables are thrown away simply because they look strange. [[1]] These stores also throw out food that is close to its “best before” date, even though it is usually still fine. At home, people often buy more than they need and forget about leftovers at the back of the fridge. By the time these forgotten meals are found, they have often gone bad.\n[[2]] All of these resources go into growing, moving, and storing what we eat. When food ends up in the trash, these resources are wasted too. Worse still, food that rots in garbage dumps gives off gases that help warm the planet.\n[[3]] One of the easiest is to make a shopping list and buy only what we need. Leftovers can also be turned into tasty new dishes instead of being thrown out. Food that will not be eaten in time can often be frozen for later. [[4]] Some restaurants give unsold meals to people in need, and some bakeries sell day-old bread at lower prices. When many people take small steps like these, the difference can be huge.",
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": {
+      "A": "Restaurants and bakeries can do their part, too.",
+      "B": "Wasted food also means wasted water, land, and energy.",
+      "C": "Cooking with friends at home can make a weekend more fun.",
+      "D": "The good news is that there are many easy ways to cut down on food waste at home.",
+      "E": "Such odd-looking food tastes just as good, but many supermarkets refuse to sell it."
+    },
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "E",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "pronoun_reference",
+          "clue_raw": "SP|PR|BF|L",
+          "key_phrase": "Such odd-looking food ← fruits and vegetables … look strange; many supermarkets → These stores also throw out food"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "B",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "pronoun_reference",
+          "clue_raw": "TS|PR|BF|L",
+          "key_phrase": "Wasted food ← these forgotten meals … have often gone bad; water, land, and energy → All of these resources"
+        }
+      },
+      {
+        "no": 3,
+        "label": "3",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "D",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "pronoun_reference",
+          "clue_raw": "TS|PR|BF|L",
+          "key_phrase": "The good news ← Worse still … gases that help warm the planet; many easy ways → One of the easiest"
+        }
+      },
+      {
+        "no": 4,
+        "label": "4",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "A",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "lexical_cohesion",
+          "clue_raw": "SP|LX|BF|L",
+          "key_phrase": "too ← make a shopping list / tasty new dishes / frozen for later（個人在家的做法）; Restaurants and bakeries → Some restaurants … some bakeries"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "food waste and how to reduce it",
+      "genre": "expository",
+      "sdgs": [],
+      "text_format": "continuous"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "前一句說農場上許多蔬果只因為外表奇怪就被丟掉；(E) 的 Such odd-looking food 回指這些「長相奇怪」的蔬果，說它們其實一樣好吃，但許多超市拒絕販售。下一句 These stores also throw out food 的 These stores 回指 (E) 的 many supermarkets，also 接著說這些超市還會丟掉什麼。前後都有錨點，選 (E)。",
+          "evidence": [
+            "many fruits and vegetables are thrown away simply because they look strange",
+            "Such odd-looking food tastes just as good, but many supermarkets refuse to sell it.",
+            "These stores also throw out food that is close to its “best before” date"
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "pronoun_reference",
+          "option_notes_zh": {
+            "A": "(A) 說餐廳和麵包店「也能盡一份力」，但這裡在講浪費從哪裡開始，too 前面沒有可以對照的做法；下一句說這些商店「也會丟掉食物」，和 (A) 的語氣矛盾。",
+            "B": "(B) 講浪費食物也浪費水、土地和能源，談的是浪費的「代價」，會打斷本段「農場、超市、家裡」的列舉；而且下一句的 These stores 找不到「商店」可以回指。",
+            "C": "多餘句：(C) 講和朋友在家做菜很有趣，與農場丟棄醜蔬果無關，下一句的 These stores 也沒有來源。",
+            "D": "(D) 談在家減少浪費的方法，但本段還在說浪費發生在哪裡，解決方法要到最後一段才出現；下一句的 These stores 也沒有先行詞。"
+          },
+          "strategy_zh": "Such＋形容詞＋名詞是把前一句的描述濃縮成一個詞（look strange → odd-looking）；下一句的 These stores 則要求空格裡先出現某種商店（supermarkets）。",
+          "hints": [
+            "前一句說蔬果因為什麼原因被丟掉？哪個選項用 Such 把這個特點換句話說？",
+            "下一句以 These stores 開頭，空格裡應該已經提到某種商店。",
+            "答案以 Such odd-looking food 開頭。"
+          ]
+        },
+        "2": {
+          "explanation_zh": "第二段列舉了浪費發生在農場、超市和家裡；第三段開頭的 (B) 轉向浪費的代價：浪費食物也就等於浪費水、土地和能源。下一句 All of these resources 回指 (B) 列出的 water, land, and energy，說明這些資源都用在種植、運送和儲存食物上。選 (B)。",
+          "evidence": [
+            "Wasted food also means wasted water, land, and energy.",
+            "All of these resources go into growing, moving, and storing what we eat."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "pronoun_reference",
+          "option_notes_zh": {
+            "A": "(A) 說餐廳和麵包店也能盡力，但這裡還沒談到解決方法，下一句的 All of these resources 也找不到「資源」可以回指。",
+            "C": "多餘句：(C) 講和朋友在家做菜，下一句的 these resources 沒有任何資源可指。",
+            "D": "(D) 談在家減少浪費的方法，下一句卻在說資源被浪費，these resources 也沒有先行詞；(D) 屬於最後一段。",
+            "E": "(E) 的 Such odd-looking food 在這裡沒有先行詞（前一句講的是被遺忘的剩菜），下一句的 these resources 也接不上。"
+          },
+          "strategy_zh": "看到 All of these＋名詞，就回頭找前面列舉的一串東西（water, land, and energy）；能提供這串東西的選項就是答案。",
+          "hints": [
+            "下一句的 All of these resources 指的是哪些資源？",
+            "找一個列出好幾種資源的選項。",
+            "答案提到 water, land, and energy。"
+          ]
+        },
+        "3": {
+          "explanation_zh": "第三段最後說腐爛的食物會釋放讓地球暖化的氣體，是壞消息；最後一段開頭的 (D) 用 The good news 轉向好消息：在家裡有許多簡單的方法可以減少食物浪費。下一句 One of the easiest is to make a shopping list 的 One of the easiest 指的是 (D) 的 many easy ways 之一（easy → easiest）。選 (D)。",
+          "evidence": [
+            "Worse still, food that rots in garbage dumps gives off gases that help warm the planet.",
+            "The good news is that there are many easy ways to cut down on food waste at home.",
+            "One of the easiest is to make a shopping list and buy only what we need."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "pronoun_reference",
+          "option_notes_zh": {
+            "A": "(A) 說餐廳和麵包店也能盡力，但下一句講的是自己列購物清單，和餐廳、麵包店無關；too 前面也還沒有提到任何人的做法，下一句的 One of the easiest 更找不到「方法」可以回指。(A) 屬於第 4 格。",
+            "B": "(B) 講浪費資源，與前一段內容重複，也無法讓下一句的 One of the easiest 有所指。",
+            "C": "多餘句：(C) 講和朋友在家做菜很好玩，不是減少浪費的方法，下一句的 One of the easiest（最簡單的方法之一）也找不到「方法」可以回指。",
+            "E": "(E) 的 Such odd-looking food 找不到先行詞，下一句的 One of the easiest 也接不上。"
+          },
+          "strategy_zh": "One of the＋最高級後面省略了名詞，要回頭找「複數名詞＋原級形容詞」（many easy ways）；再留意段落由壞消息轉為好消息的語氣。",
+          "hints": [
+            "下一句 One of the easiest 是「最簡單的……之一」，省略了什麼名詞？",
+            "前一段結尾是壞消息，這一句應該怎麼轉折？",
+            "答案以 The good news 開頭。"
+          ]
+        },
+        "4": {
+          "explanation_zh": "前面幾句都是個人在家能做的事（列購物清單、把剩菜做成新菜、把食物冷凍起來）；(A) 用 too 補充：餐廳和麵包店也能盡一份力。下一句 Some restaurants give unsold meals … some bakeries sell day-old bread 正是餐廳和麵包店的做法，restaurants、bakeries 兩個字前後重複。選 (A)。",
+          "evidence": [
+            "Food that will not be eaten in time can often be frozen for later.",
+            "Restaurants and bakeries can do their part, too.",
+            "Some restaurants give unsold meals to people in need, and some bakeries sell day-old bread at lower prices."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "lexical_cohesion",
+          "option_notes_zh": {
+            "B": "(B) 講浪費資源的問題，夾在解決方法之間不通順，也無法引出下一句餐廳、麵包店的做法。",
+            "C": "多餘句：(C) 也提到在家做菜，看起來能接剩菜的話題，但它講的是週末的樂趣，不是減少浪費；下一句的餐廳、麵包店也接不上。",
+            "D": "(D) 的 many easy ways … at home 是本段開頭的主題句，放在這裡重複，而且下一句講的是餐廳，不是家裡。",
+            "E": "(E) 說許多超市拒賣長相奇怪的蔬果，與前一句冷凍食物接不上，Such odd-looking food 也沒有先行詞。"
+          },
+          "strategy_zh": "too、also 表示「追加」：先看前面講了誰的做法（個人在家），再看下一句換成了誰（餐廳、麵包店），中間就需要一句把主角換過來。",
+          "hints": [
+            "前面幾句是誰可以做的事？下一句換成了誰？",
+            "找一個提到 restaurants 和 bakeries，又用 too 表示追加的選項。",
+            "答案以 Restaurants and bakeries 開頭。"
+          ]
+        }
+      }
+    },
+    "translation_zh": {
+      "text": "每天，世界各地都有大量的食物被丟掉，同時卻有數以百萬計的人吃不飽。被浪費的食物有些已經壞了，但其中很多仍然完全可以安全食用。這種浪費幾乎發生在食物從農場到餐桌的每一個環節。\n浪費從農場就開始了：許多蔬菜水果只因為外表奇怪就被丟掉。【1】這些長相奇怪的食物其實一樣好吃，但許多超市拒絕販售。這些商店也會丟掉接近「最佳賞味」日期的食物，即使它們通常都還能吃。在家裡，人們常常買得比需要的多，然後忘了冰箱深處的剩菜。等到發現這些被遺忘的飯菜時，它們往往已經壞了。\n【2】浪費食物也意味著浪費水、土地和能源。這些資源全都被用在種植、運送和儲存我們吃的東西上。當食物被丟進垃圾桶，這些資源也跟著被浪費了。更糟的是，在垃圾場腐爛的食物會釋放出讓地球暖化的氣體。\n【3】好消息是，在家裡有許多簡單的方法可以減少食物浪費。最簡單的方法之一是列一張購物清單，只買需要的東西。剩菜也可以做成美味的新菜，而不是被丟掉。來不及吃完的食物常常可以冷凍起來以後再吃。【4】餐廳和麵包店也可以盡一份心力。有些餐廳把沒賣完的餐點送給需要的人，有些麵包店則以較低的價格出售前一天的麵包。當許多人都採取像這樣的小步驟，就能帶來巨大的差別。\n（多餘句 (C)：和朋友在家一起做菜可以讓週末更有趣。）"
+    },
+    "elimination": {
+      "feasible": {
+        "1": [
+          "E"
+        ],
+        "2": [
+          "B"
+        ],
+        "3": [
+          "D"
+        ],
+        "4": [
+          "A"
+        ]
+      },
+      "perfect_matchings": 1
+    },
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": null,
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "3-V-7",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "7-V-5",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "B-V-8",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": "本文由 AI 撰寫"
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-08-structure-basic-01",
+    "lot": "structure-basic-01",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/structure",
+    "prompt_sha256": "cba86c4ab7ea3717e493fac37437cc57a242dd5da5754c77abdd9dbb2e680f94",
+    "spec_id": "structure-basic@2026-10-08",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 243,
+    "sentences": 15,
+    "avg_sentence_length": 16.2,
+    "denominator": 242,
+    "proper_nouns": [],
+    "numbers": 1,
+    "coverage_l1_4": 0.9876,
+    "coverage_l1_6": 0.9876,
+    "offlist_ratio": 0.0124,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {
+      "1": 216,
+      "2": 16,
+      "3": 7,
+      "off": 3
+    },
+    "offlist_words": [
+      "leftovers",
+      "unsold"
+    ],
+    "band": {
+      "tier": "basic",
+      "basis": "lot structure-basic-01（SPEC §3.4＋出題規格書 passage_overrides（words、coverage_L1_4_min（取代 SPEC 的區間）、coverage_L1_6_min、offlist_max、beyond_l4_ratio_max））",
+      "ok": true,
+      "checks": {
+        "word_count": {
+          "value": 243,
+          "min": 220,
+          "max": 280,
+          "ok": true
+        },
+        "coverage_l1_4": {
+          "value": 0.9876,
+          "min": 0.93,
+          "max": null,
+          "ok": true
+        },
+        "coverage_l1_6": {
+          "value": 0.9876,
+          "min": 0.96,
+          "max": null,
+          "ok": true
+        },
+        "offlist_ratio": {
+          "value": 0.0124,
+          "min": null,
+          "max": 0.04,
+          "ok": true
+        },
+        "avg_sentence_length": {
+          "value": 16.2,
+          "min": null,
+          "max": 17,
+          "ok": true
+        },
+        "beyond_l4_ratio": {
+          "value": 0.0,
+          "min": null,
+          "max": 0.04,
+          "ok": true
+        }
+      }
+    }
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T00:50:05Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T00:44:37Z",
+      "details": {
+        "solver": "A",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "answers": {
+          "1": {
+            "answer": "E",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Waste starts on farms, where many fruits and vegetables are thrown away simply because they look strange.",
+              "These stores also throw out food that is close to its “best before” date, even though it is usually still fine."
+            ],
+            "explanation_zh": "前句說外觀奇怪的蔬果被丟掉，E 的 Such odd-looking food 承接；後句 These stores also 需要先提到超市。",
+            "feasible": [
+              "E"
+            ]
+          },
+          "2": {
+            "answer": "B",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "All of these resources go into growing, moving, and storing what we eat."
+            ],
+            "explanation_zh": "段首，後句 All of these resources 需先列出資源；B 提到水、土地、能源也被浪費。",
+            "feasible": [
+              "B"
+            ]
+          },
+          "3": {
+            "answer": "D",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "One of the easiest is to make a shopping list and buy only what we need."
+            ],
+            "explanation_zh": "段首，後句 One of the easiest 需要先提到一組方法；D 說在家減少食物浪費有許多簡單方法。",
+            "feasible": [
+              "D"
+            ]
+          },
+          "4": {
+            "answer": "A",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Food that will not be eaten in time can often be frozen for later.",
+              "Some restaurants give unsold meals to people in need, and some bakeries sell day-old bread at lower prices."
+            ],
+            "explanation_zh": "前面講的都是在家的作法，後句轉到餐廳與麵包店，A 的 Restaurants and bakeries can do their part, too 作為轉折。",
+            "feasible": [
+              "A"
+            ]
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T00:50:05Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "answers": {
+          "1": {
+            "answer": "E",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Waste starts on farms, where many fruits and vegetables are thrown away simply because they look strange.",
+              "These stores also throw out food that is close to its “best before” date, even though it is usually still fine."
+            ],
+            "explanation_zh": "前句說外觀奇怪的蔬果在農場就被丟掉，後句 These stores 指超市；E 說這種外觀怪的食物味道一樣好但超市不肯賣。",
+            "feasible": [
+              "E"
+            ]
+          },
+          "2": {
+            "answer": "B",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "All of these resources go into growing, moving, and storing what we eat."
+            ],
+            "explanation_zh": "後句 All of these resources 需要先列出資源；B 說浪費食物也等於浪費水、土地與能源。",
+            "feasible": [
+              "B"
+            ]
+          },
+          "3": {
+            "answer": "D",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "One of the easiest is to make a shopping list and buy only what we need."
+            ],
+            "explanation_zh": "前段談浪費的原因與後果，後句 One of the easiest 說最簡單的方法之一，D 說有許多在家減少食物浪費的簡單方法，作為轉折與引出。",
+            "feasible": [
+              "D"
+            ]
+          },
+          "4": {
+            "answer": "A",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Some restaurants give unsold meals to people in need, and some bakeries sell day-old bread at lower prices."
+            ],
+            "explanation_zh": "後文談餐廳把賣不完的餐點送給需要的人、麵包店賣隔夜麵包，A 的 Restaurants and bakeries 剛好總起。C 談週末與朋友下廚，與減少浪費無關。",
+            "feasible": [
+              "A"
+            ]
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "distractor_audit",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T00:49:37Z",
+      "details": {
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "items": {
+          "1": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "These stores also throw out food that is close to its “best before” date, even though it is usually still fine.",
+              "explanation_zh": "(A) 的 do their part, too 是「也來盡一份力（減少浪費）」，下一句卻說這些店也丟掉食物，語意相反；本段在講浪費從哪裡開始，還沒談解決方法。"
+            },
+            "B": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "These stores also throw out food that is close to its “best before” date, even though it is usually still fine.",
+              "explanation_zh": "(B) 列的是水、土地、能源，沒有提到任何商店，下一句的 These stores 沒有先行詞。"
+            },
+            "C": {
+              "verdict": "clearly_wrong",
+              "error_type": "off_topic",
+              "evidence": "These stores also throw out food that is close to its “best before” date, even though it is usually still fine.",
+              "explanation_zh": "多餘句：和朋友在家做菜與農場丟棄醜蔬果無關，下一句 These stores 沒有來源。"
+            },
+            "D": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "These stores also throw out food that is close to its “best before” date, even though it is usually still fine.",
+              "explanation_zh": "(D) 談在家減少浪費的方法，解決方法要到最後一段；下一句的 These stores 也沒有先行詞。"
+            }
+          },
+          "2": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "All of these resources go into growing, moving, and storing what we eat.",
+              "explanation_zh": "(A) 講餐廳和麵包店盡力，沒有列出任何資源，下一句 All of these resources 沒有先行詞。"
+            },
+            "C": {
+              "verdict": "clearly_wrong",
+              "error_type": "off_topic",
+              "evidence": "All of these resources go into growing, moving, and storing what we eat.",
+              "explanation_zh": "多餘句：在家做菜很有趣，下一句的 these resources 沒有可指的資源。"
+            },
+            "D": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "All of these resources go into growing, moving, and storing what we eat.",
+              "explanation_zh": "(D) 談在家減少浪費的方法，下一句卻在說資源投入種植與運送，these resources 沒有先行詞。"
+            },
+            "E": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "All of these resources go into growing, moving, and storing what we eat.",
+              "explanation_zh": "前一句講的是被遺忘的剩菜，(E) 的 Such odd-looking food 沒有先行詞，下一句的 these resources 也接不上。"
+            }
+          },
+          "3": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "One of the easiest is to make a shopping list and buy only what we need.",
+              "explanation_zh": "下一句 One of the easiest 省略了 ways，需要先有「許多方法」；(A) 沒有，too 前面也沒有任何人的做法，而且下一句講的是自己列購物清單，不是餐廳、麵包店。"
+            },
+            "B": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "One of the easiest is to make a shopping list and buy only what we need.",
+              "explanation_zh": "(B) 重複浪費資源的代價，沒有提出方法，下一句 One of the easiest 沒有可回指的名詞。"
+            },
+            "C": {
+              "verdict": "clearly_wrong",
+              "error_type": "off_topic",
+              "evidence": "One of the easiest is to make a shopping list and buy only what we need.",
+              "explanation_zh": "多餘句：在家做菜好玩不是減少浪費的方法，下一句 One of the easiest 找不到「方法」可回指。"
+            },
+            "E": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "One of the easiest is to make a shopping list and buy only what we need.",
+              "explanation_zh": "(E) 的 Such odd-looking food 沒有先行詞，下一句 One of the easiest 也接不上。"
+            }
+          },
+          "4": {
+            "B": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "Some restaurants give unsold meals to people in need, and some bakeries sell day-old bread at lower prices.",
+              "explanation_zh": "(B) 回頭講浪費資源的代價，夾在解決方法之間不通順，也無法引出下一句餐廳、麵包店的做法。"
+            },
+            "C": {
+              "verdict": "clearly_wrong",
+              "error_type": "off_topic",
+              "evidence": "Some restaurants give unsold meals to people in need, and some bakeries sell day-old bread at lower prices.",
+              "explanation_zh": "多餘句：週末和朋友做菜的樂趣不是減少浪費的做法，下一句的餐廳、麵包店接不上。"
+            },
+            "D": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "Some restaurants give unsold meals to people in need, and some bakeries sell day-old bread at lower prices.",
+              "explanation_zh": "(D) 說的是「在家」的簡單方法，且是本段已用過的主題句；下一句講餐廳和麵包店，不在家裡。"
+            },
+            "E": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Food that will not be eaten in time can often be frozen for later.",
+              "explanation_zh": "前一句講冷凍剩下的食物，(E) 的 Such odd-looking food 沒有先行詞；超市拒賣醜蔬果也無法引出餐廳、麵包店減少浪費的做法。"
+            }
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "unique_solution",
+      "reviewer": "record_verification.py",
+      "result": "pass",
+      "created_at": "2026-10-09T00:50:05Z",
+      "details": {
+        "method": "injective_assignment",
+        "perfect_matchings": 1,
+        "matches_key": true,
+        "feasible": {
+          "1": [
+            "E"
+          ],
+          "2": [
+            "B"
+          ],
+          "3": [
+            "D"
+          ],
+          "4": [
+            "A"
+          ]
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

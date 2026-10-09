@@ -7,7 +7,7 @@
  */
 import { ChevronLeft, ExternalLink } from 'lucide-react';
 import { Suspense, use, useCallback, useEffect, useId, useMemo, useState } from 'react';
-import { Link, useParams } from 'react-router';
+import { Link, useLocation, useParams } from 'react-router';
 import { forgetFailedLoads } from '../../data/client';
 import { loadExam, type Exam } from '../../data/exams';
 import { loadScoreScales, scaleForYear, type ScoreScales } from '../../data/scoreScales';
@@ -15,7 +15,7 @@ import { APP_NAME } from '../../modules';
 import { AttemptContext } from '../exams/AttemptContext';
 import { AttemptStore } from '../exams/attempt';
 import { ExamContext } from '../exams/ExamContext';
-import { QuestionAccessoryContext, type QuestionAccessory } from '../exams/QuestionAccessoryContext';
+import { QuestionExtrasContext, type QuestionExtras } from '../exams/QuestionExtras';
 import { DataErrorBoundary } from '../exams/components/DataErrorBoundary';
 import { ExamPaper, SectionNav } from '../exams/components/Paper';
 import { ExamSourceNote } from '../exams/components/SessionPanels';
@@ -29,7 +29,7 @@ import { SelfAssessment, type SelfChange } from './components/SelfAssessment';
 import { formatDateTime, signedPoints } from './format';
 import { findMockPaper, mockPdfMeta, SCALE_YEARS, type MockPaper } from './papers';
 import { computeReport, historyEntryFor, levelInfo } from './report';
-import { doneExamIds, loadRecord, saveRecord, upsertHistory, type MockAttemptRecord } from './storage';
+import { doneExamIds, loadRecord, parseRecord, saveRecord, upsertHistory, type MockAttemptRecord } from './storage';
 
 const REASON_TEXT: Record<NonNullable<MockAttemptRecord['submitReason']>, string> = {
   manual: '手動交卷',
@@ -64,7 +64,10 @@ function ReviewPaper({ record }: { record: MockAttemptRecord }) {
   // 已交卷的作答：題目元件會顯示答案、全國答對率與選項分布；改不了答案，所以存檔是空操作。
   const store = useMemo(() => new AttemptStore(record.attempt, true, { save: () => true }), [record.attempt]);
   const marked = useMemo(() => new Set(record.marked), [record.marked]);
-  const badge = useCallback<QuestionAccessory>((labels) => <MarkedBadge labels={labels} marked={marked} />, [marked]);
+  const extras = useMemo<QuestionExtras>(
+    () => ({ renderHeadingAccessory: (labels) => <MarkedBadge labels={labels} marked={marked} /> }),
+    [marked],
+  );
   return (
     <section aria-labelledby={`${id}-title`} className="space-y-4">
       <div className="flex flex-wrap items-center justify-between gap-2">
@@ -84,10 +87,10 @@ function ReviewPaper({ record }: { record: MockAttemptRecord }) {
       {open && (
         <div id={`${id}-paper`} className="space-y-6">
           <AttemptContext value={store}>
-            <QuestionAccessoryContext value={badge}>
+            <QuestionExtrasContext value={extras}>
               <SectionNav />
               <ExamPaper />
-            </QuestionAccessoryContext>
+            </QuestionExtrasContext>
           </AttemptContext>
         </div>
       )}
@@ -326,15 +329,35 @@ function ReportForRecord({ record }: { record: MockAttemptRecord }) {
   );
 }
 
+/**
+ * 成績單的紀錄：先讀 localStorage；讀不到時用交卷時放進路由 state 的紀錄（這個瀏覽器存不進 localStorage，
+ * 例如無痕模式或空間滿——不然整場 100 分鐘的結果一交卷就不見了）。state 也照樣驗證格式。
+ */
+function useReportRecord(attemptId: string): { record: MockAttemptRecord | null; unsaved: boolean } {
+  const location = useLocation();
+  const state: unknown = location.state;
+  return useMemo(() => {
+    const stored = loadRecord(attemptId);
+    if (stored) return { record: stored, unsaved: false };
+    const fromState = state !== null && typeof state === 'object' && 'record' in state ? parseRecord(state.record, attemptId) : null;
+    return { record: fromState, unsaved: fromState !== null };
+  }, [attemptId, state]);
+}
+
 export default function MockReportPage() {
   const { attemptId = '' } = useParams();
-  const record = useMemo(() => loadRecord(attemptId), [attemptId]);
+  const { record, unsaved } = useReportRecord(attemptId);
   return (
     <article>
       <Link to="/mock" className="mb-1 inline-flex min-h-11 items-center gap-1 text-sm text-muted hover:text-primary">
         <ChevronLeft aria-hidden="true" className="size-4" />
         模擬考列表
       </Link>
+      {unsaved && (
+        <p role="status" className="mb-4 rounded-xl border border-bad/40 bg-bad/10 px-4 py-2 text-sm text-bad">
+          這個瀏覽器無法儲存成績單（可能是無痕模式、停用了網站資料或空間已滿），離開這一頁之後就找不到了。可以先下載含答案的 PDF，或把這一頁截圖保存。
+        </p>
+      )}
       {record ? (
         <ReportForRecord key={record.id} record={record} />
       ) : (

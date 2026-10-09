@@ -10,13 +10,14 @@ import { MemoryRouter, Route, Routes } from 'react-router';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { clearDataCache } from '../../data/client';
 import type { Exam } from '../../data/exams';
+import { SessionProvider } from '../../lib/api';
 import MockExamPage from '../../pages/MockExamPage';
 import { AttemptStore, createAttempt } from '../exams/attempt';
 import { MINI_EXAM, jsonResponse } from '../exams/testFixtures';
 import MockReportPage from './MockReportPage';
 import MockSessionPage from './MockSessionPage';
 import { findMockPaper } from './papers';
-import { createRecord, loadActiveRecord, loadHistory, loadRecord, recordKey, saveRecord, setActiveId, upsertHistory, type MockAttemptRecord } from './storage';
+import { claimKey, createRecord, loadActiveRecord, loadHistory, loadRecord, recordKey, saveRecord, setActiveId, upsertHistory, type MockAttemptRecord } from './storage';
 import { OFFICIAL_SCALES } from './testScales';
 
 /** 參考試卷：第 1、2、11 題沿用 111 學測（其他是新題）。 */
@@ -39,18 +40,18 @@ const START = new Date('2026-10-09T01:00:00.000Z');
 const T0 = START.getTime();
 const MIN = 60_000;
 
-async function renderAt(path: string): Promise<RenderResult> {
+async function renderAt(path: string, { session = false }: { session?: boolean } = {}): Promise<RenderResult> {
   let result: RenderResult | undefined;
+  const routes = (
+    <Routes>
+      <Route path="/mock" element={<MockExamPage />} />
+      <Route path="/mock/:paperId" element={<MockSessionPage />} />
+      <Route path="/mock/report/:attemptId" element={<MockReportPage />} />
+    </Routes>
+  );
   await act(async () => {
-    result = render(
-      <MemoryRouter initialEntries={[path]}>
-        <Routes>
-          <Route path="/mock" element={<MockExamPage />} />
-          <Route path="/mock/:paperId" element={<MockSessionPage />} />
-          <Route path="/mock/report/:attemptId" element={<MockReportPage />} />
-        </Routes>
-      </MemoryRouter>,
-    );
+    // session：包 SessionProvider（讀 /api/features、/api/me），測登入與 AI 開放時才出現的內容。
+    result = render(<MemoryRouter initialEntries={[path]}>{session ? <SessionProvider>{routes}</SessionProvider> : routes}</MemoryRouter>);
   });
   if (!result) throw new Error('render 沒有完成');
   return result;
@@ -95,6 +96,7 @@ beforeEach(() => {
 
 afterEach(() => {
   clearDataCache();
+  vi.restoreAllMocks();
   vi.useRealTimers();
   Reflect.deleteProperty(document, 'visibilityState');
 });
@@ -208,10 +210,19 @@ describe('實考模式與自動交卷', () => {
     expect(submit).toHaveAccessibleDescription(/還要 1:00:00 才能交卷/);
     expect(screen.getByText('實考')).toBeInTheDocument();
 
+    // 最後一個大題的「寫完了，準備交卷」也一樣鎖住（不能從這裡繞過交卷鎖）。
+    await user.click(sectionButton(/^7\. 英文作文/));
+    const finish = screen.getByRole('button', { name: '寫完了，準備交卷' });
+    expect(finish).toBeDisabled();
+    expect(finish).toHaveAccessibleDescription(/還要 1:00:00 才能交卷/);
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+
     await jumpTo(59 * MIN);
     expect(submit).toBeDisabled();
+    expect(screen.getByRole('button', { name: '寫完了，準備交卷' })).toBeDisabled();
     await jumpTo(60 * MIN);
     expect(screen.getByRole('button', { name: '交卷' })).toBeEnabled();
+    expect(screen.getByRole('button', { name: '寫完了，準備交卷' })).toBeEnabled();
 
     // 剩 5 分鐘：倒數變紅並提醒一次。
     await jumpTo(95 * MIN);
@@ -234,6 +245,42 @@ describe('實考模式與自動交卷', () => {
     expect(screen.getAllByText(/已超過作答時間，以最後存檔的作答計分/).length).toBeGreaterThan(0);
     expect(screen.getByRole('region', { name: '原得總分' })).toHaveTextContent(/^原得總分2／100/);
     expect(loadRecord(record.id)).toMatchObject({ status: 'submitted', submitReason: 'expired' });
+  });
+});
+
+describe('非選擇題與 AI 批改', () => {
+  async function openExpiredReport(session: boolean) {
+    const paper = findMockPaper('gsat-115');
+    if (!paper) throw new Error('沒有 gsat-115');
+    const record = createRecord(paper, 's1', { strict: false, predictedScore: null }, new Date(T0 - 3 * 3600_000));
+    saveRecord(record);
+    setActiveId('gsat-115', record.id);
+    await renderAt('/mock/gsat-115', { session });
+    await screen.findByRole('heading', { level: 1, name: '115 學測模擬考成績單' });
+    return screen.getByRole('region', { name: '非選擇題自評' });
+  }
+
+  it('登入與 AI 批改開放時，自評區指向寫作練習的同一份考卷', async () => {
+    const features = { auth: true, ai: true, ocr: true, aiPaused: false };
+    vi.stubGlobal(
+      'fetch',
+      vi.fn(async (url: string) => {
+        if (url.endsWith('/api/features')) return jsonResponse(features);
+        if (url.endsWith('/api/me')) return jsonResponse({ user: null });
+        if (url.endsWith('/exams/gsat-115.json')) return jsonResponse(MINI_EXAM);
+        if (url.endsWith('/exams/score-scales.json')) return jsonResponse(OFFICIAL_SCALES);
+        return new Response('not found', { status: 404 });
+      }),
+    );
+    const region = await openExpiredReport(true);
+    expect(await within(region).findByRole('link', { name: '這份考卷的中譯英' })).toHaveAttribute('href', '/writing/translation/gsat-115');
+    expect(within(region).getByRole('link', { name: '這份考卷的英文作文' })).toHaveAttribute('href', '/writing/essay/gsat-115');
+  });
+
+  it('後端沒開放 AI 時不提 AI 批改', async () => {
+    const region = await openExpiredReport(false);
+    expect(within(region).queryByRole('link', { name: /這份考卷的/ })).not.toBeInTheDocument();
+    expect(region).toHaveTextContent('模擬考的非選擇題用自評計分');
   });
 });
 
@@ -290,6 +337,27 @@ describe('ref-115：沿用歷屆試題的題目', () => {
 });
 
 describe('多分頁', () => {
+  it('別的分頁接手作答（接手鍵）：就算紀錄內容沒變，這個分頁也改成唯讀；接續作答時這個分頁也會寫接手鍵', async () => {
+    const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime });
+    const first = await renderAt('/mock/gsat-115');
+    await user.click(await screen.findByRole('button', { name: '不預估，直接開始' }));
+    const record = loadActiveRecord('gsat-115');
+    if (!record) throw new Error('沒有作答中的紀錄');
+    // 開新分頁時沒有寫接手鍵（新的作答，別的分頁不可能開著）。
+    expect(window.localStorage.getItem(claimKey(record.id))).toBeNull();
+    await act(async () => {
+      window.dispatchEvent(new StorageEvent('storage', { key: claimKey(record.id), newValue: 'tab-b:1:1' }));
+    });
+    expect(screen.getByRole('alert')).toHaveTextContent('這份模擬考正在另一個分頁作答。');
+    expect(within(questionCard('1')).getByRole('radio', { name: /\(B\) tight/ })).toBeDisabled();
+    first.unmount();
+
+    // 重新打開（接續作答）：寫接手鍵，讓其他開著的分頁改成唯讀。
+    await renderAt('/mock/gsat-115');
+    expect(await screen.findByText(/已接續上次的作答進度/)).toBeInTheDocument();
+    expect(window.localStorage.getItem(claimKey(record.id))).not.toBeNull();
+  });
+
   it('同一份紀錄在另一個分頁被寫入：這個分頁改成唯讀；可以改回在這個分頁作答', async () => {
     const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime });
     await renderAt('/mock/gsat-115');
@@ -312,6 +380,29 @@ describe('多分頁', () => {
     expect(within(questionCard('1')).getByRole('radio', { name: /\(C\) diligent/ })).toBeChecked();
     await user.click(within(questionCard('1')).getByRole('radio', { name: /\(B\) tight/ }));
     expect(loadRecord(record.id)?.attempt.answers).toEqual({ '1': 'B' });
+  });
+});
+
+describe('題號面板與工具列', () => {
+  it('「前往那一題」把焦點放在作答元件上，不是題號旁的「標記」；工具列的標記數報讀得到', async () => {
+    const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime });
+    await renderAt('/mock/gsat-115');
+    await user.click(await screen.findByRole('button', { name: '不預估，直接開始' }));
+    await user.click(within(questionCard('1')).getByRole('button', { name: '標記第 1 題，稍後檢查' }));
+    expect(screen.getByText('已標記 1 題')).toBeInTheDocument();
+
+    await user.click(screen.getByRole('button', { name: /^題號面板/ }));
+    await user.click(screen.getByRole('button', { name: '第 40 題，未作答' }));
+    expect(within(questionCard('40')).getAllByRole('radio')[0]).toHaveFocus();
+
+    await user.click(screen.getByRole('button', { name: /^題號面板/ }));
+    await user.click(screen.getByRole('button', { name: /^題號面板/ }));
+    await user.click(screen.getByRole('button', { name: '第 49 題，未作答' }));
+    expect(within(questionCard('49')).getAllByRole('checkbox')[0]).toHaveFocus();
+    // 按空白鍵是作答，不是切換標記。
+    await user.keyboard(' ');
+    expect(within(questionCard('49')).getAllByRole('checkbox')[0]).toBeChecked();
+    expect(within(questionCard('49')).getByRole('button', { name: /^標記第 49 題/ })).toHaveAttribute('aria-pressed', 'false');
   });
 });
 
@@ -380,6 +471,38 @@ describe('模擬考列表', () => {
     expect(screen.getAllByText('未作答')).toHaveLength(6);
     expect(screen.queryByRole('region', { name: '作答紀錄' })).not.toBeInTheDocument();
     expect(screen.queryByRole('button', { name: /下載 PDF/ })).not.toBeInTheDocument();
+  });
+});
+
+describe('瀏覽器存不進 localStorage（無痕模式、空間滿）', () => {
+  it('開考前就提示；交卷後成績單照樣顯示（用交卷時帶過去的紀錄），並提醒離開這一頁就找不到', async () => {
+    const real = window.localStorage;
+    const full = {
+      getItem: (key: string) => real.getItem(key),
+      setItem: () => {
+        throw new DOMException('quota', 'QuotaExceededError');
+      },
+      removeItem: (key: string) => real.removeItem(key),
+      key: (i: number) => real.key(i),
+      get length() {
+        return real.length;
+      },
+      clear: () => real.clear(),
+    } as unknown as Storage;
+    vi.spyOn(window, 'localStorage', 'get').mockReturnValue(full);
+    const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime });
+    await renderAt('/mock/gsat-115');
+    expect(await screen.findByText(/這個瀏覽器無法儲存資料/)).toBeInTheDocument();
+    await user.click(screen.getByRole('button', { name: '不預估，直接開始' }));
+    expect(screen.getByText(/這個瀏覽器無法儲存作答進度/)).toBeInTheDocument();
+    await user.click(within(questionCard('1')).getByRole('radio', { name: /\(B\) tight/ }));
+    await user.click(screen.getByRole('button', { name: '交卷' }));
+    await user.click(within(screen.getByRole('dialog')).getByRole('button', { name: '確定交卷' }));
+
+    expect(await screen.findByRole('heading', { level: 1, name: '115 學測模擬考成績單' })).toBeInTheDocument();
+    expect(screen.getByText(/這個瀏覽器無法儲存成績單.*離開這一頁之後就找不到了/)).toBeInTheDocument();
+    // 第 1 題 1 分＋第 2 題送分 1 分。
+    expect(screen.getByRole('region', { name: '原得總分' })).toHaveTextContent(/^原得總分2／100/);
   });
 });
 

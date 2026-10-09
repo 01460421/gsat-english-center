@@ -6,7 +6,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { MINI_EXAM } from '../exams/testFixtures';
 import { findMockPaper } from './papers';
 import { MAX_TICK_GAP_SEC, MockSession } from './session';
-import { activeKey, createRecord, loadActiveId, loadRecord, recordKey, saveRecord, setActiveId, type MockAttemptRecord } from './storage';
+import { activeKey, claimKey, createRecord, loadActiveId, loadRecord, recordKey, saveRecord, setActiveId, type MockAttemptRecord } from './storage';
 
 const START = new Date('2026-10-09T01:00:00.000Z');
 const T0 = START.getTime();
@@ -147,6 +147,21 @@ describe('交卷', () => {
     expect(stored(record.id).attempt.answers['1']).toBe('B');
   });
 
+  it('實考模式開考 60 分鐘內手動交卷：不交（交卷鎖在 session 把關，畫面上的哪個按鈕都繞不過去）；時間到的自動交卷不受限', () => {
+    const { session, record } = begin(true);
+    session.attempt.setAnswer('1', 'B');
+    expect(session.submit(MINI_EXAM, 'manual', T0 + 5 * 60_000)).toBeNull();
+    expect(session.getMeta().status).toBe('in_progress');
+    expect(stored(record.id).status).toBe('in_progress');
+    expect(session.readOnly).toBe(false);
+    expect(loadActiveId('gsat-115')).toBe(record.id);
+    // 60 分鐘到了就可以交。
+    expect(session.submit(MINI_EXAM, 'manual', T0 + 60 * 60_000)).toMatchObject({ status: 'submitted', submitReason: 'manual' });
+    // 自動交卷（時間到）不看交卷鎖。
+    const other = begin(true);
+    expect(other.session.submit(MINI_EXAM, 'timeout', T0 + 5 * 60_000)).toMatchObject({ status: 'submitted', submitReason: 'timeout' });
+  });
+
   it('時間到自動交卷：用時是整整 100 分鐘', () => {
     const { session, record } = begin();
     vi.setSystemTime(Date.parse(record.deadlineAt));
@@ -188,6 +203,37 @@ describe('多分頁：別的分頁改了同一筆紀錄就改成唯讀', () => {
     expect(stored(record.id).attempt.answers).toEqual({ '1': 'C' });
     expect(stored(record.id).marked).toEqual([]);
     expect(session.submit(MINI_EXAM, 'manual')).toBeNull();
+  });
+
+  it('別的分頁接手作答（接續作答時寫「接手」鍵）：就算紀錄內容一模一樣，這個分頁也改成唯讀；接手鍵被刪掉不算', () => {
+    const { session, record } = begin();
+    expect(session.handleStorageEvent(claimKey(record.id), null)).toBe(false);
+    expect(session.getConflict()).toBeNull();
+    expect(session.handleStorageEvent(claimKey('other-attempt'), 'tab:1:1')).toBe(false);
+    expect(session.handleStorageEvent(claimKey(record.id), 'tab-b:123:1')).toBe(true);
+    expect(session.getConflict()).toBe('other_tab');
+    expect(session.readOnly).toBe(true);
+  });
+
+  it('claim()：寫一個每次都不同的接手鍵並存檔；交卷與放棄時清掉', () => {
+    const { session, record } = begin();
+    expect(session.claim()).toBe(true);
+    const first = window.localStorage.getItem(claimKey(record.id));
+    expect(first).not.toBeNull();
+    session.claim();
+    expect(window.localStorage.getItem(claimKey(record.id))).not.toBe(first);
+    session.submit(MINI_EXAM, 'manual');
+    expect(window.localStorage.getItem(claimKey(record.id))).toBeNull();
+
+    const b = begin();
+    b.session.claim();
+    b.session.discard();
+    expect(window.localStorage.getItem(claimKey(b.record.id))).toBeNull();
+    // 唯讀（別的分頁在作答）時不接手。
+    const c = begin();
+    c.session.handleStorageEvent(recordKey(c.record.id), JSON.stringify(c.record));
+    expect(c.session.claim()).toBe(false);
+    expect(window.localStorage.getItem(claimKey(c.record.id))).toBeNull();
   });
 
   it('另一個分頁交卷或放棄', () => {

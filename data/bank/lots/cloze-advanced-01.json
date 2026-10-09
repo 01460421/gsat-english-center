@@ -1,0 +1,274 @@
+{
+  "schema": "gsat-bank-lot/v1",
+  "lot": "cloze-advanced-01",
+  "section_type": "cloze",
+  "tier": "advanced",
+  "label_zh": "綜合測驗（克漏字）‧進階練習（第 1 批）",
+  "created_on": "2026-10-08",
+  "count": 8,
+  "questions_per_group": 5,
+  "format_version": "cloze-5",
+  "uid_prefix": "ai.cz.",
+  "path": "data/bank/v1/cloze/advanced/",
+  "spec_id": "cloze-advanced@2026-10-08",
+  "spec_file": "data/exams/generation-spec/cloze.json",
+  "spec_tier_key": "advanced",
+  "spec_status": "draft：由 595 格有官方統計的歷屆綜合測驗推得；上線後依站內作答資料校正（SPEC §3.6、本檔 CLZ-CAL-*）",
+  "topic_quota": {
+    "origins_evolution": 3,
+    "science_health": 2,
+    "culture_history": 2,
+    "society_issues": 1,
+    "labels_zh": {
+      "origins_evolution": "起源與演變",
+      "science_health": "科普與健康",
+      "culture_history": "文化與歷史",
+      "society_issues": "社會與議題"
+    },
+    "basis": "08 §6.1（每 8 組：起源與演變 3、科普與健康 2–3、文化與歷史 2、社會與議題 1），依組數等比例取整"
+  },
+  "answer_letter_share": [
+    0.2,
+    0.3
+  ],
+  "avoid": {
+    "basis": "data/exams/parsed 的 gsat-111、gsat-112、gsat-113、gsat-114、gsat-115、ref-115 同一大題（cloze）的正解（單字取詞彙表主形，功能詞與 L1 字不列；片語整串列出）",
+    "answer_words": [
+      "a joyful social activity",
+      "accommodate",
+      "accompanied by",
+      "as such",
+      "as well",
+      "but not quite",
+      "circulate",
+      "clue",
+      "communicate",
+      "compete for",
+      "could have used",
+      "cultural",
+      "decline",
+      "disrupt",
+      "do not match",
+      "equipped with",
+      "exposure to",
+      "familiar presences",
+      "free of",
+      "gave rise to",
+      "had yet to develop",
+      "have been springing",
+      "home to",
+      "immediate",
+      "improve",
+      "initiate",
+      "intensify",
+      "it turns out",
+      "keep the printed word alive",
+      "left unchecked",
+      "less likely",
+      "match",
+      "meant to be",
+      "multiple",
+      "other than",
+      "personal bias",
+      "physical",
+      "pose as",
+      "preventive measures",
+      "redistribute",
+      "release",
+      "responsive to",
+      "severe",
+      "spell disaster",
+      "strike",
+      "thus",
+      "to which",
+      "tolerate",
+      "used to be",
+      "would spread"
+    ],
+    "answer_sentences": [],
+    "topics": [
+      "book towns (second-hand bookshop towns such as Hay-on-Wye)",
+      "crown shyness in forest trees",
+      "disappearing tropical glaciers in Papua, Indonesia",
+      "effects of reduced gravity on astronauts’ bodies (the “Charlie Brown effect”)",
+      "history and culture of dim sum",
+      "knocker-ups: human alarm clocks in Industrial-Age Britain",
+      "motion sickness",
+      "mystery shoppers",
+      "the origin of the World Café discussion method",
+      "white rhinos communicating through dung piles",
+      "why airplane windows are round"
+    ]
+  },
+  "passage_band": {
+    "basis": "SPEC §3.4＋出題規格書 passage_overrides（words、coverage_L1_4_min（取代 SPEC 的區間）、coverage_L1_6_min、offlist_max、beyond_l4_ratio_max）",
+    "spec_3_4": {
+      "word_count": {
+        "min": 180,
+        "max": 215
+      },
+      "coverage_l1_4": {
+        "min": 0.89,
+        "max": 0.93
+      },
+      "coverage_l1_6": {
+        "min": 0.95,
+        "max": null
+      },
+      "offlist_ratio": {
+        "min": null,
+        "max": 0.05
+      },
+      "avg_sentence_length": {
+        "min": 15,
+        "max": 21
+      }
+    },
+    "overrides_note": "與模擬卷相同（現制 10/10 篇符合）；三級文章同一套範圍，難度由空格與誘答決定",
+    "word_count": {
+      "min": 175,
+      "max": 235
+    },
+    "coverage_l1_4": {
+      "min": 0.88,
+      "max": null
+    },
+    "coverage_l1_6": {
+      "min": 0.92,
+      "max": null
+    },
+    "offlist_ratio": {
+      "min": null,
+      "max": 0.08
+    },
+    "avg_sentence_length": {
+      "min": 15,
+      "max": 21
+    },
+    "beyond_l4_ratio": {
+      "min": null,
+      "max": 0.09
+    }
+  },
+  "item_rules": {
+    "summary_zh": "實詞 1–3、片語搭配 1–3、轉承 0–1、文法 0–1；≥1 格要看前後句",
+    "content_blanks": {
+      "min": 1,
+      "max": 3
+    },
+    "phrase_collocation_blanks": {
+      "min": 1,
+      "max": 3
+    },
+    "connective_blanks": {
+      "min": 0,
+      "max": 1
+    },
+    "grammar_blanks": {
+      "min": 0,
+      "max": 1
+    },
+    "cross_sentence_blanks_min": 1,
+    "discourse_blanks_min": 0,
+    "answer_level_max": null
+  },
+  "targets": {
+    "blank_type_mix": {
+      "per_5_recommended": {
+        "L": [
+          1,
+          2
+        ],
+        "C": [
+          1,
+          2
+        ],
+        "G": [
+          1,
+          1
+        ],
+        "D": [
+          0,
+          1
+        ],
+        "R": [
+          0,
+          1
+        ]
+      }
+    },
+    "context_scope_mix": {
+      "rule": "≥2/5 需要前後句（P）；W 可 0–1"
+    },
+    "answer_form_mix": {
+      "rule": "多字正解（phrase／chunk）≥3/5"
+    },
+    "answer_level_dist": {
+      "rule": "正解不限級別，L1–3 片語與常用字延伸義為主（現制 L1–3 = 11/15）；選項最高 L5"
+    },
+    "distractor_rules": {
+      "near_miss_count": 1,
+      "near_miss_codes_allowed": [
+        "CN",
+        "LF",
+        "GN",
+        "LR"
+      ],
+      "other_distractors": "clearly_wrong",
+      "upper_group_pull_target": [
+        0.1,
+        0.25
+      ],
+      "key_must_beat_every_distractor_in_upper_group": true,
+      "functional_min_share": 0.05,
+      "observed_basis": "現制 advanced 最強高分組誘答中位數 0.14（IQR 0.11–0.21）；碼別 CN 5、LF 4、GN 2、LR 1、none 3"
+    },
+    "set_composition_5_blanks": {
+      "basic": [
+        1,
+        1
+      ],
+      "advanced": [
+        3,
+        3
+      ],
+      "top": [
+        1,
+        1
+      ]
+    },
+    "recipe": [
+      "正解以 2–3 字片語為主（現制 15 題中 10 題）：片語動詞（pose as、gave rise to）、形＋介（responsive to）、語意片段（personal bias）",
+      "放 1 個文法格時，考要讀上下文才判斷的時態或語氣（would spread、had yet to develop），不考純句型背誦",
+      "設計恰好 1 個「近似誘答」：同一片語家族但搭配或意思差一點（CN）、單讀本句說得通但與前後句矛盾（LF）、時態看似可行（GN）、邏輯關係相反（LR）",
+      "近似誘答必須能被一個明確線索排除；約一半的格把線索放在前後句（現制 7/15 為 P）",
+      "其餘兩個誘答明顯錯誤，維持每個 ≥5% 選答"
+    ],
+    "pitfalls": [
+      "近似誘答做得太像，變成兩個都對（高分組有 0/88 題出現誘答勝過正解；進階題不該有）",
+      "沒有近似誘答時只能靠正解字義撐難度（現制 3/15：releases、severe、personal bias，正解 L3–5）；正解低於 L3 時容易落回穩定基礎",
+      "只靠提高字的級別製造難度：進階題正解 9/15 是 L1–2 字，難在用法"
+    ]
+  },
+  "set_composition": {
+    "basic": [
+      1,
+      1
+    ],
+    "advanced": [
+      3,
+      3
+    ],
+    "top": [
+      1,
+      1
+    ]
+  },
+  "verification": {
+    "blind_solvers": 2,
+    "blind_b_different_model": true,
+    "distractor_audit": true,
+    "unique_solution": false,
+    "human_review": "100%（校準期：每個題型 × 提示詞版本的前 30 組全審，SPEC §5.8）"
+  }
+}

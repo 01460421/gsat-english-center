@@ -13,6 +13,7 @@ export const APP_NAME = '學測英文中心';
 export type IconKey =
   | 'home'
   | 'words'
+  | 'practice'
   | 'vocabulary'
   | 'cloze'
   | 'word-bank'
@@ -21,6 +22,7 @@ export type IconKey =
   | 'mixed'
   | 'translation'
   | 'composition'
+  | 'writing'
   | 'exams'
   | 'mock'
   | 'settings'
@@ -72,6 +74,16 @@ export const PAGES = [
     summary: '大考中心參考詞彙表 Level 1–6 共 6,012 字：查詢單字卡、每日間隔重複複習、四種測驗與錯題本。',
     group: 'vocab',
     icon: 'words',
+    status: 'ready',
+    isStudyModule: true,
+  },
+  {
+    path: '/practice',
+    title: '題庫練習',
+    navLabel: '題庫練習',
+    summary: 'AI 出題、通過自動驗證的四種選擇題型題組，分穩定基礎、進階練習、超越頂標三種難度；作答可看提示，交卷後每題都有解析。',
+    group: 'choice',
+    icon: 'practice',
     status: 'ready',
     isStudyModule: true,
   },
@@ -152,6 +164,19 @@ export const PAGES = [
     summary: '看圖、信函與主題寫作；可拍照上傳手寫作文，由 AI 辨識並批改。',
     group: 'open',
     icon: 'composition',
+    status: 'dev',
+    isStudyModule: true,
+  },
+  {
+    // 線上作答＋AI 批改的入口（docs/design/ai-auth-mvp.md）。子頁 /writing/translation、/writing/essay、
+    // /writing/submissions/:id 不在這份清單裡（不出現在導覽列），路由在 App.tsx。
+    // 標題與說明刻意不含其他頁的標題字串（「中譯英」「英文作文」）：首頁卡片的測試用標題比對連結名稱。
+    path: '/writing',
+    title: '寫作練習',
+    navLabel: '寫作',
+    summary: '翻譯與作文的線上作答；登入並通過申請後，可由 AI 依大考評分原則批改。',
+    group: 'open',
+    icon: 'writing',
     status: 'dev',
     isStudyModule: true,
   },

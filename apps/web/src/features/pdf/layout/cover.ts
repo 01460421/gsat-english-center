@@ -5,7 +5,9 @@
 import type { Exam } from '../../../data/exams';
 import type { PdfContent, PdfNode } from '../engine/docTypes';
 import type { MockPdfMeta } from '../types';
+import { hasNationalRates } from './answerKey';
 import { NON_OFFICIAL_NOTICE, officialPaperUrl, sourceLine } from './attribution';
+import { CONTENT_WIDTH } from './metrics';
 import { boxLayout, boxed, fieldRow } from './nodes';
 import { plainInline, spacedInline, urlInline } from './richInline';
 import { PDF_TEXT } from './strings';
@@ -34,6 +36,17 @@ function hasChoice(exam: Pick<Exam, 'sections'>): boolean {
   return exam.sections.some((s) => s.groups.some((g) => g.questions.some((q) => q.mode === 'single_choice' || q.mode === 'bank_choice')));
 }
 
+/** 「倒扣」但不是「不倒扣」。 */
+const PENALTY = /(?<!不)倒扣/u;
+
+/**
+ * 原卷答錯倒扣（指考 91–99、98 指考參考試卷）：各大題說明照原卷印倒扣規則，封面就不能寫現制的「答錯以零分計算」，
+ * 改說明本站線上計分依現制（features/exams/scoring.ts）。看說明文字判斷，不靠卷別清單。
+ */
+export function hasPenaltyScoring(exam: Pick<Exam, 'sections' | 'parts'>): boolean {
+  return exam.sections.some((s) => PENALTY.test(s.instructions)) || (exam.parts ?? []).some((p) => PENALTY.test(p.instructions ?? ''));
+}
+
 /** 「•」懸掛縮排的條列。 */
 function bullet(text: string, indent = 14): PdfNode {
   return {
@@ -56,9 +69,10 @@ function noticeBox(exam: Exam, options: CoverOptions): PdfNode {
   }
   stack.push({ text: plainInline(PDF_TEXT.howTitle), fontSize: BODY, lineHeight: BODY_LINE });
   for (const line of options.includeAnswerSheet ? PDF_TEXT.howWithSheet : PDF_TEXT.howWithoutSheet) stack.push(bullet(line));
+  stack.push(bullet(PDF_TEXT.howOnline(hasNationalRates(exam))));
   if (hasChoice(exam) || hasMultiSelect(exam)) {
     stack.push({ text: plainInline(PDF_TEXT.scoringTitle), fontSize: BODY, lineHeight: BODY_LINE, margin: [0, 4, 0, 0] });
-    if (hasChoice(exam)) stack.push(bullet(PDF_TEXT.scoringSingle));
+    if (hasChoice(exam)) stack.push(bullet(hasPenaltyScoring(exam) ? PDF_TEXT.scoringPenaltyNote : PDF_TEXT.scoringSingle));
     if (hasMultiSelect(exam)) stack.push(bullet(PDF_TEXT.scoringMulti));
   }
   return boxed({ stack }, boxLayout(0.8, { x: 18, y: 14 }), [0, 0, 0, 12]);
@@ -75,9 +89,13 @@ function mockBlock(meta: MockPdfMeta): PdfContent[] {
   return out;
 }
 
+const QR_WIDTH = 70;
+const QR_GAP = 10;
+const URL_FONT_SIZE = 7.5;
+
 function qrBlock(url: string, caption: string): PdfNode {
   return {
-    width: 70,
+    width: QR_WIDTH,
     stack: [
       { qr: url, fit: 66, eccLevel: 'L', alignment: 'center' },
       { text: plainInline(caption), fontSize: 7, alignment: 'center', margin: [0, 2, 0, 0] },
@@ -87,6 +105,10 @@ function qrBlock(url: string, caption: string): PdfNode {
 
 function sourceBlock(exam: Exam, options: CoverOptions): PdfNode {
   const paperUrl = officialPaperUrl(exam);
+  const qrCount = (paperUrl ? 1 : 0) + (options.onlineUrl ? 1 : 0);
+  // 文字欄給固定寬度、網址依這個寬度換行：太長的一行會讓 pdfmake 撐寬文字欄，把 QR code 擠出右邊界（ref-111）。
+  const textWidth = CONTENT_WIDTH - qrCount * (QR_WIDTH + QR_GAP);
+  const urlWidth = textWidth - 4;
   const small = { fontSize: 8.5, lineHeight: 1.3, color: '#333333' };
   const texts: PdfContent[] = [
     { text: plainInline(sourceLine(exam)), ...small },
@@ -94,12 +116,12 @@ function sourceBlock(exam: Exam, options: CoverOptions): PdfNode {
     { text: plainInline(PDF_TEXT.coverFigureNote), ...small, margin: [0, 0, 0, 4] },
   ];
   if (paperUrl) {
-    texts.push({ text: [...plainInline(PDF_TEXT.officialPdfLabel), { text: '\n' }, urlInline(paperUrl, 72)], fontSize: 7.5, lineHeight: 1.25, color: '#333333' });
+    texts.push({ text: [...plainInline(PDF_TEXT.officialPdfLabel), { text: '\n' }, urlInline(paperUrl, urlWidth, URL_FONT_SIZE)], fontSize: URL_FONT_SIZE, lineHeight: 1.25, color: '#333333' });
   }
   if (options.onlineUrl) {
     texts.push({
-      text: [...plainInline(PDF_TEXT.onlineLabel), { text: '\n' }, urlInline(options.onlineUrl, 72)],
-      fontSize: 7.5,
+      text: [...plainInline(PDF_TEXT.onlineLabel), { text: '\n' }, urlInline(options.onlineUrl, urlWidth, URL_FONT_SIZE)],
+      fontSize: URL_FONT_SIZE,
       lineHeight: 1.25,
       color: '#333333',
       margin: [0, 2, 0, 0],
@@ -109,8 +131,8 @@ function sourceBlock(exam: Exam, options: CoverOptions): PdfNode {
   if (paperUrl) qrs.push(qrBlock(paperUrl, PDF_TEXT.qrOfficial));
   if (options.onlineUrl) qrs.push(qrBlock(options.onlineUrl, PDF_TEXT.qrOnline));
   return {
-    columns: [{ width: '*', stack: texts }, ...qrs],
-    columnGap: 10,
+    columns: [{ width: textWidth, stack: texts }, ...qrs],
+    columnGap: QR_GAP,
     margin: [0, 6, 0, 0],
   };
 }

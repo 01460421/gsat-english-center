@@ -53,6 +53,17 @@ describe('期限倒數', () => {
   });
 });
 
+describe('裝置時間往回調（現在早於開考時間）', () => {
+  it('剩餘時間不超過 100 分鐘、交卷鎖不超過 60 分鐘、已用時間是 0（不會顯示剩 160 分鐘）', () => {
+    const record = createRecord(paper, 's1', { strict: true, predictedScore: null });
+    vi.setSystemTime(START.getTime() - 3600_000);
+    expect(remainingSec(record, Date.now())).toBe(MOCK_DURATION_SEC);
+    expect(strictLockRemainingSec(record, Date.now())).toBe(STRICT_LOCK_SEC);
+    expect(usedSec(record, Date.now())).toBe(0);
+    expect(canSubmitManually(record, Date.now())).toBe(false);
+  });
+});
+
 describe('實考模式：開考 60 分鐘內不能交卷', () => {
   it('一般模式隨時可以交卷', () => {
     const record = createRecord(paper, 's1', { strict: false, predictedScore: null });

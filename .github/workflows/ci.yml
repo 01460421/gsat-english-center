@@ -5,7 +5,7 @@
 #          `npm test` 不讀 data/（讀 data/ 的測試放在 packages/shared 的 vitest data 專案）；
 #          例外是建置：apps/web 的 prebuild（scripts/build-data.mjs）會把 data/vocab、data/exams 轉成前端資料檔，
 #          資料不符合前端契約時「建置」這一步會失敗，但排在它前面的型別檢查與單元測試結果不受影響。
-#   exams  data/ 的檢查：tools/validate_exam.py（gsat-exam/v1 格式）與 `npm run test:data`
+#   exams  data/ 的檢查：tools/validate_exam.py（gsat-exam/v1 格式）、tools/validate_bank.py（AI 題庫 gsat-bank/v1）與 `npm run test:data`
 #          （實際 JSON 能不能安全地當成 @gsat/shared 的 TypeScript 型別使用）。
 # 分開的理由：題庫資料由另一條流程陸續寫入，資料有錯不該蓋掉程式碼的檢查結果，反之亦然
 # （沿用 Sekai Center「失敗隔離」的做法，見 docs/research/05-sekai-center-patterns.md §2.7）。
@@ -79,6 +79,12 @@ jobs:
       # 有檔案時，任何一份出現 error 就失敗（warning 不影響結果）。
       - name: 檢查 data/exams/parsed/*.json（validate_exam.py）
         run: python3 tools/validate_exam.py --all
+
+      # AI 題庫（gsat-bank/v1，格式見 data/bank/README.md）。data/bank/v1 不存在或沒有檔案時印訊息並以 0 結束；
+      # 有檔案時任何一份出現 error 就失敗（draft 狀態、驗證結果是 warn 都只是 warning）。
+      - name: 檢查 data/bank/v1（validate_bank.py）
+        if: ${{ !cancelled() }}
+        run: python3 tools/validate_bank.py --all
 
       # grammar-patterns.json 的歷屆翻譯題代碼要能對上題庫的 exam id 與題號（tools/link_grammar_refs.py 補上 exam_id／no）。
       - name: 檢查句型資料的翻譯題代碼都對得上題庫（link_grammar_refs.py --check）

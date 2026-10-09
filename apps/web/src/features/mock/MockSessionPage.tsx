@@ -3,11 +3,11 @@
  * 題號面板與標記、自動存檔）→ 交卷（完成後 replace 到成績單）。設計見 docs/design/mock-exam-pdf.md §6。
  *
  * 進來時這份卷子有作答中的紀錄就直接接續；已經超過期限就以最後存檔的作答交卷（submitReason: 'expired'）。
- * 題目畫面重用歷屆試題的元件（ExamPaper 的 sectionIds、QuestionAccessoryContext 的「標記」），AttemptState 的
+ * 題目畫面重用歷屆試題的元件（ExamPaper 的 sectionIds、QuestionExtras 的 renderHeadingAccessory 放「標記」），AttemptState 的
  * mode 是 'exam'，題目元件就不顯示「看答案」與全國統計（練習輔助全關）。
  */
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { Suspense, use, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { Suspense, use, useCallback, useEffect, useId, useMemo, useRef, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router';
 import { forgetFailedLoads } from '../../data/client';
 import { loadExam, type Exam } from '../../data/exams';
@@ -15,14 +15,14 @@ import { loadScoreScales, scaleForYear, type ScoreScales } from '../../data/scor
 import { APP_NAME } from '../../modules';
 import { AttemptContext, useAttemptSelector } from '../exams/AttemptContext';
 import { ExamContext } from '../exams/ExamContext';
-import { QuestionAccessoryContext, type QuestionAccessory } from '../exams/QuestionAccessoryContext';
+import { QuestionExtrasContext, type QuestionExtras } from '../exams/QuestionExtras';
 import { DataErrorBoundary } from '../exams/components/DataErrorBoundary';
 import { ExamPaper, sectionAnchorId } from '../exams/components/Paper';
 import { ExamSourceNote } from '../exams/components/SessionPanels';
 import { questionAnchorId } from '../exams/components/Questions';
 import { formatDuration } from '../exams/labels';
 import { questionTitle } from '../exams/richText';
-import { MockToolbar } from './components/MockToolbar';
+import { MockToolbar, StrictLockText, useStrictLockLeft } from './components/MockToolbar';
 import { MarkToggle } from './components/MarkToggle';
 import { QuestionPalette, SectionNavigator } from './components/SectionNavigator';
 import { StartScreen, type StartOptions } from './components/StartScreen';
@@ -54,7 +54,11 @@ function flowFromStorage(paper: MockPaper, exam: Exam): Flow {
   return session.isExpired() ? { kind: 'expired', session } : { kind: 'active', session, resumed: true };
 }
 
-/** 捲到某一題並把焦點移過去：題目卡片（#q-題號）→ 選文裡的空格或行內輸入框（aria-label 以「第 n 題」開頭）→ 大題標題。 */
+/**
+ * 捲到某一題並把焦點移過去：題目卡片（#q-題號）→ 選文裡的空格或行內輸入框（aria-label 以「第 n 題」開頭）→ 大題標題。
+ * 卡片裡優先找作答元件（選項、輸入框），其次是「標記」以外的按鈕：題號旁的「標記」是卡片裡第一個按鈕，
+ * 焦點放在它上面的話，鍵盤使用者按空白鍵作答會變成切換標記。
+ */
 function focusQuestion(container: HTMLElement | null, label: string, sectionId: string | undefined): void {
   const card = document.getElementById(questionAnchorId(label));
   let target: HTMLElement | null = card && container?.contains(card) ? card : null;
@@ -67,14 +71,60 @@ function focusQuestion(container: HTMLElement | null, label: string, sectionId: 
   target.scrollIntoView({ block: 'center' });
   const focusable = target.matches('input, button, textarea, select, [tabindex]')
     ? target
-    : target.querySelector<HTMLElement>('input:not([disabled]), textarea:not([disabled]), button:not([disabled])');
+    : (target.querySelector<HTMLElement>('input:not([disabled]), textarea:not([disabled]), select:not([disabled])') ??
+      target.querySelector<HTMLElement>('button:not([disabled]):not([data-mock-mark])') ??
+      target.querySelector<HTMLElement>('button:not([disabled])'));
   focusable?.focus({ preventScroll: true });
 }
 
+/**
+ * 工具列固定在畫面上方時的下緣（px）：sticky 的 top＋工具列高度。不能直接用目前的位置——
+ * 捲到頂端時工具列還沒黏住，位置比黏住時低得多。
+ */
+function stickyToolbarBottom(): number | null {
+  const bar = document.querySelector<HTMLElement>('[data-mock-toolbar]');
+  if (!bar) return null;
+  const top = Number.parseFloat(window.getComputedStyle(bar).top);
+  return (Number.isFinite(top) ? top : 0) + bar.getBoundingClientRect().height;
+}
+
+/**
+ * 切換大題後捲到大題標題並把焦點移過去。捲動位置扣掉固定在上方的網站標頭與模擬考工具列（手機上工具列會換成兩行，
+ * 比大題標題的 scroll-margin 高，標題會被工具列蓋住），所以量工具列的實際高度，不用 scrollIntoView。
+ */
 function focusSection(sectionId: string): void {
   const el = document.getElementById(sectionAnchorId(sectionId));
-  el?.scrollIntoView({ block: 'start' });
-  el?.focus({ preventScroll: true });
+  if (!el) return;
+  const bar = stickyToolbarBottom();
+  if (bar === null) {
+    el.scrollIntoView({ block: 'start' });
+  } else {
+    window.scrollTo({ top: Math.max(0, el.getBoundingClientRect().top + window.scrollY - bar - 8) });
+  }
+  el.focus({ preventScroll: true });
+}
+
+/**
+ * 最後一個大題的「寫完了，準備交卷」：實考模式開考 60 分鐘內和工具列的「交卷」一樣停用，旁邊寫出還要等多久。
+ */
+function FinishButton({ onClick }: { onClick: () => void }) {
+  const lockLeft = useStrictLockLeft();
+  const hintId = useId();
+  const locked = lockLeft > 0;
+  return (
+    <span className="ml-auto inline-flex flex-wrap items-center justify-end gap-x-2 gap-y-1">
+      {locked && <StrictLockText id={hintId} lockLeft={lockLeft} />}
+      <button
+        type="button"
+        onClick={onClick}
+        disabled={locked}
+        aria-describedby={locked ? hintId : undefined}
+        className="min-h-11 rounded-full bg-primary px-4 font-semibold text-on-primary disabled:opacity-50"
+      >
+        寫完了，準備交卷
+      </button>
+    </span>
+  );
 }
 
 /** 放棄這次作答：在原地確認一次。 */
@@ -212,9 +262,9 @@ function ActiveExamBody({ exam, paper, session, resumed, onSubmitted, onAbandon,
     };
   }, [session, readOnly]);
 
-  // 接續作答時先寫一次：別的分頁若開著同一份，會收到 storage 事件而改成唯讀（最後打開的分頁優先）。
+  // 接續作答時先接手：別的分頁若開著同一份，會收到 storage 事件而改成唯讀（最後打開的分頁優先）。
   useEffect(() => {
-    if (resumed) session.flush();
+    if (resumed) session.claim();
   }, [session, resumed]);
 
   useEffect(() => {
@@ -250,7 +300,7 @@ function ActiveExamBody({ exam, paper, session, resumed, onSubmitted, onAbandon,
     [session, exam, onSubmitted],
   );
   const onTimeout = useCallback(() => submit('timeout'), [submit]);
-  const renderMark = useCallback<QuestionAccessory>((labels) => <MarkToggle labels={labels} />, []);
+  const extras = useMemo<QuestionExtras>(() => ({ renderHeadingAccessory: (labels) => <MarkToggle labels={labels} /> }), []);
 
   return (
     <>
@@ -276,9 +326,9 @@ function ActiveExamBody({ exam, paper, session, resumed, onSubmitted, onAbandon,
           {/* 唯讀時用 disabled 的 fieldset 一次停用所有作答元件（min-w-0：fieldset 預設的最小寬度會撐開手機版面）。 */}
           <fieldset disabled={readOnly} className="min-w-0">
             <legend className="sr-only">作答區{current ? `：${current.label}` : ''}</legend>
-            <QuestionAccessoryContext value={renderMark}>
+            <QuestionExtrasContext value={extras}>
               <ExamPaper sectionIds={sectionIds} />
-            </QuestionAccessoryContext>
+            </QuestionExtrasContext>
           </fieldset>
         </div>
         <nav aria-label="上一個與下一個大題" className="flex flex-wrap items-center justify-between gap-2 border-t border-line pt-4">
@@ -296,11 +346,7 @@ function ActiveExamBody({ exam, paper, session, resumed, onSubmitted, onAbandon,
               <ChevronRight aria-hidden="true" className="size-4" />
             </button>
           ) : (
-            !readOnly && (
-              <button type="button" onClick={() => setSubmitOpen(true)} className="min-h-11 rounded-full bg-primary px-4 font-semibold text-on-primary">
-                寫完了，準備交卷
-              </button>
-            )
+            !readOnly && <FinishButton onClick={() => setSubmitOpen(true)} />
           )}
         </nav>
         {!readOnly && (
@@ -320,6 +366,7 @@ function ActiveExamBody({ exam, paper, session, resumed, onSubmitted, onAbandon,
         index={index}
         onConfirm={() => {
           setSubmitOpen(false);
+          // 實考模式的交卷鎖由 session.submit 把關（還在鎖定期間就回傳 null、什麼都不做）。
           submit('manual');
         }}
         onClose={() => setSubmitOpen(false)}
@@ -352,7 +399,8 @@ function MockFlow({ paper, exam }: { paper: MockPaper; exam: Exam }) {
     (record: MockAttemptRecord) => {
       const scale = scales.current ? scaleForYear(scales.current, record.scaleYear) : null;
       upsertHistory(historyEntryFor(record, computeReport(exam, record), scale));
-      navigate(`/mock/report/${record.id}`, { replace: true });
+      // 紀錄也放進路由的 state：瀏覽器存不進 localStorage（無痕模式、空間滿）時，成績單還是看得到這次的結果。
+      navigate(`/mock/report/${record.id}`, { replace: true, state: { record } });
     },
     [exam, navigate],
   );

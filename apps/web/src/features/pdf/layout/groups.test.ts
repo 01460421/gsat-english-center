@@ -70,6 +70,33 @@ describe('綜合測驗與選項庫', () => {
     expect(text).not.toContain('Rhinos ______');
   });
 
+  it('綜合測驗的短選文：題組標示＋選文＋第一題不跨頁，其餘選項列另一塊不跨頁（放不下時從第二題換頁，不整組移走）', () => {
+    const questions = [11, 12, 13, 14, 15].map((no) => q(no, { stem: null }));
+    const blocks = groupBlocks(section('cloze'), group({ passage: 'A short cloze [[11]] [[12]] [[13]] [[14]] [[15]].', questions }));
+    expect(blocks).toHaveLength(2);
+    const [head, rest] = blockTexts(blocks);
+    expect(head).toContain(PDF_TEXT.groupRange('11', '15'));
+    expect(head).toContain('A short cloze');
+    expect(head).toMatch(/11\.\(A\)\s+alpha/);
+    expect(head).not.toMatch(/12\.\(A\)/);
+    expect(rest).toMatch(/12\.\(A\)\s+alpha/);
+    expect(rest).toMatch(/15\.\(A\)\s+alpha/);
+    expect(blocks[0]?.node).toMatchObject({ unbreakable: true });
+    expect(blocks[1]?.node).toMatchObject({ unbreakable: true });
+  });
+
+  it('多文本：最後一個部分框下方留距離，不貼著下一題', () => {
+    const blocks = groupBlocks(
+      section('reading'),
+      group({ passage: null, passage_parts: [{ label: 'A', title: 'One', text: 'Part one.' }, { label: 'B', title: 'Two', text: 'Part two.' }], questions: [q(47), q(48)] }),
+    );
+    const texts = blockTexts(blocks);
+    const last = texts.findIndex((t) => t.includes('Part two.'));
+    expect(blocks[last]?.node).toMatchObject({ margin: [0, 0, 0, 6] });
+    const first = texts.findIndex((t) => t.includes('Part one.'));
+    expect(blocks[first]?.node).toMatchObject({ margin: [0, 0, 0, 0] });
+  });
+
   it('文意選填：選項框接在選文最後一段後面、綁在一起', () => {
     const bankQ = (no: number) => ({ ...q(no), mode: 'bank_choice', stem: null, options: null }) as Question;
     const blocks = groupBlocks(

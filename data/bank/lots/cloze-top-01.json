@@ -1,0 +1,305 @@
+{
+  "schema": "gsat-bank-lot/v1",
+  "lot": "cloze-top-01",
+  "section_type": "cloze",
+  "tier": "top",
+  "label_zh": "綜合測驗（克漏字）‧超越頂標（第 1 批）",
+  "created_on": "2026-10-08",
+  "count": 8,
+  "questions_per_group": 5,
+  "format_version": "cloze-5",
+  "uid_prefix": "ai.cz.",
+  "path": "data/bank/v1/cloze/top/",
+  "spec_id": "cloze-top@2026-10-08",
+  "spec_file": "data/exams/generation-spec/cloze.json",
+  "spec_tier_key": "beyond_top",
+  "spec_status": "draft：由 595 格有官方統計的歷屆綜合測驗推得；上線後依站內作答資料校正（SPEC §3.6、本檔 CLZ-CAL-*）",
+  "topic_quota": {
+    "origins_evolution": 3,
+    "science_health": 2,
+    "culture_history": 2,
+    "society_issues": 1,
+    "labels_zh": {
+      "origins_evolution": "起源與演變",
+      "science_health": "科普與健康",
+      "culture_history": "文化與歷史",
+      "society_issues": "社會與議題"
+    },
+    "basis": "08 §6.1（每 8 組：起源與演變 3、科普與健康 2–3、文化與歷史 2、社會與議題 1），依組數等比例取整"
+  },
+  "answer_letter_share": [
+    0.2,
+    0.3
+  ],
+  "avoid": {
+    "basis": "data/exams/parsed 的 gsat-111、gsat-112、gsat-113、gsat-114、gsat-115、ref-115 同一大題（cloze）的正解（單字取詞彙表主形，功能詞與 L1 字不列；片語整串列出）",
+    "answer_words": [
+      "a joyful social activity",
+      "accommodate",
+      "accompanied by",
+      "as such",
+      "as well",
+      "but not quite",
+      "circulate",
+      "clue",
+      "communicate",
+      "compete for",
+      "could have used",
+      "cultural",
+      "decline",
+      "disrupt",
+      "do not match",
+      "equipped with",
+      "exposure to",
+      "familiar presences",
+      "free of",
+      "gave rise to",
+      "had yet to develop",
+      "have been springing",
+      "home to",
+      "immediate",
+      "improve",
+      "initiate",
+      "intensify",
+      "it turns out",
+      "keep the printed word alive",
+      "left unchecked",
+      "less likely",
+      "match",
+      "meant to be",
+      "multiple",
+      "other than",
+      "personal bias",
+      "physical",
+      "pose as",
+      "preventive measures",
+      "redistribute",
+      "release",
+      "responsive to",
+      "severe",
+      "spell disaster",
+      "strike",
+      "thus",
+      "to which",
+      "tolerate",
+      "used to be",
+      "would spread"
+    ],
+    "answer_sentences": [],
+    "topics": [
+      "book towns (second-hand bookshop towns such as Hay-on-Wye)",
+      "crown shyness in forest trees",
+      "disappearing tropical glaciers in Papua, Indonesia",
+      "effects of reduced gravity on astronauts’ bodies (the “Charlie Brown effect”)",
+      "history and culture of dim sum",
+      "knocker-ups: human alarm clocks in Industrial-Age Britain",
+      "motion sickness",
+      "mystery shoppers",
+      "the origin of the World Café discussion method",
+      "white rhinos communicating through dung piles",
+      "why airplane windows are round"
+    ]
+  },
+  "passage_band": {
+    "basis": "SPEC §3.4＋出題規格書 passage_overrides（words、coverage_L1_4_min（取代 SPEC 的區間）、coverage_L1_6_min、offlist_max、beyond_l4_ratio_max）",
+    "spec_3_4": {
+      "word_count": {
+        "min": 200,
+        "max": 240
+      },
+      "coverage_l1_4": {
+        "min": 0.86,
+        "max": 0.91
+      },
+      "coverage_l1_6": {
+        "min": 0.92,
+        "max": null
+      },
+      "offlist_ratio": {
+        "min": null,
+        "max": 0.07
+      },
+      "avg_sentence_length": {
+        "min": 18,
+        "max": 25
+      }
+    },
+    "overrides_note": "與模擬卷相同（現制 10/10 篇符合）；含超越頂標格的現制選文最短 179 字，不另設較長下限",
+    "word_count": {
+      "min": 175,
+      "max": 235
+    },
+    "coverage_l1_4": {
+      "min": 0.88,
+      "max": null
+    },
+    "coverage_l1_6": {
+      "min": 0.92,
+      "max": null
+    },
+    "offlist_ratio": {
+      "min": null,
+      "max": 0.08
+    },
+    "avg_sentence_length": {
+      "min": 18,
+      "max": 25
+    },
+    "beyond_l4_ratio": {
+      "min": null,
+      "max": 0.09
+    }
+  },
+  "item_rules": {
+    "summary_zh": "≥2 格要看篇章（線索距離 ≥2 句）；文法題要讀懂上下文才判斷得出（had yet to、could have p.p.）；搭配詞干擾",
+    "content_blanks": {
+      "min": 0,
+      "max": 5
+    },
+    "phrase_collocation_blanks": {
+      "min": 0,
+      "max": 5
+    },
+    "connective_blanks": {
+      "min": 0,
+      "max": 5
+    },
+    "grammar_blanks": {
+      "min": 0,
+      "max": 5
+    },
+    "cross_sentence_blanks_min": 2,
+    "discourse_blanks_min": 2,
+    "answer_level_max": null
+  },
+  "targets": {
+    "blank_type_mix": {
+      "per_5_recommended": {
+        "L": [
+          1,
+          2
+        ],
+        "C": [
+          2,
+          2
+        ],
+        "G": [
+          0,
+          1
+        ],
+        "D": [
+          0,
+          1
+        ],
+        "R": [
+          0,
+          1
+        ]
+      }
+    },
+    "context_scope_mix": {
+      "rule": "不硬性規定；建議 S 2–3、P 2–3"
+    },
+    "answer_form_mix": {
+      "rule": "單字與片語各半（現制 9 word／7 phrase）"
+    },
+    "answer_level_dist": {
+      "rule": "正解 L1–3 ≥ 60%（現制 10/16 L1–2；合併學測 75/92 L1–3）；選項 ≥ L5 至多 1 個"
+    },
+    "distractor_rules": {
+      "near_miss_count": [
+        1,
+        2
+      ],
+      "strong_near_miss_required": true,
+      "type_to_code_default": {
+        "C": "CN",
+        "G": "GN",
+        "L": "LF",
+        "D": "LR",
+        "R": "GN"
+      },
+      "type_to_code_observed_pooled": {
+        "G": {
+          "GN": 15,
+          "LR": 2
+        },
+        "L": {
+          "SS": 1,
+          "LF": 17,
+          "LR": 3,
+          "CN": 5,
+          "SF": 3
+        },
+        "C": {
+          "CN": 29,
+          "GN": 1,
+          "LR": 2
+        },
+        "D": {
+          "LR": 7,
+          "GN": 2,
+          "CN": 1
+        },
+        "R": {
+          "GN": 4
+        }
+      },
+      "upper_group_pull_target_min": 0.2,
+      "distractor_may_rival_key_in_upper_group": true,
+      "require_D1_min_post_hoc": 0.1,
+      "functional_min_share": 0.05,
+      "observed_basis": "現制 top 15/16、合併學測 82/92 題有誘答吸到 ≥20% 高分組；中位數 0.355／0.33"
+    },
+    "set_composition_5_blanks": {
+      "basic": [
+        0,
+        0
+      ],
+      "advanced": [
+        1,
+        2
+      ],
+      "top": [
+        3,
+        4
+      ],
+      "challenge_max": 1
+    },
+    "recipe": [
+      "正解多半是常用字的非核心用法或慣用語（現制 10/16 正解是 L1–2 字：end、match、difficult、strike、don’t…）",
+      "依題型配對一個強誘答（高分組預期 ≥20% 選它）：C→同家族片語或字面誘答（CN）；G→看似合理的時態／非限定形（GN）；L→單讀本句通順或吻合全文主題、但與局部語境不符（LF）；D→相反或錯位的邏輯關係（LR）；R→代動詞或代名詞形式錯（GN）",
+      "正解仍須唯一：寫出排除強誘答的那個線索字串；線索可以在本句（現制 10/16 是 S），不必刻意拉遠",
+      "每篇第一格的前文最少，適合放超越頂標格（現制 10 篇的第 1 格有 5 格是超越頂標）",
+      "每篇最多 1 格 challenge（預期 Pa < 0.50）；避免全體都猜的題（D1 < 0.10）"
+    ],
+    "pitfalls": [
+      "用冷僻字（L6、表外）製造難度：現制超越頂標只有 3/16 題有任何選項 ≥ L5",
+      "強誘答其實可接受（雙答案）或正解要靠背景知識",
+      "題目讓所有程度都在猜（例：gsat-115 第19題 Pa 0.28、Pb 0.26，旗標 low_upper_discrimination）",
+      "把「看全文」當成難度來源：資料中 S/P/W 與答對率無關（本句可判斷的題也有 32% 是超越頂標）"
+    ]
+  },
+  "set_composition": {
+    "basic": [
+      0,
+      0
+    ],
+    "advanced": [
+      1,
+      2
+    ],
+    "top": [
+      3,
+      4
+    ],
+    "challenge_max": 1
+  },
+  "verification": {
+    "blind_solvers": 2,
+    "blind_b_different_model": true,
+    "distractor_audit": true,
+    "unique_solution": false,
+    "human_review": "100%（校準期：每個題型 × 提示詞版本的前 30 組全審，SPEC §5.8）"
+  }
+}

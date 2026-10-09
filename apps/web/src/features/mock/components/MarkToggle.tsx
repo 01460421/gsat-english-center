@@ -1,5 +1,5 @@
 /**
- * 題號旁的「標記」切換鈕（透過 features/exams 的 QuestionAccessoryContext 放進題目標題列）。
+ * 題號旁的「標記」切換鈕（透過 features/exams 的 QuestionExtras.renderHeadingAccessory 放進題目標題列）。
  * 一個題目區塊可能有兩題（混合題 47–48 的摘要句）：全部已標記才算「已標記」，按下去一起切換。
  * 交卷後的檢討只顯示「作答時標記過」的小標籤（MarkedBadge）。
  */
@@ -14,6 +14,7 @@ export function MarkToggle({ labels }: { labels: readonly string[] }) {
   return (
     <button
       type="button"
+      data-mock-mark=""
       aria-pressed={pressed}
       aria-label={`標記${name}，稍後檢查`}
       disabled={readOnly}
