@@ -8,11 +8,11 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "https://gsat-english-api.REPLACE_WITH_SUBDOMAIN.workers.dev/api/:path*"
+      "destination": "https://gsat-english-api.gsat-english.workers.dev/api/:path*"
     },
     {
       "source": "/auth/:path*",
-      "destination": "https://gsat-english-api.REPLACE_WITH_SUBDOMAIN.workers.dev/auth/:path*"
+      "destination": "https://gsat-english-api.gsat-english.workers.dev/auth/:path*"
     },
     {
       "source": "/((?!api/|auth/|assets/|data/).*)",

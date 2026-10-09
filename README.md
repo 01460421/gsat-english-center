@@ -125,7 +125,7 @@ npm run deploy -w @gsat/api                  # 部署後網址是 https://gsat-e
 **2. 前端（Vercel）**
 
 1. 在 Vercel 匯入這個 GitHub repo，Root Directory 保持 repo 根目錄；安裝、建置指令與輸出目錄都寫在 `vercel.json`，不必在後台另外設定。
-2. **把 `vercel.json` 裡兩處 `REPLACE_WITH_SUBDOMAIN` 換成你的 workers.dev 帳號子網域**（Cloudflare 儀表板 Workers & Pages 可以看到），否則 `/api`、`/auth` 會轉到不存在的網址，首頁會顯示「後端未連線」。
+2. `vercel.json` 的 `/api`、`/auth` 轉到 `https://gsat-english-api.gsat-english.workers.dev`（workers.dev 帳號子網域 `gsat-english`）。換 Cloudflare 帳號或子網域時要一起改，否則 `/api`、`/auth` 會轉到不存在的網址，首頁會顯示「後端未連線」。
 
 `vercel.json` 的設定與理由：
 
