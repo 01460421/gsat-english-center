@@ -3362,6 +3362,19 @@ def check_bank(path, d, r=None):
 # 整批（--lot）
 # ---------------------------------------------------------------------------
 
+def latest_per_uid(groups):
+    """同一個 uid 只留最新版本（只增不減：退回的題組另存 @{v+1}，舊版檔案還在，不能重複計算）。
+    沒有 uid 或 version 的檔案原樣保留；順序照輸入。"""
+    best = {}
+    for i, (_, d) in enumerate(groups):
+        uid, v = d.get('uid'), d.get('version')
+        if isinstance(uid, str) and ve.is_int(v) and (uid not in best or v > best[uid][0]):
+            best[uid] = (v, i)
+    keep = {i for _, i in best.values()}
+    return [(p, d) for i, (p, d) in enumerate(groups)
+            if not (isinstance(d.get('uid'), str) and ve.is_int(d.get('version'))) or i in keep]
+
+
 def check_lot(lot_path, banks):
     """banks：[(path, data)]，已讀好的 bank 檔案（--all 時是全部；否則掃 data/bank/v1）。"""
     r = Report(str(lot_path))
@@ -3374,7 +3387,7 @@ def check_lot(lot_path, banks):
     if not isinstance(lot_id, str) or Path(lot_path).stem != lot_id:
         r.err('lot', f'lot={lot_id!r} 必須等於檔名 {Path(lot_path).stem}')
     st, tier = lot.get('section_type'), lot.get('tier')
-    mine = [(p, d) for p, d in banks if isinstance(d, dict) and (d.get('generation') or {}).get('lot') == lot_id]
+    mine = latest_per_uid([(p, d) for p, d in banks if isinstance(d, dict) and (d.get('generation') or {}).get('lot') == lot_id])
     live = [(p, d) for p, d in mine if d.get('status') != 'rejected']
     count = lot.get('count')
     per = lot.get('questions_per_group')
