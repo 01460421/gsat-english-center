@@ -17,7 +17,7 @@ import {
   type TranslationBody,
 } from '@gsat/shared';
 import { useState } from 'react';
-import { useNavigate, useParams } from 'react-router';
+import { useLocation, useNavigate, useParams } from 'react-router';
 import { dataErrorMessage } from '../../data/client';
 import { APP_NAME } from '../../modules';
 import { RichText } from '../exams/components/RichText';
@@ -31,6 +31,7 @@ import { clearDraft, draftKey, isTranslationDraft, loadDraft, type TranslationDr
 import { isQuotaError, type ErrorView } from './lib/errors';
 import { examRefLabel } from './lib/format';
 import { useAutosave, useQuota, useRevealOnOpen, useStaticData } from './lib/hooks';
+import { listOriginBack } from './lib/listOrigin';
 import { AlreadySubmittedError, saveSelfAssessment, startTask, upsertSubmission } from './lib/submit';
 import { checkTranslationSentence, mechanicsMessages } from './lib/text';
 import { useErrorView } from './lib/useErrorView';
@@ -39,9 +40,11 @@ export default function TranslationAttemptPage() {
   const { examId = '' } = useParams();
   const data = useStaticData(loadTranslationIndex);
   const set = data.status === 'ready' ? findTranslationSet(data.value, examId) : undefined;
+  // 從中譯英題型頁（/translation）的列表點進來的，返回那一頁。
+  const back = listOriginBack(useLocation().state, { to: '/writing/translation', label: '中譯英題目' });
   return (
     <article>
-      <BackLink to="/writing/translation">中譯英題目</BackLink>
+      <BackLink to={back.to}>{back.label}</BackLink>
       {data.status === 'loading' && (
         <>
           <title>{`中譯英作答｜${APP_NAME}`}</title>
@@ -59,7 +62,7 @@ export default function TranslationAttemptPage() {
       {data.status === 'ready' && !set && (
         <>
           <title>{`找不到這個題目｜${APP_NAME}`}</title>
-          <PromptNotFound backTo="/writing/translation" backLabel="回到中譯英題目" />
+          <PromptNotFound backTo={back.to} backLabel={`回到${back.label}`} />
         </>
       )}
       {set && <TranslationAttempt key={set.exam_id} set={set} />}

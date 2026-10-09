@@ -21,16 +21,24 @@ export function submitAttempt(store: AttemptStore, exam: Exam, reason: 'manual' 
   store.submit(reason, { earned: score.earned, autoMax: score.autoMax });
 }
 
-export function AttemptTimer({ onTimeout }: { onTimeout: () => void }) {
+/**
+ * waitForFirstAnswer：第一次作答才開始計時（題型頁內嵌的題庫練習：打開頁面就抽好一組，只是來看說明、或分頁開著沒動，
+ * 不能算進這一組的用時，也不寫出作答紀錄）。開始之後就一直計時（清掉唯一的答案也不停）。預設 false：一打開就計時。
+ */
+export function AttemptTimer({ onTimeout, waitForFirstAnswer = false }: { onTimeout: () => void; waitForFirstAnswer?: boolean }) {
   const store = useAttemptStore();
   const limit = useAttemptSelector((s) => s.timeLimitSec);
   const submitted = useAttemptSelector((s) => s.submittedAt !== null);
   const storedElapsed = useAttemptSelector((s) => s.elapsedSec);
+  const hasAnswers = useAttemptSelector((s) => Object.keys(s.answers).length > 0);
+  const [answeredOnce, setAnsweredOnce] = useState(hasAnswers);
+  if (hasAnswers && !answeredOnce) setAnsweredOnce(true);
+  const waiting = waitForFirstAnswer && !answeredOnce && !submitted;
   const [elapsed, setElapsed] = useState(storedElapsed);
   const [announcement, setAnnouncement] = useState('');
 
   useEffect(() => {
-    if (submitted) return;
+    if (submitted || waiting) return;
     const base = store.getState().elapsedSec;
     const startedAt = Date.now();
     const now = () => base + Math.floor((Date.now() - startedAt) / 1000);
@@ -52,18 +60,31 @@ export function AttemptTimer({ onTimeout }: { onTimeout: () => void }) {
       window.removeEventListener('pagehide', flush);
       flush();
     };
-  }, [store, limit, submitted, onTimeout]);
+  }, [store, limit, submitted, waiting, onTimeout]);
 
-  const shown = submitted ? storedElapsed : elapsed;
+  const shown = submitted || waiting ? storedElapsed : elapsed;
   const remaining = limit === null ? null : Math.max(0, limit - shown);
   const urgent = remaining !== null && remaining <= 300 && !submitted;
   return (
     <span className={`inline-flex items-center gap-1.5 font-semibold tabular-nums ${urgent ? 'text-bad' : ''}`}>
       <TimerIcon aria-hidden="true" className="size-4" />
       <span className="text-xs font-normal text-muted">{remaining !== null && !submitted ? '剩餘' : '用時'}</span>
-      <span role="timer" aria-label={remaining !== null && !submitted ? `剩餘時間 ${formatDuration(remaining)}` : `已用時間 ${formatDuration(shown)}`}>
+      <span
+        role="timer"
+        aria-label={
+          remaining !== null && !submitted
+            ? `剩餘時間 ${formatDuration(remaining)}${waiting ? '，作答後開始計時' : ''}`
+            : `已用時間 ${formatDuration(shown)}${waiting ? '，作答後開始計時' : ''}`
+        }
+      >
         {formatClock(remaining !== null && !submitted ? remaining : shown)}
       </span>
+      {/* 手機上工具列放不下這一句（會擠成兩行），只靠計時器的無障礙名稱說明。 */}
+      {waiting && (
+        <span aria-hidden="true" className="hidden text-xs font-normal text-muted sm:inline">
+          作答後開始計時
+        </span>
+      )}
       <span className="sr-only" aria-live="polite">
         {announcement}
       </span>
@@ -71,8 +92,11 @@ export function AttemptTimer({ onTimeout }: { onTimeout: () => void }) {
   );
 }
 
-/** modeLabel：模式標籤的文字（預設「考試模式／練習模式」；題庫練習頁傳「題庫練習」）。 */
-export function ExamToolbar({ exam, modeLabel }: { exam: Exam; modeLabel?: string }) {
+/**
+ * modeLabel：模式標籤的文字（預設「考試模式／練習模式」；題庫練習頁傳「題庫練習」）。
+ * waitForFirstAnswer：第一次作答才開始計時（見 AttemptTimer；題型頁內嵌的題庫練習用）。
+ */
+export function ExamToolbar({ exam, modeLabel, waitForFirstAnswer = false }: { exam: Exam; modeLabel?: string; waitForFirstAnswer?: boolean }) {
   const store = useAttemptStore();
   const mode = useAttemptSelector((s) => s.mode);
   const submitted = useAttemptSelector((s) => s.submittedAt !== null);
@@ -113,7 +137,7 @@ export function ExamToolbar({ exam, modeLabel }: { exam: Exam; modeLabel?: strin
             </>
           )}
         </span>
-        <AttemptTimer onTimeout={onTimeout} />
+        <AttemptTimer onTimeout={onTimeout} waitForFirstAnswer={waitForFirstAnswer} />
         <span className="text-sm tabular-nums">
           已答 {answered}／{total}
         </span>

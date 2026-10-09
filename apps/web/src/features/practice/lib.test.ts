@@ -22,7 +22,7 @@ import {
 } from './history';
 import { practicePath, sectionFromSlug, tierFromParam } from './labels';
 import { findVocabEntry, wrongVocabularyWords } from './mistakes';
-import { cellProgress, pickGroup } from './pick';
+import { cellProgress, defaultTier, pickGroup } from './pick';
 import { BANK_INDEX, MINI_VOCAB_INDEX, group } from './testFixtures';
 
 const entry = (uid: string, version = 1): BankIndexEntry => ({
@@ -84,6 +84,51 @@ describe('pickGroup', () => {
     expect(cellProgress(BANK_INDEX.groups, h, 'word_bank', 'advanced')).toEqual({ total: 1, done: 1 });
     expect(cellProgress(BANK_INDEX.groups, h, 'vocabulary', 'basic')).toEqual({ total: 1, done: 0 });
     expect(cellProgress(BANK_INDEX.groups, h, 'vocabulary', 'top')).toEqual({ total: 0, done: 0 });
+  });
+});
+
+describe('defaultTier（題型頁網址沒有指定難度時）', () => {
+  const tiered = (uid: string, tier: BankIndexEntry['tier']): BankIndexEntry => ({ ...entry(uid), tier });
+  const all = [tiered('ai.wb.000001', 'basic'), tiered('ai.wb.000002', 'advanced'), tiered('ai.wb.000003', 'top')];
+  const record = (tier: DoneRecord['tier'], at: string, section: DoneRecord['section'] = 'word_bank'): DoneRecord => ({ ...done(at), section, tier });
+  const none = () => null;
+
+  it('沒練過：穩定基礎；穩定基礎還沒有題組時用第一個有題組的難度；都沒有還是穩定基礎', () => {
+    expect(defaultTier(all, emptyHistory(), 'word_bank', none)).toBe('basic');
+    expect(defaultTier(all.slice(1), emptyHistory(), 'word_bank', none)).toBe('advanced');
+    expect(defaultTier([all[2] as BankIndexEntry], emptyHistory(), 'word_bank', none)).toBe('top');
+    expect(defaultTier([], emptyHistory(), 'word_bank', none)).toBe('basic');
+  });
+
+  it('最近交卷的難度（只看這個題型）', () => {
+    const h: PracticeHistory = {
+      ...emptyHistory(),
+      done: {
+        'ai.wb.000001': record('basic', '2026-10-01T00:00:00.000Z'),
+        'ai.wb.000003': record('top', '2026-10-03T00:00:00.000Z'),
+        'ai.wb.000002': record('advanced', '2026-10-02T00:00:00.000Z'),
+        // 別的題型比較晚做，不影響。
+        'ai.cz.000009': record('advanced', '2026-10-09T00:00:00.000Z', 'cloze'),
+      },
+    };
+    expect(defaultTier(all, h, 'word_bank', none)).toBe('top');
+  });
+
+  it('作答中的題組最後一次作答比交卷晚：選那一格；只是打開過（沒作答）不算', () => {
+    let h: PracticeHistory = { ...emptyHistory(), done: { 'ai.wb.000003': record('top', '2026-10-03T00:00:00.000Z') } };
+    h = setCurrent(h, cellKey('word_bank', 'advanced'), 'ai.wb.000002@1');
+    h = setCurrent(h, cellKey('word_bank', 'basic'), 'ai.wb.000001@1');
+    const activity = (key: string) => (key === 'ai.wb.000002@1' ? '2026-10-05T00:00:00.000Z' : null);
+    expect(defaultTier(all, h, 'word_bank', activity)).toBe('advanced');
+    // 作答時間比交卷早：還是交卷的那一格。
+    expect(defaultTier(all, h, 'word_bank', (key) => (key === 'ai.wb.000002@1' ? '2026-10-01T00:00:00.000Z' : null))).toBe('top');
+    // 都只是打開過：沒有練過的紀錄 → 穩定基礎。
+    expect(defaultTier(all, setCurrent(emptyHistory(), cellKey('word_bank', 'top'), 'ai.wb.000003@1'), 'word_bank', none)).toBe('basic');
+  });
+
+  it('練過的難度現在沒有題組，照樣選它（畫面顯示出題中，上方可以切換）', () => {
+    const h: PracticeHistory = { ...emptyHistory(), done: { 'ai.wb.000003': record('top', '2026-10-03T00:00:00.000Z') } };
+    expect(defaultTier(all.slice(0, 2), h, 'word_bank', none)).toBe('top');
   });
 });
 

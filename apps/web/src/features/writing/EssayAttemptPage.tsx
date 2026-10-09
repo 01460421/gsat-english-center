@@ -11,7 +11,7 @@
 import { PHOTO_MAX_COUNT, type EssayBody, type SelfAssessment } from '@gsat/shared';
 import { ShieldCheck } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
-import { useNavigate, useParams } from 'react-router';
+import { useLocation, useNavigate, useParams } from 'react-router';
 import { dataErrorMessage } from '../../data/client';
 import { APP_NAME } from '../../modules';
 import { AiAccessNotice, QuotaSummary, taskPoints } from './components/AiAccessPanel';
@@ -26,6 +26,7 @@ import { clearDraft, completeEssayScores, draftKey, isEssayDraft, loadDraft, typ
 import { isQuotaError, type ErrorView } from './lib/errors';
 import { examRefLabel } from './lib/format';
 import { useAutosave, useQuota, useRevealOnOpen, useStaticData } from './lib/hooks';
+import { listOriginBack } from './lib/listOrigin';
 import { photoQualityIssue } from './lib/photo';
 import { AlreadySubmittedError, saveSelfAssessment, startTask, upsertSubmission } from './lib/submit';
 import { checkEssayLength } from './lib/text';
@@ -36,9 +37,11 @@ export default function EssayAttemptPage() {
   const { examId = '' } = useParams();
   const data = useStaticData(loadEssayIndex);
   const prompt = data.status === 'ready' ? findEssayPrompt(data.value, examId) : undefined;
+  // 從英文作文題型頁（/composition）的列表點進來的，返回那一頁。
+  const back = listOriginBack(useLocation().state, { to: '/writing/essay', label: '英文作文題目' });
   return (
     <article>
-      <BackLink to="/writing/essay">英文作文題目</BackLink>
+      <BackLink to={back.to}>{back.label}</BackLink>
       {data.status === 'loading' && (
         <>
           <title>{`英文作文作答｜${APP_NAME}`}</title>
@@ -56,7 +59,7 @@ export default function EssayAttemptPage() {
       {data.status === 'ready' && !prompt && (
         <>
           <title>{`找不到這個題目｜${APP_NAME}`}</title>
-          <PromptNotFound backTo="/writing/essay" backLabel="回到英文作文題目" />
+          <PromptNotFound backTo={back.to} backLabel={`回到${back.label}`} />
         </>
       )}
       {prompt && <EssayAttempt key={prompt.exam_id} prompt={prompt} />}

@@ -5,6 +5,7 @@ import { ApiRequestError } from '../../../lib/api';
 import { isAiGradableTranslation, parseGroupId, translationItemId } from '../data';
 import { FEATURES_OFF, FEATURES_ON, QUOTA, SET_115, meWith } from '../testing/fixtures';
 import { aiAccessOf } from './access';
+import { listOriginBack } from './listOrigin';
 import {
   clearDraft,
   clearLocalWritingData,
@@ -265,5 +266,20 @@ describe('資料小工具', () => {
     expect(formatScore(5.75)).toBe('5.75');
     expect(formatScore(12.5)).toBe('12.5');
     expect(formatScore(Number.NaN)).toBe('—');
+  });
+});
+
+describe('listOriginBack（作答頁的返回連結）', () => {
+  const fallback = { to: '/writing/translation', label: '中譯英題目' };
+  it('從題型頁點進來：回到題型頁', () => {
+    expect(listOriginBack({ from: '/translation' }, fallback)).toEqual({ to: '/translation', label: '中譯英' });
+    expect(listOriginBack({ from: '/composition' }, fallback)).toEqual({ to: '/composition', label: '英文作文' });
+  });
+  it('沒有 state 或不認得的值：用預設的列表（不會把任意網址當成返回連結）', () => {
+    expect(listOriginBack(null, fallback)).toBe(fallback);
+    expect(listOriginBack(undefined, fallback)).toBe(fallback);
+    expect(listOriginBack('/translation', fallback)).toBe(fallback);
+    expect(listOriginBack({ from: 'https://example.com/' }, fallback)).toBe(fallback);
+    expect(listOriginBack({ from: 'toString' }, fallback)).toBe(fallback);
   });
 });
