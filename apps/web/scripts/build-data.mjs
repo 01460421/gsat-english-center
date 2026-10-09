@@ -10,6 +10,7 @@
  *   data/exams/stats/word-frequency.json    每個條目在歷屆試題中的出現次數（tools/exam_stats.py 產生）
  *   data/exams/parsed/*.json                歷屆試題（gsat-exam/v1.1，規格見 docs/exam-json-schema.md）
  *   data/exams/manifest.json                官方檔案清單：把 sources 的本機路徑換成大考中心的官方網址
+ *   data/bank/v1/{題型}/{難度}/*.json      AI 題庫（gsat-bank/v1，見 data/bank/README.md）；可以不存在
  *
  * 輸出（apps/web/public/data/，不進版控；Vite 會原樣複製到 dist/data/）：
  *   meta.json            資料版本、產生時間、筆數、各檔大小
@@ -17,8 +18,11 @@
  *   vocab/L1…L6.json     各級完整條目（只留前端需要的欄位）
  *   exams/index.json     每份考卷的摘要
  *   exams/{id}.json      每份考卷的完整內容（去掉內部欄位與不能公開轉載的欄位）
+ *   bank/index.json      題庫練習：已通過自動驗證（verified）的 AI 題組摘要；沒有題組時是空陣列
+ *   bank/groups/{uid}@{version}.json  一個 AI 題組（題目＋解析＋中譯＋排除法表；不含生成與驗證細節）
+ *                        挑選與輸出規則在 scripts/lib/bank-data.mjs
  *
- * 前端對應的型別在 apps/web/src/data/vocab.ts、exams.ts；這裡改了輸出格式，那邊要一起改。
+ * 前端對應的型別在 apps/web/src/data/vocab.ts、exams.ts、bank.ts；這裡改了輸出格式，那邊要一起改。
  *
  * 為什麼在建置時轉檔，而不是讓前端直接讀 data/：
  *   - lexicon.json 有 22 MB，裡面大半是前端用不到的欄位（WordNet 上位詞、內部重要度特徵、來源旗標）；
@@ -36,6 +40,7 @@ import { existsSync, mkdirSync, readFileSync, readdirSync, renameSync, rmSync, w
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { gzipSync } from 'node:zlib';
+import { BANK_DATA_SCRIPT, BankDataError, SKIP_REASON_LABELS, buildBankData, practiceGroupPath } from './lib/bank-data.mjs';
 
 // ---------------------------------------------------------------------------
 // 路徑：一律從這個檔案的位置推算，不依賴目前工作目錄。
@@ -54,6 +59,12 @@ const INPUTS = {
   examsDir: path.join(DATA_DIR, 'exams', 'parsed'),
   manifest: path.join(DATA_DIR, 'exams', 'manifest.json'),
 };
+
+/**
+ * AI 題庫。和 INPUTS 分開：題庫還在陸續出題，目錄不存在或是空的都是正常狀態，不能讓建置失敗。
+ * 環境變數 GSAT_BANK_DIR 可以改指到別的目錄（例如本機用 apps/web/tests/fixtures/bank/v1 的範例題組預覽練習頁）。
+ */
+const BANK_DIR = process.env.GSAT_BANK_DIR ? path.resolve(process.env.GSAT_BANK_DIR) : path.join(DATA_DIR, 'bank', 'v1');
 
 /** 精簡索引 gzip 後的上限。索引在第一次進單字頁就要下載，超過就讓建置失敗，逼自己先想辦法瘦身。 */
 const VOCAB_INDEX_GZIP_BUDGET = 300 * 1024;
@@ -706,12 +717,23 @@ function main() {
 
   const vocab = buildVocab();
   const exams = buildExams();
-  const version = contentVersion([SCRIPT_PATH, INPUTS.lexicon, INPUTS.wordFrequency, INPUTS.manifest, ...exams.files]);
+  const bank = buildBankData(BANK_DIR, { relative });
+  const version = contentVersion([
+    SCRIPT_PATH,
+    BANK_DATA_SCRIPT,
+    INPUTS.lexicon,
+    INPUTS.wordFrequency,
+    INPUTS.manifest,
+    ...exams.files,
+    ...bank.inputs,
+  ]);
 
   emit('vocab/index.json', { version, count: vocab.index.length, entries: vocab.index });
   for (const [level, entries] of vocab.byLevel) emit(`vocab/L${level}.json`, { version, level, count: entries.length, entries });
   emit('exams/index.json', { version, count: exams.summaries.length, exams: exams.summaries });
   for (const d of exams.details) emit(`exams/${d.id}.json`, d);
+  emit('bank/index.json', { version, count: bank.entries.length, groups: bank.entries });
+  for (const g of bank.groups) emit(practiceGroupPath(g), g);
   assertNoOfficialTranslations(outputs, exams.officialTextsById);
 
   /** @type {Record<string, { bytes: number, gzip_bytes: number }>} */
@@ -738,6 +760,7 @@ function main() {
       vocab_by_level: Object.fromEntries([...vocab.byLevel].map(([lv, list]) => [String(lv), list.length])),
       exams: exams.summaries.length,
       questions: questionCount,
+      bank_groups: bank.entries.length,
     },
     files: fileSizes,
   });
@@ -759,6 +782,7 @@ function main() {
     ['vocab/index.json', fileSizes['vocab/index.json']],
     ...VOCAB_LEVELS.map((lv) => [`vocab/L${lv}.json`, fileSizes[`vocab/L${lv}.json`]]),
     ['exams/index.json', fileSizes['exams/index.json']],
+    ['bank/index.json', fileSizes['bank/index.json']],
   ];
   const examFiles = sum((rel) => rel.startsWith('exams/') && rel !== 'exams/index.json');
   console.log(`[build-data] 版本 ${version}：單字 ${vocab.index.length} 筆、試題 ${exams.summaries.length} 份（${questionCount} 題），輸出到 ${relative(OUT_DIR)}/`);
@@ -766,13 +790,30 @@ function main() {
     if (typeof rel === 'string' && s && typeof s === 'object') console.log(`  ${rel.padEnd(18)} ${formatBytes(s.bytes).padStart(10)}  gzip ${formatBytes(s.gzip_bytes).padStart(9)}`);
   }
   console.log(`  ${'exams/{id}.json'.padEnd(18)} ${formatBytes(examFiles.bytes).padStart(10)}  gzip ${formatBytes(examFiles.gzip).padStart(9)}（${exams.details.length} 個檔案合計）`);
+  logBank(bank);
   console.log(`[build-data] 完成，用時 ${((Date.now() - started) / 1000).toFixed(1)} 秒`);
+}
+
+/** 題庫的建置紀錄：收了幾組、略過了哪些（依原因統計）與警告。 @param {ReturnType<typeof buildBankData>} bank */
+function logBank(bank) {
+  if (bank.scanned === 0) {
+    console.log(`[build-data] AI 題庫：${relative(BANK_DIR)} 還沒有題組檔，輸出空的 bank/index.json`);
+    return;
+  }
+  /** @type {Map<string, number>} */
+  const byReason = new Map();
+  for (const s of bank.skipped) byReason.set(s.reason, (byReason.get(s.reason) ?? 0) + 1);
+  const skipped = [...byReason].map(([reason, n]) => `${SKIP_REASON_LABELS[/** @type {keyof typeof SKIP_REASON_LABELS} */ (reason)] ?? reason} ${n}`);
+  console.log(
+    `[build-data] AI 題庫：掃描 ${bank.scanned} 個檔案，輸出 ${bank.entries.length} 組${skipped.length > 0 ? `；略過：${skipped.join('、')}` : ''}`,
+  );
+  for (const w of bank.warnings) console.warn(`[build-data] 警告：${w}`);
 }
 
 try {
   main();
 } catch (err) {
-  if (err instanceof BuildDataError) {
+  if (err instanceof BuildDataError || err instanceof BankDataError) {
     console.error(`[build-data] 錯誤：${err.message}`);
     process.exit(1);
   }

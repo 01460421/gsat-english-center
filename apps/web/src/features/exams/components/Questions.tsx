@@ -10,6 +10,7 @@ import { useId, type ReactNode } from 'react';
 import type { OptionMap, Question, QuestionGroup } from '../../../data/exams';
 import { useAttemptStore, useAttemptSelector, useQuestionState } from '../AttemptContext';
 import { useExam } from '../ExamContext';
+import { useQuestionExtras } from '../QuestionExtras';
 import { countParagraphs, countWords, questionErratum, wordCountLabel } from '../labels';
 import { isBlankCell } from '../paper';
 import { questionRangeTitle, questionTitle, resolveBlankQuestion } from '../richText';
@@ -87,6 +88,7 @@ export function ChoiceQuestionBlock({
 }) {
   const store = useAttemptStore();
   const exam = useExam();
+  const extras = useQuestionExtras();
   const { answer, showFeedback, locked } = useQuestionState(q.label);
   const name = useId();
   const multi = q.mode === 'multi_select';
@@ -159,6 +161,7 @@ export function ChoiceQuestionBlock({
         </div>
       </fieldset>
       <RevealButton labels={[q.label]} />
+      {!showFeedback && extras?.renderWhileAnswering?.(q)}
       {showFeedback && <ChoiceFeedback q={q} answer={answer} options={options} />}
     </div>
   );

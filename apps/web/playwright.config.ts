@@ -13,7 +13,11 @@
 import { existsSync } from 'node:fs';
 import { chromium, defineConfig } from '@playwright/test';
 
-const PORT = 4173;
+/**
+ * 預覽伺服器的連接埠。同一台機器上有其他工作目錄（git worktree）也在跑 e2e 時，4173 可能已經被它們的 vite preview 佔用，
+ * 本機的 reuseExistingServer 會直接沿用那個伺服器、測到別的目錄的 dist/；這時用 E2E_PORT 換一個連接埠。
+ */
+const PORT = Number(process.env['E2E_PORT'] ?? 4173);
 const BASE_URL = `http://127.0.0.1:${PORT}`;
 
 /**

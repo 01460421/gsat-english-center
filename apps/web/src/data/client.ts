@@ -2,7 +2,7 @@
  * 前端靜態資料的共用載入層。
  *
  * 資料檔在 public/data/，由 scripts/build-data.mjs 在 predev／prebuild 時從 repo 的 data/ 產生（不進版控），
- * 部署後是網站上的一般靜態檔：/data/meta.json、/data/vocab/…、/data/exams/…。
+ * 部署後是網站上的一般靜態檔：/data/meta.json、/data/vocab/…、/data/exams/…、/data/bank/…。
  *
  * 為什麼自己寫而不用 SWR、React Query：資料是建置時產生的唯讀檔案，不需要背景重新驗證、輪詢或寫回，
  * 「同一個檔案只抓一次、失敗可以重試」就夠了，不值得多一個套件。
@@ -155,6 +155,8 @@ export interface DataMeta {
     vocab_by_level: Record<'1' | '2' | '3' | '4' | '5' | '6', number>;
     exams: number;
     questions: number;
+    /** 題庫練習的 AI 題組數（/data/bank/index.json）；題庫還沒有通過驗證的題組時是 0。 */
+    bank_groups: number;
   };
   /** 每個輸出檔（相對 /data/）的大小；gzip_bytes 是 gzip -9 的估計值，實際傳輸由 Vercel 壓縮。 */
   files: Record<string, { bytes: number; gzip_bytes: number }>;

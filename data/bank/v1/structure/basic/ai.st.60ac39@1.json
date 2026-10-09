@@ -1,0 +1,604 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.st.60ac39",
+  "version": 1,
+  "section_type": "structure",
+  "format_version": "structure-4x5",
+  "tier": "basic",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": "Today, most of us can pick up a pen and start writing without a second thought. For most of history, however, writing by hand was slow and often messy. The tools people used changed a great deal before they became as easy to use as the pens we have now.\nFor many centuries, the most common writing tool in Europe was the quill, a pen made from a large bird’s feather. [[1]] This point wore down quickly, so writers had to keep a small knife nearby to sharpen it. In fact, that is where the word “penknife” comes from. [[2]] Because of all this dipping, writing even a short letter could take a long time.\n[[3]] These metal pens lasted much longer than quills, and factories could make them cheaply in large numbers. Still, writers had to dip them into a bottle of ink again and again. The fountain pen changed this by storing ink inside its body, so people could write for pages without stopping. However, early fountain pens often leaked, and their ink took a long time to dry.\n[[4]] Inside its tip is a tiny ball that rolls ink evenly onto the paper, so the pen rarely leaks. Its special ink also dries very quickly. Because ballpoint pens are cheap and easy to carry, they soon became the most popular writing tool in the world.",
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": {
+      "A": "Some famous authors wrote their books entirely by hand.",
+      "B": "The ballpoint pen finally solved both of these problems.",
+      "C": "The end of the feather was cut into a sharp point for writing.",
+      "D": "Over time, metal began to replace feathers as the main material for pens.",
+      "E": "A quill also held very little ink, so it had to be dipped after every few words."
+    },
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "C",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "pronoun_reference",
+          "clue_raw": "SP|PR|BF|L",
+          "key_phrase": "the feather ← a large bird’s feather; a sharp point → This point wore down quickly"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "E",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "pronoun_reference",
+          "clue_raw": "SP|PR|BF|L",
+          "key_phrase": "A quill also ← This point wore down quickly（第一個缺點）; dipped → all this dipping"
+        }
+      },
+      {
+        "no": 3,
+        "label": "3",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "D",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "lexical_cohesion",
+          "clue_raw": "TS|LX|BF|L",
+          "key_phrase": "replace feathers ← the quill … a large bird’s feather; metal … pens → These metal pens lasted much longer than quills"
+        }
+      },
+      {
+        "no": 4,
+        "label": "4",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "B",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "pronoun_reference",
+          "clue_raw": "BR|PR|BF|L",
+          "key_phrase": "both of these problems ← often leaked / took a long time to dry; The ballpoint pen → Inside its tip … rarely leaks"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "from quill pens to ballpoint pens",
+      "genre": "expository",
+      "sdgs": [],
+      "text_format": "continuous"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "前一句說羽毛筆是用大型鳥類的羽毛做成的；(C) 接著說明這根羽毛（the feather）的末端被削成尖頭來寫字。後一句 This point wore down quickly 的 This point 回指 (C) 的 a sharp point，說這個筆尖很快就會磨鈍。前後都有錨點，選 (C)。",
+          "evidence": [
+            "the quill, a pen made from a large bird’s feather",
+            "The end of the feather was cut into a sharp point for writing.",
+            "This point wore down quickly"
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "pronoun_reference",
+          "option_notes_zh": {
+            "A": "多餘句：(A) 講知名作家用手寫書，與羽毛筆的構造無關，下一句的 This point 也找不到「尖端」可以回指。",
+            "B": "(B) 說原子筆解決了「這兩個問題」，但前面還沒有提到任何問題，原子筆也要到最後一段才出現。",
+            "D": "(D) 說金屬開始取代羽毛，下一句卻還在講要用小刀削羽毛筆尖，時間順序不對；(D) 屬於第 3 格。",
+            "E": "(E) 的 also 表示「另一個缺點」，但前面還沒有說過任何缺點；而且下一句的 This point 沒有先行詞。"
+          },
+          "strategy_zh": "This＋名詞常回指前面剛出現的同一個名詞；看到空格後一句以 This point 開頭，就找含有 point 的選項。",
+          "hints": [
+            "下一句以 This point 開頭，「這個尖端」是什麼？",
+            "找一個提到把羽毛削成 point 的選項。",
+            "答案提到 the end of the feather。"
+          ]
+        },
+        "2": {
+          "explanation_zh": "本段在講羽毛筆的缺點：前面先說筆尖很快磨鈍，(E) 用 also 再補一個缺點——羽毛筆能吸的墨水很少，每寫幾個字就得再沾一次（dipped）。下一句 Because of all this dipping 的 this dipping 正好回指 (E) 的 dipped，說明因此連寫一封短信都很費時。選 (E)。",
+          "evidence": [
+            "This point wore down quickly",
+            "A quill also held very little ink, so it had to be dipped after every few words.",
+            "Because of all this dipping, writing even a short letter could take a long time."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "pronoun_reference",
+          "option_notes_zh": {
+            "A": "多餘句：(A) 沒有提到沾墨水，下一句的 all this dipping 便沒有來源；而且它談的是作家，不是羽毛筆的缺點。",
+            "B": "(B) 的 both of these problems 在這裡對不上：原子筆要到最後一段才出現，下一句也沒有接著講原子筆。",
+            "C": "(C) 說羽毛被削成尖頭，下一句的 this dipping 卻沒有任何「沾墨水」的動作可以回指；(C) 屬於第 1 格。",
+            "D": "(D) 說金屬開始取代羽毛，但下一句仍在講羽毛筆沾墨水的麻煩，順序不對。"
+          },
+          "strategy_zh": "下一句出現 this＋動名詞（this dipping）時，空格裡通常有同一個動詞（dip）；再配合 also 判斷這一句是在追加同一類的內容。",
+          "hints": [
+            "下一句的 all this dipping 指的是什麼動作？",
+            "找一個提到 dip（沾墨水）的選項。",
+            "答案以 A quill also 開頭。"
+          ]
+        },
+        "3": {
+          "explanation_zh": "第二段講完羽毛筆的種種不便，第三段開頭需要一句引出新的筆。(D) 說金屬漸漸取代羽毛，成為製筆的主要材料；下一句 These metal pens lasted much longer than quills 的 These metal pens 回指 (D) 的「金屬做的筆」，並拿它和 quills 比較，與 (D) 的 replace feathers 呼應。本句是第三段的主題句，選 (D)。",
+          "evidence": [
+            "Over time, metal began to replace feathers as the main material for pens.",
+            "These metal pens lasted much longer than quills"
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "lexical_cohesion",
+          "option_notes_zh": {
+            "A": "多餘句：(A) 講作家用手寫書，下一句的 These metal pens 沒有可回指的「金屬筆」。",
+            "B": "(B) 的 both of these problems 可能讓人以為在指前一段的缺點，但下一句 These metal pens 必須先出現「金屬筆」，(B) 講的卻是原子筆。",
+            "C": "(C) 講羽毛被削尖，放在這裡內容倒退，也無法讓下一句的 These metal pens 有所指。",
+            "E": "(E) 再補充羽毛筆的缺點，但下一句的 These metal pens 找不到先行詞。"
+          },
+          "strategy_zh": "段首空格先看下一句：These metal pens 表示前面一定提過 metal 和 pen，找同時含有這兩個字的選項。",
+          "hints": [
+            "下一句以 These metal pens 開頭，空格裡應該先提到什麼材料？",
+            "找一個說 metal 取代 feathers 的選項。",
+            "答案以 Over time 開頭。"
+          ]
+        },
+        "4": {
+          "explanation_zh": "第三段最後一句指出早期鋼筆的兩個缺點：常常漏水（leaked）、墨水很久才乾（took a long time to dry），這正是 (B) 的 both of these problems。下一句 Inside its tip is a tiny ball 的 its 指 (B) 的 the ballpoint pen，並說明它很少漏水（rarely leaks），再下一句說墨水乾得很快，一一回應這兩個問題。選 (B)。",
+          "evidence": [
+            "However, early fountain pens often leaked, and their ink took a long time to dry.",
+            "The ballpoint pen finally solved both of these problems.",
+            "Inside its tip is a tiny ball that rolls ink evenly onto the paper, so the pen rarely leaks."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "pronoun_reference",
+          "option_notes_zh": {
+            "A": "多餘句：(A) 講作家用手寫書，沒有回應漏水、難乾的問題，下一句的 its tip 也沒有單數的「筆」可以指。",
+            "C": "(C) 講羽毛筆削尖頭，時間倒退回第二段，也接不上下一句的 tiny ball。",
+            "D": "(D) 說金屬取代羽毛，但第三段已經講過金屬筆和鋼筆，放在這裡順序倒退。",
+            "E": "(E) 講羽毛筆吸墨少，與前一句鋼筆的問題無關，下一句的 its tip … rarely leaks 也接不上。"
+          },
+          "strategy_zh": "選項裡出現 both／these problems 時，回頭數一數前一句列了幾個問題；再看下一句是否逐一回應。",
+          "hints": [
+            "前一句說早期鋼筆有哪兩個缺點？",
+            "哪個選項用 both of these problems 回指它們？",
+            "答案介紹了 the ballpoint pen。"
+          ]
+        }
+      }
+    },
+    "translation_zh": {
+      "text": "今天，我們大多數人都能隨手拿起一支筆就開始寫字，想都不用想。然而在人類大部分的歷史中，用手寫字既緩慢又常常弄得一團亂。人們使用的書寫工具經過很大的改變，才變得像我們現在用的筆這麼方便。\n許多世紀以來，歐洲最常見的書寫工具是羽毛筆，一種用大型鳥類的羽毛做成的筆。【1】羽毛的末端被削成尖頭用來寫字。這個尖端很快就會磨鈍，所以書寫的人得在手邊放一把小刀來削尖它。事實上，英文 penknife（小摺刀）這個字就是這樣來的。【2】羽毛筆能吸的墨水也很少，所以每寫幾個字就得再沾一次墨水。因為要不停地沾墨水，連寫一封短信都可能要花很久的時間。\n【3】隨著時間過去，金屬開始取代羽毛，成為製筆的主要材料。這些金屬筆比羽毛筆耐用得多，工廠也能便宜地大量製造。不過，書寫的人仍得一再把筆浸到墨水瓶裡。鋼筆改變了這一點：它把墨水存放在筆身裡，讓人能一連寫好幾頁都不必停下來。然而，早期的鋼筆常常漏水，墨水也要很久才會乾。\n【4】原子筆終於解決了這兩個問題。它的筆尖裡有一顆小小的珠子，能把墨水均勻地滾到紙上，所以很少漏水。它特殊的墨水也乾得很快。因為原子筆便宜又方便攜帶，很快就成為全世界最受歡迎的書寫工具。\n（多餘句 (A)：有些知名作家完全用手寫完他們的書。）"
+    },
+    "elimination": {
+      "feasible": {
+        "1": [
+          "C"
+        ],
+        "2": [
+          "E"
+        ],
+        "3": [
+          "D"
+        ],
+        "4": [
+          "B"
+        ]
+      },
+      "perfect_matchings": 1
+    },
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": null,
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "3-V-7",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "7-V-5",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "B-V-8",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": "本文由 AI 撰寫"
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-08-structure-basic-01",
+    "lot": "structure-basic-01",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/structure",
+    "prompt_sha256": "cba86c4ab7ea3717e493fac37437cc57a242dd5da5754c77abdd9dbb2e680f94",
+    "spec_id": "structure-basic@2026-10-08",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 224,
+    "sentences": 14,
+    "avg_sentence_length": 16.0,
+    "denominator": 223,
+    "proper_nouns": [
+      "Europe"
+    ],
+    "numbers": 0,
+    "coverage_l1_4": 0.9776,
+    "coverage_l1_6": 0.9821,
+    "offlist_ratio": 0.0179,
+    "beyond_l4_ratio": 0.0045,
+    "level_counts": {
+      "1": 199,
+      "2": 10,
+      "3": 8,
+      "4": 1,
+      "6": 1,
+      "off": 4
+    },
+    "offlist_words": [
+      "ballpoint",
+      "penknife",
+      "quill",
+      "quills"
+    ],
+    "band": {
+      "tier": "basic",
+      "basis": "lot structure-basic-01（SPEC §3.4＋出題規格書 passage_overrides（words、coverage_L1_4_min（取代 SPEC 的區間）、coverage_L1_6_min、offlist_max、beyond_l4_ratio_max））",
+      "ok": true,
+      "checks": {
+        "word_count": {
+          "value": 224,
+          "min": 220,
+          "max": 280,
+          "ok": true
+        },
+        "coverage_l1_4": {
+          "value": 0.9776,
+          "min": 0.93,
+          "max": null,
+          "ok": true
+        },
+        "coverage_l1_6": {
+          "value": 0.9821,
+          "min": 0.96,
+          "max": null,
+          "ok": true
+        },
+        "offlist_ratio": {
+          "value": 0.0179,
+          "min": null,
+          "max": 0.04,
+          "ok": true
+        },
+        "avg_sentence_length": {
+          "value": 16.0,
+          "min": null,
+          "max": 17,
+          "ok": true
+        },
+        "beyond_l4_ratio": {
+          "value": 0.0045,
+          "min": null,
+          "max": 0.04,
+          "ok": true
+        }
+      }
+    }
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T00:50:04Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T00:44:37Z",
+      "details": {
+        "solver": "A",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "answers": {
+          "1": {
+            "answer": "C",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "For many centuries, the most common writing tool in Europe was the quill, a pen made from a large bird’s feather.",
+              "This point wore down quickly, so writers had to keep a small knife nearby to sharpen it."
+            ],
+            "explanation_zh": "後句 This point 需要先提到筆尖；C 說羽毛末端削成尖頭，承接 quill 的介紹。",
+            "feasible": [
+              "C"
+            ]
+          },
+          "2": {
+            "answer": "E",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Because of all this dipping, writing even a short letter could take a long time."
+            ],
+            "explanation_zh": "後句 all this dipping 需要先提到沾墨水；E 說羽毛筆存墨很少、每寫幾個字就得沾一次。",
+            "feasible": [
+              "E"
+            ]
+          },
+          "3": {
+            "answer": "D",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "These metal pens lasted much longer than quills, and factories could make them cheaply in large numbers."
+            ],
+            "explanation_zh": "段首，後句 These metal pens 需先引入金屬筆；D 說金屬逐漸取代羽毛成為筆的主要材料。",
+            "feasible": [
+              "D"
+            ]
+          },
+          "4": {
+            "answer": "B",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "However, early fountain pens often leaked, and their ink took a long time to dry.",
+              "Inside its tip is a tiny ball that rolls ink evenly onto the paper, so the pen rarely leaks."
+            ],
+            "explanation_zh": "上段結尾提出鋼筆漏墨、墨水乾得慢兩個問題，B 的 both of these problems 正好呼應，後句 its tip/tiny ball 描述原子筆。",
+            "feasible": [
+              "B"
+            ]
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T00:50:04Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "answers": {
+          "1": {
+            "answer": "C",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "This point wore down quickly, so writers had to keep a small knife nearby to sharpen it."
+            ],
+            "explanation_zh": "前句說羽毛筆由大鳥羽毛做成，後句 This point 指被削尖的筆尖，C 說羽毛尾端被削成尖點，剛好提供 point 的先行詞。",
+            "feasible": [
+              "C"
+            ]
+          },
+          "2": {
+            "answer": "E",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Because of all this dipping, writing even a short letter could take a long time."
+            ],
+            "explanation_zh": "後句 Because of all this dipping 指不斷沾墨，E 說羽毛筆存墨很少、幾個字就要沾一次墨，提供 dipping 的來源。",
+            "feasible": [
+              "E"
+            ]
+          },
+          "3": {
+            "answer": "D",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "These metal pens lasted much longer than quills, and factories could make them cheaply in large numbers."
+            ],
+            "explanation_zh": "本段先講金屬筆，後句 These metal pens 需要先有 metal 出現；D 說金屬逐漸取代羽毛，引出金屬筆。",
+            "feasible": [
+              "D"
+            ]
+          },
+          "4": {
+            "answer": "B",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "However, early fountain pens often leaked, and their ink took a long time to dry.",
+              "Inside its tip is a tiny ball that rolls ink evenly onto the paper, so the pen rarely leaks."
+            ],
+            "explanation_zh": "前段說鋼筆會漏墨且墨水乾得慢，後文原子筆不漏墨、乾得快，B 說原子筆解決了這兩個問題。A 提到名作家手寫，與筆的演進無關。",
+            "feasible": [
+              "B"
+            ]
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "distractor_audit",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T00:49:37Z",
+      "details": {
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "items": {
+          "1": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "off_topic",
+              "evidence": "This point wore down quickly, so writers had to keep a small knife nearby to sharpen it.",
+              "explanation_zh": "多餘句：作家手寫書與羽毛筆的構造無關，下一句的 This point 沒有「尖端」可回指。"
+            },
+            "B": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "For many centuries, the most common writing tool in Europe was the quill, a pen made from a large bird’s feather.",
+              "explanation_zh": "前面只介紹了羽毛筆，還沒有任何問題，(B) 的 both of these problems 沒有先行詞；原子筆也還沒到出場的時候，下一句的 This point 同樣接不上。"
+            },
+            "D": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "This point wore down quickly, so writers had to keep a small knife nearby to sharpen it.",
+              "explanation_zh": "(D) 說金屬開始取代羽毛，下一句卻仍在講削羽毛筆尖，時間順序不對，This point 也沒有先行詞。"
+            },
+            "E": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "This point wore down quickly, so writers had to keep a small knife nearby to sharpen it.",
+              "explanation_zh": "(E) 沒有提到筆尖，下一句的 This point 沒有先行詞；also 表示追加缺點，但前面還沒說過任何缺點。"
+            }
+          },
+          "2": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "off_topic",
+              "evidence": "Because of all this dipping, writing even a short letter could take a long time.",
+              "explanation_zh": "多餘句：沒有提到沾墨水，下一句的 all this dipping 沒有來源。"
+            },
+            "B": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Because of all this dipping, writing even a short letter could take a long time.",
+              "explanation_zh": "前面只說了筆尖磨鈍一個缺點，(B) 的 both of these problems 對不上；下一句仍在講沾墨水的麻煩，不是原子筆。"
+            },
+            "C": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Because of all this dipping, writing even a short letter could take a long time.",
+              "explanation_zh": "(C) 只說羽毛被削尖，下一句 all this dipping 沒有任何「沾墨水」可回指；筆尖已在前一句 This point 談過，(C) 屬於第 1 格。"
+            },
+            "D": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "Because of all this dipping, writing even a short letter could take a long time.",
+              "explanation_zh": "(D) 說金屬取代羽毛，下一句卻還在講羽毛筆不斷沾墨的麻煩，順序不對，this dipping 也沒有來源。"
+            }
+          },
+          "3": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "off_topic",
+              "evidence": "These metal pens lasted much longer than quills, and factories could make them cheaply in large numbers.",
+              "explanation_zh": "多餘句：作家手寫書與金屬筆無關，下一句 These metal pens 沒有先行詞。"
+            },
+            "B": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "These metal pens lasted much longer than quills, and factories could make them cheaply in large numbers.",
+              "explanation_zh": "下一句 These metal pens 必須先出現金屬做的筆，(B) 講的是原子筆，而且原子筆出現在金屬筆、鋼筆之前，時間順序不對。"
+            },
+            "C": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "These metal pens lasted much longer than quills, and factories could make them cheaply in large numbers.",
+              "explanation_zh": "(C) 講削羽毛筆尖，內容倒退回第二段，下一句的 These metal pens 沒有先行詞。"
+            },
+            "E": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "These metal pens lasted much longer than quills, and factories could make them cheaply in large numbers.",
+              "explanation_zh": "(E) 再補充羽毛筆吸墨少，下一句的 These metal pens 沒有先行詞。"
+            }
+          },
+          "4": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "off_topic",
+              "evidence": "Inside its tip is a tiny ball that rolls ink evenly onto the paper, so the pen rarely leaks.",
+              "explanation_zh": "多餘句：作家手寫書沒有回應漏墨、難乾的問題，下一句 its tip 沒有單數的筆可指。"
+            },
+            "C": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "Inside its tip is a tiny ball that rolls ink evenly onto the paper, so the pen rarely leaks.",
+              "explanation_zh": "(C) 講羽毛筆削尖頭，時間倒退回第二段；下一句筆尖裡的小珠子、很少漏墨都不是羽毛筆的特徵。"
+            },
+            "D": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "These metal pens lasted much longer than quills, and factories could make them cheaply in large numbers.",
+              "explanation_zh": "第三段一開始就已經在講金屬筆，(D) 再說金屬開始取代羽毛，順序倒退，也沒有回應前一句鋼筆的兩個問題。"
+            },
+            "E": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "However, early fountain pens often leaked, and their ink took a long time to dry.",
+              "explanation_zh": "前一句說的是鋼筆漏墨、墨水難乾，(E) 回頭講羽毛筆吸墨少，接不上；下一句 its tip … rarely leaks 也不是在說羽毛筆。"
+            }
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "unique_solution",
+      "reviewer": "record_verification.py",
+      "result": "pass",
+      "created_at": "2026-10-09T00:50:04Z",
+      "details": {
+        "method": "injective_assignment",
+        "perfect_matchings": 1,
+        "matches_key": true,
+        "feasible": {
+          "1": [
+            "C"
+          ],
+          "2": [
+            "E"
+          ],
+          "3": [
+            "D"
+          ],
+          "4": [
+            "B"
+          ]
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

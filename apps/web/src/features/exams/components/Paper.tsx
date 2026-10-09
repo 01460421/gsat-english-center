@@ -11,7 +11,7 @@ import { useAttemptSelector } from '../AttemptContext';
 import { useExam } from '../ExamContext';
 import { groupErratum } from '../labels';
 import { clusterQuestions, groupLayout } from '../paper';
-import { refersToHighlights } from '../richText';
+import { useGroupHighlights } from '../QuestionExtras';
 import { isAutoScored } from '../scoring';
 import { BankGroup, ClozeGroup } from './BlankGroups';
 import { PassageView, groupHasStimulus } from './Passage';
@@ -23,7 +23,7 @@ const SIDE_BY_SIDE_TYPES: ReadonlySet<ExamSection['type']> = new Set(['reading',
 
 function StandardGroup({ group, section }: { group: QuestionGroup; section: ExamSection }) {
   const exam = useExam();
-  const highlights = useMemo(() => refersToHighlights(group), [group]);
+  const highlights = useGroupHighlights(group);
   const items = useMemo(() => clusterQuestions(group.questions), [group.questions]);
 
   const questions = (
@@ -88,7 +88,8 @@ function StandardGroup({ group, section }: { group: QuestionGroup; section: Exam
   );
 }
 
-function GroupView({ group, section }: { group: QuestionGroup; section: ExamSection }) {
+/** 一個題組的作答介面（依資料形狀選擇）。題庫練習頁直接用它畫 AI 題組。 */
+export function GroupView({ group, section }: { group: QuestionGroup; section: ExamSection }) {
   switch (groupLayout(group)) {
     case 'cloze':
       return <ClozeGroup group={group} />;

@@ -1,0 +1,210 @@
+{
+  "schema": "gsat-bank-lot/v1",
+  "lot": "vocabulary-top-01",
+  "section_type": "vocabulary",
+  "tier": "top",
+  "label_zh": "詞彙題‧超越頂標（第 1 批）",
+  "created_on": "2026-10-08",
+  "count": 5,
+  "questions_per_group": 10,
+  "format_version": "vocabulary-10",
+  "uid_prefix": "ai.vo.",
+  "path": "data/bank/v1/vocabulary/top/",
+  "spec_id": "vocabulary-top@2026-10-08",
+  "spec_file": "data/exams/generation-spec/vocabulary.json",
+  "spec_tier_key": "beyond_top",
+  "spec_status": "draft：由 565 題有官方統計的歷屆詞彙題推得，上線後依作答資料校正（SPEC §3.6）",
+  "topic_quota": {
+    "basis": "詞彙題是單句題，不設選文主題配額；同一組 10 題的題幹情境至少 5 種（校園、科技、健康、社會、文化…）"
+  },
+  "answer_letter_share": [
+    0.2,
+    0.3
+  ],
+  "avoid": {
+    "basis": "data/exams/parsed 的 gsat-111、gsat-112、gsat-113、gsat-114、gsat-115、ref-115 同一大題（vocabulary）的正解（單字取詞彙表主形，功能詞與 L1 字不列；片語整串列出）",
+    "answer_words": [
+      "agreeable",
+      "amateur",
+      "ancestor",
+      "appeal",
+      "assault",
+      "assistant",
+      "bare",
+      "blur",
+      "blush",
+      "choke",
+      "commit",
+      "compulsory",
+      "consumption",
+      "container",
+      "counter",
+      "credit",
+      "cripple",
+      "deliver",
+      "draft",
+      "dread",
+      "due",
+      "elbow",
+      "emerge",
+      "enormous",
+      "eventual",
+      "grace",
+      "grave",
+      "halt",
+      "humidity",
+      "initially",
+      "manufacturer",
+      "offensive",
+      "passion",
+      "pose",
+      "potentially",
+      "produce",
+      "promise",
+      "puppet",
+      "quest",
+      "randomly",
+      "recall",
+      "retire",
+      "sincerity",
+      "slender",
+      "sticky",
+      "supposedly",
+      "tag",
+      "tight",
+      "vacancy",
+      "vacant",
+      "verbally",
+      "visible"
+    ],
+    "answer_sentences": [],
+    "topics": []
+  },
+  "passage_band": null,
+  "item_rules": {
+    "summary_zh": "正解 L4–6（L6 ≤20%），或常用字的延伸義、轉品 ≥30%；≥2 個近義干擾；要讀懂整句才能判斷",
+    "answer_levels": {
+      "min": 4,
+      "max": 6
+    },
+    "level6_share_max": 0.2,
+    "word_meaning_share_min": null,
+    "collocation_share_target": null,
+    "extended_or_conversion_share_min": 0.3,
+    "near_synonym_distractors_min": 2,
+    "clue_scope": "whole_sentence"
+  },
+  "targets": {
+    "routes": {
+      "A_extended_or_conversion": {
+        "share": 0.7,
+        "answer_levels": [
+          2,
+          3,
+          4
+        ],
+        "desc": "常見字（L2–4）的延伸義或轉品；關鍵在固定搭配（現制 13 題中 9 題）"
+      },
+      "B_core_high_level": {
+        "share": 0.3,
+        "answer_levels": [
+          5,
+          6
+        ],
+        "desc": "L5（偶爾 L6）核心義，搭配一個低級字的近似干擾（現制 3 題：quest、compulsory、supposedly；指考超越頂標 L5–6／表外占 65%）",
+        "max_L6_per_10": 1
+      }
+    },
+    "answer_level_dist": {
+      "2": 0.15,
+      "3": 0.25,
+      "4": 0.3,
+      "5": 0.2,
+      "6": 0.1
+    },
+    "answer_level_allowed": [
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "off_list_answers": 0,
+    "question_type_mix": {
+      "extended_sense": 0.45,
+      "conversion": 0.25,
+      "core_L5plus_with_near_miss": 0.3
+    },
+    "blank_type_mix": {
+      "noun": 0.3,
+      "verb": 0.3,
+      "adjective": 0.3,
+      "adverb": 0.1,
+      "note": "格式固定 3/3/3/1；現制非核心義 14 題中 8 題是動詞，動詞格最適合走 route A"
+    },
+    "clue_type_mix": {
+      "collocation": 0.75,
+      "contrast": 0.1,
+      "definition_restatement": 0.1,
+      "cause_effect": 0.05
+    },
+    "clue_rules": {
+      "explicit_cue_required": true,
+      "situational_only_max_per_10": 0,
+      "collocate_must_be_in_stem": true
+    },
+    "passage_words": [
+      16,
+      21
+    ],
+    "distractor_rules": {
+      "same_pos": true,
+      "same_inflection_class": true,
+      "single_word": true,
+      "level_window_rel_key": [
+        -3,
+        3
+      ],
+      "max_level": 6,
+      "off_list_max": 1,
+      "near_miss_count": [
+        1,
+        2
+      ],
+      "near_miss_definition": "符合整句大意、常是較常見的一般字（現制最強干擾 13 題中 8 題是 L1–3），只錯在搭配、語域或精確字義",
+      "near_miss_level": "優先比正解低或同級（現制：低 5、同 5、高 2、表外 1）",
+      "must_not_be_defensible": "近似干擾放進句子必須是錯的：查得到常見搭配者不得用",
+      "target_top_third_pull_strongest": [
+        0.2,
+        0.45
+      ],
+      "reverse_distractor_expected": "至少一個干擾被高分組選的比例高於低分組（現制 13 題中 10 題）"
+    },
+    "common_errors": [
+      "把難度只放在字級：GSAT 合併資料中正解字級與 P 的等級相關只有 ρ = −0.12",
+      "近似干擾其實可接受或比正解常見：gsat-113 第 8 題高分組 78% 選另一個常見動詞，Pa 只有 .15；gsat-112 第 4 題 Pa（.21）< Pb（.28），帶 low_upper_discrimination 旗標",
+      "題幹沒有能鎖定延伸義的搭配詞，變成只能猜"
+    ]
+  },
+  "set_composition": {
+    "desc": "單一難度練習：10 題同一級",
+    "blank_type_mix": {
+      "noun": 3,
+      "verb": 3,
+      "adjective": 3,
+      "adverb": 1
+    },
+    "answer_letters_each": [
+      1,
+      4
+    ],
+    "tier_quotas": "見 tiers.*（L5 數、非核心義數、近似干擾數）"
+  },
+  "verification": {
+    "blind_solvers": 2,
+    "blind_b_different_model": true,
+    "distractor_audit": true,
+    "unique_solution": false,
+    "human_review": "100%（校準期：每個題型 × 提示詞版本的前 30 組全審，SPEC §5.8）"
+  }
+}

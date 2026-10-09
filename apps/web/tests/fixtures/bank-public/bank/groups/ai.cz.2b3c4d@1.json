@@ -1,0 +1,163 @@
+{
+  "schema": "gsat-bank-practice/v1",
+  "uid": "ai.cz.2b3c4d",
+  "version": 1,
+  "section_type": "cloze",
+  "format_version": "cloze-5",
+  "tier": "advanced",
+  "auto_verified": true,
+  "group": {
+    "id": "g1",
+    "passage": "Many people think of honey as a simple sweetener, [[1]] it has a surprisingly long history. Archaeologists have found pots of honey in ancient Egyptian tombs that were still [[2]] to eat after thousands of years. Honey lasts so long because it contains very little water, which makes it hard for bacteria to [[3]].",
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "single_choice",
+        "stem": null,
+        "options": {
+          "A": "but",
+          "B": "so",
+          "C": "because",
+          "D": "unless"
+        },
+        "answer": "A",
+        "accepted_answers": null,
+        "points": 1,
+        "stats": null,
+        "tags": {
+          "test_point": "connective",
+          "answer_pos": "conjunction"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "single_choice",
+        "stem": null,
+        "options": {
+          "A": "safe",
+          "B": "eager",
+          "C": "likely",
+          "D": "rare"
+        },
+        "answer": "A",
+        "accepted_answers": null,
+        "points": 1,
+        "stats": null,
+        "tags": {
+          "test_point": "word_meaning",
+          "answer_pos": "adjective"
+        }
+      },
+      {
+        "no": 3,
+        "label": "3",
+        "mode": "single_choice",
+        "stem": null,
+        "options": {
+          "A": "survive",
+          "B": "escape",
+          "C": "remain",
+          "D": "appear"
+        },
+        "answer": "A",
+        "accepted_answers": null,
+        "points": 1,
+        "stats": null,
+        "tags": {
+          "test_point": "word_meaning",
+          "answer_pos": "verb"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "why honey lasts so long",
+      "genre": "expository",
+      "sdgs": [],
+      "text_format": "continuous"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "前面說蜂蜜只是甜味劑，後面說它歷史悠久，語意轉折，用 but。",
+          "evidence": [
+            "it has a surprisingly long history"
+          ],
+          "blank_pos": "conjunction",
+          "clue_type": "contrast",
+          "option_notes_zh": {
+            "B": "so 表結果，前後不是因果。",
+            "C": "because 表原因，語意不通。",
+            "D": "unless 表條件，不合。"
+          },
+          "strategy_zh": "看到 surprisingly，前後常是對比。",
+          "hints": [
+            "空格連接兩個子句。",
+            "前後兩句的語意是順接還是相反？",
+            "刪去 B、D。"
+          ]
+        },
+        "2": {
+          "explanation_zh": "幾千年後仍然「可以安全」食用，safe to eat 是常見搭配。",
+          "evidence": [
+            "to eat after thousands of years"
+          ],
+          "blank_pos": "adjective",
+          "clue_type": "collocation",
+          "option_notes_zh": {
+            "B": "eager to 指人「渴望」，主詞是蜂蜜不通。",
+            "C": "likely to eat 指蜂蜜「可能去吃」，不通。",
+            "D": "rare to eat 不是自然搭配。"
+          },
+          "strategy_zh": "形容詞＋to V 的搭配要看主詞是人還是物。",
+          "hints": [
+            "空格是形容詞，後面接 to eat。",
+            "主詞是 pots of honey。",
+            "刪去 B、C。"
+          ]
+        },
+        "3": {
+          "explanation_zh": "水分很少，細菌難以「存活」。",
+          "evidence": [
+            "contains very little water"
+          ],
+          "blank_pos": "verb",
+          "clue_type": "cause_effect",
+          "option_notes_zh": {
+            "B": "escape「逃脫」，和水分少無關。",
+            "C": "remain 後面通常要接補語。",
+            "D": "appear「出現」，語意較弱且不是因果重點。"
+          },
+          "strategy_zh": "which 引導的子句說明前句的結果。",
+          "hints": [
+            "to 後面接原形動詞。",
+            "水分少會讓細菌怎樣？",
+            "刪去 B、C。"
+          ]
+        }
+      }
+    },
+    "translation_zh": {
+      "text": "許多人認為蜂蜜只是單純的甜味劑，但它其實有著出乎意料的悠久歷史。考古學家在古埃及墓穴中發現了好幾罐蜂蜜，經過數千年仍然可以安全食用。蜂蜜之所以能保存這麼久，是因為它的水分很少，細菌很難存活。"
+    },
+    "elimination": null
+  },
+  "curriculum": [
+    {
+      "code": "3-V-12",
+      "weight": "primary"
+    }
+  ],
+  "provenance": {
+    "license": "original-ai",
+    "derivation": "ai-original-from-facts",
+    "attribution_text": "本文由 AI 參考下列資料撰寫，非原文轉載",
+    "sources": []
+  }
+}

@@ -42,7 +42,23 @@ function renderNodes(
         return (
           <Fragment key={i}>
             {splitByHighlights(node.text, node.start, highlights).map((piece, j) =>
-              piece.highlight ? (
+              piece.highlight?.kind === 'evidence' ? (
+                // 證據句：底線＋淡底色（不只靠顏色），data-evidence-label 讓解析卡的「在文中標出」捲過來並把焦點移過來
+                // （tabIndex=-1：可以用程式聚焦，但不進 Tab 順序）。一句證據常被空格按鈕或另一題的證據切成好幾段，
+                // 所以不加左右內距（每段都加會在「substances ,」「expand .」這種標點前多出空隙）。
+                <mark
+                  key={j}
+                  title={`第 ${piece.highlight.label} 題的證據句`}
+                  data-evidence-label={piece.highlight.label}
+                  data-active={piece.highlight.active ? 'true' : undefined}
+                  tabIndex={piece.highlight.active ? -1 : undefined}
+                  className={`text-fg underline decoration-ok underline-offset-4 outline-none ${
+                    piece.highlight.active ? 'bg-ok/30 decoration-4' : 'bg-ok/10 decoration-2'
+                  }`}
+                >
+                  {piece.text}
+                </mark>
+              ) : piece.highlight ? (
                 <mark
                   key={j}
                   title={`第 ${piece.highlight.label} 題所指的字詞`}
