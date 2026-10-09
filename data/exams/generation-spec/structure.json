@@ -282,7 +282,7 @@
    "last_blank_tier_observed": "現制 5/5 篇的最後一格都是 advanced"
   },
   "vocabulary": {
-   "method": "同 docs/analysis/sections/02-cloze.md：tokens 用 exam_stats.py 的 regex；beyond_l4 只用 forms-index 精確比對；coverage 加衍生字回退、大寫開頭且查不到的字視為專有名詞",
+   "method": "tokens 用 exam_stats.py 的 regex；beyond_l4 只用 forms-index 精確比對；coverage 用 forms-index＋common_rules.vocabulary_level.derivation_fallback，大寫開頭且查不到的字視為專有名詞（依共通表重算，現制 5 篇的通過數不變）",
    "beyond_l4_ratio": {
     "observed": [
      0.022,
@@ -522,7 +522,11 @@
    "rule": "round(Pc*100) >= 50",
    "expected_correct_rate_for_band_students": {
     "gsat_current_structure": 0.704,
-    "ast_structure": 0.79
+    "reference_not_comparable": {
+     "ast_structure": 0.79,
+     "population": "ast",
+     "note": "指考題對指考考生各帶的值；與學測各帶不可比，不當驗收目標"
+    }
    },
    "target_stats": {
     "n_current": 8,
@@ -806,7 +810,11 @@
    "rule": "round(Pc*100) < 50 and round(Pb*100) >= 50",
    "expected_correct_rate_for_band_students": {
     "gsat_current_structure": 0.715,
-    "ast_structure": 0.719
+    "reference_not_comparable": {
+     "ast_structure": 0.719,
+     "population": "ast",
+     "note": "指考題對指考考生各帶的值；與學測各帶不可比，不當驗收目標"
+    }
    },
    "target_stats": {
     "n_current": 8,
@@ -1103,7 +1111,11 @@
    "rule": "round(Pb*100) < 50",
    "expected_correct_rate_for_band_students": {
     "gsat_current_structure": 0.747,
-    "ast_structure": 0.636
+    "reference_not_comparable": {
+     "ast_structure": 0.636,
+     "population": "ast",
+     "note": "指考題對指考考生各帶的值；與學測各帶不可比，不當驗收目標"
+    }
    },
    "target_stats": {
     "n_current": 4,
@@ -1276,10 +1288,11 @@
      0.3,
      0.45
     ],
-    "ast_supplement_P_range": [
-     0.2,
-     0.35
-    ]
+    "ast_like_design_rule": {
+     "what": "指考型設計格：線索強度 ≤1、錨點只在一側，再加一個瞄準該格的多餘句（CT 或 SC），或用生詞後指定位",
+     "target_P": null,
+     "note": "不設學測目標 P；上線後依 G50 重算。指考 top 題 P 中位數 .315（IQR .29–.35）只描述指考母體，不拿來校準學測"
+    }
    },
    "blank_recipe": {
     "cue_strength_max": 1,
@@ -1449,10 +1462,14 @@
    },
    "beyond_top": {
     "4t_current_like": 0.747,
-    "2t_current_2t_ast_like": 0.692,
     "3t1a": 0.78
    },
-   "method": "logit 內插五等分組（同 tools/difficulty_bands.py），帶內平均 θ：basic 0.235、advanced 0.781、top 1.548；ast_like 用指考 top 題對指考頂標帶的 0.636 近似"
+   "method": "logit 內插五等分組（同 tools/difficulty_bands.py），帶內平均 θ：basic 0.235、advanced 0.781、top 1.548；只用學測現制題。頂標以上帶 θ 超出 Pa 點，取 Pa（clamp）",
+   "not_comparable_reference": {
+    "2t_current_2t_ast_like": 0.692,
+    "population": "ast＋gsat 混算",
+    "note": "指考 top 題的 .636 是指考前 20% 考生的成功率，不是學測頂標以上考生；這個合成值不當驗收目標，也不進 E 的範圍檢查"
+   }
   },
   "mock_section": {
    "tiers_per_4": {
@@ -1471,7 +1488,7 @@
    },
    "last_blank_tier": "advanced（現制 5/5）"
   },
-  "rationale": "現制每篇都至少 1 格 advanced；超越頂標題在現制只有 4 格（P 0.33–0.45），對頂標帶的預期答對率 0.75，偏易，所以超越頂標練習要摻指考型設計"
+  "rationale": "現制每篇都至少 1 格 advanced；超越頂標題在現制只有 4 格（P 0.33–0.45），對頂標帶的預期答對率 0.75，偏易，所以超越頂標練習至少 1 格用指考型設計（設計規則，不設學測目標 P）"
  },
  "anchors": {
   "selection": "現制 111–115 為主、排除旗標題（篇章結構無旗標題）；P 接近該級中位數、線索類型分散；只列 exam id＋題號",
@@ -1850,6 +1867,8 @@
    "id": "STR-FMT-01",
    "stage": "pre",
    "severity": "error",
+   "actor": "program",
+   "tier_scope": "set",
    "description": "1 篇 4 空格，題號 31–34 連續（單篇練習同）",
    "rule": {
     "metric": "blanks",
@@ -1862,6 +1881,8 @@
    "id": "STR-FMT-02",
    "stage": "pre",
    "severity": "error",
+   "actor": "program",
+   "tier_scope": "set",
    "description": "選項 5 句 A–E；每個選項是完整句（大寫或引號開頭、句號／問號／驚嘆號結尾）；選項不重複",
    "rule": {
     "metric": "options",
@@ -1876,6 +1897,8 @@
    "id": "STR-FMT-03",
    "stage": "pre",
    "severity": "error",
+   "actor": "program",
+   "tier_scope": "set",
    "description": "4 個答案字母互不相同；恰好 1 個未用選項（多餘句），且不是最後一個字母 E",
    "rule": {
     "metric": "keys",
@@ -1889,6 +1912,8 @@
    "id": "STR-FMT-04",
    "stage": "pre",
    "severity": "warn",
+   "actor": "program",
+   "tier_scope": "set",
    "description": "第一格答案不是 A；答案字母與格序相同（第 k 格答第 k 個字母）至多 1 格",
    "rule": {
     "all": [
@@ -1910,6 +1935,8 @@
    "id": "STR-PAS-01",
    "stage": "pre",
    "severity": "error",
+   "actor": "program",
+   "tier_scope": "set",
    "description": "選文字數（不含選項句）落在該級 passage_overrides.words；模擬卷 220–310",
    "rule": {
     "metric": "passage_words_excluding_options",
@@ -1926,6 +1953,8 @@
    "id": "STR-PAS-02",
    "stage": "pre",
    "severity": "warn",
+   "actor": "program",
+   "tier_scope": "set",
    "description": "段落 3–5；不含空格的句數 12–19；放回答案後平均句長 14–19 字",
    "rule": {
     "all": [
@@ -1961,6 +1990,8 @@
    "id": "STR-PAS-03",
    "stage": "pre",
    "severity": "warn",
+   "actor": "program",
+   "tier_scope": "set",
    "description": "模擬卷與進階、超越頂標用說明文；記敘文、傳記只用於穩定基礎",
    "rule": {
     "metric": "genre",
@@ -1976,6 +2007,8 @@
    "id": "STR-LAY-01",
    "stage": "pre",
    "severity": "error",
+   "actor": "program",
+   "tier_scope": "set",
    "description": "第一句不挖空，第一格前至少 15 字",
    "rule": {
     "all": [
@@ -1997,6 +2030,8 @@
    "id": "STR-LAY-02",
    "stage": "pre",
    "severity": "error",
+   "actor": "program",
+   "tier_scope": "set",
    "description": "最後一句不挖空；兩格之間至少隔 1 個完整句（不連挖）",
    "rule": {
     "all": [
@@ -2018,6 +2053,8 @@
    "id": "STR-LAY-03",
    "stage": "pre",
    "severity": "error",
+   "actor": "program",
+   "tier_scope": "set",
    "description": "每段最多 2 格；至少 3 段有空格；最後一段有空格",
    "rule": {
     "all": [
@@ -2044,6 +2081,8 @@
    "id": "STR-LAY-04",
    "stage": "pre",
    "severity": "warn",
+   "actor": "program",
+   "tier_scope": "set",
    "description": "至少 1 格的功能是主題句或承上啟下（TS/BR）",
    "rule": {
     "metric": "blanks_with_func_in",
@@ -2060,6 +2099,8 @@
    "id": "STR-LAY-05",
    "stage": "pre",
    "severity": "warn",
+   "actor": "program",
+   "tier_scope": "set",
    "description": "至少 1 格在段首",
    "rule": {
     "metric": "paragraph_initial_blanks",
@@ -2072,7 +2113,9 @@
    "id": "STR-VOC-01",
    "stage": "pre",
    "severity": "warn",
-   "description": "覆蓋率（含衍生字回退）與 beyond-L4、表外字符合該級 passage_overrides",
+   "actor": "program",
+   "tier_scope": "set",
+   "description": "覆蓋率（common_rules.vocabulary_level.derivation_fallback）與 beyond-L4、表外字符合該級 passage_overrides",
    "rule": {
     "all": [
      {
@@ -2107,6 +2150,8 @@
    "id": "STR-VOC-02",
    "stage": "pre",
    "severity": "warn",
+   "actor": "program",
+   "tier_scope": "set",
    "description": "每篇相異 L5–6 詞目 ≤10（現制 5–10）",
    "rule": {
     "metric": "distinct_L5_6_lemmas",
@@ -2119,6 +2164,8 @@
    "id": "STR-VOC-03",
    "stage": "pre",
    "severity": "error",
+   "actor": "program",
+   "tier_scope": "set",
    "description": "選項句中「選文沒出現過的表外字」每句 ≤1（主題詞可在選文與選項重複出現）",
    "rule": {
     "metric": "option_new_offlist_words",
@@ -2131,6 +2178,8 @@
    "id": "STR-OPT-01",
    "stage": "pre",
    "severity": "warn",
+   "actor": "program",
+   "tier_scope": "set",
    "description": "正解句 8–20 字、多餘句 8–17 字；5 個選項最長與最短相差 ≤11 字（長度不洩題）",
    "rule": {
     "all": [
@@ -2163,6 +2212,8 @@
    "id": "STR-OPT-02",
    "stage": "pre",
    "severity": "error",
+   "actor": "program",
+   "tier_scope": "set",
    "description": "選項句與選文不得有 8 字以上連續相同字串",
    "rule": {
     "metric": "max_shared_ngram_words",
@@ -2175,6 +2226,8 @@
    "id": "STR-OPT-03",
    "stage": "pre",
    "severity": "warn",
+   "actor": "program",
+   "tier_scope": "set",
    "description": "選項依字元長度由短到長排列（官方常見做法），或至少不讓正解集中在最長／最短",
    "rule": {
     "metric": "option_order",
@@ -2190,6 +2243,8 @@
    "id": "STR-CUE-01",
    "stage": "pre",
    "severity": "error",
+   "actor": "program+auditor",
+   "tier_scope": "item",
    "description": "每格標 func（TS/BR/SP/CT/SQ/CL）、cue（PR/CN/LX/LG）、dir（B/F/BF）、scope（L/P），並附 cue_spans：選項中與前後句中的線索字串，程式檢查字串逐字存在",
    "rule": {
     "metric": "cue_spans_verbatim",
@@ -2209,6 +2264,8 @@
    "id": "STR-CUE-02",
    "stage": "pre",
    "severity": "error",
+   "actor": "program",
+   "tier_scope": "set",
    "description": "線索強度符合該級：穩定基礎每格 ≥2 且 ≥2 格 =3；進階 1–2，且含 1 格 F-only、1 格 P；超越頂標每格 ≤1",
    "rule": {
     "metric": "cue_strength",
@@ -2236,6 +2293,8 @@
    "id": "STR-CUE-03",
    "stage": "pre",
    "severity": "warn",
+   "actor": "program",
+   "tier_scope": "set",
    "description": "模擬卷 4 格至少 2 種 cue 類型；穩定基礎不得有「只靠連接詞」的格（CN 且 dir≠BF）",
    "rule": {
     "all": [
@@ -2258,6 +2317,8 @@
    "id": "STR-MIX-01",
    "stage": "pre",
    "severity": "warn",
+   "actor": "program",
+   "tier_scope": "set",
    "description": "功能配比：TS/BR ≥1、SP ≤3、CL ≤1",
    "rule": {
     "all": [
@@ -2284,6 +2345,8 @@
    "id": "STR-MIX-02",
    "stage": "pre",
    "severity": "warn",
+   "actor": "program",
+   "tier_scope": "set",
    "description": "預定難度配比符合 set_composition；模擬卷每篇至少 1 格 advanced",
    "rule": {
     "metric": "planned_tier_counts",
@@ -2297,6 +2360,8 @@
    "id": "STR-DIS-01",
    "stage": "pre",
    "severity": "error",
+   "actor": "blind_solver+program",
+   "tier_scope": "set",
    "description": "唯一指派：兩位盲解者給出每格可行選項集合，4 格各填不同選項的可行指派數必須剛好是 1 且等於答案；多餘句在每一格都不可行（SPEC §5.6）",
    "rule": {
     "metric": "feasible_assignments",
@@ -2310,6 +2375,8 @@
    "id": "STR-DIS-02",
    "stage": "pre",
    "severity": "warn",
+   "actor": "program",
+   "tier_scope": "set",
    "description": "多餘句與選文的實詞重疊率落在該級 extra_overlap_ratio（主題相關、不是離題句）",
    "rule": {
     "metric": "extra_content_overlap_ratio",
@@ -2326,6 +2393,8 @@
    "id": "STR-DIS-03",
    "stage": "pre",
    "severity": "error",
+   "actor": "program+auditor",
+   "tier_scope": "set",
    "description": "多餘句標碼（TR/SC/CT/FL/RD）並寫出它在每一格不成立的理由；碼別符合該級；超越頂標要標 target_slot",
    "rule": {
     "metric": "extra_code",
@@ -2339,10 +2408,12 @@
    "id": "STR-DIS-04",
    "stage": "pre",
    "severity": "warn",
+   "actor": "auditor",
+   "tier_scope": "item",
    "description": "超越頂標的競爭設計：每格至少符合 blank_recipe.required_competition_one_of 其中一種，並寫出區分依據",
    "rule": {
     "metric": "competition_type",
-    "applies_to_tier": "beyond_top",
+    "applies_to_tier": "top",
     "op": "in",
     "value": [
      "two_keys_compete",
@@ -2356,6 +2427,8 @@
    "id": "STR-CAL-01",
    "stage": "post",
    "severity": "warn",
+   "actor": "cron",
+   "tier_scope": "set",
    "description": "同一版本累積 ≥200 筆合格作答後，以 P、Ph、Pl（前／後 33%）推估 Pc、Pb 重新分級；與預定級別不同就改標並回饋規格",
    "rule": {
     "metric": "observed_tier",
@@ -2369,6 +2442,8 @@
    "id": "STR-CAL-02",
    "stage": "post",
    "severity": "warn",
+   "actor": "cron",
+   "tier_scope": "item",
    "description": "答對率落在該級 target_stats.P_target_range",
    "rule": {
     "metric": "P",
@@ -2381,11 +2456,13 @@
    "id": "STR-CAL-03",
    "stage": "post",
    "severity": "warn",
+   "actor": "cron",
+   "tier_scope": "item",
    "description": "高分組最強誤選比例：穩定基礎 ≤0.08、進階 0.08–0.20、超越頂標 ≥0.15；穩定基礎與進階若有選項在高分組勝過正解即標 top_prefers_distractor",
    "rule": {
     "metric": "upper_group_strongest_wrong_share",
     "by_tier": {
-     "foundation": {
+     "basic": {
       "op": "<=",
       "value": 0.08
      },
@@ -2396,7 +2473,7 @@
        0.2
       ]
      },
-     "beyond_top": {
+     "top": {
       "op": ">=",
       "value": 0.15
      }
@@ -2417,6 +2494,8 @@
    "id": "STR-CAL-04",
    "stage": "post",
    "severity": "warn",
+   "actor": "cron",
+   "tier_scope": "set",
    "description": "多餘句至少在 1 格吸到全體 ≥8%（否則記為 dead_extra）",
    "rule": {
     "metric": "extra_max_share",
@@ -2429,6 +2508,8 @@
    "id": "STR-CAL-05",
    "stage": "post",
    "severity": "warn",
+   "actor": "cron",
+   "tier_scope": "set",
    "description": "多餘句吸到高分組 ≥10% 的格數 ≤1；超過就複查是否雙答案",
    "rule": {
     "metric": "extra_upper_ge_0.10_slots",
@@ -2441,12 +2522,14 @@
    "id": "STR-CAL-06",
    "stage": "post",
    "severity": "warn",
+   "actor": "cron",
+   "tier_scope": "item",
    "description": "超越頂標題 D1（Pa−Pb）≥0.10，或以 Ph−P 代替時 >0；否則不當錨點",
    "rule": {
     "metric": "D1",
     "op": ">=",
     "value": 0.1,
-    "applies_to_tier": "beyond_top"
+    "applies_to_tier": "top"
    },
    "official_111_115_pass": "4/4"
   }
@@ -2961,5 +3044,123 @@
    }
   },
   "analysis_scripts": "scratchpad：load.py → analyze.py → build_spec.py（未放進 repo；標註已全部收在本檔，可據此重算）"
+ },
+ "annotation_schema": {
+  "version": 1,
+  "conventions": "common_rules.annotations（位置、級別列舉、盲解輸出欄位）",
+  "item_fields": {
+   "item_tier": {
+    "type": "enum",
+    "location": "annotations.design.items.<n>.item_tier",
+    "required": true,
+    "enum": [
+     "basic",
+     "advanced",
+     "top"
+    ],
+    "desc": "這一題（格）預定的級別；題組級別寫在 gsat-bank/v1 的 tier（同一套列舉）"
+   },
+   "function": {
+    "type": "enum",
+    "location": "annotations.design.items.<n>.function",
+    "required": true,
+    "enum": [
+     "TS",
+     "BR",
+     "SP",
+     "CT",
+     "SQ",
+     "CL"
+    ]
+   },
+   "cue": {
+    "type": "enum",
+    "location": "annotations.design.items.<n>.cue",
+    "required": true,
+    "enum": [
+     "PR",
+     "CN",
+     "LX",
+     "LG"
+    ]
+   },
+   "direction": {
+    "type": "enum",
+    "location": "annotations.design.items.<n>.direction",
+    "required": true,
+    "enum": [
+     "B",
+     "F",
+     "BF"
+    ]
+   },
+   "scope": {
+    "type": "enum",
+    "location": "annotations.design.items.<n>.scope",
+    "required": true,
+    "enum": [
+     "L",
+     "P"
+    ]
+   },
+   "cue_spans": {
+    "type": "list[string]",
+    "location": "annotations.design.items.<n>.cue_spans",
+    "required": true,
+    "desc": "選項中與前後句中的線索字串，逐字存在"
+   },
+   "cue_strength": {
+    "type": "int",
+    "location": "annotations.design.items.<n>.cue_strength",
+    "required": true,
+    "desc": "0–3＝(dir == BF)＋(cue ∈ {PR, LX})＋(scope == L)",
+    "range": [
+     0,
+     3
+    ]
+   },
+   "competition": {
+    "type": "enum",
+    "location": "annotations.design.items.<n>.competition",
+    "required": "item_tier == top",
+    "enum": [
+     "two_keys_compete",
+     "forward_frame",
+     "targeted_extra"
+    ]
+   },
+   "clue": {
+    "type": "string",
+    "location": "group.questions[<n>].tags.clue",
+    "required": false,
+    "desc": "沿用 gsat-exam/v1.1 tags"
+   }
+  },
+  "set_fields": {
+   "extra_code": {
+    "type": "enum",
+    "location": "annotations.design.set.extra_sentence.code",
+    "required": true,
+    "enum": [
+     "TR",
+     "SC",
+     "CT",
+     "FL",
+     "RD"
+    ]
+   },
+   "extra_target_slot": {
+    "type": "int|null",
+    "location": "annotations.design.set.extra_sentence.target_slot",
+    "required": "tier == top",
+    "desc": "多餘句瞄準的格"
+   },
+   "extra_why_not": {
+    "type": "object",
+    "location": "annotations.design.set.extra_sentence.why_not",
+    "required": true,
+    "desc": "{格號: 不成立的理由}，每一格都要有"
+   }
+  }
  }
 }

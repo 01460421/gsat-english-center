@@ -18,7 +18,8 @@
    "foundation": "basic",
    "advanced": "advanced",
    "beyond_top": "top"
-  }
+  },
+  "tier_scope_note": "item-scope 檢核的鍵用 basic／advanced／top（題目級別）；set-scope 用 foundation／advanced／beyond_top（題組級別）"
  },
  "format": {
   "applies_to": "學測 111 學年度起（108 課綱），111–115 五年不變",
@@ -836,9 +837,16 @@
      "advanced_band": 0.314,
      "top_band": 0.454,
      "top_band_gsat_legacy": 0.6,
-     "top_band_ast": 0.584
+     "top_band_extrapolated": 0.488,
+     "note_top_band": "top_band 是頂標以上帶 θ 1.548 的值；該 θ 超出 Pa 點（1.40），內插取 Pa（clamp，保守）；延伸 Pb→Pa 線段是 .488",
+     "reference_not_comparable": {
+      "ast_top_items_at_gsat_top_band": 0.584,
+      "population": "ast",
+      "note": "指考題的 Pa 是指考前 20% 考生的答對率，不是學測頂標以上考生；只當描述，不當學測驗收目標"
+     }
     },
-    "note": "現制詞彙超越頂標題頂標帶預期答對率只有 .45（13 題中 7 題 Pa < .50）；練習目標約 .55–.60，所以生成時 Pa 以 .50–.75 為準"
+    "note": "現制詞彙超越頂標題頂標帶預期答對率只有 .45（延伸值 .49；13 題中 7 題 Pa < .50），太難；練習目標約 .55–.60，所以一般題 Pa 以 .50–.75 為準：最強干擾拉力壓在 .20–.30、近似干擾恰 1 個（學測 91–115 這一帶 23 題 Pa 中位數 .67、challenge 1/23）；拉力 .30–.45 的設計只給 intended_challenge 題",
+    "challenge_policy": "Pa < .50 的題只能來自預先標記 intended_challenge 的題（每 10 題 ≤3）；一般超越頂標題以 Pa .50–.75 為目標"
    },
    "routes": {
     "A_extended_or_conversion": {
@@ -848,7 +856,9 @@
       3,
       4
      ],
-     "desc": "常見字（L2–4）的延伸義或轉品；關鍵在固定搭配（現制 13 題中 9 題）"
+     "desc": "常見字（L2–4）的延伸義或轉品；關鍵在固定搭配（現制 13 題中 9 題）",
+     "option_max_level": 5,
+     "necessary_condition": "題幹含鎖定延伸義（或轉品用法）的搭配詞 key_collocate，逐字在題幹中"
     },
     "B_core_high_level": {
      "share": 0.3,
@@ -857,8 +867,11 @@
       6
      ],
      "desc": "L5（偶爾 L6）核心義，搭配一個低級字的近似干擾（現制 3 題：quest、compulsory、supposedly；指考超越頂標 L5–6／表外占 65%）",
-     "max_L6_per_10": 1
-    }
+     "max_L6_per_10": 1,
+     "option_max_level": 6,
+     "necessary_condition": "含一個低級字的近似干擾（near_miss = true，級別低於正解）"
+    },
+    "annotation": "每題必標 route（A／B）；VOC-10、VOC-12、VOC-23 依 route 判定 L6 與級別範圍"
    },
    "answer_level_dist": {
     "2": 0.15,
@@ -896,7 +909,10 @@
    "clue_rules": {
     "explicit_cue_required": true,
     "situational_only_max_per_10": 0,
-    "collocate_must_be_in_stem": true
+    "collocate_must_be_in_stem": {
+     "A": true,
+     "B": false
+    }
    },
    "passage_words": [
     16,
@@ -914,16 +930,77 @@
     "off_list_max": 1,
     "near_miss_count": [
      1,
-     2
+     1
     ],
     "near_miss_definition": "符合整句大意、常是較常見的一般字（現制最強干擾 13 題中 8 題是 L1–3），只錯在搭配、語域或精確字義",
     "near_miss_level": "優先比正解低或同級（現制：低 5、同 5、高 2、表外 1）",
     "must_not_be_defensible": "近似干擾放進句子必須是錯的：查得到常見搭配者不得用",
     "target_top_third_pull_strongest": [
      0.2,
-     0.45
+     0.3
     ],
-    "reverse_distractor_expected": "至少一個干擾被高分組選的比例高於低分組（現制 13 題中 10 題）"
+    "reverse_distractor_expected": "至少一個干擾被高分組選的比例高於低分組（現制 13 題中 10 題）",
+    "intended_challenge": {
+     "max_per_10": 3,
+     "annotation": "annotation_schema.item_fields.intended_challenge = true（生成前宣告）",
+     "near_miss_count": [
+      1,
+      2
+     ],
+     "target_top_third_pull_strongest": [
+      0.3,
+      0.45
+     ],
+     "expected": "學測 91–115 拉力 .30–.45 的 15 題：Pa 中位數 .51、challenge 7/15"
+    },
+    "pull_bins_gsat_91_115_top": {
+     "n": 55,
+     "definition": "超越頂標詞彙題依「高分組（前 33%）選最強干擾的比例」分組",
+     "bins": [
+      {
+       "pull": [
+        0.0,
+        0.2
+       ],
+       "n": 7,
+       "Pa_median": 0.71,
+       "challenge": 0
+      },
+      {
+       "pull": [
+        0.2,
+        0.3
+       ],
+       "n": 23,
+       "Pa_median": 0.67,
+       "challenge": 1
+      },
+      {
+       "pull": [
+        0.3,
+        0.45
+       ],
+       "n": 15,
+       "Pa_median": 0.51,
+       "challenge": 7
+      },
+      {
+       "pull": [
+        0.45,
+        1.0
+       ],
+       "n": 10,
+       "Pa_median": 0.38,
+       "challenge": 9
+      }
+     ],
+     "current_in_0.20_0.45": {
+      "n": 11,
+      "Pa_median": 0.5,
+      "challenge": 5
+     },
+     "note": "區間含下限、不含上限；舊範圍 .20–.45 涵蓋官方整個分布，照它出題會重現官方 Pa .45 的難度"
+    }
    },
    "observed": {
     "gsat_current": {
@@ -1195,19 +1272,25 @@
  "checks": [
   {
    "id": "VOC-01",
+   "stage": "pre",
+   "severity": "error",
+   "actor": "program",
+   "tier_scope": "item",
    "description": "題幹恰有一個空格",
    "rule": {
     "field": "stem",
     "regex": "_{2,}",
     "count_eq": 1
    },
-   "severity": "error",
    "method": "rule",
-   "scope": "item",
    "official_111_115_pass": "80/80"
   },
   {
    "id": "VOC-02",
+   "stage": "pre",
+   "severity": "error",
+   "actor": "program",
+   "tier_scope": "item",
    "description": "題幹字數（不含空格）",
    "rule": {
     "metric": "stem_words",
@@ -1220,27 +1303,31 @@
      21
     ]
    },
-   "severity": "error",
    "method": "rule",
-   "scope": "item",
    "official_111_115_pass": "80/80",
    "official_target_range_pass": "68/80"
   },
   {
    "id": "VOC-03",
+   "stage": "pre",
+   "severity": "error",
+   "actor": "program",
+   "tier_scope": "item",
    "description": "題幹句數",
    "rule": {
     "metric": "stem_sentences",
     "max": 2,
     "per_10_max_two_sentence": 1
    },
-   "severity": "error",
    "method": "rule",
-   "scope": "item",
    "official_111_115_pass": "80/80"
   },
   {
    "id": "VOC-04",
+   "stage": "pre",
+   "severity": "error",
+   "actor": "program",
+   "tier_scope": "item",
    "description": "四個選項、標號 A–D、互不重複、恰一個正解",
    "rule": {
     "n_options": 4,
@@ -1253,36 +1340,42 @@
     "distinct_case_insensitive": true,
     "answer_in_labels": true
    },
-   "severity": "error",
    "method": "rule",
-   "scope": "item",
    "official_111_115_pass": "80/80"
   },
   {
    "id": "VOC-05",
+   "stage": "pre",
+   "severity": "error",
+   "actor": "program",
+   "tier_scope": "item",
    "description": "每個選項是單一個字（不含空白）",
    "rule": {
     "regex_each_option": "^[A-Za-z]+(?:[-’'][A-Za-z]+)*$"
    },
-   "severity": "error",
    "method": "rule",
-   "scope": "item",
    "official_111_115_pass": "80/80"
   },
   {
    "id": "VOC-06",
+   "stage": "pre",
+   "severity": "error",
+   "actor": "program",
+   "tier_scope": "item",
    "description": "空格在句首時四個選項都首字大寫，否則都小寫",
    "rule": {
     "if_blank_at_sentence_start": "all_capitalized",
     "else": "all_lowercase"
    },
-   "severity": "error",
    "method": "rule",
-   "scope": "item",
    "official_111_115_pass": "80/80"
   },
   {
    "id": "VOC-07",
+   "stage": "pre",
+   "severity": "error",
+   "actor": "program",
+   "tier_scope": "item",
    "description": "四個選項字形變化類別相同（原形／-s／-ed／-ing／-ly／-er／-est）",
    "rule": {
     "metric": "inflection_class",
@@ -1290,9 +1383,7 @@
     "source": "data/vocab/forms-index.json types；表外字依字尾（-ous／-ss／-us／-is 不算 -s）",
     "exception": "形容詞述語格可混用形容詞與 -ed 分詞形容詞（gsat-113 第 3 題）"
    },
-   "severity": "error",
    "method": "rule",
-   "scope": "item",
    "official_111_115_pass": "79/80",
    "official_fail_examples": [
     "gsat-113#3"
@@ -1300,27 +1391,31 @@
   },
   {
    "id": "VOC-08",
+   "stage": "pre",
+   "severity": "error",
+   "actor": "program",
+   "tier_scope": "item",
    "description": "副詞格四個選項都是 -ly 副詞",
    "rule": {
     "if_key_pos": "adverb",
     "all_options_suffix": "ly"
    },
-   "severity": "error",
    "method": "rule",
-   "scope": "item",
    "official_111_115_pass": "8/8"
   },
   {
    "id": "VOC-09",
+   "stage": "pre",
+   "severity": "warn",
+   "actor": "program",
+   "tier_scope": "item",
    "description": "四個選項都能當正解的詞性",
    "rule": {
     "lexicon_pos_contains_key_pos": true,
     "derived_ly_counts_as": "adv.",
     "source": "data/vocab/lexicon.json pos"
    },
-   "severity": "warning",
    "method": "rule",
-   "scope": "item",
    "official_111_115_pass": "79/80",
    "official_fail_examples": [
     "gsat-113#3"
@@ -1328,11 +1423,15 @@
   },
   {
    "id": "VOC-10",
-   "description": "正解字級符合該級允許範圍",
+   "stage": "pre",
+   "severity": "error",
+   "actor": "program",
+   "tier_scope": "item",
+   "description": "正解字級符合該級允許範圍；超越頂標依標註 route：A 限 L2–4、B 限 L5–6",
    "rule": {
     "metric": "answer_level",
     "by_tier": {
-     "foundation": [
+     "basic": [
       2,
       3,
       4,
@@ -1345,29 +1444,35 @@
       4,
       5
      ],
-     "beyond_top": [
-      2,
-      3,
-      4,
-      5,
-      6
-     ]
+     "top": {
+      "route_A": [
+       2,
+       3,
+       4
+      ],
+      "route_B": [
+       5,
+       6
+      ]
+     }
     },
     "off_list_allowed": false,
-    "level_source": "data/vocab/ceec-wordlist.json（經 forms-index 還原；規則衍生字沿用原字級別）"
+    "level_source": "data/vocab/ceec-wordlist.json（forms-index 還原；查不到時套 common_rules.vocabulary_level.derivation_fallback）"
    },
-   "severity": "error",
    "method": "rule",
-   "scope": "item",
    "official_111_115_pass": "50/50"
   },
   {
    "id": "VOC-11",
+   "stage": "pre",
+   "severity": "warn",
+   "actor": "program",
+   "tier_scope": "item",
    "description": "干擾項字級在正解 −2 到 +1 之間（超越頂標 −3 到 +3，因為 route A 的正解常是 L2–3）",
    "rule": {
     "metric": "distractor_level_minus_key",
     "by_tier": {
-     "foundation": [
+     "basic": [
       -2,
       1
      ],
@@ -1375,15 +1480,13 @@
       -2,
       1
      ],
-     "beyond_top": [
+     "top": [
       -3,
       3
      ]
     }
    },
-   "severity": "warning",
    "method": "rule",
-   "scope": "item",
    "official_111_115_pass": "49/50",
    "official_fail_examples": [
     "gsat-113#1"
@@ -1391,35 +1494,42 @@
   },
   {
    "id": "VOC-12",
-   "description": "選項不得有 L6 字（超越頂標 route B 例外）；表外字選項每題最多 1 個，且須是表內 L1–4 字的透明衍生或複合字（例：timer、forceful）",
+   "stage": "pre",
+   "severity": "error",
+   "actor": "program",
+   "tier_scope": "item",
+   "description": "選項最高級別：穩定基礎、進階與超越頂標 route A 為 L5；只有 route B（以標註 route 判定）可有 L6；表外字選項每題最多 1 個，且須是表內 L1–4 字的透明衍生或複合字（例：timer、forceful）",
    "rule": {
     "max_option_level": {
-     "foundation": 5,
+     "basic": 5,
      "advanced": 5,
-     "beyond_top": 6
+     "top": {
+      "route_A": 5,
+      "route_B": 6
+     }
     },
     "off_list_options_max": {
-     "foundation": 1,
+     "basic": 1,
      "advanced": 1,
-     "beyond_top": 1
+     "top": 1
     },
     "off_list_must_be": "transparent_derivative_of_listed_L1_4"
    },
-   "severity": "error",
    "method": "rule",
-   "scope": "item",
    "official_111_115_pass": "50/50"
   },
   {
    "id": "VOC-13",
+   "stage": "pre",
+   "severity": "warn",
+   "actor": "program",
+   "tier_scope": "item",
    "description": "干擾項不可與正解同一 OEWN synset（可能是第二個正解）",
    "rule": {
     "source": "data/vocab/lexicon.json wordnet.senses[].synset_id",
     "shared_synset": "forbid_or_review"
    },
-   "severity": "warning",
    "method": "rule",
-   "scope": "item",
    "official_111_115_pass": "78/80",
    "official_fail_examples": [
     "gsat-113#1",
@@ -1428,70 +1538,91 @@
   },
   {
    "id": "VOC-14",
+   "stage": "pre",
+   "severity": "error",
+   "actor": "program",
+   "tier_scope": "item",
    "description": "正解及其同詞族字不出現在題幹",
    "rule": {
     "stem_must_not_contain": [
      "key_lemma",
      "key_forms",
      "key_family"
-    ]
+    ],
+    "key_family_source": "lexicon.json 的 family ∪ forms-index 同一 entry 的所有詞形 ∪ 依 common_rules.vocabulary_level.derivation_fallback 可推得的衍生字；lexicon family 是空的（例如 comb、review、ignore、punish）而程式判不出時，由盲解者補判並寫進 verification"
    },
-   "severity": "error",
    "method": "rule",
-   "scope": "item",
    "official_111_115_pass": "80/80"
   },
   {
    "id": "VOC-15",
+   "stage": "pre",
+   "severity": "error",
+   "actor": "program",
+   "tier_scope": "item",
    "description": "題幹用字（不計專有名詞）：每題 L1–4 至少 85%、L5–6 或表外字最多 2 個且不可是唯一線索字；每 10 題合計 L1–4 至少 93%",
    "rule": {
     "metric": "stem_token_levels",
     "item_L1_4_min_share": 0.85,
     "item_L5plus_or_off_max_count": 2,
-    "set_L1_4_min_share": 0.93
+    "set_L1_4_min_share": 0.93,
+    "level_method": "forms-index 精確比對，查不到時套 common_rules.vocabulary_level.derivation_fallback（數字詞算 L1）；大寫開頭且查不到的字視為專有名詞"
    },
-   "severity": "error",
    "method": "rule",
-   "scope": "item",
-   "official_111_115_pass": "79/80",
+   "official_111_115_pass": "78/80",
    "official_fail_examples": [
-    "gsat-115#7"
-   ]
+    "gsat-111#4",
+    "ref-115#5"
+   ],
+   "official_note": "兩題是同一題（ref-115 沿用）：機構名稱中的 Administration 在詞表內，照規則計入；只用 forms-index 精確比對是 74/80（gsat-114#9、gsat-115#7 等也不過）"
   },
   {
    "id": "VOC-16",
+   "stage": "pre",
+   "severity": "warn",
+   "actor": "program+human",
+   "tier_scope": "item",
    "description": "正解與題幹中的關鍵搭配詞須為常見搭配；近似干擾與同一搭配詞不得是常見搭配",
    "rule": {
     "collocation_attested": "key+collocate",
     "near_miss_unattested": true,
-    "evidence": "語料庫 n-gram 或詞典例句；無法查證者送人工"
+    "evidence": "語料庫 n-gram 或詞典例句（來源待站主決定，見 known_limitations）",
+    "on_unverifiable": "needs_review：列入人工必審清單（不占 20% 抽樣名額），語料來源決定前不擋上架"
    },
-   "severity": "error",
    "method": "corpus_or_review",
-   "scope": "item",
    "tiers": [
     "advanced",
-    "beyond_top"
+    "top"
    ]
   },
   {
    "id": "VOC-17",
-   "description": "答案唯一：獨立解題模型只選得出正解，且逐一判定三個干擾放入後不通",
+   "stage": "pre",
+   "severity": "error",
+   "actor": "blind_solver",
+   "tier_scope": "item",
+   "description": "答案唯一：照 GEN-SOL-01（兩個獨立工作階段、B 用不同模型、各解 1 次）；兩位都選正解、feasible_in_context 只含正解，並逐一判定三個干擾放入後不通",
    "rule": {
-    "solver_runs": 3,
-    "solver_must_choose_key": 3,
+    "see": "GEN-SOL-01",
+    "solver_sessions": 2,
+    "distinct_models": true,
+    "runs_per_session": 1,
+    "must_choose_key": 2,
+    "feasible_in_context": "only_key",
     "each_distractor_judged_unacceptable": true
    },
-   "severity": "error",
-   "method": "llm_judge",
-   "scope": "item"
+   "method": "blind_solver"
   },
   {
    "id": "VOC-18",
-   "description": "干擾項合理度符合該級：穩定基礎 0 個近似干擾；進階恰 1 個部分合理；超越頂標 1–2 個近似干擾",
+   "stage": "pre",
+   "severity": "error",
+   "actor": "auditor",
+   "tier_scope": "item",
+   "description": "干擾項設計符合該級：穩定基礎 0 個近似干擾；進階恰 1 個部分合理；超越頂標一般題恰 1 個，intended_challenge 題 1–2 個（與 GEN-DIS-01 同為 error）",
    "rule": {
     "near_miss_count": {
-     "foundation": [
+     "basic": [
       0,
       0
      ],
@@ -1499,18 +1630,27 @@
       1,
       1
      ],
-     "beyond_top": [
-      1,
-      2
-     ]
-    }
+     "top": {
+      "default": [
+       1,
+       1
+      ],
+      "intended_challenge": [
+       1,
+       2
+      ]
+     }
+    },
+    "source": "annotation_schema.option_fields.near_miss（生成者宣告，稽核者核對）"
    },
-   "severity": "warning",
-   "method": "llm_judge",
-   "scope": "item"
+   "method": "llm_judge"
   },
   {
    "id": "VOC-19",
+   "stage": "pre",
+   "severity": "warn",
+   "actor": "program+auditor",
+   "tier_scope": "item",
    "description": "有可指認的線索：至少一個（換句話說／對比／因果／搭配）；只靠情境推論者穩定基礎、進階每 10 題最多 1 題，超越頂標不可",
    "rule": {
     "clue_types": [
@@ -1520,22 +1660,24 @@
      "collocation"
     ],
     "situational_only_max_per_10": {
-     "foundation": 1,
+     "basic": 1,
      "advanced": 1,
-     "beyond_top": 0
+     "top": 0
     },
     "regex_hint": {
      "contrast": "but|although|though|however|instead|rather than|while|despite|even though|unlike|in fact",
      "cause_effect": "because|since|so|therefore|due to|as a result|so that|in order to|if"
     }
    },
-   "severity": "warning",
-   "method": "llm_judge+regex",
-   "scope": "item"
+   "method": "llm_judge+regex"
   },
   {
    "id": "VOC-20",
-   "description": "詞義類型配額（每 10 題）：穩定基礎非核心義最多 1 題（且需強搭配）；進階最多 3 題；超越頂標至少 5 題",
+   "stage": "pre",
+   "severity": "error",
+   "actor": "program+auditor",
+   "tier_scope": "set",
+   "description": "詞義類型配額（每 10 題）：穩定基礎非核心義最多 1 題（且需強搭配）；進階最多 3 題；超越頂標至少 5 題。詞義類型依 common_rules.sense_classification 判定（程式初篩＋兩位獨立判讀，不一致時以 core 計）",
    "rule": {
     "non_core_sense_per_10": {
      "foundation": [
@@ -1552,12 +1694,14 @@
      ]
     }
    },
-   "severity": "error",
-   "method": "llm_judge",
-   "scope": "set"
+   "method": "sense_rule"
   },
   {
    "id": "VOC-21",
+   "stage": "pre",
+   "severity": "error",
+   "actor": "program",
+   "tier_scope": "set",
    "description": "每 10 題詞性 3 名詞／3 動詞／3 形容詞／1 副詞（名、動、形各可 ±1）",
    "rule": {
     "per_10": {
@@ -1579,13 +1723,15 @@
      ]
     }
    },
-   "severity": "error",
    "method": "rule",
-   "scope": "set",
    "official_111_115_pass": "8/8"
   },
   {
    "id": "VOC-22",
+   "stage": "pre",
+   "severity": "error",
+   "actor": "program",
+   "tier_scope": "set",
    "description": "每 10 題正解字母 A–D 各 1–4 次",
    "rule": {
     "per_10_each_letter": [
@@ -1593,14 +1739,16 @@
      4
     ]
    },
-   "severity": "error",
    "method": "rule",
-   "scope": "set",
    "official_111_115_pass": "8/8"
   },
   {
    "id": "VOC-23",
-   "description": "每 10 題 L5 以上正解數",
+   "stage": "pre",
+   "severity": "error",
+   "actor": "program",
+   "tier_scope": "set",
+   "description": "每 10 題 L5 以上正解數符合該級；L6 正解只能是 route B（每 10 題 ≤1）",
    "rule": {
     "per_10_L5plus": {
      "foundation": [
@@ -1620,39 +1768,113 @@
      "foundation": 0,
      "advanced": 0,
      "beyond_top": 1
-    }
+    },
+    "L6_key_requires": "route = B"
    },
-   "severity": "error",
-   "method": "rule",
-   "scope": "set"
+   "method": "rule"
   },
   {
    "id": "VOC-24",
+   "stage": "pre",
+   "severity": "warn",
+   "actor": "program",
+   "tier_scope": "set",
    "description": "同一組 10 題正解不重複、題幹主題不重複",
    "rule": {
     "distinct_key_lemmas": true,
     "distinct_topics": true
    },
-   "severity": "warning",
-   "method": "rule",
-   "scope": "set"
+   "method": "rule"
   },
   {
    "id": "VOC-25",
+   "stage": "pre",
+   "severity": "error",
+   "actor": "program",
+   "tier_scope": "item",
    "description": "原創：與歷屆題幹（data/exams/parsed 所有 vocabulary 大題）不得有 8 個以上連續相同的字",
    "rule": {
     "max_shared_ngram_tokens": 7,
     "corpus": "data/exams/parsed/*.json sections[type=vocabulary].stem"
    },
-   "severity": "error",
    "method": "rule",
-   "scope": "item",
    "official_111_115_pass": "50/50"
+  },
+  {
+   "id": "VOC-CAL-01",
+   "stage": "post",
+   "severity": "warn",
+   "actor": "cron",
+   "tier_scope": "item",
+   "description": "同一版本 ≥200 筆合格作答後依 G50 重算級別；P 落在該級目標帶，超越頂標一般題 Pa 落在 .50–.75（intended_challenge 題不檢 Pa 下限）",
+   "rule": {
+    "min_responses": 200,
+    "metric": "P",
+    "by_tier": {
+     "basic": [
+      0.55,
+      0.75
+     ],
+     "advanced": [
+      0.41,
+      0.52
+     ],
+     "top": [
+      0.22,
+      0.38
+     ]
+    },
+    "top_Pa": {
+     "default": [
+      0.5,
+      0.75
+     ],
+     "intended_challenge": [
+      0.0,
+      0.75
+     ]
+    }
+   },
+   "method": "rule",
+   "official_111_115_pass": "P：basic 15/23、advanced 13/14、top 11/13；top 的 Pa .50–.75：6/13（7 題 challenge）"
+  },
+  {
+   "id": "VOC-CAL-02",
+   "stage": "post",
+   "severity": "warn",
+   "actor": "cron",
+   "tier_scope": "item",
+   "description": "高分組（前 33%）選最強干擾的比例：穩定基礎每個干擾 ≤.10；進階 .10–.20；超越頂標一般題 .20–.30、intended_challenge .30–.45；任一干擾在高分組多於正解 → 隔離復審",
+   "rule": {
+    "metric": "upper_group_strongest_distractor",
+    "by_tier": {
+     "basic": {
+      "each_max": 0.1
+     },
+     "advanced": [
+      0.1,
+      0.2
+     ],
+     "top": {
+      "default": [
+       0.2,
+       0.3
+      ],
+      "intended_challenge": [
+       0.3,
+       0.45
+      ]
+     }
+    },
+    "quarantine_if_distractor_beats_key_in_upper": true
+   },
+   "method": "rule",
+   "official_111_115_pass": "basic 20/23、advanced 13/14；top：.20–.30 有 5/13、.30–.45 有 6/13、>.45 有 2/13；干擾在高分組多於正解：top 7/13"
   }
  ],
  "anchors": {
   "note": "只列 exam id、題號與一行說明；題目原文看題庫，不在規格中轉貼",
-  "selection": "現制 111–115 為主、排除 low_upper_discrimination、目標組答對率接近該級中位數、題型分散；超越頂標另列指考／舊制補充與反例",
+  "selection": "現制 111–115 為主、排除 low_upper_discrimination、目標組答對率接近該級中位數、題型分散；超越頂標一般錨點取高分組最強干擾 .20–.30 的題，拉力 .30–.45 以上的題另列 intended_challenge 範例；另列指考／舊制補充與反例",
   "foundation": [
    {
     "exam": "gsat-115",
@@ -1809,21 +2031,6 @@
   ],
   "beyond_top": [
    {
-    "exam": "gsat-113",
-    "no": 7,
-    "tier": "top",
-    "P": 0.29,
-    "Pc": 0.18,
-    "Pb": 0.27,
-    "Pa": 0.62,
-    "D1": 0.35,
-    "answer_level": 3,
-    "sense": "E",
-    "top_third_strongest_distractor": 0.4,
-    "top_third_strongest_distractor_word": "advantage",
-    "note": "L3 延伸義 take the credit for；近似干擾 advantage（高分組 40%）"
-   },
-   {
     "exam": "gsat-112",
     "no": 9,
     "tier": "top",
@@ -1836,43 +2043,24 @@
     "sense": "E",
     "top_third_strongest_distractor": 0.25,
     "top_third_strongest_distractor_word": "disturbed",
-    "note": "L4 延伸義 choked with traffic；近似干擾 disturbed"
+    "note": "L4 延伸義 choked with traffic；近似干擾 disturbed",
+    "route": "A"
    },
    {
-    "exam": "gsat-115",
-    "no": 10,
-    "tier": "top",
-    "P": 0.24,
-    "Pc": 0.16,
-    "Pb": 0.25,
-    "Pa": 0.43,
-    "D1": 0.18,
-    "answer_level": 4,
-    "sense": "E",
-    "top_third_strongest_distractor": 0.43,
-    "top_third_strongest_distractor_word": "harsh",
-    "note": "L4 延伸義 grave concerns；近似干擾 harsh（高分組 43%）",
-    "flags": [
-     "challenge"
-    ]
-   },
-   {
-    "exam": "gsat-114",
-    "no": 9,
+    "exam": "gsat-112",
+    "no": 7,
     "tier": "top",
     "P": 0.23,
-    "Pc": 0.16,
-    "Pb": 0.2,
-    "Pa": 0.37,
-    "D1": 0.17,
+    "Pc": 0.15,
+    "Pb": 0.22,
+    "Pa": 0.5,
+    "D1": 0.28,
     "answer_level": 4,
     "sense": "V",
-    "top_third_strongest_distractor": 0.47,
-    "top_third_strongest_distractor_word": "addressed",
-    "note": "L4 轉品（名詞當動詞）grace … with one's presence；近似干擾 addressed（高分組 47%）",
-    "flags": [
-     "challenge"
-    ]
+    "top_third_strongest_distractor": 0.23,
+    "top_third_strongest_distractor_word": "convert",
+    "note": "route A：L4 轉品（counter 當動詞）＋claims 搭配；三個干擾 .16–.23 分散，Pa .50",
+    "route": "A"
    },
    {
     "exam": "gsat-113",
@@ -1887,22 +2075,24 @@
     "sense": "C",
     "top_third_strongest_distractor": 0.3,
     "top_third_strongest_distractor_word": "forceful",
-    "note": "route B：L5 核心義，近似干擾 forceful（表外字，高分組 30%）"
+    "note": "route B：L5 核心義，近似干擾 forceful（表外字，高分組 30%）",
+    "route": "B"
    },
    {
-    "exam": "gsat-115",
-    "no": 6,
+    "exam": "gsat-112",
+    "no": 10,
     "tier": "top",
-    "P": 0.29,
-    "Pc": 0.2,
-    "Pb": 0.37,
-    "Pa": 0.59,
-    "D1": 0.22,
-    "answer_level": 4,
+    "P": 0.37,
+    "Pc": 0.25,
+    "Pb": 0.35,
+    "Pa": 0.67,
+    "D1": 0.32,
+    "answer_level": 5,
     "sense": "C",
-    "top_third_strongest_distractor": 0.24,
-    "top_third_strongest_distractor_word": "stresses",
-    "note": "L4 核心義但近似干擾 stresses／escapes 拉走高分組 24%／18%"
+    "top_third_strongest_distractor": 0.22,
+    "top_third_strongest_distractor_word": "roughly",
+    "note": "route B：L5 核心義 supposedly；低級字近似干擾 roughly（高分組 22%）",
+    "route": "B"
    }
   ],
   "beyond_top_supplementary_ast_legacy": [
@@ -2007,6 +2197,65 @@
     "top_third_strongest_distractor": 0.01,
     "top_third_strongest_distractor_word": "snap",
     "note": "穩定基礎太容易：P .88"
+   }
+  ],
+  "beyond_top_intended_challenge_examples": [
+   {
+    "exam": "gsat-113",
+    "no": 7,
+    "tier": "top",
+    "P": 0.29,
+    "Pc": 0.18,
+    "Pb": 0.27,
+    "Pa": 0.62,
+    "D1": 0.35,
+    "answer_level": 3,
+    "sense": "E",
+    "top_third_strongest_distractor": 0.4,
+    "top_third_strongest_distractor_word": "advantage",
+    "note": "L3 延伸義 take the credit for；近似干擾 advantage 拉力 .40（落在 intended_challenge 帶），Pa .62 仍過半",
+    "route": "A",
+    "intended_challenge": true
+   },
+   {
+    "exam": "gsat-115",
+    "no": 10,
+    "tier": "top",
+    "P": 0.24,
+    "Pc": 0.16,
+    "Pb": 0.25,
+    "Pa": 0.43,
+    "D1": 0.18,
+    "answer_level": 4,
+    "sense": "E",
+    "top_third_strongest_distractor": 0.43,
+    "top_third_strongest_distractor_word": "harsh",
+    "note": "L4 延伸義 grave concerns；近似干擾 harsh（高分組 43%）",
+    "flags": [
+     "challenge"
+    ],
+    "route": "A",
+    "intended_challenge": true
+   },
+   {
+    "exam": "gsat-114",
+    "no": 9,
+    "tier": "top",
+    "P": 0.23,
+    "Pc": 0.16,
+    "Pb": 0.2,
+    "Pa": 0.37,
+    "D1": 0.17,
+    "answer_level": 4,
+    "sense": "V",
+    "top_third_strongest_distractor": 0.47,
+    "top_third_strongest_distractor_word": "addressed",
+    "note": "L4 轉品 grace … with one's presence；近似干擾 addressed 拉力 .47，已超過 intended_challenge 上限 .45，示範上緣，不要更強",
+    "flags": [
+     "challenge"
+    ],
+    "route": "A",
+    "intended_challenge": true
    }
   ]
  },
@@ -2694,5 +2943,130 @@
    }
   },
   "licensing": "題目、統計可分析；答案、評分原則、第三方文章不轉貼。錨點只列考卷 id、題號與一個短語（docs/research/04）。"
+ },
+ "annotation_schema": {
+  "version": 1,
+  "conventions": "common_rules.annotations（位置、級別列舉、盲解輸出欄位）",
+  "item_fields": {
+   "item_tier": {
+    "type": "enum",
+    "location": "annotations.design.items.<n>.item_tier",
+    "required": true,
+    "enum": [
+     "basic",
+     "advanced",
+     "top"
+    ],
+    "desc": "這一題（格）預定的級別；題組級別寫在 gsat-bank/v1 的 tier（同一套列舉）"
+   },
+   "sense": {
+    "type": "enum",
+    "location": "annotations.explanations.items.<n>.sense",
+    "required": true,
+    "enum": [
+     "core",
+     "extended",
+     "conversion",
+     "idiom"
+    ],
+    "desc": "依 common_rules.sense_classification 判定"
+   },
+   "sense_reference": {
+    "type": "object",
+    "location": "annotations.design.items.<n>.sense_reference",
+    "required": true,
+    "desc": "判定詞義用的參照：{pos, oewn_synset_id, oewn_definition, zh_gloss}（該詞性 OEWN 第一個義項、lexicon zh 第一個釋義）"
+   },
+   "route": {
+    "type": "enum",
+    "location": "annotations.design.items.<n>.route",
+    "required": "item_tier == top",
+    "enum": [
+     "A",
+     "B"
+    ],
+    "desc": "A：L2–4 延伸義或轉品，靠 key_collocate 鎖定；B：L5–6 核心義＋低級字近似干擾"
+   },
+   "intended_challenge": {
+    "type": "bool",
+    "location": "annotations.design.items.<n>.intended_challenge",
+    "required": "item_tier == top",
+    "desc": "預定為 challenge 題（拉力 .30–.45、近似干擾 1–2 個）；每 10 題 ≤3"
+   },
+   "clue_types": {
+    "type": "list[enum]",
+    "location": "annotations.design.items.<n>.clue_types",
+    "required": true,
+    "enum": [
+     "definition_restatement",
+     "contrast",
+     "cause_effect",
+     "collocation",
+     "situational"
+    ],
+    "desc": "第一個也寫進 explanations.items.<n>.clue_type"
+   },
+   "clue_strings": {
+    "type": "list[string]",
+    "location": "annotations.design.items.<n>.clue_strings",
+    "required": true,
+    "desc": "逐字出現在題幹"
+   },
+   "key_collocate": {
+    "type": "string|null",
+    "location": "annotations.design.items.<n>.key_collocate",
+    "required": "route == A",
+    "desc": "鎖定字義的搭配詞，逐字出現在題幹"
+   },
+   "answer_pos": {
+    "type": "enum",
+    "location": "group.questions[<n>].tags.answer_pos",
+    "required": true,
+    "enum": [
+     "noun",
+     "verb",
+     "adjective",
+     "adverb"
+    ]
+   }
+  },
+  "option_fields": {
+   "near_miss": {
+    "type": "bool",
+    "location": "annotations.design.items.<n>.options.<letter>.near_miss",
+    "required": true,
+    "desc": "近似干擾（只讀大意可能接受、錯在搭配或精確字義）"
+   },
+   "exclusion_reason_zh": {
+    "type": "string",
+    "location": "annotations.explanations.items.<n>.option_notes_zh.<letter>",
+    "required": true,
+    "desc": "一句話說明放入後為何不通"
+   }
+  },
+  "enum_aliases": {
+   "sense": {
+    "C": "core",
+    "E": "extended",
+    "V": "conversion",
+    "meaning_core": "core",
+    "collocation_core": "core（clue_types 含 collocation）",
+    "extended_sense": "extended",
+    "extended_transparent": "extended",
+    "conversion": "conversion",
+    "conversion_with_strong_collocation": "conversion",
+    "core_L5plus_with_near_miss": "core（route B）"
+   },
+   "clue_types": {
+    "D": "definition_restatement",
+    "X": "contrast",
+    "K": "cause_effect",
+    "L": "collocation",
+    "S": "situational"
+   }
+  },
+  "notes": [
+   "tiers.*.observed、anchors 與 sources 裡的 C／E／V、D／X／K／L／S 是分析用代碼，對照 enum_aliases；生成標註一律用 enum"
+  ]
  }
 }

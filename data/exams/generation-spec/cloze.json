@@ -157,7 +157,7 @@
    "method": {
     "tokens": "regex [A-Za-z]+(?:['’-][A-Za-z]+)*，先移除 [[n]] 與 <u>/<b>（同 tools/exam_stats.py）",
     "level": "data/vocab/forms-index.json → ceec-wordlist.json，取最低級；beyond_l4_ratio 只用 forms-index 精確比對（與 data/exams/stats/passages.json 相同）",
-    "coverage_fallback": "coverage 另加衍生字回退：所有格與縮寫、-ly/-ness/-ful/-less/-er(s)/-ment/-ity/-ation、un-/in-/dis-/re-/mis-/non-/over-/under-、連字號複合字取各部分最高級、數字詞算 L1；大寫開頭且查不到的字視為專有名詞，不進分母"
+    "coverage_fallback": "common_rules.vocabulary_level.derivation_fallback（唯一回退表：-ly、-ness、-less、un-／in-／im-／ir-／il-、non-、re-、規則屈折與 -ing／-ed、所有格、縮寫、數字詞算 L1、連字號複合字取各段最高級；-er、-ful、-able、-ment、-ity、-ation、dis-、mis-、over-、under- 不回退）；大寫開頭且查不到的字視為專有名詞，不進分母"
    },
    "token_level_share": {
     "L1": 0.699,
@@ -192,8 +192,8 @@
    "coverage_with_fallback": {
     "L1_4": [
      0.881,
-     0.934,
-     0.948
+     0.928,
+     0.953
     ],
     "L1_6": [
      0.923,
@@ -205,7 +205,8 @@
      0.033,
      0.077
     ],
-    "format": "[min, median, max]"
+    "format": "[min, median, max]",
+    "method": "依共通回退表重算（現制 10 篇）"
    },
    "answer_level_dist": {
     "L1-2": 0.5,
@@ -566,7 +567,7 @@
     "coverage_L1_6_min": 0.96,
     "offlist_max": 0.04,
     "beyond_l4_ratio_max": 0.04,
-    "note": "刻意比現制輕（現制只有 5/10 篇同時符合字數與 beyond-L4，5/10 符合覆蓋率），屬閱讀負荷的產品選擇，方向同 SPEC §3.4；資料顯示字數與生字比例不決定空格難度（doc §3.3）"
+    "note": "刻意比現制輕（現制只有 5/10 篇同時符合字數與 beyond-L4，4/10 符合覆蓋率（共通回退表）），屬閱讀負荷的產品選擇，方向同 SPEC §3.4；資料顯示字數與生字比例不決定空格難度（doc §3.3）"
    },
    "set_composition_5_blanks": {
     "basic": [
@@ -1181,6 +1182,8 @@
    "id": "CLZ-FMT-01",
    "stage": "pre",
    "severity": "error",
+   "actor": "program",
+   "tier_scope": "set",
    "description": "模擬卷：2 篇 × 5 格，題號 11–20 連續；單篇練習 5 格",
    "rule": {
     "metric": "blanks_per_passage",
@@ -1198,6 +1201,8 @@
    "id": "CLZ-FMT-02",
    "stage": "pre",
    "severity": "error",
+   "actor": "program",
+   "tier_scope": "item",
    "description": "每格 4 個選項 A–D、恰一個正解、選項不重複（不分大小寫）",
    "rule": {
     "metric": "options",
@@ -1217,6 +1222,8 @@
    "id": "CLZ-FMT-03",
    "stage": "pre",
    "severity": "warn",
+   "actor": "program",
+   "tier_scope": "set",
    "description": "答案字母：10 格中每個字母 1–4 次；同一篇同字母 ≤2",
    "rule": {
     "metric": "key_letter_count_per_10",
@@ -1237,6 +1244,8 @@
    "id": "CLZ-PAS-01",
    "stage": "pre",
    "severity": "error",
+   "actor": "program",
+   "tier_scope": "set",
    "description": "選文字數（不含空格標記）落在該級 passage_overrides.words；模擬卷 175–235",
    "rule": {
     "metric": "passage_words",
@@ -1253,6 +1262,8 @@
    "id": "CLZ-PAS-02",
    "stage": "pre",
    "severity": "warn",
+   "actor": "program",
+   "tier_scope": "set",
    "description": "段落 2–4；句數 9–14；平均句長 14.5–22 字",
    "rule": {
     "all": [
@@ -1288,6 +1299,8 @@
    "id": "CLZ-LAY-01",
    "stage": "pre",
    "severity": "error",
+   "actor": "program",
+   "tier_scope": "set",
    "description": "第一句不挖空，第一格前至少 15 字",
    "rule": {
     "all": [
@@ -1309,6 +1322,8 @@
    "id": "CLZ-LAY-02",
    "stage": "pre",
    "severity": "error",
+   "actor": "program",
+   "tier_scope": "set",
    "description": "一句最多 1 格；相鄰兩格至少隔 8 字；每段最多 3 格；至少 2 段有空格",
    "rule": {
     "all": [
@@ -1340,6 +1355,8 @@
    "id": "CLZ-LAY-03",
    "stage": "pre",
    "severity": "warn",
+   "actor": "program",
+   "tier_scope": "set",
    "description": "每格平均分到 34–48 字（字數 ÷ 空格數）",
    "rule": {
     "metric": "words_per_blank",
@@ -1355,6 +1372,8 @@
    "id": "CLZ-VOC-01",
    "stage": "pre",
    "severity": "error",
+   "actor": "program",
+   "tier_scope": "set",
    "description": "beyond-L4 token 比例不超過該級上限（模擬卷 ≤0.09）",
    "rule": {
     "metric": "beyond_l4_ratio",
@@ -1368,7 +1387,9 @@
    "id": "CLZ-VOC-02",
    "stage": "pre",
    "severity": "warn",
-   "description": "覆蓋率（含衍生字回退）：L1–4、L1–6 不低於該級下限，表外字不高於上限",
+   "actor": "program",
+   "tier_scope": "set",
+   "description": "覆蓋率（common_rules.vocabulary_level.derivation_fallback）：L1–4、L1–6 不低於該級下限，表外字不高於上限",
    "rule": {
     "all": [
      {
@@ -1389,7 +1410,7 @@
     ]
    },
    "official_111_115_pass": {
-    "foundation": "5/10",
+    "foundation": "4/10",
     "advanced": "10/10",
     "beyond_top": "10/10"
    }
@@ -1398,6 +1419,8 @@
    "id": "CLZ-VOC-03",
    "stage": "pre",
    "severity": "warn",
+   "actor": "program",
+   "tier_scope": "set",
    "description": "每篇相異 L5–6 詞目 ≤9（現制 2–9）",
    "rule": {
     "metric": "distinct_L5_6_lemmas",
@@ -1410,7 +1433,9 @@
    "id": "CLZ-VOC-04",
    "stage": "pre",
    "severity": "error",
-   "description": "選項用字在大考詞彙表 L1–6（含衍生字回退）；每格至多 1 個選項含表外字；正解不含表外字（表內字的衍生字須註明原字，例：responsive ← respond）",
+   "actor": "program",
+   "tier_scope": "item",
+   "description": "選項用字在大考詞彙表 L1–6（含共通回退表）；每格至多 1 個選項含表外字；正解不含表外字（表內字的衍生字須註明原字，例：responsive ← respond）",
    "rule": {
     "metric": "options_with_offlist_word_per_blank",
     "op": "<=",
@@ -1428,6 +1453,8 @@
    "id": "CLZ-VOC-05",
    "stage": "pre",
    "severity": "warn",
+   "actor": "program",
+   "tier_scope": "set",
    "description": "正解級別分布符合該級 answer_level_dist.rule",
    "rule": {
     "metric": "answer_level_share",
@@ -1439,6 +1466,8 @@
    "id": "CLZ-OPT-01",
    "stage": "pre",
    "severity": "error",
+   "actor": "program",
+   "tier_scope": "item",
    "description": "非文法格的四個選項形式一致：字數差 ≤1，且全為單字或全為多字（文法格的時態／語態組不限）",
    "rule": {
     "metric": "option_word_count_spread",
@@ -1455,6 +1484,8 @@
    "id": "CLZ-OPT-02",
    "stage": "pre",
    "severity": "warn",
+   "actor": "program",
+   "tier_scope": "item",
    "description": "單字選項（L、C、D 格）詞性相容：依 ceec-wordlist 詞性（去括號、略過表外字），至少 3 個選項共有一個詞性",
    "rule": {
     "metric": "max_options_sharing_a_pos",
@@ -1472,6 +1503,8 @@
    "id": "CLZ-OPT-03",
    "stage": "pre",
    "severity": "error",
+   "actor": "program",
+   "tier_scope": "item",
    "description": "正解字串不在選文其他地方出現；含實詞的誘答也不出現在選文（功能詞誘答不限，例：112-15 的 For）",
    "rule": {
     "metric": "key_text_in_passage",
@@ -1485,6 +1518,8 @@
    "id": "CLZ-OPT-04",
    "stage": "pre",
    "severity": "warn",
+   "actor": "program",
+   "tier_scope": "item",
    "description": "文法格的四個選項是同一詞目的不同形式，或同一類功能詞（關係詞、助動詞、時態組）",
    "rule": {
     "metric": "grammar_option_set",
@@ -1503,6 +1538,8 @@
    "id": "CLZ-MIX-01",
    "stage": "pre",
    "severity": "warn",
+   "actor": "program",
+   "tier_scope": "set",
    "description": "模擬卷 10 格的題型配比：L 3–6、C 2–5、G 1–2、D 0–2、R 0–1；多字正解 5–7",
    "rule": {
     "metric": "blank_type_counts",
@@ -1544,6 +1581,8 @@
    "id": "CLZ-MIX-02",
    "stage": "pre",
    "severity": "warn",
+   "actor": "program",
+   "tier_scope": "set",
    "description": "單篇 5 格的題型配比符合該級 per_5_recommended",
    "rule": {
     "metric": "blank_type_counts",
@@ -1556,6 +1595,8 @@
    "id": "CLZ-MIX-03",
    "stage": "pre",
    "severity": "warn",
+   "actor": "program",
+   "tier_scope": "set",
    "description": "模擬卷至少 2 格需要前後句或段落線索（P/W）；每格標 scope 並附線索字串位置",
    "rule": {
     "metric": "nonlocal_blanks",
@@ -1569,6 +1610,8 @@
    "id": "CLZ-MIX-04",
    "stage": "pre",
    "severity": "warn",
+   "actor": "program",
+   "tier_scope": "set",
    "description": "預定難度配比：模擬卷 basic 2–5、advanced 2–4、top 3–4，且每篇三級各 ≥1；單篇練習符合 set_composition_5_blanks",
    "rule": {
     "metric": "planned_tier_counts",
@@ -1595,6 +1638,8 @@
    "id": "CLZ-DIS-01",
    "stage": "pre",
    "severity": "error",
+   "actor": "program+auditor",
+   "tier_scope": "item",
    "description": "每個誘答都標碼（LF/CN/LR/GN/SF/SS/clear）並寫出它錯在哪個字串；近似誘答數符合該級 near_miss_count",
    "rule": {
     "metric": "near_miss_count",
@@ -1608,6 +1653,8 @@
    "id": "CLZ-DIS-02",
    "stage": "pre",
    "severity": "error",
+   "actor": "blind_solver+auditor",
+   "tier_scope": "item",
    "description": "唯一正解：盲解代理讀全文後只選得出正解；誘答稽核沒有任何誘答被判 arguably_acceptable（SPEC §5.2 步驟 5–7）",
    "rule": {
     "metric": "blind_solver_agreement",
@@ -1621,10 +1668,12 @@
    "id": "CLZ-DIS-03",
    "stage": "pre",
    "severity": "warn",
+   "actor": "program",
+   "tier_scope": "item",
    "description": "超越頂標的強誘答碼與題型配對（C→CN、G→GN、L→LF、D→LR、R→GN）；不符時要寫理由",
    "rule": {
     "metric": "near_miss_code",
-    "applies_to_tier": "beyond_top",
+    "applies_to_tier": "top",
     "op": "==",
     "value_ref": "tiers.beyond_top.distractor_rules.type_to_code_default"
    },
@@ -1634,6 +1683,8 @@
    "id": "CLZ-CAL-01",
    "stage": "post",
    "severity": "warn",
+   "actor": "cron",
+   "tier_scope": "set",
    "description": "上線後（同一版本 ≥200 筆合格作答）算 P、Ph、Pl（前／後 33%），以 difficulty-bands 推估式換算 Pc、Pb 重新分級；與預定級別不同就改標並回饋規格",
    "rule": {
     "metric": "observed_tier",
@@ -1647,6 +1698,8 @@
    "id": "CLZ-CAL-02",
    "stage": "post",
    "severity": "warn",
+   "actor": "cron",
+   "tier_scope": "item",
    "description": "答對率落在該級 target_stats.P.target_range",
    "rule": {
     "metric": "P",
@@ -1659,6 +1712,8 @@
    "id": "CLZ-CAL-03",
    "stage": "post",
    "severity": "warn",
+   "actor": "cron",
+   "tier_scope": "item",
    "description": "每個誘答全體選答 ≥5%（現制 150/150）；<2% 依 SPEC §5.9 記錄為 dead_distractor",
    "rule": {
     "metric": "distractor_share_min",
@@ -1672,11 +1727,13 @@
    "id": "CLZ-CAL-04",
    "stage": "post",
    "severity": "warn",
+   "actor": "cron",
+   "tier_scope": "item",
    "description": "高分組（前 33%）最強誘答比例：穩定基礎 ≤0.10、進階 0.10–0.25、超越頂標 ≥0.20；穩定基礎與進階若有誘答在高分組勝過正解即標 top_prefers_distractor",
    "rule": {
     "metric": "upper_group_top_distractor_share",
     "by_tier": {
-     "foundation": {
+     "basic": {
       "op": "<=",
       "value": 0.1
      },
@@ -1687,7 +1744,7 @@
        0.25
       ]
      },
-     "beyond_top": {
+     "top": {
       "op": ">=",
       "value": 0.2
      }
@@ -1699,17 +1756,19 @@
    "id": "CLZ-CAL-05",
    "stage": "post",
    "severity": "warn",
+   "actor": "cron",
+   "tier_scope": "item",
    "description": "超越頂標題 D1（Pa−Pb）≥0.10，或以 Ph−P 代替時 >0；否則不當錨點",
    "rule": {
     "metric": "D1",
     "op": ">=",
     "value": 0.1,
-    "applies_to_tier": "beyond_top"
+    "applies_to_tier": "top"
    },
    "official_111_115_pass": "n/a（需作答資料或依難度帶的題組）"
   }
  ],
- "checks_validation_note": "official_111_115_pass：把規則套在 10 篇現制選文／50 格上的通過數；PAS-01 與 VOC-01 依模擬卷範圍。各級 passage_overrides 的通過數：{\"foundation\": \"5/10\", \"advanced\": \"10/10\", \"beyond_top\": \"10/10\"}",
+ "checks_validation_note": "official_111_115_pass：把規則套在 10 篇現制選文／50 格上的通過數；PAS-01 與 VOC-01 依模擬卷範圍。各級 passage_overrides 的通過數：{\"foundation\": \"4/10\", \"advanced\": \"10/10\", \"beyond_top\": \"10/10\"}",
  "anchors": {
   "selection": "現制 111–115、非 low_upper_discrimination、P 接近該級中位數、題型分散；只列 exam id＋題號",
   "foundation": [
@@ -2764,6 +2823,98 @@
    "ref-110": "108 課綱試辦：2 篇 × 5 格（193、185 字）",
    "ref-111、ref-115、ref-107-a/b": "綜合測驗全部沿用歷屆題（reused_from）",
    "ref-98-a/b、ref-102-a/b": "舊制參考卷：2 或 3 篇 × 5 格"
+  }
+ },
+ "annotation_schema": {
+  "version": 1,
+  "conventions": "common_rules.annotations（位置、級別列舉、盲解輸出欄位）",
+  "item_fields": {
+   "item_tier": {
+    "type": "enum",
+    "location": "annotations.design.items.<n>.item_tier",
+    "required": true,
+    "enum": [
+     "basic",
+     "advanced",
+     "top"
+    ],
+    "desc": "這一題（格）預定的級別；題組級別寫在 gsat-bank/v1 的 tier（同一套列舉）"
+   },
+   "blank_type": {
+    "type": "enum",
+    "location": "annotations.design.items.<n>.blank_type",
+    "required": true,
+    "enum": [
+     "L",
+     "C",
+     "G",
+     "D",
+     "R"
+    ],
+    "desc": "L 詞彙語意、C 片語／搭配、G 文法、D 轉承／連接、R 指涉／替代"
+   },
+   "clue_scope": {
+    "type": "enum",
+    "location": "annotations.design.items.<n>.clue_scope",
+    "required": true,
+    "enum": [
+     "S",
+     "P",
+     "W"
+    ],
+    "desc": "S 本句、P 前後一句、W 段落或兩句以外"
+   },
+   "clue_strings": {
+    "type": "list[string]",
+    "location": "annotations.design.items.<n>.clue_strings",
+    "required": true,
+    "desc": "逐字出現在選文"
+   },
+   "grammar_pattern_id": {
+    "type": "string",
+    "location": "annotations.design.items.<n>.grammar_pattern_id",
+    "required": "blank_type == G",
+    "desc": "存在於 data/curriculum/grammar-patterns.json"
+   },
+   "test_point": {
+    "type": "string",
+    "location": "group.questions[<n>].tags.test_point",
+    "required": true,
+    "desc": "沿用 gsat-exam/v1.1 tags"
+   }
+  },
+  "option_fields": {
+   "code": {
+    "type": "enum",
+    "location": "annotations.explanations.items.<n>.option_codes.<letter>",
+    "required": true,
+    "enum": [
+     "LF",
+     "CN",
+     "LR",
+     "GN",
+     "SF",
+     "SS",
+     "clear"
+    ],
+    "desc": "clear＝明顯不通"
+   },
+   "strength": {
+    "type": "enum",
+    "location": "annotations.design.items.<n>.options.<letter>.strength",
+    "required": true,
+    "enum": [
+     "weak",
+     "medium",
+     "strong"
+    ]
+   },
+   "exclusion_span": {
+    "type": "string",
+    "location": "annotations.design.items.<n>.options.<letter>.exclusion_span",
+    "required": true,
+    "desc": "排除它的原文字串，逐字在選文"
+   }
   }
  }
 }
