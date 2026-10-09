@@ -1,0 +1,41 @@
+{
+  "schema": "gsat-bank-blind-translation/v1",
+  "uid": "ai.tr.0b1c2d",
+  "version": 1,
+  "solver": "A",
+  "reviewer": "claude-opus-5-5",
+  "session_id": "session_tr_blind_a_example",
+  "created_at": "2026-10-09T08:00:00Z",
+  "answers": {
+    "1": {
+      "translation": "In recent years, many students have started to bring their own water bottles to school.",
+      "confidence": "high",
+      "explanation_zh": "「近年來」「已經開始」是延續到現在的改變，用現在完成式。"
+    },
+    "2": {
+      "translation": "To reduce plastic waste, the school store no longer sells bottled water.",
+      "confidence": "high",
+      "explanation_zh": "「為了」表目的放句首；「不再」用 no longer，主詞單數動詞加 s。"
+    }
+  },
+  "review": {
+    "1": {
+      "used_patterns": ["PERF"],
+      "used_target_words": ["recent", "start", "bring", "bottle", "school"],
+      "within_accepted": true,
+      "closest_reference": 0,
+      "reference_check": "pass",
+      "parts_check": "pass",
+      "issues_zh": []
+    },
+    "2": {
+      "used_patterns": ["PURP"],
+      "used_target_words": ["reduce", "plastic", "waste", "store", "no longer", "bottled"],
+      "within_accepted": true,
+      "closest_reference": 0,
+      "reference_check": "pass",
+      "parts_check": "pass",
+      "issues_zh": []
+    }
+  }
+}

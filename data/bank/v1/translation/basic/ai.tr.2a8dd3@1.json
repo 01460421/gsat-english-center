@@ -1,0 +1,621 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.2a8dd3",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "basic",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "在台灣，越來越多年輕人騎機車去上學或上班。",
+        "options": null,
+        "answer": "In Taiwan, more and more young people ride scooters to school or work.",
+        "accepted_answers": [
+          "More and more young people in Taiwan ride scooters to school or to work."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "越來越…"
+          ],
+          "topic": "騎機車戴安全帽"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "藉由戴安全帽，他們在車禍中可以保護自己的頭部。",
+        "options": null,
+        "answer": "By wearing helmets, they can protect their heads in traffic accidents.",
+        "accepted_answers": [
+          "They can protect their heads in accidents by wearing helmets.",
+          "By wearing a helmet, they are able to protect their heads in road accidents."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "介系詞＋動名詞"
+          ],
+          "topic": "騎機車戴安全帽"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "騎機車戴安全帽"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「越來越多＋名詞」用 more and more + 複數名詞，整個當主詞放在動詞前面（more and more young people ride …），不要寫成 young people are more and more。young people 已經是複數，動詞 ride 不加 s。「機車」是 scooter（或 motorcycle），很多人各騎一台，用複數 scooters。go to school、go to work 的 school、work 不加冠詞。",
+          "evidence": [
+            "越來越多年輕人",
+            "騎機車去上學或上班"
+          ],
+          "strategy_zh": "「越來越多的 N」＝ more and more + 複數 N；寫完檢查主詞是複數，動詞跟著用複數形。",
+          "hints": [
+            "切成四段：越來越多／年輕人／騎機車／去上學或上班（「在台灣」In Taiwan 放句首）",
+            "標的詞彙：young（年輕的）、ride（騎）、scooter（機車）、school（上學）、work（上班）",
+            "句型框架：In Taiwan, more and more + 複數名詞 + V …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「藉由…」表示方法，用 By + V-ing：介系詞後面的動詞一定要加 -ing（By wearing）。這個 By 片語可以放句首加逗號，也可以放句尾。「自己的頭部」是所有格 their heads，不是 themselves；can 後面接原形動詞 protect。helmet、accident 都是可數名詞，泛指時用複數（或 a helmet、an accident）。",
+          "evidence": [
+            "藉由戴安全帽",
+            "可以保護自己的頭部"
+          ],
+          "strategy_zh": "看到「藉由、除了、而不是、沒有…就」，先想「介系詞＋V-ing」；寫完圈出介系詞，檢查後面的動詞有沒有加 -ing。",
+          "hints": [
+            "切成四段：藉由戴安全帽／在車禍中／可以保護／自己的頭部（主詞 they 接在逗號後）",
+            "標的詞彙：wear（戴）、helmet（安全帽）、accident（車禍）、protect（保護）、head（頭部）",
+            "句型框架：By + V-ing …, S + can + 原形動詞 …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "In Taiwan, more and more young people ride scooters to school or work.",
+            "More and more young people in Taiwan ride scooters to school or to work."
+          ],
+          "target_words": [
+            {
+              "word": "young",
+              "zh": "年輕的"
+            },
+            {
+              "word": "ride",
+              "zh": "騎"
+            },
+            {
+              "word": "scooter",
+              "zh": "機車",
+              "alternatives": [
+                "motorcycle",
+                "motorbike"
+              ]
+            },
+            {
+              "word": "school",
+              "zh": "上學"
+            },
+            {
+              "word": "work",
+              "zh": "上班"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "COMP",
+              "grammar_id": "gp-more-and-more",
+              "label_zh": "越來越…（more and more + 名詞）",
+              "frame": "More and more + 複數名詞 + V …",
+              "zh_trigger": "越來越多"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "越來越多",
+              "accepted": [
+                "more and more",
+                "an increasing number of",
+                "a growing number of"
+              ],
+              "targets": [
+                "COMP"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "young people are more and more",
+                  "right": "more and more young people",
+                  "explanation_zh": "「越來越多的人」要把 more and more 放在名詞前面，不是放在句尾當補語。"
+                }
+              ]
+            },
+            {
+              "zh": "年輕人",
+              "accepted": [
+                "young people",
+                "young adults"
+              ],
+              "targets": [
+                "young"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "young peoples",
+                  "right": "young people",
+                  "explanation_zh": "people 本身就是複數，不加 s。"
+                }
+              ]
+            },
+            {
+              "zh": "騎機車",
+              "accepted": [
+                "ride scooters",
+                "ride motorcycles",
+                "ride their scooters",
+                "ride motorbikes",
+                "by scooter",
+                "by motorcycle"
+              ],
+              "targets": [
+                "ride",
+                "scooter"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "ride scooter",
+                  "right": "ride scooters",
+                  "explanation_zh": "很多人各騎一台，scooter 是可數名詞，用複數（或 their scooters）。"
+                },
+                {
+                  "wrong": "rides scooters",
+                  "right": "ride scooters",
+                  "explanation_zh": "主詞 young people 是複數，動詞不加 s。"
+                }
+              ]
+            },
+            {
+              "zh": "去上學或上班",
+              "accepted": [
+                "to school or work",
+                "to school or to work",
+                "to work or school",
+                "go to school or work"
+              ],
+              "targets": [
+                "school",
+                "work"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "to the school or the work",
+                  "right": "to school or work",
+                  "explanation_zh": "go to school、go to work 是固定說法，不加 the。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "plural_countable",
+              "zh": "騎機車",
+              "literal_error": "In Taiwan, more and more young people ride scooter to school or work.",
+              "part": 3,
+              "explanation_zh": "中文「機車」沒有單複數，照字面寫成 scooter 會漏掉複數，這一部分扣分。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "Riding scooters to school or work has become more and more common among young people in Taiwan.",
+              "explanation_zh": "改用動名詞片語當主詞，搭配 has become more and more common（變得越來越普遍），句構更有變化。",
+              "grammar_id": "gp-gerund-subject"
+            }
+          ]
+        },
+        "2": {
+          "references": [
+            "By wearing helmets, they can protect their heads in traffic accidents.",
+            "They can protect their heads in accidents by wearing helmets.",
+            "By wearing a helmet, they are able to protect their heads in road accidents."
+          ],
+          "target_words": [
+            {
+              "word": "wear",
+              "zh": "戴"
+            },
+            {
+              "word": "helmet",
+              "zh": "安全帽"
+            },
+            {
+              "word": "accident",
+              "zh": "車禍",
+              "alternatives": [
+                "crash"
+              ]
+            },
+            {
+              "word": "protect",
+              "zh": "保護"
+            },
+            {
+              "word": "head",
+              "zh": "頭部"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PREPVING",
+              "grammar_id": "gp-prep-gerund",
+              "label_zh": "介系詞＋動名詞（藉由…：By + V-ing）",
+              "frame": "By + V-ing …, S + V …",
+              "zh_trigger": "藉由"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "藉由戴安全帽",
+              "accepted": [
+                "By wearing helmets",
+                "by wearing a helmet",
+                "by wearing their helmets"
+              ],
+              "targets": [
+                "PREPVING",
+                "wear",
+                "helmet"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "By wear helmets",
+                  "right": "By wearing helmets",
+                  "explanation_zh": "介系詞 by 後面的動詞要用動名詞 V-ing。"
+                },
+                {
+                  "wrong": "By wearing helmet",
+                  "right": "By wearing helmets",
+                  "explanation_zh": "helmet 是可數名詞，不能單獨用單數；寫 a helmet 或 helmets。"
+                }
+              ]
+            },
+            {
+              "zh": "在車禍中",
+              "accepted": [
+                "in traffic accidents",
+                "in accidents",
+                "in road accidents",
+                "in a traffic accident",
+                "in an accident",
+                "in car accidents"
+              ],
+              "targets": [
+                "accident"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "in traffic accident",
+                  "right": "in traffic accidents",
+                  "explanation_zh": "accident 是可數名詞，泛指時用複數（或 an accident）。"
+                }
+              ]
+            },
+            {
+              "zh": "可以保護",
+              "accepted": [
+                "can protect",
+                "are able to protect"
+              ],
+              "targets": [
+                "protect"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "can protects",
+                  "right": "can protect",
+                  "explanation_zh": "助動詞 can 後面接原形動詞。"
+                }
+              ]
+            },
+            {
+              "zh": "自己的頭部",
+              "accepted": [
+                "their heads",
+                "their own heads"
+              ],
+              "targets": [
+                "head"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "themselves heads",
+                  "right": "their heads",
+                  "explanation_zh": "「自己的」要用所有格 their（或 their own）；themselves 是反身代名詞，不能放在名詞前面。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "word_form",
+              "zh": "藉由戴安全帽",
+              "literal_error": "By wear helmets, they can protect their heads in traffic accidents.",
+              "part": 1,
+              "explanation_zh": "照字面「藉由＋戴」寫成 By wear，介系詞後面沒有用動名詞，這一部分扣分。"
+            }
+          ],
+          "bonus": []
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-basic-02",
+    "lot": "translation-basic-02",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "98fb98485e580f5dcb5c9180ca2577c7306e3aace5410226eade2db68cbe253c",
+    "spec_id": "translation-basic@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T07:49:12Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T07:28:47Z",
+      "details": {
+        "solver": "A",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "In Taiwan, more and more young people ride scooters to school or to work.",
+            "confidence": "high",
+            "explanation_zh": "「越來越多」用 more and more；「騎機車」在台灣語境多指速克達，譯 ride scooters（也可 motorcycles）；「去上學或上班」用 to school or to work。"
+          },
+          "2": {
+            "translation": "By wearing helmets, they can protect their heads in traffic accidents.",
+            "confidence": "high",
+            "explanation_zh": "「藉由…」用 By + V-ing 表方法；主詞 they 與 wearing 的動作者一致；「車禍」譯 traffic accidents（騎機車的情境，不限於 car accidents）；「保護自己的頭部」用 protect their heads。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "COMP"
+            ],
+            "used_target_words": [
+              "young",
+              "ride",
+              "scooter",
+              "school",
+              "work"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "（備註，不影響判定）句首「在台灣」沒有落在任何一個部分，學生漏譯不會被扣分；影響小。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "PREPVING"
+            ],
+            "used_target_words": [
+              "wear",
+              "helmet",
+              "accident",
+              "protect",
+              "head"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "young",
+              "ride",
+              "scooter",
+              "school",
+              "work"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "COMP": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "wear",
+              "helmet",
+              "accident",
+              "protect",
+              "head"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PREPVING": true
+            },
+            "program_match": true
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T07:49:12Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "In Taiwan, more and more young people ride scooters to school or work.",
+            "confidence": "high",
+            "explanation_zh": "「越來越多」用 more and more；young people 當複數主詞；「機車」在台灣英文常譯 scooter，也可用 motorcycle；現在的普遍趨勢用現在簡單式。"
+          },
+          "2": {
+            "translation": "By wearing helmets, they can protect their heads in traffic accidents.",
+            "confidence": "high",
+            "explanation_zh": "「藉由戴安全帽」用 By + 動名詞表方式；「可以」用 can；「車禍」譯 traffic accidents（或 car accidents）。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "COMP"
+            ],
+            "used_target_words": [
+              "young",
+              "ride",
+              "scooter",
+              "school",
+              "work"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PREPVING"
+            ],
+            "used_target_words": [
+              "wear",
+              "helmet",
+              "accident",
+              "protect",
+              "head"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "young",
+              "ride",
+              "scooter",
+              "school",
+              "work"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "COMP": true
+            },
+            "program_match": true
+          },
+          "2": {
+            "target_words_found": [
+              "wear",
+              "helmet",
+              "accident",
+              "protect",
+              "head"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PREPVING": true
+            },
+            "program_match": true
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

@@ -1,0 +1,83 @@
+{
+  "schema": "gsat-bank-facts/v1",
+  "id": "mx-top01-boredom",
+  "title": "What psychologists say about boredom: an unpleasant signal that may help creative thinking",
+  "sdgs": [3],
+  "created_on": "2026-10-09",
+  "created_by": "claude-opus-5-5",
+  "sources": [
+    {
+      "id": "s1",
+      "publisher": "Frontiers for Young Minds",
+      "title": "A Boring Overview",
+      "url": "https://kids.frontiersin.org/articles/10.3389/frym.2020.558229/full",
+      "accessed": "2026-10-09",
+      "license": "CC-BY-4.0",
+      "use": "fact_only",
+      "note": "只取事實，不改寫原文"
+    },
+    {
+      "id": "s2",
+      "publisher": "Frontiers in Education",
+      "title": "Attentional states and creative potential (2022; summarizes Mann & Cadman, 2014)",
+      "url": "https://www.frontiersin.org/journals/education/articles/10.3389/feduc.2022.774685/full",
+      "accessed": "2026-10-09",
+      "license": "CC-BY-4.0",
+      "use": "fact_only",
+      "note": "只取事實，不改寫原文"
+    },
+    {
+      "id": "s3",
+      "publisher": "CORE (Open University / UK repositories)",
+      "title": "Does Being Bored Make Us More Creative? (Mann & Cadman, Creativity Research Journal, 2014)",
+      "url": "https://core.ac.uk/outputs/155778727/",
+      "accessed": "2026-10-09",
+      "license": "repository record; only facts are used",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s4",
+      "publisher": "Communications Psychology (Nature Portfolio)",
+      "title": "People are increasingly bored in our digital age (Tam & Inzlicht, 2024)",
+      "url": "https://www.nature.com/articles/s44271-024-00155-9",
+      "accessed": "2026-10-09",
+      "license": "CC-BY-4.0 (article); only facts are used",
+      "use": "fact_only",
+      "note": null
+    }
+  ],
+  "facts": [
+    {
+      "id": "f1",
+      "text": "Psychologists define boredom as the unpleasant state of wanting, but being unable, to engage in a satisfying activity.",
+      "source_ids": ["s1"],
+      "kind": "definition"
+    },
+    {
+      "id": "f2",
+      "text": "Some scientists see boredom as a signal, like an alarm, that it is time to move on to something different.",
+      "source_ids": ["s1"],
+      "kind": "other"
+    },
+    {
+      "id": "f3",
+      "text": "When people cannot escape a dull situation, their minds tend to wander, and boredom may lead to more ideas and creativity.",
+      "source_ids": ["s1", "s3"],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f4",
+      "text": "In experiments by Mann and Cadman, people who first did a boring task gave more creative answers than a control group that did not.",
+      "source_ids": ["s2", "s3"],
+      "kind": "event"
+    },
+    {
+      "id": "f5",
+      "text": "Researchers argue that turning to digital media is a poor way to cope with boredom and may leave people more bored.",
+      "source_ids": ["s4"],
+      "kind": "cause_effect"
+    }
+  ],
+  "notes": "混合題 mixed-top-01 用（2026-10-09 線上查證，只取事實、不取原句）。Mann & Cadman 的效果在後續研究中不一定重現，選文只寫「在一個知名實驗中」，並用 may、suspect 等字保留語氣；第二篇是虛構的學生經驗文，不含事實主張。"
+}

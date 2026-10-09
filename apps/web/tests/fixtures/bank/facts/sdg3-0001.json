@@ -1,0 +1,114 @@
+{
+  "schema": "gsat-bank-facts/v1",
+  "id": "sdg3-0001",
+  "title": "Under-five mortality, 1990–2020 (World, South Asia, Sub-Saharan Africa) and SDG target 3.2",
+  "sdgs": [
+    3
+  ],
+  "created_on": "2026-10-09",
+  "created_by": "claude-opus-5-5",
+  "sources": [
+    {
+      "id": "s1",
+      "publisher": "World Bank",
+      "title": "World Development Indicators: Mortality rate, under-5 (per 1,000 live births) (SH.DYN.MORT)",
+      "url": "https://data.worldbank.org/indicator/SH.DYN.MORT",
+      "accessed": "2026-10-09",
+      "license": "CC-BY-4.0",
+      "use": "dataset",
+      "note": "原始提供者：UN Inter-agency Group for Child Mortality Estimation（UN IGME）。數值由 api.worldbank.org（country WLD、SAS、SSF）取得，取 1990、2000、2010、2020 四年"
+    },
+    {
+      "id": "s2",
+      "publisher": "United Nations",
+      "title": "Goal 3: Ensure healthy lives and promote well-being for all at all ages",
+      "url": "https://sdgs.un.org/goals/goal3",
+      "accessed": "2026-10-09",
+      "license": "UN terms of use",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s3",
+      "publisher": "United Nations",
+      "title": "The 17 Goals",
+      "url": "https://sdgs.un.org/goals",
+      "accessed": "2026-10-09",
+      "license": "UN terms of use",
+      "use": "fact_only",
+      "note": null
+    }
+  ],
+  "facts": [
+    {
+      "id": "f1",
+      "text": "Under SDG target 3.2, every country should cut its under-5 death rate to 25 or fewer per 1,000 live births by 2030.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f2",
+      "text": "SDG target 3.2 also aims to end preventable deaths of newborns and young children by 2030.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "event"
+    },
+    {
+      "id": "f3",
+      "text": "All UN member states adopted the 2030 Agenda and its 17 Sustainable Development Goals in 2015.",
+      "source_ids": [
+        "s3"
+      ],
+      "kind": "date"
+    }
+  ],
+  "datasets": [
+    {
+      "id": "d1",
+      "source_id": "s1",
+      "title": "Mortality rate, under-5 (per 1,000 live births)",
+      "indicator": "SH.DYN.MORT",
+      "unit": "per 1,000 live births",
+      "categories": [
+        "1990",
+        "2000",
+        "2010",
+        "2020"
+      ],
+      "series": [
+        {
+          "name": "World",
+          "values": [
+            93.5,
+            76.7,
+            50.6,
+            39.2
+          ]
+        },
+        {
+          "name": "South Asia",
+          "values": [
+            128.6,
+            90,
+            56.3,
+            32.4
+          ]
+        },
+        {
+          "name": "Sub-Saharan Africa",
+          "values": [
+            178.5,
+            150.4,
+            97.2,
+            75.9
+          ]
+        }
+      ],
+      "note": "WDI 區域彙總（World＝WLD、South Asia＝SAS、Sub-Saharan Africa＝SSF），2026-10-09 取得的版本"
+    }
+  ],
+  "notes": "tools/tests 的範例事實單（真實公開資料，2026-10-09 線上查證）；只給單元測試用，不在 data/bank/facts。"
+}

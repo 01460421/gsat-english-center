@@ -1,0 +1,226 @@
+{
+  "schema": "gsat-bank-facts/v1",
+  "id": "vision-zero-rt01",
+  "title": "Sweden's Vision Zero road safety policy and road traffic death rates, 2000–2019",
+  "sdgs": [
+    3,
+    11
+  ],
+  "created_on": "2026-10-09",
+  "created_by": "claude-opus-5-5",
+  "sources": [
+    {
+      "id": "s1",
+      "publisher": "U.S. National Library of Medicine (PubMed Central); Kim, Muennig & Rosen, Injury Epidemiology (2017)",
+      "title": "Vision zero: a toolkit for road safety in the modern era",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5219975/",
+      "accessed": "2026-10-09",
+      "license": "CC-BY-4.0 (facts only)",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s2",
+      "publisher": "U.S. Federal Highway Administration, Office of International Programs",
+      "title": "Human factors: policy (chapter 8)",
+      "url": "https://international.fhwa.dot.gov/humanfactors/chapter_eight.cfm",
+      "accessed": "2026-10-09",
+      "license": "U.S. government work (facts only)",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s3",
+      "publisher": "World Bank",
+      "title": "World Development Indicators: Mortality caused by road traffic injury (per 100,000 population) (SH.STA.TRAF.P5)",
+      "url": "https://data.worldbank.org/indicator/SH.STA.TRAF.P5",
+      "accessed": "2026-10-09",
+      "license": "CC-BY-4.0",
+      "use": "dataset",
+      "note": "原始提供者：WHO Global Health Observatory。數值由 api.worldbank.org（SWE、NOR、JPN、KOR、USA、WLD，lastupdated 2026-10-08）取得；2020 年以後無資料"
+    }
+  ],
+  "facts": [
+    {
+      "id": "f1",
+      "text": "In October 1997 the Swedish Parliament passed a road traffic safety bill that made Vision Zero the basis of road safety policy.",
+      "source_ids": [
+        "s1",
+        "s2"
+      ],
+      "kind": "date"
+    },
+    {
+      "id": "f2",
+      "text": "Vision Zero's long-term goal is that no one should be killed or seriously injured in road traffic.",
+      "source_ids": [
+        "s1",
+        "s2"
+      ],
+      "kind": "definition"
+    },
+    {
+      "id": "f3",
+      "text": "Vision Zero aims at zero deaths and serious injuries, not zero crashes.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "definition"
+    },
+    {
+      "id": "f4",
+      "text": "Vision Zero assumes that road users will make mistakes and places responsibility on the people who design and run the road system, who must anticipate those mistakes.",
+      "source_ids": [
+        "s1",
+        "s2"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f5",
+      "text": "Sweden adopted Vision Zero even though it already had one of the lowest road traffic casualty rates in the world.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f6",
+      "text": "Pedestrians usually survive when hit by a car moving below 30 km/h.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f7",
+      "text": "Occupants of well-designed cars can tolerate crashes at about 70 km/h head-on and about 50 km/h from the side.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f8",
+      "text": "Vision Zero design keeps people on foot away from vehicles faster than 30 km/h and keeps cars from meeting oncoming traffic at high speed.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f9",
+      "text": "A meta-analysis of studies found that roundabouts reduced injury crashes by 30 to 50 percent and fatal crashes by 50 to 70 percent.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f10",
+      "text": "On 2+1 roads in Sweden, a cable barrier in the middle keeps vehicles from crossing into oncoming traffic and absorbs the energy of a collision.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f11",
+      "text": "One meta-analysis found that median cable barriers raised the crash rate by about 30 percent but lowered the chance of fatal injury by about 20 percent.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f12",
+      "text": "Norway, the United Kingdom and Canada have built Vision Zero principles into their road safety plans, and many US cities, including New York City, have adopted it.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "place"
+    },
+    {
+      "id": "f13",
+      "text": "The World Bank indicator gives estimated road traffic deaths per 100,000 people.",
+      "source_ids": [
+        "s3"
+      ],
+      "kind": "definition"
+    },
+    {
+      "id": "f14",
+      "text": "Derived from the dataset: South Korea fell from 25.6 (2000) to 8.6 (2019), about one-third; Norway (2.1) was below Sweden (3.1) in 2019; the US rate rose from 11.7 (2010) to 12.7 (2019); the world fell by 2.4 and Japan by 8.9 between 2000 and 2019.",
+      "source_ids": [
+        "s3"
+      ],
+      "kind": "number"
+    }
+  ],
+  "datasets": [
+    {
+      "id": "d1",
+      "source_id": "s3",
+      "title": "Mortality caused by road traffic injury (per 100,000 population)",
+      "indicator": "SH.STA.TRAF.P5",
+      "unit": "per 100,000 people",
+      "categories": [
+        "2000",
+        "2010",
+        "2019"
+      ],
+      "series": [
+        {
+          "name": "Sweden",
+          "values": [
+            6.7,
+            3,
+            3.1
+          ]
+        },
+        {
+          "name": "Norway",
+          "values": [
+            8,
+            4.4,
+            2.1
+          ]
+        },
+        {
+          "name": "Japan",
+          "values": [
+            12.5,
+            5.3,
+            3.6
+          ]
+        },
+        {
+          "name": "South Korea",
+          "values": [
+            25.6,
+            13.7,
+            8.6
+          ]
+        },
+        {
+          "name": "United States",
+          "values": [
+            15.7,
+            11.7,
+            12.7
+          ]
+        },
+        {
+          "name": "World",
+          "values": [
+            19.1,
+            18.204,
+            16.749
+          ]
+        }
+      ],
+      "note": "API 原值取三位小數；表格取一位小數"
+    }
+  ],
+  "notes": null
+}

@@ -1,0 +1,656 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.36c209",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "basic",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "期中考（midterms）前一週，我做了一份讀書計畫，好讓自己每科都能複習到。",
+        "options": null,
+        "answer": "A week before the midterms, I made a study plan so that I could review every subject.",
+        "accepted_answers": [
+          "I made a study plan a week before the midterms so that I could review all my subjects."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "so that 表目的"
+          ],
+          "topic": "期中考前的讀書計畫"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "後來，越來越多同學也開始為自己做讀書計畫。",
+        "options": null,
+        "answer": "Later, more and more classmates also started making study plans for themselves.",
+        "accepted_answers": [
+          "After that, more and more of my classmates also began to make their own study plans."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "越來越多"
+          ],
+          "topic": "期中考前的讀書計畫"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "期中考前的讀書計畫"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「好讓自己…」說明做計畫的目的，後面是一個有主詞的完整句子，用 so that + S + could + 原形動詞（主要子句是過去式 made，so that 子句多用 could）。「做計畫」的搭配是 make a plan。「期中考前一週」是 a week before the midterms，時間長度放在 before 前面。",
+          "evidence": [
+            "好讓自己",
+            "做了一份讀書計畫"
+          ],
+          "strategy_zh": "目的後面還有自己的主詞與動詞時，用 so that 子句；子句裡常搭配 can／could。",
+          "hints": [
+            "切成四段：期中考前一週／我做了一份讀書計畫／好讓自己／每科都能複習到",
+            "標的詞彙：week（週）、make（做）、plan（計畫）、review（複習）、subject（科目）",
+            "句型框架：S + V … so that + S + could + 原形動詞 …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「越來越多＋名詞」是 more and more + 複數名詞：more and more classmates，名詞一定要加 s。「後來」表示過去，動詞用過去式 started（或 began）；start 後面接 V-ing 或 to V 都可以。每個人各做一份計畫，用 study plans；「為自己」是 for themselves 或 their own。",
+          "evidence": [
+            "越來越多同學"
+          ],
+          "strategy_zh": "「越來越＋形容詞」用「比較級 and 比較級」（better and better、more and more popular）；「越來越多＋名詞」用 more and more + 複數名詞。",
+          "hints": [
+            "切成四段：後來／越來越多同學／也開始／為自己做讀書計畫",
+            "標的詞彙：later（後來）、classmate（同學）、start（開始）、make（做）、plan（計畫）",
+            "句型框架：Later, more and more + 複數名詞 + 過去式動詞 …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "A week before the midterms, I made a study plan so that I could review every subject.",
+            "I made a study plan a week before the midterms so that I could review all my subjects."
+          ],
+          "target_words": [
+            {
+              "word": "week",
+              "zh": "週"
+            },
+            {
+              "word": "make",
+              "zh": "做",
+              "alternatives": [
+                "draw up",
+                "write"
+              ]
+            },
+            {
+              "word": "plan",
+              "zh": "計畫"
+            },
+            {
+              "word": "review",
+              "zh": "複習",
+              "alternatives": [
+                "go over"
+              ]
+            },
+            {
+              "word": "subject",
+              "zh": "科目"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PURP",
+              "grammar_id": "gp-so-that-purpose",
+              "label_zh": "目的：so that ＋子句",
+              "frame": "S + V … so that + S + can/could + 原形動詞 …",
+              "zh_trigger": "好讓"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "期中考（midterms）前一週",
+              "accepted": [
+                "A week before the midterms",
+                "One week before the midterms",
+                "A week before the midterm exams",
+                "One week before the midterm exams",
+                "A week before midterms"
+              ],
+              "targets": [
+                "week"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Before the midterms one week",
+                  "right": "A week before the midterms",
+                  "explanation_zh": "「…前一週」英文把時間長度放在 before 前面：a week before …。"
+                }
+              ]
+            },
+            {
+              "zh": "我做了一份讀書計畫",
+              "accepted": [
+                "I made a study plan",
+                "I made a plan for studying",
+                "I made a study schedule",
+                "I drew up a study plan",
+                "I wrote a study plan",
+                "I made a plan to study"
+              ],
+              "targets": [
+                "make",
+                "plan"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "I did a study plan",
+                  "right": "I made a study plan",
+                  "explanation_zh": "「做計畫」的動詞是 make（make a plan），不用 do。"
+                },
+                {
+                  "wrong": "I made a reading plan",
+                  "right": "I made a study plan",
+                  "explanation_zh": "「讀書」在這裡是「念書、準備考試」，用 study；reading plan 是「閱讀計畫」。"
+                }
+              ]
+            },
+            {
+              "zh": "好讓自己",
+              "accepted": [
+                "so that I could",
+                "so that I can",
+                "so I could",
+                "in order that I could"
+              ],
+              "targets": [
+                "PURP"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "so that I could to review",
+                  "right": "so that I could review",
+                  "explanation_zh": "could 是助動詞，後面直接接原形動詞，不加 to。"
+                },
+                {
+                  "wrong": "so that myself could",
+                  "right": "so that I could",
+                  "explanation_zh": "so that 後面接完整子句，主詞用主格 I。"
+                }
+              ]
+            },
+            {
+              "zh": "每科都能複習到",
+              "accepted": [
+                "review every subject",
+                "review all my subjects",
+                "review all the subjects",
+                "review all subjects",
+                "go over every subject",
+                "go over all my subjects"
+              ],
+              "targets": [
+                "review",
+                "subject"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "review every subjects",
+                  "right": "review every subject",
+                  "explanation_zh": "every 後面接單數名詞。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "collocation",
+              "zh": "做了一份讀書計畫",
+              "literal_error": "A week before the midterms, I did a study plan so that I could review every subject.",
+              "part": 2,
+              "explanation_zh": "「做計畫」的固定搭配是 make a plan；照中文字面寫 do a plan 會在這一部分被扣分。"
+            }
+          ],
+          "bonus": []
+        },
+        "2": {
+          "references": [
+            "Later, more and more classmates also started making study plans for themselves.",
+            "After that, more and more of my classmates also began to make their own study plans."
+          ],
+          "target_words": [
+            {
+              "word": "later",
+              "zh": "後來",
+              "alternatives": [
+                "after that",
+                "afterwards",
+                "afterward",
+                "then"
+              ]
+            },
+            {
+              "word": "classmate",
+              "zh": "同學",
+              "alternatives": [
+                "student"
+              ]
+            },
+            {
+              "word": "start",
+              "zh": "開始",
+              "alternatives": [
+                "begin"
+              ]
+            },
+            {
+              "word": "make",
+              "zh": "做"
+            },
+            {
+              "word": "plan",
+              "zh": "計畫"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "COMP",
+              "grammar_id": "gp-more-and-more",
+              "label_zh": "越來越多（more and more + 複數名詞）",
+              "frame": "more and more + 複數名詞 + V …",
+              "zh_trigger": "越來越多"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "後來",
+              "accepted": [
+                "Later",
+                "Later on",
+                "After that",
+                "Afterwards",
+                "Afterward",
+                "Then"
+              ],
+              "targets": [
+                "later"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Late",
+                  "right": "Later",
+                  "explanation_zh": "「後來」是 later（或 after that），late 是「晚的、遲的」。"
+                }
+              ]
+            },
+            {
+              "zh": "越來越多同學",
+              "accepted": [
+                "more and more classmates",
+                "more and more of my classmates",
+                "an increasing number of classmates",
+                "a growing number of classmates",
+                "more and more students"
+              ],
+              "targets": [
+                "COMP",
+                "classmate"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "more and more classmate",
+                  "right": "more and more classmates",
+                  "explanation_zh": "more and more 後面的可數名詞要用複數。"
+                },
+                {
+                  "wrong": "classmates more and more",
+                  "right": "more and more classmates",
+                  "explanation_zh": "「越來越多＋名詞」要把 more and more 放在名詞前面。"
+                }
+              ]
+            },
+            {
+              "zh": "也開始",
+              "accepted": [
+                "also started",
+                "also began",
+                "have also started",
+                "have also begun",
+                "started",
+                "began"
+              ],
+              "targets": [
+                "start"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "also start",
+                  "right": "also started",
+                  "explanation_zh": "「後來」說的是過去的事，動詞用過去式 started。"
+                }
+              ]
+            },
+            {
+              "zh": "為自己做讀書計畫",
+              "accepted": [
+                "making study plans for themselves",
+                "to make study plans for themselves",
+                "making their own study plans",
+                "to make their own study plans",
+                "to make study plans of their own"
+              ],
+              "targets": [
+                "make",
+                "plan"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "to make study plan for themselves",
+                  "right": "to make study plans for themselves",
+                  "explanation_zh": "每位同學各做一份，plan 用複數。"
+                },
+                {
+                  "wrong": "making study plans for themself",
+                  "right": "making study plans for themselves",
+                  "explanation_zh": "主詞是複數，反身代名詞用 themselves。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "plural_countable",
+              "zh": "越來越多同學",
+              "literal_error": "Later, more and more classmate also started making study plan for themselves.",
+              "part": 2,
+              "explanation_zh": "more and more 後面的可數名詞一定要用複數；照中文寫單數 classmate 會在這一部分被扣分。"
+            }
+          ],
+          "bonus": []
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-basic-01",
+    "lot": "translation-basic-01",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "5d53cd3325023c20a689f496811202dc08d17408faea3e4eb4c3042ce15b605d",
+    "spec_id": "translation-basic@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 1,
+    "sentences": 1,
+    "avg_sentence_length": 1.0,
+    "denominator": 1,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 1.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {
+      "off": 1
+    },
+    "offlist_words": [
+      "midterms"
+    ],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T07:53:39Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T07:20:08Z",
+      "details": {
+        "solver": "A",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "A week before the midterms, I made a study plan so that I could review every subject.",
+            "confidence": "high",
+            "explanation_zh": "「好讓自己…」用 so that＋子句表目的，過去式搭配 could；期中考依題目括號用 midterms；讀書計畫譯 study plan。"
+          },
+          "2": {
+            "translation": "Later, more and more classmates also started to make study plans for themselves.",
+            "confidence": "high",
+            "explanation_zh": "「越來越多」用 more and more；「為自己」用反身代名詞 for themselves；接續上一句的過去敘事用過去式。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PURP"
+            ],
+            "used_target_words": [
+              "week",
+              "make",
+              "plan",
+              "review",
+              "subject"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "COMP"
+            ],
+            "used_target_words": [
+              "later",
+              "classmate",
+              "start",
+              "make",
+              "plan"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "week",
+              "make",
+              "plan",
+              "review",
+              "subject"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PURP": true
+            },
+            "program_match": true
+          },
+          "2": {
+            "target_words_found": [
+              "later",
+              "classmate",
+              "start",
+              "make",
+              "plan"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "COMP": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "fail",
+      "created_at": "2026-10-09T07:25:05Z",
+      "details": {
+        "solver": "B",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "The week before the midterms, I made a study plan so that I could review every subject.",
+            "confidence": "high",
+            "explanation_zh": "題目已括註 midterms，直接使用；「好讓……」用 so that + could 表目的；「每科都能複習到」譯 review every subject。"
+          },
+          "2": {
+            "translation": "Later, more and more classmates also started to make study plans for themselves.",
+            "confidence": "high",
+            "explanation_zh": "「越來越多」用 more and more；「開始」用 started to；「為自己」用 for themselves；「後來」譯 later（或 Afterward）。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PURP"
+            ],
+            "used_target_words": [
+              "week",
+              "make",
+              "plan",
+              "review",
+              "subject"
+            ],
+            "within_accepted": false,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "中文「期中考前一週」最直接的英文是 the week before (the) midterms（期中考之前的那一週），但第 1 部分 accepted 只列 A week／One week before…，盲譯的 The week before the midterms 因此落在可接受寫法之外，而且這個寫法比 a week before 更貼近原文。建議第 1 部分 accepted 補上 The week before the midterms、The week before midterms。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "COMP"
+            ],
+            "used_target_words": [
+              "later",
+              "classmate",
+              "start",
+              "make",
+              "plan"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "week",
+              "make",
+              "plan",
+              "review",
+              "subject"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PURP": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "later",
+              "classmate",
+              "start",
+              "make",
+              "plan"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "COMP": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 1 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義",
+          "第 1 題驗證者對4 部分切分有意見（warn）：中文「期中考前一週」最直接的英文是 the week before (the) midterms（期中考之前的那一週），但第 1 部分 accepted 只列 A week／One week before…，盲譯的 The week bef"
+        ]
+      }
+    }
+  ],
+  "status": "rejected",
+  "status_reason": "blind_solver:B 未通過＋判定者人工審查（第 1 輪）：評分規準太窄。第 1 題第 1 部分「期中考（midterms）前一週」的 accepted 只收 A week／One week before the midterms 系列，最貼近中文的 The week before the midterms（期中考之前的那一週）是正確譯法卻不在可接受寫法內（驗證者 B 的盲譯即因此判 fail）。重生時第 1 部分補 The week before (the) midterms 等寫法。第 2 題沒有問題。"
+}

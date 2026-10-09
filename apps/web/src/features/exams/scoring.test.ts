@@ -1,9 +1,10 @@
 /**
- * 計分：單選、選項庫、多選部分給分 (n − 2k)/n、送分與官方公告的其他答案（docs/research/02 §4.1、schema 文件 scoring_exception）。
+ * 計分：單選、選項庫、多選部分給分 (n − 2k)/n、送分與官方公告的其他答案（docs/research/02 §4.1、schema 文件 scoring_exception），
+ * 以及填充、簡答的自動判分（SPEC §4.6；題庫練習的 AI 題用）。
  */
 import { describe, expect, it } from 'vitest';
 import type { ChoiceQuestion, MultiSelectQuestion, Question } from '../../data/exams';
-import { formatPoints, isAnswered, multiSelectFraction, scoreExam, scoreQuestion } from './scoring';
+import { editDistance, formatPoints, isAnswered, multiSelectFraction, normalizeOpenAnswer, scoreExam, scoreOpenAnswer, scoreQuestion } from './scoring';
 import { MINI_EXAM } from './testFixtures';
 
 const single = (overrides: Partial<ChoiceQuestion> = {}): ChoiceQuestion => ({
@@ -152,5 +153,114 @@ describe('整份考卷', () => {
     expect(formatPoints(8 / 3)).toBe('2.67');
     expect(formatPoints(0.5)).toBe('0.5');
     expect(formatPoints(0.1 + 0.2)).toBe('0.3');
+  });
+});
+
+describe('填充、簡答的自動判分（SPEC §4.6，AI 題的可接受答案是完整清單）', () => {
+  const fill = { mode: 'fill_in_blank' as const, max: 2, accepted: ['turns', 'makes'], partial: ['turn', 'turned', 'turning', 'make', 'made', 'making'] };
+  const short = { mode: 'short_answer' as const, max: 2, accepted: ['weigh'], partial: ['weighs', 'weighed'] };
+
+  it('正規化：頭尾空白、大小寫、結尾句點、彎引號、全形、圈號數字', () => {
+    expect(normalizeOpenAnswer('  Turns. ')).toBe('turns');
+    expect(normalizeOpenAnswer('ｔｕｒｎｓ')).toBe('turns');
+    expect(normalizeOpenAnswer('it’s  fine')).toBe("it's fine");
+    expect(normalizeOpenAnswer('❼')).toBe('7');
+    expect(normalizeOpenAnswer('②')).toBe('2');
+    expect(normalizeOpenAnswer('Asylum.')).toBe(normalizeOpenAnswer('asylum'));
+  });
+
+  it('正規化：去掉包住答案的引號與結尾的標點（逗號、驚嘆號、問號、分號、冒號，全形也算）', () => {
+    for (const typed of ['“come up with”', '"come up with"', "'come up with'", '‘come up with’', 'come up with,', 'Come up with!', '"Come up with,"', '"come up with"?', '「come up with」', 'come up with；', 'come up with？', '＂come up with＂']) {
+      expect(normalizeOpenAnswer(typed), typed).toBe('come up with');
+    }
+    expect(normalizeOpenAnswer('count me in!')).toBe('count me in');
+    // 單引號只在頭尾成對時才去掉（所有格、縮寫的撇號是答案的一部分）；字中間的標點照舊。
+    expect(normalizeOpenAnswer("students'")).toBe("students'");
+    expect(normalizeOpenAnswer("'til")).toBe("'til");
+    expect(normalizeOpenAnswer('well-known, ')).toBe('well-known');
+    expect(normalizeOpenAnswer('"')).toBe('');
+  });
+
+  it('簡答、填充：加了引號或結尾標點仍是全分（不是 0 分，也不是「拼字錯誤」）', () => {
+    const phrase = { mode: 'short_answer' as const, max: 2, accepted: ['come up with'], partial: [] };
+    for (const typed of ['“come up with”', '"come up with"', 'come up with,', 'Come up with!']) {
+      expect(scoreOpenAnswer(phrase, typed), typed).toMatchObject({ earned: 2, status: 'correct', matched: 'come up with' });
+    }
+    expect(scoreOpenAnswer({ ...short, accepted: ['dial'] }, '“dial”')).toMatchObject({ earned: 2, status: 'correct' });
+    const boredom = { mode: 'fill_in_blank' as const, max: 2, accepted: ['boredom'], partial: ['bored', 'boring'] };
+    for (const typed of ['"boredom"', 'boredom,', '“Boredom”.']) {
+      expect(scoreOpenAnswer(boredom, typed), typed).toMatchObject({ earned: 2, status: 'correct', matched: 'boredom' });
+    }
+    expect(scoreOpenAnswer({ ...fill, accepted: ['kept'] }, '"kept"')).toMatchObject({ earned: 2, status: 'correct' });
+    expect(scoreOpenAnswer({ ...fill, accepted: ['reminds'] }, 'reminds,')).toMatchObject({ earned: 2, status: 'correct' });
+    // 部分給分寫法也用同一個正規化：加了引號的字形錯誤仍是 1 分「字形錯誤」。
+    expect(scoreOpenAnswer(boredom, '"bored"')).toMatchObject({ earned: 1, status: 'form', matched: 'bored' });
+    // 可接受答案本身帶標點（count me in!）時，學生沒寫驚嘆號也算對。
+    expect(scoreOpenAnswer({ ...phrase, accepted: ['count me in!'] }, 'Count me in')).toMatchObject({ earned: 2, status: 'correct' });
+  });
+
+  it('編輯距離：相鄰兩字對調算 1 次', () => {
+    expect(editDistance('turns', 'tunrs')).toBe(1);
+    expect(editDistance('filling', 'filing')).toBe(1);
+    expect(editDistance('weigh', 'way')).toBe(4);
+    expect(editDistance('', 'abc')).toBe(3);
+  });
+
+  it('填充：答案或任何一個可接受答案都得全分（大小寫、句點不計）', () => {
+    expect(scoreOpenAnswer(fill, 'turns')).toMatchObject({ kind: 'open', earned: 2, status: 'correct', matched: 'turns' });
+    expect(scoreOpenAnswer(fill, 'Makes.')).toMatchObject({ earned: 2, status: 'correct', matched: 'makes' });
+  });
+
+  it('填充：選字正確、字形錯誤（partial_credit_forms）給 1 分', () => {
+    expect(scoreOpenAnswer(fill, 'turn')).toMatchObject({ earned: 1, status: 'form', matched: 'turn' });
+    expect(scoreOpenAnswer(fill, 'Made')).toMatchObject({ earned: 1, status: 'form' });
+  });
+
+  it('填充：不在部分給分清單、但詞彙表查得到是同一個條目的其他字形，也給 1 分（SPEC §4.6 ②）', () => {
+    const lemma: Record<string, string> = { turns: 'turn', turned: 'turn', turner: 'turn', returns: 'return', makes: 'make' };
+    const sameEntry = (a: string, b: string) => lemma[a] !== undefined && lemma[a] === lemma[b];
+    const noPartial = { ...fill, partial: [] };
+    expect(scoreOpenAnswer(noPartial, 'Turned', { sameEntry })).toMatchObject({ earned: 1, status: 'form', matched: 'turns' });
+    // 沒有 sameEntry 時照舊：turned 是真的字，不算拼錯，0 分。
+    expect(scoreOpenAnswer(noPartial, 'turned', { isKnownWord: () => true })).toMatchObject({ earned: 0, status: 'wrong' });
+    // 別的條目（returns）不算。
+    expect(scoreOpenAnswer(noPartial, 'returns', { sameEntry, isKnownWord: () => true })).toMatchObject({ earned: 0, status: 'wrong' });
+    // 簡答不套用這條（簡答要照題幹要求的形式，字形錯只看部分給分清單）。
+    const shortNoPartial = { ...short, accepted: ['turns'], partial: [] };
+    expect(scoreOpenAnswer(shortNoPartial, 'turned', { sameEntry })).toMatchObject({ earned: 0, status: 'wrong' });
+  });
+
+  it('填充：拼字錯誤（長度 ≥5、編輯距離 ≤2、不是真實存在的字）給 1 分；是另一個真的字就 0 分', () => {
+    expect(scoreOpenAnswer(fill, 'tunrs')).toMatchObject({ earned: 1, status: 'spelling', matched: 'turns' });
+    const known = (w: string) => w === 'burns';
+    expect(scoreOpenAnswer(fill, 'burns', { isKnownWord: known })).toMatchObject({ earned: 0, status: 'wrong' });
+    // 太短不算拼錯（turs 只有 4 個字母）。
+    expect(scoreOpenAnswer(fill, 'turs')).toMatchObject({ earned: 0, status: 'wrong' });
+  });
+
+  it('填充：超過一個單詞 0 分（即使裡面有正解）；未作答 0 分', () => {
+    expect(scoreOpenAnswer(fill, 'turns old')).toMatchObject({ earned: 0, status: 'too_many_words' });
+    expect(scoreOpenAnswer(fill, '   ')).toMatchObject({ earned: 0, status: 'unanswered' });
+    expect(scoreOpenAnswer(fill, undefined)).toMatchObject({ earned: 0, status: 'unanswered' });
+  });
+
+  it('簡答：可接受答案全分、字形錯 1 分、多寫一兩個字 1 分、抄一大段 0 分、其他 0 分', () => {
+    expect(scoreOpenAnswer(short, 'Weigh')).toMatchObject({ earned: 2, status: 'correct' });
+    expect(scoreOpenAnswer(short, 'weighed')).toMatchObject({ earned: 1, status: 'form' });
+    expect(scoreOpenAnswer(short, 'to weigh')).toMatchObject({ earned: 1, status: 'extra_words', matched: 'weigh' });
+    expect(scoreOpenAnswer(short, 'two students weigh the food that is left')).toMatchObject({ earned: 0, status: 'copied' });
+    expect(scoreOpenAnswer(short, 'measure')).toMatchObject({ earned: 0, status: 'wrong' });
+    // 子字串不算（weight 不是 weigh）。
+    expect(scoreOpenAnswer(short, 'weight')).toMatchObject({ earned: 0, status: 'wrong' });
+  });
+
+  it('多字的可接受答案（片語）：照字比對，前後多字算多寫', () => {
+    const phrase = { mode: 'short_answer' as const, max: 2, accepted: ['one of a kind'], partial: [] };
+    expect(scoreOpenAnswer(phrase, 'One of a kind.')).toMatchObject({ earned: 2, status: 'correct' });
+    expect(scoreOpenAnswer(phrase, 'is one of a kind')).toMatchObject({ earned: 1, status: 'extra_words' });
+  });
+
+  it('部分給分不超過配分', () => {
+    expect(scoreOpenAnswer({ ...fill, max: 0.5 }, 'turn')).toMatchObject({ earned: 0.5, status: 'form' });
   });
 });

@@ -1,0 +1,276 @@
+{
+  "schema": "gsat-bank-sources-whitelist/v1",
+  "basis": "docs/SPEC.md §5.3（素材來源與授權）；docs/research/04-data-sources-licensing.md §0、§7.1、§7.4",
+  "updated_on": "2026-10-09",
+  "matching_zh": "比對事實單 sources[].url、題組 provenance.sources[].url 與圖表 chart.source.url 的主機名稱：match=domain 時，主機等於 domain 或是它的子網域（www.、news.、data.…）；match=host 時只比對列出的主機。先看 deny（只要有一條 deny 規則的網域與用途都對上就不能用），再看 allow：取網域最長（最具體）的那一筆，用途必須在 uses 內；adaptable_text 與 dataset 另外要求 license 在 licenses 內。fact_only 的 license 照實記錄原站授權（例如 all-rights-reserved、unknown），不檢查。檢查工具：tools/validate_bank.py --facts。",
+  "uses": {
+    "fact_only": "只取事實（數字、日期、因果、人名地名），用自己的話寫進事實單；原文不交給生成者、不挖空、不改寫",
+    "adaptable_text": "可改作的開放文字：標示出處並註明修改（provenance.derivation=adapted，attribution_text 必填）；CC BY-SA 另標 share_alike",
+    "dataset": "圖表資料：事實單 datasets 存原始資料與出處；圖由前端自己繪製（不貼來源網站的圖片），圖下標示資料來源"
+  },
+  "licenses": {
+    "CC-BY-3.0": "Creative Commons 姓名標示 3.0",
+    "CC-BY-4.0": "Creative Commons 姓名標示 4.0",
+    "OGDL-Taiwan-1.0": "政府資料開放授權條款－第1版（照資料集的顯名聲明標示）"
+  },
+  "allow": [
+    {
+      "id": "global-voices",
+      "publisher": "Global Voices",
+      "match": "domain",
+      "domains": ["globalvoices.org"],
+      "uses": ["adaptable_text", "fact_only"],
+      "licenses": ["CC-BY-3.0"],
+      "conditions_zh": "合作媒體轉載稿除外：文末註明原刊於合作媒體（partner、republished、originally published）的文章不是 CC BY，只能當 fact_only",
+      "basis": "SPEC §5.3；04 §0"
+    },
+    {
+      "id": "frontiers-for-young-minds",
+      "publisher": "Frontiers for Young Minds",
+      "match": "domain",
+      "domains": ["kids.frontiersin.org"],
+      "uses": ["adaptable_text", "fact_only"],
+      "licenses": ["CC-BY-4.0"],
+      "conditions_zh": "逐篇確認文章頁標示 CC BY 4.0",
+      "basis": "SPEC §5.3"
+    },
+    {
+      "id": "plos",
+      "publisher": "PLOS",
+      "match": "domain",
+      "domains": ["plos.org"],
+      "uses": ["adaptable_text", "fact_only"],
+      "licenses": ["CC-BY-4.0", "CC-BY-3.0"],
+      "conditions_zh": "逐篇確認文章標示 CC BY（PLOS 期刊預設 CC BY 4.0，少數舊文是 3.0）",
+      "basis": "SPEC §5.3"
+    },
+    {
+      "id": "our-world-in-data",
+      "publisher": "Our World in Data",
+      "match": "domain",
+      "domains": ["ourworldindata.org"],
+      "uses": ["dataset", "fact_only"],
+      "licenses": ["CC-BY-4.0"],
+      "conditions_zh": "只用資料（圖表頁的資料表、CSV 下載）：圖由前端自己繪製，不貼 OWID 圖片；OWID 文章不挖空也不改寫（見 deny owid-articles）；OWID 轉載的第三方資料以原始提供者的授權為準，事實單 sources[].note 記原始提供者",
+      "basis": "SPEC §5.3；04 §0"
+    },
+    {
+      "id": "world-bank",
+      "publisher": "World Bank",
+      "match": "domain",
+      "domains": ["worldbank.org"],
+      "uses": ["dataset", "fact_only"],
+      "licenses": ["CC-BY-4.0"],
+      "conditions_zh": "World Development Indicators 等開放資料 CC BY 4.0；WDI 查不到台灣（台灣數據改用政府資料開放平臺）",
+      "basis": "SPEC §5.3"
+    },
+    {
+      "id": "data-gov-tw",
+      "publisher": "政府資料開放平臺",
+      "match": "domain",
+      "domains": ["data.gov.tw"],
+      "uses": ["dataset", "fact_only"],
+      "licenses": ["OGDL-Taiwan-1.0"],
+      "conditions_zh": "每個資料集使用前確認採用「政府資料開放授權條款－第1版」，並照該條款的顯名聲明標示（04 §7.1：授權未在研究文件驗證）",
+      "basis": "SPEC §5.3；04 §0、§7.1"
+    },
+    {
+      "id": "un-system",
+      "publisher": "聯合國與其機構（含 WHO）",
+      "match": "domain",
+      "domains": [
+        "un.org", "who.int", "unicef.org", "unep.org", "fao.org", "undp.org", "unhcr.org", "wfp.org", "ilo.org",
+        "unfccc.int", "ipcc.ch", "wmo.int", "unwomen.org", "unido.org", "ifad.org", "iaea.org", "itu.int", "unodc.org",
+        "unhabitat.org", "unaids.org", "unfpa.org", "imo.org", "icao.int", "unctad.org", "unops.org", "unwto.org",
+        "imf.org", "paho.org"
+      ],
+      "uses": ["fact_only"],
+      "licenses": [],
+      "conditions_zh": "只取事實；UN 網站文章與 WHO 出版品不挖空也不改寫（見 deny）。UNESCO 主站不在白名單（見 deny unesco-main-site）",
+      "basis": "SPEC §5.3"
+    },
+    {
+      "id": "governments",
+      "publisher": "各國政府",
+      "match": "domain",
+      "domains": [
+        "gov.tw", "gov", "gov.uk", "europa.eu", "go.jp", "go.kr", "gov.au", "canada.ca", "gc.ca", "govt.nz", "gov.sg",
+        "gouv.fr", "bund.de", "gov.ie", "gov.in"
+      ],
+      "uses": ["fact_only"],
+      "licenses": [],
+      "conditions_zh": "只取事實；要改作或當圖表資料，改用政府資料開放平臺（data.gov.tw）上確認過授權的資料集",
+      "basis": "SPEC §5.3"
+    },
+    {
+      "id": "research-institutions",
+      "publisher": "研究機構與大學",
+      "match": "domain",
+      "domains": [
+        "edu", "edu.tw", "ac.uk", "ac.jp", "edu.au", "sinica.edu.tw", "mpg.de", "cnrs.fr", "esa.int", "iucn.org",
+        "iucnredlist.org", "wri.org", "pewresearch.org", "worldwildlife.org", "wwf.org", "oecd.org", "iea.org",
+        "irena.org", "copernicus.eu", "earthobservatory.nasa.gov"
+      ],
+      "uses": ["fact_only"],
+      "licenses": [],
+      "conditions_zh": "只取事實",
+      "basis": "SPEC §5.3"
+    },
+    {
+      "id": "journals",
+      "publisher": "期刊",
+      "match": "domain",
+      "domains": [
+        "nature.com", "science.org", "cell.com", "thelancet.com", "nejm.org", "bmj.com", "pnas.org", "sciencedirect.com",
+        "springer.com", "wiley.com", "frontiersin.org", "mdpi.com", "jamanetwork.com", "biomedcentral.com",
+        "royalsocietypublishing.org", "agu.org", "acs.org", "annualreviews.org", "sciencenews.org"
+      ],
+      "uses": ["fact_only"],
+      "licenses": [],
+      "conditions_zh": "只取事實；可改作的期刊文字只有 PLOS 與 Frontiers for Young Minds（各自一筆）",
+      "basis": "SPEC §5.3"
+    },
+    {
+      "id": "news-media",
+      "publisher": "主要新聞媒體",
+      "match": "domain",
+      "domains": [
+        "reuters.com", "apnews.com", "bbc.com", "bbc.co.uk", "nytimes.com", "washingtonpost.com", "npr.org", "cnn.com",
+        "aljazeera.com", "economist.com", "ft.com", "wsj.com", "bloomberg.com", "nationalgeographic.com",
+        "scientificamerican.com", "smithsonianmag.com", "newscientist.com", "time.com", "theatlantic.com", "dw.com",
+        "france24.com", "nhk.or.jp", "japantimes.co.jp", "scmp.com", "straitstimes.com", "abc.net.au", "cbc.ca",
+        "focustaiwan.tw", "taipeitimes.com", "cna.com.tw", "pts.org.tw", "twreporter.org", "theconversation.com",
+        "voanews.com", "vox.com", "latimes.com", "usatoday.com", "nikkei.com"
+      ],
+      "uses": ["fact_only"],
+      "licenses": [],
+      "conditions_zh": "只取事實；Guardian 不在白名單（任何內容都不交給 Claude，見 deny guardian）；The Conversation、VOA Learning English 不改寫（見 deny）",
+      "basis": "SPEC §5.3"
+    }
+  ],
+  "deny": [
+    {
+      "id": "guardian",
+      "match": "domain",
+      "domains": ["theguardian.com", "guardian.co.uk", "theguardian.co.uk"],
+      "uses": ["*"],
+      "rule_zh": "Guardian 的任何內容都不交給 Claude（含只取事實）；不爬、不建立資料庫",
+      "basis": "SPEC §5.3 最後一點；04 §7.4"
+    },
+    {
+      "id": "cambridge",
+      "match": "domain",
+      "domains": ["cambridge.org"],
+      "uses": ["*"],
+      "rule_zh": "不爬 Cambridge，也不建立它的內容的資料庫；Cambridge 只能外連（介面也不用 iframe 嵌入，見 interface-cambridge-iframe）",
+      "basis": "SPEC §5.3 最後一點；04 §2.2、§7.4"
+    },
+    {
+      "id": "oxford",
+      "match": "domain",
+      "domains": ["oup.com", "oed.com", "oxfordlearnersdictionaries.com", "oxforddictionaries.com", "lexico.com", "oxfordreference.com"],
+      "uses": ["*"],
+      "rule_zh": "不爬 Oxford，也不建立它的內容的資料庫",
+      "basis": "SPEC §5.3 最後一點；04 §7.4"
+    },
+    {
+      "id": "unesco-main-site",
+      "match": "host",
+      "hosts": ["unesco.org", "www.unesco.org", "en.unesco.org"],
+      "uses": ["*"],
+      "rule_zh": "不爬 UNESCO 主站，也不建立它的內容的資料庫",
+      "basis": "SPEC §5.3 最後一點；04 §7.4"
+    },
+    {
+      "id": "gutenberg-main-site",
+      "match": "host",
+      "hosts": ["gutenberg.org", "www.gutenberg.org"],
+      "uses": ["*"],
+      "rule_zh": "不爬 Project Gutenberg 主站，也不建立它的內容的資料庫",
+      "basis": "SPEC §5.3 最後一點；04 §7.4"
+    },
+    {
+      "id": "the-conversation-text",
+      "match": "domain",
+      "domains": ["theconversation.com"],
+      "uses": ["adaptable_text", "dataset"],
+      "rule_zh": "The Conversation 的文章不挖空也不改寫（只取事實）",
+      "basis": "SPEC §5.3；04 §0 第 6 點"
+    },
+    {
+      "id": "owid-articles",
+      "match": "domain",
+      "domains": ["ourworldindata.org"],
+      "uses": ["adaptable_text"],
+      "rule_zh": "OWID 文章不挖空也不改寫；OWID 只用資料（dataset）或取事實",
+      "basis": "SPEC §5.3 最後一點"
+    },
+    {
+      "id": "who-publications",
+      "match": "domain",
+      "domains": ["who.int"],
+      "uses": ["adaptable_text", "dataset"],
+      "rule_zh": "WHO 出版品不挖空也不改寫（只取事實）",
+      "basis": "SPEC §5.3 最後一點"
+    },
+    {
+      "id": "un-website-articles",
+      "match": "domain",
+      "domains": ["un.org"],
+      "uses": ["adaptable_text", "dataset"],
+      "rule_zh": "UN 網站文章不挖空也不改寫（只取事實）",
+      "basis": "SPEC §5.3 最後一點"
+    },
+    {
+      "id": "voa-learning-english",
+      "match": "domain",
+      "domains": ["learningenglish.voanews.com"],
+      "uses": ["adaptable_text", "dataset"],
+      "rule_zh": "VOA Learning English 的通訊社改寫稿不當公有領域：不改寫，只取事實",
+      "basis": "SPEC §5.3 最後一點"
+    },
+    {
+      "id": "global-voices-partner-content",
+      "match": "none",
+      "domains": [],
+      "uses": ["adaptable_text"],
+      "rule_zh": "Global Voices 的合作媒體轉載稿不當 CC BY（網址看不出來：用 globalvoices.org 的 adaptable_text 時，validate_bank 會提醒逐篇確認）",
+      "basis": "SPEC §5.3 最後一點"
+    },
+    {
+      "id": "cc-cedict-ci-download",
+      "match": "domain",
+      "domains": ["mdbg.net"],
+      "uses": ["*"],
+      "rule_zh": "不用 CI 到 mdbg.net 自動下載 CC-CEDICT；也不當題目素材來源",
+      "basis": "SPEC §5.3 最後一點"
+    },
+    {
+      "id": "interface-cambridge-iframe",
+      "match": "none",
+      "domains": [],
+      "uses": [],
+      "scope": "interface",
+      "rule_zh": "不用 iframe 嵌入 Cambridge（介面規則，不是素材來源）",
+      "basis": "SPEC §5.3 最後一點"
+    },
+    {
+      "id": "interface-brand-metrics",
+      "match": "none",
+      "domains": [],
+      "uses": [],
+      "scope": "interface",
+      "rule_zh": "介面不顯示 Lexile、Collins、Oxford 3000 等品牌指標",
+      "basis": "SPEC §5.3 最後一點"
+    },
+    {
+      "id": "interface-ceec-name",
+      "match": "none",
+      "domains": [],
+      "uses": [],
+      "scope": "interface",
+      "rule_zh": "網域、App 名稱、Logo 不用「大考中心」「CEEC」",
+      "basis": "SPEC §5.3 最後一點"
+    }
+  ]
+}

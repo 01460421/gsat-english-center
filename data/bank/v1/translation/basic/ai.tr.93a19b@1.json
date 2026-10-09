@@ -1,0 +1,646 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.93a19b",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "basic",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "除了在墾丁（Kenting）游泳，我們還在海邊騎了腳踏車。",
+        "options": null,
+        "answer": "Besides swimming in Kenting, we also rode bicycles by the sea.",
+        "accepted_answers": [
+          "In addition to swimming in Kenting, we also rode bikes along the beach.",
+          "Apart from swimming in Kenting, we also rode our bicycles by the sea."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "介系詞＋動名詞"
+          ],
+          "topic": "墾丁海邊"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "那裡的海水看起來和晴朗的天空一樣藍。",
+        "options": null,
+        "answer": "The sea water there looked as blue as the clear sky.",
+        "accepted_answers": [
+          "The water there looked as blue as the sunny sky.",
+          "The ocean there looked just as blue as the clear sky."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "原級比較"
+          ],
+          "topic": "墾丁海邊"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "墾丁海邊"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「除了…（之外），還…」是「除了做 A，也做 B」，用 Besides／In addition to／Apart from + V-ing，主要子句常配 also。這些介系詞（in addition to 的 to 也是介系詞）後面接動名詞 swimming。旅行已經結束，主要子句用過去式；ride 的過去式是不規則的 rode。墾丁是詞彙表外的地名，題目括號附了英文，照寫 Kenting 即可。",
+          "evidence": [
+            "除了在墾丁（Kenting）游泳",
+            "我們還在海邊騎了腳踏車"
+          ],
+          "strategy_zh": "「除了…還…」是加上去（besides），「除了…以外都…」是排除（except）；判斷清楚再選介系詞，後面一律接 V-ing。",
+          "hints": [
+            "切成四段：除了在墾丁游泳／在海邊／騎了／腳踏車（we also 接在逗號後）",
+            "標的詞彙：swim（游泳）、beach／sea（海邊）、ride（騎）、bicycle／bike（腳踏車）",
+            "句型框架：Besides + V-ing …, S + also + V(過去式) …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「A 和 B 一樣＋形容詞」用原級比較 as + 形容詞 + as：as blue as the clear sky，中間的形容詞用原級。look（看起來）是連綴動詞，後面直接接形容詞，不寫 look like。去墾丁是過去的旅行，用過去式 looked；「那裡的海水」的 there 放在名詞後面（the sea water there）。天空只有一片，sky 前面加 the。",
+          "evidence": [
+            "和晴朗的天空一樣藍",
+            "看起來"
+          ],
+          "strategy_zh": "「和…一樣」先寫 as … as，中間放形容詞原級；比較的兩邊要是同類的東西（海水和天空比，不是和「天空的顏色」比）。",
+          "hints": [
+            "切成四段：那裡的海水／看起來／和晴朗的天空／一樣藍（英文語序：… looked as blue as the clear sky）",
+            "標的詞彙：sea（海水）、look（看起來）、clear／sunny（晴朗的）、sky（天空）、blue（藍色的）",
+            "句型框架：S + looked + as + 形容詞 + as + 名詞"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "Besides swimming in Kenting, we also rode bicycles by the sea.",
+            "In addition to swimming in Kenting, we also rode bikes along the beach.",
+            "Apart from swimming in Kenting, we also rode our bicycles by the sea."
+          ],
+          "target_words": [
+            {
+              "word": "swim",
+              "zh": "游泳"
+            },
+            {
+              "word": "sea",
+              "zh": "海邊",
+              "alternatives": [
+                "beach",
+                "coast",
+                "seaside"
+              ]
+            },
+            {
+              "word": "ride",
+              "zh": "騎",
+              "alternatives": [
+                "cycle"
+              ]
+            },
+            {
+              "word": "bicycle",
+              "zh": "腳踏車",
+              "alternatives": [
+                "bike",
+                "cycling"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PREPVING",
+              "grammar_id": "gp-prep-gerund",
+              "label_zh": "介系詞＋動名詞（除了…：Besides + V-ing）",
+              "frame": "Besides / In addition to + V-ing …, S + also + V …",
+              "zh_trigger": "除了"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "除了在墾丁（Kenting）游泳",
+              "accepted": [
+                "Besides swimming in Kenting",
+                "In addition to swimming in Kenting",
+                "Apart from swimming in Kenting",
+                "Other than swimming in Kenting"
+              ],
+              "targets": [
+                "PREPVING",
+                "swim"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Besides swim in Kenting",
+                  "right": "Besides swimming in Kenting",
+                  "explanation_zh": "besides 是介系詞，後面的動詞用 V-ing。"
+                },
+                {
+                  "wrong": "In addition to swim in Kenting",
+                  "right": "In addition to swimming in Kenting",
+                  "explanation_zh": "in addition to 的 to 是介系詞，後面接 V-ing，不是不定詞。"
+                },
+                {
+                  "wrong": "Beside swimming in Kenting",
+                  "right": "Besides swimming in Kenting",
+                  "explanation_zh": "beside 是「在旁邊」，「除了…還」要用 besides。"
+                }
+              ]
+            },
+            {
+              "zh": "在海邊",
+              "accepted": [
+                "by the sea",
+                "along the beach",
+                "on the beach",
+                "along the coast",
+                "by the beach",
+                "at the beach",
+                "by the seaside"
+              ],
+              "targets": [
+                "sea"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "in the sea side",
+                  "right": "by the seaside",
+                  "explanation_zh": "「海邊」是 seaside（一個字）或 by the sea；in the sea 是「在海裡」。"
+                }
+              ]
+            },
+            {
+              "zh": "騎了",
+              "accepted": [
+                "rode",
+                "went riding"
+              ],
+              "targets": [
+                "ride"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "rided",
+                  "right": "rode",
+                  "explanation_zh": "ride 是不規則動詞，過去式是 rode。"
+                },
+                {
+                  "wrong": "ride",
+                  "right": "rode",
+                  "explanation_zh": "說的是這次旅行已經做過的事，用過去式 rode。"
+                }
+              ]
+            },
+            {
+              "zh": "腳踏車",
+              "accepted": [
+                "bicycles",
+                "bikes",
+                "our bikes",
+                "our bicycles"
+              ],
+              "targets": [
+                "bicycle"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "rode bicycle",
+                  "right": "rode bicycles",
+                  "explanation_zh": "bicycle 是可數名詞，不能單獨用單數；寫 bicycles、our bikes 或 a bicycle。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "word_form",
+              "zh": "除了在墾丁（Kenting）游泳",
+              "literal_error": "Besides swim in Kenting, we also rode bicycles by the sea.",
+              "part": 1,
+              "explanation_zh": "照字面「除了＋游泳」寫成 Besides swim，介系詞後面沒有用動名詞，這一部分扣分。"
+            }
+          ],
+          "bonus": []
+        },
+        "2": {
+          "references": [
+            "The sea water there looked as blue as the clear sky.",
+            "The water there looked as blue as the sunny sky.",
+            "The ocean there looked just as blue as the clear sky."
+          ],
+          "target_words": [
+            {
+              "word": "sea",
+              "zh": "海水",
+              "alternatives": [
+                "ocean",
+                "water",
+                "seawater"
+              ]
+            },
+            {
+              "word": "look",
+              "zh": "看起來",
+              "alternatives": [
+                "seem"
+              ]
+            },
+            {
+              "word": "clear",
+              "zh": "晴朗的",
+              "alternatives": [
+                "sunny",
+                "bright"
+              ]
+            },
+            {
+              "word": "sky",
+              "zh": "天空"
+            },
+            {
+              "word": "blue",
+              "zh": "藍色的"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "COMP",
+              "grammar_id": "gp-as-as",
+              "label_zh": "原級比較（和…一樣：as + 形容詞 + as）",
+              "frame": "A + look/be + as + adj. + as + B",
+              "zh_trigger": "一樣藍"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "那裡的海水",
+              "accepted": [
+                "The sea water there",
+                "The water there",
+                "The ocean there",
+                "The sea there",
+                "The seawater there"
+              ],
+              "targets": [
+                "sea"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "The there sea water",
+                  "right": "The sea water there",
+                  "explanation_zh": "「那裡的」修飾名詞時，there 要放在名詞後面：the sea water there。"
+                }
+              ]
+            },
+            {
+              "zh": "看起來",
+              "accepted": [
+                "looked",
+                "looks",
+                "seemed"
+              ],
+              "targets": [
+                "look"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "looked like as blue as",
+                  "right": "looked as blue as",
+                  "explanation_zh": "look 後面直接接形容詞（或 as + 形容詞 + as）；look like 後面才接名詞。"
+                }
+              ]
+            },
+            {
+              "zh": "和晴朗的天空",
+              "accepted": [
+                "the clear sky",
+                "the sunny sky",
+                "the bright sky",
+                "a clear sky"
+              ],
+              "targets": [
+                "clear",
+                "sky"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "as blue as clear sky",
+                  "right": "as blue as the clear sky",
+                  "explanation_zh": "指頭上這片天空時用 the sky，前面要有冠詞。"
+                }
+              ]
+            },
+            {
+              "zh": "一樣藍",
+              "accepted": [
+                "as blue as",
+                "just as blue as"
+              ],
+              "targets": [
+                "COMP",
+                "blue"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "the same blue as",
+                  "right": "as blue as",
+                  "explanation_zh": "「和…一樣＋形容詞」用 as + 形容詞原級 + as，不是 the same + 形容詞。"
+                },
+                {
+                  "wrong": "as bluer as",
+                  "right": "as blue as",
+                  "explanation_zh": "as … as 中間用原級，不用比較級。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "collocation",
+              "zh": "一樣藍",
+              "literal_error": "The sea water there looked the same blue as the clear sky.",
+              "part": 4,
+              "explanation_zh": "照中文「和…一樣藍」逐字寫成 the same blue as，不是英文的比較句型，這一部分扣分。"
+            }
+          ],
+          "bonus": []
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-basic-02",
+    "lot": "translation-basic-02",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "98fb98485e580f5dcb5c9180ca2577c7306e3aace5410226eade2db68cbe253c",
+    "spec_id": "translation-basic@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 1,
+    "sentences": 1,
+    "avg_sentence_length": 1.0,
+    "denominator": 1,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 1.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {
+      "off": 1
+    },
+    "offlist_words": [
+      "kenting"
+    ],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T07:49:13Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T07:28:47Z",
+      "details": {
+        "solver": "A",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "In addition to swimming in Kenting, we also rode bicycles by the sea.",
+            "confidence": "high",
+            "explanation_zh": "「除了…還…」是附加義，用 In addition to + V-ing（也可 Besides + V-ing），不能用 except；描述過去的旅行用過去式 rode；「海邊」譯 by the sea（也可 along the beach／along the coast）。"
+          },
+          "2": {
+            "translation": "The seawater there looked as blue as the clear sky.",
+            "confidence": "medium",
+            "explanation_zh": "「和…一樣藍」用原級比較 as blue as；承接上一句的過去旅遊經驗用過去式 looked；中文沒有時態，若單獨看也可用現在式 looks，所以信心 medium。「晴朗的天空」譯 the clear sky。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PREPVING"
+            ],
+            "used_target_words": [
+              "swim",
+              "sea",
+              "ride",
+              "bicycle"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "（備註，不影響判定）「騎了」「腳踏車」各只有一個英文字，「我們還」（we also，「除了…還…」的後半）不在任何部分；切分偏輕，但基礎級可以接受。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "COMP"
+            ],
+            "used_target_words": [
+              "sea",
+              "look",
+              "clear",
+              "sky",
+              "blue"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "swim",
+              "sea",
+              "ride",
+              "bicycle"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PREPVING": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "sea",
+              "look",
+              "clear",
+              "sky",
+              "blue"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "COMP": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "warn",
+      "created_at": "2026-10-09T07:49:13Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Besides swimming in Kenting, we also rode bikes by the sea.",
+            "confidence": "high",
+            "explanation_zh": "「除了……還……」用 Besides／In addition to + 動名詞，後面的主要子句用過去式 rode；「海邊」譯 by the sea。"
+          },
+          "2": {
+            "translation": "The seawater there looks as blue as the clear sky.",
+            "confidence": "high",
+            "explanation_zh": "「和……一樣藍」用 as + 形容詞 + as；「看起來」用連綴動詞 looks，後接形容詞；「晴朗的天空」譯 the clear sky。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PREPVING"
+            ],
+            "used_target_words": [
+              "swim",
+              "sea",
+              "ride",
+              "bicycle"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "第 3、4 部分把動詞「騎了」和受詞「腳踏車」拆開：accepted 只收 rode／went riding 與 bicycles／bikes，但 target_words 卻接受 cycle／cycling。學生寫 cycled 或 went cycling 時兩個部分都對不上，而 went riding 配 bikes 又組不成通順的句子。建議合併成「騎了腳踏車」一個部分（rode bikes／cycled／went cycling）。「我們還」也沒有被任何部分涵蓋。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "COMP"
+            ],
+            "used_target_words": [
+              "sea",
+              "look",
+              "clear",
+              "sky",
+              "blue"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "swim",
+              "sea",
+              "ride",
+              "bicycle"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PREPVING": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "sea",
+              "look",
+              "clear",
+              "sky",
+              "blue"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "COMP": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 1 題驗證者對4 部分切分有意見（warn）：第 3、4 部分把動詞「騎了」和受詞「腳踏車」拆開：accepted 只收 rode／went riding 與 bicycles／bikes，但 target_words 卻接受 cycle／cycling。學生寫 cycled 或 we"
+        ]
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

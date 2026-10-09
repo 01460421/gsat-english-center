@@ -7,7 +7,7 @@
  * 每層都要轉傳的話，歷屆試題用不到的參數會散落在所有元件裡。
  */
 import { createContext, use, useMemo, type ReactNode } from 'react';
-import type { Question, QuestionGroup } from '../../data/exams';
+import type { Figure, Question, QuestionGroup } from '../../data/exams';
 import { refersToHighlights, type TextHighlight } from './richText';
 import type { AnswerValue } from './scoring';
 
@@ -25,6 +25,25 @@ export interface QuestionExtras {
    * 那段說明是寫給歷屆題的。
    */
   noOfficialStats?: boolean;
+  /**
+   * 填充、簡答看答案後的回饋，取代預設的 OpenFeedback（官方參考答案、不自動計分）。
+   * AI 題的可接受答案是完整清單，練習頁用它自動判分並接上解析卡。
+   */
+  renderOpenFeedback?: (q: Question, answer: AnswerValue | undefined) => ReactNode;
+  /**
+   * 填充每格限一個單詞（現制混合題）：輸入了空白就即時提示（SPEC §4.1 OpenInput）。
+   * 歷屆試題頁不開：早期試卷有要寫片語的填充題。
+   */
+  singleWordFill?: boolean;
+  /** 填充、簡答作答框下方的說明，取代預設的「非選擇題不自動計分…」。 */
+  openAnswerNote?: (q: Question) => ReactNode;
+  /** 選文裡的圖怎麼畫（例如練習頁自己畫的 SVG 圖表）；回傳 undefined 就用預設的 FigureView。 */
+  renderFigure?: (figure: Figure, index: number) => ReactNode;
+  /**
+   * 「在文中標出證據句」的請求（題號＋計數；同一題再按一次計數也會變）。多文本目前的分頁看不到那一題的證據句時，
+   * 選文自己切到看得到的分頁（證據都在同一篇就切到那一篇，分散在幾篇就切到「全部」），外層再捲過去、移焦點。
+   */
+  locateRequest?: { label: string; n: number } | null;
 }
 
 export const QuestionExtrasContext = createContext<QuestionExtras | null>(null);

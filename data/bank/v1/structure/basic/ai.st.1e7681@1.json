@@ -1,0 +1,619 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.st.1e7681",
+  "version": 1,
+  "section_type": "structure",
+  "format_version": "structure-4x5",
+  "tier": "basic",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": "Few toys are as widely loved as the teddy bear. Children hug it at night, and many adults still keep the one they had when they were small. Surprisingly, this soft toy got its name from a hunting trip and an American president.\nThe president was Theodore Roosevelt, who was known to many Americans by the nickname “Teddy.” He loved the outdoors, and one November he joined a bear hunt in the southern state of Mississippi. The hunt did not go well, however, and he could not find a single bear. [[1]] But Roosevelt refused to shoot an animal that had no chance to escape. He felt that killing it in that way would not be fair.\n[[2]] It showed the president turning away from a frightened bear. A shop owner in New York named Morris Michtom saw the drawing and had an idea. [[3]] Next to it, they put up a sign that read “Teddy’s bear.” The toy sold so quickly that Michtom soon started a company to make more of them.\n[[4]] Its bears had arms and legs that could move, and an American company ordered a large number of them. Before long, teddy bears were being sold on both sides of the Atlantic, and children all over the world wanted one. Today, more than a century later, the teddy bear is still a symbol of comfort for people of all ages.",
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": {
+      "A": "The story soon became famous, thanks to a newspaper cartoon.",
+      "B": "He and his wife sewed a toy bear and put it in their shop window.",
+      "C": "At about the same time, a toy company in Germany was making its own bears.",
+      "D": "Black bears are skilled tree climbers and especially love the taste of honey.",
+      "E": "To help the president, his guides caught an old black bear and tied it to a tree."
+    },
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "E",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "lexical_cohesion",
+          "clue_raw": "SQ|LX|BF|L",
+          "key_phrase": "To help the president ← he could not find a single bear; caught … and tied it to a tree → an animal that had no chance to escape"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "A",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "pronoun_reference",
+          "clue_raw": "BR|PR|BF|L",
+          "key_phrase": "The story ← Roosevelt refused to shoot …; He felt that killing it in that way would not be fair; a newspaper cartoon → It showed the president …; the drawing"
+        }
+      },
+      {
+        "no": 3,
+        "label": "3",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "B",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "pronoun_reference",
+          "clue_raw": "SP|PR|BF|L",
+          "key_phrase": "He and his wife ← Morris Michtom … had an idea; a toy bear … in their shop window → Next to it, they put up a sign that read “Teddy’s bear.”"
+        }
+      },
+      {
+        "no": 4,
+        "label": "4",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "C",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "chronology",
+          "clue_raw": "TS|PR|BF|L",
+          "key_phrase": "At about the same time ← Michtom soon started a company to make more of them; a toy company in Germany → Its bears had arms and legs that could move"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "泰迪熊的由來",
+      "genre": "expository",
+      "sdgs": [],
+      "text_format": "continuous"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "前一句說狩獵並不順利，羅斯福連一隻熊都找不到；(E) 說嚮導「為了幫總統」抓了一隻老黑熊、綁在樹上，正好回應這個處境。下一句 But Roosevelt refused to shoot an animal that had no chance to escape 的「毫無機會逃跑的動物」就是被綁在樹上的那隻熊，But 也表示他沒有接受這份「幫忙」。前後兩側都對上，選 (E)。",
+          "evidence": [
+            "The hunt did not go well, however, and he could not find a single bear.",
+            "To help the president, his guides caught an old black bear and tied it to a tree.",
+            "But Roosevelt refused to shoot an animal that had no chance to escape."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "lexical_cohesion",
+          "option_notes_zh": {
+            "A": "(A) 說「這件事很快出名了」，但這時候還沒有發生任何值得出名的事；下一句的 an animal that had no chance to escape 也找不到那隻動物是從哪來的。",
+            "B": "(B) 的 He and his wife 放在這裡會變成羅斯福和妻子在打獵途中縫玩具熊，完全不合理；縫熊的是後面才出現的店主。下一句「無法逃跑的動物」也沒有來源。",
+            "C": "(C) 說德國的玩具公司在做玩具熊，這時玩具熊根本還沒誕生，At about the same time 沒有可以對照的事件；下一句的動物也沒有來源。",
+            "D": "多餘句：只看前一句「一直找不到熊」，接 (D)「黑熊很會爬樹，特別愛吃蜂蜜」好像在補充熊的習性、說明熊不好找；但後一句 But Roosevelt refused to shoot an animal that had no chance to escape 說的是一隻「沒機會逃跑」的動物，(D) 描述的黑熊卻能自由爬樹，前面也沒有任何熊被抓到，所以要靠後一句排除。"
+          },
+          "strategy_zh": "敘事文的空格常是「下一步發生了什麼」：先看前一句的處境（找不到熊），再看後一句的反應（拒絕射殺一隻逃不掉的動物），中間就要補上讓這個反應合理的事件。",
+          "hints": [
+            "前一句說羅斯福一直找不到熊，接下來可能發生什麼事？",
+            "下一句說他拒絕射殺一隻「沒有機會逃跑」的動物，這隻動物為什麼逃不掉？",
+            "答案提到 tied it to a tree。"
+          ]
+        },
+        "2": {
+          "explanation_zh": "第二段講完羅斯福拒絕射殺被綁住的熊、覺得那樣不公平。第三段開頭的 (A) 用 The story 收束這整件事，並說它因為一幅報紙漫畫而出名；下一句 It showed the president turning away from a frightened bear 的 It 回指 (A) 的 a newspaper cartoon，再下一句的 the drawing 也指這幅漫畫。本句承上啟下，選 (A)。",
+          "evidence": [
+            "He felt that killing it in that way would not be fair.",
+            "The story soon became famous, thanks to a newspaper cartoon.",
+            "It showed the president turning away from a frightened bear."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "pronoun_reference",
+          "option_notes_zh": {
+            "B": "(B) 的 He and his wife 在這裡會指羅斯福夫婦，與後文的店主不符；下一句 It showed the president turning away … 的 It 也不可能是一隻玩具熊，「畫面」要先有一幅畫。",
+            "C": "(C) 說德國公司「大約同時」也在做熊，但這時還沒有任何人做玩具熊，沒有可以對照的事件；下一句 It showed the president 的 It 也不會是一家公司。",
+            "D": "多餘句：(D) 介紹黑熊的習性，與羅斯福拒絕射殺的事件無關；下一句 It showed the president … 的 It 找不到一幅可以「呈現」畫面的東西。",
+            "E": "(E) 說嚮導抓熊綁在樹上，但羅斯福已經拒絕射殺那隻熊，事件順序倒退；下一句的 It showed 也沒有先行詞。(E) 屬於第 1 格。"
+          },
+          "strategy_zh": "下一句以 It showed … 開頭時，It 一定是一個可以「呈現畫面」的東西（照片、漫畫、影片）；在選項裡找先提到它的句子。",
+          "hints": [
+            "下一句 It showed the president …，什麼東西可以「顯示」總統的樣子？",
+            "空格同時要收束前一段的事件（The story）並引出一幅畫。",
+            "答案提到 a newspaper cartoon。"
+          ]
+        },
+        "3": {
+          "explanation_zh": "前一句說紐約的店主米奇頓看到漫畫後想到一個點子；(B) 的 He and his wife 回指這位店主，並說明點子是什麼：夫妻倆縫了一隻玩具熊，放在店裡的櫥窗。下一句 Next to it, they put up a sign 的 it 指這隻玩具熊、they 指他們夫妻，牌子上寫著 Teddy’s bear。選 (B)。",
+          "evidence": [
+            "A shop owner in New York named Morris Michtom saw the drawing and had an idea.",
+            "He and his wife sewed a toy bear and put it in their shop window.",
+            "Next to it, they put up a sign that read “Teddy’s bear.”"
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "pronoun_reference",
+          "option_notes_zh": {
+            "A": "(A) 說故事因為一幅報紙漫畫而出名，但漫畫早在前面就出現了（the drawing），這裡再介紹一次是順序倒退；下一句的 Next to it, they 也沒有可回指的東西和人。",
+            "C": "只看前一句「店主想到一個點子」，接 (C)「大約同時，德國的玩具公司也在做熊」似乎也說得通；但後一句 Next to it, they put up a sign that read “Teddy’s bear.” 的 it 必須是一個單數的東西、they 必須是放牌子的人，(C) 的 its own bears 是複數，德國公司也不會掛「泰迪的熊」的牌子，所以要靠後一句排除。(C) 屬於第 4 格。",
+            "D": "多餘句：(D) 講真正的黑熊會爬樹、愛吃蜂蜜，與店主的點子無關；下一句的 Next to it, they put up a sign 也找不到可以放牌子的地方。",
+            "E": "(E) 說嚮導抓熊綁在樹上，是第二段打獵時的事，放在店主想到點子之後，時間順序倒退。"
+          },
+          "strategy_zh": "前一句說某人 had an idea 時，空格通常要說出點子的內容；再用後一句的代名詞（it、they）確認選項裡有對應的東西和人。",
+          "hints": [
+            "前一句的店主想到了什麼點子？",
+            "下一句的 it 和 they 分別指什麼？空格裡要先出現一個東西和兩個以上的人。",
+            "答案以 He and his wife 開頭。"
+          ]
+        },
+        "4": {
+          "explanation_zh": "第三段結尾說米奇頓的玩具熊賣得很快，他開了公司大量生產。第四段開頭的 (C) 用 At about the same time 把時間拉回同一時期，帶出德國一家玩具公司也在做熊；下一句 Its bears had arms and legs that could move 的 Its 回指 (C) 的 a toy company in Germany，並說一家美國公司向它訂了一大批。選 (C)。",
+          "evidence": [
+            "The toy sold so quickly that Michtom soon started a company to make more of them.",
+            "At about the same time, a toy company in Germany was making its own bears.",
+            "Its bears had arms and legs that could move, and an American company ordered a large number of them."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "chronology",
+          "option_notes_zh": {
+            "A": "只看前一句「玩具賣得很好，米奇頓開了公司」，接 (A)「這件事很快就出名了」似乎也說得通；但後一句 Its bears had arms and legs that could move 的 Its 需要一家「有自己的熊」的公司，(A) 只有一幅漫畫，所以要靠後一句排除。而且漫畫在第三段開頭就該出現，(A) 屬於第 2 格。",
+            "B": "(B) 說夫妻倆縫熊放進櫥窗，但玩具熊已經在賣、公司也開了，順序倒退；下一句的 Its bears 也找不到所屬的公司。",
+            "D": "多餘句：(D) 講真正的黑熊會爬樹、愛吃蜂蜜，與玩具熊的生意無關；下一句的 Its bears 也沒有單數的先行詞。",
+            "E": "(E) 是第二段打獵時發生的事，放在這裡時間倒退；下一句的 Its bears 也不可能指嚮導或總統。"
+          },
+          "strategy_zh": "段首的 At about the same time、Meanwhile 這類時間詞，表示要換到「同一時期的另一條線」；再用下一句的所有格（Its）確認新出現的主角。",
+          "hints": [
+            "前一段講美國的玩具熊，這一段開頭可能換到哪裡？",
+            "下一句 Its bears …，Its 指的是一家公司還是一個人？",
+            "答案以 At about the same time 開頭。"
+          ]
+        }
+      }
+    },
+    "translation_zh": {
+      "text": "很少有玩具像泰迪熊這樣廣受喜愛。孩子們晚上抱著它睡覺，許多大人也還留著小時候的那一隻。令人意外的是，這個柔軟的玩具之所以得名，來自一趟打獵之旅和一位美國總統。\n這位總統就是西奧多．羅斯福，許多美國人都知道他的暱稱「泰迪」。他熱愛戶外活動，有一年十一月，他參加了在南方密西西比州舉行的一場獵熊活動。然而，狩獵並不順利，他連一隻熊都找不到。【1】為了幫總統，他的嚮導抓了一隻年老的黑熊，把牠綁在樹上。但羅斯福拒絕射殺一隻毫無機會逃跑的動物。他覺得用那種方式殺死牠並不公平。\n【2】這件事很快就出了名，這要歸功於一幅報紙漫畫。畫中的總統轉身背對一隻嚇壞了的熊。紐約一位名叫莫里斯．米奇頓的店主看到這幅畫，想到了一個點子。【3】他和妻子縫了一隻玩具熊，放在店裡的櫥窗。他們在旁邊立了一塊牌子，寫著「泰迪的熊」。這個玩具賣得非常快，米奇頓很快就開了一家公司，生產更多玩具熊。\n【4】大約在同一時間，德國一家玩具公司也在製作自己的熊。它的熊手腳都能活動，一家美國公司向它訂購了一大批。不久之後，大西洋兩岸都在賣泰迪熊，全世界的孩子都想要一隻。一百多年後的今天，泰迪熊仍是各個年齡層的人心中安慰的象徵。\n（多餘句 (D)：黑熊很會爬樹，而且特別愛吃蜂蜜。）"
+    },
+    "elimination": {
+      "feasible": {
+        "1": [
+          "E"
+        ],
+        "2": [
+          "A"
+        ],
+        "3": [
+          "B"
+        ],
+        "4": [
+          "C"
+        ]
+      },
+      "perfect_matchings": 1
+    },
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": null,
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "3-V-7",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "7-V-5",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "B-V-8",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": "本文由 AI 撰寫"
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-08-structure-basic-02",
+    "lot": "structure-basic-02",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/structure",
+    "prompt_sha256": "fc59fb227eaa304017a6f0cadebe20a72ed15bc071671d7d70b2beaea16d0ea2",
+    "spec_id": "structure-basic@2026-10-08",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 230,
+    "sentences": 15,
+    "avg_sentence_length": 15.33,
+    "denominator": 212,
+    "proper_nouns": [
+      "American",
+      "Americans",
+      "Atlantic",
+      "Michtom",
+      "Mississippi",
+      "Morris",
+      "November",
+      "Roosevelt",
+      "Teddy",
+      "Teddy’s",
+      "Theodore",
+      "York"
+    ],
+    "numbers": 3,
+    "coverage_l1_4": 0.9858,
+    "coverage_l1_6": 0.9858,
+    "offlist_ratio": 0.0142,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {
+      "1": 184,
+      "2": 20,
+      "3": 5,
+      "off": 3
+    },
+    "offlist_words": [
+      "teddy"
+    ],
+    "band": {
+      "tier": "basic",
+      "basis": "lot structure-basic-02（SPEC §3.4＋出題規格書 passage_overrides（words、coverage_L1_4_min（取代 SPEC 的區間）、coverage_L1_6_min、offlist_max、beyond_l4_ratio_max））",
+      "ok": true,
+      "checks": {
+        "word_count": {
+          "value": 230,
+          "min": 220,
+          "max": 280,
+          "ok": true
+        },
+        "coverage_l1_4": {
+          "value": 0.9858,
+          "min": 0.93,
+          "max": null,
+          "ok": true
+        },
+        "coverage_l1_6": {
+          "value": 0.9858,
+          "min": 0.96,
+          "max": null,
+          "ok": true
+        },
+        "offlist_ratio": {
+          "value": 0.0142,
+          "min": null,
+          "max": 0.04,
+          "ok": true
+        },
+        "avg_sentence_length": {
+          "value": 15.33,
+          "min": null,
+          "max": 17,
+          "ok": true
+        },
+        "beyond_l4_ratio": {
+          "value": 0.0,
+          "min": null,
+          "max": 0.04,
+          "ok": true
+        }
+      }
+    }
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T07:20:31Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T00:00:00Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "answers": {
+          "1": {
+            "answer": "E",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "The hunt did not go well, however, and he could not find a single bear.",
+              "But Roosevelt refused to shoot an animal that had no chance to escape."
+            ],
+            "explanation_zh": "找不到熊，嚮導抓熊綁在樹上；後句「拒絕射殺無法逃跑的動物」正好接 E。",
+            "feasible": [
+              "E"
+            ]
+          },
+          "2": {
+            "answer": "A",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "It showed the president turning away from a frightened bear.",
+              "saw the drawing and had an idea."
+            ],
+            "explanation_zh": "後句 It showed... 與 the drawing 都需要先提到漫畫；A 的 a newspaper cartoon 提供指涉。",
+            "feasible": [
+              "A"
+            ]
+          },
+          "3": {
+            "answer": "B",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "A shop owner in New York named Morris Michtom saw the drawing and had an idea.",
+              "Next to it, they put up a sign that read"
+            ],
+            "explanation_zh": "店主有了點子後，與妻子縫熊放進櫥窗；後句 Next to it、they 分別指玩具熊與夫妻二人。",
+            "feasible": [
+              "B"
+            ]
+          },
+          "4": {
+            "answer": "C",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Its bears had arms and legs that could move, and an American company ordered a large number of them.",
+              "Before long, teddy bears were being sold on both sides of the Atlantic"
+            ],
+            "explanation_zh": "Its bears 需要一家公司當先行詞，C 的德國玩具公司符合，也呼應大西洋兩岸。",
+            "feasible": [
+              "C"
+            ]
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T07:10:35Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "answers": {
+          "1": {
+            "answer": "E",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "The hunt did not go well, however, and he could not find a single bear.",
+              "But Roosevelt refused to shoot an animal that had no chance to escape.",
+              "To help the president, his guides caught an old black bear and tied it to a tree."
+            ],
+            "explanation_zh": "前句找不到熊，後句 But Roosevelt refused to shoot an animal that had no chance to escape 需要先有被綁住的熊，E 提供此情節。",
+            "feasible": [
+              "E"
+            ]
+          },
+          "2": {
+            "answer": "A",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "It showed the president turning away from a frightened bear.",
+              "The story soon became famous, thanks to a newspaper cartoon."
+            ],
+            "explanation_zh": "後句 It showed the president ... 的 It 指漫畫，A 先說故事因報紙漫畫而出名，才能接上。",
+            "feasible": [
+              "A"
+            ]
+          },
+          "3": {
+            "answer": "B",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "A shop owner in New York named Morris Michtom saw the drawing and had an idea.",
+              "Next to it, they put up a sign that read “Teddy’s bear.”",
+              "He and his wife sewed a toy bear and put it in their shop window."
+            ],
+            "explanation_zh": "後句 Next to it, they 需要先有 it（玩具熊）與兩個人，B 說店主夫婦縫了玩具熊放在櫥窗，剛好對應。",
+            "feasible": [
+              "B"
+            ]
+          },
+          "4": {
+            "answer": "C",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Its bears had arms and legs that could move, and an American company ordered a large number of them.",
+              "Before long, teddy bears were being sold on both sides of the Atlantic, and children all over the world wanted one.",
+              "At about the same time, a toy company in Germany was making its own bears."
+            ],
+            "explanation_zh": "後句 Its bears 指某家公司，且後面提到橫跨大西洋銷售，C 的德國玩具公司最合理。",
+            "feasible": [
+              "C"
+            ]
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "distractor_audit",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T07:30:00Z",
+      "details": {
+        "session_id": null,
+        "items": {
+          "1": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "But Roosevelt refused to shoot an animal that had no chance to escape.",
+              "explanation_zh": "這時還沒有發生任何值得出名的事，漫畫也還沒出現；下一句「無法逃跑的動物」找不到來源。"
+            },
+            "B": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "But Roosevelt refused to shoot an animal that had no chance to escape.",
+              "explanation_zh": "He and his wife 在這裡會指羅斯福夫婦在打獵途中縫玩具熊，不合情理；下一句的「無法逃跑的動物」也沒有來源。"
+            },
+            "C": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "But Roosevelt refused to shoot an animal that had no chance to escape.",
+              "explanation_zh": "玩具熊還沒誕生，At about the same time 沒有可對照的事件；下一句的動物也沒有來源。"
+            },
+            "D": {
+              "verdict": "clearly_wrong",
+              "error_type": "off_topic",
+              "evidence": "But Roosevelt refused to shoot an animal that had no chance to escape.",
+              "explanation_zh": "多餘句：只看前一句（找不到熊）像在補充熊的習性，但下一句說的是一隻「沒機會逃跑」的動物，(D) 的黑熊能自由爬樹，也沒有任何熊被抓到。"
+            }
+          },
+          "2": {
+            "B": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "It showed the president turning away from a frightened bear.",
+              "explanation_zh": "He and his wife 會指羅斯福夫婦；下一句 It showed the president… 需要一幅畫（照片、漫畫），一隻玩具熊不會「呈現」總統的樣子。"
+            },
+            "C": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "It showed the president turning away from a frightened bear.",
+              "explanation_zh": "下一句的 It 不可能指一家德國公司；這時也還沒有人做玩具熊，At about the same time 沒有對照的事件。"
+            },
+            "D": {
+              "verdict": "clearly_wrong",
+              "error_type": "off_topic",
+              "evidence": "It showed the president turning away from a frightened bear.",
+              "explanation_zh": "多餘句：黑熊習性與羅斯福拒絕射殺的事件無關；下一句 It showed… 找不到一幅可以呈現畫面的東西。"
+            },
+            "E": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "He felt that killing it in that way would not be fair.",
+              "explanation_zh": "羅斯福已經拒絕射殺被綁住的熊，再說嚮導抓熊綁在樹上是時間倒退；下一句 It showed… 也沒有先行詞（the drawing 指的漫畫沒有出現）。"
+            }
+          },
+          "3": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "A shop owner in New York named Morris Michtom saw the drawing and had an idea.",
+              "explanation_zh": "漫畫在前一句已經出現（the drawing），再說故事因漫畫出名是順序倒退，也沒有說出店主的點子；下一句 Next to it, they 沒有可回指的東西和人。"
+            },
+            "C": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Next to it, they put up a sign that read “Teddy’s bear.”",
+              "explanation_zh": "只看前一句（店主有點子）似乎能接，但下一句 Next to it, they put up a sign 需要一個單數的東西和放牌子的人，德國公司複數的 its own bears 對不上；The toy sold 的 the toy 也沒有來源。"
+            },
+            "D": {
+              "verdict": "clearly_wrong",
+              "error_type": "off_topic",
+              "evidence": "Next to it, they put up a sign that read “Teddy’s bear.”",
+              "explanation_zh": "多餘句：黑熊習性與店主的點子無關；下一句的 it、they 沒有可回指的對象。"
+            },
+            "E": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "A shop owner in New York named Morris Michtom saw the drawing and had an idea.",
+              "explanation_zh": "店主看到漫畫後想到點子，空格要說出點子；(E) 回到第二段打獵的事，時間倒退，下一句 The toy sold 的玩具也沒有出現。"
+            }
+          },
+          "4": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Its bears had arms and legs that could move, and an American company ordered a large number of them.",
+              "explanation_zh": "下一句 Its bears 需要一家「有自己的熊」的公司當先行詞，(A) 只有一幅漫畫；漫畫在上一段已出現（the drawing），順序也倒退。"
+            },
+            "B": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "The toy sold so quickly that Michtom soon started a company to make more of them.",
+              "explanation_zh": "玩具熊已經大賣、公司也開了，再說夫妻倆縫第一隻熊是順序倒退；下一句的 Its bears 也找不到所屬的公司。"
+            },
+            "D": {
+              "verdict": "clearly_wrong",
+              "error_type": "off_topic",
+              "evidence": "Its bears had arms and legs that could move, and an American company ordered a large number of them.",
+              "explanation_zh": "多餘句：真正黑熊的習性與玩具熊生意無關；下一句 Its bears 沒有單數的公司當先行詞。"
+            },
+            "E": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "Its bears had arms and legs that could move, and an American company ordered a large number of them.",
+              "explanation_zh": "嚮導抓熊是第二段打獵時的事，放在這裡時間倒退；下一句 Its bears 不可能指嚮導或總統。"
+            }
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "unique_solution",
+      "reviewer": "record_verification.py",
+      "result": "pass",
+      "created_at": "2026-10-09T07:20:31Z",
+      "details": {
+        "method": "injective_assignment",
+        "perfect_matchings": 1,
+        "matches_key": true,
+        "feasible": {
+          "1": [
+            "E"
+          ],
+          "2": [
+            "A"
+          ],
+          "3": [
+            "B"
+          ],
+          "4": [
+            "C"
+          ]
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

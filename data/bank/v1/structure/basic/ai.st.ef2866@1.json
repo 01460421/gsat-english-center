@@ -1,0 +1,619 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.st.ef2866",
+  "version": 1,
+  "section_type": "structure",
+  "format_version": "structure-4x5",
+  "tier": "basic",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": "Pizza can now be found in almost every corner of the world, topped with everything from sausage to pineapple. Yet one of the simplest and best-loved pizzas has a surprisingly royal name. It is called pizza Margherita, and its story begins in the Italian city of Naples.\nLong ago, Naples was a crowded city where many people had very little money. For them, pizza was a daily meal. [[1]] Street sellers carried hot pizzas through the narrow streets, and workers ate them while walking to their jobs. Richer people, however, looked down on pizza as cheap and messy. They rarely touched it, and it almost never appeared on their dinner tables.\n[[2]] As the story goes, the queen was tired of the fancy French dishes served at the palace and wanted to taste the local food. A well-known pizza maker was called in, and he prepared three different pizzas for her. [[3]] Its three colors matched those of the Italian flag, and the queen is said to have liked it best. Proud of his work, the pizza maker named it after her.\n[[4]] Some historians point out that pizzas with tomatoes and cheese were sold in Naples long before the queen’s visit. Others wonder whether the famous meeting with the pizza maker really took place. Whatever the truth may be, the name has stuck. Today, pizza Margherita is enjoyed all over the world, and for many people it is still the classic taste of Naples.",
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": {
+      "A": "Pineapple on pizza is a topic that still divides many families.",
+      "B": "Not everyone, however, believes that this story is completely true.",
+      "C": "Things changed when Queen Margherita of Italy paid a visit to Naples.",
+      "D": "It was cheap and filling, and it could be eaten quickly with the hands.",
+      "E": "One of them was topped with red tomatoes, white cheese, and green basil leaves."
+    },
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "D",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "pronoun_reference",
+          "clue_raw": "SP|PR|BF|L",
+          "key_phrase": "It ← For them, pizza was a daily meal; cheap ← had very little money; eaten quickly with the hands → workers ate them while walking to their jobs"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "C",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "lexical_cohesion",
+          "clue_raw": "TS|LX|BF|L",
+          "key_phrase": "Things changed ← it almost never appeared on their dinner tables（有錢人看不起披薩）; Queen Margherita → As the story goes, the queen"
+        }
+      },
+      {
+        "no": 3,
+        "label": "3",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "E",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "enumeration",
+          "clue_raw": "SP|PR|BF|L",
+          "key_phrase": "One of them ← three different pizzas; red tomatoes, white cheese, and green basil → Its three colors matched those of the Italian flag"
+        }
+      },
+      {
+        "no": 4,
+        "label": "4",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "B",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "contrast",
+          "clue_raw": "CT|CN|BF|L",
+          "key_phrase": "however … this story ← the pizza maker named it after her（整段傳說）; believes … completely true → Some historians point out …; Others wonder whether"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "瑪格麗特披薩的命名",
+      "genre": "expository",
+      "sdgs": [],
+      "text_format": "continuous"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "前兩句說拿坡里很擁擠、許多人沒什麼錢，對他們來說披薩是日常的一餐。(D) 的 It 回指 pizza，cheap and filling 呼應「沒什麼錢」；could be eaten quickly with the hands 則引出下一句：街頭小販賣熱披薩，工人邊走路去上工邊吃（ate them while walking）。前後兩側都有錨點，選 (D)。",
+          "evidence": [
+            "Long ago, Naples was a crowded city where many people had very little money.",
+            "For them, pizza was a daily meal.",
+            "It was cheap and filling, and it could be eaten quickly with the hands.",
+            "Street sellers carried hot pizzas through the narrow streets, and workers ate them while walking to their jobs."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "pronoun_reference",
+          "option_notes_zh": {
+            "A": "多餘句：(A) 講現在大家為了披薩上放鳳梨爭論不休，時間跳到今天；下一句 Street sellers carried hot pizzas 仍在描述從前拿坡里窮人怎麼吃披薩，接不上。",
+            "B": "(B) 說「不是每個人都相信這個故事」，但到這裡還沒有講任何故事，this story 沒有可回指的對象；下一句也和「懷疑」無關。",
+            "C": "只看前一句「披薩是窮人的日常餐點」，接 (C)「後來王后來訪，情況改變了」似乎說得通；但後一句 Street sellers carried hot pizzas … workers ate them while walking 仍在描寫窮人邊走邊吃的日常，完全沒有「改變」，所以要靠後一句排除。王后來訪屬於第 2 格。",
+            "E": "(E) 的 One of them 在這裡找不到先行詞（前一句的 them 指的是人，人不會「鋪上番茄」）；紅白綠三色要等第三段的三種披薩出現才說得通，下一句也沒有談到顏色。"
+          },
+          "strategy_zh": "空格前後都在描述同一件事時，先看前一句的主詞（pizza），再找用代名詞 It 接它、又能說明下一句內容（邊走邊吃）的選項。",
+          "hints": [
+            "前一句說披薩是窮人的日常餐點，空格要說明披薩有什麼特點。",
+            "下一句說工人「邊走路邊吃」，哪個選項提到可以很快、用手吃？",
+            "答案以 It was cheap and filling 開頭。"
+          ]
+        },
+        "2": {
+          "explanation_zh": "第二段最後說有錢人看不起披薩，它幾乎從來不會出現在他們的餐桌上。第三段開頭的 (C) 用 Things changed 表示情況出現轉變，並帶出瑪格麗特王后造訪拿坡里；下一句 As the story goes, the queen … 的 the queen 就是回指 (C) 的 Queen Margherita。本句是第三段的主題句，選 (C)。",
+          "evidence": [
+            "They rarely touched it, and it almost never appeared on their dinner tables.",
+            "Things changed when Queen Margherita of Italy paid a visit to Naples.",
+            "As the story goes, the queen was tired of the fancy French dishes served at the palace and wanted to taste the local food."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "lexical_cohesion",
+          "option_notes_zh": {
+            "A": "多餘句：(A) 講現代人對鳳梨披薩的爭論，與有錢人看不起披薩、王后的故事都無關；下一句的 the queen 也找不到來源。",
+            "B": "(B) 的 this story 沒有先行詞：到這裡還沒有開始講王后的故事，不能先說「不是每個人都相信它」；下一句的 the queen 也沒有交代是誰。",
+            "D": "只看前一句「有錢人很少碰披薩」，接 (D)「它便宜又能吃飽」好像也說得通；但後一句 As the story goes, the queen … 的 the queen 需要前面先介紹一位王后，(D) 沒有提到，所以要靠後一句排除。(D) 屬於第 1 格。",
+            "E": "(E) 的 One of them 在這裡指不到任何東西；三種披薩要到下一句之後才出現，順序不對，下一句的 the queen 也沒有來源。"
+          },
+          "strategy_zh": "段首空格多半是主題句：先讀下一句，看它用定冠詞 the 提到了什麼（the queen），空格裡就要先把這個人物介紹出來。",
+          "hints": [
+            "下一句用 the queen 表示「前面提過的那位王后」，空格裡應該第一次介紹王后。",
+            "前一句說有錢人看不起披薩，空格要表示情況開始改變。",
+            "答案以 Things changed 開頭。"
+          ]
+        },
+        "3": {
+          "explanation_zh": "前一句說披薩師傅為王后做了三種不同的披薩（three different pizzas）；(E) 的 One of them 正是從這三種裡挑出一種，說它鋪上紅色的番茄、白色的起司和綠色的羅勒葉。下一句 Its three colors matched those of the Italian flag 的 Its three colors 回指 (E) 的紅、白、綠三色。前後兩側都對上，選 (E)。",
+          "evidence": [
+            "A well-known pizza maker was called in, and he prepared three different pizzas for her.",
+            "One of them was topped with red tomatoes, white cheese, and green basil leaves.",
+            "Its three colors matched those of the Italian flag, and the queen is said to have liked it best."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "enumeration",
+          "option_notes_zh": {
+            "A": "多餘句：(A) 講鳳梨披薩引起的爭論，與王后面前的三種披薩無關；下一句 Its three colors 也找不到「三種顏色」的來源。",
+            "B": "只看前一句「師傅做了三種披薩」，接 (B)「不是每個人都相信這個故事」似乎也說得通；但後一句 Its three colors matched those of the Italian flag 的 Its three colors 需要前面先出現一個有三種顏色的東西，(B) 沒有，所以要靠後一句排除。(B) 要等故事講完才出現（第 4 格）。",
+            "C": "(C) 說王后來訪、情況開始改變，但王后早在這一段開頭就已經在場，這裡再介紹一次是順序倒退；下一句的 Its three colors 也沒有來源。",
+            "D": "(D) 的 It 前面找不到單數的先行詞（前一句是三種披薩，是複數）；「便宜、能吃飽」也和下一句的國旗顏色無關。"
+          },
+          "strategy_zh": "前一句出現「三種／幾個」東西時，下一句常用 One of them 挑出其中一個來說明；再確認後一句的 Its … 能回指到這一個。",
+          "hints": [
+            "前一句提到幾種披薩？哪個選項從中挑出一種來介紹？",
+            "下一句說 Its three colors，空格裡必須先出現三種顏色。",
+            "答案提到 red、white、green 三種顏色的配料。"
+          ]
+        },
+        "4": {
+          "explanation_zh": "第三段講完傳說：披薩師傅用王后的名字為披薩命名。第四段開頭的 (B) 用 however 轉折，說並不是每個人都相信這個故事（this story 回指整段傳說）。下一句 Some historians point out … 和再下一句 Others wonder whether … 正是說明有哪些人懷疑、懷疑什麼。選 (B)。",
+          "evidence": [
+            "Proud of his work, the pizza maker named it after her.",
+            "Not everyone, however, believes that this story is completely true.",
+            "Some historians point out that pizzas with tomatoes and cheese were sold in Naples long before the queen’s visit.",
+            "Others wonder whether the famous meeting with the pizza maker really took place."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "contrast",
+          "option_notes_zh": {
+            "A": "多餘句：(A) 說鳳梨披薩至今讓人爭論，但下一句 Some historians point out 講的是歷史學家對王后傳說的懷疑，和鳳梨無關。",
+            "C": "(C) 說王后來訪、情況改變，但王后的故事已經在第三段講完，這裡再介紹一次是順序倒退；下一句歷史學家的質疑也接不上。",
+            "D": "(D) 說披薩便宜、能吃飽，屬於第二段窮人吃披薩的描寫；放在這裡，下一句歷史學家「指出早就有人賣這種披薩」便沒有被引出來的理由。",
+            "E": "(E) 的 One of them 在這裡沒有先行詞，三種披薩已經介紹完；下一句歷史學家的質疑也與配料無關。"
+          },
+          "strategy_zh": "看到 however 與 this story 時，要確認前文真的講完了一個「故事」，而後文是在反駁或懷疑它（Some historians …／Others …）。",
+          "hints": [
+            "前一段結束在王后的傳說，這一段的句子在做什麼：補充、還是質疑？",
+            "下一句的 Some historians point out 與 Others wonder whether，需要先有一句帶出「有人不相信」。",
+            "答案含有 however 和 this story。"
+          ]
+        }
+      }
+    },
+    "translation_zh": {
+      "text": "現在世界上幾乎每個角落都吃得到披薩，上面的配料從香腸到鳳梨應有盡有。然而，最簡單、也最受喜愛的披薩之一，卻有一個帶著皇室色彩的名字。它叫做瑪格麗特披薩，故事要從義大利的拿坡里說起。\n很久以前，拿坡里是一座擁擠的城市，許多人手頭非常拮据。對他們來說，披薩是日常的一餐。【1】它便宜又能吃飽，而且可以用手拿著很快吃完。街頭小販帶著熱騰騰的披薩穿梭在狹窄的街道上，工人們邊走路去上工邊吃。然而，比較富有的人看不起披薩，覺得它廉價又吃得一團亂。他們很少碰披薩，它幾乎從來不曾出現在他們的餐桌上。\n【2】情況在義大利的瑪格麗特王后造訪拿坡里時有了改變。據說王后吃膩了宮裡奢華的法國菜，想嘗嘗當地的食物。一位有名的披薩師傅被請來，為她做了三種不同的披薩。【3】其中一種鋪上了紅色的番茄、白色的起司和綠色的羅勒葉。它的三種顏色正好和義大利國旗相同，據說王后最喜歡這一種。披薩師傅對自己的作品很得意，就用王后的名字為它命名。\n【4】不過，並不是每個人都相信這個故事完全是真的。有些歷史學家指出，早在王后造訪之前，拿坡里就有人在賣放了番茄和起司的披薩。也有人懷疑王后和披薩師傅那場有名的會面是否真的發生過。不論真相如何，這個名字就這樣流傳下來了。今天，世界各地的人都在吃瑪格麗特披薩，對許多人來說，它仍是拿坡里的經典滋味。\n（多餘句 (A)：披薩上該不該放鳳梨，至今仍是讓許多家庭意見分歧的話題。）"
+    },
+    "elimination": {
+      "feasible": {
+        "1": [
+          "D"
+        ],
+        "2": [
+          "C"
+        ],
+        "3": [
+          "E"
+        ],
+        "4": [
+          "B"
+        ]
+      },
+      "perfect_matchings": 1
+    },
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": null,
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "3-V-7",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "7-V-5",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "B-V-8",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "8-V-4",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": "本文由 AI 撰寫"
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-08-structure-basic-02",
+    "lot": "structure-basic-02",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/structure",
+    "prompt_sha256": "fc59fb227eaa304017a6f0cadebe20a72ed15bc071671d7d70b2beaea16d0ea2",
+    "spec_id": "structure-basic@2026-10-08",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 241,
+    "sentences": 16,
+    "avg_sentence_length": 15.06,
+    "denominator": 229,
+    "proper_nouns": [
+      "French",
+      "Italian",
+      "Margherita",
+      "Naples"
+    ],
+    "numbers": 3,
+    "coverage_l1_4": 0.9825,
+    "coverage_l1_6": 0.9825,
+    "offlist_ratio": 0.0175,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {
+      "1": 193,
+      "2": 26,
+      "3": 5,
+      "4": 1,
+      "off": 4
+    },
+    "offlist_words": [
+      "maker",
+      "sellers"
+    ],
+    "band": {
+      "tier": "basic",
+      "basis": "lot structure-basic-02（SPEC §3.4＋出題規格書 passage_overrides（words、coverage_L1_4_min（取代 SPEC 的區間）、coverage_L1_6_min、offlist_max、beyond_l4_ratio_max））",
+      "ok": true,
+      "checks": {
+        "word_count": {
+          "value": 241,
+          "min": 220,
+          "max": 280,
+          "ok": true
+        },
+        "coverage_l1_4": {
+          "value": 0.9825,
+          "min": 0.93,
+          "max": null,
+          "ok": true
+        },
+        "coverage_l1_6": {
+          "value": 0.9825,
+          "min": 0.96,
+          "max": null,
+          "ok": true
+        },
+        "offlist_ratio": {
+          "value": 0.0175,
+          "min": null,
+          "max": 0.04,
+          "ok": true
+        },
+        "avg_sentence_length": {
+          "value": 15.06,
+          "min": null,
+          "max": 17,
+          "ok": true
+        },
+        "beyond_l4_ratio": {
+          "value": 0.0,
+          "min": null,
+          "max": 0.04,
+          "ok": true
+        }
+      }
+    }
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T07:20:30Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T00:00:00Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "answers": {
+          "1": {
+            "answer": "D",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "For them, pizza was a daily meal.",
+              "Street sellers carried hot pizzas through the narrow streets, and workers ate them while walking to their jobs."
+            ],
+            "explanation_zh": "前句說披薩是窮人的日常餐，後句說邊走邊吃；D 說明它便宜、能飽、可用手快速吃，承上啟下。",
+            "feasible": [
+              "D"
+            ]
+          },
+          "2": {
+            "answer": "C",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "As the story goes, the queen was tired of the fancy French dishes served at the palace and wanted to taste the local food."
+            ],
+            "explanation_zh": "段首要先引出皇后，後句的 the queen 才有指涉；C 也以 Things changed 對比上段富人看不起披薩。",
+            "feasible": [
+              "C"
+            ]
+          },
+          "3": {
+            "answer": "E",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "he prepared three different pizzas for her.",
+              "Its three colors matched those of the Italian flag, and the queen is said to have liked it best."
+            ],
+            "explanation_zh": "One of them 指前句三種披薩；紅、白、綠三色正對應後句 Its three colors 與義大利國旗。",
+            "feasible": [
+              "E"
+            ]
+          },
+          "4": {
+            "answer": "B",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Some historians point out that pizzas with tomatoes and cheese were sold in Naples long before the queen’s visit.",
+              "Whatever the truth may be, the name has stuck."
+            ],
+            "explanation_zh": "後文列出史學家的質疑，B 先說並非人人相信這個故事，作為主題句。",
+            "feasible": [
+              "B"
+            ]
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T07:10:35Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "answers": {
+          "1": {
+            "answer": "D",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "For them, pizza was a daily meal.",
+              "Street sellers carried hot pizzas through the narrow streets, and workers ate them while walking to their jobs.",
+              "It was cheap and filling, and it could be eaten quickly with the hands."
+            ],
+            "explanation_zh": "前一句說披薩是窮人的日常餐，後一句談街頭小販與邊走邊吃的工人，D 說明披薩便宜、飽足又能用手快速吃完，剛好銜接。",
+            "feasible": [
+              "D"
+            ]
+          },
+          "2": {
+            "answer": "C",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "As the story goes, the queen was tired of the fancy French dishes served at the palace and wanted to taste the local food.",
+              "Things changed when Queen Margherita of Italy paid a visit to Naples."
+            ],
+            "explanation_zh": "新段落起頭，後句 As the story goes 接著講 the queen，需要先引入王后到訪那拿坡的 C，也呼應前段富人不碰披薩的狀況。",
+            "feasible": [
+              "C"
+            ]
+          },
+          "3": {
+            "answer": "E",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "A well-known pizza maker was called in, and he prepared three different pizzas for her.",
+              "Its three colors matched those of the Italian flag, and the queen is said to have liked it best.",
+              "One of them was topped with red tomatoes, white cheese, and green basil leaves."
+            ],
+            "explanation_zh": "前句說做了三種披薩，後句 Its three colors 指其中一種；E 的 One of them 與紅白綠三色正好承接。",
+            "feasible": [
+              "E"
+            ]
+          },
+          "4": {
+            "answer": "B",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Some historians point out that pizzas with tomatoes and cheese were sold in Naples long before the queen’s visit.",
+              "Others wonder whether the famous meeting with the pizza maker really took place.",
+              "Not everyone, however, believes that this story is completely true."
+            ],
+            "explanation_zh": "後面 Some historians ... Others wonder 都在質疑故事真實性，B 是這一段的主題句。",
+            "feasible": [
+              "B"
+            ]
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "distractor_audit",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T07:30:00Z",
+      "details": {
+        "session_id": null,
+        "items": {
+          "1": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "off_topic",
+              "evidence": "Street sellers carried hot pizzas through the narrow streets, and workers ate them while walking to their jobs.",
+              "explanation_zh": "多餘句：時間跳到今天、談鳳梨披薩的爭議；下一句仍在描寫從前拿坡里窮人邊走邊吃披薩，接不上。"
+            },
+            "B": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "For them, pizza was a daily meal.",
+              "explanation_zh": "到這裡還沒講任何故事，this story 沒有先行詞；下一句也不是在質疑什麼。"
+            },
+            "C": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "Street sellers carried hot pizzas through the narrow streets, and workers ate them while walking to their jobs.",
+              "explanation_zh": "「情況改變了」之後，下一句仍在描寫窮人吃披薩的日常、再下一句富人照樣看不起披薩，沒有任何改變；王后要到下一段 the queen 才出場。"
+            },
+            "E": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "For them, pizza was a daily meal.",
+              "explanation_zh": "One of them 只能回指前一句的 them（窮人），人不會鋪上番茄起司；三種披薩要到第三段才出現。"
+            }
+          },
+          "2": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "off_topic",
+              "evidence": "As the story goes, the queen was tired of the fancy French dishes served at the palace and wanted to taste the local food.",
+              "explanation_zh": "多餘句：鳳梨披薩的爭議與富人看不起披薩、王后的故事都無關；下一句 the queen 沒有先被介紹。"
+            },
+            "B": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "As the story goes, the queen was tired of the fancy French dishes served at the palace and wanted to taste the local food.",
+              "explanation_zh": "王后的故事要從下一句 As the story goes 才開始講，this story 沒有先行詞，不能先說「不是每個人都相信」；the queen 也沒有交代是誰。"
+            },
+            "D": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "As the story goes, the queen was tired of the fancy French dishes served at the palace and wanted to taste the local food.",
+              "explanation_zh": "只看前一句（富人很少碰披薩）It was cheap 似乎說得通，但下一句的 the queen 需要前一句先介紹一位王后，(D) 沒有；Things changed 的轉折也只有 (C) 提供。"
+            },
+            "E": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "As the story goes, the queen was tired of the fancy French dishes served at the palace and wanted to taste the local food.",
+              "explanation_zh": "One of them 在這裡沒有複數先行詞；三種披薩要到後面才出現，下一句的 the queen 也沒有來源。"
+            }
+          },
+          "3": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "off_topic",
+              "evidence": "Its three colors matched those of the Italian flag, and the queen is said to have liked it best.",
+              "explanation_zh": "多餘句：與王后面前的三種披薩無關；下一句 Its three colors 找不到三種顏色的來源。"
+            },
+            "B": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Its three colors matched those of the Italian flag, and the queen is said to have liked it best.",
+              "explanation_zh": "故事還沒講完（還沒命名）就說「不是每個人都相信」，順序不對；下一句 Its three colors 需要前面先出現一個有三種顏色的東西。"
+            },
+            "C": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "As the story goes, the queen was tired of the fancy French dishes served at the palace and wanted to taste the local food.",
+              "explanation_zh": "王后在本段第一句就已經在場（the queen），再說她來訪、情況改變是順序倒退；下一句 Its three colors 也沒有來源。"
+            },
+            "D": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "A well-known pizza maker was called in, and he prepared three different pizzas for her.",
+              "explanation_zh": "前一句是三種披薩（複數），(D) 的單數 It 沒有先行詞；便宜、能吃飽也引不出下一句的國旗三色。"
+            }
+          },
+          "4": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "off_topic",
+              "evidence": "Some historians point out that pizzas with tomatoes and cheese were sold in Naples long before the queen’s visit.",
+              "explanation_zh": "多餘句：下一句是歷史學家質疑王后傳說，和鳳梨披薩的爭議無關。"
+            },
+            "C": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "Proud of his work, the pizza maker named it after her.",
+              "explanation_zh": "王后來訪的故事在上一段已經講完（披薩已以她命名），再介紹她來訪是順序倒退；下一句的質疑也沒有被引出。"
+            },
+            "D": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "Some historians point out that pizzas with tomatoes and cheese were sold in Naples long before the queen’s visit.",
+              "explanation_zh": "本段在質疑傳說的真實性（Some historians…／Others wonder…），(D) 講披薩便宜好吃，沒有帶出「有人不相信」，下一句的質疑沒有著落。"
+            },
+            "E": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Proud of his work, the pizza maker named it after her.",
+              "explanation_zh": "前一句只剩單數的 it（那一種披薩），One of them 沒有複數先行詞；配料也與下一句的質疑無關。"
+            }
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "unique_solution",
+      "reviewer": "record_verification.py",
+      "result": "pass",
+      "created_at": "2026-10-09T07:20:30Z",
+      "details": {
+        "method": "injective_assignment",
+        "perfect_matchings": 1,
+        "matches_key": true,
+        "feasible": {
+          "1": [
+            "D"
+          ],
+          "2": [
+            "C"
+          ],
+          "3": [
+            "E"
+          ],
+          "4": [
+            "B"
+          ]
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

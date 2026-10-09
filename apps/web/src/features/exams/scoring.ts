@@ -193,3 +193,179 @@ export function formatPoints(value: number): string {
 export function formatPercent(rate: number): string {
   return `${Math.round(rate * 100)}%`;
 }
+
+// ---------------------------------------------------------------------------
+// 填充、簡答的自動判分（SPEC §4.6）
+//
+// 歷屆試題的官方「可接受答案」只是評分原則列出的一部分，所以歷屆題頁面仍然不自動計分（OpenFeedback 只比對文字）。
+// AI 題（題庫練習）的 accepted_answers 是完整的可接受答案清單、partial_credit_forms 是完整的「選字對、字形錯」清單
+// （README §3.3，盲解驗證過），所以可以照下面的規則自動判分。規則都是純函式，之後歷屆題要自動判分也用同一套。
+// ---------------------------------------------------------------------------
+
+export type OpenStatus =
+  /** 等於答案或可接受答案：全分。 */
+  | 'correct'
+  /** 選字正確、字形錯誤（partial_credit_forms）：1 分。 */
+  | 'form'
+  /** 拼字錯誤（長度 ≥5、和可接受答案的編輯距離 ≤2、不是另一個真實存在的字）：1 分。只用在填充。 */
+  | 'spelling'
+  /** 簡答：寫出了答案，但前後多了題目沒要的字（最多多 2 個字）：1 分。 */
+  | 'extra_words'
+  /** 簡答：答案在裡面，但抄了一大段（多 3 個字以上）：0 分。 */
+  | 'copied'
+  /** 填充：超過一個單詞：0 分。 */
+  | 'too_many_words'
+  | 'wrong'
+  | 'unanswered';
+
+export interface OpenOutcome {
+  kind: 'open';
+  max: number;
+  earned: number;
+  status: OpenStatus;
+  /**
+   * 判分依據：對上的可接受答案（correct、spelling、extra_words、copied）；form 是對上的部分給分寫法，
+   * 或（不在部分給分清單、但詞彙表查得到是同一個條目時）它是哪一個可接受答案的其他字形。
+   */
+  matched: string | null;
+}
+
+/**
+ * 判分要查的詞彙資料（都是選填；沒有時那一條規則就不套用）：
+ *   - isKnownWord：是不是另一個真實存在的字（③ 拼字錯誤要排除真的字）；
+ *   - sameEntry：兩個字是不是詞彙表同一個條目的不同字形（② 選字正確、字形錯誤；SPEC §4.6 的 vocab_forms 規則）。
+ */
+export interface WordLookup {
+  isKnownWord?: (word: string) => boolean;
+  sameEntry?: (a: string, b: string) => boolean;
+}
+
+/** 一題填充／簡答的判分依據。 */
+export interface OpenAnswerKey {
+  mode: 'fill_in_blank' | 'short_answer';
+  max: number;
+  /** 完整的可接受答案（含 answer 本身）。 */
+  accepted: readonly string[];
+  /** 選字正確、字形錯誤，給 1 分的寫法。 */
+  partial: readonly string[];
+}
+
+/** 圈號數字（①–⑳、❶–❿、➀–➉、➊–➓）→ 阿拉伯數字。 */
+function circledDigit(ch: string): string | null {
+  const c = ch.codePointAt(0) ?? 0;
+  const ranges: [number, number][] = [
+    [0x2460, 0x2473],
+    [0x2776, 0x277f],
+    [0x2780, 0x2789],
+    [0x278a, 0x2793],
+  ];
+  for (const [from, to] of ranges) if (c >= from && c <= to) return String(c - from + 1);
+  return null;
+}
+
+/** 結尾的標點（NFKC 之後全形的，！？；：已經是半形）：照抄片語時常帶上句子裡的逗號、驚嘆號。 */
+const TRAILING_PUNCTUATION = /[.,!?;:。、]+$/u;
+/** 包住整個答案的雙引號與中文引號：英文答案裡不會有意義，頭尾各自去掉（不必成對）。 */
+const WRAPPING_QUOTES = /^["「『]+|["」』]+$/gu;
+
+/**
+ * 去掉包住答案的引號與結尾標點，直到不再變：「"come up with,"」「"Come up with"!」都會變成 come up with。
+ * 單引號只在頭尾成對時才去掉：結尾的 ' 可能是答案的一部分（students' 的所有格、'til）。
+ */
+function stripWrapping(text: string): string {
+  let out = text.trim();
+  for (;;) {
+    let next = out.replace(TRAILING_PUNCTUATION, '').trim().replace(WRAPPING_QUOTES, '').trim();
+    if (next.length >= 2 && next.startsWith("'") && next.endsWith("'")) next = next.slice(1, -1).trim();
+    if (next === out) return out;
+    out = next;
+  }
+}
+
+/**
+ * SPEC §4.6 的正規化：去頭尾空白、連續空白算一個、統一引號、不分大小寫（句首大寫不計）、
+ * 去掉包住答案的引號與結尾的標點（句點、逗號、驚嘆號、問號、分號、冒號；學生在輸入框照抄片語時常帶上），
+ * 圈號數字等於阿拉伯數字；全形英數字（ｔｕｒｎｓ）也當成半形（NFKC）。
+ * 可接受答案、部分給分寫法與學生的答案都用同一個正規化再比對，拼字錯誤的編輯距離也是比正規化後的字串。
+ */
+export function normalizeOpenAnswer(text: string): string {
+  const unified = Array.from(text.normalize('NFKC'))
+    .map((ch) => circledDigit(ch) ?? ch)
+    .join('')
+    .replace(/[’‘`´]/g, "'")
+    .replace(/[“”]/g, '"');
+  return stripWrapping(unified).replace(/\s+/g, ' ').toLowerCase();
+}
+
+/** 編輯距離（相鄰兩字對調算 1 次，例如 tunrs → turns）。 */
+export function editDistance(a: string, b: string): number {
+  const rows = a.length + 1;
+  const cols = b.length + 1;
+  const d: number[][] = Array.from({ length: rows }, (_, i) => Array.from({ length: cols }, (_, j) => (i === 0 ? j : j === 0 ? i : 0)));
+  for (let i = 1; i < rows; i += 1) {
+    for (let j = 1; j < cols; j += 1) {
+      const cost = a[i - 1] === b[j - 1] ? 0 : 1;
+      const row = d[i] as number[];
+      const prev = d[i - 1] as number[];
+      let best = Math.min((prev[j] ?? 0) + 1, (row[j - 1] ?? 0) + 1, (prev[j - 1] ?? 0) + cost);
+      if (i > 1 && j > 1 && a[i - 1] === b[j - 2] && a[i - 2] === b[j - 1]) best = Math.min(best, ((d[i - 2] as number[])[j - 2] ?? 0) + 1);
+      row[j] = best;
+    }
+  }
+  return (d[a.length] as number[])[b.length] ?? 0;
+}
+
+const words = (text: string): string[] => (text === '' ? [] : text.split(' '));
+
+/** needle 的每個字依序、完整出現在 hay 裡（以字為單位，不是子字串）。 */
+function containsWords(hay: readonly string[], needle: readonly string[]): boolean {
+  if (needle.length === 0 || needle.length > hay.length) return false;
+  for (let i = 0; i + needle.length <= hay.length; i += 1) {
+    if (needle.every((w, k) => hay[i + k] === w)) return true;
+  }
+  return false;
+}
+
+/**
+ * 填充、簡答的判分（SPEC §4.6），依序：
+ *   ① 正規化後等於答案或可接受答案 → 全分；
+ *   ④ 填充超過一個單詞 → 0 分（官方只寫「會扣分」，本站先定 0 分，設計值）；
+ *   ② 等於「選字正確、字形錯誤」的寫法（partial_credit_forms）→ 1 分；
+ *      填充另外：不在清單裡、但和某個可接受答案是詞彙表同一個條目的不同字形（lookup.sameEntry）→ 同樣 1 分；
+ *   ③ 填充：長度 ≥5、和可接受答案的編輯距離 ≤2、而且不是另一個真實存在的字（lookup.isKnownWord）→ 1 分「拼字錯誤」；
+ *   簡答：答案完整出現、但多寫了字 → 多 1–2 個字 1 分（「依規則扣分」，設計值）、多 3 個字以上算抄整句 0 分；
+ *   ⑤ 其他 → 0 分。AI 題的可接受答案清單是完整的，所以不需要「待判定」。
+ * 部分給分不超過該題配分。
+ */
+export function scoreOpenAnswer(key: OpenAnswerKey, value: AnswerValue | undefined, lookup: WordLookup = {}): OpenOutcome {
+  const isKnownWord = lookup.isKnownWord ?? (() => false);
+  const { max } = key;
+  const raw = typeof value === 'string' ? value : '';
+  const mine = normalizeOpenAnswer(raw);
+  const outcome = (status: OpenStatus, earned: number, matched: string | null): OpenOutcome => ({ kind: 'open', max, earned, status, matched });
+  if (mine === '') return outcome('unanswered', 0, null);
+  const partialPoints = Math.min(1, max);
+  const accepted = key.accepted.map((a) => ({ text: a, norm: normalizeOpenAnswer(a) })).filter((a) => a.norm !== '');
+  const exact = accepted.find((a) => a.norm === mine);
+  if (exact) return outcome('correct', max, exact.text);
+  const mineWords = words(mine);
+  if (key.mode === 'fill_in_blank' && mineWords.length > 1) return outcome('too_many_words', 0, null);
+  const form = key.partial.find((p) => normalizeOpenAnswer(p) === mine);
+  if (form !== undefined) return outcome('form', partialPoints, form);
+  if (key.mode === 'fill_in_blank') {
+    const sameEntry = lookup.sameEntry;
+    const sibling = sameEntry ? accepted.find((a) => sameEntry(a.norm, mine)) : undefined;
+    if (sibling) return outcome('form', partialPoints, sibling.text);
+    if (mine.length >= 5 && !isKnownWord(mine)) {
+      const near = accepted.find((a) => editDistance(a.norm, mine) <= 2);
+      if (near) return outcome('spelling', partialPoints, near.text);
+    }
+    return outcome('wrong', 0, null);
+  }
+  const inside = accepted.find((a) => containsWords(mineWords, words(a.norm)));
+  if (inside) {
+    const extra = mineWords.length - words(inside.norm).length;
+    return extra <= 2 ? outcome('extra_words', partialPoints, inside.text) : outcome('copied', 0, inside.text);
+  }
+  return outcome('wrong', 0, null);
+}

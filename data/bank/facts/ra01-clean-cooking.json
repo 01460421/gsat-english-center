@@ -1,0 +1,197 @@
+{
+  "schema": "gsat-bank-facts/v1",
+  "id": "ra01-clean-cooking",
+  "title": "Household air pollution and access to clean cooking, 2000–2023",
+  "sdgs": [
+    3,
+    7
+  ],
+  "created_on": "2026-10-09",
+  "created_by": "claude-opus-5-5",
+  "sources": [
+    {
+      "id": "s1",
+      "publisher": "World Bank",
+      "title": "World Development Indicators: Access to clean fuels and technologies for cooking (% of population) (EG.CFT.ACCS.ZS)",
+      "url": "https://data.worldbank.org/indicator/EG.CFT.ACCS.ZS",
+      "accessed": "2026-10-09",
+      "license": "CC-BY-4.0",
+      "use": "dataset",
+      "note": "原始提供者：WHO Global Household Energy Database。數值由 api.worldbank.org（WLD、SAS、SSF；lastupdated 2026-10-08）取得"
+    },
+    {
+      "id": "s2",
+      "publisher": "World Health Organization",
+      "title": "Household air pollution (fact sheet)",
+      "url": "https://www.who.int/news-room/fact-sheets/detail/household-air-pollution-and-health",
+      "accessed": "2026-10-09",
+      "license": "WHO terms of use (facts only)",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s3",
+      "publisher": "United Nations",
+      "title": "Goal 7: Ensure access to affordable, reliable, sustainable and modern energy for all",
+      "url": "https://sdgs.un.org/goals/goal7",
+      "accessed": "2026-10-09",
+      "license": "UN terms of use (facts only)",
+      "use": "fact_only",
+      "note": null
+    }
+  ],
+  "facts": [
+    {
+      "id": "f1",
+      "text": "About 2.1 billion people still cook with solid fuels such as wood, charcoal, crop waste or dung, or with kerosene, on open fires or inefficient stoves.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f2",
+      "text": "Burning these fuels releases fine particles that go deep into the lungs and can enter the bloodstream.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f3",
+      "text": "In poorly ventilated homes, indoor smoke can hold fine particles at 100 times the acceptable level.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f4",
+      "text": "Household air pollution from cooking causes about 2.9 million premature deaths each year, including from heart disease, stroke and lung infections.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f5",
+      "text": "Women and children are most exposed because they spend the most time near the household fire.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f6",
+      "text": "Gathering fuel takes up a great deal of time for women and children and limits their education.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f7",
+      "text": "WHO counts electricity, gas and similar low-smoke fuels as clean for cooking.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "definition"
+    },
+    {
+      "id": "f8",
+      "text": "In Sub-Saharan Africa, population growth has outpaced access, and 923 million people lacked clean cooking in 2022.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f9",
+      "text": "In 2021, 49 percent of rural people relied on polluting cooking fuels, compared with 14 percent of urban people.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f10",
+      "text": "SDG target 7.1 calls for universal access to modern energy services by 2030.",
+      "source_ids": [
+        "s3"
+      ],
+      "kind": "definition"
+    },
+    {
+      "id": "f11",
+      "text": "At the current pace, about 1.8 billion people will still rely on polluting cooking fuels in 2030.",
+      "source_ids": [
+        "s2",
+        "s3"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f12",
+      "text": "South Asia’s share with clean cooking roughly doubled from 2010 (31.4%) to 2020 (62.6%).",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "number",
+      "note": "衍生：62.6 ÷ 31.4 ≈ 1.99"
+    },
+    {
+      "id": "f13",
+      "text": "The world share rose from 47.8% in 2000 (under half) to 74.5% in 2023 (about three-quarters).",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "number"
+    }
+  ],
+  "datasets": [
+    {
+      "id": "d1",
+      "source_id": "s1",
+      "title": "Access to clean fuels and technologies for cooking (% of population)",
+      "indicator": "EG.CFT.ACCS.ZS",
+      "unit": "%",
+      "categories": [
+        "2000",
+        "2010",
+        "2020",
+        "2023"
+      ],
+      "series": [
+        {
+          "name": "World",
+          "values": [
+            47.7635473857696,
+            56.696049686573,
+            71.3055727183398,
+            74.5204846722708
+          ]
+        },
+        {
+          "name": "South Asia",
+          "values": [
+            20.2123035759969,
+            31.3916845928545,
+            62.6216345844872,
+            71.6399551086059
+          ]
+        },
+        {
+          "name": "Sub-Saharan Africa",
+          "values": [
+            9.10126785012789,
+            12.0375057091208,
+            19.5107127519645,
+            22.1092939996562
+          ]
+        }
+      ],
+      "note": "World Bank 區域彙總：World（WLD）、South Asia（SAS）、Sub-Saharan Africa（SSF）；圖上四捨五入到一位小數"
+    }
+  ],
+  "notes": "選文數字對照：2.1 billion、100 times、2.9 million、2000／2010／2020／2023（圖表）、2022 年 923 million、2030、1.8 billion、2021 年 49%／14%。"
+}

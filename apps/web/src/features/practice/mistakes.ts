@@ -86,14 +86,29 @@ export function findVocabEntry(index: Pick<VocabIndex, 'entries'>, word: string,
   const key = normalizeWord(word);
   const exact = forms.get(key);
   if (exact) return pickByPos(exact, pos);
-  const lemmaHits: VocabIndexEntry[] = [];
+  return pickByPos(inflectionMatches(forms, key), pos);
+}
+
+/** 「規則變化成這個字」的條目（postponed → postpone）：原形要真的能規則變化成 key（避免 need → ne 這種誤判）。 */
+function inflectionMatches(forms: Map<string, VocabIndexEntry[]>, key: string): VocabIndexEntry[] {
+  const hits: VocabIndexEntry[] = [];
   for (const lemma of lemmaCandidates(key)) {
     for (const e of forms.get(lemma) ?? []) {
-      if (lemmaHits.includes(e)) continue;
-      if (Object.values(regularInflections(lemma, e.pos)).some((list) => list.includes(key))) lemmaHits.push(e);
+      if (hits.includes(e)) continue;
+      if (Object.values(regularInflections(lemma, e.pos)).some((list) => list.includes(key))) hits.push(e);
     }
   }
-  return pickByPos(lemmaHits, pos);
+  return hits;
+}
+
+/**
+ * 一個字可能屬於的所有條目 id：詞頭或其他寫法等於它的，加上規則變化成它的（同形的兩筆都算，不挑詞性）。
+ * 混合題填充的「選字正確、字形錯誤」用：學生寫的字和可接受答案只要有一個共同的條目，就是同一個字的不同字形。
+ */
+export function vocabEntryIds(index: Pick<VocabIndex, 'entries'>, word: string): Set<string> {
+  const forms = formIndex(index.entries);
+  const key = normalizeWord(word);
+  return new Set([...(forms.get(key) ?? []), ...inflectionMatches(forms, key)].map((e) => e.id));
 }
 
 export interface PracticeMistakeResult {

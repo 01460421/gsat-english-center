@@ -9,11 +9,12 @@ import { evidenceGuide, swappedPairs } from './components/ResultPanel';
 import { evidenceHighlights, locateEvidence } from './evidence';
 import {
   cellKey,
-  clearHints,
+  clearGroupRecords,
   emptyHistory,
   MAX_DONE,
   parseHistory,
   recordDone,
+  recordGraded,
   revealHint,
   setCurrent,
   type DoneRecord,
@@ -107,7 +108,35 @@ describe('練習紀錄', () => {
     h = revealHint(h, 'k@1', '3', 2);
     expect(revealHint(h, 'k@1', '3', 2)).toBe(h);
     expect(h.hints).toEqual({ 'k@1': { '3': 2 } });
-    expect(clearHints(h, 'k@1').hints).toEqual({});
+    expect(clearGroupRecords(h, 'k@1').hints).toEqual({});
+  });
+
+  it('固定下來的判分：存進紀錄、讀回來逐筆檢查，換組時和提示一起清掉', () => {
+    const rec = {
+      submittedAt: '2026-10-09T01:00:00.000Z',
+      open: { '1': { earned: 1, status: 'spelling' as const, matched: 'crashing' }, '4': { earned: 2, status: 'correct' as const, matched: 'weigh' } },
+      swapped: [['1', '2'] as const],
+    };
+    let h = recordGraded(revealHint(emptyHistory(), 'k@1', '1', 3), 'k@1', rec);
+    expect(parseHistory(JSON.parse(JSON.stringify(h))).graded).toEqual({ 'k@1': rec });
+    // 形狀不對的那一筆丟掉（狀態不認得、earned 不是數字、swapped 不是兩個題號），不影響其他筆。
+    const parsed = parseHistory({
+      v: 1,
+      graded: {
+        'k@1': rec,
+        'a@1': { ...rec, open: { '1': { earned: 1, status: 'maybe', matched: null } } },
+        'b@1': { ...rec, open: { '1': { earned: '1', status: 'wrong', matched: null } } },
+        'c@1': { ...rec, swapped: [['1']] },
+        'd@1': { open: {}, swapped: [] },
+      },
+    });
+    expect(Object.keys(parsed.graded)).toEqual(['k@1']);
+    // 舊版紀錄沒有 graded：當成空的。
+    expect(parseHistory({ v: 1, done: {} }).graded).toEqual({});
+    h = clearGroupRecords(h, 'k@1');
+    expect(h.graded).toEqual({});
+    expect(h.hints).toEqual({});
+    expect(clearGroupRecords(h, 'k@1')).toBe(h);
   });
 
   it('做過的紀錄最多保留 MAX_DONE 筆，丟掉最早做的', () => {
@@ -130,7 +159,10 @@ describe('網址代號', () => {
     expect(practicePath('word_bank', 'top')).toBe('/practice/word-bank/top');
     expect(sectionFromSlug('word-bank')).toBe('word_bank');
     expect(sectionFromSlug('word_bank')).toBeNull();
-    expect(sectionFromSlug('reading')).toBeNull();
+    expect(sectionFromSlug('reading')).toBe('reading');
+    expect(sectionFromSlug('mixed')).toBe('mixed');
+    expect(practicePath('mixed', 'basic')).toBe('/practice/mixed/basic');
+    expect(sectionFromSlug('translation')).toBeNull();
     expect(tierFromParam('advanced')).toBe('advanced');
     expect(tierFromParam('expert')).toBeNull();
   });

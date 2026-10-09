@@ -1,5 +1,6 @@
 /**
- * 題庫練習的本機紀錄（localStorage）：做過哪些題組、每一格目前在做哪一組、作答中看過幾層提示。
+ * 題庫練習的本機紀錄（localStorage）：做過哪些題組、每一格目前在做哪一組、作答中看過幾層提示、
+ * 交卷後固定下來的填充判分（graded，見下方 GradedRecord）。
  *
  * 為什麼存在本機：登入與作答紀錄（D1）還沒做；「抽一組沒做過的」只要記得做過哪些 uid 就夠了。
  * 題組的作答內容本身沿用歷屆試題的作答紀錄（features/exams/attempt.ts，鍵是 practice:{uid}@{version}），
@@ -12,6 +13,7 @@
  */
 import { useSyncExternalStore } from 'react';
 import type { PracticeSectionType, Tier } from '../../data/bank';
+import type { OpenStatus } from '../exams/scoring';
 
 export const PRACTICE_HISTORY_KEY = 'gsat-bank-practice:v1';
 /** 最多記幾組做過的紀錄；超過時丟掉最早做的（每筆約 100 位元組，500 筆約 50 KB）。 */
@@ -29,6 +31,26 @@ export interface DoneRecord {
   hinted: number;
 }
 
+/** 一題填充、簡答固定下來的判分（exams/scoring.ts 的 OpenOutcome 去掉 kind、max；max 每次從題目讀）。 */
+export interface FrozenOpenOutcome {
+  earned: number;
+  status: OpenStatus;
+  matched: string | null;
+}
+
+/**
+ * 交卷後第一次算出來的填充、簡答判分，之後畫面一律讀這一份（scoring.ts 的 scorePractice 的 frozen 參數）。
+ * 填充的「拼字錯誤」「字形錯誤」要查單字索引，索引下載的早晚（或下載失敗）不能讓同一份答案的分數變來變去。
+ */
+export interface GradedRecord {
+  /** 這次交卷的時間（作答紀錄的 submittedAt）：同一組重做再交卷時，舊的判分就不適用。 */
+  submittedAt: string;
+  /** 依題號。 */
+  open: Readonly<Record<string, FrozenOpenOutcome>>;
+  /** 照對調後計分的兩格填充（interchangeable_with）。 */
+  swapped: readonly (readonly [string, string])[];
+}
+
 export interface PracticeHistory {
   v: 1;
   /** 做完（交卷）的題組，鍵是 uid。 */
@@ -37,10 +59,41 @@ export interface PracticeHistory {
   current: Readonly<Record<string, string>>;
   /** 作答中每一題看過幾層提示：`uid@version` → 題號 → 層數。交卷後保留到換下一組，解析卡要顯示。 */
   hints: Readonly<Record<string, Readonly<Record<string, number>>>>;
+  /** 交卷後固定下來的填充、簡答判分：`uid@version` → GradedRecord。保留到換下一組（和 hints 一起清掉）。 */
+  graded: Readonly<Record<string, GradedRecord>>;
 }
 
 export function emptyHistory(): PracticeHistory {
-  return { v: 1, done: {}, current: {}, hints: {} };
+  return { v: 1, done: {}, current: {}, hints: {}, graded: {} };
+}
+
+const OPEN_STATUSES: ReadonlySet<string> = new Set<OpenStatus>([
+  'correct',
+  'form',
+  'spelling',
+  'extra_words',
+  'copied',
+  'too_many_words',
+  'wrong',
+  'unanswered',
+]);
+
+/** 一筆 graded；形狀不對回傳 null（那一筆丟掉，畫面會重新判分）。 */
+function parseGraded(raw: unknown): GradedRecord | null {
+  if (!isRecord(raw) || typeof raw['submittedAt'] !== 'string' || !isRecord(raw['open']) || !Array.isArray(raw['swapped'])) return null;
+  const open: Record<string, FrozenOpenOutcome> = {};
+  for (const [label, o] of Object.entries(raw['open'])) {
+    if (!isRecord(o) || !isFiniteNumber(o['earned']) || typeof o['status'] !== 'string' || !OPEN_STATUSES.has(o['status'])) return null;
+    const matched = o['matched'];
+    if (matched !== null && typeof matched !== 'string') return null;
+    open[label] = { earned: o['earned'], status: o['status'] as OpenStatus, matched };
+  }
+  const swapped: [string, string][] = [];
+  for (const pair of raw['swapped'] as unknown[]) {
+    if (!Array.isArray(pair) || pair.length !== 2 || typeof pair[0] !== 'string' || typeof pair[1] !== 'string') return null;
+    swapped.push([pair[0], pair[1]]);
+  }
+  return { submittedAt: raw['submittedAt'], open, swapped };
 }
 
 export function cellKey(section: PracticeSectionType, tier: Tier): string {
@@ -87,7 +140,14 @@ export function parseHistory(raw: unknown): PracticeHistory {
       hints[key] = clean;
     }
   }
-  return { v: 1, done, current, hints };
+  const graded: Record<string, GradedRecord> = {};
+  if (isRecord(raw['graded'])) {
+    for (const [key, rec] of Object.entries(raw['graded'])) {
+      const clean = parseGraded(rec);
+      if (clean) graded[key] = clean;
+    }
+  }
+  return { v: 1, done, current, hints, graded };
 }
 
 function trimDone(done: Record<string, DoneRecord>): Record<string, DoneRecord> {
@@ -118,12 +178,22 @@ export function revealHint(h: PracticeHistory, key: string, label: string, max: 
   return { ...h, hints: { ...h.hints, [key]: { ...perQ, [label]: used + 1 } } };
 }
 
-/** 換下一組時清掉上一組的提示紀錄（做過的紀錄已經記下用了提示的題數）。 */
-export function clearHints(h: PracticeHistory, key: string): PracticeHistory {
-  if (!(key in h.hints)) return h;
+/** 交卷後第一次判分：固定下來（之後重新整理、單字索引晚到或下載失敗，分數都不變）。 */
+export function recordGraded(h: PracticeHistory, key: string, record: GradedRecord): PracticeHistory {
+  return { ...h, graded: { ...h.graded, [key]: record } };
+}
+
+/**
+ * 換下一組時清掉上一組的提示紀錄與固定下來的判分（做過的紀錄已經記下用了提示的題數與答對題數；
+ * 作答紀錄本身由呼叫端用 clearAttempt 清掉）。
+ */
+export function clearGroupRecords(h: PracticeHistory, key: string): PracticeHistory {
+  if (!(key in h.hints) && !(key in h.graded)) return h;
   const hints = { ...h.hints };
+  const graded = { ...h.graded };
   delete hints[key];
-  return { ...h, hints };
+  delete graded[key];
+  return { ...h, hints, graded };
 }
 
 // ---------------------------------------------------------------------------

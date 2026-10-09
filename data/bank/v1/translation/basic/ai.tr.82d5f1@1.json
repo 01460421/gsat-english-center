@@ -1,0 +1,677 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.82d5f1",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "basic",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "自從去年看過醫生以後，我爸爸就很少喝含糖飲料了。",
+        "options": null,
+        "answer": "My father has seldom had sweet drinks since he saw a doctor last year.",
+        "accepted_answers": [
+          "Since he saw a doctor last year, my father has rarely had drinks with sugar.",
+          "My dad has hardly had any sugary drinks since he went to see a doctor last year."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "現在完成式"
+          ],
+          "topic": "少喝含糖飲料"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "為了保持健康，他現在每天都帶一瓶白開水去上班。",
+        "options": null,
+        "answer": "He now brings a bottle of water to work every day to stay healthy.",
+        "accepted_answers": [
+          "To stay healthy, he now takes a bottle of water to work every day.",
+          "In order to keep healthy, he now carries a bottle of plain water to work every day."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "不定詞表目的"
+          ],
+          "topic": "少喝含糖飲料"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "少喝含糖飲料"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「自從去年看過醫生以後，就很少…」說的是從過去某個時間點一直延續到現在的情況，主要子句要用現在完成式 has seldom had（或 has rarely had）；since 後面的子句寫的是過去發生的事，用過去式 saw。「很少」用頻率副詞 seldom／rarely／hardly，放在 has 和過去分詞之間。「含糖飲料」可寫 sweet drinks、sugary drinks 或 drinks with sugar，泛指時用複數。",
+          "evidence": [
+            "自從去年看過醫生以後",
+            "很少喝含糖飲料"
+          ],
+          "strategy_zh": "看到「自從…以後就…」先想現在完成式：主要子句 have/has + p.p.，since 子句用過去式。",
+          "hints": [
+            "切成四段：自從去年看過醫生以後／我爸爸／就很少喝／含糖飲料",
+            "標的詞彙：father（爸爸）、seldom／rarely（很少）、drink（飲料）、sugar／sweet（含糖的）、doctor（醫生）",
+            "句型框架：S + has + seldom + p.p. … + since + S + V(過去式) …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「為了…」表目的，用不定詞 to + 原形動詞，可以放句尾（… to stay healthy），也可以放句首加逗號（To stay healthy, …）；「保持健康」是 stay／keep healthy（連綴動詞＋形容詞），不是 keep health。主詞 he 是第三人稱單數，現在的習慣用現在式 brings／takes。「白開水」寫 water 或 plain water 即可，white water 是激流的意思；「每天」every day 放句尾，不要寫成形容詞 everyday。",
+          "evidence": [
+            "為了保持健康",
+            "每天都帶一瓶白開水"
+          ],
+          "strategy_zh": "目的放句首時，不定詞片語後面加逗號，再接完整的主要子句；放句尾時不加逗號。",
+          "hints": [
+            "切成四段：為了保持健康／他現在每天都帶／一瓶白開水／去上班（「每天」every day 放句尾）",
+            "標的詞彙：stay（保持）、healthy（健康的）、bring／take（帶）、bottle（瓶）、water（水）、work（上班）",
+            "句型框架：S + V … to + 原形動詞 ／ To + 原形動詞 …, S + V …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "My father has seldom had sweet drinks since he saw a doctor last year.",
+            "Since he saw a doctor last year, my father has rarely had drinks with sugar.",
+            "My dad has hardly had any sugary drinks since he went to see a doctor last year."
+          ],
+          "target_words": [
+            {
+              "word": "father",
+              "zh": "爸爸",
+              "alternatives": [
+                "dad"
+              ]
+            },
+            {
+              "word": "seldom",
+              "zh": "很少",
+              "alternatives": [
+                "rarely",
+                "hardly"
+              ]
+            },
+            {
+              "word": "drink",
+              "zh": "飲料"
+            },
+            {
+              "word": "sugar",
+              "zh": "含糖的",
+              "alternatives": [
+                "sweet",
+                "sugary"
+              ]
+            },
+            {
+              "word": "doctor",
+              "zh": "醫生"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PERF",
+              "grammar_id": "gp-present-perfect",
+              "label_zh": "現在完成式（自從…以來）",
+              "frame": "S + have/has (+ seldom) + p.p. … since + S + V(過去式)",
+              "zh_trigger": "自從"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "自從去年看過醫生以後",
+              "accepted": [
+                "since he saw a doctor last year",
+                "since he went to see a doctor last year",
+                "since he visited a doctor last year",
+                "since he saw the doctor last year"
+              ],
+              "targets": [
+                "doctor"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "since he has seen a doctor last year",
+                  "right": "since he saw a doctor last year",
+                  "explanation_zh": "since 子句說的是過去某個時間點的事，用過去式；last year 是過去的時間，不能和完成式連用。"
+                },
+                {
+                  "wrong": "after he saw a doctor last year",
+                  "right": "since he saw a doctor last year",
+                  "explanation_zh": "「自從…以後」強調一直延續到現在，要用 since；after 只說「在…之後」，主要子句就無法表達持續。"
+                }
+              ]
+            },
+            {
+              "zh": "我爸爸",
+              "accepted": [
+                "my father",
+                "my dad"
+              ],
+              "targets": [
+                "father"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "my farther",
+                  "right": "my father",
+                  "explanation_zh": "拼字：father（父親）不是 farther（更遠的）。"
+                }
+              ]
+            },
+            {
+              "zh": "就很少喝",
+              "accepted": [
+                "has seldom had",
+                "has rarely had",
+                "has hardly had",
+                "has seldom drunk",
+                "has rarely drunk",
+                "has hardly drunk"
+              ],
+              "targets": [
+                "seldom",
+                "PERF"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "seldom drinks",
+                  "right": "has seldom had",
+                  "explanation_zh": "有「自從…」表示從過去延續到現在，要用現在完成式。"
+                },
+                {
+                  "wrong": "has seldom drank",
+                  "right": "has seldom drunk",
+                  "explanation_zh": "drink 的過去分詞是 drunk，drank 是過去式。"
+                }
+              ]
+            },
+            {
+              "zh": "含糖飲料",
+              "accepted": [
+                "sweet drinks",
+                "drinks with sugar",
+                "sugary drinks",
+                "sweetened drinks"
+              ],
+              "targets": [
+                "drink",
+                "sugar"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "sweet drink",
+                  "right": "sweet drinks",
+                  "explanation_zh": "泛指含糖飲料，可數名詞 drink 要用複數。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "tense_trigger",
+              "zh": "自從",
+              "literal_error": "My father seldom drinks sweet drinks after he saw a doctor last year.",
+              "part": 3,
+              "explanation_zh": "「自從…以後就…」表示從過去某個時間一直到現在，照字面用現在式或 after，會漏掉現在完成式，這一部分扣分。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "Ever since he saw a doctor last year, my father has hardly touched sugary drinks.",
+              "explanation_zh": "ever since 強調「從那時起一直」；hardly touch（幾乎不碰）是更道地的說法。"
+            }
+          ]
+        },
+        "2": {
+          "references": [
+            "He now brings a bottle of water to work every day to stay healthy.",
+            "To stay healthy, he now takes a bottle of water to work every day.",
+            "In order to keep healthy, he now carries a bottle of plain water to work every day."
+          ],
+          "target_words": [
+            {
+              "word": "stay",
+              "zh": "保持",
+              "alternatives": [
+                "keep",
+                "remain"
+              ]
+            },
+            {
+              "word": "healthy",
+              "zh": "健康的",
+              "alternatives": [
+                "health",
+                "fit"
+              ]
+            },
+            {
+              "word": "bring",
+              "zh": "帶",
+              "alternatives": [
+                "take",
+                "carry"
+              ]
+            },
+            {
+              "word": "bottle",
+              "zh": "瓶"
+            },
+            {
+              "word": "water",
+              "zh": "白開水"
+            },
+            {
+              "word": "work",
+              "zh": "上班",
+              "alternatives": [
+                "office"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PURP",
+              "grammar_id": "gp-infinitive-purpose",
+              "label_zh": "不定詞表目的（為了…）",
+              "frame": "S + V … to + VR ／ To + VR …, S + V …",
+              "zh_trigger": "為了"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "為了保持健康",
+              "accepted": [
+                "to stay healthy",
+                "in order to keep healthy",
+                "in order to stay healthy",
+                "to keep healthy",
+                "so as to stay healthy",
+                "to stay fit",
+                "to keep fit"
+              ],
+              "targets": [
+                "PURP",
+                "stay",
+                "healthy"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "to keep health",
+                  "right": "to stay healthy",
+                  "explanation_zh": "「保持健康」是 stay／keep + 形容詞 healthy；keep health 是中式直譯。"
+                },
+                {
+                  "wrong": "for keeping healthy",
+                  "right": "to keep healthy",
+                  "explanation_zh": "表目的用不定詞 to + 原形動詞，不用 for + V-ing。"
+                }
+              ]
+            },
+            {
+              "zh": "他現在每天都帶",
+              "accepted": [
+                "he now brings",
+                "he now takes",
+                "he now carries",
+                "now he brings",
+                "now he takes"
+              ],
+              "targets": [
+                "bring"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "he now bring",
+                  "right": "he now brings",
+                  "explanation_zh": "主詞 he 是第三人稱單數，現在式動詞要加 s。"
+                }
+              ]
+            },
+            {
+              "zh": "一瓶白開水",
+              "accepted": [
+                "a bottle of water",
+                "a bottle of plain water",
+                "a bottle of boiled water"
+              ],
+              "targets": [
+                "bottle",
+                "water"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "a bottle of waters",
+                  "right": "a bottle of water",
+                  "explanation_zh": "water 不可數，用 a bottle of 計量，water 不加 s。"
+                },
+                {
+                  "wrong": "a bottle of white water",
+                  "right": "a bottle of water",
+                  "explanation_zh": "「白開水」不是 white water（激流），寫 water 或 plain water。"
+                }
+              ]
+            },
+            {
+              "zh": "去上班",
+              "accepted": [
+                "to work every day",
+                "to the office every day",
+                "to his office every day"
+              ],
+              "targets": [
+                "work"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "to work everyday",
+                  "right": "to work every day",
+                  "explanation_zh": "「每天」是兩個字 every day；連寫的 everyday 是形容詞（日常的）。"
+                },
+                {
+                  "wrong": "to the work every day",
+                  "right": "to work every day",
+                  "explanation_zh": "go to work、bring … to work 的 work 不加 the。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "collocation",
+              "zh": "保持健康",
+              "literal_error": "He now brings a bottle of water to work every day to keep health.",
+              "part": 1,
+              "explanation_zh": "照字面把「保持」「健康」各翻一個字會寫成 keep health；英文要用 stay／keep + 形容詞 healthy，這一部分扣分。"
+            }
+          ],
+          "bonus": []
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-basic-02",
+    "lot": "translation-basic-02",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "98fb98485e580f5dcb5c9180ca2577c7306e3aace5410226eade2db68cbe253c",
+    "spec_id": "translation-basic@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T07:49:10Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "warn",
+      "created_at": "2026-10-09T07:28:47Z",
+      "details": {
+        "solver": "A",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Since he saw a doctor last year, my father has rarely drunk sugary drinks.",
+            "confidence": "high",
+            "explanation_zh": "「自從…以後…就」是從過去延續到現在的狀態，主要子句用現在完成式 has rarely drunk，since 子句用過去式；「很少」譯 rarely（也可 seldom），「含糖飲料」譯 sugary drinks。"
+          },
+          "2": {
+            "translation": "In order to stay healthy, he now brings a bottle of plain water to work every day.",
+            "confidence": "high",
+            "explanation_zh": "「為了…」用 in order to／to 表目的；「現在每天都」是現在的習慣，用現在簡單式；「白開水」譯 plain water；「帶…去上班」用 bring/take … to work（以說話者在家的角度 take 也可以）。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PERF"
+            ],
+            "used_target_words": [
+              "father",
+              "seldom",
+              "drink",
+              "sugar",
+              "doctor"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PURP"
+            ],
+            "used_target_words": [
+              "stay",
+              "healthy",
+              "bring",
+              "bottle",
+              "water",
+              "work"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "第 2 部分中文「他現在每天都帶」含「每天」，accepted 卻只有 he now brings／he now takes 等，every day 反而放在第 4 部分「去上班」的 accepted（to work every day）；中文切分和英文對應不一致，學生把 every day 放句首（Every day, he now brings…）時兩個部分都對不上字面。建議把「每天」移到第 4 部分的中文，或在第 2 部分補含 every day 的寫法。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "father",
+              "seldom",
+              "drink",
+              "sugar",
+              "doctor"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PERF": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "stay",
+              "healthy",
+              "bring",
+              "bottle",
+              "water",
+              "work"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PURP": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 2 題驗證者對4 部分切分有意見（warn）：第 2 部分中文「他現在每天都帶」含「每天」，accepted 卻只有 he now brings／he now takes 等，every day 反而放在第 4 部分「去上班」的 accepted（to work every day）；"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "warn",
+      "created_at": "2026-10-09T07:49:10Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "My father has rarely drunk sugary drinks since he saw a doctor last year.",
+            "confidence": "high",
+            "explanation_zh": "「自從……以後就很少」是從過去持續到現在的狀態，用現在完成式 has rarely drunk 搭配 since 子句（過去式 saw）；「含糖飲料」譯成 sugary drinks。"
+          },
+          "2": {
+            "translation": "To stay healthy, he now brings a bottle of plain water to work every day.",
+            "confidence": "high",
+            "explanation_zh": "「為了保持健康」用不定詞 To stay healthy 表目的；「現在每天都」是現在的習慣，用現在簡單式搭配 now 與 every day；「白開水」譯成 plain water。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PERF"
+            ],
+            "used_target_words": [
+              "father",
+              "seldom",
+              "drink",
+              "sugar",
+              "doctor"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PURP"
+            ],
+            "used_target_words": [
+              "stay",
+              "healthy",
+              "bring",
+              "bottle",
+              "water",
+              "work"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "「每天」在中文屬於第 2 部分「他現在每天都帶」，但 accepted 把 every day 放在第 4 部分「去上班」（to work every day），第 2 部分的 accepted 沒有 every day；學生若寫 Every day, he now brings … to work，第 4 部分會因為對不上 to work every day 而被誤扣。建議把 every day 移到第 2 部分，或兩個部分都接受。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "father",
+              "seldom",
+              "drink",
+              "sugar",
+              "doctor"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PERF": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "stay",
+              "healthy",
+              "bring",
+              "bottle",
+              "water",
+              "work"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PURP": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 2 題驗證者對4 部分切分有意見（warn）：「每天」在中文屬於第 2 部分「他現在每天都帶」，但 accepted 把 every day 放在第 4 部分「去上班」（to work every day），第 2 部分的 accepted 沒有 every day；學生若寫 Ever"
+        ]
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

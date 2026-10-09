@@ -1,0 +1,453 @@
+{
+  "schema": "gsat-bank-lot/v1",
+  "lot": "structure-basic-02",
+  "section_type": "structure",
+  "tier": "basic",
+  "label_zh": "篇章結構‧穩定基礎（第 2 批）",
+  "created_on": "2026-10-09",
+  "count": 5,
+  "questions_per_group": 4,
+  "format_version": "structure-4x5",
+  "uid_prefix": "ai.st.",
+  "path": "data/bank/v1/structure/basic/",
+  "spec_id": "structure-basic@2026-10-08",
+  "spec_file": "data/exams/generation-spec/structure.json",
+  "spec_tier_key": "foundation",
+  "spec_status": "draft：由 125 題有官方統計的篇章結構題（現制 20、指考 105）推得；上線後依站內作答資料校正（SPEC §3.6、本檔 STR-CAL-*）",
+  "topic_quota": {
+    "origins_evolution": 2,
+    "science_health": 1,
+    "culture_history": 1,
+    "society_issues": 1,
+    "labels_zh": {
+      "origins_evolution": "起源與演變",
+      "science_health": "科普與健康",
+      "culture_history": "文化與歷史",
+      "society_issues": "社會與議題"
+    },
+    "basis": "08 §6.1（每 8 組：起源與演變 3、科普與健康 2–3、文化與歷史 2、社會與議題 1），依組數等比例取整；第 2 批起每組的主題見 assigned_topics（data/bank/topic-plan.json）"
+  },
+  "assigned_topics": [
+    {
+      "slot": 1,
+      "id": "st-b02-1",
+      "category": "origins_evolution",
+      "category_zh": "起源與演變",
+      "domain_zh": "飲食",
+      "topic_zh": "瑪格麗特披薩的命名",
+      "angle_en": "how pizza Margherita got its name",
+      "keywords": [
+        "pizza",
+        "margherita"
+      ],
+      "sdgs": []
+    },
+    {
+      "slot": 2,
+      "id": "st-b02-2",
+      "category": "origins_evolution",
+      "category_zh": "起源與演變",
+      "domain_zh": "生活",
+      "topic_zh": "泰迪熊的由來",
+      "angle_en": "how a hunting story gave us the teddy bear",
+      "keywords": [
+        "teddy bear"
+      ],
+      "sdgs": []
+    },
+    {
+      "slot": 3,
+      "id": "st-b02-3",
+      "category": "science_health",
+      "category_zh": "科普與健康",
+      "domain_zh": "自然",
+      "topic_zh": "海水為什麼是鹹的",
+      "angle_en": "why the sea is salty but rivers are not",
+      "keywords": [
+        "salty sea",
+        "sea salt",
+        "sea is salty"
+      ],
+      "sdgs": []
+    },
+    {
+      "slot": 4,
+      "id": "st-b02-4",
+      "category": "culture_history",
+      "category_zh": "文化與歷史",
+      "domain_zh": "世界文化",
+      "topic_zh": "泰國潑水節",
+      "angle_en": "Songkran, Thailand's water-splashing New Year",
+      "keywords": [
+        "songkran"
+      ],
+      "sdgs": []
+    },
+    {
+      "slot": 5,
+      "id": "st-b02-5",
+      "category": "society_issues",
+      "category_zh": "社會與議題",
+      "domain_zh": "社會",
+      "topic_zh": "領養代替購買",
+      "angle_en": "why animal shelters ask people to adopt pets instead of buying them",
+      "keywords": [
+        "pet adoption",
+        "adopt pet",
+        "animal shelter"
+      ],
+      "sdgs": []
+    }
+  ],
+  "topic_plan": {
+    "file": "data/bank/topic-plan.json",
+    "rule_zh": "每組一個指定主題（slot＝第幾組）：group.tags.topic 逐字照抄 topic_zh（繁體中文主題名）；angle_en 是英文切入角度；keywords 是撞題比對用的英文關鍵字；主題總表的主題彼此不重複，也避開 data/bank/v1 第一批與歷屆試題用過的主題（make_lots.py --check-topics）"
+  },
+  "answer_letter_share": null,
+  "avoid": {
+    "basis": "data/exams/parsed 的 gsat-111、gsat-112、gsat-113、gsat-114、gsat-115、ref-115 同一大題（structure）的正解（正解句；避免重寫成同義句）",
+    "answer_words": [],
+    "answer_sentences": [
+      "Originating from the Chinese Ghost Festival, this annual event has evolved into a time of family reunion.",
+      "Some people also visit the cemetery to clean up the family graves and pray for their ancestors.",
+      "Obon concludes with another bonfire, okuribi, lighting up the sky to see the ancestors’ spirits off.",
+      "Such festive activities are usually held in parks, temples, and other public places around Japan.",
+      "People with synesthesia used to be accused of making their experiences up.",
+      "This consistency serves as a proof that synesthesia is real.",
+      "Meanwhile, environmental influences seem to shape a person’s synesthesia.",
+      "Some studies even show that people may all be synesthetic to some degree.",
+      "This seems to run counter to the common practice.",
+      "Many suggest that most patients can continue with the sport they love.",
+      "For example, an injured runner might end up cycling and swimming instead of running.",
+      "Over time, researchers have come to realize the importance of exercising when injured.",
+      "Today, they provide low-budget, overnight lodging in commerce centers in large cities worldwide.",
+      "The chambers are stacked side-by-side, two units high, with the upper rooms reached by a ladder.",
+      "In response to rising demands, these hotels are embracing a wave of innovation.",
+      "The room’s thin plastic walls easily transmit the sound of snoring made by neighboring guests.",
+      "For most of recorded human history, the open smile has been deeply unfashionable.",
+      "In fact, there is a well-known Russian proverb that goes, “Smiling with no reason is a sign of stupidity.”",
+      "Another crucial factor is a society’s immigration diversity.",
+      "Various factors have thus contributed to the phenomenon of smiling.",
+      "Building an exciting roller coaster starts with a brilliant design.",
+      "Designers must then consider the space available for the coaster.",
+      "Designers can draw on a number of techniques to provide a memorable ride.",
+      "When the design is complete, detailed calculation and careful testing procedures will follow."
+    ],
+    "topics": [
+      "capsule hotels",
+      "exercising with sports injuries",
+      "how roller coasters are designed",
+      "how smiling varies across history and cultures",
+      "synesthesia: when the senses intermix",
+      "the Obon (Bon) Festival in Japan"
+    ]
+  },
+  "avoid_bank_answers": {
+    "basis": "data/bank/v1 現有題組（含 draft，不含 rejected）已用過的正解；單字取詞彙表主形（功能詞與 L1 字不列），片語整串列出。用意是避免同一個字在題庫裡反覆當正解；這是產生本批規格當下的快照，validate_bank --lot 另外會比對當時的題庫",
+    "scanned_on": "2026-10-09",
+    "scanned_groups": {
+      "vocabulary": 15,
+      "cloze": 24,
+      "word_bank": 15,
+      "structure": 15,
+      "reading": 8,
+      "mixed": 7
+    },
+    "answer_sentences": [
+      "At first, they were used mainly as cooking tools, not for eating.",
+      "Today, chopsticks come in many different shapes and sizes.",
+      "Wherever they are used, however, chopsticks come with rules of good manners.",
+      "In Japan, passing food from one pair of chopsticks to another is avoided for a similar reason.",
+      "Yet a swap could work only if each side happened to want what the other offered.",
+      "Gradually, certain objects came to be widely accepted as payment.",
+      "All of these objects were eventually replaced by something far more practical: metal coins.",
+      "This is especially popular among young people in big cities.",
+      "Near brightly lit beaches, however, many of the young turtles crawl toward the city instead.",
+      "Light at night can upset the body's natural clock, which tells us when to sleep.",
+      "Fortunately, all of these problems have fairly simple solutions.",
+      "Unlike other pollution, then, light pollution could disappear almost overnight.",
+      "Such improvements are often more than just wishful thinking.",
+      "The placebo effect has changed the way new medicines are tested.",
+      "Patients warned that a pill may cause headaches, for example, sometimes get headaches from a harmless pill.",
+      "This power of belief, however, has clear limits.",
+      "Long before it was a candy, chocolate was valued in surprising ways.",
+      "The result was a bitter, foamy drink that tasted nothing like modern chocolate.",
+      "Once sugar was added, however, the drink quickly won fans.",
+      "All of this began to change when clever new machines appeared in the 1800s.",
+      "This simple machine moved only when riders pushed their feet against the ground.",
+      "The next big step came when pedals were added to the front wheel.",
+      "Such tall bicycles were fast, but they were also very dangerous to ride.",
+      "To make riding safer, inventors created a new design known as the safety bicycle.",
+      "Such odd-looking food tastes just as good, but many supermarkets refuse to sell it.",
+      "Wasted food also means wasted water, land, and energy.",
+      "The good news is that there are many easy ways to cut down on food waste at home.",
+      "Restaurants and bakeries can do their part, too.",
+      "Instead, it spends the night sorting the information it took in during the day.",
+      "During the teenage years, the body clock changes, so people feel sleepy later at night.",
+      "Phones and other screens can make this lack of sleep even worse.",
+      "Luckily, a few simple habits can make a big difference.",
+      "The end of the feather was cut into a sharp point for writing.",
+      "A quill also held very little ink, so it had to be dipped after every few words.",
+      "Over time, metal began to replace feathers as the main material for pens.",
+      "The ballpoint pen finally solved both of these problems.",
+      "For centuries, only the Chinese knew how to make this beautiful material.",
+      "Very few traders, however, traveled the whole length of the Silk Road.",
+      "These towns became meeting places for people who spoke many different languages.",
+      "Along with goods, ideas and beliefs also traveled these long roads.",
+      "Most people assume that a yawn is the body's way of taking in more air.",
+      "In support, studies have found that people yawn more in mild weather than on very hot days.",
+      "Perhaps the strangest thing about yawning, though, is not why we do it but how easily it spreads.",
+      "For this reason, some scientists think contagious yawning may be linked to empathy.",
+      "At first, it was valued mainly as a medicine rather than for its taste.",
+      "It took many centuries for the leaves to reach the other side of the world.",
+      "Britain's growing thirst for tea, however, came at a price.",
+      "Tea bags, which became common in the twentieth century, made it quicker to prepare.",
+      "The curved lenses made small print look larger, helping older readers in particular.",
+      "Glasses received their greatest boost from an invention that had nothing to do with eyes.",
+      "Over the years, wearers came up with all sorts of clever fixes.",
+      "Plastic frames and lighter lenses, for example, made them cheaper and far more comfortable.",
+      "Only a few floors had been completed when the building began to lean.",
+      "Each new floor was built a little taller on the side that had sunk lower.",
+      "The tale has been repeated in science classrooms around the world for centuries.",
+      "Making the tower perfectly straight, however, was never the goal.",
+      "For many local people, the first problem is simply finding a place to live.",
+      "In Barcelona, residents fed up with noisy crowds have marched through tourist areas, spraying visitors with water pistols.",
+      "Some of the busiest places have now begun to take steps to control the crowds.",
+      "Peru now limits how many people may visit Machu Picchu each day."
+    ],
+    "rule_zh": "正解句不可和 answer_sentences 相同，也不要改寫成同義句（--lot：篇章結構相同是 error、閱讀是 warning）"
+  },
+  "generation_notes": {
+    "basis": "第一批（seq 01）審查意見，2026-10-09 協調者轉達；第 2 批起每批都要遵守",
+    "items": [
+      {
+        "id": "GN-TOPIC",
+        "rule_zh": "group.tags.topic 一律逐字照抄 assigned_topics 該組的 topic_zh（繁體中文主題名）；angle_en 是英文切入角度，只給出題者參考。每組只用自己的主題，不換題、不合併；主題不可行（例如找不到白名單內的事實來源）時先回報，不要自行換題",
+        "checked_by": "validate_bank --lot：tags.topic 對不到 topic_zh 列 warning；同一個主題被兩組用是 error；其他批次已用掉同一個主題列 warning"
+      },
+      {
+        "id": "GN-AVOID",
+        "rule_zh": "正解除了 avoid（近期學測）之外，也要避開 avoid_bank_answers（題庫已用過的正解字、正解句）",
+        "checked_by": "validate_bank --lot（嚴重度見 avoid_bank_answers.rule_zh）"
+      },
+      {
+        "id": "GN-BASIC-CONTEXT",
+        "rule_zh": "第一批的穩定基礎普遍偏易（盲解者全部 high、每格只有正解可行）：basic 仍要有「只讀本句說得通、看上下文才排除」的誘答。每組至少 2 格有一個選項「只讀前一句說得通，看後一句才排除」（多餘句也算）；解析的 option_notes_zh 寫明要靠哪一句排除",
+        "checked_by": "validate_bank --lot：verified 之後若 annotations.elimination.feasible 不只正解的格數 < 2，列 warning"
+      },
+      {
+        "id": "GN-STRUCTURE-CLUES",
+        "rule_zh": "第一批篇章結構（進階最明顯）的承上啟下句幾乎都是「All of this/these＋名詞」或「This＋名詞」，下一句再用 One such…／The simplest… 接，主題句那格後面多半是 for example，學生容易背套路。每組 4 格至少 3 種不同線索類型（代名詞指涉、詞彙重述、轉折／因果連接詞、時間序、列舉（含舉例）、對比、段落主旨推論），解析每格都要填 clue_type；同一 lot 內同一種承接句型最多出現 2 次",
+        "clue_families": {
+          "pronoun": [
+            "pronoun_reference"
+          ],
+          "lexical": [
+            "definition_restatement",
+            "lexical_cohesion",
+            "lexical_link"
+          ],
+          "connective": [
+            "cause_effect",
+            "connective_logic",
+            "transition_word"
+          ],
+          "time": [
+            "chronology"
+          ],
+          "enumeration": [
+            "enumeration",
+            "example"
+          ],
+          "contrast": [
+            "contrast"
+          ],
+          "main_idea": [
+            "elaboration",
+            "summary",
+            "topic_sentence"
+          ]
+        },
+        "bridge_patterns": {
+          "all_of_this": "All/Both/Each of this/these/them…",
+          "demonstrative_noun": "This／These／Those／Such＋名詞 開頭",
+          "one_such": "One such…",
+          "superlative_opener": "The simplest／easiest／best／most…",
+          "for_example": "For example／For instance 開頭"
+        },
+        "checked_by": "validate_bank --lot：clue_type 歸類後少於 3 種是 error（有格沒填 clue_type 時列 warning）；同一種承接句型（正解句開頭與空格後第一句開頭）在 lot 內超過 2 次列 warning"
+      }
+    ]
+  },
+  "passage_band": {
+    "basis": "SPEC §3.4＋出題規格書 passage_overrides（words、coverage_L1_4_min（取代 SPEC 的區間）、coverage_L1_6_min、offlist_max、beyond_l4_ratio_max）",
+    "spec_3_4": {
+      "word_count": {
+        "min": 210,
+        "max": 250
+      },
+      "coverage_l1_4": {
+        "min": 0.93,
+        "max": null
+      },
+      "coverage_l1_6": {
+        "min": 0.97,
+        "max": null
+      },
+      "offlist_ratio": {
+        "min": null,
+        "max": 0.03
+      },
+      "avg_sentence_length": {
+        "min": null,
+        "max": 17
+      }
+    },
+    "overrides_note": "字數與用字不是難度槓桿（doc §3.2、§3.5）；穩定基礎刻意減輕閱讀負荷，屬產品選擇，方向同 SPEC §3.4",
+    "word_count": {
+      "min": 220,
+      "max": 280
+    },
+    "coverage_l1_4": {
+      "min": 0.93,
+      "max": null
+    },
+    "coverage_l1_6": {
+      "min": 0.96,
+      "max": null
+    },
+    "offlist_ratio": {
+      "min": null,
+      "max": 0.04
+    },
+    "avg_sentence_length": {
+      "min": null,
+      "max": 17
+    },
+    "beyond_l4_ratio": {
+      "min": null,
+      "max": 0.04
+    }
+  },
+  "item_rules": {
+    "summary_zh": "4 格都有明顯的代名詞或轉折詞線索；多餘句主題明顯偏離",
+    "all_blanks_have_surface_cue": true,
+    "topic_or_summary_blanks": {
+      "min": 0,
+      "max": null
+    },
+    "no_surface_cue_blanks": {
+      "min": 0,
+      "max": 0
+    },
+    "extra_sentence": "off_topic"
+  },
+  "targets": {
+    "blank_recipe": {
+      "cue_strength_min": 2,
+      "cue_strength_3_min_per_4": 2,
+      "preferred_cues": [
+        "PR（this/such/another＋前一句名詞的重述）",
+        "LX（關鍵詞跨句重複或同義）"
+      ],
+      "direction": "BF 為主（兩側都有錨點）；B-only 只配具體指涉",
+      "scope": "L（相鄰句可判斷）；P 至多 1 格",
+      "connector_only_cue_allowed": false,
+      "connector_rule": "CN 格必須同時有一組詞彙對應（initially→Today、less intelligent→stupidity）；只有連接詞、沒有詞彙對應的格不放在穩定基礎",
+      "competition": "沒有任何其他選項與正解共用同一個先行詞或同一個關鍵詞",
+      "blank_types_per_4": {
+        "TS_or_BR": [
+          1,
+          2
+        ],
+        "SP": [
+          1,
+          2
+        ],
+        "CT": [
+          0,
+          1
+        ],
+        "SQ": [
+          0,
+          1
+        ],
+        "CL": [
+          0,
+          1
+        ]
+      }
+    },
+    "answer_level_dist": {
+      "observed_current": {
+        "L1-2": 1,
+        "L3-4": 2,
+        "L5-6": 5,
+        "n": 8
+      },
+      "rule": "正解句用字 L1–5；線索字（被重複的名詞、連接詞）L1–4"
+    },
+    "distractor_rules": {
+      "extra_sentence_code_allowed": [
+        "TR"
+      ],
+      "extra_overlap_ratio": [
+        0.14,
+        0.45
+      ],
+      "extra_max_neighbour_overlap_any_slot": 1,
+      "extra_no_thesis_like_claim": true,
+      "extra_must_fail_every_slot": true,
+      "extra_no_sentence_initial_reference": true,
+      "extra_observed_basis": "指考多餘句與每一格前後句都只共用 ≤1 個實詞的 5 篇中，4 篇高分組最高只到 0.03–0.09；例外是 ast-107 的替代論點句（0 個共用詞，卻在段首格吸到高分組 0.44），所以穩定基礎也不放論點型多餘句",
+      "upper_group_pull_target_max": 0.08,
+      "observed_basis": "現制 basic 高分組最強誘答中位數 0.05（IQR [0.028, 0.08]）；指考 basic 0.03"
+    },
+    "set_composition_4_blanks": {
+      "basic": [
+        3,
+        4
+      ],
+      "advanced": [
+        0,
+        1
+      ],
+      "top": [
+        0,
+        0
+      ]
+    },
+    "recipe": [
+      "先寫一篇段落主題清楚的說明文（3–5 段），每段第一句就是主題句",
+      "挑 4 個「兩側都有錨點」的句子挖掉：句首用 This/Such/Another＋前一句名詞的換說法，後一句再重複句中的一個關鍵詞",
+      "至少 1 格放主題句或承上啟下句（現制 5/5 篇），但線索要在相鄰句",
+      "多餘句寫成與主題相關的一般陳述，句首不用指涉詞與連接詞，放進任何一格都缺先行詞或接不上後一句"
+    ],
+    "pitfalls": [
+      "只靠轉折詞當線索：連接詞格（CN）合併 P 中位數 0.505，比詞彙鏈格（LX）的 0.66 難，超越頂標占 17% 對 3%",
+      "兩個選項指向同一個先行詞（例：111-32 與 111-33 都可接 mukaebi 的 bonfire），會把題目推到超越頂標",
+      "多餘句含有可解的代名詞或 also、another，意外接得上某一格"
+    ]
+  },
+  "set_composition": {
+    "basic": [
+      3,
+      4
+    ],
+    "advanced": [
+      0,
+      1
+    ],
+    "top": [
+      0,
+      0
+    ]
+  },
+  "verification": {
+    "blind_solvers": 2,
+    "blind_b_different_model": true,
+    "distractor_audit": true,
+    "unique_solution": true,
+    "human_review": "100%（校準期：每個題型 × 提示詞版本的前 30 組全審，SPEC §5.8）"
+  }
+}

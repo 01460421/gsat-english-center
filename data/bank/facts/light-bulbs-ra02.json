@@ -1,0 +1,156 @@
+{
+  "schema": "gsat-bank-facts/v1",
+  "id": "light-bulbs-ra02",
+  "title": "From Edison's incandescent bulb to CFLs and LEDs: history, power use and lifetime",
+  "sdgs": [
+    7,
+    12
+  ],
+  "created_on": "2026-10-09",
+  "created_by": "claude-opus-5-5",
+  "sources": [
+    {
+      "id": "s1",
+      "publisher": "U.S. Department of Energy",
+      "title": "The History of the Light Bulb",
+      "url": "https://www.energy.gov/articles/history-light-bulb",
+      "accessed": "2026-10-09",
+      "license": "U.S. federal government work (facts only)",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s2",
+      "publisher": "U.S. Department of Energy (Solid-State Lighting Program; prepared by Navigant Consulting)",
+      "title": "Life-Cycle Assessment of Energy and Environmental Impacts of LED Lighting Products, Part I (February 2012, updated August 2012), Table 4.1, Table 4.7 and Figure 4.1",
+      "url": "https://www1.eere.energy.gov/buildings/publications/pdfs/ssl/2012_LED_Lifecycle_Report.pdf",
+      "accessed": "2026-10-09",
+      "license": "U.S. federal government work (facts only)",
+      "use": "fact_only",
+      "note": "表格數字取自 Table 4.1（白熾燈、CFL、2011 年 LED）與 Table 4.7（鹵素燈）；CFL 壽命以 2012 年 8 月更正後的 8,500 小時為準"
+    },
+    {
+      "id": "s3",
+      "publisher": "U.S. Department of Energy (Energy Saver)",
+      "title": "Consumer Guide to Energy-Efficient Lighting (DOE/EE-2465, 2021)",
+      "url": "https://www.energy.gov/sites/default/files/2021-08/ES-EE%20Lighting_080921.pdf",
+      "accessed": "2026-10-09",
+      "license": "U.S. federal government work (facts only)",
+      "use": "fact_only",
+      "note": null
+    }
+  ],
+  "facts": [
+    {
+      "id": "f1",
+      "text": "Incandescent bulbs dominated the market for about 100 years.",
+      "source_ids": ["s3"],
+      "kind": "other"
+    },
+    {
+      "id": "f2",
+      "text": "About 90 percent of the energy an incandescent bulb uses is given off as heat and only about 10 percent as light.",
+      "source_ids": ["s1", "s3"],
+      "kind": "number"
+    },
+    {
+      "id": "f3",
+      "text": "Scientists worked on incandescent lamps for decades before Thomas Edison patented his incandescent bulb in 1879.",
+      "source_ids": ["s1"],
+      "kind": "date"
+    },
+    {
+      "id": "f4",
+      "text": "In October 1879, a carbonized cotton-thread filament tested by Edison's team lasted 14.5 hours.",
+      "source_ids": ["s1"],
+      "kind": "number"
+    },
+    {
+      "id": "f5",
+      "text": "Edison's team later used a bamboo filament that could last up to 1,200 hours.",
+      "source_ids": ["s1"],
+      "kind": "number"
+    },
+    {
+      "id": "f6",
+      "text": "In 1962, Nick Holonyak Jr. of General Electric invented the first LED that gave off visible light; it was red.",
+      "source_ids": ["s1"],
+      "kind": "person"
+    },
+    {
+      "id": "f7",
+      "text": "In 1976, Edward Hammer of General Electric made the first compact fluorescent lamp (CFL) by bending a fluorescent tube into a spiral.",
+      "source_ids": ["s1"],
+      "kind": "person"
+    },
+    {
+      "id": "f8",
+      "text": "General Electric shelved Hammer's CFL design because the machinery needed to mass-produce it was too expensive.",
+      "source_ids": ["s1"],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f9",
+      "text": "Early CFLs reached stores in the mid-1980s at prices of $25 to $35 each.",
+      "source_ids": ["s1"],
+      "kind": "number"
+    },
+    {
+      "id": "f10",
+      "text": "A CFL gives as much light as a comparable incandescent bulb but uses about 75 percent less energy and lasts up to 10 times longer.",
+      "source_ids": ["s1", "s3"],
+      "kind": "number"
+    },
+    {
+      "id": "f11",
+      "text": "LEDs use up to 90 percent less energy and last up to 25 times longer than incandescent bulbs; an LED can last up to 4 times longer than a CFL.",
+      "source_ids": ["s3"],
+      "kind": "number"
+    },
+    {
+      "id": "f12",
+      "text": "In the 2012 DOE comparison, an incandescent bulb used 60 watts, gave 900 lumens and lasted 1,000 hours.",
+      "source_ids": ["s2"],
+      "kind": "number"
+    },
+    {
+      "id": "f13",
+      "text": "In the 2012 DOE comparison, a halogen bulb used 43 watts, gave 750 lumens and lasted 1,000 hours.",
+      "source_ids": ["s2"],
+      "kind": "number"
+    },
+    {
+      "id": "f14",
+      "text": "In the 2012 DOE comparison, a CFL used 15 watts, gave 900 lumens and lasted 8,500 hours.",
+      "source_ids": ["s2"],
+      "kind": "number"
+    },
+    {
+      "id": "f15",
+      "text": "In the 2012 DOE comparison, a 2011 LED lamp used 12.5 watts, gave 800 lumens and lasted 25,000 hours.",
+      "source_ids": ["s2"],
+      "kind": "number"
+    },
+    {
+      "id": "f16",
+      "text": "To supply 20 million lumen-hours of light, a home would need about 22 incandescent bulbs, about 3 CFLs or about 1 LED lamp.",
+      "source_ids": ["s2"],
+      "kind": "number"
+    },
+    {
+      "id": "f17",
+      "text": "Lighting accounts for about 15 percent of an average U.S. home's electricity use.",
+      "source_ids": ["s3"],
+      "kind": "number"
+    },
+    {
+      "id": "f18",
+      "text": "In the table, the CFL uses a quarter of the incandescent bulb's power (15 of 60 watts) and the 2011 LED lasts 25 times as long as the incandescent bulb (25,000 versus 1,000 hours).",
+      "source_ids": ["s2"],
+      "kind": "number",
+      "note": "衍生數字：15 ÷ 60 = 0.25；25,000 ÷ 1,000 = 25；25,000 ÷ 8,500 ≈ 2.9"
+    }
+  ],
+  "datasets": [],
+  "notes": "表格（Table 1）四列：Incandescent 60 W／900 lm／1,000 h；Halogen 43 W／750 lm／1,000 h；CFL 15 W／900 lm／8,500 h；LED (2011) 12.5 W／800 lm／25,000 h（DOE 2012 Table 4.1、4.7）。注意 DOE 2012 的 LED 是 800 lm，亮度略低於白熾燈與 CFL 的 900 lm，不可說成「亮度相同」。表格是 fact_only 來源的數字，不是 dataset（表格題不畫圖）。"
+}

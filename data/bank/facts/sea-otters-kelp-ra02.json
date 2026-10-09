@@ -1,0 +1,148 @@
+{
+  "schema": "gsat-bank-facts/v1",
+  "id": "sea-otters-kelp-ra02",
+  "title": "Sea otters, sea urchins and kelp forests: biology, fur trade history and recovery",
+  "sdgs": [
+    14
+  ],
+  "created_on": "2026-10-09",
+  "created_by": "claude-opus-5-5",
+  "sources": [
+    {
+      "id": "s1",
+      "publisher": "U.S. Fish and Wildlife Service",
+      "title": "Southern Sea Otter (Enhydra lutris nereis)",
+      "url": "https://www.fws.gov/species/southern-sea-otter-enhydra-lutris-nereis",
+      "accessed": "2026-10-09",
+      "license": "U.S. federal government work (facts only)",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s2",
+      "publisher": "U.S. Fish and Wildlife Service",
+      "title": "Sea Otters Are Unlikely Helpers in Our Fight Against Climate Change (September 2022)",
+      "url": "https://www.fws.gov/story/2022-09/sea-otters-are-unlikely-helpers-our-fight-against-climate-change",
+      "accessed": "2026-10-09",
+      "license": "U.S. federal government work (facts only)",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s3",
+      "publisher": "U.S. National Park Service",
+      "title": "Sea Otters (Southeast Alaska Inventory and Monitoring Network)",
+      "url": "https://www.nps.gov/im/sean/seaotters.htm",
+      "accessed": "2026-10-09",
+      "license": "U.S. federal government work (facts only)",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s4",
+      "publisher": "NOAA Office of National Marine Sanctuaries",
+      "title": "Wildlife Health at Monterey Bay National Marine Sanctuary",
+      "url": "https://sanctuaries.noaa.gov/science/sentinel-site-program/monterey-bay/wildlife-health.html",
+      "accessed": "2026-10-09",
+      "license": "U.S. federal government work (facts only)",
+      "use": "fact_only",
+      "note": null
+    }
+  ],
+  "facts": [
+    {
+      "id": "f1",
+      "text": "Adult sea otters have no blubber and little fat under the skin; they rely on clean, dense, water-resistant fur to stay warm.",
+      "source_ids": ["s1"],
+      "kind": "definition"
+    },
+    {
+      "id": "f2",
+      "text": "Sea otter fur can have up to a million hairs per square inch, compared with about 100,000 hairs on a whole human head (about 10 times as many).",
+      "source_ids": ["s2"],
+      "kind": "number",
+      "note": "倍數為衍生數字：1,000,000 ÷ 100,000 = 10"
+    },
+    {
+      "id": "f3",
+      "text": "An adult sea otter must eat food equal to 20 to 30 percent of its body weight each day to survive in cold water.",
+      "source_ids": ["s1", "s3"],
+      "kind": "number"
+    },
+    {
+      "id": "f4",
+      "text": "Sea otters eat clams, crabs, sea urchins and snails, and they use rocks as hammers or anvils to open hard shells.",
+      "source_ids": ["s1"],
+      "kind": "other"
+    },
+    {
+      "id": "f5",
+      "text": "Sea urchins graze on kelp; when sea otters are present in healthy numbers they keep urchin numbers in check, but when otters decline, urchin numbers explode and kelp is damaged.",
+      "source_ids": ["s3", "s4"],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f6",
+      "text": "With fewer urchins grazing, kelp grows and the nearshore ecosystem becomes more diverse.",
+      "source_ids": ["s3"],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f7",
+      "text": "The sea otter is called a keystone species of the kelp forest ecosystem.",
+      "source_ids": ["s1", "s4"],
+      "kind": "definition"
+    },
+    {
+      "id": "f8",
+      "text": "Kelp can grow up to two feet a day.",
+      "source_ids": ["s2"],
+      "kind": "number"
+    },
+    {
+      "id": "f9",
+      "text": "Sea otters were hunted nearly to extinction for their fur between 1741 and 1911.",
+      "source_ids": ["s1", "s4"],
+      "kind": "date"
+    },
+    {
+      "id": "f10",
+      "text": "Before the fur trade there may have been up to 300,000 sea otters; by the early 1900s only about 13 small remnant groups were left.",
+      "source_ids": ["s2"],
+      "kind": "number"
+    },
+    {
+      "id": "f11",
+      "text": "A 1911 international treaty banned hunting sea otters in international waters and gave them their first protection.",
+      "source_ids": ["s2", "s3", "s4"],
+      "kind": "event"
+    },
+    {
+      "id": "f12",
+      "text": "In the late 1960s, 413 sea otters were moved to several places in Southeast Alaska, and the population there recovered.",
+      "source_ids": ["s3"],
+      "kind": "number"
+    },
+    {
+      "id": "f13",
+      "text": "Moving sea otters to new places accounts for about 30 percent of the world's sea otters today.",
+      "source_ids": ["s2"],
+      "kind": "number"
+    },
+    {
+      "id": "f14",
+      "text": "California's southern sea otters number around 3,000 and have returned to only about 13 percent of their historical range, from San Mateo County to Santa Barbara County.",
+      "source_ids": ["s1", "s2"],
+      "kind": "number"
+    },
+    {
+      "id": "f15",
+      "text": "Along the 217 miles of coast between San Francisco and the Oregon border, kelp canopy has fallen by more than 90 percent after a marine heat wave and an overpopulation of purple sea urchins.",
+      "source_ids": ["s2"],
+      "kind": "number",
+      "note": "FWS 引述 UC Santa Cruz 的研究；這段海岸在南方海獺目前的分布範圍（San Mateo 至 Santa Barbara）以北"
+    }
+  ],
+  "datasets": [],
+  "notes": "存活數字各來源不一（NPS：1911 年「數百隻」；FWS 2022：約 13 群共 2,000 隻；USGS：未知），選文只用「約 13 個小族群」，不寫總數。不寫「毛皮是所有哺乳類最濃密」（未從白名單來源逐字確認）。"
+}

@@ -1,0 +1,168 @@
+{
+  "schema": "gsat-bank-facts/v1",
+  "id": "internet-use-rb02",
+  "title": "Share of people using the internet: World, North America, South Asia, Sub-Saharan Africa, 2005–2023",
+  "sdgs": [
+    9
+  ],
+  "created_on": "2026-10-09",
+  "created_by": "claude-opus-5-5",
+  "sources": [
+    {
+      "id": "s1",
+      "publisher": "World Bank",
+      "title": "World Development Indicators: Individuals using the Internet (% of population) (IT.NET.USER.ZS)",
+      "url": "https://data.worldbank.org/indicator/IT.NET.USER.ZS",
+      "accessed": "2026-10-09",
+      "license": "CC-BY-4.0",
+      "use": "dataset",
+      "note": "由 World Bank API（api.worldbank.org/v2，country=WLD;NAC;SAS;SSF，lastupdated 2026-10-08）取得；原始提供者 ITU。地區彙總值從 2005 年才有資料（2000–2004 為空），所以圖表從 2005 年開始"
+    },
+    {
+      "id": "s2",
+      "publisher": "World Bank",
+      "title": "Indicator metadata: IT.NET.USER.ZS (source note)",
+      "url": "https://api.worldbank.org/v2/indicator/IT.NET.USER.ZS?format=json",
+      "accessed": "2026-10-09",
+      "license": "CC-BY-4.0",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s3",
+      "publisher": "United Nations",
+      "title": "Goal 9 (Sustainable Development Goals)",
+      "url": "https://sdgs.un.org/goals/goal9",
+      "accessed": "2026-10-09",
+      "license": "UN terms of use (facts only)",
+      "use": "fact_only",
+      "note": null
+    }
+  ],
+  "facts": [
+    {
+      "id": "f1",
+      "text": "The World Bank counts as internet users all people who went online at least once in the last three months, from any place and on any device, such as a computer, mobile phone or game machine.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "definition"
+    },
+    {
+      "id": "f2",
+      "text": "In 2005, 15.6% of the world's people used the internet; by 2023 the share was 69.2%.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f3",
+      "text": "The world share passed 60% by 2020 (60.1%).",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f4",
+      "text": "69.2% is more than two out of every three people (derived from the 2023 world value).",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f5",
+      "text": "North America: 68.3% of people used the internet in 2005 and 93.3% in 2023.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f6",
+      "text": "South Asia: 2.1% in 2005, 14.7% in 2015, and 58.3% in 2023; the share rose fastest after 2015.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f7",
+      "text": "Sub-Saharan Africa: 2.0% in 2005 and 32.3% in 2023, so about two out of three people there (67.7%) were not online in 2023 (derived).",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f8",
+      "text": "SDG 9 target 9.c calls for greatly increasing access to information and communication technology and for universal, affordable internet access in the least developed countries.",
+      "source_ids": [
+        "s3"
+      ],
+      "kind": "definition"
+    }
+  ],
+  "datasets": [
+    {
+      "id": "d1",
+      "source_id": "s1",
+      "title": "Individuals using the Internet (% of population)",
+      "indicator": "IT.NET.USER.ZS",
+      "unit": "%",
+      "categories": [
+        "2005",
+        "2010",
+        "2015",
+        "2020",
+        "2023"
+      ],
+      "series": [
+        {
+          "name": "World",
+          "values": [
+            15.6,
+            28.4,
+            39.9,
+            60.1,
+            69.2
+          ]
+        },
+        {
+          "name": "North America",
+          "values": [
+            68.3,
+            72.5,
+            76.1,
+            90.5,
+            93.3
+          ]
+        },
+        {
+          "name": "South Asia",
+          "values": [
+            2.1,
+            7.1,
+            14.7,
+            42.5,
+            58.3
+          ]
+        },
+        {
+          "name": "Sub-Saharan Africa",
+          "values": [
+            2.0,
+            6.0,
+            16.2,
+            26.7,
+            32.3
+          ]
+        }
+      ],
+      "note": "API 原值（一位小數）；地區為 World Bank 彙總（WLD、NAC、SAS、SSF）"
+    }
+  ],
+  "notes": null
+}

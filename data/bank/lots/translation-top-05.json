@@ -1,0 +1,732 @@
+{
+  "schema": "gsat-bank-lot/v1",
+  "lot": "translation-top-05",
+  "section_type": "translation",
+  "tier": "top",
+  "label_zh": "中譯英‧超越頂標（第 5 批）",
+  "created_on": "2026-10-09",
+  "count": 10,
+  "questions_per_group": 2,
+  "format_version": "translation-2",
+  "uid_prefix": "ai.tr.",
+  "path": "data/bank/v1/translation/top/",
+  "spec_id": "translation-top@2026-10-09",
+  "spec_file": "data/exams/generation-spec/writing.json",
+  "spec_tier_key": "beyond_top",
+  "spec_status": "draft：寫作沒有逐題統計，只有大題分數分布（非選擇題分數人數統計表；學測 97–115、指考 97–110 共 33 年），中譯英兩句也只有合計。三級參數由年度層級分析、能力組推估與 98 篇官方佳作的轉錄統計推得；範文的中低級參數是設計值。上線後依站內批改分數校正（WRT-CAL-*）。",
+  "site_target": {
+    "groups_per_tier": 50,
+    "sentences_per_tier": 100,
+    "lots_per_tier": 5,
+    "basis_zh": "站主要求中譯英每個難度 100 句（50 組×2 句）；ROADMAP §9.2 原訂每個難度 10 組，依站主要求放大"
+  },
+  "topics": [
+    {
+      "slot": 1,
+      "id": "tr-t05-01",
+      "domain_zh": "健康與醫療",
+      "topic_zh": "抗老產業",
+      "angle_en": "the booming anti-aging industry and unrealistic beauty standards",
+      "keywords": [
+        "anti-aging industry"
+      ]
+    },
+    {
+      "slot": 2,
+      "id": "tr-t05-02",
+      "domain_zh": "公共議題",
+      "topic_zh": "都市更新",
+      "angle_en": "urban renewal projects and the residents who must move",
+      "keywords": [
+        "urban renewal"
+      ]
+    },
+    {
+      "slot": 3,
+      "id": "tr-t05-03",
+      "domain_zh": "文化現象",
+      "topic_zh": "數位典藏",
+      "angle_en": "digital archives keeping old photos and documents safe",
+      "keywords": [
+        "digital archive"
+      ]
+    },
+    {
+      "slot": 4,
+      "id": "tr-t05-04",
+      "domain_zh": "科技與社會",
+      "topic_zh": "創客空間",
+      "angle_en": "makerspaces where people share tools to build their own inventions",
+      "keywords": [
+        "makerspace"
+      ]
+    },
+    {
+      "slot": 5,
+      "id": "tr-t05-05",
+      "domain_zh": "環境與氣候",
+      "topic_zh": "碳稅",
+      "angle_en": "carbon taxes making polluters pay for their emissions",
+      "keywords": [
+        "carbon tax"
+      ]
+    },
+    {
+      "slot": 6,
+      "id": "tr-t05-06",
+      "domain_zh": "環境與氣候",
+      "topic_zh": "冰川消融",
+      "angle_en": "melting glaciers and the water supply of millions of people",
+      "keywords": [
+        "glacier"
+      ]
+    },
+    {
+      "slot": 7,
+      "id": "tr-t05-07",
+      "domain_zh": "環境與氣候",
+      "topic_zh": "極端降雨",
+      "angle_en": "extreme rainfall causing sudden floods in cities",
+      "keywords": [
+        "extreme rainfall"
+      ]
+    },
+    {
+      "slot": 8,
+      "id": "tr-t05-08",
+      "domain_zh": "健康與醫療",
+      "topic_zh": "運動禁藥",
+      "angle_en": "athletes using banned drugs and the damage to fair play",
+      "keywords": [
+        "doping"
+      ]
+    },
+    {
+      "slot": 9,
+      "id": "tr-t05-09",
+      "domain_zh": "文化現象",
+      "topic_zh": "電子競技",
+      "angle_en": "esports gaining recognition as a real sport",
+      "keywords": [
+        "esports"
+      ]
+    },
+    {
+      "slot": 10,
+      "id": "tr-t05-10",
+      "domain_zh": "健康與醫療",
+      "topic_zh": "戒菸",
+      "angle_en": "how smokers quit and why it is so hard",
+      "keywords": [
+        "quitting smoking"
+      ]
+    }
+  ],
+  "topic_rule_zh": "group.tags.topic 逐字照抄 topic_zh；兩句同一主題，第二句用代名詞、轉折詞或同一關鍵詞延續第一句（出題規格書 WRT-TRN-FMT-02）。主題來自 data/bank/topic-plan-writing.json（已避開其他題型的主題總表、題庫與歷屆試題的主題）",
+  "pattern_plan": [
+    {
+      "slot": 1,
+      "sentences": [
+        {
+          "no": 1,
+          "patterns": [
+            {
+              "code": "NRREL",
+              "grammar_id": "gp-nonrestrictive",
+              "label_zh": "非限定關係子句（補充說明；which 可指前面整句）",
+              "frame": "N, who/which + V …, … ; S + V …, which + V …"
+            },
+            {
+              "code": "PART",
+              "grammar_id": "gp-participle-clause",
+              "label_zh": "分詞構句（以分詞片語取代副詞子句）",
+              "frame": "V-ing/p.p. …, S + V … ; S + V …, V-ing/p.p. …"
+            }
+          ]
+        },
+        {
+          "no": 2,
+          "patterns": [
+            {
+              "code": "NCL",
+              "grammar_id": "gp-wh-clause",
+              "label_zh": "間接問句（wh- / whether / if 名詞子句）",
+              "frame": "S + V + wh-/whether + S + V（直述句語序）"
+            },
+            {
+              "code": "PART",
+              "grammar_id": "gp-participle-clause",
+              "label_zh": "分詞構句（以分詞片語取代副詞子句）",
+              "frame": "V-ing/p.p. …, S + V … ; S + V …, V-ing/p.p. …"
+            }
+          ]
+        }
+      ],
+      "restructuring_hint": false
+    },
+    {
+      "slot": 2,
+      "sentences": [
+        {
+          "no": 1,
+          "patterns": [
+            {
+              "code": "ADVCL",
+              "grammar_id": "gp-no-matter",
+              "label_zh": "讓步：無論…（no matter + wh- = wh-ever）",
+              "frame": "No matter what/how/who/where + S + V, S + V ; Whatever/However + …"
+            },
+            {
+              "code": "REL",
+              "grammar_id": "gp-for-those-who",
+              "label_zh": "對於…的人而言／凡是…的人",
+              "frame": "For those who + V …, S + V ; Those who + V … + V"
+            }
+          ]
+        },
+        {
+          "no": 2,
+          "patterns": [
+            {
+              "code": "NRREL",
+              "grammar_id": "gp-nonrestrictive",
+              "label_zh": "非限定關係子句（補充說明；which 可指前面整句）",
+              "frame": "N, who/which + V …, … ; S + V …, which + V …"
+            },
+            {
+              "code": "REL",
+              "grammar_id": "gp-relative-adverb",
+              "label_zh": "關係副詞（where / when / why；the way …）",
+              "frame": "the place where / the day when / the reason why + S + V"
+            }
+          ]
+        }
+      ],
+      "restructuring_hint": true
+    },
+    {
+      "slot": 3,
+      "sentences": [
+        {
+          "no": 1,
+          "patterns": [
+            {
+              "code": "NRREL",
+              "grammar_id": "gp-nonrestrictive",
+              "label_zh": "非限定關係子句（補充說明；which 可指前面整句）",
+              "frame": "N, who/which + V …, … ; S + V …, which + V …"
+            },
+            {
+              "code": "REL",
+              "grammar_id": "gp-relative-pronoun",
+              "label_zh": "關係代名詞引導的限定形容詞子句（含省略受格關代）",
+              "frame": "N + who/which/that + V … ; N + (that/which/whom) + S + V …"
+            }
+          ]
+        },
+        {
+          "no": 2,
+          "patterns": [
+            {
+              "code": "ADVCL",
+              "grammar_id": "gp-no-matter",
+              "label_zh": "讓步：無論…（no matter + wh- = wh-ever）",
+              "frame": "No matter what/how/who/where + S + V, S + V ; Whatever/However + …"
+            },
+            {
+              "code": "REL",
+              "grammar_id": "gp-relative-adverb",
+              "label_zh": "關係副詞（where / when / why；the way …）",
+              "frame": "the place where / the day when / the reason why + S + V"
+            }
+          ]
+        }
+      ],
+      "restructuring_hint": true
+    },
+    {
+      "slot": 4,
+      "sentences": [
+        {
+          "no": 1,
+          "patterns": [
+            {
+              "code": "NRREL",
+              "grammar_id": "gp-nonrestrictive",
+              "label_zh": "非限定關係子句（補充說明；which 可指前面整句）",
+              "frame": "N, who/which + V …, … ; S + V …, which + V …"
+            },
+            {
+              "code": "PASS",
+              "grammar_id": "gp-passive",
+              "label_zh": "被動語態（含情態助動詞被動）",
+              "frame": "S + be + p.p. (+ by …) / S + must/should/can + be + p.p."
+            }
+          ]
+        },
+        {
+          "no": 2,
+          "patterns": [
+            {
+              "code": "PART",
+              "grammar_id": "gp-participle-result",
+              "label_zh": "句尾分詞片語表結果（…，造成／使得…）",
+              "frame": "S + V …, making/causing/leading to/resulting in + O …"
+            },
+            {
+              "code": "REL",
+              "grammar_id": "gp-for-those-who",
+              "label_zh": "對於…的人而言／凡是…的人",
+              "frame": "For those who + V …, S + V ; Those who + V … + V"
+            }
+          ]
+        }
+      ],
+      "restructuring_hint": true
+    },
+    {
+      "slot": 5,
+      "sentences": [
+        {
+          "no": 1,
+          "patterns": [
+            {
+              "code": "PART",
+              "grammar_id": "gp-participle-result",
+              "label_zh": "句尾分詞片語表結果（…，造成／使得…）",
+              "frame": "S + V …, making/causing/leading to/resulting in + O …"
+            },
+            {
+              "code": "PASS",
+              "grammar_id": "gp-perfect-passive",
+              "label_zh": "完成式被動（已經被…）",
+              "frame": "S + have/has (+ long) + been + p.p. …"
+            }
+          ]
+        },
+        {
+          "no": 2,
+          "patterns": [
+            {
+              "code": "PASS",
+              "grammar_id": "gp-passive",
+              "label_zh": "被動語態（含情態助動詞被動）",
+              "frame": "S + be + p.p. (+ by …) / S + must/should/can + be + p.p."
+            },
+            {
+              "code": "NFSUBJ",
+              "grammar_id": "gp-gerund-subject",
+              "label_zh": "動名詞（或不定詞）片語當主詞",
+              "frame": "V-ing … + V(單數) … / To VR … + V(單數) …"
+            }
+          ]
+        }
+      ],
+      "restructuring_hint": true
+    },
+    {
+      "slot": 6,
+      "sentences": [
+        {
+          "no": 1,
+          "patterns": [
+            {
+              "code": "PASS",
+              "grammar_id": "gp-passive",
+              "label_zh": "被動語態（含情態助動詞被動）",
+              "frame": "S + be + p.p. (+ by …) / S + must/should/can + be + p.p."
+            },
+            {
+              "code": "NFSUBJ",
+              "grammar_id": "gp-it-adj-to",
+              "label_zh": "虛主詞 It ＋形容詞＋不定詞",
+              "frame": "It is + adj. (+ for/of sb) + to VR …"
+            }
+          ]
+        },
+        {
+          "no": 2,
+          "patterns": [
+            {
+              "code": "PART",
+              "grammar_id": "gp-participle-result",
+              "label_zh": "句尾分詞片語表結果（…，造成／使得…）",
+              "frame": "S + V …, making/causing/leading to/resulting in + O …"
+            },
+            {
+              "code": "PASS",
+              "grammar_id": "gp-perfect-passive",
+              "label_zh": "完成式被動（已經被…）",
+              "frame": "S + have/has (+ long) + been + p.p. …"
+            }
+          ]
+        }
+      ],
+      "restructuring_hint": true
+    },
+    {
+      "slot": 7,
+      "sentences": [
+        {
+          "no": 1,
+          "patterns": [
+            {
+              "code": "PART",
+              "grammar_id": "gp-participle-result",
+              "label_zh": "句尾分詞片語表結果（…，造成／使得…）",
+              "frame": "S + V …, making/causing/leading to/resulting in + O …"
+            },
+            {
+              "code": "PASS",
+              "grammar_id": "gp-perfect-passive",
+              "label_zh": "完成式被動（已經被…）",
+              "frame": "S + have/has (+ long) + been + p.p. …"
+            }
+          ]
+        },
+        {
+          "no": 2,
+          "patterns": [
+            {
+              "code": "NFSUBJ",
+              "grammar_id": "gp-gerund-subject",
+              "label_zh": "動名詞（或不定詞）片語當主詞",
+              "frame": "V-ing … + V(單數) … / To VR … + V(單數) …"
+            },
+            {
+              "code": "COMP",
+              "grammar_id": "gp-comparative-superlative",
+              "label_zh": "比較級與最高級（含 one of the + 最高級 + 複數名詞）",
+              "frame": "A + be + 比較級 + than B ; the + 最高級 + N (+ in/of …) ; one of the + 最高級 + 複數N"
+            }
+          ]
+        }
+      ],
+      "restructuring_hint": true
+    },
+    {
+      "slot": 8,
+      "sentences": [
+        {
+          "no": 1,
+          "patterns": [
+            {
+              "code": "NFSUBJ",
+              "grammar_id": "gp-gerund-subject",
+              "label_zh": "動名詞（或不定詞）片語當主詞",
+              "frame": "V-ing … + V(單數) … / To VR … + V(單數) …"
+            },
+            {
+              "code": "COMP",
+              "grammar_id": "gp-the-more",
+              "label_zh": "愈…愈…",
+              "frame": "The + 比較級 (+ S + V), the + 比較級 (+ S + V)"
+            }
+          ]
+        },
+        {
+          "no": 2,
+          "patterns": [
+            {
+              "code": "NCL",
+              "grammar_id": "gp-what-clause",
+              "label_zh": "what 引導的名詞子句（所…的事物）",
+              "frame": "What + S + V … + V ; … far beyond what + S + V"
+            },
+            {
+              "code": "NFSUBJ",
+              "grammar_id": "gp-it-adj-to",
+              "label_zh": "虛主詞 It ＋形容詞＋不定詞",
+              "frame": "It is + adj. (+ for/of sb) + to VR …"
+            }
+          ]
+        }
+      ],
+      "restructuring_hint": true
+    },
+    {
+      "slot": 9,
+      "sentences": [
+        {
+          "no": 1,
+          "patterns": [
+            {
+              "code": "NCL",
+              "grammar_id": "gp-what-clause",
+              "label_zh": "what 引導的名詞子句（所…的事物）",
+              "frame": "What + S + V … + V ; … far beyond what + S + V"
+            },
+            {
+              "code": "COMP",
+              "grammar_id": "gp-compared-with",
+              "label_zh": "相較於…（比較片語）",
+              "frame": "Compared with/to + N, S + V … ; In comparison with + N, …"
+            }
+          ]
+        },
+        {
+          "no": 2,
+          "patterns": [
+            {
+              "code": "COMP",
+              "grammar_id": "gp-times",
+              "label_zh": "倍數比較",
+              "frame": "A + be + X times + as + adj. + as + B ; X times + 比較級 + than ; X times / twice / half + the + N + of …"
+            },
+            {
+              "code": "PART",
+              "grammar_id": "gp-conj-participle",
+              "label_zh": "連接詞＋分詞（when/while/after/before/once + V-ing/p.p.）",
+              "frame": "When/While/After/Before/Once + V-ing/p.p. …, S + V …"
+            }
+          ]
+        }
+      ],
+      "restructuring_hint": false
+    },
+    {
+      "slot": 10,
+      "sentences": [
+        {
+          "no": 1,
+          "patterns": [
+            {
+              "code": "PART",
+              "grammar_id": "gp-participle-modifier",
+              "label_zh": "分詞片語後位修飾名詞",
+              "frame": "N + V-ing …（主動、進行）/ N + p.p. …（被動、完成）"
+            },
+            {
+              "code": "REL",
+              "grammar_id": "gp-relative-pronoun",
+              "label_zh": "關係代名詞引導的限定形容詞子句（含省略受格關代）",
+              "frame": "N + who/which/that + V … ; N + (that/which/whom) + S + V …"
+            }
+          ]
+        },
+        {
+          "no": 2,
+          "patterns": [
+            {
+              "code": "NCL",
+              "grammar_id": "gp-wh-clause",
+              "label_zh": "間接問句（wh- / whether / if 名詞子句）",
+              "frame": "S + V + wh-/whether + S + V（直述句語序）"
+            },
+            {
+              "code": "COMP",
+              "grammar_id": "gp-comparative-superlative",
+              "label_zh": "比較級與最高級（含 one of the + 最高級 + 複數名詞）",
+              "frame": "A + be + 比較級 + than B ; the + 最高級 + N (+ in/of …) ; one of the + 最高級 + 複數N"
+            }
+          ]
+        }
+      ],
+      "restructuring_hint": true
+    }
+  ],
+  "pattern_rule_zh": "每組照 pattern_plan 的句型出題：patterns[].code、grammar_id 照抄，label_zh、frame 可改寫得更貼近題目，zh_trigger 寫中文題目裡引出句型的字串。同一組兩句的句型可以對調；整批要涵蓋 pattern_coverage 的全部句型（validate_bank.py --lot 在整批齊了以後檢查）。倒裝、假設、強調句不可當標的句型，只放 bonus（加分寫法）",
+  "pattern_coverage": {
+    "required_grammar_ids": [
+      "gp-comparative-superlative",
+      "gp-compared-with",
+      "gp-conj-participle",
+      "gp-for-those-who",
+      "gp-gerund-subject",
+      "gp-it-adj-to",
+      "gp-no-matter",
+      "gp-nonrestrictive",
+      "gp-participle-clause",
+      "gp-participle-modifier",
+      "gp-participle-result",
+      "gp-passive",
+      "gp-perfect-passive",
+      "gp-relative-adverb",
+      "gp-relative-pronoun",
+      "gp-the-more",
+      "gp-times",
+      "gp-wh-clause",
+      "gp-what-clause"
+    ],
+    "counts": {
+      "ADVCL": 2,
+      "COMP": 5,
+      "NCL": 4,
+      "NFSUBJ": 5,
+      "NRREL": 4,
+      "PART": 8,
+      "PASS": 6,
+      "REL": 6
+    },
+    "basis_zh": "依歷屆 119 句的句構次數（writing.json question_type_mix.translation_structures_all_119）等比例分配到每批 20 句；句型 id 取自 grammar-patterns.json，同一難度各批輪流用同一句構的不同句型"
+  },
+  "avoid": {
+    "basis": "data/exams/parsed 的 gsat-111、gsat-112、gsat-113、gsat-114、gsat-115、ref-110、ref-111、ref-115 中譯英題目與主題",
+    "zh_stems": [
+      "gsat-111 中譯英1：飼養寵物並非一項短暫的人生體驗，而是一個對動物的終生承諾。",
+      "gsat-111 中譯英2：在享受寵物所帶來的歡樂時，我們不該忽略要善盡照顧他們的責任。",
+      "gsat-112 中譯英1：歷史一再證明，戰爭會造成極為可怕的災難。",
+      "gsat-112 中譯英2：避免衝突、確保世界和平應該是所有人類追求的目標。",
+      "gsat-113 中譯英1：每逢選舉季節，總會看到政治人物造訪各地著名廟宇。",
+      "gsat-113 中譯英2：除了祈求好的選舉結果，他們也希望展現對在地文化與習俗的尊重。",
+      "gsat-114 中譯英1：人類的想像和創意是科技進步最大的驅動力。",
+      "gsat-114 中譯英2：過去在科幻電影中出現的神奇物件，現在正逐一成真。",
+      "gsat-115 中譯英1：現在越來越多高中英文老師已經增加在課堂上使用英文的百分比。",
+      "gsat-115 中譯英2：他們將學生依英語能力分成不同組別，進行多樣的聽、說活動。",
+      "ref-110 中譯英1：很多人害怕公開演講，常在上台之前發抖、覺得頭昏。",
+      "ref-110 中譯英2：只要我們對自己有信心，並持續練習，就可以克服怯場的問題。",
+      "ref-111 中譯英1：相較於他們父母的世代，現今年輕人享受較多的自由和繁榮。",
+      "ref-111 中譯英2：但是在這個快速改變的世界中，他們必須學習如何有效地因應新的挑戰。",
+      "ref-115 中譯英1：根據新聞報導，每年全球有超過百萬人在道路事故中喪失性命。",
+      "ref-115 中譯英2：因此，交通法規必須嚴格執行，以確保所有用路人的安全。"
+    ],
+    "topics": [
+      "gsat-115：English-medium instruction in high school English classes",
+      "ref-110：public speaking anxiety and overcoming stage fright",
+      "ref-111：young people today: freedom, prosperity and new challenges",
+      "ref-115：road traffic deaths and enforcement of traffic laws"
+    ],
+    "rule_zh": "不改寫歷屆題：中文題目和任何歷屆中譯英題目有連續 10 個以上相同漢字是 error、8–9 個是 warning；參考譯文不可和歷屆官方參考譯文有 8 字以上相同字串（D8，validate_bank.py）"
+  },
+  "item_rules": {
+    "summary_zh": "非限定關係子句、句尾分詞表結果、no matter＋wh-、what 子句；20–30 字；倒裝與假設只放「加分寫法」提示，不設為唯一正解",
+    "structures_per_sentence": {
+      "min": 2,
+      "max": null
+    },
+    "target_word_level_max": 6,
+    "above_level_words_max": 0,
+    "reference_words": {
+      "min": 20,
+      "max": 30
+    },
+    "patterns": [
+      "non-restrictive relative clause",
+      "sentence-final participle (result)",
+      "no matter + wh-",
+      "what-clause"
+    ]
+  },
+  "targets": {
+    "ast_like_reference_years": [
+      "ast-108",
+      "ast-105",
+      "ast-110",
+      "ast-107",
+      "ast-100"
+    ],
+    "source_zh_chars_per_sentence": [
+      20,
+      33
+    ],
+    "reference_en_words_per_sentence": [
+      14,
+      23
+    ],
+    "structures_per_sentence": [
+      1,
+      2
+    ],
+    "structure_pool": [
+      "NRREL",
+      "PART(句尾結果分詞 , V-ing)",
+      "NCL(whether／what)",
+      "ADVCL(once／no matter what)",
+      "REL",
+      "PASS",
+      "NFSUBJ",
+      "COMP"
+    ],
+    "ast_type_structures_min_pair": 1,
+    "L3plus_content_types_pair": [
+      5,
+      7
+    ],
+    "abstract_nominals_min_pair": 2,
+    "L5plus_types_pair": [
+      0,
+      2
+    ],
+    "max_word_level": 5,
+    "answer_level_dist": {
+      "L1-2": "<= 0.78",
+      "L3-6": ">= 0.22",
+      "L5-6": "<= 0.08",
+      "off_list": 0,
+      "observed_gsat_114": {
+        "L1-2": 0.737,
+        "L3-4": 0.263,
+        "L5-6": 0.0,
+        "off_list": 0.0
+      },
+      "observed_ast_advanced_years": {
+        "L1-2": 0.805,
+        "L3-4": 0.136,
+        "L5-6": 0.059,
+        "off_list": 0.0
+      }
+    },
+    "trap_points_per_sentence": [
+      2,
+      2
+    ],
+    "reference_translations_min": 3,
+    "variable_segments_per_sentence": [
+      3,
+      6
+    ],
+    "inversion_subjunctive": "只能列為「加分寫法」提示，不可是唯一正解（0/119）",
+    "topics": [
+      "科技與社會",
+      "公共議題",
+      "環境與氣候",
+      "文化現象",
+      "健康與醫療"
+    ]
+  },
+  "design": {
+    "distractor_rules": [
+      "每句 2 個誘錯點：1 個抽象名詞或複合概念（照字面直譯會錯，如「驅動力」）＋1 個結構型",
+      "不可為了難而用冷僻詞；L6 字只能出現在題幹括號附的英文裡",
+      "仍要有 ≥3 種可接受譯法",
+      "作文圖表題的數值要能讀出 2–3 個明確對比，避免「讀不出重點」造成的難度"
+    ],
+    "recipe": [
+      "詞彙負荷是主要槓桿：兩句合計 5–7 個 L3 以上詞目，含 ≥2 個抽象名詞",
+      "加 1 個指考型句構",
+      "作文要求因果分析、圖表描述或提出方案，第二段至少兩步推論"
+    ],
+    "common_errors": [
+      "抽象名詞寫成動詞或形容詞",
+      "把中文主題句直譯成 There is…",
+      "句尾分詞的邏輯主詞和主要子句不一致",
+      "作文：堆砌罕見詞或倒裝而內容空泛（佳作只有 20% 用到倒裝）"
+    ]
+  },
+  "format": {
+    "readme": "data/bank/README.md §3.5",
+    "sample": "tools/tests/data/ai.tr.0b1c2d@1.json",
+    "group_zh": "2 題 mode=translation、label \"1\"／\"2\"、各 4 分；stem 是中文題目（表外專有名詞在括號附英文）；answer＝本站首選參考譯文，accepted_answers＝其他參考譯文（或 null）；figures []、passage null；tags.topic 必填",
+    "annotations_zh": "explanations（每句 explanation_zh＋引用中文題目的 evidence，hints 依序是語意切分、標的詞彙、句型框架）；rubric = {kind: \"translation\", items: {題號: {references ≥2（超越頂標建議 ≥3）、target_words、patterns、parts（剛好 4 個：zh、accepted、targets、common_errors）、traps、bonus、restructuring_zh}}}",
+    "reference_words": {
+      "min": 20,
+      "max": 30
+    }
+  },
+  "verification": {
+    "blind_translators": 2,
+    "blind_b_different_model": true,
+    "distractor_audit": false,
+    "unique_solution": false,
+    "input_schema": "gsat-bank-blind-translation/v1",
+    "target_hit_rate_min": 0.8,
+    "flow_zh": "盲譯者只看 python3 tools/student_view.py FILE 的中文題目自己翻譯（answers），寫完才打開題組檔對答案（review）；兩位都通過才 verified（README §5.5）",
+    "human_review": "100%（校準期：每個題型 × 提示詞版本的前 30 組全審，SPEC §5.8）"
+  },
+  "materials": {
+    "grammar_patterns": "data/curriculum/grammar-patterns.json",
+    "writing_spec": "data/exams/generation-spec/writing.json",
+    "analysis": "docs/analysis/sections/07-writing.md",
+    "d8_zh": "本站參考譯文全部自己寫；不可重製大考中心官方參考譯文或評分原則原文（ROADMAP D8）"
+  }
+}

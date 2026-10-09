@@ -1,0 +1,5932 @@
+{
+  "schema": "gsat-bank-topic-plan/v1",
+  "created_on": "2026-10-09",
+  "basis_zh": "站主要求每個題型、每個難度至少 100 小題；第 2 批（seq 02）起的每一組都在這裡指定一個主題（lot＋slot），tools/make_lots.py --topics 依它產生批次規格。主題彼此不重複，也避開 data/bank/v1 第一批（含 draft、rejected）與 data/exams/parsed 歷屆試題用過的主題；配額照 08 §6.1（每批依組數取整：make_lots.topic_quota），閱讀與混合題每批至少 1 篇 SDG 3／12／14／15 的具體事件切入、≥50% 的篇有 SDG。",
+  "counting_rule_zh": "既有組數只算 verified＋draft（rejected 不算）；第一批還沒產生任何檔案的批次（閱讀、混合題）先以批次規格的組數計。第一次規劃時文意選填 advanced 第一批只有 2 組 verified、篇章結構 top 只有 4 組 verified，曾多開 word_bank-advanced-03（3 組）並把 structure-top-02 開到 6 組；2026-10-09 第二次掃描時兩者都已重生到 5 組 verified，所以撤掉這 4 組（主題移到 reserve_topics），批次照站主的表。混合題 advanced 第一批 1 組 rejected（ai.mx.981e5b「主街無車日」，2026-10-09 第二次掃描），所以 mixed-advanced-05 開到 5 組（多一組起源與演變）。",
+  "rules_zh": [
+    "group.tags.topic 一律逐字照抄該組的 topic_zh（繁體中文主題名）；angle_en 是英文切入角度；keywords 是撞題比對用的英文關鍵字（片語的實詞全部出現才算）。",
+    "詞彙題沒有選文：每組指定 5 種情境（contexts_en），10 題的題幹情境照它分配（每種 1–3 題，仍要 ≥5 種）。",
+    "閱讀 form：continuous／chart／table／multi_text（validate_bank.reading_form 的分類）；混合題 form：two_texts／entries（mixed_form）。form_hint_zh 是建議的文本形式與資料來源。",
+    "主題不可行（例如找不到白名單內的事實來源）時回報站主改這份總表，再用新批號開批次；已開始生成的批次規格不改。",
+    "新增主題前先跑 python3 tools/make_lots.py --check-topics（配額、重複、和題庫與歷屆試題撞題）。",
+    "replaced_topics 記錄換掉的主題（原主題、換成什麼、原因）；換主題時 id 不變（id＝lot＋slot）。",
+    "--check-topics 另比對中文主題（第一批閱讀、混合題起 tags.topic 是中文，英文關鍵字比不到）：共用兩字實詞（去掉虛詞與「由來、演變、台灣、日本」這類框架詞、地名）列 warning；人工確認不是同一主題後記進 reviewed_overlaps（id、against＝對方的主題原文、note_zh）。題庫裡 generation.lot 等於主題所屬批次的題組就是照該主題出的，不算撞題。",
+    "第一批還沒產生的題組（閱讀 advanced／top、混合題 top）產生後，或第一批有題組 rejected 而不重生時，重跑 --check-topics 並重算 targets；不足 100 小題就在這裡加批次（新批號），已開始生成的批次規格不改。",
+    "reserve_topics 是備用主題（已檢查不重複、不撞題，還沒分配批次）；主題不可行或要加批次時從這裡取，搬進 topics 時給新的 lot、slot、id。"
+  ],
+  "targets": {
+    "vocabulary": {
+      "questions_per_group": 10,
+      "min_items_per_tier": 100,
+      "tiers": {
+        "basic": {
+          "seq01_lot_count": 5,
+          "verified": 5,
+          "draft": 0,
+          "rejected": 0,
+          "counted_existing_groups": 5,
+          "new_groups": 5,
+          "new_lots": [
+            "vocabulary-basic-02"
+          ],
+          "projected_groups": 10,
+          "projected_items": 100
+        },
+        "advanced": {
+          "seq01_lot_count": 5,
+          "verified": 5,
+          "draft": 0,
+          "rejected": 0,
+          "counted_existing_groups": 5,
+          "new_groups": 5,
+          "new_lots": [
+            "vocabulary-advanced-02"
+          ],
+          "projected_groups": 10,
+          "projected_items": 100
+        },
+        "top": {
+          "seq01_lot_count": 5,
+          "verified": 5,
+          "draft": 0,
+          "rejected": 0,
+          "counted_existing_groups": 5,
+          "new_groups": 5,
+          "new_lots": [
+            "vocabulary-top-02"
+          ],
+          "projected_groups": 10,
+          "projected_items": 100
+        }
+      }
+    },
+    "cloze": {
+      "questions_per_group": 5,
+      "min_items_per_tier": 100,
+      "tiers": {
+        "basic": {
+          "seq01_lot_count": 8,
+          "verified": 8,
+          "draft": 0,
+          "rejected": 0,
+          "counted_existing_groups": 8,
+          "new_groups": 12,
+          "new_lots": [
+            "cloze-basic-02",
+            "cloze-basic-03"
+          ],
+          "projected_groups": 20,
+          "projected_items": 100
+        },
+        "advanced": {
+          "seq01_lot_count": 8,
+          "verified": 8,
+          "draft": 0,
+          "rejected": 2,
+          "counted_existing_groups": 8,
+          "new_groups": 12,
+          "new_lots": [
+            "cloze-advanced-02",
+            "cloze-advanced-03"
+          ],
+          "projected_groups": 20,
+          "projected_items": 100
+        },
+        "top": {
+          "seq01_lot_count": 8,
+          "verified": 8,
+          "draft": 0,
+          "rejected": 0,
+          "counted_existing_groups": 8,
+          "new_groups": 12,
+          "new_lots": [
+            "cloze-top-02",
+            "cloze-top-03"
+          ],
+          "projected_groups": 20,
+          "projected_items": 100
+        }
+      }
+    },
+    "word_bank": {
+      "questions_per_group": 10,
+      "min_items_per_tier": 100,
+      "tiers": {
+        "basic": {
+          "seq01_lot_count": 5,
+          "verified": 5,
+          "draft": 0,
+          "rejected": 0,
+          "counted_existing_groups": 5,
+          "new_groups": 5,
+          "new_lots": [
+            "word_bank-basic-02"
+          ],
+          "projected_groups": 10,
+          "projected_items": 100
+        },
+        "advanced": {
+          "seq01_lot_count": 5,
+          "verified": 5,
+          "draft": 0,
+          "rejected": 3,
+          "counted_existing_groups": 5,
+          "new_groups": 5,
+          "new_lots": [
+            "word_bank-advanced-02"
+          ],
+          "projected_groups": 10,
+          "projected_items": 100
+        },
+        "top": {
+          "seq01_lot_count": 5,
+          "verified": 5,
+          "draft": 0,
+          "rejected": 0,
+          "counted_existing_groups": 5,
+          "new_groups": 5,
+          "new_lots": [
+            "word_bank-top-02"
+          ],
+          "projected_groups": 10,
+          "projected_items": 100
+        }
+      }
+    },
+    "structure": {
+      "questions_per_group": 4,
+      "min_items_per_tier": 100,
+      "tiers": {
+        "basic": {
+          "seq01_lot_count": 5,
+          "verified": 5,
+          "draft": 0,
+          "rejected": 0,
+          "counted_existing_groups": 5,
+          "new_groups": 20,
+          "new_lots": [
+            "structure-basic-02",
+            "structure-basic-03",
+            "structure-basic-04",
+            "structure-basic-05"
+          ],
+          "projected_groups": 25,
+          "projected_items": 100
+        },
+        "advanced": {
+          "seq01_lot_count": 5,
+          "verified": 5,
+          "draft": 0,
+          "rejected": 0,
+          "counted_existing_groups": 5,
+          "new_groups": 20,
+          "new_lots": [
+            "structure-advanced-02",
+            "structure-advanced-03",
+            "structure-advanced-04",
+            "structure-advanced-05"
+          ],
+          "projected_groups": 25,
+          "projected_items": 100
+        },
+        "top": {
+          "seq01_lot_count": 5,
+          "verified": 5,
+          "draft": 0,
+          "rejected": 1,
+          "counted_existing_groups": 5,
+          "new_groups": 20,
+          "new_lots": [
+            "structure-top-02",
+            "structure-top-03",
+            "structure-top-04",
+            "structure-top-05"
+          ],
+          "projected_groups": 25,
+          "projected_items": 100
+        }
+      }
+    },
+    "reading": {
+      "questions_per_group": 4,
+      "min_items_per_tier": 100,
+      "tiers": {
+        "basic": {
+          "seq01_lot_count": 8,
+          "verified": 0,
+          "draft": 8,
+          "rejected": 0,
+          "counted_existing_groups": 8,
+          "new_groups": 17,
+          "new_lots": [
+            "reading-basic-02",
+            "reading-basic-03",
+            "reading-basic-04"
+          ],
+          "projected_groups": 25,
+          "projected_items": 100
+        },
+        "advanced": {
+          "seq01_lot_count": 8,
+          "verified": 0,
+          "draft": 0,
+          "rejected": 0,
+          "counted_existing_groups": 8,
+          "new_groups": 17,
+          "new_lots": [
+            "reading-advanced-02",
+            "reading-advanced-03",
+            "reading-advanced-04"
+          ],
+          "projected_groups": 25,
+          "projected_items": 100
+        },
+        "top": {
+          "seq01_lot_count": 8,
+          "verified": 0,
+          "draft": 0,
+          "rejected": 0,
+          "counted_existing_groups": 8,
+          "new_groups": 17,
+          "new_lots": [
+            "reading-top-02",
+            "reading-top-03",
+            "reading-top-04"
+          ],
+          "projected_groups": 25,
+          "projected_items": 100
+        }
+      }
+    },
+    "mixed": {
+      "questions_per_group": 4,
+      "min_items_per_tier": 100,
+      "tiers": {
+        "basic": {
+          "seq01_lot_count": 4,
+          "verified": 4,
+          "draft": 0,
+          "rejected": 0,
+          "counted_existing_groups": 4,
+          "new_groups": 21,
+          "new_lots": [
+            "mixed-basic-02",
+            "mixed-basic-03",
+            "mixed-basic-04",
+            "mixed-basic-05"
+          ],
+          "projected_groups": 25,
+          "projected_items": 100
+        },
+        "advanced": {
+          "seq01_lot_count": 4,
+          "verified": 3,
+          "draft": 0,
+          "rejected": 1,
+          "counted_existing_groups": 3,
+          "new_groups": 22,
+          "new_lots": [
+            "mixed-advanced-02",
+            "mixed-advanced-03",
+            "mixed-advanced-04",
+            "mixed-advanced-05"
+          ],
+          "projected_groups": 25,
+          "projected_items": 100
+        },
+        "top": {
+          "seq01_lot_count": 4,
+          "verified": 0,
+          "draft": 0,
+          "rejected": 0,
+          "counted_existing_groups": 4,
+          "new_groups": 21,
+          "new_lots": [
+            "mixed-top-02",
+            "mixed-top-03",
+            "mixed-top-04",
+            "mixed-top-05"
+          ],
+          "projected_groups": 25,
+          "projected_items": 100
+        }
+      }
+    }
+  },
+  "lots": [
+    {
+      "lot": "vocabulary-basic-02",
+      "section": "vocabulary",
+      "tier": "basic",
+      "seq": "02",
+      "count": 5
+    },
+    {
+      "lot": "vocabulary-advanced-02",
+      "section": "vocabulary",
+      "tier": "advanced",
+      "seq": "02",
+      "count": 5
+    },
+    {
+      "lot": "vocabulary-top-02",
+      "section": "vocabulary",
+      "tier": "top",
+      "seq": "02",
+      "count": 5
+    },
+    {
+      "lot": "cloze-basic-02",
+      "section": "cloze",
+      "tier": "basic",
+      "seq": "02",
+      "count": 6
+    },
+    {
+      "lot": "cloze-basic-03",
+      "section": "cloze",
+      "tier": "basic",
+      "seq": "03",
+      "count": 6
+    },
+    {
+      "lot": "cloze-advanced-02",
+      "section": "cloze",
+      "tier": "advanced",
+      "seq": "02",
+      "count": 6
+    },
+    {
+      "lot": "cloze-advanced-03",
+      "section": "cloze",
+      "tier": "advanced",
+      "seq": "03",
+      "count": 6
+    },
+    {
+      "lot": "cloze-top-02",
+      "section": "cloze",
+      "tier": "top",
+      "seq": "02",
+      "count": 6
+    },
+    {
+      "lot": "cloze-top-03",
+      "section": "cloze",
+      "tier": "top",
+      "seq": "03",
+      "count": 6
+    },
+    {
+      "lot": "word_bank-basic-02",
+      "section": "word_bank",
+      "tier": "basic",
+      "seq": "02",
+      "count": 5
+    },
+    {
+      "lot": "word_bank-advanced-02",
+      "section": "word_bank",
+      "tier": "advanced",
+      "seq": "02",
+      "count": 5
+    },
+    {
+      "lot": "word_bank-top-02",
+      "section": "word_bank",
+      "tier": "top",
+      "seq": "02",
+      "count": 5
+    },
+    {
+      "lot": "structure-basic-02",
+      "section": "structure",
+      "tier": "basic",
+      "seq": "02",
+      "count": 5
+    },
+    {
+      "lot": "structure-basic-03",
+      "section": "structure",
+      "tier": "basic",
+      "seq": "03",
+      "count": 5
+    },
+    {
+      "lot": "structure-basic-04",
+      "section": "structure",
+      "tier": "basic",
+      "seq": "04",
+      "count": 5
+    },
+    {
+      "lot": "structure-basic-05",
+      "section": "structure",
+      "tier": "basic",
+      "seq": "05",
+      "count": 5
+    },
+    {
+      "lot": "structure-advanced-02",
+      "section": "structure",
+      "tier": "advanced",
+      "seq": "02",
+      "count": 5
+    },
+    {
+      "lot": "structure-advanced-03",
+      "section": "structure",
+      "tier": "advanced",
+      "seq": "03",
+      "count": 5
+    },
+    {
+      "lot": "structure-advanced-04",
+      "section": "structure",
+      "tier": "advanced",
+      "seq": "04",
+      "count": 5
+    },
+    {
+      "lot": "structure-advanced-05",
+      "section": "structure",
+      "tier": "advanced",
+      "seq": "05",
+      "count": 5
+    },
+    {
+      "lot": "structure-top-02",
+      "section": "structure",
+      "tier": "top",
+      "seq": "02",
+      "count": 5
+    },
+    {
+      "lot": "structure-top-03",
+      "section": "structure",
+      "tier": "top",
+      "seq": "03",
+      "count": 5
+    },
+    {
+      "lot": "structure-top-04",
+      "section": "structure",
+      "tier": "top",
+      "seq": "04",
+      "count": 5
+    },
+    {
+      "lot": "structure-top-05",
+      "section": "structure",
+      "tier": "top",
+      "seq": "05",
+      "count": 5
+    },
+    {
+      "lot": "reading-basic-02",
+      "section": "reading",
+      "tier": "basic",
+      "seq": "02",
+      "count": 6,
+      "forms": {
+        "continuous": 3,
+        "chart": 1,
+        "table": 1,
+        "multi_text": 1
+      }
+    },
+    {
+      "lot": "reading-basic-03",
+      "section": "reading",
+      "tier": "basic",
+      "seq": "03",
+      "count": 6,
+      "forms": {
+        "continuous": 3,
+        "chart": 2,
+        "table": 0,
+        "multi_text": 1
+      }
+    },
+    {
+      "lot": "reading-basic-04",
+      "section": "reading",
+      "tier": "basic",
+      "seq": "04",
+      "count": 5,
+      "forms": {
+        "continuous": 3,
+        "chart": 1,
+        "table": 1,
+        "multi_text": 0
+      }
+    },
+    {
+      "lot": "reading-advanced-02",
+      "section": "reading",
+      "tier": "advanced",
+      "seq": "02",
+      "count": 6,
+      "forms": {
+        "continuous": 3,
+        "chart": 1,
+        "table": 1,
+        "multi_text": 1
+      }
+    },
+    {
+      "lot": "reading-advanced-03",
+      "section": "reading",
+      "tier": "advanced",
+      "seq": "03",
+      "count": 6,
+      "forms": {
+        "continuous": 3,
+        "chart": 2,
+        "table": 0,
+        "multi_text": 1
+      }
+    },
+    {
+      "lot": "reading-advanced-04",
+      "section": "reading",
+      "tier": "advanced",
+      "seq": "04",
+      "count": 5,
+      "forms": {
+        "continuous": 3,
+        "chart": 1,
+        "table": 1,
+        "multi_text": 0
+      }
+    },
+    {
+      "lot": "reading-top-02",
+      "section": "reading",
+      "tier": "top",
+      "seq": "02",
+      "count": 6,
+      "forms": {
+        "continuous": 3,
+        "chart": 1,
+        "table": 1,
+        "multi_text": 1
+      }
+    },
+    {
+      "lot": "reading-top-03",
+      "section": "reading",
+      "tier": "top",
+      "seq": "03",
+      "count": 6,
+      "forms": {
+        "continuous": 3,
+        "chart": 2,
+        "table": 0,
+        "multi_text": 1
+      }
+    },
+    {
+      "lot": "reading-top-04",
+      "section": "reading",
+      "tier": "top",
+      "seq": "04",
+      "count": 5,
+      "forms": {
+        "continuous": 3,
+        "chart": 1,
+        "table": 1,
+        "multi_text": 0
+      }
+    },
+    {
+      "lot": "mixed-basic-02",
+      "section": "mixed",
+      "tier": "basic",
+      "seq": "02",
+      "count": 6,
+      "forms": {
+        "two_texts": 3,
+        "entries": 3
+      }
+    },
+    {
+      "lot": "mixed-basic-03",
+      "section": "mixed",
+      "tier": "basic",
+      "seq": "03",
+      "count": 6,
+      "forms": {
+        "two_texts": 3,
+        "entries": 3
+      }
+    },
+    {
+      "lot": "mixed-basic-04",
+      "section": "mixed",
+      "tier": "basic",
+      "seq": "04",
+      "count": 5,
+      "forms": {
+        "two_texts": 3,
+        "entries": 2
+      }
+    },
+    {
+      "lot": "mixed-basic-05",
+      "section": "mixed",
+      "tier": "basic",
+      "seq": "05",
+      "count": 4,
+      "forms": {
+        "two_texts": 2,
+        "entries": 2
+      }
+    },
+    {
+      "lot": "mixed-advanced-02",
+      "section": "mixed",
+      "tier": "advanced",
+      "seq": "02",
+      "count": 6,
+      "forms": {
+        "two_texts": 3,
+        "entries": 3
+      }
+    },
+    {
+      "lot": "mixed-advanced-03",
+      "section": "mixed",
+      "tier": "advanced",
+      "seq": "03",
+      "count": 6,
+      "forms": {
+        "two_texts": 3,
+        "entries": 3
+      }
+    },
+    {
+      "lot": "mixed-advanced-04",
+      "section": "mixed",
+      "tier": "advanced",
+      "seq": "04",
+      "count": 5,
+      "forms": {
+        "two_texts": 3,
+        "entries": 2
+      }
+    },
+    {
+      "lot": "mixed-advanced-05",
+      "section": "mixed",
+      "tier": "advanced",
+      "seq": "05",
+      "count": 5,
+      "forms": {
+        "two_texts": 2,
+        "entries": 3
+      }
+    },
+    {
+      "lot": "mixed-top-02",
+      "section": "mixed",
+      "tier": "top",
+      "seq": "02",
+      "count": 6,
+      "forms": {
+        "two_texts": 3,
+        "entries": 3
+      }
+    },
+    {
+      "lot": "mixed-top-03",
+      "section": "mixed",
+      "tier": "top",
+      "seq": "03",
+      "count": 6,
+      "forms": {
+        "two_texts": 3,
+        "entries": 3
+      }
+    },
+    {
+      "lot": "mixed-top-04",
+      "section": "mixed",
+      "tier": "top",
+      "seq": "04",
+      "count": 5,
+      "forms": {
+        "two_texts": 3,
+        "entries": 2
+      }
+    },
+    {
+      "lot": "mixed-top-05",
+      "section": "mixed",
+      "tier": "top",
+      "seq": "05",
+      "count": 4,
+      "forms": {
+        "two_texts": 2,
+        "entries": 2
+      }
+    }
+  ],
+  "topics": [
+    {
+      "id": "vo-b02-1",
+      "lot": "vocabulary-basic-02",
+      "slot": 1,
+      "domain_zh": "多元情境",
+      "topic_zh": "情境組：捷運通勤、公寓修繕、遺失錢包、才藝表演、看牙醫",
+      "angle_en": "mixed contexts: subway commuting, apartment repairs, a lost wallet, a talent show, a dentist visit",
+      "contexts_en": [
+        "subway commuting",
+        "apartment repairs",
+        "a lost wallet",
+        "a talent show",
+        "a dentist visit"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "vo-b02-2",
+      "lot": "vocabulary-basic-02",
+      "slot": 2,
+      "domain_zh": "多元情境",
+      "topic_zh": "情境組：賞鳥、農場參訪、登山、梅雨季、露營",
+      "angle_en": "mixed contexts: bird watching, a farm visit, mountain hiking, the plum-rain season, a camping trip",
+      "contexts_en": [
+        "bird watching",
+        "a farm visit",
+        "mountain hiking",
+        "the plum-rain season",
+        "a camping trip"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "vo-b02-3",
+      "lot": "vocabulary-basic-02",
+      "slot": 3,
+      "domain_zh": "多元情境",
+      "topic_zh": "情境組：生日驚喜、運動會接力、水族館校外教學、手機維修、公車誤點",
+      "angle_en": "mixed contexts: a birthday surprise, a sports-day relay, a class trip to an aquarium, a phone repair shop, a late bus",
+      "contexts_en": [
+        "a birthday surprise",
+        "a sports-day relay",
+        "a class trip to an aquarium",
+        "a phone repair shop",
+        "a late bus"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "vo-b02-4",
+      "lot": "vocabulary-basic-02",
+      "slot": 4,
+      "domain_zh": "多元情境",
+      "topic_zh": "情境組：烹飪課、轉學生、足球賽、理髮店、停電",
+      "angle_en": "mixed contexts: a cooking class, a new classmate, a soccer match, a barbershop, a power outage",
+      "contexts_en": [
+        "a cooking class",
+        "a new classmate",
+        "a soccer match",
+        "a barbershop",
+        "a power outage"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "vo-b02-5",
+      "lot": "vocabulary-basic-02",
+      "slot": 5,
+      "domain_zh": "多元情境",
+      "topic_zh": "情境組：借書證、游泳課、花店、風箏節、郵局",
+      "angle_en": "mixed contexts: a library card, a swimming lesson, a flower shop, a kite festival, a post office",
+      "contexts_en": [
+        "a library card",
+        "a swimming lesson",
+        "a flower shop",
+        "a kite festival",
+        "a post office"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "vo-a02-1",
+      "lot": "vocabulary-advanced-02",
+      "slot": 1,
+      "domain_zh": "多元情境",
+      "topic_zh": "情境組：工作面試、報紙報導、車站廣播、公益路跑、健身房",
+      "angle_en": "mixed contexts: a job interview, a newspaper report, a train-station announcement, a charity run, a gym workout",
+      "contexts_en": [
+        "a job interview",
+        "a newspaper report",
+        "a train-station announcement",
+        "a charity run",
+        "a gym workout"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "vo-a02-2",
+      "lot": "vocabulary-advanced-02",
+      "slot": 2,
+      "domain_zh": "多元情境",
+      "topic_zh": "情境組：醫院候診室、科學 Podcast、影評、飯店入住、籃球賽",
+      "angle_en": "mixed contexts: a hospital waiting room, a science podcast, a film review, a hotel check-in, a basketball game",
+      "contexts_en": [
+        "a hospital waiting room",
+        "a science podcast",
+        "a film review",
+        "a hotel check-in",
+        "a basketball game"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "vo-a02-3",
+      "lot": "vocabulary-advanced-02",
+      "slot": 3,
+      "domain_zh": "多元情境",
+      "topic_zh": "情境組：藝廊開幕、防震演練、旅行預算、租車、海洋生物學家的田野調查",
+      "angle_en": "mixed contexts: an art-gallery opening, an earthquake drill, a travel budget, a car rental, a marine biologist's fieldwork",
+      "contexts_en": [
+        "an art-gallery opening",
+        "an earthquake drill",
+        "a travel budget",
+        "a car rental",
+        "a marine biologist's fieldwork"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "vo-a02-4",
+      "lot": "vocabulary-advanced-02",
+      "slot": 4,
+      "domain_zh": "多元情境",
+      "topic_zh": "情境組：辯論社、農夫市集、攝影比賽、筆電故障、錯過渡輪",
+      "angle_en": "mixed contexts: a debate club, a farmers' market, a photography contest, a broken laptop, a missed ferry",
+      "contexts_en": [
+        "a debate club",
+        "a farmers' market",
+        "a photography contest",
+        "a broken laptop",
+        "a missed ferry"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "vo-a02-5",
+      "lot": "vocabulary-advanced-02",
+      "slot": 5,
+      "domain_zh": "多元情境",
+      "topic_zh": "情境組：救生員值勤、錄音室、婚宴、化學實驗、電視新聞訪問",
+      "angle_en": "mixed contexts: a lifeguard on duty, a recording studio, a wedding banquet, a chemistry experiment, a TV news interview",
+      "contexts_en": [
+        "a lifeguard on duty",
+        "a recording studio",
+        "a wedding banquet",
+        "a chemistry experiment",
+        "a TV news interview"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "vo-t02-1",
+      "lot": "vocabulary-top-02",
+      "slot": 1,
+      "domain_zh": "多元情境",
+      "topic_zh": "情境組：商務談判、法庭審理、氣候會議、考古挖掘、股市報導",
+      "angle_en": "mixed contexts: a business negotiation, a court trial, a climate conference, an archaeological dig, a stock-market report",
+      "contexts_en": [
+        "a business negotiation",
+        "a court trial",
+        "a climate conference",
+        "an archaeological dig",
+        "a stock-market report"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "vo-t02-2",
+      "lot": "vocabulary-top-02",
+      "slot": 2,
+      "domain_zh": "多元情境",
+      "topic_zh": "情境組：臨床試驗、市議會表決、交響樂排練、保險理賠、新創簡報",
+      "angle_en": "mixed contexts: a clinical trial, a city-council vote, a symphony rehearsal, an insurance claim, a startup pitch",
+      "contexts_en": [
+        "a clinical trial",
+        "a city-council vote",
+        "a symphony rehearsal",
+        "an insurance claim",
+        "a startup pitch"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "vo-t02-3",
+      "lot": "vocabulary-top-02",
+      "slot": 3,
+      "domain_zh": "多元情境",
+      "topic_zh": "情境組：學術研討會、環境訴訟、小說書評、建築獎、海關檢查",
+      "angle_en": "mixed contexts: an academic conference, an environmental lawsuit, a novel review, an architecture award, a customs inspection",
+      "contexts_en": [
+        "an academic conference",
+        "an environmental lawsuit",
+        "a novel review",
+        "an architecture award",
+        "a customs inspection"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "vo-t02-4",
+      "lot": "vocabulary-top-02",
+      "slot": 4,
+      "domain_zh": "多元情境",
+      "topic_zh": "情境組：公共衛生宣導、哲學講座、戲劇首演、企業合併、山難搜救",
+      "angle_en": "mixed contexts: a public-health campaign, a philosophy lecture, a theater premiere, a company merger, a mountain rescue",
+      "contexts_en": [
+        "a public-health campaign",
+        "a philosophy lecture",
+        "a theater premiere",
+        "a company merger",
+        "a mountain rescue"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "vo-t02-5",
+      "lot": "vocabulary-top-02",
+      "slot": 5,
+      "domain_zh": "多元情境",
+      "topic_zh": "情境組：產品召回、調查紀錄片、古蹟修復、火箭發射、外交訪問",
+      "angle_en": "mixed contexts: a product recall, an investigative documentary, the restoration of a historic building, a rocket launch, a diplomatic visit",
+      "contexts_en": [
+        "a product recall",
+        "an investigative documentary",
+        "the restoration of a historic building",
+        "a rocket launch",
+        "a diplomatic visit"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "cz-b02-1",
+      "lot": "cloze-basic-02",
+      "slot": 1,
+      "category": "origins_evolution",
+      "domain_zh": "飲食",
+      "topic_zh": "冰棒的意外發明",
+      "angle_en": "how an 11-year-old boy accidentally invented the ice pop on a cold night",
+      "keywords": [
+        "ice pop",
+        "popsicle"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "cz-b02-2",
+      "lot": "cloze-basic-02",
+      "slot": 2,
+      "category": "origins_evolution",
+      "domain_zh": "生活",
+      "topic_zh": "安全別針的發明",
+      "angle_en": "how Walter Hunt invented the safety pin to pay off a debt",
+      "keywords": [
+        "safety pin"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "cz-b02-3",
+      "lot": "cloze-basic-02",
+      "slot": 3,
+      "category": "science_health",
+      "domain_zh": "健康",
+      "topic_zh": "打嗝是怎麼一回事",
+      "angle_en": "why we hiccup and why hiccups usually stop on their own",
+      "keywords": [
+        "hiccup"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "cz-b02-4",
+      "lot": "cloze-basic-02",
+      "slot": 4,
+      "category": "science_health",
+      "domain_zh": "自然",
+      "topic_zh": "秋天樹葉為什麼會變色",
+      "angle_en": "why leaves turn red and yellow in autumn",
+      "keywords": [
+        "autumn leaves",
+        "leaf color",
+        "fall foliage"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "cz-b02-5",
+      "lot": "cloze-basic-02",
+      "slot": 5,
+      "category": "culture_history",
+      "domain_zh": "台灣文化",
+      "topic_zh": "端午節的龍舟競渡",
+      "angle_en": "the Dragon Boat Festival: dragon boat races and rice dumplings",
+      "keywords": [
+        "dragon boat",
+        "rice dumpling"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "cz-b02-6",
+      "lot": "cloze-basic-02",
+      "slot": 6,
+      "category": "society_issues",
+      "domain_zh": "社會",
+      "topic_zh": "排隊文化",
+      "angle_en": "why people line up and how queueing manners differ from place to place",
+      "keywords": [
+        "queueing",
+        "queue"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "cz-b03-1",
+      "lot": "cloze-basic-03",
+      "slot": 1,
+      "category": "origins_evolution",
+      "domain_zh": "生活",
+      "topic_zh": "拼圖的起源",
+      "angle_en": "how the jigsaw puzzle began as a tool for teaching geography",
+      "keywords": [
+        "jigsaw"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "cz-b03-2",
+      "lot": "cloze-basic-03",
+      "slot": 2,
+      "category": "origins_evolution",
+      "domain_zh": "運動",
+      "topic_zh": "滑板的起源",
+      "angle_en": "how skateboarding began when surfers wanted to \"surf\" on land",
+      "keywords": [
+        "skateboard"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "cz-b03-3",
+      "lot": "cloze-basic-03",
+      "slot": 3,
+      "category": "science_health",
+      "domain_zh": "科學",
+      "topic_zh": "為什麼每個人的指紋都不同",
+      "angle_en": "why humans have fingerprints and why no two are the same",
+      "keywords": [
+        "fingerprint"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "cz-b03-4",
+      "lot": "cloze-basic-03",
+      "slot": 4,
+      "category": "science_health",
+      "domain_zh": "自然",
+      "topic_zh": "竹子為什麼長得這麼快",
+      "angle_en": "why bamboo is one of the fastest-growing plants on Earth",
+      "keywords": [
+        "bamboo"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "cz-b03-5",
+      "lot": "cloze-basic-03",
+      "slot": 5,
+      "category": "culture_history",
+      "domain_zh": "台灣文化",
+      "topic_zh": "中秋節為什麼要烤肉",
+      "angle_en": "how barbecuing became a Mid-Autumn Festival tradition in Taiwan",
+      "keywords": [
+        "mid-autumn",
+        "moon festival barbecue"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "cz-b03-6",
+      "lot": "cloze-basic-03",
+      "slot": 6,
+      "category": "society_issues",
+      "domain_zh": "職業",
+      "topic_zh": "街頭藝人的執照",
+      "angle_en": "how street performers in Taipei earn a license to perform",
+      "keywords": [
+        "street performer",
+        "busker"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "cz-a02-1",
+      "lot": "cloze-advanced-02",
+      "slot": 1,
+      "category": "origins_evolution",
+      "domain_zh": "科技",
+      "topic_zh": "QR 碼的由來",
+      "angle_en": "how the QR code was invented at a car-parts company, inspired by the game of Go",
+      "keywords": [
+        "qr code"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "cz-a02-2",
+      "lot": "cloze-advanced-02",
+      "slot": 2,
+      "category": "origins_evolution",
+      "domain_zh": "語言",
+      "topic_zh": "填字遊戲的誕生",
+      "angle_en": "how the first crossword puzzle appeared in a 1913 newspaper",
+      "keywords": [
+        "crossword"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "cz-a02-3",
+      "lot": "cloze-advanced-02",
+      "slot": 3,
+      "category": "science_health",
+      "domain_zh": "飲食",
+      "topic_zh": "辣椒為什麼會辣",
+      "angle_en": "why chili peppers feel hot: capsaicin and the body's heat sensors",
+      "keywords": [
+        "chili",
+        "capsaicin"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "cz-a02-4",
+      "lot": "cloze-advanced-02",
+      "slot": 4,
+      "category": "science_health",
+      "domain_zh": "自然",
+      "topic_zh": "樹懶的慢活生存術",
+      "angle_en": "how moving slowly helps sloths survive",
+      "keywords": [
+        "sloth"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "cz-a02-5",
+      "lot": "cloze-advanced-02",
+      "slot": 5,
+      "category": "culture_history",
+      "domain_zh": "台灣文化",
+      "topic_zh": "金門的風獅爺",
+      "angle_en": "the wind lion gods of Kinmen and why villagers built them",
+      "keywords": [
+        "wind lion",
+        "kinmen"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "cz-a02-6",
+      "lot": "cloze-advanced-02",
+      "slot": 6,
+      "category": "society_issues",
+      "domain_zh": "職業",
+      "topic_zh": "冰島的縮短工時試驗",
+      "angle_en": "what Iceland's trials of a shorter work week found",
+      "keywords": [
+        "shorter work week",
+        "four-day week"
+      ],
+      "sdgs": [
+        8
+      ]
+    },
+    {
+      "id": "cz-a03-1",
+      "lot": "cloze-advanced-03",
+      "slot": 1,
+      "category": "origins_evolution",
+      "domain_zh": "運動",
+      "topic_zh": "背越式跳高的誕生",
+      "angle_en": "how the Fosbury Flop changed the high jump",
+      "keywords": [
+        "fosbury",
+        "high jump"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "cz-a03-2",
+      "lot": "cloze-advanced-03",
+      "slot": 2,
+      "category": "origins_evolution",
+      "domain_zh": "經濟生活",
+      "topic_zh": "自動販賣機的演變",
+      "angle_en": "from an ancient holy-water dispenser to Japan's vending machines",
+      "keywords": [
+        "vending machine"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "cz-a03-3",
+      "lot": "cloze-advanced-03",
+      "slot": 3,
+      "category": "science_health",
+      "domain_zh": "自然",
+      "topic_zh": "紅鶴為什麼是粉紅色",
+      "angle_en": "why flamingos are pink: the food they eat",
+      "keywords": [
+        "flamingo"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "cz-a03-4",
+      "lot": "cloze-advanced-03",
+      "slot": 4,
+      "category": "science_health",
+      "domain_zh": "心理",
+      "topic_zh": "人為什麼會臉紅",
+      "angle_en": "why humans blush when they feel embarrassed",
+      "keywords": [
+        "blush"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "cz-a03-5",
+      "lot": "cloze-advanced-03",
+      "slot": 5,
+      "category": "culture_history",
+      "domain_zh": "世界文化",
+      "topic_zh": "墨西哥亡靈節",
+      "angle_en": "Mexico's Day of the Dead and its marigold altars",
+      "keywords": [
+        "day of the dead",
+        "marigold"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "cz-a03-6",
+      "lot": "cloze-advanced-03",
+      "slot": 6,
+      "category": "society_issues",
+      "domain_zh": "經濟生活",
+      "topic_zh": "各國不同的小費文化",
+      "angle_en": "why tipping customs differ from country to country",
+      "keywords": [
+        "tipping"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "cz-t02-1",
+      "lot": "cloze-top-02",
+      "slot": 1,
+      "category": "origins_evolution",
+      "domain_zh": "科技",
+      "topic_zh": "電腦「蟲」的由來",
+      "angle_en": "how a moth trapped in a computer helped popularize the word \"bug\"",
+      "keywords": [
+        "computer bug",
+        "moth"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "cz-t02-2",
+      "lot": "cloze-top-02",
+      "slot": 2,
+      "category": "origins_evolution",
+      "domain_zh": "經濟生活",
+      "topic_zh": "十七世紀的鬱金香狂熱",
+      "angle_en": "tulip mania in 17th-century Holland and what it says about price bubbles",
+      "keywords": [
+        "tulip"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "cz-t02-3",
+      "lot": "cloze-top-02",
+      "slot": 3,
+      "category": "science_health",
+      "domain_zh": "心理",
+      "topic_zh": "鄧寧—克魯格效應",
+      "angle_en": "the Dunning–Kruger effect: why beginners often overrate their skills",
+      "keywords": [
+        "dunning",
+        "kruger"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "cz-t02-4",
+      "lot": "cloze-top-02",
+      "slot": 4,
+      "category": "science_health",
+      "domain_zh": "科學",
+      "topic_zh": "冥王星為何被降級",
+      "angle_en": "why Pluto lost its status as a planet in 2006",
+      "keywords": [
+        "pluto"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "cz-t02-5",
+      "lot": "cloze-top-02",
+      "slot": 5,
+      "category": "culture_history",
+      "domain_zh": "歷史",
+      "topic_zh": "復活節島的摩艾石像",
+      "angle_en": "how the moai of Easter Island may have been \"walked\" into place",
+      "keywords": [
+        "easter island",
+        "moai"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "cz-t02-6",
+      "lot": "cloze-top-02",
+      "slot": 6,
+      "category": "society_issues",
+      "domain_zh": "社會",
+      "topic_zh": "英國的孤獨部長",
+      "angle_en": "why the UK appointed a minister for loneliness",
+      "keywords": [
+        "loneliness"
+      ],
+      "sdgs": [
+        3
+      ]
+    },
+    {
+      "id": "cz-t03-1",
+      "lot": "cloze-top-03",
+      "slot": 1,
+      "category": "origins_evolution",
+      "domain_zh": "經濟生活",
+      "topic_zh": "貨櫃如何改變世界貿易",
+      "angle_en": "how the shipping container reshaped world trade",
+      "keywords": [
+        "shipping container",
+        "container ship"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "cz-t03-2",
+      "lot": "cloze-top-03",
+      "slot": 2,
+      "category": "origins_evolution",
+      "domain_zh": "科技",
+      "topic_zh": "QWERTY 鍵盤的由來",
+      "angle_en": "why keyboards still use the QWERTY layout",
+      "keywords": [
+        "qwerty",
+        "keyboard layout"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "cz-t03-3",
+      "lot": "cloze-top-03",
+      "slot": 3,
+      "category": "science_health",
+      "domain_zh": "心理",
+      "topic_zh": "聚光燈效應",
+      "angle_en": "the spotlight effect: why others notice us less than we think",
+      "keywords": [
+        "spotlight effect"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "cz-t03-4",
+      "lot": "cloze-top-03",
+      "slot": 4,
+      "category": "science_health",
+      "domain_zh": "科學",
+      "topic_zh": "會自我修復的羅馬混凝土",
+      "angle_en": "why ancient Roman concrete can heal its own cracks",
+      "keywords": [
+        "roman concrete"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "cz-t03-5",
+      "lot": "cloze-top-03",
+      "slot": 5,
+      "category": "culture_history",
+      "domain_zh": "歷史",
+      "topic_zh": "維京人的太陽石",
+      "angle_en": "how Vikings may have used sunstones to navigate on cloudy days",
+      "keywords": [
+        "viking",
+        "sunstone"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "cz-t03-6",
+      "lot": "cloze-top-03",
+      "slot": 6,
+      "category": "society_issues",
+      "domain_zh": "社會",
+      "topic_zh": "路緣斜坡效應",
+      "angle_en": "the curb-cut effect: how designs for disabled people end up helping everyone",
+      "keywords": [
+        "curb cut"
+      ],
+      "sdgs": [
+        10,
+        11
+      ]
+    },
+    {
+      "id": "wb-b02-1",
+      "lot": "word_bank-basic-02",
+      "slot": 1,
+      "category": "origins_evolution",
+      "domain_zh": "生活",
+      "topic_zh": "黏土玩具的意外誕生",
+      "angle_en": "how a wallpaper cleaner became the modeling dough children play with",
+      "keywords": [
+        "modeling dough",
+        "wallpaper cleaner"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "wb-b02-2",
+      "lot": "word_bank-basic-02",
+      "slot": 2,
+      "category": "origins_evolution",
+      "domain_zh": "運動",
+      "topic_zh": "桌球的起源",
+      "angle_en": "how table tennis began in Victorian England as an after-dinner game played on dining tables",
+      "keywords": [
+        "table tennis",
+        "ping-pong",
+        "ping pong"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "wb-b02-3",
+      "lot": "word_bank-basic-02",
+      "slot": 3,
+      "category": "science_health",
+      "domain_zh": "自然",
+      "topic_zh": "蜜蜂的搖擺舞",
+      "angle_en": "how honeybees use a \"waggle dance\" to tell each other where flowers are",
+      "keywords": [
+        "honeybee",
+        "waggle dance"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "wb-b02-4",
+      "lot": "word_bank-basic-02",
+      "slot": 4,
+      "category": "culture_history",
+      "domain_zh": "台灣文化",
+      "topic_zh": "台灣夜市的由來",
+      "angle_en": "how Taiwan's night markets grew out of temple fairs",
+      "keywords": [
+        "night market"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "wb-b02-5",
+      "lot": "word_bank-basic-02",
+      "slot": 5,
+      "category": "society_issues",
+      "domain_zh": "環境",
+      "topic_zh": "工具圖書館",
+      "angle_en": "tool libraries: borrowing a drill instead of buying one",
+      "keywords": [
+        "tool library"
+      ],
+      "sdgs": [
+        12
+      ]
+    },
+    {
+      "id": "wb-a02-1",
+      "lot": "word_bank-advanced-02",
+      "slot": 1,
+      "category": "origins_evolution",
+      "domain_zh": "科技",
+      "topic_zh": "第一次熱氣球飛行",
+      "angle_en": "the first hot-air balloon flight and its animal passengers",
+      "keywords": [
+        "hot-air balloon",
+        "montgolfier"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "wb-a02-2",
+      "lot": "word_bank-advanced-02",
+      "slot": 2,
+      "category": "origins_evolution",
+      "domain_zh": "語言",
+      "topic_zh": "點字的發明",
+      "angle_en": "how a teenage Louis Braille created a reading system for blind people",
+      "keywords": [
+        "braille"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "wb-a02-3",
+      "lot": "word_bank-advanced-02",
+      "slot": 3,
+      "category": "science_health",
+      "domain_zh": "自然",
+      "topic_zh": "打不死的水熊蟲",
+      "angle_en": "how tardigrades survive boiling, freezing, and even outer space",
+      "keywords": [
+        "tardigrade",
+        "water bear"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "wb-a02-4",
+      "lot": "word_bank-advanced-02",
+      "slot": 4,
+      "category": "culture_history",
+      "domain_zh": "世界文化",
+      "topic_zh": "韓國的越冬泡菜",
+      "angle_en": "kimjang: how Korean families make winter kimchi together",
+      "keywords": [
+        "kimchi",
+        "kimjang"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "wb-a02-5",
+      "lot": "word_bank-advanced-02",
+      "slot": 5,
+      "category": "society_issues",
+      "domain_zh": "環境",
+      "topic_zh": "德國的瓶罐押金制度",
+      "angle_en": "how Germany's bottle deposit system gets almost every bottle returned",
+      "keywords": [
+        "bottle deposit",
+        "deposit return"
+      ],
+      "sdgs": [
+        12
+      ]
+    },
+    {
+      "id": "wb-t02-1",
+      "lot": "word_bank-top-02",
+      "slot": 1,
+      "category": "origins_evolution",
+      "domain_zh": "科技",
+      "topic_zh": "CAPTCHA 驗證碼",
+      "angle_en": "how CAPTCHA tests that prove you are human helped digitize old books",
+      "keywords": [
+        "captcha"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "wb-t02-2",
+      "lot": "word_bank-top-02",
+      "slot": 2,
+      "category": "origins_evolution",
+      "domain_zh": "飲食",
+      "topic_zh": "冰箱如何改變飲食",
+      "angle_en": "how the home refrigerator changed what and how people eat",
+      "keywords": [
+        "refrigerator",
+        "fridge"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "wb-t02-3",
+      "lot": "word_bank-top-02",
+      "slot": 3,
+      "category": "science_health",
+      "domain_zh": "自然",
+      "topic_zh": "樹木之間的真菌網路",
+      "angle_en": "the \"wood wide web\": how underground fungi connect trees",
+      "keywords": [
+        "fungi",
+        "fungal network",
+        "wood wide web"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "wb-t02-4",
+      "lot": "word_bank-top-02",
+      "slot": 4,
+      "category": "culture_history",
+      "domain_zh": "地理",
+      "topic_zh": "玻里尼西亞人的星空航海",
+      "angle_en": "how Polynesian navigators crossed the Pacific without instruments",
+      "keywords": [
+        "polynesian",
+        "wayfinding"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "wb-t02-5",
+      "lot": "word_bank-top-02",
+      "slot": 5,
+      "category": "society_issues",
+      "domain_zh": "社會",
+      "topic_zh": "十五分鐘城市",
+      "angle_en": "the 15-minute city: living close to everything you need",
+      "keywords": [
+        "15-minute city",
+        "fifteen-minute city"
+      ],
+      "sdgs": [
+        11
+      ]
+    },
+    {
+      "id": "st-b02-1",
+      "lot": "structure-basic-02",
+      "slot": 1,
+      "category": "origins_evolution",
+      "domain_zh": "飲食",
+      "topic_zh": "瑪格麗特披薩的命名",
+      "angle_en": "how pizza Margherita got its name",
+      "keywords": [
+        "pizza",
+        "margherita"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "st-b02-2",
+      "lot": "structure-basic-02",
+      "slot": 2,
+      "category": "origins_evolution",
+      "domain_zh": "生活",
+      "topic_zh": "泰迪熊的由來",
+      "angle_en": "how a hunting story gave us the teddy bear",
+      "keywords": [
+        "teddy bear"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "st-b02-3",
+      "lot": "structure-basic-02",
+      "slot": 3,
+      "category": "science_health",
+      "domain_zh": "自然",
+      "topic_zh": "海水為什麼是鹹的",
+      "angle_en": "why the sea is salty but rivers are not",
+      "keywords": [
+        "salty sea",
+        "sea salt",
+        "sea is salty"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "st-b02-4",
+      "lot": "structure-basic-02",
+      "slot": 4,
+      "category": "culture_history",
+      "domain_zh": "世界文化",
+      "topic_zh": "泰國潑水節",
+      "angle_en": "Songkran, Thailand's water-splashing New Year",
+      "keywords": [
+        "songkran"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "st-b02-5",
+      "lot": "structure-basic-02",
+      "slot": 5,
+      "category": "society_issues",
+      "domain_zh": "社會",
+      "topic_zh": "領養代替購買",
+      "angle_en": "why animal shelters ask people to adopt pets instead of buying them",
+      "keywords": [
+        "pet adoption",
+        "adopt pet",
+        "animal shelter"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "st-b03-1",
+      "lot": "structure-basic-03",
+      "slot": 1,
+      "category": "origins_evolution",
+      "domain_zh": "運動",
+      "topic_zh": "裁判哨子的由來",
+      "angle_en": "how the referee's whistle replaced waving handkerchiefs",
+      "keywords": [
+        "referee"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "st-b03-2",
+      "lot": "structure-basic-03",
+      "slot": 2,
+      "category": "origins_evolution",
+      "domain_zh": "生活",
+      "topic_zh": "溜溜球的歷史",
+      "angle_en": "the yo-yo: from an ancient toy to world championships",
+      "keywords": [
+        "yo-yo"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "st-b03-3",
+      "lot": "structure-basic-03",
+      "slot": 3,
+      "category": "science_health",
+      "domain_zh": "科學",
+      "topic_zh": "潮汐與月亮",
+      "angle_en": "how the moon causes ocean tides",
+      "keywords": [
+        "tide"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "st-b03-4",
+      "lot": "structure-basic-03",
+      "slot": 4,
+      "category": "culture_history",
+      "domain_zh": "世界文化",
+      "topic_zh": "日本的便當文化",
+      "angle_en": "the Japanese bento box and the care that goes into it",
+      "keywords": [
+        "bento"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "st-b03-5",
+      "lot": "structure-basic-03",
+      "slot": 5,
+      "category": "society_issues",
+      "domain_zh": "環境",
+      "topic_zh": "屋頂上的社區菜園",
+      "angle_en": "how rooftop gardens bring neighbors and vegetables together in cities",
+      "keywords": [
+        "rooftop garden"
+      ],
+      "sdgs": [
+        11
+      ]
+    },
+    {
+      "id": "st-b04-1",
+      "lot": "structure-basic-04",
+      "slot": 1,
+      "category": "origins_evolution",
+      "domain_zh": "飲食",
+      "topic_zh": "三明治的命名",
+      "angle_en": "how the sandwich got its name from an English earl",
+      "keywords": [
+        "sandwich"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "st-b04-2",
+      "lot": "structure-basic-04",
+      "slot": 2,
+      "category": "origins_evolution",
+      "domain_zh": "運動",
+      "topic_zh": "飛盤的由來",
+      "angle_en": "how empty pie tins turned into the flying disc",
+      "keywords": [
+        "frisbee",
+        "flying disc",
+        "pie tin"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "st-b04-3",
+      "lot": "structure-basic-04",
+      "slot": 3,
+      "category": "science_health",
+      "domain_zh": "自然",
+      "topic_zh": "皇帝企鵝擠在一起過冬",
+      "angle_en": "how emperor penguins huddle together to survive winter",
+      "keywords": [
+        "penguin"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "st-b04-4",
+      "lot": "structure-basic-04",
+      "slot": 4,
+      "category": "culture_history",
+      "domain_zh": "世界文化",
+      "topic_zh": "日本的招財貓",
+      "angle_en": "why Japanese shops display the beckoning \"lucky cat\"",
+      "keywords": [
+        "lucky cat",
+        "maneki-neko",
+        "beckoning cat"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "st-b04-5",
+      "lot": "structure-basic-04",
+      "slot": 5,
+      "category": "society_issues",
+      "domain_zh": "健康",
+      "topic_zh": "捐血",
+      "angle_en": "what happens to donated blood and why blood donors are always needed",
+      "keywords": [
+        "blood donation",
+        "donated blood",
+        "blood donor"
+      ],
+      "sdgs": [
+        3
+      ]
+    },
+    {
+      "id": "st-b05-1",
+      "lot": "structure-basic-05",
+      "slot": 1,
+      "category": "origins_evolution",
+      "domain_zh": "飲食",
+      "topic_zh": "泡泡糖為什麼是粉紅色",
+      "angle_en": "how bubble gum was invented and why it is pink",
+      "keywords": [
+        "bubble gum"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "st-b05-2",
+      "lot": "structure-basic-05",
+      "slot": 2,
+      "category": "origins_evolution",
+      "domain_zh": "藝術",
+      "topic_zh": "生日快樂歌的故事",
+      "angle_en": "the story behind the \"Happy Birthday\" song",
+      "keywords": [
+        "happy birthday"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "st-b05-3",
+      "lot": "structure-basic-05",
+      "slot": 3,
+      "category": "science_health",
+      "domain_zh": "科學",
+      "topic_zh": "四季是怎麼來的",
+      "angle_en": "why Earth has seasons: the tilt of its axis",
+      "keywords": [
+        "earth tilt",
+        "axis tilt",
+        "four seasons"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "st-b05-4",
+      "lot": "structure-basic-05",
+      "slot": 4,
+      "category": "culture_history",
+      "domain_zh": "台灣文化",
+      "topic_zh": "過年的紅包",
+      "angle_en": "red envelopes: the meaning behind a Lunar New Year custom",
+      "keywords": [
+        "red envelope"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "st-b05-5",
+      "lot": "structure-basic-05",
+      "slot": 5,
+      "category": "society_issues",
+      "domain_zh": "社會",
+      "topic_zh": "校園的友誼長椅",
+      "angle_en": "buddy benches: how a simple bench helps children find someone to play with",
+      "keywords": [
+        "buddy bench"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "st-a02-1",
+      "lot": "structure-advanced-02",
+      "slot": 1,
+      "category": "origins_evolution",
+      "domain_zh": "經濟生活",
+      "topic_zh": "購物推車的發明",
+      "angle_en": "how the shopping cart was invented in 1937 and why shoppers first refused it",
+      "keywords": [
+        "shopping cart"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "st-a02-2",
+      "lot": "structure-advanced-02",
+      "slot": 2,
+      "category": "origins_evolution",
+      "domain_zh": "歷史",
+      "topic_zh": "世界第一張郵票",
+      "angle_en": "the Penny Black and the invention of the postage stamp",
+      "keywords": [
+        "postage stamp",
+        "penny black"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "st-a02-3",
+      "lot": "structure-advanced-02",
+      "slot": 3,
+      "category": "science_health",
+      "domain_zh": "自然",
+      "topic_zh": "斑馬為什麼有條紋",
+      "angle_en": "why zebras have stripes: new evidence about biting flies",
+      "keywords": [
+        "zebra stripe"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "st-a02-4",
+      "lot": "structure-advanced-02",
+      "slot": 4,
+      "category": "culture_history",
+      "domain_zh": "世界文化",
+      "topic_zh": "日本賞櫻與櫻花前線",
+      "angle_en": "hanami and Japan's cherry blossom forecasts",
+      "keywords": [
+        "cherry blossom",
+        "hanami"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "st-a02-5",
+      "lot": "structure-advanced-02",
+      "slot": 5,
+      "category": "society_issues",
+      "domain_zh": "社會",
+      "topic_zh": "如何辨識假新聞",
+      "angle_en": "how to check whether a viral story is true before sharing it",
+      "keywords": [
+        "fake news",
+        "misinformation",
+        "viral story"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "st-a03-1",
+      "lot": "structure-advanced-03",
+      "slot": 1,
+      "category": "origins_evolution",
+      "domain_zh": "飲食",
+      "topic_zh": "罐頭食品的誕生",
+      "angle_en": "how Napoleon's prize led to the invention of canned food",
+      "keywords": [
+        "canned food",
+        "canning"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "st-a03-2",
+      "lot": "structure-advanced-03",
+      "slot": 2,
+      "category": "origins_evolution",
+      "domain_zh": "飲食",
+      "topic_zh": "泡麵的發明",
+      "angle_en": "how Momofuku Ando invented instant noodles in his backyard shed",
+      "keywords": [
+        "instant noodle"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "st-a03-3",
+      "lot": "structure-advanced-03",
+      "slot": 3,
+      "category": "science_health",
+      "domain_zh": "自然",
+      "topic_zh": "蝙蝠的回聲定位",
+      "angle_en": "how bats \"see\" in the dark with echolocation",
+      "keywords": [
+        "echolocation"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "st-a03-4",
+      "lot": "structure-advanced-03",
+      "slot": 4,
+      "category": "culture_history",
+      "domain_zh": "歷史",
+      "topic_zh": "岩石之城佩特拉",
+      "angle_en": "how the Nabataeans carved the city of Petra out of rose-red cliffs",
+      "keywords": [
+        "petra",
+        "nabataean"
+      ],
+      "sdgs": [],
+      "note_zh": "不寫引水、儲水（第一批混合題 ai.mx.df787c 已寫古代引水工程）"
+    },
+    {
+      "id": "st-a03-5",
+      "lot": "structure-advanced-03",
+      "slot": 5,
+      "category": "society_issues",
+      "domain_zh": "科技",
+      "topic_zh": "密碼安全",
+      "angle_en": "why long passphrases are safer than short, complex passwords",
+      "keywords": [
+        "password",
+        "passphrase"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "st-a04-1",
+      "lot": "structure-advanced-04",
+      "slot": 1,
+      "category": "origins_evolution",
+      "domain_zh": "語言",
+      "topic_zh": "「OK」的由來",
+      "angle_en": "how \"OK\" began as a joke in 1830s Boston newspapers",
+      "keywords": [
+        "ok",
+        "okay"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "st-a04-2",
+      "lot": "structure-advanced-04",
+      "slot": 2,
+      "category": "origins_evolution",
+      "domain_zh": "科技",
+      "topic_zh": "電扶梯的由來",
+      "angle_en": "how the escalator began as an amusement-park ride",
+      "keywords": [
+        "escalator"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "st-a04-3",
+      "lot": "structure-advanced-04",
+      "slot": 3,
+      "category": "science_health",
+      "domain_zh": "科學",
+      "topic_zh": "為什麼有人是左撇子",
+      "angle_en": "why about one in ten people is left-handed",
+      "keywords": [
+        "left-handed",
+        "left-handedness"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "st-a04-4",
+      "lot": "structure-advanced-04",
+      "slot": 4,
+      "category": "culture_history",
+      "domain_zh": "語言",
+      "topic_zh": "台灣手語",
+      "angle_en": "Taiwan Sign Language and its roots in Japanese sign language",
+      "keywords": [
+        "sign language"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "st-a04-5",
+      "lot": "structure-advanced-04",
+      "slot": 5,
+      "category": "society_issues",
+      "domain_zh": "環境",
+      "topic_zh": "行道樹為城市降溫",
+      "angle_en": "how street trees cool down hot cities",
+      "keywords": [
+        "street tree",
+        "heat island"
+      ],
+      "sdgs": [
+        11,
+        13
+      ]
+    },
+    {
+      "id": "st-a05-1",
+      "lot": "structure-advanced-05",
+      "slot": 1,
+      "category": "origins_evolution",
+      "domain_zh": "科技",
+      "topic_zh": "飛機黑盒子的發明",
+      "angle_en": "how the airplane \"black box\" flight recorder was invented",
+      "keywords": [
+        "black box",
+        "flight recorder"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "st-a05-2",
+      "lot": "structure-advanced-05",
+      "slot": 2,
+      "category": "origins_evolution",
+      "domain_zh": "飲食",
+      "topic_zh": "甜甜圈為什麼有洞",
+      "angle_en": "why doughnuts have holes",
+      "keywords": [
+        "doughnut",
+        "donut"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "st-a05-3",
+      "lot": "structure-advanced-05",
+      "slot": 3,
+      "category": "science_health",
+      "domain_zh": "飲食",
+      "topic_zh": "臭豆腐的發酵科學",
+      "angle_en": "the science behind the smell and taste of stinky tofu",
+      "keywords": [
+        "stinky tofu"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "st-a05-4",
+      "lot": "structure-advanced-05",
+      "slot": 4,
+      "category": "culture_history",
+      "domain_zh": "歷史",
+      "topic_zh": "印加人的結繩記事",
+      "angle_en": "quipu: how the Inca kept records with knotted strings",
+      "keywords": [
+        "quipu",
+        "inca"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "st-a05-5",
+      "lot": "structure-advanced-05",
+      "slot": 5,
+      "category": "society_issues",
+      "domain_zh": "心理",
+      "topic_zh": "新年新希望為什麼難以持續",
+      "angle_en": "why most New Year's resolutions fail, and how to keep them",
+      "keywords": [
+        "new year resolution"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "st-t02-1",
+      "lot": "structure-top-02",
+      "slot": 1,
+      "category": "origins_evolution",
+      "domain_zh": "健康",
+      "topic_zh": "麻醉手術的首次公開示範",
+      "angle_en": "the first public demonstration of surgical anesthesia in 1846",
+      "keywords": [
+        "anesthesia",
+        "anaesthesia"
+      ],
+      "sdgs": [
+        3
+      ]
+    },
+    {
+      "id": "st-t02-2",
+      "lot": "structure-top-02",
+      "slot": 2,
+      "category": "origins_evolution",
+      "domain_zh": "科技",
+      "topic_zh": "電腦滑鼠的發明",
+      "angle_en": "how the computer mouse was invented in the 1960s",
+      "keywords": [
+        "computer mouse"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "st-t02-3",
+      "lot": "structure-top-02",
+      "slot": 3,
+      "category": "science_health",
+      "domain_zh": "健康",
+      "topic_zh": "腸道菌與健康",
+      "angle_en": "how the bacteria in our gut affect health and mood",
+      "keywords": [
+        "gut bacteria",
+        "microbiome"
+      ],
+      "sdgs": [
+        3
+      ]
+    },
+    {
+      "id": "st-t02-4",
+      "lot": "structure-top-02",
+      "slot": 4,
+      "category": "culture_history",
+      "domain_zh": "藝術",
+      "topic_zh": "北齋的〈神奈川沖浪裏〉",
+      "angle_en": "Hokusai's \"The Great Wave\" and its journey to the West",
+      "keywords": [
+        "hokusai",
+        "great wave"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "st-t02-5",
+      "lot": "structure-top-02",
+      "slot": 5,
+      "category": "society_issues",
+      "domain_zh": "經濟生活",
+      "topic_zh": "選擇的悖論",
+      "angle_en": "the paradox of choice: why more options can make us less happy",
+      "keywords": [
+        "paradox of choice"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "st-t03-1",
+      "lot": "structure-top-03",
+      "slot": 1,
+      "category": "origins_evolution",
+      "domain_zh": "運動",
+      "topic_zh": "失竊的世界盃獎盃",
+      "angle_en": "how a dog named Pickles found the stolen World Cup trophy in 1966",
+      "keywords": [
+        "world cup trophy",
+        "pickles"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "st-t03-2",
+      "lot": "structure-top-03",
+      "slot": 2,
+      "category": "origins_evolution",
+      "domain_zh": "健康",
+      "topic_zh": "斯諾的霍亂地圖",
+      "angle_en": "John Snow's cholera map and the birth of modern epidemiology",
+      "keywords": [
+        "cholera",
+        "john snow"
+      ],
+      "sdgs": [
+        3,
+        6
+      ]
+    },
+    {
+      "id": "st-t03-3",
+      "lot": "structure-top-03",
+      "slot": 3,
+      "category": "science_health",
+      "domain_zh": "科學",
+      "topic_zh": "第一張黑洞照片",
+      "angle_en": "how scientists took the first picture of a black hole",
+      "keywords": [
+        "black hole"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "st-t03-4",
+      "lot": "structure-top-03",
+      "slot": 4,
+      "category": "culture_history",
+      "domain_zh": "語言",
+      "topic_zh": "莎士比亞創造的英文字",
+      "angle_en": "the words and phrases Shakespeare added to English",
+      "keywords": [
+        "shakespeare"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "st-t03-5",
+      "lot": "structure-top-03",
+      "slot": 5,
+      "category": "society_issues",
+      "domain_zh": "經濟生活",
+      "topic_zh": "誘餌效應",
+      "angle_en": "the decoy effect: how a third option changes what we buy",
+      "keywords": [
+        "decoy effect"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "st-t04-1",
+      "lot": "structure-top-04",
+      "slot": 1,
+      "category": "origins_evolution",
+      "domain_zh": "歷史",
+      "topic_zh": "一週為什麼是七天",
+      "angle_en": "why a week has seven days and where the weekday names come from",
+      "keywords": [
+        "seven-day week",
+        "weekday name"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "st-t04-2",
+      "lot": "structure-top-04",
+      "slot": 2,
+      "category": "origins_evolution",
+      "domain_zh": "歷史",
+      "topic_zh": "百科全書的演變",
+      "angle_en": "from Diderot's Encyclopédie to Wikipedia: how encyclopedias changed the way people share knowledge",
+      "keywords": [
+        "encyclopedia",
+        "wikipedia"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "st-t04-3",
+      "lot": "structure-top-04",
+      "slot": 3,
+      "category": "science_health",
+      "domain_zh": "心理",
+      "topic_zh": "決策疲勞",
+      "angle_en": "decision fatigue: why we make worse choices at the end of a long day",
+      "keywords": [
+        "decision fatigue"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "st-t04-4",
+      "lot": "structure-top-04",
+      "slot": 4,
+      "category": "culture_history",
+      "domain_zh": "藝術",
+      "topic_zh": "比黃金還貴的群青色",
+      "angle_en": "ultramarine: the blue pigment once worth more than gold",
+      "keywords": [
+        "ultramarine",
+        "blue pigment",
+        "lapis lazuli"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "st-t04-5",
+      "lot": "structure-top-04",
+      "slot": 5,
+      "category": "society_issues",
+      "domain_zh": "經濟生活",
+      "topic_zh": "航空公司為何超賣機位",
+      "angle_en": "why airlines overbook flights",
+      "keywords": [
+        "overbook"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "st-t05-1",
+      "lot": "structure-top-05",
+      "slot": 1,
+      "category": "origins_evolution",
+      "domain_zh": "建築",
+      "topic_zh": "聖家堂為何蓋了一百多年",
+      "angle_en": "why Gaudí's Sagrada Família has taken more than 140 years to build",
+      "keywords": [
+        "sagrada",
+        "gaudi"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "st-t05-2",
+      "lot": "structure-top-05",
+      "slot": 2,
+      "category": "origins_evolution",
+      "domain_zh": "職業",
+      "topic_zh": "航空英語",
+      "angle_en": "why pilots and air traffic controllers around the world speak English",
+      "keywords": [
+        "air traffic",
+        "aviation english"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "st-t05-3",
+      "lot": "structure-top-05",
+      "slot": 3,
+      "category": "science_health",
+      "domain_zh": "藝術",
+      "topic_zh": "史特拉第瓦里小提琴的聲音之謎",
+      "angle_en": "the science behind the sound of Stradivarius violins",
+      "keywords": [
+        "stradivari",
+        "stradivarius",
+        "violin"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "st-t05-4",
+      "lot": "structure-top-05",
+      "slot": 4,
+      "category": "culture_history",
+      "domain_zh": "歷史",
+      "topic_zh": "亞歷山大圖書館",
+      "angle_en": "the rise and fall of the Library of Alexandria",
+      "keywords": [
+        "library of alexandria"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "st-t05-5",
+      "lot": "structure-top-05",
+      "slot": 5,
+      "category": "society_issues",
+      "domain_zh": "科學",
+      "topic_zh": "公民科學",
+      "angle_en": "citizen science: how ordinary people help scientists count birds and sort galaxies",
+      "keywords": [
+        "citizen science"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "rd-b02-1",
+      "lot": "reading-basic-02",
+      "slot": 1,
+      "category": "origins_evolution",
+      "domain_zh": "飲食",
+      "topic_zh": "迴轉壽司的發明",
+      "angle_en": "how conveyor-belt sushi was invented in 1950s Japan",
+      "keywords": [
+        "conveyor-belt sushi",
+        "kaiten"
+      ],
+      "sdgs": [],
+      "form": "continuous"
+    },
+    {
+      "id": "rd-b02-2",
+      "lot": "reading-basic-02",
+      "slot": 2,
+      "category": "origins_evolution",
+      "domain_zh": "科技",
+      "topic_zh": "網路普及的速度",
+      "angle_en": "how quickly internet use spread around the world, 2000–2023",
+      "keywords": [
+        "internet user",
+        "people online"
+      ],
+      "sdgs": [
+        9
+      ],
+      "form": "chart",
+      "form_hint_zh": "折線圖：World Bank IT.NET.USER.ZS（世界與 3–4 個地區或國家）"
+    },
+    {
+      "id": "rd-b02-3",
+      "lot": "reading-basic-02",
+      "slot": 3,
+      "category": "science_health",
+      "domain_zh": "健康",
+      "topic_zh": "多大聲算太大聲",
+      "angle_en": "how loud is too loud: everyday sounds and safe listening time",
+      "keywords": [
+        "decibel",
+        "hearing loss",
+        "safe listening"
+      ],
+      "sdgs": [
+        3
+      ],
+      "form": "table",
+      "form_hint_zh": "表格：常見聲音的分貝數與建議的安全聆聽時間（事實單，來源如 WHO 安全聆聽資料，fact_only）"
+    },
+    {
+      "id": "rd-b02-4",
+      "lot": "reading-basic-02",
+      "slot": 4,
+      "category": "science_health",
+      "domain_zh": "環境",
+      "topic_zh": "小琉球的綠蠵龜",
+      "angle_en": "how green sea turtles came back to Xiaoliuqiu, and how divers help protect them",
+      "keywords": [
+        "sea turtle",
+        "xiaoliuqiu"
+      ],
+      "sdgs": [
+        14
+      ],
+      "form": "continuous"
+    },
+    {
+      "id": "rd-b02-5",
+      "lot": "reading-basic-02",
+      "slot": 5,
+      "category": "culture_history",
+      "domain_zh": "社會",
+      "topic_zh": "該不該穿制服",
+      "angle_en": "two students' views on wearing school uniforms",
+      "keywords": [
+        "school uniform"
+      ],
+      "sdgs": [],
+      "form": "multi_text",
+      "form_hint_zh": "兩篇學生投書（正反立場），passage_parts 2 篇"
+    },
+    {
+      "id": "rd-b02-6",
+      "lot": "reading-basic-02",
+      "slot": 6,
+      "category": "society_issues",
+      "domain_zh": "社會",
+      "topic_zh": "肯亞的駱駝圖書館",
+      "angle_en": "how camels carry library books to children in northern Kenya",
+      "keywords": [
+        "camel library",
+        "camel"
+      ],
+      "sdgs": [
+        4
+      ],
+      "form": "continuous"
+    },
+    {
+      "id": "rd-b03-1",
+      "lot": "reading-basic-03",
+      "slot": 1,
+      "category": "origins_evolution",
+      "domain_zh": "健康",
+      "topic_zh": "OK 繃的發明",
+      "angle_en": "how a husband invented the adhesive bandage for his wife's kitchen cuts",
+      "keywords": [
+        "adhesive bandage",
+        "band-aid"
+      ],
+      "sdgs": [
+        3
+      ],
+      "form": "continuous"
+    },
+    {
+      "id": "rd-b03-2",
+      "lot": "reading-basic-03",
+      "slot": 2,
+      "category": "origins_evolution",
+      "domain_zh": "交通",
+      "topic_zh": "台灣高鐵的運量",
+      "angle_en": "how ridership on Taiwan's high-speed rail grew after it opened in 2007",
+      "keywords": [
+        "high-speed rail",
+        "high speed rail",
+        "thsr"
+      ],
+      "sdgs": [
+        9,
+        11
+      ],
+      "form": "chart",
+      "form_hint_zh": "折線圖：政府資料開放平臺 data.gov.tw 台灣高鐵歷年旅運量（2007 起）"
+    },
+    {
+      "id": "rd-b03-3",
+      "lot": "reading-basic-03",
+      "slot": 3,
+      "category": "science_health",
+      "domain_zh": "健康",
+      "topic_zh": "蛀牙是怎麼形成的",
+      "angle_en": "how mouth bacteria turn sugar into acid that causes tooth decay, and how fluoride helps",
+      "keywords": [
+        "tooth decay",
+        "cavity",
+        "fluoride"
+      ],
+      "sdgs": [
+        3
+      ],
+      "form": "continuous",
+      "form_hint_zh": "長文（WHO 口腔健康的事實）"
+    },
+    {
+      "id": "rd-b03-4",
+      "lot": "reading-basic-03",
+      "slot": 4,
+      "category": "science_health",
+      "domain_zh": "自然",
+      "topic_zh": "貓頭鷹的頭為什麼能轉這麼多",
+      "angle_en": "how owls can turn their heads so far without hurting themselves",
+      "keywords": [
+        "owl"
+      ],
+      "sdgs": [],
+      "form": "continuous"
+    },
+    {
+      "id": "rd-b03-5",
+      "lot": "reading-basic-03",
+      "slot": 5,
+      "category": "culture_history",
+      "domain_zh": "台灣文化",
+      "topic_zh": "大甲媽祖遶境",
+      "angle_en": "the Dajia Mazu pilgrimage: a nine-day walk across central Taiwan",
+      "keywords": [
+        "mazu",
+        "pilgrimage"
+      ],
+      "sdgs": [],
+      "form": "multi_text",
+      "form_hint_zh": "一篇報導＋一篇參與者的日記（passage_parts 2 篇）"
+    },
+    {
+      "id": "rd-b03-6",
+      "lot": "reading-basic-03",
+      "slot": 6,
+      "category": "society_issues",
+      "domain_zh": "環境",
+      "topic_zh": "台灣的空氣品質",
+      "angle_en": "how PM2.5 levels in Taiwan's cities have changed since 2010, and what helped bring them down",
+      "keywords": [
+        "pm2.5",
+        "air quality",
+        "fine particle"
+      ],
+      "sdgs": [
+        3,
+        11
+      ],
+      "form": "chart",
+      "form_hint_zh": "折線圖：政府資料開放平臺 data.gov.tw 環境部空氣品質監測（PM2.5 年平均，3–4 個城市）"
+    },
+    {
+      "id": "rd-b04-1",
+      "lot": "reading-basic-04",
+      "slot": 1,
+      "category": "origins_evolution",
+      "domain_zh": "歷史",
+      "topic_zh": "世界第一條地鐵",
+      "angle_en": "how London built the world's first underground railway in 1863",
+      "keywords": [
+        "london underground",
+        "underground railway",
+        "subway"
+      ],
+      "sdgs": [
+        11
+      ],
+      "form": "continuous"
+    },
+    {
+      "id": "rd-b04-2",
+      "lot": "reading-basic-04",
+      "slot": 2,
+      "category": "origins_evolution",
+      "domain_zh": "藝術",
+      "topic_zh": "從翻頁書到卡通",
+      "angle_en": "from flip books to the first cartoons: how animation began",
+      "keywords": [
+        "flip book",
+        "animation",
+        "cartoon"
+      ],
+      "sdgs": [],
+      "form": "continuous"
+    },
+    {
+      "id": "rd-b04-3",
+      "lot": "reading-basic-04",
+      "slot": 3,
+      "category": "science_health",
+      "domain_zh": "健康",
+      "topic_zh": "人類越活越長",
+      "angle_en": "why people today live much longer than people did 100 years ago",
+      "keywords": [
+        "life expectancy"
+      ],
+      "sdgs": [
+        3
+      ],
+      "form": "chart",
+      "form_hint_zh": "折線圖：Our World in Data／World Bank life expectancy（世界與 3 個國家）"
+    },
+    {
+      "id": "rd-b04-4",
+      "lot": "reading-basic-04",
+      "slot": 4,
+      "category": "culture_history",
+      "domain_zh": "台灣文化",
+      "topic_zh": "廟宇屋頂的剪黏",
+      "angle_en": "jiannian: the colorful broken-porcelain art on Taiwanese temple roofs",
+      "keywords": [
+        "jiannian",
+        "temple roof"
+      ],
+      "sdgs": [],
+      "form": "continuous"
+    },
+    {
+      "id": "rd-b04-5",
+      "lot": "reading-basic-04",
+      "slot": 5,
+      "category": "society_issues",
+      "domain_zh": "社會",
+      "topic_zh": "各國的學校營養午餐",
+      "angle_en": "what students eat for school lunch in Japan, France, the US, and Taiwan",
+      "keywords": [
+        "school lunch"
+      ],
+      "sdgs": [
+        2,
+        3
+      ],
+      "form": "table",
+      "form_hint_zh": "表格：四國學校午餐的典型菜色、供餐方式與費用（事實單）"
+    },
+    {
+      "id": "rd-a02-1",
+      "lot": "reading-advanced-02",
+      "slot": 1,
+      "category": "origins_evolution",
+      "domain_zh": "歷史",
+      "topic_zh": "公共公園的誕生",
+      "angle_en": "why cities built the first public parks, from Birkenhead Park to Central Park",
+      "keywords": [
+        "public park",
+        "central park"
+      ],
+      "sdgs": [
+        11
+      ],
+      "form": "continuous"
+    },
+    {
+      "id": "rd-a02-2",
+      "lot": "reading-advanced-02",
+      "slot": 2,
+      "category": "origins_evolution",
+      "domain_zh": "科技",
+      "topic_zh": "從白熾燈泡到 LED",
+      "angle_en": "from Edison's light bulbs to LEDs: comparing how long bulbs last and how much power they use",
+      "keywords": [
+        "light bulb",
+        "incandescent"
+      ],
+      "sdgs": [
+        7,
+        12
+      ],
+      "form": "table",
+      "form_hint_zh": "表格：白熾燈泡、省電燈泡、LED 的壽命、耗電與普及年代（事實單）"
+    },
+    {
+      "id": "rd-a02-3",
+      "lot": "reading-advanced-02",
+      "slot": 3,
+      "category": "science_health",
+      "domain_zh": "健康",
+      "topic_zh": "戶外活動與學童視力",
+      "angle_en": "how outdoor time protects children's eyesight: Taiwan's fight against myopia",
+      "keywords": [
+        "myopia",
+        "nearsighted"
+      ],
+      "sdgs": [
+        3
+      ],
+      "form": "chart",
+      "form_hint_zh": "折線圖：政府資料開放平臺 學生裸視視力不良率（國小、國中、高中）"
+    },
+    {
+      "id": "rd-a02-4",
+      "lot": "reading-advanced-02",
+      "slot": 4,
+      "category": "science_health",
+      "domain_zh": "環境",
+      "topic_zh": "海獺守護海藻林",
+      "angle_en": "how sea otters protect kelp forests by eating sea urchins",
+      "keywords": [
+        "sea otter",
+        "kelp"
+      ],
+      "sdgs": [
+        14
+      ],
+      "form": "continuous"
+    },
+    {
+      "id": "rd-a02-5",
+      "lot": "reading-advanced-02",
+      "slot": 5,
+      "category": "culture_history",
+      "domain_zh": "社會",
+      "topic_zh": "威尼斯的入城費",
+      "angle_en": "Venice's fee for day-trippers: a resident and a tourist disagree",
+      "keywords": [
+        "venice"
+      ],
+      "sdgs": [
+        11,
+        12
+      ],
+      "form": "multi_text",
+      "form_hint_zh": "居民投書＋觀光客部落格（passage_parts 2 篇）"
+    },
+    {
+      "id": "rd-a02-6",
+      "lot": "reading-advanced-02",
+      "slot": 6,
+      "category": "society_issues",
+      "domain_zh": "科技",
+      "topic_zh": "無人機送血",
+      "angle_en": "how drones deliver blood to remote hospitals in Rwanda",
+      "keywords": [
+        "drone",
+        "blood delivery"
+      ],
+      "sdgs": [
+        3
+      ],
+      "form": "continuous"
+    },
+    {
+      "id": "rd-a03-1",
+      "lot": "reading-advanced-03",
+      "slot": 1,
+      "category": "origins_evolution",
+      "domain_zh": "科學",
+      "topic_zh": "煙火的顏色從哪裡來",
+      "angle_en": "how fireworks got their colors: from Chinese gunpowder to modern chemistry",
+      "keywords": [
+        "firework"
+      ],
+      "sdgs": [],
+      "form": "continuous"
+    },
+    {
+      "id": "rd-a03-2",
+      "lot": "reading-advanced-03",
+      "slot": 2,
+      "category": "origins_evolution",
+      "domain_zh": "科技",
+      "topic_zh": "挪威的電動車",
+      "angle_en": "how electric cars took over new-car sales in Norway",
+      "keywords": [
+        "electric car",
+        "electric vehicle"
+      ],
+      "sdgs": [
+        7,
+        13
+      ],
+      "form": "chart",
+      "form_hint_zh": "折線圖：Our World in Data share of new cars that are electric（挪威、世界與 2 個國家）"
+    },
+    {
+      "id": "rd-a03-3",
+      "lot": "reading-advanced-03",
+      "slot": 3,
+      "category": "science_health",
+      "domain_zh": "環境",
+      "topic_zh": "座頭鯨的復育",
+      "angle_en": "how humpback whales came back after the ban on commercial whaling",
+      "keywords": [
+        "humpback",
+        "whaling"
+      ],
+      "sdgs": [
+        14
+      ],
+      "form": "chart",
+      "form_hint_zh": "長條圖或折線圖：Our World in Data whale catches（以十年為單位）"
+    },
+    {
+      "id": "rd-a03-4",
+      "lot": "reading-advanced-03",
+      "slot": 4,
+      "category": "science_health",
+      "domain_zh": "自然",
+      "topic_zh": "候鳥的磁場導航",
+      "angle_en": "how migrating birds use Earth's magnetic field to find their way",
+      "keywords": [
+        "bird migration",
+        "migrating bird"
+      ],
+      "sdgs": [],
+      "form": "continuous"
+    },
+    {
+      "id": "rd-a03-5",
+      "lot": "reading-advanced-03",
+      "slot": 5,
+      "category": "culture_history",
+      "domain_zh": "運動",
+      "topic_zh": "紅葉少棒",
+      "angle_en": "how a little league team from a Bunun village sparked Taiwan's baseball fever",
+      "keywords": [
+        "hongye",
+        "little league"
+      ],
+      "sdgs": [],
+      "form": "continuous"
+    },
+    {
+      "id": "rd-a03-6",
+      "lot": "reading-advanced-03",
+      "slot": 6,
+      "category": "society_issues",
+      "domain_zh": "環境",
+      "topic_zh": "該不該讓長毛象復活",
+      "angle_en": "de-extinction: should scientists bring back the woolly mammoth?",
+      "keywords": [
+        "mammoth",
+        "de-extinction"
+      ],
+      "sdgs": [
+        15
+      ],
+      "form": "multi_text",
+      "form_hint_zh": "科學家專文＋生態學者回應（passage_parts 2 篇）"
+    },
+    {
+      "id": "rd-a04-1",
+      "lot": "reading-advanced-04",
+      "slot": 1,
+      "category": "origins_evolution",
+      "domain_zh": "科技",
+      "topic_zh": "燈塔的演變",
+      "angle_en": "how lighthouses evolved from bonfires to automatic beacons",
+      "keywords": [
+        "lighthouse"
+      ],
+      "sdgs": [],
+      "form": "continuous"
+    },
+    {
+      "id": "rd-a04-2",
+      "lot": "reading-advanced-04",
+      "slot": 2,
+      "category": "origins_evolution",
+      "domain_zh": "歷史",
+      "topic_zh": "識字率的變化",
+      "angle_en": "how reading became common: the rise of world literacy since 1820",
+      "keywords": [
+        "literacy"
+      ],
+      "sdgs": [
+        4
+      ],
+      "form": "chart",
+      "form_hint_zh": "折線圖：Our World in Data literacy rate（世界與 3 個地區或國家）"
+    },
+    {
+      "id": "rd-a04-3",
+      "lot": "reading-advanced-04",
+      "slot": 3,
+      "category": "science_health",
+      "domain_zh": "自然",
+      "topic_zh": "動物的心跳與壽命",
+      "angle_en": "why small animals' hearts beat faster: a table of heart rates and life spans",
+      "keywords": [
+        "heart rate",
+        "heartbeat"
+      ],
+      "sdgs": [],
+      "form": "table",
+      "form_hint_zh": "表格：6–8 種動物的體重、每分鐘心跳、平均壽命（事實單整理自研究機構或大學資料）"
+    },
+    {
+      "id": "rd-a04-4",
+      "lot": "reading-advanced-04",
+      "slot": 4,
+      "category": "culture_history",
+      "domain_zh": "世界文化",
+      "topic_zh": "伊富高梯田",
+      "angle_en": "the Ifugao rice terraces and the farmers who keep them alive",
+      "keywords": [
+        "rice terrace",
+        "ifugao"
+      ],
+      "sdgs": [
+        15,
+        2
+      ],
+      "form": "continuous"
+    },
+    {
+      "id": "rd-a04-5",
+      "lot": "reading-advanced-04",
+      "slot": 5,
+      "category": "society_issues",
+      "domain_zh": "經濟生活",
+      "topic_zh": "公平貿易咖啡",
+      "angle_en": "what the fair-trade label on a bag of coffee means for the farmers who grow it",
+      "keywords": [
+        "fair trade",
+        "coffee farmer"
+      ],
+      "sdgs": [
+        12,
+        8
+      ],
+      "form": "continuous",
+      "form_hint_zh": "長文（國際公平貿易組織的事實與數字）"
+    },
+    {
+      "id": "rd-t02-1",
+      "lot": "reading-top-02",
+      "slot": 1,
+      "category": "origins_evolution",
+      "domain_zh": "健康",
+      "topic_zh": "南丁格爾的玫瑰圖",
+      "angle_en": "how Florence Nightingale used a diagram to save soldiers' lives",
+      "keywords": [
+        "nightingale"
+      ],
+      "sdgs": [
+        3
+      ],
+      "form": "continuous"
+    },
+    {
+      "id": "rd-t02-2",
+      "lot": "reading-top-02",
+      "slot": 2,
+      "category": "origins_evolution",
+      "domain_zh": "社會",
+      "topic_zh": "緊急電話號碼的由來",
+      "angle_en": "how emergency phone numbers began: comparing 999, 911, 112, and 119",
+      "keywords": [
+        "emergency number",
+        "emergency phone"
+      ],
+      "sdgs": [
+        3,
+        11
+      ],
+      "form": "table",
+      "form_hint_zh": "表格：各國緊急電話號碼、啟用年份與服務內容（事實單）"
+    },
+    {
+      "id": "rd-t02-3",
+      "lot": "reading-top-02",
+      "slot": 3,
+      "category": "science_health",
+      "domain_zh": "環境",
+      "topic_zh": "被過度捕撈的海洋",
+      "angle_en": "how much of the world's fish is overfished",
+      "keywords": [
+        "overfish",
+        "fish stock"
+      ],
+      "sdgs": [
+        14
+      ],
+      "form": "chart",
+      "form_hint_zh": "堆疊長條或折線圖：Our World in Data fish stocks（過度捕撈／完全利用／未完全利用）"
+    },
+    {
+      "id": "rd-t02-4",
+      "lot": "reading-top-02",
+      "slot": 4,
+      "category": "science_health",
+      "domain_zh": "健康",
+      "topic_zh": "抗生素抗藥性",
+      "angle_en": "how bacteria become resistant to antibiotics",
+      "keywords": [
+        "antibiotic",
+        "superbug"
+      ],
+      "sdgs": [
+        3
+      ],
+      "form": "continuous"
+    },
+    {
+      "id": "rd-t02-5",
+      "lot": "reading-top-02",
+      "slot": 5,
+      "category": "culture_history",
+      "domain_zh": "心理",
+      "topic_zh": "一萬小時法則",
+      "angle_en": "talent or practice? two views on the 10,000-hour rule",
+      "keywords": [
+        "deliberate practice",
+        "10000 hour rule"
+      ],
+      "sdgs": [],
+      "form": "multi_text",
+      "form_hint_zh": "兩篇評論（passage_parts 2 篇）"
+    },
+    {
+      "id": "rd-t02-6",
+      "lot": "reading-top-02",
+      "slot": 6,
+      "category": "society_issues",
+      "domain_zh": "科技",
+      "topic_zh": "資料中心的用水",
+      "angle_en": "the hidden water footprint of data centers",
+      "keywords": [
+        "data center",
+        "data centre"
+      ],
+      "sdgs": [
+        6,
+        12
+      ],
+      "form": "continuous"
+    },
+    {
+      "id": "rd-t03-1",
+      "lot": "reading-top-03",
+      "slot": 1,
+      "category": "origins_evolution",
+      "domain_zh": "健康",
+      "topic_zh": "天花的根除",
+      "angle_en": "how smallpox became the first human disease wiped out, from Jenner's cowpox to 1980",
+      "keywords": [
+        "smallpox"
+      ],
+      "sdgs": [
+        3
+      ],
+      "form": "continuous"
+    },
+    {
+      "id": "rd-t03-2",
+      "lot": "reading-top-03",
+      "slot": 2,
+      "category": "origins_evolution",
+      "domain_zh": "科學",
+      "topic_zh": "綠色革命與稻米產量",
+      "angle_en": "how the Green Revolution raised rice yields",
+      "keywords": [
+        "rice yield",
+        "green revolution",
+        "cereal yield"
+      ],
+      "sdgs": [
+        2
+      ],
+      "form": "chart",
+      "form_hint_zh": "折線圖：Our World in Data／World Bank cereal or rice yield（3–4 個國家）"
+    },
+    {
+      "id": "rd-t03-3",
+      "lot": "reading-top-03",
+      "slot": 3,
+      "category": "science_health",
+      "domain_zh": "環境",
+      "topic_zh": "臭氧層的修復",
+      "angle_en": "how the world's ban on CFCs is healing the ozone layer",
+      "keywords": [
+        "ozone",
+        "cfc"
+      ],
+      "sdgs": [
+        13
+      ],
+      "form": "continuous"
+    },
+    {
+      "id": "rd-t03-4",
+      "lot": "reading-top-03",
+      "slot": 4,
+      "category": "science_health",
+      "domain_zh": "自然",
+      "topic_zh": "章魚有多聰明",
+      "angle_en": "what octopus escapes tell us about animal intelligence",
+      "keywords": [
+        "octopus"
+      ],
+      "sdgs": [],
+      "form": "multi_text",
+      "form_hint_zh": "生物學家專文＋水族館員工的部落格（passage_parts 2 篇）"
+    },
+    {
+      "id": "rd-t03-5",
+      "lot": "reading-top-03",
+      "slot": 5,
+      "category": "culture_history",
+      "domain_zh": "歷史",
+      "topic_zh": "阿茲特克人的浮田",
+      "angle_en": "how the Aztecs grew food on floating gardens called chinampas",
+      "keywords": [
+        "chinampa",
+        "aztec"
+      ],
+      "sdgs": [
+        2,
+        11
+      ],
+      "form": "continuous"
+    },
+    {
+      "id": "rd-t03-6",
+      "lot": "reading-top-03",
+      "slot": 6,
+      "category": "society_issues",
+      "domain_zh": "環境",
+      "topic_zh": "哥斯大黎加的森林",
+      "angle_en": "how Costa Rica brought its forests back",
+      "keywords": [
+        "costa rica",
+        "reforestation"
+      ],
+      "sdgs": [
+        15
+      ],
+      "form": "chart",
+      "form_hint_zh": "折線圖：World Bank forest area (% of land area)（哥斯大黎加與 2–3 個國家）"
+    },
+    {
+      "id": "rd-t04-1",
+      "lot": "reading-top-04",
+      "slot": 1,
+      "category": "origins_evolution",
+      "domain_zh": "科技",
+      "topic_zh": "愛達‧勒芙蕾絲",
+      "angle_en": "how Ada Lovelace imagined computers that could make music",
+      "keywords": [
+        "ada lovelace",
+        "lovelace"
+      ],
+      "sdgs": [],
+      "form": "continuous"
+    },
+    {
+      "id": "rd-t04-2",
+      "lot": "reading-top-04",
+      "slot": 2,
+      "category": "origins_evolution",
+      "domain_zh": "健康",
+      "topic_zh": "胰島素的發現",
+      "angle_en": "how the discovery of insulin changed the lives of people with diabetes",
+      "keywords": [
+        "insulin",
+        "diabetes"
+      ],
+      "sdgs": [
+        3
+      ],
+      "form": "continuous"
+    },
+    {
+      "id": "rd-t04-3",
+      "lot": "reading-top-04",
+      "slot": 3,
+      "category": "science_health",
+      "domain_zh": "環境",
+      "topic_zh": "食物的碳足跡",
+      "angle_en": "greenhouse gas emissions per kilogram of different foods",
+      "keywords": [
+        "food emission",
+        "carbon footprint of food"
+      ],
+      "sdgs": [
+        12,
+        13
+      ],
+      "form": "table",
+      "form_hint_zh": "表格：Our World in Data（Poore & Nemecek 2018）每公斤食物的溫室氣體排放"
+    },
+    {
+      "id": "rd-t04-4",
+      "lot": "reading-top-04",
+      "slot": 4,
+      "category": "culture_history",
+      "domain_zh": "歷史",
+      "topic_zh": "巨石陣之謎",
+      "angle_en": "what Stonehenge was for: new clues from the stones",
+      "keywords": [
+        "stonehenge"
+      ],
+      "sdgs": [],
+      "form": "continuous"
+    },
+    {
+      "id": "rd-t04-5",
+      "lot": "reading-top-04",
+      "slot": 5,
+      "category": "society_issues",
+      "domain_zh": "社會",
+      "topic_zh": "非洲的電力普及",
+      "angle_en": "how electricity reached more homes in sub-Saharan Africa",
+      "keywords": [
+        "electricity access",
+        "access to electricity"
+      ],
+      "sdgs": [
+        7
+      ],
+      "form": "chart",
+      "form_hint_zh": "折線圖：World Bank EG.ELC.ACCS.ZS（撒哈拉以南非洲、世界與 2 個國家）"
+    },
+    {
+      "id": "mx-b02-1",
+      "lot": "mixed-basic-02",
+      "slot": 1,
+      "category": "origins_evolution",
+      "domain_zh": "科技",
+      "topic_zh": "從算盤到計算機",
+      "angle_en": "from the abacus to the pocket calculator",
+      "keywords": [
+        "abacus",
+        "calculator"
+      ],
+      "sdgs": [],
+      "form": "two_texts",
+      "form_hint_zh": "博物館展板＋學生報告"
+    },
+    {
+      "id": "mx-b02-2",
+      "lot": "mixed-basic-02",
+      "slot": 2,
+      "category": "origins_evolution",
+      "domain_zh": "科技",
+      "topic_zh": "青少年發明展",
+      "angle_en": "six inventions from a young inventors' fair",
+      "keywords": [
+        "young inventor",
+        "invention fair"
+      ],
+      "sdgs": [
+        9
+      ],
+      "form": "entries",
+      "form_hint_zh": "6 則展品介紹"
+    },
+    {
+      "id": "mx-b02-3",
+      "lot": "mixed-basic-02",
+      "slot": 3,
+      "category": "science_health",
+      "domain_zh": "科學",
+      "topic_zh": "雪花為什麼形狀都不同",
+      "angle_en": "why no two snowflakes look alike",
+      "keywords": [
+        "snowflake"
+      ],
+      "sdgs": [],
+      "form": "two_texts",
+      "form_hint_zh": "科普短文＋攝影師訪談"
+    },
+    {
+      "id": "mx-b02-4",
+      "lot": "mixed-basic-02",
+      "slot": 4,
+      "category": "science_health",
+      "domain_zh": "自然",
+      "topic_zh": "植物園裡的六種植物",
+      "angle_en": "a guided walk: six remarkable plants in the Taipei Botanical Garden",
+      "keywords": [
+        "botanical garden"
+      ],
+      "sdgs": [
+        15
+      ],
+      "form": "entries",
+      "form_hint_zh": "6 則導覽牌"
+    },
+    {
+      "id": "mx-b02-5",
+      "lot": "mixed-basic-02",
+      "slot": 5,
+      "category": "culture_history",
+      "domain_zh": "台灣文化",
+      "topic_zh": "客家桐花季",
+      "angle_en": "the Hakka tung blossom season: a farmer's memories and a hiker's blog",
+      "keywords": [
+        "tung blossom",
+        "hakka"
+      ],
+      "sdgs": [
+        15
+      ],
+      "form": "two_texts",
+      "form_hint_zh": "農民口述＋登山客部落格"
+    },
+    {
+      "id": "mx-b02-6",
+      "lot": "mixed-basic-02",
+      "slot": 6,
+      "category": "society_issues",
+      "domain_zh": "環境",
+      "topic_zh": "淡水河口的紅樹林",
+      "angle_en": "Tamsui's mangrove forest: comments from a guided nature walk",
+      "keywords": [
+        "mangrove"
+      ],
+      "sdgs": [
+        14,
+        15
+      ],
+      "form": "entries",
+      "form_hint_zh": "8 則參加者留言"
+    },
+    {
+      "id": "mx-b03-1",
+      "lot": "mixed-basic-03",
+      "slot": 1,
+      "category": "origins_evolution",
+      "domain_zh": "生活",
+      "topic_zh": "旋轉木馬的由來",
+      "angle_en": "the carousel: from a training game for knights to an amusement-park ride",
+      "keywords": [
+        "carousel",
+        "merry-go-round"
+      ],
+      "sdgs": [],
+      "form": "two_texts",
+      "form_hint_zh": "歷史短文＋遊樂園員工自述"
+    },
+    {
+      "id": "mx-b03-2",
+      "lot": "mixed-basic-03",
+      "slot": 2,
+      "category": "origins_evolution",
+      "domain_zh": "飲食",
+      "topic_zh": "古早味零食",
+      "angle_en": "the stories behind seven old-time Taiwanese snacks",
+      "keywords": [
+        "old-time snack",
+        "taiwanese snack"
+      ],
+      "sdgs": [],
+      "form": "entries",
+      "form_hint_zh": "7 則零食介紹"
+    },
+    {
+      "id": "mx-b03-3",
+      "lot": "mixed-basic-03",
+      "slot": 3,
+      "category": "science_health",
+      "domain_zh": "自然",
+      "topic_zh": "紫斑蝶的遷徙",
+      "angle_en": "the purple crow butterflies' winter journey in Taiwan",
+      "keywords": [
+        "purple crow",
+        "butterfly"
+      ],
+      "sdgs": [
+        15
+      ],
+      "form": "two_texts",
+      "form_hint_zh": "研究者報導＋高速公路為蝴蝶封道的新聞"
+    },
+    {
+      "id": "mx-b03-4",
+      "lot": "mixed-basic-03",
+      "slot": 4,
+      "category": "science_health",
+      "domain_zh": "健康",
+      "topic_zh": "六個急救迷思",
+      "angle_en": "six common first-aid myths, corrected",
+      "keywords": [
+        "first aid"
+      ],
+      "sdgs": [
+        3
+      ],
+      "form": "entries",
+      "form_hint_zh": "6 則迷思與更正"
+    },
+    {
+      "id": "mx-b03-5",
+      "lot": "mixed-basic-03",
+      "slot": 5,
+      "category": "culture_history",
+      "domain_zh": "台灣文化",
+      "topic_zh": "排灣族的琉璃珠",
+      "angle_en": "Paiwan glass beads and the stories they carry",
+      "keywords": [
+        "paiwan",
+        "glass bead"
+      ],
+      "sdgs": [],
+      "form": "two_texts",
+      "form_hint_zh": "工藝師訪談＋博物館說明"
+    },
+    {
+      "id": "mx-b03-6",
+      "lot": "mixed-basic-03",
+      "slot": 6,
+      "category": "society_issues",
+      "domain_zh": "社會",
+      "topic_zh": "車站的共享雨傘",
+      "angle_en": "riders comment on a shared-umbrella program at train stations",
+      "keywords": [
+        "shared umbrella",
+        "umbrella sharing"
+      ],
+      "sdgs": [
+        11,
+        12
+      ],
+      "form": "entries",
+      "form_hint_zh": "6–8 則乘客留言（借還方便、雨傘被帶走不還、改善建議）"
+    },
+    {
+      "id": "mx-b04-1",
+      "lot": "mixed-basic-04",
+      "slot": 1,
+      "category": "origins_evolution",
+      "domain_zh": "社會",
+      "topic_zh": "行人穿越道的由來",
+      "angle_en": "how the pedestrian crossing was invented to keep walkers safe",
+      "keywords": [
+        "pedestrian crossing",
+        "crosswalk"
+      ],
+      "sdgs": [
+        11
+      ],
+      "form": "two_texts",
+      "form_hint_zh": "歷史短文＋交通警察訪談"
+    },
+    {
+      "id": "mx-b04-2",
+      "lot": "mixed-basic-04",
+      "slot": 2,
+      "category": "origins_evolution",
+      "domain_zh": "生活",
+      "topic_zh": "傳統童玩",
+      "angle_en": "a festival guide to six traditional toys: spinning tops, diabolos, and more",
+      "keywords": [
+        "traditional toy",
+        "spinning top",
+        "diabolo"
+      ],
+      "sdgs": [],
+      "form": "entries",
+      "form_hint_zh": "6 則童玩介紹",
+      "note_zh": "不要收溜溜球（st-b03-2 已用）"
+    },
+    {
+      "id": "mx-b04-3",
+      "lot": "mixed-basic-04",
+      "slot": 3,
+      "category": "science_health",
+      "domain_zh": "自然",
+      "topic_zh": "蜂鳥如何停在空中",
+      "angle_en": "how hummingbirds hover, and why flowers need them",
+      "keywords": [
+        "hummingbird"
+      ],
+      "sdgs": [
+        15
+      ],
+      "form": "two_texts",
+      "form_hint_zh": "科普短文＋賞鳥人的觀察紀錄"
+    },
+    {
+      "id": "mx-b04-4",
+      "lot": "mixed-basic-04",
+      "slot": 4,
+      "category": "culture_history",
+      "domain_zh": "台灣文化",
+      "topic_zh": "各地的早餐",
+      "angle_en": "eight readers describe breakfast in their hometowns across Taiwan",
+      "keywords": [
+        "breakfast"
+      ],
+      "sdgs": [],
+      "form": "entries",
+      "form_hint_zh": "8 則讀者留言"
+    },
+    {
+      "id": "mx-b04-5",
+      "lot": "mixed-basic-04",
+      "slot": 5,
+      "category": "society_issues",
+      "domain_zh": "環境",
+      "topic_zh": "淨灘",
+      "angle_en": "a beach clean-up: a volunteer's diary and a list of what washed ashore",
+      "keywords": [
+        "beach clean-up",
+        "beach cleanup",
+        "marine debris"
+      ],
+      "sdgs": [
+        14,
+        12
+      ],
+      "form": "two_texts",
+      "form_hint_zh": "兩篇：志工的淨灘日記／淨灘撿到的垃圾種類說明"
+    },
+    {
+      "id": "mx-b05-1",
+      "lot": "mixed-basic-05",
+      "slot": 1,
+      "category": "origins_evolution",
+      "domain_zh": "生活",
+      "topic_zh": "常見符號的由來",
+      "angle_en": "the stories behind six everyday symbols, from @ to the power button",
+      "keywords": [
+        "ampersand",
+        "everyday symbol",
+        "power symbol"
+      ],
+      "sdgs": [],
+      "form": "entries",
+      "form_hint_zh": "6 則短條目（@、&、#、電源鍵、播放鍵、回收標誌…，每則一個符號）"
+    },
+    {
+      "id": "mx-b05-2",
+      "lot": "mixed-basic-05",
+      "slot": 2,
+      "category": "science_health",
+      "domain_zh": "自然",
+      "topic_zh": "台灣黑熊",
+      "angle_en": "the Formosan black bear: a ranger's report and a hiker's safety tips",
+      "keywords": [
+        "black bear",
+        "formosan"
+      ],
+      "sdgs": [
+        15
+      ],
+      "form": "two_texts",
+      "form_hint_zh": "保育員報告＋登山客安全須知"
+    },
+    {
+      "id": "mx-b05-3",
+      "lot": "mixed-basic-05",
+      "slot": 3,
+      "category": "culture_history",
+      "domain_zh": "台灣文化",
+      "topic_zh": "歌仔戲",
+      "angle_en": "Taiwanese opera: a performer's story and a young fan's review",
+      "keywords": [
+        "taiwanese opera",
+        "gezaixi"
+      ],
+      "sdgs": [],
+      "form": "two_texts",
+      "form_hint_zh": "演員自述＋年輕觀眾心得"
+    },
+    {
+      "id": "mx-b05-4",
+      "lot": "mixed-basic-05",
+      "slot": 4,
+      "category": "society_issues",
+      "domain_zh": "環境",
+      "topic_zh": "校園飲水機地圖",
+      "angle_en": "comments on a campus map of water refill stations",
+      "keywords": [
+        "refill station",
+        "water refill"
+      ],
+      "sdgs": [
+        6,
+        12
+      ],
+      "form": "entries",
+      "form_hint_zh": "8 則留言"
+    },
+    {
+      "id": "mx-a02-1",
+      "lot": "mixed-advanced-02",
+      "slot": 1,
+      "category": "origins_evolution",
+      "domain_zh": "藝術",
+      "topic_zh": "電影音效師",
+      "angle_en": "how Foley artists create the sounds in movies",
+      "keywords": [
+        "foley"
+      ],
+      "sdgs": [],
+      "form": "two_texts",
+      "form_hint_zh": "音效師訪談＋影評人專欄"
+    },
+    {
+      "id": "mx-a02-2",
+      "lot": "mixed-advanced-02",
+      "slot": 2,
+      "category": "origins_evolution",
+      "domain_zh": "科技",
+      "topic_zh": "讓人喝到乾淨水的發明",
+      "angle_en": "six inventions that bring clean water to people, from sand filters to straw filters",
+      "keywords": [
+        "clean water",
+        "water filter"
+      ],
+      "sdgs": [
+        6
+      ],
+      "form": "entries",
+      "form_hint_zh": "6 則發明介紹"
+    },
+    {
+      "id": "mx-a02-3",
+      "lot": "mixed-advanced-02",
+      "slot": 3,
+      "category": "science_health",
+      "domain_zh": "自然",
+      "topic_zh": "鴨嘴獸為什麼讓科學家困惑",
+      "angle_en": "why the platypus puzzled scientists: a mammal that lays eggs and senses electricity",
+      "keywords": [
+        "platypus"
+      ],
+      "sdgs": [],
+      "form": "two_texts",
+      "form_hint_zh": "兩篇：十八世紀英國學者以為標本是假的／動物學家解釋鴨嘴獸的特徵"
+    },
+    {
+      "id": "mx-a02-4",
+      "lot": "mixed-advanced-02",
+      "slot": 4,
+      "category": "science_health",
+      "domain_zh": "健康",
+      "topic_zh": "中暑",
+      "angle_en": "eight readers' questions about heatstroke, answered by a doctor",
+      "keywords": [
+        "heatstroke",
+        "heat stroke"
+      ],
+      "sdgs": [
+        3
+      ],
+      "form": "entries",
+      "form_hint_zh": "讀者提問與醫師回答"
+    },
+    {
+      "id": "mx-a02-5",
+      "lot": "mixed-advanced-02",
+      "slot": 5,
+      "category": "culture_history",
+      "domain_zh": "台灣文化",
+      "topic_zh": "日月潭的邵族",
+      "angle_en": "the Thao people of Sun Moon Lake and their stories",
+      "keywords": [
+        "thao",
+        "sun moon lake"
+      ],
+      "sdgs": [],
+      "form": "two_texts",
+      "form_hint_zh": "族人口述＋旅遊報導"
+    },
+    {
+      "id": "mx-a02-6",
+      "lot": "mixed-advanced-02",
+      "slot": 6,
+      "category": "society_issues",
+      "domain_zh": "環境",
+      "topic_zh": "綠鬣蜥入侵",
+      "angle_en": "farmers, scientists, and pet owners comment on Taiwan's green iguana problem",
+      "keywords": [
+        "green iguana",
+        "iguana"
+      ],
+      "sdgs": [
+        15
+      ],
+      "form": "entries",
+      "form_hint_zh": "8 則留言"
+    },
+    {
+      "id": "mx-a03-1",
+      "lot": "mixed-advanced-03",
+      "slot": 1,
+      "category": "origins_evolution",
+      "domain_zh": "生活",
+      "topic_zh": "行李箱的輪子",
+      "angle_en": "why it took so long to put wheels on suitcases",
+      "keywords": [
+        "suitcase",
+        "wheeled luggage"
+      ],
+      "sdgs": [],
+      "form": "two_texts",
+      "form_hint_zh": "發明史短文＋旅行作家專欄"
+    },
+    {
+      "id": "mx-a03-2",
+      "lot": "mixed-advanced-03",
+      "slot": 2,
+      "category": "origins_evolution",
+      "domain_zh": "藝術",
+      "topic_zh": "黑膠唱片的復興",
+      "angle_en": "readers explain why they still buy vinyl records",
+      "keywords": [
+        "vinyl"
+      ],
+      "sdgs": [],
+      "form": "entries",
+      "form_hint_zh": "8 則留言"
+    },
+    {
+      "id": "mx-a03-3",
+      "lot": "mixed-advanced-03",
+      "slot": 3,
+      "category": "science_health",
+      "domain_zh": "科學",
+      "topic_zh": "人工降雨",
+      "angle_en": "cloud seeding: can we really make it rain?",
+      "keywords": [
+        "cloud seeding"
+      ],
+      "sdgs": [
+        6
+      ],
+      "form": "two_texts",
+      "form_hint_zh": "氣象學者專文＋農民投書"
+    },
+    {
+      "id": "mx-a03-4",
+      "lot": "mixed-advanced-03",
+      "slot": 4,
+      "category": "science_health",
+      "domain_zh": "健康",
+      "topic_zh": "森林浴",
+      "angle_en": "eight hikers describe forest bathing in Taiwan's mountains",
+      "keywords": [
+        "forest bathing",
+        "shinrin-yoku"
+      ],
+      "sdgs": [
+        3,
+        15
+      ],
+      "form": "entries",
+      "form_hint_zh": "8 則心得"
+    },
+    {
+      "id": "mx-a03-5",
+      "lot": "mixed-advanced-03",
+      "slot": 5,
+      "category": "culture_history",
+      "domain_zh": "語言",
+      "topic_zh": "俳句",
+      "angle_en": "haiku: a poet's guide and a student's first attempts",
+      "keywords": [
+        "haiku"
+      ],
+      "sdgs": [],
+      "form": "two_texts",
+      "form_hint_zh": "詩人導讀＋學生習作與心得"
+    },
+    {
+      "id": "mx-a03-6",
+      "lot": "mixed-advanced-03",
+      "slot": 6,
+      "category": "society_issues",
+      "domain_zh": "環境",
+      "topic_zh": "石虎與路殺",
+      "angle_en": "comments on building wildlife crossings for leopard cats",
+      "keywords": [
+        "leopard cat",
+        "roadkill",
+        "wildlife crossing"
+      ],
+      "sdgs": [
+        15
+      ],
+      "form": "entries",
+      "form_hint_zh": "8 則留言"
+    },
+    {
+      "id": "mx-a04-1",
+      "lot": "mixed-advanced-04",
+      "slot": 1,
+      "category": "origins_evolution",
+      "domain_zh": "健康",
+      "topic_zh": "體溫計的演變",
+      "angle_en": "from Galileo's water thermoscope to ear thermometers: how people learned to measure body temperature",
+      "keywords": [
+        "thermometer",
+        "thermoscope",
+        "body temperature"
+      ],
+      "sdgs": [
+        3
+      ],
+      "form": "two_texts",
+      "form_hint_zh": "兩篇：早期溫度計的發明史／醫生談現代體溫計的用法"
+    },
+    {
+      "id": "mx-a04-2",
+      "lot": "mixed-advanced-04",
+      "slot": 2,
+      "category": "origins_evolution",
+      "domain_zh": "科技",
+      "topic_zh": "俄羅斯方塊",
+      "angle_en": "gamers and researchers on why Tetris is still popular",
+      "keywords": [
+        "tetris"
+      ],
+      "sdgs": [],
+      "form": "entries",
+      "form_hint_zh": "7 則留言"
+    },
+    {
+      "id": "mx-a04-3",
+      "lot": "mixed-advanced-04",
+      "slot": 3,
+      "category": "science_health",
+      "domain_zh": "環境",
+      "topic_zh": "海鮮裡的微塑膠",
+      "angle_en": "microplastics in seafood: a scientist's report and a fisher's view",
+      "keywords": [
+        "microplastic"
+      ],
+      "sdgs": [
+        14
+      ],
+      "form": "two_texts",
+      "form_hint_zh": "科學家報告＋漁民訪談"
+    },
+    {
+      "id": "mx-a04-4",
+      "lot": "mixed-advanced-04",
+      "slot": 4,
+      "category": "culture_history",
+      "domain_zh": "世界文化",
+      "topic_zh": "蒙古包",
+      "angle_en": "the Mongolian ger: how a family home goes up in a day",
+      "keywords": [
+        "mongolian ger",
+        "yurt"
+      ],
+      "sdgs": [],
+      "form": "two_texts",
+      "form_hint_zh": "旅遊報導＋牧民口述"
+    },
+    {
+      "id": "mx-a04-5",
+      "lot": "mixed-advanced-04",
+      "slot": 5,
+      "category": "society_issues",
+      "domain_zh": "社會",
+      "topic_zh": "列車的安靜車廂",
+      "angle_en": "commuters comment on a rail company's new quiet carriages",
+      "keywords": [
+        "quiet carriage",
+        "quiet car"
+      ],
+      "sdgs": [
+        11
+      ],
+      "form": "entries",
+      "form_hint_zh": "6–8 則乘客留言（支持、反對、執行上的困難）"
+    },
+    {
+      "id": "mx-a05-1",
+      "lot": "mixed-advanced-05",
+      "slot": 1,
+      "category": "origins_evolution",
+      "domain_zh": "科技",
+      "topic_zh": "觸控螢幕簡史",
+      "angle_en": "six moments in the history of the touchscreen",
+      "keywords": [
+        "touchscreen",
+        "touch screen"
+      ],
+      "sdgs": [],
+      "form": "entries",
+      "form_hint_zh": "6 則時間軸條目"
+    },
+    {
+      "id": "mx-a05-2",
+      "lot": "mixed-advanced-05",
+      "slot": 2,
+      "category": "science_health",
+      "domain_zh": "環境",
+      "topic_zh": "海草床",
+      "angle_en": "seagrass meadows: a marine biologist and a fisher on why they matter",
+      "keywords": [
+        "seagrass"
+      ],
+      "sdgs": [
+        14
+      ],
+      "form": "two_texts",
+      "form_hint_zh": "海洋生物學家專文＋漁民訪談"
+    },
+    {
+      "id": "mx-a05-3",
+      "lot": "mixed-advanced-05",
+      "slot": 3,
+      "category": "culture_history",
+      "domain_zh": "職業",
+      "topic_zh": "孟買的便當快遞員",
+      "angle_en": "Mumbai's dabbawalas and how they deliver lunches without mistakes",
+      "keywords": [
+        "dabbawala"
+      ],
+      "sdgs": [
+        8
+      ],
+      "form": "two_texts",
+      "form_hint_zh": "報導＋快遞員自述"
+    },
+    {
+      "id": "mx-a05-4",
+      "lot": "mixed-advanced-05",
+      "slot": 4,
+      "category": "society_issues",
+      "domain_zh": "社會",
+      "topic_zh": "社區浪貓",
+      "angle_en": "residents comment on caring for stray cats in their neighborhood",
+      "keywords": [
+        "stray cat",
+        "street cat"
+      ],
+      "sdgs": [
+        11,
+        15
+      ],
+      "form": "entries",
+      "form_hint_zh": "8 則留言"
+    },
+    {
+      "id": "mx-a05-5",
+      "lot": "mixed-advanced-05",
+      "slot": 5,
+      "category": "origins_evolution",
+      "domain_zh": "藝術",
+      "topic_zh": "字型的故事",
+      "angle_en": "six famous typefaces and the stories behind them, from Helvetica to Comic Sans",
+      "keywords": [
+        "typeface",
+        "helvetica",
+        "comic sans"
+      ],
+      "sdgs": [],
+      "form": "entries",
+      "form_hint_zh": "6 則短條目（每則一種字型：誕生的年代、設計者、常用在哪裡）"
+    },
+    {
+      "id": "mx-t02-1",
+      "lot": "mixed-top-02",
+      "slot": 1,
+      "category": "origins_evolution",
+      "domain_zh": "科技",
+      "topic_zh": "冷氣機如何改變世界",
+      "angle_en": "how air conditioning changed where and how people live",
+      "keywords": [
+        "air conditioning",
+        "air conditioner"
+      ],
+      "sdgs": [
+        7,
+        11
+      ],
+      "form": "two_texts",
+      "form_hint_zh": "歷史專文＋城市規劃者評論"
+    },
+    {
+      "id": "mx-t02-2",
+      "lot": "mixed-top-02",
+      "slot": 2,
+      "category": "origins_evolution",
+      "domain_zh": "科技",
+      "topic_zh": "聊天機器人簡史",
+      "angle_en": "from ELIZA to today's chatbots: six milestones",
+      "keywords": [
+        "chatbot",
+        "eliza"
+      ],
+      "sdgs": [],
+      "form": "entries",
+      "form_hint_zh": "6 則時間軸條目"
+    },
+    {
+      "id": "mx-t02-3",
+      "lot": "mixed-top-02",
+      "slot": 3,
+      "category": "science_health",
+      "domain_zh": "健康",
+      "topic_zh": "維生素 D 與日照",
+      "angle_en": "vitamin D: do teenagers get enough sunlight?",
+      "keywords": [
+        "vitamin d"
+      ],
+      "sdgs": [
+        3
+      ],
+      "form": "two_texts",
+      "form_hint_zh": "醫師專欄＋研究摘要"
+    },
+    {
+      "id": "mx-t02-4",
+      "lot": "mixed-top-02",
+      "slot": 4,
+      "category": "science_health",
+      "domain_zh": "心理",
+      "topic_zh": "既視感",
+      "angle_en": "eight readers describe déjà vu, and a neuroscientist responds",
+      "keywords": [
+        "deja vu"
+      ],
+      "sdgs": [],
+      "form": "entries",
+      "form_hint_zh": "讀者描述＋神經科學家回應"
+    },
+    {
+      "id": "mx-t02-5",
+      "lot": "mixed-top-02",
+      "slot": 5,
+      "category": "culture_history",
+      "domain_zh": "藝術",
+      "topic_zh": "梵谷〈星夜〉與亂流",
+      "angle_en": "Van Gogh's \"The Starry Night\" and the physics of turbulence",
+      "keywords": [
+        "van gogh",
+        "starry night"
+      ],
+      "sdgs": [],
+      "form": "two_texts",
+      "form_hint_zh": "藝術史專文＋物理學者評論"
+    },
+    {
+      "id": "mx-t02-6",
+      "lot": "mixed-top-02",
+      "slot": 6,
+      "category": "society_issues",
+      "domain_zh": "環境",
+      "topic_zh": "海洋保護區之爭",
+      "angle_en": "fishers, divers, and scientists debate a new marine protected area",
+      "keywords": [
+        "marine protected area"
+      ],
+      "sdgs": [
+        14
+      ],
+      "form": "entries",
+      "form_hint_zh": "8 則留言"
+    },
+    {
+      "id": "mx-t03-1",
+      "lot": "mixed-top-03",
+      "slot": 1,
+      "category": "origins_evolution",
+      "domain_zh": "科技",
+      "topic_zh": "電子紙",
+      "angle_en": "how e-paper screens imitate ink on paper",
+      "keywords": [
+        "e-paper",
+        "e-ink",
+        "electronic paper"
+      ],
+      "sdgs": [],
+      "form": "two_texts",
+      "form_hint_zh": "技術說明＋讀者心得"
+    },
+    {
+      "id": "mx-t03-2",
+      "lot": "mixed-top-03",
+      "slot": 2,
+      "category": "origins_evolution",
+      "domain_zh": "經濟生活",
+      "topic_zh": "失敗博物館",
+      "angle_en": "a museum of failure: six products that flopped and what they taught",
+      "keywords": [
+        "museum of failure",
+        "failed product"
+      ],
+      "sdgs": [],
+      "form": "entries",
+      "form_hint_zh": "6 則展品說明"
+    },
+    {
+      "id": "mx-t03-3",
+      "lot": "mixed-top-03",
+      "slot": 3,
+      "category": "science_health",
+      "domain_zh": "健康",
+      "topic_zh": "過敏為什麼越來越多",
+      "angle_en": "why allergies are on the rise: the hygiene hypothesis",
+      "keywords": [
+        "allergy",
+        "hygiene hypothesis"
+      ],
+      "sdgs": [
+        3
+      ],
+      "form": "two_texts",
+      "form_hint_zh": "研究者專文＋醫師評論"
+    },
+    {
+      "id": "mx-t03-4",
+      "lot": "mixed-top-03",
+      "slot": 4,
+      "category": "science_health",
+      "domain_zh": "環境",
+      "topic_zh": "水母大量出現",
+      "angle_en": "fishers and scientists discuss jellyfish blooms",
+      "keywords": [
+        "jellyfish"
+      ],
+      "sdgs": [
+        14
+      ],
+      "form": "entries",
+      "form_hint_zh": "8 則留言"
+    },
+    {
+      "id": "mx-t03-5",
+      "lot": "mixed-top-03",
+      "slot": 5,
+      "category": "culture_history",
+      "domain_zh": "歷史",
+      "topic_zh": "龐貝城",
+      "angle_en": "Pompeii: what the volcanic ash preserved",
+      "keywords": [
+        "pompeii"
+      ],
+      "sdgs": [],
+      "form": "two_texts",
+      "form_hint_zh": "考古報導＋導覽員自述"
+    },
+    {
+      "id": "mx-t03-6",
+      "lot": "mixed-top-03",
+      "slot": 6,
+      "category": "society_issues",
+      "domain_zh": "環境",
+      "topic_zh": "網購包裝",
+      "angle_en": "shoppers, couriers, and recyclers on cutting online-shopping packaging",
+      "keywords": [
+        "delivery packaging",
+        "online shopping packaging"
+      ],
+      "sdgs": [
+        12
+      ],
+      "form": "entries",
+      "form_hint_zh": "8 則留言"
+    },
+    {
+      "id": "mx-t04-1",
+      "lot": "mixed-top-04",
+      "slot": 1,
+      "category": "origins_evolution",
+      "domain_zh": "科技",
+      "topic_zh": "英法海底隧道",
+      "angle_en": "how the Channel Tunnel was dug from both ends and met in the middle",
+      "keywords": [
+        "channel tunnel"
+      ],
+      "sdgs": [
+        9
+      ],
+      "form": "two_texts",
+      "form_hint_zh": "工程史專文＋工程師回憶"
+    },
+    {
+      "id": "mx-t04-2",
+      "lot": "mixed-top-04",
+      "slot": 2,
+      "category": "origins_evolution",
+      "domain_zh": "健康",
+      "topic_zh": "義肢的演進",
+      "angle_en": "seven milestones of prosthetic limbs, from wooden legs to bionic hands",
+      "keywords": [
+        "prosthetic",
+        "bionic"
+      ],
+      "sdgs": [
+        3,
+        10
+      ],
+      "form": "entries",
+      "form_hint_zh": "7 則時間軸條目"
+    },
+    {
+      "id": "mx-t04-3",
+      "lot": "mixed-top-04",
+      "slot": 3,
+      "category": "science_health",
+      "domain_zh": "心理",
+      "topic_zh": "記憶宮殿",
+      "angle_en": "the memory palace: a memory champion and a neuroscientist explain",
+      "keywords": [
+        "memory palace"
+      ],
+      "sdgs": [],
+      "form": "two_texts",
+      "form_hint_zh": "記憶冠軍自述＋神經科學家評論"
+    },
+    {
+      "id": "mx-t04-4",
+      "lot": "mixed-top-04",
+      "slot": 4,
+      "category": "culture_history",
+      "domain_zh": "語言",
+      "topic_zh": "冰島人的命名",
+      "angle_en": "why most Icelanders have no family names",
+      "keywords": [
+        "icelandic name",
+        "patronymic"
+      ],
+      "sdgs": [],
+      "form": "two_texts",
+      "form_hint_zh": "語言學專文＋冰島人的自述"
+    },
+    {
+      "id": "mx-t04-5",
+      "lot": "mixed-top-04",
+      "slot": 5,
+      "category": "society_issues",
+      "domain_zh": "職業",
+      "topic_zh": "下班後不回訊息的權利",
+      "angle_en": "readers debate a 'right to disconnect' law that lets workers ignore messages after hours",
+      "keywords": [
+        "right to disconnect"
+      ],
+      "sdgs": [
+        8
+      ],
+      "form": "entries",
+      "form_hint_zh": "6–8 則讀者留言（上班族、主管、自由工作者、學生的不同立場）"
+    },
+    {
+      "id": "mx-t05-1",
+      "lot": "mixed-top-05",
+      "slot": 1,
+      "category": "origins_evolution",
+      "domain_zh": "地理",
+      "topic_zh": "巴拿馬運河",
+      "angle_en": "how the Panama Canal's locks lift ships across a continent",
+      "keywords": [
+        "panama canal"
+      ],
+      "sdgs": [
+        9
+      ],
+      "form": "two_texts",
+      "form_hint_zh": "工程史專文＋船員訪談"
+    },
+    {
+      "id": "mx-t05-2",
+      "lot": "mixed-top-05",
+      "slot": 2,
+      "category": "science_health",
+      "domain_zh": "心理",
+      "topic_zh": "臉盲症",
+      "angle_en": "eight people describe living with face blindness",
+      "keywords": [
+        "face blindness",
+        "prosopagnosia"
+      ],
+      "sdgs": [],
+      "form": "entries",
+      "form_hint_zh": "8 則自述"
+    },
+    {
+      "id": "mx-t05-3",
+      "lot": "mixed-top-05",
+      "slot": 3,
+      "category": "culture_history",
+      "domain_zh": "飲食",
+      "topic_zh": "新加坡的小販中心",
+      "angle_en": "Singapore's hawker centres: a food critic and a hawker",
+      "keywords": [
+        "hawker"
+      ],
+      "sdgs": [
+        8,
+        11
+      ],
+      "form": "two_texts",
+      "form_hint_zh": "美食評論＋攤販自述"
+    },
+    {
+      "id": "mx-t05-4",
+      "lot": "mixed-top-05",
+      "slot": 4,
+      "category": "society_issues",
+      "domain_zh": "環境",
+      "topic_zh": "深海採礦",
+      "angle_en": "miners, scientists, and fishers on deep-sea mining",
+      "keywords": [
+        "deep-sea mining",
+        "seabed mining"
+      ],
+      "sdgs": [
+        14
+      ],
+      "form": "entries",
+      "form_hint_zh": "8 則留言"
+    }
+  ],
+  "reserve_topics": [
+    {
+      "id": "rsv-01",
+      "former_id": "wb-a03-1",
+      "former_lot": "word_bank-advanced-03",
+      "former_slot": 1,
+      "category": "origins_evolution",
+      "domain_zh": "健康",
+      "topic_zh": "聽診器的發明",
+      "angle_en": "how a shy French doctor invented the stethoscope with a rolled-up sheet of paper",
+      "keywords": [
+        "stethoscope",
+        "laennec"
+      ],
+      "sdgs": [
+        3
+      ],
+      "reserved_reason_zh": "第一批文意選填 advanced 的 3 組 rejected 已重生並通過（verified 5 組），word_bank-advanced-03 不再需要（2026-10-09 第二次掃描）"
+    },
+    {
+      "id": "rsv-02",
+      "former_id": "wb-a03-2",
+      "former_lot": "word_bank-advanced-03",
+      "former_slot": 2,
+      "category": "science_health",
+      "domain_zh": "自然",
+      "topic_zh": "向日葵為什麼追著太陽",
+      "angle_en": "why young sunflowers follow the sun across the sky",
+      "keywords": [
+        "sunflower"
+      ],
+      "sdgs": [],
+      "reserved_reason_zh": "第一批文意選填 advanced 的 3 組 rejected 已重生並通過（verified 5 組），word_bank-advanced-03 不再需要（2026-10-09 第二次掃描）"
+    },
+    {
+      "id": "rsv-03",
+      "former_id": "wb-a03-3",
+      "former_lot": "word_bank-advanced-03",
+      "former_slot": 3,
+      "category": "culture_history",
+      "domain_zh": "語言",
+      "topic_zh": "加那利群島的口哨語",
+      "angle_en": "Silbo Gomero, the whistled language of the Canary Islands",
+      "keywords": [
+        "silbo",
+        "whistled language",
+        "canary islands"
+      ],
+      "sdgs": [],
+      "reserved_reason_zh": "第一批文意選填 advanced 的 3 組 rejected 已重生並通過（verified 5 組），word_bank-advanced-03 不再需要（2026-10-09 第二次掃描）"
+    },
+    {
+      "id": "rsv-04",
+      "former_id": "st-t02-3",
+      "former_lot": "structure-top-02",
+      "former_slot": 3,
+      "category": "science_health",
+      "domain_zh": "心理",
+      "topic_zh": "為什麼年紀越大時間過得越快",
+      "angle_en": "why time seems to speed up as we get older",
+      "keywords": [
+        "perception of time",
+        "time speed up"
+      ],
+      "sdgs": [],
+      "reserved_reason_zh": "第一批篇章結構 top 已有 5 組 verified，structure-top-02 改回 5 組（照站主的批次表），拿掉一個科普與健康主題（2026-10-09 第二次掃描）"
+    }
+  ],
+  "used_concepts": [
+    {
+      "concept_zh": "羅塞塔石碑與埃及象形文字",
+      "keywords": [
+        "rosetta stone",
+        "hieroglyph"
+      ]
+    },
+    {
+      "concept_zh": "番茄醬的演變",
+      "keywords": [
+        "ketchup"
+      ]
+    },
+    {
+      "concept_zh": "雞皮疙瘩",
+      "keywords": [
+        "goosebump",
+        "goose bump"
+      ]
+    },
+    {
+      "concept_zh": "腳踏車的演變（4 組，含閱讀 ai.rd.5b3a62）",
+      "keywords": [
+        "bicycle",
+        "bike",
+        "cycling"
+      ]
+    },
+    {
+      "concept_zh": "金繼",
+      "keywords": [
+        "kintsugi"
+      ]
+    },
+    {
+      "concept_zh": "馬拉松",
+      "keywords": [
+        "marathon"
+      ]
+    },
+    {
+      "concept_zh": "睡眠、小睡、青少年生理時鐘（3 組）",
+      "keywords": [
+        "nap",
+        "sleep",
+        "body clock"
+      ]
+    },
+    {
+      "concept_zh": "食物浪費與醜蔬果（3 組）",
+      "keywords": [
+        "food waste",
+        "ugly fruit",
+        "ugly vegetable"
+      ]
+    },
+    {
+      "concept_zh": "低頭族",
+      "keywords": [
+        "phubbing"
+      ]
+    },
+    {
+      "concept_zh": "切洋蔥流淚",
+      "keywords": [
+        "onion"
+      ]
+    },
+    {
+      "concept_zh": "表情符號",
+      "keywords": [
+        "emoji",
+        "emoticon"
+      ]
+    },
+    {
+      "concept_zh": "robot 一字的由來",
+      "keywords": [
+        "robot"
+      ]
+    },
+    {
+      "concept_zh": "元宵節與平溪天燈",
+      "keywords": [
+        "lantern festival",
+        "sky lantern",
+        "pingxi"
+      ]
+    },
+    {
+      "concept_zh": "古代奧運",
+      "keywords": [
+        "olympic"
+      ]
+    },
+    {
+      "concept_zh": "鉛筆與筆的演變（3 組）",
+      "keywords": [
+        "pencil",
+        "quill",
+        "ballpoint"
+      ]
+    },
+    {
+      "concept_zh": "光害（3 組）",
+      "keywords": [
+        "light pollution"
+      ]
+    },
+    {
+      "concept_zh": "兵馬俑（2 組）",
+      "keywords": [
+        "terracotta"
+      ]
+    },
+    {
+      "concept_zh": "牛仔褲",
+      "keywords": [
+        "jeans",
+        "denim"
+      ]
+    },
+    {
+      "concept_zh": "鐵路與標準時間、時區",
+      "keywords": [
+        "standard time",
+        "time zone"
+      ]
+    },
+    {
+      "concept_zh": "從太空看長城的迷思",
+      "keywords": [
+        "great wall"
+      ]
+    },
+    {
+      "concept_zh": "天空為什麼是藍的、夕陽為什麼是紅的",
+      "keywords": [
+        "blue sky",
+        "sunset"
+      ]
+    },
+    {
+      "concept_zh": "安慰劑與反安慰劑效應（2 組）",
+      "keywords": [
+        "placebo",
+        "nocebo"
+      ]
+    },
+    {
+      "concept_zh": "紙鈔與貨幣的演變（2 組）",
+      "keywords": [
+        "paper money",
+        "barter",
+        "digital payment",
+        "money"
+      ]
+    },
+    {
+      "concept_zh": "筷子",
+      "keywords": [
+        "chopstick"
+      ]
+    },
+    {
+      "concept_zh": "巧克力",
+      "keywords": [
+        "chocolate",
+        "cocoa"
+      ]
+    },
+    {
+      "concept_zh": "絲路（2 組）",
+      "keywords": [
+        "silk road"
+      ]
+    },
+    {
+      "concept_zh": "打哈欠",
+      "keywords": [
+        "yawn",
+        "yawning"
+      ]
+    },
+    {
+      "concept_zh": "茶的傳播",
+      "keywords": [
+        "tea"
+      ]
+    },
+    {
+      "concept_zh": "電子廢棄物（2 組）",
+      "keywords": [
+        "e-waste",
+        "electronic waste"
+      ]
+    },
+    {
+      "concept_zh": "眼鏡的演變（2 組）",
+      "keywords": [
+        "eyeglasses",
+        "spectacles"
+      ]
+    },
+    {
+      "concept_zh": "比薩斜塔",
+      "keywords": [
+        "pisa",
+        "leaning tower"
+      ]
+    },
+    {
+      "concept_zh": "計時：日晷到原子鐘",
+      "keywords": [
+        "sundial",
+        "atomic clock"
+      ]
+    },
+    {
+      "concept_zh": "韓文的創制",
+      "keywords": [
+        "hangul",
+        "korean alphabet"
+      ]
+    },
+    {
+      "concept_zh": "嗅覺與記憶",
+      "keywords": [
+        "sense of smell"
+      ]
+    },
+    {
+      "concept_zh": "冰為什麼浮在水上",
+      "keywords": [
+        "ice float"
+      ]
+    },
+    {
+      "concept_zh": "馬鈴薯的傳播",
+      "keywords": [
+        "potato"
+      ]
+    },
+    {
+      "concept_zh": "快時尚",
+      "keywords": [
+        "fast fashion"
+      ]
+    },
+    {
+      "concept_zh": "西洋棋的演變",
+      "keywords": [
+        "chess"
+      ]
+    },
+    {
+      "concept_zh": "籃球與排球的誕生（混合題）",
+      "keywords": [
+        "basketball",
+        "volleyball",
+        "naismith"
+      ]
+    },
+    {
+      "concept_zh": "學校午休（混合題）",
+      "keywords": [
+        "siesta",
+        "school nap"
+      ]
+    },
+    {
+      "concept_zh": "主街無車日（混合題）",
+      "keywords": [
+        "car-free",
+        "car free day"
+      ]
+    },
+    {
+      "concept_zh": "古羅馬水道與波斯坎兒井（混合題）",
+      "keywords": [
+        "aqueduct",
+        "qanat"
+      ]
+    },
+    {
+      "concept_zh": "修理咖啡館、交換商店（閱讀、混合題，2 組）",
+      "keywords": [
+        "repair cafe",
+        "repair café",
+        "swap shop"
+      ]
+    },
+    {
+      "concept_zh": "意外的發明：微波爐與魔鬼氈（混合題）",
+      "keywords": [
+        "microwave",
+        "velcro"
+      ]
+    },
+    {
+      "concept_zh": "動物怎麼睡覺（混合題）",
+      "keywords": [
+        "animal sleep"
+      ]
+    },
+    {
+      "concept_zh": "家中的老物件（混合題）",
+      "keywords": [
+        "old object",
+        "family object",
+        "heirloom"
+      ]
+    },
+    {
+      "concept_zh": "台灣的音樂垃圾車與垃圾分類（閱讀）",
+      "keywords": [
+        "garbage truck",
+        "fur elise",
+        "trash sorting",
+        "garbage sorting"
+      ]
+    },
+    {
+      "concept_zh": "太陽能發電（閱讀）",
+      "keywords": [
+        "solar panel",
+        "solar power",
+        "solar cell",
+        "solar energy"
+      ]
+    },
+    {
+      "concept_zh": "吸管的演變（閱讀）",
+      "keywords": [
+        "drinking straw",
+        "plastic straw"
+      ]
+    },
+    {
+      "concept_zh": "塞麥爾維斯與洗手（閱讀）",
+      "keywords": [
+        "semmelweis",
+        "handwashing",
+        "hand washing",
+        "wash hands"
+      ]
+    },
+    {
+      "concept_zh": "日本包袱巾（閱讀）",
+      "keywords": [
+        "furoshiki",
+        "wrapping cloth"
+      ]
+    },
+    {
+      "concept_zh": "麻疹與疫苗接種（閱讀）",
+      "keywords": [
+        "measles",
+        "vaccine",
+        "vaccination"
+      ]
+    }
+  ],
+  "reviewed_overlaps": [
+    {
+      "id": "st-t05-2",
+      "against": "mixed contexts: air travel, family, packing, energy in the past, traffic accidents, medicine, teaching, plants, smoking, fire",
+      "note_zh": "詞彙題 ai.vo.353e7f 的情境清單裡 air travel 與 traffic accidents 是兩個不相干的情境，不是航空英語的主題"
+    },
+    {
+      "id": "cz-t03-4",
+      "against": "古羅馬水道與波斯坎兒井",
+      "note_zh": "只共用「羅馬」：自我修復的混凝土（材料科學）和引水工程是不同主題"
+    },
+    {
+      "id": "cz-t03-5",
+      "against": "太陽能發電的發展",
+      "note_zh": "只共用「太陽」：維京人的太陽石（航海）和太陽能發電無關"
+    },
+    {
+      "id": "rsv-02",
+      "against": "太陽能發電的發展",
+      "note_zh": "只共用「太陽」：向日葵追日（植物）和太陽能發電無關"
+    },
+    {
+      "id": "rd-b04-5",
+      "against": "學校午休該不該保留",
+      "note_zh": "只共用「學校」：各國營養午餐和午休是不同主題"
+    },
+    {
+      "id": "rd-a04-5",
+      "against": "修理咖啡館與交換商店",
+      "note_zh": "只共用「咖啡」：公平貿易咖啡（咖啡農的收入）和修理咖啡館（修理活動）是不同主題"
+    },
+    {
+      "id": "rd-a04-5",
+      "against": "修理咖啡館",
+      "note_zh": "只共用「咖啡」：公平貿易咖啡（咖啡農的收入）和修理咖啡館（修理活動）是不同主題"
+    }
+  ],
+  "replaced_topics": [
+    {
+      "id": "wb-b02-2",
+      "lot": "word_bank-basic-02",
+      "slot": 2,
+      "old_topic_zh": "籃球的發明",
+      "old_angle_en": "how James Naismith invented basketball with two peach baskets",
+      "new_topic_zh": "桌球的起源",
+      "reason_zh": "和第一批混合題 ai.mx.48c410「籃球與排球的誕生」撞題（同樣寫 Naismith 發明籃球）",
+      "replaced_on": "2026-10-09"
+    },
+    {
+      "id": "mx-b03-6",
+      "lot": "mixed-basic-03",
+      "slot": 6,
+      "old_topic_zh": "修理咖啡館",
+      "old_angle_en": "a repair café's message board: eight visitors' stories",
+      "new_topic_zh": "車站的共享雨傘",
+      "reason_zh": "和第一批閱讀 ai.rd.dc6ce2「修理咖啡館」、混合題 ai.mx.4b62cb「修理咖啡館與交換商店」相同",
+      "replaced_on": "2026-10-09"
+    },
+    {
+      "id": "rd-b03-3",
+      "lot": "reading-basic-03",
+      "slot": 3,
+      "old_topic_zh": "麻疹為什麼捲土重來",
+      "old_angle_en": "why measles came back when fewer children were vaccinated",
+      "new_topic_zh": "蛀牙是怎麼形成的",
+      "reason_zh": "和第一批閱讀 ai.rd.f5f0b5「麻疹與疫苗接種」撞題",
+      "replaced_on": "2026-10-09"
+    },
+    {
+      "id": "rd-b03-2",
+      "lot": "reading-basic-03",
+      "slot": 2,
+      "old_topic_zh": "從風車到風力發電機",
+      "old_angle_en": "from windmills to wind turbines: how wind power grew",
+      "new_topic_zh": "台灣高鐵的運量",
+      "reason_zh": "和第一批閱讀 ai.rd.2cf9a2「太陽能發電的發展」太接近（同樣是再生能源發電成長的圖表）",
+      "replaced_on": "2026-10-09"
+    },
+    {
+      "id": "rd-b03-6",
+      "lot": "reading-basic-03",
+      "slot": 6,
+      "old_topic_zh": "會唱歌的垃圾車",
+      "old_angle_en": "why Taiwan's garbage trucks play music, and how its recycling rate rose",
+      "new_topic_zh": "台灣的空氣品質",
+      "reason_zh": "和第一批閱讀 ai.rd.24d3b1「台灣的音樂垃圾車」相同",
+      "replaced_on": "2026-10-09"
+    },
+    {
+      "id": "mx-a04-1",
+      "lot": "mixed-advanced-04",
+      "slot": 1,
+      "old_topic_zh": "肥皂與洗手",
+      "old_angle_en": "how soap and handwashing became everyday habits",
+      "new_topic_zh": "體溫計的演變",
+      "reason_zh": "和第一批閱讀 ai.rd.c06f8f「塞麥爾維斯與洗手」撞題",
+      "replaced_on": "2026-10-09"
+    },
+    {
+      "id": "mx-b04-5",
+      "lot": "mixed-basic-04",
+      "slot": 5,
+      "old_topic_zh": "塑膠吸管限用",
+      "old_angle_en": "Taiwan's plastic straw ban: a café owner and a student respond",
+      "new_topic_zh": "淨灘",
+      "reason_zh": "和第一批閱讀 ai.rd.773372「吸管的演變」撞題（塑膠吸管）",
+      "replaced_on": "2026-10-09"
+    },
+    {
+      "id": "st-a03-4",
+      "lot": "structure-advanced-03",
+      "slot": 4,
+      "old_topic_zh": "沙漠古城佩特拉的水利",
+      "old_angle_en": "how the ancient city of Petra stored water in the desert",
+      "new_topic_zh": "岩石之城佩特拉",
+      "reason_zh": "原本的切入角度（佩特拉在沙漠中儲水）和第一批混合題 ai.mx.df787c「古羅馬水道與波斯坎兒井」太接近，改寫岩石雕鑿的城市",
+      "replaced_on": "2026-10-09"
+    },
+    {
+      "id": "mx-a04-5",
+      "lot": "mixed-advanced-04",
+      "slot": 5,
+      "old_topic_zh": "停車場變公園",
+      "old_angle_en": "comments on a city's plan to turn parking lots into small parks",
+      "new_topic_zh": "列車的安靜車廂",
+      "reason_zh": "和第一批混合題 ai.mx.981e5b「主街無車日」太接近（同樣是市府把車道、車位改給行人的留言）",
+      "replaced_on": "2026-10-09"
+    },
+    {
+      "id": "mx-b05-1",
+      "lot": "mixed-basic-05",
+      "slot": 1,
+      "old_topic_zh": "明信片的故事",
+      "old_angle_en": "readers share the stories behind old postcards",
+      "new_topic_zh": "常見符號的由來",
+      "reason_zh": "和第一批混合題 ai.mx.f90588「家中的老物件」太接近（同樣是讀者分享老東西的故事）",
+      "replaced_on": "2026-10-09"
+    },
+    {
+      "id": "mx-a02-3",
+      "lot": "mixed-advanced-02",
+      "slot": 3,
+      "old_topic_zh": "動物冬眠的秘密",
+      "old_angle_en": "how hibernating animals survive winter without eating",
+      "new_topic_zh": "鴨嘴獸為什麼讓科學家困惑",
+      "reason_zh": "和第一批混合題 ai.mx.d202e4「動物怎麼睡覺」太接近（冬眠也是動物休息的方式）",
+      "replaced_on": "2026-10-09"
+    },
+    {
+      "id": "rd-a04-5",
+      "lot": "reading-advanced-04",
+      "slot": 5,
+      "old_topic_zh": "上勝町的垃圾分類",
+      "old_angle_en": "how the Japanese town of Kamikatsu sorts its trash into 45 kinds",
+      "new_topic_zh": "公平貿易咖啡",
+      "reason_zh": "和第一批閱讀 ai.rd.24d3b1「台灣的音樂垃圾車」太接近（同樣寫居民自己分類垃圾、回收率）",
+      "replaced_on": "2026-10-09"
+    },
+    {
+      "id": "rd-a04-3",
+      "lot": "reading-advanced-04",
+      "slot": 3,
+      "old_topic_zh": "太陽系行星一覽",
+      "old_angle_en": "why Venus is hotter than Mercury: a table of the planets",
+      "new_topic_zh": "動物的心跳與壽命",
+      "reason_zh": "和本總表 cz-t02-4「冥王星為何被降級」重複（同樣是太陽系行星）",
+      "replaced_on": "2026-10-09"
+    },
+    {
+      "id": "st-t05-5",
+      "lot": "structure-top-05",
+      "slot": 5,
+      "old_topic_zh": "錨定效應",
+      "old_angle_en": "anchoring: how the first number we see shapes our judgments",
+      "new_topic_zh": "公民科學",
+      "reason_zh": "和本總表 st-t03-5「誘餌效應」太接近（同樣是購物定價的判斷偏誤）；結構題頂標的心理、經濟偏誤主題太集中",
+      "replaced_on": "2026-10-09"
+    },
+    {
+      "id": "st-t04-2",
+      "lot": "structure-top-04",
+      "slot": 2,
+      "old_topic_zh": "週休二日的由來",
+      "old_angle_en": "how the two-day weekend came to be",
+      "new_topic_zh": "百科全書的演變",
+      "reason_zh": "和本總表 cz-a02-6「冰島的縮短工時試驗」太接近（同樣是一週工作幾天）",
+      "replaced_on": "2026-10-09"
+    },
+    {
+      "id": "mx-t04-5",
+      "lot": "mixed-top-04",
+      "slot": 5,
+      "old_topic_zh": "吃在地",
+      "old_angle_en": "readers debate \"food miles\": is eating local always greener?",
+      "new_topic_zh": "下班後不回訊息的權利",
+      "reason_zh": "和本總表 rd-t04-3「食物的碳足跡」重複（「吃在地」與每公斤食物排放量是同一個論點）",
+      "replaced_on": "2026-10-09"
+    }
+  ],
+  "used_topics_snapshot": {
+    "scanned_on": "2026-10-09",
+    "note_zh": "data/bank/v1 全部題組（含 draft、rejected）的 tags.topic 與選文第一句（generation 沒有文字說明欄位，只記 lot）；第一批閱讀、混合題的主題是中文，已人工整理成 used_concepts 的英文關鍵字，--check-topics 也比對中文主題。歷屆試題的主題不另列，--check-topics 直接讀 data/exams/parsed。閱讀 advanced／top、混合題 top 的第一批產生後請再跑一次 --check-topics。",
+    "bank": [
+      {
+        "uid": "ai.cz.07dc95",
+        "section": "cloze",
+        "tier": "advanced",
+        "lot": "cloze-advanced-01",
+        "status": "verified",
+        "topic": "how the Rosetta Stone helped scholars read Egyptian hieroglyphs",
+        "first_sentence": "For centuries, travelers to Egypt marveled at the pictures carved on ancient temple walls, but no one could read them."
+      },
+      {
+        "uid": "ai.cz.3a71c4",
+        "section": "cloze",
+        "tier": "advanced",
+        "lot": "cloze-advanced-01",
+        "status": "rejected",
+        "topic": "how ketchup grew from a fermented fish sauce into a tomato sauce",
+        "first_sentence": "Few sauces seem as American as ketchup, yet its story begins far from the United States, and its earliest form contained no tomatoes at all."
+      },
+      {
+        "uid": "ai.cz.4b9423",
+        "section": "cloze",
+        "tier": "advanced",
+        "lot": "cloze-advanced-01",
+        "status": "verified",
+        "topic": "how ketchup grew from a fermented fish sauce into a tomato sauce",
+        "first_sentence": "Few sauces seem as American as ketchup, yet its story begins far from the United States, and its earliest form contained no tomatoes at all."
+      },
+      {
+        "uid": "ai.cz.51f8a0",
+        "section": "cloze",
+        "tier": "advanced",
+        "lot": "cloze-advanced-01",
+        "status": "rejected",
+        "topic": "why humans still get goosebumps",
+        "first_sentence": "Step out into a cold wind or listen to a moving piece of music, and you may notice tiny bumps rising on your arms."
+      },
+      {
+        "uid": "ai.cz.58e473",
+        "section": "cloze",
+        "tier": "advanced",
+        "lot": "cloze-advanced-01",
+        "status": "verified",
+        "topic": "why humans still get goosebumps",
+        "first_sentence": "Step out into a cold wind or listen to a moving piece of music, and you may notice tiny bumps rising on your arms."
+      },
+      {
+        "uid": "ai.cz.8e05b2",
+        "section": "cloze",
+        "tier": "advanced",
+        "lot": "cloze-advanced-01",
+        "status": "verified",
+        "topic": "how the bicycle evolved from the pedal-less running machine to the safety bicycle",
+        "first_sentence": "The bicycle is such a familiar sight today that it is easy to forget how odd the first one looked."
+      },
+      {
+        "uid": "ai.cz.9b4e28",
+        "section": "cloze",
+        "tier": "advanced",
+        "lot": "cloze-advanced-01",
+        "status": "verified",
+        "topic": "kintsugi, the Japanese art of repairing pottery with gold",
+        "first_sentence": "In most homes, a broken bowl ends up in the trash."
+      },
+      {
+        "uid": "ai.cz.c94d17",
+        "section": "cloze",
+        "tier": "advanced",
+        "lot": "cloze-advanced-01",
+        "status": "verified",
+        "topic": "how the marathon got its name and its official distance",
+        "first_sentence": "Every year, huge crowds of runners take on the marathon, a race of just over 42 kilometers."
+      },
+      {
+        "uid": "ai.cz.e2b63d",
+        "section": "cloze",
+        "tier": "advanced",
+        "lot": "cloze-advanced-01",
+        "status": "verified",
+        "topic": "why short naps help and long naps leave you groggy (sleep inertia)",
+        "first_sentence": "Many people feel a wave of sleepiness in the early afternoon, especially after lunch."
+      },
+      {
+        "uid": "ai.cz.f61a0c",
+        "section": "cloze",
+        "tier": "advanced",
+        "lot": "cloze-advanced-01",
+        "status": "verified",
+        "topic": "food waste caused by cosmetic standards for \"ugly\" fruit and vegetables",
+        "first_sentence": "Walk into any supermarket, and you will find rows of fruit and vegetables that look almost too perfect: shiny apples of the same size and carrots that are straight and smooth."
+      },
+      {
+        "uid": "ai.cz.0968fc",
+        "section": "cloze",
+        "tier": "basic",
+        "lot": "cloze-basic-01",
+        "status": "verified",
+        "topic": "phubbing: ignoring the people around us for our phones",
+        "first_sentence": "Imagine having dinner with a friend who keeps looking at his phone while you are trying to talk to him."
+      },
+      {
+        "uid": "ai.cz.19eb34",
+        "section": "cloze",
+        "tier": "basic",
+        "lot": "cloze-basic-01",
+        "status": "verified",
+        "topic": "why cutting onions makes us cry",
+        "first_sentence": "Cutting an onion is one of the few kitchen jobs that can bring even a tough cook to tears."
+      },
+      {
+        "uid": "ai.cz.5b6bf5",
+        "section": "cloze",
+        "tier": "basic",
+        "lot": "cloze-basic-01",
+        "status": "verified",
+        "topic": "why teenagers stay up late: the teenage body clock and sleep",
+        "first_sentence": "Many parents believe that teenagers stay up late because they are lazy or love their phones too much."
+      },
+      {
+        "uid": "ai.cz.6b81e1",
+        "section": "cloze",
+        "tier": "basic",
+        "lot": "cloze-basic-01",
+        "status": "verified",
+        "topic": "the origin of emoji and why people use them",
+        "first_sentence": "People all over the world add small pictures called emoji to their text messages."
+      },
+      {
+        "uid": "ai.cz.c9cd57",
+        "section": "cloze",
+        "tier": "basic",
+        "lot": "cloze-basic-01",
+        "status": "verified",
+        "topic": "where the word “robot” comes from (a Czech play from the 1920s)",
+        "first_sentence": "Robots are found in many places today, from car factories to our living rooms."
+      },
+      {
+        "uid": "ai.cz.e42f63",
+        "section": "cloze",
+        "tier": "basic",
+        "lot": "cloze-basic-01",
+        "status": "verified",
+        "topic": "the Lantern Festival and the sky lanterns of Pingxi, Taiwan",
+        "first_sentence": "In many Chinese communities, the Lunar New Year celebrations do not end on the first day of the year."
+      },
+      {
+        "uid": "ai.cz.ee3231",
+        "section": "cloze",
+        "tier": "basic",
+        "lot": "cloze-basic-01",
+        "status": "verified",
+        "topic": "the ancient Olympic Games in Greece",
+        "first_sentence": "The Olympic Games we watch today have their roots in ancient Greece."
+      },
+      {
+        "uid": "ai.cz.f2954f",
+        "section": "cloze",
+        "tier": "basic",
+        "lot": "cloze-basic-01",
+        "status": "verified",
+        "topic": "the history of the pencil (why pencil “lead” contains no lead)",
+        "first_sentence": "Many people call the black center of a pencil “lead,” but there is actually no lead in it."
+      },
+      {
+        "uid": "ai.cz.0becb9",
+        "section": "cloze",
+        "tier": "top",
+        "lot": "cloze-top-01",
+        "status": "verified",
+        "topic": "light pollution and its effects on people and wildlife",
+        "first_sentence": "For most of human history, a clear night meant a sky crowded with stars."
+      },
+      {
+        "uid": "ai.cz.6c56fa",
+        "section": "cloze",
+        "tier": "top",
+        "lot": "cloze-top-01",
+        "status": "verified",
+        "topic": "the Terracotta Army and why the First Emperor’s tomb remains sealed",
+        "first_sentence": "In 1974, farmers digging a well in northwestern China found pieces of a clay figure the size of a man."
+      },
+      {
+        "uid": "ai.cz.8f97d3",
+        "section": "cloze",
+        "tier": "top",
+        "lot": "cloze-top-01",
+        "status": "verified",
+        "topic": "how blue jeans went from work pants to fashion",
+        "first_sentence": "Few pieces of clothing have climbed the social ladder as far as blue jeans."
+      },
+      {
+        "uid": "ai.cz.9e68fd",
+        "section": "cloze",
+        "tier": "top",
+        "lot": "cloze-top-01",
+        "status": "verified",
+        "topic": "how the railway created standard time and time zones",
+        "first_sentence": "For most of history, people had little reason to care what time it was in a town fifty miles away."
+      },
+      {
+        "uid": "ai.cz.cfe463",
+        "section": "cloze",
+        "tier": "top",
+        "lot": "cloze-top-01",
+        "status": "verified",
+        "topic": "the myth that the Great Wall of China can be seen from space",
+        "first_sentence": "It is often said that the Great Wall of China is the only human-made structure that can be seen from space."
+      },
+      {
+        "uid": "ai.cz.d27dfa",
+        "section": "cloze",
+        "tier": "top",
+        "lot": "cloze-top-01",
+        "status": "verified",
+        "topic": "the placebo effect and the nocebo effect",
+        "first_sentence": "A sugar pill contains no medicine, yet patients who take one believing it to be real often report that they feel better."
+      },
+      {
+        "uid": "ai.cz.d65431",
+        "section": "cloze",
+        "tier": "top",
+        "lot": "cloze-top-01",
+        "status": "verified",
+        "topic": "why the sky is blue and sunsets are red",
+        "first_sentence": "Children often ask why the sky is blue, and it is a fair question."
+      },
+      {
+        "uid": "ai.cz.f32504",
+        "section": "cloze",
+        "tier": "top",
+        "lot": "cloze-top-01",
+        "status": "verified",
+        "topic": "how paper money began in China",
+        "first_sentence": "Imagine paying for a horse with a sack of coins so heavy that it takes two people to lift it."
+      },
+      {
+        "uid": "ai.mx.48c410",
+        "section": "mixed",
+        "tier": "advanced",
+        "lot": "mixed-advanced-01",
+        "status": "verified",
+        "topic": "籃球與排球的誕生",
+        "first_sentence": "Many of the games students play in PE class today did not simply appear."
+      },
+      {
+        "uid": "ai.mx.69b583",
+        "section": "mixed",
+        "tier": "advanced",
+        "lot": "mixed-advanced-01",
+        "status": "verified",
+        "topic": "學校午休該不該保留",
+        "first_sentence": "Like many high schools in Taiwan, Linden High gives its students a half-hour nap after lunch, with the lights turned off and heads resting on desks."
+      },
+      {
+        "uid": "ai.mx.981e5b",
+        "section": "mixed",
+        "tier": "advanced",
+        "lot": "mixed-advanced-01",
+        "status": "rejected",
+        "topic": "主街無車日",
+        "first_sentence": "Starting next month, the city plans to close Main Street to cars on the first Sunday of every month, so that people can walk, cycle, and play on the road."
+      },
+      {
+        "uid": "ai.mx.df787c",
+        "section": "mixed",
+        "tier": "advanced",
+        "lot": "mixed-advanced-01",
+        "status": "verified",
+        "topic": "古羅馬水道與波斯坎兒井",
+        "first_sentence": "Bringing water to towns and farms has always been a challenge, especially in hot, dry places."
+      },
+      {
+        "uid": "ai.mx.4b62cb",
+        "section": "mixed",
+        "tier": "basic",
+        "lot": "mixed-basic-01",
+        "status": "verified",
+        "topic": "修理咖啡館與交換商店",
+        "first_sentence": "Every year, people throw away many things that could still be used."
+      },
+      {
+        "uid": "ai.mx.cdf669",
+        "section": "mixed",
+        "tier": "basic",
+        "lot": "mixed-basic-01",
+        "status": "verified",
+        "topic": "意外的發明：微波爐與魔鬼氈",
+        "first_sentence": "Some of the most useful inventions were never planned."
+      },
+      {
+        "uid": "ai.mx.d202e4",
+        "section": "mixed",
+        "tier": "basic",
+        "lot": "mixed-basic-01",
+        "status": "verified",
+        "topic": "動物怎麼睡覺",
+        "first_sentence": "Every animal needs rest, but not every animal rests the way people do."
+      },
+      {
+        "uid": "ai.mx.f90588",
+        "section": "mixed",
+        "tier": "basic",
+        "lot": "mixed-basic-01",
+        "status": "verified",
+        "topic": "家中的老物件",
+        "first_sentence": "For a history class project called “Old Things, Family Stories,” six students each brought an old object from home to school."
+      },
+      {
+        "uid": "ai.rd.24d3b1",
+        "section": "reading",
+        "tier": "basic",
+        "lot": "reading-basic-01",
+        "status": "draft",
+        "topic": "台灣的音樂垃圾車",
+        "first_sentence": "Visitors to Taiwan are often surprised when they hear Beethoven's \"Für Elise\" playing in the street in the evening."
+      },
+      {
+        "uid": "ai.rd.2cf9a2",
+        "section": "reading",
+        "tier": "basic",
+        "lot": "reading-basic-01",
+        "status": "draft",
+        "topic": "太陽能發電的發展",
+        "first_sentence": "Solar panels are now a common sight on rooftops and in open fields."
+      },
+      {
+        "uid": "ai.rd.5b3a62",
+        "section": "reading",
+        "tier": "basic",
+        "lot": "reading-basic-01",
+        "status": "draft",
+        "topic": "自行車的演進",
+        "first_sentence": "Bicycles are so common today that it is easy to forget they were once a strange new invention."
+      },
+      {
+        "uid": "ai.rd.773372",
+        "section": "reading",
+        "tier": "basic",
+        "lot": "reading-basic-01",
+        "status": "draft",
+        "topic": "吸管的演變",
+        "first_sentence": "Almost everyone has used a drinking straw, but few people stop to think about where this small tube came from."
+      },
+      {
+        "uid": "ai.rd.c06f8f",
+        "section": "reading",
+        "tier": "basic",
+        "lot": "reading-basic-01",
+        "status": "draft",
+        "topic": "塞麥爾維斯與洗手",
+        "first_sentence": "Today, almost everyone knows that washing our hands helps stop the spread of disease."
+      },
+      {
+        "uid": "ai.rd.dc6ce2",
+        "section": "reading",
+        "tier": "basic",
+        "lot": "reading-basic-01",
+        "status": "draft",
+        "topic": "修理咖啡館",
+        "first_sentence": "What do you do when your favorite chair gets wobbly or your scissors stop cutting?"
+      },
+      {
+        "uid": "ai.rd.eaa58d",
+        "section": "reading",
+        "tier": "basic",
+        "lot": "reading-basic-01",
+        "status": "draft",
+        "topic": "日本包袱巾",
+        "first_sentence": "In Japan, a gift sometimes arrives wrapped not in paper but in a square piece of cloth."
+      },
+      {
+        "uid": "ai.rd.f5f0b5",
+        "section": "reading",
+        "tier": "basic",
+        "lot": "reading-basic-01",
+        "status": "draft",
+        "topic": "麻疹與疫苗接種",
+        "first_sentence": "Measles is one of the easiest diseases to catch."
+      },
+      {
+        "uid": "ai.st.1ad805",
+        "section": "structure",
+        "tier": "advanced",
+        "lot": "structure-advanced-01",
+        "status": "verified",
+        "topic": "chopsticks in East Asia: origins, regional styles, and table manners",
+        "first_sentence": "For many people across East Asia, chopsticks are as ordinary as forks are in the West."
+      },
+      {
+        "uid": "ai.st.3ef33a",
+        "section": "structure",
+        "tier": "advanced",
+        "lot": "structure-advanced-01",
+        "status": "verified",
+        "topic": "how money evolved from barter to coins, paper money, and digital payments",
+        "first_sentence": "Paying for a snack today can be as simple as tapping a phone or a card."
+      },
+      {
+        "uid": "ai.st.c06d09",
+        "section": "structure",
+        "tier": "advanced",
+        "lot": "structure-advanced-01",
+        "status": "verified",
+        "topic": "light pollution and its effects on wildlife and human sleep",
+        "first_sentence": "For most of human history, anyone who looked up on a clear night could see thousands of stars."
+      },
+      {
+        "uid": "ai.st.db080a",
+        "section": "structure",
+        "tier": "advanced",
+        "lot": "structure-advanced-01",
+        "status": "verified",
+        "topic": "the placebo effect and how expectations shape how we feel",
+        "first_sentence": "Imagine taking a pill for a headache and feeling better within an hour."
+      },
+      {
+        "uid": "ai.st.e79a35",
+        "section": "structure",
+        "tier": "advanced",
+        "lot": "structure-advanced-01",
+        "status": "verified",
+        "topic": "how chocolate changed from a bitter drink into an everyday sweet",
+        "first_sentence": "Chocolate is one of the most popular sweets in the world, found in everything from candy bars to birthday cakes."
+      },
+      {
+        "uid": "ai.st.06d3ea",
+        "section": "structure",
+        "tier": "basic",
+        "lot": "structure-basic-01",
+        "status": "verified",
+        "topic": "the evolution of the bicycle",
+        "first_sentence": "Bicycles are so common today that few people stop to think about where they came from."
+      },
+      {
+        "uid": "ai.st.16ba2b",
+        "section": "structure",
+        "tier": "basic",
+        "lot": "structure-basic-01",
+        "status": "verified",
+        "topic": "food waste and how to reduce it",
+        "first_sentence": "Every day, large amounts of food are thrown away around the world, while millions of people do not have enough to eat."
+      },
+      {
+        "uid": "ai.st.47d418",
+        "section": "structure",
+        "tier": "basic",
+        "lot": "structure-basic-01",
+        "status": "verified",
+        "topic": "why sleep matters for teenage learners",
+        "first_sentence": "Many students stay up late before a big test, hoping that a few more hours of study will raise their scores."
+      },
+      {
+        "uid": "ai.st.60ac39",
+        "section": "structure",
+        "tier": "basic",
+        "lot": "structure-basic-01",
+        "status": "verified",
+        "topic": "from quill pens to ballpoint pens",
+        "first_sentence": "Today, most of us can pick up a pen and start writing without a second thought."
+      },
+      {
+        "uid": "ai.st.a287bd",
+        "section": "structure",
+        "tier": "basic",
+        "lot": "structure-basic-01",
+        "status": "verified",
+        "topic": "the Silk Road: trade and the spread of ideas",
+        "first_sentence": "Long before trucks and airplanes, goods moved between China and Europe along a group of trade routes called the Silk Road."
+      },
+      {
+        "uid": "ai.st.22f5d0",
+        "section": "structure",
+        "tier": "top",
+        "lot": "structure-top-01",
+        "status": "verified",
+        "topic": "why we yawn: competing scientific explanations and contagious yawning",
+        "first_sentence": "Everyone yawns, and we begin surprisingly early: babies yawn even before they are born."
+      },
+      {
+        "uid": "ai.st.46548a",
+        "section": "structure",
+        "tier": "top",
+        "lot": "structure-top-01",
+        "status": "verified",
+        "topic": "how tea spread from China to the world, from medicine to bubble tea",
+        "first_sentence": "After water, tea is the most widely consumed drink on Earth, enjoyed in forms as different as Japanese green tea, British milk tea, and Taiwanese bubble tea."
+      },
+      {
+        "uid": "ai.st.48e551",
+        "section": "structure",
+        "tier": "top",
+        "lot": "structure-top-01",
+        "status": "rejected",
+        "topic": "electronic waste (e-waste): hidden value, hidden harm, and longer-lasting devices",
+        "first_sentence": "Every year, millions of phones, laptops, and chargers are replaced long before they stop working, often simply because a newer model has arrived or the battery no longer lasts a full day."
+      },
+      {
+        "uid": "ai.st.652d17",
+        "section": "structure",
+        "tier": "top",
+        "lot": "structure-top-01",
+        "status": "verified",
+        "topic": "the evolution of eyeglasses, from the first Italian lenses to modern frames",
+        "first_sentence": "Today, someone with poor eyesight can usually walk into a shop and leave with a new pair of glasses the same day."
+      },
+      {
+        "uid": "ai.st.881b41",
+        "section": "structure",
+        "tier": "top",
+        "lot": "structure-top-01",
+        "status": "verified",
+        "topic": "the Leaning Tower of Pisa: why it leans, the Galileo legend, and how it was saved",
+        "first_sentence": "Few buildings owe their fame to a mistake, but the Leaning Tower of Pisa is one of them."
+      },
+      {
+        "uid": "ai.st.899a1e",
+        "section": "structure",
+        "tier": "top",
+        "lot": "structure-top-01",
+        "status": "verified",
+        "topic": "overtourism: how crowds of visitors affect residents, and how popular places are setting limits",
+        "first_sentence": "Not long ago, a trip abroad was a rare treat that most families could enjoy only a few times in their lives."
+      },
+      {
+        "uid": "ai.vo.3e8a41",
+        "section": "vocabulary",
+        "tier": "advanced",
+        "lot": "vocabulary-advanced-01",
+        "status": "verified",
+        "topic": null,
+        "first_sentence": null
+      },
+      {
+        "uid": "ai.vo.5d19f6",
+        "section": "vocabulary",
+        "tier": "advanced",
+        "lot": "vocabulary-advanced-01",
+        "status": "verified",
+        "topic": null,
+        "first_sentence": null
+      },
+      {
+        "uid": "ai.vo.8f62a3",
+        "section": "vocabulary",
+        "tier": "advanced",
+        "lot": "vocabulary-advanced-01",
+        "status": "verified",
+        "topic": null,
+        "first_sentence": null
+      },
+      {
+        "uid": "ai.vo.b72c05",
+        "section": "vocabulary",
+        "tier": "advanced",
+        "lot": "vocabulary-advanced-01",
+        "status": "verified",
+        "topic": null,
+        "first_sentence": null
+      },
+      {
+        "uid": "ai.vo.c40e9b",
+        "section": "vocabulary",
+        "tier": "advanced",
+        "lot": "vocabulary-advanced-01",
+        "status": "verified",
+        "topic": null,
+        "first_sentence": null
+      },
+      {
+        "uid": "ai.vo.18e103",
+        "section": "vocabulary",
+        "tier": "basic",
+        "lot": "vocabulary-basic-01",
+        "status": "verified",
+        "topic": "mixed contexts: shopping, school events, food, volunteering, recycling, sun care, baking, books, gadgets, typhoon damage",
+        "first_sentence": null
+      },
+      {
+        "uid": "ai.vo.2fc48a",
+        "section": "vocabulary",
+        "tier": "basic",
+        "lot": "vocabulary-basic-01",
+        "status": "verified",
+        "topic": "mixed contexts: school assignments, museums, ballet, air pollution, holiday parties, driving tests, live music, vocabulary study, summer jobs, science fairs",
+        "first_sentence": null
+      },
+      {
+        "uid": "ai.vo.353e7f",
+        "section": "vocabulary",
+        "tier": "basic",
+        "lot": "vocabulary-basic-01",
+        "status": "verified",
+        "topic": "mixed contexts: air travel, family, packing, energy in the past, traffic accidents, medicine, teaching, plants, smoking, fire",
+        "first_sentence": null
+      },
+      {
+        "uid": "ai.vo.9d4119",
+        "section": "vocabulary",
+        "tier": "basic",
+        "lot": "vocabulary-basic-01",
+        "status": "verified",
+        "topic": "mixed contexts: shopping, saving energy, childhood, careers, family, moving to cities, neighbors, heritage, geography, teaching",
+        "first_sentence": null
+      },
+      {
+        "uid": "ai.vo.eb97ee",
+        "section": "vocabulary",
+        "tier": "basic",
+        "lot": "vocabulary-basic-01",
+        "status": "verified",
+        "topic": "mixed contexts: illness, fire rescue, language learning, city landmarks, weather forecasts, honesty, police work, family, hometown, concerts",
+        "first_sentence": null
+      },
+      {
+        "uid": "ai.vo.45f127",
+        "section": "vocabulary",
+        "tier": "top",
+        "lot": "vocabulary-top-01",
+        "status": "verified",
+        "topic": null,
+        "first_sentence": null
+      },
+      {
+        "uid": "ai.vo.901829",
+        "section": "vocabulary",
+        "tier": "top",
+        "lot": "vocabulary-top-01",
+        "status": "verified",
+        "topic": null,
+        "first_sentence": null
+      },
+      {
+        "uid": "ai.vo.a9306f",
+        "section": "vocabulary",
+        "tier": "top",
+        "lot": "vocabulary-top-01",
+        "status": "verified",
+        "topic": null,
+        "first_sentence": null
+      },
+      {
+        "uid": "ai.vo.afb965",
+        "section": "vocabulary",
+        "tier": "top",
+        "lot": "vocabulary-top-01",
+        "status": "verified",
+        "topic": null,
+        "first_sentence": null
+      },
+      {
+        "uid": "ai.vo.f31fa6",
+        "section": "vocabulary",
+        "tier": "top",
+        "lot": "vocabulary-top-01",
+        "status": "verified",
+        "topic": null,
+        "first_sentence": null
+      },
+      {
+        "uid": "ai.wb.0e1408",
+        "section": "word_bank",
+        "tier": "advanced",
+        "lot": "word_bank-advanced-01",
+        "status": "verified",
+        "topic": "how our sense of smell is linked to memory and emotion",
+        "first_sentence": "Have you ever caught the smell of baking bread on the street and suddenly found yourself back in your grandmother’s kitchen?"
+      },
+      {
+        "uid": "ai.wb.1b23f9",
+        "section": "word_bank",
+        "tier": "advanced",
+        "lot": "word_bank-advanced-01",
+        "status": "verified",
+        "topic": "electronic waste and why we should keep our devices longer",
+        "first_sentence": "Open almost any kitchen drawer, and you may find an old phone that no one has touched in years."
+      },
+      {
+        "uid": "ai.wb.3aec9a",
+        "section": "word_bank",
+        "tier": "advanced",
+        "lot": "word_bank-advanced-01",
+        "status": "verified",
+        "topic": "how people measured time, from sundials to atomic clocks",
+        "first_sentence": "For most of history, people had little need to know the exact minute; the sun’s position was enough."
+      },
+      {
+        "uid": "ai.wb.a05515",
+        "section": "word_bank",
+        "tier": "advanced",
+        "lot": "word_bank-advanced-01",
+        "status": "rejected",
+        "topic": "electronic waste and why we should keep our devices longer",
+        "first_sentence": "Every year, millions of people buy new phones, laptops, and tablets, often long before their old ones stop working."
+      },
+      {
+        "uid": "ai.wb.c8c081",
+        "section": "word_bank",
+        "tier": "advanced",
+        "lot": "word_bank-advanced-01",
+        "status": "verified",
+        "topic": "how eyeglasses developed from hand-held lenses into a fashion accessory",
+        "first_sentence": "Today, millions of people put on glasses every morning without a second thought."
+      },
+      {
+        "uid": "ai.wb.c9e33f",
+        "section": "word_bank",
+        "tier": "advanced",
+        "lot": "word_bank-advanced-01",
+        "status": "verified",
+        "topic": "Hangul, the Korean alphabet created under King Sejong",
+        "first_sentence": "For most of Korea’s long history, reading and writing belonged to only a small group of people."
+      },
+      {
+        "uid": "ai.wb.e341e3",
+        "section": "word_bank",
+        "tier": "advanced",
+        "lot": "word_bank-advanced-01",
+        "status": "rejected",
+        "topic": "how our sense of smell is linked to memory and emotion",
+        "first_sentence": "Have you ever walked past a bakery and suddenly felt as if you were back in your grandmother’s kitchen?"
+      },
+      {
+        "uid": "ai.wb.ef5211",
+        "section": "word_bank",
+        "tier": "advanced",
+        "lot": "word_bank-advanced-01",
+        "status": "rejected",
+        "topic": "how eyeglasses developed from hand-held lenses into a fashion accessory",
+        "first_sentence": "Today, millions of people put on glasses every morning without giving it a second thought."
+      },
+      {
+        "uid": "ai.wb.3c8e51",
+        "section": "word_bank",
+        "tier": "basic",
+        "lot": "word_bank-basic-01",
+        "status": "verified",
+        "topic": "the evolution of the bicycle",
+        "first_sentence": "Bicycles are so common today that few people wonder where they came from."
+      },
+      {
+        "uid": "ai.wb.5e72c9",
+        "section": "word_bank",
+        "tier": "basic",
+        "lot": "word_bank-basic-01",
+        "status": "verified",
+        "topic": "the Silk Road: trade routes linking China and Europe",
+        "first_sentence": "When people hear the name “Silk Road,” many picture a single long road stretching across Asia."
+      },
+      {
+        "uid": "ai.wb.9a4f27",
+        "section": "word_bank",
+        "tier": "basic",
+        "lot": "word_bank-basic-01",
+        "status": "verified",
+        "topic": "the history of the pencil and why it is called lead",
+        "first_sentence": "Most of us learned to write with a pencil, and many of us still keep one close at hand."
+      },
+      {
+        "uid": "ai.wb.b2f483",
+        "section": "word_bank",
+        "tier": "basic",
+        "lot": "word_bank-basic-01",
+        "status": "verified",
+        "topic": "reducing food waste at home",
+        "first_sentence": "In many homes, food is bought with good intentions but never eaten."
+      },
+      {
+        "uid": "ai.wb.d61b0e",
+        "section": "word_bank",
+        "tier": "basic",
+        "lot": "word_bank-basic-01",
+        "status": "verified",
+        "topic": "why ice floats and why it matters for life in lakes",
+        "first_sentence": "Drop an ice cube into a glass of water, and it will float."
+      },
+      {
+        "uid": "ai.wb.2bd889",
+        "section": "word_bank",
+        "tier": "top",
+        "lot": "word_bank-top-01",
+        "status": "verified",
+        "topic": "how the potato spread from the Andes to the rest of the world",
+        "first_sentence": "Today it is hard to imagine a kitchen without potatoes, yet for most of human history the plant was grown only in South America."
+      },
+      {
+        "uid": "ai.wb.7e2177",
+        "section": "word_bank",
+        "tier": "top",
+        "lot": "word_bank-top-01",
+        "status": "verified",
+        "topic": "the hidden costs of fast fashion",
+        "first_sentence": "Not long ago, most families bought new clothes only a few times a year, often when the seasons changed."
+      },
+      {
+        "uid": "ai.wb.9eab19",
+        "section": "word_bank",
+        "tier": "top",
+        "lot": "word_bank-top-01",
+        "status": "verified",
+        "topic": "how chess changed from its Indian origins to the age of computers",
+        "first_sentence": "Chess is one of the oldest strategy games still played today, yet the version found in parks and phone apps is the product of many centuries of change."
+      },
+      {
+        "uid": "ai.wb.c97ff2",
+        "section": "word_bank",
+        "tier": "top",
+        "lot": "word_bank-top-01",
+        "status": "verified",
+        "topic": "the discovery and preservation of the Terracotta Army in China",
+        "first_sentence": "The Terracotta Army is one of the greatest archaeological discoveries of the twentieth century, yet it was found entirely by chance."
+      },
+      {
+        "uid": "ai.wb.d5b4a7",
+        "section": "word_bank",
+        "tier": "top",
+        "lot": "word_bank-top-01",
+        "status": "verified",
+        "topic": "light pollution and its effects on wildlife, sleep, and the night sky",
+        "first_sentence": "For most of human history, anyone who looked up on a clear night could see thousands of stars."
+      }
+    ]
+  }
+}

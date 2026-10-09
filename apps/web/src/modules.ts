@@ -81,7 +81,7 @@ export const PAGES = [
     path: '/practice',
     title: '題庫練習',
     navLabel: '題庫練習',
-    summary: 'AI 出題、通過自動驗證的四種選擇題型題組，分穩定基礎、進階練習、超越頂標三種難度；作答可看提示，交卷後每題都有解析。',
+    summary: 'AI 出題、通過自動驗證的題組，涵蓋六種題型（含圖表閱讀與摘要填空），分穩定基礎、進階練習、超越頂標三種難度；作答可看提示，交卷後每題都有解析。',
     group: 'choice',
     icon: 'practice',
     status: 'ready',
