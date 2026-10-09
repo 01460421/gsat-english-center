@@ -1,0 +1,62 @@
+{
+  "schema": "gsat-bank-facts/v1",
+  "id": "zebra-stripes-1951-mxb04",
+  "title": "Britain's 1951 zebra stripes were painted onto existing stud-marked crossings; crossings can have both studs and stripes",
+  "sdgs": [11],
+  "created_on": "2026-10-09",
+  "created_by": "claude-opus-5-5",
+  "sources": [
+    {
+      "id": "s1",
+      "publisher": "Learning on Screen (News on Screen archive)",
+      "title": "News on Screen document NoS_104397 (1951 notice on pedestrian crossings, linked to a British Pathé story)",
+      "url": "https://media.learningonscreen.ac.uk/newsonscreen2/Pathe/104397/NoS_104397_other.pdf",
+      "accessed": "2026-10-09",
+      "license": "Learning on Screen website terms (facts only)",
+      "use": "fact_only",
+      "note": "PDF 下載時回應 503／連線被重設，事實取自 2026-10-09 搜尋結果中該文件的內容摘錄：白色條紋剛漆在選定的既有穿越道上，配合 1951 年 10 月 31 日生效的穿越道新規定"
+    },
+    {
+      "id": "s2",
+      "publisher": "GOV.UK (Department for Transport)",
+      "title": "The Highway Code: Rules for pedestrians (1 to 35)",
+      "url": "https://www.gov.uk/guidance/the-highway-code/rules-for-pedestrians-1-to-35",
+      "accessed": "2026-10-09",
+      "license": "Open Government Licence v3.0 (facts only)",
+      "use": "fact_only",
+      "note": "Rule 18"
+    },
+    {
+      "id": "s3",
+      "publisher": "legislation.gov.uk (The National Archives)",
+      "title": "The Zebra, Pelican and Puffin Pedestrian Crossings Regulations and General Directions 1997, Schedule 1",
+      "url": "https://www.legislation.gov.uk/uksi/1997/2400/schedule/1/made",
+      "accessed": "2026-10-09",
+      "license": "Open Government Licence v3.0 (facts only)",
+      "use": "fact_only",
+      "note": "Schedule 1 Part II paragraphs 6–9"
+    }
+  ],
+  "facts": [
+    {
+      "id": "f1",
+      "text": "In 1951, white stripes were painted onto chosen crossings that were already in use, ahead of new crossing rules that began on 31 October 1951.",
+      "source_ids": ["s1"],
+      "kind": "event"
+    },
+    {
+      "id": "f2",
+      "text": "Britain's Highway Code tells people on foot to cross between the studs or over the zebra markings, so one crossing can have both studs and stripes.",
+      "source_ids": ["s2"],
+      "kind": "definition"
+    },
+    {
+      "id": "f3",
+      "text": "Britain's 1997 crossing rules put the black-and-white stripes inside the limits of a zebra crossing and describe two lines of studs, which may also be left out.",
+      "source_ids": ["s3"],
+      "kind": "definition"
+    }
+  ],
+  "datasets": [],
+  "notes": "補 pedestrian-crossing-mxb04 的不足（ai.mx.c3c7df 的 fact_check）：1951 年是在原本用兩排圓釘標示的穿越道上加漆條紋，圓釘沒有拆除。2026-10-09 的 fact_check 另查到 Commercial Motor 1951-07-13 報導新規定保留圓釘（archive.commercialmotor.com，不在白名單，只作查核參考，不列為來源）。現行 1997 年規章允許省略圓釘，所以題組不寫「現在每條斑馬線都有圓釘」。"
+}

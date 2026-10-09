@@ -1,0 +1,102 @@
+{
+  "schema": "gsat-bank-facts/v1",
+  "id": "beach-cleanup-mxb04",
+  "title": "What washes up on beaches: cigarette butts, bottle caps, foam, lost fishing gear, and plastic bags",
+  "sdgs": [14, 12],
+  "created_on": "2026-10-09",
+  "created_by": "claude-opus-5-5",
+  "sources": [
+    {
+      "id": "s1",
+      "publisher": "NOAA National Ocean Service",
+      "title": "What is the most common form of ocean litter?",
+      "url": "https://oceanservice.noaa.gov/facts/most-common-ocean-litter.html",
+      "accessed": "2026-10-09",
+      "license": "U.S. government work (facts only)",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s2",
+      "publisher": "NOAA Marine Debris Program",
+      "title": "Ingestion",
+      "url": "https://marinedebris.noaa.gov/why-marine-debris-problem/ingestion",
+      "accessed": "2026-10-09",
+      "license": "U.S. government work (facts only)",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s3",
+      "publisher": "NOAA Marine Debris Program",
+      "title": "Derelict Fishing Gear",
+      "url": "https://marinedebris.noaa.gov/types/derelict-fishing-gear",
+      "accessed": "2026-10-09",
+      "license": "U.S. government work (facts only)",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s4",
+      "publisher": "NOAA Marine Debris Program",
+      "title": "What is Marine Debris?",
+      "url": "https://marinedebris.noaa.gov/discover-marine-debris/what-marine-debris",
+      "accessed": "2026-10-09",
+      "license": "U.S. government work (facts only)",
+      "use": "fact_only",
+      "note": null
+    }
+  ],
+  "facts": [
+    {
+      "id": "f1",
+      "text": "Cigarette butts are the most common kind of litter collected in beach and coastal cleanups.",
+      "source_ids": ["s1"],
+      "kind": "other"
+    },
+    {
+      "id": "f2",
+      "text": "Most cigarette filters are made of cellulose acetate, a plastic-like material.",
+      "source_ids": ["s1"],
+      "kind": "definition"
+    },
+    {
+      "id": "f3",
+      "text": "Sunlight can break the filter fibers into smaller and smaller pieces, but the pieces do not disappear.",
+      "source_ids": ["s1"],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f4",
+      "text": "Plastic items such as bottle caps, food wrappers, and plastic bags are common types of marine debris.",
+      "source_ids": ["s4"],
+      "kind": "other"
+    },
+    {
+      "id": "f5",
+      "text": "Animals can mistake pieces of debris for food and swallow them.",
+      "source_ids": ["s2"],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f6",
+      "text": "Sea turtles often try to eat plastic bags and sheets, which can look like the jellyfish they eat.",
+      "source_ids": ["s2"],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f7",
+      "text": "Lost or abandoned fishing gear is one of the most harmful types of marine debris.",
+      "source_ids": ["s3", "s4"],
+      "kind": "other"
+    },
+    {
+      "id": "f8",
+      "text": "Lost fishing gear can keep trapping fish, sea turtles, and seabirds, and synthetic gear can stay in the sea for many years.",
+      "source_ids": ["s3"],
+      "kind": "cause_effect"
+    }
+  ],
+  "datasets": [],
+  "notes": "Text A 的淨灘社團、日記作者、被魚線纏住的海鳥與 Text B 的撿拾順序都是虛構的情境（本文由 AI 撰寫）；各類垃圾的性質依上列事實撰寫。"
+}

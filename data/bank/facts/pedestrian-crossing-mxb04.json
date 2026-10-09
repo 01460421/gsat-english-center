@@ -1,0 +1,96 @@
+{
+  "schema": "gsat-bank-facts/v1",
+  "id": "pedestrian-crossing-mxb04",
+  "title": "Where the pedestrian crossing came from: Pompeii's stepping stones, Britain's 1934 crossings with beacons, and the 1951 zebra stripes",
+  "sdgs": [11],
+  "created_on": "2026-10-09",
+  "created_by": "claude-opus-5-5",
+  "sources": [
+    {
+      "id": "s1",
+      "publisher": "University of Cambridge",
+      "title": "Life and death (and sex and sewage) in a Roman town",
+      "url": "https://www.cam.ac.uk/news/life-and-death-and-sex-and-sewage-in-a-roman-town",
+      "accessed": "2026-10-09",
+      "license": "University of Cambridge website terms (facts only)",
+      "use": "fact_only",
+      "note": "談 Mary Beard 的龐貝研究：街上會流髒水，所以要在路上放踏腳石讓行人過街"
+    },
+    {
+      "id": "s2",
+      "publisher": "GOV.UK (Driver and Vehicle Standards Agency)",
+      "title": "History of road safety, The Highway Code and the driving test",
+      "url": "https://www.gov.uk/government/publications/history-of-road-safety-and-the-driving-test/history-of-road-safety-the-highway-code-and-the-driving-test",
+      "accessed": "2026-10-09",
+      "license": "Open Government Licence v3.0 (facts only)",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s3",
+      "publisher": "The National Archives (UK)",
+      "title": "Pedestrian Crossing (public information film page)",
+      "url": "https://media.nationalarchives.gov.uk/index.php/pedestrian-crossing/",
+      "accessed": "2026-10-09",
+      "license": "Open Government Licence v3.0 (facts only)",
+      "use": "fact_only",
+      "note": "原網址已轉到 UK Government Web Archive（需人機驗證），事實取自 2026-10-09 搜尋結果中該頁的內容摘錄"
+    },
+    {
+      "id": "s4",
+      "publisher": "Nottinghamshire County Council (Historic Environment Record)",
+      "title": "Thesaurus term 162722: Belisha beacon",
+      "url": "https://her.nottinghamshire.gov.uk/ThesaurusTerm/162722",
+      "accessed": "2026-10-09",
+      "license": "Council website terms of use (facts only)",
+      "use": "fact_only",
+      "note": null
+    }
+  ],
+  "facts": [
+    {
+      "id": "f1",
+      "text": "In the Roman town of Pompeii, dirty water often ran down the streets, so stepping stones were placed across them for people on foot.",
+      "source_ids": ["s1"],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f2",
+      "text": "When the first Highway Code came out in 1931, more than 7,000 people were being killed on Britain's roads each year.",
+      "source_ids": ["s2"],
+      "kind": "number"
+    },
+    {
+      "id": "f3",
+      "text": "In 1934, Britain marked new pedestrian crossings with rows of studs in the road and Belisha beacons.",
+      "source_ids": ["s2", "s3"],
+      "kind": "date"
+    },
+    {
+      "id": "f4",
+      "text": "A traditional Belisha beacon is an orange (amber) globe on top of a tall black-and-white pole that warns drivers of a crossing.",
+      "source_ids": ["s3", "s4"],
+      "kind": "definition"
+    },
+    {
+      "id": "f5",
+      "text": "The beacons were named after Leslie Hore-Belisha, the minister of transport who introduced them.",
+      "source_ids": ["s3"],
+      "kind": "person"
+    },
+    {
+      "id": "f6",
+      "text": "By the late 1940s, people were paying less attention to the crossings, and in 1949 the government tested new road markings to make them easier to see.",
+      "source_ids": ["s3"],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f7",
+      "text": "In 1951, black-and-white stripes with a beacon on each side of the road were approved as the zebra crossing.",
+      "source_ids": ["s2", "s3"],
+      "kind": "date"
+    }
+  ],
+  "datasets": [],
+  "notes": "「斑馬線」因條紋像斑馬而得名屬常識，不另列來源。Text B 的交通警察林警官與訪談內容是虛構（本文由 AI 撰寫），過馬路的安全建議是一般常識，不是真人引述。"
+}
