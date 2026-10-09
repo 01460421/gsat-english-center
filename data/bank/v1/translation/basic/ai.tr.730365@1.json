@@ -1,0 +1,637 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.730365",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "basic",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "週末時，我們會在社區中心陪小朋友讀書、畫畫和玩遊戲。",
+        "options": null,
+        "answer": "On weekends, we read, draw, and play games with children at the community center.",
+        "accepted_answers": [
+          "On weekends, we read, draw pictures, and play games with kids at the community center.",
+          "At the community center on weekends, we read, draw, and play games with the children."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "平行結構"
+          ],
+          "topic": "社區志工"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "上個月，我們還被邀請在中心的聖誕晚會上表演。",
+        "options": null,
+        "answer": "Last month, we were also invited to perform at the center's Christmas party.",
+        "accepted_answers": [
+          "Last month, we were even invited to give a performance at the center's Christmas party.",
+          "Last month, we were also invited to perform at the Christmas party at the center."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "被動語態"
+          ],
+          "topic": "社區志工"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "社區志工"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「讀書、畫畫和玩遊戲」是三個並列的動作，英文用平行結構：read, draw, and play games，三個動詞都用原形，最後一個前面加 and。「陪小朋友」可以用 with children 接在動作後面；child 的複數是 children。「社區中心」是 community center；「週末時」用 on weekends。",
+          "evidence": [
+            "讀書、畫畫和玩遊戲",
+            "陪小朋友"
+          ],
+          "strategy_zh": "中文用頓號列出幾個動作時，英文用 A, B, and C，並檢查每個動作的形式一樣。",
+          "hints": [
+            "切成四段：週末時／在社區中心／陪小朋友／讀書、畫畫和玩遊戲",
+            "標的詞彙：weekend（週末）、community（社區）、center（中心）、child（小孩）、play（玩）、game（遊戲）",
+            "句型框架：S + V1, V2, and V3 + with + 人 + 地點"
+          ]
+        },
+        "2": {
+          "explanation_zh": "我們是「被邀請」的一方，用被動語態 be + 過去分詞：were invited，後面接不定詞 to perform。「上個月」是過去時間，be 動詞用 were。「還」表示額外的好事，可以用 also 或 even，放在 were 和 invited 中間。「在晚會上」用介系詞 at。",
+          "evidence": [
+            "上個月",
+            "被邀請"
+          ],
+          "strategy_zh": "看到「被＋動詞」先寫 be + p.p.，再看時間詞決定 be 動詞的時態。",
+          "hints": [
+            "切成四段：上個月／我們還被邀請／在中心的聖誕晚會上／表演",
+            "標的詞彙：month（月）、invite（邀請）、perform（表演）、center（中心）、party（聚會、晚會）",
+            "句型框架：S + was/were + p.p. + to + 原形動詞 …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "On weekends, we read, draw, and play games with children at the community center.",
+            "On weekends, we read, draw pictures, and play games with kids at the community center.",
+            "At the community center on weekends, we read, draw, and play games with the children."
+          ],
+          "target_words": [
+            {
+              "word": "weekend",
+              "zh": "週末"
+            },
+            {
+              "word": "community",
+              "zh": "社區"
+            },
+            {
+              "word": "center",
+              "zh": "中心"
+            },
+            {
+              "word": "child",
+              "zh": "小孩",
+              "alternatives": [
+                "kid"
+              ]
+            },
+            {
+              "word": "play",
+              "zh": "玩"
+            },
+            {
+              "word": "game",
+              "zh": "遊戲"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PARA",
+              "grammar_id": "gp-parallelism",
+              "label_zh": "平行結構（三個動詞：A, B, and C）",
+              "frame": "S + V1, V2, and V3 + with + 人 + 地點",
+              "zh_trigger": "讀書、畫畫和玩遊戲"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "週末時",
+              "accepted": [
+                "On weekends",
+                "On the weekend",
+                "Every weekend",
+                "On the weekends"
+              ],
+              "targets": [
+                "weekend"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "In weekends",
+                  "right": "On weekends",
+                  "explanation_zh": "「在週末」用介系詞 on，寫 on weekends 或 on the weekend。"
+                }
+              ]
+            },
+            {
+              "zh": "在社區中心",
+              "accepted": [
+                "at the community center",
+                "at a community center",
+                "in the community center"
+              ],
+              "targets": [
+                "community",
+                "center"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "at the society center",
+                  "right": "at the community center",
+                  "explanation_zh": "「社區」是 community；society 是「社會」。"
+                },
+                {
+                  "wrong": "at the comunity center",
+                  "right": "at the community center",
+                  "explanation_zh": "拼字：community 有兩個 m。"
+                }
+              ]
+            },
+            {
+              "zh": "陪小朋友",
+              "accepted": [
+                "with children",
+                "with kids",
+                "with the children",
+                "with the kids",
+                "with young children"
+              ],
+              "targets": [
+                "child"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "with childs",
+                  "right": "with children",
+                  "explanation_zh": "child 的複數是不規則變化 children。"
+                }
+              ]
+            },
+            {
+              "zh": "讀書、畫畫和玩遊戲",
+              "accepted": [
+                "read, draw, and play games",
+                "read, draw pictures, and play games",
+                "study, draw, and play games",
+                "read books, draw pictures, and play games",
+                "read stories, draw, and play games"
+              ],
+              "targets": [
+                "PARA",
+                "play",
+                "game"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "read, draw, and play game",
+                  "right": "read, draw, and play games",
+                  "explanation_zh": "遊戲是可數名詞，泛指要用複數 games。"
+                },
+                {
+                  "wrong": "read, drawing, and play games",
+                  "right": "read, draw, and play games",
+                  "explanation_zh": "平行結構：三個動作要用同樣的形式（都是原形動詞），不能混用 drawing。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "plural_countable",
+              "zh": "玩遊戲",
+              "literal_error": "On weekends, we read, draw, and play game with children at the community center.",
+              "part": 4,
+              "explanation_zh": "中文「玩遊戲」沒有單複數，照字面寫 play game 會漏掉複數；game 是可數名詞，要寫 play games，這一部分扣分。"
+            }
+          ],
+          "bonus": []
+        },
+        "2": {
+          "references": [
+            "Last month, we were also invited to perform at the center's Christmas party.",
+            "Last month, we were even invited to give a performance at the center's Christmas party.",
+            "Last month, we were also invited to perform at the Christmas party at the center."
+          ],
+          "target_words": [
+            {
+              "word": "month",
+              "zh": "月"
+            },
+            {
+              "word": "invite",
+              "zh": "邀請"
+            },
+            {
+              "word": "perform",
+              "zh": "表演",
+              "alternatives": [
+                "performance"
+              ]
+            },
+            {
+              "word": "center",
+              "zh": "中心",
+              "alternatives": [
+                "center's"
+              ]
+            },
+            {
+              "word": "party",
+              "zh": "聚會、晚會"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PASS",
+              "grammar_id": "gp-passive",
+              "label_zh": "被動語態（be invited to V）",
+              "frame": "S + was/were + p.p. + to + 原形動詞 …",
+              "zh_trigger": "被邀請"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "上個月",
+              "accepted": [
+                "Last month"
+              ],
+              "targets": [
+                "month"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "In last month",
+                  "right": "Last month",
+                  "explanation_zh": "last month 前面不加介系詞。"
+                }
+              ]
+            },
+            {
+              "zh": "我們還被邀請",
+              "accepted": [
+                "we were also invited",
+                "we were even invited",
+                "we were invited"
+              ],
+              "targets": [
+                "PASS",
+                "invite"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "we are invited",
+                  "right": "we were invited",
+                  "explanation_zh": "「上個月」是過去的事，be 動詞用過去式 were。"
+                },
+                {
+                  "wrong": "we were invite",
+                  "right": "we were invited",
+                  "explanation_zh": "被動語態是 be + 過去分詞，invite 要加 -d。"
+                }
+              ]
+            },
+            {
+              "zh": "在中心的聖誕晚會上",
+              "accepted": [
+                "at the center's Christmas party",
+                "at the Christmas party at the center",
+                "at the community center's Christmas party",
+                "at the Christmas party held by the center"
+              ],
+              "targets": [
+                "center",
+                "party"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "in the center's Christmas party",
+                  "right": "at the center's Christmas party",
+                  "explanation_zh": "在活動、聚會「上」用 at。"
+                }
+              ]
+            },
+            {
+              "zh": "表演",
+              "accepted": [
+                "to perform",
+                "to give a performance",
+                "to put on a show"
+              ],
+              "targets": [
+                "perform"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "to performance",
+                  "right": "to perform",
+                  "explanation_zh": "to 後面接原形動詞 perform；performance 是名詞。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "tense_trigger",
+              "zh": "上個月",
+              "literal_error": "Last month, we are also invited to perform at the center's Christmas party.",
+              "part": 2,
+              "explanation_zh": "「上個月」表示已經過去的事，被動語態的 be 動詞要用過去式 were；照中文沒有時態的寫法用 are，這一部分扣分。"
+            }
+          ],
+          "bonus": []
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-basic-03",
+    "lot": "translation-basic-03",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "a2d0efb5c61ab9bdba02f949c0e9c7a37fac919a2d053a97cc75848f11db3021",
+    "spec_id": "translation-basic@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T13:20:56Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T12:58:00Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "On weekends, we read, draw, and play games with the children at the community center.",
+            "confidence": "medium",
+            "explanation_zh": "三個並列動詞用平行結構 read, draw, and play games；「陪小朋友」用 with the children 表一起做；週末的習慣用現在簡單式。「讀書」在這裡解為和小朋友一起閱讀（read），也可能解為「念書、寫功課」（study），中文略有歧義，所以信心給 medium。"
+          },
+          "2": {
+            "translation": "Last month, we were even invited to perform at the center's Christmas party.",
+            "confidence": "high",
+            "explanation_zh": "「被邀請」用被動語態 were invited + to V；「上個月」用過去式；「還」在這裡是「甚至、更進一步」的意思，譯成 even；「中心的聖誕晚會」用 the center's Christmas party。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PARA"
+            ],
+            "used_target_words": [
+              "weekend",
+              "community",
+              "center",
+              "child",
+              "play",
+              "game"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PASS"
+            ],
+            "used_target_words": [
+              "month",
+              "invite",
+              "perform",
+              "center",
+              "party"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "weekend",
+              "community",
+              "center",
+              "child",
+              "play",
+              "game"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PARA": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "month",
+              "invite",
+              "perform",
+              "center",
+              "party"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PASS": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "fail",
+      "created_at": "2026-10-09T13:20:56Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "On weekends, we keep the children company at the community center, reading, drawing, and playing games with them.",
+            "confidence": "medium",
+            "explanation_zh": "「陪」譯 keep ... company；讀書、畫畫、玩遊戲三項並列，用分詞片語接在後面。「讀書」是看書還是念書略有歧義，我取 reading，信心 medium。"
+          },
+          "2": {
+            "translation": "Last month, we were also invited to perform at the center's Christmas party.",
+            "confidence": "high",
+            "explanation_zh": "「被邀請」用被動語態 were invited to + 原形動詞；「上個月」搭配過去式；「還」譯 also；「在聖誕晚會上表演」用 perform at。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PARA"
+            ],
+            "used_target_words": [
+              "weekend",
+              "community",
+              "center",
+              "child",
+              "play",
+              "game"
+            ],
+            "within_accepted": false,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "我把「陪」譯成 keep the children company，並用 reading, drawing, and playing games with them 三個現在分詞並列接在後面。第 3 部分 accepted 只收 with children／with kids 這類 with 結構，沒有 keep … company、accompany、spend time with；第 4 部分只收原形動詞並列（read, draw, and play games），沒有收分詞並列的寫法。",
+              "中文「陪」本來就有陪伴的意思，這些譯法都正確自然，是評分規準偏窄。建議在第 3 部分補 keep the children company、spend time with the children、accompany the children，並在第 4 部分補 reading, drawing, and playing games。另外「讀書」可以是看書或念書，略有歧義（accepted 已收 read 與 study）。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "PASS"
+            ],
+            "used_target_words": [
+              "month",
+              "invite",
+              "perform",
+              "center",
+              "party"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "weekend",
+              "community",
+              "center",
+              "child",
+              "play",
+              "game"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PARA": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "month",
+              "invite",
+              "perform",
+              "center",
+              "party"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PASS": true
+            },
+            "program_match": true
+          }
+        },
+        "problems": [
+          "第 1 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義",
+          "第 1 題驗證者對4 部分切分有意見（warn）：我把「陪」譯成 keep the children company，並用 reading, drawing, and playing games with them 三個現在分詞並列接在後面。第 3 部分 accepted 只收 with "
+        ]
+      }
+    }
+  ],
+  "status": "rejected",
+  "status_reason": "兩次獨立判定結果不一致（第一次 verified、第二次 rejected），從嚴退件。判定者第 1 輪（人工審核）：第 1 題評分規準過窄。「陪小朋友」的「陪」是本句的關鍵詞，但第 3 部分 accepted 只收 with children 一類，沒有 keep the children company、spend time with the children、accompany the children 等正確寫法；第 4 部分只收原形動詞並列，沒有 … , reading, drawing, and playing games with them 這種分詞並列（仍是平行結構）。驗證者 B 的盲譯 On weekends, we keep the children company at the community center, reading, drawing, and playing games with them. 正確自然卻落在可接受寫法外（blind_solver:B 判 fail）；常見錯誤也沒有處理學生最容易寫錯的 accompany the children to read／accompany children reading。重生時請補進上述 accepted 與參考譯文，並把「陪」的常見錯誤寫進 common_errors。"
+}

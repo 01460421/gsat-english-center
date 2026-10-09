@@ -1,0 +1,667 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.3454be",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "basic",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "我們班的同學都已經做完今年的健康檢查了。",
+        "options": null,
+        "answer": "The students in our class have all finished this year's health check-up.",
+        "accepted_answers": [
+          "All the students in our class have already completed their health check-ups for this year."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "現在完成式"
+          ],
+          "topic": "學校健康檢查"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "除了量身高和體重之外，護理師也檢查了我們的視力。",
+        "options": null,
+        "answer": "Besides measuring our height and weight, the nurse also checked our vision.",
+        "accepted_answers": [
+          "In addition to measuring our height and weight, the school nurse also tested our eyesight."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "介系詞＋動名詞"
+          ],
+          "topic": "學校健康檢查"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "學校健康檢查"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「已經做完」表示到現在已經完成，用現在完成式 have finished／have completed；主詞「我們班的同學」是複數，助動詞用 have，all 可以放在 have 和過去分詞之間。「今年的」寫 this year's（所有格），「健康檢查」是 health check-up（或 health examination），用名詞 health，不用形容詞 healthy。",
+          "evidence": [
+            "都已經做完",
+            "健康檢查"
+          ],
+          "strategy_zh": "「已經＋動作完成」→ have/has＋p.p.；再看主詞單複數決定用 have 或 has。",
+          "hints": [
+            "切成四段：我們班的同學／都已經做完／今年的／健康檢查",
+            "標的詞彙：student（學生）、class（班級）、finish（完成）、year（年）、health（健康）、check-up（檢查）",
+            "句型框架：S + have + (all/already) + p.p. …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「除了…之外，…也…」用 Besides／In addition to＋動名詞：besides 是介系詞，後面的動詞要寫成 measuring。「身高、體重」要用名詞 height、weight，不能寫成形容詞 tall、heavy。健康檢查已經做完，「也檢查了」用過去式 also checked；「視力」是 vision 或 eyesight。",
+          "evidence": [
+            "除了量身高和體重之外",
+            "也檢查了我們的視力"
+          ],
+          "strategy_zh": "介系詞（besides、by、without、instead of）後面接動詞時，一律改成 V-ing。",
+          "hints": [
+            "切成四段：除了量身高和體重之外／護理師／也檢查了／我們的視力",
+            "標的詞彙：measure（量）、height（身高）、weight（體重）、nurse（護理師）、check（檢查）、vision（視力）",
+            "句型框架：Besides + V-ing …, S + also + V …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "The students in our class have all finished this year's health check-up.",
+            "All the students in our class have already completed their health check-ups for this year."
+          ],
+          "target_words": [
+            {
+              "word": "student",
+              "zh": "學生、同學",
+              "alternatives": [
+                "classmate"
+              ]
+            },
+            {
+              "word": "class",
+              "zh": "班級"
+            },
+            {
+              "word": "finish",
+              "zh": "做完",
+              "alternatives": [
+                "complete",
+                "have",
+                "get",
+                "take"
+              ]
+            },
+            {
+              "word": "year",
+              "zh": "年（今年 this year）",
+              "alternatives": [
+                "year's"
+              ]
+            },
+            {
+              "word": "health",
+              "zh": "健康",
+              "alternatives": [
+                "medical",
+                "physical"
+              ]
+            },
+            {
+              "word": "check-up",
+              "zh": "檢查",
+              "alternatives": [
+                "checkup",
+                "check",
+                "exam",
+                "examination"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PERF",
+              "grammar_id": "gp-present-perfect",
+              "label_zh": "現在完成式（已經做完）",
+              "frame": "S + have + (all/already) + p.p. …",
+              "zh_trigger": "都已經做完"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "我們班的同學",
+              "accepted": [
+                "The students in our class",
+                "All the students in our class",
+                "The students in my class",
+                "All the students in my class",
+                "All my classmates",
+                "My classmates"
+              ],
+              "targets": [
+                "student",
+                "class"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "The student in our class",
+                  "right": "The students in our class",
+                  "explanation_zh": "全班同學不只一位，student 用複數。"
+                }
+              ]
+            },
+            {
+              "zh": "都已經做完",
+              "accepted": [
+                "have all finished",
+                "have already finished",
+                "have already completed",
+                "have all completed",
+                "have finished",
+                "have completed",
+                "have all had",
+                "have already had",
+                "have all taken",
+                "have already taken",
+                "have already done"
+              ],
+              "targets": [
+                "finish",
+                "PERF"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "all already finish",
+                  "right": "have all finished",
+                  "explanation_zh": "「已經做完」表示到現在已經完成，用現在完成式 have finished。"
+                },
+                {
+                  "wrong": "have all finish",
+                  "right": "have all finished",
+                  "explanation_zh": "完成式是 have＋過去分詞 finished。"
+                }
+              ]
+            },
+            {
+              "zh": "今年的",
+              "accepted": [
+                "this year's",
+                "for this year"
+              ],
+              "targets": [
+                "year"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "this years'",
+                  "right": "this year's",
+                  "explanation_zh": "所有格是單數名詞加 's：this year's。"
+                }
+              ]
+            },
+            {
+              "zh": "健康檢查",
+              "accepted": [
+                "health check-up",
+                "health check-ups",
+                "health checkup",
+                "health checkups",
+                "health examination",
+                "health examinations",
+                "health exam",
+                "medical check-up",
+                "physical examination",
+                "health check"
+              ],
+              "targets": [
+                "health",
+                "check-up"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "healthy check",
+                  "right": "health check-up",
+                  "explanation_zh": "「健康檢查」用名詞 health 修飾，不用形容詞 healthy。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "tense_trigger",
+              "zh": "已經",
+              "literal_error": "The students in our class all already finish this year's health check-up.",
+              "part": 2,
+              "explanation_zh": "「已經」是完成式的觸發詞；照字面把「已經」寫成 already 卻保留現在式 finish，這一部分扣分。"
+            }
+          ],
+          "bonus": []
+        },
+        "2": {
+          "references": [
+            "Besides measuring our height and weight, the nurse also checked our vision.",
+            "In addition to measuring our height and weight, the school nurse also tested our eyesight."
+          ],
+          "target_words": [
+            {
+              "word": "measure",
+              "zh": "量"
+            },
+            {
+              "word": "height",
+              "zh": "身高"
+            },
+            {
+              "word": "weight",
+              "zh": "體重"
+            },
+            {
+              "word": "nurse",
+              "zh": "護理師"
+            },
+            {
+              "word": "check",
+              "zh": "檢查",
+              "alternatives": [
+                "test",
+                "examine"
+              ]
+            },
+            {
+              "word": "vision",
+              "zh": "視力",
+              "alternatives": [
+                "eyesight",
+                "eye",
+                "sight"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PREPVING",
+              "grammar_id": "gp-prep-gerund",
+              "label_zh": "介系詞＋動名詞（除了…之外：Besides／In addition to＋V-ing）",
+              "frame": "Besides / In addition to + V-ing …, S + also + V …",
+              "zh_trigger": "除了"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "除了量身高和體重之外",
+              "accepted": [
+                "Besides measuring our height and weight",
+                "In addition to measuring our height and weight",
+                "Apart from measuring our height and weight",
+                "Aside from measuring our height and weight"
+              ],
+              "targets": [
+                "measure",
+                "height",
+                "weight",
+                "PREPVING"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Besides measure our height and weight",
+                  "right": "Besides measuring our height and weight",
+                  "explanation_zh": "besides 是介系詞，後面的動詞要改成動名詞 measuring。"
+                },
+                {
+                  "wrong": "Besides measuring our tall and heavy",
+                  "right": "Besides measuring our height and weight",
+                  "explanation_zh": "「身高、體重」要用名詞 height、weight，不能用形容詞 tall、heavy。"
+                }
+              ]
+            },
+            {
+              "zh": "護理師",
+              "accepted": [
+                "the nurse",
+                "the school nurse"
+              ],
+              "targets": [
+                "nurse"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "the nurse teacher",
+                  "right": "the school nurse",
+                  "explanation_zh": "學校的護理師說 the school nurse，不必加 teacher。"
+                }
+              ]
+            },
+            {
+              "zh": "也檢查了",
+              "accepted": [
+                "also checked",
+                "also tested",
+                "also examined",
+                "has also checked"
+              ],
+              "targets": [
+                "check"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "also check",
+                  "right": "also checked",
+                  "explanation_zh": "健康檢查已經做完，這裡說的是當天發生的事，用過去式 checked。"
+                }
+              ]
+            },
+            {
+              "zh": "我們的視力",
+              "accepted": [
+                "our vision",
+                "our eyesight",
+                "our eyes"
+              ],
+              "targets": [
+                "vision"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "our eyes power",
+                  "right": "our eyesight",
+                  "explanation_zh": "「視力」是 eyesight 或 vision，不要逐字翻成 eyes power。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "word_form",
+              "zh": "除了量",
+              "literal_error": "Besides measure our height and weight, the nurse also checked our vision.",
+              "part": 1,
+              "explanation_zh": "中文動詞沒有詞形變化，照字面在 besides 後面直接接原形 measure 會扣分；介系詞後面要接動名詞 measuring。"
+            }
+          ],
+          "bonus": []
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-basic-05",
+    "lot": "translation-basic-05",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "a9e22defa014e90d4fa058a697f2a11423f1ee158f245ae054434d9cca4be9d6",
+    "spec_id": "translation-basic@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T13:28:15Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T13:07:55Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "All the students in our class have already finished this year's health checkup.",
+            "confidence": "high",
+            "explanation_zh": "「已經…了」表完成，用現在完成式 have already finished；「我們班的同學」用 all the students in our class；「健康檢查」用 health checkup。"
+          },
+          "2": {
+            "translation": "Besides measuring our height and weight, the nurse also checked our eyesight.",
+            "confidence": "high",
+            "explanation_zh": "「除了…之外（也）」用 besides + V-ing，介系詞後接動名詞；動名詞的邏輯主詞與主要子句主詞 the nurse 一致；「視力」用 eyesight；過去式承接第 1 句已做完的檢查。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PERF"
+            ],
+            "used_target_words": [
+              "student",
+              "class",
+              "finish",
+              "year",
+              "health",
+              "check-up"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PREPVING"
+            ],
+            "used_target_words": [
+              "measure",
+              "height",
+              "weight",
+              "nurse",
+              "check",
+              "vision"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "student",
+              "class",
+              "finish",
+              "year",
+              "health",
+              "check-up"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PERF": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "measure",
+              "height",
+              "weight",
+              "nurse",
+              "check",
+              "vision"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PREPVING": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T13:11:47Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "All the students in our class have already finished this year's health check-up.",
+            "confidence": "high",
+            "explanation_zh": "「已經做完」用現在完成式 have already finished；「健康檢查」用 health check-up（也可用 physical examination）；「今年的」用 this year's。"
+          },
+          "2": {
+            "translation": "In addition to measuring our height and weight, the nurse also checked our eyesight.",
+            "confidence": "high",
+            "explanation_zh": "「除了…之外，也…」用 in addition to + V-ing，後面主句再用 also；「量身高和體重」用 measuring our height and weight；「視力」用 eyesight；過去式。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PERF"
+            ],
+            "used_target_words": [
+              "student",
+              "class",
+              "finish",
+              "year",
+              "health",
+              "check-up"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PREPVING"
+            ],
+            "used_target_words": [
+              "measure",
+              "height",
+              "weight",
+              "nurse",
+              "check",
+              "vision"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "student",
+              "class",
+              "finish",
+              "year",
+              "health",
+              "check-up"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PERF": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "measure",
+              "height",
+              "weight",
+              "nurse",
+              "check",
+              "vision"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PREPVING": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

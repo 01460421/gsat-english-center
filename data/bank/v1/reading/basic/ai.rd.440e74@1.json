@@ -1,0 +1,709 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.rd.440e74",
+  "version": 1,
+  "section_type": "reading",
+  "format_version": "reading-4",
+  "tier": "basic",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": "Air pollution is not always easy to see, but it can still harm our health. One common way to measure it is PM2.5: tiny bits floating in the air that are 2.5 micrometers across or smaller. Breathing in fine particles like these is linked to heart and lung diseases. The chart below shows the yearly average amount of PM2.5 measured at one air-quality station in each of three cities: Taipei, Taichung, and Kaohsiung.\nAs the chart shows, all three cities have made clear progress since 2015. That year, the station in Kaohsiung recorded an average of 25.8 micrograms per cubic meter, the highest of the three. By 2025, the number had fallen to 16.1. Taichung saw an even bigger drop, from 24.9 to 13.6. Taipei's air was the cleanest from the start, and its average dropped from 19.0 to around 12.\nWhat made the air cleaner? The government worked on several sources of pollution at the same time, from power plants to motorcycles. At the coal-fired Taichung Power Plant, four large boilers were upgraded by 2020, a change that was expected to cut the plant's air pollution by 80 percent within five years. Some state-run companies also replaced their coal-burning boilers with gas-burning ones. On the roads, owners of old, high-polluting motorcycles were offered rewards for giving them up. In the first eleven months of 2022 alone, 1.68 million of these motorcycles were taken off the roads.\nNot all of the change came from inside Taiwan, however. Weather and pollution from other countries also <b>play a part</b>. In 2022, for example, more rain fell in parts of Taiwan, and pollution blown over from China dropped by 20 to 30 percent. Even so, the environmental agency says that the steps taken at home cut local pollution by 82 percent, far more than the 60 percent it had planned.",
+    "passage_parts": null,
+    "figures": [
+      {
+        "kind": "chart",
+        "label": "Chart 1",
+        "caption": "Yearly average PM2.5 at one station in each of three cities, 2015–2025",
+        "description": "折線圖，三條線。橫軸是年份（2015、2017、2019、2021、2023、2025），縱軸是 PM2.5 年平均濃度（μg/m3，每立方公尺微克）。Taipei（中山測站）依序是 19.0、16.6、14.4、13.2、11.9、12.5，一直是三條線中最低的；Taichung（忠明測站）依序是 24.9、21.8、19.4、17.0、15.3、13.6；Kaohsiung（前金測站）依序是 25.8、26.7、22.9、21.1、18.7、16.1，2017 年是這條線的最高點，之後一路下降。",
+        "rows": null,
+        "question_no": null,
+        "chart": {
+          "type": "line",
+          "title": "Yearly average PM2.5 at one station in each city, 2015–2025",
+          "x": {
+            "label": "Year",
+            "unit": null
+          },
+          "y": {
+            "label": "Yearly average PM2.5",
+            "unit": "μg/m3"
+          },
+          "categories": [
+            "2015",
+            "2017",
+            "2019",
+            "2021",
+            "2023",
+            "2025"
+          ],
+          "series": [
+            {
+              "name": "Taipei (Zhongshan station)",
+              "values": [
+                19.0,
+                16.6,
+                14.4,
+                13.2,
+                11.9,
+                12.5
+              ]
+            },
+            {
+              "name": "Taichung (Zhongming station)",
+              "values": [
+                24.9,
+                21.8,
+                19.4,
+                17.0,
+                15.3,
+                13.6
+              ]
+            },
+            {
+              "name": "Kaohsiung (Qianjin station)",
+              "values": [
+                25.8,
+                26.7,
+                22.9,
+                21.1,
+                18.7,
+                16.1
+              ]
+            }
+          ],
+          "note": "Each value is the average of the daily averages measured at the station in that year.",
+          "source": {
+            "publisher": "政府資料開放平臺 data.gov.tw（環境部）",
+            "title": "空氣品質監測日平均值(一般污染物)",
+            "url": "https://data.gov.tw/dataset/28197",
+            "license": "OGDL-Taiwan-1.0",
+            "accessed": "2026-10-09"
+          }
+        }
+      }
+    ],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "single_choice",
+        "stem": "What is the passage mainly about?",
+        "options": {
+          "A": "How Taiwan cut pollution from coal-burning boilers.",
+          "B": "Why it rains more in some parts of Taiwan.",
+          "C": "How air quality has improved in three Taiwanese cities.",
+          "D": "Why motorcycles are no longer allowed on Taiwan’s roads."
+        },
+        "answer": "C",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "item_type": "main_idea"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "single_choice",
+        "stem": "According to the passage, what was done at the Taichung Power Plant?",
+        "options": {
+          "A": "It stopped burning coal in 2020.",
+          "B": "It changed from burning coal to burning gas.",
+          "C": "It cut its pollution by 80 percent in one year.",
+          "D": "Some of its boilers were improved to reduce pollution."
+        },
+        "answer": "D",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "item_type": "detail"
+        }
+      },
+      {
+        "no": 3,
+        "label": "3",
+        "mode": "single_choice",
+        "stem": "In the last paragraph, what does “play a part” mean?",
+        "options": {
+          "A": "Have an effect.",
+          "B": "Are getting worse.",
+          "C": "Are measured by stations.",
+          "D": "Come mainly from coal."
+        },
+        "answer": "A",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "item_type": "vocab_in_context"
+        },
+        "refers_to": {
+          "text": "play a part",
+          "occurrence": 1,
+          "note": null
+        }
+      },
+      {
+        "no": 4,
+        "label": "4",
+        "mode": "single_choice",
+        "stem": "According to the chart, in which year was the yearly average at the Kaohsiung station the highest?",
+        "options": {
+          "A": "2015.",
+          "B": "2017.",
+          "C": "2019.",
+          "D": "2021."
+        },
+        "answer": "B",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "item_type": "chart_reading"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "台灣的空氣品質",
+      "genre": "expository",
+      "sdgs": [
+        3,
+        11
+      ],
+      "text_format": "mixed"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "第一段介紹 PM2.5 並說明圖表顯示三個城市測站的年平均值；第二段說三個城市自 2015 年以來都明顯進步；第三段說政府做了哪些事；第四段說天氣和境外污染也有影響。全文講的是台灣三個城市的空氣品質怎麼變好。",
+          "evidence": [
+            "As the chart shows, all three cities have made clear progress since 2015.",
+            "What made the air cleaner?"
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "topic_sentence",
+          "option_notes_zh": {
+            "A": "把燃煤鍋爐換成燃氣鍋爐，是第三段的其中一項措施（文中確實有寫），只是局部細節。",
+            "B": "下雨只在最後一段當作天氣影響的例子提到，文章沒有解釋為什麼某些地方雨比較多。",
+            "D": "文中說的是用獎勵讓車主淘汰老舊高污染機車，不是禁止所有機車上路。"
+          },
+          "option_codes": {
+            "A": "TN",
+            "B": "NM",
+            "D": "OG"
+          },
+          "strategy_zh": "主旨題找各段共同的主題：第二段的 made clear progress 和第三段的 What made the air cleaner? 都指向「空氣變乾淨」。",
+          "hints": [
+            "第二段第一句說三個城市怎麼了？",
+            "第三、四段在回答什麼問題？",
+            "選能涵蓋「空氣品質變好」的選項。"
+          ]
+        },
+        "2": {
+          "explanation_zh": "第三段說，燃煤的台中火力發電廠有四座大型鍋爐在 2020 年前完成改善，預計五年內讓電廠的空氣污染減少八成。",
+          "evidence": [
+            "At the coal-fired Taichung Power Plant, four large boilers were upgraded by 2020, a change that was expected to cut the plant's air pollution by 80 percent within five years."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "elaboration",
+          "option_notes_zh": {
+            "A": "文中說它是燃煤電廠（coal-fired），只說鍋爐改善，沒有說 2020 年停止燒煤。",
+            "B": "原文確實有「燃煤鍋爐換成燃氣鍋爐」，但那是一些國營事業（state-run companies）做的，不是台中電廠。",
+            "C": "80% 是預計「五年內」減少的幅度，不是一年。"
+          },
+          "option_codes": {
+            "A": "DS",
+            "B": "DS",
+            "C": "DS"
+          },
+          "strategy_zh": "先找題幹的 Taichung Power Plant，只看那一句；下一句的主詞換成 Some state-run companies，說的是別的單位。",
+          "hints": [
+            "在第三段找 Taichung Power Plant。",
+            "那一句說電廠的什麼被改善了？",
+            "80 percent 是多久之內的目標？"
+          ]
+        },
+        "3": {
+          "explanation_zh": "上一句說空氣變乾淨不全是台灣自己的功勞，下一句舉例說 2022 年雨比較多、從中國飄來的污染減少兩到三成。可見天氣和境外污染「也有影響」，play a part 是「發揮作用、有影響」。",
+          "evidence": [
+            "Weather and pollution from other countries also play a part.",
+            "In 2022, for example, more rain fell in parts of Taiwan, and pollution blown over from China dropped by 20 to 30 percent."
+          ],
+          "blank_pos": "phrase",
+          "clue_type": "example",
+          "option_notes_zh": {
+            "B": "下一句說從中國飄來的污染減少了兩到三成，並不是越來越糟。",
+            "C": "測站測量的是空氣中的 PM2.5；這個片語說的是天氣和境外污染對空氣變乾淨的影響，不是測量。",
+            "D": "燒煤是第三段電廠和鍋爐的事，天氣和境外污染並不是「主要來自燒煤」。"
+          },
+          "option_codes": {
+            "B": "OP",
+            "C": "CX",
+            "D": "DS"
+          },
+          "strategy_zh": "片語後面如果接 for example，例子就能說明它的意思：雨多、境外污染少，都讓空氣變乾淨，代表它們「有影響」。",
+          "hints": [
+            "粗體片語的主詞是什麼？",
+            "下一句的 for example 舉了哪兩個例子？",
+            "這兩件事對空氣有沒有影響？"
+          ]
+        },
+        "4": {
+          "explanation_zh": "看圖中 Kaohsiung（前金測站）那條線：2015 年 25.8、2017 年 26.7、2019 年 22.9、2021 年 21.1。最高的是 2017 年。文中說 2015 年高雄是三個城市中最高的，但那是和其他城市比，不是高雄自己歷年的最高點。",
+          "evidence": [
+            "2017, Kaohsiung (Qianjin station): 26.7 μg/m3"
+          ],
+          "blank_pos": "phrase",
+          "clue_type": "other",
+          "option_notes_zh": {
+            "A": "文中寫 2015 年高雄的 25.8 是「三個城市中最高」，但圖中高雄 2017 年的 26.7 比 2015 年還高。",
+            "C": "2019 年是 22.9，已經比 2017 年低。",
+            "D": "2021 年是 21.1，比 2017 年低。"
+          },
+          "option_codes": {
+            "A": "DS",
+            "C": "VS",
+            "D": "VS"
+          },
+          "strategy_zh": "讀圖題先找對線（Kaohsiung），再沿著這條線找最高點；不要把文中「三個城市比較」的最高，和同一條線歷年的最高混在一起。",
+          "hints": [
+            "先找到 Kaohsiung 那一條線。",
+            "這條線哪一年的點最高？",
+            "比較 2015 年的 25.8 和 2017 年的數值。"
+          ]
+        }
+      }
+    },
+    "translation_zh": {
+      "text": "空氣污染並不總是容易看見，但它仍然可能傷害我們的健康。一種常見的測量方式是 PM2.5：飄浮在空氣中、直徑 2.5 微米以下的微小顆粒。吸入這類細懸浮微粒和心臟病、肺病有關。下面的圖表顯示三個城市——台北、台中和高雄——各一個空氣品質測站測得的 PM2.5 年平均值。\n如圖所示，三個城市自 2015 年以來都有明顯進步。那一年，高雄的測站測得的平均值是每立方公尺 25.8 微克，是三個城市中最高的。到了 2025 年，這個數字已降到 16.1。台中下降得更多，從 24.9 降到 13.6。台北的空氣一開始就是最乾淨的，平均值從 19.0 降到 12 左右。\n是什麼讓空氣變乾淨的？政府同時從好幾個污染來源下手，從發電廠到機車都有。燃煤的台中火力發電廠在 2020 年前完成四座大型鍋爐的改善，預計五年內讓電廠的空氣污染減少八成。一些國營事業也把燃煤鍋爐換成燃氣鍋爐。在道路上，老舊高污染機車的車主只要淘汰機車就能獲得獎勵。光是 2022 年的前十一個月，就有 168 萬輛這類機車退出道路。\n然而，並非所有的改變都來自台灣內部。天氣和來自其他國家的污染也有影響。例如 2022 年，台灣部分地區雨量較多，而從中國飄來的污染減少了兩到三成。即便如此，環保主管機關表示，國內採取的措施讓本地污染減少了 82%，遠超過原本計畫的 60%。"
+    },
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [
+      {
+        "kind": "main_idea",
+        "prompt": "Write one English sentence that tells the main idea of the passage.",
+        "reference_answers": [
+          "PM2.5 levels in Taipei, Taichung, and Kaohsiung have fallen since 2015, thanks to government action as well as weather and less pollution from abroad.",
+          "The air in three of Taiwan’s biggest cities has become cleaner because of steps like upgrading power plants and removing old motorcycles."
+        ],
+        "checklist_zh": [
+          "有沒有說出三個城市的 PM2.5 下降",
+          "有沒有提到原因（政府措施、天氣或境外污染）",
+          "是不是一句完整的英文句子"
+        ],
+        "curriculum": [
+          "B-V-12",
+          "5-V-10"
+        ]
+      }
+    ],
+    "rubric": null,
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "3-V-3",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ae-V-2",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "3-V-7",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "3-V-12",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "C-V-4",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [
+      {
+        "source_id": "fact:taiwan-pm25-rb03",
+        "role": "fact"
+      },
+      {
+        "source_id": "fact:taiwan-pm25-rb03",
+        "role": "dataset"
+      }
+    ],
+    "license": "original-ai",
+    "derivation": "ai-original-from-facts",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": "本文由 AI 參考下列資料撰寫，非原文轉載；圖表資料：政府資料開放平臺（環境部「空氣品質監測日平均值(一般污染物)」，政府資料開放授權條款第1版；年平均值由本站依每日平均值計算）"
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-08-reading-basic-03",
+    "lot": "reading-basic-03",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/reading",
+    "prompt_sha256": "69dda5bb6068e3f33daab6028f4b12ff94b6c66e7122cd7a09073d084b308c9b",
+    "spec_id": "reading-basic@2026-10-08",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 287,
+    "sentences": 19,
+    "avg_sentence_length": 15.11,
+    "denominator": 269,
+    "proper_nouns": [
+      "Kaohsiung",
+      "Taichung",
+      "Taipei",
+      "Taipei's",
+      "Taiwan"
+    ],
+    "numbers": 38,
+    "coverage_l1_4": 0.974,
+    "coverage_l1_6": 0.9814,
+    "offlist_ratio": 0.0186,
+    "beyond_l4_ratio": 0.0074,
+    "level_counts": {
+      "1": 208,
+      "2": 34,
+      "3": 14,
+      "4": 6,
+      "5": 2,
+      "off": 5
+    },
+    "offlist_words": [
+      "boilers",
+      "cubic",
+      "micrograms",
+      "micrometers"
+    ],
+    "band": {
+      "tier": "basic",
+      "basis": "lot reading-basic-03（SPEC §3.4＋出題規格書 passage_overrides（words、cov_L1_4（取代 SPEC 的區間）、cov_L1_6（取代 SPEC 的區間）、offlist（取代 SPEC 的區間）、beyond_l4_ratio、mean_sent_len（取代 SPEC 的區間）））",
+      "ok": true,
+      "checks": {
+        "word_count": {
+          "value": 287,
+          "min": 280,
+          "max": 345,
+          "ok": true
+        },
+        "coverage_l1_4": {
+          "value": 0.974,
+          "min": 0.91,
+          "max": 1,
+          "ok": true
+        },
+        "coverage_l1_6": {
+          "value": 0.9814,
+          "min": 0.95,
+          "max": 1,
+          "ok": true
+        },
+        "offlist_ratio": {
+          "value": 0.0186,
+          "min": 0,
+          "max": 0.05,
+          "ok": true
+        },
+        "avg_sentence_length": {
+          "value": 15.11,
+          "min": 14.0,
+          "max": 20.0,
+          "ok": true
+        },
+        "beyond_l4_ratio": {
+          "value": 0.0074,
+          "min": 0,
+          "max": 0.04,
+          "ok": true
+        }
+      }
+    }
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T12:09:23Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T11:45:10Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "answers": {
+          "1": {
+            "answer": "C",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "As the chart shows, all three cities have made clear progress since 2015.",
+              "What made the air cleaner?"
+            ],
+            "explanation_zh": "文章用圖表說明台北、台中、高雄三市 PM2.5 下降，再解釋空氣變乾淨的原因；A 只是其中一項措施，B、D 不是重點或與文意不符。"
+          },
+          "2": {
+            "answer": "D",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "At the coal-fired Taichung Power Plant, four large boilers were upgraded by 2020, a change that was expected to cut the plant's air pollution by 80 percent within five years."
+            ],
+            "explanation_zh": "台中電廠是把四座大型鍋爐升級以減少污染；改燒天然氣的是一些公營事業，80% 是預計五年內而非一年。"
+          },
+          "3": {
+            "answer": "A",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Not all of the change came from inside Taiwan, however.",
+              "In 2022, for example, more rain fell in parts of Taiwan, and pollution blown over from China dropped by 20 to 30 percent."
+            ],
+            "explanation_zh": "天氣與境外污染也是空氣變化的原因之一，接著舉 2022 年多雨與境外污染減少為例，所以 play a part 是「有影響」。"
+          },
+          "4": {
+            "answer": "B",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "2015, Kaohsiung (Qianjin station): 25.8 μg/m3",
+              "2017, Kaohsiung (Qianjin station): 26.7 μg/m3"
+            ],
+            "explanation_zh": "高雄測站 2017 年 26.7 高於 2015 年的 25.8 及之後各年，是最高的一年；2015 年只是當年三市中最高。"
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T11:47:04Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "answers": {
+          "1": {
+            "answer": "C",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "As the chart shows, all three cities have made clear progress since 2015.",
+              "The chart below shows the yearly average amount of PM2.5 measured at one air-quality station in each of three cities: Taipei, Taichung, and Kaohsiung."
+            ],
+            "explanation_zh": "全文講三個城市 PM2.5 的改善情形與原因，煤鍋爐只是原因之一。"
+          },
+          "2": {
+            "answer": "D",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "At the coal-fired Taichung Power Plant, four large boilers were upgraded by 2020, a change that was expected to cut the plant's air pollution by 80 percent within five years."
+            ],
+            "explanation_zh": "台中電廠有四座大型鍋爐在 2020 年前完成升級；改用燃氣的是某些國營企業，80% 是五年內的預期，不是一年內的結果。"
+          },
+          "3": {
+            "answer": "A",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Weather and pollution from other countries also play a part.",
+              "In 2022, for example, more rain fell in parts of Taiwan, and pollution blown over from China dropped by 20 to 30 percent."
+            ],
+            "explanation_zh": "also play a part 之後舉降雨與境外汙染減少為例，表示這些因素也有影響。"
+          },
+          "4": {
+            "answer": "B",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "2017, Kaohsiung (Qianjin station): 26.7 μg/m3",
+              "2015, Kaohsiung (Qianjin station): 25.8 μg/m3"
+            ],
+            "explanation_zh": "圖表中高雄測站 2017 年為 26.7，高於 2015 年的 25.8 以及之後各年。"
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "distractor_audit",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T12:10:00Z",
+      "details": {
+        "session_id": null,
+        "items": {
+          "1": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "off_topic",
+              "evidence": "Some state-run companies also replaced their coal-burning boilers with gas-burning ones.",
+              "explanation_zh": "改換燃煤鍋爐只是第三段列舉的其中一項措施，範圍太窄，不能涵蓋三個城市空氣品質的變化與原因。"
+            },
+            "B": {
+              "verdict": "clearly_wrong",
+              "error_type": "off_topic",
+              "evidence": "In 2022, for example, more rain fell in parts of Taiwan, and pollution blown over from China dropped by 20 to 30 percent.",
+              "explanation_zh": "下雨只在最後一段當作天氣影響的例子，文章沒有解釋為什麼某些地方雨比較多。"
+            },
+            "D": {
+              "verdict": "clearly_wrong",
+              "error_type": "factual",
+              "evidence": "On the roads, owners of old, high-polluting motorcycles were offered rewards for giving them up.",
+              "explanation_zh": "文中說的是用獎勵讓車主淘汰老舊高污染機車，不是禁止所有機車上路。"
+            }
+          },
+          "2": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "factual",
+              "evidence": "At the coal-fired Taichung Power Plant, four large boilers were upgraded by 2020, a change that was expected to cut the plant's air pollution by 80 percent within five years.",
+              "explanation_zh": "文中稱它是燃煤（coal-fired）電廠，2020 年前完成的是鍋爐改善，沒有說停止燒煤。"
+            },
+            "B": {
+              "verdict": "clearly_wrong",
+              "error_type": "factual",
+              "evidence": "Some state-run companies also replaced their coal-burning boilers with gas-burning ones.",
+              "explanation_zh": "把燃煤鍋爐換成燃氣鍋爐的是一些國營事業，不是台中電廠；台中電廠是鍋爐升級。"
+            },
+            "C": {
+              "verdict": "clearly_wrong",
+              "error_type": "factual",
+              "evidence": "At the coal-fired Taichung Power Plant, four large boilers were upgraded by 2020, a change that was expected to cut the plant's air pollution by 80 percent within five years.",
+              "explanation_zh": "80% 是預計「五年內」減少的幅度，不是一年內已經做到。"
+            }
+          },
+          "3": {
+            "B": {
+              "verdict": "clearly_wrong",
+              "error_type": "meaning",
+              "evidence": "In 2022, for example, more rain fell in parts of Taiwan, and pollution blown over from China dropped by 20 to 30 percent.",
+              "explanation_zh": "舉的例子是雨變多、從中國飄來的污染減少兩到三成，說明這些因素也讓空氣變乾淨，不是「越來越糟」。"
+            },
+            "C": {
+              "verdict": "clearly_wrong",
+              "error_type": "meaning",
+              "evidence": "Not all of the change came from inside Taiwan, however.",
+              "explanation_zh": "上一句說空氣變好不全是台灣自己的功勞，play a part 說的是天氣和境外污染也有影響，和測站測量無關。"
+            },
+            "D": {
+              "verdict": "clearly_wrong",
+              "error_type": "meaning",
+              "evidence": "Weather and pollution from other countries also play a part.",
+              "explanation_zh": "主詞是天氣和境外污染，片語說它們也有影響；說它們「主要來自燒煤」不合文意，燒煤是第三段電廠與鍋爐的事。"
+            }
+          },
+          "4": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "factual",
+              "evidence": "2017, Kaohsiung (Qianjin station): 26.7 μg/m3",
+              "explanation_zh": "圖中高雄測站 2017 年 26.7 高於 2015 年的 25.8；文中說 2015 年高雄是三個城市中最高，是城市之間比，不是高雄自己歷年最高。"
+            },
+            "C": {
+              "verdict": "clearly_wrong",
+              "error_type": "factual",
+              "evidence": "2019, Kaohsiung (Qianjin station): 22.9 μg/m3",
+              "explanation_zh": "圖中 2019 年是 22.9，低於 2017 年的 26.7。"
+            },
+            "D": {
+              "verdict": "clearly_wrong",
+              "error_type": "factual",
+              "evidence": "2021, Kaohsiung (Qianjin station): 21.1 μg/m3",
+              "explanation_zh": "圖中 2021 年是 21.1，低於 2017 年的 26.7。"
+            }
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "fact_check",
+      "reviewer": "claude-opus-5-5",
+      "result": "fail",
+      "created_at": "2026-10-09T12:20:00Z",
+      "details": {
+        "checked": [
+          {
+            "claim": "PM2.5 means tiny bits floating in the air that are 2.5 micrometers across or smaller; breathing in fine particles is linked to heart and lung diseases.（f1、f2、f13）",
+            "source_id": "fact:taiwan-pm25-rb03",
+            "ok": true
+          },
+          {
+            "claim": "Kaohsiung station 25.8 in 2015 (highest of the three) → 16.1 in 2025; Taichung 24.9 → 13.6, an even bigger drop.（f4、f5、f6；d1：25.77→16.09〔降 9.68〕、24.87→13.57〔降 11.30〕）",
+            "source_id": "fact:taiwan-pm25-rb03",
+            "ok": true
+          },
+          {
+            "claim": "Taipei's air was the cleanest from the start, and its average dropped from 19.0 to around 12.（f3：18.97→12.53；圖上 2025 年是 12.5，四捨五入到整數是 13，「around 12」不精確）",
+            "source_id": "fact:taiwan-pm25-rb03",
+            "ok": false
+          },
+          {
+            "claim": "Four large boilers at the coal-fired Taichung Power Plant were upgraded by 2020, expected to cut the plant's air pollution by 80 percent within five years.（f7；Taipei Times 2020-09-12 原頁：would reduce its air pollutant emissions by 80 percent over the next five years）",
+            "source_id": "fact:taiwan-pm25-rb03",
+            "ok": true
+          },
+          {
+            "claim": "Some state-run companies replaced coal-burning boilers with gas-burning ones; in the first eleven months of 2022, 1.68 million old motorcycles were taken off the roads.（f8、f9；Taipei Times 2022-12-29 原頁一致）",
+            "source_id": "fact:taiwan-pm25-rb03",
+            "ok": true
+          },
+          {
+            "claim": "In 2022 more rain fell in parts of Taiwan and pollution from China dropped by 20 to 30 percent; local steps cut pollution by 82 percent, beyond the 60 percent planned.（f10、f12；Taipei Times 原頁：pollutants reduced by 82 percent, surpassing the original target of 60 percent）",
+            "source_id": "fact:taiwan-pm25-rb03",
+            "ok": true
+          },
+          {
+            "claim": "Chart 1 的 18 個數值與 d1 依一位小數四捨五入一致（d1 另依環境部每日平均值去重後重算，11 年×4 站完全相同）",
+            "source_id": "fact:taiwan-pm25-rb03",
+            "ok": true
+          },
+          {
+            "claim": "第 4 題與圖說：「高雄測站年平均最高的年份是 2017 年」「2017 年是這條線的最高點，之後一路下降」。d1：前金 2016＝28.67 > 2017＝26.67；2021＝21.14 > 2020＝20.19、2023＝18.68 > 2022＝18.23，並非一路下降",
+            "source_id": "fact:taiwan-pm25-rb03",
+            "ok": false
+          }
+        ],
+        "problems": [
+          "第 4 題（chart_reading）的正解與資料不符：圖表只取奇數年，題目問高雄測站年平均「最高」的年份，正解 2017（26.7）；但事實單 d1（本輪另依環境部每日平均值重算確認）前金 2016 年是 28.67，比 2017 年的 26.67 高。折線在 2015 與 2017 之間畫成直線，正好藏住真正的最高點；圖的 description 說「2017 年是這條線的最高點，之後一路下降」，解析說「最高的是 2017 年」，學生會學到錯的結論（之後也不是一路下降：2021 年 21.14 高於 2020 年 20.19）。須改成逐年資料（2015–2025 全列）或改問圖上沒有被取樣藏住的資訊後重生。",
+          "第二段 “its average dropped from 19.0 to around 12” 與資料不符：台北中山測站 2025 年是 12.53（圖上 12.5），四捨五入到整數是 13；應寫 about 12.5，或改用 2023 年的 11.9。"
+        ]
+      }
+    }
+  ],
+  "status": "rejected",
+  "status_reason": "fact_check 未通過：第 4 題（chart_reading）的正解與資料不符：圖表只取奇數年，題目問高雄測站年平均「最高」的年份，正解 2017（26.7）；但事實單 d1（本輪另依環境部每日平均值重算確認）前金 2016 年是 28.67，比 2017 年的 26.67 高。折線在 2015 與 2017 之間畫成直線，正好藏住真正的最高點；圖的 description 說「2017 年是這條線的最高點，之後一路下降」，解析說「最高的是 2017 年」，學生會學到錯的結論（之後也不是一路下降：2021 年 21.14 高於 2020 年 20.19）。須改成逐年資料（2015–2025 全列）或改問圖上沒有被取樣藏住的資訊後重生。；第二段 “its average dropped from 19.0 to around 12” 與資料不符：台北中山測站 2025 年是 12.53（圖上 12.5），四捨五入到整數是 13；應寫 about 12.5，或改用 2023 年的 11.9。"
+}

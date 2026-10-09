@@ -1,0 +1,647 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.24679f",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "basic",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "在阿里山（Alishan）上，我們看了日出、拍了照片，也欣賞了雲海。",
+        "options": null,
+        "answer": "On Alishan, we watched the sun rise, took pictures, and enjoyed the sea of clouds.",
+        "accepted_answers": [
+          "We watched the sunrise, took photos, and also enjoyed the sea of clouds on Alishan.",
+          "At Alishan, we saw the sun rise, took some pictures, and enjoyed the sea of clouds."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "平行結構（三個動詞片語並列）"
+          ],
+          "topic": "阿里山看日出"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "我們都被那天早上美麗的景色深深感動了。",
+        "options": null,
+        "answer": "We were all deeply moved by the beautiful view that morning.",
+        "accepted_answers": [
+          "We were all deeply touched by the beautiful scenery that morning.",
+          "That morning, all of us were deeply moved by the beautiful sight."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "被動語態"
+          ],
+          "topic": "阿里山看日出"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "阿里山看日出"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「看了日出、拍了照片、也欣賞了雲海」三個動作要寫成平行結構 A, B, and C，三個動詞用同一種形式：都是過去式 watched、took、enjoyed（take 的過去式是 took），最後一個動作前面要有 and。「看日出」可寫 watch the sun rise（rise 用原形，不是 raise）或 watch the sunrise；「拍照」是 take pictures／take photos，picture 是可數名詞要用複數；「雲海」是 the sea of clouds。「在阿里山上」用 On Alishan 或 At Alishan，放句首或句尾都可以；阿里山是表外專有名詞，題目已附英文。",
+          "evidence": [
+            "看了日出、拍了照片，也欣賞了雲海"
+          ],
+          "strategy_zh": "看到中文用頓號列出幾個動作，就寫 A, B, and C；寫完把三個動詞圈起來，檢查時態和形式是否一致。",
+          "hints": [
+            "切成四段：我們看了日出／拍了照片／也欣賞了／雲海（「在阿里山上」On Alishan 放句首）",
+            "標的詞彙：watch（看）、sun（太陽；watch the sun rise 看日出）、picture（照片）、enjoy（欣賞）、cloud（雲）",
+            "句型框架：S + V-ed …, V-ed …, and V-ed …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "中文有「被」，英文用被動語態 be + 過去分詞：We were (all) deeply moved by …。「那天早上」是過去，be 動詞用 were；「被感動」用過去分詞 moved（或 touched），不要寫成 moving（令人感動的）。all 放在 be 動詞後面：We were all …；「美麗的景色」是 the beautiful view／scenery，scenery 不可數，不加 s。這一句接著第一句，「我們」就是在阿里山看日出的人。",
+          "evidence": [
+            "我們都被",
+            "深深感動了"
+          ],
+          "strategy_zh": "看到「被」先寫 be 動詞，再接過去分詞；be 動詞的時態看時間詞（那天早上→過去式 were）。",
+          "hints": [
+            "切成四段：我們都被／那天早上／美麗的景色／深深感動了",
+            "標的詞彙：move（感動）、beautiful（美麗的）、view（景色）、morning（早上）",
+            "句型框架：S + were + (all) + deeply + p.p. + by …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "On Alishan, we watched the sun rise, took pictures, and enjoyed the sea of clouds.",
+            "We watched the sunrise, took photos, and also enjoyed the sea of clouds on Alishan.",
+            "At Alishan, we saw the sun rise, took some pictures, and enjoyed the sea of clouds."
+          ],
+          "target_words": [
+            {
+              "word": "watch",
+              "zh": "看",
+              "alternatives": [
+                "see"
+              ]
+            },
+            {
+              "word": "sun",
+              "zh": "太陽（看日出：watch the sun rise）",
+              "alternatives": [
+                "sunrise"
+              ]
+            },
+            {
+              "word": "picture",
+              "zh": "照片",
+              "alternatives": [
+                "photo"
+              ]
+            },
+            {
+              "word": "enjoy",
+              "zh": "欣賞；享受",
+              "alternatives": [
+                "admire",
+                "appreciate"
+              ]
+            },
+            {
+              "word": "cloud",
+              "zh": "雲"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PARA",
+              "grammar_id": "gp-parallelism",
+              "label_zh": "平行結構（三個過去式動詞片語並列）",
+              "frame": "S + V-ed …, V-ed …, and V-ed …",
+              "zh_trigger": "看了日出、拍了照片，也欣賞了雲海"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "我們看了日出",
+              "accepted": [
+                "we watched the sun rise",
+                "we watched the sunrise",
+                "we saw the sun rise",
+                "we saw the sunrise",
+                "we watched the sun come up"
+              ],
+              "targets": [
+                "watch",
+                "sun"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "we watched the sun raise",
+                  "right": "we watched the sun rise",
+                  "explanation_zh": "rise 是不及物動詞（升起）；raise 是及物動詞（舉起），不能用在太陽上。"
+                },
+                {
+                  "wrong": "we watch the sunrise",
+                  "right": "we watched the sunrise",
+                  "explanation_zh": "「看了」是過去的事，用過去式 watched。"
+                }
+              ]
+            },
+            {
+              "zh": "拍了照片",
+              "accepted": [
+                "took pictures",
+                "took photos",
+                "took some pictures",
+                "took some photos"
+              ],
+              "targets": [
+                "picture"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "took picture",
+                  "right": "took pictures",
+                  "explanation_zh": "picture 是可數名詞，不能單獨用單數；寫 pictures 或 some pictures。"
+                },
+                {
+                  "wrong": "taked pictures",
+                  "right": "took pictures",
+                  "explanation_zh": "take 的過去式是不規則變化 took。"
+                }
+              ]
+            },
+            {
+              "zh": "也欣賞了",
+              "accepted": [
+                "and enjoyed",
+                "and also enjoyed",
+                "and admired"
+              ],
+              "targets": [
+                "PARA",
+                "enjoy"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "and enjoy",
+                  "right": "and enjoyed",
+                  "explanation_zh": "平行結構裡的動詞要用同一種形式；前面是 watched、took，這裡也用過去式 enjoyed。"
+                },
+                {
+                  "wrong": "took pictures, also enjoyed",
+                  "right": "took pictures, and enjoyed",
+                  "explanation_zh": "三個動作並列時，最後一個前面要加 and；also 是副詞，不能連接動詞。"
+                }
+              ]
+            },
+            {
+              "zh": "雲海",
+              "accepted": [
+                "the sea of clouds",
+                "the ocean of clouds",
+                "the clouds"
+              ],
+              "targets": [
+                "cloud"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "the sea of cloud",
+                  "right": "the sea of clouds",
+                  "explanation_zh": "一大片雲是很多朵雲，cloud 用複數 clouds。"
+                },
+                {
+                  "wrong": "the see of clouds",
+                  "right": "the sea of clouds",
+                  "explanation_zh": "拼字：「海」是 sea，see 是「看見」。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "plural_countable",
+              "zh": "拍了照片",
+              "literal_error": "On Alishan, we watched the sun rise, took picture, and enjoyed the sea of clouds.",
+              "part": 2,
+              "explanation_zh": "中文「照片」沒有單複數，照字面寫成 took picture 會漏掉複數（或冠詞），這一部分扣分。"
+            }
+          ],
+          "bonus": []
+        },
+        "2": {
+          "references": [
+            "We were all deeply moved by the beautiful view that morning.",
+            "We were all deeply touched by the beautiful scenery that morning.",
+            "That morning, all of us were deeply moved by the beautiful sight."
+          ],
+          "target_words": [
+            {
+              "word": "move",
+              "zh": "感動",
+              "alternatives": [
+                "touch"
+              ]
+            },
+            {
+              "word": "beautiful",
+              "zh": "美麗的"
+            },
+            {
+              "word": "view",
+              "zh": "景色",
+              "alternatives": [
+                "scenery",
+                "sight",
+                "scene"
+              ]
+            },
+            {
+              "word": "morning",
+              "zh": "早上"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PASS",
+              "grammar_id": "gp-passive",
+              "label_zh": "被動語態（be + p.p. + by …）",
+              "frame": "S + were + (all) + p.p. + by …",
+              "zh_trigger": "被"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "我們都被",
+              "accepted": [
+                "We were all",
+                "all of us were",
+                "We all were"
+              ],
+              "targets": [
+                "PASS"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "We all deeply moved by",
+                  "right": "We were all deeply moved by",
+                  "explanation_zh": "被動語態要有 be 動詞：were + 過去分詞 moved；漏掉 were 就變成「我們感動了別人」。"
+                },
+                {
+                  "wrong": "We are all",
+                  "right": "We were all",
+                  "explanation_zh": "「那天早上」是過去的事，be 動詞用過去式 were。"
+                }
+              ]
+            },
+            {
+              "zh": "那天早上",
+              "accepted": [
+                "that morning",
+                "on that morning"
+              ],
+              "targets": [
+                "morning"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "in that morning",
+                  "right": "that morning",
+                  "explanation_zh": "that morning 前面不加 in（要加介系詞時用 on that morning）。"
+                }
+              ]
+            },
+            {
+              "zh": "美麗的景色",
+              "accepted": [
+                "by the beautiful view",
+                "by the beautiful scenery",
+                "by the beautiful sight",
+                "by the beautiful scene"
+              ],
+              "targets": [
+                "beautiful",
+                "view"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "by the beautiful sceneries",
+                  "right": "by the beautiful scenery",
+                  "explanation_zh": "scenery 是不可數名詞，不加 s。"
+                },
+                {
+                  "wrong": "by the beatiful view",
+                  "right": "by the beautiful view",
+                  "explanation_zh": "拼字：beautiful（b-e-a-u-t-i-f-u-l）。"
+                }
+              ]
+            },
+            {
+              "zh": "深深感動了",
+              "accepted": [
+                "deeply moved",
+                "deeply touched",
+                "very moved",
+                "greatly moved",
+                "really touched",
+                "so moved"
+              ],
+              "targets": [
+                "move"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "deeply moving",
+                  "right": "deeply moved",
+                  "explanation_zh": "人「被感動」用過去分詞 moved；moving 是「令人感動的」，用來形容景色。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "word_form",
+              "zh": "我們都被",
+              "literal_error": "We all deeply moved by the beautiful view that morning.",
+              "part": 1,
+              "explanation_zh": "中文「被…感動」只有一個「被」字，照字面常會漏掉 be 動詞，寫成 We all moved；英文被動要用 were + moved，這一部分扣分。"
+            }
+          ],
+          "bonus": []
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-basic-04",
+    "lot": "translation-basic-04",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "825ee6e76853b2ea2df931259eb3211229fc9f6e568e89591ca9feda5b5b935e",
+    "spec_id": "translation-basic@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 1,
+    "sentences": 1,
+    "avg_sentence_length": 1.0,
+    "denominator": 1,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 1.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {
+      "off": 1
+    },
+    "offlist_words": [
+      "alishan"
+    ],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T07:59:12Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T00:00:00Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "On Alishan, we watched the sunrise, took pictures, and enjoyed the sea of clouds.",
+            "confidence": "high",
+            "explanation_zh": "三個動作用對等連接的平行結構（過去式 watched, took, enjoyed，最後一項前加 and）；回憶出遊經過用過去式；雲海直譯 the sea of clouds；山名照題目給的 Alishan，用介系詞 On。"
+          },
+          "2": {
+            "translation": "We were all deeply moved by the beautiful scenery that morning.",
+            "confidence": "high",
+            "explanation_zh": "「被…感動」用被動語態 be moved by；過去式 were；all 放在 be 動詞後；「深深」用 deeply 修飾 moved；「那天早上」that morning 放句尾。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PARA"
+            ],
+            "used_target_words": [
+              "watch",
+              "sun",
+              "picture",
+              "enjoy",
+              "cloud"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "（備註，不影響判定）4 個部分沒有涵蓋「在阿里山上」，地點不計分；第 4 部分收 the clouds（少了「海」的意象）偏寬鬆，但基礎級可接受。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "PASS"
+            ],
+            "used_target_words": [
+              "move",
+              "beautiful",
+              "view",
+              "morning"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "watch",
+              "sun",
+              "picture",
+              "enjoy",
+              "cloud"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PARA": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "move",
+              "beautiful",
+              "view",
+              "morning"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PASS": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T00:00:00Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "On Alishan, we watched the sunrise, took some photos, and enjoyed the sea of clouds.",
+            "confidence": "high",
+            "explanation_zh": "三個過去式動作並列（watched、took、enjoyed）；「雲海」是固定譯法 the sea of clouds；山上用介系詞 on。"
+          },
+          "2": {
+            "translation": "We were all deeply moved by the beautiful scenery that morning.",
+            "confidence": "high",
+            "explanation_zh": "「被…感動」用被動語態 be moved by；「深深」譯為 deeply；「那天早上美麗的景色」譯為 the beautiful scenery that morning；all 放在 be 動詞之後。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PARA"
+            ],
+            "used_target_words": [
+              "watch",
+              "sun",
+              "picture",
+              "enjoy",
+              "cloud"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PASS"
+            ],
+            "used_target_words": [
+              "move",
+              "beautiful",
+              "view",
+              "morning"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "watch",
+              "sun",
+              "picture",
+              "enjoy",
+              "cloud"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PARA": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "move",
+              "beautiful",
+              "view",
+              "morning"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PASS": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

@@ -1,0 +1,712 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.cp.9d1eab",
+  "version": 1,
+  "section_type": "composition",
+  "format_version": "composition-1",
+  "tier": "top",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [
+      {
+        "kind": "chart",
+        "label": "圖",
+        "caption": "圖：某高中學生每天平均螢幕使用時數（依用途分）",
+        "description": "長條圖（題目設定的假設調查）。橫軸是四種用途：課業、社群媒體、影音、遊戲，每種用途有平日、假日兩根長條；縱軸是每天平均使用時數（小時）。課業：平日 2.0、假日 1.5；社群媒體：平日 1.2、假日 2.5；影音：平日 1.0、假日 2.8；遊戲：平日 0.6、假日 1.9。圖下註明合計：平日 4.8 小時、假日 8.7 小時。只有課業在假日減少，其他三種用途在假日都增加一倍以上，其中影音增加最多。",
+        "rows": [
+          [
+            "用途",
+            "平日（小時）",
+            "假日（小時）"
+          ],
+          [
+            "課業",
+            "2.0",
+            "1.5"
+          ],
+          [
+            "社群媒體",
+            "1.2",
+            "2.5"
+          ],
+          [
+            "影音",
+            "1.0",
+            "2.8"
+          ],
+          [
+            "遊戲",
+            "0.6",
+            "1.9"
+          ],
+          [
+            "合計",
+            "4.8",
+            "8.7"
+          ]
+        ],
+        "question_no": null,
+        "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 440 270\" role=\"img\" aria-label=\"某高中學生每天平均螢幕使用時數長條圖\">\n  <rect x=\"0\" y=\"0\" width=\"440\" height=\"270\" fill=\"#f6f3ea\"/>\n  <text x=\"220\" y=\"20\" font-size=\"13\" fill=\"#333333\" text-anchor=\"middle\" font-weight=\"bold\">每天平均螢幕使用時數（小時）</text>\n  <line x1=\"48\" y1=\"218\" x2=\"424\" y2=\"218\" stroke=\"#cccccc\" stroke-width=\"1\"/>\n  <text x=\"42\" y=\"222\" font-size=\"10\" fill=\"#333333\" text-anchor=\"end\">0.0</text>\n  <line x1=\"48\" y1=\"188.333\" x2=\"424\" y2=\"188.333\" stroke=\"#cccccc\" stroke-width=\"1\"/>\n  <text x=\"42\" y=\"192.333\" font-size=\"10\" fill=\"#333333\" text-anchor=\"end\">0.5</text>\n  <line x1=\"48\" y1=\"158.667\" x2=\"424\" y2=\"158.667\" stroke=\"#cccccc\" stroke-width=\"1\"/>\n  <text x=\"42\" y=\"162.667\" font-size=\"10\" fill=\"#333333\" text-anchor=\"end\">1.0</text>\n  <line x1=\"48\" y1=\"129\" x2=\"424\" y2=\"129\" stroke=\"#cccccc\" stroke-width=\"1\"/>\n  <text x=\"42\" y=\"133\" font-size=\"10\" fill=\"#333333\" text-anchor=\"end\">1.5</text>\n  <line x1=\"48\" y1=\"99.3333\" x2=\"424\" y2=\"99.3333\" stroke=\"#cccccc\" stroke-width=\"1\"/>\n  <text x=\"42\" y=\"103.333\" font-size=\"10\" fill=\"#333333\" text-anchor=\"end\">2.0</text>\n  <line x1=\"48\" y1=\"69.6667\" x2=\"424\" y2=\"69.6667\" stroke=\"#cccccc\" stroke-width=\"1\"/>\n  <text x=\"42\" y=\"73.6667\" font-size=\"10\" fill=\"#333333\" text-anchor=\"end\">2.5</text>\n  <line x1=\"48\" y1=\"40\" x2=\"424\" y2=\"40\" stroke=\"#cccccc\" stroke-width=\"1\"/>\n  <text x=\"42\" y=\"44\" font-size=\"10\" fill=\"#333333\" text-anchor=\"end\">3.0</text>\n  <line x1=\"48\" y1=\"40\" x2=\"48\" y2=\"218\" stroke=\"#333333\" stroke-width=\"1\"/>\n  <line x1=\"48\" y1=\"218\" x2=\"424\" y2=\"218\" stroke=\"#333333\" stroke-width=\"1\"/>\n  <text x=\"14\" y=\"129\" font-size=\"10\" fill=\"#333333\" text-anchor=\"middle\">小時</text>\n  <rect x=\"69\" y=\"99.3333\" width=\"24\" height=\"118.667\" fill=\"#4e79a7\"/>\n  <text x=\"81\" y=\"96.3333\" font-size=\"9\" fill=\"#333333\" text-anchor=\"middle\">2.0</text>\n  <rect x=\"95\" y=\"129\" width=\"24\" height=\"89\" fill=\"#f28e2b\"/>\n  <text x=\"107\" y=\"126\" font-size=\"9\" fill=\"#333333\" text-anchor=\"middle\">1.5</text>\n  <text x=\"95\" y=\"233\" font-size=\"11\" fill=\"#333333\" text-anchor=\"middle\">課業</text>\n  <rect x=\"163\" y=\"146.8\" width=\"24\" height=\"71.2\" fill=\"#4e79a7\"/>\n  <text x=\"175\" y=\"143.8\" font-size=\"9\" fill=\"#333333\" text-anchor=\"middle\">1.2</text>\n  <rect x=\"189\" y=\"69.6667\" width=\"24\" height=\"148.333\" fill=\"#f28e2b\"/>\n  <text x=\"201\" y=\"66.6667\" font-size=\"9\" fill=\"#333333\" text-anchor=\"middle\">2.5</text>\n  <text x=\"189\" y=\"233\" font-size=\"11\" fill=\"#333333\" text-anchor=\"middle\">社群媒體</text>\n  <rect x=\"257\" y=\"158.667\" width=\"24\" height=\"59.3333\" fill=\"#4e79a7\"/>\n  <text x=\"269\" y=\"155.667\" font-size=\"9\" fill=\"#333333\" text-anchor=\"middle\">1.0</text>\n  <rect x=\"283\" y=\"51.8667\" width=\"24\" height=\"166.133\" fill=\"#f28e2b\"/>\n  <text x=\"295\" y=\"48.8667\" font-size=\"9\" fill=\"#333333\" text-anchor=\"middle\">2.8</text>\n  <text x=\"283\" y=\"233\" font-size=\"11\" fill=\"#333333\" text-anchor=\"middle\">影音</text>\n  <rect x=\"351\" y=\"182.4\" width=\"24\" height=\"35.6\" fill=\"#4e79a7\"/>\n  <text x=\"363\" y=\"179.4\" font-size=\"9\" fill=\"#333333\" text-anchor=\"middle\">0.6</text>\n  <rect x=\"377\" y=\"105.267\" width=\"24\" height=\"112.733\" fill=\"#f28e2b\"/>\n  <text x=\"389\" y=\"102.267\" font-size=\"9\" fill=\"#333333\" text-anchor=\"middle\">1.9</text>\n  <text x=\"377\" y=\"233\" font-size=\"11\" fill=\"#333333\" text-anchor=\"middle\">遊戲</text>\n  <rect x=\"56\" y=\"252\" width=\"10\" height=\"10\" fill=\"#4e79a7\"/>\n  <text x=\"70\" y=\"261\" font-size=\"10\" fill=\"#333333\" text-anchor=\"start\">平日</text>\n  <rect x=\"112\" y=\"252\" width=\"10\" height=\"10\" fill=\"#f28e2b\"/>\n  <text x=\"126\" y=\"261\" font-size=\"10\" fill=\"#333333\" text-anchor=\"start\">假日</text>\n  <text x=\"428\" y=\"261\" font-size=\"10\" fill=\"#333333\" text-anchor=\"end\">合計：平日 4.8 小時；假日 8.7 小時</text>\n</svg>"
+      }
+    ],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "composition",
+        "stem": "提示：某高中調查學生每天花在手機、平板與電腦螢幕上的時間，並依用途分成課業、社群媒體、影音與遊戲四類，結果如下圖。請根據圖表內容，寫一篇英文作文，文分兩段。第一段描述圖表的主要結果，並比較平日與假日的差異；第二段評估這樣的使用習慣對高中生的影響是否值得擔心，並提出一個具體可行的改善做法。",
+        "options": null,
+        "answer": null,
+        "accepted_answers": null,
+        "points": 20,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "essay_type": "chart",
+          "paragraphs": 2,
+          "word_count": {
+            "min": 120,
+            "max": null,
+            "approx": null
+          },
+          "word_requirement_raw": "at least 120 words",
+          "topic": "高中生每日螢幕時間"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "高中生每日螢幕時間"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "這一題有四個要求：第一段描述圖表並比較平日與假日；第二段先評估這樣的習慣是否值得擔心，再提出改善做法。第一段不必把八個數字全部念一遍，而是挑出 2–3 個對比：假日合計 8.7 小時、接近平日 4.8 小時的兩倍；影音增加最多；課業是唯一減少的用途。第二段只說「螢幕不好」而沒有說明影響，或做法空泛（例如「要有自制力」），內容分數會偏低。",
+          "evidence": [
+            "第一段描述圖表的主要結果，並比較平日與假日的差異",
+            "評估這樣的使用習慣對高中生的影響是否值得擔心",
+            "提出一個具體可行的改善做法"
+          ],
+          "strategy_zh": "先決定立場（值得擔心或不必過度擔心），再用「多出來的時間從哪裡來」帶出影響；做法寫成能執行的步驟（設定上限、追蹤、學校活動）。",
+          "hints": [
+            "第一段：先寫總量（4.8 對 8.7），再寫增加最多與唯一減少的用途",
+            "第二段前半：表明立場，用一個因果鏈或自己的經驗說明影響",
+            "第二段後半：提出具體做法，承認螢幕也有好處，最後寫出自己的見解"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "composition",
+      "prompt_type": "chart",
+      "moves": [
+        {
+          "paragraph": 1,
+          "code": "describe_data",
+          "zh": "描述圖表的主要結果"
+        },
+        {
+          "paragraph": 1,
+          "code": "compare",
+          "zh": "比較平日與假日的差異"
+        },
+        {
+          "paragraph": 2,
+          "code": "evaluate",
+          "zh": "評估這樣的使用習慣對高中生的影響是否值得擔心"
+        },
+        {
+          "paragraph": 2,
+          "code": "propose",
+          "zh": "提出一個具體可行的改善做法"
+        }
+      ],
+      "criteria": {
+        "content": {
+          "focus_zh": "第一段要讀出 2–3 個明確對比（假日總時數接近平日兩倍、影音增加最多、只有課業減少），數字要和圖表一致；第二段要對「是否值得擔心」表明立場並說明影響，再提出具體可行的做法。",
+          "bands": [
+            {
+              "min": 4,
+              "max": 5,
+              "descriptor_zh": "回應題目的每一項要求，主旨明確；用具體的事例、細節或親身經驗撐起每個重點。"
+            },
+            {
+              "min": 3,
+              "max": 3,
+              "descriptor_zh": "大致回應題目，但有一項要求寫得單薄，或細節偏籠統、說服力不足。"
+            },
+            {
+              "min": 1,
+              "max": 2,
+              "descriptor_zh": "漏掉題目的主要要求或主旨模糊，多數句子空泛、重複或偏離題目。"
+            },
+            {
+              "min": 0,
+              "max": 0,
+              "descriptor_zh": "空白、離題、只抄題目，或內容少到無法判斷要說什麼。"
+            }
+          ]
+        },
+        "organization": {
+          "focus_zh": "第一段由總量到個別用途、先平日後假日；第二段依「評估、理由或經驗、做法、見解」推進，兩段之間用轉承語銜接。",
+          "bands": [
+            {
+              "min": 4,
+              "max": 5,
+              "descriptor_zh": "兩段分工清楚，各有主題句；句與句、段與段的銜接自然，轉承語用得恰當，篇幅分配合理。"
+            },
+            {
+              "min": 3,
+              "max": 3,
+              "descriptor_zh": "段落大致分明，但有的地方跳接或重複，轉承語偏少或用得生硬。"
+            },
+            {
+              "min": 1,
+              "max": 2,
+              "descriptor_zh": "重點排列混亂，前後句常接不起來，讀者不容易跟上。"
+            },
+            {
+              "min": 0,
+              "max": 0,
+              "descriptor_zh": "看不出段落與順序，句子彼此無關。"
+            }
+          ]
+        },
+        "grammar": {
+          "focus_zh": "描述圖表用現在式，寫自己的經驗改用過去式；比較要用比較級、倍數（twice、more than double）與 while 對照句，句型要有變化。",
+          "bands": [
+            {
+              "min": 4,
+              "max": 5,
+              "descriptor_zh": "句子幾乎沒有文法、標點錯誤，能交替使用簡單句、複句與不同的句首。"
+            },
+            {
+              "min": 3,
+              "max": 3,
+              "descriptor_zh": "偶有時態、單複數或標點錯誤，但讀得懂意思；句型變化有限。"
+            },
+            {
+              "min": 1,
+              "max": 2,
+              "descriptor_zh": "錯誤多到常讓人誤解意思，句子結構常不完整。"
+            },
+            {
+              "min": 0,
+              "max": 0,
+              "descriptor_zh": "幾乎沒有正確的句子，無法理解。"
+            }
+          ]
+        },
+        "vocabulary": {
+          "focus_zh": "描述增減的動詞要有變化（rise、climb、jump、drop、shrink），不要一直重複 increase；hour 的單複數要和數字對應。",
+          "bands": [
+            {
+              "min": 4,
+              "max": 5,
+              "descriptor_zh": "用字精準、貼切，搭配自然，少有重複；拼字與大小寫幾乎全對。"
+            },
+            {
+              "min": 3,
+              "max": 3,
+              "descriptor_zh": "字彙範圍偏窄、常重複同幾個字，偶有用字不當或拼錯，但不妨礙理解。"
+            },
+            {
+              "min": 1,
+              "max": 2,
+              "descriptor_zh": "用錯字或拼錯字很多，常讓人看不懂。"
+            },
+            {
+              "min": 0,
+              "max": 0,
+              "descriptor_zh": "幾乎每個字都用錯或拼錯，無法理解。"
+            }
+          ]
+        }
+      },
+      "deductions_zh": "字數明顯不足（少於 100 個單詞）或沒有分成兩段，各扣總分 1 分；兩種情形同時發生只扣 1 分。離題或空白以 0 分計。",
+      "scaffold": {
+        "kind": "checklist",
+        "checklist_zh": [
+          "第一段有沒有讀出 2–3 個明確對比（例如總時數、增加最多的用途、唯一減少的用途），而且數字和圖表一致",
+          "第二段有沒有清楚表明值不值得擔心，並用因果說明影響（多出來的時間是從哪裡擠出來的）",
+          "提出的做法是否具體可行：誰來做、做什麼、怎麼知道有沒有效",
+          "有沒有至少一個讓步或反面考量（例如螢幕也有好處），結尾是否提出自己的見解，而不是重述數字"
+        ]
+      }
+    },
+    "model_texts": [
+      {
+        "label": "steady",
+        "text": "The chart shows how many hours students at one high school spend on screens every day. On weekdays, they use screens for 4.8 hours in total, and schoolwork takes up the largest part with 2.0 hours. On weekends, however, the total rises to 8.7 hours. The biggest change is in watching videos, which jumps from 1.0 hour to 2.8 hours. Time on social media and games also more than doubles. In contrast, schoolwork is the only use that drops, from 2.0 to 1.5 hours.\nIn my opinion, these numbers are worth worrying about. Spending almost nine hours a day on screens leaves little time for sleep, exercise, and real conversations. I know this from my own experience. Last semester, I often watched videos until two in the morning on weekends, so I felt tired and could not focus in class on Mondays. To solve this problem, students can set a daily time limit on their phones. For example, when I set a two-hour limit for video apps, my phone locked them after the time was up, and I started to read and jog more. In short, screens are useful tools, but we should control them instead of letting them control us.",
+        "paragraphs": [
+          {
+            "function_zh": "描述數據＋比較：總時數的差距、增加最多的影音、唯一減少的課業",
+            "topic_sentence": "The chart shows how many hours students at one high school spend on screens every day."
+          },
+          {
+            "function_zh": "評估＋提出方案：表明值得擔心，用自己的經驗說明影響，再提出設定使用上限的做法",
+            "topic_sentence": "In my opinion, these numbers are worth worrying about."
+          }
+        ],
+        "notes": [
+          {
+            "kind": "connective",
+            "text": "however,",
+            "function": "contrast",
+            "zh": "轉折：假日的情況不同"
+          },
+          {
+            "kind": "connective",
+            "text": "also",
+            "function": "addition",
+            "zh": "補充另外兩種用途"
+          },
+          {
+            "kind": "connective",
+            "text": "In contrast,",
+            "function": "contrast",
+            "zh": "對比：唯一減少的用途"
+          },
+          {
+            "kind": "connective",
+            "text": "so",
+            "function": "cause_effect",
+            "zh": "因果：熬夜導致上課不專心"
+          },
+          {
+            "kind": "connective",
+            "text": "For example,",
+            "function": "example",
+            "zh": "舉自己的例子說明做法有效"
+          },
+          {
+            "kind": "connective",
+            "text": "when",
+            "function": "sequence",
+            "zh": "時間：設定上限之後"
+          },
+          {
+            "kind": "connective",
+            "text": "after",
+            "function": "sequence",
+            "zh": "時間：時間到了以後"
+          },
+          {
+            "kind": "connective",
+            "text": "In short,",
+            "function": "conclusion",
+            "zh": "總結全文"
+          },
+          {
+            "kind": "detail",
+            "text": "The biggest change is in watching videos, which jumps from 1.0 hour to 2.8 hours.",
+            "zh": "指出增加最多的用途並附數字"
+          },
+          {
+            "kind": "detail",
+            "text": "In contrast, schoolwork is the only use that drops, from 2.0 to 1.5 hours.",
+            "zh": "第三個對比：唯一減少的用途"
+          },
+          {
+            "kind": "experience",
+            "text": "Last semester, I often watched videos until two in the morning on weekends, so I felt tired and could not focus in class on Mondays.",
+            "zh": "用自己的經驗說明影響"
+          },
+          {
+            "kind": "experience",
+            "text": "For example, when I set a two-hour limit for video apps, my phone locked them after the time was up, and I started to read and jog more.",
+            "zh": "親身試過的做法，讓建議更可信"
+          },
+          {
+            "kind": "pattern",
+            "text": "worth worrying about",
+            "zh": "be worth V-ing：值得…"
+          },
+          {
+            "kind": "pattern",
+            "text": "control them instead of letting them control us",
+            "zh": "instead of V-ing：而不是…；前後對照的收尾句"
+          },
+          {
+            "kind": "pattern",
+            "text": "more than doubles",
+            "zh": "more than double：增加一倍以上"
+          },
+          {
+            "kind": "phrase",
+            "text": "takes up",
+            "zh": "take up：占用（時間、空間）"
+          },
+          {
+            "kind": "phrase",
+            "text": "leaves little time for",
+            "zh": "leave little time for：讓…幾乎沒有時間"
+          }
+        ],
+        "self_assessment": {
+          "scores": {
+            "content": 4,
+            "organization": 4,
+            "grammar": 4,
+            "vocabulary": 3
+          },
+          "explanation_zh": "兩段都回應題目：第一段讀出總量、增加最多與唯一減少三個對比，第二段有立場、經驗與做法（內容 4）；段落分工清楚，轉承語恰當但變化不多（組織 4）；句子正確，以簡單句和常見複句為主（文法句構 4）；用字正確但多是常用字，描述增減的動詞較少變化（字彙拼字 3）。總分 15，屬穩健版。"
+        }
+      },
+      {
+        "label": "top",
+        "text": "According to the survey, the screen habits of these high school students change dramatically once the school week ends. On weekdays, they spend an average of 4.8 hours a day in front of screens, and schoolwork accounts for the largest share at 2.0 hours. On weekends, by contrast, the total soars to 8.7 hours, almost twice the weekday figure. What drives this jump is entertainment rather than study. Video watching nearly triples, rising from 1.0 to 2.8 hours, while social media climbs from 1.2 to 2.5 hours and gaming from 0.6 to 1.9 hours. Schoolwork, meanwhile, is the only category that shrinks, falling to 1.5 hours. In other words, screens serve mainly as study tools from Monday to Friday but turn into recreational devices as soon as students have free time.\nAlthough screens are not harmful in themselves, I believe the weekend pattern deserves attention, because those extra hours have to come from somewhere. Every additional hour of scrolling is usually an hour taken from sleep, exercise, or face-to-face time with family. I noticed this chain reaction in myself last semester. After staying up late watching short videos on Saturdays, I would wake up near noon, skip my usual basketball game, and then feel too tired to finish my homework on Sunday night. Admittedly, some online activities, such as chatting with friends, help teenagers stay connected, so banning screens would be neither realistic nor fair. A more practical solution is to plan screen time deliberately rather than simply cut it, since the real problem is not the device itself but the endless temptation of just one more video. For instance, students could set a weekend screen budget in advance, say three hours for entertainment, and track it with the time-limit function that most phones already have. Schools could also encourage this habit by holding a two-week challenge in which classes share their results. If teenagers learn to treat their attention as something valuable to spend wisely, they will gain not only more rest but also a stronger sense of autonomy over their own lives.",
+        "paragraphs": [
+          {
+            "function_zh": "描述數據＋比較：先點出平日與假日的落差，再用倍數與增減說明娛樂用途是主因，最後歸納螢幕角色的轉變",
+            "topic_sentence": "According to the survey, the screen habits of these high school students change dramatically once the school week ends."
+          },
+          {
+            "function_zh": "評估＋提出方案：用「時間從哪裡來」的因果鏈評估影響，讓步承認螢幕的好處，再提出個人與學校兩層的具體做法",
+            "topic_sentence": "Although screens are not harmful in themselves, I believe the weekend pattern deserves attention, because those extra hours have to come from somewhere."
+          }
+        ],
+        "notes": [
+          {
+            "kind": "connective",
+            "text": "once",
+            "function": "sequence",
+            "zh": "時間：一到週末就…"
+          },
+          {
+            "kind": "connective",
+            "text": "by contrast,",
+            "function": "contrast",
+            "zh": "對比平日與假日"
+          },
+          {
+            "kind": "connective",
+            "text": "while",
+            "function": "contrast",
+            "zh": "同時對照另外兩種用途"
+          },
+          {
+            "kind": "connective",
+            "text": "meanwhile,",
+            "function": "sequence",
+            "zh": "同一時間的另一個變化"
+          },
+          {
+            "kind": "connective",
+            "text": "In other words,",
+            "function": "conclusion",
+            "zh": "換句話說：歸納第一段"
+          },
+          {
+            "kind": "connective",
+            "text": "as soon as",
+            "function": "sequence",
+            "zh": "時間：一有空就…"
+          },
+          {
+            "kind": "connective",
+            "text": "Although",
+            "function": "contrast",
+            "zh": "讓步：螢幕本身不是壞東西"
+          },
+          {
+            "kind": "connective",
+            "text": "because",
+            "function": "cause_effect",
+            "zh": "說明值得注意的原因"
+          },
+          {
+            "kind": "connective",
+            "text": "After",
+            "function": "sequence",
+            "zh": "時間：熬夜之後"
+          },
+          {
+            "kind": "connective",
+            "text": "then",
+            "function": "sequence",
+            "zh": "接著發生的事"
+          },
+          {
+            "kind": "connective",
+            "text": "Admittedly,",
+            "function": "contrast",
+            "zh": "讓步：承認線上活動也有好處"
+          },
+          {
+            "kind": "connective",
+            "text": "such as",
+            "function": "example",
+            "zh": "舉例：和朋友聊天"
+          },
+          {
+            "kind": "connective",
+            "text": "since",
+            "function": "cause_effect",
+            "zh": "說明為什麼要「規劃」而不是「禁止」"
+          },
+          {
+            "kind": "connective",
+            "text": "For instance,",
+            "function": "example",
+            "zh": "舉出具體做法"
+          },
+          {
+            "kind": "connective",
+            "text": "also",
+            "function": "addition",
+            "zh": "補充學校可以做的事"
+          },
+          {
+            "kind": "connective",
+            "text": "If",
+            "function": "cause_effect",
+            "zh": "條件與結果：結尾提出見解"
+          },
+          {
+            "kind": "detail",
+            "text": "Video watching nearly triples, rising from 1.0 to 2.8 hours, while social media climbs from 1.2 to 2.5 hours and gaming from 0.6 to 1.9 hours.",
+            "zh": "用倍數與數字寫出三種娛樂用途的增加"
+          },
+          {
+            "kind": "detail",
+            "text": "For instance, students could set a weekend screen budget in advance, say three hours for entertainment, and track it with the time-limit function that most phones already have.",
+            "zh": "把做法寫到能執行的程度"
+          },
+          {
+            "kind": "experience",
+            "text": "After staying up late watching short videos on Saturdays, I would wake up near noon, skip my usual basketball game, and then feel too tired to finish my homework on Sunday night.",
+            "zh": "自己的連鎖反應，支持「時間被擠掉」的論點"
+          },
+          {
+            "kind": "pattern",
+            "text": "What drives this jump is entertainment rather than study.",
+            "zh": "what 子句當主詞：點出重點"
+          },
+          {
+            "kind": "pattern",
+            "text": "neither realistic nor fair",
+            "zh": "neither A nor B：既不…也不…"
+          },
+          {
+            "kind": "pattern",
+            "text": "not only more rest but also a stronger sense of autonomy",
+            "zh": "not only A but also B"
+          },
+          {
+            "kind": "pattern",
+            "text": "almost twice the weekday figure",
+            "zh": "倍數：twice＋名詞"
+          },
+          {
+            "kind": "phrase",
+            "text": "accounts for",
+            "zh": "account for：占（比例）"
+          },
+          {
+            "kind": "phrase",
+            "text": "face-to-face",
+            "zh": "面對面的"
+          },
+          {
+            "kind": "phrase",
+            "text": "in advance",
+            "zh": "事先"
+          }
+        ],
+        "self_assessment": {
+          "scores": {
+            "content": 5,
+            "organization": 5,
+            "grammar": 5,
+            "vocabulary": 4
+          },
+          "explanation_zh": "第一段用總量、倍數與唯一減少的用途讀出三個對比，第二段有因果鏈、親身經驗、讓步與具體方案，結尾提出見解（內容 5）；兩段層次分明，轉承語功能多樣、銜接自然（組織 5）；what 子句、分詞構句、neither…nor、not only…but also 等句型正確且有變化（文法句構 5）；描述增減的動詞多樣、搭配自然，但較進階的字不多（字彙拼字 4）。總分 19，屬頂標版。"
+        }
+      }
+    ]
+  },
+  "curriculum": [
+    {
+      "code": "9-V-7",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "9-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "4-V-8",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-composition-top-01",
+    "lot": "composition-top-01",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/composition",
+    "prompt_sha256": "93458e2632b5c4651b5c6df172ff3e875d94a287c44655c1578516843d3c87f9",
+    "spec_id": "composition-top@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T08:00:34Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "fail",
+      "created_at": "2026-10-09T07:46:11Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_grading",
+        "order": {
+          "E1": "top",
+          "E2": "steady"
+        },
+        "essays": {
+          "top": {
+            "scores": {
+              "content": 5,
+              "organization": 5,
+              "grammar": 5,
+              "vocabulary": 5
+            },
+            "off_topic": false,
+            "covers_all_tasks": true,
+            "errors": [
+              {
+                "excerpt": "screens serve mainly as study tools from Monday to Friday",
+                "explanation_zh": "用字與圖表不符：平日課業只占 4.8 小時中的 2.0 小時，社群、影音、遊戲合計 2.8 小時，課業只是「最大的單一用途」，不是「主要」用途；mainly 的概括和第一段自己引用的數字矛盾。",
+                "suggestion": "In other words, schoolwork is the single biggest use of screens from Monday to Friday, but entertainment takes over as soon as students have free time."
+              }
+            ],
+            "comment_zh": "第一段數字全部正確，先總量再個別用途，triples、soars、climbs、shrinks 等動詞多變；第二段立場清楚，以「多出來的時間從哪裡來」說明影響，親身經驗具體，先讓步再提出「週末螢幕預算＋手機限時功能」的做法並延伸到學校，結尾有見解。唯一的問題是第一段結論句說平日螢幕「主要」用於課業，與圖表不符（平日課業 2.0 小時，娛樂三項合計 2.8 小時）。",
+            "id": "E1"
+          },
+          "steady": {
+            "scores": {
+              "content": 4,
+              "organization": 4,
+              "grammar": 4,
+              "vocabulary": 4
+            },
+            "off_topic": false,
+            "covers_all_tasks": true,
+            "errors": [],
+            "comment_zh": "回應了四項要求：總量、最大單項、影音增加最多、只有課業減少都讀得正確；第二段立場明確，熬夜看影片的經驗與設定使用時限的做法具體。句型以簡單句和並列句為主，複句不多；rises、jumps、more than doubles、drops 有變化，但 takes up the largest part with 2.0 hours 搭配略生硬。屬穩健、無錯誤但深度與句構變化較有限的文章。",
+            "id": "E2"
+          }
+        },
+        "totals": {
+          "top": 20,
+          "steady": 16
+        },
+        "prompt_check": "pass",
+        "issues_zh": [],
+        "problems": [
+          "E1（頂標版） 有 1 個語言錯誤（範文要 0 錯，出題規格書 WRT-MOD-ERR-01）：screens serve mainly as study "
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T07:51:04Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_grading",
+        "order": {
+          "E1": "top",
+          "E2": "steady"
+        },
+        "essays": {
+          "top": {
+            "scores": {
+              "content": 4,
+              "organization": 5,
+              "grammar": 5,
+              "vocabulary": 5
+            },
+            "off_topic": false,
+            "covers_all_tasks": true,
+            "errors": [],
+            "comment_zh": "第一段由總量到分項、先平日後假日，數字與圖表一致，並用 soars、nearly triples、climbs、shrinks 等多樣動詞；第二段立場明確（值得留意）、有親身經驗、正反兼顧，建議（週末螢幕預算加班級挑戰）具體可行。小瑕疵：結尾說平日螢幕『主要當作學習工具』與圖表不符（平日課業 2.0 小時，少於其他三項合計 2.8 小時），內容扣 1 分。語言無誤。",
+            "id": "E1"
+          },
+          "steady": {
+            "scores": {
+              "content": 4,
+              "organization": 4,
+              "grammar": 4,
+              "vocabulary": 4
+            },
+            "off_topic": false,
+            "covers_all_tasks": true,
+            "errors": [],
+            "comment_zh": "兩段分工清楚，第一段列出總時數與各項對比，數字正確；第二段立場明確、有經驗、建議（設定使用時限）具體。句型以簡單句與合句為主，變化有限，用字正確但偏基本；『almost nine hours a day』其實只是假日的數字，略不精確。語言無誤。",
+            "id": "E2"
+          }
+        },
+        "totals": {
+          "top": 19,
+          "steady": 16
+        },
+        "prompt_check": "pass",
+        "issues_zh": [],
+        "problems": []
+      }
+    }
+  ],
+  "status": "rejected",
+  "status_reason": "blind_solver:A 未通過：E1（頂標版） 有 1 個語言錯誤（範文要 0 錯，出題規格書 WRT-MOD-ERR-01）：screens serve mainly as study；人工審核（第 1 輪判定）：同意退回。頂標版第一段結論句 In other words, screens serve mainly as study tools from Monday to Friday 和圖表矛盾：平日課業 2.0 小時，社群、影音、遊戲合計 2.8 小時，課業只是「最大的單一用途」，不是「主要」用途；前一句自己也寫了娛樂才是增加的主因，範文讀錯自己引用的數據（驗證者 A 列為錯誤、驗證者 B 也因此扣內容 1 分）。另外穩健版 Spending almost nine hours a day on screens 只是假日的數字，寫成每天不夠精確。重生時頂標版改成 schoolwork is the single biggest use on weekdays 一類的寫法，穩健版寫明 on weekends。"
+}

@@ -1,0 +1,666 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.fdc178",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "basic",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "這間美術館裡的畫，大多是由台灣畫家畫的。",
+        "options": null,
+        "answer": "Most of the paintings in this art museum were painted by Taiwanese artists.",
+        "accepted_answers": [
+          "Most of the pictures in this art museum were painted by artists from Taiwan.",
+          "Most paintings in this art museum were created by Taiwanese painters."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "被動語態"
+          ],
+          "topic": "參觀美術館"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "看完這些畫之後，我們全班在美術館前面拍了很多張照片。",
+        "options": null,
+        "answer": "After we looked at these paintings, our whole class took many photos in front of the museum.",
+        "accepted_answers": [
+          "After looking at these paintings, our class took a lot of pictures in front of the museum.",
+          "After we finished looking at these paintings, our class took lots of photos in front of the museum."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "時間副詞子句"
+          ],
+          "topic": "參觀美術館"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "參觀美術館"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「是由…畫的」表示畫是被畫家畫出來的，用被動語態 were painted by …；畫作是過去完成的，用過去式。主詞「大多數的畫」寫 most of the paintings（或 most paintings），是複數，be 動詞用 were。畫作是 painting，不是 paint（顏料）；「台灣畫家」寫 Taiwanese artists 或 artists from Taiwan。",
+          "evidence": [
+            "是由台灣畫家畫的",
+            "美術館裡的畫"
+          ],
+          "strategy_zh": "看到「由／被＋人＋動詞」先想被動：被做的東西當主詞，動作者放在 by 後面。",
+          "hints": [
+            "切成四段：這間美術館裡的畫／大多／由台灣畫家／畫的",
+            "標的詞彙：painting（畫作）、art（藝術）、museum（美術館）、most（大多數）、paint（畫）、artist（畫家）",
+            "句型框架：Most of the + 複數名詞 + were + p.p. + by …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「看完…之後，…」用時間副詞子句 After + 主詞 + 動詞（After we looked at these paintings），或簡化成 After looking at …；整件事已經發生，兩個動詞都用過去式（looked、took）。「拍照」的搭配是 take photos／take pictures，take 的過去式是 took；「很多張照片」要用複數 photos。「在美術館前面」是 in front of the museum。",
+          "evidence": [
+            "看完這些畫之後",
+            "拍了很多張照片"
+          ],
+          "strategy_zh": "「…之後／之前／的時候」放句首時，英文寫成 After／Before／When + 子句，後面加逗號再接主要子句。",
+          "hints": [
+            "切成四段：看完這些畫之後／我們全班／在美術館前面／拍了很多張照片",
+            "標的詞彙：painting（畫作）、class（班級）、front（前面）、museum（美術館）、take（拍〔照〕）、photo（照片）",
+            "句型框架：After + S + V（過去式）…, S + V（過去式）…"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "Most of the paintings in this art museum were painted by Taiwanese artists.",
+            "Most of the pictures in this art museum were painted by artists from Taiwan.",
+            "Most paintings in this art museum were created by Taiwanese painters."
+          ],
+          "target_words": [
+            {
+              "word": "painting",
+              "zh": "畫作",
+              "alternatives": [
+                "picture"
+              ]
+            },
+            {
+              "word": "art",
+              "zh": "藝術"
+            },
+            {
+              "word": "museum",
+              "zh": "美術館、博物館"
+            },
+            {
+              "word": "most",
+              "zh": "大多數"
+            },
+            {
+              "word": "paint",
+              "zh": "畫",
+              "alternatives": [
+                "create",
+                "draw"
+              ]
+            },
+            {
+              "word": "artist",
+              "zh": "畫家",
+              "alternatives": [
+                "painter"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PASS",
+              "grammar_id": "gp-passive",
+              "label_zh": "被動語態（由…畫的：be + p.p. + by …）",
+              "frame": "Most of the + 複數名詞 + were + p.p. + by + 動作者",
+              "zh_trigger": "是由台灣畫家畫的"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "這間美術館裡的畫",
+              "accepted": [
+                "the paintings in this art museum",
+                "the pictures in this art museum",
+                "paintings in this art museum",
+                "the paintings in this museum",
+                "the paintings in the art museum"
+              ],
+              "targets": [
+                "painting",
+                "art",
+                "museum"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "the painting in this art museum",
+                  "right": "the paintings in this art museum",
+                  "explanation_zh": "most of the 後面接複數名詞；美術館裡的畫不只一幅，用 paintings。"
+                },
+                {
+                  "wrong": "the paints in this art museum",
+                  "right": "the paintings in this art museum",
+                  "explanation_zh": "paint 當名詞是「顏料、油漆」；畫作是 painting。"
+                }
+              ]
+            },
+            {
+              "zh": "大多",
+              "accepted": [
+                "Most of",
+                "Most"
+              ],
+              "targets": [
+                "most"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Most of paintings",
+                  "right": "Most of the paintings",
+                  "explanation_zh": "most of 後面的名詞要有限定詞（the、these、my…）：most of the paintings；或直接寫 most paintings。"
+                },
+                {
+                  "wrong": "Almost the paintings",
+                  "right": "Most of the paintings",
+                  "explanation_zh": "almost 是副詞，不能直接修飾名詞；「大部分的」用 most。"
+                }
+              ]
+            },
+            {
+              "zh": "由台灣畫家",
+              "accepted": [
+                "by Taiwanese artists",
+                "by artists from Taiwan",
+                "by Taiwanese painters",
+                "by painters from Taiwan"
+              ],
+              "targets": [
+                "artist"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "by Taiwanese artist",
+                  "right": "by Taiwanese artists",
+                  "explanation_zh": "畫家不只一位，artist 要用複數。"
+                },
+                {
+                  "wrong": "from Taiwanese artists",
+                  "right": "by Taiwanese artists",
+                  "explanation_zh": "被動語態的動作者用 by 帶出。"
+                }
+              ]
+            },
+            {
+              "zh": "畫的",
+              "accepted": [
+                "were painted",
+                "were created",
+                "were drawn"
+              ],
+              "targets": [
+                "PASS",
+                "paint"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "were paint",
+                  "right": "were painted",
+                  "explanation_zh": "被動語態是 be + 過去分詞，paint 要加 -ed。"
+                },
+                {
+                  "wrong": "was painted",
+                  "right": "were painted",
+                  "explanation_zh": "主詞 most of the paintings 是複數，be 動詞用 were。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "plural_countable",
+              "zh": "美術館裡的畫",
+              "literal_error": "Most of the painting in this art museum was painted by Taiwanese artists.",
+              "part": 1,
+              "explanation_zh": "中文「畫」沒有單複數，照字面寫 the painting 會漏掉複數；most of the 後面接複數 paintings，動詞也要用 were，這一部分扣分。"
+            }
+          ],
+          "bonus": []
+        },
+        "2": {
+          "references": [
+            "After we looked at these paintings, our whole class took many photos in front of the museum.",
+            "After looking at these paintings, our class took a lot of pictures in front of the museum.",
+            "After we finished looking at these paintings, our class took lots of photos in front of the museum."
+          ],
+          "target_words": [
+            {
+              "word": "painting",
+              "zh": "畫作"
+            },
+            {
+              "word": "class",
+              "zh": "班級"
+            },
+            {
+              "word": "front",
+              "zh": "前面"
+            },
+            {
+              "word": "museum",
+              "zh": "美術館"
+            },
+            {
+              "word": "take",
+              "zh": "拍（照）"
+            },
+            {
+              "word": "photo",
+              "zh": "照片",
+              "alternatives": [
+                "picture"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "ADVCL",
+              "grammar_id": "gp-time-clause",
+              "label_zh": "時間副詞子句（After + S + V, S + V）",
+              "frame": "After + S + V（過去式）…, S + V（過去式）…",
+              "zh_trigger": "之後"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "看完這些畫之後",
+              "accepted": [
+                "After we looked at these paintings",
+                "After looking at these paintings",
+                "After we finished looking at these paintings",
+                "After we saw these paintings",
+                "After seeing these paintings",
+                "After we had looked at these paintings",
+                "After viewing these paintings"
+              ],
+              "targets": [
+                "ADVCL",
+                "painting"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "After we look at these paintings",
+                  "right": "After we looked at these paintings",
+                  "explanation_zh": "整件事發生在過去（拍了照片），時間子句的動詞也用過去式 looked。"
+                },
+                {
+                  "wrong": "After finish looking at these paintings",
+                  "right": "After we finished looking at these paintings",
+                  "explanation_zh": "after 後面要接完整子句（主詞＋動詞），或直接接動名詞 After looking …。"
+                }
+              ]
+            },
+            {
+              "zh": "我們全班",
+              "accepted": [
+                "our whole class",
+                "our class",
+                "the whole class",
+                "all of us"
+              ],
+              "targets": [
+                "class"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "we all class",
+                  "right": "our whole class",
+                  "explanation_zh": "「我們全班」寫成 our whole class（或 all of us），不要逐字翻成 we all class。"
+                }
+              ]
+            },
+            {
+              "zh": "在美術館前面",
+              "accepted": [
+                "in front of the museum",
+                "in front of the art museum",
+                "outside the museum"
+              ],
+              "targets": [
+                "front",
+                "museum"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "in the front of the museum",
+                  "right": "in front of the museum",
+                  "explanation_zh": "「在…前面（外面）」是 in front of；in the front of 指「在…內部的前段」。"
+                }
+              ]
+            },
+            {
+              "zh": "拍了很多張照片",
+              "accepted": [
+                "took many photos",
+                "took a lot of pictures",
+                "took lots of photos",
+                "took many pictures",
+                "took a lot of photos"
+              ],
+              "targets": [
+                "take",
+                "photo"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "took many photo",
+                  "right": "took many photos",
+                  "explanation_zh": "many 後面接複數名詞 photos。"
+                },
+                {
+                  "wrong": "taked many photos",
+                  "right": "took many photos",
+                  "explanation_zh": "take 的過去式是不規則變化 took。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "plural_countable",
+              "zh": "很多張照片",
+              "literal_error": "After we looked at these paintings, our whole class took many photo in front of the museum.",
+              "part": 4,
+              "explanation_zh": "中文「很多張照片」的「照片」沒有複數記號，照字面寫 many photo 會漏掉複數；many 後面要接 photos，這一部分扣分。"
+            }
+          ],
+          "bonus": []
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-basic-03",
+    "lot": "translation-basic-03",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "a2d0efb5c61ab9bdba02f949c0e9c7a37fac919a2d053a97cc75848f11db3021",
+    "spec_id": "translation-basic@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T13:20:57Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T12:58:00Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Most of the paintings in this art museum were painted by Taiwanese painters.",
+            "confidence": "high",
+            "explanation_zh": "「由台灣畫家畫的」用被動語態 be painted by；畫作是過去完成的，用過去式 were painted；「大多」用 Most of the + 複數名詞；美術館用 art museum。"
+          },
+          "2": {
+            "translation": "After looking at these paintings, our whole class took a lot of photos in front of the museum.",
+            "confidence": "high",
+            "explanation_zh": "「看完……之後」用 After + V-ing（主詞與主要子句相同，都是我們班）；「拍了很多張照片」用過去式 took a lot of photos；「全班」用 our whole class 當單數主詞；後面的美術館承前省略成 the museum。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PASS"
+            ],
+            "used_target_words": [
+              "painting",
+              "art",
+              "museum",
+              "most",
+              "paint",
+              "artist"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "ADVCL"
+            ],
+            "used_target_words": [
+              "painting",
+              "class",
+              "front",
+              "museum",
+              "take",
+              "photo"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "painting",
+              "art",
+              "museum",
+              "most",
+              "paint",
+              "artist"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PASS": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "painting",
+              "class",
+              "front",
+              "museum",
+              "take",
+              "photo"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "ADVCL": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "fail",
+      "created_at": "2026-10-09T13:20:57Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Most of the paintings in this art museum were painted by Taiwanese artists.",
+            "confidence": "high",
+            "explanation_zh": "「大多是」用 Most of the + 複數名詞；「由台灣畫家畫的」用被動語態 were painted by；畫是過去完成的作品，用過去式被動。"
+          },
+          "2": {
+            "translation": "After looking at these paintings, our whole class took a lot of photos in front of the art museum.",
+            "confidence": "high",
+            "explanation_zh": "「看完……之後」用 After + 動名詞；兩個動作都已發生，主要子句用過去式；「全班」譯 our whole class（視為單數），「前面」用 in front of。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PASS"
+            ],
+            "used_target_words": [
+              "painting",
+              "art",
+              "museum",
+              "most",
+              "paint",
+              "artist"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [],
+            "used_target_words": [
+              "painting",
+              "class",
+              "front",
+              "museum",
+              "take",
+              "photo"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "我的譯文寫 After looking at these paintings（After + V-ing），沒有自己的主詞，不算標的句型 ADVCL 要求的 After + S + V 時間副詞子句，所以沒有用到標的句型。中文「看完這些畫之後」沒有主詞，不會逼學生寫出子句。",
+              "第 1 部分 accepted 同時收了 After looking／seeing／viewing（沒有主詞）與 After we looked 等子句，等於沒有強制子句句型。建議中文改成有主詞的寫法（例如「在我們看完這些畫之後，全班在美術館前面拍了很多照片」），或把標的句型改成「After + 子句或 V-ing」。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "painting",
+              "art",
+              "museum",
+              "most",
+              "paint",
+              "artist"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PASS": true
+            },
+            "program_match": true
+          },
+          "2": {
+            "target_words_found": [
+              "painting",
+              "class",
+              "front",
+              "museum",
+              "take",
+              "photo"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {},
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 2 題盲譯沒有用到標的句型 ['ADVCL']：中文題目沒有自然引出這個句型（SPEC §5.7）",
+          "第 2 題驗證者對4 部分切分有意見（warn）：我的譯文寫 After looking at these paintings（After + V-ing），沒有自己的主詞，不算標的句型 ADVCL 要求的 After + S + V 時間副詞子句，所以沒有用到標的句型。中文「看完這些畫之"
+        ]
+      }
+    }
+  ],
+  "status": "rejected",
+  "status_reason": "兩次獨立判定結果不一致（第一次 verified、第二次 rejected），從嚴退件。判定者第 1 輪（人工審核）：第 2 題的標的句型 ADVCL（After + S + V 時間副詞子句）沒有被中文引出。「看完這些畫之後」沒有主詞，兩位驗證者都獨立譯成 After looking at these paintings（After + V-ing，是介系詞＋動名詞，不是時間子句）；第 2 個參考譯文本身也是 After looking …，第 1 部分 accepted 又收 After looking／seeing／viewing，等於不寫子句也拿滿分，參考譯文並沒有每一句都用到標的句型（程式比對 ADVCL 把 After + V-ing 也算進去，所以 validate 沒擋下；blind_solver:B 判 fail）。重生時請讓時間子句有自己的主詞（例如「我們看完這些畫之後，…」或前後主詞不同），並把 After + V-ing 的參考譯文換掉。"
+}

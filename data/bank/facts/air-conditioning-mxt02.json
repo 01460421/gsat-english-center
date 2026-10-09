@@ -1,0 +1,186 @@
+{
+  "schema": "gsat-bank-facts/v1",
+  "id": "air-conditioning-mxt02",
+  "title": "How air conditioning spread from a Brooklyn printing plant to homes and hot regions, and its effects on cities",
+  "sdgs": [
+    7,
+    11
+  ],
+  "created_on": "2026-10-09",
+  "created_by": "claude-opus-5-5",
+  "sources": [
+    {
+      "id": "s1",
+      "publisher": "U.S. Department of Energy",
+      "title": "History of Air Conditioning",
+      "url": "https://www.energy.gov/articles/history-air-conditioning",
+      "accessed": "2026-10-09",
+      "license": "U.S. government work",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s2",
+      "publisher": "Smithsonian Magazine",
+      "title": "The Unexpected History of the Air Conditioner",
+      "url": "https://www.smithsonianmag.com/smithsonian-institution/unexpected-history-air-conditioner-180972108/",
+      "accessed": "2026-10-09",
+      "license": "Smithsonian terms of use",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s3",
+      "publisher": "TIME",
+      "title": "Time Essay: The Great American Cooling Machine",
+      "url": "https://time.com/archive/6881673/time-essay-the-great-american-cooling-machine/",
+      "accessed": "2026-10-09",
+      "license": "TIME terms of use",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s4",
+      "publisher": "Arizona State University (ASU News)",
+      "title": "Excess heat from air conditioners causes higher nighttime temperatures",
+      "url": "https://news.asu.edu/content/excess-heat-air-conditioners-causes-higher-nighttime-temperatures",
+      "accessed": "2026-10-09",
+      "license": "ASU terms of use",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s5",
+      "publisher": "U.S. Centers for Disease Control and Prevention",
+      "title": "Tracking Heat Events",
+      "url": "https://www.cdc.gov/environmental-health-tracking/php/data-research/tracking-heat-events.html",
+      "accessed": "2026-10-09",
+      "license": "U.S. government work",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s6",
+      "publisher": "U.S. Environmental Protection Agency",
+      "title": "Using Trees and Vegetation to Reduce Heat Islands",
+      "url": "https://www.epa.gov/heatislands/using-trees-and-vegetation-reduce-heat-islands",
+      "accessed": "2026-10-09",
+      "license": "U.S. government work",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s7",
+      "publisher": "U.S. Environmental Protection Agency",
+      "title": "Using Cool Roofs to Reduce Heat Islands",
+      "url": "https://www.epa.gov/heatislands/using-cool-roofs-reduce-heat-islands",
+      "accessed": "2026-10-09",
+      "license": "U.S. government work",
+      "use": "fact_only",
+      "note": null
+    }
+  ],
+  "facts": [
+    {
+      "id": "f1",
+      "text": "In 1902 Willis Carrier, a young engineer at the Buffalo Forge Company, was asked to fix a humidity problem at a printing company in Brooklyn, New York.",
+      "source_ids": [
+        "s1",
+        "s2"
+      ],
+      "kind": "event"
+    },
+    {
+      "id": "f2",
+      "text": "At the printing plant, humid summer air made the paper swell and the printed colors blur.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f3",
+      "text": "Carrier's system blew air over cold coils so that extra moisture condensed out; making people comfortable was a side effect that raised wider interest.",
+      "source_ids": [
+        "s1",
+        "s2"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f12",
+      "text": "Early systems were used in industry, for example to control humidity and temperature in textile mills; at first they were too large and expensive for homes.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f4",
+      "text": "In the 1920s many American movie theaters installed cooling, and theaters were where most members of the public first felt cooled air.",
+      "source_ids": [
+        "s1",
+        "s2"
+      ],
+      "kind": "event"
+    },
+    {
+      "id": "f5",
+      "text": "Air conditioning moved into private homes mainly after World War II.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "date"
+    },
+    {
+      "id": "f6",
+      "text": "In the late 1960s, more affordable air conditioning helped fuel population growth in hot states such as Arizona and Florida.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f7",
+      "text": "Before air conditioning, people spent hot evenings outdoors, including on front porches, and some slept on roofs or lawns; afterwards families retreated into houses with shut windows.",
+      "source_ids": [
+        "s3"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f8",
+      "text": "Air conditioning made sealed buildings with fixed glass windows practical.",
+      "source_ids": [
+        "s3"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f9",
+      "text": "Air conditioning is described as the strongest protective factor against heat-related illness.",
+      "source_ids": [
+        "s5"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f10",
+      "text": "A 2014 ASU study of Phoenix found that waste heat released by air conditioners raised nighttime air temperatures, which in turn raised demand for cooling, a feedback loop.",
+      "source_ids": [
+        "s4"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f11",
+      "text": "Shade trees and cool roofs made of light-colored or reflective materials lower surface and air temperatures and reduce the need for air conditioning.",
+      "source_ids": [
+        "s6",
+        "s7"
+      ],
+      "kind": "cause_effect"
+    }
+  ],
+  "notes": "混合題 mixed-top-02 第 1 組用（2026-10-09 線上查證，只取事實、不取原句）。Carrier 的機器最初是為了控制濕度而不是讓人涼快，選文照這個寫；Phoenix 研究的升溫幅度選文不寫數字，只寫夜間氣溫升高與惡性循環。EPA 頁面 2026-10-09 以搜尋結果確認內容（樹木遮蔭、淺色反光屋頂降溫）。"
+}

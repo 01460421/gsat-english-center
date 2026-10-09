@@ -1,0 +1,648 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.1d423d",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "basic",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "從去年開始，我就一直在家自己學彈吉他。",
+        "options": null,
+        "answer": "Since last year, I have been learning to play the guitar by myself at home.",
+        "accepted_answers": [
+          "I have been teaching myself to play the guitar at home since last year.",
+          "Since last year, I have been learning to play the guitar on my own at home."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "現在完成（進行）式"
+          ],
+          "topic": "學吉他"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "為了學新歌，我常常在網路上看吉他教學影片。",
+        "options": null,
+        "answer": "To learn new songs, I often watch guitar lesson videos on the Internet.",
+        "accepted_answers": [
+          "I often watch guitar lessons online in order to learn new songs.",
+          "In order to learn new songs, I often watch guitar teaching videos online."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "不定詞表目的（為了…）"
+          ],
+          "topic": "學吉他"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "學吉他"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「從去年開始，一直…」表示動作從過去持續到現在而且還在進行，用 since + 過去時間點，主要子句用現在完成進行式 have been learning（也可以寫 have been teaching myself）。since 後面接時間點 last year，不用 from。「學彈吉他」是 learn to play the guitar，樂器前面通常加 the；「自己」是 by myself 或 on my own；「在家」是 at home。",
+          "evidence": [
+            "從去年開始，我就一直"
+          ],
+          "strategy_zh": "看到「從…開始一直／自…以來／已經」先想現在完成式；since 接時間點，for 接一段時間。",
+          "hints": [
+            "切成四段：從去年開始／我就一直／在家／自己學彈吉他",
+            "標的詞彙：since（從…以來）、learn（學）、play（彈奏）、guitar（吉他）、home（家）",
+            "句型框架：Since + 過去時間點, S + have been + V-ing …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「為了…」表目的，用不定詞 To + 原形動詞放句首（後面加逗號），或把 in order to + 原形動詞放句尾。「新歌」泛指好幾首，用複數 new songs。「常常」是頻率副詞 often，放在一般動詞 watch 前面；主詞 I，現在式動詞不加 s。「在網路上」是 on the Internet 或 online；「教學影片」可寫 lesson videos、teaching videos 或 guitar lessons，看影片用 watch。",
+          "evidence": [
+            "為了學新歌"
+          ],
+          "strategy_zh": "目的放句首時寫 To V …,；放句尾時用 in order to V。寫完檢查 to 後面是原形動詞。",
+          "hints": [
+            "切成四段：為了學新歌／我常常／在網路上／看吉他教學影片",
+            "標的詞彙：learn（學）、song（歌）、often（常常）、watch（看）、video（影片）、Internet（網路）",
+            "句型框架：To + 原形動詞 …, S + often + V …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "Since last year, I have been learning to play the guitar by myself at home.",
+            "I have been teaching myself to play the guitar at home since last year.",
+            "Since last year, I have been learning to play the guitar on my own at home."
+          ],
+          "target_words": [
+            {
+              "word": "since",
+              "zh": "自從（從…開始）"
+            },
+            {
+              "word": "learn",
+              "zh": "學",
+              "alternatives": [
+                "teach"
+              ]
+            },
+            {
+              "word": "play",
+              "zh": "彈（樂器）"
+            },
+            {
+              "word": "guitar",
+              "zh": "吉他"
+            },
+            {
+              "word": "home",
+              "zh": "家"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PERF",
+              "grammar_id": "gp-present-perfect",
+              "label_zh": "現在完成（進行）式（自…以來：since）",
+              "frame": "Since + 過去時間點, S + have/has been + V-ing …",
+              "zh_trigger": "從去年開始，我就一直"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "從去年開始",
+              "accepted": [
+                "Since last year",
+                "Starting from last year",
+                "Ever since last year"
+              ],
+              "targets": [
+                "since"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "From last year",
+                  "right": "Since last year",
+                  "explanation_zh": "「從過去某時開始一直到現在」用 since；from 要搭配 to／until 才完整。"
+                },
+                {
+                  "wrong": "Since last years",
+                  "right": "Since last year",
+                  "explanation_zh": "last year 是一個時間點，不加 s。"
+                }
+              ]
+            },
+            {
+              "zh": "我就一直",
+              "accepted": [
+                "I have been",
+                "I've been"
+              ],
+              "targets": [
+                "PERF"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "I am learning",
+                  "right": "I have been learning",
+                  "explanation_zh": "從過去持續到現在的動作要用現在完成（進行）式，不能只用現在進行式。"
+                },
+                {
+                  "wrong": "I learned",
+                  "right": "I have been learning",
+                  "explanation_zh": "一直持續到現在、還在進行的事，不用過去式。"
+                }
+              ]
+            },
+            {
+              "zh": "在家",
+              "accepted": [
+                "at home"
+              ],
+              "targets": [
+                "home"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "in home",
+                  "right": "at home",
+                  "explanation_zh": "「在家」的固定說法是 at home。"
+                }
+              ]
+            },
+            {
+              "zh": "自己學彈吉他",
+              "accepted": [
+                "learning to play the guitar by myself",
+                "teaching myself to play the guitar",
+                "learning the guitar on my own",
+                "learning to play the guitar on my own",
+                "learning the guitar by myself",
+                "teaching myself the guitar",
+                "learning to play the guitar at home by myself",
+                "learning to play the guitar at home on my own",
+                "learning the guitar at home by myself"
+              ],
+              "targets": [
+                "learn",
+                "play",
+                "guitar"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "learning to play the guitar by me",
+                  "right": "learning to play the guitar by myself",
+                  "explanation_zh": "「自己（獨力）」是 by myself 或 on my own；by me 是「被我」。"
+                },
+                {
+                  "wrong": "learning play the guitar",
+                  "right": "learning to play the guitar",
+                  "explanation_zh": "learn 後面接不定詞 to play。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "tense_trigger",
+              "zh": "從去年開始，我就一直",
+              "literal_error": "Since last year, I learn to play the guitar by myself at home.",
+              "part": 2,
+              "explanation_zh": "「從…開始，一直…」表示從過去持續到現在，照字面寫成現在簡單式 learn 會漏掉完成式，這一部分扣分。"
+            }
+          ],
+          "bonus": []
+        },
+        "2": {
+          "references": [
+            "To learn new songs, I often watch guitar lesson videos on the Internet.",
+            "I often watch guitar lessons online in order to learn new songs.",
+            "In order to learn new songs, I often watch guitar teaching videos online."
+          ],
+          "target_words": [
+            {
+              "word": "learn",
+              "zh": "學"
+            },
+            {
+              "word": "song",
+              "zh": "歌"
+            },
+            {
+              "word": "often",
+              "zh": "常常"
+            },
+            {
+              "word": "watch",
+              "zh": "看"
+            },
+            {
+              "word": "video",
+              "zh": "影片",
+              "alternatives": [
+                "lesson"
+              ]
+            },
+            {
+              "word": "Internet",
+              "zh": "網路",
+              "alternatives": [
+                "online"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PURP",
+              "grammar_id": "gp-infinitive-purpose",
+              "label_zh": "不定詞表目的（為了…：to／in order to）",
+              "frame": "To + 原形動詞 …, S + V … ／ S + V … in order to + 原形動詞",
+              "zh_trigger": "為了"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "為了學新歌",
+              "accepted": [
+                "To learn new songs",
+                "in order to learn new songs",
+                "To learn some new songs"
+              ],
+              "targets": [
+                "PURP",
+                "learn",
+                "song"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "For learning new songs",
+                  "right": "To learn new songs",
+                  "explanation_zh": "表目的用不定詞 To + 原形動詞（或 in order to）。"
+                },
+                {
+                  "wrong": "To learn new song",
+                  "right": "To learn new songs",
+                  "explanation_zh": "「新歌」泛指好幾首，song 是可數名詞，用複數 songs。"
+                }
+              ]
+            },
+            {
+              "zh": "我常常",
+              "accepted": [
+                "I often",
+                "I usually",
+                "I frequently"
+              ],
+              "targets": [
+                "often"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "I often am watching",
+                  "right": "I often watch",
+                  "explanation_zh": "表示習慣用現在簡單式，頻率副詞 often 放在一般動詞前面。"
+                }
+              ]
+            },
+            {
+              "zh": "在網路上",
+              "accepted": [
+                "on the Internet",
+                "online"
+              ],
+              "targets": [
+                "Internet"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "on Internet",
+                  "right": "on the Internet",
+                  "explanation_zh": "on the Internet 的 the 不能省略（或直接寫 online）。"
+                },
+                {
+                  "wrong": "on the online",
+                  "right": "online",
+                  "explanation_zh": "online 本身就是副詞（在網路上），前面不加 on the。"
+                }
+              ]
+            },
+            {
+              "zh": "看吉他教學影片",
+              "accepted": [
+                "watch guitar lesson videos",
+                "watch guitar lessons",
+                "watch guitar teaching videos",
+                "watch guitar videos",
+                "watch videos of guitar lessons",
+                "watch guitar tutorials",
+                "watch guitar tutorial videos"
+              ],
+              "targets": [
+                "watch",
+                "video"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "see guitar teaching films",
+                  "right": "watch guitar teaching videos",
+                  "explanation_zh": "看影片用 watch；網路上的影片是 video，film 多指電影。"
+                },
+                {
+                  "wrong": "watch guitar lesson video",
+                  "right": "watch guitar lesson videos",
+                  "explanation_zh": "常常看的不只一支影片，video 用複數。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "plural_countable",
+              "zh": "為了學新歌",
+              "literal_error": "To learn new song, I often watch guitar lesson videos on the Internet.",
+              "part": 1,
+              "explanation_zh": "中文「新歌」沒有單複數，照字面寫成 new song 會被扣分；泛指好幾首新歌要用 new songs。"
+            }
+          ],
+          "bonus": []
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-basic-04",
+    "lot": "translation-basic-04",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "825ee6e76853b2ea2df931259eb3211229fc9f6e568e89591ca9feda5b5b935e",
+    "spec_id": "translation-basic@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T07:59:15Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T00:00:00Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Since last year, I have been learning to play the guitar by myself at home.",
+            "confidence": "high",
+            "explanation_zh": "「從去年開始…一直」用 since + 過去時間點配現在完成進行式 have been learning（現在完成式 have learned 也可）；「自己學」by myself；「彈吉他」play the guitar。"
+          },
+          "2": {
+            "translation": "In order to learn new songs, I often watch guitar lesson videos online.",
+            "confidence": "high",
+            "explanation_zh": "「為了」表目的，用 In order to + 原形動詞放句首（To learn … 也可）；「常常」often 放一般動詞前；「吉他教學影片」譯 guitar lesson videos（也可 guitar tutorial videos / videos that teach guitar）；「在網路上」online（也可 on the Internet）。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PERF"
+            ],
+            "used_target_words": [
+              "since",
+              "learn",
+              "play",
+              "guitar",
+              "home"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "（備註，不影響判定）句型標籤寫「現在完成（進行）式」，但第 2、4 部分只收進行式（I have been … learning／teaching myself）；學生寫現在完成簡單式 Since last year, I have learned to play the guitar by myself at home. 也說得通，若要收應補進 accepted，否則可在說明中寫明本題要求完成進行式。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "PURP"
+            ],
+            "used_target_words": [
+              "learn",
+              "song",
+              "often",
+              "watch",
+              "video",
+              "Internet"
+            ],
+            "within_accepted": true,
+            "closest_reference": 2,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "since",
+              "learn",
+              "play",
+              "guitar",
+              "home"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PERF": true
+            },
+            "program_match": true
+          },
+          "2": {
+            "target_words_found": [
+              "learn",
+              "song",
+              "often",
+              "watch",
+              "video",
+              "Internet"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PURP": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T00:00:00Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Since last year, I have been learning to play the guitar by myself at home.",
+            "confidence": "high",
+            "explanation_zh": "「從去年開始…就一直」表示動作從過去持續到現在，用 since + 現在完成進行式 have been learning；「自己」譯為 by myself。"
+          },
+          "2": {
+            "translation": "In order to learn new songs, I often watch guitar tutorial videos online.",
+            "confidence": "high",
+            "explanation_zh": "「為了…」用 In order to + 原形動詞；「常常」用頻率副詞 often 放在動詞前；「教學影片」譯為 tutorial videos。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PERF"
+            ],
+            "used_target_words": [
+              "since",
+              "learn",
+              "play",
+              "guitar",
+              "home"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PURP"
+            ],
+            "used_target_words": [
+              "learn",
+              "song",
+              "often",
+              "watch",
+              "video",
+              "Internet"
+            ],
+            "within_accepted": true,
+            "closest_reference": 2,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "since",
+              "learn",
+              "play",
+              "guitar",
+              "home"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PERF": true
+            },
+            "program_match": true
+          },
+          "2": {
+            "target_words_found": [
+              "learn",
+              "song",
+              "often",
+              "watch",
+              "video",
+              "Internet"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PURP": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

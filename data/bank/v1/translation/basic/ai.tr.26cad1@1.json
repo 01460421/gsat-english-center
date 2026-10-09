@@ -1,0 +1,666 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.26cad1",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "basic",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "放學後和朋友組讀書會，可以幫助我們互相學習。",
+        "options": null,
+        "answer": "Forming a study group with friends after school helps us learn from each other.",
+        "accepted_answers": [
+          "Starting a study group with friends after school can help us learn from one another.",
+          "Having a study group with friends after school helps us learn from each other."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "動名詞主詞"
+          ],
+          "topic": "放學後的讀書會"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "有時候，朋友們的講解甚至和老師的一樣清楚。",
+        "options": null,
+        "answer": "Sometimes my friends' explanations are even as clear as the teacher's.",
+        "accepted_answers": [
+          "Sometimes my friends explain things even as clearly as our teacher does.",
+          "My friends' explanations are sometimes even as clear as our teacher's."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "原級比較"
+          ],
+          "topic": "放學後的讀書會"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "放學後的讀書會"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "整句的主詞是「放學後和朋友組讀書會」這件事，英文用動名詞片語當主詞：Forming（Starting／Having）a study group with friends after school；動名詞主詞視為單數，動詞要用 helps（或 can help）。「互相學習」是 learn from each other，from 不能漏；朋友不只一位，用複數 friends。",
+          "evidence": [
+            "和朋友組讀書會",
+            "互相學習"
+          ],
+          "strategy_zh": "中文用「做某件事＋可以／會…」開頭時，英文把那件事改成 V-ing 當主詞，再接單數動詞。",
+          "hints": [
+            "切成四段：放學後／和朋友組讀書會／可以幫助我們／互相學習",
+            "標的詞彙：form（組成）、study（讀書）、group（團體）、friend（朋友）、school（學校）、help（幫助）、learn（學習）、each other（互相）",
+            "句型框架：V-ing … + helps／can help + 受詞 + 原形動詞 …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「和…一樣清楚」用原級比較 as clear as，中間是原級形容詞；「甚至」放在 as 前面：even as clear as。比較的兩邊要對等：朋友的講解比老師的講解，寫 the teacher's，不寫 the teacher。「朋友們」是複數，所有格寫 friends'，講解用複數 explanations，動詞用 are。",
+          "evidence": [
+            "朋友們的講解",
+            "和老師的一樣清楚"
+          ],
+          "strategy_zh": "「A 和 B 一樣＋形容詞」→ A + be + as + 原級 + as + B；寫完回頭確認 A、B 是同一類東西。",
+          "hints": [
+            "切成四段：有時候／朋友們的講解／甚至／和老師的一樣清楚",
+            "標的詞彙：sometimes（有時候）、friend（朋友）、explanation（講解）、even（甚至）、clear（清楚的）、teacher（老師）",
+            "句型框架：A + be + (even) as + 原級形容詞 + as + B"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "Forming a study group with friends after school helps us learn from each other.",
+            "Starting a study group with friends after school can help us learn from one another.",
+            "Having a study group with friends after school helps us learn from each other."
+          ],
+          "target_words": [
+            {
+              "word": "form",
+              "zh": "組成",
+              "alternatives": [
+                "start",
+                "have",
+                "set up"
+              ]
+            },
+            {
+              "word": "study",
+              "zh": "讀書"
+            },
+            {
+              "word": "group",
+              "zh": "團體"
+            },
+            {
+              "word": "friend",
+              "zh": "朋友"
+            },
+            {
+              "word": "school",
+              "zh": "學校"
+            },
+            {
+              "word": "help",
+              "zh": "幫助"
+            },
+            {
+              "word": "learn",
+              "zh": "學習"
+            },
+            {
+              "word": "each other",
+              "zh": "互相",
+              "alternatives": [
+                "one another"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "NFSUBJ",
+              "grammar_id": "gp-gerund-subject",
+              "label_zh": "動名詞片語當主詞（V-ing … + 單數動詞）",
+              "frame": "V-ing … + V（單數）／can + 原形動詞 …",
+              "zh_trigger": "和朋友組讀書會"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "放學後",
+              "accepted": [
+                "after school"
+              ],
+              "targets": [
+                "school"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "after the school",
+                  "right": "after school",
+                  "explanation_zh": "「放學後」是 after school，school 不加 the。"
+                }
+              ]
+            },
+            {
+              "zh": "和朋友組讀書會",
+              "accepted": [
+                "Forming a study group with friends",
+                "Starting a study group with friends",
+                "Having a study group with friends",
+                "Setting up a study group with friends",
+                "Forming a study group with our friends"
+              ],
+              "targets": [
+                "NFSUBJ",
+                "form",
+                "study",
+                "group",
+                "friend"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Form a study group with friends",
+                  "right": "Forming a study group with friends",
+                  "explanation_zh": "動作當主詞要改成動名詞 Forming（或不定詞 To form），原形動詞不能當主詞。"
+                },
+                {
+                  "wrong": "Forming a study group with friend",
+                  "right": "Forming a study group with friends",
+                  "explanation_zh": "一起讀書的朋友不只一位，friend 要用複數。"
+                }
+              ]
+            },
+            {
+              "zh": "可以幫助我們",
+              "accepted": [
+                "helps us",
+                "can help us",
+                "will help us"
+              ],
+              "targets": [
+                "help"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "help us",
+                  "right": "helps us",
+                  "explanation_zh": "動名詞片語當主詞視為單數，現在式動詞要加 s：helps（或寫 can help）。"
+                }
+              ]
+            },
+            {
+              "zh": "互相學習",
+              "accepted": [
+                "learn from each other",
+                "learn from one another",
+                "to learn from each other"
+              ],
+              "targets": [
+                "learn",
+                "each other"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "learn each other",
+                  "right": "learn from each other",
+                  "explanation_zh": "「向彼此學習」要加 from：learn from each other；learn each other 變成「學會彼此」。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "plural_countable",
+              "zh": "和朋友",
+              "literal_error": "Forming a study group with friend after school helps us learn from each other.",
+              "part": 2,
+              "explanation_zh": "中文「朋友」沒有標出單複數，照字面寫 with friend 會漏掉複數；一起組讀書會的是好幾位朋友，要寫 friends，這一部分扣分。"
+            }
+          ],
+          "bonus": []
+        },
+        "2": {
+          "references": [
+            "Sometimes my friends' explanations are even as clear as the teacher's.",
+            "Sometimes my friends explain things even as clearly as our teacher does.",
+            "My friends' explanations are sometimes even as clear as our teacher's."
+          ],
+          "target_words": [
+            {
+              "word": "sometimes",
+              "zh": "有時候"
+            },
+            {
+              "word": "friend",
+              "zh": "朋友"
+            },
+            {
+              "word": "explanation",
+              "zh": "講解",
+              "alternatives": [
+                "explain"
+              ]
+            },
+            {
+              "word": "even",
+              "zh": "甚至"
+            },
+            {
+              "word": "clear",
+              "zh": "清楚的",
+              "alternatives": [
+                "clearly"
+              ]
+            },
+            {
+              "word": "teacher",
+              "zh": "老師",
+              "alternatives": [
+                "teacher's"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "COMP",
+              "grammar_id": "gp-as-as",
+              "label_zh": "原級比較（as + 形容詞／副詞 + as）",
+              "frame": "A + be + (even) as + 原級形容詞 + as + B ／ A + V + as + 副詞 + as + B",
+              "zh_trigger": "和老師的一樣清楚"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "有時候",
+              "accepted": [
+                "Sometimes",
+                "At times"
+              ],
+              "targets": [
+                "sometimes"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Sometime",
+                  "right": "Sometimes",
+                  "explanation_zh": "「有時候」是 sometimes（要有 s）；sometime 是「某個時候」。"
+                }
+              ]
+            },
+            {
+              "zh": "朋友們的講解",
+              "accepted": [
+                "my friends' explanations",
+                "my friends explain things",
+                "our friends' explanations"
+              ],
+              "targets": [
+                "friend",
+                "explanation"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "my friend's explanation",
+                  "right": "my friends' explanations",
+                  "explanation_zh": "「朋友們」是複數，所有格寫 friends'（s 後面加撇號），講解也用複數 explanations。"
+                },
+                {
+                  "wrong": "my friends' explainations",
+                  "right": "my friends' explanations",
+                  "explanation_zh": "拼字：explain 的名詞是 explanation，ai 變成 a。"
+                }
+              ]
+            },
+            {
+              "zh": "甚至",
+              "accepted": [
+                "even"
+              ],
+              "targets": [
+                "even"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "even more clear",
+                  "right": "even as clear",
+                  "explanation_zh": "「甚至和…一樣」是 even as … as；寫成比較級 even more clear 意思變成「更清楚」。"
+                }
+              ]
+            },
+            {
+              "zh": "和老師的一樣清楚",
+              "accepted": [
+                "as clear as the teacher's",
+                "as clearly as our teacher does",
+                "as clear as our teacher's",
+                "as clear as the teacher's explanations",
+                "as clearly as the teacher does",
+                "as clearly as our teacher"
+              ],
+              "targets": [
+                "COMP",
+                "clear",
+                "teacher"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "as clear as the teacher",
+                  "right": "as clear as the teacher's",
+                  "explanation_zh": "比較的是「講解」和「老師的講解」，所以要寫 the teacher's（＝the teacher's explanations），不能拿講解跟老師本人比。"
+                },
+                {
+                  "wrong": "as clearer as the teacher's",
+                  "right": "as clear as the teacher's",
+                  "explanation_zh": "as … as 中間用原級 clear，不用比較級。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "plural_countable",
+              "zh": "朋友們",
+              "literal_error": "Sometimes my friend's explanation is even as clear as the teacher's.",
+              "part": 2,
+              "explanation_zh": "「朋友們」標明是複數，寫成單數所有格 friend's 就錯了；複數所有格是 friends'，講解也跟著用 explanations，這一部分扣分。"
+            }
+          ],
+          "bonus": []
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-basic-03",
+    "lot": "translation-basic-03",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "a2d0efb5c61ab9bdba02f949c0e9c7a37fac919a2d053a97cc75848f11db3021",
+    "spec_id": "translation-basic@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T07:59:02Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "warn",
+      "created_at": "2026-10-09T07:40:01Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Forming a study group with friends after school can help us learn from each other.",
+            "confidence": "high",
+            "explanation_zh": "主詞是「組讀書會」這件事，用動名詞 Forming a study group 當主詞；「幫助我們互相學習」用 help + O + 原形 V，「互相學習」譯成 learn from each other。"
+          },
+          "2": {
+            "translation": "Sometimes, our friends' explanations are even as clear as our teacher's.",
+            "confidence": "high",
+            "explanation_zh": "「和……一樣清楚」用 as + 原級 + as；比較對象是講解對講解，所以用所有格 our teacher's（＝our teacher's explanations）；「甚至」用 even 放在 be 動詞後。中文沒說老師單複數，我用單數。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "NFSUBJ"
+            ],
+            "used_target_words": [
+              "form",
+              "study",
+              "group",
+              "friend",
+              "school",
+              "help",
+              "learn",
+              "each other"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "第 2 部分「和朋友組讀書會」的常見錯誤說明寫「動作當主詞要改成動名詞 Forming（或不定詞 To form）」，等於承認 To form 也正確，但 accepted 沒有 \"To form a study group with friends\"；評分時可能誤扣，建議補進 accepted，或把說明裡的「或不定詞 To form」拿掉，兩邊要一致。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "COMP"
+            ],
+            "used_target_words": [
+              "sometimes",
+              "friend",
+              "explanation",
+              "even",
+              "clear",
+              "teacher"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "form",
+              "study",
+              "group",
+              "friend",
+              "school",
+              "help",
+              "learn",
+              "each other"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NFSUBJ": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "sometimes",
+              "friend",
+              "explanation",
+              "even",
+              "clear",
+              "teacher"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "COMP": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 1 題驗證者對4 部分切分有意見（warn）：第 2 部分「和朋友組讀書會」的常見錯誤說明寫「動作當主詞要改成動名詞 Forming（或不定詞 To form）」，等於承認 To form 也正確，但 accepted 沒有 \"To form a study group with fr"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T07:39:22Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Forming a study group with friends after school can help us learn from each other.",
+            "confidence": "high",
+            "explanation_zh": "「組讀書會」當主詞，用動名詞 Forming a study group；「幫助我們互相學習」用 help us learn（help 後可省略 to），互相用 from each other。"
+          },
+          "2": {
+            "translation": "Sometimes, my friends' explanations are even as clear as our teacher's.",
+            "confidence": "medium",
+            "explanation_zh": "「和老師的一樣清楚」用 as…as 的同級比較，後面用 teacher's 避免重複 explanations；「甚至」用 even。even as clear as 的語感略不自然，也可以改成 are just as clear as。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "NFSUBJ"
+            ],
+            "used_target_words": [
+              "form",
+              "study",
+              "group",
+              "friend",
+              "school",
+              "help",
+              "learn",
+              "each other"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "COMP"
+            ],
+            "used_target_words": [
+              "sometimes",
+              "friend",
+              "explanation",
+              "even",
+              "clear",
+              "teacher"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "form",
+              "study",
+              "group",
+              "friend",
+              "school",
+              "help",
+              "learn",
+              "each other"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NFSUBJ": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "sometimes",
+              "friend",
+              "explanation",
+              "even",
+              "clear",
+              "teacher"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "COMP": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

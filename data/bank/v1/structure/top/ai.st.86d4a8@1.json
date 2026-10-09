@@ -1,0 +1,616 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.st.86d4a8",
+  "version": 1,
+  "section_type": "structure",
+  "format_version": "structure-4x5",
+  "tier": "top",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": "By the end of a long school day, many students find even a simple question like what to eat for dinner strangely hard to answer. This is not just laziness. From the moment we wake up, we make a steady stream of choices, from what to wear to which task to tackle first, and each one seems to take a small toll on the mind.\n[[1]] Psychologists call this decision fatigue: the more decisions a person makes, the harder it becomes to make the next one well. As the mind tires, it looks for shortcuts, which usually take one of two forms. [[2]] Others avoid the effort altogether, putting choices off or simply accepting whatever has already been chosen for them, such as the settings that come with a new phone.\nA well-known study of judges in Israel suggested how serious the effect can be. The judges were deciding whether prisoners should be released early, and they heard case after case for hours, stopping only for a morning snack and lunch. [[3]] After each break, however, the share of prisoners who were released jumped back up, only to fall again as the next session wore on. Some researchers think the order of the cases explains part of this pattern, but the study still made many people wonder how often tiredness shapes important decisions.\n[[4]] Barack Obama, for instance, wore only gray or blue suits as president, explaining that he had too many important decisions to make to waste energy on clothes. Experts suggest similar habits for everyone: make big choices in the morning, turn small daily choices into routines, and avoid deciding anything important when hungry or tired. The best way to make good decisions, it seems, may be to make fewer of them.",
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": {
+      "A": "Some scientists blame it all on students not getting enough sleep.",
+      "B": "Our ability to choose wisely appears to wear down as the choices pile up.",
+      "C": "One way to fight back is to cut down on the small choices that fill each day.",
+      "D": "The longer each session went on, the less likely a prisoner was to be set free.",
+      "E": "Some people become impulsive and simply grab whatever offers the quickest reward."
+    },
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "B",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "pronoun_reference",
+          "clue_raw": "TS|PR|F|L",
+          "key_phrase": "Our ability to choose wisely appears to wear down as the choices pile up → Psychologists call this decision fatigue: the more decisions a person makes, the harder it becomes to make the next one well"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "E",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "enumeration",
+          "clue_raw": "SP|PR|F|P",
+          "key_phrase": "one of two forms → Some people become impulsive … → Others avoid the effort altogether"
+        }
+      },
+      {
+        "no": 3,
+        "label": "3",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "D",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "contrast",
+          "clue_raw": "SP|CN|F|L",
+          "key_phrase": "The longer each session went on, the less likely … set free ↔ After each break, however, the share … jumped back up, only to fall again as the next session wore on"
+        }
+      },
+      {
+        "no": 4,
+        "label": "4",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "C",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "topic_sentence",
+          "clue_raw": "TS|LX|F|P",
+          "key_phrase": "cut down on the small choices → Barack Obama, for instance, wore only gray or blue suits；turn small daily choices into routines；make fewer of them"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "決策疲勞",
+      "genre": "expository",
+      "sdgs": [],
+      "text_format": "continuous"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "第一段說：上了一整天課，連晚餐吃什麼都難以決定；這不只是懶惰——從早上醒來就不斷做選擇，每一個選擇都讓心智付出一點代價。第二段段首空格之後說 Psychologists call this decision fatigue（心理學家把這稱為「決策疲勞」），冒號後的定義是：做的決定越多，下一個決定就越難做好。this 必須指一個「選擇越多、判斷越差」的現象。(B)「隨著選擇越積越多，我們明智選擇的能力似乎會逐漸耗損」正是這個現象，this 指的就是它。選項本身沒有承接前文的轉折詞或回指前文的代名詞，只能靠後一句的 this 和冒號後的定義來定位。選 (B)。",
+          "evidence": [
+            "Our ability to choose wisely appears to wear down as the choices pile up.",
+            "Psychologists call this decision fatigue: the more decisions a person makes, the harder it becomes to make the next one well.",
+            "From the moment we wake up, we make a steady stream of choices, from what to wear to which task to tackle first, and each one seems to take a small toll on the mind."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "pronoun_reference",
+          "option_notes_zh": {
+            "A": "多餘句（瞄準本格）：它提出另一個原因——學生睡眠不足——看起來也能接在第一段「這不只是懶惰」之後，當作新段落的開頭；但下一句說「心理學家把這稱為決策疲勞：做的決定越多，越難做好下一個決定」，this 若指睡眠不足，就和冒號後的定義對不上；全文講的也一直是「選擇太多」，不是睡眠。",
+            "C": "(C) 說「反擊的一種方法」是減少小選擇，但這時還沒說明問題是什麼，fight back 沒有對象；下一句的 this 也不能指「一種方法」。(C) 屬於第 4 格。",
+            "D": "(D) 講每一段審理拖得越久，囚犯越不容易獲釋，是第三段法官研究的內容，這裡還沒提到法官或囚犯。(D) 屬於第 3 格。",
+            "E": "(E) 說有些人變得衝動，是「兩種捷徑」中的第一種，要放在 one of two forms 之後、Others 之前；放在段首，下一句的 this 會變成「衝動」，和決策疲勞的定義不符。(E) 屬於第 2 格。"
+          },
+          "strategy_zh": "段首空格只能靠後一句定位時，先看後一句有沒有 this、it、such 這類回指詞，再看它後面的解釋（冒號後的定義）。空格就是被這個定義描述的現象；提出「另一個原因」的選項，要檢查它和定義是否吻合。",
+          "hints": [
+            "下一句的 this 被稱為 decision fatigue，它的定義是什麼？",
+            "哪個選項描述「選擇越多，判斷越差」？",
+            "答案說我們的能力 wear down as the choices pile up。"
+          ]
+        },
+        "2": {
+          "explanation_zh": "前一句說：心智疲倦時會找省力的捷徑，這些捷徑通常有「兩種形式」。空格後一句以 Others 開頭：「另一些人則乾脆逃避費力，拖延決定，或直接接受別人替他們選好的東西，例如新手機的預設設定。」Others 表示前面要先有 Some（有些人），而且後一句是第二種形式，空格就是第一種。(E)「有些人變得衝動，乾脆抓住能最快帶來好處的選項」——一種是衝動行事，一種是逃避決定，正好構成「兩種形式」。選 (E)。",
+          "evidence": [
+            "Some people become impulsive and simply grab whatever offers the quickest reward.",
+            "As the mind tires, it looks for shortcuts, which usually take one of two forms.",
+            "Others avoid the effort altogether, putting choices off or simply accepting whatever has already been chosen for them, such as the settings that come with a new phone."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "enumeration",
+          "option_notes_zh": {
+            "A": "多餘句：它也以 Some 開頭，表面上能和下一句的 Others 配成一組，但「有些科學家把一切歸咎於學生睡眠不足」講的是科學家的看法，不是疲倦時的一種捷徑；接上 Others avoid the effort altogether，就變成「另一些科學家逃避費力」，說不通。",
+            "B": "(B) 是對決策疲勞的總述，要放在段首，讓下一句的 this 有所指；放在這裡，它既不是一種「捷徑」，也無法讓 Others 有對應的 Some。(B) 屬於第 1 格。",
+            "C": "(C) 說減少小選擇是「反擊」決策疲勞的方法，是事先的規劃，不是疲倦時的捷徑；它也沒有 Some，接不上 Others。(C) 屬於第 4 格。",
+            "D": "(D) 講法官審理的時間越長，囚犯越難獲釋，是第三段的研究結果，和「兩種捷徑」無關。(D) 屬於第 3 格。"
+          },
+          "strategy_zh": "看到 two forms／two kinds，或後一句以 Others、The other 開頭，就要找「第一個」：用 Some…、One… 開頭，而且內容和第二個屬於同一類（都是疲倦時的捷徑）的選項。只有開頭相同還不夠，內容也要對得上。",
+          "hints": [
+            "前一句說捷徑有幾種？下一句的 Others 是第幾種？",
+            "哪個選項描述另一種省力的作法，而且主詞是「人」？",
+            "答案說有些人 become impulsive。"
+          ]
+        },
+        "3": {
+          "explanation_zh": "前一句說：法官要決定囚犯能否提前獲釋，一連好幾個小時審理一件又一件案子，中間只停下來吃早上的點心和午餐。空格後一句說：然而每次休息過後，獲釋的比例又「跳回」高點，接著隨著下一段審理進行又再次下降。jumped back up（回升）和 fall again（再次下降）表示空格必須先說出「比例隨著審理進行而下降」；however 也需要一個相反的情況來轉折。(D)「每一段審理進行得越久，囚犯獲釋的可能就越低」正好提供這個下降的趨勢。選 (D)。",
+          "evidence": [
+            "The longer each session went on, the less likely a prisoner was to be set free.",
+            "The judges were deciding whether prisoners should be released early, and they heard case after case for hours, stopping only for a morning snack and lunch.",
+            "After each break, however, the share of prisoners who were released jumped back up, only to fall again as the next session wore on."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "contrast",
+          "option_notes_zh": {
+            "A": "多餘句：把原因歸咎於學生睡眠不足，和法官的研究無關；後一句說的是休息後獲釋比例回升，(A) 沒有提供任何「下降」可供轉折。",
+            "B": "(B) 是決策疲勞的一般性說法，看似也能解釋法官的表現，但它沒有說出「獲釋的比例下降」，後一句的 jumped back up 和 fall again 就失去對照；而且 (B) 必須放在第 1 格，讓 Psychologists call this decision fatigue 的 this 有所指。(B) 屬於第 1 格。",
+            "C": "(C) 說減少小選擇是對抗疲勞的方法，和法官審案的研究結果無關，也接不上 however 的轉折。(C) 屬於第 4 格。",
+            "E": "(E) 說有些人變得衝動，後面要接 Others…；放在這裡和囚犯獲釋的比例無關。(E) 屬於第 2 格。"
+          },
+          "strategy_zh": "back、again 這類字（jumped back up、fall again）表示「回到原來的狀態」，空格就要先交代「原來發生了什麼變化」。把後一句的變化倒推回去：休息後回升 → 休息前一定在下降。一般性的說法雖然沾得上邊，但沒有交代這個變化就接不上。",
+          "hints": [
+            "下一句說休息後獲釋比例「回升」，那休息前發生了什麼？",
+            "哪個選項描述審理越久、對囚犯越不利？",
+            "答案說 the longer each session went on, the less likely a prisoner was to be set free。"
+          ]
+        },
+        "4": {
+          "explanation_zh": "最後一段段首。空格後一句說：例如歐巴馬（Barack Obama）擔任總統時只穿灰色或藍色西裝，因為要做的重要決定太多，不想把精力浪費在衣服上。再下一句是專家給一般人的類似建議：重大決定在早上做、把日常小選擇變成例行公事、餓了或累了就別做重要決定；最後總結「做出好決定的最好方法，或許就是少做一些決定」。for instance 表示空格是被舉例說明的概括句：(C)「反擊的一種方法，是減少每天充斥生活的小選擇」——歐巴馬的西裝就是一例。選 (C)。",
+          "evidence": [
+            "One way to fight back is to cut down on the small choices that fill each day.",
+            "Barack Obama, for instance, wore only gray or blue suits as president, explaining that he had too many important decisions to make to waste energy on clothes.",
+            "The best way to make good decisions, it seems, may be to make fewer of them."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "topic_sentence",
+          "option_notes_zh": {
+            "A": "多餘句：把一切歸咎於學生睡眠不足，和後面歐巴馬減少穿衣選擇的例子無關；最後一句「少做一些決定」也說明全文的重點在選擇的數量，不在睡眠。",
+            "B": "(B) 說能力會隨選擇增加而耗損，是在描述問題，不是解決方法；歐巴馬固定只穿兩種顏色的西裝是「減少選擇」的作法，for instance 舉的例子對不上「能力耗損」。(B) 屬於第 1 格。",
+            "D": "(D) 講囚犯獲釋的機率，屬於第三段法官的研究，和歐巴馬的西裝無關。(D) 屬於第 3 格。",
+            "E": "(E) 說有些人變得衝動，是疲倦時的捷徑之一；歐巴馬固定穿同色西裝是事先規劃、減少選擇，方向正好相反。(E) 屬於第 2 格。"
+          },
+          "strategy_zh": "後一句有 for instance、for example（即使不在句首）時，空格多半是「被舉例的那個概念」。先想歐巴馬的作法是什麼的例子（減少不必要的選擇），再找概括這個作法的選項。",
+          "hints": [
+            "歐巴馬只穿灰色或藍色西裝，是為了什麼？",
+            "哪個選項提到「減少小選擇」？",
+            "答案說 one way to fight back is to cut down on the small choices。"
+          ]
+        }
+      }
+    },
+    "translation_zh": {
+      "text": "上了一整天課之後，許多學生發現，連晚餐要吃什麼這種簡單的問題，都變得出奇地難以回答。這不只是懶惰而已。從早上醒來那一刻起，我們就不斷在做選擇，從要穿什麼到先做哪件事，而每一個選擇似乎都會讓心智付出一點代價。\n【1】隨著選擇越積越多，我們明智選擇的能力似乎會逐漸耗損。心理學家把這種現象稱為「決策疲勞」：一個人做的決定越多，下一個決定就越難做好。心智疲倦時，會尋找省力的捷徑，這些捷徑通常有兩種形式。【2】有些人會變得衝動，乾脆抓住能最快帶來好處的選項。另一些人則完全逃避費力，拖延決定，或乾脆接受別人已經替他們選好的東西，例如新手機出廠時的預設設定。\n一項針對以色列法官的知名研究，顯示了這種效應可能有多嚴重。這些法官要決定囚犯能否提前獲釋，他們一連好幾個小時審理一件又一件案子，中間只停下來吃早上的點心和午餐。【3】每一段審理進行得越久，囚犯獲釋的可能就越低。然而每次休息過後，獲釋的比例又回升，接著隨著下一段審理的進行再次下降。有些研究者認為，案件審理的順序可以解釋這個模式的一部分，但這項研究仍讓許多人思考：疲勞究竟有多常左右重要的決定。\n【4】反擊的一種方法，是減少每天充斥生活的各種小選擇。例如，歐巴馬（Barack Obama）擔任總統期間只穿灰色或藍色西裝，他解釋說，他要做的重要決定太多，不想把精力浪費在衣服上。專家也建議每個人養成類似的習慣：重大的選擇在早上做，把日常的小選擇變成例行公事，餓了或累了的時候避免做任何重要決定。看來，做出好決定的最好方法，或許就是少做一些決定。\n（多餘句 (A)：有些科學家把這一切都歸咎於學生睡眠不足。）"
+    },
+    "elimination": {
+      "feasible": {
+        "1": [
+          "B"
+        ],
+        "2": [
+          "E"
+        ],
+        "3": [
+          "D"
+        ],
+        "4": [
+          "C"
+        ]
+      },
+      "perfect_matchings": 1
+    },
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": null,
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "3-V-7",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "7-V-5",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "9-V-2",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "D-V-2",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": "本文由 AI 撰寫"
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-08-structure-top-04",
+    "lot": "structure-top-04",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/structure",
+    "prompt_sha256": "f7bdb6c0e9f9c3d38bda07f71a27a0a8235bbdbfc85dd88a5e37cdd44530cbcf",
+    "spec_id": "structure-top@2026-10-08",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 290,
+    "sentences": 13,
+    "avg_sentence_length": 22.31,
+    "denominator": 284,
+    "proper_nouns": [
+      "Israel",
+      "Obama"
+    ],
+    "numbers": 4,
+    "coverage_l1_4": 0.9648,
+    "coverage_l1_6": 0.9824,
+    "offlist_ratio": 0.0176,
+    "beyond_l4_ratio": 0.0176,
+    "level_counts": {
+      "1": 231,
+      "2": 37,
+      "3": 4,
+      "4": 2,
+      "5": 5,
+      "off": 5
+    },
+    "offlist_words": [
+      "barack",
+      "fewer",
+      "laziness",
+      "shortcuts",
+      "tiredness"
+    ],
+    "band": {
+      "tier": "top",
+      "basis": "lot structure-top-04（SPEC §3.4＋出題規格書 passage_overrides（words、coverage_L1_4_min（取代 SPEC 的區間）、coverage_L1_6_min、offlist_max、beyond_l4_ratio_max））",
+      "ok": true,
+      "checks": {
+        "word_count": {
+          "value": 290,
+          "min": 220,
+          "max": 310,
+          "ok": true
+        },
+        "coverage_l1_4": {
+          "value": 0.9648,
+          "min": 0.9,
+          "max": null,
+          "ok": true
+        },
+        "coverage_l1_6": {
+          "value": 0.9824,
+          "min": 0.94,
+          "max": null,
+          "ok": true
+        },
+        "offlist_ratio": {
+          "value": 0.0176,
+          "min": null,
+          "max": 0.06,
+          "ok": true
+        },
+        "avg_sentence_length": {
+          "value": 22.31,
+          "min": 18,
+          "max": 25,
+          "ok": true
+        },
+        "beyond_l4_ratio": {
+          "value": 0.0176,
+          "min": null,
+          "max": 0.06,
+          "ok": true
+        }
+      }
+    }
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T12:29:26Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T12:11:33Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "answers": {
+          "1": {
+            "answer": "B",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Psychologists call this decision fatigue: the more decisions a person makes, the harder it becomes to make the next one well."
+            ],
+            "explanation_zh": "空格後 Psychologists call this decision fatigue 的 this 需指「選擇愈多、判斷力愈差」的現象，B 正是此意；A 把原因歸於睡眠不足，與 decision fatigue 的定義及前文 This is not just laziness 的論點不合。",
+            "feasible": [
+              "B"
+            ]
+          },
+          "2": {
+            "answer": "E",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "As the mind tires, it looks for shortcuts, which usually take one of two forms.",
+              "Others avoid the effort altogether, putting choices off or simply accepting whatever has already been chosen for them, such as the settings that come with a new phone."
+            ],
+            "explanation_zh": "前句說捷徑有兩種形式，空格後 Others 是第二種，E 以 Some people 開頭描述第一種（衝動選最快的獎賞），形成 Some…Others 的對應。",
+            "feasible": [
+              "E"
+            ]
+          },
+          "3": {
+            "answer": "D",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "The judges were deciding whether prisoners should be released early, and they heard case after case for hours, stopping only for a morning snack and lunch.",
+              "After each break, however, the share of prisoners who were released jumped back up, only to fall again as the next session wore on."
+            ],
+            "explanation_zh": "空格後 After each break, however… jumped back up 表示前句講的是假釋率隨庭期延長而下降，D 正好說明這一點。",
+            "feasible": [
+              "D"
+            ]
+          },
+          "4": {
+            "answer": "C",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Barack Obama, for instance, wore only gray or blue suits as president, explaining that he had too many important decisions to make to waste energy on clothes.",
+              "Experts suggest similar habits for everyone: make big choices in the morning, turn small daily choices into routines, and avoid deciding anything important when hungry or tired."
+            ],
+            "explanation_zh": "本段講對抗決策疲勞的方法，空格後 for instance 舉歐巴馬只穿兩色西裝為例，C 說減少每天的小選擇是一種對策，是本段主題句。",
+            "feasible": [
+              "C"
+            ]
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T12:12:51Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "answers": {
+          "1": {
+            "answer": "B",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Psychologists call this decision fatigue: the more decisions a person makes, the harder it becomes to make the next one well.",
+              "Our ability to choose wisely appears to wear down as the choices pile up."
+            ],
+            "explanation_zh": "後一句 Psychologists call this decision fatigue 需要先有描述現象的句子，B 說選擇越多判斷力越下降。",
+            "feasible": [
+              "B"
+            ]
+          },
+          "2": {
+            "answer": "E",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "As the mind tires, it looks for shortcuts, which usually take one of two forms.",
+              "Others avoid the effort altogether, putting choices off or simply accepting whatever has already been chosen for them, such as the settings that come with a new phone."
+            ],
+            "explanation_zh": "前面說捷徑有兩種，後面以 Others 開頭講第二種（逃避），所以空格要是第一種，E 的 Some people 衝動地抓最快的獎賞。",
+            "feasible": [
+              "E"
+            ]
+          },
+          "3": {
+            "answer": "D",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "The judges were deciding whether prisoners should be released early, and they heard case after case for hours, stopping only for a morning snack and lunch.",
+              "After each break, however, the share of prisoners who were released jumped back up, only to fall again as the next session wore on."
+            ],
+            "explanation_zh": "後一句 jumped back up 暗示先前下降，D 說每一場審理越久越不容易獲釋，與休息後回升形成 however 的對比。",
+            "feasible": [
+              "D"
+            ]
+          },
+          "4": {
+            "answer": "C",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Barack Obama, for instance, wore only gray or blue suits as president, explaining that he had too many important decisions to make to waste energy on clothes.",
+              "One way to fight back is to cut down on the small choices that fill each day."
+            ],
+            "explanation_zh": "歐巴馬只穿灰藍西裝是 for instance 的例子，用來說明減少日常小選擇的對策，C 是這段的主題句。",
+            "feasible": [
+              "C"
+            ]
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "distractor_audit",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T12:40:00Z",
+      "details": {
+        "session_id": null,
+        "items": {
+          "1": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "Psychologists call this decision fatigue: the more decisions a person makes, the harder it becomes to make the next one well.",
+              "explanation_zh": "下一句說心理學家把 this 稱為決策疲勞，定義是「做的決定越多，越難做好下一個」；this 若指睡眠不足，就和冒號後的定義對不上，也和第一段「每個選擇都消耗心智」的說法相反。"
+            },
+            "C": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Psychologists call this decision fatigue: the more decisions a person makes, the harder it becomes to make the next one well.",
+              "explanation_zh": "還沒說明問題就說「反擊的方法」，fight back 沒有對象；下一句的 this 也不能把「減少小選擇」稱為決策疲勞。"
+            },
+            "D": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "The judges were deciding whether prisoners should be released early, and they heard case after case for hours, stopping only for a morning snack and lunch.",
+              "explanation_zh": "each session 與 a prisoner 都沒有先行詞：法官、囚犯與審理時段要到第三段才介紹；放在這裡，下一句的 this 也不會是「選擇越多越難做好」的現象。"
+            },
+            "E": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Psychologists call this decision fatigue: the more decisions a person makes, the harder it becomes to make the next one well.",
+              "explanation_zh": "「有些人變得衝動」是疲倦時兩種捷徑中的第一種；放在段首，下一句的 this 會指「衝動」，和決策疲勞的定義不符，Some people 也沒有後續的 Others 可配對。"
+            }
+          },
+          "2": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Others avoid the effort altogether, putting choices off or simply accepting whatever has already been chosen for them, such as the settings that come with a new phone.",
+              "explanation_zh": "雖然也以 Some 開頭，但接上 Others avoid the effort altogether 會變成「另一些科學家逃避費力」；歸咎睡眠不足是科學家的看法，不是疲倦時採取的一種捷徑。"
+            },
+            "B": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Others avoid the effort altogether, putting choices off or simply accepting whatever has already been chosen for them, such as the settings that come with a new phone.",
+              "explanation_zh": "(B) 是對決策疲勞的總述，不是兩種捷徑之一；主詞 Our ability 不是一群人，下一句的 Others 沒有可對應的 Some。"
+            },
+            "C": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "As the mind tires, it looks for shortcuts, which usually take one of two forms.",
+              "explanation_zh": "前一句說心智疲倦時會找捷徑，(C) 的減少小選擇是事先規劃的對策，不是疲倦時的捷徑；One way 和下一句指人的 Others（for them）也對不上。"
+            },
+            "D": {
+              "verdict": "clearly_wrong",
+              "error_type": "off_topic",
+              "evidence": "As the mind tires, it looks for shortcuts, which usually take one of two forms.",
+              "explanation_zh": "審理時段與囚犯獲釋是第三段研究的內容，和「兩種捷徑」無關，這裡也還沒有提到法官。"
+            }
+          },
+          "3": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "off_topic",
+              "evidence": "After each break, however, the share of prisoners who were released jumped back up, only to fall again as the next session wore on.",
+              "explanation_zh": "睡眠不足的說法和法官研究無關；後一句說休息後獲釋比例「回升」，(A) 沒有提供任何「下降」可供 however 轉折。"
+            },
+            "B": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "After each break, however, the share of prisoners who were released jumped back up, only to fall again as the next session wore on.",
+              "explanation_zh": "(B) 是一般性的說法，沒有說出獲釋比例下降；後一句 jumped back up、fall again 必須先有「比例隨審理進行而下降」的具體描述，however 才有對照。"
+            },
+            "C": {
+              "verdict": "clearly_wrong",
+              "error_type": "off_topic",
+              "evidence": "After each break, however, the share of prisoners who were released jumped back up, only to fall again as the next session wore on.",
+              "explanation_zh": "減少小選擇是對抗疲勞的方法，和法官審案的研究結果無關，接不上 however 與 jumped back up。"
+            },
+            "E": {
+              "verdict": "clearly_wrong",
+              "error_type": "off_topic",
+              "evidence": "After each break, however, the share of prisoners who were released jumped back up, only to fall again as the next session wore on.",
+              "explanation_zh": "一般人衝動選擇的捷徑和囚犯獲釋的比例無關，後一句的 jumped back up 沒有對照。"
+            }
+          },
+          "4": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "off_topic",
+              "evidence": "Barack Obama, for instance, wore only gray or blue suits as president, explaining that he had too many important decisions to make to waste energy on clothes.",
+              "explanation_zh": "歐巴馬只穿兩種顏色的西裝是在減少選擇，不是睡眠問題；for instance 舉的例子和 (A) 對不上，末句「少做一些決定」也說明重點在選擇的數量。"
+            },
+            "B": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "Barack Obama, for instance, wore only gray or blue suits as president, explaining that he had too many important decisions to make to waste energy on clothes.",
+              "explanation_zh": "(B) 描述問題（能力耗損），歐巴馬固定穿同色西裝卻是減少選擇的作法，for instance 舉的不是「能力耗損」的例子；下一句 Experts suggest similar habits 也需要先有一個「習慣／對策」。"
+            },
+            "D": {
+              "verdict": "clearly_wrong",
+              "error_type": "off_topic",
+              "evidence": "Barack Obama, for instance, wore only gray or blue suits as president, explaining that he had too many important decisions to make to waste energy on clothes.",
+              "explanation_zh": "囚犯獲釋的機率屬於第三段的研究，和歐巴馬的西裝例子無關。"
+            },
+            "E": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "Barack Obama, for instance, wore only gray or blue suits as president, explaining that he had too many important decisions to make to waste energy on clothes.",
+              "explanation_zh": "衝動抓最快好處是疲倦時的捷徑，歐巴馬事先固定穿著、保留精力做重要決定，方向相反，不能當 (E) 的例子。"
+            }
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "unique_solution",
+      "reviewer": "record_verification.py",
+      "result": "pass",
+      "created_at": "2026-10-09T12:29:26Z",
+      "details": {
+        "method": "injective_assignment",
+        "perfect_matchings": 1,
+        "matches_key": true,
+        "feasible": {
+          "1": [
+            "B"
+          ],
+          "2": [
+            "E"
+          ],
+          "3": [
+            "D"
+          ],
+          "4": [
+            "C"
+          ]
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

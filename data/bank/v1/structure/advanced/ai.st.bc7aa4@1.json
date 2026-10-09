@@ -1,0 +1,623 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.st.bc7aa4",
+  "version": 1,
+  "section_type": "structure",
+  "format_version": "structure-4x5",
+  "tier": "advanced",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": "Walk through almost any night market in Taiwan, and you will probably smell stinky tofu long before you see it. Some visitors hurry past with their noses covered, while others happily join the line. Both groups are reacting to the work of living things far too small to see.\nFresh tofu has almost no smell of its own. Its famous odor comes from a brine, a liquid in which vegetables have been left to ferment for a long time. [[1]] Whatever the recipe, the brine is alive with bacteria, which will soon go to work. How long the tofu soaks in this liquid depends on the seller.\nDuring this time, the bacteria feed on the tofu, slowly breaking down the proteins that soybeans are rich in. Some of the substances released in the process contain sulfur, which gives rotten eggs their smell. [[2]] No wonder the odor can travel far down the street.\n[[3]] As proteins break apart, they release amino acids, which give food a rich, savory taste. Fans often compare stinky tofu to strong cheese, another fermented food whose smell can scare beginners away.\nIn Taiwan, the tofu is most often deep-fried until golden and served with sour pickled cabbage and chili sauce. Many people trying it for the first time are surprised to find that it tastes much milder than it smells. [[4]] For those brave enough to take a bite, a pleasant discovery may be waiting.",
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": {
+      "A": "Others give off a sharp, sour smell of their own.",
+      "B": "Their reaction shows that the nose can be a poor judge of food.",
+      "C": "Yet the bacteria do far more than simply create a terrible smell.",
+      "D": "Frying, however, removes the smell of these substances almost completely.",
+      "E": "Every seller has a slightly different recipe, and many keep theirs a secret."
+    },
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "E",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "lexical_cohesion",
+          "clue_raw": "SP|LX|F|L",
+          "key_phrase": "recipe → Whatever the recipe；seller → depends on the seller"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "A",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "enumeration",
+          "clue_raw": "SP|PR|B|L",
+          "key_phrase": "Others ← Some of the substances；a sharp, sour smell → No wonder the odor can travel far down the street"
+        }
+      },
+      {
+        "no": 3,
+        "label": "3",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "C",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "contrast",
+          "clue_raw": "BR|CN|BF|P",
+          "key_phrase": "Yet ← 第三段整段（臭味）；the bacteria ← 第二、三段；do far more than → amino acids, which give food a rich, savory taste"
+        }
+      },
+      {
+        "no": 4,
+        "label": "4",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "B",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "summary",
+          "clue_raw": "CL|PR|B|L",
+          "key_phrase": "Their reaction ← Many people trying it for the first time are surprised；the nose can be a poor judge → For those brave enough to take a bite"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "臭豆腐的發酵科學",
+      "genre": "expository",
+      "sdgs": [],
+      "text_format": "continuous"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "前一句說臭豆腐的氣味來自一種讓蔬菜長時間發酵的滷水；後一句 Whatever the recipe（不論配方如何）一定要接在「配方各有不同」之後。(E)「每個攤販的配方都略有不同，許多人還把自己的配方當成祕密」正好提出 recipe，後一句再用 Whatever the recipe 把話題拉回所有滷水的共同點：都充滿細菌。再下一句 How long the tofu soaks in this liquid depends on the seller 也呼應 (E) 的 seller。這一格的關鍵在後一句，選 (E)。",
+          "evidence": [
+            "Its famous odor comes from a brine, a liquid in which vegetables have been left to ferment for a long time.",
+            "Every seller has a slightly different recipe, and many keep theirs a secret.",
+            "Whatever the recipe, the brine is alive with bacteria, which will soon go to work."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "lexical_cohesion",
+          "option_notes_zh": {
+            "A": "(A) 的 Others 前面要有「有些……」，這裡只講到蔬菜發酵，Others 指不出另一群東西；後一句的 Whatever the recipe 也找不到「配方」。(A) 屬於第 2 格。",
+            "B": "(B) 的 Their reaction 要指某些人的反應，前一句只講滷水，沒有人可指。(B) 屬於第 4 格。",
+            "C": "(C) 說「然而，細菌做的事不只是製造臭味」，但細菌要到後一句才出現，這時也還沒講到臭味怎麼產生，Yet 沒有可以轉折的內容。(C) 屬於第 3 格。",
+            "D": "多餘句：(D) 說油炸能去除這些物質的氣味，但這時既還沒提到油炸，也還沒提到任何「物質」，these substances 沒有先行詞；後一句的 Whatever the recipe 也接不上。"
+          },
+          "strategy_zh": "後一句以 Whatever the recipe、Either way、In any case 開頭時，空格要先提出「有好幾種可能」；找出選項中與後一句重複的關鍵字（recipe），再確認前一句能自然帶出它。",
+          "hints": [
+            "後一句的 Whatever the recipe 表示前面提過什麼？",
+            "每個攤販做滷水的方法都一樣嗎？",
+            "答案說每個攤販的配方都略有不同，許多人還保密。"
+          ]
+        },
+        "2": {
+          "explanation_zh": "前一句說分解蛋白質時釋放出的物質，「有一些」（Some of the substances）含有硫，聞起來像臭雞蛋。(A)「另一些則散發出它們自己的刺鼻酸味」的 Others 正好和 Some 成對，補上第二種氣味。後一句 No wonder the odor can travel far down the street 把兩種氣味合起來作結：難怪味道能飄那麼遠。選 (A)。",
+          "evidence": [
+            "Some of the substances released in the process contain sulfur, which gives rotten eggs their smell.",
+            "Others give off a sharp, sour smell of their own.",
+            "No wonder the odor can travel far down the street."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "enumeration",
+          "option_notes_zh": {
+            "B": "(B) 的 Their reaction 要有人在前面，這裡講的是化學物質，沒有人可以「反應」。(B) 屬於第 4 格。",
+            "C": "(C) 和前一句共用 smell，是本格的競爭選項；但 Yet 表示轉折，後一句的 No wonder 卻是順著「很臭」往下說，方向相反。(C) 要放在第四段開頭，引出鮮味的說明（第 3 格）。",
+            "D": "多餘句：(D) 和前一句共用 substances、smell，最容易誤選；但它說油炸會去除氣味，後一句卻說難怪氣味能飄到街道另一頭，前後矛盾，而且油炸到第五段才出現。",
+            "E": "(E) 說每個攤販的配方不同，屬於第二段的滷水；放在這裡打斷了「有些物質……另一些……」的列舉，後一句的 No wonder 也無從接起。(E) 屬於第 1 格。"
+          },
+          "strategy_zh": "前一句以 Some…開頭時，留意後面常有 Others／Still others 列舉；空格後若是 No wonder、That is why，表示空格要和前文一起構成「原因」，不能出現轉折或相反的內容。",
+          "hints": [
+            "前一句說「有一些」物質含有硫——那其他的物質呢？",
+            "後一句的 No wonder 是根據什麼下的結論？",
+            "答案用 Others 開頭，說另一些物質散發刺鼻的酸味。"
+          ]
+        },
+        "3": {
+          "explanation_zh": "第四段開頭的空格要承接第三段整段（細菌分解蛋白質、產生臭味），再轉向本段的主題：鮮味。(C)「然而，這些細菌做的事遠不只是製造可怕的臭味」的 the bacteria 指前兩段的細菌，Yet 從臭味轉折，do far more than 預告還有別的作用；後一句 As proteins break apart, they release amino acids, which give food a rich, savory taste 說明這個作用就是帶來鮮味。選 (C)。",
+          "evidence": [
+            "No wonder the odor can travel far down the street.",
+            "Yet the bacteria do far more than simply create a terrible smell.",
+            "As proteins break apart, they release amino acids, which give food a rich, savory taste."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "contrast",
+          "option_notes_zh": {
+            "A": "(A) 的 Others 要和前面的 Some 成對，但前一句是 No wonder 的結論句，不是列舉；放在段首也引不出後一句的鮮味。(A) 屬於第 2 格。",
+            "B": "(B) 的 Their reaction 找不到可指的人（前一句只有氣味）；本段講的是鮮味從哪裡來，不是吃的人的反應。(B) 屬於第 4 格。",
+            "D": "多餘句：(D) 說油炸能去除氣味，和前一句「氣味能飄到街道另一頭」矛盾；本段講的是蛋白質分解帶來的鮮味，也和油炸無關。",
+            "E": "(E) 說每個攤販的配方不同，屬於第二段的滷水；放在第四段開頭，和後一句的蛋白質分解、鮮味接不上。(E) 屬於第 1 格。"
+          },
+          "strategy_zh": "段首空格如果前一段全在講缺點（臭味），後一段卻在講優點（鮮味），空格多半是用 Yet、However 轉折的承上啟下句；確認選項裡的名詞（the bacteria）能回指前文，又能帶出後一句的說明。",
+          "hints": [
+            "前一段都在講什麼？這一段又在講什麼？",
+            "從「臭味」轉到「鮮味」，需要什麼樣的連接詞？",
+            "答案用 Yet 開頭，說細菌做的事遠不只製造臭味。"
+          ]
+        },
+        "4": {
+          "explanation_zh": "前一句說許多第一次吃的人很驚訝，臭豆腐吃起來比聞起來溫和得多。(B)「他們的反應說明，鼻子可能不太會判斷食物」的 Their reaction 指這些人的驚訝，並把它歸納成一個道理：聞起來的味道不等於吃起來的味道。最後一句鼓勵讀者勇於嘗試，正好接在這個結論之後。這一格是全文的總結句，選 (B)。",
+          "evidence": [
+            "Many people trying it for the first time are surprised to find that it tastes much milder than it smells.",
+            "Their reaction shows that the nose can be a poor judge of food.",
+            "For those brave enough to take a bite, a pleasant discovery may be waiting."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "summary",
+          "option_notes_zh": {
+            "A": "(A) 的 Others 要和前文的 Some 成對，這裡的前一句講的是第一次吃的人，(A) 的「刺鼻酸味」和前後都接不上。(A) 屬於第 2 格。",
+            "C": "(C) 和前一句共用 smell，又用 Yet 轉折，是本格的競爭選項；但細菌與鮮味的關係第四段已經說明過，這裡再用 Yet 轉回細菌，會打斷「第一次吃的人的反應 → 鼓勵嘗試」的結尾。(C) 要放在第四段開頭引出化學說明（第 3 格）。",
+            "D": "多餘句：(D) 說油炸幾乎能完全去除氣味，但前一句才說它「聞起來」比吃起來重，第一段也說在夜市老遠就聞得到，前後矛盾；these substances 也離第三段太遠。",
+            "E": "(E) 說每個攤販的配方不同，屬於第二段；放在結尾和「第一次吃的人的反應」無關。(E) 屬於第 1 格。"
+          },
+          "strategy_zh": "最後一段的空格常是總結句：先找它回指的對象（Their reaction ← 第一次吃的人），再確認它把前一句的具體例子提升成一般道理（鼻子不太會判斷食物），最後一句才能順著這個道理收尾。",
+          "hints": [
+            "前一句說第一次吃的人有什麼反應？",
+            "這個反應可以歸納出什麼道理？",
+            "答案用 Their reaction 開頭，說鼻子可能不太會判斷食物。"
+          ]
+        }
+      }
+    },
+    "translation_zh": {
+      "text": "走過台灣幾乎任何一個夜市，你很可能在看到臭豆腐之前，就先聞到它的味道。有些遊客摀著鼻子匆匆走過，有些人卻開心地排起隊來。這兩群人反應的，其實都是一些小到看不見的生物所做的工作。\n新鮮豆腐本身幾乎沒有味道。它出名的氣味來自臭滷水——一種讓蔬菜長時間發酵而成的液體。【1】每個攤販的配方都略有不同，許多人還把自己的配方當成祕密。不論配方如何，滷水裡都充滿細菌，它們很快就會開始工作。豆腐要在這種液體裡浸泡多久，依攤販而定。\n在這段時間裡，細菌以豆腐為食，慢慢分解黃豆富含的蛋白質。在這個過程中釋放出的物質，有一些含有硫——也就是讓臭雞蛋發臭的元素。【2】另一些則散發出它們自己的刺鼻酸味。難怪這股氣味能飄到街道的另一頭。\n【3】然而，這些細菌做的事遠不只是製造可怕的臭味。蛋白質分解時會釋放出胺基酸，讓食物有濃郁的鮮味。愛吃的人常把臭豆腐比作味道濃烈的起司——另一種氣味會把初嘗者嚇跑的發酵食品。\n在台灣，臭豆腐最常見的吃法是炸到金黃，再配上酸的泡菜和辣椒醬。許多第一次吃的人都很驚訝，它吃起來比聞起來溫和得多。【4】他們的反應說明，鼻子可能不太會判斷食物。對於勇於咬下一口的人來說，一個愉快的發現或許正等著他們。\n（多餘句 (D)：然而，油炸幾乎能完全去除這些物質的氣味。）"
+    },
+    "elimination": {
+      "feasible": {
+        "1": [
+          "E"
+        ],
+        "2": [
+          "A"
+        ],
+        "3": [
+          "C"
+        ],
+        "4": [
+          "B"
+        ]
+      },
+      "perfect_matchings": 1
+    },
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": null,
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "3-V-7",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "7-V-5",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "B-V-8",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "9-V-2",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "8-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": "本文由 AI 撰寫"
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-08-structure-advanced-05",
+    "lot": "structure-advanced-05",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/structure",
+    "prompt_sha256": "5d4b0f027e4de517eda68aa80f1a4672f189d384dafcbe90baf62851a6804390",
+    "spec_id": "structure-advanced@2026-10-08",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 236,
+    "sentences": 15,
+    "avg_sentence_length": 15.73,
+    "denominator": 234,
+    "proper_nouns": [
+      "Taiwan"
+    ],
+    "numbers": 0,
+    "coverage_l1_4": 0.9402,
+    "coverage_l1_6": 0.9573,
+    "offlist_ratio": 0.0427,
+    "beyond_l4_ratio": 0.0171,
+    "level_counts": {
+      "1": 178,
+      "2": 26,
+      "3": 10,
+      "4": 6,
+      "5": 1,
+      "6": 3,
+      "off": 10
+    },
+    "offlist_words": [
+      "amino",
+      "brine",
+      "ferment",
+      "fermented",
+      "savory",
+      "seller",
+      "stinky",
+      "sulfur"
+    ],
+    "band": {
+      "tier": "advanced",
+      "basis": "lot structure-advanced-05（SPEC §3.4＋出題規格書 passage_overrides（words、coverage_L1_4_min（取代 SPEC 的區間）、coverage_L1_6_min、offlist_max、beyond_l4_ratio_max））",
+      "ok": true,
+      "checks": {
+        "word_count": {
+          "value": 236,
+          "min": 220,
+          "max": 310,
+          "ok": true
+        },
+        "coverage_l1_4": {
+          "value": 0.9402,
+          "min": 0.9,
+          "max": null,
+          "ok": true
+        },
+        "coverage_l1_6": {
+          "value": 0.9573,
+          "min": 0.94,
+          "max": null,
+          "ok": true
+        },
+        "offlist_ratio": {
+          "value": 0.0427,
+          "min": null,
+          "max": 0.06,
+          "ok": true
+        },
+        "avg_sentence_length": {
+          "value": 15.73,
+          "min": 15,
+          "max": 21,
+          "ok": true
+        },
+        "beyond_l4_ratio": {
+          "value": 0.0171,
+          "min": null,
+          "max": 0.06,
+          "ok": true
+        }
+      }
+    }
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T12:38:13Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T12:26:02Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "answers": {
+          "1": {
+            "answer": "E",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Whatever the recipe, the brine is alive with bacteria, which will soon go to work."
+            ],
+            "explanation_zh": "後句 Whatever the recipe 呼應 E 每家配方不同。",
+            "feasible": [
+              "E"
+            ]
+          },
+          "2": {
+            "answer": "A",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Some of the substances released in the process contain sulfur, which gives rotten eggs their smell.",
+              "No wonder the odor can travel far down the street."
+            ],
+            "explanation_zh": "Some of the substances… / Others… 成對，兩種氣味加起來才「難怪臭味飄很遠」。",
+            "feasible": [
+              "A"
+            ]
+          },
+          "3": {
+            "answer": "C",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "As proteins break apart, they release amino acids, which give food a rich, savory taste."
+            ],
+            "explanation_zh": "段落轉向細菌帶來的鮮味，C 的 do far more than simply create a terrible smell 是主題句。",
+            "feasible": [
+              "C"
+            ]
+          },
+          "4": {
+            "answer": "B",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Many people trying it for the first time are surprised to find that it tastes much milder than it smells.",
+              "For those brave enough to take a bite, a pleasant discovery may be waiting."
+            ],
+            "explanation_zh": "Their reaction 指初嚐者的驚訝，說明鼻子不可靠，接著勸人勇敢嘗試。",
+            "feasible": [
+              "B"
+            ]
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T12:38:13Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "answers": {
+          "1": {
+            "answer": "E",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Whatever the recipe, the brine is alive with bacteria, which will soon go to work.",
+              "Its famous odor comes from a brine, a liquid in which vegetables have been left to ferment for a long time."
+            ],
+            "explanation_zh": "後句 Whatever the recipe 呼應 E 說每個攤販配方略有不同、許多還保密。",
+            "feasible": [
+              "E"
+            ]
+          },
+          "2": {
+            "answer": "A",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Some of the substances released in the process contain sulfur, which gives rotten eggs their smell.",
+              "No wonder the odor can travel far down the street."
+            ],
+            "explanation_zh": "Some of the substances ... 後面接 Others 指其他物質，帶出酸臭味，再接 No wonder 說氣味飄得遠。",
+            "feasible": [
+              "A"
+            ]
+          },
+          "3": {
+            "answer": "C",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "As proteins break apart, they release amino acids, which give food a rich, savory taste.",
+              "During this time, the bacteria feed on the tofu, slowly breaking down the proteins that soybeans are rich in."
+            ],
+            "explanation_zh": "前段談細菌造成的臭味，C 以 Yet 轉折說細菌的作用不只如此，後句說明釋出胺基酸帶來鮮味。",
+            "feasible": [
+              "C"
+            ]
+          },
+          "4": {
+            "answer": "B",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Many people trying it for the first time are surprised to find that it tastes much milder than it smells.",
+              "For those brave enough to take a bite, a pleasant discovery may be waiting."
+            ],
+            "explanation_zh": "初嘗者驚訝它比聞起來溫和，B 的 Their reaction 指這種驚訝，並總結鼻子不一定能判斷食物好壞；D 說油炸去除氣味與前文氣味仍濃矛盾。",
+            "feasible": [
+              "B"
+            ]
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "distractor_audit",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T12:40:00Z",
+      "details": {
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "items": {
+          "1": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Whatever the recipe, the brine is alive with bacteria, which will soon go to work.",
+              "explanation_zh": "(A) 的 Others 需要前面先有 Some 一類的列舉，前一句只講蔬菜發酵成滷水，Others 指不出另一群東西；下一句 Whatever the recipe 需要先提到「配方各有不同」，(A) 沒有。"
+            },
+            "B": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Its famous odor comes from a brine, a liquid in which vegetables have been left to ferment for a long time.",
+              "explanation_zh": "(B) 的 Their reaction 要指某些人的反應，前一句只講滷水與蔬菜，沒有人可指；下一句的 Whatever the recipe 也找不到「配方」。"
+            },
+            "C": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Whatever the recipe, the brine is alive with bacteria, which will soon go to work.",
+              "explanation_zh": "(C) 用定冠詞 the bacteria，但細菌要到下一句才第一次出現（alive with bacteria），臭味怎麼產生也還沒講，Yet 沒有可轉折的內容；下一句的 Whatever the recipe 也接不上。"
+            },
+            "D": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Whatever the recipe, the brine is alive with bacteria, which will soon go to work.",
+              "explanation_zh": "多餘句 (D) 的 these substances 沒有先行詞（物質到第三段才出現），油炸也要到第五段才提到；下一句的 Whatever the recipe 找不到「配方」。"
+            }
+          },
+          "2": {
+            "B": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Some of the substances released in the process contain sulfur, which gives rotten eggs their smell.",
+              "explanation_zh": "(B) 的 Their reaction 要指人的反應，前一句講的是化學物質和臭雞蛋，沒有人可指；下一句 No wonder 是順著「很臭」下的結論，(B) 提供不了理由。"
+            },
+            "C": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "No wonder the odor can travel far down the street.",
+              "explanation_zh": "(C) 用 Yet 轉向細菌的其他作用，下一句 No wonder 卻順著「很臭」說氣味飄得遠，方向相反；(C) 要放在第四段開頭引出鮮味。"
+            },
+            "D": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "No wonder the odor can travel far down the street.",
+              "explanation_zh": "多餘句 (D) 說油炸幾乎完全去除這些物質的氣味，下一句卻說難怪氣味能飄到街道另一頭，前後矛盾；油炸也要到第五段才出現。"
+            },
+            "E": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "No wonder the odor can travel far down the street.",
+              "explanation_zh": "(E) 講攤販各有配方，屬於第二段的滷水；放在這裡打斷 Some of the substances… 的列舉，下一句 No wonder 也無從由它推出。"
+            }
+          },
+          "3": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "As proteins break apart, they release amino acids, which give food a rich, savory taste.",
+              "explanation_zh": "(A) 的 Others 要和 Some 成對，但前一句是 No wonder 的結論句、不是列舉；(A) 講的仍是氣味，下一句卻轉到胺基酸帶來的鮮味，(A) 引不出本段主題。"
+            },
+            "B": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "No wonder the odor can travel far down the street.",
+              "explanation_zh": "(B) 的 Their reaction 找不到可指的人（前一句只有飄到街上的氣味）；本段接著講蛋白質分解帶來鮮味，不是吃的人的反應。"
+            },
+            "D": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "Many people trying it for the first time are surprised to find that it tastes much milder than it smells.",
+              "explanation_zh": "多餘句 (D) 雖然能回指第三段的 substances，但它說油炸幾乎完全去除氣味，和第五段「炸好端上的臭豆腐聞起來比吃起來重」矛盾；油炸此時也還沒出現，下一句講的是胺基酸與鮮味，和油炸無關。"
+            },
+            "E": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "As proteins break apart, they release amino acids, which give food a rich, savory taste.",
+              "explanation_zh": "(E) 講攤販各有配方，屬於第二段的滷水；放在第四段開頭和下一句的蛋白質分解、鮮味接不上。"
+            }
+          },
+          "4": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Many people trying it for the first time are surprised to find that it tastes much milder than it smells.",
+              "explanation_zh": "(A) 的 Others 前面沒有 Some 可成對，若指「其他人」散發酸味更不合理；(A) 講物質的氣味，和前一句初嘗者的驚訝、下一句鼓勵嘗試都接不上。"
+            },
+            "C": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Many people trying it for the first time are surprised to find that it tastes much milder than it smells.",
+              "explanation_zh": "(C) 用 Yet 轉回細菌，但前一句講的是初嘗者發現吃起來比聞起來溫和，沒有可以轉折的「細菌只會製造臭味」；細菌帶來鮮味第四段已說明過，放在這裡重複，也打斷「初嘗者的反應 → 鼓勵嘗試」的結尾。"
+            },
+            "D": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "Many people trying it for the first time are surprised to find that it tastes much milder than it smells.",
+              "explanation_zh": "多餘句 (D) 說油炸幾乎完全去除氣味，但前一句說炸好的臭豆腐聞起來比吃起來重，第一段也說夜市老遠就聞得到，前後矛盾；these substances 也離第三段太遠。"
+            },
+            "E": {
+              "verdict": "clearly_wrong",
+              "error_type": "off_topic",
+              "evidence": "For those brave enough to take a bite, a pleasant discovery may be waiting.",
+              "explanation_zh": "(E) 講攤販各有祕密配方，屬於第二段；和前一句初嘗者的驚訝無關，也引不出下一句鼓勵勇於嘗試的結論。"
+            }
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "unique_solution",
+      "reviewer": "record_verification.py",
+      "result": "pass",
+      "created_at": "2026-10-09T12:38:13Z",
+      "details": {
+        "method": "injective_assignment",
+        "perfect_matchings": 1,
+        "matches_key": true,
+        "feasible": {
+          "1": [
+            "E"
+          ],
+          "2": [
+            "A"
+          ],
+          "3": [
+            "C"
+          ],
+          "4": [
+            "B"
+          ]
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

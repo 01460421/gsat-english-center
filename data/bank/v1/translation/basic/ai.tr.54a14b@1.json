@@ -1,0 +1,683 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.54a14b",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "basic",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "一泡進北投（Beitou）的溫泉，我就覺得非常放鬆。",
+        "options": null,
+        "answer": "As soon as I get into the hot springs in Beitou, I feel very relaxed.",
+        "accepted_answers": [
+          "Once I soak in the hot springs of Beitou, I feel really relaxed.",
+          "As soon as I step into a hot spring in Beitou, I feel very relaxed."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "時間副詞子句（as soon as：一…就…）"
+          ],
+          "topic": "北投泡溫泉"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "喜歡泡溫泉的遊客也可以參觀附近的溫泉博物館。",
+        "options": null,
+        "answer": "Tourists who love hot springs can also visit the hot spring museum nearby.",
+        "accepted_answers": [
+          "Visitors who like hot springs can also visit the nearby hot spring museum.",
+          "Tourists who enjoy soaking in hot springs can also visit the hot spring museum nearby."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "關係代名詞 who 引導的形容詞子句"
+          ],
+          "topic": "北投泡溫泉"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "北投泡溫泉"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「一…就…」表示前一個動作一發生，後一個動作馬上跟著發生，用時間副詞子句 As soon as（或 Once）+ S + V, S + V；兩個子句已經由 as soon as 連接，「就」不用另外翻。這裡說的是一般習慣，用現在式 get、feel。「覺得放鬆」是 feel relaxed（-ed 形容詞描述人的感受），不是 feel relax；relaxing 是「令人放鬆的」。「溫泉」是 hot spring；北投是表外專有名詞，題目已附英文 Beitou。",
+          "evidence": [
+            "一泡進",
+            "我就覺得非常放鬆"
+          ],
+          "strategy_zh": "看到「一…就…」想 as soon as／once；寫完檢查子句裡沒有多加 will，形容感受的字用 -ed。",
+          "hints": [
+            "切成四段：一泡進／北投的溫泉／我就覺得／非常放鬆",
+            "標的詞彙：get into（泡進）、hot spring（溫泉）、feel（覺得）、relaxed（放鬆的）",
+            "句型框架：As soon as + S + V …, S + V …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「喜歡泡溫泉的遊客」是中文的前置修飾，英文要把修飾語改成關係子句放在名詞後面：Tourists who love hot springs。先行詞是人，關係代名詞用 who（或 that）；who 代替複數 tourists，子句動詞用 love，不加 s；泛指一群人，tourist 要用複數。「也可以參觀」是 can also visit（visit 後面不加 to）；「附近的」放名詞前用 nearby，放句尾也可以（the museum nearby）。",
+          "evidence": [
+            "喜歡泡溫泉的遊客",
+            "附近的溫泉博物館"
+          ],
+          "strategy_zh": "中文「…的＋人」時，先寫人（名詞），再用 who 接後面的說明；寫完檢查整句只有一個主要動詞 can visit。",
+          "hints": [
+            "切成四段：喜歡泡溫泉的遊客／也可以參觀／附近的／溫泉博物館",
+            "標的詞彙：tourist（遊客）、love（喜歡）、hot spring（溫泉）、visit（參觀）、nearby（附近的）、museum（博物館）",
+            "句型框架：複數名詞 + who + V … + can also + 原形動詞 …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "As soon as I get into the hot springs in Beitou, I feel very relaxed.",
+            "Once I soak in the hot springs of Beitou, I feel really relaxed.",
+            "As soon as I step into a hot spring in Beitou, I feel very relaxed."
+          ],
+          "target_words": [
+            {
+              "word": "get into",
+              "zh": "泡進；進入",
+              "alternatives": [
+                "soak",
+                "step into"
+              ]
+            },
+            {
+              "word": "hot spring",
+              "zh": "溫泉"
+            },
+            {
+              "word": "feel",
+              "zh": "覺得"
+            },
+            {
+              "word": "relaxed",
+              "zh": "放鬆的"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "ADVCL",
+              "grammar_id": "gp-time-clause",
+              "label_zh": "時間副詞子句（as soon as／once：一…就…）",
+              "frame": "As soon as + S + V …, S + V …",
+              "zh_trigger": "一泡進"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "一泡進",
+              "accepted": [
+                "As soon as I get into",
+                "Once I soak in",
+                "As soon as I step into",
+                "Once I get into",
+                "As soon as I soak in",
+                "When I get into",
+                "When I soak in",
+                "Whenever I soak in",
+                "Whenever I get into",
+                "The moment I get into",
+                "The moment I step into",
+                "As soon as I got into",
+                "Once I got into",
+                "When I got into",
+                "As soon as I stepped into"
+              ],
+              "targets": [
+                "ADVCL",
+                "get into"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "As soon as I will get into",
+                  "right": "As soon as I get into",
+                  "explanation_zh": "時間副詞子句用現在式表示習慣或未來，不加 will。"
+                },
+                {
+                  "wrong": "As soon as I get into the hot springs in Beitou, so I feel",
+                  "right": "As soon as I get into the hot springs in Beitou, I feel",
+                  "explanation_zh": "中文「一…就…」的「就」不用翻成 so；as soon as 已經連接兩個子句。"
+                }
+              ]
+            },
+            {
+              "zh": "北投（Beitou）的溫泉",
+              "accepted": [
+                "the hot springs in Beitou",
+                "the hot springs of Beitou",
+                "a hot spring in Beitou",
+                "Beitou's hot springs"
+              ],
+              "targets": [
+                "hot spring"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "the hot springs of Beitou's",
+                  "right": "the hot springs of Beitou",
+                  "explanation_zh": "of 和所有格 's 不重複使用；寫 the hot springs of Beitou 或 Beitou's hot springs。"
+                },
+                {
+                  "wrong": "the warm springs in Beitou",
+                  "right": "the hot springs in Beitou",
+                  "explanation_zh": "「溫泉」的固定說法是 hot spring。"
+                }
+              ]
+            },
+            {
+              "zh": "我就覺得",
+              "accepted": [
+                "I feel",
+                "I always feel",
+                "I felt"
+              ],
+              "targets": [
+                "feel"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "I am feel",
+                  "right": "I feel",
+                  "explanation_zh": "feel 是一般動詞，前面不加 be 動詞。"
+                }
+              ]
+            },
+            {
+              "zh": "非常放鬆",
+              "accepted": [
+                "very relaxed",
+                "really relaxed",
+                "so relaxed",
+                "totally relaxed",
+                "extremely relaxed",
+                "completely relaxed"
+              ],
+              "targets": [
+                "relaxed"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "very relax",
+                  "right": "very relaxed",
+                  "explanation_zh": "relax 是動詞；「覺得放鬆」要用形容詞 relaxed。"
+                },
+                {
+                  "wrong": "very relaxing",
+                  "right": "very relaxed",
+                  "explanation_zh": "relaxing 是「令人放鬆的」，用來形容溫泉；形容人的感受用 relaxed。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "word_form",
+              "zh": "非常放鬆",
+              "literal_error": "As soon as I get into the hot springs in Beitou, I feel very relax.",
+              "part": 4,
+              "explanation_zh": "「放鬆」照字面常寫成動詞 relax；feel 後面要接形容詞，人覺得放鬆用 relaxed，這一部分扣分。"
+            }
+          ],
+          "bonus": []
+        },
+        "2": {
+          "references": [
+            "Tourists who love hot springs can also visit the hot spring museum nearby.",
+            "Visitors who like hot springs can also visit the nearby hot spring museum.",
+            "Tourists who enjoy soaking in hot springs can also visit the hot spring museum nearby."
+          ],
+          "target_words": [
+            {
+              "word": "tourist",
+              "zh": "遊客",
+              "alternatives": [
+                "visitor"
+              ]
+            },
+            {
+              "word": "love",
+              "zh": "喜歡",
+              "alternatives": [
+                "like",
+                "enjoy"
+              ]
+            },
+            {
+              "word": "hot spring",
+              "zh": "溫泉"
+            },
+            {
+              "word": "visit",
+              "zh": "參觀"
+            },
+            {
+              "word": "nearby",
+              "zh": "附近的"
+            },
+            {
+              "word": "museum",
+              "zh": "博物館"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "REL",
+              "grammar_id": "gp-relative-pronoun",
+              "label_zh": "關係代名詞 who 引導的形容詞子句",
+              "frame": "複數名詞（人）+ who + V … + can + 原形動詞 …",
+              "zh_trigger": "喜歡泡溫泉的遊客"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "喜歡泡溫泉的遊客",
+              "accepted": [
+                "Tourists who love hot springs",
+                "Visitors who like hot springs",
+                "Tourists who enjoy soaking in hot springs",
+                "Tourists who like hot springs",
+                "Visitors who love hot springs",
+                "Tourists who enjoy hot springs",
+                "Visitors who enjoy hot springs",
+                "Tourists that love hot springs",
+                "People who love hot springs",
+                "Tourists who like soaking in hot springs",
+                "Visitors who like soaking in hot springs",
+                "Visitors who enjoy soaking in hot springs",
+                "Visitors who love soaking in hot springs"
+              ],
+              "targets": [
+                "REL",
+                "tourist",
+                "love",
+                "hot spring"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Tourists love hot springs can also visit",
+                  "right": "Tourists who love hot springs can also visit",
+                  "explanation_zh": "「喜歡泡溫泉的」修飾「遊客」，英文要用關係代名詞 who 引導子句放在名詞後面；漏掉 who，句子就有兩個動詞。"
+                },
+                {
+                  "wrong": "Tourists who loves hot springs",
+                  "right": "Tourists who love hot springs",
+                  "explanation_zh": "who 代替複數的 tourists，子句動詞用複數 love。"
+                },
+                {
+                  "wrong": "Tourists which love hot springs",
+                  "right": "Tourists who love hot springs",
+                  "explanation_zh": "先行詞是人，用 who（或 that），不用 which。"
+                }
+              ]
+            },
+            {
+              "zh": "也可以參觀",
+              "accepted": [
+                "can also visit",
+                "may also visit",
+                "can also go to",
+                "can also go and see"
+              ],
+              "targets": [
+                "visit"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "can also visits",
+                  "right": "can also visit",
+                  "explanation_zh": "助動詞 can 後面接原形動詞。"
+                },
+                {
+                  "wrong": "can also visit to",
+                  "right": "can also visit",
+                  "explanation_zh": "visit 是及物動詞，後面直接接地點，不加 to。"
+                }
+              ]
+            },
+            {
+              "zh": "附近的",
+              "accepted": [
+                "nearby",
+                "near there",
+                "in the area"
+              ],
+              "targets": [
+                "nearby"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "the near hot spring museum",
+                  "right": "the nearby hot spring museum",
+                  "explanation_zh": "「附近的」放在名詞前面用 nearby；near 通常當介系詞（near the station）。"
+                }
+              ]
+            },
+            {
+              "zh": "溫泉博物館",
+              "accepted": [
+                "the hot spring museum",
+                "hot spring museum",
+                "the museum of hot springs"
+              ],
+              "targets": [
+                "museum"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "the hot spring museums",
+                  "right": "the hot spring museum",
+                  "explanation_zh": "附近只有一座溫泉博物館，用單數。"
+                },
+                {
+                  "wrong": "the hot spring musuem",
+                  "right": "the hot spring museum",
+                  "explanation_zh": "拼字：museum（m-u-s-e-u-m）。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "plural_countable",
+              "zh": "喜歡泡溫泉的遊客",
+              "literal_error": "Tourist who love hot springs can also visit the hot spring museum nearby.",
+              "part": 1,
+              "explanation_zh": "中文「遊客」沒有單複數，照字面寫成 Tourist 會漏掉複數（或冠詞）；泛指喜歡泡溫泉的人要用複數 Tourists，who 子句的動詞也跟著用 love。"
+            }
+          ],
+          "bonus": []
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-basic-04",
+    "lot": "translation-basic-04",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "825ee6e76853b2ea2df931259eb3211229fc9f6e568e89591ca9feda5b5b935e",
+    "spec_id": "translation-basic@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 1,
+    "sentences": 1,
+    "avg_sentence_length": 1.0,
+    "denominator": 1,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 1.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {
+      "off": 1
+    },
+    "offlist_words": [
+      "beitou"
+    ],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T07:59:13Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "warn",
+      "created_at": "2026-10-09T00:00:00Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "As soon as I soak in the hot springs in Beitou, I feel very relaxed.",
+            "confidence": "high",
+            "explanation_zh": "「一…就…」用 As soon as 引導時間子句；中文沒有時間標記，配合第二句的一般陳述，用簡單現在式表示每次都這樣（若當成某次經驗改用過去式 soaked / felt 也通）；「泡溫泉」soak in the hot springs；「覺得放鬆」feel relaxed。"
+          },
+          "2": {
+            "translation": "Visitors who like to soak in hot springs can also visit the nearby hot spring museum.",
+            "confidence": "high",
+            "explanation_zh": "「喜歡泡溫泉的遊客」用關係代名詞 who 引導的形容詞子句修飾 Visitors；「也可以」can also；「附近的溫泉博物館」the nearby hot spring museum（也可 the hot spring museum nearby）。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "ADVCL"
+            ],
+            "used_target_words": [
+              "get into",
+              "hot spring",
+              "feel",
+              "relaxed"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "（備註，不影響判定）中文「一泡進…就覺得」沒有時間標記，可理解為每次如此（現在式）或某次經驗（過去式）；rubric 兩種時態都收，處理得當。第 1 部分也收 When／Whenever，失去「一…就」的立即感，偏寬鬆但可接受。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "REL"
+            ],
+            "used_target_words": [
+              "tourist",
+              "love",
+              "hot spring",
+              "visit",
+              "nearby",
+              "museum"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "第 1 部分「喜歡泡溫泉的遊客」的 accepted 只收 like/enjoy/love soaking in hot springs（動名詞），沒有收不定詞 who like to soak in hot springs／who love to soak in hot springs；兩者同樣正確且很常見，本盲譯即寫成 Visitors who like to soak in hot springs，字面上不在清單內，建議補進 accepted。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "get into",
+              "hot spring",
+              "feel",
+              "relaxed"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "ADVCL": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "tourist",
+              "love",
+              "hot spring",
+              "visit",
+              "nearby",
+              "museum"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "REL": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 2 題驗證者對4 部分切分有意見（warn）：第 1 部分「喜歡泡溫泉的遊客」的 accepted 只收 like/enjoy/love soaking in hot springs（動名詞），沒有收不定詞 who like to soak in hot springs／who lov"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "fail",
+      "created_at": "2026-10-09T00:00:00Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "As soon as I soaked in the hot spring in Beitou, I felt extremely relaxed.",
+            "confidence": "high",
+            "explanation_zh": "「一…就…」用 As soon as 引導副詞子句，兩個動作皆為過去式；「非常放鬆」譯為 felt extremely relaxed。"
+          },
+          "2": {
+            "translation": "Visitors who like soaking in hot springs can also visit the nearby hot spring museum.",
+            "confidence": "medium",
+            "explanation_zh": "「喜歡泡溫泉的遊客」用關係代名詞 who 修飾 visitors；「也可以」用 can also；「附近的溫泉博物館」譯為 the nearby hot spring museum。博物館指特定的一間，故用 the。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "ADVCL"
+            ],
+            "used_target_words": [
+              "get into",
+              "hot spring",
+              "feel",
+              "relaxed"
+            ],
+            "within_accepted": false,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "中文沒有時態標記，「一泡進…就覺得」可以是過去的一次經驗，也可以是習慣；參考譯文與 parts.accepted 的第 1 部分只收現在式的 soak（As soon as I soak in／Once I soak in 等），過去式只收 got into／stepped into，漏了 As soon as I soaked in、Once I soaked in、When I soaked in、The moment I soaked in。",
+              "第 2 部分「北投（Beitou）的溫泉」只收 the hot springs in／of Beitou、a hot spring in Beitou、Beitou's hot springs，沒有收單數特指的 the hot spring in Beitou（自然合理的寫法）。盲譯者寫 As soon as I soaked in the hot spring in Beitou, I felt extremely relaxed. 第 1、2 部分都對不上，建議補進 parts.accepted（answer_segments 同步），或在中文加線索（例如「每次」）排除時態歧義。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "REL"
+            ],
+            "used_target_words": [
+              "tourist",
+              "love",
+              "hot spring",
+              "visit",
+              "nearby",
+              "museum"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "get into",
+              "hot spring",
+              "feel",
+              "relaxed"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "ADVCL": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "tourist",
+              "love",
+              "hot spring",
+              "visit",
+              "nearby",
+              "museum"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "REL": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 1 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義",
+          "第 1 題驗證者對4 部分切分有意見（warn）：中文沒有時態標記，「一泡進…就覺得」可以是過去的一次經驗，也可以是習慣；參考譯文與 parts.accepted 的第 1 部分只收現在式的 soak（As soon as I soak in／Once I soak in 等），過去式只收"
+        ]
+      }
+    }
+  ],
+  "status": "rejected",
+  "status_reason": "blind_solver:B 未通過：第 1 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義；第 1 題驗證者對4 部分切分有意見（warn）：中文沒有時態標記，「一泡進…就覺得」可以是過去的一次經驗，也可以是習慣；參考譯文與 parts.accepted 的第 1 部分只收現在式的 soak（As soon as I soak in／Once I soak in 等），過去式只收；判定者人工審查（第 1 輪）：同意退回，評分規準太窄。第 1 題第 1 部分「一泡進」過去式只收 got into／stepped into，漏了最貼近「泡」的 soaked in（As soon as I soaked in、Once I soaked in、When I soaked in）；第 2 部分「北投（Beitou）的溫泉」沒收 the hot spring in Beitou（驗證者 B 的盲譯 As soon as I soaked in the hot spring in Beitou, I felt extremely relaxed. 正確自然卻對不上）。第 2 題第 1 部分只收動名詞 like/enjoy/love soaking in hot springs，沒收同樣常見的不定詞 who like/love to soak in hot springs（驗證者 A 的盲譯即用此寫法）。重生時補齊上述 accepted 與參考譯文，或在中文加「每次」等線索排除時態歧義；中文題目、句型、解析本身沒有問題。"
+}

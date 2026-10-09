@@ -1,0 +1,642 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.d9c809",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "basic",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "週末時，我喜歡去一家可以坐著看書的書店。",
+        "options": null,
+        "answer": "On weekends, I like to go to a bookstore where I can sit and read.",
+        "accepted_answers": [
+          "On weekends, I like going to a bookstore where people can sit and read books.",
+          "On the weekend, I enjoy going to a bookstore where I can sit down and read."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "關係副詞 where"
+          ],
+          "topic": "逛書店"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "只要有空，我就會在那裡待上好幾個小時。",
+        "options": null,
+        "answer": "As long as I have free time, I will stay there for several hours.",
+        "accepted_answers": [
+          "As long as I am free, I stay there for a few hours.",
+          "Whenever I have time, I will spend several hours there."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "條件子句（as long as：只要…就…）"
+          ],
+          "topic": "逛書店"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "逛書店"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「可以坐著看書的書店」要把修飾語改成關係子句放在 bookstore 後面。坐著看書的是人，書店是「在那裡看書」的地點，所以用關係副詞 where + 主詞 + 動詞：a bookstore where I can sit and read（where ＝ in which）。不要寫成 which I can sit and read，也不要漏掉主詞寫成 that can sit and read。「週末時」是 on weekends 或 on the weekend，weekend 是可數名詞；like 後面接 to go 或 going。",
+          "evidence": [
+            "可以坐著看書的書店",
+            "週末時"
+          ],
+          "strategy_zh": "地點名詞後面接「在那裡做什麼」的說明時，用 where + 完整子句（主詞＋動詞）；寫完檢查 where 後面有主詞。",
+          "hints": [
+            "切成四段：週末時／我喜歡去／可以坐著看書的／書店",
+            "標的詞彙：weekend（週末）、like（喜歡）、bookstore（書店）、sit（坐）、read（閱讀）",
+            "句型框架：S + V + a + 地點名詞 + where + S + can + 原形動詞 …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「只要…就…」是條件子句，用 As long as（或 If）+ S + V(現在式), S + will + 原形動詞。條件子句裡用現在式表示未來，不寫 will；「就」不用翻成 so。「有空」是 have free time 或 be free；「在那裡待上」是 stay there（there 前面不加 at），也可以寫 spend several hours there。「好幾個小時」用 several hours、a few hours 或 for hours，hour 要加 s。there 指第一句的那家書店。",
+          "evidence": [
+            "只要有空",
+            "好幾個小時"
+          ],
+          "strategy_zh": "看到「只要／如果…就…」先寫條件子句（現在式），逗號後接主要子句；寫完檢查數量詞後面的名詞有沒有加 s。",
+          "hints": [
+            "切成四段：只要／有空／我就會在那裡待上／好幾個小時",
+            "標的詞彙：free（有空的）、stay（待）、hour（小時）",
+            "句型框架：As long as + S + V(現在式), S + will + 原形動詞 …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "On weekends, I like to go to a bookstore where I can sit and read.",
+            "On weekends, I like going to a bookstore where people can sit and read books.",
+            "On the weekend, I enjoy going to a bookstore where I can sit down and read."
+          ],
+          "target_words": [
+            {
+              "word": "weekend",
+              "zh": "週末"
+            },
+            {
+              "word": "like",
+              "zh": "喜歡",
+              "alternatives": [
+                "enjoy",
+                "love"
+              ]
+            },
+            {
+              "word": "bookstore",
+              "zh": "書店",
+              "alternatives": [
+                "bookshop"
+              ]
+            },
+            {
+              "word": "sit",
+              "zh": "坐"
+            },
+            {
+              "word": "read",
+              "zh": "看書；閱讀"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "REL",
+              "grammar_id": "gp-relative-adverb",
+              "label_zh": "關係副詞 where（地點名詞 + where + S + V）",
+              "frame": "a + 地點名詞 + where + S + can + 原形動詞 …",
+              "zh_trigger": "可以坐著看書的書店"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "週末時",
+              "accepted": [
+                "On weekends",
+                "On the weekend",
+                "On the weekends",
+                "At weekends",
+                "At the weekend"
+              ],
+              "targets": [
+                "weekend"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "On weekend",
+                  "right": "On weekends",
+                  "explanation_zh": "weekend 是可數名詞，不能單獨用單數；寫 on weekends（每個週末）或 on the weekend。"
+                }
+              ]
+            },
+            {
+              "zh": "我喜歡去",
+              "accepted": [
+                "I like to go to",
+                "I like going to",
+                "I enjoy going to",
+                "I love going to",
+                "I love to go to",
+                "I like to visit"
+              ],
+              "targets": [
+                "like"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "I like go to",
+                  "right": "I like to go to",
+                  "explanation_zh": "like 後面接不定詞 to go 或動名詞 going，不能直接接原形動詞。"
+                },
+                {
+                  "wrong": "I enjoy to go to",
+                  "right": "I enjoy going to",
+                  "explanation_zh": "enjoy 後面只能接動名詞 V-ing。"
+                }
+              ]
+            },
+            {
+              "zh": "可以坐著看書的",
+              "accepted": [
+                "where I can sit and read",
+                "where people can sit and read books",
+                "where I can sit down and read",
+                "where you can sit and read",
+                "where people can sit and read",
+                "where I can sit and read books",
+                "in which I can sit and read",
+                "where customers can sit and read",
+                "where I can sit down and read books",
+                "where people can sit down and read",
+                "where people can sit down and read books"
+              ],
+              "targets": [
+                "REL",
+                "sit",
+                "read"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "that can sit and read",
+                  "right": "where I can sit and read",
+                  "explanation_zh": "能坐著看書的是人，不是書店；關係子句裡要補上主詞（I／people），而且表示「在那裡」要用關係副詞 where。"
+                },
+                {
+                  "wrong": "which I can sit and read",
+                  "right": "where I can sit and read",
+                  "explanation_zh": "sit and read 後面沒有受詞，先行詞 bookstore 是地點，要用 where（＝ in which），不能只用 which。"
+                }
+              ]
+            },
+            {
+              "zh": "書店",
+              "accepted": [
+                "a bookstore",
+                "a bookshop"
+              ],
+              "targets": [
+                "bookstore"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "a library",
+                  "right": "a bookstore",
+                  "explanation_zh": "library 是圖書館；「書店」是 bookstore 或 bookshop。"
+                },
+                {
+                  "wrong": "a bookstores",
+                  "right": "a bookstore",
+                  "explanation_zh": "不定冠詞 a 後面接單數名詞。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "subjectless",
+              "zh": "可以坐著看書的",
+              "literal_error": "On weekends, I like to go to a bookstore that can sit and read.",
+              "part": 3,
+              "explanation_zh": "中文修飾語「可以坐著看書的」沒有說出是誰坐著看書，照字面寫成 a bookstore that can sit and read，變成書店在看書；英文要補上主詞並用 where：where I can sit and read。"
+            }
+          ],
+          "bonus": []
+        },
+        "2": {
+          "references": [
+            "As long as I have free time, I will stay there for several hours.",
+            "As long as I am free, I stay there for a few hours.",
+            "Whenever I have time, I will spend several hours there."
+          ],
+          "target_words": [
+            {
+              "word": "free",
+              "zh": "有空的",
+              "alternatives": [
+                "time"
+              ]
+            },
+            {
+              "word": "stay",
+              "zh": "待；停留",
+              "alternatives": [
+                "spend"
+              ]
+            },
+            {
+              "word": "hour",
+              "zh": "小時"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "ADVCL",
+              "grammar_id": "gp-condition-real",
+              "label_zh": "條件子句（as long as／if：只要…就…）",
+              "frame": "As long as + S + V(現在式), S + will + 原形動詞 …",
+              "zh_trigger": "只要有空"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "只要",
+              "accepted": [
+                "As long as",
+                "Whenever",
+                "If",
+                "Every time"
+              ],
+              "targets": [
+                "ADVCL"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "As long as I will have free time",
+                  "right": "As long as I have free time",
+                  "explanation_zh": "條件子句用現在式表示未來，不加 will。"
+                },
+                {
+                  "wrong": "As long as I have free time, so I will",
+                  "right": "As long as I have free time, I will",
+                  "explanation_zh": "as long as 已經連接兩個子句，「就」不用再翻成 so。"
+                }
+              ]
+            },
+            {
+              "zh": "有空",
+              "accepted": [
+                "I have free time",
+                "I am free",
+                "I have time",
+                "I'm free",
+                "I have some free time",
+                "I have some time"
+              ],
+              "targets": [
+                "free"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "I am free time",
+                  "right": "I have free time",
+                  "explanation_zh": "「有空」是 be free 或 have free time，兩種寫法不能混在一起。"
+                }
+              ]
+            },
+            {
+              "zh": "我就會在那裡待上",
+              "accepted": [
+                "I will stay there",
+                "I stay there",
+                "I will spend",
+                "I'll stay there",
+                "I usually stay there",
+                "I often stay there",
+                "I'll spend",
+                "I usually spend",
+                "I spend"
+              ],
+              "targets": [
+                "stay"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "I will stay at there",
+                  "right": "I will stay there",
+                  "explanation_zh": "there 是副詞，前面不加介系詞 at。"
+                }
+              ]
+            },
+            {
+              "zh": "好幾個小時",
+              "accepted": [
+                "for several hours",
+                "for a few hours",
+                "several hours",
+                "for hours",
+                "for many hours",
+                "a few hours",
+                "hours"
+              ],
+              "targets": [
+                "hour"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "for several hour",
+                  "right": "for several hours",
+                  "explanation_zh": "several、a few 後面接複數名詞 hours。"
+                },
+                {
+                  "wrong": "for a lot hours",
+                  "right": "for a lot of hours",
+                  "explanation_zh": "a lot 後面要加 of 才能接名詞；也可以寫 several hours。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "plural_countable",
+              "zh": "好幾個小時",
+              "literal_error": "As long as I have free time, I will stay there for several hour.",
+              "part": 4,
+              "explanation_zh": "中文「好幾個小時」的「小時」沒有複數記號，照字面寫成 hour 會被扣分；several 後面一定接複數 hours。"
+            }
+          ],
+          "bonus": []
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-basic-04",
+    "lot": "translation-basic-04",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "825ee6e76853b2ea2df931259eb3211229fc9f6e568e89591ca9feda5b5b935e",
+    "spec_id": "translation-basic@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T07:59:14Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T00:00:00Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "On weekends, I like to go to a bookstore where I can sit and read.",
+            "confidence": "high",
+            "explanation_zh": "「可以坐著看書的書店」用關係副詞 where 引導的形容詞子句修飾 bookstore（也可 in which）；「坐著看書」sit and read；習慣用簡單現在式；On weekends 放句首。"
+          },
+          "2": {
+            "translation": "As long as I have free time, I will stay there for several hours.",
+            "confidence": "high",
+            "explanation_zh": "「只要…就…」用 As long as 引導條件子句；「待上好幾個小時」stay there for several hours（也可 for hours / spend hours there）；will 表示習慣性的傾向；Whenever I am free … 也自然，若參考譯文只收 as long as 應補收。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "REL"
+            ],
+            "used_target_words": [
+              "weekend",
+              "like",
+              "bookstore",
+              "sit",
+              "read"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "ADVCL"
+            ],
+            "used_target_words": [
+              "free",
+              "stay",
+              "hour"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "（備註，不影響判定）參考譯文 1 把「好幾個小時」寫成 a few hours，語氣比「好幾個」弱一些（several／for hours 較貼近），可接受。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "weekend",
+              "like",
+              "bookstore",
+              "sit",
+              "read"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "REL": true
+            },
+            "program_match": true
+          },
+          "2": {
+            "target_words_found": [
+              "free",
+              "stay",
+              "hour"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "ADVCL": true
+            },
+            "program_match": true
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T00:00:00Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "On weekends, I like to go to a bookstore where I can sit and read.",
+            "confidence": "high",
+            "explanation_zh": "「週末時」譯為 On weekends；「可以坐著看書的書店」用關係副詞 where 修飾 a bookstore；sit and read 表示坐下來看書。"
+          },
+          "2": {
+            "translation": "As long as I have time, I stay there for several hours.",
+            "confidence": "medium",
+            "explanation_zh": "「只要」用 as long as 引導條件副詞子句，時態用現在簡單式；「好幾個小時」譯為 for several hours；「待」用 stay；「有空」可譯為 have time 或 am free。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "REL"
+            ],
+            "used_target_words": [
+              "weekend",
+              "like",
+              "bookstore",
+              "sit",
+              "read"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "ADVCL"
+            ],
+            "used_target_words": [
+              "free",
+              "stay",
+              "hour"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "weekend",
+              "like",
+              "bookstore",
+              "sit",
+              "read"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "REL": true
+            },
+            "program_match": true
+          },
+          "2": {
+            "target_words_found": [
+              "free",
+              "stay",
+              "hour"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "ADVCL": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

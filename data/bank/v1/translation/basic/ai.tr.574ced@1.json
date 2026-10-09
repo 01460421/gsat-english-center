@@ -1,0 +1,649 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.574ced",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "basic",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "上週五，我們班參觀了一家觀光工廠，還親手做了巧克力。",
+        "options": null,
+        "answer": "Last Friday, our class visited a tourist factory and made our own chocolate.",
+        "accepted_answers": [
+          "Our class went to a tourist factory last Friday and made chocolate by ourselves."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "平行結構"
+          ],
+          "topic": "參觀觀光工廠"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "在工廠裡，帶我們參觀的導覽員耐心地回答了我們所有的問題。",
+        "options": null,
+        "answer": "At the factory, the guide who showed us around patiently answered all our questions.",
+        "accepted_answers": [
+          "In the factory, the guide who took us around answered all of our questions patiently."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "關係代名詞"
+          ],
+          "topic": "參觀觀光工廠"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "參觀觀光工廠"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "這一句有兩個動作「參觀了」和「做了」，用 and 連接成平行結構；上週五是過去的時間，兩個動詞都要用過去式 visited、made。visit 是及物動詞，直接接地點；「觀光工廠」說 tourist factory。「親手做」可寫 made our own chocolate，或 made chocolate ourselves／with our own hands。",
+          "evidence": [
+            "上週五",
+            "還親手做了巧克力"
+          ],
+          "strategy_zh": "and 前後的動作時態要一致；寫完第二個動詞時，回頭看一次時間副詞（上週五 → 過去式）。",
+          "hints": [
+            "切成四段：上週五／參觀了／一家觀光工廠／還親手做了巧克力",
+            "標的詞彙：last（上一個）、visit（參觀）、tourist（觀光的）、factory（工廠）、make（做）、chocolate（巧克力）",
+            "句型框架：S + V1-ed … and V2-ed …（兩個過去式動詞並列）"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「帶我們參觀的導覽員」是「…的＋名詞」，英文把修飾語放到名詞後面，用關係代名詞 who 帶出形容詞子句：the guide who showed us around（先行詞是人，用 who 或 that）。主要動詞是 answered；「耐心地」修飾動詞，用副詞 patiently；「所有的問題」用複數 all our questions。",
+          "evidence": [
+            "帶我們參觀的導覽員",
+            "我們所有的問題"
+          ],
+          "strategy_zh": "中文「…的＋人」時，先寫出那個人（the guide），再用 who＋動詞補上「…的」部分，最後才接主要動詞。",
+          "hints": [
+            "切成四段：在工廠裡／帶我們參觀的導覽員／耐心地／回答了我們所有的問題",
+            "標的詞彙：factory（工廠）、guide（導覽員）、show（帶…參觀，show sb around）、patiently（耐心地）、answer（回答）、question（問題）",
+            "句型框架：the + 人 + who + V …, 再接主要動詞 …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "Last Friday, our class visited a tourist factory and made our own chocolate.",
+            "Our class went to a tourist factory last Friday and made chocolate by ourselves."
+          ],
+          "target_words": [
+            {
+              "word": "last",
+              "zh": "上一個（上週五 last Friday）"
+            },
+            {
+              "word": "visit",
+              "zh": "參觀",
+              "alternatives": [
+                "go to"
+              ]
+            },
+            {
+              "word": "tourist",
+              "zh": "觀光（客）的",
+              "alternatives": [
+                "tourism"
+              ]
+            },
+            {
+              "word": "factory",
+              "zh": "工廠"
+            },
+            {
+              "word": "make",
+              "zh": "做"
+            },
+            {
+              "word": "chocolate",
+              "zh": "巧克力"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PARA",
+              "grammar_id": "gp-parallelism",
+              "label_zh": "平行結構（兩個過去式動詞以 and 連接）",
+              "frame": "S + V1-ed … and V2-ed …（時態一致）",
+              "zh_trigger": "還親手做了"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "上週五",
+              "accepted": [
+                "Last Friday"
+              ],
+              "targets": [
+                "last"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "On last Friday",
+                  "right": "Last Friday",
+                  "explanation_zh": "last＋時間名詞本身就是副詞片語，前面不加 on。"
+                }
+              ]
+            },
+            {
+              "zh": "參觀了",
+              "accepted": [
+                "visited",
+                "went to",
+                "paid a visit to"
+              ],
+              "targets": [
+                "visit"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "visit",
+                  "right": "visited",
+                  "explanation_zh": "上週五是過去的時間，動詞用過去式 visited。"
+                },
+                {
+                  "wrong": "visited to",
+                  "right": "visited",
+                  "explanation_zh": "visit 是及物動詞，後面直接接地點，不加 to。"
+                }
+              ]
+            },
+            {
+              "zh": "一家觀光工廠",
+              "accepted": [
+                "a tourist factory",
+                "a tourism factory"
+              ],
+              "targets": [
+                "tourist",
+                "factory"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "a sightseeing factory",
+                  "right": "a tourist factory",
+                  "explanation_zh": "「觀光工廠」是開放遊客參觀的工廠，通常說 tourist factory。"
+                }
+              ]
+            },
+            {
+              "zh": "還親手做了巧克力",
+              "accepted": [
+                "and made our own chocolate",
+                "and made chocolate by ourselves",
+                "and made chocolate ourselves",
+                "and made chocolate with our own hands",
+                "and also made our own chocolate",
+                "and made chocolate on our own"
+              ],
+              "targets": [
+                "make",
+                "chocolate",
+                "PARA"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "and make our own chocolate",
+                  "right": "and made our own chocolate",
+                  "explanation_zh": "and 連接的兩個動作都發生在上週五，第二個動詞也要用過去式 made（平行結構）。"
+                },
+                {
+                  "wrong": "and made chocolate by our hands",
+                  "right": "and made chocolate with our own hands",
+                  "explanation_zh": "「親手」說 with our own hands 或 by ourselves，不說 by our hands。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "tense_trigger",
+              "zh": "上週五",
+              "literal_error": "Last Friday, our class visited a tourist factory and make our own chocolate.",
+              "part": 4,
+              "explanation_zh": "「上週五」要求過去式；第一個動詞常寫對，and 後面的第二個動詞卻容易忘了也用過去式，這一部分扣分。"
+            }
+          ],
+          "bonus": []
+        },
+        "2": {
+          "references": [
+            "At the factory, the guide who showed us around patiently answered all our questions.",
+            "In the factory, the guide who took us around answered all of our questions patiently."
+          ],
+          "target_words": [
+            {
+              "word": "factory",
+              "zh": "工廠"
+            },
+            {
+              "word": "guide",
+              "zh": "導覽員"
+            },
+            {
+              "word": "show",
+              "zh": "帶（人）參觀（show sb around）",
+              "alternatives": [
+                "take",
+                "lead",
+                "give"
+              ]
+            },
+            {
+              "word": "patiently",
+              "zh": "耐心地",
+              "alternatives": [
+                "patient",
+                "patience"
+              ]
+            },
+            {
+              "word": "answer",
+              "zh": "回答"
+            },
+            {
+              "word": "question",
+              "zh": "問題"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "REL",
+              "grammar_id": "gp-relative-pronoun",
+              "label_zh": "關係代名詞 who 引導的形容詞子句",
+              "frame": "the + 人 + who + V …, 再接主要動詞",
+              "zh_trigger": "帶我們參觀的導覽員"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "在工廠裡",
+              "accepted": [
+                "At the factory",
+                "In the factory",
+                "Inside the factory"
+              ],
+              "targets": [
+                "factory"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "In factory",
+                  "right": "In the factory",
+                  "explanation_zh": "factory 是可數名詞，前面要有冠詞 the。"
+                }
+              ]
+            },
+            {
+              "zh": "帶我們參觀的導覽員",
+              "accepted": [
+                "the guide who showed us around",
+                "the guide who took us around",
+                "the guide who led us around",
+                "the tour guide who showed us around",
+                "the guide who gave us a tour",
+                "the guide that showed us around"
+              ],
+              "targets": [
+                "guide",
+                "show",
+                "REL"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "the guide showed us around",
+                  "right": "the guide who showed us around",
+                  "explanation_zh": "「帶我們參觀的」是修飾導覽員的形容詞子句，要用關係代名詞 who（或 that）帶出，不然一句話會有兩個主要動詞。"
+                },
+                {
+                  "wrong": "the guide which showed us around",
+                  "right": "the guide who showed us around",
+                  "explanation_zh": "先行詞是人，關係代名詞用 who 或 that，不用 which。"
+                }
+              ]
+            },
+            {
+              "zh": "耐心地",
+              "accepted": [
+                "patiently",
+                "with patience"
+              ],
+              "targets": [
+                "patiently"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "patient answered",
+                  "right": "patiently answered",
+                  "explanation_zh": "修飾動詞 answered 要用副詞 patiently。"
+                }
+              ]
+            },
+            {
+              "zh": "回答了我們所有的問題",
+              "accepted": [
+                "answered all our questions",
+                "answered all of our questions",
+                "answered every one of our questions"
+              ],
+              "targets": [
+                "answer",
+                "question"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "answered all our question",
+                  "right": "answered all our questions",
+                  "explanation_zh": "all 後面的可數名詞用複數 questions。"
+                },
+                {
+                  "wrong": "answered to all our questions",
+                  "right": "answered all our questions",
+                  "explanation_zh": "answer 當動詞是及物動詞，直接接受詞，不加 to。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "plural_countable",
+              "zh": "所有的問題",
+              "literal_error": "At the factory, the guide who showed us around patiently answered all our question.",
+              "part": 4,
+              "explanation_zh": "中文「問題」沒有單複數，照字面寫成單數 question 會扣分；「所有的」問題要用複數 questions。"
+            }
+          ],
+          "bonus": []
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-basic-05",
+    "lot": "translation-basic-05",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "a9e22defa014e90d4fa058a697f2a11423f1ee158f245ae054434d9cca4be9d6",
+    "spec_id": "translation-basic@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T13:28:11Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T13:07:55Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Last Friday, our class visited a tourist factory and made chocolate with our own hands.",
+            "confidence": "high",
+            "explanation_zh": "「上週五」用過去簡單式；兩個動作用 and 連接 visited 與 made；「親手」用 with our own hands（by ourselves 也可）；「觀光工廠」直譯 tourist factory。"
+          },
+          "2": {
+            "translation": "In the factory, the guide who showed us around patiently answered all our questions.",
+            "confidence": "high",
+            "explanation_zh": "「帶我們參觀的導覽員」是前置修飾語，英文要改成關係子句 who showed us around 放在 guide 後面；「耐心地」用副詞 patiently；過去式承接第 1 句。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PARA"
+            ],
+            "used_target_words": [
+              "last",
+              "visit",
+              "tourist",
+              "factory",
+              "make",
+              "chocolate"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "REL"
+            ],
+            "used_target_words": [
+              "factory",
+              "guide",
+              "show",
+              "patiently",
+              "answer",
+              "question"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "last",
+              "visit",
+              "tourist",
+              "factory",
+              "make",
+              "chocolate"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PARA": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "factory",
+              "guide",
+              "show",
+              "patiently",
+              "answer",
+              "question"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "REL": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "warn",
+      "created_at": "2026-10-09T13:11:47Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Last Friday, our class visited a tourist factory and even made chocolate by hand.",
+            "confidence": "high",
+            "explanation_zh": "「上週五」是明確的過去時間，用過去式；「觀光工廠」譯成 tourist factory；「親手做」用 made ... by hand（或 made it ourselves）；「還」用 even/also 帶出補充。"
+          },
+          "2": {
+            "translation": "In the factory, the guide who showed us around patiently answered all of our questions.",
+            "confidence": "high",
+            "explanation_zh": "「帶我們參觀的導覽員」用關係子句 who showed us around 修飾 the guide；「耐心地」用副詞 patiently；過去式 answered。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PARA"
+            ],
+            "used_target_words": [
+              "last",
+              "visit",
+              "tourist",
+              "factory",
+              "make",
+              "chocolate"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "第 4 部分「還親手做了巧克力」的 accepted 偏窄：我自然寫出的 'and even made chocolate by hand'（'by hand' 表示親手、手工製作，'even' 對應「還」）沒有列在 accepted 內。意思與結構都正確（過去式、平行結構、標的詞彙都有），但嚴格比對時會落在清單之外。建議在第 4 部分補上 'and made chocolate by hand'、'and even made our own chocolate' 等變體。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "REL"
+            ],
+            "used_target_words": [
+              "factory",
+              "guide",
+              "show",
+              "patiently",
+              "answer",
+              "question"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "last",
+              "visit",
+              "tourist",
+              "factory",
+              "make",
+              "chocolate"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PARA": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "factory",
+              "guide",
+              "show",
+              "patiently",
+              "answer",
+              "question"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "REL": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 1 題驗證者對4 部分切分有意見（warn）：第 4 部分「還親手做了巧克力」的 accepted 偏窄：我自然寫出的 'and even made chocolate by hand'（'by hand' 表示親手、手工製作，'even' 對應「還」）沒有列在 accepted 內。"
+        ]
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

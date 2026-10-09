@@ -1,0 +1,163 @@
+{
+  "schema": "gsat-bank-facts/v1",
+  "id": "vitamin-d-mxt02",
+  "title": "Vitamin D, sunlight, and teenagers: how the body gets vitamin D and why levels are often low",
+  "sdgs": [
+    3
+  ],
+  "created_on": "2026-10-09",
+  "created_by": "claude-opus-5-5",
+  "sources": [
+    {
+      "id": "s1",
+      "publisher": "MedlinePlus (U.S. National Library of Medicine)",
+      "title": "Vitamin D",
+      "url": "https://medlineplus.gov/ency/article/002405.htm",
+      "accessed": "2026-10-09",
+      "license": "U.S. government work",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s2",
+      "publisher": "NIH Office of Dietary Supplements",
+      "title": "Vitamin D: Fact Sheet for Health Professionals",
+      "url": "https://ods.od.nih.gov/factsheets/VitaminD-HealthProfessional/",
+      "accessed": "2026-10-09",
+      "license": "U.S. government work",
+      "use": "fact_only",
+      "note": "2026-10-09 直接讀取被擋（403），以搜尋結果的摘錄確認窗玻璃擋 UVB 與影響合成的因素"
+    },
+    {
+      "id": "s3",
+      "publisher": "Italian Journal of Pediatrics (via PubMed Central)",
+      "title": "Prevalence of hypovitaminosis D and predictors of vitamin D status in Italian healthy adolescents",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4064504/",
+      "accessed": "2026-10-09",
+      "license": "CC-BY (article); only facts are used",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s4",
+      "publisher": "PubMed Central",
+      "title": "Association of sun exposure and seasonality with vitamin D levels in Brazilian children and adolescents",
+      "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9984152/",
+      "accessed": "2026-10-09",
+      "license": "Open access article; only facts are used",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s5",
+      "publisher": "PubMed Central",
+      "title": "High prevalence and seasonal patterns of vitamin D deficiency in children and adolescents in Central China: a three-year single-center study",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11607669/",
+      "accessed": "2026-10-09",
+      "license": "Open access article; only facts are used",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s6",
+      "publisher": "PubMed Central",
+      "title": "Optimal sunscreen use, during a sun holiday with a very high ultraviolet index, allows vitamin D synthesis without sunburn",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6899952/",
+      "accessed": "2026-10-09",
+      "license": "Open access article; only facts are used",
+      "use": "fact_only",
+      "note": null
+    }
+  ],
+  "facts": [
+    {
+      "id": "f1",
+      "text": "Vitamin D helps the body absorb calcium, which is needed to build strong bones.",
+      "source_ids": [
+        "s1",
+        "s2"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f2",
+      "text": "In children, a long-term lack of vitamin D can cause rickets, a disease in which bones become soft.",
+      "source_ids": [
+        "s1",
+        "s2"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f3",
+      "text": "Few foods are rich in vitamin D; fatty fish such as salmon, tuna, and mackerel are among the best sources, and egg yolks contain smaller amounts.",
+      "source_ids": [
+        "s1",
+        "s2"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f4",
+      "text": "The body makes vitamin D when bare skin is exposed to sunlight; a few minutes of sun on the arms or legs on most days may meet many people's needs, though output varies widely.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f5",
+      "text": "Only UVB light triggers vitamin D production in the skin; its strength depends on season, time of day, cloud cover, smog, and latitude.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f6",
+      "text": "UVB does not pass through window glass, so sitting in sunshine indoors behind a window does not produce vitamin D.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f7",
+      "text": "Darker skin and sunscreen can reduce vitamin D production, though studies disagree about how much sunscreen lowers vitamin D status in everyday use.",
+      "source_ids": [
+        "s1",
+        "s2",
+        "s6"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f8",
+      "text": "Longer unprotected sun exposure is not recommended because it raises the risk of skin cancer.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f9",
+      "text": "Studies of adolescents in Italy, Brazil, and China found low vitamin D levels to be common, with lower levels in winter.",
+      "source_ids": [
+        "s3",
+        "s4",
+        "s5"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f10",
+      "text": "In these studies, adolescents who spent more time active outdoors had better vitamin D status than those mainly active indoors.",
+      "source_ids": [
+        "s3",
+        "s4"
+      ],
+      "kind": "other"
+    }
+  ],
+  "notes": "混合題 mixed-top-02 第 3 組用（2026-10-09 線上查證，只取事實、不取原句）。選文不寫每日建議量、盛行率等數字，避免把單一研究的數字寫成定論；日照時間只寫「幾分鐘可能足夠，因人而異」。"
+}

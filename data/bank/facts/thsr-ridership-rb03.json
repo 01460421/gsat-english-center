@@ -1,0 +1,257 @@
+{
+  "schema": "gsat-bank-facts/v1",
+  "id": "thsr-ridership-rb03",
+  "title": "Taiwan High Speed Rail: yearly passengers 2007–2025 and background facts",
+  "sdgs": [
+    9,
+    11
+  ],
+  "created_on": "2026-10-09",
+  "created_by": "claude-opus-5-5",
+  "sources": [
+    {
+      "id": "s1",
+      "publisher": "政府資料開放平臺 data.gov.tw（提供機關：交通部鐵道局）",
+      "title": "高鐵運量統計表",
+      "url": "https://data.gov.tw/dataset/96941",
+      "accessed": "2026-10-09",
+      "license": "OGDL-Taiwan-1.0",
+      "use": "dataset",
+      "note": "資料資源 CSV 檔放在鐵道局網站（https://www.rb.gov.tw/api/proxy/v4/file-service/Opendata%2F回傳附件-高鐵運量統計表(更新至11504)(CSV檔).csv），欄位：年（民國）、月、旅客人數……；逐月資料 2007/01–2026/04。本事實單的年度數值是 2007–2025 每年 12 個月的旅客人數加總，換算成百萬人次（未四捨五入）"
+    },
+    {
+      "id": "s2",
+      "publisher": "Knowledge at Wharton (University of Pennsylvania)",
+      "title": "Taiwan's High-speed Rail: It's Been a Rapid Learning Curve",
+      "url": "https://knowledge.wharton.upenn.edu/article/taiwans-high-speed-rail-its-been-a-rapid-learning-curve/",
+      "accessed": "2026-10-09",
+      "license": "all-rights-reserved",
+      "use": "fact_only",
+      "note": "2007 年 9 月的報導"
+    },
+    {
+      "id": "s3",
+      "publisher": "Taipei Times",
+      "title": "THSRC set for largest timetable change in 20 years",
+      "url": "https://www.taipeitimes.com/News/front/archives/2026/08/02/2003861784",
+      "accessed": "2026-10-09",
+      "license": "all-rights-reserved",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s4",
+      "publisher": "Focus Taiwan (CNA)",
+      "title": "High speed rail to reduce service amid slow demand due to COVID-19",
+      "url": "https://focustaiwan.tw/society/202003230009",
+      "accessed": "2026-10-09",
+      "license": "all-rights-reserved",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s5",
+      "publisher": "Taipei Times",
+      "title": "COVID-19: High-speed rail service to increase next month",
+      "url": "https://www.taipeitimes.com/News/taiwan/archives/2021/08/17/2003762755",
+      "accessed": "2026-10-09",
+      "license": "all-rights-reserved",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s6",
+      "publisher": "Taipei Times",
+      "title": "High-speed rail passengers hit record-high 73 million",
+      "url": "https://www.taipeitimes.com/News/taiwan/archives/2024/02/23/2003813960",
+      "accessed": "2026-10-09",
+      "license": "all-rights-reserved",
+      "use": "fact_only",
+      "note": "報導中的 2023 年人次是公司公布的 73.03 百萬，與 s1 逐月加總（73.09 百萬）略有差異；本事實單只取這篇的原因說明，數字一律用 s1"
+    }
+  ],
+  "facts": [
+    {
+      "id": "f1",
+      "text": "Taiwan's high-speed rail began carrying passengers in January 2007.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "date"
+    },
+    {
+      "id": "f2",
+      "text": "The line runs about 345 km along Taiwan's west coast, from Taipei in the north to Kaohsiung in the south.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "place"
+    },
+    {
+      "id": "f3",
+      "text": "In 2007, an express high-speed train with one stop in between took about 90 minutes from Taipei to Kaohsiung; a train stopping at seven stations took about two hours.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "number",
+      "note": "2007 年（Wharton 2007 年 9 月報導當時）的情形，不是現況，選文不可用 now 或現在式寫成現在的事實。2026 年的直達車在台北與左營之間至少停 2 站（板橋＋台中，或板橋＋台南），最快的台北－左營約 95 分鐘（2026 年 2 月新增的 1985 車次；ai.rd.7fd13e 的 fact_check 意見，本事實單沒有收錄 2026 年時刻表的來源）"
+    },
+    {
+      "id": "f4",
+      "text": "Before the high-speed rail, the trip from Taipei to Kaohsiung took about five hours by regular train or by express bus.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f5",
+      "text": "High-speed trains reach almost 300 km per hour between stations.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f6",
+      "text": "In the high-speed rail's first year, some domestic air routes lost more than half of their passengers, and airlines canceled dozens of flights.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f7",
+      "text": "In 2015, some high-speed trains began stopping at new stations in Miaoli, Changhua and Yunlin counties.",
+      "source_ids": [
+        "s3"
+      ],
+      "kind": "date"
+    },
+    {
+      "id": "f8",
+      "text": "In 2020, the high-speed rail ran fewer trains for a time because the COVID-19 pandemic had reduced the number of travelers.",
+      "source_ids": [
+        "s4"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f9",
+      "text": "On May 19, 2021, Taiwan raised its COVID-19 alert to level 3 nationwide, and high-speed rail ridership dropped sharply.",
+      "source_ids": [
+        "s5"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f10",
+      "text": "Ridership in 2023 reached a record because rail travel bounced back strongly after pandemic rules were relaxed.",
+      "source_ids": [
+        "s6"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f11",
+      "text": "Yearly passengers (data.gov.tw): 15.56 million in 2007, 30.58 million in 2008, 67.41 million in 2019, 43.46 million in 2021, 73.09 million in 2023 and 82.07 million in 2025.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f12",
+      "text": "The 2008 total (30.58 million) was almost twice the 2007 total (15.56 million).",
+      "source_ids": [
+        "s1",
+        "s2"
+      ],
+      "kind": "number",
+      "note": "倍數為衍生數字：30.58 ÷ 15.56 ≈ 1.97"
+    },
+    {
+      "id": "f13",
+      "text": "The 2025 total (82.07 million) was more than five times the 2007 total (15.56 million) and was the highest of any year up to 2025.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "number",
+      "note": "衍生數字：82.07 ÷ 15.56 ≈ 5.3"
+    },
+    {
+      "id": "f14",
+      "text": "Yearly passengers first went above 60 million in 2017 (60.57 million); the 2016 total was 56.59 million.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f15",
+      "text": "During 2007 the number of daily trains kept rising, from 19 at the opening to 46 by mid-September.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "number"
+    }
+  ],
+  "datasets": [
+    {
+      "id": "d1",
+      "source_id": "s1",
+      "title": "Taiwan High Speed Rail passengers per year (sum of monthly passenger counts)",
+      "indicator": "旅客人數（年合計）",
+      "unit": "million passengers",
+      "categories": [
+        "2007",
+        "2008",
+        "2009",
+        "2010",
+        "2011",
+        "2012",
+        "2013",
+        "2014",
+        "2015",
+        "2016",
+        "2017",
+        "2018",
+        "2019",
+        "2020",
+        "2021",
+        "2022",
+        "2023",
+        "2024",
+        "2025"
+      ],
+      "series": [
+        {
+          "name": "Passengers",
+          "values": [
+            15.555656,
+            30.581261,
+            32.34926,
+            36.939596,
+            41.629303,
+            44.525754,
+            47.486859,
+            48.024758,
+            50.561954,
+            56.58621,
+            60.571057,
+            63.963199,
+            67.411248,
+            57.238942,
+            43.459558,
+            54.162008,
+            73.086668,
+            78.250483,
+            82.070618
+          ]
+        }
+      ],
+      "note": "2007 年 1 月通車；年度值是逐月旅客人數的加總"
+    }
+  ],
+  "notes": "2007 年的年度值依 s1 的逐月資料加總（1–12 月）。"
+}

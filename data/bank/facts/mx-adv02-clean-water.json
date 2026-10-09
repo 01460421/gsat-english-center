@@ -1,0 +1,180 @@
+{
+  "schema": "gsat-bank-facts/v1",
+  "id": "mx-adv02-clean-water",
+  "title": "Six ways to make drinking water safe: sand filters, chlorine, clay pot filters, solar bottles, folded cloth and straw filters",
+  "sdgs": [
+    6
+  ],
+  "created_on": "2026-10-09",
+  "created_by": "claude-opus-5-5",
+  "sources": [
+    {
+      "id": "s1",
+      "publisher": "U.S. Environmental Protection Agency",
+      "title": "The History of Drinking Water Treatment (EPA-816-F-00-006)",
+      "url": "https://archive.epa.gov/water/archive/web/pdf/2001_11_15_consumer_hist.pdf",
+      "accessed": "2026-10-09",
+      "license": "public domain (U.S. government work)",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s2",
+      "publisher": "U.S. Centers for Disease Control and Prevention",
+      "title": "CDC Yellow Book: Water Disinfection for Travelers",
+      "url": "https://www.cdc.gov/yellow-book/hcp/preparing-international-travelers/water-disinfection-for-travelers.html",
+      "accessed": "2026-10-09",
+      "license": "public domain (U.S. government work)",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s3",
+      "publisher": "Massachusetts Institute of Technology",
+      "title": "Investigation of the Potters for Peace Colloidal Silver Impregnated Ceramic Filter (D. Lantagne, 2001)",
+      "url": "https://web.mit.edu/watsan/Docs/Other%20Documents/ceramicpot/PFP-Report1-Daniele%20Lantagne,%2012-01.pdf",
+      "accessed": "2026-10-09",
+      "license": "all-rights-reserved (MIT report)",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s4",
+      "publisher": "Proceedings of the National Academy of Sciences (via PubMed Central)",
+      "title": "Reduction of cholera in Bangladeshi villages by simple filtration (Colwell et al., 2003)",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC298724/",
+      "accessed": "2026-10-09",
+      "license": "all-rights-reserved (PNAS)",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s5",
+      "publisher": "U.S. National Institutes of Health, Fogarty International Center",
+      "title": "Sari cloth can filter cholera from water, research shows",
+      "url": "https://www.fic.nih.gov/News/GlobalHealthMatters/january-february-2015/Pages/nursing-cholera-sari-water-filter.aspx",
+      "accessed": "2026-10-09",
+      "license": "public domain (U.S. government work)",
+      "use": "fact_only",
+      "note": null
+    }
+  ],
+  "facts": [
+    {
+      "id": "f1",
+      "text": "By the early 1800s, slow sand filtration was beginning to be used regularly in Europe.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "date"
+    },
+    {
+      "id": "f2",
+      "text": "Communities and households can build effective slow sand or biosand filters from simple sand and gravel.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f3",
+      "text": "In 1908, chlorine was first used as a primary disinfectant of drinking water in Jersey City, New Jersey.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "date"
+    },
+    {
+      "id": "f4",
+      "text": "Household bleach (sodium hypochlorite) is the main disinfectant promoted by CDC and WHO for treating water at home.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f5",
+      "text": "Unlike sunlight (UV) treatment, chlorine leaves a residual that helps keep stored water from being contaminated again.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f6",
+      "text": "The clay pot filter was first developed in Guatemala by Fernando Mazariegos of the research institute ICAITI.",
+      "source_ids": [
+        "s3"
+      ],
+      "kind": "person"
+    },
+    {
+      "id": "f7",
+      "text": "Clay is mixed with sawdust; when the pot is fired, the sawdust burns away and leaves a network of fine pores.",
+      "source_ids": [
+        "s3"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f8",
+      "text": "For solar disinfection, clear plastic bottles are laid on their side in sunlight for at least 6 hours.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f9",
+      "text": "In cloudy weather, solar disinfection needs 2 days in a row; very muddy water must be cleared first because particles block UV light.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f10",
+      "text": "In a field trial in rural Bangladesh (September 1999 to July 2002), villagers filtered water through old sari cloth folded four to eight times.",
+      "source_ids": [
+        "s4"
+      ],
+      "kind": "event"
+    },
+    {
+      "id": "f11",
+      "text": "Filtering through folded sari cloth reduced cholera by 48% compared with the control villages.",
+      "source_ids": [
+        "s4",
+        "s5"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f12",
+      "text": "The folded cloth removes tiny plankton (copepods) to which cholera bacteria attach.",
+      "source_ids": [
+        "s4",
+        "s5"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f13",
+      "text": "Portable microfilters (including straw-type filters) with pores under 1 micrometer remove bacteria and protozoa.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f14",
+      "text": "Microfilters do not reliably remove viruses, which are much smaller than bacteria.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "other"
+    }
+  ],
+  "datasets": [],
+  "notes": "混合題 mixed-advanced-02 第 2 組用（2026-10-09 線上查證，只取事實、不取原句）。選文 E 的「about half as many cholera cases」對應 48% 的降幅；「three-year study」對應 1999 年 9 月到 2002 年 7 月。吸管濾水器只寫一般微過濾器的特性（CDC），不寫特定品牌與年份。陶壺濾水器的年份來源不一，選文不寫。"
+}

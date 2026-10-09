@@ -105,6 +105,23 @@ class ValidateTest(TempCase):
         errs = self.errors_of(d)
         self.assertTrue(any('2 種填法' in e for e in errs), errs)
 
+    def test_rejected_group_multiple_matchings_is_only_a_warning(self):
+        # 因為多解被退件的題組照規定保留在題庫裡；唯一性問題對它只列 warning，validate --all 不會因此失敗。
+        d = load(FIXTURE)
+        key = vb.answer_key(d)
+        feasible = {no: [k] for no, k in key.items()}
+        feasible['1'], feasible['8'] = ['A', 'E'], ['A', 'E']
+        d['annotations']['elimination'] = {'feasible': feasible, 'perfect_matchings': 2}
+        d['status'] = 'rejected'
+        d['status_reason'] = 'unique_solution 未通過：第 1、8 格可以互換'
+        r, _ = vb.check_file(self.write(d, 'ai.wb.0a1b2c@1.json'))
+        self.assertFalse(any('種填法' in e for e in r.errors), r.errors)
+        self.assertTrue(any('2 種填法' in w for w in r.warnings), r.warnings)
+        # perfect_matchings 寫錯仍然是 error
+        d['annotations']['elimination']['perfect_matchings'] = 1
+        r, _ = vb.check_file(self.write(d, 'ai.wb.0a1b2c@1.json'))
+        self.assertTrue(any('perfect_matchings' in e for e in r.errors), r.errors)
+
     def test_verified_requires_verification_entries(self):
         d = load(FIXTURE)
         d['status'] = 'verified'

@@ -1,0 +1,681 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.cp.f585ad",
+  "version": 1,
+  "section_type": "composition",
+  "format_version": "composition-1",
+  "tier": "top",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [
+      {
+        "kind": "chart",
+        "label": "圖",
+        "caption": "圖：國中生、高中生、大學生最常使用的閱讀形式（%）",
+        "description": "堆疊長條圖（題目設定的假設調查）。橫軸是三組學生：國中生、高中生、大學生；每根長條代表該組最常使用的閱讀形式，由紙本書、電子書、有聲書三段組成，合計為百分之百。國中生：紙本書 62%、電子書 25%、有聲書 13%；高中生：紙本書 45%、電子書 38%、有聲書 17%；大學生：紙本書 30%、電子書 44%、有聲書 26%。年齡越大，紙本書的比例越低，電子書與有聲書的比例越高；大學生的電子書比例超過紙本書。",
+        "rows": [
+          [
+            "學生",
+            "紙本書（%）",
+            "電子書（%）",
+            "有聲書（%）"
+          ],
+          [
+            "國中生",
+            "62",
+            "25",
+            "13"
+          ],
+          [
+            "高中生",
+            "45",
+            "38",
+            "17"
+          ],
+          [
+            "大學生",
+            "30",
+            "44",
+            "26"
+          ]
+        ],
+        "question_no": null,
+        "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 440 270\" role=\"img\" aria-label=\"三個年齡層最常使用的閱讀形式堆疊長條圖\">\n  <rect x=\"0\" y=\"0\" width=\"440\" height=\"270\" fill=\"#f6f3ea\"/>\n  <text x=\"220\" y=\"20\" font-size=\"13\" fill=\"#333333\" text-anchor=\"middle\" font-weight=\"bold\">最常使用的閱讀形式（%）</text>\n  <line x1=\"48\" y1=\"218\" x2=\"424\" y2=\"218\" stroke=\"#cccccc\" stroke-width=\"1\"/>\n  <text x=\"42\" y=\"222\" font-size=\"10\" fill=\"#333333\" text-anchor=\"end\">0%</text>\n  <line x1=\"48\" y1=\"182.4\" x2=\"424\" y2=\"182.4\" stroke=\"#cccccc\" stroke-width=\"1\"/>\n  <text x=\"42\" y=\"186.4\" font-size=\"10\" fill=\"#333333\" text-anchor=\"end\">20%</text>\n  <line x1=\"48\" y1=\"146.8\" x2=\"424\" y2=\"146.8\" stroke=\"#cccccc\" stroke-width=\"1\"/>\n  <text x=\"42\" y=\"150.8\" font-size=\"10\" fill=\"#333333\" text-anchor=\"end\">40%</text>\n  <line x1=\"48\" y1=\"111.2\" x2=\"424\" y2=\"111.2\" stroke=\"#cccccc\" stroke-width=\"1\"/>\n  <text x=\"42\" y=\"115.2\" font-size=\"10\" fill=\"#333333\" text-anchor=\"end\">60%</text>\n  <line x1=\"48\" y1=\"75.6\" x2=\"424\" y2=\"75.6\" stroke=\"#cccccc\" stroke-width=\"1\"/>\n  <text x=\"42\" y=\"79.6\" font-size=\"10\" fill=\"#333333\" text-anchor=\"end\">80%</text>\n  <line x1=\"48\" y1=\"40\" x2=\"424\" y2=\"40\" stroke=\"#cccccc\" stroke-width=\"1\"/>\n  <text x=\"42\" y=\"44\" font-size=\"10\" fill=\"#333333\" text-anchor=\"end\">100%</text>\n  <line x1=\"48\" y1=\"40\" x2=\"48\" y2=\"218\" stroke=\"#333333\" stroke-width=\"1\"/>\n  <line x1=\"48\" y1=\"218\" x2=\"424\" y2=\"218\" stroke=\"#333333\" stroke-width=\"1\"/>\n  <rect x=\"75.6667\" y=\"107.64\" width=\"70\" height=\"110.36\" fill=\"#4e79a7\" stroke=\"#ffffff\" stroke-width=\"1\"/>\n  <text x=\"110.667\" y=\"166.82\" font-size=\"10\" fill=\"#ffffff\" text-anchor=\"middle\" font-weight=\"bold\">62%</text>\n  <rect x=\"75.6667\" y=\"63.14\" width=\"70\" height=\"44.5\" fill=\"#f28e2b\" stroke=\"#ffffff\" stroke-width=\"1\"/>\n  <text x=\"110.667\" y=\"89.39\" font-size=\"10\" fill=\"#ffffff\" text-anchor=\"middle\" font-weight=\"bold\">25%</text>\n  <rect x=\"75.6667\" y=\"40\" width=\"70\" height=\"23.14\" fill=\"#59a14f\" stroke=\"#ffffff\" stroke-width=\"1\"/>\n  <text x=\"110.667\" y=\"55.57\" font-size=\"10\" fill=\"#ffffff\" text-anchor=\"middle\" font-weight=\"bold\">13%</text>\n  <text x=\"110.667\" y=\"233\" font-size=\"11\" fill=\"#333333\" text-anchor=\"middle\">國中生</text>\n  <rect x=\"201\" y=\"137.9\" width=\"70\" height=\"80.1\" fill=\"#4e79a7\" stroke=\"#ffffff\" stroke-width=\"1\"/>\n  <text x=\"236\" y=\"181.95\" font-size=\"10\" fill=\"#ffffff\" text-anchor=\"middle\" font-weight=\"bold\">45%</text>\n  <rect x=\"201\" y=\"70.26\" width=\"70\" height=\"67.64\" fill=\"#f28e2b\" stroke=\"#ffffff\" stroke-width=\"1\"/>\n  <text x=\"236\" y=\"108.08\" font-size=\"10\" fill=\"#ffffff\" text-anchor=\"middle\" font-weight=\"bold\">38%</text>\n  <rect x=\"201\" y=\"40\" width=\"70\" height=\"30.26\" fill=\"#59a14f\" stroke=\"#ffffff\" stroke-width=\"1\"/>\n  <text x=\"236\" y=\"59.13\" font-size=\"10\" fill=\"#ffffff\" text-anchor=\"middle\" font-weight=\"bold\">17%</text>\n  <text x=\"236\" y=\"233\" font-size=\"11\" fill=\"#333333\" text-anchor=\"middle\">高中生</text>\n  <rect x=\"326.333\" y=\"164.6\" width=\"70\" height=\"53.4\" fill=\"#4e79a7\" stroke=\"#ffffff\" stroke-width=\"1\"/>\n  <text x=\"361.333\" y=\"195.3\" font-size=\"10\" fill=\"#ffffff\" text-anchor=\"middle\" font-weight=\"bold\">30%</text>\n  <rect x=\"326.333\" y=\"86.28\" width=\"70\" height=\"78.32\" fill=\"#f28e2b\" stroke=\"#ffffff\" stroke-width=\"1\"/>\n  <text x=\"361.333\" y=\"129.44\" font-size=\"10\" fill=\"#ffffff\" text-anchor=\"middle\" font-weight=\"bold\">44%</text>\n  <rect x=\"326.333\" y=\"40\" width=\"70\" height=\"46.28\" fill=\"#59a14f\" stroke=\"#ffffff\" stroke-width=\"1\"/>\n  <text x=\"361.333\" y=\"67.14\" font-size=\"10\" fill=\"#ffffff\" text-anchor=\"middle\" font-weight=\"bold\">26%</text>\n  <text x=\"361.333\" y=\"233\" font-size=\"11\" fill=\"#333333\" text-anchor=\"middle\">大學生</text>\n  <rect x=\"56\" y=\"252\" width=\"10\" height=\"10\" fill=\"#4e79a7\"/>\n  <text x=\"70\" y=\"261\" font-size=\"10\" fill=\"#333333\" text-anchor=\"start\">紙本書</text>\n  <rect x=\"124\" y=\"252\" width=\"10\" height=\"10\" fill=\"#f28e2b\"/>\n  <text x=\"138\" y=\"261\" font-size=\"10\" fill=\"#333333\" text-anchor=\"start\">電子書</text>\n  <rect x=\"192\" y=\"252\" width=\"10\" height=\"10\" fill=\"#59a14f\"/>\n  <text x=\"206\" y=\"261\" font-size=\"10\" fill=\"#333333\" text-anchor=\"start\">有聲書</text>\n</svg>"
+      }
+    ],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "composition",
+        "stem": "提示：某市立圖書館調查該市國中生、高中生與大學生最常使用的閱讀形式，結果如下圖。請根據圖表，寫一篇英文作文，文分兩段。第一段描述圖表內容，並比較不同年齡層在紙本書、電子書與有聲書之間的選擇有何不同；第二段評估這三種閱讀形式各自的優缺點，並提出你認為最適合高中生的閱讀方式及理由。",
+        "options": null,
+        "answer": null,
+        "accepted_answers": null,
+        "points": 20,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "essay_type": "chart",
+          "paragraphs": 2,
+          "word_count": {
+            "min": 120,
+            "max": null,
+            "approx": null
+          },
+          "word_requirement_raw": "at least 120 words",
+          "topic": "青少年的閱讀形式"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "青少年的閱讀形式"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "這一題有四個要求：第一段描述圖表並比較三個年齡層的選擇；第二段評估三種閱讀形式的優缺點，再提出最適合高中生的方式與理由。圖表最清楚的趨勢是年齡越大、紙本越少（62%、45%、30%），電子書則在大學生這一組超越紙本；有聲書雖然一直最少，比例卻加倍。第二段如果只評估一兩種形式，或建議和前面的評估接不起來，內容分數會偏低。",
+          "evidence": [
+            "比較不同年齡層在紙本書、電子書與有聲書之間的選擇有何不同",
+            "評估這三種閱讀形式各自的優缺點",
+            "提出你認為最適合高中生的閱讀方式及理由"
+          ],
+          "strategy_zh": "第二段可以用「各有用途」的架構：每種形式寫一個優點、一個缺點，最後建議依讀書目的搭配使用，讓建議直接從評估推出來。",
+          "hints": [
+            "第一段：先寫國中生最多的紙本書，再用 as 子句寫出隨年齡改變的趨勢",
+            "第二段前半：三種形式各寫一個優點與一個缺點，至少一個用自己的經驗支持",
+            "第二段後半：提出適合高中生的方式，回應可能的反對意見，最後寫出見解"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "composition",
+      "prompt_type": "chart",
+      "moves": [
+        {
+          "paragraph": 1,
+          "code": "describe_data",
+          "zh": "描述圖表內容"
+        },
+        {
+          "paragraph": 1,
+          "code": "compare",
+          "zh": "比較不同年齡層在紙本書、電子書與有聲書之間的選擇有何不同"
+        },
+        {
+          "paragraph": 2,
+          "code": "evaluate",
+          "zh": "評估這三種閱讀形式各自的優缺點"
+        },
+        {
+          "paragraph": 2,
+          "code": "propose",
+          "zh": "提出你認為最適合高中生的閱讀方式及理由"
+        }
+      ],
+      "criteria": {
+        "content": {
+          "focus_zh": "第一段要讀出 2–3 個對比（紙本隨年齡遞減、電子書在大學生超越紙本、有聲書比例加倍）；第二段要逐一評估三種形式的優缺點，並提出適合高中生的方式與理由。",
+          "bands": [
+            {
+              "min": 4,
+              "max": 5,
+              "descriptor_zh": "回應題目的每一項要求，主旨明確；用具體的事例、細節或親身經驗撐起每個重點。"
+            },
+            {
+              "min": 3,
+              "max": 3,
+              "descriptor_zh": "大致回應題目，但有一項要求寫得單薄，或細節偏籠統、說服力不足。"
+            },
+            {
+              "min": 1,
+              "max": 2,
+              "descriptor_zh": "漏掉題目的主要要求或主旨模糊，多數句子空泛、重複或偏離題目。"
+            },
+            {
+              "min": 0,
+              "max": 0,
+              "descriptor_zh": "空白、離題、只抄題目，或內容少到無法判斷要說什麼。"
+            }
+          ]
+        },
+        "organization": {
+          "focus_zh": "第一段依年齡層由小到大說明趨勢；第二段先逐一評估三種形式，再由評估自然導出建議，結尾提出見解。",
+          "bands": [
+            {
+              "min": 4,
+              "max": 5,
+              "descriptor_zh": "兩段分工清楚，各有主題句；句與句、段與段的銜接自然，轉承語用得恰當，篇幅分配合理。"
+            },
+            {
+              "min": 3,
+              "max": 3,
+              "descriptor_zh": "段落大致分明，但有的地方跳接或重複，轉承語偏少或用得生硬。"
+            },
+            {
+              "min": 1,
+              "max": 2,
+              "descriptor_zh": "重點排列混亂，前後句常接不起來，讀者不容易跟上。"
+            },
+            {
+              "min": 0,
+              "max": 0,
+              "descriptor_zh": "看不出段落與順序，句子彼此無關。"
+            }
+          ]
+        },
+        "grammar": {
+          "focus_zh": "描述趨勢可用 as 子句、the＋比較級…the＋比較級；評估優缺點時用 but、yet、whereas 對照，句型要有變化。",
+          "bands": [
+            {
+              "min": 4,
+              "max": 5,
+              "descriptor_zh": "句子幾乎沒有文法、標點錯誤，能交替使用簡單句、複句與不同的句首。"
+            },
+            {
+              "min": 3,
+              "max": 3,
+              "descriptor_zh": "偶有時態、單複數或標點錯誤，但讀得懂意思；句型變化有限。"
+            },
+            {
+              "min": 1,
+              "max": 2,
+              "descriptor_zh": "錯誤多到常讓人誤解意思，句子結構常不完整。"
+            },
+            {
+              "min": 0,
+              "max": 0,
+              "descriptor_zh": "幾乎沒有正確的句子，無法理解。"
+            }
+          ]
+        },
+        "vocabulary": {
+          "focus_zh": "閱讀相關字詞要精確（printed books、e-books、audiobooks、format、concentration），避免一直重複 good、bad 這類評價字。",
+          "bands": [
+            {
+              "min": 4,
+              "max": 5,
+              "descriptor_zh": "用字精準、貼切，搭配自然，少有重複；拼字與大小寫幾乎全對。"
+            },
+            {
+              "min": 3,
+              "max": 3,
+              "descriptor_zh": "字彙範圍偏窄、常重複同幾個字，偶有用字不當或拼錯，但不妨礙理解。"
+            },
+            {
+              "min": 1,
+              "max": 2,
+              "descriptor_zh": "用錯字或拼錯字很多，常讓人看不懂。"
+            },
+            {
+              "min": 0,
+              "max": 0,
+              "descriptor_zh": "幾乎每個字都用錯或拼錯，無法理解。"
+            }
+          ]
+        }
+      },
+      "deductions_zh": "字數明顯不足（少於 100 個單詞）或沒有分成兩段，各扣總分 1 分；兩種情形同時發生只扣 1 分。離題或空白以 0 分計。",
+      "scaffold": {
+        "kind": "checklist",
+        "checklist_zh": [
+          "第一段有沒有讀出 2–3 個明確對比（例如紙本遞減、電子書超越紙本的年齡層、有聲書加倍），而且數字正確",
+          "第二段是否三種形式都評估到，而且每一種都有優點也有缺點",
+          "建議是否從評估推得出來，並說明為什麼適合高中生",
+          "有沒有讓步或反面考量，結尾是否提出自己的見解"
+        ]
+      }
+    },
+    "model_texts": [
+      {
+        "label": "steady",
+        "text": "The chart shows the most common ways of reading among students of different ages. Paper books are the top choice for junior high students, at 62%. However, as students grow older, paper becomes less popular. Its share drops to 45% for senior high students and to only 30% for college students. On the other hand, e-books become more popular with age, rising from 25% to 44%. Audiobooks are the least common choice in every group, but their share doubles from 13% to 26%.\nEach type has its own advantages and disadvantages. Paper books are easy on the eyes, and I remember more because I can write notes in them. However, they are heavy to carry. E-books are light and cheap, but messages on the same device can easily break our focus. Audiobooks let people enjoy books while they are doing other things. For example, I often listen to stories on the bus, and it makes the long ride more enjoyable. Still, it is hard to go back and check a detail I missed. In my view, the best way for high school students is to mix the three types. They can study textbooks on paper, carry e-books on trips, and listen to stories on the way to school. In this way, they can read more without feeling tired.",
+        "paragraphs": [
+          {
+            "function_zh": "描述數據＋比較：紙本書隨年齡遞減、電子書遞增、有聲書比例加倍",
+            "topic_sentence": "The chart shows the most common ways of reading among students of different ages."
+          },
+          {
+            "function_zh": "評估＋提出方案：三種形式各寫優缺點（附自己的經驗），再建議高中生混合使用",
+            "topic_sentence": "Each type has its own advantages and disadvantages."
+          }
+        ],
+        "notes": [
+          {
+            "kind": "connective",
+            "text": "However,",
+            "function": "contrast",
+            "zh": "轉折：年齡越大越少讀紙本"
+          },
+          {
+            "kind": "connective",
+            "text": "as",
+            "function": "sequence",
+            "zh": "隨著（年齡增長）"
+          },
+          {
+            "kind": "connective",
+            "text": "On the other hand,",
+            "function": "contrast",
+            "zh": "對比：電子書的趨勢相反"
+          },
+          {
+            "kind": "connective",
+            "text": "but",
+            "function": "contrast",
+            "zh": "轉折：雖然最少卻加倍"
+          },
+          {
+            "kind": "connective",
+            "text": "because",
+            "function": "cause_effect",
+            "zh": "說明記得比較多的原因"
+          },
+          {
+            "kind": "connective",
+            "text": "while",
+            "function": "sequence",
+            "zh": "同時：一邊做其他事"
+          },
+          {
+            "kind": "connective",
+            "text": "For example,",
+            "function": "example",
+            "zh": "舉自己的例子"
+          },
+          {
+            "kind": "connective",
+            "text": "Still,",
+            "function": "contrast",
+            "zh": "轉折：有聲書的缺點"
+          },
+          {
+            "kind": "connective",
+            "text": "In this way,",
+            "function": "conclusion",
+            "zh": "總結建議的效果"
+          },
+          {
+            "kind": "detail",
+            "text": "Its share drops to 45% for senior high students and to only 30% for college students.",
+            "zh": "用數字寫出紙本遞減的趨勢"
+          },
+          {
+            "kind": "detail",
+            "text": "Audiobooks are the least common choice in every group, but their share doubles from 13% to 26%.",
+            "zh": "第三個對比：有聲書加倍"
+          },
+          {
+            "kind": "detail",
+            "text": "They can study textbooks on paper, carry e-books on trips, and listen to stories on the way to school.",
+            "zh": "把建議寫成三種具體用法"
+          },
+          {
+            "kind": "experience",
+            "text": "For example, I often listen to stories on the bus, and it makes the long ride more enjoyable.",
+            "zh": "自己用有聲書的經驗"
+          },
+          {
+            "kind": "experience",
+            "text": "Paper books are easy on the eyes, and I remember more because I can write notes in them.",
+            "zh": "自己讀紙本書的感受"
+          },
+          {
+            "kind": "pattern",
+            "text": "it is hard to go back and check a detail I missed",
+            "zh": "it is＋形容詞＋to V：做…很難"
+          },
+          {
+            "kind": "pattern",
+            "text": "read more without feeling tired",
+            "zh": "without V-ing：不會…"
+          },
+          {
+            "kind": "phrase",
+            "text": "easy on the eyes",
+            "zh": "看起來不傷眼、看起來舒服"
+          },
+          {
+            "kind": "phrase",
+            "text": "on the way to school",
+            "zh": "在上學途中"
+          }
+        ],
+        "self_assessment": {
+          "scores": {
+            "content": 4,
+            "organization": 4,
+            "grammar": 4,
+            "vocabulary": 3
+          },
+          "explanation_zh": "第一段讀出紙本遞減、電子書遞增與有聲書加倍，第二段三種形式都有優缺點，建議也從評估推出（內容 4）；段落分工清楚，轉承語恰當但有重複（組織 4）；句子正確，句型以簡單句與常見複句為主（文法句構 4）；用字正確但偏常用（字彙拼字 3）。總分 15，屬穩健版。"
+        }
+      },
+      {
+        "label": "top",
+        "text": "The survey reveals a clear shift in reading habits as students grow older. Among junior high students, paper books remain dominant, chosen by 62% of readers, while e-books and audiobooks account for only 25% and 13%. As students move up the educational ladder, however, the picture changes steadily. By senior high school, paper has slipped to 45%, and e-books have climbed to 38%, nearly catching up. At the college level, the order is reversed: e-books lead with 44%, whereas paper falls to 30%. Audiobooks, though still the least popular format in every group, show the fastest relative growth, doubling from 13% to 26%. Taken together, the figures suggest that the older students become, the further they move away from the printed page.\nIn my opinion, each format serves a different purpose rather than replacing the others. Printed books are ideal for deep reading; when I prepared for a history report last spring, I found that underlining a paper copy helped me remember details far better than scrolling through a screen. E-books, on the other hand, are portable and often cheaper, but the same tablet that holds a novel also delivers notifications, which can easily break one's concentration. Audiobooks turn wasted time, such as a crowded bus ride, into reading time, yet listeners may miss key points because they cannot glance back at a page. Since no single format wins in every situation, I believe the ideal approach for high school students is a flexible mix. Textbooks and challenging works deserve paper, light fiction suits e-readers, and audiobooks can fill the minutes spent commuting or exercising. Some may argue that switching formats is confusing, but choosing a tool according to the task is exactly what skilled readers do. In the end, the format matters less than the habit. What we should protect is the willingness to keep reading, whatever form the words take.",
+        "paragraphs": [
+          {
+            "function_zh": "描述數據＋比較：依年齡層由小到大寫出紙本遞減、電子書在大學生超越紙本、有聲書成長最快，最後用 the＋比較級句型歸納",
+            "topic_sentence": "The survey reveals a clear shift in reading habits as students grow older."
+          },
+          {
+            "function_zh": "評估＋提出方案：三種形式各寫用途與限制（附親身經驗），由「沒有一種全勝」推出依目的搭配的建議，回應反對意見後提出見解",
+            "topic_sentence": "In my opinion, each format serves a different purpose rather than replacing the others."
+          }
+        ],
+        "notes": [
+          {
+            "kind": "connective",
+            "text": "while",
+            "function": "contrast",
+            "zh": "對照另外兩種形式"
+          },
+          {
+            "kind": "connective",
+            "text": "As",
+            "function": "sequence",
+            "zh": "隨著年級升高"
+          },
+          {
+            "kind": "connective",
+            "text": "however,",
+            "function": "contrast",
+            "zh": "轉折：情況開始改變"
+          },
+          {
+            "kind": "connective",
+            "text": "whereas",
+            "function": "contrast",
+            "zh": "對比電子書與紙本"
+          },
+          {
+            "kind": "connective",
+            "text": "though",
+            "function": "contrast",
+            "zh": "讓步：雖然仍是最少"
+          },
+          {
+            "kind": "connective",
+            "text": "rather than",
+            "function": "contrast",
+            "zh": "對比：互補而不是取代"
+          },
+          {
+            "kind": "connective",
+            "text": "when",
+            "function": "sequence",
+            "zh": "時間：準備報告的時候"
+          },
+          {
+            "kind": "connective",
+            "text": "on the other hand,",
+            "function": "contrast",
+            "zh": "轉到電子書的評估"
+          },
+          {
+            "kind": "connective",
+            "text": "such as",
+            "function": "example",
+            "zh": "舉例：擁擠的公車上"
+          },
+          {
+            "kind": "connective",
+            "text": "yet",
+            "function": "contrast",
+            "zh": "轉折：有聲書的缺點"
+          },
+          {
+            "kind": "connective",
+            "text": "because",
+            "function": "cause_effect",
+            "zh": "說明漏掉重點的原因"
+          },
+          {
+            "kind": "connective",
+            "text": "Since",
+            "function": "cause_effect",
+            "zh": "因為沒有一種全勝，所以建議混合"
+          },
+          {
+            "kind": "connective",
+            "text": "In the end,",
+            "function": "conclusion",
+            "zh": "結尾提出見解"
+          },
+          {
+            "kind": "detail",
+            "text": "At the college level, the order is reversed: e-books lead with 44%, whereas paper falls to 30%.",
+            "zh": "用數字寫出順序反轉"
+          },
+          {
+            "kind": "detail",
+            "text": "Textbooks and challenging works deserve paper, light fiction suits e-readers, and audiobooks can fill the minutes spent commuting or exercising.",
+            "zh": "把建議寫成三種具體搭配"
+          },
+          {
+            "kind": "experience",
+            "text": "Printed books are ideal for deep reading; when I prepared for a history report last spring, I found that underlining a paper copy helped me remember details far better than scrolling through a screen.",
+            "zh": "自己準備報告的經驗，支持紙本的優點"
+          },
+          {
+            "kind": "pattern",
+            "text": "the older students become, the further they move away from the printed page",
+            "zh": "the＋比較級…, the＋比較級…：越…就越…"
+          },
+          {
+            "kind": "pattern",
+            "text": "What we should protect is the willingness to keep reading",
+            "zh": "what 子句當主詞：強調真正重要的事"
+          },
+          {
+            "kind": "pattern",
+            "text": "Audiobooks turn wasted time, such as a crowded bus ride, into reading time",
+            "zh": "turn A into B：把 A 變成 B"
+          },
+          {
+            "kind": "phrase",
+            "text": "move up the educational ladder",
+            "zh": "升上更高的學習階段"
+          },
+          {
+            "kind": "phrase",
+            "text": "catching up",
+            "zh": "catch up：追上"
+          },
+          {
+            "kind": "phrase",
+            "text": "glance back at",
+            "zh": "回頭瞄一眼"
+          }
+        ],
+        "self_assessment": {
+          "scores": {
+            "content": 5,
+            "organization": 5,
+            "grammar": 5,
+            "vocabulary": 4
+          },
+          "explanation_zh": "第一段讀出紙本遞減、順序在大學生反轉、有聲書成長最快三個對比；第二段三種形式都有用途與限制，建議由評估推出，並回應反對意見（內容 5）；兩段結構清楚，轉承語功能多樣（組織 5）；the＋比較級、what 子句、關係子句與分號連接等句型正確且有變化（文法句構 5）；用字精準（dominant、notifications、concentration），仍以常用字為主（字彙拼字 4）。總分 19，屬頂標版。"
+        }
+      }
+    ]
+  },
+  "curriculum": [
+    {
+      "code": "9-V-7",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "9-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "4-V-8",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-composition-top-01",
+    "lot": "composition-top-01",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/composition",
+    "prompt_sha256": "93458e2632b5c4651b5c6df172ff3e875d94a287c44655c1578516843d3c87f9",
+    "spec_id": "composition-top@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T08:00:35Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T07:46:11Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_grading",
+        "order": {
+          "E1": "top",
+          "E2": "steady"
+        },
+        "essays": {
+          "top": {
+            "scores": {
+              "content": 5,
+              "organization": 5,
+              "grammar": 5,
+              "vocabulary": 5
+            },
+            "off_topic": false,
+            "covers_all_tasks": true,
+            "errors": [],
+            "comment_zh": "第一段依年齡層說明趨勢，數字正確，並讀出大學生電子書超越紙本、有聲書雖然一直最少但相對成長最快（13% 到 26%）；以 the older…, the further… 收束。第二段逐一評估三種形式的優缺點（各有對照句與經驗），由「沒有一種在每種情況都贏」推出彈性混用的建議，並先駁斥反方，結尾有見解。用字精確（format、concentration、printed page）。",
+            "id": "E1"
+          },
+          "steady": {
+            "scores": {
+              "content": 4,
+              "organization": 4,
+              "grammar": 4,
+              "vocabulary": 4
+            },
+            "off_topic": false,
+            "covers_all_tasks": true,
+            "errors": [],
+            "comment_zh": "第一段讀出紙本遞減、電子書遞增、有聲書最少但加倍等重點，但高中生電子書 38%、有聲書 17% 未提；第二段三種形式的優缺點都寫到，有聽有聲書的經驗，最後提出混用並舉例說明怎麼分配。句子短而正確，複句與句首變化有限，用字清楚但較平實。",
+            "id": "E2"
+          }
+        },
+        "totals": {
+          "top": 20,
+          "steady": 16
+        },
+        "prompt_check": "pass",
+        "issues_zh": [],
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T07:51:04Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_grading",
+        "order": {
+          "E1": "top",
+          "E2": "steady"
+        },
+        "essays": {
+          "top": {
+            "scores": {
+              "content": 4,
+              "organization": 5,
+              "grammar": 5,
+              "vocabulary": 5
+            },
+            "off_topic": false,
+            "covers_all_tasks": true,
+            "errors": [],
+            "comment_zh": "第一段依年齡層由小到大說明趨勢，數字全對，並以 doubling 點出有聲書的相對成長；第二段逐一評估三種形式，提出『彈性搭配』並有親身經驗與反方回應，用字精準。小缺點：紙本書只寫了優點、沒有寫缺點（題目要求各自的優缺點），內容扣 1 分。語言無誤。",
+            "id": "E1"
+          },
+          "steady": {
+            "scores": {
+              "content": 4,
+              "organization": 4,
+              "grammar": 4,
+              "vocabulary": 4
+            },
+            "off_topic": false,
+            "covers_all_tasks": true,
+            "errors": [],
+            "comment_zh": "數字正確，第一段清楚；第二段逐一寫出三種形式的優缺點，建議混合使用，並有個人經驗。理由偏簡短（結尾只說『讀得更多又不累』），句型與用字偏基本但正確。語言無誤。",
+            "id": "E2"
+          }
+        },
+        "totals": {
+          "top": 19,
+          "steady": 16
+        },
+        "prompt_check": "pass",
+        "issues_zh": [],
+        "problems": []
+      }
+    }
+  ],
+  "status": "rejected",
+  "status_reason": "人工審核（第 1 輪判定）：record_verification 判 verified，但判定改為退回。題目第二段要求「評估這三種閱讀形式各自的優缺點」，本站檢核表第 2 條也寫「每一種都有優點也有缺點」，頂標版範文卻只寫紙本書的優點（Printed books are ideal for deep reading…），沒有寫紙本書的任何缺點（電子書、有聲書都有優缺點），頂標範文沒有完整回應題目要求，和本站自己的檢核表矛盾（驗證者 B 指出並扣內容 1 分）；穩健版反而有寫紙本書的缺點（heavy to carry），兩篇的示範方向不一致。重生時頂標版補上紙本書的缺點（例如攜帶不便、價格較高），其餘可沿用。"
+}

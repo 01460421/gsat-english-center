@@ -1,0 +1,267 @@
+{
+  "schema": "gsat-bank-facts/v1",
+  "id": "green-revolution-rice-rt03",
+  "title": "IR8 rice, the Green Revolution, and rice yields in India, Indonesia, the Philippines and Japan, 1961-2020",
+  "sdgs": [
+    2
+  ],
+  "created_on": "2026-10-09",
+  "created_by": "claude-opus-5-5",
+  "sources": [
+    {
+      "id": "s1",
+      "publisher": "Our World in Data",
+      "title": "Rice yields (rice-yields)",
+      "url": "https://ourworldindata.org/grapher/rice-yields",
+      "accessed": "2026-10-09",
+      "license": "CC-BY-4.0",
+      "use": "dataset",
+      "note": "原始提供者：Food and Agriculture Organization of the United Nations (2025) – with major processing by Our World in Data；grapher CSV（csvType=full）下載，單位 tonnes per hectare；圖表只取 1961、1970…2020"
+    },
+    {
+      "id": "s2",
+      "publisher": "Plants (MDPI) via PubMed Central, NIH",
+      "title": "Tomita & Ishimoto (2019), Rice Novel Semidwarfing Gene d60 Can Be as Effective as Green Revolution Gene sd1",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6918401",
+      "accessed": "2026-10-09",
+      "license": "journal article (facts only)",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s3",
+      "publisher": "Food and Agriculture Organization of the United Nations (FAO)",
+      "title": "International Rice Commission Newsletter vol. 47: Global hybrid rice: progress, issues and challenges",
+      "url": "https://www.fao.org/4/w8595t/w8595t03.htm",
+      "accessed": "2026-10-09",
+      "license": "FAO terms of use (facts only)",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s4",
+      "publisher": "Food and Agriculture Organization of the United Nations (FAO)",
+      "title": "International Rice Commission Newsletter 2002: Productive and environmentally friendly rice integrated crop management systems",
+      "url": "https://www.fao.org/4/y6159t/y6159t03.htm",
+      "accessed": "2026-10-09",
+      "license": "FAO terms of use (facts only)",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s5",
+      "publisher": "Proceedings of the National Academy of Sciences via PubMed Central, NIH",
+      "title": "Pingali (2012), Green Revolution: Impacts, limits, and the path ahead",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3411969/",
+      "accessed": "2026-10-09",
+      "license": "journal article (facts only)",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s6",
+      "publisher": "Nature via PubMed Central, NIH",
+      "title": "Reducing brassinosteroid signalling enhances grain yield in semi-dwarf wheat (2023)",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10156601/",
+      "accessed": "2026-10-09",
+      "license": "journal article (facts only)",
+      "use": "fact_only",
+      "note": "只取引言中綠色革命半矮性品種抗倒伏、需大量氮肥的背景"
+    }
+  ],
+  "facts": [
+    {
+      "id": "f1",
+      "text": "In 1966 the International Rice Research Institute (IRRI) in the Philippines developed IR8 from a Taiwanese semi-dwarf variety, Dee-geo-woo-gen.",
+      "source_ids": [
+        "s2",
+        "s4"
+      ],
+      "kind": "date"
+    },
+    {
+      "id": "f2",
+      "text": "IR8 was nicknamed miracle rice and is credited with bringing the Green Revolution to tropical Asia.",
+      "source_ids": [
+        "s2",
+        "s3"
+      ],
+      "kind": "event"
+    },
+    {
+      "id": "f3",
+      "text": "IR8 is a semi-dwarf variety that resists lodging, that is, its plants do not easily fall over, and it responds well to nitrogen fertilizer.",
+      "source_ids": [
+        "s3",
+        "s6"
+      ],
+      "kind": "definition"
+    },
+    {
+      "id": "f4",
+      "text": "Green Revolution varieties were short and lodging-resistant; this let farmers apply heavy nitrogen fertilizer, which raised grain yields.",
+      "source_ids": [
+        "s6"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f5",
+      "text": "Before 1950 farmers in tropical Asia mostly grew traditional varieties, and yields rarely went above about 2.5 tonnes per hectare.",
+      "source_ids": [
+        "s4"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f6",
+      "text": "In the 1966 dry season at IRRI's farm, IR8 yielded about 10.3 tonnes per hectare.",
+      "source_ids": [
+        "s4"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f7",
+      "text": "At experiment stations across tropical Asia, IR8 gave about 4 to 8 tonnes per hectare.",
+      "source_ids": [
+        "s4"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f8",
+      "text": "Irrigation and fertilizer were critical partners of the new high-yielding varieties.",
+      "source_ids": [
+        "s5"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f9",
+      "text": "The poorest areas, which relied on rain-fed farming, were the slowest to benefit from the Green Revolution.",
+      "source_ids": [
+        "s5"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f10",
+      "text": "Between 1960 and 2000, rice yields in all developing countries together rose by 109 percent, that is, they more than doubled.",
+      "source_ids": [
+        "s5"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f11",
+      "text": "Over about 50 years, cereal production in the developing world tripled while the cultivated land area grew by only about 30 percent.",
+      "source_ids": [
+        "s5"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f12",
+      "text": "Without improved crop varieties, about 20 to 25 million more hectares of farmland would have been needed worldwide.",
+      "source_ids": [
+        "s5"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f13",
+      "text": "Unintended effects included problems with water use, soil damage and chemical runoff.",
+      "source_ids": [
+        "s5"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f14",
+      "text": "Semi-dwarf varieties released after IR8 have about the same or lower yield potential than IR8, a yield plateau.",
+      "source_ids": [
+        "s3"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f15",
+      "text": "Pingali dates the first Green Revolution period to 1966 to 1985.",
+      "source_ids": [
+        "s5"
+      ],
+      "kind": "date"
+    }
+  ],
+  "datasets": [
+    {
+      "id": "d1",
+      "source_id": "s1",
+      "title": "Rice yields (tonnes per hectare)",
+      "indicator": "rice-yields (FAO, Production: Crops and livestock products)",
+      "unit": "tonnes per hectare",
+      "categories": [
+        "1961",
+        "1970",
+        "1980",
+        "1990",
+        "2000",
+        "2010",
+        "2020"
+      ],
+      "series": [
+        {
+          "name": "India",
+          "values": [
+            1.5419,
+            1.6849,
+            2.0002,
+            2.6125,
+            2.838,
+            3.323,
+            4.0594
+          ]
+        },
+        {
+          "name": "Indonesia",
+          "values": [
+            1.7623,
+            2.3763,
+            3.2928,
+            4.3018,
+            4.4007,
+            5.0253,
+            5.1279
+          ]
+        },
+        {
+          "name": "Philippines",
+          "values": [
+            1.2299,
+            1.746,
+            2.2105,
+            2.9786,
+            3.0681,
+            3.6224,
+            4.0888
+          ]
+        },
+        {
+          "name": "Japan",
+          "values": [
+            4.8794,
+            5.6348,
+            5.1279,
+            6.3279,
+            6.7023,
+            6.5076,
+            6.8315
+          ]
+        }
+      ],
+      "note": "OWID grapher CSV values rounded to 4 decimals"
+    }
+  ],
+  "notes": null
+}

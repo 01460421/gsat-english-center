@@ -1,0 +1,676 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.ae8120",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "basic",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "到目前為止，我只搭過火車和公車，從來沒有搭過飛機。",
+        "options": null,
+        "answer": "So far, I have only traveled by train and bus, never by plane.",
+        "accepted_answers": [
+          "Up to now, I have only taken trains and buses, but never a plane.",
+          "So far, I have only ridden trains and buses and have never been on a plane."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "現在完成式"
+          ],
+          "topic": "第一次搭飛機"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "為了趕上明天早上七點的飛機，我們全家四點就要起床。",
+        "options": null,
+        "answer": "To catch the plane at seven tomorrow morning, my family will get up at four.",
+        "accepted_answers": [
+          "My whole family will get up at four in order to catch the plane at seven tomorrow morning.",
+          "In order to catch the plane at seven tomorrow morning, my family has to get up at four."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "不定詞表目的"
+          ],
+          "topic": "第一次搭飛機"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "第一次搭飛機"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「到目前為止，我只搭過…」是說到現在為止的經驗，用 so far（或 up to now）配現在完成式：I have only traveled by train and bus；「從來沒有搭過」用 never：never by plane，或寫完整的 I have never been on a plane。表示交通方式的 by train、by bus、by plane 都不加冠詞。",
+          "evidence": [
+            "到目前為止",
+            "從來沒有搭過飛機"
+          ],
+          "strategy_zh": "「…過」「到目前為止」「從來沒有」都是經驗的訊號，先想 have/has (+ never/only) + p.p.。",
+          "hints": [
+            "切成四段：到目前為止／我只搭過／火車和公車／從來沒有搭過飛機",
+            "標的詞彙：so far（到目前為止）、travel（旅行、搭乘）、train（火車）、bus（公車）、never（從未）、plane（飛機）",
+            "句型框架：So far, S + have/has + only + p.p. …, never …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「為了…」表示目的，用不定詞 to + 原形動詞（或 in order to），可以放句首（後面加逗號），也可以放句尾。「趕上飛機」是 catch the plane（不是 catch up with）；「明天早上七點的飛機」寫 the plane at seven tomorrow morning。說的是明天要做的事，主要子句用 will get up（或 has to get up）；幾點鐘用 at。",
+          "evidence": [
+            "為了趕上",
+            "四點就要起床"
+          ],
+          "strategy_zh": "「為了＋動作」→ To／In order to + 原形動詞；不要寫 for + V-ing。",
+          "hints": [
+            "切成四段：為了趕上／明天早上七點的飛機／我們全家／四點就要起床",
+            "標的詞彙：catch（趕上）、plane（飛機）、tomorrow（明天）、morning（早上）、family（家人）、get up（起床）",
+            "句型框架：To + 原形動詞 …, S + will + 原形動詞 …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "So far, I have only traveled by train and bus, never by plane.",
+            "Up to now, I have only taken trains and buses, but never a plane.",
+            "So far, I have only ridden trains and buses and have never been on a plane."
+          ],
+          "target_words": [
+            {
+              "word": "so far",
+              "zh": "到目前為止",
+              "alternatives": [
+                "up to now",
+                "until now"
+              ]
+            },
+            {
+              "word": "travel",
+              "zh": "搭乘、旅行",
+              "alternatives": [
+                "take",
+                "ride"
+              ]
+            },
+            {
+              "word": "train",
+              "zh": "火車"
+            },
+            {
+              "word": "bus",
+              "zh": "公車"
+            },
+            {
+              "word": "never",
+              "zh": "從未"
+            },
+            {
+              "word": "plane",
+              "zh": "飛機",
+              "alternatives": [
+                "fly",
+                "flight"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PERF",
+              "grammar_id": "gp-present-perfect",
+              "label_zh": "現在完成式（經驗：have + only／never + p.p.）",
+              "frame": "So far, S + have/has + only + p.p. …, never …",
+              "zh_trigger": "到目前為止"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "到目前為止",
+              "accepted": [
+                "So far",
+                "Up to now",
+                "Until now",
+                "Up till now"
+              ],
+              "targets": [
+                "so far"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Up to date",
+                  "right": "Up to now",
+                  "explanation_zh": "up to date 是「最新的」；「到目前為止」用 so far 或 up to now。"
+                }
+              ]
+            },
+            {
+              "zh": "我只搭過",
+              "accepted": [
+                "I have only traveled",
+                "I have only taken",
+                "I have only ridden",
+                "I've only taken",
+                "I have only travelled"
+              ],
+              "targets": [
+                "PERF",
+                "travel"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "I only took",
+                  "right": "I have only taken",
+                  "explanation_zh": "「到目前為止…過」是到現在為止的經驗，要用現在完成式。"
+                },
+                {
+                  "wrong": "I have only rode",
+                  "right": "I have only ridden",
+                  "explanation_zh": "ride 的過去分詞是 ridden，不是過去式 rode。"
+                }
+              ]
+            },
+            {
+              "zh": "火車和公車",
+              "accepted": [
+                "by train and bus",
+                "trains and buses",
+                "by train and by bus",
+                "by train or bus"
+              ],
+              "targets": [
+                "train",
+                "bus"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "by a train and a bus",
+                  "right": "by train and bus",
+                  "explanation_zh": "表示交通方式的 by 後面直接接名詞，不加冠詞：by train、by bus。"
+                },
+                {
+                  "wrong": "trains and buss",
+                  "right": "trains and buses",
+                  "explanation_zh": "bus 的複數是 buses。"
+                }
+              ]
+            },
+            {
+              "zh": "從來沒有搭過飛機",
+              "accepted": [
+                "never by plane",
+                "but never a plane",
+                "have never been on a plane",
+                "never a plane",
+                "but I have never taken a plane",
+                "never flown"
+              ],
+              "targets": [
+                "never",
+                "plane"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "never by a plane",
+                  "right": "never by plane",
+                  "explanation_zh": "by plane 表示交通方式，不加冠詞。"
+                },
+                {
+                  "wrong": "have never took a plane",
+                  "right": "have never taken a plane",
+                  "explanation_zh": "have 後面接過去分詞 taken。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "tense_trigger",
+              "zh": "到目前為止",
+              "literal_error": "So far, I only took trains and buses and never took a plane.",
+              "part": 2,
+              "explanation_zh": "「到目前為止…過」說的是到現在為止的經驗，要用現在完成式 have taken／have traveled；照中文寫成過去式 took，這一部分扣分。"
+            }
+          ],
+          "bonus": []
+        },
+        "2": {
+          "references": [
+            "To catch the plane at seven tomorrow morning, my family will get up at four.",
+            "My whole family will get up at four in order to catch the plane at seven tomorrow morning.",
+            "In order to catch the plane at seven tomorrow morning, my family has to get up at four."
+          ],
+          "target_words": [
+            {
+              "word": "catch",
+              "zh": "趕上"
+            },
+            {
+              "word": "plane",
+              "zh": "飛機",
+              "alternatives": [
+                "flight"
+              ]
+            },
+            {
+              "word": "tomorrow",
+              "zh": "明天"
+            },
+            {
+              "word": "morning",
+              "zh": "早上"
+            },
+            {
+              "word": "family",
+              "zh": "家人"
+            },
+            {
+              "word": "get up",
+              "zh": "起床",
+              "alternatives": [
+                "wake up"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PURP",
+              "grammar_id": "gp-infinitive-purpose",
+              "label_zh": "不定詞表目的（為了…：to／in order to + 原形動詞）",
+              "frame": "(In order) To + 原形動詞 …, S + V … ／ S + V … in order to + 原形動詞 …",
+              "zh_trigger": "為了"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "為了趕上",
+              "accepted": [
+                "To catch",
+                "in order to catch",
+                "So as to catch"
+              ],
+              "targets": [
+                "PURP",
+                "catch"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "For catching",
+                  "right": "To catch",
+                  "explanation_zh": "表示目的用不定詞 to + 原形動詞（或 in order to），不用 for + V-ing。"
+                },
+                {
+                  "wrong": "To catch up with",
+                  "right": "To catch",
+                  "explanation_zh": "「趕上（車、飛機）」是 catch；catch up with 是「追上（某人）」。"
+                }
+              ]
+            },
+            {
+              "zh": "明天早上七點的飛機",
+              "accepted": [
+                "the plane at seven tomorrow morning",
+                "the seven o'clock plane tomorrow morning",
+                "the 7 a.m. flight tomorrow",
+                "the plane at 7 a.m. tomorrow",
+                "tomorrow's seven o'clock flight",
+                "the seven a.m. flight tomorrow"
+              ],
+              "targets": [
+                "plane",
+                "tomorrow",
+                "morning"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "the plane at seven in tomorrow morning",
+                  "right": "the plane at seven tomorrow morning",
+                  "explanation_zh": "tomorrow morning 前面不加介系詞。"
+                }
+              ]
+            },
+            {
+              "zh": "我們全家",
+              "accepted": [
+                "my family",
+                "my whole family",
+                "our whole family",
+                "our family",
+                "we all",
+                "all of us"
+              ],
+              "targets": [
+                "family"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "my whole families",
+                  "right": "my whole family",
+                  "explanation_zh": "「全家」是一個家庭，用單數 family。"
+                }
+              ]
+            },
+            {
+              "zh": "四點就要起床",
+              "accepted": [
+                "will get up at four",
+                "will have to get up at four",
+                "has to get up at four",
+                "will wake up at four",
+                "are going to get up at four",
+                "must get up at four",
+                "will get up at 4",
+                "need to get up at four",
+                "will have to wake up at four"
+              ],
+              "targets": [
+                "get up"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "will get up on four",
+                  "right": "will get up at four",
+                  "explanation_zh": "幾點鐘用介系詞 at。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "collocation",
+              "zh": "趕上",
+              "literal_error": "To catch up with the plane at seven tomorrow morning, my family will get up at four.",
+              "part": 1,
+              "explanation_zh": "「趕上飛機」照字面常寫成 catch up with，但那是「追上（某人）」；趕上交通工具的搭配是 catch the plane／catch the train，這一部分扣分。"
+            }
+          ],
+          "bonus": []
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-basic-03",
+    "lot": "translation-basic-03",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "a2d0efb5c61ab9bdba02f949c0e9c7a37fac919a2d053a97cc75848f11db3021",
+    "spec_id": "translation-basic@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T07:59:06Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "warn",
+      "created_at": "2026-10-09T07:40:01Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "So far, I have only taken trains and buses and have never taken a plane.",
+            "confidence": "high",
+            "explanation_zh": "「到目前為止」用 so far，配現在完成式表示經驗；「只搭過……，從來沒有搭過……」兩個完成式動詞用 and 連接；「搭」交通工具用 take。"
+          },
+          "2": {
+            "translation": "In order to catch the seven o'clock flight tomorrow morning, my whole family has to get up at four.",
+            "confidence": "high",
+            "explanation_zh": "「為了……」用 In order to + V 放句首；「趕上飛機」用 catch the flight；「我們全家」用 my whole family 當單數主詞配 has to；「就要」表示必須，用 has to（will have to 也可）。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PERF"
+            ],
+            "used_target_words": [
+              "so far",
+              "travel",
+              "train",
+              "bus",
+              "never",
+              "plane"
+            ],
+            "within_accepted": true,
+            "closest_reference": 2,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "第 4 部分「從來沒有搭過飛機」的 accepted 有 \"but I have never taken a plane\" 和 \"have never been on a plane\"，卻沒有不帶 but I 的 \"have never taken a plane\"；我的譯文 \"... and have never taken a plane\" 要拼湊兩個寫法才對得上（判定仍在可接受範圍），建議補 \"have never taken a plane\"、\"and have never taken a plane\"。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "PURP"
+            ],
+            "used_target_words": [
+              "catch",
+              "plane",
+              "tomorrow",
+              "morning",
+              "family",
+              "get up"
+            ],
+            "within_accepted": true,
+            "closest_reference": 2,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "第 2 部分「明天早上七點的飛機」的 accepted 有 \"the seven o'clock plane tomorrow morning\" 和幾個 flight 的寫法，卻沒有最常見的 \"the seven o'clock flight tomorrow morning\"（我的譯文就是這個；target_words 已認可 flight，判定仍在可接受範圍），也沒有 \"the 7 a.m. flight tomorrow morning\"／\"the seven o'clock flight\"；建議補進。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "so far",
+              "travel",
+              "train",
+              "bus",
+              "never",
+              "plane"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PERF": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "catch",
+              "plane",
+              "tomorrow",
+              "morning",
+              "family",
+              "get up"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PURP": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 1 題驗證者對4 部分切分有意見（warn）：第 4 部分「從來沒有搭過飛機」的 accepted 有 \"but I have never taken a plane\" 和 \"have never been on a plane\"，卻沒有不帶 but I 的 \"have never t",
+          "第 2 題驗證者對4 部分切分有意見（warn）：第 2 部分「明天早上七點的飛機」的 accepted 有 \"the seven o'clock plane tomorrow morning\" 和幾個 flight 的寫法，卻沒有最常見的 \"the seven o'clock fligh"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T07:39:22Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "So far, I have only taken trains and buses, and I have never taken a plane.",
+            "confidence": "high",
+            "explanation_zh": "「到目前為止」搭配現在完成式 have taken；「從來沒有」用 never；「搭」用 take，火車與公車用複數表示泛指。"
+          },
+          "2": {
+            "translation": "In order to catch the seven o'clock flight tomorrow morning, my whole family has to get up at four.",
+            "confidence": "medium",
+            "explanation_zh": "「為了」用 in order to 接原形動詞 catch；「全家」用 my whole family（視為單數，搭配 has to）；「四點」中文沒寫清楚是清晨，但從「趕早上七點的飛機」推得出是凌晨四點，可加 in the morning 說明；「就要」表必須，用 has to。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PERF"
+            ],
+            "used_target_words": [
+              "so far",
+              "travel",
+              "train",
+              "bus",
+              "never",
+              "plane"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PURP"
+            ],
+            "used_target_words": [
+              "catch",
+              "plane",
+              "tomorrow",
+              "morning",
+              "family",
+              "get up"
+            ],
+            "within_accepted": true,
+            "closest_reference": 2,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "so far",
+              "travel",
+              "train",
+              "bus",
+              "never",
+              "plane"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PERF": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "catch",
+              "plane",
+              "tomorrow",
+              "morning",
+              "family",
+              "get up"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PURP": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

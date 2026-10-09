@@ -1,0 +1,656 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.89f81e",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "basic",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "醫生開了一些感冒藥給我，好讓我晚上能好好睡覺。",
+        "options": null,
+        "answer": "The doctor gave me some cold medicine so that I could sleep well at night.",
+        "accepted_answers": [
+          "The doctor prescribed some cold medicine for me so that I could sleep well at night.",
+          "The doctor gave me some medicine for my cold so that I could sleep well at night."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "目的子句 so that"
+          ],
+          "topic": "感冒看醫生"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "到目前為止，我已經按時吃了三天的藥。",
+        "options": null,
+        "answer": "So far, I have taken the medicine on time for three days.",
+        "accepted_answers": [
+          "Up to now, I have taken my medicine regularly for three days.",
+          "So far, I have been taking the medicine on time for three days."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "現在完成式"
+          ],
+          "topic": "感冒看醫生"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "感冒看醫生"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「好讓我能…」表示目的，用 so that + 主詞 + could／can + 原形動詞。前半句「開了」是過去的事，用過去式 gave，so that 子句配合用 could。「開藥」不能逐字寫 open，要寫 give me some medicine（或 prescribe some medicine for me）；「感冒藥」是 cold medicine。「好好睡覺」是 sleep well（well 是副詞，不是 good），「晚上」是 at night。",
+          "evidence": [
+            "好讓我晚上能好好睡覺",
+            "醫生開了一些感冒藥給我"
+          ],
+          "strategy_zh": "看到「好讓／以便…能…」想 so that + S + can／could；前面主要子句是過去式時，so that 子句多用 could。",
+          "hints": [
+            "切成四段：醫生開了／一些感冒藥／好讓我／晚上能好好睡覺",
+            "標的詞彙：doctor（醫生）、give（給；開藥）、cold（感冒）、medicine（藥）、sleep（睡覺）、night（晚上）",
+            "句型框架：S + V(過去式) … so that + S + could + 原形動詞 …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「到目前為止，已經…」表示從過去累積到現在，用現在完成式 have taken（take 的過去分詞是 taken），也可以用現在完成進行式 have been taking。「吃藥」的固定搭配是 take medicine，不用 eat；「按時」是 on time（in time 是「及時」）。「三天」是一段時間，用 for three days，day 要加 s。第二句的 the medicine 就是第一句醫生開的感冒藥。",
+          "evidence": [
+            "到目前為止",
+            "我已經按時吃了三天的藥"
+          ],
+          "strategy_zh": "看到「到目前為止／已經／…以來」先想現在完成式；一段時間用 for，時間點用 since。",
+          "hints": [
+            "切成四段：到目前為止／我已經（吃了…藥）／按時／三天",
+            "標的詞彙：so far（到目前為止）、take（吃藥的「吃」）、medicine（藥）、on time（按時）、day（天）",
+            "句型框架：So far, S + have + p.p. … for + 一段時間"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "The doctor gave me some cold medicine so that I could sleep well at night.",
+            "The doctor prescribed some cold medicine for me so that I could sleep well at night.",
+            "The doctor gave me some medicine for my cold so that I could sleep well at night."
+          ],
+          "target_words": [
+            {
+              "word": "doctor",
+              "zh": "醫生"
+            },
+            {
+              "word": "give",
+              "zh": "開（藥）；給",
+              "alternatives": [
+                "prescribe"
+              ]
+            },
+            {
+              "word": "cold",
+              "zh": "感冒"
+            },
+            {
+              "word": "medicine",
+              "zh": "藥"
+            },
+            {
+              "word": "sleep",
+              "zh": "睡覺"
+            },
+            {
+              "word": "night",
+              "zh": "晚上"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PURP",
+              "grammar_id": "gp-so-that-purpose",
+              "label_zh": "目的子句 so that（好讓…）",
+              "frame": "S + V(過去式) … so that + S + could + 原形動詞 …",
+              "zh_trigger": "好讓"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "醫生開了",
+              "accepted": [
+                "The doctor gave me",
+                "The doctor prescribed",
+                "The doctor gave"
+              ],
+              "targets": [
+                "doctor",
+                "give"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "The doctor opened some cold medicine for me",
+                  "right": "The doctor gave me some cold medicine",
+                  "explanation_zh": "「開藥」不是 open；用 give sb medicine 或 prescribe medicine。"
+                },
+                {
+                  "wrong": "The doctor gives me",
+                  "right": "The doctor gave me",
+                  "explanation_zh": "「開了」是已經發生的事，用過去式 gave。"
+                }
+              ]
+            },
+            {
+              "zh": "一些感冒藥",
+              "accepted": [
+                "some cold medicine",
+                "some medicine for my cold",
+                "some medicine for colds"
+              ],
+              "targets": [
+                "cold",
+                "medicine"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "some catch-cold medicine",
+                  "right": "some cold medicine",
+                  "explanation_zh": "「感冒藥」是 cold medicine；catch a cold 是「得感冒」，不能拿來當形容詞。"
+                }
+              ]
+            },
+            {
+              "zh": "好讓我",
+              "accepted": [
+                "so that I could",
+                "so that I can",
+                "so that I would be able to",
+                "in order that I could"
+              ],
+              "targets": [
+                "PURP"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "let me can",
+                  "right": "so that I could",
+                  "explanation_zh": "「好讓我能…」表目的，用 so that + S + could／can + 原形動詞；let 後面不能再接 can。"
+                },
+                {
+                  "wrong": "so that I could slept",
+                  "right": "so that I could sleep",
+                  "explanation_zh": "could 後面接原形動詞。"
+                }
+              ]
+            },
+            {
+              "zh": "晚上能好好睡覺",
+              "accepted": [
+                "sleep well at night",
+                "get a good sleep at night",
+                "have a good sleep at night",
+                "get a good night's sleep"
+              ],
+              "targets": [
+                "sleep",
+                "night"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "sleep good at night",
+                  "right": "sleep well at night",
+                  "explanation_zh": "修飾動詞 sleep 要用副詞 well，good 是形容詞。"
+                },
+                {
+                  "wrong": "sleep well in night",
+                  "right": "sleep well at night",
+                  "explanation_zh": "「晚上」的固定說法是 at night。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "collocation",
+              "zh": "醫生開了",
+              "literal_error": "The doctor opened some cold medicine for me so that I could sleep well at night.",
+              "part": 1,
+              "explanation_zh": "「開藥」照字面寫成 open 是典型的中式英文；醫生開藥用 give sb medicine 或 prescribe medicine，這一部分扣分。"
+            }
+          ],
+          "bonus": []
+        },
+        "2": {
+          "references": [
+            "So far, I have taken the medicine on time for three days.",
+            "Up to now, I have taken my medicine regularly for three days.",
+            "So far, I have been taking the medicine on time for three days."
+          ],
+          "target_words": [
+            {
+              "word": "so far",
+              "zh": "到目前為止",
+              "alternatives": [
+                "up to now",
+                "until now",
+                "up till now"
+              ]
+            },
+            {
+              "word": "take",
+              "zh": "吃（藥）"
+            },
+            {
+              "word": "medicine",
+              "zh": "藥"
+            },
+            {
+              "word": "on time",
+              "zh": "按時",
+              "alternatives": [
+                "regularly"
+              ]
+            },
+            {
+              "word": "day",
+              "zh": "天"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PERF",
+              "grammar_id": "gp-present-perfect",
+              "label_zh": "現在完成式（到目前為止：so far）",
+              "frame": "So far, S + have/has + p.p. … for + 一段時間",
+              "zh_trigger": "已經"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "到目前為止",
+              "accepted": [
+                "So far",
+                "Up to now",
+                "Until now",
+                "Up till now"
+              ],
+              "targets": [
+                "so far"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "So far as",
+                  "right": "So far",
+                  "explanation_zh": "「到目前為止」是 so far，不加 as（so far as 是「就…而言」）。"
+                }
+              ]
+            },
+            {
+              "zh": "我已經",
+              "accepted": [
+                "I have taken the medicine",
+                "I have taken my medicine",
+                "I have been taking the medicine",
+                "I've taken the medicine",
+                "I have been taking my medicine",
+                "I've been taking the medicine",
+                "I've taken my medicine"
+              ],
+              "targets": [
+                "PERF",
+                "take",
+                "medicine"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "I already took the medicine",
+                  "right": "I have taken the medicine",
+                  "explanation_zh": "「到目前為止，已經…」是到現在的累積，要用現在完成式 have taken。"
+                },
+                {
+                  "wrong": "I have eaten the medicine",
+                  "right": "I have taken the medicine",
+                  "explanation_zh": "「吃藥」的固定搭配是 take medicine，不用 eat。"
+                },
+                {
+                  "wrong": "I have took the medicine",
+                  "right": "I have taken the medicine",
+                  "explanation_zh": "take 的過去分詞是 taken。"
+                }
+              ]
+            },
+            {
+              "zh": "按時",
+              "accepted": [
+                "on time",
+                "regularly",
+                "as the doctor told me",
+                "as instructed"
+              ],
+              "targets": [
+                "on time"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "in time",
+                  "right": "on time",
+                  "explanation_zh": "「準時、按時」是 on time；in time 是「及時、來得及」。"
+                }
+              ]
+            },
+            {
+              "zh": "三天",
+              "accepted": [
+                "for three days",
+                "for 3 days",
+                "for the past three days"
+              ],
+              "targets": [
+                "day"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "for three day",
+                  "right": "for three days",
+                  "explanation_zh": "three 後面接複數名詞 days。"
+                },
+                {
+                  "wrong": "since three days",
+                  "right": "for three days",
+                  "explanation_zh": "一段時間用 for；since 後面接時間點。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "tense_trigger",
+              "zh": "我已經",
+              "literal_error": "So far, I already took the medicine on time for three days.",
+              "part": 2,
+              "explanation_zh": "「到目前為止」「已經」是完成式的觸發詞，照字面寫成過去式 already took 會漏掉完成式，這一部分扣分。"
+            }
+          ],
+          "bonus": []
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-basic-04",
+    "lot": "translation-basic-04",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "825ee6e76853b2ea2df931259eb3211229fc9f6e568e89591ca9feda5b5b935e",
+    "spec_id": "translation-basic@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T07:59:16Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "warn",
+      "created_at": "2026-10-09T00:00:00Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "The doctor gave me some cold medicine so that I could sleep well at night.",
+            "confidence": "high",
+            "explanation_zh": "「好讓我…」表目的，用 so that + 子句，主句過去式所以用 could；「開藥」用基礎詞 gave（較精確可用 prescribed some cold medicine for me）；「好好睡覺」sleep well。"
+          },
+          "2": {
+            "translation": "So far, I have taken the medicine on time for three days.",
+            "confidence": "high",
+            "explanation_zh": "「到目前為止，已經…三天」用現在完成式 have taken 加 for three days；So far 放句首；「吃藥」take medicine；「按時」on time（也可 regularly / as instructed）。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PURP"
+            ],
+            "used_target_words": [
+              "doctor",
+              "give",
+              "cold",
+              "medicine",
+              "sleep",
+              "night"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PERF"
+            ],
+            "used_target_words": [
+              "so far",
+              "take",
+              "medicine",
+              "on time",
+              "day"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "第 2 部分的中文標示只有「我已經」，accepted 卻是 I have taken the medicine（含「吃了…藥」）；「吃藥」沒有出現在任何部分的中文標示裡，學生看分項回饋時會對不上，建議把第 2 部分的中文改成「我已經吃了…藥」之類。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "doctor",
+              "give",
+              "cold",
+              "medicine",
+              "sleep",
+              "night"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PURP": true
+            },
+            "program_match": true
+          },
+          "2": {
+            "target_words_found": [
+              "so far",
+              "take",
+              "medicine",
+              "on time",
+              "day"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PERF": true
+            },
+            "program_match": true
+          }
+        },
+        "problems": [
+          "第 2 題驗證者對4 部分切分有意見（warn）：第 2 部分的中文標示只有「我已經」，accepted 卻是 I have taken the medicine（含「吃了…藥」）；「吃藥」沒有出現在任何部分的中文標示裡，學生看分項回饋時會對不上，建議把第 2 部分的中文改成「我已經吃了…"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T00:00:00Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "The doctor gave me some cold medicine so that I could sleep well at night.",
+            "confidence": "medium",
+            "explanation_zh": "「開藥」可用 prescribe 或 give；「好讓我…能」用 so that + could 表示目的（主要子句為過去式，所以用 could）；「好好睡覺」譯為 sleep well。"
+          },
+          "2": {
+            "translation": "So far, I have taken the medicine on time for three days.",
+            "confidence": "high",
+            "explanation_zh": "「到目前為止」是現在完成式的典型標記，用 So far；「按時」譯為 on time；「三天」用 for three days 表示持續期間。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PURP"
+            ],
+            "used_target_words": [
+              "doctor",
+              "give",
+              "cold",
+              "medicine",
+              "sleep",
+              "night"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PERF"
+            ],
+            "used_target_words": [
+              "so far",
+              "take",
+              "medicine",
+              "on time",
+              "day"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "doctor",
+              "give",
+              "cold",
+              "medicine",
+              "sleep",
+              "night"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PURP": true
+            },
+            "program_match": true
+          },
+          "2": {
+            "target_words_found": [
+              "so far",
+              "take",
+              "medicine",
+              "on time",
+              "day"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PERF": true
+            },
+            "program_match": true
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

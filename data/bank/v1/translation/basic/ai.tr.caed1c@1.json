@@ -1,0 +1,673 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.caed1c",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "basic",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "如今在我們的社區裡，越來越多年長的人獨自生活。",
+        "options": null,
+        "answer": "These days, more and more elderly people in our neighborhood live alone.",
+        "accepted_answers": [
+          "Nowadays, more and more old people live alone in our community.",
+          "In our neighborhood, more and more elderly people live by themselves these days."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "越來越…（more and more + 名詞）"
+          ],
+          "topic": "幫助年長鄰居"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "對年輕人來說，幫他們把重物提上樓並不困難。",
+        "options": null,
+        "answer": "It is not difficult for young people to help them carry heavy things upstairs.",
+        "accepted_answers": [
+          "For young people, it is not hard to help them carry heavy bags upstairs.",
+          "It is not difficult for young people to help them carry heavy items up the stairs."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "虛主詞 It ＋形容詞＋不定詞"
+          ],
+          "topic": "幫助年長鄰居"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "幫助年長鄰居"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「越來越多＋名詞」用 more and more + 複數名詞，整個放在動詞前面當主詞（more and more elderly people live …）。「年長的人」可寫 elderly people 或 old people；people 已經是複數，不加 s，動詞 live 也不加 s。「獨自生活」是 live alone，不要寫成 live lonely（lonely 是寂寞的）。「如今」用 these days 或 nowadays（字尾有 s）；「社區」是 neighborhood 或 community，不是 neighbor（鄰居）。",
+          "evidence": [
+            "越來越多年長的人",
+            "獨自生活"
+          ],
+          "strategy_zh": "「越來越多的 N」＝ more and more + 複數 N，放在動詞前面當主詞；寫完檢查動詞要用複數形。",
+          "hints": [
+            "切成四段：如今／在我們的社區裡／越來越多年長的人／獨自生活",
+            "標的詞彙：nowadays（如今）、neighborhood（社區）、elderly（年長的）、live（生活）、alone（獨自）",
+            "句型框架：These days, more and more + 複數名詞 + V …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「對某人來說，做某事（並不）困難」用虛主詞句型：It is (not) + 形容詞 + for + 人 + to + 原形動詞。真正的主詞「幫他們把重物提上樓」很長，先用 It 佔主詞位置，再把 to help them carry … 放到句尾（用動名詞 Helping them … 當主詞、動詞用 is 也正確）。help 後面可以直接接原形動詞：help them carry。「重物」泛指好幾樣東西，用複數 heavy things／heavy bags；upstairs 是副詞，前面不加 to。them 指第一句的年長的人。",
+          "evidence": [
+            "對年輕人來說",
+            "並不困難"
+          ],
+          "strategy_zh": "看到「對…來說，做…很／不…」先想 It is + 形容詞 + for sb + to V；寫完確認 to 後面是原形動詞。",
+          "hints": [
+            "切成四段：對年輕人來說／幫他們／把重物提上樓／並不困難",
+            "標的詞彙：difficult（困難的）、young（年輕的）、help（幫忙）、carry（提）、heavy（重的）、upstairs（上樓）",
+            "句型框架：It is not + 形容詞 + for + 人 + to + 原形動詞 …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "These days, more and more elderly people in our neighborhood live alone.",
+            "Nowadays, more and more old people live alone in our community.",
+            "In our neighborhood, more and more elderly people live by themselves these days."
+          ],
+          "target_words": [
+            {
+              "word": "nowadays",
+              "zh": "如今",
+              "alternatives": [
+                "these days",
+                "today"
+              ]
+            },
+            {
+              "word": "neighborhood",
+              "zh": "社區；街坊",
+              "alternatives": [
+                "community"
+              ]
+            },
+            {
+              "word": "elderly",
+              "zh": "年長的",
+              "alternatives": [
+                "old",
+                "older",
+                "senior"
+              ]
+            },
+            {
+              "word": "live",
+              "zh": "生活；居住"
+            },
+            {
+              "word": "alone",
+              "zh": "獨自",
+              "alternatives": [
+                "by themselves",
+                "on their own"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "COMP",
+              "grammar_id": "gp-more-and-more",
+              "label_zh": "越來越多（more and more + 複數名詞）",
+              "frame": "More and more + 複數名詞 + V …",
+              "zh_trigger": "越來越多"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "如今",
+              "accepted": [
+                "These days",
+                "Nowadays",
+                "Today",
+                "Now"
+              ],
+              "targets": [
+                "nowadays"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Nowaday",
+                  "right": "Nowadays",
+                  "explanation_zh": "nowadays 字尾有 s，是固定拼法。"
+                }
+              ]
+            },
+            {
+              "zh": "在我們的社區裡",
+              "accepted": [
+                "in our neighborhood",
+                "in our community",
+                "in our area"
+              ],
+              "targets": [
+                "neighborhood"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "in our neighbor",
+                  "right": "in our neighborhood",
+                  "explanation_zh": "neighbor 是「鄰居（人）」；「社區、街坊（地方）」是 neighborhood。"
+                }
+              ]
+            },
+            {
+              "zh": "越來越多年長的人",
+              "accepted": [
+                "more and more elderly people",
+                "more and more old people",
+                "more and more older people",
+                "an increasing number of elderly people",
+                "a growing number of elderly people",
+                "more and more seniors"
+              ],
+              "targets": [
+                "COMP",
+                "elderly"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "elderly people are more and more",
+                  "right": "more and more elderly people",
+                  "explanation_zh": "「越來越多的人」要把 more and more 放在名詞前面，整個當主詞，不是放在 be 動詞後面。"
+                },
+                {
+                  "wrong": "more and more elderly peoples",
+                  "right": "more and more elderly people",
+                  "explanation_zh": "people 本身就是複數，不加 s。"
+                }
+              ]
+            },
+            {
+              "zh": "獨自生活",
+              "accepted": [
+                "live alone",
+                "live by themselves",
+                "live on their own",
+                "are living alone",
+                "are living by themselves"
+              ],
+              "targets": [
+                "live",
+                "alone"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "live lonely",
+                  "right": "live alone",
+                  "explanation_zh": "lonely 是「寂寞的」（形容詞）；「獨自、一個人」是 alone。"
+                },
+                {
+                  "wrong": "lives alone",
+                  "right": "live alone",
+                  "explanation_zh": "主詞 more and more elderly people 是複數，動詞不加 s。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "collocation",
+              "zh": "獨自生活",
+              "literal_error": "These days, more and more elderly people in our neighborhood live lonely.",
+              "part": 4,
+              "explanation_zh": "「獨自」很容易想到 lonely，但 lonely 是「寂寞的」；「一個人住」的固定搭配是 live alone（或 live by themselves），寫錯這一部分扣分。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "These days, the number of elderly people living alone in our neighborhood is growing.",
+              "grammar_id": "gp-participle-modifier",
+              "explanation_zh": "改用 the number of … is growing，並用分詞片語 living alone 修飾名詞；the number of 當主詞時動詞用單數 is。"
+            }
+          ]
+        },
+        "2": {
+          "references": [
+            "It is not difficult for young people to help them carry heavy things upstairs.",
+            "For young people, it is not hard to help them carry heavy bags upstairs.",
+            "It is not difficult for young people to help them carry heavy items up the stairs."
+          ],
+          "target_words": [
+            {
+              "word": "difficult",
+              "zh": "困難的",
+              "alternatives": [
+                "hard"
+              ]
+            },
+            {
+              "word": "young",
+              "zh": "年輕的"
+            },
+            {
+              "word": "help",
+              "zh": "幫忙"
+            },
+            {
+              "word": "carry",
+              "zh": "提；搬"
+            },
+            {
+              "word": "heavy",
+              "zh": "重的"
+            },
+            {
+              "word": "upstairs",
+              "zh": "上樓",
+              "alternatives": [
+                "up the stairs"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "NFSUBJ",
+              "grammar_id": "gp-it-adj-to",
+              "label_zh": "虛主詞 It ＋形容詞＋不定詞",
+              "frame": "It is not + 形容詞 + for + 人 + to + 原形動詞 …",
+              "zh_trigger": "並不困難"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "對年輕人來說",
+              "accepted": [
+                "for young people",
+                "for the young"
+              ],
+              "targets": [
+                "young"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "for young peoples",
+                  "right": "for young people",
+                  "explanation_zh": "people 本身就是複數，不加 s。"
+                },
+                {
+                  "wrong": "difficult to young people to help them",
+                  "right": "difficult for young people to help them",
+                  "explanation_zh": "It is + 形容詞 + for + 人 + to V：「對某人來說」在這個句型裡用 for。"
+                }
+              ]
+            },
+            {
+              "zh": "幫他們",
+              "accepted": [
+                "to help them",
+                "Helping them"
+              ],
+              "targets": [
+                "help"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "to help they",
+                  "right": "to help them",
+                  "explanation_zh": "help 後面接受格 them。"
+                },
+                {
+                  "wrong": "to helping them",
+                  "right": "to help them",
+                  "explanation_zh": "不定詞 to 後面接原形動詞。"
+                }
+              ]
+            },
+            {
+              "zh": "把重物提上樓",
+              "accepted": [
+                "carry heavy things upstairs",
+                "carry heavy bags upstairs",
+                "carry heavy items up the stairs",
+                "carry heavy things up the stairs",
+                "carry heavy items upstairs",
+                "carry heavy stuff upstairs"
+              ],
+              "targets": [
+                "carry",
+                "heavy",
+                "upstairs"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "carry heavy thing upstairs",
+                  "right": "carry heavy things upstairs",
+                  "explanation_zh": "「重物」泛指好幾樣東西，thing 是可數名詞，用複數 things。"
+                },
+                {
+                  "wrong": "carry heavy things to upstairs",
+                  "right": "carry heavy things upstairs",
+                  "explanation_zh": "upstairs 本身是副詞（到樓上），前面不加 to。"
+                }
+              ]
+            },
+            {
+              "zh": "並不困難",
+              "accepted": [
+                "It is not difficult",
+                "it is not hard",
+                "It isn't difficult",
+                "It's not difficult",
+                "is not difficult",
+                "is not hard"
+              ],
+              "targets": [
+                "NFSUBJ",
+                "difficult"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Help them carry heavy things upstairs is not difficult",
+                  "right": "It is not difficult to help them carry heavy things upstairs",
+                  "explanation_zh": "原形動詞片語不能當主詞；用虛主詞 It 開頭，真正的主詞（to + 原形動詞）放在後面。"
+                },
+                {
+                  "wrong": "It is not difficulty",
+                  "right": "It is not difficult",
+                  "explanation_zh": "be 動詞後面要用形容詞 difficult，difficulty 是名詞。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "verbal_subject",
+              "zh": "幫他們把重物提上樓",
+              "literal_error": "Help them carry heavy things upstairs is not difficult for young people.",
+              "part": 4,
+              "explanation_zh": "中文直接用「幫他們把重物提上樓」當主詞，照字面把原形動詞片語放句首，主詞不成立；英文要用 It is not difficult … to help them …，這一部分扣分。"
+            }
+          ],
+          "bonus": []
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-basic-04",
+    "lot": "translation-basic-04",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "825ee6e76853b2ea2df931259eb3211229fc9f6e568e89591ca9feda5b5b935e",
+    "spec_id": "translation-basic@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T07:59:11Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T00:00:00Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Nowadays, more and more elderly people live alone in our community.",
+            "confidence": "high",
+            "explanation_zh": "「越來越多」用 more and more + 複數名詞；「如今」用 Nowadays；描述現況的趨勢用簡單現在式（也可用現在進行式 are living）；「年長的人」譯 elderly people（也可 old people / senior citizens）。"
+          },
+          "2": {
+            "translation": "It is not difficult for young people to help them carry heavy things upstairs.",
+            "confidence": "high",
+            "explanation_zh": "「對年輕人來說…並不困難」用虛主詞句型 It is not difficult for young people to V；help + 受詞 + 原形動詞 carry；「提上樓」用 carry … upstairs；them 指上一句的年長者。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "COMP"
+            ],
+            "used_target_words": [
+              "nowadays",
+              "neighborhood",
+              "elderly",
+              "live",
+              "alone"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "NFSUBJ"
+            ],
+            "used_target_words": [
+              "difficult",
+              "young",
+              "help",
+              "carry",
+              "heavy",
+              "upstairs"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "（備註，不影響判定）第 2 部分 accepted 有 Helping them（動名詞主詞），句型標籤卻寫「虛主詞 It＋形容詞＋不定詞」；動名詞主詞的寫法文法正確可以收，但若學生用 Helping them … is not difficult，程式的句型偵測與標籤可能對不上，建議確認 NFSUBJ 是否涵蓋。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "nowadays",
+              "neighborhood",
+              "elderly",
+              "live",
+              "alone"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "COMP": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "difficult",
+              "young",
+              "help",
+              "carry",
+              "heavy",
+              "upstairs"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NFSUBJ": true
+            },
+            "program_match": true
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T00:00:00Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Nowadays, more and more elderly people in our community live alone.",
+            "confidence": "high",
+            "explanation_zh": "「如今」譯為 Nowadays；「越來越多」用 more and more + 複數名詞；「年長的人」譯為 elderly people；「獨自生活」譯為 live alone，描述現狀用現在簡單式。"
+          },
+          "2": {
+            "translation": "For young people, it is not difficult to help them carry heavy things upstairs.",
+            "confidence": "medium",
+            "explanation_zh": "用虛主詞 it 引導不定詞片語（It is not difficult to ...）；「對…來說」用 For；「把重物提上樓」譯為 carry heavy things upstairs；them 指前一句的年長者。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "COMP"
+            ],
+            "used_target_words": [
+              "nowadays",
+              "neighborhood",
+              "elderly",
+              "live",
+              "alone"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "NFSUBJ"
+            ],
+            "used_target_words": [
+              "difficult",
+              "young",
+              "help",
+              "carry",
+              "heavy",
+              "upstairs"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "nowadays",
+              "neighborhood",
+              "elderly",
+              "live",
+              "alone"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "COMP": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "difficult",
+              "young",
+              "help",
+              "carry",
+              "heavy",
+              "upstairs"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NFSUBJ": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

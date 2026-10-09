@@ -1,0 +1,652 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.a2d881",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "basic",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "七夕（Qixi）那天，情侶們要在熱門餐廳訂到位子並不容易。",
+        "options": null,
+        "answer": "On Qixi, it is not easy for couples to book a table at a popular restaurant.",
+        "accepted_answers": [
+          "On Qixi, it is hard for couples to get a table at a popular restaurant."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "虛主詞 It"
+          ],
+          "topic": "七夕情人節"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "不過，簡單的約會也可以和昂貴的晚餐一樣浪漫。",
+        "options": null,
+        "answer": "However, a simple date can be as romantic as an expensive dinner.",
+        "accepted_answers": [
+          "But a simple date can also be as romantic as an expensive dinner."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "原級比較 as … as"
+          ],
+          "topic": "七夕情人節"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "七夕情人節"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「情侶們要…並不容易」是說「這件事」不容易，英文用虛主詞 It 開頭，真正的主詞（不定詞片語）放後面：It is not easy for couples to book a table …；人不能當 easy 的主詞（× Couples are not easy to …）。餐廳「訂位」是 book／reserve a table，order 是點餐。",
+          "evidence": [
+            "並不容易",
+            "訂到位子"
+          ],
+          "strategy_zh": "中文「（某人）做某事很難／不容易」→ It is (not) + 形容詞 + for + 人 + to VR。",
+          "hints": [
+            "切成四段：情侶們／要在熱門餐廳／訂到位子／並不容易",
+            "標的詞彙：couple（情侶）、popular（熱門的）、restaurant（餐廳）、book（預訂）、table（桌位）、easy（容易的）",
+            "句型框架：It is (not) + adj. + for + 人 + to VR …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「和…一樣＋形容詞」用原級比較 as＋原級形容詞＋as：as romantic as。比較的兩邊要對等：a simple date 對 an expensive dinner。「也可以」寫 can（also）be，can 後面接原形 be；expensive 以母音開頭，冠詞用 an。",
+          "evidence": [
+            "和昂貴的晚餐一樣浪漫",
+            "簡單的約會也可以"
+          ],
+          "strategy_zh": "「A 和 B 一樣＋形容詞」→ A + be + as + 原級 + as + B；寫完確認 A、B 是同一類東西。",
+          "hints": [
+            "切成四段：不過／簡單的約會也可以／和昂貴的晚餐／一樣浪漫",
+            "標的詞彙：however（不過）、simple（簡單的）、date（約會）、expensive（昂貴的）、dinner（晚餐）、romantic（浪漫的）",
+            "句型框架：A + can be + as + 原級形容詞 + as + B"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "On Qixi, it is not easy for couples to book a table at a popular restaurant.",
+            "On Qixi, it is hard for couples to get a table at a popular restaurant."
+          ],
+          "target_words": [
+            {
+              "word": "couple",
+              "zh": "情侶",
+              "alternatives": [
+                "lover"
+              ]
+            },
+            {
+              "word": "popular",
+              "zh": "熱門的、受歡迎的"
+            },
+            {
+              "word": "restaurant",
+              "zh": "餐廳"
+            },
+            {
+              "word": "book",
+              "zh": "預訂",
+              "alternatives": [
+                "reserve",
+                "get"
+              ]
+            },
+            {
+              "word": "table",
+              "zh": "（餐廳的）桌位",
+              "alternatives": [
+                "seat"
+              ]
+            },
+            {
+              "word": "easy",
+              "zh": "容易的",
+              "alternatives": [
+                "hard",
+                "difficult"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "NFSUBJ",
+              "grammar_id": "gp-it-adj-to",
+              "label_zh": "虛主詞 It＋形容詞＋for 人＋不定詞",
+              "frame": "It is (not) + adj. + for + 人 + to VR …",
+              "zh_trigger": "並不容易"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "情侶們",
+              "accepted": [
+                "for couples",
+                "for lovers",
+                "for young couples"
+              ],
+              "targets": [
+                "couple"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "for couple",
+                  "right": "for couples",
+                  "explanation_zh": "泛指情侶們，couple 是可數名詞，用複數 couples。"
+                }
+              ]
+            },
+            {
+              "zh": "要在熱門餐廳",
+              "accepted": [
+                "at a popular restaurant",
+                "at popular restaurants",
+                "in a popular restaurant"
+              ],
+              "targets": [
+                "popular",
+                "restaurant"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "in a popular restaurants",
+                  "right": "at a popular restaurant",
+                  "explanation_zh": "冠詞 a 後面接單數名詞；或寫複數 at popular restaurants。"
+                }
+              ]
+            },
+            {
+              "zh": "訂到位子",
+              "accepted": [
+                "to book a table",
+                "to get a table",
+                "to reserve a table",
+                "to book seats",
+                "to reserve seats"
+              ],
+              "targets": [
+                "book",
+                "table"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "to order a seat",
+                  "right": "to book a table",
+                  "explanation_zh": "在餐廳「訂位」的搭配是 book／reserve a table，order 是點餐。"
+                }
+              ]
+            },
+            {
+              "zh": "並不容易",
+              "accepted": [
+                "it is not easy",
+                "it isn't easy",
+                "it's not easy",
+                "it is hard",
+                "it is difficult"
+              ],
+              "targets": [
+                "easy",
+                "NFSUBJ"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "couples are not easy to book a table",
+                  "right": "it is not easy for couples to book a table",
+                  "explanation_zh": "「…並不容易」說的是這件事不容易，用虛主詞 It is not easy for＋人＋to V；人不能當 easy 的主詞。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "collocation",
+              "zh": "訂到位子",
+              "literal_error": "On Qixi, it is not easy for couples to order a seat at a popular restaurant.",
+              "part": 3,
+              "explanation_zh": "「訂位子」照字面翻成 order a seat 是錯誤搭配；在餐廳訂位要用 book／reserve a table。"
+            }
+          ],
+          "bonus": []
+        },
+        "2": {
+          "references": [
+            "However, a simple date can be as romantic as an expensive dinner.",
+            "But a simple date can also be as romantic as an expensive dinner."
+          ],
+          "target_words": [
+            {
+              "word": "however",
+              "zh": "不過",
+              "alternatives": [
+                "but"
+              ]
+            },
+            {
+              "word": "simple",
+              "zh": "簡單的",
+              "alternatives": [
+                "plain"
+              ]
+            },
+            {
+              "word": "date",
+              "zh": "約會"
+            },
+            {
+              "word": "expensive",
+              "zh": "昂貴的",
+              "alternatives": [
+                "fancy"
+              ]
+            },
+            {
+              "word": "dinner",
+              "zh": "晚餐",
+              "alternatives": [
+                "meal"
+              ]
+            },
+            {
+              "word": "romantic",
+              "zh": "浪漫的"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "COMP",
+              "grammar_id": "gp-as-as",
+              "label_zh": "原級比較 as … as（和…一樣…）",
+              "frame": "A + can be + as + 原級形容詞 + as + B",
+              "zh_trigger": "一樣浪漫"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "不過",
+              "accepted": [
+                "However",
+                "But"
+              ],
+              "targets": [
+                "however"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "However a simple date",
+                  "right": "However, a simple date",
+                  "explanation_zh": "However 放句首時後面要加逗號。"
+                }
+              ]
+            },
+            {
+              "zh": "簡單的約會也可以",
+              "accepted": [
+                "a simple date can be",
+                "a simple date can also be",
+                "a plain date can be",
+                "simple dates can be"
+              ],
+              "targets": [
+                "simple",
+                "date"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "a simple appointment can be",
+                  "right": "a simple date can be",
+                  "explanation_zh": "情侶的「約會」是 date；appointment 是和醫生等的正式約定。"
+                },
+                {
+                  "wrong": "a simple date can as",
+                  "right": "a simple date can be as",
+                  "explanation_zh": "can 後面要接原形動詞 be，再接 as romantic as。"
+                }
+              ]
+            },
+            {
+              "zh": "和昂貴的晚餐",
+              "accepted": [
+                "an expensive dinner",
+                "an expensive meal",
+                "a fancy dinner",
+                "expensive dinners"
+              ],
+              "targets": [
+                "expensive",
+                "dinner"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "a expensive dinner",
+                  "right": "an expensive dinner",
+                  "explanation_zh": "expensive 以母音開頭，冠詞用 an。"
+                }
+              ]
+            },
+            {
+              "zh": "一樣浪漫",
+              "accepted": [
+                "as romantic as",
+                "just as romantic as"
+              ],
+              "targets": [
+                "romantic",
+                "COMP"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "the same romantic as",
+                  "right": "as romantic as",
+                  "explanation_zh": "「和…一樣＋形容詞」用 as＋原級＋as，不是 the same＋形容詞。"
+                },
+                {
+                  "wrong": "as more romantic as",
+                  "right": "as romantic as",
+                  "explanation_zh": "as … as 中間用原級。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "collocation",
+              "zh": "一樣浪漫",
+              "literal_error": "However, a simple date can be the same romantic as an expensive dinner.",
+              "part": 4,
+              "explanation_zh": "「和…一樣浪漫」照字面翻成 the same romantic 是錯誤搭配，原級比較要寫 as romantic as。"
+            }
+          ],
+          "bonus": []
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-basic-05",
+    "lot": "translation-basic-05",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "a9e22defa014e90d4fa058a697f2a11423f1ee158f245ae054434d9cca4be9d6",
+    "spec_id": "translation-basic@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 1,
+    "sentences": 1,
+    "avg_sentence_length": 1.0,
+    "denominator": 1,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 1.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {
+      "off": 1
+    },
+    "offlist_words": [
+      "qixi"
+    ],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T13:28:17Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T13:07:55Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "On Qixi, it is not easy for couples to book a table at a popular restaurant.",
+            "confidence": "high",
+            "explanation_zh": "「要…並不容易」用虛主詞 It is not easy for sb. to V；「訂到位子」在餐廳的語境用 book a table；Qixi 是節日名稱，前面用 on。"
+          },
+          "2": {
+            "translation": "However, a simple date can be as romantic as an expensive dinner.",
+            "confidence": "high",
+            "explanation_zh": "「和…一樣浪漫」用原級比較 as + adj. + as；「也可以」用 can；「不過」放句首用 However 加逗號。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "NFSUBJ"
+            ],
+            "used_target_words": [
+              "couple",
+              "popular",
+              "restaurant",
+              "book",
+              "table",
+              "easy"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "COMP"
+            ],
+            "used_target_words": [
+              "however",
+              "simple",
+              "date",
+              "expensive",
+              "dinner",
+              "romantic"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "couple",
+              "popular",
+              "restaurant",
+              "book",
+              "table",
+              "easy"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NFSUBJ": true
+            },
+            "program_match": true
+          },
+          "2": {
+            "target_words_found": [
+              "however",
+              "simple",
+              "date",
+              "expensive",
+              "dinner",
+              "romantic"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "COMP": true
+            },
+            "program_match": true
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T13:11:47Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "On Qixi, it is not easy for couples to get a table at a popular restaurant.",
+            "confidence": "high",
+            "explanation_zh": "「…並不容易」用虛主詞 it is not easy for + 人 + to V；「訂到位子」用 get a table（也可用 make a reservation）；「七夕那天」用 On Qixi。"
+          },
+          "2": {
+            "translation": "However, a simple date can be just as romantic as an expensive dinner.",
+            "confidence": "high",
+            "explanation_zh": "「不過」用 However；「和…一樣浪漫」用 just as romantic as；「也可以」用 can。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "NFSUBJ"
+            ],
+            "used_target_words": [
+              "couple",
+              "popular",
+              "restaurant",
+              "book",
+              "table",
+              "easy"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "COMP"
+            ],
+            "used_target_words": [
+              "however",
+              "simple",
+              "date",
+              "expensive",
+              "dinner",
+              "romantic"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "couple",
+              "popular",
+              "restaurant",
+              "book",
+              "table",
+              "easy"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NFSUBJ": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "however",
+              "simple",
+              "date",
+              "expensive",
+              "dinner",
+              "romantic"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "COMP": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

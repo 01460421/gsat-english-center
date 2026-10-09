@@ -1,0 +1,625 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.st.69d5ff",
+  "version": 1,
+  "section_type": "structure",
+  "format_version": "structure-4x5",
+  "tier": "advanced",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": "A shocking headline pops up on your phone: a popular snack is about to disappear from stores forever. Within hours, the post has been shared thousands of times, often by people who never read past the headline. Many stories like this turn out to be false, but by the time the truth comes out, they have already reached millions of screens.\nWhy do false stories travel so fast? [[1]] Fear, anger, and surprise push people to react before they think, and sharing a post takes only a second. Checking whether it is true, on the other hand, takes time and effort that few people are willing to spend.\n[[2]] A report from a well-known news organization deserves more trust than one from a website you have never heard of, especially a site whose name only imitates that of a real newspaper. If no source is given at all, that alone should make you suspicious. It is also worth checking the date, since old stories are often shared again as if they were new.\nMany people judge a website by how professional it looks, but appearances can be misleading. [[3]] Rather than studying a suspicious page closely, they quickly open new tabs to see what other sources say about it. If no trusted outlet is reporting the same news, there is good reason to doubt it.\nPhotos deserve a second look as well, since an old picture is often reused to illustrate a new and unrelated event. [[4]] They take only a few minutes, and none of them requires any special skill. The next time a shocking story appears on your screen, try them before pressing “share.” A short pause may be all it takes to keep a lie from spreading.",
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": {
+      "A": "Simple habits like these can stop a false story in its tracks.",
+      "B": "A false story is much harder to correct once it has spread widely.",
+      "C": "Much of the blame lies with our emotions and how quickly they take over.",
+      "D": "Professional fact-checkers, by contrast, pay little attention to a site’s looks.",
+      "E": "Yet a quick check can begin with a simple question: where did the story come from?"
+    },
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "C",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "example",
+          "clue_raw": "SP|LX|F|L",
+          "key_phrase": "our emotions and how quickly they take over → Fear, anger, and surprise push people to react before they think"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "E",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "transition_word",
+          "clue_raw": "TS|CN|BF|L",
+          "key_phrase": "Yet ← takes time and effort that few people are willing to spend; where did the story come from? → A report from a well-known news organization deserves more trust …"
+        }
+      },
+      {
+        "no": 3,
+        "label": "3",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "D",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "contrast",
+          "clue_raw": "CT|CN|BF|L",
+          "key_phrase": "by contrast ← Many people judge a website by how professional it looks; Professional fact-checkers → they quickly open new tabs"
+        }
+      },
+      {
+        "no": 4,
+        "label": "4",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "A",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "summary",
+          "clue_raw": "CL|PR|BF|P",
+          "key_phrase": "habits like these ← 第三到第五段的查證方法（看來源、看日期、開新分頁、檢查照片）; → They take only a few minutes; try them"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "如何辨識假新聞",
+      "genre": "expository",
+      "sdgs": [],
+      "text_format": "continuous"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "前一句問：假消息為什麼傳得這麼快？空格要給出原因，但答案句本身沒有 because 之類的字，要靠下一句確認。下一句 Fear, anger, and surprise push people to react before they think 舉出恐懼、憤怒、驚訝三種情緒，說它們讓人還沒思考就先反應——正是 (C) 的 our emotions（我們的情緒）和 how quickly they take over（情緒多快就占了上風）的具體說明。再下一句 Checking whether it is true, on the other hand, takes time 則對照「分享只要一秒、查證卻要時間」。選 (C)。",
+          "evidence": [
+            "Why do false stories travel so fast?",
+            "Much of the blame lies with our emotions and how quickly they take over.",
+            "Fear, anger, and surprise push people to react before they think, and sharing a post takes only a second."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "example",
+          "option_notes_zh": {
+            "A": "(A) 說像這樣的簡單習慣可以阻止假消息，like these 前面沒有任何習慣可指（這裡才剛問原因），也沒有回答「為什麼傳得快」。(A) 是最後一段的總結句。",
+            "B": "多餘句：(B) 說假消息一旦廣為流傳就很難更正，雖然和前一句一樣有 false story，談的卻是「更正」，沒有回答前一句「為什麼傳得這麼快」；下一句的 Fear, anger, and surprise 是三種情緒，(B) 裡沒有任何可以讓它們呼應的字。",
+            "D": "(D) 用 by contrast 說專業查核人員不看網站外觀，但前一句是問句，沒有可以對比的對象；網站外觀要到第四段才出現。",
+            "E": "(E) 用 Yet 說查證可以從一個問題開始，但前一句問的是「為什麼傳得快」，不能用 Yet 轉折；下一句講情緒，也不是在回答「消息從哪裡來」。"
+          },
+          "strategy_zh": "空格前是 Why …? 而空格後一句很具體時，先讀後一句：它列出的例子（fear、anger、surprise）是哪一類東西的例子，就找概括那一類的選項（emotions）。",
+          "hints": [
+            "前一句問了什麼？下一句舉出的 fear、anger、surprise 都屬於哪一類？",
+            "哪個選項把假消息傳得快的原因歸到這一類東西上？",
+            "答案說很大一部分要怪我們的情緒，以及情緒多快就占了上風。"
+          ]
+        },
+        "2": {
+          "explanation_zh": "前一句說查證要花時間和力氣，很少人願意付出；(E) 用 Yet（然而）轉折：快速的查證其實可以從一個簡單的問題開始——這則消息是從哪裡來的？下一句 A report from a well-known news organization deserves more trust than one from a website you have never heard of 正是在回答「來源」的問題：知名新聞機構的報導比沒聽過的網站可信；接著 If no source is given at all … 也在談來源。前後都要對上，選 (E)。",
+          "evidence": [
+            "Checking whether it is true, on the other hand, takes time and effort that few people are willing to spend.",
+            "Yet a quick check can begin with a simple question: where did the story come from?",
+            "A report from a well-known news organization deserves more trust than one from a website you have never heard of, especially a site whose name only imitates that of a real newspaper."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "transition_word",
+          "option_notes_zh": {
+            "A": "(A) 說像這樣的簡單習慣可以阻止假消息，like these 前面還沒有介紹任何習慣；(A) 應放在全文最後，總結各種查證方法。",
+            "B": "多餘句：(B) 說假消息傳開後很難更正，既沒有用轉折接住前一句「很少人願意花時間查證」，也沒有帶出這一段的主題「消息來源」；下一句比較知名新聞機構和陌生網站的可信度，和「更正」無關。(B) 的內容其實是第一段最後一句已經說過的事。",
+            "C": "(C) 說要怪我們的情緒，回答的是第二段開頭「為什麼傳得快」的問題；放在第三段開頭，下一句的來源可信度和情緒無關。",
+            "D": "(D) 和下一句都提到網站（site／website），看起來相關；但 (D) 的 by contrast 要和「看網站外觀的人」對比，前一句講的是很少人願意花時間查證，不是外觀；第四段才談外觀，(D) 屬於那裡。"
+          },
+          "strategy_zh": "段首空格要找能「接住上一段結尾、帶出這一段內容」的句子。上一段說查證很麻煩、沒人想做，Yet 轉成「其實可以很快」；這一段的細節都在談來源，就選帶出「來源」問題的選項。",
+          "hints": [
+            "前一句說查證有什麼問題？空格要怎麼轉折？",
+            "這一段談的知名新聞機構、陌生網站、沒有標出處，都和消息的什麼有關？",
+            "答案以 Yet 開頭，說查證可以從「消息從哪裡來」這個問題開始。"
+          ]
+        },
+        "3": {
+          "explanation_zh": "前一句說很多人看網站做得專不專業來判斷它，但外表可能騙人；(D) 用 by contrast（相對地）提出對照的一群人：專業的事實查核人員幾乎不在意網站的外觀。下一句 Rather than studying a suspicious page closely, they quickly open new tabs to see what other sources say about it 的 they 指的就是 fact-checkers：他們不細看可疑的網頁，而是馬上開新分頁看其他來源怎麼說——正好和「看外觀判斷」相反。選 (D)。",
+          "evidence": [
+            "Many people judge a website by how professional it looks, but appearances can be misleading.",
+            "Professional fact-checkers, by contrast, pay little attention to a site’s looks.",
+            "Rather than studying a suspicious page closely, they quickly open new tabs to see what other sources say about it."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "contrast",
+          "option_notes_zh": {
+            "A": "(A) 說簡單的習慣可以阻止假消息，是全文的總結；放在這裡，下一句的 they 會指「習慣」，「習慣開新分頁」說不通。",
+            "B": "多餘句：(B) 和前一句的網站外觀無關；放進去後，下一句的 they 找不到可以指的複數人物（只能退回去指前一句的 Many people，但他們正是「看外觀判斷網站」的人，和「不細看網頁、改開新分頁」互相矛盾）。",
+            "C": "(C) 說要怪我們的情緒，是第二段的原因；下一句的 they quickly open new tabs 是一種查證方法，和情緒無關，they 也會變成指「情緒」。",
+            "E": "(E) 說查證可以從「消息從哪裡來」開始，是第三段的開頭；放在這裡，Yet 和前一句「外表會騙人」不構成轉折，下一句的 they 也沒有對象。"
+          },
+          "strategy_zh": "前一句描述「很多人怎麼做」，空格後一句描述「另一群人怎麼做」時，空格常用 by contrast、however、unlike them 引出另一群人；再用下一句的代名詞 they 確認指的是誰。",
+          "hints": [
+            "前一句說很多人怎麼判斷網站？",
+            "下一句的 they 不細看網頁、而是開新分頁——they 是誰？和前一句的人有什麼不同？",
+            "答案用 by contrast 說專業的事實查核人員不太在意網站的外觀。"
+          ]
+        },
+        "4": {
+          "explanation_zh": "前一句說照片也要多看一眼。到這裡，作者已經介紹完各種查證方法：看來源、看日期（第三段）、開新分頁看其他來源（第四段）、檢查照片（第五段）。(A) 的 habits like these（像這樣的習慣）回指這些方法，說它們能讓假消息當場停下來。下一句 They take only a few minutes, and none of them requires any special skill 的 They、none of them 都指這些習慣，再下一句 try them before pressing “share” 也一樣。like these 的先行詞橫跨三段，要掌握全文結構才能確定，選 (A)。",
+          "evidence": [
+            "Photos deserve a second look as well, since an old picture is often reused to illustrate a new and unrelated event.",
+            "Simple habits like these can stop a false story in its tracks.",
+            "They take only a few minutes, and none of them requires any special skill."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "summary",
+          "option_notes_zh": {
+            "B": "多餘句：(B) 說假消息傳開後很難更正，和前一句的照片沒有關係；下一句 They take only a few minutes, and none of them requires any special skill 需要一個複數名詞讓 They、none of them 指涉，(B) 唯一的名詞 a false story 是單數，「假消息只要幾分鐘、不需要特殊技能」再接 try them 也說不通。(B) 重述的是第一段「等真相出來，消息早已傳遍」的意思，全文沒有一格需要再說一次。",
+            "C": "(C) 說要怪我們的情緒，是第二段的原因；放在結尾，下一句的 They take only a few minutes 會變成「情緒只要幾分鐘」，說不通。",
+            "D": "(D) 說專業查核人員不在意網站外觀，是第四段的內容；放在照片之後，下一句的 They 會指 fact-checkers，「查核人員只要幾分鐘、不需要特殊技能」也和 try them 接不上。",
+            "E": "(E) 說查證可以從「消息從哪裡來」開始，是第三段的引言；放在最後，Yet 沒有轉折的對象，也不能讓 They 指「各種查證方法」。"
+          },
+          "strategy_zh": "結尾前的空格常是總結句：like these、such steps、all of this 這類字回指前面好幾段的內容。再用下一句的 They、none of them、try them 核對：空格裡要有一個複數名詞，而且是「只要幾分鐘、可以試試看」的東西（方法、習慣）。",
+          "hints": [
+            "前面三段一共介紹了哪些查證方法？",
+            "下一句的 They 和 none of them 指的是什麼？應該是單數還是複數？",
+            "答案說像這樣的簡單習慣，可以讓假消息當場停下來。"
+          ]
+        }
+      }
+    },
+    "translation_zh": {
+      "text": "手機上跳出一則驚人的標題：一款熱門零食即將從商店永遠消失。幾個小時之內，這則貼文就被分享了數千次，分享的人往往只看了標題。許多這類消息後來證實是假的，但等到真相大白時，它們早已傳到數百萬個螢幕上。\n假消息為什麼傳得這麼快？【1】很大一部分要怪我們的情緒，以及情緒多快就占了上風。恐懼、憤怒和驚訝會讓人還沒思考就先反應，而分享一則貼文只要一秒鐘。相反地，查證消息是否屬實要花時間和力氣，很少人願意付出。\n【2】然而，快速的查證可以從一個簡單的問題開始：這則消息是從哪裡來的？知名新聞機構的報導，比你從沒聽過的網站上的報導更值得信賴，尤其是那些名稱只是模仿真正報社的網站。如果完全沒有標出消息來源，光是這一點就該讓你起疑。也值得查看日期，因為舊消息常常被重新分享，好像是新的一樣。\n很多人依網站看起來專不專業來判斷它，但外表可能會誤導人。【3】相對地，專業的事實查核人員幾乎不在意網站的外觀。他們不會仔細研究可疑的網頁，而是很快地開啟新分頁，看看其他來源怎麼說。如果沒有任何可信的媒體報導同樣的消息，就有充分的理由懷疑它。\n照片也值得多看一眼，因為舊照片常被拿來說明一件新的、毫不相干的事件。【4】像這樣的簡單習慣，可以讓假消息當場停下來。它們只要幾分鐘，而且都不需要任何特殊技能。下次螢幕上再出現驚人的消息時，在按下「分享」之前先試試看。短短的停頓，也許就足以阻止謊言散播。\n（多餘句 (B)：假消息一旦廣為流傳，就更難更正了。）"
+    },
+    "elimination": {
+      "feasible": {
+        "1": [
+          "C"
+        ],
+        "2": [
+          "E"
+        ],
+        "3": [
+          "D"
+        ],
+        "4": [
+          "A"
+        ]
+      },
+      "perfect_matchings": 1
+    },
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": null,
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "3-V-7",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "7-V-5",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "B-V-8",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "9-V-2",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "9-V-7",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "D-V-7",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": "本文由 AI 撰寫"
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-structure-advanced-02-regen",
+    "lot": "structure-advanced-02",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/structure",
+    "prompt_sha256": "b9a726d26bb6710e835e77ffd1d181c1d421e0ff588ec2fbbca82d2463068adc",
+    "spec_id": "structure-advanced@2026-10-08",
+    "regenerated_from": "ai.st.3cfcc6"
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 286,
+    "sentences": 16,
+    "avg_sentence_length": 17.88,
+    "denominator": 285,
+    "proper_nouns": [],
+    "numbers": 1,
+    "coverage_l1_4": 0.986,
+    "coverage_l1_6": 0.9895,
+    "offlist_ratio": 0.0105,
+    "beyond_l4_ratio": 0.0035,
+    "level_counts": {
+      "1": 228,
+      "2": 37,
+      "3": 5,
+      "4": 11,
+      "5": 1,
+      "off": 3
+    },
+    "offlist_words": [
+      "reused",
+      "tabs",
+      "unrelated"
+    ],
+    "band": {
+      "tier": "advanced",
+      "basis": "lot structure-advanced-02（SPEC §3.4＋出題規格書 passage_overrides（words、coverage_L1_4_min（取代 SPEC 的區間）、coverage_L1_6_min、offlist_max、beyond_l4_ratio_max））",
+      "ok": true,
+      "checks": {
+        "word_count": {
+          "value": 286,
+          "min": 220,
+          "max": 310,
+          "ok": true
+        },
+        "coverage_l1_4": {
+          "value": 0.986,
+          "min": 0.9,
+          "max": null,
+          "ok": true
+        },
+        "coverage_l1_6": {
+          "value": 0.9895,
+          "min": 0.94,
+          "max": null,
+          "ok": true
+        },
+        "offlist_ratio": {
+          "value": 0.0105,
+          "min": null,
+          "max": 0.06,
+          "ok": true
+        },
+        "avg_sentence_length": {
+          "value": 17.88,
+          "min": 15,
+          "max": 21,
+          "ok": true
+        },
+        "beyond_l4_ratio": {
+          "value": 0.0035,
+          "min": null,
+          "max": 0.06,
+          "ok": true
+        }
+      }
+    }
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T12:39:47Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T12:36:14Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "answers": {
+          "1": {
+            "answer": "C",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Why do false stories travel so fast?",
+              "Fear, anger, and surprise push people to react before they think, and sharing a post takes only a second."
+            ],
+            "explanation_zh": "空格要回答前句「假消息為何傳得快」，C 說原因在於情緒及其接管速度，後句的 Fear, anger, and surprise 正是在具體說明 our emotions。",
+            "feasible": [
+              "C"
+            ]
+          },
+          "2": {
+            "answer": "E",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Checking whether it is true, on the other hand, takes time and effort that few people are willing to spend.",
+              "A report from a well-known news organization deserves more trust than one from a website you have never heard of, especially a site whose name only imitates that of a real newspaper.",
+              "If no source is given at all, that alone should make you suspicious."
+            ],
+            "explanation_zh": "E 的 Yet 與上段「查證費時費力」形成轉折（但快速查證可以從一個簡單問題開始），而「消息從哪裡來」引出本段對來源（新聞機構、網站、沒附來源）的討論。",
+            "feasible": [
+              "E"
+            ]
+          },
+          "3": {
+            "answer": "D",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Many people judge a website by how professional it looks, but appearances can be misleading.",
+              "Rather than studying a suspicious page closely, they quickly open new tabs to see what other sources say about it."
+            ],
+            "explanation_zh": "D 的 by contrast 與前句「許多人以網站外觀判斷」對比，且後句的 they 需要一個複數指涉對象，只有 D 的 Professional fact-checkers 能對上（他們不細看網頁、而是開新分頁查別處說法）。",
+            "feasible": [
+              "D"
+            ]
+          },
+          "4": {
+            "answer": "A",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "They take only a few minutes, and none of them requires any special skill.",
+              "The next time a shocking story appears on your screen, try them before pressing “share.”"
+            ],
+            "explanation_zh": "後句的 They／none of them／try them 指的是可以「花幾分鐘、不需特殊技巧」去做的事，只有 A 的 Simple habits like these（總結前面查來源、日期、旁查、看照片等習慣）能當指涉對象，並開啟結尾段。",
+            "feasible": [
+              "A"
+            ]
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T12:39:47Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "answers": {
+          "1": {
+            "answer": "C",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Why do false stories travel so fast?",
+              "Fear, anger, and surprise push people to react before they think, and sharing a post takes only a second.",
+              "Much of the blame lies with our emotions and how quickly they take over."
+            ],
+            "explanation_zh": "空格緊接在「為什麼假消息傳得這麼快？」之後，需要一句回答；C 指出原因在情緒，後面的 Fear, anger, and surprise 正好具體說明是哪些情緒。",
+            "feasible": [
+              "C"
+            ]
+          },
+          "2": {
+            "answer": "E",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Checking whether it is true, on the other hand, takes time and effort that few people are willing to spend.",
+              "A report from a well-known news organization deserves more trust than one from a website you have never heard of, especially a site whose name only imitates that of a real newspaper.",
+              "Yet a quick check can begin with a simple question: where did the story come from?"
+            ],
+            "explanation_zh": "上一段說查證要花時間、很少人願意，這一段用 Yet 轉折，提出簡單的第一步「消息從哪來」，後文整段都在談資訊來源的可信度，E 承上啟下。",
+            "feasible": [
+              "E"
+            ]
+          },
+          "3": {
+            "answer": "D",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Many people judge a website by how professional it looks, but appearances can be misleading.",
+              "Rather than studying a suspicious page closely, they quickly open new tabs to see what other sources say about it."
+            ],
+            "explanation_zh": "前面說一般人以網站外觀專業與否來判斷，後面的 they 要有指涉對象；D 的 Professional fact-checkers, by contrast 與一般人形成對比，並引出他們不看外觀、改開新分頁比對的做法。",
+            "feasible": [
+              "D"
+            ]
+          },
+          "4": {
+            "answer": "A",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "They take only a few minutes, and none of them requires any special skill.",
+              "A short pause may be all it takes to keep a lie from spreading."
+            ],
+            "explanation_zh": "後面的 They 與 none of them 需要一個複數名詞作先行詞；A 的 Simple habits like these 概括前面幾個查證方法，並與結尾的 keep a lie from spreading 呼應。",
+            "feasible": [
+              "A"
+            ]
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "distractor_audit",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T12:39:20Z",
+      "details": {
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "items": {
+          "1": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Why do false stories travel so fast?",
+              "explanation_zh": "(A) 的 habits like these 必須回指前面介紹過的習慣，但這裡才剛提出「為什麼傳得快」的問題，前面沒有任何習慣可指；(A) 也沒有回答這個問題。"
+            },
+            "B": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "Why do false stories travel so fast?",
+              "explanation_zh": "多餘句：前一句問假消息「為什麼傳得這麼快」，(B) 說的是傳開之後「很難更正」，沒有回答原因；下一句 Fear, anger, and surprise 列舉的三種情緒在 (B) 裡也沒有可以呼應的概括詞。"
+            },
+            "D": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Why do false stories travel so fast?",
+              "explanation_zh": "(D) 的 by contrast 需要一個可以對比的對象，前一句是問句，沒有提到任何人如何看待網站外觀（要到第四段才出現）；(D) 也沒有回答問題。"
+            },
+            "E": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "Why do false stories travel so fast?",
+              "explanation_zh": "前一句問「為什麼傳得快」，(E) 用 Yet 轉到「查證可以從哪裡開始」，既沒有回答問題，也沒有可以轉折的前文；下一句講情緒，和「消息從哪裡來」接不上。"
+            }
+          },
+          "2": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Checking whether it is true, on the other hand, takes time and effort that few people are willing to spend.",
+              "explanation_zh": "前一句只說很少人願意花時間查證，還沒有介紹任何查證習慣，(A) 的 like these 無所指；(A) 也帶不出下一句的來源可信度。"
+            },
+            "B": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "A report from a well-known news organization deserves more trust than one from a website you have never heard of, especially a site whose name only imitates that of a real newspaper.",
+              "explanation_zh": "多餘句：(B) 談的是假消息傳開後「難以更正」，放在段首帶不出本段主題；下一句直接比較知名新聞機構和陌生網站的可信度，和「更正」毫無關係，整段會缺少引出「看消息來源」的主題句。(B) 的意思也只是重述第一段「等真相出來，消息早已傳遍」。"
+            },
+            "C": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "A report from a well-known news organization deserves more trust than one from a website you have never heard of, especially a site whose name only imitates that of a real newspaper.",
+              "explanation_zh": "(C) 的情緒是對第二段開頭「為什麼傳得快」的回答，放在第三段段首，下一句的來源可信度和情緒無關。"
+            },
+            "D": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "Checking whether it is true, on the other hand, takes time and effort that few people are willing to spend.",
+              "explanation_zh": "(D) 的 by contrast 要和「憑外觀判斷網站的人」對比，但前一句講的是很少人願意花時間查證，沒有提到網站外觀；下一句講的是來源可信度，也不是查核人員的做法。"
+            }
+          },
+          "3": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Rather than studying a suspicious page closely, they quickly open new tabs to see what other sources say about it.",
+              "explanation_zh": "放入 (A) 後，下一句的 they 會指 habits，「習慣不細看網頁、很快開新分頁」說不通；這一段還在介紹方法，不是總結的位置。"
+            },
+            "B": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Rather than studying a suspicious page closely, they quickly open new tabs to see what other sources say about it.",
+              "explanation_zh": "多餘句：(B) 和前一句「依網站外觀判斷」無關；放入後下一句的 they 找不到複數的人可指（(B) 只有單數的 a false story），退回去指前一句的 Many people 又和「不細看網頁、改開新分頁」的做法矛盾。"
+            },
+            "C": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "Rather than studying a suspicious page closely, they quickly open new tabs to see what other sources say about it.",
+              "explanation_zh": "(C) 的情緒是第二段的原因；放入後下一句的 they 會指「情緒」，「情緒很快開新分頁」說不通。"
+            },
+            "E": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Rather than studying a suspicious page closely, they quickly open new tabs to see what other sources say about it.",
+              "explanation_zh": "(E) 是第三段「查證從來源開始」的引言，放在這裡內容重複，Yet 和前一句「外表會騙人」也不構成轉折；下一句的 they 沒有可指的人。"
+            }
+          },
+          "4": {
+            "B": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "They take only a few minutes, and none of them requires any special skill.",
+              "explanation_zh": "多餘句：下一句的 They、none of them 和再下一句的 try them 需要一個指「幾種查證做法」的複數先行詞，(B) 唯一的名詞 a false story 是單數，They 無所指；(B) 和前一句的照片也沒有關係，只是重述第一段的意思，不能總結前面各段的方法。"
+            },
+            "C": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "They take only a few minutes, and none of them requires any special skill.",
+              "explanation_zh": "(C) 的情緒是第二段的原因；放入後下一句 They take only a few minutes 會變成「情緒只要幾分鐘」，try them 更說不通。"
+            },
+            "D": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "They take only a few minutes, and none of them requires any special skill.",
+              "explanation_zh": "放入 (D) 後，They 會指 fact-checkers，「查核人員只要幾分鐘、都不需要特殊技能」以及 try them 都說不通；(D) 的 by contrast 和前一句的照片也沒有對比關係，它屬於第四段。"
+            },
+            "E": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "Photos deserve a second look as well, since an old picture is often reused to illustrate a new and unrelated event.",
+              "explanation_zh": "(E) 的 Yet 和前一句「照片也值得多看一眼」不構成轉折；「消息從哪裡來」是第三段的查證起點，放在最後順序不對，也不能讓下一句的 They 指各種方法。"
+            }
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "unique_solution",
+      "reviewer": "record_verification.py",
+      "result": "pass",
+      "created_at": "2026-10-09T12:39:47Z",
+      "details": {
+        "method": "injective_assignment",
+        "perfect_matchings": 1,
+        "matches_key": true,
+        "feasible": {
+          "1": [
+            "C"
+          ],
+          "2": [
+            "E"
+          ],
+          "3": [
+            "D"
+          ],
+          "4": [
+            "A"
+          ]
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

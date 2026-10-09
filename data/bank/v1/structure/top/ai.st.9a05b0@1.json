@@ -1,0 +1,620 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.st.9a05b0",
+  "version": 1,
+  "section_type": "structure",
+  "format_version": "structure-4x5",
+  "tier": "top",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": "In the mid-1800s, cholera swept through London again and again, often killing its victims within days of the first signs of illness. Most doctors of the time believed that it was spread by \"bad air,\" a poisonous mist thought to rise from rotting rubbish and dirty rivers.\nJohn Snow, a London doctor, had his doubts. Because the disease attacked the stomach and gut rather than the lungs, he suspected that people caught it by swallowing something, most likely drinking water polluted with human waste. His chance to test the idea came in the summer of 1854, when a sudden outbreak in the Soho district killed hundreds of people in little more than a week.\n[[1]] Going from door to door, he asked which households had lost someone and where they usually fetched their water. He also marked each death on a street map with a short black bar, and the bars piled up most thickly around a single public pump on Broad Street.\nThe exceptions to this pattern turned out to be just as revealing. [[2]] Workers at a brewery next to the pump, for instance, drank the free beer they were given and never touched the pump water. [[3]] In one case, a widow living several miles away died after drinking Broad Street water, which she had delivered to her home every day because she liked its taste.\n[[4]] Snow took his findings to the local officials, who doubted his theory but agreed to remove the pump's handle. The outbreak, which had already begun to slow, soon came to an end. It would be years before most experts accepted that dirty water could carry disease, but Snow's careful method of tracking cases laid the foundation for epidemiology, the study of how diseases spread through whole populations.",
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": {
+      "A": "Taken together, the evidence pointed to the pump.",
+      "B": "Brewery workers relying on the pump were hit hard.",
+      "C": "A few of the victims lived nowhere near Broad Street.",
+      "D": "Some people right next to the pump escaped the disease entirely.",
+      "E": "While many residents fled in panic, Snow headed straight into the area."
+    },
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "E",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "chronology",
+          "clue_raw": "SQ|LG|F|L",
+          "key_phrase": "a sudden outbreak … killed hundreds → While many residents fled in panic, Snow headed straight into the area → Going from door to door, he asked …"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "D",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "example",
+          "clue_raw": "SP|CN|F|L",
+          "key_phrase": "Some people right next to the pump escaped → Workers at a brewery next to the pump, for instance, … never touched the pump water (targeted extra B)"
+        }
+      },
+      {
+        "no": 3,
+        "label": "3",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "C",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "contrast",
+          "clue_raw": "CT|CN|F|L",
+          "key_phrase": "lived nowhere near Broad Street → In one case, a widow living several miles away died after drinking Broad Street water"
+        }
+      },
+      {
+        "no": 4,
+        "label": "4",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "A",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "summary",
+          "clue_raw": "CL|CN|B|P",
+          "key_phrase": "Taken together, the evidence ← the bars piled up … around a single public pump; The exceptions to this pattern → Snow took his findings … remove the pump's handle"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "斯諾的霍亂地圖",
+      "genre": "expository",
+      "sdgs": [
+        3,
+        6
+      ],
+      "text_format": "continuous"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "第二段最後說，1854 年夏天蘇活區突然爆發疫情，一個多星期就死了好幾百人。第三段的空格在段首，後一句直接說「他挨家挨戶詢問哪些家庭有人過世、平常到哪裡取水」，但沒有交代他是在什麼情況下展開調查的。(E) 說「許多居民驚慌逃離時，斯諾卻直接走進疫區」，接上前段的疫情，也為後一句挨家挨戶的調查交代了起點。其他選項的 the pump、the evidence、Broad Street 在這時都還沒出現過。選 (E)。",
+          "evidence": [
+            "While many residents fled in panic, Snow headed straight into the area.",
+            "Going from door to door, he asked which households had lost someone and where they usually fetched their water."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "chronology",
+          "option_notes_zh": {
+            "A": "(A)「綜合起來，證據都指向那個水泵」：這時斯諾還沒開始調查，也還沒提到任何水泵，the evidence 與 the pump 都沒有所指。(A) 屬於第 4 格。",
+            "B": "多餘句（CT 型，瞄準第 2 格）：這時文章還沒提到釀酒廠和水泵，the pump 沒有所指；內容也和第四段「釀酒廠工人只喝廠裡發的啤酒、從不碰水泵的水」矛盾。",
+            "C": "(C)「有幾位死者住得離寬街很遠」：寬街和水泵要到本段最後才出現；而且這是「例外」，要在發現死亡集中在水泵周圍之後才談得上。(C) 屬於第 3 格。",
+            "D": "(D)「有些人就在水泵旁邊卻完全沒有染病」：水泵還沒出現，the pump 沒有所指；它也是例外情形，屬於第四段。(D) 屬於第 2 格。"
+          },
+          "strategy_zh": "段首空格要同時照顧前後：前一段剛說疫情爆發，後一句直接開始調查。選項裡的「the＋名詞」（the pump、the evidence）如果前文還沒出現過，就不能放在這裡。",
+          "hints": [
+            "後一句「挨家挨戶詢問」之前，需要交代什麼？",
+            "選項中哪些 the＋名詞在這個位置還沒有出現過？",
+            "答案說居民逃離時，Snow headed straight into the area。"
+          ]
+        },
+        "2": {
+          "explanation_zh": "第三段最後說，地圖上的黑線集中在寬街的一座公共水泵周圍。第四段第一句說「這個模式的例外也同樣有啟發性」。空格後一句用 for instance（例如）舉例：水泵旁一家釀酒廠的工人喝的是廠方免費提供的啤酒，從不碰水泵的水。for instance 前面必須是一個概括的說法，而例子講的是「就在水泵旁、卻沒有喝那裡的水」的人。(D) 說「有些人就在水泵旁邊，卻完全沒有染病」，正是釀酒廠工人這個例子要說明的例外。選 (D)。",
+          "evidence": [
+            "The exceptions to this pattern turned out to be just as revealing.",
+            "Some people right next to the pump escaped the disease entirely.",
+            "Workers at a brewery next to the pump, for instance, drank the free beer they were given and never touched the pump water."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "example",
+          "option_notes_zh": {
+            "A": "(A)「綜合起來，證據都指向水泵」是總結句，後面不能再接 for instance 舉例；這時例外情形也還沒講完。(A) 屬於第 4 格。",
+            "B": "多餘句（CT 型，瞄準本格）：它和後一句共用 brewery、workers、pump，看起來像在談同一群人；但它說工人靠這座水泵取水、受創嚴重，和後一句「喝廠方發的啤酒、從不碰水泵的水」矛盾，而且這樣的人符合模式，不是「例外」。",
+            "C": "(C)「有幾位死者住得離寬街很遠」也是例外，但後一句的例子是在水泵旁邊工作的釀酒廠工人，不是住得遠的死者。(C) 屬於第 3 格。",
+            "E": "(E)「居民逃離時，斯諾直接走進疫區」是調查的開端，放在已經畫出地圖、討論例外之後，順序顛倒；後一句的 for instance 也找不到概括句。(E) 屬於第 1 格。"
+          },
+          "strategy_zh": "後一句有 for instance／for example 時，空格要是「概括句」，而且例子的內容必須和它吻合。這段有兩種例外（離得近卻沒病、住得遠卻病死），要看例子是哪一種。",
+          "hints": [
+            "後一句的釀酒廠工人離水泵近還是遠？他們有沒有喝水泵的水？",
+            "for instance 前面應該是什麼樣的概括說法？",
+            "答案說 some people right next to the pump escaped the disease。"
+          ]
+        },
+        "3": {
+          "explanation_zh": "前一句說釀酒廠工人就在水泵旁邊，卻因為只喝啤酒而沒有染病。空格後一句說：其中一例是一位住在幾英里外的寡婦，因為喜歡寬街水的味道，每天請人把水送到家裡，喝了之後就死了。In one case（其中一例）前面需要一個「住得遠卻染病死亡」的概括說法。(C) 說「有幾位死者住得離寬街很遠」，和上一格的「離得近卻沒病」形成另一種例外；寡婦的例子說明她雖然住得遠，喝的仍是寬街的水。選 (C)。",
+          "evidence": [
+            "A few of the victims lived nowhere near Broad Street.",
+            "In one case, a widow living several miles away died after drinking Broad Street water, which she had delivered to her home every day because she liked its taste."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "contrast",
+          "option_notes_zh": {
+            "A": "(A)「綜合起來，證據都指向水泵」是總結句，後面的 In one case 是單一個案，接不上；例外還沒講完就先下結論，順序也不對。(A) 屬於第 4 格。",
+            "B": "多餘句：前一句才說釀酒廠工人從不碰水泵的水，緊接著說他們靠水泵取水、受創嚴重，直接矛盾；也引不出後一句住在遠方的寡婦。",
+            "D": "(D)「有些人就在水泵旁邊卻沒有染病」看起來能總結前一句的釀酒廠工人，但後一句的 In one case 舉的是住在幾英里外、喝了水後死亡的寡婦，和「就在旁邊、沒有染病」正好相反。(D) 屬於第 2 格。",
+            "E": "(E) 是斯諾開始調查的情形，放在例外的討論中間，時間順序不對，也和後一句的寡婦無關。(E) 屬於第 1 格。"
+          },
+          "strategy_zh": "一段裡有兩個相似的空格時，分別看各自後一句的例子：釀酒廠工人是「近而無恙」，寡婦是「遠而染病」。兩個概括句局部都說得通，要靠例子的細節才分得開。",
+          "hints": [
+            "後一句的寡婦住在哪裡？結果怎麼了？",
+            "她和前一句的釀酒廠工人，是同一種例外還是相反的例外？",
+            "答案說 a few of the victims lived nowhere near Broad Street。"
+          ]
+        },
+        "4": {
+          "explanation_zh": "第三、四段整理了斯諾找到的證據：死亡集中在寬街的水泵周圍；在水泵旁卻不喝那裡的水的人沒有染病，住得遠卻喝了那裡的水的人病死。第五段的空格在段首，後一句說斯諾把調查結果交給地方官員，官員雖然懷疑他的理論，仍同意拆掉水泵的把手。(A) 說「綜合起來，證據都指向那個水泵」，Taken together（綜合起來）把前兩段的發現收在一起，也說明了為什麼接下來要拆掉水泵的把手。選 (A)。",
+          "evidence": [
+            "Taken together, the evidence pointed to the pump.",
+            "the bars piled up most thickly around a single public pump on Broad Street",
+            "Snow took his findings to the local officials, who doubted his theory but agreed to remove the pump's handle."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "summary",
+          "option_notes_zh": {
+            "B": "多餘句：它和第四段「釀酒廠工人從不碰水泵的水」矛盾；放在段首也引不出後一句「把調查結果交給官員」。",
+            "C": "(C) 住得遠的死者是第四段的例外之一，後面要接寡婦的例子；放在這裡，後一句卻直接談交給官員、拆把手，中間少了總結。(C) 屬於第 3 格。",
+            "D": "(D) 也是例外之一，後面要接釀酒廠工人的例子；放在第五段段首，後一句接不上。(D) 屬於第 2 格。",
+            "E": "(E) 是斯諾開始調查的時候，放在已經得出結果、要交給官員之前，時間順序顛倒。(E) 屬於第 1 格。"
+          },
+          "strategy_zh": "段首的總結句（Taken together、In short、All in all）要回頭看前面幾段累積了什麼證據，再看後一句是不是根據這個結論採取的行動。",
+          "hints": [
+            "第三、四段的證據都和哪個地點有關？",
+            "後一句拆掉水泵的把手，是根據什麼結論？",
+            "答案是 Taken together, the evidence pointed to the pump。"
+          ]
+        }
+      }
+    },
+    "translation_zh": {
+      "text": "十九世紀中葉，霍亂一次又一次席捲倫敦，患者往往在出現最初症狀後幾天之內就死亡。當時大多數醫生相信，霍亂是透過「壞空氣」傳播的——一種據說從腐爛垃圾和骯髒河流中升起的毒霧。\n倫敦醫生約翰．斯諾對此存疑。由於這種病侵襲的是胃和腸道，而不是肺，他懷疑人們是吞下了某種東西才染病，最可能的是喝了被人類排泄物汙染的水。1854 年夏天，他有了驗證這個想法的機會：蘇活區突然爆發疫情，一個多星期就奪走了好幾百條人命。\n【1】許多居民驚慌逃離時，斯諾卻直接走進疫區。他挨家挨戶詢問哪些家庭有人過世、他們平常在哪裡取水。他還在街道地圖上用一小條黑線標出每一例死亡，結果黑線最密集地堆在寬街上的一座公共水泵周圍。\n這個模式的例外，結果也同樣具有啟發性。【2】有些人就在水泵旁邊，卻完全沒有染病。例如，水泵旁一家釀酒廠的工人喝的是廠方免費提供的啤酒，從來不碰水泵的水。【3】有幾位死者則住得離寬街很遠。其中一例是一位住在幾英里外的寡婦，她因為喜歡寬街水的味道，每天請人把水送到家裡，喝了之後就死了。\n【4】綜合起來，證據都指向那座水泵。斯諾把調查結果交給地方官員，官員雖然懷疑他的理論，仍同意拆掉水泵的把手。原本就已經開始趨緩的疫情，不久便結束了。又過了好些年，大多數專家才接受髒水會傳播疾病的看法；但斯諾追蹤病例的嚴謹方法，為流行病學——研究疾病如何在整個人群中傳播的學問——奠定了基礎。\n（多餘句 (B)：靠那座水泵取水的釀酒廠工人受創嚴重。）"
+    },
+    "elimination": {
+      "feasible": {
+        "1": [
+          "E"
+        ],
+        "2": [
+          "D"
+        ],
+        "3": [
+          "C"
+        ],
+        "4": [
+          "A"
+        ]
+      },
+      "perfect_matchings": 1
+    },
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": null,
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "3-V-7",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "7-V-5",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "9-V-2",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "9-V-4",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "C-V-5",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": "本文由 AI 撰寫"
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-08-structure-top-03",
+    "lot": "structure-top-03",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/structure",
+    "prompt_sha256": "5b93a8b27160f24ce98ae811e0390c38cf810b1be0c87111f5b3ea7f0fef42b8",
+    "spec_id": "structure-top@2026-10-08",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 291,
+    "sentences": 13,
+    "avg_sentence_length": 22.38,
+    "denominator": 287,
+    "proper_nouns": [
+      "London",
+      "Soho"
+    ],
+    "numbers": 3,
+    "coverage_l1_4": 0.9582,
+    "coverage_l1_6": 0.9756,
+    "offlist_ratio": 0.0244,
+    "beyond_l4_ratio": 0.0174,
+    "level_counts": {
+      "1": 219,
+      "2": 36,
+      "3": 14,
+      "4": 6,
+      "5": 1,
+      "6": 4,
+      "off": 7
+    },
+    "offlist_words": [
+      "brewery",
+      "cholera",
+      "epidemiology",
+      "findings",
+      "illness",
+      "john",
+      "summer"
+    ],
+    "band": {
+      "tier": "top",
+      "basis": "lot structure-top-03（SPEC §3.4＋出題規格書 passage_overrides（words、coverage_L1_4_min（取代 SPEC 的區間）、coverage_L1_6_min、offlist_max、beyond_l4_ratio_max））",
+      "ok": true,
+      "checks": {
+        "word_count": {
+          "value": 291,
+          "min": 220,
+          "max": 310,
+          "ok": true
+        },
+        "coverage_l1_4": {
+          "value": 0.9582,
+          "min": 0.9,
+          "max": null,
+          "ok": true
+        },
+        "coverage_l1_6": {
+          "value": 0.9756,
+          "min": 0.94,
+          "max": null,
+          "ok": true
+        },
+        "offlist_ratio": {
+          "value": 0.0244,
+          "min": null,
+          "max": 0.06,
+          "ok": true
+        },
+        "avg_sentence_length": {
+          "value": 22.38,
+          "min": 18,
+          "max": 25,
+          "ok": true
+        },
+        "beyond_l4_ratio": {
+          "value": 0.0174,
+          "min": null,
+          "max": 0.06,
+          "ok": true
+        }
+      }
+    }
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T12:20:53Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T12:07:26Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "answers": {
+          "1": {
+            "answer": "E",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "His chance to test the idea came in the summer of 1854, when a sudden outbreak in the Soho district killed hundreds of people in little more than a week.",
+              "Going from door to door, he asked which households had lost someone and where they usually fetched their water."
+            ],
+            "explanation_zh": "上段說疫情在 Soho 爆發，本段描述 Snow 挨家挨戶調查，E「許多居民驚慌逃離時，Snow 直接進入該區」是段首引出實地調查的句子。",
+            "feasible": [
+              "E"
+            ]
+          },
+          "2": {
+            "answer": "D",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "The exceptions to this pattern turned out to be just as revealing.",
+              "Workers at a brewery next to the pump, for instance, drank the free beer they were given and never touched the pump water."
+            ],
+            "explanation_zh": "下一句以 for instance 舉幫浦旁啤酒廠工人沒喝幫浦水的例子，前面應是「有些住在幫浦旁的人完全沒染病」這類例外，D 吻合；B 說啤酒廠工人受害慘重，與下文矛盾。",
+            "feasible": [
+              "D"
+            ]
+          },
+          "3": {
+            "answer": "C",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "In one case, a widow living several miles away died after drinking Broad Street water, which she had delivered to her home every day because she liked its taste."
+            ],
+            "explanation_zh": "下一句 In one case 舉住在數英里外的寡婦因喝 Broad Street 的水而死，對應 C「有些死者根本不住在 Broad Street 附近」這另一類例外。",
+            "feasible": [
+              "C"
+            ]
+          },
+          "4": {
+            "answer": "A",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Snow took his findings to the local officials, who doubted his theory but agreed to remove the pump's handle."
+            ],
+            "explanation_zh": "前兩段列出地圖與例外的證據，本段段首需要總結，A「綜合來看，證據都指向那座幫浦」，接著 Snow 把發現交給官員、拆掉把手。",
+            "feasible": [
+              "A"
+            ]
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T12:20:53Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "answers": {
+          "1": {
+            "answer": "E",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Going from door to door, he asked which households had lost someone and where they usually fetched their water."
+            ],
+            "explanation_zh": "後句描述Snow挨家挨戶詢問，前句應是他不顧居民逃離而直接進入疫區。",
+            "feasible": [
+              "E"
+            ]
+          },
+          "2": {
+            "answer": "D",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Workers at a brewery next to the pump, for instance, drank the free beer they were given and never touched the pump water."
+            ],
+            "explanation_zh": "本段談與模式不符的例外，for instance 舉啤酒廠工人在水泵旁卻沒生病，對應「泵旁有些人完全沒染病」；B與之矛盾。",
+            "feasible": [
+              "D"
+            ]
+          },
+          "3": {
+            "answer": "C",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "In one case, a widow living several miles away died after drinking Broad Street water, which she had delivered to her home every day because she liked its taste."
+            ],
+            "explanation_zh": "第二個例外：住在遠處的寡婦卻死了，對應「少數死者根本不住在Broad Street附近」。",
+            "feasible": [
+              "C"
+            ]
+          },
+          "4": {
+            "answer": "A",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Snow took his findings to the local officials, who doubted his theory but agreed to remove the pump's handle."
+            ],
+            "explanation_zh": "最後一段開頭總結前述證據都指向水泵，才接著Snow拿發現去找官員。",
+            "feasible": [
+              "A"
+            ]
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "distractor_audit",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T13:00:00Z",
+      "details": {
+        "session_id": null,
+        "items": {
+          "1": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Going from door to door, he asked which households had lost someone and where they usually fetched their water.",
+              "explanation_zh": "後一句才開始挨家挨戶調查，還沒有 the evidence 可以綜合；the pump 也要到本段最後才出現。"
+            },
+            "B": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "He also marked each death on a street map with a short black bar, and the bars piled up most thickly around a single public pump on Broad Street.",
+              "explanation_zh": "多餘句：水泵到本段最後才第一次出現（a single public pump），這時 the pump 沒有所指；內容也和第四段「釀酒廠工人從不碰水泵的水」矛盾。"
+            },
+            "C": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "The exceptions to this pattern turned out to be just as revealing.",
+              "explanation_zh": "「住得離寬街很遠的死者」是模式的例外，要先發現死亡集中在寬街水泵周圍才談得上；這時寬街也還沒出現。"
+            },
+            "D": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "The exceptions to this pattern turned out to be just as revealing.",
+              "explanation_zh": "「水泵旁的人沒有染病」也是例外，屬於第四段；這時 the pump 還沒出現，沒有所指。"
+            }
+          },
+          "2": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "Workers at a brewery next to the pump, for instance, drank the free beer they were given and never touched the pump water.",
+              "explanation_zh": "總結句後面不能再接 for instance 舉例；例外才剛開始談就下結論，順序不對。"
+            },
+            "B": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "Workers at a brewery next to the pump, for instance, drank the free beer they were given and never touched the pump water.",
+              "explanation_zh": "多餘句（瞄準本格）：和後一句共用 brewery、workers、pump，但「靠水泵取水、受創嚴重」和後一句「喝廠方發的啤酒、從不碰水泵的水」矛盾；這種人符合模式，也不是 exceptions。"
+            },
+            "C": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "Workers at a brewery next to the pump, for instance, drank the free beer they were given and never touched the pump water.",
+              "explanation_zh": "住得遠的死者也是例外，但後一句的例子是在水泵旁工作、沒有喝水泵水的工人，與「住得遠、死亡」不符；(C) 要接第 3 格後寡婦的例子。"
+            },
+            "E": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "The exceptions to this pattern turned out to be just as revealing.",
+              "explanation_zh": "斯諾走進疫區是調查的起點，放在畫出地圖、討論例外之後順序顛倒；後一句的 for instance 也找不到概括句。"
+            }
+          },
+          "3": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "In one case, a widow living several miles away died after drinking Broad Street water, which she had delivered to her home every day because she liked its taste.",
+              "explanation_zh": "總結句後面接 In one case 的單一個案接不上；例外還沒講完就下結論，順序也不對。"
+            },
+            "B": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "Workers at a brewery next to the pump, for instance, drank the free beer they were given and never touched the pump water.",
+              "explanation_zh": "多餘句：前一句剛說釀酒廠工人從不碰水泵的水，接著說他們靠水泵取水、受創嚴重，直接矛盾；也引不出住在遠方的寡婦。"
+            },
+            "D": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "In one case, a widow living several miles away died after drinking Broad Street water, which she had delivered to her home every day because she liked its taste.",
+              "explanation_zh": "(D) 能概括前一句的釀酒廠工人，但後一句 In one case 舉的是住在幾英里外、喝了寬街的水而死亡的寡婦，和「就在水泵旁、沒有染病」正好相反；(D) 屬於第 2 格。"
+            },
+            "E": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "In one case, a widow living several miles away died after drinking Broad Street water, which she had delivered to her home every day because she liked its taste.",
+              "explanation_zh": "斯諾開始調查的情形放在例外的討論中間，時間順序不對，也和後一句寡婦的例子無關。"
+            }
+          },
+          "4": {
+            "B": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "Workers at a brewery next to the pump, for instance, drank the free beer they were given and never touched the pump water.",
+              "explanation_zh": "多餘句：和第四段「釀酒廠工人從不碰水泵的水」矛盾；放在段首也引不出後一句「把調查結果交給官員」。"
+            },
+            "C": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Snow took his findings to the local officials, who doubted his theory but agreed to remove the pump's handle.",
+              "explanation_zh": "住得遠的死者是例外之一，後面要接寡婦的例子；放在第五段段首，後一句直接談交給官員、拆把手，缺少把證據收攏的總結。"
+            },
+            "D": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Snow took his findings to the local officials, who doubted his theory but agreed to remove the pump's handle.",
+              "explanation_zh": "(D) 也是例外之一，後面要接釀酒廠工人的例子；放在第五段段首，引不出交給官員、拆把手的行動。"
+            },
+            "E": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "Snow took his findings to the local officials, who doubted his theory but agreed to remove the pump's handle.",
+              "explanation_zh": "斯諾走進疫區是調查的開端，放在已得出結果、要交給官員之前，時間順序顛倒。"
+            }
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "unique_solution",
+      "reviewer": "record_verification.py",
+      "result": "pass",
+      "created_at": "2026-10-09T12:20:53Z",
+      "details": {
+        "method": "injective_assignment",
+        "perfect_matchings": 1,
+        "matches_key": true,
+        "feasible": {
+          "1": [
+            "E"
+          ],
+          "2": [
+            "D"
+          ],
+          "3": [
+            "C"
+          ],
+          "4": [
+            "A"
+          ]
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

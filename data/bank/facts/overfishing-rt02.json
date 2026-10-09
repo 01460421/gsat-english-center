@@ -1,0 +1,162 @@
+{
+  "schema": "gsat-bank-facts/v1",
+  "id": "overfishing-rt02",
+  "title": "Status of the world's assessed fish stocks, 1974–2021, and FAO's 2025 review of marine fishery resources",
+  "sdgs": [
+    14
+  ],
+  "created_on": "2026-10-09",
+  "created_by": "claude-opus-5-5",
+  "sources": [
+    {
+      "id": "s1",
+      "publisher": "Our World in Data",
+      "title": "Status of the world's fish stocks (fish-stocks-within-sustainable-levels)",
+      "url": "https://ourworldindata.org/grapher/fish-stocks-within-sustainable-levels",
+      "accessed": "2026-10-09",
+      "license": "CC-BY-4.0",
+      "use": "dataset",
+      "note": "原始提供者：Food and Agriculture Organization of the United Nations (2025), SDG Indicators – with major processing by Our World in Data。數值由 grapher CSV（csvType=full）取得，World 一列，1974–2021；圖表只取部分年份"
+    },
+    {
+      "id": "s2",
+      "publisher": "Food and Agriculture Organization of the United Nations (FAO)",
+      "title": "FAO releases the most detailed global assessment of marine fish stocks to date (2025-06-11)",
+      "url": "https://www.fao.org/newsroom/detail/fao-releases-the-most-detailed-global-assessment-of-marine-fish-stocks-to-date/en",
+      "accessed": "2026-10-09",
+      "license": "FAO terms of use (facts only)",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s3",
+      "publisher": "Our World in Data",
+      "title": "Status of the world's fish stocks: chart metadata (indicator definitions and notes)",
+      "url": "https://ourworldindata.org/grapher/fish-stocks-within-sustainable-levels",
+      "accessed": "2026-10-09",
+      "license": "CC-BY-4.0",
+      "use": "fact_only",
+      "note": "圖表的指標說明與附註"
+    }
+  ],
+  "facts": [
+    {
+      "id": "f1",
+      "text": "A fish stock is a population of one species of fish that shares an area and similar growth and death rates.",
+      "source_ids": [
+        "s3"
+      ],
+      "kind": "definition"
+    },
+    {
+      "id": "f2",
+      "text": "A stock is overexploited when the catch is larger than the maximum sustainable yield, the amount the population can replace by breeding and growing.",
+      "source_ids": [
+        "s3"
+      ],
+      "kind": "definition"
+    },
+    {
+      "id": "f3",
+      "text": "The data cover only assessed stocks; many fish stocks in Africa, Asia and South America have not been assessed.",
+      "source_ids": [
+        "s3"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f4",
+      "text": "FAO released its Review of the state of world marine fishery resources in June 2025 at the UN Ocean Conference; it assessed 2,570 individual stocks with more than 650 experts from over 90 countries.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f5",
+      "text": "The 2025 review found that 64.5 percent of stocks were fished within biologically sustainable levels and 35.5 percent were overfished.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f6",
+      "text": "Weighted by how much fish each stock produces, 77.2 percent of global fisheries landings came from sustainable stocks.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f7",
+      "text": "For tuna and tuna-like species, 87 percent of stocks were sustainable, and these stocks provided 99 percent of tuna landings.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f8",
+      "text": "In the Northeast Pacific, 92.7 percent of stocks were sustainable; in the Mediterranean and Black Sea, only 35.1 percent were.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f9",
+      "text": "In the Mediterranean and Black Sea, fishing pressure has fallen by 30 percent and fish biomass has risen by 15 percent since 2013.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f10",
+      "text": "FAO's Director-General said that effective management is the strongest tool for conserving fishery resources.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f11",
+      "text": "Derived from the dataset: the overexploited share was 10.0 percent in 1974 and 35.5 percent in 2021, about 3.55 times as high; it fell from 33.0 percent in 2008 to 32.0 percent in 2013.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f12",
+      "text": "Derived from the dataset: the sustainable share fell by 17.2 points between 1974 (90.0) and 2000 (72.8); the overexploited share rose by 4.8 points from 1980 to 1990, 9.1 points from 1990 to 2000 and 5.8 points from 2000 to 2008.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "number"
+    }
+  ],
+  "datasets": [
+    {
+      "id": "d1",
+      "source_id": "s1",
+      "title": "Share of assessed fish stocks within biologically sustainable levels and overexploited, World",
+      "indicator": "FAO SDG indicator 14.4.1 (OWID variables 1271092, 1271094)",
+      "unit": "% of assessed stocks",
+      "categories": ["1974", "1975", "1976", "1977", "1978", "1979", "1980", "1981", "1982", "1983", "1984", "1985", "1986", "1987", "1988", "1989", "1990", "1991", "1992", "1993", "1994", "1995", "1996", "1997", "1998", "1999", "2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021"],
+      "series": [
+        {
+          "name": "Biologically sustainable",
+          "values": [90.0, 90.37, 90.73, 91.1, 91.46, 86.98, 86.7, 86.42, 84.88, 83.33, 82.58, 81.82, 78.75, 75.68, 74.52, 73.37, 81.87, 79.32, 76.78, 75.96, 75.14, 74.32, 75.65, 76.97, 75.57, 74.18, 72.79, 73.69, 74.59, 75.49, 76.39, 74.38, 72.37, 69.7, 67.02, 69.55, 70.32, 71.08, 69.54, 68.0, 67.33, 66.67, 66.26, 65.85, 65.21, 64.57, 63.45, 64.5]
+        },
+        {
+          "name": "Overexploited",
+          "values": [10.0, 9.63, 9.27, 8.9, 8.54, 13.02, 13.3, 13.58, 15.12, 16.67, 17.42, 18.18, 21.25, 24.32, 25.48, 26.63, 18.13, 20.68, 23.22, 24.04, 24.86, 25.68, 24.35, 23.03, 24.43, 25.82, 27.21, 26.31, 25.41, 24.51, 23.61, 25.62, 27.63, 30.3, 32.98, 30.45, 29.68, 28.92, 30.46, 32.0, 32.67, 33.33, 33.74, 34.15, 34.79, 35.43, 36.55, 35.5]
+        }
+      ],
+      "note": "Overexploited 由 CSV 原值取兩位小數（例如 1989 年 26.629997 → 26.63）；兩個數列相加為 100"
+    }
+  ],
+  "notes": null
+}

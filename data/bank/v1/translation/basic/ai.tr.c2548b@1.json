@@ -1,0 +1,655 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.c2548b",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "basic",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "我爸媽在陽台上用盆子種菜，而不是到市場去買。",
+        "options": null,
+        "answer": "My parents grow vegetables in pots on the balcony instead of buying them at the market.",
+        "accepted_answers": [
+          "Instead of buying vegetables at the market, my parents grow them in pots on our balcony.",
+          "My parents plant vegetables in pots on the balcony rather than buying them from the market."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "介系詞＋動名詞"
+          ],
+          "topic": "陽台種菜"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "我們家陽台上的番茄，吃起來比市場賣的還要甜。",
+        "options": null,
+        "answer": "The tomatoes on our balcony taste sweeter than the ones from the market.",
+        "accepted_answers": [
+          "The tomatoes on our balcony taste sweeter than those sold at the market.",
+          "Tomatoes from our balcony taste much sweeter than the ones sold in the market."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "比較級"
+          ],
+          "topic": "陽台種菜"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "陽台種菜"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「而不是到市場去買」是拿兩種做法比較：用 instead of（或 rather than）連接，後面的動詞要用動名詞 buying；也可以把 Instead of buying … 放到句首，後面加逗號。「種菜」泛指蔬菜，用複數 vegetables；「用盆子」是種在盆子裡，寫 in pots；「在陽台上」用介系詞 on。",
+          "evidence": [
+            "而不是到市場去買",
+            "用盆子種菜"
+          ],
+          "strategy_zh": "介系詞（instead of、besides、by、without）後面接動詞時，一律改成 V-ing。",
+          "hints": [
+            "切成四段：我爸媽／在陽台上／用盆子種菜／而不是到市場去買",
+            "標的詞彙：parent（父母）、balcony（陽台）、grow（種植）、vegetable（蔬菜）、pot（盆子）、buy（買）、market（市場）",
+            "句型框架：S + V … instead of + V-ing …（或 Instead of + V-ing …, S + V …）"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「比市場賣的還要甜」是比較級：sweet 加 -er 變 sweeter，後面接 than。比較的對象要對等：拿番茄比番茄，所以寫 than the ones（或 those）from the market，不能只寫 than the market。「吃起來」是描述味道，用連綴動詞 taste；主詞 the tomatoes 是複數，動詞用 taste，不加 s。",
+          "evidence": [
+            "吃起來",
+            "比市場賣的還要甜"
+          ],
+          "strategy_zh": "翻比較句先找「誰跟誰比」，兩邊要是同一類東西；後面重複的名詞用 the one(s)／those 代替。",
+          "hints": [
+            "切成四段：我們家陽台上的番茄／吃起來／比市場賣的／還要甜",
+            "標的詞彙：tomato（番茄）、balcony（陽台）、taste（嚐起來）、sweet（甜的）、market（市場）",
+            "句型框架：A + taste + 比較級 + than + the ones …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "My parents grow vegetables in pots on the balcony instead of buying them at the market.",
+            "Instead of buying vegetables at the market, my parents grow them in pots on our balcony.",
+            "My parents plant vegetables in pots on the balcony rather than buying them from the market."
+          ],
+          "target_words": [
+            {
+              "word": "parent",
+              "zh": "父母"
+            },
+            {
+              "word": "balcony",
+              "zh": "陽台"
+            },
+            {
+              "word": "grow",
+              "zh": "種植",
+              "alternatives": [
+                "plant"
+              ]
+            },
+            {
+              "word": "vegetable",
+              "zh": "蔬菜"
+            },
+            {
+              "word": "pot",
+              "zh": "盆子"
+            },
+            {
+              "word": "buy",
+              "zh": "買"
+            },
+            {
+              "word": "market",
+              "zh": "市場"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PREPVING",
+              "grammar_id": "gp-prep-gerund",
+              "label_zh": "介系詞＋動名詞（而不是…：instead of + V-ing）",
+              "frame": "S + V … instead of + V-ing … ／ Instead of + V-ing …, S + V …",
+              "zh_trigger": "而不是"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "我爸媽",
+              "accepted": [
+                "My parents",
+                "My mom and dad",
+                "My father and mother"
+              ],
+              "targets": [
+                "parent"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "My parent",
+                  "right": "My parents",
+                  "explanation_zh": "「爸媽」是兩個人，parent 要用複數 parents。"
+                }
+              ]
+            },
+            {
+              "zh": "在陽台上",
+              "accepted": [
+                "on the balcony",
+                "on our balcony"
+              ],
+              "targets": [
+                "balcony"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "in the balcony",
+                  "right": "on the balcony",
+                  "explanation_zh": "陽台是突出在屋外的平台，「在陽台上」用介系詞 on。"
+                }
+              ]
+            },
+            {
+              "zh": "用盆子種菜",
+              "accepted": [
+                "grow vegetables in pots",
+                "grow them in pots",
+                "plant vegetables in pots",
+                "grow vegetables in flowerpots"
+              ],
+              "targets": [
+                "grow",
+                "vegetable",
+                "pot"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "grow vegetable in pots",
+                  "right": "grow vegetables in pots",
+                  "explanation_zh": "vegetable 是可數名詞，泛指「種菜」要用複數 vegetables。"
+                },
+                {
+                  "wrong": "grow vegetables by pots",
+                  "right": "grow vegetables in pots",
+                  "explanation_zh": "菜是種「在」盆子裡，用 in pots；by 表示方法或「在旁邊」。"
+                }
+              ]
+            },
+            {
+              "zh": "而不是到市場去買",
+              "accepted": [
+                "instead of buying them at the market",
+                "Instead of buying vegetables at the market",
+                "rather than buying them from the market",
+                "instead of buying them from the market",
+                "rather than buying them at the market",
+                "instead of going to the market to buy them",
+                "rather than going to the market to buy them"
+              ],
+              "targets": [
+                "PREPVING",
+                "buy",
+                "market"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "instead of buy them at the market",
+                  "right": "instead of buying them at the market",
+                  "explanation_zh": "instead of 的 of 是介系詞，後面的動詞要改成動名詞 buying。"
+                },
+                {
+                  "wrong": "instead of buying it at the market",
+                  "right": "instead of buying them at the market",
+                  "explanation_zh": "代名詞要對應前面的複數 vegetables，用 them。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "plural_countable",
+              "zh": "種菜",
+              "literal_error": "My parents grow vegetable in pots on the balcony instead of buying them at the market.",
+              "part": 3,
+              "explanation_zh": "中文「種菜」沒有單複數，照字面寫 grow vegetable 會漏掉複數；泛指蔬菜要寫 vegetables，這一部分扣分。"
+            }
+          ],
+          "bonus": []
+        },
+        "2": {
+          "references": [
+            "The tomatoes on our balcony taste sweeter than the ones from the market.",
+            "The tomatoes on our balcony taste sweeter than those sold at the market.",
+            "Tomatoes from our balcony taste much sweeter than the ones sold in the market."
+          ],
+          "target_words": [
+            {
+              "word": "tomato",
+              "zh": "番茄"
+            },
+            {
+              "word": "balcony",
+              "zh": "陽台"
+            },
+            {
+              "word": "taste",
+              "zh": "嚐起來"
+            },
+            {
+              "word": "sweet",
+              "zh": "甜的"
+            },
+            {
+              "word": "market",
+              "zh": "市場"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "COMP",
+              "grammar_id": "gp-comparative-superlative",
+              "label_zh": "比較級（A + 比較級 + than B）",
+              "frame": "A + taste + 比較級 + than + B（the ones／those …）",
+              "zh_trigger": "比市場賣的還要甜"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "我們家陽台上的番茄",
+              "accepted": [
+                "The tomatoes on our balcony",
+                "Tomatoes from our balcony",
+                "The tomatoes on our family's balcony",
+                "The tomatoes grown on our balcony",
+                "The tomatoes from our balcony"
+              ],
+              "targets": [
+                "tomato",
+                "balcony"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "The tomato on our balcony",
+                  "right": "The tomatoes on our balcony",
+                  "explanation_zh": "陽台上種的番茄不只一顆，用複數 tomatoes，動詞也跟著用 taste。"
+                },
+                {
+                  "wrong": "The tomatos on our balcony",
+                  "right": "The tomatoes on our balcony",
+                  "explanation_zh": "拼字：tomato 的複數要加 -es，寫成 tomatoes。"
+                }
+              ]
+            },
+            {
+              "zh": "吃起來",
+              "accepted": [
+                "taste"
+              ],
+              "targets": [
+                "taste"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "eat",
+                  "right": "taste",
+                  "explanation_zh": "「吃起來…」是描述味道，用連綴動詞 taste + 形容詞。"
+                },
+                {
+                  "wrong": "tastes",
+                  "right": "taste",
+                  "explanation_zh": "主詞 the tomatoes 是複數，動詞不加 s。"
+                }
+              ]
+            },
+            {
+              "zh": "比市場賣的",
+              "accepted": [
+                "than the ones from the market",
+                "than those sold at the market",
+                "than the ones sold in the market",
+                "than those from the market",
+                "than the ones sold at the market",
+                "than the ones at the market",
+                "than those at the market",
+                "than the ones bought at the market",
+                "than those bought at the market"
+              ],
+              "targets": [
+                "market"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "than the market",
+                  "right": "than the ones from the market",
+                  "explanation_zh": "比較的是番茄和番茄，不是番茄和市場；要用 the ones 或 those 代替前面的 tomatoes。"
+                },
+                {
+                  "wrong": "than the one from the market",
+                  "right": "than the ones from the market",
+                  "explanation_zh": "代替複數的 tomatoes 要用複數 the ones。"
+                }
+              ]
+            },
+            {
+              "zh": "還要甜",
+              "accepted": [
+                "sweeter",
+                "much sweeter",
+                "even sweeter"
+              ],
+              "targets": [
+                "COMP",
+                "sweet"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "more sweet",
+                  "right": "sweeter",
+                  "explanation_zh": "sweet 是單音節形容詞，比較級直接加 -er：sweeter。"
+                },
+                {
+                  "wrong": "more sweeter",
+                  "right": "sweeter",
+                  "explanation_zh": "比較級只要一個記號，sweeter 前面不再加 more。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "collocation",
+              "zh": "吃起來",
+              "literal_error": "The tomatoes on our balcony eat sweeter than the ones from the market.",
+              "part": 2,
+              "explanation_zh": "照字面把「吃起來」寫成 eat，意思變成「番茄在吃東西」；描述味道要用連綴動詞 taste，這一部分扣分。"
+            }
+          ],
+          "bonus": []
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-basic-03",
+    "lot": "translation-basic-03",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "a2d0efb5c61ab9bdba02f949c0e9c7a37fac919a2d053a97cc75848f11db3021",
+    "spec_id": "translation-basic@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T07:59:01Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T07:40:01Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "My parents grow vegetables in pots on the balcony instead of buying them at the market.",
+            "confidence": "high",
+            "explanation_zh": "「而不是到市場去買」用 instead of + V-ing 最自然；「用盆子」譯成 in pots；習慣性的事實用現在簡單式。"
+          },
+          "2": {
+            "translation": "The tomatoes on our balcony taste sweeter than the ones sold at the market.",
+            "confidence": "high",
+            "explanation_zh": "「吃起來」用感官動詞 taste + 形容詞比較級；「市場賣的」用 the ones sold at the market 避免重複 tomatoes，比較對象是番茄對番茄。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PREPVING"
+            ],
+            "used_target_words": [
+              "parent",
+              "balcony",
+              "grow",
+              "vegetable",
+              "pot",
+              "buy",
+              "market"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "COMP"
+            ],
+            "used_target_words": [
+              "tomato",
+              "balcony",
+              "taste",
+              "sweet",
+              "market"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "parent",
+              "balcony",
+              "grow",
+              "vegetable",
+              "pot",
+              "buy",
+              "market"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PREPVING": true
+            },
+            "program_match": true
+          },
+          "2": {
+            "target_words_found": [
+              "tomato",
+              "balcony",
+              "taste",
+              "sweet",
+              "market"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "COMP": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T07:39:22Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "My parents grow vegetables in pots on the balcony instead of buying them at the market.",
+            "confidence": "high",
+            "explanation_zh": "「而不是到市場去買」用 instead of 接動名詞 buying；「用盆子種菜」譯成 grow vegetables in pots；習慣性行為用現在簡單式。"
+          },
+          "2": {
+            "translation": "The tomatoes on our balcony taste even sweeter than the ones sold at the market.",
+            "confidence": "high",
+            "explanation_zh": "「吃起來」用連綴動詞 taste 接形容詞；「比…還要」用比較級加 even；「市場賣的」用 the ones sold at the market 避免重複 tomatoes。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PREPVING"
+            ],
+            "used_target_words": [
+              "parent",
+              "balcony",
+              "grow",
+              "vegetable",
+              "pot",
+              "buy",
+              "market"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "COMP"
+            ],
+            "used_target_words": [
+              "tomato",
+              "balcony",
+              "taste",
+              "sweet",
+              "market"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "parent",
+              "balcony",
+              "grow",
+              "vegetable",
+              "pot",
+              "buy",
+              "market"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PREPVING": true
+            },
+            "program_match": true
+          },
+          "2": {
+            "target_words_found": [
+              "tomato",
+              "balcony",
+              "taste",
+              "sweet",
+              "market"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "COMP": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

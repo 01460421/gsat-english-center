@@ -1,0 +1,259 @@
+{
+  "schema": "gsat-bank-facts/v1",
+  "id": "taiwan-pm25-rb03",
+  "title": "PM2.5 in Taiwan's cities since 2015 and what helped lower it",
+  "sdgs": [
+    3,
+    11
+  ],
+  "created_on": "2026-10-09",
+  "created_by": "claude-opus-5-5",
+  "sources": [
+    {
+      "id": "s1",
+      "publisher": "政府資料開放平臺 data.gov.tw（提供機關：環境部）",
+      "title": "空氣品質監測日平均值(一般污染物)",
+      "url": "https://data.gov.tw/dataset/28197",
+      "accessed": "2026-10-09",
+      "license": "OGDL-Taiwan-1.0",
+      "use": "dataset",
+      "note": "資料資源由環境部環境資料開放平臺 API 提供（data.moenv.gov.tw/api/v2/aqx_p_19，篩選 itemengname=PM2.5 與測站名稱）。本事實單的年平均值是該測站當年每日平均值的算術平均（不含無效值 x），四捨五入到小數 2 位；各年有效日數見 datasets 的 note。2013→2014 四個測站都在一年內下降約三成，疑似測量方式改變，所以只取 2015 年以後"
+    },
+    {
+      "id": "s2",
+      "publisher": "政府資料開放平臺 data.gov.tw（提供機關：環境部）",
+      "title": "空氣污染物濃度測值",
+      "url": "https://data.gov.tw/dataset/89030",
+      "accessed": "2026-10-09",
+      "license": "OGDL-Taiwan-1.0",
+      "use": "fact_only",
+      "note": "只取 PM2.5 的定義（粒徑 2.5 微米以下的懸浮微粒、單位 μg/m3）"
+    },
+    {
+      "id": "s3",
+      "publisher": "World Health Organization",
+      "title": "Ambient (outdoor) air quality and health (fact sheet)",
+      "url": "https://www.who.int/news-room/fact-sheets/detail/ambient-(outdoor)-air-quality-and-health",
+      "accessed": "2026-10-09",
+      "license": "WHO terms of use (facts only)",
+      "use": "fact_only",
+      "note": "WHO 出版品只取事實、不改寫"
+    },
+    {
+      "id": "s4",
+      "publisher": "Taipei Times",
+      "title": "Unhealthy air days drop nearly 75% from last year: EPA",
+      "url": "https://www.taipeitimes.com/News/taiwan/archives/2022/12/29/2003791622",
+      "accessed": "2026-10-09",
+      "license": "all-rights-reserved",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s5",
+      "publisher": "Taipei Times",
+      "title": "Taichung Power upgrades to reduce its emissions",
+      "url": "https://www.taipeitimes.com/News/taiwan/archives/2020/09/12/2003743279",
+      "accessed": "2026-10-09",
+      "license": "all-rights-reserved",
+      "use": "fact_only",
+      "note": null
+    }
+  ],
+  "facts": [
+    {
+      "id": "f1",
+      "text": "PM2.5 means tiny particles floating in the air that are 2.5 micrometers across or smaller; it is measured in micrograms per cubic meter.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "definition"
+    },
+    {
+      "id": "f2",
+      "text": "Fine particles in the air are linked to heart disease, lung disease and cancers.",
+      "source_ids": [
+        "s3"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f3",
+      "text": "Yearly average PM2.5 at the Zhongshan station in Taipei fell from 18.97 in 2015 to 12.53 in 2025 (micrograms per cubic meter).",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f4",
+      "text": "Yearly average PM2.5 at the Zhongming station in Taichung fell from 24.87 in 2015 to 13.57 in 2025, a drop of 11.30.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f5",
+      "text": "Yearly average PM2.5 at the Qianjin station in Kaohsiung fell from 25.77 in 2015 to 16.09 in 2025, a drop of 9.68.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f6",
+      "text": "In 2015, the Kaohsiung station had the highest yearly average of the three stations and the Taipei station the lowest.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f7",
+      "text": "Upgrades to four boiler units at the coal-fired Taichung Power Plant were finished in 2020; the premier said they would cut the plant's air pollution by 80 percent over the next five years.",
+      "source_ids": [
+        "s5"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f8",
+      "text": "Some state-run companies replaced coal-fired boilers with gas-fired ones, which the environmental agency said helped reduce pollution.",
+      "source_ids": [
+        "s4"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f9",
+      "text": "From January to November 2022, rewards offered by the government took 1.68 million high-polluting motorcycles off Taiwan's roads.",
+      "source_ids": [
+        "s4"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f10",
+      "text": "The environmental agency said the cleaner air in 2022 was partly due to more rain and less pollution from abroad; pollution blown over from China fell by 20 to 30 percent that year.",
+      "source_ids": [
+        "s4"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f11",
+      "text": "A four-year government program aimed to bring the yearly PM2.5 average below 15 micrograms per cubic meter, and the agency judged it a success.",
+      "source_ids": [
+        "s4"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f12",
+      "text": "The agency said local pollution control cut pollutants by 82 percent, well beyond its 60 percent target.",
+      "source_ids": [
+        "s4"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f13",
+      "text": "Particulate matter in the air is commonly used as a measure of air pollution.",
+      "source_ids": [
+        "s3"
+      ],
+      "kind": "other"
+    }
+  ],
+  "datasets": [
+    {
+      "id": "d1",
+      "source_id": "s1",
+      "title": "Yearly average PM2.5 at four air-quality stations (mean of daily averages)",
+      "indicator": "PM2.5 年平均（日平均值的算術平均）",
+      "unit": "μg/m3",
+      "categories": [
+        "2015",
+        "2016",
+        "2017",
+        "2018",
+        "2019",
+        "2020",
+        "2021",
+        "2022",
+        "2023",
+        "2024",
+        "2025"
+      ],
+      "series": [
+        {
+          "name": "Taipei (Zhongshan station)",
+          "values": [
+            18.97,
+            18.18,
+            16.62,
+            15.86,
+            14.43,
+            13.03,
+            13.19,
+            9.29,
+            11.89,
+            12.68,
+            12.53
+          ]
+        },
+        {
+          "name": "Taichung (Zhongming station)",
+          "values": [
+            24.87,
+            22.65,
+            21.81,
+            20.27,
+            19.42,
+            15.88,
+            16.96,
+            11.81,
+            15.34,
+            13.29,
+            13.57
+          ]
+        },
+        {
+          "name": "Kaohsiung (Qianjin station)",
+          "values": [
+            25.77,
+            28.67,
+            26.67,
+            24.97,
+            22.94,
+            20.19,
+            21.14,
+            18.23,
+            18.68,
+            16.63,
+            16.09
+          ]
+        },
+        {
+          "name": "Tainan (Tainan station)",
+          "values": [
+            23.86,
+            26.96,
+            25.11,
+            23.08,
+            22.22,
+            18.52,
+            20.34,
+            18.11,
+            18.96,
+            17.51,
+            16.05
+          ]
+        }
+      ],
+      "note": "有效日數（2015–2025）：Taipei (Zhongshan station) [352, 348, 344, 363, 364, 361, 360, 360, 354, 361, 358]；Taichung (Zhongming station) [361, 365, 364, 363, 362, 359, 360, 360, 352, 362, 358]；Tainan (Tainan station) [352, 363, 364, 365, 359, 360, 363, 346, 353, 362, 358]；Kaohsiung (Qianjin station) [357, 363, 361, 361, 363, 355, 365, 353, 354, 361, 356]"
+    }
+  ],
+  "notes": "題組只用其中三個測站（台北中山、台中忠明、高雄前金）。ai.rd.440e74（rejected）只畫奇數年，藏住了高雄 2016 年的最高點；重生的 ai.rd.4ac8fb 把 2015–2025 逐年畫出。逐年資料不是每年都下降（例如三站 2021 年都比 2020 年高），高雄前金的最高點是 2016 年。"
+}
