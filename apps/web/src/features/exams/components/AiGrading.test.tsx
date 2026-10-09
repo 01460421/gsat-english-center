@@ -1,7 +1,8 @@
 /**
  * 中譯英與作文的「AI 批改」說明：登入與 AI 開放時（/api/features）指向寫作練習的同一份考卷，沒開放時維持「即將推出」。
+ * 填充、簡答沒有 AI 批改，不論開不開放都不提 AI 批改。
  */
-import { render, screen } from '@testing-library/react';
+import { act, render, screen, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import type { Question } from '../../../data/exams';
@@ -56,5 +57,26 @@ describe('AI 批改的說明', () => {
     renderFeedback(question('translation'), { auth: true, ai: false });
     expect((await screen.findAllByText(/AI 批改即將推出/)).length).toBeGreaterThan(0);
     expect(screen.queryByRole('link', { name: '寫作練習的這一題' })).not.toBeInTheDocument();
+  });
+
+  // 填充、簡答沒有 AI 批改（題庫練習用固定規則判分，只有中譯英與作文送 AI），開不開都不能說「即將推出」。
+  const fill = question('fill_in_blank');
+  const shortAnswer: Question = { ...fill, mode: 'short_answer' } as Question;
+  describe.each([
+    ['填充', fill],
+    ['簡答', shortAnswer],
+  ])('%s', (_name, q) => {
+    it.each([
+      ['開放', { auth: true, ai: true }],
+      ['沒開放', { auth: false, ai: false }],
+    ])('%s時：只請學生對照參考答案，不提 AI 批改、不放連結', async (_state, features) => {
+      renderFeedback(q, features);
+      // 等 /api/features 讀完、畫面依結果更新後再檢查（開放時才有機會換成連結）。
+      await waitFor(() => expect(fetch).toHaveBeenCalled());
+      await act(async () => {});
+      expect(screen.getByText(/請對照參考答案自行評估。/)).toBeInTheDocument();
+      expect(screen.queryByText(/AI 批改/)).not.toBeInTheDocument();
+      expect(screen.queryByRole('link', { name: '寫作練習的這一題' })).not.toBeInTheDocument();
+    });
   });
 });

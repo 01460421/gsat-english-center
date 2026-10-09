@@ -7,7 +7,7 @@ import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { App } from './App';
-import { APP_NAME, PAGES, documentTitle } from './modules';
+import { APP_NAME, NAV_GROUPS, PAGES, documentTitle, isDevPage } from './modules';
 
 function renderAt(path: string) {
   return render(
@@ -28,8 +28,18 @@ describe('路由', () => {
       renderAt(page.path);
       // 逾時放寬到 5 秒：完成的模組（/words 約百 KB）第一次按需載入要先轉譯一大串模組，
       // 整套平行跑時偶爾超過預設的 1 秒，變成和程式無關的偶發失敗。
-      expect(await screen.findByRole('heading', { level: 1, name: page.title }, { timeout: 5000 })).toBeInTheDocument();
+      const h1 = await screen.findByRole('heading', { level: 1, name: page.title }, { timeout: 5000 });
       expect(document.title).toBe(documentTitle(page));
+      // 「開發中」標記與說明橫幅只出現在還沒完成的模組（status: 'dev'）。
+      const titleRow = h1.parentElement;
+      if (!titleRow) throw new Error('標題沒有外層元素');
+      if (isDevPage(page)) {
+        expect(within(titleRow).getByText('開發中')).toBeInTheDocument();
+        expect(screen.getByText(/這個模組還在開發中/)).toBeInTheDocument();
+      } else {
+        expect(within(titleRow).queryByText('開發中')).not.toBeInTheDocument();
+        expect(screen.queryByText(/這個模組還在開發中/)).not.toBeInTheDocument();
+      }
     });
   }
 
@@ -52,14 +62,23 @@ describe('版面', () => {
     expect(within(sidebar).getByRole('link', { name: '綜合測驗' })).toHaveAttribute('aria-current', 'page');
   });
 
-  it('首頁有各模組的入口卡片與「開發中」標記', async () => {
+  it('首頁依分組列出各模組的入口卡片，「開發中」只標在還沒完成的模組', async () => {
     renderAt('/');
     expect(await screen.findByRole('heading', { level: 1, name: APP_NAME })).toBeInTheDocument();
-    const main = screen.getByRole('main');
-    for (const page of PAGES.filter((p) => p.isStudyModule)) {
-      expect(within(main).getByRole('link', { name: new RegExp(page.title) })).toHaveAttribute('href', page.path);
+    let cards = 0;
+    for (const group of NAV_GROUPS) {
+      const pages = PAGES.filter((p) => p.group === group.id && p.isStudyModule);
+      if (!group.label || pages.length === 0) continue;
+      const region = screen.getByRole('region', { name: group.label });
+      for (const page of pages) {
+        const link = within(region).getByRole('link', { name: new RegExp(page.title) });
+        expect(link).toHaveAttribute('href', page.path);
+        if (isDevPage(page)) expect(within(link).getByText('開發中')).toBeInTheDocument();
+        else expect(within(link).queryByText('開發中')).not.toBeInTheDocument();
+        cards += 1;
+      }
     }
-    expect(within(main).getAllByText('開發中').length).toBeGreaterThan(0);
+    expect(cards).toBe(PAGES.filter((p) => p.isStudyModule).length);
   });
 
   it('手機的「更多」面板：開啟後列出全部頁面，Esc 關閉並把焦點還給按鈕', async () => {

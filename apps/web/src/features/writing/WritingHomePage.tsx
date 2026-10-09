@@ -44,7 +44,7 @@ export default function WritingHomePage() {
         <ul className="grid gap-3 sm:grid-cols-2">
           <li className="min-w-0">
             <EntryCard to="/writing/translation" icon={<Languages aria-hidden="true" className="size-6" />} title="中譯英">
-              歷屆學測、指考與參考試卷的中譯英，兩句一組，每句 4 分。
+              歷屆學測、指考與參考試卷的中譯英；現制是兩句一組，每句 4 分。
             </EntryCard>
           </li>
           <li className="min-w-0">

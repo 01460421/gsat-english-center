@@ -1,15 +1,54 @@
 /**
- * 首頁：後端連線狀態、學習進度（占位）與各模組入口卡片。
- * 學習進度要等登入與作答紀錄（D1）完成才有資料，先放占位說明，版面先決定好位置。
+ * 首頁：後端連線狀態、學習進度與各模組入口卡片。
+ *
+ * 學習進度只統計這台裝置的瀏覽器裡已經存著的紀錄（單字每日學習、題庫練習、單字錯題本），不下載資料檔；
+ * 內容（features/progress/ProgressStats.tsx）按需載入，理由見該檔檔頭。載入失敗（例如網站剛更新、舊分頁的 chunk 不見了）
+ * 只有這一區顯示提示，首頁其他部分照常。
  */
 import { ChevronRight } from 'lucide-react';
+import { Component, Suspense, lazy, type ErrorInfo, type ReactNode } from 'react';
 import { Link } from 'react-router';
 import { BackendStatus } from '../components/BackendStatus';
 import { PageIcon } from '../components/icons';
 import { DevBadge } from '../components/ModulePage';
-import { APP_NAME, NAV_GROUPS, PAGES, documentTitle, getPage } from '../modules';
+import { APP_NAME, NAV_GROUPS, PAGES, documentTitle, getPage, isDevPage } from '../modules';
 
 const home = getPage('/');
+
+const ProgressStats = lazy(() => import('../features/progress/ProgressStats'));
+
+class ProgressBoundary extends Component<{ children: ReactNode }, { failed: boolean }> {
+  override state = { failed: false };
+
+  static getDerivedStateFromError(): { failed: boolean } {
+    return { failed: true };
+  }
+
+  override componentDidCatch(error: unknown, info: ErrorInfo) {
+    console.error('首頁學習進度載入失敗', error, info.componentStack);
+  }
+
+  override render() {
+    if (!this.state.failed) return this.props.children;
+    return <p className="mt-3 text-sm text-muted">暫時讀不到學習紀錄，請重新整理頁面再試一次。</p>;
+  }
+}
+
+/** 載入中：先排好三格的位置，載入後版面不會大幅跳動。 */
+function ProgressPlaceholder() {
+  return (
+    <div className="mt-3">
+      <p role="status" className="sr-only">
+        讀取學習紀錄中…
+      </p>
+      <ul aria-hidden="true" className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+        {[0, 1, 2].map((i) => (
+          <li key={i} className="h-28 rounded-xl bg-surface-2" />
+        ))}
+      </ul>
+    </div>
+  );
+}
 
 export default function HomePage() {
   return (
@@ -26,28 +65,17 @@ export default function HomePage() {
       </section>
 
       <section aria-labelledby="progress-heading" className="rounded-2xl border border-line bg-surface p-5 lg:p-6">
-        <div className="flex flex-wrap items-center gap-2">
+        <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
           <h2 id="progress-heading" className="text-lg font-semibold">
             學習進度
           </h2>
-          <DevBadge />
+          <p className="text-sm text-muted">只統計這台裝置的瀏覽器裡的紀錄</p>
         </div>
-        <p className="mt-2 text-muted">登入與作答紀錄完成後，這裡會顯示：</p>
-        <ul className="mt-3 grid gap-3 sm:grid-cols-3">
-          {[
-            ['今日待複習單字', '依間隔重複排程，到期的單字會出現在這裡'],
-            ['各題型答對率', '詞彙、綜合測驗、文意選填等分開統計'],
-            ['弱點分析', '錯題依考點（搭配詞、轉折詞、文法…）歸類'],
-          ].map(([label, hint]) => (
-            <li key={label} className="rounded-xl bg-surface-2 p-4">
-              <p className="text-2xl font-bold text-muted" aria-hidden="true">
-                —
-              </p>
-              <p className="mt-1 font-medium">{label}</p>
-              <p className="text-sm text-muted">{hint}</p>
-            </li>
-          ))}
-        </ul>
+        <ProgressBoundary>
+          <Suspense fallback={<ProgressPlaceholder />}>
+            <ProgressStats />
+          </Suspense>
+        </ProgressBoundary>
       </section>
 
       {NAV_GROUPS.filter((g) => g.label && PAGES.some((p) => p.group === g.id && p.isStudyModule)).map((group) => (
@@ -68,7 +96,7 @@ export default function HomePage() {
                   <span className="min-w-0 flex-1">
                     <span className="flex flex-wrap items-center gap-2">
                       <span className="font-semibold">{page.title}</span>
-                      {page.status === 'dev' && <DevBadge />}
+                      {isDevPage(page) && <DevBadge />}
                     </span>
                     <span className="mt-1 block text-sm text-muted">{page.summary}</span>
                   </span>

@@ -99,15 +99,47 @@ describe('WritingHomePage', () => {
 });
 
 describe('中譯英、英文作文說明頁', () => {
+  const pages = { '/translation': <TranslationPage />, '/composition': <CompositionPage /> };
+
   it('後端沒部署：不叫學生「登入並通過申請」，說 AI 批改即將開放', async () => {
-    renderPage('/translation', baseRoutes(FEATURES_OFF), { '/translation': <TranslationPage />, '/composition': <CompositionPage /> });
+    renderPage('/translation', baseRoutes(FEATURES_OFF), pages);
     expect(await screen.findByText(/AI 逐句批改即將開放/)).toBeInTheDocument();
     expect(screen.queryByText(/登入並通過申請/)).not.toBeInTheDocument();
+    expect(screen.getByRole('link', { name: '前往中譯英練習' })).toHaveAttribute('href', '/writing/translation');
   });
 
-  it('AI 開著：說明登入並通過申請後可以請 AI 批改', async () => {
-    renderPage('/composition', baseRoutes(FEATURES_ON), { '/translation': <TranslationPage />, '/composition': <CompositionPage /> });
-    expect(await screen.findByText(/登入並通過申請後，可以請 AI 依四個評分面向批改，或拍照上傳手寫稿/)).toBeInTheDocument();
+  it('後端沒部署（作文）：AI 批改與拍照上傳都說即將開放，不出現點數', async () => {
+    renderPage('/composition', baseRoutes(FEATURES_OFF), pages);
+    expect(await screen.findByText(/AI 批改與拍照上傳手寫稿即將開放/)).toBeInTheDocument();
+    expect(screen.getByRole('region', { name: '拍照上傳手寫作文' })).toHaveTextContent('這個功能即將開放');
+    expect(screen.queryByText(/登入並通過申請/)).not.toBeInTheDocument();
+    expect(screen.queryByText(/每篇扣/)).not.toBeInTheDocument();
+  });
+
+  it('AI 開著（中譯英）：說明登入並通過申請後的 AI 逐句批改與點數，沒有「規劃中」', async () => {
+    renderPage('/translation', baseRoutes(FEATURES_ON), pages);
+    expect(await screen.findByText(/登入並通過申請後，由兩位 AI 評分者依大考評分原則逐句給分/)).toBeInTheDocument();
+    expect(screen.getByText(/AI 批改每組扣 3 點/)).toBeInTheDocument();
+    expect(screen.queryByText(/即將開放/)).not.toBeInTheDocument();
+    expect(screen.queryByText(/規劃/)).not.toBeInTheDocument();
+    expect(screen.getByRole('region', { name: '陸續加入' })).toHaveTextContent('仿真中譯英題組');
+  });
+
+  it('AI 與辨識開著（作文）：說明 AI 批改、實際的拍照流程與照片保存規則', async () => {
+    renderPage('/composition', baseRoutes(FEATURES_ON), pages);
+    expect(await screen.findByText(/登入並通過申請後，由兩位 AI 評分者依內容、組織、文法句構、字彙拼字四個面向/)).toBeInTheDocument();
+    expect(screen.getByText(/手寫稿也可以拍照上傳/)).toBeInTheDocument();
+    const photo = screen.getByRole('region', { name: '拍照上傳手寫作文' });
+    const steps = within(photo).getAllByRole('listitem').map((li) => li.textContent ?? '');
+    expect(steps[0]).toMatch(/拍照上傳手寫稿.*最多 2 張/);
+    expect(steps[1]).toMatch(/縮小、轉成 JPEG/);
+    expect(steps[2]).toMatch(/AI 辨識手寫文字（2 點）/);
+    expect(steps[3]).toMatch(/逐行確認、修正辨識結果/);
+    expect(steps[4]).toMatch(/AI 依四個評分面向批改（7 點）/);
+    expect(photo).toHaveTextContent('最長也只保留 24 小時');
+    expect(within(photo).getByRole('link', { name: '隱私權說明' })).toHaveAttribute('href', '/privacy');
+    expect(screen.queryByText(/即將開放/)).not.toBeInTheDocument();
+    expect(screen.queryByText(/規劃/)).not.toBeInTheDocument();
   });
 });
 

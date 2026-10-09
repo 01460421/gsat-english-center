@@ -25,7 +25,7 @@ export default function ExamsPage() {
       <PageHeader page={page} />
       <div className="grid grid-cols-1 gap-4">
         <p className="text-[0.95rem]">
-          點選考卷開始作答：<strong>練習模式</strong>每題寫完就能看答案與全國答對率；<strong>考試模式</strong>依考卷時間倒數計時，交卷後計分。進度會自動存在這台裝置。
+          點選考卷開始作答：<strong>練習模式</strong>每題寫完就能看答案（有公布統計的試卷另附全國答對率）；<strong>考試模式</strong>依考卷時間倒數計時，交卷後計分。進度會自動存在這台裝置。
         </p>
         <DataErrorBoundary key={retry} onRetry={handleRetry}>
           <Suspense

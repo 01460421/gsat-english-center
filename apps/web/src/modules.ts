@@ -64,7 +64,7 @@ export const PAGES = [
     summary: '學測英文備考：單字、各題型練習、歷屆試題與模擬考。',
     group: 'start',
     icon: 'home',
-    status: 'dev',
+    status: 'ready',
     isStudyModule: false,
   },
   {
@@ -94,7 +94,7 @@ export const PAGES = [
     summary: '單句一空格、四選一，練詞義、構詞與搭配詞。',
     group: 'choice',
     icon: 'vocabulary',
-    status: 'dev',
+    status: 'ready',
     isStudyModule: true,
   },
   {
@@ -104,7 +104,7 @@ export const PAGES = [
     summary: '短文挖空、每空四選一，考上下文、轉折詞與文法。',
     group: 'choice',
     icon: 'cloze',
-    status: 'dev',
+    status: 'ready',
     isStudyModule: true,
   },
   {
@@ -114,7 +114,7 @@ export const PAGES = [
     summary: '一篇短文十個空格，從 A–J 十個選項中選出最適合的字詞。',
     group: 'choice',
     icon: 'word-bank',
-    status: 'dev',
+    status: 'ready',
     isStudyModule: true,
   },
   {
@@ -124,37 +124,37 @@ export const PAGES = [
     summary: '把句子放回文章的空格，練段落組織與上下文線索。',
     group: 'choice',
     icon: 'structure',
-    status: 'dev',
+    status: 'ready',
     isStudyModule: true,
   },
   {
     path: '/reading',
     title: '閱讀測驗',
     navLabel: '閱讀測驗',
-    summary: '以聯合國永續發展目標（SDGs）為主題的長文、圖表與多文本閱讀。',
+    summary: '長文、圖表、表格與多文本閱讀，每篇四題單選；題材多與聯合國永續發展目標（SDGs）相關。',
     group: 'choice',
     icon: 'reading',
-    status: 'dev',
+    status: 'ready',
     isStudyModule: true,
   },
   {
     path: '/mixed',
     title: '混合題',
     navLabel: '混合題',
-    summary: '同一篇文章搭配填充、多選與簡答，練擷取重點與精準表達。',
+    summary: '兩篇或多則短文搭配填充、多選與簡答，練擷取重點與精準表達；交卷後自動計分。',
     group: 'open',
     icon: 'mixed',
-    status: 'dev',
+    status: 'ready',
     isStudyModule: true,
   },
   {
     path: '/translation',
     title: '中譯英',
     navLabel: '中譯英',
-    summary: '歷屆與仿真翻譯題，AI 依評分原則逐句批改並提供參考譯文。',
+    summary: '歷屆學測、指考的翻譯題線上作答：用檢核清單自我檢核，或由 AI 依大考評分原則逐句批改、標出錯誤並附修正版。',
     group: 'open',
     icon: 'translation',
-    status: 'dev',
+    status: 'ready',
     isStudyModule: true,
   },
   {
@@ -164,7 +164,7 @@ export const PAGES = [
     summary: '看圖、信函與主題寫作；可拍照上傳手寫作文，由 AI 辨識並批改。',
     group: 'open',
     icon: 'composition',
-    status: 'dev',
+    status: 'ready',
     isStudyModule: true,
   },
   {
@@ -177,7 +177,7 @@ export const PAGES = [
     summary: '翻譯與作文的線上作答；登入並通過申請後，可由 AI 依大考評分原則批改。',
     group: 'open',
     icon: 'writing',
-    status: 'dev',
+    status: 'ready',
     isStudyModule: true,
   },
   {
@@ -204,10 +204,10 @@ export const PAGES = [
     path: '/settings',
     title: '設定',
     navLabel: '設定',
-    summary: '外觀主題與學習偏好。',
+    summary: '外觀主題、學習偏好與帳號。',
     group: 'system',
     icon: 'settings',
-    status: 'dev',
+    status: 'ready',
     isStudyModule: false,
   },
   {
@@ -223,6 +223,14 @@ export const PAGES = [
 ] as const satisfies readonly PageMeta[];
 
 export type PagePath = (typeof PAGES)[number]['path'];
+
+/**
+ * 還沒完成、要掛「開發中」標記的頁面。參數刻意用寬的 PageMeta 型別：PAGES 是 as const，
+ * 全部頁面都是 'ready' 時直接寫 page.status === 'dev' 會被 tsc 判定為永遠不成立（TS2367）。
+ */
+export function isDevPage(page: Pick<PageMeta, 'status'>): boolean {
+  return page.status === 'dev';
+}
 
 /** 依路徑取頁面資料。路徑寫錯時 tsc 會報錯（PagePath 是字面值聯集）。 */
 export function getPage(path: PagePath): PageMeta {
