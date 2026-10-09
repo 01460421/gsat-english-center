@@ -33,6 +33,9 @@ const PAGE_COMPONENTS: Record<PagePath, ComponentType> = {
 const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
 /** 歷屆試題的作答頁（/exams/:examId）。不在 modules.ts 的 PAGES 裡：它是列表頁的子頁，不出現在導覽列。 */
 const ExamPaperPage = lazy(() => import('./features/exams/ExamPaperPage'));
+/** 模擬考的作答頁與成績單（/mock/:paperId、/mock/report/:attemptId），同樣是子頁。實作在 features/mock/。 */
+const MockSessionPage = lazy(() => import('./features/mock/MockSessionPage'));
+const MockReportPage = lazy(() => import('./features/mock/MockReportPage'));
 
 export function App() {
   return (
@@ -47,6 +50,8 @@ export function App() {
           );
         })}
         <Route path="exams/:examId" element={<ExamPaperPage />} />
+        <Route path="mock/report/:attemptId" element={<MockReportPage />} />
+        <Route path="mock/:paperId" element={<MockSessionPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>

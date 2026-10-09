@@ -39,8 +39,10 @@ const lines = [
   `import type { DataMeta } from ${JSON.stringify(path.join(src, 'client'))};`,
   `import type { VocabIndex, VocabIndexEntry, VocabLevelFile, VocabEntry } from ${JSON.stringify(path.join(src, 'vocab'))};`,
   `import type { ExamIndex, Exam } from ${JSON.stringify(path.join(src, 'exams'))};`,
+  `import type { ScoreScales } from ${JSON.stringify(path.join(src, 'scoreScales'))};`,
   `export const meta: DataMeta = ${JSON.stringify(read('meta.json'))};`,
   `export const examIndex: ExamIndex = ${JSON.stringify(read('exams/index.json'))};`,
+  `export const scoreScales: ScoreScales = ${JSON.stringify(read('exams/score-scales.json'))};`,
 ];
 
 /**
@@ -59,7 +61,7 @@ function chunked(name, fileType, entryType, file) {
 
 chunked('vocabIndex', 'VocabIndex', 'VocabIndexEntry', read('vocab/index.json'));
 for (const level of [1, 2, 3, 4, 5, 6]) chunked(`vocabL${level}`, 'VocabLevelFile', 'VocabEntry', read(`vocab/L${level}.json`));
-const examFiles = readdirSync(path.join(DATA, 'exams')).filter((f) => f.endsWith('.json') && f !== 'index.json');
+const examFiles = readdirSync(path.join(DATA, 'exams')).filter((f) => f.endsWith('.json') && f !== 'index.json' && f !== 'score-scales.json');
 for (const f of examFiles) lines.push(`export const exam_${ident(f)}: Exam = ${JSON.stringify(read(`exams/${f}`))};`);
 
 rmSync(WORK, { recursive: true, force: true });

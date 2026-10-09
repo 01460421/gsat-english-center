@@ -46,6 +46,19 @@ describe('儲存與續作', () => {
     expect(loadAttempt('ast-110')?.answers['1']).toBe('C');
   });
 
+  it('可以換存放位置（模擬考用自己的鍵），不會寫到歷屆試題的紀錄', () => {
+    const saved: unknown[] = [];
+    const persistence = { save: (s: unknown) => (saved.push(s), true) };
+    const store = AttemptStore.start('gsat-115', 'exam', 6000, persistence);
+    store.setAnswer('1', 'B');
+    expect(saved).toHaveLength(2);
+    expect(saved.at(-1)).toMatchObject({ examId: 'gsat-115', answers: { '1': 'B' } });
+    expect(loadAttempt('gsat-115')).toBeNull();
+    const failing = new AttemptStore(createAttempt('gsat-115', 'exam', 6000), true, { save: () => false });
+    failing.setAnswer('1', 'A');
+    expect(failing.persisted).toBe(false);
+  });
+
   it('清除後就沒有紀錄', () => {
     new AttemptStore(createAttempt('gsat-115', 'practice', null)).setAnswer('1', 'A');
     clearAttempt('gsat-115');

@@ -10,6 +10,7 @@
  *   data/exams/stats/word-frequency.json    每個條目在歷屆試題中的出現次數（tools/exam_stats.py 產生）
  *   data/exams/parsed/*.json                歷屆試題（gsat-exam/v1.1，規格見 docs/exam-json-schema.md）
  *   data/exams/manifest.json                官方檔案清單：把 sources 的本機路徑換成大考中心的官方網址
+ *   data/exams/gsat-spec.json               學測英文官方規格：111–115 的原得總分與級分對照表、五標、級分人數（模擬考換算級分用）
  *
  * 輸出（apps/web/public/data/，不進版控；Vite 會原樣複製到 dist/data/）：
  *   meta.json            資料版本、產生時間、筆數、各檔大小
@@ -17,8 +18,12 @@
  *   vocab/L1…L6.json     各級完整條目（只留前端需要的欄位）
  *   exams/index.json     每份考卷的摘要
  *   exams/{id}.json      每份考卷的完整內容（去掉內部欄位與不能公開轉載的欄位）
+ *   exams/score-scales.json  111–115 英文科的級分對照表、五標與級分人數分布（模擬考成績單用，非官方換算的依據）
  *
- * 前端對應的型別在 apps/web/src/data/vocab.ts、exams.ts；這裡改了輸出格式，那邊要一起改。
+ * 前端對應的型別在 apps/web/src/data/vocab.ts、exams.ts、scoreScales.ts；這裡改了輸出格式，那邊要一起改。
+ *
+ * 另外檢查 PDF 字型（scripts/font-coverage.mjs）：試題裡的每個字元都要在 src/features/pdf/fonts/ 的字型子集裡有字形，
+ * 否則下載的考試格式 PDF 會出現方框；缺字時建置失敗，修法見 src/features/pdf/fonts/README.md。
  *
  * 為什麼在建置時轉檔，而不是讓前端直接讀 data/：
  *   - lexicon.json 有 22 MB，裡面大半是前端用不到的欄位（WordNet 上位詞、內部重要度特徵、來源旗標）；
@@ -36,6 +41,7 @@ import { existsSync, mkdirSync, readFileSync, readdirSync, renameSync, rmSync, w
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { gzipSync } from 'node:zlib';
+import { checkFontCoverage } from './font-coverage.mjs';
 
 // ---------------------------------------------------------------------------
 // 路徑：一律從這個檔案的位置推算，不依賴目前工作目錄。
@@ -53,6 +59,7 @@ const INPUTS = {
   wordFrequency: path.join(DATA_DIR, 'exams', 'stats', 'word-frequency.json'),
   examsDir: path.join(DATA_DIR, 'exams', 'parsed'),
   manifest: path.join(DATA_DIR, 'exams', 'manifest.json'),
+  gsatSpec: path.join(DATA_DIR, 'exams', 'gsat-spec.json'),
 };
 
 /** 精簡索引 gzip 後的上限。索引在第一次進單字頁就要下載，超過就讓建置失敗，逼自己先想辦法瘦身。 */
@@ -117,6 +124,14 @@ const OFFICIAL_FILE_LABELS = {
 };
 
 const EXAM_KIND_ORDER = { gsat: 0, ast: 1, reference: 2 };
+
+/** exams/ 底下不是單份考卷的檔案（列表、級分對照）；其餘 exams/*.json 都是 {id}.json。 */
+const EXAM_DIR_NON_EXAM_FILES = new Set(['index.json', 'score-scales.json']);
+
+/** 輸出路徑是不是單份考卷（exams/{id}.json）。 @param {string} rel */
+function isExamFile(rel) {
+  return rel.startsWith('exams/') && !EXAM_DIR_NON_EXAM_FILES.has(rel.slice('exams/'.length));
+}
 
 // ---------------------------------------------------------------------------
 // 輸入資料的型別（只描述這裡會讀的欄位；完整格式見 data/vocab/lexicon-report.md、docs/exam-json-schema.md）
@@ -601,7 +616,7 @@ function assertNoOfficialTranslations(files, officialTextsById) {
   /** @type {string[]} */
   const problems = [];
   for (const [rel, content] of files) {
-    if (!rel.startsWith('exams/') || rel === 'exams/index.json') continue;
+    if (!isExamFile(rel)) continue;
     const exam = /** @type {JsonObject} */ (JSON.parse(content));
     for (const s of /** @type {JsonObject[]} */ (exam.sections)) {
       for (const g of /** @type {JsonObject[]} */ (s.groups)) {
@@ -697,6 +712,155 @@ function buildExams() {
 }
 
 // ---------------------------------------------------------------------------
+// 級分對照（模擬考成績單）：data/exams/gsat-spec.json → exams/score-scales.json
+// ---------------------------------------------------------------------------
+
+/** 五標的名稱與百分位數（116 學年度簡章：頂標＝第 88 百分位數…底標＝第 12 百分位數）。 */
+const FIVE_STANDARDS = /** @type {const} */ ([
+  ['頂標', 88],
+  ['前標', 75],
+  ['均標', 50],
+  ['後標', 25],
+  ['底標', 12],
+]);
+
+/**
+ * @typedef {{ count: number, pct: number, cum_high_to_low_count: number, cum_high_to_low_pct: number }} SpecLevelCount
+ * @typedef {{
+ *   examinees: number, level_step: number, exam_date?: string, src: string[],
+ *   raw_score_range_by_level: Record<string, string>,
+ *   five_standards: Record<string, { level: number, pct_at_or_above: number }>,
+ *   level_distribution: Record<string, SpecLevelCount>
+ * }} SpecYear
+ */
+
+/** 2 位小數、第 3 位四捨五入（官方對照表的取位方式）。用整數運算避開 0.005 這類浮點誤差。 @param {number} x */
+function round2(x) {
+  return Math.round(x * 100 + 1e-6) / 100;
+}
+
+/**
+ * 官方「原得總分與級分對照表」的一列：「85.36<X<=100.00」→ { min_exclusive: 85.36, max_inclusive: 100 }；
+ * 0 級分寫成「X=0.00」→ { min_exclusive: null, max_inclusive: 0 }。
+ * @param {string} text @param {string} at
+ */
+function parseLevelRange(text, at) {
+  const zero = /^X=0(\.0+)?$/.exec(text);
+  if (zero) return { min_exclusive: null, max_inclusive: 0 };
+  const m = /^(\d+(?:\.\d+)?)<X<=(\d+(?:\.\d+)?)$/.exec(text);
+  check(m !== null, `${at}：看不懂級分範圍「${text}」`);
+  return { min_exclusive: Number(m[1]), max_inclusive: Number(m[2]) };
+}
+
+/**
+ * 111 學年度起（現制）英文科的級分對照表、五標、級分人數。只收 111 起：110 以前級距取到小數第二位、題型也不同，
+ * 模擬考只用現制真題（SPEC §6.11）。這裡的檢查讓轉錄錯誤在建置時就被抓到，而不是學生看到錯的級分：
+ *   - 15～0 級分剛好 16 列、首尾相接；1～14 級分的上界＝round2(k × 級距)（官方換算公式）；
+ *   - 各級分人數加總＝到考人數，累計人數與累計百分比和逐級人數一致；
+ *   - 五標的「達到該級分以上人數百分比」＝級分人數累計表上同一級分的累計百分比。
+ */
+function buildScoreScales() {
+  const specRaw = readJson(INPUTS.gsatSpec);
+  check(isObject(specRaw) && isObject(specRaw.grading) && isObject(specRaw.grading.english_by_year), `${relative(INPUTS.gsatSpec)} 缺少 grading.english_by_year`);
+  check(isObject(specRaw.sources), `${relative(INPUTS.gsatSpec)} 缺少 sources`);
+  const sources = /** @type {Record<string, { title?: string, url?: string }>} */ (specRaw.sources);
+  const byYear = /** @type {Record<string, SpecYear>} */ (specRaw.grading.english_by_year);
+  const years = Object.keys(byYear)
+    .map(Number)
+    .filter((y) => y >= 111)
+    .sort((a, b) => b - a)
+    .map((year) => {
+      const at = `${relative(INPUTS.gsatSpec)} grading.english_by_year.${year}`;
+      const y = /** @type {SpecYear} */ (byYear[String(year)]);
+      check(typeof y.examinees === 'number' && y.examinees > 0, `${at}：examinees 必須是正整數`);
+      check(typeof y.level_step === 'number' && y.level_step > 5 && y.level_step < 7.5, `${at}：level_step ${y.level_step} 不合理`);
+
+      const levels = [];
+      for (let level = 15; level >= 0; level -= 1) {
+        const text = y.raw_score_range_by_level[String(level)];
+        check(typeof text === 'string', `${at}：缺 ${level} 級分的原得總分範圍`);
+        levels.push({ level, ...parseLevelRange(text, `${at} ${level} 級分`) });
+      }
+      for (let i = 0; i < levels.length - 1; i += 1) {
+        const hi = /** @type {(typeof levels)[number]} */ (levels[i]);
+        const lo = /** @type {(typeof levels)[number]} */ (levels[i + 1]);
+        check(hi.min_exclusive === lo.max_inclusive, `${at}：${hi.level} 級分的下界 ${hi.min_exclusive} 和 ${lo.level} 級分的上界 ${lo.max_inclusive} 接不起來`);
+        if (lo.level >= 1) {
+          const expected = round2(lo.level * y.level_step);
+          check(lo.max_inclusive === expected, `${at}：${lo.level} 級分上界 ${lo.max_inclusive} ≠ round2(${lo.level} × ${y.level_step}) = ${expected}`);
+        }
+      }
+      check(levels[0]?.max_inclusive === 100, `${at}：15 級分上界應為滿分 100`);
+
+      /** @type {{ level: number, count: number, pct: number, cum_count_at_or_above: number, cum_pct_at_or_above: number }[]} */
+      const distribution = [];
+      let cumCount = 0;
+      for (let level = 15; level >= 0; level -= 1) {
+        const d = y.level_distribution[String(level)];
+        check(d !== undefined && typeof d.count === 'number', `${at}：缺 ${level} 級分的人數`);
+        cumCount += d.count;
+        check(d.cum_high_to_low_count === cumCount, `${at}：${level} 級分的累計人數 ${d.cum_high_to_low_count} ≠ 逐級加總 ${cumCount}`);
+        const cumPct = Math.round((cumCount / y.examinees) * 10000) / 100;
+        check(Math.abs(d.cum_high_to_low_pct - cumPct) <= 0.011, `${at}：${level} 級分的累計百分比 ${d.cum_high_to_low_pct} 和人數換算的 ${cumPct} 不符`);
+        distribution.push({ level, count: d.count, pct: d.pct, cum_count_at_or_above: d.cum_high_to_low_count, cum_pct_at_or_above: d.cum_high_to_low_pct });
+      }
+      check(cumCount === y.examinees, `${at}：各級分人數加總 ${cumCount} ≠ 到考人數 ${y.examinees}`);
+
+      const fiveStandards = FIVE_STANDARDS.map(([name, percentile]) => {
+        const s = y.five_standards[name];
+        check(s !== undefined && Number.isInteger(s.level) && s.level >= 0 && s.level <= 15, `${at}：缺 ${name} 或級分不合法`);
+        const cum = distribution.find((d) => d.level === s.level)?.cum_pct_at_or_above;
+        check(cum !== undefined && Math.abs(cum - s.pct_at_or_above) <= 0.011, `${at}：${name}的累計百分比 ${s.pct_at_or_above} 和級分人數表的 ${cum} 不符`);
+        return { name, percentile, level: s.level, pct_at_or_above: s.pct_at_or_above };
+      });
+
+      /** @type {{ label: string, url: string }[]} */
+      const yearSources = [];
+      for (const id of y.src) {
+        const src = sources[id];
+        if (src && typeof src.url === 'string' && typeof src.title === 'string') yearSources.push({ label: src.title, url: src.url });
+      }
+      check(yearSources.length > 0, `${at}：src 對不到任何來源網址`);
+
+      return {
+        year,
+        exam_date: typeof y.exam_date === 'string' ? y.exam_date : null,
+        examinees: y.examinees,
+        level_step: y.level_step,
+        levels,
+        five_standards: fiveStandards,
+        distribution,
+        sources: yearSources,
+      };
+    });
+  check(years.length >= 5, `${relative(INPUTS.gsatSpec)}：111 學年度起的英文級分資料少於 5 年`);
+  const meanStep = Math.round((years.reduce((acc, y) => acc + y.level_step, 0) / years.length) * 10000) / 10000;
+  return {
+    subject: 'english',
+    exam: 'gsat',
+    note: '級分對照表、五標與級分人數取自大學入學考試中心公布的學科能力測驗統計資料；本站依此換算的級分僅供參考，不是官方級分。',
+    default_year: years[0]?.year ?? 115,
+    mean_level_step: meanStep,
+    years,
+  };
+}
+
+/**
+ * PDF 字型缺字檢查（scripts/font-coverage.mjs）：輸出的試題字串都要有字形。
+ * @param {ReturnType<typeof examDetail>[]} details
+ */
+function assertFontCoverage(details) {
+  const result = checkFontCoverage(details.map((d) => ({ id: String(d.id), exam: d })));
+  for (const w of result.warnings) console.warn(`[build-data] 注意：${w}`);
+  check(
+    result.errors.length === 0,
+    `PDF 字型缺字（下載的考試格式 PDF 會出現方框）：\n${result.errors.map((e) => `  - ${e}`).join('\n')}\n` +
+      '修法：照 apps/web/src/features/pdf/fonts/README.md 重跑 scripts/fonts/subset_fonts.py（需要 Python 與 fonttools，只在開發機上跑）。',
+  );
+  return result.stats;
+}
+
+// ---------------------------------------------------------------------------
 // 主程式
 // ---------------------------------------------------------------------------
 
@@ -706,13 +870,16 @@ function main() {
 
   const vocab = buildVocab();
   const exams = buildExams();
-  const version = contentVersion([SCRIPT_PATH, INPUTS.lexicon, INPUTS.wordFrequency, INPUTS.manifest, ...exams.files]);
+  const scoreScales = buildScoreScales();
+  const version = contentVersion([SCRIPT_PATH, INPUTS.lexicon, INPUTS.wordFrequency, INPUTS.manifest, INPUTS.gsatSpec, ...exams.files]);
 
   emit('vocab/index.json', { version, count: vocab.index.length, entries: vocab.index });
   for (const [level, entries] of vocab.byLevel) emit(`vocab/L${level}.json`, { version, level, count: entries.length, entries });
   emit('exams/index.json', { version, count: exams.summaries.length, exams: exams.summaries });
   for (const d of exams.details) emit(`exams/${d.id}.json`, d);
+  emit('exams/score-scales.json', { version, ...scoreScales });
   assertNoOfficialTranslations(outputs, exams.officialTextsById);
+  const fontStats = assertFontCoverage(exams.details);
 
   /** @type {Record<string, { bytes: number, gzip_bytes: number }>} */
   const fileSizes = {};
@@ -759,13 +926,15 @@ function main() {
     ['vocab/index.json', fileSizes['vocab/index.json']],
     ...VOCAB_LEVELS.map((lv) => [`vocab/L${lv}.json`, fileSizes[`vocab/L${lv}.json`]]),
     ['exams/index.json', fileSizes['exams/index.json']],
+    ['exams/score-scales.json', fileSizes['exams/score-scales.json']],
   ];
-  const examFiles = sum((rel) => rel.startsWith('exams/') && rel !== 'exams/index.json');
+  const examFiles = sum(isExamFile);
   console.log(`[build-data] 版本 ${version}：單字 ${vocab.index.length} 筆、試題 ${exams.summaries.length} 份（${questionCount} 題），輸出到 ${relative(OUT_DIR)}/`);
+  console.log(`[build-data] PDF 字型檢查通過：${fontStats.chars} 種字元都有字形；級分對照 ${scoreScales.years.map((y) => y.year).join('、')} 學年度`);
   for (const [rel, s] of rows) {
-    if (typeof rel === 'string' && s && typeof s === 'object') console.log(`  ${rel.padEnd(18)} ${formatBytes(s.bytes).padStart(10)}  gzip ${formatBytes(s.gzip_bytes).padStart(9)}`);
+    if (typeof rel === 'string' && s && typeof s === 'object') console.log(`  ${rel.padEnd(24)} ${formatBytes(s.bytes).padStart(10)}  gzip ${formatBytes(s.gzip_bytes).padStart(9)}`);
   }
-  console.log(`  ${'exams/{id}.json'.padEnd(18)} ${formatBytes(examFiles.bytes).padStart(10)}  gzip ${formatBytes(examFiles.gzip).padStart(9)}（${exams.details.length} 個檔案合計）`);
+  console.log(`  ${'exams/{id}.json'.padEnd(24)} ${formatBytes(examFiles.bytes).padStart(10)}  gzip ${formatBytes(examFiles.gzip).padStart(9)}（${exams.details.length} 個檔案合計）`);
   console.log(`[build-data] 完成，用時 ${((Date.now() - started) / 1000).toFixed(1)} 秒`);
 }
 

@@ -36,6 +36,9 @@ export default defineConfig({
   build: {
     // 產物檔名帶內容雜湊，放在 /assets/ 下；vercel.json 對 /assets/* 設一年 immutable 快取。
     assetsDir: 'assets',
+    // PDF 引擎（pdfmake，約 1 MB／gzip 350 KB）與它的 Web Worker 只在按下「下載 PDF」時才載入（features/pdf/engine/），
+    // 不影響一般頁面；預設 500 kB 的警告每次建置都會被它觸發，提高門檻只為了讓真正的回歸（例如主程式變大）不被淹沒。
+    chunkSizeWarningLimit: 1100,
   },
   test: {
     environment: 'happy-dom',

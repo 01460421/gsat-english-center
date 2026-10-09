@@ -96,6 +96,22 @@ const CREDITS: Credit[] = [
     license: 'Apache License 2.0。',
   },
   {
+    name: <ExternalLink href="https://github.com/bpampuch/pdfmake">pdfmake</ExternalLink>,
+    usage: '在瀏覽器裡產生考試格式的 PDF（歷屆試題與模擬考的「下載 PDF」）。',
+    license: 'MIT License，Copyright (c) 2014-2015 bpampuch, 2016-2026 liborm85。',
+  },
+  {
+    name: (
+      <>
+        <ExternalLink href="https://fonts.google.com/noto/specimen/Noto+Serif+TC">Noto Serif TC</ExternalLink>、
+        <ExternalLink href="https://fonts.google.com/specimen/Tinos">Tinos</ExternalLink>、
+        <ExternalLink href="https://fonts.google.com/noto/specimen/Noto+Emoji">Noto Emoji</ExternalLink>
+      </>
+    ),
+    usage: 'PDF 的中文、英文與表情符號字型（只保留用得到的字，嵌入在下載的 PDF 裡）。',
+    license: 'SIL Open Font License 1.1；Noto Serif TC © 2017-2024 Adobe，Tinos © The Tinos Project Authors，Noto Emoji © 2013-2026 Google LLC。',
+  },
+  {
     name: 'Cambridge Dictionary（英漢繁體）',
     usage: '單字頁提供「在 Cambridge 辭典查看」的外部連結，另開新分頁。',
     license: '本站不轉載、不嵌入 Cambridge 的任何內容；著作權屬 Cambridge University Press。',

@@ -1,0 +1,2920 @@
+{
+ "schema": "gsat-generation-spec/v1",
+ "section": "cloze",
+ "label_zh": "綜合測驗（克漏字）",
+ "generated_on": "2026-10-08",
+ "doc": "docs/analysis/sections/02-cloze.md",
+ "imitate": "gsat-current（111–115，108 課綱學測）；指考與舊制學測只用來界定超越頂標與檢查規則穩定度",
+ "status": "draft：由 595 格有官方統計的歷屆綜合測驗推得；上線後依站內作答資料校正（SPEC §3.6、本檔 CLZ-CAL-*）",
+ "tier_rule": {
+  "id": "G50",
+  "source": "data/exams/difficulty-bands.json",
+  "basic": "round(Pc*100) >= 50",
+  "advanced": "round(Pc*100) < 50 and round(Pb*100) >= 50",
+  "top": "round(Pb*100) < 50",
+  "flags": {
+   "challenge": "top and Pa < 0.50",
+   "low_upper_discrimination": "top and D1 < 0.10（不當錨點）"
+  },
+  "imputation_when_only_P_Ph_Pl": "difficulty-bands.json rule.imputation.coefficients（Ph、Pl 須為前／後 33%）"
+ },
+ "format": {
+  "reference_exams": [
+   "gsat-111",
+   "gsat-112",
+   "gsat-113",
+   "gsat-114",
+   "gsat-115"
+  ],
+  "question_numbers": {
+   "first": 11,
+   "last": 20
+  },
+  "passages": 2,
+  "blanks_per_passage": 5,
+  "blanks_total": 10,
+  "options_per_blank": 4,
+  "option_letters": [
+   "A",
+   "B",
+   "C",
+   "D"
+  ],
+  "mode": "single_choice",
+  "points_per_blank": 1,
+  "points_total": 10,
+  "stem": null,
+  "blank_marker": "[[n]]",
+  "section_title": "二、綜合測驗（占10分）",
+  "instructions": "說明︰第11題至第20題為單選題，每題1分。",
+  "passage": {
+   "words": {
+    "observed": [
+     179,
+     231
+    ],
+    "median": 196.0,
+    "iqr": [
+     191.5,
+     208.5
+    ],
+    "allowed": [
+     175,
+     235
+    ],
+    "target": [
+     185,
+     215
+    ]
+   },
+   "paragraphs": {
+    "observed": [
+     2,
+     4
+    ],
+    "median": 3.0,
+    "allowed": [
+     2,
+     4
+    ]
+   },
+   "sentences": {
+    "observed": [
+     10,
+     13
+    ],
+    "median": 12.0,
+    "allowed": [
+     9,
+     14
+    ]
+   },
+   "mean_sentence_words": {
+    "observed": [
+     15.0,
+     21.2
+    ],
+    "median": 17.1,
+    "allowed": [
+     14.5,
+     22.0
+    ]
+   },
+   "genre_counts": {
+    "expository": 9,
+    "narrative": 1
+   },
+   "domain_counts": {
+    "culture": 4,
+    "nature": 2,
+    "health": 2,
+    "tech": 1,
+    "society": 1
+   },
+   "genre_rule": "說明文為主（10 篇中 9 篇）；每份至少 1 篇是「起源／歷史演變」或「現象成因」框架；記敘文最多 1 篇"
+  },
+  "blank_layout": {
+   "words_per_blank": {
+    "observed": [
+     35.8,
+     46.2
+    ],
+    "median": 39.2,
+    "allowed": [
+     34,
+     48
+    ]
+   },
+   "first_sentence_has_blank": {
+    "observed": "0/10",
+    "rule": false
+   },
+   "first_blank_offset_words": {
+    "observed_min": 18,
+    "median": 37.5,
+    "min": 15
+   },
+   "gap_between_blanks_words": {
+    "observed_min": 9,
+    "median": 35.5,
+    "iqr": [
+     24.0,
+     41.0
+    ],
+    "min": 8
+   },
+   "max_blanks_per_sentence": 1,
+   "max_blanks_per_paragraph": 3,
+   "min_paragraphs_with_blanks": 2,
+   "observed_blanks_per_paragraph": {
+    "2": 9,
+    "1": 11,
+    "3": 7,
+    "0": 2
+   }
+  },
+  "vocabulary": {
+   "method": {
+    "tokens": "regex [A-Za-z]+(?:['’-][A-Za-z]+)*，先移除 [[n]] 與 <u>/<b>（同 tools/exam_stats.py）",
+    "level": "data/vocab/forms-index.json → ceec-wordlist.json，取最低級；beyond_l4_ratio 只用 forms-index 精確比對（與 data/exams/stats/passages.json 相同）",
+    "coverage_fallback": "common_rules.vocabulary_level.derivation_fallback（唯一回退表：-ly、-ness、-less、un-／in-／im-／ir-／il-、non-、re-、規則屈折與 -ing／-ed、所有格、縮寫、數字詞算 L1、連字號複合字取各段最高級；-er、-ful、-able、-ment、-ity、-ation、dis-、mis-、over-、under- 不回退）；大寫開頭且查不到的字視為專有名詞，不進分母"
+   },
+   "token_level_share": {
+    "L1": 0.699,
+    "L2": 0.107,
+    "L3": 0.051,
+    "L4": 0.027,
+    "L5": 0.021,
+    "L6": 0.013,
+    "off_list": 0.082,
+    "tokens": 2000
+   },
+   "beyond_l4_ratio": {
+    "observed": [
+     0.01,
+     0.085
+    ],
+    "median": 0.028,
+    "iqr": [
+     0.023,
+     0.035
+    ],
+    "max_allowed": 0.09
+   },
+   "distinct_L5_6_lemmas_per_passage": {
+    "observed": [
+     2,
+     9
+    ],
+    "median": 5.5,
+    "max_allowed": 9
+   },
+   "coverage_with_fallback": {
+    "L1_4": [
+     0.881,
+     0.928,
+     0.953
+    ],
+    "L1_6": [
+     0.923,
+     0.967,
+     0.984
+    ],
+    "offlist": [
+     0.016,
+     0.033,
+     0.077
+    ],
+    "format": "[min, median, max]",
+    "method": "依共通回退表重算（現制 10 篇）"
+   },
+   "answer_level_dist": {
+    "L1-2": 0.5,
+    "L3": 0.12,
+    "L4": 0.2,
+    "L5": 0.12,
+    "L6": 0.02,
+    "off": 0.04,
+    "n": 50
+   },
+   "distractor_level_dist": {
+    "L1-2": 0.507,
+    "L3": 0.12,
+    "L4": 0.187,
+    "L5": 0.133,
+    "L6": 0.007,
+    "off": 0.047,
+    "n": 150
+   },
+   "items_with_any_option_ge_L5": 0.38,
+   "max_option_level": 6
+  },
+  "options": {
+   "answer_form_dist": {
+    "word": 0.44,
+    "phrase": 0.5,
+    "chunk": 0.06,
+    "n": 50
+   },
+   "multiword_keys_per_10": [
+    5,
+    7
+   ],
+   "form_definition": "word = 1 字；phrase = 2–3 字；chunk = 4 字以上",
+   "word_count_spread_max": 1,
+   "word_count_spread_observed": "非文法格 43/43 字數差 ≤1 且形式一致；例外只有文法格的動詞形式組（111-12、112-18）",
+   "key_letter_count_per_10": [
+    1,
+    4
+   ],
+   "max_same_key_per_passage": 2,
+   "key_letter_observed": {
+    "A": 0.22,
+    "B": 0.24,
+    "C": 0.26,
+    "D": 0.28
+   },
+   "key_text_elsewhere_in_passage": "0/50",
+   "distractor_text_elsewhere_in_passage": "1/150"
+  },
+  "blank_type_mix": {
+   "definition": {
+    "L": "詞彙語意（同詞性，靠意思選；含多字的語意片段）",
+    "C": "片語／搭配（片語動詞、慣用語、介系詞搭配、動名／形名搭配）",
+    "G": "文法（時態語氣、非限定動詞、子句連接詞、一致）",
+    "D": "轉承／連接（子句或句間的邏輯關係）",
+    "R": "指涉／替代（代名詞、限定詞、do/so 替代）"
+   },
+   "observed_counts": {
+    "L": 22,
+    "C": 16,
+    "G": 7,
+    "D": 4,
+    "R": 1,
+    "n": 50
+   },
+   "per_10": {
+    "L": [
+     3,
+     6
+    ],
+    "C": [
+     2,
+     5
+    ],
+    "G": [
+     1,
+     2
+    ],
+    "D": [
+     0,
+     2
+    ],
+    "R": [
+     0,
+     1
+    ]
+   },
+   "pooled_gsat_91_115_share": {
+    "L": 0.3,
+    "C": 0.288,
+    "G": 0.212,
+    "D": 0.168,
+    "R": 0.032,
+    "n": 340
+   },
+   "grammar_points_observed": {
+    "tense_aspect（含 had yet to）": 3,
+    "modal（used to、could have p.p.）": 2,
+    "finite_vs_participle": 1,
+    "preposition_plus_relative": 1,
+    "substitution（do 替代，歸 R）": 1
+   }
+  },
+  "question_type_mix": {
+   "test_point_parsed": {
+    "word_meaning": 13,
+    "grammar": 7,
+    "phrase": 12,
+    "discourse": 8,
+    "collocation": 6,
+    "connective": 4
+   },
+   "answer_pos_parsed": {
+    "verb": 13,
+    "phrase": 28,
+    "noun": 3,
+    "adjective": 4,
+    "preposition": 1,
+    "adverb": 1
+   },
+   "note": "parsed tags 來自題本 JSON；blank_type_mix 是本分析的人工五分類，兩者一致率 93.8%（595 題）"
+  },
+  "context_scope_mix": {
+   "definition": {
+    "S": "空格所在句即可判斷",
+    "P": "要用到前後一句",
+    "W": "要用段落大意、別段資訊或 ≥2 句外的線索"
+   },
+   "observed_share": {
+    "S": 0.62,
+    "P": 0.32,
+    "W": 0.06,
+    "n": 50
+   },
+   "per_10": {
+    "S": [
+     4,
+     8
+    ],
+    "P": [
+     2,
+     5
+    ],
+    "W": [
+     0,
+     1
+    ]
+   },
+   "nonlocal_min_per_10": 2
+  },
+  "tier_mix": {
+   "per_10": {
+    "basic": [
+     2,
+     5
+    ],
+    "advanced": [
+     2,
+     4
+    ],
+    "top": [
+     3,
+     4
+    ]
+   },
+   "per_passage": "10/10 篇都同時含 basic、advanced、top 各至少 1 格",
+   "observed_patterns": {
+    "2b1a2t": 3,
+    "2b2a1t": 2,
+    "3b1a1t": 2,
+    "1b2a2t": 1,
+    "1b3a1t": 1,
+    "1b1a3t": 1
+   }
+  }
+ },
+ "tiers": {
+  "foundation": {
+   "label": "穩定基礎",
+   "band_id": "basic",
+   "target_group": "Pc",
+   "audience": "均標 → 前標",
+   "rule": "round(Pc*100) >= 50",
+   "expected_correct_rate_for_band_students": {
+    "gsat_current_cloze": 0.744,
+    "gsat_91_115_cloze": 0.767,
+    "method": "logit 內插五等分組（同 tools/difficulty_bands.py success_at），帶內平均 θ：basic 0.235、advanced 0.781、top 1.548"
+   },
+   "target_stats": {
+    "P": {
+     "current_median": 0.58,
+     "current_iqr": [
+      0.57,
+      0.705
+     ],
+     "pooled_median": 0.64,
+     "pooled_iqr": [
+      0.59,
+      0.71
+     ],
+     "target_range": [
+      0.57,
+      0.71
+     ]
+    },
+    "Pc_median": 0.61,
+    "Pb_median": 0.83,
+    "Pa_median": 0.95,
+    "D1_median": 0.12,
+    "n_current": 19,
+    "n_pooled_gsat": 160
+   },
+   "blank_type_mix": {
+    "current_counts": {
+     "L": 11,
+     "C": 5,
+     "G": 2,
+     "D": 1,
+     "R": 0,
+     "n": 19
+    },
+    "pooled_gsat_counts": {
+     "L": 53,
+     "C": 42,
+     "G": 30,
+     "D": 32,
+     "R": 3,
+     "n": 160
+    },
+    "ast_counts": {
+     "L": 44,
+     "C": 31,
+     "G": 27,
+     "D": 27,
+     "R": 3,
+     "n": 132
+    },
+    "per_5_recommended": {
+     "L": [
+      2,
+      3
+     ],
+     "C": [
+      1,
+      2
+     ],
+     "G": [
+      0,
+      1
+     ],
+     "D": [
+      0,
+      1
+     ],
+     "R": [
+      0,
+      0
+     ]
+    }
+   },
+   "context_scope_mix": {
+    "current_counts": {
+     "S": 13,
+     "P": 3,
+     "W": 3,
+     "n": 19
+    },
+    "pooled_gsat_counts": {
+     "S": 120,
+     "P": 36,
+     "W": 4,
+     "n": 160
+    },
+    "rule": "≥3/5 本句可判斷（S）；W 至多 1"
+   },
+   "answer_form_mix": {
+    "current_counts": {
+     "word": 10,
+     "phrase": 8,
+     "chunk": 1,
+     "n": 19
+    },
+    "pooled_gsat_counts": {
+     "word": 117,
+     "phrase": 40,
+     "chunk": 3,
+     "n": 160
+    },
+    "rule": "單字或 2–3 字片語；4 字以上語意片段至多 1"
+   },
+   "answer_level_dist": {
+    "current": {
+     "L1-2": 0.316,
+     "L3": 0.211,
+     "L4": 0.263,
+     "L5": 0.158,
+     "L6": 0.053,
+     "off": 0.0,
+     "n": 19
+    },
+    "pooled_gsat": {
+     "L1-2": 0.669,
+     "L3": 0.156,
+     "L4": 0.069,
+     "L5": 0.031,
+     "L6": 0.013,
+     "off": 0.062,
+     "n": 160
+    },
+    "items_with_any_option_ge_L5_current": 0.526,
+    "rule": "正解 L1–4 ≥ 75%（現制 15/19）；L5–6 可用（現制 4/19），前提是三個誘答與正解語意距離大；不用表外字當正解"
+   },
+   "distractor_profile_observed": {
+    "upper_group_top_distractor_share": {
+     "current_median": 0.05,
+     "current_iqr": [
+      0.025,
+      0.07
+     ],
+     "pooled_median": 0.05,
+     "pooled_iqr": [
+      0.02,
+      0.08
+     ]
+    },
+    "lower_group_top_distractor_share_current_median": 0.28,
+    "items_with_upper_trap_ge_0_20": {
+     "current": 0.053,
+     "pooled": 0.05
+    },
+    "items_where_a_distractor_beats_key_in_upper_group": "0/19",
+    "strongest_upper_distractor_code_current": {
+     "LF": 1,
+     "CN": 0,
+     "LR": 0,
+     "GN": 1,
+     "SF": 0,
+     "SS": 1,
+     "none": 16,
+     "n": 19
+    }
+   },
+   "distractor_rules": {
+    "near_miss_count": 0,
+    "all_distractors": "clearly_wrong：只讀空格所在句就能排除（語意不合或文法不合）",
+    "same_pos_and_form": true,
+    "upper_group_pull_target_max": 0.1,
+    "functional_min_share": 0.05,
+    "observed_basis": "現制 basic：16/19 題沒有任何誘答吸到 ≥10% 高分組；150 個現制誘答全部 ≥5% 全體選答"
+   },
+   "passage_overrides": {
+    "words": [
+     170,
+     205
+    ],
+    "coverage_L1_4_min": 0.93,
+    "coverage_L1_6_min": 0.96,
+    "offlist_max": 0.04,
+    "beyond_l4_ratio_max": 0.04,
+    "note": "刻意比現制輕（現制只有 5/10 篇同時符合字數與 beyond-L4，4/10 符合覆蓋率（共通回退表）），屬閱讀負荷的產品選擇，方向同 SPEC §3.4；資料顯示字數與生字比例不決定空格難度（doc §3.3）"
+   },
+   "set_composition_5_blanks": {
+    "basic": [
+     3,
+     4
+    ],
+    "advanced": [
+     1,
+     2
+    ],
+    "top": [
+     0,
+     0
+    ]
+   },
+   "recipe": [
+    "先選空格所在句能自足的位置（本句或前一句就有線索），讓會讀懂這一句的學生就能作答",
+    "正解多用實詞：動詞或名詞的核心義、常見搭配（take measures、exposure to）、句內就能判斷的時態（Since… → 完成式）",
+    "正解可以是 L4–L5 字，只要三個誘答在句中語意或文法明顯不通；難度不靠生字，靠誘答的距離",
+    "三個誘答同詞性、同字數，各自明顯不合句意；可以取同主題的字，讓低分組仍會選（每個誘答預期 ≥5% 選答）",
+    "附一句「線索」：指出使正解成立的字串（同句或前一句）"
+   ],
+   "pitfalls": [
+    "誘答之一其實也說得通（會變成進階或雙答案）：誘答稽核要逐一寫出它錯在哪個字",
+    "把正解做成全題唯一的高級字或唯一的長選項，讓學生不讀就猜得到",
+    "以為換成簡單字就是基礎題：現制穩定基礎的正解有 4/19 是 L5–6 字（accommodate、initiated…），簡單字反而常出現在超越頂標",
+    "線索放在兩句以外或下一段（現制穩定基礎 19 題中 13 題本句可判斷）"
+   ]
+  },
+  "advanced": {
+   "label": "進階練習",
+   "band_id": "advanced",
+   "target_group": "Pb",
+   "audience": "前標 → 頂標",
+   "rule": "round(Pc*100) < 50 and round(Pb*100) >= 50",
+   "expected_correct_rate_for_band_students": {
+    "gsat_current_cloze": 0.687,
+    "gsat_91_115_cloze": 0.684,
+    "method": "logit 內插五等分組（同 tools/difficulty_bands.py success_at），帶內平均 θ：basic 0.235、advanced 0.781、top 1.548"
+   },
+   "target_stats": {
+    "P": {
+     "current_median": 0.46,
+     "current_iqr": [
+      0.43,
+      0.52
+     ],
+     "pooled_median": 0.475,
+     "pooled_iqr": [
+      0.44,
+      0.502
+     ],
+     "target_range": [
+      0.43,
+      0.52
+     ]
+    },
+    "Pc_median": 0.42,
+    "Pb_median": 0.57,
+    "Pa_median": 0.85,
+    "D1_median": 0.23,
+    "n_current": 15,
+    "n_pooled_gsat": 88
+   },
+   "blank_type_mix": {
+    "current_counts": {
+     "L": 6,
+     "C": 5,
+     "G": 3,
+     "D": 1,
+     "R": 0,
+     "n": 15
+    },
+    "pooled_gsat_counts": {
+     "L": 20,
+     "C": 24,
+     "G": 25,
+     "D": 15,
+     "R": 4,
+     "n": 88
+    },
+    "ast_counts": {
+     "L": 17,
+     "C": 18,
+     "G": 7,
+     "D": 5,
+     "R": 3,
+     "n": 50
+    },
+    "per_5_recommended": {
+     "L": [
+      1,
+      2
+     ],
+     "C": [
+      1,
+      2
+     ],
+     "G": [
+      1,
+      1
+     ],
+     "D": [
+      0,
+      1
+     ],
+     "R": [
+      0,
+      1
+     ]
+    }
+   },
+   "context_scope_mix": {
+    "current_counts": {
+     "S": 8,
+     "P": 7,
+     "W": 0,
+     "n": 15
+    },
+    "pooled_gsat_counts": {
+     "S": 63,
+     "P": 22,
+     "W": 3,
+     "n": 88
+    },
+    "rule": "≥2/5 需要前後句（P）；W 可 0–1"
+   },
+   "answer_form_mix": {
+    "current_counts": {
+     "word": 3,
+     "phrase": 10,
+     "chunk": 2,
+     "n": 15
+    },
+    "pooled_gsat_counts": {
+     "word": 57,
+     "phrase": 29,
+     "chunk": 2,
+     "n": 88
+    },
+    "rule": "多字正解（phrase／chunk）≥3/5"
+   },
+   "answer_level_dist": {
+    "current": {
+     "L1-2": 0.6,
+     "L3": 0.133,
+     "L4": 0.2,
+     "L5": 0.067,
+     "L6": 0.0,
+     "off": 0.0,
+     "n": 15
+    },
+    "pooled_gsat": {
+     "L1-2": 0.648,
+     "L3": 0.08,
+     "L4": 0.182,
+     "L5": 0.023,
+     "L6": 0.011,
+     "off": 0.057,
+     "n": 88
+    },
+    "items_with_any_option_ge_L5_current": 0.4,
+    "rule": "正解不限級別，L1–3 片語與常用字延伸義為主（現制 L1–3 = 11/15）；選項最高 L5"
+   },
+   "distractor_profile_observed": {
+    "upper_group_top_distractor_share": {
+     "current_median": 0.14,
+     "current_iqr": [
+      0.11,
+      0.21
+     ],
+     "pooled_median": 0.14,
+     "pooled_iqr": [
+      0.11,
+      0.203
+     ]
+    },
+    "lower_group_top_distractor_share_current_median": 0.3,
+    "items_with_upper_trap_ge_0_20": {
+     "current": 0.333,
+     "pooled": 0.261
+    },
+    "items_where_a_distractor_beats_key_in_upper_group": "0/15",
+    "strongest_upper_distractor_code_current": {
+     "LF": 4,
+     "CN": 5,
+     "LR": 1,
+     "GN": 2,
+     "SF": 0,
+     "SS": 0,
+     "none": 3,
+     "n": 15
+    }
+   },
+   "distractor_rules": {
+    "near_miss_count": 1,
+    "near_miss_codes_allowed": [
+     "CN",
+     "LF",
+     "GN",
+     "LR"
+    ],
+    "other_distractors": "clearly_wrong",
+    "upper_group_pull_target": [
+     0.1,
+     0.25
+    ],
+    "key_must_beat_every_distractor_in_upper_group": true,
+    "functional_min_share": 0.05,
+    "observed_basis": "現制 advanced 最強高分組誘答中位數 0.14（IQR 0.11–0.21）；碼別 CN 5、LF 4、GN 2、LR 1、none 3"
+   },
+   "passage_overrides": {
+    "words": [
+     175,
+     235
+    ],
+    "coverage_L1_4_min": 0.88,
+    "coverage_L1_6_min": 0.92,
+    "offlist_max": 0.08,
+    "beyond_l4_ratio_max": 0.09,
+    "note": "與模擬卷相同（現制 10/10 篇符合）；三級文章同一套範圍，難度由空格與誘答決定"
+   },
+   "set_composition_5_blanks": {
+    "basic": [
+     1,
+     1
+    ],
+    "advanced": [
+     3,
+     3
+    ],
+    "top": [
+     1,
+     1
+    ]
+   },
+   "recipe": [
+    "正解以 2–3 字片語為主（現制 15 題中 10 題）：片語動詞（pose as、gave rise to）、形＋介（responsive to）、語意片段（personal bias）",
+    "放 1 個文法格時，考要讀上下文才判斷的時態或語氣（would spread、had yet to develop），不考純句型背誦",
+    "設計恰好 1 個「近似誘答」：同一片語家族但搭配或意思差一點（CN）、單讀本句說得通但與前後句矛盾（LF）、時態看似可行（GN）、邏輯關係相反（LR）",
+    "近似誘答必須能被一個明確線索排除；約一半的格把線索放在前後句（現制 7/15 為 P）",
+    "其餘兩個誘答明顯錯誤，維持每個 ≥5% 選答"
+   ],
+   "pitfalls": [
+    "近似誘答做得太像，變成兩個都對（高分組有 0/88 題出現誘答勝過正解；進階題不該有）",
+    "沒有近似誘答時只能靠正解字義撐難度（現制 3/15：releases、severe、personal bias，正解 L3–5）；正解低於 L3 時容易落回穩定基礎",
+    "只靠提高字的級別製造難度：進階題正解 9/15 是 L1–2 字，難在用法"
+   ]
+  },
+  "beyond_top": {
+   "label": "超越頂標",
+   "band_id": "top",
+   "target_group": "Pa",
+   "audience": "頂標 → 15 級分",
+   "rule": "round(Pb*100) < 50",
+   "expected_correct_rate_for_band_students": {
+    "gsat_current_cloze": 0.532,
+    "gsat_91_115_cloze": 0.561,
+    "method": "logit 內插五等分組（同 tools/difficulty_bands.py success_at），帶內平均 θ：basic 0.235、advanced 0.781、top 1.548"
+   },
+   "target_stats": {
+    "P": {
+     "current_median": 0.29,
+     "current_iqr": [
+      0.242,
+      0.323
+     ],
+     "pooled_median": 0.32,
+     "pooled_iqr": [
+      0.27,
+      0.36
+     ],
+     "target_range": [
+      0.24,
+      0.36
+     ]
+    },
+    "Pc_median": 0.215,
+    "Pb_median": 0.285,
+    "Pa_median": 0.525,
+    "D1_median": 0.245,
+    "n_current": 16,
+    "n_pooled_gsat": 92
+   },
+   "blank_type_mix": {
+    "current_counts": {
+     "L": 5,
+     "C": 6,
+     "G": 2,
+     "D": 2,
+     "R": 1,
+     "n": 16
+    },
+    "pooled_gsat_counts": {
+     "L": 29,
+     "C": 32,
+     "G": 17,
+     "D": 10,
+     "R": 4,
+     "n": 92
+    },
+    "ast_counts": {
+     "L": 21,
+     "C": 24,
+     "G": 12,
+     "D": 12,
+     "R": 4,
+     "n": 73
+    },
+    "per_5_recommended": {
+     "L": [
+      1,
+      2
+     ],
+     "C": [
+      2,
+      2
+     ],
+     "G": [
+      0,
+      1
+     ],
+     "D": [
+      0,
+      1
+     ],
+     "R": [
+      0,
+      1
+     ]
+    }
+   },
+   "context_scope_mix": {
+    "current_counts": {
+     "S": 10,
+     "P": 6,
+     "W": 0,
+     "n": 16
+    },
+    "pooled_gsat_counts": {
+     "S": 71,
+     "P": 19,
+     "W": 2,
+     "n": 92
+    },
+    "rule": "不硬性規定；建議 S 2–3、P 2–3"
+   },
+   "answer_form_mix": {
+    "current_counts": {
+     "word": 9,
+     "phrase": 7,
+     "chunk": 0,
+     "n": 16
+    },
+    "pooled_gsat_counts": {
+     "word": 60,
+     "phrase": 30,
+     "chunk": 2,
+     "n": 92
+    },
+    "rule": "單字與片語各半（現制 9 word／7 phrase）"
+   },
+   "answer_level_dist": {
+    "current": {
+     "L1-2": 0.625,
+     "L3": 0.0,
+     "L4": 0.125,
+     "L5": 0.125,
+     "L6": 0.0,
+     "off": 0.125,
+     "n": 16
+    },
+    "pooled_gsat": {
+     "L1-2": 0.761,
+     "L3": 0.054,
+     "L4": 0.076,
+     "L5": 0.043,
+     "L6": 0.0,
+     "off": 0.065,
+     "n": 92
+    },
+    "items_with_any_option_ge_L5_current": 0.188,
+    "rule": "正解 L1–3 ≥ 60%（現制 10/16 L1–2；合併學測 75/92 L1–3）；選項 ≥ L5 至多 1 個"
+   },
+   "distractor_profile_observed": {
+    "upper_group_top_distractor_share": {
+     "current_median": 0.355,
+     "current_iqr": [
+      0.302,
+      0.45
+     ],
+     "pooled_median": 0.33,
+     "pooled_iqr": [
+      0.247,
+      0.403
+     ]
+    },
+    "lower_group_top_distractor_share_current_median": 0.325,
+    "items_with_upper_trap_ge_0_20": {
+     "current": 0.938,
+     "pooled": 0.891
+    },
+    "items_where_a_distractor_beats_key_in_upper_group": "7/16",
+    "strongest_upper_distractor_code_current": {
+     "LF": 4,
+     "CN": 6,
+     "LR": 4,
+     "GN": 2,
+     "SF": 0,
+     "SS": 0,
+     "none": 0,
+     "n": 16
+    }
+   },
+   "distractor_rules": {
+    "near_miss_count": [
+     1,
+     2
+    ],
+    "strong_near_miss_required": true,
+    "type_to_code_default": {
+     "C": "CN",
+     "G": "GN",
+     "L": "LF",
+     "D": "LR",
+     "R": "GN"
+    },
+    "type_to_code_observed_pooled": {
+     "G": {
+      "GN": 15,
+      "LR": 2
+     },
+     "L": {
+      "SS": 1,
+      "LF": 17,
+      "LR": 3,
+      "CN": 5,
+      "SF": 3
+     },
+     "C": {
+      "CN": 29,
+      "GN": 1,
+      "LR": 2
+     },
+     "D": {
+      "LR": 7,
+      "GN": 2,
+      "CN": 1
+     },
+     "R": {
+      "GN": 4
+     }
+    },
+    "upper_group_pull_target_min": 0.2,
+    "distractor_may_rival_key_in_upper_group": true,
+    "require_D1_min_post_hoc": 0.1,
+    "functional_min_share": 0.05,
+    "observed_basis": "現制 top 15/16、合併學測 82/92 題有誘答吸到 ≥20% 高分組；中位數 0.355／0.33"
+   },
+   "passage_overrides": {
+    "words": [
+     175,
+     235
+    ],
+    "coverage_L1_4_min": 0.88,
+    "coverage_L1_6_min": 0.92,
+    "offlist_max": 0.08,
+    "beyond_l4_ratio_max": 0.09,
+    "note": "與模擬卷相同（現制 10/10 篇符合）；含超越頂標格的現制選文最短 179 字，不另設較長下限"
+   },
+   "set_composition_5_blanks": {
+    "basic": [
+     0,
+     0
+    ],
+    "advanced": [
+     1,
+     2
+    ],
+    "top": [
+     3,
+     4
+    ],
+    "challenge_max": 1
+   },
+   "recipe": [
+    "正解多半是常用字的非核心用法或慣用語（現制 10/16 正解是 L1–2 字：end、match、difficult、strike、don’t…）",
+    "依題型配對一個強誘答（高分組預期 ≥20% 選它）：C→同家族片語或字面誘答（CN）；G→看似合理的時態／非限定形（GN）；L→單讀本句通順或吻合全文主題、但與局部語境不符（LF）；D→相反或錯位的邏輯關係（LR）；R→代動詞或代名詞形式錯（GN）",
+    "正解仍須唯一：寫出排除強誘答的那個線索字串；線索可以在本句（現制 10/16 是 S），不必刻意拉遠",
+    "每篇第一格的前文最少，適合放超越頂標格（現制 10 篇的第 1 格有 5 格是超越頂標）",
+    "每篇最多 1 格 challenge（預期 Pa < 0.50）；避免全體都猜的題（D1 < 0.10）"
+   ],
+   "pitfalls": [
+    "用冷僻字（L6、表外）製造難度：現制超越頂標只有 3/16 題有任何選項 ≥ L5",
+    "強誘答其實可接受（雙答案）或正解要靠背景知識",
+    "題目讓所有程度都在猜（例：gsat-115 第19題 Pa 0.28、Pb 0.26，旗標 low_upper_discrimination）",
+    "把「看全文」當成難度來源：資料中 S/P/W 與答對率無關（本句可判斷的題也有 32% 是超越頂標）"
+   ],
+   "ast_supplement": {
+    "note": "指考 top 題（以指考考生分組）可補進超越頂標練習；不當學測校準錨點（difficulty-bands §6）",
+    "n": 73,
+    "P_median": 0.33,
+    "P_iqr": [
+     0.26,
+     0.37
+    ],
+    "Pa_median": 0.58,
+    "type_counts": {
+     "L": 21,
+     "C": 24,
+     "G": 12,
+     "D": 12,
+     "R": 4,
+     "n": 73
+    },
+    "flags": {
+     "challenge": 23,
+     "low_upper_discrimination": 3
+    }
+   }
+  }
+ },
+ "set_composition": {
+  "practice_set_5": {
+   "foundation": {
+    "basic": [
+     3,
+     4
+    ],
+    "advanced": [
+     1,
+     2
+    ],
+    "top": [
+     0,
+     0
+    ]
+   },
+   "advanced": {
+    "basic": [
+     1,
+     1
+    ],
+    "advanced": [
+     3,
+     3
+    ],
+    "top": [
+     1,
+     1
+    ]
+   },
+   "beyond_top": {
+    "basic": [
+     0,
+     0
+    ],
+    "advanced": [
+     1,
+     2
+    ],
+    "top": [
+     3,
+     4
+    ],
+    "challenge_max": 1
+   }
+  },
+  "mock_section_10": {
+   "tiers_per_10": {
+    "basic": [
+     2,
+     5
+    ],
+    "advanced": [
+     2,
+     4
+    ],
+    "top": [
+     3,
+     4
+    ]
+   },
+   "per_passage": "每篇 basic、advanced、top 各 ≥1",
+   "type_per_10": {
+    "L": [
+     3,
+     6
+    ],
+    "C": [
+     2,
+     5
+    ],
+    "G": [
+     1,
+     2
+    ],
+    "D": [
+     0,
+     2
+    ],
+    "R": [
+     0,
+     1
+    ]
+   }
+  },
+  "rationale": "現制 10 篇每篇都混合三級；單一題組練習以目標級為主、相鄰級為輔"
+ },
+ "checks": [
+  {
+   "id": "CLZ-FMT-01",
+   "stage": "pre",
+   "severity": "error",
+   "actor": "program",
+   "tier_scope": "set",
+   "description": "模擬卷：2 篇 × 5 格，題號 11–20 連續；單篇練習 5 格",
+   "rule": {
+    "metric": "blanks_per_passage",
+    "op": "==",
+    "value": 5,
+    "and": {
+     "metric": "passages_mock",
+     "op": "==",
+     "value": 2
+    }
+   },
+   "official_111_115_pass": "5/5"
+  },
+  {
+   "id": "CLZ-FMT-02",
+   "stage": "pre",
+   "severity": "error",
+   "actor": "program",
+   "tier_scope": "item",
+   "description": "每格 4 個選項 A–D、恰一個正解、選項不重複（不分大小寫）",
+   "rule": {
+    "metric": "options",
+    "op": "len==",
+    "value": 4,
+    "unique": true,
+    "answer_in": [
+     "A",
+     "B",
+     "C",
+     "D"
+    ]
+   },
+   "official_111_115_pass": "50/50"
+  },
+  {
+   "id": "CLZ-FMT-03",
+   "stage": "pre",
+   "severity": "warn",
+   "actor": "program",
+   "tier_scope": "set",
+   "description": "答案字母：10 格中每個字母 1–4 次；同一篇同字母 ≤2",
+   "rule": {
+    "metric": "key_letter_count_per_10",
+    "op": "between",
+    "value": [
+     1,
+     4
+    ],
+    "and": {
+     "metric": "max_same_key_per_passage",
+     "op": "<=",
+     "value": 2
+    }
+   },
+   "official_111_115_pass": "5/5"
+  },
+  {
+   "id": "CLZ-PAS-01",
+   "stage": "pre",
+   "severity": "error",
+   "actor": "program",
+   "tier_scope": "set",
+   "description": "選文字數（不含空格標記）落在該級 passage_overrides.words；模擬卷 175–235",
+   "rule": {
+    "metric": "passage_words",
+    "op": "between",
+    "value_ref": "tiers.{tier}.passage_overrides.words",
+    "mock_value": [
+     175,
+     235
+    ]
+   },
+   "official_111_115_pass": "10/10"
+  },
+  {
+   "id": "CLZ-PAS-02",
+   "stage": "pre",
+   "severity": "warn",
+   "actor": "program",
+   "tier_scope": "set",
+   "description": "段落 2–4；句數 9–14；平均句長 14.5–22 字",
+   "rule": {
+    "all": [
+     {
+      "metric": "paragraphs",
+      "op": "between",
+      "value": [
+       2,
+       4
+      ]
+     },
+     {
+      "metric": "sentences",
+      "op": "between",
+      "value": [
+       9,
+       14
+      ]
+     },
+     {
+      "metric": "mean_sentence_words",
+      "op": "between",
+      "value": [
+       14.5,
+       22.0
+      ]
+     }
+    ]
+   },
+   "official_111_115_pass": "10/10"
+  },
+  {
+   "id": "CLZ-LAY-01",
+   "stage": "pre",
+   "severity": "error",
+   "actor": "program",
+   "tier_scope": "set",
+   "description": "第一句不挖空，第一格前至少 15 字",
+   "rule": {
+    "all": [
+     {
+      "metric": "first_sentence_has_blank",
+      "op": "==",
+      "value": false
+     },
+     {
+      "metric": "first_blank_offset_words",
+      "op": ">=",
+      "value": 15
+     }
+    ]
+   },
+   "official_111_115_pass": "10/10"
+  },
+  {
+   "id": "CLZ-LAY-02",
+   "stage": "pre",
+   "severity": "error",
+   "actor": "program",
+   "tier_scope": "set",
+   "description": "一句最多 1 格；相鄰兩格至少隔 8 字；每段最多 3 格；至少 2 段有空格",
+   "rule": {
+    "all": [
+     {
+      "metric": "max_blanks_per_sentence",
+      "op": "<=",
+      "value": 1
+     },
+     {
+      "metric": "min_gap_words",
+      "op": ">=",
+      "value": 8
+     },
+     {
+      "metric": "max_blanks_per_paragraph",
+      "op": "<=",
+      "value": 3
+     },
+     {
+      "metric": "paragraphs_with_blanks",
+      "op": ">=",
+      "value": 2
+     }
+    ]
+   },
+   "official_111_115_pass": "10/10"
+  },
+  {
+   "id": "CLZ-LAY-03",
+   "stage": "pre",
+   "severity": "warn",
+   "actor": "program",
+   "tier_scope": "set",
+   "description": "每格平均分到 34–48 字（字數 ÷ 空格數）",
+   "rule": {
+    "metric": "words_per_blank",
+    "op": "between",
+    "value": [
+     34,
+     48
+    ]
+   },
+   "official_111_115_pass": "10/10"
+  },
+  {
+   "id": "CLZ-VOC-01",
+   "stage": "pre",
+   "severity": "error",
+   "actor": "program",
+   "tier_scope": "set",
+   "description": "beyond-L4 token 比例不超過該級上限（模擬卷 ≤0.09）",
+   "rule": {
+    "metric": "beyond_l4_ratio",
+    "op": "<=",
+    "value_ref": "tiers.{tier}.passage_overrides.beyond_l4_ratio_max",
+    "mock_value": 0.09
+   },
+   "official_111_115_pass": "10/10"
+  },
+  {
+   "id": "CLZ-VOC-02",
+   "stage": "pre",
+   "severity": "warn",
+   "actor": "program",
+   "tier_scope": "set",
+   "description": "覆蓋率（common_rules.vocabulary_level.derivation_fallback）：L1–4、L1–6 不低於該級下限，表外字不高於上限",
+   "rule": {
+    "all": [
+     {
+      "metric": "coverage_L1_4",
+      "op": ">=",
+      "value_ref": "tiers.{tier}.passage_overrides.coverage_L1_4_min"
+     },
+     {
+      "metric": "coverage_L1_6",
+      "op": ">=",
+      "value_ref": "tiers.{tier}.passage_overrides.coverage_L1_6_min"
+     },
+     {
+      "metric": "offlist_ratio",
+      "op": "<=",
+      "value_ref": "tiers.{tier}.passage_overrides.offlist_max"
+     }
+    ]
+   },
+   "official_111_115_pass": {
+    "foundation": "4/10",
+    "advanced": "10/10",
+    "beyond_top": "10/10"
+   }
+  },
+  {
+   "id": "CLZ-VOC-03",
+   "stage": "pre",
+   "severity": "warn",
+   "actor": "program",
+   "tier_scope": "set",
+   "description": "每篇相異 L5–6 詞目 ≤9（現制 2–9）",
+   "rule": {
+    "metric": "distinct_L5_6_lemmas",
+    "op": "<=",
+    "value": 9
+   },
+   "official_111_115_pass": "10/10"
+  },
+  {
+   "id": "CLZ-VOC-04",
+   "stage": "pre",
+   "severity": "error",
+   "actor": "program",
+   "tier_scope": "item",
+   "description": "選項用字在大考詞彙表 L1–6（含共通回退表）；每格至多 1 個選項含表外字；正解不含表外字（表內字的衍生字須註明原字，例：responsive ← respond）",
+   "rule": {
+    "metric": "options_with_offlist_word_per_blank",
+    "op": "<=",
+    "value": 1,
+    "and": {
+     "metric": "offlist_words_in_key",
+     "op": "==",
+     "value": 0,
+     "derivation_note_allowed": true
+    }
+   },
+   "official_111_115_pass": "50/50"
+  },
+  {
+   "id": "CLZ-VOC-05",
+   "stage": "pre",
+   "severity": "warn",
+   "actor": "program",
+   "tier_scope": "set",
+   "description": "正解級別分布符合該級 answer_level_dist.rule",
+   "rule": {
+    "metric": "answer_level_share",
+    "value_ref": "tiers.{tier}.answer_level_dist.rule"
+   },
+   "official_111_115_pass": "n/a（需作答資料或依難度帶的題組）"
+  },
+  {
+   "id": "CLZ-OPT-01",
+   "stage": "pre",
+   "severity": "error",
+   "actor": "program",
+   "tier_scope": "item",
+   "description": "非文法格的四個選項形式一致：字數差 ≤1，且全為單字或全為多字（文法格的時態／語態組不限）",
+   "rule": {
+    "metric": "option_word_count_spread",
+    "op": "<=",
+    "value": 1,
+    "same_form": true,
+    "exempt_types": [
+     "G"
+    ]
+   },
+   "official_111_115_pass": "43/43"
+  },
+  {
+   "id": "CLZ-OPT-02",
+   "stage": "pre",
+   "severity": "warn",
+   "actor": "program",
+   "tier_scope": "item",
+   "description": "單字選項（L、C、D 格）詞性相容：依 ceec-wordlist 詞性（去括號、略過表外字），至少 3 個選項共有一個詞性",
+   "rule": {
+    "metric": "max_options_sharing_a_pos",
+    "applies_to_types": [
+     "L",
+     "C",
+     "D"
+    ],
+    "op": ">=",
+    "value": 3
+   },
+   "official_111_115_pass": "20/20"
+  },
+  {
+   "id": "CLZ-OPT-03",
+   "stage": "pre",
+   "severity": "error",
+   "actor": "program",
+   "tier_scope": "item",
+   "description": "正解字串不在選文其他地方出現；含實詞的誘答也不出現在選文（功能詞誘答不限，例：112-15 的 For）",
+   "rule": {
+    "metric": "key_text_in_passage",
+    "op": "==",
+    "value": false,
+    "content_distractor_text_in_passage_max": 0
+   },
+   "official_111_115_pass": "50/50"
+  },
+  {
+   "id": "CLZ-OPT-04",
+   "stage": "pre",
+   "severity": "warn",
+   "actor": "program",
+   "tier_scope": "item",
+   "description": "文法格的四個選項是同一詞目的不同形式，或同一類功能詞（關係詞、助動詞、時態組）",
+   "rule": {
+    "metric": "grammar_option_set",
+    "applies_to_types": [
+     "G"
+    ],
+    "op": "in",
+    "value": [
+     "same_lemma",
+     "same_function_class"
+    ]
+   },
+   "official_111_115_pass": "7/7（人工檢視：同詞目或同類功能詞）"
+  },
+  {
+   "id": "CLZ-MIX-01",
+   "stage": "pre",
+   "severity": "warn",
+   "actor": "program",
+   "tier_scope": "set",
+   "description": "模擬卷 10 格的題型配比：L 3–6、C 2–5、G 1–2、D 0–2、R 0–1；多字正解 5–7",
+   "rule": {
+    "metric": "blank_type_counts",
+    "op": "within",
+    "value": {
+     "L": [
+      3,
+      6
+     ],
+     "C": [
+      2,
+      5
+     ],
+     "G": [
+      1,
+      2
+     ],
+     "D": [
+      0,
+      2
+     ],
+     "R": [
+      0,
+      1
+     ]
+    },
+    "and": {
+     "metric": "multiword_keys",
+     "op": "between",
+     "value": [
+      5,
+      7
+     ]
+    }
+   },
+   "official_111_115_pass": "5/5"
+  },
+  {
+   "id": "CLZ-MIX-02",
+   "stage": "pre",
+   "severity": "warn",
+   "actor": "program",
+   "tier_scope": "set",
+   "description": "單篇 5 格的題型配比符合該級 per_5_recommended",
+   "rule": {
+    "metric": "blank_type_counts",
+    "op": "within",
+    "value_ref": "tiers.{tier}.blank_type_mix.per_5_recommended"
+   },
+   "official_111_115_pass": "n/a（需作答資料或依難度帶的題組）"
+  },
+  {
+   "id": "CLZ-MIX-03",
+   "stage": "pre",
+   "severity": "warn",
+   "actor": "program",
+   "tier_scope": "set",
+   "description": "模擬卷至少 2 格需要前後句或段落線索（P/W）；每格標 scope 並附線索字串位置",
+   "rule": {
+    "metric": "nonlocal_blanks",
+    "op": ">=",
+    "value": 2,
+    "clue_span_required": true
+   },
+   "official_111_115_pass": "5/5"
+  },
+  {
+   "id": "CLZ-MIX-04",
+   "stage": "pre",
+   "severity": "warn",
+   "actor": "program",
+   "tier_scope": "set",
+   "description": "預定難度配比：模擬卷 basic 2–5、advanced 2–4、top 3–4，且每篇三級各 ≥1；單篇練習符合 set_composition_5_blanks",
+   "rule": {
+    "metric": "planned_tier_counts",
+    "op": "within",
+    "value": {
+     "basic": [
+      2,
+      5
+     ],
+     "advanced": [
+      2,
+      4
+     ],
+     "top": [
+      3,
+      4
+     ]
+    },
+    "per_passage_each_tier_min": 1
+   },
+   "official_111_115_pass": "10/10"
+  },
+  {
+   "id": "CLZ-DIS-01",
+   "stage": "pre",
+   "severity": "error",
+   "actor": "program+auditor",
+   "tier_scope": "item",
+   "description": "每個誘答都標碼（LF/CN/LR/GN/SF/SS/clear）並寫出它錯在哪個字串；近似誘答數符合該級 near_miss_count",
+   "rule": {
+    "metric": "near_miss_count",
+    "op": "==",
+    "value_ref": "tiers.{tier}.distractor_rules.near_miss_count",
+    "reason_span_required": true
+   },
+   "official_111_115_pass": "n/a（需作答資料或依難度帶的題組）"
+  },
+  {
+   "id": "CLZ-DIS-02",
+   "stage": "pre",
+   "severity": "error",
+   "actor": "blind_solver+auditor",
+   "tier_scope": "item",
+   "description": "唯一正解：盲解代理讀全文後只選得出正解；誘答稽核沒有任何誘答被判 arguably_acceptable（SPEC §5.2 步驟 5–7）",
+   "rule": {
+    "metric": "blind_solver_agreement",
+    "op": "==",
+    "value": 1.0,
+    "arguably_acceptable_distractors": 0
+   },
+   "official_111_115_pass": "n/a（需作答資料或依難度帶的題組）"
+  },
+  {
+   "id": "CLZ-DIS-03",
+   "stage": "pre",
+   "severity": "warn",
+   "actor": "program",
+   "tier_scope": "item",
+   "description": "超越頂標的強誘答碼與題型配對（C→CN、G→GN、L→LF、D→LR、R→GN）；不符時要寫理由",
+   "rule": {
+    "metric": "near_miss_code",
+    "applies_to_tier": "top",
+    "op": "==",
+    "value_ref": "tiers.beyond_top.distractor_rules.type_to_code_default"
+   },
+   "official_111_115_pass": "現制超越頂標 13/16 符合預設配對（人工碼）"
+  },
+  {
+   "id": "CLZ-CAL-01",
+   "stage": "post",
+   "severity": "warn",
+   "actor": "cron",
+   "tier_scope": "set",
+   "description": "上線後（同一版本 ≥200 筆合格作答）算 P、Ph、Pl（前／後 33%），以 difficulty-bands 推估式換算 Pc、Pb 重新分級；與預定級別不同就改標並回饋規格",
+   "rule": {
+    "metric": "observed_tier",
+    "op": "==",
+    "value_ref": "planned_tier",
+    "min_responses": 200
+   },
+   "official_111_115_pass": "n/a（需作答資料或依難度帶的題組）"
+  },
+  {
+   "id": "CLZ-CAL-02",
+   "stage": "post",
+   "severity": "warn",
+   "actor": "cron",
+   "tier_scope": "item",
+   "description": "答對率落在該級 target_stats.P.target_range",
+   "rule": {
+    "metric": "P",
+    "op": "between",
+    "value_ref": "tiers.{tier}.target_stats.P.target_range"
+   },
+   "official_111_115_pass": "n/a（需作答資料或依難度帶的題組）"
+  },
+  {
+   "id": "CLZ-CAL-03",
+   "stage": "post",
+   "severity": "warn",
+   "actor": "cron",
+   "tier_scope": "item",
+   "description": "每個誘答全體選答 ≥5%（現制 150/150）；<2% 依 SPEC §5.9 記錄為 dead_distractor",
+   "rule": {
+    "metric": "distractor_share_min",
+    "op": ">=",
+    "value": 0.05,
+    "dead_below": 0.02
+   },
+   "official_111_115_pass": "n/a（需作答資料或依難度帶的題組）"
+  },
+  {
+   "id": "CLZ-CAL-04",
+   "stage": "post",
+   "severity": "warn",
+   "actor": "cron",
+   "tier_scope": "item",
+   "description": "高分組（前 33%）最強誘答比例：穩定基礎 ≤0.10、進階 0.10–0.25、超越頂標 ≥0.20；穩定基礎與進階若有誘答在高分組勝過正解即標 top_prefers_distractor",
+   "rule": {
+    "metric": "upper_group_top_distractor_share",
+    "by_tier": {
+     "basic": {
+      "op": "<=",
+      "value": 0.1
+     },
+     "advanced": {
+      "op": "between",
+      "value": [
+       0.1,
+       0.25
+      ]
+     },
+     "top": {
+      "op": ">=",
+      "value": 0.2
+     }
+    }
+   },
+   "official_111_115_pass": "n/a（需作答資料或依難度帶的題組）"
+  },
+  {
+   "id": "CLZ-CAL-05",
+   "stage": "post",
+   "severity": "warn",
+   "actor": "cron",
+   "tier_scope": "item",
+   "description": "超越頂標題 D1（Pa−Pb）≥0.10，或以 Ph−P 代替時 >0；否則不當錨點",
+   "rule": {
+    "metric": "D1",
+    "op": ">=",
+    "value": 0.1,
+    "applies_to_tier": "top"
+   },
+   "official_111_115_pass": "n/a（需作答資料或依難度帶的題組）"
+  }
+ ],
+ "checks_validation_note": "official_111_115_pass：把規則套在 10 篇現制選文／50 格上的通過數；PAS-01 與 VOC-01 依模擬卷範圍。各級 passage_overrides 的通過數：{\"foundation\": \"4/10\", \"advanced\": \"10/10\", \"beyond_top\": \"10/10\"}",
+ "anchors": {
+  "selection": "現制 111–115、非 low_upper_discrimination、P 接近該級中位數、題型分散；只列 exam id＋題號",
+  "foundation": [
+   {
+    "exam": "gsat-112",
+    "no": 14,
+    "tier": "basic",
+    "type": "C",
+    "scope": "S",
+    "form": "phrase",
+    "P": 0.58,
+    "Pc": 0.53,
+    "Pb": 0.81,
+    "Pa": 0.97,
+    "D1": 0.16,
+    "flags": [],
+    "upper_group_top_distractor_share": 0.05,
+    "note": "C：名詞＋介系詞搭配（exposure to），誘答同形但語意不合",
+    "distractor_code": "none"
+   },
+   {
+    "exam": "gsat-113",
+    "no": 17,
+    "tier": "basic",
+    "type": "C",
+    "scope": "S",
+    "form": "phrase",
+    "P": 0.61,
+    "Pc": 0.6,
+    "Pb": 0.83,
+    "Pa": 0.96,
+    "D1": 0.13,
+    "flags": [],
+    "upper_group_top_distractor_share": 0.05,
+    "note": "C：分詞片語 Equipped with，同句列出的工具（sticks or pea shooters）即可判斷",
+    "distractor_code": "none"
+   },
+   {
+    "exam": "gsat-115",
+    "no": 16,
+    "tier": "basic",
+    "type": "L",
+    "scope": "S",
+    "form": "word",
+    "P": 0.57,
+    "Pc": 0.58,
+    "Pb": 0.79,
+    "Pa": 0.91,
+    "D1": 0.12,
+    "flags": [],
+    "upper_group_top_distractor_share": 0.07,
+    "note": "L：四個選項都是 L5 動詞仍屬穩定基礎，說明級別不是難度來源",
+    "distractor_code": "none"
+   },
+   {
+    "exam": "gsat-114",
+    "no": 15,
+    "tier": "basic",
+    "type": "D",
+    "scope": "W",
+    "form": "word",
+    "P": 0.57,
+    "Pc": 0.6,
+    "Pb": 0.83,
+    "Pa": 0.95,
+    "D1": 0.12,
+    "flags": [],
+    "upper_group_top_distractor_share": 0.04,
+    "note": "D：末段首句以 thus 收束前段敘事（scope W），誘答 still/also/further 明顯不合",
+    "distractor_code": "none"
+   },
+   {
+    "exam": "gsat-115",
+    "no": 20,
+    "tier": "basic",
+    "type": "L",
+    "scope": "W",
+    "form": "chunk",
+    "P": 0.62,
+    "Pc": 0.64,
+    "Pb": 0.79,
+    "Pa": 0.93,
+    "D1": 0.14,
+    "flags": [],
+    "upper_group_top_distractor_share": 0.07,
+    "note": "L（4 字語意片段）：靠全段「重點在用餐經驗」選 social activity",
+    "distractor_code": "none"
+   },
+   {
+    "exam": "gsat-111",
+    "no": 17,
+    "tier": "basic",
+    "type": "G",
+    "scope": "S",
+    "form": "phrase",
+    "P": 0.73,
+    "Pc": 0.82,
+    "Pb": 0.9,
+    "Pa": 0.96,
+    "D1": 0.06,
+    "flags": [],
+    "upper_group_top_distractor_share": 0.05,
+    "note": "G：In the early days… → used to be；句內可判斷（P 0.73，略易於目標帶）",
+    "distractor_code": "none"
+   }
+  ],
+  "advanced": [
+   {
+    "exam": "gsat-114",
+    "no": 11,
+    "tier": "advanced",
+    "type": "G",
+    "scope": "S",
+    "form": "phrase",
+    "P": 0.46,
+    "Pc": 0.44,
+    "Pb": 0.56,
+    "Pa": 0.74,
+    "D1": 0.18,
+    "flags": [],
+    "upper_group_top_distractor_share": 0.22,
+    "note": "G：過去未來 would spread；強誘答 would have spread（GN）",
+    "distractor_code": "GN"
+   },
+   {
+    "exam": "gsat-113",
+    "no": 11,
+    "tier": "advanced",
+    "type": "C",
+    "scope": "S",
+    "form": "phrase",
+    "P": 0.42,
+    "Pc": 0.3,
+    "Pb": 0.57,
+    "Pa": 0.84,
+    "D1": 0.27,
+    "flags": [],
+    "upper_group_top_distractor_share": 0.11,
+    "note": "C：片語動詞 pose as；誘答同為「動詞＋介系詞」家族（CN）",
+    "distractor_code": "CN"
+   },
+   {
+    "exam": "gsat-112",
+    "no": 15,
+    "tier": "advanced",
+    "type": "D",
+    "scope": "S",
+    "form": "word",
+    "P": 0.53,
+    "Pc": 0.45,
+    "Pb": 0.65,
+    "Pa": 0.88,
+    "D1": 0.23,
+    "flags": [],
+    "upper_group_top_distractor_share": 0.16,
+    "note": "D：讓步 Despite；誘答 For 可接 decades（LR）",
+    "distractor_code": "LR"
+   },
+   {
+    "exam": "gsat-113",
+    "no": 18,
+    "tier": "advanced",
+    "type": "L",
+    "scope": "P",
+    "form": "phrase",
+    "P": 0.43,
+    "Pc": 0.34,
+    "Pb": 0.5,
+    "Pa": 0.81,
+    "D1": 0.31,
+    "flags": [],
+    "upper_group_top_distractor_share": 0.22,
+    "note": "L（語意片段）：familiar presences；誘答 public eyesores 單讀本句說得通（LF）",
+    "distractor_code": "LF"
+   },
+   {
+    "exam": "gsat-115",
+    "no": 17,
+    "tier": "advanced",
+    "type": "G",
+    "scope": "P",
+    "form": "chunk",
+    "P": 0.44,
+    "Pc": 0.39,
+    "Pb": 0.56,
+    "Pa": 0.78,
+    "D1": 0.22,
+    "flags": [],
+    "upper_group_top_distractor_share": 0.24,
+    "note": "G：had yet to develop 要看下一句的「幾世紀後」；誘答 would hardly develop 意思接近（GN）",
+    "distractor_code": "GN"
+   }
+  ],
+  "beyond_top": [
+   {
+    "exam": "gsat-111",
+    "no": 13,
+    "tier": "top",
+    "type": "C",
+    "scope": "S",
+    "form": "word",
+    "P": 0.2,
+    "Pc": 0.06,
+    "Pb": 0.16,
+    "Pa": 0.52,
+    "D1": 0.36,
+    "flags": [],
+    "upper_group_top_distractor_share": 0.4,
+    "note": "C：L1 字 end 的慣用說法；高分組被 form 吸走（CN）",
+    "distractor_code": "CN"
+   },
+   {
+    "exam": "gsat-112",
+    "no": 18,
+    "tier": "top",
+    "type": "G",
+    "scope": "S",
+    "form": "word",
+    "P": 0.22,
+    "Pc": 0.09,
+    "Pb": 0.18,
+    "Pa": 0.53,
+    "D1": 0.35,
+    "flags": [],
+    "upper_group_top_distractor_share": 0.32,
+    "note": "G：主要動詞要用原形 redistribute，誘答為分詞（GN）",
+    "distractor_code": "GN"
+   },
+   {
+    "exam": "gsat-113",
+    "no": 14,
+    "tier": "top",
+    "type": "L",
+    "scope": "S",
+    "form": "word",
+    "P": 0.25,
+    "Pc": 0.1,
+    "Pb": 0.22,
+    "Pa": 0.59,
+    "D1": 0.37,
+    "flags": [],
+    "upper_group_top_distractor_share": 0.46,
+    "note": "L：difficult customers 的語境義；誘答 anonymous 吻合全文主題（LF 主題陷阱）",
+    "distractor_code": "LF"
+   },
+   {
+    "exam": "gsat-112",
+    "no": 11,
+    "tier": "top",
+    "type": "C",
+    "scope": "P",
+    "form": "phrase",
+    "P": 0.29,
+    "Pc": 0.21,
+    "Pb": 0.28,
+    "Pa": 0.55,
+    "D1": 0.27,
+    "flags": [],
+    "upper_group_top_distractor_share": 0.25,
+    "note": "C：almost, but not quite 的語氣；誘答 and pretty much 方向相反（LR）",
+    "distractor_code": "LR"
+   },
+   {
+    "exam": "gsat-114",
+    "no": 18,
+    "tier": "top",
+    "type": "R",
+    "scope": "S",
+    "form": "word",
+    "P": 0.4,
+    "Pc": 0.33,
+    "Pb": 0.48,
+    "Pa": 0.72,
+    "D1": 0.24,
+    "flags": [],
+    "upper_group_top_distractor_share": 0.34,
+    "note": "R：代動詞 don’t 承接 detects；誘答 aren’t（GN）",
+    "distractor_code": "GN"
+   },
+   {
+    "exam": "gsat-115",
+    "no": 11,
+    "tier": "top",
+    "type": "D",
+    "scope": "P",
+    "form": "phrase",
+    "P": 0.29,
+    "Pc": 0.23,
+    "Pb": 0.29,
+    "Pa": 0.45,
+    "D1": 0.16,
+    "flags": [
+     "challenge"
+    ],
+    "upper_group_top_distractor_share": 0.24,
+    "note": "D：it turns out（challenge，Pa 0.45）；誘答 in other words 等邏輯錯位（LR）",
+    "distractor_code": "LR"
+   }
+  ],
+  "beyond_top_upper_reference_ast": [
+   {
+    "exam": "ast-97",
+    "no": 17,
+    "tier": "top",
+    "type": "C",
+    "scope": "S",
+    "form": "phrase",
+    "P": 0.19,
+    "Pc": 0.12,
+    "Pb": 0.15,
+    "Pa": 0.41,
+    "D1": 0.26,
+    "flags": [
+     "challenge"
+    ],
+    "upper_group_top_distractor_share": 0.26,
+    "note": "指考 C：responsible for（challenge）；指考考生分組，只作上緣參考"
+   },
+   {
+    "exam": "ast-104",
+    "no": 11,
+    "tier": "top",
+    "type": "G",
+    "scope": "S",
+    "form": "word",
+    "P": 0.14,
+    "Pc": 0.1,
+    "Pb": 0.11,
+    "Pa": 0.25,
+    "D1": 0.14,
+    "flags": [
+     "challenge"
+    ],
+    "upper_group_top_distractor_share": 0.53,
+    "note": "指考 G：as did his life 的倒裝替代（challenge，P 0.14）"
+   }
+  ]
+ },
+ "sources": {
+  "inputs": [
+   "data/exams/parsed/*.json（cloze 大題）",
+   "data/exams/item-stats.json（P、Pa–Pe、Ph、Pl、D1、選項分析 T/H/L）",
+   "data/exams/difficulty-bands.json（tier、flags）",
+   "data/exams/stats/items.json（answer_level）",
+   "data/exams/stats/passages.json（字數、level_dist、beyond_l4_ratio、genre、topic）",
+   "data/vocab/ceec-wordlist.json、forms-index.json、lexicon.json（級別、詞性、WordNet 義項數）"
+  ],
+  "counts": {
+   "cloze_items_all_eras": 895,
+   "items_with_stats": 595,
+   "by_era_with_stats": {
+    "gsat-current": 50,
+    "gsat-legacy(91–110)": 290,
+    "ast(91–110)": 255
+   },
+   "passages_all_eras": 163,
+   "excluded": "gsat-84 第一部分「對話」（10 格，4 段對話）不算克漏字；ref-* 只看格式，不進統計"
+  },
+  "manual_annotation": {
+   "blank_type_and_scope": "595 題有統計的題目逐題人工標 type（L/C/G/D/R）與 scope（S/P/W）；其他 300 題（學測 83–90、補考、參考試卷）用 parsed tags 自動對應（與人工一致 93.8%）",
+   "distractor_code": "現制 50 題全部，加上舊制學測 76 題 top，共 126 題，標「高分組最常選的誘答」錯誤類型",
+   "format": "annotations[exam][no] = \"type|scope[|distractor_code]\""
+  },
+  "annotations": {
+   "ast-100": {
+    "11": "G|S",
+    "12": "L|S",
+    "13": "C|S",
+    "14": "D|S",
+    "15": "C|S",
+    "16": "D|P",
+    "17": "G|S",
+    "18": "G|S",
+    "19": "L|S",
+    "20": "C|P"
+   },
+   "ast-101": {
+    "11": "C|S",
+    "12": "D|S",
+    "13": "L|S",
+    "14": "C|S",
+    "15": "L|S",
+    "16": "L|P",
+    "17": "C|S",
+    "18": "R|S",
+    "19": "C|S",
+    "20": "G|S"
+   },
+   "ast-102": {
+    "11": "L|S",
+    "12": "G|S",
+    "13": "L|P",
+    "14": "D|P",
+    "15": "C|P",
+    "16": "G|S",
+    "17": "D|P",
+    "18": "L|P",
+    "19": "L|S",
+    "20": "D|S"
+   },
+   "ast-103": {
+    "11": "L|S",
+    "12": "G|S",
+    "13": "L|S",
+    "14": "D|P",
+    "15": "R|S",
+    "16": "C|P",
+    "17": "C|S",
+    "18": "L|S",
+    "19": "C|S",
+    "20": "G|S"
+   },
+   "ast-104": {
+    "11": "G|S",
+    "12": "L|S",
+    "13": "L|S",
+    "14": "L|S",
+    "15": "G|S",
+    "16": "L|S",
+    "17": "C|P",
+    "18": "L|S",
+    "19": "G|S",
+    "20": "D|P"
+   },
+   "ast-105": {
+    "11": "L|S",
+    "12": "L|P",
+    "13": "G|S",
+    "14": "C|S",
+    "15": "L|S",
+    "16": "L|S",
+    "17": "L|P",
+    "18": "G|S",
+    "19": "D|S",
+    "20": "L|P"
+   },
+   "ast-106": {
+    "11": "L|S",
+    "12": "C|S",
+    "13": "C|S",
+    "14": "C|S",
+    "15": "L|S",
+    "16": "R|P",
+    "17": "G|S",
+    "18": "C|S",
+    "19": "D|P",
+    "20": "L|S"
+   },
+   "ast-107": {
+    "11": "L|S",
+    "12": "R|S",
+    "13": "L|W",
+    "14": "C|S",
+    "15": "C|S",
+    "16": "R|S",
+    "17": "D|S",
+    "18": "G|S",
+    "19": "G|S",
+    "20": "L|P"
+   },
+   "ast-108": {
+    "11": "C|S",
+    "12": "G|S",
+    "13": "D|S",
+    "14": "C|S",
+    "15": "C|S",
+    "16": "C|S",
+    "17": "D|P",
+    "18": "L|P",
+    "19": "L|P",
+    "20": "L|S"
+   },
+   "ast-109": {
+    "11": "C|S",
+    "12": "L|S",
+    "13": "L|S",
+    "14": "G|S",
+    "15": "D|S",
+    "16": "L|P",
+    "17": "G|S",
+    "18": "L|P",
+    "19": "C|P",
+    "20": "L|S"
+   },
+   "ast-110": {
+    "11": "L|S",
+    "12": "D|S",
+    "13": "L|S",
+    "14": "L|S",
+    "15": "G|S",
+    "16": "L|W",
+    "17": "G|P",
+    "18": "C|S",
+    "19": "L|P",
+    "20": "D|P"
+   },
+   "ast-91": {
+    "16": "D|P",
+    "17": "R|S",
+    "18": "L|S",
+    "19": "G|S",
+    "20": "C|S",
+    "21": "C|S",
+    "22": "G|S",
+    "23": "C|S",
+    "24": "C|S",
+    "25": "D|S",
+    "26": "G|S",
+    "27": "C|S",
+    "28": "G|S",
+    "29": "D|S",
+    "30": "L|P"
+   },
+   "ast-92": {
+    "16": "C|S",
+    "17": "C|S",
+    "18": "L|P",
+    "19": "L|S",
+    "20": "C|S",
+    "21": "L|P",
+    "22": "D|P",
+    "23": "R|S",
+    "24": "D|P",
+    "25": "C|S",
+    "26": "D|S",
+    "27": "D|S",
+    "28": "C|S",
+    "29": "G|S",
+    "30": "C|S"
+   },
+   "ast-93": {
+    "16": "C|S",
+    "17": "G|S",
+    "18": "C|S",
+    "19": "R|W",
+    "20": "D|P",
+    "21": "L|S",
+    "22": "D|S",
+    "23": "L|W",
+    "24": "C|S",
+    "25": "G|S",
+    "26": "D|S",
+    "27": "G|S",
+    "28": "C|S",
+    "29": "G|S",
+    "30": "D|P"
+   },
+   "ast-94": {
+    "11": "L|S",
+    "12": "C|P",
+    "13": "L|S",
+    "14": "L|S",
+    "15": "C|S",
+    "16": "C|S",
+    "17": "C|S",
+    "18": "L|S",
+    "19": "G|S",
+    "20": "C|S",
+    "21": "G|S",
+    "22": "C|S",
+    "23": "G|S",
+    "24": "L|P",
+    "25": "D|S",
+    "26": "L|S",
+    "27": "C|S",
+    "28": "G|S",
+    "29": "C|S",
+    "30": "L|S"
+   },
+   "ast-95": {
+    "11": "L|P",
+    "12": "D|S",
+    "13": "C|S",
+    "14": "D|P",
+    "15": "L|S",
+    "16": "C|S",
+    "17": "D|P",
+    "18": "D|S",
+    "19": "D|P",
+    "20": "C|S",
+    "21": "L|P",
+    "22": "G|S",
+    "23": "L|S",
+    "24": "L|S",
+    "25": "C|P",
+    "26": "C|S",
+    "27": "C|S",
+    "28": "L|S",
+    "29": "L|S",
+    "30": "C|P"
+   },
+   "ast-96": {
+    "11": "C|S",
+    "12": "C|S",
+    "13": "D|P",
+    "14": "L|S",
+    "15": "D|S",
+    "16": "C|S",
+    "17": "D|P",
+    "18": "C|S",
+    "19": "G|S",
+    "20": "C|S",
+    "21": "L|P",
+    "22": "C|S",
+    "23": "D|W",
+    "24": "C|S",
+    "25": "L|S",
+    "26": "D|S",
+    "27": "L|S",
+    "28": "C|S",
+    "29": "L|P",
+    "30": "G|S"
+   },
+   "ast-97": {
+    "11": "L|P",
+    "12": "L|S",
+    "13": "D|S",
+    "14": "C|S",
+    "15": "D|P",
+    "16": "D|P",
+    "17": "C|S",
+    "18": "G|S",
+    "19": "G|S",
+    "20": "L|S",
+    "21": "G|S",
+    "22": "C|S",
+    "23": "C|S",
+    "24": "R|P",
+    "25": "L|S",
+    "26": "G|S",
+    "27": "L|S",
+    "28": "C|S",
+    "29": "L|S",
+    "30": "R|W"
+   },
+   "ast-98": {
+    "11": "L|P",
+    "12": "L|S",
+    "13": "D|S",
+    "14": "C|S",
+    "15": "L|S",
+    "16": "D|S",
+    "17": "G|S",
+    "18": "L|P",
+    "19": "C|S",
+    "20": "G|P"
+   },
+   "ast-99": {
+    "11": "L|S",
+    "12": "G|S",
+    "13": "C|S",
+    "14": "L|S",
+    "15": "D|W",
+    "16": "C|S",
+    "17": "G|S",
+    "18": "L|S",
+    "19": "L|S",
+    "20": "G|S"
+   },
+   "gsat-100": {
+    "16": "C|S",
+    "17": "C|S",
+    "18": "L|S",
+    "19": "G|S",
+    "20": "L|P",
+    "21": "G|P",
+    "22": "L|P",
+    "23": "G|S",
+    "24": "G|S",
+    "25": "C|S",
+    "26": "R|S",
+    "27": "C|S",
+    "28": "G|S",
+    "29": "G|S",
+    "30": "G|S"
+   },
+   "gsat-101": {
+    "16": "C|S",
+    "17": "G|S|GN",
+    "18": "D|P",
+    "19": "D|S",
+    "20": "G|S",
+    "21": "L|S",
+    "22": "D|S",
+    "23": "C|S",
+    "24": "R|P",
+    "25": "C|S",
+    "26": "C|S",
+    "27": "G|S",
+    "28": "C|P",
+    "29": "L|W",
+    "30": "C|S"
+   },
+   "gsat-102": {
+    "16": "G|S",
+    "17": "D|P|LR",
+    "18": "C|S|CN",
+    "19": "L|S|SS",
+    "20": "L|P|LF",
+    "21": "G|S",
+    "22": "L|P",
+    "23": "D|S",
+    "24": "L|S",
+    "25": "R|S",
+    "26": "L|S|LF",
+    "27": "G|S",
+    "28": "C|S",
+    "29": "L|S|LF",
+    "30": "G|S"
+   },
+   "gsat-103": {
+    "16": "L|S",
+    "17": "C|S|CN",
+    "18": "R|P",
+    "19": "D|P",
+    "20": "L|S",
+    "21": "L|S",
+    "22": "L|P",
+    "23": "C|S",
+    "24": "L|S",
+    "25": "D|P",
+    "26": "L|S|LF",
+    "27": "D|S|GN",
+    "28": "C|S",
+    "29": "D|P",
+    "30": "D|S"
+   },
+   "gsat-104": {
+    "16": "C|S",
+    "17": "D|S",
+    "18": "G|S|GN",
+    "19": "L|P",
+    "20": "C|S",
+    "21": "D|P",
+    "22": "L|W",
+    "23": "G|S|GN",
+    "24": "L|S",
+    "25": "L|S",
+    "26": "G|S",
+    "27": "G|S",
+    "28": "L|P",
+    "29": "G|S",
+    "30": "L|S|LF"
+   },
+   "gsat-105": {
+    "16": "D|P",
+    "17": "C|S",
+    "18": "C|S",
+    "19": "G|S",
+    "20": "D|P",
+    "21": "G|S",
+    "22": "C|S",
+    "23": "L|S",
+    "24": "G|S|GN",
+    "25": "C|S",
+    "26": "G|S",
+    "27": "L|S",
+    "28": "C|P",
+    "29": "G|S",
+    "30": "C|S|CN"
+   },
+   "gsat-106": {
+    "16": "C|S|CN",
+    "17": "L|P",
+    "18": "L|S",
+    "19": "D|S",
+    "20": "C|S|CN",
+    "21": "D|S|LR",
+    "22": "C|S|CN",
+    "23": "L|S",
+    "24": "C|S",
+    "25": "D|S|GN",
+    "26": "D|P",
+    "27": "L|P|LF",
+    "28": "D|S|CN",
+    "29": "C|S",
+    "30": "L|S"
+   },
+   "gsat-107": {
+    "16": "G|P|LR",
+    "17": "L|S",
+    "18": "C|S",
+    "19": "G|S|GN",
+    "20": "C|S|CN",
+    "21": "D|S",
+    "22": "C|S",
+    "23": "C|S",
+    "24": "G|S",
+    "25": "L|P",
+    "26": "G|S",
+    "27": "L|S",
+    "28": "C|P",
+    "29": "D|P",
+    "30": "D|S"
+   },
+   "gsat-108": {
+    "16": "C|P",
+    "17": "G|S|GN",
+    "18": "D|P",
+    "19": "C|S|CN",
+    "20": "L|S",
+    "21": "C|S",
+    "22": "G|S",
+    "23": "G|S",
+    "24": "L|P",
+    "25": "D|S",
+    "26": "C|S",
+    "27": "R|S|GN",
+    "28": "D|P",
+    "29": "L|P",
+    "30": "L|P|LF"
+   },
+   "gsat-109": {
+    "16": "G|S",
+    "17": "C|S",
+    "18": "C|S|CN",
+    "19": "L|S|LR",
+    "20": "C|S",
+    "21": "L|P",
+    "22": "C|S",
+    "23": "C|S",
+    "24": "G|S",
+    "25": "C|S",
+    "26": "L|S",
+    "27": "L|P",
+    "28": "D|P|LR",
+    "29": "D|S",
+    "30": "C|S|CN"
+   },
+   "gsat-110": {
+    "16": "C|S|CN",
+    "17": "C|S|CN",
+    "18": "L|S",
+    "19": "L|P",
+    "20": "G|S",
+    "21": "D|S",
+    "22": "L|S",
+    "23": "L|S",
+    "24": "C|S",
+    "25": "G|S|GN",
+    "26": "C|S|CN",
+    "27": "C|S",
+    "28": "G|S|GN",
+    "29": "L|P|LF",
+    "30": "C|S|GN"
+   },
+   "gsat-111": {
+    "11": "L|S|LF",
+    "12": "G|S|GN",
+    "13": "C|S|CN",
+    "14": "L|S|none",
+    "15": "L|P|LF",
+    "16": "C|S|CN",
+    "17": "G|S|none",
+    "18": "L|S|LF",
+    "19": "C|P|LF",
+    "20": "L|S|none"
+   },
+   "gsat-112": {
+    "11": "C|P|LR",
+    "12": "L|W|none",
+    "13": "C|S|none",
+    "14": "C|S|none",
+    "15": "D|S|LR",
+    "16": "C|S|CN",
+    "17": "L|P|none",
+    "18": "G|S|GN",
+    "19": "L|S|none",
+    "20": "C|P|CN"
+   },
+   "gsat-113": {
+    "11": "C|S|CN",
+    "12": "G|S|CN",
+    "13": "L|P|none",
+    "14": "L|S|LF",
+    "15": "L|S|none",
+    "16": "G|P|LR",
+    "17": "C|S|none",
+    "18": "L|P|LF",
+    "19": "L|S|CN",
+    "20": "L|P|LF"
+   },
+   "gsat-114": {
+    "11": "G|S|GN",
+    "12": "L|S|none",
+    "13": "L|S|LF",
+    "14": "C|S|CN",
+    "15": "D|W|none",
+    "16": "C|S|CN",
+    "17": "L|P|LF",
+    "18": "R|S|GN",
+    "19": "C|S|none",
+    "20": "C|P|none"
+   },
+   "gsat-115": {
+    "11": "D|P|LR",
+    "12": "L|P|none",
+    "13": "L|S|SS",
+    "14": "L|S|none",
+    "15": "C|P|CN",
+    "16": "L|S|none",
+    "17": "G|P|GN",
+    "18": "C|P|CN",
+    "19": "D|S|LR",
+    "20": "L|W|none"
+   },
+   "gsat-91": {
+    "21": "L|P|LR",
+    "22": "D|S",
+    "23": "C|S",
+    "24": "D|S",
+    "25": "G|S",
+    "26": "C|S|CN",
+    "27": "L|S",
+    "28": "G|S",
+    "29": "C|S|CN",
+    "30": "C|S|CN"
+   },
+   "gsat-92": {
+    "21": "D|P",
+    "22": "R|P",
+    "23": "L|P|LF",
+    "24": "R|S",
+    "25": "G|S",
+    "26": "R|S|GN",
+    "27": "G|S|GN",
+    "28": "G|S",
+    "29": "C|S",
+    "30": "L|P|LR"
+   },
+   "gsat-93": {
+    "16": "L|P|LF",
+    "17": "R|P|GN",
+    "18": "G|S",
+    "19": "G|S|GN",
+    "20": "D|S",
+    "21": "C|S",
+    "22": "L|S|CN",
+    "23": "C|S|CN",
+    "24": "L|S|SF",
+    "25": "G|S|GN",
+    "26": "L|P",
+    "27": "C|S",
+    "28": "G|S",
+    "29": "D|P",
+    "30": "D|S"
+   },
+   "gsat-94": {
+    "16": "G|S",
+    "17": "C|S|CN",
+    "18": "G|S",
+    "19": "G|S",
+    "20": "L|S|SF",
+    "21": "G|S",
+    "22": "L|P",
+    "23": "L|S|CN",
+    "24": "G|S",
+    "25": "D|S",
+    "26": "D|S",
+    "27": "D|P",
+    "28": "L|S",
+    "29": "C|S",
+    "30": "D|P"
+   },
+   "gsat-95": {
+    "16": "C|P",
+    "17": "C|S|CN",
+    "18": "G|S",
+    "19": "C|S|CN",
+    "20": "C|S",
+    "21": "L|S",
+    "22": "L|S",
+    "23": "C|S",
+    "24": "G|S",
+    "25": "D|S",
+    "26": "L|P",
+    "27": "G|S",
+    "28": "D|W",
+    "29": "L|S",
+    "30": "D|P"
+   },
+   "gsat-96": {
+    "16": "G|S|GN",
+    "17": "C|S|LR",
+    "18": "D|S",
+    "19": "D|S",
+    "20": "C|S",
+    "21": "G|S|GN",
+    "22": "L|S",
+    "23": "D|S",
+    "24": "L|W|LF",
+    "25": "L|S",
+    "26": "C|S",
+    "27": "C|S",
+    "28": "C|S|CN",
+    "29": "D|W|LR",
+    "30": "L|S|CN"
+   },
+   "gsat-97": {
+    "16": "G|S",
+    "17": "C|S",
+    "18": "C|S",
+    "19": "L|P",
+    "20": "D|P",
+    "21": "C|S",
+    "22": "R|S",
+    "23": "G|S",
+    "24": "G|S",
+    "25": "C|S",
+    "26": "G|S",
+    "27": "D|S",
+    "28": "L|S|LF",
+    "29": "L|P",
+    "30": "D|P"
+   },
+   "gsat-98": {
+    "16": "L|S",
+    "17": "C|S|CN",
+    "18": "G|S",
+    "19": "D|S",
+    "20": "L|S",
+    "21": "D|P",
+    "22": "L|P",
+    "23": "G|S",
+    "24": "G|S",
+    "25": "L|S|CN",
+    "26": "C|S|CN",
+    "27": "D|S",
+    "28": "G|S",
+    "29": "C|S",
+    "30": "L|P|LF"
+   },
+   "gsat-99": {
+    "16": "C|S",
+    "17": "L|S|SF",
+    "18": "C|S|CN",
+    "19": "L|S",
+    "20": "L|S",
+    "21": "C|S",
+    "22": "L|S",
+    "23": "G|S|GN",
+    "24": "D|P",
+    "25": "C|S",
+    "26": "L|S",
+    "27": "G|S",
+    "28": "D|S|LR",
+    "29": "L|W",
+    "30": "C|S"
+   }
+  },
+  "reference_papers_format_only": {
+   "ref-110": "108 課綱試辦：2 篇 × 5 格（193、185 字）",
+   "ref-111、ref-115、ref-107-a/b": "綜合測驗全部沿用歷屆題（reused_from）",
+   "ref-98-a/b、ref-102-a/b": "舊制參考卷：2 或 3 篇 × 5 格"
+  }
+ },
+ "annotation_schema": {
+  "version": 1,
+  "conventions": "common_rules.annotations（位置、級別列舉、盲解輸出欄位）",
+  "item_fields": {
+   "item_tier": {
+    "type": "enum",
+    "location": "annotations.design.items.<n>.item_tier",
+    "required": true,
+    "enum": [
+     "basic",
+     "advanced",
+     "top"
+    ],
+    "desc": "這一題（格）預定的級別；題組級別寫在 gsat-bank/v1 的 tier（同一套列舉）"
+   },
+   "blank_type": {
+    "type": "enum",
+    "location": "annotations.design.items.<n>.blank_type",
+    "required": true,
+    "enum": [
+     "L",
+     "C",
+     "G",
+     "D",
+     "R"
+    ],
+    "desc": "L 詞彙語意、C 片語／搭配、G 文法、D 轉承／連接、R 指涉／替代"
+   },
+   "clue_scope": {
+    "type": "enum",
+    "location": "annotations.design.items.<n>.clue_scope",
+    "required": true,
+    "enum": [
+     "S",
+     "P",
+     "W"
+    ],
+    "desc": "S 本句、P 前後一句、W 段落或兩句以外"
+   },
+   "clue_strings": {
+    "type": "list[string]",
+    "location": "annotations.design.items.<n>.clue_strings",
+    "required": true,
+    "desc": "逐字出現在選文"
+   },
+   "grammar_pattern_id": {
+    "type": "string",
+    "location": "annotations.design.items.<n>.grammar_pattern_id",
+    "required": "blank_type == G",
+    "desc": "存在於 data/curriculum/grammar-patterns.json"
+   },
+   "test_point": {
+    "type": "string",
+    "location": "group.questions[<n>].tags.test_point",
+    "required": true,
+    "desc": "沿用 gsat-exam/v1.1 tags"
+   }
+  },
+  "option_fields": {
+   "code": {
+    "type": "enum",
+    "location": "annotations.explanations.items.<n>.option_codes.<letter>",
+    "required": true,
+    "enum": [
+     "LF",
+     "CN",
+     "LR",
+     "GN",
+     "SF",
+     "SS",
+     "clear"
+    ],
+    "desc": "clear＝明顯不通"
+   },
+   "strength": {
+    "type": "enum",
+    "location": "annotations.design.items.<n>.options.<letter>.strength",
+    "required": true,
+    "enum": [
+     "weak",
+     "medium",
+     "strong"
+    ]
+   },
+   "exclusion_span": {
+    "type": "string",
+    "location": "annotations.design.items.<n>.options.<letter>.exclusion_span",
+    "required": true,
+    "desc": "排除它的原文字串，逐字在選文"
+   }
+  }
+ }
+}

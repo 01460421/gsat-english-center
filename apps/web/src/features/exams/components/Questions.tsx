@@ -10,6 +10,7 @@ import { useId, type ReactNode } from 'react';
 import type { OptionMap, Question, QuestionGroup } from '../../../data/exams';
 import { useAttemptStore, useAttemptSelector, useQuestionState } from '../AttemptContext';
 import { useExam } from '../ExamContext';
+import { QuestionAccessorySlot } from '../QuestionAccessoryContext';
 import { countParagraphs, countWords, questionErratum, wordCountLabel } from '../labels';
 import { isBlankCell } from '../paper';
 import { questionRangeTitle, questionTitle, resolveBlankQuestion } from '../richText';
@@ -24,12 +25,24 @@ export function questionAnchorId(label: string): string {
 
 export const cardClass = 'rounded-2xl border border-line bg-surface p-4 scroll-mt-32';
 
-export function QuestionHeading({ title, points, extra }: { title: string; points: number | null; extra?: ReactNode }) {
+export function QuestionHeading({
+  title,
+  points,
+  extra,
+  labels,
+}: {
+  title: string;
+  points: number | null;
+  extra?: ReactNode;
+  /** 這個區塊的題號；有提供時，題號旁畫 QuestionAccessoryContext 的附加元件（模擬考的「標記」）。 */
+  labels?: readonly string[];
+}) {
   return (
     <span className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
       <span className="font-semibold text-primary">{title}</span>
       {points !== null && <span className="text-xs text-muted">{formatPoints(points)} 分</span>}
       {extra}
+      <QuestionAccessorySlot labels={labels} />
     </span>
   );
 }
@@ -112,6 +125,7 @@ export function ChoiceQuestionBlock({
           <QuestionHeading
             title={questionTitle(q.label)}
             points={q.points}
+            labels={[q.label]}
             extra={multi ? <span className="rounded-full bg-primary-soft px-2 text-xs font-semibold text-primary">多選</span> : null}
           />
           {q.stem && <RichText text={q.stem} variant="inline" className="mt-1 block break-words" />}
@@ -214,7 +228,7 @@ export function FillClusterBlock({ stem, questions }: { stem: string; questions:
   const points = questions.reduce((acc, q) => acc + (q.points ?? 0), 0);
   return (
     <div id={questionAnchorId(labels[0] ?? '')} className={cardClass}>
-      <QuestionHeading title={questionRangeTitle(labels)} points={points} />
+      <QuestionHeading title={questionRangeTitle(labels)} points={points} labels={labels} />
       <div className="mt-2 break-words leading-loose">
         <RichText
           text={stem}
@@ -242,7 +256,7 @@ export function TextAnswerBlock({ q, multiline }: { q: Question; multiline: bool
   const translation = q.mode === 'translation';
   return (
     <div id={questionAnchorId(q.label)} className={cardClass}>
-      <QuestionHeading title={questionTitle(q.label)} points={q.points} />
+      <QuestionHeading title={questionTitle(q.label)} points={q.points} labels={[q.label]} />
       {q.stem && (
         <div className="mt-2 break-words">
           <RichText text={q.stem} />
@@ -279,7 +293,7 @@ export function CompositionBlock({ q }: { q: Question }) {
   const minWords = q.tags.word_count?.min ?? q.tags.word_count?.approx ?? null;
   return (
     <div id={questionAnchorId(q.label)} className={cardClass}>
-      <QuestionHeading title={questionTitle(q.label)} points={q.points} />
+      <QuestionHeading title={questionTitle(q.label)} points={q.points} labels={[q.label]} />
       {q.stem && (
         <div className="mt-2 break-words">
           <RichText text={q.stem} />
@@ -325,7 +339,7 @@ export function TableAnswerBlock({ q, group }: { q: Question; group: QuestionGro
   let blankIndex = 0;
   return (
     <div id={questionAnchorId(q.label)} className={cardClass}>
-      <QuestionHeading title={questionTitle(q.label)} points={q.points} />
+      <QuestionHeading title={questionTitle(q.label)} points={q.points} labels={[q.label]} />
       {q.stem && (
         <div className="mt-2 break-words">
           <RichText text={q.stem} />

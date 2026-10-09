@@ -149,12 +149,24 @@ function isEmptyAnswer(value: AnswerValue): boolean {
 }
 
 /**
+ * 作答狀態存到哪裡。預設是歷屆試題的 localStorage 鍵（gsat-exam-attempt:v1:{examId}）；
+ * 模擬考用自己的鍵（features/mock/），同一份考卷在歷屆試題與模擬考的作答才不會互相覆蓋。
+ * save 回傳是否成功（無痕模式、空間滿時 false）。
+ */
+export interface AttemptPersistence {
+  save(state: AttemptState): boolean;
+}
+
+export const examAttemptPersistence: AttemptPersistence = { save: saveAttempt };
+
+/**
  * 一次作答的 store：改值 → 寫 localStorage → 通知訂閱者，一次做完。
  * 鎖定規則也集中在這裡（交卷後全部鎖、練習模式看過答案的題目鎖），元件不必各自判斷能不能改。
  */
 export class AttemptStore {
   private state: AttemptState;
   private readonly listeners = new Set<() => void>();
+  private readonly persistence: AttemptPersistence;
   /** 最近一次存檔是否成功；false 時畫面提示「這台裝置無法儲存進度」。 */
   persisted: boolean;
 
@@ -162,15 +174,16 @@ export class AttemptStore {
    * 用既有的狀態建立 store（例如從 localStorage 讀回來的紀錄）。建構時不寫入：
    * 續作時元件在 render 裡建立 store，render 不該有副作用；讀得到紀錄也就代表儲存可用。
    */
-  constructor(initial: AttemptState, persisted = true) {
+  constructor(initial: AttemptState, persisted = true, persistence: AttemptPersistence = examAttemptPersistence) {
     this.state = initial;
     this.persisted = persisted;
+    this.persistence = persistence;
   }
 
   /** 開始新的一次作答並立刻存檔：還沒作答就重新整理，也能接回原本選的模式與計時。 */
-  static start(examId: string, mode: AttemptMode, timeLimitSec: number | null): AttemptStore {
+  static start(examId: string, mode: AttemptMode, timeLimitSec: number | null, persistence: AttemptPersistence = examAttemptPersistence): AttemptStore {
     const state = createAttempt(examId, mode, timeLimitSec);
-    return new AttemptStore(state, saveAttempt(state));
+    return new AttemptStore(state, persistence.save(state), persistence);
   }
 
   getState = (): AttemptState => this.state;
@@ -182,7 +195,7 @@ export class AttemptStore {
 
   private commit(next: AttemptState): void {
     this.state = next;
-    this.persisted = saveAttempt(next);
+    this.persisted = this.persistence.save(next);
     for (const listener of this.listeners) listener();
   }
 
