@@ -1,0 +1,86 @@
+{
+  "schema": "gsat-bank-facts/v1",
+  "id": "right-to-disconnect-mxt04",
+  "title": "The right to disconnect: France (2017) and Australia (2024)",
+  "sdgs": [
+    8
+  ],
+  "created_on": "2026-10-09",
+  "created_by": "claude-opus-5-5",
+  "sources": [
+    {
+      "id": "s1",
+      "publisher": "TIME",
+      "title": "France Just Gave Workers the ‘Right to Disconnect’ From Work Email",
+      "url": "https://time.com/4620457/france-workers-disconnect-email/",
+      "accessed": "2026-10-09",
+      "license": "TIME terms of use",
+      "use": "fact_only"
+    },
+    {
+      "id": "s2",
+      "publisher": "NPR",
+      "title": "French Law Giving Workers ‘The Right To Disconnect’ Goes Into Effect",
+      "url": "https://www.npr.org/sections/thetwo-way/2016/12/31/507704720/french-law-giving-workers-the-right-to-disconnect-goes-into-effect",
+      "accessed": "2026-10-09",
+      "license": "NPR terms of use",
+      "use": "fact_only"
+    },
+    {
+      "id": "s3",
+      "publisher": "NPR",
+      "title": "Australia is the latest country to give workers the ‘right to disconnect’ after hours",
+      "url": "https://www.npr.org/2024/08/26/nx-s1-5089792/australia-right-to-disconnect-workers-respond-after-work",
+      "accessed": "2026-10-09",
+      "license": "NPR terms of use",
+      "use": "fact_only"
+    },
+    {
+      "id": "s4",
+      "publisher": "Fair Work Ombudsman (Australian Government)",
+      "title": "New right to disconnect laws",
+      "url": "https://www.fairwork.gov.au/about-us/workplace-laws/legislation-changes/closing-loopholes/right-to-disconnect",
+      "accessed": "2026-10-09",
+      "license": "Australian Government terms of use",
+      "use": "fact_only"
+    }
+  ],
+  "facts": [
+    {
+      "id": "f1",
+      "text": "From 1 January 2017, a French law has required companies with more than 50 employees to negotiate limits on work email outside working hours.",
+      "source_ids": [
+        "s1",
+        "s2"
+      ],
+      "kind": "event"
+    },
+    {
+      "id": "f2",
+      "text": "Australia’s right to disconnect took effect on 26 August 2024 for employers with 15 or more employees and in 2025 for smaller businesses.",
+      "source_ids": [
+        "s3",
+        "s4"
+      ],
+      "kind": "event"
+    },
+    {
+      "id": "f3",
+      "text": "Under the Australian rule, employees may refuse to monitor, read or respond to work contact outside working hours unless the refusal is unreasonable.",
+      "source_ids": [
+        "s3",
+        "s4"
+      ],
+      "kind": "definition"
+    },
+    {
+      "id": "f4",
+      "text": "Whether a refusal is unreasonable depends on factors such as the reason for the contact, the employee’s role and whether the employee is paid to stay available.",
+      "source_ids": [
+        "s4"
+      ],
+      "kind": "other"
+    }
+  ],
+  "notes": "混合題 mixed-top-04 第 5 組（下班後不回訊息的權利，8 則讀者留言）用。2026-10-09 線上查證，只取事實、不取原句。引言只寫法國 2017、澳洲 2024 兩點（f1、f2）；「本地正在討論類似法案」與八則留言是虛構的情境與意見，留言裡的條件（緊急狀況、待命加給、跨時區合作）呼應 f3、f4 的「是否合理」判斷因素。"
+}

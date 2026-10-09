@@ -1,0 +1,184 @@
+{
+  "schema": "gsat-bank-facts/v1",
+  "id": "panama-canal-locks-mxt05",
+  "title": "How the Panama Canal's locks lift ships, and why the canal depends on rain",
+  "sdgs": [
+    9
+  ],
+  "created_on": "2026-10-09",
+  "created_by": "claude-opus-5-5",
+  "sources": [
+    {
+      "id": "s1",
+      "publisher": "U.S. Department of State, Office of the Historian",
+      "title": "Building the Panama Canal, 1903–1914",
+      "url": "https://history.state.gov/milestones/1899-1913/panama-canal",
+      "accessed": "2026-10-09",
+      "license": "U.S. government work",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s2",
+      "publisher": "Smithsonian Magazine",
+      "title": "Panama Rises",
+      "url": "https://www.smithsonianmag.com/travel/panama-rises-103406780/",
+      "accessed": "2026-10-09",
+      "license": "Smithsonian terms of use",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s3",
+      "publisher": "NASA Earth Observatory",
+      "title": "Deforestation around the Panama Canal",
+      "url": "https://science.nasa.gov/earth/earth-observatory/deforestation-around-the-panama-canal-5534/",
+      "accessed": "2026-10-09",
+      "license": "NASA media usage guidelines",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s4",
+      "publisher": "NASA Earth Observatory",
+      "title": "Panama Canal Traffic Backup",
+      "url": "https://science.nasa.gov/earth/earth-observatory/panama-canal-traffic-backup-151778",
+      "accessed": "2026-10-09",
+      "license": "NASA media usage guidelines",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s5",
+      "publisher": "University of Florida News",
+      "title": "Explainer: how Panama Canal expansion will transform shipping once again",
+      "url": "https://archive.news.ufl.edu/articles/2016/06/explainer-how-panama-canal-expansion-will-transform-shipping-once-again-1.html",
+      "accessed": "2026-10-09",
+      "license": "UF terms of use",
+      "use": "fact_only",
+      "note": null
+    }
+  ],
+  "facts": [
+    {
+      "id": "f1",
+      "text": "A French effort to build a canal across Panama began in the 1880s and failed by the end of that decade.",
+      "source_ids": [
+        "s1",
+        "s2"
+      ],
+      "kind": "event"
+    },
+    {
+      "id": "f2",
+      "text": "Tropical diseases, mainly yellow fever and malaria, killed about 20,000 people during the French effort.",
+      "source_ids": [
+        "s1",
+        "s2"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f3",
+      "text": "The French planned a channel at sea level; cutting such a channel through the mountains proved too difficult.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f4",
+      "text": "The United States took over the work in 1904 and completed the canal in 1914, after about ten years of work.",
+      "source_ids": [
+        "s1",
+        "s2"
+      ],
+      "kind": "date"
+    },
+    {
+      "id": "f5",
+      "text": "American engineers dammed the Chagres River, the main river in the canal's path, which created Gatun Lake.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "event"
+    },
+    {
+      "id": "f6",
+      "text": "Gatun Lake lies about 85 feet (26 metres) above sea level.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f7",
+      "text": "Three lock steps at each end of the canal raise ships to the level of Gatun Lake and later lower them back to sea level.",
+      "source_ids": [
+        "s2",
+        "s5"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f8",
+      "text": "The locks use no pumps: water from the lake flows by gravity through underground culverts and valves into the lock chambers.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f9",
+      "text": "Each ship transit uses about 52 million gallons (roughly 200 million litres) of fresh water from Gatun Lake, which then flows out to the sea.",
+      "source_ids": [
+        "s2",
+        "s3"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f10",
+      "text": "The original 1914 locks are about 110 feet wide; electric towing locomotives called mules guide ships through them with steel cables.",
+      "source_ids": [
+        "s2",
+        "s5"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f11",
+      "text": "Larger locks opened in 2016 have basins that capture and reuse part of the water used in each transit.",
+      "source_ids": [
+        "s5"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f12",
+      "text": "Gatun Lake is refilled by rainfall over the surrounding forests.",
+      "source_ids": [
+        "s3",
+        "s4"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f13",
+      "text": "In 2023 a drought left Gatun Lake near record lows, and from July 30 the canal cut the number of ships allowed through each day.",
+      "source_ids": [
+        "s4"
+      ],
+      "kind": "event"
+    },
+    {
+      "id": "f14",
+      "text": "During the 2023 drought the queue of waiting ships grew to about 160, and waiting times rose sharply.",
+      "source_ids": [
+        "s4"
+      ],
+      "kind": "number"
+    }
+  ],
+  "notes": "混合題 mixed-top-05 第 1 組（巴拿馬運河）用。2026-10-09 線上查證。Text B 的船員是虛構人物；等待一週以上是依 f13、f14 寫的個人經驗。"
+}

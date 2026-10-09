@@ -1,0 +1,176 @@
+{
+  "schema": "gsat-bank-facts/v1",
+  "id": "seafood-microplastics-mxa04",
+  "title": "Microplastics in seafood: size, sources, gut removal, bivalves eaten whole, FAO risk view and lost fishing gear",
+  "sdgs": [
+    14
+  ],
+  "created_on": "2026-10-09",
+  "created_by": "claude-opus-5-5",
+  "sources": [
+    {
+      "id": "s1",
+      "publisher": "NOAA National Ocean Service",
+      "title": "What are microplastics?",
+      "url": "https://oceanservice.noaa.gov/facts/microplastics.html",
+      "accessed": "2026-10-09",
+      "license": "public domain (U.S. government work)",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s2",
+      "publisher": "FAO",
+      "title": "Microplastics in fisheries and aquaculture (Fisheries and Aquaculture Technical Paper 615, 2017)",
+      "url": "https://openknowledge.fao.org/server/api/core/bitstreams/a9a298e0-9db6-4769-beac-37325be3e280/content",
+      "accessed": "2026-10-09",
+      "license": "FAO terms of use",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s3",
+      "publisher": "FAO",
+      "title": "Ghost nets hurting marine environment",
+      "url": "https://www.fao.org/newsroom/detail/Ghost-nets-hurting-marine-environment/",
+      "accessed": "2026-10-09",
+      "license": "FAO terms of use",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s4",
+      "publisher": "UNEP",
+      "title": "Fishing nets: the double-edged plastic swords in our ocean",
+      "url": "https://www.unep.org/technical-highlight/fishing-nets-double-edged-plastic-swords-our-ocean",
+      "accessed": "2026-10-09",
+      "license": "UNEP terms of use",
+      "use": "fact_only",
+      "note": null
+    }
+  ],
+  "facts": [
+    {
+      "id": "f1",
+      "text": "Microplastics are plastic pieces smaller than five millimeters.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "definition"
+    },
+    {
+      "id": "f2",
+      "text": "A five-millimeter piece is about the size of a pencil eraser.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f3",
+      "text": "Some microplastics, such as microbeads once used in cleansers, are made small on purpose.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f4",
+      "text": "Many microplastics come from larger plastic items breaking down into smaller pieces.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f5",
+      "text": "Sea animals can mistake microplastics for food and swallow them.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f6",
+      "text": "In exposed fish, most microplastics are found in the digestive tract.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f7",
+      "text": "The gut of most seafood is removed before eating, which lowers exposure.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f8",
+      "text": "Bivalves such as mussels and oysters are usually eaten whole.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f9",
+      "text": "FAO judged the health risk from microplastics in seafood to be low with current knowledge.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f15",
+      "text": "FAO says the risk should be weighed against the health benefits of eating seafood.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f10",
+      "text": "Much about the smallest particles (nanoplastics) is still unknown; more research is needed.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f11",
+      "text": "Fishing gear lost at sea can keep catching fish for months or even years.",
+      "source_ids": [
+        "s3"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f12",
+      "text": "Most fishing gear is lost by accident, for example in storms or strong currents.",
+      "source_ids": [
+        "s3"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f13",
+      "text": "Nets left in the ocean can break down into microplastic pieces.",
+      "source_ids": [
+        "s4"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f14",
+      "text": "FAO supports low- or no-cost port facilities where fishers can hand in old or recovered gear.",
+      "source_ids": [
+        "s3"
+      ],
+      "kind": "other"
+    }
+  ],
+  "datasets": [],
+  "notes": "混合題 mixed-advanced-04 第 3 組用（2026-10-09 線上查證，只取事實、不取原句）。Text A 的海洋科學家與 Text B 的漁夫都是虛構的敘述者；漁夫的四十年資歷、港口免費回收垃圾與舊網是他個人的經驗敘述（符合 s3 建議的做法），不當成特定港口的史實。選文的 a large review by a United Nations agency 指 s2（FAO 2017）。"
+}
