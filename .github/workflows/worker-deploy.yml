@@ -108,40 +108,8 @@ jobs:
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-        run: |
-          # token 經 curl 的設定檔（從 stdin 讀）傳入，不放在指令列上。
-          printf 'header = "Authorization: Bearer %s"\n' "$CLOUDFLARE_API_TOKEN" \
-            | curl -sS --max-time 30 -K - "$CF_API/accounts/$CLOUDFLARE_ACCOUNT_ID/workers/subdomain" \
-            > "$RUNNER_TEMP/cf-subdomain.json"
-          node -e '
-            const fs = require("fs");
-            let r = null;
-            try { r = JSON.parse(fs.readFileSync(process.argv[1], "utf8")); } catch {}
-            const sub = r && r.success && r.result && r.result.subdomain;
-            if (sub) {
-              fs.appendFileSync(process.env.GITHUB_OUTPUT, "subdomain=" + sub + "\n");
-              console.log("workers.dev 子網域：" + sub + ".workers.dev");
-              console.log("Worker 網址會是：https://" + process.env.WORKER_NAME + "." + sub + ".workers.dev");
-              process.exit(0);
-            }
-            const errs = (r && Array.isArray(r.errors)) ? r.errors : [];
-            const codes = errs.map((e) => e.code);
-            const detail = errs.map((e) => "[" + e.code + "] " + e.message).join("；") || "回應不是 Cloudflare API 的 JSON";
-            if (codes.includes(10007)) {
-              console.log("::error::這個 Cloudflare 帳號還沒有 workers.dev 子網域。請到 Cloudflare 儀表板 → Workers & Pages，" +
-                "第一次進入時會要求設定子網域（或在 Workers & Pages 概觀頁右側的「Subdomain」設定；直接網址 " +
-                "https://dash.cloudflare.com/?to=/:account/workers/onboarding ），設定一次後重跑這個 workflow。" +
-                "子網域會出現在 Worker 網址裡，之後 vercel.json 的 rewrites 要指向它。");
-            } else if (codes.includes(7003) || codes.includes(7000)) {
-              console.log("::error::Cloudflare 找不到這個帳號（" + detail + "）。請確認 CLOUDFLARE_ACCOUNT_ID 是 Workers & Pages 概觀頁右側的 Account ID（32 個英數字）。");
-            } else if (codes.some((c) => c === 10000 || c === 9109 || c === 6003 || c === 6111)) {
-              console.log("::error::Cloudflare 拒絕了 API token（" + detail + "）。請確認 CLOUDFLARE_API_TOKEN 是用「Edit Cloudflare Workers」" +
-                "範本建立、Account Resources 選的是 CLOUDFLARE_ACCOUNT_ID 這個帳號，而且 token 沒有過期或被刪除。");
-            } else {
-              console.log("::error::讀不到帳號的 workers.dev 子網域設定：" + detail);
-            }
-            process.exit(1);
-          ' "$RUNNER_TEMP/cf-subdomain.json"
+        # 讀不到子網域時，會再分辨是 token 無效、Account ID 不符還是權限不足（.github/scripts/cf-check-account.mjs）。
+        run: node .github/scripts/cf-check-account.mjs
 
       # wrangler.toml 裡的 database_id 是占位字串。這一步找出（或第一次建立）名為 gsat-english 的 D1，
       # 只在 runner 上把 id 填進 wrangler.toml，不提交回 repo：id 不是機密，但讓 repo 保持與帳號無關，
