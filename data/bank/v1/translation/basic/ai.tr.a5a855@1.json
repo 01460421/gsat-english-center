@@ -478,7 +478,7 @@
       "kind": "program",
       "reviewer": "validate_bank.py",
       "result": "pass",
-      "created_at": "2026-10-09T07:59:03Z",
+      "created_at": "2026-10-09T13:20:55Z",
       "details": {
         "errors": [],
         "warnings": []
@@ -488,21 +488,21 @@
       "kind": "blind_solver",
       "reviewer": "claude-opus-5-5",
       "result": "warn",
-      "created_at": "2026-10-09T07:40:01Z",
+      "created_at": "2026-10-09T12:58:00Z",
       "details": {
         "solver": "A",
         "session_id": null,
         "task": "blind_translation",
         "answers": {
           "1": {
-            "translation": "It is very interesting for me to learn English by watching TV series with English subtitles.",
+            "translation": "It is interesting for me to learn English by watching TV series with English subtitles.",
             "confidence": "high",
-            "explanation_zh": "「透過……來學」用 by + V-ing；「對我來說很有趣」用 It is + adj. + for me + to V 的虛主詞句型；「影集」譯成 TV series，「有英文字幕的」用 with English subtitles 後位修飾。"
+            "explanation_zh": "「對我來說很有趣」用虛主詞 It is + adj. + for me + to V；「透過看……來學」用 by + V-ing 表方法；「有英文字幕的影集」用介系詞片語 with English subtitles 後位修飾；影集譯成 TV series（也可用 TV shows／dramas）。"
           },
           "2": {
-            "translation": "I write down useful sentences from the series, read them aloud, and then use them in my daily life.",
+            "translation": "I copy down useful sentences from the series, read them aloud, and then use them in my daily life.",
             "confidence": "high",
-            "explanation_zh": "三個並列動作用 V1, V2, and then V3；「抄下來」用 write down，「大聲唸出來」用 read aloud；「會」在這裡是習慣，用現在簡單式；「生活中」譯成 in my daily life。"
+            "explanation_zh": "三個並列動作用平行結構 copy down、read ... aloud、and then use；「我會」在這裡是習慣，用現在簡單式；「抄下來」用 copy down（也可 write down）；「大聲唸出來」用 read aloud；「用在生活中」用 use them in my daily life。"
           }
         },
         "review": {
@@ -519,10 +519,8 @@
             "within_accepted": true,
             "closest_reference": 0,
             "reference_check": "pass",
-            "parts_check": "warn",
-            "issues_zh": [
-              "第 4 部分「對我來說很有趣」的 accepted 沒有「很」最直接的譯法 \"It is very interesting for me\"／\"It is very fun for me\"；我的譯文用的就是 very interesting，不在字面清單內（只差加強語氣的 very，清單已收 really fun，所以判定仍在可接受範圍）。同一部分的常見錯誤把 \"It is very funny for me\" 改成 \"It is fun for me\"，連 very 一起拿掉，評分者可能誤以為 very 不能用；建議補進 \"It is very interesting for me\"、\"It is very fun for me\"、\"is very interesting for me\"，常見錯誤的 right 也改成 \"It is very fun for me\" 只更正 funny。"
-            ]
+            "parts_check": "pass",
+            "issues_zh": []
           },
           "2": {
             "used_patterns": [
@@ -539,11 +537,11 @@
               "life"
             ],
             "within_accepted": true,
-            "closest_reference": 0,
+            "closest_reference": 1,
             "reference_check": "pass",
             "parts_check": "warn",
             "issues_zh": [
-              "第 1 部分「影集裡好用的句子」的 accepted 只有 shows／TV shows，沒有 series／dramas；但 target_words 的 show 已列 alternatives series／drama，第 1 句的 accepted 也收 \"TV series with English subtitles\"，前後不一致。我的譯文 \"useful sentences from the series\" 因此不在字面清單內（規準的 alternatives 認可，判定仍在可接受範圍）；建議補 \"useful sentences from the series\"、\"useful sentences in the series\"、\"useful sentences from the dramas\"。"
+              "第 1 部分「影集裡好用的句子」的 accepted 只收 the shows／the TV shows，沒有收 target_words 已列為 show 的 alternatives 的 series、drama；本句盲譯寫 useful sentences from the series（和第 1 句 accepted 的 TV series 一致），依規準精神應給分，所以 within_accepted 判 true，但建議在 accepted 補 useful sentences from the series／from the TV series／from the dramas，避免批改時被誤扣。"
             ]
           }
         },
@@ -580,16 +578,15 @@
           }
         },
         "problems": [
-          "第 1 題驗證者對4 部分切分有意見（warn）：第 4 部分「對我來說很有趣」的 accepted 沒有「很」最直接的譯法 \"It is very interesting for me\"／\"It is very fun for me\"；我的譯文用的就是 very interesting，",
-          "第 2 題驗證者對4 部分切分有意見（warn）：第 1 部分「影集裡好用的句子」的 accepted 只有 shows／TV shows，沒有 series／dramas；但 target_words 的 show 已列 alternatives series／drama，第 1 句的 "
+          "第 2 題驗證者對4 部分切分有意見（warn）：第 1 部分「影集裡好用的句子」的 accepted 只收 the shows／the TV shows，沒有收 target_words 已列為 show 的 alternatives 的 series、drama；本句盲譯寫 usefu"
         ]
       }
     },
     {
       "kind": "blind_solver",
       "reviewer": "claude-sonnet-5-5",
-      "result": "pass",
-      "created_at": "2026-10-09T07:39:22Z",
+      "result": "fail",
+      "created_at": "2026-10-09T13:20:55Z",
       "details": {
         "solver": "B",
         "session_id": null,
@@ -598,19 +595,17 @@
           "1": {
             "translation": "Learning English by watching TV series with English subtitles is fun for me.",
             "confidence": "high",
-            "explanation_zh": "「透過…來學英文」用 by 接動名詞；「看有英文字幕的影集」用 watching TV series with English subtitles；動名詞當主詞，「對我來說很有趣」用 is fun for me。"
+            "explanation_zh": "「透過看……來學英文」用 by + 動名詞，主詞用動名詞片語；「有趣」譯 fun（interesting 也可）；「對我來說」用 for me。"
           },
           "2": {
-            "translation": "I copy down the useful sentences from the series, read them out loud, and then use them in my daily life.",
+            "translation": "I copy down the useful sentences from the series, read them aloud, and then use them in my daily life.",
             "confidence": "high",
-            "explanation_zh": "三個動作並列（抄下來、大聲唸出來、用在生活中），用 copy down, read them out loud, use them 保持動詞形式一致；「會」表習慣，用現在簡單式；「再」用 then。"
+            "explanation_zh": "三個動作用並列結構：copy down、read aloud、use，以 and then 表示先後順序；現在簡單式表習慣；「好用的句子」譯 useful sentences。"
           }
         },
         "review": {
           "1": {
-            "used_patterns": [
-              "NFSUBJ"
-            ],
+            "used_patterns": [],
             "used_target_words": [
               "watch",
               "show",
@@ -620,9 +615,10 @@
             "within_accepted": true,
             "closest_reference": 0,
             "reference_check": "pass",
-            "parts_check": "pass",
+            "parts_check": "warn",
             "issues_zh": [
-              "（提醒，不影響判定）我自然寫出的是動名詞片語當主詞（Learning English by watching … is fun for me），不是 It is fun for me to …；程式的 NFSUBJ 兩者都算，但這一句 patterns 的 label_zh／frame 只寫「虛主詞 It＋形容詞＋不定詞」，建議把標籤放寬成「虛主詞 It…to 或動名詞片語當主詞」，免得學生用動名詞主詞時被誤判沒用到句型。"
+              "我的譯文用動名詞片語當主詞（Learning English by watching … is fun for me），沒有用到標的句型 NFSUBJ 所寫的虛主詞 It（It is + 形容詞 + for + 人 + to + 原形動詞）。中文「……對我來說很有趣」同樣自然地對應動名詞主詞，題目沒有把學生引向 It 句型。",
+              "第 4 部分 accepted 收了 is fun for me、is interesting for me（沒有 It），第 3 部分也收了 learning English，所以動名詞主詞的寫法照樣拿滿分，卻沒用到標的句型。建議把標的句型改成「非限定動詞當主詞」（動名詞或虛主詞 It 皆可），或調整中文讓 It … to 更自然（例如主詞更長、後面再接補充）。"
             ]
           },
           "2": {
@@ -642,8 +638,10 @@
             "within_accepted": true,
             "closest_reference": 1,
             "reference_check": "pass",
-            "parts_check": "pass",
-            "issues_zh": []
+            "parts_check": "warn",
+            "issues_zh": [
+              "第 1 部分 accepted 只收 shows 的寫法（from the shows、in the shows、from the TV shows），沒有 series、dramas；但 target_words 的 show 有列 series、drama 當替代詞，同組第 1 題也收了 TV series／TV dramas。我的譯文寫 the useful sentences from the series，語意正確、標的詞彙也算命中，所以判為落在可接受範圍內，不過建議在 accepted 補上 from the series、from the TV series、from the dramas。"
+            ]
           }
         },
         "checks": {
@@ -655,9 +653,7 @@
               "fun"
             ],
             "target_hit_rate": 1.0,
-            "patterns_detected": {
-              "NFSUBJ": true
-            },
+            "patterns_detected": {},
             "program_match": false
           },
           "2": {
@@ -678,10 +674,14 @@
             "program_match": false
           }
         },
-        "problems": []
+        "problems": [
+          "第 1 題盲譯沒有用到標的句型 ['NFSUBJ']：中文題目沒有自然引出這個句型（SPEC §5.7）",
+          "第 1 題驗證者對4 部分切分有意見（warn）：我的譯文用動名詞片語當主詞（Learning English by watching … is fun for me），沒有用到標的句型 NFSUBJ 所寫的虛主詞 It（It is + 形容詞 + for + 人 + to + 原形動詞）",
+          "第 2 題驗證者對4 部分切分有意見（warn）：第 1 部分 accepted 只收 shows 的寫法（from the shows、in the shows、from the TV shows），沒有 series、dramas；但 target_words 的 show 有列 se"
+        ]
       }
     }
   ],
-  "status": "verified",
-  "status_reason": null
+  "status": "rejected",
+  "status_reason": "兩次獨立判定結果不一致（第一次 verified、第二次 rejected），從嚴退件。判定者第 1 輪（人工審核）：第 1 題的標的句型（NFSUBJ／gp-it-adj-to：It is + 形容詞 + for + 人 + to + 原形動詞）沒有唯一的觸發詞。「透過看…影集來學英文，對我來說很有趣」同樣自然地引出動名詞主詞（Learning English by watching … is fun for me），驗證者 B 盲譯就寫成動名詞主詞，而評分規準第 3、4 部分也收 learning English、is fun for me，等於不用虛主詞 It 也拿滿分，這一句教不到、也考不到標的句型（批次規格 design.recipe：核心句構要有唯一的觸發詞）。另外兩位驗證者都指出第 2 題第 1 部分 accepted 只收 shows，沒有 target_words 已列為替代詞的 series／drama（第 1 題卻收了 TV series／TV dramas），前後不一致。重生時請讓中文更自然地導向 It … to（例如不定詞片語更長、後面還有補充，讓虛主詞明顯較通順），或改用動名詞主詞當標的；並在第 2 題第 1 部分補 useful sentences from the series／from the TV series／from the dramas。"
 }

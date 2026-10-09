@@ -1,0 +1,634 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.d82fcf",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "basic",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "我把日記本放在床頭，好讓自己每天晚上都能寫幾句。",
+        "options": null,
+        "answer": "I keep my diary by my bed so that I can write a few sentences every night.",
+        "accepted_answers": [
+          "I put my diary next to my bed so that I can write a few lines every night."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "目的副詞子句 so that"
+          ],
+          "topic": "寫日記"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "到目前為止，我已經寫了超過一百頁的英文日記。",
+        "options": null,
+        "answer": "So far, I have written more than one hundred pages of my English diary.",
+        "accepted_answers": [
+          "Up to now, I have already written over a hundred pages in my English diary."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "現在完成式"
+          ],
+          "topic": "寫日記"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "寫日記"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「好讓自己…能…」表示目的，用 so that＋S＋can＋原形動詞；so that 後面要接完整子句，主詞用 I，不用 myself。「把日記本放在床頭」可寫 keep／put my diary by／next to my bed（日記本就是 diary）。「幾句」是 a few sentences，a few 後面接複數名詞；every 後面則接單數 night。",
+          "evidence": [
+            "好讓自己",
+            "寫幾句"
+          ],
+          "strategy_zh": "「好讓／以便…能…」→ so that＋S＋can＋VR；先寫完前面的動作，再用 so that 接上目的子句。",
+          "hints": [
+            "切成四段：我把日記本放在床頭／好讓自己／每天晚上／都能寫幾句",
+            "標的詞彙：diary（日記）、bed（床）、night（晚上）、write（寫）、sentence（句子）",
+            "句型框架：S + V … so that + S + can + VR …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「到目前為止…已經…」表示從過去累積到現在的結果，用現在完成式 have written（write 的過去分詞是 written）。「到目前為止」是 so far／up to now；「超過一百頁」是 more than（over）one hundred pages，page 用複數；「英文日記」是 my English diary（English 不寫成 England）。",
+          "evidence": [
+            "到目前為止",
+            "已經寫了"
+          ],
+          "strategy_zh": "看到「到目前為止、已經、至今」先想現在完成式；主詞 I 用 have，接過去分詞。",
+          "hints": [
+            "切成四段：到目前為止／我已經寫了／超過一百頁／的英文日記",
+            "標的詞彙：so far（到目前為止）、write（寫）、more than（超過）、page（頁）、diary（日記）",
+            "句型框架：So far, S + have/has + p.p. …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "I keep my diary by my bed so that I can write a few sentences every night.",
+            "I put my diary next to my bed so that I can write a few lines every night."
+          ],
+          "target_words": [
+            {
+              "word": "diary",
+              "zh": "日記（本）",
+              "alternatives": [
+                "journal"
+              ]
+            },
+            {
+              "word": "bed",
+              "zh": "床"
+            },
+            {
+              "word": "night",
+              "zh": "晚上",
+              "alternatives": [
+                "evening"
+              ]
+            },
+            {
+              "word": "write",
+              "zh": "寫"
+            },
+            {
+              "word": "sentence",
+              "zh": "句子",
+              "alternatives": [
+                "line",
+                "word"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PURP",
+              "grammar_id": "gp-so-that-purpose",
+              "label_zh": "目的副詞子句 so that（好讓…能…）",
+              "frame": "S + V … so that + S + can + VR …",
+              "zh_trigger": "好讓"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "我把日記本放在床頭",
+              "accepted": [
+                "I keep my diary by my bed",
+                "I put my diary next to my bed",
+                "I keep my diary next to my bed",
+                "I put my diary beside my bed",
+                "I keep my diary beside my bed",
+                "I put my diary by my bed"
+              ],
+              "targets": [
+                "diary",
+                "bed"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "I put my diary book on my bed head",
+                  "right": "I keep my diary by my bed",
+                  "explanation_zh": "「床頭」是床邊，用 by／next to／beside my bed，bed head 是逐字直譯；日記本就是 diary，不必加 book。"
+                }
+              ]
+            },
+            {
+              "zh": "好讓自己",
+              "accepted": [
+                "so that I can",
+                "so I can",
+                "so that I am able to",
+                "so that I will be able to"
+              ],
+              "targets": [
+                "PURP"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "so that myself can",
+                  "right": "so that I can",
+                  "explanation_zh": "so that 後面接完整子句，主詞用主格 I，不用 myself。"
+                }
+              ]
+            },
+            {
+              "zh": "每天晚上",
+              "accepted": [
+                "every night",
+                "each night",
+                "every evening"
+              ],
+              "targets": [
+                "night"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "every nights",
+                  "right": "every night",
+                  "explanation_zh": "every 後面接單數名詞。"
+                }
+              ]
+            },
+            {
+              "zh": "都能寫幾句",
+              "accepted": [
+                "write a few sentences",
+                "write a few lines",
+                "write several sentences"
+              ],
+              "targets": [
+                "write",
+                "sentence"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "write a few sentence",
+                  "right": "write a few sentences",
+                  "explanation_zh": "a few 後面接複數可數名詞。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "plural_countable",
+              "zh": "寫幾句",
+              "literal_error": "I keep my diary by my bed so that I can write a few sentence every night.",
+              "part": 4,
+              "explanation_zh": "中文「幾句」沒有複數標記，照字面寫成 a few sentence 會扣分；a few 後面要接複數 sentences。"
+            }
+          ],
+          "bonus": []
+        },
+        "2": {
+          "references": [
+            "So far, I have written more than one hundred pages of my English diary.",
+            "Up to now, I have already written over a hundred pages in my English diary."
+          ],
+          "target_words": [
+            {
+              "word": "so far",
+              "zh": "到目前為止",
+              "alternatives": [
+                "up to now",
+                "until now",
+                "by now",
+                "up till now"
+              ]
+            },
+            {
+              "word": "write",
+              "zh": "寫"
+            },
+            {
+              "word": "more than",
+              "zh": "超過",
+              "alternatives": [
+                "over"
+              ]
+            },
+            {
+              "word": "page",
+              "zh": "頁"
+            },
+            {
+              "word": "diary",
+              "zh": "日記",
+              "alternatives": [
+                "journal"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PERF",
+              "grammar_id": "gp-present-perfect",
+              "label_zh": "現在完成式（到目前為止＋have p.p.）",
+              "frame": "So far, S + have/has + p.p. …",
+              "zh_trigger": "已經"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "到目前為止",
+              "accepted": [
+                "So far",
+                "Up to now",
+                "Until now",
+                "By now",
+                "Up till now"
+              ],
+              "targets": [
+                "so far"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "To now",
+                  "right": "So far",
+                  "explanation_zh": "「到目前為止」用 so far、up to now 或 until now，不能逐字寫成 to now。"
+                }
+              ]
+            },
+            {
+              "zh": "我已經寫了",
+              "accepted": [
+                "I have written",
+                "I have already written",
+                "I've written",
+                "I've already written"
+              ],
+              "targets": [
+                "write",
+                "PERF"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "I already wrote",
+                  "right": "I have already written",
+                  "explanation_zh": "「到目前為止…已經」表示從過去累積到現在，用現在完成式 have written。"
+                },
+                {
+                  "wrong": "I have wrote",
+                  "right": "I have written",
+                  "explanation_zh": "write 的過去分詞是 written。"
+                }
+              ]
+            },
+            {
+              "zh": "超過一百頁",
+              "accepted": [
+                "more than one hundred pages",
+                "more than a hundred pages",
+                "over one hundred pages",
+                "over a hundred pages",
+                "more than 100 pages",
+                "over 100 pages"
+              ],
+              "targets": [
+                "more than",
+                "page"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "more than one hundred page",
+                  "right": "more than one hundred pages",
+                  "explanation_zh": "一百多頁，page 用複數 pages。"
+                },
+                {
+                  "wrong": "one hundred more pages",
+                  "right": "more than one hundred pages",
+                  "explanation_zh": "「超過一百頁」是 more than one hundred pages；one hundred more pages 是「再多一百頁」。"
+                }
+              ]
+            },
+            {
+              "zh": "的英文日記",
+              "accepted": [
+                "of my English diary",
+                "in my English diary",
+                "of my diary in English",
+                "in my diary in English",
+                "of English diary entries"
+              ],
+              "targets": [
+                "diary"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "of my England diary",
+                  "right": "of my English diary",
+                  "explanation_zh": "「英文的」是 English；England 是英格蘭（地名）。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "tense_trigger",
+              "zh": "已經",
+              "literal_error": "So far, I already write more than one hundred pages of my English diary.",
+              "part": 2,
+              "explanation_zh": "「到目前為止、已經」是現在完成式的觸發詞，照字面用現在式或只加 already 都不對，要寫 have written。"
+            }
+          ],
+          "bonus": []
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-basic-05",
+    "lot": "translation-basic-05",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "a9e22defa014e90d4fa058a697f2a11423f1ee158f245ae054434d9cca4be9d6",
+    "spec_id": "translation-basic@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T13:28:14Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T13:07:55Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "I put my diary by my bed so that I can write a few sentences every night.",
+            "confidence": "high",
+            "explanation_zh": "「好讓自己…」表目的，用 so that + S + can；「床頭」用 by my bed；put 現在式和過去式同形，不論中文指習慣或一次的動作都通。"
+          },
+          "2": {
+            "translation": "So far, I have written more than one hundred pages in my English diary.",
+            "confidence": "high",
+            "explanation_zh": "「到目前為止」用 so far，搭配現在完成式 have written；「超過」用 more than；「英文日記」寫成 in my English diary 較自然。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PURP"
+            ],
+            "used_target_words": [
+              "diary",
+              "bed",
+              "night",
+              "write",
+              "sentence"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PERF"
+            ],
+            "used_target_words": [
+              "so far",
+              "write",
+              "more than",
+              "page",
+              "diary"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "diary",
+              "bed",
+              "night",
+              "write",
+              "sentence"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PURP": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "so far",
+              "write",
+              "more than",
+              "page",
+              "diary"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PERF": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T13:11:47Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "I put my diary next to my bed so that I can write a few sentences every night.",
+            "confidence": "high",
+            "explanation_zh": "「好讓自己能…」是目的，用 so that + can；「床頭」譯成 next to my bed 或 by my bed；放置動作用 put（也可用 keep 表狀態）。"
+          },
+          "2": {
+            "translation": "So far, I have written more than one hundred pages of English diary entries.",
+            "confidence": "high",
+            "explanation_zh": "「到目前為止」搭配現在完成式 have written；「超過一百頁」用 more than one hundred pages。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PURP"
+            ],
+            "used_target_words": [
+              "diary",
+              "bed",
+              "night",
+              "write",
+              "sentence"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PERF"
+            ],
+            "used_target_words": [
+              "so far",
+              "write",
+              "more than",
+              "page",
+              "diary"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "diary",
+              "bed",
+              "night",
+              "write",
+              "sentence"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PURP": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "so far",
+              "write",
+              "more than",
+              "page",
+              "diary"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PERF": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

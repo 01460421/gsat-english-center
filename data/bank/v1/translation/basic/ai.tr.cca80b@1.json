@@ -1,0 +1,619 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.cca80b",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "basic",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "藉由擦防曬乳（sunscreen），我們可以保護皮膚不受陽光傷害。",
+        "options": null,
+        "answer": "By putting on sunscreen, we can protect our skin from the sun.",
+        "accepted_answers": [
+          "By applying sunscreen, we can protect our skin from sun damage."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "介系詞＋動名詞"
+          ],
+          "topic": "出門擦防曬"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "體育老師已經提醒我們好幾次，上課前一定要擦防曬乳（sunscreen）。",
+        "options": null,
+        "answer": "Our PE teacher has reminded us many times to put on sunscreen before class.",
+        "accepted_answers": [
+          "The PE teacher has already reminded us several times that we must put on sunscreen before class."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "現在完成式"
+          ],
+          "topic": "出門擦防曬"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "出門擦防曬"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「藉由…」用 By＋動名詞表示方法：By putting on sunscreen；by 是介系詞，後面不能接原形動詞。「擦」防曬乳是塗在皮膚上，用 put on／apply／use，不用 wipe（擦掉）。「保護 A 不受 B 傷害」是 protect A from B；skin 在這裡是不可數名詞，不加 s。",
+          "evidence": [
+            "藉由擦防曬乳",
+            "保護皮膚不受陽光傷害"
+          ],
+          "strategy_zh": "「藉由／透過做某事」→ By＋V-ing, S＋V；整句真正的主詞（we）放在逗號後面。",
+          "hints": [
+            "切成四段：藉由擦防曬乳／我們可以保護／皮膚／不受陽光傷害",
+            "標的詞彙：put on（擦上、塗上）、protect（保護）、skin（皮膚）、sun（陽光）",
+            "句型框架：By + V-ing …, S + can + VR …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「已經提醒…好幾次」是到現在為止的經驗，用現在完成式 has reminded（主詞 our PE teacher 是單數，用 has）。「好幾次」是 many／several times，time 指次數時是可數名詞，要加 s。「提醒某人做某事」是 remind sb to VR。",
+          "evidence": [
+            "已經提醒我們好幾次",
+            "上課前一定要擦防曬乳"
+          ],
+          "strategy_zh": "「已經…過幾次」→ have/has＋p.p.＋… times；次數片語常放在受詞後面。",
+          "hints": [
+            "切成四段：體育老師／已經提醒我們／好幾次／上課前一定要擦防曬乳",
+            "標的詞彙：teacher（老師）、remind（提醒）、time（次）、put on（擦上）、class（課）",
+            "句型框架：S + has + p.p. + sb + … times + to VR …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "By putting on sunscreen, we can protect our skin from the sun.",
+            "By applying sunscreen, we can protect our skin from sun damage."
+          ],
+          "target_words": [
+            {
+              "word": "put on",
+              "zh": "擦、塗上",
+              "alternatives": [
+                "apply",
+                "use",
+                "wear"
+              ]
+            },
+            {
+              "word": "protect",
+              "zh": "保護"
+            },
+            {
+              "word": "skin",
+              "zh": "皮膚"
+            },
+            {
+              "word": "sun",
+              "zh": "陽光",
+              "alternatives": [
+                "sunlight",
+                "sunshine"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PREPVING",
+              "grammar_id": "gp-prep-gerund",
+              "label_zh": "介系詞＋動名詞（藉由…：By＋V-ing）",
+              "frame": "By + V-ing …, S + can + VR …",
+              "zh_trigger": "藉由"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "藉由擦防曬乳",
+              "accepted": [
+                "By putting on sunscreen",
+                "By applying sunscreen",
+                "By using sunscreen",
+                "By wearing sunscreen",
+                "By putting sunscreen on"
+              ],
+              "targets": [
+                "put on",
+                "PREPVING"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "By put on sunscreen",
+                  "right": "By putting on sunscreen",
+                  "explanation_zh": "by 是介系詞，後面接動名詞 putting。"
+                },
+                {
+                  "wrong": "By wiping sunscreen",
+                  "right": "By putting on sunscreen",
+                  "explanation_zh": "「擦」防曬乳是塗在皮膚上，用 put on／apply；wipe 是「擦掉」。"
+                }
+              ]
+            },
+            {
+              "zh": "我們可以保護",
+              "accepted": [
+                "we can protect",
+                "we are able to protect"
+              ],
+              "targets": [
+                "protect"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "we can protecting",
+                  "right": "we can protect",
+                  "explanation_zh": "助動詞 can 後面接原形動詞。"
+                }
+              ]
+            },
+            {
+              "zh": "皮膚",
+              "accepted": [
+                "our skin"
+              ],
+              "targets": [
+                "skin"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "our skins",
+                  "right": "our skin",
+                  "explanation_zh": "這裡的 skin 指身體表面的皮膚，是不可數名詞，不加 s。"
+                }
+              ]
+            },
+            {
+              "zh": "不受陽光傷害",
+              "accepted": [
+                "from the sun",
+                "from sun damage",
+                "from the sunlight",
+                "from sunlight",
+                "from the strong sun",
+                "from being hurt by the sun",
+                "from being damaged by the sun",
+                "from strong sunlight"
+              ],
+              "targets": [
+                "sun"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "not to be hurt by the sun",
+                  "right": "from the sun",
+                  "explanation_zh": "「保護 A 不受 B 傷害」用 protect A from B，不要逐字翻成 not to be hurt。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "collocation",
+              "zh": "不受陽光傷害",
+              "literal_error": "By putting on sunscreen, we can protect our skin not to be hurt by the sun.",
+              "part": 4,
+              "explanation_zh": "「保護…不受…」照字面翻會寫出 protect … not to be hurt，正確搭配是 protect A from B。"
+            }
+          ],
+          "bonus": []
+        },
+        "2": {
+          "references": [
+            "Our PE teacher has reminded us many times to put on sunscreen before class.",
+            "The PE teacher has already reminded us several times that we must put on sunscreen before class."
+          ],
+          "target_words": [
+            {
+              "word": "teacher",
+              "zh": "老師"
+            },
+            {
+              "word": "remind",
+              "zh": "提醒"
+            },
+            {
+              "word": "time",
+              "zh": "次（好幾次 many times）"
+            },
+            {
+              "word": "put on",
+              "zh": "擦上",
+              "alternatives": [
+                "apply",
+                "use",
+                "wear"
+              ]
+            },
+            {
+              "word": "class",
+              "zh": "課"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PERF",
+              "grammar_id": "gp-present-perfect",
+              "label_zh": "現在完成式（已經…好幾次：到現在為止的經驗）",
+              "frame": "S + has + p.p. + sb + … times …",
+              "zh_trigger": "已經提醒"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "體育老師",
+              "accepted": [
+                "Our PE teacher",
+                "The PE teacher",
+                "Our gym teacher"
+              ],
+              "targets": [
+                "teacher"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "PE teacher has reminded",
+                  "right": "Our PE teacher has reminded",
+                  "explanation_zh": "單數可數名詞 teacher 前要有限定詞，例如 our 或 the。"
+                }
+              ]
+            },
+            {
+              "zh": "已經提醒我們",
+              "accepted": [
+                "has reminded us",
+                "has already reminded us"
+              ],
+              "targets": [
+                "remind",
+                "PERF"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "already reminds us",
+                  "right": "has already reminded us",
+                  "explanation_zh": "「已經…好幾次」是到現在為止的經驗，用現在完成式 has reminded。"
+                },
+                {
+                  "wrong": "have reminded us",
+                  "right": "has reminded us",
+                  "explanation_zh": "主詞 our PE teacher 是單數，助動詞用 has。"
+                }
+              ]
+            },
+            {
+              "zh": "好幾次",
+              "accepted": [
+                "many times",
+                "several times",
+                "a few times",
+                "again and again"
+              ],
+              "targets": [
+                "time"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "many time",
+                  "right": "many times",
+                  "explanation_zh": "表示「次數」的 time 是可數名詞，好幾次用複數 times。"
+                }
+              ]
+            },
+            {
+              "zh": "上課前一定要擦防曬乳",
+              "accepted": [
+                "to put on sunscreen before class",
+                "that we must put on sunscreen before class",
+                "to apply sunscreen before class",
+                "to use sunscreen before class",
+                "that we should put on sunscreen before class",
+                "to put on sunscreen before PE class",
+                "to wear sunscreen before class"
+              ],
+              "targets": [
+                "put on",
+                "class"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "to putting on sunscreen before class",
+                  "right": "to put on sunscreen before class",
+                  "explanation_zh": "remind sb to＋原形動詞。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "tense_trigger",
+              "zh": "已經",
+              "literal_error": "Our PE teacher already reminds us many times to put on sunscreen before class.",
+              "part": 2,
+              "explanation_zh": "「已經…好幾次」是現在完成式的觸發詞，照字面寫成現在式 reminds 會扣分，要寫 has reminded。"
+            }
+          ],
+          "bonus": []
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-basic-05",
+    "lot": "translation-basic-05",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "a9e22defa014e90d4fa058a697f2a11423f1ee158f245ae054434d9cca4be9d6",
+    "spec_id": "translation-basic@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 2,
+    "sentences": 2,
+    "avg_sentence_length": 1.0,
+    "denominator": 2,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 1.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {
+      "off": 2
+    },
+    "offlist_words": [
+      "sunscreen"
+    ],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T13:28:15Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T13:07:55Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "By putting on sunscreen, we can protect our skin from being damaged by the sun.",
+            "confidence": "high",
+            "explanation_zh": "「藉由…」用 by + V-ing；「保護…不受…」用 protect A from B，from 後面接動名詞被動 being damaged by the sun；「擦」防曬乳用 put on。"
+          },
+          "2": {
+            "translation": "Our PE teacher has reminded us several times that we must put on sunscreen before class.",
+            "confidence": "high",
+            "explanation_zh": "「已經提醒我們好幾次」到現在為止的次數，用現在完成式 has reminded；「一定要」保留成 that 子句的 must（remind us to put on 也可）；「好幾次」用 several times。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PREPVING"
+            ],
+            "used_target_words": [
+              "put on",
+              "protect",
+              "skin",
+              "sun"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PERF"
+            ],
+            "used_target_words": [
+              "teacher",
+              "remind",
+              "time",
+              "put on",
+              "class"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "put on",
+              "protect",
+              "skin",
+              "sun"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PREPVING": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "teacher",
+              "remind",
+              "time",
+              "put on",
+              "class"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PERF": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "fail",
+      "created_at": "2026-10-09T13:11:47Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "By applying sunscreen, we can protect our skin from the sun's harmful rays.",
+            "confidence": "high",
+            "explanation_zh": "「藉由…」用 by + V-ing；「擦防曬乳」用 apply sunscreen；「保護…不受…傷害」用 protect ... from ...。"
+          },
+          "2": {
+            "translation": "The PE teacher has reminded us several times that we must put on sunscreen before class.",
+            "confidence": "high",
+            "explanation_zh": "「已經提醒好幾次」用現在完成式 has reminded us several times；「一定要」用 must；「擦防曬乳」用 put on sunscreen。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PREPVING"
+            ],
+            "used_target_words": [
+              "put on",
+              "protect",
+              "skin",
+              "sun"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PERF"
+            ],
+            "used_target_words": [
+              "teacher",
+              "remind",
+              "time",
+              "put on",
+              "class"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "put on",
+              "protect",
+              "skin"
+            ],
+            "target_hit_rate": 0.75,
+            "patterns_detected": {
+              "PREPVING": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "teacher",
+              "remind",
+              "time",
+              "put on",
+              "class"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PERF": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 1 題盲譯只用到 3/4 個標的詞彙（沒用到 ['sun']；至少 80%）：中文題目可能沒有自然引出標的詞彙，或要在 alternatives 補可接受的換字",
+          "第 1 題驗證者說用了 ['sun']，程式在譯文裡找不到"
+        ]
+      }
+    }
+  ],
+  "status": "rejected",
+  "status_reason": "blind_solver:B 未通過：第 1 題盲譯只用到 3/4 個標的詞彙（沒用到 ['sun']；至少 80%）：中文題目可能沒有自然引出標的詞彙，或要在 alternatives 補可接受的換字；第 1 題驗證者說用了 ['sun']，程式在譯文裡找不到；判定者人工審查（第 1 輪）：同意退回，但主因是程式比對：B 的盲譯 from the sun's harmful rays 其實有 sun，程式把所有格 sun's 當成一個字，比對不到標的詞 sun（工具限制，已回報）。題目本身另有一處要補：第 1 題第 4 部分「不受陽光傷害」accepted 沒收 from the sun's (harmful) rays、from UV rays、from harmful sunlight 這類常見正確寫法（B 自評 within_accepted 為 true，實際不在清單內）。重生時補進第 4 部分 accepted；中文題目、參考譯文、第 2 題都沒有問題。"
+}

@@ -435,7 +435,7 @@
       "kind": "program",
       "reviewer": "validate_bank.py",
       "result": "pass",
-      "created_at": "2026-10-09T07:59:03Z",
+      "created_at": "2026-10-09T13:20:56Z",
       "details": {
         "errors": [],
         "warnings": []
@@ -445,7 +445,7 @@
       "kind": "blind_solver",
       "reviewer": "claude-opus-5-5",
       "result": "pass",
-      "created_at": "2026-10-09T07:40:01Z",
+      "created_at": "2026-10-09T12:58:00Z",
       "details": {
         "solver": "A",
         "session_id": null,
@@ -453,13 +453,13 @@
         "answers": {
           "1": {
             "translation": "On weekends, we read, draw, and play games with the children at the community center.",
-            "confidence": "high",
-            "explanation_zh": "「陪小朋友讀書、畫畫和玩遊戲」把三個並列動詞放在 with the children 前面，表示一起做；週末的固定活動用現在簡單式。"
+            "confidence": "medium",
+            "explanation_zh": "三個並列動詞用平行結構 read, draw, and play games；「陪小朋友」用 with the children 表一起做；週末的習慣用現在簡單式。「讀書」在這裡解為和小朋友一起閱讀（read），也可能解為「念書、寫功課」（study），中文略有歧義，所以信心給 medium。"
           },
           "2": {
             "translation": "Last month, we were even invited to perform at the center's Christmas party.",
             "confidence": "high",
-            "explanation_zh": "「被邀請」用被動語態 be invited to V；「上個月」用過去式 were；「還」在這裡有「甚至」的意味，用 even（用 also 也通）；「中心的聖誕晚會」用 the center's Christmas party。"
+            "explanation_zh": "「被邀請」用被動語態 were invited + to V；「上個月」用過去式；「還」在這裡是「甚至、更進一步」的意思，譯成 even；「中心的聖誕晚會」用 the center's Christmas party。"
           }
         },
         "review": {
@@ -536,22 +536,22 @@
     {
       "kind": "blind_solver",
       "reviewer": "claude-sonnet-5-5",
-      "result": "warn",
-      "created_at": "2026-10-09T07:39:22Z",
+      "result": "fail",
+      "created_at": "2026-10-09T13:20:56Z",
       "details": {
         "solver": "B",
         "session_id": null,
         "task": "blind_translation",
         "answers": {
           "1": {
-            "translation": "On weekends, we spend time with little kids at the community center, reading, drawing, and playing games together.",
+            "translation": "On weekends, we keep the children company at the community center, reading, drawing, and playing games with them.",
             "confidence": "medium",
-            "explanation_zh": "「陪小朋友」可譯成 spend time with 或 keep…company，這裡用 spend time with 後接分詞片語列出三個活動（reading, drawing, playing games），維持平行結構；習慣用現在簡單式。「陪…讀書」的寫法不只一種，所以信心給 medium。"
+            "explanation_zh": "「陪」譯 keep ... company；讀書、畫畫、玩遊戲三項並列，用分詞片語接在後面。「讀書」是看書還是念書略有歧義，我取 reading，信心 medium。"
           },
           "2": {
             "translation": "Last month, we were also invited to perform at the center's Christmas party.",
             "confidence": "high",
-            "explanation_zh": "「我們被邀請」是被動語態 were invited；邀請的目的用 to perform；「上個月」是過去的時間，用過去式；「還」譯成 also。"
+            "explanation_zh": "「被邀請」用被動語態 were invited to + 原形動詞；「上個月」搭配過去式；「還」譯 also；「在聖誕晚會上表演」用 perform at。"
           }
         },
         "review": {
@@ -567,13 +567,13 @@
               "play",
               "game"
             ],
-            "within_accepted": true,
+            "within_accepted": false,
             "closest_reference": 0,
             "reference_check": "pass",
             "parts_check": "warn",
             "issues_zh": [
-              "「陪小朋友」這一部分的 accepted 全部只有 with children／with kids 這類介系詞片語，而且在英文裡要排到動詞（read, draw, play games）後面，和中文順序相反；學生若把「陪」譯成 keep the children company、accompany the children 或 spend time with the children 都沒有對應的可接受寫法，建議補進 accepted。",
-              "我的盲譯是 spend time with little kids … , reading, drawing, and playing games together（分詞並列），各部分語意都對得上 accepted，但這種整句結構沒列入 references，我判為落在可接受範圍內（within_accepted=true），建議一併補上分詞並列的寫法。"
+              "我把「陪」譯成 keep the children company，並用 reading, drawing, and playing games with them 三個現在分詞並列接在後面。第 3 部分 accepted 只收 with children／with kids 這類 with 結構，沒有 keep … company、accompany、spend time with；第 4 部分只收原形動詞並列（read, draw, and play games），沒有收分詞並列的寫法。",
+              "中文「陪」本來就有陪伴的意思，這些譯法都正確自然，是評分規準偏窄。建議在第 3 部分補 keep the children company、spend time with the children、accompany the children，並在第 4 部分補 reading, drawing, and playing games。另外「讀書」可以是看書或念書，略有歧義（accepted 已收 read 與 study）。"
             ]
           },
           "2": {
@@ -626,11 +626,12 @@
           }
         },
         "problems": [
-          "第 1 題驗證者對4 部分切分有意見（warn）：「陪小朋友」這一部分的 accepted 全部只有 with children／with kids 這類介系詞片語，而且在英文裡要排到動詞（read, draw, play games）後面，和中文順序相反；學生若把「陪」譯成 keep t"
+          "第 1 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義",
+          "第 1 題驗證者對4 部分切分有意見（warn）：我把「陪」譯成 keep the children company，並用 reading, drawing, and playing games with them 三個現在分詞並列接在後面。第 3 部分 accepted 只收 with "
         ]
       }
     }
   ],
-  "status": "verified",
-  "status_reason": null
+  "status": "rejected",
+  "status_reason": "兩次獨立判定結果不一致（第一次 verified、第二次 rejected），從嚴退件。判定者第 1 輪（人工審核）：第 1 題評分規準過窄。「陪小朋友」的「陪」是本句的關鍵詞，但第 3 部分 accepted 只收 with children 一類，沒有 keep the children company、spend time with the children、accompany the children 等正確寫法；第 4 部分只收原形動詞並列，沒有 … , reading, drawing, and playing games with them 這種分詞並列（仍是平行結構）。驗證者 B 的盲譯 On weekends, we keep the children company at the community center, reading, drawing, and playing games with them. 正確自然卻落在可接受寫法外（blind_solver:B 判 fail）；常見錯誤也沒有處理學生最容易寫錯的 accompany the children to read／accompany children reading。重生時請補進上述 accepted 與參考譯文，並把「陪」的常見錯誤寫進 common_errors。"
 }

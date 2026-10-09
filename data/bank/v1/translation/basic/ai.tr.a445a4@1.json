@@ -1,0 +1,662 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.a445a4",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "basic",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "這學期，同學們如果想換座位，一定要先問過導師。",
+        "options": null,
+        "answer": "If students want to change seats this semester, they must ask the teacher first.",
+        "accepted_answers": [
+          "This semester, students have to ask their homeroom teacher first if they want to change seats."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "條件子句"
+          ],
+          "topic": "新學期換座位"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "為了看清楚黑板，我這次選了第一排的座位。",
+        "options": null,
+        "answer": "To see the blackboard clearly, I chose a seat in the first row this time.",
+        "accepted_answers": [
+          "This time, I chose a seat in the front row in order to see the blackboard clearly."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "不定詞表目的"
+          ],
+          "topic": "新學期換座位"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "新學期換座位"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「如果…」用條件子句 If＋S＋V（現在式），主要子句接「一定要」must／have to＋原形動詞。條件子句用現在式表示未來，不用 will。「換座位」是和別人互換，英文固定用複數 change seats；ask 後面直接接人（ask the teacher），不加 to。",
+          "evidence": [
+            "如果想換座位",
+            "一定要先問過導師"
+          ],
+          "strategy_zh": "條件句可以先寫 If 子句再接逗號和主要子句，也可以把 if 子句放在句尾（前面不加逗號）。",
+          "hints": [
+            "切成四段：這學期／同學們如果想換座位／一定要先問過／導師",
+            "標的詞彙：semester（學期）、change（換）、seat（座位）、ask（問）、teacher（導師）",
+            "句型框架：If + S + V(現在式), S + must/have to + VR"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「為了…」表目的，句首用不定詞 To＋原形動詞（或 In order to），後面加逗號再接主要子句。「看清楚」是 see … clearly（副詞修飾動詞）。「選了」是已經發生的事，用過去式 chose（choose 是不規則動詞，不寫 choosed）；座位的「排」是 row，「第一排」說 in the first row／front row。",
+          "evidence": [
+            "為了看清楚黑板",
+            "選了"
+          ],
+          "strategy_zh": "目的放句首時，不定詞片語後面加逗號，再接完整的主要子句；主要子句的時態看中文的「了」。",
+          "hints": [
+            "切成四段：為了看清楚黑板／這次／選了／第一排的座位",
+            "標的詞彙：see（看）、blackboard（黑板）、clearly（清楚地）、time（次）、choose（選）、seat（座位）、row（排）",
+            "句型框架：To + VR …, S + V(過去式) …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "If students want to change seats this semester, they must ask the teacher first.",
+            "This semester, students have to ask their homeroom teacher first if they want to change seats."
+          ],
+          "target_words": [
+            {
+              "word": "semester",
+              "zh": "學期",
+              "alternatives": [
+                "term"
+              ]
+            },
+            {
+              "word": "change",
+              "zh": "換",
+              "alternatives": [
+                "switch"
+              ]
+            },
+            {
+              "word": "seat",
+              "zh": "座位"
+            },
+            {
+              "word": "ask",
+              "zh": "問"
+            },
+            {
+              "word": "teacher",
+              "zh": "導師"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "ADVCL",
+              "grammar_id": "gp-condition-real",
+              "label_zh": "條件子句（if＋現在式）",
+              "frame": "If + S + V(現在式), S + must/have to + VR",
+              "zh_trigger": "如果"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "這學期",
+              "accepted": [
+                "this semester",
+                "this term"
+              ],
+              "targets": [
+                "semester"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "this semster",
+                  "right": "this semester",
+                  "explanation_zh": "拼字要注意：semester。"
+                }
+              ]
+            },
+            {
+              "zh": "同學們如果想換座位",
+              "accepted": [
+                "If students want to change seats",
+                "if they want to change seats",
+                "If classmates want to change seats",
+                "If students want to switch seats",
+                "if they want to switch seats",
+                "If anyone wants to change seats",
+                "If students would like to change seats"
+              ],
+              "targets": [
+                "change",
+                "seat",
+                "ADVCL"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "If students want to change seat",
+                  "right": "If students want to change seats",
+                  "explanation_zh": "「換座位」是和別人互換，英文固定用複數 change seats。"
+                },
+                {
+                  "wrong": "If students will want to change seats",
+                  "right": "If students want to change seats",
+                  "explanation_zh": "條件子句用現在式表示未來，不用 will。"
+                }
+              ]
+            },
+            {
+              "zh": "一定要先問過",
+              "accepted": [
+                "must ask",
+                "have to ask",
+                "need to ask",
+                "must first ask",
+                "have to first ask"
+              ],
+              "targets": [
+                "ask"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "must asking",
+                  "right": "must ask",
+                  "explanation_zh": "助動詞 must 後面接原形動詞。"
+                },
+                {
+                  "wrong": "must ask to the teacher",
+                  "right": "must ask the teacher",
+                  "explanation_zh": "ask 後面直接接人當受詞，不加 to。"
+                }
+              ]
+            },
+            {
+              "zh": "導師",
+              "accepted": [
+                "the teacher",
+                "their homeroom teacher",
+                "the homeroom teacher",
+                "the class teacher",
+                "their teacher"
+              ],
+              "targets": [
+                "teacher"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "the guide teacher",
+                  "right": "the homeroom teacher",
+                  "explanation_zh": "「導師」是班級導師 homeroom teacher（或 class teacher），不要逐字翻成 guide teacher。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "plural_countable",
+              "zh": "換座位",
+              "literal_error": "If students want to change seat this semester, they must ask the teacher first.",
+              "part": 2,
+              "explanation_zh": "中文「換座位」看不出單複數，照字面寫成 change seat 會扣分；和別人交換座位要用複數 change seats。"
+            }
+          ],
+          "bonus": []
+        },
+        "2": {
+          "references": [
+            "To see the blackboard clearly, I chose a seat in the first row this time.",
+            "This time, I chose a seat in the front row in order to see the blackboard clearly."
+          ],
+          "target_words": [
+            {
+              "word": "see",
+              "zh": "看"
+            },
+            {
+              "word": "blackboard",
+              "zh": "黑板",
+              "alternatives": [
+                "board"
+              ]
+            },
+            {
+              "word": "clearly",
+              "zh": "清楚地",
+              "alternatives": [
+                "clear"
+              ]
+            },
+            {
+              "word": "time",
+              "zh": "（這）次"
+            },
+            {
+              "word": "choose",
+              "zh": "選",
+              "alternatives": [
+                "pick",
+                "select"
+              ]
+            },
+            {
+              "word": "seat",
+              "zh": "座位",
+              "alternatives": [
+                "sit"
+              ]
+            },
+            {
+              "word": "row",
+              "zh": "排",
+              "alternatives": [
+                "front"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PURP",
+              "grammar_id": "gp-infinitive-purpose",
+              "label_zh": "不定詞表目的（To＋原形動詞：為了…）",
+              "frame": "To / In order to + VR …, S + V …",
+              "zh_trigger": "為了"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "為了看清楚黑板",
+              "accepted": [
+                "To see the blackboard clearly",
+                "in order to see the blackboard clearly",
+                "To see the board clearly",
+                "In order to see the board clearly",
+                "So as to see the blackboard clearly"
+              ],
+              "targets": [
+                "see",
+                "blackboard",
+                "clearly",
+                "PURP"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "For seeing the blackboard clearly",
+                  "right": "To see the blackboard clearly",
+                  "explanation_zh": "表目的用不定詞 to＋原形動詞。"
+                },
+                {
+                  "wrong": "To see the blackboard clear",
+                  "right": "To see the blackboard clearly",
+                  "explanation_zh": "修飾動詞 see 要用副詞 clearly。"
+                }
+              ]
+            },
+            {
+              "zh": "這次",
+              "accepted": [
+                "this time"
+              ],
+              "targets": [
+                "time"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "this times",
+                  "right": "this time",
+                  "explanation_zh": "「這一次」是 this time，time 用單數。"
+                }
+              ]
+            },
+            {
+              "zh": "選了",
+              "accepted": [
+                "chose",
+                "picked",
+                "selected"
+              ],
+              "targets": [
+                "choose"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "choosed",
+                  "right": "chose",
+                  "explanation_zh": "choose 是不規則動詞，過去式是 chose。"
+                },
+                {
+                  "wrong": "choose",
+                  "right": "chose",
+                  "explanation_zh": "「選了」是已經發生的事，用過去式。"
+                }
+              ]
+            },
+            {
+              "zh": "第一排的座位",
+              "accepted": [
+                "a seat in the first row",
+                "a seat in the front row",
+                "a front-row seat",
+                "a first-row seat",
+                "to sit in the first row",
+                "to sit in the front row"
+              ],
+              "targets": [
+                "seat",
+                "row"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "a seat on the first line",
+                  "right": "a seat in the first row",
+                  "explanation_zh": "座位的「排」是 row，「在第…排」用介系詞 in。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "tense_trigger",
+              "zh": "選了",
+              "literal_error": "To see the blackboard clearly, I choose a seat in the first row this time.",
+              "part": 3,
+              "explanation_zh": "「選了」的「了」表示已經發生，照中文不變化動詞寫成 choose 會扣分；要用過去式 chose。"
+            }
+          ],
+          "bonus": []
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-basic-05",
+    "lot": "translation-basic-05",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "a9e22defa014e90d4fa058a697f2a11423f1ee158f245ae054434d9cca4be9d6",
+    "spec_id": "translation-basic@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T13:28:13Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T13:07:55Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "This semester, if students want to change seats, they must ask their homeroom teacher first.",
+            "confidence": "high",
+            "explanation_zh": "「如果…」用 if 引導條件副詞子句（現在式代未來）；「一定要」用 must；「換座位」用複數 change seats；「導師」用 homeroom teacher。"
+          },
+          "2": {
+            "translation": "In order to see the blackboard clearly, I chose a seat in the front row this time.",
+            "confidence": "high",
+            "explanation_zh": "「為了…」用 in order to 表目的；「選了」用過去式 chose；「第一排的座位」用 a seat in the front row，避免中文式的 the first row's seat。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "ADVCL"
+            ],
+            "used_target_words": [
+              "semester",
+              "change",
+              "seat",
+              "ask",
+              "teacher"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "（小建議，不影響判定）首選參考譯文把「導師」譯成 the teacher，意思可以但少了「導師」的意思；學生較容易從 references[1] 的 their homeroom teacher 學到正確說法，可考慮把 homeroom teacher 放進首選譯文。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "PURP"
+            ],
+            "used_target_words": [
+              "see",
+              "blackboard",
+              "clearly",
+              "time",
+              "choose",
+              "seat",
+              "row"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "semester",
+              "change",
+              "seat",
+              "ask",
+              "teacher"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "ADVCL": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "see",
+              "blackboard",
+              "clearly",
+              "time",
+              "choose",
+              "seat",
+              "row"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PURP": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T13:11:47Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "This semester, if students want to change seats, they must ask the homeroom teacher first.",
+            "confidence": "high",
+            "explanation_zh": "「如果想…就一定要…」用 if 條件句加 must；「導師」用 homeroom teacher；「先問過」用 ask ... first。「這學期」是一整段期間，所以用現在簡單式陳述規定。"
+          },
+          "2": {
+            "translation": "In order to see the blackboard clearly, I chose a seat in the front row this time.",
+            "confidence": "high",
+            "explanation_zh": "「為了…」用 in order to + 原形；「這次選了」是已完成的動作，用過去式 chose；「第一排」用 the front row。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "ADVCL"
+            ],
+            "used_target_words": [
+              "semester",
+              "change",
+              "seat",
+              "ask",
+              "teacher"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PURP"
+            ],
+            "used_target_words": [
+              "see",
+              "blackboard",
+              "clearly",
+              "time",
+              "choose",
+              "seat",
+              "row"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "semester",
+              "change",
+              "seat",
+              "ask",
+              "teacher"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "ADVCL": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "see",
+              "blackboard",
+              "clearly",
+              "time",
+              "choose",
+              "seat",
+              "row"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PURP": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

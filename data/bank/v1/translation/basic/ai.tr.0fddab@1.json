@@ -1,0 +1,631 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.0fddab",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "basic",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "冬至（winter solstice）和家人一起吃湯圓（tangyuan）是一項重要的傳統。",
+        "options": null,
+        "answer": "Eating tangyuan with family on the winter solstice is an important tradition.",
+        "accepted_answers": [
+          "Having tangyuan together with family members on the winter solstice is an important custom."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "動名詞主詞"
+          ],
+          "topic": "冬至吃湯圓"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "可惜的是，越來越多年輕人不知道這個傳統的由來。",
+        "options": null,
+        "answer": "Sadly, more and more young people do not know the origin of this tradition.",
+        "accepted_answers": [
+          "Unfortunately, more and more young people don't know the story behind this tradition."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "越來越…"
+          ],
+          "topic": "冬至吃湯圓"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "冬至吃湯圓"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "整句的主詞是「冬至和家人一起吃湯圓」這件事，英文用動名詞片語當主詞：Eating tangyuan with family on the winter solstice；動名詞主詞視為單數，動詞用 is。特定的節日用介系詞 on：on the winter solstice。「傳統」是名詞 tradition（或 custom），不是形容詞 traditional。",
+          "evidence": [
+            "吃湯圓",
+            "是一項重要的傳統"
+          ],
+          "strategy_zh": "中文用「做某件事＋是…」開頭時，把那件事改成 V-ing 當主詞，再接單數動詞 is。",
+          "hints": [
+            "切成四段：冬至和家人一起／吃湯圓／是一項重要的／傳統",
+            "標的詞彙：family（家人）、eat（吃）、important（重要的）、tradition（傳統）",
+            "句型框架：V-ing … + is + a/an + 形容詞 + 名詞"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「越來越多＋名詞」用 more and more＋複數名詞：more and more young people（people 本身是複數，不寫 young man）。主詞是複數，否定用 do not know。「可惜的是」可寫 Sadly 或 Unfortunately；「由來」是名詞 origin（或 the story behind …）。",
+          "evidence": [
+            "越來越多年輕人",
+            "這個傳統的由來"
+          ],
+          "strategy_zh": "「越來越多的 N」→ more and more＋複數 N，動詞用複數；「越來越＋形容詞」則用「比較級 and 比較級」。",
+          "hints": [
+            "切成四段：可惜的是／越來越多年輕人／不知道／這個傳統的由來",
+            "標的詞彙：sadly（可惜地）、young（年輕的）、people（人們）、know（知道）、origin（由來）、tradition（傳統）",
+            "句型框架：More and more + 複數名詞 + do not + VR …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "Eating tangyuan with family on the winter solstice is an important tradition.",
+            "Having tangyuan together with family members on the winter solstice is an important custom."
+          ],
+          "target_words": [
+            {
+              "word": "family",
+              "zh": "家人"
+            },
+            {
+              "word": "eat",
+              "zh": "吃",
+              "alternatives": [
+                "have"
+              ]
+            },
+            {
+              "word": "important",
+              "zh": "重要的"
+            },
+            {
+              "word": "tradition",
+              "zh": "傳統",
+              "alternatives": [
+                "custom"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "NFSUBJ",
+              "grammar_id": "gp-gerund-subject",
+              "label_zh": "動名詞片語當主詞（V-ing … is …）",
+              "frame": "V-ing … + is（單數）+ a/an + 形容詞 + 名詞",
+              "zh_trigger": "吃湯圓"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "冬至（winter solstice）和家人一起",
+              "accepted": [
+                "with family on the winter solstice",
+                "with family members on the winter solstice",
+                "together with family members on the winter solstice",
+                "with our families on the winter solstice",
+                "with their families on the winter solstice",
+                "with family during the winter solstice",
+                "with my family on the winter solstice",
+                "with our family on the winter solstice"
+              ],
+              "targets": [
+                "family"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "with family in winter solstice",
+                  "right": "with family on the winter solstice",
+                  "explanation_zh": "特定的節日、日子用介系詞 on，winter solstice 前加 the。"
+                }
+              ]
+            },
+            {
+              "zh": "吃湯圓",
+              "accepted": [
+                "Eating tangyuan",
+                "Having tangyuan",
+                "to eat tangyuan"
+              ],
+              "targets": [
+                "eat",
+                "NFSUBJ"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Eat tangyuan",
+                  "right": "Eating tangyuan",
+                  "explanation_zh": "「吃湯圓」這件事當主詞，要改成動名詞 Eating（或 To eat），不能用原形動詞開頭。"
+                }
+              ]
+            },
+            {
+              "zh": "是一項重要的",
+              "accepted": [
+                "is an important",
+                "is a very important",
+                "It is an important"
+              ],
+              "targets": [
+                "important"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "are an important",
+                  "right": "is an important",
+                  "explanation_zh": "動名詞片語當主詞視為單數，動詞用 is。"
+                }
+              ]
+            },
+            {
+              "zh": "傳統",
+              "accepted": [
+                "tradition",
+                "custom"
+              ],
+              "targets": [
+                "tradition"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "traditional",
+                  "right": "tradition",
+                  "explanation_zh": "這裡需要名詞「傳統」tradition，traditional 是形容詞。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "collocation",
+              "zh": "冬至",
+              "literal_error": "Eating tangyuan with family in winter solstice is an important tradition.",
+              "part": 1,
+              "explanation_zh": "中文「冬至」前面沒有介系詞，照字面容易漏掉或用錯；特定的日子要搭配 on：on the winter solstice。"
+            }
+          ],
+          "bonus": []
+        },
+        "2": {
+          "references": [
+            "Sadly, more and more young people do not know the origin of this tradition.",
+            "Unfortunately, more and more young people don't know the story behind this tradition."
+          ],
+          "target_words": [
+            {
+              "word": "sadly",
+              "zh": "可惜地、令人難過地",
+              "alternatives": [
+                "unfortunately",
+                "pity"
+              ]
+            },
+            {
+              "word": "young",
+              "zh": "年輕的"
+            },
+            {
+              "word": "people",
+              "zh": "人們"
+            },
+            {
+              "word": "know",
+              "zh": "知道"
+            },
+            {
+              "word": "origin",
+              "zh": "由來",
+              "alternatives": [
+                "story",
+                "history"
+              ]
+            },
+            {
+              "word": "tradition",
+              "zh": "傳統",
+              "alternatives": [
+                "custom"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "COMP",
+              "grammar_id": "gp-more-and-more",
+              "label_zh": "越來越多（more and more＋複數名詞）",
+              "frame": "More and more + 複數名詞 + V(複數) …",
+              "zh_trigger": "越來越多"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "可惜的是",
+              "accepted": [
+                "Sadly",
+                "Unfortunately",
+                "It is a pity that",
+                "It's a pity that"
+              ],
+              "targets": [
+                "sadly"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Pity is",
+                  "right": "It is a pity that",
+                  "explanation_zh": "「可惜的是」可用 Sadly／Unfortunately 放句首，或 It is a pity that＋子句。"
+                }
+              ]
+            },
+            {
+              "zh": "越來越多年輕人",
+              "accepted": [
+                "more and more young people"
+              ],
+              "targets": [
+                "young",
+                "people",
+                "COMP"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "more and more young man",
+                  "right": "more and more young people",
+                  "explanation_zh": "「年輕人」泛指一群人，用 young people（people 本身就是複數）。"
+                },
+                {
+                  "wrong": "more young and more young people",
+                  "right": "more and more young people",
+                  "explanation_zh": "「越來越多＋名詞」的固定寫法是 more and more＋複數名詞。"
+                }
+              ]
+            },
+            {
+              "zh": "不知道",
+              "accepted": [
+                "do not know",
+                "don't know"
+              ],
+              "targets": [
+                "know"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "doesn't know",
+                  "right": "don't know",
+                  "explanation_zh": "主詞 more and more young people 是複數，助動詞用 do。"
+                }
+              ]
+            },
+            {
+              "zh": "這個傳統的由來",
+              "accepted": [
+                "the origin of this tradition",
+                "the story behind this tradition",
+                "the history of this tradition",
+                "the origin of this custom"
+              ],
+              "targets": [
+                "origin",
+                "tradition"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "this tradition comes from",
+                  "right": "the origin of this tradition",
+                  "explanation_zh": "「由來」是名詞 origin（或 the story behind …），不要把「來」翻成動詞 come。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "plural_countable",
+              "zh": "年輕人",
+              "literal_error": "Sadly, more and more young man does not know the origin of this tradition.",
+              "part": 2,
+              "explanation_zh": "「年輕人」照字面容易寫成單數 young man；more and more 後面要接複數名詞 young people，動詞也跟著用複數。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "Sadly, fewer and fewer young people know the origin of this tradition.",
+              "grammar_id": "gp-more-and-more",
+              "explanation_zh": "換個角度用 fewer and fewer（越來越少）＋肯定句，比 more and more … do not know 更簡潔；people 是可數名詞，所以用 fewer，不用 less。"
+            }
+          ]
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-basic-05",
+    "lot": "translation-basic-05",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "a9e22defa014e90d4fa058a697f2a11423f1ee158f245ae054434d9cca4be9d6",
+    "spec_id": "translation-basic@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 3,
+    "sentences": 1,
+    "avg_sentence_length": 3.0,
+    "denominator": 3,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 1.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {
+      "off": 3
+    },
+    "offlist_words": [
+      "solstice",
+      "tangyuan",
+      "winter"
+    ],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T13:28:16Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "warn",
+      "created_at": "2026-10-09T13:07:55Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Eating tangyuan with our family on the winter solstice is an important tradition.",
+            "confidence": "high",
+            "explanation_zh": "整個「冬至和家人一起吃湯圓」是主詞，用動名詞片語 Eating … 當主詞，動詞用單數 is；節日前用 on the winter solstice。"
+          },
+          "2": {
+            "translation": "Unfortunately, more and more young people do not know the origin of this tradition.",
+            "confidence": "high",
+            "explanation_zh": "「可惜的是」用句首副詞 Unfortunately；「越來越多」用 more and more + 複數名詞；「由來」用 the origin of（where this tradition comes from 也可）。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "NFSUBJ"
+            ],
+            "used_target_words": [
+              "family",
+              "eat",
+              "important",
+              "tradition"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "COMP"
+            ],
+            "used_target_words": [
+              "sadly",
+              "young",
+              "people",
+              "know",
+              "origin",
+              "tradition"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "「這個傳統的由來」的常見錯誤把 this tradition comes from 判錯，說明寫「不要把『來』翻成動詞 come」，範圍太廣：don't know where this tradition comes from、don't know how this tradition started 都是正確又自然的寫法（間接問句），錯的只是少了疑問詞 where。建議把這兩種寫法補進 accepted，並把說明改成「know 後面接名詞 the origin of …，或接間接問句 where this tradition comes from；不能少了 where」。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "family",
+              "eat",
+              "important",
+              "tradition"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NFSUBJ": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "sadly",
+              "young",
+              "people",
+              "know",
+              "origin",
+              "tradition"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "COMP": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 2 題驗證者對4 部分切分有意見（warn）：「這個傳統的由來」的常見錯誤把 this tradition comes from 判錯，說明寫「不要把『來』翻成動詞 come」，範圍太廣：don't know where this tradition comes from、don't "
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T13:11:47Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Eating tangyuan with family on the winter solstice is an important tradition.",
+            "confidence": "high",
+            "explanation_zh": "主詞是「吃湯圓」，用動名詞 Eating tangyuan 當主詞，「和家人一起」用 with family，「冬至」用 on the winter solstice；一般事實用現在式。"
+          },
+          "2": {
+            "translation": "Unfortunately, more and more young people do not know the origin of this tradition.",
+            "confidence": "high",
+            "explanation_zh": "「可惜的是」用 Unfortunately；「越來越多」用 more and more；「由來」用 origin；一般現況用現在式。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "NFSUBJ"
+            ],
+            "used_target_words": [
+              "family",
+              "eat",
+              "important",
+              "tradition"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "COMP"
+            ],
+            "used_target_words": [
+              "sadly",
+              "young",
+              "people",
+              "know",
+              "origin",
+              "tradition"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "family",
+              "eat",
+              "important",
+              "tradition"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NFSUBJ": true
+            },
+            "program_match": true
+          },
+          "2": {
+            "target_words_found": [
+              "sadly",
+              "young",
+              "people",
+              "know",
+              "origin",
+              "tradition"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "COMP": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "rejected",
+  "status_reason": "判定者人工審查（第 1 輪）：record_verification 判 verified，但判定改為退回，評分規準有實質錯誤。第 2 題第 4 部分「這個傳統的由來」的常見錯誤把 this tradition comes from 列為錯誤，說明寫「不要把『來』翻成動詞 come」；可是 do not know where this tradition comes from（間接問句）是正確又自然的譯法，how this tradition started 也是，錯的只是少了疑問詞 where。照這份規準會誤扣學生分數並教錯觀念（驗證者 A 以 parts_check warn 指出）。重生時：把 where this tradition comes from／how this tradition began 補進第 4 部分 accepted，常見錯誤改成「know 後面接名詞 the origin of …或完整的間接問句 where … comes from，不能漏掉 where」，explanations 第 2 題同步修正。第 1 題沒有問題。"
+}

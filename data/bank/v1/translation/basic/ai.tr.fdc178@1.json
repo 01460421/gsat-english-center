@@ -464,7 +464,7 @@
       "kind": "program",
       "reviewer": "validate_bank.py",
       "result": "pass",
-      "created_at": "2026-10-09T07:59:04Z",
+      "created_at": "2026-10-09T13:20:57Z",
       "details": {
         "errors": [],
         "warnings": []
@@ -474,7 +474,7 @@
       "kind": "blind_solver",
       "reviewer": "claude-opus-5-5",
       "result": "pass",
-      "created_at": "2026-10-09T07:40:01Z",
+      "created_at": "2026-10-09T12:58:00Z",
       "details": {
         "solver": "A",
         "session_id": null,
@@ -483,12 +483,12 @@
           "1": {
             "translation": "Most of the paintings in this art museum were painted by Taiwanese painters.",
             "confidence": "high",
-            "explanation_zh": "「由……畫的」用被動語態 be painted by；畫作是過去完成的，所以用過去式 were painted；「大多」用 Most of the paintings，動詞配合複數。"
+            "explanation_zh": "「由台灣畫家畫的」用被動語態 be painted by；畫作是過去完成的，用過去式 were painted；「大多」用 Most of the + 複數名詞；美術館用 art museum。"
           },
           "2": {
-            "translation": "After looking at these paintings, our whole class took a lot of photos in front of the art museum.",
-            "confidence": "medium",
-            "explanation_zh": "「看完……之後」用 After + V-ing（主詞同為全班，不會變成懸垂分詞）；也可以寫 After we finished looking at these paintings。「拍照」用 take photos，過去的事用過去式 took。"
+            "translation": "After looking at these paintings, our whole class took a lot of photos in front of the museum.",
+            "confidence": "high",
+            "explanation_zh": "「看完……之後」用 After + V-ing（主詞與主要子句相同，都是我們班）；「拍了很多張照片」用過去式 took a lot of photos；「全班」用 our whole class 當單數主詞；後面的美術館承前省略成 the museum。"
           }
         },
         "review": {
@@ -567,8 +567,8 @@
     {
       "kind": "blind_solver",
       "reviewer": "claude-sonnet-5-5",
-      "result": "pass",
-      "created_at": "2026-10-09T07:39:22Z",
+      "result": "fail",
+      "created_at": "2026-10-09T13:20:57Z",
       "details": {
         "solver": "B",
         "session_id": null,
@@ -577,12 +577,12 @@
           "1": {
             "translation": "Most of the paintings in this art museum were painted by Taiwanese artists.",
             "confidence": "high",
-            "explanation_zh": "「由台灣畫家畫的」是被動語態 were painted by…；「大多」用 most of；畫是過去完成的事，用過去式被動。"
+            "explanation_zh": "「大多是」用 Most of the + 複數名詞；「由台灣畫家畫的」用被動語態 were painted by；畫是過去完成的作品，用過去式被動。"
           },
           "2": {
-            "translation": "After looking at all of these paintings, our whole class took a lot of pictures in front of the art museum.",
+            "translation": "After looking at these paintings, our whole class took a lot of photos in front of the art museum.",
             "confidence": "high",
-            "explanation_zh": "「看完…之後」用 after 接動名詞 looking；「全班」用 our whole class；「拍了很多張照片」用 took a lot of pictures，動作在過去；「在…前面」用 in front of。"
+            "explanation_zh": "「看完……之後」用 After + 動名詞；兩個動作都已發生，主要子句用過去式；「全班」譯 our whole class（視為單數），「前面」用 in front of。"
           }
         },
         "review": {
@@ -605,9 +605,7 @@
             "issues_zh": []
           },
           "2": {
-            "used_patterns": [
-              "ADVCL"
-            ],
+            "used_patterns": [],
             "used_target_words": [
               "painting",
               "class",
@@ -619,9 +617,10 @@
             "within_accepted": true,
             "closest_reference": 1,
             "reference_check": "pass",
-            "parts_check": "pass",
+            "parts_check": "warn",
             "issues_zh": [
-              "（提醒，不影響判定）我寫的是 After looking at all of these paintings（After＋動名詞的省略子句），不是 After + S + V 的完整子句；accepted 與 references[1] 都有這種寫法，我判為落在範圍內，程式的 ADVCL 也算。"
+              "我的譯文寫 After looking at these paintings（After + V-ing），沒有自己的主詞，不算標的句型 ADVCL 要求的 After + S + V 時間副詞子句，所以沒有用到標的句型。中文「看完這些畫之後」沒有主詞，不會逼學生寫出子句。",
+              "第 1 部分 accepted 同時收了 After looking／seeing／viewing（沒有主詞）與 After we looked 等子句，等於沒有強制子句句型。建議中文改成有主詞的寫法（例如「在我們看完這些畫之後，全班在美術館前面拍了很多照片」），或把標的句型改成「After + 子句或 V-ing」。"
             ]
           }
         },
@@ -651,16 +650,17 @@
               "photo"
             ],
             "target_hit_rate": 1.0,
-            "patterns_detected": {
-              "ADVCL": true
-            },
+            "patterns_detected": {},
             "program_match": false
           }
         },
-        "problems": []
+        "problems": [
+          "第 2 題盲譯沒有用到標的句型 ['ADVCL']：中文題目沒有自然引出這個句型（SPEC §5.7）",
+          "第 2 題驗證者對4 部分切分有意見（warn）：我的譯文寫 After looking at these paintings（After + V-ing），沒有自己的主詞，不算標的句型 ADVCL 要求的 After + S + V 時間副詞子句，所以沒有用到標的句型。中文「看完這些畫之"
+        ]
       }
     }
   ],
-  "status": "verified",
-  "status_reason": null
+  "status": "rejected",
+  "status_reason": "兩次獨立判定結果不一致（第一次 verified、第二次 rejected），從嚴退件。判定者第 1 輪（人工審核）：第 2 題的標的句型 ADVCL（After + S + V 時間副詞子句）沒有被中文引出。「看完這些畫之後」沒有主詞，兩位驗證者都獨立譯成 After looking at these paintings（After + V-ing，是介系詞＋動名詞，不是時間子句）；第 2 個參考譯文本身也是 After looking …，第 1 部分 accepted 又收 After looking／seeing／viewing，等於不寫子句也拿滿分，參考譯文並沒有每一句都用到標的句型（程式比對 ADVCL 把 After + V-ing 也算進去，所以 validate 沒擋下；blind_solver:B 判 fail）。重生時請讓時間子句有自己的主詞（例如「我們看完這些畫之後，…」或前後主詞不同），並把 After + V-ing 的參考譯文換掉。"
 }

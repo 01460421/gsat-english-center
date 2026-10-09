@@ -1,0 +1,652 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.58fff9",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "basic",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "在校車上，每位學生都被要求繫好安全帶。",
+        "options": null,
+        "answer": "On the school bus, every student is asked to wear a seat belt.",
+        "accepted_answers": [
+          "Every student on the school bus is required to fasten his or her seat belt."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "被動語態"
+          ],
+          "topic": "搭校車上學"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "在清晨的車程中，很多學生會睡覺、聽音樂或背英文單字。",
+        "options": null,
+        "answer": "During the early morning ride, many students sleep, listen to music, or memorize English words.",
+        "accepted_answers": [
+          "On the early morning ride, a lot of students sleep, listen to music, or learn English vocabulary."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "平行結構"
+          ],
+          "topic": "搭校車上學"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "搭校車上學"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「被要求」是被動語態：is asked to／is required to＋原形動詞。every student 是單數，be 動詞用 is。「繫安全帶」的搭配是 wear 或 fasten a seat belt，不用 tie。搭校車用介系詞 on：on the school bus。",
+          "evidence": [
+            "都被要求",
+            "繫好安全帶"
+          ],
+          "strategy_zh": "「被要求做某事」＝be asked to VR；every／each＋單數名詞，動詞跟著用單數。",
+          "hints": [
+            "切成四段：在校車上／每位學生／都被要求／繫好安全帶",
+            "標的詞彙：school bus（校車）、student（學生）、ask（要求）、wear（繫上）、seat belt（安全帶）",
+            "句型框架：S + is asked/required + to VR …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "三個動作「睡覺、聽音樂、背英文單字」用平行結構並列：前兩項之間用逗號，最後一項前面加 or（或），三個動詞的形式要一樣（主詞 many students 是複數，都用原形 sleep、listen、memorize）。「聽音樂」要寫 listen to music，to 不能漏；「單字」用複數 words（或 vocabulary）。「在清晨的車程中」可寫 during the early morning ride。",
+          "evidence": [
+            "睡覺、聽音樂或背英文單字",
+            "在清晨的車程中"
+          ],
+          "strategy_zh": "翻「A、B 或 C」時，先決定動詞形式，再讓三個動作都用同一種形式，最後一項前面加 or／and。",
+          "hints": [
+            "切成四段：在清晨的車程中／很多學生會睡覺／聽音樂／或背英文單字",
+            "標的詞彙：ride（車程）、sleep（睡覺）、listen（聽）、music（音樂）、memorize（背、記住）、word（單字）",
+            "句型框架：S + V1, V2, or V3（三個動詞形式一致）"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "On the school bus, every student is asked to wear a seat belt.",
+            "Every student on the school bus is required to fasten his or her seat belt."
+          ],
+          "target_words": [
+            {
+              "word": "school bus",
+              "zh": "校車"
+            },
+            {
+              "word": "student",
+              "zh": "學生"
+            },
+            {
+              "word": "ask",
+              "zh": "要求",
+              "alternatives": [
+                "require",
+                "tell"
+              ]
+            },
+            {
+              "word": "wear",
+              "zh": "繫上、戴著",
+              "alternatives": [
+                "fasten",
+                "put on",
+                "buckle"
+              ]
+            },
+            {
+              "word": "seat belt",
+              "zh": "安全帶",
+              "alternatives": [
+                "safety belt"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PASS",
+              "grammar_id": "gp-passive",
+              "label_zh": "被動語態（be asked/required to＋原形動詞）",
+              "frame": "S + is asked/required + to VR …",
+              "zh_trigger": "被要求"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "在校車上",
+              "accepted": [
+                "On the school bus"
+              ],
+              "targets": [
+                "school bus"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "In the school bus",
+                  "right": "On the school bus",
+                  "explanation_zh": "搭乘公車、校車這類大型交通工具，習慣用 on the bus。"
+                }
+              ]
+            },
+            {
+              "zh": "每位學生",
+              "accepted": [
+                "every student",
+                "each student",
+                "all students",
+                "all the students"
+              ],
+              "targets": [
+                "student"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "every students",
+                  "right": "every student",
+                  "explanation_zh": "every 後面接單數名詞 student，動詞也用單數 is。"
+                }
+              ]
+            },
+            {
+              "zh": "都被要求",
+              "accepted": [
+                "is asked to",
+                "is required to",
+                "is told to",
+                "are asked to",
+                "are required to",
+                "are told to"
+              ],
+              "targets": [
+                "ask",
+                "PASS"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "is asking to",
+                  "right": "is asked to",
+                  "explanation_zh": "「被要求」是被動，用 be asked to，不是進行式 is asking。"
+                },
+                {
+                  "wrong": "asks to",
+                  "right": "is asked to",
+                  "explanation_zh": "學生是「被」要求的一方，要用被動語態 be＋p.p.。"
+                }
+              ]
+            },
+            {
+              "zh": "繫好安全帶",
+              "accepted": [
+                "wear a seat belt",
+                "fasten his or her seat belt",
+                "fasten a seat belt",
+                "wear their seat belts",
+                "fasten their seat belts",
+                "put on a seat belt",
+                "wear a safety belt"
+              ],
+              "targets": [
+                "wear",
+                "seat belt"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "tie the safety belt",
+                  "right": "wear a seat belt",
+                  "explanation_zh": "「繫安全帶」的搭配是 wear／fasten a seat belt；tie 是打結、綁繩子。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "collocation",
+              "zh": "繫好安全帶",
+              "literal_error": "On the school bus, every student is asked to tie the safety belt.",
+              "part": 4,
+              "explanation_zh": "「繫」照字面翻成 tie 是錯誤搭配，安全帶要用 wear 或 fasten。"
+            }
+          ],
+          "bonus": []
+        },
+        "2": {
+          "references": [
+            "During the early morning ride, many students sleep, listen to music, or memorize English words.",
+            "On the early morning ride, a lot of students sleep, listen to music, or learn English vocabulary."
+          ],
+          "target_words": [
+            {
+              "word": "ride",
+              "zh": "車程",
+              "alternatives": [
+                "trip",
+                "journey",
+                "way"
+              ]
+            },
+            {
+              "word": "sleep",
+              "zh": "睡覺"
+            },
+            {
+              "word": "listen",
+              "zh": "聽"
+            },
+            {
+              "word": "music",
+              "zh": "音樂"
+            },
+            {
+              "word": "memorize",
+              "zh": "背、記住",
+              "alternatives": [
+                "learn",
+                "study",
+                "review"
+              ]
+            },
+            {
+              "word": "word",
+              "zh": "單字",
+              "alternatives": [
+                "vocabulary"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PARA",
+              "grammar_id": "gp-parallelism",
+              "label_zh": "平行結構（三個原形動詞以 or 並列）",
+              "frame": "S + V1, V2, or V3（三個動詞形式一致）",
+              "zh_trigger": "睡覺、聽音樂或背英文單字"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "在清晨的車程中",
+              "accepted": [
+                "During the early morning ride",
+                "On the early morning ride",
+                "During the ride early in the morning",
+                "During the early morning trip",
+                "On the way to school early in the morning",
+                "On the bus early in the morning",
+                "During the bus ride early in the morning"
+              ],
+              "targets": [
+                "ride"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "In early morning ride",
+                  "right": "During the early morning ride",
+                  "explanation_zh": "「在…的車程中」用 during／on the ride；可數名詞 ride 前要有冠詞 the。"
+                }
+              ]
+            },
+            {
+              "zh": "很多學生會睡覺",
+              "accepted": [
+                "many students sleep",
+                "a lot of students sleep",
+                "lots of students sleep",
+                "many students will sleep"
+              ],
+              "targets": [
+                "sleep"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "many student sleep",
+                  "right": "many students sleep",
+                  "explanation_zh": "many 後面接複數名詞 students。"
+                }
+              ]
+            },
+            {
+              "zh": "聽音樂",
+              "accepted": [
+                "listen to music"
+              ],
+              "targets": [
+                "listen",
+                "music",
+                "PARA"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "listen music",
+                  "right": "listen to music",
+                  "explanation_zh": "listen 是不及物動詞，「聽音樂」要寫 listen to music。"
+                },
+                {
+                  "wrong": "listening to music",
+                  "right": "listen to music",
+                  "explanation_zh": "平行結構：三個動作的動詞形式要一致，前面用原形 sleep，這裡也用原形 listen。"
+                }
+              ]
+            },
+            {
+              "zh": "或背英文單字",
+              "accepted": [
+                "or memorize English words",
+                "or learn English vocabulary",
+                "or memorize English vocabulary",
+                "or learn English words",
+                "or study English words",
+                "or review English words"
+              ],
+              "targets": [
+                "memorize",
+                "word",
+                "PARA"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "or memorizing English words",
+                  "right": "or memorize English words",
+                  "explanation_zh": "平行結構：前面是原形動詞 sleep、listen，第三個也要用原形 memorize。"
+                },
+                {
+                  "wrong": "or memorize English word",
+                  "right": "or memorize English words",
+                  "explanation_zh": "背的單字不只一個，word 用複數 words。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "collocation",
+              "zh": "聽音樂",
+              "literal_error": "During the early morning ride, many students sleep, listen music, or memorize English words.",
+              "part": 3,
+              "explanation_zh": "「聽音樂」照字面寫成 listen music 會漏掉介系詞，listen 的固定搭配是 listen to。"
+            }
+          ],
+          "bonus": []
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-basic-05",
+    "lot": "translation-basic-05",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "a9e22defa014e90d4fa058a697f2a11423f1ee158f245ae054434d9cca4be9d6",
+    "spec_id": "translation-basic@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T13:28:10Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T13:07:55Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "On the school bus, every student is required to fasten his or her seat belt.",
+            "confidence": "high",
+            "explanation_zh": "「被要求」用被動 be required to（be asked to 也可）；every student 是單數，動詞用 is、代名詞用 his or her；「繫好安全帶」用 fasten a seat belt。"
+          },
+          "2": {
+            "translation": "During the early morning ride, many students sleep, listen to music, or memorize English words.",
+            "confidence": "high",
+            "explanation_zh": "「會」表習慣，用現在簡單式；三個動作用對等的原形動詞並列（A, B, or C）；「背單字」用 memorize words；「車程」用 ride。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PASS"
+            ],
+            "used_target_words": [
+              "school bus",
+              "student",
+              "ask",
+              "wear",
+              "seat belt"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PARA"
+            ],
+            "used_target_words": [
+              "ride",
+              "sleep",
+              "listen",
+              "music",
+              "memorize",
+              "word"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "school bus",
+              "student",
+              "ask",
+              "wear",
+              "seat belt"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PASS": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "ride",
+              "sleep",
+              "listen",
+              "music",
+              "memorize",
+              "word"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PARA": true
+            },
+            "program_match": true
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T13:11:47Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "On the school bus, every student is required to fasten his or her seat belt.",
+            "confidence": "high",
+            "explanation_zh": "「被要求」用被動 be required to；every student 是單數，後面搭配 his or her（或 their）；「繫好安全帶」用 fasten the seat belt。"
+          },
+          "2": {
+            "translation": "During the early morning ride, many students sleep, listen to music, or memorize English vocabulary.",
+            "confidence": "high",
+            "explanation_zh": "「會…」表示習慣性行為，用現在簡單式；三個並列動詞 sleep, listen to music, memorize 時態一致；「背單字」用 memorize vocabulary。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PASS"
+            ],
+            "used_target_words": [
+              "school bus",
+              "student",
+              "ask",
+              "wear",
+              "seat belt"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PARA"
+            ],
+            "used_target_words": [
+              "ride",
+              "sleep",
+              "listen",
+              "music",
+              "memorize",
+              "word"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "school bus",
+              "student",
+              "ask",
+              "wear",
+              "seat belt"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PASS": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "ride",
+              "sleep",
+              "listen",
+              "music",
+              "memorize",
+              "word"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PARA": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}
