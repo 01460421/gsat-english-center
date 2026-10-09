@@ -1,0 +1,605 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.st.22f5d0",
+  "version": 1,
+  "section_type": "structure",
+  "format_version": "structure-4x5",
+  "tier": "top",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": "Everyone yawns, and we begin surprisingly early: babies yawn even before they are born. Dogs, cats, and many other animals do it too. Yet for something so common, yawning has proved remarkably hard to explain, and scientists still disagree about what it is actually for.\n[[1]] Experiments, however, tell a different story. When volunteers breathed air containing extra oxygen, they went on yawning just as often as before. If a shortage of oxygen were really the cause, the extra supply should have made a clear difference.\nResearchers have since proposed other explanations, and none has yet won everyone over. One popular idea is that a deep yawn cools the brain by drawing in air and speeding up the flow of blood through the head. [[2]] A rival theory treats yawning as a kind of alarm that keeps the brain alert, noting that it often comes when we are bored or sleepy, or just before a demanding task such as an exam or a race.\n[[3]] Seeing someone yawn, hearing a yawn, or even reading about one can be enough to set us off, and you may well have yawned once or twice while reading this article. Some studies have found that we are more likely to catch a yawn from a family member or close friend than from a stranger. [[4]] Whatever the answer turns out to be, the humble yawn clearly has more to tell us than its sleepy reputation suggests.",
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": {
+      "A": "Supporters add that a yawn heats the brain by slowing its blood flow.",
+      "B": "Most people assume that a yawn is the body's way of taking in more air.",
+      "C": "For this reason, some scientists think contagious yawning may be linked to empathy.",
+      "D": "In support, studies have found that people yawn more in mild weather than on very hot days.",
+      "E": "Perhaps the strangest thing about yawning, though, is not why we do it but how easily it spreads."
+    },
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "B",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "contrast",
+          "clue_raw": "TS|CN|F|L",
+          "key_phrase": "Most people assume … taking in more air → Experiments, however, tell a different story; extra oxygen → yawning just as often"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "D",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "elaboration",
+          "clue_raw": "SP|CN|B|L",
+          "key_phrase": "In support ← One popular idea is that a deep yawn cools the brain; mild weather vs. very hot days"
+        }
+      },
+      {
+        "no": 3,
+        "label": "3",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "E",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "topic_sentence",
+          "clue_raw": "TS|CN|BF|P",
+          "key_phrase": "not why we do it ← the explanations in paragraphs 2–3; how easily it spreads → Seeing someone yawn, hearing a yawn, or even reading about one can be enough to set us off"
+        }
+      },
+      {
+        "no": 4,
+        "label": "4",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "C",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "transition_word",
+          "clue_raw": "SP|CN|B|L",
+          "key_phrase": "For this reason ← more likely to catch a yawn from a family member or close friend than from a stranger; empathy"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "why we yawn: competing scientific explanations and contagious yawning",
+      "genre": "expository",
+      "sdgs": [],
+      "text_format": "continuous"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "第一段結尾只說科學家對打哈欠的用途仍有爭議，沒有可回指的字。第二段的空格要靠後一句定位：Experiments, however, tell a different story 表示空格先提出一個「說法」，接著實驗推翻它；再下一句說吸入額外氧氣的受試者打哈欠的次數並沒有減少。(B) 說「大多數人以為打哈欠是身體吸進更多空氣的方式」，正是被這個氧氣實驗檢驗、推翻的看法。錨點只在後面，選 (B)。",
+          "evidence": [
+            "Most people assume that a yawn is the body's way of taking in more air.",
+            "Experiments, however, tell a different story.",
+            "When volunteers breathed air containing extra oxygen, they went on yawning just as often as before."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "contrast",
+          "option_notes_zh": {
+            "A": "多餘句（CT 型，瞄準第 2 格）：Supporters add 的 Supporters 在這裡找不到支持的對象（還沒有提出任何理論）；內容「打哈欠減慢血流、讓腦變熱」也和第三段「加快血流、讓腦降溫」相反，放在任何一格都不成立。",
+            "C": "(C) 的 For this reason 找不到原因：前一句只說科學家仍有爭議；contagious yawning（會傳染的哈欠）也要到最後一段才出現。(C) 屬於第 4 格。",
+            "D": "(D) 的 In support 要支持某個理論，但這時還沒有提出任何理論；mild weather 的研究和下一句的氧氣實驗也無關。(D) 屬於第 2 格。",
+            "E": "(E) 說打哈欠最奇特之處「不是我們為什麼打，而是多容易傳染」，但接下來兩段都在討論「為什麼打哈欠」，下一句的實驗也和傳染無關。(E) 屬於第 3 格。"
+          },
+          "strategy_zh": "後一句是 however、Yet 這類轉折時，空格要先提出「被推翻的那一方」。讀到 a different story，就回頭找一個常見的看法或假設，再確認它正是後文實驗檢驗的內容（air ↔ oxygen）。",
+          "hints": [
+            "下一句說實驗講的是 a different story，空格應該先提出什麼？",
+            "實驗測的是氧氣多寡，空格裡的看法應該和呼吸、空氣有關。",
+            "答案以 Most people assume 開頭。"
+          ]
+        },
+        "2": {
+          "explanation_zh": "前一句提出「腦部降溫說」：深深打一個哈欠能吸入空氣、加快頭部血流，讓大腦降溫。(D) 用 In support 提出支持這個說法的研究：人們在溫和的天氣比在非常炎熱的日子更常打哈欠——天氣太熱時吸進的空氣無法降溫，所以哈欠變少，正好符合降溫說。下一句 A rival theory 再轉向另一個對立的理論。選 (D)。",
+          "evidence": [
+            "One popular idea is that a deep yawn cools the brain by drawing in air and speeding up the flow of blood through the head.",
+            "In support, studies have found that people yawn more in mild weather than on very hot days.",
+            "A rival theory treats yawning as a kind of alarm"
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "elaboration",
+          "option_notes_zh": {
+            "A": "多餘句（CT 型，瞄準本格）：它和前一句共用 yawn、brain、blood、flow 等字，又以 Supporters 開頭，看起來像在替降溫說補充證據；但內容說打哈欠「減慢血流、讓腦變熱」，和前一句「加快血流、讓腦降溫」正好相反，支持者不可能這樣說。",
+            "B": "(B)「大多數人以為打哈欠是為了吸進更多空氣」是已經被第二段實驗推翻的舊說法，放在新理論之後時間與邏輯都倒退。(B) 屬於第 1 格。",
+            "C": "(C) 的 For this reason 指不出原因：前一句講腦部降溫，和「會傳染的哈欠與同理心」無關；contagious yawning 也要到最後一段才出現。",
+            "E": "(E) 說最奇特之處在於哈欠多容易傳染，但下一句 A rival theory 仍在介紹「為什麼打哈欠」的理論，話題被打斷。(E) 屬於第 3 格。"
+          },
+          "strategy_zh": "In support、For example 這類開頭要接在某個主張之後：先找出前一句的主張（腦部降溫），再檢查選項的證據方向是否「支持」它。和前一句用字很像、內容卻相反的句子是陷阱。",
+          "hints": [
+            "前一句提出了什麼理論？它說打哈欠對大腦有什麼作用？",
+            "找一句能「支持」這個理論的證據；小心用字相同但說法相反的選項。",
+            "答案以 In support 開頭，比較溫和的天氣與炎熱的日子。"
+          ]
+        },
+        "3": {
+          "explanation_zh": "第二、三段都在討論「我們為什麼打哈欠」（缺氧說、降溫說、警醒說）；最後一段的空格是段首主題句，下一句說「看到別人打哈欠、聽到哈欠聲，甚至讀到哈欠，都可能讓我們跟著打」，再下一句談從親友身上更容易「感染」哈欠。(E) 用 though 轉折：打哈欠最奇特之處不在「為什麼打」（回應前兩段），而在「多容易傳染」（引出本段）。要掌握全文的段落安排才能確定，選 (E)。",
+          "evidence": [
+            "Perhaps the strangest thing about yawning, though, is not why we do it but how easily it spreads.",
+            "Seeing someone yawn, hearing a yawn, or even reading about one can be enough to set us off"
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "topic_sentence",
+          "option_notes_zh": {
+            "A": "多餘句：Supporters 找不到支持的對象，而且「減慢血流、讓腦變熱」和第三段的降溫說相反；下一句講的是哈欠的傳染，也接不上。",
+            "B": "(B) 的缺氧說屬於第二段開頭，放在這裡等於回到已被推翻的說法，也引不出下一句「看到、聽到、讀到哈欠就會跟著打」。",
+            "C": "(C) 的 contagious yawning 看似和本段主題相同，但 For this reason 要接在一個原因之後：前一句講的是警醒說，不能推出「傳染性哈欠與同理心有關」；這個推論要等到「從親友身上更容易感染哈欠」的研究之後才成立。(C) 屬於第 4 格。",
+            "D": "(D) 的 In support 要支持前一句的理論，但溫和天氣與炎熱天氣的比較支持的是降溫說，不是前一句的警醒說；也引不出下一句的哈欠傳染。"
+          },
+          "strategy_zh": "最後一段的段首句常要「承上啟下」：先用一句話說出前面幾段在談什麼（why we yawn），再看本段在談什麼（哈欠會傳染），能同時回應兩者的選項就是答案。",
+          "hints": [
+            "前面兩段都在討論打哈欠的哪一個問題？",
+            "最後一段的內容換成了什麼？看下一句：看到、聽到、讀到哈欠會怎樣？",
+            "答案說最奇特的不是 why we do it，而是 how easily it spreads。"
+          ]
+        },
+        "4": {
+          "explanation_zh": "前一句說有些研究發現，我們比較容易被家人或好友的哈欠「傳染」，而不是陌生人的。(C) 用 For this reason 接著推論：因此有些科學家認為傳染性哈欠可能和同理心（感受他人情緒的能力）有關——越親近的人越能引起共鳴。下一句 Whatever the answer turns out to be 收束全文。選 (C)。",
+          "evidence": [
+            "Some studies have found that we are more likely to catch a yawn from a family member or close friend than from a stranger.",
+            "For this reason, some scientists think contagious yawning may be linked to empathy."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "cause_effect",
+          "option_notes_zh": {
+            "A": "多餘句：Supporters add 找不到支持的對象；「打哈欠讓腦變熱」和第三段的降溫說相反，也和親友間的哈欠傳染無關。",
+            "B": "(B) 的缺氧說是文章一開始就被推翻的看法，放在全文結尾之前時間與邏輯都倒退。",
+            "D": "(D) 和前一句一樣以「研究發現」的形式出現，看起來能並列；但它比較的是天氣與哈欠次數，支持的是第三段的降溫說，和「從親友身上更容易感染哈欠」沒有關係，In support 在這裡沒有可支持的主張。(D) 屬於第 2 格。",
+            "E": "(E) 說最奇特的是哈欠多容易傳染，但本段前兩句已經在談傳染，這時才提出這個主題，順序顛倒。(E) 屬於第 3 格。"
+          },
+          "strategy_zh": "For this reason、As a result 要接在「原因」之後：先找前一句的事實（親友比陌生人更容易傳染哈欠），再看選項的結論是否由它推得出來（親近 → 同理心）。",
+          "hints": [
+            "前一句的研究發現：我們比較容易被誰的哈欠傳染？",
+            "從「越親近越容易傳染」可以推出什麼結論？找以 For this reason 開頭的選項。",
+            "答案提到 empathy（同理心）。"
+          ]
+        }
+      }
+    },
+    "translation_zh": {
+      "text": "每個人都會打哈欠，而且我們很早就開始了：嬰兒在出生之前就會打哈欠。狗、貓和許多其他動物也會。然而，這麼普遍的行為卻出奇地難以解釋，科學家至今仍對它究竟有什麼用途意見分歧。\n【1】大多數人以為，打哈欠是身體吸進更多空氣的方式。然而，實驗結果卻不是這麼一回事。受試者吸入含有額外氧氣的空氣時，打哈欠的次數和之前一樣多。如果真的是缺氧造成的，額外供應的氧氣應該會帶來明顯的差別。\n此後研究人員提出了其他解釋，但至今沒有一個能讓所有人信服。一個廣為流傳的說法是，深深打一個哈欠能吸入空氣、加快頭部的血液流動，讓大腦降溫。【2】支持這個說法的研究發現，人們在溫和的天氣裡比在非常炎熱的日子更常打哈欠。另一個對立的理論則把打哈欠看成一種讓大腦保持警醒的警報，並指出哈欠常在我們無聊或想睡時出現，或者就在考試、比賽這類吃力的任務之前出現。\n【3】不過，打哈欠最奇特的地方，也許不在於我們為什麼打，而在於它多容易傳染。看到別人打哈欠、聽到哈欠聲，甚至只是讀到關於哈欠的文字，都可能讓我們跟著打；你讀這篇文章時，說不定已經打了一兩個哈欠。有些研究發現，比起陌生人，我們更容易被家人或好友的哈欠傳染。【4】因此，有些科學家認為傳染性哈欠可能和同理心有關。無論答案最後是什麼，這個不起眼的哈欠顯然能告訴我們的，比它「想睡覺」的名聲所暗示的更多。\n（多餘句 (A)：支持者還補充說，打哈欠會減慢血流，讓大腦變熱。）"
+    },
+    "elimination": {
+      "feasible": {
+        "1": [
+          "B"
+        ],
+        "2": [
+          "D"
+        ],
+        "3": [
+          "E"
+        ],
+        "4": [
+          "C"
+        ]
+      },
+      "perfect_matchings": 1
+    },
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": null,
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "3-V-7",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "7-V-5",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "9-V-2",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "9-V-3",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": "本文由 AI 撰寫"
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-08-structure-top-01",
+    "lot": "structure-top-01",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/structure",
+    "prompt_sha256": "5e2bcaff225bc4b9bd348c80f1661305156955f443c015c13387ed83fdb093fc",
+    "spec_id": "structure-top@2026-10-08",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 238,
+    "sentences": 12,
+    "avg_sentence_length": 19.83,
+    "denominator": 236,
+    "proper_nouns": [],
+    "numbers": 2,
+    "coverage_l1_4": 0.9915,
+    "coverage_l1_6": 1.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0085,
+    "level_counts": {
+      "1": 183,
+      "2": 27,
+      "3": 4,
+      "4": 20,
+      "5": 2
+    },
+    "offlist_words": [],
+    "band": {
+      "tier": "top",
+      "basis": "lot structure-top-01（SPEC §3.4＋出題規格書 passage_overrides（words、coverage_L1_4_min（取代 SPEC 的區間）、coverage_L1_6_min、offlist_max、beyond_l4_ratio_max））",
+      "ok": true,
+      "checks": {
+        "word_count": {
+          "value": 238,
+          "min": 220,
+          "max": 310,
+          "ok": true
+        },
+        "coverage_l1_4": {
+          "value": 0.9915,
+          "min": 0.9,
+          "max": null,
+          "ok": true
+        },
+        "coverage_l1_6": {
+          "value": 1.0,
+          "min": 0.94,
+          "max": null,
+          "ok": true
+        },
+        "offlist_ratio": {
+          "value": 0.0,
+          "min": null,
+          "max": 0.06,
+          "ok": true
+        },
+        "avg_sentence_length": {
+          "value": 19.83,
+          "min": 18,
+          "max": 25,
+          "ok": true
+        },
+        "beyond_l4_ratio": {
+          "value": 0.0085,
+          "min": null,
+          "max": 0.06,
+          "ok": true
+        }
+      }
+    }
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T01:50:03Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T01:37:41Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "answers": {
+          "1": {
+            "answer": "B",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Experiments, however, tell a different story.",
+              "When volunteers breathed air containing extra oxygen, they went on yawning just as often as before.",
+              "If a shortage of oxygen were really the cause, the extra supply should have made a clear difference."
+            ],
+            "explanation_zh": "後句 Experiments, however, tell a different story 需要前面先有一個一般看法；B「多數人以為打哈欠是身體要吸進更多空氣」正是被氧氣實驗推翻的說法。",
+            "feasible": [
+              "B"
+            ]
+          },
+          "2": {
+            "answer": "D",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "One popular idea is that a deep yawn cools the brain by drawing in air and speeding up the flow of blood through the head.",
+              "A rival theory treats yawning as a kind of alarm that keeps the brain alert, noting that it often comes when we are bored or sleepy, or just before a demanding task such as an exam or a race."
+            ],
+            "explanation_zh": "D 以 In support 提出支持「降溫說」的證據（天氣溫和時比酷熱時更常打哈欠，因熱空氣無法降溫）。A 說哈欠藉減緩血流使大腦升溫，與前句 cools、speeding up 完全相反，是多餘句。",
+            "feasible": [
+              "D"
+            ]
+          },
+          "3": {
+            "answer": "E",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Seeing someone yawn, hearing a yawn, or even reading about one can be enough to set us off, and you may well have yawned once or twice while reading this article."
+            ],
+            "explanation_zh": "本段轉入哈欠的傳染性；E「最奇特的不是為什麼打哈欠，而是它多容易傳染」以 though 轉折，作為段落主題句，後文列舉看、聽、讀都會被傳染。",
+            "feasible": [
+              "E"
+            ]
+          },
+          "4": {
+            "answer": "C",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Some studies have found that we are more likely to catch a yawn from a family member or close friend than from a stranger.",
+              "Whatever the answer turns out to be, the humble yawn clearly has more to tell us than its sleepy reputation suggests."
+            ],
+            "explanation_zh": "C 的 For this reason 指前句「較易被家人朋友傳染」，推出傳染性哈欠可能與同理心有關；後句 Whatever the answer turns out to be 承接這個尚未定論的解釋。",
+            "feasible": [
+              "C"
+            ]
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T01:50:03Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "answers": {
+          "1": {
+            "answer": "B",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Experiments, however, tell a different story.",
+              "When volunteers breathed air containing extra oxygen, they went on yawning just as often as before."
+            ],
+            "explanation_zh": "後文 Experiments, however, tell a different story 要有一個先前的常見想法可以反駁；B 的「多數人以為打呵欠是吸入更多空氣」與氧氣實驗對應。",
+            "feasible": [
+              "B"
+            ]
+          },
+          "2": {
+            "answer": "D",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "One popular idea is that a deep yawn cools the brain by drawing in air and speeding up the flow of blood through the head.",
+              "A rival theory treats yawning as a kind of alarm that keeps the brain alert, noting that it often comes when we are bored or sleepy, or just before a demanding task such as an exam or a race."
+            ],
+            "explanation_zh": "前句是降溫理論，D 以 In support 提出天氣溫和時打呵欠較多的研究來支持降溫說，之後才轉到對立的警覺說。A 說呵欠使大腦升溫且減緩血流，與降溫說相反，是多餘句。",
+            "feasible": [
+              "D"
+            ]
+          },
+          "3": {
+            "answer": "E",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Seeing someone yawn, hearing a yawn, or even reading about one can be enough to set us off, and you may well have yawned once or twice while reading this article.",
+              "Perhaps the strangest thing about yawning, though, is not why we do it but how easily it spreads."
+            ],
+            "explanation_zh": "這段全在描述呵欠的傳染性，E 是主題句，說最奇怪的不是為什麼打而是傳得多容易，後文的例子正是在說明這點。",
+            "feasible": [
+              "E"
+            ]
+          },
+          "4": {
+            "answer": "C",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Some studies have found that we are more likely to catch a yawn from a family member or close friend than from a stranger.",
+              "Whatever the answer turns out to be, the humble yawn clearly has more to tell us than its sleepy reputation suggests."
+            ],
+            "explanation_zh": "For this reason 承接「對家人朋友比陌生人更容易被傳染」，導出傳染性呵欠可能與同理心有關，再接 Whatever the answer 作結。",
+            "feasible": [
+              "C"
+            ]
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "distractor_audit",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T02:10:00Z",
+      "details": {
+        "session_id": null,
+        "items": {
+          "1": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "One popular idea is that a deep yawn cools the brain by drawing in air and speeding up the flow of blood through the head.",
+              "explanation_zh": "多餘句：Supporters 此時沒有可支持的理論；「減慢血流、讓腦變熱」也和第三段「加快血流、讓腦降溫」相反。"
+            },
+            "C": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "If a shortage of oxygen were really the cause, the extra supply should have made a clear difference.",
+              "explanation_zh": "後文實驗檢驗的是「缺氧說」，空格必須先提出和氧氣、空氣有關的看法；(C) 的 For this reason 沒有原因可承接，contagious yawning 也還沒出現。"
+            },
+            "D": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "If a shortage of oxygen were really the cause, the extra supply should have made a clear difference.",
+              "explanation_zh": "In support 要支持某個已提出的理論，此時還沒有；天氣研究也和後文的氧氣實驗無關。"
+            },
+            "E": {
+              "verdict": "clearly_wrong",
+              "error_type": "off_topic",
+              "evidence": "If a shortage of oxygen were really the cause, the extra supply should have made a clear difference.",
+              "explanation_zh": "本段檢驗「為什麼打哈欠」的缺氧說，(E) 轉去談哈欠的傳染，話題不符。"
+            }
+          },
+          "2": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "One popular idea is that a deep yawn cools the brain by drawing in air and speeding up the flow of blood through the head.",
+              "explanation_zh": "多餘句（瞄準本格）：和前一句共用 yawn、brain、blood、flow，但「減慢血流、讓腦變熱」與前一句「加快血流、讓腦降溫」正好相反，支持者不會這樣說。"
+            },
+            "B": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "Researchers have since proposed other explanations, and none has yet won everyone over.",
+              "explanation_zh": "缺氧說已在第二段被實驗推翻，本段介紹的是之後提出的新解釋，回頭再提舊看法邏輯倒退。"
+            },
+            "C": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "One popular idea is that a deep yawn cools the brain by drawing in air and speeding up the flow of blood through the head.",
+              "explanation_zh": "For this reason 無法從「腦部降溫」推出「傳染性哈欠與同理心有關」；contagious yawning 要到最後一段才出現。"
+            },
+            "E": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "A rival theory treats yawning as a kind of alarm that keeps the brain alert",
+              "explanation_zh": "(E) 說最奇特的不是「為什麼打」，但下一句仍在介紹另一個「為什麼打」的理論，話題被打斷。"
+            }
+          },
+          "3": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "One popular idea is that a deep yawn cools the brain by drawing in air and speeding up the flow of blood through the head.",
+              "explanation_zh": "多餘句：Supporters 找不到支持對象，內容和降溫說相反，也引不出下一句哈欠的傳染。"
+            },
+            "B": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Seeing someone yawn, hearing a yawn, or even reading about one can be enough to set us off",
+              "explanation_zh": "缺氧說已被推翻，放在最後一段段首引不出下一句「看到、聽到、讀到哈欠就會跟著打」。"
+            },
+            "C": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "A rival theory treats yawning as a kind of alarm that keeps the brain alert",
+              "explanation_zh": "For this reason 要接原因，前一句是警醒說，推不出同理心；這個推論要在「親友比陌生人更易傳染」之後才成立。"
+            },
+            "D": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "A rival theory treats yawning as a kind of alarm that keeps the brain alert",
+              "explanation_zh": "In support 會變成支持前一句的警醒說，但天氣與哈欠次數的研究支持的是降溫說；也引不出下一句的傳染。"
+            }
+          },
+          "4": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "One popular idea is that a deep yawn cools the brain by drawing in air and speeding up the flow of blood through the head.",
+              "explanation_zh": "多餘句：「讓腦變熱」和降溫說相反，也和親友間的哈欠傳染無關。"
+            },
+            "B": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "Researchers have since proposed other explanations, and none has yet won everyone over.",
+              "explanation_zh": "缺氧說在文章開頭就被推翻，放在結尾前時間與邏輯都倒退，也接不上前一句的親友研究。"
+            },
+            "D": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "Some studies have found that we are more likely to catch a yawn from a family member or close friend than from a stranger.",
+              "explanation_zh": "前一句是「親友比陌生人更易傳染哈欠」的發現，天氣與哈欠次數的研究無法「支持」它，In support 沒有可支持的主張。"
+            },
+            "E": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Seeing someone yawn, hearing a yawn, or even reading about one can be enough to set us off",
+              "explanation_zh": "本段前兩句已經在談哈欠的傳染，這時才提出「最奇特的是多容易傳染」順序顛倒。"
+            }
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "unique_solution",
+      "reviewer": "record_verification.py",
+      "result": "pass",
+      "created_at": "2026-10-09T01:50:03Z",
+      "details": {
+        "method": "injective_assignment",
+        "perfect_matchings": 1,
+        "matches_key": true,
+        "feasible": {
+          "1": [
+            "B"
+          ],
+          "2": [
+            "D"
+          ],
+          "3": [
+            "E"
+          ],
+          "4": [
+            "C"
+          ]
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}
