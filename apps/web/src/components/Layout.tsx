@@ -221,6 +221,23 @@ function MoreMenu({ onDismiss, onNavigate }: { onDismiss: () => void; onNavigate
   );
 }
 
+/** 每頁底部的條款連結：Google 登入的品牌審查會檢查首頁有沒有連到隱私權政策。 */
+function SiteFooter() {
+  const linkCls = 'inline-flex min-h-11 items-center underline-offset-2 hover:text-fg hover:underline';
+  return (
+    <footer className="mx-auto max-w-5xl border-t border-line px-4 py-2 text-sm text-muted lg:px-10">
+      <nav aria-label="網站資訊" className="flex flex-wrap gap-x-5">
+        <NavLink to="/privacy" className={linkCls}>
+          隱私權說明
+        </NavLink>
+        <NavLink to="/terms" className={linkCls}>
+          服務條款
+        </NavLink>
+      </nav>
+    </footer>
+  );
+}
+
 function PageLoading() {
   return (
     <p role="status" className="py-10 text-center text-muted">
@@ -267,6 +284,7 @@ export function Layout() {
             </Suspense>
           </RouteErrorBoundary>
         </div>
+        <SiteFooter />
       </main>
       <BottomNav menuOpen={menuOpen} onOpenMenu={() => setMenuOpen(true)} moreButtonRef={moreButtonRef} />
       {menuOpen && <MoreMenu onDismiss={dismissMenu} onNavigate={closeMenuAfterNavigate} />}

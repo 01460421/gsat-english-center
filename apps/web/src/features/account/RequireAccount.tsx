@@ -75,14 +75,16 @@ export function OnboardingRedirect() {
   const user = signedIn(me);
   const pending = !loading && features.auth && user !== null && needsOnboarding(user);
   const onWelcome = location.pathname === '/account/welcome';
+  // 公開的條款頁不導走：還沒同意的人也要能先把全文看完。
+  const onPolicyPage = location.pathname === '/privacy' || location.pathname === '/terms';
   const userId = user?.user.id ?? null;
 
   useEffect(() => {
-    if (!pending || userId === null || redirectedForUser === userId) return;
+    if (!pending || userId === null || redirectedForUser === userId || onPolicyPage) return;
     redirectedForUser = userId;
     // 已經在歡迎頁（例如登入時 next 就是它）只記下「導向過」，不必再導一次。
     if (!onWelcome) navigate(welcomeHref(location.pathname + location.search), { replace: true });
-  }, [pending, onWelcome, userId, navigate, location.pathname, location.search]);
+  }, [pending, onWelcome, onPolicyPage, userId, navigate, location.pathname, location.search]);
 
   return null;
 }
