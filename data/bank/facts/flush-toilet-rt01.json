@@ -1,0 +1,309 @@
+{
+  "schema": "gsat-bank-facts/v1",
+  "id": "flush-toilet-rt01",
+  "title": "The flush toilet, London's Great Stink and Bazalgette's sewers; people using at least basic sanitation, 2000–2024",
+  "sdgs": [
+    6,
+    3
+  ],
+  "created_on": "2026-10-09",
+  "created_by": "claude-opus-5-5",
+  "sources": [
+    {
+      "id": "s1",
+      "publisher": "The National Archives (UK)",
+      "title": "Innovations in toilet design",
+      "url": "https://www.nationalarchives.gov.uk/explore-the-collection/explore-by-topic/business-finance-and-innovation/toilet-design/",
+      "accessed": "2026-10-09",
+      "license": "Open Government Licence v3.0 (facts only)",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s2",
+      "publisher": "Gresham College",
+      "title": "Sir Joseph Bazalgette and the cleansing of the Victorian metropolis (lecture text by Stephen Halliday, 2019)",
+      "url": "https://www.gresham.ac.uk/sites/default/files/2019-10-09_StephenHalliday_Bazalgette_T.pdf",
+      "accessed": "2026-10-09",
+      "license": "all rights reserved (facts only)",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s3",
+      "publisher": "University of Houston, The Engines of Our Ingenuity",
+      "title": "No. 846: Harington's John",
+      "url": "https://engines.egr.uh.edu/episode/846",
+      "accessed": "2026-10-09",
+      "license": "all rights reserved (facts only)",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s4",
+      "publisher": "United Nations",
+      "title": "World Toilet Day, 19 November",
+      "url": "https://www.un.org/en/observances/toilet-day",
+      "accessed": "2026-10-09",
+      "license": "UN terms of use (facts only)",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s5",
+      "publisher": "World Bank",
+      "title": "World Development Indicators: People using at least basic sanitation services (% of population) (SH.STA.BASS.ZS)",
+      "url": "https://data.worldbank.org/indicator/SH.STA.BASS.ZS",
+      "accessed": "2026-10-09",
+      "license": "CC-BY-4.0",
+      "use": "dataset",
+      "note": "原始提供者：WHO/UNICEF Joint Monitoring Programme (JMP)。數值由 api.worldbank.org（WLD、8S、ZG，lastupdated 2026-10-08）取得"
+    }
+  ],
+  "facts": [
+    {
+      "id": "f1",
+      "text": "Sir John Harington, an English courtier, described an early flush toilet in a book published in the 1590s.",
+      "source_ids": [
+        "s3"
+      ],
+      "kind": "person"
+    },
+    {
+      "id": "f2",
+      "text": "Harington installed one of his flushing devices for Queen Elizabeth I, who was his godmother.",
+      "source_ids": [
+        "s3"
+      ],
+      "kind": "person"
+    },
+    {
+      "id": "f3",
+      "text": "Harington's design included a valve and a system that washed waste down with water.",
+      "source_ids": [
+        "s3"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f4",
+      "text": "In 1775 Alexander Cumming, a Scottish watchmaker, received the first UK patent for a flushing water closet.",
+      "source_ids": [
+        "s1",
+        "s2"
+      ],
+      "kind": "date"
+    },
+    {
+      "id": "f5",
+      "text": "Cumming's invention centred on an S-shaped trap, or U-bend, in the pipe; his patent called it a stink trap, a water seal that keeps drain smells out.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "definition"
+    },
+    {
+      "id": "f6",
+      "text": "In 1778 Joseph Bramah patented an improved flushing closet worked by a handle; by 1797 he had made and sold more than 6,000 closets.",
+      "source_ids": [
+        "s1",
+        "s2"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f7",
+      "text": "When Cumming received his patent, houses had no indoor plumbing and there were no sewers for flushed waste to flow into.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f8",
+      "text": "In London, waste was traditionally collected in cesspools under or near houses and removed by night soil men.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f9",
+      "text": "Each flush of a water closet sent two gallons or more of water into the cesspool, filling it quickly with liquid that leaked into the soil.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f10",
+      "text": "Leaking cesspools contaminated underground springs and wells used for drinking water, carrying diseases such as cholera and typhoid into homes.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f11",
+      "text": "London's public sewers had originally been meant to carry away rainwater.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f12",
+      "text": "In 1815 London authorities first allowed cesspools and house drains to be connected to the public sewers; in 1847 such connection became required by law.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "date"
+    },
+    {
+      "id": "f13",
+      "text": "The public sewers emptied into the Thames, so between 1815 and 1847 the river changed from fairly clean to an open sewer.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f14",
+      "text": "Water discharged into the rivers also polluted the rivers from which London drew its water supply.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f15",
+      "text": "Almost 40,000 people died in London in four cholera epidemics during the 19th century.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f16",
+      "text": "Most people of the time, including members of Parliament, believed diseases spread through foul-smelling air rather than polluted water; this belief was later shown to be wrong.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f17",
+      "text": "The hot, dry summer of 1858 brought the Great Stink; members of Parliament were unable to stay in committee rooms and the library because of the smell from the river.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "event"
+    },
+    {
+      "id": "f18",
+      "text": "Parliament then passed a bill that allowed engineer Joseph Bazalgette to start building his sewer system at once; work began in January 1859.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "date"
+    },
+    {
+      "id": "f19",
+      "text": "Bazalgette's intercepting sewers ran parallel to the Thames and carried sewage east to outfalls at Beckton and Crossness, away from central London.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "place"
+    },
+    {
+      "id": "f20",
+      "text": "London's last cholera epidemic, in the summer of 1866, struck about one square mile of Whitechapel in the east, the only part of the system not yet complete.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "event"
+    },
+    {
+      "id": "f21",
+      "text": "World Toilet Day is observed every year on 19 November.",
+      "source_ids": [
+        "s4"
+      ],
+      "kind": "date"
+    },
+    {
+      "id": "f22",
+      "text": "According to WHO/UNICEF figures cited by the UN, about 3.4 billion people, or 4 in 10 worldwide, lack safe toilets.",
+      "source_ids": [
+        "s4"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f23",
+      "text": "The World Bank indicator counts people using at least basic sanitation: improved sanitation facilities that are not shared with other households.",
+      "source_ids": [
+        "s5"
+      ],
+      "kind": "definition"
+    },
+    {
+      "id": "f24",
+      "text": "Derived from the dataset: in 2024 South Asia (82.0%) was just below the world share (82.2%); Sub-Saharan Africa (37.1%) left about 62.9% of people without at least basic sanitation.",
+      "source_ids": [
+        "s5"
+      ],
+      "kind": "number"
+    }
+  ],
+  "datasets": [
+    {
+      "id": "d1",
+      "source_id": "s5",
+      "title": "People using at least basic sanitation services (% of population)",
+      "indicator": "SH.STA.BASS.ZS",
+      "unit": "%",
+      "categories": [
+        "2000",
+        "2006",
+        "2012",
+        "2018",
+        "2024"
+      ],
+      "series": [
+        {
+          "name": "World",
+          "values": [
+            54.771,
+            61.898,
+            68.949,
+            76.029,
+            82.161
+          ]
+        },
+        {
+          "name": "South Asia",
+          "values": [
+            16.648,
+            32.098,
+            48.448,
+            65.413,
+            81.96
+          ]
+        },
+        {
+          "name": "Sub-Saharan Africa",
+          "values": [
+            21.877,
+            24.845,
+            28.636,
+            33.082,
+            37.115
+          ]
+        }
+      ],
+      "note": "API 原值取三位小數；圖表取一位小數"
+    }
+  ],
+  "notes": null
+}

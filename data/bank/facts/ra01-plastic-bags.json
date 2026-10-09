@@ -1,0 +1,196 @@
+{
+  "schema": "gsat-bank-facts/v1",
+  "id": "ra01-plastic-bags",
+  "title": "The plastic shopping bag, 1933–2018, and world plastic production 1950–2019",
+  "sdgs": [
+    12,
+    14
+  ],
+  "created_on": "2026-10-09",
+  "created_by": "claude-opus-5-5",
+  "sources": [
+    {
+      "id": "s1",
+      "publisher": "United Nations Environment Programme",
+      "title": "From birth to ban: A history of the plastic shopping bag",
+      "url": "https://www.unep.org/news-and-stories/story/birth-ban-history-plastic-shopping-bag",
+      "accessed": "2026-10-09",
+      "license": "UN terms of use (facts only)",
+      "use": "fact_only",
+      "note": "UNEP 網站文章：只取事實、不改寫"
+    },
+    {
+      "id": "s2",
+      "publisher": "Our World in Data",
+      "title": "Global plastics production (Geyer et al. 2017; OECD 2022)",
+      "url": "https://ourworldindata.org/grapher/global-plastics-production",
+      "accessed": "2026-10-09",
+      "license": "CC-BY-4.0",
+      "use": "dataset",
+      "note": "下載 grapher CSV（World，Annual plastic production between 1950 and 2019，單位 tonnes）；1950–2015 來自 Geyer et al. 2017，2016–2018 依 5% 年成長推估，2019 來自 OECD Global Plastics Outlook"
+    }
+  ],
+  "facts": [
+    {
+      "id": "f1",
+      "text": "Polyethylene, the most widely used plastic, was first made in an industrially practical way in 1933, by accident, at a chemical plant in Northwich, England.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "event"
+    },
+    {
+      "id": "f2",
+      "text": "The British military first used polyethylene in secret during World War II.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "event"
+    },
+    {
+      "id": "f3",
+      "text": "In 1965 the Swedish company Celloplast patented a one-piece polyethylene shopping bag designed by its engineer Sten Gustaf Thulin.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "person"
+    },
+    {
+      "id": "f4",
+      "text": "By 1979 plastic bags held 80 percent of the bag market in Europe (four out of every five bags).",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f5",
+      "text": "In 1982 the U.S. supermarket chains Safeway and Kroger switched to plastic bags, and other stores followed.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "event"
+    },
+    {
+      "id": "f6",
+      "text": "By the end of the 1980s plastic bags had almost completely replaced paper bags around the world.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "event"
+    },
+    {
+      "id": "f7",
+      "text": "Plastic bags have been found from the deep ocean to the summit of Mount Everest and the polar ice.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "place"
+    },
+    {
+      "id": "f8",
+      "text": "In 1997 the sailor and researcher Charles Moore discovered the Great Pacific Garbage Patch, a huge area of floating plastic waste.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "event"
+    },
+    {
+      "id": "f9",
+      "text": "In 2002 Bangladesh became the first country to ban thin plastic bags, after they were found to have clogged drains during disastrous floods.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f10",
+      "text": "As of July 2018, UNEP found that 127 of the 192 countries it reviewed had some national law on plastic bags.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f11",
+      "text": "World plastic production was about 2 million tonnes in 1950 and about 459.7 million tonnes in 2019, roughly 230 times as much.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "number",
+      "note": "倍數為衍生數字：459.746016 ÷ 2 ≈ 229.9，文中寫 around 230 times"
+    },
+    {
+      "id": "f12",
+      "text": "World plastic production was about 17 million tonnes in 1965, about 73 million tonnes in 1982 and about 231 million tonnes in 2002.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "number",
+      "note": "OWID grapher CSV（World）：1965＝17,000,000 t、1982＝73,000,000 t、2002＝231,000,000 t。衍生倍數：2002 ÷ 1965 ≈ 13.6、1982 ÷ 1965 ≈ 4.3、2002 ÷ 1982 ≈ 3.2、2019 ÷ 2002 ≈ 2.0"
+    }
+  ],
+  "datasets": [
+    {
+      "id": "d1",
+      "source_id": "s2",
+      "title": "Annual plastic production, World (million tonnes)",
+      "indicator": "plastic_production",
+      "unit": "million tonnes",
+      "categories": [
+        "1950",
+        "1960",
+        "1970",
+        "1980",
+        "1990",
+        "2000",
+        "2010",
+        "2019"
+      ],
+      "series": [
+        {
+          "name": "World",
+          "values": [
+            2,
+            8,
+            35,
+            70,
+            120,
+            213,
+            313,
+            459.746016
+          ]
+        }
+      ],
+      "note": "OWID 原始單位為 tonnes，此處除以 1,000,000；圖上 2019 年四捨五入為 460"
+    },
+    {
+      "id": "d2",
+      "source_id": "s2",
+      "title": "Annual plastic production, World, selected years (million tonnes)",
+      "indicator": "plastic_production",
+      "unit": "million tonnes",
+      "categories": [
+        "1950",
+        "1965",
+        "1982",
+        "2002",
+        "2019"
+      ],
+      "series": [
+        {
+          "name": "World",
+          "values": [
+            2,
+            17,
+            73,
+            231,
+            459.746016
+          ]
+        }
+      ],
+      "note": "同 d1 的 OWID CSV，挑出選文提到的年份（1965 專利、1982 美國超市改用、2002 孟加拉禁令）；OWID 原始單位為 tonnes，此處除以 1,000,000；圖上 2019 年四捨五入為 460"
+    }
+  ],
+  "notes": "選文、題目的數字對照：1933、1965、1979（80% → four out of every five）、1982、1997、2002、July 2018、127／192、1950 與 2019（2 → 460 百萬公噸，約 230 倍）。注意：OWID CSV 不是逐年遞增（1973＝51 → 1975＝46，1974 缺值；1979＝71 高於 1980＝70；2007＝295 → 2008＝281），出題時不要假設兩個資料點之間的年份一定落在兩值之間；要用到的年份請直接放進圖表（d2）。"
+}

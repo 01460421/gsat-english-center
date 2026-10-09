@@ -1,0 +1,422 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.0b1c2d",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "basic",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "近年來，許多學生已經開始自己帶水壺到學校。",
+        "options": null,
+        "answer": "In recent years, many students have started to bring their own water bottles to school.",
+        "accepted_answers": [
+          "Many students have begun bringing their own water bottles to school in recent years."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "現在完成式"
+          ],
+          "topic": "自備水壺上學"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "為了減少塑膠垃圾，學校的福利社也不再賣瓶裝水。",
+        "options": null,
+        "answer": "To reduce plastic waste, the school store also no longer sells bottled water.",
+        "accepted_answers": [
+          "The school store has also stopped selling bottled water in order to reduce plastic waste."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "不定詞表目的"
+          ],
+          "topic": "自備水壺上學"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "自備水壺上學"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「已經開始」說的是從過去延續到現在的改變，要用現在完成式 have started／have begun；「近年來」是 in recent years（years 要用複數）。「自己帶」寫成 bring their own …，水壺是可數名詞，許多學生各帶一個，用複數 water bottles。",
+          "evidence": [
+            "近年來",
+            "已經開始"
+          ],
+          "strategy_zh": "看到「近年來、已經、自從…以來」先想現在完成式；再確認主詞是複數，助動詞用 have。",
+          "hints": [
+            "切成四段：近年來／許多學生已經開始／自己帶水壺／到學校",
+            "標的詞彙：recent（近來的）、start（開始）、bring（帶來）、bottle（瓶子）",
+            "句型框架：In recent years, S + have/has + p.p. …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「為了…」表目的，句首用 To + 原形動詞（或 in order to）；「減少」用 reduce，「塑膠垃圾」是 plastic waste（不可數，不加 s）。「不再」是 no longer 或 not … anymore，主詞 the school store 是單數，動詞要加 s：no longer sells。",
+          "evidence": [
+            "為了減少塑膠垃圾",
+            "不再"
+          ],
+          "strategy_zh": "目的放句首時，不定詞片語後面加逗號，再接完整的主要子句。",
+          "hints": [
+            "切成四段：為了減少塑膠垃圾／學校的福利社／也不再賣／瓶裝水",
+            "標的詞彙：reduce（減少）、plastic（塑膠的）、waste（廢棄物）、no longer（不再）",
+            "句型框架：To + 原形動詞 …, S + V …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "In recent years, many students have started to bring their own water bottles to school.",
+            "Many students have begun bringing their own water bottles to school in recent years."
+          ],
+          "target_words": [
+            {
+              "word": "recent",
+              "zh": "近來的",
+              "alternatives": [
+                "recently"
+              ]
+            },
+            {
+              "word": "start",
+              "zh": "開始",
+              "alternatives": [
+                "begin"
+              ]
+            },
+            {
+              "word": "bring",
+              "zh": "帶來",
+              "alternatives": [
+                "carry"
+              ]
+            },
+            {
+              "word": "bottle",
+              "zh": "瓶子"
+            },
+            {
+              "word": "school",
+              "zh": "學校"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PERF",
+              "grammar_id": "gp-present-perfect",
+              "label_zh": "現在完成式",
+              "frame": "S + have/has + p.p.",
+              "zh_trigger": "已經開始"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "近年來",
+              "accepted": [
+                "In recent years",
+                "Recently",
+                "In the past few years"
+              ],
+              "targets": [
+                "recent"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "In recent year",
+                  "right": "In recent years",
+                  "explanation_zh": "years 要用複數。"
+                }
+              ]
+            },
+            {
+              "zh": "許多學生已經開始",
+              "accepted": [
+                "many students have started",
+                "many students have begun",
+                "a lot of students have started",
+                "lots of students have started"
+              ],
+              "targets": [
+                "start",
+                "PERF"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "many students already start",
+                  "right": "many students have started",
+                  "explanation_zh": "「已經開始」是延續到現在的改變，要用現在完成式。"
+                },
+                {
+                  "wrong": "many student have started",
+                  "explanation_zh": "many 後面接複數名詞 students。"
+                }
+              ]
+            },
+            {
+              "zh": "自己帶水壺",
+              "accepted": [
+                "to bring their own water bottles",
+                "bringing their own water bottles",
+                "to carry their own water bottles",
+                "carrying their own water bottles"
+              ],
+              "targets": [
+                "bring",
+                "bottle"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "to bring their own water bottle",
+                  "right": "to bring their own water bottles",
+                  "explanation_zh": "許多學生各帶一個，水壺用複數。"
+                },
+                {
+                  "wrong": "to bring water bottles by themselves",
+                  "explanation_zh": "「自己帶」是帶自己的（their own），by themselves 是「獨自」。"
+                }
+              ]
+            },
+            {
+              "zh": "到學校",
+              "accepted": [
+                "to school"
+              ],
+              "targets": [
+                "school"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "to the school",
+                  "right": "to school",
+                  "explanation_zh": "上學的「到學校」不加 the。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "tense_trigger",
+              "zh": "已經開始",
+              "literal_error": "Many students already start to bring their own water bottles to school.",
+              "part": 2,
+              "explanation_zh": "照字面寫成現在簡單式會漏掉完成式，這一部分扣分。"
+            }
+          ],
+          "bonus": []
+        },
+        "2": {
+          "references": [
+            "To reduce plastic waste, the school store also no longer sells bottled water.",
+            "The school store has also stopped selling bottled water in order to reduce plastic waste."
+          ],
+          "target_words": [
+            {
+              "word": "reduce",
+              "zh": "減少",
+              "alternatives": [
+                "cut down on"
+              ]
+            },
+            {
+              "word": "plastic",
+              "zh": "塑膠的"
+            },
+            {
+              "word": "waste",
+              "zh": "廢棄物",
+              "alternatives": [
+                "trash",
+                "garbage"
+              ]
+            },
+            {
+              "word": "store",
+              "zh": "商店（福利社）",
+              "alternatives": [
+                "shop"
+              ]
+            },
+            {
+              "word": "no longer",
+              "zh": "不再",
+              "alternatives": [
+                "stop",
+                "not anymore"
+              ]
+            },
+            {
+              "word": "bottled",
+              "zh": "瓶裝的"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PURP",
+              "grammar_id": "gp-infinitive-purpose",
+              "label_zh": "不定詞表目的",
+              "frame": "To + 原形動詞 …, S + V …",
+              "zh_trigger": "為了"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "為了減少塑膠垃圾",
+              "accepted": [
+                "To reduce plastic waste",
+                "in order to reduce plastic waste",
+                "To reduce plastic trash",
+                "To cut down on plastic waste"
+              ],
+              "targets": [
+                "reduce",
+                "plastic",
+                "waste",
+                "PURP"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "For reducing plastic waste",
+                  "right": "To reduce plastic waste",
+                  "explanation_zh": "表目的用不定詞 To + 原形動詞。"
+                },
+                {
+                  "wrong": "To reduce plastic wastes",
+                  "explanation_zh": "waste 指廢棄物時多當不可數名詞。"
+                }
+              ]
+            },
+            {
+              "zh": "學校的福利社",
+              "accepted": [
+                "the school store",
+                "the school shop"
+              ],
+              "targets": [
+                "store"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "the school's welfare society",
+                  "explanation_zh": "福利社是學校裡賣東西的地方，用 school store 或 school shop，不要逐字翻。"
+                }
+              ]
+            },
+            {
+              "zh": "也不再賣",
+              "accepted": [
+                "also no longer sells",
+                "no longer sells",
+                "has also stopped selling",
+                "has stopped selling"
+              ],
+              "targets": [
+                "no longer"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "also no longer sell",
+                  "right": "also no longer sells",
+                  "explanation_zh": "主詞 the school store 是單數，動詞加 s。"
+                }
+              ]
+            },
+            {
+              "zh": "瓶裝水",
+              "accepted": [
+                "bottled water",
+                "water in plastic bottles"
+              ],
+              "targets": [
+                "bottled"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "bottle water",
+                  "right": "bottled water",
+                  "explanation_zh": "「瓶裝的」是 bottled。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "collocation",
+              "zh": "不再",
+              "literal_error": "the school store does not sell bottled water again",
+              "part": 3,
+              "explanation_zh": "not … again 是「不會再一次」，「不再」要用 no longer 或 not … anymore。"
+            }
+          ],
+          "bonus": []
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-tr-basic-sample",
+    "lot": "translation-basic-01",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "3c1f0e7a9b2d4c6e8f0a1b3c5d7e9f1a2b4c6d8e0f1a3b5c7d9e1f2a4b6c8d0e",
+    "spec_id": "translation-basic@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": null,
+  "verification": [],
+  "status": "draft",
+  "status_reason": null
+}

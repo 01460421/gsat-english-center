@@ -1,0 +1,662 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.3c111c",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "basic",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "週末時，我們全家會一起在家做晚餐，而不是去餐廳吃飯。",
+        "options": null,
+        "answer": "On weekends, my family cooks dinner together at home instead of eating at a restaurant.",
+        "accepted_answers": [
+          "On weekends, instead of going to a restaurant, my whole family makes dinner together at home.",
+          "On weekends, my whole family cooks dinner at home together rather than eating at a restaurant."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "介系詞＋動名詞"
+          ],
+          "topic": "全家一起做晚餐"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "我的工作是洗菜、擺好碗筷和飯後洗碗。",
+        "options": null,
+        "answer": "My job is to wash the vegetables, set the table, and do the dishes after dinner.",
+        "accepted_answers": [
+          "My task is to wash the vegetables, set the table, and wash the dishes after the meal.",
+          "I am in charge of washing the vegetables, setting the table, and doing the dishes after dinner."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "平行結構"
+          ],
+          "topic": "全家一起做晚餐"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "全家一起做晚餐"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「而不是…」用 instead of + V-ing（或 rather than + V-ing），of 是介系詞，後面的動詞要加 -ing：instead of eating at a restaurant。這是每個週末的習慣，用現在簡單式；主詞 my family 看成一個整體，動詞加 s：cooks。「週末時」是 on weekends（複數）。",
+          "evidence": [
+            "而不是去餐廳吃飯",
+            "週末時"
+          ],
+          "strategy_zh": "介系詞（instead of、besides、by、without）後面一律接 V-ing；先把主要子句寫好，再把「而不是…」接在句尾。",
+          "hints": [
+            "切成四段：週末時／我們全家／一起在家做晚餐／而不是去餐廳吃飯",
+            "標的詞彙：weekend（週末）、family（全家）、cook（做（飯））、dinner（晚餐）、restaurant（餐廳）",
+            "句型框架：S + V … instead of + V-ing …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "三件工作用 and 連接，要用相同的形式：to wash …, set …, and do …（to 只寫一次），或全部用 V-ing（I am in charge of washing …, setting …, and doing …）。三項以上時，最後一項前面加 and，各項之間用逗號。「洗碗」是 do／wash the dishes（dishes 複數），「擺好碗筷」英文慣用 set the table。",
+          "evidence": [
+            "洗菜、擺好碗筷和飯後洗碗"
+          ],
+          "strategy_zh": "列舉三件事時，先決定第一項的形式（to V 或 V-ing），後面每一項都照著寫。",
+          "hints": [
+            "切成四段：我的工作是／洗菜／擺好碗筷／飯後洗碗",
+            "標的詞彙：job（工作）、wash（洗）、vegetable（菜（蔬菜））、set the table（擺好碗筷）、dish（碗盤）",
+            "句型框架：My job is to V1 …, V2 …, and V3 …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "On weekends, my family cooks dinner together at home instead of eating at a restaurant.",
+            "On weekends, instead of going to a restaurant, my whole family makes dinner together at home.",
+            "On weekends, my whole family cooks dinner at home together rather than eating at a restaurant."
+          ],
+          "target_words": [
+            {
+              "word": "weekend",
+              "zh": "週末"
+            },
+            {
+              "word": "family",
+              "zh": "全家"
+            },
+            {
+              "word": "cook",
+              "zh": "做（飯）",
+              "alternatives": [
+                "make"
+              ]
+            },
+            {
+              "word": "dinner",
+              "zh": "晚餐"
+            },
+            {
+              "word": "restaurant",
+              "zh": "餐廳",
+              "alternatives": [
+                "eat out",
+                "dine out"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PREPVING",
+              "grammar_id": "gp-prep-gerund",
+              "label_zh": "介系詞＋動名詞（instead of＋V-ing）",
+              "frame": "S + V … instead of + V-ing …",
+              "zh_trigger": "而不是"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "週末時",
+              "accepted": [
+                "On weekends",
+                "On the weekends",
+                "At weekends",
+                "Every weekend",
+                "On the weekend"
+              ],
+              "targets": [
+                "weekend"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "On weekend",
+                  "right": "On weekends",
+                  "explanation_zh": "說「每個週末都這樣」的習慣，用複數 on weekends（或 every weekend）。"
+                },
+                {
+                  "wrong": "In weekends",
+                  "right": "On weekends",
+                  "explanation_zh": "週末前面的介系詞用 on（英式用 at），不用 in。"
+                }
+              ]
+            },
+            {
+              "zh": "我們全家",
+              "accepted": [
+                "my family",
+                "my whole family",
+                "our family",
+                "our whole family",
+                "everyone in my family"
+              ],
+              "targets": [
+                "family"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "we all family",
+                  "right": "my whole family",
+                  "explanation_zh": "「我們全家」是 my whole family 或 everyone in my family，不要逐字翻成 we all family。"
+                }
+              ]
+            },
+            {
+              "zh": "一起在家做晚餐",
+              "accepted": [
+                "cooks dinner together at home",
+                "makes dinner together at home",
+                "cooks dinner at home together",
+                "cook dinner together at home",
+                "make dinner together at home",
+                "cooks dinner at home"
+              ],
+              "targets": [
+                "cook",
+                "dinner"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "does dinner together at home",
+                  "right": "cooks dinner together at home",
+                  "explanation_zh": "「做晚餐」是 cook／make dinner，不用 do。"
+                },
+                {
+                  "wrong": "cooks the dinner together in home",
+                  "right": "cooks dinner together at home",
+                  "explanation_zh": "三餐名稱前通常不加 the；「在家」是 at home。"
+                }
+              ]
+            },
+            {
+              "zh": "而不是去餐廳吃飯",
+              "accepted": [
+                "instead of eating at a restaurant",
+                "instead of going to a restaurant",
+                "instead of eating in a restaurant",
+                "instead of eating out",
+                "rather than eating at a restaurant",
+                "rather than going to a restaurant",
+                "instead of dining at a restaurant",
+                "instead of dining out"
+              ],
+              "targets": [
+                "PREPVING",
+                "restaurant"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "instead of eat at a restaurant",
+                  "right": "instead of eating at a restaurant",
+                  "explanation_zh": "instead of 的 of 是介系詞，後面接動名詞 eating。"
+                },
+                {
+                  "wrong": "instead of eating at restaurant",
+                  "right": "instead of eating at a restaurant",
+                  "explanation_zh": "restaurant 是可數名詞，單數前面要有 a。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "plural_countable",
+              "zh": "週末時",
+              "literal_error": "On weekend, my family cooks dinner together at home instead of eating at a restaurant.",
+              "part": 1,
+              "explanation_zh": "這裡說的是每個週末的習慣，weekend 要用複數 on weekends（或 every weekend）；寫 on weekend 會在這一部分被扣分。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "Rather than eating out on weekends, my family prefers to cook dinner together at home.",
+              "grammar_id": "gp-prep-gerund",
+              "explanation_zh": "用 rather than + V-ing 放句首，再搭配 prefer to V，把「寧可在家做飯」的意思說得更清楚。"
+            }
+          ]
+        },
+        "2": {
+          "references": [
+            "My job is to wash the vegetables, set the table, and do the dishes after dinner.",
+            "My task is to wash the vegetables, set the table, and wash the dishes after the meal.",
+            "I am in charge of washing the vegetables, setting the table, and doing the dishes after dinner."
+          ],
+          "target_words": [
+            {
+              "word": "job",
+              "zh": "工作",
+              "alternatives": [
+                "task",
+                "duty",
+                "in charge of",
+                "responsible"
+              ]
+            },
+            {
+              "word": "wash",
+              "zh": "洗"
+            },
+            {
+              "word": "vegetable",
+              "zh": "菜（蔬菜）"
+            },
+            {
+              "word": "set the table",
+              "zh": "擺好碗筷",
+              "alternatives": [
+                "bowls and chopsticks"
+              ]
+            },
+            {
+              "word": "dish",
+              "zh": "碗盤"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PARA",
+              "grammar_id": "gp-parallelism",
+              "label_zh": "平行結構（A, B, and C 用相同的動詞形式）",
+              "frame": "to V1 …, V2 …, and V3 …（或 V1-ing …, V2-ing …, and V3-ing …）",
+              "zh_trigger": "洗菜、擺好碗筷和飯後洗碗"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "我的工作是",
+              "accepted": [
+                "My job is",
+                "My task is",
+                "My duty is",
+                "My work is",
+                "I am in charge of",
+                "I am responsible for"
+              ],
+              "targets": [
+                "job"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "My job is wash",
+                  "right": "My job is to wash",
+                  "explanation_zh": "be 動詞後面接動作當補語，要用 to V（或 V-ing），不能直接接原形動詞。"
+                }
+              ]
+            },
+            {
+              "zh": "洗菜",
+              "accepted": [
+                "to wash the vegetables",
+                "wash the vegetables",
+                "washing the vegetables"
+              ],
+              "targets": [
+                "wash",
+                "vegetable"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "to wash vegetable",
+                  "right": "to wash the vegetables",
+                  "explanation_zh": "要洗的菜不只一樣，vegetable 用複數。"
+                },
+                {
+                  "wrong": "to wash the dishes",
+                  "right": "to wash the vegetables",
+                  "explanation_zh": "「洗菜」的「菜」是蔬菜 vegetables；dishes 是碗盤或菜餚。"
+                }
+              ]
+            },
+            {
+              "zh": "擺好碗筷",
+              "accepted": [
+                "set the table",
+                "setting the table",
+                "put the bowls and chopsticks on the table",
+                "lay the table",
+                "put out the bowls and chopsticks"
+              ],
+              "targets": [
+                "set the table"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "put the bowls and chopsticks well",
+                  "right": "set the table",
+                  "explanation_zh": "「擺好碗筷」英文習慣說 set the table；逐字把「好」翻成 well 不通順。"
+                }
+              ]
+            },
+            {
+              "zh": "飯後洗碗",
+              "accepted": [
+                "do the dishes after dinner",
+                "wash the dishes after dinner",
+                "do the dishes after the meal",
+                "wash the dishes after the meal",
+                "doing the dishes after dinner",
+                "washing the dishes after dinner"
+              ],
+              "targets": [
+                "PARA",
+                "dish"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "and doing the dishes after dinner",
+                  "right": "and do the dishes after dinner",
+                  "explanation_zh": "前面用 to wash …, set …，最後一項也要用同樣的原形動詞，保持平行結構。"
+                },
+                {
+                  "wrong": "do the dish after dinner",
+                  "right": "do the dishes after dinner",
+                  "explanation_zh": "「洗碗」是 do／wash the dishes，dish 用複數。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "plural_countable",
+              "zh": "飯後洗碗",
+              "literal_error": "My job is to wash the vegetables, set the table, and do the dish after dinner.",
+              "part": 4,
+              "explanation_zh": "「洗碗」要洗的碗盤不只一個，固定說 do／wash the dishes；寫單數 dish 會在這一部分被扣分。"
+            }
+          ],
+          "bonus": []
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-basic-01",
+    "lot": "translation-basic-01",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "5d53cd3325023c20a689f496811202dc08d17408faea3e4eb4c3042ce15b605d",
+    "spec_id": "translation-basic@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T07:53:40Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T07:20:08Z",
+      "details": {
+        "solver": "A",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "On weekends, my whole family cooks dinner together at home instead of eating at a restaurant.",
+            "confidence": "high",
+            "explanation_zh": "「而不是…」用 instead of＋動名詞；週末的習慣用現在簡單式，my whole family 當單數主詞配 cooks。"
+          },
+          "2": {
+            "translation": "My job is to wash the vegetables, set out the bowls and chopsticks, and wash the dishes after the meal.",
+            "confidence": "high",
+            "explanation_zh": "主詞補語用不定詞 to V，三個動作平行（to wash, set out, wash）；擺好碗筷照字面譯 set out the bowls and chopsticks（也可 set the table）；洗碗譯 wash the dishes。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PREPVING"
+            ],
+            "used_target_words": [
+              "weekend",
+              "family",
+              "cook",
+              "dinner",
+              "restaurant"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PARA"
+            ],
+            "used_target_words": [
+              "job",
+              "wash",
+              "vegetable",
+              "set the table",
+              "dish"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "（小建議）第 3 部分 accepted 有 put out the bowls and chopsticks，可再補同義的 set out the bowls and chopsticks（我的譯文用這個寫法）。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "weekend",
+              "family",
+              "cook",
+              "dinner",
+              "restaurant"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PREPVING": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "job",
+              "wash",
+              "vegetable",
+              "set the table",
+              "dish"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PARA": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T07:25:05Z",
+      "details": {
+        "solver": "B",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "On weekends, my whole family cooks dinner together at home instead of eating at a restaurant.",
+            "confidence": "high",
+            "explanation_zh": "「週末時」用 on weekends；習慣性行為用現在簡單式；「而不是」用 instead of + V-ing；「全家」譯 my whole family。"
+          },
+          "2": {
+            "translation": "My job is to wash the vegetables, set the table, and wash the dishes after the meal.",
+            "confidence": "medium",
+            "explanation_zh": "My job is to V 的三個並列不定詞要結構一致；「擺好碗筷」意譯為 set the table（也可直譯 put out the bowls and chopsticks），這裡有取捨；「飯後」譯 after the meal。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PREPVING"
+            ],
+            "used_target_words": [
+              "weekend",
+              "family",
+              "cook",
+              "dinner",
+              "restaurant"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PARA"
+            ],
+            "used_target_words": [
+              "job",
+              "wash",
+              "vegetable",
+              "set the table",
+              "dish"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "weekend",
+              "family",
+              "cook",
+              "dinner",
+              "restaurant"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PREPVING": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "job",
+              "wash",
+              "vegetable",
+              "set the table",
+              "dish"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PARA": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

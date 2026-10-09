@@ -1,0 +1,156 @@
+{
+  "schema": "gsat-bank-facts/v1",
+  "id": "myopia-outdoors-ra02",
+  "title": "Myopia, outdoor time and school-age eyesight in Taiwan (Tian-Tian 120; Taipei City screening data, school years 2014-2025)",
+  "sdgs": [
+    3
+  ],
+  "created_on": "2026-10-09",
+  "created_by": "claude-opus-5-5",
+  "sources": [
+    {
+      "id": "s1",
+      "publisher": "政府資料開放平臺 data.gov.tw（提供機關：臺北市政府教育局）",
+      "title": "臺北市國中小裸眼視力不良率（103 至 114 學年度）",
+      "url": "https://data.gov.tw/dataset/134660",
+      "accessed": "2026-10-09",
+      "license": "OGDL-Taiwan-1.0",
+      "use": "dataset",
+      "note": "資料集頁標示「政府資料開放授權條款-第1版」；CSV 實際下載自 data.taipei（資料集頁的資源連結）。欄位：民國年（學年度）、國中與國小的裸視視力檢查人數與裸視視力不良率（百分比）。103 學年度＝2014–2015 學年，依此換算成西元起始年"
+    },
+    {
+      "id": "s2",
+      "publisher": "National Eye Institute (U.S. National Institutes of Health)",
+      "title": "Nearsightedness (Myopia)",
+      "url": "https://www.nei.nih.gov/learn-about-eye-health/eye-conditions-and-diseases/nearsightedness-myopia",
+      "accessed": "2026-10-09",
+      "license": "U.S. federal government work (facts only)",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s3",
+      "publisher": "PubMed (U.S. National Library of Medicine)",
+      "title": "Wu PC et al. Increased Time Outdoors Is Followed by Reversal of the Long-Term Trend to Reduced Visual Acuity in Taiwan Primary School Students. Ophthalmology 2020;127(11):1462-1469 (abstract, PMID 32197911)",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/32197911/",
+      "accessed": "2026-10-09",
+      "license": "Abstract, copyright American Academy of Ophthalmology (facts only)",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s4",
+      "publisher": "PubMed (U.S. National Library of Medicine)",
+      "title": "Wu PC et al. Outdoor activity during class recess reduces myopia onset and progression in school children. Ophthalmology 2013;120(5):1080-1085 (abstract, PMID 23462271)",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/23462271/",
+      "accessed": "2026-10-09",
+      "license": "Abstract, copyright American Academy of Ophthalmology (facts only)",
+      "use": "fact_only",
+      "note": null
+    }
+  ],
+  "facts": [
+    {
+      "id": "f1",
+      "text": "Nearsightedness (myopia) usually happens when the eyeball grows too long from front to back, so light focuses in front of the retina and faraway objects look blurry.",
+      "source_ids": ["s2"],
+      "kind": "definition"
+    },
+    {
+      "id": "f2",
+      "text": "Nearsightedness usually starts between ages 6 and 14 and gets worse until the early twenties.",
+      "source_ids": ["s2"],
+      "kind": "number"
+    },
+    {
+      "id": "f3",
+      "text": "Children who spend more time outdoors are less likely to become nearsighted, but experts are not sure why.",
+      "source_ids": ["s2"],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f4",
+      "text": "Taiwan's school eyesight screening tests the uncorrected vision of all students in grades 1 to 6 every half year.",
+      "source_ids": ["s3"],
+      "kind": "other"
+    },
+    {
+      "id": "f5",
+      "text": "Among Taiwan's primary school students, the share with reduced vision rose from 34.8 percent in 2001 to 50.0 percent in 2011.",
+      "source_ids": ["s3"],
+      "kind": "number"
+    },
+    {
+      "id": "f6",
+      "text": "A program called Tian-Tian 120, begun in September 2010, encouraged Taiwanese schools to take students outdoors for 120 minutes every day to prevent myopia.",
+      "source_ids": ["s3"],
+      "kind": "event"
+    },
+    {
+      "id": "f7",
+      "text": "After Tian-Tian 120 began, the share of Taiwanese primary school students with reduced vision fell every year, from 49.4 percent in 2012 to 46.1 percent in 2015.",
+      "source_ids": ["s3"],
+      "kind": "number"
+    },
+    {
+      "id": "f8",
+      "text": "In a study at two primary schools in southern Taiwan, one school encouraged children to go outside during class recess and the other made no change.",
+      "source_ids": ["s4"],
+      "kind": "event"
+    },
+    {
+      "id": "f9",
+      "text": "After 1 year, 8.41 percent of children at the outdoor-recess school had newly developed myopia, compared with 17.65 percent at the other school.",
+      "source_ids": ["s4"],
+      "kind": "number"
+    },
+    {
+      "id": "f10",
+      "text": "The new-myopia rate at the outdoor-recess school (8.41 percent) was less than half the rate at the other school (17.65 percent).",
+      "source_ids": ["s4"],
+      "kind": "number",
+      "note": "衍生數字：8.41 ÷ 17.65 ≈ 0.48"
+    },
+    {
+      "id": "f11",
+      "text": "In Taipei, the share of elementary school students with poor uncorrected eyesight fell from 49.44 percent in the 2014 school year to 43.51 percent in the 2019 school year, then rose to 45.02 percent in 2023 and was 44.35 percent in 2025.",
+      "source_ids": ["s1"],
+      "kind": "number"
+    },
+    {
+      "id": "f12",
+      "text": "In Taipei, the share of junior high school students with poor uncorrected eyesight was 77.67 percent in the 2014 school year and 72.13 percent in the 2025 school year.",
+      "source_ids": ["s1"],
+      "kind": "number"
+    },
+    {
+      "id": "f13",
+      "text": "In every Taipei school year from 2014 to 2025, the junior high rate was more than 25 percentage points higher than the elementary school rate; the gap was 32.84 points in 2019 and 27.78 points in 2025.",
+      "source_ids": ["s1"],
+      "kind": "number",
+      "note": "衍生數字：各年差距 28.23、29.5、29.94、31.68、31.79、32.84、31.96、31.08、30.22、28.42、27.82、27.78"
+    }
+  ],
+  "datasets": [
+    {
+      "id": "d1",
+      "source_id": "s1",
+      "title": "Taipei City students with poor uncorrected eyesight, by school level (%)",
+      "indicator": "臺北市國中小裸眼視力不良率",
+      "unit": "%",
+      "categories": ["2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025"],
+      "series": [
+        {
+          "name": "Elementary school",
+          "values": [49.44, 47.92, 47.05, 46.03, 44.55, 43.51, 43.83, 44.71, 44.93, 45.02, 44.96, 44.35]
+        },
+        {
+          "name": "Junior high school",
+          "values": [77.67, 77.42, 76.99, 77.71, 76.34, 76.35, 75.79, 75.79, 75.15, 73.44, 72.78, 72.13]
+        }
+      ],
+      "note": "原始 CSV 的「民國年」103–114 是學年度（資料集說明：103學年度至114學年度）；類別寫成學年的西元起始年（103→2014 … 114→2025）。檢查人數未列入。"
+    }
+  ],
+  "notes": "原規劃的全國國小、國中、高中資料在 data.gov.tw 找不到全國層級的資料集（只有各縣市），改用臺北市教育局的國中小資料（12 個學年、無高中）。文中全國數字（2001–2015）取自 Wu et al. 2020 摘要，與臺北市圖表是不同母體，選文要分開說明。圖表本身不能說明 2020 年後國小比率回升的原因，選文不寫原因。"
+}

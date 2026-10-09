@@ -1,0 +1,656 @@
+{
+  "schema": "gsat-bank-lot/v1",
+  "lot": "composition-basic-01",
+  "section_type": "composition",
+  "tier": "basic",
+  "label_zh": "英文作文‧穩定基礎（第 1 批）",
+  "created_on": "2026-10-09",
+  "count": 10,
+  "questions_per_group": 1,
+  "format_version": "composition-1",
+  "uid_prefix": "ai.cp.",
+  "path": "data/bank/v1/composition/basic/",
+  "spec_id": "composition-basic@2026-10-09",
+  "spec_file": "data/exams/generation-spec/writing.json",
+  "spec_tier_key": "foundation",
+  "spec_status": "draft：寫作沒有逐題統計，只有大題分數分布（非選擇題分數人數統計表；學測 97–115、指考 97–110 共 33 年），中譯英兩句也只有合計。三級參數由年度層級分析、能力組推估與 98 篇官方佳作的轉錄統計推得；範文的中低級參數是設計值。上線後依站內批改分數校正（WRT-CAL-*）。",
+  "site_target": {
+    "items_per_tier": 10,
+    "lots_per_tier": 1,
+    "basis_zh": "站主要求作文每個難度 10 題（每題附穩健版與頂標版範文）；ROADMAP §9.2 原訂每個難度 4 題，依站主要求放大"
+  },
+  "topics": [
+    {
+      "slot": 1,
+      "id": "cp-b01-01",
+      "domain_zh": "校園生活",
+      "topic_zh": "下課十分鐘的走廊",
+      "angle_en": "what students do in the hallway during a ten-minute break",
+      "keywords": [
+        "class break hallway"
+      ],
+      "prompt_type": "picture_scene",
+      "essay_type": "picture",
+      "figures_hint_zh": "1 張插圖：走廊上聊天、追跑、到飲水機裝水、在布告欄看公告的學生",
+      "moves": [
+        {
+          "paragraph": 1,
+          "code": "describe"
+        },
+        {
+          "paragraph": 2,
+          "code": "personal_experience"
+        },
+        {
+          "paragraph": 2,
+          "code": "preference_reasons"
+        }
+      ]
+    },
+    {
+      "slot": 2,
+      "id": "cp-b01-02",
+      "domain_zh": "校園生活",
+      "topic_zh": "午餐時間的學生餐廳",
+      "angle_en": "the busy school cafeteria at lunchtime",
+      "keywords": [
+        "school cafeteria"
+      ],
+      "prompt_type": "picture_scene",
+      "essay_type": "picture",
+      "figures_hint_zh": "1 張插圖：排隊取餐、找座位、收拾餐盤的學生",
+      "moves": [
+        {
+          "paragraph": 1,
+          "code": "describe"
+        },
+        {
+          "paragraph": 2,
+          "code": "personal_experience"
+        },
+        {
+          "paragraph": 2,
+          "code": "preference_reasons"
+        }
+      ]
+    },
+    {
+      "slot": 3,
+      "id": "cp-b01-03",
+      "domain_zh": "校園生活",
+      "topic_zh": "校園植物觀察課",
+      "angle_en": "a biology class observing and drawing plants on campus",
+      "keywords": [
+        "campus plants"
+      ],
+      "prompt_type": "picture_scene",
+      "essay_type": "picture",
+      "figures_hint_zh": "1 張插圖：學生拿放大鏡、做筆記、拍照記錄樹葉與花",
+      "moves": [
+        {
+          "paragraph": 1,
+          "code": "describe"
+        },
+        {
+          "paragraph": 2,
+          "code": "personal_experience"
+        },
+        {
+          "paragraph": 2,
+          "code": "preference_reasons"
+        }
+      ]
+    },
+    {
+      "slot": 4,
+      "id": "cp-b01-04",
+      "domain_zh": "校園生活",
+      "topic_zh": "體育課跳繩比賽",
+      "angle_en": "a jump rope contest in PE class",
+      "keywords": [
+        "jump rope"
+      ],
+      "prompt_type": "picture_scene",
+      "essay_type": "picture",
+      "figures_hint_zh": "1 張插圖：兩人搖大繩、一群人排隊跳繩、旁邊同學計數加油",
+      "moves": [
+        {
+          "paragraph": 1,
+          "code": "describe"
+        },
+        {
+          "paragraph": 2,
+          "code": "personal_experience"
+        },
+        {
+          "paragraph": 2,
+          "code": "preference_reasons"
+        }
+      ]
+    },
+    {
+      "slot": 5,
+      "id": "cp-b01-05",
+      "domain_zh": "校園生活",
+      "topic_zh": "班會討論",
+      "angle_en": "a class meeting where students discuss how to spend the class fund",
+      "keywords": [
+        "class meeting"
+      ],
+      "prompt_type": "picture_scene",
+      "essay_type": "picture",
+      "figures_hint_zh": "1 張插圖：主席在台上、同學舉手發言、黑板寫著三個選項",
+      "moves": [
+        {
+          "paragraph": 1,
+          "code": "describe"
+        },
+        {
+          "paragraph": 2,
+          "code": "personal_experience"
+        },
+        {
+          "paragraph": 2,
+          "code": "simple_plan"
+        }
+      ]
+    },
+    {
+      "slot": 6,
+      "id": "cp-b01-06",
+      "domain_zh": "校園生活",
+      "topic_zh": "科學實驗課",
+      "angle_en": "students doing an experiment in the science lab",
+      "keywords": [
+        "science lab"
+      ],
+      "prompt_type": "picture_scene",
+      "essay_type": "picture",
+      "figures_hint_zh": "1 張插圖：戴護目鏡量液體、記錄數據、老師在旁指導",
+      "moves": [
+        {
+          "paragraph": 1,
+          "code": "describe"
+        },
+        {
+          "paragraph": 2,
+          "code": "personal_experience"
+        },
+        {
+          "paragraph": 2,
+          "code": "preference_reasons"
+        }
+      ]
+    },
+    {
+      "slot": 7,
+      "id": "cp-b01-07",
+      "domain_zh": "校園生活",
+      "topic_zh": "新生訓練",
+      "angle_en": "first-year students on their first day of freshman orientation",
+      "keywords": [
+        "freshman orientation"
+      ],
+      "prompt_type": "picture_scene",
+      "essay_type": "picture",
+      "figures_hint_zh": "2 張插圖：圖一新生在禮堂聽介紹、圖二學長姐帶新生參觀校園",
+      "moves": [
+        {
+          "paragraph": 1,
+          "code": "compare"
+        },
+        {
+          "paragraph": 2,
+          "code": "personal_experience"
+        },
+        {
+          "paragraph": 2,
+          "code": "preference_reasons"
+        }
+      ]
+    },
+    {
+      "slot": 8,
+      "id": "cp-b01-08",
+      "domain_zh": "校園生活",
+      "topic_zh": "教室布置比賽",
+      "angle_en": "a class decorating its classroom for a contest",
+      "keywords": [
+        "classroom decoration"
+      ],
+      "prompt_type": "picture_scene",
+      "essay_type": "picture",
+      "figures_hint_zh": "1 張插圖：貼海報、掛彩帶、擺盆栽、畫黑板畫的學生",
+      "moves": [
+        {
+          "paragraph": 1,
+          "code": "describe"
+        },
+        {
+          "paragraph": 2,
+          "code": "personal_experience"
+        },
+        {
+          "paragraph": 2,
+          "code": "simple_plan"
+        }
+      ]
+    },
+    {
+      "slot": 9,
+      "id": "cp-b01-09",
+      "domain_zh": "校園生活",
+      "topic_zh": "美術課畫壁畫",
+      "angle_en": "students painting a mural on a school wall in art class",
+      "keywords": [
+        "school mural"
+      ],
+      "prompt_type": "picture_scene",
+      "essay_type": "picture",
+      "figures_hint_zh": "1 張插圖：學生踩梯子塗色、調顏料、對照草圖的牆面壁畫",
+      "moves": [
+        {
+          "paragraph": 1,
+          "code": "describe"
+        },
+        {
+          "paragraph": 2,
+          "code": "personal_experience"
+        },
+        {
+          "paragraph": 2,
+          "code": "preference_reasons"
+        }
+      ]
+    },
+    {
+      "slot": 10,
+      "id": "cp-b01-10",
+      "domain_zh": "校園生活",
+      "topic_zh": "拍畢業照",
+      "angle_en": "seniors taking graduation photos around the campus",
+      "keywords": [
+        "graduation photo"
+      ],
+      "prompt_type": "picture_scene",
+      "essay_type": "picture",
+      "figures_hint_zh": "2 張插圖：圖一全班在校門口拍團體照、圖二三五好友在教室裡拍搞笑照片",
+      "moves": [
+        {
+          "paragraph": 1,
+          "code": "compare"
+        },
+        {
+          "paragraph": 2,
+          "code": "personal_experience"
+        },
+        {
+          "paragraph": 2,
+          "code": "preference_reasons"
+        }
+      ]
+    }
+  ],
+  "topic_rule_zh": "group.tags.topic 逐字照抄 topic_zh；rubric.prompt_type、question tags.essay_type 照 topics；moves 的 code 照抄，zh 寫這個步驟在題目提示裡的寫法",
+  "prompt_type_quota": {
+    "picture_scene": 10
+  },
+  "prompt_rules": {
+    "spec_3_5_zh": "圖片描述＋個人經驗，校園生活情境；提供構思圖與句型開頭",
+    "stem_zh": "以「提示：」開頭，寫情境、看圖要求，以及「請…寫一篇英文作文，文分兩段。第一段…；第二段…」（分別指定兩段任務）；tags.word_count = {min: 120, max: null, approx: null}、paragraphs = 2、points = 20",
+    "figures_zh": "1–3 張圖（ROADMAP D9：代理畫簡單的 SVG 示意圖放在 figure.svg，或只用文字描述情境）；每張要有 caption 與完整的 description；圖表題 kind=chart／table，數字寫在 rows（第一列表頭），是題目設定的假設調查（題目寫明「某校調查」），要能讀出 2–3 個明確對比",
+    "prompt_zh_chars": [
+      70,
+      120
+    ],
+    "moves": [
+      3,
+      3
+    ],
+    "p1_tasks": [
+      "describe",
+      "compare_two_pictures"
+    ],
+    "p2_tasks": [
+      "personal_experience",
+      "preference+reasons",
+      "simple_plan+reasons"
+    ],
+    "curriculum": []
+  },
+  "scaffold": {
+    "kind": "outline+sentence_starters",
+    "required": true,
+    "rule_zh": "提供構思圖（5W1H：什麼時候、在哪裡、誰、發生什麼、你的感受、後來呢，branches ≥4）、兩段大綱（每段主題句＋2–3 個細節）與每段 2–3 個英文句型開頭（SPEC §3.5、§6.9 步驟 1–2）"
+  },
+  "model_texts": {
+    "steady": {
+      "label_zh": "穩健版",
+      "target_score": [
+        14,
+        17
+      ],
+      "spec": {
+        "role": "穩健版（SPEC §6.9）",
+        "target_score": [
+          14,
+          16
+        ],
+        "words": [
+          160,
+          240
+        ],
+        "paragraphs": 2,
+        "p2_share": [
+          0.4,
+          0.65
+        ],
+        "sentences": [
+          10,
+          18
+        ],
+        "mean_sentence_length": [
+          12,
+          18
+        ],
+        "connectives_per_100w": [
+          2.5,
+          5.5
+        ],
+        "connective_functions_min": 4,
+        "connective_types_min": 5,
+        "non_subject_opener_share_min": 0.25,
+        "L1_4_coverage_min": 0.95,
+        "L5plus_share_max": 0.015,
+        "inversion_max": 0,
+        "errors": 0,
+        "must_show": [
+          "每個題目要求都有對應句子",
+          "兩段各有主題句",
+          "≥2 個具體細節句",
+          "≥1 個個人經驗句",
+          "結尾句回扣題目"
+        ],
+        "basis": "設計值：沒有中段考生的樣本。長度約為下限 120 的 1.3–2 倍，句長與轉承取佳作下緣再往下放寬"
+      }
+    },
+    "top": {
+      "label_zh": "頂標版",
+      "target_score": [
+        18,
+        20
+      ],
+      "spec": {
+        "role": "頂標版（SPEC §6.9）",
+        "target_score": [
+          19,
+          20
+        ],
+        "words": [
+          300,
+          450
+        ],
+        "paragraphs": 2,
+        "p2_share": [
+          0.45,
+          0.63
+        ],
+        "sentences": [
+          14,
+          25
+        ],
+        "mean_sentence_length": [
+          17,
+          24
+        ],
+        "sentence_length_cv_min": 0.28,
+        "connectives_per_100w": [
+          2.5,
+          5.0
+        ],
+        "connective_functions_min": 4,
+        "connective_types_min": 8,
+        "non_subject_opener_share_min": 0.45,
+        "L1_4_coverage": [
+          0.9,
+          0.97
+        ],
+        "L5plus_share": [
+          0.012,
+          0.05
+        ],
+        "mattr50_min": 0.79,
+        "inversion_max": 1,
+        "errors": 0,
+        "must_show": [
+          "第二段「寫深寫廣」：因果鏈，或從自己延伸到他人與社會",
+          "至少 1 個具體例子或數據",
+          "至少 1 組讓步或反面考量",
+          "結尾提出見解而不是重述"
+        ],
+        "basis": "學測 111–115 官方佳作 46 篇約第 10–90 百分位（essay_sample_features）；字數上限 450 約為 P85，避免範文長到學生手寫寫不完；佳作每百字仍有約 2 個錯，範文要求 0 錯"
+      }
+    },
+    "rule_zh": "每題兩篇範文（steady＝穩健版、top＝頂標版），各 ≥120 字、剛好 2 段（段落之間一個換行）；paragraphs 寫段落功能與主題句；notes 標轉承詞（function 涵蓋 sequence／cause_effect／contrast／example／conclusion 至少 4 種）、細節句、個人經驗句、好用句型、片語，text 都要逐字出現在範文；self_assessment 依四項指標給分（穩健版 14–17、頂標版 18–20）。範文 0 錯，不堆砌罕見字或倒裝（07 §4.3）；spec 是出題規格書的篇章指標，不符只列 warning"
+  },
+  "rubric_template": {
+    "criteria": {
+      "content": [
+        {
+          "min": 4,
+          "max": 5,
+          "descriptor_zh": "回應題目的每一項要求，主旨明確；用具體的事例、細節或親身經驗撐起每個重點。"
+        },
+        {
+          "min": 3,
+          "max": 3,
+          "descriptor_zh": "大致回應題目，但有一項要求寫得單薄，或細節偏籠統、說服力不足。"
+        },
+        {
+          "min": 1,
+          "max": 2,
+          "descriptor_zh": "漏掉題目的主要要求或主旨模糊，多數句子空泛、重複或偏離題目。"
+        },
+        {
+          "min": 0,
+          "max": 0,
+          "descriptor_zh": "空白、離題、只抄題目，或內容少到無法判斷要說什麼。"
+        }
+      ],
+      "organization": [
+        {
+          "min": 4,
+          "max": 5,
+          "descriptor_zh": "兩段分工清楚，各有主題句；句與句、段與段的銜接自然，轉承語用得恰當，篇幅分配合理。"
+        },
+        {
+          "min": 3,
+          "max": 3,
+          "descriptor_zh": "段落大致分明，但有的地方跳接或重複，轉承語偏少或用得生硬。"
+        },
+        {
+          "min": 1,
+          "max": 2,
+          "descriptor_zh": "重點排列混亂，前後句常接不起來，讀者不容易跟上。"
+        },
+        {
+          "min": 0,
+          "max": 0,
+          "descriptor_zh": "看不出段落與順序，句子彼此無關。"
+        }
+      ],
+      "grammar": [
+        {
+          "min": 4,
+          "max": 5,
+          "descriptor_zh": "句子幾乎沒有文法、標點錯誤，能交替使用簡單句、複句與不同的句首。"
+        },
+        {
+          "min": 3,
+          "max": 3,
+          "descriptor_zh": "偶有時態、單複數或標點錯誤，但讀得懂意思；句型變化有限。"
+        },
+        {
+          "min": 1,
+          "max": 2,
+          "descriptor_zh": "錯誤多到常讓人誤解意思，句子結構常不完整。"
+        },
+        {
+          "min": 0,
+          "max": 0,
+          "descriptor_zh": "幾乎沒有正確的句子，無法理解。"
+        }
+      ],
+      "vocabulary": [
+        {
+          "min": 4,
+          "max": 5,
+          "descriptor_zh": "用字精準、貼切，搭配自然，少有重複；拼字與大小寫幾乎全對。"
+        },
+        {
+          "min": 3,
+          "max": 3,
+          "descriptor_zh": "字彙範圍偏窄、常重複同幾個字，偶有用字不當或拼錯，但不妨礙理解。"
+        },
+        {
+          "min": 1,
+          "max": 2,
+          "descriptor_zh": "用錯字或拼錯字很多，常讓人看不懂。"
+        },
+        {
+          "min": 0,
+          "max": 0,
+          "descriptor_zh": "幾乎每個字都用錯或拼錯，無法理解。"
+        }
+      ]
+    },
+    "deductions_zh": "字數明顯不足（少於 100 個單詞）或沒有分成兩段，各扣總分 1 分；兩種情形同時發生只扣 1 分。離題或空白以 0 分計。",
+    "rule_zh": "rubric.criteria 的 bands 照抄這裡（本站自己的文字），每項另寫這一題的 focus_zh；不可抄評分原則原文（D8）"
+  },
+  "avoid": {
+    "basis": "data/exams/parsed 的 gsat-111、gsat-112、gsat-113、gsat-114、gsat-115、ref-110、ref-111、ref-115 英文作文主題",
+    "topics": [
+      "gsat-111：different parks and one’s ideal park",
+      "gsat-112：the use of emojis in communication",
+      "gsat-115：the changing role of pets in people’s lives",
+      "ref-110：drought, reservoir depletion and water rationing",
+      "ref-111：daily time allocation of high school students",
+      "ref-115：parks: their features and an ideal park"
+    ],
+    "p2_tasks_recent": {
+      "111": "理想設計＋理由",
+      "112": "親友經驗＋化解方法",
+      "113": "想像幫手的特質與分工",
+      "114": "看法＋經驗",
+      "115": "原因＋影響"
+    },
+    "rule_zh": "不改寫歷屆題；題目提示和歷屆作文題有連續 12 個以上相同漢字列 warning；範文不可和官方內容有 8 字以上相同字串（D8）"
+  },
+  "item_rules": {
+    "summary_zh": "圖片描述＋個人經驗，校園生活情境；提供構思圖與句型開頭",
+    "prompt_kinds": [
+      "picture",
+      "experience"
+    ],
+    "scaffold": true,
+    "curriculum": []
+  },
+  "targets": {
+    "prompt_types": [
+      "picture_scene：1–2 張熟悉場景圖，第一段描述、第二段個人經驗或偏好＋理由",
+      "topic_experience：校園、家庭主題＋親身經驗"
+    ],
+    "figures": [
+      1,
+      2
+    ],
+    "prompt_zh_chars": [
+      70,
+      120
+    ],
+    "moves": [
+      3,
+      3
+    ],
+    "p1_tasks": [
+      "describe",
+      "compare_two_pictures"
+    ],
+    "p2_tasks": [
+      "personal_experience",
+      "preference+reasons",
+      "simple_plan+reasons"
+    ],
+    "abstract_reasoning": false,
+    "experience_required": true,
+    "reference_prompts": [
+      "gsat-111",
+      "gsat-113",
+      "gsat-105"
+    ],
+    "scaffolds": [
+      "5W1H 構思提示",
+      "兩段大綱（主題句、2–3 個支持細節、結尾句）",
+      "每段 2–3 個句型開頭"
+    ],
+    "response_words_target": [
+      120,
+      180
+    ],
+    "target_score_band": [
+      10,
+      13
+    ]
+  },
+  "design": {
+    "distractor_rules": [
+      "每句恰 1 個誘錯點：時態觸發詞（已經、近年來、自…以來）、可數名詞複數、或高頻搭配",
+      "誘錯點要落在 4 個評分部分的某一段，能獨立扣分",
+      "不出需要改寫句構才能翻的中文（無主詞句、長前置修飾、抽象名詞）"
+    ],
+    "recipe": [
+      "先寫英文參考譯文再寫中文題幹，確定中文自然、核心句構有唯一的觸發詞",
+      "兩句實詞全在 L1–4，L3 以上詞目合計 ≤2",
+      "第二句以代名詞或同一關鍵詞延續第一句",
+      "作文給 1–2 張熟悉場景圖：第一段描述、第二段寫自己的經驗或偏好與理由，附大綱與句型開頭"
+    ],
+    "common_errors": [
+      "拼字（官方閱卷說明 22/39 份提到）",
+      "時態漏用完成式（7/39）",
+      "單複數、主詞動詞一致（5/39）",
+      "作文：漏寫其中一段任務、只寫一段、字數不足（各扣 1 分）"
+    ]
+  },
+  "format": {
+    "readme": "data/bank/README.md §3.6–3.7",
+    "sample": "tools/tests/data/ai.cp.0e1f2a@1.json",
+    "group_zh": "1 題 mode=composition、label \"1\"、answer null、points 20；stem 是題目提示；figures 1–3 張（可帶 svg）；tags.topic 必填",
+    "annotations_zh": "rubric = {kind: \"composition\", prompt_type, moves, criteria（四項各 bands＋focus_zh）, deductions_zh, scaffold}；model_texts = [steady, top]；explanations 選填（審題重點，evidence 引用題目）"
+  },
+  "verification": {
+    "blind_graders": 2,
+    "blind_b_different_model": true,
+    "distractor_audit": false,
+    "unique_solution": false,
+    "input_schema": "gsat-bank-blind-grading/v1",
+    "score_targets": {
+      "steady": [
+        14,
+        17
+      ],
+      "top": [
+        18,
+        20
+      ]
+    },
+    "max_grader_gap": 2,
+    "flow_zh": "盲評者只看 python3 tools/student_view.py --grading FILE（題目、評分規準、兩篇範文以 E1／E2 呈現，不標版本、不給目標分數），依評分規準給四項分數；兩位都通過才 verified（README §5.6）",
+    "human_review": "100%（校準期：每個題型 × 提示詞版本的前 30 組全審，SPEC §5.8）"
+  },
+  "materials": {
+    "grammar_patterns": "data/curriculum/grammar-patterns.json（轉承詞 connectives、句型 patterns）",
+    "writing_spec": "data/exams/generation-spec/writing.json",
+    "analysis": "docs/analysis/sections/07-writing.md",
+    "d8_zh": "範文全部自己寫；不可重製大考中心官方範文、佳作或評分原則原文（ROADMAP D8；佳作只連結不重製）"
+  }
+}

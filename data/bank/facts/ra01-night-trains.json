@@ -1,0 +1,205 @@
+{
+  "schema": "gsat-bank-facts/v1",
+  "id": "ra01-night-trains",
+  "title": "The decline and revival of European night trains, and carbon footprint of travel per kilometer",
+  "sdgs": [
+    13,
+    11
+  ],
+  "created_on": "2026-10-09",
+  "created_by": "claude-opus-5-5",
+  "sources": [
+    {
+      "id": "s1",
+      "publisher": "CNN",
+      "title": "Europe’s night trains are on track for a resurgence",
+      "url": "https://www.cnn.com/travel/article/night-trains-europe-sleeper-obb/index.html",
+      "accessed": "2026-10-09",
+      "license": "CNN terms of use, all rights reserved (facts only)",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s2",
+      "publisher": "CNN",
+      "title": "The night train revolution has been hailed as an alternative to airplanes. Here’s how that’s going",
+      "url": "https://www.cnn.com/travel/night-train-revolution-alternative-to-planes/index.html",
+      "accessed": "2026-10-09",
+      "license": "CNN terms of use, all rights reserved (facts only)",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s3",
+      "publisher": "Our World in Data",
+      "title": "Carbon footprint of travel per kilometer (UK Government, DESNZ, 2022)",
+      "url": "https://ourworldindata.org/grapher/carbon-footprint-travel-mode",
+      "accessed": "2026-10-09",
+      "license": "CC-BY-4.0",
+      "use": "dataset",
+      "note": "下載 grapher CSV；原單位 kgCO2e，OWID conversionFactor 1000 換成公克；每位乘客每公里"
+    },
+    {
+      "id": "s4",
+      "publisher": "BBC News",
+      "title": "Sweden sees rare fall in air passengers, as flight-shaming takes off (10 January 2020)",
+      "url": "https://www.bbc.com/news/world-europe-51067440",
+      "accessed": "2026-10-09",
+      "license": "BBC terms of use, all rights reserved (facts only)",
+      "use": "fact_only",
+      "note": "引用瑞典機場營運單位 Swedavia 的 2019 年統計"
+    }
+  ],
+  "facts": [
+    {
+      "id": "f1",
+      "text": "In 2013 and 2014 night train lines such as Paris–Madrid, Berlin–Paris and Amsterdam–Prague were cut.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "date"
+    },
+    {
+      "id": "f2",
+      "text": "Night trains lost passengers to low-cost airlines, cars, buses and high-speed trains, and there was little investment in new carriages.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f3",
+      "text": "Night trains are expensive to run: they need special carriages, usually make one journey a day and gain few passengers at stops in the middle of the night.",
+      "source_ids": [
+        "s1",
+        "s2"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f4",
+      "text": "Austria’s national railway ÖBB took over many night routes abandoned by Germany’s Deutsche Bahn, including Munich–Rome.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "event"
+    },
+    {
+      "id": "f5",
+      "text": "The flygskam (flight shame) movement spread from Scandinavia and encourages people to choose alternatives to flying.",
+      "source_ids": [
+        "s1",
+        "s2"
+      ],
+      "kind": "definition"
+    },
+    {
+      "id": "f6",
+      "text": "In 2019 the number of domestic air passengers in Sweden fell by 9 percent, according to the airport operator Swedavia.",
+      "source_ids": [
+        "s4"
+      ],
+      "kind": "number",
+      "note": "更正（2026-10-09 fact_check）：原本寫成 2018 年（照抄 CNN 2020-12-14 的說法）。Swedavia 年度統計：2018 年國內旅客 13,542,000 人，只比 2017 年少約 3%；約 9% 的降幅在 2019 年（BBC 2020-01-10 引 Swedavia）"
+    },
+    {
+      "id": "f7",
+      "text": "The European Union designated 2021 the European Year of Rail.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "date"
+    },
+    {
+      "id": "f8",
+      "text": "New night routes and new sleeper carriages have since been introduced in Europe.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "event"
+    },
+    {
+      "id": "f9",
+      "text": "Fares on busy night train routes can rise quickly, and getting new sleeper cars financed and approved is difficult.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f10",
+      "text": "Supporters say night trains need to become cheaper than flying to be a real alternative.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f11",
+      "text": "The emission figures are UK government conversion factors for 2022, in grams of CO2e per passenger-kilometer.",
+      "source_ids": [
+        "s3"
+      ],
+      "kind": "definition"
+    },
+    {
+      "id": "f12",
+      "text": "A domestic flight produces about 6.9 times the emissions per passenger-kilometer of UK national rail (245.87 vs 35.49 grams).",
+      "source_ids": [
+        "s3"
+      ],
+      "kind": "number",
+      "note": "衍生：245.87 ÷ 35.49 ≈ 6.93"
+    },
+    {
+      "id": "f13",
+      "text": "In 2019 more than 40 million passengers used Sweden's 10 Swedavia airports, down 4 percent from 42 million in 2018, a rare fall for a European country.",
+      "source_ids": [
+        "s4"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f14",
+      "text": "Swedavia gave several reasons for the fall in passengers: Sweden's aviation tax, worries about the economy, the weak Swedish crown and the climate debate.",
+      "source_ids": [
+        "s4"
+      ],
+      "kind": "cause_effect"
+    }
+  ],
+  "datasets": [
+    {
+      "id": "d1",
+      "source_id": "s3",
+      "title": "Transport emissions per passenger-kilometer (grams CO2e, UK 2022)",
+      "indicator": "transport_emissions_factor",
+      "unit": "g CO2e per passenger-km",
+      "categories": [
+        "Domestic flight",
+        "Petrol car",
+        "Short-haul flight",
+        "Bus (average)",
+        "National rail",
+        "Coach",
+        "Eurostar (to Paris)"
+      ],
+      "series": [
+        {
+          "name": "Emissions per passenger-km",
+          "values": [
+            245.87,
+            170.48,
+            151.02,
+            96.5,
+            35.49,
+            27.33,
+            4.46
+          ]
+        }
+      ],
+      "note": "OWID 數值（kg）× 1000；表格四捨五入到整數"
+    }
+  ],
+  "notes": "選文數字對照：2013、2014、2021、表格 246 與 35（domestic flight、national rail）。瑞典國內航空旅客減少 9% 是 2019 年（f6，已更正；不是 2018 年）；2019 年 Swedavia 旅客總數比 2018 年少 4%（f13），原因不只氣候辯論（f14）。"
+}

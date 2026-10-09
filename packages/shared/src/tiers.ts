@@ -36,7 +36,7 @@ export const GENERATION_SPEC_TIER_KEYS: Record<'foundation' | 'advanced' | 'beyo
 
 /**
  * AI 題庫的 8 種題型（gsat-bank/v1 的 section_type）。值沿用 gsat-exam 的 SectionType，
- * 所以作文是 composition（uid 縮寫 es）。
+ * 所以作文是 composition（uid 縮寫 cp，見 BANK_UID_CODES）。
  */
 export const AI_SECTION_TYPES = [
   'vocabulary',
@@ -50,8 +50,17 @@ export const AI_SECTION_TYPES = [
 ] as const satisfies readonly SectionType[];
 export type BankSectionType = (typeof AI_SECTION_TYPES)[number];
 
-/** 第一批已有完整程式檢查的題型；其餘 4 種目前只跑共通檢查（tools/validate_bank.py 會印 warning）。 */
-export const AI_SECTION_TYPES_WITH_CHECKS = ['vocabulary', 'cloze', 'word_bank', 'structure'] as const satisfies readonly BankSectionType[];
+/** 已有題型專屬程式檢查的題型（tools/validate_bank.py 的 TYPE_CHECKS）：8 種都有了，中譯英、作文見 data/bank/README.md §3.5–3.7。 */
+export const AI_SECTION_TYPES_WITH_CHECKS = [
+  'vocabulary',
+  'cloze',
+  'word_bank',
+  'structure',
+  'reading',
+  'mixed',
+  'translation',
+  'composition',
+] as const satisfies readonly BankSectionType[];
 
 /** uid 的題型縮寫：ai.{縮寫}.{6 位小寫十六進位}。 */
 export const BANK_UID_CODES: Record<BankSectionType, string> = {

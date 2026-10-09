@@ -1,0 +1,674 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.62370a",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "basic",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "這些家族老照片大多是在五十多年前拍的。",
+        "options": null,
+        "answer": "Most of these old family photos were taken more than fifty years ago.",
+        "accepted_answers": [
+          "Most of these old family pictures were taken over fifty years ago.",
+          "Most of these old photos of our family were taken more than 50 years ago."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "被動語態"
+          ],
+          "topic": "整理家族老照片"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "如果我們不好好保存這些照片，很多美好的回憶就會消失。",
+        "options": null,
+        "answer": "If we do not take good care of these photos, many good memories will disappear.",
+        "accepted_answers": [
+          "Unless we take good care of these photos, many happy memories will disappear.",
+          "If we don't take good care of these pictures, many beautiful memories will be gone."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "條件子句"
+          ],
+          "topic": "整理家族老照片"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "整理家族老照片"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "照片是被拍的，主詞是「這些照片」，英文用被動語態 were taken（take 的過去分詞是 taken）；是過去的事，be 動詞用 were。「大多」是 most of these …，most 前面不加 the。「五十多年前」是 more than／over fifty years ago，不能照中文語序寫成 fifty more years ago（那是「再多五十年」）。",
+          "evidence": [
+            "大多是在五十多年前拍的",
+            "這些家族老照片"
+          ],
+          "strategy_zh": "中文「…是…的」常常藏著被動：先找出動作（拍）的承受者（照片），主詞是承受者就寫 be + p.p.。",
+          "hints": [
+            "切成四段：這些家族老照片／大多／在五十多年前／拍的（英文語序：Most of these old family photos were taken …）",
+            "標的詞彙：most（大多）、old（老的）、family（家族）、photo（照片）、take（拍）、year（年）",
+            "句型框架：Most of + 複數名詞 + were + p.p. + 時間 + ago"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「如果…就會…」是真實條件句：if 子句用現在式（do not take），主要子句用 will + 原形動詞（will disappear）；if 子句裡不用 will。「好好保存」可寫 take good care of（good 放在 care 前面）。「回憶」指一段一段的記憶時是可數名詞，「很多」要用複數 memories（y 改 i 加 es）。disappear 是不及物動詞，沒有被動語態。也可以用 unless（除非）改寫：Unless we take good care of these photos, …。",
+          "evidence": [
+            "如果我們不好好保存這些照片",
+            "很多美好的回憶就會消失"
+          ],
+          "strategy_zh": "條件句先寫 if 子句（現在式），再寫主要子句（will + 原形）；if 子句放句首時中間加逗號。",
+          "hints": [
+            "切成四段：如果我們不好好保存／這些照片／很多美好的回憶／就會消失",
+            "標的詞彙：if（如果）、care（照顧，take good care of）、photo（照片）、memory（回憶）、disappear（消失）",
+            "句型框架：If + S + do/does not + 原形動詞 …, S + will + 原形動詞 …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "Most of these old family photos were taken more than fifty years ago.",
+            "Most of these old family pictures were taken over fifty years ago.",
+            "Most of these old photos of our family were taken more than 50 years ago."
+          ],
+          "target_words": [
+            {
+              "word": "most",
+              "zh": "大多"
+            },
+            {
+              "word": "old",
+              "zh": "老的"
+            },
+            {
+              "word": "family",
+              "zh": "家族"
+            },
+            {
+              "word": "photo",
+              "zh": "照片",
+              "alternatives": [
+                "picture"
+              ]
+            },
+            {
+              "word": "take",
+              "zh": "拍"
+            },
+            {
+              "word": "year",
+              "zh": "年"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PASS",
+              "grammar_id": "gp-passive",
+              "label_zh": "被動語態（be＋p.p.）",
+              "frame": "S + was/were + p.p. + 時間 …",
+              "zh_trigger": "拍的"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "這些家族老照片",
+              "accepted": [
+                "these old family photos",
+                "these old family pictures",
+                "these old photos of our family"
+              ],
+              "targets": [
+                "old",
+                "family",
+                "photo"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "this old family photos",
+                  "right": "these old family photos",
+                  "explanation_zh": "「這些」是複數，用 these。"
+                },
+                {
+                  "wrong": "these family old photos",
+                  "right": "these old family photos",
+                  "explanation_zh": "形容詞順序：old 要放在當形容詞用的名詞 family 前面（old family photos）。"
+                }
+              ]
+            },
+            {
+              "zh": "大多",
+              "accepted": [
+                "Most of"
+              ],
+              "targets": [
+                "most"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "The most of",
+                  "right": "Most of",
+                  "explanation_zh": "「大部分的…」是 most of + the／these + 名詞，most 前面不加 the。"
+                },
+                {
+                  "wrong": "Most these",
+                  "right": "Most of these",
+                  "explanation_zh": "most 後面接 these 時要加 of。"
+                }
+              ]
+            },
+            {
+              "zh": "在五十多年前",
+              "accepted": [
+                "more than fifty years ago",
+                "over fifty years ago",
+                "more than 50 years ago",
+                "over 50 years ago"
+              ],
+              "targets": [
+                "year"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "fifty more years ago",
+                  "right": "more than fifty years ago",
+                  "explanation_zh": "「五十多年」是「超過五十年」：more than／over fifty years，不是 fifty more years。"
+                },
+                {
+                  "wrong": "before more than fifty years",
+                  "right": "more than fifty years ago",
+                  "explanation_zh": "「…年前」從現在往回算，用 ago 放在時間後面。"
+                }
+              ]
+            },
+            {
+              "zh": "拍的",
+              "accepted": [
+                "were taken"
+              ],
+              "targets": [
+                "PASS",
+                "take"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "were took",
+                  "right": "were taken",
+                  "explanation_zh": "被動語態用過去分詞 taken，took 是過去式。"
+                },
+                {
+                  "wrong": "took",
+                  "right": "were taken",
+                  "explanation_zh": "照片是「被拍」的，主詞是照片時要用被動 were taken。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "collocation",
+              "zh": "五十多年前",
+              "literal_error": "Most of these old family photos were taken fifty more years ago.",
+              "part": 3,
+              "explanation_zh": "照中文語序把「五十多」寫成 fifty more，意思變成「再多五十年」；要寫 more than fifty years ago，這一部分扣分。"
+            }
+          ],
+          "bonus": []
+        },
+        "2": {
+          "references": [
+            "If we do not take good care of these photos, many good memories will disappear.",
+            "Unless we take good care of these photos, many happy memories will disappear.",
+            "If we don't take good care of these pictures, many beautiful memories will be gone."
+          ],
+          "target_words": [
+            {
+              "word": "if",
+              "zh": "如果",
+              "alternatives": [
+                "unless"
+              ]
+            },
+            {
+              "word": "care",
+              "zh": "保存（好好照顧）",
+              "alternatives": [
+                "keep",
+                "save",
+                "protect"
+              ]
+            },
+            {
+              "word": "photo",
+              "zh": "照片",
+              "alternatives": [
+                "picture"
+              ]
+            },
+            {
+              "word": "memory",
+              "zh": "回憶"
+            },
+            {
+              "word": "disappear",
+              "zh": "消失",
+              "alternatives": [
+                "gone",
+                "lost"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "ADVCL",
+              "grammar_id": "gp-condition-real",
+              "label_zh": "條件子句（如果…就…：If …, S + will …）",
+              "frame": "If + S + V(現在式), S + will + VR …",
+              "zh_trigger": "如果"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "如果我們不好好保存",
+              "accepted": [
+                "If we do not take good care of",
+                "If we don't take good care of",
+                "Unless we take good care of",
+                "If we do not keep",
+                "If we don't keep",
+                "If we do not save",
+                "If we don't save",
+                "If we do not protect",
+                "If we don't protect"
+              ],
+              "targets": [
+                "ADVCL",
+                "if",
+                "care"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "If we will not take good care of",
+                  "right": "If we do not take good care of",
+                  "explanation_zh": "if 引導的條件子句說未來的事也用現在式，will 只放在主要子句。"
+                },
+                {
+                  "wrong": "If we don't take care well of",
+                  "right": "If we don't take good care of",
+                  "explanation_zh": "「好好照顧」是 take good care of，good 放在 care 前面。"
+                }
+              ]
+            },
+            {
+              "zh": "這些照片",
+              "accepted": [
+                "these photos",
+                "these pictures"
+              ],
+              "targets": [
+                "photo"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "these photo",
+                  "right": "these photos",
+                  "explanation_zh": "these 後面接複數名詞。"
+                }
+              ]
+            },
+            {
+              "zh": "很多美好的回憶",
+              "accepted": [
+                "many good memories",
+                "many happy memories",
+                "many beautiful memories",
+                "a lot of good memories",
+                "a lot of happy memories",
+                "lots of happy memories",
+                "many sweet memories"
+              ],
+              "targets": [
+                "memory"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "many good memory",
+                  "right": "many good memories",
+                  "explanation_zh": "memory 當「一段回憶」是可數名詞，many 後面用複數 memories。"
+                },
+                {
+                  "wrong": "many good memorys",
+                  "right": "many good memories",
+                  "explanation_zh": "子音＋y 結尾的名詞，複數要把 y 改成 i 再加 es。"
+                }
+              ]
+            },
+            {
+              "zh": "就會消失",
+              "accepted": [
+                "will disappear",
+                "will be gone",
+                "will be lost",
+                "will fade away"
+              ],
+              "targets": [
+                "disappear"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "will disappeared",
+                  "right": "will disappear",
+                  "explanation_zh": "will 後面接原形動詞。"
+                },
+                {
+                  "wrong": "will be disappeared",
+                  "right": "will disappear",
+                  "explanation_zh": "disappear 是不及物動詞，沒有被動語態。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "plural_countable",
+              "zh": "很多美好的回憶",
+              "literal_error": "If we do not take good care of these photos, many good memory will disappear.",
+              "part": 3,
+              "explanation_zh": "中文「回憶」沒有單複數，照字面寫成 memory 會漏掉複數，這一部分扣分。"
+            }
+          ],
+          "bonus": []
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-basic-02",
+    "lot": "translation-basic-02",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "98fb98485e580f5dcb5c9180ca2577c7306e3aace5410226eade2db68cbe253c",
+    "spec_id": "translation-basic@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T07:49:16Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "warn",
+      "created_at": "2026-10-09T07:28:47Z",
+      "details": {
+        "solver": "A",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Most of these old family photos were taken more than fifty years ago.",
+            "confidence": "high",
+            "explanation_zh": "照片「被拍」用被動過去式 were taken；「大多」用 Most of these…；「五十多年前」用 more than fifty years ago。"
+          },
+          "2": {
+            "translation": "If we do not take good care of these photos, many beautiful memories will disappear.",
+            "confidence": "high",
+            "explanation_zh": "條件句：If 子句用現在式代替未來，主要子句用 will；「好好保存」譯 take good care of（也可 preserve/keep … well）；「美好的回憶」譯 beautiful memories（也可 wonderful／precious memories）。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PASS"
+            ],
+            "used_target_words": [
+              "most",
+              "old",
+              "family",
+              "photo",
+              "take",
+              "year"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "第 2 部分「大多」的 accepted 只有 Most of 一種；These old family photos were mostly taken more than fifty years ago（用 mostly）也是自然正確、學生常寫的譯法，建議補進 accepted 或參考譯文。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "ADVCL"
+            ],
+            "used_target_words": [
+              "if",
+              "care",
+              "photo",
+              "memory",
+              "disappear"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "第 1 部分「如果我們不好好保存」的 accepted 與標的詞彙 care 的 alternatives 都沒有最直接的 preserve（If we do not preserve these photos well／properly），也沒有 store；學生用 preserve 會同時對不上部分 accepted 與標的詞彙，建議補進。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "most",
+              "old",
+              "family",
+              "photo",
+              "take",
+              "year"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PASS": true
+            },
+            "program_match": true
+          },
+          "2": {
+            "target_words_found": [
+              "if",
+              "care",
+              "photo",
+              "memory",
+              "disappear"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "ADVCL": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 1 題驗證者對4 部分切分有意見（warn）：第 2 部分「大多」的 accepted 只有 Most of 一種；These old family photos were mostly taken more than fifty years ago（用 mostly）也是自然正確、學",
+          "第 2 題驗證者對4 部分切分有意見（warn）：第 1 部分「如果我們不好好保存」的 accepted 與標的詞彙 care 的 alternatives 都沒有最直接的 preserve（If we do not preserve these photos well／properly）"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "fail",
+      "created_at": "2026-10-09T07:49:16Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Most of these old family photos were taken more than fifty years ago.",
+            "confidence": "high",
+            "explanation_zh": "「大多」用 Most of these + 複數名詞；照片是「被拍」，用過去式被動 were taken；「五十多年前」譯 more than fifty years ago。"
+          },
+          "2": {
+            "translation": "If we don't take good care of these photos, many wonderful memories will disappear.",
+            "confidence": "high",
+            "explanation_zh": "表示未來可能發生的假設，if 子句用現在式，主要子句用 will；「好好保存」譯 take good care of；「消失」譯 disappear。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PASS"
+            ],
+            "used_target_words": [
+              "most",
+              "old",
+              "family",
+              "photo",
+              "take",
+              "year"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "ADVCL"
+            ],
+            "used_target_words": [
+              "if",
+              "care",
+              "photo",
+              "memory",
+              "disappear"
+            ],
+            "within_accepted": false,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "第 3 部分「很多美好的回憶」的 accepted 只收 good／happy／beautiful／sweet，缺了「美好」最常見的對應 wonderful，也缺 precious、fond、lovely；我的 many wonderful memories 語意正確卻不在清單內。評分規準偏窄，建議補入 many wonderful／precious／fond／lovely memories 等。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "most",
+              "old",
+              "family",
+              "photo",
+              "take",
+              "year"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PASS": true
+            },
+            "program_match": true
+          },
+          "2": {
+            "target_words_found": [
+              "if",
+              "care",
+              "photo",
+              "memory",
+              "disappear"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "ADVCL": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 2 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義"
+        ]
+      }
+    }
+  ],
+  "status": "rejected",
+  "status_reason": "blind_solver:B 未通過：第 2 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義"
+}

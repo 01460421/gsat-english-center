@@ -1,0 +1,90 @@
+{
+  "schema": "gsat-bank-audit/v1",
+  "uid": "ai.rd.0c1d2e",
+  "version": 1,
+  "reviewer": "claude-opus-5-5",
+  "session_id": "session_test_audit",
+  "created_at": "2026-10-09T08:30:00Z",
+  "items": {
+    "1": {
+      "A": {
+        "verdict": "clearly_wrong",
+        "error_type": "off_topic",
+        "evidence": "Every parent hopes to watch a child grow up healthy and strong, but in many parts of the world this simple hope has not always come true.",
+        "explanation_zh": "只是開頭的引子，不是全文主旨。"
+      },
+      "C": {
+        "verdict": "clearly_wrong",
+        "error_type": "factual",
+        "evidence": "In 2015, the United Nations agreed on a list of goals for a better and fairer world.",
+        "explanation_zh": "聯合國只訂目標，文中沒有訓練醫護人員。"
+      },
+      "D": {
+        "verdict": "clearly_wrong",
+        "error_type": "off_topic",
+        "evidence": "The chart below gives this rate for the whole world and for two large regions in the years between 1990 and 2020.",
+        "explanation_zh": "文中比的是死亡率，不是醫院。"
+      }
+    },
+    "2": {
+      "A": {
+        "verdict": "clearly_wrong",
+        "error_type": "factual",
+        "evidence": "2020, World: 39.2 per 1,000 live births",
+        "explanation_zh": "全球 39.2 比 75.9 低。"
+      },
+      "B": {
+        "verdict": "clearly_wrong",
+        "error_type": "factual",
+        "evidence": "2020, South Asia: 32.4 per 1,000 live births",
+        "explanation_zh": "南亞 32.4 最低。"
+      },
+      "D": {
+        "verdict": "clearly_wrong",
+        "error_type": "factual",
+        "evidence": "Even so, its rate in 2020 was still about twice the world rate, so young children there still face much greater danger.",
+        "explanation_zh": "差了約兩倍，不是差不多。"
+      }
+    },
+    "3": {
+      "B": {
+        "verdict": "clearly_wrong",
+        "error_type": "factual",
+        "evidence": "2010, South Asia: 56.3 per 1,000 live births",
+        "explanation_zh": "56.3 降到 32.4，是下降。"
+      },
+      "C": {
+        "verdict": "clearly_wrong",
+        "error_type": "factual",
+        "evidence": "One of these goals asks every country to lower the rate to 25 or below by the year 2030.",
+        "explanation_zh": "32.4 還沒降到 25。"
+      },
+      "D": {
+        "verdict": "clearly_wrong",
+        "error_type": "factual",
+        "evidence": "1990, Sub-Saharan Africa: 178.5 per 1,000 live births",
+        "explanation_zh": "1990 年最高的是 178.5。"
+      }
+    },
+    "4": {
+      "A": {
+        "verdict": "clearly_wrong",
+        "error_type": "meaning",
+        "evidence": "For others, it will take many more years of hard work.",
+        "explanation_zh": "對比的是時間長短，不是花費。"
+      },
+      "B": {
+        "verdict": "clearly_wrong",
+        "error_type": "meaning",
+        "evidence": "For some places, this target is already within reach.",
+        "explanation_zh": "within reach 說的是目標，不是距離醫院。"
+      },
+      "C": {
+        "verdict": "clearly_wrong",
+        "error_type": "meaning",
+        "evidence": "For others, it will take many more years of hard work.",
+        "explanation_zh": "目標還沒完成。"
+      }
+    }
+  }
+}

@@ -5,7 +5,8 @@
  * 多文本用分頁（tabs）：115 學測混合題有 6 家店、112 有 8 則聊天訊息，分欄會窄到讀不下去；
  * 第一個分頁「全部」把各篇依序列出，想逐篇對照時再切到單篇。
  */
-import { useId, useRef, useState, type KeyboardEvent, type ReactNode } from 'react';
+import { stripMarkup } from '@gsat/shared';
+import { Fragment, useId, useRef, useState, type KeyboardEvent, type ReactNode } from 'react';
 import type { Figure, PassagePart, QuestionGroup } from '../../../data/exams';
 import { figureKindLabel } from '../labels';
 import { useQuestionExtras } from '../QuestionExtras';
@@ -66,6 +67,33 @@ export function FigureView({ figure }: { figure: Figure }) {
   );
 }
 
+/**
+ * 「在文中標出」第 label 題的證據句時，多文本該顯示哪個分頁（-1 是「全部」）：
+ *   - 目前的分頁已經看得到這一題所有落在多文本裡的證據句 → 不切（回傳 selected）；
+ *   - 證據句都在同一篇 → 切到那一篇；分散在幾篇 → 切到「全部」。
+ * 沒有任何證據句落在多文本裡（都在共同的 passage，或選文裡找不到）時回傳 null（不必切）。
+ * offsets 是各篇在題組選文座標的起點（groupTextOffsets().parts）。
+ */
+export function partForEvidence(
+  parts: readonly PassagePart[],
+  offsets: readonly (number | null)[],
+  highlights: readonly TextHighlight[],
+  label: string,
+  selected: number,
+): number | null {
+  const ranges = highlights.filter((h) => h.kind === 'evidence' && h.label === label);
+  const hit: number[] = [];
+  parts.forEach((part, i) => {
+    const start = offsets[i];
+    if (start === null || start === undefined) return;
+    const end = start + stripMarkup(part.text).length;
+    if (ranges.some((r) => r.start < end && start < r.end)) hit.push(i);
+  });
+  if (hit.length === 0) return null;
+  if (selected === -1 || (hit.length === 1 && hit[0] === selected)) return selected;
+  return hit.length === 1 ? (hit[0] ?? -1) : -1;
+}
+
 function partHeading(part: PassagePart, index: number): string {
   const label = part.label ?? String(index + 1);
   return part.title ? `${label}　${part.title}` : `文本 ${label}`;
@@ -91,6 +119,17 @@ function PassageParts({
   const [selected, setSelected] = useState(-1); // -1：全部
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const tabs = [{ key: -1, label: '全部' }, ...parts.map((p, i) => ({ key: i, label: p.label ?? String(i + 1) }))];
+
+  // 「在文中標出證據句」（題庫練習）：目前的分頁看不到那一題的證據句時切到看得到的分頁。
+  // 在 render 中調整（React 的「依 props 變化調整 state」寫法），同一次 commit 就畫出新分頁，
+  // 外層的 effect 接著就找得到證據句、捲過去並移焦點。
+  const request = useQuestionExtras()?.locateRequest ?? null;
+  const [handledRequest, setHandledRequest] = useState(request);
+  if (request !== handledRequest) {
+    setHandledRequest(request);
+    const target = request ? partForEvidence(parts, offsets, highlights, request.label, selected) : null;
+    if (target !== null && target !== selected) setSelected(target);
+  }
 
   const onKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
     const pos = tabs.findIndex((t) => t.key === selected);
@@ -176,7 +215,8 @@ export function PassageView({
   const offsets = groupTextOffsets(group);
   const poem = group.tags?.genre === 'poem';
   const parts = group.passage_parts ?? [];
-  const footer = useQuestionExtras()?.passageFooter;
+  const extras = useQuestionExtras();
+  const footer = extras?.passageFooter;
   return (
     <div className="space-y-3 leading-relaxed">
       {group.group_label && <p className="text-sm text-muted">{group.group_label}</p>}
@@ -198,9 +238,10 @@ export function PassageView({
           renderBlank={renderBlank}
         />
       )}
-      {group.figures.map((figure, i) => (
-        <FigureView key={i} figure={figure} />
-      ))}
+      {group.figures.map((figure, i) => {
+        const custom = extras?.renderFigure?.(figure, i);
+        return custom !== undefined ? <Fragment key={i}>{custom}</Fragment> : <FigureView key={i} figure={figure} />;
+      })}
       {footer}
     </div>
   );

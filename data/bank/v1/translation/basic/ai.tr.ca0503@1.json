@@ -1,0 +1,649 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.ca0503",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "basic",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "對我的外國朋友來說，在夜市用筷子吃東西一點也不難。",
+        "options": null,
+        "answer": "It is not hard at all for my foreign friend to use chopsticks at the night market.",
+        "accepted_answers": [
+          "It is not hard at all for my foreign friend to eat with chopsticks at night markets.",
+          "It was not hard at all for my foreign friend to eat with chopsticks at the night market."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "虛主詞 It＋形容詞＋不定詞"
+          ],
+          "topic": "帶外國朋友逛台灣"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "他在那裡吃了很多小吃，也買了一些禮物給家人。",
+        "options": null,
+        "answer": "He ate a lot of snacks there and bought some gifts for his family.",
+        "accepted_answers": [
+          "He had many snacks there and also bought some presents for his family.",
+          "He tried lots of local snacks there and bought some gifts for his family."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "平行結構"
+          ],
+          "topic": "帶外國朋友逛台灣"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "帶外國朋友逛台灣"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "中文用「在夜市用筷子吃東西」這個動作當主詞，英文常用虛主詞 It 開頭：It is not hard (for sb) to + 原形動詞，把真正的主詞（不定詞片語）放到後面。「一點也不」是 not … at all；「對某人來說」用 for + 人，放在形容詞和不定詞之間。也可以寫成動名詞主詞 Using chopsticks at the night market is not hard at all for my foreign friend（同一個句構家族）。用工具吃東西是 eat with chopsticks，筷子是一雙，用複數。",
+          "evidence": [
+            "對我的外國朋友來說",
+            "用筷子吃東西一點也不難"
+          ],
+          "strategy_zh": "主詞是一長串動作時，先寫 It is + 形容詞，再用 for + 人 + to + 原形動詞 補上動作，句子比較平衡。",
+          "hints": [
+            "切成四段：對我的外國朋友來說／在夜市／用筷子吃東西／一點也不難（英文從「一點也不難」開始：It is not hard at all …）",
+            "標的詞彙：foreign（外國的）、friend（朋友）、night market（夜市）、chopsticks（筷子）、hard／difficult（困難的）",
+            "句型框架：It is + not + 形容詞 + at all + for sb + to + 原形動詞 …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「吃了…，也買了…」是同一個主詞做的兩個動作，用 and 連接，兩個動詞形式要一致（平行結構）：ate … and bought …。兩個都是過去式，eat、buy 都是不規則動詞（ate、bought）。「買禮物給某人」是 buy gifts for sb，介系詞用 for；some、many 後面的可數名詞用複數。there（在那裡）放在 snacks 後面。",
+          "evidence": [
+            "吃了很多小吃",
+            "也買了一些禮物給家人"
+          ],
+          "strategy_zh": "用 and 連接動作時，先看第一個動詞的時態，第二個照著寫；不規則動詞（eat-ate、buy-bought）要特別檢查拼法。",
+          "hints": [
+            "切成四段：他在那裡吃了／很多小吃／也買了一些禮物／給家人（there 放在 snacks 後面）",
+            "標的詞彙：eat（吃）、snack（小吃）、buy（買）、gift／present（禮物）、family（家人）",
+            "句型框架：S + V-ed … and (also) V-ed …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "It is not hard at all for my foreign friend to use chopsticks at the night market.",
+            "It is not hard at all for my foreign friend to eat with chopsticks at night markets.",
+            "It was not hard at all for my foreign friend to eat with chopsticks at the night market."
+          ],
+          "target_words": [
+            {
+              "word": "foreign",
+              "zh": "外國的"
+            },
+            {
+              "word": "friend",
+              "zh": "朋友"
+            },
+            {
+              "word": "night market",
+              "zh": "夜市"
+            },
+            {
+              "word": "chopsticks",
+              "zh": "筷子"
+            },
+            {
+              "word": "hard",
+              "zh": "難",
+              "alternatives": [
+                "difficult"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "NFSUBJ",
+              "grammar_id": "gp-it-adj-to",
+              "label_zh": "虛主詞 It ＋形容詞＋不定詞",
+              "frame": "It is + (not) adj. (+ at all) + for sb + to VR …",
+              "zh_trigger": "一點也不難"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "對我的外國朋友來說",
+              "accepted": [
+                "for my foreign friend"
+              ],
+              "targets": [
+                "foreign",
+                "friend"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "for my foreigner friend",
+                  "right": "for my foreign friend",
+                  "explanation_zh": "「外國的」是形容詞 foreign；foreigner 是名詞（外國人）。"
+                },
+                {
+                  "wrong": "for my foreign friends",
+                  "right": "for my foreign friend",
+                  "explanation_zh": "題目說的是一位朋友（下一句用「他」），用單數 friend。"
+                }
+              ]
+            },
+            {
+              "zh": "在夜市",
+              "accepted": [
+                "at the night market",
+                "at night markets",
+                "at a night market",
+                "in the night market"
+              ],
+              "targets": [
+                "night market"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "at night market",
+                  "right": "at the night market",
+                  "explanation_zh": "market 是可數名詞，要加 the／a 或用複數。"
+                }
+              ]
+            },
+            {
+              "zh": "用筷子吃東西",
+              "accepted": [
+                "to use chopsticks",
+                "to eat with chopsticks",
+                "to eat food with chopsticks",
+                "using chopsticks",
+                "eating with chopsticks"
+              ],
+              "targets": [
+                "chopsticks",
+                "NFSUBJ"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "to eat by chopsticks",
+                  "right": "to eat with chopsticks",
+                  "explanation_zh": "用工具做事，介系詞用 with。"
+                },
+                {
+                  "wrong": "to use chopstick",
+                  "right": "to use chopsticks",
+                  "explanation_zh": "筷子是一雙，用複數 chopsticks。"
+                }
+              ]
+            },
+            {
+              "zh": "一點也不難",
+              "accepted": [
+                "It is not hard at all",
+                "It is not difficult at all",
+                "It's not hard at all",
+                "It's not difficult at all",
+                "It was not hard at all",
+                "It was not difficult at all",
+                "is not hard at all",
+                "is not difficult at all"
+              ],
+              "targets": [
+                "hard",
+                "NFSUBJ"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "It is not hard at all for my foreign friend use chopsticks",
+                  "right": "It is not hard at all for my foreign friend to use chopsticks",
+                  "explanation_zh": "It is … for sb 後面要接不定詞 to + 原形動詞。"
+                },
+                {
+                  "wrong": "It is a little not hard",
+                  "right": "It is not hard at all",
+                  "explanation_zh": "「一點也不」是 not … at all，不逐字翻成 a little。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "verbal_subject",
+              "zh": "用筷子吃東西",
+              "literal_error": "For my foreign friend, use chopsticks at the night market is not hard at all.",
+              "part": 3,
+              "explanation_zh": "照中文語序把動詞片語 use chopsticks 直接當主詞，英文主詞必須是 It … to V 或 V-ing，這一部分扣分。"
+            }
+          ],
+          "bonus": []
+        },
+        "2": {
+          "references": [
+            "He ate a lot of snacks there and bought some gifts for his family.",
+            "He had many snacks there and also bought some presents for his family.",
+            "He tried lots of local snacks there and bought some gifts for his family."
+          ],
+          "target_words": [
+            {
+              "word": "eat",
+              "zh": "吃",
+              "alternatives": [
+                "have",
+                "try"
+              ]
+            },
+            {
+              "word": "snack",
+              "zh": "小吃"
+            },
+            {
+              "word": "buy",
+              "zh": "買"
+            },
+            {
+              "word": "gift",
+              "zh": "禮物",
+              "alternatives": [
+                "present",
+                "souvenir"
+              ]
+            },
+            {
+              "word": "family",
+              "zh": "家人"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PARA",
+              "grammar_id": "gp-parallelism",
+              "label_zh": "平行結構（and 連接兩個過去式動詞片語）",
+              "frame": "S + V-ed … and (also) V-ed …",
+              "zh_trigger": "也買了"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "他在那裡吃了",
+              "accepted": [
+                "He ate",
+                "He had",
+                "He tried"
+              ],
+              "targets": [
+                "eat"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "He eat",
+                  "right": "He ate",
+                  "explanation_zh": "說的是那次去夜市已經做過的事，用過去式 ate。"
+                },
+                {
+                  "wrong": "He eated",
+                  "right": "He ate",
+                  "explanation_zh": "eat 是不規則動詞，過去式是 ate。"
+                }
+              ]
+            },
+            {
+              "zh": "很多小吃",
+              "accepted": [
+                "a lot of snacks",
+                "many snacks",
+                "lots of snacks",
+                "a lot of local snacks",
+                "lots of local snacks",
+                "many local snacks"
+              ],
+              "targets": [
+                "snack"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "many snack",
+                  "right": "many snacks",
+                  "explanation_zh": "many 後面接複數名詞。"
+                },
+                {
+                  "wrong": "a lot of small eats",
+                  "right": "a lot of snacks",
+                  "explanation_zh": "「小吃」是 snacks（或 street food），不逐字翻。"
+                }
+              ]
+            },
+            {
+              "zh": "也買了一些禮物",
+              "accepted": [
+                "and bought some gifts",
+                "and also bought some gifts",
+                "and also bought some presents",
+                "and bought some presents",
+                "and bought some souvenirs"
+              ],
+              "targets": [
+                "PARA",
+                "buy",
+                "gift"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "and buy some gifts",
+                  "right": "and bought some gifts",
+                  "explanation_zh": "and 連接的兩個動作形式要一致：前面 ate 是過去式，buy 也要改成 bought。"
+                },
+                {
+                  "wrong": "and bought some gift",
+                  "right": "and bought some gifts",
+                  "explanation_zh": "some 後面接可數名詞時用複數。"
+                }
+              ]
+            },
+            {
+              "zh": "給家人",
+              "accepted": [
+                "for his family",
+                "for his family members",
+                "for his family back home"
+              ],
+              "targets": [
+                "family"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "to his family",
+                  "right": "for his family",
+                  "explanation_zh": "「買東西給某人」是 buy sth for sb，介系詞用 for。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "word_form",
+              "zh": "也買了",
+              "literal_error": "He ate a lot of snacks there and buy some gifts for his family.",
+              "part": 3,
+              "explanation_zh": "中文動詞沒有時態變化，照字面寫成 buy，和前面的 ate 不平行，這一部分扣分。"
+            }
+          ],
+          "bonus": []
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-basic-02",
+    "lot": "translation-basic-02",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "98fb98485e580f5dcb5c9180ca2577c7306e3aace5410226eade2db68cbe253c",
+    "spec_id": "translation-basic@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T07:49:14Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T07:28:47Z",
+      "details": {
+        "solver": "A",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "It is not difficult at all for my foreign friend to eat with chopsticks at the night market.",
+            "confidence": "high",
+            "explanation_zh": "「對…來說…一點也不難」用 It is not difficult at all for sb to V（也可用動名詞主詞 Eating with chopsticks … is not difficult at all）；第 2 句用「他」，所以「朋友」譯單數 friend；「一點也不」用 not … at all。"
+          },
+          "2": {
+            "translation": "He ate a lot of snacks there and also bought some gifts for his family.",
+            "confidence": "high",
+            "explanation_zh": "兩個過去的動作用 and 連接，過去式 ate、bought；「小吃」譯 snacks（也可 local snacks／street food）；「買禮物給家人」用 buy something for sb。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "NFSUBJ"
+            ],
+            "used_target_words": [
+              "foreign",
+              "friend",
+              "night market",
+              "chopsticks",
+              "hard"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "（備註，不影響判定）程式的 NFSUBJ 偵測只看 It is 與 to 之間 40 個字元內，It is not difficult at all for my foreign friend to … 超過 40 字元而偵測不到（hard 的版本剛好在範圍內）；NFSUBJ 不在嚴格句構清單，不影響判定。",
+              "（備註，不影響判定）第 1 句「朋友」的單複數要看第 2 句的「他」才確定；第 1 部分 accepted 只有 for my foreign friend，學生單看第 1 句寫 friends 會對不上。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "PARA"
+            ],
+            "used_target_words": [
+              "eat",
+              "snack",
+              "buy",
+              "gift",
+              "family"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "foreign",
+              "friend",
+              "night market",
+              "chopsticks",
+              "hard"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NFSUBJ": false
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "eat",
+              "snack",
+              "buy",
+              "gift",
+              "family"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PARA": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "fail",
+      "created_at": "2026-10-09T07:49:14Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "For my foreign friend, using chopsticks to eat at the night market is not difficult at all.",
+            "confidence": "medium",
+            "explanation_zh": "「對……來說」用 For；以動名詞片語 using chopsticks 當主詞；「一點也不難」譯 not difficult at all。「朋友」單複數中文沒說清楚，第 2 句用單數的「他」，所以我採單數 friend。"
+          },
+          "2": {
+            "translation": "He ate a lot of snacks there and also bought some gifts for his family.",
+            "confidence": "high",
+            "explanation_zh": "兩個過去的動作用過去式並列（ate 與 bought），共用主詞 He；「很多小吃」譯 a lot of snacks；「也」譯 also。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [],
+            "used_target_words": [
+              "foreign",
+              "friend",
+              "night market",
+              "chopsticks",
+              "hard"
+            ],
+            "within_accepted": true,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "我的盲譯用動名詞片語當主詞（Using chopsticks to eat … is not difficult at all），沒有用到這一句標的句型 gp-it-adj-to（虛主詞 It ＋形容詞＋ for sb to V）：中文「在夜市用筷子吃東西一點也不難」是動詞片語，自然可以直接當主詞，題目沒有引出虛主詞 It。另外 accepted 與 traps 都接受 V-ing 當主詞，與句型標籤（虛主詞 It）不一致。建議把句型改成「非限定動詞當主詞（It … to V 或 V-ing）」，或在中文加線索讓 It … to V 成為唯一自然的說法。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "PARA"
+            ],
+            "used_target_words": [
+              "eat",
+              "snack",
+              "buy",
+              "gift",
+              "family"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "foreign",
+              "friend",
+              "night market",
+              "chopsticks",
+              "hard"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {},
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "eat",
+              "snack",
+              "buy",
+              "gift",
+              "family"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PARA": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 1 題盲譯沒有用到標的句型 ['NFSUBJ']：中文題目沒有自然引出這個句型（SPEC §5.7）"
+        ]
+      }
+    }
+  ],
+  "status": "rejected",
+  "status_reason": "blind_solver:B 未通過：第 1 題盲譯沒有用到標的句型 ['NFSUBJ']：中文題目沒有自然引出這個句型（SPEC §5.7）"
+}

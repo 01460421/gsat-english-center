@@ -1,0 +1,152 @@
+{
+  "schema": "gsat-bank-facts/v1",
+  "id": "venice-fee-ra02",
+  "title": "Venice's access fee for day-trippers: the 2024 trial and the 2025 expansion",
+  "sdgs": [
+    11,
+    12
+  ],
+  "created_on": "2026-10-09",
+  "created_by": "claude-opus-5-5",
+  "sources": [
+    {
+      "id": "s1",
+      "publisher": "ABC News (Australia), from Reuters",
+      "title": "Venice introduces charge for day-trippers as it tackles tourism influx (25 April 2024)",
+      "url": "https://www.abc.net.au/news/2024-04-25/venice-introduces-first-payment-charge-for-tourists/103770130",
+      "accessed": "2026-10-09",
+      "license": "ABC / Reuters terms of use, all rights reserved (facts only)",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s2",
+      "publisher": "France 24",
+      "title": "Venice launches pilot day-tripper entry fee to tackle mass tourism (25 April 2024)",
+      "url": "https://www.france24.com/en/europe/20240425-venice-launches-pilot-day-tripper-entry-fee-to-tackle-mass-tourism",
+      "accessed": "2026-10-09",
+      "license": "France 24 terms of use, all rights reserved (facts only)",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s3",
+      "publisher": "France 24 (AFP)",
+      "title": "Venice extends tourist tax for 2025 (10 February 2025)",
+      "url": "https://www.france24.com/en/live-news/20250210-venice-extends-tourist-tax-for-2025",
+      "accessed": "2026-10-09",
+      "license": "France 24 / AFP terms of use, all rights reserved (facts only)",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s4",
+      "publisher": "Smithsonian Magazine",
+      "title": "Is Venice's Controversial Entry Fee Working?",
+      "url": "https://www.smithsonianmag.com/smart-news/is-venices-controversial-entry-fee-working-180984758/",
+      "accessed": "2026-10-09",
+      "license": "Smithsonian terms of use, all rights reserved (facts only)",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s5",
+      "publisher": "Al Jazeera (from AP)",
+      "title": "Venice entry tax failed to deter tourists, critics say (14 July 2024)",
+      "url": "https://www.aljazeera.com/news/2024/7/14/venice-entry-tax-failed-to-deter-tourists-critics-say",
+      "accessed": "2026-10-09",
+      "license": "Al Jazeera / AP terms of use, all rights reserved (facts only)",
+      "use": "fact_only",
+      "note": null
+    }
+  ],
+  "facts": [
+    {
+      "id": "f1",
+      "text": "On 25 April 2024 Venice became the first city in the world to make day-trippers pay to enter, as a trial.",
+      "source_ids": ["s1", "s2"],
+      "kind": "event"
+    },
+    {
+      "id": "f2",
+      "text": "In the 2024 trial, day visitors paid 5 euros on 29 busy days between late April and mid-July, during daytime hours.",
+      "source_ids": ["s1", "s2", "s4"],
+      "kind": "number"
+    },
+    {
+      "id": "f3",
+      "text": "Day visitors register and pay online and receive a QR code; there are no turnstiles, and inspectors make random checks.",
+      "source_ids": ["s1", "s2", "s4"],
+      "kind": "other"
+    },
+    {
+      "id": "f4",
+      "text": "People caught without registering can be fined 50 to 300 euros.",
+      "source_ids": ["s1", "s2", "s3"],
+      "kind": "number"
+    },
+    {
+      "id": "f5",
+      "text": "Overnight visitors staying in the city do not pay the fee because they already pay a tax on their stay; residents, students, workers and children under 14 are also exempt.",
+      "source_ids": ["s1", "s3", "s5"],
+      "kind": "definition"
+    },
+    {
+      "id": "f6",
+      "text": "In 2025 the fee applied on 54 days, up from 29 in 2024.",
+      "source_ids": ["s3"],
+      "kind": "number"
+    },
+    {
+      "id": "f7",
+      "text": "In 2025 the ticket cost 5 euros if bought at least 4 days ahead and 10 euros if bought within 3 days of the visit.",
+      "source_ids": ["s3"],
+      "kind": "number"
+    },
+    {
+      "id": "f8",
+      "text": "The 2025 fee days fell in April, May, June and July, and the ticket was needed only for daytime arrivals.",
+      "source_ids": ["s3"],
+      "kind": "date",
+      "note": "France 24 只寫 2025 年的收費日分布在 4–7 月；逐日日期未查證，選文只說部落客挑了 5 月的一個收費日"
+    },
+    {
+      "id": "f9",
+      "text": "Fewer than 50,000 official residents live in Venice's historic center, about 49,000 in 2024.",
+      "source_ids": ["s1", "s2"],
+      "kind": "number"
+    },
+    {
+      "id": "f10",
+      "text": "About 20 million people visited Venice in 2023, roughly half of them staying overnight.",
+      "source_ids": ["s1"],
+      "kind": "number"
+    },
+    {
+      "id": "f11",
+      "text": "Critics, including an opposition city councillor, said the 2024 fee failed to reduce crowds, and officials admitted large crowds remained.",
+      "source_ids": ["s4", "s5"],
+      "kind": "other"
+    },
+    {
+      "id": "f12",
+      "text": "Critics argued the city should focus on housing for residents, who have been moving to the mainland for decades as tourism takes over homes.",
+      "source_ids": ["s4", "s5"],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f13",
+      "text": "Large cruise ships are banned from the Venetian lagoon.",
+      "source_ids": ["s1"],
+      "kind": "other"
+    },
+    {
+      "id": "f14",
+      "text": "In 2023 Venice narrowly avoided being put on UNESCO's list of World Heritage in Danger.",
+      "source_ids": ["s1", "s4"],
+      "kind": "event"
+    }
+  ],
+  "datasets": [],
+  "notes": "收費時段各報導不一（16:00 或 16:30），選文不寫結束時間。2024 年付費人次（485,000 或 438,000）與收入各報導不一，選文不寫。2026 年的收費規則本次未查證，選文只寫 2024、2025 年。文本 A（居民投書）與文本 B（觀光客部落格）的作者是虛構人物，文中的看法是虛構人物的意見；文中的制度與數字依本事實單。"
+}

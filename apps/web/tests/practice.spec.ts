@@ -5,14 +5,19 @@
  * 測試不能跟著題庫的進度變。假資料是 build-data 的範例輸出（tests/fixtures/bank-public，scripts/lib/bank-data.test.ts
  * 確認它和建置真正產生的一致），所以這裡測到的形狀就是正式資料的形狀。
  *
- *   1. 選單：題型 × 難度、每格幾組、沒有題組的格子顯示「出題中」；
+ *   1. 選單：6 種題型 × 3 種難度、每格幾組、沒有題組的格子顯示「出題中」；
  *   2. 文意選填：作答、逐層看提示、重新整理後接續、交卷計分、四段式解析卡、證據句加亮、全文中譯、排除法表、再一組；
  *   3. 詞彙題：卡片內的提示（用鍵盤打開最後一層時焦點不會掉到 body）、答錯的正解字收進單字錯題本
  *      （正解是變化形 postponed、ingredients 時收原形；錯題本頁看得到「題庫練習」）；
  *   4. 篇章結構：點空格 → 點選項放句子（不靠拖放）、交卷後的排除法表；
  *   5. 深色模式：證據句與 AI 標示用主題色，不是瀏覽器預設的黃底黑字；
  *   6. 還沒有任何題組：選單與作答頁都正常顯示「出題中」，沒有 console error；
- *   7. localStorage 不能用（無痕模式、封鎖網站資料）：照樣可以作答、交卷，畫面說明存不了進度。
+ *   7. localStorage 不能用（無痕模式、封鎖網站資料）：照樣可以作答、交卷，畫面說明存不了進度；
+ *   8. 閱讀（圖表）：SVG 折線圖、圖例、讀數、資料來源、資料表、參考資料；作答、交卷、解析卡、證據引用的資料點；
+ *   9. 混合題：多文本 A／B、摘要填空（只能一個字的即時提示）、多選、簡答；自動判分、每個選項的判斷、可接受答案；
+ *  10. 深色模式的圖表：數列用深色主題的顏色、軸與數值是淺色字；
+ *  11. 長表頭的表格（手機卡片）與長類別名稱的長條圖、折線圖（用 patch 改寫閱讀題組）。
+ * 混合題另外測：簡答加了引號照樣算對、多文本切到 B 再定位 A 的證據句會自動切分頁。
  * 每個測試都檢查沒有 console error、未捕捉的例外與水平捲動（手機另外縮到 320px 再檢查一次）。
  */
 import { existsSync, readFileSync } from 'node:fs';
@@ -23,8 +28,13 @@ import { expect, test, type Page, type TestInfo } from '@playwright/test';
 const FIXTURE_DIR = path.join(path.dirname(fileURLToPath(import.meta.url)), 'fixtures', 'bank-public');
 const EMPTY_INDEX = { version: 'empty', count: 0, groups: [] };
 
-/** 假的 /data/bank/*：empty 時索引是空的（題庫還沒有通過驗證的題組），題組檔一律 404。 */
-async function mockBank(page: Page, { empty = false }: { empty?: boolean } = {}) {
+type Json = Record<string, unknown>;
+
+/**
+ * 假的 /data/bank/*：empty 時索引是空的（題庫還沒有通過驗證的題組），題組檔一律 404。
+ * patch：改寫某個檔案的內容（rel 是相對 /data/ 的路徑），用來測正式資料還沒出現的形狀（長表頭、長類別名稱）。
+ */
+async function mockBank(page: Page, { empty = false, patch }: { empty?: boolean; patch?: (rel: string, json: Json) => Json } = {}) {
   await page.route('**/data/bank/**', (route) => {
     const rel = new URL(route.request().url()).pathname.replace(/^\/data\//, '');
     if (empty) {
@@ -32,6 +42,7 @@ async function mockBank(page: Page, { empty = false }: { empty?: boolean } = {})
     }
     const file = path.join(FIXTURE_DIR, rel);
     if (!rel.startsWith('bank/') || rel.includes('..') || !existsSync(file)) return route.fulfill({ status: 404, body: 'not found' });
+    if (patch) return route.fulfill({ json: patch(rel, JSON.parse(readFileSync(file, 'utf8')) as Json) });
     return route.fulfill({ contentType: 'application/json', body: readFileSync(file) });
   });
 }
@@ -120,8 +131,11 @@ test('選單：題型 × 難度，每格顯示幾組，沒有題組的顯示「�
 
   const wb = page.getByRole('link', { name: '文意選填・進階練習：1 組，已做 0 組' });
   await expect(wb).toBeVisible();
-  await expect(page.getByRole('link', { name: /組，已做/ })).toHaveCount(4);
-  await expect(page.getByRole('group', { name: /：出題中$/ })).toHaveCount(8);
+  await expect(page.getByRole('link', { name: /組，已做/ })).toHaveCount(6);
+  await expect(page.getByRole('group', { name: /：出題中$/ })).toHaveCount(12);
+  await expect(page.getByRole('link', { name: '閱讀測驗・穩定基礎：1 組，已做 0 組' })).toBeVisible();
+  await expect(page.getByRole('link', { name: '混合題・穩定基礎：1 組，已做 0 組' })).toBeVisible();
+  await expect(page.getByRole('group', { name: '混合題・超越頂標：出題中' })).toContainText('出題中');
   await expect(page.getByRole('group', { name: '篇章結構・穩定基礎：出題中' })).toContainText('出題中');
   await page.waitForLoadState('networkidle');
   await expectFitsWidth(page, testInfo);
@@ -324,7 +338,7 @@ test('還沒有任何題組：選單與作答頁都顯示「出題中」，沒�
   await page.goto('/practice');
   await expect(page.getByRole('heading', { level: 1, name: '題庫練習' })).toBeVisible();
   await expect(page.getByText(/AI 題庫正在出題與驗證中/)).toBeVisible();
-  await expect(page.getByRole('group', { name: /：出題中$/ })).toHaveCount(12);
+  await expect(page.getByRole('group', { name: /：出題中$/ })).toHaveCount(18);
   await expect(page.getByRole('link', { name: /組，已做/ })).toHaveCount(0);
   await page.waitForLoadState('networkidle');
   await expectFitsWidth(page, testInfo);
@@ -355,5 +369,280 @@ test('localStorage 不能用：照樣可以作答與交卷，畫面說明進度�
   const result = await submit(page);
   await expect(result).toContainText('1／10 題');
   await expect(page.getByTestId('explanation-card')).toHaveCount(10);
+  expect(errors).toEqual([]);
+});
+
+test('閱讀（圖表）：折線圖、資料表、參考資料；作答、交卷、解析卡與證據引用的資料點', async ({ page }, testInfo) => {
+  const errors = collectErrors(page);
+  await mockBank(page);
+  await page.goto('/practice/reading/basic');
+  await expect(page.getByRole('heading', { level: 1, name: '閱讀測驗・穩定基礎' })).toBeVisible();
+  // 英文主題不顯示。
+  await expect(page.getByText(/falling child death rates/)).toHaveCount(0);
+
+  const chart = page.getByRole('img', { name: /^折線圖：Children who die before age 5/ });
+  await expect(chart).toBeVisible();
+  await expect(page.getByRole('list', { name: '圖例' })).toContainText('Sub-Saharan Africa');
+  await expect(page.getByText(/^縱軸：/)).toContainText('per 1,000 live births');
+  const source = page.getByTestId('chart-source');
+  await expect(source).toContainText('資料來源：World Bank');
+  await expect(source).toContainText('CC BY 4.0');
+  await expect(source.getByRole('link', { name: /World Bank/ })).toHaveAttribute('href', 'https://data.worldbank.org/indicator/SH.DYN.MORT');
+  // 圖的寬度不超過選文欄（手機也是），整頁不能水平捲動。
+  const box = await chart.boundingBox();
+  const frame = await page.getByTestId('chart-scroll').boundingBox();
+  expect(box && frame && box.width <= frame.width + 1).toBe(true);
+
+  // 點圖看數值。
+  // 最右邊那一帶是 2020（右側留給最後一個點的數值標籤，點在標籤左邊一點）。
+  await chart.click({ position: { x: (box?.width ?? 300) - 70, y: 80 } });
+  await expect(page.getByTestId('chart-readout')).toContainText('2020');
+  await expect(page.getByTestId('chart-readout')).toContainText('Sub-Saharan Africa 75.9');
+
+  // 資料表展開才看得到。
+  const table = page.getByTestId('chart-data-table').getByRole('table');
+  await expect(table).toBeHidden();
+  await page.getByTestId('chart-data-table').getByText('資料表').click();
+  await expect(table).toBeVisible();
+  await expect(table.getByRole('row', { name: /^1990/ })).toContainText('178.5');
+
+  // 參考資料與聲明。
+  await expect(page.getByText('本文由 AI 參考下列資料撰寫，非原文轉載；AI 撰寫的事實陳述可能有誤，請以參考資料為準')).toBeVisible();
+  // 三筆參考資料＋資料集來源（World Bank）的授權條款連結。
+  await expect(page.getByTestId('references').getByRole('listitem')).toHaveCount(3);
+  await expect(page.getByTestId('references').getByRole('link')).toHaveCount(4);
+  await expect(page.getByTestId('references').getByTestId('license-link')).toHaveAttribute('href', 'https://creativecommons.org/licenses/by/4.0/');
+  await page.waitForLoadState('networkidle');
+  await expectFitsWidth(page, testInfo);
+
+  await page.getByRole('radio', { name: /How the death rate of young children has changed since 1990/ }).check();
+  await page.getByRole('radio', { name: /Sub-Saharan Africa\./ }).check();
+  await page.getByRole('radio', { name: /Its rate in 1990 was the highest in the chart\./ }).check();
+  await page.getByRole('radio', { name: /Possible to achieve soon\./ }).check();
+  const result = await submit(page);
+  await expect(result).toContainText('3／4 題');
+  await expect(result).toContainText('6／8 分');
+  await expect(page.getByTestId('explanation-card')).toHaveCount(4);
+  const card3 = page.getByRole('region', { name: /第 3 題解析/ });
+  await expect(card3).toContainText('你選的為什麼錯');
+  await expect(card3).toContainText('誘答類型：細節錯置');
+  // 證據句在選文裡加底線；引用圖表的證據在圖上加粗框、資料表那一列加底色。
+  expect(await page.locator('mark[data-evidence-label]').count()).toBeGreaterThan(0);
+  await expect(page.getByText(/粗框標出的是解析引用的數據/)).toBeVisible();
+  await expect(table.getByRole('row', { name: /^2020/ })).toContainText('（解析引用）');
+  await expectFitsWidth(page, testInfo);
+  expect(errors).toEqual([]);
+});
+
+test('混合題：多文本、摘要填空、多選、簡答；自動判分、每個選項的判斷、可接受答案與字形變化', async ({ page }, testInfo) => {
+  const errors = collectErrors(page);
+  await mockBank(page);
+  await page.goto('/practice/mixed/basic');
+  await expect(page.getByRole('heading', { level: 1, name: '混合題・穩定基礎' })).toBeVisible();
+  await expect(page.getByRole('tab', { name: 'A' })).toBeVisible();
+  await expect(page.getByRole('tab', { name: 'B' })).toBeVisible();
+  await expect(page.getByRole('region', { name: /^A\s+Mia: Clean the Fridge Night/ })).toBeVisible();
+  // 切到 B 只看 Kevin 的短文。
+  await page.getByRole('tab', { name: 'B' }).click();
+  await expect(page.getByRole('region', { name: /^B\s+Kevin: Taste First/ })).toBeVisible();
+  await expect(page.getByRole('region', { name: /^A\s+Mia/ })).toHaveCount(0);
+  await expect(page.getByTestId('references').getByRole('link')).toHaveCount(2);
+
+  const blank1 = page.getByRole('textbox', { name: '第 1 題作答' });
+  await blank1.fill('turned into');
+  await expect(page.getByText(/第 1 題：每格只能填一個單詞/)).toBeVisible();
+  await blank1.fill('Turned');
+  await expect(page.getByText(/每格只能填一個單詞/)).toHaveCount(0);
+  await page.getByRole('textbox', { name: '第 2 題作答' }).fill('filling');
+  await page.getByRole('checkbox', { name: /They keep track of the food they throw away/ }).check();
+  await page.getByRole('checkbox', { name: /They now spend less money on food/ }).check();
+  await page.getByRole('checkbox', { name: /They now cook or serve smaller amounts of food/ }).check();
+  // 簡答照抄時加了引號：照樣算對（正規化會去掉包住答案的引號）。
+  await page.getByRole('textbox', { name: '你的答案' }).fill('“weigh”');
+  await page.waitForLoadState('networkidle');
+  await expectFitsWidth(page, testInfo);
+
+  // 重新整理：答案還在。
+  await page.reload();
+  await expect(page.getByRole('textbox', { name: '第 1 題作答' })).toHaveValue('Turned');
+  await expect(page.getByRole('checkbox', { name: /They now spend less money on food/ })).toBeChecked();
+
+  const result = await submit(page);
+  await expect(result).toContainText('2／4 題');
+  await expect(result).toContainText('7.67／10 分');
+  await expect(result).toContainText('另有 2 題部分給分');
+  await expect(page.getByTestId('multi-select-formula')).toContainText('本題 6 個選項，你錯了 1 個 → 4 × (6 − 2 × 1) ÷ 6 ＝ 2.67 分。');
+  await expect(page.getByTestId('option-verdict-C')).toContainText('不應選，你多選了');
+  await expect(page.getByTestId('option-verdict-C')).toContainText('Our list is much shorter now');
+  await expect(page.getByTestId('option-verdict-D')).toContainText('應選，你選了');
+  const fb1 = page.getByTestId('question-feedback').filter({ hasText: '選字正確，但字形錯誤' });
+  await expect(fb1).toContainText('部分給分 1／2 分');
+  await expect(fb1.getByTestId('accepted-answers')).toContainText('turns、makes');
+  await expect(fb1.getByTestId('transform-note')).toContainText('turn → turns');
+  await expect(page.getByTestId('explanation-card')).toHaveCount(4);
+  await expectFitsWidth(page, testInfo);
+
+  // 多文本切到 B，再按第 1 題（證據在 A）的「在文中標出證據句」：自動切到 A、捲過去並移焦點。
+  await page.getByRole('tab', { name: 'B' }).click();
+  await expect(page.getByRole('region', { name: /^A\s+Mia/ })).toHaveCount(0);
+  const card1 = page.getByRole('region', { name: /第 1 題解析/ });
+  await card1.getByRole('button', { name: '在文中標出證據句' }).click();
+  await expect(page.getByRole('tab', { name: 'A' })).toHaveAttribute('aria-selected', 'true');
+  const mark1 = page.locator('mark[data-evidence-label="1"]').first();
+  await expect(mark1).toContainText('Third, we turn food');
+  await expect(mark1).toHaveAttribute('data-active', 'true');
+  await expect(mark1).toBeFocused();
+  await expect(mark1).toBeInViewport();
+  // 第 3 題（多選）的證據分散在 A、B：切到「全部」。
+  await page.getByRole('region', { name: /第 3 題解析/ }).getByRole('button', { name: '在文中標出證據句' }).click();
+  await expect(page.getByRole('tab', { name: '全部' })).toHaveAttribute('aria-selected', 'true');
+  await expect(page.locator('mark[data-evidence-label="3"]').first()).toBeFocused();
+  expect(errors).toEqual([]);
+});
+
+/** 長表頭的表格（手機卡片）與長類別名稱的長條圖、折線圖：正式資料還沒有這種形狀，用 patch 改寫閱讀題組。 */
+function longLabelsGroup(rel: string, json: Json): Json {
+  if (!rel.endsWith('ai.rd.0c1d2e@1.json')) return json;
+  const group = json['group'] as Json;
+  const [figure] = group['figures'] as Json[];
+  const chart = (figure as Json)['chart'] as Json;
+  const countries = ['Bangladesh', 'Philippines', 'Indonesia', 'Vietnam', 'Thailand'];
+  const regions = [
+    'Sub-Saharan Africa', 'Latin America and the Caribbean', 'East Asia and Pacific', 'South Asia', 'Europe and Central Asia',
+    'Middle East and North Africa', 'North America', 'Oceania', 'Western Europe', 'Eastern Europe', 'Central America', 'Internationalization',
+  ];
+  const chartFigure = (type: string, categories: string[], title: string): Json => ({
+    ...(figure as Json),
+    label: title,
+    caption: title,
+    chart: {
+      ...chart,
+      type,
+      title,
+      x: { label: 'Country or region', unit: null },
+      categories,
+      series: [
+        { name: '2000', values: categories.map((_, i) => 10 + i * 3) },
+        { name: '2020', values: categories.map((_, i) => 40 - i * 2) },
+      ],
+    },
+  });
+  const table = (head: string[], rows: string[][], caption: string): Json => ({
+    kind: 'table',
+    label: caption,
+    caption,
+    description: '測試用的長表頭表格。',
+    rows: [head, ...rows],
+    question_no: null,
+  });
+  return {
+    ...json,
+    group: {
+      ...group,
+      figures: [
+        chartFigure('bar', countries, 'Countries'),
+        chartFigure('line', regions, 'Regions'),
+        table(['Year', 'Invention', "Price in today's US dollars"], [['1817', 'Running machine', '1,200'], ['1885', 'Safety bicycle', '2,500']], 'Inventions'),
+        table(['Country', 'Number of bicycles sold worldwide each year'], [['China', 'About 70 million bicycles']], 'Bicycles'),
+      ],
+    },
+  };
+}
+
+test('長表頭的表格與長類別名稱的圖：手機卡片的內容不被擠成一兩個字一行；橫軸標籤不重疊、不被裁掉', async ({ page }, testInfo) => {
+  const errors = collectErrors(page);
+  await mockBank(page, { patch: longLabelsGroup });
+  await page.goto('/practice/reading/basic');
+  await expect(page.getByRole('heading', { level: 1, name: '閱讀測驗・穩定基礎' })).toBeVisible();
+  await expect(page.locator('svg[role="img"]')).toHaveCount(2);
+
+  /** 每張圖的橫軸標籤（有 tspan 的 text）用 getBBox 量：彼此不重疊、都在 SVG 的 0..width 裡。 */
+  const checkAxisLabels = async () => {
+    const problems = await page.evaluate(() => {
+      const out: string[] = [];
+      for (const svg of Array.from(document.querySelectorAll<SVGSVGElement>('svg[role="img"]'))) {
+        const width = Number(svg.getAttribute('width'));
+        const labels = Array.from(svg.querySelectorAll<SVGTextElement>('text')).filter((t) => t.querySelector('tspan'));
+        const boxes = labels.map((t) => ({ text: t.textContent ?? '', box: t.getBBox() }));
+        boxes.forEach(({ text, box }, i) => {
+          if (text.includes('…')) out.push(`${text} 被截斷`);
+          if (box.x < -0.5 || box.x + box.width > width + 0.5) out.push(`${text} 超出 SVG（${Math.round(box.x)}..${Math.round(box.x + box.width)}，寬 ${width}）`);
+          const next = boxes[i + 1];
+          if (next && box.x + box.width > next.box.x) out.push(`${text} 和 ${next.text} 重疊`);
+        });
+        if (labels.length === 0) out.push('找不到橫軸標籤');
+      }
+      return out;
+    });
+    expect(problems).toEqual([]);
+  };
+  await checkAxisLabels();
+
+  if (testInfo.project.name === 'mobile') {
+    /** 手機卡片：每一格內容至少 100px 寬，「Running machine」「1,200」不會被拆成一兩個字一行。 */
+    const checkCards = async () => {
+      const cells = await page.locator('[data-testid="table-card-fields"] dd').evaluateAll((els) =>
+        els.map((el) => {
+          // 行數用文字本身的行框算（dd 會被同一列較高的表頭撐高，不能用 dd 的高度）。
+          const range = document.createRange();
+          range.selectNodeContents(el);
+          const lines = new Set(Array.from(range.getClientRects()).map((r) => Math.round(r.top))).size;
+          return { text: el.textContent ?? '', width: Math.round(el.getBoundingClientRect().width), lines };
+        }),
+      );
+      expect(cells.length).toBeGreaterThan(0);
+      for (const c of cells) {
+        expect(c.width, `${c.text} 的寬度`).toBeGreaterThanOrEqual(100);
+        expect(c.lines, `${c.text} 的行數`).toBeLessThanOrEqual(c.text === 'About 70 million bicycles' ? 2 : 1);
+      }
+    };
+    await checkCards();
+    const size = page.viewportSize();
+    await page.setViewportSize({ width: 320, height: size?.height ?? 667 });
+    await checkCards();
+    await checkAxisLabels();
+    if (size) await page.setViewportSize(size);
+  }
+  await page.waitForLoadState('networkidle');
+  await expectFitsWidth(page, testInfo);
+  expect(errors).toEqual([]);
+});
+
+test('深色模式的圖表：數列用深色主題的顏色、軸與數值是淺色字、資料表也是深色', async ({ page }) => {
+  const errors = collectErrors(page);
+  await page.emulateMedia({ colorScheme: 'dark' });
+  await mockBank(page);
+  await page.goto('/practice/reading/basic');
+  const chart = page.getByRole('img', { name: /^折線圖/ });
+  await expect(chart).toBeVisible();
+  await page.getByTestId('chart-data-table').getByText('資料表').click();
+  const colors = await page.evaluate(() => {
+    const svg = document.querySelector('svg[role="img"][data-chart-type="line"]');
+    const line = Array.from(svg?.querySelectorAll('path') ?? []).find((p) => getComputedStyle(p).fill === 'none');
+    const tick = svg?.querySelector('text');
+    const scroll = document.querySelector('[data-testid="chart-scroll"]');
+    const cell = document.querySelector('[data-testid="chart-data-table"] td');
+    return {
+      line: line ? getComputedStyle(line).stroke : null,
+      tick: tick ? getComputedStyle(tick).fill : null,
+      surface: scroll ? getComputedStyle(scroll).backgroundColor : null,
+      cell: cell ? getComputedStyle(cell).color : null,
+    };
+  });
+  const rgb = (css: string | null) => (css ?? '').match(/[\d.]+/g)?.slice(0, 3).map(Number) ?? [];
+  const lum = (css: string | null) => {
+    const [r = 0, g = 0, b = 0] = rgb(css).map((v) => v / 255).map((v) => (v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4));
+    return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+  };
+  const contrast = (a: string | null, b: string | null) => {
+    const [hi, lo] = [lum(a), lum(b)].sort((x, y) => y - x);
+    return ((hi ?? 0) + 0.05) / ((lo ?? 0) + 0.05);
+  };
+  // 第 1 個數列是深色主題的 --chart-1（#3987e5），不是淺色主題的 #2a78d6。
+  expect(rgb(colors.line)).toEqual([57, 135, 229]);
+  expect(lum(colors.surface)).toBeLessThan(0.05);
+  expect(contrast(colors.tick, colors.surface), `刻度字 ${String(colors.tick)} 對背景 ${String(colors.surface)}`).toBeGreaterThan(4.5);
+  expect(contrast(colors.line, colors.surface), '數列對背景至少 3:1').toBeGreaterThan(3);
+  expect(lum(colors.cell)).toBeGreaterThan(0.5);
   expect(errors).toEqual([]);
 });

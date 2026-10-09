@@ -7,8 +7,13 @@ import {
   BANK_SCHEMA_ID,
   BANK_UID_PATTERN,
   bankFilePath,
+  COMPOSITION_MOVE_CODES,
+  CONNECTIVE_FUNCTIONS,
   isForbiddenFieldName,
+  MODEL_TEXT_CRITERIA,
+  MODEL_TEXT_NOTE_KINDS,
   sectionTypeOfUid,
+  TRANSLATION_STRUCTURE_CODES,
   type BankFile,
 } from './bank';
 import { AI_SECTION_TYPES, BANK_UID_CODES } from './tiers';
@@ -55,5 +60,21 @@ describe('isForbiddenFieldName', () => {
     for (const k of ['explanation_zh', 'evidence', 'strategy_zh', 'hints', 'option_notes_zh', 'clue_type']) {
       expect(isForbiddenFieldName(k), k).toBe(false);
     }
+  });
+});
+
+describe('中譯英、作文的常數（tools/validate_bank.py 用同一組值）', () => {
+  it('句構代碼不含倒裝、假設、強調：這些只能放加分寫法', () => {
+    expect(TRANSLATION_STRUCTURE_CODES).toContain('PERF');
+    expect(TRANSLATION_STRUCTURE_CODES).toHaveLength(17);
+    for (const banned of ['INV', 'SUBJUNCTIVE', 'CLEFT']) expect(TRANSLATION_STRUCTURE_CODES).not.toContain(banned);
+  });
+
+  it('作文四項指標與範文註解', () => {
+    expect(MODEL_TEXT_CRITERIA).toEqual(['content', 'organization', 'grammar', 'vocabulary']);
+    expect(MODEL_TEXT_NOTE_KINDS).toEqual(['connective', 'detail', 'experience', 'pattern', 'phrase']);
+    expect(CONNECTIVE_FUNCTIONS).toEqual(['sequence', 'addition', 'cause_effect', 'contrast', 'example', 'conclusion']);
+    expect(COMPOSITION_MOVE_CODES).toContain('personal_experience');
+    expect(COMPOSITION_MOVE_CODES).toContain('propose');
   });
 });

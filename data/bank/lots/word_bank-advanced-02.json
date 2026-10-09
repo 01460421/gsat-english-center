@@ -1,0 +1,796 @@
+{
+  "schema": "gsat-bank-lot/v1",
+  "lot": "word_bank-advanced-02",
+  "section_type": "word_bank",
+  "tier": "advanced",
+  "label_zh": "文意選填‧進階練習（第 2 批）",
+  "created_on": "2026-10-09",
+  "count": 5,
+  "questions_per_group": 10,
+  "format_version": "word_bank-10x10",
+  "uid_prefix": "ai.wb.",
+  "path": "data/bank/v1/word_bank/advanced/",
+  "spec_id": "word_bank-advanced@2026-10-08",
+  "spec_file": "data/exams/generation-spec/word_bank.json",
+  "spec_tier_key": "advanced",
+  "spec_status": "draft：由 450 格有官方統計的歷屆文意選填推得（現制 50、舊制學測 200、指考 200）；上線後依站內作答資料校正（SPEC §3.6、本檔 WB-CAL-*）",
+  "topic_quota": {
+    "origins_evolution": 2,
+    "science_health": 1,
+    "culture_history": 1,
+    "society_issues": 1,
+    "labels_zh": {
+      "origins_evolution": "起源與演變",
+      "science_health": "科普與健康",
+      "culture_history": "文化與歷史",
+      "society_issues": "社會與議題"
+    },
+    "basis": "08 §6.1（每 8 組：起源與演變 3、科普與健康 2–3、文化與歷史 2、社會與議題 1），依組數等比例取整；第 2 批起每組的主題見 assigned_topics（data/bank/topic-plan.json）"
+  },
+  "assigned_topics": [
+    {
+      "slot": 1,
+      "id": "wb-a02-1",
+      "category": "origins_evolution",
+      "category_zh": "起源與演變",
+      "domain_zh": "科技",
+      "topic_zh": "第一次熱氣球飛行",
+      "angle_en": "the first hot-air balloon flight and its animal passengers",
+      "keywords": [
+        "hot-air balloon",
+        "montgolfier"
+      ],
+      "sdgs": []
+    },
+    {
+      "slot": 2,
+      "id": "wb-a02-2",
+      "category": "origins_evolution",
+      "category_zh": "起源與演變",
+      "domain_zh": "語言",
+      "topic_zh": "點字的發明",
+      "angle_en": "how a teenage Louis Braille created a reading system for blind people",
+      "keywords": [
+        "braille"
+      ],
+      "sdgs": []
+    },
+    {
+      "slot": 3,
+      "id": "wb-a02-3",
+      "category": "science_health",
+      "category_zh": "科普與健康",
+      "domain_zh": "自然",
+      "topic_zh": "打不死的水熊蟲",
+      "angle_en": "how tardigrades survive boiling, freezing, and even outer space",
+      "keywords": [
+        "tardigrade",
+        "water bear"
+      ],
+      "sdgs": []
+    },
+    {
+      "slot": 4,
+      "id": "wb-a02-4",
+      "category": "culture_history",
+      "category_zh": "文化與歷史",
+      "domain_zh": "世界文化",
+      "topic_zh": "韓國的越冬泡菜",
+      "angle_en": "kimjang: how Korean families make winter kimchi together",
+      "keywords": [
+        "kimchi",
+        "kimjang"
+      ],
+      "sdgs": []
+    },
+    {
+      "slot": 5,
+      "id": "wb-a02-5",
+      "category": "society_issues",
+      "category_zh": "社會與議題",
+      "domain_zh": "環境",
+      "topic_zh": "德國的瓶罐押金制度",
+      "angle_en": "how Germany's bottle deposit system gets almost every bottle returned",
+      "keywords": [
+        "bottle deposit",
+        "deposit return"
+      ],
+      "sdgs": [
+        12
+      ]
+    }
+  ],
+  "topic_plan": {
+    "file": "data/bank/topic-plan.json",
+    "rule_zh": "每組一個指定主題（slot＝第幾組）：group.tags.topic 逐字照抄 topic_zh（繁體中文主題名）；angle_en 是英文切入角度；keywords 是撞題比對用的英文關鍵字；主題總表的主題彼此不重複，也避開 data/bank/v1 第一批與歷屆試題用過的主題（make_lots.py --check-topics）"
+  },
+  "answer_letter_share": null,
+  "avoid": {
+    "basis": "data/exams/parsed 的 gsat-111、gsat-112、gsat-113、gsat-114、gsat-115、ref-115 同一大題（word_bank）的正解（單字取詞彙表主形，功能詞與 L1 字不列；片語整串列出）",
+    "answer_words": [
+      "absorption",
+      "active",
+      "alert",
+      "atmosphere",
+      "brought forth",
+      "called for",
+      "career",
+      "celebration",
+      "combat",
+      "delay",
+      "depart",
+      "depend on",
+      "dramatic",
+      "effective",
+      "faithful",
+      "familiar",
+      "fateful",
+      "function",
+      "manageable",
+      "mechanism",
+      "minimal",
+      "necessity",
+      "option",
+      "pass through",
+      "passed on",
+      "point to",
+      "professional",
+      "reach for",
+      "reference",
+      "restoration",
+      "retain",
+      "risk",
+      "risky",
+      "sensation",
+      "silent",
+      "sorrow",
+      "status",
+      "survive",
+      "tried out",
+      "unproductive",
+      "witness"
+    ],
+    "answer_sentences": [],
+    "topics": [
+      "benefits of napping and how to nap well",
+      "staying hydrated: when water is (and is not) the best drink",
+      "the bells of Notre-Dame de Paris",
+      "the history of stunt performers in film",
+      "the history of stunt work in the film industry",
+      "the wind phone in Otsuchi, Japan, and coping with grief"
+    ]
+  },
+  "avoid_bank_answers": {
+    "basis": "data/bank/v1 現有題組（含 draft，不含 rejected）已用過的正解；單字取詞彙表主形（功能詞與 L1 字不列），片語整串列出。用意是避免同一個字在題庫裡反覆當正解；這是產生本批規格當下的快照，validate_bank --lot 另外會比對當時的題庫",
+    "scanned_on": "2026-10-09",
+    "scanned_groups": {
+      "vocabulary": 15,
+      "cloze": 24,
+      "word_bank": 15,
+      "structure": 15,
+      "reading": 8,
+      "mixed": 7
+    },
+    "answer_words": [
+      "accurate",
+      "alive",
+      "amount",
+      "ancient",
+      "ashamed",
+      "attach",
+      "awkward",
+      "balance",
+      "base",
+      "blot out",
+      "brought back",
+      "burn",
+      "came up with",
+      "confuse",
+      "confusion",
+      "connect",
+      "connection",
+      "credit",
+      "curious",
+      "demand",
+      "design",
+      "device",
+      "devise",
+      "dim",
+      "disposable",
+      "dropped off",
+      "economical",
+      "edged out",
+      "end up",
+      "environment",
+      "exception",
+      "exchange",
+      "expand",
+      "explanation",
+      "fatal",
+      "fierce",
+      "flavor",
+      "flock",
+      "flourish",
+      "flow",
+      "fraction",
+      "fragile",
+      "freedom",
+      "fuel",
+      "gave way to",
+      "get around",
+      "give up",
+      "glue",
+      "held off",
+      "honor",
+      "huge",
+      "humble",
+      "ideal",
+      "intact",
+      "junk",
+      "layer",
+      "limitation",
+      "literate",
+      "logical",
+      "looked down on",
+      "lowly",
+      "luxury",
+      "magnify",
+      "master",
+      "match",
+      "mend",
+      "milestone",
+      "mirror",
+      "mix",
+      "mystery",
+      "network",
+      "ordinary",
+      "pace",
+      "picked up",
+      "pile up",
+      "praise",
+      "precious",
+      "pride",
+      "privilege",
+      "protect",
+      "rank",
+      "rare",
+      "reject",
+      "religion",
+      "roll out",
+      "rot",
+      "scale",
+      "shed",
+      "sink",
+      "soft",
+      "speed up",
+      "spotlight",
+      "spread",
+      "staple",
+      "steady",
+      "steer",
+      "stray",
+      "suit",
+      "suspicious",
+      "sweep",
+      "symbol",
+      "threat",
+      "thrown away",
+      "toll",
+      "took off",
+      "toxic",
+      "trigger",
+      "turn into",
+      "turned up",
+      "use up",
+      "valuable",
+      "vivid",
+      "vulnerable",
+      "warn",
+      "wiped out",
+      "won over",
+      "wrap"
+    ],
+    "answer_words_other_sections": [
+      "a dial",
+      "a warm blanket",
+      "absorb",
+      "accordingly",
+      "address",
+      "admit",
+      "adopted as",
+      "ambition",
+      "announce the victory",
+      "anything but",
+      "apologize",
+      "appetite",
+      "attached to",
+      "attention",
+      "badly",
+      "barely",
+      "bargain",
+      "be seen",
+      "bitter",
+      "blend into",
+      "bless",
+      "blossom",
+      "boredom",
+      "breakthrough",
+      "breath",
+      "brink",
+      "broad",
+      "budget",
+      "bury",
+      "by no means",
+      "by the time",
+      "call for",
+      "cast",
+      "chronic",
+      "clue",
+      "combination",
+      "come up with",
+      "compatible",
+      "competition",
+      "compliment",
+      "comply",
+      "compromise",
+      "conceal",
+      "concentrate",
+      "concentration",
+      "concrete",
+      "consecutive",
+      "consensus",
+      "considerate",
+      "contact",
+      "could have avoided",
+      "covering up",
+      "crash",
+      "cue",
+      "curiosity",
+      "cushion",
+      "cuts both ways",
+      "dawn",
+      "deadline",
+      "deadly",
+      "decorate",
+      "departure",
+      "deprive",
+      "detect",
+      "diagnose",
+      "dial",
+      "did away with",
+      "digest",
+      "dilemma",
+      "diverse",
+      "do us much good",
+      "drowsy",
+      "eligible",
+      "enormous size",
+      "even so",
+      "evidence",
+      "fairly",
+      "familiar",
+      "fault",
+      "feast",
+      "fell into line",
+      "figure out",
+      "firm",
+      "flexible",
+      "fluent",
+      "forbid",
+      "glimpse",
+      "go far beyond",
+      "grain",
+      "gratitude",
+      "grew out of",
+      "grow apart",
+      "guilty",
+      "habitat",
+      "had been lost",
+      "had been making",
+      "harbor",
+      "hardly",
+      "hardship",
+      "harmful",
+      "has come to be seen",
+      "have begun",
+      "herd",
+      "hesitate",
+      "highly",
+      "household",
+      "idle",
+      "if anything",
+      "imaginary",
+      "in addition",
+      "in addition to",
+      "in short",
+      "include",
+      "ingredient",
+      "injure",
+      "insight",
+      "inspired by",
+      "interfere with",
+      "invest",
+      "just as",
+      "keen",
+      "lack",
+      "landmark",
+      "largely",
+      "lean",
+      "let in",
+      "lift",
+      "live up to",
+      "loose",
+      "made do with",
+      "made little sense",
+      "make out",
+      "make up for",
+      "melt",
+      "memorize",
+      "microscope",
+      "misunderstand",
+      "more elegant",
+      "mostly",
+      "mutual",
+      "namely",
+      "narrow",
+      "nearly",
+      "necessity",
+      "nutritious",
+      "obstacle",
+      "obvious",
+      "odd",
+      "opens the door to",
+      "partial",
+      "partly",
+      "passes the test",
+      "patience",
+      "pave",
+      "perform",
+      "persuade",
+      "pollution",
+      "portable",
+      "postpone",
+      "precaution",
+      "predict",
+      "preserve",
+      "presumably",
+      "prohibit",
+      "prolong",
+      "prone",
+      "put into practice",
+      "raw",
+      "receipt",
+      "recipe",
+      "recycle",
+      "reduce",
+      "relate",
+      "reliable",
+      "reluctant",
+      "remain",
+      "remind",
+      "represent",
+      "reputation",
+      "rescue",
+      "resemble",
+      "restore",
+      "reverse",
+      "rhythm",
+      "runs into",
+      "rural",
+      "rusty",
+      "scarce",
+      "scarcely",
+      "seal",
+      "seize",
+      "sensitive",
+      "seriously",
+      "shadow",
+      "shortly",
+      "sink into",
+      "skin",
+      "sleepy",
+      "smooth",
+      "solved the puzzle",
+      "spare",
+      "spark",
+      "specialize",
+      "stand on end",
+      "start out",
+      "steep",
+      "surface",
+      "symptom",
+      "take chances with",
+      "teamed up with",
+      "temporary",
+      "tender",
+      "the surface",
+      "thrive",
+      "tighten",
+      "tolerate",
+      "took away from",
+      "translate",
+      "transparent",
+      "trash",
+      "travel",
+      "turned against",
+      "unanimous",
+      "undergo",
+      "vast",
+      "versatile",
+      "vessel",
+      "volunteer",
+      "wealth",
+      "wear out",
+      "were doing",
+      "were to reach",
+      "whisper",
+      "without the use of",
+      "would have"
+    ],
+    "rule_zh": "正解不可用 answer_words（同題型已用過；--lot：詞彙題、文意選填是 error，綜合測驗、混合題是 warning）；也盡量避開 answer_words_other_sections（其他題型已用過；--lot 列 warning）"
+  },
+  "generation_notes": {
+    "basis": "第一批（seq 01）審查意見，2026-10-09 協調者轉達；第 2 批起每批都要遵守",
+    "items": [
+      {
+        "id": "GN-TOPIC",
+        "rule_zh": "group.tags.topic 一律逐字照抄 assigned_topics 該組的 topic_zh（繁體中文主題名）；angle_en 是英文切入角度，只給出題者參考。每組只用自己的主題，不換題、不合併；主題不可行（例如找不到白名單內的事實來源）時先回報，不要自行換題",
+        "checked_by": "validate_bank --lot：tags.topic 對不到 topic_zh 列 warning；同一個主題被兩組用是 error；其他批次已用掉同一個主題列 warning"
+      },
+      {
+        "id": "GN-AVOID",
+        "rule_zh": "正解除了 avoid（近期學測）之外，也要避開 avoid_bank_answers（題庫已用過的正解字、正解句）",
+        "checked_by": "validate_bank --lot（嚴重度見 avoid_bank_answers.rule_zh）"
+      }
+    ]
+  },
+  "passage_band": {
+    "basis": "SPEC §3.4＋出題規格書 passage_overrides（words、coverage_L1_4_min（取代 SPEC 的區間）、coverage_L1_6_min、offlist_max（＝1 − coverage_L1_6_min）、beyond_l4_ratio_max）",
+    "spec_3_4": {
+      "word_count": {
+        "min": 270,
+        "max": 310
+      },
+      "coverage_l1_4": {
+        "min": 0.89,
+        "max": 0.93
+      },
+      "coverage_l1_6": {
+        "min": 0.95,
+        "max": null
+      },
+      "offlist_ratio": {
+        "min": null,
+        "max": 0.05
+      },
+      "avg_sentence_length": {
+        "min": 15,
+        "max": 21
+      }
+    },
+    "overrides_note": "與模擬卷相同；現制 5/5 篇符合",
+    "word_count": {
+      "min": 265,
+      "max": 315
+    },
+    "coverage_l1_4": {
+      "min": 0.84,
+      "max": null
+    },
+    "coverage_l1_6": {
+      "min": 0.88,
+      "max": null
+    },
+    "offlist_ratio": {
+      "min": null,
+      "max": 0.12
+    },
+    "avg_sentence_length": {
+      "min": 15,
+      "max": 21
+    },
+    "beyond_l4_ratio": {
+      "min": null,
+      "max": 0.045
+    }
+  },
+  "item_rules": {
+    "summary_zh": "名詞約 3、形容詞約 3、動詞 2–3、片語 0–2；同詞性近義誘答對 1–2；1 格詞彙聯結（同一指涉換說法）",
+    "pos_groups_min": null,
+    "compatible_options_per_blank": {
+      "min": null,
+      "max": null
+    },
+    "near_synonym_pairs": {
+      "min": 1,
+      "max": 2
+    },
+    "bank_pos_mix": {
+      "noun": {
+        "min": 2,
+        "max": 4
+      },
+      "adjective": {
+        "min": 2,
+        "max": 4
+      },
+      "verb": {
+        "min": 2,
+        "max": 3
+      },
+      "phrase": {
+        "min": 0,
+        "max": 2
+      }
+    },
+    "lexical_link_blanks": {
+      "min": 1,
+      "max": 1
+    },
+    "phrasal_verb_option_required": false
+  },
+  "targets": {
+    "unit": "整篇（10 格）",
+    "blank_tier_mix": {
+      "basic": [
+        2,
+        4
+      ],
+      "advanced": [
+        3,
+        5
+      ],
+      "top": [
+        2,
+        3
+      ]
+    },
+    "recipe_example_mix": {
+      "basic": 3,
+      "advanced": 4,
+      "top": 3
+    },
+    "passage_words": [
+      265,
+      315
+    ],
+    "sense_mix": {
+      "core": [
+        4,
+        7
+      ],
+      "ext": [
+        2,
+        5
+      ],
+      "conv": [
+        0,
+        2
+      ],
+      "idiom": [
+        0,
+        1
+      ],
+      "ext_conv_idiom_total": [
+        3,
+        6
+      ],
+      "basis": "現制每卷 core 4–9、ext 1–5、conv 0–3、idiom 0–1；延伸義＋轉品＋慣用語合計 1–6，中位數 4"
+    },
+    "question_type_mix": {
+      "word_meaning": [
+        4,
+        6
+      ],
+      "collocation": [
+        2,
+        4
+      ],
+      "phrase": [
+        1,
+        3
+      ],
+      "discourse": [
+        0,
+        1
+      ],
+      "basis": "現制每卷 word_meaning 4–6、collocation 2–4、phrase 0–3、discourse 0–1"
+    },
+    "blank_type_mix": {
+      "N": [
+        3,
+        4
+      ],
+      "V": [
+        1,
+        5
+      ],
+      "A": [
+        2,
+        5
+      ],
+      "note": "現制每卷 frame 類別範圍；空格句法位置，不是選項外觀詞性"
+    },
+    "answer_level_dist": {
+      "L1-2": [
+        3,
+        6
+      ],
+      "L3-4": [
+        3,
+        5
+      ],
+      "L5-6": [
+        1,
+        2
+      ],
+      "basis": "現制每卷 L1-2 4–7、L3-4 2–5、L5-6 1–2"
+    },
+    "bank": {
+      "phrasal_verbs": [
+        0,
+        2
+      ],
+      "max_frame_group_size": [
+        4,
+        5
+      ],
+      "options_ge_L5": [
+        1,
+        2
+      ],
+      "frame_classes": 3
+    },
+    "distractor_rules": {
+      "confusable_same_frame_pairs": [
+        2,
+        4
+      ],
+      "near_synonyms_in_same_frame": "1–2 組（例：survived／retained、sorrow／mechanism）",
+      "partner_types": [
+        "近義或語意重疊（passed on／brought forth）",
+        "只讀本句也說得通（111-28：called for 放進 witnessed 的空格）",
+        "與全文主題相合但不合本句（fateful 放進 manageable 的空格）",
+        "字形相近（familiar／faithful）"
+      ],
+      "blind_solver_also_plausible": "進階格各有 1 個，且能用本句以外的線索排除",
+      "expected_upper_top_distractor": [
+        0.04,
+        0.12
+      ],
+      "observed_basis": "現制 advanced 17 格：高分組最強誘答中位數 0.10（IQR 0.04–0.12），12/17 格有同組近似誘答"
+    },
+    "recipe": [
+      "照現制模擬卷配比：basic 2–4、advanced 3–5、top 2–3",
+      "安排 2–4 組同句法位置的近似對；每組只讓其中一格難（另一格用強線索撐住，例如 114-24 survived 易、114-25 retained 難）",
+      "延伸義 2–4 格，例如 called for（需要）、point to（顯示）、departed（已故的）；轉品至多 1 格",
+      "片語動詞 0–2 個，意義以「可推得的延伸義」為主（pass on 訊息、point to 研究結果）"
+    ],
+    "pitfalls": [
+      "近似對兩格都沒有排除線索，會變成雙正解或兩格同時落到超越頂標",
+      "只靠提高字的級別：現制正解級別與 P 無關（ρ = +0.03），L1-2 字的格有 6/24 是超越頂標",
+      "同組太大（≥6）又全是常用義：舊制 gsat-110 這類卷會讓高分組在同組裡打轉，但未必落在目標級"
+    ]
+  },
+  "set_composition": {
+    "basic": [
+      2,
+      4
+    ],
+    "advanced": [
+      3,
+      5
+    ],
+    "top": [
+      2,
+      3
+    ]
+  },
+  "verification": {
+    "blind_solvers": 2,
+    "blind_b_different_model": true,
+    "distractor_audit": true,
+    "unique_solution": true,
+    "human_review": "100%（校準期：每個題型 × 提示詞版本的前 30 組全審，SPEC §5.8）"
+  }
+}

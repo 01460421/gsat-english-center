@@ -1,0 +1,140 @@
+{
+  "schema": "gsat-bank-facts/v1",
+  "id": "safe-listening-rb02",
+  "title": "How loud is too loud: sound levels of everyday sounds and WHO safe weekly listening times",
+  "sdgs": [
+    3
+  ],
+  "created_on": "2026-10-09",
+  "created_by": "claude-opus-5-5",
+  "sources": [
+    {
+      "id": "s1",
+      "publisher": "World Health Organization",
+      "title": "Deafness and hearing loss: Safe listening (Questions and answers)",
+      "url": "https://www.who.int/news-room/questions-and-answers/item/deafness-and-hearing-loss-safe-listening",
+      "accessed": "2026-10-09",
+      "license": "WHO terms of use (facts only)",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s2",
+      "publisher": "World Health Organization",
+      "title": "Deafness and hearing loss (fact sheet)",
+      "url": "https://www.who.int/news-room/fact-sheets/detail/deafness-and-hearing-loss",
+      "accessed": "2026-10-09",
+      "license": "WHO terms of use (facts only)",
+      "use": "fact_only",
+      "note": null
+    }
+  ],
+  "facts": [
+    {
+      "id": "f1",
+      "text": "WHO estimates that more than 1 billion young adults are at risk of permanent hearing loss that could be avoided, because of unsafe listening.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f2",
+      "text": "Sound level is measured in decibels (dB).",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "definition"
+    },
+    {
+      "id": "f3",
+      "text": "Typical levels: a library is about 40 dB and a normal conversation about 60 dB.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f4",
+      "text": "Typical levels: a doorbell 80 dB, heavy traffic heard inside a car 85 dB, a shouted conversation 90 dB, a motorcycle 95 dB, a hair dryer 100 dB, standing near a siren 120 dB.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f5",
+      "text": "Safe listening time per week: 60 dB or less has no limit; 80 dB 40 hours; 85 dB 12 hours 30 minutes; 90 dB 4 hours.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f6",
+      "text": "Safe listening time per week: 95 dB 1 hour 15 minutes; 100 dB 20 minutes; 120 dB 12 seconds.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f7",
+      "text": "WHO says sounds below 80 dB are unlikely to damage hearing.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f8",
+      "text": "Even one exposure to an extremely loud sound can damage cells in the inner ear.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f9",
+      "text": "Simple check: if you must raise your voice to be heard by someone an arm's length away, the sound is too loud.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f10",
+      "text": "WHO advice: keep a device's volume at no more than 60% of its maximum.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f11",
+      "text": "WHO advice: well-fitted noise-cancelling headphones help because listeners do not need to raise the volume in noisy places.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f12",
+      "text": "WHO advice: wear earplugs in noisy places, and at concerts or other loud events rest the ears in a quiet place for 10 minutes every hour.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f13",
+      "text": "Ringing in the ears that does not go away is a warning sign; WHO advises getting a hearing check.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "other"
+    }
+  ],
+  "datasets": [],
+  "notes": "表格把 WHO 的「常見聲音分貝數」與「每週安全聆聽時間」兩份清單依分貝數併成一張表；數值照原值，不另做換算。"
+}

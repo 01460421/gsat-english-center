@@ -1,0 +1,657 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.784b04",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "basic",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "如果我們這個週末把所有東西都打包好，下週就能搬進新家。",
+        "options": null,
+        "answer": "If we pack everything this weekend, we can move into our new apartment next week.",
+        "accepted_answers": [
+          "We can move into our new home next week if we pack everything this weekend.",
+          "As long as we pack up everything this weekend, we can move into our new home next week."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "條件子句"
+          ],
+          "topic": "搬家"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "大型家具則會由搬家公司的工人搬上卡車。",
+        "options": null,
+        "answer": "The big furniture will be carried onto the truck by workers from a moving company.",
+        "accepted_answers": [
+          "Large pieces of furniture will be moved onto the truck by the workers of the moving company.",
+          "The large furniture will be loaded onto the truck by workers from the moving company."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "被動語態"
+          ],
+          "topic": "搬家"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "搬家"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「如果…就…」是條件子句：If + S + 現在式, S + can/will + 原形動詞。說的雖然是未來的事，if 子句仍用現在式 pack，不用 will pack。this weekend、next week 前面都不加介系詞；「搬進」是 move into。",
+          "evidence": [
+            "如果",
+            "就能搬進新家"
+          ],
+          "strategy_zh": "if、unless、as long as 子句用現在式表示未來，主要子句才用 will／can。",
+          "hints": [
+            "切成四段：如果我們／這個週末把所有東西都打包好／下週／就能搬進新家",
+            "標的詞彙：pack（打包）、weekend（週末）、week（週）、move（搬（家））、apartment（新家（公寓））",
+            "句型框架：If + S + V(現在式) …, S + can + 原形動詞 …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "家具是「被搬」的，用被動語態 will be carried（未來式被動：will be + p.p.），做動作的人用 by 帶出：by workers from a moving company。furniture 不可數，不加 s；「搬家公司」是 moving company。「則」表示和上一句（我們自己打包）對照，翻譯時不一定要譯出來。",
+          "evidence": [
+            "則會由搬家公司的工人搬上卡車"
+          ],
+          "strategy_zh": "主詞是東西、動作是別人做的時候，先想被動語態 be + p.p.；中文的「由」「被」是提示。",
+          "hints": [
+            "切成四段：大型家具／搬家公司的工人／搬上／卡車",
+            "標的詞彙：big（大型的）、furniture（家具）、worker（工人）、company（公司）、carry（搬（運））、truck（卡車）",
+            "句型框架：S + will be + p.p. + onto … + by …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "If we pack everything this weekend, we can move into our new apartment next week.",
+            "We can move into our new home next week if we pack everything this weekend.",
+            "As long as we pack up everything this weekend, we can move into our new home next week."
+          ],
+          "target_words": [
+            {
+              "word": "pack",
+              "zh": "打包"
+            },
+            {
+              "word": "weekend",
+              "zh": "週末"
+            },
+            {
+              "word": "week",
+              "zh": "週"
+            },
+            {
+              "word": "move",
+              "zh": "搬（家）"
+            },
+            {
+              "word": "apartment",
+              "zh": "新家（公寓）",
+              "alternatives": [
+                "home",
+                "house"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "ADVCL",
+              "grammar_id": "gp-condition-real",
+              "label_zh": "條件子句（If + 現在式, S + can/will + 原形動詞）",
+              "frame": "If + S + V(現在式), S + can/will + 原形動詞 …",
+              "zh_trigger": "如果"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "如果我們",
+              "accepted": [
+                "If we",
+                "As long as we",
+                "Provided that we"
+              ],
+              "targets": [
+                "ADVCL"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "If we will pack",
+                  "right": "If we pack",
+                  "explanation_zh": "條件子句說的雖然是未來的事，仍用現在式，不用 will。"
+                }
+              ]
+            },
+            {
+              "zh": "這個週末把所有東西都打包好",
+              "accepted": [
+                "pack everything this weekend",
+                "pack up everything this weekend",
+                "pack all our things this weekend",
+                "finish packing everything this weekend",
+                "get everything packed this weekend",
+                "pack everything up this weekend"
+              ],
+              "targets": [
+                "pack",
+                "weekend"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "pack everything at this weekend",
+                  "right": "pack everything this weekend",
+                  "explanation_zh": "this weekend 前面不加介系詞。"
+                },
+                {
+                  "wrong": "will pack everything this weekend",
+                  "right": "pack everything this weekend",
+                  "explanation_zh": "if 子句用現在式代替未來式。"
+                }
+              ]
+            },
+            {
+              "zh": "下週",
+              "accepted": [
+                "next week"
+              ],
+              "targets": [
+                "week"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "on next week",
+                  "right": "next week",
+                  "explanation_zh": "next、this、last 開頭的時間副詞前面不加介系詞。"
+                }
+              ]
+            },
+            {
+              "zh": "就能搬進新家",
+              "accepted": [
+                "we can move into our new apartment",
+                "we can move into our new home",
+                "we can move into our new house",
+                "we will be able to move into our new apartment",
+                "we will be able to move into our new home",
+                "we can move into the new apartment"
+              ],
+              "targets": [
+                "move",
+                "apartment"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "we can move in our new home",
+                  "right": "we can move into our new home",
+                  "explanation_zh": "「搬進」是 move into，表示進入的動作。"
+                },
+                {
+                  "wrong": "we can moving into our new home",
+                  "right": "we can move into our new home",
+                  "explanation_zh": "can 後面接原形動詞。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "tense_trigger",
+              "zh": "如果我們這個週末把所有東西都打包好",
+              "literal_error": "If we will pack everything this weekend, we can move into our new apartment next week.",
+              "part": 2,
+              "explanation_zh": "中文「這個週末」是未來，但英文條件子句用現在式代替未來式；寫 if we will pack 會在這一部分被扣分。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "Unless we pack everything this weekend, we won't be able to move into our new home next week.",
+              "grammar_id": "gp-condition-real",
+              "explanation_zh": "用 unless（除非）從反面說同一件事，條件子句一樣用現在式。"
+            }
+          ]
+        },
+        "2": {
+          "references": [
+            "The big furniture will be carried onto the truck by workers from a moving company.",
+            "Large pieces of furniture will be moved onto the truck by the workers of the moving company.",
+            "The large furniture will be loaded onto the truck by workers from the moving company."
+          ],
+          "target_words": [
+            {
+              "word": "big",
+              "zh": "大型的",
+              "alternatives": [
+                "large"
+              ]
+            },
+            {
+              "word": "furniture",
+              "zh": "家具"
+            },
+            {
+              "word": "worker",
+              "zh": "工人",
+              "alternatives": [
+                "mover"
+              ]
+            },
+            {
+              "word": "company",
+              "zh": "公司"
+            },
+            {
+              "word": "carry",
+              "zh": "搬（運）",
+              "alternatives": [
+                "move",
+                "load",
+                "put",
+                "transport"
+              ]
+            },
+            {
+              "word": "truck",
+              "zh": "卡車"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PASS",
+              "grammar_id": "gp-passive",
+              "label_zh": "被動語態（未來式被動 will be + p.p.）",
+              "frame": "S + will be + p.p. (+ by …)",
+              "zh_trigger": "則會由"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "大型家具",
+              "accepted": [
+                "The big furniture",
+                "The large furniture",
+                "Large pieces of furniture",
+                "Big pieces of furniture",
+                "The large pieces of furniture"
+              ],
+              "targets": [
+                "big",
+                "furniture"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "The big furnitures",
+                  "right": "The big furniture",
+                  "explanation_zh": "furniture 是不可數名詞，不加 s；要數件數用 pieces of furniture。"
+                }
+              ]
+            },
+            {
+              "zh": "搬家公司的工人",
+              "accepted": [
+                "workers from a moving company",
+                "workers from the moving company",
+                "the moving company's workers",
+                "the workers of the moving company",
+                "the movers"
+              ],
+              "targets": [
+                "worker",
+                "company"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "the move company workers",
+                  "right": "workers from the moving company",
+                  "explanation_zh": "「搬家公司」是 moving company（moving 當形容詞），不是 move company。"
+                }
+              ]
+            },
+            {
+              "zh": "搬上",
+              "accepted": [
+                "will be carried onto",
+                "will be moved onto",
+                "will be loaded onto",
+                "will be put onto",
+                "will be put on",
+                "will be carried to"
+              ],
+              "targets": [
+                "PASS",
+                "carry"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "will carry onto",
+                  "right": "will be carried onto",
+                  "explanation_zh": "家具是被搬的一方，要用被動語態 will be + 過去分詞。"
+                },
+                {
+                  "wrong": "will be carry onto",
+                  "right": "will be carried onto",
+                  "explanation_zh": "被動語態的 be 後面接過去分詞 carried。"
+                }
+              ]
+            },
+            {
+              "zh": "卡車",
+              "accepted": [
+                "the truck",
+                "a truck",
+                "the moving truck"
+              ],
+              "targets": [
+                "truck"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "the car",
+                  "right": "the truck",
+                  "explanation_zh": "載貨的「卡車」是 truck；car 是小汽車。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "plural_countable",
+              "zh": "大型家具",
+              "literal_error": "The big furnitures will be carried onto the truck by workers from a moving company.",
+              "part": 1,
+              "explanation_zh": "furniture 是不可數名詞，照中文直接加 s 會在這一部分被扣分；要強調件數就寫 pieces of furniture。"
+            }
+          ],
+          "bonus": []
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-basic-01",
+    "lot": "translation-basic-01",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "5d53cd3325023c20a689f496811202dc08d17408faea3e4eb4c3042ce15b605d",
+    "spec_id": "translation-basic@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T07:53:43Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "warn",
+      "created_at": "2026-10-09T07:20:08Z",
+      "details": {
+        "solver": "A",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "If we pack everything up this weekend, we will be able to move into our new house next week.",
+            "confidence": "high",
+            "explanation_zh": "條件句：if 子句用現在式代替未來、主要子句用 will be able to；「打包好」用 pack up；搬進新家用 move into our new house。"
+          },
+          "2": {
+            "translation": "The large furniture, however, will be carried onto the truck by workers from the moving company.",
+            "confidence": "high",
+            "explanation_zh": "「由…搬上卡車」用未來式被動 will be carried ... by；furniture 不可數，配單數動詞；「則」表對比，用 however；搬家公司譯 moving company。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "ADVCL"
+            ],
+            "used_target_words": [
+              "pack",
+              "weekend",
+              "week",
+              "move",
+              "apartment"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "切分不均：第 1 部分「如果我們」（If we）和第 3 部分「下週」（next week）都只有兩個字，真正的考點（if 子句用現在式代替未來）在第 2 部分。",
+              "同一個錯誤列了兩次：If we will pack 列在第 1 部分 common_errors，will pack everything this weekend 又列在第 2 部分，學生寫 if we will pack 可能兩部分都被扣；建議只留在第 2 部分（trap 也標第 2 部分），或改切成「如果我們這個週末／把所有東西都打包好／下週就能／搬進新家」。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "PASS"
+            ],
+            "used_target_words": [
+              "big",
+              "furniture",
+              "worker",
+              "company",
+              "carry",
+              "truck"
+            ],
+            "within_accepted": true,
+            "closest_reference": 2,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "（小建議）中文「則」帶對比語氣，參考譯文都沒譯出；可註明 however／on the other hand／as for 加不加都可以（我的譯文加了 however）。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "pack",
+              "weekend",
+              "week",
+              "move",
+              "apartment"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "ADVCL": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "big",
+              "furniture",
+              "worker",
+              "company",
+              "carry",
+              "truck"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PASS": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 1 題驗證者對4 部分切分有意見（warn）：切分不均：第 1 部分「如果我們」（If we）和第 3 部分「下週」（next week）都只有兩個字，真正的考點（if 子句用現在式代替未來）在第 2 部分。；同一個錯誤列了兩次：If we will pack 列在第 1 部分 com"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T07:25:05Z",
+      "details": {
+        "solver": "B",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "If we pack everything this weekend, we will be able to move into our new home next week.",
+            "confidence": "high",
+            "explanation_zh": "表示未來可能的條件句：if 子句用現在簡單式、主句用 will；「就能」用 will be able to；「搬進」用 move into；「打包好」用 pack。"
+          },
+          "2": {
+            "translation": "The large furniture will be carried onto the truck by the workers from the moving company.",
+            "confidence": "high",
+            "explanation_zh": "中文「由……搬上卡車」帶有被動意味，用被動語態 will be carried onto the truck by ...；「搬家公司」譯 moving company。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "ADVCL"
+            ],
+            "used_target_words": [
+              "pack",
+              "weekend",
+              "week",
+              "move",
+              "apartment"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PASS"
+            ],
+            "used_target_words": [
+              "big",
+              "furniture",
+              "worker",
+              "company",
+              "carry",
+              "truck"
+            ],
+            "within_accepted": true,
+            "closest_reference": 2,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "pack",
+              "weekend",
+              "week",
+              "move",
+              "apartment"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "ADVCL": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "big",
+              "furniture",
+              "worker",
+              "company",
+              "carry",
+              "truck"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PASS": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

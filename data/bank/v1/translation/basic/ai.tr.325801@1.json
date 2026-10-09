@@ -1,0 +1,652 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.325801",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "basic",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "流感季節搭公車時，我會戴口罩，這樣才不會感冒。",
+        "options": null,
+        "answer": "I wear a mask on the bus during flu season so that I won't catch a cold.",
+        "accepted_answers": [
+          "During flu season, I wear a mask on buses so that I will not get sick.",
+          "When I take the bus in flu season, I wear a mask so that I won't get sick."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "目的：so that"
+          ],
+          "topic": "戴口罩預防感冒"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "這是我保護自己和家人最簡單的方法之一。",
+        "options": null,
+        "answer": "This is one of the easiest ways for me to protect myself and my family.",
+        "accepted_answers": [
+          "It is one of the simplest ways for me to protect myself and my family.",
+          "This is one of the easiest ways to protect myself and my family."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "最高級"
+          ],
+          "topic": "戴口罩預防感冒"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "戴口罩預防感冒"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「這樣才不會…」說的是做這件事的目的，後面有自己的主詞和動詞，用 so that + S + won't／will not + 原形動詞。這裡的「會」是習慣，主要子句用現在式 I wear。mask、bus 都是可數名詞，要有冠詞（a mask、the bus）或用複數（buses）。「感冒」是 catch a cold 或 get sick，不是 feel cold（覺得冷）。",
+          "evidence": [
+            "這樣才不會感冒",
+            "我會戴口罩"
+          ],
+          "strategy_zh": "「為了…／這樣才…」都表目的：後面要接主詞和動詞時用 so that 子句，只接動作時用 to + 原形動詞。",
+          "hints": [
+            "切成四段：流感季節／搭公車時／我會戴口罩／這樣才不會感冒",
+            "標的詞彙：flu（流感）、season（季節）、bus（公車）、wear（戴著）、mask（口罩）、catch a cold（感冒）",
+            "句型框架：S + V … so that + S + won't + 原形動詞 …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「最…的…之一」用 one of the + 最高級 + 複數名詞：one of the easiest ways；「這」指上一句的戴口罩，用 This 或 It 開頭。「方法」後面接不定詞 to protect，說明是什麼方法，可加 for me 表示是誰的方法；「保護自己」的受詞就是主詞本人，用反身代名詞 myself。easy 的最高級是 easiest，不寫 most easy。",
+          "evidence": [
+            "最簡單的方法之一",
+            "保護自己和家人"
+          ],
+          "strategy_zh": "看到「…之一」，先寫 one of the，再寫最高級形容詞和複數名詞；最後檢查 easy → easiest 的拼法。",
+          "hints": [
+            "切成四段：我保護自己／和家人／最簡單的方法／之一（英文語序：This is one of the easiest ways for me to protect myself and my family）",
+            "標的詞彙：protect（保護）、family（家人）、easy／simple（簡單的）、way（方法）",
+            "句型框架：This is one of the + 最高級 + 複數名詞 + (for sb) to + 原形動詞 …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "I wear a mask on the bus during flu season so that I won't catch a cold.",
+            "During flu season, I wear a mask on buses so that I will not get sick.",
+            "When I take the bus in flu season, I wear a mask so that I won't get sick."
+          ],
+          "target_words": [
+            {
+              "word": "flu",
+              "zh": "流感"
+            },
+            {
+              "word": "season",
+              "zh": "季節"
+            },
+            {
+              "word": "bus",
+              "zh": "公車"
+            },
+            {
+              "word": "wear",
+              "zh": "戴"
+            },
+            {
+              "word": "mask",
+              "zh": "口罩"
+            },
+            {
+              "word": "catch a cold",
+              "zh": "感冒",
+              "alternatives": [
+                "get a cold",
+                "get sick",
+                "catch the flu",
+                "catch cold"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PURP",
+              "grammar_id": "gp-so-that-purpose",
+              "label_zh": "目的：so that（這樣才…）",
+              "frame": "S + V … so that + S + will/won't/can + VR",
+              "zh_trigger": "這樣才不會"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "流感季節",
+              "accepted": [
+                "during flu season",
+                "during the flu season",
+                "in flu season",
+                "in the flu season"
+              ],
+              "targets": [
+                "flu",
+                "season"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "during flew season",
+                  "right": "during flu season",
+                  "explanation_zh": "拼字：flu（流感）不是 flew（fly 的過去式）。"
+                },
+                {
+                  "wrong": "during the flu time",
+                  "right": "during flu season",
+                  "explanation_zh": "「流感季節」固定說 flu season。"
+                }
+              ]
+            },
+            {
+              "zh": "搭公車時",
+              "accepted": [
+                "on the bus",
+                "on buses",
+                "on a bus",
+                "when I take the bus",
+                "when I take a bus",
+                "when I ride the bus",
+                "when taking the bus",
+                "while taking the bus",
+                "when riding the bus"
+              ],
+              "targets": [
+                "bus"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "when I take bus",
+                  "right": "when I take the bus",
+                  "explanation_zh": "bus 是可數名詞，要加冠詞 the／a（或寫複數 buses）。"
+                }
+              ]
+            },
+            {
+              "zh": "我會戴口罩",
+              "accepted": [
+                "I wear a mask",
+                "I wear a face mask",
+                "I put on a mask",
+                "I put on a face mask",
+                "I always wear a mask"
+              ],
+              "targets": [
+                "wear",
+                "mask"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "I wear mask",
+                  "right": "I wear a mask",
+                  "explanation_zh": "mask 是可數名詞，單數要加 a。"
+                },
+                {
+                  "wrong": "I wear on a mask",
+                  "right": "I wear a mask",
+                  "explanation_zh": "wear 是「戴著」（狀態），後面直接接受詞；put on 才是「戴上」（動作），不要寫成 wear on。"
+                }
+              ]
+            },
+            {
+              "zh": "這樣才不會感冒",
+              "accepted": [
+                "so that I won't catch a cold",
+                "so that I will not catch a cold",
+                "so that I will not get sick",
+                "so that I won't get sick",
+                "so that I won't get a cold",
+                "so that I will not get a cold",
+                "so that I don't catch a cold",
+                "so that I don't get sick",
+                "so I won't catch a cold",
+                "in order not to catch a cold",
+                "to avoid catching a cold"
+              ],
+              "targets": [
+                "PURP",
+                "catch a cold"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "so that I don't feel cold",
+                  "right": "so that I won't catch a cold",
+                  "explanation_zh": "「感冒」是 catch a cold／get sick；feel cold 是「覺得冷」。"
+                },
+                {
+                  "wrong": "so that I won't catching a cold",
+                  "right": "so that I won't catch a cold",
+                  "explanation_zh": "won't（will not）後面接原形動詞。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "plural_countable",
+              "zh": "戴口罩",
+              "literal_error": "I wear mask on bus during flu season so that I won't catch a cold.",
+              "part": 3,
+              "explanation_zh": "中文沒有冠詞，照字面寫會漏掉 a；mask、bus 都是可數名詞，單數前面要有冠詞，這一部分扣分。"
+            }
+          ],
+          "bonus": []
+        },
+        "2": {
+          "references": [
+            "This is one of the easiest ways for me to protect myself and my family.",
+            "It is one of the simplest ways for me to protect myself and my family.",
+            "This is one of the easiest ways to protect myself and my family."
+          ],
+          "target_words": [
+            {
+              "word": "protect",
+              "zh": "保護"
+            },
+            {
+              "word": "family",
+              "zh": "家人"
+            },
+            {
+              "word": "easy",
+              "zh": "簡單的",
+              "alternatives": [
+                "simple"
+              ]
+            },
+            {
+              "word": "way",
+              "zh": "方法",
+              "alternatives": [
+                "method"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "COMP",
+              "grammar_id": "gp-comparative-superlative",
+              "label_zh": "最高級（one of the + 最高級 + 複數名詞）",
+              "frame": "S + be + one of the + 最高級 + 複數 N (+ to VR …)",
+              "zh_trigger": "最簡單的方法之一"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "我保護自己",
+              "accepted": [
+                "for me to protect myself",
+                "to protect myself",
+                "I can protect myself",
+                "I protect myself"
+              ],
+              "targets": [
+                "protect"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "for me to protect me",
+                  "right": "for me to protect myself",
+                  "explanation_zh": "保護「自己」，受詞和主詞是同一個人，用反身代名詞 myself。"
+                },
+                {
+                  "wrong": "for me to protect my self",
+                  "right": "for me to protect myself",
+                  "explanation_zh": "myself 是一個字，不分開寫。"
+                }
+              ]
+            },
+            {
+              "zh": "和家人",
+              "accepted": [
+                "and my family",
+                "and my family members"
+              ],
+              "targets": [
+                "family"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "and my families",
+                  "right": "and my family",
+                  "explanation_zh": "family 指「一家人」時是集合名詞，這裡用單數。"
+                }
+              ]
+            },
+            {
+              "zh": "最簡單的方法",
+              "accepted": [
+                "the easiest ways",
+                "the simplest ways",
+                "the easiest methods",
+                "the simplest methods"
+              ],
+              "targets": [
+                "easy",
+                "way"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "the most easy ways",
+                  "right": "the easiest ways",
+                  "explanation_zh": "easy 是以 y 結尾的雙音節形容詞，最高級是 easiest，不用 most easy。"
+                },
+                {
+                  "wrong": "the easiest way",
+                  "right": "the easiest ways",
+                  "explanation_zh": "「…之一」表示好幾個裡面的一個，名詞要用複數 ways。"
+                }
+              ]
+            },
+            {
+              "zh": "之一",
+              "accepted": [
+                "This is one of",
+                "It is one of"
+              ],
+              "targets": [
+                "COMP"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "This is one of easiest",
+                  "right": "This is one of the easiest",
+                  "explanation_zh": "最高級前面要加 the：one of the + 最高級 + 複數名詞。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "plural_countable",
+              "zh": "方法之一",
+              "literal_error": "This is one of the easiest way for me to protect myself and my family.",
+              "part": 3,
+              "explanation_zh": "中文「方法」沒有單複數，照字面寫成 way 會漏掉「之一」要求的複數 ways，這一部分扣分。"
+            }
+          ],
+          "bonus": []
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-basic-02",
+    "lot": "translation-basic-02",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "98fb98485e580f5dcb5c9180ca2577c7306e3aace5410226eade2db68cbe253c",
+    "spec_id": "translation-basic@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T07:49:11Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T07:28:47Z",
+      "details": {
+        "solver": "A",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "When I take the bus during flu season, I wear a mask so that I won't catch a cold.",
+            "confidence": "medium",
+            "explanation_zh": "時間子句 When I take the bus during flu season；「這樣才不會」表目的，用 so that … won't；習慣用現在簡單式。「感冒」照字面譯 catch a cold，但流感季節語境下也可能想說 catch the flu／get sick，略有歧義所以信心 medium。"
+          },
+          "2": {
+            "translation": "This is one of the simplest ways for me to protect myself and my family.",
+            "confidence": "high",
+            "explanation_zh": "「最…的…之一」用 one of the + 最高級 + 複數名詞；「保護自己和家人」用反身代名詞 myself；「方法」用 ways for me to V（也可 ways I can protect…）；「簡單」也可譯 easiest。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PURP"
+            ],
+            "used_target_words": [
+              "flu",
+              "season",
+              "bus",
+              "wear",
+              "mask",
+              "catch a cold"
+            ],
+            "within_accepted": true,
+            "closest_reference": 2,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "COMP"
+            ],
+            "used_target_words": [
+              "protect",
+              "family",
+              "easy",
+              "way"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "flu",
+              "season",
+              "bus",
+              "wear",
+              "mask",
+              "catch a cold"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PURP": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "protect",
+              "family",
+              "easy",
+              "way"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "COMP": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "warn",
+      "created_at": "2026-10-09T07:49:11Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "During flu season, I wear a mask when I take the bus so that I won't catch a cold.",
+            "confidence": "high",
+            "explanation_zh": "「會戴口罩」是習慣，用現在簡單式；「這樣才不會感冒」是目的，用 so that 引導子句，catch a cold 表感冒。"
+          },
+          "2": {
+            "translation": "This is one of the easiest ways to protect myself and my family.",
+            "confidence": "high",
+            "explanation_zh": "「最簡單的方法之一」用 one of the + 最高級 + 複數名詞；ways to protect 用不定詞修飾名詞；protect 的受詞 myself 為反身代名詞。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PURP"
+            ],
+            "used_target_words": [
+              "flu",
+              "season",
+              "bus",
+              "wear",
+              "mask",
+              "catch a cold"
+            ],
+            "within_accepted": true,
+            "closest_reference": 2,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "COMP"
+            ],
+            "used_target_words": [
+              "protect",
+              "family",
+              "easy",
+              "way"
+            ],
+            "within_accepted": true,
+            "closest_reference": 2,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "第 1、2 部分把並列受詞「自己和家人」拆成「我保護自己」與「和家人」；學生若照英文習慣寫 protect my family and myself，兩個部分都會對不上。「之一」又單獨成一部分、只對應 This is one of，切得偏碎。建議把「保護自己和家人」併成同一部分。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "flu",
+              "season",
+              "bus",
+              "wear",
+              "mask",
+              "catch a cold"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PURP": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "protect",
+              "family",
+              "easy",
+              "way"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "COMP": true
+            },
+            "program_match": true
+          }
+        },
+        "problems": [
+          "第 2 題驗證者對4 部分切分有意見（warn）：第 1、2 部分把並列受詞「自己和家人」拆成「我保護自己」與「和家人」；學生若照英文習慣寫 protect my family and myself，兩個部分都會對不上。「之一」又單獨成一部分、只對應 This is one of，切得偏碎"
+        ]
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

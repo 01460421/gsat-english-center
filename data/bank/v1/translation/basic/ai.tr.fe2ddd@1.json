@@ -1,0 +1,633 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.fe2ddd",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "basic",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "每位同學都已經寫好了一張教師節的感謝卡。",
+        "options": null,
+        "answer": "Each of my classmates has already written a thank-you card for Teachers' Day.",
+        "accepted_answers": [
+          "All of my classmates have already written thank-you cards for Teachers' Day.",
+          "Every student in my class has already written a thank-you card for Teachers' Day."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "現在完成式"
+          ],
+          "topic": "教師節寫卡片"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "我寫了一張卡片給常常鼓勵我的英文老師。",
+        "options": null,
+        "answer": "I wrote a card to the English teacher who often encourages me.",
+        "accepted_answers": [
+          "I wrote a card for the English teacher that often encourages me.",
+          "I wrote my card to the English teacher who often encourages me."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "關係代名詞"
+          ],
+          "topic": "教師節寫卡片"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "教師節寫卡片"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「已經…了」表示動作到現在已經完成，用現在完成式 has/have + already + p.p.；write 的過去分詞是 written。主詞 Each of my classmates（或 Every student）視為單數，助動詞用 has；寫成 All of my classmates 時用 have，卡片也跟著用複數。教師節是 Teachers' Day，節日名稱每個字的字首大寫。",
+          "evidence": [
+            "都已經寫好了",
+            "每位同學"
+          ],
+          "strategy_zh": "看到「已經、還沒、…過」先想現在完成式；再看主詞是 each／every（單數 has）還是 all（複數 have）。",
+          "hints": [
+            "切成四段：每位同學／都已經寫好了／教師節的／感謝卡（英文語序：… a thank-you card for Teachers' Day）",
+            "標的詞彙：classmate（同學）、already（已經）、write（寫）、thank-you card（感謝卡）、Teachers' Day（教師節）",
+            "句型框架：Each of + 複數名詞 + has + already + p.p. …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「常常鼓勵我的」是放在「老師」前面的修飾語，英文要改成放在名詞後面的關係子句：the English teacher who often encourages me。先行詞是人，用 who（或 that）；先行詞 teacher 是單數，子句動詞 encourages 要加 s。頻率副詞 often 放在一般動詞前面。寫卡片「給」某人用 to 或 for；write 的過去式是 wrote。",
+          "evidence": [
+            "常常鼓勵我的英文老師",
+            "我寫了一張卡片"
+          ],
+          "strategy_zh": "中文「…的＋名詞」修飾語比較長時，英文先寫名詞，再用 who／which／that 子句補充說明。",
+          "hints": [
+            "切成四段：我寫了／一張卡片／常常鼓勵我的／英文老師（英文語序：I wrote a card to the English teacher who often encourages me）",
+            "標的詞彙：write（寫）、card（卡片）、often（常常）、encourage（鼓勵）、teacher（老師）",
+            "句型框架：S + V + O + to + the + N + who + V(-s) …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "Each of my classmates has already written a thank-you card for Teachers' Day.",
+            "All of my classmates have already written thank-you cards for Teachers' Day.",
+            "Every student in my class has already written a thank-you card for Teachers' Day."
+          ],
+          "target_words": [
+            {
+              "word": "classmate",
+              "zh": "同學",
+              "alternatives": [
+                "student"
+              ]
+            },
+            {
+              "word": "already",
+              "zh": "已經"
+            },
+            {
+              "word": "write",
+              "zh": "寫"
+            },
+            {
+              "word": "thank-you card",
+              "zh": "感謝卡"
+            },
+            {
+              "word": "Teachers' Day",
+              "zh": "教師節",
+              "alternatives": [
+                "Teacher's Day"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PERF",
+              "grammar_id": "gp-present-perfect",
+              "label_zh": "現在完成式（已經…了）",
+              "frame": "S + has/have + already + p.p. …",
+              "zh_trigger": "已經"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "每位同學",
+              "accepted": [
+                "Each of my classmates",
+                "All of my classmates",
+                "Every student in my class",
+                "All my classmates",
+                "Every one of my classmates",
+                "Each student in my class",
+                "Every classmate"
+              ],
+              "targets": [
+                "classmate"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Each of my classmate",
+                  "right": "Each of my classmates",
+                  "explanation_zh": "each of 後面接複數名詞（each of my classmates），但動詞用單數 has。"
+                }
+              ]
+            },
+            {
+              "zh": "都已經寫好了",
+              "accepted": [
+                "has already written",
+                "have already written",
+                "has written",
+                "have written",
+                "has already finished writing",
+                "have already finished writing"
+              ],
+              "targets": [
+                "already",
+                "write",
+                "PERF"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "already wrote",
+                  "right": "has already written",
+                  "explanation_zh": "「已經…了」表示到現在已完成，用現在完成式。"
+                },
+                {
+                  "wrong": "has already wrote",
+                  "right": "has already written",
+                  "explanation_zh": "write 的過去分詞是 written，wrote 是過去式。"
+                },
+                {
+                  "wrong": "Each of my classmates have already written",
+                  "right": "Each of my classmates has already written",
+                  "explanation_zh": "each of … 當主詞視為單數，助動詞用 has。"
+                }
+              ]
+            },
+            {
+              "zh": "教師節的",
+              "accepted": [
+                "for Teachers' Day",
+                "for Teacher's Day"
+              ],
+              "targets": [
+                "Teachers' Day"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "for Teacher Day",
+                  "right": "for Teachers' Day",
+                  "explanation_zh": "教師節常寫 Teachers' Day（也有人寫 Teacher's Day），teacher 要用所有格。"
+                }
+              ]
+            },
+            {
+              "zh": "感謝卡",
+              "accepted": [
+                "a thank-you card",
+                "thank-you cards"
+              ],
+              "targets": [
+                "thank-you card"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "a thanks card",
+                  "right": "a thank-you card",
+                  "explanation_zh": "「感謝卡」固定說 thank-you card。"
+                },
+                {
+                  "wrong": "a thank-you cards",
+                  "right": "a thank-you card",
+                  "explanation_zh": "a 後面接單數名詞。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "tense_trigger",
+              "zh": "已經",
+              "literal_error": "Each of my classmates already writes a thank-you card for Teachers' Day.",
+              "part": 2,
+              "explanation_zh": "「已經…了」是完成式的訊號，照字面用現在式（already writes）會漏掉完成式，這一部分扣分。"
+            }
+          ],
+          "bonus": []
+        },
+        "2": {
+          "references": [
+            "I wrote a card to the English teacher who often encourages me.",
+            "I wrote a card for the English teacher that often encourages me.",
+            "I wrote my card to the English teacher who often encourages me."
+          ],
+          "target_words": [
+            {
+              "word": "write",
+              "zh": "寫"
+            },
+            {
+              "word": "card",
+              "zh": "卡片"
+            },
+            {
+              "word": "often",
+              "zh": "常常",
+              "alternatives": [
+                "always",
+                "usually"
+              ]
+            },
+            {
+              "word": "encourage",
+              "zh": "鼓勵"
+            },
+            {
+              "word": "teacher",
+              "zh": "老師"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "REL",
+              "grammar_id": "gp-relative-pronoun",
+              "label_zh": "關係代名詞 who／that 引導的形容詞子句",
+              "frame": "N + who/that + V …",
+              "zh_trigger": "常常鼓勵我的"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "我寫了",
+              "accepted": [
+                "I wrote"
+              ],
+              "targets": [
+                "write"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "I writed",
+                  "right": "I wrote",
+                  "explanation_zh": "write 是不規則動詞，過去式是 wrote。"
+                }
+              ]
+            },
+            {
+              "zh": "一張卡片",
+              "accepted": [
+                "a card",
+                "my card"
+              ],
+              "targets": [
+                "card"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "a piece of card",
+                  "right": "a card",
+                  "explanation_zh": "「一張卡片」直接寫 a card，不用 a piece of。"
+                }
+              ]
+            },
+            {
+              "zh": "常常鼓勵我的",
+              "accepted": [
+                "who often encourages me",
+                "that often encourages me",
+                "who encourages me a lot"
+              ],
+              "targets": [
+                "REL",
+                "often",
+                "encourage"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "who often encourage me",
+                  "right": "who often encourages me",
+                  "explanation_zh": "who 指的是 the teacher（單數），子句動詞要加 s。"
+                },
+                {
+                  "wrong": "which often encourages me",
+                  "right": "who often encourages me",
+                  "explanation_zh": "先行詞是人，關係代名詞用 who 或 that。"
+                }
+              ]
+            },
+            {
+              "zh": "英文老師",
+              "accepted": [
+                "to the English teacher",
+                "for the English teacher",
+                "to my English teacher",
+                "for my English teacher"
+              ],
+              "targets": [
+                "teacher"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "to my English's teacher",
+                  "right": "to my English teacher",
+                  "explanation_zh": "「英文老師」直接寫 English teacher，English 當形容詞用，不加 's。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "prenominal_modifier",
+              "zh": "常常鼓勵我的英文老師",
+              "literal_error": "I wrote a card to the often encouraging me English teacher.",
+              "part": 3,
+              "explanation_zh": "照中文語序把「常常鼓勵我的」放在 teacher 前面，英文名詞前放不下帶受詞的動作，要改成後面的 who 子句，這一部分扣分。"
+            }
+          ],
+          "bonus": []
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-basic-02",
+    "lot": "translation-basic-02",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "98fb98485e580f5dcb5c9180ca2577c7306e3aace5410226eade2db68cbe253c",
+    "spec_id": "translation-basic@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T07:49:16Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T07:28:47Z",
+      "details": {
+        "solver": "A",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Every student in our class has already written a thank-you card for Teachers' Day.",
+            "confidence": "medium",
+            "explanation_zh": "「已經寫好了」是完成，用現在完成式 has already written；every 後接單數名詞與單數動詞；「每位同學」在班級語境譯 every student in our class（也可 each of my classmates）；「教師節」譯 Teachers' Day。主詞要不要加 in our class 有選擇空間，信心 medium。"
+          },
+          "2": {
+            "translation": "I wrote a card to my English teacher, who often encourages me.",
+            "confidence": "high",
+            "explanation_zh": "「常常鼓勵我的英文老師」用關係子句修飾 teacher；因為是 my English teacher（特定一位），用逗號非限定 who 子句；鼓勵是持續的習慣，用現在式 encourages；「寫卡片給」用 write a card to／for。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PERF"
+            ],
+            "used_target_words": [
+              "classmate",
+              "already",
+              "write",
+              "thank-you card",
+              "Teachers' Day"
+            ],
+            "within_accepted": true,
+            "closest_reference": 2,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "（備註）我寫 Every student in our class，第 1 部分 accepted 只列 in my class；語意相同，判定落在可接受範圍內，建議補 in our class。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "REL"
+            ],
+            "used_target_words": [
+              "write",
+              "card",
+              "often",
+              "encourage",
+              "teacher"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "classmate",
+              "already",
+              "write",
+              "thank-you card",
+              "Teachers' Day"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PERF": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "write",
+              "card",
+              "often",
+              "encourage",
+              "teacher"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "REL": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "fail",
+      "created_at": "2026-10-09T07:49:16Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Every student has already written a thank-you card for Teacher's Day.",
+            "confidence": "high",
+            "explanation_zh": "Every + 單數名詞搭配單數動詞 has；「已經寫好」用現在完成式 has already written；「教師節的感謝卡」譯 a thank-you card for Teacher's Day。"
+          },
+          "2": {
+            "translation": "I wrote a card for my English teacher, who often encourages me.",
+            "confidence": "high",
+            "explanation_zh": "「寫了」是過去的動作用過去式；「常常鼓勵我的英文老師」用非限定關係子句 who often encourages me 補充說明；frequency 副詞 often 放在動詞前。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PERF"
+            ],
+            "used_target_words": [
+              "classmate",
+              "already",
+              "write",
+              "thank-you card",
+              "Teachers' Day"
+            ],
+            "within_accepted": false,
+            "closest_reference": 2,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "第 1 部分「每位同學」的 accepted 沒有單獨的 Every student／Each student／Every one of us，只收 Every student in my class；我的 Every student has already written … 語意正確、也很常見，卻對不上。評分規準偏窄，建議補上不帶 in my class 的寫法。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "REL"
+            ],
+            "used_target_words": [
+              "write",
+              "card",
+              "often",
+              "encourage",
+              "teacher"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "classmate",
+              "already",
+              "write",
+              "thank-you card",
+              "Teachers' Day"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PERF": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "write",
+              "card",
+              "often",
+              "encourage",
+              "teacher"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "REL": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 1 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義"
+        ]
+      }
+    }
+  ],
+  "status": "rejected",
+  "status_reason": "blind_solver:B 未通過：第 1 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義"
+}

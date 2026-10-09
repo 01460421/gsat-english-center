@@ -1,0 +1,647 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.37f01a",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "basic",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "這次畢業旅行，墾丁（Kenting）的海水和照片裡一樣藍。",
+        "options": null,
+        "answer": "On our graduation trip, the sea in Kenting was as blue as in the photos.",
+        "accepted_answers": [
+          "During our graduation trip, the sea in Kenting was just as blue as it was in the photos.",
+          "On our graduation trip, the seawater in Kenting was as blue as it looked in the pictures."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "原級比較"
+          ],
+          "topic": "畢業旅行"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "除了在海邊玩水之外，我們還去逛了熱鬧的夜市。",
+        "options": null,
+        "answer": "Besides playing in the sea, we also visited a busy night market.",
+        "accepted_answers": [
+          "In addition to playing in the water, we also went to a lively night market.",
+          "Apart from playing in the sea, we also walked around a crowded night market."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "介系詞＋動名詞"
+          ],
+          "topic": "畢業旅行"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "畢業旅行"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「A 和 B 一樣＋形容詞」用原級比較 as + 形容詞 + as：was as blue as。後面比較的對象是「照片裡（的海）」，寫 as in the photos 或 as it looked in the photos，比只寫 as the photos（拿海和照片本身比）更精確。墾丁是詞彙表外的地名，照題目括號寫 Kenting。",
+          "evidence": [
+            "和照片裡一樣藍"
+          ],
+          "strategy_zh": "「和…一樣＋形容詞」→ as + 原級 + as；「沒有…那麼＋形容詞」→ not as + 原級 + as。",
+          "hints": [
+            "切成四段：這次畢業旅行／墾丁的海水／和照片裡／一樣藍",
+            "標的詞彙：graduation（畢業）、trip（旅行）、sea（海水）、blue（藍的）、photo（照片）",
+            "句型框架：A + was + as + 形容詞 + as + B"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「除了…之外，還…」是補充，用 besides 或 in addition to；它們是介系詞，後面的動詞要用 V-ing：besides playing …。主要子句常搭配 also。「熱鬧的」是 busy／lively／crowded，不是 hot。畢業旅行已經過去，動詞用過去式 visited／went。",
+          "evidence": [
+            "除了在海邊玩水之外"
+          ],
+          "strategy_zh": "「除了 A，還 B」用 besides／in addition to + V-ing；「除了 A 以外都…」才用 except。",
+          "hints": [
+            "切成四段：除了在海邊玩水之外／我們還去逛了／熱鬧的／夜市",
+            "標的詞彙：play（玩（水））、visit（逛）、busy（熱鬧的）、night market（夜市）",
+            "句型框架：Besides + V-ing …, S + also + 過去式動詞 …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "On our graduation trip, the sea in Kenting was as blue as in the photos.",
+            "During our graduation trip, the sea in Kenting was just as blue as it was in the photos.",
+            "On our graduation trip, the seawater in Kenting was as blue as it looked in the pictures."
+          ],
+          "target_words": [
+            {
+              "word": "graduation",
+              "zh": "畢業"
+            },
+            {
+              "word": "trip",
+              "zh": "旅行"
+            },
+            {
+              "word": "sea",
+              "zh": "海水",
+              "alternatives": [
+                "seawater",
+                "ocean",
+                "water"
+              ]
+            },
+            {
+              "word": "blue",
+              "zh": "藍的"
+            },
+            {
+              "word": "photo",
+              "zh": "照片",
+              "alternatives": [
+                "picture"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "COMP",
+              "grammar_id": "gp-as-as",
+              "label_zh": "原級比較（as + 形容詞 + as）",
+              "frame": "A + be + as + adj. + as + B",
+              "zh_trigger": "和照片裡一樣藍"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "這次畢業旅行",
+              "accepted": [
+                "On our graduation trip",
+                "During our graduation trip",
+                "On this graduation trip",
+                "During this graduation trip",
+                "On the graduation trip",
+                "During the graduation trip"
+              ],
+              "targets": [
+                "graduation",
+                "trip"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "In this graduate trip",
+                  "right": "On our graduation trip",
+                  "explanation_zh": "「畢業」修飾 trip 用名詞 graduation；graduate 是動詞或「畢業生」。旅行途中用介系詞 on 或 during。"
+                }
+              ]
+            },
+            {
+              "zh": "墾丁（Kenting）的海水",
+              "accepted": [
+                "the sea in Kenting",
+                "the seawater in Kenting",
+                "the water in Kenting",
+                "the ocean in Kenting",
+                "Kenting's sea",
+                "the sea at Kenting"
+              ],
+              "targets": [
+                "sea"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "the seawaters in Kenting",
+                  "right": "the seawater in Kenting",
+                  "explanation_zh": "「海水」指整片海，用 the sea 或 the seawater（不可數，不加 s）。"
+                }
+              ]
+            },
+            {
+              "zh": "和照片裡",
+              "accepted": [
+                "as in the photos",
+                "as it was in the photos",
+                "as it looked in the photos",
+                "as in the pictures",
+                "as it looked in the pictures",
+                "as the sea in the photos",
+                "as it is in the photos"
+              ],
+              "targets": [
+                "photo"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "same as the photos",
+                  "right": "as blue as in the photos",
+                  "explanation_zh": "「和…一樣＋形容詞」用 as + 形容詞 + as；the same as 後面不能再接形容詞 blue。"
+                }
+              ]
+            },
+            {
+              "zh": "一樣藍",
+              "accepted": [
+                "was as blue",
+                "was just as blue",
+                "is as blue",
+                "looked as blue",
+                "was exactly as blue"
+              ],
+              "targets": [
+                "COMP",
+                "blue"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "was as bluer as",
+                  "right": "was as blue as",
+                  "explanation_zh": "as … as 中間用形容詞原級，不用比較級。"
+                },
+                {
+                  "wrong": "was same blue as",
+                  "right": "was as blue as",
+                  "explanation_zh": "「一樣藍」是 as blue as，不要寫成 same blue。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "collocation",
+              "zh": "和照片裡一樣藍",
+              "literal_error": "On our graduation trip, the sea in Kenting was the same blue with the photos.",
+              "part": 4,
+              "explanation_zh": "照中文「和…一樣」寫成 the same … with 是常見錯誤；形容詞的「一樣…」要用 as + 形容詞原級 + as。"
+            }
+          ],
+          "bonus": []
+        },
+        "2": {
+          "references": [
+            "Besides playing in the sea, we also visited a busy night market.",
+            "In addition to playing in the water, we also went to a lively night market.",
+            "Apart from playing in the sea, we also walked around a crowded night market."
+          ],
+          "target_words": [
+            {
+              "word": "play",
+              "zh": "玩（水）",
+              "alternatives": [
+                "swim"
+              ]
+            },
+            {
+              "word": "visit",
+              "zh": "逛",
+              "alternatives": [
+                "go to",
+                "walk around",
+                "explore",
+                "stroll"
+              ]
+            },
+            {
+              "word": "busy",
+              "zh": "熱鬧的",
+              "alternatives": [
+                "lively",
+                "crowded",
+                "bustling"
+              ]
+            },
+            {
+              "word": "night market",
+              "zh": "夜市"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PREPVING",
+              "grammar_id": "gp-prep-gerund",
+              "label_zh": "介系詞＋動名詞（Besides／In addition to＋V-ing）",
+              "frame": "Besides / In addition to + V-ing …, S + also + V …",
+              "zh_trigger": "除了"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "除了在海邊玩水之外",
+              "accepted": [
+                "Besides playing in the sea",
+                "In addition to playing in the sea",
+                "Apart from playing in the sea",
+                "Aside from playing in the sea",
+                "Besides playing in the water",
+                "In addition to playing in the water",
+                "Besides swimming in the sea",
+                "Besides playing at the beach"
+              ],
+              "targets": [
+                "PREPVING",
+                "play"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Besides play in the sea",
+                  "right": "Besides playing in the sea",
+                  "explanation_zh": "besides 是介系詞，後面的動詞要改成動名詞 playing。"
+                },
+                {
+                  "wrong": "In addition to play in the sea",
+                  "right": "In addition to playing in the sea",
+                  "explanation_zh": "in addition to 的 to 是介系詞，後面接 V-ing。"
+                },
+                {
+                  "wrong": "Except playing in the sea",
+                  "right": "Besides playing in the sea",
+                  "explanation_zh": "except 是「除了…之外都不」；這裡是「除了…還有」，要用 besides 或 in addition to。"
+                }
+              ]
+            },
+            {
+              "zh": "我們還去逛了",
+              "accepted": [
+                "we also visited",
+                "we also went to",
+                "we also walked around",
+                "we also went around",
+                "we also strolled around",
+                "we also went shopping at",
+                "we also explored"
+              ],
+              "targets": [
+                "visit"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "we also go to",
+                  "right": "we also went to",
+                  "explanation_zh": "畢業旅行是過去的事，動詞用過去式。"
+                }
+              ]
+            },
+            {
+              "zh": "熱鬧的",
+              "accepted": [
+                "busy",
+                "lively",
+                "crowded",
+                "bustling"
+              ],
+              "targets": [
+                "busy"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "hot",
+                  "explanation_zh": "「熱鬧」不是 hot（熱的）；人很多、很有活力用 busy、lively 或 crowded。"
+                }
+              ]
+            },
+            {
+              "zh": "夜市",
+              "accepted": [
+                "night market"
+              ],
+              "targets": [
+                "night market"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "night city",
+                  "right": "night market",
+                  "explanation_zh": "「市」在這裡是「市場」market，不是 city。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "collocation",
+              "zh": "除了在海邊玩水之外",
+              "literal_error": "Besides play in the sea, we also visited a busy night market.",
+              "part": 1,
+              "explanation_zh": "besides、in addition to 這些介系詞後面固定接動名詞；照中文直接接原形動詞 play 會在這一部分被扣分。"
+            }
+          ],
+          "bonus": []
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-basic-01",
+    "lot": "translation-basic-01",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "5d53cd3325023c20a689f496811202dc08d17408faea3e4eb4c3042ce15b605d",
+    "spec_id": "translation-basic@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 1,
+    "sentences": 1,
+    "avg_sentence_length": 1.0,
+    "denominator": 1,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 1.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {
+      "off": 1
+    },
+    "offlist_words": [
+      "kenting"
+    ],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T07:53:40Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T07:20:08Z",
+      "details": {
+        "solver": "A",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "On this graduation trip, the sea in Kenting was as blue as it was in the photos.",
+            "confidence": "high",
+            "explanation_zh": "「和…一樣藍」用原級比較 as blue as；比較對象是照片裡的海，用 it was in the photos 補足；畢業旅行譯 graduation trip。"
+          },
+          "2": {
+            "translation": "Besides playing in the water at the beach, we also went to a lively night market.",
+            "confidence": "high",
+            "explanation_zh": "「除了…之外，還…」是累加，用 besides＋動名詞（不用 except）；熱鬧的譯 lively；逛夜市用 went to a night market。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "COMP"
+            ],
+            "used_target_words": [
+              "graduation",
+              "trip",
+              "sea",
+              "blue",
+              "photo"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "（小建議）as … as 被拆在第 3、4 部分，第 3 部分的 same as the photos 與第 4 部分的 was same blue as 是同一類錯誤，批改時注意不要一個錯扣兩部分。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "PREPVING"
+            ],
+            "used_target_words": [
+              "play",
+              "visit",
+              "busy",
+              "night market"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "（小建議）最貼近中文「在海邊玩水」的 Besides playing in the water at the beach 不在第 1 部分 accepted 的字面清單內（是 Besides playing in the water 加地點，意思完全正確），建議補進。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "graduation",
+              "trip",
+              "sea",
+              "blue",
+              "photo"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "COMP": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "play",
+              "visit",
+              "busy",
+              "night market"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PREPVING": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T07:25:05Z",
+      "details": {
+        "solver": "B",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "On this graduation trip, the seawater in Kenting was as blue as it looked in the photos.",
+            "confidence": "high",
+            "explanation_zh": "「和……一樣藍」用 as ... as 同級比較；「照片裡」補出 it looked in the photos 使比較對象完整；時態用過去式（畢業旅行已發生）。"
+          },
+          "2": {
+            "translation": "Besides playing in the water at the beach, we also visited a lively night market.",
+            "confidence": "high",
+            "explanation_zh": "「除了……之外，還」用 besides + V-ing（或 in addition to）搭配 also；「熱鬧的夜市」譯 a lively night market；「逛」譯 visited。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "COMP"
+            ],
+            "used_target_words": [
+              "graduation",
+              "trip",
+              "sea",
+              "blue",
+              "photo"
+            ],
+            "within_accepted": true,
+            "closest_reference": 2,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PREPVING"
+            ],
+            "used_target_words": [
+              "play",
+              "visit",
+              "busy",
+              "night market"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "graduation",
+              "trip",
+              "sea",
+              "blue",
+              "photo"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "COMP": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "play",
+              "visit",
+              "busy",
+              "night market"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PREPVING": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

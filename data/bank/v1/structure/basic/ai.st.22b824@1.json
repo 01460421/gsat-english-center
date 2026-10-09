@@ -1,0 +1,608 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.st.22b824",
+  "version": 1,
+  "section_type": "structure",
+  "format_version": "structure-4x5",
+  "tier": "basic",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": "Anyone who has swallowed sea water while swimming knows how salty it tastes. Yet the water in most rivers tastes fresh, even though rivers have been flowing into the sea for millions of years. So where does all the salt in the ocean come from, and why do rivers not taste salty too?\nThe answer begins with rain. As rain falls through the air, it takes in a little carbon dioxide, a gas that makes the water slightly acidic. [[1]] Over many years, the rain slowly wears away rock and frees tiny bits of minerals, including salts. Streams and rivers then carry these minerals all the way to the sea.\n[[2]] Because there is so little of it, our tongues do not notice it at all. Moreover, the water in a river never stays in one place for long. It keeps flowing toward the sea and is always being replaced by fresh rain from the sky.\nThe ocean is different, because its water has no way to flow out. [[3]] The salt, however, stays behind, because salt does not turn into a gas the way water does. Over millions of years, a huge amount of salt has built up in the sea this way. Hot springs deep on the ocean floor have added even more minerals to the water.\n[[4]] The Dead Sea in the Middle East is a famous example. Its water is so salty that people can float on the surface without any effort. Like the ocean, it receives salt from rivers but loses water only to the hot sun.",
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": {
+      "A": "Instead, the sun’s heat turns water at the surface into a gas.",
+      "B": "When the rain lands on rocks and soil, it acts like a very weak acid.",
+      "C": "Salt was once so valuable that people in some places used it as money.",
+      "D": "River water does contain some salt, but only in extremely small amounts.",
+      "E": "Some lakes that have no outlet to the sea are even saltier than the ocean."
+    },
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "B",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "lexical_cohesion",
+          "clue_raw": "SP|LX|BF|L",
+          "key_phrase": "a very weak acid ← makes the water slightly acidic; lands on rocks and soil → the rain slowly wears away rock"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "D",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "lexical_cohesion",
+          "clue_raw": "BR|LX|BF|L",
+          "key_phrase": "River water … salt ← Streams and rivers then carry these minerals all the way to the sea; extremely small amounts → Because there is so little of it"
+        }
+      },
+      {
+        "no": 3,
+        "label": "3",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "A",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "contrast",
+          "clue_raw": "SP|LX|BF|L",
+          "key_phrase": "Instead ← its water has no way to flow out; turns water … into a gas → The salt, however, stays behind … does not turn into a gas the way water does"
+        }
+      },
+      {
+        "no": 4,
+        "label": "4",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "E",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "example",
+          "clue_raw": "TS|LX|BF|L",
+          "key_phrase": "even saltier than the ocean ← a huge amount of salt has built up in the sea; Some lakes → The Dead Sea … is a famous example"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "海水為什麼是鹹的",
+      "genre": "expository",
+      "sdgs": [],
+      "text_format": "continuous"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "前一句說雨水落下時吸收了一點二氧化碳，變得略帶酸性（slightly acidic）；(B) 接著說雨水落在岩石和土壤上時，就像一種很弱的酸（a very weak acid），acidic 與 acid 前後呼應。下一句 the rain slowly wears away rock 說雨水慢慢侵蝕岩石，正是 (B) 的 lands on rocks 之後的結果。兩側都有錨點，選 (B)。",
+          "evidence": [
+            "As rain falls through the air, it takes in a little carbon dioxide, a gas that makes the water slightly acidic.",
+            "When the rain lands on rocks and soil, it acts like a very weak acid.",
+            "Over many years, the rain slowly wears away rock and frees tiny bits of minerals, including salts."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "lexical_cohesion",
+          "option_notes_zh": {
+            "A": "(A) 以 Instead 開頭，但前一句沒有任何可以「取而代之」的內容；它講的是太陽把海面的水變成氣體，下一句卻在講雨水侵蝕岩石，接不上。(A) 屬於第 3 格。",
+            "C": "多餘句：(C) 講鹽在歷史上曾被當成錢，與雨水變酸、侵蝕岩石的過程無關；下一句 the rain slowly wears away rock 也接不上。",
+            "D": "(D) 說河水含有少量的鹽，但這時還沒講到雨水怎麼帶出鹽、河流怎麼把礦物質帶走，順序太早；下一句又回到雨水侵蝕岩石，前後跳來跳去。",
+            "E": "(E) 說有些湖比海還鹹，與「雨水為什麼帶酸性」毫無關係；下一句講雨水侵蝕岩石，也不是在舉湖泊的例子。"
+          },
+          "strategy_zh": "說明自然現象的文章常一步接一步：先找前一句的關鍵詞（acidic），再找在選項裡換個說法重複它（acid）、又能引出下一步（侵蝕岩石）的句子。",
+          "hints": [
+            "前一句說雨水變得怎麼樣？哪個選項用了同一個字根的詞？",
+            "下一句說雨水慢慢侵蝕岩石，空格裡應該先讓雨水碰到岩石。",
+            "答案提到 rocks and soil 和 a very weak acid。"
+          ]
+        },
+        "2": {
+          "explanation_zh": "第二段最後說溪流和河川把礦物質（包括鹽類）帶進大海，這就引出開頭的疑問：河水裡也有鹽，為什麼不鹹？第三段開頭的 (D) 回答：河水確實含有一些鹽，但含量極少。下一句 Because there is so little of it 的 so little 呼應 (D) 的 extremely small amounts，it 指的就是鹽。選 (D)。",
+          "evidence": [
+            "Streams and rivers then carry these minerals all the way to the sea.",
+            "River water does contain some salt, but only in extremely small amounts.",
+            "Because there is so little of it, our tongues do not notice it at all."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "lexical_cohesion",
+          "option_notes_zh": {
+            "A": "(A) 以 Instead 開頭，前一句卻沒有可以對比的內容；下一句 Because there is so little of it 的 it 也不會是「氣體」——太陽把水變成氣體是海洋的事，屬於第 3 格。",
+            "B": "(B) 講雨水落在岩石上像弱酸，是第二段開頭的步驟，放在河流把礦物質帶到海之後，順序倒退；下一句的 so little of it 也指不到東西。",
+            "C": "多餘句：(C) 說鹽曾經珍貴到被當成錢，與河水為什麼不鹹無關；接上下一句會變成「因為鹽很少，所以舌頭嚐不出來」，和人人都嚐得出鹽味的常識矛盾，也和這一段講河水的主題不符。",
+            "E": "只看前一句「河流把礦物質帶進大海」，接 (E)「有些沒有出口的湖比海還鹹」好像也在談鹹水；但後一句 Because there is so little of it, our tongues do not notice it at all 說的是「鹽少到嚐不出來」，和 (E) 的「更鹹」正好相反，所以要靠後一句排除。(E) 屬於第 4 格。"
+          },
+          "strategy_zh": "段首空格要同時回應前一段（河流把鹽帶走）和開頭的問題（河水為什麼不鹹）；再看下一句的 so little of it 需要前面先說「很少」。",
+          "hints": [
+            "第一段提出了兩個問題，第三段在回答哪一個？",
+            "下一句說 so little of it，空格裡要先出現「很少量的某樣東西」。",
+            "答案以 River water 開頭。"
+          ]
+        },
+        "3": {
+          "explanation_zh": "前一句說海洋和河流不同，海水沒有辦法流出去；(A) 用 Instead 說明海水「改用」另一種方式離開：太陽的熱把海面的水變成氣體。下一句 The salt, however, stays behind, because salt does not turn into a gas the way water does 用 however 對比鹽和水，turn into a gas 也重複了 (A) 的說法。選 (A)。",
+          "evidence": [
+            "The ocean is different, because its water has no way to flow out.",
+            "Instead, the sun’s heat turns water at the surface into a gas.",
+            "The salt, however, stays behind, because salt does not turn into a gas the way water does."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "contrast",
+          "option_notes_zh": {
+            "B": "(B) 講雨水落在岩石上像弱酸，是第二段的內容；放在這裡，下一句的 stays behind（留下來）找不到「水離開」的前提。",
+            "C": "多餘句：(C) 說鹽曾被當成錢，與海水怎麼離開無關；下一句 The salt, however, stays behind 的 however 和 stays behind 都沒有對照的對象。",
+            "D": "(D) 說河水含鹽很少，屬於第三段開頭；這一段已經轉到海洋，再講河水是倒退，下一句的「鹽留下來、不像水那樣變成氣體」也沒有交代水怎麼變成氣體。",
+            "E": "只看前一句「海水沒有辦法流出去」，接 (E)「有些沒有出口的湖比海還鹹」似乎很順（no outlet 呼應 no way to flow out）；但後一句 The salt, however, stays behind, because salt does not turn into a gas the way water does 要對比「水變成氣體、鹽留下來」，(E) 沒有提到水離開，所以要靠後一句排除。(E) 屬於第 4 格。"
+          },
+          "strategy_zh": "後一句有 however 時，空格裡的句子要和它形成對比；先找出後一句在比較什麼（鹽留下、水變成氣體），再找講「另一半」的選項。",
+          "hints": [
+            "前一句說海水沒有辦法流出去，那海水怎麼離開？",
+            "下一句用 however 說鹽「留下來」，空格裡應該講水怎麼「離開」。",
+            "答案以 Instead 開頭，提到 the sun’s heat。"
+          ]
+        },
+        "4": {
+          "explanation_zh": "前兩句說數百萬年來海裡累積了大量的鹽，海底溫泉又加入更多礦物質。最後一段開頭的 (E) 說有些沒有出口通往大海的湖泊，甚至比海還鹹（even saltier than the ocean 承接前文「海裡累積了大量的鹽」）。下一句 The Dead Sea in the Middle East is a famous example 的 example 指的就是這種湖，後面也說明死海和海洋一樣只靠太陽蒸發失去水分。選 (E)。",
+          "evidence": [
+            "Hot springs deep on the ocean floor have added even more minerals to the water.",
+            "Some lakes that have no outlet to the sea are even saltier than the ocean.",
+            "The Dead Sea in the Middle East is a famous example."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "example",
+          "option_notes_zh": {
+            "A": "(A) 說太陽把海面的水變成氣體，是第四段開頭的步驟，放在這裡順序倒退；下一句 The Dead Sea … is a famous example 也不是在舉「水變成氣體」的例子。",
+            "B": "(B) 講雨水落在岩石上像弱酸，屬於第二段；下一句說死海是一個有名的例子，與雨水變酸無關。",
+            "C": "多餘句：(C) 講鹽曾被當成錢；下一句 The Dead Sea in the Middle East is a famous example 會變成「死海是把鹽當錢的例子」，說不通。",
+            "D": "(D) 說河水含鹽極少，與下一句的死海「鹹到人可以浮起來」相反；而且河水的部分在第三段已經說明過了。"
+          },
+          "strategy_zh": "下一句出現 … is a famous example 時，空格裡要先有一個「類別」或「說法」，下一句才是它的例子；找出能讓死海當例子的那個類別。",
+          "hints": [
+            "下一句說死海是一個有名的「例子」，它是什麼東西的例子？",
+            "死海是湖，空格要講一種比海還鹹的湖。",
+            "答案以 Some lakes 開頭。"
+          ]
+        }
+      }
+    },
+    "translation_zh": {
+      "text": "游泳時不小心喝過海水的人，都知道海水有多鹹。然而，雖然河流已經流進大海好幾百萬年，大部分河水嚐起來卻是淡的。那麼，海裡這麼多鹽到底是從哪裡來的？河水為什麼嚐起來不鹹呢？\n答案要從雨說起。雨從空中落下時，會吸收一點二氧化碳，這種氣體讓雨水略帶酸性。【1】雨水落在岩石和土壤上時，就像一種很弱的酸。經過許多年，雨水慢慢侵蝕岩石，釋放出微小的礦物質，其中包括鹽類。溪流和河川再把這些礦物質一路帶進大海。\n【2】河水確實含有一些鹽，但含量極少。因為鹽太少了，我們的舌頭根本察覺不到。此外，河水從來不會在同一個地方停留太久。它不斷流向大海，也一直有天上落下的新雨水來補充。\n海洋就不同了，因為海水沒有辦法流出去。【3】取而代之的是，太陽的熱會把海面的水變成氣體。然而鹽會留下來，因為鹽不會像水那樣變成氣體。經過數百萬年，海裡就這樣累積了大量的鹽。深海海底的溫泉又為海水增添了更多礦物質。\n【4】有些沒有出口通往大海的湖泊，甚至比海洋還鹹。中東的死海就是一個有名的例子。它的湖水鹹到人可以毫不費力地浮在水面上。和海洋一樣，它從河流得到鹽分，卻只會因為炎熱的太陽而失去水分。\n（多餘句 (C)：鹽過去曾經非常珍貴，有些地方的人甚至拿它來當錢用。）"
+    },
+    "elimination": {
+      "feasible": {
+        "1": [
+          "B"
+        ],
+        "2": [
+          "D"
+        ],
+        "3": [
+          "A"
+        ],
+        "4": [
+          "E"
+        ]
+      },
+      "perfect_matchings": 1
+    },
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": null,
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "3-V-7",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "7-V-5",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "B-V-8",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": "本文由 AI 撰寫"
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-08-structure-basic-02",
+    "lot": "structure-basic-02",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/structure",
+    "prompt_sha256": "fc59fb227eaa304017a6f0cadebe20a72ed15bc071671d7d70b2beaea16d0ea2",
+    "spec_id": "structure-basic@2026-10-08",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 258,
+    "sentences": 17,
+    "avg_sentence_length": 15.18,
+    "denominator": 257,
+    "proper_nouns": [],
+    "numbers": 1,
+    "coverage_l1_4": 0.9883,
+    "coverage_l1_6": 0.9922,
+    "offlist_ratio": 0.0078,
+    "beyond_l4_ratio": 0.0039,
+    "level_counts": {
+      "1": 222,
+      "2": 23,
+      "3": 4,
+      "4": 5,
+      "5": 1,
+      "off": 2
+    },
+    "offlist_words": [
+      "acidic",
+      "dioxide"
+    ],
+    "band": {
+      "tier": "basic",
+      "basis": "lot structure-basic-02（SPEC §3.4＋出題規格書 passage_overrides（words、coverage_L1_4_min（取代 SPEC 的區間）、coverage_L1_6_min、offlist_max、beyond_l4_ratio_max））",
+      "ok": true,
+      "checks": {
+        "word_count": {
+          "value": 258,
+          "min": 220,
+          "max": 280,
+          "ok": true
+        },
+        "coverage_l1_4": {
+          "value": 0.9883,
+          "min": 0.93,
+          "max": null,
+          "ok": true
+        },
+        "coverage_l1_6": {
+          "value": 0.9922,
+          "min": 0.96,
+          "max": null,
+          "ok": true
+        },
+        "offlist_ratio": {
+          "value": 0.0078,
+          "min": null,
+          "max": 0.04,
+          "ok": true
+        },
+        "avg_sentence_length": {
+          "value": 15.18,
+          "min": null,
+          "max": 17,
+          "ok": true
+        },
+        "beyond_l4_ratio": {
+          "value": 0.0039,
+          "min": null,
+          "max": 0.04,
+          "ok": true
+        }
+      }
+    }
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T07:20:31Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T00:00:00Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "answers": {
+          "1": {
+            "answer": "B",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "As rain falls through the air, it takes in a little carbon dioxide, a gas that makes the water slightly acidic.",
+              "Over many years, the rain slowly wears away rock and frees tiny bits of minerals, including salts."
+            ],
+            "explanation_zh": "前句說雨水略帶酸性，B 接著說落到岩石上像弱酸，後句才是長年侵蝕岩石釋出礦物。",
+            "feasible": [
+              "B"
+            ]
+          },
+          "2": {
+            "answer": "D",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Because there is so little of it, our tongues do not notice it at all.",
+              "Moreover, the water in a river never stays in one place for long."
+            ],
+            "explanation_zh": "後句 so little of it 的 it 指河水中的鹽；D 說河水含鹽但量極少，回答開頭「河水為何不鹹」。",
+            "feasible": [
+              "D"
+            ]
+          },
+          "3": {
+            "answer": "A",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "The ocean is different, because its water has no way to flow out.",
+              "The salt, however, stays behind, because salt does not turn into a gas the way water does."
+            ],
+            "explanation_zh": "海水流不出去，Instead 改由陽光蒸發成氣體；後句 salt does not turn into a gas the way water does 呼應 A。",
+            "feasible": [
+              "A"
+            ]
+          },
+          "4": {
+            "answer": "E",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "The Dead Sea in the Middle East is a famous example.",
+              "Like the ocean, it receives salt from rivers but loses water only to the hot sun."
+            ],
+            "explanation_zh": "後句說死海是「著名的例子」，E 說沒有出海口的湖比海更鹹，死海正是其例。",
+            "feasible": [
+              "E"
+            ]
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T07:10:35Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "answers": {
+          "1": {
+            "answer": "B",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "As rain falls through the air, it takes in a little carbon dioxide, a gas that makes the water slightly acidic.",
+              "Over many years, the rain slowly wears away rock and frees tiny bits of minerals, including salts.",
+              "When the rain lands on rocks and soil, it acts like a very weak acid."
+            ],
+            "explanation_zh": "前句講雨水帶酸性，後句講雨水侵蝕岩石釋出礦物，B 說雨落在岩石土壤上像弱酸，是中間的橋樑。",
+            "feasible": [
+              "B"
+            ]
+          },
+          "2": {
+            "answer": "D",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Because there is so little of it, our tongues do not notice it at all.",
+              "River water does contain some salt, but only in extremely small amounts."
+            ],
+            "explanation_zh": "後句 Because there is so little of it 的 it 指鹽，D 說河水含鹽但極少，直接提供先行詞。",
+            "feasible": [
+              "D"
+            ]
+          },
+          "3": {
+            "answer": "A",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "The ocean is different, because its water has no way to flow out.",
+              "The salt, however, stays behind, because salt does not turn into a gas the way water does.",
+              "Instead, the sun’s heat turns water at the surface into a gas."
+            ],
+            "explanation_zh": "前句海水無處可流出，後句鹽留下來因為鹽不會變氣體，A 說明水被太陽蒸發成氣體，Instead 對照無法流出。",
+            "feasible": [
+              "A"
+            ]
+          },
+          "4": {
+            "answer": "E",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "The Dead Sea in the Middle East is a famous example.",
+              "Some lakes that have no outlet to the sea are even saltier than the ocean."
+            ],
+            "explanation_zh": "後句 The Dead Sea ... is a famous example 需要先有一般性陳述，E 說無出海口的湖比海洋更鹹，死海是其例子。",
+            "feasible": [
+              "E"
+            ]
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "distractor_audit",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T07:30:00Z",
+      "details": {
+        "session_id": null,
+        "items": {
+          "1": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Over many years, the rain slowly wears away rock and frees tiny bits of minerals, including salts.",
+              "explanation_zh": "Instead 前面沒有可以「取而代之」的內容；太陽蒸發海水與下一句雨水侵蝕岩石接不上。"
+            },
+            "C": {
+              "verdict": "clearly_wrong",
+              "error_type": "off_topic",
+              "evidence": "Over many years, the rain slowly wears away rock and frees tiny bits of minerals, including salts.",
+              "explanation_zh": "多餘句：鹽曾被當成錢與雨水變酸、侵蝕岩石的過程無關。"
+            },
+            "D": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "Over many years, the rain slowly wears away rock and frees tiny bits of minerals, including salts.",
+              "explanation_zh": "雨水還沒碰到岩石、礦物質也還沒被帶進河流，就先說河水含鹽很少，順序太早；下一句又回到雨水侵蝕岩石。"
+            },
+            "E": {
+              "verdict": "clearly_wrong",
+              "error_type": "off_topic",
+              "evidence": "Over many years, the rain slowly wears away rock and frees tiny bits of minerals, including salts.",
+              "explanation_zh": "比海還鹹的湖與「雨水如何帶出礦物質」無關；下一句不是在舉湖泊的例子。"
+            }
+          },
+          "2": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Because there is so little of it, our tongues do not notice it at all.",
+              "explanation_zh": "Instead 沒有對照的內容；下一句 so little of it 的 it 不會是「氣體」，本段在回答河水為什麼不鹹，海水蒸發是第四段的事。"
+            },
+            "B": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "Streams and rivers then carry these minerals all the way to the sea.",
+              "explanation_zh": "前一句礦物質已被河流帶到海裡，再回到雨水落在岩石上是順序倒退；下一句「少到舌頭嚐不出」也不是在說酸。"
+            },
+            "C": {
+              "verdict": "clearly_wrong",
+              "error_type": "off_topic",
+              "evidence": "Because there is so little of it, our tongues do not notice it at all.",
+              "explanation_zh": "多餘句：接上下一句會變成「鹽太少所以嚐不出來」，與鹽曾被當錢無關、也和鹽嚐得出鹹味的常識矛盾；本段在講河水。"
+            },
+            "E": {
+              "verdict": "clearly_wrong",
+              "error_type": "meaning",
+              "evidence": "Because there is so little of it, our tongues do not notice it at all.",
+              "explanation_zh": "只看前一句（河流把礦物質帶進海）似乎能接，但下一句說鹽「少到嚐不出」，與 (E)「比海還鹹」正好相反。"
+            }
+          },
+          "3": {
+            "B": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "The salt, however, stays behind, because salt does not turn into a gas the way water does.",
+              "explanation_zh": "雨水落在岩石上是第二段的步驟，放在海洋這一段是倒退；下一句的 stays behind 需要前面先說水怎麼離開。"
+            },
+            "C": {
+              "verdict": "clearly_wrong",
+              "error_type": "off_topic",
+              "evidence": "The salt, however, stays behind, because salt does not turn into a gas the way water does.",
+              "explanation_zh": "多餘句：鹽曾被當成錢與海水怎麼離開無關；下一句的 however、stays behind 沒有對照的對象。"
+            },
+            "D": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "The ocean is different, because its water has no way to flow out.",
+              "explanation_zh": "本段已轉到海洋，再講河水含鹽很少是倒退；下一句「鹽不像水那樣變成氣體」也沒有交代水如何變成氣體。"
+            },
+            "E": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "The salt, however, stays behind, because salt does not turn into a gas the way water does.",
+              "explanation_zh": "只看前一句（海水流不出去）no outlet 似乎呼應，但下一句用 however 對比「水變成氣體離開、鹽留下」，(E) 沒有提到水離開；後面 this way 也要指蒸發的過程。"
+            }
+          },
+          "4": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "The Dead Sea in the Middle East is a famous example.",
+              "explanation_zh": "Instead 沒有對照的內容，蒸發的步驟在本段前面已經說過；下一句的死海不是「水變成氣體」的例子。"
+            },
+            "B": {
+              "verdict": "clearly_wrong",
+              "error_type": "off_topic",
+              "evidence": "The Dead Sea in the Middle East is a famous example.",
+              "explanation_zh": "雨水落在岩石上像弱酸屬於第二段；死海不是它的例子。"
+            },
+            "C": {
+              "verdict": "clearly_wrong",
+              "error_type": "off_topic",
+              "evidence": "The Dead Sea in the Middle East is a famous example.",
+              "explanation_zh": "多餘句：死海不是「鹽被當成錢」的例子。"
+            },
+            "D": {
+              "verdict": "clearly_wrong",
+              "error_type": "meaning",
+              "evidence": "Its water is so salty that people can float on the surface without any effort.",
+              "explanation_zh": "河水含鹽極少，與死海「鹹到人能浮起來」相反；死海也不是河水的例子。"
+            }
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "unique_solution",
+      "reviewer": "record_verification.py",
+      "result": "pass",
+      "created_at": "2026-10-09T07:20:31Z",
+      "details": {
+        "method": "injective_assignment",
+        "perfect_matchings": 1,
+        "matches_key": true,
+        "feasible": {
+          "1": [
+            "B"
+          ],
+          "2": [
+            "D"
+          ],
+          "3": [
+            "A"
+          ],
+          "4": [
+            "E"
+          ]
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

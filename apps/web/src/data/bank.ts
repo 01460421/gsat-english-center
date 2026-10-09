@@ -3,20 +3,22 @@
  *
  * 資料檔（scripts/build-data.mjs → scripts/lib/bank-data.mjs 產生，來源是 data/bank/v1/**）：
  *   /data/bank/index.json                   BankIndex          已通過自動驗證的題組摘要；還沒有題組時 groups 是空陣列
- *   /data/bank/groups/{uid}@{version}.json  PracticeGroupFile  一個題組：題目、解析、全文中譯、排除法表
+ *   /data/bank/groups/{uid}@{version}.json  PracticeGroupFile  一個題組：題目、解析、全文中譯、排除法表、參考資料
  *
  * 和原始題庫檔（gsat-bank/v1，packages/shared/src/bank.ts 的 BankFile）的差異：
  *   - 只有 status: verified、pool: practice、前端能作答的題型（PRACTICE_SECTION_TYPES），同 uid 只留最新版本；
  *   - 不含 generation（模型、提示詞）、verification（盲解與稽核細節）、metrics，改成一個 auto_verified 旗標；
  *   - annotations 只留學生要看的 explanations、translation_zh、elimination；
- *   - provenance 只留授權、出處說明與有公開網址的來源（事實單的內部代號不輸出）。
- * group 就是 gsat-exam/v1.1 的題組，型別直接用 exams.ts 的 QuestionGroup，作答與計分元件和歷屆試題共用。
+ *   - provenance 只留授權、出處說明、有公開網址的來源，以及事實單裡的參考資料（publisher、title、url；事實單的內部代號不輸出）。
+ * group 就是 gsat-exam/v1.1 的題組（exams.ts 的 QuestionGroup），只多了圖表題 figure 的 chart（@gsat/shared 的 ChartSpec），
+ * 作答與計分元件和歷屆試題共用。
  * 解析卡、排除法表的型別直接沿用 @gsat/shared（和出題工具、檢查工具同一份定義）。
  */
 import type {
   BankDerivation,
   BankLicense,
   BankSectionType,
+  ChartSpec,
   EliminationAnnotation,
   ExplanationsAnnotation,
   ProvenanceSource,
@@ -24,12 +26,12 @@ import type {
   TranslationZhAnnotation,
 } from '@gsat/shared';
 import { DataLoadError, DATA_BASE_URL, fetchDataFile, isRecord, memoizeAsync } from './client';
-import type { QuestionGroup } from './exams';
+import type { Figure, QuestionGroup } from './exams';
 
-export type { ExplanationItem, EliminationAnnotation, Tier } from '@gsat/shared';
+export type { ChartSeries, ChartSpec, ChartType, ExplanationItem, EliminationAnnotation, FillTransform, Tier } from '@gsat/shared';
 
-/** 前端已經有練習介面的題型（第一批）。scripts/lib/bank-data.mjs 的 PRACTICE_SECTION_TYPES 要一起改。 */
-export const PRACTICE_SECTION_TYPES = ['vocabulary', 'cloze', 'word_bank', 'structure'] as const satisfies readonly BankSectionType[];
+/** 前端已經有練習介面的題型：四種選擇題型＋閱讀、混合題。scripts/lib/bank-data.mjs 的 PRACTICE_SECTION_TYPES 要一起改。 */
+export const PRACTICE_SECTION_TYPES = ['vocabulary', 'cloze', 'word_bank', 'structure', 'reading', 'mixed'] as const satisfies readonly BankSectionType[];
 export type PracticeSectionType = (typeof PRACTICE_SECTION_TYPES)[number];
 
 export function isPracticeSectionType(value: unknown): value is PracticeSectionType {
@@ -37,7 +39,7 @@ export function isPracticeSectionType(value: unknown): value is PracticeSectionT
 }
 
 /** 題組 uid：ai.{題型縮寫}.{6 位小寫十六進位}（@gsat/shared 的 BANK_UID_PATTERN，這裡只收練習題型）。 */
-export const PRACTICE_UID_PATTERN = /^ai\.(vo|cz|wb|st)\.[0-9a-f]{6}$/;
+export const PRACTICE_UID_PATTERN = /^ai\.(vo|cz|wb|st|rd|mx)\.[0-9a-f]{6}$/;
 
 export interface BankCurriculumRef {
   /** 課綱代碼（ASCII 寫法，例如 3-V-12）。 */
@@ -53,7 +55,7 @@ export interface BankIndexEntry {
   /** 例如 word_bank-10x10。 */
   format_version: string;
   tier: Tier;
-  /** 選文主題（英文短語）；詞彙題沒有選文，是 null。 */
+  /** 選文主題（舊題組是英文短語，新題組是中文；畫面上只顯示含中文的）；詞彙題沒有選文，是 null。 */
   topic: string | null;
   question_count: number;
   curriculum: BankCurriculumRef[];
@@ -74,6 +76,18 @@ export interface PracticeAnnotations {
   elimination: EliminationAnnotation | null;
 }
 
+/** 參考資料：事實單（data/bank/facts）裡的來源。閱讀、混合題的文章下方列成「參考資料」。 */
+export interface PracticeReference {
+  publisher: string;
+  title: string;
+  url: string;
+  /**
+   * 授權代碼（例如 CC-BY-4.0）：只有資料集來源有（表格、圖表照原樣用了它的數值，CC BY 的標示要寫授權）；
+   * 只用來取事實的來源沒有這個欄位。
+   */
+  license?: string;
+}
+
 export interface PracticeProvenance {
   license: BankLicense;
   derivation: BankDerivation;
@@ -81,7 +95,17 @@ export interface PracticeProvenance {
   attribution_text: string | null;
   /** 有公開網址的來源（改作的原文、資料集）。 */
   sources: { role: ProvenanceSource['role']; url: string }[];
+  /** AI 撰寫文章時參考的資料（閱讀、混合題一定有；前四種題型通常是空陣列）。 */
+  references: PracticeReference[];
 }
+
+/** 題組的圖：gsat-exam 的 Figure，圖表題多一個 chart（前端依它繪圖，README §3.2）。 */
+export interface PracticeFigure extends Figure {
+  chart?: ChartSpec;
+}
+
+/** 練習題組：歷屆試題的 QuestionGroup，figures 換成 PracticeFigure（仍然可以直接交給作答元件）。 */
+export type PracticeGroup = Omit<QuestionGroup, 'figures'> & { figures: PracticeFigure[] };
 
 /** /data/bank/groups/{uid}@{version}.json。 */
 export interface PracticeGroupFile {
@@ -93,7 +117,7 @@ export interface PracticeGroupFile {
   tier: Tier;
   /** 已通過自動驗證（程式檢查、兩位盲解、干擾選項稽核、唯一正解）；人工審核還在進行。 */
   auto_verified: true;
-  group: QuestionGroup;
+  group: PracticeGroup;
   annotations: PracticeAnnotations;
   curriculum: BankCurriculumRef[];
   provenance: PracticeProvenance;
@@ -114,7 +138,7 @@ function isBankIndex(body: unknown): body is BankIndex {
 
 const indexLoader = memoizeAsync((_key: 'index') => fetchDataFile('bank/index.json', isBankIndex));
 
-const GROUP_KEY_PATTERN = /^(ai\.(?:vo|cz|wb|st)\.[0-9a-f]{6})@([1-9]\d*)$/;
+const GROUP_KEY_PATTERN = /^(ai\.(?:vo|cz|wb|st|rd|mx)\.[0-9a-f]{6})@([1-9]\d*)$/;
 
 const groupLoader = memoizeAsync((key: string) => {
   // 代號格式在快取裡面檢查：格式不對也要每次拿到同一個失敗的 Promise（理由見 client.ts 檔頭）。

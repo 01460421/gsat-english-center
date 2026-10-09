@@ -1,0 +1,649 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.2864af",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "basic",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "在校慶園遊會上，我們班的奶茶是最受歡迎的飲料。",
+        "options": null,
+        "answer": "At the school anniversary fair, our class's milk tea was the most popular drink.",
+        "accepted_answers": [
+          "Our class's milk tea was the most popular drink at the school anniversary fair.",
+          "The milk tea sold by our class was the most popular drink at the school anniversary fair."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "最高級"
+          ],
+          "topic": "校慶園遊會"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "為了賣出更多杯奶茶，我們還做了一張很大的海報。",
+        "options": null,
+        "answer": "To sell more cups of milk tea, we also made a very big poster.",
+        "accepted_answers": [
+          "We also made a huge poster in order to sell more cups of milk tea.",
+          "In order to sell more cups of milk tea, we also made a very large poster."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "不定詞表目的"
+          ],
+          "topic": "校慶園遊會"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "校慶園遊會"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「最受歡迎的」是最高級：the most popular（popular 是多音節形容詞，用 the most，不加 -est）。「受歡迎」不要照字面寫 welcome。「我們班的」所有格是 our class's；園遊會已經結束，用過去式 was（如果是在描述正在進行的園遊會，也可以用 is）。",
+          "evidence": [
+            "最受歡迎的飲料"
+          ],
+          "strategy_zh": "看到「最…」先想最高級：短形容詞加 -est，長形容詞用 the most，前面都要有 the。",
+          "hints": [
+            "切成四段：在校慶園遊會上／我們班的奶茶／是最受歡迎的／飲料",
+            "標的詞彙：anniversary（週年（校慶））、fair（園遊會）、milk tea（奶茶）、popular（受歡迎的）、drink（飲料）",
+            "句型框架：S + was + the most + adj. + N (+ at …)"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「為了…」表示目的，用不定詞 To + 原形動詞放在句首（後面加逗號），或放在句尾寫 in order to …。「更多杯奶茶」是 more cups of milk tea：杯數可以數，cup 要加 s，milk tea 不加。「做海報」的動詞用 make。",
+          "evidence": [
+            "為了賣出更多杯奶茶"
+          ],
+          "strategy_zh": "目的放句首時，To V 片語後面加逗號，再接完整的主要子句（we also made …）。",
+          "hints": [
+            "切成四段：為了賣出更多杯奶茶／我們還做了／一張很大的／海報",
+            "標的詞彙：sell（賣出）、cup（杯）、milk tea（奶茶）、make（做）、big（很大的）、poster（海報）",
+            "句型框架：To + 原形動詞 …, S + V …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "At the school anniversary fair, our class's milk tea was the most popular drink.",
+            "Our class's milk tea was the most popular drink at the school anniversary fair.",
+            "The milk tea sold by our class was the most popular drink at the school anniversary fair."
+          ],
+          "target_words": [
+            {
+              "word": "anniversary",
+              "zh": "週年（校慶）"
+            },
+            {
+              "word": "fair",
+              "zh": "園遊會"
+            },
+            {
+              "word": "milk tea",
+              "zh": "奶茶"
+            },
+            {
+              "word": "popular",
+              "zh": "受歡迎的"
+            },
+            {
+              "word": "drink",
+              "zh": "飲料",
+              "alternatives": [
+                "beverage"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "COMP",
+              "grammar_id": "gp-comparative-superlative",
+              "label_zh": "最高級（the most + 形容詞）",
+              "frame": "S + be + the most + adj. + N …",
+              "zh_trigger": "最受歡迎"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "在校慶園遊會上",
+              "accepted": [
+                "At the school anniversary fair",
+                "At our school anniversary fair",
+                "At the school's anniversary fair",
+                "During the school anniversary fair",
+                "At the anniversary fair"
+              ],
+              "targets": [
+                "anniversary",
+                "fair"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "In the school celebration garden party",
+                  "right": "At the school anniversary fair",
+                  "explanation_zh": "「園遊會」是 fair，不要逐字翻成 garden party；「校慶」是學校的週年慶 anniversary。"
+                }
+              ]
+            },
+            {
+              "zh": "我們班的奶茶",
+              "accepted": [
+                "our class's milk tea",
+                "the milk tea from our class",
+                "the milk tea sold by our class",
+                "the milk tea made by our class",
+                "the milk tea our class sold"
+              ],
+              "targets": [
+                "milk tea"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "we class's milk tea",
+                  "right": "our class's milk tea",
+                  "explanation_zh": "「我們班的」所有格用 our class's，不是 we class。"
+                }
+              ]
+            },
+            {
+              "zh": "是最受歡迎的",
+              "accepted": [
+                "was the most popular",
+                "is the most popular",
+                "the most popular"
+              ],
+              "targets": [
+                "COMP",
+                "popular"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "was most popular",
+                  "right": "was the most popular",
+                  "explanation_zh": "最高級前面要加 the。"
+                },
+                {
+                  "wrong": "was the most welcome",
+                  "right": "was the most popular",
+                  "explanation_zh": "「受歡迎的」（很多人喜歡）是 popular；welcome 是「受款待的、令人樂意接受的」，意思不同。"
+                }
+              ]
+            },
+            {
+              "zh": "飲料",
+              "accepted": [
+                "drink",
+                "beverage"
+              ],
+              "targets": [
+                "drink"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "the most popular drinks",
+                  "right": "the most popular drink",
+                  "explanation_zh": "the most popular drink 指「最受歡迎的那一種」，用單數；寫 one of the most popular drinks 才用複數。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "collocation",
+              "zh": "最受歡迎",
+              "literal_error": "At the school anniversary fair, our class's milk tea was the most welcome drink.",
+              "part": 3,
+              "explanation_zh": "「受歡迎」照字面翻成 welcome 是常見的中式英文；很多人喜歡的東西要用 popular，這一部分會被扣分。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "Our class's milk tea sold better than any other drink at the school anniversary fair.",
+              "grammar_id": "gp-comparative-superlative",
+              "explanation_zh": "用「比較級＋than any other＋單數名詞」表達最高級的意思，句型更有變化。"
+            }
+          ]
+        },
+        "2": {
+          "references": [
+            "To sell more cups of milk tea, we also made a very big poster.",
+            "We also made a huge poster in order to sell more cups of milk tea.",
+            "In order to sell more cups of milk tea, we also made a very large poster."
+          ],
+          "target_words": [
+            {
+              "word": "sell",
+              "zh": "賣出"
+            },
+            {
+              "word": "cup",
+              "zh": "杯",
+              "alternatives": [
+                "glass"
+              ]
+            },
+            {
+              "word": "milk tea",
+              "zh": "奶茶"
+            },
+            {
+              "word": "make",
+              "zh": "做",
+              "alternatives": [
+                "design",
+                "draw",
+                "create",
+                "put up"
+              ]
+            },
+            {
+              "word": "big",
+              "zh": "很大的",
+              "alternatives": [
+                "huge",
+                "large"
+              ]
+            },
+            {
+              "word": "poster",
+              "zh": "海報"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PURP",
+              "grammar_id": "gp-infinitive-purpose",
+              "label_zh": "不定詞表目的（To V…, S + V）",
+              "frame": "To + 原形動詞 …, S + V …／S + V … in order to + 原形動詞",
+              "zh_trigger": "為了"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "為了賣出更多杯奶茶",
+              "accepted": [
+                "To sell more cups of milk tea",
+                "In order to sell more cups of milk tea",
+                "So as to sell more cups of milk tea",
+                "To sell more milk tea",
+                "In order to sell more milk tea"
+              ],
+              "targets": [
+                "PURP",
+                "sell",
+                "cup",
+                "milk tea"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "For selling more cups of milk tea",
+                  "right": "To sell more cups of milk tea",
+                  "explanation_zh": "表目的「為了…」用不定詞 to + 原形動詞（或 in order to）。"
+                },
+                {
+                  "wrong": "To sell more cup of milk tea",
+                  "right": "To sell more cups of milk tea",
+                  "explanation_zh": "more 後面的可數名詞用複數 cups；milk tea 本身不可數，不加 s。"
+                }
+              ]
+            },
+            {
+              "zh": "我們還做了",
+              "accepted": [
+                "we also made",
+                "we also designed",
+                "we also drew",
+                "we also created",
+                "we also put up"
+              ],
+              "targets": [
+                "make"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "we also did",
+                  "right": "we also made",
+                  "explanation_zh": "「做海報」是 make a poster，不用 do。"
+                }
+              ]
+            },
+            {
+              "zh": "一張很大的",
+              "accepted": [
+                "a very big",
+                "a huge",
+                "a very large",
+                "a really big",
+                "a large",
+                "a big"
+              ],
+              "targets": [
+                "big"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "a very big posters",
+                  "right": "a very big poster",
+                  "explanation_zh": "a 後面接單數名詞。"
+                }
+              ]
+            },
+            {
+              "zh": "海報",
+              "accepted": [
+                "poster"
+              ],
+              "targets": [
+                "poster"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "post",
+                  "right": "poster",
+                  "explanation_zh": "post 是「郵件、貼文、職位」；「海報」是 poster。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "plural_countable",
+              "zh": "更多杯奶茶",
+              "literal_error": "To sell more cup of milk tea, we also made a very big poster.",
+              "part": 1,
+              "explanation_zh": "「更多杯」的 cup 是可數名詞，要寫 more cups of milk tea；寫單數 cup 或寫成 more milk teas 都會扣分。"
+            }
+          ],
+          "bonus": []
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-basic-01",
+    "lot": "translation-basic-01",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "5d53cd3325023c20a689f496811202dc08d17408faea3e4eb4c3042ce15b605d",
+    "spec_id": "translation-basic@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T07:53:38Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "warn",
+      "created_at": "2026-10-09T07:20:08Z",
+      "details": {
+        "solver": "A",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "At the school anniversary fair, our class's milk tea was the most popular drink.",
+            "confidence": "high",
+            "explanation_zh": "校慶園遊會譯 school anniversary fair；「最受歡迎」用最高級 the most popular；敘述已發生的活動，用過去式。"
+          },
+          "2": {
+            "translation": "In order to sell more cups of milk tea, we also made a very large poster.",
+            "confidence": "high",
+            "explanation_zh": "「為了…」用 in order to＋原形動詞表目的；「更多杯奶茶」用 more cups of milk tea；與上一句時態一致用過去式。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "COMP"
+            ],
+            "used_target_words": [
+              "anniversary",
+              "fair",
+              "milk tea",
+              "popular",
+              "drink"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PURP"
+            ],
+            "used_target_words": [
+              "sell",
+              "cup",
+              "milk tea",
+              "make",
+              "big",
+              "poster"
+            ],
+            "within_accepted": true,
+            "closest_reference": 2,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "切分輕重不均：第 1 部分「為了賣出更多杯奶茶」同時承載目的不定詞（PURP）、more cups 複數陷阱與 3 個標的詞，第 3、4 部分「一張很大的」「海報」各只考一個簡單詞；建議改切成「為了賣出／更多杯奶茶／我們還做了／一張很大的海報」之類，讓每部分都有考點。",
+              "「還」也可理解為「甚至」：第 2 部分 accepted 可補 we even made。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "anniversary",
+              "fair",
+              "milk tea",
+              "popular",
+              "drink"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "COMP": true
+            },
+            "program_match": true
+          },
+          "2": {
+            "target_words_found": [
+              "sell",
+              "cup",
+              "milk tea",
+              "make",
+              "big",
+              "poster"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PURP": true
+            },
+            "program_match": true
+          }
+        },
+        "problems": [
+          "第 2 題驗證者對4 部分切分有意見（warn）：切分輕重不均：第 1 部分「為了賣出更多杯奶茶」同時承載目的不定詞（PURP）、more cups 複數陷阱與 3 個標的詞，第 3、4 部分「一張很大的」「海報」各只考一個簡單詞；建議改切成「為了賣出／更多杯奶茶／我們還做了／一張很大的海"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "fail",
+      "created_at": "2026-10-09T07:25:05Z",
+      "details": {
+        "solver": "B",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "At the school anniversary carnival, the milk tea from our class was the most popular drink.",
+            "confidence": "medium",
+            "explanation_zh": "「校慶園遊會」譯 school anniversary carnival（school fair 也可），英文說法沒有唯一；「最受歡迎的」用 the most popular 最高級。"
+          },
+          "2": {
+            "translation": "In order to sell more cups of milk tea, we also made a very big poster.",
+            "confidence": "high",
+            "explanation_zh": "「為了……」用 in order to + 原形動詞；「更多杯」more cups of；「還」譯 also；「很大的海報」a very big poster。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "COMP"
+            ],
+            "used_target_words": [
+              "anniversary",
+              "milk tea",
+              "popular",
+              "drink"
+            ],
+            "within_accepted": false,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "「園遊會」除了 fair 之外，台灣校園活動也常譯成 carnival（盲譯者即譯成 At the school anniversary carnival），但第 1 部分 accepted 只列 fair 系列，標的詞 fair 也沒有 alternatives，所以這個合理的譯法落在可接受寫法之外（標的詞只命中 4/5）。建議第 1 部分 accepted 補 carnival（例如 At the school anniversary carnival、At our school anniversary carnival），並在標的詞 fair 的 alternatives 補 carnival。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "PURP"
+            ],
+            "used_target_words": [
+              "sell",
+              "cup",
+              "milk tea",
+              "make",
+              "big",
+              "poster"
+            ],
+            "within_accepted": true,
+            "closest_reference": 2,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "anniversary",
+              "milk tea",
+              "popular",
+              "drink"
+            ],
+            "target_hit_rate": 0.8,
+            "patterns_detected": {
+              "COMP": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "sell",
+              "cup",
+              "milk tea",
+              "make",
+              "big",
+              "poster"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PURP": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 1 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義",
+          "第 1 題驗證者對4 部分切分有意見（warn）：「園遊會」除了 fair 之外，台灣校園活動也常譯成 carnival（盲譯者即譯成 At the school anniversary carnival），但第 1 部分 accepted 只列 fair 系列，標的詞 fair 也沒有 "
+        ]
+      }
+    }
+  ],
+  "status": "rejected",
+  "status_reason": "blind_solver:B 未通過＋判定者人工審查（第 1 輪）：評分規準太窄。第 1 題第 1 部分「在校慶園遊會上」的 accepted 只收 fair 系列，標的詞 fair 也沒有 alternatives；台灣校園常見的 carnival、bazaar（例如 At the school anniversary carnival）是正確譯法卻落在可接受寫法外（驗證者 B 的盲譯即因此判 fail）。第 2 題 4 部分輕重不均：第 1 部分「為了賣出更多杯奶茶」同時承載目的不定詞、more cups 複數與 3 個標的詞，第 3、4 部分「一張很大的」「海報」各只考一個簡單詞（驗證者 A 指出）。重生時補 carnival／bazaar 等寫法，並把第 2 題重新切成每部分都有考點。"
+}

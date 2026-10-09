@@ -1,0 +1,176 @@
+{
+  "schema": "gsat-bank-facts/v1",
+  "id": "measles-vaccination-rb01",
+  "title": "Measles, the measles vaccine, and world measles vaccination coverage 2018–2024",
+  "sdgs": [
+    3
+  ],
+  "created_on": "2026-10-09",
+  "created_by": "claude-opus-5-5",
+  "sources": [
+    {
+      "id": "s1",
+      "publisher": "World Bank",
+      "title": "World Development Indicators: Immunization, measles (% of children ages 12-23 months) (SH.IMM.MEAS)",
+      "url": "https://data.worldbank.org/indicator/SH.IMM.MEAS",
+      "accessed": "2026-10-09",
+      "license": "CC-BY-4.0",
+      "use": "dataset",
+      "note": "原始提供者：WHO/UNICEF Estimates of National Immunization Coverage。數值由 api.worldbank.org（country WLD，lastupdated 2026-10-08）取得"
+    },
+    {
+      "id": "s2",
+      "publisher": "World Health Organization",
+      "title": "Measles (fact sheet)",
+      "url": "https://www.who.int/news-room/fact-sheets/detail/measles",
+      "accessed": "2026-10-09",
+      "license": "WHO terms of use (facts only)",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s3",
+      "publisher": "World Health Organization",
+      "title": "COVID-19 pandemic fuels largest continued backslide in vaccinations in three decades (2022-07-15)",
+      "url": "https://www.who.int/news/item/15-07-2022-covid-19-pandemic-fuels-largest-continued-backslide-in-vaccinations-in-three-decades",
+      "accessed": "2026-10-09",
+      "license": "WHO terms of use (facts only)",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s4",
+      "publisher": "World Health Organization",
+      "title": "Childhood immunization begins recovery after COVID-19 backslide (2023-07-18)",
+      "url": "https://www.who.int/news/item/18-07-2023-childhood-immunization-begins-recovery-after-covid-19-backslide",
+      "accessed": "2026-10-09",
+      "license": "WHO terms of use (facts only)",
+      "use": "fact_only",
+      "note": null
+    }
+  ],
+  "facts": [
+    {
+      "id": "f1",
+      "text": "Measles is caused by a highly contagious virus that spreads when an infected person coughs or sneezes.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f2",
+      "text": "The measles virus can stay active in the air or on surfaces for up to two hours.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f3",
+      "text": "One person with measles can infect up to 18 other people.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f4",
+      "text": "Measles usually begins with fever, runny nose, cough and red eyes; a rash follows a few days later, starting on the face and spreading down the body.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f5",
+      "text": "Unvaccinated young children face the highest risk of severe measles.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f6",
+      "text": "The measles vaccine has been used since 1963; it is safe and effective and costs less than one US dollar per child.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "date"
+    },
+    {
+      "id": "f7",
+      "text": "WHO recommends two doses of measles vaccine; in high-risk countries the first dose is usually given at nine months of age.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f8",
+      "text": "Measles vaccination prevented an estimated 59 million deaths between 2000 and 2024.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f9",
+      "text": "WHO and UNICEF said the drop in childhood vaccination seen in 2021 was the largest sustained decline in about 30 years, driven by COVID-19 disruptions.",
+      "source_ids": [
+        "s3"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f10",
+      "text": "Childhood immunization began to recover in 2022.",
+      "source_ids": [
+        "s4"
+      ],
+      "kind": "date"
+    },
+    {
+      "id": "f11",
+      "text": "The World Bank indicator counts children aged 12 to 23 months who had received a measles vaccine (at least one dose).",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "definition"
+    }
+  ],
+  "datasets": [
+    {
+      "id": "d1",
+      "source_id": "s1",
+      "title": "Immunization, measles (% of children ages 12-23 months), World",
+      "indicator": "SH.IMM.MEAS",
+      "unit": "%",
+      "categories": [
+        "2018",
+        "2019",
+        "2020",
+        "2021",
+        "2022",
+        "2023",
+        "2024"
+      ],
+      "series": [
+        {
+          "name": "World",
+          "values": [
+            86.42,
+            86.23,
+            83.88,
+            82.04,
+            83.69,
+            83.01,
+            84.3
+          ]
+        }
+      ],
+      "note": "API 原值取兩位小數（例如 2021 為 82.0412289018879）；圖表取一位小數"
+    }
+  ],
+  "notes": null
+}

@@ -16,6 +16,8 @@ const INSTRUCTIONS: Record<PracticeGroupFile['section_type'], string> = {
   cloze: '點選文中的空格選答案，或在下方逐題作答。',
   word_bank: '點空格再點選項填入（也可以拖放）；每個選項只能用一次。',
   structure: '把句子放回文章的空格；有一個選項是多餘的。',
+  reading: '閱讀文章（含圖表或表格）後，每題選出最適當的答案。',
+  mixed: '依兩篇（或多則）短文作答：填充每格限填一個英文單詞，多選題答錯 k 個選項得 (n − 2k)/n 題分，簡答照題目要求的形式寫。',
 };
 
 export function practiceExam(file: PracticeGroupFile): Exam {

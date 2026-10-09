@@ -6,7 +6,7 @@
  *
  * 文字作答一律關掉拼字檢查與自動大寫：實際考試沒有拼字提示，瀏覽器的紅色波浪線等於直接告訴學生哪個字拼錯了。
  */
-import { useId, type ReactNode } from 'react';
+import { Fragment, useId, type ReactNode } from 'react';
 import type { OptionMap, Question, QuestionGroup } from '../../../data/exams';
 import { useAttemptStore, useAttemptSelector, useQuestionState } from '../AttemptContext';
 import { useExam } from '../ExamContext';
@@ -194,40 +194,65 @@ const englishInputProps = {
   lang: 'en',
 } as const;
 
+/** 填充題的作答超過一個單詞（中間有空白）：即時提示「每格只能填一個單詞」（SPEC §4.1 OpenInput）。 */
+function hasMultipleWords(value: string): boolean {
+  return /\S\s+\S/.test(value.trim());
+}
+
 /** 題幹裡的行內輸入框（混合題摘要句的 [[47]]）。 */
 function InlineBlankInput({ q }: { q: Question }) {
   const store = useAttemptStore();
   const { answer, locked } = useQuestionState(q.label);
+  const extras = useQuestionExtras();
   const value = typeof answer === 'string' ? answer : '';
+  const tooMany = Boolean(extras?.singleWordFill) && !locked && hasMultipleWords(value);
   return (
     <input
       type="text"
       aria-label={`${questionTitle(q.label)}作答`}
+      aria-invalid={tooMany || undefined}
       value={value}
       disabled={locked}
       onChange={(e) => store.setAnswer(q.label, e.currentTarget.value)}
       placeholder={q.label}
-      className="mx-1 inline-block w-36 max-w-full rounded-md border border-primary/60 bg-bg px-2 py-0.5 text-fg placeholder:text-muted focus:border-primary disabled:opacity-70"
+      className={`mx-1 inline-block w-36 max-w-full rounded-md border bg-bg px-2 py-0.5 text-fg placeholder:text-muted focus:border-primary disabled:opacity-70 ${tooMany ? 'border-bad' : 'border-primary/60'}`}
       {...englishInputProps}
     />
+  );
+}
+
+/** 填充題組裡超過一個單詞的格子（即時提示，交卷前就看得到）。 */
+function MultiWordWarning({ questions }: { questions: readonly Question[] }) {
+  const answers = useAttemptSelector((s) => s.answers);
+  const submitted = useAttemptSelector((s) => s.submittedAt !== null);
+  const enabled = Boolean(useQuestionExtras()?.singleWordFill);
+  if (!enabled) return null;
+  const bad = submitted ? [] : questions.filter((q) => q.mode === 'fill_in_blank' && typeof answers[q.label] === 'string' && hasMultipleWords(answers[q.label] as string));
+  return (
+    <p aria-live="polite" className={bad.length > 0 ? 'mt-2 text-sm font-medium text-bad' : 'sr-only'}>
+      {bad.length > 0 ? `${bad.map((q) => questionTitle(q.label)).join('、')}：每格只能填一個單詞（中間不能有空格）。` : ''}
+    </p>
   );
 }
 
 /** 依 label 取作答狀態（RevealButton 之外，回饋區要知道每一題是否已顯示答案）。 */
 function OpenFeedbackFor({ q }: { q: Question }) {
   const { answer, showFeedback } = useQuestionState(q.label);
+  const extras = useQuestionExtras();
   if (!showFeedback) return null;
   return (
     <div>
       {/* 多題併在一起時標出是哪一題的回饋。 */}
       <p className="mt-3 text-sm font-semibold">{questionTitle(q.label)}</p>
-      <OpenFeedback q={q} answer={answer} />
+      {extras?.renderOpenFeedback ? extras.renderOpenFeedback(q, answer) : <OpenFeedback q={q} answer={answer} />}
     </div>
   );
 }
 
 /** 混合題的摘要句填充：共用題幹畫一次，裡面的 [[題號]] 各自是輸入框。 */
 export function FillClusterBlock({ stem, questions }: { stem: string; questions: Question[] }) {
+  const extras = useQuestionExtras();
+  const showFeedback = useAttemptSelector((s) => s.submittedAt !== null || (s.mode === 'practice' && questions.every((q) => s.revealed.includes(q.label))));
   const labels = questions.map((q) => q.label);
   const points = questions.reduce((acc, q) => acc + (q.points ?? 0), 0);
   return (
@@ -242,7 +267,9 @@ export function FillClusterBlock({ stem, questions }: { stem: string; questions:
           }}
         />
       </div>
-      <p className="mt-2 text-xs text-muted">每格限填一個單詞；非選擇題不自動計分。</p>
+      <MultiWordWarning questions={questions} />
+      <p className="mt-2 text-xs text-muted">{extras?.openAnswerNote ? extras.openAnswerNote(questions[0] as Question) : '每格限填一個單詞；非選擇題不自動計分。'}</p>
+      {!showFeedback && questions.map((q) => <Fragment key={q.label}>{extras?.renderWhileAnswering?.(q)}</Fragment>)}
       <RevealButton labels={labels}>看參考答案</RevealButton>
       {questions.map((q) => (
         <OpenFeedbackFor key={q.label} q={q} />
@@ -254,6 +281,7 @@ export function FillClusterBlock({ stem, questions }: { stem: string; questions:
 /** 單行（填充、簡答）或多行（中譯英）的文字作答。 */
 export function TextAnswerBlock({ q, multiline }: { q: Question; multiline: boolean }) {
   const store = useAttemptStore();
+  const extras = useQuestionExtras();
   const { answer, showFeedback, locked } = useQuestionState(q.label);
   const id = useId();
   const value = typeof answer === 'string' ? answer : '';
@@ -275,14 +303,19 @@ export function TextAnswerBlock({ q, multiline }: { q: Question; multiline: bool
       ) : (
         <input id={id} type="text" value={value} disabled={locked} onChange={(e) => store.setAnswer(q.label, e.currentTarget.value)} className={`mt-1 ${textInputClass}`} {...englishInputProps} />
       )}
+      {q.mode === 'fill_in_blank' && <MultiWordWarning questions={[q]} />}
       <p className="mt-2 text-xs text-muted">
         {translation
           ? `答案只存在這台裝置；${aiOpen ? '想請 AI 批改，可以到「寫作練習」作答送出。' : 'AI 批改即將推出。'}`
-          : '非選擇題不自動計分，看參考答案後自行對照。'}
+          : extras?.openAnswerNote
+            ? extras.openAnswerNote(q)
+            : '非選擇題不自動計分，看參考答案後自行對照。'}
       </p>
+      {!showFeedback && !translation && extras?.renderWhileAnswering?.(q)}
       {/* 中譯英不顯示官方參考譯文（D8），按鈕只帶出評分原則的連結，不叫「看參考答案」以免誤會。 */}
       <RevealButton labels={[q.label]}>{translation ? '看說明' : '看參考答案'}</RevealButton>
-      {showFeedback && <OpenFeedback q={q} answer={answer} />}
+      {showFeedback &&
+        (!translation && extras?.renderOpenFeedback ? extras.renderOpenFeedback(q, answer) : <OpenFeedback q={q} answer={answer} />)}
     </div>
   );
 }
