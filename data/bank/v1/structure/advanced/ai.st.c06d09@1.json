@@ -1,0 +1,621 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.st.c06d09",
+  "version": 1,
+  "section_type": "structure",
+  "format_version": "structure-4x5",
+  "tier": "advanced",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": "For most of human history, anyone who looked up on a clear night could see thousands of stars. Today, many people living in cities can see only a few of them. The reason is light pollution, the glow from streetlights, buildings, and signs that brightens the night sky.\nThis glow is more than a problem for people who enjoy looking at the stars. Many birds that travel at night use the stars to find their way, and brightly lit buildings can confuse them so badly that some crash into windows. Baby sea turtles face a similar danger when they hatch on beaches at night. Newly hatched turtles find the sea by crawling toward the brighter horizon over the water. [[1]]\nHumans are affected as well, even though the harm is harder to notice. [[2]] Streetlights shining through bedroom windows, for example, can make it harder to fall asleep and to stay asleep. Over time, poor sleep may lead to a range of other health problems.\n[[3]] The simplest is to fit streetlights with covers so that they shine only downward, where light is actually needed. Lights in offices and shops can also be switched off when no one is inside. Some towns have even passed strict rules on outdoor lighting so that residents and visitors can enjoy a truly dark sky. [[4]] Few other environmental problems can be fixed so quickly and so cheaply.",
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": {
+      "A": "Lighting empty buildings also wastes a lot of energy.",
+      "B": "Fortunately, all of these problems have fairly simple solutions.",
+      "C": "Unlike other pollution, then, light pollution could disappear almost overnight.",
+      "D": "Light at night can upset the body's natural clock, which tells us when to sleep.",
+      "E": "Near brightly lit beaches, however, many of the young turtles crawl toward the city instead."
+    },
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "E",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "lexical_cohesion",
+          "clue_raw": "SP|LX|B|L",
+          "key_phrase": "however; the young turtles ← Newly hatched turtles; brightly lit / crawl toward ← crawling toward the brighter horizon"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "D",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "example",
+          "clue_raw": "SP|CN|F|L",
+          "key_phrase": "upset the body's natural clock, which tells us when to sleep → Streetlights shining through bedroom windows, for example, can make it harder to fall asleep"
+        }
+      },
+      {
+        "no": 3,
+        "label": "3",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "B",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "pronoun_reference",
+          "clue_raw": "BR|PR|BF|P",
+          "key_phrase": "all of these problems ← 第二、三段（鳥撞窗、海龜迷路、睡不好與健康問題）; simple solutions → The simplest [solution] is to fit streetlights with covers"
+        }
+      },
+      {
+        "no": 4,
+        "label": "4",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "C",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "summary",
+          "clue_raw": "CL|CN|BF|L",
+          "key_phrase": "then ← 加燈罩、沒人時關燈、限制戶外照明; disappear almost overnight → so quickly and so cheaply; Unlike other pollution → Few other environmental problems"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "light pollution and its effects on wildlife and human sleep",
+      "genre": "expository",
+      "sdgs": [
+        3,
+        11,
+        14,
+        15
+      ],
+      "text_format": "continuous"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "前一句說剛孵化的小海龜會朝海面上較亮的地平線爬，藉此找到大海。(E) 用 however 轉折：在燈火通明的海灘附近，許多小海龜反而朝城市爬去——因為城市的燈光比海面更亮。the young turtles 重複前一句的 turtles，crawl toward 也呼應 crawling toward，並說明了前面提到的 a similar danger 到底是什麼。空格在段尾，線索都在前面，選 (E)。",
+          "evidence": [
+            "Baby sea turtles face a similar danger when they hatch on beaches at night.",
+            "Newly hatched turtles find the sea by crawling toward the brighter horizon over the water.",
+            "Near brightly lit beaches, however, many of the young turtles crawl toward the city instead."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "lexical_cohesion",
+          "option_notes_zh": {
+            "A": "多餘句：(A) 用 also 補充「照亮空無一人的建築也浪費能源」，但本段講的是光害對野生動物的危害；前面說小海龜面臨 a similar danger，放 (A) 會讓這個危險始終沒有說明。",
+            "B": "(B) 說這些問題都有簡單的解決辦法，但人類受到的影響（下一段）還沒講到，就先說「所有這些問題」有解方，順序太早；(B) 應放在最後一段開頭。",
+            "C": "(C) 用 then 下結論說光害幾乎可以一夜消失，但前面只講到海龜，還沒提到任何解決方法，這個結論沒有根據。",
+            "D": "(D) 說夜間的光會擾亂人的生理時鐘，講的是人類；下一段開頭才說 Humans are affected as well，放在這裡會重複，順序也不對。"
+          },
+          "strategy_zh": "前文提到「危險」或「問題」卻還沒說清楚時，空格常要補上具體情況；可以找重複前一句關鍵詞（turtles、crawl）並用 however 表示「結果出了錯」的選項。",
+          "hints": [
+            "前面說小海龜面臨 a similar danger，這個危險是什麼，文章說清楚了嗎？",
+            "小海龜朝較亮的地平線爬；如果海灘附近有城市燈光，會發生什麼事？",
+            "答案說許多小海龜反而朝城市爬去。"
+          ]
+        },
+        "2": {
+          "explanation_zh": "前一句只說人類也會受影響，卻沒說怎麼受影響；(D) 說明夜間的光會擾亂告訴我們何時該睡覺的生理時鐘。下一句以 for example 舉例：路燈照進臥室窗戶，會讓人更難入睡、也更難一覺到天亮——這正是「生理時鐘被擾亂」的具體情況。(D) 本身沒有回指前文的字，要靠下一句的 for example 才能確定，選 (D)。",
+          "evidence": [
+            "Humans are affected as well, even though the harm is harder to notice.",
+            "Light at night can upset the body's natural clock, which tells us when to sleep.",
+            "Streetlights shining through bedroom windows, for example, can make it harder to fall asleep and to stay asleep."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "example",
+          "option_notes_zh": {
+            "A": "多餘句：(A) 講浪費能源，與「人類受到什麼傷害」無關；下一句 for example 舉的是睡不好的例子，不是浪費能源的例子。",
+            "B": "(B) 說這些問題都有簡單的解方，但下一句 for example 舉的是路燈讓人睡不著，是問題本身，不是解方。",
+            "C": "(C) 用 then 下結論說光害能一夜消失，但這一段還在描述對人的危害，下一句的例子也與「消失」無關。",
+            "E": "(E) 講小海龜朝城市爬，the young turtles 與本段的 Humans 不符，下一句的睡眠例子也接不上。"
+          },
+          "strategy_zh": "如果後一句以 for example 開頭，就把它當成「答案的具體版」：先讀懂例子（路燈讓人睡不著），再找一句能概括這個例子的選項。",
+          "hints": [
+            "下一句的 for example 舉了什麼例子？",
+            "路燈照進臥室讓人睡不著，這說明夜間的光影響了身體的什麼？",
+            "答案提到身體的生理時鐘（natural clock）。"
+          ]
+        },
+        "3": {
+          "explanation_zh": "(B) 的 all of these problems 回指第二、三段提到的所有問題：候鳥撞上窗戶、小海龜迷路、人睡不好而引發其他健康問題；Fortunately 表示要從問題轉向解方。下一句 The simplest is to fit streetlights with covers 省略了 solution，意思是「其中最簡單的辦法」，必須接在提到 simple solutions 的 (B) 之後。本句收束前兩段、引出最後一段的解決方法，選 (B)。",
+          "evidence": [
+            "Over time, poor sleep may lead to a range of other health problems.",
+            "Fortunately, all of these problems have fairly simple solutions.",
+            "The simplest is to fit streetlights with covers so that they shine only downward, where light is actually needed."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "pronoun_reference",
+          "option_notes_zh": {
+            "A": "多餘句：(A) 用 also 再補一個問題（浪費能源），接在健康問題後面看起來很順；但下一句 The simplest is to … 需要先出現 solutions 之類的名詞，(A) 沒有，「最簡單的什麼」就說不通。",
+            "C": "(C) 用 then 下結論說光害能一夜消失，但前一句講的是健康問題，推不出這個結論；下一句的 The simplest 也需要先提到「解決辦法」。",
+            "D": "(D) 說夜間的光會擾亂生理時鐘，與前一段重複，下一句的 The simplest 也找不到被省略的名詞。",
+            "E": "(E) 講小海龜朝城市爬，是第二段的內容，放在最後一段開頭時間和主題都不對。"
+          },
+          "strategy_zh": "The simplest、The first、Another 這類開頭省略了名詞，空格裡必須先出現那個名詞（solutions）；再用 all of these problems 這種回指確認它能收束前面幾段。",
+          "hints": [
+            "下一句 The simplest is to … 說的是「最簡單的什麼」？",
+            "哪個選項先提到 solutions，並回指前面所有的問題？",
+            "答案以 Fortunately 開頭。"
+          ]
+        },
+        "4": {
+          "explanation_zh": "前面三句列出解決光害的辦法：替路燈加燈罩、沒人時關燈、有些城鎮訂定戶外照明規定。(C) 用 then（那麼、由此可見）下結論：和其他污染不同，光害幾乎可以在一夜之間消失。下一句 Few other environmental problems can be fixed so quickly and so cheaply 的 so quickly 呼應 (C) 的 almost overnight，Few other 也呼應 Unlike other pollution。選 (C)。",
+          "evidence": [
+            "Some towns have even passed strict rules on outdoor lighting so that residents and visitors can enjoy a truly dark sky.",
+            "Unlike other pollution, then, light pollution could disappear almost overnight.",
+            "Few other environmental problems can be fixed so quickly and so cheaply."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "summary",
+          "option_notes_zh": {
+            "A": "多餘句：(A) 用 also 補充一個問題，但前一句講的是解決辦法（城鎮限制戶外照明），不是問題；下一句的 so quickly 也找不到可以呼應的「快」。",
+            "B": "(B) 說這些問題都有簡單的解方，可是解方已經在前面一一列出，到這裡才說「有解方」，順序顛倒；all of these problems 在這裡也無法回指，下一句的 so quickly 沒有依據。",
+            "D": "(D) 說夜間的光會擾亂生理時鐘，是第三段的內容，放在解決辦法之後又回到問題，下一句的 so quickly 也接不上。",
+            "E": "(E) 講小海龜朝城市爬，是第二段的內容，與本段的解決辦法無關。"
+          },
+          "strategy_zh": "結論句常帶 then、thus、in short 等字，必須是前面幾句的合理推論；再檢查後一句的 so quickly、such、this 這類字，看它呼應的是哪個選項的內容。",
+          "hints": [
+            "前面三句在講光害的什麼？問題還是解決辦法？",
+            "下一句說 so quickly and so cheaply，空格裡應該先提到什麼「很快」的事？",
+            "答案以 Unlike other pollution 開頭，並用 then 下結論。"
+          ]
+        }
+      }
+    },
+    "translation_zh": {
+      "text": "在人類歷史的大部分時間裡，任何人在晴朗的夜晚抬頭，都能看到成千上萬顆星星。今天，許多住在城市裡的人卻只看得到寥寥幾顆。原因就是光害——路燈、建築物和招牌發出的光，把夜空照亮了。\n這種光不只是喜歡看星星的人的困擾。許多在夜間遷徙的鳥類靠星星辨別方向，而燈火通明的建築物可能讓牠們嚴重迷失方向，有些甚至撞上窗戶。小海龜在夜晚於海灘孵化時，也面臨類似的危險。剛孵化的小海龜會朝海面上較亮的地平線爬，藉此找到大海。【1】然而，在燈火通明的海灘附近，許多小海龜反而朝城市爬去。\n人類也會受到影響，只是這種傷害比較不容易察覺。【2】夜間的光線會擾亂身體的生理時鐘，而生理時鐘會告訴我們什麼時候該睡覺。例如，照進臥室窗戶的路燈會讓人更難入睡，也更難一覺到天亮。長期下來，睡不好可能引發其他各種健康問題。\n【3】幸好，這些問題都有相當簡單的解決辦法。最簡單的是替路燈加上燈罩，讓光只往下照到真正需要的地方。辦公室和商店的燈也可以在沒有人時關掉。有些城鎮甚至訂定了嚴格的戶外照明規定，讓居民和遊客能享受真正漆黑的夜空。【4】那麼，和其他污染不同，光害幾乎可以在一夜之間消失。很少有其他環境問題能解決得這麼快、這麼便宜。\n（多餘句 (A)：照亮空無一人的建築物也會浪費大量能源。）"
+    },
+    "elimination": {
+      "feasible": {
+        "1": [
+          "E"
+        ],
+        "2": [
+          "D"
+        ],
+        "3": [
+          "B"
+        ],
+        "4": [
+          "C"
+        ]
+      },
+      "perfect_matchings": 1
+    },
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": null,
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "3-V-7",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "7-V-5",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "B-V-8",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "9-V-2",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "C-V-5",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": "本文由 AI 撰寫"
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-08-structure-advanced-01",
+    "lot": "structure-advanced-01",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/structure",
+    "prompt_sha256": "a04b227d742a87c007f031e68be6b978d576e7910a4123b1904d4bd60fda82eb",
+    "spec_id": "structure-advanced@2026-10-08",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 230,
+    "sentences": 14,
+    "avg_sentence_length": 16.43,
+    "denominator": 229,
+    "proper_nouns": [],
+    "numbers": 1,
+    "coverage_l1_4": 0.9738,
+    "coverage_l1_6": 0.9825,
+    "offlist_ratio": 0.0175,
+    "beyond_l4_ratio": 0.0087,
+    "level_counts": {
+      "1": 188,
+      "2": 23,
+      "3": 11,
+      "4": 1,
+      "5": 1,
+      "6": 1,
+      "off": 4
+    },
+    "offlist_words": [
+      "brightens",
+      "streetlights"
+    ],
+    "band": {
+      "tier": "advanced",
+      "basis": "lot structure-advanced-01（SPEC §3.4＋出題規格書 passage_overrides（words、coverage_L1_4_min（取代 SPEC 的區間）、coverage_L1_6_min、offlist_max、beyond_l4_ratio_max））",
+      "ok": true,
+      "checks": {
+        "word_count": {
+          "value": 230,
+          "min": 220,
+          "max": 310,
+          "ok": true
+        },
+        "coverage_l1_4": {
+          "value": 0.9738,
+          "min": 0.9,
+          "max": null,
+          "ok": true
+        },
+        "coverage_l1_6": {
+          "value": 0.9825,
+          "min": 0.94,
+          "max": null,
+          "ok": true
+        },
+        "offlist_ratio": {
+          "value": 0.0175,
+          "min": null,
+          "max": 0.06,
+          "ok": true
+        },
+        "avg_sentence_length": {
+          "value": 16.43,
+          "min": 15,
+          "max": 21,
+          "ok": true
+        },
+        "beyond_l4_ratio": {
+          "value": 0.0087,
+          "min": null,
+          "max": 0.06,
+          "ok": true
+        }
+      }
+    }
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T01:33:17Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T01:24:34Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "answers": {
+          "1": {
+            "answer": "E",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Newly hatched turtles find the sea by crawling toward the brighter horizon over the water."
+            ],
+            "explanation_zh": "前句說小海龜靠爬向海面較亮的地平線找到大海；E 以 however 轉折，在燈火通明的海灘附近牠們反而爬向城市，說明光害的危險。",
+            "feasible": [
+              "E"
+            ]
+          },
+          "2": {
+            "answer": "D",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Humans are affected as well, even though the harm is harder to notice.",
+              "Streetlights shining through bedroom windows, for example, can make it harder to fall asleep and to stay asleep."
+            ],
+            "explanation_zh": "前句說人類也受影響，後句以 for example 舉路燈照進臥室讓人難以入睡；D 說夜間光線會打亂生理時鐘，正是被舉例的論點。",
+            "feasible": [
+              "D"
+            ]
+          },
+          "3": {
+            "answer": "B",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "The simplest is to fit streetlights with covers so that they shine only downward, where light is actually needed."
+            ],
+            "explanation_zh": "後句 The simplest 需要先提到 solutions；B 說這些問題都有相當簡單的解決方法，開啟本段一連串的對策。",
+            "feasible": [
+              "B"
+            ]
+          },
+          "4": {
+            "answer": "C",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Few other environmental problems can be fixed so quickly and so cheaply."
+            ],
+            "explanation_zh": "C 以 then 總結：光害與其他污染不同，幾乎能一夕消失；後句「很少有其他環境問題能如此快速便宜地解決」呼應 Unlike other pollution 與 overnight。",
+            "feasible": [
+              "C"
+            ]
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T01:30:00Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "answers": {
+          "1": {
+            "answer": "E",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Newly hatched turtles find the sea by crawling toward the brighter horizon over the water.",
+              "Near brightly lit beaches, however, many of the young turtles crawl toward the city instead."
+            ],
+            "explanation_zh": "前句說小海龜朝較亮的海面爬行找到海，E 用 however 說明靠近燈火通明的海灘時牠們反而爬向城市，點出光害的後果。",
+            "feasible": [
+              "E"
+            ]
+          },
+          "2": {
+            "answer": "D",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Humans are affected as well, even though the harm is harder to notice.",
+              "Light at night can upset the body's natural clock, which tells us when to sleep.",
+              "Streetlights shining through bedroom windows, for example, can make it harder to fall asleep and to stay asleep."
+            ],
+            "explanation_zh": "前句說人類也受影響，後句 for example 以路燈照進臥室影響睡眠為例，D 說夜間的光會擾亂身體的生理時鐘，正好是概括句。",
+            "feasible": [
+              "D"
+            ]
+          },
+          "3": {
+            "answer": "B",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Fortunately, all of these problems have fairly simple solutions.",
+              "The simplest is to fit streetlights with covers so that they shine only downward, where light is actually needed."
+            ],
+            "explanation_zh": "後句 The simplest 需要前面先提到 solutions，B 作為新段主題句，說這些問題都有相當簡單的解決方法。",
+            "feasible": [
+              "B"
+            ]
+          },
+          "4": {
+            "answer": "C",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Some towns have even passed strict rules on outdoor lighting so that residents and visitors can enjoy a truly dark sky.",
+              "Unlike other pollution, then, light pollution could disappear almost overnight.",
+              "Few other environmental problems can be fixed so quickly and so cheaply."
+            ],
+            "explanation_zh": "C 的 then 為前面各種解決方法的結論，Unlike other pollution 與後句 Few other environmental problems 前後呼應。",
+            "feasible": [
+              "C"
+            ]
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "distractor_audit",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T01:32:00Z",
+      "details": {
+        "session_id": null,
+        "items": {
+          "1": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "off_topic",
+              "evidence": "Baby sea turtles face a similar danger when they hatch on beaches at night.",
+              "explanation_zh": "多餘句 (A) 講浪費能源，與本段光害對野生動物的危害無關；前文說小海龜面臨 a similar danger，放 (A) 會讓這個危險始終沒有交代。"
+            },
+            "B": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "Humans are affected as well, even though the harm is harder to notice.",
+              "explanation_zh": "(B) 說所有這些問題都有簡單的解決辦法，但下一段才開始講人類受到的傷害，問題還沒講完就先談解方，順序太早。"
+            },
+            "C": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "Humans are affected as well, even though the harm is harder to notice.",
+              "explanation_zh": "(C) 用 then 下結論說光害幾乎可以一夜消失，但前文還沒提到任何解決辦法，下一段也還在描述傷害，這個結論沒有根據。"
+            },
+            "D": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Humans are affected as well, even though the harm is harder to notice.",
+              "explanation_zh": "(D) 講夜間的光擾亂「我們」的生理時鐘，是人類受到的影響；下一段開頭才說 Humans are affected as well，放在這裡內容重複、順序顛倒，小海龜的危險也沒有交代。"
+            }
+          },
+          "2": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "off_topic",
+              "evidence": "Streetlights shining through bedroom windows, for example, can make it harder to fall asleep and to stay asleep.",
+              "explanation_zh": "多餘句 (A) 講浪費能源，不是人類受到的傷害；下一句 for example 舉的睡眠問題也不是它的例子。"
+            },
+            "B": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "Streetlights shining through bedroom windows, for example, can make it harder to fall asleep and to stay asleep.",
+              "explanation_zh": "(B) 說這些問題都有簡單的解方，但下一句 for example 舉的是路燈讓人睡不著，是問題本身，不是解方。"
+            },
+            "C": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "Streetlights shining through bedroom windows, for example, can make it harder to fall asleep and to stay asleep.",
+              "explanation_zh": "(C) 用 then 下結論說光害可以一夜消失，但本段還在描述對人的危害，下一句的例子也與「消失」無關。"
+            },
+            "E": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Humans are affected as well, even though the harm is harder to notice.",
+              "explanation_zh": "(E) 講小海龜朝城市爬，the young turtles 與本段的 Humans 不符，下一句的睡眠例子也接不上。"
+            }
+          },
+          "3": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "The simplest is to fit streetlights with covers so that they shine only downward, where light is actually needed.",
+              "explanation_zh": "多餘句 (A) 用 also 再補一個問題，接在健康問題後面看似通順，但下一句 The simplest is to … 需要先出現 solutions 之類的名詞，(A) 沒有，「最簡單的什麼」說不通。"
+            },
+            "C": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "The simplest is to fit streetlights with covers so that they shine only downward, where light is actually needed.",
+              "explanation_zh": "(C) 用 then 下結論說光害可一夜消失，前一句的健康問題推不出這個結論；下一句的 The simplest 也需要先提到解決辦法。"
+            },
+            "D": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "The simplest is to fit streetlights with covers so that they shine only downward, where light is actually needed.",
+              "explanation_zh": "(D) 說夜間的光擾亂生理時鐘，與上一段重複，下一句的 The simplest 找不到被省略的名詞。"
+            },
+            "E": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "The simplest is to fit streetlights with covers so that they shine only downward, where light is actually needed.",
+              "explanation_zh": "(E) 講小海龜朝城市爬，屬於第二段的內容，下一句的 The simplest 也沒有可指的名詞。"
+            }
+          },
+          "4": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Some towns have even passed strict rules on outdoor lighting so that residents and visitors can enjoy a truly dark sky.",
+              "explanation_zh": "多餘句 (A) 用 also 補充一個新問題（浪費能源），但前面是一連串解決辦法，列完對策又回頭談問題，順序不對；下一句說很少有環境問題能這麼快、這麼便宜地解決，需要的是對解決辦法的總結，(A) 沒有提供。"
+            },
+            "B": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "Some towns have even passed strict rules on outdoor lighting so that residents and visitors can enjoy a truly dark sky.",
+              "explanation_zh": "(B) 用 Fortunately 從問題轉向解方，但解方已經在前面一一列出，到這裡才說「有解方」順序顛倒；all of these problems 在這裡也只碰得到解決辦法，無從回指。"
+            },
+            "D": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "Some towns have even passed strict rules on outdoor lighting so that residents and visitors can enjoy a truly dark sky.",
+              "explanation_zh": "(D) 說夜間的光擾亂生理時鐘，是第三段的問題，接在解決辦法之後又回到問題，下一句的 so quickly 也沒有依據。"
+            },
+            "E": {
+              "verdict": "clearly_wrong",
+              "error_type": "off_topic",
+              "evidence": "Some towns have even passed strict rules on outdoor lighting so that residents and visitors can enjoy a truly dark sky.",
+              "explanation_zh": "(E) 講小海龜朝城市爬，是第二段的內容，與本段的解決辦法無關。"
+            }
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "unique_solution",
+      "reviewer": "record_verification.py",
+      "result": "pass",
+      "created_at": "2026-10-09T01:33:17Z",
+      "details": {
+        "method": "injective_assignment",
+        "perfect_matchings": 1,
+        "matches_key": true,
+        "feasible": {
+          "1": [
+            "E"
+          ],
+          "2": [
+            "D"
+          ],
+          "3": [
+            "B"
+          ],
+          "4": [
+            "C"
+          ]
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}
