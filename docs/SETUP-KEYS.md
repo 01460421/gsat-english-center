@@ -167,7 +167,11 @@ workflow 會依序：型別檢查與測試 → 檢查 token 與 workers.dev 子�
 |---|---|---|
 | Actions 綠燈，但寫「這次略過部署」 | `CLOUDFLARE_API_TOKEN`、`CLOUDFLARE_ACCOUNT_ID` 都沒設（或名稱打錯） | §1.3、§1.4、§4 |
 | 「只設了一個」 | 其中一個名稱打錯或漏填 | 檢查兩個 secret 的名稱 |
-| 「Cloudflare 拒絕了 API token」 | token 權限、帳號不符、過期或被刪 | 照 §1.4 重建 token，Account Resources 選對帳號 |
+| 「頭尾多了空白或換行」 | 貼 secret 時多選到空白或換行 | 重新貼上那個 secret，只貼值本身 |
+| 「CLOUDFLARE_ACCOUNT_ID 的格式不對」 | 貼成 email、帳號名稱或 token | §1.3，重新複製 Account ID |
+| 「不是有效的 API token」 | 貼錯東西（token 名稱、Global API Key、curl 指令），或 token 被刪 | §1.4 重建 token，貼「只顯示一次」的那串 |
+| 「token 有效，但……沒有 CLOUDFLARE_ACCOUNT_ID 這個帳號」 | Account ID 貼錯（例如 Zone ID），或 token 的 Account Resources 選了別的帳號 | §1.3 重新複製 Account ID；或編輯 token 改 Account Resources |
+| 「token 有效、帳號也對，但讀不到 Workers 設定」 | token 少了 Workers 權限 | §1.4，用「Edit Cloudflare Workers」範本，加 `D1: Edit`、`Queues: Edit` |
 | 「還沒有 workers.dev 子網域」 | 帳號沒註冊過 workers.dev | §1.2，設好後重跑 |
 | 「找不到也建立不了 D1」 | token 少了 `D1: Edit` | §1.4 第 3 點，編輯 token 加權限後重跑 |
 | 「讀不到 Queue 清單」「建立 Queue 失敗」 | token 少了 `Queues: Edit` | 同上 |
