@@ -1,0 +1,628 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.fc0c8f",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "basic",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "每天早上，除了在公園慢跑，我也會走路上學。",
+        "options": null,
+        "answer": "Every morning, besides jogging in the park, I also walk to school.",
+        "accepted_answers": [
+          "In addition to jogging in the park, I also walk to school every morning.",
+          "Every morning, apart from jogging in the park, I also go to school on foot."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "介系詞＋動名詞"
+          ],
+          "topic": "清晨慢跑"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "現在，越來越多同學也會在早上和我一起慢跑。",
+        "options": null,
+        "answer": "Now more and more classmates also jog with me in the morning.",
+        "accepted_answers": [
+          "Now, more and more of my classmates also go jogging with me in the morning.",
+          "These days, more and more classmates jog with me in the mornings too."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "越來越…"
+          ],
+          "topic": "清晨慢跑"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "清晨慢跑"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「除了…，我也…」表示兩件事都做，用 besides、in addition to 或 apart from；這些都是介系詞，後面的「慢跑」要寫成動名詞 jogging（jog 要重複 g）。不要用 except，except 是「除了…以外都不」。「走路上學」是 walk to school 或 go to school on foot，不能寫 by walk。",
+          "evidence": [
+            "除了在公園慢跑",
+            "走路上學"
+          ],
+          "strategy_zh": "「除了 A，也 B」→ Besides + V-ing …, S + also + V …；逗號前是介系詞片語，逗號後才是完整句子。",
+          "hints": [
+            "切成四段：每天早上／除了／在公園慢跑／（我也會）走路上學",
+            "標的詞彙：morning（早上）、jog（慢跑）、park（公園）、walk（走路）、school（學校）",
+            "句型框架：Besides + V-ing …, S + also + V …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「越來越多＋名詞」寫成 more and more + 複數名詞；同學是可數名詞，要用 classmates，後面的動詞也用複數形 jog（不加 s）。「在早上」是 in the morning；「和我一起」用 with me（with 後面接受格）。",
+          "evidence": [
+            "越來越多同學",
+            "在早上"
+          ],
+          "strategy_zh": "看到「越來越多」先寫 more and more，再檢查後面的名詞有沒有加 s、動詞有沒有跟著用複數。",
+          "hints": [
+            "切成四段：現在／越來越多同學／在早上／和我一起慢跑",
+            "標的詞彙：now（現在）、classmate（同學）、jog（慢跑）、morning（早上）",
+            "句型框架：More and more + 複數名詞 + V（複數）…"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "Every morning, besides jogging in the park, I also walk to school.",
+            "In addition to jogging in the park, I also walk to school every morning.",
+            "Every morning, apart from jogging in the park, I also go to school on foot."
+          ],
+          "target_words": [
+            {
+              "word": "morning",
+              "zh": "早上"
+            },
+            {
+              "word": "jog",
+              "zh": "慢跑",
+              "alternatives": [
+                "run"
+              ]
+            },
+            {
+              "word": "park",
+              "zh": "公園"
+            },
+            {
+              "word": "walk",
+              "zh": "走路",
+              "alternatives": [
+                "on foot"
+              ]
+            },
+            {
+              "word": "school",
+              "zh": "學校"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PREPVING",
+              "grammar_id": "gp-prep-gerund",
+              "label_zh": "介系詞＋動名詞（除了…：besides + V-ing）",
+              "frame": "Besides / In addition to / Apart from + V-ing …, S + also + V …",
+              "zh_trigger": "除了"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "每天早上",
+              "accepted": [
+                "Every morning",
+                "Each morning"
+              ],
+              "targets": [
+                "morning"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Everyday morning",
+                  "right": "Every morning",
+                  "explanation_zh": "everyday 是形容詞（日常的）；「每天早上」寫成 every morning。"
+                },
+                {
+                  "wrong": "Every mornings",
+                  "right": "Every morning",
+                  "explanation_zh": "every 後面接單數名詞。"
+                }
+              ]
+            },
+            {
+              "zh": "除了",
+              "accepted": [
+                "besides",
+                "In addition to",
+                "apart from",
+                "aside from"
+              ],
+              "targets": [
+                "PREPVING"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "except",
+                  "right": "besides",
+                  "explanation_zh": "這裡的「除了…也…」是「除了…之外還有」，用 besides／in addition to；except 是「除了…以外都不」，意思相反。"
+                }
+              ]
+            },
+            {
+              "zh": "在公園慢跑",
+              "accepted": [
+                "jogging in the park",
+                "running in the park",
+                "going jogging in the park"
+              ],
+              "targets": [
+                "jog",
+                "park"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "jog in the park",
+                  "right": "jogging in the park",
+                  "explanation_zh": "besides 是介系詞，後面的動詞要用動名詞 jogging。"
+                },
+                {
+                  "wrong": "joging in the park",
+                  "right": "jogging in the park",
+                  "explanation_zh": "拼字：jog 加 -ing 要重複 g，寫成 jogging。"
+                }
+              ]
+            },
+            {
+              "zh": "走路上學",
+              "accepted": [
+                "also walk to school",
+                "walk to school",
+                "also go to school on foot",
+                "go to school on foot"
+              ],
+              "targets": [
+                "walk",
+                "school"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "go to school by walk",
+                  "right": "walk to school",
+                  "explanation_zh": "walk 是動詞，不能接在 by 後面；「走路上學」寫 walk to school 或 go to school on foot。"
+                },
+                {
+                  "wrong": "walk to the school",
+                  "right": "walk to school",
+                  "explanation_zh": "「上學」的 school 指去上課，不加 the。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "collocation",
+              "zh": "走路上學",
+              "literal_error": "Every morning, besides jogging in the park, I also go to school by walk.",
+              "part": 4,
+              "explanation_zh": "照中文順序寫成 go to school by walk 是常見錯誤：walk 是動詞，要寫 walk to school 或 go to school on foot，這一部分扣分。"
+            }
+          ],
+          "bonus": []
+        },
+        "2": {
+          "references": [
+            "Now more and more classmates also jog with me in the morning.",
+            "Now, more and more of my classmates also go jogging with me in the morning.",
+            "These days, more and more classmates jog with me in the mornings too."
+          ],
+          "target_words": [
+            {
+              "word": "now",
+              "zh": "現在",
+              "alternatives": [
+                "these days",
+                "nowadays"
+              ]
+            },
+            {
+              "word": "classmate",
+              "zh": "同學",
+              "alternatives": [
+                "student"
+              ]
+            },
+            {
+              "word": "jog",
+              "zh": "慢跑",
+              "alternatives": [
+                "run"
+              ]
+            },
+            {
+              "word": "morning",
+              "zh": "早上"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "COMP",
+              "grammar_id": "gp-more-and-more",
+              "label_zh": "越來越…（more and more + 複數名詞）",
+              "frame": "More and more + 複數名詞 + V（複數）…",
+              "zh_trigger": "越來越多"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "現在",
+              "accepted": [
+                "Now",
+                "These days",
+                "Nowadays"
+              ],
+              "targets": [
+                "now"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Now days",
+                  "right": "Nowadays",
+                  "explanation_zh": "「現今」是一個字 nowadays，不要拆開寫。"
+                }
+              ]
+            },
+            {
+              "zh": "越來越多同學",
+              "accepted": [
+                "more and more classmates",
+                "more and more of my classmates",
+                "more and more students"
+              ],
+              "targets": [
+                "COMP",
+                "classmate"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "more and more classmate",
+                  "right": "more and more classmates",
+                  "explanation_zh": "more and more 後面接可數名詞要用複數。"
+                },
+                {
+                  "wrong": "more and more many classmates",
+                  "right": "more and more classmates",
+                  "explanation_zh": "more 已經是 many 的比較級，不要再加 many。"
+                }
+              ]
+            },
+            {
+              "zh": "在早上",
+              "accepted": [
+                "in the morning",
+                "in the mornings",
+                "every morning"
+              ],
+              "targets": [
+                "morning"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "at the morning",
+                  "right": "in the morning",
+                  "explanation_zh": "「在早上」用 in the morning；at 用在 at night、at noon。"
+                }
+              ]
+            },
+            {
+              "zh": "和我一起慢跑",
+              "accepted": [
+                "jog with me",
+                "go jogging with me",
+                "run with me",
+                "go running with me"
+              ],
+              "targets": [
+                "jog"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "jogs with me",
+                  "right": "jog with me",
+                  "explanation_zh": "主詞 more and more classmates 是複數，動詞不加 s。"
+                },
+                {
+                  "wrong": "jog together with I",
+                  "right": "jog with me",
+                  "explanation_zh": "介系詞 with 後面要用受格 me。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "plural_countable",
+              "zh": "越來越多同學",
+              "literal_error": "Now more and more classmate also jog with me in the morning.",
+              "part": 2,
+              "explanation_zh": "中文「同學」沒有單複數，照字面寫 classmate 會漏掉複數；more and more 後面的可數名詞要用 classmates，這一部分扣分。"
+            }
+          ],
+          "bonus": []
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-basic-03",
+    "lot": "translation-basic-03",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "a2d0efb5c61ab9bdba02f949c0e9c7a37fac919a2d053a97cc75848f11db3021",
+    "spec_id": "translation-basic@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T07:59:01Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T07:40:01Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Every morning, besides jogging in the park, I also walk to school.",
+            "confidence": "high",
+            "explanation_zh": "「除了……也……」是包含（不是排除），所以用 besides + V-ing（也可用 in addition to + V-ing），不可用 except；每天的習慣用現在簡單式。"
+          },
+          "2": {
+            "translation": "Now, more and more of my classmates also jog with me in the morning.",
+            "confidence": "high",
+            "explanation_zh": "「越來越多」用 more and more；「同學」配合第一句的語境指自己的同學，用 my classmates；「會」表習慣，用現在簡單式。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PREPVING"
+            ],
+            "used_target_words": [
+              "morning",
+              "jog",
+              "park",
+              "walk",
+              "school"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "COMP"
+            ],
+            "used_target_words": [
+              "now",
+              "classmate",
+              "jog",
+              "morning"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "morning",
+              "jog",
+              "park",
+              "walk",
+              "school"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PREPVING": true
+            },
+            "program_match": true
+          },
+          "2": {
+            "target_words_found": [
+              "now",
+              "classmate",
+              "jog",
+              "morning"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "COMP": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T07:39:22Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Every morning, besides jogging in the park, I also walk to school.",
+            "confidence": "high",
+            "explanation_zh": "「除了…也…」用 besides／in addition to 接動名詞 jogging；「走路上學」譯成 walk to school；每天的習慣用現在簡單式。"
+          },
+          "2": {
+            "translation": "Now, more and more classmates also jog with me in the morning.",
+            "confidence": "high",
+            "explanation_zh": "「越來越多」用 more and more；「現在」描述現況用現在簡單式；「和我一起慢跑」用 jog with me。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PREPVING"
+            ],
+            "used_target_words": [
+              "morning",
+              "jog",
+              "park",
+              "walk",
+              "school"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "COMP"
+            ],
+            "used_target_words": [
+              "now",
+              "classmate",
+              "jog",
+              "morning"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "morning",
+              "jog",
+              "park",
+              "walk",
+              "school"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PREPVING": true
+            },
+            "program_match": true
+          },
+          "2": {
+            "target_words_found": [
+              "now",
+              "classmate",
+              "jog",
+              "morning"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "COMP": true
+            },
+            "program_match": true
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

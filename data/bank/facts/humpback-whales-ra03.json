@@ -1,0 +1,240 @@
+{
+  "schema": "gsat-bank-facts/v1",
+  "id": "humpback-whales-ra03",
+  "title": "Humpback whales: the whaling era, protection, and recovery (incl. western South Atlantic); whales killed per decade",
+  "sdgs": [
+    14
+  ],
+  "created_on": "2026-10-09",
+  "created_by": "claude-opus-5-5",
+  "sources": [
+    {
+      "id": "s1",
+      "publisher": "Our World in Data",
+      "title": "Number of whales killed globally per decade (whales-killed-per-decade)",
+      "url": "https://ourworldindata.org/grapher/whales-killed-per-decade",
+      "accessed": "2026-10-09",
+      "license": "CC-BY-4.0",
+      "use": "dataset",
+      "note": "原始資料：Rocha, Clapham & Ivashchenko (2014)（1990 年以前，只含商業捕鯨）；International Whaling Commission（1990 年以後，含原住民生計捕鯨）。數值由 grapher CSV（csvType=full）取得，World 一列；年份是該十年的起始年（1900＝1900–1909）。圖表只取 1900–2010 這 12 個完整的十年（2020 年代只有 2020–2024，未納入）"
+    },
+    {
+      "id": "s2",
+      "publisher": "NOAA Fisheries (U.S. National Oceanic and Atmospheric Administration)",
+      "title": "Humpback Whale (species profile)",
+      "url": "https://www.fisheries.noaa.gov/species/humpback-whale",
+      "accessed": "2026-10-09",
+      "license": "U.S. federal government work (facts only)",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s3",
+      "publisher": "University of Washington News",
+      "title": "Humpback whale population on the rise after near miss with extinction (2019-10-21)",
+      "url": "https://www.washington.edu/news/2019/10/21/humpback-whale-population-on-the-rise-after-near-miss-with-extinction/",
+      "accessed": "2026-10-09",
+      "license": "University of Washington copyright (facts only)",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s4",
+      "publisher": "Science News",
+      "title": "Humpback whales in the South Atlantic have recovered from near-extinction (2019-11-18)",
+      "url": "https://www.sciencenews.org/article/humpback-whales-south-atlantic-have-recovered-near-extinction",
+      "accessed": "2026-10-09",
+      "license": "Society for Science copyright (facts only)",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s5",
+      "publisher": "Our World in Data",
+      "title": "Number of whales killed (whale-catch), by species",
+      "url": "https://ourworldindata.org/grapher/whale-catch",
+      "accessed": "2026-10-09",
+      "license": "CC-BY-4.0",
+      "use": "fact_only",
+      "note": "各物種的年度捕獲數，用來確認座頭鯨之外還有藍鯨、長鬚鯨、抹香鯨、小鬚鯨等也被大量捕殺"
+    }
+  ],
+  "facts": [
+    {
+      "id": "f1",
+      "text": "Humpback whales often jump above the waves and hit the water with their long fins or tails.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f2",
+      "text": "Some humpback populations travel about 5,000 miles between warm tropical waters, where they mate and give birth, and cold feeding grounds.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f3",
+      "text": "Humpbacks feed on krill and small fish.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f4",
+      "text": "The black-and-white pattern on the underside of each humpback's tail is unique, so scientists use it to identify individual whales.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f5",
+      "text": "Industrial whaling in the 20th century killed many kinds of whales, including blue, fin, sperm, minke and humpback whales.",
+      "source_ids": [
+        "s5"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f6",
+      "text": "Before commercial whaling was stopped, nearly every humpback population had shrunk sharply; most had lost over 95 percent of their numbers.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f7",
+      "text": "About 25,000 humpbacks were caught in the western South Atlantic, off Brazil, over about 12 years in the early 1900s.",
+      "source_ids": [
+        "s3"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f8",
+      "text": "The western South Atlantic humpback population fell to about 450 whales by the 1950s.",
+      "source_ids": [
+        "s3",
+        "s4"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f9",
+      "text": "Humpbacks gained protection in the 1960s after scientists saw their numbers dropping around the world.",
+      "source_ids": [
+        "s3"
+      ],
+      "kind": "date"
+    },
+    {
+      "id": "f10",
+      "text": "A moratorium (pause) on all commercial whaling, set by the International Whaling Commission, began in the mid-1980s; it gave further protection and played a major role in humpback recovery.",
+      "source_ids": [
+        "s2",
+        "s3"
+      ],
+      "kind": "date"
+    },
+    {
+      "id": "f11",
+      "text": "An International Whaling Commission assessment carried out between 2006 and 2015 had estimated that the western South Atlantic population had recovered to only about 30 percent of its size before hunting.",
+      "source_ids": [
+        "s3",
+        "s4"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f12",
+      "text": "A 2019 study using new data on past catches, genetics and life history estimated the population at about 25,000 whales, about 93 percent of its size before hunting.",
+      "source_ids": [
+        "s3",
+        "s4"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f13",
+      "text": "Of the 14 humpback populations (distinct population segments) recognized under U.S. law, nine are no longer listed as endangered or threatened; four are endangered and one is threatened.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f14",
+      "text": "Humpbacks today face threats from getting caught in fishing gear, being hit by ships, and underwater noise.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f15",
+      "text": "Whales compete with penguins and seals for krill, so the recovery of humpbacks may affect other animals.",
+      "source_ids": [
+        "s3"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f16",
+      "text": "Derived from the dataset: the most whales were killed in the 1960s (703,235); more were killed in the 2000s (18,141) than in the 1990s (10,300); more in the 1950s (613,862) than in the 1930s (403,287).",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "number"
+    }
+  ],
+  "datasets": [
+    {
+      "id": "d1",
+      "source_id": "s1",
+      "title": "Number of whales killed globally per decade (all species)",
+      "indicator": "OWID whales-killed-per-decade, World",
+      "unit": "whales",
+      "categories": [
+        "1900s",
+        "1910s",
+        "1920s",
+        "1930s",
+        "1940s",
+        "1950s",
+        "1960s",
+        "1970s",
+        "1980s",
+        "1990s",
+        "2000s",
+        "2010s"
+      ],
+      "series": [
+        {
+          "name": "Whales killed",
+          "values": [
+            52110,
+            177557,
+            229100,
+            403287,
+            256989,
+            613862,
+            703235,
+            363661,
+            77074,
+            10300,
+            18141,
+            14957
+          ]
+        }
+      ],
+      "note": "Decade start year: 1900s = 1900–1909. Before 1990: industrial whaling only (Rocha et al. 2014); from 1990: IWC records including subsistence whaling."
+    }
+  ],
+  "notes": null
+}

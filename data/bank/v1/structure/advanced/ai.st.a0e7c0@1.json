@@ -1,0 +1,625 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.st.a0e7c0",
+  "version": 1,
+  "section_type": "structure",
+  "format_version": "structure-4x5",
+  "tier": "advanced",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": "Every spring, millions of people across Japan head outdoors for hanami, a word that means “flower viewing.” Friends, families, and coworkers spread blankets beneath cherry trees and share food and drinks under the pink and white blossoms. The custom is centuries old; long ago, nobles at the emperor’s court held parties to admire the flowers and write poems about them.\nPlanning a hanami party, however, is not as easy as it sounds. [[1]] Within a week or so of opening, most of the petals have already fallen. To make matters harder, the trees do not bloom on the same date every year, since a warm spring can bring the flowers out much earlier than a cold one.\n[[2]] Each year, weather experts publish maps predicting when the trees will bloom in each part of the country. On the main islands, the flowers usually open first in the warm south, often in late March. [[3]] By the time they reach the northern island of Hokkaido, it is already May. Linked together, the dates on these maps form a line that the Japanese call the “cherry blossom front,” and its progress is reported on the evening news almost like the weather.\n[[4]] In the old capital of Kyoto, people noted the dates of the blossoms in diaries and court records for more than a thousand years. Scientists now use these records to study how the climate has changed. They have found that in recent decades, the trees have tended to bloom earlier than in the past, most likely because springs are getting warmer.",
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": {
+      "A": "Instead of guessing, most people simply check a forecast.",
+      "B": "Cherry blossoms are well known for their very short lives.",
+      "C": "Evening news programs show the best places to see the flowers.",
+      "D": "From there, the blossoms move slowly north as the weather warms.",
+      "E": "Keeping such a close eye on the blossoms is nothing new in Japan."
+    },
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "B",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "lexical_cohesion",
+          "clue_raw": "SP|LX|F|L",
+          "key_phrase": "their very short lives → Within a week or so of opening, most of the petals have already fallen; To make matters harder"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "A",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "contrast",
+          "clue_raw": "BR|CN|BF|L",
+          "key_phrase": "Instead of guessing ← the trees do not bloom on the same date every year; check a forecast → weather experts publish maps predicting when the trees will bloom"
+        }
+      },
+      {
+        "no": 3,
+        "label": "3",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "D",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "chronology",
+          "clue_raw": "SQ|CN|BF|L",
+          "key_phrase": "From there ← open first in the warm south, often in late March; move slowly north → By the time they reach the northern island of Hokkaido, it is already May"
+        }
+      },
+      {
+        "no": 4,
+        "label": "4",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "E",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "topic_sentence",
+          "clue_raw": "TS|PR|BF|P",
+          "key_phrase": "such a close eye ← 第三段整段（預測地圖、櫻花前線、晚間新聞）; nothing new → noted the dates … for more than a thousand years"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "日本賞櫻與櫻花前線",
+      "genre": "expository",
+      "sdgs": [],
+      "text_format": "continuous"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "前一句說規劃賞花聚會並不像聽起來那麼容易，但沒有說難在哪裡；空格要說出第一個困難。下一句 Within a week or so of opening, most of the petals have already fallen（開花後大約一週，大部分花瓣就已經掉了）具體說明 (B) 的 their very short lives（花期非常短）；再下一句 To make matters harder（更麻煩的是）表示前面已經有一個困難，接著說每年開花日期不同。要靠後一句的細節回指才能確定，選 (B)。",
+          "evidence": [
+            "Cherry blossoms are well known for their very short lives.",
+            "Within a week or so of opening, most of the petals have already fallen.",
+            "To make matters harder, the trees do not bloom on the same date every year, since a warm spring can bring the flowers out much earlier than a cold one."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "lexical_cohesion",
+          "option_notes_zh": {
+            "A": "(A) 說人們不用猜、直接查預報，是解決問題的辦法；這裡才剛要說明困難，下一句「花瓣一週就掉光」也不是查預報的內容，To make matters harder 更不能接在辦法之後。",
+            "C": "多餘句：(C) 說晚間新聞節目會介紹最佳賞花地點，與「規劃不容易」無關；下一句 Within a week or so of opening 的 opening 指花開，(C) 沒有提到開花，接不上，新聞也要到第三段才出現。",
+            "D": "(D) 說櫻花從那裡慢慢往北開，From there 找不到起點（前面還沒說哪裡先開），而且是第三段櫻花前線的內容。",
+            "E": "(E) 說這麼密切地關注櫻花在日本並不新鮮，such a close eye 前面沒有可指的內容；這裡在講困難，不是歷史。"
+          },
+          "strategy_zh": "空格前一句只說「不容易」而沒說原因時，往後讀：細節句（一週就掉光）會說明空格，To make matters harder、What’s more 則告訴你空格是「第一個」困難。找和細節意思相同的選項。",
+          "hints": [
+            "前一句說規劃賞花不容易，下一句說開花一週左右花瓣就掉了，這說明了櫻花的什麼特性？",
+            "To make matters harder 表示前面已經提過一個困難，那是什麼？",
+            "答案說櫻花以花期非常短而聞名。"
+          ]
+        },
+        "2": {
+          "explanation_zh": "前一句說櫻花每年開花的日期不同，暖春會提早開，所以很難事先決定聚會日期。(A) 用 Instead of guessing（不必用猜的）和這種不確定形成對照，說大多數人只要查預報就好；下一句 Each year, weather experts publish maps predicting when the trees will bloom … 說明預報是什麼：氣象專家每年發布地圖，預測各地何時開花（forecast ↔ maps predicting）。前後都要對上才能確定，選 (A)。",
+          "evidence": [
+            "To make matters harder, the trees do not bloom on the same date every year, since a warm spring can bring the flowers out much earlier than a cold one.",
+            "Instead of guessing, most people simply check a forecast.",
+            "Each year, weather experts publish maps predicting when the trees will bloom in each part of the country."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "contrast",
+          "option_notes_zh": {
+            "B": "(B) 說櫻花的花期非常短，是第二段的第一個困難；前一句已經用 To make matters harder 說到第二個困難，再回頭講第一個，順序顛倒，也接不到下一句的預測地圖。",
+            "C": "多餘句：(C) 說晚間新聞節目會介紹最佳賞花地點，和下一句的氣象地圖看似相關，但新聞要到這一段最後才出現；而且 (C) 講的是「去哪裡看」，不是解決「哪一天開」的問題，接不上前一句的日期問題。",
+            "D": "(D) 說櫻花從那裡往北開，From there 前面沒有出發點；下一句還在介紹預測地圖，(D) 應放在「南部先開」之後。",
+            "E": "(E) 說這麼密切地關注櫻花並不新鮮，但前一句只說日期會變，沒有描述任何關注的行為，such a close eye 沒有先行詞；下一句講的是現在的預報，也不能證明「不新鮮」。(E) 是最後一段的開頭。"
+          },
+          "strategy_zh": "前一段結尾提出問題（日期每年不同），下一段開頭常是解決辦法；Instead of、Fortunately、To solve this 這類詞是承上啟下的訊號。再用下一句的內容（預測地圖）確認辦法是什麼。",
+          "hints": [
+            "前一句說櫻花的開花日期有什麼問題？",
+            "下一句說氣象專家發布預測地圖，這可以讓人們不必做什麼？",
+            "答案說大多數人不用猜，只要查看預報就好。"
+          ]
+        },
+        "3": {
+          "explanation_zh": "前一句說在日本本島，櫻花通常最先在溫暖的南部開，多半在三月下旬；(D) 的 From there（從那裡開始）接續這個起點，說櫻花隨著天氣變暖慢慢往北開。下一句 By the time they reach the northern island of Hokkaido, it is already May 的 they 指櫻花，reach（抵達）北方的北海道正好接續 move slowly north，三月 → 五月的時間順序也一致。選 (D)。",
+          "evidence": [
+            "On the main islands, the flowers usually open first in the warm south, often in late March.",
+            "From there, the blossoms move slowly north as the weather warms.",
+            "By the time they reach the northern island of Hokkaido, it is already May."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "chronology",
+          "option_notes_zh": {
+            "A": "(A) 說大多數人查預報，下一句的 they 會變成指「人們」，「人們抵達北海道時已經五月」說不通；而且 (A) 應放在這一段開頭。",
+            "B": "(B) 說櫻花的花期非常短，下一句的 they 雖然也能指櫻花，但 (B) 沒有說櫻花「移動」，reach the northern island 就沒有來由；(B) 屬於第二段。",
+            "C": "多餘句：(C) 說晚間新聞節目介紹賞花地點，下一句的 they 會變成指新聞節目，「新聞節目抵達北海道」說不通；也打斷了由南往北的時間順序。",
+            "E": "(E) 說密切關注櫻花並不新鮮，是談歷史的段首句；放在這裡打斷「南部先開 → 抵達北海道」的順序，下一句的 they 也沒有合適的指涉。"
+          },
+          "strategy_zh": "描述「先…，再…，到…時」的段落，要找能接住起點（first in the south）又引出終點（reach Hokkaido）的句子；From there、Then、Later 這類時間、空間的順序詞就是線索，再用代名詞 they 核對。",
+          "hints": [
+            "前一句說櫻花最先在哪裡、什麼時候開？",
+            "下一句說 they 抵達北方的北海道時已經五月，they 是什麼？它們怎麼移動？",
+            "答案說櫻花從那裡開始，隨著天氣變暖慢慢往北開。"
+          ]
+        },
+        "4": {
+          "explanation_zh": "第三段說日本每年發布開花預測地圖，櫻花前線的進度還像天氣一樣上晚間新聞——這就是 (E) 所說的 such a close eye（如此密切的關注），such 回指的是第三段整段。(E) 再說這種關注 nothing new（並不新鮮），下一句 In the old capital of Kyoto, people noted the dates of the blossoms in diaries and court records for more than a thousand years 用京都一千多年的日記與宮廷紀錄證明「不新鮮」，後面再談科學家用這些紀錄研究氣候。要把第三段整段當作 such 的先行詞，選 (E)。",
+          "evidence": [
+            "Linked together, the dates on these maps form a line that the Japanese call the “cherry blossom front,” and its progress is reported on the evening news almost like the weather.",
+            "Keeping such a close eye on the blossoms is nothing new in Japan.",
+            "In the old capital of Kyoto, people noted the dates of the blossoms in diaries and court records for more than a thousand years."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "topic_sentence",
+          "option_notes_zh": {
+            "A": "(A) 說大多數人查預報，是第三段的開頭；預報已經介紹完，再說一次只是重複，也無法引出下一句京都一千多年的紀錄。",
+            "B": "(B) 說櫻花的花期非常短，是第二段的困難；放在這裡，下一句京都的歷史紀錄沒有被引出的理由。",
+            "C": "多餘句：(C) 和前一句都提到 evening news，像是在補充新聞的內容，最容易被誤選；但最後一段講的是京都一千多年的紀錄與氣候研究，(C) 談的是今天的賞花地點，無法引出下一句的歷史，段落主旨接不上。",
+            "D": "(D) 說櫻花從南往北開，是第三段中間的句子；放在這裡，From there 沒有起點，下一句的京都紀錄也和櫻花的移動無關。"
+          },
+          "strategy_zh": "段首空格要同時看上一段在講什麼、這一段在講什麼。such、this、these 的先行詞可能是上一整段；nothing new、has a long history 這類說法，下一句通常會舉出過去的例子來證明。和前一句共用字的選項，要確認它能不能引出這一段的主題。",
+          "hints": [
+            "第三段描述了日本人怎麼關注櫻花？",
+            "下一句說京都人記錄櫻花日期已經有一千多年，這證明了什麼「並不新鮮」？",
+            "答案說這麼密切地關注櫻花，在日本並不是新鮮事。"
+          ]
+        }
+      }
+    },
+    "translation_zh": {
+      "text": "每年春天，日本各地有數百萬人到戶外「花見」，這個詞的意思是「賞花」。朋友、家人和同事在櫻花樹下鋪上墊子，在粉紅與白色的花朵下分享食物和飲料。這個習俗已有好幾百年的歷史；很久以前，天皇宮廷裡的貴族就會舉辦宴會欣賞櫻花，並為它們寫詩。\n然而，規劃一場賞花聚會並不像聽起來那麼容易。【1】櫻花以花期非常短暫而聞名。開花後大約一週，大部分的花瓣就已經掉落了。更麻煩的是，櫻花每年開花的日期都不一樣，因為溫暖的春天會讓花比寒冷的春天早開許多。\n【2】大多數人不用憑空猜測，只要查看預報就好。每年，氣象專家都會發布地圖，預測全國各地的櫻花何時開花。在日本本島，櫻花通常最先在溫暖的南部開放，多半是在三月下旬。【3】從那裡開始，櫻花隨著天氣轉暖慢慢往北開。等到抵達北方的北海道時，已經是五月了。把這些地圖上的日期連起來，就形成一條日本人稱為「櫻花前線」的線，它的進度幾乎像天氣一樣在晚間新聞中報導。\n【4】這樣密切地關注櫻花，在日本並不是新鮮事。在古都京都，人們在日記和宮廷紀錄中記下櫻花開花的日期，已經有一千多年了。科學家現在利用這些紀錄研究氣候的變化。他們發現，近幾十年來，櫻花往往比過去開得早，最可能的原因是春天越來越暖和。\n（多餘句 (C)：晚間新聞節目會介紹最佳的賞花地點。）"
+    },
+    "elimination": {
+      "feasible": {
+        "1": [
+          "B"
+        ],
+        "2": [
+          "A"
+        ],
+        "3": [
+          "D"
+        ],
+        "4": [
+          "E"
+        ]
+      },
+      "perfect_matchings": 1
+    },
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": null,
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "3-V-7",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "7-V-5",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "B-V-8",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "9-V-2",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "8-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "C-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": "本文由 AI 撰寫"
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-08-structure-advanced-02",
+    "lot": "structure-advanced-02",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/structure",
+    "prompt_sha256": "f78d49355061b11c3fe70d74cccda30a2aa094a8a145f09759ada62e736147e4",
+    "spec_id": "structure-advanced@2026-10-08",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 257,
+    "sentences": 13,
+    "avg_sentence_length": 19.77,
+    "denominator": 252,
+    "proper_nouns": [
+      "Hokkaido",
+      "Japan",
+      "Japanese",
+      "Kyoto"
+    ],
+    "numbers": 1,
+    "coverage_l1_4": 0.9841,
+    "coverage_l1_6": 0.9841,
+    "offlist_ratio": 0.0159,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {
+      "1": 208,
+      "2": 21,
+      "3": 10,
+      "4": 9,
+      "off": 4
+    },
+    "offlist_words": [
+      "coworkers",
+      "hanami",
+      "petals"
+    ],
+    "band": {
+      "tier": "advanced",
+      "basis": "lot structure-advanced-02（SPEC §3.4＋出題規格書 passage_overrides（words、coverage_L1_4_min（取代 SPEC 的區間）、coverage_L1_6_min、offlist_max、beyond_l4_ratio_max））",
+      "ok": true,
+      "checks": {
+        "word_count": {
+          "value": 257,
+          "min": 220,
+          "max": 310,
+          "ok": true
+        },
+        "coverage_l1_4": {
+          "value": 0.9841,
+          "min": 0.9,
+          "max": null,
+          "ok": true
+        },
+        "coverage_l1_6": {
+          "value": 0.9841,
+          "min": 0.94,
+          "max": null,
+          "ok": true
+        },
+        "offlist_ratio": {
+          "value": 0.0159,
+          "min": null,
+          "max": 0.06,
+          "ok": true
+        },
+        "avg_sentence_length": {
+          "value": 19.77,
+          "min": 15,
+          "max": 21,
+          "ok": true
+        },
+        "beyond_l4_ratio": {
+          "value": 0.0,
+          "min": null,
+          "max": 0.06,
+          "ok": true
+        }
+      }
+    }
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T12:22:19Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T00:00:00Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "answers": {
+          "1": {
+            "answer": "B",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Planning a hanami party, however, is not as easy as it sounds.",
+              "Within a week or so of opening, most of the petals have already fallen."
+            ],
+            "explanation_zh": "前句說賞花派對不好安排，後句說開花一週左右就凋落，中間需要 B「櫻花以花期很短著稱」作為原因的總述。",
+            "feasible": [
+              "B"
+            ]
+          },
+          "2": {
+            "answer": "A",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "To make matters harder, the trees do not bloom on the same date every year, since a warm spring can bring the flowers out much earlier than a cold one.",
+              "Each year, weather experts publish maps predicting when the trees will bloom in each part of the country."
+            ],
+            "explanation_zh": "前段說花期每年不同難以預料，A「不用猜，大多數人看預報」轉入下句氣象專家每年公布的開花預測地圖。",
+            "feasible": [
+              "A"
+            ]
+          },
+          "3": {
+            "answer": "D",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "On the main islands, the flowers usually open first in the warm south, often in late March.",
+              "By the time they reach the northern island of Hokkaido, it is already May."
+            ],
+            "explanation_zh": "From there 指前句的溫暖南部，D 說花期隨天氣變暖往北移，後句 By the time they reach ... Hokkaido 接續北移的終點。",
+            "feasible": [
+              "D"
+            ]
+          },
+          "4": {
+            "answer": "E",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "In the old capital of Kyoto, people noted the dates of the blossoms in diaries and court records for more than a thousand years."
+            ],
+            "explanation_zh": "E「如此密切關注櫻花在日本並不新鮮」承接前段的櫻前線報導（such a close eye），並引出後句京都千年來記錄花期的歷史。",
+            "feasible": [
+              "E"
+            ]
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T12:22:19Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "answers": {
+          "1": {
+            "answer": "B",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Planning a hanami party, however, is not as easy as it sounds.",
+              "Within a week or so of opening, most of the petals have already fallen."
+            ],
+            "explanation_zh": "前句說辦賞花不容易，後句說花開後約一週就凋落，B 說花期很短，連接兩者。",
+            "feasible": [
+              "B"
+            ]
+          },
+          "2": {
+            "answer": "A",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "To make matters harder, the trees do not bloom on the same date every year, since a warm spring can bring the flowers out much earlier than a cold one.",
+              "Each year, weather experts publish maps predicting when the trees will bloom in each part of the country."
+            ],
+            "explanation_zh": "前面說開花日期每年不同，後面說氣象專家發布預測地圖，A 的 Instead of guessing 把問題與解決辦法接起來。",
+            "feasible": [
+              "A"
+            ]
+          },
+          "3": {
+            "answer": "D",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "On the main islands, the flowers usually open first in the warm south, often in late March.",
+              "By the time they reach the northern island of Hokkaido, it is already May."
+            ],
+            "explanation_zh": "前句講南方先開，後句講到北海道已是五月，D 的 From there 與 move slowly north 填補中間的北移過程。",
+            "feasible": [
+              "D"
+            ]
+          },
+          "4": {
+            "answer": "E",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "In the old capital of Kyoto, people noted the dates of the blossoms in diaries and court records for more than a thousand years.",
+              "Keeping such a close eye on the blossoms is nothing new in Japan."
+            ],
+            "explanation_zh": "新段落以京都千年來記錄開花日期為例，E 說明密切注意櫻花並不是新鮮事，作為該段主題句。",
+            "feasible": [
+              "E"
+            ]
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "distractor_audit",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T12:21:47Z",
+      "details": {
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "items": {
+          "1": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "To make matters harder, the trees do not bloom on the same date every year, since a warm spring can bring the flowers out much earlier than a cold one.",
+              "explanation_zh": "(A) 是解決辦法（查預報），但這裡才開始說明規劃的困難；下一句「開花一週左右花瓣就掉」不是預報的內容，再下一句 To make matters harder 也不能接在辦法之後。"
+            },
+            "C": {
+              "verdict": "clearly_wrong",
+              "error_type": "off_topic",
+              "evidence": "Within a week or so of opening, most of the petals have already fallen.",
+              "explanation_zh": "多餘句：(C) 說晚間新聞介紹賞花地點，和「規劃不容易」無關；下一句的 opening（開花）與花瓣掉落，在 (C) 裡沒有可以承接的內容。"
+            },
+            "D": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Planning a hanami party, however, is not as easy as it sounds.",
+              "explanation_zh": "(D) 的 From there 沒有起點（前面沒說哪裡先開）；這裡在講規劃賞花聚會的困難，不是櫻花往北開的順序。"
+            },
+            "E": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Planning a hanami party, however, is not as easy as it sounds.",
+              "explanation_zh": "(E) 的 such a close eye 前面沒有任何關注櫻花的行為可指；這裡在談規劃的困難，不是歷史。"
+            }
+          },
+          "2": {
+            "B": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "To make matters harder, the trees do not bloom on the same date every year, since a warm spring can bring the flowers out much earlier than a cold one.",
+              "explanation_zh": "前一句已用 To make matters harder 說到第二個困難，(B) 再回頭講花期短（第一個困難），順序顛倒；也引不出下一句的開花預測地圖。"
+            },
+            "C": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "To make matters harder, the trees do not bloom on the same date every year, since a warm spring can bring the flowers out much earlier than a cold one.",
+              "explanation_zh": "多餘句：前一句的問題是「哪一天開」，(C) 講的是「去哪裡看」，沒有回應日期的不確定；下一句的地圖預測的也是開花時間，不是地點。"
+            },
+            "D": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Each year, weather experts publish maps predicting when the trees will bloom in each part of the country.",
+              "explanation_zh": "(D) 的 From there 前面沒有出發點；下一句才開始介紹預測地圖，(D) 要放在「南部先開」之後。"
+            },
+            "E": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "To make matters harder, the trees do not bloom on the same date every year, since a warm spring can bring the flowers out much earlier than a cold one.",
+              "explanation_zh": "前一句只說開花日期每年不同，沒有任何關注行為讓 such a close eye 回指；下一句講的是現在的預報，也無法說明「並不新鮮」。"
+            }
+          },
+          "3": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "By the time they reach the northern island of Hokkaido, it is already May.",
+              "explanation_zh": "放入 (A) 後，下一句的 they 會指「人們」，「人們抵達北海道時已經五月」說不通；查預報也應在本段開頭。"
+            },
+            "B": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "By the time they reach the northern island of Hokkaido, it is already May.",
+              "explanation_zh": "(B) 沒有說櫻花往北移動，下一句 reach the northern island 沒有來由；花期短是第二段的困難。"
+            },
+            "C": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "By the time they reach the northern island of Hokkaido, it is already May.",
+              "explanation_zh": "多餘句：放入 (C) 後，下一句的 they 會變成指新聞節目，「新聞節目抵達北海道」說不通；也打斷由南往北的時間順序。"
+            },
+            "E": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "On the main islands, the flowers usually open first in the warm south, often in late March.",
+              "explanation_zh": "(E) 是談歷史的段首句，放在「南部先開」與「抵達北海道」之間打斷了順序，下一句 they 的移動也沒有交代。"
+            }
+          },
+          "4": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "In the old capital of Kyoto, people noted the dates of the blossoms in diaries and court records for more than a thousand years.",
+              "explanation_zh": "(A) 查預報已在上一段開頭介紹過，放在這裡是重複；也無法引出下一句京都一千多年的紀錄。"
+            },
+            "B": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "In the old capital of Kyoto, people noted the dates of the blossoms in diaries and court records for more than a thousand years.",
+              "explanation_zh": "(B) 花期短是第二段的困難，放在這裡無法引出下一句京都的歷史紀錄。"
+            },
+            "C": {
+              "verdict": "clearly_wrong",
+              "error_type": "off_topic",
+              "evidence": "In the old capital of Kyoto, people noted the dates of the blossoms in diaries and court records for more than a thousand years.",
+              "explanation_zh": "多餘句：(C) 承接前一句的 evening news，但談的是今天的賞花地點；本段講的是京都一千多年的紀錄與氣候研究，(C) 無法引出。"
+            },
+            "D": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "In the old capital of Kyoto, people noted the dates of the blossoms in diaries and court records for more than a thousand years.",
+              "explanation_zh": "(D) 的 From there 沒有地點可當起點（前一句講的是新聞報導櫻花前線），櫻花北移也已在上一段說完；下一句京都的紀錄和櫻花的移動無關。"
+            }
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "unique_solution",
+      "reviewer": "record_verification.py",
+      "result": "pass",
+      "created_at": "2026-10-09T12:22:19Z",
+      "details": {
+        "method": "injective_assignment",
+        "perfect_matchings": 1,
+        "matches_key": true,
+        "feasible": {
+          "1": [
+            "B"
+          ],
+          "2": [
+            "A"
+          ],
+          "3": [
+            "D"
+          ],
+          "4": [
+            "E"
+          ]
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

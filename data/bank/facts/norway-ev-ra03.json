@@ -1,0 +1,258 @@
+{
+  "schema": "gsat-bank-facts/v1",
+  "id": "norway-ev-ra03",
+  "title": "Electric cars in Norway: incentives, charging and the share of new cars that are electric (2015-2025)",
+  "sdgs": [
+    7,
+    13
+  ],
+  "created_on": "2026-10-09",
+  "created_by": "claude-opus-5-5",
+  "sources": [
+    {
+      "id": "s1",
+      "publisher": "Our World in Data",
+      "title": "Share of new cars sold that are electric (electric-car-sales-share)",
+      "url": "https://ourworldindata.org/grapher/electric-car-sales-share",
+      "accessed": "2026-10-09",
+      "license": "CC-BY-4.0",
+      "use": "dataset",
+      "note": "原始提供者：International Energy Agency, Global EV Outlook（processed by Our World in Data）。數值由 grapher CSV（csvType=full）取得，2010–2025；圖表只取 2015、2017、2019、2021、2023、2025 四個地區"
+    },
+    {
+      "id": "s2",
+      "publisher": "CBC News",
+      "title": "What Canada can learn from Norway, the EV capital of the world (2024-01-24)",
+      "url": "https://www.cbc.ca/news/climate/canada-norway-evs-1.7092003",
+      "accessed": "2026-10-09",
+      "license": "CBC/Radio-Canada copyright (facts only)",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s3",
+      "publisher": "CNN",
+      "title": "For the first time ever, electric cars outsold gas and diesel vehicles in Norway (2019-04-04)",
+      "url": "https://www.cnn.com/2019/04/04/world/norway-zero-emission-vehicles-trnd/index.html",
+      "accessed": "2026-10-09",
+      "license": "CNN copyright (facts only)",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s4",
+      "publisher": "Our World in Data",
+      "title": "Share of new cars sold that are electric: chart metadata (definition of electric cars)",
+      "url": "https://ourworldindata.org/grapher/electric-car-sales-share",
+      "accessed": "2026-10-09",
+      "license": "CC-BY-4.0",
+      "use": "fact_only",
+      "note": "圖表說明：電動車含純電動車與插電式油電混合車"
+    }
+  ],
+  "facts": [
+    {
+      "id": "f1",
+      "text": "In this data, electric cars include fully battery-electric cars and plug-in hybrids.",
+      "source_ids": [
+        "s4"
+      ],
+      "kind": "definition"
+    },
+    {
+      "id": "f2",
+      "text": "Norway has about 5.3 million people.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f3",
+      "text": "Norway is one of the leading exporters of fossil fuels such as oil and gas.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f4",
+      "text": "More than a decade before 2024, Norway changed several policies to make electric cars more attractive, as part of cutting greenhouse gas emissions at home.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "event"
+    },
+    {
+      "id": "f5",
+      "text": "For electric cars, Norway dropped the heavy import duties and the registration and sales taxes charged on petrol and diesel cars.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f6",
+      "text": "Zero-emission cars in Norway do not pay the 25% value added tax.",
+      "source_ids": [
+        "s3"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f7",
+      "text": "Electric car owners in Norway were excused from road tolls and allowed to drive in bus lanes in crowded city centers.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f8",
+      "text": "Electric cars in Norway have also received cheaper or free parking and ferry rides.",
+      "source_ids": [
+        "s2",
+        "s3"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f9",
+      "text": "A Norwegian energy professor said the high taxes on petrol and diesel cars were the main reason people chose electric cars, while perks such as bus lanes and free parking made them convenient.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f10",
+      "text": "There are close to 8,000 fast-charging stations in Norway; most of the growth came from private money after an early boost from the government.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f11",
+      "text": "At many newer petrol stations in Norway, fast chargers come first and the fuel pumps are placed behind them.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f12",
+      "text": "In March 2019, electric cars outsold petrol and diesel cars in Norway for the first time, making up 58.4% of new cars sold that month.",
+      "source_ids": [
+        "s3"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f13",
+      "text": "Norway set a goal of ending sales of new petrol and diesel passenger cars by 2025, aiming to be the first country to do so.",
+      "source_ids": [
+        "s2",
+        "s3"
+      ],
+      "kind": "date"
+    },
+    {
+      "id": "f14",
+      "text": "Some environmentalists criticized the policies for mainly benefiting wealthy people and for putting private cars ahead of public transport.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f15",
+      "text": "Because the switch has gone so well, Norway has begun to scale back some of the benefits for electric cars.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f16",
+      "text": "The head of the Norwegian EV Association said the fast switch came from policies and the will to keep them in place for a long time.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f17",
+      "text": "Derived from the dataset: in 2025 China's share (53%) was more than twice the world share (25%); Norway's share passed one half between 2017 (39%) and 2019 (56%).",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "number"
+    }
+  ],
+  "datasets": [
+    {
+      "id": "d1",
+      "source_id": "s1",
+      "title": "Share of new cars sold that are electric (battery-electric and plug-in hybrid)",
+      "indicator": "IEA Global EV Outlook via OWID (variable 820022)",
+      "unit": "%",
+      "categories": [
+        "2015",
+        "2017",
+        "2019",
+        "2021",
+        "2023",
+        "2025"
+      ],
+      "series": [
+        {
+          "name": "Norway",
+          "values": [
+            22,
+            39,
+            56,
+            86,
+            90,
+            97
+          ]
+        },
+        {
+          "name": "China",
+          "values": [
+            1.1,
+            2.4,
+            5,
+            16,
+            38,
+            53
+          ]
+        },
+        {
+          "name": "World",
+          "values": [
+            0.68,
+            1.4,
+            2.7,
+            9.3,
+            18,
+            25
+          ]
+        },
+        {
+          "name": "United States",
+          "values": [
+            0.7,
+            1.3,
+            2.1,
+            4.7,
+            9.7,
+            10
+          ]
+        }
+      ],
+      "note": "OWID 的原始數值（兩位有效數字）；全部年份 2010–2025 見來源"
+    }
+  ],
+  "notes": null
+}

@@ -1,0 +1,715 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.rd.48f362",
+  "version": 1,
+  "section_type": "reading",
+  "format_version": "reading-4",
+  "tier": "top",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": "Every time someone streams a video or asks a chatbot a question, the request travels to a data center, a building packed with computers that run day and night. Those machines turn electricity into heat, and unless the heat is carried away, they cannot keep working properly. Carrying it away often takes water, and a surprising amount of it.\nMany large data centers rely on cooling towers. Warm water from the cooling system is pumped into the towers, where part of it evaporates and takes the heat into the air. Water that leaves as vapor does not return to the river or lake it came from, so experts describe it as consumed rather than simply used. The remaining water can circulate several times, but each round of evaporation leaves minerals behind, and once they become too concentrated, the water must be drained away and replaced. Because more water evaporates in hot weather, these centers are thirstiest in the hottest hours of the day and the hottest months of the year. One study estimated that American data centers directly used about 17 billion gallons of water in 2023, roughly three times the 5.6 billion gallons used in 2014.\nThat figure leaves out a hidden share. Many of the power plants that supply data centers with electricity cool themselves with towers of their own, so every unit of power carries a water cost. The International Energy Agency estimates that only about 40 percent of the water linked to data centers is used on site; the other 60 percent is consumed at power plants.\nReducing this footprint is harder than it sounds. Air-cooled systems use no water at all, but they need more electricity than systems that depend on evaporation. Timing offers another option. Training runs for AI models, which can take weeks, are a different matter from everyday requests. Unlike web searches and video streams, which users expect to start instantly, <b>they</b> can be scheduled for almost any hour, including cooler ones when less water is lost. Yet the coolest hours are rarely the sunniest, so the time that saves the most water may not be the time when solar power is most plentiful.",
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "single_choice",
+        "stem": "What is the main purpose of the passage?",
+        "options": {
+          "A": "To urge readers to stream fewer videos and ask chatbots fewer questions to save water.",
+          "B": "To compare how much water data centers use in different countries.",
+          "C": "To show that air cooling has already solved data centers’ water problem.",
+          "D": "To explain how data centers use water and why cutting that use is not simple."
+        },
+        "answer": "D",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "item_type": "purpose"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "single_choice",
+        "stem": "Based on the passage, what would most likely happen if a data center replaced its cooling towers with air-cooled systems?",
+        "options": {
+          "A": "Its total water footprint would disappear completely.",
+          "B": "It would need more water on cool nights than on hot days.",
+          "C": "It would use less water on site but more electricity.",
+          "D": "Its cooling water would have to be replaced more often."
+        },
+        "answer": "C",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "item_type": "inference"
+        }
+      },
+      {
+        "no": 3,
+        "label": "3",
+        "mode": "single_choice",
+        "stem": "According to the passage, which of the following is true?",
+        "options": {
+          "A": "Most of the water linked to data centers is used inside the centers themselves.",
+          "B": "U.S. data centers’ direct water use grew by over 11 billion gallons from 2014 to 2023.",
+          "C": "Water in a cooling tower can be used only once before it has to be drained.",
+          "D": "U.S. data centers directly used about five times as much water in 2023 as in 2014."
+        },
+        "answer": "B",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "item_type": "detail"
+        }
+      },
+      {
+        "no": 4,
+        "label": "4",
+        "mode": "single_choice",
+        "stem": "What does “they” in the last paragraph refer to?",
+        "options": {
+          "A": "The training of AI models.",
+          "B": "Web searches and video streams.",
+          "C": "Users of online services.",
+          "D": "Air-cooled systems."
+        },
+        "answer": "A",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "item_type": "reference"
+        },
+        "refers_to": {
+          "text": "they",
+          "occurrence": 4,
+          "note": "最後一段第五句，選文以粗體標示"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "資料中心的用水",
+      "genre": "expository",
+      "sdgs": [
+        6,
+        12
+      ],
+      "text_format": "continuous"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "第一段說資料中心產生的熱常要靠水帶走；第二、三段說明冷卻塔如何消耗水，以及發電廠用水這部分「隱藏的份額」；第四段以 Reducing this footprint is harder than it sounds 開頭，說明氣冷要多用電、改時段又和太陽能衝突。全文是在解釋資料中心如何用水，以及為什麼減少用水並不簡單。",
+          "evidence": [
+            "Carrying it away often takes water, and a surprising amount of it.",
+            "That figure leaves out a hidden share.",
+            "Reducing this footprint is harder than it sounds."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "summary",
+          "option_notes_zh": {
+            "A": "文中只用串流影片和聊天機器人當例子，說明請求會送到資料中心；作者沒有呼籲讀者少用這些服務，而是說明用水的原因與減少用水的困難。",
+            "B": "文中只提到美國資料中心的用水量，沒有比較不同國家。",
+            "C": "與原文相反：氣冷雖然不用水，卻要用更多電，而發電本身也耗水；作者說減少用水比聽起來難。"
+          },
+          "option_codes": {
+            "A": "NM",
+            "B": "NM",
+            "C": "OP"
+          },
+          "option_evidence": {
+            "C": [
+              "Air-cooled systems use no water at all, but they need more electricity than systems that depend on evaporation.",
+              "Reducing this footprint is harder than it sounds."
+            ]
+          },
+          "strategy_zh": "全文目的題要看各段主題句：第一段提出問題（散熱要用水），第二、三段說明直接與間接用水，第四段說解決辦法各有代價。正解要同時涵蓋「說明」與「困難」。",
+          "hints": [
+            "第一段說資料中心為什麼需要水？",
+            "第三段說的「隱藏的份額」是什麼？",
+            "第四段第一句對減少用水的看法是什麼？"
+          ]
+        },
+        "2": {
+          "explanation_zh": "第四段說氣冷系統完全不用水，但比靠蒸發的系統更耗電。所以把冷卻塔換成氣冷，資料中心本身的用水會減少，用電卻會增加。第三段又說發電廠也耗水，所以總用水量不一定會消失。",
+          "evidence": [
+            "Air-cooled systems use no water at all, but they need more electricity than systems that depend on evaporation.",
+            "Many of the power plants that supply data centers with electricity cool themselves with towers of their own, so every unit of power carries a water cost."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "cause_effect",
+          "option_notes_zh": {
+            "A": "符合直覺但與原文相反：氣冷要多用電，而供電的發電廠本身也要用水，所以用水足跡不會完全消失。",
+            "B": "細節錯置：天熱時蒸發較多，所以是炎熱的時段最需要水；而且換成氣冷後根本不靠蒸發。",
+            "D": "細節錯置：礦物質濃縮後要換水，是冷卻塔循環用水的情況；氣冷系統不用水。"
+          },
+          "option_codes": {
+            "A": "OP",
+            "B": "DS",
+            "D": "DS"
+          },
+          "option_evidence": {
+            "A": [
+              "Many of the power plants that supply data centers with electricity cool themselves with towers of their own, so every unit of power carries a water cost.",
+              "The International Energy Agency estimates that only about 40 percent of the water linked to data centers is used on site; the other 60 percent is consumed at power plants."
+            ],
+            "B": [
+              "Because more water evaporates in hot weather, these centers are thirstiest in the hottest hours of the day and the hottest months of the year."
+            ],
+            "D": [
+              "The remaining water can circulate several times, but each round of evaporation leaves minerals behind, and once they become too concentrated, the water must be drained away and replaced."
+            ]
+          },
+          "strategy_zh": "情境推論題：先找出文中關於該做法的「好處」與「代價」（不用水／多用電），再想代價會連帶影響什麼（發電廠用水）。「完全消失」這種符合直覺的選項要回原文檢查。",
+          "hints": [
+            "氣冷系統用不用水？用電比較多還是比較少？",
+            "第三段說發電廠和水有什麼關係？",
+            "換成氣冷後，資料中心的用水足跡會完全消失嗎？"
+          ]
+        },
+        "3": {
+          "explanation_zh": "第二段說美國資料中心 2023 年直接用水約 170 億加侖，2014 年約 56 億加侖；17 − 5.6 ＝ 11.4（十億加侖），所以增加了超過 110 億加侖。A：只有約 40% 在資料中心現場使用，60% 在發電廠；C：剩下的水可以循環好幾次；D：文中說約是三倍，不是五倍。",
+          "evidence": [
+            "One study estimated that American data centers directly used about 17 billion gallons of water in 2023, roughly three times the 5.6 billion gallons used in 2014."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "other",
+          "option_notes_zh": {
+            "A": "與原文相反：國際能源署估計只有約 40% 在現場使用，其餘 60% 消耗在發電廠。",
+            "C": "與原文相反：文中說剩下的水可以循環好幾次，直到礦物質太濃才排掉。",
+            "D": "數字近似錯：17 是 5.6 的約三倍，不是五倍。"
+          },
+          "option_codes": {
+            "A": "OP",
+            "C": "OP",
+            "D": "DS"
+          },
+          "option_evidence": {
+            "A": [
+              "The International Energy Agency estimates that only about 40 percent of the water linked to data centers is used on site; the other 60 percent is consumed at power plants."
+            ],
+            "C": [
+              "The remaining water can circulate several times, but each round of evaporation leaves minerals behind, and once they become too concentrated, the water must be drained away and replaced."
+            ],
+            "D": [
+              "One study estimated that American data centers directly used about 17 billion gallons of water in 2023, roughly three times the 5.6 billion gallons used in 2014."
+            ]
+          },
+          "strategy_zh": "數字題要自己算：「增加多少」用減法（17 − 5.6），「幾倍」用除法；也要分清楚 40% 和 60% 各指哪裡的用水。",
+          "hints": [
+            "2014 年和 2023 年的直接用水量各是多少？",
+            "兩個數字相差多少？是幾倍？",
+            "40% 和 60% 分別指哪裡的用水？"
+          ]
+        },
+        "4": {
+          "explanation_zh": "they 前面最近的複數名詞是 web searches and video streams 和 users，但句子以 Unlike（不同於）開頭，they 正是要和網路搜尋、影片串流對比的東西，也就是上一句的主詞「AI 模型的訓練工作」：它可以安排在幾乎任何時段，包括較涼爽、水分蒸發較少的時段。",
+          "evidence": [
+            "Training runs for AI models, which can take weeks, are a different matter from everyday requests.",
+            "Unlike web searches and video streams, which users expect to start instantly, they can be scheduled for almost any hour, including cooler ones when less water is lost."
+          ],
+          "blank_pos": "phrase",
+          "clue_type": "pronoun_reference",
+          "option_notes_zh": {
+            "B": "最近的複數名詞，但句子用 Unlike 把它們和 they 對比，而且使用者期待它們立刻開始，不能任意排時段。",
+            "C": "users 是期待服務立刻開始的人，不是被安排時段的對象。",
+            "D": "氣冷系統在前面幾句，句意也不是安排時段。"
+          },
+          "option_codes": {
+            "B": "NA",
+            "C": "NA",
+            "D": "DS"
+          },
+          "option_evidence": {
+            "B": [
+              "Unlike web searches and video streams, which users expect to start instantly, they can be scheduled for almost any hour, including cooler ones when less water is lost."
+            ],
+            "D": [
+              "Air-cooled systems use no water at all, but they need more electricity than systems that depend on evaporation."
+            ]
+          },
+          "strategy_zh": "指涉題遇到 Unlike X, they…，they 一定不是 X；再往前找上一句的主詞，代回去檢查句意（能安排在任何時段的是訓練工作）。",
+          "hints": [
+            "這句開頭的 Unlike 把 they 和什麼東西做對比？",
+            "上一句的主詞是什麼？",
+            "哪一種工作可以安排在任何時段、不必立刻完成？"
+          ]
+        }
+      }
+    },
+    "translation_zh": {
+      "text": "每當有人串流影片或問聊天機器人一個問題，這個請求就會傳送到資料中心——一棟擠滿日夜運轉的電腦的建築。這些機器把電轉換成熱，如果不把熱帶走，它們就無法正常運作。而帶走熱量往往需要用水，而且用量驚人。\n許多大型資料中心依靠冷卻塔。冷卻系統的溫水被抽進冷卻塔，部分的水在那裡蒸發，把熱帶進空氣中。以水蒸氣形式離開的水不會回到原本取水的河流或湖泊，所以專家說這些水是被「消耗」掉，而不只是「使用」。剩下的水可以循環好幾次，但每一輪蒸發都會留下礦物質；一旦礦物質太濃，這些水就必須排掉並換新。因為天氣熱時蒸發的水比較多，這些資料中心在一天中最熱的時段、一年中最熱的月份最「口渴」。一項研究估計，美國的資料中心在 2023 年直接用掉約 170 億加侖的水，大約是 2014 年 56 億加侖的三倍。\n這個數字還漏掉了一部分隱藏的用水。許多為資料中心供電的發電廠，也用自己的冷卻塔降溫，所以每一度電都伴隨著用水的代價。國際能源署估計，與資料中心有關的用水中，只有約 40% 是在現場使用，其餘 60% 消耗在發電廠。\n要減少這個用水足跡，比聽起來困難。氣冷系統完全不用水，但比靠蒸發的系統需要更多電力。調整時間是另一個選項。AI 模型的訓練工作可能要花上好幾週，和日常的請求不一樣。不同於使用者期待立刻開始的網路搜尋與影片串流，訓練工作幾乎可以安排在任何時段，包括水分流失較少的涼爽時段。然而，最涼爽的時段很少是陽光最充足的時段，所以最省水的時間，未必是太陽能最充沛的時間。"
+    },
+    "elimination": null,
+    "guess_targets": [
+      {
+        "word": "evaporates",
+        "options": [
+          "蒸發",
+          "結冰",
+          "流入"
+        ],
+        "answer": 0,
+        "clue_type": "cause_effect"
+      },
+      {
+        "word": "footprint",
+        "options": [
+          "（對環境的）足跡、消耗量",
+          "腳印的形狀",
+          "建築物的地基"
+        ],
+        "answer": 0,
+        "clue_type": "situational"
+      }
+    ],
+    "open_tasks": [
+      {
+        "kind": "evaluate",
+        "prompt": "A company wants to build a new data center in a hot, dry area. Based on the passage, give one piece of advice in 1–2 English sentences and explain the trade-off involved.",
+        "reference_answers": [
+          "The company could use air-cooled systems to protect the local water supply, but it should also buy clean electricity, because air cooling uses more power and power plants also consume water.",
+          "The company could schedule AI training for cooler night hours to lose less water, even though this means it cannot rely on solar power at those times."
+        ],
+        "checklist_zh": [
+          "有沒有提出一個具體的建議",
+          "有沒有說明這個做法的代價（多用電、無法用太陽能等）",
+          "有沒有用到文中的資訊",
+          "句子文法是否正確"
+        ],
+        "curriculum": [
+          "9-V-7",
+          "9-V-5"
+        ]
+      }
+    ],
+    "rubric": null,
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "3-V-13",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "3-V-15",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "9-V-5",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "9-V-2",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [
+      {
+        "source_id": "fact:data-center-water-rt02",
+        "role": "fact"
+      }
+    ],
+    "license": "original-ai",
+    "derivation": "ai-original-from-facts",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": "本文由 AI 參考下列資料撰寫，非原文轉載"
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-08-reading-top-02",
+    "lot": "reading-top-02",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/reading",
+    "prompt_sha256": "b86763750ee31e9f3144d1079d26d2178d204dd0fb7820053595599e2fb44e99",
+    "spec_id": "reading-top@2026-10-08",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 356,
+    "sentences": 18,
+    "avg_sentence_length": 19.78,
+    "denominator": 351,
+    "proper_nouns": [
+      "AI",
+      "American"
+    ],
+    "numbers": 10,
+    "coverage_l1_4": 0.9715,
+    "coverage_l1_6": 0.9744,
+    "offlist_ratio": 0.0256,
+    "beyond_l4_ratio": 0.0028,
+    "level_counts": {
+      "1": 271,
+      "2": 38,
+      "3": 18,
+      "4": 14,
+      "6": 1,
+      "off": 9
+    },
+    "offlist_words": [
+      "cannot",
+      "chatbot",
+      "evaporates",
+      "evaporation",
+      "everyday",
+      "footprint",
+      "unlike"
+    ],
+    "band": {
+      "tier": "top",
+      "basis": "lot reading-top-02（SPEC §3.4＋出題規格書 passage_overrides（words、cov_L1_4（取代 SPEC 的區間）、cov_L1_6（取代 SPEC 的區間）、offlist（取代 SPEC 的區間）、beyond_l4_ratio、mean_sent_len（取代 SPEC 的區間）））",
+      "ok": true,
+      "checks": {
+        "word_count": {
+          "value": 356,
+          "min": 320,
+          "max": 400,
+          "ok": true
+        },
+        "coverage_l1_4": {
+          "value": 0.9715,
+          "min": 0.85,
+          "max": 1,
+          "ok": true
+        },
+        "coverage_l1_6": {
+          "value": 0.9744,
+          "min": 0.87,
+          "max": 1,
+          "ok": true
+        },
+        "offlist_ratio": {
+          "value": 0.0256,
+          "min": 0,
+          "max": 0.125,
+          "ok": true
+        },
+        "avg_sentence_length": {
+          "value": 19.78,
+          "min": 16.0,
+          "max": 24.0,
+          "ok": true
+        },
+        "beyond_l4_ratio": {
+          "value": 0.0028,
+          "min": 0,
+          "max": 0.065,
+          "ok": true
+        }
+      }
+    }
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T08:04:17Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T07:53:51Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "answers": {
+          "1": {
+            "answer": "D",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Carrying it away often takes water, and a surprising amount of it.",
+              "Reducing this footprint is harder than it sounds."
+            ],
+            "explanation_zh": "前段說明資料中心如何用水，末段說明減少用水並不簡單。"
+          },
+          "2": {
+            "answer": "C",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Air-cooled systems use no water at all, but they need more electricity than systems that depend on evaporation."
+            ],
+            "explanation_zh": "氣冷不用水但更耗電；電廠本身也耗水，所以總用水足跡不會完全消失。"
+          },
+          "3": {
+            "answer": "B",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "One study estimated that American data centers directly used about 17 billion gallons of water in 2023, roughly three times the 5.6 billion gallons used in 2014."
+            ],
+            "explanation_zh": "17−5.6＝11.4（十億加侖），超過 11；現場只占約 40%、水可循環數次、約三倍不是五倍。"
+          },
+          "4": {
+            "answer": "A",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Training runs for AI models, which can take weeks, are a different matter from everyday requests.",
+              "Unlike web searches and video streams, which users expect to start instantly, they can be scheduled for almost any hour, including cooler ones when less water is lost."
+            ],
+            "explanation_zh": "they 與網路搜尋、影音串流對比，指可排在任何時段的 AI 模型訓練。"
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T08:04:17Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "answers": {
+          "1": {
+            "answer": "D",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Carrying it away often takes water, and a surprising amount of it.",
+              "Reducing this footprint is harder than it sounds."
+            ],
+            "explanation_zh": "全文先說明資料中心如何用水（冷卻塔、發電廠），再說明減少用水的困難（空冷耗電、時間安排與太陽能的矛盾）。A 沒有呼籲，B 沒有比較國家，C 與全文相反。"
+          },
+          "2": {
+            "answer": "C",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Air-cooled systems use no water at all, but they need more electricity than systems that depend on evaporation.",
+              "Many of the power plants that supply data centers with electricity cool themselves with towers of their own, so every unit of power carries a water cost."
+            ],
+            "explanation_zh": "空冷系統現場不用水，但需要更多電力；因此現場用水減少、用電增加。A 錯在總用水量不會完全消失（發電廠仍用水）。"
+          },
+          "3": {
+            "answer": "B",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "One study estimated that American data centers directly used about 17 billion gallons of water in 2023, roughly three times the 5.6 billion gallons used in 2014."
+            ],
+            "explanation_zh": "17 − 5.6 = 11.4，增加超過 110 億加侖。A 現場只占約 40%；C 水可循環數次；D 是約三倍而非五倍。"
+          },
+          "4": {
+            "answer": "A",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Training runs for AI models, which can take weeks, are a different matter from everyday requests.",
+              "Unlike web searches and video streams, which users expect to start instantly, they can be scheduled for almost any hour, including cooler ones when less water is lost."
+            ],
+            "explanation_zh": "Unlike 引出對比：網路搜尋與影音串流要立即開始，而 they（AI 模型的訓練）可以排在任何時段。"
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "distractor_audit",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T08:30:00Z",
+      "details": {
+        "session_id": null,
+        "items": {
+          "1": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "Every time someone streams a video or asks a chatbot a question, the request travels to a data center",
+              "explanation_zh": "串流影片、問聊天機器人只是開頭的例子；作者沒有呼籲讀者少用，而是說明用水原因與減量的困難。"
+            },
+            "B": {
+              "verdict": "clearly_wrong",
+              "error_type": "factual",
+              "evidence": "One study estimated that American data centers directly used about 17 billion gallons of water in 2023",
+              "explanation_zh": "文中只有美國資料中心的數字，沒有比較不同國家。"
+            },
+            "C": {
+              "verdict": "clearly_wrong",
+              "error_type": "meaning",
+              "evidence": "Reducing this footprint is harder than it sounds.",
+              "explanation_zh": "與原文相反：氣冷雖不用水卻更耗電，作者說減少用水比聽起來難。"
+            }
+          },
+          "2": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "so every unit of power carries a water cost",
+              "explanation_zh": "氣冷要用更多電，而發電廠本身也耗水（第三段），所以總用水足跡不會完全消失。"
+            },
+            "B": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "Because more water evaporates in hot weather, these centers are thirstiest in the hottest hours of the day",
+              "explanation_zh": "文中說的是天熱時最需要水，而且換成氣冷後就不靠蒸發用水，不會「涼夜比熱天更需要水」。"
+            },
+            "D": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "Air-cooled systems use no water at all",
+              "explanation_zh": "要換水是冷卻塔循環用水、礦物質濃縮的情況；氣冷系統根本不用水。"
+            }
+          },
+          "3": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "factual",
+              "evidence": "only about 40 percent of the water linked to data centers is used on site",
+              "explanation_zh": "與原文相反：只有約 40% 在現場使用，其餘 60% 消耗在發電廠。"
+            },
+            "C": {
+              "verdict": "clearly_wrong",
+              "error_type": "factual",
+              "evidence": "The remaining water can circulate several times",
+              "explanation_zh": "與原文相反：剩下的水可以循環好幾次，直到礦物質太濃才排掉。"
+            },
+            "D": {
+              "verdict": "clearly_wrong",
+              "error_type": "factual",
+              "evidence": "roughly three times the 5.6 billion gallons used in 2014",
+              "explanation_zh": "17 約是 5.6 的三倍，不是五倍。"
+            }
+          },
+          "4": {
+            "B": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Unlike web searches and video streams, which users expect to start instantly",
+              "explanation_zh": "Unlike 把 they 和網路搜尋、影片串流對比，they 不可能就是它們；它們要立刻開始，不能任意排時段。"
+            },
+            "C": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "which users expect to start instantly",
+              "explanation_zh": "users 是期待服務立刻開始的人，不是被安排時段的對象。"
+            },
+            "D": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Air-cooled systems use no water at all, but they need more electricity than systems that depend on evaporation.",
+              "explanation_zh": "氣冷系統在前面幾句，句意（安排時段）也對不上；可安排時段的是上一句的主詞 AI 模型的訓練工作。"
+            }
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "fact_check",
+      "reviewer": "claude-opus-5-5",
+      "result": "warn",
+      "created_at": "2026-10-09T08:30:00Z",
+      "details": {
+        "checked": [
+          {
+            "claim": "資料中心是日夜運轉的電腦建築，熱必須帶走",
+            "source_id": "fact:data-center-water-rt02#f1",
+            "ok": true
+          },
+          {
+            "claim": "大型資料中心用冷卻塔，部分水蒸發帶走熱",
+            "source_id": "fact:data-center-water-rt02#f2",
+            "ok": true
+          },
+          {
+            "claim": "蒸發的水不回到水源，所以稱為「消耗」",
+            "source_id": "fact:data-center-water-rt02#f3",
+            "ok": true
+          },
+          {
+            "claim": "水可循環數次，礦物質太濃就要排掉換新",
+            "source_id": "fact:data-center-water-rt02#f4",
+            "ok": true,
+            "note": "CRS R49057（s1）原文確認"
+          },
+          {
+            "claim": "天熱時最需要水",
+            "source_id": "fact:data-center-water-rt02#f5",
+            "ok": true
+          },
+          {
+            "claim": "美國資料中心 2023 年直接用水約 170 億加侖，約為 2014 年 56 億加侖的三倍",
+            "source_id": "fact:data-center-water-rt02#f9",
+            "ok": true,
+            "note": "s1：approximately 17 billion gallons … compared with 5.6 billion gallons in 2014"
+          },
+          {
+            "claim": "供電的發電廠也用冷卻塔，所以每一度電都有用水代價",
+            "source_id": "fact:data-center-water-rt02#f6",
+            "ok": true,
+            "note": "事實單與 UCR（s2）只說 many power plants use cooling towers；every unit of power 是從 many 推得太滿的概括（太陽能、風力發電幾乎不耗水）"
+          },
+          {
+            "claim": "IEA：約 40% 現場、60% 發電廠",
+            "source_id": "fact:data-center-water-rt02#f7",
+            "ok": true,
+            "note": "s1 註 4：IEA estimates water use of data centers to include 60% indirect (at power plants) and 40% direct"
+          },
+          {
+            "claim": "氣冷不用水但更耗電",
+            "source_id": "fact:data-center-water-rt02#f10",
+            "ok": true,
+            "note": "s1：While air-cooled chillers use no water, they use comparatively more energy"
+          },
+          {
+            "claim": "AI 訓練可能要好幾週",
+            "source_id": "fact:data-center-water-rt02#f11",
+            "ok": true
+          },
+          {
+            "claim": "AI 訓練可排在任何時段，包括較涼的時段",
+            "source_id": "fact:data-center-water-rt02#f12",
+            "ok": true
+          },
+          {
+            "claim": "最涼的時段很少是陽光最足的時段，省水與太陽能的時段可能衝突",
+            "source_id": "fact:data-center-water-rt02#f13",
+            "ok": true
+          }
+        ],
+        "problems": [
+          "第三段「so every unit of power carries a water cost」：事實單 f6 與來源只說 many power plants 用冷卻塔，「每一度電」是推得太滿的概括（太陽能、風力發電幾乎不耗水），與同段 40%／60% 的說法也只是平均值。不影響任何小題（第 2 題 A 只需要「發電廠也耗水」），列 warn 供人工審核"
+        ],
+        "against": [
+          "fact:data-center-water-rt02"
+        ]
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

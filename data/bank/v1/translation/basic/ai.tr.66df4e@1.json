@@ -1,0 +1,640 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.66df4e",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "basic",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "清明節（Tomb Sweeping Day）快到了，我們已經買好了鮮花和水果。",
+        "options": null,
+        "answer": "Tomb Sweeping Day is coming, and we have already bought flowers and fruit.",
+        "accepted_answers": [
+          "Tomb Sweeping Day is coming soon, so we have bought some flowers and fruit.",
+          "Tomb Sweeping Day is near, and we have already bought fresh flowers and fruit."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "現在完成式"
+          ],
+          "topic": "清明節掃墓"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "我們藉由打掃墓地來表達對祖先的敬意。",
+        "options": null,
+        "answer": "We show our respect for our ancestors by cleaning their graves.",
+        "accepted_answers": [
+          "By cleaning the graves, we show respect to our ancestors.",
+          "We show our respect for our ancestors by sweeping their tombs."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "介系詞＋動名詞（藉由…：by + V-ing）"
+          ],
+          "topic": "清明節掃墓"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "清明節掃墓"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「已經買好了」表示到現在已經完成，用現在完成式 have (already) bought；bought 是 buy 的過去分詞，不要和 bring 的 brought 搞混。「快到了」是即將發生的事，用 is coming（或 is near）；兩個子句之間要用 and 或 so 連接，不能只放逗號。「鮮花」是 flowers（可數，要加 s），「水果」fruit 泛指時多當不可數。清明節是表外專有名詞，題目已附英文 Tomb Sweeping Day。",
+          "evidence": [
+            "已經買好了",
+            "快到了"
+          ],
+          "strategy_zh": "看到「已經…了」先想 have／has + p.p.；兩個完整子句之間記得加連接詞。",
+          "hints": [
+            "切成四段：清明節快到了／我們已經買好了／鮮花／水果",
+            "標的詞彙：come（到來）、buy（買）、flower（花）、fruit（水果）",
+            "句型框架：…, and S + have already + p.p. …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「藉由…」表示方法，用 by + V-ing：介系詞 by 後面的動詞一定要加 -ing（by cleaning）。by 片語可以放句尾，也可以放句首再加逗號。「表達對祖先的敬意」是 show (our) respect for／to our ancestors，respect 本身就是名詞；ancestor 用複數。「墓」是 grave 或 tomb。",
+          "evidence": [
+            "藉由打掃墓地",
+            "對祖先的敬意"
+          ],
+          "strategy_zh": "看到「藉由、除了、而不是」先想「介系詞＋V-ing」；寫完圈出介系詞，檢查後面的動詞有沒有加 -ing。",
+          "hints": [
+            "切成四段：藉由打掃墓地／來表達／對祖先的／敬意",
+            "標的詞彙：show（表達）、respect（敬意）、ancestor（祖先）、clean（打掃）、grave（墳墓）",
+            "句型框架：S + V … by + V-ing … ／ By + V-ing …, S + V …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "Tomb Sweeping Day is coming, and we have already bought flowers and fruit.",
+            "Tomb Sweeping Day is coming soon, so we have bought some flowers and fruit.",
+            "Tomb Sweeping Day is near, and we have already bought fresh flowers and fruit."
+          ],
+          "target_words": [
+            {
+              "word": "come",
+              "zh": "到來",
+              "alternatives": [
+                "near",
+                "approach"
+              ]
+            },
+            {
+              "word": "buy",
+              "zh": "買"
+            },
+            {
+              "word": "flower",
+              "zh": "花"
+            },
+            {
+              "word": "fruit",
+              "zh": "水果"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PERF",
+              "grammar_id": "gp-present-perfect",
+              "label_zh": "現在完成式（已經：have already + p.p.）",
+              "frame": "S + have/has (+ already) + p.p. …",
+              "zh_trigger": "已經買好了"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "清明節（Tomb Sweeping Day）快到了",
+              "accepted": [
+                "Tomb Sweeping Day is coming",
+                "Tomb Sweeping Day is coming soon",
+                "Tomb Sweeping Day is near",
+                "Tomb Sweeping Day is around the corner",
+                "Tomb Sweeping Day is approaching"
+              ],
+              "targets": [
+                "come"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Tomb Sweeping Day is come",
+                  "right": "Tomb Sweeping Day is coming",
+                  "explanation_zh": "「快到了」是即將發生的事，用進行式 is coming；is come 文法錯誤。"
+                },
+                {
+                  "wrong": "Tomb Sweeping Day is coming, we have already bought",
+                  "right": "Tomb Sweeping Day is coming, and we have already bought",
+                  "explanation_zh": "兩個完整子句不能只用逗號連接，中間要加 and／so，或分成兩句。"
+                }
+              ]
+            },
+            {
+              "zh": "我們已經買好了",
+              "accepted": [
+                "we have already bought",
+                "we have bought",
+                "we've already bought"
+              ],
+              "targets": [
+                "PERF",
+                "buy"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "we already bought",
+                  "right": "we have already bought",
+                  "explanation_zh": "「已經…了」強調到現在已經完成，用現在完成式 have bought。"
+                },
+                {
+                  "wrong": "we have already buy",
+                  "right": "we have already bought",
+                  "explanation_zh": "have 後面接過去分詞 bought。"
+                },
+                {
+                  "wrong": "we have already brought",
+                  "right": "we have already bought",
+                  "explanation_zh": "bought 是 buy（買）的過去分詞；brought 是 bring（帶）的過去分詞，拼字別混淆。"
+                }
+              ]
+            },
+            {
+              "zh": "鮮花",
+              "accepted": [
+                "flowers",
+                "fresh flowers",
+                "some flowers"
+              ],
+              "targets": [
+                "flower"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "flower",
+                  "right": "flowers",
+                  "explanation_zh": "買來掃墓的花不只一朵，flower 是可數名詞，用複數 flowers。"
+                }
+              ]
+            },
+            {
+              "zh": "水果",
+              "accepted": [
+                "fruit",
+                "some fruit",
+                "fruits"
+              ],
+              "targets": [
+                "fruit"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "fruites",
+                  "right": "fruit",
+                  "explanation_zh": "拼字：fruit；泛指水果時通常當不可數名詞，不需要加 s。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "tense_trigger",
+              "zh": "已經買好了",
+              "literal_error": "Tomb Sweeping Day is coming, and we already bought flowers and fruit.",
+              "part": 2,
+              "explanation_zh": "「已經…了」是完成式的觸發詞，照字面寫成過去式 already bought 會漏掉完成式，這一部分扣分。"
+            }
+          ],
+          "bonus": []
+        },
+        "2": {
+          "references": [
+            "We show our respect for our ancestors by cleaning their graves.",
+            "By cleaning the graves, we show respect to our ancestors.",
+            "We show our respect for our ancestors by sweeping their tombs."
+          ],
+          "target_words": [
+            {
+              "word": "show",
+              "zh": "表達",
+              "alternatives": [
+                "express",
+                "pay"
+              ]
+            },
+            {
+              "word": "respect",
+              "zh": "敬意"
+            },
+            {
+              "word": "ancestor",
+              "zh": "祖先"
+            },
+            {
+              "word": "clean",
+              "zh": "打掃",
+              "alternatives": [
+                "sweep"
+              ]
+            },
+            {
+              "word": "grave",
+              "zh": "墳墓",
+              "alternatives": [
+                "tomb"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PREPVING",
+              "grammar_id": "gp-prep-gerund",
+              "label_zh": "介系詞＋動名詞（藉由…：by + V-ing）",
+              "frame": "S + V … by + V-ing … ／ By + V-ing …, S + V …",
+              "zh_trigger": "藉由"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "藉由打掃墓地",
+              "accepted": [
+                "by cleaning their graves",
+                "By cleaning the graves",
+                "by sweeping their tombs",
+                "by cleaning the tombs",
+                "by sweeping the graves",
+                "by cleaning their tombs",
+                "by sweeping their graves",
+                "by cleaning up their graves",
+                "by cleaning up the graves"
+              ],
+              "targets": [
+                "PREPVING",
+                "clean",
+                "grave"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "by clean their graves",
+                  "right": "by cleaning their graves",
+                  "explanation_zh": "介系詞 by 後面的動詞要用動名詞 V-ing。"
+                },
+                {
+                  "wrong": "by cleanning their graves",
+                  "right": "by cleaning their graves",
+                  "explanation_zh": "拼字：clean 加 -ing 是 cleaning，n 不重複。"
+                }
+              ]
+            },
+            {
+              "zh": "來表達",
+              "accepted": [
+                "we show",
+                "we express",
+                "we pay"
+              ],
+              "targets": [
+                "show"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "we shows",
+                  "right": "we show",
+                  "explanation_zh": "主詞 we 的現在式動詞不加 s。"
+                }
+              ]
+            },
+            {
+              "zh": "對祖先的",
+              "accepted": [
+                "for our ancestors",
+                "to our ancestors",
+                "for the ancestors"
+              ],
+              "targets": [
+                "ancestor"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "for our ancestor",
+                  "right": "for our ancestors",
+                  "explanation_zh": "祖先指好幾代的長輩，ancestor 用複數。"
+                },
+                {
+                  "wrong": "for our ancesters",
+                  "right": "for our ancestors",
+                  "explanation_zh": "拼字：ancestor（-tor 結尾）。"
+                }
+              ]
+            },
+            {
+              "zh": "敬意",
+              "accepted": [
+                "our respect",
+                "respect",
+                "our respects"
+              ],
+              "targets": [
+                "respect"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "our respection",
+                  "right": "our respect",
+                  "explanation_zh": "respect 本身就是名詞（敬意），沒有 respection 這個字。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "word_form",
+              "zh": "藉由打掃墓地",
+              "literal_error": "We show our respect for our ancestors by clean their graves.",
+              "part": 1,
+              "explanation_zh": "「藉由＋動作」照字面接原形動詞 by clean，介系詞後面沒有用動名詞，這一部分扣分。"
+            }
+          ],
+          "bonus": []
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-basic-04",
+    "lot": "translation-basic-04",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "825ee6e76853b2ea2df931259eb3211229fc9f6e568e89591ca9feda5b5b935e",
+    "spec_id": "translation-basic@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 3,
+    "sentences": 1,
+    "avg_sentence_length": 3.0,
+    "denominator": 3,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 1.0,
+    "coverage_l1_6": 1.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {
+      "1": 1,
+      "2": 1,
+      "4": 1
+    },
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T07:59:17Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "warn",
+      "created_at": "2026-10-09T00:00:00Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Tomb Sweeping Day is coming soon, and we have already bought fresh flowers and fruit.",
+            "confidence": "high",
+            "explanation_zh": "「快到了」用現在進行式 is coming soon（表即將發生）；「已經買好了」用現在完成式 have already bought；兩個子句用 and 連接成一句（也可用 Since/As 引導原因）；節日名照題目給的 Tomb Sweeping Day。"
+          },
+          "2": {
+            "translation": "We express our respect for our ancestors by cleaning their tombs.",
+            "confidence": "high",
+            "explanation_zh": "「藉由…來…」用 by + V-ing 表方法；「表達對祖先的敬意」express our respect for our ancestors（show respect to 也可）；「打掃墓地」cleaning their tombs（也可 graves / sweeping the tombs）；一般習俗用簡單現在式。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PERF"
+            ],
+            "used_target_words": [
+              "come",
+              "buy",
+              "flower",
+              "fruit"
+            ],
+            "within_accepted": true,
+            "closest_reference": 2,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PREPVING"
+            ],
+            "used_target_words": [
+              "show",
+              "respect",
+              "ancestor",
+              "clean",
+              "grave"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "第 2 部分收 we pay、第 3 部分收 for our ancestors，各部分分開判定時會接受 we pay our respect for our ancestors；pay 的固定搭配是 pay (our) respects to，pay respect for 不道地。建議第 2 部分只收 show／express，或把 pay 的寫法和 to our ancestors 綁在一起（例如另列 we pay our respects to our ancestors）。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "come",
+              "buy",
+              "flower",
+              "fruit"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PERF": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "show",
+              "respect",
+              "ancestor",
+              "clean",
+              "grave"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PREPVING": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 2 題驗證者對4 部分切分有意見（warn）：第 2 部分收 we pay、第 3 部分收 for our ancestors，各部分分開判定時會接受 we pay our respect for our ancestors；pay 的固定搭配是 pay (our) respects "
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T00:00:00Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Tomb Sweeping Day is coming, and we have already bought fresh flowers and fruit.",
+            "confidence": "high",
+            "explanation_zh": "「快到了」可譯為 is coming（近期將發生）；「已經買好了」用現在完成式搭配 already，強調目前已備妥；兩個子句用 and 連接。"
+          },
+          "2": {
+            "translation": "We show our respect to our ancestors by cleaning their graves.",
+            "confidence": "medium",
+            "explanation_zh": "「藉由…來表達」用 by + V-ing 表示方式；「表達對祖先的敬意」譯為 show respect to our ancestors；「打掃墓地」譯為 cleaning their graves。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PERF"
+            ],
+            "used_target_words": [
+              "come",
+              "buy",
+              "flower",
+              "fruit"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PREPVING"
+            ],
+            "used_target_words": [
+              "show",
+              "respect",
+              "ancestor",
+              "clean",
+              "grave"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "come",
+              "buy",
+              "flower",
+              "fruit"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PERF": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "show",
+              "respect",
+              "ancestor",
+              "clean",
+              "grave"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PREPVING": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

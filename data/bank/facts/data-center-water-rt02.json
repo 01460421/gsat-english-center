@@ -1,0 +1,150 @@
+{
+  "schema": "gsat-bank-facts/v1",
+  "id": "data-center-water-rt02",
+  "title": "The water footprint of data centers: cooling, indirect use and trade-offs",
+  "sdgs": [
+    6,
+    12
+  ],
+  "created_on": "2026-10-09",
+  "created_by": "claude-opus-5-5",
+  "sources": [
+    {
+      "id": "s1",
+      "publisher": "U.S. Congressional Research Service",
+      "title": "Data Centers and Water: Frequently Asked Questions (R49057, July 31, 2026)",
+      "url": "https://www.congress.gov/crs_external_products/R/PDF/R49057/R49057.1.pdf",
+      "accessed": "2026-10-09",
+      "license": "U.S. government work (facts only)",
+      "use": "fact_only",
+      "note": "報告引用 LBNL 2024 United States Data Center Energy Usage Report 與 IEA Energy and AI（2025）的估計"
+    },
+    {
+      "id": "s2",
+      "publisher": "University of California, Riverside (UCR News)",
+      "title": "AI programs consume large volumes of scarce water (2023-04-28)",
+      "url": "https://news.ucr.edu/articles/2023/04/28/ai-programs-consume-large-volumes-scarce-water",
+      "accessed": "2026-10-09",
+      "license": "university news release (facts only)",
+      "use": "fact_only",
+      "note": null
+    }
+  ],
+  "facts": [
+    {
+      "id": "f1",
+      "text": "A data center is a building or facility that houses and runs large computer systems; its processors and other equipment produce heat that must be removed to keep the systems working.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "definition"
+    },
+    {
+      "id": "f2",
+      "text": "Many larger data centers use cooling towers, in which part of the water evaporates and carries heat away into the air.",
+      "source_ids": [
+        "s1",
+        "s2"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f3",
+      "text": "Water consumption means water taken from a source that is not returned to it, mainly because it has evaporated.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "definition"
+    },
+    {
+      "id": "f4",
+      "text": "Cooling water can be reused on site several times, but evaporation leaves dissolved minerals behind; when they become too concentrated, the water has to be discharged.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f5",
+      "text": "Data centers that rely on evaporative cooling need more water during the hotter parts of the day and the hotter seasons of the year.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f6",
+      "text": "Data centers also use water indirectly, because many power plants that supply their electricity use cooling towers that evaporate water.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f7",
+      "text": "The International Energy Agency estimates that about 40 percent of data centers' water use happens on site and about 60 percent happens at power plants.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f8",
+      "text": "One study estimated that U.S. data centers directly used about 17 billion gallons of water in 2023, compared with 5.6 billion gallons in 2014.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f9",
+      "text": "Derived from f8: 17 billion gallons is about 3 times (3.04 times) the 5.6 billion gallons used in 2014, an increase of about 11.4 billion gallons.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f10",
+      "text": "Air-cooled chillers use no water, but they use more energy than cooling systems based on evaporation.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f11",
+      "text": "UC Riverside researchers estimated that training the AI model GPT-3, which took about two weeks, in Microsoft's U.S. data centers consumed about 700,000 liters of fresh water.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f12",
+      "text": "Unlike web searches or video streaming, AI training can be scheduled for almost any time, so it could be moved to cooler hours when less water evaporates.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f13",
+      "text": "Scheduling for cooler hours can conflict with scheduling for low carbon emissions, which favors running when solar power is plentiful.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f14",
+      "text": "Direct water use by data centers makes up about 2 percent of total U.S. water consumption, but it can strain the water supply of individual communities.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "number"
+    }
+  ],
+  "datasets": [],
+  "notes": null
+}

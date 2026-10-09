@@ -1,0 +1,644 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.0b70d8",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "basic",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "每年，許多遊客都被澎湖（Penghu）美麗的海灘吸引。",
+        "options": null,
+        "answer": "Every year, many visitors are attracted by the beautiful beaches of Penghu.",
+        "accepted_answers": [
+          "Every year, many tourists are attracted to Penghu's beautiful beaches.",
+          "Many visitors are attracted by the beautiful beaches in Penghu every year."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "被動語態"
+          ],
+          "topic": "搭船去澎湖"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "他們搭船到附近的小島、在海裡游泳，也吃新鮮的海鮮。",
+        "options": null,
+        "answer": "They take boats to nearby islands, swim in the sea, and eat fresh seafood.",
+        "accepted_answers": [
+          "They go to nearby islands by boat, swim in the sea, and also eat fresh seafood.",
+          "They take a boat to the islands nearby, swim in the ocean, and eat fresh seafood."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "平行結構（三個動詞片語並列）"
+          ],
+          "topic": "搭船去澎湖"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "搭船去澎湖"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "中文「被…吸引」用被動語態 be attracted by／to …；主詞 many visitors 是複數，而且是每年都會發生的事，用現在簡單式 are attracted，不能漏掉 are，也不能寫成原形 attract。「每年」是 every year（year 用單數）；「美麗的海灘」是很多處海灘，寫 beautiful beaches。澎湖是表外專有名詞，題目已附英文 Penghu。",
+          "evidence": [
+            "都被",
+            "美麗的海灘吸引"
+          ],
+          "strategy_zh": "被動語態三步驟：找出被動的主詞→選 be 動詞（看時態、單複數）→接過去分詞。",
+          "hints": [
+            "切成四段：每年／許多遊客／澎湖美麗的海灘／（被…）吸引",
+            "標的詞彙：year（年）、visitor（遊客）、attract（吸引）、beautiful（美麗的）、beach（海灘）",
+            "句型框架：Every year, S + are + p.p. + by …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「搭船到附近的小島、在海裡游泳、吃新鮮的海鮮」三個動作用平行結構 A, B, and C，三個動詞都用現在式原形（主詞 They 是複數）：take、swim、eat；最後一個動作前要有 and（中文的「也」可以寫成 and also）。「搭船」是 take a boat／take boats 或 go … by boat；附近不只一座島，寫 nearby islands；seafood 不可數，不加 s。They 指第一句被海灘吸引的遊客。",
+          "evidence": [
+            "搭船到附近的小島、在海裡游泳，也吃新鮮的海鮮"
+          ],
+          "strategy_zh": "並列三個動作時，先決定時態，三個動詞都用同一種形式，最後一個前面加 and。",
+          "hints": [
+            "切成四段：他們搭船到附近的小島／在海裡游泳／也吃／新鮮的海鮮",
+            "標的詞彙：boat（船）、island（島）、swim（游泳）、sea（海）、fresh（新鮮的）、seafood（海鮮）",
+            "句型框架：They + V …, V …, and V …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "Every year, many visitors are attracted by the beautiful beaches of Penghu.",
+            "Every year, many tourists are attracted to Penghu's beautiful beaches.",
+            "Many visitors are attracted by the beautiful beaches in Penghu every year."
+          ],
+          "target_words": [
+            {
+              "word": "year",
+              "zh": "年"
+            },
+            {
+              "word": "visitor",
+              "zh": "遊客",
+              "alternatives": [
+                "tourist"
+              ]
+            },
+            {
+              "word": "attract",
+              "zh": "吸引",
+              "alternatives": [
+                "draw"
+              ]
+            },
+            {
+              "word": "beautiful",
+              "zh": "美麗的"
+            },
+            {
+              "word": "beach",
+              "zh": "海灘"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PASS",
+              "grammar_id": "gp-passive",
+              "label_zh": "被動語態（be attracted by／to …）",
+              "frame": "S + am/is/are + p.p. + by …",
+              "zh_trigger": "被"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "每年",
+              "accepted": [
+                "Every year",
+                "Each year"
+              ],
+              "targets": [
+                "year"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Every years",
+                  "right": "Every year",
+                  "explanation_zh": "every 後面接單數名詞。"
+                }
+              ]
+            },
+            {
+              "zh": "許多遊客",
+              "accepted": [
+                "many visitors",
+                "many tourists",
+                "a lot of visitors",
+                "a lot of tourists",
+                "lots of tourists"
+              ],
+              "targets": [
+                "visitor"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "many visitor",
+                  "right": "many visitors",
+                  "explanation_zh": "many 後面接複數名詞。"
+                }
+              ]
+            },
+            {
+              "zh": "澎湖（Penghu）美麗的海灘",
+              "accepted": [
+                "the beautiful beaches of Penghu",
+                "Penghu's beautiful beaches",
+                "the beautiful beaches in Penghu",
+                "the beautiful beaches on Penghu"
+              ],
+              "targets": [
+                "beautiful",
+                "beach"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "the beautiful beach of Penghu",
+                  "right": "the beautiful beaches of Penghu",
+                  "explanation_zh": "澎湖有很多海灘，beach 用複數 beaches。"
+                }
+              ]
+            },
+            {
+              "zh": "吸引",
+              "accepted": [
+                "are attracted by",
+                "are attracted to",
+                "are drawn to",
+                "are drawn by"
+              ],
+              "targets": [
+                "PASS",
+                "attract"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "attract by",
+                  "right": "are attracted by",
+                  "explanation_zh": "「被吸引」是被動語態，要寫 be 動詞 + 過去分詞 attracted。"
+                },
+                {
+                  "wrong": "are attract by",
+                  "right": "are attracted by",
+                  "explanation_zh": "被動語態的動詞要用過去分詞 attracted。"
+                },
+                {
+                  "wrong": "is attracted by",
+                  "right": "are attracted by",
+                  "explanation_zh": "主詞 many visitors 是複數，be 動詞用 are。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "plural_countable",
+              "zh": "澎湖（Penghu）美麗的海灘",
+              "literal_error": "Every year, many visitors are attracted by the beautiful beach of Penghu.",
+              "part": 3,
+              "explanation_zh": "中文「海灘」沒有單複數，照字面寫成單數 beach 會被扣分；澎湖有許多海灘，要用複數 beaches。"
+            }
+          ],
+          "bonus": []
+        },
+        "2": {
+          "references": [
+            "They take boats to nearby islands, swim in the sea, and eat fresh seafood.",
+            "They go to nearby islands by boat, swim in the sea, and also eat fresh seafood.",
+            "They take a boat to the islands nearby, swim in the ocean, and eat fresh seafood."
+          ],
+          "target_words": [
+            {
+              "word": "boat",
+              "zh": "船"
+            },
+            {
+              "word": "island",
+              "zh": "島"
+            },
+            {
+              "word": "swim",
+              "zh": "游泳"
+            },
+            {
+              "word": "sea",
+              "zh": "海",
+              "alternatives": [
+                "ocean"
+              ]
+            },
+            {
+              "word": "fresh",
+              "zh": "新鮮的"
+            },
+            {
+              "word": "seafood",
+              "zh": "海鮮"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PARA",
+              "grammar_id": "gp-parallelism",
+              "label_zh": "平行結構（三個現在式動詞片語並列）",
+              "frame": "S + V …, V …, and V …",
+              "zh_trigger": "搭船到附近的小島、在海裡游泳，也吃新鮮的海鮮"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "他們搭船到附近的小島",
+              "accepted": [
+                "They take boats to nearby islands",
+                "They go to nearby islands by boat",
+                "They take a boat to the islands nearby",
+                "They take a boat to nearby islands",
+                "They take boats to the islands nearby",
+                "They take boats to the nearby islands",
+                "They go to the nearby islands by boat",
+                "They take a boat to the nearby islands",
+                "They ride boats to nearby islands"
+              ],
+              "targets": [
+                "boat",
+                "island"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "They take boats to nearby island",
+                  "right": "They take boats to nearby islands",
+                  "explanation_zh": "附近不只一座小島，island 用複數 islands。"
+                },
+                {
+                  "wrong": "They sit boats to nearby islands",
+                  "right": "They take boats to nearby islands",
+                  "explanation_zh": "「搭（交通工具）」用 take，或寫 go … by boat，不逐字寫成 sit。"
+                }
+              ]
+            },
+            {
+              "zh": "在海裡游泳",
+              "accepted": [
+                "swim in the sea",
+                "swim in the ocean",
+                "go swimming in the sea"
+              ],
+              "targets": [
+                "swim",
+                "sea"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "swimming in the sea",
+                  "right": "swim in the sea",
+                  "explanation_zh": "平行結構的動詞形式要一致：前面是 take，這裡也用原形 swim。"
+                },
+                {
+                  "wrong": "swim in sea",
+                  "right": "swim in the sea",
+                  "explanation_zh": "in the sea 的 the 不能省略。"
+                }
+              ]
+            },
+            {
+              "zh": "也吃",
+              "accepted": [
+                "and eat",
+                "and also eat",
+                "and enjoy",
+                "and also enjoy",
+                "and taste"
+              ],
+              "targets": [
+                "PARA"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "swim in the sea, also eat",
+                  "right": "swim in the sea, and eat",
+                  "explanation_zh": "三個動作並列時，最後一個前面要有 and；also 是副詞，不能取代連接詞。"
+                }
+              ]
+            },
+            {
+              "zh": "新鮮的海鮮",
+              "accepted": [
+                "fresh seafood"
+              ],
+              "targets": [
+                "fresh",
+                "seafood"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "fresh seafoods",
+                  "right": "fresh seafood",
+                  "explanation_zh": "seafood 是不可數名詞，不加 s。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "word_form",
+              "zh": "在海裡游泳",
+              "literal_error": "They take boats to nearby islands, swimming in the sea, and eat fresh seafood.",
+              "part": 2,
+              "explanation_zh": "中文用頓號列出動作，動詞沒有形式變化，翻譯時很容易一個用原形、一個用 V-ing；平行結構的三個動詞要用同一種形式，這一部分扣分。"
+            }
+          ],
+          "bonus": []
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-basic-04",
+    "lot": "translation-basic-04",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "825ee6e76853b2ea2df931259eb3211229fc9f6e568e89591ca9feda5b5b935e",
+    "spec_id": "translation-basic@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 1,
+    "sentences": 1,
+    "avg_sentence_length": 1.0,
+    "denominator": 1,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 1.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {
+      "off": 1
+    },
+    "offlist_words": [
+      "penghu"
+    ],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T07:59:12Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T00:00:00Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Every year, many tourists are attracted by the beautiful beaches of Penghu.",
+            "confidence": "high",
+            "explanation_zh": "「被…吸引」用被動語態 be attracted by（attracted to 也可）；「每年」表示常態，用簡單現在式 are；「澎湖美麗的海灘」譯 the beautiful beaches of Penghu（也可 Penghu's beautiful beaches）。"
+          },
+          "2": {
+            "translation": "They take boats to the nearby islands, swim in the sea, and eat fresh seafood.",
+            "confidence": "high",
+            "explanation_zh": "三個動作用平行結構（現在式 take, swim, eat），延續上一句「每年」的常態描述用簡單現在式；「搭船到」take a boat to；「附近的小島」the nearby islands（也可 small islands nearby）。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PASS"
+            ],
+            "used_target_words": [
+              "year",
+              "visitor",
+              "attract",
+              "beautiful",
+              "beach"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PARA"
+            ],
+            "used_target_words": [
+              "boat",
+              "island",
+              "swim",
+              "sea",
+              "fresh",
+              "seafood"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "year",
+              "visitor",
+              "attract",
+              "beautiful",
+              "beach"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PASS": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "boat",
+              "island",
+              "swim",
+              "sea",
+              "fresh",
+              "seafood"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PARA": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T00:00:00Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Every year, many tourists are attracted to the beautiful beaches of Penghu.",
+            "confidence": "high",
+            "explanation_zh": "「被…吸引」用被動語態 be attracted to；「每年」放句首加逗號；「澎湖美麗的海灘」用 the beautiful beaches of Penghu。"
+          },
+          "2": {
+            "translation": "They take boats to nearby islands, swim in the sea, and eat fresh seafood.",
+            "confidence": "high",
+            "explanation_zh": "三個並列動作（搭船、游泳、吃海鮮）用平行結構的現在簡單式，表示每年反覆發生的習慣；「附近的小島」譯為 nearby islands。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PASS"
+            ],
+            "used_target_words": [
+              "year",
+              "visitor",
+              "attract",
+              "beautiful",
+              "beach"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PARA"
+            ],
+            "used_target_words": [
+              "boat",
+              "island",
+              "swim",
+              "sea",
+              "fresh",
+              "seafood"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "year",
+              "visitor",
+              "attract",
+              "beautiful",
+              "beach"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PASS": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "boat",
+              "island",
+              "swim",
+              "sea",
+              "fresh",
+              "seafood"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PARA": true
+            },
+            "program_match": true
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

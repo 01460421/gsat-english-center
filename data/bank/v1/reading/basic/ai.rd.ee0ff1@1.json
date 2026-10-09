@@ -1,0 +1,789 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.rd.ee0ff1",
+  "version": 1,
+  "section_type": "reading",
+  "format_version": "reading-4",
+  "tier": "basic",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": "Taiwan's high-speed rail began carrying passengers in January 2007. Its trains run along the west coast between Taipei in the north and Kaohsiung in the south, a distance of about 345 kilometers. Before the line opened, this trip took about five hours by regular train or by bus. In 2007, the fastest high-speed trains needed only about 90 minutes, and between stations they reached almost 300 kilometers per hour. The chart below shows how many passengers the high-speed rail carried in each year from 2007 to 2025.\nIn its first year, the high-speed rail carried 15.6 million passengers. The company kept adding trains to its daily schedule during that year, and in 2008 the total almost doubled. The fast new trains also pulled many travelers away from planes. Within a year, some flights between cities in Taiwan lost more than half of their passengers, and airlines canceled dozens of flights. After that, the number of riders kept climbing every year. In 2015, some trains began stopping at three new stations in Miaoli, Changhua, and Yunlin, and by 2019 the yearly total had reached 67.4 million.\nThen the COVID-19 pandemic arrived. In 2020, fewer people traveled, so the company ran fewer trains for a while. Things got even worse in May 2021, when Taiwan raised its COVID-19 alert to level 3 and the number of riders fell sharply. The total for 2021 was only 43.5 million, the lowest since 2011.\nThe drop did not last long, however. Ridership <b>bounced back</b> after pandemic rules were relaxed: people returned to the trains, and in 2023 the high-speed rail set a new record of 73.1 million passengers. The total rose again in 2024, and in 2025 the trains carried 82.1 million people, more than five times as many as in the first year. These numbers show how quickly the high-speed rail has become a part of daily life for many people in Taiwan.",
+    "passage_parts": null,
+    "figures": [
+      {
+        "kind": "chart",
+        "label": "Chart 1",
+        "caption": "Passengers on Taiwan High Speed Rail per year, 2007–2025",
+        "description": "折線圖，只有一條線。橫軸是年份（2007 到 2025，每年一點），縱軸是一年的旅客人數（單位：百萬人次）。數值依序是 2007 年 15.6、2008 年 30.6、2009 年 32.3、2010 年 36.9、2011 年 41.6、2012 年 44.5、2013 年 47.5、2014 年 48、2015 年 50.6、2016 年 56.6、2017 年 60.6、2018 年 64、2019 年 67.4、2020 年 57.2、2021 年 43.5、2022 年 54.2、2023 年 73.1、2024 年 78.3、2025 年 82.1。線從 2007 年到 2019 年每年都上升；2020、2021 年連續下跌，2021 年的 43.5 是 2011 年以來最低；2022 年回升到 54.2，但仍低於 2016 到 2019 年；2023 年的 73.1 超過 2019 年的 67.4，之後繼續上升，2025 年的 82.1 是圖中最高。",
+        "rows": null,
+        "question_no": null,
+        "chart": {
+          "type": "line",
+          "title": "Passengers on Taiwan High Speed Rail per year, 2007–2025",
+          "x": {
+            "label": "Year",
+            "unit": null
+          },
+          "y": {
+            "label": "Passengers per year",
+            "unit": "million"
+          },
+          "categories": [
+            "2007",
+            "2008",
+            "2009",
+            "2010",
+            "2011",
+            "2012",
+            "2013",
+            "2014",
+            "2015",
+            "2016",
+            "2017",
+            "2018",
+            "2019",
+            "2020",
+            "2021",
+            "2022",
+            "2023",
+            "2024",
+            "2025"
+          ],
+          "series": [
+            {
+              "name": "Passengers",
+              "values": [
+                15.6,
+                30.6,
+                32.3,
+                36.9,
+                41.6,
+                44.5,
+                47.5,
+                48.0,
+                50.6,
+                56.6,
+                60.6,
+                64.0,
+                67.4,
+                57.2,
+                43.5,
+                54.2,
+                73.1,
+                78.3,
+                82.1
+              ]
+            }
+          ],
+          "note": "Each value is the total of the twelve monthly passenger counts for that year. The line opened in January 2007.",
+          "source": {
+            "publisher": "政府資料開放平臺 data.gov.tw（交通部鐵道局）",
+            "title": "高鐵運量統計表",
+            "url": "https://data.gov.tw/dataset/96941",
+            "license": "OGDL-Taiwan-1.0",
+            "accessed": "2026-10-09"
+          }
+        }
+      }
+    ],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "single_choice",
+        "stem": "What is the passage mainly about?",
+        "options": {
+          "A": "How many people have ridden the high-speed rail since 2007.",
+          "B": "Why airlines in Taiwan canceled dozens of flights.",
+          "C": "How the high-speed rail was built along the west coast.",
+          "D": "Why the pandemic stopped people from taking trains for good."
+        },
+        "answer": "A",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "item_type": "main_idea"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "single_choice",
+        "stem": "According to the passage, why did the high-speed rail run fewer trains for a while in 2020?",
+        "options": {
+          "A": "Some trains had started stopping at new stations.",
+          "B": "Taiwan had raised its COVID-19 alert to level 3.",
+          "C": "Not as many people were traveling at that time.",
+          "D": "Airlines had canceled many of their flights."
+        },
+        "answer": "C",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "item_type": "detail"
+        }
+      },
+      {
+        "no": 3,
+        "label": "3",
+        "mode": "single_choice",
+        "stem": "In the last paragraph, what does “bounced back” mean?",
+        "options": {
+          "A": "Fell to its lowest level.",
+          "B": "Stayed about the same.",
+          "C": "Moved from planes to trains.",
+          "D": "Went up again."
+        },
+        "answer": "D",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "item_type": "vocab_in_context"
+        },
+        "refers_to": {
+          "text": "bounced back",
+          "occurrence": 1,
+          "note": null
+        }
+      },
+      {
+        "no": 4,
+        "label": "4",
+        "mode": "single_choice",
+        "stem": "According to the chart, what was true about the number of passengers in 2022?",
+        "options": {
+          "A": "It was even lower than in 2021.",
+          "B": "It was higher than in 2021 but lower than in 2019.",
+          "C": "It was already higher than in any year before the pandemic.",
+          "D": "It was about the same as in the first year."
+        },
+        "answer": "B",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "item_type": "chart_reading"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "台灣高鐵的運量",
+      "genre": "expository",
+      "sdgs": [
+        9,
+        11
+      ],
+      "text_format": "mixed"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "第一段介紹高鐵 2007 年通車，最後一句說圖表顯示 2007 到 2025 年每年的載客人數；第二段說前十幾年人數一路成長，第三段說疫情時人數下跌，第四段說疫情後人數回升並創新高。全文講的是這些年搭高鐵的人數怎麼變化。",
+          "evidence": [
+            "The chart below shows how many passengers the high-speed rail carried in each year from 2007 to 2025.",
+            "The drop did not last long, however."
+          ],
+          "clue_type": "topic_sentence",
+          "option_notes_zh": {
+            "B": "航空公司取消數十個航班是第二段的一個細節（文中確實有 airlines canceled dozens of flights），用來說明高鐵把旅客從飛機吸引過來，不是全文主旨。",
+            "C": "文中只交代路線沿西海岸、長約 345 公里，完全沒有談高鐵怎麼興建。",
+            "D": "疫情只在第三段，而且第四段說下跌沒有持續很久、人們又回到列車上，並不是從此不搭火車。"
+          },
+          "option_codes": {
+            "B": "TN",
+            "C": "NM",
+            "D": "OP"
+          },
+          "option_evidence": {
+            "B": [
+              "Within a year, some flights between cities in Taiwan lost more than half of their passengers, and airlines canceled dozens of flights."
+            ],
+            "D": [
+              "The drop did not last long, however."
+            ]
+          },
+          "strategy_zh": "主旨題要能涵蓋「成長 → 疫情下跌 → 回升創新高」整個過程；只講其中一段的選項範圍太窄，和末段相反的選項更不可能。",
+          "hints": [
+            "第一段最後一句說圖表顯示什麼？",
+            "第二、三、四段各講哪一段時期的搭乘人數？",
+            "選能涵蓋所有時期的選項。"
+          ]
+        },
+        "2": {
+          "explanation_zh": "第三段說 2020 年出門旅行的人變少，所以公司有一段時間減少班次。原因是旅行的人沒有那麼多了。",
+          "evidence": [
+            "In 2020, fewer people traveled, so the company ran fewer trains for a while."
+          ],
+          "clue_type": "cause_effect",
+          "option_notes_zh": {
+            "A": "原文確實有 some trains began stopping at three new stations，但那是 2015 年的事，和 2020 年減班無關。",
+            "B": "原文確實有 Taiwan raised its COVID-19 alert to level 3，但那是 2021 年 5 月的事，不是 2020 年減班的原因。",
+            "D": "原文確實有 airlines canceled dozens of flights，但那是高鐵通車第一年（2007 年）航空公司的情形；航班減少只會讓搭高鐵的人變多。"
+          },
+          "option_codes": {
+            "A": "DS",
+            "B": "DS",
+            "D": "DS"
+          },
+          "option_evidence": {
+            "A": [
+              "In 2015, some trains began stopping at three new stations in Miaoli, Changhua, and Yunlin, and by 2019 the yearly total had reached 67.4 million."
+            ],
+            "B": [
+              "Things got even worse in May 2021, when Taiwan raised its COVID-19 alert to level 3 and the number of riders fell sharply."
+            ],
+            "D": [
+              "Within a year, some flights between cities in Taiwan lost more than half of their passengers, and airlines canceled dozens of flights."
+            ]
+          },
+          "strategy_zh": "題幹的時間點是 2020 年；先找文中 In 2020 那一句，看 so 前面的原因。其他選項的句子都在文中，但年份不對（2015、2021、2007）。",
+          "hints": [
+            "在第三段找 In 2020。",
+            "那一句 so 的前面說了什麼原因？",
+            "三級警戒是哪一年的事？"
+          ]
+        },
+        "3": {
+          "explanation_zh": "上一句說人數下跌沒有持續很久；粗體片語後面接著說人們回到列車上，2023 年還以 7,310 萬人次創新紀錄。可見 bounced back 是「回升、恢復」。",
+          "evidence": [
+            "Ridership bounced back after pandemic rules were relaxed: people returned to the trains, and in 2023 the high-speed rail set a new record of 73.1 million passengers."
+          ],
+          "clue_type": "definition_restatement",
+          "option_notes_zh": {
+            "A": "跌到 2011 年以來最低是第三段 2021 年的情形（文中確實有 the lowest since 2011）；粗體片語說的是之後人數回到列車上、創新高。",
+            "B": "冒號後面說人們回到列車上、創下新紀錄，人數不是持平。",
+            "C": "「旅客從飛機轉向火車」是第二段高鐵剛通車時的事，和疫情後搭乘人數的變化無關。"
+          },
+          "option_codes": {
+            "A": "OP",
+            "B": "OP",
+            "C": "DS"
+          },
+          "option_evidence": {
+            "A": [
+              "The drop did not last long, however."
+            ],
+            "C": [
+              "The fast new trains also pulled many travelers away from planes."
+            ]
+          },
+          "strategy_zh": "看不懂的片語，先看主詞（Ridership 搭乘人數），再看冒號後面的說明：人們回到列車上、創新紀錄，就知道是「回升」。",
+          "hints": [
+            "粗體片語的主詞是什麼？",
+            "冒號後面說人們做了什麼？2023 年發生什麼事？",
+            "人數變多了，該選哪一個？"
+          ]
+        },
+        "4": {
+          "explanation_zh": "看圖：2022 年是 54.2（百萬人次），比 2021 年的 43.5 高，但比 2019 年的 67.4 低。文中說疫情後人數回升，但要到 2023 年（73.1）才超過 2019 年；2022 年還沒有回到疫情前的水準。",
+          "evidence": [
+            "2021: 43.5 million",
+            "2022: 54.2 million",
+            "2019: 67.4 million"
+          ],
+          "clue_type": "other",
+          "option_notes_zh": {
+            "A": "圖中 2022 年 54.2 比 2021 年的 43.5 高，不是更低。",
+            "C": "文中說人數回升（bounced back），但圖中 2022 年的 54.2 低於 2016 到 2019 年（例如 2019 年 67.4），所以不是高於疫情前每一年。",
+            "D": "第一年（2007 年）只有 15.6，2022 年的 54.2 是它的三倍多，不是差不多。"
+          },
+          "option_codes": {
+            "A": "VS",
+            "C": "DS",
+            "D": "VS"
+          },
+          "option_evidence": {
+            "A": [
+              "2021: 43.5 million"
+            ],
+            "C": [
+              "2019: 67.4 million"
+            ],
+            "D": [
+              "2007: 15.6 million"
+            ]
+          },
+          "strategy_zh": "讀圖題先在橫軸找到 2022，讀出數值，再和選項提到的年份（2021、2019、第一年 2007）一一比較；不要只憑文中「回升」就猜它已經超過疫情前。",
+          "hints": [
+            "在圖上找到 2022 年的點，數值是多少？",
+            "和 2021 年、2019 年比，是高還是低？",
+            "疫情前最高的是哪一年？2022 年有沒有超過它？"
+          ]
+        }
+      }
+    },
+    "translation_zh": {
+      "text": "台灣高鐵在 2007 年 1 月開始載客。列車沿著西海岸行駛，往來北部的台北和南部的高雄之間，距離約 345 公里。在高鐵通車以前，這趟路搭一般火車或客運大約要五個小時。2007 年時，最快的高鐵列車只需要大約 90 分鐘，在兩站之間時速接近 300 公里。下面的圖表顯示高鐵從 2007 年到 2025 年每年載運的旅客人數。\n通車第一年，高鐵載運了 1,560 萬人次。那一年公司不斷增加每天的班次，到了 2008 年，總人數幾乎翻倍。快速的新列車也把許多旅客從飛機那裡吸引過來。不到一年，台灣有些城市之間的航班就少了一半以上的乘客，航空公司也取消了數十個航班。在那之後，搭乘人數每年持續攀升。2015 年，部分列車開始停靠苗栗、彰化和雲林三個新車站；到了 2019 年，全年總人數已經達到 6,740 萬人次。\n接著新冠肺炎疫情來襲。2020 年出門旅行的人變少，公司因此有一段時間減少班次。2021 年 5 月情況更糟，台灣把疫情警戒提升到第三級，搭乘人數大幅下跌。2021 年全年只有 4,350 萬人次，是 2011 年以來最低。\n不過，這次下跌並沒有持續很久。防疫規定放寬後，搭乘人數回升了：人們回到列車上，2023 年高鐵以 7,310 萬人次創下新紀錄。2024 年總人數再度增加，2025 年列車載運了 8,210 萬人次，是第一年的五倍以上。這些數字顯示，高鐵很快就成為台灣許多人日常生活的一部分。"
+    },
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [
+      {
+        "kind": "main_idea",
+        "prompt": "Write one English sentence that tells the main idea of the passage.",
+        "reference_answers": [
+          "Ridership on Taiwan’s high-speed rail grew every year after 2007, dropped during the pandemic, and then rose to new records.",
+          "More and more people have ridden Taiwan’s high-speed rail since it opened, except for a short drop during COVID-19."
+        ],
+        "checklist_zh": [
+          "有沒有提到搭乘人數整體大幅成長",
+          "有沒有提到疫情時的短暫下跌與之後的回升",
+          "是不是一句完整的英文句子"
+        ],
+        "curriculum": [
+          "B-V-12",
+          "5-V-10"
+        ]
+      }
+    ],
+    "rubric": null,
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "3-V-3",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ae-V-2",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "3-V-7",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "3-V-12",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "B-V-12",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [
+      {
+        "source_id": "fact:thsr-ridership-rb03",
+        "role": "fact"
+      },
+      {
+        "source_id": "fact:thsr-ridership-rb03",
+        "role": "dataset"
+      }
+    ],
+    "license": "original-ai",
+    "derivation": "ai-original-from-facts",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": "本文由 AI 參考下列資料撰寫，非原文轉載；圖表資料：政府資料開放平臺（交通部鐵道局「高鐵運量統計表」，政府資料開放授權條款第1版）"
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-reading-basic-03-regen",
+    "lot": "reading-basic-03",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/reading",
+    "prompt_sha256": "b433ea99ad2f7ce37a9e3eedb2a66bfe903717a429cb932c5190d09463281031",
+    "spec_id": "reading-basic@2026-10-08",
+    "regenerated_from": "ai.rd.7fd13e"
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 294,
+    "sentences": 19,
+    "avg_sentence_length": 15.47,
+    "denominator": 281,
+    "proper_nouns": [
+      "Changhua",
+      "January",
+      "Kaohsiung",
+      "Miaoli",
+      "Taipei",
+      "Taiwan",
+      "Taiwan's",
+      "Yunlin"
+    ],
+    "numbers": 33,
+    "coverage_l1_4": 0.9573,
+    "coverage_l1_6": 0.9751,
+    "offlist_ratio": 0.0249,
+    "beyond_l4_ratio": 0.0178,
+    "level_counts": {
+      "1": 232,
+      "2": 24,
+      "3": 11,
+      "4": 2,
+      "5": 5,
+      "off": 7
+    },
+    "offlist_words": [
+      "fewer",
+      "pandemic",
+      "riders",
+      "ridership"
+    ],
+    "band": {
+      "tier": "basic",
+      "basis": "lot reading-basic-03（SPEC §3.4＋出題規格書 passage_overrides（words、cov_L1_4（取代 SPEC 的區間）、cov_L1_6（取代 SPEC 的區間）、offlist（取代 SPEC 的區間）、beyond_l4_ratio、mean_sent_len（取代 SPEC 的區間）））",
+      "ok": true,
+      "checks": {
+        "word_count": {
+          "value": 294,
+          "min": 280,
+          "max": 345,
+          "ok": true
+        },
+        "coverage_l1_4": {
+          "value": 0.9573,
+          "min": 0.91,
+          "max": 1,
+          "ok": true
+        },
+        "coverage_l1_6": {
+          "value": 0.9751,
+          "min": 0.95,
+          "max": 1,
+          "ok": true
+        },
+        "offlist_ratio": {
+          "value": 0.0249,
+          "min": 0,
+          "max": 0.05,
+          "ok": true
+        },
+        "avg_sentence_length": {
+          "value": 15.47,
+          "min": 14.0,
+          "max": 20.0,
+          "ok": true
+        },
+        "beyond_l4_ratio": {
+          "value": 0.0178,
+          "min": 0,
+          "max": 0.04,
+          "ok": true
+        }
+      }
+    }
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T12:31:48Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T12:20:31Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "answers": {
+          "1": {
+            "answer": "A",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "The chart below shows how many passengers the high-speed rail carried in each year from 2007 to 2025.",
+              "These numbers show how quickly the high-speed rail has become a part of daily life for many people in Taiwan."
+            ],
+            "explanation_zh": "全文依時間敘述高鐵 2007 年以來每年的載客量：開通後成長、疫情下跌、之後回升創新高，主旨是載客人數的變化。B 只是第二段的細節；C 文中沒談興建過程；D 與「The drop did not last long」相反。"
+          },
+          "2": {
+            "answer": "C",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "In 2020, fewer people traveled, so the company ran fewer trains for a while."
+            ],
+            "explanation_zh": "文中明說 2020 年因為旅行的人變少，所以暫時減班。B 的三級警戒是 2021 年 5 月的事；A、D 是其他年份的細節，與減班無關。"
+          },
+          "3": {
+            "answer": "D",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Ridership bounced back after pandemic rules were relaxed: people returned to the trains, and in 2023 the high-speed rail set a new record of 73.1 million passengers.",
+              "The drop did not last long, however."
+            ],
+            "explanation_zh": "冒號後說明旅客回到列車、2023 年創新高，可知 bounced back 是「再度上升、回升」。A、B 與上下文相反；C 是第二段飛機旅客轉搭高鐵的內容，與此處無關。"
+          },
+          "4": {
+            "answer": "B",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "2022: 54.2 million",
+              "2021: 43.5 million",
+              "2019: 67.4 million"
+            ],
+            "explanation_zh": "2022 年 54.2 百萬，高於 2021 年的 43.5，但低於 2019 年的 67.4。A 方向相反；C 錯，2016–2019 都比 54.2 高；D 錯，第一年只有 15.6。"
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T12:21:19Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "answers": {
+          "1": {
+            "answer": "A",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "The chart below shows how many passengers the high-speed rail carried in each year from 2007 to 2025.",
+              "These numbers show how quickly the high-speed rail has become a part of daily life for many people in Taiwan."
+            ],
+            "explanation_zh": "全文依年份交代高鐵載客量從 2007 年起的變化（成長、疫情下滑、再創新高），A 最能概括；B、C 只是細節或沒談到，D 與最後恢復成長的內容相反。"
+          },
+          "2": {
+            "answer": "C",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "In 2020, fewer people traveled, so the company ran fewer trains for a while."
+            ],
+            "explanation_zh": "文中明說 2020 年旅客變少，所以公司減少班次；level 3 警戒是 2021 年 5 月的事，不是 2020 年減班的原因。"
+          },
+          "3": {
+            "answer": "D",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Ridership bounced back after pandemic rules were relaxed: people returned to the trains, and in 2023 the high-speed rail set a new record of 73.1 million passengers."
+            ],
+            "explanation_zh": "bounced back 後面接 people returned 與創新高，表示載客量又回升，故選 Went up again。"
+          },
+          "4": {
+            "answer": "B",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "2022: 54.2 million",
+              "2021: 43.5 million",
+              "2019: 67.4 million"
+            ],
+            "explanation_zh": "圖中 2022 年 54.2 百萬，高於 2021 年的 43.5、低於 2019 年的 67.4，且遠高於第一年的 15.6，故選 B。"
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "distractor_audit",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T12:40:00Z",
+      "details": {
+        "session_id": null,
+        "items": {
+          "1": {
+            "B": {
+              "verdict": "clearly_wrong",
+              "error_type": "off_topic",
+              "evidence": "Within a year, some flights between cities in Taiwan lost more than half of their passengers, and airlines canceled dozens of flights.",
+              "explanation_zh": "航空公司取消數十個航班只是第二段說明高鐵把旅客從飛機吸走的一個細節；全文依時間交代 2007–2025 年每年的載客人數（成長、疫情下跌、回升創新高），B 範圍太窄。"
+            },
+            "C": {
+              "verdict": "clearly_wrong",
+              "error_type": "off_topic",
+              "evidence": "Its trains run along the west coast between Taipei in the north and Kaohsiung in the south, a distance of about 345 kilometers.",
+              "explanation_zh": "文中只交代路線沿西海岸、長約 345 公里，完全沒有談高鐵怎麼興建。"
+            },
+            "D": {
+              "verdict": "clearly_wrong",
+              "error_type": "factual",
+              "evidence": "The drop did not last long, however.",
+              "explanation_zh": "疫情只出現在第三段，第四段一開頭就說下跌沒有持續很久，接著人們回到列車上、2023 年創新紀錄；「從此不再搭火車」與文意相反，也不是主旨。"
+            }
+          },
+          "2": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "factual",
+              "evidence": "In 2015, some trains began stopping at three new stations in Miaoli, Changhua, and Yunlin, and by 2019 the yearly total had reached 67.4 million.",
+              "explanation_zh": "部分列車開始停靠苗栗、彰化、雲林新站是 2015 年的事，和 2020 年減班無關。"
+            },
+            "B": {
+              "verdict": "clearly_wrong",
+              "error_type": "factual",
+              "evidence": "Things got even worse in May 2021, when Taiwan raised its COVID-19 alert to level 3 and the number of riders fell sharply.",
+              "explanation_zh": "疫情警戒提升到三級是 2021 年 5 月的事，不可能是 2020 年減班的原因。"
+            },
+            "D": {
+              "verdict": "clearly_wrong",
+              "error_type": "factual",
+              "evidence": "Within a year, some flights between cities in Taiwan lost more than half of their passengers, and airlines canceled dozens of flights.",
+              "explanation_zh": "航空公司取消航班是高鐵通車第一年旅客被高鐵吸走的結果，時間是 2007 年，不是 2020 年高鐵減班的原因。"
+            }
+          },
+          "3": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "meaning",
+              "evidence": "The drop did not last long, however.",
+              "explanation_zh": "粗體片語的上一句說下跌沒有持續很久；跌到 2011 年以來最低是第三段 2021 年的情形，片語說的是之後人數回升。"
+            },
+            "B": {
+              "verdict": "clearly_wrong",
+              "error_type": "meaning",
+              "evidence": "Ridership bounced back after pandemic rules were relaxed: people returned to the trains, and in 2023 the high-speed rail set a new record of 73.1 million passengers.",
+              "explanation_zh": "冒號後面說人們回到列車上、2023 年創下 7,310 萬人次的新紀錄，人數是增加，不是持平。"
+            },
+            "C": {
+              "verdict": "clearly_wrong",
+              "error_type": "meaning",
+              "evidence": "The fast new trains also pulled many travelers away from planes.",
+              "explanation_zh": "「旅客從飛機轉向火車」是第二段高鐵剛通車時的事；粗體片語的主詞是 Ridership（搭乘人數），說的是疫情後人數的變化，和交通工具的轉換無關。"
+            }
+          },
+          "4": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "factual",
+              "evidence": "2021: 43.5 million",
+              "explanation_zh": "圖中 2022 年是 54.2，比 2021 年的 43.5 高，不是更低。"
+            },
+            "C": {
+              "verdict": "clearly_wrong",
+              "error_type": "factual",
+              "evidence": "2019: 67.4 million",
+              "explanation_zh": "2022 年的 54.2 低於 2016–2019 年（例如 2019 年 67.4），沒有高於疫情前的每一年；要到 2023 年（73.1）才超過。"
+            },
+            "D": {
+              "verdict": "clearly_wrong",
+              "error_type": "factual",
+              "evidence": "2007: 15.6 million",
+              "explanation_zh": "第一年（2007）只有 15.6，2022 年的 54.2 是它的三倍多，不是差不多。"
+            }
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "fact_check",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T12:40:00Z",
+      "details": {
+        "checked": [
+          {
+            "claim": "Taiwan's high-speed rail began carrying passengers in January 2007.（f1；Knowledge at Wharton 2007-09-26 原頁：carried its first passengers in January this year）",
+            "source_id": "fact:thsr-ridership-rb03",
+            "ok": true
+          },
+          {
+            "claim": "Its trains run along the west coast between Taipei in the north and Kaohsiung in the south, a distance of about 345 kilometers.（f2；Wharton 原頁：a distance of 345 km, from Taipei in the north to Kaohsiung in the south）",
+            "source_id": "fact:thsr-ridership-rb03",
+            "ok": true
+          },
+          {
+            "claim": "Before the line opened, this trip took about five hours by regular train or by bus.（f4；Wharton 原頁：The bus and the regular train each take about five hours）",
+            "source_id": "fact:thsr-ridership-rb03",
+            "ok": true
+          },
+          {
+            "claim": "In 2007, the fastest high-speed trains needed only about 90 minutes, and between stations they reached almost 300 kilometers per hour.（f3、f5；Wharton 原頁：A one-stop express train takes just 90 minutes；reach almost 300 km per hour。這次明確寫成 2007 年的情形、用過去式，已修正 ai.rd.7fd13e 寫成現況的問題）",
+            "source_id": "fact:thsr-ridership-rb03",
+            "ok": true
+          },
+          {
+            "claim": "In its first year, the high-speed rail carried 15.6 million passengers; in 2008 the total almost doubled.（f11、f12；d1：15.555656、30.581261，比值 1.97；本輪用 data.gov.tw 逐月 CSV 重新加總，與 d1 完全相同）",
+            "source_id": "fact:thsr-ridership-rb03",
+            "ok": true
+          },
+          {
+            "claim": "The company kept adding trains to its daily schedule during that year.（f15；Wharton 原頁：19 frequencies per day → 46 frequencies per day on September 14）",
+            "source_id": "fact:thsr-ridership-rb03",
+            "ok": true
+          },
+          {
+            "claim": "The fast new trains pulled many travelers away from planes; within a year, some flights between cities in Taiwan lost more than half of their passengers, and airlines canceled dozens of flights.（f6；Wharton 原頁：air traffic on some competing routes has plummeted more than 50%；Domestic airlines are canceling dozens of flights）",
+            "source_id": "fact:thsr-ridership-rb03",
+            "ok": true
+          },
+          {
+            "claim": "After that, the number of riders kept climbing every year … by 2019 the yearly total had reached 67.4 million.（d1：2008–2019 逐年上升，2019＝67.411248）",
+            "source_id": "fact:thsr-ridership-rb03",
+            "ok": true
+          },
+          {
+            "claim": "In 2015, some trains began stopping at three new stations in Miaoli, Changhua, and Yunlin.（f7；Taipei Times 2026-08-02 原頁：2015 年改點時 stops in Miaoli, Changhua and Yunlin counties were added to select services）",
+            "source_id": "fact:thsr-ridership-rb03",
+            "ok": true
+          },
+          {
+            "claim": "In 2020, fewer people traveled, so the company ran fewer trains for a while.（f8；Focus Taiwan 2020-03-23 原頁：service will be reduced between April 18 and June 21 … as demand has fallen due to the COVID-19 coronavirus pandemic）",
+            "source_id": "fact:thsr-ridership-rb03",
+            "ok": true
+          },
+          {
+            "claim": "In May 2021 Taiwan raised its COVID-19 alert to level 3 and the number of riders fell sharply.（f9；Taipei Times 2021-08-17 原頁：on May 19 imposed a nationwide level-3 COVID-19 alert, which caused ridership to plummet）",
+            "source_id": "fact:thsr-ridership-rb03",
+            "ok": true
+          },
+          {
+            "claim": "The total for 2021 was only 43.5 million, the lowest since 2011.（d1：2021＝43.459558；2011＝41.629303，2012–2020 都高於 43.46，說法正確）",
+            "source_id": "fact:thsr-ridership-rb03",
+            "ok": true
+          },
+          {
+            "claim": "Ridership bounced back after pandemic rules were relaxed … in 2023 the high-speed rail set a new record of 73.1 million passengers.（f10、f11；d1：2023＝73.086668 > 2019 的 67.41。Taipei Times 2024-02-23 原頁的公司公布數是 73.03 million（四捨五入 73.0），與鐵道局逐月資料加總 73.09 有 0.06 百萬差異；事實單 s6 已註明數字一律採 s1，文中 73.1 與圖表一致，不判錯）",
+            "source_id": "fact:thsr-ridership-rb03",
+            "ok": true
+          },
+          {
+            "claim": "The total rose again in 2024, and in 2025 the trains carried 82.1 million people, more than five times as many as in the first year.（f13、d1：2024＝78.250483、2025＝82.070618，82.07 ÷ 15.56 ≈ 5.3）",
+            "source_id": "fact:thsr-ridership-rb03",
+            "ok": true
+          },
+          {
+            "claim": "Chart 1：19 個數值與 d1 依一位小數四捨五入全部一致；description 的敘述（2007–2019 每年上升、2020–2021 連續下跌、2022 回升到 54.2 但低於 2016–2019、2023 超過 2019、2025 最高）都和資料相符",
+            "source_id": "fact:thsr-ridership-rb03",
+            "ok": true
+          },
+          {
+            "claim": "第 4 題：2022＝54.2，高於 2021 的 43.5、低於 2019 的 67.4（d1：54.162008、43.459558、67.411248），正解 B 與資料一致；C（高於疫情前每一年）與 2016–2019 的資料不符，D（和第一年差不多）與 15.6 不符",
+            "source_id": "fact:thsr-ridership-rb03",
+            "ok": true
+          }
+        ],
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

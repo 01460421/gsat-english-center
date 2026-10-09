@@ -1,0 +1,612 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.st.4fb115",
+  "version": 1,
+  "section_type": "structure",
+  "format_version": "structure-4x5",
+  "tier": "advanced",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": "On summer evenings, small dark shapes can often be seen darting above ponds and around street lights. These are bats, catching insects in light so dim that most hunters would be helpless. Contrary to a popular saying, bats are not blind, and many of them can see quite well. [[1]] Instead, they find their way mainly by listening.\nAs a bat flies, it gives out a rapid series of high-pitched calls, most of them far too high for human ears to detect. When a call strikes an insect or a branch, part of the sound bounces back as an echo. [[2]] Scientists call this way of sensing the world echolocation, and it is precise enough to let some bats avoid wires as thin as a human hair.\n[[3]] During such a chase, the bat calls faster and faster as it closes in, so that the echoes give it an almost constant update on where its prey is. This allows it to follow even an insect that suddenly twists and turns. The calls themselves can also be extremely loud. To protect its own hearing, the bat briefly tightens tiny muscles inside its ears every time it calls out.\n[[4]] Some, like certain moths, can hear a bat's calls and escape by suddenly folding their wings and dropping toward the ground. Others make clicking sounds of their own, which seem to confuse the hunter. So on a quiet summer night, the sky above us may be full of a battle of sounds that we cannot hear.",
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": {
+      "A": "Fruit bats find their meals by sight and smell.",
+      "B": "Many insects have developed clever tricks for staying alive.",
+      "C": "Their eyes, however, are not what guides them through the darkness.",
+      "D": "The real test of this skill comes when a bat chases its prey through the air.",
+      "E": "From these echoes, the bat can tell where an object is and even how large it is."
+    },
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "C",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "contrast",
+          "clue_raw": "CT|CN|BF|L",
+          "key_phrase": "however ← bats are not blind, and many of them can see quite well；are not what guides them → Instead, they find their way mainly by listening"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "E",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "pronoun_reference",
+          "clue_raw": "SP|PR|B|L",
+          "key_phrase": "these echoes ← part of the sound bounces back as an echo"
+        }
+      },
+      {
+        "no": 3,
+        "label": "3",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "D",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "lexical_cohesion",
+          "clue_raw": "BR|LX|BF|P",
+          "key_phrase": "this skill ← 第二段整段（回聲定位）；chases its prey → During such a chase … where its prey is"
+        }
+      },
+      {
+        "no": 4,
+        "label": "4",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "B",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "enumeration",
+          "clue_raw": "TS|PR|F|L",
+          "key_phrase": "Many insects → Some, like certain moths, … / Others make clicking sounds；clever tricks → escape by suddenly folding their wings"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "蝙蝠的回聲定位",
+      "genre": "expository",
+      "sdgs": [],
+      "text_format": "continuous"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "前一句破除迷思：蝙蝠並不瞎，很多蝙蝠其實看得很清楚。(C) 用 however 轉折：「然而，在黑暗中引導牠們的並不是眼睛。」後一句 Instead, they find their way mainly by listening 的 Instead（取而代之）必須接在一個否定說法之後，正對應 (C) 的 are not what guides them。前後兩側都有錨點，選 (C)。",
+          "evidence": [
+            "Contrary to a popular saying, bats are not blind, and many of them can see quite well.",
+            "Their eyes, however, are not what guides them through the darkness.",
+            "Instead, they find their way mainly by listening."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "contrast",
+          "option_notes_zh": {
+            "A": "多餘句：(A) 說果蝠靠視覺和嗅覺找食物，接在「蝙蝠看得很清楚」之後好像很順，最容易誤選；但後一句說「取而代之，牠們主要靠聽覺找路」，Instead 剛好和 (A) 的「靠視覺和嗅覺」矛盾，所以不能放這裡。",
+            "B": "(B) 說很多昆蟲發展出求生妙招，但這一段講的是蝙蝠怎麼找路；後一句的 Instead 也找不到可以「取而代之」的否定說法。(B) 屬於第 4 格。",
+            "D": "(D) 的 this skill 在這裡沒有先行詞（回聲定位還沒介紹），後一句的 Instead 也接不上。(D) 屬於第 3 格。",
+            "E": "(E) 的 these echoes 沒有先行詞，回聲要到第二段才出現。(E) 屬於第 2 格。"
+          },
+          "strategy_zh": "空格後一句以 Instead、Rather 開頭時，空格裡一定有一個被否定的說法（not、never、no）；先找有否定詞的選項，再看它和前一句是否構成轉折。",
+          "hints": [
+            "後一句的 Instead 是「取代」什麼？空格裡要先有一個否定的說法。",
+            "前一句說蝙蝠看得見，接下來要轉到哪裡？",
+            "答案用 however 轉折，說引導牠們的不是眼睛。"
+          ]
+        },
+        "2": {
+          "explanation_zh": "前兩句說明蝙蝠飛行時發出高頻叫聲，叫聲碰到昆蟲或樹枝，有一部分會反彈回來成為回聲。(E) 的 these echoes 指的就是前一句的 echo，並說明蝙蝠能從回聲判斷物體的位置和大小。後一句 Scientists call this way of sensing the world echolocation 再為整個過程命名。(E) 回指前一句，選 (E)。",
+          "evidence": [
+            "When a call strikes an insect or a branch, part of the sound bounces back as an echo.",
+            "From these echoes, the bat can tell where an object is and even how large it is."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "pronoun_reference",
+          "option_notes_zh": {
+            "A": "多餘句：(A) 說果蝠靠視覺和嗅覺找食物；放在這裡，後一句的 this way of sensing the world（這種感知方式）就變成指視覺和嗅覺，卻被稱為回聲定位，自相矛盾。",
+            "B": "(B) 說昆蟲有求生妙招，打斷了「叫聲→回聲→命名」的說明，後一句的 this way of sensing 也接不上。(B) 屬於第 4 格。",
+            "C": "(C) 說引導蝙蝠的不是眼睛，但前一句講的是回聲，沒有提到眼睛，however 也沒有可以轉折的對象。(C) 屬於第 1 格。",
+            "D": "(D) 說這項技能真正的考驗在追捕獵物時，但技能的內容還沒說完、也還沒命名；放在這裡，後一句又回頭替技能命名，順序不對。(D) 屬於第 3 格。"
+          },
+          "strategy_zh": "看到選項以 these＋名詞（these echoes）回指時，回到前一句確認這個名詞是否剛出現；說明一個過程的段落，通常依「動作→結果→命名」的順序排列。",
+          "hints": [
+            "前一句最後出現了什麼新名詞？",
+            "哪個選項用 these 指回這個名詞？",
+            "答案說蝙蝠可以從這些回聲判斷物體的位置和大小。"
+          ]
+        },
+        "3": {
+          "explanation_zh": "第三段開頭的空格要能接住第二段、又帶出第三段。(D) 的 this skill 指第二段整段介紹的回聲定位，說「這項技能真正的考驗，是在蝙蝠於空中追捕獵物的時候」。後一句 During such a chase 的 such a chase 正指 (D) 的 chases its prey，接著描述追捕時叫聲越來越快。(D) 的先行詞是一整段，同時提供後一句的先行詞，是承上啟下句，選 (D)。",
+          "evidence": [
+            "Scientists call this way of sensing the world echolocation, and it is precise enough to let some bats avoid wires as thin as a human hair.",
+            "The real test of this skill comes when a bat chases its prey through the air.",
+            "During such a chase, the bat calls faster and faster as it closes in, so that the echoes give it an almost constant update on where its prey is."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "lexical_cohesion",
+          "option_notes_zh": {
+            "A": "多餘句：(A) 說果蝠靠視覺和嗅覺找食物，接在回聲定位之後像是補充一個例外；但後一句的 such a chase（這樣的追捕）找不到先行詞，吃水果的果蝠也不需要追捕。",
+            "B": "(B) 說很多昆蟲有求生妙招，但後一句的 such a chase 找不到先行詞，本段講的也是蝙蝠怎麼追，不是昆蟲怎麼逃。(B) 屬於第 4 格。",
+            "C": "(C) 說引導蝙蝠的不是眼睛，放在介紹完回聲定位之後既重複又不連貫；後一句的 such a chase 也沒有先行詞。(C) 屬於第 1 格。",
+            "E": "(E) 的 these echoes 可以指前一段的回聲，也和後一句的 echoes 相同，容易誤選；但後一句開頭的 During such a chase 需要先提到「追捕」，(E) 沒有。(E) 屬於第 2 格。"
+          },
+          "strategy_zh": "段首空格要同時檢查兩件事：選項的回指（this skill）能不能涵蓋前一段，以及後一句的回指（such a chase）能不能在選項裡找到先行詞。只有一邊接得上的選項要刪掉。",
+          "hints": [
+            "後一句的 such a chase 指的是什麼樣的追捕？空格裡要先提到追捕。",
+            "this skill 可以指前一段介紹的哪一種能力？",
+            "答案說這項技能真正的考驗在追捕獵物的時候。"
+          ]
+        },
+        "4": {
+          "explanation_zh": "最後一段開頭的空格要放主題句。後一句 Some, like certain moths, can hear a bat's calls and escape… 和再下一句 Others make clicking sounds of their own 用 Some… Others… 列舉，Some 和 Others 都需要一個複數的群體當先行詞；(B)「很多昆蟲發展出巧妙的求生招數」的 Many insects 正是這個群體，clever tricks 也由後面兩種逃生方法具體說明。前一句講的是蝙蝠保護自己的聽力，(B) 沒有回指它的字，位置要靠後面的列舉確定，選 (B)。",
+          "evidence": [
+            "Many insects have developed clever tricks for staying alive.",
+            "Some, like certain moths, can hear a bat's calls and escape by suddenly folding their wings and dropping toward the ground.",
+            "Others make clicking sounds of their own, which seem to confuse the hunter."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "enumeration",
+          "option_notes_zh": {
+            "A": "多餘句：(A) 說果蝠靠視覺和嗅覺找食物，但後一句的 Some, like certain moths（有些，例如某些蛾）要從一群昆蟲裡舉例，果蝠不屬於這個群體；本段講的是獵物如何逃生。",
+            "C": "(C) 說引導蝙蝠的不是眼睛，但後一句的 Some… Others… 找不到複數的群體可以指，本段也不是在講蝙蝠的眼睛。(C) 屬於第 1 格。",
+            "D": "(D) 說這項技能真正的考驗在追捕獵物時，好像可以帶出獵物逃走的例子；但後一句的 Some, like certain moths 需要一個複數的「昆蟲」群體，(D) 只有單數的 its prey，而且第三段開頭的 such a chase 會因此失去先行詞。(D) 屬於第 3 格。",
+            "E": "(E) 說蝙蝠可以從回聲判斷物體的位置，那是第二段的內容；後一句的 Some… Others… 也沒有可以指的群體。(E) 屬於第 2 格。"
+          },
+          "strategy_zh": "看到 Some…, Others…（有的……，有的……）的列舉，往前找一個複數的群體名詞當主題句；段落的主題句常常不回指前一句，要靠後面的列舉來定位。",
+          "hints": [
+            "後兩句的 Some 和 Others 指的是哪一群生物？",
+            "蛾的兩種逃生方法可以用哪個選項概括？",
+            "答案說很多昆蟲發展出巧妙的求生招數。"
+          ]
+        }
+      }
+    },
+    "translation_zh": {
+      "text": "夏天傍晚，常常可以看到小小的黑影在池塘上方和路燈周圍飛竄。牠們是蝙蝠，正在光線昏暗到大多數獵食者都束手無策的環境中捕捉昆蟲。和俗話說的不同，蝙蝠並不瞎，很多蝙蝠其實看得相當清楚。【1】然而，在黑暗中引導牠們的並不是眼睛。取而代之的是，牠們主要靠聽覺來找路。\n蝙蝠飛行時，會發出一連串急促的高頻叫聲，其中大多數音調太高，人耳根本聽不到。當叫聲碰到昆蟲或樹枝時，部分聲音會反彈回來，成為回聲。【2】蝙蝠可以從這些回聲判斷物體在哪裡，甚至判斷它有多大。科學家把這種感知世界的方式稱為回聲定位，它精確到能讓某些蝙蝠避開細如人髮的電線。\n【3】這項技能真正的考驗，是在蝙蝠於空中追捕獵物的時候。在這樣的追捕中，蝙蝠越逼近獵物，叫聲就越快，回聲因此幾乎不間斷地更新獵物的位置。這讓牠甚至能緊跟突然轉彎、扭動的昆蟲。這些叫聲本身也可能非常響亮。為了保護自己的聽力，蝙蝠每次發出叫聲時，都會讓耳朵裡的細小肌肉短暫收緊。\n【4】很多昆蟲發展出巧妙的求生招數。有些昆蟲，例如某些蛾，聽得到蝙蝠的叫聲，會突然收起翅膀、朝地面落下來逃走。有些則會自己發出喀嗒聲，似乎能讓獵捕者混淆。所以，在安靜的夏夜裡，我們頭頂的天空可能正上演著一場我們聽不見的聲音大戰。\n（多餘句 (A)：果蝠靠視覺和嗅覺找食物。）"
+    },
+    "elimination": {
+      "feasible": {
+        "1": [
+          "C"
+        ],
+        "2": [
+          "E"
+        ],
+        "3": [
+          "D"
+        ],
+        "4": [
+          "B"
+        ]
+      },
+      "perfect_matchings": 1
+    },
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": null,
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "3-V-7",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "7-V-5",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "B-V-8",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "9-V-2",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": "本文由 AI 撰寫"
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-08-structure-advanced-03",
+    "lot": "structure-advanced-03",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/structure",
+    "prompt_sha256": "257262f8832fbffdf8c3c8dea5601b5023882427703b584039e3a0634cb66563",
+    "spec_id": "structure-advanced@2026-10-08",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 250,
+    "sentences": 14,
+    "avg_sentence_length": 17.86,
+    "denominator": 250,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.964,
+    "coverage_l1_6": 0.976,
+    "offlist_ratio": 0.024,
+    "beyond_l4_ratio": 0.012,
+    "level_counts": {
+      "1": 200,
+      "2": 24,
+      "3": 14,
+      "4": 3,
+      "5": 3,
+      "off": 6
+    },
+    "offlist_words": [
+      "cannot",
+      "darting",
+      "echolocation",
+      "helpless",
+      "summer"
+    ],
+    "band": {
+      "tier": "advanced",
+      "basis": "lot structure-advanced-03（SPEC §3.4＋出題規格書 passage_overrides（words、coverage_L1_4_min（取代 SPEC 的區間）、coverage_L1_6_min、offlist_max、beyond_l4_ratio_max））",
+      "ok": true,
+      "checks": {
+        "word_count": {
+          "value": 250,
+          "min": 220,
+          "max": 310,
+          "ok": true
+        },
+        "coverage_l1_4": {
+          "value": 0.964,
+          "min": 0.9,
+          "max": null,
+          "ok": true
+        },
+        "coverage_l1_6": {
+          "value": 0.976,
+          "min": 0.94,
+          "max": null,
+          "ok": true
+        },
+        "offlist_ratio": {
+          "value": 0.024,
+          "min": null,
+          "max": 0.06,
+          "ok": true
+        },
+        "avg_sentence_length": {
+          "value": 17.86,
+          "min": 15,
+          "max": 21,
+          "ok": true
+        },
+        "beyond_l4_ratio": {
+          "value": 0.012,
+          "min": null,
+          "max": 0.06,
+          "ok": true
+        }
+      }
+    }
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T12:23:02Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T00:00:00Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "answers": {
+          "1": {
+            "answer": "C",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Contrary to a popular saying, bats are not blind, and many of them can see quite well.",
+              "Instead, they find their way mainly by listening."
+            ],
+            "explanation_zh": "前句說蝙蝠看得見，後句 Instead 說靠聽覺辨位；C 以 however 轉折說眼睛不是在黑暗中引導牠們的東西，Instead 才接得上。",
+            "feasible": [
+              "C"
+            ]
+          },
+          "2": {
+            "answer": "E",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "When a call strikes an insect or a branch, part of the sound bounces back as an echo.",
+              "Scientists call this way of sensing the world echolocation, and it is precise enough to let some bats avoid wires as thin as a human hair."
+            ],
+            "explanation_zh": "E 的 these echoes 承接前句的 an echo，說明蝙蝠如何從回音判斷物體位置與大小；後句的 this way of sensing the world 再總稱為回聲定位。",
+            "feasible": [
+              "E"
+            ]
+          },
+          "3": {
+            "answer": "D",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "During such a chase, the bat calls faster and faster as it closes in, so that the echoes give it an almost constant update on where its prey is."
+            ],
+            "explanation_zh": "空格後 During such a chase 需要先提到追捕；D 的 chases its prey through the air 提供先行詞，this skill 承接前段的回聲定位。",
+            "feasible": [
+              "D"
+            ]
+          },
+          "4": {
+            "answer": "B",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Some, like certain moths, can hear a bat's calls and escape by suddenly folding their wings and dropping toward the ground.",
+              "Others make clicking sounds of their own, which seem to confuse the hunter."
+            ],
+            "explanation_zh": "Some... Others... 分述不同昆蟲的對策，需要前面先有複數名詞的總述；B 的 Many insects have developed clever tricks for staying alive 正是主題句。",
+            "feasible": [
+              "B"
+            ]
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T12:23:02Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "answers": {
+          "1": {
+            "answer": "C",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Contrary to a popular saying, bats are not blind, and many of them can see quite well.",
+              "Instead, they find their way mainly by listening."
+            ],
+            "explanation_zh": "前面說蝙蝠不盲，後面 Instead 說靠聽覺，中間需要 However 轉折說明眼睛不是靠的方式，C 最合。",
+            "feasible": [
+              "C"
+            ]
+          },
+          "2": {
+            "answer": "E",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "When a call strikes an insect or a branch, part of the sound bounces back as an echo.",
+              "Scientists call this way of sensing the world echolocation, and it is precise enough to let some bats avoid wires as thin as a human hair."
+            ],
+            "explanation_zh": "E 的 From these echoes 承接回聲，再說明蝙蝠如何判斷位置與大小，下一句才命名為回聲定位。",
+            "feasible": [
+              "E"
+            ]
+          },
+          "3": {
+            "answer": "D",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "During such a chase, the bat calls faster and faster as it closes in, so that the echoes give it an almost constant update on where its prey is.",
+              "Scientists call this way of sensing the world echolocation, and it is precise enough to let some bats avoid wires as thin as a human hair."
+            ],
+            "explanation_zh": "後句的 such a chase 需要先有追捕獵物的句子，D 提到蝙蝠追逐獵物，最合。",
+            "feasible": [
+              "D"
+            ]
+          },
+          "4": {
+            "answer": "B",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Some, like certain moths, can hear a bat's calls and escape by suddenly folding their wings and dropping toward the ground.",
+              "Others make clicking sounds of their own, which seem to confuse the hunter."
+            ],
+            "explanation_zh": "後文的 Some 與 Others 指某些昆蟲想出的求生招數，B 總述昆蟲的各種技倆。",
+            "feasible": [
+              "B"
+            ]
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "distractor_audit",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T12:30:00Z",
+      "details": {
+        "session_id": null,
+        "items": {
+          "1": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "Instead, they find their way mainly by listening.",
+              "explanation_zh": "多餘句 (A) 說果蝠靠視覺和嗅覺找食物，接在「看得很清楚」之後似乎很順；但後一句 Instead 說牠們主要靠聽覺，與 (A) 的「靠視覺和嗅覺」矛盾，Instead 前也需要一個被否定的說法。"
+            },
+            "B": {
+              "verdict": "clearly_wrong",
+              "error_type": "off_topic",
+              "evidence": "Instead, they find their way mainly by listening.",
+              "explanation_zh": "(B) 講昆蟲的求生招數，與本段「蝙蝠靠什麼找路」無關；後一句的 Instead 也沒有可以取代的否定說法。"
+            },
+            "D": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Instead, they find their way mainly by listening.",
+              "explanation_zh": "(D) 的 this skill 在這裡沒有先行詞（回聲定位還沒介紹）；後一句的 Instead 也找不到被否定的說法。"
+            },
+            "E": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Contrary to a popular saying, bats are not blind, and many of them can see quite well.",
+              "explanation_zh": "(E) 的 these echoes 沒有先行詞：前一句只講蝙蝠看得見，回聲要到第二段才出現。"
+            }
+          },
+          "2": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "Scientists call this way of sensing the world echolocation, and it is precise enough to let some bats avoid wires as thin as a human hair.",
+              "explanation_zh": "多餘句 (A) 放在這裡，後一句的 this way of sensing the world 就變成指視覺和嗅覺，卻被稱為回聲定位，自相矛盾。"
+            },
+            "B": {
+              "verdict": "clearly_wrong",
+              "error_type": "off_topic",
+              "evidence": "Scientists call this way of sensing the world echolocation, and it is precise enough to let some bats avoid wires as thin as a human hair.",
+              "explanation_zh": "(B) 講昆蟲的求生招數，打斷「叫聲→回聲→命名」的說明，後一句的 this way of sensing the world 也接不上。"
+            },
+            "C": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "When a call strikes an insect or a branch, part of the sound bounces back as an echo.",
+              "explanation_zh": "(C) 的 however 要轉折，但前一句講的是回聲，沒有提到眼睛；本段也以單數 a bat 敘述，Their eyes 接不上。"
+            },
+            "D": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Scientists call this way of sensing the world echolocation, and it is precise enough to let some bats avoid wires as thin as a human hair.",
+              "explanation_zh": "(D) 說這項技能真正的考驗在追捕時，但技能怎麼運作（從回聲判斷位置）還沒說明，後一句又回頭替這種感知方式命名，順序錯亂。"
+            }
+          },
+          "3": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "During such a chase, the bat calls faster and faster as it closes in, so that the echoes give it an almost constant update on where its prey is.",
+              "explanation_zh": "多餘句 (A) 講果蝠靠視覺和嗅覺，後一句的 such a chase 找不到先行詞，吃水果的果蝠也不需要追捕。"
+            },
+            "B": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "During such a chase, the bat calls faster and faster as it closes in, so that the echoes give it an almost constant update on where its prey is.",
+              "explanation_zh": "(B) 講昆蟲的求生招數，後一句的 such a chase 找不到先行詞；本段講的是蝙蝠怎麼追，不是昆蟲怎麼逃。"
+            },
+            "C": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "During such a chase, the bat calls faster and faster as it closes in, so that the echoes give it an almost constant update on where its prey is.",
+              "explanation_zh": "(C) 說引導蝙蝠的不是眼睛，重複第一段的內容；後一句的 such a chase 也沒有先行詞。"
+            },
+            "E": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "During such a chase, the bat calls faster and faster as it closes in, so that the echoes give it an almost constant update on where its prey is.",
+              "explanation_zh": "(E) 的 these echoes 雖能回指回聲，但 (E) 沒有提到追捕，後一句開頭的 During such a chase 找不到先行詞。"
+            }
+          },
+          "4": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "Some, like certain moths, can hear a bat's calls and escape by suddenly folding their wings and dropping toward the ground.",
+              "explanation_zh": "多餘句 (A) 講果蝠，但後一句 Some, like certain moths 要從一群「昆蟲」裡舉例，果蝠不屬於這個群體；本段講的是獵物如何逃生。"
+            },
+            "C": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Some, like certain moths, can hear a bat's calls and escape by suddenly folding their wings and dropping toward the ground.",
+              "explanation_zh": "(C) 的 Their eyes 與前一句單數的 the bat 不合；後一句 Some… Others… 找不到複數的群體可以指。"
+            },
+            "D": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "During such a chase, the bat calls faster and faster as it closes in, so that the echoes give it an almost constant update on where its prey is.",
+              "explanation_zh": "(D) 說「真正的考驗在追捕獵物時」，但第三段已經詳細描述過追捕，放在第四段開頭是倒退重複；後一句 Some, like certain moths 也需要一個複數的昆蟲群體，(D) 只有單數的 its prey。"
+            },
+            "E": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Some, like certain moths, can hear a bat's calls and escape by suddenly folding their wings and dropping toward the ground.",
+              "explanation_zh": "(E) 說蝙蝠能從回聲判斷物體位置，屬於第二段的內容；後一句的 Some… Others… 沒有可以指的群體。"
+            }
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "unique_solution",
+      "reviewer": "record_verification.py",
+      "result": "pass",
+      "created_at": "2026-10-09T12:23:02Z",
+      "details": {
+        "method": "injective_assignment",
+        "perfect_matchings": 1,
+        "matches_key": true,
+        "feasible": {
+          "1": [
+            "C"
+          ],
+          "2": [
+            "E"
+          ],
+          "3": [
+            "D"
+          ],
+          "4": [
+            "B"
+          ]
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

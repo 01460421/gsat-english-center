@@ -1,0 +1,618 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.st.45a222",
+  "version": 1,
+  "section_type": "structure",
+  "format_version": "structure-4x5",
+  "tier": "advanced",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": "For many students, a cup of instant noodles is the easiest meal imaginable: add boiling water, wait a few minutes, and it is ready to eat. Yet this everyday food was born in a backyard shed, where one determined man worked alone for nearly a year.\nIn the years after World War II, food was in short supply across Japan. One cold night in Osaka, Momofuku Ando noticed a long line of hungry people waiting outside a street stall for bowls of hot ramen. [[1]] Noodles, he decided, should take minutes to prepare, not hours.\nAlthough he had no training as a cook, Ando built a small shed behind his house and began experimenting on his own. His goal was a noodle that tasted good, stayed fresh for months, and could be ready in an instant. [[2]] Each failure only made him more determined, and he often worked from early morning until late at night.\n[[3]] There, one evening, he watched his wife fry tempura, pieces of seafood and vegetables dipped in batter and cooked in hot oil. The oil drove the water out of the batter, leaving it dry and full of tiny holes. Ando realized that frying his noodles would dry them in the same way, and that hot water could later flow back into the holes to make them soft again.\nHis Chicken Ramen went on sale in 1958 and soon became a hit across Japan. Years later, on a trip to the United States, he saw supermarket workers breaking his noodles into paper cups and eating them with forks. [[4]] Today, people around the world eat billions of servings of instant noodles every year.",
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": {
+      "A": "For months, nothing he tried seemed to work.",
+      "B": "As a result, his dried noodles could last for months.",
+      "C": "Making the dish at home, by contrast, could take hours.",
+      "D": "The answer finally came from an unexpected place: his own kitchen.",
+      "E": "That simple habit inspired Cup Noodles, sold in a cup that doubled as a bowl."
+    },
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "C",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "contrast",
+          "clue_raw": "CT|CN|BF|L",
+          "key_phrase": "the dish ← bowls of hot ramen；by contrast ← waiting outside a street stall（在攤子吃）vs. at home；could take hours → should take minutes to prepare, not hours"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "A",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "lexical_cohesion",
+          "clue_raw": "SP|LX|F|L",
+          "key_phrase": "nothing he tried seemed to work → Each failure only made him more determined"
+        }
+      },
+      {
+        "no": 3,
+        "label": "3",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "D",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "topic_sentence",
+          "clue_raw": "TS|LX|BF|P",
+          "key_phrase": "The answer ← 第三段整段（他的目標與一再失敗）；his own kitchen → There, one evening, he watched his wife fry tempura"
+        }
+      },
+      {
+        "no": 4,
+        "label": "4",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "E",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "pronoun_reference",
+          "clue_raw": "SP|PR|B|L",
+          "key_phrase": "That simple habit ← breaking his noodles into paper cups and eating them with forks；a cup ← paper cups"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "泡麵的發明",
+      "genre": "expository",
+      "sdgs": [],
+      "text_format": "continuous"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "前一句說戰後的大阪，一群飢餓的人在寒夜裡排著長隊，等著在路邊攤吃一碗熱拉麵。(C) 的 the dish 指拉麵，用 by contrast 對比：在攤子上吃很方便，「相較之下，在家自己做卻可能要花好幾個小時」。後一句 Noodles, he decided, should take minutes to prepare, not hours 的 not hours 正好回應 (C) 的 hours：安藤因此決定，麵要能在幾分鐘內煮好。選 (C)。",
+          "evidence": [
+            "One cold night in Osaka, Momofuku Ando noticed a long line of hungry people waiting outside a street stall for bowls of hot ramen.",
+            "Making the dish at home, by contrast, could take hours.",
+            "Noodles, he decided, should take minutes to prepare, not hours."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "contrast",
+          "option_notes_zh": {
+            "A": "(A) 說他試了好幾個月都沒有成功，但這時安藤還沒開始做任何實驗；後一句才說他「決定」要做什麼樣的麵，順序顛倒，not hours 也找不到呼應的對象。(A) 屬於第 2 格。",
+            "B": "多餘句：(B) 用 As a result 說他的乾麵可以保存好幾個月，但這時麵根本還沒發明，前一句「排隊吃拉麵」也不是原因；後一句的 not hours 也接不上。",
+            "D": "(D) 說答案終於在他自己的廚房出現，但這時連問題都還沒提出；後一句的 not hours 也找不到呼應。(D) 屬於第 3 格。",
+            "E": "(E) 的 bowl 和前一句的 bowls 相同，容易誤選；但 That simple habit 在這裡沒有可以指的習慣，杯麵也要到故事最後才誕生。(E) 屬於第 4 格。"
+          },
+          "strategy_zh": "空格後一句出現 not hours、instead of… 這種「否定對照」時，往選項裡找被否定的那一端（hours）；by contrast 這類連接詞也要確認前文真的有可以對照的東西（攤子 vs. 家裡）。",
+          "hints": [
+            "後一句說麵應該幾分鐘就能煮好，not hours——「好幾個小時」是從哪裡來的？",
+            "在路邊攤吃拉麵，和在家自己做，有什麼不同？",
+            "答案用 by contrast，說在家做這道菜可能要好幾個小時。"
+          ]
+        },
+        "2": {
+          "explanation_zh": "前一句列出安藤的目標：好吃、能保存好幾個月、一下子就能吃。後一句 Each failure only made him more determined 的 Each failure（每一次失敗）需要前面先說他失敗過。(A)「好幾個月來，他嘗試的方法似乎都行不通」正好提供這些失敗，也呼應第一段說他獨自在小屋裡做了將近一年。(A) 和前一句之間沒有明顯的連接詞，位置主要靠後一句的 Each failure 確定，選 (A)。",
+          "evidence": [
+            "His goal was a noodle that tasted good, stayed fresh for months, and could be ready in an instant.",
+            "For months, nothing he tried seemed to work.",
+            "Each failure only made him more determined, and he often worked from early morning until late at night."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "lexical_cohesion",
+          "option_notes_zh": {
+            "B": "多餘句：(B) 和前一句共用 noodle、months，讀起來很像目標達成了，最容易誤選；但 As a result 要接一個原因，前一句只是「目標」，不是已經做到的事。後一句的 Each failure 也說明他還在失敗，(B) 卻說成功了，前後矛盾。",
+            "C": "(C) 說在家做這道菜要好幾個小時，但 the dish 在這裡沒有明確的指涉，by contrast 也沒有對照的對象；後一句的 Each failure 也找不到失敗的事。(C) 屬於第 1 格。",
+            "D": "(D) 說答案終於出現了，但後一句卻說每次失敗都讓他更堅定、繼續日夜工作，前後矛盾。(D) 屬於第 3 格（第四段開頭）。",
+            "E": "(E) 說那個簡單的習慣啟發了杯麵，但這時既沒有可以指的習慣，杯麵也還沒出現。(E) 屬於第 4 格。"
+          },
+          "strategy_zh": "後一句以 Each failure、This problem 這類名詞回指時，空格必須先說出那件事（失敗、問題）；選項如果說「成功了」，後面卻還在講失敗，就可以刪掉。",
+          "hints": [
+            "後一句的 Each failure 指的是什麼？前面要先出現什麼？",
+            "安藤立下目標之後，結果順利嗎？",
+            "答案說好幾個月來，他試的方法都行不通。"
+          ]
+        },
+        "3": {
+          "explanation_zh": "第四段開頭的空格要放這一段的主題句。上一段說安藤一再失敗，卻仍日夜工作；(D)「答案終於從一個意想不到的地方出現：他自己的廚房」中的 The answer，回應的是整個第三段一直在找的解決方法。後一句 There, one evening, he watched his wife fry tempura 的 There 正指 (D) 的 his own kitchen，接著說明炸天婦羅如何給了他靈感。選 (D)。",
+          "evidence": [
+            "Each failure only made him more determined, and he often worked from early morning until late at night.",
+            "The answer finally came from an unexpected place: his own kitchen.",
+            "There, one evening, he watched his wife fry tempura, pieces of seafood and vegetables dipped in batter and cooked in hot oil."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "topic_sentence",
+          "option_notes_zh": {
+            "A": "(A) 說他好幾個月都沒成功，只看前一句好像也接得上；但後一句的 There 需要一個地點當先行詞，(A) 沒有，本段講的也是「突破」，不是失敗。(A) 屬於第 2 格。",
+            "B": "多餘句：(B) 用 As a result 說乾麵可以保存好幾個月，好像是日夜努力的成果；但這時他還沒想出把麵炸乾的方法（要等本段的天婦羅才想到），後一句的 There 也找不到地點。",
+            "C": "(C) 的 at home 看似能讓 There 接上；但 the dish 沒有指涉、by contrast 也沒有可以對照的東西，本段講的是靈感從哪裡來，不是在家做菜要花多久。(C) 屬於第 1 格。",
+            "E": "(E) 說那個簡單的習慣啟發了杯麵，但美國之行在最後一段才出現，放在這裡時間錯亂；後一句的 There 也找不到地點。(E) 屬於第 4 格。"
+          },
+          "strategy_zh": "段首空格可以先看後一句有沒有 There、Then、It 這類需要先行詞的字，再看前一段在找什麼（解決方法）；能「回應前一段、又提供後一句先行詞」的就是答案。",
+          "hints": [
+            "上一段的安藤一直在找什麼？",
+            "後一句的 There 指的是哪裡？空格裡要先出現一個地點。",
+            "答案說答案終於在他自己的廚房出現。"
+          ]
+        },
+        "4": {
+          "explanation_zh": "前一句說安藤到美國時，看到超市員工把他的麵折斷放進紙杯，再用叉子吃。(E) 的 That simple habit 指的就是這個做法，並說它啟發了杯麵——裝在一個也能當碗用的杯子裡。後一句 Today 轉到現在，說全世界每年吃掉幾十億份泡麵，為全文作結。選 (E)。",
+          "evidence": [
+            "Years later, on a trip to the United States, he saw supermarket workers breaking his noodles into paper cups and eating them with forks.",
+            "That simple habit inspired Cup Noodles, sold in a cup that doubled as a bowl."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "pronoun_reference",
+          "option_notes_zh": {
+            "A": "(A) 說他好幾個月都沒成功，但前一段雞汁拉麵已經大受歡迎，再說失敗前後矛盾。(A) 屬於第 2 格。",
+            "B": "多餘句：(B) 用 As a result 說乾麵可以保存好幾個月，但前一句把麵放進紙杯吃，並不是麵能久放的原因；能久放是第四段油炸法的結果，放在這裡因果不對。",
+            "C": "(C) 說在家做這道菜要好幾個小時，但前一句講的是在紙杯裡吃泡麵；泡麵不必煮好幾個小時，by contrast 也對照不起來。(C) 屬於第 1 格。",
+            "D": "(D) 說答案終於在廚房出現，那是第四段開頭的內容；放在美國之行之後時間順序不對，後一句的 Today 也無法說明是什麼答案。(D) 屬於第 3 格。"
+          },
+          "strategy_zh": "選項以 That／This＋名詞（habit、idea）開頭時，回到前一句確認有沒有一個可以被這樣稱呼的行為；故事接近尾聲時，也要注意時間順序。",
+          "hints": [
+            "前一句的超市員工在做什麼？",
+            "哪個選項用 That simple habit 指這個做法？",
+            "答案說這個習慣啟發了杯麵。"
+          ]
+        }
+      }
+    },
+    "translation_zh": {
+      "text": "對許多學生來說，一杯泡麵是再簡單不過的一餐：加入滾水，等幾分鐘就可以吃了。然而，這種日常食物誕生於一間後院的小屋，一個意志堅定的男人在那裡獨自工作了將近一年。\n二次世界大戰之後的那幾年，日本各地都缺乏糧食。一個寒冷的夜晚，安藤百福在大阪看到一長串飢餓的人在路邊攤外排隊，等著吃一碗熱騰騰的拉麵。【1】相較之下，在家自己做這道菜可能要花上好幾個小時。他認定，麵應該幾分鐘就能煮好，而不是好幾個小時。\n雖然沒受過廚師訓練，安藤還是在自家屋後蓋了一間小屋，開始自己做實驗。他的目標是做出一種好吃、能保存好幾個月、而且馬上就能吃的麵。【2】好幾個月來，他嘗試的方法似乎都行不通。每一次失敗只讓他更加堅定，他常常從清晨一路工作到深夜。\n【3】答案終於從一個意想不到的地方出現：他自己的廚房。一天晚上，他在那裡看著妻子炸天婦羅——把海鮮和蔬菜裹上麵糊，放進熱油裡炸。熱油把麵糊裡的水分逼出來，讓麵糊變得乾燥、布滿細小的孔洞。安藤領悟到，用同樣的方法油炸麵條就能讓麵變乾，之後熱水又能流回這些孔洞，讓麵重新變軟。\n他的雞汁拉麵在一九五八年上市，很快就在日本大受歡迎。多年後，他到美國旅行時，看到超市員工把他的麵折斷放進紙杯，再用叉子吃。【4】這個簡單的習慣啟發了杯麵——它裝在一個也能當碗用的杯子裡。今天，全世界的人每年吃掉幾十億份泡麵。\n（多餘句 (B)：因此，他的乾麵可以保存好幾個月。）"
+    },
+    "elimination": {
+      "feasible": {
+        "1": [
+          "C"
+        ],
+        "2": [
+          "A"
+        ],
+        "3": [
+          "D"
+        ],
+        "4": [
+          "E"
+        ]
+      },
+      "perfect_matchings": 1
+    },
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": null,
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "3-V-7",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "7-V-5",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "B-V-8",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "9-V-2",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": "本文由 AI 撰寫"
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-08-structure-advanced-03",
+    "lot": "structure-advanced-03",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/structure",
+    "prompt_sha256": "257262f8832fbffdf8c3c8dea5601b5023882427703b584039e3a0634cb66563",
+    "spec_id": "structure-advanced@2026-10-08",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 273,
+    "sentences": 14,
+    "avg_sentence_length": 19.5,
+    "denominator": 261,
+    "proper_nouns": [
+      "Ando",
+      "II",
+      "Japan",
+      "Momofuku",
+      "Osaka",
+      "Ramen"
+    ],
+    "numbers": 4,
+    "coverage_l1_4": 0.9579,
+    "coverage_l1_6": 0.9847,
+    "offlist_ratio": 0.0153,
+    "beyond_l4_ratio": 0.0268,
+    "level_counts": {
+      "1": 218,
+      "2": 27,
+      "3": 5,
+      "5": 4,
+      "6": 3,
+      "off": 4
+    },
+    "offlist_words": [
+      "everyday",
+      "imaginable",
+      "ramen",
+      "tempura"
+    ],
+    "band": {
+      "tier": "advanced",
+      "basis": "lot structure-advanced-03（SPEC §3.4＋出題規格書 passage_overrides（words、coverage_L1_4_min（取代 SPEC 的區間）、coverage_L1_6_min、offlist_max、beyond_l4_ratio_max））",
+      "ok": true,
+      "checks": {
+        "word_count": {
+          "value": 273,
+          "min": 220,
+          "max": 310,
+          "ok": true
+        },
+        "coverage_l1_4": {
+          "value": 0.9579,
+          "min": 0.9,
+          "max": null,
+          "ok": true
+        },
+        "coverage_l1_6": {
+          "value": 0.9847,
+          "min": 0.94,
+          "max": null,
+          "ok": true
+        },
+        "offlist_ratio": {
+          "value": 0.0153,
+          "min": null,
+          "max": 0.06,
+          "ok": true
+        },
+        "avg_sentence_length": {
+          "value": 19.5,
+          "min": 15,
+          "max": 21,
+          "ok": true
+        },
+        "beyond_l4_ratio": {
+          "value": 0.0268,
+          "min": null,
+          "max": 0.06,
+          "ok": true
+        }
+      }
+    }
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T12:23:02Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T00:00:00Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "answers": {
+          "1": {
+            "answer": "C",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "One cold night in Osaka, Momofuku Ando noticed a long line of hungry people waiting outside a street stall for bowls of hot ramen.",
+              "Noodles, he decided, should take minutes to prepare, not hours."
+            ],
+            "explanation_zh": "空格後 should take minutes to prepare, not hours 的 hours 需要前文說明拉麵做起來要好幾個小時；C 的 the dish 指 ramen，by contrast 對比路邊攤現成的熱拉麵。",
+            "feasible": [
+              "C"
+            ]
+          },
+          "2": {
+            "answer": "A",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "His goal was a noodle that tasted good, stayed fresh for months, and could be ready in an instant.",
+              "Each failure only made him more determined, and he often worked from early morning until late at night."
+            ],
+            "explanation_zh": "空格後 Each failure 需要前面先提到失敗；A 的 nothing he tried seemed to work 正好說明他屢試屢敗。",
+            "feasible": [
+              "A"
+            ]
+          },
+          "3": {
+            "answer": "D",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "There, one evening, he watched his wife fry tempura, pieces of seafood and vegetables dipped in batter and cooked in hot oil."
+            ],
+            "explanation_zh": "空格後的 There 需要一個地點作先行詞，D 的 his own kitchen 正是看妻子炸天婦羅的地方；The answer finally came 也承接上一段的屢次失敗。",
+            "feasible": [
+              "D"
+            ]
+          },
+          "4": {
+            "answer": "E",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Years later, on a trip to the United States, he saw supermarket workers breaking his noodles into paper cups and eating them with forks.",
+              "Today, people around the world eat billions of servings of instant noodles every year."
+            ],
+            "explanation_zh": "E 的 That simple habit 指前句美國員工把麵掰進紙杯、用叉子吃的習慣，因而啟發杯麵；接著 Today 談全球銷量。",
+            "feasible": [
+              "E"
+            ]
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T12:23:02Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "answers": {
+          "1": {
+            "answer": "C",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Noodles, he decided, should take minutes to prepare, not hours.",
+              "One cold night in Osaka, Momofuku Ando noticed a long line of hungry people waiting outside a street stall for bowls of hot ramen."
+            ],
+            "explanation_zh": "後句 not hours 呼應 C 的 could take hours，說明他為何認為麵應該幾分鐘就能做好。",
+            "feasible": [
+              "C"
+            ]
+          },
+          "2": {
+            "answer": "A",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "His goal was a noodle that tasted good, stayed fresh for months, and could be ready in an instant.",
+              "Each failure only made him more determined, and he often worked from early morning until late at night."
+            ],
+            "explanation_zh": "後句 Each failure 需要先有「一直失敗」，A 說好幾個月什麼都沒成功，最合。",
+            "feasible": [
+              "A"
+            ]
+          },
+          "3": {
+            "answer": "D",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "There, one evening, he watched his wife fry tempura, pieces of seafood and vegetables dipped in batter and cooked in hot oil.",
+              "The answer finally came from an unexpected place: his own kitchen."
+            ],
+            "explanation_zh": "後句開頭的 There 指的地點只能是 D 提到的 his own kitchen，也承接前段的一再失敗。",
+            "feasible": [
+              "D"
+            ]
+          },
+          "4": {
+            "answer": "E",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Years later, on a trip to the United States, he saw supermarket workers breaking his noodles into paper cups and eating them with forks.",
+              "Today, people around the world eat billions of servings of instant noodles every year."
+            ],
+            "explanation_zh": "前句描述店員把麵放進紙杯用叉子吃，E 的 That simple habit 指此習慣並帶出杯麵。",
+            "feasible": [
+              "E"
+            ]
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "distractor_audit",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T12:30:00Z",
+      "details": {
+        "session_id": null,
+        "items": {
+          "1": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "Noodles, he decided, should take minutes to prepare, not hours.",
+              "explanation_zh": "(A) 說他試了好幾個月都失敗，但後一句他才剛「決定」要做出幾分鐘就能煮好的麵，實驗要到下一段才開始，順序顛倒；not hours 也找不到呼應的對象。"
+            },
+            "B": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "Noodles, he decided, should take minutes to prepare, not hours.",
+              "explanation_zh": "多餘句 (B) 用 As a result 說他的乾麵能保存好幾個月，但這時麵根本還沒發明，前一句排隊吃拉麵也不是原因；後一句的 not hours 也接不上。"
+            },
+            "D": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "Noodles, he decided, should take minutes to prepare, not hours.",
+              "explanation_zh": "(D) 說答案終於出現，但後一句他才剛決定目標，問題都還沒提出，無從有答案；not hours 也沒有呼應。"
+            },
+            "E": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "One cold night in Osaka, Momofuku Ando noticed a long line of hungry people waiting outside a street stall for bowls of hot ramen.",
+              "explanation_zh": "(E) 的 That simple habit 在前一句找不到可以指的習慣（排隊吃拉麵是一次觀察），杯麵也要到故事最後才誕生。"
+            }
+          },
+          "2": {
+            "B": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "Each failure only made him more determined, and he often worked from early morning until late at night.",
+              "explanation_zh": "多餘句 (B) 說乾麵已經能保存好幾個月（等於成功），後一句卻說每一次失敗都讓他更堅定，前後矛盾；前一句只是目標，As a result 也沒有原因可承接。"
+            },
+            "C": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Each failure only made him more determined, and he often worked from early morning until late at night.",
+              "explanation_zh": "(C) 的 the dish 在這裡沒有指涉、by contrast 也沒有對照的對象；後一句的 Each failure 找不到前面的失敗。"
+            },
+            "D": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "Each failure only made him more determined, and he often worked from early morning until late at night.",
+              "explanation_zh": "(D) 說答案終於出現了，後一句卻說每次失敗都讓他更堅定、繼續日夜工作，前後矛盾。"
+            },
+            "E": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "His goal was a noodle that tasted good, stayed fresh for months, and could be ready in an instant.",
+              "explanation_zh": "(E) 的 That simple habit 沒有可以指的習慣，前一句只是他的目標；杯麵此時也還沒出現（連雞汁拉麵都還沒上市）。"
+            }
+          },
+          "3": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "There, one evening, he watched his wife fry tempura, pieces of seafood and vegetables dipped in batter and cooked in hot oil.",
+              "explanation_zh": "(A) 沒有地點，後一句的 There 找不到先行詞（看妻子炸天婦羅的地方是廚房）；本段講的是突破，(A) 又重複前一句的失敗。"
+            },
+            "B": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "Ando realized that frying his noodles would dry them in the same way, and that hot water could later flow back into the holes to make them soft again.",
+              "explanation_zh": "多餘句 (B) 說乾麵已經能久放，但油炸讓麵變乾的方法要到本段看了天婦羅才想到，時間倒置；後一句的 There 也找不到地點。"
+            },
+            "C": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "There, one evening, he watched his wife fry tempura, pieces of seafood and vegetables dipped in batter and cooked in hot oil.",
+              "explanation_zh": "(C) 的 at home 看似能讓 There 接上，但 the dish 沒有指涉、by contrast 和前一句「日夜工作」也無從對照；本段講的是靈感從哪裡來，不是在家做菜要花多久。"
+            },
+            "E": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "Years later, on a trip to the United States, he saw supermarket workers breaking his noodles into paper cups and eating them with forks.",
+              "explanation_zh": "(E) 的「簡單習慣」是多年後美國之行才看到的，放在第四段開頭時間錯亂；後一句的 There 也找不到地點。"
+            }
+          },
+          "4": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "His Chicken Ramen went on sale in 1958 and soon became a hit across Japan.",
+              "explanation_zh": "(A) 說他試了好幾個月都沒成功，但雞汁拉麵已經上市並大受歡迎，前後矛盾。"
+            },
+            "B": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "Years later, on a trip to the United States, he saw supermarket workers breaking his noodles into paper cups and eating them with forks.",
+              "explanation_zh": "多餘句 (B) 用 As a result 說乾麵能久放，但前一句把麵放進紙杯用叉子吃，並不是麵能久放的原因，因果不對。"
+            },
+            "C": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "Years later, on a trip to the United States, he saw supermarket workers breaking his noodles into paper cups and eating them with forks.",
+              "explanation_zh": "(C) 說在家做這道菜要好幾個小時，但前一句講的是在紙杯裡吃泡麵，by contrast 對照不起來。"
+            },
+            "D": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "Years later, on a trip to the United States, he saw supermarket workers breaking his noodles into paper cups and eating them with forks.",
+              "explanation_zh": "(D) 說答案終於在廚房出現，那是發明雞汁拉麵之前的事，放在多年後的美國之行之後時間順序不對。"
+            }
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "unique_solution",
+      "reviewer": "record_verification.py",
+      "result": "pass",
+      "created_at": "2026-10-09T12:23:02Z",
+      "details": {
+        "method": "injective_assignment",
+        "perfect_matchings": 1,
+        "matches_key": true,
+        "feasible": {
+          "1": [
+            "C"
+          ],
+          "2": [
+            "A"
+          ],
+          "3": [
+            "D"
+          ],
+          "4": [
+            "E"
+          ]
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

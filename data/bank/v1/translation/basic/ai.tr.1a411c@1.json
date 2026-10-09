@@ -1,0 +1,699 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.1a411c",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "basic",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "對我們班來說，合唱比賽是這學期最重要的活動之一。",
+        "options": null,
+        "answer": "For our class, the singing contest is one of the most important events this semester.",
+        "accepted_answers": [
+          "The singing competition is one of the most important events for our class this semester.",
+          "For our class, the choir contest is one of the most important events of the semester."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "最高級（one of the + 最高級 + 複數名詞）"
+          ],
+          "topic": "合唱比賽"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "每天放學後一起練唱並不輕鬆，但全班都很享受。",
+        "options": null,
+        "answer": "Practicing singing together after school every day is not easy, but the whole class enjoys it.",
+        "accepted_answers": [
+          "Practicing our songs together every day after school is tiring, but the whole class enjoys it.",
+          "To practice singing together after school every day is not easy, but our whole class enjoys it."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "動名詞片語當主詞"
+          ],
+          "topic": "合唱比賽"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "合唱比賽"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「…之一」是最高級的固定句型：one of the + 最高級 + 複數名詞，所以「最重要的活動之一」寫成 one of the most important events，events 一定要加 s；important 是多音節形容詞，最高級用 the most important，不是 importantest。「對我們班來說」用 For our class 放句首；「合唱比賽」可寫 singing contest 或 choir contest（choir 是較難的字，用 singing 也完全正確）。「這學期」寫 this semester 就好，不用另外加介系詞。",
+          "evidence": [
+            "最重要的活動之一",
+            "合唱比賽"
+          ],
+          "strategy_zh": "看到「…之一」先寫 one of the，再接最高級和複數名詞；寫完回頭檢查名詞有沒有加 s。",
+          "hints": [
+            "切成四段：對我們班來說／合唱比賽／這學期／最重要的活動之一",
+            "標的詞彙：class（班級）、sing（唱歌）、contest（比賽）、semester（學期）、important（重要的）、event（活動）",
+            "句型框架：S + be + one of the most + 形容詞 + 複數名詞 …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "中文「每天放學後一起練唱」整個動詞片語當主詞，英文要改成動名詞片語 Practicing singing together …（或 To practice singing together …）；主詞是「一件事」，動詞用單數 is。「放學後」是 after school（不加 the），「每天」當副詞要分開寫 every day。後半句「全班都很享受」：the whole class 視為單數，動詞 enjoys 要加 s，enjoy 後面要接受詞 it。",
+          "evidence": [
+            "每天放學後一起練唱",
+            "並不輕鬆"
+          ],
+          "strategy_zh": "中文用一個動作當主詞時，先把動作改成 V-ing；寫完檢查主詞後面的 be 動詞是不是單數 is。",
+          "hints": [
+            "切成四段：每天放學後／一起練唱／並不輕鬆／但全班都很享受",
+            "標的詞彙：practice（練習）、sing（唱歌）、school（學校；after school 放學後）、easy（輕鬆的）、enjoy（享受）、class（班級）",
+            "句型框架：V-ing … + is + 形容詞, but S + V …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "For our class, the singing contest is one of the most important events this semester.",
+            "The singing competition is one of the most important events for our class this semester.",
+            "For our class, the choir contest is one of the most important events of the semester."
+          ],
+          "target_words": [
+            {
+              "word": "class",
+              "zh": "班級"
+            },
+            {
+              "word": "sing",
+              "zh": "唱歌（合唱）",
+              "alternatives": [
+                "choir",
+                "chorus"
+              ]
+            },
+            {
+              "word": "contest",
+              "zh": "比賽",
+              "alternatives": [
+                "competition"
+              ]
+            },
+            {
+              "word": "semester",
+              "zh": "學期",
+              "alternatives": [
+                "term"
+              ]
+            },
+            {
+              "word": "important",
+              "zh": "重要的"
+            },
+            {
+              "word": "event",
+              "zh": "活動",
+              "alternatives": [
+                "activity"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "COMP",
+              "grammar_id": "gp-comparative-superlative",
+              "label_zh": "最高級（one of the + 最高級 + 複數名詞）",
+              "frame": "S + be + one of the most + 形容詞 + 複數名詞 …",
+              "zh_trigger": "最重要的活動之一"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "對我們班來說",
+              "accepted": [
+                "For our class",
+                "To our class"
+              ],
+              "targets": [
+                "class"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "For our classes",
+                  "right": "For our class",
+                  "explanation_zh": "「我們班」是一個班級，用單數 class。"
+                }
+              ]
+            },
+            {
+              "zh": "合唱比賽",
+              "accepted": [
+                "the singing contest",
+                "the singing competition",
+                "the choir contest",
+                "the choir competition",
+                "the chorus contest",
+                "the chorus competition"
+              ],
+              "targets": [
+                "sing",
+                "contest"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "the sing contest",
+                  "right": "the singing contest",
+                  "explanation_zh": "名詞前面修飾用 singing（歌唱的），不能用原形動詞 sing。"
+                },
+                {
+                  "wrong": "the singing game",
+                  "right": "the singing contest",
+                  "explanation_zh": "game 是遊戲或球賽；歌唱、才藝類的「比賽」用 contest 或 competition。"
+                }
+              ]
+            },
+            {
+              "zh": "這學期",
+              "accepted": [
+                "this semester",
+                "of the semester",
+                "of this semester",
+                "this term"
+              ],
+              "targets": [
+                "semester"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "this semster",
+                  "right": "this semester",
+                  "explanation_zh": "拼字：semester（se-mes-ter）。"
+                }
+              ]
+            },
+            {
+              "zh": "最重要的活動之一",
+              "accepted": [
+                "one of the most important events",
+                "one of the most important activities"
+              ],
+              "targets": [
+                "COMP",
+                "important",
+                "event"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "one of the most important event",
+                  "right": "one of the most important events",
+                  "explanation_zh": "one of the + 最高級後面接複數名詞。"
+                },
+                {
+                  "wrong": "one of the importantest events",
+                  "right": "one of the most important events",
+                  "explanation_zh": "important 是多音節形容詞，最高級用 the most important。"
+                },
+                {
+                  "wrong": "the most important event",
+                  "right": "one of the most important events",
+                  "explanation_zh": "漏譯「之一」：只寫最高級會變成「最重要的那一個」。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "plural_countable",
+              "zh": "最重要的活動之一",
+              "literal_error": "For our class, the singing contest is one of the most important event this semester.",
+              "part": 4,
+              "explanation_zh": "中文「活動之一」沒有複數記號，照字面寫成單數 event 會被扣分；one of the + 最高級後面一定接複數名詞。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "For our class, few events this semester are as important as the singing contest.",
+              "grammar_id": "gp-as-as",
+              "explanation_zh": "用「few + 複數名詞 + as … as」表達「數一數二重要」，意思和 one of the most important 相同，句型更有變化。"
+            }
+          ]
+        },
+        "2": {
+          "references": [
+            "Practicing singing together after school every day is not easy, but the whole class enjoys it.",
+            "Practicing our songs together every day after school is tiring, but the whole class enjoys it.",
+            "To practice singing together after school every day is not easy, but our whole class enjoys it."
+          ],
+          "target_words": [
+            {
+              "word": "practice",
+              "zh": "練習"
+            },
+            {
+              "word": "sing",
+              "zh": "唱歌",
+              "alternatives": [
+                "song",
+                "choir",
+                "chorus"
+              ]
+            },
+            {
+              "word": "school",
+              "zh": "學校（after school 放學後）"
+            },
+            {
+              "word": "easy",
+              "zh": "輕鬆的；容易的",
+              "alternatives": [
+                "tiring",
+                "hard",
+                "tough"
+              ]
+            },
+            {
+              "word": "enjoy",
+              "zh": "享受"
+            },
+            {
+              "word": "class",
+              "zh": "班級"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "NFSUBJ",
+              "grammar_id": "gp-gerund-subject",
+              "label_zh": "動名詞片語當主詞",
+              "frame": "V-ing … + is（單數動詞）+ 形容詞 …",
+              "zh_trigger": "每天放學後一起練唱"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "每天放學後",
+              "accepted": [
+                "after school every day",
+                "every day after school"
+              ],
+              "targets": [
+                "school"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "after the school every day",
+                  "right": "after school every day",
+                  "explanation_zh": "「放學後」是固定說法 after school，school 前面不加 the。"
+                },
+                {
+                  "wrong": "everyday after school",
+                  "right": "every day after school",
+                  "explanation_zh": "當副詞的「每天」要分開寫 every day；連寫的 everyday 是形容詞（日常的）。"
+                }
+              ]
+            },
+            {
+              "zh": "一起練唱",
+              "accepted": [
+                "Practicing singing together",
+                "Practicing our songs together",
+                "To practice singing together",
+                "Practicing together",
+                "Having singing practice together",
+                "Having choir practice together"
+              ],
+              "targets": [
+                "NFSUBJ",
+                "practice",
+                "sing"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Practice singing together",
+                  "right": "Practicing singing together",
+                  "explanation_zh": "動詞片語當主詞要改成動名詞 V-ing（或 To + 原形動詞），不能用原形動詞開頭。"
+                },
+                {
+                  "wrong": "Practicing sing together",
+                  "right": "Practicing singing together",
+                  "explanation_zh": "practice 後面接動名詞：practice singing。"
+                }
+              ]
+            },
+            {
+              "zh": "並不輕鬆",
+              "accepted": [
+                "is not easy",
+                "is tiring",
+                "is not relaxing",
+                "is hard",
+                "isn't easy",
+                "is hard work",
+                "is tough"
+              ],
+              "targets": [
+                "easy"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "are not easy",
+                  "right": "is not easy",
+                  "explanation_zh": "動名詞片語當主詞視為單數，動詞用 is。"
+                },
+                {
+                  "wrong": "is not relax",
+                  "right": "is not easy",
+                  "explanation_zh": "relax 是動詞；「不輕鬆」用 not easy，或用形容詞 not relaxing。"
+                }
+              ]
+            },
+            {
+              "zh": "但全班都很享受",
+              "accepted": [
+                "but the whole class enjoys it",
+                "but our whole class enjoys it",
+                "but everyone in our class enjoys it",
+                "but we all enjoy it",
+                "but all of us enjoy it"
+              ],
+              "targets": [
+                "enjoy",
+                "class"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "but the whole class enjoy it",
+                  "right": "but the whole class enjoys it",
+                  "explanation_zh": "the whole class 視為單數，現在式動詞要加 s。"
+                },
+                {
+                  "wrong": "but the whole class enjoys",
+                  "right": "but the whole class enjoys it",
+                  "explanation_zh": "enjoy 是及物動詞，後面要有受詞（it 指練唱這件事）。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "verbal_subject",
+              "zh": "每天放學後一起練唱",
+              "literal_error": "Practice singing together after school every day is not easy, but the whole class enjoys it.",
+              "part": 2,
+              "explanation_zh": "中文可以直接用動詞片語當主詞，英文不行；照字面用原形 Practice 開頭，主詞不成立，這一部分扣分。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "Although practicing singing together after school every day is not easy, the whole class enjoys it.",
+              "grammar_id": "gp-concession-clause",
+              "explanation_zh": "把「並不輕鬆，但…」改成 Although 引導的讓步子句；注意 although 和 but 不能在同一句同時使用。"
+            }
+          ]
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-basic-04",
+    "lot": "translation-basic-04",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "825ee6e76853b2ea2df931259eb3211229fc9f6e568e89591ca9feda5b5b935e",
+    "spec_id": "translation-basic@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T07:59:10Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "warn",
+      "created_at": "2026-10-09T00:00:00Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "For our class, the chorus contest is one of the most important activities this semester.",
+            "confidence": "high",
+            "explanation_zh": "「最重要的活動之一」用 one of the most important + 複數名詞 activities；「對我們班來說」放句首用 For our class；合唱比賽譯 chorus contest（也可 choir/singing competition）；本學期的現況用簡單現在式。"
+          },
+          "2": {
+            "translation": "Practicing singing together after school every day is not easy, but the whole class enjoys it very much.",
+            "confidence": "high",
+            "explanation_zh": "「每天放學後一起練唱」整件事當主詞，用動名詞 Practicing singing … 當主詞配單數動詞 is；後半句的 it 指回練唱這件事；也可改寫成 It is not easy to practice … 的虛主詞句型。全班 the whole class 視為單數，用 enjoys。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "COMP"
+            ],
+            "used_target_words": [
+              "class",
+              "sing",
+              "contest",
+              "semester",
+              "important",
+              "event"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "（備註，不影響判定）參考譯文 0、1 把「合唱比賽」寫成 singing contest／competition，少了「合唱」的意思，但在班級比賽的語境下可以接受；choir／chorus 已列在 parts 與 alternatives。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "NFSUBJ"
+            ],
+            "used_target_words": [
+              "practice",
+              "sing",
+              "school",
+              "easy",
+              "enjoy",
+              "class"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "第 4 部分「但全班都很享受」的 accepted 都沒有表達「很」的寫法（如 but the whole class enjoys it very much／really enjoys it／enjoys it a lot）；這是學生最常見、也完全正確的譯法，本盲譯即寫成 enjoys it very much，字面上不在清單內，建議補進 accepted。",
+              "（次要）第 3 部分 accepted 的 is not relaxing 把「輕鬆」理解成「放鬆」，和「不容易」的原意略有出入；第 2 部分 Practicing together 少了「唱」，偏寬鬆。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "class",
+              "sing",
+              "contest",
+              "semester",
+              "important",
+              "event"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "COMP": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "practice",
+              "sing",
+              "school",
+              "easy",
+              "enjoy",
+              "class"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NFSUBJ": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 2 題驗證者對4 部分切分有意見（warn）：第 4 部分「但全班都很享受」的 accepted 都沒有表達「很」的寫法（如 but the whole class enjoys it very much／really enjoys it／enjoys it a lot）；這是學生最常"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T00:00:00Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "For our class, the chorus contest is one of the most important events this semester.",
+            "confidence": "high",
+            "explanation_zh": "「對…來說」用 For；「最重要的活動之一」用 one of the most important + 複數名詞；「這學期」放句尾 this semester。"
+          },
+          "2": {
+            "translation": "Practicing singing together after school every day is not easy, but the whole class enjoys it.",
+            "confidence": "high",
+            "explanation_zh": "「每天放學後一起練唱」整段當主詞，用動名詞 Practicing 開頭；「並不輕鬆」譯為 is not easy；「全班」是單數集合主詞，動詞用 enjoys。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "COMP"
+            ],
+            "used_target_words": [
+              "class",
+              "sing",
+              "contest",
+              "semester",
+              "important",
+              "event"
+            ],
+            "within_accepted": true,
+            "closest_reference": 2,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "NFSUBJ"
+            ],
+            "used_target_words": [
+              "practice",
+              "sing",
+              "school",
+              "easy",
+              "enjoy",
+              "class"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "class",
+              "sing",
+              "contest",
+              "semester",
+              "important",
+              "event"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "COMP": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "practice",
+              "sing",
+              "school",
+              "easy",
+              "enjoy",
+              "class"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NFSUBJ": true
+            },
+            "program_match": true
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

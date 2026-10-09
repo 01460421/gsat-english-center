@@ -1,0 +1,604 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.st.549b58",
+  "version": 1,
+  "section_type": "structure",
+  "format_version": "structure-4x5",
+  "tier": "top",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": "Imagine a cinema that sells popcorn in two sizes: a small bag, and a large one that costs more than twice as much. Most moviegoers, sensibly enough, choose the small one. Now suppose the cinema adds a medium bag priced only a little below the large. Suddenly the large bag looks like a bargain, and far more people walk away with it, even though nothing about it has changed.\nEconomists call the medium bag a decoy, and the shift it causes is known as the decoy effect. [[1]] What it does instead is change how the other choices look: placed beside it, the large bag seems to offer a great deal of extra popcorn for very little extra money.\n[[2]] We are rarely sure how much a bag of popcorn, a phone, or a holiday is really worth, so we judge each option by comparing it with whatever happens to be next to it. In the cinema, the medium bag costs almost as much as the large one but holds far less, so choosing the large bag suddenly feels like an obvious, easy decision.\nOnce you know what to look for, decoys turn up almost everywhere, from coffee sizes to phone plans. [[3]] In one well-known experiment, students could choose an online-only magazine subscription, a print-only one, or both together for the same price as print alone. Almost no one chose print only, yet most went for the combined deal; when the print-only choice was removed, however, most picked the cheaper online-only offer instead.\n[[4]] Before choosing, ask yourself which option you would pick if the decoy were not there at all. If the answer changes, the extra option has done exactly the job it was designed to do.",
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": {
+      "A": "The effect of a decoy can be surprisingly large.",
+      "B": "Fortunately, there is a simple way to protect yourself.",
+      "C": "Most customers end up buying the medium bag, the decoy itself.",
+      "D": "The explanation lies in the way our minds judge whether a price is fair.",
+      "E": "Hardly anyone buys the medium bag itself, and it is not really meant to be bought."
+    },
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "E",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "transition_word",
+          "clue_raw": "SP|CN|F|L",
+          "key_phrase": "Hardly anyone buys the medium bag … not really meant to be bought → What it does instead is change how the other choices look (targeted extra C)"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "D",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "topic_sentence",
+          "clue_raw": "TS|LG|F|P",
+          "key_phrase": "The explanation lies in the way our minds judge … → We are rarely sure how much … is really worth, so we judge each option by comparing it"
+        }
+      },
+      {
+        "no": 3,
+        "label": "3",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "A",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "example",
+          "clue_raw": "TS|CN|F|P",
+          "key_phrase": "can be surprisingly large → In one well-known experiment … Almost no one chose print only, yet most went for the combined deal; when the print-only choice was removed … most picked the cheaper online-only offer"
+        }
+      },
+      {
+        "no": 4,
+        "label": "4",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "B",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "topic_sentence",
+          "clue_raw": "TS|LG|F|L",
+          "key_phrase": "a simple way to protect yourself → Before choosing, ask yourself which option you would pick if the decoy were not there at all"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "誘餌效應",
+      "genre": "expository",
+      "sdgs": [],
+      "text_format": "continuous"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "第二段第一句說，經濟學家把中份稱為「誘餌」，它造成的轉變叫作誘餌效應。空格後一句說「它『反而』做的是改變其他選項看起來的樣子：放在它旁邊，大份似乎只要多花很少的錢，就能多得到一大堆爆米花」。instead（反而、取而代之）表示前面先說了誘餌「不是」用來做什麼。(E) 說「幾乎沒有人買中份本身，它本來就不是要賣出去的」，後一句接著說它真正的作用，形成「不是……而是……」的關係；這也符合第一段「加了中份之後，買大份的人變多」。選 (E)。",
+          "evidence": [
+            "Hardly anyone buys the medium bag itself, and it is not really meant to be bought.",
+            "What it does instead is change how the other choices look",
+            "Suddenly the large bag looks like a bargain, and far more people walk away with it"
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "transition_word",
+          "option_notes_zh": {
+            "A": "(A)「誘餌的效果可能大得驚人」不是否定的說法，後一句的 instead 找不到「不是做什麼」可以對照。(A) 屬於第 3 格。",
+            "B": "(B)「幸好有個簡單的方法能保護自己」要引出應對的建議；這時才剛介紹誘餌效應的名稱，後一句也不是建議。(B) 屬於第 4 格。",
+            "C": "多餘句（CT 型，瞄準本格）：它和前一句共用 medium、bag、decoy，看起來像在補充誘餌的事；但第一段說加了中份之後，買大份的人變多，後一句的 instead 也表示誘餌不是拿來賣的，「多數顧客最後買了中份」和文意矛盾。",
+            "D": "(D)「原因在於我們判斷價格是否合理的方式」要引出心理上的解釋，放在這裡太早；後一句的 instead 也無法和它對照。(D) 屬於第 2 格。"
+          },
+          "strategy_zh": "後一句有 instead 時，前面通常先有一個否定的說法（不是 A），後一句再說「而是 B」。先找否定句，再確認內容和前文一致；兩個選項意思正好相反時，回頭核對第一段的事實。",
+          "hints": [
+            "後一句的 instead 表示前面先說了誘餌「不是」用來做什麼？",
+            "第一段裡，加了中份之後，大家改買哪一種？",
+            "答案說 hardly anyone buys the medium bag itself。"
+          ]
+        },
+        "2": {
+          "explanation_zh": "第二段說明誘餌的作用：讓大份看起來只多花一點錢就多很多爆米花。第三段的空格在段首，後面說：我們很少確定一包爆米花、一支手機或一趟旅行到底值多少錢，所以會拿旁邊的東西來比較；在電影院裡，中份價格幾乎和大份一樣、份量卻少很多，選大份就變成理所當然、輕鬆的決定。這一段在解釋「為什麼誘餌有效」，而且原因在我們判斷價格的方式。(D) 說「原因在於我們的頭腦判斷價格是否合理的方式」，正好概括本段。選 (D)。",
+          "evidence": [
+            "The explanation lies in the way our minds judge whether a price is fair.",
+            "We are rarely sure how much a bag of popcorn, a phone, or a holiday is really worth, so we judge each option by comparing it with whatever happens to be next to it."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "topic_sentence",
+          "option_notes_zh": {
+            "A": "(A)「誘餌的效果可能大得驚人」需要數據或實驗來支持，後面卻是在解釋我們怎麼判斷價值，不是在說效果多大。(A) 屬於第 3 格。",
+            "B": "(B) 要引出保護自己的方法，後面卻沒有任何建議，而是在解釋心理機制。(B) 屬於第 4 格。",
+            "C": "多餘句：第一段說加了中份後買大份的人變多，「多數顧客買了中份」與文意相反；也引不出本段對比較心理的解釋。",
+            "E": "(E)「幾乎沒有人買中份」要接第二段的 What it does instead；放在這裡，後一句沒有 instead 可以呼應，內容也不是在談中份賣不賣得出去。(E) 屬於第 1 格。"
+          },
+          "strategy_zh": "段首空格先看整段在做什麼：舉例、解釋原因，還是提出建議？本段用 so（所以）說明我們判斷價值的方式，屬於「解釋」，要選能引出原因的主題句。",
+          "hints": [
+            "這一段是在舉例、解釋原因，還是給建議？",
+            "我們判斷東西值不值得的方法是什麼？",
+            "答案說 the explanation lies in the way our minds judge whether a price is fair。"
+          ]
+        },
+        "3": {
+          "explanation_zh": "第四段第一句說，只要知道要找什麼，從咖啡的杯型到手機方案，到處都看得到誘餌。空格後面描述一個有名的實驗：學生可以選只訂網路版、只訂紙本，或以紙本的價格同時訂兩者；幾乎沒有人選只訂紙本，但大多數人選了合訂方案；拿掉「只訂紙本」後，多數人反而改選較便宜的網路版。一個幾乎沒人選的選項，就讓結果大幅改變。(A) 說「誘餌的效果可能大得驚人」，後面的實驗正是證據。選 (A)。",
+          "evidence": [
+            "The effect of a decoy can be surprisingly large.",
+            "Almost no one chose print only, yet most went for the combined deal; when the print-only choice was removed, however, most picked the cheaper online-only offer instead."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "example",
+          "option_notes_zh": {
+            "B": "(B) 要引出保護自己的建議，後一句卻是一個實驗，不是建議。(B) 屬於第 4 格。",
+            "C": "多餘句：實驗裡幾乎沒有人選誘餌（只訂紙本），「多數顧客最後買了誘餌」正好和實驗結果相反；這一段講的也不是電影院的中份。",
+            "D": "(D) 要引出心理上的解釋，但第三段已經解釋過了；後一句是實驗的描述，不是解釋。(D) 屬於第 2 格。",
+            "E": "(E) 談的是電影院的中份（the medium bag），而本段講的是雜誌訂閱的實驗；它要接第二段的 What it does instead。(E) 屬於第 1 格。"
+          },
+          "strategy_zh": "後一句以 In one experiment／study 開頭時，空格常是實驗要證明的論點。先讀完實驗結果，再問「這證明了什麼？」",
+          "hints": [
+            "實驗中，拿掉一個幾乎沒人選的選項後，結果改變了多少？",
+            "這個實驗證明誘餌的效果大還是小？",
+            "答案說 the effect of a decoy can be surprisingly large。"
+          ]
+        },
+        "4": {
+          "explanation_zh": "前一段用實驗說明誘餌的效果很大。最後一段的空格在段首，後一句說：做選擇之前，問問自己，如果沒有誘餌，你會選哪一個；如果答案不同，那個多出來的選項就完全達成了設計它的目的。這是給讀者的建議。(B) 說「幸好有個簡單的方法能保護自己」，Fortunately 從「效果很大」轉到「有辦法應對」，後一句就是那個簡單的方法。選 (B)。",
+          "evidence": [
+            "Fortunately, there is a simple way to protect yourself.",
+            "Before choosing, ask yourself which option you would pick if the decoy were not there at all."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "topic_sentence",
+          "option_notes_zh": {
+            "A": "(A)「誘餌的效果可能大得驚人」接在實驗之後局部也說得通，但後一句是給讀者的建議，(A) 引不出建議；而且第四段的實驗需要 (A) 這個論點放在前面。(A) 屬於第 3 格。",
+            "C": "多餘句：「多數顧客最後買了中份」和第一段、第四段的結果都矛盾，也引不出後一句的建議。",
+            "D": "(D) 是在解釋原因，後一句卻是建議；原因第三段已經解釋過了。(D) 屬於第 2 格。",
+            "E": "(E) 說中份沒有人買，後一句卻教讀者怎麼避免被影響，中間少了「有辦法應對」的過渡；它要接第二段的 instead。(E) 屬於第 1 格。"
+          },
+          "strategy_zh": "文章最後一段如果出現祈使句（ask yourself、remember），空格多半是引出建議的句子（Fortunately、The good news is…）。兩個選項都像收尾句時，看哪一個能引出後一句的建議。",
+          "hints": [
+            "後一句是事實、解釋，還是建議？",
+            "什麼樣的句子能引出一個建議？",
+            "答案說 there is a simple way to protect yourself。"
+          ]
+        }
+      }
+    },
+    "translation_zh": {
+      "text": "想像一家電影院賣兩種大小的爆米花：一包小份，還有一包價格是小份兩倍多的大份。大多數看電影的人很合理地選了小份。現在假設電影院加賣一包中份，價格只比大份便宜一點點。突然間，大份看起來像撿到便宜，買大份的人多了許多，儘管大份本身什麼都沒變。\n經濟學家把中份稱為「誘餌」，它造成的轉變則叫作「誘餌效應」。【1】幾乎沒有人買中份本身，它本來就不是要賣出去的。它真正的作用是改變其他選項看起來的樣子：放在它旁邊，大份似乎只要多花很少的錢，就能多得到一大堆爆米花。\n【2】原因在於我們的頭腦判斷價格是否合理的方式。我們很少確定一包爆米花、一支手機或一趟旅行到底值多少錢，所以會拿碰巧擺在旁邊的東西來比較每個選項。在電影院裡，中份的價格幾乎和大份一樣，份量卻少得多，於是選大份突然變成一個顯而易見、毫不費力的決定。\n一旦知道要找什麼，從咖啡的杯型到手機方案，誘餌幾乎到處都是。【3】誘餌的效果可能大得驚人。在一個有名的實驗中，學生可以選擇只訂雜誌的網路版、只訂紙本，或以紙本的價格同時訂兩者。幾乎沒有人選只訂紙本，但大多數人選了合訂方案；然而，拿掉「只訂紙本」這個選項後，多數人反而改選比較便宜的網路版。\n【4】幸好，有一個簡單的方法能保護自己。做選擇之前，問問自己：如果誘餌根本不存在，你會選哪一個？如果答案不一樣，那個多出來的選項就正好完成了它被設計來做的事。\n（多餘句 (C)：大多數顧客最後買了中份，也就是誘餌本身。）"
+    },
+    "elimination": {
+      "feasible": {
+        "1": [
+          "E"
+        ],
+        "2": [
+          "D"
+        ],
+        "3": [
+          "A"
+        ],
+        "4": [
+          "B"
+        ]
+      },
+      "perfect_matchings": 1
+    },
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": null,
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "3-V-7",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "7-V-5",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "9-V-2",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "9-V-7",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": "本文由 AI 撰寫"
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-08-structure-top-03",
+    "lot": "structure-top-03",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/structure",
+    "prompt_sha256": "5b93a8b27160f24ce98ae811e0390c38cf810b1be0c87111f5b3ea7f0fef42b8",
+    "spec_id": "structure-top@2026-10-08",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 285,
+    "sentences": 13,
+    "avg_sentence_length": 21.92,
+    "denominator": 278,
+    "proper_nouns": [],
+    "numbers": 7,
+    "coverage_l1_4": 0.9748,
+    "coverage_l1_6": 0.9784,
+    "offlist_ratio": 0.0216,
+    "beyond_l4_ratio": 0.0036,
+    "level_counts": {
+      "1": 229,
+      "2": 31,
+      "3": 5,
+      "4": 6,
+      "6": 1,
+      "off": 6
+    },
+    "offlist_words": [
+      "decoy",
+      "decoys",
+      "everywhere",
+      "moviegoers"
+    ],
+    "band": {
+      "tier": "top",
+      "basis": "lot structure-top-03（SPEC §3.4＋出題規格書 passage_overrides（words、coverage_L1_4_min（取代 SPEC 的區間）、coverage_L1_6_min、offlist_max、beyond_l4_ratio_max））",
+      "ok": true,
+      "checks": {
+        "word_count": {
+          "value": 285,
+          "min": 220,
+          "max": 310,
+          "ok": true
+        },
+        "coverage_l1_4": {
+          "value": 0.9748,
+          "min": 0.9,
+          "max": null,
+          "ok": true
+        },
+        "coverage_l1_6": {
+          "value": 0.9784,
+          "min": 0.94,
+          "max": null,
+          "ok": true
+        },
+        "offlist_ratio": {
+          "value": 0.0216,
+          "min": null,
+          "max": 0.06,
+          "ok": true
+        },
+        "avg_sentence_length": {
+          "value": 21.92,
+          "min": 18,
+          "max": 25,
+          "ok": true
+        },
+        "beyond_l4_ratio": {
+          "value": 0.0036,
+          "min": null,
+          "max": 0.06,
+          "ok": true
+        }
+      }
+    }
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T12:20:54Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T12:07:26Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "answers": {
+          "1": {
+            "answer": "E",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Economists call the medium bag a decoy, and the shift it causes is known as the decoy effect.",
+              "What it does instead is change how the other choices look: placed beside it, the large bag seems to offer a great deal of extra popcorn for very little extra money."
+            ],
+            "explanation_zh": "後句 What it does instead 需要前面先有否定：誘餌本身不是用來賣的；E「幾乎沒人買中杯，它本來就不是要被買的」吻合；C 說多數人買中杯，與 instead 及上文大杯變多人買矛盾。",
+            "feasible": [
+              "E"
+            ]
+          },
+          "2": {
+            "answer": "D",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "We are rarely sure how much a bag of popcorn, a phone, or a holiday is really worth, so we judge each option by comparing it with whatever happens to be next to it."
+            ],
+            "explanation_zh": "本段解釋誘餌效應的心理原因（我們不確定價值，只能和旁邊的選項比較），D「原因在於我們的大腦如何判斷價格是否合理」是段首主題句。",
+            "feasible": [
+              "D"
+            ]
+          },
+          "3": {
+            "answer": "A",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Once you know what to look for, decoys turn up almost everywhere, from coffee sizes to phone plans.",
+              "Almost no one chose print only, yet most went for the combined deal; when the print-only choice was removed, however, most picked the cheaper online-only offer instead."
+            ],
+            "explanation_zh": "後文的雜誌訂閱實驗顯示有無誘餌時選擇大幅翻轉，A「誘餌的效果可能大得驚人」正好引出這個實驗。",
+            "feasible": [
+              "A"
+            ]
+          },
+          "4": {
+            "answer": "B",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Before choosing, ask yourself which option you would pick if the decoy were not there at all."
+            ],
+            "explanation_zh": "本段給讀者避免被誘餌影響的方法，B「幸好有個簡單的方法可以保護自己」作段首，下句即是那個方法。",
+            "feasible": [
+              "B"
+            ]
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T12:20:54Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "answers": {
+          "1": {
+            "answer": "E",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "What it does instead is change how the other choices look: placed beside it, the large bag seems to offer a great deal of extra popcorn for very little extra money."
+            ],
+            "explanation_zh": "後句 What it does instead 表示誘餌的作用不是被買，前句應說幾乎沒人買中杯，它本來就不是用來賣的；C與此矛盾。",
+            "feasible": [
+              "E"
+            ]
+          },
+          "2": {
+            "answer": "D",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "We are rarely sure how much a bag of popcorn, a phone, or a holiday is really worth, so we judge each option by comparing it with whatever happens to be next to it."
+            ],
+            "explanation_zh": "本段解釋誘餌為何有效：我們不確定價值，所以靠比較判斷，對應「原因在於心智判斷價格是否合理的方式」。",
+            "feasible": [
+              "D"
+            ]
+          },
+          "3": {
+            "answer": "A",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "In one well-known experiment, students could choose an online-only magazine subscription, a print-only one, or both together for the same price as print alone."
+            ],
+            "explanation_zh": "後句用實驗舉證，前句宜為「誘餌的效果可以大得驚人」作為引導。",
+            "feasible": [
+              "A"
+            ]
+          },
+          "4": {
+            "answer": "B",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Before choosing, ask yourself which option you would pick if the decoy were not there at all."
+            ],
+            "explanation_zh": "最後一段給出自我保護的辦法（問自己沒有誘餌時會選哪個），前句為 Fortunately, there is a simple way to protect yourself。",
+            "feasible": [
+              "B"
+            ]
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "distractor_audit",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T13:00:00Z",
+      "details": {
+        "session_id": null,
+        "items": {
+          "1": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "What it does instead is change how the other choices look: placed beside it, the large bag seems to offer a great deal of extra popcorn for very little extra money.",
+              "explanation_zh": "instead 前面要先有「誘餌不是用來做什麼」的否定說法；(A) 是肯定句，也還沒有任何證據說明效果大小。"
+            },
+            "B": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "What it does instead is change how the other choices look: placed beside it, the large bag seems to offer a great deal of extra popcorn for very little extra money.",
+              "explanation_zh": "才剛介紹誘餌效應的名稱就給保護方法太早；後一句也不是建議，instead 接不上。"
+            },
+            "C": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "Suddenly the large bag looks like a bargain, and far more people walk away with it, even though nothing about it has changed.",
+              "explanation_zh": "多餘句（瞄準本格）：和前一句共用 medium、bag、decoy，但第一段說加了中份之後多數人改買大份，後一句 instead 也表示誘餌不是拿來賣的，「多數顧客最後買了中份」與文意矛盾。"
+            },
+            "D": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "What it does instead is change how the other choices look: placed beside it, the large bag seems to offer a great deal of extra popcorn for very little extra money.",
+              "explanation_zh": "(D) 要引出心理機制的解釋；後一句的 instead 無法和它構成「不是……而是……」，原因要到下一段才解釋。"
+            }
+          },
+          "2": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "We are rarely sure how much a bag of popcorn, a phone, or a holiday is really worth, so we judge each option by comparing it with whatever happens to be next to it.",
+              "explanation_zh": "(A) 說效果大得驚人，後面應接數據或實驗；本段卻在解釋我們怎麼判斷東西值多少錢。"
+            },
+            "B": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "We are rarely sure how much a bag of popcorn, a phone, or a holiday is really worth, so we judge each option by comparing it with whatever happens to be next to it.",
+              "explanation_zh": "本段在解釋比較心理，沒有任何保護自己的建議。"
+            },
+            "C": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "Suddenly the large bag looks like a bargain, and far more people walk away with it, even though nothing about it has changed.",
+              "explanation_zh": "多餘句：與第一段「多數人改買大份」相反，也引不出本段對比較心理的解釋。"
+            },
+            "E": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "We are rarely sure how much a bag of popcorn, a phone, or a holiday is really worth, so we judge each option by comparing it with whatever happens to be next to it.",
+              "explanation_zh": "(E) 的否定說法需要 What it does instead 呼應；放在這裡，後一句在談我們不確定價值，沒有 instead，也不是在談中份賣不賣得出去。"
+            }
+          },
+          "3": {
+            "B": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "In one well-known experiment, students could choose an online-only magazine subscription, a print-only one, or both together for the same price as print alone.",
+              "explanation_zh": "後一句是一個實驗，不是保護自己的方法。"
+            },
+            "C": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "Almost no one chose print only, yet most went for the combined deal; when the print-only choice was removed, however, most picked the cheaper online-only offer instead.",
+              "explanation_zh": "多餘句：實驗中幾乎沒有人選誘餌（只訂紙本），「多數顧客買了誘餌」與實驗結果相反；本段也不是在講電影院的中份。"
+            },
+            "D": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "In one well-known experiment, students could choose an online-only magazine subscription, a print-only one, or both together for the same price as print alone.",
+              "explanation_zh": "心理機制第三段已經解釋過，後一句是實驗的描述，不是解釋。"
+            },
+            "E": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "In one well-known experiment, students could choose an online-only magazine subscription, a print-only one, or both together for the same price as print alone.",
+              "explanation_zh": "(E) 談電影院的中份（the medium bag），本段是雜誌訂閱的實驗；(E) 要接第二段的 What it does instead。"
+            }
+          },
+          "4": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Before choosing, ask yourself which option you would pick if the decoy were not there at all.",
+              "explanation_zh": "後一句是給讀者的建議（祈使句），(A) 只重述效果很大，引不出建議；第四段的實驗也需要 (A) 這個論點放在前面。"
+            },
+            "C": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "Almost no one chose print only, yet most went for the combined deal; when the print-only choice was removed, however, most picked the cheaper online-only offer instead.",
+              "explanation_zh": "多餘句：「多數顧客最後買了誘餌」和第一段、第四段的結果都矛盾，也引不出後一句的建議。"
+            },
+            "D": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Before choosing, ask yourself which option you would pick if the decoy were not there at all.",
+              "explanation_zh": "(D) 是在解釋原因，後一句卻是建議；原因第三段已經解釋過了。"
+            },
+            "E": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Before choosing, ask yourself which option you would pick if the decoy were not there at all.",
+              "explanation_zh": "(E) 說中份沒有人買，後一句卻教讀者怎麼避免被影響，中間少了「有辦法應對」的過渡；(E) 要接第二段的 instead。"
+            }
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "unique_solution",
+      "reviewer": "record_verification.py",
+      "result": "pass",
+      "created_at": "2026-10-09T12:20:54Z",
+      "details": {
+        "method": "injective_assignment",
+        "perfect_matchings": 1,
+        "matches_key": true,
+        "feasible": {
+          "1": [
+            "E"
+          ],
+          "2": [
+            "D"
+          ],
+          "3": [
+            "A"
+          ],
+          "4": [
+            "B"
+          ]
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

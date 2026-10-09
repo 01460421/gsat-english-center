@@ -1,0 +1,131 @@
+{
+  "schema": "gsat-bank-facts/v1",
+  "id": "mx-adv02-heatstroke",
+  "title": "Heatstroke: warning signs, first aid and prevention",
+  "sdgs": [
+    3
+  ],
+  "created_on": "2026-10-09",
+  "created_by": "claude-opus-5-5",
+  "sources": [
+    {
+      "id": "s1",
+      "publisher": "U.S. National Institute for Occupational Safety and Health (CDC)",
+      "title": "Heat-related Illnesses",
+      "url": "https://www.cdc.gov/niosh/heat-stress/about/illnesses.html",
+      "accessed": "2026-10-09",
+      "license": "public domain (U.S. government work)",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s2",
+      "publisher": "U.S. Centers for Disease Control and Prevention",
+      "title": "Protect Yourself From the Dangers of Extreme Heat",
+      "url": "https://www.cdc.gov/climate-health/php/resources/protect-yourself-from-the-dangers-of-extreme-heat.html",
+      "accessed": "2026-10-09",
+      "license": "public domain (U.S. government work)",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s3",
+      "publisher": "World Health Organization",
+      "title": "Climate change, heat and health (fact sheet)",
+      "url": "https://www.who.int/news-room/fact-sheets/detail/climate-change-heat-and-health",
+      "accessed": "2026-10-09",
+      "license": "WHO terms of use",
+      "use": "fact_only",
+      "note": null
+    }
+  ],
+  "facts": [
+    {
+      "id": "f1",
+      "text": "Heatstroke is the most serious heat-related illness and is a medical emergency.",
+      "source_ids": [
+        "s1",
+        "s3"
+      ],
+      "kind": "definition"
+    },
+    {
+      "id": "f2",
+      "text": "In heatstroke, the body loses its ability to control its temperature and sweating may stop working.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f3",
+      "text": "Signs of heatstroke include confusion, slurred speech, fainting or loss of consciousness, and hot, dry skin or heavy sweating.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f4",
+      "text": "Body temperature can rise to dangerous levels within 10 to 15 minutes, and without emergency treatment heatstroke can cause permanent disability or death.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f5",
+      "text": "First aid for heatstroke: call emergency services, move the person to a cool place and cool them with cold water or cold wet cloths on the head, neck and armpits.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f6",
+      "text": "People should drink plenty of fluids even when they do not feel thirsty.",
+      "source_ids": [
+        "s2",
+        "s3"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f7",
+      "text": "Older adults are less likely to sense and respond to changes in temperature, so others should check on them.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f8",
+      "text": "Never leave children or pets in parked cars, because car temperatures can quickly become deadly.",
+      "source_ids": [
+        "s2",
+        "s3"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f9",
+      "text": "Loose, lightweight, light-colored clothing and sunscreen help; sunburn slows the skin's ability to release heat.",
+      "source_ids": [
+        "s2",
+        "s3"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f10",
+      "text": "Avoid hard activity in the hottest part of the day and schedule outdoor exercise for cooler times.",
+      "source_ids": [
+        "s2",
+        "s3"
+      ],
+      "kind": "other"
+    }
+  ],
+  "datasets": [],
+  "notes": "混合題 mixed-advanced-02 第 4 組用（2026-10-09 線上查證，只取事實、不取原句）。選文是虛構的讀者問答專欄（Dr. Grace Lin 與讀者都是虛構人物），醫學建議只寫 CDC／WHO 頁面上有的內容，不寫體溫數字。"
+}

@@ -1,0 +1,613 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.st.fed09a",
+  "version": 1,
+  "section_type": "structure",
+  "format_version": "structure-4x5",
+  "tier": "advanced",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": "Many websites ask users to create passwords that mix capital letters, numbers, and symbols. The result is often something like \"Sunshine1!\", which looks hard to guess but can be cracked surprisingly fast. Security experts now say that a long string of ordinary words is usually a much safer choice.\nAttackers rarely sit and type in guesses one at a time. Instead, they use computer programs that can test billions of possible passwords in a short time. [[1]] Their makers know, for instance, that most people start with a capital letter, end with a number or symbol, and swap letters for look-alikes, such as \"@\" for \"a.\" Because these tricks are so common, the programs simply try them first. As a result, a password that seems clever to its owner may not hold out for long.\nWhat really protects a password is its length. Each extra character multiplies the number of combinations that must be tried, so every added letter makes an attacker's job far harder. [[2]] The idea is to string together several random words, such as \"purple tiger river spoon.\" Because such a phrase is long, it takes far more guesses to crack, yet it is much easier to remember than a jumble of symbols.\n[[3]] Famous sayings and lines from popular songs are poor choices, since attackers add them to their lists as well. [[4]] Otherwise, one stolen password could unlock all the others. A few extra words, chosen with a little care, can protect your accounts far better than any number of strange symbols.",
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": {
+      "A": "Not all long phrases are equally safe, however.",
+      "B": "Meanwhile, stolen passwords are often sold on the web.",
+      "C": "It is also wise to use a different phrase for every account.",
+      "D": "Worse still, these programs are built with human habits in mind.",
+      "E": "For this reason, many experts now recommend using a passphrase instead."
+    },
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "D",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "example",
+          "clue_raw": "BR|CN|BF|L",
+          "key_phrase": "these programs ← computer programs that can test billions of possible passwords；human habits → Their makers know, for instance, that most people …"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "E",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "lexical_cohesion",
+          "clue_raw": "SP|LX|F|L",
+          "key_phrase": "a passphrase → The idea is to string together several random words；such a phrase"
+        }
+      },
+      {
+        "no": 3,
+        "label": "3",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "A",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "contrast",
+          "clue_raw": "TS|LX|BF|P",
+          "key_phrase": "however ← 第三段整段（長片語比較安全、好記）；Not all long phrases are equally safe → Famous sayings and lines from popular songs are poor choices"
+        }
+      },
+      {
+        "no": 4,
+        "label": "4",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "C",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "transition_word",
+          "clue_raw": "SP|CN|BF|L",
+          "key_phrase": "also ← Famous sayings … are poor choices（前一個提醒）；use a different phrase for every account → Otherwise, one stolen password could unlock all the others"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "密碼安全",
+      "genre": "expository",
+      "sdgs": [],
+      "text_format": "continuous"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "前一句說攻擊者用電腦程式，在短時間內測試幾十億組可能的密碼。(D) 用 Worse still 再加一層壞消息：「更糟的是，這些程式在設計時就把人類的習慣考慮進去了。」these programs 指前一句的 computer programs。後一句 Their makers know, for instance, that most people… 的 Their makers 指這些程式的設計者，for instance 舉出的「大寫開頭、數字或符號結尾、用 @ 代替 a」，正是 (D) 所說的 human habits。前後兩側都有錨點，選 (D)。",
+          "evidence": [
+            "Instead, they use computer programs that can test billions of possible passwords in a short time.",
+            "Worse still, these programs are built with human habits in mind.",
+            "Their makers know, for instance, that most people start with a capital letter, end with a number or symbol, and swap letters for look-alikes, such as \"@\" for \"a.\""
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "example",
+          "option_notes_zh": {
+            "A": "(A) 說並非所有長片語都一樣安全，但文章還沒介紹長片語；後一句的 Their makers 和 for instance 也接不上。(A) 屬於第 3 格。",
+            "B": "多餘句：(B) 用 Meanwhile 說被偷的密碼常在網路上被販賣，和前一句共用 passwords；但後一句 Their makers know, for instance… 要舉例說明的是人們設定密碼的習慣，(B) 沒有提出這樣的概括，Their makers 也找不到可以指的東西。",
+            "C": "(C) 用 also 建議每個帳號用不同的片語，但這時還沒有提出任何建議，also 沒有著落；後一句的 Their makers 也找不到先行詞。(C) 屬於第 4 格。",
+            "E": "(E) 和前一句共用 instead、use，「程式能很快猜出密碼，所以專家建議改用 passphrase」只看前一句似乎說得通，容易誤選；但後一句 Their makers know, for instance… 的 Their makers 會變成指 passphrase 或專家，for instance 舉的使用者習慣也不是 (E) 的例子。(E) 屬於第 2 格。"
+          },
+          "strategy_zh": "後一句有 for instance 時，空格應是一句可以被舉例的概括說法（human habits）；Worse still、What is more 表示在前一句的基礎上再加一層，前後要說同一方向的事（都是對使用者不利的消息）。",
+          "hints": [
+            "後一句 for instance 舉的「大寫開頭、數字結尾、用 @ 代替 a」是在說明什麼？",
+            "後一句的 Their makers 是什麼東西的設計者？",
+            "答案用 Worse still 開頭，說這些程式把人類的習慣考慮進去。"
+          ]
+        },
+        "2": {
+          "explanation_zh": "前兩句說真正保護密碼的是長度：每多一個字元，必須嘗試的組合數就成倍增加。(E) 用 For this reason 承接這個道理：「因此許多專家現在建議改用 passphrase（密碼片語）。」後一句 The idea is to string together several random words 的 The idea 解釋的就是 passphrase 的做法：把幾個隨機的單字串在一起；再下一句的 such a phrase 也指它。(E) 的位置主要靠後一句確定，選 (E)。",
+          "evidence": [
+            "Each extra character multiplies the number of combinations that must be tried, so every added letter makes an attacker's job far harder.",
+            "For this reason, many experts now recommend using a passphrase instead.",
+            "The idea is to string together several random words, such as \"purple tiger river spoon.\""
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "lexical_cohesion",
+          "option_notes_zh": {
+            "A": "(A) 說並非所有長片語都一樣安全，但這時還沒介紹長片語是什麼，就先說它們不一樣安全，順序顛倒；後一句的 The idea 也找不到可以解釋的做法。(A) 屬於第 3 格。",
+            "B": "多餘句：(B) 說被偷的密碼常在網路上被販賣，和前一句「攻擊者的工作更難」無關；後一句的 The idea is to string together several random words 也找不到要說明的做法。",
+            "C": "(C) 說每個帳號也該用不同的片語，但 also 前面沒有其他建議；後一句的 The idea 若指「每個帳號用不同片語」，就和「把隨機單字串在一起」對不上。(C) 屬於第 4 格。",
+            "D": "(D) 的 these programs 可以指前一段的程式，但前一句講的是長度與組合數，Worse still 沒有可以承接的壞消息；後一句的 The idea 也接不上。(D) 屬於第 1 格。"
+          },
+          "strategy_zh": "後一句以 The idea、The trick、This method 開頭時，空格裡要先出現一個「做法」或「新名詞」讓它解釋；For this reason 則要確認前文真的有一個理由。",
+          "hints": [
+            "後一句的 The idea 在解釋什麼做法？",
+            "前兩句說密碼最重要的是什麼？根據這個理由，專家會建議什麼？",
+            "答案說許多專家建議改用 passphrase。"
+          ]
+        },
+        "3": {
+          "explanation_zh": "第三段大力推薦長片語：比較難破解，又比一串符號好記。最後一段開頭的 (A) 用 however 轉折：「然而，並非所有長片語都一樣安全。」它讓步的是整個第三段的說法，先行詞是一整段。後一句 Famous sayings and lines from popular songs are poor choices 舉出不好的長片語（名言、流行歌詞），正是 (A) 所說的「不一樣安全」。選 (A)。",
+          "evidence": [
+            "Because such a phrase is long, it takes far more guesses to crack, yet it is much easier to remember than a jumble of symbols.",
+            "Not all long phrases are equally safe, however.",
+            "Famous sayings and lines from popular songs are poor choices, since attackers add them to their lists as well."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "contrast",
+          "option_notes_zh": {
+            "B": "多餘句：(B) 說被偷的密碼常在網路上被販賣，和第三段、後一句都接不上；後一句說名言和歌詞是不好的選擇，前面需要一句「有些片語不好」的鋪陳，(B) 沒有。",
+            "C": "(C) 用 also 建議每個帳號用不同的片語，但前面還沒有任何建議；後一句說名言和歌詞是不好的選擇，和「每個帳號不同」無關。(C) 屬於第 4 格。",
+            "D": "(D) 說程式把人類的習慣考慮進去，是第二段的內容；放在推薦長片語之後，後一句的 poor choices 也沒有鋪陳。(D) 屬於第 1 格。",
+            "E": "(E) 建議改用 passphrase，但第三段已經介紹過了，這時再建議一次是重複；後一句的 poor choices 也需要先有「不是每個片語都好」的說法。(E) 屬於第 2 格。"
+          },
+          "strategy_zh": "前一段一直講優點、後一句卻突然舉出「不好的選擇」時，空格常是一句帶 however、but 的讓步句，限縮前一段的說法；這種句子的先行詞往往是一整段。",
+          "hints": [
+            "第三段對長片語的評價是好是壞？後一句呢？",
+            "從「長片語很好」轉到「名言和歌詞不好」，中間需要什麼樣的句子？",
+            "答案用 however，說並非所有長片語都一樣安全。"
+          ]
+        },
+        "4": {
+          "explanation_zh": "前一句說名言和歌詞不是好的選擇，這是第一個提醒。(C) 用 also 再補一個建議：「每個帳號都使用不同的片語，也是明智的做法。」後一句 Otherwise, one stolen password could unlock all the others 的 Otherwise（否則）必須接在一個建議之後，說明不這樣做的後果：一組密碼被偷，其他帳號也會被打開。前有 also、後有 Otherwise，選 (C)。",
+          "evidence": [
+            "Famous sayings and lines from popular songs are poor choices, since attackers add them to their lists as well.",
+            "It is also wise to use a different phrase for every account.",
+            "Otherwise, one stolen password could unlock all the others."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "transition_word",
+          "option_notes_zh": {
+            "A": "(A) 說並非所有長片語都一樣安全，這個意思前一句已經用例子說明過了，再說一次是重複；後一句的 Otherwise 也找不到可以「否則」的建議。(A) 屬於第 3 格。",
+            "B": "多餘句：(B) 和後一句共用 stolen、password，最容易誤選；但後一句的 Otherwise（否則）前面必須是一個建議或條件，(B) 只是陳述「被偷的密碼常被拿去賣」，接上「否則，一組被偷的密碼就可能打開其他帳號」說不通。",
+            "D": "(D) 說程式把人類的習慣考慮進去，是第二段的內容；放在這裡，後一句的 Otherwise 沒有可以接的建議。(D) 屬於第 1 格。",
+            "E": "(E) 建議改用 passphrase，但前一句已經在討論怎麼挑選片語，這時才建議改用是重複；Otherwise 也無法說明「不改用片語」的後果是一組密碼能打開所有帳號。(E) 屬於第 2 格。"
+          },
+          "strategy_zh": "後一句以 Otherwise（否則）開頭時，空格必須是一個建議、命令或條件；再用 also 這類追加詞確認它和前一句是並列的提醒。",
+          "hints": [
+            "後一句的 Otherwise 表示「如果不這麼做」——空格要先提出什麼？",
+            "一組密碼被偷，為什麼可能打開其他帳號？",
+            "答案用 also，建議每個帳號都用不同的片語。"
+          ]
+        }
+      }
+    },
+    "translation_zh": {
+      "text": "許多網站要求使用者設定混合大寫字母、數字和符號的密碼。結果常常是像「Sunshine1!」這樣的密碼——看起來很難猜，卻能被出奇快速地破解。資安專家現在表示，一長串普通的單字通常是安全得多的選擇。\n攻擊者很少坐下來一次輸入一組猜測。他們反而會使用電腦程式，在短時間內測試幾十億組可能的密碼。【1】更糟的是，這些程式在設計時就把人類的習慣考慮進去了。例如，程式的設計者知道，大多數人會用大寫字母開頭、用數字或符號結尾，並用長得像的符號代替字母，像是用「@」代替「a」。因為這些花招太常見了，程式會直接先試它們。結果，一組主人自以為聰明的密碼，可能撐不了多久。\n真正保護密碼的是它的長度。每多一個字元，必須嘗試的組合數就會成倍增加，所以每多加一個字母，攻擊者的工作就困難得多。【2】因此，許多專家現在建議改用「密碼片語」。做法是把幾個隨機的單字串在一起，例如「purple tiger river spoon」（紫色、老虎、河流、湯匙）。因為這樣的片語很長，要猜非常多次才能破解，卻比一串雜亂的符號好記得多。\n【3】然而，並非所有長片語都一樣安全。名言和流行歌曲的歌詞都是不好的選擇，因為攻擊者也會把它們加進清單裡。【4】每個帳號都使用不同的片語，也是明智的做法。否則，一組密碼被偷，就可能打開其他所有的帳號。多加幾個單字、稍微用點心挑選，保護帳號的效果會遠遠勝過再多的奇怪符號。\n（多餘句 (B)：與此同時，被偷的密碼常常在網路上被販賣。）"
+    },
+    "elimination": {
+      "feasible": {
+        "1": [
+          "D"
+        ],
+        "2": [
+          "E"
+        ],
+        "3": [
+          "A"
+        ],
+        "4": [
+          "C"
+        ]
+      },
+      "perfect_matchings": 1
+    },
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": null,
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "3-V-7",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "7-V-5",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "B-V-8",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "9-V-2",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": "本文由 AI 撰寫"
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-08-structure-advanced-03",
+    "lot": "structure-advanced-03",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/structure",
+    "prompt_sha256": "257262f8832fbffdf8c3c8dea5601b5023882427703b584039e3a0634cb66563",
+    "spec_id": "structure-advanced@2026-10-08",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 251,
+    "sentences": 15,
+    "avg_sentence_length": 16.73,
+    "denominator": 249,
+    "proper_nouns": [],
+    "numbers": 3,
+    "coverage_l1_4": 0.9598,
+    "coverage_l1_6": 0.9719,
+    "offlist_ratio": 0.0281,
+    "beyond_l4_ratio": 0.012,
+    "level_counts": {
+      "1": 191,
+      "2": 40,
+      "3": 3,
+      "4": 5,
+      "5": 3,
+      "off": 7
+    },
+    "offlist_words": [
+      "attacker's",
+      "attackers",
+      "jumble",
+      "look-alikes",
+      "makers",
+      "sayings"
+    ],
+    "band": {
+      "tier": "advanced",
+      "basis": "lot structure-advanced-03（SPEC §3.4＋出題規格書 passage_overrides（words、coverage_L1_4_min（取代 SPEC 的區間）、coverage_L1_6_min、offlist_max、beyond_l4_ratio_max））",
+      "ok": true,
+      "checks": {
+        "word_count": {
+          "value": 251,
+          "min": 220,
+          "max": 310,
+          "ok": true
+        },
+        "coverage_l1_4": {
+          "value": 0.9598,
+          "min": 0.9,
+          "max": null,
+          "ok": true
+        },
+        "coverage_l1_6": {
+          "value": 0.9719,
+          "min": 0.94,
+          "max": null,
+          "ok": true
+        },
+        "offlist_ratio": {
+          "value": 0.0281,
+          "min": null,
+          "max": 0.06,
+          "ok": true
+        },
+        "avg_sentence_length": {
+          "value": 16.73,
+          "min": 15,
+          "max": 21,
+          "ok": true
+        },
+        "beyond_l4_ratio": {
+          "value": 0.012,
+          "min": null,
+          "max": 0.06,
+          "ok": true
+        }
+      }
+    }
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T12:23:02Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T00:00:00Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "answers": {
+          "1": {
+            "answer": "D",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Instead, they use computer programs that can test billions of possible passwords in a short time.",
+              "Their makers know, for instance, that most people start with a capital letter, end with a number or symbol, and swap letters for look-alikes, such as \"@\" for \"a.\""
+            ],
+            "explanation_zh": "後句 Their makers 指程式的設計者，for instance 舉出人們設密碼的習慣；D 說這些程式是針對人類習慣設計的，Worse still 承接前句程式速度很快。",
+            "feasible": [
+              "D"
+            ]
+          },
+          "2": {
+            "answer": "E",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Each extra character multiplies the number of combinations that must be tried, so every added letter makes an attacker's job far harder.",
+              "The idea is to string together several random words, such as \"purple tiger river spoon.\""
+            ],
+            "explanation_zh": "E 的 For this reason 承接前句長度越長越難破解，引出 passphrase；後句 The idea is to string together several random words 正在解釋 passphrase。",
+            "feasible": [
+              "E"
+            ]
+          },
+          "3": {
+            "answer": "A",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Famous sayings and lines from popular songs are poor choices, since attackers add them to their lists as well."
+            ],
+            "explanation_zh": "前段剛稱讚長句密碼，A 以 however 轉折說並非所有長句都一樣安全；後句以名言、歌詞為不安全的例子。",
+            "feasible": [
+              "A"
+            ]
+          },
+          "4": {
+            "answer": "C",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Otherwise, one stolen password could unlock all the others."
+            ],
+            "explanation_zh": "Otherwise 需要前面先有一項建議；C 建議每個帳號用不同的句子，否則一組被偷就能打開其他帳號。",
+            "feasible": [
+              "C"
+            ]
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T12:23:02Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "answers": {
+          "1": {
+            "answer": "D",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Instead, they use computer programs that can test billions of possible passwords in a short time.",
+              "Because these tricks are so common, the programs simply try them first."
+            ],
+            "explanation_zh": "後句 Their makers 指程式的製作者，D 的 these programs 與 human habits 剛好引出後面舉的習慣。",
+            "feasible": [
+              "D"
+            ]
+          },
+          "2": {
+            "answer": "E",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "What really protects a password is its length.",
+              "Because such a phrase is long, it takes far more guesses to crack, yet it is much easier to remember than a jumble of symbols."
+            ],
+            "explanation_zh": "前面強調長度最重要，E 提出改用 passphrase，並引出後文 the idea 與 such a phrase。",
+            "feasible": [
+              "E"
+            ]
+          },
+          "3": {
+            "answer": "A",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Famous sayings and lines from popular songs are poor choices, since attackers add them to their lists as well.",
+              "Because such a phrase is long, it takes far more guesses to crack, yet it is much easier to remember than a jumble of symbols."
+            ],
+            "explanation_zh": "A 說不是所有長句都一樣安全，後句舉名言與歌詞為不佳選擇，銜接自然。",
+            "feasible": [
+              "A"
+            ]
+          },
+          "4": {
+            "answer": "C",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Otherwise, one stolen password could unlock all the others.",
+              "Famous sayings and lines from popular songs are poor choices, since attackers add them to their lists as well."
+            ],
+            "explanation_zh": "Otherwise 需要前面有一項建議，C 建議每個帳號用不同的 phrase，否則一組被偷就全部被破。",
+            "feasible": [
+              "C"
+            ]
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "distractor_audit",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T12:30:00Z",
+      "details": {
+        "session_id": null,
+        "items": {
+          "1": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Their makers know, for instance, that most people start with a capital letter, end with a number or symbol, and swap letters for look-alikes, such as \"@\" for \"a.\"",
+              "explanation_zh": "(A) 說並非所有長片語都一樣安全，但文章還沒介紹長片語，however 無可轉折；後一句的 Their makers 與 for instance 也接不上。"
+            },
+            "B": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Their makers know, for instance, that most people start with a capital letter, end with a number or symbol, and swap letters for look-alikes, such as \"@\" for \"a.\"",
+              "explanation_zh": "多餘句 (B) 講被偷的密碼被販賣，Meanwhile 沒有同時發生的事；後一句 Their makers 找不到可以指的東西，for instance 舉的使用者習慣也不是 (B) 的例子。"
+            },
+            "C": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Their makers know, for instance, that most people start with a capital letter, end with a number or symbol, and swap letters for look-alikes, such as \"@\" for \"a.\"",
+              "explanation_zh": "(C) 的 also 前面沒有任何建議；後一句的 Their makers 也找不到先行詞。"
+            },
+            "E": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Their makers know, for instance, that most people start with a capital letter, end with a number or symbol, and swap letters for look-alikes, such as \"@\" for \"a.\"",
+              "explanation_zh": "(E) 放在這裡，後一句的 Their makers 會變成指 passphrase 或專家，for instance 舉的人類習慣也不是 (E) 的例子；推薦 passphrase 的理由（長度）要到下一段才出現。"
+            }
+          },
+          "2": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "The idea is to string together several random words, such as \"purple tiger river spoon.\"",
+              "explanation_zh": "(A) 只是提出警告，沒有提出任何做法，後一句的 The idea 沒有可以解釋的對象；本段正在推薦長片語，先說「不一樣安全」順序顛倒。"
+            },
+            "B": {
+              "verdict": "clearly_wrong",
+              "error_type": "off_topic",
+              "evidence": "The idea is to string together several random words, such as \"purple tiger river spoon.\"",
+              "explanation_zh": "多餘句 (B) 講被偷的密碼被販賣，與前一句的長度、組合數無關；後一句的 The idea 也找不到要說明的做法。"
+            },
+            "C": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "The idea is to string together several random words, such as \"purple tiger river spoon.\"",
+              "explanation_zh": "(C) 的 also 前面沒有其他建議；後一句的 The idea 若指「每個帳號用不同片語」，就和「把隨機單字串在一起」對不上。"
+            },
+            "D": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "Each extra character multiplies the number of combinations that must be tried, so every added letter makes an attacker's job far harder.",
+              "explanation_zh": "(D) 的 Worse still 要接一個壞消息，但前一句說長度讓攻擊者的工作更難，對使用者是好消息；後一句的 The idea 也接不上。"
+            }
+          },
+          "3": {
+            "B": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Famous sayings and lines from popular songs are poor choices, since attackers add them to their lists as well.",
+              "explanation_zh": "多餘句 (B) 講被偷的密碼被販賣，與後一句「名言、歌詞是不好的選擇」無關，沒有「有些片語不好」的鋪陳。"
+            },
+            "C": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Famous sayings and lines from popular songs are poor choices, since attackers add them to their lists as well.",
+              "explanation_zh": "(C) 的 also 前面沒有建議；後一句說名言和歌詞是不好的選擇，與「每個帳號用不同片語」無關。"
+            },
+            "D": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "Because such a phrase is long, it takes far more guesses to crack, yet it is much easier to remember than a jumble of symbols.",
+              "explanation_zh": "(D) 的 Worse still 要接壞消息，但前一句說密碼片語難破解又好記，是好消息；these programs 也要回指隔了一整段的第二段。"
+            },
+            "E": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Famous sayings and lines from popular songs are poor choices, since attackers add them to their lists as well.",
+              "explanation_zh": "(E) 推薦改用 passphrase，但上一段已經介紹並說明過這個做法，再推薦一次是重複；後一句的 poor choices 需要先有「不是每個片語都好」的限縮，(E) 沒有。"
+            }
+          },
+          "4": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Otherwise, one stolen password could unlock all the others.",
+              "explanation_zh": "(A) 的意思前一句已經用例子說明過，再說一次是重複；後一句的 Otherwise 前面必須是建議，(A) 不是。"
+            },
+            "B": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "Otherwise, one stolen password could unlock all the others.",
+              "explanation_zh": "多餘句 (B) 和後一句共用 stolen、password，最容易誤選；但 Otherwise（否則）前面必須是建議或條件，(B) 只是陳述事實，「否則，一組被偷的密碼可能打開其他帳號」說不通。"
+            },
+            "D": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Otherwise, one stolen password could unlock all the others.",
+              "explanation_zh": "(D) 是第二段的內容，放在這裡，後一句的 Otherwise 沒有可以接的建議。"
+            },
+            "E": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "Otherwise, one stolen password could unlock all the others.",
+              "explanation_zh": "(E) 雖是建議，但「否則（不改用 passphrase），一組被偷的密碼就會打開其他所有帳號」因果不成立：改用片語並不能避免一組密碼通用；For this reason 也接不上前一句。"
+            }
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "unique_solution",
+      "reviewer": "record_verification.py",
+      "result": "pass",
+      "created_at": "2026-10-09T12:23:02Z",
+      "details": {
+        "method": "injective_assignment",
+        "perfect_matchings": 1,
+        "matches_key": true,
+        "feasible": {
+          "1": [
+            "D"
+          ],
+          "2": [
+            "E"
+          ],
+          "3": [
+            "A"
+          ],
+          "4": [
+            "C"
+          ]
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

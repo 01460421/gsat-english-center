@@ -1,0 +1,652 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.c26e73",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "basic",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "媽媽的廚房，就是我第一次為朋友烤蛋糕的地方。",
+        "options": null,
+        "answer": "My mother's kitchen is the place where I first baked a cake for my friend.",
+        "accepted_answers": [
+          "My mother's kitchen is the place where I baked a cake for a friend for the first time.",
+          "The place where I first baked a cake for my friend is my mother's kitchen."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "關係副詞"
+          ],
+          "topic": "學做蛋糕"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "從那天起，我已經烤了好幾個蛋糕給家人和朋友。",
+        "options": null,
+        "answer": "Since that day, I have baked several cakes for my family and friends.",
+        "accepted_answers": [
+          "Since then, I have made quite a few cakes for my family and friends.",
+          "Ever since that day, I have baked many cakes for my family and friends."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "現在完成式"
+          ],
+          "topic": "學做蛋糕"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "學做蛋糕"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「…的地方」修飾地點時，英文把 the place 放前面，後面用關係副詞 where 引導子句：the place where I first baked a cake。也可以把 The place where … 當主詞放在句首。「烤蛋糕」是 bake a cake（roast 是烤肉）；「第一次」可以在動詞前加 first，或在句尾寫 for the first time。",
+          "evidence": [
+            "的地方",
+            "烤蛋糕"
+          ],
+          "strategy_zh": "「（人）做某事的地方／那一天／原因」→ the place where／the day when／the reason why + S + V。",
+          "hints": [
+            "切成四段：媽媽的廚房／第一次／為朋友烤蛋糕／的地方",
+            "標的詞彙：mother（媽媽）、kitchen（廚房）、place（地方）、first（第一次）、bake（烘烤）、cake（蛋糕）、friend（朋友）",
+            "句型框架：A + is + the place where + S + V …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「從那天起，我已經…」說的是從過去某一天一直延續到現在的經驗，用 since that day（或 since then）配現在完成式 I have baked。「好幾個蛋糕」用複數 several cakes。「烤給家人和朋友」是 bake … for my family and friends（為某人做東西用 for）。",
+          "evidence": [
+            "從那天起",
+            "我已經烤了"
+          ],
+          "strategy_zh": "看到「從…起」「自從…以來」，主要子句先想 have/has + p.p.；since 後面接時間點，for 後面接一段時間。",
+          "hints": [
+            "切成四段：從那天起／我已經烤了／好幾個蛋糕／給家人和朋友",
+            "標的詞彙：since（自從）、bake（烘烤）、cake（蛋糕）、family（家人）、friend（朋友）",
+            "句型框架：Since + 過去時間點, S + have/has + p.p. …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "My mother's kitchen is the place where I first baked a cake for my friend.",
+            "My mother's kitchen is the place where I baked a cake for a friend for the first time.",
+            "The place where I first baked a cake for my friend is my mother's kitchen."
+          ],
+          "target_words": [
+            {
+              "word": "mother",
+              "zh": "媽媽",
+              "alternatives": [
+                "mother's",
+                "mom",
+                "mom's"
+              ]
+            },
+            {
+              "word": "kitchen",
+              "zh": "廚房"
+            },
+            {
+              "word": "place",
+              "zh": "地方"
+            },
+            {
+              "word": "first",
+              "zh": "第一次"
+            },
+            {
+              "word": "bake",
+              "zh": "烘烤",
+              "alternatives": [
+                "make"
+              ]
+            },
+            {
+              "word": "cake",
+              "zh": "蛋糕"
+            },
+            {
+              "word": "friend",
+              "zh": "朋友"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "REL",
+              "grammar_id": "gp-relative-adverb",
+              "label_zh": "關係副詞 where（the place where …）",
+              "frame": "A + is + the place where + S + V …",
+              "zh_trigger": "的地方"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "媽媽的廚房",
+              "accepted": [
+                "My mother's kitchen",
+                "Mom's kitchen",
+                "My mom's kitchen"
+              ],
+              "targets": [
+                "mother",
+                "kitchen"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "My mother kitchen",
+                  "right": "My mother's kitchen",
+                  "explanation_zh": "「媽媽的」要用所有格 mother's。"
+                },
+                {
+                  "wrong": "My mothers' kitchen",
+                  "right": "My mother's kitchen",
+                  "explanation_zh": "只有一位媽媽，所有格寫 mother's（撇號在 s 前面）。"
+                }
+              ]
+            },
+            {
+              "zh": "第一次",
+              "accepted": [
+                "first",
+                "for the first time"
+              ],
+              "targets": [
+                "first"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "at the first time",
+                  "right": "for the first time",
+                  "explanation_zh": "「第一次（做某事）」是 for the first time，或在動詞前加 first；at first 是「起初」。"
+                }
+              ]
+            },
+            {
+              "zh": "為朋友烤蛋糕",
+              "accepted": [
+                "baked a cake for my friend",
+                "baked a cake for a friend",
+                "made a cake for my friend",
+                "made a cake for a friend"
+              ],
+              "targets": [
+                "bake",
+                "cake",
+                "friend"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "roasted a cake for my friend",
+                  "right": "baked a cake for my friend",
+                  "explanation_zh": "用烤箱「烤」蛋糕、麵包是 bake；roast 用在烤肉。"
+                },
+                {
+                  "wrong": "baked cake for my friend",
+                  "right": "baked a cake for my friend",
+                  "explanation_zh": "這裡指做了一整個蛋糕，cake 是可數名詞，前面要加 a。"
+                }
+              ]
+            },
+            {
+              "zh": "的地方",
+              "accepted": [
+                "is the place where",
+                "the place where",
+                "is the place in which",
+                "is where"
+              ],
+              "targets": [
+                "REL",
+                "place"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "is the place which I first baked",
+                  "right": "is the place where I first baked",
+                  "explanation_zh": "place 後面的子句「在那裡烤蛋糕」缺介系詞，要用關係副詞 where（＝in which），不能只用 which。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "collocation",
+              "zh": "烤蛋糕",
+              "literal_error": "My mother's kitchen is the place where I first roasted a cake for my friend.",
+              "part": 3,
+              "explanation_zh": "「烤」照字面常被寫成 roast，但 roast 是烤肉；烤蛋糕、麵包的固定搭配是 bake a cake，這一部分扣分。"
+            }
+          ],
+          "bonus": []
+        },
+        "2": {
+          "references": [
+            "Since that day, I have baked several cakes for my family and friends.",
+            "Since then, I have made quite a few cakes for my family and friends.",
+            "Ever since that day, I have baked many cakes for my family and friends."
+          ],
+          "target_words": [
+            {
+              "word": "since",
+              "zh": "自從"
+            },
+            {
+              "word": "bake",
+              "zh": "烘烤",
+              "alternatives": [
+                "make"
+              ]
+            },
+            {
+              "word": "cake",
+              "zh": "蛋糕"
+            },
+            {
+              "word": "family",
+              "zh": "家人"
+            },
+            {
+              "word": "friend",
+              "zh": "朋友"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PERF",
+              "grammar_id": "gp-present-perfect",
+              "label_zh": "現在完成式（since + 過去時間點）",
+              "frame": "Since + 過去時間點, S + have/has + p.p. …",
+              "zh_trigger": "從那天起"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "從那天起",
+              "accepted": [
+                "Since that day",
+                "Since then",
+                "Ever since that day",
+                "From that day on"
+              ],
+              "targets": [
+                "since"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "From that day",
+                  "right": "Since that day",
+                  "explanation_zh": "「從那天起（一直到現在）」用 since that day 或 from that day on；只寫 from that day 意思不完整。"
+                }
+              ]
+            },
+            {
+              "zh": "我已經烤了",
+              "accepted": [
+                "I have baked",
+                "I have made",
+                "I've baked"
+              ],
+              "targets": [
+                "PERF",
+                "bake"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "I baked",
+                  "right": "I have baked",
+                  "explanation_zh": "since 引出從過去延續到現在的時間，主要子句要用現在完成式 have baked。"
+                },
+                {
+                  "wrong": "I have bake",
+                  "right": "I have baked",
+                  "explanation_zh": "have 後面接過去分詞 baked。"
+                }
+              ]
+            },
+            {
+              "zh": "好幾個蛋糕",
+              "accepted": [
+                "several cakes",
+                "quite a few cakes",
+                "many cakes",
+                "a lot of cakes",
+                "lots of cakes"
+              ],
+              "targets": [
+                "cake"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "several cake",
+                  "right": "several cakes",
+                  "explanation_zh": "several 後面接複數名詞。"
+                }
+              ]
+            },
+            {
+              "zh": "給家人和朋友",
+              "accepted": [
+                "for my family and friends",
+                "for my family and my friends",
+                "for family and friends"
+              ],
+              "targets": [
+                "family",
+                "friend"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "to my family and friends",
+                  "right": "for my family and friends",
+                  "explanation_zh": "「為某人做（烤）東西」用 bake／make sth for sb；to 用在 give sth to sb。"
+                },
+                {
+                  "wrong": "for my families and friends",
+                  "right": "for my family and friends",
+                  "explanation_zh": "family 指「我的家人」這個整體，用單數 family。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "tense_trigger",
+              "zh": "從那天起",
+              "literal_error": "Since that day, I baked several cakes for my family and friends.",
+              "part": 2,
+              "explanation_zh": "「從那天起」表示從過去某一天延續到現在，要用現在完成式 have baked；照中文寫成過去式 baked，這一部分扣分。"
+            }
+          ],
+          "bonus": []
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-basic-03",
+    "lot": "translation-basic-03",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "a2d0efb5c61ab9bdba02f949c0e9c7a37fac919a2d053a97cc75848f11db3021",
+    "spec_id": "translation-basic@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T07:59:05Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "fail",
+      "created_at": "2026-10-09T07:40:01Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "My mom's kitchen is the place where I baked a cake for my friends for the first time.",
+            "confidence": "high",
+            "explanation_zh": "「……的地方」用關係副詞 where 引導的形容詞子句修飾 the place；「第一次」用 for the first time；中文「朋友」未分單複數，我用 my friends。"
+          },
+          "2": {
+            "translation": "Since that day, I have baked several cakes for my family and friends.",
+            "confidence": "high",
+            "explanation_zh": "「從那天起……已經……」用 since + 過去時間點，配現在完成式 have baked；「好幾個」用 several。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "REL"
+            ],
+            "used_target_words": [
+              "mother",
+              "kitchen",
+              "place",
+              "first",
+              "bake",
+              "cake",
+              "friend"
+            ],
+            "within_accepted": false,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "「為朋友烤蛋糕」的「朋友」中文沒有標出單複數，譯成複數 for my friends 是同樣合理的讀法（第 2 句「給家人和朋友」本身就譯成複數 friends）；但 3 個參考譯文與第 3 部分的 accepted 全部是單數 my friend／a friend，我的譯文 \"baked a cake for my friends\" 因此不在可接受寫法內。這一組大量以單複數當陷阱，評分者照規準可能把 friends 當錯扣分。建議第 3 部分補 \"baked a cake for my friends\"、\"made a cake for my friends\"、\"baked a cake for friends\"，並加一個複數的參考譯文（或在中文寫明「一位朋友」／「朋友們」消除歧義）。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "PERF"
+            ],
+            "used_target_words": [
+              "since",
+              "bake",
+              "cake",
+              "family",
+              "friend"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "mother",
+              "kitchen",
+              "place",
+              "first",
+              "bake",
+              "cake",
+              "friend"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "REL": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "since",
+              "bake",
+              "cake",
+              "family",
+              "friend"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PERF": true
+            },
+            "program_match": true
+          }
+        },
+        "problems": [
+          "第 1 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義",
+          "第 1 題驗證者對4 部分切分有意見（warn）：「為朋友烤蛋糕」的「朋友」中文沒有標出單複數，譯成複數 for my friends 是同樣合理的讀法（第 2 句「給家人和朋友」本身就譯成複數 friends）；但 3 個參考譯文與第 3 部分的 accepted 全部是單數 my fr"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T07:39:22Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "My mother's kitchen is where I first baked a cake for my friends.",
+            "confidence": "high",
+            "explanation_zh": "「就是…的地方」用名詞子句 where 當補語；「第一次」放在動詞前用 first；「為朋友烤蛋糕」用 bake a cake for my friends，烤的動作發生在過去，用過去式 baked。"
+          },
+          "2": {
+            "translation": "Since that day, I have baked several cakes for my family and friends.",
+            "confidence": "high",
+            "explanation_zh": "「從那天起，我已經…」用 since 加現在完成式 have baked；「好幾個」用 several；「給家人和朋友」用 for。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "REL"
+            ],
+            "used_target_words": [
+              "mother",
+              "kitchen",
+              "first",
+              "bake",
+              "cake",
+              "friend"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "（提醒，不影響判定）我寫的是 is where I first baked a cake for my friends（沒有寫 the place，所以標的詞彙 place 沒用到，6/7）；我用複數 friends，accepted 只列單數 friend，中文「朋友」沒有指定單複數，建議補上 for my friends。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "PERF"
+            ],
+            "used_target_words": [
+              "since",
+              "bake",
+              "cake",
+              "family",
+              "friend"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "mother",
+              "kitchen",
+              "first",
+              "bake",
+              "cake",
+              "friend"
+            ],
+            "target_hit_rate": 0.857,
+            "patterns_detected": {
+              "REL": false
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "since",
+              "bake",
+              "cake",
+              "family",
+              "friend"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PERF": true
+            },
+            "program_match": true
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "rejected",
+  "status_reason": "判定者第 1 輪（人工審核）：評分規準過窄。第 1 題「為朋友烤蛋糕」的「朋友」中文沒有標出單複數，兩位驗證者都獨立譯成複數 for my friends（第 2 題「給家人和朋友」本身也用複數 friends），但 3 個參考譯文與第 3 部分的 accepted 只有單數 my friend／a friend，常見錯誤也沒說明單複數皆可；本批其他題組又把沒標單複數的「朋友」當成要寫複數的陷阱，評分者照規準可能把正確的 friends 誤扣分（blind_solver:A 判 fail：盲譯不在可接受寫法內）。重生時請在中文寫明「一位朋友」或「朋友們」，或補進複數的參考譯文與 accepted（baked／made a cake for my friends、for friends）。"
+}

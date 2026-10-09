@@ -1,0 +1,611 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.st.319eab",
+  "version": 1,
+  "section_type": "structure",
+  "format_version": "structure-4x5",
+  "tier": "top",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": "Imagine arriving at the gate for a full flight, only to hear an announcement asking whether anyone would give up a seat in exchange for a travel voucher. It may seem strange that an airline would sell more tickets than there are seats, yet this is rarely an accident. Most large airlines overbook on purpose, and their reasons are surprisingly simple.\n[[1]] Business travelers often change their plans at the last minute, and passengers on connecting flights may be held up by delays elsewhere. As a result, a flight that has sold every seat often takes off with several of them empty, and for an airline, that is money lost forever. [[2]] A shop can keep an unsold sweater on the shelf until next week, but once the doors of a plane close, its empty seats can never be sold again.\nTo decide how many extra tickets to sell, airlines study years of records showing how many passengers usually fail to appear on a particular route, day, and time. [[3]] A morning flight full of business travelers, for example, may have far more empty seats than a holiday flight packed with families, who rarely miss a trip they have planned for months. Most of the time the predictions work well, but now and then more passengers turn up than there are seats.\n[[4]] If nobody accepts, the offer is raised, sometimes again and again, until enough people agree to take a later flight. Only when this fails are passengers removed against their will, and in many countries the law then requires the airline to pay them. Airlines argue that overbooking keeps fares lower for everyone, though few travelers agree when they are the ones left at the gate.",
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": {
+      "A": "The numbers can vary widely from one flight to the next.",
+      "B": "A seat on a plane is very different from most other goods.",
+      "C": "So most airlines simply turn away whoever checked in last.",
+      "D": "Not every passenger who buys a ticket actually turns up at the airport.",
+      "E": "Usually the first step is to see whether anyone will give up a seat for a reward."
+    },
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "D",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "topic_sentence",
+          "clue_raw": "TS|LX|F|L",
+          "key_phrase": "Not every passenger … actually turns up → Business travelers often change their plans …；passengers on connecting flights may be held up；takes off with several of them empty"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "B",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "contrast",
+          "clue_raw": "CT|LX|F|L",
+          "key_phrase": "very different from most other goods → A shop can keep an unsold sweater on the shelf until next week, but once the doors of a plane close, its empty seats can never be sold again"
+        }
+      },
+      {
+        "no": 3,
+        "label": "3",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "A",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "example",
+          "clue_raw": "SP|PR|F|L",
+          "key_phrase": "The numbers can vary widely from one flight to the next → A morning flight full of business travelers, for example, may have far more empty seats than a holiday flight packed with families"
+        }
+      },
+      {
+        "no": 4,
+        "label": "4",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "E",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "chronology",
+          "clue_raw": "SQ|LX|F|L",
+          "key_phrase": "the first step … give up a seat for a reward → If nobody accepts, the offer is raised … → Only when this fails are passengers removed against their will"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "航空公司為何超賣機位",
+      "genre": "expository",
+      "sdgs": [],
+      "text_format": "continuous"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "第一段說大型航空公司「刻意」超賣機位，而且理由很簡單。第二段段首空格之後說：商務旅客常在最後一刻改變計畫，轉機旅客也可能被其他地方的延誤耽擱；結果，一班賣光座位的航班，起飛時往往還空著好幾個位子。這些都是「買了票卻沒出現」的情況，空格要先提出這個主旨：(D)「並不是每一位買了票的乘客都真的會到機場」。選項和後一句只共用 passenger(s) 一個字，也沒有代名詞可抓，要先歸納後面兩句的例子，才知道它們在說明什麼。選 (D)。",
+          "evidence": [
+            "Not every passenger who buys a ticket actually turns up at the airport.",
+            "Business travelers often change their plans at the last minute, and passengers on connecting flights may be held up by delays elsewhere.",
+            "As a result, a flight that has sold every seat often takes off with several of them empty, and for an airline, that is money lost forever."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "topic_sentence",
+          "option_notes_zh": {
+            "A": "(A) 的 The numbers 是「哪些數字」？這是第二段開頭，前面沒有任何數字可指；(A) 要放在第三段「航空公司研究多年的紀錄」之後。(A) 屬於第 3 格。",
+            "B": "(B) 說機位和大多數商品很不一樣，但這時還沒說出「空位就是損失」，比較沒有基礎；它也引不出下一句旅客改變計畫的例子。(B) 屬於第 2 格。",
+            "C": "多餘句：「所以大多數航空公司乾脆把最後報到的人拒於門外」，So 沒有可承接的原因（第一段只說超賣是刻意的），下一句講的也是乘客為什麼沒出現，不是怎麼處理多出來的乘客；第四段更說明只有在沒人自願、加碼也失敗時，才會強制讓乘客下機。",
+            "E": "(E) 說第一步是看看有沒有人願意為了報酬讓出座位，是「乘客太多」時的處理方式，要放在第四段，緊接著 If nobody accepts。(E) 屬於第 4 格。"
+          },
+          "strategy_zh": "段首主題句沒有代名詞可抓時，就讀後面兩三句，找出它們共同說明的一件事（商務旅客改行程、轉機旅客被延誤、起飛時有空位＝有人沒出現），再找概括它的選項。",
+          "hints": [
+            "商務旅客改變計畫、轉機旅客被延誤，結果會怎樣？",
+            "哪個選項把這些情況概括成一句話？",
+            "答案說 not every passenger who buys a ticket actually turns up。"
+          ]
+        },
+        "2": {
+          "explanation_zh": "前一句說：帶著空位起飛，對航空公司來說就是「永遠損失的錢」。空格後一句拿商店和飛機對比：商店可以把沒賣掉的毛衣留在架上，等下週再賣；但飛機艙門一關，空位就永遠賣不出去了。這個對比之前要有一句概括的說法：(B)「飛機上的座位和大多數其他商品非常不同」，下一句再用毛衣和機位具體說明「哪裡不同」，也解釋了前一句為什麼說錢是「永遠」損失。選 (B)。",
+          "evidence": [
+            "A seat on a plane is very different from most other goods.",
+            "As a result, a flight that has sold every seat often takes off with several of them empty, and for an airline, that is money lost forever.",
+            "A shop can keep an unsold sweater on the shelf until next week, but once the doors of a plane close, its empty seats can never be sold again."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "contrast",
+          "option_notes_zh": {
+            "A": "(A) 說「這些數字」每班差異很大，但這裡沒有出現任何數字；它也引不出下一句商店與飛機的對比。(A) 屬於第 3 格。",
+            "C": "多餘句：So 看起來接在「錢永遠損失了」之後，但「把最後報到的人拒於門外」只會讓座位空下來、損失更多，因果說不通；它也和下一句毛衣與機位的比較無關。",
+            "D": "(D) 說不是每位乘客都會出現，這一點前兩句已經說明過；放在這裡重複，也無法引出商店與飛機的對比。(D) 屬於第 1 格。",
+            "E": "(E) 說第一步是徵求自願讓位的乘客，是第四段機位不夠時的處理方法，和「空位賣不掉」的比較無關。(E) 屬於第 4 格。"
+          },
+          "strategy_zh": "後一句用「A…, but B…」做對比時，空格常是「點出差異」的概括句。先看後一句比較了哪兩樣東西（毛衣 vs. 機位），再找把其中一樣和「其他東西」作比較的選項。",
+          "hints": [
+            "下一句拿哪兩樣東西作比較？",
+            "哪個選項說機位和其他商品「不同」？",
+            "答案說 a seat on a plane is very different from most other goods。"
+          ]
+        },
+        "3": {
+          "explanation_zh": "前一句說：為了決定要多賣幾張票，航空公司會研究多年的紀錄，看看某條航線在某一天、某個時段通常有多少乘客沒出現。空格後一句以 for example 舉例：坐滿商務旅客的早班機，空位可能遠多於擠滿家庭旅客的假期航班。這個例子比較的是「兩種航班的差別」，空格就要先說出「差別」：(A)「這些數字每班航班之間可能相差很大」，The numbers 指前一句紀錄中沒出現的人數。選 (A)。",
+          "evidence": [
+            "The numbers can vary widely from one flight to the next.",
+            "To decide how many extra tickets to sell, airlines study years of records showing how many passengers usually fail to appear on a particular route, day, and time.",
+            "A morning flight full of business travelers, for example, may have far more empty seats than a holiday flight packed with families, who rarely miss a trip they have planned for months."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "example",
+          "option_notes_zh": {
+            "B": "(B) 說機位和其他商品不同，是第二段解釋「空位就是損失」的內容；放在這裡，後一句兩種航班的比較就沒有對應的概括。(B) 屬於第 2 格。",
+            "C": "多餘句：說航空公司乾脆把最後報到的人拒於門外，和前一句「研究紀錄來決定多賣幾張票」無關，也不是後一句舉例說明的對象。",
+            "D": "(D) 說不是每位乘客都會出現，和前一句「通常有多少乘客沒出現」意思重複；後一句的例子比較的是「不同航班的差別」，(D) 沒有說到差別。(D) 屬於第 1 格。",
+            "E": "(E) 說第一步是徵求自願讓位的人，是機位不夠時的處理方式，屬於第四段。(E) 屬於第 4 格。"
+          },
+          "strategy_zh": "for example 舉的例子是什麼「形狀」，空格就是什麼主張：例子在比較兩種航班，空格就是「不同航班差很多」。和例子主旨不完全對齊的選項，即使用字相近（passenger、turns up）也要排除。",
+          "hints": [
+            "下一句舉的例子比較了哪兩種航班？",
+            "哪個選項說「不同航班的情況不一樣」？",
+            "答案說 the numbers can vary widely from one flight to the next。"
+          ]
+        },
+        "4": {
+          "explanation_zh": "上一段結尾說：偶爾出現的乘客會比座位還多。最後一段空格之後說：如果沒有人接受，the offer（這個提議）就會提高，有時一再加碼，直到有足夠的人同意改搭晚一點的航班；只有在這樣也失敗時，才會違反乘客意願讓他們下機。If nobody accepts 和 the offer 表示空格必須先提出一個「提議」，而且這是處理程序的第一步。(E)「通常第一步是看看有沒有人願意為了報酬讓出座位」——first step 引出後面的第二步、最後一步，a reward 就是後一句的 the offer；第一段登機門廣播徵求自願者的情景也和這裡呼應。選 (E)。",
+          "evidence": [
+            "Usually the first step is to see whether anyone will give up a seat for a reward.",
+            "If nobody accepts, the offer is raised, sometimes again and again, until enough people agree to take a later flight.",
+            "Only when this fails are passengers removed against their will, and in many countries the law then requires the airline to pay them."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "chronology",
+          "option_notes_zh": {
+            "A": "(A) 說數字每班差很多，屬於第三段預測的內容；放在這裡，下一句的 If nobody accepts 和 the offer 都沒有所指。(A) 屬於第 3 格。",
+            "B": "(B) 說機位和其他商品不同，和處理超賣的步驟無關，也沒有提出任何「提議」。(B) 屬於第 2 格。",
+            "C": "多餘句（FL 型，瞄準本格）：So 接在「乘客比座位多」之後看似很順，但「直接把最後報到的人拒於門外」並沒有提出任何提議，下一句的 If nobody accepts, the offer is raised 就接不上；後文也明說只有在加碼仍失敗時才會強迫乘客下機，和 (C) 矛盾。",
+            "D": "(D) 說不是每位乘客都會出現，是第二段的主題句；這裡要處理的卻是乘客「太多」的情況，方向相反。(D) 屬於第 1 格。"
+          },
+          "strategy_zh": "後一句出現 If nobody accepts、the offer、Only when this fails 這類「程序」用語時，把步驟排出來：先提議 → 沒人接受就加碼 → 再失敗才強制。空格就是缺少的那一步。",
+          "hints": [
+            "下一句的 the offer 是什麼提議？If nobody accepts 是誰不接受？",
+            "處理機位不夠的「第一步」是什麼？",
+            "答案說 the first step 是看看有沒有人願意 give up a seat for a reward。"
+          ]
+        }
+      }
+    },
+    "translation_zh": {
+      "text": "想像你來到登機門，準備搭一班客滿的航班，卻聽到廣播詢問有沒有人願意讓出座位，換取一張旅遊抵用券。航空公司竟會賣出比座位還多的機票，聽起來也許很奇怪，但這很少是意外。大多數大型航空公司都是刻意超賣，而它們的理由出奇地簡單。\n【1】並不是每一位買了票的乘客都真的會到機場。商務旅客常在最後一刻改變計畫，轉機的乘客也可能被其他地方的延誤耽擱。結果，一班賣光所有座位的航班，起飛時往往還空著好幾個位子；對航空公司來說，這筆錢就永遠賺不回來了。【2】飛機上的座位和大多數其他商品非常不同。商店可以把沒賣掉的毛衣留在架上，等到下週再賣；但飛機艙門一關上，空位就再也賣不出去了。\n為了決定要多賣幾張票，航空公司會研究多年的紀錄，看看某條航線在某一天、某個時段通常有多少乘客沒有出現。【3】這些數字每班航班之間可能相差很大。例如，坐滿商務旅客的早班機，空位可能遠多於擠滿家庭旅客的假期航班——這些家庭很少錯過規劃了好幾個月的旅行。大多數時候，這些預測都很準確，但偶爾出現的乘客還是會比座位多。\n【4】通常第一步是看看有沒有人願意為了報酬讓出座位。如果沒有人接受，報酬就會提高，有時一再加碼，直到有足夠的人同意改搭晚一點的航班。只有在這樣也失敗時，才會違反乘客的意願讓他們下機，而在許多國家，法律規定航空公司這時必須給予賠償。航空公司主張，超賣讓每個人的票價都更低，但當自己就是被留在登機門的人時，很少旅客會同意這個說法。\n（多餘句 (C)：所以大多數航空公司乾脆把最後報到的人拒於門外。）"
+    },
+    "elimination": {
+      "feasible": {
+        "1": [
+          "D"
+        ],
+        "2": [
+          "B"
+        ],
+        "3": [
+          "A"
+        ],
+        "4": [
+          "E"
+        ]
+      },
+      "perfect_matchings": 1
+    },
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": null,
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "3-V-7",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "7-V-5",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "9-V-2",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "B-V-8",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": "本文由 AI 撰寫"
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-08-structure-top-04",
+    "lot": "structure-top-04",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/structure",
+    "prompt_sha256": "f7bdb6c0e9f9c3d38bda07f71a27a0a8235bbdbfc85dd88a5e37cdd44530cbcf",
+    "spec_id": "structure-top@2026-10-08",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 284,
+    "sentences": 12,
+    "avg_sentence_length": 23.67,
+    "denominator": 283,
+    "proper_nouns": [],
+    "numbers": 1,
+    "coverage_l1_4": 0.9859,
+    "coverage_l1_6": 0.9894,
+    "offlist_ratio": 0.0106,
+    "beyond_l4_ratio": 0.0035,
+    "level_counts": {
+      "1": 228,
+      "2": 30,
+      "3": 18,
+      "4": 3,
+      "5": 1,
+      "off": 3
+    },
+    "offlist_words": [
+      "overbook",
+      "overbooking",
+      "unsold"
+    ],
+    "band": {
+      "tier": "top",
+      "basis": "lot structure-top-04（SPEC §3.4＋出題規格書 passage_overrides（words、coverage_L1_4_min（取代 SPEC 的區間）、coverage_L1_6_min、offlist_max、beyond_l4_ratio_max））",
+      "ok": true,
+      "checks": {
+        "word_count": {
+          "value": 284,
+          "min": 220,
+          "max": 310,
+          "ok": true
+        },
+        "coverage_l1_4": {
+          "value": 0.9859,
+          "min": 0.9,
+          "max": null,
+          "ok": true
+        },
+        "coverage_l1_6": {
+          "value": 0.9894,
+          "min": 0.94,
+          "max": null,
+          "ok": true
+        },
+        "offlist_ratio": {
+          "value": 0.0106,
+          "min": null,
+          "max": 0.06,
+          "ok": true
+        },
+        "avg_sentence_length": {
+          "value": 23.67,
+          "min": 18,
+          "max": 25,
+          "ok": true
+        },
+        "beyond_l4_ratio": {
+          "value": 0.0035,
+          "min": null,
+          "max": 0.06,
+          "ok": true
+        }
+      }
+    }
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T12:29:27Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T12:11:33Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "answers": {
+          "1": {
+            "answer": "D",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Business travelers often change their plans at the last minute, and passengers on connecting flights may be held up by delays elsewhere.",
+              "As a result, a flight that has sold every seat often takes off with several of them empty, and for an airline, that is money lost forever."
+            ],
+            "explanation_zh": "空格後舉商務旅客臨時改計畫、轉機旅客被延誤為例，結果客滿班機仍有空位，D 說買了票的旅客不一定會到，是本段主題句。",
+            "feasible": [
+              "D"
+            ]
+          },
+          "2": {
+            "answer": "B",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "A shop can keep an unsold sweater on the shelf until next week, but once the doors of a plane close, its empty seats can never be sold again."
+            ],
+            "explanation_zh": "空格後拿商店賣不掉的毛衣和機位對比，B 說機位和大多數商品很不一樣，是這個對比的引言。",
+            "feasible": [
+              "B"
+            ]
+          },
+          "3": {
+            "answer": "A",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "To decide how many extra tickets to sell, airlines study years of records showing how many passengers usually fail to appear on a particular route, day, and time.",
+              "A morning flight full of business travelers, for example, may have far more empty seats than a holiday flight packed with families, who rarely miss a trip they have planned for months."
+            ],
+            "explanation_zh": "A 的 The numbers 指前句未到旅客的人數，說各班機差異很大，下句 for example 用早班商務班機與假期家庭班機的對比舉例。",
+            "feasible": [
+              "A"
+            ]
+          },
+          "4": {
+            "answer": "E",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "If nobody accepts, the offer is raised, sometimes again and again, until enough people agree to take a later flight.",
+              "Only when this fails are passengers removed against their will, and in many countries the law then requires the airline to pay them."
+            ],
+            "explanation_zh": "空格後 If nobody accepts, the offer is raised 需要前句先提出一個「提議」，E 說第一步是看有沒有人願意為了補償讓出座位；C 說直接拒載最後報到者，與 Only when this fails are passengers removed against their will 矛盾。",
+            "feasible": [
+              "E"
+            ]
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T12:12:51Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "answers": {
+          "1": {
+            "answer": "D",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Business travelers often change their plans at the last minute, and passengers on connecting flights may be held up by delays elsewhere.",
+              "Not every passenger who buys a ticket actually turns up at the airport."
+            ],
+            "explanation_zh": "後面舉商務旅客改行程、轉機延誤等例子，說明有人買了票卻沒出現，D 是這段的主題句。",
+            "feasible": [
+              "D"
+            ]
+          },
+          "2": {
+            "answer": "B",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "A shop can keep an unsold sweater on the shelf until next week, but once the doors of a plane close, its empty seats can never be sold again.",
+              "A seat on a plane is very different from most other goods."
+            ],
+            "explanation_zh": "後面拿商店賣不出的毛衣與飛機空位對比，B 先點出座位與一般商品不同。",
+            "feasible": [
+              "B"
+            ]
+          },
+          "3": {
+            "answer": "A",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "A morning flight full of business travelers, for example, may have far more empty seats than a holiday flight packed with families, who rarely miss a trip they have planned for months.",
+              "The numbers can vary widely from one flight to the next."
+            ],
+            "explanation_zh": "for example 後面比較早晨商務班機與假期家庭班機的空位數差異，A 說數字因班次而差異很大。",
+            "feasible": [
+              "A"
+            ]
+          },
+          "4": {
+            "answer": "E",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "If nobody accepts, the offer is raised, sometimes again and again, until enough people agree to take a later flight.",
+              "Usually the first step is to see whether anyone will give up a seat for a reward."
+            ],
+            "explanation_zh": "If nobody accepts 的 accepts 需要前面有提議，E 說第一步是詢問有沒有人願意讓位換獎勵；C 與後面 Only when this fails 才強制請人下機矛盾。",
+            "feasible": [
+              "E"
+            ]
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "distractor_audit",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T12:40:00Z",
+      "details": {
+        "session_id": null,
+        "items": {
+          "1": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Business travelers often change their plans at the last minute, and passengers on connecting flights may be held up by delays elsewhere.",
+              "explanation_zh": "The numbers 在第二段段首沒有所指（前面沒有任何數字或紀錄）；下一句講的是乘客沒出現的原因，不是數字的差異。(A) 要接在第三段研究紀錄之後。"
+            },
+            "B": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Business travelers often change their plans at the last minute, and passengers on connecting flights may be held up by delays elsewhere.",
+              "explanation_zh": "(B) 說機位和其他商品不同，但下一句舉的是商務旅客改行程、轉機旅客被延誤，說明的是「有人沒出現」，不是機位和商品哪裡不同；那個對比在毛衣那一句才出現。"
+            },
+            "C": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "Only when this fails are passengers removed against their will, and in many countries the law then requires the airline to pay them.",
+              "explanation_zh": "第四段明說只有在徵求自願者、一再加碼都失敗時，才會違反乘客意願讓他們下機，和 (C)「乾脆把最後報到的人拒於門外」矛盾；So 前面也沒有可承接的原因，下一句講的是乘客為何沒出現。"
+            },
+            "E": {
+              "verdict": "clearly_wrong",
+              "error_type": "off_topic",
+              "evidence": "Business travelers often change their plans at the last minute, and passengers on connecting flights may be held up by delays elsewhere.",
+              "explanation_zh": "徵求自願讓位是「乘客太多」時的處理步驟，屬於第四段；下一句講的卻是乘客為什麼沒出現，the first step 在這裡也不知道是什麼程序的第一步。"
+            }
+          },
+          "2": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "A shop can keep an unsold sweater on the shelf until next week, but once the doors of a plane close, its empty seats can never be sold again.",
+              "explanation_zh": "前面沒有任何數字可讓 The numbers 指涉；它也引不出下一句商店毛衣與飛機空位的對比。"
+            },
+            "C": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "Only when this fails are passengers removed against their will, and in many countries the law then requires the airline to pay them.",
+              "explanation_zh": "So 接在「錢永遠損失」之後看似順，但把乘客拒於門外只會讓空位更多，因果不通；而且和第四段「只有加碼失敗才強制下機」矛盾。"
+            },
+            "D": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "A shop can keep an unsold sweater on the shelf until next week, but once the doors of a plane close, its empty seats can never be sold again.",
+              "explanation_zh": "「不是每位乘客都會出現」前兩句已經說明過，再說一次是重複；它也無法引出下一句商店與飛機的對比。"
+            },
+            "E": {
+              "verdict": "clearly_wrong",
+              "error_type": "off_topic",
+              "evidence": "A shop can keep an unsold sweater on the shelf until next week, but once the doors of a plane close, its empty seats can never be sold again.",
+              "explanation_zh": "徵求自願讓位是機位不夠時的處理方法，和「空位賣不掉」的商品比較無關。"
+            }
+          },
+          "3": {
+            "B": {
+              "verdict": "clearly_wrong",
+              "error_type": "off_topic",
+              "evidence": "A morning flight full of business travelers, for example, may have far more empty seats than a holiday flight packed with families, who rarely miss a trip they have planned for months.",
+              "explanation_zh": "後一句 for example 比較的是兩種航班的空位多寡，(B) 講的是機位和其他商品的差別，例子對不上概括句。"
+            },
+            "C": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "Only when this fails are passengers removed against their will, and in many countries the law then requires the airline to pay them.",
+              "explanation_zh": "和第四段「只有加碼失敗才會違反意願讓乘客下機」矛盾；也和前一句研究紀錄、後一句兩種航班的比較無關。"
+            },
+            "D": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "A morning flight full of business travelers, for example, may have far more empty seats than a holiday flight packed with families, who rarely miss a trip they have planned for months.",
+              "explanation_zh": "前一句已在講「通常有多少乘客沒出現」，(D) 只是重複；後一句的例子以 far more … than 比較兩種航班，要說明的是「各班差很多」，(D) 沒有提到差異。"
+            },
+            "E": {
+              "verdict": "clearly_wrong",
+              "error_type": "off_topic",
+              "evidence": "A morning flight full of business travelers, for example, may have far more empty seats than a holiday flight packed with families, who rarely miss a trip they have planned for months.",
+              "explanation_zh": "徵求自願讓位屬於第四段機位不夠時的處理，和兩種航班空位多寡的例子無關。"
+            }
+          },
+          "4": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "If nobody accepts, the offer is raised, sometimes again and again, until enough people agree to take a later flight.",
+              "explanation_zh": "後一句 If nobody accepts, the offer is raised 需要先有一個「提議」；(A) 講的是各班數字差異，nobody accepts 與 the offer 都沒有所指。"
+            },
+            "B": {
+              "verdict": "clearly_wrong",
+              "error_type": "off_topic",
+              "evidence": "If nobody accepts, the offer is raised, sometimes again and again, until enough people agree to take a later flight.",
+              "explanation_zh": "機位和其他商品的差別與處理超賣的步驟無關，也沒有提出任何可被接受或加碼的提議。"
+            },
+            "C": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "Only when this fails are passengers removed against their will, and in many countries the law then requires the airline to pay them.",
+              "explanation_zh": "So 接在「乘客比座位多」之後看似順，但 (C) 沒有提出任何提議，下一句的 the offer 無從接起；後文說只有加碼仍失敗才會強迫乘客下機，和「乾脆拒載最後報到者」矛盾。"
+            },
+            "D": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "If nobody accepts, the offer is raised, sometimes again and again, until enough people agree to take a later flight.",
+              "explanation_zh": "(D) 講乘客沒出現，這裡要處理的卻是乘客太多的情況，方向相反；下一句的 nobody accepts 與 the offer 也沒有所指。"
+            }
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "unique_solution",
+      "reviewer": "record_verification.py",
+      "result": "pass",
+      "created_at": "2026-10-09T12:29:27Z",
+      "details": {
+        "method": "injective_assignment",
+        "perfect_matchings": 1,
+        "matches_key": true,
+        "feasible": {
+          "1": [
+            "D"
+          ],
+          "2": [
+            "B"
+          ],
+          "3": [
+            "A"
+          ],
+          "4": [
+            "E"
+          ]
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

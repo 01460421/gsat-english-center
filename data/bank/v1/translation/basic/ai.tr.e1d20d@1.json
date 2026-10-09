@@ -1,0 +1,637 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.e1d20d",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "basic",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "中元節（Ghost Festival）時，除了準備食物，很多家庭也會燒紙錢。",
+        "options": null,
+        "answer": "During the Ghost Festival, besides preparing food, many families also burn paper money.",
+        "accepted_answers": [
+          "During the Ghost Festival, in addition to preparing food, many families also burn paper money.",
+          "During the Ghost Festival, apart from preparing food, many families also burn ghost money."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "介系詞＋動名詞（除了…：besides + V-ing）"
+          ],
+          "topic": "中元普渡"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "對很多家庭來說，這個節日幾乎和農曆新年一樣重要。",
+        "options": null,
+        "answer": "For many families, this festival is almost as important as Chinese New Year.",
+        "accepted_answers": [
+          "To many families, this festival is nearly as important as the Lunar New Year.",
+          "This festival is almost as important as Chinese New Year for many families."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "原級比較（as … as）"
+          ],
+          "topic": "中元普渡"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "中元普渡"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「除了…（還／也）…」用 besides、in addition to 或 apart from，三個都是介系詞，後面的動詞要用動名詞 preparing；in addition to 的 to 也是介系詞，不接原形。注意 besides（除了）和 beside（在旁邊）不同。「中元節時」用 during the Ghost Festival；主詞 many families 是複數，動詞 burn 不加 s；「紙錢」常寫 paper money 或 ghost money，money 不可數。中元節是表外專有名詞，題目已附英文 Ghost Festival。",
+          "evidence": [
+            "除了準備食物",
+            "也會燒紙錢"
+          ],
+          "strategy_zh": "「除了 A，也 B」：介系詞片語 Besides + V-ing 放在句首加逗號，主要子句用 also；寫完確認介系詞後面是 V-ing。",
+          "hints": [
+            "切成四段：中元節時／除了準備食物／很多家庭也會／燒紙錢",
+            "標的詞彙：festival（節日）、prepare（準備）、food（食物）、family（家庭）、burn（燒）、money（錢）",
+            "句型框架：During …, besides + V-ing …, S + also + V …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「A 和 B 一樣＋形容詞」用原級比較 as + 形容詞原級 + as：as important as Chinese New Year；「幾乎」almost／nearly 放在第一個 as 前面。不要寫成 the same important as 或 as important than。主詞 this festival 是單數，be 動詞用 is；「對很多家庭來說」是 For many families，families 要用複數。「農曆新年」可寫 Chinese New Year 或 the Lunar New Year。「這個節日」指第一句的中元節。",
+          "evidence": [
+            "幾乎和農曆新年一樣重要",
+            "對很多家庭來說"
+          ],
+          "strategy_zh": "看到「和…一樣（不一樣）＋形容詞」想 (not) as + 形容詞 + as；程度副詞 almost／nearly 放在第一個 as 前面。",
+          "hints": [
+            "切成四段：對很多家庭來說／這個節日／幾乎／和農曆新年一樣重要",
+            "標的詞彙：family（家庭）、festival（節日）、almost（幾乎）、important（重要的）",
+            "句型框架：S + is + almost + as + 形容詞 + as + B"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "During the Ghost Festival, besides preparing food, many families also burn paper money.",
+            "During the Ghost Festival, in addition to preparing food, many families also burn paper money.",
+            "During the Ghost Festival, apart from preparing food, many families also burn ghost money."
+          ],
+          "target_words": [
+            {
+              "word": "festival",
+              "zh": "節日"
+            },
+            {
+              "word": "prepare",
+              "zh": "準備"
+            },
+            {
+              "word": "food",
+              "zh": "食物"
+            },
+            {
+              "word": "family",
+              "zh": "家庭"
+            },
+            {
+              "word": "burn",
+              "zh": "燒"
+            },
+            {
+              "word": "money",
+              "zh": "錢（紙錢 paper money）"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PREPVING",
+              "grammar_id": "gp-prep-gerund",
+              "label_zh": "介系詞＋動名詞（除了…：besides／in addition to + V-ing）",
+              "frame": "Besides / In addition to + V-ing …, S + also + V …",
+              "zh_trigger": "除了"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "中元節（Ghost Festival）時",
+              "accepted": [
+                "During the Ghost Festival",
+                "On the Ghost Festival",
+                "At the Ghost Festival",
+                "At the time of the Ghost Festival"
+              ],
+              "targets": [
+                "festival"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "When Ghost Festival",
+                  "right": "During the Ghost Festival",
+                  "explanation_zh": "「…時」後面接名詞要用介系詞 during；when 是連接詞，後面要接子句。"
+                }
+              ]
+            },
+            {
+              "zh": "除了準備食物",
+              "accepted": [
+                "besides preparing food",
+                "in addition to preparing food",
+                "apart from preparing food",
+                "besides getting food ready"
+              ],
+              "targets": [
+                "PREPVING",
+                "prepare",
+                "food"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "besides prepare food",
+                  "right": "besides preparing food",
+                  "explanation_zh": "besides 是介系詞，後面的動詞要用動名詞 preparing。"
+                },
+                {
+                  "wrong": "in addition to prepare food",
+                  "right": "in addition to preparing food",
+                  "explanation_zh": "in addition to 的 to 是介系詞，後面接 V-ing，不接原形。"
+                },
+                {
+                  "wrong": "beside preparing food",
+                  "right": "besides preparing food",
+                  "explanation_zh": "「除了…之外（還有）」是 besides；beside 是「在…旁邊」。"
+                }
+              ]
+            },
+            {
+              "zh": "很多家庭也會",
+              "accepted": [
+                "many families also",
+                "lots of families also",
+                "a lot of families also",
+                "many families will also"
+              ],
+              "targets": [
+                "family"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "many family also",
+                  "right": "many families also",
+                  "explanation_zh": "many 後面接複數名詞 families（y 改 i 加 es）。"
+                }
+              ]
+            },
+            {
+              "zh": "燒紙錢",
+              "accepted": [
+                "burn paper money",
+                "burn ghost money",
+                "burn joss paper",
+                "burn spirit money"
+              ],
+              "targets": [
+                "burn",
+                "money"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "burns paper money",
+                  "right": "burn paper money",
+                  "explanation_zh": "主詞 many families 是複數，動詞不加 s。"
+                },
+                {
+                  "wrong": "burn paper moneys",
+                  "right": "burn paper money",
+                  "explanation_zh": "money 是不可數名詞，不加 s。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "word_form",
+              "zh": "除了準備食物",
+              "literal_error": "During the Ghost Festival, besides prepare food, many families also burn paper money.",
+              "part": 2,
+              "explanation_zh": "「除了＋動作」照字面接原形動詞 besides prepare，介系詞後面沒有用動名詞，這一部分扣分。"
+            }
+          ],
+          "bonus": []
+        },
+        "2": {
+          "references": [
+            "For many families, this festival is almost as important as Chinese New Year.",
+            "To many families, this festival is nearly as important as the Lunar New Year.",
+            "This festival is almost as important as Chinese New Year for many families."
+          ],
+          "target_words": [
+            {
+              "word": "family",
+              "zh": "家庭"
+            },
+            {
+              "word": "festival",
+              "zh": "節日",
+              "alternatives": [
+                "holiday"
+              ]
+            },
+            {
+              "word": "almost",
+              "zh": "幾乎",
+              "alternatives": [
+                "nearly"
+              ]
+            },
+            {
+              "word": "important",
+              "zh": "重要的"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "COMP",
+              "grammar_id": "gp-as-as",
+              "label_zh": "原級比較（as … as：和…一樣…）",
+              "frame": "A + be + (almost) as + 形容詞 + as + B",
+              "zh_trigger": "和農曆新年一樣重要"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "對很多家庭來說",
+              "accepted": [
+                "For many families",
+                "To many families",
+                "For lots of families",
+                "For a lot of families"
+              ],
+              "targets": [
+                "family"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "For many family",
+                  "right": "For many families",
+                  "explanation_zh": "many 後面接複數名詞 families。"
+                }
+              ]
+            },
+            {
+              "zh": "這個節日",
+              "accepted": [
+                "this festival",
+                "this holiday",
+                "the festival"
+              ],
+              "targets": [
+                "festival"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "this festivals",
+                  "right": "this festival",
+                  "explanation_zh": "this 後面接單數名詞。"
+                },
+                {
+                  "wrong": "this festival are",
+                  "right": "this festival is",
+                  "explanation_zh": "主詞 this festival 是單數，be 動詞用 is。"
+                }
+              ]
+            },
+            {
+              "zh": "幾乎",
+              "accepted": [
+                "almost",
+                "nearly"
+              ],
+              "targets": [
+                "almost"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "most",
+                  "right": "almost",
+                  "explanation_zh": "「幾乎」是 almost；most 是「最、大部分」。"
+                }
+              ]
+            },
+            {
+              "zh": "和農曆新年一樣重要",
+              "accepted": [
+                "as important as Chinese New Year",
+                "as important as the Lunar New Year",
+                "as important as Lunar New Year",
+                "as important as the Chinese New Year"
+              ],
+              "targets": [
+                "COMP",
+                "important"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "the same important as Chinese New Year",
+                  "right": "as important as Chinese New Year",
+                  "explanation_zh": "「和…一樣＋形容詞」用 as + 形容詞 + as，不是 the same + 形容詞。"
+                },
+                {
+                  "wrong": "as important than Chinese New Year",
+                  "right": "as important as Chinese New Year",
+                  "explanation_zh": "原級比較前後都用 as，不能用 than。"
+                },
+                {
+                  "wrong": "as more important as Chinese New Year",
+                  "right": "as important as Chinese New Year",
+                  "explanation_zh": "as … as 中間用形容詞原級，不用比較級。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "collocation",
+              "zh": "和農曆新年一樣重要",
+              "literal_error": "For many families, this festival is almost the same important as Chinese New Year.",
+              "part": 4,
+              "explanation_zh": "「和…一樣重要」照字面寫成 the same important as 是常見的中式英文；「一樣＋形容詞」要用 as + 形容詞原級 + as，這一部分扣分。"
+            }
+          ],
+          "bonus": []
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-basic-04",
+    "lot": "translation-basic-04",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "825ee6e76853b2ea2df931259eb3211229fc9f6e568e89591ca9feda5b5b935e",
+    "spec_id": "translation-basic@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 2,
+    "sentences": 1,
+    "avg_sentence_length": 2.0,
+    "denominator": 2,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 1.0,
+    "coverage_l1_6": 1.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {
+      "1": 2
+    },
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T07:59:18Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T00:00:00Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "During the Ghost Festival, besides preparing food, many families also burn paper money.",
+            "confidence": "high",
+            "explanation_zh": "「除了…也…」用 besides + V-ing（介系詞後接動名詞；In addition to preparing 也可），配 also；「燒紙錢」burn paper money（也可 joss paper）；習俗用簡單現在式；節日名照題目給的 Ghost Festival。"
+          },
+          "2": {
+            "translation": "For many families, this festival is almost as important as Chinese New Year.",
+            "confidence": "high",
+            "explanation_zh": "「幾乎和…一樣重要」用 almost as + 原級形容詞 + as 的同等比較；「對很多家庭來說」For many families 放句首；「農曆新年」Chinese New Year（也可 Lunar New Year）。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PREPVING"
+            ],
+            "used_target_words": [
+              "festival",
+              "prepare",
+              "food",
+              "family",
+              "burn",
+              "money"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "COMP"
+            ],
+            "used_target_words": [
+              "family",
+              "festival",
+              "almost",
+              "important"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "festival",
+              "prepare",
+              "food",
+              "family",
+              "burn",
+              "money"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PREPVING": true
+            },
+            "program_match": true
+          },
+          "2": {
+            "target_words_found": [
+              "family",
+              "festival",
+              "almost",
+              "important"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "COMP": true
+            },
+            "program_match": true
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T00:00:00Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "During the Ghost Festival, in addition to preparing food, many families also burn paper money.",
+            "confidence": "high",
+            "explanation_zh": "「除了…也…」用 in addition to + V-ing 搭配 also；「中元節時」用 During the Ghost Festival；「燒紙錢」譯為 burn paper money；描述習俗用現在簡單式。"
+          },
+          "2": {
+            "translation": "For many families, this festival is almost as important as the Lunar New Year.",
+            "confidence": "high",
+            "explanation_zh": "「幾乎和…一樣重要」用 almost as important as 的同級比較；「農曆新年」譯為 the Lunar New Year。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PREPVING"
+            ],
+            "used_target_words": [
+              "festival",
+              "prepare",
+              "food",
+              "family",
+              "burn",
+              "money"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "COMP"
+            ],
+            "used_target_words": [
+              "family",
+              "festival",
+              "almost",
+              "important"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "festival",
+              "prepare",
+              "food",
+              "family",
+              "burn",
+              "money"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PREPVING": true
+            },
+            "program_match": true
+          },
+          "2": {
+            "target_words_found": [
+              "family",
+              "festival",
+              "almost",
+              "important"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "COMP": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}
