@@ -1,0 +1,723 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.d7794c",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "basic",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "對我的外國朋友馬克（Mark）來說，看懂中文菜單一點也不難。",
+        "options": null,
+        "answer": "For my foreign friend Mark, it is not hard at all to read a Chinese menu.",
+        "accepted_answers": [
+          "For my foreign friend Mark, reading Chinese menus is not difficult at all.",
+          "It is not difficult at all for my foreign friend Mark to understand Chinese menus."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "虛主詞 It"
+          ],
+          "topic": "帶外國朋友逛台灣"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "他在夜市吃了小吃、玩了遊戲，還買了一些衣服。",
+        "options": null,
+        "answer": "He ate snacks, played games, and bought some clothes at the night market.",
+        "accepted_answers": [
+          "At the night market, he had some snacks, played games, and also bought some clothes.",
+          "He tried local snacks, played some games, and bought some clothes at a night market."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "平行結構"
+          ],
+          "topic": "帶外國朋友逛台灣"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "帶外國朋友逛台灣"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「對某人來說，做某事（不）難」最常用虛主詞句型：It is (not) + 形容詞 + for + 人 + to + 原形動詞，把真正的主詞 to read a Chinese menu 放到句尾；「對…來說」也可以放句首：For my foreign friend Mark, it is not hard at all to read a Chinese menu.；也可以用動名詞 reading Chinese menus 當主詞。不能寫成 My foreign friend Mark is not hard to …（人不是「難」的主詞）。「一點也不」是 not … at all；「看懂」用 read 或 understand；「菜單」menu，泛指時用 a Chinese menu 或複數 Chinese menus。「外國的」是形容詞 foreign，不是名詞 foreigner。",
+          "evidence": [
+            "對我的外國朋友馬克（Mark）來說",
+            "一點也不難"
+          ],
+          "strategy_zh": "看到「對某人來說，做某事很…」先想 It is + adj. + for + 人 + to V；主詞是「做某事」，不是那個人。",
+          "hints": [
+            "切成四段：對我的外國朋友馬克來說／看懂／中文菜單／一點也不難",
+            "標的詞彙：foreign（外國的）、friend（朋友）、read／understand（看懂）、menu（菜單）、hard／difficult（難的）",
+            "句型框架：It is + not + adj. + at all + for sb + to VR … ／ V-ing … + is not + adj. + at all"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「吃了小吃、玩了遊戲，還買了…」三個動作並列，英文用平行結構：三個動詞都用過去式 ate／played／bought，前兩項用逗號隔開，最後一項前面加 and（「還」可譯 also）。可數名詞要用複數 snacks、games；clothes 本身就是複數形，不能寫 clothe 或 a clothes。「在夜市」at the night market，放句首加逗號或放句尾都可以。",
+          "evidence": [
+            "吃了小吃、玩了遊戲，還買了一些衣服"
+          ],
+          "strategy_zh": "三個動作同一個時態：第一個用過去式，後面兩個也都用過去式。",
+          "hints": [
+            "切成四段：在夜市／吃了小吃／玩了遊戲／還買了一些衣服",
+            "標的詞彙：night market（夜市）、eat（吃）、snack（小吃）、play（玩）、game（遊戲）、buy（買）、clothes（衣服）",
+            "句型框架：S + V-ed …, V-ed …, and (also) V-ed … (+ at the night market)"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "For my foreign friend Mark, it is not hard at all to read a Chinese menu.",
+            "For my foreign friend Mark, reading Chinese menus is not difficult at all.",
+            "It is not difficult at all for my foreign friend Mark to understand Chinese menus."
+          ],
+          "target_words": [
+            {
+              "word": "foreign",
+              "zh": "外國的"
+            },
+            {
+              "word": "friend",
+              "zh": "朋友"
+            },
+            {
+              "word": "read",
+              "zh": "看懂",
+              "alternatives": [
+                "understand"
+              ]
+            },
+            {
+              "word": "menu",
+              "zh": "菜單"
+            },
+            {
+              "word": "hard",
+              "zh": "難的",
+              "alternatives": [
+                "difficult",
+                "easy"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "NFSUBJ",
+              "grammar_id": "gp-it-adj-to",
+              "label_zh": "虛主詞 It ＋形容詞＋ for sb ＋不定詞（寫成動名詞主詞 V-ing … is … 也屬同一句構 NFSUBJ）",
+              "frame": "It is + not + adj. + at all + for sb + to VR … ／ V-ing … + is not + adj. + at all",
+              "zh_trigger": "一點也不難"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "對我的外國朋友馬克（Mark）來說",
+              "accepted": [
+                "for my foreign friend Mark",
+                "to my foreign friend Mark",
+                "for Mark, my foreign friend",
+                "for my friend Mark from abroad",
+                "for my friend Mark from another country",
+                "for my friend from abroad, Mark",
+                "for Mark, a foreign friend of mine",
+                "for my foreign friend named Mark",
+                "for my foreign friend"
+              ],
+              "targets": [
+                "foreign",
+                "friend"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "for my foreigner friend Mark",
+                  "right": "for my foreign friend Mark",
+                  "explanation_zh": "foreigner 是名詞（外國人）；修飾 friend 要用形容詞 foreign。"
+                }
+              ]
+            },
+            {
+              "zh": "看懂",
+              "accepted": [
+                "to read",
+                "reading",
+                "to understand",
+                "understanding",
+                "to read and understand",
+                "to make sense of",
+                "to figure out"
+              ],
+              "targets": [
+                "read"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Read Chinese menus is …",
+                  "right": "Reading Chinese menus is …",
+                  "explanation_zh": "原形動詞不能直接當主詞，要用動名詞或 It … to V。"
+                },
+                {
+                  "wrong": "to reading",
+                  "right": "to read",
+                  "explanation_zh": "for sb 後面接不定詞 to + 原形動詞。"
+                }
+              ]
+            },
+            {
+              "zh": "中文菜單",
+              "accepted": [
+                "a Chinese menu",
+                "Chinese menus",
+                "the Chinese menu",
+                "a menu in Chinese",
+                "menus in Chinese",
+                "the menu in Chinese",
+                "menus written in Chinese",
+                "Chinese-language menus"
+              ],
+              "targets": [
+                "menu"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "a Chinese menus",
+                  "right": "a Chinese menu",
+                  "explanation_zh": "冠詞 a 後面接單數；泛指複數就不加 a（Chinese menus）。"
+                }
+              ]
+            },
+            {
+              "zh": "一點也不難",
+              "accepted": [
+                "is not hard at all",
+                "is not difficult at all",
+                "isn't hard at all",
+                "isn't difficult at all",
+                "it's not hard at all",
+                "it's not difficult at all",
+                "is not at all hard",
+                "is not at all difficult",
+                "is very easy",
+                "is really easy",
+                "it's very easy",
+                "is no problem at all",
+                "is not hard for him at all",
+                "is not difficult for him at all"
+              ],
+              "targets": [
+                "NFSUBJ",
+                "hard"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "My foreign friend Mark is not hard to read a Chinese menu.",
+                  "right": "It is not hard at all for my foreign friend Mark to read a Chinese menu.",
+                  "explanation_zh": "hard／difficult 說的是「事情」難不難，人不能當主詞；用虛主詞 It is … for sb to V。"
+                },
+                {
+                  "wrong": "is a little not hard",
+                  "right": "is not hard at all",
+                  "explanation_zh": "「一點也不…」是 not … at all，不是 a little not。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "verbal_subject",
+              "zh": "看懂中文菜單",
+              "literal_error": "For my foreign friend Mark, read Chinese menus is not hard at all.",
+              "part": 2,
+              "explanation_zh": "中文的動詞片語「看懂中文菜單」可以直接當主詞，照字面寫成 read … is，英文要改成 It is … to read … 或 Reading … is …，這一部分扣分。"
+            }
+          ],
+          "bonus": [],
+          "notes_zh": "虛主詞 It is not hard at all for … to read …，或動名詞主詞 Reading Chinese menus is not difficult at all (for …)，都屬於本題的句型（非限定動詞當主詞），都給分。「難」可用 hard 或 difficult，縮寫 it's、isn't 都可以；意思相同的 It is very easy for … to … 也給分。「看懂」read、understand 都可以；「中文菜單」a Chinese menu、Chinese menus、a menu in Chinese 都可以；「對…來說」放句首（For my foreign friend Mark, …）或放在 It is … 後面都可以。"
+        },
+        "2": {
+          "references": [
+            "He ate snacks, played games, and bought some clothes at the night market.",
+            "At the night market, he had some snacks, played games, and also bought some clothes.",
+            "He tried local snacks, played some games, and bought some clothes at a night market."
+          ],
+          "target_words": [
+            {
+              "word": "night market",
+              "zh": "夜市"
+            },
+            {
+              "word": "eat",
+              "zh": "吃",
+              "alternatives": [
+                "have",
+                "try",
+                "enjoy"
+              ]
+            },
+            {
+              "word": "snack",
+              "zh": "小吃",
+              "alternatives": [
+                "food"
+              ]
+            },
+            {
+              "word": "play",
+              "zh": "玩"
+            },
+            {
+              "word": "game",
+              "zh": "遊戲"
+            },
+            {
+              "word": "buy",
+              "zh": "買"
+            },
+            {
+              "word": "clothes",
+              "zh": "衣服",
+              "alternatives": [
+                "clothing"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PARA",
+              "grammar_id": "gp-parallelism",
+              "label_zh": "平行結構（三個過去式動詞片語：V-ed …, V-ed …, and V-ed …）",
+              "frame": "S + V-ed …, V-ed …, and (also) V-ed …",
+              "zh_trigger": "吃了小吃、玩了遊戲，還買了"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "在夜市",
+              "accepted": [
+                "at the night market",
+                "at a night market",
+                "in the night market",
+                "at the night markets",
+                "at night markets",
+                "in a night market",
+                "at that night market",
+                "in the night markets"
+              ],
+              "targets": [
+                "night market"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "in night market",
+                  "right": "at the night market",
+                  "explanation_zh": "night market 是可數名詞，要加冠詞；「在夜市」常用 at the night market。"
+                }
+              ]
+            },
+            {
+              "zh": "吃了小吃",
+              "accepted": [
+                "ate snacks",
+                "ate some snacks",
+                "ate local snacks",
+                "ate some local snacks",
+                "ate street food",
+                "ate some street food",
+                "ate a lot of snacks",
+                "had snacks",
+                "had some snacks",
+                "had local snacks",
+                "had some local snacks",
+                "had street food",
+                "had some street food",
+                "had a lot of snacks",
+                "tried snacks",
+                "tried some snacks",
+                "tried local snacks",
+                "tried some local snacks",
+                "tried street food",
+                "tried some street food",
+                "tried a lot of snacks",
+                "enjoyed some snacks",
+                "ate night market snacks",
+                "ate street snacks"
+              ],
+              "targets": [
+                "eat",
+                "snack"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "He eat snacks",
+                  "right": "He ate snacks",
+                  "explanation_zh": "「吃了」是過去的事，用過去式 ate。"
+                },
+                {
+                  "wrong": "ate snack",
+                  "right": "ate snacks",
+                  "explanation_zh": "「小吃」泛指好幾樣點心，snack 要用複數。"
+                }
+              ]
+            },
+            {
+              "zh": "玩了遊戲",
+              "accepted": [
+                "played games",
+                "played some games",
+                "played a few games",
+                "played night market games",
+                "played carnival games",
+                "played a game"
+              ],
+              "targets": [
+                "play",
+                "game"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "played game",
+                  "right": "played games",
+                  "explanation_zh": "game 是可數名詞，沒有冠詞時要用複數 games（或 a game）。"
+                }
+              ]
+            },
+            {
+              "zh": "還買了一些衣服",
+              "accepted": [
+                "and bought some clothes",
+                "and bought clothes",
+                "and bought some clothing",
+                "and bought some new clothes",
+                "and also bought some clothes",
+                "and also bought clothes",
+                "and also bought some clothing",
+                "and also bought some new clothes",
+                "and even bought some clothes",
+                "and even bought clothes",
+                "and even bought some clothing",
+                "and even bought some new clothes",
+                "and he also bought some clothes",
+                "and he also bought clothes",
+                "and he also bought some clothing",
+                "and he also bought some new clothes"
+              ],
+              "targets": [
+                "PARA",
+                "buy",
+                "clothes"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "and buy some clothes",
+                  "right": "and bought some clothes",
+                  "explanation_zh": "三個並列的動作都用過去式，buy 要寫成 bought。"
+                },
+                {
+                  "wrong": "and bought some clothe",
+                  "right": "and bought some clothes",
+                  "explanation_zh": "「衣服」一律寫 clothes；clothe 是動詞（給…穿衣）。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "plural_countable",
+              "zh": "玩了遊戲",
+              "literal_error": "He ate snacks, played game, and bought some clothes at the night market.",
+              "part": 3,
+              "explanation_zh": "中文「遊戲」沒有單複數，照字面寫成 played game 會漏掉複數（或冠詞），這一部分扣分。"
+            }
+          ],
+          "bonus": [],
+          "notes_zh": "三個動詞都要用過去式（ate／had／tried、played、bought）。「吃了小吃」可寫 ate／had／tried + (some／local) snacks 或 street food；「遊戲」games、some games、a game 都可以；「還」可譯 also、even 或省略；「在夜市」放句首（At the night market, he …）或句尾都可以，the／a night market 都可以。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-basic-02-regen",
+    "lot": "translation-basic-02",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "2c5ef77e58a3846b481c3cd32f2468c2e9f8b4421d9d9d23848ce57a9f827d9b",
+    "spec_id": "translation-basic@2026-10-09",
+    "regenerated_from": "ai.tr.ca0503"
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 1,
+    "sentences": 1,
+    "avg_sentence_length": 1.0,
+    "denominator": 1,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 1.0,
+    "coverage_l1_6": 1.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {
+      "1": 1
+    },
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "warn",
+      "created_at": "2026-10-09T18:19:56Z",
+      "details": {
+        "errors": [],
+        "warnings": [
+          "annotations.rubric.items.1.patterns[0]: references[2] 看不出用了句構 NFSUBJ（虛主詞 It ＋形容詞＋ for sb ＋不定詞（寫成動名詞主詞 V-ing … is … 也屬同一句構 NFSUBJ））（程式只能粗略比對，請人工確認）"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T18:00:28Z",
+      "details": {
+        "solver": "A",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "For my foreign friend Mark, it is not difficult at all to understand a Chinese menu.",
+            "confidence": "high",
+            "explanation_zh": "「對……來說，做某事不難」用 for 某人 + it is not difficult to V，也可寫成 It is not difficult at all for my foreign friend Mark to understand Chinese menus.；「一點也不」用 not ... at all；「看懂」取「理解」義用 understand（read 也說得通）；同位語 my foreign friend Mark 不加逗號。"
+          },
+          "2": {
+            "translation": "At the night market, he ate snacks, played games, and bought some clothes.",
+            "confidence": "high",
+            "explanation_zh": "敘述過去發生的事，三個動作都用過去式並保持平行（ate / played / bought）；「還」用 and 連接最後一項即可，不必另加 also；地點 at the night market 放句首呼應中文語序。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "NFSUBJ"
+            ],
+            "used_target_words": [
+              "foreign",
+              "friend",
+              "read",
+              "menu",
+              "hard"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PARA"
+            ],
+            "used_target_words": [
+              "night market",
+              "eat",
+              "snack",
+              "play",
+              "game",
+              "buy",
+              "clothes"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "foreign",
+              "friend",
+              "read",
+              "menu",
+              "hard"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NFSUBJ": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "night market",
+              "eat",
+              "snack",
+              "play",
+              "game",
+              "buy",
+              "clothes"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PARA": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T18:00:31Z",
+      "details": {
+        "solver": "B",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "For my foreign friend Mark, understanding Chinese menus is not difficult at all.",
+            "confidence": "high",
+            "explanation_zh": "「對……來說，看懂……一點也不難」用 For + 人, + 動名詞主詞 + is not difficult at all；也可用虛主詞 It is not difficult at all for Mark to understand Chinese menus。「看懂」用 understand（讀得懂的意思）。"
+          },
+          "2": {
+            "translation": "At the night market, he ate some snacks, played games, and bought some clothes.",
+            "confidence": "high",
+            "explanation_zh": "三個過去式動作並列（ate / played / bought），時態一致；「還買了」是並列最後一項，用 and 連接，不必另外加 also。「一些衣服」用 some clothes。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "NFSUBJ"
+            ],
+            "used_target_words": [
+              "foreign",
+              "friend",
+              "read",
+              "menu",
+              "hard"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PARA"
+            ],
+            "used_target_words": [
+              "night market",
+              "eat",
+              "snack",
+              "play",
+              "game",
+              "buy",
+              "clothes"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "foreign",
+              "friend",
+              "read",
+              "menu",
+              "hard"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NFSUBJ": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "night market",
+              "eat",
+              "snack",
+              "play",
+              "game",
+              "buy",
+              "clothes"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PARA": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

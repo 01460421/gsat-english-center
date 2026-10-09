@@ -1,0 +1,686 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.15845f",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "basic",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "我永遠不會忘記我第一次為一位好朋友烤蛋糕的那一天。",
+        "options": null,
+        "answer": "I will never forget the day when I first baked a cake for a good friend.",
+        "accepted_answers": [
+          "I'll never forget the day when I baked a cake for a good friend for the first time.",
+          "I will never forget the day when I first made a cake for one of my good friends."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "關係副詞"
+          ],
+          "topic": "學做蛋糕"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "從那天起，我已經烤了好幾個蛋糕給家人和朋友。",
+        "options": null,
+        "answer": "Since that day, I have baked several cakes for my family and friends.",
+        "accepted_answers": [
+          "Since then, I have made quite a few cakes for my family and friends.",
+          "Ever since that day, I have baked many cakes for my family and friends."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "現在完成式"
+          ],
+          "topic": "學做蛋糕"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "學做蛋糕"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「…的那一天」修飾時間名詞，英文把 the day 放前面，後面用關係副詞 when 引導子句：the day when I first baked a cake …（when 也可以換成 that，或省略不寫）。「我永遠不會忘記」是 I will never forget（will 後面接原形動詞；never 已經是否定，不再加 not）。「第一次」可以在動詞前加 first，或在句尾寫 for the first time；烤蛋糕是過去的事，用過去式 baked。「烤蛋糕」是 bake a cake（roast 是烤肉）；「一位好朋友」是單數 a good friend（或 one of my good friends）。",
+          "evidence": [
+            "的那一天",
+            "烤蛋糕"
+          ],
+          "strategy_zh": "「（人）做某事的那一天／那個地方／原因」→ the day when／the place where／the reason why + S + V：先寫名詞，再用關係副詞接子句。",
+          "hints": [
+            "切成四段：我永遠不會忘記／我第一次／為一位好朋友烤蛋糕／的那一天",
+            "標的詞彙：forget（忘記）、day（天）、first（第一次）、bake（烘烤）、cake（蛋糕）、friend（朋友）",
+            "句型框架：I will never forget + the day when + S + V …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「從那天起，我已經…」說的是從過去某一天（第一句的那一天）一直延續到現在的經驗，用 since that day（或 since then）配現在完成式 I have baked。「好幾個蛋糕」用複數 several cakes。「烤給家人和朋友」是 bake … for my family and friends（為某人做東西用 for）；family 指整個家人，用單數。",
+          "evidence": [
+            "從那天起",
+            "我已經烤了"
+          ],
+          "strategy_zh": "看到「從…起」「自從…以來」，主要子句先想 have/has + p.p.；since 後面接時間點，for 後面接一段時間。",
+          "hints": [
+            "切成四段：從那天起／我已經烤了／好幾個蛋糕／給家人和朋友",
+            "標的詞彙：since（自從）、bake（烘烤）、cake（蛋糕）、family（家人）、friend（朋友）",
+            "句型框架：Since + 過去時間點, S + have/has + p.p. …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "I will never forget the day when I first baked a cake for a good friend.",
+            "I'll never forget the day when I baked a cake for a good friend for the first time.",
+            "I will never forget the day when I first made a cake for one of my good friends."
+          ],
+          "target_words": [
+            {
+              "word": "forget",
+              "zh": "忘記",
+              "alternatives": [
+                "remember"
+              ]
+            },
+            {
+              "word": "day",
+              "zh": "天、日子"
+            },
+            {
+              "word": "first",
+              "zh": "第一次"
+            },
+            {
+              "word": "bake",
+              "zh": "烘烤",
+              "alternatives": [
+                "make"
+              ]
+            },
+            {
+              "word": "cake",
+              "zh": "蛋糕"
+            },
+            {
+              "word": "friend",
+              "zh": "朋友"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "REL",
+              "grammar_id": "gp-relative-adverb",
+              "label_zh": "關係副詞 when（the day when …）",
+              "frame": "I will never forget + the day when + S + V …",
+              "zh_trigger": "的那一天"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "我永遠不會忘記",
+              "accepted": [
+                "I will never forget",
+                "I'll never forget",
+                "I will always remember",
+                "I'll always remember",
+                "I can never forget",
+                "I won't ever forget",
+                "I will never ever forget"
+              ],
+              "targets": [
+                "forget"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "I will never forgot",
+                  "right": "I will never forget",
+                  "explanation_zh": "助動詞 will 後面接原形動詞 forget。"
+                },
+                {
+                  "wrong": "I will not never forget",
+                  "right": "I will never forget",
+                  "explanation_zh": "never 本身就是否定，前面不再加 not。"
+                }
+              ]
+            },
+            {
+              "zh": "我第一次",
+              "accepted": [
+                "I first",
+                "for the first time",
+                "my first cake"
+              ],
+              "targets": [
+                "first"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "at the first time",
+                  "right": "for the first time",
+                  "explanation_zh": "「第一次（做某事）」是 for the first time，或在動詞前加 first；at first 是「起初」。"
+                },
+                {
+                  "wrong": "I firstly baked",
+                  "right": "I first baked",
+                  "explanation_zh": "firstly 是列舉時的「第一點」；「第一次做某事」在動詞前用 first：I first baked。"
+                }
+              ]
+            },
+            {
+              "zh": "為一位好朋友烤蛋糕",
+              "accepted": [
+                "baked a cake for a good friend",
+                "baked a cake for a close friend",
+                "baked a cake for my good friend",
+                "baked a cake for my best friend",
+                "baked a cake for one of my good friends",
+                "baked a cake for one of my close friends",
+                "baked a cake for one of my best friends",
+                "baked a cake for a good friend of mine",
+                "baked a cake for a close friend of mine",
+                "made a cake for a good friend",
+                "made a cake for a close friend",
+                "made a cake for my good friend",
+                "made a cake for my best friend",
+                "made a cake for one of my good friends",
+                "made a cake for one of my close friends",
+                "made a cake for one of my best friends",
+                "made a cake for a good friend of mine",
+                "made a cake for a close friend of mine",
+                "baked my first cake for a good friend",
+                "baked my first cake for a close friend",
+                "baked my first cake for my good friend",
+                "baked my first cake for my best friend",
+                "made my first cake for a good friend",
+                "made my first cake for a close friend",
+                "made my first cake for my good friend",
+                "made my first cake for my best friend"
+              ],
+              "targets": [
+                "bake",
+                "cake",
+                "friend"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "roasted a cake for a good friend",
+                  "right": "baked a cake for a good friend",
+                  "explanation_zh": "用烤箱「烤」蛋糕、麵包是 bake；roast 用在烤肉。"
+                },
+                {
+                  "wrong": "baked cake for a good friend",
+                  "right": "baked a cake for a good friend",
+                  "explanation_zh": "這裡指做了一整個蛋糕，cake 是可數名詞，前面要加 a。"
+                },
+                {
+                  "wrong": "baked a cake to a good friend",
+                  "right": "baked a cake for a good friend",
+                  "explanation_zh": "「為某人做（烤）東西」用 bake／make sth for sb；to 用在 give sth to sb。"
+                }
+              ]
+            },
+            {
+              "zh": "的那一天",
+              "accepted": [
+                "the day when",
+                "the day that",
+                "the day on which",
+                "the day I"
+              ],
+              "targets": [
+                "REL",
+                "day"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "the day which I first baked",
+                  "right": "the day when I first baked",
+                  "explanation_zh": "day 後面的子句「在那天烤蛋糕」缺介系詞，要用關係副詞 when（＝on which），不能只用 which。"
+                },
+                {
+                  "wrong": "the day where I first baked",
+                  "right": "the day when I first baked",
+                  "explanation_zh": "where 修飾地點；修飾時間 the day 用 when。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "collocation",
+              "zh": "烤蛋糕",
+              "literal_error": "I will never forget the day when I first roasted a cake for a good friend.",
+              "part": 3,
+              "explanation_zh": "「烤」照字面常被寫成 roast，但 roast 是烤肉；烤蛋糕、麵包的固定搭配是 bake a cake，這一部分扣分。"
+            }
+          ],
+          "bonus": []
+        },
+        "2": {
+          "references": [
+            "Since that day, I have baked several cakes for my family and friends.",
+            "Since then, I have made quite a few cakes for my family and friends.",
+            "Ever since that day, I have baked many cakes for my family and friends."
+          ],
+          "target_words": [
+            {
+              "word": "since",
+              "zh": "自從"
+            },
+            {
+              "word": "bake",
+              "zh": "烘烤",
+              "alternatives": [
+                "make"
+              ]
+            },
+            {
+              "word": "cake",
+              "zh": "蛋糕"
+            },
+            {
+              "word": "family",
+              "zh": "家人"
+            },
+            {
+              "word": "friend",
+              "zh": "朋友"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PERF",
+              "grammar_id": "gp-present-perfect",
+              "label_zh": "現在完成式（since + 過去時間點）",
+              "frame": "Since + 過去時間點, S + have/has + p.p. …",
+              "zh_trigger": "從那天起"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "從那天起",
+              "accepted": [
+                "Since that day",
+                "Since then",
+                "Ever since that day",
+                "Ever since then",
+                "From that day on",
+                "From then on"
+              ],
+              "targets": [
+                "since"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Since that days",
+                  "right": "Since that day",
+                  "explanation_zh": "that 後面接單數名詞 day。"
+                }
+              ]
+            },
+            {
+              "zh": "我已經烤了",
+              "accepted": [
+                "I have baked",
+                "I have made",
+                "I've baked",
+                "I've made",
+                "I have already baked",
+                "I have already made"
+              ],
+              "targets": [
+                "PERF",
+                "bake"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "I baked",
+                  "right": "I have baked",
+                  "explanation_zh": "since 引出從過去延續到現在的時間，主要子句要用現在完成式 have baked。"
+                },
+                {
+                  "wrong": "I have bake",
+                  "right": "I have baked",
+                  "explanation_zh": "have 後面接過去分詞 baked。"
+                }
+              ]
+            },
+            {
+              "zh": "好幾個蛋糕",
+              "accepted": [
+                "several cakes",
+                "quite a few cakes",
+                "many cakes",
+                "a lot of cakes",
+                "lots of cakes",
+                "a few cakes",
+                "a number of cakes"
+              ],
+              "targets": [
+                "cake"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "several cake",
+                  "right": "several cakes",
+                  "explanation_zh": "several 後面接複數名詞。"
+                }
+              ]
+            },
+            {
+              "zh": "給家人和朋友",
+              "accepted": [
+                "for my family and friends",
+                "for my family and my friends",
+                "for family and friends",
+                "for my family members and friends"
+              ],
+              "targets": [
+                "family",
+                "friend"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "to my family and friends",
+                  "right": "for my family and friends",
+                  "explanation_zh": "「為某人做（烤）東西」用 bake／make sth for sb；to 用在 give sth to sb。"
+                },
+                {
+                  "wrong": "for my families and friends",
+                  "right": "for my family and friends",
+                  "explanation_zh": "family 指「我的家人」這個整體，用單數 family。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "tense_trigger",
+              "zh": "從那天起",
+              "literal_error": "Since that day, I baked several cakes for my family and friends.",
+              "part": 2,
+              "explanation_zh": "「從那天起」表示從過去某一天延續到現在，要用現在完成式 have baked；照中文寫成過去式 baked，這一部分扣分。"
+            }
+          ],
+          "bonus": []
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-basic-03-regen",
+    "lot": "translation-basic-03",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "0f872ae524d49a58e60e8879cc8b5121088847f52164650ea431d65aabd8698e",
+    "spec_id": "translation-basic@2026-10-09",
+    "regenerated_from": "ai.tr.c26e73"
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T18:19:36Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T17:54:44Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "I will never forget the day when I first baked a cake for a good friend.",
+            "confidence": "high",
+            "explanation_zh": "「我永遠不會忘記」用 I will never forget；「……的那一天」是中文的前置修飾，英文改成名詞 the day 後面接關係副詞 when 引導的子句；「第一次」用 first 放在動詞前（for the first time 放句尾也可以，但會和 for a good friend 連用兩個 for）；「烤蛋糕」用 bake a cake，事情發生在過去，用過去式 baked。"
+          },
+          "2": {
+            "translation": "Since that day, I have baked several cakes for my family and friends.",
+            "confidence": "high",
+            "explanation_zh": "「從那天起」用 Since that day，「已經烤了好幾個」是從過去持續到現在的經驗累積，用現在完成式 have baked；「好幾個」用 several；「給家人和朋友」用 for my family and friends（bake 給人用 for）。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "REL"
+            ],
+            "used_target_words": [
+              "forget",
+              "day",
+              "first",
+              "bake",
+              "cake",
+              "friend"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PERF"
+            ],
+            "used_target_words": [
+              "since",
+              "bake",
+              "cake",
+              "family",
+              "friend"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "forget",
+              "day",
+              "first",
+              "bake",
+              "cake",
+              "friend"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "REL": true
+            },
+            "program_match": true
+          },
+          "2": {
+            "target_words_found": [
+              "since",
+              "bake",
+              "cake",
+              "family",
+              "friend"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PERF": true
+            },
+            "program_match": true
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T17:55:48Z",
+      "details": {
+        "solver": "B",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "I will never forget the day I baked a cake for a good friend for the first time.",
+            "confidence": "high",
+            "explanation_zh": "「永遠不會忘記」用 will never forget；「……的那一天」用 the day 加關係副詞子句（省略 when）；烤蛋糕是過去發生的事件，用過去式；「第一次」放句尾 for the first time（或 first baked）。"
+          },
+          "2": {
+            "translation": "Since that day, I have baked several cakes for my family and friends.",
+            "confidence": "high",
+            "explanation_zh": "「從那天起」用 Since that day，搭配現在完成式 have baked 表示從過去到現在累積的經驗；「好幾個」用 several；「給家人和朋友」用 for my family and friends。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "REL"
+            ],
+            "used_target_words": [
+              "forget",
+              "day",
+              "first",
+              "bake",
+              "cake",
+              "friend"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PERF"
+            ],
+            "used_target_words": [
+              "since",
+              "bake",
+              "cake",
+              "family",
+              "friend"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "forget",
+              "day",
+              "first",
+              "bake",
+              "cake",
+              "friend"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "REL": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "since",
+              "bake",
+              "cake",
+              "family",
+              "friend"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PERF": true
+            },
+            "program_match": true
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

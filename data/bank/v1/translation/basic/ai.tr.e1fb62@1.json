@@ -1,0 +1,715 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.e1fb62",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "basic",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "在校慶園遊會上，我們班的紅茶是最受歡迎的飲料。",
+        "options": null,
+        "answer": "At the school anniversary fair, our class's black tea was the most popular drink.",
+        "accepted_answers": [
+          "Our class's black tea was the most popular drink at the school fair.",
+          "The black tea from our class was the most popular drink at the school anniversary carnival."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "最高級"
+          ],
+          "topic": "校慶園遊會"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "為了賣出更多杯紅茶，我們班還做了一張很大的海報。",
+        "options": null,
+        "answer": "To sell more cups of black tea, our class also made a very big poster.",
+        "accepted_answers": [
+          "Our class also made a huge poster in order to sell more cups of black tea.",
+          "In order to sell more cups of black tea, we also made a very large poster."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "不定詞表目的"
+          ],
+          "topic": "校慶園遊會"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "校慶園遊會"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「最受歡迎的」是最高級：the most popular（popular 是多音節形容詞，用 the most，不加 -est）；「受歡迎」不要照字面寫 welcome。「紅茶」是 black tea，不是 red tea；「我們班的」所有格是 our class's，也可以寫 the black tea from our class。「園遊會」用 fair、carnival 或 bazaar 都可以，只寫 school fair 也算對；「在…園遊會上」介系詞用 at。園遊會已經結束，用過去式 was（描述當下也可以用 is）。",
+          "evidence": [
+            "最受歡迎的飲料"
+          ],
+          "strategy_zh": "看到「最…」先想最高級：短形容詞加 -est，長形容詞用 the most，前面都要有 the。",
+          "hints": [
+            "切成四段：在校慶園遊會上／我們班的紅茶／是最受歡迎的／飲料",
+            "標的詞彙：school（學校）、fair（園遊會，也可用 carnival、bazaar）、tea（茶；紅茶是 black tea）、popular（受歡迎的）、drink（飲料）",
+            "句型框架：S + was + the most + adj. + N (+ at …)"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「為了…」表示目的，用不定詞 To + 原形動詞放在句首（後面加逗號），或放在句尾寫 in order to …；不要寫 for selling。「更多杯紅茶」是 more cups of black tea：杯數可以數，cup 要加 s，black tea 不加。「做海報」的動詞用 make，不用 do；海報已經做好，用過去式 made。「一張很大的海報」是 a very big poster，a 後面接單數名詞。",
+          "evidence": [
+            "為了賣出更多杯紅茶"
+          ],
+          "strategy_zh": "目的放句首時，To V 片語後面加逗號，再接完整的主要子句（our class also made …）。",
+          "hints": [
+            "切成四段：為了賣出／更多杯紅茶／我們班還做了／一張很大的海報",
+            "標的詞彙：sell（賣出）、cup（杯）、tea（茶）、make（做）、big（很大的，也可用 huge、large）、poster（海報）",
+            "句型框架：To + 原形動詞 …, S + V …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "At the school anniversary fair, our class's black tea was the most popular drink.",
+            "Our class's black tea was the most popular drink at the school fair.",
+            "The black tea from our class was the most popular drink at the school anniversary carnival."
+          ],
+          "target_words": [
+            {
+              "word": "school",
+              "zh": "學校（校慶）"
+            },
+            {
+              "word": "fair",
+              "zh": "園遊會",
+              "alternatives": [
+                "carnival",
+                "bazaar",
+                "festival"
+              ]
+            },
+            {
+              "word": "tea",
+              "zh": "茶（紅茶 black tea）"
+            },
+            {
+              "word": "popular",
+              "zh": "受歡迎的"
+            },
+            {
+              "word": "drink",
+              "zh": "飲料",
+              "alternatives": [
+                "beverage"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "COMP",
+              "grammar_id": "gp-comparative-superlative",
+              "label_zh": "最高級（the most + 形容詞）",
+              "frame": "S + be + the most + adj. + N (+ at …)",
+              "zh_trigger": "最受歡迎"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "在校慶園遊會上",
+              "accepted": [
+                "At the school anniversary fair",
+                "At our school anniversary fair",
+                "At the school's anniversary fair",
+                "At our school's anniversary fair",
+                "During the school anniversary fair",
+                "At the anniversary fair",
+                "At the school fair",
+                "At our school fair",
+                "During the school fair",
+                "At the school anniversary carnival",
+                "At the school carnival",
+                "At our school's anniversary carnival",
+                "At the school anniversary bazaar",
+                "At the school bazaar",
+                "At the school anniversary festival",
+                "At the fair for our school anniversary",
+                "At the fair for the school anniversary",
+                "At our school anniversary carnival",
+                "At our school's fair",
+                "During our school anniversary fair",
+                "During our school's anniversary fair",
+                "At our school's anniversary bazaar"
+              ],
+              "targets": [
+                "school",
+                "fair"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "On the school anniversary fair",
+                  "right": "At the school anniversary fair",
+                  "explanation_zh": "在某個活動「上」用介系詞 at（at the fair），不用 on 或 in。"
+                }
+              ]
+            },
+            {
+              "zh": "我們班的紅茶",
+              "accepted": [
+                "our class's black tea",
+                "the black tea from our class",
+                "the black tea sold by our class",
+                "the black tea made by our class",
+                "the black tea our class sold",
+                "the black tea our class made",
+                "the black tea at our class's stand"
+              ],
+              "targets": [
+                "tea"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "our class's red tea",
+                  "right": "our class's black tea",
+                  "explanation_zh": "「紅茶」英文是 black tea（看的是茶葉的顏色），不是 red tea。"
+                },
+                {
+                  "wrong": "we class's black tea",
+                  "right": "our class's black tea",
+                  "explanation_zh": "「我們班的」用所有格 our class's，不是 we class。"
+                }
+              ]
+            },
+            {
+              "zh": "是最受歡迎的",
+              "accepted": [
+                "was the most popular",
+                "is the most popular",
+                "was the most loved",
+                "was the most well-liked"
+              ],
+              "targets": [
+                "COMP",
+                "popular"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "was the popularest",
+                  "right": "was the most popular",
+                  "explanation_zh": "popular 是多音節形容詞，最高級用 the most popular，不加 -est。"
+                },
+                {
+                  "wrong": "was the most welcome",
+                  "right": "was the most popular",
+                  "explanation_zh": "「受歡迎的」（很多人喜歡）是 popular；welcome 是「被歡迎、受款待的」，意思不同。"
+                }
+              ]
+            },
+            {
+              "zh": "飲料",
+              "accepted": [
+                "drink",
+                "beverage"
+              ],
+              "targets": [
+                "drink"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "the most popular drinks",
+                  "right": "the most popular drink",
+                  "explanation_zh": "the most popular drink 指「最受歡迎的那一種」，用單數；寫 one of the most popular drinks（最受歡迎的飲料之一）才用複數。"
+                },
+                {
+                  "wrong": "the most popular drinking",
+                  "right": "the most popular drink",
+                  "explanation_zh": "「飲料」是名詞 drink；drinking 是「喝（這個動作）」。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "collocation",
+              "zh": "最受歡迎",
+              "literal_error": "At the school anniversary fair, our class's black tea was the most welcome drink.",
+              "part": 3,
+              "explanation_zh": "「受歡迎」照字面翻成 welcome 是常見的中式英文；很多人喜歡的東西要用 popular，這一部分會被扣分。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "Our class's black tea sold better than any other drink at the school anniversary fair.",
+              "grammar_id": "gp-comparative-superlative",
+              "explanation_zh": "用「比較級＋than any other＋單數名詞」表達最高級的意思，句型更有變化。"
+            }
+          ]
+        },
+        "2": {
+          "references": [
+            "To sell more cups of black tea, our class also made a very big poster.",
+            "Our class also made a huge poster in order to sell more cups of black tea.",
+            "In order to sell more cups of black tea, we also made a very large poster."
+          ],
+          "target_words": [
+            {
+              "word": "sell",
+              "zh": "賣出"
+            },
+            {
+              "word": "cup",
+              "zh": "杯",
+              "alternatives": [
+                "glass"
+              ]
+            },
+            {
+              "word": "tea",
+              "zh": "茶（紅茶）"
+            },
+            {
+              "word": "make",
+              "zh": "做（海報）",
+              "alternatives": [
+                "design",
+                "draw",
+                "paint",
+                "create"
+              ]
+            },
+            {
+              "word": "big",
+              "zh": "很大的",
+              "alternatives": [
+                "huge",
+                "large",
+                "giant"
+              ]
+            },
+            {
+              "word": "poster",
+              "zh": "海報"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PURP",
+              "grammar_id": "gp-infinitive-purpose",
+              "label_zh": "不定詞表目的（為了…）",
+              "frame": "To + 原形動詞 …, S + V …／S + V … in order to + 原形動詞",
+              "zh_trigger": "為了"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "為了賣出",
+              "accepted": [
+                "To sell",
+                "In order to sell",
+                "So as to sell"
+              ],
+              "targets": [
+                "PURP",
+                "sell"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "For selling",
+                  "right": "To sell",
+                  "explanation_zh": "表目的「為了…」用不定詞 to + 原形動詞（或 in order to）；for + V-ing 多用來說明東西的用途。"
+                },
+                {
+                  "wrong": "To sale",
+                  "right": "To sell",
+                  "explanation_zh": "sale 是名詞（銷售），動詞「賣」是 sell。"
+                }
+              ]
+            },
+            {
+              "zh": "更多杯紅茶",
+              "accepted": [
+                "more cups of black tea",
+                "more black tea",
+                "more cups of tea",
+                "more glasses of black tea",
+                "more cups of our black tea"
+              ],
+              "targets": [
+                "cup",
+                "tea"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "more cup of black tea",
+                  "right": "more cups of black tea",
+                  "explanation_zh": "杯數可以數，more 後面的 cup 要用複數 cups；black tea 本身不可數，不加 s。"
+                },
+                {
+                  "wrong": "more cups of red tea",
+                  "right": "more cups of black tea",
+                  "explanation_zh": "「紅茶」是 black tea，不是 red tea。"
+                }
+              ]
+            },
+            {
+              "zh": "我們班還做了",
+              "accepted": [
+                "our class also made",
+                "we also made",
+                "our class also designed",
+                "we also designed",
+                "our class also drew",
+                "we also drew",
+                "our class also painted",
+                "we also painted",
+                "our class also created",
+                "we also created",
+                "our class even made",
+                "we even made",
+                "our class has also made",
+                "we have also made",
+                "our class made",
+                "we made"
+              ],
+              "targets": [
+                "make"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "our class also did",
+                  "right": "our class also made",
+                  "explanation_zh": "「做海報」是 make a poster，不用 do。"
+                },
+                {
+                  "wrong": "our class also makes",
+                  "right": "our class also made",
+                  "explanation_zh": "「做了」是已經完成的動作，用過去式 made（或現在完成式 has made），不用現在簡單式。"
+                }
+              ]
+            },
+            {
+              "zh": "一張很大的海報",
+              "accepted": [
+                "a very big poster",
+                "a huge poster",
+                "a very large poster",
+                "a really big poster",
+                "a big poster",
+                "a large poster",
+                "a giant poster",
+                "an enormous poster",
+                "a really large poster"
+              ],
+              "targets": [
+                "big",
+                "poster"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "a very big posters",
+                  "right": "a very big poster",
+                  "explanation_zh": "「一張」用 a，後面接單數名詞 poster。"
+                },
+                {
+                  "wrong": "a very big post",
+                  "right": "a very big poster",
+                  "explanation_zh": "post 是「郵件、貼文、職位」；「海報」是 poster。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "plural_countable",
+              "zh": "更多杯紅茶",
+              "literal_error": "To sell more cup of black tea, our class also made a very big poster.",
+              "part": 2,
+              "explanation_zh": "「更多杯」的 cup 是可數名詞，要寫 more cups of black tea；中文沒有複數標記，照字面寫單數 cup 會在這一部分扣分。"
+            }
+          ],
+          "bonus": []
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-basic-01-regen",
+    "lot": "translation-basic-01",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "d7d4b935208193587edc9b7e91774574a5e2aa0a2dd6fc944773ce41ceec7d2b",
+    "spec_id": "translation-basic@2026-10-09",
+    "regenerated_from": "ai.tr.2864af"
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T18:06:50Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "warn",
+      "created_at": "2026-10-09T17:35:00Z",
+      "details": {
+        "solver": "A",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "At the school anniversary fair, our class's black tea was the most popular drink.",
+            "confidence": "high",
+            "explanation_zh": "「最受歡迎的」用最高級 the most popular；「紅茶」英文是 black tea，不是 red tea；「校慶園遊會」譯 the school anniversary fair（fair 也可換 carnival）；園遊會已經辦過，用過去式 was；「我們班的紅茶」用所有格 our class's black tea。"
+          },
+          "2": {
+            "translation": "In order to sell more cups of black tea, our class also made a very big poster.",
+            "confidence": "high",
+            "explanation_zh": "「為了……」表目的，用 In order to＋原形動詞放句首（To sell … 亦可）；「更多杯紅茶」用 more cups of black tea（tea 不可數，用 cups of 計量）；承上句用過去式 made；「還」譯 also（even 語氣較強亦可）；「很大的海報」用 a very big poster（a huge poster 亦可）。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "COMP"
+            ],
+            "used_target_words": [
+              "school",
+              "fair",
+              "tea",
+              "popular",
+              "drink"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "warn",
+            "parts_check": "pass",
+            "issues_zh": [
+              "references[1]「Our class's black tea was the most popular drink at the school fair.」只寫 school fair，漏譯了「校慶」；參考譯文要完整表達題目的資訊，建議改成 at the school anniversary fair（或 at our school's anniversary fair）。",
+              "第 1 部分「在校慶園遊會上」的 accepted 也收了 At the school fair、At our school fair、During the school fair、At the school carnival、At the school bazaar、At our school's fair 等省略「校慶」的寫法；如果是刻意放寬，建議在解析說明省略「校慶」仍給分的理由，否則學生會以為漏譯沒關係。4 個部分的切法本身公平。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "PURP"
+            ],
+            "used_target_words": [
+              "sell",
+              "cup",
+              "tea",
+              "make",
+              "big",
+              "poster"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "school",
+              "fair",
+              "tea",
+              "popular",
+              "drink"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "COMP": true
+            },
+            "program_match": true
+          },
+          "2": {
+            "target_words_found": [
+              "sell",
+              "cup",
+              "tea",
+              "make",
+              "big",
+              "poster"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PURP": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 1 題驗證者對參考譯文有意見（warn）：references[1]「Our class's black tea was the most popular drink at the school fair.」只寫 school fair，漏譯了「校慶」；參考譯文要完整表達題目的資訊"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T17:32:00Z",
+      "details": {
+        "solver": "B",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "At the school anniversary fair, our class's black tea was the most popular drink.",
+            "confidence": "high",
+            "explanation_zh": "「在校慶園遊會上」用 At the school anniversary fair；「我們班的紅茶」用 our class's black tea（紅茶是 black tea，不是 red tea）；「最受歡迎的飲料」是最高級，用 the most popular drink。活動已經結束，所以用過去式 was。"
+          },
+          "2": {
+            "translation": "In order to sell more cups of black tea, our class also made a very big poster.",
+            "confidence": "high",
+            "explanation_zh": "「為了賣出更多杯紅茶」表示目的，用 In order to sell more cups of black tea（to V 不定詞片語放句首，也可以只寫 To sell ...）；more cups of black tea 對應「更多杯紅茶」。「還做了一張很大的海報」用過去式 also made a very big poster；與上一句同樣發生在過去。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "COMP"
+            ],
+            "used_target_words": [
+              "school",
+              "fair",
+              "tea",
+              "popular",
+              "drink"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PURP"
+            ],
+            "used_target_words": [
+              "sell",
+              "cup",
+              "tea",
+              "make",
+              "big",
+              "poster"
+            ],
+            "within_accepted": true,
+            "closest_reference": 2,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "（提醒，不影響判定）第 3 部分 accepted 收了 our class has also made／we have also made（現在完成式），和上一句 was 的過去時態不一致，且「還做了」沒有現在關聯；建議拿掉或保留但不鼓勵。第 2 部分 more black tea 少了杯數（cup），語意稍弱。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "school",
+              "fair",
+              "tea",
+              "popular",
+              "drink"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "COMP": true
+            },
+            "program_match": true
+          },
+          "2": {
+            "target_words_found": [
+              "sell",
+              "cup",
+              "tea",
+              "make",
+              "big",
+              "poster"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PURP": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

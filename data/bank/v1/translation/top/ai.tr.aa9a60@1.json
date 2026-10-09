@@ -1,0 +1,1005 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.aa9a60",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "top",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "無論我們多麼努力對抗全球暖化，氣候難民的人數仍可能成長為現在的五倍。",
+        "options": null,
+        "answer": "No matter how hard we fight global warming, the number of climate refugees may still grow five times larger than it is today.",
+        "accepted_answers": [
+          "No matter how hard we try to fight global warming, the number of climate refugees could still become five times as large as it is now.",
+          "No matter how hard we work to slow down global warming, the number of climate refugees might still grow to be five times as large as it is today."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "無論…（no matter how）",
+            "倍數比較（five times + 比較級 + than）"
+          ],
+          "topic": "氣候移民"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "對這些難民來說，最困難的不是找到暫時的住處，而是找回他們在家鄉所失去的。",
+        "options": null,
+        "answer": "For these refugees, the hardest part is not finding temporary shelter but recovering what they have lost in their homeland.",
+        "accepted_answers": [
+          "For these refugees, the most difficult thing is not finding a temporary place to live but getting back what they lost in their homeland.",
+          "For these refugees, the greatest challenge is not to find temporary housing but to regain what they have lost in their hometowns."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "what 名詞子句（他們所失去的）",
+            "最高級（the hardest part）"
+          ],
+          "topic": "氣候移民"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "氣候移民"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「無論我們多麼努力…」是讓步子句，用 No matter how hard + S + V（＝However hard …），how hard 要緊接在 no matter 後面，後面用直述句語序。「對抗全球暖化」fight global warming。主要子句的主詞是「氣候難民的人數」the number of climate refugees（number 用單數），「仍可能」用 may still。「成長為現在的五倍」是倍數比較，倍數放在比較級前面：grow five times larger than it is today，或 become five times as large as it is now。",
+          "evidence": [
+            "無論我們多麼努力",
+            "現在的五倍"
+          ],
+          "strategy_zh": "看到「無論多麼＋形容詞／副詞」→ No matter how + adj./adv. + S + V；看到「是…的 X 倍」→ X times + as … as，或 X times + 比較級 + than。",
+          "hints": [
+            "切成四段：無論我們多麼努力／對抗全球暖化／氣候難民的人數仍可能／成長為現在的五倍",
+            "標的詞彙：fight（對抗）、global warming（全球暖化）、climate（氣候）、refugee（難民）、number（人數）",
+            "句型框架：No matter how hard + S + V, the number of … may still grow + five times + 比較級 + than it is today"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「對這些難民來說」For these refugees。「最困難的」是最高級，寫成 the hardest part／the most difficult thing（most difficult 後面要有名詞）。「不是 A，而是 B」用 is not A but B，A、B 形式要對稱（finding … but recovering …）。「找到暫時的住處」finding temporary shelter／a temporary place to live。「他們在家鄉所失去的」後面沒有名詞，用 what 名詞子句 what they have lost in their homeland 當 recovering 的受詞。",
+          "evidence": [
+            "最困難的",
+            "他們在家鄉所失去的"
+          ],
+          "strategy_zh": "「…所＋動詞＋的」後面沒有名詞時，想 what + S + V；「最困難的是…」→ the hardest part is …。",
+          "hints": [
+            "切成四段：對這些難民來說／最困難的不是／找到暫時的住處／而是找回他們在家鄉所失去的",
+            "標的詞彙：refugee（難民）、difficult／hard（困難的）、temporary（暫時的）、shelter（住處）、lose（失去）、homeland（家鄉）",
+            "句型框架：For + N, the hardest part is not V-ing … but V-ing + what + S + have p.p. …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "No matter how hard we fight global warming, the number of climate refugees may still grow five times larger than it is today.",
+            "No matter how hard we try to fight global warming, the number of climate refugees could still become five times as large as it is now.",
+            "No matter how hard we work to slow down global warming, the number of climate refugees might still grow to be five times as large as it is today."
+          ],
+          "target_words": [
+            {
+              "word": "fight",
+              "zh": "對抗",
+              "alternatives": [
+                "combat",
+                "slow",
+                "stop",
+                "tackle",
+                "battle",
+                "reduce",
+                "curb",
+                "deal with"
+              ]
+            },
+            {
+              "word": "global",
+              "zh": "全球的"
+            },
+            {
+              "word": "warming",
+              "zh": "暖化"
+            },
+            {
+              "word": "climate",
+              "zh": "氣候"
+            },
+            {
+              "word": "refugee",
+              "zh": "難民",
+              "alternatives": [
+                "migrant",
+                "immigrant"
+              ]
+            },
+            {
+              "word": "number",
+              "zh": "人數",
+              "alternatives": [
+                "population"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "ADVCL",
+              "grammar_id": "gp-no-matter",
+              "label_zh": "讓步：無論多麼…（no matter how）",
+              "frame": "No matter how + adj./adv. + S + V, S + V …",
+              "zh_trigger": "無論我們多麼努力"
+            },
+            {
+              "code": "COMP",
+              "grammar_id": "gp-times",
+              "label_zh": "倍數比較：是現在的五倍",
+              "frame": "S + grow + X times + 比較級 + than … ; X times + as + adj. + as … ; X times + what it is now",
+              "zh_trigger": "現在的五倍"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "無論我們多麼努力",
+              "accepted": [
+                "No matter how hard we",
+                "No matter how hard we try",
+                "No matter how hard we work",
+                "No matter how much we try",
+                "No matter how much effort we make",
+                "No matter how much effort we put into",
+                "No matter how hard we strive",
+                "However hard we",
+                "However hard we try",
+                "However hard we work"
+              ],
+              "targets": [
+                "ADVCL"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "No matter how hard do we try",
+                  "right": "No matter how hard we try",
+                  "explanation_zh": "no matter how 後面用直述句語序（主詞＋動詞），不加 do 變成疑問句。"
+                },
+                {
+                  "wrong": "No matter we try how hard",
+                  "right": "No matter how hard we try",
+                  "explanation_zh": "how hard 要緊接在 no matter 後面，再接主詞與動詞；不能照中文語序拆開。"
+                },
+                {
+                  "wrong": "Although we try hard",
+                  "right": "No matter how hard we try",
+                  "explanation_zh": "「無論多麼…」是讓步的極端情況，要用 no matter how＋形容詞／副詞；although 只是「雖然」，意思不夠。"
+                }
+              ]
+            },
+            {
+              "zh": "對抗全球暖化",
+              "accepted": [
+                "fight global warming",
+                "try to fight global warming",
+                "work to fight global warming",
+                "fight against global warming",
+                "try to fight against global warming",
+                "combat global warming",
+                "try to combat global warming",
+                "slow down global warming",
+                "work to slow down global warming",
+                "try to slow down global warming",
+                "slow global warming",
+                "try to slow global warming",
+                "stop global warming",
+                "try to stop global warming",
+                "tackle global warming",
+                "try to tackle global warming",
+                "battle global warming",
+                "deal with global warming",
+                "reduce global warming",
+                "try to reduce global warming",
+                "curb global warming",
+                "fighting global warming",
+                "fighting against global warming",
+                "combating global warming",
+                "slowing down global warming",
+                "slowing global warming",
+                "stopping global warming",
+                "tackling global warming",
+                "reducing global warming"
+              ],
+              "targets": [
+                "fight",
+                "global",
+                "warming"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "fight global warm",
+                  "right": "fight global warming",
+                  "explanation_zh": "「全球暖化」是名詞 global warming；warm 是形容詞或動詞，這裡要用 -ing 的名詞形。"
+                },
+                {
+                  "wrong": "fight the globe warming",
+                  "right": "fight global warming",
+                  "explanation_zh": "修飾名詞要用形容詞 global（全球的）；globe 是名詞「地球」。"
+                }
+              ]
+            },
+            {
+              "zh": "氣候難民的人數仍可能",
+              "accepted": [
+                "the number of climate refugees may still",
+                "the number of climate refugees could still",
+                "the number of climate refugees might still",
+                "the number of climate refugees is still likely to",
+                "the number of climate refugees may still possibly",
+                "the number of climate refugees will possibly still",
+                "the number of climate migrants may still",
+                "the number of climate migrants could still",
+                "the number of climate migrants might still",
+                "the number of climate migrants is still likely to",
+                "the number of climate migrants may still possibly",
+                "the number of climate migrants will possibly still",
+                "the population of climate refugees may still",
+                "the population of climate refugees could still",
+                "the population of climate refugees might still",
+                "the population of climate refugees is still likely to",
+                "the population of climate refugees may still possibly",
+                "the population of climate refugees will possibly still",
+                "the number of climate immigrants may still",
+                "the number of climate immigrants could still",
+                "the number of climate immigrants might still",
+                "the number of climate immigrants is still likely to",
+                "the number of climate immigrants may still possibly",
+                "the number of climate immigrants will possibly still",
+                "there may still be five times as many climate refugees",
+                "there could still be five times as many climate refugees",
+                "there might still be five times as many climate refugees"
+              ],
+              "targets": [
+                "climate",
+                "refugee",
+                "number"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "the numbers of climate refugees may still",
+                  "right": "the number of climate refugees may still",
+                  "explanation_zh": "「…的人數」是 the number of + 複數名詞，number 本身用單數。"
+                },
+                {
+                  "wrong": "the amount of climate refugees may still",
+                  "right": "the number of climate refugees may still",
+                  "explanation_zh": "人可以數，用 the number of；the amount of 接不可數名詞。"
+                },
+                {
+                  "wrong": "the number of weather refugees may still",
+                  "right": "the number of climate refugees may still",
+                  "explanation_zh": "「氣候」指長期的氣候變遷，用 climate；weather 是每天的天氣。"
+                }
+              ]
+            },
+            {
+              "zh": "成長為現在的五倍",
+              "accepted": [
+                "grow five times larger than it is today",
+                "become five times as large as it is now",
+                "grow to be five times as large as it is today",
+                "grow five times larger than it is now",
+                "become five times larger than it is today",
+                "become five times larger than it is now",
+                "be five times larger than it is today",
+                "be five times as large as it is today",
+                "be five times as large as it is now",
+                "be five times higher than it is today",
+                "be five times higher than it is now",
+                "be five times what it is today",
+                "be five times what it is now",
+                "grow to five times what it is today",
+                "grow to five times what it is now",
+                "rise to five times what it is today",
+                "increase to five times what it is now",
+                "increase to five times what it is today",
+                "grow to five times its current size",
+                "grow to five times its present size",
+                "grow to five times the current number",
+                "increase to five times the current number",
+                "rise to five times the current level",
+                "increase to five times the current level",
+                "reach five times the current level",
+                "reach five times today's level",
+                "be five times today's number",
+                "be five times the current number",
+                "grow fivefold",
+                "increase fivefold",
+                "become five times bigger than it is now",
+                "grow five times bigger than it is today",
+                "grow to be five times larger than it is today",
+                "become five times what it is now",
+                "become five times the current number",
+                "increase to five times its current level",
+                "grow to five times its current level",
+                "rise to five times its current level",
+                "five times as many climate refugees as there are today",
+                "five times as many climate refugees as there are now",
+                "five times as many climate refugees as today",
+                "increase to five times today's level",
+                "grow to five times today's level"
+              ],
+              "targets": [
+                "COMP"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "grow larger five times than it is today",
+                  "right": "grow five times larger than it is today",
+                  "explanation_zh": "倍數要放在比較級前面：X times + 比較級 + than …。"
+                },
+                {
+                  "wrong": "become five times as large than it is now",
+                  "right": "become five times as large as it is now",
+                  "explanation_zh": "as … as 要成對使用，不能和 than 混在一起。"
+                },
+                {
+                  "wrong": "grow to now's five times",
+                  "right": "grow to five times what it is now",
+                  "explanation_zh": "「現在的五倍」不能照字面寫 now's five times；用 five times what it is now 或 five times larger than it is now。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "abstract_nominal",
+              "zh": "氣候難民",
+              "literal_error": "No matter how hard we fight global warming, the number of weather refugees may still …",
+              "part": 3,
+              "explanation_zh": "「氣候難民」是一個複合概念：因長期氣候變遷（海平面上升、乾旱、洪水）被迫離家的人，要寫 climate refugees（或 climate migrants）；weather 是每天的天氣，照字面換字會錯。"
+            },
+            {
+              "type": "prenominal_modifier",
+              "zh": "現在的五倍",
+              "literal_error": "… the number of climate refugees may still grow to now's five times.",
+              "part": 4,
+              "explanation_zh": "中文「現在的五倍」把比較對象放在前面，英文要把倍數放在比較級前，比較對象放在 than／as 後面：five times larger than it is today、five times as large as it is now。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "However hard we fight global warming, the number of climate refugees may still increase fivefold.",
+              "grammar_id": "gp-no-matter",
+              "explanation_zh": "However＋形容詞／副詞＝no matter how，更簡潔；increase fivefold（增加為五倍）是正式的倍數說法。"
+            }
+          ],
+          "restructuring_zh": "「成長為現在的五倍」中文先講比較對象「現在的」，英文要倒過來，先寫倍數再寫比較：grow five times larger than it is today（或 five times as large as it is now）。"
+        },
+        "2": {
+          "references": [
+            "For these refugees, the hardest part is not finding temporary shelter but recovering what they have lost in their homeland.",
+            "For these refugees, the most difficult thing is not finding a temporary place to live but getting back what they lost in their homeland.",
+            "For these refugees, the greatest challenge is not to find temporary housing but to regain what they have lost in their hometowns."
+          ],
+          "target_words": [
+            {
+              "word": "refugee",
+              "zh": "難民",
+              "alternatives": [
+                "migrant",
+                "immigrant"
+              ]
+            },
+            {
+              "word": "difficult",
+              "zh": "困難的",
+              "alternatives": [
+                "hard",
+                "challenge",
+                "tough",
+                "challenging",
+                "difficulty"
+              ]
+            },
+            {
+              "word": "temporary",
+              "zh": "暫時的",
+              "alternatives": [
+                "short-term",
+                "temporarily"
+              ]
+            },
+            {
+              "word": "shelter",
+              "zh": "住處",
+              "alternatives": [
+                "housing",
+                "place to live",
+                "place to stay",
+                "home",
+                "house",
+                "accommodation",
+                "somewhere to live"
+              ]
+            },
+            {
+              "word": "lose",
+              "zh": "失去"
+            },
+            {
+              "word": "homeland",
+              "zh": "家鄉",
+              "alternatives": [
+                "hometown",
+                "home country",
+                "home"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "NCL",
+              "grammar_id": "gp-what-clause",
+              "label_zh": "what 引導的名詞子句（所…的事物）當動名詞的受詞",
+              "frame": "… + V-ing／to VR + what + S + have p.p. …（沒有先行詞）",
+              "zh_trigger": "他們在家鄉所失去的"
+            },
+            {
+              "code": "COMP",
+              "grammar_id": "gp-comparative-superlative",
+              "label_zh": "最高級（最困難的）",
+              "frame": "the + 最高級 + N + is not A but B",
+              "zh_trigger": "最困難的"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "對這些難民來說",
+              "accepted": [
+                "For these refugees",
+                "For these climate refugees",
+                "For these migrants",
+                "For those refugees",
+                "For such refugees",
+                "For these people",
+                "To these refugees",
+                "For these climate migrants"
+              ],
+              "targets": [
+                "refugee"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "For these refugee",
+                  "right": "For these refugees",
+                  "explanation_zh": "these 後面接複數名詞 refugees。"
+                },
+                {
+                  "wrong": "To these refugees speaking",
+                  "right": "For these refugees",
+                  "explanation_zh": "「對…來說」用 for + 人（或 to + 人），不要逐字翻出「說」。"
+                }
+              ]
+            },
+            {
+              "zh": "最困難的不是",
+              "accepted": [
+                "the hardest part is not",
+                "the most difficult thing is not",
+                "the greatest challenge is not",
+                "the hardest thing is not",
+                "the most difficult part is not",
+                "the biggest challenge is not",
+                "the toughest part is not",
+                "the greatest difficulty is not",
+                "the biggest difficulty is not",
+                "what is most difficult is not",
+                "what is hardest is not",
+                "the most challenging thing is not",
+                "the most challenging part is not"
+              ],
+              "targets": [
+                "COMP",
+                "difficult"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "the most hardest part is not",
+                  "right": "the hardest part is not",
+                  "explanation_zh": "hard 的最高級是 hardest，前面不能再加 most。"
+                },
+                {
+                  "wrong": "the most difficult is not",
+                  "right": "the most difficult thing is not",
+                  "explanation_zh": "the most difficult 後面要有名詞（thing、part），或改寫成 what is most difficult。"
+                }
+              ]
+            },
+            {
+              "zh": "找到暫時的住處",
+              "accepted": [
+                "finding temporary shelter",
+                "finding a temporary place to live",
+                "finding temporary housing",
+                "finding a temporary home",
+                "finding a temporary place to stay",
+                "finding temporary accommodation",
+                "finding temporary homes",
+                "finding a temporary shelter",
+                "finding temporary places to live",
+                "finding short-term housing",
+                "finding a short-term place to live",
+                "finding a place to live temporarily",
+                "finding somewhere to live temporarily",
+                "finding a place to stay for the time being",
+                "to find temporary shelter",
+                "to find a temporary place to live",
+                "to find temporary housing",
+                "to find a temporary home",
+                "to find a temporary place to stay",
+                "to find temporary accommodation",
+                "to find temporary homes",
+                "to find a temporary shelter",
+                "to find temporary places to live",
+                "to find short-term housing",
+                "to find a short-term place to live",
+                "to find a place to live temporarily",
+                "to find somewhere to live temporarily",
+                "to find a place to stay for the time being"
+              ],
+              "targets": [
+                "temporary",
+                "shelter"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "finding temporarily shelter",
+                  "right": "finding temporary shelter",
+                  "explanation_zh": "修飾名詞要用形容詞 temporary；temporarily 是副詞。"
+                },
+                {
+                  "wrong": "finding a temporary living place",
+                  "right": "finding a temporary place to live",
+                  "explanation_zh": "「住處」用 a place to live（不定詞修飾 place）、shelter 或 housing；living place 不自然。"
+                }
+              ]
+            },
+            {
+              "zh": "而是找回他們在家鄉所失去的",
+              "accepted": [
+                "but recovering what they have lost in their homeland",
+                "but recovering what they lost in their homeland",
+                "but recovering what they have lost in their hometowns",
+                "but recovering what they lost in their hometowns",
+                "but recovering what they have lost in their hometown",
+                "but recovering what they lost in their hometown",
+                "but recovering what they have lost back home",
+                "but recovering what they had lost in their homeland",
+                "but recovering what they have lost in their home countries",
+                "but getting back what they have lost in their homeland",
+                "but getting back what they lost in their homeland",
+                "but getting back what they have lost in their hometowns",
+                "but getting back what they lost in their hometowns",
+                "but getting back what they have lost in their hometown",
+                "but getting back what they lost in their hometown",
+                "but getting back what they have lost back home",
+                "but getting back what they had lost in their homeland",
+                "but getting back what they have lost in their home countries",
+                "but to regain what they have lost in their homeland",
+                "but to regain what they lost in their homeland",
+                "but to regain what they have lost in their hometowns",
+                "but to regain what they lost in their hometowns",
+                "but to regain what they have lost in their hometown",
+                "but to regain what they lost in their hometown",
+                "but to regain what they have lost back home",
+                "but to regain what they had lost in their homeland",
+                "but to regain what they have lost in their home countries",
+                "but regaining what they have lost in their homeland",
+                "but regaining what they lost in their homeland",
+                "but regaining what they have lost in their hometowns",
+                "but regaining what they lost in their hometowns",
+                "but regaining what they have lost in their hometown",
+                "but regaining what they lost in their hometown",
+                "but regaining what they have lost back home",
+                "but regaining what they had lost in their homeland",
+                "but regaining what they have lost in their home countries",
+                "but to recover what they have lost in their homeland",
+                "but to recover what they lost in their homeland",
+                "but to recover what they have lost in their hometowns",
+                "but to recover what they lost in their hometowns",
+                "but to recover what they have lost in their hometown",
+                "but to recover what they lost in their hometown",
+                "but to recover what they have lost back home",
+                "but to recover what they had lost in their homeland",
+                "but to recover what they have lost in their home countries",
+                "but to get back what they have lost in their homeland",
+                "but to get back what they lost in their homeland",
+                "but to get back what they have lost in their hometowns",
+                "but to get back what they lost in their hometowns",
+                "but to get back what they have lost in their hometown",
+                "but to get back what they lost in their hometown",
+                "but to get back what they have lost back home",
+                "but to get back what they had lost in their homeland",
+                "but to get back what they have lost in their home countries",
+                "but rebuilding what they have lost in their homeland",
+                "but rebuilding what they lost in their homeland",
+                "but rebuilding what they have lost in their hometowns",
+                "but rebuilding what they lost in their hometowns",
+                "but rebuilding what they have lost in their hometown",
+                "but rebuilding what they lost in their hometown",
+                "but rebuilding what they have lost back home",
+                "but rebuilding what they had lost in their homeland",
+                "but rebuilding what they have lost in their home countries",
+                "but to rebuild what they have lost in their homeland",
+                "but to rebuild what they lost in their homeland",
+                "but to rebuild what they have lost in their hometowns",
+                "but to rebuild what they lost in their hometowns",
+                "but to rebuild what they have lost in their hometown",
+                "but to rebuild what they lost in their hometown",
+                "but to rebuild what they have lost back home",
+                "but to rebuild what they had lost in their homeland",
+                "but to rebuild what they have lost in their home countries",
+                "but rather recovering what they have lost in their homeland",
+                "but rather recovering what they lost in their homeland",
+                "but rather recovering what they have lost in their hometowns",
+                "but rather recovering what they lost in their hometowns",
+                "but rather recovering what they have lost in their hometown",
+                "but rather recovering what they lost in their hometown",
+                "but rather recovering what they have lost back home",
+                "but rather recovering what they had lost in their homeland",
+                "but rather recovering what they have lost in their home countries",
+                "but rather getting back what they have lost in their homeland",
+                "but rather getting back what they lost in their homeland",
+                "but rather getting back what they have lost in their hometowns",
+                "but rather getting back what they lost in their hometowns",
+                "but rather getting back what they have lost in their hometown",
+                "but rather getting back what they lost in their hometown",
+                "but rather getting back what they have lost back home",
+                "but rather getting back what they had lost in their homeland",
+                "but rather getting back what they have lost in their home countries"
+              ],
+              "targets": [
+                "NCL",
+                "lose",
+                "homeland"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "but recovering they have lost in their homeland",
+                  "right": "but recovering what they have lost in their homeland",
+                  "explanation_zh": "「他們所失去的」沒有先行詞，要用 what 引導名詞子句（＝the things that）；少了 what，recovering 就沒有受詞。"
+                },
+                {
+                  "wrong": "but recovering what did they lose in their homeland",
+                  "right": "but recovering what they lost in their homeland",
+                  "explanation_zh": "what 名詞子句用直述句語序（主詞＋動詞），不用疑問句的 did。"
+                },
+                {
+                  "wrong": "is not finding temporary shelter but to recover what they have lost",
+                  "right": "is not finding temporary shelter but recovering what they have lost",
+                  "explanation_zh": "not A but B 前後形式要對稱：A 用 finding，B 也用 recovering（或兩邊都用 to VR）。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "abstract_nominal",
+              "zh": "住處",
+              "literal_error": "For these refugees, the hardest part is not finding a temporary living place but …",
+              "part": 3,
+              "explanation_zh": "「住處」不是 living place，而是 shelter、housing 或 a place to live；「暫時的住處」寫成 temporary shelter／a temporary place to live。"
+            },
+            {
+              "type": "prenominal_modifier",
+              "zh": "他們在家鄉所失去的",
+              "literal_error": "… but recovering they have lost in their homeland.",
+              "part": 4,
+              "explanation_zh": "中文「他們在家鄉所失去的」是修飾語，後面省略了被修飾的名詞；英文沒有先行詞時要用 what 名詞子句：what they have lost in their homeland。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "For these refugees, it is not finding temporary shelter but recovering what they have lost in their homeland that is the hardest part.",
+              "grammar_id": "gp-cleft",
+              "explanation_zh": "用 It is … that … 強調句把「不是 A 而是 B」放在焦點位置，語氣更強；強調句只當加分寫法，不是唯一正解。"
+            }
+          ],
+          "restructuring_zh": "中文「最困難的不是…，而是…」先講主題再對比，英文用 the hardest part is not A but B，A、B 都用動名詞（finding／recovering）保持對稱；「他們在家鄉所失去的」沒有先行詞，改成 what 名詞子句。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ac-V-3",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-top-04-regen",
+    "lot": "translation-top-04",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "70c894d7855dda9bf4cb99fc8d645915606e8c30052b45ca877e11bf3bddf573",
+    "spec_id": "translation-top@2026-10-09",
+    "regenerated_from": "ai.tr.039f6d"
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T18:14:07Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "warn",
+      "created_at": "2026-10-09T17:50:48Z",
+      "details": {
+        "solver": "A",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "No matter how hard we fight against global warming, the number of climate refugees may still grow to five times what it is now.",
+            "confidence": "medium",
+            "explanation_zh": "「無論多麼努力」用 no matter how + 副詞 hard；「人數…成長為現在的五倍」用倍數 five times what it is now（亦可 five times the current number／increase fivefold）。倍數寫法有好幾種，評分規準是否都收不確定，故信心 medium。"
+          },
+          "2": {
+            "translation": "For these refugees, the most difficult thing is not finding a temporary place to live but regaining what they have lost in their homeland.",
+            "confidence": "high",
+            "explanation_zh": "「最困難的不是…而是…」用 not A but B，兩邊都用動名詞保持對稱；「他們在家鄉所失去的」用 what 名詞子句，失去的狀態延續到現在，用現在完成式 have lost；「家鄉」對難民來說用 homeland（hometown 亦可）。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "ADVCL",
+              "COMP"
+            ],
+            "used_target_words": [
+              "fight",
+              "global",
+              "warming",
+              "climate",
+              "refugee",
+              "number"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "NCL",
+              "COMP"
+            ],
+            "used_target_words": [
+              "refugee",
+              "difficult",
+              "temporary",
+              "shelter",
+              "lose",
+              "homeland"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "fight",
+              "global",
+              "warming",
+              "climate",
+              "refugee",
+              "number"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "ADVCL": true,
+              "COMP": false
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "refugee",
+              "difficult",
+              "temporary",
+              "shelter",
+              "lose",
+              "homeland"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NCL": true,
+              "COMP": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 1 題驗證者說用了句型 COMP，程式在譯文裡看不出來"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "warn",
+      "created_at": "2026-10-09T17:50:51Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "No matter how hard we fight global warming, the number of climate refugees may still grow to five times what it is now.",
+            "confidence": "high",
+            "explanation_zh": "「無論……多麼努力」用 no matter how hard we fight；「對抗」用 fight（或 combat）；「成長為現在的五倍」用倍數 five times what it is now；「氣候難民的人數」主詞用 the number of，動詞用單數／情態動詞無須變化。"
+          },
+          "2": {
+            "translation": "For these refugees, what is most difficult is not finding a temporary place to live but regaining what they lost in their hometowns.",
+            "confidence": "high",
+            "explanation_zh": "「最困難的不是……而是……」用名詞子句 what is most difficult is not A but B，A、B 都用動名詞對稱；「暫時的住處」譯為 a temporary place to live；「找回他們……所失去的」用 regain what they lost 的名詞子句。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "ADVCL",
+              "COMP"
+            ],
+            "used_target_words": [
+              "fight",
+              "global",
+              "warming",
+              "climate",
+              "refugee",
+              "number"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "NCL",
+              "COMP"
+            ],
+            "used_target_words": [
+              "refugee",
+              "difficult",
+              "temporary",
+              "shelter",
+              "lose",
+              "homeland"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "fight",
+              "global",
+              "warming",
+              "climate",
+              "refugee",
+              "number"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "ADVCL": true,
+              "COMP": false
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "refugee",
+              "difficult",
+              "temporary",
+              "shelter",
+              "lose",
+              "homeland"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NCL": true,
+              "COMP": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 1 題驗證者說用了句型 COMP，程式在譯文裡看不出來"
+        ]
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

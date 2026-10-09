@@ -1,0 +1,848 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.6eb8e4",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "top",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "在漁民世代居住的村落，許多房屋和肥沃的農田正逐漸被上升的海水淹沒。",
+        "options": null,
+        "answer": "In villages where fishermen have lived for generations, many houses and fertile fields are gradually being flooded by the rising sea.",
+        "accepted_answers": [
+          "In villages where fishing families have lived for generations, many homes and fertile farms are slowly being swallowed up by rising seawater.",
+          "Many houses and fertile fields are gradually being covered by the rising sea in villages where fishermen have lived for generations."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "關係副詞 where",
+            "被動語態（進行式）"
+          ],
+          "topic": "海平面上升"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "無論海堤蓋得多高，都無法完全保護居民辛苦建立的家園和漁港。",
+        "options": null,
+        "answer": "No matter how high the sea walls are, they can't completely protect the homes and harbors that residents have worked hard to build.",
+        "accepted_answers": [
+          "No matter how tall the sea walls are built, they cannot entirely protect the homes and harbors that residents have worked so hard to build.",
+          "No matter how high we build the sea walls, they cannot completely protect the homes and fishing ports that local people have built through hard work."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "無論多…（no matter how）",
+            "關係代名詞 that"
+          ],
+          "topic": "海平面上升"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "海平面上升"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「漁民世代居住的村落」是地點名詞加修飾語，英文把修飾語改成放在後面的關係子句，用關係副詞 where（＝in which）：villages where fishermen have lived for generations；live 是不及物動詞，不能用 which 直接接。「正逐漸被上升的海水淹沒」是正在進行的被動：are gradually being flooded by the rising sea；「上升的」用 rising（rise 不及物）。",
+          "evidence": [
+            "漁民世代居住的村落",
+            "正逐漸被上升的海水淹沒"
+          ],
+          "strategy_zh": "地點名詞前面有一長串「…的」修飾語時，先想 N(地點) + where + S + V；「正在被…」用 be being p.p.。",
+          "hints": [
+            "切成四段：在漁民世代居住的村落／許多房屋和肥沃的農田／正逐漸被／上升的海水淹沒",
+            "標的詞彙：village（村落）、generation（世代）、field（農田；肥沃的 fertile）、gradually（逐漸地）、flood（淹沒）、rise（上升）",
+            "句型框架：In + 地點N + where + S + have p.p. + for generations, S + are (gradually) being p.p. + by …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「無論海堤蓋得多高」是讓步子句：No matter how high the sea walls are (built)，how 後面緊接形容詞，再接主詞與動詞（直述句語序）。「都無法完全保護」是部分否定 cannot completely protect；「都」是語氣，不必譯成 all。「居民辛苦建立的家園和漁港」用關係代名詞引導的形容詞子句放在名詞後面：the homes and harbors that residents have worked hard to build（that 是 build 的受詞，句尾不再加 them）。",
+          "evidence": [
+            "無論海堤蓋得多高",
+            "都無法完全保護",
+            "居民辛苦建立的家園和漁港"
+          ],
+          "strategy_zh": "「無論多…」直接套 No matter how + adj. + S + V；名詞前面有「某人做了…的」修飾語，英文改成 N + that + S + V。",
+          "hints": [
+            "切成四段：無論海堤蓋得多高／都無法完全保護／居民辛苦建立的／家園和漁港",
+            "標的詞彙：sea wall（海堤）、protect（保護）、completely（完全地）、resident（居民）、home（家園）、harbor（港口）",
+            "句型框架：No matter how + adj. + S + V, S + cannot completely + V + N + that + S + have worked hard to VR"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "In villages where fishermen have lived for generations, many houses and fertile fields are gradually being flooded by the rising sea.",
+            "In villages where fishing families have lived for generations, many homes and fertile farms are slowly being swallowed up by rising seawater.",
+            "Many houses and fertile fields are gradually being covered by the rising sea in villages where fishermen have lived for generations."
+          ],
+          "target_words": [
+            {
+              "word": "village",
+              "zh": "村落",
+              "alternatives": [
+                "town",
+                "community"
+              ]
+            },
+            {
+              "word": "generation",
+              "zh": "世代"
+            },
+            {
+              "word": "field",
+              "zh": "農田",
+              "alternatives": [
+                "farm",
+                "farms",
+                "farmland"
+              ]
+            },
+            {
+              "word": "gradually",
+              "zh": "逐漸地",
+              "alternatives": [
+                "slowly",
+                "little by little",
+                "steadily"
+              ]
+            },
+            {
+              "word": "flood",
+              "zh": "淹沒",
+              "alternatives": [
+                "swallow",
+                "cover",
+                "submerge",
+                "submerged",
+                "drown"
+              ]
+            },
+            {
+              "word": "rise",
+              "zh": "上升",
+              "alternatives": [
+                "rising"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "REL",
+              "grammar_id": "gp-relative-adverb",
+              "label_zh": "關係副詞 where（地點 + where + S + V）",
+              "frame": "N(地點) + where + S + have p.p. …",
+              "zh_trigger": "漁民世代居住的村落"
+            },
+            {
+              "code": "PASS",
+              "grammar_id": "gp-passive",
+              "label_zh": "被動語態（現在進行式被動）",
+              "frame": "S + be + being + p.p. (+ by …)",
+              "zh_trigger": "正逐漸被上升的海水淹沒"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "在漁民世代居住的村落",
+              "accepted": [
+                "In villages where fishermen have lived for generations",
+                "In villages where fishing families have lived for generations",
+                "In the villages where fishermen have lived for generations",
+                "In villages in which fishermen have lived for generations",
+                "In fishing villages where people have lived for generations",
+                "In villages where fishermen have been living for generations",
+                "In the villages where fishing families have lived for generations",
+                "In villages that fishermen have lived in for generations",
+                "In villages where fishers have lived for generations",
+                "In villages where fishermen have lived for many generations",
+                "In fishing villages where fishermen have lived for generations",
+                "In the fishing villages where fishermen have lived for generations"
+              ],
+              "targets": [
+                "REL",
+                "village",
+                "generation"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "In villages which fishermen have lived for generations",
+                  "right": "In villages where fishermen have lived for generations",
+                  "explanation_zh": "live 是不及物動詞，「住在村落裡」要用關係副詞 where（＝in which）；用 which 就要寫 which fishermen have lived in。"
+                },
+                {
+                  "wrong": "In villages where fishermen have lived for generation",
+                  "right": "In villages where fishermen have lived for generations",
+                  "explanation_zh": "「世世代代」是 for generations，generation 要用複數。"
+                }
+              ]
+            },
+            {
+              "zh": "許多房屋和肥沃的農田",
+              "accepted": [
+                "many houses and fertile fields",
+                "many homes and fertile farms",
+                "many houses and fertile farms",
+                "many homes and fertile fields",
+                "many houses and fertile farmland",
+                "many homes and fertile farmland",
+                "a lot of houses and fertile fields",
+                "many houses and rich farmland",
+                "many houses and fertile land",
+                "many houses and fertile farmlands",
+                "many homes and fertile farmlands"
+              ],
+              "targets": [
+                "field"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "many house and fertile field",
+                  "right": "many houses and fertile fields",
+                  "explanation_zh": "many 後面接複數名詞 houses、fields。"
+                },
+                {
+                  "wrong": "much houses and fertile fields",
+                  "right": "many houses and fertile fields",
+                  "explanation_zh": "可數名詞用 many，much 接不可數名詞。"
+                },
+                {
+                  "wrong": "many houses and fertilized fields",
+                  "right": "many houses and fertile fields",
+                  "explanation_zh": "「肥沃的」是形容詞 fertile；fertilized 是「施過肥的」，意思不同。"
+                }
+              ]
+            },
+            {
+              "zh": "正逐漸被",
+              "accepted": [
+                "are gradually being",
+                "are slowly being",
+                "are being gradually",
+                "are now gradually being",
+                "are steadily being",
+                "are being slowly"
+              ],
+              "targets": [
+                "PASS",
+                "gradually"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "are gradually be flooded",
+                  "right": "are gradually being flooded",
+                  "explanation_zh": "現在進行式被動是 are being + p.p.，be 要寫成 being。"
+                },
+                {
+                  "wrong": "are gradually flooding",
+                  "right": "are gradually being flooded",
+                  "explanation_zh": "房屋和農田是「被」淹沒，要用被動；正在進行用 are being + p.p.。"
+                }
+              ]
+            },
+            {
+              "zh": "上升的海水淹沒",
+              "accepted": [
+                "flooded by the rising sea",
+                "swallowed up by rising seawater",
+                "covered by the rising sea",
+                "flooded by rising seawater",
+                "flooded by rising sea levels",
+                "flooded by the rising sea level",
+                "flooded by the rising ocean",
+                "flooded by the rising seawater",
+                "flooded by the rising waters",
+                "swallowed up by the rising sea",
+                "swallowed up by rising sea levels",
+                "swallowed up by the rising sea level",
+                "swallowed up by the rising ocean",
+                "swallowed up by the rising seawater",
+                "swallowed up by the rising waters",
+                "covered by rising seawater",
+                "covered by rising sea levels",
+                "covered by the rising sea level",
+                "covered by the rising ocean",
+                "covered by the rising seawater",
+                "covered by the rising waters",
+                "submerged by the rising sea",
+                "submerged by rising seawater",
+                "submerged by rising sea levels",
+                "submerged by the rising sea level",
+                "submerged by the rising ocean",
+                "submerged by the rising seawater",
+                "submerged by the rising waters"
+              ],
+              "targets": [
+                "flood",
+                "rise"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "flooded by the raising sea",
+                  "right": "flooded by the rising sea",
+                  "explanation_zh": "「上升」是不及物動詞 rise（rising）；raise 是及物的「舉起、提高」。"
+                },
+                {
+                  "wrong": "flooded by the rised sea",
+                  "right": "flooded by the rising sea",
+                  "explanation_zh": "rise 的過去分詞是 risen；修飾「正在上升的海水」用現在分詞 rising。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "prenominal_modifier",
+              "zh": "漁民世代居住的村落",
+              "literal_error": "In villages which fishermen have lived for generations …",
+              "part": 1,
+              "explanation_zh": "中文修飾語放在名詞前面，英文要改成放在名詞後面的關係子句；地點名詞後面用關係副詞 where（＝in which）。"
+            },
+            {
+              "type": "tense_trigger",
+              "zh": "正逐漸被",
+              "literal_error": "… many houses and fields are gradually flooded by the rising sea.",
+              "part": 3,
+              "explanation_zh": "「正逐漸被…」是正在進行的被動，要用 are (gradually) being + p.p.；只寫 are flooded 會失去「正在」的意思。"
+            }
+          ],
+          "bonus": [],
+          "restructuring_zh": "「漁民世代居住的村落」修飾語在前，英文改成 villages where fishermen have lived for generations（關係副詞 where 引導，放在名詞後）；「正逐漸被…淹沒」用現在進行式被動 are gradually being flooded。"
+        },
+        "2": {
+          "references": [
+            "No matter how high the sea walls are, they can't completely protect the homes and harbors that residents have worked hard to build.",
+            "No matter how tall the sea walls are built, they cannot entirely protect the homes and harbors that residents have worked so hard to build.",
+            "No matter how high we build the sea walls, they cannot completely protect the homes and fishing ports that local people have built through hard work."
+          ],
+          "target_words": [
+            {
+              "word": "sea wall",
+              "zh": "海堤",
+              "alternatives": [
+                "seawall",
+                "seawalls",
+                "dike",
+                "levee"
+              ]
+            },
+            {
+              "word": "protect",
+              "zh": "保護",
+              "alternatives": [
+                "save",
+                "defend",
+                "shield"
+              ]
+            },
+            {
+              "word": "completely",
+              "zh": "完全地",
+              "alternatives": [
+                "fully",
+                "entirely",
+                "totally"
+              ]
+            },
+            {
+              "word": "resident",
+              "zh": "居民",
+              "alternatives": [
+                "local people",
+                "locals",
+                "people",
+                "villagers"
+              ]
+            },
+            {
+              "word": "home",
+              "zh": "家園",
+              "alternatives": [
+                "homeland"
+              ]
+            },
+            {
+              "word": "harbor",
+              "zh": "漁港",
+              "alternatives": [
+                "port",
+                "harbour"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "ADVCL",
+              "grammar_id": "gp-no-matter",
+              "label_zh": "讓步：無論多…（No matter how + adj.）",
+              "frame": "No matter how + adj. + S + V, S + V …",
+              "zh_trigger": "無論海堤蓋得多高"
+            },
+            {
+              "code": "REL",
+              "grammar_id": "gp-relative-pronoun",
+              "label_zh": "關係代名詞 that 引導的形容詞子句（受格關代）",
+              "frame": "N + that + S + V …",
+              "zh_trigger": "居民辛苦建立的家園和漁港"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "無論海堤蓋得多高",
+              "accepted": [
+                "No matter how high the sea walls are",
+                "No matter how tall the sea walls are built",
+                "No matter how high we build the sea walls",
+                "No matter how high the sea walls are built",
+                "No matter how high sea walls are built",
+                "No matter how tall the sea walls are",
+                "However high the sea walls are built",
+                "However high the sea walls are",
+                "No matter how high the seawalls are",
+                "No matter how high a sea wall is built",
+                "No matter how high they build the sea walls",
+                "No matter how high the seawalls are built",
+                "No matter how high a seawall is"
+              ],
+              "targets": [
+                "ADVCL",
+                "sea wall"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "No matter how the sea walls are built high",
+                  "right": "No matter how high the sea walls are built",
+                  "explanation_zh": "no matter how 後面要緊接形容詞 high，再接主詞與動詞。"
+                },
+                {
+                  "wrong": "No matter how high are the sea walls",
+                  "right": "No matter how high the sea walls are",
+                  "explanation_zh": "no matter how 引導的子句用直述句語序（主詞在動詞前）。"
+                }
+              ]
+            },
+            {
+              "zh": "都無法完全保護",
+              "accepted": [
+                "they can't completely protect",
+                "they cannot entirely protect",
+                "they cannot completely protect",
+                "they cannot fully protect",
+                "they cannot totally protect",
+                "they are unable to completely protect",
+                "they still cannot completely protect",
+                "they will never be able to completely protect",
+                "it cannot completely protect",
+                "they can never completely protect"
+              ],
+              "targets": [
+                "protect",
+                "completely"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "they cannot protect completely the homes",
+                  "right": "they cannot completely protect the homes",
+                  "explanation_zh": "副詞 completely 不要插在動詞和受詞中間；放在 protect 前面，或放在受詞後面。"
+                },
+                {
+                  "wrong": "they all cannot completely protect",
+                  "right": "they cannot completely protect",
+                  "explanation_zh": "「都」在這裡是「無論如何都」的語氣，不必譯成 all。"
+                }
+              ]
+            },
+            {
+              "zh": "居民辛苦建立的",
+              "accepted": [
+                "that residents have worked hard to build",
+                "that residents have worked so hard to build",
+                "that local people have built through hard work",
+                "that residents have built through hard work",
+                "that the residents have worked hard to build",
+                "which residents have worked hard to build",
+                "that local residents have worked hard to build",
+                "that residents have built with great effort",
+                "that the locals have worked hard to build",
+                "that people there have worked hard to build",
+                "residents have worked hard to build",
+                "that the residents have built with great effort",
+                "that the residents have worked so hard to build",
+                "that residents built with their own hands"
+              ],
+              "targets": [
+                "REL",
+                "resident"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "that residents have worked hard to build them",
+                  "right": "that residents have worked hard to build",
+                  "explanation_zh": "關係代名詞 that 已經是 build 的受詞，句尾不要再加 them。"
+                },
+                {
+                  "wrong": "which built by residents with hard work",
+                  "right": "that residents have worked hard to build",
+                  "explanation_zh": "which 後面要有完整的主詞＋動詞（which residents built）；漏了主詞或 be 動詞都不合文法。"
+                }
+              ]
+            },
+            {
+              "zh": "家園和漁港",
+              "accepted": [
+                "the homes and harbors",
+                "the homes and fishing ports",
+                "the homes and fishing harbors",
+                "the homes and ports",
+                "the houses and harbors",
+                "the homes and the harbors",
+                "the homes and harbours"
+              ],
+              "targets": [
+                "home",
+                "harbor"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "the home and harbor",
+                  "right": "the homes and harbors",
+                  "explanation_zh": "居民不只一戶、漁港也不只一座，用複數 homes、harbors。"
+                },
+                {
+                  "wrong": "the families and harbors",
+                  "right": "the homes and harbors",
+                  "explanation_zh": "「家園」指居住的地方 homes；family 是「家人、家庭」。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "redundancy",
+              "zh": "都無法完全保護",
+              "literal_error": "… they all cannot protect the homes and harbors completely …",
+              "part": 2,
+              "explanation_zh": "「都」是「無論如何都」的語氣，不要譯成 all；「無法完全」是部分否定 cannot completely（不是 completely cannot）。"
+            },
+            {
+              "type": "prenominal_modifier",
+              "zh": "居民辛苦建立的家園和漁港",
+              "literal_error": "… they cannot completely protect the residents' hard-built homes and harbors.",
+              "part": 3,
+              "explanation_zh": "中文修飾語「居民辛苦建立的」放在名詞前面，英文改成後面的關係子句 the homes and harbors that residents have worked hard to build。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "However high the sea walls may be built, never can they completely protect the homes and harbors that residents have worked so hard to build.",
+              "explanation_zh": "However + 形容詞 等於 no matter how；never 放句首要倒裝（can they）。屬加分寫法，基本分仍看 no matter how 與關係子句。"
+            }
+          ],
+          "restructuring_zh": "「無論海堤蓋得多高」用 No matter how high + S + V；「居民辛苦建立的家園和漁港」修飾語在前，英文改成 the homes and harbors that residents have worked hard to build（that 當 build 的受詞，也可以省略）。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ac-V-3",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-top-01-regen",
+    "lot": "translation-top-01",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "e70574f962ee519de618ee9fd1feb7119f6d0a8843e55cfe43a9c37f50b38132",
+    "spec_id": "translation-top@2026-10-09",
+    "regenerated_from": "ai.tr.e9a56a"
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T18:09:06Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T17:34:42Z",
+      "details": {
+        "solver": "A",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "In villages where fishermen have lived for generations, many houses and fertile farmland are gradually being flooded by rising seawater.",
+            "confidence": "high",
+            "explanation_zh": "「漁民世代居住的村落」用關係副詞 where 修飾 villages，「世代居住」到現在仍持續，用現在完成式 have lived for generations；「正逐漸被淹沒」是進行中的被動，用 are gradually being flooded；farmland 不可數，不加 s。"
+          },
+          "2": {
+            "translation": "No matter how high the seawalls are built, they cannot completely protect the homes and fishing ports that residents have worked hard to build.",
+            "confidence": "high",
+            "explanation_zh": "「無論……多高」用 No matter how + 形容詞 + S + V；海堤是被蓋的，用被動 are built；「居民辛苦建立的家園和漁港」用 that 關係子句修飾，辛苦建立到現在用現在完成式 have worked hard to build；「無法完全」寫 cannot completely。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "REL",
+              "PASS"
+            ],
+            "used_target_words": [
+              "village",
+              "generation",
+              "field",
+              "gradually",
+              "flood",
+              "rise"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "ADVCL",
+              "REL"
+            ],
+            "used_target_words": [
+              "sea wall",
+              "protect",
+              "completely",
+              "resident",
+              "home",
+              "harbor"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "（小建議，不影響判定）第 3 部分 accepted 的 that residents built with their own hands 沒有譯出「辛苦」，也沒有完成式，比其他寫法寬鬆；可考慮刪除或改成 that residents have built with their own hands through hard work。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "village",
+              "generation",
+              "field",
+              "gradually",
+              "flood",
+              "rise"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "REL": true,
+              "PASS": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "sea wall",
+              "protect",
+              "completely",
+              "resident",
+              "home",
+              "harbor"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "ADVCL": true,
+              "REL": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "fail",
+      "created_at": "2026-10-09T17:40:23Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "In the village where fishermen have lived for generations, many houses and fertile farmland are gradually being swallowed up by the rising sea.",
+            "confidence": "medium",
+            "explanation_zh": "「漁民世代居住的村落」用關係副詞 where 加現在完成式 have lived for generations；「正逐漸被…淹沒」是進行式被動 are gradually being swallowed up；「上升的海水」用 the rising sea。中文「村落」未明說單複數，我選單數 the village；「淹沒」有 flood／submerge／swallow up 多種譯法，所以信心給 medium。"
+          },
+          "2": {
+            "translation": "No matter how high a seawall is built, it cannot completely protect the homes and fishing ports that the residents have worked so hard to build.",
+            "confidence": "high",
+            "explanation_zh": "「無論…多高」用 No matter how high …（也可用 However high）；「蓋得多高」用被動 is built；「無法完全保護」是部分否定 cannot completely protect；「居民辛苦建立的家園和漁港」用關係子句 that the residents have worked so hard to build，現在完成式表示成果延續到現在。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "REL",
+              "PASS"
+            ],
+            "used_target_words": [
+              "village",
+              "generation",
+              "field",
+              "gradually",
+              "flood",
+              "rise"
+            ],
+            "within_accepted": false,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "第 1 部分（在漁民世代居住的村落）的 accepted 全部是複數 villages（或 fishing villages），沒有單數的 the village。中文「村落」沒有標示單複數，後面「許多房屋和肥沃的農田」也可以屬於同一個村落，所以單數 In the village where fishermen have lived for generations 是自然又正確的譯法，卻落在可接受寫法之外。",
+              "建議在第 1 部分補上單數寫法（In the village where fishermen have lived for generations、In the fishing village where …），或把題目中文寫明是「一個漁村」或「好幾個漁村」，避免單複數歧義。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "ADVCL",
+              "REL"
+            ],
+            "used_target_words": [
+              "sea wall",
+              "protect",
+              "completely",
+              "resident",
+              "home",
+              "harbor"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "village",
+              "generation",
+              "field",
+              "gradually",
+              "flood",
+              "rise"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "REL": true,
+              "PASS": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "sea wall",
+              "protect",
+              "completely",
+              "resident",
+              "home",
+              "harbor"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "ADVCL": true,
+              "REL": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 1 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義",
+          "第 1 題驗證者對4 部分切分有意見（warn）：第 1 部分（在漁民世代居住的村落）的 accepted 全部是複數 villages（或 fishing villages），沒有單數的 the village。中文「村落」沒有標示單複數，後面「許多房屋和肥沃的農田」也可以屬於同一個村落"
+        ]
+      }
+    }
+  ],
+  "status": "rejected",
+  "status_reason": "blind_solver:B 未通過：第 1 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義；第 1 題驗證者對4 部分切分有意見（warn）：第 1 部分（在漁民世代居住的村落）的 accepted 全部是複數 villages（或 fishing villages），沒有單數的 the village。中文「村落」沒有標示單複數，後面「許多房屋和肥沃的農田」也可以屬於同一個村落；判定者（第 2 輪）：同意退回，第 1 句第 1 部分要補單數寫法（In the village where fishermen have lived for generations、In a fishing village where …），或把中文改成明示單複數；另建議刪掉第 4 部分語意不通的 covered／swallowed up by the rising sea level（sea level 是水位，不會覆蓋、吞沒房屋），第 2 句第 1 部分補 a seawall is built 等拼法組合（B 的 No matter how high a seawall is built 只有 a sea wall is built 的拼法在清單內）"
+}

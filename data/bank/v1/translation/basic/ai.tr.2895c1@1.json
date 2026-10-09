@@ -1,0 +1,722 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.2895c1",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "basic",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "自從當上班長以來，我已經學會關心班上的每一位同學。",
+        "options": null,
+        "answer": "Since I became class leader, I have learned to care about every one of my classmates.",
+        "accepted_answers": [
+          "I have learned to care about every student in my class since I became the class president.",
+          "Ever since I became class monitor, I have learned to care about each of my classmates."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "現在完成式"
+          ],
+          "topic": "擔任班長"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "我也會提醒那些常常忘記交作業的同學。",
+        "options": null,
+        "answer": "I also remind classmates who often forget to hand in their homework.",
+        "accepted_answers": [
+          "I will also remind the classmates who often forget to turn in their homework.",
+          "I also remind those classmates that often forget to hand in their homework."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "關係代名詞"
+          ],
+          "topic": "擔任班長"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "擔任班長"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「自從…以來」加上「已經」，表示從當上班長那一刻一直延續到現在的改變，主要子句用現在完成式 have learned；since 子句說的是過去的起點，用過去式 became。「班長」寫 class leader、class president 或 class monitor 都可以（當補語時前面的 the 可省略）。「關心某人」是 care about sb（也可寫 care for、show concern for）；「每一位同學」用 every one of my classmates、every student in my class（every 接單數名詞），寫 all my classmates 也可以。",
+          "evidence": [
+            "自從當上班長以來",
+            "已經學會"
+          ],
+          "strategy_zh": "看到「自從…以來」「已經」先想到現在完成式：Since + S + 過去式, S + have/has + p.p.。",
+          "hints": [
+            "切成四段：自從當上班長以來／我已經學會／關心／班上的每一位同學",
+            "標的詞彙：leader（班長，也可用 president、monitor）、learn（學會）、care（關心，care about）、every（每一）、classmate（同學）",
+            "句型框架：Since + S + 過去式, S + have/has + p.p. …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「那些常常忘記交作業的同學」是放在名詞前面、裡面有動詞的修飾語，英文要先寫名詞 classmates，再用關係代名詞 who（或 that）帶出形容詞子句：classmates who often forget to hand in their homework。先行詞是複數，子句動詞用 forget，不加 s；頻率副詞 often 放在一般動詞前面。「提醒」是 remind（不要和 remember 混淆）；「交作業」是 hand in／turn in homework，homework 不可數。",
+          "evidence": [
+            "那些常常忘記交作業的同學"
+          ],
+          "strategy_zh": "中文「…的＋名詞」的修飾語裡有動詞時，英文先寫名詞，再用 who／that 子句補上說明；先行詞是人用 who。",
+          "hints": [
+            "切成四段：我也會提醒／常常忘記（關係子句）／交作業／（那些…的）同學",
+            "標的詞彙：remind（提醒）、forget（忘記）、hand in（繳交，也可用 turn in）、homework（作業，不可數）、classmate（同學）",
+            "句型框架：S + remind + N（人）+ who/that + V …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "Since I became class leader, I have learned to care about every one of my classmates.",
+            "I have learned to care about every student in my class since I became the class president.",
+            "Ever since I became class monitor, I have learned to care about each of my classmates."
+          ],
+          "target_words": [
+            {
+              "word": "leader",
+              "zh": "班長（class leader）",
+              "alternatives": [
+                "president",
+                "monitor"
+              ]
+            },
+            {
+              "word": "learn",
+              "zh": "學會"
+            },
+            {
+              "word": "care",
+              "zh": "關心（care about）",
+              "alternatives": [
+                "concern",
+                "attention"
+              ]
+            },
+            {
+              "word": "every",
+              "zh": "每一（位）",
+              "alternatives": [
+                "each",
+                "all"
+              ]
+            },
+            {
+              "word": "classmate",
+              "zh": "同學",
+              "alternatives": [
+                "student",
+                "everyone",
+                "everybody"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PERF",
+              "grammar_id": "gp-present-perfect",
+              "label_zh": "現在完成式（自從…以來＋已經）",
+              "frame": "Since + S + 過去式, S + have/has + p.p. …",
+              "zh_trigger": "已經學會"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "自從當上班長以來",
+              "accepted": [
+                "Since I became class leader",
+                "Since I became the class leader",
+                "Since I became our class leader",
+                "Since I became class president",
+                "Since I became the class president",
+                "Since I became class monitor",
+                "Since I became the class monitor",
+                "Ever since I became class leader",
+                "Ever since I became class president",
+                "Ever since I became class monitor",
+                "Since becoming class leader",
+                "Since becoming class president",
+                "Since I was elected class leader",
+                "Since I was elected class president",
+                "Since I was chosen as class leader",
+                "Since I was chosen to be class leader"
+              ],
+              "targets": [
+                "leader"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Since I become class leader",
+                  "right": "Since I became class leader",
+                  "explanation_zh": "since 子句說的是過去的起點（當上班長那一刻），動詞用過去式 became。"
+                },
+                {
+                  "wrong": "From I became class leader",
+                  "right": "Since I became class leader",
+                  "explanation_zh": "「自從…以來」用連接詞 since；from 是介系詞，後面不能直接接子句。"
+                }
+              ]
+            },
+            {
+              "zh": "我已經學會",
+              "accepted": [
+                "I have learned",
+                "I've learned",
+                "I have learnt",
+                "I've learnt"
+              ],
+              "targets": [
+                "learn",
+                "PERF"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "I already learned",
+                  "right": "I have learned",
+                  "explanation_zh": "從當上班長到現在一直累積的改變，要用現在完成式 have learned，不能只用過去式。"
+                },
+                {
+                  "wrong": "I have learn",
+                  "right": "I have learned",
+                  "explanation_zh": "have 後面接過去分詞 learned（或 learnt）。"
+                }
+              ]
+            },
+            {
+              "zh": "關心",
+              "accepted": [
+                "to care about",
+                "how to care about",
+                "to care for",
+                "to show care for",
+                "to show concern for",
+                "to be concerned about",
+                "to pay attention to"
+              ],
+              "targets": [
+                "care"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "to care every one of my classmates",
+                  "right": "to care about every one of my classmates",
+                  "explanation_zh": "「關心某人」是 care about sb（或 care for sb），care 後面要有介系詞。"
+                },
+                {
+                  "wrong": "to caring about",
+                  "right": "to care about",
+                  "explanation_zh": "learn 後面接不定詞 to + 原形動詞（learn to V）。"
+                },
+                {
+                  "wrong": "to concern about",
+                  "right": "to be concerned about",
+                  "explanation_zh": "concern 當動詞是「使擔心、與…有關」；「關心」寫 be concerned about 或 show concern for。"
+                }
+              ]
+            },
+            {
+              "zh": "班上的每一位同學",
+              "accepted": [
+                "every one of my classmates",
+                "every student in my class",
+                "every classmate",
+                "each of my classmates",
+                "each classmate",
+                "each student in my class",
+                "every student in our class",
+                "everyone in my class",
+                "everybody in my class",
+                "everyone in our class",
+                "all my classmates",
+                "all of my classmates",
+                "all the students in my class",
+                "every classmate of mine",
+                "every classmate in my class"
+              ],
+              "targets": [
+                "every",
+                "classmate"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "every students in my class",
+                  "right": "every student in my class",
+                  "explanation_zh": "every、each 後面接單數名詞；要用複數就寫 all my classmates。"
+                },
+                {
+                  "wrong": "each of my classmate",
+                  "right": "each of my classmates",
+                  "explanation_zh": "each of、every one of 後面接複數名詞（each of my classmates）。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "tense_trigger",
+              "zh": "已經學會",
+              "literal_error": "Since I became class leader, I already learned to care about every one of my classmates.",
+              "part": 2,
+              "explanation_zh": "「自從…以來」「已經」表示從當上班長到現在一直累積的改變；照中文寫成過去式 already learned 會在這一部分被扣分。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "Being class leader has taught me to care about every one of my classmates.",
+              "grammar_id": "gp-gerund-subject",
+              "explanation_zh": "把「當班長」改成動名詞主詞 Being class leader，再用 has taught me to …（讓我學會），句子更精簡、更有變化。"
+            }
+          ]
+        },
+        "2": {
+          "references": [
+            "I also remind classmates who often forget to hand in their homework.",
+            "I will also remind the classmates who often forget to turn in their homework.",
+            "I also remind those classmates that often forget to hand in their homework."
+          ],
+          "target_words": [
+            {
+              "word": "remind",
+              "zh": "提醒"
+            },
+            {
+              "word": "forget",
+              "zh": "忘記"
+            },
+            {
+              "word": "hand in",
+              "zh": "交（作業）",
+              "alternatives": [
+                "turn in",
+                "submit",
+                "hand"
+              ]
+            },
+            {
+              "word": "homework",
+              "zh": "作業",
+              "alternatives": [
+                "assignment",
+                "schoolwork"
+              ]
+            },
+            {
+              "word": "classmate",
+              "zh": "同學",
+              "alternatives": [
+                "student"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "REL",
+              "grammar_id": "gp-relative-pronoun",
+              "label_zh": "關係代名詞 who／that 引導的形容詞子句（修飾「那些…的同學」）",
+              "frame": "N（人）+ who/that + V …",
+              "zh_trigger": "那些常常忘記交作業的同學"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "我也會提醒",
+              "accepted": [
+                "I also remind",
+                "I will also remind",
+                "I'll also remind",
+                "I also often remind",
+                "I also try to remind",
+                "I also give reminders to"
+              ],
+              "targets": [
+                "remind"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "I also remember",
+                  "right": "I also remind",
+                  "explanation_zh": "「提醒（別人）」是 remind；remember 是「（自己）記得」，兩個字常被搞混。"
+                },
+                {
+                  "wrong": "I also remind to classmates",
+                  "right": "I also remind classmates",
+                  "explanation_zh": "remind 是及物動詞，後面直接接人（remind sb），不加 to。"
+                }
+              ]
+            },
+            {
+              "zh": "常常忘記",
+              "accepted": [
+                "who often forget",
+                "that often forget",
+                "who always forget",
+                "who usually forget",
+                "who frequently forget",
+                "who keep forgetting",
+                "that always forget",
+                "who tend to forget"
+              ],
+              "targets": [
+                "REL",
+                "forget"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "classmates who often forgets",
+                  "right": "classmates who often forget",
+                  "explanation_zh": "先行詞是複數 classmates 時，who 也代表複數，關係子句的動詞用 forget，不加 s。"
+                },
+                {
+                  "wrong": "classmates often forget",
+                  "right": "classmates who often forget",
+                  "explanation_zh": "少了關係代名詞 who／that，句子會有兩個動詞（remind、forget）卻沒有連接。"
+                }
+              ]
+            },
+            {
+              "zh": "交作業",
+              "accepted": [
+                "to hand in their homework",
+                "to turn in their homework",
+                "to hand in homework",
+                "to turn in homework",
+                "to hand their homework in",
+                "to submit their homework",
+                "to hand in their assignments",
+                "to turn in their assignments",
+                "to hand in the homework",
+                "to give their homework to the teacher"
+              ],
+              "targets": [
+                "hand in",
+                "homework"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "to hand in their homeworks",
+                  "right": "to hand in their homework",
+                  "explanation_zh": "homework 是不可數名詞，不加 s；要數份數用 assignments。"
+                },
+                {
+                  "wrong": "to hand out their homework",
+                  "right": "to hand in their homework",
+                  "explanation_zh": "hand out 是「分發」；「繳交」是 hand in（或 turn in）。"
+                }
+              ]
+            },
+            {
+              "zh": "同學",
+              "accepted": [
+                "classmates",
+                "those classmates",
+                "the classmates",
+                "my classmates",
+                "students",
+                "those students",
+                "the students",
+                "those"
+              ],
+              "targets": [
+                "classmate"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "the classmate",
+                  "right": "the classmates",
+                  "explanation_zh": "「那些…的同學」不只一個人，classmate 要加 s（關係子句的動詞跟著用 forget；這是同一個錯誤，只扣一次）。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "plural_countable",
+              "zh": "那些常常忘記交作業的同學",
+              "literal_error": "I also remind the classmate who often forgets to hand in his homework.",
+              "part": 4,
+              "explanation_zh": "「那些…的同學」是複數，要寫 classmates；寫成單數會在這一部分扣分（後面的動詞跟著寫成 forgets 算同一個錯誤，只扣一次）。"
+            }
+          ],
+          "bonus": []
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-basic-01-regen",
+    "lot": "translation-basic-01",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "d7d4b935208193587edc9b7e91774574a5e2aa0a2dd6fc944773ce41ceec7d2b",
+    "spec_id": "translation-basic@2026-10-09",
+    "regenerated_from": "ai.tr.0b8782"
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T18:06:48Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T17:35:00Z",
+      "details": {
+        "solver": "A",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Since I became the class leader, I have learned to care about every one of my classmates.",
+            "confidence": "high",
+            "explanation_zh": "「自從……以來」＋「已經學會」是從過去延續到現在的經驗，主要子句用現在完成式 have learned，since 子句用過去式 became；「班長」譯 class leader（也可用 class president／class monitor）；「每一位同學」用 every one of my classmates 強調每一位，「班上的」已含在 my classmates 裡，不再加 in my class 以免重複。"
+          },
+          "2": {
+            "translation": "I also remind those classmates who often forget to hand in their homework.",
+            "confidence": "high",
+            "explanation_zh": "「會提醒」是習慣性的動作，用現在簡單式 remind，不譯成 will；「那些常常忘記交作業的同學」用關係子句 those classmates who often forget…；「交作業」用 hand in homework（turn in 亦可），homework 不可數不加 s。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PERF"
+            ],
+            "used_target_words": [
+              "leader",
+              "learn",
+              "care",
+              "every",
+              "classmate"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "REL"
+            ],
+            "used_target_words": [
+              "remind",
+              "forget",
+              "hand in",
+              "homework",
+              "classmate"
+            ],
+            "within_accepted": true,
+            "closest_reference": 2,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "leader",
+              "learn",
+              "care",
+              "every",
+              "classmate"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PERF": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "remind",
+              "forget",
+              "hand in",
+              "homework",
+              "classmate"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "REL": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T17:32:00Z",
+      "details": {
+        "solver": "B",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Ever since I became the class leader, I have learned to care about every classmate in my class.",
+            "confidence": "high",
+            "explanation_zh": "「自從……以來」搭配 since（加強語氣可用 ever since），since 子句用過去式 became，主要子句因為「已經學會、到現在仍持續」所以用現在完成式 have learned。「學會關心」譯成 learn to care about，「班上的每一位同學」用 every classmate in my class（every 後面接單數名詞）。"
+          },
+          "2": {
+            "translation": "I also remind the classmates who often forget to hand in their homework.",
+            "confidence": "high",
+            "explanation_zh": "「我也會提醒」表示習慣性的做法，用現在簡單式 remind（also 放在主詞之後、動詞之前）。「那些常常忘記交作業的同學」用 the classmates who often forget to hand in their homework 的關係代名詞子句修飾；forget to V 表示忘記去做某事，hand in 是交（作業），homework 為不可數名詞，不加 s。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PERF"
+            ],
+            "used_target_words": [
+              "leader",
+              "learn",
+              "care",
+              "every",
+              "classmate"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "（提醒，不影響判定）我的第 1 部分是 Ever since I became the class leader；parts.accepted 只有 Ever since I became class leader 與 Since I became the class leader，沒有兩者的組合，建議補上 Ever since I became the class leader（語意與參考譯文完全等價）。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "REL"
+            ],
+            "used_target_words": [
+              "remind",
+              "forget",
+              "hand in",
+              "homework",
+              "classmate"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "（提醒，不影響判定）4 部分依中文順序切成「提醒／常常忘記／交作業／同學」，但英文的 classmates 會排在 who often forget 前面（先行詞在前）；accepted 的各條已是各部分獨立可比對，不依順序，所以不算不公平。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "leader",
+              "learn",
+              "care",
+              "every",
+              "classmate"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PERF": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "remind",
+              "forget",
+              "hand in",
+              "homework",
+              "classmate"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "REL": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

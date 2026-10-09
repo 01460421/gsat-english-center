@@ -1,0 +1,788 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.72379a",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "basic",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "在九份（Jiufen）的老街上，很多遊客喜歡喝茶、吃小吃和拍照。",
+        "options": null,
+        "answer": "On the old streets of Jiufen, many visitors like to drink tea, eat snacks, and take pictures.",
+        "accepted_answers": [
+          "Many tourists enjoy drinking tea, eating snacks, and taking photos on Jiufen's old streets.",
+          "On the old streets in Jiufen, lots of visitors love to drink tea, eat snacks, and take photos."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "平行結構"
+          ],
+          "topic": "九份老街"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "到了晚上，在這些老街上散步也很浪漫。",
+        "options": null,
+        "answer": "At night, walking along these old streets is also very romantic.",
+        "accepted_answers": [
+          "Taking a walk on these old streets at night is romantic too.",
+          "At night, it is also very romantic to walk along these old streets."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "動名詞當主詞"
+          ],
+          "topic": "九份老街"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "九份老街"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「喝茶、吃小吃和拍照」三個並列的動作要用相同的形式：like／love to + 原形（like to drink tea, eat snacks, and take pictures，後兩個 to 可省略），或 enjoy／like + V-ing（enjoy drinking tea, eating snacks, and taking pictures）；enjoy 後面只能接 V-ing。最後一項前加 and，前面用逗號隔開。「拍照」是 take pictures／photos；「小吃」snacks、「遊客」visitors／tourists 都用複數。「在九份的老街上」寫 on the old streets of Jiufen，放句首要加逗號，也可以放句尾。",
+          "evidence": [
+            "喝茶、吃小吃和拍照",
+            "很多遊客喜歡"
+          ],
+          "strategy_zh": "列舉三個動作時，先決定第一個動作的形式（to V 或 V-ing），後面全部照抄同一個形式。",
+          "hints": [
+            "切成四段：在九份的老街上／很多遊客喜歡／喝茶、吃小吃／和拍照",
+            "標的詞彙：street（街）、visitor／tourist（遊客）、tea（茶）、snack（小吃）、picture／photo（照片）",
+            "句型框架：S + like to VR …, VR …, and VR … ／ S + enjoy V-ing …, V-ing …, and V-ing …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「在這些老街上散步」整個動作是句子的主詞，英文要把動作變成動名詞 walking along these old streets（或 taking a walk on …）當主詞，動名詞主詞視為單數，動詞用 is；也可以用虛主詞：It is also very romantic to walk along these old streets.。不能直接用原形 walk 開頭當主詞。「到了晚上」at night／in the evening，放句首加逗號或放句尾。「浪漫的」是形容詞 romantic（romance 是名詞）；「也」用 also（放 is 後面）或句尾的 too。",
+          "evidence": [
+            "在這些老街上散步",
+            "也很浪漫"
+          ],
+          "strategy_zh": "中文用一個動作當主詞時，英文先把動作變成 V-ing（或用 It is … to V），再接單數動詞。",
+          "hints": [
+            "切成四段：到了晚上／在這些老街上／散步（當主詞）／也很浪漫",
+            "標的詞彙：night（晚上）、old（老的）、street（街）、walk（散步，take a walk）、romantic（浪漫的）",
+            "句型框架：V-ing … + is + also + adj. ／ It is + also + adj. + to VR …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "On the old streets of Jiufen, many visitors like to drink tea, eat snacks, and take pictures.",
+            "Many tourists enjoy drinking tea, eating snacks, and taking photos on Jiufen's old streets.",
+            "On the old streets in Jiufen, lots of visitors love to drink tea, eat snacks, and take photos."
+          ],
+          "target_words": [
+            {
+              "word": "street",
+              "zh": "街（老街）",
+              "alternatives": [
+                "lane",
+                "road"
+              ]
+            },
+            {
+              "word": "visitor",
+              "zh": "遊客",
+              "alternatives": [
+                "tourist",
+                "traveler",
+                "traveller",
+                "people"
+              ]
+            },
+            {
+              "word": "tea",
+              "zh": "茶"
+            },
+            {
+              "word": "snack",
+              "zh": "小吃",
+              "alternatives": [
+                "food"
+              ]
+            },
+            {
+              "word": "picture",
+              "zh": "照片（拍照 take pictures）",
+              "alternatives": [
+                "photo",
+                "photograph"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PARA",
+              "grammar_id": "gp-parallelism",
+              "label_zh": "平行結構（三個並列動作用相同形式：to V …, V …, and V … ／ V-ing …, V-ing …, and V-ing …）",
+              "frame": "S + like to VR …, VR …, and VR … ／ S + enjoy V-ing …, V-ing …, and V-ing …",
+              "zh_trigger": "喝茶、吃小吃和拍照"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "在九份（Jiufen）的老街上",
+              "accepted": [
+                "On the old streets of Jiufen",
+                "on the old streets in Jiufen",
+                "on Jiufen's old streets",
+                "on Jiufen Old Street",
+                "on the old street in Jiufen",
+                "in the old streets of Jiufen",
+                "in the old streets in Jiufen",
+                "in Jiufen's old streets",
+                "in Jiufen Old Street",
+                "in the old street in Jiufen",
+                "along the old streets of Jiufen",
+                "along the old streets in Jiufen",
+                "along Jiufen's old streets",
+                "along Jiufen Old Street",
+                "along the old street in Jiufen",
+                "at Jiufen Old Street",
+                "on the old streets",
+                "on its old streets",
+                "in the old streets",
+                "in its old streets",
+                "along the old streets",
+                "along its old streets"
+              ],
+              "targets": [
+                "street"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "On the olds streets of Jiufen",
+                  "right": "On the old streets of Jiufen",
+                  "explanation_zh": "形容詞 old 沒有複數形，不加 s。"
+                },
+                {
+                  "wrong": "On Jiufen of the old streets",
+                  "right": "On the old streets of Jiufen",
+                  "explanation_zh": "「九份的老街」是 the old streets of Jiufen（或 Jiufen's old streets），of 後面接地名。"
+                }
+              ]
+            },
+            {
+              "zh": "很多遊客喜歡",
+              "accepted": [
+                "many visitors like",
+                "many tourists enjoy",
+                "lots of visitors love",
+                "many visitors",
+                "many tourists",
+                "many travelers",
+                "many people",
+                "a lot of visitors",
+                "a lot of tourists",
+                "a lot of travelers",
+                "a lot of people",
+                "lots of visitors",
+                "lots of tourists",
+                "lots of travelers",
+                "lots of people"
+              ],
+              "targets": [
+                "visitor"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "many visitor like",
+                  "right": "many visitors like",
+                  "explanation_zh": "many 後面接可數名詞複數 visitors。"
+                },
+                {
+                  "wrong": "many visitors likes",
+                  "right": "many visitors like",
+                  "explanation_zh": "主詞 visitors 是複數，動詞不加 s。"
+                }
+              ]
+            },
+            {
+              "zh": "喝茶、吃小吃",
+              "accepted": [
+                "drink tea, eat snacks",
+                "drink tea, eat local snacks",
+                "drink tea, eat some snacks",
+                "drink tea, try local snacks",
+                "drink tea, have snacks",
+                "drink tea, eat street food",
+                "have tea, eat snacks",
+                "have tea, eat local snacks",
+                "have tea, eat some snacks",
+                "have tea, try local snacks",
+                "have tea, have snacks",
+                "have tea, eat street food",
+                "drink some tea, eat snacks",
+                "drink some tea, eat local snacks",
+                "drink some tea, eat some snacks",
+                "drink some tea, try local snacks",
+                "drink some tea, have snacks",
+                "drink some tea, eat street food",
+                "drinking tea, eating snacks",
+                "drinking tea, eating local snacks",
+                "drinking tea, eating some snacks",
+                "drinking tea, trying local snacks",
+                "drinking tea, having snacks",
+                "drinking tea, eating street food",
+                "having tea, eating snacks",
+                "having tea, eating local snacks",
+                "having tea, eating some snacks",
+                "having tea, trying local snacks",
+                "having tea, having snacks",
+                "having tea, eating street food",
+                "drinking some tea, eating snacks",
+                "drinking some tea, eating local snacks",
+                "drinking some tea, eating some snacks",
+                "drinking some tea, trying local snacks",
+                "drinking some tea, having snacks",
+                "drinking some tea, eating street food"
+              ],
+              "targets": [
+                "tea",
+                "snack"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "drinking tea, eat snacks",
+                  "right": "drinking tea, eating snacks",
+                  "explanation_zh": "並列的動作形式要一致：前面用 drinking，後面也要用 eating。"
+                },
+                {
+                  "wrong": "drink tea, eat snack",
+                  "right": "drink tea, eat snacks",
+                  "explanation_zh": "「小吃」泛指各種點心，snack 要用複數 snacks。"
+                }
+              ]
+            },
+            {
+              "zh": "和拍照",
+              "accepted": [
+                "and take pictures",
+                "and take photos",
+                "and take photographs",
+                "and take some pictures",
+                "and take some photos",
+                "and taking pictures",
+                "and taking photos",
+                "and taking photographs",
+                "and taking some pictures",
+                "and taking some photos",
+                "and to take pictures",
+                "and to take photos"
+              ],
+              "targets": [
+                "PARA",
+                "picture"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "enjoy drinking tea, eating snacks, and take pictures",
+                  "right": "enjoy drinking tea, eating snacks, and taking pictures",
+                  "explanation_zh": "enjoy 後面三個動作都用 V-ing，最後一項也要寫 taking，三項才平行。"
+                },
+                {
+                  "wrong": "and make pictures",
+                  "right": "and take pictures",
+                  "explanation_zh": "「拍照」的動詞用 take（take pictures／photos），不用 make。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "word_form",
+              "zh": "喝茶、吃小吃和拍照",
+              "literal_error": "On the old streets of Jiufen, many visitors enjoy drinking tea, eating snacks, and take pictures.",
+              "part": 4,
+              "explanation_zh": "中文三個動詞沒有形式變化，照字面寫容易前面用 V-ing、最後一項又變回原形，三項不平行，這一部分扣分。"
+            }
+          ],
+          "bonus": [],
+          "notes_zh": "三個動作寫成 like／love to + 原形（to 只寫一次或每項都寫都可以），或 enjoy／like／love + V-ing，只要三項形式一致都給分。「小吃」寫 (local) snacks 或 street food、動詞用 eat、try、have 都可以，加不加 some 都可以；「拍照」take pictures／photos；「老街」可用 street、streets、lanes，介系詞 on、in、along 都可以，地點放句首或句尾都可以；「遊客」visitors、tourists 都可以。"
+        },
+        "2": {
+          "references": [
+            "At night, walking along these old streets is also very romantic.",
+            "Taking a walk on these old streets at night is romantic too.",
+            "At night, it is also very romantic to walk along these old streets."
+          ],
+          "target_words": [
+            {
+              "word": "night",
+              "zh": "晚上",
+              "alternatives": [
+                "evening",
+                "dark"
+              ]
+            },
+            {
+              "word": "old",
+              "zh": "老的"
+            },
+            {
+              "word": "street",
+              "zh": "街（老街）",
+              "alternatives": [
+                "lane",
+                "alley",
+                "road"
+              ]
+            },
+            {
+              "word": "walk",
+              "zh": "散步（take a walk）",
+              "alternatives": [
+                "stroll"
+              ]
+            },
+            {
+              "word": "romantic",
+              "zh": "浪漫的"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "NFSUBJ",
+              "grammar_id": "gp-gerund-subject",
+              "label_zh": "動名詞片語當主詞（也可用虛主詞 It is … to V，同屬「非限定動詞當主詞」）",
+              "frame": "V-ing … + is + (also) + adj. ／ It is + (also) + adj. + to VR …",
+              "zh_trigger": "在這些老街上散步"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "到了晚上",
+              "accepted": [
+                "At night",
+                "In the evening",
+                "At nighttime",
+                "When night comes",
+                "When night falls",
+                "After dark",
+                "When it gets dark",
+                "When evening comes"
+              ],
+              "targets": [
+                "night"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "In night",
+                  "right": "At night",
+                  "explanation_zh": "「在晚上」是 at night（或 in the evening），不用 in night。"
+                }
+              ]
+            },
+            {
+              "zh": "在這些老街上",
+              "accepted": [
+                "along these old streets",
+                "along the old streets",
+                "along those old streets",
+                "along these old lanes",
+                "on these old streets",
+                "on the old streets",
+                "on those old streets",
+                "on these old lanes",
+                "in these old streets",
+                "in the old streets",
+                "in those old streets",
+                "in these old lanes",
+                "through these old streets",
+                "through the old streets",
+                "through those old streets",
+                "through these old lanes",
+                "around these old streets",
+                "around the old streets",
+                "around those old streets",
+                "around these old lanes",
+                "along this old street",
+                "on this old street",
+                "along the old street",
+                "on the old street"
+              ],
+              "targets": [
+                "old",
+                "street"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "along these old street",
+                  "right": "along these old streets",
+                  "explanation_zh": "these 後面接複數名詞 streets。"
+                }
+              ]
+            },
+            {
+              "zh": "散步",
+              "accepted": [
+                "walking",
+                "taking a walk",
+                "going for a walk",
+                "strolling",
+                "taking a stroll",
+                "to walk",
+                "to take a walk",
+                "to go for a walk",
+                "to stroll",
+                "to take a stroll"
+              ],
+              "targets": [
+                "NFSUBJ",
+                "walk"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Walk along these old streets … is",
+                  "right": "Walking along these old streets … is",
+                  "explanation_zh": "動詞原形不能直接當主詞，要用動名詞 walking（或虛主詞 It is … to walk …）。"
+                },
+                {
+                  "wrong": "Walking … are also very romantic",
+                  "right": "Walking … is also very romantic",
+                  "explanation_zh": "動名詞當主詞視為單數，動詞用 is。"
+                }
+              ]
+            },
+            {
+              "zh": "也很浪漫",
+              "accepted": [
+                "is also very romantic",
+                "is very romantic too",
+                "is very romantic as well",
+                "can also be very romantic",
+                "is also really romantic",
+                "is really romantic too",
+                "is really romantic as well",
+                "can also be really romantic",
+                "is also quite romantic",
+                "is quite romantic too",
+                "is quite romantic as well",
+                "can also be quite romantic",
+                "is also so romantic",
+                "is so romantic too",
+                "is so romantic as well",
+                "can also be so romantic",
+                "is also romantic",
+                "is romantic too",
+                "is romantic as well",
+                "can also be romantic",
+                "it's also very romantic",
+                "it's also romantic",
+                "is very romantic",
+                "is romantic",
+                "also feels very romantic",
+                "feels romantic too",
+                "is also a romantic thing",
+                "is also a very romantic experience",
+                "is also full of romance",
+                "is also extremely romantic",
+                "is also pretty romantic"
+              ],
+              "targets": [
+                "romantic"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "is also very romance",
+                  "right": "is also very romantic",
+                  "explanation_zh": "romance 是名詞（愛情故事）；「浪漫的」是形容詞 romantic。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "verbal_subject",
+              "zh": "在這些老街上散步",
+              "literal_error": "At night, walk along these old streets is also very romantic.",
+              "part": 3,
+              "explanation_zh": "中文動詞可以直接當主詞，照字面寫成 walk … is，英文主詞沒有改成動名詞（或 It … to V），這一部分扣分。"
+            }
+          ],
+          "bonus": [],
+          "notes_zh": "動名詞主詞（Walking／Taking a walk … is …）或虛主詞 It is … to walk …，都屬於本題的句型（非限定動詞當主詞），都給分。「很」可寫 very、really、quite、so 或省略，「也」可用 also、too、as well 或省略；「老街」streets、the old street、lanes 都可以，介系詞 along、on、in、through、around 都可以；「散步」walking、taking a walk、going for a walk、strolling 都可以；「到了晚上」at night、in the evening、after dark 都可以，放句首或句尾都可以。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-basic-02-regen",
+    "lot": "translation-basic-02",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "2c5ef77e58a3846b481c3cd32f2468c2e9f8b4421d9d9d23848ce57a9f827d9b",
+    "spec_id": "translation-basic@2026-10-09",
+    "regenerated_from": "ai.tr.7c6750"
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 1,
+    "sentences": 1,
+    "avg_sentence_length": 1.0,
+    "denominator": 1,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 1.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {
+      "off": 1
+    },
+    "offlist_words": [
+      "jiufen"
+    ],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T18:19:55Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T18:00:28Z",
+      "details": {
+        "solver": "A",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "On the old streets of Jiufen, many tourists like to drink tea, eat snacks, and take pictures.",
+            "confidence": "high",
+            "explanation_zh": "「在……老街上」用 on the old streets of Jiufen；「喜歡」接三個並列動作，用 like to + 原形動詞，三項保持平行（drink / eat / take），最後一項前加 and；小吃譯 snacks，拍照用 take pictures（take photos 也可）。"
+          },
+          "2": {
+            "translation": "At night, it is also very romantic to take a walk on these old streets.",
+            "confidence": "high",
+            "explanation_zh": "「到了晚上」用 at night；「在老街上散步很浪漫」主詞是動作，用虛主詞 it is + 形容詞 + to V 最自然（也可寫成動名詞主詞 Walking on these old streets at night is also romantic.）；「也」放在 be 動詞後。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PARA"
+            ],
+            "used_target_words": [
+              "street",
+              "visitor",
+              "tea",
+              "snack",
+              "picture"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "NFSUBJ"
+            ],
+            "used_target_words": [
+              "night",
+              "old",
+              "street",
+              "walk",
+              "romantic"
+            ],
+            "within_accepted": true,
+            "closest_reference": 2,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "street",
+              "visitor",
+              "tea",
+              "snack",
+              "picture"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PARA": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "night",
+              "old",
+              "street",
+              "walk",
+              "romantic"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NFSUBJ": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T18:00:31Z",
+      "details": {
+        "solver": "B",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "On the old streets of Jiufen, many tourists like to drink tea, eat snacks, and take photos.",
+            "confidence": "high",
+            "explanation_zh": "「很多遊客喜歡……」用 many tourists like to + 三個並列的原形動詞（drink / eat / take），動詞形式一致；「在九份的老街上」用 on the old streets of Jiufen，因為下一句說「這些老街」，所以用複數。"
+          },
+          "2": {
+            "translation": "At night, walking along these old streets is also very romantic.",
+            "confidence": "high",
+            "explanation_zh": "「在這些老街上散步」當主詞，用動名詞 walking along these old streets；「到了晚上」譯成 At night；「也」放在 be 動詞後面用 also。也可寫成 It is also romantic to walk along ...。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PARA"
+            ],
+            "used_target_words": [
+              "street",
+              "visitor",
+              "tea",
+              "snack",
+              "picture"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "NFSUBJ"
+            ],
+            "used_target_words": [
+              "night",
+              "old",
+              "street",
+              "walk",
+              "romantic"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "street",
+              "visitor",
+              "tea",
+              "snack",
+              "picture"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PARA": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "night",
+              "old",
+              "street",
+              "walk",
+              "romantic"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NFSUBJ": true
+            },
+            "program_match": true
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

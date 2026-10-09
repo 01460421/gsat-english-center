@@ -1,0 +1,807 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.8b46d4",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "top",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "檢測自己的基因可以找出潛在的健康風險，而且越早發現，就越容易預防疾病。",
+        "options": null,
+        "answer": "Testing our own genes can identify potential health risks, and the earlier we find them, the easier it is to prevent disease.",
+        "accepted_answers": [
+          "Having our genes tested can reveal possible health risks, and the sooner we discover them, the more easily we can prevent diseases.",
+          "Getting our genes tested can help us find out our potential health risks, and the earlier we detect them, the easier it becomes to prevent diseases."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "動名詞片語當主詞",
+            "愈…愈…"
+          ],
+          "topic": "基因檢測"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "不過，檢測結果所顯示的未必就是將來會發生的事，因此保持冷靜是很重要的。",
+        "options": null,
+        "answer": "However, what the test results show is not necessarily what will happen in the future, so it is important to stay calm.",
+        "accepted_answers": [
+          "However, what the test results reveal may not be what will actually happen in the future, so it is important to keep calm.",
+          "But what the results of the test indicate might not be what happens in the future, so it is very important to remain calm."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "what 名詞子句",
+            "虛主詞 It ＋形容詞＋不定詞"
+          ],
+          "topic": "基因檢測"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "基因檢測"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "主詞是「檢測自己的基因」這個動作，用動名詞片語 Testing our own genes（或 Having our genes tested），動詞用單數。「找出潛在的健康風險」是 identify／reveal potential health risks（health 修飾 risks）。「越早發現，就越容易預防疾病」用 the + 比較級 …, the + 比較級 …：the earlier we find them, the easier it is to prevent disease；them 回指 risks。",
+          "evidence": [
+            "檢測自己的基因",
+            "越早發現，就越容易預防疾病"
+          ],
+          "strategy_zh": "看到「越…就越…」，直接套 the + 比較級 + S + V, the + 比較級 + S + V；兩個比較級前面都要有 the。",
+          "hints": [
+            "切成四段：檢測自己的基因／可以找出潛在的健康風險／而且越早發現／就越容易預防疾病",
+            "標的詞彙：gene（基因）、test（檢測）、potential（潛在的）、risk（風險）、prevent（預防）、disease（疾病）",
+            "句型框架：V-ing … + can + V …, and the + 比較級 + S + V, the + 比較級 + it is to VR"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「檢測結果所顯示的」是「所…的事物」，用 what 名詞子句當主詞：what the test results show（直述句語序）。「未必就是」是部分否定 is not necessarily／may not be。「將來會發生的事」也是 what 子句：what will happen in the future（happen 沒有被動）。「保持冷靜是很重要的」以動作當主詞，英文用虛主詞 it is important to stay calm（寫 staying calm is important 也是非限定動詞當主詞）。",
+          "evidence": [
+            "檢測結果所顯示的",
+            "未必就是將來會發生的事",
+            "保持冷靜是很重要的"
+          ],
+          "strategy_zh": "中文「…的」後面省略名詞、指「…的事物」時，英文多半用 what 子句；「做某事是很重要的」先想 It is important to VR。",
+          "hints": [
+            "切成四段：不過，檢測結果所顯示的／未必就是／將來會發生的事／因此保持冷靜是很重要的",
+            "標的詞彙：result（結果）、show（顯示）、necessarily（not necessarily＝未必）、happen（發生）、calm（冷靜的）、important（重要的）",
+            "句型框架：What + S + V + is not necessarily + what + will + V …, so it is important to VR"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "Testing our own genes can identify potential health risks, and the earlier we find them, the easier it is to prevent disease.",
+            "Having our genes tested can reveal possible health risks, and the sooner we discover them, the more easily we can prevent diseases.",
+            "Getting our genes tested can help us find out our potential health risks, and the earlier we detect them, the easier it becomes to prevent diseases."
+          ],
+          "target_words": [
+            {
+              "word": "gene",
+              "zh": "基因",
+              "alternatives": [
+                "genetic",
+                "DNA"
+              ]
+            },
+            {
+              "word": "test",
+              "zh": "檢測",
+              "alternatives": [
+                "analyze",
+                "check"
+              ]
+            },
+            {
+              "word": "potential",
+              "zh": "潛在的",
+              "alternatives": [
+                "possible"
+              ]
+            },
+            {
+              "word": "risk",
+              "zh": "風險"
+            },
+            {
+              "word": "prevent",
+              "zh": "預防"
+            },
+            {
+              "word": "disease",
+              "zh": "疾病",
+              "alternatives": [
+                "illness",
+                "illnesses",
+                "sickness"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "NFSUBJ",
+              "grammar_id": "gp-gerund-subject",
+              "label_zh": "動名詞片語當主詞",
+              "frame": "V-ing … + can + V …",
+              "zh_trigger": "檢測自己的基因"
+            },
+            {
+              "code": "COMP",
+              "grammar_id": "gp-the-more",
+              "label_zh": "愈…愈…",
+              "frame": "the + 比較級 + S + V, the + 比較級 + S + V ／ it is to VR",
+              "zh_trigger": "越早發現，就越容易"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "檢測自己的基因",
+              "accepted": [
+                "Testing our own genes",
+                "Having our genes tested",
+                "Getting our genes tested",
+                "Testing our genes",
+                "Testing one's own genes",
+                "Testing your own genes",
+                "Having our own genes tested",
+                "Getting our own genes tested",
+                "Taking a genetic test",
+                "Having our DNA tested",
+                "Having one's genes tested"
+              ],
+              "targets": [
+                "NFSUBJ",
+                "gene",
+                "test"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Test our own genes",
+                  "right": "Testing our own genes",
+                  "explanation_zh": "動作當主詞要用動名詞 Testing …（或 To test …）。"
+                },
+                {
+                  "wrong": "Testing our own gene",
+                  "right": "Testing our own genes",
+                  "explanation_zh": "每個人有許多基因，用複數 genes。"
+                }
+              ]
+            },
+            {
+              "zh": "可以找出潛在的健康風險",
+              "accepted": [
+                "can identify potential health risks",
+                "can reveal possible health risks",
+                "can help us find out our potential health risks",
+                "can reveal potential health risks",
+                "can help identify potential health risks",
+                "can help us find possible health risks",
+                "can detect potential health risks",
+                "can help us discover potential health risks",
+                "can uncover potential health risks",
+                "can find out potential health risks"
+              ],
+              "targets": [
+                "potential",
+                "risk"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "can find out potential healthy risks",
+                  "right": "can find out potential health risks",
+                  "explanation_zh": "「健康風險」是名詞修飾名詞 health risks；healthy 是「健康的」，healthy risks 意思不通。"
+                },
+                {
+                  "wrong": "can find out potential health risk",
+                  "right": "can find out potential health risks",
+                  "explanation_zh": "泛指各種風險，risk 用複數。"
+                }
+              ]
+            },
+            {
+              "zh": "而且越早發現",
+              "accepted": [
+                "and the earlier we find them",
+                "and the sooner we discover them",
+                "and the earlier we detect them",
+                "and the earlier they are discovered",
+                "and the earlier these risks are detected",
+                "and the earlier they are found",
+                "and the sooner we find them",
+                "and the earlier we know about them",
+                "and the earlier we discover them",
+                "and the earlier they are detected"
+              ],
+              "targets": [
+                "COMP"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "and more early we find them",
+                  "right": "and the earlier we find them",
+                  "explanation_zh": "「越…越…」是 the + 比較級 …, the + 比較級 …；early 的比較級是 earlier，前面要加 the。"
+                },
+                {
+                  "wrong": "and the earlier we find it",
+                  "right": "and the earlier we find them",
+                  "explanation_zh": "回指前面的 risks（複數），用 them。"
+                }
+              ]
+            },
+            {
+              "zh": "就越容易預防疾病",
+              "accepted": [
+                "the easier it is to prevent disease",
+                "the more easily we can prevent diseases",
+                "the easier it becomes to prevent diseases",
+                "the easier it is to prevent diseases",
+                "the more easily we can prevent disease",
+                "the easier it will be to prevent diseases",
+                "the easier it is to prevent illnesses",
+                "the easier it will be to prevent disease"
+              ],
+              "targets": [
+                "COMP",
+                "prevent",
+                "disease"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "the more easy it is to prevent disease",
+                  "right": "the easier it is to prevent disease",
+                  "explanation_zh": "easy 的比較級是 easier，不寫 more easy。"
+                },
+                {
+                  "wrong": "the easier to prevent disease it is",
+                  "right": "the easier it is to prevent disease",
+                  "explanation_zh": "後半句仍要用 the easier it is to VR 的語序。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "verbal_subject",
+              "zh": "檢測自己的基因",
+              "literal_error": "Test our own genes can identify potential health risks …",
+              "part": 1,
+              "explanation_zh": "「檢測自己的基因」是動作當主詞，要用動名詞 Testing our own genes；原形動詞不能當主詞。"
+            },
+            {
+              "type": "prenominal_modifier",
+              "zh": "健康風險",
+              "literal_error": "… can identify potential healthy risks …",
+              "part": 2,
+              "explanation_zh": "「健康風險」是名詞修飾名詞（health risks），不是形容詞 healthy；這是複合概念的誘錯點。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "Only by testing our genes early can we find potential health risks in time to prevent disease.",
+              "explanation_zh": "Only by + V-ing 放句首要倒裝（can we find）；屬加分寫法，基本分仍看動名詞主詞與「越…越…」。"
+            }
+          ],
+          "restructuring_zh": "「檢測自己的基因」以動作當主詞，英文用動名詞片語 Testing our own genes；「越早發現，就越容易預防」用 the earlier …, the easier it is to VR，第二個比較級後面常接虛主詞 it is to VR。"
+        },
+        "2": {
+          "references": [
+            "However, what the test results show is not necessarily what will happen in the future, so it is important to stay calm.",
+            "However, what the test results reveal may not be what will actually happen in the future, so it is important to keep calm.",
+            "But what the results of the test indicate might not be what happens in the future, so it is very important to remain calm."
+          ],
+          "target_words": [
+            {
+              "word": "result",
+              "zh": "結果"
+            },
+            {
+              "word": "show",
+              "zh": "顯示",
+              "alternatives": [
+                "reveal",
+                "indicate",
+                "suggest"
+              ]
+            },
+            {
+              "word": "necessarily",
+              "zh": "必定（not necessarily＝未必）",
+              "alternatives": [
+                "may not",
+                "might not",
+                "not always"
+              ]
+            },
+            {
+              "word": "happen",
+              "zh": "發生",
+              "alternatives": [
+                "occur",
+                "take place",
+                "come true"
+              ]
+            },
+            {
+              "word": "calm",
+              "zh": "冷靜的"
+            },
+            {
+              "word": "important",
+              "zh": "重要的",
+              "alternatives": [
+                "essential",
+                "crucial",
+                "vital"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "NCL",
+              "grammar_id": "gp-what-clause",
+              "label_zh": "what 引導的名詞子句（所…的事物）",
+              "frame": "What + S + V + is not necessarily + what + will + V …",
+              "zh_trigger": "檢測結果所顯示的"
+            },
+            {
+              "code": "NFSUBJ",
+              "grammar_id": "gp-it-adj-to",
+              "label_zh": "虛主詞 It ＋形容詞＋不定詞",
+              "frame": "It is + adj. + to VR …（動名詞主詞 V-ing … is + adj. 也算）",
+              "zh_trigger": "保持冷靜是很重要的"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "不過，檢測結果所顯示的",
+              "accepted": [
+                "However, what the test results show",
+                "However, what the test results reveal",
+                "But what the results of the test indicate",
+                "However, what the test results indicate",
+                "However, what the results of the test indicate",
+                "However, what the test results suggest",
+                "However, what the results show",
+                "But what the test results show",
+                "But what the test results reveal",
+                "But what the test results indicate",
+                "But what the test results suggest",
+                "But what the results show",
+                "Still, what the test results show",
+                "Still, what the test results reveal",
+                "Still, what the test results indicate",
+                "Still, what the results of the test indicate",
+                "Still, what the test results suggest",
+                "Still, what the results show",
+                "Nevertheless, what the test results show",
+                "Nevertheless, what the test results reveal",
+                "Nevertheless, what the test results indicate",
+                "Nevertheless, what the results of the test indicate",
+                "Nevertheless, what the test results suggest",
+                "Nevertheless, what the results show"
+              ],
+              "targets": [
+                "NCL",
+                "result",
+                "show"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "However, what do the test results show",
+                  "right": "However, what the test results show",
+                  "explanation_zh": "名詞子句要用直述句語序 what + S + V，不能用問句語序。"
+                },
+                {
+                  "wrong": "However, the test results showed",
+                  "right": "However, what the test results show",
+                  "explanation_zh": "「檢測結果所顯示的」是「所…的事」，要用 what 子句當主詞，不能只寫 the test results show。"
+                }
+              ]
+            },
+            {
+              "zh": "未必就是",
+              "accepted": [
+                "is not necessarily",
+                "may not be",
+                "might not be",
+                "will not necessarily be",
+                "is not always"
+              ],
+              "targets": [
+                "necessarily"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "is not must be",
+                  "right": "is not necessarily",
+                  "explanation_zh": "「未必」是 not necessarily 或 may not；must 前面不能再加 is not。"
+                },
+                {
+                  "wrong": "is necessarily not",
+                  "right": "is not necessarily",
+                  "explanation_zh": "「未必」是部分否定 not necessarily；necessarily not 變成「必定不是」，意思不同。"
+                }
+              ]
+            },
+            {
+              "zh": "將來會發生的事",
+              "accepted": [
+                "what will happen in the future",
+                "what will actually happen in the future",
+                "what happens in the future",
+                "what will happen",
+                "what will actually happen",
+                "what is going to happen in the future",
+                "what will happen later"
+              ],
+              "targets": [
+                "NCL",
+                "happen"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "the thing will happen in the future",
+                  "right": "what will happen in the future",
+                  "explanation_zh": "「將來會發生的事」用 what will happen；寫 the thing 就要接關係子句 the thing that will happen。"
+                },
+                {
+                  "wrong": "what will be happened in the future",
+                  "right": "what will happen in the future",
+                  "explanation_zh": "happen 是不及物動詞，沒有被動式。"
+                }
+              ]
+            },
+            {
+              "zh": "因此保持冷靜是很重要的",
+              "accepted": [
+                "so it is important to stay calm",
+                "so it is important to keep calm",
+                "so it is very important to remain calm",
+                "so it is very important to stay calm",
+                "so it is important to remain calm",
+                "therefore it is important to stay calm",
+                "so it is important for us to stay calm",
+                "so it is essential to stay calm",
+                "so staying calm is very important",
+                "so staying calm is important",
+                "so keeping calm is important",
+                "so it's important to stay calm",
+                "thus it is important to stay calm"
+              ],
+              "targets": [
+                "NFSUBJ",
+                "calm",
+                "important"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "so stay calm is very important",
+                  "right": "so staying calm is very important",
+                  "explanation_zh": "動作當主詞要用動名詞 staying，或改用虛主詞 it is important to stay calm。"
+                },
+                {
+                  "wrong": "so it is important to keep calmly",
+                  "right": "so it is important to keep calm",
+                  "explanation_zh": "keep／stay 後面接形容詞補語 calm，不用副詞 calmly。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "abstract_nominal",
+              "zh": "檢測結果所顯示的",
+              "literal_error": "However, the test results' showing is not necessarily …",
+              "part": 1,
+              "explanation_zh": "「…所顯示的」是「所…的事物」，英文用 what 名詞子句 what the test results show 當主詞，不要硬造名詞。"
+            },
+            {
+              "type": "verbal_subject",
+              "zh": "保持冷靜是很重要的",
+              "literal_error": "… so keep calm is very important.",
+              "part": 4,
+              "explanation_zh": "「保持冷靜」是動作當主詞，要用虛主詞 it is important to stay calm（或動名詞 staying calm）。"
+            }
+          ],
+          "bonus": [],
+          "restructuring_zh": "「檢測結果所顯示的」與「將來會發生的事」都是「所…的事」，英文各用一個 what 子句，前者當主詞、後者當補語；「保持冷靜是很重要的」以動作當主詞，英文改用虛主詞 it is important to stay calm。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ac-V-3",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-top-01-regen",
+    "lot": "translation-top-01",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "e70574f962ee519de618ee9fd1feb7119f6d0a8843e55cfe43a9c37f50b38132",
+    "spec_id": "translation-top@2026-10-09",
+    "regenerated_from": "ai.tr.bf28fe"
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T18:09:08Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T17:34:42Z",
+      "details": {
+        "solver": "A",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Testing one's own genes can identify potential health risks, and the earlier they are discovered, the easier it is to prevent disease.",
+            "confidence": "high",
+            "explanation_zh": "「檢測自己的基因」當主詞用動名詞 Testing one's own genes；「找出」用 identify；「越早發現，就越容易……」用 the + 比較級…, the + 比較級…；風險是被發現的，用被動 they are discovered；「預防疾病」泛指用不可數 disease。"
+          },
+          "2": {
+            "translation": "However, what the test results show is not necessarily what will happen in the future, so it is important to stay calm.",
+            "confidence": "high",
+            "explanation_zh": "「檢測結果所顯示的」與「將來會發生的事」都用 what 名詞子句；「未必就是」用 is not necessarily；「保持冷靜是很重要的」用虛主詞 it is important to stay calm。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "NFSUBJ",
+              "COMP"
+            ],
+            "used_target_words": [
+              "gene",
+              "test",
+              "potential",
+              "risk",
+              "prevent",
+              "disease"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "NCL",
+              "NFSUBJ"
+            ],
+            "used_target_words": [
+              "result",
+              "show",
+              "necessarily",
+              "happen",
+              "calm",
+              "important"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "gene",
+              "test",
+              "potential",
+              "risk",
+              "prevent",
+              "disease"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NFSUBJ": true,
+              "COMP": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "result",
+              "show",
+              "necessarily",
+              "happen",
+              "calm",
+              "important"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NCL": true,
+              "NFSUBJ": true
+            },
+            "program_match": true
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T17:40:23Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Testing your own genes can identify potential health risks, and the earlier they are discovered, the easier it is to prevent disease.",
+            "confidence": "high",
+            "explanation_zh": "「檢測自己的基因」用動名詞當主詞 Testing your own genes；「越早發現，就越容易預防疾病」是 the＋比較級…, the＋比較級… 句型，前半用被動 they are discovered，後半用虛主詞 it is easier to prevent disease。"
+          },
+          "2": {
+            "translation": "However, what the test results show is not necessarily what will happen in the future, so it is important to stay calm.",
+            "confidence": "high",
+            "explanation_zh": "「不過」用 However 加逗號；「檢測結果所顯示的」用名詞子句 what the test results show；「未必就是」是部分否定 is not necessarily；「將來會發生的事」用 what will happen in the future；「保持冷靜是很重要的」用 it is important to stay calm，前面以 so 表示因果。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "NFSUBJ",
+              "COMP"
+            ],
+            "used_target_words": [
+              "gene",
+              "test",
+              "potential",
+              "risk",
+              "prevent",
+              "disease"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "NCL",
+              "NFSUBJ"
+            ],
+            "used_target_words": [
+              "result",
+              "show",
+              "necessarily",
+              "happen",
+              "calm",
+              "important"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "gene",
+              "test",
+              "potential",
+              "risk",
+              "prevent",
+              "disease"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NFSUBJ": true,
+              "COMP": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "result",
+              "show",
+              "necessarily",
+              "happen",
+              "calm",
+              "important"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NCL": true,
+              "NFSUBJ": true
+            },
+            "program_match": true
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

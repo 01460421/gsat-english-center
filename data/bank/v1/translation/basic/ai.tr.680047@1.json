@@ -1,0 +1,692 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.680047",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "basic",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "為了母親節，我已經為媽媽做了一個小禮物。",
+        "options": null,
+        "answer": "For Mother's Day, I have already made a small gift for my mother.",
+        "accepted_answers": [
+          "I have already made a little present for my mom for Mother's Day.",
+          "To celebrate Mother's Day, I have already made a small gift for my mom."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "現在完成式"
+          ],
+          "topic": "母親節禮物"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "我把它藏在一個媽媽絕對找不到的地方。",
+        "options": null,
+        "answer": "I hid it in a place where my mother would never find it.",
+        "accepted_answers": [
+          "I have hidden it in a place where my mom will never find it.",
+          "I hid the gift in a place where my mother could never find it."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "關係副詞"
+          ],
+          "topic": "母親節禮物"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "母親節禮物"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「已經…了」表示到現在已經完成的事，用現在完成式 have already made（make 的過去分詞是 made），already 放在 have 和過去分詞中間。「為了母親節」for Mother's Day（Mother's 要有所有格）；「為媽媽做」是 make sth for sb，介系詞用 for。「一個小禮物」a small gift／a little present。",
+          "evidence": [
+            "我已經為媽媽做了一個小禮物"
+          ],
+          "strategy_zh": "「已經＋動詞＋了」通常用 have/has + already + p.p.。",
+          "hints": [
+            "切成四段：為了母親節／我已經（做了）／為媽媽／一個小禮物",
+            "標的詞彙：Mother's Day（母親節）、already（已經）、make（做）、mother（媽媽）、small（小的）、gift（禮物）",
+            "句型框架：S + have + already + p.p. + sth + for sb …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「媽媽絕對找不到的地方」修飾「地方」，英文要放在名詞後面，用關係副詞 where 引導：a place where my mother would never find it（where＝in which；子句缺的是地點，所以 find it 的 it 要保留）。如果改用 that／which，就要把 it 拿掉：a place that my mother would never find。「絕對找不到」would never find／will never find；「藏」hide 的過去式是 hid，過去分詞是 hidden。",
+          "evidence": [
+            "媽媽絕對找不到的地方"
+          ],
+          "strategy_zh": "「…的地方」修飾語有完整的主詞和動詞時，寫成 a place where + S + V。",
+          "hints": [
+            "切成四段：我把它藏在／媽媽／絕對找不到／的地方（a place where …）",
+            "標的詞彙：hide（藏）、place（地方）、mother（媽媽）、never（絕不）、find（找到）",
+            "句型框架：S + hid + it + in a place + where + S + would never + VR …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "For Mother's Day, I have already made a small gift for my mother.",
+            "I have already made a little present for my mom for Mother's Day.",
+            "To celebrate Mother's Day, I have already made a small gift for my mom."
+          ],
+          "target_words": [
+            {
+              "word": "Mother's Day",
+              "zh": "母親節"
+            },
+            {
+              "word": "already",
+              "zh": "已經"
+            },
+            {
+              "word": "make",
+              "zh": "做",
+              "alternatives": [
+                "prepare",
+                "create"
+              ]
+            },
+            {
+              "word": "mother",
+              "zh": "媽媽",
+              "alternatives": [
+                "mom",
+                "mum"
+              ]
+            },
+            {
+              "word": "small",
+              "zh": "小的",
+              "alternatives": [
+                "little",
+                "tiny"
+              ]
+            },
+            {
+              "word": "gift",
+              "zh": "禮物",
+              "alternatives": [
+                "present"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PERF",
+              "grammar_id": "gp-present-perfect",
+              "label_zh": "現在完成式（已經…了：have already + p.p.）",
+              "frame": "S + have/has + already + p.p. …",
+              "zh_trigger": "已經"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "為了母親節",
+              "accepted": [
+                "For Mother's Day",
+                "To celebrate Mother's Day",
+                "For this Mother's Day",
+                "For this year's Mother's Day",
+                "In preparation for Mother's Day",
+                "To prepare for Mother's Day",
+                "For Mother's Day this year",
+                "Mother's Day"
+              ],
+              "targets": [
+                "Mother's Day"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "For Mother Day",
+                  "right": "For Mother's Day",
+                  "explanation_zh": "「母親節」是 Mother's Day，要有所有格。"
+                }
+              ]
+            },
+            {
+              "zh": "我已經",
+              "accepted": [
+                "I have already made",
+                "I have already prepared",
+                "I have made",
+                "I've already made",
+                "I've already prepared",
+                "I've made",
+                "I have already finished making",
+                "I have already created"
+              ],
+              "targets": [
+                "PERF",
+                "already",
+                "make"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "I already make",
+                  "right": "I have already made",
+                  "explanation_zh": "「已經…了」是到現在已完成的事，用現在完成式。"
+                },
+                {
+                  "wrong": "I have already make",
+                  "right": "I have already made",
+                  "explanation_zh": "have 後面接過去分詞 made。"
+                }
+              ]
+            },
+            {
+              "zh": "為媽媽",
+              "accepted": [
+                "for my mother",
+                "for my mom",
+                "for Mom",
+                "for my mum",
+                "made my mother",
+                "made my mom",
+                "made Mom"
+              ],
+              "targets": [
+                "mother"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "to my mother",
+                  "right": "for my mother",
+                  "explanation_zh": "「為某人做某物」是 make sth for sb，介系詞用 for。"
+                }
+              ]
+            },
+            {
+              "zh": "一個小禮物",
+              "accepted": [
+                "a small gift",
+                "a small present",
+                "a little gift",
+                "a little present",
+                "a tiny gift",
+                "a small handmade gift",
+                "a little handmade gift"
+              ],
+              "targets": [
+                "small",
+                "gift"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "a small gifts",
+                  "right": "a small gift",
+                  "explanation_zh": "「一個」用 a，後面接單數 gift。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "tense_trigger",
+              "zh": "已經",
+              "literal_error": "For Mother's Day, I already make a small gift for my mother.",
+              "part": 2,
+              "explanation_zh": "「已經…了」是完成式的訊號，照字面用現在式 make（already make）會漏掉完成式，這一部分扣分。"
+            }
+          ],
+          "bonus": [],
+          "notes_zh": "「為了母親節」for Mother's Day、to celebrate Mother's Day 都給分，可放句首或句尾；「做了」made、prepared 都可以；「媽媽」my mother、my mom、Mom 都可以；「小禮物」a small／little gift 或 present 都可以（可加 handmade）。"
+        },
+        "2": {
+          "references": [
+            "I hid it in a place where my mother would never find it.",
+            "I have hidden it in a place where my mom will never find it.",
+            "I hid the gift in a place where my mother could never find it."
+          ],
+          "target_words": [
+            {
+              "word": "hide",
+              "zh": "藏",
+              "alternatives": [
+                "put",
+                "keep"
+              ]
+            },
+            {
+              "word": "place",
+              "zh": "地方",
+              "alternatives": [
+                "spot",
+                "somewhere"
+              ]
+            },
+            {
+              "word": "mother",
+              "zh": "媽媽",
+              "alternatives": [
+                "mom",
+                "mum"
+              ]
+            },
+            {
+              "word": "never",
+              "zh": "絕不（絕對…不）",
+              "alternatives": [
+                "definitely",
+                "possibly"
+              ]
+            },
+            {
+              "word": "find",
+              "zh": "找到"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "REL",
+              "grammar_id": "gp-relative-adverb",
+              "label_zh": "關係副詞 where（…的地方：a place where + S + V）",
+              "frame": "S + V … in a place + where + S + V …",
+              "zh_trigger": "找不到的地方"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "我把它藏在",
+              "accepted": [
+                "I hid it",
+                "I hid the gift",
+                "I have hidden it",
+                "I have hidden the gift",
+                "I've hidden it",
+                "I've hidden the gift",
+                "I put it",
+                "I put the gift",
+                "I hid the present",
+                "I have put it",
+                "I kept it"
+              ],
+              "targets": [
+                "hide"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "I hided it",
+                  "right": "I hid it",
+                  "explanation_zh": "hide 是不規則動詞：hide－hid－hidden。"
+                }
+              ]
+            },
+            {
+              "zh": "媽媽",
+              "accepted": [
+                "my mother",
+                "my mom",
+                "Mom",
+                "my mum",
+                "Mum",
+                "Mother"
+              ],
+              "targets": [
+                "mother"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "my mother she",
+                  "right": "my mother",
+                  "explanation_zh": "子句的主詞只寫一次，不要再加 she。"
+                }
+              ]
+            },
+            {
+              "zh": "絕對找不到",
+              "accepted": [
+                "would never find it",
+                "will never find it",
+                "could never find it",
+                "can never find it",
+                "would never be able to find it",
+                "will never be able to find it",
+                "definitely can't find it",
+                "definitely won't find it",
+                "can't possibly find it",
+                "could not possibly find it",
+                "is never going to find it",
+                "would never find",
+                "will never find"
+              ],
+              "targets": [
+                "never",
+                "find"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "would never found it",
+                  "right": "would never find it",
+                  "explanation_zh": "助動詞 would 後面接原形動詞 find。"
+                },
+                {
+                  "wrong": "would not never find it",
+                  "right": "would never find it",
+                  "explanation_zh": "never 本身就是否定，不要再加 not（雙重否定）。"
+                }
+              ]
+            },
+            {
+              "zh": "的地方",
+              "accepted": [
+                "a place where",
+                "a spot where",
+                "somewhere",
+                "a place that",
+                "the place where",
+                "a hiding place where",
+                "a place in which",
+                "somewhere that"
+              ],
+              "targets": [
+                "REL",
+                "place"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "a place which my mother would never find it",
+                  "right": "a place where my mother would never find it",
+                  "explanation_zh": "子句裡缺的是「地點」，用 where；用 which／that 時，後面不能再有 it。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "prenominal_modifier",
+              "zh": "媽媽絕對找不到的地方",
+              "literal_error": "I hid it in a place which my mother would never find it.",
+              "part": 4,
+              "explanation_zh": "把前面的修飾語「媽媽絕對找不到的」改成後位子句時，照「的＝which」直譯會選錯關係詞；子句缺的是地點，要用 where，這一部分扣分。"
+            }
+          ],
+          "bonus": [],
+          "notes_zh": "關係副詞 where 是本題的句型；寫 a place that my mother would never find（關係代名詞，後面不能再有 it）或 somewhere my mother would never find it，同樣是形容詞子句，也給分。「藏」寫 hid、have hidden 或 put 都可以；「絕對找不到」would／will／could never find it 都可以；「媽媽」my mother、my mom、Mom 都可以。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-basic-02-regen",
+    "lot": "translation-basic-02",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "2c5ef77e58a3846b481c3cd32f2468c2e9f8b4421d9d9d23848ce57a9f827d9b",
+    "spec_id": "translation-basic@2026-10-09",
+    "regenerated_from": "ai.tr.a3233b"
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T18:19:59Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "warn",
+      "created_at": "2026-10-09T18:00:28Z",
+      "details": {
+        "solver": "A",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "For Mother's Day, I have already made a small gift for my mom.",
+            "confidence": "high",
+            "explanation_zh": "「已經做了」表示動作完成、結果到現在，用現在完成式 have already made；「為了母親節」用 For Mother's Day 放句首，「為媽媽」用 for my mom；already 放在 have 與過去分詞之間；禮物用 gift（present 也可）。"
+          },
+          "2": {
+            "translation": "I hid it in a place where my mom will never find it.",
+            "confidence": "medium",
+            "explanation_zh": "「一個媽媽絕對找不到的地方」用關係副詞 where 引導形容詞子句修飾 a place（也可寫 somewhere my mom will never find it 或 a place that my mom can never find）；「絕對找不到」用 will never find（can never find 也可）；「藏」用過去式 hid（或接上一句用 have hidden）。主要子句的時態與「找不到」用 will／can 都有不只一種合理寫法，所以信心給 medium。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PERF"
+            ],
+            "used_target_words": [
+              "Mother's Day",
+              "already",
+              "make",
+              "mother",
+              "small",
+              "gift"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "REL"
+            ],
+            "used_target_words": [
+              "hide",
+              "place",
+              "mother",
+              "never",
+              "find"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "第 2 部分「媽媽」只有一個名詞（my mother／my mom），列的常見錯誤（my mother she）也很少見，幾乎等於送分；第 4 部分「的地方」卻同時承擔關係副詞 where（本題句型）與 place，四個部分輕重差很多。建議改切成「我把它藏在／一個……的地方（a place where）／媽媽絕對找不到（my mother would never）／找到它（find it）」之類，讓「媽媽」併入子句主詞那一段，每段都有可判對錯的語法點。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "Mother's Day",
+              "already",
+              "make",
+              "mother",
+              "small",
+              "gift"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PERF": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "hide",
+              "place",
+              "mother",
+              "never",
+              "find"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "REL": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 2 題驗證者對4 部分切分有意見（warn）：第 2 部分「媽媽」只有一個名詞（my mother／my mom），列的常見錯誤（my mother she）也很少見，幾乎等於送分；第 4 部分「的地方」卻同時承擔關係副詞 where（本題句型）與 place，四個部分輕重差很多。建議"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T18:00:31Z",
+      "details": {
+        "solver": "B",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "For Mother's Day, I have already made a small gift for my mom.",
+            "confidence": "high",
+            "explanation_zh": "「已經……做了」強調到目前為止已完成，用現在完成式 have already made；「為了母親節」譯成 For Mother's Day；「為媽媽做」用 make ... for my mom。"
+          },
+          "2": {
+            "translation": "I hid it in a place where my mom will never find it.",
+            "confidence": "high",
+            "explanation_zh": "「藏」是過去完成的動作，用過去式 hid；「一個媽媽絕對找不到的地方」用關係副詞 where 引導形容詞子句修飾 place；「絕對找不到」用 will never find。「它」指上一句的禮物，所以用 it。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PERF"
+            ],
+            "used_target_words": [
+              "Mother's Day",
+              "already",
+              "make",
+              "mother",
+              "small",
+              "gift"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "REL"
+            ],
+            "used_target_words": [
+              "hide",
+              "place",
+              "mother",
+              "never",
+              "find"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "Mother's Day",
+              "already",
+              "make",
+              "mother",
+              "small",
+              "gift"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PERF": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "hide",
+              "place",
+              "mother",
+              "never",
+              "find"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "REL": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

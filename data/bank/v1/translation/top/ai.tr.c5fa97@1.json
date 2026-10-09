@@ -1,0 +1,894 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.c5fa97",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "top",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "要負擔太空旅遊，對一般人來說並不容易，但富豪們卻爭相購票，使票價不斷上漲。",
+        "options": null,
+        "answer": "It is not easy for ordinary people to afford space tourism, but the wealthy are rushing to buy tickets, pushing prices ever higher.",
+        "accepted_answers": [
+          "It is difficult for average people to afford space travel, yet wealthy people are competing to buy tickets, driving ticket prices higher and higher.",
+          "It is hard for the average person to afford a trip to space, but rich people are scrambling to buy tickets, causing prices to keep rising."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "句尾分詞表結果",
+            "虛主詞 It ＋形容詞＋不定詞"
+          ],
+          "topic": "太空旅遊"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "送少數富人上太空玩幾分鐘，比我們想像中更傷害地球。",
+        "options": null,
+        "answer": "Sending a few wealthy people into space for a few minutes of fun does more harm to the earth than we imagine.",
+        "accepted_answers": [
+          "Sending a handful of rich people into space for a few minutes of fun harms the planet more than we think.",
+          "Flying a small number of wealthy people into space to have fun for a few minutes is more harmful to the earth than we realize."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "動名詞片語當主詞",
+            "比較級"
+          ],
+          "topic": "太空旅遊"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "太空旅遊"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「要負擔…，對一般人來說並不容易」用虛主詞 It is not easy for ordinary people to afford …；afford 是「負擔得起」，直接接 space tourism 或 the cost of …。「但富豪們卻爭相購票」是另一個有實際主詞的子句：the wealthy／the rich 指一群人，動詞用複數 are rushing／competing to buy tickets。「，使票價不斷上漲」是搶票造成的結果，用句尾分詞 pushing prices ever higher 或 causing ticket prices to keep rising。",
+          "evidence": [
+            "要負擔太空旅遊，對一般人來說並不容易",
+            "使票價不斷上漲"
+          ],
+          "strategy_zh": "句尾表結果的分詞要接在有實際主詞的子句後面（富豪搶票 → 票價上漲），邏輯關係才清楚。",
+          "hints": [
+            "切成四段：要負擔太空旅遊／對一般人來說並不容易／但富豪們卻爭相購票／使票價不斷上漲",
+            "標的詞彙：afford（負擔得起）、tourism（旅遊）、ordinary（一般的）、wealthy（富有的）、ticket（票）、price（價格）",
+            "句型框架：It is not easy for sb to VR …, but S + be + V-ing …, pushing／driving／causing + O …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "主詞是「送少數富人上太空玩幾分鐘」這整個動作，用動名詞片語 Sending a few wealthy people into space for a few minutes of fun 當主詞，動詞用單數。「玩幾分鐘」要把「玩」譯出來：for a few minutes of fun 或 to have fun for a few minutes。「比我們想像中更傷害地球」用比較級：does more harm to the earth（harm 不可數）、harms the earth more 或 is more harmful to the earth，最後接 than we imagine。",
+          "evidence": [
+            "送少數富人上太空玩幾分鐘",
+            "比我們想像中更傷害地球"
+          ],
+          "strategy_zh": "中文「比 B 更…」的 B 在前面，英文的 than B 要放到比較的內容後面。",
+          "hints": [
+            "切成四段：送少數富人上太空／玩幾分鐘／比我們想像中／更傷害地球",
+            "標的詞彙：wealthy（富有的）、space（太空）、minute（分鐘）、harm（傷害）、earth（地球）、imagine（想像）",
+            "句型框架：V-ing … + does more harm to + O + than + S + imagine"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "It is not easy for ordinary people to afford space tourism, but the wealthy are rushing to buy tickets, pushing prices ever higher.",
+            "It is difficult for average people to afford space travel, yet wealthy people are competing to buy tickets, driving ticket prices higher and higher.",
+            "It is hard for the average person to afford a trip to space, but rich people are scrambling to buy tickets, causing prices to keep rising."
+          ],
+          "target_words": [
+            {
+              "word": "afford",
+              "zh": "負擔得起",
+              "alternatives": [
+                "pay for"
+              ]
+            },
+            {
+              "word": "tourism",
+              "zh": "旅遊",
+              "alternatives": [
+                "travel",
+                "trip",
+                "trips"
+              ]
+            },
+            {
+              "word": "ordinary",
+              "zh": "一般的",
+              "alternatives": [
+                "average",
+                "common",
+                "regular"
+              ]
+            },
+            {
+              "word": "wealthy",
+              "zh": "富有的",
+              "alternatives": [
+                "rich",
+                "billionaire",
+                "billionaires",
+                "super-rich"
+              ]
+            },
+            {
+              "word": "ticket",
+              "zh": "票"
+            },
+            {
+              "word": "price",
+              "zh": "價格",
+              "alternatives": [
+                "fare",
+                "cost"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PART",
+              "grammar_id": "gp-participle-result",
+              "label_zh": "句尾分詞片語表結果（…，使得…）",
+              "frame": "S + V …, pushing／driving／causing + O …",
+              "zh_trigger": "使票價不斷上漲"
+            },
+            {
+              "code": "NFSUBJ",
+              "grammar_id": "gp-it-adj-to",
+              "label_zh": "虛主詞 It ＋形容詞＋for sb＋不定詞",
+              "frame": "It is + adj. + for sb + to VR …",
+              "zh_trigger": "要負擔太空旅遊，對一般人來說並不容易"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "要負擔太空旅遊",
+              "accepted": [
+                "to afford space tourism",
+                "to afford space travel",
+                "to afford a trip to space",
+                "to afford trips to space",
+                "to afford a space trip",
+                "to afford space trips",
+                "to pay for space tourism",
+                "to pay for a trip to space",
+                "to afford the cost of space tourism",
+                "to pay for space travel",
+                "Affording space tourism",
+                "Paying for space tourism"
+              ],
+              "targets": [
+                "afford",
+                "tourism"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "to burden space tourism",
+                  "right": "to afford space tourism",
+                  "explanation_zh": "「負擔」在這裡是「負擔得起（費用）」，英文用 afford；burden 是「使…負重擔」，意思不對。"
+                },
+                {
+                  "wrong": "to afford space tour",
+                  "right": "to afford space tourism",
+                  "explanation_zh": "「太空旅遊」泛指這種活動，用 space tourism／space travel；tour 是可數名詞，單數要加冠詞。"
+                }
+              ]
+            },
+            {
+              "zh": "對一般人來說並不容易",
+              "accepted": [
+                "It is not easy for ordinary people",
+                "It is difficult for average people",
+                "It is hard for the average person",
+                "It is not easy for average people",
+                "It is not easy for the average person",
+                "It is not easy for ordinary citizens",
+                "It is not easy for common people",
+                "It is not easy for regular people",
+                "It is not easy for most people",
+                "It is difficult for ordinary people",
+                "It is difficult for the average person",
+                "It is difficult for ordinary citizens",
+                "It is difficult for common people",
+                "It is difficult for regular people",
+                "It is difficult for most people",
+                "It is hard for ordinary people",
+                "It is hard for average people",
+                "It is hard for ordinary citizens",
+                "It is hard for common people",
+                "It is hard for regular people",
+                "It is hard for most people",
+                "For ordinary people, it is not easy",
+                "For ordinary people, it is difficult",
+                "For the average person, it is hard",
+                "is not easy for ordinary people",
+                "is difficult for ordinary people",
+                "is hard for the average person"
+              ],
+              "targets": [
+                "NFSUBJ",
+                "ordinary"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Ordinary people are not easy to afford",
+                  "right": "It is not easy for ordinary people to afford",
+                  "explanation_zh": "人不能當 easy 的主詞（人不是「容易的」）；用虛主詞 It is not easy for sb to VR。"
+                },
+                {
+                  "wrong": "It is not easy that ordinary people afford",
+                  "right": "It is not easy for ordinary people to afford",
+                  "explanation_zh": "It is + adj. 後面接 for sb + to VR，不接 that 子句。"
+                }
+              ]
+            },
+            {
+              "zh": "但富豪們卻爭相購票",
+              "accepted": [
+                "but the wealthy are rushing to buy tickets",
+                "yet wealthy people are competing to buy tickets",
+                "but rich people are scrambling to buy tickets",
+                "but the rich are rushing to buy tickets",
+                "but wealthy people are rushing to buy tickets",
+                "but rich people are rushing to buy tickets",
+                "yet the rich are competing to buy tickets",
+                "but the wealthy are competing for tickets",
+                "but rich people are competing for tickets",
+                "but the wealthy are eager to buy tickets",
+                "but wealthy people are lining up to buy tickets",
+                "but the rich are snapping up tickets",
+                "but rich people are racing to buy tickets",
+                "but the super-rich are rushing to buy tickets",
+                "while the wealthy are rushing to buy tickets",
+                "but the wealthy rush to buy tickets",
+                "but rich people compete to buy tickets",
+                "but the wealthy are scrambling to buy tickets",
+                "but the rich are fighting to buy tickets",
+                "but wealthy people are vying for tickets",
+                "but the rich are competing to buy tickets",
+                "yet the wealthy are rushing to buy tickets"
+              ],
+              "targets": [
+                "wealthy",
+                "ticket"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "but the wealthy is rushing to buy tickets",
+                  "right": "but the wealthy are rushing to buy tickets",
+                  "explanation_zh": "the + 形容詞（the wealthy／the rich）指一群人，動詞用複數。"
+                },
+                {
+                  "wrong": "but the riches are rushing to buy tickets",
+                  "right": "but the rich are rushing to buy tickets",
+                  "explanation_zh": "「富人」是 the rich（the + 形容詞），riches 是「財富」。"
+                },
+                {
+                  "wrong": "but the wealthy are rushing to buy ticket",
+                  "right": "but the wealthy are rushing to buy tickets",
+                  "explanation_zh": "很多人搶票，ticket 用複數。"
+                }
+              ]
+            },
+            {
+              "zh": "使票價不斷上漲",
+              "accepted": [
+                "pushing prices ever higher",
+                "driving ticket prices higher and higher",
+                "causing prices to keep rising",
+                "pushing prices higher and higher",
+                "pushing prices even higher",
+                "pushing prices up continuously",
+                "pushing prices up and up",
+                "pushing ticket prices ever higher",
+                "pushing ticket prices higher and higher",
+                "pushing ticket prices even higher",
+                "pushing ticket prices up continuously",
+                "pushing ticket prices up and up",
+                "driving prices ever higher",
+                "driving prices higher and higher",
+                "driving prices even higher",
+                "driving prices up continuously",
+                "driving prices up and up",
+                "driving ticket prices ever higher",
+                "driving ticket prices even higher",
+                "driving ticket prices up continuously",
+                "driving ticket prices up and up",
+                "sending prices ever higher",
+                "sending prices higher and higher",
+                "sending prices even higher",
+                "sending prices up continuously",
+                "sending prices up and up",
+                "sending ticket prices ever higher",
+                "sending ticket prices higher and higher",
+                "sending ticket prices even higher",
+                "sending ticket prices up continuously",
+                "sending ticket prices up and up",
+                "pushing up prices",
+                "pushing up ticket prices",
+                "driving up prices",
+                "driving up ticket prices",
+                "causing prices to rise continuously",
+                "causing prices to rise steadily",
+                "causing prices to keep going up",
+                "causing ticket prices to keep rising",
+                "causing ticket prices to rise continuously",
+                "causing ticket prices to rise steadily",
+                "causing ticket prices to keep going up",
+                "making ticket prices keep rising",
+                "making prices rise again and again",
+                "making ticket prices go up continuously"
+              ],
+              "targets": [
+                "PART",
+                "price"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "pushes prices ever higher",
+                  "right": "pushing prices ever higher",
+                  "explanation_zh": "逗號後直接接 pushes 會變成兩個動詞卻沒有連接詞；表結果用分詞 pushing／driving／causing。"
+                },
+                {
+                  "wrong": "making ticket prices to keep rising",
+                  "right": "making ticket prices keep rising",
+                  "explanation_zh": "make 是使役動詞，後面接原形動詞；要接 to VR 就改用 causing ticket prices to keep rising。"
+                },
+                {
+                  "wrong": "causing ticket prices keep rising",
+                  "right": "causing ticket prices to keep rising",
+                  "explanation_zh": "cause + O + to VR，不能省略 to。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "collocation",
+              "zh": "負擔",
+              "literal_error": "To burden space tourism is not easy for ordinary people …",
+              "part": 1,
+              "explanation_zh": "「負擔（費用）」英文用 afford（負擔得起），不是 burden；afford 直接接活動或費用（afford space tourism／afford the cost）。"
+            },
+            {
+              "type": "verbal_subject",
+              "zh": "對一般人來說並不容易",
+              "literal_error": "Ordinary people are not easy to afford space tourism …",
+              "part": 2,
+              "explanation_zh": "中文把「要負擔太空旅遊」這個動作放在前面當主題，英文要改用虛主詞 It is not easy for ordinary people to VR；人不能當 easy 的主詞。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "So expensive is space tourism that few ordinary people can afford it, yet the wealthy keep rushing to buy tickets, pushing prices ever higher.",
+              "explanation_zh": "So + 形容詞 + be + S + that … 是倒裝，語氣更強；屬加分寫法，基本分仍看虛主詞與句尾分詞。"
+            }
+          ],
+          "restructuring_zh": "「要負擔太空旅遊，對一般人來說並不容易」以動作開頭，英文改用虛主詞 It is not easy for ordinary people to afford …；「，使票價不斷上漲」接在有實際主詞的子句（the wealthy are rushing to buy tickets）後面，用句尾分詞 pushing／driving／causing … 表結果，不必另起一句。"
+        },
+        "2": {
+          "references": [
+            "Sending a few wealthy people into space for a few minutes of fun does more harm to the earth than we imagine.",
+            "Sending a handful of rich people into space for a few minutes of fun harms the planet more than we think.",
+            "Flying a small number of wealthy people into space to have fun for a few minutes is more harmful to the earth than we realize."
+          ],
+          "target_words": [
+            {
+              "word": "wealthy",
+              "zh": "富有的",
+              "alternatives": [
+                "rich"
+              ]
+            },
+            {
+              "word": "space",
+              "zh": "太空"
+            },
+            {
+              "word": "minute",
+              "zh": "分鐘"
+            },
+            {
+              "word": "harm",
+              "zh": "傷害",
+              "alternatives": [
+                "harmful",
+                "damage",
+                "hurt"
+              ]
+            },
+            {
+              "word": "earth",
+              "zh": "地球",
+              "alternatives": [
+                "planet"
+              ]
+            },
+            {
+              "word": "imagine",
+              "zh": "想像",
+              "alternatives": [
+                "think",
+                "realize",
+                "expect",
+                "believe"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "NFSUBJ",
+              "grammar_id": "gp-gerund-subject",
+              "label_zh": "動名詞片語當主詞",
+              "frame": "V-ing … + V(單數) …",
+              "zh_trigger": "送少數富人上太空玩幾分鐘"
+            },
+            {
+              "code": "COMP",
+              "grammar_id": "gp-comparative-superlative",
+              "label_zh": "比較級（more … than）",
+              "frame": "S + does more harm to + O + than … ／ S + harms + O + more than …",
+              "zh_trigger": "比我們想像中更傷害地球"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "送少數富人上太空",
+              "accepted": [
+                "Sending a few wealthy people into space",
+                "Sending a handful of rich people into space",
+                "Flying a small number of wealthy people into space",
+                "Sending a few rich people into space",
+                "Sending a handful of wealthy people into space",
+                "Sending a small number of rich people into space",
+                "Sending a few wealthy people to space",
+                "Sending a few rich people to space",
+                "Taking a few wealthy people into space",
+                "Flying a few rich people into space"
+              ],
+              "targets": [
+                "NFSUBJ",
+                "wealthy",
+                "space"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Send a few wealthy people into space",
+                  "right": "Sending a few wealthy people into space",
+                  "explanation_zh": "動作當主詞要用動名詞 Sending …（或 To send …），原形動詞不能當主詞。"
+                },
+                {
+                  "wrong": "Sending few wealthy people into the space",
+                  "right": "Sending a few wealthy people into space",
+                  "explanation_zh": "「少數」是 a few（few 偏「幾乎沒有」）；外太空的 space 不加 the。"
+                }
+              ]
+            },
+            {
+              "zh": "玩幾分鐘",
+              "accepted": [
+                "for a few minutes of fun",
+                "to have fun for a few minutes",
+                "for just a few minutes of fun",
+                "for a few minutes of entertainment",
+                "to play for a few minutes",
+                "to have a few minutes of fun",
+                "to enjoy a few minutes of fun",
+                "for a few minutes of pleasure",
+                "just to have fun for a few minutes",
+                "for a few minutes' fun",
+                "just for a few minutes of fun"
+              ],
+              "targets": [
+                "minute"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "for a few minute of fun",
+                  "right": "for a few minutes of fun",
+                  "explanation_zh": "a few 後面接複數名詞 minutes。"
+                },
+                {
+                  "wrong": "to play a few minutes",
+                  "right": "to have fun for a few minutes",
+                  "explanation_zh": "表示「玩了多久」要用 for a few minutes；「玩」用 have fun 較清楚。"
+                }
+              ]
+            },
+            {
+              "zh": "比我們想像中",
+              "accepted": [
+                "than we imagine",
+                "than we think",
+                "than we realize",
+                "than we might imagine",
+                "than we can imagine",
+                "than we expect",
+                "than we may think",
+                "than most of us imagine",
+                "than we would imagine",
+                "than we imagined",
+                "than we thought"
+              ],
+              "targets": [
+                "imagine"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "than we image",
+                  "right": "than we imagine",
+                  "explanation_zh": "image 是名詞「影像」，「想像」是 imagine。"
+                },
+                {
+                  "wrong": "than imagine",
+                  "right": "than we imagine",
+                  "explanation_zh": "than 後面接完整的子句 we imagine，主詞 we 不能省略。"
+                }
+              ]
+            },
+            {
+              "zh": "更傷害地球",
+              "accepted": [
+                "does more harm to the earth",
+                "harms the planet more",
+                "is more harmful to the earth",
+                "harms the earth more",
+                "does more damage to the earth",
+                "causes more harm to the earth",
+                "does more harm to the planet",
+                "causes more damage to the planet",
+                "is more harmful to the planet",
+                "hurts the earth more",
+                "damages the earth more"
+              ],
+              "targets": [
+                "COMP",
+                "harm",
+                "earth"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "does more harms to the earth",
+                  "right": "does more harm to the earth",
+                  "explanation_zh": "harm 當名詞是不可數，不加 s；do harm to sth 是固定搭配。"
+                },
+                {
+                  "wrong": "is more harm to the earth",
+                  "right": "is more harmful to the earth",
+                  "explanation_zh": "be 動詞後面要接形容詞 harmful；harm 是名詞或動詞。"
+                },
+                {
+                  "wrong": "harms the earth more serious",
+                  "right": "harms the earth more seriously",
+                  "explanation_zh": "修飾動詞要用副詞 seriously；或直接寫 harms the earth more。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "verbal_subject",
+              "zh": "送少數富人上太空玩幾分鐘",
+              "literal_error": "Send a few wealthy people into space for a few minutes of fun does more harm …",
+              "part": 1,
+              "explanation_zh": "整個動作「送…玩幾分鐘」當主詞，英文要用動名詞 Sending …，動詞用單數 does／harms。"
+            },
+            {
+              "type": "word_form",
+              "zh": "更傷害地球",
+              "literal_error": "… is more harm to the earth than we imagine.",
+              "part": 4,
+              "explanation_zh": "「更傷害」可以寫 does more harm to（harm 名詞）、harms … more（harm 動詞）或 is more harmful to（形容詞），詞性要和句型配合，不能寫 is more harm。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "Little do we realize how much harm sending a few wealthy people into space for a few minutes of fun can do to the earth.",
+              "explanation_zh": "Little do we realize … 是否定副詞放句首的倒裝，語氣更強；屬加分寫法，基本分仍看動名詞主詞與比較級。"
+            }
+          ],
+          "restructuring_zh": "「送少數富人上太空玩幾分鐘」整個動作當主詞，英文用動名詞片語 Sending …；「比我們想像中更傷害地球」英文語序是「更傷害地球＋比我們想像的」：does more harm to the earth than we imagine。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ac-V-3",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-top-01-regen",
+    "lot": "translation-top-01",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "e70574f962ee519de618ee9fd1feb7119f6d0a8843e55cfe43a9c37f50b38132",
+    "spec_id": "translation-top@2026-10-09",
+    "regenerated_from": "ai.tr.325715"
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T18:09:09Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "fail",
+      "created_at": "2026-10-09T17:34:42Z",
+      "details": {
+        "solver": "A",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "It is not easy for ordinary people to afford space travel, but the wealthy are competing to buy tickets, causing ticket prices to keep rising.",
+            "confidence": "high",
+            "explanation_zh": "「要負擔……對一般人來說並不容易」用 It is not easy for sb to V；「負擔」用 afford；「爭相購票」寫 are competing to buy tickets（現在的趨勢用進行式）；「使票價不斷上漲」是結果，用句尾分詞 causing ticket prices to keep rising。"
+          },
+          "2": {
+            "translation": "Sending a small number of rich people into space for a few minutes of fun harms the Earth more than we imagine.",
+            "confidence": "high",
+            "explanation_zh": "「送少數富人上太空玩幾分鐘」當主詞用動名詞片語 Sending…；「玩幾分鐘」寫 for a few minutes of fun；「比我們想像中更傷害地球」用 harms the Earth more than we imagine；為避免 a few…a few 重複，「少數」寫 a small number of。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "NFSUBJ",
+              "PART"
+            ],
+            "used_target_words": [
+              "afford",
+              "tourism",
+              "ordinary",
+              "wealthy",
+              "ticket",
+              "price"
+            ],
+            "within_accepted": false,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "本盲譯第 3 部分寫 but the wealthy are competing to buy tickets；accepted 有 but the wealthy are rushing／scrambling to buy tickets、but the wealthy are competing for tickets、but the rich are competing to buy tickets、yet wealthy people are competing to buy tickets，卻沒有這個組合，整句也不等於任何參考譯文，所以 within_accepted 照實填 false。這是 accepted 清單的組合不完整，不是中文有歧義；其餘 3 部分都逐字在 accepted 內。建議補 but the wealthy are competing to buy tickets、but wealthy people are competing to buy tickets、yet the wealthy are competing to buy tickets 等組合（最好把 but／yet × the wealthy／the rich／wealthy people／rich people × rushing／competing／scrambling to buy tickets 系統性展開）。",
+              "（小建議，不影響判定）第 4 部分 accepted 的 pushing up prices、driving up prices 等沒有譯出「不斷」，比參考譯文寬鬆；可接受，但若要求「不斷」要有對應，可改成 pushing prices up steadily 之類。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "NFSUBJ",
+              "COMP"
+            ],
+            "used_target_words": [
+              "wealthy",
+              "space",
+              "minute",
+              "harm",
+              "earth",
+              "imagine"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "afford",
+              "tourism",
+              "ordinary",
+              "wealthy",
+              "ticket",
+              "price"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NFSUBJ": true,
+              "PART": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "wealthy",
+              "space",
+              "minute",
+              "harm",
+              "earth",
+              "imagine"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NFSUBJ": true,
+              "COMP": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 1 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T17:40:23Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "It is not easy for ordinary people to afford space tourism, but wealthy people are scrambling to buy tickets, causing ticket prices to keep rising.",
+            "confidence": "medium",
+            "explanation_zh": "「要負擔…對一般人來說並不容易」用虛主詞 It is not easy for ordinary people to afford…；「爭相購票」用 are scrambling to buy tickets（現在進行式表示正在發生的趨勢）；「使票價不斷上漲」用分詞構句 causing ticket prices to keep rising。中文「太空旅遊」我用 space tourism，「富豪們」用 wealthy people，詞彙選擇空間大，所以給 medium。"
+          },
+          "2": {
+            "translation": "Sending a few wealthy people into space to have fun for a few minutes harms the Earth more than we imagine.",
+            "confidence": "high",
+            "explanation_zh": "「送少數富人上太空玩幾分鐘」用動名詞片語當主詞 Sending a few wealthy people into space…（主詞是單一行為，動詞用單數 harms）；「比我們想像中更傷害地球」用比較級 more than we imagine，harm 當及物動詞。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PART",
+              "NFSUBJ"
+            ],
+            "used_target_words": [
+              "afford",
+              "tourism",
+              "ordinary",
+              "wealthy",
+              "ticket",
+              "price"
+            ],
+            "within_accepted": true,
+            "closest_reference": 2,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "NFSUBJ",
+              "COMP"
+            ],
+            "used_target_words": [
+              "wealthy",
+              "space",
+              "minute",
+              "harm",
+              "earth",
+              "imagine"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "afford",
+              "tourism",
+              "ordinary",
+              "wealthy",
+              "ticket",
+              "price"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PART": true,
+              "NFSUBJ": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "wealthy",
+              "space",
+              "minute",
+              "harm",
+              "earth",
+              "imagine"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NFSUBJ": true,
+              "COMP": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "rejected",
+  "status_reason": "blind_solver:A 未通過：第 1 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義；判定者（第 2 輪）：同意退回。第 1 句第 3 部分（但富豪們卻爭相購票）accepted 組合不完整，兩位驗證者的寫法都不在清單內（A：but the wealthy are competing to buy tickets；B：but wealthy people are scrambling to buy tickets，B 自填 true，但逐字比對也不在清單內）；要把 but／yet × the wealthy／the rich／wealthy people／rich people × rushing／competing／scrambling to buy tickets 系統性展開；第 4 部分 pushing up prices、driving up prices 沒有譯出「不斷」，建議刪除或改成 pushing prices up steadily 之類"
+}
