@@ -98,6 +98,27 @@ class DefaultBehaviorTest(Case):
         self.assertFalse(has(r.warnings + r.errors, 'assigned_topics'))
 
 
+class LatestVersionTest(Case):
+    def test_lot_counts_only_latest_version_of_each_uid(self):
+        """退回時另存 @2（內容不變、status rejected）：舊的 @1 不能再被當成有效題組算進批次數量。"""
+        d1 = load(WORD_BANK)
+        d1['status'] = 'verified'
+        d2 = copy.deepcopy(d1)
+        d2['version'] = d1['version'] + 1
+        d2['status'] = 'rejected'
+        groups = [(DATA / 'x@1.json', d1), (DATA / 'x@2.json', d2)]
+        self.assertEqual([p.name for p, _ in vb.latest_per_uid(groups)], ['x@2.json'])
+        self.assertEqual([p.name for p, _ in vb.latest_per_uid(list(reversed(groups)))], ['x@2.json'])
+        other = copy.deepcopy(d1)
+        other['uid'] = d1['uid'] + 'z'
+        self.assertEqual(len(vb.latest_per_uid(groups + [(DATA / 'y@1.json', other)])), 2)
+        # --lot：@1（verified）＋@2（rejected）＝這一批有效題組 0 組，不是 1 組
+        lot = vb.LOTS_DIR / f"{d1['generation']['lot']}.json"
+        r = vb.check_lot(lot, groups)
+        self.assertTrue(has(r.warnings, '目前 0 組'), r.warnings)
+        self.assertTrue(has(vb.check_lot(lot, groups[:1]).warnings, '目前 1 組'))
+
+
 class TopicPlanTest(Case):
     def test_plan_is_internally_consistent(self):
         errors, _ = ml.check_topic_plan(PLAN)
