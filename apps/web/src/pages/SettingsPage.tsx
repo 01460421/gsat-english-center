@@ -1,5 +1,6 @@
 /**
- * 設定頁。外觀主題可以用；帳號區塊連到「我的帳號」與「AI 批改申請」（features/account）；學習偏好還在開發中。
+ * 設定頁。外觀主題可以用；帳號區塊連到「我的帳號」與「AI 批改申請」（features/account）。
+ * 學習偏好：每日新字數與學習範圍已經可以在單字模組的「每日學習」設定，這裡連過去；複習提醒與發音聲音還沒做，只有那一項標「開發中」。
  * 主題設定只存在這台裝置的瀏覽器（localStorage），登入後才會考慮同步到帳號。
  */
 import { useId } from 'react';
@@ -113,9 +114,16 @@ export default function SettingsPage() {
           <p className="text-sm text-muted">這個設定只存在目前使用的瀏覽器。</p>
         </InfoSection>
         <InfoSection title="學習偏好">
+          <p>
+            每日新字數與新字的學習範圍（級別），在
+            <Link to="/words?tab=study" className={`mx-1 ${linkCls}`}>
+              單字的「每日學習」
+            </Link>
+            分頁下方的學習設定調整。
+          </p>
           <p className="flex flex-wrap items-center gap-2">
             <DevBadge />
-            <span>每日新單字數量、複習提醒時間、發音聲音的選擇。</span>
+            <span>複習提醒時間、發音聲音的選擇。</span>
           </p>
         </InfoSection>
         <InfoSection title="帳號">

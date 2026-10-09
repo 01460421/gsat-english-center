@@ -1,5 +1,6 @@
 /**
- * 設定頁的「帳號」區塊：後端沒部署時顯示「即將開放」；登入功能開放後連到我的帳號、AI 批改申請與寫作練習。
+ * 設定頁：標題旁不再掛「開發中」，只有還沒做的學習偏好（複習提醒、發音聲音）那一行標「開發中」，每日新字數連到單字的每日學習；
+ * 「帳號」區塊：後端沒部署時顯示「即將開放」；登入功能開放後連到我的帳號、AI 批改申請與寫作練習。
  */
 import { screen, waitFor, within } from '@testing-library/react';
 import { afterEach, describe, expect, it } from 'vitest';
@@ -15,6 +16,21 @@ async function accountSection() {
   if (!section) throw new Error('找不到帳號區塊');
   return within(section);
 }
+
+describe('設定頁的完成狀態', () => {
+  it('頁首沒有「開發中」；學習偏好連到每日學習，「開發中」只標在還沒做的那一行', async () => {
+    mockApi({ 'GET /api/features': FEATURES_ON, 'GET /api/me': { user: null } });
+    renderApp('/settings');
+    const h1 = await screen.findByRole('heading', { level: 1, name: '設定' }, { timeout: 5000 });
+    expect(within(h1.parentElement as HTMLElement).queryByText('開發中')).not.toBeInTheDocument();
+    expect(screen.queryByText(/這個模組還在開發中/)).not.toBeInTheDocument();
+    const prefs = within(screen.getByRole('region', { name: '學習偏好' }));
+    expect(prefs.getByRole('link', { name: '單字的「每日學習」' })).toHaveAttribute('href', '/words?tab=study');
+    const badges = screen.getAllByText('開發中');
+    expect(badges).toHaveLength(1);
+    expect(badges[0]?.parentElement).toHaveTextContent('複習提醒時間、發音聲音的選擇');
+  });
+});
 
 describe('設定頁的帳號區塊', () => {
   it('後端沒部署：顯示即將開放，不讀 /api/me', async () => {

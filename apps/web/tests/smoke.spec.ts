@@ -9,7 +9,7 @@
  * 否則後端一出問題前端的 CI 就跟著紅（05 文件 §3.5 第 7 點）。
  */
 import { expect, test, type Page } from '@playwright/test';
-import { APP_NAME, BOTTOM_NAV_PATHS, PAGES, documentTitle, getPage } from '../src/modules';
+import { APP_NAME, BOTTOM_NAV_PATHS, PAGES, documentTitle, getPage, isDevPage } from '../src/modules';
 
 const HEALTH = { ok: true, service: 'gsat-english-api', version: '0.0.0-smoke', time: '2026-10-07T00:00:00.000Z' };
 
@@ -74,7 +74,15 @@ test.describe('每個路由', () => {
       await expect(page.getByRole('heading', { level: 1, name: meta.title })).toBeVisible();
       await expect(page).toHaveTitle(documentTitle(meta));
       if (meta.path === '/') await expect(page.getByText('後端已連線')).toBeVisible();
-      if (meta.status === 'dev' && meta.path !== '/') await expect(page.getByText('開發中').first()).toBeVisible();
+      // 「開發中」標記與說明橫幅只出現在還沒完成的模組；完成的模組（status: 'ready'）標題旁不能再掛著。
+      const titleRow = page.getByRole('heading', { level: 1, name: meta.title }).locator('..');
+      if (isDevPage(meta)) {
+        await expect(titleRow.getByText('開發中', { exact: true })).toBeVisible();
+        await expect(page.getByText('這個模組還在開發中')).toBeVisible();
+      } else {
+        await expect(titleRow.getByText('開發中', { exact: true })).toHaveCount(0);
+        await expect(page.getByText('這個模組還在開發中')).toHaveCount(0);
+      }
 
       // 版面：桌機看得到側邊欄、手機看得到底部導覽的「更多」（另一個用 CSS 隱藏，不在無障礙樹裡）。
       const nav = page.getByRole('navigation', { name: '主要導覽' });

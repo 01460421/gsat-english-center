@@ -377,7 +377,8 @@ function TranslationSource() {
 /** 非選擇題（填充、簡答、表格、中譯英、作文）的回饋：不自動計分；填充、簡答、表格附官方參考答案，中譯英只附出處連結。 */
 export function OpenFeedback({ q, answer }: { q: Question; answer: AnswerValue | undefined }) {
   const mine = answer === undefined ? '' : typeof answer === 'string' ? answer : '';
-  // 中譯英與作文可以到寫作練習送 AI 批改（features/writing）；其他非選擇題還沒有。
+  // 中譯英與作文可以到寫作練習送 AI 批改（features/writing）。填充、簡答、表格沒有 AI 批改，也沒有規劃，
+  // 所以不論 AI 開不開都不提「即將推出」，只請學生對照參考答案。
   const aiGradable = q.mode === 'translation' || q.mode === 'composition';
   const aiOpen = useAiGradingOpen();
   // 中譯英的資料檔不含官方答案（型別也沒有這些欄位），其他題型才有參考答案可以比對。
@@ -398,8 +399,10 @@ export function OpenFeedback({ q, answer }: { q: Question; answer: AnswerValue |
           <>
             。<AiGradingLink mode={q.mode === 'translation' ? 'translation' : 'composition'} />
           </>
-        ) : (
+        ) : aiGradable ? (
           '；AI 批改即將推出。'
+        ) : (
+          '。'
         )}
       </p>
       {q.mode !== 'table_completion' && q.mode !== 'composition' && (

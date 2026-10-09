@@ -6,7 +6,8 @@
  *   - 歷屆試題本身不受著作權保護（著作權法第 9 條第 1 項第 5 款），但慣例上仍標示來源並連回官方。
  *   - ECDICT（MIT）、OEWN（CC BY 4.0，要同時標示 Princeton WordNet）、Tatoeba（CC BY 2.0 FR，逐句標示作者）。
  *   - 「大考中心」「CEEC」是註冊商標，不能讓人誤以為本站與大考中心有關（§0 第 2 點），所以加上無關聲明。
- * 有些來源還沒接進 App（資料管線另案進行），頁面上明說「已使用或規劃使用」，不誇大現況。
+ * 還沒接進 App 的來源（目前只有搭配詞候選的 Datamuse／Google Books Ngram）標 planned，頁面上標「規劃使用」，不誇大現況；
+ * 接上之後拿掉 planned。「AI 生成內容」只寫現在真的由 AI 產生的東西（題庫練習的文章、題目、解析與全文中譯，寫作的 AI 批改）。
  */
 import type { ReactNode } from 'react';
 import { InfoSection, PageHeader } from '../components/ModulePage';
@@ -26,6 +27,8 @@ interface Credit {
   license: ReactNode;
   /** App 內的標示文字（04 文件 §7.1）。 */
   notice?: string;
+  /** 還沒用在網站上（規劃使用）。 */
+  planned?: boolean;
 }
 
 const CREDITS: Credit[] = [
@@ -71,7 +74,7 @@ const CREDITS: Credit[] = [
     name: <ExternalLink href="https://tatoeba.org/">Tatoeba</ExternalLink>,
     usage: '英中對照例句。',
     license: 'CC BY 2.0 FR（部分句子為 CC0）。每句例句旁標示句子編號與作者。',
-    notice: '例句標示格式：「Tatoeba #句子編號 by 作者名」；AI 產生的例句標示「AI 生成」',
+    notice: '例句標示格式：「Tatoeba #句子編號 by 作者名」',
   },
   {
     name: (
@@ -83,12 +86,13 @@ const CREDITS: Credit[] = [
     usage: '搭配詞候選，經 AI 篩選並人工抽查。',
     license: 'Google Books Ngram 資料集為 CC BY 3.0；Datamuse 依其服務條款使用。',
     notice: '搭配詞候選來自 Datamuse API／Google Books Ngram，經 AI 篩選',
+    planned: true,
   },
   {
     name: <ExternalLink href="https://www.cefr-j.org/download.html">CEFR-J Wordlist</ExternalLink>,
-    usage: '單字的 CEFR 等級參考標籤。',
-    license: '可用於研究與商業用途，須適當標示出處；著作權屬東京外國語大學投野研究室。',
-    notice: 'CEFR 對照依 CEFR-J Wordlist',
+    usage: '單字的 CEFR 等級參考標籤（C1、C2 來自 Octanove C1–C2 字表）。',
+    license: 'CEFR-J：可用於研究與商業用途，須適當標示出處；著作權屬東京外國語大學投野研究室。Octanove C1–C2 字表：CC BY-SA 4.0。',
+    notice: 'CEFR 對照依 CEFR-J Wordlist；C1／C2 來自 Octanove（CC BY-SA 4.0）',
   },
   {
     name: <ExternalLink href="https://github.com/BYVoid/OpenCC">OpenCC</ExternalLink>,
@@ -126,7 +130,7 @@ export default function AboutPage() {
       <div className="grid grid-cols-1 gap-4">
         <InfoSection title={`關於${APP_NAME}`}>
           <p>
-            {APP_NAME}是為台灣高中生打造的學測英文備考網頁 App，涵蓋單字、各題型練習、歷屆試題與模擬考。AI 功能（出題、批改、詳解與範文）使用 Anthropic 的 Claude。
+            {APP_NAME}是為台灣高中生打造的學測英文備考網頁 App，涵蓋單字、各題型練習、歷屆試題與模擬考。AI 功能（題庫出題與解析、中譯英與作文批改、手寫作文辨識）使用 Anthropic 的 Claude。
           </p>
           <p className="text-sm text-muted">
             本站與大學入學考試中心沒有任何關係，也未經其授權或背書。「大考中心」「大學入學考試中心」「CEEC」為財團法人大學入學考試中心基金會的註冊商標。
@@ -135,8 +139,8 @@ export default function AboutPage() {
 
         <InfoSection title="AI 生成內容">
           <ul>
-            <li>練習用文章由 AI 依多個來源的事實撰寫成原創內容，不是原文轉載，並會列出參考資料。</li>
-            <li>範文、詳解與批改評語由 AI 產生，僅供參考；AI 對事實的陳述可能有誤，重要資訊請再查證。</li>
+            <li>題庫練習的文章與題目由 AI 撰寫，不是原文轉載；閱讀測驗與部分混合題是參考事實資料寫成的，選文下方會列出參考資料。</li>
+            <li>題庫的解析與全文中譯、中譯英與作文的 AI 批改評語、修正版與參考改寫由 AI 產生，僅供參考；AI 對事實的陳述可能有誤，重要資訊請再查證。</li>
             <li>發音使用瀏覽器內建的語音合成，聲音依你的裝置而定。</li>
           </ul>
         </InfoSection>
@@ -144,12 +148,19 @@ export default function AboutPage() {
         <section className="rounded-2xl border border-line bg-surface p-5 lg:p-6">
           <h2 className="text-lg font-semibold">資料來源與授權致謝</h2>
           <p className="mt-2 text-[0.95rem] text-muted">
-            以下是本站已使用或規劃使用的資料來源。各功能上線時，也會在對應的頁面標示出處。
+            以下是本站使用的資料來源，用到的頁面也會標示出處；標「規劃使用」的還沒用在網站上。
           </p>
           <ul className="mt-4 divide-y divide-line">
             {CREDITS.map((credit, i) => (
               <li key={i} className="py-4 first:pt-0 last:pb-0">
-                <h3 className="font-semibold">{credit.name}</h3>
+                <h3 className="font-semibold">
+                  {credit.name}
+                  {credit.planned && (
+                    <span className="ml-2 inline-flex items-center rounded-full bg-surface-2 px-2 py-0.5 align-middle text-xs font-medium text-muted">
+                      規劃使用
+                    </span>
+                  )}
+                </h3>
                 <dl className="mt-1 grid gap-1 text-sm sm:grid-cols-[5rem_1fr]">
                   <dt className="text-muted">用途</dt>
                   <dd>{credit.usage}</dd>
