@@ -38,6 +38,11 @@ async function mockBank(page: Page, { empty = false }: { empty?: boolean } = {})
 
 async function mockBackend(page: Page) {
   await page.route(/\/(api|auth)\//, (route) => route.fulfill({ status: 404, json: { error: { code: 'not_found', message: 'e2e' } } }));
+  // 每一頁都會問 /api/features 決定要不要顯示登入與 AI；這裡回「全部關閉」，練習頁照常運作。
+  // 後註冊的 route 先比對，所以這一條會蓋過上面的 404。
+  await page.route('**/api/features', (route) =>
+    route.fulfill({ json: { auth: false, ai: false, ocr: false, aiPaused: false } }),
+  );
 }
 
 function collectErrors(page: Page): string[] {

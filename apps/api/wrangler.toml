@@ -7,10 +7,19 @@
 #   （docs/research/05-sekai-center-patterns.md §0 第 7 點、§1.3）。
 # 買網域之後：主網域 → Vercel，api.<網域> → 這支 Worker（取消下方 [[routes]] 的註解）。
 #
-# 機密一律用 `npx wrangler secret put <名稱>` 設定，絕對不要寫進這個檔案或提交到 git：
-#   ANTHROPIC_API_KEY      Claude API 金鑰（AI 批改、出題）
-#   SESSION_SECRET         簽 session cookie 用的長隨機字串（openssl rand -base64 48）
+# 機密絕對不要寫進這個檔案或提交到 git。正式環境的機密由部署 workflow（.github/workflows/worker-deploy.yml）
+# 處理，站主的逐步說明在 docs/SETUP-KEYS.md：
+#   GOOGLE_CLIENT_ID       Google OAuth client id（本身不算機密，但統一設成 secret；程式從 env 讀，var 或 secret 都可以）
 #   GOOGLE_CLIENT_SECRET   Google OAuth client secret
+#   ADMIN_EMAIL            管理員 bootstrap：站上還沒有管理員時，這個信箱第一次登入就自動設為 admin 並核准 AI
+#   ANTHROPIC_API_KEY      Claude API 金鑰（online workspace）
+#     ↑ 這四個放 GitHub repo secrets（部署後由 workflow 用 wrangler secret bulk 同步），或在 Cloudflare 儀表板
+#       Workers & Pages → gsat-english-api → Settings → Variables and Secrets 手動新增，類型一定要選 Secret：
+#       選 Text 的會被下一次部署刪掉（wrangler deploy 以這個檔案的 [vars] 為準；Secret 不受影響）。
+#   SESSION_SECRET         簽 session cookie 與 OAuth state 用的長隨機字串
+#   LEDGER_SALT            帳本、日誌、刪除證明的 HMAC 假名鹽（設定後不要再改）
+#     ↑ 這兩個由 workflow 在 Worker 上還沒有時用 openssl rand 產生，已經有就不覆蓋。
+# 沒設的機密對應的功能就是「未啟用」（GET /api/features 回 false），Worker 其他部分照常運作。
 # 本機開發的機密放 apps/api/.dev.vars（已列入 .gitignore；格式見 .dev.vars.example）。
 
 name = "gsat-english-api"
@@ -18,7 +27,14 @@ main = "src/index.ts"
 # 用安裝的 wrangler 4.148.0 所附 workerd（1.20261006.1）支援的最新日期。
 # 日期決定執行期行為；升級 wrangler 後再評估要不要往後調，不要隨手改成「今天」。
 compatibility_date = "2026-10-06"
-# 不開 nodejs_compat：目前不需要 Node API；之後接 @anthropic-ai/sdk 時再依官方說明評估。
+# 不開 nodejs_compat：@anthropic-ai/sdk 官方支援 Cloudflare Workers（用全域 fetch），zod 也不需要 Node API。
+# 若之後實測 SDK 需要 Node 模組再開，並在 docs/design/ai-auth-mvp.md 記錄原因。
+
+# 過渡期（買網域前）Vercel 的 rewrites 轉到 https://gsat-english-api.<帳號子網域>.workers.dev，所以 workers.dev
+# 一定要開著；換成自訂網域、前端改直連 api.<網域> 之後，才可以考慮關掉（ARCHITECTURE §4.4）。
+workers_dev = true
+# 每個版本各自的預覽網址（<版本>-gsat-english-api.<子網域>.workers.dev）用不到，關掉以免舊版本還能被呼叫。
+preview_urls = false
 
 # 之後接自訂網域時取消註解（<網域> 換成實際網域；不可含 ceec 或「大考中心」，見 04 文件 §0 第 2 點）。
 # custom_domain = true 會自動建立 DNS 記錄與憑證；網域必須是 Cloudflare 上 active 的 zone，
@@ -35,7 +51,8 @@ port = 8787
 [[d1_databases]]
 binding = "DB"
 database_name = "gsat-english"
-# 用 `npx wrangler d1 create gsat-english` 建立後，把輸出的 database_id 填在這裡。
+# 占位字串不要改：部署 workflow 會找出（第一次時建立）名為 gsat-english 的 D1，只在 runner 上把 id 填進來。
+# 手動部署時才需要自己用 `npx wrangler d1 list` 查 id 暫時填上（不要提交）。
 # 本機 `wrangler dev` 用 .wrangler/ 下的模擬資料庫，不需要真的 id。
 database_id = "REPLACE_WITH_D1_DATABASE_ID"
 # 資料表一律用遷移檔管理：wrangler 會在 d1_migrations 表記錄哪些已套用（見 migrations/README.md）。
@@ -43,12 +60,80 @@ migrations_dir = "migrations"
 
 [vars]
 # CORS 與 Origin 檢查的允許清單（逗號分隔，必須是完整的 origin：協定＋主機＋連接埠，結尾不加斜線）。
-# - REPLACE_WITH_VERCEL_PROJECT.vercel.app：買網域前的 Vercel 網址（rewrites 代理時，瀏覽器送的 Origin 是它）
-# - REPLACE_WITH_DOMAIN：買網域後的主網域與 www
+# 目前只有 Vercel 的網址（rewrites 代理時，瀏覽器送的 Origin 是它）。
+# 買網域後改成 "https://<網域>,https://www.<網域>"（過渡期可以暫時三個都留著，ARCHITECTURE §4.4 第 4 步）。
 #
 # 刻意不放 localhost：這裡的值會跟著部署到正式環境，放了就等於讓任何跑在學生電腦 localhost:5173 的網頁
 # 都能帶 cookie 呼叫正式 API。本機開發也用不到：Vite proxy 不改 Host（apps/web/vite.config.ts 的
 # changeOrigin: false），Worker 看到的網址就是 http://localhost:5173/…，同源請求會被當成「Worker 自己」放行
 # （src/security.ts 的 originGuard）。若真的要讓本機頁面跨來源直連 Worker，把含 localhost 的清單寫進
 # apps/api/.dev.vars，它只在 wrangler dev 生效，會覆寫這裡的值。
-ALLOWED_ORIGINS = "https://REPLACE_WITH_VERCEL_PROJECT.vercel.app,https://REPLACE_WITH_DOMAIN,https://www.REPLACE_WITH_DOMAIN"
+ALLOWED_ORIGINS = "https://gsat-english-center.vercel.app"
+
+# 前端網址（登入後跳回、OAuth redirect URI 的基準；ARCHITECTURE §4.1）。
+# PUBLIC_API_ORIGIN 沒設時等於 APP_ORIGIN（過渡期兩者相同）；買網域後改成
+#   APP_ORIGIN = "https://<網域>"、PUBLIC_API_ORIGIN = "https://api.<網域>"。
+APP_ORIGIN = "https://gsat-english-center.vercel.app"
+
+# 條款版本：改版時改這裡，使用者下次使用前會被要求重新同意（ARCHITECTURE §5、§8.2）。
+PRIVACY_POLICY_VERSION = "2026-10-08"
+TERMS_VERSION = "2026-10-08"
+AI_CONSENT_VERSION = "2026-10-08"
+
+# ── AI（ARCHITECTURE §6.1、§6.3、§11）。程式的預設值在 src/config.ts 的 CONFIG_DEFAULTS，
+#    兩邊必須一致（test/skeleton.test.ts 會檢查）；要調整就兩邊一起改。
+AI_MODEL_DEFAULT = "claude-opus-5-5"
+AI_MODEL_SECOND_RATER = "claude-opus-5-5"
+AI_EFFORT_GRADE = "medium"
+AI_EFFORT_OCR = "low"
+
+# 每人額度：每天 30 點、每月 300 點（試用 10 點／天）；作文每天 3 篇；同時進行中 2 個任務。
+AI_POINTS_USER_DAY = "30"
+AI_POINTS_USER_MONTH = "300"
+AI_POINTS_TRIAL_DAY = "10"
+AI_ESSAY_USER_DAY = "3"
+AI_CONCURRENT_USER = "2"
+
+# 站內預算與 Anthropic Console 上限（美元）。這裡是 §6.3「正式開放」的值（online 450＋dev 50 ≤ 級距 500；
+# 站內 400＋20 ≤ 450）。Phase 3 校準月份（約 10 人試用）改成：
+#   ANTHROPIC_ONLINE_SPEND_LIMIT_USD = "250"、ANTHROPIC_DEV_SPEND_LIMIT_USD = "250"、AI_BUDGET_SITE_USD_MONTH = "200"
+# （Console 的 workspace 上限要同步改；名額會自動變成 ⌊200 ÷ (300 × 0.0271)⌋ ＝ 24）。
+# 三層大小關係由 /api/admin/health 的啟動檢查驗證，不成立時後台紅燈並拒絕新的 AI 核准。
+AI_BUDGET_SITE_USD_DAY = "20"
+AI_BUDGET_SITE_USD_MONTH = "400"
+ANTHROPIC_ONLINE_SPEND_LIMIT_USD = "450"
+ANTHROPIC_PIPELINE_SPEND_LIMIT_USD = "0"
+ANTHROPIC_DEV_SPEND_LIMIT_USD = "50"
+ANTHROPIC_TIER_LIMIT_USD = "500"
+# 核准名額：不設就依 §6.6 自動計算（預設 49 人）；要手動限制時取消註解。
+# AI_APPROVAL_CAP = "49"
+
+# AI 任務佇列（ARCHITECTURE §3.4、§6.8）。wrangler deploy 不會自動建立 Queue：部署 workflow 每次部署前會確認
+# 兩個都存在（先建死信佇列）。手動部署時要先自己建立（只需一次）：
+#   npx wrangler queues create ai-tasks-dlq
+#   npx wrangler queues create ai-tasks
+# 訊息只有 {op_id}；consumer 是 src/ai/consumer.ts 的 handleQueue（同一支函式依 batch.queue 分辨兩個佇列）。
+[[queues.producers]]
+binding = "AI_QUEUE"
+queue = "ai-tasks"
+
+# max_batch_size 1：一則一則處理（每則可能要等 Claude 數分鐘）；max_concurrency 5 同時就是送往 Anthropic 的速率閘。
+[[queues.consumers]]
+queue = "ai-tasks"
+max_batch_size = 1
+max_concurrency = 5
+max_retries = 3
+dead_letter_queue = "ai-tasks-dlq"
+
+# 死信佇列：重試用完的任務在這裡退還點數、標記失敗、寫 ops_events。
+[[queues.consumers]]
+queue = "ai-tasks-dlq"
+max_batch_size = 10
+max_retries = 3
+
+# Workers Logs（ARCHITECTURE §9.1、§11）。日誌不得含提示詞、學生文字或 email（§6.5、§8）。
+# 取樣率先用預設的 100%（MVP 流量小）；流量大了再加 head_sampling_rate。
+[observability]
+enabled = true
+# 請求網址的查詢字串不進日誌：/auth/google/callback?code=…&state=… 的授權碼與 state 不該留在 log 裡。
+redact_query_string = true

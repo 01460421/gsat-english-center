@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // @ts-check
 /**
- * 檢查 public/data/ 的實際 JSON 是否符合 src/data/ 的 TypeScript 型別（前端資料契約）。
+ * 檢查 public/data/ 的實際 JSON 是否符合 src/data/（與寫作練習的 src/features/writing/data.ts）的 TypeScript 型別（前端資料契約）。
  *
  *   npm run check:data -w @gsat/web     （先跑過 build:data）
  *

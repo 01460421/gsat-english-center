@@ -21,8 +21,10 @@
  *   bank/index.json      題庫練習：已通過自動驗證（verified）的 AI 題組摘要；沒有題組時是空陣列
  *   bank/groups/{uid}@{version}.json  一個 AI 題組（題目＋解析＋中譯＋排除法表；不含生成與驗證細節）
  *                        挑選與輸出規則在 scripts/lib/bank-data.mjs
+ *   writing/translation.json  寫作練習：每個中譯英題組的中文題目（不含官方譯文）
+ *   writing/essay.json        寫作練習：每個作文題的說明、提示、圖的文字描述、字數要求與官方題本連結
  *
- * 前端對應的型別在 apps/web/src/data/vocab.ts、exams.ts、bank.ts；這裡改了輸出格式，那邊要一起改。
+ * 前端對應的型別在 apps/web/src/data/vocab.ts、exams.ts、bank.ts、src/features/writing/data.ts；這裡改了輸出格式，那邊要一起改。
  *
  * 為什麼在建置時轉檔，而不是讓前端直接讀 data/：
  *   - lexicon.json 有 22 MB，裡面大半是前端用不到的欄位（WordNet 上位詞、內部重要度特徵、來源旗標）；
@@ -611,7 +613,23 @@ function officialTranslationTexts(raw) {
 function assertNoOfficialTranslations(files, officialTextsById) {
   /** @type {string[]} */
   const problems = [];
+  const allOfficialTexts = [...officialTextsById.values()].flat();
   for (const [rel, content] of files) {
+    if (rel.startsWith('writing/')) {
+      // 寫作練習的索引彙整了所有考卷，任何一份的官方譯文都不能出現；題目物件也不能帶受保護欄位。
+      for (const text of allOfficialTexts) {
+        if (content.includes(JSON.stringify(text).slice(1, -1))) problems.push(`${rel} 含有官方中譯英參考譯文：「${text.slice(0, 40)}…」`);
+      }
+      const banned = [...TRANSLATION_STRIPPED_FIELDS, ...STRIPPED_QUESTION_FIELDS];
+      const parsed = /** @type {JsonObject} */ (JSON.parse(content));
+      for (const set of Array.isArray(parsed.sets) ? /** @type {JsonObject[]} */ (parsed.sets) : []) {
+        for (const item of Array.isArray(set.items) ? /** @type {JsonObject[]} */ (set.items) : []) {
+          const found = banned.filter((k) => Object.hasOwn(item, k));
+          if (found.length > 0) problems.push(`${rel} ${String(set.exam_id)} 第 ${String(item.label)} 題含有不能公開的欄位：${found.join('、')}`);
+        }
+      }
+      continue;
+    }
     if (!rel.startsWith('exams/') || rel === 'exams/index.json') continue;
     const exam = /** @type {JsonObject} */ (JSON.parse(content));
     for (const s of /** @type {JsonObject[]} */ (exam.sections)) {
@@ -708,6 +726,101 @@ function buildExams() {
 }
 
 // ---------------------------------------------------------------------------
+// 寫作練習（/writing）：中譯英題組與作文題目的索引
+// ---------------------------------------------------------------------------
+
+/**
+ * 寫作練習的列表與作答頁只需要「中譯英」「英文作文」兩種大題，為此下載 66 份完整考卷太重，
+ * 所以從已經去掉受保護欄位的考卷內容（examDetail 的輸出）另外整理兩個小檔：
+ *   writing/translation.json  每個中譯英題組：中文題目、配分、本站的句型標註（**不含任何官方譯文**：輸入就已刪除，
+ *                             輸出時 assertNoOfficialTranslations 再比對一次）
+ *   writing/essay.json        每個作文題：說明、提示、圖的文字描述（原圖可能有第三方著作權，只附官方題本 PDF 連結）、
+ *                             字數與段數要求
+ * 順序沿用 exams/index.json（學測 → 指考 → 參考試卷，各自新到舊）。前端型別在 src/features/writing/data.ts。
+ *
+ * @param {ReturnType<typeof examDetail>[]} details
+ * @param {ReturnType<typeof examSummary>[]} summaries
+ */
+function buildWriting(details, summaries) {
+  const byId = new Map(details.map((d) => [String(d.id), d]));
+  /** @type {JsonObject[]} */
+  const translationSets = [];
+  /** @type {JsonObject[]} */
+  const essayPrompts = [];
+  for (const summary of summaries) {
+    const d = byId.get(String(summary.id));
+    if (!d) continue;
+    const files = /** @type {{ kind: string, url: string }[]} */ (d.official_files);
+    const officialUrl = (/** @type {string} */ kind) => files.find((f) => f.kind === kind)?.url ?? null;
+    const examRef = {
+      exam_id: d.id,
+      exam: d.exam,
+      year: d.year,
+      session: d.session,
+      target: d.target,
+      title: d.title,
+      paper_url: officialUrl('paper'),
+      scoring_url: officialUrl('scoring'),
+    };
+    for (const s of d.sections) {
+      if (s.type !== 'translation' && s.type !== 'composition') continue;
+      for (const g of /** @type {JsonObject[]} */ (s.groups)) {
+        const questions = /** @type {JsonObject[]} */ (g.questions);
+        const at = `${String(d.id)} ${String(g.id)}`;
+        const common = {
+          ...examRef,
+          section_id: s.id,
+          group_id: g.id,
+          section_title: s.title,
+          instructions: typeof s.instructions === 'string' ? s.instructions : '',
+          points_total: typeof s.points_total === 'number' ? s.points_total : null,
+          // 題組有選文時（例如 85 學測的中譯英嵌在英文短文裡、作文的背景提示）一併帶上，題目才看得懂。
+          passage: typeof g.passage === 'string' ? g.passage : null,
+          topic: isObject(g.tags) && typeof g.tags.topic === 'string' ? g.tags.topic : null,
+        };
+        if (s.type === 'translation') {
+          const items = questions.map((q) => {
+            check(q.mode === 'translation' && typeof q.stem === 'string' && q.stem.trim() !== '', `${at}：中譯英第 ${String(q.label)} 題缺少中文題目`);
+            const tags = isObject(q.tags) ? q.tags : {};
+            // 逐欄挑選，不展開 q：之後題目檔就算多了新欄位，也不會被帶進公開的索引。
+            return {
+              no: q.no,
+              label: q.label,
+              stem: q.stem,
+              points: typeof q.points === 'number' ? q.points : null,
+              patterns: Array.isArray(tags.patterns) ? tags.patterns.filter((p) => typeof p === 'string') : [],
+            };
+          });
+          check(items.length > 0, `${at}：中譯英題組沒有題目`);
+          translationSets.push({ ...common, items });
+        } else {
+          const q = questions[0];
+          check(questions.length === 1 && q !== undefined && q.mode === 'composition', `${at}：作文題組應該剛好一題`);
+          const tags = isObject(q.tags) ? q.tags : {};
+          essayPrompts.push({
+            ...common,
+            label: q.label,
+            stem: typeof q.stem === 'string' ? q.stem : null,
+            figures: /** @type {JsonObject[]} */ (g.figures).map((f) => ({
+              kind: f.kind,
+              label: f.label ?? null,
+              caption: f.caption ?? null,
+              description: f.description,
+              rows: f.rows ?? null,
+            })),
+            essay_type: typeof tags.essay_type === 'string' ? tags.essay_type : null,
+            paragraphs: typeof tags.paragraphs === 'number' ? tags.paragraphs : null,
+            word_count: isObject(tags.word_count) ? tags.word_count : null,
+            answer_sheet_url: officialUrl('answer_sheet'),
+          });
+        }
+      }
+    }
+  }
+  return { translationSets, essayPrompts };
+}
+
+// ---------------------------------------------------------------------------
 // 主程式
 // ---------------------------------------------------------------------------
 
@@ -734,6 +847,9 @@ function main() {
   for (const d of exams.details) emit(`exams/${d.id}.json`, d);
   emit('bank/index.json', { version, count: bank.entries.length, groups: bank.entries });
   for (const g of bank.groups) emit(practiceGroupPath(g), g);
+  const writing = buildWriting(exams.details, exams.summaries);
+  emit('writing/translation.json', { version, count: writing.translationSets.length, sets: writing.translationSets });
+  emit('writing/essay.json', { version, count: writing.essayPrompts.length, prompts: writing.essayPrompts });
   assertNoOfficialTranslations(outputs, exams.officialTextsById);
 
   /** @type {Record<string, { bytes: number, gzip_bytes: number }>} */
@@ -783,6 +899,8 @@ function main() {
     ...VOCAB_LEVELS.map((lv) => [`vocab/L${lv}.json`, fileSizes[`vocab/L${lv}.json`]]),
     ['exams/index.json', fileSizes['exams/index.json']],
     ['bank/index.json', fileSizes['bank/index.json']],
+    ['writing/translation.json', fileSizes['writing/translation.json']],
+    ['writing/essay.json', fileSizes['writing/essay.json']],
   ];
   const examFiles = sum((rel) => rel.startsWith('exams/') && rel !== 'exams/index.json');
   console.log(`[build-data] 版本 ${version}：單字 ${vocab.index.length} 筆、試題 ${exams.summaries.length} 份（${questionCount} 題），輸出到 ${relative(OUT_DIR)}/`);
