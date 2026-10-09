@@ -1,0 +1,739 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.756ec6",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "advanced",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "在一門跨領域（interdisciplinary）課程中，學生被要求藉由素描來觀察植物的生長。",
+        "options": null,
+        "answer": "In an interdisciplinary course, students are asked to observe the growth of plants by sketching them.",
+        "accepted_answers": [
+          "In an interdisciplinary course, students are required to observe how plants grow by sketching them.",
+          "In one interdisciplinary class, the students are asked to observe the growth of plants by drawing them."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "被動語態",
+            "介系詞＋動名詞（by）"
+          ],
+          "topic": "跨領域課程"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "這類課程已被證明能鼓勵學生從不同的角度探索世界。",
+        "options": null,
+        "answer": "Such courses have been proved to encourage students to explore the world from different angles.",
+        "accepted_answers": [
+          "This kind of course has been shown to encourage students to explore the world from different perspectives.",
+          "Courses like this have been proved to encourage students to explore the world from different points of view."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "完成式被動",
+            "動詞＋受詞＋不定詞"
+          ],
+          "topic": "跨領域課程"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "跨領域課程"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「學生被要求…」用被動 students are asked（required）to + 原形動詞。「藉由素描」是方法，用介系詞 by + 動名詞 sketching；英文通常放在句尾，素描的對象要補上 them。「植物的生長」用名詞 growth（the growth of plants），或改成間接問句 how plants grow。跨領域題目附了英文 interdisciplinary，前面的冠詞用 an。",
+          "evidence": [
+            "學生被要求",
+            "藉由素描來觀察植物的生長"
+          ],
+          "strategy_zh": "「藉由、透過做某事」用 by + V-ing；中文的「被要求、被規定」先想 be asked 或 required to + VR。",
+          "hints": [
+            "切成四段：在一門跨領域（interdisciplinary）課程中／學生被要求／藉由素描／來觀察植物的生長",
+            "標的詞彙：course（課程，L1）、ask（要求，L1）、sketch（素描，L4）、observe（觀察，L3）、plant（植物，L1）、growth（生長，L2）",
+            "句型框架：In …, S + are asked to + VR … by + V-ing …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「已被證明」同時表示完成和被動，用 have been proved（proven）或 shown，後面接不定詞 to encourage …；主詞 such courses 是複數，助動詞用 have（寫 this kind of course 就用 has）。「鼓勵學生做某事」是 encourage + 受詞 + to + 原形動詞。「從不同的角度」介系詞用 from：from different angles 或 perspectives。",
+          "evidence": [
+            "這類課程已被證明",
+            "鼓勵學生從不同的角度探索世界"
+          ],
+          "strategy_zh": "encourage、allow、ask、expect、enable 這類動詞的句型都是 V + 受詞 + to + 原形動詞，先找出受詞，再補 to。",
+          "hints": [
+            "切成四段：這類課程／已被證明／能鼓勵學生／從不同的角度探索世界",
+            "標的詞彙：course（課程，L1）、prove（證明，L2）、encourage（鼓勵，L2）、explore（探索，L3）、world（世界，L1）、angle（角度，L2）",
+            "句型框架：S + have been + p.p. + to encourage + O + to VR …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "In an interdisciplinary course, students are asked to observe the growth of plants by sketching them.",
+            "In an interdisciplinary course, students are required to observe how plants grow by sketching them.",
+            "In one interdisciplinary class, the students are asked to observe the growth of plants by drawing them."
+          ],
+          "target_words": [
+            {
+              "word": "course",
+              "zh": "課程",
+              "alternatives": [
+                "class"
+              ]
+            },
+            {
+              "word": "ask",
+              "zh": "要求",
+              "alternatives": [
+                "require",
+                "expect"
+              ]
+            },
+            {
+              "word": "observe",
+              "zh": "觀察",
+              "alternatives": [
+                "watch",
+                "study"
+              ]
+            },
+            {
+              "word": "plant",
+              "zh": "植物"
+            },
+            {
+              "word": "growth",
+              "zh": "生長",
+              "alternatives": [
+                "grow"
+              ]
+            },
+            {
+              "word": "sketch",
+              "zh": "素描",
+              "alternatives": [
+                "draw"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PASS",
+              "grammar_id": "gp-passive",
+              "label_zh": "被動語態（be asked to …）",
+              "frame": "S + be + p.p. (+ to VR) …",
+              "zh_trigger": "被要求"
+            },
+            {
+              "code": "PREPVING",
+              "grammar_id": "gp-prep-gerund",
+              "label_zh": "介系詞＋動名詞（by + V-ing 藉由）",
+              "frame": "… by + V-ing …",
+              "zh_trigger": "藉由素描"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "在一門跨領域（interdisciplinary）課程中",
+              "accepted": [
+                "In an interdisciplinary course",
+                "In one interdisciplinary class",
+                "In an interdisciplinary class",
+                "In one interdisciplinary course"
+              ],
+              "targets": [
+                "course"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "In a interdisciplinary course",
+                  "right": "In an interdisciplinary course",
+                  "explanation_zh": "interdisciplinary 以母音開頭，冠詞用 an。"
+                }
+              ]
+            },
+            {
+              "zh": "學生被要求",
+              "accepted": [
+                "students are asked",
+                "students are required",
+                "the students are asked",
+                "students are expected",
+                "the students are required"
+              ],
+              "targets": [
+                "PASS",
+                "ask"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "students asked",
+                  "right": "students are asked",
+                  "explanation_zh": "被動語態要有 be 動詞：students are asked。"
+                },
+                {
+                  "wrong": "students are ask",
+                  "right": "students are asked",
+                  "explanation_zh": "被動是 be + 過去分詞 asked。"
+                }
+              ]
+            },
+            {
+              "zh": "藉由素描",
+              "accepted": [
+                "by sketching them",
+                "by drawing them",
+                "by sketching the plants",
+                "by drawing pictures of them",
+                "by making sketches of them"
+              ],
+              "targets": [
+                "PREPVING",
+                "sketch"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "by sketch them",
+                  "right": "by sketching them",
+                  "explanation_zh": "by 是介系詞，後面接動名詞 sketching。"
+                },
+                {
+                  "wrong": "through sketch them",
+                  "right": "by sketching them",
+                  "explanation_zh": "「藉由做某事」用 by + V-ing。"
+                }
+              ]
+            },
+            {
+              "zh": "來觀察植物的生長",
+              "accepted": [
+                "to observe the growth of plants",
+                "to observe how plants grow",
+                "to observe the growth of the plants",
+                "to watch how plants grow",
+                "to study the growth of plants",
+                "to observe plant growth"
+              ],
+              "targets": [
+                "observe",
+                "plant",
+                "growth"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "to observe the grow of plants",
+                  "right": "to observe the growth of plants",
+                  "explanation_zh": "the 後面要接名詞 growth；grow 是動詞。"
+                },
+                {
+                  "wrong": "to observe how do plants grow",
+                  "right": "to observe how plants grow",
+                  "explanation_zh": "間接問句用直述句語序，不加 do。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "word_form",
+              "zh": "藉由素描",
+              "literal_error": "In an interdisciplinary course, students are asked to observe the growth of plants by sketch them.",
+              "part": 3,
+              "explanation_zh": "「藉由」是介系詞 by，後面接動名詞 sketching。"
+            },
+            {
+              "type": "word_form",
+              "zh": "生長",
+              "literal_error": "In an interdisciplinary course, students are asked to observe the grow of plants by sketching them.",
+              "part": 4,
+              "explanation_zh": "「植物的生長」是名詞 growth；grow 是動詞，要寫成 how plants grow。"
+            }
+          ],
+          "bonus": [],
+          "restructuring_zh": "中文「藉由素描來觀察植物的生長」方法在前、目的在後；英文改成 to observe the growth of plants by sketching them，by + V-ing 放在後面，並補上受詞 them（指植物）。"
+        },
+        "2": {
+          "references": [
+            "Such courses have been proved to encourage students to explore the world from different angles.",
+            "This kind of course has been shown to encourage students to explore the world from different perspectives.",
+            "Courses like this have been proved to encourage students to explore the world from different points of view."
+          ],
+          "target_words": [
+            {
+              "word": "course",
+              "zh": "課程",
+              "alternatives": [
+                "class"
+              ]
+            },
+            {
+              "word": "prove",
+              "zh": "證明",
+              "alternatives": [
+                "show"
+              ]
+            },
+            {
+              "word": "encourage",
+              "zh": "鼓勵"
+            },
+            {
+              "word": "explore",
+              "zh": "探索"
+            },
+            {
+              "word": "world",
+              "zh": "世界"
+            },
+            {
+              "word": "angle",
+              "zh": "角度",
+              "alternatives": [
+                "perspective",
+                "point of view",
+                "viewpoint"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PASS",
+              "grammar_id": "gp-perfect-passive",
+              "label_zh": "完成式被動（已被證明）",
+              "frame": "S + have/has been + p.p. + to VR …",
+              "zh_trigger": "已被證明"
+            },
+            {
+              "code": "VOC",
+              "grammar_id": "gp-v-o-to-v",
+              "label_zh": "動詞＋受詞＋不定詞（encourage sb to V）",
+              "frame": "encourage + O + to VR …",
+              "zh_trigger": "鼓勵學生"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "這類課程",
+              "accepted": [
+                "Such courses",
+                "This kind of course",
+                "Courses like this",
+                "These kinds of courses",
+                "This type of course",
+                "Courses of this kind"
+              ],
+              "targets": [
+                "course"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "This kind of courses has",
+                  "right": "This kind of course has",
+                  "explanation_zh": "this kind of 後面接單數名詞；要用複數就寫 these kinds of courses 或 such courses。"
+                }
+              ]
+            },
+            {
+              "zh": "已被證明",
+              "accepted": [
+                "have been proved",
+                "has been shown",
+                "have been proven",
+                "have been shown",
+                "has been proven",
+                "has been proved"
+              ],
+              "targets": [
+                "PASS",
+                "prove"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "are proved",
+                  "right": "have been proved",
+                  "explanation_zh": "「已（經）被證明」是完成式被動 have been + p.p.。"
+                },
+                {
+                  "wrong": "have proved",
+                  "right": "have been proved",
+                  "explanation_zh": "課程是「被證明」的一方，完成式被動要有 been。"
+                }
+              ]
+            },
+            {
+              "zh": "能鼓勵學生",
+              "accepted": [
+                "to encourage students",
+                "to encourage the students",
+                "to motivate students"
+              ],
+              "targets": [
+                "VOC",
+                "encourage"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "to encourage students explore",
+                  "right": "to encourage students to explore",
+                  "explanation_zh": "encourage + 受詞 + to + 原形動詞，to 不能漏。"
+                },
+                {
+                  "wrong": "can encourage students",
+                  "right": "to encourage students",
+                  "explanation_zh": "be proved 後面接不定詞 to + 原形動詞，不再接 can。"
+                }
+              ]
+            },
+            {
+              "zh": "從不同的角度探索世界",
+              "accepted": [
+                "to explore the world from different angles",
+                "to explore the world from different perspectives",
+                "to explore the world from different points of view",
+                "to explore the world from various angles",
+                "to explore the world in different ways"
+              ],
+              "targets": [
+                "explore",
+                "world",
+                "angle"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "to explore the world in different angles",
+                  "right": "to explore the world from different angles",
+                  "explanation_zh": "「從…角度」用介系詞 from（from different angles 或 perspectives）。"
+                },
+                {
+                  "wrong": "to exploring the world from different angles",
+                  "right": "to explore the world from different angles",
+                  "explanation_zh": "encourage sb to 的 to 是不定詞，後面接原形動詞。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "tense_trigger",
+              "zh": "已被證明",
+              "literal_error": "Such courses are proved to encourage students to explore the world from different angles.",
+              "part": 2,
+              "explanation_zh": "「已」要用完成式、「被」要用被動，合起來是 have been proved（proven）。"
+            },
+            {
+              "type": "collocation",
+              "zh": "鼓勵學生",
+              "literal_error": "Such courses have been proved to encourage students explore the world from different angles.",
+              "part": 3,
+              "explanation_zh": "encourage 的句型是 encourage + 受詞 + to + 原形動詞，to 不能省略。"
+            }
+          ],
+          "bonus": []
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-advanced-05",
+    "lot": "translation-advanced-05",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "e5c4baeec359d5ac42e4e899ef49b7db98863cbe7bb8568d933d20cee46dbcaf",
+    "spec_id": "translation-advanced@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 1,
+    "sentences": 1,
+    "avg_sentence_length": 1.0,
+    "denominator": 1,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 1.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {
+      "off": 1
+    },
+    "offlist_words": [
+      "interdisciplinary"
+    ],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "warn",
+      "created_at": "2026-10-09T13:12:56Z",
+      "details": {
+        "errors": [],
+        "warnings": [
+          "annotations.rubric.items.2.patterns[0]: gp-perfect-passive 通常對應句構 PERF（目前 code=PASS）"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "warn",
+      "created_at": "2026-10-09T12:52:38Z",
+      "details": {
+        "solver": "A",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "In an interdisciplinary course, students are asked to observe the growth of plants by sketching them.",
+            "confidence": "high",
+            "explanation_zh": "「被要求」用被動 are asked to（are required to 亦可）；「藉由素描來」用 by + V-ing；「觀察植物的生長」用 observe the growth of plants（或 observe how plants grow）。"
+          },
+          "2": {
+            "translation": "Courses like this have been proven to encourage students to explore the world from different perspectives.",
+            "confidence": "high",
+            "explanation_zh": "「已被證明能」用現在完成式被動 have been proven to + V；「鼓勵學生探索」用 encourage + O + to V；「從不同的角度」用 from different perspectives；「這類課程」寫成 Courses like this（Such courses 亦可）。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PASS",
+              "PREPVING"
+            ],
+            "used_target_words": [
+              "course",
+              "ask",
+              "observe",
+              "plant",
+              "growth",
+              "sketch"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PASS",
+              "VOC"
+            ],
+            "used_target_words": [
+              "course",
+              "prove",
+              "encourage",
+              "explore",
+              "world",
+              "angle"
+            ],
+            "within_accepted": true,
+            "closest_reference": 2,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "course",
+              "ask",
+              "observe",
+              "plant",
+              "growth",
+              "sketch"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PASS": true,
+              "PREPVING": true
+            },
+            "program_match": true
+          },
+          "2": {
+            "target_words_found": [
+              "course",
+              "encourage",
+              "explore",
+              "world",
+              "angle"
+            ],
+            "target_hit_rate": 0.833,
+            "patterns_detected": {
+              "PASS": false,
+              "VOC": null
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 2 題驗證者說用了 ['prove']，程式在譯文裡找不到",
+          "第 2 題驗證者說用了句型 PASS，程式在譯文裡看不出來"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "warn",
+      "created_at": "2026-10-09T12:54:59Z",
+      "details": {
+        "solver": "B",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "In an interdisciplinary course, students are asked to observe the growth of plants by sketching them.",
+            "confidence": "high",
+            "explanation_zh": "「被要求」用被動 are asked to + 原形動詞；「藉由素描」用 by + 動名詞 sketching them；「觀察植物的生長」用 observe the growth of plants。interdisciplinary 題目已給，句首用 In 引導地點／情境副詞片語。"
+          },
+          "2": {
+            "translation": "Such courses have been proven to encourage students to explore the world from different perspectives.",
+            "confidence": "high",
+            "explanation_zh": "「已被證明能……」用現在完成式被動 have been proven to + 原形動詞；「這類課程」用 such courses；「鼓勵學生……」用 encourage + 受詞 + to V；「從不同的角度」用 from different perspectives。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PASS",
+              "PREPVING"
+            ],
+            "used_target_words": [
+              "course",
+              "ask",
+              "observe",
+              "plant",
+              "growth",
+              "sketch"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PASS",
+              "VOC"
+            ],
+            "used_target_words": [
+              "course",
+              "prove",
+              "encourage",
+              "explore",
+              "world",
+              "angle"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "工具備註（不是題目問題）：我的譯文用 have been proven，這是 prove 的標準過去分詞，也在第 2 部分的可接受寫法裡；但程式的詞形表可能認不得 proven，因此 prove 的標的詞彙比對與 PASS 句構偵測可能找不到，驗證者聲明與程式比對不一致時會列 warn，請人工確認即可。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "course",
+              "ask",
+              "observe",
+              "plant",
+              "growth",
+              "sketch"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PASS": true,
+              "PREPVING": true
+            },
+            "program_match": true
+          },
+          "2": {
+            "target_words_found": [
+              "course",
+              "encourage",
+              "explore",
+              "world",
+              "angle"
+            ],
+            "target_hit_rate": 0.833,
+            "patterns_detected": {
+              "PASS": false,
+              "VOC": null
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 2 題驗證者說用了 ['prove']，程式在譯文裡找不到",
+          "第 2 題驗證者說用了句型 PASS，程式在譯文裡看不出來"
+        ]
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

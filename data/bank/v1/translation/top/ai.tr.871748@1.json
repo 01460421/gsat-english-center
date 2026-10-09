@@ -1,0 +1,744 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.871748",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "top",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "對於凡事都追求完美的人來說，作業裡的一個小錯誤就可能被視為徹底的失敗。",
+        "options": null,
+        "answer": "For those who pursue perfection in everything, a small mistake in an assignment may be seen as a complete failure.",
+        "accepted_answers": [
+          "For those who want everything to be perfect, a tiny mistake in an assignment can be viewed as a total failure.",
+          "For those who seek perfection in all things, one small error in an assignment might be regarded as a complete failure."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "對於…的人來說（For those who …）",
+            "被動語態（含情態助動詞被動：可能被視為）"
+          ],
+          "topic": "完美主義"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "這種在成績優異的學生中常見的完美主義（perfectionism），可能讓人走到連開始都不敢的地步。",
+        "options": null,
+        "answer": "This kind of perfectionism, which is common among outstanding students, may push people to the point where they dare not even begin.",
+        "accepted_answers": [
+          "Such perfectionism, which is common among students with excellent grades, can lead people to a point where they are afraid to even start.",
+          "This perfectionism, which is often seen in top students, can drive people to a point where they are too scared to start at all."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "非限定關係子句（補充說明：在成績優異的學生中常見的）",
+            "關係副詞 where（…的地步＝a point where …）"
+          ],
+          "topic": "完美主義"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "完美主義"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「對於…的人來說」用 For those who + V：For those who pursue perfection in everything（pursue／seek 後接名詞 perfection）。主要子句以「一個小錯誤」當主詞：a small mistake in an assignment（「作業」是 assignment，也可寫 homework）；「可能被視為」是情態助動詞的被動 may be seen／regarded as。「徹底的失敗」是 a complete／total failure，failure 是名詞，不能寫成 fail。",
+          "evidence": [
+            "對於凡事都追求完美的人來說",
+            "就可能被視為徹底的失敗"
+          ],
+          "strategy_zh": "For those who … 只是點出對象；主要子句的主詞是「錯誤」，所以動詞用被動 may be seen as。",
+          "hints": [
+            "切成四段：對於凡事都追求完美的人來說／作業裡的一個小錯誤／就可能被視為／徹底的失敗",
+            "標的詞彙：perfect／perfection（完美）、mistake（錯誤）、assignment（作業）、regard（視為）、failure（失敗）",
+            "句型框架：For those who + V …, S + may be seen/regarded as + N"
+          ]
+        },
+        "2": {
+          "explanation_zh": "主詞「這種…完美主義」的前置修飾很長，英文用非限定關係子句補充：This kind of perfectionism, which is common among outstanding students, …（「成績優異的學生」可寫 outstanding／top students；逗號後用 which，不用 that）。「讓人走到…的地步」用 push／lead people to the point where …，point 表程度，後面用關係副詞 where。「連開始都不敢」是 they dare not even begin／they are afraid to even start。",
+          "evidence": [
+            "這種在成績優異的學生中常見的完美主義（perfectionism）",
+            "可能讓人走到連開始都不敢的地步"
+          ],
+          "strategy_zh": "主詞後面用兩個逗號夾住 which 子句；主要動詞是 may push，最後用 the point where + 子句收尾。",
+          "hints": [
+            "切成四段：這種在成績優異的學生中常見的完美主義／可能讓人走到／連開始都不敢／地步",
+            "標的詞彙：common（常見的）、student（學生）、push（推向）、point（地步）、dare（敢）",
+            "句型框架：N, which is + adj. + among …, may push + O + to the point where + S + V …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "For those who pursue perfection in everything, a small mistake in an assignment may be seen as a complete failure.",
+            "For those who want everything to be perfect, a tiny mistake in an assignment can be viewed as a total failure.",
+            "For those who seek perfection in all things, one small error in an assignment might be regarded as a complete failure."
+          ],
+          "target_words": [
+            {
+              "word": "perfect",
+              "zh": "完美的",
+              "alternatives": [
+                "perfection"
+              ]
+            },
+            {
+              "word": "mistake",
+              "zh": "錯誤",
+              "alternatives": [
+                "error"
+              ]
+            },
+            {
+              "word": "assignment",
+              "zh": "作業",
+              "alternatives": [
+                "homework"
+              ]
+            },
+            {
+              "word": "regard",
+              "zh": "視為",
+              "alternatives": [
+                "see",
+                "view",
+                "consider",
+                "treat"
+              ]
+            },
+            {
+              "word": "failure",
+              "zh": "失敗"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "REL",
+              "grammar_id": "gp-for-those-who",
+              "label_zh": "對於…的人來說（For those who …）",
+              "frame": "For those who + V …, S + V …",
+              "zh_trigger": "對於凡事都追求完美的人來說"
+            },
+            {
+              "code": "PASS",
+              "grammar_id": "gp-passive",
+              "label_zh": "被動語態（含情態助動詞被動：可能被視為）",
+              "frame": "S + may/can + be + p.p. + as …",
+              "zh_trigger": "被視為"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "對於凡事都追求完美的人來說",
+              "accepted": [
+                "For those who pursue perfection in everything",
+                "For those who want everything to be perfect",
+                "For those who seek perfection in all things",
+                "For those who seek perfection in everything",
+                "For people who want everything to be perfect"
+              ],
+              "targets": [
+                "REL",
+                "perfect"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "For those who pursues perfection in everything",
+                  "right": "For those who pursue perfection in everything",
+                  "explanation_zh": "those 是複數，關係子句的動詞不加 s。"
+                },
+                {
+                  "wrong": "For those who pursue perfect in everything",
+                  "right": "For those who pursue perfection in everything",
+                  "explanation_zh": "pursue／seek 後面接名詞 perfection；perfect 是形容詞。"
+                }
+              ]
+            },
+            {
+              "zh": "作業裡的一個小錯誤",
+              "accepted": [
+                "a small mistake in an assignment",
+                "a tiny mistake in an assignment",
+                "one small error in an assignment",
+                "a small mistake in their homework",
+                "a minor mistake in an assignment",
+                "a small error in an assignment"
+              ],
+              "targets": [
+                "mistake",
+                "assignment"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "a small mistake of an assignment",
+                  "right": "a small mistake in an assignment",
+                  "explanation_zh": "「作業裡的」用 in an assignment。"
+                },
+                {
+                  "wrong": "a small wrong in an assignment",
+                  "right": "a small mistake in an assignment",
+                  "explanation_zh": "「錯誤」是名詞 mistake／error；wrong 多當形容詞。"
+                }
+              ]
+            },
+            {
+              "zh": "就可能被視為",
+              "accepted": [
+                "may be seen as",
+                "can be viewed as",
+                "might be regarded as",
+                "may be regarded as",
+                "can be considered"
+              ],
+              "targets": [
+                "PASS",
+                "regard"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "may see as",
+                  "right": "may be seen as",
+                  "explanation_zh": "錯誤是「被視為」，要用被動 be seen as。"
+                },
+                {
+                  "wrong": "may be regarded a complete failure",
+                  "right": "may be regarded as a complete failure",
+                  "explanation_zh": "regard A as B 的被動是 be regarded as，as 不能省。"
+                }
+              ]
+            },
+            {
+              "zh": "徹底的失敗",
+              "accepted": [
+                "a complete failure",
+                "a total failure",
+                "an absolute failure",
+                "a total disaster"
+              ],
+              "targets": [
+                "failure"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "a complete fail",
+                  "right": "a complete failure",
+                  "explanation_zh": "「失敗」當名詞用 failure；fail 是動詞。"
+                },
+                {
+                  "wrong": "a thorough failure",
+                  "right": "a complete failure",
+                  "explanation_zh": "「徹底的失敗」英文習慣說 a complete／total failure。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "abstract_nominal",
+              "zh": "徹底的失敗",
+              "literal_error": "a small mistake in an assignment may be seen as a complete fail",
+              "part": 4,
+              "explanation_zh": "「失敗」在這裡是抽象名詞 failure；fail 是動詞，不能接在 a complete 後面。"
+            },
+            {
+              "type": "redundancy",
+              "zh": "對於凡事都追求完美的人來說",
+              "literal_error": "For those who pursue perfection in everything, they may see a small mistake in an assignment as a complete failure.",
+              "part": 1,
+              "explanation_zh": "For those who … 已經點出對象，後面的主要子句不要再用 they 重複主詞；把「錯誤」當主詞，用被動 may be seen as。"
+            }
+          ],
+          "bonus": [],
+          "restructuring_zh": "「作業裡的一個小錯誤就可能被視為…」中文沒有說是誰「視為」，英文以「錯誤」當主詞用被動 may be seen as；「對於…的人來說」用 For those who …，主要子句不要再用 they 重複主詞。"
+        },
+        "2": {
+          "references": [
+            "This kind of perfectionism, which is common among outstanding students, may push people to the point where they dare not even begin.",
+            "Such perfectionism, which is common among students with excellent grades, can lead people to a point where they are afraid to even start.",
+            "This perfectionism, which is often seen in top students, can drive people to a point where they are too scared to start at all."
+          ],
+          "target_words": [
+            {
+              "word": "common",
+              "zh": "常見的",
+              "alternatives": [
+                "often seen",
+                "widespread",
+                "prevalent",
+                "frequently seen"
+              ]
+            },
+            {
+              "word": "student",
+              "zh": "學生"
+            },
+            {
+              "word": "push",
+              "zh": "推向、使走到",
+              "alternatives": [
+                "lead",
+                "drive",
+                "bring",
+                "take"
+              ]
+            },
+            {
+              "word": "point",
+              "zh": "地步",
+              "alternatives": [
+                "stage",
+                "extent",
+                "degree"
+              ]
+            },
+            {
+              "word": "dare",
+              "zh": "敢",
+              "alternatives": [
+                "afraid",
+                "scared",
+                "fear",
+                "hesitate"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "NRREL",
+              "grammar_id": "gp-nonrestrictive",
+              "label_zh": "非限定關係子句（補充說明：在成績優異的學生中常見的）",
+              "frame": "N, which + be + adj. + among …, + V …",
+              "zh_trigger": "在成績優異的學生中常見的"
+            },
+            {
+              "code": "REL",
+              "grammar_id": "gp-relative-adverb",
+              "label_zh": "關係副詞 where（…的地步＝a point where …）",
+              "frame": "lead/push + O + to a point where + S + V …",
+              "zh_trigger": "連開始都不敢的地步"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "這種在成績優異的學生中常見的完美主義（perfectionism）",
+              "accepted": [
+                "This kind of perfectionism, which is common among outstanding students",
+                "Such perfectionism, which is common among students with excellent grades",
+                "This perfectionism, which is often seen in top students",
+                "This kind of perfectionism, which is common among excellent students",
+                "This perfectionism, which is common among students with good grades"
+              ],
+              "targets": [
+                "NRREL",
+                "common",
+                "student"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "This kind of perfectionism, that is common among outstanding students",
+                  "right": "This kind of perfectionism, which is common among outstanding students",
+                  "explanation_zh": "非限定關係子句（有逗號）不能用 that，要用 which。"
+                },
+                {
+                  "wrong": "This kind of common among outstanding students perfectionism",
+                  "right": "This kind of perfectionism, which is common among outstanding students",
+                  "explanation_zh": "較長的修飾語不能放在名詞前，改成關係子句放在後面。"
+                }
+              ]
+            },
+            {
+              "zh": "可能讓人走到",
+              "accepted": [
+                "may push people to",
+                "can lead people to",
+                "can drive people to",
+                "may lead people to",
+                "can bring people to"
+              ],
+              "targets": [
+                "push"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "may let people walk to",
+                  "right": "may push people to",
+                  "explanation_zh": "「讓人走到…地步」是比喻，用 push／lead／drive sb to；不是真的 walk。"
+                },
+                {
+                  "wrong": "may make people to",
+                  "right": "may push people to",
+                  "explanation_zh": "make 後面接原形動詞，不接 to；這裡用 push／lead sb to。"
+                }
+              ]
+            },
+            {
+              "zh": "連開始都不敢",
+              "accepted": [
+                "they dare not even begin",
+                "they are afraid to even start",
+                "they are too scared to start at all",
+                "they are afraid even to start",
+                "they do not even dare to start"
+              ],
+              "targets": [
+                "dare"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "they even don't dare start",
+                  "right": "they do not even dare to start",
+                  "explanation_zh": "even 放在助動詞後面：do not even dare to start。"
+                },
+                {
+                  "wrong": "they are afraid of start",
+                  "right": "they are afraid to start",
+                  "explanation_zh": "afraid to + 原形動詞，或 afraid of + V-ing。"
+                }
+              ]
+            },
+            {
+              "zh": "地步",
+              "accepted": [
+                "the point where",
+                "a point where",
+                "a stage where",
+                "the point at which"
+              ],
+              "targets": [
+                "REL",
+                "point"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "the point which they dare not even begin",
+                  "right": "the point where they dare not even begin",
+                  "explanation_zh": "point 在子句中表「程度、地步」，要用關係副詞 where（或 at which）。"
+                },
+                {
+                  "wrong": "the step where",
+                  "right": "the point where",
+                  "explanation_zh": "「地步」是程度，用 point；step 是「步驟」。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "prenominal_modifier",
+              "zh": "這種在成績優異的學生中常見的完美主義",
+              "literal_error": "This kind of common among outstanding students perfectionism may push people …",
+              "part": 1,
+              "explanation_zh": "中文把「在成績優異的學生中常見的」放在名詞前面；英文改成非限定關係子句 , which is common among outstanding students, 放在 perfectionism 後面。"
+            },
+            {
+              "type": "abstract_nominal",
+              "zh": "地步",
+              "literal_error": "may let people walk to the step of not daring to start",
+              "part": 4,
+              "explanation_zh": "「走到…的地步」是比喻的抽象說法，英文用 push／lead sb to the point where …；step 是「步驟」，walk to 是真的走路。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "Never satisfied with anything less than perfect, many top students end up too afraid to even start.",
+              "grammar_id": "gp-adj-phrase-front",
+              "explanation_zh": "用形容詞片語置首 Never satisfied with …（從不滿足於…）描寫完美主義者的心態，再用 end up（最後落得）帶出結果。"
+            }
+          ],
+          "restructuring_zh": "「這種在成績優異的學生中常見的完美主義」前置修飾太長，英文改成非限定關係子句放在名詞後；「走到…的地步」改寫成 push／lead sb to the point where …。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ac-V-3",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-top-03",
+    "lot": "translation-top-03",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "31117a6d4ea07290a38612cba619cca8744c8f0cc9141fe199063ce8d6f7050e",
+    "spec_id": "translation-top@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 1,
+    "sentences": 1,
+    "avg_sentence_length": 1.0,
+    "denominator": 1,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 1.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {
+      "off": 1
+    },
+    "offlist_words": [
+      "perfectionism"
+    ],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T13:17:20Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T12:52:43Z",
+      "details": {
+        "solver": "A",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "For people who pursue perfection in everything, even a small mistake in their homework can be seen as a complete failure.",
+            "confidence": "high",
+            "explanation_zh": "「凡事都追求完美的人」用 who 關係子句；「就可能被視為」用 can be seen as（被動）；「一個小錯誤就…」的「就」用 even 表達；「徹底的失敗」用 a complete failure。"
+          },
+          "2": {
+            "translation": "This kind of perfectionism, which is common among students with excellent grades, can push people to the point where they do not even dare to start.",
+            "confidence": "medium",
+            "explanation_zh": "「在成績優異的學生中常見的」用非限定關係子句 which is common among…補充說明；「走到…的地步」用 to the point where…；「連開始都不敢」用 do not even dare to start。「這種」已經限定了指涉，所以用逗號的非限定關係子句；若當成限定也可寫 the kind of perfectionism that is common among…。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "REL",
+              "PASS"
+            ],
+            "used_target_words": [
+              "perfect",
+              "mistake",
+              "assignment",
+              "regard",
+              "failure"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "NRREL",
+              "REL"
+            ],
+            "used_target_words": [
+              "common",
+              "student",
+              "push",
+              "point",
+              "dare"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "perfect",
+              "mistake",
+              "assignment",
+              "regard",
+              "failure"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "REL": true,
+              "PASS": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "common",
+              "student",
+              "push",
+              "point",
+              "dare"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NRREL": true,
+              "REL": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T12:59:49Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "For people who strive for perfection in everything, one small mistake in an assignment may be regarded as a complete failure.",
+            "confidence": "high",
+            "explanation_zh": "「凡事都追求完美的人」用 people who strive for perfection in everything；「被視為」用被動 be regarded as；「徹底的失敗」譯為 a complete failure，may 表『就可能』。"
+          },
+          "2": {
+            "translation": "This kind of perfectionism, which is common among students with excellent grades, may lead people to the point where they are afraid even to begin.",
+            "confidence": "medium",
+            "explanation_zh": "「這種…完美主義」用 This kind of perfectionism 加非限定關係子句 which is common among …；「走到…的地步」譯為 lead people to the point where …；「連開始都不敢」譯為 afraid even to begin。『走到…的地步』可用 to the point where 或 to such an extent that，信心給 medium。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "REL",
+              "PASS"
+            ],
+            "used_target_words": [
+              "perfect",
+              "mistake",
+              "assignment",
+              "regard",
+              "failure"
+            ],
+            "within_accepted": true,
+            "closest_reference": 2,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "NRREL",
+              "REL"
+            ],
+            "used_target_words": [
+              "common",
+              "student",
+              "push",
+              "point",
+              "dare"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "perfect",
+              "mistake",
+              "assignment",
+              "regard",
+              "failure"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "REL": true,
+              "PASS": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "common",
+              "student",
+              "push",
+              "point",
+              "dare"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NRREL": true,
+              "REL": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

@@ -1,0 +1,709 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.7cbeb0",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "advanced",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "從高一就一直在整理學習歷程檔案（learning portfolio）的人，申請大學時更有優勢。",
+        "options": null,
+        "answer": "Those who have been organizing their learning portfolios since tenth grade have an advantage when applying to college.",
+        "accepted_answers": [
+          "Students who have been working on their learning portfolios since their first year of high school have an advantage when they apply to college.",
+          "Those who have been preparing their learning portfolios since the tenth grade are at an advantage when they apply to universities."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "凡是…的人",
+            "現在完成進行式"
+          ],
+          "topic": "學習歷程檔案"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "面對大學面試，這些學生和其他申請者相比，更能自信地介紹自己。",
+        "options": null,
+        "answer": "Faced with college interviews, these students can introduce themselves more confidently than other applicants.",
+        "accepted_answers": [
+          "Facing college interviews, these students can introduce themselves with more confidence than other applicants.",
+          "Compared with other applicants, these students can introduce themselves more confidently when facing college interviews."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "分詞構句",
+            "相較於…"
+          ],
+          "topic": "學習歷程檔案"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "學習歷程檔案"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「…的人」改成 Those who …，把修飾語放到後面。「從高一就一直在整理」是從過去持續到現在的動作，用 have been organizing … since tenth grade（since 帶出起點）。主詞 Those 是複數，主要動詞用 have an advantage；「申請大學時」寫 when applying to college（apply to 某校）。",
+          "evidence": [
+            "從高一就一直在整理",
+            "的人",
+            "更有優勢"
+          ],
+          "strategy_zh": "主詞很長時，先找出核心名詞（人），用 Those who … 把修飾語放後面，最後再接主要動詞，注意單複數一致。",
+          "hints": [
+            "切成四段：從高一就一直在整理（學習歷程檔案）／的人／申請大學時／更有優勢",
+            "標的詞彙：organize（整理，L3）、advantage（優勢，L3）、apply（申請，L2）、college（大學，L2）",
+            "句型框架：Those who + have been V-ing … since … + have an advantage + when V-ing …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「面對大學面試」和主要子句共用主詞 these students，可以寫成分詞構句 Faced with college interviews,（或 Facing …）。「和其他申請者相比，更能…」用比較級 more confidently than other applicants，也可以把 Compared with other applicants 放句首。「自信地」修飾動詞，用副詞 confidently。",
+          "evidence": [
+            "面對大學面試",
+            "和其他申請者相比",
+            "更能自信地介紹自己"
+          ],
+          "strategy_zh": "兩個動作主詞相同時，可以把較次要的動作改成分詞片語放在句首；比較的對象要對等（學生和申請者比）。",
+          "hints": [
+            "切成四段：面對大學面試／這些學生／和其他申請者相比／更能自信地介紹自己",
+            "標的詞彙：face（面對，L1）、interview（面試，L1）、student（學生，L1）、introduce（介紹，L2）、confident（有自信的，L2）",
+            "句型框架：Faced with + N, S + can + VR + more + adv. + than + N（或 Compared with + N, S + V + 比較級 …）"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "Those who have been organizing their learning portfolios since tenth grade have an advantage when applying to college.",
+            "Students who have been working on their learning portfolios since their first year of high school have an advantage when they apply to college.",
+            "Those who have been preparing their learning portfolios since the tenth grade are at an advantage when they apply to universities."
+          ],
+          "target_words": [
+            {
+              "word": "organize",
+              "zh": "整理",
+              "alternatives": [
+                "work on",
+                "prepare",
+                "put together",
+                "build"
+              ]
+            },
+            {
+              "word": "advantage",
+              "zh": "優勢",
+              "alternatives": [
+                "edge"
+              ]
+            },
+            {
+              "word": "apply",
+              "zh": "申請",
+              "alternatives": [
+                "application"
+              ]
+            },
+            {
+              "word": "college",
+              "zh": "大學",
+              "alternatives": [
+                "university"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "REL",
+              "grammar_id": "gp-for-those-who",
+              "label_zh": "凡是…的人（Those who …）",
+              "frame": "Those who + V … + V …",
+              "zh_trigger": "的人"
+            },
+            {
+              "code": "PERF",
+              "grammar_id": "gp-present-perfect-progressive",
+              "label_zh": "現在完成進行式（從…起一直在…）",
+              "frame": "S + have been + V-ing + since …",
+              "zh_trigger": "從高一就一直在"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "從高一就一直在整理",
+              "accepted": [
+                "have been organizing their learning portfolios since tenth grade",
+                "have been working on their learning portfolios since their first year of high school",
+                "have been preparing their learning portfolios since the tenth grade",
+                "have been organizing their learning portfolios since their first year of senior high school",
+                "have been putting together their learning portfolios since tenth grade",
+                "have been working on their learning portfolios since tenth grade"
+              ],
+              "targets": [
+                "organize",
+                "PERF"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "have organized their learning portfolios from tenth grade",
+                  "right": "have been organizing their learning portfolios since tenth grade",
+                  "explanation_zh": "「從…起一直」用 since 搭配完成（進行）式；from 只說起點，帶不出持續到現在。"
+                },
+                {
+                  "wrong": "are organizing their learning portfolios since tenth grade",
+                  "right": "have been organizing their learning portfolios since tenth grade",
+                  "explanation_zh": "有 since 表示從過去持續到現在，要用現在完成進行式，不能用現在進行式。"
+                }
+              ]
+            },
+            {
+              "zh": "的人",
+              "accepted": [
+                "Those who",
+                "Students who",
+                "People who",
+                "For those who"
+              ],
+              "targets": [
+                "REL"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Those who has been organizing",
+                  "right": "Those who have been organizing",
+                  "explanation_zh": "those 是複數，who 子句的動詞用 have。"
+                },
+                {
+                  "wrong": "The people which",
+                  "right": "The people who",
+                  "explanation_zh": "先行詞是人，關係代名詞用 who。"
+                }
+              ]
+            },
+            {
+              "zh": "申請大學時",
+              "accepted": [
+                "when applying to college",
+                "when they apply to college",
+                "when they apply to universities",
+                "when applying to universities",
+                "when applying for college",
+                "when they apply for college"
+              ],
+              "targets": [
+                "apply",
+                "college"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "when apply to college",
+                  "right": "when applying to college",
+                  "explanation_zh": "when 後面要接子句（when they apply）或分詞（when applying），不能直接接原形動詞。"
+                },
+                {
+                  "wrong": "when applying college",
+                  "right": "when applying to college",
+                  "explanation_zh": "申請進入某校是 apply to（申請某樣東西才用 apply for）。"
+                }
+              ]
+            },
+            {
+              "zh": "更有優勢",
+              "accepted": [
+                "have an advantage",
+                "are at an advantage",
+                "have a greater advantage",
+                "have more of an advantage",
+                "have an edge",
+                "will have an advantage"
+              ],
+              "targets": [
+                "advantage"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "are more advantage",
+                  "right": "have an advantage",
+                  "explanation_zh": "advantage 是名詞，不能放在 be 動詞後面當形容詞；說 have an advantage 或 are at an advantage。"
+                },
+                {
+                  "wrong": "has an advantage",
+                  "right": "have an advantage",
+                  "explanation_zh": "主詞 Those (who …) 是複數，動詞用 have。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "prenominal_modifier",
+              "zh": "的人",
+              "literal_error": "From tenth grade always organizing learning portfolios people have more advantage when apply college.",
+              "part": 2,
+              "explanation_zh": "「…的人」前面的修飾語很長，英文要先寫 Those，再用 who 子句補充。"
+            },
+            {
+              "type": "word_form",
+              "zh": "更有優勢",
+              "literal_error": "Those who have been organizing their learning portfolios are more advantage.",
+              "part": 4,
+              "explanation_zh": "advantage 是名詞，不能當形容詞用（名詞↔形容詞的詞性誘錯）。"
+            }
+          ],
+          "bonus": [],
+          "restructuring_zh": "主詞「從高一就一直在整理學習歷程檔案的人」是很長的前置修飾，英文改成 Those who have been organizing …（後位修飾），主要動詞 have 要和 Those 一致。"
+        },
+        "2": {
+          "references": [
+            "Faced with college interviews, these students can introduce themselves more confidently than other applicants.",
+            "Facing college interviews, these students can introduce themselves with more confidence than other applicants.",
+            "Compared with other applicants, these students can introduce themselves more confidently when facing college interviews."
+          ],
+          "target_words": [
+            {
+              "word": "face",
+              "zh": "面對"
+            },
+            {
+              "word": "interview",
+              "zh": "面試"
+            },
+            {
+              "word": "student",
+              "zh": "學生"
+            },
+            {
+              "word": "introduce",
+              "zh": "介紹"
+            },
+            {
+              "word": "confident",
+              "zh": "有自信的",
+              "alternatives": [
+                "confidently",
+                "confidence"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PART",
+              "grammar_id": "gp-participle-clause",
+              "label_zh": "分詞構句（Faced with …／Facing …）",
+              "frame": "Faced with/Facing + N, S + V …",
+              "zh_trigger": "面對大學面試"
+            },
+            {
+              "code": "COMP",
+              "grammar_id": "gp-compared-with",
+              "label_zh": "相較於…（比較）",
+              "frame": "S + V + 比較級 + than + N ／ Compared with + N, S + V + 比較級 …",
+              "zh_trigger": "和其他申請者相比"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "面對大學面試",
+              "accepted": [
+                "Faced with college interviews",
+                "Facing college interviews",
+                "when facing college interviews",
+                "when faced with college interviews",
+                "Faced with university interviews",
+                "Facing interviews for college"
+              ],
+              "targets": [
+                "face",
+                "interview",
+                "PART"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Face college interviews",
+                  "right": "Faced with college interviews",
+                  "explanation_zh": "句首這個部分不是祈使句，要用分詞構句 Faced with …／Facing …，主詞是後面的 these students。"
+                },
+                {
+                  "wrong": "Facing with college interviews",
+                  "right": "Facing college interviews",
+                  "explanation_zh": "face 是及物動詞，Facing 後面直接接受詞；用被動分詞時才是 Faced with。"
+                }
+              ]
+            },
+            {
+              "zh": "這些學生",
+              "accepted": [
+                "these students",
+                "these young people"
+              ],
+              "targets": [
+                "student"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "this students",
+                  "right": "these students",
+                  "explanation_zh": "複數名詞前用 these。"
+                }
+              ]
+            },
+            {
+              "zh": "和其他申請者相比",
+              "accepted": [
+                "than other applicants",
+                "compared with other applicants",
+                "compared to other applicants",
+                "in comparison with other applicants",
+                "than other students",
+                "than others"
+              ],
+              "targets": [
+                "COMP"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "compare with other applicants",
+                  "right": "compared with other applicants",
+                  "explanation_zh": "「和…相比」用過去分詞片語 compared with／to，compare 要加 -d。"
+                },
+                {
+                  "wrong": "than other applicant",
+                  "right": "than other applicants",
+                  "explanation_zh": "other 後面接可數名詞的複數。"
+                }
+              ]
+            },
+            {
+              "zh": "更能自信地介紹自己",
+              "accepted": [
+                "can introduce themselves more confidently",
+                "can introduce themselves with more confidence",
+                "are able to introduce themselves more confidently",
+                "are more confident in introducing themselves",
+                "can more confidently introduce themselves"
+              ],
+              "targets": [
+                "introduce",
+                "confident",
+                "COMP"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "can introduce themselves more confident",
+                  "right": "can introduce themselves more confidently",
+                  "explanation_zh": "修飾動詞 introduce 要用副詞 confidently（形容詞↔副詞）。"
+                },
+                {
+                  "wrong": "can introduce themself more confidently",
+                  "right": "can introduce themselves more confidently",
+                  "explanation_zh": "主詞是複數，反身代名詞用 themselves。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "word_form",
+              "zh": "面對大學面試",
+              "literal_error": "Face college interviews, these students can introduce themselves more confidently.",
+              "part": 1,
+              "explanation_zh": "句首用原形動詞會變成祈使句，要用分詞 Faced with／Facing。"
+            },
+            {
+              "type": "word_form",
+              "zh": "自信地",
+              "literal_error": "these students can introduce themselves more confident than other applicants",
+              "part": 4,
+              "explanation_zh": "「自信地」修飾動詞，要用副詞 confidently，或改成 with more confidence。"
+            }
+          ],
+          "bonus": []
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-advanced-02",
+    "lot": "translation-advanced-02",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "dab2f301b2dd4cfd48bfd913df11ca683b0620cee3b8b044ef9794bc46049e02",
+    "spec_id": "translation-advanced@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 2,
+    "sentences": 1,
+    "avg_sentence_length": 2.0,
+    "denominator": 2,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.5,
+    "coverage_l1_6": 1.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.5,
+    "level_counts": {
+      "1": 1,
+      "5": 1
+    },
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T12:57:11Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T07:52:07Z",
+      "details": {
+        "solver": "A",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Those who have been organizing their learning portfolios since their first year of senior high school have a greater advantage when applying to universities.",
+            "confidence": "high",
+            "explanation_zh": "「……的人」用 Those who；「從高一就一直在整理」用現在完成進行式 have been organizing + since；「申請大學時」用 when + V-ing 的省略子句；「更有優勢」用比較級 have a greater advantage。"
+          },
+          "2": {
+            "translation": "When facing college interviews, these students can introduce themselves more confidently than other applicants.",
+            "confidence": "medium",
+            "explanation_zh": "「面對大學面試」用 When + V-ing（也可 Faced with）；「和其他申請者相比，更能自信地」用比較級副詞 more confidently than other applicants，也可另加 Compared with other applicants 開頭，但兩者並用會重複，所以只用 than。中文「更能」也可譯 are better able to，故信心給 medium。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "REL",
+              "PERF"
+            ],
+            "used_target_words": [
+              "organize",
+              "advantage",
+              "apply",
+              "college"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "（不影響判定）三句參考譯文都寫 have an advantage／are at an advantage，沒有譯出「更」；advantage 本身含比較意味，可接受，accepted 也有 have a greater advantage。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "PART",
+              "COMP"
+            ],
+            "used_target_words": [
+              "face",
+              "interview",
+              "student",
+              "introduce",
+              "confident"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "（不影響判定）我用 When facing college interviews（連接詞＋分詞，屬 PART 代碼的 gp-conj-participle），不是句型說明寫的 Faced with／Facing 句首分詞構句；accepted 已收 when facing college interviews，程式也偵測得到。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "organize",
+              "advantage",
+              "apply",
+              "college"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "REL": true,
+              "PERF": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "face",
+              "interview",
+              "student",
+              "introduce",
+              "confident"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PART": true,
+              "COMP": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "fail",
+      "created_at": "2026-10-09T12:57:11Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Students who have been organizing their learning portfolios since the first year of senior high school have a greater advantage when applying to universities.",
+            "confidence": "medium",
+            "explanation_zh": "「從高一就一直在整理」用 have been organizing + since，表示從過去延續到現在；「的人」改成 students who；「更有優勢」用比較級 a greater advantage。「的人」不一定限於學生，但從上下文看是學生，信心 medium。"
+          },
+          "2": {
+            "translation": "In university interviews, these students can introduce themselves more confidently than other applicants.",
+            "confidence": "high",
+            "explanation_zh": "「面對大學面試」譯為介系詞片語 In university interviews；「更能自信地介紹自己」用副詞比較級 more confidently than；『和其他申請者相比』直接用 than 表達。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "REL",
+              "PERF"
+            ],
+            "used_target_words": [
+              "organize",
+              "advantage",
+              "apply",
+              "college"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "COMP"
+            ],
+            "used_target_words": [
+              "interview",
+              "student",
+              "introduce",
+              "confident"
+            ],
+            "within_accepted": false,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "「面對大學面試」我自然譯成介系詞片語 In university interviews，沒有用分詞構句（Faced with／Facing …），所以沒用到 PART 句型，標的詞彙 face 也沒用到（4/5）；中文並沒有強制引出分詞構句，「面對」也可以譯成 In／At／When facing 等。",
+              "第一部分 accepted 全是 Faced with／Facing／when facing 一類，漏了 In／At university interviews、In the face of … 等自然寫法，所以 within_accepted 判 false；建議補寫法，或在題目中加線索讓分詞構句成為唯一自然選擇。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "organize",
+              "advantage",
+              "apply",
+              "college"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "REL": true,
+              "PERF": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "interview",
+              "student",
+              "introduce",
+              "confident"
+            ],
+            "target_hit_rate": 0.8,
+            "patterns_detected": {
+              "COMP": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 2 題盲譯沒有用到標的句型 ['PART']：中文題目沒有自然引出這個句型（SPEC §5.7）",
+          "第 2 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義"
+        ]
+      }
+    }
+  ],
+  "status": "rejected",
+  "status_reason": "blind_solver:B 未通過：第 2 題盲譯沒有用到標的句型 ['PART']：中文題目沒有自然引出這個句型（SPEC §5.7）；第 2 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義；人工判定：第 2 題「面對大學面試」不一定引出分詞構句（盲譯 B 自然譯成 In university interviews），第 1 部分 accepted 也漏了 When they face college interviews、In／At college interviews 等正確寫法，評分規準太窄；COMP 標 gp-compared-with（Compared with + N），但 REF0、REF1 只用 than，沒有用到這個句型。重生時要讓中文自然引出分詞構句，並補齊可接受寫法"
+}

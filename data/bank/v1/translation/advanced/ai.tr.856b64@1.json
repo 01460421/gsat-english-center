@@ -1,0 +1,735 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.856b64",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "advanced",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "許多年輕人表示，他們吃素不是因為宗教信仰，而是為了保護環境。",
+        "options": null,
+        "answer": "Many young people say that they eat a vegetarian diet not for religious reasons but to protect the environment.",
+        "accepted_answers": [
+          "Many young people say that they have become vegetarians not because of their religious beliefs but to protect the environment.",
+          "Many young people say that they are vegetarians not because of religion but because they want to protect the environment."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "that 名詞子句",
+            "不是 A 而是 B"
+          ],
+          "topic": "素食飲食"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "這股風潮正在改變人們的飲食習慣，許多人開始關心食物從哪裡來。",
+        "options": null,
+        "answer": "This trend is changing people's eating habits, and many people are starting to care about where their food comes from.",
+        "accepted_answers": [
+          "This trend is changing the way people eat, and many have begun to care about where their food comes from.",
+          "This trend is changing people's diets, and many people are beginning to think about where their food comes from."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "現在進行式描述趨勢",
+            "間接問句"
+          ],
+          "topic": "素食飲食"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "素食飲食"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「表示」後面接一整句話，用 say that + 子句（that 可省略）。「不是因為…，而是為了…」用 not … but …：not for religious reasons（或 not because of religion）but to protect the environment，but 後面接表目的的不定詞。「吃素」寫成 eat a vegetarian diet 或 are vegetarians，不是 eat vegetables。",
+          "evidence": [
+            "表示",
+            "不是因為宗教信仰",
+            "而是為了保護環境"
+          ],
+          "strategy_zh": "not A but B 要把 A、B 放在對稱的位置；because 接子句、because of 接名詞，先確認後面接的是什麼。",
+          "hints": [
+            "切成四段：許多年輕人表示／他們吃素／不是因為宗教信仰／而是為了保護環境",
+            "標的詞彙：say（表示，L1）、vegetarian（素食的，L4）、religion／religious（宗教，L2／L3）、protect（保護，L2）、environment（環境，L2）",
+            "句型框架：S + say (that) + S + V + not for/because of A + but to VR …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「正在改變」描述正在發生的趨勢，用現在進行式 is changing；「開始關心」也可以用進行式 are starting to care about。「食物從哪裡來」當 care about 的受詞，要寫成間接問句 where their food comes from（直述句語序、動詞加 s）。「飲食習慣」是 eating habits。",
+          "evidence": [
+            "正在改變",
+            "食物從哪裡來"
+          ],
+          "strategy_zh": "「正在…」想到 be + V-ing；中文問句放進英文句子裡時，疑問詞放前面，後面接「主詞＋動詞」。",
+          "hints": [
+            "切成四段：這股風潮／正在改變人們的飲食習慣／許多人開始關心／食物從哪裡來",
+            "標的詞彙：trend（風潮，L3）、change（改變，L1）、habit（習慣，L1）、care（關心，L1）、food（食物，L1）",
+            "句型框架：S + is changing …, and many people are starting to care about + where + S + V"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "Many young people say that they eat a vegetarian diet not for religious reasons but to protect the environment.",
+            "Many young people say that they have become vegetarians not because of their religious beliefs but to protect the environment.",
+            "Many young people say that they are vegetarians not because of religion but because they want to protect the environment."
+          ],
+          "target_words": [
+            {
+              "word": "say",
+              "zh": "表示",
+              "alternatives": [
+                "claim",
+                "state",
+                "explain"
+              ]
+            },
+            {
+              "word": "vegetarian",
+              "zh": "素食的；素食者",
+              "alternatives": [
+                "meat"
+              ]
+            },
+            {
+              "word": "religion",
+              "zh": "宗教",
+              "alternatives": [
+                "religious"
+              ]
+            },
+            {
+              "word": "protect",
+              "zh": "保護",
+              "alternatives": [
+                "save"
+              ]
+            },
+            {
+              "word": "environment",
+              "zh": "環境",
+              "alternatives": [
+                "planet",
+                "earth"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "NCL",
+              "grammar_id": "gp-that-clause",
+              "label_zh": "that 名詞子句當受詞",
+              "frame": "S + say + (that) + S + V …",
+              "zh_trigger": "表示"
+            },
+            {
+              "code": "CORR",
+              "grammar_id": "gp-not-but",
+              "label_zh": "不是 A 而是 B",
+              "frame": "not + A + but + B（A、B 放在對稱的位置）",
+              "zh_trigger": "不是因為宗教信仰，而是"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "許多年輕人表示",
+              "accepted": [
+                "Many young people say that",
+                "Many young people say",
+                "Lots of young people say that",
+                "A lot of young people say that",
+                "Many young people claim that",
+                "Many young people state that",
+                "Many young people explain that"
+              ],
+              "targets": [
+                "say",
+                "NCL"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Many young people express that",
+                  "right": "Many young people say that",
+                  "explanation_zh": "「表示」是「說」，用 say／state；express 後面通常接名詞（express their ideas），不接 that 子句。"
+                },
+                {
+                  "wrong": "Many young man say that",
+                  "right": "Many young people say that",
+                  "explanation_zh": "「許多年輕人」用 many young people（複數）。"
+                }
+              ]
+            },
+            {
+              "zh": "他們吃素",
+              "accepted": [
+                "they eat a vegetarian diet",
+                "they have become vegetarians",
+                "they are vegetarians",
+                "they eat vegetarian food",
+                "they become vegetarians",
+                "they follow a vegetarian diet",
+                "they go vegetarian"
+              ],
+              "targets": [
+                "vegetarian"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "they eat vegetables",
+                  "right": "they eat a vegetarian diet",
+                  "explanation_zh": "「吃素」是不吃肉的飲食方式，不等於「吃蔬菜」。"
+                },
+                {
+                  "wrong": "they are vegetarian food",
+                  "right": "they eat vegetarian food",
+                  "explanation_zh": "主詞是人，不能說人「是」素食；用 eat vegetarian food 或 are vegetarians。"
+                }
+              ]
+            },
+            {
+              "zh": "不是因為宗教信仰",
+              "accepted": [
+                "not for religious reasons",
+                "not because of their religious beliefs",
+                "not because of religion",
+                "not because of their religion",
+                "not for religion"
+              ],
+              "targets": [
+                "religion",
+                "CORR"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "not because religion",
+                  "right": "not because of religion",
+                  "explanation_zh": "because 後面接子句；接名詞要用 because of。"
+                },
+                {
+                  "wrong": "not for religion reasons",
+                  "right": "not for religious reasons",
+                  "explanation_zh": "修飾 reasons 要用形容詞 religious，不能直接用名詞 religion。"
+                }
+              ]
+            },
+            {
+              "zh": "而是為了保護環境",
+              "accepted": [
+                "but to protect the environment",
+                "but because they want to protect the environment",
+                "but in order to protect the environment",
+                "but to protect the earth",
+                "but to save the planet"
+              ],
+              "targets": [
+                "protect",
+                "environment",
+                "CORR"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "but for protect the environment",
+                  "right": "but to protect the environment",
+                  "explanation_zh": "表目的用 to + 原形動詞；for 是介系詞，後面不能接原形動詞。"
+                },
+                {
+                  "wrong": "and to protect the environment",
+                  "right": "but to protect the environment",
+                  "explanation_zh": "「不是 A，而是 B」要用 not … but …，不能用 and。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "collocation",
+              "zh": "不是因為",
+              "literal_error": "Many young people say that they eat a vegetarian diet not because religion but to protect the environment.",
+              "part": 3,
+              "explanation_zh": "because 接子句、because of 接名詞，直接接名詞是常見錯誤。"
+            },
+            {
+              "type": "word_form",
+              "zh": "宗教信仰",
+              "literal_error": "they eat a vegetarian diet not for religion reasons",
+              "part": 3,
+              "explanation_zh": "名詞 religion 不能當形容詞修飾 reasons，要用 religious（名詞↔形容詞的詞性誘錯）。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "It is not religion but concern for the environment that makes many young people choose a vegetarian diet.",
+              "explanation_zh": "用強調句 It is … that … 凸顯真正的原因；強調句只當加分寫法，不是本題要求的句型。",
+              "grammar_id": "gp-cleft"
+            }
+          ]
+        },
+        "2": {
+          "references": [
+            "This trend is changing people's eating habits, and many people are starting to care about where their food comes from.",
+            "This trend is changing the way people eat, and many have begun to care about where their food comes from.",
+            "This trend is changing people's diets, and many people are beginning to think about where their food comes from."
+          ],
+          "target_words": [
+            {
+              "word": "trend",
+              "zh": "風潮、趨勢",
+              "alternatives": [
+                "movement"
+              ]
+            },
+            {
+              "word": "change",
+              "zh": "改變"
+            },
+            {
+              "word": "habit",
+              "zh": "習慣",
+              "alternatives": [
+                "diet",
+                "way"
+              ]
+            },
+            {
+              "word": "care",
+              "zh": "關心",
+              "alternatives": [
+                "pay attention",
+                "concern",
+                "think about"
+              ]
+            },
+            {
+              "word": "food",
+              "zh": "食物"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PROG",
+              "grammar_id": "gp-progressive-trend",
+              "label_zh": "現在進行式描述正在發生的趨勢",
+              "frame": "S + is/are + V-ing（is changing／are starting）",
+              "zh_trigger": "正在改變"
+            },
+            {
+              "code": "NCL",
+              "grammar_id": "gp-wh-clause",
+              "label_zh": "間接問句（where + S + V）",
+              "frame": "care about + where + S + V（直述句語序）",
+              "zh_trigger": "從哪裡來"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "這股風潮",
+              "accepted": [
+                "This trend",
+                "This new trend",
+                "The trend",
+                "This movement"
+              ],
+              "targets": [
+                "trend"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "This wind",
+                  "right": "This trend",
+                  "explanation_zh": "「風潮」是 trend，不是字面上的 wind。"
+                }
+              ]
+            },
+            {
+              "zh": "正在改變人們的飲食習慣",
+              "accepted": [
+                "is changing people's eating habits",
+                "is changing the way people eat",
+                "is changing people's diets",
+                "is changing how people eat",
+                "is changing people's diet"
+              ],
+              "targets": [
+                "change",
+                "habit",
+                "PROG"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "is change people's eating habits",
+                  "right": "is changing people's eating habits",
+                  "explanation_zh": "進行式是 be + V-ing，change 要加 -ing。"
+                },
+                {
+                  "wrong": "is changing people's eat habits",
+                  "right": "is changing people's eating habits",
+                  "explanation_zh": "「飲食習慣」是 eating habits，eat 要改成動名詞 eating 才能修飾 habits。"
+                }
+              ]
+            },
+            {
+              "zh": "許多人開始關心",
+              "accepted": [
+                "and many people are starting to care about",
+                "and many have begun to care about",
+                "and many people are beginning to think about",
+                "and many people have started to care about",
+                "and many people are beginning to pay attention to",
+                "and many people are starting to pay attention to",
+                "and many people start to care about"
+              ],
+              "targets": [
+                "care"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "and many people are starting to care for",
+                  "right": "and many people are starting to care about",
+                  "explanation_zh": "care for 是「照顧、喜歡」，「關心、在意」用 care about。"
+                },
+                {
+                  "wrong": "eating habits, many people are starting to care about",
+                  "right": "eating habits, and many people are starting to care about",
+                  "explanation_zh": "兩個完整的子句不能只用逗號連接，要加 and。"
+                }
+              ]
+            },
+            {
+              "zh": "食物從哪裡來",
+              "accepted": [
+                "where their food comes from",
+                "where food comes from",
+                "where their food is from",
+                "where the food they eat comes from"
+              ],
+              "targets": [
+                "food",
+                "NCL"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "where does their food come from",
+                  "right": "where their food comes from",
+                  "explanation_zh": "間接問句用直述句語序，不加 does。"
+                },
+                {
+                  "wrong": "where their food come from",
+                  "right": "where their food comes from",
+                  "explanation_zh": "food 是單數（不可數），動詞要加 s。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "collocation",
+              "zh": "關心",
+              "literal_error": "and many people are starting to care for where their food comes from",
+              "part": 3,
+              "explanation_zh": "「關心」是 care about；care for 是「照顧、喜歡」。"
+            },
+            {
+              "type": "word_form",
+              "zh": "飲食習慣",
+              "literal_error": "This trend is changing people's eat habits.",
+              "part": 2,
+              "explanation_zh": "動詞 eat 不能直接修飾名詞，要用 eating habits。"
+            }
+          ],
+          "bonus": [],
+          "restructuring_zh": "「食物從哪裡來」在中文是問句的形式，放進句子當 care about 的受詞時，要改成間接問句的直述句語序 where their food comes from；後半句沒有連接詞，英文要用 and 把兩個子句接起來。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "C-V-5",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-advanced-02",
+    "lot": "translation-advanced-02",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "dab2f301b2dd4cfd48bfd913df11ca683b0620cee3b8b044ef9794bc46049e02",
+    "spec_id": "translation-advanced@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T12:57:10Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T07:52:07Z",
+      "details": {
+        "solver": "A",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Many young people say that they eat vegetarian food not because of religious beliefs but to protect the environment.",
+            "confidence": "high",
+            "explanation_zh": "「不是因為……而是為了……」用 not A but B；A 用 because of + 名詞、B 用不定詞表目的。嚴格來說兩邊詞類不完全對稱，也可寫成 not because of their religion but because they want to protect the environment；「吃素」譯 eat vegetarian food（也可 are vegetarians）。"
+          },
+          "2": {
+            "translation": "This trend is changing people's eating habits, and many people have started to care about where their food comes from.",
+            "confidence": "high",
+            "explanation_zh": "「正在改變」用現在進行式；「開始關心」用現在完成式 have started to；「食物從哪裡來」用間接問句 where their food comes from（直述句語序）。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "NCL",
+              "CORR"
+            ],
+            "used_target_words": [
+              "say",
+              "vegetarian",
+              "religion",
+              "protect",
+              "environment"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "（不影響判定）REF0、REF1 的 not for religious reasons／not because of … but to protect 兩邊是介系詞片語對不定詞，句型說明寫「A、B 放在對稱的位置」；位置對稱、可接受，但若要示範嚴格平行，REF2（because … but because …）最標準。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "PROG",
+              "NCL"
+            ],
+            "used_target_words": [
+              "trend",
+              "change",
+              "habit",
+              "care",
+              "food"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "say",
+              "vegetarian",
+              "religion",
+              "protect",
+              "environment"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NCL": true,
+              "CORR": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "trend",
+              "change",
+              "habit",
+              "care",
+              "food"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PROG": true,
+              "NCL": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T12:57:10Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Many young people say that they eat vegetarian food not because of their religion but in order to protect the environment.",
+            "confidence": "medium",
+            "explanation_zh": "「不是因為……而是為了……」用 not A but B 的對比結構；A 是原因 because of，B 是目的 in order to，兩者詞性不完全平行，所以信心給 medium。"
+          },
+          "2": {
+            "translation": "This trend is changing people's eating habits, and many people have begun to care about where their food comes from.",
+            "confidence": "high",
+            "explanation_zh": "「正在改變」用現在進行式；「開始關心」用現在完成式 have begun to；「食物從哪裡來」用名詞子句 where their food comes from。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "NCL",
+              "CORR"
+            ],
+            "used_target_words": [
+              "say",
+              "vegetarian",
+              "religion",
+              "protect",
+              "environment"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PROG",
+              "NCL"
+            ],
+            "used_target_words": [
+              "trend",
+              "change",
+              "habit",
+              "care",
+              "food"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "say",
+              "vegetarian",
+              "religion",
+              "protect",
+              "environment"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NCL": true,
+              "CORR": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "trend",
+              "change",
+              "habit",
+              "care",
+              "food"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PROG": true,
+              "NCL": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

@@ -1,0 +1,822 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.564c52",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "top",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "在熱帶地區，每年都有大片森林被砍伐來種植作物，使許多野生動物失去棲息地。",
+        "options": null,
+        "answer": "In tropical regions, large areas of forest are cut down every year to grow crops, causing many wild animals to lose their habitats.",
+        "accepted_answers": [
+          "Every year, vast areas of forest in tropical regions are cleared to plant crops, leaving many wild animals without a home.",
+          "In the tropics, huge areas of forest are cut down every year to make room for crops, driving many wild animals out of their habitats."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "句尾分詞片語表結果（…，使許多野生動物失去棲息地）",
+            "被動語態（森林被砍伐）"
+          ],
+          "topic": "生物多樣性"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "幫忙生產我們三分之一糧食的蜜蜂，也已因棲息地消失而受到嚴重傷害。",
+        "options": null,
+        "answer": "Bees, which help produce one third of our food, have also been severely harmed by the loss of their habitats.",
+        "accepted_answers": [
+          "Bees, which help to produce a third of our food, have also been badly hurt by the loss of their habitats.",
+          "Bees, which help produce one third of the food we eat, have also been seriously harmed because their habitats are disappearing."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "非限定關係子句（補充說明泛指的蜜蜂：Bees, which …,）",
+            "完成式被動（已經受到傷害）"
+          ],
+          "topic": "生物多樣性"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "生物多樣性"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「每年都有大片森林被砍伐」不要寫成 there are … 的存在句，直接以 large areas of forest 當主詞，用被動 are cut down（或 are cleared）；「來種植作物」表目的，用 to grow crops。「，使許多野生動物失去棲息地」是前面整件事造成的結果，用句尾分詞片語 causing many wild animals to lose their habitats（或 leaving many wild animals without a home）接在逗號後面；cause 的用法是 cause sb to VR。",
+          "evidence": [
+            "每年都有大片森林被砍伐來種植作物",
+            "使許多野生動物失去棲息地"
+          ],
+          "strategy_zh": "先寫被動句主幹 large areas of forest are cut down every year，再補目的 to grow crops，最後在逗號後用 causing／leaving 帶出結果。",
+          "hints": [
+            "切成四段：在熱帶地區，每年都有大片森林／被砍伐來種植作物／使許多野生動物／失去棲息地",
+            "標的詞彙：forest（森林）、cut down（砍伐）、crop（作物）、animal（動物）、habitat（棲息地）",
+            "句型框架：S + be + p.p. + to VR …, causing + O + to VR …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「蜜蜂」在這裡是泛指，修飾語只是補充說明牠們的功能，所以用逗號加 which 的非限定關係子句；限定用法 that 會變成「只有某些蜜蜂」。「已…受到傷害」是到現在為止的結果，用現在完成式被動 have been harmed，主詞 Bees 是複數用 have。「三分之一」是 one third 或 a third；「也」放在 have 和 been 之間：have also been。「因棲息地消失」可寫 by the loss of their habitats，也可以用子句 because their habitats are disappearing。",
+          "evidence": [
+            "幫忙生產我們三分之一糧食的蜜蜂",
+            "也已因棲息地消失而受到嚴重傷害"
+          ],
+          "strategy_zh": "先抓主幹「蜜蜂也已受到嚴重傷害」，再把前面的長修飾語改成 which 子句插在主詞後面，最後用 by＋名詞片語交代原因。",
+          "hints": [
+            "切成四段：幫忙生產我們三分之一糧食／的蜜蜂／因棲息地消失／而受到嚴重傷害",
+            "標的詞彙：bee（蜜蜂）、produce（生產）、food（糧食）、harm（傷害）、habitat（棲息地）",
+            "句型框架：N, which + V …, + have also been + p.p. + by …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "In tropical regions, large areas of forest are cut down every year to grow crops, causing many wild animals to lose their habitats.",
+            "Every year, vast areas of forest in tropical regions are cleared to plant crops, leaving many wild animals without a home.",
+            "In the tropics, huge areas of forest are cut down every year to make room for crops, driving many wild animals out of their habitats."
+          ],
+          "target_words": [
+            {
+              "word": "forest",
+              "zh": "森林",
+              "alternatives": [
+                "rainforest",
+                "rainforests",
+                "woods",
+                "woodland"
+              ]
+            },
+            {
+              "word": "cut down",
+              "zh": "砍伐",
+              "alternatives": [
+                "clear",
+                "chop down",
+                "destroy",
+                "log",
+                "cut"
+              ]
+            },
+            {
+              "word": "crop",
+              "zh": "作物",
+              "alternatives": [
+                "farm",
+                "farming",
+                "farmland",
+                "agriculture",
+                "agricultural",
+                "plantation",
+                "plantations"
+              ]
+            },
+            {
+              "word": "animal",
+              "zh": "動物",
+              "alternatives": [
+                "wildlife",
+                "creature",
+                "species"
+              ]
+            },
+            {
+              "word": "habitat",
+              "zh": "棲息地",
+              "alternatives": [
+                "home",
+                "homes",
+                "homeless"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PART",
+              "grammar_id": "gp-participle-result",
+              "label_zh": "句尾分詞片語表結果（…，使許多野生動物失去棲息地）",
+              "frame": "S + be + p.p. …, causing/leaving/driving + O + …",
+              "zh_trigger": "使許多野生動物失去棲息地"
+            },
+            {
+              "code": "PASS",
+              "grammar_id": "gp-passive",
+              "label_zh": "被動語態（森林被砍伐）",
+              "frame": "S + be + p.p. (+ every year) + to VR …",
+              "zh_trigger": "被砍伐"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "在熱帶地區，每年都有大片森林",
+              "accepted": [
+                "In tropical regions, large areas of forest",
+                "Every year, vast areas of forest in tropical regions",
+                "In the tropics, huge areas of forest",
+                "In tropical areas, large areas of forest",
+                "Every year, large areas of tropical forest",
+                "In tropical regions, vast areas of forest",
+                "Every year, large areas of forest in the tropics",
+                "In tropical regions, huge stretches of forest",
+                "In tropical regions, every year, large areas of forest",
+                "In the tropics, large areas of forest",
+                "In tropical regions, huge areas of forest",
+                "In tropical regions, large tracts of forest",
+                "Every year, vast tracts of forest in the tropics",
+                "In tropical regions, large areas of forests",
+                "In tropical areas, huge areas of forest",
+                "Every year, huge areas of forest in tropical areas"
+              ],
+              "targets": [
+                "forest"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Every year, there are large areas of forest are cut down",
+                  "right": "Every year, large areas of forest are cut down",
+                  "explanation_zh": "中文「都有…被砍伐」的「有」不是「存在」；寫成 there are 再接 are cut down 會有兩個動詞，直接以森林當主詞寫被動句。"
+                },
+                {
+                  "wrong": "In tropical regions, large area of forest are cut down",
+                  "right": "In tropical regions, large areas of forest are cut down",
+                  "explanation_zh": "large area 是單數，不能配 are；「大片森林」泛指很多片，寫 large areas of forest。"
+                }
+              ]
+            },
+            {
+              "zh": "被砍伐來種植作物",
+              "accepted": [
+                "are cut down every year to grow crops",
+                "are cleared to plant crops",
+                "are cut down every year to make room for crops",
+                "are cut down to grow crops",
+                "are cleared every year to grow crops",
+                "are cut down every year to plant crops",
+                "are cleared every year to make way for crops",
+                "are cut down every year for growing crops",
+                "are cut down every year to make room for farmland",
+                "are cleared every year for farming",
+                "are cleared for crops",
+                "are cleared for farming",
+                "are cut down to make way for farms",
+                "are cut down for agriculture",
+                "are being cut down every year to grow crops",
+                "are cut down each year to grow crops",
+                "are destroyed every year to grow crops",
+                "are cut down to make room for farmland"
+              ],
+              "targets": [
+                "PASS",
+                "cut down",
+                "crop"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "large areas of forest cut down every year to grow crops",
+                  "right": "large areas of forest are cut down every year to grow crops",
+                  "explanation_zh": "森林是「被」砍伐的，要用 be 動詞＋過去分詞 are cut down；少了 are 就變成森林自己去砍東西。"
+                },
+                {
+                  "wrong": "are cut down every year to growing crops",
+                  "right": "are cut down every year to grow crops",
+                  "explanation_zh": "表目的的 to 是不定詞，後面接原形動詞 grow。"
+                }
+              ]
+            },
+            {
+              "zh": "使許多野生動物",
+              "accepted": [
+                "causing many wild animals",
+                "leaving many wild animals",
+                "driving many wild animals",
+                "forcing many wild animals",
+                "causing a lot of wild animals",
+                "leaving many animals",
+                "depriving many wild animals",
+                "making many wild animals",
+                "leaving many wildlife species",
+                "causing many wildlife species",
+                "leaving countless wild animals",
+                "destroying the habitats of many wild animals"
+              ],
+              "targets": [
+                "PART",
+                "animal"
+              ],
+              "common_errors": [
+                {
+                  "wrong": ", makes many wild animals lose their habitats",
+                  "right": ", causing many wild animals to lose their habitats",
+                  "explanation_zh": "逗號後面不能再接一個主要動詞 makes（兩個子句之間沒有連接詞）；表示前面整件事帶來的結果，用分詞 causing／leaving。"
+                },
+                {
+                  "wrong": ", causing many wild animals lose their habitats",
+                  "right": ", causing many wild animals to lose their habitats",
+                  "explanation_zh": "cause 的用法是 cause sb to VR，to 不能省（make sb VR 才不加 to）。"
+                }
+              ]
+            },
+            {
+              "zh": "失去棲息地",
+              "accepted": [
+                "to lose their habitats",
+                "without a home",
+                "out of their habitats",
+                "to lose their homes",
+                "without homes",
+                "homeless",
+                "to lose their natural habitats",
+                "out of their homes",
+                "without a place to live",
+                "with nowhere to live",
+                "of their habitats",
+                "the habitats of many wild animals"
+              ],
+              "targets": [
+                "habitat"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "causing many wild animals to losing their habitats",
+                  "right": "causing many wild animals to lose their habitats",
+                  "explanation_zh": "cause sb to VR 的 to 是不定詞，後面接原形動詞 lose。"
+                },
+                {
+                  "wrong": "causing many wild animals to lose its habitats",
+                  "right": "causing many wild animals to lose their habitats",
+                  "explanation_zh": "代名詞要和 many wild animals（複數）一致，用 their。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "redundancy",
+              "zh": "每年都有",
+              "literal_error": "Every year, there are large areas of forest are cut down to grow crops.",
+              "part": 1,
+              "explanation_zh": "「每年都有大片森林被砍伐」的「有」只是中文的說法，不是「存在」；照字面寫 there are，句子就多了一個動詞。直接以 large areas of forest 當主詞，寫被動 are cut down。"
+            },
+            {
+              "type": "word_form",
+              "zh": "使許多野生動物失去棲息地",
+              "literal_error": "In tropical regions, large areas of forest are cut down every year to grow crops, makes many wild animals lose their habitats.",
+              "part": 3,
+              "explanation_zh": "中文用逗號接「使…」；英文逗號不能連接兩個主要動詞，要把 makes 改成句尾分詞 causing／leaving，表示前面整件事造成的結果。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "In tropical regions, vast areas of forest are cleared every year to make way for crops, robbing countless wild animals of their homes.",
+              "explanation_zh": "用 rob sb of sth（奪走某人的…）寫句尾分詞，搭配 make way for（騰出空間給…）與 countless（無數的），語氣更強烈。"
+            }
+          ],
+          "restructuring_zh": "「每年都有大片森林被砍伐」看起來像存在句，英文直接以森林當主詞寫被動 large areas of forest are cut down；「來種植作物」用不定詞 to grow crops 表目的；「，使許多野生動物失去棲息地」不另起一句，用句尾分詞 causing many wild animals to lose their habitats 表示前面整件事帶來的結果。"
+        },
+        "2": {
+          "references": [
+            "Bees, which help produce one third of our food, have also been severely harmed by the loss of their habitats.",
+            "Bees, which help to produce a third of our food, have also been badly hurt by the loss of their habitats.",
+            "Bees, which help produce one third of the food we eat, have also been seriously harmed because their habitats are disappearing."
+          ],
+          "target_words": [
+            {
+              "word": "bee",
+              "zh": "蜜蜂",
+              "alternatives": [
+                "honeybee",
+                "honeybees"
+              ]
+            },
+            {
+              "word": "produce",
+              "zh": "生產",
+              "alternatives": [
+                "grow",
+                "make",
+                "provide",
+                "pollinate"
+              ]
+            },
+            {
+              "word": "food",
+              "zh": "糧食",
+              "alternatives": [
+                "crops"
+              ]
+            },
+            {
+              "word": "harm",
+              "zh": "傷害",
+              "alternatives": [
+                "hurt",
+                "damage",
+                "injure",
+                "affect",
+                "threaten"
+              ]
+            },
+            {
+              "word": "habitat",
+              "zh": "棲息地",
+              "alternatives": [
+                "home",
+                "homes"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "NRREL",
+              "grammar_id": "gp-nonrestrictive",
+              "label_zh": "非限定關係子句（補充說明泛指的蜜蜂：Bees, which …,）",
+              "frame": "N, which + V …, + V …",
+              "zh_trigger": "幫忙生產我們三分之一糧食的蜜蜂"
+            },
+            {
+              "code": "PASS",
+              "grammar_id": "gp-perfect-passive",
+              "label_zh": "完成式被動（已經受到傷害）",
+              "frame": "S + have/has (+ also) + been + p.p. …",
+              "zh_trigger": "已因棲息地消失而受到嚴重傷害"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "幫忙生產我們三分之一糧食",
+              "accepted": [
+                "help produce one third of our food",
+                "help to produce a third of our food",
+                "help produce one third of the food we eat",
+                "help produce a third of our food",
+                "help to produce one third of our food",
+                "help produce a third of the food we eat",
+                "help to produce one third of the food we eat"
+              ],
+              "targets": [
+                "produce",
+                "food"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "help producing one third of our food",
+                  "right": "help produce one third of our food",
+                  "explanation_zh": "help 後面接原形動詞（或 to＋原形），不接 V-ing。"
+                },
+                {
+                  "wrong": "help produce one three of our food",
+                  "right": "help produce one third of our food",
+                  "explanation_zh": "分數的分母用序數：三分之一是 one third／a third。"
+                }
+              ]
+            },
+            {
+              "zh": "的蜜蜂",
+              "accepted": [
+                "Bees, which",
+                "Honeybees, which"
+              ],
+              "targets": [
+                "bee",
+                "NRREL"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "The bees that help produce one third of our food",
+                  "right": "Bees, which help produce one third of our food,",
+                  "explanation_zh": "這裡說的是所有蜜蜂（泛指），修飾語只是補充說明牠們的功能，要用逗號加 which；用 that（限定用法）會變成「只有其中某些蜜蜂」。"
+                },
+                {
+                  "wrong": "Bees, they help produce one third of our food,",
+                  "right": "Bees, which help produce one third of our food,",
+                  "explanation_zh": "補充說明用關係代名詞 which，不能再放一個主詞 they（兩個子句之間沒有連接詞）。"
+                }
+              ]
+            },
+            {
+              "zh": "因棲息地消失",
+              "accepted": [
+                "by the loss of their habitats",
+                "because their habitats are disappearing",
+                "by the loss of their homes",
+                "because they are losing their habitats",
+                "due to the loss of their habitats",
+                "because of the loss of their habitats",
+                "by habitat loss",
+                "because of habitat loss",
+                "because their habitats have disappeared",
+                "as their habitats disappear"
+              ],
+              "targets": [
+                "habitat"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "by habitat disappear",
+                  "right": "by the loss of their habitats",
+                  "explanation_zh": "by 是介系詞，後面要接名詞片語；「棲息地消失」寫成 the loss of their habitats。"
+                },
+                {
+                  "wrong": "because of their habitats are disappearing",
+                  "right": "because their habitats are disappearing",
+                  "explanation_zh": "because of 後面接名詞；接子句要用 because。"
+                }
+              ]
+            },
+            {
+              "zh": "而受到嚴重傷害",
+              "accepted": [
+                "have also been severely harmed",
+                "have also been badly hurt",
+                "have also been seriously harmed",
+                "have also been seriously hurt",
+                "have also been badly harmed",
+                "have also been severely damaged",
+                "have also been severely affected",
+                "have also been seriously affected"
+              ],
+              "targets": [
+                "harm",
+                "PASS"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "have also severely harmed",
+                  "right": "have also been severely harmed",
+                  "explanation_zh": "蜜蜂是受害的一方，要用完成式被動 have been＋p.p.；少了 been 就變成蜜蜂去傷害別人。"
+                },
+                {
+                  "wrong": "has also been severely harmed",
+                  "right": "have also been severely harmed",
+                  "explanation_zh": "主詞 Bees 是複數，用 have。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "prenominal_modifier",
+              "zh": "幫忙生產我們三分之一糧食的蜜蜂",
+              "literal_error": "Bees help produce one third of our food have also been severely harmed.",
+              "part": 2,
+              "explanation_zh": "中文把很長的修飾語放在名詞前面；英文要把它搬到名詞後面，寫成關係子句，否則句子會出現兩個動詞（help、have been）。"
+            },
+            {
+              "type": "abstract_nominal",
+              "zh": "棲息地消失",
+              "literal_error": "by habitat disappear",
+              "part": 3,
+              "explanation_zh": "「棲息地消失」放在「因…而」裡，英文用 by 時要寫成名詞片語 the loss of their habitats；也可以改寫成子句 because their habitats are disappearing。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "Bees, on which one third of our food depends, have also been severely harmed by the loss of their habitats.",
+              "grammar_id": "gp-prep-relative",
+              "explanation_zh": "用「介系詞＋關係代名詞」on which，把「我們三分之一的糧食仰賴蜜蜂」寫進非限定子句，句構更緊湊。"
+            }
+          ],
+          "restructuring_zh": "「幫忙生產我們三分之一糧食的蜜蜂」是很長的前置修飾，英文要把修飾語搬到名詞後面，寫成非限定關係子句 Bees, which …,；「因棲息地消失而受到嚴重傷害」中文先因後果，英文先寫結果 have been severely harmed，再用 by the loss of their habitats 交代原因。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ac-V-3",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-top-02-regen",
+    "lot": "translation-top-02",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "fea97c14fa3e45cbc507a5a9130c0ea2bc91f32008c7fde55fb98b627572675d",
+    "spec_id": "translation-top@2026-10-09",
+    "regenerated_from": "ai.tr.e52428"
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "warn",
+      "created_at": "2026-10-09T14:57:34Z",
+      "details": {
+        "errors": [],
+        "warnings": [
+          "annotations.rubric.items.2.patterns[1]: gp-perfect-passive 通常對應句構 PERF（目前 code=PASS）"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "warn",
+      "created_at": "2026-10-09T14:30:00Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "In tropical regions, large areas of forest are cut down every year to grow crops, causing many wild animals to lose their habitats.",
+            "confidence": "high",
+            "explanation_zh": "「被砍伐」用被動式 are cut down，「每年」是常態所以用現在式；「來種植作物」用不定詞表目的 to grow crops；「使許多野生動物失去棲息地」是前面整件事的結果，用句尾分詞 causing ... to lose 表結果。"
+          },
+          "2": {
+            "translation": "Bees, which help produce one third of our food, have also been seriously harmed by the loss of their habitats.",
+            "confidence": "high",
+            "explanation_zh": "「幫忙生產我們三分之一糧食的」是補充說明一般的蜜蜂，英文用非限定關係子句 which help produce；「已…受到嚴重傷害」用現在完成式被動 have been seriously harmed；「因棲息地消失」譯成 by the loss of their habitats（也可寫 because their habitats are disappearing）。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PART",
+              "PASS"
+            ],
+            "used_target_words": [
+              "forest",
+              "cut down",
+              "crop",
+              "animal",
+              "habitat"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "第 1 部分的中文含「每年」，但第 1 部分的可接受寫法（如 In tropical regions, large areas of forest）和第 2 部分的可接受寫法（如 are cut down to grow crops、are cleared for farming）都有不含 every year 的版本，整句漏譯「每年」仍可拿滿 4 分。建議把 every year／each year 固定歸在某一部分，並要求一定要譯出。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "NRREL",
+              "PASS"
+            ],
+            "used_target_words": [
+              "bee",
+              "produce",
+              "food",
+              "harm",
+              "habitat"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "第 2 部分（的蜜蜂）只收 Bees, which／Honeybees, which，還把限定子句 The bees that help produce one third of our food 列為常見錯誤。中文前位修飾「幫忙生產…的蜜蜂」本身不分限定或非限定，Bees that help produce one third of our food have also been … 文法正確、意思也通（指會授粉的那些蜂），整整扣 1 分偏嚴。建議改列為可接受（或只在說明註明非限定較好），common_errors 只留 Bees, they help … 這類逗號接句的錯誤。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "forest",
+              "cut down",
+              "crop",
+              "animal",
+              "habitat"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PART": true,
+              "PASS": true
+            },
+            "program_match": true
+          },
+          "2": {
+            "target_words_found": [
+              "bee",
+              "produce",
+              "food",
+              "harm",
+              "habitat"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NRREL": true,
+              "PASS": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 1 題驗證者對4 部分切分有意見（warn）：第 1 部分的中文含「每年」，但第 1 部分的可接受寫法（如 In tropical regions, large areas of forest）和第 2 部分的可接受寫法（如 are cut down to grow crops、are",
+          "第 2 題驗證者對4 部分切分有意見（warn）：第 2 部分（的蜜蜂）只收 Bees, which／Honeybees, which，還把限定子句 The bees that help produce one third of our food 列為常見錯誤。中文前位修飾「幫忙生產…的蜜"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "warn",
+      "created_at": "2026-10-09T14:31:33Z",
+      "details": {
+        "solver": "B",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "In tropical regions, large areas of forest are cut down every year to grow crops, leaving many wild animals without a habitat.",
+            "confidence": "high",
+            "explanation_zh": "「被砍伐」用被動語態 are cut down；「來種植作物」用不定詞表目的；「使……失去棲息地」用分詞構句 leaving ... without a habitat 表結果。"
+          },
+          "2": {
+            "translation": "Bees, which help produce one third of our food, have also been seriously harmed by the loss of their habitats.",
+            "confidence": "high",
+            "explanation_zh": "「幫忙生產……的蜜蜂」用非限定關係子句補充說明；「也已……受到傷害」用現在完成式被動 have also been harmed；「因棲息地消失」用 by the loss of。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PART",
+              "PASS"
+            ],
+            "used_target_words": [
+              "forest",
+              "cut down",
+              "crop",
+              "animal",
+              "habitat"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "第 4 部分（失去棲息地）的 accepted 沒有收「without a habitat／without habitats」。這是直接把標的詞 habitat 放進「leaving … without …」框架的自然寫法，和已收的「without a home／without homes」同構，學生用標的詞反而可能對不上，建議補進 accepted。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "NRREL",
+              "PASS"
+            ],
+            "used_target_words": [
+              "bee",
+              "produce",
+              "food",
+              "harm",
+              "habitat"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "forest",
+              "cut down",
+              "crop",
+              "animal",
+              "habitat"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PART": true,
+              "PASS": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "bee",
+              "produce",
+              "food",
+              "harm",
+              "habitat"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NRREL": true,
+              "PASS": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 1 題驗證者對4 部分切分有意見（warn）：第 4 部分（失去棲息地）的 accepted 沒有收「without a habitat／without habitats」。這是直接把標的詞 habitat 放進「leaving … without …」框架的自然寫法，和已收的「wit"
+        ]
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

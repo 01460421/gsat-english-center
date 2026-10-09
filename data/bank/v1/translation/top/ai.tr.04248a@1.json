@@ -1,0 +1,744 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.04248a",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "top",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "生活在多數工作都得久坐的時代，許多上班族一天坐著的時間超過八小時。",
+        "options": null,
+        "answer": "Living in an era when most jobs require long hours of sitting, many office workers remain seated for over eight hours a day.",
+        "accepted_answers": [
+          "Living in an age in which most jobs require people to sit for long periods, many office workers sit for more than eight hours a day.",
+          "Living in a time when most jobs involve sitting for hours, many office workers spend more than eight hours a day in their seats."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "分詞構句",
+            "關係副詞 when"
+          ],
+          "topic": "久坐的生活"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "許多研究人員開始懷疑，久坐不動對身體健康的危害是否比抽菸還要嚴重。",
+        "options": null,
+        "answer": "Many researchers have begun to wonder whether sitting still for long periods is even more harmful to our physical health than smoking.",
+        "accepted_answers": [
+          "Many researchers have started to question whether the harm that sitting for long hours does to our physical health is greater than that of smoking.",
+          "Many researchers have begun to ask whether sitting for hours without moving is more harmful to physical health than smoking is."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "間接問句（whether）",
+            "比較級"
+          ],
+          "topic": "久坐的生活"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "久坐的生活"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "句首「生活在…」沒有主詞，主詞和後面的「上班族」相同，用分詞構句 Living in …。「多數工作都得久坐的時代」修飾 era，子句裡缺的是時間，用關係副詞 when（＝in which）：an era when most jobs require long hours of sitting；工作本身不會坐，要寫 require (people) to sit。「一天…超過八小時」是 for over eight hours a day。",
+          "evidence": [
+            "生活在",
+            "多數工作都得久坐的時代"
+          ],
+          "strategy_zh": "句首沒有主詞的動作片語，若和主要子句同一個主詞，就用 V-ing 分詞構句；修飾時間、地點的子句用 when／where。",
+          "hints": [
+            "切成四段：生活在／多數工作都得久坐的時代／許多上班族／一天坐著的時間超過八小時",
+            "標的詞彙：era（時代）、require（需要）、office worker（上班族）、sit（坐）、hour（小時）",
+            "句型框架：Living in an era when + S + V …, S + V …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「懷疑…是否…」是 wonder／question whether + 直述句（不是 suspect）；「開始懷疑」用 have begun to。whether 子句的主詞是「久坐不動」這個動作，用動名詞 sitting still for long periods；把「危害…嚴重」改成形容詞比較級 more harmful to … than smoking，比較對象 sitting 和 smoking 都用動名詞才對等。",
+          "evidence": [
+            "許多研究人員開始懷疑",
+            "比抽菸還要嚴重"
+          ],
+          "strategy_zh": "「懷疑是否」先想 wonder whether；比較句寫完後檢查 than 前後的比較對象是不是同一類（動名詞對動名詞）。",
+          "hints": [
+            "切成四段：許多研究人員開始懷疑／久坐不動／對身體健康的危害／比抽菸還要嚴重",
+            "標的詞彙：researcher（研究人員）、wonder（想知道、懷疑）、sit（坐）、harmful（有害的）、health（健康）、smoke（抽菸）",
+            "句型框架：S + have begun to wonder whether + V-ing … is more + adj. + to … than + V-ing"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "Living in an era when most jobs require long hours of sitting, many office workers remain seated for over eight hours a day.",
+            "Living in an age in which most jobs require people to sit for long periods, many office workers sit for more than eight hours a day.",
+            "Living in a time when most jobs involve sitting for hours, many office workers spend more than eight hours a day in their seats."
+          ],
+          "target_words": [
+            {
+              "word": "era",
+              "zh": "時代",
+              "alternatives": [
+                "age",
+                "time",
+                "period"
+              ]
+            },
+            {
+              "word": "require",
+              "zh": "需要",
+              "alternatives": [
+                "involve",
+                "need",
+                "demand"
+              ]
+            },
+            {
+              "word": "office worker",
+              "zh": "上班族",
+              "alternatives": [
+                "employee",
+                "white-collar worker"
+              ]
+            },
+            {
+              "word": "sit",
+              "zh": "坐",
+              "alternatives": [
+                "seat"
+              ]
+            },
+            {
+              "word": "hour",
+              "zh": "小時"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PART",
+              "grammar_id": "gp-participle-clause",
+              "label_zh": "分詞構句（以分詞片語取代副詞子句）",
+              "frame": "V-ing …, S + V …",
+              "zh_trigger": "生活在"
+            },
+            {
+              "code": "REL",
+              "grammar_id": "gp-relative-adverb",
+              "label_zh": "關係副詞 when（時代＋when）",
+              "frame": "an era/age + when + S + V …",
+              "zh_trigger": "多數工作都得久坐的時代"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "生活在",
+              "accepted": [
+                "Living in",
+                "As they live in"
+              ],
+              "targets": [
+                "PART"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Live in an era when",
+                  "right": "Living in an era when",
+                  "explanation_zh": "沒有主詞的「生活在…」放句首要用分詞構句 Living …；原形 Live 會變成祈使句。"
+                },
+                {
+                  "wrong": "Lived in an era when",
+                  "right": "Living in an era when",
+                  "explanation_zh": "主詞（上班族）是主動「生活」，用現在分詞 Living，不用過去分詞。"
+                }
+              ]
+            },
+            {
+              "zh": "多數工作都得久坐的時代",
+              "accepted": [
+                "an era when most jobs require long hours of sitting",
+                "an age in which most jobs require people to sit for long periods",
+                "a time when most jobs involve sitting for hours",
+                "an age in which most jobs require long hours of sitting",
+                "an era when most jobs require people to sit for long hours"
+              ],
+              "targets": [
+                "REL",
+                "era",
+                "require"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "an era which most jobs require long hours of sitting",
+                  "right": "an era when most jobs require long hours of sitting",
+                  "explanation_zh": "關係子句裡主詞、受詞都有了，缺的是「時間」，要用關係副詞 when（＝in which），不能用 which。"
+                },
+                {
+                  "wrong": "an era when most jobs need to sit for a long time",
+                  "right": "an era when most jobs require people to sit for a long time",
+                  "explanation_zh": "「工作」不會坐；要寫 jobs require people to sit 或 jobs require long hours of sitting。"
+                }
+              ]
+            },
+            {
+              "zh": "許多上班族",
+              "accepted": [
+                "many office workers",
+                "many employees",
+                "many white-collar workers"
+              ],
+              "targets": [
+                "office worker"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "many office worker",
+                  "right": "many office workers",
+                  "explanation_zh": "many 後面接複數名詞。"
+                },
+                {
+                  "wrong": "many go-to-work people",
+                  "right": "many office workers",
+                  "explanation_zh": "「上班族」是 office workers 或 employees，不要逐字翻。"
+                }
+              ]
+            },
+            {
+              "zh": "一天坐著的時間超過八小時",
+              "accepted": [
+                "remain seated for over eight hours a day",
+                "sit for more than eight hours a day",
+                "spend more than eight hours a day in their seats",
+                "sit for over eight hours a day",
+                "spend over eight hours a day sitting"
+              ],
+              "targets": [
+                "sit",
+                "hour"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "sit over eight hours one day",
+                  "right": "sit for over eight hours a day",
+                  "explanation_zh": "「一天…小時」是 … hours a day（a＝每）；時間長度前常加 for。"
+                },
+                {
+                  "wrong": "spend more than eight hours a day to sit",
+                  "right": "spend more than eight hours a day sitting",
+                  "explanation_zh": "spend + 時間 + V-ing，不接 to V。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "subjectless",
+              "zh": "生活在",
+              "literal_error": "Live in an era when most jobs require long hours of sitting, many office workers …",
+              "part": 1,
+              "explanation_zh": "句首「生活在…」沒有主詞，英文不能直接用原形動詞開頭；用分詞構句 Living in …（意義主詞是後面的 office workers），或改成 As they live in …。"
+            },
+            {
+              "type": "prenominal_modifier",
+              "zh": "多數工作都得久坐的時代",
+              "literal_error": "Living in most jobs must sit for a long time era, …",
+              "part": 2,
+              "explanation_zh": "修飾「時代」的子句要放在名詞後面，用關係副詞 when：an era when most jobs require long hours of sitting。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "Living in an era when most jobs chain people to their desks, many office workers remain seated for over eight hours a day.",
+              "explanation_zh": "chain sb to the desk（把人綁在辦公桌前）是生動的比喻寫法。"
+            }
+          ],
+          "restructuring_zh": "句首「生活在…的時代」沒有主詞，英文用分詞構句 Living in …，意義主詞就是後面的 many office workers；「多數工作都得久坐」不能寫成工作會坐，要改成 most jobs require long hours of sitting（或 require people to sit）。"
+        },
+        "2": {
+          "references": [
+            "Many researchers have begun to wonder whether sitting still for long periods is even more harmful to our physical health than smoking.",
+            "Many researchers have started to question whether the harm that sitting for long hours does to our physical health is greater than that of smoking.",
+            "Many researchers have begun to ask whether sitting for hours without moving is more harmful to physical health than smoking is."
+          ],
+          "target_words": [
+            {
+              "word": "researcher",
+              "zh": "研究人員",
+              "alternatives": [
+                "scientist",
+                "expert"
+              ]
+            },
+            {
+              "word": "wonder",
+              "zh": "懷疑、想知道",
+              "alternatives": [
+                "question",
+                "ask",
+                "doubt"
+              ]
+            },
+            {
+              "word": "sit",
+              "zh": "坐"
+            },
+            {
+              "word": "harmful",
+              "zh": "有害的",
+              "alternatives": [
+                "harm",
+                "damaging",
+                "damage"
+              ]
+            },
+            {
+              "word": "health",
+              "zh": "健康"
+            },
+            {
+              "word": "smoke",
+              "zh": "抽菸"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "NCL",
+              "grammar_id": "gp-wh-clause",
+              "label_zh": "間接問句（whether 名詞子句）",
+              "frame": "S + V + whether + S + V（直述句語序）",
+              "zh_trigger": "是否"
+            },
+            {
+              "code": "COMP",
+              "grammar_id": "gp-comparative-superlative",
+              "label_zh": "比較級（more + adj. + than）",
+              "frame": "A + be + more + adj. + to … + than + B",
+              "zh_trigger": "比抽菸還要嚴重"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "許多研究人員開始懷疑",
+              "accepted": [
+                "Many researchers have begun to wonder whether",
+                "Many researchers have started to question whether",
+                "Many researchers have begun to ask whether",
+                "Many researchers have started to wonder if",
+                "Many scientists have begun to wonder whether"
+              ],
+              "targets": [
+                "NCL",
+                "researcher",
+                "wonder"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Many researchers begin to suspect whether",
+                  "right": "Many researchers have begun to wonder whether",
+                  "explanation_zh": "suspect 是「認為可能是」，接 that 子句；「懷疑是否」用 wonder／question whether。「開始懷疑」是到現在的狀態，常用現在完成式 have begun。"
+                },
+                {
+                  "wrong": "Many researchers have begun to doubt that",
+                  "right": "Many researchers have begun to wonder whether",
+                  "explanation_zh": "doubt that 是「不相信…」，和「懷疑是否」語意不同；用 wonder／question whether。"
+                }
+              ]
+            },
+            {
+              "zh": "久坐不動",
+              "accepted": [
+                "sitting still for long periods",
+                "the harm that sitting for long hours does",
+                "sitting for hours without moving",
+                "sitting for long periods",
+                "sitting still for hours"
+              ],
+              "targets": [
+                "sit"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "sit for a long time is",
+                  "right": "sitting for a long time is",
+                  "explanation_zh": "whether 子句的主詞是「久坐」這個動作，要用動名詞 sitting。"
+                },
+                {
+                  "wrong": "sitting long time",
+                  "right": "sitting for a long time",
+                  "explanation_zh": "時間長度前要加 for（for a long time／for long periods）。"
+                }
+              ]
+            },
+            {
+              "zh": "對身體健康的危害",
+              "accepted": [
+                "is even more harmful to our physical health",
+                "to our physical health is greater",
+                "is more harmful to physical health",
+                "is more harmful to our health",
+                "is more damaging to our health"
+              ],
+              "targets": [
+                "harmful",
+                "health",
+                "COMP"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "is more harm to our health",
+                  "right": "is more harmful to our health",
+                  "explanation_zh": "be 動詞後要用形容詞 harmful；harm 是名詞或動詞。"
+                },
+                {
+                  "wrong": "is more harmful for our health",
+                  "right": "is more harmful to our health",
+                  "explanation_zh": "harmful 搭配介系詞 to（be harmful to …）。"
+                }
+              ]
+            },
+            {
+              "zh": "比抽菸還要嚴重",
+              "accepted": [
+                "than smoking",
+                "than that of smoking",
+                "than smoking is",
+                "than smoking does"
+              ],
+              "targets": [
+                "smoke",
+                "COMP"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "than smoke",
+                  "right": "than smoking",
+                  "explanation_zh": "比較的對象要對等：前面是 sitting（動名詞），後面也用動名詞 smoking。"
+                },
+                {
+                  "wrong": "than the harm of smoke",
+                  "right": "than that of smoking",
+                  "explanation_zh": "重複的名詞用 that 代替（than that of smoking），smoke 也要改成動名詞 smoking。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "collocation",
+              "zh": "懷疑",
+              "literal_error": "Many researchers begin to suspect whether …",
+              "part": 1,
+              "explanation_zh": "「懷疑是否」是 wonder／question whether；suspect 是「懷疑某事可能是真的」，接 that 子句，意思相反。"
+            },
+            {
+              "type": "abstract_nominal",
+              "zh": "危害",
+              "literal_error": "… whether the danger of sitting still to physical health is more serious than smoking.",
+              "part": 3,
+              "explanation_zh": "照字面以「危害」當主詞，容易寫成比較對象不對等（危害 vs. 抽菸）；用形容詞 harmful 改寫最簡潔：sitting … is more harmful to our health than smoking。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "Many researchers have begun to wonder whether prolonged sitting poses an even greater threat to our health than smoking.",
+              "explanation_zh": "prolonged sitting（長時間久坐）、pose a threat to（對…構成威脅）是更正式的學術寫法。"
+            }
+          ],
+          "restructuring_zh": "「久坐不動對身體健康的危害是否比抽菸還要嚴重」以「危害」當主詞，英文改用動作當主詞、形容詞當補語：whether sitting still … is more harmful to our health than smoking，比較對象 sitting／smoking 才對等。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ac-V-3",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-top-01",
+    "lot": "translation-top-01",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "a1384b01f87b0f8fded3505d9aeb991591fcc72147d3fc44a0f533a9db995000",
+    "spec_id": "translation-top@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T13:10:36Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T00:00:00Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Living in an era when most jobs require people to sit for long hours, many office workers spend more than eight hours a day sitting.",
+            "confidence": "high",
+            "explanation_zh": "「生活在…的時代」用分詞構句 Living in an era when ...，邏輯主詞是 many office workers；「多數工作都得久坐」用 most jobs require people to sit for long hours；「一天坐著的時間超過八小時」用 spend + 時間 + V-ing。"
+          },
+          "2": {
+            "translation": "Many researchers have begun to wonder whether sitting for long periods is even more harmful to our health than smoking.",
+            "confidence": "medium",
+            "explanation_zh": "「開始懷疑…是否」配「是否」，讀成「想知道／質疑是否」，用 have begun to wonder whether；若把「懷疑」讀成 suspect（認為可能是），則會寫 have begun to suspect that ...，兩種讀法都說得通；「危害…比抽菸還要嚴重」用 even more harmful to ... than smoking（也可寫 the harm ... is even more serious than that of smoking）。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PART",
+              "REL"
+            ],
+            "used_target_words": [
+              "era",
+              "require",
+              "office worker",
+              "sit",
+              "hour"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "NCL",
+              "COMP"
+            ],
+            "used_target_words": [
+              "researcher",
+              "wonder",
+              "sit",
+              "harmful",
+              "health",
+              "smoke"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "（說明）「開始懷疑…是否」可讀成 wonder／question whether，也可讀成 suspect that（認為可能是），意思接近；參考譯文都用 whether，和我的譯文一致。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "era",
+              "require",
+              "office worker",
+              "sit",
+              "hour"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PART": true,
+              "REL": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "researcher",
+              "wonder",
+              "sit",
+              "harmful",
+              "health",
+              "smoke"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NCL": true,
+              "COMP": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T07:56:17Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Living in an age when most jobs require people to sit for long periods, many office workers sit for more than eight hours a day.",
+            "confidence": "high",
+            "explanation_zh": "「生活在……的時代」用分詞片語 Living in an age when ...；主要子句主詞 many office workers 與分詞的動作者一致；超過八小時用 more than eight hours a day。"
+          },
+          "2": {
+            "translation": "Many researchers have begun to wonder whether sitting for long periods does even more harm to our health than smoking.",
+            "confidence": "medium",
+            "explanation_zh": "「開始懷疑」用 have begun to wonder whether；「危害是否比……還要嚴重」改用 does even more harm ... than smoking 的比較結構，不照字面把 harm 當主詞，所以信心中等。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PART",
+              "REL"
+            ],
+            "used_target_words": [
+              "era",
+              "require",
+              "office worker",
+              "sit",
+              "hour"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "NCL",
+              "COMP"
+            ],
+            "used_target_words": [
+              "researcher",
+              "wonder",
+              "sit",
+              "harmful",
+              "health",
+              "smoke"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "era",
+              "require",
+              "office worker",
+              "sit",
+              "hour"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PART": true,
+              "REL": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "researcher",
+              "wonder",
+              "sit",
+              "harmful",
+              "health",
+              "smoke"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NCL": true,
+              "COMP": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

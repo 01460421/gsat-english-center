@@ -1,0 +1,719 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.524d7b",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "advanced",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "和農曆（the lunar calendar）相比，二十四節氣（the 24 solar terms）更能準確反映季節的變化。",
+        "options": null,
+        "answer": "Compared with the lunar calendar, the 24 solar terms can reflect the changes of the seasons more accurately.",
+        "accepted_answers": [
+          "Compared to the lunar calendar, the 24 solar terms reflect seasonal changes more accurately.",
+          "Compared with the lunar calendar, the 24 solar terms show the change of seasons more accurately."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "比較級",
+            "分詞構句（Compared with）"
+          ],
+          "topic": "二十四節氣"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "如今，越來越多人依照印在月曆上的節氣安排飲食。",
+        "options": null,
+        "answer": "Nowadays, more and more people plan their meals based on the solar terms printed on calendars.",
+        "accepted_answers": [
+          "Today, more and more people plan their diets according to the solar terms printed on calendars.",
+          "These days, more and more people plan what they eat according to the solar terms printed on calendars."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "越來越…（more and more）",
+            "分詞片語後位修飾"
+          ],
+          "topic": "二十四節氣"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "二十四節氣"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「和…相比」用過去分詞構句 Compared with（或 to）…，放在句首、後面加逗號，邏輯主詞是主要子句的 the 24 solar terms（節氣是被比較的一方，所以用過去分詞）。「更能準確反映」的比較落在副詞上：reflect … more accurately；accurately 是多音節，比較級用 more。農曆、二十四節氣題目都附了英文。",
+          "evidence": [
+            "和農曆（the lunar calendar）相比",
+            "更能準確反映季節的變化"
+          ],
+          "strategy_zh": "「和 A 相比，B 更…」先寫 Compared with A, B + V … + 比較級；形容詞或副詞要看修飾的是名詞還是動詞。",
+          "hints": [
+            "切成四段：和農曆（the lunar calendar）相比／更能準確／反映／季節的變化",
+            "標的詞彙：compare（比較，L2）、reflect（反映，L4）、accurately（準確地，L3）、season（季節，L1）、change（變化，L1）",
+            "句型框架：Compared with + N, S + can + V … + more + 副詞"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「越來越多人」是 more and more people，後面動詞用複數。「印在月曆上的節氣」：節氣是被印上去的，用過去分詞片語 printed on calendars 放在名詞後面修飾（等於 that are printed on calendars 省略了 that are）。「依照」是 based on 或 according to；「安排飲食」寫成 plan their meals 或 plan their diets。",
+          "evidence": [
+            "越來越多人",
+            "印在月曆上的節氣"
+          ],
+          "strategy_zh": "「被…的＋名詞」可以直接用過去分詞片語放在名詞後面；主動、進行的用 V-ing。",
+          "hints": [
+            "切成四段：如今，越來越多人／依照／印在月曆上的節氣／安排飲食",
+            "標的詞彙：based on（依照，L2）、print（印，L2）、calendar（月曆，L2）、plan（安排，L1）、meal（餐點、飲食，L1）",
+            "句型框架：Nowadays, more and more + N + V … + based on + N + p.p. …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "Compared with the lunar calendar, the 24 solar terms can reflect the changes of the seasons more accurately.",
+            "Compared to the lunar calendar, the 24 solar terms reflect seasonal changes more accurately.",
+            "Compared with the lunar calendar, the 24 solar terms show the change of seasons more accurately."
+          ],
+          "target_words": [
+            {
+              "word": "compare",
+              "zh": "比較"
+            },
+            {
+              "word": "reflect",
+              "zh": "反映",
+              "alternatives": [
+                "show",
+                "indicate"
+              ]
+            },
+            {
+              "word": "accurately",
+              "zh": "準確地",
+              "alternatives": [
+                "accurate",
+                "precisely"
+              ]
+            },
+            {
+              "word": "season",
+              "zh": "季節",
+              "alternatives": [
+                "seasonal"
+              ]
+            },
+            {
+              "word": "change",
+              "zh": "變化"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "COMP",
+              "grammar_id": "gp-comparative-superlative",
+              "label_zh": "比較級（more accurately）",
+              "frame": "S + V … + more + 副詞",
+              "zh_trigger": "更能準確"
+            },
+            {
+              "code": "PART",
+              "grammar_id": "gp-participle-clause",
+              "label_zh": "分詞構句（Compared with …,）",
+              "frame": "Compared with/to + N, S + V …",
+              "zh_trigger": "和農曆（the lunar calendar）相比"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "和農曆（the lunar calendar）相比",
+              "accepted": [
+                "Compared with the lunar calendar",
+                "Compared to the lunar calendar",
+                "When compared with the lunar calendar",
+                "In comparison with the lunar calendar"
+              ],
+              "targets": [
+                "PART",
+                "compare"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Compare with the lunar calendar",
+                  "right": "Compared with the lunar calendar",
+                  "explanation_zh": "句首的分詞構句表示「被拿來比較」，要用過去分詞 Compared；Compare 是祈使句的原形。"
+                },
+                {
+                  "wrong": "Comparing with the lunar calendar",
+                  "right": "Compared with the lunar calendar",
+                  "explanation_zh": "節氣是「被比較」的一方，用過去分詞 compared，不用現在分詞。"
+                }
+              ]
+            },
+            {
+              "zh": "更能準確",
+              "accepted": [
+                "more accurately",
+                "more precisely",
+                "much more accurately"
+              ],
+              "targets": [
+                "COMP",
+                "accurately"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "more accurate",
+                  "right": "more accurately",
+                  "explanation_zh": "修飾動詞 reflect 要用副詞 accurately；accurate 是形容詞。"
+                },
+                {
+                  "wrong": "more accurater",
+                  "right": "more accurately",
+                  "explanation_zh": "多音節的字比較級用 more + 原級，不加 -er。"
+                }
+              ]
+            },
+            {
+              "zh": "反映",
+              "accepted": [
+                "can reflect",
+                "reflect",
+                "show",
+                "can show"
+              ],
+              "targets": [
+                "reflect"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "can reflects",
+                  "right": "can reflect",
+                  "explanation_zh": "助動詞 can 後面接原形動詞。"
+                }
+              ]
+            },
+            {
+              "zh": "季節的變化",
+              "accepted": [
+                "the changes of the seasons",
+                "seasonal changes",
+                "the change of seasons",
+                "the changes in the seasons",
+                "changes in the seasons",
+                "how the seasons change"
+              ],
+              "targets": [
+                "season",
+                "change"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "the seasons changes",
+                  "right": "the changes of the seasons",
+                  "explanation_zh": "名詞 seasons 不能直接放在 changes 前面當修飾；寫成 the changes of the seasons 或 seasonal changes。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "word_form",
+              "zh": "相比",
+              "literal_error": "Compare with the lunar calendar, the 24 solar terms can reflect the changes of the seasons more accurately.",
+              "part": 1,
+              "explanation_zh": "句首要用過去分詞 Compared with …（被拿來比較）；寫成原形 Compare 會變成命令句。"
+            },
+            {
+              "type": "word_form",
+              "zh": "準確",
+              "literal_error": "Compared with the lunar calendar, the 24 solar terms can reflect the changes of the seasons more accurate.",
+              "part": 2,
+              "explanation_zh": "「準確（地）反映」修飾動詞，要用副詞 accurately。"
+            }
+          ],
+          "bonus": [],
+          "restructuring_zh": "「和…相比」英文用分詞構句 Compared with … 放句首；「更能準確反映」的「更」落在副詞上，寫成 reflect … more accurately。"
+        },
+        "2": {
+          "references": [
+            "Nowadays, more and more people plan their meals based on the solar terms printed on calendars.",
+            "Today, more and more people plan their diets according to the solar terms printed on calendars.",
+            "These days, more and more people plan what they eat according to the solar terms printed on calendars."
+          ],
+          "target_words": [
+            {
+              "word": "based on",
+              "zh": "依照",
+              "alternatives": [
+                "according to",
+                "follow"
+              ]
+            },
+            {
+              "word": "print",
+              "zh": "印",
+              "alternatives": [
+                "mark",
+                "show",
+                "list"
+              ]
+            },
+            {
+              "word": "calendar",
+              "zh": "月曆"
+            },
+            {
+              "word": "plan",
+              "zh": "安排",
+              "alternatives": [
+                "arrange",
+                "organize"
+              ]
+            },
+            {
+              "word": "meal",
+              "zh": "餐點、飲食",
+              "alternatives": [
+                "diet",
+                "eat",
+                "food"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "COMP",
+              "grammar_id": "gp-more-and-more",
+              "label_zh": "越來越多（more and more）",
+              "frame": "more and more + N + V …",
+              "zh_trigger": "越來越多人"
+            },
+            {
+              "code": "PART",
+              "grammar_id": "gp-participle-modifier",
+              "label_zh": "分詞片語後位修飾名詞（p.p.）",
+              "frame": "N + p.p. …（the solar terms printed on calendars）",
+              "zh_trigger": "印在月曆上的"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "如今，越來越多人",
+              "accepted": [
+                "Nowadays, more and more people",
+                "Today, more and more people",
+                "These days, more and more people",
+                "Now, more and more people"
+              ],
+              "targets": [
+                "COMP"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Nowadays, more and more person",
+                  "right": "Nowadays, more and more people",
+                  "explanation_zh": "more and more 後面接複數名詞；person 的複數是 people。"
+                },
+                {
+                  "wrong": "Nowadays, more and more many people",
+                  "right": "Nowadays, more and more people",
+                  "explanation_zh": "more 已經是 many 的比較級，不能再加 many。"
+                }
+              ]
+            },
+            {
+              "zh": "依照",
+              "accepted": [
+                "based on",
+                "according to",
+                "following"
+              ],
+              "targets": [
+                "based on"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "base on",
+                  "right": "based on",
+                  "explanation_zh": "「依據…」是 based on，base 要用過去分詞 based。"
+                },
+                {
+                  "wrong": "according the solar terms",
+                  "right": "according to the solar terms",
+                  "explanation_zh": "according 後面要接 to。"
+                }
+              ]
+            },
+            {
+              "zh": "印在月曆上的節氣",
+              "accepted": [
+                "the solar terms printed on calendars",
+                "the solar terms printed on the calendar",
+                "the solar terms that are printed on calendars",
+                "the solar terms marked on calendars",
+                "the solar terms shown on calendars",
+                "the solar terms listed on calendars"
+              ],
+              "targets": [
+                "PART",
+                "print",
+                "calendar"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "the printed on calendars solar terms",
+                  "right": "the solar terms printed on calendars",
+                  "explanation_zh": "分詞片語帶有地點時，要放在名詞後面修飾。"
+                },
+                {
+                  "wrong": "the solar terms printing on calendars",
+                  "right": "the solar terms printed on calendars",
+                  "explanation_zh": "節氣是「被印」上去的，用過去分詞 printed。"
+                }
+              ]
+            },
+            {
+              "zh": "安排飲食",
+              "accepted": [
+                "plan their meals",
+                "plan their diets",
+                "plan what they eat",
+                "arrange their meals",
+                "plan their daily meals",
+                "decide what to eat"
+              ],
+              "targets": [
+                "plan",
+                "meal"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "arrange their eating and drinking",
+                  "right": "plan their meals",
+                  "explanation_zh": "「飲食」指平日吃的東西，用 meals、diet 或 what they eat，不必逐字翻成 eating and drinking。"
+                },
+                {
+                  "wrong": "plans their meals",
+                  "right": "plan their meals",
+                  "explanation_zh": "主詞 more and more people 是複數，動詞不加 s。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "prenominal_modifier",
+              "zh": "印在月曆上的節氣",
+              "literal_error": "Nowadays, more and more people plan their meals based on the printed on calendars solar terms.",
+              "part": 3,
+              "explanation_zh": "「印在月曆上的」修飾語帶有地點，英文要改成名詞在前、過去分詞片語在後：the solar terms printed on calendars。"
+            },
+            {
+              "type": "plural_countable",
+              "zh": "越來越多人",
+              "literal_error": "Nowadays, more and more person plan their meals based on the solar terms printed on calendars.",
+              "part": 1,
+              "explanation_zh": "more and more 後面接複數名詞 people。"
+            }
+          ],
+          "bonus": [],
+          "restructuring_zh": "「印在月曆上的節氣」是前置修飾，英文改成「名詞＋過去分詞片語」：the solar terms printed on calendars（＝that are printed on calendars）。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "8-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-advanced-05",
+    "lot": "translation-advanced-05",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "e5c4baeec359d5ac42e4e899ef49b7db98863cbe7bb8568d933d20cee46dbcaf",
+    "spec_id": "translation-advanced@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 6,
+    "sentences": 1,
+    "avg_sentence_length": 6.0,
+    "denominator": 6,
+    "proper_nouns": [],
+    "numbers": 1,
+    "coverage_l1_4": 0.8333,
+    "coverage_l1_6": 1.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.1667,
+    "level_counts": {
+      "1": 2,
+      "2": 2,
+      "4": 1,
+      "6": 1
+    },
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T13:12:52Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T12:52:38Z",
+      "details": {
+        "solver": "A",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Compared with the lunar calendar, the 24 solar terms can reflect seasonal changes more accurately.",
+            "confidence": "high",
+            "explanation_zh": "「和……相比」用分詞構句 Compared with ...；「更能準確反映」用比較級副詞 more accurately；「季節的變化」寫成 seasonal changes（也可寫 the changes of the seasons）。"
+          },
+          "2": {
+            "translation": "Nowadays, more and more people plan their diets according to the solar terms printed on their calendars.",
+            "confidence": "medium",
+            "explanation_zh": "「越來越多人」用 more and more people；「依照」用 according to；「印在月曆上的節氣」用過去分詞片語 printed on ... 後位修飾；「安排飲食」寫成 plan their diets（plan their meals 也可以，信心 medium 是因為搭配詞有幾種寫法）。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "COMP",
+              "PART"
+            ],
+            "used_target_words": [
+              "compare",
+              "reflect",
+              "accurately",
+              "season",
+              "change"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "COMP",
+              "PART"
+            ],
+            "used_target_words": [
+              "based on",
+              "print",
+              "calendar",
+              "plan",
+              "meal"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "（不影響判定）第 3 部分可補 the solar terms printed on their calendars。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "compare",
+              "reflect",
+              "accurately",
+              "season",
+              "change"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "COMP": true,
+              "PART": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "based on",
+              "print",
+              "calendar",
+              "plan",
+              "meal"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "COMP": true,
+              "PART": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T12:54:59Z",
+      "details": {
+        "solver": "B",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Compared with the lunar calendar, the 24 solar terms can reflect the changes of the seasons more accurately.",
+            "confidence": "high",
+            "explanation_zh": "「和……相比」用 Compared with ...（過去分詞片語作副詞）；「更能準確反映」用 can reflect ... more accurately，以副詞比較級 more accurately 表達「更準確」。題目已提供 the lunar calendar 與 the 24 solar terms 的英文。"
+          },
+          "2": {
+            "translation": "Nowadays, more and more people plan their diets according to the solar terms printed on the calendar.",
+            "confidence": "high",
+            "explanation_zh": "「越來越多人」用 more and more people；「如今」用 Nowadays 搭配現在簡單式；「印在月曆上的節氣」用過去分詞片語 printed on the calendar 後置修飾 solar terms（省略 which are）；「依照」用 according to。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "COMP",
+              "PART"
+            ],
+            "used_target_words": [
+              "compare",
+              "reflect",
+              "accurately",
+              "season",
+              "change"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "COMP",
+              "PART"
+            ],
+            "used_target_words": [
+              "based on",
+              "print",
+              "calendar",
+              "plan",
+              "meal"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "compare",
+              "reflect",
+              "accurately",
+              "season",
+              "change"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "COMP": true,
+              "PART": true
+            },
+            "program_match": true
+          },
+          "2": {
+            "target_words_found": [
+              "based on",
+              "print",
+              "calendar",
+              "plan",
+              "meal"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "COMP": true,
+              "PART": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

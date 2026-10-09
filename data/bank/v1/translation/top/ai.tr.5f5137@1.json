@@ -1,0 +1,776 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.5f5137",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "top",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "令經濟學家意外的是，在某些製造業，自動化（automation）所創造的工作竟是它所淘汰的兩倍。",
+        "options": null,
+        "answer": "What surprises economists is that in some manufacturing industries, automation has created twice as many jobs as it has eliminated.",
+        "accepted_answers": [
+          "What has surprised economists is that in certain manufacturing industries, automation has created twice as many jobs as it has wiped out.",
+          "What economists find surprising is that in some manufacturing industries, automation actually creates twice as many jobs as it eliminates."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "what 名詞子句當主詞",
+            "倍數比較（twice as many … as）"
+          ],
+          "topic": "工作自動化"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "然而，無論年紀多大，被機器取代的勞工都必須學習新技能，才能勝任這些新工作。",
+        "options": null,
+        "answer": "However, no matter how old they are, the workers replaced by machines must learn new skills to be qualified for these new jobs.",
+        "accepted_answers": [
+          "However, no matter how old they may be, the workers replaced by machines have to acquire new skills so that they can handle these new jobs.",
+          "No matter how old they are, however, workers replaced by robots must learn new skills in order to take on these new jobs."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "無論多…（no matter how）",
+            "分詞片語後位修飾（N + p.p.）"
+          ],
+          "topic": "工作自動化"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "工作自動化"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「令經濟學家意外的是」整段是主詞，用 what 子句：What surprises economists is that …（that 帶出後面的事實）。「製造業」是 manufacturing (industries)。「竟是它所淘汰的兩倍」是倍數比較：automation has created twice as many jobs as it has eliminated（jobs 可數，用 many；用現在完成式表示到目前為止的結果，用現在式說一般情況也可以）。「自動化」題目已附英文 automation。",
+          "evidence": [
+            "令經濟學家意外的是",
+            "竟是它所淘汰的兩倍"
+          ],
+          "strategy_zh": "看到「令…的是」先想 What + V + O + is that …；「是…的兩倍」用 twice as many/much + N + as …，前後兩個動詞的時態要一致。",
+          "hints": [
+            "切成四段：令經濟學家意外的是／在某些製造業／自動化所創造的工作／竟是它所淘汰的兩倍",
+            "標的詞彙：surprise（使意外）、economist（經濟學家）、manufacturing（製造業）、create（創造）、job（工作）、twice（兩倍）、eliminate（淘汰、消除）",
+            "句型框架：What + V + O + is that …, S + has p.p. + twice as many + N + as + S + has p.p."
+          ]
+        },
+        "2": {
+          "explanation_zh": "「無論年紀多大」用 no matter how old they are（＝however old they are），how old 要放在一起、子句用直述句語序。「被機器取代的勞工」用過去分詞片語後位修飾：workers replaced by machines（＝workers who have been replaced by machines）。「才能勝任」表目的，用 to be qualified for／in order to handle …；「都」是語氣，不必譯 all。",
+          "evidence": [
+            "無論年紀多大",
+            "被機器取代的勞工"
+          ],
+          "strategy_zh": "「被…的＋名詞」先寫名詞，再接 p.p. + by …；「無論多＋形容詞」用 No matter how + adj. + S + V。",
+          "hints": [
+            "切成四段：然而，無論年紀多大／被機器取代的勞工／都必須學習新技能／才能勝任這些新工作",
+            "標的詞彙：replace（取代）、machine（機器）、worker（勞工）、learn（學習）、skill（技能）、qualified（能勝任的）",
+            "句型框架：However, no matter how + adj. + S + V, N + p.p. + by … + must + V … + to + V …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "What surprises economists is that in some manufacturing industries, automation has created twice as many jobs as it has eliminated.",
+            "What has surprised economists is that in certain manufacturing industries, automation has created twice as many jobs as it has wiped out.",
+            "What economists find surprising is that in some manufacturing industries, automation actually creates twice as many jobs as it eliminates."
+          ],
+          "target_words": [
+            {
+              "word": "surprise",
+              "zh": "使意外",
+              "alternatives": [
+                "surprising"
+              ]
+            },
+            {
+              "word": "economist",
+              "zh": "經濟學家"
+            },
+            {
+              "word": "manufacturing",
+              "zh": "製造業",
+              "alternatives": [
+                "manufacture",
+                "factory"
+              ]
+            },
+            {
+              "word": "create",
+              "zh": "創造",
+              "alternatives": [
+                "produce",
+                "generate"
+              ]
+            },
+            {
+              "word": "job",
+              "zh": "工作"
+            },
+            {
+              "word": "twice",
+              "zh": "兩倍",
+              "alternatives": [
+                "double"
+              ]
+            },
+            {
+              "word": "eliminate",
+              "zh": "淘汰、消除",
+              "alternatives": [
+                "wipe out",
+                "destroy",
+                "replace"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "NCL",
+              "grammar_id": "gp-what-clause",
+              "label_zh": "what 引導的名詞子句當主詞（令…的是）",
+              "frame": "What + V + O + is that …",
+              "zh_trigger": "令經濟學家意外的是"
+            },
+            {
+              "code": "COMP",
+              "grammar_id": "gp-times",
+              "label_zh": "倍數比較：是…的兩倍",
+              "frame": "S + V + twice as many + N + as + S + V",
+              "zh_trigger": "兩倍"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "令經濟學家意外的是",
+              "accepted": [
+                "What surprises economists is that",
+                "What has surprised economists is that",
+                "What economists find surprising is that"
+              ],
+              "targets": [
+                "NCL",
+                "surprise",
+                "economist"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "It surprises economists is that",
+                  "right": "What surprises economists is that",
+                  "explanation_zh": "「令…意外的是」整段當主詞要用 what 子句；若用 It surprises economists that …，後面就不能再接 is。"
+                },
+                {
+                  "wrong": "The surprise of economists is that",
+                  "right": "What surprises economists is that",
+                  "explanation_zh": "照字面把「意外」寫成名詞 the surprise of …，意思變成「經濟學家的驚喜」，不自然。"
+                }
+              ]
+            },
+            {
+              "zh": "在某些製造業",
+              "accepted": [
+                "in some manufacturing industries",
+                "in certain manufacturing industries",
+                "in some areas of manufacturing",
+                "in some manufacturing sectors"
+              ],
+              "targets": [
+                "manufacturing"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "in some manufacture industries",
+                  "right": "in some manufacturing industries",
+                  "explanation_zh": "「製造業」是 manufacturing (industry)；manufacture 是動詞「製造」。"
+                },
+                {
+                  "wrong": "in some making industries",
+                  "right": "in some manufacturing industries",
+                  "explanation_zh": "「製造業」有固定說法 manufacturing，不要逐字翻成 making。"
+                }
+              ]
+            },
+            {
+              "zh": "自動化（automation）所創造的工作",
+              "accepted": [
+                "automation has created",
+                "automation actually creates",
+                "automation has produced",
+                "automation has generated",
+                "automation creates"
+              ],
+              "targets": [
+                "create"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "automation has create",
+                  "right": "automation has created",
+                  "explanation_zh": "現在完成式是 has + 過去分詞 created。"
+                },
+                {
+                  "wrong": "automation has been created",
+                  "right": "automation has created",
+                  "explanation_zh": "自動化是「創造」工作的一方，用主動語態，不是被創造。"
+                }
+              ]
+            },
+            {
+              "zh": "竟是它所淘汰的兩倍",
+              "accepted": [
+                "twice as many jobs as it has eliminated",
+                "twice as many jobs as it has wiped out",
+                "twice as many jobs as it eliminates",
+                "twice as many jobs as it has destroyed"
+              ],
+              "targets": [
+                "COMP",
+                "twice",
+                "job",
+                "eliminate"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "two times jobs than it has eliminated",
+                  "right": "twice as many jobs as it has eliminated",
+                  "explanation_zh": "倍數比較是 twice／X times + as many + 名詞 + as …（或 twice the number of …）；than 只能配比較級。"
+                },
+                {
+                  "wrong": "twice as much jobs as it has eliminated",
+                  "right": "twice as many jobs as it has eliminated",
+                  "explanation_zh": "jobs 是可數名詞，用 many 不用 much。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "verbal_subject",
+              "zh": "令經濟學家意外的是",
+              "literal_error": "Let economists surprised is that automation …",
+              "part": 1,
+              "explanation_zh": "「令…意外的是」不是祈使句的 let，整段是句子的主詞，要寫成 What surprises economists is that …。"
+            },
+            {
+              "type": "collocation",
+              "zh": "淘汰",
+              "literal_error": "… automation has created twice as many jobs as it has knocked out.",
+              "part": 4,
+              "explanation_zh": "工作被「淘汰」是消失、被取代，用 eliminate／wipe out；knock out 是比賽中「淘汰對手」。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "To the surprise of many economists, automation has generated twice as many jobs as it has eliminated in some manufacturing industries.",
+              "grammar_id": "gp-to-ones-emotion",
+              "explanation_zh": "To the surprise of …（令…驚訝的是）是強調情緒的正式寫法；generate（產生）也可替換 create。"
+            }
+          ],
+          "restructuring_zh": "「令…意外的是」英文用 What surprises … is that 開頭；「自動化所創造的工作是它所淘汰的兩倍」不要寫成 The jobs automation created are twice of …，改成以 automation 為主詞：automation has created twice as many jobs as it has eliminated。"
+        },
+        "2": {
+          "references": [
+            "However, no matter how old they are, the workers replaced by machines must learn new skills to be qualified for these new jobs.",
+            "However, no matter how old they may be, the workers replaced by machines have to acquire new skills so that they can handle these new jobs.",
+            "No matter how old they are, however, workers replaced by robots must learn new skills in order to take on these new jobs."
+          ],
+          "target_words": [
+            {
+              "word": "replace",
+              "zh": "取代"
+            },
+            {
+              "word": "machine",
+              "zh": "機器",
+              "alternatives": [
+                "robot"
+              ]
+            },
+            {
+              "word": "worker",
+              "zh": "勞工"
+            },
+            {
+              "word": "learn",
+              "zh": "學習",
+              "alternatives": [
+                "acquire"
+              ]
+            },
+            {
+              "word": "skill",
+              "zh": "技能"
+            },
+            {
+              "word": "qualified",
+              "zh": "能勝任的",
+              "alternatives": [
+                "qualify",
+                "handle",
+                "take on",
+                "competent"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "ADVCL",
+              "grammar_id": "gp-no-matter",
+              "label_zh": "讓步：無論多…（no matter how + adj.）",
+              "frame": "No matter how + adj. + S + V, S + V …",
+              "zh_trigger": "無論年紀多大"
+            },
+            {
+              "code": "PART",
+              "grammar_id": "gp-participle-modifier",
+              "label_zh": "過去分詞片語後位修飾名詞（被…的 N）",
+              "frame": "N + p.p. + by …",
+              "zh_trigger": "被機器取代的勞工"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "然而，無論年紀多大",
+              "accepted": [
+                "However, no matter how old they are",
+                "However, no matter how old they may be",
+                "No matter how old they are, however",
+                "However, regardless of their age"
+              ],
+              "targets": [
+                "ADVCL"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "However, no matter how old are they",
+                  "right": "However, no matter how old they are",
+                  "explanation_zh": "no matter how + 形容詞後面用直述句語序 they are。"
+                },
+                {
+                  "wrong": "However, no matter their age is",
+                  "right": "However, no matter how old they are",
+                  "explanation_zh": "no matter 後面接 wh- 子句（how old they are）；寫成 their age is 結構不完整。"
+                }
+              ]
+            },
+            {
+              "zh": "被機器取代的勞工",
+              "accepted": [
+                "workers replaced by machines",
+                "workers replaced by robots",
+                "workers who have been replaced by machines",
+                "workers who are replaced by machines"
+              ],
+              "targets": [
+                "PART",
+                "replace",
+                "machine",
+                "worker"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "workers replacing by machines",
+                  "right": "workers replaced by machines",
+                  "explanation_zh": "勞工是「被」取代，後位修飾要用過去分詞 replaced。"
+                },
+                {
+                  "wrong": "replaced by machines workers",
+                  "right": "workers replaced by machines",
+                  "explanation_zh": "分詞片語帶有 by …，要放在名詞後面。"
+                }
+              ]
+            },
+            {
+              "zh": "都必須學習新技能",
+              "accepted": [
+                "must learn new skills",
+                "have to acquire new skills",
+                "need to learn new skills",
+                "have to learn new skills"
+              ],
+              "targets": [
+                "learn",
+                "skill"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "all must learn new skills",
+                  "right": "must learn new skills",
+                  "explanation_zh": "這裡的「都」只是配合「無論」的語氣，不必譯成 all。"
+                },
+                {
+                  "wrong": "must learn new skill",
+                  "right": "must learn new skills",
+                  "explanation_zh": "技能可數，泛指時用複數 skills。"
+                }
+              ]
+            },
+            {
+              "zh": "才能勝任這些新工作",
+              "accepted": [
+                "to be qualified for these new jobs",
+                "so that they can handle these new jobs",
+                "in order to take on these new jobs",
+                "to handle these new jobs"
+              ],
+              "targets": [
+                "qualified"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "can win these new jobs",
+                  "right": "to be qualified for these new jobs",
+                  "explanation_zh": "「勝任」是有能力做好，用 be qualified for／handle／take on；win 是「贏得」。"
+                },
+                {
+                  "wrong": "to be qualified these new jobs",
+                  "right": "to be qualified for these new jobs",
+                  "explanation_zh": "be qualified 後面接 for + 工作。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "collocation",
+              "zh": "勝任",
+              "literal_error": "… workers replaced by machines must learn new skills to win these new jobs.",
+              "part": 4,
+              "explanation_zh": "「勝任」是能力足以做好，不是「贏得」；用 be qualified for／handle／take on these new jobs。"
+            },
+            {
+              "type": "prenominal_modifier",
+              "zh": "被機器取代的勞工",
+              "literal_error": "However, no matter how old they are, replaced by machines workers must learn new skills …",
+              "part": 2,
+              "explanation_zh": "中文「被…的」放在名詞前；英文帶 by 的分詞片語要放在名詞後面：workers replaced by machines。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "However old they may be, workers displaced by automation must pick up new skills if they are to qualify for these emerging jobs.",
+              "grammar_id": "gp-no-matter",
+              "explanation_zh": "However + 形容詞 + S + may be 是 no matter how 的正式寫法；displaced（被迫離開原職）、emerging（新興的）、be to（若要…）讓句子更精準。"
+            }
+          ],
+          "restructuring_zh": "「被機器取代的勞工」中文修飾語在前，英文改成名詞＋過去分詞片語 workers replaced by machines；「…才能勝任」改成表目的的不定詞 to be qualified for …，放在句尾。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ac-V-3",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-top-04",
+    "lot": "translation-top-04",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "6a9df5361ca910602b338b273c04042b40d0d8c92f6dc2609abebceddbfdb2f7",
+    "spec_id": "translation-top@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 1,
+    "sentences": 1,
+    "avg_sentence_length": 1.0,
+    "denominator": 1,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 1.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {
+      "off": 1
+    },
+    "offlist_words": [
+      "automation"
+    ],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T13:27:21Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "fail",
+      "created_at": "2026-10-09T13:05:21Z",
+      "details": {
+        "solver": "A",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "To the surprise of economists, in some manufacturing industries, automation has actually created twice as many jobs as it has eliminated.",
+            "confidence": "high",
+            "explanation_zh": "「令……意外的是」用 To the surprise of...；「竟」譯 actually；「所創造的工作是它所淘汰的兩倍」用倍數比較 twice as many jobs as；研究發現到目前為止的結果用現在完成式。"
+          },
+          "2": {
+            "translation": "However, no matter how old they are, workers who have been replaced by machines must learn new skills in order to be qualified for these new jobs.",
+            "confidence": "high",
+            "explanation_zh": "「無論年紀多大」用 no matter how old they are；「被機器取代的勞工」用含被動的關係子句；「才能勝任」用目的 in order to be qualified for。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "COMP"
+            ],
+            "used_target_words": [
+              "surprise",
+              "economist",
+              "manufacturing",
+              "create",
+              "job",
+              "twice",
+              "eliminate"
+            ],
+            "within_accepted": false,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "盲譯時「令經濟學家意外的是」自然寫成 To the surprise of economists，沒有用 What + V + is that 名詞子句：中文同樣能引出介系詞片語寫法，NCL 不是唯一自然的句構。",
+              "第 1 部分 accepted 只收 What 子句，卻沒收 To the surprise of (many) economists／To economists' surprise；而本題 bonus 本身就用 To the surprise of many economists，依現行規準寫出加分寫法的學生第 1 部分反而拿不到分，規準前後矛盾，應補進 accepted。",
+              "「竟」只有參考譯文 2 用 actually 表達，可考慮在參考譯文 0、1 也表現出來（不影響正確性）。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "ADVCL"
+            ],
+            "used_target_words": [
+              "replace",
+              "machine",
+              "worker",
+              "learn",
+              "skill",
+              "qualified"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "盲譯時「被機器取代的勞工」自然寫成關係子句 workers who have been replaced by machines，沒有用過去分詞後位修飾（PART）；第 2 部分 accepted 本來就收關係子句寫法，所以中文題目並沒有逼出 PART，標的句型的要求和評分規準不一致。",
+              "建議（不影響判定）：第 4 部分可補「in order to be qualified for these new jobs」。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "surprise",
+              "economist",
+              "manufacturing",
+              "create",
+              "job",
+              "twice",
+              "eliminate"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "COMP": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "replace",
+              "machine",
+              "worker",
+              "learn",
+              "skill",
+              "qualified"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "ADVCL": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 1 題盲譯沒有用到標的句型 ['NCL']：中文題目沒有自然引出這個句型（SPEC §5.7）",
+          "第 1 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義",
+          "第 2 題盲譯沒有用到標的句型 ['PART']：中文題目沒有自然引出這個句型（SPEC §5.7）",
+          "第 1 題驗證者對4 部分切分有意見（warn）：盲譯時「令經濟學家意外的是」自然寫成 To the surprise of economists，沒有用 What + V + is that 名詞子句：中文同樣能引出介系詞片語寫法，NCL 不是唯一自然的句構。；第 1 部分 accept"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "fail",
+      "created_at": "2026-10-09T13:09:20Z",
+      "details": {
+        "solver": "B",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "To economists' surprise, in some manufacturing industries, automation has created twice as many jobs as it has eliminated.",
+            "confidence": "high",
+            "explanation_zh": "「令經濟學家意外的是」譯成 to economists' surprise；「兩倍」用倍數比較 twice as many … as；創造與淘汰是累積結果，用現在完成式；eliminate 對應「淘汰」。"
+          },
+          "2": {
+            "translation": "However, no matter how old they are, workers who have been replaced by machines must learn new skills in order to be qualified for these new jobs.",
+            "confidence": "high",
+            "explanation_zh": "「無論年紀多大」用 no matter how old they are（也可用 regardless of their age）；「被機器取代的勞工」用關係子句加被動；「才能勝任」用 in order to be qualified for 表目的。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "COMP"
+            ],
+            "used_target_words": [
+              "surprise",
+              "economist",
+              "manufacturing",
+              "create",
+              "job",
+              "twice",
+              "eliminate"
+            ],
+            "within_accepted": false,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "我的譯文用 To economists' surprise, … 這個常見且正確的說法，但 references 與各部分 accepted 只收 What surprises economists is that 一類的 what 子句（bonus 的 To the surprise of many economists 也沒進 accepted）；中文「令經濟學家意外的是」不一定引出 what 子句（NCL）。建議 accepted 補上 To economists' surprise／To the surprise of economists，或放寬 NCL 標的。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "ADVCL"
+            ],
+            "used_target_words": [
+              "replace",
+              "machine",
+              "worker",
+              "learn",
+              "skill",
+              "qualified"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "第 2 部分的 accepted 收了 workers who have been replaced by machines、workers who are replaced by machines 這類關係子句寫法，但同一部分的標的句型是 PART（過去分詞片語後位修飾）；用關係子句的學生算在可接受寫法內，卻沒有用到 PART。我自己就用了關係子句，所以 PART 沒有自然用到。建議刪掉關係子句寫法，或把標的改成接受關係子句。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "surprise",
+              "economist",
+              "manufacturing",
+              "create",
+              "job",
+              "twice",
+              "eliminate"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "COMP": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "replace",
+              "machine",
+              "worker",
+              "learn",
+              "skill",
+              "qualified"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "ADVCL": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 1 題盲譯沒有用到標的句型 ['NCL']：中文題目沒有自然引出這個句型（SPEC §5.7）",
+          "第 1 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義",
+          "第 2 題盲譯沒有用到標的句型 ['PART']：中文題目沒有自然引出這個句型（SPEC §5.7）",
+          "第 2 題驗證者對4 部分切分有意見（warn）：第 2 部分的 accepted 收了 workers who have been replaced by machines、workers who are replaced by machines 這類關係子句寫法，但同一部分的標的句型是"
+        ]
+      }
+    }
+  ],
+  "status": "rejected",
+  "status_reason": "blind_solver:A 未通過：第 1 題盲譯沒有用到標的句型 ['NCL']：中文題目沒有自然引出這個句型（SPEC §5.7）；第 1 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義；第 2 題盲譯沒有用到標的句型 ['PART']：中文題目沒有自然引出這個句型（SPEC §5.7）…；blind_solver:B 未通過：第 1 題盲譯沒有用到標的句型 ['NCL']：中文題目沒有自然引出這個句型（SPEC §5.7）；第 1 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義；第 2 題盲譯沒有用到標的句型 ['PART']：中文題目沒有自然引出這個句型（SPEC §5.7）…"
+}

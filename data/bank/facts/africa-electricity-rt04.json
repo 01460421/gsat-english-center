@@ -1,0 +1,258 @@
+{
+  "schema": "gsat-bank-facts/v1",
+  "id": "africa-electricity-rt04",
+  "title": "Access to electricity in sub-Saharan Africa: Kenya’s grid and pay-as-you-go solar, 2003–2023",
+  "sdgs": [
+    7
+  ],
+  "created_on": "2026-10-09",
+  "created_by": "claude-opus-5-5",
+  "sources": [
+    {
+      "id": "s1",
+      "publisher": "World Bank",
+      "title": "World Development Indicators: Access to electricity (% of population) (EG.ELC.ACCS.ZS)",
+      "url": "https://data.worldbank.org/indicator/EG.ELC.ACCS.ZS",
+      "accessed": "2026-10-09",
+      "license": "CC-BY-4.0",
+      "use": "dataset",
+      "note": "以 World Bank API（api.worldbank.org/v2，lastupdated 2026-10-08）下載 SSF、WLD、KEN、NGA；取 2003–2023 每 5 年"
+    },
+    {
+      "id": "s2",
+      "publisher": "World Bank",
+      "title": "Tracking SDG 7 – The Energy Progress Report 2025 (publication page, 2025-06-20)",
+      "url": "https://www.worldbank.org/en/topic/energy/publication/tracking-sdg-7-the-energy-progress-report-2025",
+      "accessed": "2026-10-09",
+      "license": "World Bank terms of use (facts only)",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s3",
+      "publisher": "IEA, IRENA, UNSD, World Bank, WHO (copy hosted by WHO)",
+      "title": "Tracking SDG 7: The Energy Progress Report 2025 (full report)",
+      "url": "https://cdn.who.int/media/docs/default-source/air-pollution-documents/air-quality-and-health/sdg7-report-2025.pdf",
+      "accessed": "2026-10-09",
+      "license": "Report terms of use (facts only)",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s4",
+      "publisher": "World Bank",
+      "title": "Kenya: Off-grid Solar Access Project for Underserved Counties, Project Appraisal Document (2017)",
+      "url": "https://documents1.worldbank.org/curated/en/212451501293669530/pdf/Kenya-off-grid-PAD-07072017.pdf",
+      "accessed": "2026-10-09",
+      "license": "World Bank terms of use (facts only)",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s5",
+      "publisher": "World Bank (ESMAP)",
+      "title": "Mini Grids in Kenya: A Case Study of a Market at a Turning Point (2017)",
+      "url": "https://documents1.worldbank.org/curated/en/792001512392701402/pdf/ESM-cKenyaMiniGridsCaseStudyConfEd-PUBLIC.pdf",
+      "accessed": "2026-10-09",
+      "license": "World Bank terms of use (facts only)",
+      "use": "fact_only",
+      "note": null
+    }
+  ],
+  "facts": [
+    {
+      "id": "f1",
+      "text": "During 2023 about 35 million people in sub-Saharan Africa were newly connected to electricity. Because the population rose by 30 million that year, the number lacking electricity dropped by just 5 million, from 570 million to 565 million.",
+      "source_ids": [
+        "s2",
+        "s3"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f2",
+      "text": "In 2023, sub-Saharan Africa was home to 85% of the world’s people without electricity, up from 50% in 2010.",
+      "source_ids": [
+        "s2",
+        "s3"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f3",
+      "text": "Central and Southern Asia cut the number of people without electricity from 414 million in 2010 to 27 million in 2023.",
+      "source_ids": [
+        "s2",
+        "s3"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f4",
+      "text": "Worldwide, 92% of people had electricity in 2023, and 666 million people still did not.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f5",
+      "text": "In 2023, 84% of the people without electricity lived in rural areas. Most live in remote, low-income or conflict-affected places where the grid is hard to extend.",
+      "source_ids": [
+        "s2",
+        "s3"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f6",
+      "text": "From 2020 to 2022, 55% of new connections in sub-Saharan Africa came from decentralized renewable energy, for example solar home systems and small solar grids.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f7",
+      "text": "Kenya was among the fastest-electrifying countries between 2010 and 2023, reaching 76% access by 2023.",
+      "source_ids": [
+        "s3"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f8",
+      "text": "Nigeria had the largest electricity access gap in the world in 2023, with 86.6 million people lacking electricity.",
+      "source_ids": [
+        "s3"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f9",
+      "text": "Mini-grid projects in Nigeria have connected nearly 6 million people.",
+      "source_ids": [
+        "s3"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f10",
+      "text": "Kenya’s Last Mile Connectivity Program aims to connect every household within 600 meters of a transformer.",
+      "source_ids": [
+        "s4",
+        "s5"
+      ],
+      "kind": "definition"
+    },
+    {
+      "id": "f11",
+      "text": "Under the program the household connection fee was cut from 35,000 Kenyan shillings (US$343) to 15,000 shillings (US$147), payable in installments; each connection costs the utility about US$1,000.",
+      "source_ids": [
+        "s4",
+        "s5"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f12",
+      "text": "Kenya is the birthplace of pay-as-you-go solar, in which customers pay for a solar home system in small installments, often by mobile money. The Kenyan company M-KOPA first sold it commercially in 2012.",
+      "source_ids": [
+        "s4"
+      ],
+      "kind": "date"
+    },
+    {
+      "id": "f13",
+      "text": "Pay-as-you-go systems are switched off if the customer stops paying; it is a lease-to-own model, so customers end up owning the system.",
+      "source_ids": [
+        "s4"
+      ],
+      "kind": "definition"
+    },
+    {
+      "id": "f14",
+      "text": "Pay-as-you-go models made up 39% of off-grid solar sales in 2023, up from 24% in 2018.",
+      "source_ids": [
+        "s3"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f16",
+      "text": "Kenya, Rwanda and Uganda, which have made fast progress on electricity access, combine extending the grid with decentralized renewable options such as off-grid solar.",
+      "source_ids": [
+        "s3"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f15",
+      "text": "Mission 300, led by the World Bank and the African Development Bank, aims to bring electricity to 300 million people in Africa by 2030.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "number"
+    }
+  ],
+  "datasets": [
+    {
+      "id": "d1",
+      "source_id": "s1",
+      "title": "Access to electricity (% of population)",
+      "indicator": "EG.ELC.ACCS.ZS",
+      "unit": "% of population",
+      "categories": [
+        "2003",
+        "2008",
+        "2013",
+        "2018",
+        "2023"
+      ],
+      "series": [
+        {
+          "name": "World",
+          "values": [
+            79.9685,
+            82.6714,
+            85.7137,
+            89.8012,
+            91.6035
+          ]
+        },
+        {
+          "name": "Sub-Saharan Africa",
+          "values": [
+            29.5965,
+            32.4037,
+            38.0305,
+            46.4141,
+            53.2508
+          ]
+        },
+        {
+          "name": "Kenya",
+          "values": [
+            16.0,
+            30.3,
+            40.1,
+            61.2,
+            76.2
+          ]
+        },
+        {
+          "name": "Nigeria",
+          "values": [
+            52.2,
+            50.3,
+            55.6,
+            56.5,
+            61.2
+          ]
+        }
+      ],
+      "note": "World Bank API values rounded to 4 decimals"
+    }
+  ],
+  "notes": null
+}

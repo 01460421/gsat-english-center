@@ -1,0 +1,727 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.d06845",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "advanced",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "搬回老家後，我表哥發現自己在農場工作得越久，心情就越好。",
+        "options": null,
+        "answer": "After moving back home, my cousin found that the longer he worked on the farm, the happier he felt.",
+        "accepted_answers": [
+          "After moving back to his hometown, my cousin realized that the longer he worked on the farm, the better he felt.",
+          "After returning to his hometown, my cousin discovered that the more he worked on the farm, the happier he became."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "連接詞＋分詞（After＋V-ing）",
+            "愈…愈…（the＋比較級, the＋比較級）"
+          ],
+          "topic": "青年返鄉"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "為了吸引遊客，他舉辦農場導覽、開設烹飪課，還教小朋友種菜。",
+        "options": null,
+        "answer": "To attract tourists, he organizes farm tours, offers cooking classes, and teaches kids to grow vegetables.",
+        "accepted_answers": [
+          "In order to attract tourists, he holds farm tours, runs cooking classes, and teaches children how to grow vegetables.",
+          "He organizes farm tours, holds cooking classes, and teaches children to grow vegetables in order to attract visitors."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "不定詞表目的（為了…）",
+            "平行結構（三個動詞片語）"
+          ],
+          "topic": "青年返鄉"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "青年返鄉"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「搬回老家後」沒有主詞，主詞和後面的「表哥」相同，用連接詞＋分詞 After moving back home。「發現」後面接整句話，用 found that …。「越…越…」用 the＋比較級＋主詞＋動詞, the＋比較級＋主詞＋動詞：the longer he worked on the farm, the happier he felt（long → longer、happy → happier）。",
+          "evidence": [
+            "搬回老家後",
+            "在農場工作得越久，心情就越好"
+          ],
+          "strategy_zh": "「越…越…」的兩半都要以 the＋比較級開頭，後面再接主詞和動詞；先寫好第一半，第二半照同樣的形式寫。",
+          "hints": [
+            "切成四段：搬回老家後／我表哥發現／自己在農場工作得越久／心情就越好",
+            "標的詞彙：home（家鄉）、cousin（表哥）、find（發現）、farm（農場）、happy（快樂的）",
+            "句型框架：After + V-ing …, S + found that the + 比較級 + S + V, the + 比較級 + S + V"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「為了吸引遊客」表目的，句首用 To attract tourists（或 In order to …），後面加逗號接主要子句。主詞「他」做了三件事：舉辦農場導覽、開設烹飪課、教小朋友種菜，用平行結構 organizes farm tours, offers cooking classes, and teaches kids to grow vegetables，三個動詞都用第三人稱單數現在式，最後一個前面加 and。「教某人做某事」是 teach sb to VR（或 how to VR）。",
+          "evidence": [
+            "為了吸引遊客",
+            "舉辦農場導覽、開設烹飪課，還教小朋友種菜"
+          ],
+          "strategy_zh": "列舉三個以上的動作時用 A, B, and C，每一項的形式（時態、單複數、V-ing／原形）要一致。",
+          "hints": [
+            "切成四段：為了吸引遊客／他舉辦農場導覽／開設烹飪課／還教小朋友種菜",
+            "標的詞彙：attract（吸引）、tourist（遊客）、tour（導覽）、cooking（烹飪）、grow（種植）、vegetable（蔬菜）",
+            "句型框架：To VR …, S + V1 …, V2 …, and V3 …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "After moving back home, my cousin found that the longer he worked on the farm, the happier he felt.",
+            "After moving back to his hometown, my cousin realized that the longer he worked on the farm, the better he felt.",
+            "After returning to his hometown, my cousin discovered that the more he worked on the farm, the happier he became."
+          ],
+          "target_words": [
+            {
+              "word": "home",
+              "zh": "老家（家鄉）",
+              "alternatives": [
+                "hometown"
+              ]
+            },
+            {
+              "word": "cousin",
+              "zh": "表哥"
+            },
+            {
+              "word": "find",
+              "zh": "發現",
+              "alternatives": [
+                "realize",
+                "discover",
+                "notice"
+              ]
+            },
+            {
+              "word": "farm",
+              "zh": "農場"
+            },
+            {
+              "word": "happy",
+              "zh": "快樂的（心情好）",
+              "alternatives": [
+                "good",
+                "better"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PART",
+              "grammar_id": "gp-conj-participle",
+              "label_zh": "連接詞＋分詞（After＋V-ing）",
+              "frame": "After + V-ing …, S + V …",
+              "zh_trigger": "搬回老家後"
+            },
+            {
+              "code": "COMP",
+              "grammar_id": "gp-the-more",
+              "label_zh": "愈…愈…（the＋比較級, the＋比較級）",
+              "frame": "The + 比較級 + S + V, the + 比較級 + S + V",
+              "zh_trigger": "越久，心情就越好"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "搬回老家後",
+              "accepted": [
+                "After moving back home",
+                "After moving back to his hometown",
+                "After returning to his hometown",
+                "After returning home",
+                "After going back to his hometown",
+                "After he moved back home"
+              ],
+              "targets": [
+                "PART",
+                "home"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "After move back home",
+                  "right": "After moving back home",
+                  "explanation_zh": "after 當介系詞時後面接動名詞 moving；也可以寫成 After he moved back home。"
+                },
+                {
+                  "wrong": "After moved back home",
+                  "right": "After moving back home",
+                  "explanation_zh": "表哥是主動搬回去，用 V-ing；p.p. 表被動。"
+                }
+              ]
+            },
+            {
+              "zh": "我表哥發現",
+              "accepted": [
+                "my cousin found that",
+                "my cousin realized that",
+                "my cousin discovered that",
+                "my cousin found",
+                "my cousin has found that",
+                "my cousin noticed that"
+              ],
+              "targets": [
+                "cousin",
+                "find"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "my cousin found out himself",
+                  "right": "my cousin found that",
+                  "explanation_zh": "「發現自己…」的「自己」不用譯，find that＋子句即可。"
+                }
+              ]
+            },
+            {
+              "zh": "自己在農場工作得越久",
+              "accepted": [
+                "the longer he worked on the farm",
+                "the more he worked on the farm",
+                "the longer he worked at the farm",
+                "the longer he spent working on the farm",
+                "the more time he spent on the farm"
+              ],
+              "targets": [
+                "COMP",
+                "farm"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "the more long he worked on the farm",
+                  "right": "the longer he worked on the farm",
+                  "explanation_zh": "long 的比較級是 longer，不用 more long。"
+                },
+                {
+                  "wrong": "he worked on the farm the longer",
+                  "right": "the longer he worked on the farm",
+                  "explanation_zh": "「愈…愈…」要把 the＋比較級放在子句最前面。"
+                }
+              ]
+            },
+            {
+              "zh": "心情就越好",
+              "accepted": [
+                "the happier he felt",
+                "the better he felt",
+                "the happier he became",
+                "the happier he was",
+                "the better his mood became",
+                "the better his mood was"
+              ],
+              "targets": [
+                "COMP",
+                "happy"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "his mood was the better",
+                  "right": "the better his mood was",
+                  "explanation_zh": "第二部分同樣用 the＋比較級＋主詞＋動詞。"
+                },
+                {
+                  "wrong": "the more happy he felt",
+                  "right": "the happier he felt",
+                  "explanation_zh": "happy 的比較級是 happier。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "subjectless",
+              "zh": "搬回老家後",
+              "literal_error": "After move back home, my cousin found …",
+              "part": 1,
+              "explanation_zh": "中文「搬回老家後」沒有主詞，英文用 After＋V-ing（邏輯主詞是後面的 my cousin），或寫成 After he moved back home。"
+            },
+            {
+              "type": "word_form",
+              "zh": "越久",
+              "literal_error": "the more long he worked on the farm, the more happy he felt",
+              "part": 3,
+              "explanation_zh": "long、happy 的比較級是 longer、happier；「愈…愈…」是 the＋比較級, the＋比較級。"
+            }
+          ],
+          "bonus": [],
+          "restructuring_zh": "「搬回老家後」中文沒有主詞，英文要改成 After moving back home（連接詞＋分詞，邏輯主詞是 my cousin）；「工作得越久，心情就越好」要改成 the longer …, the happier … 的對稱句型。"
+        },
+        "2": {
+          "references": [
+            "To attract tourists, he organizes farm tours, offers cooking classes, and teaches kids to grow vegetables.",
+            "In order to attract tourists, he holds farm tours, runs cooking classes, and teaches children how to grow vegetables.",
+            "He organizes farm tours, holds cooking classes, and teaches children to grow vegetables in order to attract visitors."
+          ],
+          "target_words": [
+            {
+              "word": "attract",
+              "zh": "吸引",
+              "alternatives": [
+                "draw"
+              ]
+            },
+            {
+              "word": "tourist",
+              "zh": "遊客",
+              "alternatives": [
+                "visitor",
+                "traveler"
+              ]
+            },
+            {
+              "word": "tour",
+              "zh": "導覽"
+            },
+            {
+              "word": "cooking",
+              "zh": "烹飪",
+              "alternatives": [
+                "cook"
+              ]
+            },
+            {
+              "word": "grow",
+              "zh": "種植",
+              "alternatives": [
+                "plant"
+              ]
+            },
+            {
+              "word": "vegetable",
+              "zh": "蔬菜"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PURP",
+              "grammar_id": "gp-infinitive-purpose",
+              "label_zh": "不定詞表目的（為了…）",
+              "frame": "To VR …, S + V … ／ S + V … in order to VR",
+              "zh_trigger": "為了"
+            },
+            {
+              "code": "PARA",
+              "grammar_id": "gp-parallelism",
+              "label_zh": "平行結構（三個動詞片語）",
+              "frame": "S + V1 …, V2 …, and V3 …（三個動詞同時態、同形式）",
+              "zh_trigger": "還教"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "為了吸引遊客",
+              "accepted": [
+                "To attract tourists",
+                "In order to attract tourists",
+                "To attract visitors",
+                "In order to attract visitors",
+                "To attract more tourists",
+                "So as to attract tourists"
+              ],
+              "targets": [
+                "PURP",
+                "attract",
+                "tourist"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "For attracting tourists",
+                  "right": "To attract tourists",
+                  "explanation_zh": "表目的用不定詞 to＋原形動詞。"
+                },
+                {
+                  "wrong": "To attract tourist",
+                  "right": "To attract tourists",
+                  "explanation_zh": "泛指遊客用複數 tourists。"
+                }
+              ]
+            },
+            {
+              "zh": "他舉辦農場導覽",
+              "accepted": [
+                "he organizes farm tours",
+                "he holds farm tours",
+                "he runs farm tours",
+                "he offers farm tours",
+                "he organized farm tours",
+                "he gives tours of his farm"
+              ],
+              "targets": [
+                "tour"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "he holds farm guides",
+                  "right": "he holds farm tours",
+                  "explanation_zh": "「導覽」是活動 tour；guide 指導覽員。"
+                }
+              ]
+            },
+            {
+              "zh": "開設烹飪課",
+              "accepted": [
+                "offers cooking classes",
+                "runs cooking classes",
+                "holds cooking classes",
+                "teaches cooking classes",
+                "offered cooking classes",
+                "gives cooking lessons"
+              ],
+              "targets": [
+                "cooking"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "opens cooking classes",
+                  "right": "offers cooking classes",
+                  "explanation_zh": "「開設課程」英文說 offer／run／hold classes，不用 open。"
+                },
+                {
+                  "wrong": "offers cook classes",
+                  "right": "offers cooking classes",
+                  "explanation_zh": "「烹飪課」是 cooking classes，用動名詞 cooking 當修飾語。"
+                }
+              ]
+            },
+            {
+              "zh": "還教小朋友種菜",
+              "accepted": [
+                "and teaches kids to grow vegetables",
+                "and teaches children how to grow vegetables",
+                "and teaches children to grow vegetables",
+                "and teaches kids how to grow vegetables",
+                "and taught children to grow vegetables",
+                "and teaches children to plant vegetables"
+              ],
+              "targets": [
+                "PARA",
+                "grow",
+                "vegetable"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "and teaching kids to grow vegetables",
+                  "right": "and teaches kids to grow vegetables",
+                  "explanation_zh": "三個動作要同形式：organizes …, offers …, and teaches …。"
+                },
+                {
+                  "wrong": "teaches kids to grow vegetables",
+                  "right": "and teaches kids to grow vegetables",
+                  "explanation_zh": "列舉三個以上的動作時，最後一個前面要加 and。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "word_form",
+              "zh": "為了吸引遊客",
+              "literal_error": "For attracting tourists, he holds farm tours …",
+              "part": 1,
+              "explanation_zh": "「為了…」表目的，用 to＋原形動詞，不用 for＋V-ing。"
+            },
+            {
+              "type": "collocation",
+              "zh": "開設烹飪課",
+              "literal_error": "he opens cooking classes",
+              "part": 3,
+              "explanation_zh": "「開設課程」說 offer／run／hold classes。"
+            }
+          ],
+          "bonus": []
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-advanced-01",
+    "lot": "translation-advanced-01",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "aabb674c20baad2f5310b8b4d808a265893e2edf0c2a598bf8b873bfdfb38f0f",
+    "spec_id": "translation-advanced@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T12:42:31Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T07:45:00Z",
+      "details": {
+        "solver": "A",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "After moving back to his hometown, my cousin found that the longer he worked on the farm, the better he felt.",
+            "confidence": "high",
+            "explanation_zh": "「搬回老家後」與主要子句同主詞，用 After + V-ing；「越……越……」用 the + 比較級 …, the + 比較級 …；「發現」接 that 名詞子句；「心情就越好」譯 the better he felt；時態全用過去式。"
+          },
+          "2": {
+            "translation": "To attract tourists, he held farm tours, offered cooking classes, and also taught children how to grow vegetables.",
+            "confidence": "high",
+            "explanation_zh": "「為了吸引遊客」用不定詞 To attract tourists 表目的；三個動作用對等的過去式動詞 held …, offered …, and also taught … 保持平行；「教小朋友種菜」用 teach sb how to V。時態承接上一句的過去式。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PART",
+              "COMP"
+            ],
+            "used_target_words": [
+              "home",
+              "cousin",
+              "find",
+              "farm",
+              "happy"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PURP",
+              "PARA"
+            ],
+            "used_target_words": [
+              "attract",
+              "tourist",
+              "tour",
+              "cooking",
+              "grow",
+              "vegetable"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "（小建議，不影響判定）第 1 句用過去式，三個參考譯文第 2 句都用現在式；兩種都說得通（現在式表示他目前持續在做），P2–P4 也收了過去式寫法，可接受。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "home",
+              "cousin",
+              "find",
+              "farm",
+              "happy"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PART": true,
+              "COMP": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "attract",
+              "tourist",
+              "tour",
+              "cooking",
+              "grow",
+              "vegetable"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PURP": true,
+              "PARA": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T07:46:21Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "After moving back to his hometown, my cousin found that the longer he worked on the farm, the better he felt.",
+            "confidence": "high",
+            "explanation_zh": "「搬回老家後」用 After + 動名詞；「越…就越…」用 the + 比較級, the + 比較級；「發現」後接名詞子句，時態與主要動詞 found 配合用過去式。"
+          },
+          "2": {
+            "translation": "To attract tourists, he organized farm tours, offered cooking classes, and even taught children how to grow vegetables.",
+            "confidence": "medium",
+            "explanation_zh": "「為了吸引遊客」用不定詞片語表目的；三個動作用平行結構（organized / offered / taught），「還」用 even 帶出遞進。中文沒有明確時間，延續上一句的過去式，但也可能是現在式習慣，所以信心 medium。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PART",
+              "COMP"
+            ],
+            "used_target_words": [
+              "home",
+              "cousin",
+              "find",
+              "farm",
+              "happy"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PURP",
+              "PARA"
+            ],
+            "used_target_words": [
+              "attract",
+              "tourist",
+              "tour",
+              "cooking",
+              "grow",
+              "vegetable"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "備註：中文「他舉辦…、開設…、還教…」沒有時態標記。參考譯文都用現在式，我延續上一句 found 用了過去式；accepted 兩種都有收，但過去式的寫法每個部分只列一種（organized／offered／taught），與上一句 Q1 的過去式敘事是否一致可再確認。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "home",
+              "cousin",
+              "find",
+              "farm",
+              "happy"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PART": true,
+              "COMP": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "attract",
+              "tourist",
+              "tour",
+              "cooking",
+              "grow",
+              "vegetable"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PURP": true,
+              "PARA": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

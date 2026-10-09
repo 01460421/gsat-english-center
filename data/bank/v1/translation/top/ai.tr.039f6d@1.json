@@ -1,0 +1,778 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.039f6d",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "top",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "氣候難民所失去的不只是家園，還有他們最珍惜的文化傳統與社群。",
+        "options": null,
+        "answer": "What climate refugees lose is not only their homes but also the cultural traditions and communities that they cherish most.",
+        "accepted_answers": [
+          "What climate refugees have lost is not just their homes but also the cultural traditions and communities they treasure the most.",
+          "What climate refugees lose is not merely their homes but also the cultural traditions and communities that they value most."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "what 名詞子句當主詞",
+            "最高級（V + most）"
+          ],
+          "topic": "氣候移民"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "無論最後在哪裡落腳，這些難民的收入往往還不到當地居民平均薪資的一半。",
+        "options": null,
+        "answer": "No matter where they finally settle down, these refugees often earn less than half the average salary of local residents.",
+        "accepted_answers": [
+          "No matter where they eventually settle, the income of these refugees is often less than half the average wage of local residents.",
+          "No matter where they end up settling, what these refugees earn is often less than half the average pay of local people."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "無論…（no matter where）",
+            "倍數比較（less than half the + N）"
+          ],
+          "topic": "氣候移民"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "氣候移民"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「氣候難民所失去的」是整個句子的主詞，英文用 what 引導的名詞子句 What climate refugees lose（＝the things that climate refugees lose），what 子句當主詞，動詞用單數 is。「不只是…，還有…」用 not only … but also …，前後都接名詞，保持對稱。「他們最珍惜的」修飾「文化傳統與社群」，改成後位關係子句 that they cherish most（most 修飾動詞，也可寫 the most）。",
+          "evidence": [
+            "氣候難民所失去的",
+            "最珍惜"
+          ],
+          "strategy_zh": "「…所＋動詞＋的」當主詞時，先想 What + S + V；「最＋動詞」用 V + (the) most，放在子句句尾。",
+          "hints": [
+            "切成四段：氣候難民所失去的／不只是家園，還有／他們最珍惜的／文化傳統與社群",
+            "標的詞彙：climate（氣候）、refugee（難民）、lose（失去）、home（家園）、tradition（傳統）、community（社群）、cherish（珍惜）",
+            "句型框架：What + S + V + is not only A but also B + (that) + S + V + most"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「無論在哪裡…」用 No matter where + S + V（＝Wherever …），子句用直述句語序；「落腳」是定居 settle (down)。「這些難民的收入」可以讓人當主詞 these refugees earn …，也可以用名詞 the income of these refugees is …。「還不到…的一半」是倍數比較，寫成 less than half + the + 名詞 + of …（half 後面直接接 the average salary），英文一定要有動詞 earn 或 is。",
+          "evidence": [
+            "無論最後在哪裡落腳",
+            "還不到當地居民平均薪資的一半"
+          ],
+          "strategy_zh": "「無論＋疑問詞」→ No matter + wh- + S + V；「是…的一半／兩倍」→ half／twice + the + N + of …，或 half as much as …。",
+          "hints": [
+            "切成四段：無論最後在哪裡落腳／這些難民的收入往往／還不到／當地居民平均薪資的一半",
+            "標的詞彙：settle（定居、落腳）、refugee（難民）、income／earn（收入）、half（一半）、average（平均的）、salary（薪資）、local（當地的）、resident（居民）",
+            "句型框架：No matter where + S + V, S + often earn + less than half + the + N + of …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "What climate refugees lose is not only their homes but also the cultural traditions and communities that they cherish most.",
+            "What climate refugees have lost is not just their homes but also the cultural traditions and communities they treasure the most.",
+            "What climate refugees lose is not merely their homes but also the cultural traditions and communities that they value most."
+          ],
+          "target_words": [
+            {
+              "word": "climate",
+              "zh": "氣候"
+            },
+            {
+              "word": "refugee",
+              "zh": "難民",
+              "alternatives": [
+                "migrant"
+              ]
+            },
+            {
+              "word": "lose",
+              "zh": "失去"
+            },
+            {
+              "word": "home",
+              "zh": "家園",
+              "alternatives": [
+                "homeland",
+                "house"
+              ]
+            },
+            {
+              "word": "tradition",
+              "zh": "傳統",
+              "alternatives": [
+                "custom"
+              ]
+            },
+            {
+              "word": "community",
+              "zh": "社群"
+            },
+            {
+              "word": "cherish",
+              "zh": "珍惜",
+              "alternatives": [
+                "treasure",
+                "value"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "NCL",
+              "grammar_id": "gp-what-clause",
+              "label_zh": "what 引導的名詞子句當主詞（所…的事物）",
+              "frame": "What + S + V … + is …",
+              "zh_trigger": "氣候難民所失去的"
+            },
+            {
+              "code": "COMP",
+              "grammar_id": "gp-comparative-superlative",
+              "label_zh": "最高級：動詞 + most（最…）",
+              "frame": "… (that) + S + V + (the) most",
+              "zh_trigger": "最珍惜"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "氣候難民所失去的",
+              "accepted": [
+                "What climate refugees lose",
+                "What climate refugees have lost"
+              ],
+              "targets": [
+                "NCL",
+                "climate",
+                "refugee",
+                "lose"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Climate refugees lose is",
+                  "right": "What climate refugees lose is",
+                  "explanation_zh": "「…所失去的」整段是主詞，要用 what 引導名詞子句；少了 what，句子同時有 lose 和 is 兩個動詞卻沒有連接。"
+                },
+                {
+                  "wrong": "What climate refugee loses",
+                  "right": "What climate refugees lose",
+                  "explanation_zh": "難民泛指一群人，用複數 refugees，動詞 lose 不加 s。"
+                }
+              ]
+            },
+            {
+              "zh": "不只是家園，還有",
+              "accepted": [
+                "is not only their homes but also",
+                "is not just their homes but also",
+                "is not merely their homes but also"
+              ],
+              "targets": [
+                "home"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "is not only their homes, also",
+                  "right": "is not only their homes but also",
+                  "explanation_zh": "not only 要和 but also 配對；「還有」不能只在逗號後面寫 also。"
+                },
+                {
+                  "wrong": "is not only their family but also",
+                  "right": "is not only their homes but also",
+                  "explanation_zh": "「家園」指居住的家和土地，用 homes（或 homeland）；family 是家人。"
+                }
+              ]
+            },
+            {
+              "zh": "他們最珍惜的",
+              "accepted": [
+                "that they cherish most",
+                "they treasure the most",
+                "that they value most",
+                "they cherish the most",
+                "that they treasure most"
+              ],
+              "targets": [
+                "COMP",
+                "cherish"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "that they cherish mostly",
+                  "right": "that they cherish most",
+                  "explanation_zh": "「最」修飾動詞用 most（或 the most）；mostly 是「大多、主要地」。"
+                },
+                {
+                  "wrong": "that they cherish them most",
+                  "right": "that they cherish most",
+                  "explanation_zh": "that 已經代替受詞（傳統與社群），子句裡不可再寫 them。"
+                }
+              ]
+            },
+            {
+              "zh": "文化傳統與社群",
+              "accepted": [
+                "the cultural traditions and communities",
+                "their cultural traditions and communities",
+                "the traditions and communities"
+              ],
+              "targets": [
+                "tradition",
+                "community"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "the culture traditions and communities",
+                  "right": "the cultural traditions and communities",
+                  "explanation_zh": "修飾名詞要用形容詞 cultural；culture 是名詞。"
+                },
+                {
+                  "wrong": "the cultural traditions and societies",
+                  "right": "the cultural traditions and communities",
+                  "explanation_zh": "「社群」指彼此有連結、一起生活的一群人，用 community；society 是整個社會。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "abstract_nominal",
+              "zh": "文化傳統與社群",
+              "literal_error": "What climate refugees lose is not only their homes but also their culture and groups they love most.",
+              "part": 4,
+              "explanation_zh": "「社群」不是隨意的 group，而是一起生活、互相扶持的 community；「文化傳統」要寫成 cultural traditions（形容詞＋名詞）。"
+            },
+            {
+              "type": "verbal_subject",
+              "zh": "氣候難民所失去的",
+              "literal_error": "Climate refugees lost is not only their homes but also …",
+              "part": 1,
+              "explanation_zh": "中文「…所失去的」直接當主詞，英文不能拿動詞當主詞，要改成名詞子句 What climate refugees lose。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "Not only do climate refugees lose their homes, but they also lose the cultural traditions and communities they hold most dear.",
+              "grammar_id": "gp-not-only-inversion",
+              "explanation_zh": "Not only 放句首時，後面要倒裝（do + 主詞 + 原形動詞）；hold … dear（珍視）比 cherish 更有文采。這是加分寫法，不是唯一正解。"
+            }
+          ],
+          "restructuring_zh": "「他們最珍惜的文化傳統與社群」中文修飾語在前，英文先寫名詞，再用後位關係子句 the cultural traditions and communities that they cherish most；主詞「氣候難民所失去的」整段改成 what 子句。"
+        },
+        "2": {
+          "references": [
+            "No matter where they finally settle down, these refugees often earn less than half the average salary of local residents.",
+            "No matter where they eventually settle, the income of these refugees is often less than half the average wage of local residents.",
+            "No matter where they end up settling, what these refugees earn is often less than half the average pay of local people."
+          ],
+          "target_words": [
+            {
+              "word": "settle",
+              "zh": "落腳、定居"
+            },
+            {
+              "word": "refugee",
+              "zh": "難民",
+              "alternatives": [
+                "migrant"
+              ]
+            },
+            {
+              "word": "income",
+              "zh": "收入",
+              "alternatives": [
+                "earn"
+              ]
+            },
+            {
+              "word": "half",
+              "zh": "一半"
+            },
+            {
+              "word": "average",
+              "zh": "平均的"
+            },
+            {
+              "word": "salary",
+              "zh": "薪資",
+              "alternatives": [
+                "wage",
+                "pay"
+              ]
+            },
+            {
+              "word": "local",
+              "zh": "當地的"
+            },
+            {
+              "word": "resident",
+              "zh": "居民",
+              "alternatives": [
+                "people",
+                "locals"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "ADVCL",
+              "grammar_id": "gp-no-matter",
+              "label_zh": "讓步：無論在哪裡（no matter where）",
+              "frame": "No matter where + S + V, S + V …",
+              "zh_trigger": "無論最後在哪裡落腳"
+            },
+            {
+              "code": "COMP",
+              "grammar_id": "gp-times",
+              "label_zh": "倍數比較：不到…的一半",
+              "frame": "S + earn + less than half + the + N + of …",
+              "zh_trigger": "一半"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "無論最後在哪裡落腳",
+              "accepted": [
+                "No matter where they finally settle down",
+                "No matter where they eventually settle",
+                "No matter where they end up settling",
+                "Wherever they finally settle down"
+              ],
+              "targets": [
+                "ADVCL",
+                "settle"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "No matter where do they finally settle down",
+                  "right": "No matter where they finally settle down",
+                  "explanation_zh": "no matter where 後面用直述句語序（主詞＋動詞），不要用疑問句的 do 倒裝。"
+                },
+                {
+                  "wrong": "No matter where they finally drop their feet",
+                  "right": "No matter where they finally settle down",
+                  "explanation_zh": "「落腳」是定居、安頓下來，用 settle (down)；不要逐字翻。"
+                }
+              ]
+            },
+            {
+              "zh": "這些難民的收入往往",
+              "accepted": [
+                "these refugees often earn",
+                "the income of these refugees is often",
+                "what these refugees earn is often",
+                "these refugees usually earn"
+              ],
+              "targets": [
+                "refugee",
+                "income"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "these refugees' income often earn",
+                  "right": "these refugees often earn",
+                  "explanation_zh": "用動詞 earn 時主詞是人（these refugees）；用名詞 income 時寫 the income of these refugees is …，兩種寫法不要混在一起。"
+                },
+                {
+                  "wrong": "the income of these refugees are often",
+                  "right": "the income of these refugees is often",
+                  "explanation_zh": "主詞的核心是 income（不可數），動詞用 is。"
+                }
+              ]
+            },
+            {
+              "zh": "還不到",
+              "accepted": [
+                "less than half",
+                "under half",
+                "not even half"
+              ],
+              "targets": [
+                "COMP",
+                "half"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "not reach half",
+                  "right": "less than half",
+                  "explanation_zh": "「還不到一半」是在比較數量，用 less than half；not reach half 是逐字直譯，而且少了 be 動詞或主要動詞。"
+                },
+                {
+                  "wrong": "half less than",
+                  "right": "less than half",
+                  "explanation_zh": "語序是 less than half（少於一半），不要照中文順序寫成 half less than。"
+                }
+              ]
+            },
+            {
+              "zh": "當地居民平均薪資的一半",
+              "accepted": [
+                "the average salary of local residents",
+                "the average wage of local residents",
+                "the average pay of local people",
+                "the average income of local residents"
+              ],
+              "targets": [
+                "average",
+                "salary",
+                "local",
+                "resident"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "the average salary of the local resident",
+                  "right": "the average salary of local residents",
+                  "explanation_zh": "「當地居民」泛指一群人，用複數 local residents。"
+                },
+                {
+                  "wrong": "the local residents average salary",
+                  "right": "the average salary of local residents",
+                  "explanation_zh": "所有格要加 s 的撇號（local residents' average salary），或改用 the average salary of local residents。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "collocation",
+              "zh": "落腳",
+              "literal_error": "No matter where they finally drop their feet, these refugees …",
+              "part": 1,
+              "explanation_zh": "「落腳」是安頓、定居，英文用 settle (down)；照字面寫 drop their feet 讀者看不懂。"
+            },
+            {
+              "type": "word_form",
+              "zh": "還不到",
+              "literal_error": "No matter where they settle down, these refugees' income often not reach half of …",
+              "part": 3,
+              "explanation_zh": "中文「還不到一半」沒有「是」，英文卻一定要有動詞：these refugees earn less than half …／their income is less than half …。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "Wherever they eventually settle, these refugees rarely earn even half the average wage of local residents.",
+              "grammar_id": "gp-no-matter",
+              "explanation_zh": "Wherever 等於 no matter where，更簡潔；rarely … even half（很少能達到一半）用否定副詞表達「還不到」，語氣更強。"
+            }
+          ],
+          "restructuring_zh": "「這些難民的收入…還不到…的一半」可以把名詞「收入」改成動詞：these refugees earn less than half …，比 the income of these refugees is … 簡潔；「平均薪資」直接放在 half the 後面。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ac-V-3",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-top-04",
+    "lot": "translation-top-04",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "6a9df5361ca910602b338b273c04042b40d0d8c92f6dc2609abebceddbfdb2f7",
+    "spec_id": "translation-top@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T13:27:20Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T13:05:21Z",
+      "details": {
+        "solver": "A",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "What climate refugees lose is not only their homes but also the cultural traditions and communities that they cherish most.",
+            "confidence": "high",
+            "explanation_zh": "「所失去的」以 what 名詞子句當主詞；「不只是……還有……」用 not only... but also... 對稱連接兩個名詞；「最珍惜的」以關係子句 that they cherish most 修飾；一般性陳述用現在式。"
+          },
+          "2": {
+            "translation": "No matter where these refugees eventually settle, their income is often less than half of the average salary of local residents.",
+            "confidence": "high",
+            "explanation_zh": "「無論在哪裡」用 No matter where 引導讓步子句；「最後」譯 eventually；「還不到……的一半」用 less than half of；主詞換成 these refugees 放在讓步子句，主要子句用 their income 避免代名詞前指。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "NCL",
+              "COMP"
+            ],
+            "used_target_words": [
+              "climate",
+              "refugee",
+              "lose",
+              "home",
+              "tradition",
+              "community",
+              "cherish"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "ADVCL",
+              "COMP"
+            ],
+            "used_target_words": [
+              "settle",
+              "refugee",
+              "income",
+              "half",
+              "average",
+              "salary",
+              "local",
+              "resident"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "建議（不影響判定）：第 1 部分可補「No matter where these refugees eventually settle」（讓步子句直接用名詞、主要子句用 their income），第 4 部分可補「less than half of the average salary…」（half 後加 of 也正確）。",
+              "建議（不影響判定）：第 4 部分的 zh「當地居民平均薪資的一半」含「一半」，但 half 是算在第 3 部分「還不到」，改卷時要留意不要重複扣分。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "climate",
+              "refugee",
+              "lose",
+              "home",
+              "tradition",
+              "community",
+              "cherish"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NCL": true,
+              "COMP": true
+            },
+            "program_match": true
+          },
+          "2": {
+            "target_words_found": [
+              "settle",
+              "refugee",
+              "income",
+              "half",
+              "average",
+              "salary",
+              "local",
+              "resident"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "ADVCL": true,
+              "COMP": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "fail",
+      "created_at": "2026-10-09T13:09:20Z",
+      "details": {
+        "solver": "B",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Climate refugees have lost not only their homes but also the cultural traditions and communities that they cherish the most.",
+            "confidence": "high",
+            "explanation_zh": "「失去的不只是……還有……」用 not only … but also 對等連接兩個受詞；失去是已發生且影響延續的事，用現在完成式；「最珍惜的」譯成 cherish the most 的關係子句。"
+          },
+          "2": {
+            "translation": "No matter where they end up settling, these refugees often earn less than half of the average wage of local residents.",
+            "confidence": "high",
+            "explanation_zh": "「無論……」用 no matter where 引導讓步副詞子句；「最後落腳」用 end up settling；「不到一半」是 less than half；「收入」直接用動詞 earn，句子較自然。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "COMP"
+            ],
+            "used_target_words": [
+              "climate",
+              "refugee",
+              "lose",
+              "home",
+              "tradition",
+              "community",
+              "cherish"
+            ],
+            "within_accepted": false,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "我的譯文是主動句 Climate refugees have lost not only their homes but also …，自然又正確；但參考譯文與各部分 accepted 都綁死 what 子句（What … lose is not only …），中文「所失去的不只是…還有…」沒有強制 what 子句，標的句型 NCL 沒有被引出。",
+              "第 1、2 部分（氣候難民所失去的／不只是家園，還有）都要求 What 子句加 is，改寫成 have lost not only … but also 的學生會同時丟掉兩個部分；建議 accepted 補上 Climate refugees have lost/lose not only their homes but also，或把標的句型改成中文較能引出的句型。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "ADVCL",
+              "COMP"
+            ],
+            "used_target_words": [
+              "settle",
+              "refugee",
+              "income",
+              "half",
+              "average",
+              "salary",
+              "local",
+              "resident"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "climate",
+              "refugee",
+              "lose",
+              "home",
+              "tradition",
+              "community",
+              "cherish"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "COMP": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "settle",
+              "refugee",
+              "income",
+              "half",
+              "average",
+              "salary",
+              "local",
+              "resident"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "ADVCL": true,
+              "COMP": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 1 題盲譯沒有用到標的句型 ['NCL']：中文題目沒有自然引出這個句型（SPEC §5.7）",
+          "第 1 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義",
+          "第 1 題驗證者對4 部分切分有意見（warn）：我的譯文是主動句 Climate refugees have lost not only their homes but also …，自然又正確；但參考譯文與各部分 accepted 都綁死 what 子句（What … lose is "
+        ]
+      }
+    }
+  ],
+  "status": "rejected",
+  "status_reason": "blind_solver:B 未通過：第 1 題盲譯沒有用到標的句型 ['NCL']：中文題目沒有自然引出這個句型（SPEC §5.7）；第 1 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義；第 1 題驗證者對4 部分切分有意見（warn）：我的譯文是主動句 Climate refugees have lost not only their homes but also …，自然又正確；但參考譯文與各部分 accepted 都綁死 what 子句（What … lose is "
+}

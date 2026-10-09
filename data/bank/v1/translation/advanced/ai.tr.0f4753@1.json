@@ -1,0 +1,781 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.0f4753",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "advanced",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "除了吸引年輕人之外，直播也已被許多傳統店家用來銷售商品。",
+        "options": null,
+        "answer": "Besides attracting young people, live streaming has also been used by many traditional stores to sell their goods.",
+        "accepted_answers": [
+          "In addition to attracting young people, live streaming has also been used by many traditional shops to sell products.",
+          "Apart from attracting young people, live streams have also been used by many traditional stores to sell goods."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "介系詞＋動名詞",
+            "完成式被動"
+          ],
+          "topic": "直播"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "主持人生動的介紹常讓觀眾興奮不已，商品幾分鐘內就被搶購一空。",
+        "options": null,
+        "answer": "The hosts' lively introductions often make the audience very excited, and the goods are sold out within minutes.",
+        "accepted_answers": [
+          "The lively introductions by the hosts often make viewers extremely excited, and the products are sold out in a few minutes.",
+          "The hosts' vivid introductions often make the audience really excited, and the goods are snapped up within minutes."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "make + 受詞 + 補語",
+            "被動語態"
+          ],
+          "topic": "直播"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "直播"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「除了…之外，也…」用 Besides／In addition to + V-ing，表示「除了這項，還有那項」（不用 except）。「直播也已被許多傳統店家用來銷售商品」是完成式被動：live streaming has also been used by many traditional stores to sell their goods；by 後面是使用的人，to sell 說明用途。「銷售」當動詞是 sell，sale 是名詞。",
+          "evidence": [
+            "除了吸引年輕人之外",
+            "已被"
+          ],
+          "strategy_zh": "「A 已被 B 用來做 C」整理成 A + has been used by B + to + C；先寫主詞，再依序放 by 和 to。",
+          "hints": [
+            "切成四段：除了吸引年輕人之外／直播也已被／許多傳統店家用來／銷售商品",
+            "標的詞彙：attract（吸引，L3）、young（年輕的，L1）、live stream（直播，L2）、traditional（傳統的，L2）、store（店家，L1）、sell（銷售，L1）、goods（商品，L1）",
+            "句型框架：Besides + V-ing …, S + has (also) been + p.p. + by … + to VR …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「讓觀眾興奮不已」是 make + 受詞 + 受詞補語：make the audience very excited；觀眾是「感到」興奮，用 excited（不是 exciting），make 不能換成 let。「商品…被搶購一空」用被動 are sold out（或 are snapped up），within minutes 表示「幾分鐘內」；兩個子句之間用 and 連接。",
+          "evidence": [
+            "讓觀眾興奮不已",
+            "被搶購一空"
+          ],
+          "strategy_zh": "「讓某人覺得…」想 make + O + adj.；描述人的感受用 -ed 形容詞，描述事物的性質用 -ing。",
+          "hints": [
+            "切成四段：主持人生動的介紹／常讓觀眾興奮不已／商品／幾分鐘內就被搶購一空",
+            "標的詞彙：host（主持人，L2）、lively（生動的，L3）、introduction（介紹，L2）、audience（觀眾，L3）、excited（興奮的，L1）、goods（商品，L1）、sell（賣，L1）、minute（分鐘，L1）",
+            "句型框架：S + make + O + adj., and + S + are + p.p. …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "Besides attracting young people, live streaming has also been used by many traditional stores to sell their goods.",
+            "In addition to attracting young people, live streaming has also been used by many traditional shops to sell products.",
+            "Apart from attracting young people, live streams have also been used by many traditional stores to sell goods."
+          ],
+          "target_words": [
+            {
+              "word": "attract",
+              "zh": "吸引",
+              "alternatives": [
+                "draw"
+              ]
+            },
+            {
+              "word": "young",
+              "zh": "年輕的"
+            },
+            {
+              "word": "live stream",
+              "zh": "直播"
+            },
+            {
+              "word": "traditional",
+              "zh": "傳統的"
+            },
+            {
+              "word": "store",
+              "zh": "店家",
+              "alternatives": [
+                "shop",
+                "business"
+              ]
+            },
+            {
+              "word": "sell",
+              "zh": "銷售",
+              "alternatives": [
+                "promote"
+              ]
+            },
+            {
+              "word": "goods",
+              "zh": "商品",
+              "alternatives": [
+                "product",
+                "merchandise"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PREPVING",
+              "grammar_id": "gp-prep-gerund",
+              "label_zh": "介系詞＋動名詞（Besides + V-ing）",
+              "frame": "Besides／In addition to／Apart from + V-ing …, S + V",
+              "zh_trigger": "除了吸引年輕人之外"
+            },
+            {
+              "code": "PASS",
+              "grammar_id": "gp-perfect-passive",
+              "label_zh": "完成式被動（has been used by … to VR）",
+              "frame": "S + has/have (also) been + p.p. + by … + to VR",
+              "zh_trigger": "已被"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "除了吸引年輕人之外",
+              "accepted": [
+                "Besides attracting young people",
+                "In addition to attracting young people",
+                "Apart from attracting young people",
+                "Besides attracting young viewers",
+                "Besides drawing young people",
+                "Besides attracting the young"
+              ],
+              "targets": [
+                "attract",
+                "young",
+                "PREPVING"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Besides attract young people",
+                  "right": "Besides attracting young people",
+                  "explanation_zh": "besides 是介系詞，後面接動名詞 attracting。"
+                },
+                {
+                  "wrong": "Except attracting young people",
+                  "right": "Besides attracting young people",
+                  "explanation_zh": "except 是「除了…之外都不」（排除）；「除了…還…」（包含）用 besides／in addition to。"
+                }
+              ]
+            },
+            {
+              "zh": "直播也已被",
+              "accepted": [
+                "live streaming has also been",
+                "live streams have also been",
+                "live streaming has been",
+                "live streams have been"
+              ],
+              "targets": [
+                "live stream",
+                "PASS"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "live streaming has also used",
+                  "right": "live streaming has also been used",
+                  "explanation_zh": "直播是「被」店家使用，完成式被動要寫 has been + p.p.；少了 been 意思就變成直播去使用店家。"
+                },
+                {
+                  "wrong": "live streaming is also used",
+                  "right": "live streaming has also been used",
+                  "explanation_zh": "「已被」強調到現在為止的結果，用現在完成式被動 has been used。"
+                }
+              ]
+            },
+            {
+              "zh": "許多傳統店家用來",
+              "accepted": [
+                "used by many traditional stores to",
+                "used by many traditional shops to",
+                "used by a lot of traditional stores to",
+                "used by many traditional businesses to",
+                "used by many old-fashioned stores to"
+              ],
+              "targets": [
+                "traditional",
+                "store"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "used by many tradition stores to",
+                  "right": "used by many traditional stores to",
+                  "explanation_zh": "修飾名詞 stores 要用形容詞 traditional。"
+                },
+                {
+                  "wrong": "used to by many traditional stores",
+                  "right": "used by many traditional stores to",
+                  "explanation_zh": "by + 行為者放在 used 後面，表用途的 to + 原形動詞放最後。"
+                }
+              ]
+            },
+            {
+              "zh": "銷售商品",
+              "accepted": [
+                "sell their goods",
+                "sell products",
+                "sell goods",
+                "sell their products",
+                "promote their products",
+                "sell their merchandise"
+              ],
+              "targets": [
+                "sell",
+                "goods"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "sale their goods",
+                  "right": "sell their goods",
+                  "explanation_zh": "sale 是名詞，「銷售」當動詞用 sell。"
+                },
+                {
+                  "wrong": "sell their good",
+                  "right": "sell their goods",
+                  "explanation_zh": "「商品」是 goods，固定用複數形。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "tense_trigger",
+              "zh": "已被",
+              "literal_error": "Besides attracting young people, live streaming is also used by many traditional stores to sell their goods.",
+              "part": 2,
+              "explanation_zh": "「已被」表示到現在為止的結果，要用現在完成式被動 has been used，不只是 is used。"
+            },
+            {
+              "type": "word_form",
+              "zh": "銷售",
+              "literal_error": "Besides attracting young people, live streaming has also been used by many traditional stores to sale their goods.",
+              "part": 4,
+              "explanation_zh": "「銷售」在這裡當動詞，用 sell；sale 是名詞。"
+            }
+          ],
+          "bonus": [],
+          "restructuring_zh": "「直播也已被許多傳統店家用來銷售商品」中文是「被…用來…」，英文要重排成 has been used by many traditional stores to sell their goods：先寫被動動詞，再接 by 行為者，最後才是表用途的不定詞。"
+        },
+        "2": {
+          "references": [
+            "The hosts' lively introductions often make the audience very excited, and the goods are sold out within minutes.",
+            "The lively introductions by the hosts often make viewers extremely excited, and the products are sold out in a few minutes.",
+            "The hosts' vivid introductions often make the audience really excited, and the goods are snapped up within minutes."
+          ],
+          "target_words": [
+            {
+              "word": "host",
+              "zh": "主持人",
+              "alternatives": [
+                "streamer",
+                "presenter"
+              ]
+            },
+            {
+              "word": "lively",
+              "zh": "生動的",
+              "alternatives": [
+                "vivid"
+              ]
+            },
+            {
+              "word": "introduction",
+              "zh": "介紹",
+              "alternatives": [
+                "introduce",
+                "description"
+              ]
+            },
+            {
+              "word": "audience",
+              "zh": "觀眾",
+              "alternatives": [
+                "viewer"
+              ]
+            },
+            {
+              "word": "excited",
+              "zh": "興奮的",
+              "alternatives": [
+                "excite",
+                "thrilled"
+              ]
+            },
+            {
+              "word": "goods",
+              "zh": "商品",
+              "alternatives": [
+                "product",
+                "item"
+              ]
+            },
+            {
+              "word": "sell",
+              "zh": "賣",
+              "alternatives": [
+                "snap up",
+                "buy up"
+              ]
+            },
+            {
+              "word": "minute",
+              "zh": "分鐘"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "VOC",
+              "grammar_id": "gp-svoc",
+              "label_zh": "S + make + O + 形容詞（使…感到…）",
+              "frame": "S + make(s) + O + adj.",
+              "zh_trigger": "讓觀眾興奮不已"
+            },
+            {
+              "code": "PASS",
+              "grammar_id": "gp-passive",
+              "label_zh": "被動語態（are + p.p.）",
+              "frame": "S + am/is/are + p.p. …",
+              "zh_trigger": "被搶購一空"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "主持人生動的介紹",
+              "accepted": [
+                "The hosts' lively introductions",
+                "The lively introductions by the hosts",
+                "The hosts' vivid introductions",
+                "The host's lively introduction",
+                "The lively introductions of the hosts",
+                "The hosts' lively descriptions"
+              ],
+              "targets": [
+                "host",
+                "lively",
+                "introduction"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "The hosts' alive introductions",
+                  "right": "The hosts' lively introductions",
+                  "explanation_zh": "alive 是「活著的」，不放在名詞前面；「生動的」用 lively 或 vivid。"
+                },
+                {
+                  "wrong": "The host's lively introduce",
+                  "right": "The host's lively introduction",
+                  "explanation_zh": "形容詞後面要接名詞 introduction，introduce 是動詞。"
+                }
+              ]
+            },
+            {
+              "zh": "常讓觀眾興奮不已",
+              "accepted": [
+                "often make the audience very excited",
+                "often make viewers extremely excited",
+                "often make the audience really excited",
+                "often get the audience very excited",
+                "often make viewers very excited",
+                "often make the audience thrilled",
+                "often make the audience extremely excited"
+              ],
+              "targets": [
+                "audience",
+                "excited",
+                "VOC"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "often make the audience very exciting",
+                  "right": "often make the audience very excited",
+                  "explanation_zh": "觀眾是「感到」興奮，用 excited；exciting 是「令人興奮的」。"
+                },
+                {
+                  "wrong": "often let the audience very excited",
+                  "right": "often make the audience very excited",
+                  "explanation_zh": "let 後面接原形動詞，不接形容詞；「讓某人感到…」用 make + 人 + 形容詞。"
+                }
+              ]
+            },
+            {
+              "zh": "商品",
+              "accepted": [
+                "the goods",
+                "the products",
+                "the items"
+              ],
+              "targets": [
+                "goods"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "the good",
+                  "right": "the goods",
+                  "explanation_zh": "「商品」用複數形 goods；good 單數是「好處、善」。"
+                }
+              ]
+            },
+            {
+              "zh": "幾分鐘內就被搶購一空",
+              "accepted": [
+                "are sold out within minutes",
+                "are sold out in a few minutes",
+                "are snapped up within minutes",
+                "are bought up within minutes",
+                "are sold out within a few minutes",
+                "are all sold out within minutes",
+                "are sold out in minutes"
+              ],
+              "targets": [
+                "sell",
+                "minute",
+                "PASS"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "are robbed empty within minutes",
+                  "right": "are sold out within minutes",
+                  "explanation_zh": "「搶購一空」不要逐字翻成 rob；用 be sold out 或 be snapped up。"
+                },
+                {
+                  "wrong": "are sold out within minute",
+                  "right": "are sold out within minutes",
+                  "explanation_zh": "「幾分鐘」是複數 minutes。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "word_form",
+              "zh": "興奮不已",
+              "literal_error": "The hosts' lively introductions often make the audience very exciting, and the goods are sold out within minutes.",
+              "part": 2,
+              "explanation_zh": "描述人的感受用 -ed 形容詞 excited；exciting 是「令人興奮的」。"
+            },
+            {
+              "type": "collocation",
+              "zh": "搶購一空",
+              "literal_error": "The hosts' lively introductions often make the audience very excited, and the goods are robbed empty within minutes.",
+              "part": 4,
+              "explanation_zh": "「搶購一空」照字面翻會用錯動詞；英文說 be sold out 或 be snapped up。"
+            }
+          ],
+          "bonus": []
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-advanced-03",
+    "lot": "translation-advanced-03",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "02c0a28073619c0bc20ca233498a317fe41127b7ed24b485e5a25ef485b7d3c2",
+    "spec_id": "translation-advanced@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "warn",
+      "created_at": "2026-10-09T13:03:04Z",
+      "details": {
+        "errors": [],
+        "warnings": [
+          "annotations.rubric.items.1.patterns[1]: gp-perfect-passive 通常對應句構 PERF（目前 code=PASS）"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "warn",
+      "created_at": "2026-10-09T08:05:03Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Besides attracting young people, live streaming has also been used by many traditional stores to sell products.",
+            "confidence": "high",
+            "explanation_zh": "「除了吸引年輕人之外」用 Besides + V-ing（主詞 live streaming 主動吸引）；「也已被…用來銷售商品」用現在完成被動 has been used by…to V。"
+          },
+          "2": {
+            "translation": "The host's lively introductions often make the viewers extremely excited, and the products are sold out within a few minutes.",
+            "confidence": "medium",
+            "explanation_zh": "「讓觀眾興奮不已」用使役動詞 make + O + adj.（excited 修飾人）；「商品幾分鐘內就被搶購一空」用被動 be sold out within a few minutes。中文兩個分句之間隱含因果，也可以寫成 so excited that the products are sold out…；「搶購一空」也可譯 snapped up，所以信心給 medium。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PREPVING",
+              "PASS"
+            ],
+            "used_target_words": [
+              "attract",
+              "young",
+              "live stream",
+              "traditional",
+              "store",
+              "sell",
+              "goods"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "VOC",
+              "PASS"
+            ],
+            "used_target_words": [
+              "host",
+              "lively",
+              "introduction",
+              "audience",
+              "excited",
+              "goods",
+              "sell",
+              "minute"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "（不影響判定）我寫 The host's lively introductions，確實用了標的詞 host，但程式把所有格 host's 當成一個字，比對不到；P1 accepted 的 The host's lively introduction 也會遇到同樣問題（tools 斷詞的問題，不是題目的問題）。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "attract",
+              "young",
+              "live stream",
+              "traditional",
+              "store",
+              "sell",
+              "goods"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PREPVING": true,
+              "PASS": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "lively",
+              "introduction",
+              "audience",
+              "excited",
+              "goods",
+              "sell",
+              "minute"
+            ],
+            "target_hit_rate": 0.875,
+            "patterns_detected": {
+              "VOC": null,
+              "PASS": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 2 題驗證者說用了 ['host']，程式在譯文裡找不到"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "warn",
+      "created_at": "2026-10-09T00:00:00Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Besides attracting young people, live streaming has also been used by many traditional shops to sell products.",
+            "confidence": "high",
+            "explanation_zh": "「除了……之外」用 Besides 加動名詞；「已被許多傳統店家用來」是現在完成被動 has been used by…to sell…；主詞 live streaming 同時是吸引年輕人的主體，沒有垂懸問題。"
+          },
+          "2": {
+            "translation": "The host's vivid introductions often make the viewers so excited that the products are sold out within a few minutes.",
+            "confidence": "medium",
+            "explanation_zh": "「讓觀眾興奮不已，商品……被搶購一空」之間有因果關係，用 make…so excited that… 結果子句整合；「搶購一空」用 be sold out，也可寫 snapped up。結果子句是我自行補上的因果連結，中文沒有明說。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PREPVING",
+              "PASS"
+            ],
+            "used_target_words": [
+              "attract",
+              "young",
+              "live stream",
+              "traditional",
+              "store",
+              "sell",
+              "goods"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "VOC",
+              "PASS"
+            ],
+            "used_target_words": [
+              "host",
+              "lively",
+              "introduction",
+              "audience",
+              "excited",
+              "goods",
+              "sell",
+              "minute"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "attract",
+              "young",
+              "live stream",
+              "traditional",
+              "store",
+              "sell",
+              "goods"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PREPVING": true,
+              "PASS": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "lively",
+              "introduction",
+              "audience",
+              "excited",
+              "goods",
+              "sell",
+              "minute"
+            ],
+            "target_hit_rate": 0.875,
+            "patterns_detected": {
+              "VOC": null,
+              "PASS": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 2 題驗證者說用了 ['host']，程式在譯文裡找不到"
+        ]
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

@@ -1,0 +1,767 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.19edea",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "top",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "演算法（algorithm）會推薦和我們按過讚的貼文類似的內容，這正是我們放不下手機的原因。",
+        "options": null,
+        "answer": "Algorithms recommend content similar to the posts we have liked, which is why it is hard for us to put down our phones.",
+        "accepted_answers": [
+          "Algorithms suggest content that is similar to the posts we have liked, which explains why we find it hard to put our phones down.",
+          "Algorithms recommend content that resembles the posts we have liked, which is the reason why we can't put down our phones."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "非限定關係子句",
+            "關係代名詞（省略受格）"
+          ],
+          "topic": "演算法推薦"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "凡是想擺脫這種循環的人，無論演算法推薦什麼，都應該主動接觸多元的觀點。",
+        "options": null,
+        "answer": "Those who want to break free from this cycle should actively expose themselves to diverse perspectives, no matter what algorithms recommend.",
+        "accepted_answers": [
+          "No matter what the algorithms recommend, those who hope to escape this cycle should take the initiative to explore a variety of viewpoints.",
+          "Those who wish to get out of this cycle should actively seek out different points of view, no matter what algorithms suggest."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "無論…（no matter what）",
+            "凡是…的人（those who）"
+          ],
+          "topic": "演算法推薦"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "演算法推薦"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「這正是…的原因」指前面整件事（演算法推薦類似的內容），英文用非限定關係子句 , which is why …，which 前面要有逗號，不能用 that。「我們按過讚的貼文」是限定關係子句 the posts (that) we have liked，受格關代可以省略；「按讚」就是動詞 like，已經按過用現在完成式。be similar to 的介系詞是 to。「放不下手機」可寫 it is hard for us to put down our phones 或 we can't put our phones down。",
+          "evidence": [
+            "這正是",
+            "我們按過讚的貼文"
+          ],
+          "strategy_zh": "看到「，這正是／這也是…的原因」，先想 , which is why …；看到「…的＋名詞」，把修飾語搬到名詞後面變成關係子句。",
+          "hints": [
+            "切成四段：演算法會推薦／和我們按過讚的貼文類似的內容／這正是…的原因／我們放不下手機",
+            "標的詞彙：recommend（推薦）、content（內容）、similar（類似的）、post（貼文）、phone（手機）",
+            "句型框架：S + V + N + similar to + N + (that) + S + have p.p., which is why + S + V …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「凡是…的人」用 those who＋複數動詞（或 anyone who＋單數動詞）。「無論演算法推薦什麼」用 no matter what algorithms recommend（= whatever algorithms recommend），後面是直述句語序。「主動」修飾動詞用副詞 actively；「接觸多元的觀點」不要直譯成 contact，用 expose oneself to／seek out diverse perspectives。「都」是配合「無論」的語氣，不需要譯成 all。",
+          "evidence": [
+            "凡是想擺脫這種循環的人",
+            "無論演算法推薦什麼",
+            "接觸多元的觀點"
+          ],
+          "strategy_zh": "「無論…都…」先找主幹（誰應該做什麼），no matter 子句可以放句首或句尾；「凡是…的人」直接想 Those who …。",
+          "hints": [
+            "切成四段：凡是想擺脫這種循環的人／無論演算法推薦什麼／都應該主動／接觸多元的觀點",
+            "標的詞彙：escape（擺脫）、cycle（循環）、recommend（推薦）、actively（主動地）、diverse（多元的）、perspective（觀點）",
+            "句型框架：Those who + V … should + V …, no matter what + S + V"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "Algorithms recommend content similar to the posts we have liked, which is why it is hard for us to put down our phones.",
+            "Algorithms suggest content that is similar to the posts we have liked, which explains why we find it hard to put our phones down.",
+            "Algorithms recommend content that resembles the posts we have liked, which is the reason why we can't put down our phones."
+          ],
+          "target_words": [
+            {
+              "word": "recommend",
+              "zh": "推薦",
+              "alternatives": [
+                "suggest"
+              ]
+            },
+            {
+              "word": "content",
+              "zh": "內容"
+            },
+            {
+              "word": "similar",
+              "zh": "類似的",
+              "alternatives": [
+                "resemble",
+                "alike"
+              ]
+            },
+            {
+              "word": "post",
+              "zh": "貼文"
+            },
+            {
+              "word": "phone",
+              "zh": "手機",
+              "alternatives": [
+                "smartphone",
+                "cellphone"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "NRREL",
+              "grammar_id": "gp-nonrestrictive",
+              "label_zh": "非限定關係子句（which 指前面整件事）",
+              "frame": "S + V …, which is why + S + V …",
+              "zh_trigger": "這正是"
+            },
+            {
+              "code": "REL",
+              "grammar_id": "gp-relative-pronoun",
+              "label_zh": "限定關係子句（可省略受格關代 that）",
+              "frame": "N + (that) + S + have p.p. …",
+              "zh_trigger": "我們按過讚的貼文"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "演算法（algorithm）會推薦",
+              "accepted": [
+                "Algorithms recommend",
+                "Algorithms suggest",
+                "Algorithms will recommend",
+                "Algorithms tend to recommend",
+                "The algorithm recommends"
+              ],
+              "targets": [
+                "recommend"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Algorithm recommend",
+                  "right": "Algorithms recommend",
+                  "explanation_zh": "泛指演算法要用複數 Algorithms（或 The algorithm recommends）；單數可數名詞不能單獨當主詞，主詞和動詞也要一致。"
+                },
+                {
+                  "wrong": "Algorithms recommend us content",
+                  "right": "Algorithms recommend content to us",
+                  "explanation_zh": "recommend 不接雙受詞，要寫 recommend sth (to sb)。"
+                }
+              ]
+            },
+            {
+              "zh": "和我們按過讚的貼文類似的內容",
+              "accepted": [
+                "content similar to the posts we have liked",
+                "content that is similar to the posts we have liked",
+                "content that resembles the posts we have liked",
+                "content similar to the posts that we have liked",
+                "content similar to the posts we liked",
+                "content like the posts we have liked"
+              ],
+              "targets": [
+                "content",
+                "similar",
+                "post",
+                "REL"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "content similar with the posts we have liked",
+                  "right": "content similar to the posts we have liked",
+                  "explanation_zh": "be similar to 的介系詞是 to，不是 with。"
+                },
+                {
+                  "wrong": "similar to we have liked posts content",
+                  "right": "content similar to the posts we have liked",
+                  "explanation_zh": "中文把修飾語放在名詞前面，英文要把關係子句放在名詞後面：the posts (that) we have liked。"
+                }
+              ]
+            },
+            {
+              "zh": "這正是",
+              "accepted": [
+                "which is why",
+                "which explains why",
+                "which is the reason why",
+                "which is the reason"
+              ],
+              "targets": [
+                "NRREL"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "we have liked, this is why it is hard",
+                  "right": "we have liked, which is why it is hard",
+                  "explanation_zh": "逗號不能連接兩個完整的句子（逗點謬誤）；用 which 指前面整件事，或改用句號再寫 This is why。"
+                },
+                {
+                  "wrong": "we have liked, that is why it is hard",
+                  "right": "we have liked, which is why it is hard",
+                  "explanation_zh": "非限定關係子句不能用 that；that is why 是獨立句，不能只用逗號接上。"
+                }
+              ]
+            },
+            {
+              "zh": "我們放不下手機",
+              "accepted": [
+                "it is hard for us to put down our phones",
+                "we find it hard to put our phones down",
+                "we can't put down our phones",
+                "we can hardly put our phones down",
+                "it is difficult for us to put our phones down",
+                "we cannot put down our phones"
+              ],
+              "targets": [
+                "phone"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "we can't put our phones",
+                  "right": "we can't put down our phones",
+                  "explanation_zh": "「放下」是 put down，down 不能漏掉。"
+                },
+                {
+                  "wrong": "it is hard for us putting down our phones",
+                  "right": "it is hard for us to put down our phones",
+                  "explanation_zh": "It is + 形容詞 + for sb 後面接不定詞 to V。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "plural_countable",
+              "zh": "演算法（algorithm）會推薦",
+              "literal_error": "Algorithm recommends content similar to the posts we have liked …",
+              "part": 1,
+              "explanation_zh": "「演算法」泛指一類東西，英文用複數 Algorithms 或加冠詞 The algorithm；單數可數名詞不能沒有冠詞。"
+            },
+            {
+              "type": "prenominal_modifier",
+              "zh": "和我們按過讚的貼文類似的內容",
+              "literal_error": "Algorithms recommend similar to we have liked posts content …",
+              "part": 2,
+              "explanation_zh": "中文兩層「的」都放在名詞前面；英文要先寫 content，再接 similar to the posts (that) we have liked。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "So closely does the content algorithms recommend match the posts we have liked that it is hard for us to put down our phones.",
+              "grammar_id": "gp-so-adj-inversion",
+              "explanation_zh": "用 So + 副詞 + 助動詞 + 主詞 + V … that … 的倒裝強調「推薦內容和我們的喜好有多像」；屬於加分寫法，基本分仍看 which is why 的寫法。"
+            }
+          ],
+          "restructuring_zh": "「這正是我們放不下手機的原因」不要另起一句 This is the reason …，改用 , which is why … 把前面整件事當先行詞接上；「和我們按過讚的貼文類似的內容」要把修飾語移到 content 後面（content similar to the posts we have liked）。"
+        },
+        "2": {
+          "references": [
+            "Those who want to break free from this cycle should actively expose themselves to diverse perspectives, no matter what algorithms recommend.",
+            "No matter what the algorithms recommend, those who hope to escape this cycle should take the initiative to explore a variety of viewpoints.",
+            "Those who wish to get out of this cycle should actively seek out different points of view, no matter what algorithms suggest."
+          ],
+          "target_words": [
+            {
+              "word": "escape",
+              "zh": "擺脫",
+              "alternatives": [
+                "break free from",
+                "get out of",
+                "break out of"
+              ]
+            },
+            {
+              "word": "cycle",
+              "zh": "循環"
+            },
+            {
+              "word": "recommend",
+              "zh": "推薦",
+              "alternatives": [
+                "suggest"
+              ]
+            },
+            {
+              "word": "actively",
+              "zh": "主動地",
+              "alternatives": [
+                "initiative",
+                "active"
+              ]
+            },
+            {
+              "word": "diverse",
+              "zh": "多元的",
+              "alternatives": [
+                "different",
+                "various",
+                "variety"
+              ]
+            },
+            {
+              "word": "perspective",
+              "zh": "觀點",
+              "alternatives": [
+                "viewpoint",
+                "point of view",
+                "view",
+                "opinion"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "ADVCL",
+              "grammar_id": "gp-no-matter",
+              "label_zh": "讓步子句：無論…（no matter what = whatever）",
+              "frame": "S + V …, no matter what + S + V ／ No matter what + S + V, S + V …",
+              "zh_trigger": "無論演算法推薦什麼"
+            },
+            {
+              "code": "REL",
+              "grammar_id": "gp-for-those-who",
+              "label_zh": "凡是…的人（Those who + V …）",
+              "frame": "Those who + V … + should + V …",
+              "zh_trigger": "凡是想擺脫這種循環的人"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "凡是想擺脫這種循環的人",
+              "accepted": [
+                "Those who want to break free from this cycle",
+                "those who hope to escape this cycle",
+                "Those who wish to get out of this cycle",
+                "Anyone who wants to escape this cycle",
+                "Whoever wants to escape this cycle",
+                "People who want to break out of this cycle"
+              ],
+              "targets": [
+                "REL",
+                "escape",
+                "cycle"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Those who wants to escape this cycle",
+                  "right": "Those who want to escape this cycle",
+                  "explanation_zh": "those 是複數，who 子句的動詞用複數 want。"
+                },
+                {
+                  "wrong": "Who wants to escape this cycle should",
+                  "right": "Those who want to escape this cycle should",
+                  "explanation_zh": "who 不能單獨當主詞，要有先行詞 those／anyone，或改用 Whoever wants …。"
+                }
+              ]
+            },
+            {
+              "zh": "無論演算法推薦什麼",
+              "accepted": [
+                "no matter what algorithms recommend",
+                "no matter what the algorithms recommend",
+                "no matter what algorithms suggest",
+                "whatever algorithms recommend",
+                "whatever the algorithms recommend",
+                "regardless of what algorithms recommend"
+              ],
+              "targets": [
+                "ADVCL",
+                "recommend"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "no matter what do algorithms recommend",
+                  "right": "no matter what algorithms recommend",
+                  "explanation_zh": "no matter what 後面接直述句語序（主詞＋動詞），不要加助動詞倒裝成問句。"
+                },
+                {
+                  "wrong": "no matter algorithms recommend what",
+                  "right": "no matter what algorithms recommend",
+                  "explanation_zh": "what 要緊跟在 no matter 後面，再接主詞與動詞。"
+                }
+              ]
+            },
+            {
+              "zh": "都應該主動",
+              "accepted": [
+                "should actively",
+                "should take the initiative to",
+                "should make an effort to",
+                "should make a point of"
+              ],
+              "targets": [
+                "actively"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "should active",
+                  "right": "should actively",
+                  "explanation_zh": "修飾動詞要用副詞 actively；active 是形容詞。"
+                },
+                {
+                  "wrong": "all should actively",
+                  "right": "should actively",
+                  "explanation_zh": "這裡的「都」是配合「無論」的語氣，不必譯成 all。"
+                }
+              ]
+            },
+            {
+              "zh": "接觸多元的觀點",
+              "accepted": [
+                "expose themselves to diverse perspectives",
+                "explore a variety of viewpoints",
+                "seek out different points of view",
+                "seek out diverse perspectives",
+                "be open to different points of view",
+                "look for a variety of perspectives"
+              ],
+              "targets": [
+                "diverse",
+                "perspective"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "contact diverse perspectives",
+                  "right": "expose themselves to diverse perspectives",
+                  "explanation_zh": "contact 是「聯絡（人）」；「接觸觀點」要說 expose oneself to／seek out／be open to。"
+                },
+                {
+                  "wrong": "expose themselves to diversity perspectives",
+                  "right": "expose themselves to diverse perspectives",
+                  "explanation_zh": "修飾名詞要用形容詞 diverse；diversity 是名詞。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "collocation",
+              "zh": "接觸多元的觀點",
+              "literal_error": "should actively contact diverse perspectives",
+              "part": 4,
+              "explanation_zh": "「接觸」是抽象的「去看、去聽不同的觀點」，不是 contact（聯絡某人）；用 expose oneself to／seek out。"
+            },
+            {
+              "type": "prenominal_modifier",
+              "zh": "想擺脫這種循環的人",
+              "literal_error": "All want to escape this cycle people should …",
+              "part": 1,
+              "explanation_zh": "「…的人」要寫成 those who …／anyone who …，修飾語放在後面；「凡是」不必譯成 all。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "Whatever algorithms may recommend, those who long to break free from this cycle should make a point of exposing themselves to diverse perspectives.",
+              "grammar_id": "gp-no-matter",
+              "explanation_zh": "Whatever = no matter what；make a point of V-ing（刻意去做）比 should actively 更道地。"
+            }
+          ],
+          "restructuring_zh": "中文「凡是…的人，無論…，都應該…」三段排在一起；英文以 Those who … should … 當主幹，把 no matter what 子句移到句尾（或句首加逗號），「都」不必譯出。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ac-V-3",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-top-01",
+    "lot": "translation-top-01",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "a1384b01f87b0f8fded3505d9aeb991591fcc72147d3fc44a0f533a9db995000",
+    "spec_id": "translation-top@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 1,
+    "sentences": 1,
+    "avg_sentence_length": 1.0,
+    "denominator": 1,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 1.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {
+      "off": 1
+    },
+    "offlist_words": [
+      "algorithm"
+    ],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "warn",
+      "created_at": "2026-10-09T13:10:30Z",
+      "details": {
+        "errors": [],
+        "warnings": [
+          "annotations.rubric.items.1: 首選參考譯文有詞彙表外的字 ['Algorithms']（表外專有名詞請在題目括號附英文）",
+          "annotations.rubric.items.2: 首選參考譯文有詞彙表外的字 ['algorithms']（表外專有名詞請在題目括號附英文）"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T00:00:00Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Algorithms recommend content similar to the posts we have liked, which is exactly why we can't put down our phones.",
+            "confidence": "high",
+            "explanation_zh": "「這正是…的原因」用非限定關係子句 which is exactly why 承接前句；「按過讚」用現在完成式 have liked；「放不下手機」譯為 can't put down our phones。"
+          },
+          "2": {
+            "translation": "Whoever wants to break free from this cycle should actively seek out diverse perspectives, no matter what the algorithms recommend.",
+            "confidence": "high",
+            "explanation_zh": "「凡是想…的人」用 whoever 引導名詞子句當主詞；「無論演算法推薦什麼」用 no matter what，放句尾比夾在主詞與動詞之間自然；「主動接觸多元的觀點」譯為 actively seek out diverse perspectives（也可用 expose themselves to）。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "NRREL",
+              "REL"
+            ],
+            "used_target_words": [
+              "recommend",
+              "content",
+              "similar",
+              "post",
+              "phone"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "（建議，不影響判定）我寫 which is exactly why，把「正是」的「正」譯成 exactly；第 3 部分 accepted 只有 which is why 等，可補上 which is exactly why。第 4 部分中文標示沒包含句尾「的原因」，英文 which is why 已涵蓋，不影響評分。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "ADVCL",
+              "REL"
+            ],
+            "used_target_words": [
+              "escape",
+              "cycle",
+              "recommend",
+              "actively",
+              "diverse",
+              "perspective"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "（說明）「凡是…的人」我用 Whoever（複合關係代名詞）而不是 Those who；第 1 部分 accepted 有 Whoever wants to escape this cycle，所以算 REL，但若程式只比對 who 引導的 those who／anyone who，可能比對不到。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "recommend",
+              "content",
+              "similar",
+              "post",
+              "phone"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NRREL": true,
+              "REL": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "escape",
+              "cycle",
+              "recommend",
+              "actively",
+              "diverse",
+              "perspective"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "ADVCL": true,
+              "REL": false
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T07:56:17Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "An algorithm recommends content similar to the posts we have liked, which is exactly why we cannot put our phones down.",
+            "confidence": "high",
+            "explanation_zh": "「這正是……的原因」用非限定關係子句 which is exactly why 接前句；按過讚是已發生並延續到現在的經驗，用現在完成式 have liked 修飾 posts。"
+          },
+          "2": {
+            "translation": "Anyone who wants to break free from this cycle should actively seek out diverse perspectives, no matter what the algorithm recommends.",
+            "confidence": "high",
+            "explanation_zh": "「凡是想……的人」用 Anyone who；「無論……」用 no matter what 引導讓步子句；主動接觸譯成 actively seek out。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "NRREL",
+              "REL"
+            ],
+            "used_target_words": [
+              "recommend",
+              "content",
+              "similar",
+              "post",
+              "phone"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "ADVCL",
+              "REL"
+            ],
+            "used_target_words": [
+              "escape",
+              "cycle",
+              "recommend",
+              "actively",
+              "diverse",
+              "perspective"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "recommend",
+              "content",
+              "similar",
+              "post",
+              "phone"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NRREL": true,
+              "REL": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "escape",
+              "cycle",
+              "recommend",
+              "actively",
+              "diverse",
+              "perspective"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "ADVCL": true,
+              "REL": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

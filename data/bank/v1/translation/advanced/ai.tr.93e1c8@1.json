@@ -1,0 +1,775 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.93e1c8",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "advanced",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "以前一到大熱天，我們就會開冷氣，從不在意電費有多高。",
+        "options": null,
+        "answer": "We used to turn on the air conditioning on hot days and never cared how high the electricity bill was.",
+        "accepted_answers": [
+          "On hot days, we used to turn on the air conditioning and never cared how much the electricity bill was.",
+          "Whenever it got hot, we used to switch on the air conditioning without caring how high the electric bill was."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "used to 表過去習慣",
+            "間接問句"
+          ],
+          "topic": "夏季節約用電"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "現在我們學會了如何省電，還把家裡的燈泡全都換成省電的。",
+        "options": null,
+        "answer": "Now we have learned how to save electricity and have replaced all the light bulbs at home with energy-saving ones.",
+        "accepted_answers": [
+          "Now we know how to save electricity, and we have changed all the light bulbs at home to power-saving ones.",
+          "We have now learned how to save power, and all the bulbs in our home have been replaced with energy-saving ones."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "疑問詞＋不定詞",
+            "複合形容詞"
+          ],
+          "topic": "夏季節約用電"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "夏季節約用電"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「以前…就會…」說的是過去的習慣，用 used to + 原形動詞（We used to turn on …）。「一到大熱天」中文沒有主詞，英文用 on hot days 或 whenever it got hot。「從不在意電費有多高」：care 後面接間接問句，要用直述句語序 how high the electricity bill was，不能寫成 how high was the bill。開電器用 turn on／switch on，不用 open。",
+          "evidence": [
+            "以前",
+            "一到大熱天",
+            "電費有多高"
+          ],
+          "strategy_zh": "「以前常常…」用 used to VR；疑問詞帶出的部分放進句子當受詞時，後面一律改回「主詞＋動詞」的語序。",
+          "hints": [
+            "切成四段：一到大熱天／（以前）我們就會開冷氣／從不在意／電費有多高",
+            "標的詞彙：hot（熱的，L1）、turn on（開，L1）、air conditioning（冷氣，L2）、care（在意，L1）、electricity（電，L3）、bill（帳單，L2）",
+            "句型框架：S + used to + VR …, and never cared + how + adj. + S + V（直述句語序）"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「學會了如何省電」用 have learned how to save electricity，「如何＋動詞」寫成 how to VR。「把燈泡全都換成省電的」是把字句，英文用 replace A with B（或 change A to B）；「省電的」是複合形容詞 energy-saving，後面用 ones 代替前面提過的 bulbs。",
+          "evidence": [
+            "如何省電",
+            "換成省電的"
+          ],
+          "strategy_zh": "「如何／怎麼＋動詞」當受詞時用 how to VR；「省…的、節…的」常寫成「名詞－V-ing」的複合形容詞。",
+          "hints": [
+            "切成四段：現在我們學會了／如何省電／還把家裡的燈泡全都換成／省電的",
+            "標的詞彙：learn（學會，L1）、save（節省，L1）、electricity（電，L3）、replace（替換，L3）、bulb（燈泡，L3）、energy-saving（省電的，L2）",
+            "句型框架：S + have learned + how to VR …, and have replaced A with energy-saving ones"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "We used to turn on the air conditioning on hot days and never cared how high the electricity bill was.",
+            "On hot days, we used to turn on the air conditioning and never cared how much the electricity bill was.",
+            "Whenever it got hot, we used to switch on the air conditioning without caring how high the electric bill was."
+          ],
+          "target_words": [
+            {
+              "word": "hot",
+              "zh": "熱的"
+            },
+            {
+              "word": "turn on",
+              "zh": "開（電器）",
+              "alternatives": [
+                "switch on",
+                "turn sth on",
+                "run",
+                "use"
+              ]
+            },
+            {
+              "word": "air conditioning",
+              "zh": "冷氣",
+              "alternatives": [
+                "air conditioner",
+                "AC"
+              ]
+            },
+            {
+              "word": "care",
+              "zh": "在意",
+              "alternatives": [
+                "mind",
+                "worry about",
+                "pay attention to",
+                "think about"
+              ]
+            },
+            {
+              "word": "electricity",
+              "zh": "電",
+              "alternatives": [
+                "electric",
+                "power"
+              ]
+            },
+            {
+              "word": "bill",
+              "zh": "帳單（電費）",
+              "alternatives": [
+                "cost",
+                "pay"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "BASIC",
+              "grammar_id": "gp-used-to",
+              "label_zh": "used to + 原形動詞（過去的習慣）",
+              "frame": "S + used to + VR …",
+              "zh_trigger": "以前"
+            },
+            {
+              "code": "NCL",
+              "grammar_id": "gp-wh-clause",
+              "label_zh": "間接問句（how + adj. + S + V）",
+              "frame": "… care + how high/how much + S + V（直述句語序）",
+              "zh_trigger": "電費有多高"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "一到大熱天",
+              "accepted": [
+                "on hot days",
+                "whenever it got hot",
+                "when it got hot",
+                "whenever it was hot",
+                "when it was hot",
+                "in hot weather",
+                "on hot summer days"
+              ],
+              "targets": [
+                "hot"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "when hot days",
+                  "right": "on hot days",
+                  "explanation_zh": "「一到大熱天」中文沒有主詞，英文寫成 on hot days，或補主詞 whenever it got hot；when 後面不能只接名詞。"
+                },
+                {
+                  "wrong": "in hot days",
+                  "right": "on hot days",
+                  "explanation_zh": "特定的日子用介系詞 on。"
+                }
+              ]
+            },
+            {
+              "zh": "我們就會開冷氣",
+              "accepted": [
+                "we used to turn on the air conditioning",
+                "we used to switch on the air conditioning",
+                "we used to turn on the air conditioner",
+                "we used to use the air conditioning",
+                "we would turn on the air conditioning"
+              ],
+              "targets": [
+                "turn on",
+                "air conditioning",
+                "BASIC"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "we are used to turning on the air conditioning",
+                  "right": "we used to turn on the air conditioning",
+                  "explanation_zh": "be used to + V-ing 是「習慣於」；「以前都會」是過去的習慣，用 used to + 原形動詞。"
+                },
+                {
+                  "wrong": "we use to turn on the air conditioning",
+                  "right": "we used to turn on the air conditioning",
+                  "explanation_zh": "肯定句的「過去常常」要寫 used to，不是 use to。"
+                },
+                {
+                  "wrong": "we used to open the air conditioning",
+                  "right": "we used to turn on the air conditioning",
+                  "explanation_zh": "開電器用 turn on／switch on；open 是打開門窗、蓋子。"
+                }
+              ]
+            },
+            {
+              "zh": "從不在意",
+              "accepted": [
+                "and never cared",
+                "without caring",
+                "and never worried about",
+                "and didn't care",
+                "and never paid attention to",
+                "never caring"
+              ],
+              "targets": [
+                "care"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "and never care",
+                  "right": "and never cared",
+                  "explanation_zh": "說的是以前的事，cared 要用過去式，和 used to 的時間一致。"
+                },
+                {
+                  "wrong": "without care",
+                  "right": "without caring",
+                  "explanation_zh": "介系詞 without 後面接動名詞 caring。"
+                }
+              ]
+            },
+            {
+              "zh": "電費有多高",
+              "accepted": [
+                "how high the electricity bill was",
+                "how much the electricity bill was",
+                "how high the electric bill was",
+                "how high the power bill was",
+                "how expensive the electricity bill was",
+                "how much we paid for electricity",
+                "how much electricity cost"
+              ],
+              "targets": [
+                "electricity",
+                "bill",
+                "NCL"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "how high was the electricity bill",
+                  "right": "how high the electricity bill was",
+                  "explanation_zh": "間接問句要用直述句語序（主詞＋動詞），不能像問句一樣把 was 移到主詞前面。"
+                },
+                {
+                  "wrong": "how high the electricity fee is",
+                  "right": "how high the electricity bill was",
+                  "explanation_zh": "電費帳單是 electricity bill；而且說的是以前，要用過去式 was。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "word_form",
+              "zh": "以前",
+              "literal_error": "We were used to turning on the air conditioning on hot days.",
+              "part": 2,
+              "explanation_zh": "be used to + V-ing 是「習慣於」，和表示過去習慣的 used to + VR 字形相近、意思不同。"
+            },
+            {
+              "type": "subjectless",
+              "zh": "一到大熱天",
+              "literal_error": "When hot days, we used to turn on the air conditioning.",
+              "part": 1,
+              "explanation_zh": "中文「一到大熱天」沒有主詞，英文要補 it（whenever it got hot），或改成介系詞片語 on hot days。"
+            }
+          ],
+          "bonus": [],
+          "restructuring_zh": "「一到大熱天」中文沒有主詞，英文要補主詞寫成 whenever it got hot，或改成介系詞片語 on hot days；「電費有多高」的問句形式要改成間接問句的直述句語序 how high the electricity bill was。"
+        },
+        "2": {
+          "references": [
+            "Now we have learned how to save electricity and have replaced all the light bulbs at home with energy-saving ones.",
+            "Now we know how to save electricity, and we have changed all the light bulbs at home to power-saving ones.",
+            "We have now learned how to save power, and all the bulbs in our home have been replaced with energy-saving ones."
+          ],
+          "target_words": [
+            {
+              "word": "learn",
+              "zh": "學會",
+              "alternatives": [
+                "know"
+              ]
+            },
+            {
+              "word": "save",
+              "zh": "節省"
+            },
+            {
+              "word": "electricity",
+              "zh": "電",
+              "alternatives": [
+                "power",
+                "energy"
+              ]
+            },
+            {
+              "word": "replace",
+              "zh": "替換、換成",
+              "alternatives": [
+                "change",
+                "switch"
+              ]
+            },
+            {
+              "word": "bulb",
+              "zh": "燈泡"
+            },
+            {
+              "word": "energy-saving",
+              "zh": "省電的",
+              "alternatives": [
+                "power-saving",
+                "energy-efficient"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "NCL",
+              "grammar_id": "gp-wh-to",
+              "label_zh": "疑問詞＋不定詞（how to VR）",
+              "frame": "S + learn/know + how to + VR",
+              "zh_trigger": "如何省電"
+            },
+            {
+              "code": "BASIC",
+              "grammar_id": "gp-compound-adj",
+              "label_zh": "複合形容詞（N-V-ing：energy-saving）",
+              "frame": "energy-saving / power-saving + N（或 ones）",
+              "zh_trigger": "省電的"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "現在我們學會了",
+              "accepted": [
+                "Now we have learned",
+                "We have now learned",
+                "Now we know",
+                "Now we have learnt",
+                "Now we've learned"
+              ],
+              "targets": [
+                "learn"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Now we learned",
+                  "right": "Now we have learned",
+                  "explanation_zh": "「現在…學會了」強調到現在已經學會，用現在完成式；也可以直接說 Now we know。"
+                }
+              ]
+            },
+            {
+              "zh": "如何省電",
+              "accepted": [
+                "how to save electricity",
+                "how to save power",
+                "how to save energy",
+                "how to use less electricity"
+              ],
+              "targets": [
+                "save",
+                "electricity",
+                "NCL"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "how to saving electricity",
+                  "right": "how to save electricity",
+                  "explanation_zh": "how to 後面接原形動詞。"
+                },
+                {
+                  "wrong": "how can we save electricity",
+                  "right": "how to save electricity",
+                  "explanation_zh": "放在句中當受詞時用 how to VR，或 how we can save …（直述句語序），不用問句語序。"
+                }
+              ]
+            },
+            {
+              "zh": "還把家裡的燈泡全都換成",
+              "accepted": [
+                "have replaced all the light bulbs at home with",
+                "have changed all the light bulbs at home to",
+                "all the bulbs in our home have been replaced with",
+                "have replaced all the bulbs at home with",
+                "have replaced all the light bulbs in our home with",
+                "have switched all the light bulbs at home to"
+              ],
+              "targets": [
+                "replace",
+                "bulb"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "have replaced all the light bulbs at home to",
+                  "right": "have replaced all the light bulbs at home with",
+                  "explanation_zh": "replace A with B（用 B 取代 A）；change A to／into B 才用 to。"
+                },
+                {
+                  "wrong": "have changed all the light bulb at home",
+                  "right": "have changed all the light bulbs at home",
+                  "explanation_zh": "all the 後面的可數名詞用複數。"
+                }
+              ]
+            },
+            {
+              "zh": "省電的",
+              "accepted": [
+                "energy-saving ones",
+                "power-saving ones",
+                "energy-efficient ones",
+                "energy-saving bulbs",
+                "energy-saving light bulbs"
+              ],
+              "targets": [
+                "energy-saving",
+                "BASIC"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "energy-saved ones",
+                  "right": "energy-saving ones",
+                  "explanation_zh": "燈泡會「節省」能源，是主動，複合形容詞用「名詞－V-ing」：energy-saving。"
+                },
+                {
+                  "wrong": "save-energy ones",
+                  "right": "energy-saving ones",
+                  "explanation_zh": "複合形容詞的語序是「受詞名詞－V-ing」，不能把動詞放前面。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "collocation",
+              "zh": "換成",
+              "literal_error": "Now we have replaced all the light bulbs at home to energy-saving ones.",
+              "part": 3,
+              "explanation_zh": "replace 搭配 with；用 to 是把 change A to B 的用法混進來。"
+            },
+            {
+              "type": "word_form",
+              "zh": "省電的",
+              "literal_error": "We have changed all the light bulbs at home to energy-saved ones.",
+              "part": 4,
+              "explanation_zh": "複合形容詞要看主被動：燈泡節省電力是主動，用 energy-saving。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "Having learned how to save electricity, we have replaced all the light bulbs at home with energy-saving ones.",
+              "explanation_zh": "用完成式分詞構句 Having learned … 交代先後順序，句子更精簡。",
+              "grammar_id": "gp-participle-clause"
+            }
+          ]
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "C-V-5",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-advanced-02",
+    "lot": "translation-advanced-02",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "dab2f301b2dd4cfd48bfd913df11ca683b0620cee3b8b044ef9794bc46049e02",
+    "spec_id": "translation-advanced@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T12:57:09Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T07:52:07Z",
+      "details": {
+        "solver": "A",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "We used to turn on the air conditioner whenever it was very hot, never caring how high the electricity bill was.",
+            "confidence": "high",
+            "explanation_zh": "「以前……就會」是過去的習慣，用 used to；「一到大熱天」用 whenever 子句；「從不在意」用分詞構句 never caring，後接間接問句 how high the electricity bill was。"
+          },
+          "2": {
+            "translation": "Now we have learned how to save electricity, and we have even replaced all the light bulbs in our house with energy-saving ones.",
+            "confidence": "high",
+            "explanation_zh": "「學會了」用現在完成式 have learned how to V；「把……換成……」用 replace A with B；「省電的」用 energy-saving ones 避免重複 light bulbs；「還」譯 even。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "BASIC",
+              "NCL"
+            ],
+            "used_target_words": [
+              "hot",
+              "turn on",
+              "air conditioning",
+              "care",
+              "electricity",
+              "bill"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "（不影響判定）第 2 部分 accepted 收了 we would turn on the air conditioning，這個寫法沒有用到本句標的句型 BASIC（used to）；若要求學生練 used to，建議在評分說明註明 would 可給分但不算用到標的句型，或移除。",
+              "（不影響判定）我的寫法 whenever it was very hot 比 accepted 的 whenever it was hot 多了 very（對應「大」熱天），屬同義小差異。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "NCL",
+              "BASIC"
+            ],
+            "used_target_words": [
+              "learn",
+              "save",
+              "electricity",
+              "replace",
+              "bulb",
+              "energy-saving"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "（不影響判定）我的寫法 have even replaced all the light bulbs in our house with 與 accepted 的 have replaced all the light bulbs in our home with 只差 even（對應「還」）與 house／home，屬同義小差異。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "hot",
+              "turn on",
+              "air conditioning",
+              "care",
+              "electricity",
+              "bill"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "BASIC": null,
+              "NCL": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "learn",
+              "save",
+              "electricity",
+              "replace",
+              "bulb",
+              "energy-saving"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NCL": true,
+              "BASIC": null
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "warn",
+      "created_at": "2026-10-09T12:57:09Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "We used to turn on the air conditioner whenever it got hot, never caring how high the electricity bill was.",
+            "confidence": "high",
+            "explanation_zh": "「以前」對照「現在」，用 used to 表過去習慣；「一到……就」用 whenever；「從不在意」用分詞構句 never caring，後接間接問句。"
+          },
+          "2": {
+            "translation": "Now we have learned how to save electricity, and we have even replaced all the light bulbs at home with energy-saving ones.",
+            "confidence": "high",
+            "explanation_zh": "「現在……學會了」用現在完成式；「還」用 even 加強語氣；「把……換成……」用 replace A with B；「省電的」用 energy-saving ones 避免重複 light bulbs。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "BASIC",
+              "NCL"
+            ],
+            "used_target_words": [
+              "hot",
+              "turn on",
+              "air conditioning",
+              "care",
+              "electricity",
+              "bill"
+            ],
+            "within_accepted": true,
+            "closest_reference": 2,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "「以前」不在任何一個部分的 zh 裡，但 BASIC 句型（used to，zh_trigger 就是「以前」）卻掛在第二部分「我們就會開冷氣」。",
+              "用 In the past 加過去簡單式（In the past, whenever it was hot, we turned on the air conditioning …）也是自然的譯法，但第二部分的 accepted 只有 used to／would，這種寫法會被判錯；建議把「以前」併入第二部分，並補上過去簡單式的可接受寫法。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "NCL",
+              "BASIC"
+            ],
+            "used_target_words": [
+              "learn",
+              "save",
+              "electricity",
+              "replace",
+              "bulb",
+              "energy-saving"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "hot",
+              "turn on",
+              "air conditioning",
+              "care",
+              "electricity",
+              "bill"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "BASIC": null,
+              "NCL": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "learn",
+              "save",
+              "electricity",
+              "replace",
+              "bulb",
+              "energy-saving"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NCL": true,
+              "BASIC": null
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 1 題驗證者對4 部分切分有意見（warn）：「以前」不在任何一個部分的 zh 裡，但 BASIC 句型（used to，zh_trigger 就是「以前」）卻掛在第二部分「我們就會開冷氣」。；用 In the past 加過去簡單式（In the past, whenever it "
+        ]
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

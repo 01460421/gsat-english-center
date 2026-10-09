@@ -1,0 +1,773 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.228111",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "advanced",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "網路廣告正變得愈來愈精準，似乎很清楚該向我們推銷什麼。",
+        "options": null,
+        "answer": "Online advertisements are becoming more and more precise, and they seem to know exactly what to sell to us.",
+        "accepted_answers": [
+          "Online ads are getting more and more accurate and seem to know clearly what to sell us.",
+          "Internet advertising is becoming increasingly precise, and it seems to know exactly what to promote to us."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "現在進行式（趨勢）",
+            "疑問詞＋不定詞"
+          ],
+          "topic": "衝動購物"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "因為這些廣告，那些容易衝動購物的人已經買了許多用不到的東西。",
+        "options": null,
+        "answer": "Because of these ads, those who tend to buy on impulse have bought many things they do not need.",
+        "accepted_answers": [
+          "Because of these advertisements, those who are likely to buy things on impulse have already bought many things they never use.",
+          "Due to these ads, those who often shop on impulse have bought lots of things they do not need."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "現在完成式",
+            "those who"
+          ],
+          "topic": "衝動購物"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "衝動購物"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「正變得愈來愈…」描述正在發生的趨勢，用現在進行式 are becoming／getting + more and more + 形容詞（become 後面接形容詞 precise，不接副詞 precisely）。「該向我們推銷什麼」是「疑問詞＋不定詞」：what to sell to us，等於 what they should sell to us。",
+          "evidence": [
+            "正變得愈來愈精準",
+            "該向我們推銷什麼"
+          ],
+          "strategy_zh": "看到「正在、正…」先想進行式；「該…什麼／如何…」當受詞時想 what／how + to VR。",
+          "hints": [
+            "切成四段：網路廣告／正變得愈來愈精準／似乎很清楚／該向我們推銷什麼",
+            "標的詞彙：online（網路的，L1）、advertisement（廣告，L3）、become（變得，L1）、precise（精準的，L4）、seem（似乎，L2）、know（知道，L1）、sell（推銷，L1）",
+            "句型框架：S + are becoming + more and more + adj., and + S + seem to know + what + to VR …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「因為這些廣告」後面是名詞，用 because of／due to。「那些容易衝動購物的人」用 those who + 動詞：those who tend to buy on impulse（on impulse＝一時衝動）。「已經買了」是到現在為止的結果，用現在完成式 have bought（bought 是 buy 的過去分詞）。「用不到的東西」修飾語放後面：things (that) they do not need。",
+          "evidence": [
+            "那些容易衝動購物的人",
+            "已經買了"
+          ],
+          "strategy_zh": "「那些…的人」直接想 those who + V；中文「…的東西」也一樣把修飾語移到名詞後面。",
+          "hints": [
+            "切成四段：因為這些廣告／那些容易衝動購物的人／已經買了許多／用不到的東西",
+            "標的詞彙：ad（廣告，L3）、tend（容易、傾向，L3）、impulse（衝動，L5）、buy（購買，L1）、thing（東西，L1）、need（需要，L1）",
+            "句型框架：Because of + N, those who + V … + have + p.p. + N + (that) + S + V"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "Online advertisements are becoming more and more precise, and they seem to know exactly what to sell to us.",
+            "Online ads are getting more and more accurate and seem to know clearly what to sell us.",
+            "Internet advertising is becoming increasingly precise, and it seems to know exactly what to promote to us."
+          ],
+          "target_words": [
+            {
+              "word": "online",
+              "zh": "網路的",
+              "alternatives": [
+                "Internet"
+              ]
+            },
+            {
+              "word": "advertisement",
+              "zh": "廣告",
+              "alternatives": [
+                "ad",
+                "advertising"
+              ]
+            },
+            {
+              "word": "become",
+              "zh": "變得",
+              "alternatives": [
+                "get"
+              ]
+            },
+            {
+              "word": "precise",
+              "zh": "精準的",
+              "alternatives": [
+                "accurate"
+              ]
+            },
+            {
+              "word": "seem",
+              "zh": "似乎"
+            },
+            {
+              "word": "know",
+              "zh": "知道"
+            },
+            {
+              "word": "sell",
+              "zh": "推銷",
+              "alternatives": [
+                "promote",
+                "push"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PROG",
+              "grammar_id": "gp-progressive-trend",
+              "label_zh": "現在進行式描述趨勢（are becoming）",
+              "frame": "S + am/is/are + becoming/getting + 比較級 …",
+              "zh_trigger": "正變得愈來愈精準"
+            },
+            {
+              "code": "NCL",
+              "grammar_id": "gp-wh-to",
+              "label_zh": "疑問詞＋不定詞（what to VR）",
+              "frame": "S + know + what + to VR …",
+              "zh_trigger": "該向我們推銷什麼"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "網路廣告",
+              "accepted": [
+                "Online advertisements",
+                "Online ads",
+                "Internet advertising",
+                "Internet ads",
+                "Online advertising",
+                "Ads on the Internet",
+                "Internet advertisements"
+              ],
+              "targets": [
+                "online",
+                "advertisement"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Online advertise",
+                  "right": "Online advertisements",
+                  "explanation_zh": "「廣告」是名詞 advertisement（ad），advertise 是動詞。"
+                },
+                {
+                  "wrong": "Online advertisement",
+                  "right": "Online advertisements",
+                  "explanation_zh": "泛指網路上的廣告用複數 advertisements（可數名詞單數前面要有冠詞）。"
+                }
+              ]
+            },
+            {
+              "zh": "正變得愈來愈精準",
+              "accepted": [
+                "are becoming more and more precise",
+                "are getting more and more accurate",
+                "is becoming increasingly precise",
+                "are becoming increasingly accurate",
+                "are becoming more and more accurate",
+                "are getting more and more precise",
+                "are becoming more precise",
+                "are becoming increasingly precise"
+              ],
+              "targets": [
+                "become",
+                "precise",
+                "PROG"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "become more and more precise",
+                  "right": "are becoming more and more precise",
+                  "explanation_zh": "「正變得」是正在發生的趨勢，用現在進行式 are becoming。"
+                },
+                {
+                  "wrong": "are becoming more and more precisely",
+                  "right": "are becoming more and more precise",
+                  "explanation_zh": "become 後面接形容詞 precise，不接副詞。"
+                }
+              ]
+            },
+            {
+              "zh": "似乎很清楚",
+              "accepted": [
+                "and they seem to know exactly",
+                "and seem to know clearly",
+                "and it seems to know exactly",
+                "and they seem to know clearly",
+                "and seem to know exactly",
+                "and they seem to know very well"
+              ],
+              "targets": [
+                "seem",
+                "know"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "and they are seem to know exactly",
+                  "right": "and they seem to know exactly",
+                  "explanation_zh": "seem 是一般動詞，前面不加 be 動詞。"
+                },
+                {
+                  "wrong": "and they seem knowing exactly",
+                  "right": "and they seem to know exactly",
+                  "explanation_zh": "seem 後面接 to + 原形動詞。"
+                }
+              ]
+            },
+            {
+              "zh": "該向我們推銷什麼",
+              "accepted": [
+                "what to sell to us",
+                "what to sell us",
+                "what to promote to us",
+                "what to sell to each of us",
+                "what they should sell to us",
+                "what products to sell to us"
+              ],
+              "targets": [
+                "sell",
+                "NCL"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "what should sell to us",
+                  "right": "what to sell to us",
+                  "explanation_zh": "疑問詞後面要嘛接不定詞（what to sell），要嘛接完整子句（what they should sell），不能只有助動詞沒有主詞。"
+                },
+                {
+                  "wrong": "what they should to sell us",
+                  "right": "what they should sell us",
+                  "explanation_zh": "should 後面直接接原形動詞，不加 to。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "word_form",
+              "zh": "精準",
+              "literal_error": "Online advertisements are becoming more and more precisely, and they seem to know exactly what to sell to us.",
+              "part": 2,
+              "explanation_zh": "become 是連綴動詞，後面接形容詞 precise，不是副詞 precisely。"
+            },
+            {
+              "type": "subjectless",
+              "zh": "該向我們推銷什麼",
+              "literal_error": "Online advertisements are becoming more and more precise, and they seem to know exactly what should sell to us.",
+              "part": 4,
+              "explanation_zh": "「該推銷什麼」中文沒寫主詞，照字面寫 what should sell 少了主詞；用 what to sell（或 what they should sell）。"
+            }
+          ],
+          "bonus": []
+        },
+        "2": {
+          "references": [
+            "Because of these ads, those who tend to buy on impulse have bought many things they do not need.",
+            "Because of these advertisements, those who are likely to buy things on impulse have already bought many things they never use.",
+            "Due to these ads, those who often shop on impulse have bought lots of things they do not need."
+          ],
+          "target_words": [
+            {
+              "word": "ad",
+              "zh": "廣告",
+              "alternatives": [
+                "advertisement",
+                "advertising"
+              ]
+            },
+            {
+              "word": "tend",
+              "zh": "容易、傾向",
+              "alternatives": [
+                "likely",
+                "often",
+                "easily"
+              ]
+            },
+            {
+              "word": "impulse",
+              "zh": "衝動"
+            },
+            {
+              "word": "buy",
+              "zh": "購買",
+              "alternatives": [
+                "shop",
+                "purchase"
+              ]
+            },
+            {
+              "word": "thing",
+              "zh": "東西",
+              "alternatives": [
+                "item"
+              ]
+            },
+            {
+              "word": "need",
+              "zh": "需要",
+              "alternatives": [
+                "use"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PERF",
+              "grammar_id": "gp-present-perfect",
+              "label_zh": "現在完成式（已經＋p.p.）",
+              "frame": "S + have/has (already) + p.p. …",
+              "zh_trigger": "已經買了"
+            },
+            {
+              "code": "REL",
+              "grammar_id": "gp-for-those-who",
+              "label_zh": "那些…的人（those who + V）",
+              "frame": "Those who + V … + V …",
+              "zh_trigger": "那些容易衝動購物的人"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "因為這些廣告",
+              "accepted": [
+                "Because of these ads",
+                "Because of these advertisements",
+                "Due to these ads",
+                "Due to these advertisements",
+                "Influenced by these ads",
+                "As a result of these ads"
+              ],
+              "targets": [
+                "ad"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Because these ads",
+                  "right": "Because of these ads",
+                  "explanation_zh": "because 是連接詞，後面接子句；接名詞要用 because of。"
+                },
+                {
+                  "wrong": "Because of these advertise",
+                  "right": "Because of these advertisements",
+                  "explanation_zh": "of 後面接名詞 advertisements。"
+                }
+              ]
+            },
+            {
+              "zh": "那些容易衝動購物的人",
+              "accepted": [
+                "those who tend to buy on impulse",
+                "those who are likely to buy things on impulse",
+                "those who often shop on impulse",
+                "people who tend to buy on impulse",
+                "those who easily buy things on impulse",
+                "those who tend to buy things on impulse",
+                "those who are prone to impulse buying"
+              ],
+              "targets": [
+                "tend",
+                "impulse",
+                "buy",
+                "REL"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "those easily impulse shopping people",
+                  "right": "those who tend to buy on impulse",
+                  "explanation_zh": "「…的人」修飾語很長，英文用 those who + 動詞 放在後面。"
+                },
+                {
+                  "wrong": "those who tends to buy on impulse",
+                  "right": "those who tend to buy on impulse",
+                  "explanation_zh": "who 指複數的 those，動詞不加 s。"
+                }
+              ]
+            },
+            {
+              "zh": "已經買了許多",
+              "accepted": [
+                "have bought many",
+                "have already bought many",
+                "have bought lots of",
+                "have already bought a lot of",
+                "have bought a lot of",
+                "have purchased many"
+              ],
+              "targets": [
+                "PERF"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "have buyed many",
+                  "right": "have bought many",
+                  "explanation_zh": "buy 的過去分詞是 bought。"
+                },
+                {
+                  "wrong": "have brought many",
+                  "right": "have bought many",
+                  "explanation_zh": "brought 是 bring（帶來）的過去分詞；「買」是 bought。"
+                }
+              ]
+            },
+            {
+              "zh": "用不到的東西",
+              "accepted": [
+                "things they do not need",
+                "things they never use",
+                "things they will never use",
+                "things that they do not need",
+                "things they do not use",
+                "items they do not need",
+                "things that they will never use"
+              ],
+              "targets": [
+                "thing",
+                "need"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "do not need things",
+                  "right": "things they do not need",
+                  "explanation_zh": "「用不到的東西」修飾語放在後面：things (that) they do not need。"
+                },
+                {
+                  "wrong": "things they are not need",
+                  "right": "things they do not need",
+                  "explanation_zh": "need 是一般動詞，否定用 do not，不用 be 動詞。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "prenominal_modifier",
+              "zh": "那些容易衝動購物的人",
+              "literal_error": "Because of these ads, those easily impulse shopping people have bought many things they do not need.",
+              "part": 2,
+              "explanation_zh": "修飾語照中文放在 people 前面，英文不通；要寫 those who tend to buy on impulse。"
+            },
+            {
+              "type": "tense_trigger",
+              "zh": "已經買了",
+              "literal_error": "Because of these ads, those who tend to buy on impulse buy many things they do not need.",
+              "part": 3,
+              "explanation_zh": "「已經買了」是到現在為止的結果，要用現在完成式 have bought。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "But for these ads, those who tend to buy on impulse would not have bought so many things they do not need.",
+              "grammar_id": "gp-but-for",
+              "explanation_zh": "用 But for（要不是）加假設語氣，強調廣告造成的影響；這是假設語氣，只當加分寫法。"
+            }
+          ],
+          "restructuring_zh": "「那些容易衝動購物的人」「用不到的東西」都是前置修飾，英文要改成 those who tend to buy on impulse、things they do not need，把修飾語放在名詞後面。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-advanced-03",
+    "lot": "translation-advanced-03",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "02c0a28073619c0bc20ca233498a317fe41127b7ed24b485e5a25ef485b7d3c2",
+    "spec_id": "translation-advanced@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T13:03:07Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T08:05:03Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Online advertisements are becoming more and more precise, and they seem to know exactly what to sell to us.",
+            "confidence": "high",
+            "explanation_zh": "「正變得愈來愈精準」用現在進行式 are becoming 加 more and more + 形容詞；「似乎很清楚該向我們推銷什麼」用 seem to V 加 what to V；兩個分句用 and 連接（也可用分詞 seeming to know…）。「精準」可用 precise 或 accurate。"
+          },
+          "2": {
+            "translation": "Because of these advertisements, people who tend to shop on impulse have already bought many things that they will never use.",
+            "confidence": "medium",
+            "explanation_zh": "「因為這些廣告」接名詞，用 Because of；「那些容易衝動購物的人」用 who 關係子句（tend to shop on impulse；也可說 make impulse purchases）；「已經買了」用現在完成式 have already bought；「用不到的東西」用 that 關係子句。「容易衝動購物」英文說法很多，信心給 medium。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PROG",
+              "NCL"
+            ],
+            "used_target_words": [
+              "online",
+              "advertisement",
+              "become",
+              "precise",
+              "seem",
+              "know",
+              "sell"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PERF",
+              "REL"
+            ],
+            "used_target_words": [
+              "ad",
+              "tend",
+              "impulse",
+              "buy",
+              "thing",
+              "need"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "online",
+              "advertisement",
+              "become",
+              "precise",
+              "seem",
+              "know",
+              "sell"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PROG": true,
+              "NCL": true
+            },
+            "program_match": true
+          },
+          "2": {
+            "target_words_found": [
+              "ad",
+              "tend",
+              "impulse",
+              "buy",
+              "thing",
+              "need"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PERF": true,
+              "REL": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T00:00:00Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Online ads are becoming more and more precise, and they seem to know exactly what they should try to sell us.",
+            "confidence": "high",
+            "explanation_zh": "「正變得愈來愈精準」用現在進行式 are becoming 加 more and more；「似乎很清楚」用 seem to know；「該向我們推銷什麼」用 what 引導名詞子句。"
+          },
+          "2": {
+            "translation": "Because of these ads, those who are prone to impulse buying have already bought many things they will never use.",
+            "confidence": "high",
+            "explanation_zh": "「因為這些廣告」是名詞片語，所以用 Because of；「容易衝動購物的人」用 those who are prone to impulse buying；「已經買了」用現在完成式 have already bought；「用不到的東西」用省略關代的子句 things they will never use。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PROG",
+              "NCL"
+            ],
+            "used_target_words": [
+              "online",
+              "advertisement",
+              "become",
+              "precise",
+              "seem",
+              "know",
+              "sell"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PERF",
+              "REL"
+            ],
+            "used_target_words": [
+              "ad",
+              "impulse",
+              "buy",
+              "thing",
+              "need"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "（建議，不影響判定）第 2 部分 accepted 收了 those who are prone to impulse buying，但目標詞彙 tend 的 alternatives 沒有 prone；照 accepted 寫的學生會少命中 tend，建議在 alternatives 補 prone。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "online",
+              "advertisement",
+              "become",
+              "precise",
+              "seem",
+              "know",
+              "sell"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PROG": true,
+              "NCL": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "ad",
+              "impulse",
+              "buy",
+              "thing",
+              "need"
+            ],
+            "target_hit_rate": 0.833,
+            "patterns_detected": {
+              "PERF": true,
+              "REL": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

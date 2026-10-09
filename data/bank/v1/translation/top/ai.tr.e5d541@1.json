@@ -1,0 +1,709 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.e5d541",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "top",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "如今，無論到哪裡旅行，我們都能輕易找到少數幾個國際品牌所販售的相同商品。",
+        "options": null,
+        "answer": "These days, no matter where we travel, we can easily find identical products sold by just a few global brands.",
+        "accepted_answers": [
+          "Nowadays, no matter where we go, we can easily find the same products sold by a handful of international brands.",
+          "Today, wherever we travel, it is easy for us to find identical products sold by only a few international brands."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "讓步：無論…（no matter where = wherever）",
+            "分詞片語後位修飾名詞（…所販售的商品＝products sold by …）"
+          ],
+          "topic": "全球化與在地文化"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "面對全球化（globalization）的浪潮，許多小鎮開始推廣只有當地才有的傳統節慶和美食。",
+        "options": null,
+        "answer": "Faced with the tide of globalization, many small towns have begun to promote traditional festivals and foods that are not found anywhere else.",
+        "accepted_answers": [
+          "Facing the wave of globalization, many small towns have started to promote traditional festivals and food that are unique to their area.",
+          "Faced with globalization, many small towns have started promoting traditional festivals and dishes that can only be found in their own areas."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "分詞構句（面對…：Faced with / Facing …）",
+            "關係代名詞限定子句（只有當地才有的＝that cannot be found anywhere else）"
+          ],
+          "topic": "全球化與在地文化"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "全球化與在地文化"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「無論到哪裡」用 no matter where＋S＋V（＝wherever），中文省略主詞，英文要補 we，語序是直述句。「少數幾個國際品牌所販售的商品」修飾語放在名詞後面：products sold by just a few global brands（sold 是被動分詞，等於 that are sold）。「相同商品」是 identical products 或 the same products。",
+          "evidence": [
+            "無論到哪裡旅行",
+            "少數幾個國際品牌所販售的相同商品"
+          ],
+          "strategy_zh": "先寫讓步子句 No matter where we travel，再寫主要子句 we can easily find＋名詞，最後把「…所販售的」變成後位修飾的過去分詞片語。",
+          "hints": [
+            "切成四段：無論到哪裡旅行／我們都能輕易找到／少數幾個國際品牌所販售的／相同商品",
+            "標的詞彙：travel（旅行）、find（找到）、sell（販售）、brand（品牌）、identical（相同的）",
+            "句型框架：No matter where + S + V, S + can + V + N + p.p. + by …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「面對…」放句首，用分詞構句 Faced with／Facing＋名詞，邏輯主詞是後面的「許多小鎮」。「浪潮」是比喻，寫 the tide／wave of globalization（單數）。「只有當地才有的」改成放在名詞後面的關係子句 that are not found anywhere else／that are unique to their area，節慶與美食是被找到的，用被動。「開始推廣」是已經出現的變化，用現在完成式 have begun to promote。",
+          "evidence": [
+            "面對全球化（globalization）的浪潮",
+            "只有當地才有的傳統節慶和美食"
+          ],
+          "strategy_zh": "先寫主幹 many small towns have begun to promote＋名詞，把「只有當地才有的」改成 that 子句放在名詞後面，最後補句首的 Faced with …。",
+          "hints": [
+            "切成四段：面對全球化的浪潮／許多小鎮開始推廣／只有當地才有的／傳統節慶和美食",
+            "標的詞彙：town（小鎮）、promote（推廣）、traditional（傳統的）、festival（節慶）",
+            "句型框架：Faced with + N, S + have begun to VR + N + that + V …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "These days, no matter where we travel, we can easily find identical products sold by just a few global brands.",
+            "Nowadays, no matter where we go, we can easily find the same products sold by a handful of international brands.",
+            "Today, wherever we travel, it is easy for us to find identical products sold by only a few international brands."
+          ],
+          "target_words": [
+            {
+              "word": "travel",
+              "zh": "旅行",
+              "alternatives": [
+                "go"
+              ]
+            },
+            {
+              "word": "find",
+              "zh": "找到",
+              "alternatives": [
+                "buy",
+                "see"
+              ]
+            },
+            {
+              "word": "sell",
+              "zh": "販售"
+            },
+            {
+              "word": "brand",
+              "zh": "品牌"
+            },
+            {
+              "word": "identical",
+              "zh": "相同的",
+              "alternatives": [
+                "same"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "ADVCL",
+              "grammar_id": "gp-no-matter",
+              "label_zh": "讓步：無論…（no matter where = wherever）",
+              "frame": "No matter where + S + V, S + V … ; Wherever + S + V, …",
+              "zh_trigger": "無論到哪裡旅行"
+            },
+            {
+              "code": "PART",
+              "grammar_id": "gp-participle-modifier",
+              "label_zh": "分詞片語後位修飾名詞（…所販售的商品＝products sold by …）",
+              "frame": "N + p.p. + by …",
+              "zh_trigger": "少數幾個國際品牌所販售的"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "無論到哪裡旅行",
+              "accepted": [
+                "no matter where we travel",
+                "no matter where we go",
+                "wherever we travel",
+                "wherever we go"
+              ],
+              "targets": [
+                "ADVCL",
+                "travel"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "no matter where do we travel",
+                  "right": "no matter where we travel",
+                  "explanation_zh": "no matter where 後面用直述句語序。"
+                },
+                {
+                  "wrong": "no matter where travel",
+                  "right": "no matter where we travel",
+                  "explanation_zh": "中文沒寫主詞，英文要補上 we。"
+                }
+              ]
+            },
+            {
+              "zh": "我們都能輕易找到",
+              "accepted": [
+                "we can easily find",
+                "it is easy for us to find",
+                "we can easily buy"
+              ],
+              "targets": [
+                "find"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "we can easy find",
+                  "right": "we can easily find",
+                  "explanation_zh": "修飾動詞 find 要用副詞 easily。"
+                },
+                {
+                  "wrong": "we all can easily find",
+                  "right": "we can easily find",
+                  "explanation_zh": "這裡的「都」只是加強語氣，不必譯成 all；硬要加，位置是 we can all。"
+                }
+              ]
+            },
+            {
+              "zh": "少數幾個國際品牌所販售的",
+              "accepted": [
+                "sold by just a few global brands",
+                "sold by a handful of international brands",
+                "sold by only a few international brands",
+                "sold by a few international brands",
+                "sold by a small number of international brands"
+              ],
+              "targets": [
+                "PART",
+                "sell",
+                "brand"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "selling by just a few global brands",
+                  "right": "sold by just a few global brands",
+                  "explanation_zh": "商品是「被」販售的，用過去分詞 sold；selling 是主動。"
+                },
+                {
+                  "wrong": "which sold by just a few global brands",
+                  "right": "sold by just a few global brands",
+                  "explanation_zh": "用關係代名詞就要有 be 動詞（which are sold）；不然直接用分詞 sold。"
+                }
+              ]
+            },
+            {
+              "zh": "相同商品",
+              "accepted": [
+                "identical products",
+                "the same products"
+              ],
+              "targets": [
+                "identical"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "same products",
+                  "right": "the same products",
+                  "explanation_zh": "same 前面要加 the；或改用 identical。"
+                },
+                {
+                  "wrong": "identical product",
+                  "right": "identical products",
+                  "explanation_zh": "泛指各種商品用複數。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "subjectless",
+              "zh": "無論到哪裡旅行",
+              "literal_error": "No matter where travel, we can easily find identical products.",
+              "part": 1,
+              "explanation_zh": "中文「無論到哪裡旅行」沒有主詞；英文的 no matter where 子句是完整子句，要補上主詞 we。"
+            },
+            {
+              "type": "prenominal_modifier",
+              "zh": "少數幾個國際品牌所販售的相同商品",
+              "literal_error": "we can easily find just a few global brands sell identical products",
+              "part": 3,
+              "explanation_zh": "中文的修飾語放在名詞前面；英文要把被動分詞片語 sold by … 放到 products 後面，不能把「品牌販售」變成另一個子句硬塞進去。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "Wherever we may travel these days, identical products sold by a few global brands are never hard to find.",
+              "explanation_zh": "以 Wherever … may … 表讓步，主要子句改用 are never hard to find（從來都不難找到）的否定說法，語氣更生動。"
+            }
+          ],
+          "restructuring_zh": "「少數幾個國際品牌所販售的相同商品」中文修飾語放在名詞前，英文把被動分詞片語 sold by … 放到 products 後面。"
+        },
+        "2": {
+          "references": [
+            "Faced with the tide of globalization, many small towns have begun to promote traditional festivals and foods that are not found anywhere else.",
+            "Facing the wave of globalization, many small towns have started to promote traditional festivals and food that are unique to their area.",
+            "Faced with globalization, many small towns have started promoting traditional festivals and dishes that can only be found in their own areas."
+          ],
+          "target_words": [
+            {
+              "word": "town",
+              "zh": "小鎮"
+            },
+            {
+              "word": "promote",
+              "zh": "推廣"
+            },
+            {
+              "word": "traditional",
+              "zh": "傳統的"
+            },
+            {
+              "word": "festival",
+              "zh": "節慶"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PART",
+              "grammar_id": "gp-participle-clause",
+              "label_zh": "分詞構句（面對…：Faced with / Facing …）",
+              "frame": "Faced with / Facing + N, S + V …",
+              "zh_trigger": "面對全球化（globalization）的浪潮"
+            },
+            {
+              "code": "REL",
+              "grammar_id": "gp-relative-pronoun",
+              "label_zh": "關係代名詞限定子句（只有當地才有的＝that cannot be found anywhere else）",
+              "frame": "N + that + V …",
+              "zh_trigger": "只有當地才有的"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "面對全球化（globalization）的浪潮",
+              "accepted": [
+                "Faced with the tide of globalization",
+                "Facing the wave of globalization",
+                "Faced with globalization",
+                "Facing the tide of globalization",
+                "Faced with the wave of globalization"
+              ],
+              "targets": [
+                "PART"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Face the tide of globalization,",
+                  "right": "Faced with the tide of globalization,",
+                  "explanation_zh": "句首的分詞構句用 Facing 或 Faced with；原形 Face 會變成祈使句。"
+                },
+                {
+                  "wrong": "Faced the tide of globalization,",
+                  "right": "Faced with the tide of globalization,",
+                  "explanation_zh": "被動的 faced 後面要加 with。"
+                }
+              ]
+            },
+            {
+              "zh": "許多小鎮開始推廣",
+              "accepted": [
+                "many small towns have begun to promote",
+                "many small towns have started to promote",
+                "many small towns have started promoting",
+                "many small towns have begun promoting",
+                "many small towns are starting to promote"
+              ],
+              "targets": [
+                "town",
+                "promote"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "many small town have begun to promote",
+                  "right": "many small towns have begun to promote",
+                  "explanation_zh": "many 後面接複數名詞 towns。"
+                },
+                {
+                  "wrong": "many small towns have begun to promotion",
+                  "right": "many small towns have begun to promote",
+                  "explanation_zh": "to 後面接原形動詞 promote；promotion 是名詞。"
+                }
+              ]
+            },
+            {
+              "zh": "只有當地才有的",
+              "accepted": [
+                "that are not found anywhere else",
+                "that are unique to their area",
+                "that cannot be found anywhere else",
+                "that can only be found in their own areas",
+                "that are found only in their area",
+                "that can only be found there"
+              ],
+              "targets": [
+                "REL"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "that only local has",
+                  "right": "that are not found anywhere else",
+                  "explanation_zh": "「只有當地才有的」不要逐字翻；寫成 are not found anywhere else 或 are unique to their area。"
+                },
+                {
+                  "wrong": "that are not find anywhere else",
+                  "right": "that are not found anywhere else",
+                  "explanation_zh": "節慶和美食是「被找到」的，要用被動 be found。"
+                }
+              ]
+            },
+            {
+              "zh": "傳統節慶和美食",
+              "accepted": [
+                "traditional festivals and foods",
+                "traditional festivals and food",
+                "traditional festivals and dishes"
+              ],
+              "targets": [
+                "traditional",
+                "festival"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "traditional festival and food",
+                  "right": "traditional festivals and food",
+                  "explanation_zh": "泛指各種節慶用複數 festivals。"
+                },
+                {
+                  "wrong": "tradition festivals and food",
+                  "right": "traditional festivals and food",
+                  "explanation_zh": "修飾名詞要用形容詞 traditional。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "abstract_nominal",
+              "zh": "浪潮",
+              "literal_error": "Facing globalization's big waves,",
+              "part": 1,
+              "explanation_zh": "「浪潮」是比喻，英文說 the tide／wave of globalization（單數）；寫成 big waves 或用所有格都不自然。"
+            },
+            {
+              "type": "prenominal_modifier",
+              "zh": "只有當地才有的傳統節慶和美食",
+              "literal_error": "many small towns have begun to promote only-local traditional festivals and foods",
+              "part": 3,
+              "explanation_zh": "中文的修飾語「只有當地才有的」放在名詞前；英文要改成名詞後面的關係子句 that are not found anywhere else。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "In the face of globalization, many small towns have begun to promote local festivals and dishes found nowhere else.",
+              "explanation_zh": "用 In the face of …（面對）開頭，句尾用分詞片語 found nowhere else（別處都找不到的）取代關係子句，更精簡。"
+            }
+          ],
+          "restructuring_zh": "「只有當地才有的傳統節慶和美食」修飾語放名詞後面，寫成關係子句 traditional festivals and foods that are not found anywhere else；「面對…浪潮」用分詞構句 Faced with the tide of globalization。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ac-V-3",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-top-02",
+    "lot": "translation-top-02",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "6c20f5a14ca426db5ab42249ce1bc261a4855dfb4f5732045980d8afdca92905",
+    "spec_id": "translation-top@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 1,
+    "sentences": 1,
+    "avg_sentence_length": 1.0,
+    "denominator": 1,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 1.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {
+      "off": 1
+    },
+    "offlist_words": [
+      "globalization"
+    ],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T13:14:35Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T08:03:54Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Nowadays, no matter where we travel, we can easily find the same products sold by a few international brands.",
+            "confidence": "high",
+            "explanation_zh": "「無論到哪裡」用 no matter where（也可寫 wherever）；「少數幾個國際品牌所販售的相同商品」用過去分詞片語後位修飾 the same products sold by a few international brands。"
+          },
+          "2": {
+            "translation": "Faced with the wave of globalization, many small towns have begun to promote traditional festivals and foods that can only be found locally.",
+            "confidence": "high",
+            "explanation_zh": "「面對浪潮」用過去分詞構句 Faced with the wave of globalization；「開始推廣」用現在完成式 have begun to promote；「只有當地才有的」用限定關係子句 that can only be found locally；「美食」譯成 foods。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "ADVCL",
+              "PART"
+            ],
+            "used_target_words": [
+              "travel",
+              "find",
+              "sell",
+              "brand",
+              "identical"
+            ],
+            "within_accepted": true,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [],
+            "closest_reference": 1
+          },
+          "2": {
+            "used_patterns": [
+              "PART",
+              "REL"
+            ],
+            "used_target_words": [
+              "town",
+              "promote",
+              "traditional",
+              "festival"
+            ],
+            "within_accepted": true,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [],
+            "closest_reference": 0
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "travel",
+              "find",
+              "sell",
+              "brand",
+              "identical"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "ADVCL": true,
+              "PART": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "town",
+              "promote",
+              "traditional",
+              "festival"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PART": true,
+              "REL": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "fail",
+      "created_at": "2026-10-09T12:46:22Z",
+      "details": {
+        "solver": "B",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Nowadays, no matter where we travel, we can easily find the same goods sold by just a few international brands.",
+            "confidence": "high",
+            "explanation_zh": "「無論到哪裡」用 no matter where；「少數幾個國際品牌所販售的相同商品」用過去分詞片語 sold by just a few international brands 後置修飾 the same goods。"
+          },
+          "2": {
+            "translation": "Faced with the tide of globalization, many small towns have started to promote traditional festivals and local dishes that cannot be found anywhere else.",
+            "confidence": "medium",
+            "explanation_zh": "「面對……」用過去分詞片語 Faced with...；「全球化的浪潮」譯成 the tide of globalization；「只有當地才有的」用關係子句 that cannot be found anywhere else（也可用 unique to the area）；「開始推廣」用現在完成式 have started to promote。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "ADVCL",
+              "PART"
+            ],
+            "used_target_words": [
+              "travel",
+              "find",
+              "sell",
+              "brand",
+              "identical"
+            ],
+            "within_accepted": false,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "「相同商品」我寫 the same goods；第 4 部分 accepted 只有 identical products／the same products，「商品」譯成 goods 是很自然的寫法，建議補 the same goods。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "PART",
+              "REL"
+            ],
+            "used_target_words": [
+              "town",
+              "promote",
+              "traditional",
+              "festival"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "travel",
+              "find",
+              "sell",
+              "brand",
+              "identical"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "ADVCL": true,
+              "PART": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "town",
+              "promote",
+              "traditional",
+              "festival"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PART": true,
+              "REL": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 1 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義"
+        ]
+      }
+    }
+  ],
+  "status": "rejected",
+  "status_reason": "blind_solver:B 未通過：第 1 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義；人工審核：第 1 句「相同商品」寫 the same goods 是自然譯法，第 4 部分只收 identical／the same products，accepted 太窄；另外第 2 部分把 we all can easily find 列為常見錯誤，we all can 雖不如 we can all 常見但不算錯，列為錯誤會誤扣分。"
+}

@@ -1,0 +1,805 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.b43a62",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "advanced",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "當公車遲遲不來時，騎共享機車通勤比在站牌乾等有效率多了。",
+        "options": null,
+        "answer": "When the bus is late, commuting by shared scooter is much more efficient than waiting at the stop.",
+        "accepted_answers": [
+          "When the bus is delayed, it is much more efficient to commute by shared scooter than to wait at the bus stop.",
+          "When the bus doesn't come, riding a shared scooter to work is far more efficient than waiting at the stop."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "時間副詞子句（when…）",
+            "動名詞片語當主詞"
+          ],
+          "topic": "共享機車"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "但如果有人把車亂停在人行道上，老人和小孩走路就會很危險。",
+        "options": null,
+        "answer": "But if people park the scooters anywhere on the sidewalk, it is dangerous for seniors and children to walk there.",
+        "accepted_answers": [
+          "However, if someone parks a scooter carelessly on the sidewalk, it will be dangerous for the elderly and children to walk there.",
+          "But if people park their scooters randomly on the sidewalk, it can be very dangerous for old people and kids to walk by."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "條件子句（if…）",
+            "虛主詞 It ＋形容詞＋for sb＋不定詞"
+          ],
+          "topic": "共享機車"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "共享機車"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「當…時」用 when 引導時間副詞子句，子句要有主詞和動詞：When the bus is late（「遲遲不來」就是誤點、一直沒來，也可以說 takes a long time to come）。「騎共享機車通勤」是主詞，英文用動名詞 Commuting by shared scooter（或 Riding a shared scooter to work），動詞用單數 is。「比在站牌乾等有效率多了」是比較級：much more efficient than waiting at the (bus) stop，than 後面也用 V-ing，和主詞形式一致。",
+          "evidence": [
+            "當公車遲遲不來時",
+            "騎共享機車通勤",
+            "比在站牌乾等有效率多了"
+          ],
+          "strategy_zh": "中文句子的主詞是一個動作時，先把它變成 V-ing 或 To V；比較兩個動作時，than 前後的形式要一致。",
+          "hints": [
+            "切成四段：當公車遲遲不來時／騎共享機車通勤／比在站牌乾等／有效率多了",
+            "標的詞彙：bus（公車）、commute（通勤）、scooter（機車）、efficient（有效率的）、wait（等待）",
+            "句型框架：When + S + V, V-ing … is + much more + adj. + than V-ing …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「如果…」是真實條件，用 if＋現在式（If people park …），主要子句用 it is／it will be。「把車亂停」的「車」承接上一句的共享機車，寫 the scooters、scooters 或 a scooter 都可以（只寫 them 時要確定前面有複數名詞可以指）；「亂」修飾動詞，用副詞 carelessly、randomly、illegally、improperly，或 anywhere／wherever they like。「老人和小孩走路就會很危險」不能把「老人和小孩走路」直接當主詞，要用虛主詞句型 It is dangerous for seniors and children to walk there；「危險」用形容詞 dangerous。",
+          "evidence": [
+            "如果有人把車亂停在人行道上",
+            "老人和小孩走路就會很危險"
+          ],
+          "strategy_zh": "中文「某人做某事＋很…」常要改成 It is＋形容詞＋for sb＋to VR；if 子句表未來仍用現在式。",
+          "hints": [
+            "切成四段：但如果有人／把車亂停在人行道上／老人和小孩走路／就會很危險",
+            "標的詞彙：park（停車）、sidewalk（人行道）、elderly（年長的）、child（小孩）、dangerous（危險的）",
+            "句型框架：If + S + V(現在式), it is/will be + adj. + for sb + to VR"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "When the bus is late, commuting by shared scooter is much more efficient than waiting at the stop.",
+            "When the bus is delayed, it is much more efficient to commute by shared scooter than to wait at the bus stop.",
+            "When the bus doesn't come, riding a shared scooter to work is far more efficient than waiting at the stop."
+          ],
+          "target_words": [
+            {
+              "word": "bus",
+              "zh": "公車"
+            },
+            {
+              "word": "commute",
+              "zh": "通勤",
+              "alternatives": [
+                "ride",
+                "go to work",
+                "get to work"
+              ]
+            },
+            {
+              "word": "scooter",
+              "zh": "機車",
+              "alternatives": [
+                "motorcycle",
+                "motorbike"
+              ]
+            },
+            {
+              "word": "efficient",
+              "zh": "有效率的"
+            },
+            {
+              "word": "wait",
+              "zh": "等待"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "ADVCL",
+              "grammar_id": "gp-time-clause",
+              "label_zh": "時間副詞子句（when…）",
+              "frame": "When + S + V, S + V",
+              "zh_trigger": "當公車遲遲不來時"
+            },
+            {
+              "code": "NFSUBJ",
+              "grammar_id": "gp-gerund-subject",
+              "label_zh": "動名詞片語當主詞",
+              "frame": "V-ing … + is + adj. …（或 It is + adj. + to VR …）",
+              "zh_trigger": "騎共享機車通勤"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "當公車遲遲不來時",
+              "accepted": [
+                "When the bus is late",
+                "When the bus is delayed",
+                "When the bus doesn't come",
+                "When the bus does not come for a long time",
+                "When the bus takes too long to come",
+                "When the bus is running late",
+                "When the bus takes a long time to come",
+                "When the bus takes forever to come",
+                "When the bus still hasn't come"
+              ],
+              "targets": [
+                "ADVCL",
+                "bus"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "When the bus late",
+                  "right": "When the bus is late",
+                  "explanation_zh": "when 引導的是子句，要有動詞（is late）。"
+                },
+                {
+                  "wrong": "When the bus doesn't come late",
+                  "right": "When the bus is late",
+                  "explanation_zh": "「遲遲不來」是「一直沒來、誤點」，不是 doesn't come late。"
+                }
+              ]
+            },
+            {
+              "zh": "騎共享機車通勤",
+              "accepted": [
+                "commuting by shared scooter",
+                "to commute by shared scooter",
+                "riding a shared scooter to work",
+                "commuting on a shared scooter",
+                "taking a shared scooter to work",
+                "to ride a shared scooter to work"
+              ],
+              "targets": [
+                "NFSUBJ",
+                "commute",
+                "scooter"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "commute by shared scooter is",
+                  "right": "commuting by shared scooter is",
+                  "explanation_zh": "動詞片語當主詞要改成動名詞 commuting …，或用虛主詞 It is … to commute …。"
+                },
+                {
+                  "wrong": "riding a share scooter",
+                  "right": "riding a shared scooter",
+                  "explanation_zh": "「共享的」用過去分詞 shared 修飾名詞。"
+                }
+              ]
+            },
+            {
+              "zh": "比在站牌乾等",
+              "accepted": [
+                "than waiting at the stop",
+                "than to wait at the bus stop",
+                "than waiting at the bus stop",
+                "than just waiting at the bus stop",
+                "than just waiting at the stop",
+                "than standing at the bus stop waiting"
+              ],
+              "targets": [
+                "wait"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "than wait at the bus stop",
+                  "right": "than waiting at the bus stop",
+                  "explanation_zh": "比較的兩邊形式要一致：commuting … 對 waiting …（或 to commute … 對 to wait …）。"
+                },
+                {
+                  "wrong": "than waiting in the bus stop",
+                  "right": "than waiting at the bus stop",
+                  "explanation_zh": "在站牌、車站這種「點」用 at。"
+                }
+              ]
+            },
+            {
+              "zh": "有效率多了",
+              "accepted": [
+                "is much more efficient",
+                "is far more efficient",
+                "is a lot more efficient",
+                "is even more efficient"
+              ],
+              "targets": [
+                "efficient"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "is more efficient much",
+                  "right": "is much more efficient",
+                  "explanation_zh": "修飾比較級的 much／far 放在 more 前面。"
+                },
+                {
+                  "wrong": "is very more efficient",
+                  "right": "is much more efficient",
+                  "explanation_zh": "very 不能修飾比較級，要用 much、far 或 a lot。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "verbal_subject",
+              "zh": "騎共享機車通勤",
+              "literal_error": "Ride a shared scooter to work is much more efficient than wait at the stop.",
+              "part": 2,
+              "explanation_zh": "中文用動詞片語當主詞，英文要改成動名詞 Commuting … 或虛主詞 It is … to commute …。"
+            },
+            {
+              "type": "word_form",
+              "zh": "有效率",
+              "literal_error": "commuting by shared scooter is much more efficiency",
+              "part": 4,
+              "explanation_zh": "be 動詞後面要接形容詞 efficient，efficiency 是名詞。"
+            }
+          ],
+          "bonus": [],
+          "restructuring_zh": "「騎共享機車通勤」是動詞片語當主詞，英文要改成動名詞 Commuting by shared scooter 當主詞，或改用虛主詞 It is much more efficient to commute … than to wait …；比較的兩邊也要同形式（commuting … than waiting …）。"
+        },
+        "2": {
+          "references": [
+            "But if people park the scooters anywhere on the sidewalk, it is dangerous for seniors and children to walk there.",
+            "However, if someone parks a scooter carelessly on the sidewalk, it will be dangerous for the elderly and children to walk there.",
+            "But if people park their scooters randomly on the sidewalk, it can be very dangerous for old people and kids to walk by."
+          ],
+          "target_words": [
+            {
+              "word": "park",
+              "zh": "停（車）",
+              "alternatives": [
+                "leave"
+              ]
+            },
+            {
+              "word": "sidewalk",
+              "zh": "人行道",
+              "alternatives": [
+                "pavement"
+              ]
+            },
+            {
+              "word": "elderly",
+              "zh": "老人（年長的）",
+              "alternatives": [
+                "old",
+                "older",
+                "senior",
+                "seniors",
+                "elder",
+                "elders"
+              ]
+            },
+            {
+              "word": "child",
+              "zh": "小孩",
+              "alternatives": [
+                "kid"
+              ]
+            },
+            {
+              "word": "dangerous",
+              "zh": "危險的",
+              "alternatives": [
+                "unsafe",
+                "risky"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "ADVCL",
+              "grammar_id": "gp-condition-real",
+              "label_zh": "條件子句（if…）",
+              "frame": "If + S + V(現在式), it is/will be …",
+              "zh_trigger": "如果"
+            },
+            {
+              "code": "NFSUBJ",
+              "grammar_id": "gp-it-adj-to",
+              "label_zh": "虛主詞 It ＋形容詞＋for sb＋不定詞",
+              "frame": "It is + adj. + for sb + to VR …",
+              "zh_trigger": "走路就會很危險"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "但如果有人",
+              "accepted": [
+                "But if people",
+                "However, if someone",
+                "But if someone",
+                "However, if people",
+                "But if anyone",
+                "However, if anyone",
+                "But if somebody",
+                "However, if somebody"
+              ],
+              "targets": [
+                "ADVCL"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "But if somebody park",
+                  "right": "But if somebody parks",
+                  "explanation_zh": "someone／somebody 是單數，現在式動詞要加 s。"
+                },
+                {
+                  "wrong": "However, if people will park",
+                  "right": "However, if people park",
+                  "explanation_zh": "表條件的 if 子句用現在式表示未來，不加 will。"
+                }
+              ]
+            },
+            {
+              "zh": "把車亂停在人行道上",
+              "accepted": [
+                "park the scooters anywhere on the sidewalk",
+                "park their scooters anywhere on the sidewalk",
+                "park scooters anywhere on the sidewalk",
+                "park them anywhere on the sidewalk",
+                "park the scooters carelessly on the sidewalk",
+                "park their scooters carelessly on the sidewalk",
+                "park scooters carelessly on the sidewalk",
+                "park them carelessly on the sidewalk",
+                "park the scooters randomly on the sidewalk",
+                "park their scooters randomly on the sidewalk",
+                "park scooters randomly on the sidewalk",
+                "park them randomly on the sidewalk",
+                "park the scooters illegally on the sidewalk",
+                "park their scooters illegally on the sidewalk",
+                "park scooters illegally on the sidewalk",
+                "park them illegally on the sidewalk",
+                "park the scooters improperly on the sidewalk",
+                "park their scooters improperly on the sidewalk",
+                "park scooters improperly on the sidewalk",
+                "park them improperly on the sidewalk",
+                "park the scooters wherever they like on the sidewalk",
+                "park their scooters wherever they like on the sidewalk",
+                "park scooters wherever they like on the sidewalk",
+                "park them wherever they like on the sidewalk",
+                "park the scooters wherever they want on the sidewalk",
+                "park their scooters wherever they want on the sidewalk",
+                "park scooters wherever they want on the sidewalk",
+                "park them wherever they want on the sidewalk",
+                "parks a scooter carelessly on the sidewalk",
+                "parks their scooter carelessly on the sidewalk",
+                "parks a vehicle carelessly on the sidewalk",
+                "parks a scooter randomly on the sidewalk",
+                "parks their scooter randomly on the sidewalk",
+                "parks a vehicle randomly on the sidewalk",
+                "parks a scooter illegally on the sidewalk",
+                "parks their scooter illegally on the sidewalk",
+                "parks a vehicle illegally on the sidewalk",
+                "parks a scooter improperly on the sidewalk",
+                "parks their scooter improperly on the sidewalk",
+                "parks a vehicle improperly on the sidewalk",
+                "parks a scooter anywhere on the sidewalk",
+                "parks their scooter anywhere on the sidewalk",
+                "parks a vehicle anywhere on the sidewalk",
+                "parks a scooter wherever they like on the sidewalk",
+                "parks their scooter wherever they like on the sidewalk",
+                "parks a vehicle wherever they like on the sidewalk",
+                "park their scooters on the sidewalk carelessly",
+                "park the scooters on the sidewalk randomly",
+                "park the scooters all over the sidewalk",
+                "park them all over the sidewalk",
+                "leave the scooters anywhere on the sidewalk",
+                "leave them anywhere on the sidewalk"
+              ],
+              "targets": [
+                "park",
+                "sidewalk"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "park the scooters on the sidewalk random",
+                  "right": "park the scooters randomly on the sidewalk",
+                  "explanation_zh": "random 是形容詞，不能修飾動詞 park；要用副詞 randomly，或改用 carelessly、anywhere、wherever they like 等寫法。"
+                },
+                {
+                  "wrong": "park the scooters messy on the sidewalk",
+                  "right": "park the scooters carelessly on the sidewalk",
+                  "explanation_zh": "messy 是形容詞，不能修飾動詞；「亂停」用副詞 carelessly／randomly／illegally，或 anywhere／wherever they like。"
+                },
+                {
+                  "wrong": "park the scooters in the sidewalk",
+                  "right": "park the scooters on the sidewalk",
+                  "explanation_zh": "在人行道「上」用 on。"
+                }
+              ]
+            },
+            {
+              "zh": "老人和小孩走路",
+              "accepted": [
+                "for seniors and children to walk",
+                "for seniors and kids to walk",
+                "for the elderly and children to walk",
+                "for the elderly and kids to walk",
+                "for old people and children to walk",
+                "for old people and kids to walk",
+                "for elderly people and children to walk",
+                "for elderly people and kids to walk",
+                "for older people and children to walk",
+                "for older people and kids to walk"
+              ],
+              "targets": [
+                "elderly",
+                "child"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "old people and children walk will be dangerous",
+                  "right": "it will be dangerous for old people and children to walk",
+                  "explanation_zh": "照中文語序把「老人和小孩走路」當主詞是錯的；要用虛主詞 it，把真正的主詞移到 for … to VR。"
+                },
+                {
+                  "wrong": "for the elderlies and childs to walk",
+                  "right": "for the elderly and children to walk",
+                  "explanation_zh": "the elderly 本身就指老人（複數意義，不加 s）；child 的複數是 children。"
+                }
+              ]
+            },
+            {
+              "zh": "就會很危險",
+              "accepted": [
+                "it is dangerous",
+                "it will be dangerous",
+                "it can be very dangerous",
+                "it can be dangerous",
+                "it will be very dangerous",
+                "it is very dangerous",
+                "it would be dangerous",
+                "it will be unsafe",
+                "it becomes dangerous",
+                "it will become dangerous",
+                "it may be dangerous",
+                "it could be dangerous"
+              ],
+              "targets": [
+                "NFSUBJ",
+                "dangerous"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "it is danger",
+                  "right": "it is dangerous",
+                  "explanation_zh": "be 動詞後面要接形容詞 dangerous，danger 是名詞。"
+                },
+                {
+                  "wrong": "it is dangerous to seniors and children walk",
+                  "right": "it is dangerous for seniors and children to walk",
+                  "explanation_zh": "虛主詞句型是 It is＋形容詞＋for sb＋to VR。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "verbal_subject",
+              "zh": "老人和小孩走路",
+              "literal_error": "Old people and children walk will be very dangerous.",
+              "part": 3,
+              "explanation_zh": "中文把「老人和小孩走路」當主詞，英文要改用虛主詞 It is dangerous for … to walk。"
+            },
+            {
+              "type": "word_form",
+              "zh": "亂停",
+              "literal_error": "park the scooters on the sidewalk random",
+              "part": 2,
+              "explanation_zh": "「亂」修飾動詞「停」，英文要用副詞 carelessly／randomly，或 anywhere／wherever they like；random、messy 是形容詞。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "Should people park the scooters anywhere on the sidewalk, it will be dangerous for the elderly and children to walk there.",
+              "grammar_id": "gp-inverted-if",
+              "explanation_zh": "省略 if、把 should 移到句首的倒裝條件句，語氣較正式；這是加分寫法，一般寫 if 子句就能拿滿分。"
+            }
+          ],
+          "restructuring_zh": "「老人和小孩走路就會很危險」照中文語序會寫成 Old people and children walk will be dangerous，英文要改用虛主詞：it is dangerous for seniors and children to walk there。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-advanced-01-regen",
+    "lot": "translation-advanced-01",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "3c592a935e002bfc3a9345cac2beeef2a0e87c47409c0e13ae879a73c019f5c3",
+    "spec_id": "translation-advanced@2026-10-09",
+    "regenerated_from": "ai.tr.638a41"
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T14:07:09Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T13:40:35Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "When the bus is running late, commuting on a shared scooter is much more efficient than just waiting at the bus stop.",
+            "confidence": "high",
+            "explanation_zh": "「當……時」用 when 引導副詞子句；「遲遲不來」譯 is running late（也可說 is late／does not come for a long time）；主詞「騎共享機車通勤」是動作，用動名詞 commuting on a shared scooter 當主詞；「比……有效率多了」用 much more efficient than，比較的兩邊都用動名詞（commuting ↔ waiting）保持對稱；「乾等」用 just waiting 表達。"
+          },
+          "2": {
+            "translation": "However, if someone parks a scooter carelessly on the sidewalk, it will be very dangerous for the elderly and children to walk there.",
+            "confidence": "high",
+            "explanation_zh": "「但如果」用 However, if 引導條件子句（條件子句用現在式表未來）；「亂停」不能直譯 randomly，用 park ... carelessly；「老人和小孩走路就會很危險」用虛主詞 It will be dangerous for sb to V，避免寫成 the elderly and children will be dangerous（變成老人小孩本身很危險）；補 there 指人行道。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "ADVCL",
+              "NFSUBJ"
+            ],
+            "used_target_words": [
+              "bus",
+              "commute",
+              "scooter",
+              "efficient",
+              "wait"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "ADVCL",
+              "NFSUBJ"
+            ],
+            "used_target_words": [
+              "park",
+              "sidewalk",
+              "elderly",
+              "child",
+              "dangerous"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "bus",
+              "commute",
+              "scooter",
+              "efficient",
+              "wait"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "ADVCL": true,
+              "NFSUBJ": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "park",
+              "sidewalk",
+              "elderly",
+              "child",
+              "dangerous"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "ADVCL": true,
+              "NFSUBJ": false
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "warn",
+      "created_at": "2026-10-09T13:50:00Z",
+      "details": {
+        "solver": "B",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "When the bus is late, riding a shared scooter to work is much more efficient than just waiting at the bus stop.",
+            "confidence": "high",
+            "explanation_zh": "「當公車遲遲不來時」用 When the bus is late 的時間副詞子句；主詞「騎共享機車通勤」用動名詞片語 riding a shared scooter to work；「比……有效率多了」用 much more efficient than，than 後面接與主詞對等的動名詞 waiting（平行結構）；「乾等」帶有白白等待的意思，用 just waiting 表達。"
+          },
+          "2": {
+            "translation": "But if someone parks a vehicle carelessly on the sidewalk, it will be very dangerous for the elderly and children to walk there.",
+            "confidence": "medium",
+            "explanation_zh": "「如果有人把車亂停在人行道上」用 if 條件句，條件句中用現在式 parks，主要子句用 will 表示可預期的結果；「老人和小孩走路就會很危險」用虛主詞 it is dangerous for sb to V 的句型。「亂停」用 carelessly（也可用 illegally），「車」依上下文可譯 vehicle 或 scooter，所以信心 medium。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "ADVCL",
+              "NFSUBJ"
+            ],
+            "used_target_words": [
+              "bus",
+              "commute",
+              "scooter",
+              "efficient",
+              "wait"
+            ],
+            "within_accepted": true,
+            "closest_reference": 2,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "ADVCL",
+              "NFSUBJ"
+            ],
+            "used_target_words": [
+              "park",
+              "sidewalk",
+              "elderly",
+              "child",
+              "dangerous"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "「把車亂停在人行道上」的「車」中文沒有指明是機車（同題組第 1 句才出現共享機車），學生很可能寫 cars 或 vehicles；但第 2 部分的 accepted 幾乎都限定 scooter(s)，只有單數 someone parks 的寫法收了 a vehicle，像 park their cars／park vehicles carelessly／leave their bikes anywhere 這類同樣自然的複數寫法都沒收。建議補上 car(s)、vehicle(s)、bike(s) 的單複數與 their 變化，或在中文加「共享機車」把名詞固定。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "bus",
+              "commute",
+              "scooter",
+              "efficient",
+              "wait"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "ADVCL": true,
+              "NFSUBJ": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "park",
+              "sidewalk",
+              "elderly",
+              "child",
+              "dangerous"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "ADVCL": true,
+              "NFSUBJ": false
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 2 題驗證者對4 部分切分有意見（warn）：「把車亂停在人行道上」的「車」中文沒有指明是機車（同題組第 1 句才出現共享機車），學生很可能寫 cars 或 vehicles；但第 2 部分的 accepted 幾乎都限定 scooter(s)，只有單數 someone parks 的"
+        ]
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

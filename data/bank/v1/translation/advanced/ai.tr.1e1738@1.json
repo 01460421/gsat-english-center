@@ -1,0 +1,772 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.1e1738",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "advanced",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "我以前很怕說英文，後來才發現在語言交換應用程式（app）上聊天很有趣。",
+        "options": null,
+        "answer": "I used to be afraid of speaking English, but later found that chatting on a language exchange app was fun.",
+        "accepted_answers": [
+          "I used to be scared of speaking English, but I later realized that chatting on language exchange apps was interesting.",
+          "I used to be afraid to speak English, but later I discovered that it was fun to chat on language exchange apps."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "used to＋原形動詞（以前…）",
+            "that 名詞子句"
+          ],
+          "topic": "語言交換 App"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "我的語言夥伴是一位七十歲的英國人，他常問我台灣人怎麼過節。",
+        "options": null,
+        "answer": "My language partner is a 70-year-old British man, and he often asks me how Taiwanese people celebrate festivals.",
+        "accepted_answers": [
+          "My language exchange partner is a seventy-year-old British man who often asks me how people in Taiwan celebrate holidays.",
+          "My language partner is a 70-year-old Englishman, and he often asks me how Taiwanese people spend their holidays."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "複合形容詞（數字-year-old）",
+            "間接問句（how + S + V）"
+          ],
+          "topic": "語言交換 App"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "語言交換 App"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「以前很怕…（現在不怕了）」是過去的狀態，用 used to + 原形動詞：I used to be afraid of speaking English（afraid 是形容詞，前面要有 be）；不要和 be used to + V-ing（習慣於）混淆。「後來才發現…」接名詞子句：later I found (that) …（也可以用 realized、discovered、found out）。that 子句的主詞是「在語言交換 app 上聊天」這個動作，用動名詞 chatting on language exchange apps，或改用虛主詞 it was fun to chat …；「有趣」用 fun／interesting，不是 funny。",
+          "evidence": [
+            "我以前很怕說英文",
+            "後來才發現"
+          ],
+          "strategy_zh": "「以前…（現在不再）」先想 used to + VR；「發現／認為／相信＋一件事」後面接 that 子句。",
+          "hints": [
+            "切成四段：我以前很怕說英文／後來才發現／在語言交換應用程式（app）上聊天／很有趣",
+            "標的詞彙：afraid（害怕的）、speak（說）、find（發現；過去式 found）、chat（聊天）、exchange（交換）、fun（有趣的事）",
+            "句型框架：S + used to + be + adj. …, but later S + found (that) + V-ing … + was + adj."
+          ]
+        },
+        "2": {
+          "explanation_zh": "「七十歲的英國人」把年齡放在名詞前面當形容詞，英文用複合形容詞 a 70-year-old（seventy-year-old）British man：數字、year、old 用連字號連起來，year 用單數，前面加冠詞 a；British 是形容詞，後面要接 man（或寫 Englishman）。後半句「他常問我…」可以寫 and he often asks me，或用關係子句 who often asks me。「台灣人怎麼過節」是間接問句，當 ask 的受詞，要用直述句語序 how Taiwanese people celebrate festivals，不能寫成 how do Taiwanese people celebrate …；「過節」是 celebrate festivals（或 spend their holidays）。",
+          "evidence": [
+            "七十歲的英國人",
+            "台灣人怎麼過節"
+          ],
+          "strategy_zh": "「數字＋歲的＋人」先想 a + 數字-year-old + N（year 用單數）；ask 後面接間接問句時，疑問詞後面用「主詞＋動詞」。",
+          "hints": [
+            "切成四段：我的語言夥伴／是一位七十歲的英國人／他常問我／台灣人怎麼過節",
+            "標的詞彙：partner（夥伴）、old（…歲的：70-year-old）、ask（問）、celebrate（慶祝；過節）、festival（節日，也可用 holiday）",
+            "句型框架：S + is + a + 數字-year-old + N, and he often asks me + how + S + V …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "I used to be afraid of speaking English, but later found that chatting on a language exchange app was fun.",
+            "I used to be scared of speaking English, but I later realized that chatting on language exchange apps was interesting.",
+            "I used to be afraid to speak English, but later I discovered that it was fun to chat on language exchange apps."
+          ],
+          "target_words": [
+            {
+              "word": "afraid",
+              "zh": "害怕的",
+              "alternatives": [
+                "scared",
+                "fear",
+                "frightened",
+                "nervous"
+              ]
+            },
+            {
+              "word": "speak",
+              "zh": "說"
+            },
+            {
+              "word": "find",
+              "zh": "發現",
+              "alternatives": [
+                "realize",
+                "discover",
+                "learn",
+                "notice"
+              ]
+            },
+            {
+              "word": "chat",
+              "zh": "聊天",
+              "alternatives": [
+                "talk"
+              ]
+            },
+            {
+              "word": "exchange",
+              "zh": "交換"
+            },
+            {
+              "word": "fun",
+              "zh": "有趣（的事）",
+              "alternatives": [
+                "interesting",
+                "enjoyable"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "BASIC",
+              "grammar_id": "gp-used-to",
+              "label_zh": "used to＋原形動詞（以前…，現在不再）",
+              "frame": "S + used to + VR（以前…）",
+              "zh_trigger": "以前"
+            },
+            {
+              "code": "NCL",
+              "grammar_id": "gp-that-clause",
+              "label_zh": "that 名詞子句（當 found 的受詞）",
+              "frame": "S + find/realize + (that) + S + V",
+              "zh_trigger": "後來才發現"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "我以前很怕說英文",
+              "accepted": [
+                "I used to be afraid of speaking English",
+                "I used to be scared of speaking English",
+                "I used to be afraid to speak English",
+                "I used to be scared to speak English",
+                "I used to be very afraid of speaking English",
+                "I used to be really afraid of speaking English",
+                "I used to be really scared of speaking English",
+                "I used to be very scared of speaking English",
+                "I used to be so afraid of speaking English",
+                "I used to be afraid of speaking in English",
+                "I used to fear speaking English"
+              ],
+              "targets": [
+                "BASIC",
+                "afraid",
+                "speak"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "I used to afraid of speaking English",
+                  "right": "I used to be afraid of speaking English",
+                  "explanation_zh": "afraid 是形容詞，used to 後面要先接原形 be。"
+                },
+                {
+                  "wrong": "I was used to be afraid of speaking English",
+                  "right": "I used to be afraid of speaking English",
+                  "explanation_zh": "「以前…」是 used to + 原形動詞；be used to + V-ing 是「習慣於」。"
+                },
+                {
+                  "wrong": "I used to be afraid of speak English",
+                  "right": "I used to be afraid of speaking English",
+                  "explanation_zh": "介系詞 of 後面接動名詞 speaking。"
+                }
+              ]
+            },
+            {
+              "zh": "後來才發現",
+              "accepted": [
+                "but later found that",
+                "but later I found that",
+                "but I later found that",
+                "but later I found out that",
+                "but I later found out that",
+                "but I later realized that",
+                "but later I realized that",
+                "but later I discovered that",
+                "but I later discovered that",
+                "but then I realized that",
+                "but later I learned that",
+                "but later I found",
+                "but later I realized"
+              ],
+              "targets": [
+                "NCL",
+                "find"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "but after I found that",
+                  "right": "but later I found that",
+                  "explanation_zh": "「後來」是副詞 later／then；after 是連接詞，but after I found that … 只剩從屬子句、沒有主要子句，句子不完整。"
+                },
+                {
+                  "wrong": "but later I find that",
+                  "right": "but later I found that",
+                  "explanation_zh": "「後來才發現」是過去的事，用過去式 found。"
+                }
+              ]
+            },
+            {
+              "zh": "在語言交換應用程式（app）上聊天",
+              "accepted": [
+                "chatting on a language exchange app",
+                "chatting on language exchange apps",
+                "to chat on language exchange apps",
+                "to chat on a language exchange app",
+                "chatting with people on a language exchange app",
+                "chatting with people on language exchange apps",
+                "talking to people on language exchange apps",
+                "using language exchange apps to chat",
+                "chatting through a language exchange app"
+              ],
+              "targets": [
+                "chat",
+                "exchange"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "chat on language exchange apps was",
+                  "right": "chatting on language exchange apps was",
+                  "explanation_zh": "動作當主詞要用動名詞 chatting（或用 it was fun to chat …）。"
+                },
+                {
+                  "wrong": "chatting on language exchanging apps",
+                  "right": "chatting on language exchange apps",
+                  "explanation_zh": "「語言交換」是名詞修飾名詞 language exchange，不寫 exchanging。"
+                }
+              ]
+            },
+            {
+              "zh": "很有趣",
+              "accepted": [
+                "was fun",
+                "was interesting",
+                "was a lot of fun",
+                "was really fun",
+                "was so much fun",
+                "was very interesting",
+                "was enjoyable",
+                "is fun",
+                "is interesting"
+              ],
+              "targets": [
+                "fun"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "was very funny",
+                  "right": "was fun",
+                  "explanation_zh": "funny 是「好笑的」；「有趣、好玩」用 fun 或 interesting。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "word_form",
+              "zh": "我以前很怕說英文",
+              "literal_error": "I used to afraid speak English, but later I found that …",
+              "part": 1,
+              "explanation_zh": "afraid 是形容詞，used to 後面要先接 be；「怕做某事」是 afraid of + V-ing 或 afraid to + VR。"
+            },
+            {
+              "type": "verbal_subject",
+              "zh": "在語言交換應用程式（app）上聊天很有趣",
+              "literal_error": "I used to be afraid of speaking English, but later I found on language exchange apps chat was very funny.",
+              "part": 3,
+              "explanation_zh": "that 子句的主詞是「在 app 上聊天」這個動作，要用動名詞 chatting on language exchange apps，不能照中文先寫地點再接原形動詞。"
+            }
+          ],
+          "bonus": [],
+          "restructuring_zh": "that 子句的主詞是「在語言交換 app 上聊天」這個動作，英文用動名詞 chatting on language exchange apps 當主詞，或用虛主詞 it was fun to chat …。"
+        },
+        "2": {
+          "references": [
+            "My language partner is a 70-year-old British man, and he often asks me how Taiwanese people celebrate festivals.",
+            "My language exchange partner is a seventy-year-old British man who often asks me how people in Taiwan celebrate holidays.",
+            "My language partner is a 70-year-old Englishman, and he often asks me how Taiwanese people spend their holidays."
+          ],
+          "target_words": [
+            {
+              "word": "partner",
+              "zh": "夥伴",
+              "alternatives": [
+                "buddy"
+              ]
+            },
+            {
+              "word": "old",
+              "zh": "…歲的（70-year-old）"
+            },
+            {
+              "word": "ask",
+              "zh": "問"
+            },
+            {
+              "word": "celebrate",
+              "zh": "慶祝（過節）",
+              "alternatives": [
+                "spend"
+              ]
+            },
+            {
+              "word": "festival",
+              "zh": "節日",
+              "alternatives": [
+                "holiday"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "BASIC",
+              "grammar_id": "gp-compound-adj",
+              "label_zh": "複合形容詞（數字-year-old：a 70-year-old man）",
+              "frame": "a + 數字-year-old + N（year 用單數，中間加連字號）",
+              "zh_trigger": "七十歲的英國人"
+            },
+            {
+              "code": "NCL",
+              "grammar_id": "gp-wh-clause",
+              "label_zh": "間接問句（how + S + V，當 ask 的受詞）",
+              "frame": "S + ask + O + how + S + V（直述句語序）",
+              "zh_trigger": "怎麼過節"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "我的語言夥伴",
+              "accepted": [
+                "My language partner",
+                "My language exchange partner",
+                "My language buddy",
+                "My language exchange buddy"
+              ],
+              "targets": [
+                "partner"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "My language partners is",
+                  "right": "My language partner is",
+                  "explanation_zh": "後面用「他」，可見語言夥伴只有一位：用單數 partner、動詞 is。"
+                }
+              ]
+            },
+            {
+              "zh": "是一位七十歲的英國人",
+              "accepted": [
+                "is a 70-year-old British man",
+                "is a seventy-year-old British man",
+                "is a 70-year-old Englishman",
+                "is a seventy-year-old Englishman",
+                "is a 70-year-old British gentleman",
+                "is a seventy-year-old British gentleman",
+                "is a 70-year-old man from the UK",
+                "is a seventy-year-old man from the UK",
+                "is a 70-year-old man from Britain",
+                "is a seventy-year-old man from Britain",
+                "is a 70-year-old British person",
+                "is a 70-year-old Brit"
+              ],
+              "targets": [
+                "BASIC",
+                "old"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "is a 70-years-old British man",
+                  "right": "is a 70-year-old British man",
+                  "explanation_zh": "「數字-year-old」放在名詞前面當形容詞時，year 用單數，三個字用連字號連起來。"
+                },
+                {
+                  "wrong": "is a seventy years old British",
+                  "right": "is a seventy-year-old British man",
+                  "explanation_zh": "「七十歲的」放在名詞前面要寫成複合形容詞 seventy-year-old；British 是形容詞，後面要有名詞 man（或寫 Englishman）。"
+                }
+              ]
+            },
+            {
+              "zh": "他常問我",
+              "accepted": [
+                "and he often asks me",
+                "who often asks me",
+                "He often asks me",
+                "and he usually asks me",
+                "who usually asks me",
+                "and he frequently asks me",
+                "who frequently asks me"
+              ],
+              "targets": [
+                "ask"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "and he often ask me",
+                  "right": "and he often asks me",
+                  "explanation_zh": "主詞 he 是第三人稱單數，現在式動詞要加 s：asks。"
+                },
+                {
+                  "wrong": "and he often asks to me",
+                  "right": "and he often asks me",
+                  "explanation_zh": "ask 是及物動詞，後面直接接人：ask me。"
+                }
+              ]
+            },
+            {
+              "zh": "台灣人怎麼過節",
+              "accepted": [
+                "how Taiwanese people celebrate festivals",
+                "how people in Taiwan celebrate festivals",
+                "how Taiwanese people celebrate holidays",
+                "how people in Taiwan celebrate holidays",
+                "how Taiwanese people celebrate their festivals",
+                "how Taiwanese celebrate festivals",
+                "how the Taiwanese celebrate festivals",
+                "how we Taiwanese celebrate festivals",
+                "how we celebrate festivals in Taiwan",
+                "how Taiwanese people spend their holidays",
+                "how Taiwanese people spend holidays",
+                "how people in Taiwan spend their holidays",
+                "how Taiwanese people celebrate traditional festivals"
+              ],
+              "targets": [
+                "NCL",
+                "celebrate",
+                "festival"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "how do Taiwanese people celebrate festivals",
+                  "right": "how Taiwanese people celebrate festivals",
+                  "explanation_zh": "間接問句用直述句語序（how + 主詞 + 動詞），不加助動詞 do。"
+                },
+                {
+                  "wrong": "how Taiwanese people pass festivals",
+                  "right": "how Taiwanese people celebrate festivals",
+                  "explanation_zh": "「過節」是慶祝節日 celebrate festivals（或 spend the holidays）；pass 沒有「過節」的意思。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "prenominal_modifier",
+              "zh": "七十歲的英國人",
+              "literal_error": "My language partner is a seventy years old British, he often asks me …",
+              "part": 2,
+              "explanation_zh": "中文把「七十歲的」放在名詞前面；英文要寫成複合形容詞 a seventy-year-old（year 用單數、加連字號），British 是形容詞，後面要接 man。"
+            },
+            {
+              "type": "collocation",
+              "zh": "怎麼過節",
+              "literal_error": "My language partner is a 70-year-old British man, and he often asks me how do Taiwanese pass festivals.",
+              "part": 4,
+              "explanation_zh": "「過節」是 celebrate festivals（spend the holidays），不是 pass；間接問句也不能用 how do … 的疑問句語序。"
+            }
+          ],
+          "bonus": []
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-advanced-04-regen",
+    "lot": "translation-advanced-04",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "5341afc25d344c7e86c5f6768889faff79ec168d1da075e82edf61baf41c0b1f",
+    "spec_id": "translation-advanced@2026-10-09",
+    "regenerated_from": "ai.tr.12604a"
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 1,
+    "sentences": 1,
+    "avg_sentence_length": 1.0,
+    "denominator": 1,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 1.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {
+      "off": 1
+    },
+    "offlist_words": [
+      "app"
+    ],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "warn",
+      "created_at": "2026-10-09T14:18:26Z",
+      "details": {
+        "errors": [],
+        "warnings": [
+          "group: 兩句合計 L3 以上詞目數 2，出題規格書建議 3–4"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "warn",
+      "created_at": "2026-10-09T14:12:13Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "I used to be afraid of speaking English, but later I found that chatting on a language exchange app was a lot of fun.",
+            "confidence": "high",
+            "explanation_zh": "「以前很怕」是過去習慣、現在不再如此，用 used to be afraid of V-ing；「後來才發現」用 but later I found that…，不用 not until 強調句；子句主詞「在 app 上聊天」用動名詞 chatting on a language exchange app；時態跟著 found 用 was。"
+          },
+          "2": {
+            "translation": "My language partner is a seventy-year-old British man, who often asks me how Taiwanese people celebrate festivals.",
+            "confidence": "high",
+            "explanation_zh": "「七十歲的」放名詞前要寫成連字號複合形容詞 seventy-year-old（year 不加 s）；補充說明這位夥伴用逗號加 who 的非限定關係子句；「台灣人怎麼過節」是間接問句，用直述語序 how Taiwanese people celebrate festivals（不是 how do Taiwanese people…）。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "BASIC",
+              "NCL"
+            ],
+            "used_target_words": [
+              "afraid",
+              "speak",
+              "find",
+              "chat",
+              "exchange",
+              "fun"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "BASIC",
+              "NCL"
+            ],
+            "used_target_words": [
+              "partner",
+              "old",
+              "ask",
+              "celebrate",
+              "festival"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "warn",
+            "parts_check": "pass",
+            "issues_zh": [
+              "參考譯文 3 用 spend their holidays 譯「過節」：holidays 在英式英文常指「休假、度假」，題目的語言夥伴又是英國人，容易被讀成「台灣人怎麼度假」，和「過節（慶祝節日）」有語意落差；第 4 部分可接受寫法的 spend (their) holidays 同理，建議改成 celebrate holidays 或 spend the holidays 並在解析說明。",
+              "參考譯文 3 的 Englishman 只指英格蘭人，比「英國人」（British）窄；不算錯，但建議首選仍用 British man，並在解析提醒兩者差別。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "afraid",
+              "speak",
+              "find",
+              "chat",
+              "exchange",
+              "fun"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "BASIC": null,
+              "NCL": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "partner",
+              "old",
+              "ask",
+              "celebrate",
+              "festival"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "BASIC": null,
+              "NCL": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 2 題驗證者對參考譯文有意見（warn）：參考譯文 3 用 spend their holidays 譯「過節」：holidays 在英式英文常指「休假、度假」，題目的語言夥伴又是英國人，容易被讀成「台灣人怎麼度假」，和「過節（慶祝節日）」有語意落差；第 4 部分可接受寫法的 sp"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T14:13:00Z",
+      "details": {
+        "solver": "B",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "I used to be afraid of speaking English, but I later discovered that chatting on a language exchange app is a lot of fun.",
+            "confidence": "high",
+            "explanation_zh": "「以前很怕」是過去的狀態，現在已經不同，所以用 used to be afraid of + V-ing；「後來才發現」用 later discovered that ...。「在語言交換應用程式上聊天很有趣」是一般性的感受，所以子句用現在式 is a lot of fun；也可以用過去式配合主要子句，但現在式更符合中文語意。"
+          },
+          "2": {
+            "translation": "My language partner is a seventy-year-old British man who often asks me how people in Taiwan celebrate holidays.",
+            "confidence": "high",
+            "explanation_zh": "「七十歲的英國人」用連字號形容詞 seventy-year-old，單位不加 s；人物用 who 接非限定性的描述，「他常問我……」變成 who often asks me ...；「台灣人怎麼過節」是間接問句，語序要改成 how people in Taiwan celebrate holidays，不能倒裝。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "BASIC",
+              "NCL"
+            ],
+            "used_target_words": [
+              "afraid",
+              "speak",
+              "find",
+              "chat",
+              "exchange",
+              "fun"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "BASIC",
+              "NCL"
+            ],
+            "used_target_words": [
+              "partner",
+              "old",
+              "ask",
+              "celebrate",
+              "festival"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "afraid",
+              "speak",
+              "find",
+              "chat",
+              "exchange",
+              "fun"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "BASIC": null,
+              "NCL": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "partner",
+              "old",
+              "ask",
+              "celebrate",
+              "festival"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "BASIC": null,
+              "NCL": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

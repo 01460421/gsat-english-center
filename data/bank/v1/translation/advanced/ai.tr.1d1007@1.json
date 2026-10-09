@@ -1,0 +1,760 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.1d1007",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "advanced",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "雖然暖身只要幾分鐘，跳過它卻是青少年運動受傷的主因。",
+        "options": null,
+        "answer": "Although warming up takes only a few minutes, skipping it is the main cause of sports injuries among teenagers.",
+        "accepted_answers": [
+          "Even though a warm-up only takes a few minutes, skipping it is the main reason why teenagers get hurt in sports.",
+          "Though it takes just a few minutes to warm up, skipping warm-ups is the major cause of teenagers' sports injuries."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "讓步子句",
+            "動名詞當主詞"
+          ],
+          "topic": "運動傷害"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "運動前暖身很重要，因為還沒熱開的肌肉常常僵硬到很容易受傷。",
+        "options": null,
+        "answer": "It is important to warm up before exercising, because cold muscles are often so stiff that they get hurt easily.",
+        "accepted_answers": [
+          "It is important to warm up before exercise because muscles that are still cold are often so stiff that they get injured easily.",
+          "It is important to warm up before working out, since cold muscles are usually so stiff that they can easily get hurt."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "虛主詞 It",
+            "so … that"
+          ],
+          "topic": "運動傷害"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "運動傷害"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「雖然…卻…」英文只用一個連接詞：Although／Even though + 子句，後面的主要子句不再加 but。「跳過它卻是…的主因」主詞是動詞片語「跳過它」，英文改成動名詞 skipping it，後面接單數動詞 is。「運動受傷」當名詞用 sports injuries（injure 是動詞）。",
+          "evidence": [
+            "雖然",
+            "跳過它",
+            "主因"
+          ],
+          "strategy_zh": "中文主詞是「做某件事」時，英文用 V-ing（或 To + VR）當主詞，動詞用單數。",
+          "hints": [
+            "切成四段：雖然暖身只要幾分鐘／跳過它卻是／青少年運動受傷的／主因",
+            "標的詞彙：warm up（暖身，L1）、minute（分鐘，L1）、skip（跳過，L3）、cause（原因，L2）、injury（受傷，L3）、teenager（青少年，L1）",
+            "句型框架：Although + S + V, V-ing … + is + the main cause of …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「運動前暖身很重要」主詞是動詞片語，英文用虛主詞：It is important to warm up before exercising（也可以寫 Warming up before exercising is important）。「僵硬到很容易受傷」是「so + 形容詞 + that + 子句」表結果，so 不能換成 very；「還沒熱開的肌肉」可以說 cold muscles 或 muscles that are not warmed up。",
+          "evidence": [
+            "運動前暖身很重要",
+            "僵硬到很容易受傷"
+          ],
+          "strategy_zh": "「做某事很＋形容詞」想 It is + adj. + to VR；「…到（結果）」想 so + adj. + that。",
+          "hints": [
+            "切成四段：運動前暖身很重要／因為還沒熱開的肌肉／常常僵硬到／很容易受傷",
+            "標的詞彙：important（重要的，L1）、warm up（暖身，L1）、exercise（運動，L1）、muscle（肌肉，L3）、stiff（僵硬的，L3）、hurt（受傷，L1）、easily（容易地，L1）",
+            "句型框架：It is + adj. + to VR …, because + S + be + so + adj. + that + S + V"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "Although warming up takes only a few minutes, skipping it is the main cause of sports injuries among teenagers.",
+            "Even though a warm-up only takes a few minutes, skipping it is the main reason why teenagers get hurt in sports.",
+            "Though it takes just a few minutes to warm up, skipping warm-ups is the major cause of teenagers' sports injuries."
+          ],
+          "target_words": [
+            {
+              "word": "warm up",
+              "zh": "暖身",
+              "alternatives": [
+                "warm-up"
+              ]
+            },
+            {
+              "word": "minute",
+              "zh": "分鐘"
+            },
+            {
+              "word": "skip",
+              "zh": "跳過"
+            },
+            {
+              "word": "cause",
+              "zh": "原因",
+              "alternatives": [
+                "reason"
+              ]
+            },
+            {
+              "word": "injury",
+              "zh": "受傷",
+              "alternatives": [
+                "hurt",
+                "injure"
+              ]
+            },
+            {
+              "word": "teenager",
+              "zh": "青少年",
+              "alternatives": [
+                "teen"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "ADVCL",
+              "grammar_id": "gp-concession-clause",
+              "label_zh": "讓步子句（Although／Even though + S + V）",
+              "frame": "Although + S + V, S + V",
+              "zh_trigger": "雖然"
+            },
+            {
+              "code": "NFSUBJ",
+              "grammar_id": "gp-gerund-subject",
+              "label_zh": "動名詞片語當主詞",
+              "frame": "V-ing … + is …",
+              "zh_trigger": "跳過它"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "雖然暖身只要幾分鐘",
+              "accepted": [
+                "Although warming up takes only a few minutes",
+                "Even though a warm-up only takes a few minutes",
+                "Though it takes just a few minutes to warm up",
+                "Although warming up only takes a few minutes",
+                "Although it only takes a few minutes to warm up",
+                "Even though warming up takes only a few minutes",
+                "Although a warm-up takes just a few minutes"
+              ],
+              "targets": [
+                "warm up",
+                "minute",
+                "ADVCL"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Although warm up takes only a few minutes",
+                  "right": "Although warming up takes only a few minutes",
+                  "explanation_zh": "「暖身」在這裡當主詞，要用動名詞 warming up（或名詞 a warm-up）。"
+                },
+                {
+                  "wrong": "Although warming up takes only a few minute",
+                  "right": "Although warming up takes only a few minutes",
+                  "explanation_zh": "a few 後面接複數名詞 minutes。"
+                }
+              ]
+            },
+            {
+              "zh": "跳過它卻是",
+              "accepted": [
+                "skipping it is",
+                "skipping warm-ups is",
+                "skipping a warm-up is",
+                "skipping this step is"
+              ],
+              "targets": [
+                "skip",
+                "NFSUBJ"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "skip it is",
+                  "right": "skipping it is",
+                  "explanation_zh": "動詞片語不能直接當主詞，要改成動名詞 skipping it。"
+                },
+                {
+                  "wrong": "but skipping it is",
+                  "right": "skipping it is",
+                  "explanation_zh": "although 和 but 不能同時用；「雖然…卻…」英文只保留一個連接詞。"
+                }
+              ]
+            },
+            {
+              "zh": "青少年運動受傷的",
+              "accepted": [
+                "of sports injuries among teenagers",
+                "why teenagers get hurt in sports",
+                "of teenagers' sports injuries",
+                "of sports injuries in teenagers",
+                "why teenagers get injured in sports",
+                "of teenagers getting hurt in sports",
+                "of sports injuries among teens"
+              ],
+              "targets": [
+                "teenager",
+                "injury"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "of teenagers' sports injure",
+                  "right": "of teenagers' sports injuries",
+                  "explanation_zh": "injure 是動詞，「受傷」當名詞要用 injury（複數 injuries）。"
+                },
+                {
+                  "wrong": "of teenagers sport hurt",
+                  "right": "of sports injuries among teenagers",
+                  "explanation_zh": "「運動受傷」當名詞用 sports injuries；hurt 很少當這種名詞用。"
+                }
+              ]
+            },
+            {
+              "zh": "主因",
+              "accepted": [
+                "the main cause",
+                "the main reason",
+                "the major cause",
+                "a major cause",
+                "one of the main causes",
+                "the biggest cause",
+                "a main cause"
+              ],
+              "targets": [
+                "cause"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "the main reason of sports injuries",
+                  "right": "the main reason for sports injuries",
+                  "explanation_zh": "reason 後面接 for 或 why 子句，不接 of。"
+                },
+                {
+                  "wrong": "the most main cause",
+                  "right": "the main cause",
+                  "explanation_zh": "main 本身就是「主要的」，不再加 most。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "verbal_subject",
+              "zh": "跳過它",
+              "literal_error": "Although warming up takes only a few minutes, skip it is the main cause of sports injuries among teenagers.",
+              "part": 2,
+              "explanation_zh": "中文主詞是動詞片語「跳過它」，照字面寫 skip it is 不合文法；要改成動名詞 skipping it。"
+            },
+            {
+              "type": "word_form",
+              "zh": "受傷",
+              "literal_error": "Although warming up takes only a few minutes, skipping it is the main cause of teenagers' sports injure.",
+              "part": 3,
+              "explanation_zh": "「受傷」在這裡是名詞，要用 injury／injuries，injure 是動詞。"
+            }
+          ],
+          "bonus": [],
+          "restructuring_zh": "「跳過它」是動詞片語當主詞，英文要改成動名詞 skipping it；「青少年運動受傷的主因」也要改成 the main cause of sports injuries among teenagers，把修飾語移到後面。"
+        },
+        "2": {
+          "references": [
+            "It is important to warm up before exercising, because cold muscles are often so stiff that they get hurt easily.",
+            "It is important to warm up before exercise because muscles that are still cold are often so stiff that they get injured easily.",
+            "It is important to warm up before working out, since cold muscles are usually so stiff that they can easily get hurt."
+          ],
+          "target_words": [
+            {
+              "word": "important",
+              "zh": "重要的"
+            },
+            {
+              "word": "warm up",
+              "zh": "暖身",
+              "alternatives": [
+                "warm-up"
+              ]
+            },
+            {
+              "word": "exercise",
+              "zh": "運動",
+              "alternatives": [
+                "work out"
+              ]
+            },
+            {
+              "word": "muscle",
+              "zh": "肌肉"
+            },
+            {
+              "word": "stiff",
+              "zh": "僵硬的",
+              "alternatives": [
+                "tight"
+              ]
+            },
+            {
+              "word": "hurt",
+              "zh": "受傷",
+              "alternatives": [
+                "injure",
+                "injury"
+              ]
+            },
+            {
+              "word": "easily",
+              "zh": "容易地",
+              "alternatives": [
+                "easy"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "NFSUBJ",
+              "grammar_id": "gp-it-adj-to",
+              "label_zh": "虛主詞 It＋形容詞＋不定詞",
+              "frame": "It is + adj. + to VR …",
+              "zh_trigger": "運動前暖身很重要"
+            },
+            {
+              "code": "ADVCL",
+              "grammar_id": "gp-so-such-that",
+              "label_zh": "結果：so + 形容詞 + that …",
+              "frame": "S + be + so + adj. + that + S + V",
+              "zh_trigger": "僵硬到很容易受傷"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "運動前暖身很重要",
+              "accepted": [
+                "It is important to warm up before exercising",
+                "It is important to warm up before exercise",
+                "It is important to warm up before working out",
+                "It is important to warm up before you exercise",
+                "It is important to warm up before doing exercise",
+                "Warming up before exercising is important",
+                "It is very important to warm up before exercising"
+              ],
+              "targets": [
+                "important",
+                "warm up",
+                "exercise",
+                "NFSUBJ"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Warm up before exercising is very important",
+                  "right": "It is very important to warm up before exercising",
+                  "explanation_zh": "動詞片語不能直接當主詞；用虛主詞 It is important to …，或改成動名詞 Warming up …。"
+                },
+                {
+                  "wrong": "It is important warm up before exercising",
+                  "right": "It is important to warm up before exercising",
+                  "explanation_zh": "It is + 形容詞 + to + 原形動詞，不能漏掉 to。"
+                }
+              ]
+            },
+            {
+              "zh": "因為還沒熱開的肌肉",
+              "accepted": [
+                "because cold muscles",
+                "because muscles that are still cold",
+                "since cold muscles",
+                "as cold muscles",
+                "because muscles that are not warmed up",
+                "because muscles that have not been warmed up"
+              ],
+              "targets": [
+                "muscle"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "because not warmed up muscles",
+                  "right": "because muscles that are not warmed up",
+                  "explanation_zh": "長的修飾語不放在名詞前面，改用 that 子句，或直接說 cold muscles。"
+                },
+                {
+                  "wrong": "because the muscles not warm up",
+                  "right": "because muscles that are not warmed up",
+                  "explanation_zh": "少了關係代名詞和 be 動詞；肌肉是「被暖開」，寫成 that are not warmed up。"
+                }
+              ]
+            },
+            {
+              "zh": "常常僵硬到",
+              "accepted": [
+                "are often so stiff that",
+                "are usually so stiff that",
+                "are often so tight that",
+                "can be so stiff that",
+                "are so stiff that",
+                "often become so stiff that"
+              ],
+              "targets": [
+                "stiff",
+                "ADVCL"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "are often very stiff that",
+                  "right": "are often so stiff that",
+                  "explanation_zh": "「…到（結果）」用 so + 形容詞 + that，不用 very。"
+                },
+                {
+                  "wrong": "are often such stiff that",
+                  "right": "are often so stiff that",
+                  "explanation_zh": "such 後面接名詞；只有形容詞時用 so。"
+                }
+              ]
+            },
+            {
+              "zh": "很容易受傷",
+              "accepted": [
+                "they get hurt easily",
+                "they get injured easily",
+                "they can easily get hurt",
+                "they are easily injured",
+                "they easily get hurt",
+                "they are easily hurt",
+                "they can get hurt easily"
+              ],
+              "targets": [
+                "hurt",
+                "easily"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "they are easily to get hurt",
+                  "right": "they get hurt easily",
+                  "explanation_zh": "easily 是副詞，直接修飾 get hurt；be easily to … 不合文法。"
+                },
+                {
+                  "wrong": "they easily hurt",
+                  "right": "they easily get hurt",
+                  "explanation_zh": "肌肉是「受傷」，要用 get hurt 或 be injured；they easily hurt 會變成「容易疼痛／傷害別人」。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "verbal_subject",
+              "zh": "運動前暖身很重要",
+              "literal_error": "Warm up before exercising is very important, because cold muscles are often so stiff that they get hurt easily.",
+              "part": 1,
+              "explanation_zh": "中文主詞是動詞片語，照字面寫 Warm up … is 不合文法；用虛主詞 It is important to warm up …。"
+            },
+            {
+              "type": "collocation",
+              "zh": "僵硬到",
+              "literal_error": "It is important to warm up before exercising, because cold muscles are often very stiff that they get hurt easily.",
+              "part": 3,
+              "explanation_zh": "表示結果的「…到…」要用 so + 形容詞 + that，very 不能和 that 子句搭配。"
+            }
+          ],
+          "bonus": [],
+          "restructuring_zh": "「運動前暖身很重要」主詞是動詞片語，英文用虛主詞 It 開頭，把真正的主詞 to warm up before exercising 移到後面。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-advanced-03",
+    "lot": "translation-advanced-03",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "02c0a28073619c0bc20ca233498a317fe41127b7ed24b485e5a25ef485b7d3c2",
+    "spec_id": "translation-advanced@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T13:03:03Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T08:05:03Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Although warming up takes only a few minutes, skipping it is the main cause of sports injuries among teenagers.",
+            "confidence": "high",
+            "explanation_zh": "「雖然…卻…」英文只用 Although，不再加 but；「暖身只要幾分鐘」以動名詞 warming up 當主詞，搭配 take + 時間；「跳過它」也用動名詞 skipping it 當主詞；「青少年運動受傷的主因」譯 the main cause of sports injuries among teenagers。"
+          },
+          "2": {
+            "translation": "It is important to warm up before exercising because muscles that have not been warmed up are often so stiff that they get injured easily.",
+            "confidence": "high",
+            "explanation_zh": "「運動前暖身很重要」用虛主詞 It is important to V；「因為」用 because 副詞子句；「還沒熱開的肌肉」用 that 關係子句（現在完成被動）；「僵硬到很容易受傷」用 so + adj. + that 表程度結果。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "ADVCL",
+              "NFSUBJ"
+            ],
+            "used_target_words": [
+              "warm up",
+              "minute",
+              "skip",
+              "cause",
+              "injury",
+              "teenager"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "NFSUBJ",
+              "ADVCL"
+            ],
+            "used_target_words": [
+              "important",
+              "warm up",
+              "exercise",
+              "muscle",
+              "stiff",
+              "hurt",
+              "easily"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "warm up",
+              "minute",
+              "skip",
+              "cause",
+              "injury",
+              "teenager"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "ADVCL": true,
+              "NFSUBJ": true
+            },
+            "program_match": true
+          },
+          "2": {
+            "target_words_found": [
+              "important",
+              "warm up",
+              "exercise",
+              "muscle",
+              "stiff",
+              "hurt",
+              "easily"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NFSUBJ": true,
+              "ADVCL": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T00:00:00Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Although warming up takes only a few minutes, skipping it is the main cause of sports injuries among teenagers.",
+            "confidence": "high",
+            "explanation_zh": "「雖然……卻」只能用一個連接詞，所以用 Although 而不加 but；動名詞 warming up、skipping 當主詞；「主因」用 the main cause of。"
+          },
+          "2": {
+            "translation": "It is important to warm up before exercising because muscles that have not warmed up are often so stiff that they are easily injured.",
+            "confidence": "high",
+            "explanation_zh": "「運動前暖身很重要」用虛主詞 It is important to；「僵硬到很容易受傷」用 so…that… 結果子句；「還沒熱開的肌肉」用 that 關係子句修飾 muscles。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "ADVCL",
+              "NFSUBJ"
+            ],
+            "used_target_words": [
+              "warm up",
+              "minute",
+              "skip",
+              "cause",
+              "injury",
+              "teenager"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "NFSUBJ",
+              "ADVCL"
+            ],
+            "used_target_words": [
+              "important",
+              "warm up",
+              "exercise",
+              "muscle",
+              "stiff",
+              "hurt",
+              "easily"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "warm up",
+              "minute",
+              "skip",
+              "cause",
+              "injury",
+              "teenager"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "ADVCL": true,
+              "NFSUBJ": true
+            },
+            "program_match": true
+          },
+          "2": {
+            "target_words_found": [
+              "important",
+              "warm up",
+              "exercise",
+              "muscle",
+              "stiff",
+              "hurt",
+              "easily"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NFSUBJ": true,
+              "ADVCL": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

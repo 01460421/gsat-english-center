@@ -1,0 +1,800 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.181c34",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "advanced",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "和傳統商店相比，由機器經營的商店人力成本較低，營業時間也較長。",
+        "options": null,
+        "answer": "Compared with traditional stores, stores run by machines have lower labor costs and longer business hours.",
+        "accepted_answers": [
+          "Compared to traditional stores, those operated by machines have lower labor costs and can stay open longer.",
+          "Compared with traditional shops, shops run by machines spend less on labor and stay open for longer hours."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "相較於…（Compared with）",
+            "分詞片語後位修飾"
+          ],
+          "topic": "無人商店"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "試過這種商店後，許多長輩發現自己越常去，就越有信心。",
+        "options": null,
+        "answer": "After trying these stores, many senior citizens find that the more often they go, the more confident they feel.",
+        "accepted_answers": [
+          "After trying out such stores, many seniors find that the more often they go there, the more confident they become.",
+          "After trying this kind of store, many elderly people found that the more often they went, the more confident they felt."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "連接詞＋分詞（After + V-ing）",
+            "愈…愈…（the more …, the more …）"
+          ],
+          "topic": "無人商店"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "無人商店"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「和…相比」放句首用 Compared with／to + 名詞：Compared with traditional stores（用過去分詞 compared，不用 compare 或 comparing），後面的述語用比較級 lower、longer。「由機器經營的商店」中文把修飾語放在名詞前面，英文用過去分詞片語後位修飾：stores run (operated) by machines；商店是「被」經營，run 是過去分詞（意思等於 stores that are run by machines 省略 that are，本題練習較精簡的分詞片語）。為了不和前面的 stores 重複，也可以寫 those run by machines。「人力成本較低」是 have lower labor costs（或 spend less on labor）；「營業時間也較長」可以接在 have 後面寫 and longer business hours，或寫成 and can stay open longer。",
+          "evidence": [
+            "和傳統商店相比",
+            "由機器經營的商店"
+          ],
+          "strategy_zh": "「和…相比」放句首想 Compared with + N；「被…的＋名詞」想「名詞＋過去分詞片語」。",
+          "hints": [
+            "切成四段：和傳統商店相比／由機器經營的商店／人力成本較低／營業時間也較長",
+            "標的詞彙：traditional（傳統的）、machine（機器）、run（經營，也可用 operate）、labor（人力）、cost（成本）、hour（時間；business hours）",
+            "句型框架：Compared with + N, N + p.p. + by … + have + 比較級 + N … and + 比較級 + N"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「試過這種商店後」沒有主詞，試的人就是後面的「許多長輩」，英文用連接詞＋分詞 After trying these stores,（after 後面省略主詞時接 V-ing；也可以寫成分詞構句 Having tried these stores,），主要子句的主詞一定要是 many senior citizens（elderly people），否則會變成懸垂分詞。「發現自己越常去，就越有信心」是 find (that) 後面接「越…越…」：the more often they go, the more confident they feel；often、confident 要跟著 the more 移到各自子句的最前面，兩個 the 都不能省；「自己」不必譯出。",
+          "evidence": [
+            "試過這種商店後",
+            "越常去，就越有信心"
+          ],
+          "strategy_zh": "句首「…後／…時」沒有主詞、主詞在後面時，想 After／When + V-ing；「越…越…」先把兩個比較級各放到子句開頭。",
+          "hints": [
+            "切成四段：試過這種商店後／許多長輩發現／自己越常去／就越有信心",
+            "標的詞彙：try（嘗試）、store（商店）、senior（年長的；長輩，也可用 elderly）、find（發現）、confident（有信心的）",
+            "句型框架：After + V-ing …, S + find (that) + the more often + S + V, the more + adj. + S + V"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "Compared with traditional stores, stores run by machines have lower labor costs and longer business hours.",
+            "Compared to traditional stores, those operated by machines have lower labor costs and can stay open longer.",
+            "Compared with traditional shops, shops run by machines spend less on labor and stay open for longer hours."
+          ],
+          "target_words": [
+            {
+              "word": "traditional",
+              "zh": "傳統的",
+              "alternatives": [
+                "conventional",
+                "ordinary",
+                "regular"
+              ]
+            },
+            {
+              "word": "machine",
+              "zh": "機器"
+            },
+            {
+              "word": "run",
+              "zh": "經營",
+              "alternatives": [
+                "operate",
+                "manage"
+              ]
+            },
+            {
+              "word": "labor",
+              "zh": "人力；勞力",
+              "alternatives": [
+                "labour",
+                "staff",
+                "staffing",
+                "personnel",
+                "worker",
+                "employee"
+              ]
+            },
+            {
+              "word": "cost",
+              "zh": "成本",
+              "alternatives": [
+                "spend"
+              ]
+            },
+            {
+              "word": "hour",
+              "zh": "（營業）時間",
+              "alternatives": [
+                "open"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "COMP",
+              "grammar_id": "gp-compared-with",
+              "label_zh": "相較於…（Compared with + N）",
+              "frame": "Compared with/to + N, S + V + 比較級 …",
+              "zh_trigger": "和傳統商店相比"
+            },
+            {
+              "code": "PART",
+              "grammar_id": "gp-participle-modifier",
+              "label_zh": "分詞片語後位修飾（stores run by machines）",
+              "frame": "N + p.p. + by …（被…經營的 N）",
+              "zh_trigger": "由機器經營的商店"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "和傳統商店相比",
+              "accepted": [
+                "Compared with traditional stores",
+                "Compared to traditional stores",
+                "Compared with traditional shops",
+                "Compared to traditional shops",
+                "In comparison with traditional stores",
+                "Compared with conventional stores",
+                "Compared with ordinary stores",
+                "Compared with regular stores"
+              ],
+              "targets": [
+                "COMP",
+                "traditional"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Compare with traditional stores",
+                  "right": "Compared with traditional stores",
+                  "explanation_zh": "「和…相比」用過去分詞 Compared with／to 開頭；Compare 開頭會變成祈使句。"
+                },
+                {
+                  "wrong": "Comparing with traditional stores",
+                  "right": "Compared with traditional stores",
+                  "explanation_zh": "商店是「被拿來比較」的一方，用過去分詞 compared；comparing 表示主詞主動去比較。"
+                }
+              ]
+            },
+            {
+              "zh": "由機器經營的商店",
+              "accepted": [
+                "stores run by machines",
+                "those run by machines",
+                "stores operated by machines",
+                "those operated by machines",
+                "shops run by machines",
+                "shops operated by machines",
+                "stores managed by machines",
+                "those managed by machines"
+              ],
+              "targets": [
+                "PART",
+                "machine",
+                "run"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "run by machines stores",
+                  "right": "stores run by machines",
+                  "explanation_zh": "分詞片語 run by machines 要放在名詞 stores 後面修飾。"
+                },
+                {
+                  "wrong": "stores running by machines",
+                  "right": "stores run by machines",
+                  "explanation_zh": "商店是「被」經營，用過去分詞 run（被動），不用 running。"
+                }
+              ]
+            },
+            {
+              "zh": "人力成本較低",
+              "accepted": [
+                "have lower labor costs",
+                "have lower labour costs",
+                "have lower staff costs",
+                "have lower staffing costs",
+                "have lower personnel costs",
+                "have lower costs for labor",
+                "spend less on labor",
+                "spend less on staff",
+                "spend less on workers",
+                "cost less in labor"
+              ],
+              "targets": [
+                "labor",
+                "cost"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "have less labor costs",
+                  "right": "have lower labor costs",
+                  "explanation_zh": "成本的高低用 high／low，比較級是 lower costs；less 修飾不可數名詞。"
+                },
+                {
+                  "wrong": "have lower labor cost",
+                  "right": "have lower labor costs",
+                  "explanation_zh": "人力成本指薪水等各項開銷，通常用複數 costs。"
+                }
+              ]
+            },
+            {
+              "zh": "營業時間也較長",
+              "accepted": [
+                "and longer business hours",
+                "and longer opening hours",
+                "and longer operating hours",
+                "and can stay open longer",
+                "and stay open longer",
+                "and are open longer",
+                "and can stay open for longer hours",
+                "and stay open for longer hours",
+                "and are open for longer hours",
+                "and have longer business hours",
+                "and their business hours are longer",
+                "and they can stay open longer"
+              ],
+              "targets": [
+                "hour"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "and longer business time",
+                  "right": "and longer business hours",
+                  "explanation_zh": "「營業時間」是 business hours／opening hours，不說 business time。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "prenominal_modifier",
+              "zh": "由機器經營的商店",
+              "literal_error": "Compared with traditional stores, run by machines stores have lower labor costs and longer business hours.",
+              "part": 2,
+              "explanation_zh": "「由機器經營的商店」照中文把修飾語放在前面不通；英文用過去分詞片語後位修飾 stores run by machines。"
+            },
+            {
+              "type": "word_form",
+              "zh": "和傳統商店相比",
+              "literal_error": "Compare with traditional stores, stores run by machines have lower labor costs and longer business hours.",
+              "part": 1,
+              "explanation_zh": "「和…相比」放句首要用過去分詞 Compared with／to；Compare 開頭是祈使句。"
+            }
+          ],
+          "bonus": [],
+          "restructuring_zh": "「由機器經營的商店」是前置修飾，英文改成名詞＋過去分詞片語 stores run by machines（「…的＋名詞」改後位修飾）。"
+        },
+        "2": {
+          "references": [
+            "After trying these stores, many senior citizens find that the more often they go, the more confident they feel.",
+            "After trying out such stores, many seniors find that the more often they go there, the more confident they become.",
+            "After trying this kind of store, many elderly people found that the more often they went, the more confident they felt."
+          ],
+          "target_words": [
+            {
+              "word": "try",
+              "zh": "嘗試；試用",
+              "alternatives": [
+                "visit",
+                "use"
+              ]
+            },
+            {
+              "word": "store",
+              "zh": "商店",
+              "alternatives": [
+                "shop"
+              ]
+            },
+            {
+              "word": "senior",
+              "zh": "長輩；年長的",
+              "alternatives": [
+                "elderly",
+                "old",
+                "older",
+                "elder",
+                "elders"
+              ]
+            },
+            {
+              "word": "find",
+              "zh": "發現",
+              "alternatives": [
+                "discover",
+                "realize",
+                "notice"
+              ]
+            },
+            {
+              "word": "confident",
+              "zh": "有信心的",
+              "alternatives": [
+                "confidence"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PART",
+              "grammar_id": "gp-conj-participle",
+              "label_zh": "連接詞＋分詞（After trying …）",
+              "frame": "After + V-ing …, S + V …（分詞的意義主詞＝主要子句主詞）",
+              "zh_trigger": "試過這種商店後"
+            },
+            {
+              "code": "COMP",
+              "grammar_id": "gp-the-more",
+              "label_zh": "愈…愈…（the more often …, the more confident …）",
+              "frame": "S + find (that) + the + 比較級 + S + V, the + 比較級 + S + V",
+              "zh_trigger": "越常去，就越有信心"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "試過這種商店後",
+              "accepted": [
+                "After trying these stores",
+                "After trying such stores",
+                "After trying this kind of store",
+                "After trying this type of store",
+                "After trying out these stores",
+                "After trying out such stores",
+                "After trying out this kind of store",
+                "After trying stores like these",
+                "After trying stores like this",
+                "After having tried these stores",
+                "After giving these stores a try",
+                "After giving such stores a try",
+                "Having tried these stores",
+                "Having tried such stores",
+                "After visiting these stores",
+                "After using these stores",
+                "After shopping at these stores"
+              ],
+              "targets": [
+                "PART",
+                "try",
+                "store"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "After try these stores",
+                  "right": "After trying these stores",
+                  "explanation_zh": "after 後面省略主詞時接 V-ing（trying），不接原形動詞。"
+                },
+                {
+                  "wrong": "After tried these stores",
+                  "right": "After trying these stores",
+                  "explanation_zh": "省略主詞以後要用 V-ing；tried 前面沒有主詞，不能當動詞。"
+                }
+              ]
+            },
+            {
+              "zh": "許多長輩發現",
+              "accepted": [
+                "many senior citizens find",
+                "many seniors find",
+                "many elderly people find",
+                "many older people find",
+                "many senior citizens found",
+                "many seniors found",
+                "many elderly people found",
+                "many older people found",
+                "many senior citizens have found",
+                "many seniors have found",
+                "many elderly people have found",
+                "many older people have found",
+                "a lot of elderly people find",
+                "many of the elderly find",
+                "many elderly people realize",
+                "many elderly people discover"
+              ],
+              "targets": [
+                "senior",
+                "find"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "many elderly people finds",
+                  "right": "many elderly people find",
+                  "explanation_zh": "people 是複數，現在式動詞不加 s。"
+                },
+                {
+                  "wrong": "many elderly find themselves",
+                  "right": "many elderly people find",
+                  "explanation_zh": "「發現自己越常去…」的「自己」不必譯成 themselves，find 後面直接接 that 子句。"
+                }
+              ]
+            },
+            {
+              "zh": "自己越常去",
+              "accepted": [
+                "the more often they go",
+                "the more they go",
+                "the more often they went",
+                "the more they went",
+                "the more often they visit",
+                "the more often they visited",
+                "the more frequently they go",
+                "the more they visit",
+                "the more often they shop there",
+                "the more they shop there",
+                "the more often they use them",
+                "the more they use them"
+              ],
+              "targets": [
+                "COMP"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "the more they go often",
+                  "right": "the more often they go",
+                  "explanation_zh": "「越常」是 the more often，often 要跟著 the more 移到子句最前面。"
+                },
+                {
+                  "wrong": "more often they go",
+                  "right": "the more often they go",
+                  "explanation_zh": "「越…越…」兩個子句的開頭都要有 the。"
+                }
+              ]
+            },
+            {
+              "zh": "就越有信心",
+              "accepted": [
+                "the more confident they feel",
+                "the more confident they become",
+                "the more confident they get",
+                "the more confident they are",
+                "the more confident they felt",
+                "the more confident they became",
+                "the more confidence they have",
+                "the more confidence they gain",
+                "the more confidence they had"
+              ],
+              "targets": [
+                "COMP",
+                "confident"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "the more they feel confident",
+                  "right": "the more confident they feel",
+                  "explanation_zh": "「the + 比較級」要把形容詞 confident 一起移到子句最前面：the more confident they feel。"
+                },
+                {
+                  "wrong": "the more confidence they feel",
+                  "right": "the more confident they feel",
+                  "explanation_zh": "feel 後面接形容詞 confident；名詞 confidence 搭配 have／gain。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "subjectless",
+              "zh": "試過這種商店後",
+              "literal_error": "After try these stores, many elderly people find themselves the more often go, the more confident.",
+              "part": 1,
+              "explanation_zh": "「試過…後」沒有主詞，英文用 After + V-ing（After trying …），主要子句的主詞必須是試的人 many senior citizens。"
+            },
+            {
+              "type": "word_form",
+              "zh": "就越有信心",
+              "literal_error": "After trying these stores, many senior citizens find that the more often they go, the more they have confident.",
+              "part": 4,
+              "explanation_zh": "confident 是形容詞，要和 the more 一起放在子句開頭：the more confident they feel；用名詞要寫 the more confidence they have。"
+            }
+          ],
+          "bonus": [],
+          "restructuring_zh": "「試過這種商店後」沒有主詞，英文改成 After trying these stores（連接詞＋分詞），分詞的意義主詞就是主要子句的 many senior citizens。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-advanced-04-regen",
+    "lot": "translation-advanced-04",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "5341afc25d344c7e86c5f6768889faff79ec168d1da075e82edf61baf41c0b1f",
+    "spec_id": "translation-advanced@2026-10-09",
+    "regenerated_from": "ai.tr.7b1a19"
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T14:18:28Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "warn",
+      "created_at": "2026-10-09T14:12:13Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Compared with traditional stores, stores run by machines have lower labor costs and longer business hours.",
+            "confidence": "high",
+            "explanation_zh": "「和……相比」用過去分詞片語 Compared with…；「由機器經營的商店」用過去分詞後位修飾 stores run by machines；「較低、較長」用比較級 lower、longer，兩個受詞用 and 並列（也可說 stay open longer）。"
+          },
+          "2": {
+            "translation": "After trying this kind of store, many elderly people found that the more often they went there, the more confident they became.",
+            "confidence": "high",
+            "explanation_zh": "「試過……後」用介系詞 after 加動名詞 trying；「越……就越……」用 the + 比較級…, the + 比較級… 句型，放在 found that 的名詞子句裡；敘述過去的經驗，時態用過去式（也可用 have found…go…feel）。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "COMP",
+              "PART"
+            ],
+            "used_target_words": [
+              "traditional",
+              "machine",
+              "run",
+              "labor",
+              "cost",
+              "hour"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "第 2 部分「由機器經營的商店」的可接受寫法只有 stores／shops／those + run／operated／managed by machines，少了意思完全正確、也很自然的 automated stores、machine-run stores（無人商店 unmanned stores）；學生這樣寫雖然沒用到 PART 句型，但達意正確，照學測給分原則不該扣這 1 分，建議補進 accepted 並在解析說明標的句型是後位分詞修飾。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "PART",
+              "COMP"
+            ],
+            "used_target_words": [
+              "try",
+              "store",
+              "senior",
+              "find",
+              "confident"
+            ],
+            "within_accepted": true,
+            "closest_reference": 2,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "（分類小建議，不影響判定）After trying … 標成 PART（gp-conj-participle）；README 另有 PREPVING（介系詞＋V-ing）代碼，after 在這裡也可以看成介系詞。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "traditional",
+              "machine",
+              "run",
+              "labor",
+              "cost",
+              "hour"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "COMP": true,
+              "PART": true
+            },
+            "program_match": true
+          },
+          "2": {
+            "target_words_found": [
+              "try",
+              "store",
+              "senior",
+              "find",
+              "confident"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PART": true,
+              "COMP": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 1 題驗證者對4 部分切分有意見（warn）：第 2 部分「由機器經營的商店」的可接受寫法只有 stores／shops／those + run／operated／managed by machines，少了意思完全正確、也很自然的 automated stores、machine-r"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T14:13:00Z",
+      "details": {
+        "solver": "B",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Compared with traditional stores, stores run by machines have lower labor costs and longer opening hours.",
+            "confidence": "high",
+            "explanation_zh": "「和傳統商店相比」用 Compared with ... 開頭的過去分詞片語；「由機器經營的商店」用過去分詞後置修飾 stores run by machines；「人力成本較低，營業時間也較長」用兩個比較級名詞片語並列：lower labor costs and longer opening hours，結構對稱。"
+          },
+          "2": {
+            "translation": "After trying this kind of store, many elderly people find that the more often they go there, the more confident they become.",
+            "confidence": "high",
+            "explanation_zh": "「越……，就越……」用 the + 比較級, the + 比較級：the more often they go there, the more confident they become。「試過這種商店後」用 After + V-ing，主詞與主要子句相同（長輩）；「發現」用 find that ... 接名詞子句。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "COMP",
+              "PART"
+            ],
+            "used_target_words": [
+              "traditional",
+              "machine",
+              "run",
+              "labor",
+              "cost",
+              "hour"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PART",
+              "COMP"
+            ],
+            "used_target_words": [
+              "try",
+              "store",
+              "senior",
+              "find",
+              "confident"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "traditional",
+              "machine",
+              "run",
+              "labor",
+              "cost",
+              "hour"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "COMP": true,
+              "PART": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "try",
+              "store",
+              "senior",
+              "find",
+              "confident"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PART": true,
+              "COMP": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

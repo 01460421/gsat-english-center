@@ -1,0 +1,774 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.60e75b",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "top",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "對想回饋社會的人來說，志工旅遊（voluntourism）結合了旅行與服務，這正是它日益流行的原因。",
+        "options": null,
+        "answer": "For those who want to contribute to society, voluntourism combines travel with volunteer work, which is why it is increasingly popular.",
+        "accepted_answers": [
+          "For those who wish to give back to society, voluntourism combines traveling and volunteering, which explains why it is becoming more and more popular.",
+          "For those who hope to give something back to society, voluntourism brings together travel and service, which is exactly why it is growing in popularity."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "For those who …",
+            "非限定關係子句（, which is why …）"
+          ],
+          "topic": "志工旅遊"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "然而，短期志工為當地社區蓋的學校，往往在他們離開後因缺乏維護而被棄置。",
+        "options": null,
+        "answer": "However, the schools that short-term volunteers build for local communities are often abandoned after the volunteers leave due to a lack of maintenance.",
+        "accepted_answers": [
+          "However, the schools which short-term volunteers build for local communities are often left unused after they leave because of a lack of maintenance.",
+          "However, the schools that short-term volunteers put up for local communities are often abandoned once they leave, as no one maintains them."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "關係代名詞 that（受格）",
+            "被動語態"
+          ],
+          "topic": "志工旅遊"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "志工旅遊"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「對…的人來說」用 For those who + V …（those 指「那些人」，後面接 who 子句）；「回饋社會」是 give back to society／contribute to society。「結合 A 與 B」用 combine A with B（或 combine A and B）。句尾「這正是它日益流行的原因」指前面整件事，用非限定關係子句 , which is why it is increasingly popular（which is why＝這就是為什麼）。「志工旅遊」題目已附英文 voluntourism。",
+          "evidence": [
+            "對想回饋社會的人來說",
+            "這正是它日益流行的原因"
+          ],
+          "strategy_zh": "「對…的人來說」→ For those who + V；「這正是…的原因」接在句尾 → , which is why + S + V。",
+          "hints": [
+            "切成四段：對想回饋社會的人來說／志工旅遊結合了旅行與服務／這正是／它日益流行的原因",
+            "標的詞彙：contribute／give back（回饋）、society（社會）、combine（結合）、travel（旅行）、service（服務）、popular（流行的）",
+            "句型框架：For those who + V …, S + combines A with B, which is why + S + V …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "主詞是「學校」，修飾語「短期志工為當地社區蓋的」改成關係子句 the schools that short-term volunteers build for local communities（that 是受格關代，可省略）。學校是「被」棄置，用被動 are (often) abandoned／are left unused。「在他們離開後」用 after the volunteers leave（時間子句用現在式）；「因缺乏維護」用 due to／because of a lack of maintenance。",
+          "evidence": [
+            "短期志工為當地社區蓋的學校",
+            "而被棄置"
+          ],
+          "strategy_zh": "先找出真正的主詞（學校）和主要動詞（被棄置），英文主詞＋動詞先寫，時間、原因放後面。",
+          "hints": [
+            "切成四段：然而，短期志工為當地社區蓋的學校／在他們離開後／因缺乏維護／而被棄置（英文順序：學校＋被棄置＋離開後＋原因）",
+            "標的詞彙：short-term（短期的）、volunteer（志工）、build（建造）、community（社區）、leave（離開）、lack（缺乏）、maintenance（維護）、abandon（棄置）",
+            "句型框架：However, the + N + that + S + V … + are often p.p. + after … + due to a lack of + N"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "For those who want to contribute to society, voluntourism combines travel with volunteer work, which is why it is increasingly popular.",
+            "For those who wish to give back to society, voluntourism combines traveling and volunteering, which explains why it is becoming more and more popular.",
+            "For those who hope to give something back to society, voluntourism brings together travel and service, which is exactly why it is growing in popularity."
+          ],
+          "target_words": [
+            {
+              "word": "contribute",
+              "zh": "回饋、貢獻",
+              "alternatives": [
+                "give back",
+                "give sth back"
+              ]
+            },
+            {
+              "word": "society",
+              "zh": "社會"
+            },
+            {
+              "word": "combine",
+              "zh": "結合",
+              "alternatives": [
+                "bring together",
+                "mix"
+              ]
+            },
+            {
+              "word": "travel",
+              "zh": "旅行"
+            },
+            {
+              "word": "service",
+              "zh": "服務",
+              "alternatives": [
+                "volunteer",
+                "volunteering"
+              ]
+            },
+            {
+              "word": "popular",
+              "zh": "流行的",
+              "alternatives": [
+                "popularity"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "REL",
+              "grammar_id": "gp-for-those-who",
+              "label_zh": "對於…的人而言（For those who）",
+              "frame": "For those who + V …, S + V …",
+              "zh_trigger": "對想回饋社會的人來說"
+            },
+            {
+              "code": "NRREL",
+              "grammar_id": "gp-nonrestrictive",
+              "label_zh": "非限定關係子句（, which is why …）",
+              "frame": "S + V …, which is why + S + V …",
+              "zh_trigger": "這正是它日益流行的原因"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "對想回饋社會的人來說",
+              "accepted": [
+                "For those who want to contribute to society",
+                "For those who wish to give back to society",
+                "For those who hope to give something back to society",
+                "For those who want to give back to society"
+              ],
+              "targets": [
+                "REL",
+                "contribute",
+                "society"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "For those want to contribute to society",
+                  "right": "For those who want to contribute to society",
+                  "explanation_zh": "those 後面要用 who 引導子句（those who + V），who 不能省略。"
+                },
+                {
+                  "wrong": "For those who want to feedback society",
+                  "right": "For those who want to give back to society",
+                  "explanation_zh": "「回饋社會」是 give back to society／contribute to society；feedback 是名詞「意見回饋」。"
+                }
+              ]
+            },
+            {
+              "zh": "結合了旅行與服務",
+              "accepted": [
+                "voluntourism combines travel with volunteer work",
+                "voluntourism combines traveling and volunteering",
+                "voluntourism brings together travel and service",
+                "voluntourism combines travel and service"
+              ],
+              "targets": [
+                "combine",
+                "travel",
+                "service"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "voluntourism combines travel and serve",
+                  "right": "voluntourism combines travel and service",
+                  "explanation_zh": "and 前後要對等：travel（名詞）配 service（名詞），或 traveling 配 volunteering。"
+                },
+                {
+                  "wrong": "voluntourism combine travel with volunteer work",
+                  "right": "voluntourism combines travel with volunteer work",
+                  "explanation_zh": "主詞 voluntourism 是單數，動詞加 s。"
+                }
+              ]
+            },
+            {
+              "zh": "這正是",
+              "accepted": [
+                "which is why",
+                "which explains why",
+                "which is exactly why"
+              ],
+              "targets": [
+                "NRREL"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "this is why",
+                  "right": "which is why",
+                  "explanation_zh": "逗號後面用 this 會變成兩個句子硬接；用 which 指前面整件事：which is why …。"
+                },
+                {
+                  "wrong": "which is the reason why that",
+                  "right": "which is why",
+                  "explanation_zh": "the reason why 和 that 不要同時用；寫 which is why 最簡潔。"
+                }
+              ]
+            },
+            {
+              "zh": "它日益流行的原因",
+              "accepted": [
+                "it is increasingly popular",
+                "it is becoming more and more popular",
+                "it is growing in popularity",
+                "it has become increasingly popular"
+              ],
+              "targets": [
+                "popular"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "it is more and more popularity",
+                  "right": "it is becoming more and more popular",
+                  "explanation_zh": "be 動詞後面接形容詞 popular；popularity 是名詞（grow in popularity）。"
+                },
+                {
+                  "wrong": "it popular increasingly",
+                  "right": "it is increasingly popular",
+                  "explanation_zh": "popular 是形容詞，前面要有 be 動詞；副詞 increasingly 放在形容詞前面。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "collocation",
+              "zh": "回饋社會",
+              "literal_error": "For those who want to feedback the society, voluntourism …",
+              "part": 1,
+              "explanation_zh": "「回饋社會」是把自己得到的回報給社會，用 give back to society 或 contribute to society；feedback 是名詞，意思是「意見回饋」。"
+            },
+            {
+              "type": "word_form",
+              "zh": "日益流行",
+              "literal_error": "…, which is why it is more and more popularity.",
+              "part": 4,
+              "explanation_zh": "「流行」在 be 動詞後面要用形容詞 popular；名詞 popularity 要搭配 grow in popularity。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "For those eager to give back, voluntourism blends travel with service, which accounts for its growing popularity.",
+              "grammar_id": "gp-for-those-who",
+              "explanation_zh": "those eager to …（省略 who are）、blend … with …（融合）、which accounts for（這說明了）讓句子更精簡。"
+            }
+          ],
+          "restructuring_zh": "「這正是它日益流行的原因」不要譯成 This is the reason … 另起一句，改成 , which is why it is increasingly popular，把「原因」轉成 why 子句。"
+        },
+        "2": {
+          "references": [
+            "However, the schools that short-term volunteers build for local communities are often abandoned after the volunteers leave due to a lack of maintenance.",
+            "However, the schools which short-term volunteers build for local communities are often left unused after they leave because of a lack of maintenance.",
+            "However, the schools that short-term volunteers put up for local communities are often abandoned once they leave, as no one maintains them."
+          ],
+          "target_words": [
+            {
+              "word": "short-term",
+              "zh": "短期的"
+            },
+            {
+              "word": "volunteer",
+              "zh": "志工"
+            },
+            {
+              "word": "build",
+              "zh": "蓋、建造",
+              "alternatives": [
+                "put up"
+              ]
+            },
+            {
+              "word": "community",
+              "zh": "社區"
+            },
+            {
+              "word": "leave",
+              "zh": "離開"
+            },
+            {
+              "word": "lack",
+              "zh": "缺乏",
+              "alternatives": [
+                "no one"
+              ]
+            },
+            {
+              "word": "maintenance",
+              "zh": "維護",
+              "alternatives": [
+                "maintain"
+              ]
+            },
+            {
+              "word": "abandon",
+              "zh": "棄置",
+              "alternatives": [
+                "leave unused",
+                "leave empty",
+                "desert"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "REL",
+              "grammar_id": "gp-relative-pronoun",
+              "label_zh": "關係代名詞 that 引導的形容詞子句（受格，可省略）",
+              "frame": "the + N + (that) + S + V …",
+              "zh_trigger": "短期志工為當地社區蓋的學校"
+            },
+            {
+              "code": "PASS",
+              "grammar_id": "gp-passive",
+              "label_zh": "被動語態（被棄置）",
+              "frame": "S + are (often) + p.p. …",
+              "zh_trigger": "而被棄置"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "然而，短期志工為當地社區蓋的學校",
+              "accepted": [
+                "However, the schools that short-term volunteers build for local communities",
+                "However, the schools which short-term volunteers build for local communities",
+                "However, the schools that short-term volunteers put up for local communities",
+                "However, the schools short-term volunteers build for local communities"
+              ],
+              "targets": [
+                "REL",
+                "short-term",
+                "volunteer",
+                "build",
+                "community"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "However, short-term volunteers build schools for local communities",
+                  "right": "However, the schools that short-term volunteers build for local communities",
+                  "explanation_zh": "這一句的主詞是「學校」，「短期志工為當地社區蓋的」是修飾語，要寫成 the schools that … build；照中文順序寫會變成志工當主詞，後面的「被棄置」接不上。"
+                },
+                {
+                  "wrong": "the schools that short-term volunteers build them",
+                  "right": "the schools that short-term volunteers build",
+                  "explanation_zh": "that 已經代替受詞 schools，子句裡不可再寫 them。"
+                }
+              ]
+            },
+            {
+              "zh": "在他們離開後",
+              "accepted": [
+                "after the volunteers leave",
+                "after they leave",
+                "once they leave",
+                "after the volunteers have left"
+              ],
+              "targets": [
+                "leave"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "after they will leave",
+                  "right": "after they leave",
+                  "explanation_zh": "時間副詞子句用現在式代替未來式。"
+                },
+                {
+                  "wrong": "after they leaving",
+                  "right": "after they leave",
+                  "explanation_zh": "after 後面接子句要有完整的動詞：after they leave。"
+                }
+              ]
+            },
+            {
+              "zh": "因缺乏維護",
+              "accepted": [
+                "due to a lack of maintenance",
+                "because of a lack of maintenance",
+                "as no one maintains them",
+                "for lack of maintenance"
+              ],
+              "targets": [
+                "lack",
+                "maintenance"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "because lack of maintenance",
+                  "right": "because of a lack of maintenance",
+                  "explanation_zh": "because 後面接子句；接名詞片語要用 because of／due to。"
+                },
+                {
+                  "wrong": "due to lack maintain",
+                  "right": "due to a lack of maintenance",
+                  "explanation_zh": "「缺乏維護」是名詞片語 a lack of maintenance；maintain 是動詞。"
+                }
+              ]
+            },
+            {
+              "zh": "而被棄置",
+              "accepted": [
+                "are often abandoned",
+                "are often left unused",
+                "are often left empty"
+              ],
+              "targets": [
+                "PASS",
+                "abandon"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "often abandon",
+                  "right": "are often abandoned",
+                  "explanation_zh": "學校是「被」棄置，要用被動語態 be + p.p.。"
+                },
+                {
+                  "wrong": "are often been abandoned",
+                  "right": "are often abandoned",
+                  "explanation_zh": "現在式被動是 are abandoned，are 和 been 不能同時用。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "abstract_nominal",
+              "zh": "缺乏維護",
+              "literal_error": "… are often abandoned after the volunteers leave due to lack maintain.",
+              "part": 3,
+              "explanation_zh": "「維護」在這裡是名詞，due to 後面接名詞片語 a lack of maintenance；寫成動詞 maintain 是詞性錯誤。"
+            },
+            {
+              "type": "prenominal_modifier",
+              "zh": "短期志工為當地社區蓋的學校",
+              "literal_error": "However, short-term volunteers built for local communities schools are often abandoned …",
+              "part": 1,
+              "explanation_zh": "「…蓋的學校」中文修飾語在前；英文先寫 the schools，再接 that short-term volunteers build for local communities。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "However, many schools hastily built for local communities by short-term volunteers end up abandoned once the volunteers depart, with no one left to maintain them.",
+              "grammar_id": "gp-with-o-c",
+              "explanation_zh": "用分詞片語 hastily built by …、end up + p.p.（最後落得…）和 with no one left to …（附帶狀況）把原因說得更生動。"
+            }
+          ],
+          "restructuring_zh": "中文把「被棄置」放在句尾，英文要把主要動詞 are often abandoned 緊接在主詞後面，再接 after … 與 due to …；主詞「…蓋的學校」改成 the schools that … build。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ac-V-3",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-top-04",
+    "lot": "translation-top-04",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "6a9df5361ca910602b338b273c04042b40d0d8c92f6dc2609abebceddbfdb2f7",
+    "spec_id": "translation-top@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 1,
+    "sentences": 1,
+    "avg_sentence_length": 1.0,
+    "denominator": 1,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 1.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {
+      "off": 1
+    },
+    "offlist_words": [
+      "voluntourism"
+    ],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T13:27:24Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T13:05:21Z",
+      "details": {
+        "solver": "A",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "For people who want to give back to society, voluntourism combines travel with service, which is exactly why it has become increasingly popular.",
+            "confidence": "high",
+            "explanation_zh": "「想回饋社會的人」用關係子句與片語 give back to society；「結合了」譯 combines A with B；「這正是……的原因」用非限定關係子句 which is exactly why；「日益流行」用現在完成式 has become increasingly popular。"
+          },
+          "2": {
+            "translation": "However, the schools that short-term volunteers build for local communities are often abandoned due to a lack of maintenance after the volunteers leave.",
+            "confidence": "high",
+            "explanation_zh": "「短期志工為當地社區蓋的學校」用關係子句；「被棄置」用被動 are abandoned；「因缺乏維護」譯 due to a lack of maintenance；「在他們離開後」用 after 子句，主詞寫明 the volunteers，避免 they 被誤解為指學校。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "REL",
+              "NRREL"
+            ],
+            "used_target_words": [
+              "contribute",
+              "society",
+              "combine",
+              "travel",
+              "service",
+              "popular"
+            ],
+            "within_accepted": true,
+            "closest_reference": 2,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "建議（不影響判定）：第 1 部分可補「For people who want to give back to society」，第 2 部分可補「combines travel with service」。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "REL",
+              "PASS"
+            ],
+            "used_target_words": [
+              "short-term",
+              "volunteer",
+              "build",
+              "community",
+              "leave",
+              "lack",
+              "maintenance",
+              "abandon"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "建議（不影響判定）：參考譯文 1、2 的 after/once they leave 中 they 在文法上最近的先行詞是主詞 the schools，雖然語意上不會誤解，超越頂標的示範譯文寫成 the volunteers（如參考譯文 0）較清楚。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "contribute",
+              "society",
+              "combine",
+              "travel",
+              "service",
+              "popular"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "REL": true,
+              "NRREL": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "short-term",
+              "volunteer",
+              "build",
+              "community",
+              "leave",
+              "lack",
+              "maintenance",
+              "abandon"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "REL": true,
+              "PASS": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T13:09:20Z",
+      "details": {
+        "solver": "B",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "For people who want to give back to society, voluntourism combines travel with service, which is exactly why it is becoming increasingly popular.",
+            "confidence": "high",
+            "explanation_zh": "「回饋社會」用 give back to society；「結合了旅行與服務」用 combine A with B；「這正是……的原因」用 which is exactly why 帶出結果；「日益流行」用 become increasingly popular 的進行式。"
+          },
+          "2": {
+            "translation": "However, the schools that short-term volunteers build for local communities are often abandoned after the volunteers leave because of a lack of maintenance.",
+            "confidence": "medium",
+            "explanation_zh": "「蓋的學校」用關係子句修飾 schools；「被棄置」用被動 be abandoned；「離開後」用 after the volunteers leave 以免 they 指代不明；「因缺乏維護」用 because of a lack of maintenance。bulid 與 abandon 的詞選擇無疑問，信心稍降是因為副詞片語位置有兩種寫法。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "REL",
+              "NRREL"
+            ],
+            "used_target_words": [
+              "contribute",
+              "society",
+              "combine",
+              "travel",
+              "service",
+              "popular"
+            ],
+            "within_accepted": true,
+            "closest_reference": 2,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "輕微：我寫 For people who 而不是 For those who，並且把 combines travel with service、is becoming increasingly popular 這些可接受寫法重新組合，逐字不在 accepted 清單內，但結構與語意都落在可接受範圍；accepted 逐一列舉的做法對這類重組比較脆弱。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "REL",
+              "PASS"
+            ],
+            "used_target_words": [
+              "short-term",
+              "volunteer",
+              "build",
+              "community",
+              "leave",
+              "lack",
+              "maintenance",
+              "abandon"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "contribute",
+              "society",
+              "combine",
+              "travel",
+              "service",
+              "popular"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "REL": true,
+              "NRREL": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "short-term",
+              "volunteer",
+              "build",
+              "community",
+              "leave",
+              "lack",
+              "maintenance",
+              "abandon"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "REL": true,
+              "PASS": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

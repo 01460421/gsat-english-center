@@ -1,0 +1,707 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.4ae11e",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "advanced",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "雖然線上課程讓學習更有彈性，但要自己按時上完課並不容易。",
+        "options": null,
+        "answer": "Although online courses make learning more flexible, finishing them on time on your own is not easy.",
+        "accepted_answers": [
+          "Though online courses make learning more flexible, completing them on time by yourself is not easy.",
+          "Even though online courses make learning more flexible, it is not easy to finish them on time on your own."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "讓步子句（although／though／even though）",
+            "動名詞片語當主詞"
+          ],
+          "topic": "線上課程"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "除了觀看影片，學生每週也會被要求完成一份線上作業。",
+        "options": null,
+        "answer": "Besides watching the videos, students are also required to complete an online assignment every week.",
+        "accepted_answers": [
+          "In addition to watching videos, students are also asked to finish an online assignment each week.",
+          "Apart from watching the videos, students are also required to do an online assignment every week."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "被動語態（be required to…）",
+            "介系詞＋動名詞（除了…）"
+          ],
+          "topic": "線上課程"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "線上課程"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「雖然…但…」英文只用一個連接詞：Although／Though／Even though 引導讓步子句，後面直接接主要子句，不再加 but。「讓學習更有彈性」是 make＋受詞＋形容詞：make learning more flexible。「要自己按時上完課」是一個動作當主詞，用動名詞片語 finishing them on time on your own（them 指線上課程），動詞用單數 is；也可以改成 It is not easy to finish them …。",
+          "evidence": [
+            "雖然線上課程讓學習更有彈性",
+            "要自己按時上完課並不容易"
+          ],
+          "strategy_zh": "中文「雖然…但是…」譯成英文時刪掉其中一個連接詞；動作當主詞時先想 V-ing 或 It is … to VR。",
+          "hints": [
+            "切成四段：雖然線上課程／讓學習更有彈性／但要自己按時上完課／並不容易",
+            "標的詞彙：online（線上的）、course（課程）、flexible（有彈性的）、finish（完成）、easy（容易的）",
+            "句型框架：Although + S + V, V-ing … is not + adj.（或 it is not + adj. + to VR）"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「除了…（還…）」表示「另外加上」，用 Besides／In addition to／Apart from＋V-ing，介系詞後面接動名詞 watching；不要用 except（那是「排除」）。「被要求完成」是被動語態 be required／asked to＋原形動詞，主詞 students 是複數，用 are。「一份作業」用可數的 an assignment（homework 不可數）。",
+          "evidence": [
+            "除了觀看影片",
+            "被要求完成一份線上作業"
+          ],
+          "strategy_zh": "介系詞（besides、in addition to、apart from、by、without）後面的動詞一律用 V-ing。",
+          "hints": [
+            "切成四段：除了觀看影片／每週／也會被要求／完成一份線上作業",
+            "標的詞彙：besides（除了）、video（影片）、require（要求）、assignment（作業）、week（星期）",
+            "句型框架：Besides + V-ing …, S + be + required to VR …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "Although online courses make learning more flexible, finishing them on time on your own is not easy.",
+            "Though online courses make learning more flexible, completing them on time by yourself is not easy.",
+            "Even though online courses make learning more flexible, it is not easy to finish them on time on your own."
+          ],
+          "target_words": [
+            {
+              "word": "online",
+              "zh": "線上的"
+            },
+            {
+              "word": "course",
+              "zh": "課程",
+              "alternatives": [
+                "class"
+              ]
+            },
+            {
+              "word": "flexible",
+              "zh": "有彈性的"
+            },
+            {
+              "word": "finish",
+              "zh": "上完（完成）",
+              "alternatives": [
+                "complete"
+              ]
+            },
+            {
+              "word": "easy",
+              "zh": "容易的",
+              "alternatives": [
+                "simple"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "ADVCL",
+              "grammar_id": "gp-concession-clause",
+              "label_zh": "讓步子句（although／though／even though）",
+              "frame": "Although + S + V, S + V（不再加 but）",
+              "zh_trigger": "雖然"
+            },
+            {
+              "code": "NFSUBJ",
+              "grammar_id": "gp-gerund-subject",
+              "label_zh": "動名詞片語當主詞",
+              "frame": "V-ing … + is (not) + adj. ／ It is not + adj. + to VR …",
+              "zh_trigger": "要自己按時上完課"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "雖然線上課程",
+              "accepted": [
+                "Although online courses",
+                "Though online courses",
+                "Even though online courses",
+                "Although online classes",
+                "While online courses"
+              ],
+              "targets": [
+                "ADVCL",
+                "online",
+                "course"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Although online course",
+                  "right": "Although online courses",
+                  "explanation_zh": "泛指線上課程用複數 courses。"
+                }
+              ]
+            },
+            {
+              "zh": "讓學習更有彈性",
+              "accepted": [
+                "make learning more flexible",
+                "make studying more flexible",
+                "allow people to learn more flexibly",
+                "make learning more flexible for students"
+              ],
+              "targets": [
+                "flexible"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "make learning more flexibility",
+                  "right": "make learning more flexible",
+                  "explanation_zh": "make＋受詞＋形容詞：受詞補語用形容詞 flexible，不用名詞 flexibility。"
+                },
+                {
+                  "wrong": "let learning more flexible",
+                  "right": "make learning more flexible",
+                  "explanation_zh": "let 後面接原形動詞；「讓…變得…」接形容詞時用 make。"
+                }
+              ]
+            },
+            {
+              "zh": "但要自己按時上完課",
+              "accepted": [
+                "finishing them on time on your own",
+                "completing them on time by yourself",
+                "to finish them on time on your own",
+                "finishing them on time by yourself",
+                "completing them on time on your own",
+                "finishing the courses on time by yourself"
+              ],
+              "targets": [
+                "NFSUBJ",
+                "finish"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "but finishing them on time on your own",
+                  "right": "finishing them on time on your own",
+                  "explanation_zh": "although 和 but 不能同時用，中文的「雖然…但…」英文只留一個連接詞。"
+                },
+                {
+                  "wrong": "finish them on time on your own is",
+                  "right": "finishing them on time on your own is",
+                  "explanation_zh": "動詞片語當主詞要用動名詞 finishing。"
+                }
+              ]
+            },
+            {
+              "zh": "並不容易",
+              "accepted": [
+                "is not easy",
+                "isn't easy",
+                "is not an easy thing",
+                "is not simple",
+                "is never easy"
+              ],
+              "targets": [
+                "easy"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "are not easy",
+                  "right": "is not easy",
+                  "explanation_zh": "動名詞片語當主詞視為單數，動詞用 is。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "redundancy",
+              "zh": "雖然",
+              "literal_error": "Although online courses make learning more flexible, but finishing them on time is not easy.",
+              "part": 3,
+              "explanation_zh": "中文「雖然…但…」成對出現，英文 although 和 but 只能選一個。"
+            },
+            {
+              "type": "verbal_subject",
+              "zh": "要自己按時上完課",
+              "literal_error": "Finish them on time by yourself is not easy.",
+              "part": 3,
+              "explanation_zh": "「要自己按時上完課」是動作當主詞，英文要用動名詞 Finishing … 或虛主詞 It is not easy to finish …。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "Flexible as online courses are, finishing them on time on your own is not easy.",
+              "explanation_zh": "「形容詞＋as＋S＋V」是較正式的讓步寫法（＝Although online courses are flexible），屬加分寫法；一般用 although 就能拿滿分。"
+            }
+          ],
+          "restructuring_zh": "「要自己按時上完課並不容易」是動作當主詞，英文改成動名詞主詞 finishing them on time on your own is not easy，或虛主詞 it is not easy to finish them …；「雖然…但…」英文只用 although，不再加 but。"
+        },
+        "2": {
+          "references": [
+            "Besides watching the videos, students are also required to complete an online assignment every week.",
+            "In addition to watching videos, students are also asked to finish an online assignment each week.",
+            "Apart from watching the videos, students are also required to do an online assignment every week."
+          ],
+          "target_words": [
+            {
+              "word": "besides",
+              "zh": "除了（還有）",
+              "alternatives": [
+                "in addition to",
+                "apart from",
+                "aside from"
+              ]
+            },
+            {
+              "word": "video",
+              "zh": "影片",
+              "alternatives": [
+                "clip"
+              ]
+            },
+            {
+              "word": "require",
+              "zh": "要求",
+              "alternatives": [
+                "ask",
+                "expect"
+              ]
+            },
+            {
+              "word": "assignment",
+              "zh": "作業",
+              "alternatives": [
+                "homework",
+                "task",
+                "exercise"
+              ]
+            },
+            {
+              "word": "week",
+              "zh": "星期"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PASS",
+              "grammar_id": "gp-passive",
+              "label_zh": "被動語態（be required to…）",
+              "frame": "S + be + p.p. (+ to VR)",
+              "zh_trigger": "被要求"
+            },
+            {
+              "code": "PREPVING",
+              "grammar_id": "gp-prep-gerund",
+              "label_zh": "介系詞＋動名詞（除了…）",
+              "frame": "Besides / In addition to / Apart from + V-ing …, S + V",
+              "zh_trigger": "除了"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "除了觀看影片",
+              "accepted": [
+                "Besides watching the videos",
+                "In addition to watching videos",
+                "Apart from watching the videos",
+                "Besides watching videos",
+                "Apart from watching videos",
+                "In addition to watching the videos"
+              ],
+              "targets": [
+                "PREPVING",
+                "besides",
+                "video"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "In addition to watch videos",
+                  "right": "In addition to watching videos",
+                  "explanation_zh": "in addition to 的 to 是介系詞，後面接動名詞。"
+                },
+                {
+                  "wrong": "Except watching videos",
+                  "right": "Besides watching videos",
+                  "explanation_zh": "except 是「除…之外都…」（排除），這裡是「除了…還有…」（加上），要用 besides／in addition to。"
+                }
+              ]
+            },
+            {
+              "zh": "每週",
+              "accepted": [
+                "every week",
+                "each week",
+                "once a week",
+                "weekly"
+              ],
+              "targets": [
+                "week"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "every weeks",
+                  "right": "every week",
+                  "explanation_zh": "every 後面接單數名詞。"
+                }
+              ]
+            },
+            {
+              "zh": "也會被要求",
+              "accepted": [
+                "are also required",
+                "are also asked",
+                "are also expected",
+                "will also be required",
+                "will also be asked",
+                "are required"
+              ],
+              "targets": [
+                "PASS",
+                "require"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "students are also requiring to",
+                  "right": "students are also required to",
+                  "explanation_zh": "學生是「被要求」，要用被動 be required，不是進行式。"
+                },
+                {
+                  "wrong": "students also required to",
+                  "right": "students are also required to",
+                  "explanation_zh": "被動語態要有 be 動詞。"
+                }
+              ]
+            },
+            {
+              "zh": "完成一份線上作業",
+              "accepted": [
+                "to complete an online assignment",
+                "to finish an online assignment",
+                "to do an online assignment",
+                "to complete an online task",
+                "to hand in an online assignment"
+              ],
+              "targets": [
+                "assignment"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "to complete an online homework",
+                  "right": "to complete an online assignment",
+                  "explanation_zh": "homework 是不可數名詞，不能加 an；可數的「一份作業」用 assignment。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "word_form",
+              "zh": "除了觀看影片",
+              "literal_error": "In addition to watch videos, students also need to complete an online assignment.",
+              "part": 1,
+              "explanation_zh": "in addition to 的 to 是介系詞，後面要接動名詞 watching。"
+            },
+            {
+              "type": "plural_countable",
+              "zh": "一份線上作業",
+              "literal_error": "to complete an online homework",
+              "part": 4,
+              "explanation_zh": "homework 不可數，不能說 an online homework；「一份作業」用 an assignment 或 a piece of homework。"
+            }
+          ],
+          "bonus": []
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-advanced-01",
+    "lot": "translation-advanced-01",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "aabb674c20baad2f5310b8b4d808a265893e2edf0c2a598bf8b873bfdfb38f0f",
+    "spec_id": "translation-advanced@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T12:42:25Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T07:45:00Z",
+      "details": {
+        "solver": "A",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Although online courses make learning more flexible, it is not easy for students to finish the classes on time on their own.",
+            "confidence": "high",
+            "explanation_zh": "「雖然……但……」英文只能用 Although，不可再加 but；「讓學習更有彈性」用 make + O + 比較級形容詞；後半句主詞省略，用虛主詞 it is not easy for students to V；「自己」譯 on their own，「按時」譯 on time。"
+          },
+          "2": {
+            "translation": "In addition to watching videos, students are also required to complete an online assignment every week.",
+            "confidence": "high",
+            "explanation_zh": "「除了觀看影片」用 In addition to + V-ing（to 是介系詞）；「被要求完成」用被動 are required to complete；「每週一份線上作業」譯 an online assignment every week，assignment 是可數名詞（homework 不可數，不能說 a homework）。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "ADVCL",
+              "NFSUBJ"
+            ],
+            "used_target_words": [
+              "online",
+              "course",
+              "flexible",
+              "finish",
+              "easy"
+            ],
+            "within_accepted": true,
+            "closest_reference": 2,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PASS",
+              "PREPVING"
+            ],
+            "used_target_words": [
+              "besides",
+              "video",
+              "require",
+              "assignment",
+              "week"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "（小建議，不影響判定）P2「每週」單獨占 1 分，比其他三部分輕很多；可接受，但若要更平均，可把「每週」併進 P4（每週完成一份線上作業），另找一個較有分量的點單獨給分。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "online",
+              "course",
+              "flexible",
+              "finish",
+              "easy"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "ADVCL": true,
+              "NFSUBJ": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "besides",
+              "video",
+              "require",
+              "assignment",
+              "week"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PASS": true,
+              "PREPVING": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T07:46:21Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Although online courses make learning more flexible, it is not easy to finish the lessons on time by yourself.",
+            "confidence": "high",
+            "explanation_zh": "「雖然…但」英文只用 Although，不再加 but；「讓學習更有彈性」用 make + 受詞 + 形容詞比較級；「要自己按時上完課」用虛主詞 it is not easy to ...，on time by yourself 對應「按時」「自己」。"
+          },
+          "2": {
+            "translation": "In addition to watching videos, students are also required to complete an online assignment every week.",
+            "confidence": "high",
+            "explanation_zh": "「除了…」用 In addition to + 動名詞；「被要求」用被動 are required to；「每週」放句尾 every week；「一份線上作業」是 an online assignment。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "ADVCL",
+              "NFSUBJ"
+            ],
+            "used_target_words": [
+              "online",
+              "course",
+              "flexible",
+              "finish",
+              "easy"
+            ],
+            "within_accepted": true,
+            "closest_reference": 2,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PASS",
+              "PREPVING"
+            ],
+            "used_target_words": [
+              "besides",
+              "video",
+              "require",
+              "assignment",
+              "week"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "備註：主詞「學生」沒有放進任何一個部分，漏掉或寫錯 students 不會被扣分（不影響通過）。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "online",
+              "course",
+              "flexible",
+              "finish",
+              "easy"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "ADVCL": true,
+              "NFSUBJ": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "besides",
+              "video",
+              "require",
+              "assignment",
+              "week"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PASS": true,
+              "PREPVING": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

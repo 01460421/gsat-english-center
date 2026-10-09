@@ -1,0 +1,762 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.7d93ee",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "top",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "許多名人的臉孔已被用來製作深偽影片（deepfake），讓觀眾越來越難分辨真假。",
+        "options": null,
+        "answer": "Many celebrities' faces have been used to create deepfake videos, making it increasingly hard for the audience to tell what is real.",
+        "accepted_answers": [
+          "The faces of many celebrities have been used to make deepfake videos, making it more and more difficult for viewers to distinguish truth from lies.",
+          "Deepfake videos have been made with the faces of many celebrities, making it increasingly difficult for people to tell what is true."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "句尾分詞表結果",
+            "完成式被動"
+          ],
+          "topic": "深偽影片"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "這類影片常在社群平台上被大量轉傳，而這可能嚴重損害當事人的名譽。",
+        "options": null,
+        "answer": "Such videos are often widely shared on social media platforms, which can seriously harm the reputation of the people involved.",
+        "accepted_answers": [
+          "These videos are often shared widely on social media, which may do serious harm to the reputations of the people in them.",
+          "Videos like these are frequently forwarded on social media, which could severely damage the reputation of those who appear in them."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "非限定關係子句",
+            "被動語態"
+          ],
+          "topic": "深偽影片"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "深偽影片"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「已被用來」是完成式被動 have been used to V（be used to 後接原形動詞，不是 V-ing）。「讓觀眾越來越難…」是前面這件事造成的結果，用句尾分詞 making it increasingly difficult for the audience to …；difficult 不能用人當主詞，所以要用虛受詞 it。「越來越」可寫 increasingly 或 more and more。「分辨真假」可寫 tell what is real、distinguish truth from lies。",
+          "evidence": [
+            "已被用來",
+            "讓觀眾越來越難分辨真假"
+          ],
+          "strategy_zh": "「讓某人很難／很容易做某事」是 make it + 形容詞 + for sb + to V；放在逗號後表結果時用 making。",
+          "hints": [
+            "切成四段：許多名人的臉孔／已被用來製作深偽影片／讓觀眾越來越難／分辨真假",
+            "標的詞彙：celebrity（名人）、face（臉）、create（製作）、audience（觀眾）、tell（分辨）、real（真實的）",
+            "句型框架：S + have been p.p. + to V …, making it + increasingly + adj. + for sb + to V"
+          ]
+        },
+        "2": {
+          "explanation_zh": "影片是「被」轉傳，用被動 are (widely) shared；「大量」修飾動詞，用副詞 widely。「而這可能…」的「這」指前面整件事（影片被大量轉傳），用非限定關係子句 , which can …，which 前加逗號、不用 that。「嚴重損害」是 seriously harm／do serious harm to（serious 修飾名詞、seriously 修飾動詞）；「名譽」是 reputation，不是 fame；「當事人」指影片裡的人，譯成 the people involved。",
+          "evidence": [
+            "被大量轉傳",
+            "而這可能嚴重損害當事人的名譽"
+          ],
+          "strategy_zh": "「而這／這會…」指前面整件事時，用逗號加 which 一句接完；再檢查主詞是不是「被」做動作，決定用不用被動。",
+          "hints": [
+            "切成四段：這類影片常在社群平台上被大量轉傳／而這可能／嚴重損害／當事人的名譽",
+            "標的詞彙：share（分享、轉傳）、social media（社群媒體）、seriously（嚴重地）、harm（損害）、reputation（名譽）",
+            "句型框架：S + be + often + widely + p.p. …, which + can + V …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "Many celebrities' faces have been used to create deepfake videos, making it increasingly hard for the audience to tell what is real.",
+            "The faces of many celebrities have been used to make deepfake videos, making it more and more difficult for viewers to distinguish truth from lies.",
+            "Deepfake videos have been made with the faces of many celebrities, making it increasingly difficult for people to tell what is true."
+          ],
+          "target_words": [
+            {
+              "word": "celebrity",
+              "zh": "名人",
+              "alternatives": [
+                "famous people",
+                "star",
+                "public figure"
+              ]
+            },
+            {
+              "word": "face",
+              "zh": "臉孔"
+            },
+            {
+              "word": "create",
+              "zh": "製作",
+              "alternatives": [
+                "make",
+                "produce"
+              ]
+            },
+            {
+              "word": "audience",
+              "zh": "觀眾",
+              "alternatives": [
+                "viewer",
+                "people",
+                "the public"
+              ]
+            },
+            {
+              "word": "tell",
+              "zh": "分辨",
+              "alternatives": [
+                "distinguish",
+                "differentiate"
+              ]
+            },
+            {
+              "word": "real",
+              "zh": "真實的",
+              "alternatives": [
+                "true",
+                "truth",
+                "genuine"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PART",
+              "grammar_id": "gp-participle-result",
+              "label_zh": "句尾分詞片語表結果（…，讓…）",
+              "frame": "S + V …, making it + adj. + for sb + to V",
+              "zh_trigger": "讓觀眾"
+            },
+            {
+              "code": "PASS",
+              "grammar_id": "gp-perfect-passive",
+              "label_zh": "完成式被動（已被…）",
+              "frame": "S + have/has been + p.p. + to V …",
+              "zh_trigger": "已被用來"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "許多名人的臉孔",
+              "accepted": [
+                "Many celebrities' faces",
+                "the faces of many celebrities",
+                "Many famous people's faces",
+                "The faces of many famous people"
+              ],
+              "targets": [
+                "celebrity",
+                "face"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Many celebrity's faces",
+                  "right": "Many celebrities' faces",
+                  "explanation_zh": "many 後面接複數 celebrities，複數名詞的所有格是 celebrities'。"
+                },
+                {
+                  "wrong": "Many celebrities' face",
+                  "right": "Many celebrities' faces",
+                  "explanation_zh": "許多名人各有一張臉，face 要用複數。"
+                }
+              ]
+            },
+            {
+              "zh": "已被用來製作深偽影片",
+              "accepted": [
+                "have been used to create deepfake videos",
+                "have been used to make deepfake videos",
+                "deepfake videos have been made with",
+                "have been used in deepfake videos",
+                "have been used to produce deepfakes"
+              ],
+              "targets": [
+                "PASS",
+                "create"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "have used to create deepfake videos",
+                  "right": "have been used to create deepfake videos",
+                  "explanation_zh": "臉孔是「被」拿來用，完成式被動要有 been。"
+                },
+                {
+                  "wrong": "have been used to creating deepfake videos",
+                  "right": "have been used to create deepfake videos",
+                  "explanation_zh": "be used to V（被用來做）和 be used to V-ing（習慣於）不同，這裡接原形動詞。"
+                }
+              ]
+            },
+            {
+              "zh": "讓觀眾越來越難",
+              "accepted": [
+                "making it increasingly hard for the audience",
+                "making it more and more difficult for viewers",
+                "making it increasingly difficult for people",
+                "making it harder and harder for viewers",
+                "making it increasingly difficult for the audience"
+              ],
+              "targets": [
+                "PART",
+                "audience"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "making the audience more and more difficult to",
+                  "right": "making it more and more difficult for the audience to",
+                  "explanation_zh": "difficult 不能用人當主詞（人不是「困難的」）；要用虛受詞 make it difficult for sb to V。"
+                },
+                {
+                  "wrong": "makes it more and more difficult",
+                  "right": "making it more and more difficult",
+                  "explanation_zh": "逗號後表結果要用分詞 making；用 makes 會變成兩個動詞沒有連接詞。"
+                }
+              ]
+            },
+            {
+              "zh": "分辨真假",
+              "accepted": [
+                "to tell what is real",
+                "to distinguish truth from lies",
+                "to tell what is true",
+                "to tell real from fake",
+                "to distinguish what is real from what is fake",
+                "to tell the real from the fake"
+              ],
+              "targets": [
+                "tell",
+                "real"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "to distinguish true and false",
+                  "right": "to distinguish truth from lies",
+                  "explanation_zh": "distinguish A from B 或 distinguish between A and B，A、B 要用名詞（truth、lies）。"
+                },
+                {
+                  "wrong": "to separate true and fake",
+                  "right": "to tell real from fake",
+                  "explanation_zh": "separate 是「把東西分開」；分辨真假用 tell／distinguish。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "word_form",
+              "zh": "分辨真假",
+              "literal_error": "… making it increasingly hard for the audience to distinguish true and false.",
+              "part": 4,
+              "explanation_zh": "「真假」在英文要用名詞 truth／lies，或用子句 what is real；不能把形容詞 true and false 直接當受詞。"
+            },
+            {
+              "type": "verbal_subject",
+              "zh": "讓觀眾越來越難",
+              "literal_error": "… making the audience more and more difficult to tell what is real.",
+              "part": 3,
+              "explanation_zh": "真正「困難」的是「分辨真假」這個動作，不是觀眾；英文用虛受詞 make it difficult for the audience to V。"
+            }
+          ],
+          "bonus": [],
+          "restructuring_zh": "「讓觀眾越來越難分辨真假」不要寫成 make the audience difficult；英文用虛受詞 make it increasingly difficult for the audience to tell …，並以句尾分詞 making 接在前句後面表結果。"
+        },
+        "2": {
+          "references": [
+            "Such videos are often widely shared on social media platforms, which can seriously harm the reputation of the people involved.",
+            "These videos are often shared widely on social media, which may do serious harm to the reputations of the people in them.",
+            "Videos like these are frequently forwarded on social media, which could severely damage the reputation of those who appear in them."
+          ],
+          "target_words": [
+            {
+              "word": "share",
+              "zh": "分享、轉傳",
+              "alternatives": [
+                "forward",
+                "spread",
+                "circulate"
+              ]
+            },
+            {
+              "word": "social media",
+              "zh": "社群媒體",
+              "alternatives": [
+                "social network"
+              ]
+            },
+            {
+              "word": "seriously",
+              "zh": "嚴重地",
+              "alternatives": [
+                "serious",
+                "severely",
+                "badly"
+              ]
+            },
+            {
+              "word": "harm",
+              "zh": "損害",
+              "alternatives": [
+                "damage",
+                "hurt",
+                "ruin"
+              ]
+            },
+            {
+              "word": "reputation",
+              "zh": "名譽",
+              "alternatives": [
+                "good name",
+                "image"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "NRREL",
+              "grammar_id": "gp-nonrestrictive",
+              "label_zh": "非限定關係子句（which 指前面整件事）",
+              "frame": "S + V …, which + can/may + V …",
+              "zh_trigger": "而這"
+            },
+            {
+              "code": "PASS",
+              "grammar_id": "gp-passive",
+              "label_zh": "被動語態（be + p.p.）",
+              "frame": "S + be + (often) + p.p. …",
+              "zh_trigger": "被大量轉傳"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "這類影片常在社群平台上被大量轉傳",
+              "accepted": [
+                "Such videos are often widely shared on social media platforms",
+                "These videos are often shared widely on social media",
+                "Videos like these are frequently forwarded on social media",
+                "Such videos are often shared widely on social media",
+                "These videos are frequently spread on social media"
+              ],
+              "targets": [
+                "PASS",
+                "share",
+                "social media"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Such videos often share on social media",
+                  "right": "Such videos are often shared on social media",
+                  "explanation_zh": "影片是「被」轉傳，要用被動 are shared。"
+                },
+                {
+                  "wrong": "Such videos are often a lot shared on social media",
+                  "right": "Such videos are often widely shared on social media",
+                  "explanation_zh": "「大量」修飾動詞，用副詞 widely；a lot 不能放在 be 動詞和過去分詞中間。"
+                }
+              ]
+            },
+            {
+              "zh": "而這可能",
+              "accepted": [
+                "which can",
+                "which may",
+                "which could",
+                "which might"
+              ],
+              "targets": [
+                "NRREL"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "social media, this may seriously harm",
+                  "right": "social media, which may seriously harm",
+                  "explanation_zh": "逗號不能接兩個完整句；「而這」指前面整件事，用 which。"
+                },
+                {
+                  "wrong": "social media, that may seriously harm",
+                  "right": "social media, which may seriously harm",
+                  "explanation_zh": "非限定關係子句不能用 that。"
+                }
+              ]
+            },
+            {
+              "zh": "嚴重損害",
+              "accepted": [
+                "seriously harm",
+                "do serious harm to",
+                "severely damage",
+                "seriously damage",
+                "badly hurt"
+              ],
+              "targets": [
+                "seriously",
+                "harm"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "serious harm the reputation",
+                  "right": "seriously harm the reputation",
+                  "explanation_zh": "修飾動詞 harm 要用副詞 seriously；serious 是形容詞，只能修飾名詞（do serious harm to）。"
+                },
+                {
+                  "wrong": "seriously hurt to the reputation",
+                  "right": "seriously hurt the reputation",
+                  "explanation_zh": "hurt／harm／damage 是及物動詞，後面直接接受詞，不加 to。"
+                }
+              ]
+            },
+            {
+              "zh": "當事人的名譽",
+              "accepted": [
+                "the reputation of the people involved",
+                "the reputations of the people in them",
+                "the reputation of those who appear in them",
+                "the reputation of the people in the videos",
+                "the good name of the people involved"
+              ],
+              "targets": [
+                "reputation"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "the fame of the people involved",
+                  "right": "the reputation of the people involved",
+                  "explanation_zh": "「名譽」是 reputation；fame 是「名氣」，意思不同。"
+                },
+                {
+                  "wrong": "the reputation of the involved people",
+                  "right": "the reputation of the people involved",
+                  "explanation_zh": "involved 表「牽涉在內的」時放在名詞後面：the people involved。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "abstract_nominal",
+              "zh": "當事人的名譽",
+              "literal_error": "… which can seriously harm the fame of the parties.",
+              "part": 4,
+              "explanation_zh": "「名譽」是 reputation，不是 fame（名氣）；「當事人」指影片裡被冒用臉孔的人，用 the people involved／those who appear in them。"
+            },
+            {
+              "type": "word_form",
+              "zh": "大量轉傳",
+              "literal_error": "Such videos are often a lot shared on social media …",
+              "part": 1,
+              "explanation_zh": "「大量轉傳」的「大量」修飾動詞，用副詞 widely（are widely shared），不要寫 a lot／many。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "Such videos often go viral on social media, which can seriously tarnish the reputation of the people involved.",
+              "explanation_zh": "go viral（在網路上瘋傳）、tarnish one's reputation（玷汙名譽）是更道地的搭配；但 go viral 是主動語態，原句的被動寫法仍是基本分的依據。"
+            }
+          ]
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ac-V-3",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-top-01",
+    "lot": "translation-top-01",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "a1384b01f87b0f8fded3505d9aeb991591fcc72147d3fc44a0f533a9db995000",
+    "spec_id": "translation-top@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 1,
+    "sentences": 1,
+    "avg_sentence_length": 1.0,
+    "denominator": 1,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 1.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {
+      "off": 1
+    },
+    "offlist_words": [
+      "deepfake"
+    ],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "warn",
+      "created_at": "2026-10-09T13:10:32Z",
+      "details": {
+        "errors": [],
+        "warnings": [
+          "annotations.rubric.items.1.patterns[1]: gp-perfect-passive 通常對應句構 PERF（目前 code=PASS）"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T00:00:00Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "The faces of many celebrities have been used to make deepfake videos, making it harder and harder for viewers to tell the real from the fake.",
+            "confidence": "high",
+            "explanation_zh": "「已被用來」用現在完成式被動 have been used to；「讓觀眾越來越難…」用分詞構句 making it + 比較級 and 比較級 + for viewers to V；「分辨真假」譯為 tell the real from the fake。"
+          },
+          "2": {
+            "translation": "Such videos are often widely shared on social media platforms, which can seriously damage the reputations of the people involved.",
+            "confidence": "high",
+            "explanation_zh": "「常…被大量轉傳」用現在簡單式被動 are often widely shared；「而這可能」用 which 承接整個前句；「當事人」譯為 the people involved；「名譽」用 reputation(s)。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PART",
+              "PASS"
+            ],
+            "used_target_words": [
+              "celebrity",
+              "face",
+              "create",
+              "audience",
+              "tell",
+              "real"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "（小問題）R1 的 distinguish truth from lies 把「假」譯成 lies（謊言），深偽影片是偽造而不是說謊，不如 tell real from fake 貼切，但仍可接受。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "NRREL",
+              "PASS"
+            ],
+            "used_target_words": [
+              "share",
+              "social media",
+              "seriously",
+              "harm",
+              "reputation"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "celebrity",
+              "face",
+              "create",
+              "audience",
+              "tell",
+              "real"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PART": true,
+              "PASS": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "share",
+              "social media",
+              "seriously",
+              "harm",
+              "reputation"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NRREL": true,
+              "PASS": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T07:56:17Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "The faces of many celebrities have been used to make deepfake videos, making it increasingly difficult for viewers to tell what is real from what is fake.",
+            "confidence": "high",
+            "explanation_zh": "「已被用來」用現在完成式被動 have been used to make；「讓……越來越難」用 making it increasingly difficult for ... to ... 的虛受詞結構；分辨真假譯成 tell what is real from what is fake。"
+          },
+          "2": {
+            "translation": "Such videos are often widely shared on social media platforms, which can seriously damage the reputation of the people involved.",
+            "confidence": "high",
+            "explanation_zh": "「而這」指前面整件事，用 which 引導非限定關係子句；大量轉傳譯成 widely shared；當事人用 the people involved。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PART",
+              "PASS"
+            ],
+            "used_target_words": [
+              "celebrity",
+              "face",
+              "create",
+              "audience",
+              "tell",
+              "real"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "NRREL",
+              "PASS"
+            ],
+            "used_target_words": [
+              "share",
+              "social media",
+              "seriously",
+              "harm",
+              "reputation"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "celebrity",
+              "face",
+              "create",
+              "audience",
+              "tell",
+              "real"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PART": true,
+              "PASS": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "share",
+              "social media",
+              "seriously",
+              "harm",
+              "reputation"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NRREL": true,
+              "PASS": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

@@ -1,0 +1,725 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.4308c7",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "advanced",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "研究顯示，由於少子化，鄉下學校的學生人數正在逐年減少。",
+        "options": null,
+        "answer": "Studies show that because of the low birth rate, the number of students in rural schools is decreasing every year.",
+        "accepted_answers": [
+          "Research shows that due to the falling birth rate, the number of students at rural schools is dropping year by year.",
+          "Studies have shown that because of the declining birth rate, the number of students in country schools is getting smaller every year."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "that 引導的名詞子句（當 show 的受詞）",
+            "現在進行式描述趨勢（is decreasing）"
+          ],
+          "topic": "少子化"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "一些曾經有上百名學生的鄉下學校，已經和鄰近的學校合併了。",
+        "options": null,
+        "answer": "Some rural schools that once had hundreds of students have already merged with nearby schools.",
+        "accepted_answers": [
+          "Some country schools which used to have over a hundred students have already been combined with nearby schools.",
+          "Some rural schools that used to have hundreds of students have now merged with schools nearby."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "關係代名詞引導的形容詞子句（that／which）",
+            "現在完成式（已經…了）"
+          ],
+          "topic": "少子化"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "少子化"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「研究顯示」後面接一整句話，用 that 子句當受詞：Studies show that …（research 不可數，要說 Research shows that …）。「少子化」是出生率低：because of／due to the low birth rate。「鄉下學校的學生人數」改成後位修飾：the number of students in rural schools；主詞是 the number，動詞用單數。「正在逐年減少」是正在發生的趨勢，用現在進行式 is decreasing every year／year by year。",
+          "evidence": [
+            "研究顯示",
+            "鄉下學校的學生人數正在逐年減少"
+          ],
+          "strategy_zh": "the number of＋複數名詞 當主詞時動詞用單數；a number of＋複數名詞（許多…）才用複數動詞。",
+          "hints": [
+            "切成四段：研究顯示／由於少子化／鄉下學校的學生人數／正在逐年減少",
+            "標的詞彙：study（研究）、birth rate（出生率）、rural（鄉下的）、number（數目）、decrease（減少）",
+            "句型框架：Studies show that + S + is + V-ing …（趨勢用現在進行式）"
+          ]
+        },
+        "2": {
+          "explanation_zh": "主詞是「一些…的鄉下學校」，英文先寫 Some rural schools，再用關係代名詞 that／which 引導形容詞子句 that once had hundreds of students；「曾經」是過去，子句用 had（或 used to have）。主要子句「已經和鄰近的學校合併了」用現在完成式 have already merged with nearby schools（主詞複數，用 have）。",
+          "evidence": [
+            "曾經有上百名學生的鄉下學校",
+            "已經和鄰近的學校合併了"
+          ],
+          "strategy_zh": "一句裡同時有「曾經」和「已經」時要分清楚：關係子句講過去的狀態用過去式，主要子句講到現在的結果用現在完成式。",
+          "hints": [
+            "切成四段：曾經有上百名學生的／鄉下學校／已經／和鄰近的學校合併了",
+            "標的詞彙：rural（鄉下的）、hundred（百）、merge（合併）、nearby（附近的）",
+            "句型框架：Some + N + that + V(過去式) … + have already + p.p. …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "Studies show that because of the low birth rate, the number of students in rural schools is decreasing every year.",
+            "Research shows that due to the falling birth rate, the number of students at rural schools is dropping year by year.",
+            "Studies have shown that because of the declining birth rate, the number of students in country schools is getting smaller every year."
+          ],
+          "target_words": [
+            {
+              "word": "study",
+              "zh": "研究",
+              "alternatives": [
+                "research"
+              ]
+            },
+            {
+              "word": "birth rate",
+              "zh": "出生率（少子化）",
+              "alternatives": [
+                "birthrate"
+              ]
+            },
+            {
+              "word": "rural",
+              "zh": "鄉下的",
+              "alternatives": [
+                "country",
+                "countryside"
+              ]
+            },
+            {
+              "word": "number",
+              "zh": "人數（數目）"
+            },
+            {
+              "word": "decrease",
+              "zh": "減少",
+              "alternatives": [
+                "drop",
+                "fall",
+                "shrink",
+                "get smaller",
+                "decline",
+                "go down"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "NCL",
+              "grammar_id": "gp-that-clause",
+              "label_zh": "that 引導的名詞子句（當 show 的受詞）",
+              "frame": "Studies show + (that) + S + V",
+              "zh_trigger": "研究顯示"
+            },
+            {
+              "code": "PROG",
+              "grammar_id": "gp-progressive-trend",
+              "label_zh": "現在進行式描述趨勢（is decreasing）",
+              "frame": "S + is/are + V-ing（decreasing / dropping …）",
+              "zh_trigger": "正在逐年減少"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "研究顯示",
+              "accepted": [
+                "Studies show that",
+                "Research shows that",
+                "Studies have shown that",
+                "Research has shown that",
+                "Studies show",
+                "Research shows"
+              ],
+              "targets": [
+                "NCL",
+                "study"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Research show that",
+                  "right": "Research shows that",
+                  "explanation_zh": "research 是不可數名詞，動詞用單數 shows；studies 才用 show。"
+                },
+                {
+                  "wrong": "A research shows that",
+                  "right": "A study shows that",
+                  "explanation_zh": "research 不可數，不加 a；可數的「一項研究」用 a study。"
+                }
+              ]
+            },
+            {
+              "zh": "由於少子化",
+              "accepted": [
+                "because of the low birth rate",
+                "due to the falling birth rate",
+                "because of the declining birth rate",
+                "due to the low birth rate",
+                "because of the falling birth rate",
+                "as a result of the low birth rate"
+              ],
+              "targets": [
+                "birth rate"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "because of less children",
+                  "right": "because of the low birth rate",
+                  "explanation_zh": "「少子化」是出生率低，譯成 the low／falling birth rate；而且 child 是可數名詞，「較少的」要用 fewer。"
+                },
+                {
+                  "wrong": "because the low birth rate",
+                  "right": "because of the low birth rate",
+                  "explanation_zh": "because 後面接子句；接名詞片語要用 because of 或 due to。"
+                }
+              ]
+            },
+            {
+              "zh": "鄉下學校的學生人數",
+              "accepted": [
+                "the number of students in rural schools",
+                "the number of students at rural schools",
+                "the number of students in country schools",
+                "the number of students in schools in the countryside",
+                "the student population in rural schools"
+              ],
+              "targets": [
+                "rural",
+                "number"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "rural schools' students number",
+                  "right": "the number of students in rural schools",
+                  "explanation_zh": "「…的學生人數」英文用 the number of students in …，修飾語放在後面。"
+                },
+                {
+                  "wrong": "the amount of students",
+                  "right": "the number of students",
+                  "explanation_zh": "students 是可數名詞，「人數」用 number。"
+                }
+              ]
+            },
+            {
+              "zh": "正在逐年減少",
+              "accepted": [
+                "is decreasing every year",
+                "is dropping year by year",
+                "is getting smaller every year",
+                "is decreasing year by year",
+                "is falling year after year",
+                "is shrinking every year"
+              ],
+              "targets": [
+                "PROG",
+                "decrease"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "are decreasing every year",
+                  "right": "is decreasing every year",
+                  "explanation_zh": "主詞是 the number（人數），動詞用單數 is。"
+                },
+                {
+                  "wrong": "is reducing every year",
+                  "right": "is decreasing every year",
+                  "explanation_zh": "reduce 是及物動詞（減少某物），「人數自己減少」用 decrease、drop 或 fall。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "abstract_nominal",
+              "zh": "少子化",
+              "literal_error": "because of the less-children phenomenon",
+              "part": 2,
+              "explanation_zh": "「少子化」是抽象名詞，要說出它的意思：the low／falling birth rate。"
+            },
+            {
+              "type": "prenominal_modifier",
+              "zh": "鄉下學校的學生人數",
+              "literal_error": "rural schools' students number are decreasing",
+              "part": 3,
+              "explanation_zh": "「…的學生人數」改成 the number of students in rural schools；主詞是 the number，動詞用單數。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "Studies show that, with the birth rate falling, rural schools are seeing fewer and fewer students every year.",
+              "explanation_zh": "用 with＋名詞＋V-ing 表示附帶狀況，再用 fewer and fewer 表示「越來越少」，句子更精簡，屬加分寫法。"
+            }
+          ],
+          "restructuring_zh": "「鄉下學校的學生人數」要改寫成 the number of students in rural schools（修飾語後置），主詞是單數的 the number，所以動詞用 is decreasing；抽象名詞「少子化」也要說成 the low birth rate。"
+        },
+        "2": {
+          "references": [
+            "Some rural schools that once had hundreds of students have already merged with nearby schools.",
+            "Some country schools which used to have over a hundred students have already been combined with nearby schools.",
+            "Some rural schools that used to have hundreds of students have now merged with schools nearby."
+          ],
+          "target_words": [
+            {
+              "word": "rural",
+              "zh": "鄉下的",
+              "alternatives": [
+                "country",
+                "countryside"
+              ]
+            },
+            {
+              "word": "hundred",
+              "zh": "百"
+            },
+            {
+              "word": "merge",
+              "zh": "合併",
+              "alternatives": [
+                "combine",
+                "join",
+                "unite"
+              ]
+            },
+            {
+              "word": "nearby",
+              "zh": "鄰近的",
+              "alternatives": [
+                "neighboring",
+                "near"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "REL",
+              "grammar_id": "gp-relative-pronoun",
+              "label_zh": "關係代名詞引導的形容詞子句（that／which）",
+              "frame": "N + that/which + V …",
+              "zh_trigger": "曾經有上百名學生的"
+            },
+            {
+              "code": "PERF",
+              "grammar_id": "gp-present-perfect",
+              "label_zh": "現在完成式（已經…了）",
+              "frame": "S + have/has + already + p.p.",
+              "zh_trigger": "已經"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "曾經有上百名學生的",
+              "accepted": [
+                "that once had hundreds of students",
+                "which used to have over a hundred students",
+                "that used to have hundreds of students",
+                "which once had hundreds of students",
+                "that once had more than a hundred students",
+                "that used to have over a hundred students"
+              ],
+              "targets": [
+                "REL",
+                "hundred"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "that once had hundred of students",
+                  "right": "that once had hundreds of students",
+                  "explanation_zh": "「上百」是 hundreds of＋複數名詞（或 over a hundred），hundred 後面不能直接加 of。"
+                },
+                {
+                  "wrong": "that once have hundreds of students",
+                  "right": "that once had hundreds of students",
+                  "explanation_zh": "「曾經」是過去的事，子句動詞用過去式 had（或 used to have）。"
+                }
+              ]
+            },
+            {
+              "zh": "鄉下學校",
+              "accepted": [
+                "Some rural schools",
+                "Some country schools",
+                "Some schools in the countryside",
+                "Some schools in rural areas",
+                "Some village schools"
+              ],
+              "targets": [
+                "rural"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Some rural school",
+                  "right": "Some rural schools",
+                  "explanation_zh": "some 後面接可數名詞時用複數。"
+                },
+                {
+                  "wrong": "Some once had hundreds of students rural schools",
+                  "right": "Some rural schools that once had hundreds of students",
+                  "explanation_zh": "中文的前置修飾在英文要改成名詞後面的關係子句。"
+                }
+              ]
+            },
+            {
+              "zh": "已經",
+              "accepted": [
+                "have already",
+                "have now",
+                "have recently"
+              ],
+              "targets": [
+                "PERF"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "already merged",
+                  "right": "have already merged",
+                  "explanation_zh": "「已經…了」表示完成並影響到現在，用現在完成式 have＋p.p.。"
+                },
+                {
+                  "wrong": "has already",
+                  "right": "have already",
+                  "explanation_zh": "主詞 some rural schools 是複數，用 have。"
+                }
+              ]
+            },
+            {
+              "zh": "和鄰近的學校合併了",
+              "accepted": [
+                "merged with nearby schools",
+                "been combined with nearby schools",
+                "merged with schools nearby",
+                "been merged with nearby schools",
+                "combined with nearby schools",
+                "joined with nearby schools"
+              ],
+              "targets": [
+                "merge",
+                "nearby"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "merged nearby schools",
+                  "right": "merged with nearby schools",
+                  "explanation_zh": "「和…合併」是 merge with …（或 be combined with …）。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "prenominal_modifier",
+              "zh": "曾經有上百名學生的鄉下學校",
+              "literal_error": "Some once had hundreds of students rural schools have already merged …",
+              "part": 1,
+              "explanation_zh": "「曾經有上百名學生的」是很長的前置修飾，英文要改成關係子句放在名詞後面：rural schools that once had hundreds of students。"
+            },
+            {
+              "type": "tense_trigger",
+              "zh": "已經",
+              "literal_error": "Some rural schools already merged with nearby schools.",
+              "part": 3,
+              "explanation_zh": "「已經…了」要用現在完成式 have already merged。"
+            }
+          ],
+          "bonus": [],
+          "restructuring_zh": "「曾經有上百名學生的鄉下學校」是長的前置修飾，英文要把名詞 rural schools 放前面，再用關係子句 that once had hundreds of students 修飾；子句的「曾經」用過去式，主要子句的「已經…了」用現在完成式。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-advanced-01",
+    "lot": "translation-advanced-01",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "aabb674c20baad2f5310b8b4d808a265893e2edf0c2a598bf8b873bfdfb38f0f",
+    "spec_id": "translation-advanced@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T12:42:28Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T07:45:00Z",
+      "details": {
+        "solver": "A",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Studies show that because of the declining birth rate, the number of students in rural schools is decreasing year by year.",
+            "confidence": "high",
+            "explanation_zh": "「研究顯示」用 Studies show that 名詞子句；「由於少子化」用 because of the declining birth rate；「正在逐年減少」用現在進行式 is decreasing year by year；主詞 the number of students 是單數，動詞用 is。"
+          },
+          "2": {
+            "translation": "Some rural schools that once had more than a hundred students have already merged with nearby schools.",
+            "confidence": "high",
+            "explanation_zh": "「曾經有上百名學生的」用限定關係子句 that once had …；「上百名」譯 more than a hundred（hundreds of 會誇大）；「已經……合併了」用現在完成式 have already merged with。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "NCL",
+              "PROG"
+            ],
+            "used_target_words": [
+              "study",
+              "birth rate",
+              "rural",
+              "number",
+              "decrease"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "REL",
+              "PERF"
+            ],
+            "used_target_words": [
+              "rural",
+              "hundred",
+              "merge",
+              "nearby"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "（小建議，不影響判定）「上百名」較精確是 more than a hundred／over a hundred；首選 hundreds of 略有誇大但屬常見譯法，P1 也已收 more than a hundred。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "study",
+              "birth rate",
+              "rural",
+              "number",
+              "decrease"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NCL": true,
+              "PROG": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "rural",
+              "hundred",
+              "merge",
+              "nearby"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "REL": true,
+              "PERF": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "warn",
+      "created_at": "2026-10-09T07:46:21Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Research shows that, owing to the declining birth rate, the number of students in rural schools is decreasing year by year.",
+            "confidence": "high",
+            "explanation_zh": "「研究顯示」用 Research shows that 帶出名詞子句；「由於少子化」譯為 owing to the declining birth rate；「學生人數」要用 the number of students 搭配單數動詞；「正在逐年減少」用現在進行式加 year by year。"
+          },
+          "2": {
+            "translation": "Some rural schools that once had hundreds of students have already merged with nearby schools.",
+            "confidence": "medium",
+            "explanation_zh": "「曾經有上百名學生」用 once had（或 used to have）修飾 schools；「上百名」我取 hundreds of，語意略有彈性（也可能是一百多人）；「已經…合併了」用現在完成式 have already merged with。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "NCL",
+              "PROG"
+            ],
+            "used_target_words": [
+              "study",
+              "birth rate",
+              "rural",
+              "number",
+              "decrease"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "備註：我用 owing to the declining birth rate，意思與 because of／due to 相同，但不在 part 2 的 accepted 清單；視為可接受，建議補進 owing to／thanks to 之類的換法。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "REL",
+              "PERF"
+            ],
+            "used_target_words": [
+              "rural",
+              "hundred",
+              "merge",
+              "nearby"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "第 3 部分「已經」只有兩個字，accepted 全部要求出現 already／now／recently；而 have 在第 3 部分、merged 在第 4 部分，把 have already merged 一個動詞片語拆在兩段，PERF 句型的得分取決於一個副詞。只寫 have merged（不寫 already）也是正確的完成式，卻會對不上第 3 部分。建議把「已經」併入第 4 部分（have already merged with nearby schools）。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "study",
+              "birth rate",
+              "rural",
+              "number",
+              "decrease"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NCL": true,
+              "PROG": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "rural",
+              "hundred",
+              "merge",
+              "nearby"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "REL": true,
+              "PERF": true
+            },
+            "program_match": true
+          }
+        },
+        "problems": [
+          "第 2 題驗證者對4 部分切分有意見（warn）：第 3 部分「已經」只有兩個字，accepted 全部要求出現 already／now／recently；而 have 在第 3 部分、merged 在第 4 部分，把 have already merged 一個動詞片語拆在兩段，PERF"
+        ]
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

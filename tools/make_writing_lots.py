@@ -179,8 +179,11 @@ def bank_topics():
 
 
 def generated_from(run_id, lot):
-    """題組的 generation.run_id（agent-YYYY-MM-DD-{lot}）是否表示它就是依這個批次出的題。"""
-    return bool(lot) and (run_id == lot or run_id.endswith('-' + lot))
+    """題組的 generation.run_id（agent-YYYY-MM-DD-{lot}，退件重出的是 …-{lot}-regen）是否表示它就是依這個批次出的題。"""
+    if not lot or not run_id:
+        return False
+    base = run_id[: -len('-regen')] if run_id.endswith('-regen') else run_id
+    return base == lot or base.endswith('-' + lot)
 
 
 def check_topics(plan):

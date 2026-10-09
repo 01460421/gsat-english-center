@@ -1,0 +1,176 @@
+{
+  "schema": "gsat-bank-facts/v1",
+  "id": "fair-trade-coffee-ra04",
+  "title": "Fair-trade coffee: minimum price, premium, the 2001 price crisis and limits of the label",
+  "sdgs": [
+    12,
+    8
+  ],
+  "created_on": "2026-10-09",
+  "created_by": "claude-opus-5-5",
+  "sources": [
+    {
+      "id": "s1",
+      "publisher": "FAO",
+      "title": "Giovannucci D., Liu P. & Byers A. (2008) Adding Value: Certified Coffee Trade in North America, chapter 3 (Certified coffee)",
+      "url": "https://www.fao.org/4/a1585e/a1585e01.pdf",
+      "accessed": "2026-10-09",
+      "license": "FAO copyright (facts only)",
+      "use": "fact_only"
+    },
+    {
+      "id": "s2",
+      "publisher": "World Bank",
+      "title": "Ronchi L. (2006) “Fairtrade” and Market Failures in Agricultural Commodity Markets. Policy Research Working Paper 4011",
+      "url": "https://documents1.worldbank.org/curated/en/832461468137098938/pdf/wps4011.pdf",
+      "accessed": "2026-10-09",
+      "license": "World Bank working paper (facts only)",
+      "use": "fact_only"
+    },
+    {
+      "id": "s3",
+      "publisher": "University of Minnesota (copy of FLO standards document)",
+      "title": "Fairtrade Labelling Organizations International: Fairtrade Standards for Coffee (version January 2003)",
+      "url": "https://cinram.umn.edu/sites/cinram.umn.edu/files/2021-08/12-coffee_ft_standards.pdf",
+      "accessed": "2026-10-09",
+      "license": "FLO copyright (facts only)",
+      "use": "fact_only"
+    },
+    {
+      "id": "s4",
+      "publisher": "Columbia Business School (Chazen Web Journal of International Business)",
+      "title": "Zehner D.C. (2002) An Economic Assessment of “Fair Trade” in Coffee",
+      "url": "https://business.columbia.edu/sites/default/files-efs/pubfiles/92/Fair_Trade_in_Coffee_Final_Version1004.pdf",
+      "accessed": "2026-10-09",
+      "license": "Columbia University copyright (facts only)",
+      "use": "fact_only"
+    }
+  ],
+  "facts": [
+    {
+      "id": "f1",
+      "text": "Small family farms grow more than 70 percent of the world’s coffee.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f2",
+      "text": "Conventional coffee markets are highly competitive, and coffee prices usually move up and down in cycles.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f3",
+      "text": "In October 2001 the world market price of coffee fell to a record low of US$0.45 (45 cents) per pound; the price crisis caused great hardship for small coffee growers across the developing world.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f4",
+      "text": "Under Fairtrade rules, buyers may buy only from cooperatively organized groups of small producers, and these groups must be democratically controlled by their members.",
+      "source_ids": [
+        "s2",
+        "s3"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f5",
+      "text": "The Fairtrade minimum, or floor, price is based on the estimated cost of producing coffee sustainably.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "definition"
+    },
+    {
+      "id": "f6",
+      "text": "Fair-trade coffee is priced from the market price; the minimum price takes over only when the market price is lower than it.",
+      "source_ids": [
+        "s3"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f7",
+      "text": "Fairtrade buyers commit to long-term, stable trading relationships with producer groups.",
+      "source_ids": [
+        "s2",
+        "s3"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f8",
+      "text": "If producers ask, buyers must pay in advance up to 60 percent of the contract value, giving farmers credit against future sales.",
+      "source_ids": [
+        "s3",
+        "s4"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f9",
+      "text": "The Fairtrade premium is meant for social and economic investment at the level of the cooperative and its community, not for individual farmers.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f10",
+      "text": "Members of the producer organization decide democratically how the premium is used.",
+      "source_ids": [
+        "s2",
+        "s3"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f11",
+      "text": "Producer groups typically spend the premium on building the organization, social programs, services for members, infrastructure projects and quality programs.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f12",
+      "text": "In the October 2001 crisis, the price of fair-trade coffee was 180 percent higher than the market price.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f13",
+      "text": "When market prices are well above the minimum, the fair-trade price advantage becomes small, and some producers question whether certification is still worth it.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f14",
+      "text": "Certified groups can produce far more Fairtrade coffee than the Fairtrade market buys (excess capacity of about 80 percent, Giovannucci et al. 2003), so they also sell to conventional markets.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f15",
+      "text": "A study by Mendoza (2000) of Nicaraguan coffee sold in the United Kingdom in the 1990s (1996) found growers got only US$0.09 a pound, about 2 percent of the US$4.23 retail premium, while UK distribution took the largest single share, US$1.54 (36 percent).",
+      "source_ids": [
+        "s4"
+      ],
+      "kind": "number"
+    }
+  ],
+  "notes": null
+}

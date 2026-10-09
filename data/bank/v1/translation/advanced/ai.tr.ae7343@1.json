@@ -1,0 +1,792 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.ae7343",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "advanced",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "日夜和長輩住在一起，外籍看護往往比任何人都了解他們的需要。",
+        "options": null,
+        "answer": "Living with the elderly day and night, foreign care workers often understand their needs better than anyone else.",
+        "accepted_answers": [
+          "Living with elderly people day and night, foreign care workers often know what they need better than anyone else.",
+          "Staying with older people day and night, foreign caregivers usually understand their needs better than anyone else does."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "分詞構句（以 V-ing 片語取代副詞子句）",
+            "比較級（比任何人都…）"
+          ],
+          "topic": "外籍移工"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "許多看護會去上由志工開設的中文課，中文說得越來越流利。",
+        "options": null,
+        "answer": "Many care workers take Chinese classes offered by volunteers and are speaking Chinese more and more fluently.",
+        "accepted_answers": [
+          "Many caregivers attend Chinese classes run by volunteers and are becoming more and more fluent in Chinese.",
+          "Many care workers go to Chinese lessons taught by volunteers, and their Chinese is getting better and better."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "分詞片語後位修飾名詞（N＋p.p.＋by …）",
+            "越來越…（more and more／比較級 and 比較級）"
+          ],
+          "topic": "外籍移工"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "外籍移工"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "前半句沒有主詞，主詞和後半句相同（外籍看護），用分詞構句 Living with the elderly day and night。「外籍看護」是 foreign care workers（或 caregivers）；「往往」是頻率副詞 often／usually，放在一般動詞前面。「比任何人都了解」是比較級：understand their needs better than anyone else；better 已是比較級，不加 more。「他們的需要」指長輩的需要，也可以寫成 the needs of the elderly，意思更清楚。",
+          "evidence": [
+            "日夜和長輩住在一起",
+            "外籍看護往往",
+            "比任何人都了解他們的需要"
+          ],
+          "strategy_zh": "兩個子句主詞相同時，可以把前面的子句改成分詞構句：主動用 V-ing，被動用 p.p.。",
+          "hints": [
+            "切成四段：日夜和長輩住在一起／外籍看護往往／比任何人都／了解他們的需要",
+            "標的詞彙：elderly（年長的）、foreign（外國的）、care worker（看護）、understand（了解）、need（需要）",
+            "句型框架：V-ing …, S + often + V + better than anyone else"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「由志工開設的中文課」是前置修飾，英文把名詞 Chinese classes 放前面，後面直接接過去分詞片語 offered by volunteers（課是被開設的，用 p.p.；也可以用 run／taught／held by volunteers）。「會去上」表示經常這樣做，用現在式 take／attend。「中文說得越來越流利」主詞是看護：are speaking Chinese more and more fluently（修飾動詞用副詞 fluently），或 are becoming more and more fluent in Chinese（be／become 後面用形容詞 fluent）。",
+          "evidence": [
+            "許多看護會去上",
+            "由志工開設的中文課",
+            "中文說得越來越流利"
+          ],
+          "strategy_zh": "「由…＋動詞＋的＋名詞」常譯成「名詞＋p.p.＋by …」：classes offered by volunteers、products made in Taiwan。",
+          "hints": [
+            "切成四段：許多看護會去上／由志工開設的／中文課／中文說得越來越流利",
+            "標的詞彙：care worker（看護）、volunteer（志工）、offer（開設）、class（課）、fluent（流利的）",
+            "句型框架：S + V + N + p.p. + by … and + be + V-ing + more and more + adv."
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "Living with the elderly day and night, foreign care workers often understand their needs better than anyone else.",
+            "Living with elderly people day and night, foreign care workers often know what they need better than anyone else.",
+            "Staying with older people day and night, foreign caregivers usually understand their needs better than anyone else does."
+          ],
+          "target_words": [
+            {
+              "word": "elderly",
+              "zh": "長輩（年長的）",
+              "alternatives": [
+                "old",
+                "older",
+                "senior",
+                "seniors",
+                "elder",
+                "elders"
+              ]
+            },
+            {
+              "word": "foreign",
+              "zh": "外籍的",
+              "alternatives": [
+                "migrant"
+              ]
+            },
+            {
+              "word": "care worker",
+              "zh": "看護",
+              "alternatives": [
+                "caregiver",
+                "caregivers",
+                "caretaker",
+                "caretakers",
+                "carer",
+                "carers",
+                "helper",
+                "helpers"
+              ]
+            },
+            {
+              "word": "understand",
+              "zh": "了解",
+              "alternatives": [
+                "know"
+              ]
+            },
+            {
+              "word": "need",
+              "zh": "需要"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PART",
+              "grammar_id": "gp-participle-clause",
+              "label_zh": "分詞構句（以 V-ing 片語取代副詞子句）",
+              "frame": "V-ing …, S + V …",
+              "zh_trigger": "日夜和長輩住在一起"
+            },
+            {
+              "code": "COMP",
+              "grammar_id": "gp-comparative-superlative",
+              "label_zh": "比較級（比任何人都…）",
+              "frame": "S + V + better than anyone else",
+              "zh_trigger": "比任何人都"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "日夜和長輩住在一起",
+              "accepted": [
+                "Living with the elderly day and night",
+                "Living with elderly people day and night",
+                "Staying with older people day and night",
+                "Living with old people day and night",
+                "Staying with the elderly day and night",
+                "Living with the elderly all day and night",
+                "Living with older people day and night",
+                "Living with seniors day and night"
+              ],
+              "targets": [
+                "PART",
+                "elderly"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Live with the elderly day and night",
+                  "right": "Living with the elderly day and night",
+                  "explanation_zh": "前半句沒有主詞，要用分詞構句 Living …（或補成 Because they live …）。"
+                },
+                {
+                  "wrong": "Lived with the elderly day and night",
+                  "right": "Living with the elderly day and night",
+                  "explanation_zh": "看護是主動「住在一起」，用現在分詞 living；過去分詞表示被動。"
+                }
+              ]
+            },
+            {
+              "zh": "外籍看護往往",
+              "accepted": [
+                "foreign care workers often",
+                "foreign caregivers usually",
+                "foreign caregivers often",
+                "foreign care workers usually",
+                "foreign caretakers often",
+                "foreign helpers often",
+                "foreign care workers tend to",
+                "foreign caregivers tend to",
+                "care workers from other countries often",
+                "care workers from abroad often",
+                "foreign care workers generally",
+                "migrant care workers often",
+                "migrant caregivers often"
+              ],
+              "targets": [
+                "foreign",
+                "care worker"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "foreign nursing often",
+                  "right": "foreign care workers often",
+                  "explanation_zh": "「看護」指人，用 care workers／caregivers；nursing 是「護理工作」。"
+                },
+                {
+                  "wrong": "foreign care workers always",
+                  "right": "foreign care workers often",
+                  "explanation_zh": "「往往」是「常常、通常」，用 often／usually 或 tend to；always 是「總是、一定」，語氣太強。"
+                }
+              ]
+            },
+            {
+              "zh": "比任何人都",
+              "accepted": [
+                "better than anyone else",
+                "better than anyone else does",
+                "better than anybody else",
+                "better than anyone",
+                "better than any other person",
+                "better than anybody"
+              ],
+              "targets": [
+                "COMP"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "more better than anyone else",
+                  "right": "better than anyone else",
+                  "explanation_zh": "better 已經是比較級，前面不加 more。"
+                },
+                {
+                  "wrong": "better than any people",
+                  "right": "better than anyone else",
+                  "explanation_zh": "「比任何人都…」說 than anyone else 或 than any other person（單數）。"
+                }
+              ]
+            },
+            {
+              "zh": "了解他們的需要",
+              "accepted": [
+                "understand their needs",
+                "know what they need",
+                "know their needs",
+                "understand what they need",
+                "understand the needs of the elderly",
+                "know what the elderly need",
+                "understand what the elderly need",
+                "understand the elderly's needs"
+              ],
+              "targets": [
+                "understand",
+                "need"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "understand their need",
+                  "right": "understand their needs",
+                  "explanation_zh": "長輩的需要不只一項，needs 用複數。"
+                },
+                {
+                  "wrong": "know what do they need",
+                  "right": "know what they need",
+                  "explanation_zh": "間接問句用直述句語序。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "subjectless",
+              "zh": "日夜和長輩住在一起",
+              "literal_error": "Live with the elderly day and night, foreign care workers often …",
+              "part": 1,
+              "explanation_zh": "前半句中文沒有主詞，英文不能直接放原形動詞；主詞和後半句相同時用分詞構句 Living …。"
+            },
+            {
+              "type": "word_form",
+              "zh": "比任何人都",
+              "literal_error": "foreign care workers often understand their needs more better than anyone",
+              "part": 3,
+              "explanation_zh": "well 的比較級是 better，不能再加 more。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "No one understands the needs of the elderly better than the foreign care workers who live with them day and night.",
+              "explanation_zh": "用 No one … better than … 的否定比較表示「最了解」，再用關係子句說明看護的身分；句構不同但語意相同，屬加分寫法。"
+            }
+          ],
+          "restructuring_zh": "前半句「日夜和長輩住在一起」中文沒有主詞，英文要用分詞構句 Living with the elderly day and night，邏輯主詞就是後面的 foreign care workers。"
+        },
+        "2": {
+          "references": [
+            "Many care workers take Chinese classes offered by volunteers and are speaking Chinese more and more fluently.",
+            "Many caregivers attend Chinese classes run by volunteers and are becoming more and more fluent in Chinese.",
+            "Many care workers go to Chinese lessons taught by volunteers, and their Chinese is getting better and better."
+          ],
+          "target_words": [
+            {
+              "word": "care worker",
+              "zh": "看護",
+              "alternatives": [
+                "caregiver",
+                "caregivers",
+                "caretaker",
+                "caretakers",
+                "carer",
+                "carers",
+                "helper",
+                "helpers"
+              ]
+            },
+            {
+              "word": "volunteer",
+              "zh": "志工"
+            },
+            {
+              "word": "offer",
+              "zh": "開設",
+              "alternatives": [
+                "run",
+                "hold",
+                "held",
+                "teach",
+                "taught",
+                "organize",
+                "organized",
+                "provide",
+                "give",
+                "given",
+                "set up",
+                "open",
+                "start",
+                "host"
+              ]
+            },
+            {
+              "word": "class",
+              "zh": "課",
+              "alternatives": [
+                "course",
+                "lesson"
+              ]
+            },
+            {
+              "word": "fluent",
+              "zh": "流利的",
+              "alternatives": [
+                "fluently",
+                "better"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PART",
+              "grammar_id": "gp-participle-modifier",
+              "label_zh": "分詞片語後位修飾名詞（N＋p.p.＋by …）",
+              "frame": "N + p.p. + by …（被動）",
+              "zh_trigger": "由志工開設的"
+            },
+            {
+              "code": "COMP",
+              "grammar_id": "gp-more-and-more",
+              "label_zh": "越來越…（more and more／比較級 and 比較級）",
+              "frame": "S + be + V-ing + more and more + adv. ／ become + more and more + adj.",
+              "zh_trigger": "越來越"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "許多看護會去上",
+              "accepted": [
+                "Many care workers take",
+                "Many caregivers attend",
+                "Many care workers go to",
+                "Many caregivers take",
+                "Many care workers attend",
+                "Many caregivers go to",
+                "Many care workers are taking",
+                "Many caregivers are taking",
+                "Many care workers sign up for",
+                "Many caregivers join",
+                "A lot of care workers take",
+                "A lot of caregivers attend"
+              ],
+              "targets": [
+                "care worker"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Many care worker take",
+                  "right": "Many care workers take",
+                  "explanation_zh": "many 後面接複數名詞 care workers。"
+                },
+                {
+                  "wrong": "Many care workers will take",
+                  "right": "Many care workers take",
+                  "explanation_zh": "這裡的「會」表示經常這麼做（習慣），用現在式 take 就好，不是未來式 will。"
+                }
+              ]
+            },
+            {
+              "zh": "由志工開設的",
+              "accepted": [
+                "offered by volunteers",
+                "run by volunteers",
+                "taught by volunteers",
+                "held by volunteers",
+                "organized by volunteers",
+                "given by volunteers",
+                "provided by volunteers",
+                "set up by volunteers",
+                "started by volunteers",
+                "hosted by volunteers",
+                "offered by some volunteers",
+                "taught by some volunteers"
+              ],
+              "targets": [
+                "PART",
+                "volunteer",
+                "offer"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "offering by volunteers",
+                  "right": "offered by volunteers",
+                  "explanation_zh": "課是「被開設」的，用過去分詞 offered；現在分詞 offering 表示主動。"
+                },
+                {
+                  "wrong": "by volunteers offered",
+                  "right": "offered by volunteers",
+                  "explanation_zh": "分詞片語要放在名詞後面：Chinese classes offered by volunteers，不能照中文語序放在名詞前面。"
+                }
+              ]
+            },
+            {
+              "zh": "中文課",
+              "accepted": [
+                "Chinese classes",
+                "Chinese lessons",
+                "Chinese courses",
+                "Chinese language classes",
+                "Mandarin classes",
+                "Chinese language courses"
+              ],
+              "targets": [
+                "class"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Chinese's classes",
+                  "right": "Chinese classes",
+                  "explanation_zh": "Chinese 本身就可以當形容詞修飾 classes，不用所有格。"
+                }
+              ]
+            },
+            {
+              "zh": "中文說得越來越流利",
+              "accepted": [
+                "are speaking Chinese more and more fluently",
+                "are becoming more and more fluent in Chinese",
+                "their Chinese is getting better and better",
+                "speak Chinese more and more fluently",
+                "are getting more and more fluent in Chinese",
+                "become more and more fluent in Chinese",
+                "their Chinese is becoming more and more fluent",
+                "their Chinese is getting more and more fluent",
+                "are speaking Chinese better and better",
+                "speak Chinese better and better"
+              ],
+              "targets": [
+                "COMP",
+                "fluent"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "speak Chinese more and more fluent",
+                  "right": "speak Chinese more and more fluently",
+                  "explanation_zh": "修飾動詞 speak 要用副詞 fluently；用形容詞 fluent 時要搭配 be／become fluent in Chinese。"
+                },
+                {
+                  "wrong": "more fluently and more fluently",
+                  "right": "more and more fluently",
+                  "explanation_zh": "「越來越…」是 more and more＋形容詞／副詞，或「比較級 and 比較級」（better and better）。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "prenominal_modifier",
+              "zh": "由志工開設的中文課",
+              "literal_error": "Many care workers take by volunteers offered Chinese classes …",
+              "part": 2,
+              "explanation_zh": "「由志工開設的中文課」中文修飾語在名詞前面，英文要把名詞放前面、過去分詞片語放後面：Chinese classes offered by volunteers。"
+            },
+            {
+              "type": "word_form",
+              "zh": "流利",
+              "literal_error": "are speaking Chinese more and more fluent",
+              "part": 4,
+              "explanation_zh": "修飾動詞 speak 要用副詞 fluently；用形容詞 fluent 時要搭配 become／be fluent in Chinese。"
+            }
+          ],
+          "bonus": [],
+          "restructuring_zh": "「由志工開設的中文課」是前置修飾，英文要改成名詞在前、過去分詞片語在後：Chinese classes offered by volunteers；「中文說得越來越流利」以看護為主詞，寫成 are speaking Chinese more and more fluently 或 are becoming more and more fluent in Chinese。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-advanced-01-regen",
+    "lot": "translation-advanced-01",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "3c592a935e002bfc3a9345cac2beeef2a0e87c47409c0e13ae879a73c019f5c3",
+    "spec_id": "translation-advanced@2026-10-09",
+    "regenerated_from": "ai.tr.012857"
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T14:07:08Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "warn",
+      "created_at": "2026-10-09T13:40:35Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Living with the elderly day and night, foreign caregivers often understand their needs better than anyone else.",
+            "confidence": "high",
+            "explanation_zh": "前半句「日夜和長輩住在一起」與主句同主詞（外籍看護），用現在分詞片語 Living with ... 當副詞修飾最自然；「比任何人都了解」用比較級 better than anyone else（要加 else，否則把自己也比進去）；「往往」譯 often；「長輩」在看護的語境裡指受照顧的老人，用 the elderly。their 指長輩，語境清楚。"
+          },
+          "2": {
+            "translation": "Many caregivers attend Chinese classes offered by volunteers, and they are becoming more and more fluent in Chinese.",
+            "confidence": "high",
+            "explanation_zh": "「由志工開設的中文課」是後位修飾，用過去分詞片語 offered by volunteers（也可說 taught／run by）；「會去上」譯 attend（或 take）；後半「中文說得越來越流利」主詞是看護，補 and they 連成一句，用 become more and more fluent in Chinese（越來越＋比較級重複），進行式表示逐漸變化。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PART",
+              "COMP"
+            ],
+            "used_target_words": [
+              "elderly",
+              "foreign",
+              "care worker",
+              "understand",
+              "need"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PART",
+              "COMP"
+            ],
+            "used_target_words": [
+              "care worker",
+              "volunteer",
+              "offer",
+              "class",
+              "fluent"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "warn",
+            "parts_check": "pass",
+            "issues_zh": [
+              "第 3 個參考譯文（索引 2）「their Chinese is getting better and better」只說「中文越來越好」，沒有譯出「流利」，語意偏鬆；它能通過標的詞彙檢查，是因為 fluent 的 alternatives 放了 better，但 better 不是 fluent 的同義詞（是 good／well 的比較級），等於用替換字繞過標的詞彙。",
+              "建議把參考譯文 3 改成 「Many care workers go to Chinese lessons taught by volunteers, and their Chinese is getting more and more fluent.」，並把 better 從 fluent 的 alternatives 拿掉；第 4 部分 accepted 裡的 better and better 寫法要不要保留給學生得分可另外決定，但不宜放在參考譯文。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "elderly",
+              "foreign",
+              "care worker",
+              "understand",
+              "need"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PART": true,
+              "COMP": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "care worker",
+              "volunteer",
+              "offer",
+              "class",
+              "fluent"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PART": true,
+              "COMP": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 2 題驗證者對參考譯文有意見（warn）：第 3 個參考譯文（索引 2）「their Chinese is getting better and better」只說「中文越來越好」，沒有譯出「流利」，語意偏鬆；它能通過標的詞彙檢查，是因為 fluent 的 alternatives"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T13:50:00Z",
+      "details": {
+        "solver": "B",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Living with the elderly day and night, foreign caregivers often understand their needs better than anyone else does.",
+            "confidence": "high",
+            "explanation_zh": "前半「日夜和長輩住在一起」與後半的主詞相同（外籍看護），可用現在分詞片語 Living with the elderly day and night 當分詞構句，表原因兼伴隨；「比任何人都了解」用比較級 better than anyone else（does 可省略），「往往」放在一般動詞前用 often。「長輩」譯成 the elderly，their needs 指他們（長輩）的需要。"
+          },
+          "2": {
+            "translation": "Many caregivers take Chinese classes offered by volunteers, and they speak Chinese more and more fluently.",
+            "confidence": "medium",
+            "explanation_zh": "「由志工開設的中文課」用過去分詞片語 offered by volunteers 後置修飾 Chinese classes；「說得越來越流利」用 more and more fluently 表示程度逐漸增加（也可寫成 are becoming more and more fluent in Chinese）。兩個分句之間中文沒有明確因果，所以用 and 連接而不加 so。信心 medium 是因為「越來越流利」有副詞與形容詞兩種合理寫法。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PART",
+              "COMP"
+            ],
+            "used_target_words": [
+              "elderly",
+              "foreign",
+              "care worker",
+              "understand",
+              "need"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PART",
+              "COMP"
+            ],
+            "used_target_words": [
+              "care worker",
+              "volunteer",
+              "offer",
+              "class",
+              "fluent"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "elderly",
+              "foreign",
+              "care worker",
+              "understand",
+              "need"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PART": true,
+              "COMP": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "care worker",
+              "volunteer",
+              "offer",
+              "class",
+              "fluent"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PART": true,
+              "COMP": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "rejected",
+  "status_reason": "判定者人工審查（第 2 輪）：參考譯文與評分規準有實質問題。第 2 題參考譯文 R3「Many care workers go to Chinese lessons taught by volunteers, and their Chinese is getting better and better.」把「流利」譯成 better，只表達「中文越來越好」，漏掉「流利」的語意；它能通過「每個參考譯文都含每個標的詞彙」的檢查，是因為標的詞彙 fluent 的 alternatives 放了 better，但 better 是 good／well 的比較級，不是 fluent 的換字（README §3.5：alternatives 是可替換的換字），等於用 alternatives 繞過標的詞彙（驗證者 A 判 warn）。第 4 部分 accepted 也因此把 their Chinese is getting better and better、are speaking Chinese better and better、speak Chinese better and better 三種漏譯「流利」的寫法列為滿分寫法。重生時 R3 改成含 fluent 的寫法（例如 their Chinese is getting more and more fluent），把 better 從 fluent 的 alternatives 刪掉，第 4 部分刪除 better and better 系列（或改列為常見錯誤：語意不完整）。第 1 題沒有問題。"
+}

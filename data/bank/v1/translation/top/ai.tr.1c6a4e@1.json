@@ -1,0 +1,722 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.1c6a4e",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "top",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "遠距醫療（telemedicine）讓醫生能透過網路為病人看診，這對住在偏遠地區的人特別有幫助。",
+        "options": null,
+        "answer": "Telemedicine enables doctors to see patients through the Internet, which is especially helpful for people who live in remote areas.",
+        "accepted_answers": [
+          "Telemedicine allows doctors to examine patients over the Internet, which is particularly helpful to people who live in remote areas.",
+          "Telemedicine lets doctors see and treat patients through the Internet, which is especially helpful to those who live in remote areas."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "非限定關係子句（which 指前面整件事：…, which is …）",
+            "關係代名詞限定子句（住在偏遠地區的人＝people who live in remote areas）"
+          ],
+          "topic": "遠距醫療"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "在年輕人大多已搬走的鄉村，這項服務已被用來照顧獨居的長者。",
+        "options": null,
+        "answer": "In rural villages where most young people have moved away, this service has been used to care for elderly residents who live alone.",
+        "accepted_answers": [
+          "In rural areas where most of the young people have left, this service has been used to take care of old people living alone.",
+          "In villages from which most young people have moved away, this service has been used to look after elderly people who live by themselves."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "關係副詞 where（年輕人已搬走的鄉村＝villages where …）",
+            "完成式被動（已被用來…）"
+          ],
+          "topic": "遠距醫療"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "遠距醫療"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「，這對…特別有幫助」的「這」指的是「醫生能透過網路看診」這整件事，英文用逗號加 which（非限定關係子句，which 可以指前面整句），不要用逗號直接接 this is …。「住在偏遠地區的人」改成後位的限定關係子句 people who live in remote areas。「讓醫生能…」用 enable／allow doctors to VR；「看診」是 see／examine patients。",
+          "evidence": [
+            "透過網路為病人看診",
+            "這對住在偏遠地區的人特別有幫助"
+          ],
+          "strategy_zh": "先寫主要子句 Telemedicine enables doctors to see patients …，逗號後用 which 補充評論，評論裡再用 who 子句修飾「人」。",
+          "hints": [
+            "切成四段：遠距醫療讓醫生能／透過網路為病人看診／住在偏遠地區的人／特別有幫助",
+            "標的詞彙：enable（使能夠）、patient（病人）、Internet（網路）、helpful（有幫助的）、remote（偏遠的）",
+            "句型框架：S + V …, which is especially + adj. + for people who + V …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「年輕人大多已搬走的鄉村」修飾語是完整子句，缺的是地點，用關係副詞 where：rural villages where most young people have moved away（move away 不及物，不能用 which）。「已被用來照顧」用完成式被動 has been used to care for；注意 be used to VR（被用來）和 be used to V-ing（習慣於）不同。「獨居的長者」是 elderly people who live alone，不是 lonely old people。",
+          "evidence": [
+            "年輕人大多已搬走的鄉村",
+            "已被用來照顧獨居的長者"
+          ],
+          "strategy_zh": "句首地點片語 In rural villages 後面接 where 子句；主要子句 this service has been used to VR；最後用 who 子句修飾長者。",
+          "hints": [
+            "切成四段：在年輕人大多已搬走的鄉村／這項服務／已被用來照顧／獨居的長者",
+            "標的詞彙：rural（鄉村的）、service（服務）、care for（照顧）、elderly（年長的）",
+            "句型框架：In + N(地方) + where + S + have p.p., S + has been used to VR …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "Telemedicine enables doctors to see patients through the Internet, which is especially helpful for people who live in remote areas.",
+            "Telemedicine allows doctors to examine patients over the Internet, which is particularly helpful to people who live in remote areas.",
+            "Telemedicine lets doctors see and treat patients through the Internet, which is especially helpful to those who live in remote areas."
+          ],
+          "target_words": [
+            {
+              "word": "enable",
+              "zh": "使能夠",
+              "alternatives": [
+                "allow",
+                "let"
+              ]
+            },
+            {
+              "word": "patient",
+              "zh": "病人"
+            },
+            {
+              "word": "Internet",
+              "zh": "網路",
+              "alternatives": [
+                "online"
+              ]
+            },
+            {
+              "word": "helpful",
+              "zh": "有幫助的",
+              "alternatives": [
+                "help",
+                "useful"
+              ]
+            },
+            {
+              "word": "remote",
+              "zh": "偏遠的"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "NRREL",
+              "grammar_id": "gp-nonrestrictive",
+              "label_zh": "非限定關係子句（which 指前面整件事：…, which is …）",
+              "frame": "S + V …, which + V …",
+              "zh_trigger": "這對住在偏遠地區的人特別有幫助"
+            },
+            {
+              "code": "REL",
+              "grammar_id": "gp-relative-pronoun",
+              "label_zh": "關係代名詞限定子句（住在偏遠地區的人＝people who live in remote areas）",
+              "frame": "people who + V …",
+              "zh_trigger": "住在偏遠地區的人"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "遠距醫療（telemedicine）讓醫生能",
+              "accepted": [
+                "Telemedicine enables doctors to",
+                "Telemedicine allows doctors to",
+                "Telemedicine lets doctors"
+              ],
+              "targets": [
+                "enable"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Telemedicine enables doctors can see patients",
+                  "right": "Telemedicine enables doctors to see patients",
+                  "explanation_zh": "enable／allow sb to VR；後面不能再接 can。"
+                },
+                {
+                  "wrong": "Telemedicine lets doctors to see patients",
+                  "right": "Telemedicine lets doctors see patients",
+                  "explanation_zh": "let 後面接原形動詞，不加 to。"
+                }
+              ]
+            },
+            {
+              "zh": "透過網路為病人看診",
+              "accepted": [
+                "see patients through the Internet",
+                "examine patients over the Internet",
+                "see and treat patients through the Internet",
+                "see patients online",
+                "treat patients online"
+              ],
+              "targets": [
+                "patient",
+                "Internet"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "see a doctor for patients through the Internet",
+                  "right": "see patients through the Internet",
+                  "explanation_zh": "「看診」是醫生 see／examine patients；see a doctor 是病人去看醫生。"
+                },
+                {
+                  "wrong": "see patients through Internet",
+                  "right": "see patients through the Internet",
+                  "explanation_zh": "Internet 前面要加 the。"
+                }
+              ]
+            },
+            {
+              "zh": "住在偏遠地區的人",
+              "accepted": [
+                "for people who live in remote areas",
+                "to people who live in remote areas",
+                "to those who live in remote areas",
+                "for those who live in remote areas"
+              ],
+              "targets": [
+                "REL",
+                "remote"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "for people who lives in remote areas",
+                  "right": "for people who live in remote areas",
+                  "explanation_zh": "先行詞 people 是複數，關係子句的動詞不加 s。"
+                },
+                {
+                  "wrong": "for living-in-remote-areas people",
+                  "right": "for people who live in remote areas",
+                  "explanation_zh": "中文前置的修飾語，英文改成名詞後面的關係子句。"
+                }
+              ]
+            },
+            {
+              "zh": "特別有幫助",
+              "accepted": [
+                "which is especially helpful",
+                "which is particularly helpful"
+              ],
+              "targets": [
+                "NRREL",
+                "helpful"
+              ],
+              "common_errors": [
+                {
+                  "wrong": ", this is especially helpful",
+                  "right": ", which is especially helpful",
+                  "explanation_zh": "逗號不能連接兩個完整句子；補充說明前面整件事要用 which。"
+                },
+                {
+                  "wrong": ", which is especially help",
+                  "right": ", which is especially helpful",
+                  "explanation_zh": "be 動詞後面接形容詞 helpful。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "collocation",
+              "zh": "看診",
+              "literal_error": "allows doctors to see a doctor for patients",
+              "part": 2,
+              "explanation_zh": "「看診」在這裡是醫生為病人診療，英文說 see／examine patients；see a doctor 是「病人去看醫生」，主客顛倒。"
+            },
+            {
+              "type": "prenominal_modifier",
+              "zh": "住在偏遠地區的人",
+              "literal_error": "especially helpful for live-in-remote-areas people",
+              "part": 3,
+              "explanation_zh": "「住在偏遠地區的人」修飾語在名詞前；英文改成名詞後面的關係子句 people who live in remote areas。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "Thanks to telemedicine, doctors can now see patients online, a service that is especially helpful for those living in remote areas.",
+              "explanation_zh": "用 Thanks to … 開頭，再以同位語 a service that … 取代 which 子句，是另一種補充說明的進階寫法。"
+            }
+          ],
+          "restructuring_zh": "「這對住在偏遠地區的人特別有幫助」的「這」指前面整件事，英文用 which 引導非限定子句接在逗號後面；「住在偏遠地區的人」改成 people who live in remote areas。"
+        },
+        "2": {
+          "references": [
+            "In rural villages where most young people have moved away, this service has been used to care for elderly residents who live alone.",
+            "In rural areas where most of the young people have left, this service has been used to take care of old people living alone.",
+            "In villages from which most young people have moved away, this service has been used to look after elderly people who live by themselves."
+          ],
+          "target_words": [
+            {
+              "word": "rural",
+              "zh": "鄉村的",
+              "alternatives": [
+                "countryside",
+                "village"
+              ]
+            },
+            {
+              "word": "service",
+              "zh": "服務"
+            },
+            {
+              "word": "care for",
+              "zh": "照顧",
+              "alternatives": [
+                "take care of",
+                "look after"
+              ]
+            },
+            {
+              "word": "elderly",
+              "zh": "年長的",
+              "alternatives": [
+                "old",
+                "senior"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "REL",
+              "grammar_id": "gp-relative-adverb",
+              "label_zh": "關係副詞 where（年輕人已搬走的鄉村＝villages where …）",
+              "frame": "N(地方) + where + S + V …",
+              "zh_trigger": "年輕人大多已搬走的鄉村"
+            },
+            {
+              "code": "PASS",
+              "grammar_id": "gp-perfect-passive",
+              "label_zh": "完成式被動（已被用來…）",
+              "frame": "S + have/has + been + p.p. + to VR …",
+              "zh_trigger": "已被用來"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "在年輕人大多已搬走的鄉村",
+              "accepted": [
+                "In rural villages where most young people have moved away",
+                "In rural areas where most of the young people have left",
+                "In villages from which most young people have moved away",
+                "In villages where most young people have moved away",
+                "In rural areas where most young people have moved away"
+              ],
+              "targets": [
+                "REL",
+                "rural"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "In rural villages which most young people have moved away",
+                  "right": "In rural villages where most young people have moved away",
+                  "explanation_zh": "move away 是不及物動詞，關係子句缺的是地點，要用 where（＝from which）。"
+                },
+                {
+                  "wrong": "In rural village where most young people have moved away",
+                  "right": "In rural villages where most young people have moved away",
+                  "explanation_zh": "泛指鄉村用複數 villages。"
+                }
+              ]
+            },
+            {
+              "zh": "這項服務",
+              "accepted": [
+                "this service"
+              ],
+              "targets": [
+                "service"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "this services",
+                  "right": "this service",
+                  "explanation_zh": "this 後面接單數名詞。"
+                },
+                {
+                  "wrong": "this serve",
+                  "right": "this service",
+                  "explanation_zh": "「服務」的名詞是 service，serve 是動詞。"
+                }
+              ]
+            },
+            {
+              "zh": "已被用來照顧",
+              "accepted": [
+                "has been used to care for",
+                "has been used to take care of",
+                "has been used to look after"
+              ],
+              "targets": [
+                "PASS",
+                "care for"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "has used to care for",
+                  "right": "has been used to care for",
+                  "explanation_zh": "服務是「被用來」照顧人，要用完成式被動 has been used to VR。"
+                },
+                {
+                  "wrong": "has been used to caring for",
+                  "right": "has been used to care for",
+                  "explanation_zh": "be used to VR 是「被用來做…」；be used to V-ing 是「習慣於…」，意思不同。"
+                }
+              ]
+            },
+            {
+              "zh": "獨居的長者",
+              "accepted": [
+                "elderly residents who live alone",
+                "old people living alone",
+                "elderly people who live by themselves",
+                "elderly people living alone",
+                "elderly people who live alone"
+              ],
+              "targets": [
+                "elderly"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "lonely old people",
+                  "right": "elderly people who live alone",
+                  "explanation_zh": "「獨居」是 live alone（一個人住）；lonely 是「寂寞的」，意思不同。"
+                },
+                {
+                  "wrong": "elderly residents who lives alone",
+                  "right": "elderly residents who live alone",
+                  "explanation_zh": "先行詞 residents 是複數，動詞不加 s。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "abstract_nominal",
+              "zh": "獨居的長者",
+              "literal_error": "to care for lonely elders",
+              "part": 4,
+              "explanation_zh": "「獨居」是「一個人住」的複合概念，英文說 who live alone／living alone；寫成 lonely（寂寞的）就把意思改掉了。"
+            },
+            {
+              "type": "prenominal_modifier",
+              "zh": "年輕人大多已搬走的鄉村",
+              "literal_error": "In rural villages which most young people have moved away",
+              "part": 1,
+              "explanation_zh": "中文用子句修飾「鄉村」；英文要放在名詞後面，而且子句缺的是地點，要用關係副詞 where，不能用 which。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "In rural villages largely abandoned by the young, this service has been used to look after elderly people living on their own.",
+              "explanation_zh": "用過去分詞片語 largely abandoned by the young（大多被年輕人拋下的）後位修飾 villages，並用 the young 表示「年輕人」。"
+            }
+          ],
+          "restructuring_zh": "「年輕人大多已搬走的鄉村」是帶主詞的子句修飾地點，英文改成名詞後面的關係副詞子句 villages where most young people have moved away；「已被用來」改用完成式被動 has been used to。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ac-V-3",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-top-02",
+    "lot": "translation-top-02",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "6c20f5a14ca426db5ab42249ce1bc261a4855dfb4f5732045980d8afdca92905",
+    "spec_id": "translation-top@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 1,
+    "sentences": 1,
+    "avg_sentence_length": 1.0,
+    "denominator": 1,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 1.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {
+      "off": 1
+    },
+    "offlist_words": [
+      "telemedicine"
+    ],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "warn",
+      "created_at": "2026-10-09T13:14:38Z",
+      "details": {
+        "errors": [],
+        "warnings": [
+          "annotations.rubric.items.2.patterns[1]: gp-perfect-passive 通常對應句構 PERF（目前 code=PASS）"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "warn",
+      "created_at": "2026-10-09T08:03:54Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Telemedicine allows doctors to see patients over the Internet, which is especially helpful for people who live in remote areas.",
+            "confidence": "high",
+            "explanation_zh": "「讓醫生能…」用 allow sb. to V；「看診」see patients；「透過網路」over the Internet；「這對…特別有幫助」用 which 補述前面整句；「住在偏遠地區的人」用關係子句 people who live in remote areas。"
+          },
+          "2": {
+            "translation": "In rural villages where most young people have moved away, this service has been used to take care of elderly people who live alone.",
+            "confidence": "high",
+            "explanation_zh": "「年輕人大多已搬走的鄉村」用關係副詞 where 加現在完成式 have moved away；「已被用來」用現在完成式被動 has been used to；「獨居的長者」elderly people who live alone。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "NRREL",
+              "REL"
+            ],
+            "used_target_words": [
+              "enable",
+              "patient",
+              "Internet",
+              "helpful",
+              "remote"
+            ],
+            "within_accepted": true,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [],
+            "closest_reference": 0
+          },
+          "2": {
+            "used_patterns": [
+              "REL",
+              "PASS"
+            ],
+            "used_target_words": [
+              "rural",
+              "service",
+              "care for",
+              "elderly"
+            ],
+            "within_accepted": true,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "第 2 部分「這項服務」只有 this service 一種寫法，沒有句型、只有一個基礎字，幾乎是送分；第 3 部分卻同時扛 PASS 與 care for。4 部分份量不均。建議改成「這項服務已被用來」（this service has been used to，PASS＋service）與「照顧」（care for／take care of／look after）兩部分。"
+            ],
+            "closest_reference": 0
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "enable",
+              "patient",
+              "Internet",
+              "helpful",
+              "remote"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NRREL": true,
+              "REL": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "rural",
+              "service",
+              "care for",
+              "elderly"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "REL": true,
+              "PASS": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 2 題驗證者對4 部分切分有意見（warn）：第 2 部分「這項服務」只有 this service 一種寫法，沒有句型、只有一個基礎字，幾乎是送分；第 3 部分卻同時扛 PASS 與 care for。4 部分份量不均。建議改成「這項服務已被用來」（this service has "
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "fail",
+      "created_at": "2026-10-09T12:46:22Z",
+      "details": {
+        "solver": "B",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Telemedicine allows doctors to see patients through the Internet, which is especially helpful to people living in remote areas.",
+            "confidence": "high",
+            "explanation_zh": "「讓醫生能……」用 allows doctors to + V；「這對……特別有幫助」用 which 非限定關係子句指前面整件事；「住在偏遠地區的人」用現在分詞 people living in remote areas。"
+          },
+          "2": {
+            "translation": "In rural villages where most young people have already moved away, this service has been used to take care of elderly people who live alone.",
+            "confidence": "high",
+            "explanation_zh": "「年輕人大多已搬走的鄉村」用關係副詞 where 的子句，搬走的動作已完成並影響現在，所以用現在完成式；「已被用來照顧」用現在完成式被動 has been used to + V；「獨居的長者」譯成 elderly people who live alone。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "NRREL"
+            ],
+            "used_target_words": [
+              "enable",
+              "patient",
+              "Internet",
+              "helpful",
+              "remote"
+            ],
+            "within_accepted": false,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "「住在偏遠地區的人」我自然寫成現在分詞後位修飾 people living in remote areas（關係子句的省略形），沒有用 REL 要求的 people who live in remote areas；第 3 部分 accepted 只收 who live 的寫法。中文並沒有強制要用完整關係子句，REL 沒被引出，建議把 people living in remote areas 納入 accepted，或接受這個句型只能是『其中一種可接受寫法』。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "REL",
+              "PASS"
+            ],
+            "used_target_words": [
+              "rural",
+              "service",
+              "care for",
+              "elderly"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "enable",
+              "patient",
+              "Internet",
+              "helpful",
+              "remote"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NRREL": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "rural",
+              "service",
+              "care for",
+              "elderly"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "REL": true,
+              "PASS": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 1 題盲譯沒有用到標的句型 ['REL']：中文題目沒有自然引出這個句型（SPEC §5.7）",
+          "第 1 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義"
+        ]
+      }
+    }
+  ],
+  "status": "rejected",
+  "status_reason": "blind_solver:B 未通過：第 1 題盲譯沒有用到標的句型 ['REL']：中文題目沒有自然引出這個句型（SPEC §5.7）；第 1 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義；人工審核：第 1 句「住在偏遠地區的人」寫成 people living in remote areas（關係子句的省略形）一樣自然正確，第 3 部分只收 who live，REL 不是中文唯一引出的寫法；第 2 句第 2 部分「這項服務」只有 this service 一種寫法、沒有句型，第 3 部分同時扛 PASS 與 care for，4 部分份量不均。"
+}

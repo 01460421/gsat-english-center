@@ -1,0 +1,754 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.deef2d",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "top",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "在超市購物時，很少人會仔細看標示，了解食品裡究竟添加了哪些成分。",
+        "options": null,
+        "answer": "When shopping at supermarkets, few people read the labels carefully to find out what ingredients have actually been added to the food.",
+        "accepted_answers": [
+          "While shopping in a supermarket, only a few people check the labels carefully to learn which ingredients have really been put into the food.",
+          "When doing their shopping at the supermarket, few people take a careful look at the labels to find out exactly what ingredients have been added to the food."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "間接問句（what）",
+            "連接詞＋分詞"
+          ],
+          "topic": "超加工食品"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "對於常吃含有大量糖、鹽的超加工食品（ultra-processed food）的人來說，罹患慢性病的風險明顯較高。",
+        "options": null,
+        "answer": "For those who often eat ultra-processed foods containing lots of sugar and salt, the risk of developing chronic diseases is significantly higher.",
+        "accepted_answers": [
+          "For those who regularly consume ultra-processed food loaded with sugar and salt, the risk of getting chronic illnesses is clearly higher.",
+          "Those who frequently eat ultra-processed foods containing large amounts of sugar and salt face a much higher risk of chronic diseases."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "分詞片語後位修飾",
+            "對於…的人（for those who）"
+          ],
+          "topic": "超加工食品"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "超加工食品"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「在…時」沒有主詞，主詞和後面的「人」相同，可寫 When shopping at supermarkets（連接詞＋分詞），主要子句的主詞要是人，避免懸垂分詞。「很少人」是 few people（a few 是「有一些」）。「了解…添加了哪些成分」用 to find out + what ingredients + 直述句語序；成分是被加入的，用 have been added to。",
+          "evidence": [
+            "在超市購物時",
+            "究竟添加了哪些成分"
+          ],
+          "strategy_zh": "「在…時」主詞相同時可以寫 When + V-ing；「…了哪些／什麼」放在動詞後面當受詞，用 what／which 子句、直述句語序。",
+          "hints": [
+            "切成四段：在超市購物時／很少人會仔細看標示／了解（哪些成分）／究竟添加了",
+            "標的詞彙：supermarket（超市）、shop（購物）、few（很少的）、label（標示）、ingredient（成分）、add（添加）",
+            "句型框架：When + V-ing …, few people + V … to find out what + N + have been p.p. …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「對於常吃…的人來說」用 For those who often eat …（those 複數，動詞用原形）。「含有大量糖、鹽的超加工食品」中文修飾語在前，英文用現在分詞片語後位修飾 ultra-processed foods containing lots of sugar and salt（sugar、salt 不可數）。「罹患慢性病的風險」是 the risk of developing chronic diseases（risk of + V-ing；慢性病不用 catch）；「明顯較高」用 significantly／much higher（very 不能修飾比較級）。",
+          "evidence": [
+            "對於常吃",
+            "含有大量糖、鹽的超加工食品"
+          ],
+          "strategy_zh": "名詞前面的修飾語很長（含動詞＋受詞）時，改成名詞＋分詞片語；「對於…的人來說」直接想 For those who …。",
+          "hints": [
+            "切成四段：對於常吃…的人來說／含有大量糖、鹽的超加工食品／罹患慢性病的風險／明顯較高",
+            "標的詞彙：contain（含有）、sugar（糖）、chronic（慢性的）、disease（疾病）、risk（風險）、significantly（明顯地）",
+            "句型框架：For those who + V + N + V-ing …, the risk of + V-ing … is + significantly + 比較級"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "When shopping at supermarkets, few people read the labels carefully to find out what ingredients have actually been added to the food.",
+            "While shopping in a supermarket, only a few people check the labels carefully to learn which ingredients have really been put into the food.",
+            "When doing their shopping at the supermarket, few people take a careful look at the labels to find out exactly what ingredients have been added to the food."
+          ],
+          "target_words": [
+            {
+              "word": "supermarket",
+              "zh": "超市"
+            },
+            {
+              "word": "shop",
+              "zh": "購物"
+            },
+            {
+              "word": "few",
+              "zh": "很少的"
+            },
+            {
+              "word": "label",
+              "zh": "標示"
+            },
+            {
+              "word": "ingredient",
+              "zh": "成分"
+            },
+            {
+              "word": "add",
+              "zh": "添加",
+              "alternatives": [
+                "put into",
+                "put in"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "NCL",
+              "grammar_id": "gp-wh-clause",
+              "label_zh": "間接問句（what／which + N 名詞子句）",
+              "frame": "find out + what + N + have been p.p. …（直述句語序）",
+              "zh_trigger": "究竟添加了哪些成分"
+            },
+            {
+              "code": "PART",
+              "grammar_id": "gp-conj-participle",
+              "label_zh": "連接詞＋分詞（When + V-ing）",
+              "frame": "When/While + V-ing …, S + V …",
+              "zh_trigger": "在超市購物時"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "在超市購物時",
+              "accepted": [
+                "When shopping at supermarkets",
+                "While shopping in a supermarket",
+                "When doing their shopping at the supermarket",
+                "When shopping in supermarkets",
+                "When they shop at supermarkets"
+              ],
+              "targets": [
+                "PART",
+                "supermarket",
+                "shop"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "When shop at supermarkets",
+                  "right": "When shopping at supermarkets",
+                  "explanation_zh": "連接詞後省略主詞時，動詞要改成分詞 shopping。"
+                },
+                {
+                  "wrong": "When shopping at supermarkets, the labels are seldom read carefully",
+                  "right": "When shopping at supermarkets, few people read the labels carefully",
+                  "explanation_zh": "分詞的意義主詞要和主要子句的主詞相同；購物的是人，主要子句要以 few people 當主詞（避免懸垂分詞）。"
+                }
+              ]
+            },
+            {
+              "zh": "很少人會仔細看標示",
+              "accepted": [
+                "few people read the labels carefully",
+                "only a few people check the labels carefully",
+                "few people take a careful look at the labels",
+                "few people check the labels carefully",
+                "few people carefully read the labels"
+              ],
+              "targets": [
+                "few",
+                "label"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "a few people read the labels carefully",
+                  "right": "few people read the labels carefully",
+                  "explanation_zh": "「很少人」是 few people（否定意味）；a few people 是「有幾個人」，語意相反。"
+                },
+                {
+                  "wrong": "little people read the labels carefully",
+                  "right": "few people read the labels carefully",
+                  "explanation_zh": "people 是可數名詞，用 few；little 修飾不可數名詞。"
+                }
+              ]
+            },
+            {
+              "zh": "了解",
+              "accepted": [
+                "to find out what ingredients",
+                "to learn which ingredients",
+                "to find out exactly what ingredients",
+                "to see what ingredients",
+                "to check which ingredients"
+              ],
+              "targets": [
+                "NCL",
+                "ingredient"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "to find out what ingredients do the food have",
+                  "right": "to find out what ingredients the food has",
+                  "explanation_zh": "名詞子句用直述句語序，不要加 do 倒裝成問句。"
+                },
+                {
+                  "wrong": "to understand what elements",
+                  "right": "to find out what ingredients",
+                  "explanation_zh": "食品的「成分」是 ingredients；element 是化學元素或要素。"
+                }
+              ]
+            },
+            {
+              "zh": "究竟添加了",
+              "accepted": [
+                "have actually been added to the food",
+                "have really been put into the food",
+                "have been added to the food",
+                "have actually been added",
+                "are actually added to the food"
+              ],
+              "targets": [
+                "add"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "have actually added to the food",
+                  "right": "have actually been added to the food",
+                  "explanation_zh": "成分是「被」添加的，用被動 have been added。"
+                },
+                {
+                  "wrong": "have been added in the food",
+                  "right": "have been added to the food",
+                  "explanation_zh": "add A to B（把 A 加進 B），介系詞用 to。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "plural_countable",
+              "zh": "很少人",
+              "literal_error": "When shopping at supermarkets, a few people read the labels carefully …",
+              "part": 2,
+              "explanation_zh": "「很少人」是 few people；a few people 是「有幾個人」，語意相反；people 可數，不能用 little。"
+            },
+            {
+              "type": "subjectless",
+              "zh": "在超市購物時",
+              "literal_error": "When shopping at supermarkets, the labels are seldom read carefully …",
+              "part": 1,
+              "explanation_zh": "「在…時」沒有主詞，英文寫 When shopping … 時，主要子句的主詞必須是購物的人（few people），否則成了懸垂分詞。"
+            }
+          ],
+          "bonus": [],
+          "restructuring_zh": "「在超市購物時」沒有主詞，英文用 When shopping … 的分詞構句，主要子句要以購物的人（few people）當主詞；「了解…添加了哪些成分」改成目的不定詞 to find out ＋ what 名詞子句。"
+        },
+        "2": {
+          "references": [
+            "For those who often eat ultra-processed foods containing lots of sugar and salt, the risk of developing chronic diseases is significantly higher.",
+            "For those who regularly consume ultra-processed food loaded with sugar and salt, the risk of getting chronic illnesses is clearly higher.",
+            "Those who frequently eat ultra-processed foods containing large amounts of sugar and salt face a much higher risk of chronic diseases."
+          ],
+          "target_words": [
+            {
+              "word": "contain",
+              "zh": "含有",
+              "alternatives": [
+                "loaded with",
+                "full of",
+                "high in"
+              ]
+            },
+            {
+              "word": "sugar",
+              "zh": "糖"
+            },
+            {
+              "word": "chronic",
+              "zh": "慢性的"
+            },
+            {
+              "word": "disease",
+              "zh": "疾病",
+              "alternatives": [
+                "illness",
+                "illnesses"
+              ]
+            },
+            {
+              "word": "risk",
+              "zh": "風險"
+            },
+            {
+              "word": "significantly",
+              "zh": "明顯地",
+              "alternatives": [
+                "clearly",
+                "much",
+                "considerably",
+                "noticeably"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PART",
+              "grammar_id": "gp-participle-modifier",
+              "label_zh": "分詞片語後位修飾名詞（N + V-ing／p.p. …）",
+              "frame": "N + containing … ／ N + loaded with …",
+              "zh_trigger": "含有大量糖、鹽的超加工食品"
+            },
+            {
+              "code": "REL",
+              "grammar_id": "gp-for-those-who",
+              "label_zh": "對於…的人而言（For those who …）",
+              "frame": "For those who + V …, S + V ／ Those who + V … + V",
+              "zh_trigger": "對於常吃"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "對於常吃",
+              "accepted": [
+                "For those who often eat",
+                "For those who regularly consume",
+                "Those who frequently eat",
+                "For people who often eat"
+              ],
+              "targets": [
+                "REL"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "For those who often eats",
+                  "right": "For those who often eat",
+                  "explanation_zh": "those 是複數，who 子句的動詞用原形 eat。"
+                },
+                {
+                  "wrong": "For the people often eat",
+                  "right": "For people who often eat",
+                  "explanation_zh": "people 後面要用 who 引導關係子句，不能直接接動詞。"
+                }
+              ]
+            },
+            {
+              "zh": "含有大量糖、鹽的超加工食品",
+              "accepted": [
+                "ultra-processed foods containing lots of sugar and salt",
+                "ultra-processed food loaded with sugar and salt",
+                "ultra-processed foods containing large amounts of sugar and salt",
+                "ultra-processed foods that contain a lot of sugar and salt",
+                "ultra-processed foods high in sugar and salt"
+              ],
+              "targets": [
+                "PART",
+                "contain",
+                "sugar"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "containing a lot of sugar and salt ultra-processed foods",
+                  "right": "ultra-processed foods containing a lot of sugar and salt",
+                  "explanation_zh": "帶受詞的分詞片語要放在名詞後面。"
+                },
+                {
+                  "wrong": "ultra-processed foods contained lots of sugar and salt",
+                  "right": "ultra-processed foods containing lots of sugar and salt",
+                  "explanation_zh": "食品「含有」是主動，用現在分詞 containing；contained 會變成被動或另一個動詞。"
+                },
+                {
+                  "wrong": "lots of sugars and salts",
+                  "right": "lots of sugar and salt",
+                  "explanation_zh": "sugar、salt 指物質時是不可數名詞，不加 s。"
+                }
+              ]
+            },
+            {
+              "zh": "罹患慢性病的風險",
+              "accepted": [
+                "the risk of developing chronic diseases",
+                "the risk of getting chronic illnesses",
+                "risk of chronic diseases",
+                "the risk of developing chronic illnesses",
+                "the risk of suffering from chronic diseases"
+              ],
+              "targets": [
+                "risk",
+                "chronic",
+                "disease"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "the risk of catching chronic diseases",
+                  "right": "the risk of developing chronic diseases",
+                  "explanation_zh": "catch 用在會傳染的病（catch a cold）；慢性病用 develop／get／suffer from。"
+                },
+                {
+                  "wrong": "the risk to get chronic diseases",
+                  "right": "the risk of getting chronic diseases",
+                  "explanation_zh": "risk 後面用 of + V-ing。"
+                }
+              ]
+            },
+            {
+              "zh": "明顯較高",
+              "accepted": [
+                "is significantly higher",
+                "is clearly higher",
+                "a much higher",
+                "is much higher",
+                "is considerably higher"
+              ],
+              "targets": [
+                "significantly"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "is obviously high",
+                  "right": "is significantly higher",
+                  "explanation_zh": "「較高」是比較級 higher；修飾比較級用 significantly／much／clearly。"
+                },
+                {
+                  "wrong": "is very higher",
+                  "right": "is much higher",
+                  "explanation_zh": "very 不能修飾比較級，要用 much／far／significantly。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "prenominal_modifier",
+              "zh": "含有大量糖、鹽的超加工食品",
+              "literal_error": "For those who often eat containing lots of sugar and salt ultra-processed foods …",
+              "part": 2,
+              "explanation_zh": "中文修飾語放在「食品」前面；英文帶受詞的修飾語要用分詞片語放在名詞後面：foods containing lots of sugar and salt。"
+            },
+            {
+              "type": "collocation",
+              "zh": "罹患",
+              "literal_error": "… the risk of catching chronic diseases is significantly higher.",
+              "part": 3,
+              "explanation_zh": "catch 用在會傳染的病；「罹患慢性病」用 develop／get／suffer from chronic diseases。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "Those who often eat ultra-processed foods laden with sugar and salt are far more likely to develop chronic diseases.",
+              "explanation_zh": "be (far) more likely to V（更可能…）把「風險較高」改寫成形容詞句型；laden with（充滿）是較正式的分詞修飾。"
+            }
+          ],
+          "restructuring_zh": "中文「對於…的人來說，…的風險較高」可照譯成 For those who …, the risk of … is higher，也可直接以 Those who … 當主詞：Those who … face a higher risk of …；「含有大量糖、鹽的」要用分詞片語放在食品後面。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ac-V-3",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-top-01",
+    "lot": "translation-top-01",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "a1384b01f87b0f8fded3505d9aeb991591fcc72147d3fc44a0f533a9db995000",
+    "spec_id": "translation-top@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 2,
+    "sentences": 1,
+    "avg_sentence_length": 2.0,
+    "denominator": 2,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.5,
+    "coverage_l1_6": 0.5,
+    "offlist_ratio": 0.5,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {
+      "1": 1,
+      "off": 1
+    },
+    "offlist_words": [
+      "ultra-processed"
+    ],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T13:10:36Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "warn",
+      "created_at": "2026-10-09T00:00:00Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "When shopping at the supermarket, few people read the labels carefully to find out exactly what ingredients have been added to the food.",
+            "confidence": "high",
+            "explanation_zh": "「在超市購物時」用省略主詞的副詞子句 When shopping；「很少人」用 few people（否定意味）；「了解…究竟添加了哪些成分」用間接問句 what ingredients have been added，「究竟」譯為 exactly。"
+          },
+          "2": {
+            "translation": "For people who often eat ultra-processed food containing large amounts of sugar and salt, the risk of developing chronic diseases is significantly higher.",
+            "confidence": "high",
+            "explanation_zh": "「對於…的人來說」照原結構用 For people who ...；「含有大量糖、鹽的」用現在分詞片語 containing large amounts of sugar and salt 後位修飾；「罹患慢性病」用 develop chronic diseases；「明顯較高」用 significantly higher。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "NCL",
+              "PART"
+            ],
+            "used_target_words": [
+              "supermarket",
+              "shop",
+              "few",
+              "label",
+              "ingredient",
+              "add"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "4 部分的中文標示沒有涵蓋「食品裡」「哪些成分」：第 3 部分中文只標「了解」，卻 targets NCL、ingredient，accepted 也含 what ingredients；第 4 部分中文標「究竟添加了」，accepted 卻含 to the food，而「究竟」的 exactly 在 accepted 裡反而放在第 3 部分。中英對應錯位，閱卷者照中文標示評分會混淆，建議第 3 部分改標「了解…究竟…哪些成分」、第 4 部分改標「食品裡…添加了」。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "PART",
+              "REL"
+            ],
+            "used_target_words": [
+              "contain",
+              "sugar",
+              "chronic",
+              "disease",
+              "risk",
+              "significantly"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "（小問題）R1 的 clearly higher 譯「明顯較高」可以，但 significantly／noticeably higher 較自然。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "supermarket",
+              "shop",
+              "few",
+              "label",
+              "ingredient",
+              "add"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NCL": true,
+              "PART": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "contain",
+              "sugar",
+              "chronic",
+              "disease",
+              "risk",
+              "significantly"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PART": true,
+              "REL": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 1 題驗證者對4 部分切分有意見（warn）：4 部分的中文標示沒有涵蓋「食品裡」「哪些成分」：第 3 部分中文只標「了解」，卻 targets NCL、ingredient，accepted 也含 what ingredients；第 4 部分中文標「究竟添加了」，accepted "
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T07:56:17Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "When shopping at the supermarket, few people read the labels carefully to learn exactly what ingredients have been added to the food.",
+            "confidence": "high",
+            "explanation_zh": "「在超市購物時」用省略主詞的 When shopping；「很少人」用 few people；「了解……究竟添加了哪些成分」用不定詞加 what ingredients 的名詞子句，被動用現在完成式 have been added。"
+          },
+          "2": {
+            "translation": "For people who often eat ultra-processed food containing large amounts of sugar and salt, the risk of developing chronic diseases is significantly higher.",
+            "confidence": "high",
+            "explanation_zh": "「對於常吃……的人來說」用 For people who ...；「含有大量糖、鹽」用現在分詞 containing large amounts of；罹患慢性病用 developing chronic diseases；「明顯較高」用 significantly higher。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "NCL",
+              "PART"
+            ],
+            "used_target_words": [
+              "supermarket",
+              "shop",
+              "few",
+              "label",
+              "ingredient",
+              "add"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PART",
+              "REL"
+            ],
+            "used_target_words": [
+              "contain",
+              "sugar",
+              "chronic",
+              "disease",
+              "risk",
+              "significantly"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "supermarket",
+              "shop",
+              "few",
+              "label",
+              "ingredient",
+              "add"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NCL": true,
+              "PART": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "contain",
+              "sugar",
+              "chronic",
+              "disease",
+              "risk",
+              "significantly"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PART": true,
+              "REL": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

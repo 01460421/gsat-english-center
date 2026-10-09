@@ -1,0 +1,799 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.230a73",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "top",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "碳稅（carbon tax）已經被許多國家採用，迫使企業為自己排放到空氣中的溫室氣體付出代價。",
+        "options": null,
+        "answer": "Carbon taxes have been adopted by many countries, forcing companies to pay for the greenhouse gases they release into the air.",
+        "accepted_answers": [
+          "Carbon taxes have been introduced in many countries, forcing businesses to pay the price for the greenhouse gases that they release into the air.",
+          "A carbon tax has been adopted by many countries, making companies pay for the greenhouse gases they send into the air."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "完成式被動（已經被…）",
+            "句尾分詞片語表結果（, forcing …）"
+          ],
+          "topic": "碳稅"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "讓企業為汙染付費，被許多經濟學家視為對抗氣候變遷最公平的方式之一。",
+        "options": null,
+        "answer": "Making companies pay for pollution is regarded by many economists as one of the fairest ways to fight climate change.",
+        "accepted_answers": [
+          "Making businesses pay for their pollution is considered by many economists to be one of the fairest ways to fight climate change.",
+          "Making companies pay for the pollution they cause is seen by many economists as one of the fairest ways to deal with climate change."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "動名詞片語當主詞",
+            "被動語態（被…視為）"
+          ],
+          "topic": "碳稅"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "碳稅"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「已經被許多國家採用」用現在完成式被動 have been adopted by many countries。「迫使企業…」是採用碳稅的結果，用句尾分詞 , forcing + 受詞 + to V（force 後面接 to V）。「自己排放到空氣中的溫室氣體」修飾語在前，英文用省略 that 的關係子句 the greenhouse gases (that) they release into the air 放在名詞後面。「付出代價」用 pay for …／pay the price for …。",
+          "evidence": [
+            "已經被許多國家採用",
+            "迫使企業為自己排放到空氣中的溫室氣體付出代價"
+          ],
+          "strategy_zh": "「已經被…」→ have/has been + p.p.；「…，迫使／使得…」→ , forcing/making + O + (to) V。",
+          "hints": [
+            "切成四段：碳稅已經被許多國家採用／迫使企業／為自己排放到空氣中的溫室氣體／付出代價",
+            "標的詞彙：adopt（採用）、country（國家）、force（迫使）、company（企業）、pay for（為…付出代價）、greenhouse gas（溫室氣體）、release（排放）",
+            "句型框架：S + have been p.p. by …, forcing + O + to pay for + N + (that) + S + V"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「讓企業為汙染付費」整個動作當主詞，用動名詞片語 Making companies pay for pollution（make 後面接原形 pay），動名詞主詞視為單數。「被…視為」用被動 is regarded as／is considered (to be)／is seen as，by many economists 可放在動詞後面。「…最公平的方式之一」用 one of the + 最高級 + 複數名詞 one of the fairest ways，「對抗」寫成不定詞 to fight／combat climate change 修飾 ways。",
+          "evidence": [
+            "讓企業為汙染付費",
+            "被許多經濟學家視為"
+          ],
+          "strategy_zh": "動作當主詞 → V-ing … + 單數動詞；「被視為」→ be regarded as／be considered (to be)。",
+          "hints": [
+            "切成四段：讓企業為汙染付費／被許多經濟學家視為／對抗氣候變遷／最公平的方式之一",
+            "標的詞彙：make（讓）、company（企業）、pay for（付費）、pollution（汙染）、regard（視為）、economist（經濟學家）、fair（公平的）、way（方式）、fight（對抗）、climate（氣候）",
+            "句型框架：V-ing … + is regarded by … as one of the + 最高級 + 複數名詞 + to V"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "Carbon taxes have been adopted by many countries, forcing companies to pay for the greenhouse gases they release into the air.",
+            "Carbon taxes have been introduced in many countries, forcing businesses to pay the price for the greenhouse gases that they release into the air.",
+            "A carbon tax has been adopted by many countries, making companies pay for the greenhouse gases they send into the air."
+          ],
+          "target_words": [
+            {
+              "word": "adopt",
+              "zh": "採用",
+              "alternatives": [
+                "introduce"
+              ]
+            },
+            {
+              "word": "country",
+              "zh": "國家"
+            },
+            {
+              "word": "force",
+              "zh": "迫使",
+              "alternatives": [
+                "make"
+              ]
+            },
+            {
+              "word": "company",
+              "zh": "企業",
+              "alternatives": [
+                "business"
+              ]
+            },
+            {
+              "word": "pay",
+              "zh": "付出代價"
+            },
+            {
+              "word": "greenhouse",
+              "zh": "溫室"
+            },
+            {
+              "word": "gas",
+              "zh": "氣體"
+            },
+            {
+              "word": "release",
+              "zh": "排放",
+              "alternatives": [
+                "send",
+                "emit",
+                "give off"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PASS",
+              "grammar_id": "gp-perfect-passive",
+              "label_zh": "完成式被動（已經被…採用）",
+              "frame": "S + have/has + been + p.p. + by …",
+              "zh_trigger": "已經被許多國家採用"
+            },
+            {
+              "code": "PART",
+              "grammar_id": "gp-participle-result",
+              "label_zh": "句尾分詞片語表結果（迫使…）",
+              "frame": "S + V …, forcing + O + to V …",
+              "zh_trigger": "迫使企業"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "碳稅（carbon tax）已經被許多國家採用",
+              "accepted": [
+                "Carbon taxes have been adopted by many countries",
+                "Carbon taxes have been introduced in many countries",
+                "A carbon tax has been adopted by many countries",
+                "Carbon taxes have been put into effect in many countries"
+              ],
+              "targets": [
+                "PASS",
+                "adopt",
+                "country"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Carbon taxes have adopted by many countries",
+                  "right": "Carbon taxes have been adopted by many countries",
+                  "explanation_zh": "碳稅是「被」採用，現在完成式被動是 have been + p.p.；少了 been 意思變成碳稅去採用別的東西。"
+                },
+                {
+                  "wrong": "Carbon tax has been adopted by many countries",
+                  "right": "A carbon tax has been adopted by many countries",
+                  "explanation_zh": "tax 是可數名詞，單數要加 a，或用複數 taxes。"
+                }
+              ]
+            },
+            {
+              "zh": "迫使企業",
+              "accepted": [
+                "forcing companies to",
+                "forcing businesses to",
+                "making companies"
+              ],
+              "targets": [
+                "PART",
+                "force",
+                "company"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "forcing companies pay",
+                  "right": "forcing companies to pay",
+                  "explanation_zh": "force + 受詞 + to V；make 才接原形動詞。"
+                },
+                {
+                  "wrong": "countries, forced companies to",
+                  "right": "countries, forcing companies to",
+                  "explanation_zh": "前面已有完整句子，表示結果要用句尾分詞 forcing；用 forced 會變成第二個主要動詞卻沒有連接詞。"
+                }
+              ]
+            },
+            {
+              "zh": "為自己排放到空氣中的溫室氣體",
+              "accepted": [
+                "the greenhouse gases they release into the air",
+                "the greenhouse gases that they release into the air",
+                "the greenhouse gases they send into the air",
+                "the greenhouse gases they give off"
+              ],
+              "targets": [
+                "greenhouse",
+                "gas",
+                "release"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "the greenhouse gas they release into the air",
+                  "right": "the greenhouse gases they release into the air",
+                  "explanation_zh": "溫室氣體有很多種，泛指時用複數 gases。"
+                },
+                {
+                  "wrong": "the greenhouse gases they release them into the air",
+                  "right": "the greenhouse gases they release into the air",
+                  "explanation_zh": "關係子句的受詞已經由（省略的）that 代替，不可再寫 them。"
+                }
+              ]
+            },
+            {
+              "zh": "付出代價",
+              "accepted": [
+                "pay for",
+                "pay the price for"
+              ],
+              "targets": [
+                "pay"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "pay a price of",
+                  "right": "pay the price for",
+                  "explanation_zh": "片語是 pay the price for …（為…付出代價），介系詞用 for。"
+                },
+                {
+                  "wrong": "pay cost for",
+                  "right": "pay for",
+                  "explanation_zh": "「付出代價」不是 pay cost；用 pay for … 或 pay the price for …。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "tense_trigger",
+              "zh": "已經被許多國家採用",
+              "literal_error": "Carbon taxes are adopted by many countries already",
+              "part": 1,
+              "explanation_zh": "「已經被…」表示到現在已完成的狀態，用現在完成式被動 have been adopted；只用現在式被動看不出「已經」。"
+            },
+            {
+              "type": "abstract_nominal",
+              "zh": "付出代價",
+              "literal_error": "forcing companies to pay cost for …",
+              "part": 4,
+              "explanation_zh": "「付出代價」是抽象說法，英文用 pay for …（為…付錢、負責）或 pay the price for …；pay cost 是逐字直譯。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "Now adopted by many countries, carbon taxes make companies pay for every ton of greenhouse gas they pump into the air.",
+              "grammar_id": "gp-participle-clause",
+              "explanation_zh": "用分詞構句 Now adopted by … 開頭，主句直接講影響；every ton of …、pump into the air 讓句子更具體。這是加分寫法。"
+            }
+          ],
+          "restructuring_zh": "「迫使企業為…付出代價」承接前面整件事，英文用句尾分詞 forcing companies to pay for …；「為自己排放到空氣中的溫室氣體」修飾語在前，英文改成 the greenhouse gases (that) they release into the air。"
+        },
+        "2": {
+          "references": [
+            "Making companies pay for pollution is regarded by many economists as one of the fairest ways to fight climate change.",
+            "Making businesses pay for their pollution is considered by many economists to be one of the fairest ways to fight climate change.",
+            "Making companies pay for the pollution they cause is seen by many economists as one of the fairest ways to deal with climate change."
+          ],
+          "target_words": [
+            {
+              "word": "make",
+              "zh": "讓"
+            },
+            {
+              "word": "company",
+              "zh": "企業",
+              "alternatives": [
+                "business"
+              ]
+            },
+            {
+              "word": "pay",
+              "zh": "付費"
+            },
+            {
+              "word": "pollution",
+              "zh": "汙染"
+            },
+            {
+              "word": "regard",
+              "zh": "視為",
+              "alternatives": [
+                "consider",
+                "see",
+                "view"
+              ]
+            },
+            {
+              "word": "economist",
+              "zh": "經濟學家"
+            },
+            {
+              "word": "fair",
+              "zh": "公平的"
+            },
+            {
+              "word": "way",
+              "zh": "方式"
+            },
+            {
+              "word": "fight",
+              "zh": "對抗",
+              "alternatives": [
+                "deal with",
+                "combat",
+                "tackle"
+              ]
+            },
+            {
+              "word": "climate",
+              "zh": "氣候"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "NFSUBJ",
+              "grammar_id": "gp-gerund-subject",
+              "label_zh": "動名詞片語當主詞（讓企業為汙染付費）",
+              "frame": "V-ing … + is (單數) …",
+              "zh_trigger": "讓企業為汙染付費"
+            },
+            {
+              "code": "PASS",
+              "grammar_id": "gp-passive",
+              "label_zh": "被動語態（被…視為）",
+              "frame": "S + is regarded/considered/seen + by … + as …",
+              "zh_trigger": "被許多經濟學家視為"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "讓企業為汙染付費",
+              "accepted": [
+                "Making companies pay for pollution",
+                "Making businesses pay for their pollution",
+                "Making companies pay for the pollution they cause",
+                "To make companies pay for pollution"
+              ],
+              "targets": [
+                "NFSUBJ",
+                "make",
+                "company",
+                "pay",
+                "pollution"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Make companies pay for pollution is",
+                  "right": "Making companies pay for pollution is",
+                  "explanation_zh": "「讓企業為汙染付費」是一件事當主詞，要用動名詞 Making …（或 To make …），原形 Make 不能當主詞。"
+                },
+                {
+                  "wrong": "Making companies to pay for pollution",
+                  "right": "Making companies pay for pollution",
+                  "explanation_zh": "使役動詞 make + 受詞 + 原形動詞 pay，不加 to。"
+                }
+              ]
+            },
+            {
+              "zh": "被許多經濟學家視為",
+              "accepted": [
+                "is regarded by many economists as",
+                "is considered by many economists to be",
+                "is seen by many economists as",
+                "is viewed by many economists as"
+              ],
+              "targets": [
+                "PASS",
+                "regard",
+                "economist"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "is regarded by many economists to",
+                  "right": "is regarded by many economists as",
+                  "explanation_zh": "regard A as B，被動是 A is regarded as B；consider 才可以接 to be。"
+                },
+                {
+                  "wrong": "are regarded by many economists as",
+                  "right": "is regarded by many economists as",
+                  "explanation_zh": "動名詞片語當主詞視為單數，動詞用 is。"
+                }
+              ]
+            },
+            {
+              "zh": "對抗氣候變遷",
+              "accepted": [
+                "to fight climate change",
+                "to deal with climate change",
+                "to combat climate change",
+                "to tackle climate change"
+              ],
+              "targets": [
+                "fight",
+                "climate"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "ways against climate change",
+                  "right": "ways to fight climate change",
+                  "explanation_zh": "「對抗」在這裡是動作，要有動詞：to fight／combat／tackle climate change；只寫 against 少了動詞。"
+                },
+                {
+                  "wrong": "to fight the climate changing",
+                  "right": "to fight climate change",
+                  "explanation_zh": "「氣候變遷」是名詞片語 climate change。"
+                }
+              ]
+            },
+            {
+              "zh": "最公平的方式之一",
+              "accepted": [
+                "one of the fairest ways",
+                "one of the fairest methods",
+                "one of the fairest approaches"
+              ],
+              "targets": [
+                "fair",
+                "way"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "one of the fairest way",
+                  "right": "one of the fairest ways",
+                  "explanation_zh": "one of the + 最高級 + 複數名詞：way 要加 s。"
+                },
+                {
+                  "wrong": "one of the most fairest ways",
+                  "right": "one of the fairest ways",
+                  "explanation_zh": "fair 的最高級是 fairest，不能再加 most。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "verbal_subject",
+              "zh": "讓企業為汙染付費",
+              "literal_error": "Let companies pay for pollution is regarded …",
+              "part": 1,
+              "explanation_zh": "中文直接用動作「讓企業付費」當主詞，英文要變成動名詞片語 Making companies pay …（或 To make …），不能用原形動詞 Let／Make 開頭當主詞。"
+            },
+            {
+              "type": "collocation",
+              "zh": "對抗氣候變遷",
+              "literal_error": "… one of the fairest ways against climate change",
+              "part": 3,
+              "explanation_zh": "「對抗」要寫成動詞：to fight／combat／tackle climate change；只用介系詞 against 少了動作。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "Many economists regard putting a price on pollution as one of the fairest weapons against climate change.",
+              "explanation_zh": "regard + V-ing + as …：把動名詞片語 putting a price on pollution（為汙染定價）改當受詞，句子更緊湊；weapons against … 是比喻用法。這是加分寫法。"
+            }
+          ]
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ac-V-3",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-top-05",
+    "lot": "translation-top-05",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "1423e68b58216cafb46e710ae1065ce2ef47f637e82f416d8ddb06bd091160ba",
+    "spec_id": "translation-top@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 2,
+    "sentences": 1,
+    "avg_sentence_length": 2.0,
+    "denominator": 2,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.5,
+    "coverage_l1_6": 1.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.5,
+    "level_counts": {
+      "2": 1,
+      "5": 1
+    },
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "warn",
+      "created_at": "2026-10-09T14:05:37Z",
+      "details": {
+        "errors": [],
+        "warnings": [
+          "annotations.rubric.items.1.patterns[0]: gp-perfect-passive 通常對應句構 PERF（目前 code=PASS）"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T13:22:48Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Carbon taxes have been adopted by many countries, forcing companies to pay for the greenhouse gases they release into the air.",
+            "confidence": "high",
+            "explanation_zh": "「已經被許多國家採用」用現在完成被動 have been adopted by；碳稅是各國各自的稅，用複數；「迫使企業…」是結果，用分詞 forcing companies to；「為自己排放…的溫室氣體付出代價」用 pay for＋省略關係代名詞的子句 they release into the air（也可 emit）。"
+          },
+          "2": {
+            "translation": "Making companies pay for their pollution is regarded by many economists as one of the fairest ways to fight climate change.",
+            "confidence": "high",
+            "explanation_zh": "「讓企業為汙染付費」當主詞，用動名詞 Making companies pay for…；「被…視為」用 is regarded as（也可 seen as／considered）；「最公平的方式之一」用 one of the fairest ways，ways 複數；「對抗氣候變遷」用 to fight climate change。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PASS",
+              "PART"
+            ],
+            "used_target_words": [
+              "adopt",
+              "country",
+              "force",
+              "company",
+              "pay",
+              "greenhouse",
+              "gas",
+              "release"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "NFSUBJ",
+              "PASS"
+            ],
+            "used_target_words": [
+              "make",
+              "company",
+              "pay",
+              "pollution",
+              "regard",
+              "economist",
+              "fair",
+              "way",
+              "fight",
+              "climate"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "adopt",
+              "country",
+              "force",
+              "company",
+              "pay",
+              "greenhouse",
+              "gas",
+              "release"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PASS": true,
+              "PART": true
+            },
+            "program_match": true
+          },
+          "2": {
+            "target_words_found": [
+              "make",
+              "company",
+              "pay",
+              "pollution",
+              "regard",
+              "economist",
+              "fair",
+              "way",
+              "fight",
+              "climate"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NFSUBJ": true,
+              "PASS": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T13:30:00Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "A carbon tax has been adopted by many countries, forcing companies to pay for the greenhouse gases they release into the air.",
+            "confidence": "high",
+            "explanation_zh": "「已經被許多國家採用」用現在完成被動 has been adopted by；「迫使企業……」用現在分詞 forcing ... to pay for 表結果；「排放到空氣中的溫室氣體」用省略 that 的關係子句 they release into the air。"
+          },
+          "2": {
+            "translation": "Making companies pay for pollution is regarded by many economists as one of the fairest ways to fight climate change.",
+            "confidence": "high",
+            "explanation_zh": "「讓企業為汙染付費」用動名詞片語 Making companies pay for pollution 當主詞；「被……視為」用 is regarded ... as；「最公平的方式之一」用 one of the fairest ways；「對抗氣候變遷」用 fight climate change。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PASS",
+              "PART"
+            ],
+            "used_target_words": [
+              "adopt",
+              "country",
+              "force",
+              "company",
+              "pay",
+              "greenhouse",
+              "gas",
+              "release"
+            ],
+            "within_accepted": true,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [],
+            "closest_reference": 0
+          },
+          "2": {
+            "used_patterns": [
+              "NFSUBJ",
+              "PASS"
+            ],
+            "used_target_words": [
+              "make",
+              "company",
+              "pay",
+              "pollution",
+              "regard",
+              "economist",
+              "fair",
+              "way",
+              "fight",
+              "climate"
+            ],
+            "within_accepted": true,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [],
+            "closest_reference": 0
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "adopt",
+              "country",
+              "force",
+              "company",
+              "pay",
+              "greenhouse",
+              "gas",
+              "release"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PASS": true,
+              "PART": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "make",
+              "company",
+              "pay",
+              "pollution",
+              "regard",
+              "economist",
+              "fair",
+              "way",
+              "fight",
+              "climate"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NFSUBJ": true,
+              "PASS": true
+            },
+            "program_match": true
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

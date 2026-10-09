@@ -1,0 +1,775 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.91a1b8",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "top",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "服用禁藥對其他選手並不公平，然而獎金越高，就越多人願意冒這個險。",
+        "options": null,
+        "answer": "Taking banned drugs is not fair to other athletes, yet the bigger the prize, the more people are willing to take the risk.",
+        "accepted_answers": [
+          "Using banned drugs is unfair to other athletes, but the higher the prize money is, the more athletes are willing to take this risk.",
+          "Taking illegal drugs is not fair to other players; however, the more prize money there is, the more people are willing to take the risk."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "動名詞片語當主詞",
+            "愈…愈…（the + 比較級, the + 比較級）"
+          ],
+          "topic": "運動禁藥"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "一旦真相曝光，這些選手要讓球迷忘記他們所做的事，是非常困難的。",
+        "options": null,
+        "answer": "Once the truth is revealed, it is extremely difficult for these athletes to make fans forget what they have done.",
+        "accepted_answers": [
+          "Once the truth comes out, it is very hard for these athletes to make their fans forget what they did.",
+          "Once the truth is exposed, it is extremely difficult for these players to get fans to forget what they have done."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "what 引導的名詞子句",
+            "虛主詞 It ＋形容詞＋for 人＋不定詞"
+          ],
+          "topic": "運動禁藥"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "運動禁藥"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「服用禁藥」是動作當主詞，用動名詞片語 Taking banned drugs，動詞用單數 is；「對…不公平」是 not fair／unfair to …。「然而」用 but／yet／however。「獎金越高，就越多人願意…」用 the + 比較級, the + 比較級：the higher the prize money (is), the more people are willing to …；「冒這個險」是 take the risk。",
+          "evidence": [
+            "服用禁藥",
+            "獎金越高，就越多人願意冒這個險"
+          ],
+          "strategy_zh": "「越 A 越 B」→ The + 比較級 + S (+ V), the + 比較級 + S + V；動作當主詞 → V-ing。",
+          "hints": [
+            "切成四段：服用禁藥／對其他選手並不公平／然而獎金越高／就越多人願意冒這個險",
+            "標的詞彙：take（服用）、drug（藥物）、fair（公平的）、other（其他的）、athlete（選手）、prize（獎金）、willing（願意的）、risk（風險）",
+            "句型框架：V-ing … is not fair to …, but the + 比較級 + S, the more + N + are willing to …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「一旦真相曝光」用 Once the truth is revealed／comes out（時間子句用現在式表未來）。「這些選手要…是非常困難的」：difficult 不能用人當主詞，改用虛主詞 It is extremely difficult for these athletes to …。「讓球迷忘記」是使役 make fans forget（原形動詞）。「他們所做的事」用 what 引導的名詞子句 what they have done 當 forget 的受詞。",
+          "evidence": [
+            "一旦真相曝光",
+            "他們所做的事",
+            "是非常困難的"
+          ],
+          "strategy_zh": "「某人要做某事很難」→ It is difficult for + 人 + to V；「所＋V＋的（事）」→ what + S + V。",
+          "hints": [
+            "切成四段：一旦真相曝光／這些選手要讓球迷／忘記他們所做的事／是非常困難的",
+            "標的詞彙：truth（真相）、reveal（揭露）、athlete（選手）、make（讓）、fan（球迷）、forget（忘記）、difficult（困難的）",
+            "句型框架：Once + S + is p.p., it is extremely difficult for + 人 + to make + O + forget + what + S + have done"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "Taking banned drugs is not fair to other athletes, yet the bigger the prize, the more people are willing to take the risk.",
+            "Using banned drugs is unfair to other athletes, but the higher the prize money is, the more athletes are willing to take this risk.",
+            "Taking illegal drugs is not fair to other players; however, the more prize money there is, the more people are willing to take the risk."
+          ],
+          "target_words": [
+            {
+              "word": "take",
+              "zh": "服用",
+              "alternatives": [
+                "use"
+              ]
+            },
+            {
+              "word": "drug",
+              "zh": "藥物"
+            },
+            {
+              "word": "fair",
+              "zh": "公平的",
+              "alternatives": [
+                "unfair"
+              ]
+            },
+            {
+              "word": "other",
+              "zh": "其他的"
+            },
+            {
+              "word": "athlete",
+              "zh": "選手",
+              "alternatives": [
+                "player"
+              ]
+            },
+            {
+              "word": "prize",
+              "zh": "獎金"
+            },
+            {
+              "word": "willing",
+              "zh": "願意的"
+            },
+            {
+              "word": "risk",
+              "zh": "風險"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "NFSUBJ",
+              "grammar_id": "gp-gerund-subject",
+              "label_zh": "動名詞片語當主詞（服用禁藥…）",
+              "frame": "V-ing … + is (not) + adj. …",
+              "zh_trigger": "服用禁藥"
+            },
+            {
+              "code": "COMP",
+              "grammar_id": "gp-the-more",
+              "label_zh": "愈…愈…（the + 比較級, the + 比較級）",
+              "frame": "the + 比較級 + S (+ V), the + 比較級 + S + V",
+              "zh_trigger": "獎金越高，就越多人"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "服用禁藥",
+              "accepted": [
+                "Taking banned drugs",
+                "Using banned drugs",
+                "Taking illegal drugs",
+                "Using illegal drugs"
+              ],
+              "targets": [
+                "NFSUBJ",
+                "take",
+                "drug"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Take banned drugs is not fair",
+                  "right": "Taking banned drugs is not fair",
+                  "explanation_zh": "動作「服用禁藥」當主詞要用動名詞 Taking …（或 To take …），原形動詞不能當主詞。"
+                },
+                {
+                  "wrong": "Eating banned drugs",
+                  "right": "Taking banned drugs",
+                  "explanation_zh": "「服用」藥物用 take，不用 eat。"
+                }
+              ]
+            },
+            {
+              "zh": "對其他選手並不公平",
+              "accepted": [
+                "is not fair to other athletes",
+                "is unfair to other athletes",
+                "is not fair to other players"
+              ],
+              "targets": [
+                "fair",
+                "other",
+                "athlete"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "are not fair to other athletes",
+                  "right": "is not fair to other athletes",
+                  "explanation_zh": "動名詞片語當主詞視為單數，動詞用 is。"
+                },
+                {
+                  "wrong": "is not fair to another athletes",
+                  "right": "is not fair to other athletes",
+                  "explanation_zh": "another 後面接單數名詞；複數要用 other athletes。"
+                }
+              ]
+            },
+            {
+              "zh": "然而獎金越高",
+              "accepted": [
+                "yet the bigger the prize",
+                "but the higher the prize money is",
+                "however the more prize money there is",
+                "but the higher the prize money",
+                "but the bigger the prize"
+              ],
+              "targets": [
+                "COMP",
+                "prize"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "but the prize money higher",
+                  "right": "but the higher the prize money",
+                  "explanation_zh": "「越…越…」要寫成 the + 比較級 + 主詞 (+ 動詞)，比較級放在前面。"
+                },
+                {
+                  "wrong": "but more higher the prize money",
+                  "right": "but the higher the prize money",
+                  "explanation_zh": "high 的比較級是 higher，不再加 more，前面也要有 the。"
+                }
+              ]
+            },
+            {
+              "zh": "就越多人願意冒這個險",
+              "accepted": [
+                "the more people are willing to take the risk",
+                "the more athletes are willing to take this risk",
+                "the more people are willing to take this risk",
+                "the more people are willing to risk it"
+              ],
+              "targets": [
+                "COMP",
+                "willing",
+                "risk"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "more people are willing to take the risk",
+                  "right": "the more people are willing to take the risk",
+                  "explanation_zh": "「越…越…」前後兩半都要用 the + 比較級，後半的 the 不能省略。"
+                },
+                {
+                  "wrong": "the more people are willing to take the danger",
+                  "right": "the more people are willing to take the risk",
+                  "explanation_zh": "「冒險」的固定搭配是 take a／the risk，不說 take the danger。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "abstract_nominal",
+              "zh": "禁藥",
+              "literal_error": "Taking forbidden medicine is not fair …",
+              "part": 1,
+              "explanation_zh": "「禁藥」不是 forbidden medicine，運動上指被禁止使用的藥物：banned drugs／illegal drugs（也可說 performance-enhancing drugs）。"
+            },
+            {
+              "type": "word_form",
+              "zh": "獎金越高，就越多人",
+              "literal_error": "the prize money is higher, more people are willing …",
+              "part": 3,
+              "explanation_zh": "「越…越…」英文固定寫法是 the + 比較級 …, the + 比較級 …；比較級要移到各自子句的最前面，兩個 the 都不能少。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "Doping cheats every clean competitor, yet the richer the reward, the more athletes seem willing to gamble with their careers.",
+              "grammar_id": "gp-the-more",
+              "explanation_zh": "clean competitor（沒用藥的選手）、gamble with their careers（拿職業生涯當賭注）讓句子更有畫面；the richer the reward 用不同形容詞表達「獎金越高」。這是加分寫法。"
+            }
+          ],
+          "restructuring_zh": "「服用禁藥對…不公平」中文以動作當主詞，英文用動名詞片語 Taking banned drugs 當主詞；「獎金越高，就越多人…」改成 the + 比較級, the + 比較級 的固定結構，比較級移到子句最前面。"
+        },
+        "2": {
+          "references": [
+            "Once the truth is revealed, it is extremely difficult for these athletes to make fans forget what they have done.",
+            "Once the truth comes out, it is very hard for these athletes to make their fans forget what they did.",
+            "Once the truth is exposed, it is extremely difficult for these players to get fans to forget what they have done."
+          ],
+          "target_words": [
+            {
+              "word": "truth",
+              "zh": "真相"
+            },
+            {
+              "word": "reveal",
+              "zh": "曝光",
+              "alternatives": [
+                "come out",
+                "expose"
+              ]
+            },
+            {
+              "word": "difficult",
+              "zh": "困難的",
+              "alternatives": [
+                "hard"
+              ]
+            },
+            {
+              "word": "athlete",
+              "zh": "選手",
+              "alternatives": [
+                "player"
+              ]
+            },
+            {
+              "word": "make",
+              "zh": "讓",
+              "alternatives": [
+                "get"
+              ]
+            },
+            {
+              "word": "fan",
+              "zh": "球迷"
+            },
+            {
+              "word": "forget",
+              "zh": "忘記"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "NCL",
+              "grammar_id": "gp-what-clause",
+              "label_zh": "what 引導的名詞子句當受詞（他們所做的事）",
+              "frame": "… forget + what + S + have done",
+              "zh_trigger": "他們所做的事"
+            },
+            {
+              "code": "NFSUBJ",
+              "grammar_id": "gp-it-adj-to",
+              "label_zh": "虛主詞 It ＋形容詞＋for 人＋不定詞（要…是非常困難的）",
+              "frame": "It is + extremely difficult + for + 人 + to V …",
+              "zh_trigger": "是非常困難的"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "一旦真相曝光",
+              "accepted": [
+                "Once the truth is revealed",
+                "Once the truth comes out",
+                "Once the truth is exposed",
+                "As soon as the truth comes out"
+              ],
+              "targets": [
+                "truth",
+                "reveal"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Once the truth reveals",
+                  "right": "Once the truth is revealed",
+                  "explanation_zh": "真相是「被」揭露，用被動 is revealed；或用不及物片語 comes out。"
+                },
+                {
+                  "wrong": "Once the truth will come out",
+                  "right": "Once the truth comes out",
+                  "explanation_zh": "once 引導的時間子句用現在式表示未來，不用 will。"
+                }
+              ]
+            },
+            {
+              "zh": "這些選手要讓球迷",
+              "accepted": [
+                "for these athletes to make fans",
+                "for these athletes to make their fans",
+                "for these players to get fans to"
+              ],
+              "targets": [
+                "athlete",
+                "make",
+                "fan"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "for these athletes to let fans forget",
+                  "right": "for these athletes to make fans forget",
+                  "explanation_zh": "這裡的「讓」是「使得」，用 make／get；let 是「允許」，語意不對。"
+                },
+                {
+                  "wrong": "for these athletes to make fans to forget",
+                  "right": "for these athletes to make fans forget",
+                  "explanation_zh": "使役動詞 make + 受詞 + 原形動詞，不加 to（get 才接 to forget）。"
+                }
+              ]
+            },
+            {
+              "zh": "忘記他們所做的事",
+              "accepted": [
+                "forget what they have done",
+                "forget what they did"
+              ],
+              "targets": [
+                "NCL",
+                "forget"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "forget the things what they have done",
+                  "right": "forget what they have done",
+                  "explanation_zh": "what 已經等於 the things that，前面不可再有先行詞。"
+                },
+                {
+                  "wrong": "forget what have they done",
+                  "right": "forget what they have done",
+                  "explanation_zh": "名詞子句用直述句語序：what + 主詞 + 動詞。"
+                }
+              ]
+            },
+            {
+              "zh": "是非常困難的",
+              "accepted": [
+                "it is extremely difficult",
+                "it is very hard",
+                "it is very difficult",
+                "it is extremely hard"
+              ],
+              "targets": [
+                "NFSUBJ",
+                "difficult"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "these athletes are very difficult to make fans forget",
+                  "right": "it is very difficult for these athletes to make fans forget",
+                  "explanation_zh": "difficult 不能以「人」當主詞表示「某人很難做某事」；要用虛主詞 It is difficult for + 人 + to V。"
+                },
+                {
+                  "wrong": "it is extremely difficult that these athletes make fans forget",
+                  "right": "it is extremely difficult for these athletes to make fans forget",
+                  "explanation_zh": "difficult 後面用 for + 人 + to V，不接 that 子句。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "collocation",
+              "zh": "真相曝光",
+              "literal_error": "Once the truth exposes, …",
+              "part": 1,
+              "explanation_zh": "「真相曝光」英文說 the truth comes out／is revealed／is exposed；寫成 the truth exposes 主被動顛倒。"
+            },
+            {
+              "type": "verbal_subject",
+              "zh": "這些選手要讓球迷忘記他們所做的事，是非常困難的",
+              "literal_error": "These athletes are extremely difficult to make fans forget …",
+              "part": 4,
+              "explanation_zh": "中文「這些選手要…是很困難的」以整件事當主詞，英文 difficult 不能說「人很困難」；要用虛主詞 It is difficult for these athletes to …，把不定詞片語放到後面。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "Once exposed, these athletes may find that no apology can ever make fans forget what they have done.",
+              "grammar_id": "gp-conj-participle",
+              "explanation_zh": "Once exposed（一旦被揭發）用連接詞＋分詞，簡潔；no apology can ever …（再多道歉也無法…）語氣更強。這是加分寫法。"
+            }
+          ],
+          "restructuring_zh": "「這些選手要讓球迷…是非常困難的」中文以人開頭，英文要改用虛主詞 It is extremely difficult for these athletes to …，真正的主詞（不定詞片語）放到後面。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ac-V-3",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-top-05",
+    "lot": "translation-top-05",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "1423e68b58216cafb46e710ae1065ce2ef47f637e82f416d8ddb06bd091160ba",
+    "spec_id": "translation-top@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T14:05:39Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "warn",
+      "created_at": "2026-10-09T13:22:48Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Taking banned drugs is not fair to other athletes, but the higher the prize money, the more people are willing to take this risk.",
+            "confidence": "high",
+            "explanation_zh": "「服用禁藥」當主詞，用動名詞 Taking banned drugs；「對…不公平」用 not fair to；「然而」以 but 連接成一句（也可用分號＋however）；「越…就越…」用 the higher…, the more…；「冒這個險」用 take this risk。"
+          },
+          "2": {
+            "translation": "Once the truth is revealed, it is very difficult for these athletes to make their fans forget what they have done.",
+            "confidence": "high",
+            "explanation_zh": "「一旦真相曝光」用 Once＋被動 is revealed（也可 comes out）；「…是非常困難的」用虛主詞 it is very difficult for…to；「讓球迷忘記」用使役 make…forget；「他們所做的事」用 what 名詞子句 what they have done。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "NFSUBJ",
+              "COMP"
+            ],
+            "used_target_words": [
+              "take",
+              "drug",
+              "fair",
+              "other",
+              "athlete",
+              "prize",
+              "willing",
+              "risk"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "warn",
+            "parts_check": "pass",
+            "issues_zh": [
+              "第 3 個參考譯文和第 1 部分 accepted 用 illegal drugs 譯「禁藥」；illegal drugs 一般指毒品（違法藥物），運動禁藥多半不是違法而是被賽事禁止，宜用 banned drugs／performance-enhancing drugs／prohibited substances。建議參考譯文改用 banned drugs，accepted 可保留 illegal drugs 但不要當範本。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "NCL",
+              "NFSUBJ"
+            ],
+            "used_target_words": [
+              "truth",
+              "reveal",
+              "difficult",
+              "athlete",
+              "make",
+              "fan",
+              "forget"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "take",
+              "drug",
+              "fair",
+              "other",
+              "athlete",
+              "prize",
+              "willing",
+              "risk"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NFSUBJ": true,
+              "COMP": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "truth",
+              "reveal",
+              "difficult",
+              "athlete",
+              "make",
+              "fan",
+              "forget"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NCL": true,
+              "NFSUBJ": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 1 題驗證者對參考譯文有意見（warn）：第 3 個參考譯文和第 1 部分 accepted 用 illegal drugs 譯「禁藥」；illegal drugs 一般指毒品（違法藥物），運動禁藥多半不是違法而是被賽事禁止，宜用 banned drugs／performance-"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "warn",
+      "created_at": "2026-10-09T13:30:00Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Taking banned drugs is unfair to other athletes, but the higher the prize money is, the more athletes are willing to take the risk.",
+            "confidence": "high",
+            "explanation_zh": "「服用禁藥」用動名詞 Taking banned drugs 當主詞；「對……不公平」用 unfair to；「獎金越高，就越多人……」用 the + 比較級 ..., the + 比較級 ... 句型；「冒這個險」用 take the risk。「然而」用 but 連接兩個分句。"
+          },
+          "2": {
+            "translation": "Once the truth comes out, it is very difficult for these players to make fans forget what they have done.",
+            "confidence": "high",
+            "explanation_zh": "「一旦真相曝光」用 Once the truth comes out（副詞子句用現在式表未來）；「要……是非常困難的」用虛主詞 it is very difficult for ... to ...；「讓球迷忘記」用使役動詞 make fans forget；「他們所做的事」用 what they have done。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "NFSUBJ",
+              "COMP"
+            ],
+            "used_target_words": [
+              "take",
+              "drug",
+              "fair",
+              "other",
+              "athlete",
+              "prize",
+              "willing",
+              "risk"
+            ],
+            "within_accepted": true,
+            "reference_check": "warn",
+            "parts_check": "pass",
+            "issues_zh": [
+              "REF2 與第 1 部分 accepted 的 illegal drugs（Taking／Using illegal drugs）偏向「毒品、違法藥物」；運動場合的「禁藥」是被運動組織禁止使用的藥物（banned／performance-enhancing drugs），建議刪掉 illegal drugs 或改成 banned substances。"
+            ],
+            "closest_reference": 1
+          },
+          "2": {
+            "used_patterns": [
+              "NCL",
+              "NFSUBJ"
+            ],
+            "used_target_words": [
+              "truth",
+              "reveal",
+              "difficult",
+              "athlete",
+              "make",
+              "fan",
+              "forget"
+            ],
+            "within_accepted": true,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [],
+            "closest_reference": 1
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "take",
+              "drug",
+              "fair",
+              "other",
+              "athlete",
+              "prize",
+              "willing",
+              "risk"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NFSUBJ": true,
+              "COMP": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "truth",
+              "reveal",
+              "difficult",
+              "athlete",
+              "make",
+              "fan",
+              "forget"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NCL": true,
+              "NFSUBJ": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 1 題驗證者對參考譯文有意見（warn）：REF2 與第 1 部分 accepted 的 illegal drugs（Taking／Using illegal drugs）偏向「毒品、違法藥物」；運動場合的「禁藥」是被運動組織禁止使用的藥物（banned／performance-e"
+        ]
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

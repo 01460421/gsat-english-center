@@ -1,0 +1,785 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.921f94",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "top",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "近年來，許多城市已多次被極端降雨淹沒，造成嚴重的交通混亂與財產損失。",
+        "options": null,
+        "answer": "In recent years, many cities have been flooded by extreme rainfall several times, causing serious traffic chaos and property damage.",
+        "accepted_answers": [
+          "In recent years, many cities have repeatedly been flooded by extreme rainfall, resulting in serious traffic chaos and damage to property.",
+          "In recent years, many cities have been flooded by extreme rainfall time after time, leading to serious traffic chaos and property losses."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "完成式被動（已多次被…）",
+            "句尾分詞片語表結果（, causing …）"
+          ],
+          "topic": "極端降雨"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "預測這種極端降雨比預測颱風困難得多，因為它可能在不到一小時內就形成。",
+        "options": null,
+        "answer": "Predicting such extreme rainfall is much more difficult than predicting typhoons, because it can form in less than an hour.",
+        "accepted_answers": [
+          "Predicting this kind of extreme rainfall is far harder than predicting typhoons, because it may form in under an hour.",
+          "Forecasting such extreme rainfall is much more difficult than forecasting typhoons, since it can develop in less than an hour."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "動名詞片語當主詞",
+            "比較級（much more … than）"
+          ],
+          "topic": "極端降雨"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "極端降雨"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「近年來…已多次…」表示從過去到現在反覆發生，用現在完成式；城市是被淹沒的一方，用完成式被動 have been flooded by extreme rainfall（several times／repeatedly）。「造成…」是淹水的結果，用句尾分詞 , causing／resulting in／leading to …，分詞的邏輯主詞是前面整件事。「交通混亂與財產損失」寫成 traffic chaos and property damage，damage 不可數。",
+          "evidence": [
+            "已多次被極端降雨淹沒",
+            "造成嚴重的交通混亂與財產損失"
+          ],
+          "strategy_zh": "「近年來已多次被…」→ have been p.p. … several times；「…，造成…」→ , causing + N。",
+          "hints": [
+            "切成四段：近年來，許多城市／已多次被極端降雨淹沒／造成／嚴重的交通混亂與財產損失",
+            "標的詞彙：recent（近來的）、city（城市）、flood（淹沒）、extreme（極端的）、rainfall（降雨）、serious（嚴重的）、traffic（交通）、chaos（混亂）、property（財產）、damage（損失）",
+            "句型框架：In recent years, S + have been p.p. by … several times, causing + N + and + N"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「預測這種極端降雨」是動作當主詞，用動名詞片語 Predicting such extreme rainfall，動詞用單數 is。「比預測颱風困難得多」用比較級 much／far more difficult than …，than 後面也用動名詞 predicting typhoons，比較的對象才對等。「因為它可能在不到一小時內就形成」用 because it can form in less than an hour；form（形成）是不及物動詞。",
+          "evidence": [
+            "預測這種極端降雨",
+            "比預測颱風困難得多"
+          ],
+          "strategy_zh": "「做 A 比做 B＋形容詞」→ V-ing A + is + 比較級 + than + V-ing B；比較級加強用 much／far。",
+          "hints": [
+            "切成四段：預測這種極端降雨／比預測颱風困難得多／因為它可能／在不到一小時內就形成",
+            "標的詞彙：predict（預測）、extreme（極端的）、rainfall（降雨）、difficult（困難的）、typhoon（颱風）、because（因為）、form（形成）、hour（小時）",
+            "句型框架：V-ing … + is much more + adj. + than + V-ing …, because + S + can + V …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "In recent years, many cities have been flooded by extreme rainfall several times, causing serious traffic chaos and property damage.",
+            "In recent years, many cities have repeatedly been flooded by extreme rainfall, resulting in serious traffic chaos and damage to property.",
+            "In recent years, many cities have been flooded by extreme rainfall time after time, leading to serious traffic chaos and property losses."
+          ],
+          "target_words": [
+            {
+              "word": "recent",
+              "zh": "近來的"
+            },
+            {
+              "word": "city",
+              "zh": "城市"
+            },
+            {
+              "word": "flood",
+              "zh": "淹沒"
+            },
+            {
+              "word": "extreme",
+              "zh": "極端的"
+            },
+            {
+              "word": "rainfall",
+              "zh": "降雨"
+            },
+            {
+              "word": "serious",
+              "zh": "嚴重的"
+            },
+            {
+              "word": "traffic",
+              "zh": "交通"
+            },
+            {
+              "word": "chaos",
+              "zh": "混亂"
+            },
+            {
+              "word": "property",
+              "zh": "財產"
+            },
+            {
+              "word": "damage",
+              "zh": "損失",
+              "alternatives": [
+                "loss"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PASS",
+              "grammar_id": "gp-perfect-passive",
+              "label_zh": "完成式被動（已多次被…淹沒）",
+              "frame": "S + have been + p.p. + by … (+ several times)",
+              "zh_trigger": "已多次被極端降雨淹沒"
+            },
+            {
+              "code": "PART",
+              "grammar_id": "gp-participle-result",
+              "label_zh": "句尾分詞片語表結果（造成…）",
+              "frame": "S + V …, causing/resulting in + N …",
+              "zh_trigger": "造成嚴重的交通混亂與財產損失"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "近年來，許多城市",
+              "accepted": [
+                "In recent years, many cities",
+                "Over the past few years, many cities",
+                "Recently, many cities"
+              ],
+              "targets": [
+                "recent",
+                "city"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "In recent year, many cities",
+                  "right": "In recent years, many cities",
+                  "explanation_zh": "「近年來」是 in recent years，years 用複數。"
+                },
+                {
+                  "wrong": "In recent years, many city",
+                  "right": "In recent years, many cities",
+                  "explanation_zh": "many 後面接複數名詞 cities。"
+                }
+              ]
+            },
+            {
+              "zh": "已多次被極端降雨淹沒",
+              "accepted": [
+                "have been flooded by extreme rainfall several times",
+                "have repeatedly been flooded by extreme rainfall",
+                "have been flooded by extreme rainfall time after time",
+                "have been flooded by extreme rainfall many times",
+                "have been flooded by extreme rainfall again and again"
+              ],
+              "targets": [
+                "PASS",
+                "flood",
+                "extreme",
+                "rainfall"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "have flooded by extreme rainfall several times",
+                  "right": "have been flooded by extreme rainfall several times",
+                  "explanation_zh": "城市是「被」淹沒，完成式被動要有 been：have been flooded。"
+                },
+                {
+                  "wrong": "have been drowned by extreme rainfall",
+                  "right": "have been flooded by extreme rainfall",
+                  "explanation_zh": "「淹沒」城市、街道用 flood；drown 多指人或動物溺水。"
+                }
+              ]
+            },
+            {
+              "zh": "造成",
+              "accepted": [
+                "causing",
+                "resulting in",
+                "leading to"
+              ],
+              "targets": [
+                "PART"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "several times, caused serious traffic chaos",
+                  "right": "several times, causing serious traffic chaos",
+                  "explanation_zh": "前面已是完整句子，表結果用句尾分詞 causing（或 resulting in／leading to）；caused 會變成第二個主要動詞卻沒有連接詞。"
+                },
+                {
+                  "wrong": "resulting serious traffic chaos",
+                  "right": "resulting in serious traffic chaos",
+                  "explanation_zh": "result 表「造成」時要接 in：resulting in …。"
+                }
+              ]
+            },
+            {
+              "zh": "嚴重的交通混亂與財產損失",
+              "accepted": [
+                "serious traffic chaos and property damage",
+                "serious traffic chaos and damage to property",
+                "serious traffic chaos and property losses"
+              ],
+              "targets": [
+                "serious",
+                "traffic",
+                "chaos",
+                "property",
+                "damage"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "serious traffic chaos and property damages",
+                  "right": "serious traffic chaos and property damage",
+                  "explanation_zh": "damage 表「損害」時不可數，不加 s（damages 是「賠償金」）。"
+                },
+                {
+                  "wrong": "serious traffic confusion",
+                  "right": "serious traffic chaos",
+                  "explanation_zh": "「交通混亂」是 traffic chaos；confusion 指人的困惑。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "tense_trigger",
+              "zh": "已多次被極端降雨淹沒",
+              "literal_error": "many cities were flooded by extreme rainfall",
+              "part": 2,
+              "explanation_zh": "「近年來…已多次」表示從過去到現在反覆發生，用現在完成式被動 have been flooded；過去式看不出延續到現在。"
+            },
+            {
+              "type": "abstract_nominal",
+              "zh": "交通混亂",
+              "literal_error": "…, causing the traffic very messy",
+              "part": 4,
+              "explanation_zh": "「交通混亂」是抽象名詞，英文用 traffic chaos；寫成 the traffic very messy 少了動詞，也不是名詞片語。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "Time and again in recent years, cities have been swamped by extreme rainfall, which has brought traffic to a standstill and caused heavy property damage.",
+              "explanation_zh": "swamp（淹沒）、bring traffic to a standstill（讓交通停擺）是進階搭配；time and again（一再）放句首強調「多次」。這是加分寫法。"
+            }
+          ],
+          "restructuring_zh": "「造成…」中文接在逗號後沒有主詞，英文用句尾分詞 causing … 表結果；「已多次被…淹沒」改成完成式被動 have been flooded … several times。"
+        },
+        "2": {
+          "references": [
+            "Predicting such extreme rainfall is much more difficult than predicting typhoons, because it can form in less than an hour.",
+            "Predicting this kind of extreme rainfall is far harder than predicting typhoons, because it may form in under an hour.",
+            "Forecasting such extreme rainfall is much more difficult than forecasting typhoons, since it can develop in less than an hour."
+          ],
+          "target_words": [
+            {
+              "word": "predict",
+              "zh": "預測",
+              "alternatives": [
+                "forecast"
+              ]
+            },
+            {
+              "word": "extreme",
+              "zh": "極端的"
+            },
+            {
+              "word": "rainfall",
+              "zh": "降雨"
+            },
+            {
+              "word": "difficult",
+              "zh": "困難的",
+              "alternatives": [
+                "hard"
+              ]
+            },
+            {
+              "word": "typhoon",
+              "zh": "颱風"
+            },
+            {
+              "word": "because",
+              "zh": "因為",
+              "alternatives": [
+                "since"
+              ]
+            },
+            {
+              "word": "form",
+              "zh": "形成",
+              "alternatives": [
+                "develop"
+              ]
+            },
+            {
+              "word": "hour",
+              "zh": "小時"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "NFSUBJ",
+              "grammar_id": "gp-gerund-subject",
+              "label_zh": "動名詞片語當主詞（預測…）",
+              "frame": "V-ing … + is + 比較級 + than + V-ing …",
+              "zh_trigger": "預測這種極端降雨"
+            },
+            {
+              "code": "COMP",
+              "grammar_id": "gp-comparative-superlative",
+              "label_zh": "比較級（比…困難得多：much more + adj. + than）",
+              "frame": "A + is + much/far more + adj. + than + B",
+              "zh_trigger": "比預測颱風困難得多"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "預測這種極端降雨",
+              "accepted": [
+                "Predicting such extreme rainfall",
+                "Predicting this kind of extreme rainfall",
+                "Forecasting such extreme rainfall",
+                "To predict such extreme rainfall"
+              ],
+              "targets": [
+                "NFSUBJ",
+                "predict",
+                "extreme",
+                "rainfall"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Predict such extreme rainfall is",
+                  "right": "Predicting such extreme rainfall is",
+                  "explanation_zh": "動作「預測…」當主詞要用動名詞 Predicting（或 To predict），原形動詞不能當主詞。"
+                },
+                {
+                  "wrong": "Predicting such extreme rainfall are",
+                  "right": "Predicting such extreme rainfall is",
+                  "explanation_zh": "動名詞片語當主詞視為單數，動詞用 is。"
+                }
+              ]
+            },
+            {
+              "zh": "比預測颱風困難得多",
+              "accepted": [
+                "is much more difficult than predicting typhoons",
+                "is far harder than predicting typhoons",
+                "is much more difficult than forecasting typhoons",
+                "is much harder than predicting typhoons"
+              ],
+              "targets": [
+                "COMP",
+                "difficult",
+                "typhoon"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "is very more difficult than",
+                  "right": "is much more difficult than",
+                  "explanation_zh": "比較級前面加強語氣用 much／far／a lot，不能用 very。"
+                },
+                {
+                  "wrong": "is much more difficult than predict typhoons",
+                  "right": "is much more difficult than predicting typhoons",
+                  "explanation_zh": "than 前後比較的對象要對等：Predicting … 對 predicting typhoons。"
+                }
+              ]
+            },
+            {
+              "zh": "因為它可能",
+              "accepted": [
+                "because it can",
+                "because it may",
+                "since it can",
+                "as it can"
+              ],
+              "targets": [
+                "because"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "because of it can",
+                  "right": "because it can",
+                  "explanation_zh": "because of 後面接名詞；接子句（it can …）只用 because。"
+                },
+                {
+                  "wrong": "because it may can",
+                  "right": "because it can",
+                  "explanation_zh": "情態助動詞不能連用，may 和 can 擇一。"
+                }
+              ]
+            },
+            {
+              "zh": "在不到一小時內就形成",
+              "accepted": [
+                "form in less than an hour",
+                "form in under an hour",
+                "develop in less than an hour",
+                "form within an hour"
+              ],
+              "targets": [
+                "form",
+                "hour"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "form less than an hour",
+                  "right": "form in less than an hour",
+                  "explanation_zh": "表示「在多少時間之內」要有介系詞 in／within。"
+                },
+                {
+                  "wrong": "form in less than one hours",
+                  "right": "form in less than an hour",
+                  "explanation_zh": "less than an hour：「一小時」用單數 an hour。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "verbal_subject",
+              "zh": "預測這種極端降雨",
+              "literal_error": "Predict such extreme rainfall is more difficult …",
+              "part": 1,
+              "explanation_zh": "中文用動作「預測…」當主詞，英文要用動名詞 Predicting …（或 To predict …）。"
+            },
+            {
+              "type": "word_form",
+              "zh": "困難得多",
+              "literal_error": "… is very more difficult than predict typhoons",
+              "part": 2,
+              "explanation_zh": "「…得多」修飾比較級要用 much／far，不能用 very；than 後面也要用同樣的動名詞 predicting typhoons，比較的對象才對等。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "Such extreme rainfall is far trickier to forecast than a typhoon, as it can build up in well under an hour.",
+              "explanation_zh": "A is trickier to forecast than B（形容詞＋不定詞）把「預測」移到後面，句子更精簡；in well under an hour 強調「連一小時都不到」。這是加分寫法。"
+            }
+          ]
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ac-V-3",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-top-05",
+    "lot": "translation-top-05",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "1423e68b58216cafb46e710ae1065ce2ef47f637e82f416d8ddb06bd091160ba",
+    "spec_id": "translation-top@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "warn",
+      "created_at": "2026-10-09T14:05:38Z",
+      "details": {
+        "errors": [],
+        "warnings": [
+          "annotations.rubric.items.1.patterns[0]: gp-perfect-passive 通常對應句構 PERF（目前 code=PASS）"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T13:22:48Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "In recent years, many cities have been repeatedly flooded by extreme rainfall, resulting in serious traffic chaos and property damage.",
+            "confidence": "high",
+            "explanation_zh": "「近年來」配現在完成式；「已多次被…淹沒」用現在完成被動 have been repeatedly flooded by（也可 several times）；「造成…」是結果，用分詞 resulting in／causing；「財產損失」用 property damage（也可 property losses）。"
+          },
+          "2": {
+            "translation": "Predicting this kind of extreme rainfall is much more difficult than predicting typhoons because it can form in less than an hour.",
+            "confidence": "high",
+            "explanation_zh": "「預測這種極端降雨」當主詞，用動名詞；「困難得多」用 much more difficult than，比較對象也用動名詞 predicting typhoons 保持對稱；「可能在不到一小時內就形成」用 can form in less than an hour。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PASS",
+              "PART"
+            ],
+            "used_target_words": [
+              "recent",
+              "city",
+              "flood",
+              "extreme",
+              "rainfall",
+              "serious",
+              "traffic",
+              "chaos",
+              "property",
+              "damage"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "NFSUBJ",
+              "COMP"
+            ],
+            "used_target_words": [
+              "predict",
+              "extreme",
+              "rainfall",
+              "difficult",
+              "typhoon",
+              "because",
+              "form",
+              "hour"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "recent",
+              "city",
+              "flood",
+              "extreme",
+              "rainfall",
+              "serious",
+              "traffic",
+              "chaos",
+              "property",
+              "damage"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PASS": true,
+              "PART": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "predict",
+              "extreme",
+              "rainfall",
+              "difficult",
+              "typhoon",
+              "because",
+              "form",
+              "hour"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NFSUBJ": true,
+              "COMP": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T13:30:00Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "In recent years, many cities have been flooded repeatedly by extreme rainfall, causing serious traffic chaos and property damage.",
+            "confidence": "high",
+            "explanation_zh": "「近年來」搭配現在完成式 have been flooded；「多次」用 repeatedly；「被極端降雨淹沒」用被動 flooded by extreme rainfall；「造成……」用現在分詞 causing 表結果。"
+          },
+          "2": {
+            "translation": "Predicting this kind of extreme rainfall is much more difficult than predicting typhoons because it can form in less than an hour.",
+            "confidence": "high",
+            "explanation_zh": "「預測……」用動名詞 Predicting 當主詞；「比……困難得多」用 much more difficult than，than 後面用 predicting 保持平行；「因為它可能在不到一小時內形成」用 because it can form in less than an hour。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PASS",
+              "PART"
+            ],
+            "used_target_words": [
+              "recent",
+              "city",
+              "flood",
+              "extreme",
+              "rainfall",
+              "serious",
+              "traffic",
+              "chaos",
+              "property",
+              "damage"
+            ],
+            "within_accepted": true,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [],
+            "closest_reference": 1
+          },
+          "2": {
+            "used_patterns": [
+              "NFSUBJ",
+              "COMP"
+            ],
+            "used_target_words": [
+              "predict",
+              "extreme",
+              "rainfall",
+              "difficult",
+              "typhoon",
+              "because",
+              "form",
+              "hour"
+            ],
+            "within_accepted": true,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [],
+            "closest_reference": 1
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "recent",
+              "city",
+              "flood",
+              "extreme",
+              "rainfall",
+              "serious",
+              "traffic",
+              "chaos",
+              "property",
+              "damage"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PASS": true,
+              "PART": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "predict",
+              "extreme",
+              "rainfall",
+              "difficult",
+              "typhoon",
+              "because",
+              "form",
+              "hour"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NFSUBJ": true,
+              "COMP": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

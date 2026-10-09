@@ -1,0 +1,723 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.99cd21",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "advanced",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "這幾年來，不會說外語的旅客一直靠機器翻譯和當地人溝通。",
+        "options": null,
+        "answer": "In recent years, travelers who can't speak foreign languages have been relying on machine translation to communicate with locals.",
+        "accepted_answers": [
+          "Over the past few years, travelers who don't speak any foreign languages have been depending on machine translation to talk with local people.",
+          "For the last few years, travelers who are unable to speak foreign languages have been using machine translation to communicate with local people."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "現在完成進行式",
+            "關係代名詞子句（who）"
+          ],
+          "topic": "機器翻譯"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "在沒有人會說英語的小鎮上，這些翻譯工具已經幫了他們很大的忙。",
+        "options": null,
+        "answer": "In small towns where no one speaks English, these translation tools have helped them a lot.",
+        "accepted_answers": [
+          "In small towns where nobody can speak English, these translation tools have helped them a great deal.",
+          "In small towns in which no one speaks English, these translation tools have helped them very much."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "現在完成式",
+            "關係副詞 where"
+          ],
+          "topic": "機器翻譯"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "機器翻譯"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「這幾年來一直…」表示從過去持續到現在、而且仍在進行，用現在完成進行式 have been relying on（或 have been depending on）。「不會說外語的旅客」中文把修飾語放在前面，英文要改成 travelers who can't speak foreign languages（關係代名詞 who 指人）。「機器翻譯」是名詞 machine translation；「和當地人溝通」是依靠翻譯的目的，用不定詞 to communicate with locals／local people。",
+          "evidence": [
+            "這幾年來",
+            "不會說外語的旅客"
+          ],
+          "strategy_zh": "「這幾年來一直…」先想現在完成（進行）式；「…的＋人」修飾語很長時，改成「名詞＋who 子句」。",
+          "hints": [
+            "切成四段：這幾年來／不會說外語的旅客／一直靠機器翻譯／和當地人溝通",
+            "標的詞彙：traveler（旅客）、foreign（外國的）、rely（依賴；rely on）、translation（翻譯）、communicate（溝通）、local（當地人）",
+            "句型框架：In recent years, N + who + V … + have been + V-ing …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「沒有人會說英語的小鎮」是表示地點的名詞加上修飾語，英文把修飾語放到後面，用關係副詞 where（＝in which）：small towns where no one speaks English；子句本身已經完整，不能用 which。no one／nobody 是單數，動詞用 speaks。「已經幫了很大的忙」的影響延續到現在，用現在完成式 have helped them a lot（或 a great deal）。「這些翻譯工具」回指上一句的機器翻譯。",
+          "evidence": [
+            "在沒有人會說英語的小鎮上",
+            "已經幫了他們很大的忙"
+          ],
+          "strategy_zh": "先判斷修飾地點的子句缺不缺主詞或受詞：子句完整就用 where，缺受詞才用 which／that；「已經」想現在完成式。",
+          "hints": [
+            "切成四段：在沒有人會說英語的小鎮上／這些翻譯工具／已經幫了他們／很大的忙",
+            "標的詞彙：town（小鎮）、speak（說）、translation（翻譯）、tool（工具）、help（幫助）、great（很大的；a lot／a great deal）",
+            "句型框架：In + 地點 N + where + S + V …, S + have + p.p. …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "In recent years, travelers who can't speak foreign languages have been relying on machine translation to communicate with locals.",
+            "Over the past few years, travelers who don't speak any foreign languages have been depending on machine translation to talk with local people.",
+            "For the last few years, travelers who are unable to speak foreign languages have been using machine translation to communicate with local people."
+          ],
+          "target_words": [
+            {
+              "word": "traveler",
+              "zh": "旅客",
+              "alternatives": [
+                "tourist",
+                "visitor"
+              ]
+            },
+            {
+              "word": "foreign",
+              "zh": "外國的"
+            },
+            {
+              "word": "rely",
+              "zh": "依賴",
+              "alternatives": [
+                "depend",
+                "use",
+                "count on"
+              ]
+            },
+            {
+              "word": "translation",
+              "zh": "翻譯"
+            },
+            {
+              "word": "communicate",
+              "zh": "溝通",
+              "alternatives": [
+                "talk"
+              ]
+            },
+            {
+              "word": "local",
+              "zh": "當地人；當地的"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PERF",
+              "grammar_id": "gp-present-perfect-progressive",
+              "label_zh": "現在完成進行式（這幾年來一直…）",
+              "frame": "S + have/has been + V-ing (+ in recent years / for …)",
+              "zh_trigger": "一直靠"
+            },
+            {
+              "code": "REL",
+              "grammar_id": "gp-relative-pronoun",
+              "label_zh": "關係代名詞子句（不會說外語的旅客）",
+              "frame": "N + who + V …",
+              "zh_trigger": "不會說外語的旅客"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "這幾年來",
+              "accepted": [
+                "In recent years",
+                "Over the past few years",
+                "For the last few years",
+                "In the past few years",
+                "For the past few years",
+                "Recently"
+              ],
+              "targets": [
+                "PERF"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "These few years",
+                  "right": "In recent years",
+                  "explanation_zh": "「這幾年來」是時間副詞，用 in recent years／over the past few years；these few years 不能直接當副詞。"
+                }
+              ]
+            },
+            {
+              "zh": "不會說外語的旅客",
+              "accepted": [
+                "travelers who can't speak foreign languages",
+                "travelers who don't speak any foreign languages",
+                "travelers who are unable to speak foreign languages",
+                "travelers who cannot speak foreign languages",
+                "tourists who can't speak foreign languages",
+                "travelers who can't speak a foreign language"
+              ],
+              "targets": [
+                "REL",
+                "foreign",
+                "traveler"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "can't speak foreign languages travelers",
+                  "right": "travelers who can't speak foreign languages",
+                  "explanation_zh": "「…的旅客」這種長修飾語要放在名詞後面，用關係子句 who …。"
+                },
+                {
+                  "wrong": "travelers which can't speak foreign languages",
+                  "right": "travelers who can't speak foreign languages",
+                  "explanation_zh": "先行詞是人，關係代名詞用 who（或 that）。"
+                }
+              ]
+            },
+            {
+              "zh": "一直靠機器翻譯",
+              "accepted": [
+                "have been relying on machine translation",
+                "have been depending on machine translation",
+                "have been using machine translation",
+                "have relied on machine translation",
+                "have been counting on machine translation",
+                "have depended on machine translation"
+              ],
+              "targets": [
+                "PERF",
+                "rely",
+                "translation"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "have been relying machine translation",
+                  "right": "have been relying on machine translation",
+                  "explanation_zh": "rely／depend 後面要接介系詞 on。"
+                },
+                {
+                  "wrong": "always rely on machine translation",
+                  "right": "have been relying on machine translation",
+                  "explanation_zh": "「這幾年來一直」從過去持續到現在，用現在完成進行式 have been + V-ing。"
+                },
+                {
+                  "wrong": "have been relying on machine translate",
+                  "right": "have been relying on machine translation",
+                  "explanation_zh": "介系詞 on 後面接名詞 translation，不用動詞 translate。"
+                }
+              ]
+            },
+            {
+              "zh": "和當地人溝通",
+              "accepted": [
+                "to communicate with locals",
+                "to talk with local people",
+                "to communicate with local people",
+                "to talk to locals",
+                "to communicate with the locals",
+                "to talk with the local people"
+              ],
+              "targets": [
+                "communicate",
+                "local"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "to communicate locals",
+                  "right": "to communicate with locals",
+                  "explanation_zh": "communicate 後面要加 with。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "prenominal_modifier",
+              "zh": "不會說外語的旅客",
+              "literal_error": "In recent years, can't speak foreign languages travelers have been relying on machine translation to communicate with locals.",
+              "part": 2,
+              "explanation_zh": "「不會說外語的旅客」修飾語很長，英文要放到名詞後面，改成關係子句 travelers who can't speak foreign languages。"
+            },
+            {
+              "type": "word_form",
+              "zh": "機器翻譯",
+              "literal_error": "In recent years, travelers who can't speak foreign languages have been relying on machine translate to communicate with locals.",
+              "part": 3,
+              "explanation_zh": "「機器翻譯」在這裡是名詞，用 machine translation；translate 是動詞。"
+            }
+          ],
+          "bonus": [],
+          "restructuring_zh": "「不會說外語的旅客」是長的前置修飾，英文改成名詞＋關係子句 travelers who can't speak foreign languages（「…的＋名詞」改後位修飾）。"
+        },
+        "2": {
+          "references": [
+            "In small towns where no one speaks English, these translation tools have helped them a lot.",
+            "In small towns where nobody can speak English, these translation tools have helped them a great deal.",
+            "In small towns in which no one speaks English, these translation tools have helped them very much."
+          ],
+          "target_words": [
+            {
+              "word": "town",
+              "zh": "小鎮",
+              "alternatives": [
+                "village"
+              ]
+            },
+            {
+              "word": "speak",
+              "zh": "說"
+            },
+            {
+              "word": "translation",
+              "zh": "翻譯"
+            },
+            {
+              "word": "tool",
+              "zh": "工具",
+              "alternatives": [
+                "app"
+              ]
+            },
+            {
+              "word": "help",
+              "zh": "幫助"
+            },
+            {
+              "word": "great",
+              "zh": "很大的（幫了很大的忙）",
+              "alternatives": [
+                "lot",
+                "much"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PERF",
+              "grammar_id": "gp-present-perfect",
+              "label_zh": "現在完成式（已經幫了…）",
+              "frame": "S + have/has + p.p. …",
+              "zh_trigger": "已經幫了"
+            },
+            {
+              "code": "REL",
+              "grammar_id": "gp-relative-adverb",
+              "label_zh": "關係副詞 where（沒有人會說英語的小鎮）",
+              "frame": "the place(s) + where + S + V",
+              "zh_trigger": "沒有人會說英語的小鎮"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "在沒有人會說英語的小鎮上",
+              "accepted": [
+                "In small towns where no one speaks English",
+                "In small towns where nobody can speak English",
+                "In small towns in which no one speaks English",
+                "In small towns where nobody speaks English",
+                "In small towns where no one can speak English",
+                "In towns where no one speaks English"
+              ],
+              "targets": [
+                "REL",
+                "town",
+                "speak"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "In small towns which no one speaks English",
+                  "right": "In small towns where no one speaks English",
+                  "explanation_zh": "子句 no one speaks English 本身已經完整，修飾地點要用關係副詞 where（＝in which）。"
+                },
+                {
+                  "wrong": "In small towns where no one speak English",
+                  "right": "In small towns where no one speaks English",
+                  "explanation_zh": "no one 是單數，動詞加 s。"
+                }
+              ]
+            },
+            {
+              "zh": "這些翻譯工具",
+              "accepted": [
+                "these translation tools",
+                "these translation apps",
+                "these machine translation tools",
+                "these tools for translation"
+              ],
+              "targets": [
+                "translation",
+                "tool"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "these translate tools",
+                  "right": "these translation tools",
+                  "explanation_zh": "名詞修飾名詞用 translation，不用動詞 translate。"
+                }
+              ]
+            },
+            {
+              "zh": "已經幫了他們",
+              "accepted": [
+                "have helped them",
+                "have already helped them",
+                "have been helping them",
+                "have been a great help to them",
+                "have been very helpful to them"
+              ],
+              "targets": [
+                "PERF",
+                "help"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "has helped them",
+                  "right": "have helped them",
+                  "explanation_zh": "主詞 these translation tools 是複數，用 have。"
+                },
+                {
+                  "wrong": "already helped them",
+                  "right": "have helped them",
+                  "explanation_zh": "「已經」的影響延續到現在，用現在完成式 have helped。"
+                }
+              ]
+            },
+            {
+              "zh": "很大的忙",
+              "accepted": [
+                "a lot",
+                "a great deal",
+                "very much",
+                "greatly",
+                "so much",
+                "a great help"
+              ],
+              "targets": [
+                "great"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "a big busy",
+                  "right": "a lot",
+                  "explanation_zh": "「幫了很大的忙」是 help … a lot 或 be a great help，「忙」不是 busy。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "prenominal_modifier",
+              "zh": "沒有人會說英語的小鎮",
+              "literal_error": "In no one speaks English small towns, these translation tools have helped them a lot.",
+              "part": 1,
+              "explanation_zh": "「沒有人會說英語的小鎮」照中文語序把子句放在名詞前面不通；英文改成 small towns where no one speaks English。"
+            },
+            {
+              "type": "tense_trigger",
+              "zh": "已經幫了",
+              "literal_error": "In small towns where no one speaks English, these translation tools already helped them a lot.",
+              "part": 3,
+              "explanation_zh": "「已經」的影響延續到現在，用現在完成式 have helped；只寫 already helped 會扣分。"
+            }
+          ],
+          "bonus": [],
+          "restructuring_zh": "「沒有人會說英語的小鎮」改成名詞＋關係副詞子句 small towns where no one speaks English（「…的＋名詞」改後位修飾）。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-advanced-04",
+    "lot": "translation-advanced-04",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "4c825c0a94fac9dc54e263ee5e16ad1f93b574fa99d23ce45a0c738ed355d865",
+    "spec_id": "translation-advanced@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T13:07:06Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T13:07:06Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "For the past few years, travelers who cannot speak foreign languages have been relying on machine translation to communicate with local people.",
+            "confidence": "high",
+            "explanation_zh": "「這幾年來…一直」用 For the past few years 加現在完成進行式；「不會說外語的旅客」用 who 關係子句；「靠…和當地人溝通」用 rely on N to V。"
+          },
+          "2": {
+            "translation": "In small towns where no one speaks English, these translation tools have been a great help to them.",
+            "confidence": "high",
+            "explanation_zh": "「在沒有人會說英語的小鎮上」用關係副詞 where 修飾 small towns；「已經幫了很大的忙」用現在完成式 have been a great help to them（也可寫 have helped them a lot）。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PERF",
+              "REL"
+            ],
+            "used_target_words": [
+              "traveler",
+              "foreign",
+              "rely",
+              "translation",
+              "communicate",
+              "local"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PERF",
+              "REL"
+            ],
+            "used_target_words": [
+              "town",
+              "speak",
+              "translation",
+              "tool",
+              "help",
+              "great"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "traveler",
+              "foreign",
+              "rely",
+              "translation",
+              "communicate",
+              "local"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PERF": true,
+              "REL": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "town",
+              "speak",
+              "translation",
+              "tool",
+              "help",
+              "great"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PERF": true,
+              "REL": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T12:50:33Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "For the past few years, travelers who cannot speak foreign languages have been relying on machine translation to communicate with locals.",
+            "confidence": "high",
+            "explanation_zh": "「這幾年來……一直」用 for the past few years 搭配現在完成進行式 have been relying on；「靠……和當地人溝通」用 rely on ... to communicate with locals。"
+          },
+          "2": {
+            "translation": "In small towns where no one speaks English, these translation tools have already helped them a great deal.",
+            "confidence": "high",
+            "explanation_zh": "「在沒有人會說英語的小鎮上」用 where 關係子句修飾 small towns；「已經幫了……很大的忙」用現在完成式 have already helped them a great deal。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PERF",
+              "REL"
+            ],
+            "used_target_words": [
+              "traveler",
+              "foreign",
+              "rely",
+              "translation",
+              "communicate",
+              "local"
+            ],
+            "within_accepted": true,
+            "closest_reference": 2,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PERF",
+              "REL"
+            ],
+            "used_target_words": [
+              "town",
+              "speak",
+              "translation",
+              "tool",
+              "help",
+              "great"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "traveler",
+              "foreign",
+              "rely",
+              "translation",
+              "communicate",
+              "local"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PERF": true,
+              "REL": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "town",
+              "speak",
+              "translation",
+              "tool",
+              "help",
+              "great"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PERF": true,
+              "REL": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

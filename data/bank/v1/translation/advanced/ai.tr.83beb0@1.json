@@ -1,0 +1,759 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.83beb0",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "advanced",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "為了節省紙張、保護森林，政府鼓勵民眾用電子發票取代紙本收據。",
+        "options": null,
+        "answer": "To save paper and protect forests, the government encourages people to replace paper receipts with electronic ones.",
+        "accepted_answers": [
+          "In order to save paper and protect forests, the government encourages the public to use e-invoices instead of paper receipts.",
+          "The government encourages people to replace paper receipts with e-invoices in order to save paper and protect forests."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "不定詞表目的",
+            "平行結構"
+          ],
+          "topic": "電子發票"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "政府也提供免費的應用程式（app），好讓民眾查看和管理這些發票。",
+        "options": null,
+        "answer": "The government also provides a free app so that people can check and manage these electronic receipts.",
+        "accepted_answers": [
+          "The government has also launched a free app so that the public can view and manage these e-invoices.",
+          "The government also offers a free app so that people can check and organize their electronic invoices."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "目的：so that",
+            "平行結構"
+          ],
+          "topic": "電子發票"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "電子發票"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「為了…」表目的，句首用不定詞 To + 原形動詞（或 In order to），後面加逗號再接主要子句；也可以把目的放到句尾。「節省紙張、保護森林」是兩個並列的目的，to save paper and (to) protect forests 形式要一致（平行結構）；paper 指紙張時不可數。「鼓勵民眾…」是 encourage + 受詞 + to VR。「用 A 取代 B」是 replace B with A、use A instead of B 或 use A to replace B；電子發票可以寫 e-invoices、electronic invoices 或 electronic receipts（electronic ones）。",
+          "evidence": [
+            "為了節省紙張、保護森林",
+            "用電子發票取代紙本收據"
+          ],
+          "strategy_zh": "目的放句首時想 To VR …, S + V；並列的動作用 and 連接、形式一致。",
+          "hints": [
+            "切成四段：為了節省紙張／保護森林／政府鼓勵民眾／用電子發票取代紙本收據",
+            "標的詞彙：save（節省）、protect（保護）、forest（森林）、encourage（鼓勵）、replace（取代）、receipt（收據）",
+            "句型框架：To VR₁ … and VR₂ …, S + encourage + O + to replace B with A"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「政府也提供…，好讓民眾…」：前半句主詞是政府（the government 是單數，動詞加 s：provides；「也」是 also），「應用程式」是可數名詞，單數要加 a：a free app。後半句表目的而且主詞換成民眾，用 so that + people + can + 原形動詞。「查看和管理」是 can 後面並列的兩個動作，用 and 連接、都用原形：check and manage（平行結構），兩個動詞共用受詞 these electronic receipts（these e-invoices），「這些發票」指上一句的電子發票。",
+          "evidence": [
+            "政府也提供免費的應用程式（app）",
+            "好讓民眾查看和管理這些發票"
+          ],
+          "strategy_zh": "目的子句的主詞和主要子句不同時，用 so that + S + can …；同一個助動詞後面並列的動詞形式要一致。",
+          "hints": [
+            "切成四段：政府也提供免費的應用程式（app）／好讓民眾／查看和管理／這些發票",
+            "標的詞彙：government（政府）、provide（提供，也可用 offer）、free（免費的）、check（查看）、manage（管理）、receipt（收據；發票也可寫 invoice）",
+            "句型框架：S + also + provides + O + so that + S + can + VR₁ and VR₂ + O"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "To save paper and protect forests, the government encourages people to replace paper receipts with electronic ones.",
+            "In order to save paper and protect forests, the government encourages the public to use e-invoices instead of paper receipts.",
+            "The government encourages people to replace paper receipts with e-invoices in order to save paper and protect forests."
+          ],
+          "target_words": [
+            {
+              "word": "save",
+              "zh": "節省"
+            },
+            {
+              "word": "protect",
+              "zh": "保護"
+            },
+            {
+              "word": "forest",
+              "zh": "森林"
+            },
+            {
+              "word": "encourage",
+              "zh": "鼓勵"
+            },
+            {
+              "word": "replace",
+              "zh": "取代",
+              "alternatives": [
+                "instead of",
+                "switch"
+              ]
+            },
+            {
+              "word": "receipt",
+              "zh": "收據"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PURP",
+              "grammar_id": "gp-infinitive-purpose",
+              "label_zh": "不定詞表目的（為了…）",
+              "frame": "To / In order to + VR …, S + V …",
+              "zh_trigger": "為了"
+            },
+            {
+              "code": "PARA",
+              "grammar_id": "gp-parallelism",
+              "label_zh": "平行結構（to save … and (to) protect …）",
+              "frame": "to VR₁ … and (to) VR₂ …",
+              "zh_trigger": "節省紙張、保護森林"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "為了節省紙張",
+              "accepted": [
+                "To save paper",
+                "In order to save paper",
+                "So as to save paper",
+                "To use less paper",
+                "In order to use less paper",
+                "To reduce paper use"
+              ],
+              "targets": [
+                "PURP",
+                "save"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "For saving paper",
+                  "right": "To save paper",
+                  "explanation_zh": "表目的用不定詞 to + 原形動詞（或 in order to）。"
+                },
+                {
+                  "wrong": "To save papers",
+                  "right": "To save paper",
+                  "explanation_zh": "paper 指紙張時是不可數名詞，不加 s。"
+                }
+              ]
+            },
+            {
+              "zh": "保護森林",
+              "accepted": [
+                "and protect forests",
+                "and to protect forests",
+                "and protect the forests",
+                "and to protect the forests",
+                "and protect our forests",
+                "and to protect our forests"
+              ],
+              "targets": [
+                "PARA",
+                "protect",
+                "forest"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "and protecting forests",
+                  "right": "and protect forests",
+                  "explanation_zh": "平行結構：to save … and (to) protect …，兩個動作的形式要一致。"
+                }
+              ]
+            },
+            {
+              "zh": "政府鼓勵民眾",
+              "accepted": [
+                "the government encourages people",
+                "the government encourages the public",
+                "the government encourages citizens",
+                "the government is encouraging people",
+                "the government is encouraging the public",
+                "the government encourages everyone"
+              ],
+              "targets": [
+                "encourage"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "the government encourage people",
+                  "right": "the government encourages people",
+                  "explanation_zh": "the government 是單數，動詞加 s。"
+                },
+                {
+                  "wrong": "the government encourages people use",
+                  "right": "the government encourages people to use",
+                  "explanation_zh": "encourage + 受詞 + to + 原形動詞。"
+                }
+              ]
+            },
+            {
+              "zh": "用電子發票取代紙本收據",
+              "accepted": [
+                "to replace paper receipts with electronic ones",
+                "to use e-invoices instead of paper receipts",
+                "to replace paper receipts with e-invoices",
+                "to replace paper receipts with electronic invoices",
+                "to replace paper receipts with electronic receipts",
+                "to use electronic invoices instead of paper receipts",
+                "to use electronic receipts instead of paper ones",
+                "to use e-invoices instead of paper ones",
+                "to use e-invoices to replace paper receipts",
+                "to use electronic invoices to replace paper receipts",
+                "to switch from paper receipts to e-invoices",
+                "to switch from paper receipts to electronic invoices"
+              ],
+              "targets": [
+                "replace",
+                "receipt"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "to use e-invoices replace paper receipts",
+                  "right": "to replace paper receipts with e-invoices",
+                  "explanation_zh": "「用 A 取代 B」是 replace B with A、use A instead of B，或 use A to replace B；兩個動詞不能直接並排。"
+                },
+                {
+                  "wrong": "to replace e-invoices with paper receipts",
+                  "right": "to replace paper receipts with e-invoices",
+                  "explanation_zh": "replace B with A 是「用 A 換掉 B」，被換掉的紙本收據放在 replace 後面。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "word_form",
+              "zh": "保護森林",
+              "literal_error": "To save paper and protecting forests, the government encourages people to replace paper receipts with electronic ones.",
+              "part": 2,
+              "explanation_zh": "平行結構：to save … and (to) protect …，第二個動作也用原形，不要寫成 protecting。"
+            },
+            {
+              "type": "collocation",
+              "zh": "用電子發票取代紙本收據",
+              "literal_error": "To save paper and protect forests, the government encourages people use e-invoices replace paper receipts.",
+              "part": 4,
+              "explanation_zh": "照中文語序把「用」「取代」兩個動詞並排不合英文；要寫 replace paper receipts with e-invoices、use e-invoices instead of paper receipts 或 use e-invoices to replace paper receipts。"
+            }
+          ],
+          "bonus": [],
+          "restructuring_zh": "「用電子發票取代紙本收據」不能照中文把「用」「取代」兩個動詞並排：英文改成 replace paper receipts with e-invoices（被取代的紙本收據放在 replace 後面），或 use e-invoices instead of paper receipts。"
+        },
+        "2": {
+          "references": [
+            "The government also provides a free app so that people can check and manage these electronic receipts.",
+            "The government has also launched a free app so that the public can view and manage these e-invoices.",
+            "The government also offers a free app so that people can check and organize their electronic invoices."
+          ],
+          "target_words": [
+            {
+              "word": "government",
+              "zh": "政府"
+            },
+            {
+              "word": "provide",
+              "zh": "提供",
+              "alternatives": [
+                "offer",
+                "launch",
+                "develop",
+                "create",
+                "release"
+              ]
+            },
+            {
+              "word": "free",
+              "zh": "免費的"
+            },
+            {
+              "word": "check",
+              "zh": "查看",
+              "alternatives": [
+                "view",
+                "look at",
+                "see",
+                "access"
+              ]
+            },
+            {
+              "word": "manage",
+              "zh": "管理",
+              "alternatives": [
+                "organize",
+                "organise",
+                "keep track of",
+                "handle"
+              ]
+            },
+            {
+              "word": "receipt",
+              "zh": "收據（發票）",
+              "alternatives": [
+                "receipts",
+                "invoice",
+                "invoices",
+                "e-invoice",
+                "e-invoices"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PURP",
+              "grammar_id": "gp-so-that-purpose",
+              "label_zh": "目的：so that（好讓…）",
+              "frame": "S + V … so that + S + can + VR …",
+              "zh_trigger": "好讓"
+            },
+            {
+              "code": "PARA",
+              "grammar_id": "gp-parallelism",
+              "label_zh": "平行結構（can check and manage …）",
+              "frame": "S + can + VR₁ and VR₂ + O",
+              "zh_trigger": "查看和管理"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "政府也提供免費的應用程式（app）",
+              "accepted": [
+                "The government also provides a free app",
+                "The government also offers a free app",
+                "The government has also launched a free app",
+                "The government has also created a free app",
+                "The government has also developed a free app",
+                "The government also provides free apps",
+                "The government also offers free apps",
+                "The government also has a free app",
+                "It also provides a free app",
+                "It also offers a free app",
+                "The government also provides a free application",
+                "The government also provides an app for free",
+                "The government also offers an app for free"
+              ],
+              "targets": [
+                "government",
+                "provide",
+                "free"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "The government also provide a free app",
+                  "right": "The government also provides a free app",
+                  "explanation_zh": "the government 是第三人稱單數，現在式動詞要加 s：provides。"
+                },
+                {
+                  "wrong": "The government also provides free app",
+                  "right": "The government also provides a free app",
+                  "explanation_zh": "app 是可數名詞，單數前面要有冠詞 a。"
+                }
+              ]
+            },
+            {
+              "zh": "好讓民眾",
+              "accepted": [
+                "so that people can",
+                "so that the public can",
+                "so that citizens can",
+                "so that everyone can",
+                "so that users can",
+                "so people can",
+                "in order that people can"
+              ],
+              "targets": [
+                "PURP"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "let people",
+                  "right": "so that people can",
+                  "explanation_zh": "「好讓…」表目的，用 so that + 子句；let 是使役動詞，不能用來連接兩個子句。"
+                },
+                {
+                  "wrong": "in order to people can",
+                  "right": "so that people can",
+                  "explanation_zh": "「好讓＋另一個主詞＋能…」用 so that + 子句；in order to 後面只能接原形動詞，不能接主詞。"
+                }
+              ]
+            },
+            {
+              "zh": "查看和管理",
+              "accepted": [
+                "check and manage",
+                "view and manage",
+                "check and organize",
+                "view and organize",
+                "look at and manage",
+                "see and manage",
+                "access and manage",
+                "check and keep track of"
+              ],
+              "targets": [
+                "PARA",
+                "check",
+                "manage"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "check and managing",
+                  "right": "check and manage",
+                  "explanation_zh": "平行結構：can 後面兩個並列的動詞都用原形，形式要一致。"
+                }
+              ]
+            },
+            {
+              "zh": "這些發票",
+              "accepted": [
+                "these electronic receipts",
+                "these e-invoices",
+                "these invoices",
+                "these electronic invoices",
+                "these e-receipts",
+                "these receipts",
+                "their e-invoices",
+                "their electronic receipts",
+                "their electronic invoices",
+                "their invoices",
+                "the e-invoices"
+              ],
+              "targets": [
+                "receipt"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "these bills",
+                  "right": "these invoices",
+                  "explanation_zh": "「發票」是消費的憑證 invoice／receipt；bill 多指帳單。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "collocation",
+              "zh": "好讓民眾",
+              "literal_error": "The government also provides a free app, let people check and manage these invoices.",
+              "part": 2,
+              "explanation_zh": "「好讓」照字面譯成 let 會把兩個子句硬接在一起；表目的要用 so that + people + can …。"
+            },
+            {
+              "type": "word_form",
+              "zh": "查看和管理",
+              "literal_error": "The government also provides a free app so that people can check and managing these invoices.",
+              "part": 3,
+              "explanation_zh": "並列的兩個動作都接在 can 後面，都用原形：check and manage（平行結構）。"
+            }
+          ],
+          "bonus": []
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-advanced-04-regen",
+    "lot": "translation-advanced-04",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "5341afc25d344c7e86c5f6768889faff79ec168d1da075e82edf61baf41c0b1f",
+    "spec_id": "translation-advanced@2026-10-09",
+    "regenerated_from": "ai.tr.dd6f3c"
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 1,
+    "sentences": 1,
+    "avg_sentence_length": 1.0,
+    "denominator": 1,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 1.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {
+      "off": 1
+    },
+    "offlist_words": [
+      "app"
+    ],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T14:18:29Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T14:12:13Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "In order to save paper and protect forests, the government encourages people to replace paper receipts with electronic invoices.",
+            "confidence": "high",
+            "explanation_zh": "「為了……」用 in order to V 表目的放句首；「鼓勵民眾做某事」用 encourage sb to V；「用 A 取代 B」用 replace B with A，所以是 replace paper receipts with electronic invoices（不可寫反）；電子發票在台灣的通行英文是 e-invoice／electronic invoice。"
+          },
+          "2": {
+            "translation": "The government also provides a free app so that people can check and manage these invoices.",
+            "confidence": "high",
+            "explanation_zh": "「好讓民眾……」是目的，用 so that + 主詞 + can；「查看和管理」譯 check and manage（view 也可）；「這些發票」接上一句，用 these invoices。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PURP",
+              "PARA"
+            ],
+            "used_target_words": [
+              "save",
+              "protect",
+              "forest",
+              "encourage",
+              "replace",
+              "receipt"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "（題目用語小建議，不影響判定）台灣一般說「用電子發票取代紙本發票」，中文題目把「電子發票」和「紙本收據」對比，發票、收據混用略不精確；參考譯文用 paper receipts 對 e-invoices 仍通順。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "PURP",
+              "PARA"
+            ],
+            "used_target_words": [
+              "government",
+              "provide",
+              "free",
+              "check",
+              "manage",
+              "receipt"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "save",
+              "protect",
+              "forest",
+              "encourage",
+              "replace",
+              "receipt"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PURP": true,
+              "PARA": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "government",
+              "provide",
+              "free",
+              "check",
+              "manage",
+              "receipt"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PURP": true,
+              "PARA": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T14:13:00Z",
+      "details": {
+        "solver": "B",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "To save paper and protect forests, the government encourages people to use electronic invoices instead of paper receipts.",
+            "confidence": "high",
+            "explanation_zh": "「為了節省紙張、保護森林」是目的，用不定詞片語 To save paper and protect forests 放句首；「鼓勵民眾……」用 encourage + 受詞 + to V；「用電子發票取代紙本收據」可譯成 use electronic invoices instead of paper receipts。「發票」在台灣常說 invoice，「收據」用 receipt，兩者各自對應。"
+          },
+          "2": {
+            "translation": "The government also provides a free app so that people can check and manage these invoices.",
+            "confidence": "high",
+            "explanation_zh": "「好讓民眾查看和管理這些發票」表示目的，用 so that + 子句（people can check and manage these invoices）；「免費的應用程式」用 a free app；「也提供」放在 also provides，副詞位置在 be 動詞之後、一般動詞之前。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PURP",
+              "PARA"
+            ],
+            "used_target_words": [
+              "save",
+              "protect",
+              "forest",
+              "encourage",
+              "replace",
+              "receipt"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PURP",
+              "PARA"
+            ],
+            "used_target_words": [
+              "government",
+              "provide",
+              "free",
+              "check",
+              "manage",
+              "receipt"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "save",
+              "protect",
+              "forest",
+              "encourage",
+              "replace",
+              "receipt"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PURP": true,
+              "PARA": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "government",
+              "provide",
+              "free",
+              "check",
+              "manage",
+              "receipt"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PURP": true,
+              "PARA": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

@@ -1,0 +1,158 @@
+{
+  "schema": "gsat-bank-facts/v1",
+  "id": "flipbook-animation-rb04",
+  "title": "From flip books to the first cartoons: how drawn animation began",
+  "sdgs": [],
+  "created_on": "2026-10-09",
+  "created_by": "claude-opus-5-5",
+  "sources": [
+    {
+      "id": "s1",
+      "publisher": "History of Science Museum, University of Oxford",
+      "title": "Flip Books (Fancy Names and Fun Toys: Kinora)",
+      "url": "https://www.mhs.ox.ac.uk/exhibits/fancy-names-and-fun-toys/kinora/",
+      "accessed": "2026-10-09",
+      "license": "all-rights-reserved",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s2",
+      "publisher": "Library of Congress (National Film Preservation Board)",
+      "title": "Gertie the Dinosaur (film essay by Daniel Eagan)",
+      "url": "https://www.loc.gov/static/programs/national-film-preservation-board/documents/gertie.pdf",
+      "accessed": "2026-10-09",
+      "license": "all-rights-reserved",
+      "use": "fact_only",
+      "note": "國會圖書館轉載的影評短文，只取事實"
+    },
+    {
+      "id": "s3",
+      "publisher": "Library of Congress",
+      "title": "Cartoon America: Animation",
+      "url": "https://www.loc.gov/exhibits/cartoonamerica/cartoon-zip.html",
+      "accessed": "2026-10-09",
+      "license": "Library of Congress exhibition text",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s4",
+      "publisher": "American University Library (Media Services blog)",
+      "title": "The Evolution of Animated Movies",
+      "url": "https://blogs.library.american.edu/mediaservices/2025/03/31/the-evolution-of-animated-movies/",
+      "accessed": "2026-10-09",
+      "license": "all-rights-reserved",
+      "use": "fact_only",
+      "note": "只取 Fantasmagorie 的長度、張數，以及它在 Blackton 1906 年的短片之後不久推出的先後順序（f16）"
+    }
+  ],
+  "facts": [
+    {
+      "id": "f1",
+      "text": "In 1868, the English printer John Barnes Linnett patented a small book of pictures that he called the kineograph; the name means moving picture. It is now known as the flip book.",
+      "source_ids": ["s1"],
+      "kind": "date"
+    },
+    {
+      "id": "f2",
+      "text": "A Frenchman, Pierre-Hubert Desvignes, had a similar idea around 1860, before Linnett's patent.",
+      "source_ids": ["s1"],
+      "kind": "person"
+    },
+    {
+      "id": "f3",
+      "text": "In a flip book, each page shows one frame, and each picture moves the scene on a little from the picture before it.",
+      "source_ids": ["s1"],
+      "kind": "definition"
+    },
+    {
+      "id": "f4",
+      "text": "When the pages are flipped quickly, the separate pictures seem to move because the eye blends them together (persistence of vision).",
+      "source_ids": ["s1"],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f5",
+      "text": "Because each page works like a frame of film, flip books pointed the way to motion pictures.",
+      "source_ids": ["s1"],
+      "kind": "other"
+    },
+    {
+      "id": "f6",
+      "text": "In the 1906 film Humorous Phases of Funny Faces, J. Stuart Blackton filmed himself drawing pictures and then made the pictures move through animation.",
+      "source_ids": ["s2", "s4"],
+      "kind": "event"
+    },
+    {
+      "id": "f7",
+      "text": "The French artist Emile Cohl made the short film Fantasmagorie from roughly 700 drawings; it runs for about one minute and 45 seconds.",
+      "source_ids": ["s4"],
+      "kind": "number"
+    },
+    {
+      "id": "f8",
+      "text": "Winsor McCay first showed Gertie the Dinosaur at the Palace theater in Chicago on February 2, 1914.",
+      "source_ids": ["s2"],
+      "kind": "date"
+    },
+    {
+      "id": "f9",
+      "text": "McCay made the film part of a live stage show: he stood on the stage with a whip, gave Gertie orders, and appeared to feed her an apple.",
+      "source_ids": ["s2", "s3"],
+      "kind": "event"
+    },
+    {
+      "id": "f10",
+      "text": "Audiences of the time were not used to films, and many people believed Gertie was real.",
+      "source_ids": ["s3"],
+      "kind": "other"
+    },
+    {
+      "id": "f11",
+      "text": "Some critics call Gertie the first cartoon character with a personality of her own.",
+      "source_ids": ["s2"],
+      "kind": "other"
+    },
+    {
+      "id": "f12",
+      "text": "To save drawing time, McCay reused the same series of drawings; to show Gertie breathing, he filmed one set of drawings up to fifteen times.",
+      "source_ids": ["s2"],
+      "kind": "number"
+    },
+    {
+      "id": "f13",
+      "text": "McCay's earlier film Little Nemo (1911) used about four thousand drawings.",
+      "source_ids": ["s2"],
+      "kind": "number"
+    },
+    {
+      "id": "f14",
+      "text": "Snow White and the Seven Dwarfs (1937) was the first American feature-length animated film.",
+      "source_ids": ["s3"],
+      "kind": "date"
+    },
+    {
+      "id": "f15",
+      "text": "More than 750 Disney artists worked on Snow White and the Seven Dwarfs between 1934 and 1937, about three years.",
+      "source_ids": ["s3"],
+      "kind": "number"
+    },
+    {
+      "id": "f16",
+      "text": "Emile Cohl's Fantasmagorie came out not long after Blackton's 1906 film Humorous Phases of Funny Faces.",
+      "source_ids": ["s4"],
+      "kind": "date",
+      "note": "只有先後順序；Fantasmagorie 的確切年份仍未在白名單來源確認（見 notes）"
+    },
+    {
+      "id": "f17",
+      "text": "Many people in the audience thought Gertie was real because they were not used to watching films.",
+      "source_ids": ["s3"],
+      "kind": "cause_effect",
+      "note": "f10 的因果關係：s3 把觀眾不習慣看電影寫成他們以為葛蒂是真的原因"
+    }
+  ],
+  "datasets": [],
+  "notes": "Fantasmagorie 的年份（一般寫 1908）未在可開啟的白名單來源確認，文章不寫年份；它排在 Blackton 1906 年短片之後的先後順序見 f16。f11 只是「有些評論者」的說法（s2），而 s4 說第一個真正的動畫明星是 Felix the Cat，所以題組不可把葛蒂寫成「最有名的早期卡通明星」這類不帶保留的最高級事實（ai.rd.801b10 因此被 fact_check 退回；重生的 ai.rd.26cf17 寫成「有些評論者說……」）。f16、f17 是重生時補的。"
+}

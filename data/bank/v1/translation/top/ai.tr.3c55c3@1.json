@@ -1,0 +1,724 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.3c55c3",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "top",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "登記器官捐贈只需幾分鐘，但一個人的器官最多可被用來拯救八條生命。",
+        "options": null,
+        "answer": "Registering to donate organs takes only a few minutes, but one person's organs can be used to save up to eight lives.",
+        "accepted_answers": [
+          "Signing up for organ donation only takes a few minutes, yet the organs of a single person can be used to save as many as eight lives.",
+          "Registering as an organ donor takes just a few minutes, but one person's organs can be used to save up to eight lives."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "情態助動詞被動（可被用來…）",
+            "動名詞片語當主詞（登記器官捐贈）"
+          ],
+          "topic": "器官捐贈"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "對於那些苦等新器官的人來說，捐贈者的大愛帶來重生，這是金錢買不到的。",
+        "options": null,
+        "answer": "For those who are desperately waiting for new organs, a donor's generosity brings them a new life, which money can never buy.",
+        "accepted_answers": [
+          "For people who are desperately waiting for new organs, a donor's great love brings them a second life, which is something money cannot buy.",
+          "For those who have been waiting anxiously for new organs, a donor's generosity means a second chance at life, which no money can buy."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "非限定關係子句（補充說明：…, which money can never buy）",
+            "對於…的人而言（For those who …）"
+          ],
+          "topic": "器官捐贈"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "器官捐贈"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「登記器官捐贈」是主詞，英文用動名詞片語 Registering to donate organs 或 Registering for organ donation（動名詞主詞視為單數，動詞用 takes）；「花幾分鐘」用 take，不用 need。後半句器官是「被用來」救人，用情態助動詞被動 can be used to save；「最多」是 up to／as many as，「八條生命」是 eight lives。",
+          "evidence": [
+            "登記器官捐贈只需幾分鐘",
+            "最多可被用來拯救八條生命"
+          ],
+          "strategy_zh": "前半句動名詞主詞＋takes＋時間，後半句 but 接被動 can be used to VR，兩個子句對比「付出很少、幫助很大」。",
+          "hints": [
+            "切成四段：登記器官捐贈／只需幾分鐘／但一個人的器官／最多可被用來拯救八條生命",
+            "標的詞彙：register（登記）、organ（器官）、donation（捐贈）、minute（分鐘）、save（拯救）",
+            "句型框架：V-ing … + takes + 時間, but S + can be + p.p. + to VR …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「對於那些…的人來說」用 For those who＋V …；「苦等」寫 are desperately waiting for（wait 要接 for）。「大愛」是抽象名詞，寫 generosity／great love，不要寫 big love。「這是金錢買不到的」補充說明前面的 a new life，用逗號加 which：which money can never buy，which 是 buy 的受詞，後面不再加 it。",
+          "evidence": [
+            "對於那些苦等新器官的人來說",
+            "這是金錢買不到的"
+          ],
+          "strategy_zh": "句首 For those who … 交代對象，主要子句「捐贈者的大愛帶來重生」，最後用 which 子句補充評論。",
+          "hints": [
+            "切成四段：對於那些苦等新器官的人來說／捐贈者的大愛／帶來重生／這是金錢買不到的",
+            "標的詞彙：wait（等待）、organ（器官）、donor（捐贈者）、generosity（慷慨、大愛）、life（生命）",
+            "句型框架：For those who + V …, S + V + N, which + S + can never + V"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "Registering to donate organs takes only a few minutes, but one person's organs can be used to save up to eight lives.",
+            "Signing up for organ donation only takes a few minutes, yet the organs of a single person can be used to save as many as eight lives.",
+            "Registering as an organ donor takes just a few minutes, but one person's organs can be used to save up to eight lives."
+          ],
+          "target_words": [
+            {
+              "word": "register",
+              "zh": "登記",
+              "alternatives": [
+                "sign up"
+              ]
+            },
+            {
+              "word": "organ",
+              "zh": "器官"
+            },
+            {
+              "word": "donation",
+              "zh": "捐贈",
+              "alternatives": [
+                "donate",
+                "donor"
+              ]
+            },
+            {
+              "word": "minute",
+              "zh": "分鐘"
+            },
+            {
+              "word": "save",
+              "zh": "拯救"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PASS",
+              "grammar_id": "gp-passive",
+              "label_zh": "情態助動詞被動（可被用來…）",
+              "frame": "S + can + be + p.p. + to VR …",
+              "zh_trigger": "可被用來"
+            },
+            {
+              "code": "NFSUBJ",
+              "grammar_id": "gp-gerund-subject",
+              "label_zh": "動名詞片語當主詞（登記器官捐贈）",
+              "frame": "V-ing … + takes + 時間 …",
+              "zh_trigger": "登記器官捐贈"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "登記器官捐贈",
+              "accepted": [
+                "Registering to donate organs",
+                "Signing up for organ donation",
+                "Registering as an organ donor",
+                "Registering for organ donation",
+                "Signing up to be an organ donor"
+              ],
+              "targets": [
+                "NFSUBJ",
+                "register",
+                "organ",
+                "donation"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Register to donate organs",
+                  "right": "Registering to donate organs",
+                  "explanation_zh": "動詞片語當主詞要用動名詞 Registering …；原形 Register 會變成祈使句。"
+                },
+                {
+                  "wrong": "Registering for organ donate",
+                  "right": "Registering for organ donation",
+                  "explanation_zh": "「器官捐贈」是名詞 organ donation，donate 是動詞。"
+                }
+              ]
+            },
+            {
+              "zh": "只需幾分鐘",
+              "accepted": [
+                "takes only a few minutes",
+                "only takes a few minutes",
+                "takes just a few minutes"
+              ],
+              "targets": [
+                "minute"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "only needs a few minutes",
+                  "right": "takes only a few minutes",
+                  "explanation_zh": "「花多少時間」用 take；need 的主詞通常是人。"
+                },
+                {
+                  "wrong": "takes only a few minute",
+                  "right": "takes only a few minutes",
+                  "explanation_zh": "a few 後面接複數名詞。"
+                }
+              ]
+            },
+            {
+              "zh": "但一個人的器官",
+              "accepted": [
+                "but one person's organs",
+                "yet the organs of a single person",
+                "but a single person's organs",
+                "but the organs of one person"
+              ],
+              "targets": [
+                "organ"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "but one person organs",
+                  "right": "but one person's organs",
+                  "explanation_zh": "「一個人的」要用所有格 person's。"
+                },
+                {
+                  "wrong": "but one people's organs",
+                  "right": "but one person's organs",
+                  "explanation_zh": "一個人是 one person；people 是複數。"
+                }
+              ]
+            },
+            {
+              "zh": "最多可被用來拯救八條生命",
+              "accepted": [
+                "can be used to save up to eight lives",
+                "can be used to save as many as eight lives"
+              ],
+              "targets": [
+                "PASS",
+                "save"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "can use to save up to eight lives",
+                  "right": "can be used to save up to eight lives",
+                  "explanation_zh": "器官是「被用來」救人，要用被動 can be used to VR。"
+                },
+                {
+                  "wrong": "can be used to save up to eight life",
+                  "right": "can be used to save up to eight lives",
+                  "explanation_zh": "life 的複數是 lives。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "abstract_nominal",
+              "zh": "器官捐贈",
+              "literal_error": "Registering for organ donate",
+              "part": 1,
+              "explanation_zh": "「器官捐贈」可以寫成名詞片語 organ donation，或改用動詞 to donate organs；把動詞 donate 直接接在 for organ 後面當名詞用就錯了詞性。"
+            },
+            {
+              "type": "verbal_subject",
+              "zh": "登記器官捐贈只需幾分鐘",
+              "literal_error": "Register organ donation only needs a few minutes.",
+              "part": 1,
+              "explanation_zh": "中文直接拿「登記器官捐贈」這個動作當主詞；英文要用動名詞 Registering to donate organs（或 Registering for organ donation），「花時間」用 takes，不用 needs。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "It takes only a few minutes to register as an organ donor, yet a single donor can save as many as eight lives.",
+              "explanation_zh": "用 It takes＋時間＋to VR 的句型改寫前半句，後半改用主動 a single donor can save，和 yet 形成強烈對比。"
+            }
+          ],
+          "restructuring_zh": "「登記器官捐贈只需幾分鐘」中文以動詞片語當主詞，英文用動名詞片語 Registering to donate organs（或 Registering for organ donation）當主詞，「需要時間」用 takes。"
+        },
+        "2": {
+          "references": [
+            "For those who are desperately waiting for new organs, a donor's generosity brings them a new life, which money can never buy.",
+            "For people who are desperately waiting for new organs, a donor's great love brings them a second life, which is something money cannot buy.",
+            "For those who have been waiting anxiously for new organs, a donor's generosity means a second chance at life, which no money can buy."
+          ],
+          "target_words": [
+            {
+              "word": "wait",
+              "zh": "等待"
+            },
+            {
+              "word": "organ",
+              "zh": "器官"
+            },
+            {
+              "word": "donor",
+              "zh": "捐贈者",
+              "alternatives": [
+                "donor's"
+              ]
+            },
+            {
+              "word": "generosity",
+              "zh": "慷慨；大愛",
+              "alternatives": [
+                "love",
+                "kindness"
+              ]
+            },
+            {
+              "word": "life",
+              "zh": "生命"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "NRREL",
+              "grammar_id": "gp-nonrestrictive",
+              "label_zh": "非限定關係子句（補充說明：…, which money can never buy）",
+              "frame": "…, which + S + can never + V",
+              "zh_trigger": "這是金錢買不到的"
+            },
+            {
+              "code": "REL",
+              "grammar_id": "gp-for-those-who",
+              "label_zh": "對於…的人而言（For those who …）",
+              "frame": "For those who + V …, S + V …",
+              "zh_trigger": "對於那些苦等新器官的人來說"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "對於那些苦等新器官的人來說",
+              "accepted": [
+                "For those who are desperately waiting for new organs",
+                "For people who are desperately waiting for new organs",
+                "For those who have been waiting anxiously for new organs",
+                "For those who are waiting for new organs",
+                "For those who have long been waiting for new organs"
+              ],
+              "targets": [
+                "REL",
+                "wait",
+                "organ"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "For those who are desperately waiting new organs",
+                  "right": "For those who are desperately waiting for new organs",
+                  "explanation_zh": "wait 是不及物動詞，「等待某物」要用 wait for。"
+                },
+                {
+                  "wrong": "For those people who are waiting for new organs",
+                  "right": "For those who are waiting for new organs",
+                  "explanation_zh": "those 已經指「那些人」，不加 people。"
+                }
+              ]
+            },
+            {
+              "zh": "捐贈者的大愛",
+              "accepted": [
+                "a donor's generosity",
+                "a donor's great love",
+                "the generosity of a donor"
+              ],
+              "targets": [
+                "donor",
+                "generosity"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "a donor's big love",
+                  "right": "a donor's generosity",
+                  "explanation_zh": "「大愛」不要逐字翻成 big love；英文用 generosity 或 great love。"
+                },
+                {
+                  "wrong": "a donator's generosity",
+                  "right": "a donor's generosity",
+                  "explanation_zh": "「捐贈者」是 donor。"
+                }
+              ]
+            },
+            {
+              "zh": "帶來重生",
+              "accepted": [
+                "brings them a new life",
+                "brings them a second life",
+                "means a second chance at life",
+                "gives them a new life",
+                "offers them a second chance at life"
+              ],
+              "targets": [
+                "life"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "brings them reborn",
+                  "right": "brings them a new life",
+                  "explanation_zh": "reborn 是形容詞／過去分詞，不能當 bring 的受詞；用名詞片語 a new life。"
+                },
+                {
+                  "wrong": "brings them a new lives",
+                  "right": "brings them a new life",
+                  "explanation_zh": "a 後面接單數 life。"
+                }
+              ]
+            },
+            {
+              "zh": "這是金錢買不到的",
+              "accepted": [
+                "which money can never buy",
+                "which is something money cannot buy",
+                "which no money can buy",
+                "which money cannot buy"
+              ],
+              "targets": [
+                "NRREL"
+              ],
+              "common_errors": [
+                {
+                  "wrong": ", this is money can't buy",
+                  "right": ", which money can never buy",
+                  "explanation_zh": "逗號不能連接兩個完整句子，而且 this is 後面還缺名詞；補充說明用 which 子句。"
+                },
+                {
+                  "wrong": ", which money can never buy it",
+                  "right": ", which money can never buy",
+                  "explanation_zh": "which 已經是 buy 的受詞，後面不能再加 it。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "abstract_nominal",
+              "zh": "大愛",
+              "literal_error": "a donor's big love brings them reborn",
+              "part": 2,
+              "explanation_zh": "「大愛」是台灣常用的抽象說法，英文用 generosity／great love；逐字翻成 big love 不自然。"
+            },
+            {
+              "type": "collocation",
+              "zh": "苦等新器官",
+              "literal_error": "For those who are bitterly waiting new organs",
+              "part": 1,
+              "explanation_zh": "「苦等」是焦急地等，英文用 desperately／anxiously waiting for；wait 一定要接 for，bitterly 和 wait 也不搭配。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "To those awaiting new organs, a donor's generosity is nothing less than a second life, a gift that no amount of money can buy.",
+              "explanation_zh": "用 nothing less than（簡直就是）加強語氣，句尾用同位語 a gift that … 取代 which 子句，層次更豐富。"
+            }
+          ],
+          "restructuring_zh": "「這是金錢買不到的」的「這」指前面的「重生」，英文用 which 引導非限定子句接在逗號後面：…, which money can never buy。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ac-V-3",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-top-02",
+    "lot": "translation-top-02",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "6c20f5a14ca426db5ab42249ce1bc261a4855dfb4f5732045980d8afdca92905",
+    "spec_id": "translation-top@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T13:14:39Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "fail",
+      "created_at": "2026-10-09T08:03:54Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "It takes only a few minutes to register as an organ donor, but one person's organs can be used to save up to eight lives.",
+            "confidence": "high",
+            "explanation_zh": "「只需幾分鐘」用 It takes + 時間 + to V；「登記器官捐贈」register as an organ donor；「最多」up to；「可被用來拯救」用被動 can be used to save。"
+          },
+          "2": {
+            "translation": "For those who are desperately waiting for new organs, a donor's selfless love gives them a new life, which is something money cannot buy.",
+            "confidence": "medium",
+            "explanation_zh": "「對於那些苦等…的人來說」用 For those who are desperately waiting for…；「大愛」譯成 selfless love（great love 也可）；「帶來重生」gives them a new life（也可寫 a second chance at life）；「這是金錢買不到的」用 which is something money cannot buy 補述。「大愛」「重生」的英譯選擇多，所以信心給 medium。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PASS"
+            ],
+            "used_target_words": [
+              "register",
+              "organ",
+              "donation",
+              "minute",
+              "save"
+            ],
+            "within_accepted": false,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "我寫 It takes only a few minutes to register as an organ donor（虛主詞 It takes + 時間 + to VR），沒有用動名詞主詞 Registering… takes…；這句的 NFSUBJ label／frame 指定 V-ing 主詞，第 1 部分 accepted 也只有動名詞寫法，所以照規準 NFSUBJ 沒用到、也不在 accepted 內。",
+              "但「登記器官捐贈只需幾分鐘」譯成 It takes only a few minutes to… 至少一樣自然（英文甚至更常見），規準自己的 bonus 句就是這個寫法；而且同批的 7bf557 第 2 句、1053ce 第 1 句、871010 第 2 句都把 It…to VR 算成 NFSUBJ，7bf557 第 2 句還反過來接受動名詞主詞。建議第 1、2 部分 accepted 補 It takes only a few minutes to register as an organ donor／to sign up for organ donation，並把 NFSUBJ 的 label 改成同時涵蓋兩種寫法。"
+            ],
+            "closest_reference": 2
+          },
+          "2": {
+            "used_patterns": [
+              "NRREL",
+              "REL"
+            ],
+            "used_target_words": [
+              "wait",
+              "organ",
+              "donor",
+              "generosity",
+              "life"
+            ],
+            "within_accepted": true,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [],
+            "closest_reference": 1
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "register",
+              "organ",
+              "donation",
+              "minute",
+              "save"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PASS": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "wait",
+              "organ",
+              "donor",
+              "generosity",
+              "life"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NRREL": true,
+              "REL": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 1 題盲譯沒有用到標的句型 ['NFSUBJ']：中文題目沒有自然引出這個句型（SPEC §5.7）",
+          "第 1 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "fail",
+      "created_at": "2026-10-09T12:46:22Z",
+      "details": {
+        "solver": "B",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "It takes only a few minutes to register as an organ donor, but one person's organs can be used to save as many as eight lives.",
+            "confidence": "high",
+            "explanation_zh": "「只需幾分鐘」用 It takes only a few minutes to...；「登記器官捐贈」譯成 register as an organ donor；「最多可被用來拯救八條生命」用被動式 can be used to save as many as eight lives；兩個分句用 but 轉折。"
+          },
+          "2": {
+            "translation": "For those who have been waiting desperately for new organs, a donor's great generosity brings a new lease on life, which money cannot buy.",
+            "confidence": "medium",
+            "explanation_zh": "「苦等」用現在完成進行式 have been waiting desperately；「大愛」譯成 great generosity；「帶來重生」譯成 brings a new lease on life（也可說 gives them a second chance at life）；「這是金錢買不到的」用非限定關係子句 which money cannot buy。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PASS"
+            ],
+            "used_target_words": [
+              "register",
+              "organ",
+              "donation",
+              "minute",
+              "save"
+            ],
+            "within_accepted": false,
+            "closest_reference": 2,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "「登記器官捐贈只需幾分鐘」我自然寫成虛主詞 It takes only a few minutes to register as an organ donor，沒有用 NFSUBJ（label 寫動名詞片語當主詞）要的 Registering … takes …；第 1 部分 accepted 全部是動名詞主詞，沒有收 It takes … to register 的寫法，而這是中文「只需幾分鐘」最自然的對應之一，建議補入。",
+              "NFSUBJ 這個 code 在不同題組代表不同結構（有的是虛主詞 It…to VR，有的是動名詞當主詞），建議統一定義或拆成兩個 code。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "REL",
+              "NRREL"
+            ],
+            "used_target_words": [
+              "wait",
+              "organ",
+              "donor",
+              "generosity",
+              "life"
+            ],
+            "within_accepted": false,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "「帶來重生」我寫 brings a new lease on life（慣用語），第 3 部分 accepted 只有 brings them a new life／a second life／a second chance at life 等；「重生」的慣用譯法 a new lease on life、a rebirth 沒收，建議補入。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "register",
+              "organ",
+              "donation",
+              "minute",
+              "save"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PASS": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "wait",
+              "organ",
+              "donor",
+              "generosity",
+              "life"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "REL": true,
+              "NRREL": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 1 題盲譯沒有用到標的句型 ['NFSUBJ']：中文題目沒有自然引出這個句型（SPEC §5.7）",
+          "第 1 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義",
+          "第 2 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義"
+        ]
+      }
+    }
+  ],
+  "status": "rejected",
+  "status_reason": "blind_solver:A 未通過：第 1 題盲譯沒有用到標的句型 ['NFSUBJ']：中文題目沒有自然引出這個句型（SPEC §5.7）；第 1 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義；blind_solver:B 未通過：第 1 題盲譯沒有用到標的句型 ['NFSUBJ']：中文題目沒有自然引出這個句型（SPEC §5.7）；第 1 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義；第 2 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義；人工審核：第 1 句兩位盲譯都寫 It takes only a few minutes to register as an organ donor（就是本組 bonus 的寫法），NFSUBJ 卻只收動名詞主詞，第 1、2 部分沒收虛主詞寫法；第 2 句第 1 部分把文法正確的 For those people who are waiting for new organs 列為常見錯誤（those people who 是正確英文，學測 109 選文就有 For those people who were born without …），會誤扣分；第 3 部分沒收 a new lease on life。"
+}

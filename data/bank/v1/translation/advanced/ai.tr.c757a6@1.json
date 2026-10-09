@@ -1,0 +1,711 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.c757a6",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "advanced",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "老師兩年來一直用 3D 印表機，為那些覺得科學概念抽象的學生做模型。",
+        "options": null,
+        "answer": "For two years, teachers have been using 3D printers to make models for those who find scientific concepts abstract.",
+        "accepted_answers": [
+          "For the past two years, teachers have been using 3D printers to create models for students who find scientific concepts abstract.",
+          "In the past two years, teachers have been using 3D printers to build models for those students who think scientific concepts are too abstract."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "現在完成進行式",
+            "for those who（為那些…的人）"
+          ],
+          "topic": "3D 列印"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "親眼看到自己的設計變成模型，學生們對科學越來越有興趣。",
+        "options": null,
+        "answer": "Seeing their own designs turn into models, students are becoming more and more interested in science.",
+        "accepted_answers": [
+          "Watching their own designs become models, students have become more and more interested in science.",
+          "Having seen their own designs turned into models, the students are growing more and more interested in science."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "分詞構句",
+            "越來越…（more and more）"
+          ],
+          "topic": "3D 列印"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "3D 列印"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「兩年來一直用」是從兩年前持續到現在、而且還在進行，用現在完成進行式 have been using，時間寫 for two years（或 for the past two years）。「為那些…的學生做模型」中文把長修飾語放在名詞前面，英文改成 for those who …（those who＝…的人），who 子句說明是哪些人：those who find scientific concepts abstract（find + 受詞 + 形容詞＝覺得某事…）。「用 3D 印表機做模型」：use 3D printers to make models，不定詞表示用途。",
+          "evidence": [
+            "兩年來一直用",
+            "為那些覺得科學概念抽象的學生做模型"
+          ],
+          "strategy_zh": "「…來一直…」想 have been + V-ing + for／since；「那些…的人」先想 those who …。",
+          "hints": [
+            "切成四段：老師兩年來一直用／3D 印表機／為那些覺得科學概念抽象的學生／做模型",
+            "標的詞彙：printer（印表機）、model（模型）、scientific（科學的）、concept（概念）、abstract（抽象的）",
+            "句型框架：For + 時間, S + have been + V-ing … to VR … for those who + V …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "前半句「親眼看到自己的設計變成模型」沒有主詞，動作者就是後面的「學生們」，英文可以改成分詞構句 Seeing their own designs turn into models,（see + 受詞 + 原形動詞＝看到…變成…）；主要子句一定要以 students 當主詞，否則會變成懸垂分詞。「越來越有興趣」用 more and more interested，描述正在發生的變化可用 are becoming／are growing；人感到興趣用 interested in。",
+          "evidence": [
+            "親眼看到自己的設計變成模型",
+            "越來越有興趣"
+          ],
+          "strategy_zh": "兩個動作共用一個主詞、中間沒有連接詞時，可以把前一個動作改成 V-ing 分詞構句；「越來越…」想 more and more + adj.（或比較級 and 比較級）。",
+          "hints": [
+            "切成四段：親眼看到自己的設計／變成模型／學生們／對科學越來越有興趣",
+            "標的詞彙：see（看到）、design（設計）、model（模型）、student（學生）、interested（感興趣的）、science（科學）",
+            "句型框架：V-ing + O …, S + be becoming + more and more + adj. + in …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "For two years, teachers have been using 3D printers to make models for those who find scientific concepts abstract.",
+            "For the past two years, teachers have been using 3D printers to create models for students who find scientific concepts abstract.",
+            "In the past two years, teachers have been using 3D printers to build models for those students who think scientific concepts are too abstract."
+          ],
+          "target_words": [
+            {
+              "word": "scientific",
+              "zh": "科學的",
+              "alternatives": [
+                "science"
+              ]
+            },
+            {
+              "word": "concept",
+              "zh": "概念",
+              "alternatives": [
+                "idea"
+              ]
+            },
+            {
+              "word": "abstract",
+              "zh": "抽象的"
+            },
+            {
+              "word": "printer",
+              "zh": "印表機"
+            },
+            {
+              "word": "model",
+              "zh": "模型"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "REL",
+              "grammar_id": "gp-for-those-who",
+              "label_zh": "for those who …（為那些…的人）",
+              "frame": "… for those who + V …",
+              "zh_trigger": "為那些"
+            },
+            {
+              "code": "PERF",
+              "grammar_id": "gp-present-perfect-progressive",
+              "label_zh": "現在完成進行式（兩年來一直…）",
+              "frame": "For + 時間, S + have been + V-ing …",
+              "zh_trigger": "兩年來一直"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "老師兩年來一直用",
+              "accepted": [
+                "For two years, teachers have been using",
+                "For the past two years, teachers have been using",
+                "In the past two years, teachers have been using",
+                "Teachers have been using",
+                "For two years, teachers have used"
+              ],
+              "targets": [
+                "PERF"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Teachers have using",
+                  "right": "Teachers have been using",
+                  "explanation_zh": "現在完成進行式是 have been + V-ing，been 不能省略。"
+                },
+                {
+                  "wrong": "Teachers always use",
+                  "right": "For two years, teachers have been using",
+                  "explanation_zh": "「兩年來一直」從過去持續到現在，用現在完成進行式，並加 for two years。"
+                },
+                {
+                  "wrong": "Since two years, teachers have been using",
+                  "right": "For two years, teachers have been using",
+                  "explanation_zh": "「兩年來」是一段時間，用 for two years；since 後面接起點（since 2024）。"
+                }
+              ]
+            },
+            {
+              "zh": "3D 印表機",
+              "accepted": [
+                "3D printers",
+                "a 3D printer",
+                "3D printing machines"
+              ],
+              "targets": [
+                "printer"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "3D printer to make",
+                  "right": "3D printers to make",
+                  "explanation_zh": "printer 是可數名詞，單數前面要有 a；泛指時用複數 printers。"
+                }
+              ]
+            },
+            {
+              "zh": "為那些覺得科學概念抽象的學生",
+              "accepted": [
+                "for those who find scientific concepts abstract",
+                "for students who find scientific concepts abstract",
+                "for those students who think scientific concepts are too abstract",
+                "for those students who find scientific concepts abstract",
+                "for students who think scientific ideas are abstract",
+                "for those who find science concepts abstract"
+              ],
+              "targets": [
+                "REL",
+                "scientific",
+                "concept",
+                "abstract"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "for those find scientific concepts abstract",
+                  "right": "for those who find scientific concepts abstract",
+                  "explanation_zh": "those 後面要用關係代名詞 who 引導子句，說明是哪些人。"
+                },
+                {
+                  "wrong": "for those who feel scientific concepts abstract",
+                  "right": "for those who find scientific concepts abstract",
+                  "explanation_zh": "「覺得某事很…」用 find + 受詞 + 形容詞；feel 不能這樣接受詞補語。"
+                },
+                {
+                  "wrong": "for those who find scientific concepts abstraction",
+                  "right": "for those who find scientific concepts abstract",
+                  "explanation_zh": "受詞補語用形容詞 abstract；abstraction 是名詞。"
+                }
+              ]
+            },
+            {
+              "zh": "做模型",
+              "accepted": [
+                "to make models",
+                "to create models",
+                "to build models",
+                "to print models"
+              ],
+              "targets": [
+                "model"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "to do models",
+                  "right": "to make models",
+                  "explanation_zh": "「做模型」用 make／build／create，不用 do。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "tense_trigger",
+              "zh": "兩年來一直",
+              "literal_error": "Teachers always use 3D printers two years to make models for those who find scientific concepts abstract.",
+              "part": 1,
+              "explanation_zh": "「兩年來一直」從過去持續到現在而且仍在進行，用現在完成進行式 have been using，並加 for two years。"
+            },
+            {
+              "type": "prenominal_modifier",
+              "zh": "那些覺得科學概念抽象的學生",
+              "literal_error": "For two years, teachers have been using 3D printers to make models for those feel scientific concepts abstract students.",
+              "part": 3,
+              "explanation_zh": "「那些…的學生」的修飾語很長，英文要放到後面：those who find scientific concepts abstract。"
+            }
+          ],
+          "bonus": [],
+          "restructuring_zh": "「那些覺得科學概念抽象的學生」是長的前置修飾，英文改成 those who find scientific concepts abstract（those who…＝…的人；「…的＋名詞」改後位修飾）。"
+        },
+        "2": {
+          "references": [
+            "Seeing their own designs turn into models, students are becoming more and more interested in science.",
+            "Watching their own designs become models, students have become more and more interested in science.",
+            "Having seen their own designs turned into models, the students are growing more and more interested in science."
+          ],
+          "target_words": [
+            {
+              "word": "see",
+              "zh": "看到",
+              "alternatives": [
+                "watch"
+              ]
+            },
+            {
+              "word": "design",
+              "zh": "設計"
+            },
+            {
+              "word": "model",
+              "zh": "模型"
+            },
+            {
+              "word": "student",
+              "zh": "學生"
+            },
+            {
+              "word": "interested",
+              "zh": "感興趣的"
+            },
+            {
+              "word": "science",
+              "zh": "科學"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PART",
+              "grammar_id": "gp-participle-clause",
+              "label_zh": "分詞構句（Seeing …, S + V）",
+              "frame": "V-ing …, S + V …（分詞的意義主詞＝主要子句主詞）",
+              "zh_trigger": "親眼看到自己的設計變成模型"
+            },
+            {
+              "code": "COMP",
+              "grammar_id": "gp-more-and-more",
+              "label_zh": "越來越…（more and more + adj.）",
+              "frame": "S + be becoming + more and more + adj.",
+              "zh_trigger": "越來越有興趣"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "親眼看到自己的設計",
+              "accepted": [
+                "Seeing their own designs",
+                "Watching their own designs",
+                "Having seen their own designs",
+                "Seeing their designs",
+                "Watching their designs"
+              ],
+              "targets": [
+                "PART",
+                "see",
+                "design"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "See their own designs",
+                  "right": "Seeing their own designs",
+                  "explanation_zh": "兩個動作共用主詞 students，前半句改成分詞構句 Seeing …；用原形動詞開頭會變成祈使句。"
+                },
+                {
+                  "wrong": "Seeing their own design",
+                  "right": "Seeing their own designs",
+                  "explanation_zh": "學生們各有作品，design 用複數。"
+                }
+              ]
+            },
+            {
+              "zh": "變成模型",
+              "accepted": [
+                "turn into models",
+                "become models",
+                "turned into models",
+                "turn into real models",
+                "become real models",
+                "being made into models"
+              ],
+              "targets": [
+                "model"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "become to models",
+                  "right": "become models",
+                  "explanation_zh": "become 後面直接接名詞，不加 to；也可以用 turn into。"
+                }
+              ]
+            },
+            {
+              "zh": "學生們",
+              "accepted": [
+                "students",
+                "the students"
+              ],
+              "targets": [
+                "student"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "science becomes more and more interesting to students",
+                  "right": "students are becoming more and more interested in science",
+                  "explanation_zh": "分詞構句的主詞要和主要子句的主詞相同；看到設計的是學生，主要子句要以 students 開頭，否則會變成懸垂分詞。"
+                }
+              ]
+            },
+            {
+              "zh": "對科學越來越有興趣",
+              "accepted": [
+                "are becoming more and more interested in science",
+                "have become more and more interested in science",
+                "are growing more and more interested in science",
+                "become more and more interested in science",
+                "are getting more and more interested in science",
+                "are more and more interested in science"
+              ],
+              "targets": [
+                "COMP",
+                "interested",
+                "science"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "are becoming more and more interesting in science",
+                  "right": "are becoming more and more interested in science",
+                  "explanation_zh": "人「感興趣」用 interested；interesting 是「令人感興趣的」。"
+                },
+                {
+                  "wrong": "are becoming more and more interested on science",
+                  "right": "are becoming more and more interested in science",
+                  "explanation_zh": "「對…有興趣」是 be interested in。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "subjectless",
+              "zh": "親眼看到自己的設計變成模型",
+              "literal_error": "See their own designs become models, students more and more interested in science.",
+              "part": 1,
+              "explanation_zh": "前半句沒有主詞，用原形動詞開頭會變成祈使句；英文要改成分詞構句 Seeing …，並讓主要子句的主詞是 students。"
+            },
+            {
+              "type": "word_form",
+              "zh": "越來越有興趣",
+              "literal_error": "Seeing their own designs turn into models, students are becoming more and more interesting in science.",
+              "part": 4,
+              "explanation_zh": "人「感到有興趣」用 interested in；interesting 是「令人感興趣的」。"
+            }
+          ],
+          "bonus": [],
+          "restructuring_zh": "前半句沒有主詞、和後半句共用主詞「學生們」，英文改成分詞構句 Seeing their own designs turn into models, students …（分詞的意義主詞必須是 students）。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-advanced-04",
+    "lot": "translation-advanced-04",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "4c825c0a94fac9dc54e263ee5e16ad1f93b574fa99d23ce45a0c738ed355d865",
+    "spec_id": "translation-advanced@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 1,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 1,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T13:07:07Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "fail",
+      "created_at": "2026-10-09T13:07:07Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "For two years, the teacher has been using a 3D printer to make models for those students who find scientific concepts abstract.",
+            "confidence": "high",
+            "explanation_zh": "「兩年來一直」用 for two years 加現在完成進行式；「那些覺得…的學生」用 those students who；「覺得科學概念抽象」用 find + 受詞 + 形容詞。"
+          },
+          "2": {
+            "translation": "Seeing their own designs turn into models with their own eyes, the students have become more and more interested in science.",
+            "confidence": "medium",
+            "explanation_zh": "「親眼看到…，學生們…」用分詞構句 Seeing…，邏輯主詞是 the students；「看到設計變成模型」用感官動詞 see + O + 原形動詞；「越來越有興趣」用 more and more interested，配現在完成式表逐漸改變。own 出現兩次稍嫌重複，所以信心給 medium。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "REL",
+              "PERF"
+            ],
+            "used_target_words": [
+              "scientific",
+              "concept",
+              "abstract",
+              "printer",
+              "model"
+            ],
+            "within_accepted": false,
+            "closest_reference": 0,
+            "reference_check": "warn",
+            "parts_check": "warn",
+            "issues_zh": [
+              "中文「老師兩年來一直用 3D 印表機」的「老師」沒有標示單複數，讀成一位特定的老師（the teacher has been using a 3D printer）至少和泛指的 teachers 一樣自然（第 2 句又接「學生們」，像在描述某一班的情形）；但三個參考譯文和第 1 部分的 accepted 全部只收複數 teachers have been using，我的盲譯 For two years, the teacher has been using … 因此落在可接受寫法外。",
+              "建議第 1 部分 accepted 補 For two years, the teacher has been using／A teacher has been using …，並至少一個參考譯文改用單數；或把中文改成「老師們」以消除歧義。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "PART",
+              "COMP"
+            ],
+            "used_target_words": [
+              "see",
+              "design",
+              "model",
+              "student",
+              "interested",
+              "science"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "warn",
+            "parts_check": "pass",
+            "issues_zh": [
+              "「親眼」三個參考譯文和第 1 部分 accepted 都沒有譯出（只寫 Seeing／Watching）；建議至少一個參考譯文與 accepted 補上 with their own eyes／firsthand（例如 Seeing their own designs turn into models with their own eyes, …），免得評分時把譯出「親眼」的學生當成多寫，或讓人以為漏譯也不扣分。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "scientific",
+              "concept",
+              "abstract",
+              "printer",
+              "model"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "REL": true,
+              "PERF": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "see",
+              "design",
+              "model",
+              "student",
+              "interested",
+              "science"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PART": true,
+              "COMP": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 1 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義",
+          "第 1 題驗證者對參考譯文有意見（warn）：中文「老師兩年來一直用 3D 印表機」的「老師」沒有標示單複數，讀成一位特定的老師（the teacher has been using a 3D printer）至少和泛指的 teachers 一樣自然（第 2 句又接「學生們」，像在描述",
+          "第 1 題驗證者對4 部分切分有意見（warn）：中文「老師兩年來一直用 3D 印表機」的「老師」沒有標示單複數，讀成一位特定的老師（the teacher has been using a 3D printer）至少和泛指的 teachers 一樣自然（第 2 句又接「學生們」，像在描述",
+          "第 2 題驗證者對參考譯文有意見（warn）：「親眼」三個參考譯文和第 1 部分 accepted 都沒有譯出（只寫 Seeing／Watching）；建議至少一個參考譯文與 accepted 補上 with their own eyes／firsthand（例如 Seeing the"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "warn",
+      "created_at": "2026-10-09T12:50:33Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "For two years, the teacher has been using a 3D printer to make models for students who find scientific concepts abstract.",
+            "confidence": "high",
+            "explanation_zh": "「兩年來一直」用 for two years 搭配現在完成進行式 has been using；「為……做模型」用不定詞表目的；「覺得科學概念抽象的學生」用 students who find scientific concepts abstract。"
+          },
+          "2": {
+            "translation": "Seeing their own designs turn into models with their own eyes, the students are becoming more and more interested in science.",
+            "confidence": "medium",
+            "explanation_zh": "「親眼看到」用分詞構句 Seeing ... with their own eyes，感官動詞 see + 受詞 + 原形動詞 turn；「越來越有興趣」用 become more and more interested in。分詞構句的主詞與主句主詞一致（the students）。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "REL",
+              "PERF"
+            ],
+            "used_target_words": [
+              "scientific",
+              "concept",
+              "abstract",
+              "printer",
+              "model"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "「老師」沒有單複數，我譯成單數 the teacher has been using，但第 1 部分 accepted 與三句參考譯文都只有複數 teachers have been using，沒有單數寫法（has been）；建議補 the teacher has been using。另外句型 REL（for those who）我用 for students who find …，accepted 第 3 部分有收，應該算有用到。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "PART",
+              "COMP"
+            ],
+            "used_target_words": [
+              "see",
+              "design",
+              "model",
+              "student",
+              "interested",
+              "science"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "scientific",
+              "concept",
+              "abstract",
+              "printer",
+              "model"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "REL": true,
+              "PERF": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "see",
+              "design",
+              "model",
+              "student",
+              "interested",
+              "science"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PART": true,
+              "COMP": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 1 題驗證者對4 部分切分有意見（warn）：「老師」沒有單複數，我譯成單數 the teacher has been using，但第 1 部分 accepted 與三句參考譯文都只有複數 teachers have been using，沒有單數寫法（has been）；建議補 t"
+        ]
+      }
+    }
+  ],
+  "status": "rejected",
+  "status_reason": "blind_solver:A 未通過：第 1 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義；第 1 題驗證者對參考譯文有意見（warn）：中文「老師兩年來一直用 3D 印表機」的「老師」沒有標示單複數，讀成一位特定的老師（the teacher has been using a 3D printer）至少和泛指的 teachers 一樣自然（第 2 句又接「學生們」，像在描述；第 1 題驗證者對4 部分切分有意見（warn）：中文「老師兩年來一直用 3D 印表機」的「老師」沒有標示單複數，讀成一位特定的老師（the teacher has been using a 3D printer）至少和泛指的 teachers 一樣自然（第 2 句又接「學生們」，像在描述…；判定者人工審查（第 1 輪）：同意退回。①第 1 題「老師」沒有標示單複數，兩位驗證者都獨立譯成單數 the teacher has been using a 3D printer（第 2 句的「學生們」讓它讀起來像在描述某一位老師的班級），但三個參考譯文與第 1 部分 accepted 只收複數 teachers have been using；第 1 部分又收了沒有時間詞的 Teachers have been using，和 common_errors 要求加 for two years 的說法不一致（「兩年來」漏譯不扣分）。②第 2 題「親眼」三個參考譯文和第 1 部分 accepted 都沒有譯出，兩位驗證者都寫了 with their own eyes，規準沒有交代譯出或漏譯怎麼算。重生時請在中文寫明「老師們」或「這位老師」（或補進單數的參考譯文與 accepted），第 1 部分拿掉不含「兩年來」的寫法，第 2 題至少一個參考譯文與 accepted 譯出「親眼」（with their own eyes／firsthand）。"
+}

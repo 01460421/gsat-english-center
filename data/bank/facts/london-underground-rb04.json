@@ -1,0 +1,171 @@
+{
+  "schema": "gsat-bank-facts/v1",
+  "id": "london-underground-rb04",
+  "title": "The Metropolitan Railway (1863): how London built the world's first underground railway",
+  "sdgs": [
+    11
+  ],
+  "created_on": "2026-10-09",
+  "created_by": "claude-opus-5-5",
+  "sources": [
+    {
+      "id": "s1",
+      "publisher": "Transport for London (TfL)",
+      "title": "Tube 160 heritage leaflet (160th anniversary of public service on the world's first underground railway)",
+      "url": "https://foi.tfl.gov.uk/FOI-0773-2324/TUBE160%20Heritage%20Leaflet.pdf",
+      "accessed": "2026-10-09",
+      "license": "TfL copyright (all rights reserved)",
+      "use": "fact_only",
+      "note": "2023 年 TfL 與倫敦交通博物館的 160 週年傳單"
+    },
+    {
+      "id": "s2",
+      "publisher": "The National Archives (UK)",
+      "title": "Railways (Explore by topic: transport and travel)",
+      "url": "https://www.nationalarchives.gov.uk/explore-the-collection/explore-by-topic/transport-and-travel/railways/",
+      "accessed": "2026-10-09",
+      "license": "Crown copyright (Open Government Licence v3.0)",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s3",
+      "publisher": "Scientific American",
+      "title": "Scientific American's Owner Built the First New York Subway [Excerpt]",
+      "url": "https://www.scientificamerican.com/article/scientific-americans-owner-built-the-first-new-york-subway-excerpt/",
+      "accessed": "2026-10-09",
+      "license": "all-rights-reserved",
+      "use": "fact_only",
+      "note": "只取倫敦大都會鐵路的開通日期與蒸汽煙塵兩項"
+    },
+    {
+      "id": "s4",
+      "publisher": "ABC (Australian Broadcasting Corporation), Rear Vision",
+      "title": "The London Underground",
+      "url": "https://www.abc.net.au/listen/programs/rearvision/the-london-underground/4499020",
+      "accessed": "2026-10-09",
+      "license": "all-rights-reserved",
+      "use": "fact_only",
+      "note": "首日人數此來源寫約 30,000，與 TfL、英國國家檔案館的約 40,000 不同；本事實單採用約 40,000"
+    }
+  ],
+  "facts": [
+    {
+      "id": "f1",
+      "text": "In the middle of the 1800s, the narrow old streets of central London were badly crowded with horse-drawn traffic.",
+      "source_ids": ["s4"],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f2",
+      "text": "London's mainline railway stations brought large numbers of travelers into the city, and moving between these stations added to the crowding on the streets.",
+      "source_ids": ["s4"],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f3",
+      "text": "Charles Pearson pushed the idea of running trains under the ground after getting stuck in heavy street traffic himself.",
+      "source_ids": ["s4"],
+      "kind": "person"
+    },
+    {
+      "id": "f4",
+      "text": "The first line was built by the cut-and-cover method: workers dug a large trench, laid the railway inside it, and then covered it over.",
+      "source_ids": ["s4"],
+      "kind": "definition"
+    },
+    {
+      "id": "f5",
+      "text": "Builders preferred to dig the trench under an existing road, so that fewer houses had to be knocked down.",
+      "source_ids": ["s4"],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f6",
+      "text": "Cut and cover was a rough but fast way to build, and it caused years of disruption in central London.",
+      "source_ids": ["s4"],
+      "kind": "other"
+    },
+    {
+      "id": "f7",
+      "text": "The Metropolitan Railway, the first underground railway in the world, had a formal opening on 9 January 1863 and opened to the public on 10 January 1863.",
+      "source_ids": ["s1", "s2", "s3"],
+      "kind": "date"
+    },
+    {
+      "id": "f18",
+      "text": "About 650 important guests attended the formal opening of the line, which included a banquet at Farringdon station.",
+      "source_ids": ["s2"],
+      "kind": "number"
+    },
+    {
+      "id": "f8",
+      "text": "The first line ran between Paddington (then called Bishop's Road) and Farringdon Street.",
+      "source_ids": ["s1", "s2"],
+      "kind": "place"
+    },
+    {
+      "id": "f9",
+      "text": "The first line had only seven stops, and all seven are still in use today.",
+      "source_ids": ["s1"],
+      "kind": "number"
+    },
+    {
+      "id": "f10",
+      "text": "On the first day of public service, around 40,000 passengers rode the new railway.",
+      "source_ids": ["s1", "s2"],
+      "kind": "number"
+    },
+    {
+      "id": "f11",
+      "text": "Passengers sat in first-class, second-class, or third-class compartments, and the carriages were pulled by steam engines.",
+      "source_ids": ["s1", "s3"],
+      "kind": "other"
+    },
+    {
+      "id": "f12",
+      "text": "Smoke, soot, and steam from the engines filled the tunnels from the very first day, which made the ride unpleasant and added to the confusion on opening day.",
+      "source_ids": ["s2", "s3"],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f13",
+      "text": "A poster of rules for passengers did not allow smoking or riding on the roof of the carriages.",
+      "source_ids": ["s2"],
+      "kind": "other"
+    },
+    {
+      "id": "f14",
+      "text": "Dogs were not allowed to travel in the carriages with passengers; they were carried separately, and their owners had to pay for this.",
+      "source_ids": ["s2"],
+      "kind": "other"
+    },
+    {
+      "id": "f15",
+      "text": "In 1890, the City and South London Railway opened as the world's first deep-level electric tube railway.",
+      "source_ids": ["s1"],
+      "kind": "date"
+    },
+    {
+      "id": "f16",
+      "text": "In 1961, steam locomotives stopped pulling passenger trains on London's transport network.",
+      "source_ids": ["s1"],
+      "kind": "date"
+    },
+    {
+      "id": "f19",
+      "text": "In 2023, Transport for London marked 160 years of public service on the line; by 2026 the first underground railway had been open for more than 160 years.",
+      "source_ids": ["s1"],
+      "kind": "number",
+      "note": "衍生數字：2023 年為 160 週年"
+    },
+    {
+      "id": "f17",
+      "text": "In 2023, the London Underground network had 11 lines, 272 stations, and about 250 miles of track.",
+      "source_ids": ["s1"],
+      "kind": "number"
+    }
+  ],
+  "datasets": [],
+  "notes": "首日乘客數各來源不一（約 30,000～40,000），文章只用 TfL 與英國國家檔案館都寫的「約 40,000」。"
+}

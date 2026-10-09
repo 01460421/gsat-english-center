@@ -1,0 +1,785 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.72dd6c",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "top",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "在創客空間（makerspace）裡，昂貴的設備由所有會員共用，這讓人人都有機會把創意變成發明。",
+        "options": null,
+        "answer": "In a makerspace, expensive equipment is shared by all members, which gives everyone a chance to turn creative ideas into inventions.",
+        "accepted_answers": [
+          "In a makerspace, expensive equipment is shared by all the members, which gives everybody an opportunity to turn their creativity into inventions.",
+          "In a makerspace, expensive machines and tools are shared by all members, which gives everyone a chance to turn their creative ideas into inventions."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "被動語態（由…共用）",
+            "非限定關係子句（, which gives …）"
+          ],
+          "topic": "創客空間"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "它們還開設免費課程，讓那些買不起工具的人也能探索興趣、學習新技能。",
+        "options": null,
+        "answer": "They also offer free classes, allowing those who can't afford their own tools to explore their interests and learn new skills.",
+        "accepted_answers": [
+          "They also run free courses, enabling those who cannot afford tools of their own to explore their interests and pick up new skills.",
+          "They also provide free lessons, making it possible for those who cannot afford tools to explore their interests and learn new skills."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "句尾分詞片語表結果（, allowing …）",
+            "those who …（那些…的人）"
+          ],
+          "topic": "創客空間"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "創客空間"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「昂貴的設備由所有會員共用」設備是承受動作的一方，英文用被動 is shared by all members；equipment 是不可數名詞，動詞用單數 is。「這讓人人都有機會…」的「這」指前面整件事（設備共用），用非限定關係子句 , which gives everyone a chance to V。「把創意變成發明」用 turn A into B，「創意」寫成名詞 creative ideas 或 creativity。",
+          "evidence": [
+            "昂貴的設備由所有會員共用",
+            "這讓人人都有機會把創意變成發明"
+          ],
+          "strategy_zh": "「A 由 B＋V」→ A + be + p.p. + by B；「…，這讓人有機會…」→ , which gives + 人 + a chance to V。",
+          "hints": [
+            "切成四段：在創客空間裡，昂貴的設備／由所有會員共用／這讓人人都有機會／把創意變成發明",
+            "標的詞彙：expensive（昂貴的）、equipment（設備）、share（共用）、member（會員）、chance（機會）、turn … into（把…變成）、creative（有創意的）、invention（發明）",
+            "句型框架：In a makerspace, S + is shared by …, which gives everyone a chance to turn A into B"
+          ]
+        },
+        "2": {
+          "explanation_zh": "主詞「它們」指上一句的創客空間。「開設免費課程」用 offer／run free classes。「讓…也能…」是前面整件事帶來的結果，用句尾分詞 , allowing + 受詞 + to V（也可用 enabling、making it possible for … to V）。「那些買不起工具的人」用 those who cannot afford tools（those who＝那些…的人），「買不起」是 cannot afford。",
+          "evidence": [
+            "讓那些買不起工具的人",
+            "探索興趣、學習新技能"
+          ],
+          "strategy_zh": "「…，讓／使得＋人＋V」→ , allowing + 人 + to V；「那些…的人」→ those who + V。",
+          "hints": [
+            "切成四段：它們還開設免費課程／讓那些買不起工具的人／也能探索興趣／學習新技能",
+            "標的詞彙：offer（開設）、free（免費的）、class（課程）、afford（買得起）、tool（工具）、explore（探索）、interest（興趣）、learn（學習）、skill（技能）",
+            "句型框架：S + also offer …, allowing those who + V … + to V … and V …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "In a makerspace, expensive equipment is shared by all members, which gives everyone a chance to turn creative ideas into inventions.",
+            "In a makerspace, expensive equipment is shared by all the members, which gives everybody an opportunity to turn their creativity into inventions.",
+            "In a makerspace, expensive machines and tools are shared by all members, which gives everyone a chance to turn their creative ideas into inventions."
+          ],
+          "target_words": [
+            {
+              "word": "expensive",
+              "zh": "昂貴的"
+            },
+            {
+              "word": "equipment",
+              "zh": "設備",
+              "alternatives": [
+                "machine",
+                "tool"
+              ]
+            },
+            {
+              "word": "share",
+              "zh": "共用"
+            },
+            {
+              "word": "member",
+              "zh": "會員"
+            },
+            {
+              "word": "chance",
+              "zh": "機會",
+              "alternatives": [
+                "opportunity"
+              ]
+            },
+            {
+              "word": "turn",
+              "zh": "把…變成"
+            },
+            {
+              "word": "creative",
+              "zh": "有創意的",
+              "alternatives": [
+                "creativity"
+              ]
+            },
+            {
+              "word": "invention",
+              "zh": "發明"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PASS",
+              "grammar_id": "gp-passive",
+              "label_zh": "被動語態（由…共用）",
+              "frame": "S + be + p.p. + by …",
+              "zh_trigger": "由所有會員共用"
+            },
+            {
+              "code": "NRREL",
+              "grammar_id": "gp-nonrestrictive",
+              "label_zh": "非限定關係子句：which 指前面整句（這讓…）",
+              "frame": "S + V …, which gives + O + a chance to V …",
+              "zh_trigger": "這讓人人都有機會"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "在創客空間（makerspace）裡，昂貴的設備",
+              "accepted": [
+                "In a makerspace, expensive equipment",
+                "In a makerspace, expensive machines and tools",
+                "In makerspaces, expensive equipment"
+              ],
+              "targets": [
+                "expensive",
+                "equipment"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "In a makerspace, expensive equipments",
+                  "right": "In a makerspace, expensive equipment",
+                  "explanation_zh": "equipment（設備）不可數，沒有複數 equipments。"
+                },
+                {
+                  "wrong": "In makerspace, expensive equipment",
+                  "right": "In a makerspace, expensive equipment",
+                  "explanation_zh": "makerspace 是可數名詞，單數要加 a（或用複數 makerspaces）。"
+                }
+              ]
+            },
+            {
+              "zh": "由所有會員共用",
+              "accepted": [
+                "is shared by all members",
+                "is shared by all the members",
+                "are shared by all members",
+                "is shared among all members"
+              ],
+              "targets": [
+                "PASS",
+                "share",
+                "member"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "is share by all members",
+                  "right": "is shared by all members",
+                  "explanation_zh": "被動式是 be + 過去分詞 shared。"
+                },
+                {
+                  "wrong": "expensive equipment are shared by all members",
+                  "right": "expensive equipment is shared by all members",
+                  "explanation_zh": "equipment 不可數，be 動詞用單數 is。"
+                }
+              ]
+            },
+            {
+              "zh": "這讓人人都有機會",
+              "accepted": [
+                "which gives everyone a chance",
+                "which gives everybody an opportunity",
+                "which gives everyone the chance",
+                "which allows everyone"
+              ],
+              "targets": [
+                "NRREL",
+                "chance"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "members, this gives everyone a chance",
+                  "right": "members, which gives everyone a chance",
+                  "explanation_zh": "「這讓…」指前面整件事，用非限定關係子句 which；用 this 會造成逗號連接句。"
+                },
+                {
+                  "wrong": "which gives everyone chance",
+                  "right": "which gives everyone a chance",
+                  "explanation_zh": "chance 是可數名詞，單數要加 a。"
+                }
+              ]
+            },
+            {
+              "zh": "把創意變成發明",
+              "accepted": [
+                "to turn creative ideas into inventions",
+                "to turn their creativity into inventions",
+                "to turn their creative ideas into inventions",
+                "to turn their ideas into inventions"
+              ],
+              "targets": [
+                "turn",
+                "creative",
+                "invention"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "to turn creative ideas become inventions",
+                  "right": "to turn creative ideas into inventions",
+                  "explanation_zh": "「把 A 變成 B」用 turn A into B，不要再加 become。"
+                },
+                {
+                  "wrong": "to turn creative ideas into invents",
+                  "right": "to turn creative ideas into inventions",
+                  "explanation_zh": "invent 是動詞，「發明（物）」的名詞是 invention。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "word_form",
+              "zh": "由所有會員共用",
+              "literal_error": "expensive equipment shares by all members",
+              "part": 2,
+              "explanation_zh": "設備是「被」大家共用，英文用被動 is shared by …；equipment 不可數，be 動詞用 is。"
+            },
+            {
+              "type": "abstract_nominal",
+              "zh": "把創意變成發明",
+              "literal_error": "to make creative become inventions",
+              "part": 4,
+              "explanation_zh": "「創意」在這裡是名詞（creative ideas／creativity），creative 單獨是形容詞；「把 A 變成 B」用 turn A into B。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "Because costly equipment is pooled among members, a makerspace lowers the barrier to invention, letting anyone turn a creative spark into something real.",
+              "grammar_id": "gp-participle-result",
+              "explanation_zh": "pool（集中共用）、lower the barrier to（降低…的門檻）、a creative spark（創意火花）都是進階搭配；句尾分詞 letting … 表結果。這是加分寫法。"
+            }
+          ],
+          "restructuring_zh": "「由所有會員共用」中文沒有「被」，英文要改成被動 is shared by all members；「這讓人人都有機會…」的「這」指前面整件事，用 , which gives everyone a chance to …。"
+        },
+        "2": {
+          "references": [
+            "They also offer free classes, allowing those who can't afford their own tools to explore their interests and learn new skills.",
+            "They also run free courses, enabling those who cannot afford tools of their own to explore their interests and pick up new skills.",
+            "They also provide free lessons, making it possible for those who cannot afford tools to explore their interests and learn new skills."
+          ],
+          "target_words": [
+            {
+              "word": "offer",
+              "zh": "開設",
+              "alternatives": [
+                "run",
+                "provide"
+              ]
+            },
+            {
+              "word": "free",
+              "zh": "免費的"
+            },
+            {
+              "word": "class",
+              "zh": "課程",
+              "alternatives": [
+                "course",
+                "lesson"
+              ]
+            },
+            {
+              "word": "afford",
+              "zh": "買得起"
+            },
+            {
+              "word": "tool",
+              "zh": "工具"
+            },
+            {
+              "word": "explore",
+              "zh": "探索"
+            },
+            {
+              "word": "interest",
+              "zh": "興趣"
+            },
+            {
+              "word": "learn",
+              "zh": "學習",
+              "alternatives": [
+                "pick up"
+              ]
+            },
+            {
+              "word": "skill",
+              "zh": "技能"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PART",
+              "grammar_id": "gp-participle-result",
+              "label_zh": "句尾分詞片語表結果（讓…）",
+              "frame": "S + V …, allowing + O + to V …",
+              "zh_trigger": "讓那些買不起工具的人"
+            },
+            {
+              "code": "REL",
+              "grammar_id": "gp-for-those-who",
+              "label_zh": "those who …（那些…的人）",
+              "frame": "… those who + V …",
+              "zh_trigger": "那些買不起工具的人"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "它們還開設免費課程",
+              "accepted": [
+                "They also offer free classes",
+                "They also run free courses",
+                "They also provide free lessons",
+                "They also offer free courses"
+              ],
+              "targets": [
+                "offer",
+                "free",
+                "class"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "They also open free classes",
+                  "right": "They also offer free classes",
+                  "explanation_zh": "「開設課程」英文說 offer／run classes；open classes 是逐字直譯。"
+                },
+                {
+                  "wrong": "They also offer free class",
+                  "right": "They also offer free classes",
+                  "explanation_zh": "課程不只一堂，用複數 classes。"
+                }
+              ]
+            },
+            {
+              "zh": "讓那些買不起工具的人",
+              "accepted": [
+                "allowing those who can't afford their own tools",
+                "allowing those who cannot afford their own tools",
+                "allowing those who cannot afford tools",
+                "enabling those who cannot afford tools of their own",
+                "making it possible for those who cannot afford tools"
+              ],
+              "targets": [
+                "PART",
+                "REL",
+                "afford",
+                "tool"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "free classes, let those who cannot afford",
+                  "right": "free classes, allowing those who cannot afford",
+                  "explanation_zh": "前面已有完整句子，「讓…」要變成句尾分詞 allowing（表結果），不能在逗號後面直接接原形動詞 let。"
+                },
+                {
+                  "wrong": "allowing those who cannot buy tools",
+                  "right": "allowing those who cannot afford tools",
+                  "explanation_zh": "「買不起」是錢不夠，英文用 cannot afford；cannot buy 只是「不能買」，語意不準確。"
+                }
+              ]
+            },
+            {
+              "zh": "也能探索興趣",
+              "accepted": [
+                "to explore their interests",
+                "to explore what interests them",
+                "to discover their interests"
+              ],
+              "targets": [
+                "explore",
+                "interest"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "to exploring their interests",
+                  "right": "to explore their interests",
+                  "explanation_zh": "allow + 受詞 + to + 原形動詞。"
+                },
+                {
+                  "wrong": "to explore their interest things",
+                  "right": "to explore their interests",
+                  "explanation_zh": "「興趣」是名詞 interests，後面不必再加 things。"
+                }
+              ]
+            },
+            {
+              "zh": "學習新技能",
+              "accepted": [
+                "learn new skills",
+                "pick up new skills"
+              ],
+              "targets": [
+                "learn",
+                "skill"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "learn new skill",
+                  "right": "learn new skills",
+                  "explanation_zh": "skill 是可數名詞，「新技能」泛指時用複數 skills。"
+                },
+                {
+                  "wrong": "study new skills",
+                  "right": "learn new skills",
+                  "explanation_zh": "「學習技能」英文搭配用 learn／pick up；study 多用在學科。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "word_form",
+              "zh": "讓那些買不起工具的人",
+              "literal_error": "They also offer free classes, let those who cannot afford tools …",
+              "part": 2,
+              "explanation_zh": "「讓…」承接前面整句、沒有新主詞，英文不能在逗號後面直接接 let（變成兩個動詞）；用句尾分詞 allowing …，或改成 so that … 子句。"
+            },
+            {
+              "type": "collocation",
+              "zh": "開設免費課程",
+              "literal_error": "They also open free classes",
+              "part": 1,
+              "explanation_zh": "「開設課程」英文說 offer／run／provide classes；open classes 是逐字直譯。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "They also run free workshops, opening the door for those who could never afford such tools to discover new passions and skills.",
+              "grammar_id": "gp-participle-result",
+              "explanation_zh": "opening the door for …（為…打開大門）是比喻用法；could never afford 語氣更強。這是加分寫法。"
+            }
+          ]
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ac-V-3",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-top-05",
+    "lot": "translation-top-05",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "1423e68b58216cafb46e710ae1065ce2ef47f637e82f416d8ddb06bd091160ba",
+    "spec_id": "translation-top@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 1,
+    "sentences": 1,
+    "avg_sentence_length": 1.0,
+    "denominator": 1,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 1.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {
+      "off": 1
+    },
+    "offlist_words": [
+      "makerspace"
+    ],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T14:05:36Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T13:22:48Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "In a makerspace, expensive equipment is shared by all the members, which gives everyone a chance to turn their ideas into inventions.",
+            "confidence": "high",
+            "explanation_zh": "「由所有會員共用」照中文用被動 is shared by all the members；「這讓人人都有機會」指前面整件事，用非限定關係子句 which gives everyone a chance to；「把創意變成發明」用 turn…into。"
+          },
+          "2": {
+            "translation": "They also offer free courses, allowing even those who cannot afford tools to explore their interests and learn new skills.",
+            "confidence": "high",
+            "explanation_zh": "「開設免費課程」用 offer free courses（也可 classes）；「讓…也能」是結果，用分詞 allowing…to；「那些買不起工具的人」用 those who cannot afford tools；「也」用 even 表示連這些人都能；「探索興趣、學習新技能」兩個原形動詞並列。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PASS",
+              "NRREL"
+            ],
+            "used_target_words": [
+              "expensive",
+              "equipment",
+              "share",
+              "member",
+              "chance",
+              "turn",
+              "invention"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PART",
+              "REL"
+            ],
+            "used_target_words": [
+              "offer",
+              "free",
+              "class",
+              "afford",
+              "tool",
+              "explore",
+              "interest",
+              "learn",
+              "skill"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "expensive",
+              "equipment",
+              "share",
+              "member",
+              "chance",
+              "turn",
+              "invention"
+            ],
+            "target_hit_rate": 0.875,
+            "patterns_detected": {
+              "PASS": true,
+              "NRREL": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "offer",
+              "free",
+              "class",
+              "afford",
+              "tool",
+              "explore",
+              "interest",
+              "learn",
+              "skill"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PART": true,
+              "REL": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "fail",
+      "created_at": "2026-10-09T13:30:00Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "In makerspaces, expensive equipment is shared by all the members, which gives everyone a chance to turn their ideas into inventions.",
+            "confidence": "high",
+            "explanation_zh": "「由所有會員共用」用被動 is shared by；下一句的「它們」指創客空間，所以這裡用複數 makerspaces 較一致；「這讓人人都有機會」用 which gives everyone a chance to ...；「把創意變成發明」用 turn ... into ...。"
+          },
+          "2": {
+            "translation": "They also offer free classes, which allow people who cannot afford tools to explore their interests and learn new skills, too.",
+            "confidence": "high",
+            "explanation_zh": "「它們」指創客空間，用 They；「開設」用 offer；「買不起」用 cannot afford；「讓……也能」用 which allow ... to ..., too；「探索興趣、學習新技能」兩個動詞並列。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PASS",
+              "NRREL"
+            ],
+            "used_target_words": [
+              "expensive",
+              "equipment",
+              "share",
+              "member",
+              "chance",
+              "turn",
+              "invention"
+            ],
+            "within_accepted": true,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [],
+            "closest_reference": 0
+          },
+          "2": {
+            "used_patterns": [
+              "REL"
+            ],
+            "used_target_words": [
+              "offer",
+              "free",
+              "class",
+              "afford",
+              "tool",
+              "explore",
+              "interest",
+              "learn",
+              "skill"
+            ],
+            "within_accepted": false,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "「讓…」我自然寫成 which allow people who cannot afford tools to …（非限定 which 子句），沒有用句尾分詞 allowing；中文不會強迫分詞片語，標的句型 PART 在這句不一定引得出來。",
+              "第 2 部分 accepted 只列 allowing／enabling／making it possible for 加 those who，缺少 which allow… 或 so that… 這類同樣正確的寫法；我也是寫 people who 而不是 those who。"
+            ],
+            "closest_reference": 0
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "expensive",
+              "equipment",
+              "share",
+              "member",
+              "chance",
+              "turn",
+              "invention"
+            ],
+            "target_hit_rate": 0.875,
+            "patterns_detected": {
+              "PASS": true,
+              "NRREL": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "offer",
+              "free",
+              "class",
+              "afford",
+              "tool",
+              "explore",
+              "interest",
+              "learn",
+              "skill"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "REL": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 2 題盲譯沒有用到標的句型 ['PART']：中文題目沒有自然引出這個句型（SPEC §5.7）",
+          "第 2 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義"
+        ]
+      }
+    }
+  ],
+  "status": "rejected",
+  "status_reason": "blind_solver:B 未通過：第 2 題盲譯沒有用到標的句型 ['PART']：中文題目沒有自然引出這個句型（SPEC §5.7）；第 2 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義；判定者補充：第 2 句「讓那些買不起工具的人…」沒有唯一引出句尾分詞（PART），盲譯 B 自然寫成 , which allow people who cannot afford tools to …；第 2 部分 accepted 只收 allowing／enabling／making it possible for＋those who，沒有 which 子句、people who 等同樣正確的寫法，評分規準太窄、標的句型引不出來。"
+}

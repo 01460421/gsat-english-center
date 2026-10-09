@@ -1,0 +1,742 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.dd7d3f",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "advanced",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "雖然面試只有十分鐘，但事先練習回答問題能幫助考生保持冷靜。",
+        "options": null,
+        "answer": "Although the interview lasts only ten minutes, practicing answering questions in advance can help applicants stay calm.",
+        "accepted_answers": [
+          "Although the interview is only ten minutes long, practicing answers beforehand can help candidates stay calm.",
+          "Even though the interview takes only ten minutes, practicing answering questions ahead of time can help applicants keep calm."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "讓步子句（although）",
+            "動名詞片語當主詞"
+          ],
+          "topic": "大學面試"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "除了閱讀學長姐的心得，許多考生也已經被邀請參加模擬面試。",
+        "options": null,
+        "answer": "Besides reading their seniors' advice, many applicants have also been invited to take part in mock interviews.",
+        "accepted_answers": [
+          "In addition to reading the experiences of their seniors, many applicants have also been invited to attend mock interviews.",
+          "Apart from reading tips from their seniors, many candidates have also been invited to attend practice interviews."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "完成式被動",
+            "介系詞＋動名詞"
+          ],
+          "topic": "大學面試"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "大學面試"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「雖然…，但…」英文只能選一個連接詞：用 Although 或 Even though 引導讓步子句，後半句就不加 but。「面試只有十分鐘」說時間長度，用 last 或 take only ten minutes，或 is only ten minutes long。後半句的主詞是「事先練習回答問題」這個動作，英文用動名詞片語 practicing answering questions in advance（practice 後面接 V-ing），視為單數。「幫助考生保持冷靜」是 help + 受詞 + 原形動詞：help applicants stay calm。",
+          "evidence": [
+            "雖然面試只有十分鐘，但",
+            "事先練習回答問題能幫助考生保持冷靜"
+          ],
+          "strategy_zh": "看到「雖然…但…」先決定用 although 還是 but，只能留一個；主詞是動作時改成 V-ing。",
+          "hints": [
+            "切成四段：雖然面試只有十分鐘／但事先練習回答問題／能幫助考生／保持冷靜",
+            "標的詞彙：interview（面試，L1）、practice（練習，L1）、answer（回答，L1）、advance（in advance 事先，L2）、applicant（考生、申請者，L4）、calm（冷靜的，L2）",
+            "句型框架：Although + S + V …, V-ing … + can help + O + VR"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「除了…（之外還）」用 Besides、In addition to 或 Apart from，這些都是介系詞，後面接動名詞 reading；做「閱讀」的人就是主要子句的主詞 many applicants。「已經被邀請」同時有完成（已經）與被動（被），寫成 have been invited；also 放在 have 後面。「參加」用 take part in 或 attend；「心得」可寫 advice、experiences 或 tips，advice 不可數。",
+          "evidence": [
+            "除了閱讀學長姐的心得",
+            "也已經被邀請參加模擬面試"
+          ],
+          "strategy_zh": "介系詞（besides、by、without、instead of…）後面的動作一律用 V-ing；「已經被…」直接套 have/has been + p.p.。",
+          "hints": [
+            "切成四段：除了閱讀／學長姐的心得／許多考生也已經被邀請／參加模擬面試",
+            "標的詞彙：read（閱讀，L1）、senior（學長姐，L3）、advice（建議、心得，L2）、applicant（考生，L4）、invite（邀請，L1）、take part in（參加）、interview（面試，L1）",
+            "句型框架：Besides + V-ing …, S + have also been + p.p. + to VR …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "Although the interview lasts only ten minutes, practicing answering questions in advance can help applicants stay calm.",
+            "Although the interview is only ten minutes long, practicing answers beforehand can help candidates stay calm.",
+            "Even though the interview takes only ten minutes, practicing answering questions ahead of time can help applicants keep calm."
+          ],
+          "target_words": [
+            {
+              "word": "interview",
+              "zh": "面試"
+            },
+            {
+              "word": "practice",
+              "zh": "練習"
+            },
+            {
+              "word": "answer",
+              "zh": "回答"
+            },
+            {
+              "word": "advance",
+              "zh": "事先（in advance）",
+              "alternatives": [
+                "beforehand",
+                "ahead"
+              ]
+            },
+            {
+              "word": "applicant",
+              "zh": "考生",
+              "alternatives": [
+                "candidate",
+                "student",
+                "interviewee",
+                "examinee"
+              ]
+            },
+            {
+              "word": "calm",
+              "zh": "冷靜的",
+              "alternatives": [
+                "relaxed"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "ADVCL",
+              "grammar_id": "gp-concession-clause",
+              "label_zh": "讓步子句（Although、Even though …）",
+              "frame": "Although + S + V …, S + V …（不再加 but）",
+              "zh_trigger": "雖然"
+            },
+            {
+              "code": "NFSUBJ",
+              "grammar_id": "gp-gerund-subject",
+              "label_zh": "動名詞片語當主詞",
+              "frame": "V-ing … + can help + O + VR …",
+              "zh_trigger": "事先練習回答問題"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "雖然面試只有十分鐘",
+              "accepted": [
+                "Although the interview lasts only ten minutes",
+                "Although the interview is only ten minutes long",
+                "Even though the interview takes only ten minutes",
+                "Although the interview only lasts ten minutes",
+                "Though the interview lasts only ten minutes",
+                "Although the interview is only ten minutes"
+              ],
+              "targets": [
+                "ADVCL",
+                "interview"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Although the interview has only ten minutes",
+                  "right": "Although the interview lasts only ten minutes",
+                  "explanation_zh": "「面試只有十分鐘」是時間長度，用 last、take 或 be … long，不用 have。"
+                }
+              ]
+            },
+            {
+              "zh": "但事先練習回答問題",
+              "accepted": [
+                "practicing answering questions in advance",
+                "practicing answers beforehand",
+                "practicing answering questions ahead of time",
+                "practicing answers in advance",
+                "practicing how to answer questions in advance",
+                "rehearsing answers in advance"
+              ],
+              "targets": [
+                "NFSUBJ",
+                "practice",
+                "answer",
+                "advance"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "but practicing answering questions in advance",
+                  "right": "practicing answering questions in advance",
+                  "explanation_zh": "although 和 but 不能同時用；用了 Although，後半句就不加 but。"
+                },
+                {
+                  "wrong": "practice answering questions in advance",
+                  "right": "practicing answering questions in advance",
+                  "explanation_zh": "動詞片語當主詞要用動名詞 practicing（或 to practice），不能用原形。"
+                }
+              ]
+            },
+            {
+              "zh": "能幫助考生",
+              "accepted": [
+                "can help applicants",
+                "can help candidates",
+                "can help students",
+                "can help interviewees",
+                "helps applicants"
+              ],
+              "targets": [
+                "applicant"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "can helps applicants",
+                  "right": "can help applicants",
+                  "explanation_zh": "助動詞 can 後面接原形動詞。"
+                }
+              ]
+            },
+            {
+              "zh": "保持冷靜",
+              "accepted": [
+                "stay calm",
+                "keep calm",
+                "remain calm",
+                "to stay calm",
+                "stay relaxed"
+              ],
+              "targets": [
+                "calm"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "keep calmly",
+                  "right": "keep calm",
+                  "explanation_zh": "keep、stay 後面接形容詞當補語：keep calm，不用副詞。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "collocation",
+              "zh": "但",
+              "literal_error": "Although the interview lasts only ten minutes, but practicing answering questions in advance can help applicants stay calm.",
+              "part": 2,
+              "explanation_zh": "中文「雖然…，但…」照字面翻會寫出 although … but …；英文兩個連接詞只能用一個。"
+            },
+            {
+              "type": "verbal_subject",
+              "zh": "事先練習回答問題",
+              "literal_error": "Although the interview lasts only ten minutes, practice answering questions in advance can help applicants stay calm.",
+              "part": 2,
+              "explanation_zh": "「事先練習回答問題」是整個動作當主詞，英文要用動名詞 practicing …（或不定詞 to practice …）。"
+            }
+          ],
+          "bonus": [],
+          "restructuring_zh": "「事先練習回答問題能幫助…」中文用動詞片語當主詞，英文要改成動名詞片語 practicing answering questions in advance；同時拿掉中文的「但」，因為 although 已經表示讓步。"
+        },
+        "2": {
+          "references": [
+            "Besides reading their seniors' advice, many applicants have also been invited to take part in mock interviews.",
+            "In addition to reading the experiences of their seniors, many applicants have also been invited to attend mock interviews.",
+            "Apart from reading tips from their seniors, many candidates have also been invited to attend practice interviews."
+          ],
+          "target_words": [
+            {
+              "word": "read",
+              "zh": "閱讀"
+            },
+            {
+              "word": "senior",
+              "zh": "學長姐",
+              "alternatives": [
+                "upperclassman"
+              ]
+            },
+            {
+              "word": "advice",
+              "zh": "心得、建議",
+              "alternatives": [
+                "experience",
+                "tip",
+                "story"
+              ]
+            },
+            {
+              "word": "applicant",
+              "zh": "考生",
+              "alternatives": [
+                "candidate",
+                "student",
+                "interviewee",
+                "examinee"
+              ]
+            },
+            {
+              "word": "invite",
+              "zh": "邀請"
+            },
+            {
+              "word": "take part in",
+              "zh": "參加",
+              "alternatives": [
+                "attend",
+                "join",
+                "participate"
+              ]
+            },
+            {
+              "word": "interview",
+              "zh": "面試"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PASS",
+              "grammar_id": "gp-perfect-passive",
+              "label_zh": "完成式被動（已經被…）",
+              "frame": "S + have/has (+ also) + been + p.p. …",
+              "zh_trigger": "已經被邀請"
+            },
+            {
+              "code": "PREPVING",
+              "grammar_id": "gp-prep-gerund",
+              "label_zh": "介系詞＋動名詞（Besides + V-ing）",
+              "frame": "Besides / In addition to + V-ing …, S + V …",
+              "zh_trigger": "除了閱讀"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "除了閱讀",
+              "accepted": [
+                "Besides reading",
+                "In addition to reading",
+                "Apart from reading",
+                "Aside from reading"
+              ],
+              "targets": [
+                "PREPVING",
+                "read"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Besides read",
+                  "right": "Besides reading",
+                  "explanation_zh": "besides 是介系詞，後面接動名詞 reading。"
+                },
+                {
+                  "wrong": "Except reading",
+                  "right": "Besides reading",
+                  "explanation_zh": "這裡的「除了」是「除了…之外還有」，用 besides 或 in addition to；except 是「除了…都不算」。"
+                }
+              ]
+            },
+            {
+              "zh": "學長姐的心得",
+              "accepted": [
+                "their seniors' advice",
+                "the experiences of their seniors",
+                "tips from their seniors",
+                "their seniors' experiences",
+                "the advice of older students",
+                "what their seniors have shared"
+              ],
+              "targets": [
+                "senior",
+                "advice"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "their seniors' advices",
+                  "right": "their seniors' advice",
+                  "explanation_zh": "advice 是不可數名詞，不加 s。"
+                },
+                {
+                  "wrong": "their senior's advice",
+                  "right": "their seniors' advice",
+                  "explanation_zh": "學長姐不只一位，複數所有格寫成 seniors'。"
+                }
+              ]
+            },
+            {
+              "zh": "許多考生也已經被邀請",
+              "accepted": [
+                "many applicants have also been invited",
+                "many candidates have also been invited",
+                "many applicants have already been invited",
+                "many students have also been invited"
+              ],
+              "targets": [
+                "PASS",
+                "applicant",
+                "invite"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "many applicants are also invited",
+                  "right": "many applicants have also been invited",
+                  "explanation_zh": "「已經被邀請」是完成式被動 have been + p.p.。"
+                },
+                {
+                  "wrong": "many applicants have also invited",
+                  "right": "many applicants have also been invited",
+                  "explanation_zh": "考生是被邀請的一方，少了 been 就變成主動「邀請別人」。"
+                }
+              ]
+            },
+            {
+              "zh": "參加模擬面試",
+              "accepted": [
+                "to take part in mock interviews",
+                "to attend mock interviews",
+                "to attend practice interviews",
+                "to take part in practice interviews",
+                "to join mock interviews",
+                "to participate in mock interviews"
+              ],
+              "targets": [
+                "take part in",
+                "interview"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "to take part mock interviews",
+                  "right": "to take part in mock interviews",
+                  "explanation_zh": "take part 後面要接 in 才能接活動；或用 attend。"
+                },
+                {
+                  "wrong": "to attend to mock interviews",
+                  "right": "to attend mock interviews",
+                  "explanation_zh": "attend（參加）是及物動詞，直接接受詞；attend to 是「處理、照顧」。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "word_form",
+              "zh": "除了閱讀",
+              "literal_error": "Besides read their seniors' advice, many applicants have also been invited to take part in mock interviews.",
+              "part": 1,
+              "explanation_zh": "besides 是介系詞，後面的動詞要改成動名詞 reading。"
+            },
+            {
+              "type": "tense_trigger",
+              "zh": "已經被邀請",
+              "literal_error": "Besides reading their seniors' advice, many applicants are also invited to take part in mock interviews.",
+              "part": 3,
+              "explanation_zh": "「已經」要用完成式，「被」要用被動，合起來是 have been invited。"
+            }
+          ],
+          "bonus": [],
+          "restructuring_zh": "「除了閱讀學長姐的心得，」英文用「介系詞＋動名詞」Besides reading …，邏輯主詞就是後面的 many applicants；「許多考生也已經被邀請」要改成完成式被動 have also been invited。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-advanced-05",
+    "lot": "translation-advanced-05",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "e5c4baeec359d5ac42e4e899ef49b7db98863cbe7bb8568d933d20cee46dbcaf",
+    "spec_id": "translation-advanced@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "warn",
+      "created_at": "2026-10-09T13:12:55Z",
+      "details": {
+        "errors": [],
+        "warnings": [
+          "annotations.rubric.items.2.patterns[0]: gp-perfect-passive 通常對應句構 PERF（目前 code=PASS）"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T12:52:38Z",
+      "details": {
+        "solver": "A",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Although the interview lasts only ten minutes, practicing answering questions in advance can help candidates stay calm.",
+            "confidence": "high",
+            "explanation_zh": "「雖然……但……」英文只用 Although，不加 but；「事先練習回答問題」用動名詞片語當主詞（practice + V-ing）；「能幫助考生保持冷靜」用 help + O + 原形動詞 stay calm；考生在面試情境用 candidates。"
+          },
+          "2": {
+            "translation": "In addition to reading senior students' experiences, many candidates have also been invited to take part in mock interviews.",
+            "confidence": "medium",
+            "explanation_zh": "「除了……也……」用 In addition to + V-ing；「已經被邀請」用現在完成式被動 have been invited to；「模擬面試」用 mock interviews；「學長姐的心得」較難精準對應，寫成 senior students' experiences（也可 what older students have shared），信心 medium。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "ADVCL",
+              "NFSUBJ"
+            ],
+            "used_target_words": [
+              "interview",
+              "practice",
+              "answer",
+              "advance",
+              "applicant",
+              "calm"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PASS",
+              "PREPVING"
+            ],
+            "used_target_words": [
+              "read",
+              "senior",
+              "advice",
+              "applicant",
+              "invite",
+              "take part in",
+              "interview"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "（不影響判定）第 2 部分可補 senior students' experiences（本盲譯寫法）。首選譯文把「心得」譯成 advice 可以接受，但「心得」偏向經驗分享（experiences、insights），advice 稍窄。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "interview",
+              "practice",
+              "answer",
+              "advance",
+              "applicant",
+              "calm"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "ADVCL": true,
+              "NFSUBJ": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "read",
+              "senior",
+              "advice",
+              "applicant",
+              "invite",
+              "take part in",
+              "interview"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PASS": true,
+              "PREPVING": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T12:54:59Z",
+      "details": {
+        "solver": "B",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Although the interview lasts only ten minutes, practicing answering questions in advance can help candidates stay calm.",
+            "confidence": "high",
+            "explanation_zh": "「雖然……但……」英文只能用 Although，不可同時使用 but；「練習回答問題」用動名詞片語 practicing answering questions 當主詞；「幫助……保持冷靜」用 help + 受詞 + 原形動詞（stay calm）；「考生」譯成 candidates。"
+          },
+          "2": {
+            "translation": "Besides reading the experiences shared by seniors, many candidates have also been invited to take part in mock interviews.",
+            "confidence": "medium",
+            "explanation_zh": "「除了……」用 Besides + 動名詞片語（reading 的主詞與主要子句主詞 many candidates 一致，無懸垂問題）；「已經被邀請」用現在完成式被動 have ... been invited；「參加」用 take part in；「模擬面試」是 mock interviews。「學長姐的心得」譯成 the experiences shared by seniors，信心 medium 是因為「心得」有多種譯法。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "ADVCL",
+              "NFSUBJ"
+            ],
+            "used_target_words": [
+              "interview",
+              "practice",
+              "answer",
+              "advance",
+              "applicant",
+              "calm"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PASS",
+              "PREPVING"
+            ],
+            "used_target_words": [
+              "read",
+              "senior",
+              "advice",
+              "applicant",
+              "invite",
+              "take part in",
+              "interview"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "interview",
+              "practice",
+              "answer",
+              "advance",
+              "applicant",
+              "calm"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "ADVCL": true,
+              "NFSUBJ": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "read",
+              "senior",
+              "advice",
+              "applicant",
+              "invite",
+              "take part in",
+              "interview"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PASS": true,
+              "PREPVING": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

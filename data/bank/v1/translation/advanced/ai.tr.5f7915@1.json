@@ -1,0 +1,759 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.5f7915",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "advanced",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "當學生們開始拍攝時，才發現拍一部短片需要很多耐心與合作。",
+        "options": null,
+        "answer": "When the students began shooting, they found that making a short film required a lot of patience and cooperation.",
+        "accepted_answers": [
+          "When the students started filming, they realized that making a short film took a lot of patience and teamwork.",
+          "When the students started to shoot the film, they discovered that making a short film needed lots of patience and cooperation."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "時間副詞子句",
+            "動名詞當主詞"
+          ],
+          "topic": "學生影展"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "除了在校內影展播放，他們的作品也被上傳到網路，讓更多觀眾看到。",
+        "options": null,
+        "answer": "Besides being shown at the school film festival, their films were also uploaded online for a larger audience.",
+        "accepted_answers": [
+          "In addition to being shown at the school film festival, their works were also posted online so that more people could see them.",
+          "Apart from being shown at the school's film festival, their films were also uploaded to the Internet for more viewers to watch."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "介系詞＋動名詞",
+            "被動語態"
+          ],
+          "topic": "學生影展"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "學生影展"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「當學生們開始拍攝時」是時間副詞子句 When + S + V；主要子句「才發現」中文省略主詞，英文要補 they。「拍一部短片需要…」的主詞是動詞片語，英文改成動名詞 making a short film，動詞用單數（required／took）。「耐心」是名詞 patience，不是形容詞 patient。",
+          "evidence": [
+            "當學生們開始拍攝時",
+            "拍一部短片"
+          ],
+          "strategy_zh": "中文「才發現」常省略主詞，英文主要子句一定要有主詞；that 子句裡的主詞是動作時，一樣改成 V-ing。",
+          "hints": [
+            "切成四段：當學生們開始拍攝時／才發現／拍一部短片／需要很多耐心與合作",
+            "標的詞彙：student（學生，L1）、shoot（拍攝，L2）、find（發現，L1）、film（影片，L1）、require（需要，L2）、patience（耐心，L3）、cooperation（合作，L4）",
+            "句型框架：When + S + V-ed, S + found that + V-ing … + V-ed …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「除了…之外」用 Besides／In addition to／Apart from，介系詞後面接動名詞；作品是「被播放」的，要寫被動的 being shown。「也被上傳到網路」是過去的被動：were (also) uploaded online，also 放在 be 動詞後面。「讓更多觀眾看到」可以簡潔寫成 for a larger audience，或用 so that more people could see them。",
+          "evidence": [
+            "除了在校內影展播放",
+            "被上傳"
+          ],
+          "strategy_zh": "介系詞後面一律接名詞或 V-ing；主詞是「被…」的時候，動名詞要改成 being + p.p.。",
+          "hints": [
+            "切成四段：除了在校內影展播放／他們的作品／也被上傳到網路／讓更多觀眾看到",
+            "標的詞彙：show（播放，L1）、festival（影展，L1）、film（影片、作品，L1）、upload（上傳，L2）、audience（觀眾，L3）",
+            "句型框架：Besides + being p.p. …, S + were also + p.p. …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "When the students began shooting, they found that making a short film required a lot of patience and cooperation.",
+            "When the students started filming, they realized that making a short film took a lot of patience and teamwork.",
+            "When the students started to shoot the film, they discovered that making a short film needed lots of patience and cooperation."
+          ],
+          "target_words": [
+            {
+              "word": "student",
+              "zh": "學生"
+            },
+            {
+              "word": "shoot",
+              "zh": "拍攝",
+              "alternatives": [
+                "film"
+              ]
+            },
+            {
+              "word": "find",
+              "zh": "發現",
+              "alternatives": [
+                "realize",
+                "discover"
+              ]
+            },
+            {
+              "word": "film",
+              "zh": "影片",
+              "alternatives": [
+                "movie"
+              ]
+            },
+            {
+              "word": "require",
+              "zh": "需要",
+              "alternatives": [
+                "take",
+                "need"
+              ]
+            },
+            {
+              "word": "patience",
+              "zh": "耐心"
+            },
+            {
+              "word": "cooperation",
+              "zh": "合作",
+              "alternatives": [
+                "teamwork"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "ADVCL",
+              "grammar_id": "gp-time-clause",
+              "label_zh": "時間副詞子句（When + S + V）",
+              "frame": "When + S + V, S + V …",
+              "zh_trigger": "當學生們開始拍攝時"
+            },
+            {
+              "code": "NFSUBJ",
+              "grammar_id": "gp-gerund-subject",
+              "label_zh": "動名詞片語當主詞（在 that 子句裡）",
+              "frame": "S + find that + V-ing … + V …",
+              "zh_trigger": "拍一部短片"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "當學生們開始拍攝時",
+              "accepted": [
+                "When the students began shooting",
+                "When the students started filming",
+                "When the students started to shoot the film",
+                "When the students began to shoot",
+                "When the students started shooting",
+                "When students began filming",
+                "When the students began to film"
+              ],
+              "targets": [
+                "student",
+                "shoot",
+                "ADVCL"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "When the students began shoot",
+                  "right": "When the students began shooting",
+                  "explanation_zh": "begin 後面接 V-ing 或 to + 原形動詞。"
+                },
+                {
+                  "wrong": "When the students begin shooting",
+                  "right": "When the students began shooting",
+                  "explanation_zh": "後面說「才發現」是過去的事，兩個子句時態要一致，用過去式 began。"
+                }
+              ]
+            },
+            {
+              "zh": "才發現",
+              "accepted": [
+                "they found that",
+                "they realized that",
+                "they discovered that",
+                "they found",
+                "they realized"
+              ],
+              "targets": [
+                "find"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "found that",
+                  "right": "they found that",
+                  "explanation_zh": "「才發現」的主詞是學生們，英文的主要子句不能沒有主詞，要補 they。"
+                },
+                {
+                  "wrong": "they just found that",
+                  "right": "they found that",
+                  "explanation_zh": "這裡的「才」表示「到那時候才」，不是 just（剛剛）；直接用 they found／realized 即可。"
+                }
+              ]
+            },
+            {
+              "zh": "拍一部短片",
+              "accepted": [
+                "making a short film",
+                "shooting a short film",
+                "making a short movie",
+                "producing a short film",
+                "filming a short movie"
+              ],
+              "targets": [
+                "film",
+                "NFSUBJ"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "make a short film",
+                  "right": "making a short film",
+                  "explanation_zh": "「拍一部短片」在 that 子句裡當主詞，要改成動名詞 making a short film。"
+                },
+                {
+                  "wrong": "making a short films",
+                  "right": "making a short film",
+                  "explanation_zh": "a 後面接單數名詞 film。"
+                }
+              ]
+            },
+            {
+              "zh": "需要很多耐心與合作",
+              "accepted": [
+                "required a lot of patience and cooperation",
+                "took a lot of patience and teamwork",
+                "needed lots of patience and cooperation",
+                "required a lot of patience and teamwork",
+                "took a lot of patience and cooperation",
+                "required great patience and cooperation",
+                "required much patience and cooperation"
+              ],
+              "targets": [
+                "require",
+                "patience",
+                "cooperation"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "required a lot of patient and cooperation",
+                  "right": "required a lot of patience and cooperation",
+                  "explanation_zh": "a lot of 後面接名詞 patience；patient 是形容詞（有耐心的）或名詞「病人」。"
+                },
+                {
+                  "wrong": "required many patience and cooperation",
+                  "right": "required a lot of patience and cooperation",
+                  "explanation_zh": "patience 不可數，不用 many。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "verbal_subject",
+              "zh": "拍一部短片",
+              "literal_error": "When the students began shooting, they found that make a short film required a lot of patience and cooperation.",
+              "part": 3,
+              "explanation_zh": "that 子句的主詞是動作「拍一部短片」，照字面寫 make a short film 當主詞不合文法；要改成動名詞 making …。"
+            },
+            {
+              "type": "word_form",
+              "zh": "耐心",
+              "literal_error": "When the students began shooting, they found that making a short film required a lot of patient and cooperation.",
+              "part": 4,
+              "explanation_zh": "「耐心」是名詞 patience；patient 是形容詞或「病人」。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "Not until the students began shooting did they realize that making a short film required a lot of patience and cooperation.",
+              "grammar_id": "gp-not-until-inversion",
+              "explanation_zh": "「…時才發現」可以寫成 Not until … 放句首，主要子句倒裝 did they realize；這是倒裝句，只當加分寫法。"
+            }
+          ],
+          "restructuring_zh": "「拍一部短片需要很多耐心與合作」的主詞是動詞片語，英文要改成動名詞 making a short film 當 that 子句的主詞；「才發現」也要補上主詞 they。"
+        },
+        "2": {
+          "references": [
+            "Besides being shown at the school film festival, their films were also uploaded online for a larger audience.",
+            "In addition to being shown at the school film festival, their works were also posted online so that more people could see them.",
+            "Apart from being shown at the school's film festival, their films were also uploaded to the Internet for more viewers to watch."
+          ],
+          "target_words": [
+            {
+              "word": "show",
+              "zh": "播放",
+              "alternatives": [
+                "play",
+                "screen"
+              ]
+            },
+            {
+              "word": "festival",
+              "zh": "影展"
+            },
+            {
+              "word": "film",
+              "zh": "影片、作品",
+              "alternatives": [
+                "work",
+                "movie",
+                "video"
+              ]
+            },
+            {
+              "word": "upload",
+              "zh": "上傳",
+              "alternatives": [
+                "post",
+                "put"
+              ]
+            },
+            {
+              "word": "audience",
+              "zh": "觀眾",
+              "alternatives": [
+                "viewer",
+                "people"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PREPVING",
+              "grammar_id": "gp-prep-gerund",
+              "label_zh": "介系詞＋動名詞（Besides + being p.p.）",
+              "frame": "Besides／In addition to／Apart from + V-ing（被動：being p.p.）…, S + V",
+              "zh_trigger": "除了在校內影展播放"
+            },
+            {
+              "code": "PASS",
+              "grammar_id": "gp-passive",
+              "label_zh": "被動語態（were + p.p.）",
+              "frame": "S + was/were + p.p. …",
+              "zh_trigger": "被上傳"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "除了在校內影展播放",
+              "accepted": [
+                "Besides being shown at the school film festival",
+                "In addition to being shown at the school film festival",
+                "Apart from being shown at the school's film festival",
+                "Besides being played at the school film festival",
+                "Besides being screened at the school film festival",
+                "Apart from being shown at the school film festival",
+                "In addition to being shown at the school's film festival"
+              ],
+              "targets": [
+                "show",
+                "festival",
+                "PREPVING"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Besides showing at the school film festival",
+                  "right": "Besides being shown at the school film festival",
+                  "explanation_zh": "作品是「被播放」的，介系詞後面要用被動的動名詞 being shown。"
+                },
+                {
+                  "wrong": "Besides be shown at the school film festival",
+                  "right": "Besides being shown at the school film festival",
+                  "explanation_zh": "besides 是介系詞，後面接動名詞 being。"
+                }
+              ]
+            },
+            {
+              "zh": "他們的作品",
+              "accepted": [
+                "their films",
+                "their works",
+                "their movies",
+                "their short films",
+                "their videos"
+              ],
+              "targets": [
+                "film"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "they're films",
+                  "right": "their films",
+                  "explanation_zh": "所有格是 their；they're 是 they are 的縮寫。"
+                }
+              ]
+            },
+            {
+              "zh": "也被上傳到網路",
+              "accepted": [
+                "were also uploaded online",
+                "were also posted online",
+                "were also uploaded to the Internet",
+                "were also put online",
+                "were also uploaded onto the Internet",
+                "were also shared online"
+              ],
+              "targets": [
+                "upload",
+                "PASS"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "were also upload online",
+                  "right": "were also uploaded online",
+                  "explanation_zh": "被動語態是 be + 過去分詞，要寫 uploaded。"
+                },
+                {
+                  "wrong": "also uploaded to the Internet",
+                  "right": "were also uploaded to the Internet",
+                  "explanation_zh": "作品是「被上傳」的，少了 be 動詞 were，就變成作品自己上傳。"
+                }
+              ]
+            },
+            {
+              "zh": "讓更多觀眾看到",
+              "accepted": [
+                "for a larger audience",
+                "so that more people could see them",
+                "for more viewers to watch",
+                "for a wider audience",
+                "so that more viewers could watch them",
+                "to reach a larger audience",
+                "so more people could watch them"
+              ],
+              "targets": [
+                "audience"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "to let more audience see",
+                  "right": "so that more people could see them",
+                  "explanation_zh": "audience 是集合名詞，不說 more audience；可以說 a larger audience 或 more viewers。"
+                },
+                {
+                  "wrong": "so that more people can saw them",
+                  "right": "so that more people could see them",
+                  "explanation_zh": "助動詞後面接原形動詞 see。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "word_form",
+              "zh": "播放",
+              "literal_error": "Besides showing at the school film festival, their films were also uploaded online for a larger audience.",
+              "part": 1,
+              "explanation_zh": "作品是被播放的，介系詞後面要用被動形式 being shown，不是主動的 showing。"
+            },
+            {
+              "type": "collocation",
+              "zh": "讓更多觀眾看到",
+              "literal_error": "Besides being shown at the school film festival, their films were also uploaded online to let more audience see.",
+              "part": 4,
+              "explanation_zh": "audience 不和 more 連用，也不必照字面寫 let …；用 for a larger audience 或 so that more people could see them。"
+            }
+          ],
+          "bonus": []
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-advanced-03",
+    "lot": "translation-advanced-03",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "02c0a28073619c0bc20ca233498a317fe41127b7ed24b485e5a25ef485b7d3c2",
+    "spec_id": "translation-advanced@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T13:03:03Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "fail",
+      "created_at": "2026-10-09T08:05:03Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "When the students started filming, they realized that making a short film requires a lot of patience and cooperation.",
+            "confidence": "high",
+            "explanation_zh": "「當…時，才發現」用 When 副詞子句（過去式），「才」不一定要譯成 not until／only then 的倒裝；「拍一部短片」用動名詞 making a short film 當名詞子句的主詞；拍片需要耐心是一般事實，子句用現在式 requires（用 required 也可）。"
+          },
+          "2": {
+            "translation": "Besides being shown at the school film festival, their works were also uploaded to the Internet so that more viewers could see them.",
+            "confidence": "medium",
+            "explanation_zh": "「除了在…播放」作品是被播放，用 Besides + being p.p.（介系詞＋動名詞的被動）；「也被上傳到網路」用過去式被動 were uploaded；「讓更多觀眾看到」表目的，用 so that…could。「作品」譯 works（也可譯 films），「播放」也可用 screened，寫法不止一種所以給 medium。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "ADVCL",
+              "NFSUBJ"
+            ],
+            "used_target_words": [
+              "student",
+              "shoot",
+              "find",
+              "film",
+              "require",
+              "patience",
+              "cooperation"
+            ],
+            "within_accepted": false,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "我在 that 子句用一般現在式 requires：「拍短片需要很多耐心與合作」是普遍事實，主要子句用過去式 realized 之後仍可用現在式（文法正確，學生也常這樣寫）。但三個參考譯文和 P4 accepted 全是過去式 required／took／needed，現在式不在可接受寫法內；建議 P4 accepted 補 requires／takes／needs a lot of patience and cooperation。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "PREPVING",
+              "PASS"
+            ],
+            "used_target_words": [
+              "show",
+              "festival",
+              "film",
+              "upload",
+              "audience"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "student",
+              "shoot",
+              "find",
+              "film",
+              "require",
+              "patience",
+              "cooperation"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "ADVCL": true,
+              "NFSUBJ": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "show",
+              "festival",
+              "film",
+              "upload",
+              "audience"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PREPVING": true,
+              "PASS": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 1 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T00:00:00Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "It was only when the students began filming that they realized making a short film requires a great deal of patience and cooperation.",
+            "confidence": "high",
+            "explanation_zh": "中文「當……時，才發現」帶有「到那時才」的語氣，用強調句型 It was only when…that…；「發現」用 realized 後接名詞子句，動名詞 making a short film 當子句主詞。"
+          },
+          "2": {
+            "translation": "Besides being shown at the school film festival, their works were also uploaded to the Internet so that more viewers could see them.",
+            "confidence": "high",
+            "explanation_zh": "「除了……之外」用 Besides 加動名詞被動 being shown，主詞 their works 與被動一致；「讓更多觀眾看到」用 so that 目的子句。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "ADVCL",
+              "NFSUBJ"
+            ],
+            "used_target_words": [
+              "student",
+              "shoot",
+              "find",
+              "film",
+              "require",
+              "patience",
+              "cooperation"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "（建議，不影響判定）第 4 部分 accepted 全是過去式（required／took／needed），但「拍一部短片需要…」是普遍事實，現在式 requires 同樣正確，建議補現在式與 a great deal of；中文「才發現」帶有「到那時才」的語氣，也可補 It was only when … that … 的強調寫法。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "PREPVING",
+              "PASS"
+            ],
+            "used_target_words": [
+              "show",
+              "festival",
+              "film",
+              "upload",
+              "audience"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "student",
+              "shoot",
+              "find",
+              "film",
+              "require",
+              "patience",
+              "cooperation"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "ADVCL": true,
+              "NFSUBJ": false
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "show",
+              "festival",
+              "film",
+              "upload",
+              "audience"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PREPVING": true,
+              "PASS": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "rejected",
+  "status_reason": "blind_solver:A 未通過：第 1 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義。判定者（第 1 輪）人工確認：第 1 題評分規準太窄。「拍一部短片需要很多耐心與合作」是普遍事實，盲譯 A 寫 they realized that making a short film requires a lot of patience and cooperation（過去式主要子句接現在式 that 子句，文法正確），B 也指出現在式同樣正確；但三個參考譯文與 P4 accepted 只收過去式 required／took／needed，常見錯誤與解析又強調兩個子句時態要一致，學生寫正確的現在式會被扣分。修正方向：P4 accepted 補 requires／takes／needs a lot of patience and cooperation（可加 a great deal of），解析說明普遍事實可用現在式；B 建議的 It was only when … that … 強調句可列進 bonus。"
+}

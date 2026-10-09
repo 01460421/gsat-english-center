@@ -1,0 +1,141 @@
+{
+  "schema": "gsat-bank-facts/v1",
+  "id": "jellyfish-blooms-mxt03",
+  "title": "Jellyfish blooms: their costs and suspected causes",
+  "sdgs": [
+    14
+  ],
+  "created_on": "2026-10-09",
+  "created_by": "claude-opus-5-5",
+  "sources": [
+    {
+      "id": "s1",
+      "publisher": "Woods Hole Oceanographic Institution (Oceanus)",
+      "title": "Are Jellyfish Populations Increasing?",
+      "url": "https://www.whoi.edu/oceanus/feature/are-jellyfish-populations-increasing/",
+      "accessed": "2026-10-09",
+      "license": "WHOI terms of use",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s2",
+      "publisher": "Yale Environment 360",
+      "title": "Massive Outbreak of Jellyfish Could Spell Trouble for Fisheries",
+      "url": "https://e360.yale.edu/features/massive_outbreak_of_jellyfish_could_spell_trouble_for_fisheries",
+      "accessed": "2026-10-09",
+      "license": "Yale terms of use",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s3",
+      "publisher": "National Geographic",
+      "title": "The upside of rising jellyfish numbers? Many animals eat them",
+      "url": "https://www.nationalgeographic.com/animals/2019/01/many-ocean-creatures-surprisingly-eat-jellyfish",
+      "accessed": "2026-10-09",
+      "license": "National Geographic terms of use",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s4",
+      "publisher": "Smithsonian Magazine",
+      "title": "A Taste of Jellyfish",
+      "url": "https://www.smithsonianmag.com/arts-culture/a-taste-of-jellyfish-93733573/",
+      "accessed": "2026-10-09",
+      "license": "Smithsonian terms of use",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s5",
+      "publisher": "University of Alaska Fairbanks Sea Grant (NOSB)",
+      "title": "Research Project for the 2011 Alaska Region National Ocean Sciences Bowl",
+      "url": "https://seagrant.uaf.edu/nosb/papers/2011/seward-smack.php",
+      "accessed": "2026-10-09",
+      "license": "UAF terms of use",
+      "use": "fact_only",
+      "note": "只取「水母破壞漁網、壓壞或螫傷漁獲」這一點"
+    }
+  ],
+  "facts": [
+    {
+      "id": "f1",
+      "text": "Huge jellyfish blooms have filled and torn fishing nets, for example in Japan, crushing or stinging the fish caught in them.",
+      "source_ids": [
+        "s1",
+        "s5"
+      ],
+      "kind": "event"
+    },
+    {
+      "id": "f2",
+      "text": "Blooms also invade fish farms, block cooling-water intakes at coastal power plants and force beaches to close.",
+      "source_ids": [
+        "s1",
+        "s2"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f3",
+      "text": "Overfishing may help jellyfish by removing fish that compete with them for food or eat them.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f4",
+      "text": "Farm and city runoff feeds algae; as they decay, low-oxygen zones form that fish avoid but jellyfish tolerate.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f5",
+      "text": "Warmer seas may help some jellyfish grow and spread.",
+      "source_ids": [
+        "s1",
+        "s2"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f6",
+      "text": "Jellyfish begin life as polyps attached to hard surfaces; piers, platforms and sea walls may give polyps more places to settle.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f7",
+      "text": "Scientists disagree on whether blooms are rising worldwide; blooms have occurred throughout history and populations naturally rise and fall.",
+      "source_ids": [
+        "s1",
+        "s2"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f8",
+      "text": "Leatherback sea turtles feed almost entirely on jellyfish.",
+      "source_ids": [
+        "s3"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f9",
+      "text": "Some kinds of jellyfish are eaten as food in China, Japan and other Asian countries.",
+      "source_ids": [
+        "s4"
+      ],
+      "kind": "other"
+    }
+  ],
+  "notes": "混合題 mixed-top-03 第 4 組（水母大量出現）用。2026-10-09 線上查證。八則留言是虛構的讀者意見，各自引用 f1–f9 的事實或立場；人工結構物提供水螅體附著處（f6）來源寫的是假說，留言用 I suspect 呈現。"
+}

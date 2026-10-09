@@ -1,0 +1,750 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.e6e916",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "top",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "用植物肉取代牛肉可以減少養牛產生的溫室氣體，進而減緩全球暖化。",
+        "options": null,
+        "answer": "Replacing beef with plant-based meat can reduce the greenhouse gases produced by raising cattle, helping to slow down global warming.",
+        "accepted_answers": [
+          "Using plant-based meat in place of beef can cut down on the greenhouse gases that come from raising cows, slowing down global warming.",
+          "Eating plant-based meat instead of beef can reduce the greenhouse gases released by cattle farming, helping to slow global warming."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "句尾分詞片語表結果（…，進而減緩全球暖化）",
+            "動名詞片語當主詞（用植物肉取代牛肉）"
+          ],
+          "topic": "植物肉"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "然而，相較於一般牛肉，植物肉的價格仍然偏高，消費者是否願意購買還很難說。",
+        "options": null,
+        "answer": "However, compared with regular beef, plant-based meat is still more expensive, so it is hard to say whether consumers will buy it.",
+        "accepted_answers": [
+          "However, compared to ordinary beef, plant-based meat still costs more, and it is still hard to tell whether consumers are willing to buy it.",
+          "However, in comparison with regular beef, the price of plant-based meat is still higher, so it is difficult to say whether consumers will pay for it."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "間接問句（whether 名詞子句：消費者是否願意購買）",
+            "相較於…（比較片語＋比較級：相較於一般牛肉，…仍然偏高）"
+          ],
+          "topic": "植物肉"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "植物肉"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "主詞是「用植物肉取代牛肉」這個動作，寫成動名詞片語 Replacing beef with plant-based meat；注意 replace A with B 是「用 B 取代 A」，被換掉的 beef 放在前面。「養牛產生的溫室氣體」修飾語較長，英文放到名詞後面：the greenhouse gases produced by raising cattle（cattle 是集合名詞，不加 s）。「進而減緩全球暖化」是前面減碳帶來的結果，用句尾分詞 helping to slow down global warming。",
+          "evidence": [
+            "用植物肉取代牛肉",
+            "養牛產生的溫室氣體",
+            "進而減緩全球暖化"
+          ],
+          "strategy_zh": "先寫主幹 V-ing … can reduce + N；再把「養牛產生的」移到名詞後面；最後用 helping to … 接上結果。",
+          "hints": [
+            "切成四段：用植物肉取代牛肉／可以減少／養牛產生的溫室氣體／進而減緩全球暖化",
+            "標的詞彙：replace（取代）、beef（牛肉）、reduce（減少）、greenhouse（溫室）、cattle（牛隻）",
+            "句型框架：Replacing A with B + can + VR + N + p.p. …, helping to VR …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「相較於一般牛肉」用 compared with／to regular beef，後面的主要子句要有比較級：plant-based meat is still more expensive（或 still costs more）。注意「價格偏高」若以 price 當主詞要說 the price is higher，不說 the price is expensive。「消費者是否願意購買還很難說」英文用 it is hard to say whether consumers will buy it，whether 子句用直述句語序。",
+          "evidence": [
+            "相較於一般牛肉",
+            "植物肉的價格仍然偏高",
+            "消費者是否願意購買還很難說"
+          ],
+          "strategy_zh": "比較片語放句首，主要子句一定要出現比較級；後半句先寫 it is hard to say，再接 whether 子句。",
+          "hints": [
+            "切成四段：相較於一般牛肉／植物肉的價格仍然偏高／消費者是否願意購買／還很難說",
+            "標的詞彙：compare（比較）、expensive（昂貴的）、consumer（消費者）、hard（困難的）",
+            "句型框架：Compared with + N, S + be + 比較級 …, so it is hard to say whether + S + V …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "Replacing beef with plant-based meat can reduce the greenhouse gases produced by raising cattle, helping to slow down global warming.",
+            "Using plant-based meat in place of beef can cut down on the greenhouse gases that come from raising cows, slowing down global warming.",
+            "Eating plant-based meat instead of beef can reduce the greenhouse gases released by cattle farming, helping to slow global warming."
+          ],
+          "target_words": [
+            {
+              "word": "replace",
+              "zh": "取代",
+              "alternatives": [
+                "in place of",
+                "instead of",
+                "substitute"
+              ]
+            },
+            {
+              "word": "beef",
+              "zh": "牛肉"
+            },
+            {
+              "word": "reduce",
+              "zh": "減少",
+              "alternatives": [
+                "cut down on",
+                "cut",
+                "lower",
+                "decrease"
+              ]
+            },
+            {
+              "word": "greenhouse",
+              "zh": "溫室"
+            },
+            {
+              "word": "cattle",
+              "zh": "牛隻（集合名詞，視為複數）",
+              "alternatives": [
+                "cow",
+                "livestock"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PART",
+              "grammar_id": "gp-participle-result",
+              "label_zh": "句尾分詞片語表結果（…，進而減緩全球暖化）",
+              "frame": "S + V …, helping (to) / slowing + O …",
+              "zh_trigger": "進而減緩全球暖化"
+            },
+            {
+              "code": "NFSUBJ",
+              "grammar_id": "gp-gerund-subject",
+              "label_zh": "動名詞片語當主詞（用植物肉取代牛肉）",
+              "frame": "V-ing A with B … + can + VR …",
+              "zh_trigger": "用植物肉取代牛肉"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "用植物肉取代牛肉",
+              "accepted": [
+                "Replacing beef with plant-based meat",
+                "Using plant-based meat in place of beef",
+                "Eating plant-based meat instead of beef",
+                "Using plant-based meat instead of beef",
+                "Using plant-based meat to replace beef",
+                "Substituting plant-based meat for beef",
+                "Replacing beef with meat made from plants"
+              ],
+              "targets": [
+                "NFSUBJ",
+                "replace",
+                "beef"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Replacing plant-based meat with beef",
+                  "right": "Replacing beef with plant-based meat",
+                  "explanation_zh": "replace A with B 是「用 B 取代 A」，被換掉的牛肉要緊接在 replace 後面。"
+                },
+                {
+                  "wrong": "Use plant-based meat to replace beef can reduce",
+                  "right": "Using plant-based meat to replace beef can reduce",
+                  "explanation_zh": "動詞片語當主詞要改成動名詞（或不定詞）。"
+                }
+              ]
+            },
+            {
+              "zh": "可以減少",
+              "accepted": [
+                "can reduce",
+                "can cut down on",
+                "can lower",
+                "can cut",
+                "can decrease"
+              ],
+              "targets": [
+                "reduce"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "can reduce down",
+                  "right": "can reduce",
+                  "explanation_zh": "reduce 本身就是「減少」，後面不加 down；cut 才說 cut down on。"
+                },
+                {
+                  "wrong": "can less",
+                  "right": "can reduce",
+                  "explanation_zh": "less 是形容詞或副詞，不能當動詞；「減少」用 reduce／cut down on。"
+                }
+              ]
+            },
+            {
+              "zh": "養牛產生的溫室氣體",
+              "accepted": [
+                "the greenhouse gases produced by raising cattle",
+                "the greenhouse gases that come from raising cows",
+                "the greenhouse gases released by cattle farming",
+                "the greenhouse gases produced by raising cows",
+                "greenhouse gas emissions from cattle farming"
+              ],
+              "targets": [
+                "greenhouse",
+                "cattle"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "the raising cattle produced greenhouse gases",
+                  "right": "the greenhouse gases produced by raising cattle",
+                  "explanation_zh": "中文的修飾語放在名詞前；英文較長的修飾語要放到名詞後面（分詞片語或關係子句）。"
+                },
+                {
+                  "wrong": "the greenhouse gases produced by raising cattles",
+                  "right": "the greenhouse gases produced by raising cattle",
+                  "explanation_zh": "cattle 本身就是複數意義的集合名詞，不加 s。"
+                }
+              ]
+            },
+            {
+              "zh": "進而減緩全球暖化",
+              "accepted": [
+                "helping to slow down global warming",
+                "slowing down global warming",
+                "helping to slow global warming",
+                "helping slow down global warming",
+                "thus slowing down global warming"
+              ],
+              "targets": [
+                "PART"
+              ],
+              "common_errors": [
+                {
+                  "wrong": ", helps to slow down global warming",
+                  "right": ", helping to slow down global warming",
+                  "explanation_zh": "逗號後直接接動詞會變成沒有主詞的子句；表結果用分詞 helping。"
+                },
+                {
+                  "wrong": "slowing down the global warm",
+                  "right": "slowing down global warming",
+                  "explanation_zh": "「全球暖化」是固定名詞 global warming。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "collocation",
+              "zh": "取代",
+              "literal_error": "Replacing plant-based meat with beef can reduce the greenhouse gases produced by raising cattle.",
+              "part": 1,
+              "explanation_zh": "中文是「用 B 取代 A」，英文要寫 replace A with B（或 use B instead of A）；照中文語序寫成 replace B with A，意思剛好相反。"
+            },
+            {
+              "type": "prenominal_modifier",
+              "zh": "養牛產生的溫室氣體",
+              "literal_error": "can reduce the raising cattle produced greenhouse gases",
+              "part": 3,
+              "explanation_zh": "中文把「養牛產生的」放在名詞前面；英文要把修飾語移到 gases 後面，寫成 produced by raising cattle 或 that come from raising cattle。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "Were more people to replace beef with plant-based meat, far less greenhouse gas would be released, which would help slow down global warming.",
+              "grammar_id": "gp-inverted-if",
+              "explanation_zh": "用省略 if 的假設倒裝 Were + S + to VR 表示「要是更多人…」的假設情境；題目本身不是假設語氣，只當加分寫法。"
+            }
+          ],
+          "restructuring_zh": "「用植物肉取代牛肉」整個動作當主詞，英文寫成動名詞片語，並改用 replace A with B 的語序；「養牛產生的溫室氣體」的前置修飾語要移到名詞後面（produced by raising cattle）；「進而…」改成句尾分詞 helping to … 表結果。"
+        },
+        "2": {
+          "references": [
+            "However, compared with regular beef, plant-based meat is still more expensive, so it is hard to say whether consumers will buy it.",
+            "However, compared to ordinary beef, plant-based meat still costs more, and it is still hard to tell whether consumers are willing to buy it.",
+            "However, in comparison with regular beef, the price of plant-based meat is still higher, so it is difficult to say whether consumers will pay for it."
+          ],
+          "target_words": [
+            {
+              "word": "compare",
+              "zh": "比較",
+              "alternatives": [
+                "comparison"
+              ]
+            },
+            {
+              "word": "expensive",
+              "zh": "昂貴的",
+              "alternatives": [
+                "cost",
+                "price"
+              ]
+            },
+            {
+              "word": "consumer",
+              "zh": "消費者",
+              "alternatives": [
+                "customer",
+                "shopper",
+                "buyer"
+              ]
+            },
+            {
+              "word": "hard",
+              "zh": "困難的",
+              "alternatives": [
+                "difficult",
+                "uncertain",
+                "unclear",
+                "unknown"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "NCL",
+              "grammar_id": "gp-wh-clause",
+              "label_zh": "間接問句（whether 名詞子句：消費者是否願意購買）",
+              "frame": "it is hard to say + whether + S + V（直述句語序）",
+              "zh_trigger": "是否願意購買"
+            },
+            {
+              "code": "COMP",
+              "grammar_id": "gp-compared-with",
+              "label_zh": "相較於…（比較片語＋比較級：相較於一般牛肉，…仍然偏高）",
+              "frame": "Compared with + N, S + be + 比較級 …",
+              "zh_trigger": "相較於一般牛肉"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "相較於一般牛肉",
+              "accepted": [
+                "compared with regular beef",
+                "compared to ordinary beef",
+                "in comparison with regular beef",
+                "compared with ordinary beef",
+                "compared to regular beef"
+              ],
+              "targets": [
+                "compare"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "compare with regular beef",
+                  "right": "compared with regular beef",
+                  "explanation_zh": "「相較於」用過去分詞片語 compared with／to，不能用原形 compare。"
+                },
+                {
+                  "wrong": "comparing with regular beef",
+                  "right": "compared with regular beef",
+                  "explanation_zh": "植物肉是「被拿來比較」的一方，用過去分詞 compared。"
+                }
+              ]
+            },
+            {
+              "zh": "植物肉的價格仍然偏高",
+              "accepted": [
+                "plant-based meat is still more expensive",
+                "plant-based meat still costs more",
+                "the price of plant-based meat is still higher",
+                "plant-based meat is still more costly",
+                "plant-based meat is still relatively expensive"
+              ],
+              "targets": [
+                "COMP",
+                "expensive"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "the price of plant-based meat is still more expensive",
+                  "right": "the price of plant-based meat is still higher",
+                  "explanation_zh": "price 只能說 high／low；expensive 用來形容東西本身（plant-based meat is more expensive）。"
+                },
+                {
+                  "wrong": "plant-based meat is still expensiver",
+                  "right": "plant-based meat is still more expensive",
+                  "explanation_zh": "expensive 是多音節形容詞，比較級用 more expensive。"
+                }
+              ]
+            },
+            {
+              "zh": "消費者是否願意購買",
+              "accepted": [
+                "whether consumers will buy it",
+                "whether consumers are willing to buy it",
+                "whether consumers will pay for it",
+                "whether consumers are willing to pay for it",
+                "if consumers will buy it"
+              ],
+              "targets": [
+                "NCL",
+                "consumer"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "whether will consumers buy it",
+                  "right": "whether consumers will buy it",
+                  "explanation_zh": "間接問句用直述句語序：whether + 主詞 + 動詞。"
+                },
+                {
+                  "wrong": "whether consumers are willing to buy",
+                  "right": "whether consumers are willing to buy it",
+                  "explanation_zh": "buy 是及物動詞，要補受詞 it（指植物肉）。"
+                }
+              ]
+            },
+            {
+              "zh": "還很難說",
+              "accepted": [
+                "it is hard to say",
+                "it is still hard to tell",
+                "it is difficult to say",
+                "it is hard to tell",
+                "it is still difficult to say"
+              ],
+              "targets": [
+                "hard"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "it is hard to say that",
+                  "right": "it is hard to say whether",
+                  "explanation_zh": "「…還很難說」是不確定的事，後面接 whether／if 子句，不接 that。"
+                },
+                {
+                  "wrong": "it is hard to speak",
+                  "right": "it is hard to say",
+                  "explanation_zh": "「很難說」是「很難斷定」，用 hard to say／hard to tell；speak 是「說話、講話」。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "collocation",
+              "zh": "價格仍然偏高",
+              "literal_error": "the price of plant-based meat is still more expensive",
+              "part": 2,
+              "explanation_zh": "「價格高」英文說 the price is high；expensive 用來形容東西本身，不說 the price is expensive。"
+            },
+            {
+              "type": "verbal_subject",
+              "zh": "消費者是否願意購買還很難說",
+              "literal_error": "Consumers whether are willing to buy it is still hard to say.",
+              "part": 3,
+              "explanation_zh": "中文拿整個「消費者是否願意購買」當主詞；英文要改成 whether 名詞子句，習慣寫成 It is hard to say whether …，子句內用直述句語序。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "However, plant-based meat still costs more than regular beef, and only time will tell whether consumers are willing to pay for it.",
+              "explanation_zh": "用 only time will tell（只有時間能證明）表達「還很難說」，比較的對象改用 than 直接帶出。"
+            }
+          ],
+          "restructuring_zh": "「消費者是否願意購買還很難說」中文以問句當主詞，英文習慣改成 it is hard to say whether …，把 whether 子句放到句尾。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ac-V-3",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "C-V-4",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-top-03",
+    "lot": "translation-top-03",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "31117a6d4ea07290a38612cba619cca8744c8f0cc9141fe199063ce8d6f7050e",
+    "spec_id": "translation-top@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T13:17:15Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "warn",
+      "created_at": "2026-10-09T12:52:43Z",
+      "details": {
+        "solver": "A",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Replacing beef with plant-based meat can reduce the greenhouse gases produced by raising cattle, thus slowing down global warming.",
+            "confidence": "high",
+            "explanation_zh": "動名詞片語當主詞；replace A with B 要注意 A 是被取代的牛肉；「養牛產生的」用過去分詞片語 produced by raising cattle 後位修飾；「進而減緩」是結果，用句尾分詞 thus slowing down。"
+          },
+          "2": {
+            "translation": "However, compared with regular beef, plant-based meat is still relatively expensive, so it is hard to say whether consumers will be willing to buy it.",
+            "confidence": "high",
+            "explanation_zh": "「相較於」用分詞片語 compared with；「價格偏高」直接說 relatively expensive，避免 the price is expensive 的搭配錯誤；兩個子句用 so 連接，避免逗號接句；「是否…還很難說」用 whether 名詞子句當 say 的受詞。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PART",
+              "NFSUBJ"
+            ],
+            "used_target_words": [
+              "replace",
+              "beef",
+              "reduce",
+              "greenhouse",
+              "cattle"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "NCL",
+              "COMP"
+            ],
+            "used_target_words": [
+              "compare",
+              "expensive",
+              "consumer",
+              "hard"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "warn",
+            "parts_check": "pass",
+            "issues_zh": [
+              "參考譯文 2「in comparison with regular beef, the price of plant-based meat is still higher」比較的對象不對稱：拿「一般牛肉」和「植物肉的價格」比，嚴格說要寫 compared with that of regular beef，或改成 plant-based meat is still more expensive。第 2 部分 accepted 的 the price of plant-based meat is still higher 和第 1 部分的 compared with regular beef 組起來也是同樣的問題。這一句的常見錯誤正好在教「price 和 expensive 的搭配」，範句本身最好也示範對稱的比較。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "replace",
+              "beef",
+              "reduce",
+              "greenhouse",
+              "cattle"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PART": true,
+              "NFSUBJ": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "compare",
+              "expensive",
+              "consumer",
+              "hard"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NCL": true,
+              "COMP": false
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 2 題驗證者說用了句型 COMP，程式在譯文裡看不出來",
+          "第 2 題驗證者對參考譯文有意見（warn）：參考譯文 2「in comparison with regular beef, the price of plant-based meat is still higher」比較的對象不對稱：拿「一般牛肉」和「植物肉的價格」比，嚴格說要寫 c"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "fail",
+      "created_at": "2026-10-09T12:59:49Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Replacing beef with plant-based meat can reduce the greenhouse gases produced by raising cattle, thus slowing down global warming.",
+            "confidence": "high",
+            "explanation_zh": "「用 A 取代 B」譯為 replace B with A（用植物肉取代牛肉＝replace beef with plant-based meat），動名詞當主詞；「養牛產生的溫室氣體」用過去分詞後置修飾；「進而減緩全球暖化」用 thus + 現在分詞表示結果。"
+          },
+          "2": {
+            "translation": "However, compared with regular beef, plant-based meat is still relatively expensive, and it is hard to say whether consumers will be willing to buy it.",
+            "confidence": "high",
+            "explanation_zh": "「相較於」用 compared with；「價格偏高」直接說 relatively expensive 比 the price is high 自然；「是否願意購買還很難說」用虛主詞 it is hard to say whether …。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PART",
+              "NFSUBJ"
+            ],
+            "used_target_words": [
+              "replace",
+              "beef",
+              "reduce",
+              "greenhouse",
+              "cattle"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "NCL"
+            ],
+            "used_target_words": [
+              "compare",
+              "expensive",
+              "consumer",
+              "hard"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "「仍然偏高」我自然譯成 relatively expensive（第 2 部分的 accepted 也收這個寫法），句中沒有比較級，所以 COMP（Compared with + N, S + be + 比較級）只用到 compared with 的開頭，比較級沒被引出；中文沒有逼人用 more expensive／higher。",
+              "第 2 部分的 accepted 收了 relatively expensive，目標卻標 COMP，標記前後不一致：學生寫這個寫法可以拿到該部分的分數，卻沒練到比較級。建議中文改成更明確的比較（例如「比一般牛肉貴」），或把 relatively expensive 從 accepted 拿掉。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "replace",
+              "beef",
+              "reduce",
+              "greenhouse",
+              "cattle"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PART": true,
+              "NFSUBJ": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "compare",
+              "expensive",
+              "consumer",
+              "hard"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NCL": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 2 題盲譯沒有用到標的句型 ['COMP']：中文題目沒有自然引出這個句型（SPEC §5.7）",
+          "第 2 題驗證者對4 部分切分有意見（warn）：「仍然偏高」我自然譯成 relatively expensive（第 2 部分的 accepted 也收這個寫法），句中沒有比較級，所以 COMP（Compared with + N, S + be + 比較級）只用到 compared w"
+        ]
+      }
+    }
+  ],
+  "status": "rejected",
+  "status_reason": "blind_solver:B 未通過：第 2 題盲譯沒有用到標的句型 ['COMP']：中文題目沒有自然引出這個句型（SPEC §5.7）；第 2 題驗證者對4 部分切分有意見（warn）：「仍然偏高」我自然譯成 relatively expensive（第 2 部分的 accepted 也收這個寫法），句中沒有比較級，所以 COMP（Compared with + N, S + be + 比較級）只用到 compared w"
+}

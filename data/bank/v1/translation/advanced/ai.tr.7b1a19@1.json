@@ -1,0 +1,709 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.7b1a19",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "advanced",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "越多消費者習慣用手機付款，由機器經營的商店就會越普遍。",
+        "options": null,
+        "answer": "The more consumers get used to paying by phone, the more common stores run by machines will become.",
+        "accepted_answers": [
+          "The more consumers become used to paying with their phones, the more common stores operated by machines will be.",
+          "The more customers are used to paying with their phones, the more common stores run by machines will become."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "愈…愈…（the more …, the more …）",
+            "分詞片語後位修飾"
+          ],
+          "topic": "無人商店"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "和在櫃檯排隊結帳相比，離開前掃描手機付款方便多了。",
+        "options": null,
+        "answer": "Compared with lining up to pay at the counter, scanning your phone before leaving is much more convenient.",
+        "accepted_answers": [
+          "Compared to waiting in line at the counter, paying by scanning your phone before leaving is far more convenient.",
+          "Compared with standing in line at the counter, scanning your phone to pay before leaving is a lot more convenient."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "相較於…（Compared with）",
+            "連接詞＋分詞（before leaving）"
+          ],
+          "topic": "無人商店"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "無人商店"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「越…，就越…」用 The + 比較級 + S + V, the + 比較級 + S + V：The more consumers get used to …, the more common … will become，第二個子句的形容詞 common 要跟著 the more 移到最前面。「習慣做…」是 get／be used to + V-ing（to 是介系詞）。「由機器經營的商店」中文把修飾語放前面，英文用過去分詞片語後位修飾：stores run (operated) by machines，商店是被經營，所以用過去分詞 run。",
+          "evidence": [
+            "越多消費者習慣用手機付款",
+            "由機器經營的商店"
+          ],
+          "strategy_zh": "「越…越…」先把兩個比較級各放到子句開頭；「被…的＋名詞」想「名詞＋過去分詞片語」。",
+          "hints": [
+            "切成四段：越多消費者／習慣用手機付款／由機器經營的商店／就會越普遍",
+            "標的詞彙：consumer（消費者）、pay（付款）、phone（手機）、machine（機器）、run（經營，也可用 operate）、common（普遍的）",
+            "句型框架：The more + S + V …, the more + adj. + N + p.p. … + will become"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「和…相比」用 Compared with／to + 名詞或動名詞放句首：Compared with lining up to pay at the counter（with 是介系詞，後面用 V-ing）。後半句的主詞是「離開前掃描手機付款」這個動作，用動名詞 scanning your phone；「離開前」可以寫成連接詞＋分詞 before leaving。「方便多了」是比較級，用 much／far／a lot + more convenient。",
+          "evidence": [
+            "和在櫃檯排隊結帳相比",
+            "離開前掃描手機付款"
+          ],
+          "strategy_zh": "「和…相比」想 Compared with；before／after／when 後面省略主詞時接 V-ing；「…多了」用 much + 比較級。",
+          "hints": [
+            "切成四段：和在櫃檯排隊結帳相比／離開前／掃描手機付款／方便多了",
+            "標的詞彙：counter（櫃檯）、line（排隊；line up／wait in line）、scan（掃描）、phone（手機）、leave（離開）、convenient（方便的）",
+            "句型框架：Compared with + V-ing …, V-ing … before + V-ing + is much more + adj."
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "The more consumers get used to paying by phone, the more common stores run by machines will become.",
+            "The more consumers become used to paying with their phones, the more common stores operated by machines will be.",
+            "The more customers are used to paying with their phones, the more common stores run by machines will become."
+          ],
+          "target_words": [
+            {
+              "word": "consumer",
+              "zh": "消費者",
+              "alternatives": [
+                "customer"
+              ]
+            },
+            {
+              "word": "pay",
+              "zh": "付款"
+            },
+            {
+              "word": "phone",
+              "zh": "手機"
+            },
+            {
+              "word": "machine",
+              "zh": "機器"
+            },
+            {
+              "word": "run",
+              "zh": "經營",
+              "alternatives": [
+                "operate"
+              ]
+            },
+            {
+              "word": "common",
+              "zh": "普遍的",
+              "alternatives": [
+                "popular"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "COMP",
+              "grammar_id": "gp-the-more",
+              "label_zh": "愈…愈…（The more …, the more …）",
+              "frame": "The + 比較級 + S + V, the + 比較級 + S + V",
+              "zh_trigger": "越多消費者"
+            },
+            {
+              "code": "PART",
+              "grammar_id": "gp-participle-modifier",
+              "label_zh": "分詞片語後位修飾（stores run by machines）",
+              "frame": "N + p.p. + by …（被…經營的 N）",
+              "zh_trigger": "由機器經營的商店"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "越多消費者",
+              "accepted": [
+                "The more consumers",
+                "The more customers",
+                "The more shoppers",
+                "The more people"
+              ],
+              "targets": [
+                "COMP",
+                "consumer"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "More consumers",
+                  "right": "The more consumers",
+                  "explanation_zh": "「越…越…」用 The + 比較級 …, the + 比較級 …，兩個 the 都不能省。"
+                },
+                {
+                  "wrong": "The more and more consumers",
+                  "right": "The more consumers",
+                  "explanation_zh": "「越…越…」是 the more …, the more …，不是「越來越」more and more。"
+                }
+              ]
+            },
+            {
+              "zh": "習慣用手機付款",
+              "accepted": [
+                "get used to paying by phone",
+                "become used to paying with their phones",
+                "are used to paying with their phones",
+                "get used to paying with their phones",
+                "are used to paying by phone",
+                "get used to paying with mobile phones"
+              ],
+              "targets": [
+                "pay",
+                "phone"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "get used to pay by phone",
+                  "right": "get used to paying by phone",
+                  "explanation_zh": "be／get used to 的 to 是介系詞，後面接動名詞 paying。"
+                }
+              ]
+            },
+            {
+              "zh": "由機器經營的商店",
+              "accepted": [
+                "stores run by machines",
+                "stores operated by machines",
+                "shops run by machines",
+                "stores that are run by machines",
+                "stores run by machines alone"
+              ],
+              "targets": [
+                "PART",
+                "machine",
+                "run"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "run by machines stores",
+                  "right": "stores run by machines",
+                  "explanation_zh": "分詞片語 run by machines 要放在名詞 stores 後面修飾。"
+                },
+                {
+                  "wrong": "stores running by machines",
+                  "right": "stores run by machines",
+                  "explanation_zh": "商店是「被」經營，用過去分詞 run（被動），不用 running。"
+                }
+              ]
+            },
+            {
+              "zh": "就會越普遍",
+              "accepted": [
+                "the more common",
+                "the more popular",
+                "the more widespread",
+                "the more commonly seen"
+              ],
+              "targets": [
+                "COMP",
+                "common"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "the more stores run by machines will become common",
+                  "right": "the more common stores run by machines will become",
+                  "explanation_zh": "「the + 比較級」要放在子句最前面：the more common + 主詞 + 動詞。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "word_form",
+              "zh": "習慣用手機付款",
+              "literal_error": "The more consumers get used to pay by phone, the more common stores run by machines will become.",
+              "part": 2,
+              "explanation_zh": "get／be used to 的 to 是介系詞，後面要接動名詞 paying。"
+            },
+            {
+              "type": "prenominal_modifier",
+              "zh": "由機器經營的商店",
+              "literal_error": "The more consumers get used to paying by phone, the more run by machines stores will be common.",
+              "part": 3,
+              "explanation_zh": "「由機器經營的商店」照中文把修飾語放在前面不通；英文用過去分詞片語後位修飾 stores run by machines。"
+            }
+          ],
+          "bonus": [],
+          "restructuring_zh": "「由機器經營的商店」是前置修飾，英文改成名詞＋過去分詞片語 stores run by machines；「越…越…」的兩個比較級都要移到各自子句的最前面。"
+        },
+        "2": {
+          "references": [
+            "Compared with lining up to pay at the counter, scanning your phone before leaving is much more convenient.",
+            "Compared to waiting in line at the counter, paying by scanning your phone before leaving is far more convenient.",
+            "Compared with standing in line at the counter, scanning your phone to pay before leaving is a lot more convenient."
+          ],
+          "target_words": [
+            {
+              "word": "counter",
+              "zh": "櫃檯"
+            },
+            {
+              "word": "line",
+              "zh": "排隊（line up／wait in line）",
+              "alternatives": [
+                "queue"
+              ]
+            },
+            {
+              "word": "scan",
+              "zh": "掃描"
+            },
+            {
+              "word": "phone",
+              "zh": "手機"
+            },
+            {
+              "word": "leave",
+              "zh": "離開"
+            },
+            {
+              "word": "convenient",
+              "zh": "方便的"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "COMP",
+              "grammar_id": "gp-compared-with",
+              "label_zh": "相較於…（Compared with …）",
+              "frame": "Compared with/to + N/V-ing, S + V …",
+              "zh_trigger": "相比"
+            },
+            {
+              "code": "PART",
+              "grammar_id": "gp-conj-participle",
+              "label_zh": "連接詞＋分詞（before leaving）",
+              "frame": "before/after/when + V-ing …",
+              "zh_trigger": "離開前"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "和在櫃檯排隊結帳相比",
+              "accepted": [
+                "Compared with lining up to pay at the counter",
+                "Compared to waiting in line at the counter",
+                "Compared with standing in line at the counter",
+                "Compared with waiting in line to pay at the counter",
+                "Compared with lining up at the counter",
+                "In comparison with lining up at the counter"
+              ],
+              "targets": [
+                "COMP",
+                "counter",
+                "line"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Compare with lining up at the counter",
+                  "right": "Compared with lining up at the counter",
+                  "explanation_zh": "「和…相比」用過去分詞 Compared with／to 開頭；Compare 開頭會變成祈使句。"
+                },
+                {
+                  "wrong": "Compared with line up at the counter",
+                  "right": "Compared with lining up at the counter",
+                  "explanation_zh": "with 是介系詞，後面接動名詞 lining up。"
+                }
+              ]
+            },
+            {
+              "zh": "離開前",
+              "accepted": [
+                "before leaving",
+                "before leaving the store",
+                "before walking out",
+                "before you leave"
+              ],
+              "targets": [
+                "PART",
+                "leave"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "before leave",
+                  "right": "before leaving",
+                  "explanation_zh": "before 後面接動名詞 leaving，或完整子句 before you leave。"
+                }
+              ]
+            },
+            {
+              "zh": "掃描手機付款",
+              "accepted": [
+                "scanning your phone",
+                "paying by scanning your phone",
+                "scanning your phone to pay",
+                "scanning a phone to pay",
+                "paying with your phone",
+                "scanning their phones to pay"
+              ],
+              "targets": [
+                "scan",
+                "phone"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "scan your phone to pay is",
+                  "right": "scanning your phone to pay is",
+                  "explanation_zh": "動作當主詞要用動名詞 scanning。"
+                }
+              ]
+            },
+            {
+              "zh": "方便多了",
+              "accepted": [
+                "is much more convenient",
+                "is far more convenient",
+                "is a lot more convenient",
+                "is much easier"
+              ],
+              "targets": [
+                "convenient"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "is very more convenient",
+                  "right": "is much more convenient",
+                  "explanation_zh": "比較級前面用 much／far／a lot 加強語氣，不用 very。"
+                },
+                {
+                  "wrong": "is much convenient",
+                  "right": "is much more convenient",
+                  "explanation_zh": "convenient 的比較級是 more convenient。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "word_form",
+              "zh": "相比",
+              "literal_error": "Compare with line up at the counter, scanning your phone before leaving is much more convenient.",
+              "part": 1,
+              "explanation_zh": "「和…相比」要用過去分詞 Compared with，with 後面的動作用動名詞 lining up。"
+            },
+            {
+              "type": "verbal_subject",
+              "zh": "掃描手機付款",
+              "literal_error": "Compared with lining up to pay at the counter, before leave scan phone pay is more convenient much.",
+              "part": 3,
+              "explanation_zh": "「離開前掃描手機付款」整個動作是主詞，英文用動名詞片語 scanning your phone before leaving 當主詞。"
+            }
+          ],
+          "bonus": [],
+          "restructuring_zh": "「離開前掃描手機付款」是動作當主詞，英文改成動名詞主詞 scanning your phone before leaving；「和…相比」用 Compared with + V-ing 放在句首。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-advanced-04",
+    "lot": "translation-advanced-04",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "4c825c0a94fac9dc54e263ee5e16ad1f93b574fa99d23ce45a0c738ed355d865",
+    "spec_id": "translation-advanced@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T13:07:08Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "fail",
+      "created_at": "2026-10-09T13:07:08Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "The more consumers get used to paying with their phones, the more common stores run by machines will become.",
+            "confidence": "high",
+            "explanation_zh": "「越…就越…」用 the 比較級…, the 比較級…；「習慣用手機付款」用 get used to + V-ing；「由機器經營的商店」用過去分詞片語 run by machines 後置修飾。"
+          },
+          "2": {
+            "translation": "Compared with lining up at the counter to check out, scanning your phone to pay before you leave is much more convenient.",
+            "confidence": "high",
+            "explanation_zh": "「和…相比」用 Compared with + V-ing；「掃描手機付款」是動作當主詞，用動名詞 scanning；「方便多了」用 much more convenient；中文泛指，用 your/you。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "COMP",
+              "PART"
+            ],
+            "used_target_words": [
+              "consumer",
+              "pay",
+              "phone",
+              "machine",
+              "run",
+              "common"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "COMP"
+            ],
+            "used_target_words": [
+              "counter",
+              "line",
+              "scan",
+              "phone",
+              "leave",
+              "convenient"
+            ],
+            "within_accepted": true,
+            "closest_reference": 2,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "標的句型 PART（連接詞＋分詞 before leaving）沒有被中文自然引出：「離開前」直接譯成 before you leave 一樣自然，我的盲譯就是這樣寫，而且第 2 部分 accepted 本身也收了 before you leave，等於句型目標和可接受寫法互相矛盾。",
+              "建議把這一句的第二個句型換成中文確實會逼出來的「動名詞當主詞」（scanning your phone to pay … is much more convenient，restructuring_zh 也是這樣說明），或刪掉 accepted 的 before you leave 並改寫中文讓 before + V-ing 成為唯一自然的寫法。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "consumer",
+              "pay",
+              "phone",
+              "machine",
+              "run",
+              "common"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "COMP": true,
+              "PART": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "counter",
+              "line",
+              "scan",
+              "phone",
+              "leave",
+              "convenient"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "COMP": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 2 題盲譯沒有用到標的句型 ['PART']：中文題目沒有自然引出這個句型（SPEC §5.7）",
+          "第 2 題驗證者對4 部分切分有意見（warn）：標的句型 PART（連接詞＋分詞 before leaving）沒有被中文自然引出：「離開前」直接譯成 before you leave 一樣自然，我的盲譯就是這樣寫，而且第 2 部分 accepted 本身也收了 before you l"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "fail",
+      "created_at": "2026-10-09T12:50:33Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "The more consumers get used to paying with their phones, the more common stores run by machines will become.",
+            "confidence": "high",
+            "explanation_zh": "「越……就越……」用 the more ..., the more ...；「習慣」用 get used to + V-ing；「由機器經營的商店」用過去分詞後置修飾 stores run by machines。"
+          },
+          "2": {
+            "translation": "Compared with standing in line at the checkout counter, scanning your phone to pay before you leave is much more convenient.",
+            "confidence": "high",
+            "explanation_zh": "「和……相比」用 compared with + V-ing；「方便多了」用 much more convenient（much 修飾比較級）；動名詞 scanning 當主詞。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "COMP",
+              "PART"
+            ],
+            "used_target_words": [
+              "consumer",
+              "pay",
+              "phone",
+              "machine",
+              "run",
+              "common"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "COMP"
+            ],
+            "used_target_words": [
+              "counter",
+              "line",
+              "scan",
+              "phone",
+              "leave",
+              "convenient"
+            ],
+            "within_accepted": true,
+            "closest_reference": 2,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "標的句型 PART（gp-conj-participle：before + V-ing）沒有被中文自然引出：「離開前」我自然譯成 before you leave（子句），沒有用 before leaving；第 2 部分 accepted 也收 before you leave，與標的句型 PART 互相矛盾（收進來的寫法並沒有用到該句型）。建議刪掉 accepted 裡的子句寫法、並讓中文更強制分詞構句（例如省略主詞的情境），或把 PART 從這一句的標的句型拿掉。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "consumer",
+              "pay",
+              "phone",
+              "machine",
+              "run",
+              "common"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "COMP": true,
+              "PART": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "counter",
+              "line",
+              "scan",
+              "phone",
+              "leave",
+              "convenient"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "COMP": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 2 題盲譯沒有用到標的句型 ['PART']：中文題目沒有自然引出這個句型（SPEC §5.7）",
+          "第 2 題驗證者對4 部分切分有意見（warn）：標的句型 PART（gp-conj-participle：before + V-ing）沒有被中文自然引出：「離開前」我自然譯成 before you leave（子句），沒有用 before leaving；第 2 部分 accepted"
+        ]
+      }
+    }
+  ],
+  "status": "rejected",
+  "status_reason": "blind_solver:A 未通過：第 2 題盲譯沒有用到標的句型 ['PART']：中文題目沒有自然引出這個句型（SPEC §5.7）；第 2 題驗證者對4 部分切分有意見（warn）：標的句型 PART（連接詞＋分詞 before leaving）沒有被中文自然引出：「離開前」直接譯成 before you leave 一樣自然，我的盲譯就是這樣寫，而且第 2 部分 accepted 本身也收了 before you l；blind_solver:B 未通過：第 2 題盲譯沒有用到標的句型 ['PART']：中文題目沒有自然引出這個句型（SPEC §5.7）；第 2 題驗證者對4 部分切分有意見（warn）：標的句型 PART（gp-conj-participle：before + V-ing）沒有被中文自然引出：「離開前」我自然譯成 before you leave（子句），沒有用 before leaving；第 2 部分 accepted；判定者人工審查（第 1 輪）：同意退回。第 2 題標的句型 PART（連接詞＋分詞 before leaving）沒有被中文唯一引出：「離開前」兩位驗證者都自然譯成子句 before you leave，第 2 部分 accepted 本身也收了 before you leave，標的句型和評分規準互相矛盾。另外首選譯文 scanning your phone before leaving 沒有譯出「付款」，第 3 部分 accepted 也收了不含 pay 的 scanning your phone；第 1 部分收了不含「結帳」的 Compared with lining up at the counter，規準對漏譯的處理不一致。重生時把第二個句型換成中文確實會逼出來的動名詞主詞（NFSUBJ：scanning your phone to pay … is much more convenient），或改寫中文讓 before + V-ing 成為唯一自然的寫法並刪掉子句寫法；首選譯文補上 to pay。第 1 題沒有問題。"
+}

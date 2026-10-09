@@ -1,0 +1,736 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.eb8e45",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "advanced",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "全組一起完成的報告，通常比一個人包辦的報告更有創意。",
+        "options": null,
+        "answer": "Reports finished by the whole group are usually more creative than those done by a single person.",
+        "accepted_answers": [
+          "Reports completed by the whole team are usually more creative than reports done by just one person.",
+          "A report finished by all the group members is usually more creative than one done by a single member."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "分詞片語後位修飾",
+            "比較級"
+          ],
+          "topic": "分組報告"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "完成幾次分組報告後，學生們也越來越懂得與組員溝通合作。",
+        "options": null,
+        "answer": "After finishing several group projects, students also become better and better at communicating and cooperating with their group members.",
+        "accepted_answers": [
+          "After completing a few group reports, students also get better and better at communicating and working with group members.",
+          "After doing several group projects, students also grow better and better at communicating and cooperating with other members."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "連接詞＋分詞",
+            "越來越…"
+          ],
+          "topic": "分組報告"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "分組報告"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「全組一起完成的報告」是被完成的，用過去分詞片語放在名詞後面：reports finished by the whole group。「比一個人包辦的報告更有創意」用比較級 more creative than，比較對象要對等，用 those done by a single person 代替 reports done by …。creative 是多音節形容詞，比較級寫 more creative。",
+          "evidence": [
+            "全組一起完成的報告",
+            "比一個人包辦的報告更有創意"
+          ],
+          "strategy_zh": "「被…的＋名詞」先寫名詞，再接 p.p. 片語；寫比較句前先確認兩邊比的是同一類東西。",
+          "hints": [
+            "切成四段：全組一起完成的報告／通常／比一個人包辦的報告／更有創意",
+            "標的詞彙：report（報告，L1）、group（組，L1）、finish（完成，L1）、usually（通常，L1）、single（單一的，L2）、creative（有創意的，L3）",
+            "句型框架：N + p.p. + by … + be + more + adj. + than + those + p.p. + by …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「完成…後」和主要子句主詞相同，用 After + V-ing：After finishing several group projects。「越來越懂得與組員溝通合作」用「比較級 and 比較級」：become better and better at communicating and cooperating with their group members；at 是介系詞，後面兩個動詞都用 V-ing，保持平行。",
+          "evidence": [
+            "完成幾次分組報告後",
+            "越來越懂得"
+          ],
+          "strategy_zh": "「越來越＋形容詞」用「比較級 and 比較級」；good 的比較級是 better，不要寫 more better。",
+          "hints": [
+            "切成四段：完成幾次分組報告後／學生們也越來越懂得／與組員／溝通合作",
+            "標的詞彙：finish（完成，L1）、project（專題報告，L2）、communicate（溝通，L3）、cooperate（合作，L4）、member（組員，L1）",
+            "句型框架：After + V-ing …, S + also become + better and better at + V-ing and V-ing + with …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "Reports finished by the whole group are usually more creative than those done by a single person.",
+            "Reports completed by the whole team are usually more creative than reports done by just one person.",
+            "A report finished by all the group members is usually more creative than one done by a single member."
+          ],
+          "target_words": [
+            {
+              "word": "report",
+              "zh": "報告"
+            },
+            {
+              "word": "group",
+              "zh": "（小）組",
+              "alternatives": [
+                "team",
+                "member"
+              ]
+            },
+            {
+              "word": "finish",
+              "zh": "完成",
+              "alternatives": [
+                "complete",
+                "do"
+              ]
+            },
+            {
+              "word": "usually",
+              "zh": "通常",
+              "alternatives": [
+                "often",
+                "generally",
+                "tend"
+              ]
+            },
+            {
+              "word": "single",
+              "zh": "單一的（一個人）",
+              "alternatives": [
+                "one",
+                "alone"
+              ]
+            },
+            {
+              "word": "creative",
+              "zh": "有創意的",
+              "alternatives": [
+                "creativity"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PART",
+              "grammar_id": "gp-participle-modifier",
+              "label_zh": "過去分詞片語後位修飾名詞",
+              "frame": "N + p.p. + by …（Reports finished by …）",
+              "zh_trigger": "全組一起完成的報告"
+            },
+            {
+              "code": "COMP",
+              "grammar_id": "gp-comparative-superlative",
+              "label_zh": "比較級（以 those／one 代替前面的名詞）",
+              "frame": "A + be + more + adj. + than + those/one + p.p. …",
+              "zh_trigger": "比一個人包辦的報告更有創意"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "全組一起完成的報告",
+              "accepted": [
+                "Reports finished by the whole group",
+                "Reports completed by the whole team",
+                "A report finished by all the group members",
+                "Reports done by the whole group",
+                "Reports completed by the whole group",
+                "Reports that the whole group finishes together"
+              ],
+              "targets": [
+                "report",
+                "group",
+                "finish",
+                "PART"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "The whole group together finished reports",
+                  "right": "Reports finished by the whole group",
+                  "explanation_zh": "「全組一起完成的報告」修飾語很長，英文要把分詞片語放在名詞後面（後位修飾）。"
+                },
+                {
+                  "wrong": "Reports finishing by the whole group",
+                  "right": "Reports finished by the whole group",
+                  "explanation_zh": "報告是「被」完成的，用過去分詞 finished，不是現在分詞。"
+                }
+              ]
+            },
+            {
+              "zh": "通常",
+              "accepted": [
+                "usually",
+                "often",
+                "generally",
+                "tend to be"
+              ],
+              "targets": [
+                "usually"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "are usual more creative",
+                  "right": "are usually more creative",
+                  "explanation_zh": "修飾形容詞要用副詞 usually。"
+                }
+              ]
+            },
+            {
+              "zh": "比一個人包辦的報告",
+              "accepted": [
+                "than those done by a single person",
+                "than reports done by just one person",
+                "than one done by a single member",
+                "than those done by only one person",
+                "than those done by one person alone",
+                "than those completed by one person"
+              ],
+              "targets": [
+                "single",
+                "COMP",
+                "PART"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "than a single person",
+                  "right": "than those done by a single person",
+                  "explanation_zh": "比較的對象要對等：報告要和報告比，不能拿報告和「一個人」比；用 those 代替 reports。"
+                },
+                {
+                  "wrong": "than that done by a single person",
+                  "right": "than those done by a single person",
+                  "explanation_zh": "代替複數的 reports 要用 those；單數才用 that 或 one。"
+                }
+              ]
+            },
+            {
+              "zh": "更有創意",
+              "accepted": [
+                "more creative",
+                "more original",
+                "show more creativity"
+              ],
+              "targets": [
+                "creative",
+                "COMP"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "more creativity",
+                  "right": "more creative",
+                  "explanation_zh": "be 動詞後面要用形容詞 creative，creativity 是名詞（名詞↔形容詞）。"
+                },
+                {
+                  "wrong": "creativer",
+                  "right": "more creative",
+                  "explanation_zh": "多音節形容詞的比較級用 more + 原級。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "prenominal_modifier",
+              "zh": "全組一起完成的報告",
+              "literal_error": "The whole group together finished reports are usually more creative than one person do all the reports.",
+              "part": 1,
+              "explanation_zh": "中文的長前置修飾要改成後位的分詞片語 reports finished by the whole group。"
+            },
+            {
+              "type": "word_form",
+              "zh": "更有創意",
+              "literal_error": "Reports finished by the whole group usually have more creative than those done by a single person.",
+              "part": 4,
+              "explanation_zh": "「有創意」是形容詞 creative；用 have 就要接名詞 creativity，詞性要配合動詞。"
+            }
+          ],
+          "bonus": [],
+          "restructuring_zh": "兩個「…的報告」都是前置修飾，英文改成後位的過去分詞片語：reports finished by the whole group、those done by a single person；第二個 reports 用 those 代替，避免重複。"
+        },
+        "2": {
+          "references": [
+            "After finishing several group projects, students also become better and better at communicating and cooperating with their group members.",
+            "After completing a few group reports, students also get better and better at communicating and working with group members.",
+            "After doing several group projects, students also grow better and better at communicating and cooperating with other members."
+          ],
+          "target_words": [
+            {
+              "word": "finish",
+              "zh": "完成",
+              "alternatives": [
+                "complete",
+                "do"
+              ]
+            },
+            {
+              "word": "project",
+              "zh": "（分組）報告、專題",
+              "alternatives": [
+                "report"
+              ]
+            },
+            {
+              "word": "communicate",
+              "zh": "溝通"
+            },
+            {
+              "word": "cooperate",
+              "zh": "合作",
+              "alternatives": [
+                "work with",
+                "work together",
+                "work"
+              ]
+            },
+            {
+              "word": "member",
+              "zh": "組員",
+              "alternatives": [
+                "teammate",
+                "partner"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PART",
+              "grammar_id": "gp-conj-participle",
+              "label_zh": "連接詞＋分詞（After + V-ing）",
+              "frame": "After + V-ing …, S + V …",
+              "zh_trigger": "完成幾次分組報告後"
+            },
+            {
+              "code": "COMP",
+              "grammar_id": "gp-more-and-more",
+              "label_zh": "越來越…（比較級 and 比較級）",
+              "frame": "S + become/get + better and better at + V-ing",
+              "zh_trigger": "越來越"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "完成幾次分組報告後",
+              "accepted": [
+                "After finishing several group projects",
+                "After completing a few group reports",
+                "After doing several group projects",
+                "After finishing a few group projects",
+                "After completing several group projects",
+                "After having finished several group projects"
+              ],
+              "targets": [
+                "finish",
+                "project",
+                "PART"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "After finish several group projects",
+                  "right": "After finishing several group projects",
+                  "explanation_zh": "after 在這裡後面接 V-ing（或完整子句 after they finish …），不能接原形動詞。"
+                },
+                {
+                  "wrong": "After finishing several group project",
+                  "right": "After finishing several group projects",
+                  "explanation_zh": "several 後面接複數名詞。"
+                }
+              ]
+            },
+            {
+              "zh": "學生們也越來越懂得",
+              "accepted": [
+                "students also become better and better at",
+                "students also get better and better at",
+                "students also grow better and better at",
+                "students become better and better at",
+                "students also become more and more skilled at"
+              ],
+              "targets": [
+                "COMP"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "students also become more and more better at",
+                  "right": "students also become better and better at",
+                  "explanation_zh": "better 已經是比較級，前面不能再加 more。"
+                },
+                {
+                  "wrong": "students also more and more understand how to",
+                  "right": "students also become better and better at",
+                  "explanation_zh": "「越來越懂得…」用「become + 比較級 and 比較級 + at V-ing」，more and more 不能直接修飾動詞 understand。"
+                }
+              ]
+            },
+            {
+              "zh": "與組員",
+              "accepted": [
+                "with their group members",
+                "with group members",
+                "with other members",
+                "with their teammates",
+                "with the other members of the group"
+              ],
+              "targets": [
+                "member"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "with their group member",
+                  "right": "with their group members",
+                  "explanation_zh": "組員不只一位，用複數 members。"
+                }
+              ]
+            },
+            {
+              "zh": "溝通合作",
+              "accepted": [
+                "communicating and cooperating",
+                "communicating and working",
+                "communicating and working together"
+              ],
+              "targets": [
+                "communicate",
+                "cooperate"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "communicating and cooperate",
+                  "right": "communicating and cooperating",
+                  "explanation_zh": "and 連接的兩個動詞要同樣形式（平行結構），都放在介系詞 at 後面，用 V-ing。"
+                },
+                {
+                  "wrong": "communicate and cooperate",
+                  "right": "communicating and cooperating",
+                  "explanation_zh": "介系詞 at 後面要接動名詞。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "redundancy",
+              "zh": "越來越",
+              "literal_error": "students also become more and more better at communicating and cooperating with their group members",
+              "part": 2,
+              "explanation_zh": "better 本身就是比較級，再加 more 是重複。"
+            },
+            {
+              "type": "word_form",
+              "zh": "完成幾次分組報告後",
+              "literal_error": "After finish several group projects, students also become better and better at communicating.",
+              "part": 1,
+              "explanation_zh": "介系詞 after 後面接動名詞 finishing。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "The more group projects students finish, the better they become at communicating and cooperating with others.",
+              "explanation_zh": "用「the + 比較級…, the + 比較級…」（愈…愈…）把做報告的次數和溝通合作的能力連在一起，是更進階的寫法。",
+              "grammar_id": "gp-the-more"
+            }
+          ]
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-advanced-02",
+    "lot": "translation-advanced-02",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "dab2f301b2dd4cfd48bfd913df11ca683b0620cee3b8b044ef9794bc46049e02",
+    "spec_id": "translation-advanced@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T12:57:12Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T07:52:07Z",
+      "details": {
+        "solver": "A",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Reports completed by the whole group together are usually more creative than those done by one person alone.",
+            "confidence": "high",
+            "explanation_zh": "「全組一起完成的報告」用過去分詞片語後位修飾 completed by the whole group；「比……更有創意」用比較級 more creative than；比較對象用 those 代替 reports，後接 done by one person alone 譯「一個人包辦」。"
+          },
+          "2": {
+            "translation": "After completing several group reports, the students have also become better and better at communicating and cooperating with their group members.",
+            "confidence": "medium",
+            "explanation_zh": "「完成幾次……後」用 After + V-ing；「越來越懂得」用 become better and better at + V-ing（也可 increasingly know how to）；時態用現在完成式表變化至今。「越來越」的寫法很多，故信心 medium。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PART",
+              "COMP"
+            ],
+            "used_target_words": [
+              "report",
+              "group",
+              "finish",
+              "usually",
+              "single",
+              "creative"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "（不影響判定）我的寫法 Reports completed by the whole group together 比 accepted 多了 together（對應「一起」），屬同義小差異。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "PART",
+              "COMP"
+            ],
+            "used_target_words": [
+              "finish",
+              "project",
+              "communicate",
+              "cooperate",
+              "member"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "（不影響判定）第 2 部分 accepted 只有現在式 students also become/get/grow better and better at；我用現在完成式 the students have also become better and better at（表示到現在的變化），同樣正確，建議補進 accepted。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "report",
+              "group",
+              "finish",
+              "usually",
+              "single",
+              "creative"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PART": true,
+              "COMP": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "finish",
+              "project",
+              "communicate",
+              "cooperate",
+              "member"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PART": true,
+              "COMP": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T12:57:12Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Reports completed by the whole group together are usually more creative than those done by one person alone.",
+            "confidence": "high",
+            "explanation_zh": "「全組一起完成的報告」用過去分詞後置修飾 reports completed by ...；「比……更有創意」用比較級 more creative than；用 those 避免重複 reports。"
+          },
+          "2": {
+            "translation": "After finishing several group reports, students also get better and better at communicating and cooperating with their group members.",
+            "confidence": "medium",
+            "explanation_zh": "「完成幾次分組報告後」用 After + 動名詞；「越來越懂得」用 better and better at + 動名詞；『也』用 also。『越來越懂得』時態可用現在簡單式或現在完成式，所以信心 medium。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PART",
+              "COMP"
+            ],
+            "used_target_words": [
+              "report",
+              "group",
+              "finish",
+              "usually",
+              "single",
+              "creative"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PART",
+              "COMP"
+            ],
+            "used_target_words": [
+              "finish",
+              "project",
+              "communicate",
+              "cooperate",
+              "member"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "report",
+              "group",
+              "finish",
+              "usually",
+              "single",
+              "creative"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PART": true,
+              "COMP": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "finish",
+              "project",
+              "communicate",
+              "cooperate",
+              "member"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PART": true,
+              "COMP": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

@@ -1,0 +1,752 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.e55e36",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "top",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "過去，技職教育（vocational education）常被人看不起，導致許多有天分的學生不願意選擇這條路。",
+        "options": null,
+        "answer": "In the past, vocational education was often looked down on, causing many gifted students to be reluctant to choose this path.",
+        "accepted_answers": [
+          "In the past, vocational education was often looked down upon, leading many talented students to be unwilling to take this path.",
+          "In the past, vocational education was often looked down on by society, making many gifted students unwilling to choose this route."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "被動語態（be looked down on）",
+            "句尾分詞表結果（, causing …）"
+          ],
+          "topic": "技職教育"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "如今這種偏見已逐漸被打破，許多家長認為讓孩子及早學會一技之長是明智的。",
+        "options": null,
+        "answer": "Today, this prejudice has gradually been broken down, and many parents believe it is wise for children to acquire practical skills early.",
+        "accepted_answers": [
+          "Nowadays, this prejudice has been gradually overcome, and many parents think it is wise to let their children learn practical skills early.",
+          "These days, this bias has slowly been broken down, and many parents feel that it is wise for kids to master a practical skill early on."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "完成式被動（has been p.p.）",
+            "虛主詞 It is + adj. + to V"
+          ],
+          "topic": "技職教育"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "技職教育"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「常被人看不起」用被動 was often looked down on（look down on 是片語動詞，被動時 on 不能省略）；說的是過去的情況，用過去式。「導致…」是前面整件事造成的結果，用句尾分詞片語 , causing／leading + 人 + to V（邏輯主詞是前面整件事）。「有天分的」用 gifted／talented，「不願意」用 be reluctant／unwilling to V。技職教育題目已附英文 vocational education。",
+          "evidence": [
+            "常被人看不起",
+            "導致許多有天分的學生不願意選擇這條路"
+          ],
+          "strategy_zh": "片語動詞改被動時，介系詞要留著（be looked down on）；「…，導致…」→ , causing + O + to V。",
+          "hints": [
+            "切成四段：（過去，）技職教育常被人看不起／導致／許多有天分的學生／不願意選擇這條路",
+            "標的詞彙：look down on（看不起）、gifted（有天分的）、reluctant（不情願的）、choose（選擇）、path（道路、出路）",
+            "句型框架：In the past, S + was often looked down on, causing + O + to be reluctant to + V …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「已逐漸被打破」偏見是被打破的一方，而且延續到現在，用完成式被動 has (gradually) been broken down／overcome。「讓孩子及早學會一技之長是明智的」動作當主詞太長，用虛主詞 it is wise for children to …（或 it is wise to let children …）；「一技之長」是實用技能 practical skills。兩個完整子句用 and 連接。",
+          "evidence": [
+            "已逐漸被打破",
+            "是明智的"
+          ],
+          "strategy_zh": "中文「做某事是…的」主詞很長時，英文先寫 It is + adj.，再接 (for 人) to V。",
+          "hints": [
+            "切成四段：如今這種偏見／已逐漸被打破／許多家長認為／讓孩子及早學會一技之長是明智的",
+            "標的詞彙：prejudice（偏見）、gradually（逐漸地）、break（打破）、parent（家長）、wise（明智的）、acquire（習得）、skill（技能）",
+            "句型框架：S + has (gradually) been p.p., and S + believe + it is + adj. + for + 人 + to + V …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "In the past, vocational education was often looked down on, causing many gifted students to be reluctant to choose this path.",
+            "In the past, vocational education was often looked down upon, leading many talented students to be unwilling to take this path.",
+            "In the past, vocational education was often looked down on by society, making many gifted students unwilling to choose this route."
+          ],
+          "target_words": [
+            {
+              "word": "look down on",
+              "zh": "看不起",
+              "alternatives": [
+                "look down upon",
+                "despise"
+              ]
+            },
+            {
+              "word": "gifted",
+              "zh": "有天分的",
+              "alternatives": [
+                "talented",
+                "able"
+              ]
+            },
+            {
+              "word": "reluctant",
+              "zh": "不願意的",
+              "alternatives": [
+                "unwilling"
+              ]
+            },
+            {
+              "word": "choose",
+              "zh": "選擇",
+              "alternatives": [
+                "take"
+              ]
+            },
+            {
+              "word": "path",
+              "zh": "道路、出路",
+              "alternatives": [
+                "route"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PART",
+              "grammar_id": "gp-participle-result",
+              "label_zh": "句尾分詞片語表結果（導致…）",
+              "frame": "S + V …, causing/leading + O + to V …",
+              "zh_trigger": "導致"
+            },
+            {
+              "code": "PASS",
+              "grammar_id": "gp-passive",
+              "label_zh": "被動語態（片語動詞的被動 be looked down on）",
+              "frame": "S + was (often) + p.p. + on …",
+              "zh_trigger": "常被人看不起"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "常被人看不起",
+              "accepted": [
+                "vocational education was often looked down on",
+                "vocational education was often looked down upon"
+              ],
+              "targets": [
+                "PASS",
+                "look down on"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "vocational education was often looked down",
+                  "right": "vocational education was often looked down on",
+                  "explanation_zh": "look down on 是片語動詞，改成被動時介系詞 on 不能省略：be looked down on。"
+                },
+                {
+                  "wrong": "vocational education was often not looked up",
+                  "right": "vocational education was often looked down on",
+                  "explanation_zh": "「看不起」是輕視，不是字面的「看不上去」；用 look down on。"
+                }
+              ]
+            },
+            {
+              "zh": "導致",
+              "accepted": [
+                "causing",
+                "leading",
+                "making"
+              ],
+              "targets": [
+                "PART"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "and cause",
+                  "right": "causing",
+                  "explanation_zh": "前面是過去式 was，用 and 連接時要寫 caused；更簡潔的寫法是句尾分詞 causing。"
+                },
+                {
+                  "wrong": "caused",
+                  "right": "causing",
+                  "explanation_zh": "逗號後直接接過去式動詞，會變成兩個動詞沒有連接；表結果用分詞 causing／leading，或寫 , which caused …。"
+                }
+              ]
+            },
+            {
+              "zh": "許多有天分的學生",
+              "accepted": [
+                "many gifted students",
+                "many talented students",
+                "many able students"
+              ],
+              "targets": [
+                "gifted"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "many talent students",
+                  "right": "many talented students",
+                  "explanation_zh": "修飾名詞要用形容詞 talented／gifted；talent 是名詞。"
+                }
+              ]
+            },
+            {
+              "zh": "不願意選擇這條路",
+              "accepted": [
+                "to be reluctant to choose this path",
+                "to be unwilling to take this path",
+                "unwilling to choose this route",
+                "to be reluctant to take this path"
+              ],
+              "targets": [
+                "reluctant",
+                "choose",
+                "path"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "to be reluctant choosing this path",
+                  "right": "to be reluctant to choose this path",
+                  "explanation_zh": "be reluctant 後面接不定詞 to V。"
+                },
+                {
+                  "wrong": "not willing choose this road",
+                  "right": "unwilling to choose this route",
+                  "explanation_zh": "willing 後面要接 to V；「這條路」是比喻的出路，用 path／route。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "collocation",
+              "zh": "看不起",
+              "literal_error": "In the past, vocational education was often not looked up, …",
+              "part": 1,
+              "explanation_zh": "「看不起」是輕視，用片語動詞 look down on，被動寫成 be looked down on；不要逐字翻成 not look up。"
+            },
+            {
+              "type": "word_form",
+              "zh": "導致",
+              "literal_error": "…, caused many gifted students to be reluctant to choose this path.",
+              "part": 2,
+              "explanation_zh": "中文「導致」前面沒有主詞；英文逗號後直接接 caused 會變成兩個動詞沒有連接，要用分詞 causing（或 , which caused …）。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "In the past, vocational education was widely looked down on, deterring many gifted students from pursuing this path.",
+              "grammar_id": "gp-participle-result",
+              "explanation_zh": "deter sb from V-ing（使人打消念頭）、pursue（追求）比 cause … to be reluctant 更精準。"
+            }
+          ],
+          "restructuring_zh": "「被人看不起」不必譯出「人」，用被動 was looked down on；「導致…」不要另起子句寫 It caused …，改成句尾分詞 causing many gifted students to …。"
+        },
+        "2": {
+          "references": [
+            "Today, this prejudice has gradually been broken down, and many parents believe it is wise for children to acquire practical skills early.",
+            "Nowadays, this prejudice has been gradually overcome, and many parents think it is wise to let their children learn practical skills early.",
+            "These days, this bias has slowly been broken down, and many parents feel that it is wise for kids to master a practical skill early on."
+          ],
+          "target_words": [
+            {
+              "word": "prejudice",
+              "zh": "偏見",
+              "alternatives": [
+                "bias"
+              ]
+            },
+            {
+              "word": "gradually",
+              "zh": "逐漸地",
+              "alternatives": [
+                "slowly"
+              ]
+            },
+            {
+              "word": "break",
+              "zh": "打破",
+              "alternatives": [
+                "overcome"
+              ]
+            },
+            {
+              "word": "parent",
+              "zh": "家長"
+            },
+            {
+              "word": "wise",
+              "zh": "明智的"
+            },
+            {
+              "word": "acquire",
+              "zh": "學會、習得",
+              "alternatives": [
+                "learn",
+                "master"
+              ]
+            },
+            {
+              "word": "skill",
+              "zh": "技能"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PASS",
+              "grammar_id": "gp-perfect-passive",
+              "label_zh": "完成式被動（已逐漸被…）",
+              "frame": "S + has (gradually) been + p.p.",
+              "zh_trigger": "已逐漸被打破"
+            },
+            {
+              "code": "NFSUBJ",
+              "grammar_id": "gp-it-adj-to",
+              "label_zh": "虛主詞 It ＋形容詞＋不定詞",
+              "frame": "S + believe + it is + adj. + for + 人 + to + V …",
+              "zh_trigger": "是明智的"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "如今這種偏見",
+              "accepted": [
+                "Today, this prejudice",
+                "Nowadays, this prejudice",
+                "These days, this bias",
+                "Today, this bias"
+              ],
+              "targets": [
+                "prejudice"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Today, these prejudice",
+                  "right": "Today, this prejudice",
+                  "explanation_zh": "「這種偏見」是單數，用 this。"
+                },
+                {
+                  "wrong": "Today, this partial view",
+                  "right": "Today, this prejudice",
+                  "explanation_zh": "「偏見」用 prejudice／bias；partial view 是字面拼湊，不自然。"
+                }
+              ]
+            },
+            {
+              "zh": "已逐漸被打破",
+              "accepted": [
+                "has gradually been broken down",
+                "has been gradually overcome",
+                "has slowly been broken down",
+                "has been gradually broken down"
+              ],
+              "targets": [
+                "PASS",
+                "gradually",
+                "break"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "has gradually broken",
+                  "right": "has gradually been broken down",
+                  "explanation_zh": "偏見是「被」打破，完成式被動要有 been：has been broken (down)。"
+                },
+                {
+                  "wrong": "is gradually broke",
+                  "right": "has gradually been broken down",
+                  "explanation_zh": "被動要用過去分詞 broken；「已逐漸」延續到現在，用現在完成式。"
+                }
+              ]
+            },
+            {
+              "zh": "許多家長認為",
+              "accepted": [
+                "and many parents believe",
+                "and many parents think",
+                "and many parents feel that"
+              ],
+              "targets": [
+                "parent"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "and many parent believe",
+                  "right": "and many parents believe",
+                  "explanation_zh": "many 後面接複數名詞 parents。"
+                },
+                {
+                  "wrong": "many parents believe",
+                  "right": "and many parents believe",
+                  "explanation_zh": "前後是兩個完整子句，只用逗號隔開會變成逗號接句，要加 and（或拆成兩句）。"
+                }
+              ]
+            },
+            {
+              "zh": "讓孩子及早學會一技之長是明智的",
+              "accepted": [
+                "it is wise for children to acquire practical skills early",
+                "it is wise to let their children learn practical skills early",
+                "it is wise for kids to master a practical skill early on",
+                "it is wise for children to learn a practical skill early"
+              ],
+              "targets": [
+                "NFSUBJ",
+                "wise",
+                "acquire",
+                "skill"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "let children learn practical skills early is wise",
+                  "right": "it is wise for children to acquire practical skills early",
+                  "explanation_zh": "原形動詞不能當主詞；用虛主詞 it is wise for/to …，或改成動名詞 letting children learn … is wise。"
+                },
+                {
+                  "wrong": "it is wise for children learning practical skills early",
+                  "right": "it is wise for children to acquire practical skills early",
+                  "explanation_zh": "It is + 形容詞 + for 人 後面接不定詞 to V。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "abstract_nominal",
+              "zh": "一技之長",
+              "literal_error": "… it is wise for children to learn one skill's length early.",
+              "part": 4,
+              "explanation_zh": "「一技之長」是一項專長、實用的技能，用 practical skills／a useful skill；不要逐字拆開翻。"
+            },
+            {
+              "type": "tense_trigger",
+              "zh": "已逐漸被打破",
+              "literal_error": "Today, this prejudice is gradually broke, and many parents …",
+              "part": 2,
+              "explanation_zh": "「已…被…」要同時表現完成式與被動：has (gradually) been broken down；broke 是過去式，不能當過去分詞。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "Now that this prejudice has largely been dispelled, many parents consider it wise for their children to master a trade early.",
+              "grammar_id": "gp-find-it",
+              "explanation_zh": "dispel（消除）偏見、consider it wise for … to …（虛受詞 it）、master a trade（學會一技之長）都更道地。"
+            }
+          ],
+          "restructuring_zh": "「讓孩子及早學會一技之長是明智的」主詞是一整個動作，英文移到後面、用虛主詞 it 開頭：it is wise for children to acquire practical skills early；「讓孩子」可轉成 for children。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ac-V-3",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-top-04",
+    "lot": "translation-top-04",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "6a9df5361ca910602b338b273c04042b40d0d8c92f6dc2609abebceddbfdb2f7",
+    "spec_id": "translation-top@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 2,
+    "sentences": 1,
+    "avg_sentence_length": 2.0,
+    "denominator": 2,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.5,
+    "coverage_l1_6": 1.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.5,
+    "level_counts": {
+      "2": 1,
+      "6": 1
+    },
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "warn",
+      "created_at": "2026-10-09T13:27:26Z",
+      "details": {
+        "errors": [],
+        "warnings": [
+          "annotations.rubric.items.2.patterns[0]: gp-perfect-passive 通常對應句構 PERF（目前 code=PASS）"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "warn",
+      "created_at": "2026-10-09T13:05:21Z",
+      "details": {
+        "solver": "A",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "In the past, vocational education was often looked down upon, making many talented students reluctant to choose this path.",
+            "confidence": "high",
+            "explanation_zh": "「過去……常被人看不起」用過去式被動 was looked down upon；「導致……」是前一件事的結果，用句尾分詞 making + O + adj 表結果；「不願意」譯 reluctant to。"
+          },
+          "2": {
+            "translation": "Nowadays, this prejudice has gradually been broken down, and many parents believe it is wise to let their children learn a practical skill early on.",
+            "confidence": "medium",
+            "explanation_zh": "「已逐漸被打破」用現在完成式被動 has gradually been broken down；「認為……是明智的」用 believe (that) it is wise to 虛主詞；「一技之長」沒有固定英文對應，譯 a practical skill（也可 a specialized skill／a trade），「及早」譯 early on。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PART",
+              "PASS"
+            ],
+            "used_target_words": [
+              "look down on",
+              "gifted",
+              "reluctant",
+              "choose",
+              "path"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "第 2 部分「導致」只有一個字卻占 1 分，accepted 只收 causing／leading／making；學生寫同樣正確的「, which made／led many talented students…」或「so many talented students were unwilling…」會被扣分，等於只為句型給分，建議補進 which led/which made 等寫法，或把「導致」併進第 3、4 部分。",
+              "第 2 部分收 making，但第 4 部分的 accepted 多是 to be reluctant…；making 後面要接形容詞（making many talented students reluctant to choose this path），第 4 部分應補「reluctant to choose this path」，避免改卷時以為 making 搭 to be 才對。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "PASS",
+              "NFSUBJ"
+            ],
+            "used_target_words": [
+              "prejudice",
+              "gradually",
+              "break",
+              "parent",
+              "wise",
+              "acquire",
+              "skill"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "look down on",
+              "gifted",
+              "reluctant",
+              "choose",
+              "path"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PART": true,
+              "PASS": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "prejudice",
+              "gradually",
+              "break",
+              "parent",
+              "wise",
+              "acquire",
+              "skill"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PASS": true,
+              "NFSUBJ": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 1 題驗證者對4 部分切分有意見（warn）：第 2 部分「導致」只有一個字卻占 1 分，accepted 只收 causing／leading／making；學生寫同樣正確的「, which made／led many talented students…」或「so many tal"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "fail",
+      "created_at": "2026-10-09T13:09:20Z",
+      "details": {
+        "solver": "B",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "In the past, vocational education was often looked down on, which made many talented students unwilling to choose this path.",
+            "confidence": "high",
+            "explanation_zh": "「過去」配過去式；「看不起」用 look down on 的被動；「導致……不願意」用 which made + 受詞 + 形容詞（unwilling to），把結果接在前句後面；「有天分的」用 talented。"
+          },
+          "2": {
+            "translation": "Today, this prejudice has gradually been broken down, and many parents believe it is wise to let their children learn a marketable skill at an early age.",
+            "confidence": "medium",
+            "explanation_zh": "「如今……已逐漸被打破」用現在完成式被動加 gradually；「認為……是明智的」用 believe it is wise to 的虛主詞句型；「一技之長」譯成 a marketable skill（也可用 a trade）；「及早」用 at an early age。「一技之長」沒有唯一對應詞，所以信心為 medium。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PASS"
+            ],
+            "used_target_words": [
+              "look down on",
+              "gifted",
+              "reluctant",
+              "choose",
+              "path"
+            ],
+            "within_accepted": false,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "我的譯文是 …, which made many talented students unwilling to choose this path（非限定關係子句表結果），自然又正確；但第 2 部分「導致」的 accepted 只收 causing／leading／making 的分詞片語，中文沒有強制分詞構句，標的句型 PART 沒有被引出。建議 accepted 補上 which made／which led to，或移除 PART 標的。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "PASS",
+              "NFSUBJ"
+            ],
+            "used_target_words": [
+              "prejudice",
+              "gradually",
+              "break",
+              "parent",
+              "wise",
+              "acquire",
+              "skill"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "look down on",
+              "gifted",
+              "reluctant",
+              "choose",
+              "path"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PASS": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "prejudice",
+              "gradually",
+              "break",
+              "parent",
+              "wise",
+              "acquire",
+              "skill"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PASS": true,
+              "NFSUBJ": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 1 題盲譯沒有用到標的句型 ['PART']：中文題目沒有自然引出這個句型（SPEC §5.7）",
+          "第 1 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義"
+        ]
+      }
+    }
+  ],
+  "status": "rejected",
+  "status_reason": "blind_solver:B 未通過：第 1 題盲譯沒有用到標的句型 ['PART']：中文題目沒有自然引出這個句型（SPEC §5.7）；第 1 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義"
+}

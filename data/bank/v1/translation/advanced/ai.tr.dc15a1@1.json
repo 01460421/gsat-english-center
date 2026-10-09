@@ -1,0 +1,736 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.dc15a1",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "advanced",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "韓流（the Korean Wave）正在席捲台灣，許多青少年很想知道偶像平常吃什麼、穿什麼。",
+        "options": null,
+        "answer": "The Korean Wave is sweeping Taiwan, and many teenagers are eager to know what their idols usually eat and wear.",
+        "accepted_answers": [
+          "The Korean Wave is spreading across Taiwan, and many teens want to know what their idols usually eat and wear.",
+          "The Korean Wave is taking over Taiwan, and many teenagers are curious about what their idols eat and wear every day."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "現在進行式（趨勢）",
+            "間接問句（what）"
+          ],
+          "topic": "韓流"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "他們也已經學會許多韓劇和流行歌曲裡常出現的韓語單字。",
+        "options": null,
+        "answer": "They have also learned many Korean words that frequently appear in Korean dramas and pop songs.",
+        "accepted_answers": [
+          "They have also learned a lot of Korean words which often appear in Korean dramas and popular songs.",
+          "They have also picked up many Korean expressions that are often used in Korean dramas and pop songs."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "現在完成式",
+            "關係代名詞（that／which）"
+          ],
+          "topic": "韓流"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "韓流"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「正在席捲」描述正在發展的趨勢，用現在進行式 is sweeping（或 is spreading across）；韓流題目附了英文 the Korean Wave。「很想知道」是 are eager to know 或 really want to know。想知道的內容「偶像吃什麼、穿什麼」是間接問句，當 know 的受詞，用 what + 主詞 + 動詞的直述句語序，兩個動詞 eat、wear 共用一個 what。",
+          "evidence": [
+            "正在席捲台灣",
+            "很想知道偶像平常吃什麼、穿什麼"
+          ],
+          "strategy_zh": "疑問詞（什麼、哪裡、如何、是否）放在動詞後面當受詞時，要改成間接問句：疑問詞＋主詞＋動詞，不倒裝、不加 do。",
+          "hints": [
+            "切成四段：韓流（the Korean Wave）正在席捲台灣／許多青少年／很想知道／偶像平常吃什麼、穿什麼",
+            "標的詞彙：sweep（席捲，L2）、teenager（青少年，L1）、know（知道，L1）、idol（偶像，L4）、wear（穿，L1）",
+            "句型框架：S + is + V-ing …, and S + are eager to know + what + S + V …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「已經學會」表示到現在為止的成果，用現在完成式 have learned；also 放在 have 和過去分詞中間。「韓劇和流行歌曲裡常出現的韓語單字」中文修飾語在前，英文改成「名詞＋關係子句」：Korean words that frequently appear in …；先行詞 words 是複數，子句動詞 appear 不加 s。「常」修飾動詞，用副詞 often 或 frequently。",
+          "evidence": [
+            "已經學會",
+            "韓劇和流行歌曲裡常出現的韓語單字"
+          ],
+          "strategy_zh": "中文「…的＋名詞」修飾語很長時，英文先寫名詞，再用 that、which、who 子句補在後面。",
+          "hints": [
+            "切成四段：他們也已經學會許多／韓劇和流行歌曲裡／常出現的／韓語單字",
+            "標的詞彙：learn（學會，L1）、word（單字，L1）、appear（出現，L1）、often／frequently（常常，L1／L3）、drama（戲劇，L2）、song（歌曲，L1）",
+            "句型框架：S + have also + p.p. + N + that + V … in …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "The Korean Wave is sweeping Taiwan, and many teenagers are eager to know what their idols usually eat and wear.",
+            "The Korean Wave is spreading across Taiwan, and many teens want to know what their idols usually eat and wear.",
+            "The Korean Wave is taking over Taiwan, and many teenagers are curious about what their idols eat and wear every day."
+          ],
+          "target_words": [
+            {
+              "word": "sweep",
+              "zh": "席捲",
+              "alternatives": [
+                "spread",
+                "take over",
+                "popular"
+              ]
+            },
+            {
+              "word": "teenager",
+              "zh": "青少年",
+              "alternatives": [
+                "teen",
+                "teens",
+                "adolescent",
+                "young"
+              ]
+            },
+            {
+              "word": "know",
+              "zh": "知道",
+              "alternatives": [
+                "curious",
+                "wonder",
+                "find out"
+              ]
+            },
+            {
+              "word": "idol",
+              "zh": "偶像",
+              "alternatives": [
+                "star",
+                "celebrity"
+              ]
+            },
+            {
+              "word": "wear",
+              "zh": "穿",
+              "alternatives": [
+                "dress"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PROG",
+              "grammar_id": "gp-progressive-trend",
+              "label_zh": "現在進行式描述正在發生的趨勢",
+              "frame": "S + is + V-ing (sweeping / spreading …)",
+              "zh_trigger": "正在席捲"
+            },
+            {
+              "code": "NCL",
+              "grammar_id": "gp-wh-clause",
+              "label_zh": "間接問句（what 名詞子句）",
+              "frame": "know + what + S + V（直述句語序）",
+              "zh_trigger": "吃什麼、穿什麼"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "韓流（the Korean Wave）正在席捲台灣",
+              "accepted": [
+                "The Korean Wave is sweeping Taiwan",
+                "The Korean Wave is spreading across Taiwan",
+                "The Korean Wave is taking over Taiwan",
+                "The Korean Wave is sweeping across Taiwan",
+                "The Korean Wave is sweeping through Taiwan",
+                "The Korean Wave is spreading all over Taiwan",
+                "The Korean Wave is becoming popular all over Taiwan"
+              ],
+              "targets": [
+                "PROG",
+                "sweep"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "The Korean Wave sweeps Taiwan",
+                  "right": "The Korean Wave is sweeping Taiwan",
+                  "explanation_zh": "「正在」描述眼前持續發展的趨勢，用現在進行式 is + V-ing。"
+                },
+                {
+                  "wrong": "The Korean Wave is sweep Taiwan",
+                  "right": "The Korean Wave is sweeping Taiwan",
+                  "explanation_zh": "進行式是 be 動詞＋V-ing，不能寫成 be＋原形。"
+                }
+              ]
+            },
+            {
+              "zh": "許多青少年",
+              "accepted": [
+                "many teenagers",
+                "many teens",
+                "a lot of teenagers",
+                "lots of teenagers",
+                "many adolescents",
+                "many young people"
+              ],
+              "targets": [
+                "teenager"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "many teenager",
+                  "right": "many teenagers",
+                  "explanation_zh": "many 後面接複數名詞。"
+                }
+              ]
+            },
+            {
+              "zh": "很想知道",
+              "accepted": [
+                "are eager to know",
+                "want to know",
+                "are curious about",
+                "really want to know",
+                "are curious to know",
+                "would like to know",
+                "are dying to know"
+              ],
+              "targets": [
+                "know"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "are very want to know",
+                  "right": "really want to know",
+                  "explanation_zh": "want 是一般動詞，不能和 be 動詞連用；「很想」寫 really want to 或 are eager to。"
+                },
+                {
+                  "wrong": "are eager to knowing",
+                  "right": "are eager to know",
+                  "explanation_zh": "be eager to 後面接原形動詞。"
+                }
+              ]
+            },
+            {
+              "zh": "偶像平常吃什麼、穿什麼",
+              "accepted": [
+                "what their idols usually eat and wear",
+                "what their idols eat and wear every day",
+                "what their idols usually eat and what they wear",
+                "what their idols eat and wear in daily life",
+                "what their idols normally eat and wear",
+                "what their favorite stars usually eat and wear"
+              ],
+              "targets": [
+                "NCL",
+                "idol",
+                "wear"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "what do their idols usually eat and wear",
+                  "right": "what their idols usually eat and wear",
+                  "explanation_zh": "間接問句用直述句語序（主詞＋動詞），不加 do。"
+                },
+                {
+                  "wrong": "what their idols usually eat and dress",
+                  "right": "what their idols usually eat and wear",
+                  "explanation_zh": "「穿（衣服）」是 wear；dress 當動詞是「幫…穿衣」或 dress up，後面不直接接衣服。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "tense_trigger",
+              "zh": "正在席捲",
+              "literal_error": "The Korean Wave sweeps Taiwan, and many teenagers are eager to know what their idols usually eat and wear.",
+              "part": 1,
+              "explanation_zh": "「正在」表示趨勢正在發生，要用現在進行式 is sweeping；寫成現在簡單式就漏掉了「正在」。"
+            }
+          ],
+          "bonus": [],
+          "restructuring_zh": "「偶像平常吃什麼、穿什麼」中文重複兩個「什麼」，英文合併成一個 what 名詞子句：what their idols usually eat and wear，並用直述句語序。"
+        },
+        "2": {
+          "references": [
+            "They have also learned many Korean words that frequently appear in Korean dramas and pop songs.",
+            "They have also learned a lot of Korean words which often appear in Korean dramas and popular songs.",
+            "They have also picked up many Korean expressions that are often used in Korean dramas and pop songs."
+          ],
+          "target_words": [
+            {
+              "word": "learn",
+              "zh": "學會",
+              "alternatives": [
+                "pick up"
+              ]
+            },
+            {
+              "word": "word",
+              "zh": "單字",
+              "alternatives": [
+                "expression",
+                "phrase",
+                "vocabulary"
+              ]
+            },
+            {
+              "word": "appear",
+              "zh": "出現",
+              "alternatives": [
+                "use",
+                "hear",
+                "show up"
+              ]
+            },
+            {
+              "word": "often",
+              "zh": "常常",
+              "alternatives": [
+                "frequently",
+                "commonly",
+                "usually"
+              ]
+            },
+            {
+              "word": "drama",
+              "zh": "戲劇"
+            },
+            {
+              "word": "song",
+              "zh": "歌曲"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PERF",
+              "grammar_id": "gp-present-perfect",
+              "label_zh": "現在完成式（已經學會）",
+              "frame": "S + have/has (+ also) + p.p. …",
+              "zh_trigger": "已經學會"
+            },
+            {
+              "code": "REL",
+              "grammar_id": "gp-relative-pronoun",
+              "label_zh": "關係代名詞 that／which 引導形容詞子句",
+              "frame": "N + that/which + V …",
+              "zh_trigger": "常出現的"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "他們也已經學會許多",
+              "accepted": [
+                "They have also learned many",
+                "They have also learned a lot of",
+                "They have also picked up many",
+                "They have also learnt many",
+                "They have also learned lots of",
+                "They have already learned many"
+              ],
+              "targets": [
+                "PERF",
+                "learn"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "They also already learn many",
+                  "right": "They have also learned many",
+                  "explanation_zh": "「已經學會」是到現在為止完成的結果，用現在完成式 have learned。"
+                },
+                {
+                  "wrong": "They have also learn many",
+                  "right": "They have also learned many",
+                  "explanation_zh": "完成式是 have + 過去分詞 learned（或 learnt）。"
+                }
+              ]
+            },
+            {
+              "zh": "韓劇和流行歌曲裡",
+              "accepted": [
+                "in Korean dramas and pop songs",
+                "in Korean dramas and popular songs",
+                "in Korean TV dramas and pop songs",
+                "in K-dramas and K-pop songs"
+              ],
+              "targets": [
+                "drama",
+                "song"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "in Korean drama and pop song",
+                  "right": "in Korean dramas and pop songs",
+                  "explanation_zh": "泛指韓劇和歌曲，可數名詞用複數。"
+                }
+              ]
+            },
+            {
+              "zh": "常出現的",
+              "accepted": [
+                "that frequently appear",
+                "which often appear",
+                "that are often used",
+                "that often appear",
+                "which frequently appear",
+                "that often show up",
+                "that people often hear"
+              ],
+              "targets": [
+                "REL",
+                "appear",
+                "often"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "that frequent appear",
+                  "right": "that frequently appear",
+                  "explanation_zh": "修飾動詞 appear 要用副詞 frequently（或 often）；frequent 是形容詞。"
+                },
+                {
+                  "wrong": "that often appears",
+                  "right": "that often appear",
+                  "explanation_zh": "關係子句的動詞跟著先行詞 words（複數），不加 s。"
+                }
+              ]
+            },
+            {
+              "zh": "韓語單字",
+              "accepted": [
+                "Korean words",
+                "Korean expressions",
+                "Korean phrases",
+                "Korean vocabulary words"
+              ],
+              "targets": [
+                "word"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Korea words",
+                  "right": "Korean words",
+                  "explanation_zh": "「韓語的」是形容詞 Korean；Korea 是國名。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "prenominal_modifier",
+              "zh": "韓劇和流行歌曲裡常出現的韓語單字",
+              "literal_error": "They have also learned many in Korean dramas and pop songs frequently appear Korean words.",
+              "part": 3,
+              "explanation_zh": "中文把很長的修飾語放在名詞前面；英文要先寫名詞 Korean words，再用關係子句 that frequently appear in … 放在後面修飾。"
+            },
+            {
+              "type": "word_form",
+              "zh": "常出現",
+              "literal_error": "They have also learned many Korean words that frequent appear in Korean dramas and pop songs.",
+              "part": 3,
+              "explanation_zh": "「常」修飾動詞「出現」，要用副詞 frequently 或 often；frequent 是形容詞。"
+            }
+          ],
+          "bonus": [],
+          "restructuring_zh": "「韓劇和流行歌曲裡常出現的韓語單字」是很長的前置修飾，英文要把名詞 Korean words 放前面，修飾語改成關係子句 that frequently appear in Korean dramas and pop songs 放在後面。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "C-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-advanced-05",
+    "lot": "translation-advanced-05",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "e5c4baeec359d5ac42e4e899ef49b7db98863cbe7bb8568d933d20cee46dbcaf",
+    "spec_id": "translation-advanced@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 3,
+    "sentences": 1,
+    "avg_sentence_length": 3.0,
+    "denominator": 2,
+    "proper_nouns": [
+      "Korean"
+    ],
+    "numbers": 0,
+    "coverage_l1_4": 1.0,
+    "coverage_l1_6": 1.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {
+      "1": 2
+    },
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T13:12:50Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T12:52:38Z",
+      "details": {
+        "solver": "A",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "The Korean Wave is sweeping across Taiwan, and many teenagers are eager to know what their idols usually eat and wear.",
+            "confidence": "high",
+            "explanation_zh": "「正在席捲」用現在進行式 is sweeping across；「很想知道」用 be eager to know；「吃什麼、穿什麼」用間接問句 what their idols usually eat and wear，語序不倒裝。"
+          },
+          "2": {
+            "translation": "They have also learned many Korean words that often appear in Korean dramas and pop songs.",
+            "confidence": "high",
+            "explanation_zh": "「已經學會」用現在完成式 have learned；「……裡常出現的單字」用關係子句 that often appear in ...；韓劇用 Korean dramas，流行歌曲用 pop songs。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PROG",
+              "NCL"
+            ],
+            "used_target_words": [
+              "sweep",
+              "teenager",
+              "know",
+              "idol",
+              "wear"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PERF",
+              "REL"
+            ],
+            "used_target_words": [
+              "learn",
+              "word",
+              "appear",
+              "often",
+              "drama",
+              "song"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "sweep",
+              "teenager",
+              "know",
+              "idol",
+              "wear"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PROG": true,
+              "NCL": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "learn",
+              "word",
+              "appear",
+              "often",
+              "drama",
+              "song"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PERF": true,
+              "REL": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T12:54:59Z",
+      "details": {
+        "solver": "B",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "The Korean Wave is sweeping across Taiwan, and many teenagers are eager to know what their idols usually eat and wear.",
+            "confidence": "high",
+            "explanation_zh": "「正在席捲」用現在進行式 is sweeping across；「很想知道」用 be eager to know；「偶像平常吃什麼、穿什麼」是名詞子句，疑問詞 what 作 eat／wear 的受詞，usually 表示「平常」，用現在簡單式。兩個分句用 and 連接。"
+          },
+          "2": {
+            "translation": "They have also already learned many Korean words that often appear in Korean dramas and pop songs.",
+            "confidence": "high",
+            "explanation_zh": "「已經學會」用現在完成式 have ... learned，also 與 already 都放在 have 和過去分詞之間；「常出現在……的單字」用關係代名詞 that 引導的關係子句修飾 words，often 為頻率副詞，用現在簡單式。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PROG",
+              "NCL"
+            ],
+            "used_target_words": [
+              "sweep",
+              "teenager",
+              "know",
+              "idol",
+              "wear"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PERF",
+              "REL"
+            ],
+            "used_target_words": [
+              "learn",
+              "word",
+              "appear",
+              "often",
+              "drama",
+              "song"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "sweep",
+              "teenager",
+              "know",
+              "idol",
+              "wear"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PROG": true,
+              "NCL": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "learn",
+              "word",
+              "appear",
+              "often",
+              "drama",
+              "song"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PERF": true,
+              "REL": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

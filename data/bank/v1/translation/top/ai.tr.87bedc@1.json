@@ -1,0 +1,787 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.87bedc",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "top",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "看到明星完美的照片，連年輕人也開始購買抗老產品（anti-aging products），這讓抗老產業蓬勃發展。",
+        "options": null,
+        "answer": "Seeing perfect photos of celebrities, even young people have started buying anti-aging products, which has caused the anti-aging industry to boom.",
+        "accepted_answers": [
+          "Seeing perfect pictures of stars, even young people have begun to buy anti-aging products, which has made the anti-aging industry boom.",
+          "Having seen perfect photos of celebrities, even young people have started buying anti-aging products, which has led to a boom in the anti-aging industry."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "分詞構句（句首 V-ing）",
+            "非限定關係子句（, which 指前面整句）"
+          ],
+          "topic": "抗老產業"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "擔心自己顯老，許多消費者花大錢買這些產品，卻從不想想它們是否真的有效。",
+        "options": null,
+        "answer": "Worried about looking old, many consumers spend a fortune on these products but never think about whether they really work.",
+        "accepted_answers": [
+          "Worried that they look old, many consumers spend a lot of money on these products without ever asking whether they are truly effective.",
+          "Worrying about looking old, many consumers spend large sums of money on these products but never consider whether they actually work."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "分詞構句（句首 p.p.）",
+            "間接問句（whether 名詞子句）"
+          ],
+          "topic": "抗老產業"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "抗老產業"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「看到明星完美的照片」沒有主詞，做這個動作的其實是後面的「年輕人」，所以用分詞構句 Seeing …, even young people …。「連…也」用 even 放在名詞前；「開始購買」用現在完成式 have started buying 表示到現在的趨勢。「這讓…」的「這」指前面整件事，用非限定關係子句 , which has caused／made …（which 指整個子句）；made 後面接原形 boom，caused 後面接 to boom。",
+          "evidence": [
+            "看到明星完美的照片",
+            "這讓抗老產業蓬勃發展"
+          ],
+          "strategy_zh": "句首沒有主詞的動作（看到…、聽到…）→ 先想分詞構句 V-ing …；「…，這讓／這使得…」→ , which + V …（which 指前面整句）。",
+          "hints": [
+            "切成四段：看到明星完美的照片／連年輕人也開始購買抗老產品／這讓／抗老產業蓬勃發展",
+            "標的詞彙：see（看到）、perfect（完美的）、photo（照片）、celebrity（明星）、young（年輕的）、buy（購買）、industry（產業）、boom（蓬勃發展）",
+            "句型框架：V-ing …, even + S + have started V-ing …, which has caused + O + to V"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「擔心自己顯老」是後面「許多消費者」的心理狀態，用過去分詞開頭的分詞構句 Worried about looking old,（＝Because they are worried about looking old）；about 後面接動名詞。「花大錢買…」用 spend a fortune／a lot of money on …。「是否真的有效」是 think about 的受詞，用 whether 引導的名詞子句，語序是 whether + they + really work（直述句）；「有效」可用動詞 work 或形容詞 effective。",
+          "evidence": [
+            "擔心自己顯老",
+            "它們是否真的有效"
+          ],
+          "strategy_zh": "「是否…」當受詞 → whether + S + V（不倒裝）；「花錢在…上」→ spend + 錢 + on + N。",
+          "hints": [
+            "切成四段：擔心自己顯老／許多消費者花大錢買這些產品／卻從不想想／它們是否真的有效",
+            "標的詞彙：worry（擔心）、old（老的）、consumer（消費者）、spend（花錢）、fortune（大筆錢）、product（產品）、think（想）、work（有效）",
+            "句型框架：Worried about V-ing …, S + spend a fortune on … but never think about whether + S + V"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "Seeing perfect photos of celebrities, even young people have started buying anti-aging products, which has caused the anti-aging industry to boom.",
+            "Seeing perfect pictures of stars, even young people have begun to buy anti-aging products, which has made the anti-aging industry boom.",
+            "Having seen perfect photos of celebrities, even young people have started buying anti-aging products, which has led to a boom in the anti-aging industry."
+          ],
+          "target_words": [
+            {
+              "word": "see",
+              "zh": "看到"
+            },
+            {
+              "word": "perfect",
+              "zh": "完美的"
+            },
+            {
+              "word": "photo",
+              "zh": "照片",
+              "alternatives": [
+                "picture"
+              ]
+            },
+            {
+              "word": "celebrity",
+              "zh": "明星",
+              "alternatives": [
+                "star"
+              ]
+            },
+            {
+              "word": "young",
+              "zh": "年輕的"
+            },
+            {
+              "word": "buy",
+              "zh": "購買"
+            },
+            {
+              "word": "industry",
+              "zh": "產業"
+            },
+            {
+              "word": "boom",
+              "zh": "蓬勃發展"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PART",
+              "grammar_id": "gp-participle-clause",
+              "label_zh": "分詞構句：句首 V-ing 片語（看到…）",
+              "frame": "V-ing …, S + V …",
+              "zh_trigger": "看到明星完美的照片"
+            },
+            {
+              "code": "NRREL",
+              "grammar_id": "gp-nonrestrictive",
+              "label_zh": "非限定關係子句：which 指前面整句（這讓…）",
+              "frame": "S + V …, which has caused + O + to V ／ which has made + O + V",
+              "zh_trigger": "這讓抗老產業蓬勃發展"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "看到明星完美的照片",
+              "accepted": [
+                "Seeing perfect photos of celebrities",
+                "Seeing perfect pictures of stars",
+                "Having seen perfect photos of celebrities",
+                "Seeing celebrities' perfect photos",
+                "Seeing stars' perfect pictures"
+              ],
+              "targets": [
+                "PART",
+                "see",
+                "perfect",
+                "photo",
+                "celebrity"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "See perfect photos of celebrities, even young people",
+                  "right": "Seeing perfect photos of celebrities, even young people",
+                  "explanation_zh": "「看到…」沒有主詞，英文不能用原形動詞 See 開頭又接主要子句（兩個動詞沒有連接）；改成分詞構句 Seeing …，邏輯主詞就是後面的 young people。"
+                },
+                {
+                  "wrong": "Seeing perfect photos of celebrity",
+                  "right": "Seeing perfect photos of celebrities",
+                  "explanation_zh": "「明星」泛指一群人，用複數 celebrities（或 stars）。"
+                }
+              ]
+            },
+            {
+              "zh": "連年輕人也開始購買抗老產品",
+              "accepted": [
+                "even young people have started buying anti-aging products",
+                "even young people have begun to buy anti-aging products",
+                "even young people have started to buy anti-aging products",
+                "even young people have begun buying anti-aging products"
+              ],
+              "targets": [
+                "young",
+                "buy"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "even young people also have started buying",
+                  "right": "even young people have started buying",
+                  "explanation_zh": "「連…也」用 even 就夠了，再加 also 是贅字。"
+                },
+                {
+                  "wrong": "even young people have started buy",
+                  "right": "even young people have started buying",
+                  "explanation_zh": "start／begin 後面接動名詞 buying 或不定詞 to buy，不能接原形動詞。"
+                }
+              ]
+            },
+            {
+              "zh": "這讓",
+              "accepted": [
+                "which has caused",
+                "which has made",
+                "which has led to"
+              ],
+              "targets": [
+                "NRREL"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "anti-aging products, this has caused",
+                  "right": "anti-aging products, which has caused",
+                  "explanation_zh": "「這讓…」的「這」指前面整件事，英文用非限定關係代名詞 which；寫成 this 會讓兩個完整句子只用逗號相連（逗號連接句）。"
+                },
+                {
+                  "wrong": "anti-aging products, that has caused",
+                  "right": "anti-aging products, which has caused",
+                  "explanation_zh": "逗號後面補充說明前面整句，只能用 which，that 不用在非限定關係子句。"
+                }
+              ]
+            },
+            {
+              "zh": "抗老產業蓬勃發展",
+              "accepted": [
+                "the anti-aging industry to boom",
+                "the anti-aging industry boom",
+                "a boom in the anti-aging industry"
+              ],
+              "targets": [
+                "industry",
+                "boom"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "which has made the anti-aging industry to boom",
+                  "right": "which has made the anti-aging industry boom",
+                  "explanation_zh": "使役動詞 make 後面接原形動詞 boom，不加 to；cause 才接 to boom。"
+                },
+                {
+                  "wrong": "the anti-aging industry develop prosperously",
+                  "right": "the anti-aging industry boom",
+                  "explanation_zh": "「蓬勃發展」不要逐字拆成 develop prosperously，英文一個動詞 boom（或名詞 a boom in …）就能表達。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "subjectless",
+              "zh": "看到明星完美的照片",
+              "literal_error": "See perfect photos of celebrities, even young people have started buying …",
+              "part": 1,
+              "explanation_zh": "中文句首「看到…」省略主詞，英文不能讓原形動詞開頭又接另一個子句；改用分詞構句 Seeing …（邏輯主詞＝後面的 young people）。"
+            },
+            {
+              "type": "abstract_nominal",
+              "zh": "蓬勃發展",
+              "literal_error": "…, which makes the anti-aging industry develop prosperously.",
+              "part": 4,
+              "explanation_zh": "「蓬勃發展」是複合概念，照字面拆成 develop + prosperously 很不自然；英文用動詞 boom（迅速興旺）或名詞 a boom in …。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "So perfect do celebrities look in their photos that even young people have started buying anti-aging products, fueling a boom in the industry.",
+              "grammar_id": "gp-so-adj-inversion",
+              "explanation_zh": "So + 形容詞 + 助動詞 + 主詞 … that …（倒裝）強調「明星看起來完美到…」；句尾 fueling a boom in … 用分詞表結果。倒裝只是加分寫法，不是唯一正解。"
+            }
+          ],
+          "restructuring_zh": "「這讓抗老產業蓬勃發展」的「這」指前面整件事，英文不另起一句用 this，而是改成非限定關係子句 , which has caused …；「蓬勃發展」也可以名詞化成 a boom in the anti-aging industry。"
+        },
+        "2": {
+          "references": [
+            "Worried about looking old, many consumers spend a fortune on these products but never think about whether they really work.",
+            "Worried that they look old, many consumers spend a lot of money on these products without ever asking whether they are truly effective.",
+            "Worrying about looking old, many consumers spend large sums of money on these products but never consider whether they actually work."
+          ],
+          "target_words": [
+            {
+              "word": "worry",
+              "zh": "擔心",
+              "alternatives": [
+                "worried",
+                "worrying"
+              ]
+            },
+            {
+              "word": "old",
+              "zh": "老的"
+            },
+            {
+              "word": "consumer",
+              "zh": "消費者"
+            },
+            {
+              "word": "spend",
+              "zh": "花（錢）"
+            },
+            {
+              "word": "fortune",
+              "zh": "大筆錢",
+              "alternatives": [
+                "money"
+              ]
+            },
+            {
+              "word": "product",
+              "zh": "產品"
+            },
+            {
+              "word": "think",
+              "zh": "想",
+              "alternatives": [
+                "ask",
+                "consider"
+              ]
+            },
+            {
+              "word": "work",
+              "zh": "有效",
+              "alternatives": [
+                "effective"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PART",
+              "grammar_id": "gp-participle-clause",
+              "label_zh": "分詞構句：句首過去分詞片語（擔心…）",
+              "frame": "Worried/Worrying about …, S + V …",
+              "zh_trigger": "擔心自己顯老"
+            },
+            {
+              "code": "NCL",
+              "grammar_id": "gp-wh-clause",
+              "label_zh": "間接問句：whether 名詞子句（是否…）",
+              "frame": "… think about + whether + S + V（直述句語序）",
+              "zh_trigger": "它們是否真的有效"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "擔心自己顯老",
+              "accepted": [
+                "Worried about looking old",
+                "Worried that they look old",
+                "Worrying about looking old",
+                "Worried about looking older"
+              ],
+              "targets": [
+                "PART",
+                "worry",
+                "old"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Worry about looking old, many consumers",
+                  "right": "Worried about looking old, many consumers",
+                  "explanation_zh": "「擔心…」沒有主詞，英文不能用原形 Worry 開頭再接主要子句；改成分詞構句 Worried about …（＝Because they are worried about …）。"
+                },
+                {
+                  "wrong": "Worried about look old",
+                  "right": "Worried about looking old",
+                  "explanation_zh": "介系詞 about 後面接動名詞 looking。"
+                }
+              ]
+            },
+            {
+              "zh": "許多消費者花大錢買這些產品",
+              "accepted": [
+                "many consumers spend a fortune on these products",
+                "many consumers spend a lot of money on these products",
+                "many consumers spend large sums of money on these products"
+              ],
+              "targets": [
+                "consumer",
+                "spend",
+                "fortune",
+                "product"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "many consumers spend big money on these products",
+                  "right": "many consumers spend a fortune on these products",
+                  "explanation_zh": "「花大錢」不是 big money，要說 a fortune、a lot of money 或 large sums of money。"
+                },
+                {
+                  "wrong": "many consumer spend a fortune on these products",
+                  "right": "many consumers spend a fortune on these products",
+                  "explanation_zh": "many 後面接複數名詞 consumers。"
+                }
+              ]
+            },
+            {
+              "zh": "卻從不想想",
+              "accepted": [
+                "but never think about",
+                "without ever asking",
+                "but never consider",
+                "but never stop to think about",
+                "but never ask"
+              ],
+              "targets": [
+                "think"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "but never thinks about",
+                  "right": "but never think about",
+                  "explanation_zh": "主詞 many consumers 是複數，動詞 think 不加 s。"
+                },
+                {
+                  "wrong": "without ever ask",
+                  "right": "without ever asking",
+                  "explanation_zh": "介系詞 without 後面接動名詞 asking。"
+                }
+              ]
+            },
+            {
+              "zh": "它們是否真的有效",
+              "accepted": [
+                "whether they really work",
+                "whether they are truly effective",
+                "whether they actually work",
+                "whether they are really effective",
+                "if they really work"
+              ],
+              "targets": [
+                "NCL",
+                "work"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "whether do they really work",
+                  "right": "whether they really work",
+                  "explanation_zh": "間接問句用直述句語序（whether + 主詞 + 動詞），不加疑問句的 do。"
+                },
+                {
+                  "wrong": "whether they are really work",
+                  "right": "whether they really work",
+                  "explanation_zh": "work（有效）本身是動詞，前面不加 are；用形容詞才寫 are effective。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "word_form",
+              "zh": "擔心自己顯老",
+              "literal_error": "Worry about look old, many consumers spend …",
+              "part": 1,
+              "explanation_zh": "句首的「擔心」沒有主詞，英文要變成分詞 Worried／Worrying，不能用原形動詞開頭；「顯老」是 look old，about 後面要用動名詞 looking。"
+            },
+            {
+              "type": "collocation",
+              "zh": "花大錢",
+              "literal_error": "many consumers spend big money to buy these products",
+              "part": 2,
+              "explanation_zh": "「花大錢」英文是 spend a fortune／a lot of money on …；big money 是逐字直譯，spend 的錢後面用 on + 東西。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "Worried about looking old, many consumers pour money into these products; rarely do they stop to ask whether the products really work.",
+              "grammar_id": "gp-negative-inversion",
+              "explanation_zh": "pour money into …（把錢大把砸進…）是生動的搭配；否定副詞 rarely 放句首要倒裝（do + 主詞 + 原形動詞）。倒裝只是加分寫法，不是唯一正解。"
+            }
+          ],
+          "restructuring_zh": "「卻從不想想…」可以改用介系詞片語 without ever asking whether …，把兩個動作併進同一個子句。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ac-V-3",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-top-05",
+    "lot": "translation-top-05",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "1423e68b58216cafb46e710ae1065ce2ef47f637e82f416d8ddb06bd091160ba",
+    "spec_id": "translation-top@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 2,
+    "sentences": 1,
+    "avg_sentence_length": 2.0,
+    "denominator": 2,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.5,
+    "coverage_l1_6": 0.5,
+    "offlist_ratio": 0.5,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {
+      "3": 1,
+      "off": 1
+    },
+    "offlist_words": [
+      "anti-aging"
+    ],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T14:05:33Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "fail",
+      "created_at": "2026-10-09T13:22:48Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Seeing the perfect photos of celebrities, even young people have started buying anti-aging products, which has made the anti-aging industry thrive.",
+            "confidence": "high",
+            "explanation_zh": "「看到明星完美的照片」主詞和主要子句相同（年輕人），用分詞構句 Seeing… 開頭；「開始」是到現在的變化，用現在完成式 have started；「這讓抗老產業蓬勃發展」指前面整件事，用非限定關係子句 which has made… thrive（也可寫 boom／flourish）。"
+          },
+          "2": {
+            "translation": "Worried about looking old, many consumers spend a lot of money on these products but never stop to think about whether they really work.",
+            "confidence": "high",
+            "explanation_zh": "「擔心自己顯老」主詞同為消費者，用過去分詞構句 Worried about looking old；「花大錢買」用 spend a lot of money on；「卻從不想想」用 but never stop to think about；「是否真的有效」用 whether 名詞子句，work 表示有效（也可寫 are really effective）。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PART",
+              "NRREL"
+            ],
+            "used_target_words": [
+              "see",
+              "perfect",
+              "photo",
+              "celebrity",
+              "young",
+              "buy",
+              "industry"
+            ],
+            "within_accepted": false,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "盲譯把「蓬勃發展」譯成 thrive（which has made the anti-aging industry thrive），這是「蓬勃發展」最常見的譯法之一，但第 4 部分 accepted 只收 boom 系列（to boom／boom／a boom in），標的詞彙 boom 也沒有 alternatives；建議 boom 補 thrive、flourish、prosper 等 alternatives，第 4 部分 accepted 補 the anti-aging industry thrive／flourish。",
+              "第 3 部分「這讓」只收 which 關係子句；句尾分詞 , causing the anti-aging industry to boom 也是自然正確的寫法（加分寫法也用 fueling a boom），但會被判失分，評分時宜說明 NRREL 是標的句型、分詞寫法另行斟酌。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "PART",
+              "NCL"
+            ],
+            "used_target_words": [
+              "worry",
+              "old",
+              "consumer",
+              "spend",
+              "fortune",
+              "product",
+              "think",
+              "work"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "see",
+              "perfect",
+              "photo",
+              "celebrity",
+              "young",
+              "buy",
+              "industry"
+            ],
+            "target_hit_rate": 0.875,
+            "patterns_detected": {
+              "PART": true,
+              "NRREL": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "worry",
+              "old",
+              "consumer",
+              "spend",
+              "fortune",
+              "product",
+              "think",
+              "work"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PART": true,
+              "NCL": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 1 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義",
+          "第 1 題驗證者對4 部分切分有意見（warn）：盲譯把「蓬勃發展」譯成 thrive（which has made the anti-aging industry thrive），這是「蓬勃發展」最常見的譯法之一，但第 4 部分 accepted 只收 boom 系列（to boom／b"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "fail",
+      "created_at": "2026-10-09T13:30:00Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "After seeing celebrities' perfect photos, even young people have started to buy anti-aging products, which has made the anti-aging industry flourish.",
+            "confidence": "high",
+            "explanation_zh": "「連年輕人也」用 even young people 放在主詞；「開始購買」用現在完成式 have started to buy，因為這個趨勢延續到現在；「這讓……蓬勃發展」用非限定的 which 子句接前面整件事，動詞用 has made ... flourish。「看到」改成 After seeing，讓時間先後清楚。"
+          },
+          "2": {
+            "translation": "Worried about looking old, many consumers spend a lot of money on these products without ever stopping to think about whether they really work.",
+            "confidence": "high",
+            "explanation_zh": "「擔心自己顯老」用過去分詞片語 Worried about looking old，主詞是 many consumers，邏輯一致；「卻從不想想」用 without ever stopping to think about whether ...，比用 but 連接兩個動詞更自然；「是否真的有效」用 whether they really work。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PART",
+              "NRREL"
+            ],
+            "used_target_words": [
+              "see",
+              "perfect",
+              "photo",
+              "celebrity",
+              "young",
+              "buy",
+              "industry"
+            ],
+            "within_accepted": false,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "第 1 部分我寫 After seeing（保留連接詞的分詞構句，和本庫 d84c2b 第 2 句把「連接詞＋分詞」算成 PART 的標準一致），但 accepted 只列 Seeing／Having seen，沒有 After seeing。",
+              "「蓬勃發展」我譯成 flourish（thrive 也是常見譯法），第 4 部分 accepted 只有 boom，沒有 flourish／thrive；學生寫得正確也可能被判不在可接受範圍，建議補上。"
+            ],
+            "closest_reference": 1
+          },
+          "2": {
+            "used_patterns": [
+              "PART",
+              "NCL"
+            ],
+            "used_target_words": [
+              "worry",
+              "old",
+              "consumer",
+              "spend",
+              "fortune",
+              "product",
+              "think",
+              "work"
+            ],
+            "within_accepted": true,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [],
+            "closest_reference": 0
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "see",
+              "perfect",
+              "photo",
+              "celebrity",
+              "young",
+              "buy",
+              "industry"
+            ],
+            "target_hit_rate": 0.875,
+            "patterns_detected": {
+              "PART": true,
+              "NRREL": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "worry",
+              "old",
+              "consumer",
+              "spend",
+              "fortune",
+              "product",
+              "think",
+              "work"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PART": true,
+              "NCL": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 1 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義"
+        ]
+      }
+    }
+  ],
+  "status": "rejected",
+  "status_reason": "blind_solver:A 未通過：第 1 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義；第 1 題驗證者對4 部分切分有意見（warn）：盲譯把「蓬勃發展」譯成 thrive（which has made the anti-aging industry thrive），這是「蓬勃發展」最常見的譯法之一，但第 4 部分 accepted 只收 boom 系列（to boom／b；blind_solver:B 未通過：第 1 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義；判定者補充：第 1 句第 4 部分「蓬勃發展」只收 boom 系列，標的詞 boom 沒有 alternatives，兩位盲譯分別寫 thrive、flourish（都是正確常見譯法）卻被判不在可接受寫法內，評分規準太窄；第 1 部分沒收 After seeing（連接詞＋分詞）；第 3 部分「這讓」只收 which 子句，句尾分詞 causing／fueling … 也會失分。重生時 boom 補 thrive／flourish／prosper，第 1、3、4 部分補這些正確寫法。"
+}

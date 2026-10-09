@@ -1,0 +1,729 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.5d1e5e",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "top",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "照顧年邁父母時，許多中年人還得兼顧工作與家庭，這常讓他們身心俱疲。",
+        "options": null,
+        "answer": "While caring for their elderly parents, many middle-aged people must also balance work and family, which often leaves them physically and mentally exhausted.",
+        "accepted_answers": [
+          "When looking after their elderly parents, many middle-aged people also have to balance their jobs and families, which often makes them physically and mentally exhausted.",
+          "While taking care of their aged parents, many middle-aged people also need to juggle work and family, which often wears them out both physically and mentally."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "連接詞＋分詞（While V-ing）",
+            "非限定關係子句（, which 指前面整件事）"
+          ],
+          "topic": "長期照護"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "然而，許多家庭仍不確定自己是否有資格使用由政府提供的長期照護服務。",
+        "options": null,
+        "answer": "However, many families are still not sure whether they are eligible for the long-term care services provided by the government.",
+        "accepted_answers": [
+          "However, many families are still unsure whether or not they qualify for the long-term care services offered by the government.",
+          "However, many families remain uncertain whether they have the right to use the long-term care services provided by the government."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "whether 名詞子句（間接問句）",
+            "分詞片語後位修飾（N + p.p. + by）"
+          ],
+          "topic": "長期照護"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "長期照護"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「照顧年邁父母時」的主詞和後面的「許多中年人」相同，可用連接詞＋分詞 While caring for …／When taking care of …（＝While they are caring for …）。「兼顧工作與家庭」是在兩者之間取得平衡 balance work and family。「這常讓他們身心俱疲」的「這」指前面整件事，用非限定關係子句 , which often leaves/makes them physically and mentally exhausted（which 前面要有逗號）。",
+          "evidence": [
+            "照顧年邁父母時",
+            "這常讓他們身心俱疲"
+          ],
+          "strategy_zh": "中文句首「…時」若和主要子句同主詞，可用 While/When + V-ing；句尾「這讓…」指前面整件事時用 , which …。",
+          "hints": [
+            "切成四段：照顧年邁父母時／許多中年人／還得兼顧工作與家庭／這常讓他們身心俱疲",
+            "標的詞彙：care（照顧）、elderly（年長的）、middle-aged（中年的）、balance（兼顧、平衡）、exhausted（精疲力盡的）",
+            "句型框架：While + V-ing …, S + must also + V …, which + often + leaves/makes + O + adj."
+          ]
+        },
+        "2": {
+          "explanation_zh": "「是否」引出間接問句 whether they are eligible for …（whether／if＋直述句語序）；「有資格」用 be eligible for 或 qualify for。「由政府提供的長期照護服務」修飾語很長，英文把名詞放前面，用過去分詞片語後位修飾：the long-term care services provided by the government（服務是被提供的，用 provided）。",
+          "evidence": [
+            "是否",
+            "由政府提供的長期照護服務"
+          ],
+          "strategy_zh": "「不確定是否…」→ be not sure whether + S + V；「由…提供的 N」→ N + provided by …。",
+          "hints": [
+            "切成四段：然而，許多家庭仍不確定／自己是否有資格使用／由政府提供的／長期照護服務",
+            "標的詞彙：family（家庭）、eligible（有資格的）、provide（提供）、government（政府）、long-term（長期的）、care（照護）、service（服務）",
+            "句型框架：However, S + be still not sure + whether + S + be eligible for + N + p.p. + by …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "While caring for their elderly parents, many middle-aged people must also balance work and family, which often leaves them physically and mentally exhausted.",
+            "When looking after their elderly parents, many middle-aged people also have to balance their jobs and families, which often makes them physically and mentally exhausted.",
+            "While taking care of their aged parents, many middle-aged people also need to juggle work and family, which often wears them out both physically and mentally."
+          ],
+          "target_words": [
+            {
+              "word": "care",
+              "zh": "照顧",
+              "alternatives": [
+                "look after"
+              ]
+            },
+            {
+              "word": "elderly",
+              "zh": "年邁的",
+              "alternatives": [
+                "aged",
+                "aging",
+                "old"
+              ]
+            },
+            {
+              "word": "middle-aged",
+              "zh": "中年的"
+            },
+            {
+              "word": "balance",
+              "zh": "兼顧、平衡",
+              "alternatives": [
+                "juggle"
+              ]
+            },
+            {
+              "word": "exhausted",
+              "zh": "精疲力盡的",
+              "alternatives": [
+                "exhaust",
+                "wear sb out"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "NRREL",
+              "grammar_id": "gp-nonrestrictive",
+              "label_zh": "非限定關係子句（which 指前面整件事）",
+              "frame": "S + V …, which + V + O + adj.",
+              "zh_trigger": "這常讓他們身心俱疲"
+            },
+            {
+              "code": "PART",
+              "grammar_id": "gp-conj-participle",
+              "label_zh": "連接詞＋分詞（While／When + V-ing）",
+              "frame": "While/When + V-ing …, S + V …",
+              "zh_trigger": "照顧年邁父母時"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "照顧年邁父母時",
+              "accepted": [
+                "While caring for their elderly parents",
+                "When looking after their elderly parents",
+                "While taking care of their aged parents",
+                "When taking care of their elderly parents"
+              ],
+              "targets": [
+                "PART",
+                "care",
+                "elderly"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "While caring their elderly parents",
+                  "right": "While caring for their elderly parents",
+                  "explanation_zh": "care 當「照顧」要接 for（care for）；也可用 take care of／look after。"
+                },
+                {
+                  "wrong": "While they caring for their elderly parents",
+                  "right": "While caring for their elderly parents",
+                  "explanation_zh": "連接詞後面接分詞時，主詞和 be 動詞一起省略；要保留主詞就寫完整子句 While they are caring for …。"
+                }
+              ]
+            },
+            {
+              "zh": "許多中年人",
+              "accepted": [
+                "many middle-aged people",
+                "a lot of middle-aged people"
+              ],
+              "targets": [
+                "middle-aged"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "many middle age people",
+                  "right": "many middle-aged people",
+                  "explanation_zh": "「中年的」是形容詞 middle-aged（有連字號、字尾 -ed）。"
+                }
+              ]
+            },
+            {
+              "zh": "還得兼顧工作與家庭",
+              "accepted": [
+                "must also balance work and family",
+                "also have to balance their jobs and families",
+                "also need to juggle work and family",
+                "also have to balance work and family"
+              ],
+              "targets": [
+                "balance"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "also have to take care work and family",
+                  "right": "also have to balance work and family",
+                  "explanation_zh": "「兼顧」是在兩者之間取得平衡，用 balance／juggle；take care 後面少了 of，意思也不同。"
+                },
+                {
+                  "wrong": "also has to balance work and family",
+                  "right": "also have to balance work and family",
+                  "explanation_zh": "主詞 many middle-aged people 是複數，用 have to。"
+                }
+              ]
+            },
+            {
+              "zh": "這常讓他們身心俱疲",
+              "accepted": [
+                "which often leaves them physically and mentally exhausted",
+                "which often makes them physically and mentally exhausted",
+                "which often wears them out both physically and mentally"
+              ],
+              "targets": [
+                "NRREL",
+                "exhausted"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "this often makes them physically and mentally exhausted",
+                  "right": "which often leaves them physically and mentally exhausted",
+                  "explanation_zh": "逗號後直接接 this 會變成兩個子句硬接（逗號接句）；用 which 指前面整件事，或另起一句。"
+                },
+                {
+                  "wrong": "which often makes them physically and mentally exhausting",
+                  "right": "which often makes them physically and mentally exhausted",
+                  "explanation_zh": "描述人「感到」疲憊用 exhausted；exhausting 是「令人疲憊的」。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "collocation",
+              "zh": "身心俱疲",
+              "literal_error": "…, which often makes their body and heart tired.",
+              "part": 4,
+              "explanation_zh": "「身心俱疲」是身體和心理都非常疲累，用 physically and mentally exhausted 或 worn out；不要逐字寫 body and heart tired。"
+            },
+            {
+              "type": "subjectless",
+              "zh": "照顧年邁父母時",
+              "literal_error": "When take care of their elderly parents, many middle-aged people …",
+              "part": 1,
+              "explanation_zh": "中文時間子句省略了主詞，英文不能只留原形動詞；用 While caring for …（分詞），或寫完整子句 When they take care of …。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "Caring for their elderly parents while juggling work and family, many middle-aged people often end up physically and mentally drained.",
+              "grammar_id": "gp-participle-clause",
+              "explanation_zh": "用分詞構句把「照顧父母」和「兼顧工作家庭」合在句首，end up drained（最後筋疲力盡）更生動。"
+            }
+          ],
+          "restructuring_zh": "句首「照顧…時」省略主詞，英文用 While caring for …（分詞的主詞就是後面的 many middle-aged people）；句尾「這常讓他們…」不要用 this 另起子句，改成 , which … 指前面整件事。"
+        },
+        "2": {
+          "references": [
+            "However, many families are still not sure whether they are eligible for the long-term care services provided by the government.",
+            "However, many families are still unsure whether or not they qualify for the long-term care services offered by the government.",
+            "However, many families remain uncertain whether they have the right to use the long-term care services provided by the government."
+          ],
+          "target_words": [
+            {
+              "word": "family",
+              "zh": "家庭"
+            },
+            {
+              "word": "eligible",
+              "zh": "有資格的",
+              "alternatives": [
+                "qualify",
+                "have the right",
+                "entitled"
+              ]
+            },
+            {
+              "word": "provide",
+              "zh": "提供",
+              "alternatives": [
+                "offer"
+              ]
+            },
+            {
+              "word": "government",
+              "zh": "政府"
+            },
+            {
+              "word": "long-term",
+              "zh": "長期的"
+            },
+            {
+              "word": "care",
+              "zh": "照護"
+            },
+            {
+              "word": "service",
+              "zh": "服務"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "NCL",
+              "grammar_id": "gp-wh-clause",
+              "label_zh": "間接問句：whether 名詞子句（是否）",
+              "frame": "S + be not sure + whether + S + V …",
+              "zh_trigger": "是否"
+            },
+            {
+              "code": "PART",
+              "grammar_id": "gp-participle-modifier",
+              "label_zh": "過去分詞片語後位修飾名詞（由…提供的 N）",
+              "frame": "N + p.p. + by …",
+              "zh_trigger": "由政府提供的"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "然而，許多家庭仍不確定",
+              "accepted": [
+                "However, many families are still not sure",
+                "However, many families are still unsure",
+                "However, many families remain uncertain",
+                "However, many families still do not know"
+              ],
+              "targets": [
+                "family"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "However, many families still not sure",
+                  "right": "However, many families are still not sure",
+                  "explanation_zh": "sure 是形容詞，前面要有 be 動詞 are。"
+                },
+                {
+                  "wrong": "However, many family are still not sure",
+                  "right": "However, many families are still not sure",
+                  "explanation_zh": "many 後面接複數名詞 families。"
+                }
+              ]
+            },
+            {
+              "zh": "自己是否有資格使用",
+              "accepted": [
+                "whether they are eligible for",
+                "whether or not they qualify for",
+                "whether they have the right to use",
+                "if they are eligible for"
+              ],
+              "targets": [
+                "NCL",
+                "eligible"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "whether are they eligible for",
+                  "right": "whether they are eligible for",
+                  "explanation_zh": "間接問句用直述句語序：whether + 主詞 + 動詞。"
+                },
+                {
+                  "wrong": "whether they have qualification to use",
+                  "right": "whether they are eligible for",
+                  "explanation_zh": "「有資格」用 be eligible for／qualify for；qualification 多指學歷或證照，照字面寫 have qualification 不自然。"
+                }
+              ]
+            },
+            {
+              "zh": "由政府提供的",
+              "accepted": [
+                "provided by the government",
+                "offered by the government"
+              ],
+              "targets": [
+                "PART",
+                "provide",
+                "government"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "providing by the government",
+                  "right": "provided by the government",
+                  "explanation_zh": "服務是「被」政府提供的，用過去分詞 provided。"
+                },
+                {
+                  "wrong": "the government provided the long-term care services",
+                  "right": "the long-term care services provided by the government",
+                  "explanation_zh": "照中文順序寫成 the government provided …，會多出一組主詞＋動詞；要改成名詞後面接 provided by the government。"
+                }
+              ]
+            },
+            {
+              "zh": "長期照護服務",
+              "accepted": [
+                "the long-term care services",
+                "long-term care services"
+              ],
+              "targets": [
+                "long-term",
+                "care",
+                "service"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "the long time care services",
+                  "right": "the long-term care services",
+                  "explanation_zh": "「長期的」是複合形容詞 long-term；long time 是名詞片語，不能這樣修飾名詞。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "abstract_nominal",
+              "zh": "有資格",
+              "literal_error": "… whether they have qualification to use the long-term care services …",
+              "part": 2,
+              "explanation_zh": "「有資格」英文多用形容詞 eligible 或動詞 qualify：be eligible for／qualify for，不要照字面寫成 have qualification。"
+            },
+            {
+              "type": "prenominal_modifier",
+              "zh": "由政府提供的長期照護服務",
+              "literal_error": "… whether they are eligible for the by the government provided long-term care services.",
+              "part": 3,
+              "explanation_zh": "中文修飾語「由政府提供的」放在名詞前；英文帶 by 的分詞片語要放在名詞後面：the long-term care services provided by the government。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "However, it remains unclear to many families whether they are entitled to the long-term care services offered by the government.",
+              "grammar_id": "gp-wh-clause",
+              "explanation_zh": "用虛主詞 it 把 whether 子句移到句尾，be entitled to（有權享有）比 be eligible for 更正式。"
+            }
+          ],
+          "restructuring_zh": "「由政府提供的長期照護服務」英文要倒過來：先寫 the long-term care services，再用 provided by the government 後位修飾；「不確定自己是否…」改成 be not sure whether they …。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ac-V-3",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-top-04",
+    "lot": "translation-top-04",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "6a9df5361ca910602b338b273c04042b40d0d8c92f6dc2609abebceddbfdb2f7",
+    "spec_id": "translation-top@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T13:27:22Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T13:05:21Z",
+      "details": {
+        "solver": "A",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "While taking care of their aging parents, many middle-aged people also have to balance work and family, which often leaves them physically and mentally exhausted.",
+            "confidence": "high",
+            "explanation_zh": "「照顧……時」用 While + V-ing 的分詞構句；「兼顧」譯 balance；「這常讓他們身心俱疲」中的「這」指前面整件事，用非限定關係子句 which often leaves them...；「身心俱疲」譯 physically and mentally exhausted。"
+          },
+          "2": {
+            "translation": "However, many families are still unsure whether they are eligible to use the long-term care services provided by the government.",
+            "confidence": "high",
+            "explanation_zh": "「不確定是否」用 unsure whether 名詞子句；「有資格」譯 be eligible to；「由政府提供的」用過去分詞後位修飾 provided by the government。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "NRREL",
+              "PART"
+            ],
+            "used_target_words": [
+              "care",
+              "elderly",
+              "middle-aged",
+              "balance",
+              "exhausted"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "建議（不影響判定）：第 1 部分可補「While taking care of their aging parents」（aging 已在 elderly 的 alternatives）。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "NCL",
+              "PART"
+            ],
+            "used_target_words": [
+              "family",
+              "eligible",
+              "provide",
+              "government",
+              "long-term",
+              "care",
+              "service"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "建議（不影響判定）：第 2 部分可補「whether they are eligible to use」（保留「使用」，與 eligible for 同樣正確）。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "care",
+              "elderly",
+              "middle-aged",
+              "balance",
+              "exhausted"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NRREL": true,
+              "PART": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "family",
+              "eligible",
+              "provide",
+              "government",
+              "long-term",
+              "care",
+              "service"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NCL": true,
+              "PART": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T13:09:20Z",
+      "details": {
+        "solver": "B",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "While caring for their elderly parents, many middle-aged people also have to balance work and family, which often leaves them physically and mentally exhausted.",
+            "confidence": "high",
+            "explanation_zh": "「照顧年邁父母時」用 while + V-ing 的分詞構句；「兼顧」用 balance；「這常讓他們身心俱疲」以 which 非限定關係子句指前面整件事，再用 leave + 受詞 + 形容詞。"
+          },
+          "2": {
+            "translation": "However, many families are still unsure whether they are eligible for the long-term care services provided by the government.",
+            "confidence": "high",
+            "explanation_zh": "「不確定是否」用 unsure whether 帶名詞子句；「有資格」用 be eligible for；「由政府提供的」用過去分詞片語後置修飾 services。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PART",
+              "NRREL"
+            ],
+            "used_target_words": [
+              "care",
+              "elderly",
+              "middle-aged",
+              "balance",
+              "exhausted"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "NCL",
+              "PART"
+            ],
+            "used_target_words": [
+              "family",
+              "eligible",
+              "provide",
+              "government",
+              "long-term",
+              "care",
+              "service"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "care",
+              "elderly",
+              "middle-aged",
+              "balance",
+              "exhausted"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PART": true,
+              "NRREL": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "family",
+              "eligible",
+              "provide",
+              "government",
+              "long-term",
+              "care",
+              "service"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NCL": true,
+              "PART": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

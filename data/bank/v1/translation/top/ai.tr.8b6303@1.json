@@ -1,0 +1,740 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.8b6303",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "top",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "在被要求將文物歸還原屬國時，許多博物館發現，拖得越久，受到的批評就越強烈。",
+        "options": null,
+        "answer": "When asked to return cultural objects to their home countries, many museums find that the longer they delay, the fiercer the criticism becomes.",
+        "accepted_answers": [
+          "When asked to give cultural objects back to their countries of origin, many museums discover that the longer they wait, the stronger the criticism grows.",
+          "When asked to return cultural objects to their countries of origin, many museums realize that the longer they put it off, the harsher the criticism they receive."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "愈…愈…（拖得越久，批評越強烈）",
+            "連接詞＋過去分詞（When asked to …）"
+          ],
+          "topic": "文物歸還"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "在這場爭議中，最根本的問題不是這些文物值多少錢，而是它們真正屬於哪裡。",
+        "options": null,
+        "answer": "In this dispute, the most fundamental issue is not how much these objects are worth but where they truly belong.",
+        "accepted_answers": [
+          "In this debate, the most basic question is not how valuable these cultural objects are, but where they really belong.",
+          "In this dispute, the most fundamental question is not what these cultural objects are worth but where they actually belong."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "間接問句（值多少錢／屬於哪裡：how much … / where …）",
+            "最高級（最根本的問題：the most fundamental issue）"
+          ],
+          "topic": "文物歸還"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "文物歸還"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「在被要求…時」博物館是被要求的一方，用「連接詞＋過去分詞」When asked to …，等於 When they are asked to …；省略的主詞必須和主要子句的主詞（many museums）相同。「拖得越久，批評就越強烈」用 the longer they delay, the fiercer the criticism becomes，兩個子句都以 the＋比較級開頭。「原屬國」是 home countries／countries of origin，「批評」用名詞 criticism。",
+          "evidence": [
+            "在被要求將文物歸還原屬國時",
+            "拖得越久，受到的批評就越強烈"
+          ],
+          "strategy_zh": "先寫主幹 many museums find that …，that 子句裡放「越…越…」；句首的時間子句簡化成 When asked to …。",
+          "hints": [
+            "切成四段：在被要求將文物歸還原屬國時／許多博物館發現／拖得越久／受到的批評就越強烈",
+            "標的詞彙：return（歸還）、cultural（文化的）、museum（博物館）、criticism（批評）、fierce（強烈的）",
+            "句型框架：When asked to VR …, S + find that the + 比較級 + S + V, the + 比較級 + S + V"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「最根本的問題」用最高級 the most fundamental issue（或 the most basic question），「問題」是要討論的議題，用 issue／question，不用 problem。「不是…而是…」用 not A but B，A、B 都是間接問句：how much these objects are worth（值多少錢用 be worth）、where they truly belong（belong 後面不加 to），語序都是直述句。",
+          "evidence": [
+            "最根本的問題",
+            "不是這些文物值多少錢，而是它們真正屬於哪裡"
+          ],
+          "strategy_zh": "主幹是 the most fundamental issue is not A but B；A、B 各自寫成 wh- 名詞子句，注意不要用疑問句語序。",
+          "hints": [
+            "切成四段：在這場爭議中／最根本的問題／不是這些文物值多少錢／而是它們真正屬於哪裡",
+            "標的詞彙：dispute（爭議）、fundamental（根本的）、issue（議題）、worth（值…錢）、belong（屬於）",
+            "句型框架：the most + adj. + N + is not how much + S + be worth but where + S + V"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "When asked to return cultural objects to their home countries, many museums find that the longer they delay, the fiercer the criticism becomes.",
+            "When asked to give cultural objects back to their countries of origin, many museums discover that the longer they wait, the stronger the criticism grows.",
+            "When asked to return cultural objects to their countries of origin, many museums realize that the longer they put it off, the harsher the criticism they receive."
+          ],
+          "target_words": [
+            {
+              "word": "return",
+              "zh": "歸還",
+              "alternatives": [
+                "give sth back",
+                "send sth back"
+              ]
+            },
+            {
+              "word": "cultural",
+              "zh": "文化的（文物）"
+            },
+            {
+              "word": "museum",
+              "zh": "博物館"
+            },
+            {
+              "word": "criticism",
+              "zh": "批評",
+              "alternatives": [
+                "criticize"
+              ]
+            },
+            {
+              "word": "fierce",
+              "zh": "強烈的",
+              "alternatives": [
+                "strong",
+                "harsh",
+                "intense"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "COMP",
+              "grammar_id": "gp-the-more",
+              "label_zh": "愈…愈…（拖得越久，批評越強烈）",
+              "frame": "the + 比較級 + S + V, the + 比較級 + S + V",
+              "zh_trigger": "拖得越久，受到的批評就越強烈"
+            },
+            {
+              "code": "PART",
+              "grammar_id": "gp-conj-participle",
+              "label_zh": "連接詞＋過去分詞（When asked to …）",
+              "frame": "When + p.p. …, S + V …",
+              "zh_trigger": "在被要求"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "在被要求將文物歸還原屬國時",
+              "accepted": [
+                "When asked to return cultural objects to their home countries",
+                "When asked to give cultural objects back to their countries of origin",
+                "When asked to return cultural objects to their countries of origin",
+                "When they are asked to return cultural objects to their home countries"
+              ],
+              "targets": [
+                "PART",
+                "return",
+                "cultural"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "When asking to return cultural objects to their home countries",
+                  "right": "When asked to return cultural objects to their home countries",
+                  "explanation_zh": "博物館是「被要求」的一方，要用過去分詞 asked；asking 是主動「要求別人」。"
+                },
+                {
+                  "wrong": "When asked to return cultural objects to their original countries",
+                  "right": "When asked to return cultural objects to their home countries",
+                  "explanation_zh": "「原屬國」是 home country 或 country of origin；original country 不是道地說法。"
+                }
+              ]
+            },
+            {
+              "zh": "許多博物館發現",
+              "accepted": [
+                "many museums find that",
+                "many museums discover that",
+                "many museums realize that",
+                "many museums find"
+              ],
+              "targets": [
+                "museum"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "many museum find that",
+                  "right": "many museums find that",
+                  "explanation_zh": "many 後面接複數名詞。"
+                },
+                {
+                  "wrong": "many museums finds that",
+                  "right": "many museums find that",
+                  "explanation_zh": "主詞 museums 是複數，動詞不加 s。"
+                }
+              ]
+            },
+            {
+              "zh": "拖得越久",
+              "accepted": [
+                "the longer they delay",
+                "the longer they wait",
+                "the longer they put it off"
+              ],
+              "targets": [
+                "COMP"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "longer they delay",
+                  "right": "the longer they delay",
+                  "explanation_zh": "「越…越…」兩個子句都要以 the＋比較級開頭。"
+                },
+                {
+                  "wrong": "the more long they delay",
+                  "right": "the longer they delay",
+                  "explanation_zh": "long 的比較級是 longer。"
+                }
+              ]
+            },
+            {
+              "zh": "受到的批評就越強烈",
+              "accepted": [
+                "the fiercer the criticism becomes",
+                "the stronger the criticism grows",
+                "the harsher the criticism they receive",
+                "the more criticism they receive",
+                "the more criticism they face"
+              ],
+              "targets": [
+                "COMP",
+                "criticism",
+                "fierce"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "the more strong the criticism becomes",
+                  "right": "the stronger the criticism becomes",
+                  "explanation_zh": "strong 的比較級是 stronger。"
+                },
+                {
+                  "wrong": "the fiercer they get criticize",
+                  "right": "the fiercer the criticism becomes",
+                  "explanation_zh": "「批評」在這裡是名詞 criticism，不是動詞 criticize。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "abstract_nominal",
+              "zh": "批評",
+              "literal_error": "the more they get criticize",
+              "part": 4,
+              "explanation_zh": "「受到的批評」是抽象名詞 criticism，寫成 the fiercer the criticism becomes；把「受到批評」直接翻成 get criticize 會同時錯在詞性與被動。"
+            },
+            {
+              "type": "word_form",
+              "zh": "在被要求",
+              "literal_error": "When asking to return cultural objects to their home countries, many museums find that the longer they delay, the fiercer the criticism becomes.",
+              "part": 1,
+              "explanation_zh": "中文有「被」：博物館是被要求的一方，要用過去分詞 When asked to …；寫成 When asking 意思變成博物館去要求別人。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "When asked to return cultural objects to their home countries, many museums learn that every year of delay only invites fiercer criticism.",
+              "explanation_zh": "把「拖得越久，批評越強烈」改寫成 every year of delay only invites fiercer criticism（每拖一年只會招來更強烈的批評），用抽象名詞當主詞，句子更精簡。"
+            }
+          ],
+          "restructuring_zh": "「在被要求…時」省略主詞與 be 動詞，寫成 When asked to …（省略的主詞要和主要子句的 many museums 相同）；「受到的批評就越強烈」以「批評」為主詞，寫成 the fiercer the criticism becomes，比較級要移到子句開頭。"
+        },
+        "2": {
+          "references": [
+            "In this dispute, the most fundamental issue is not how much these objects are worth but where they truly belong.",
+            "In this debate, the most basic question is not how valuable these cultural objects are, but where they really belong.",
+            "In this dispute, the most fundamental question is not what these cultural objects are worth but where they actually belong."
+          ],
+          "target_words": [
+            {
+              "word": "dispute",
+              "zh": "爭議",
+              "alternatives": [
+                "debate",
+                "controversy"
+              ]
+            },
+            {
+              "word": "fundamental",
+              "zh": "根本的",
+              "alternatives": [
+                "basic"
+              ]
+            },
+            {
+              "word": "issue",
+              "zh": "議題（問題）",
+              "alternatives": [
+                "question"
+              ]
+            },
+            {
+              "word": "worth",
+              "zh": "值…（錢）",
+              "alternatives": [
+                "valuable",
+                "value"
+              ]
+            },
+            {
+              "word": "belong",
+              "zh": "屬於"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "NCL",
+              "grammar_id": "gp-wh-clause",
+              "label_zh": "間接問句（值多少錢／屬於哪裡：how much … / where …）",
+              "frame": "… is not how much + S + be worth but where + S + V",
+              "zh_trigger": "屬於哪裡"
+            },
+            {
+              "code": "COMP",
+              "grammar_id": "gp-comparative-superlative",
+              "label_zh": "最高級（最根本的問題：the most fundamental issue）",
+              "frame": "the most + adj. + N",
+              "zh_trigger": "最根本的問題"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "在這場爭議中",
+              "accepted": [
+                "In this dispute",
+                "In this debate",
+                "In this controversy"
+              ],
+              "targets": [
+                "dispute"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "In this argue",
+                  "right": "In this dispute",
+                  "explanation_zh": "介系詞 in 後面接名詞 dispute／debate；argue 是動詞。"
+                },
+                {
+                  "wrong": "In this disputes",
+                  "right": "In this dispute",
+                  "explanation_zh": "this 後面接單數名詞。"
+                }
+              ]
+            },
+            {
+              "zh": "最根本的問題",
+              "accepted": [
+                "the most fundamental issue",
+                "the most basic question",
+                "the most fundamental question"
+              ],
+              "targets": [
+                "COMP",
+                "fundamental",
+                "issue"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "the most fundamental problem",
+                  "right": "the most fundamental issue",
+                  "explanation_zh": "這裡的「問題」是要討論的議題，用 issue／question；problem 是要解決的麻煩。"
+                },
+                {
+                  "wrong": "the most fundamentalest issue",
+                  "right": "the most fundamental issue",
+                  "explanation_zh": "多音節形容詞的最高級用 the most，不加 -est。"
+                }
+              ]
+            },
+            {
+              "zh": "不是這些文物值多少錢",
+              "accepted": [
+                "is not how much these objects are worth",
+                "is not how valuable these cultural objects are",
+                "is not what these cultural objects are worth",
+                "is not how much these cultural objects are worth"
+              ],
+              "targets": [
+                "NCL",
+                "worth"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "is not how much money these objects value",
+                  "right": "is not how much these objects are worth",
+                  "explanation_zh": "「值多少錢」用 be worth：how much they are worth；value 當動詞是「重視、估價」。"
+                },
+                {
+                  "wrong": "is not how much are these objects worth",
+                  "right": "is not how much these objects are worth",
+                  "explanation_zh": "名詞子句用直述句語序：how much＋主詞＋be worth。"
+                }
+              ]
+            },
+            {
+              "zh": "而是它們真正屬於哪裡",
+              "accepted": [
+                "but where they truly belong",
+                "but where they really belong",
+                "but where they actually belong"
+              ],
+              "targets": [
+                "NCL",
+                "belong"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "but where do they truly belong",
+                  "right": "but where they truly belong",
+                  "explanation_zh": "間接問句不用疑問句語序。"
+                },
+                {
+                  "wrong": "but where they truly belong to",
+                  "right": "but where they truly belong",
+                  "explanation_zh": "where 已經表示地點，belong 後面不再加 to。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "abstract_nominal",
+              "zh": "最根本的問題",
+              "literal_error": "the most fundamental problem",
+              "part": 2,
+              "explanation_zh": "中文的「問題」可以是 problem、question 或 issue；這裡指爭議裡要討論的核心議題，用 issue／question，寫成 problem 意思就偏了。"
+            },
+            {
+              "type": "collocation",
+              "zh": "值多少錢",
+              "literal_error": "is not how much money these objects value",
+              "part": 3,
+              "explanation_zh": "「值多少錢」英文用 be worth：how much these objects are worth；直譯成 how much money … value 是錯誤搭配。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "What matters most in this dispute is not how much these objects are worth but where they truly belong.",
+              "grammar_id": "gp-what-cleft",
+              "explanation_zh": "用 What matters most … is …（準分裂句）強調「最重要的是」，是作文也常用的加分句型。"
+            }
+          ]
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ac-V-3",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-top-02",
+    "lot": "translation-top-02",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "6c20f5a14ca426db5ab42249ce1bc261a4855dfb4f5732045980d8afdca92905",
+    "spec_id": "translation-top@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T13:14:34Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "fail",
+      "created_at": "2026-10-09T08:03:54Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "When asked to return artifacts to their countries of origin, many museums have found that the longer they delay, the stronger the criticism they receive.",
+            "confidence": "high",
+            "explanation_zh": "「在被要求…時」用省略主詞與 be 動詞的 When asked to…；「原屬國」countries of origin；「拖得越久，受到的批評就越強烈」用 the + 比較級…, the + 比較級…，後半 the stronger the criticism (that) they receive 省略 is；「發現」用現在完成式表至今的經驗。"
+          },
+          "2": {
+            "translation": "In this controversy, the most fundamental question is not how much these artifacts are worth but where they truly belong.",
+            "confidence": "high",
+            "explanation_zh": "「不是…而是…」用 not A but B，A、B 都是名詞子句（間接問句）how much these artifacts are worth／where they truly belong，結構對稱；「最根本的問題」the most fundamental question。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "COMP",
+              "PART"
+            ],
+            "used_target_words": [
+              "return",
+              "museum",
+              "criticism",
+              "fierce"
+            ],
+            "within_accepted": false,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "我把「文物」譯成 artifacts（return artifacts to their countries of origin），這是英文談文物歸還時最常用的字，但第 1 部分 accepted 全是 cultural objects，標的詞 cultural 也沒有 alternatives，所以照規準不在可接受寫法內。建議 cultural 補 alternatives artifact／relic／heritage，第 1 部分 accepted 補 return artifacts／cultural relics to their countries of origin。",
+              "「許多博物館發現」我用現在完成式 have found；accepted 只列現在式 find／discover／realize，這是非標的的時態差異，不影響判斷，但可順手補上。",
+              "標的詞彙我用到 4/5（80%），剛好在門檻上。"
+            ],
+            "closest_reference": 2
+          },
+          "2": {
+            "used_patterns": [
+              "NCL",
+              "COMP"
+            ],
+            "used_target_words": [
+              "dispute",
+              "fundamental",
+              "issue",
+              "worth",
+              "belong"
+            ],
+            "within_accepted": true,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "（參考）第 3 部分我寫 how much these artifacts are worth，accepted 只有 objects／cultural objects；這裡「文物」不是標的詞，句型 NCL 與標的詞 worth 都對，所以仍算在可接受寫法內。建議一併補 artifacts。"
+            ],
+            "closest_reference": 2
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "return",
+              "museum",
+              "criticism",
+              "fierce"
+            ],
+            "target_hit_rate": 0.8,
+            "patterns_detected": {
+              "COMP": true,
+              "PART": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "dispute",
+              "fundamental",
+              "issue",
+              "worth",
+              "belong"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NCL": true,
+              "COMP": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 1 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "fail",
+      "created_at": "2026-10-09T12:46:22Z",
+      "details": {
+        "solver": "B",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "When asked to return cultural relics to the countries they originally belonged to, many museums have found that the longer they delay, the stronger the criticism they receive becomes.",
+            "confidence": "medium",
+            "explanation_zh": "「在被要求……時」用省略主詞的 When asked to...；「越……越……」用 the longer..., the stronger...；「文物」譯成 cultural relics（亦可 artifacts）；「原屬國」用關係子句說明。句尾的 becomes 讓結構完整，但略顯累贅，也可改成 the more strongly they are criticized。"
+          },
+          "2": {
+            "translation": "In this controversy, the most fundamental issue is not how much these artifacts are worth, but where they really belong.",
+            "confidence": "high",
+            "explanation_zh": "「不是……而是……」用 not ... but ...，兩側都接名詞子句 how much ... worth 與 where they belong；「最根本的問題」用最高級 the most fundamental issue；「爭議」譯成 controversy。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "COMP",
+              "PART"
+            ],
+            "used_target_words": [
+              "return",
+              "cultural",
+              "museum",
+              "criticism",
+              "fierce"
+            ],
+            "within_accepted": false,
+            "closest_reference": 2,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "「文物」我自然寫成 cultural relics；參考譯文與各部分 accepted 一律用 cultural objects，relics／artifacts 這兩個比 objects 更常見的譯法都沒收，建議補入 cultural relics、artifacts（Q2 同樣的問題）。",
+              "「原屬國」我寫成 the countries they originally belonged to，不在第 1 部分 accepted 內（只有 their home countries／their countries of origin）；另外「發現」我用現在完成式 have found，accepted 只收現在式 find／discover／realize，建議補現在完成式。",
+              "我最後的 the stronger the criticism they receive becomes 有點累贅（屬於我自己的寫法問題，不是 rubric 問題）。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "NCL",
+              "COMP"
+            ],
+            "used_target_words": [
+              "dispute",
+              "fundamental",
+              "issue",
+              "worth",
+              "belong"
+            ],
+            "within_accepted": false,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "「文物」我寫 these artifacts，第 3 部分 accepted 只有 these objects／these cultural objects；artifacts 是更常見的說法，建議補入 artifacts、relics。",
+              "另：第 2 題 items 缺少 restructuring_zh 欄位（第 1 題有），格式不一致。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "return",
+              "cultural",
+              "museum",
+              "criticism",
+              "fierce"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "COMP": true,
+              "PART": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "dispute",
+              "fundamental",
+              "issue",
+              "worth",
+              "belong"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NCL": true,
+              "COMP": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 1 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義",
+          "第 2 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義"
+        ]
+      }
+    }
+  ],
+  "status": "rejected",
+  "status_reason": "blind_solver:A 未通過：第 1 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義；blind_solver:B 未通過：第 1 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義；第 2 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義；人工審核：「文物」兩位盲譯都自然寫成 artifacts／cultural relics，但參考譯文和各部分 accepted 只用 cultural objects，標的詞 cultural 沒有 alternatives（兩句都受影響）；「許多博物館發現」也沒收 have found。"
+}

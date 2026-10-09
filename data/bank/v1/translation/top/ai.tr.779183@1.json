@@ -1,0 +1,804 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.779183",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "top",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "社會企業（social enterprise）的獲利越多，能雇用的弱勢者就越多，幫助更多家庭擺脫貧窮的循環。",
+        "options": null,
+        "answer": "The more profit a social enterprise makes, the more disadvantaged people it can hire, helping more families break the cycle of poverty.",
+        "accepted_answers": [
+          "The more money a social enterprise earns, the more people from disadvantaged groups it can employ, allowing more families to escape the cycle of poverty.",
+          "The more profitable a social enterprise is, the more underprivileged people it can hire, enabling more families to break free from the cycle of poverty."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "愈…愈…（獲利越多，能雇用的弱勢者就越多）",
+            "句尾分詞片語表結果（…，幫助更多家庭…）"
+          ],
+          "topic": "社會企業"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "然而，要找出這些人真正需要的並不容易，因為造成貧窮的原因往往不只一個。",
+        "options": null,
+        "answer": "However, it is not easy to identify what these people really need, because poverty often has more than one cause.",
+        "accepted_answers": [
+          "However, it is not easy to figure out what these people truly need, since poverty is usually caused by more than one factor.",
+          "However, it is difficult to find out what these people actually need, as there is often more than one cause of poverty."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "what 名詞子句（這些人真正需要的＝what these people really need）",
+            "虛主詞 It ＋形容詞＋不定詞（要找出…並不容易）"
+          ],
+          "topic": "社會企業"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "社會企業"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「…越多，…就越多」用 the more＋名詞＋S＋V, the more＋名詞＋S＋V；第二個子句的「能雇用的弱勢者」要把 the more disadvantaged people 整個放在前面，再接 it can hire。「幫助更多家庭擺脫貧窮的循環」是前面這件事帶來的結果，用句尾分詞 helping more families (to) break the cycle of poverty；「貧窮的循環」是固定說法 the cycle of poverty。",
+          "evidence": [
+            "社會企業（social enterprise）的獲利越多，能雇用的弱勢者就越多",
+            "幫助更多家庭擺脫貧窮的循環"
+          ],
+          "strategy_zh": "先寫兩個 the＋比較級子句，注意比較級要帶著名詞一起移到開頭；最後在逗號後用 helping more families … 帶出結果。",
+          "hints": [
+            "切成四段：社會企業的獲利越多／能雇用的弱勢者就越多／幫助更多家庭／擺脫貧窮的循環",
+            "標的詞彙：profit（獲利）、hire（雇用）、disadvantaged（弱勢的）、family（家庭）、poverty（貧窮）",
+            "句型框架：The more + N + S + V, the more + N + S + can V, helping + O + VR …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「要找出…並不容易」用虛主詞 It is not easy to …；「這些人真正需要的」沒有中心名詞，用 what 名詞子句 what these people really need 當 identify／find out 的受詞，語序是直述句。「因為造成貧窮的原因往往不只一個」把抽象名詞 poverty 當主詞改寫成 poverty often has more than one cause，或用被動 poverty is often caused by more than one factor；more than one 後接單數名詞。",
+          "evidence": [
+            "要找出這些人真正需要的並不容易",
+            "造成貧窮的原因往往不只一個"
+          ],
+          "strategy_zh": "句首 However, 接虛主詞句；受詞是一個 what 子句；最後用 because 帶出原因，並把「原因不只一個」改寫成 has more than one cause。",
+          "hints": [
+            "切成四段：要找出／這些人真正需要的／並不容易／因為造成貧窮的原因往往不只一個",
+            "標的詞彙：easy（容易）、identify（找出）、need（需要）、poverty（貧窮）、cause（原因）",
+            "句型框架：It is not easy to identify + what + S + V, because …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "The more profit a social enterprise makes, the more disadvantaged people it can hire, helping more families break the cycle of poverty.",
+            "The more money a social enterprise earns, the more people from disadvantaged groups it can employ, allowing more families to escape the cycle of poverty.",
+            "The more profitable a social enterprise is, the more underprivileged people it can hire, enabling more families to break free from the cycle of poverty."
+          ],
+          "target_words": [
+            {
+              "word": "profit",
+              "zh": "獲利",
+              "alternatives": [
+                "profitable",
+                "money",
+                "earn",
+                "earnings",
+                "income",
+                "revenue"
+              ]
+            },
+            {
+              "word": "hire",
+              "zh": "雇用",
+              "alternatives": [
+                "employ",
+                "recruit",
+                "take on"
+              ]
+            },
+            {
+              "word": "disadvantaged",
+              "zh": "弱勢的",
+              "alternatives": [
+                "underprivileged",
+                "vulnerable",
+                "needy",
+                "in need",
+                "marginalized",
+                "poor"
+              ]
+            },
+            {
+              "word": "family",
+              "zh": "家庭",
+              "alternatives": [
+                "household",
+                "households"
+              ]
+            },
+            {
+              "word": "poverty",
+              "zh": "貧窮",
+              "alternatives": [
+                "poor"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "COMP",
+              "grammar_id": "gp-the-more",
+              "label_zh": "愈…愈…（獲利越多，能雇用的弱勢者就越多）",
+              "frame": "The + 比較級 + N + S + V, the + 比較級 + N + S + can + V",
+              "zh_trigger": "的獲利越多，能雇用的弱勢者就越多"
+            },
+            {
+              "code": "PART",
+              "grammar_id": "gp-participle-result",
+              "label_zh": "句尾分詞片語表結果（…，幫助更多家庭…）",
+              "frame": "…, helping/allowing + O + (to) VR …",
+              "zh_trigger": "幫助更多家庭擺脫貧窮的循環"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "社會企業（social enterprise）的獲利越多",
+              "accepted": [
+                "The more profit a social enterprise makes",
+                "The more money a social enterprise earns",
+                "The more profitable a social enterprise is",
+                "The more profit a social enterprise earns",
+                "The more money a social enterprise makes",
+                "The more profits a social enterprise makes",
+                "The higher a social enterprise's profits are",
+                "The more a social enterprise earns",
+                "The more profits a social enterprise earns",
+                "The more profit a social enterprise generates",
+                "The more money a social enterprise generates"
+              ],
+              "targets": [
+                "COMP",
+                "profit"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "More profit a social enterprise makes",
+                  "right": "The more profit a social enterprise makes",
+                  "explanation_zh": "「越…越…」兩個子句都要以 the＋比較級開頭，the 不能省。"
+                },
+                {
+                  "wrong": "The more profit does a social enterprise make",
+                  "right": "The more profit a social enterprise makes",
+                  "explanation_zh": "the＋比較級後面接直述句語序，不用疑問句的 does。"
+                }
+              ]
+            },
+            {
+              "zh": "能雇用的弱勢者就越多",
+              "accepted": [
+                "the more disadvantaged people it can hire",
+                "the more people from disadvantaged groups it can employ",
+                "the more underprivileged people it can hire",
+                "the more disadvantaged people it can employ",
+                "the more vulnerable people it can hire",
+                "the more disadvantaged workers it can hire",
+                "the more people in need it can employ",
+                "the more people from disadvantaged groups it can hire",
+                "the more jobs it can offer to disadvantaged people",
+                "the more disadvantaged people it is able to hire",
+                "the more disadvantaged people it is able to employ",
+                "the more underprivileged people it can employ",
+                "the more people in need it can hire",
+                "the more disadvantaged individuals it can hire"
+              ],
+              "targets": [
+                "COMP",
+                "hire",
+                "disadvantaged"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "the more disadvantaged people can it hire",
+                  "right": "the more disadvantaged people it can hire",
+                  "explanation_zh": "the＋比較級＋名詞後面接直述句語序（主詞＋助動詞＋動詞），不要倒裝成 can it hire。"
+                },
+                {
+                  "wrong": "the more disadvantage people it can hire",
+                  "right": "the more disadvantaged people it can hire",
+                  "explanation_zh": "修飾 people 要用形容詞 disadvantaged（弱勢的）；disadvantage 是名詞。"
+                }
+              ]
+            },
+            {
+              "zh": "幫助更多家庭",
+              "accepted": [
+                "helping more families",
+                "allowing more families",
+                "enabling more families",
+                "lifting more families",
+                "letting more families",
+                "giving more families the chance",
+                "thus helping more families",
+                "helping many more families"
+              ],
+              "targets": [
+                "PART",
+                "family"
+              ],
+              "common_errors": [
+                {
+                  "wrong": ", helps more families break the cycle of poverty",
+                  "right": ", helping more families break the cycle of poverty",
+                  "explanation_zh": "逗號後面不能再接一個主要動詞 helps；表示前面整件事帶來的結果，用分詞 helping。"
+                },
+                {
+                  "wrong": ", helping more family break the cycle of poverty",
+                  "right": ", helping more families break the cycle of poverty",
+                  "explanation_zh": "more 後面接可數名詞的複數 families。"
+                }
+              ]
+            },
+            {
+              "zh": "擺脫貧窮的循環",
+              "accepted": [
+                "break the cycle of poverty",
+                "to escape the cycle of poverty",
+                "to break free from the cycle of poverty",
+                "to break the cycle of poverty",
+                "escape the cycle of poverty",
+                "break free from the cycle of poverty",
+                "out of the cycle of poverty",
+                "get out of the cycle of poverty",
+                "escape the poverty cycle",
+                "break out of the poverty cycle",
+                "escape poverty",
+                "out of poverty",
+                "escape from the cycle of poverty",
+                "break away from the cycle of poverty",
+                "to get out of the cycle of poverty",
+                "free themselves from the cycle of poverty"
+              ],
+              "targets": [
+                "poverty"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "break the cycle of poor",
+                  "right": "break the cycle of poverty",
+                  "explanation_zh": "「貧窮」在這裡是名詞 poverty；poor 是形容詞，不能放在 of 後面當名詞用。"
+                },
+                {
+                  "wrong": "escape the circulation of poverty",
+                  "right": "escape the cycle of poverty",
+                  "explanation_zh": "「循環」指一再重複的惡性循環，用 cycle；circulation 是血液、貨幣的「流通」。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "abstract_nominal",
+              "zh": "貧窮的循環",
+              "literal_error": "helping more families escape the poor circulation",
+              "part": 4,
+              "explanation_zh": "「貧窮的循環」是抽象名詞片語，英文固定說 the cycle of poverty（或 the poverty cycle）；poor 是形容詞，circulation 是「流通」，都不能用。"
+            },
+            {
+              "type": "word_form",
+              "zh": "弱勢者",
+              "literal_error": "the more disadvantage it can hire",
+              "part": 2,
+              "explanation_zh": "「弱勢者」指處境不利的人，英文用 disadvantaged people（或 the disadvantaged）；disadvantage 是名詞「不利條件」，不能指人。「越…越…」也要把 the more disadvantaged people 整個放到子句開頭，再接 it can hire。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "The more profit a social enterprise generates, the more jobs it can offer to disadvantaged people, lifting more families out of poverty for good.",
+              "explanation_zh": "generate profit（創造獲利）、offer jobs to …（提供工作給…）與 lift … out of poverty（使…脫貧）都是道地搭配，for good 表示「永久地」。"
+            }
+          ],
+          "restructuring_zh": "「獲利越多，能雇用的弱勢者就越多」用 the＋比較級 …, the＋比較級 …，比較級連同名詞（the more disadvantaged people）一起移到子句開頭；「幫助更多家庭擺脫貧窮的循環」不另起一句，用句尾分詞 helping more families … 表示前面整件事帶來的結果。"
+        },
+        "2": {
+          "references": [
+            "However, it is not easy to identify what these people really need, because poverty often has more than one cause.",
+            "However, it is not easy to figure out what these people truly need, since poverty is usually caused by more than one factor.",
+            "However, it is difficult to find out what these people actually need, as there is often more than one cause of poverty."
+          ],
+          "target_words": [
+            {
+              "word": "easy",
+              "zh": "容易",
+              "alternatives": [
+                "difficult",
+                "hard",
+                "simple"
+              ]
+            },
+            {
+              "word": "identify",
+              "zh": "找出",
+              "alternatives": [
+                "find out",
+                "figure out",
+                "discover",
+                "work out",
+                "determine",
+                "understand"
+              ]
+            },
+            {
+              "word": "need",
+              "zh": "需要",
+              "alternatives": [
+                "require",
+                "want"
+              ]
+            },
+            {
+              "word": "poverty",
+              "zh": "貧窮",
+              "alternatives": [
+                "poor"
+              ]
+            },
+            {
+              "word": "cause",
+              "zh": "原因",
+              "alternatives": [
+                "reason",
+                "factor",
+                "factors",
+                "source"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "NCL",
+              "grammar_id": "gp-what-clause",
+              "label_zh": "what 名詞子句（這些人真正需要的＝what these people really need）",
+              "frame": "identify / find out + what + S + V",
+              "zh_trigger": "這些人真正需要的"
+            },
+            {
+              "code": "NFSUBJ",
+              "grammar_id": "gp-it-adj-to",
+              "label_zh": "虛主詞 It ＋形容詞＋不定詞（要找出…並不容易）",
+              "frame": "It is not + adj. + to VR …",
+              "zh_trigger": "並不容易"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "要找出",
+              "accepted": [
+                "to identify",
+                "to figure out",
+                "to find out",
+                "to discover",
+                "to work out",
+                "to determine"
+              ],
+              "targets": [
+                "identify"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "to identify out",
+                  "right": "to identify",
+                  "explanation_zh": "identify 本身就是「找出、辨認」，不加 out；find out／figure out 才有 out。"
+                },
+                {
+                  "wrong": "to finding out",
+                  "right": "to find out",
+                  "explanation_zh": "It is … to 後面接原形動詞。"
+                }
+              ]
+            },
+            {
+              "zh": "這些人真正需要的",
+              "accepted": [
+                "what these people really need",
+                "what these people truly need",
+                "what these people actually need",
+                "what they really need",
+                "what these people need most"
+              ],
+              "targets": [
+                "NCL",
+                "need"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "to identify these people really need",
+                  "right": "to identify what these people really need",
+                  "explanation_zh": "「這些人真正需要的」沒有中心名詞，要用 what 引導名詞子句當受詞。"
+                },
+                {
+                  "wrong": "what do these people really need",
+                  "right": "what these people really need",
+                  "explanation_zh": "名詞子句用直述句語序，不用疑問句的 do。"
+                }
+              ]
+            },
+            {
+              "zh": "並不容易",
+              "accepted": [
+                "it is not easy",
+                "it is difficult",
+                "it is hard",
+                "it is never easy",
+                "it is not an easy task"
+              ],
+              "targets": [
+                "NFSUBJ",
+                "easy"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Find out what these people really need is not easy",
+                  "right": "It is not easy to find out what these people really need",
+                  "explanation_zh": "動詞原形不能當主詞；中文的動詞片語主詞，英文改用虛主詞 It is … to VR。"
+                },
+                {
+                  "wrong": "it is not easily to find out",
+                  "right": "it is not easy to find out",
+                  "explanation_zh": "be 動詞後面接形容詞 easy，不是副詞 easily。"
+                }
+              ]
+            },
+            {
+              "zh": "因為造成貧窮的原因往往不只一個",
+              "accepted": [
+                "because poverty often has more than one cause",
+                "since poverty is usually caused by more than one factor",
+                "as there is often more than one cause of poverty",
+                "because there is often more than one cause of poverty",
+                "because poverty often has many causes",
+                "because poverty is often caused by more than one factor",
+                "because poverty often results from more than one factor",
+                "since poverty usually has more than one cause",
+                "because there is usually more than one reason for poverty",
+                "because poverty is often caused by several factors"
+              ],
+              "targets": [
+                "poverty",
+                "cause"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "because the reasons that cause poor are not only one",
+                  "right": "because poverty often has more than one cause",
+                  "explanation_zh": "「貧窮」是名詞 poverty，不是形容詞 poor；「不只一個」寫成 more than one，不是 not only one。"
+                },
+                {
+                  "wrong": "because poverty often has more than one causes",
+                  "right": "because poverty often has more than one cause",
+                  "explanation_zh": "more than one 後面接單數名詞。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "abstract_nominal",
+              "zh": "造成貧窮的原因",
+              "literal_error": "because the reasons causing poor are often not only one",
+              "part": 4,
+              "explanation_zh": "「貧窮」要用抽象名詞 poverty，不是形容詞 poor；整句也不要逐字翻，改寫成以 poverty 為主詞的 poverty often has more than one cause，或 poverty is often caused by more than one factor。"
+            },
+            {
+              "type": "verbal_subject",
+              "zh": "要找出",
+              "literal_error": "However, find out what these people really need is not easy.",
+              "part": 3,
+              "explanation_zh": "中文「要找出…」直接當主詞；英文動詞原形不能當主詞，改用虛主詞 It is not easy to find out …。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "However, finding out what these people really need is no easy task, for poverty seldom has a single cause.",
+              "explanation_zh": "用動名詞主詞加 no easy task（絕非易事），後半用 for（因為）和 seldom has a single cause（很少只有單一原因）的否定說法，語氣更精鍊。"
+            }
+          ],
+          "restructuring_zh": "「要找出…並不容易」改成虛主詞 It is not easy to …；「造成貧窮的原因往往不只一個」不要逐字翻，改寫成以 poverty 當主詞的 poverty often has more than one cause，或被動 poverty is often caused by more than one factor。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ac-V-3",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-top-02-regen",
+    "lot": "translation-top-02",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "fea97c14fa3e45cbc507a5a9130c0ea2bc91f32008c7fde55fb98b627572675d",
+    "spec_id": "translation-top@2026-10-09",
+    "regenerated_from": "ai.tr.871010"
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 2,
+    "sentences": 1,
+    "avg_sentence_length": 2.0,
+    "denominator": 2,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.5,
+    "coverage_l1_6": 1.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.5,
+    "level_counts": {
+      "2": 1,
+      "5": 1
+    },
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T14:57:37Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "warn",
+      "created_at": "2026-10-09T14:30:00Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "The more profit a social enterprise makes, the more disadvantaged people it can hire, helping more families escape the cycle of poverty.",
+            "confidence": "high",
+            "explanation_zh": "「越…就越…」用 The more ..., the more ... 比較級句型；「弱勢者」譯 disadvantaged people；「幫助更多家庭擺脫貧窮的循環」是結果，用句尾分詞 helping more families escape the cycle of poverty（也可用 break the cycle of poverty）。"
+          },
+          "2": {
+            "translation": "However, it is not easy to find out what these people really need, because there is often more than one cause of poverty.",
+            "confidence": "high",
+            "explanation_zh": "「要找出…並不容易」用 it is not easy to find out；「這些人真正需要的」用 what 名詞子句；「因為…」用 because 副詞子句；「造成貧窮的原因往往不只一個」用 there is often more than one cause of poverty，比直譯 the causes ... are not only one 自然。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "COMP",
+              "PART"
+            ],
+            "used_target_words": [
+              "profit",
+              "hire",
+              "disadvantaged",
+              "family",
+              "poverty"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "NCL",
+              "NFSUBJ"
+            ],
+            "used_target_words": [
+              "easy",
+              "identify",
+              "need",
+              "poverty",
+              "cause"
+            ],
+            "within_accepted": true,
+            "closest_reference": 2,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "第 1 部分（要找出）只收 to identify／to find out 等不定詞，第 3 部分（並不容易）只收 it is not easy 等虛主詞開頭。動名詞主詞 Finding out what these people really need is not easy 文法正確、很自然（加分寫法 finding out … is no easy task 正是這個結構），卻會同時丟第 1、3 部分共 2 分。建議兩部分都補動名詞主詞的寫法，或把 NFSUBJ 拆成的這兩部分合併評分。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "profit",
+              "hire",
+              "disadvantaged",
+              "family",
+              "poverty"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "COMP": true,
+              "PART": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "easy",
+              "identify",
+              "need",
+              "poverty",
+              "cause"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NCL": true,
+              "NFSUBJ": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 2 題驗證者對4 部分切分有意見（warn）：第 1 部分（要找出）只收 to identify／to find out 等不定詞，第 3 部分（並不容易）只收 it is not easy 等虛主詞開頭。動名詞主詞 Finding out what these people real"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T14:31:33Z",
+      "details": {
+        "solver": "B",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "The more profit a social enterprise makes, the more disadvantaged people it can hire, helping more families break free from the cycle of poverty.",
+            "confidence": "high",
+            "explanation_zh": "「越……就越……」用 the more ..., the more ... 比較級對應結構；「幫助更多家庭擺脫」用分詞構句 helping ... break free from；「貧窮的循環」是 the cycle of poverty。"
+          },
+          "2": {
+            "translation": "However, it is not easy to find out what these people really need, because poverty is often caused by more than one factor.",
+            "confidence": "high",
+            "explanation_zh": "「要找出……並不容易」用虛主詞 it；「這些人真正需要的」用名詞子句 what these people really need；「造成貧窮的原因往往不只一個」改成被動 poverty is often caused by more than one factor，避免直譯 cause 當主詞的累贅。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "COMP",
+              "PART"
+            ],
+            "used_target_words": [
+              "profit",
+              "hire",
+              "disadvantaged",
+              "family",
+              "poverty"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "NCL",
+              "NFSUBJ"
+            ],
+            "used_target_words": [
+              "easy",
+              "identify",
+              "need",
+              "poverty",
+              "cause"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "profit",
+              "hire",
+              "disadvantaged",
+              "family",
+              "poverty"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "COMP": true,
+              "PART": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "easy",
+              "identify",
+              "need",
+              "poverty",
+              "cause"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NCL": true,
+              "NFSUBJ": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

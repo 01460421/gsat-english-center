@@ -1,0 +1,707 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.cd4bd9",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "advanced",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "這些交換學生住在寄宿家庭，好讓自己更快學會中文、適應當地文化。",
+        "options": null,
+        "answer": "These exchange students live with host families so that they can learn Chinese and adapt to local culture faster.",
+        "accepted_answers": [
+          "These exchange students stay with host families so that they can learn Chinese and adjust to the local culture more quickly.",
+          "These exchange students live with host families in order to learn Chinese and adapt to the local culture faster."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "目的：so that",
+            "平行結構"
+          ],
+          "topic": "交換學生"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "只要願意主動和同學聊天，要在國外交到朋友其實並不難。",
+        "options": null,
+        "answer": "As long as they are willing to chat with classmates first, it is actually not hard to make friends abroad.",
+        "accepted_answers": [
+          "If they are willing to start conversations with classmates, it is not difficult to make friends in a foreign country.",
+          "As long as they are willing to talk with classmates first, making friends abroad is actually not difficult."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "條件子句（as long as／if）",
+            "虛主詞 It ＋形容詞＋不定詞"
+          ],
+          "topic": "交換學生"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "交換學生"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「好讓自己更快學會中文、適應當地文化」是住寄宿家庭的目的，可以用 so that + they + can + 原形動詞；因為兩個子句的主詞相同，也可以改用 in order to + 原形動詞。「學會中文」和「適應當地文化」是並列的兩個動作，can 後面的 learn 和 adapt 都用原形，形成平行結構。「住在寄宿家庭」是和寄宿家庭一起住，用 live with／stay with host families（複數）；「更快」用 faster 或 more quickly，放在句尾修飾兩個動作。",
+          "evidence": [
+            "好讓自己更快學會中文",
+            "學會中文、適應當地文化"
+          ],
+          "strategy_zh": "看到「好讓…能…」「以便…」先想 so that＋子句；並列的動作要用同一種形式（同為原形或同為 V-ing）。",
+          "hints": [
+            "切成四段：這些交換學生住在寄宿家庭／好讓自己／更快／學會中文、適應當地文化",
+            "標的詞彙：exchange（交換）、host（host family 寄宿家庭）、adapt（適應，也可用 adjust）、culture（文化）、fast（快；比較級 faster）",
+            "句型框架：S + V … so that + S + can + VR₁ … and VR₂ … + faster"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「只要…」是條件，用 as long as 或 if 引導，子句用現在式；中文省略主詞（指上一句的交換學生），英文要補 they are willing to …。「要在國外交到朋友並不難」真正的主詞是「在國外交到朋友」這個動作，英文習慣用虛主詞 it 放句首：it is not hard／difficult to make friends abroad，也可以用動名詞主詞 making friends abroad is not difficult。「主動」可以譯成 first、take the initiative to 或 start a conversation；abroad 是副詞，前面不加 in。",
+          "evidence": [
+            "只要願意",
+            "要在國外交到朋友其實並不難"
+          ],
+          "strategy_zh": "中文「要…很難／並不難」常是「動作當主詞」，先想 It is + adj. + to VR；「只要」是 as long as，不是 only if（唯有…才）。",
+          "hints": [
+            "切成四段：只要願意／主動和同學聊天／要在國外交到朋友／其實並不難",
+            "標的詞彙：willing（願意的）、chat（聊天，也可用 talk）、classmate（同學）、abroad（在國外）、hard（困難的，也可用 difficult）",
+            "句型框架：As long as + S + be willing to VR …, it is (not) + adj. + to VR …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "These exchange students live with host families so that they can learn Chinese and adapt to local culture faster.",
+            "These exchange students stay with host families so that they can learn Chinese and adjust to the local culture more quickly.",
+            "These exchange students live with host families in order to learn Chinese and adapt to the local culture faster."
+          ],
+          "target_words": [
+            {
+              "word": "exchange",
+              "zh": "交換"
+            },
+            {
+              "word": "host",
+              "zh": "（寄宿家庭的）接待者；host family 寄宿家庭"
+            },
+            {
+              "word": "adapt",
+              "zh": "適應",
+              "alternatives": [
+                "adjust",
+                "get used to"
+              ]
+            },
+            {
+              "word": "culture",
+              "zh": "文化"
+            },
+            {
+              "word": "fast",
+              "zh": "快速地（更快 faster）",
+              "alternatives": [
+                "quickly",
+                "soon"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PURP",
+              "grammar_id": "gp-so-that-purpose",
+              "label_zh": "目的：so that（好讓…能…）",
+              "frame": "S + V … so that + S + can + VR …",
+              "zh_trigger": "好讓自己"
+            },
+            {
+              "code": "PARA",
+              "grammar_id": "gp-parallelism",
+              "label_zh": "平行結構（can 後面並列兩個原形動詞）",
+              "frame": "S + can + VR₁ … and VR₂ …",
+              "zh_trigger": "學會中文、適應當地文化"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "這些交換學生住在寄宿家庭",
+              "accepted": [
+                "These exchange students live with host families",
+                "These exchange students stay with host families",
+                "These exchange students live with local host families",
+                "These exchange students are staying with host families"
+              ],
+              "targets": [
+                "exchange",
+                "host"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "These exchange students live in host family",
+                  "right": "These exchange students live with host families",
+                  "explanation_zh": "「住在寄宿家庭」是和寄宿家庭一起住，用 live with；學生不只一位，host families 要用複數。"
+                },
+                {
+                  "wrong": "These exchanging students",
+                  "right": "These exchange students",
+                  "explanation_zh": "「交換學生」是名詞修飾名詞 exchange student，不寫成 exchanging。"
+                }
+              ]
+            },
+            {
+              "zh": "好讓自己",
+              "accepted": [
+                "so that they can",
+                "so that they could",
+                "in order to",
+                "so that they will be able to",
+                "so they can"
+              ],
+              "targets": [
+                "PURP"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "so that let themselves",
+                  "right": "so that they can",
+                  "explanation_zh": "「好讓自己…」表目的，用 so that + 主詞 + can + 原形動詞，不要把「讓」直譯成 let。"
+                },
+                {
+                  "wrong": "so that they can to learn",
+                  "right": "so that they can learn",
+                  "explanation_zh": "助動詞 can 後面直接接原形動詞，不加 to。"
+                }
+              ]
+            },
+            {
+              "zh": "更快",
+              "accepted": [
+                "faster",
+                "more quickly",
+                "sooner",
+                "quickly"
+              ],
+              "targets": [
+                "fast"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "more fast",
+                  "right": "faster",
+                  "explanation_zh": "fast 的比較級是 faster；要用副詞 quickly 時才寫 more quickly。"
+                }
+              ]
+            },
+            {
+              "zh": "學會中文、適應當地文化",
+              "accepted": [
+                "learn Chinese and adapt to local culture",
+                "learn Chinese and adjust to the local culture",
+                "learn Chinese and adapt to the local culture",
+                "learn Chinese and get used to the local culture",
+                "learn Chinese and fit into the local culture"
+              ],
+              "targets": [
+                "PARA",
+                "adapt",
+                "culture"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "learn Chinese and adapting to local culture",
+                  "right": "learn Chinese and adapt to local culture",
+                  "explanation_zh": "平行結構：can 後面的兩個動作都用原形動詞（learn … and adapt …）。"
+                },
+                {
+                  "wrong": "learn Chinese and adapt local culture",
+                  "right": "learn Chinese and adapt to local culture",
+                  "explanation_zh": "「適應…」是 adapt to／adjust to，不能漏掉介系詞 to。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "plural_countable",
+              "zh": "寄宿家庭",
+              "literal_error": "These exchange students live with host family so that they can learn Chinese and adapt to local culture faster.",
+              "part": 1,
+              "explanation_zh": "學生不只一位、各住不同家庭，host family 是可數名詞，要用複數 host families。"
+            },
+            {
+              "type": "word_form",
+              "zh": "更快",
+              "literal_error": "These exchange students live with host families so that they can learn Chinese and adapt to local culture more fast.",
+              "part": 3,
+              "explanation_zh": "fast 的比較級是 faster；寫成 more fast 是字形錯誤（或改用副詞 more quickly）。"
+            }
+          ],
+          "bonus": []
+        },
+        "2": {
+          "references": [
+            "As long as they are willing to chat with classmates first, it is actually not hard to make friends abroad.",
+            "If they are willing to start conversations with classmates, it is not difficult to make friends in a foreign country.",
+            "As long as they are willing to talk with classmates first, making friends abroad is actually not difficult."
+          ],
+          "target_words": [
+            {
+              "word": "willing",
+              "zh": "願意的"
+            },
+            {
+              "word": "chat",
+              "zh": "聊天",
+              "alternatives": [
+                "talk",
+                "conversation"
+              ]
+            },
+            {
+              "word": "classmate",
+              "zh": "同學"
+            },
+            {
+              "word": "abroad",
+              "zh": "在國外",
+              "alternatives": [
+                "foreign"
+              ]
+            },
+            {
+              "word": "hard",
+              "zh": "困難的",
+              "alternatives": [
+                "difficult"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "ADVCL",
+              "grammar_id": "gp-condition-real",
+              "label_zh": "條件子句（只要…：as long as／if）",
+              "frame": "As long as / If + S + V（現在式）, S + V …",
+              "zh_trigger": "只要"
+            },
+            {
+              "code": "NFSUBJ",
+              "grammar_id": "gp-it-adj-to",
+              "label_zh": "虛主詞 It ＋形容詞＋不定詞",
+              "frame": "it is (not) + adj. + to VR …",
+              "zh_trigger": "要在國外交到朋友其實並不難"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "只要願意",
+              "accepted": [
+                "As long as they are willing",
+                "If they are willing",
+                "As long as they're willing",
+                "So long as they are willing",
+                "As long as students are willing",
+                "As long as you are willing",
+                "If you are willing"
+              ],
+              "targets": [
+                "ADVCL",
+                "willing"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "As long as willing",
+                  "right": "As long as they are willing",
+                  "explanation_zh": "中文省略了主詞，英文的條件子句要補上主詞 they 和 be 動詞。"
+                },
+                {
+                  "wrong": "As long as they are will to",
+                  "right": "As long as they are willing to",
+                  "explanation_zh": "「願意」是形容詞 willing（be willing to + 原形動詞）；will 是助動詞，不能放在 be 後面。"
+                }
+              ]
+            },
+            {
+              "zh": "主動和同學聊天",
+              "accepted": [
+                "to chat with classmates first",
+                "to start conversations with classmates",
+                "to talk with classmates first",
+                "to take the first step to chat with classmates",
+                "to take the initiative to talk to classmates",
+                "to chat with their classmates first",
+                "to chat with your classmates first"
+              ],
+              "targets": [
+                "chat",
+                "classmate"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "to chat with classmate first",
+                  "right": "to chat with classmates first",
+                  "explanation_zh": "同學不只一位，classmate 是可數名詞，要用複數。"
+                },
+                {
+                  "wrong": "to active chat with classmates",
+                  "right": "to chat with classmates first",
+                  "explanation_zh": "active 是形容詞，不能修飾動詞；「主動」可以寫 first、take the initiative to 或 start a conversation。"
+                }
+              ]
+            },
+            {
+              "zh": "要在國外交到朋友",
+              "accepted": [
+                "to make friends abroad",
+                "to make friends in a foreign country",
+                "making friends abroad",
+                "making friends in a foreign country",
+                "to make new friends abroad"
+              ],
+              "targets": [
+                "NFSUBJ",
+                "abroad"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "make friends abroad is",
+                  "right": "making friends abroad is",
+                  "explanation_zh": "動作當主詞要用動名詞 making，或改用虛主詞 it is … to make friends。"
+                },
+                {
+                  "wrong": "to make friends in abroad",
+                  "right": "to make friends abroad",
+                  "explanation_zh": "abroad 是副詞，前面不加介系詞 in。"
+                }
+              ]
+            },
+            {
+              "zh": "其實並不難",
+              "accepted": [
+                "it is actually not hard",
+                "it is not difficult",
+                "is actually not difficult",
+                "it is not hard",
+                "it is actually not difficult",
+                "it is not that hard"
+              ],
+              "targets": [
+                "hard"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "it is actually not difficulty",
+                  "right": "it is actually not difficult",
+                  "explanation_zh": "difficulty 是名詞；be 動詞後面要用形容詞 difficult（或 hard）。"
+                },
+                {
+                  "wrong": "Is actually not hard",
+                  "right": "it is actually not hard",
+                  "explanation_zh": "「並不難」前面沒有主詞時，英文要補虛主詞 it，不能讓句子以 is 開頭。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "subjectless",
+              "zh": "只要願意",
+              "literal_error": "As long as willing to chat with classmates first, it is not hard to make friends abroad.",
+              "part": 1,
+              "explanation_zh": "中文的條件子句省略了主詞（指上一句的交換學生），英文子句一定要有主詞，要補上 they are willing …。"
+            },
+            {
+              "type": "verbal_subject",
+              "zh": "要在國外交到朋友",
+              "literal_error": "In foreign countries make friends actually is not hard.",
+              "part": 3,
+              "explanation_zh": "「在國外交到朋友」是動作當主詞，照中文語序會變成「介系詞片語＋原形動詞」當主詞；英文用虛主詞 It is not hard to make friends abroad，或動名詞 Making friends abroad is …。"
+            }
+          ],
+          "bonus": [],
+          "restructuring_zh": "「要在國外交到朋友其實並不難」是動作當主詞，英文改用虛主詞 it 開頭：it is not hard to make friends abroad（也可用動名詞主詞 making friends abroad is …）；「只要願意…」沒有主詞，要補上 they。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-advanced-04",
+    "lot": "translation-advanced-04",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "4c825c0a94fac9dc54e263ee5e16ad1f93b574fa99d23ce45a0c738ed355d865",
+    "spec_id": "translation-advanced@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T13:07:02Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T13:07:02Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "These exchange students live with host families so that they can learn Chinese more quickly and adapt to the local culture.",
+            "confidence": "high",
+            "explanation_zh": "「好讓自己…」是目的，用 so that they can 引導；「住在寄宿家庭」譯成 live with host families 最自然；「更快」我理解為主要修飾學會中文，用 more quickly。"
+          },
+          "2": {
+            "translation": "As long as they are willing to take the initiative to chat with their classmates, it is actually not difficult for them to make friends abroad.",
+            "confidence": "high",
+            "explanation_zh": "「只要…」用 As long as 表條件；「要…其實並不難」用 it is not difficult (for sb) to V 的虛主詞句型；中文沒有主詞，承接上句的交換學生用 they（也可用泛指的 you）；「主動」譯 take the initiative。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PURP",
+              "PARA"
+            ],
+            "used_target_words": [
+              "exchange",
+              "host",
+              "adapt",
+              "culture",
+              "fast"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "ADVCL",
+              "NFSUBJ"
+            ],
+            "used_target_words": [
+              "willing",
+              "chat",
+              "classmate",
+              "abroad",
+              "hard"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "exchange",
+              "host",
+              "adapt",
+              "culture",
+              "fast"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PURP": true,
+              "PARA": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "willing",
+              "chat",
+              "classmate",
+              "abroad",
+              "hard"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "ADVCL": true,
+              "NFSUBJ": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T12:50:33Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "These exchange students live with host families so that they can learn Chinese more quickly and adapt to the local culture.",
+            "confidence": "high",
+            "explanation_zh": "「好讓……」表目的，用 so that 子句加 can；「更快」用 more quickly，「適應當地文化」用 adapt to the local culture。"
+          },
+          "2": {
+            "translation": "As long as you are willing to take the initiative to chat with your classmates, it is actually not difficult to make friends abroad.",
+            "confidence": "high",
+            "explanation_zh": "「只要……」用 as long as；「主動」譯成 take the initiative；「要……並不難」用虛主詞 it is not difficult to V。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PURP",
+              "PARA"
+            ],
+            "used_target_words": [
+              "exchange",
+              "host",
+              "adapt",
+              "culture",
+              "fast"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "ADVCL",
+              "NFSUBJ"
+            ],
+            "used_target_words": [
+              "willing",
+              "chat",
+              "classmate",
+              "abroad",
+              "hard"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "exchange",
+              "host",
+              "adapt",
+              "culture",
+              "fast"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PURP": true,
+              "PARA": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "willing",
+              "chat",
+              "classmate",
+              "abroad",
+              "hard"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "ADVCL": true,
+              "NFSUBJ": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

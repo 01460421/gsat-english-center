@@ -1,0 +1,256 @@
+{
+  "schema": "gsat-bank-facts/v1",
+  "id": "food-emissions-rt04",
+  "title": "Greenhouse gas emissions per kilogram of food and the small role of transport (Poore and Nemecek 2018, via Our World in Data)",
+  "sdgs": [
+    12,
+    13
+  ],
+  "created_on": "2026-10-09",
+  "created_by": "claude-opus-5-5",
+  "sources": [
+    {
+      "id": "s1",
+      "publisher": "Our World in Data",
+      "title": "Greenhouse gas emissions per kilogram of food product (data: Poore and Nemecek 2018)",
+      "url": "https://ourworldindata.org/grapher/ghg-per-kg-poore",
+      "accessed": "2026-10-09",
+      "license": "CC-BY-4.0",
+      "use": "dataset",
+      "note": "原始資料：Poore, J. & Nemecek, T. (2018), Science 360(6392)；下載 grapher CSV（kg CO2eq per kg）"
+    },
+    {
+      "id": "s2",
+      "publisher": "Our World in Data",
+      "title": "Food: greenhouse gas emissions across the supply chain (data: Poore and Nemecek 2018)",
+      "url": "https://ourworldindata.org/grapher/food-emissions-supply-chain",
+      "accessed": "2026-10-09",
+      "license": "CC-BY-4.0",
+      "use": "dataset",
+      "note": "下載 grapher CSV；取 transport 一欄（kg CO2eq per kg），四捨五入到小數 4 位"
+    },
+    {
+      "id": "s3",
+      "publisher": "Our World in Data",
+      "title": "You want to reduce the carbon footprint of your food? Focus on what you eat, not whether your food is local (H. Ritchie, 2020)",
+      "url": "https://ourworldindata.org/food-choice-vs-eating-local",
+      "accessed": "2026-10-09",
+      "license": "CC-BY-4.0 (OWID article; facts only, not adapted)",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s4",
+      "publisher": "Our World in Data",
+      "title": "Food production is responsible for one-quarter of the world’s greenhouse gas emissions (H. Ritchie, 2019)",
+      "url": "https://ourworldindata.org/food-ghg-emissions",
+      "accessed": "2026-10-09",
+      "license": "CC-BY-4.0 (OWID article; facts only, not adapted)",
+      "use": "fact_only",
+      "note": null
+    }
+  ],
+  "facts": [
+    {
+      "id": "f1",
+      "text": "Food is responsible for about 26% of the world’s greenhouse gas emissions, roughly a quarter.",
+      "source_ids": [
+        "s4"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f2",
+      "text": "In 2018 Joseph Poore and Thomas Nemecek published, in the journal Science, the biggest review of food-system data up to then; it used data from over 38,000 commercial farms across 119 countries.",
+      "source_ids": [
+        "s3",
+        "s4"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f3",
+      "text": "Food emissions are measured in kilograms of carbon dioxide equivalents, a unit that also counts other greenhouse gases such as methane and nitrous oxide according to how much warming they cause.",
+      "source_ids": [
+        "s3",
+        "s1"
+      ],
+      "kind": "definition"
+    },
+    {
+      "id": "f4",
+      "text": "On average, producing 1 kilogram of beef from a beef herd releases 99.48 kg of carbon dioxide equivalents, while 1 kilogram of peas releases 0.98 kg.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f5",
+      "text": "In general, foods from animals have larger footprints than foods from plants.",
+      "source_ids": [
+        "s3"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f6",
+      "text": "Land use change and activities on the farm are the main sources of emissions for most foods, especially the largest emitters. Combined, they make up over 80% of the total for most foods.",
+      "source_ids": [
+        "s3"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f7",
+      "text": "Farm-stage emissions include the use of fertilizers, the handling of manure, and the methane produced in the stomachs of cattle.",
+      "source_ids": [
+        "s3"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f8",
+      "text": "Land use change releases carbon dioxide when forests, grasslands and other carbon sinks are turned into cropland or pasture.",
+      "source_ids": [
+        "s4"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f9",
+      "text": "For most food products transport makes up less than 10% of total emissions; for beef from beef herds it is about 0.5%.",
+      "source_ids": [
+        "s3"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f10",
+      "text": "Across the global food system, transport accounts for only about 6% of food’s emissions.",
+      "source_ids": [
+        "s4"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f11",
+      "text": "One study found that Swedish greenhouse tomatoes needed 10 times the energy of tomatoes shipped in from southern Europe, where the crop was then in season.",
+      "source_ids": [
+        "s3"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f12",
+      "text": "Moving food by plane emits about 50 times as much greenhouse gas as moving it by boat for each tonne carried one kilometer, but only 0.16% of food miles are by air.",
+      "source_ids": [
+        "s3"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f13",
+      "text": "Foods sent by air are mostly ones that spoil quickly, such as asparagus, green beans and berries.",
+      "source_ids": [
+        "s3"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f14",
+      "text": "A diet’s footprint shrinks far more through eating less meat and dairy, or replacing beef and lamb with chicken, pork or plant foods, than through buying local.",
+      "source_ids": [
+        "s3"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f16",
+      "text": "Eating local is often recommended as a way to cut the carbon footprint of a diet, and moving food from place to place does cause some emissions.",
+      "source_ids": [
+        "s3"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f15",
+      "text": "Worked out from the two datasets: transport is about 34% of the total for bananas (0.30 of 0.86 kg), about 10% for peas, about 6% for tofu, about 4% for poultry meat, about 2% for rice and for lamb, and under 1% for cheese and for beef.",
+      "source_ids": [
+        "s1",
+        "s2"
+      ],
+      "kind": "number",
+      "note": "衍生數字：transport ÷ total（d2 ÷ d1）"
+    }
+  ],
+  "datasets": [
+    {
+      "id": "d1",
+      "source_id": "s1",
+      "title": "Greenhouse gas emissions per kilogram of food product",
+      "indicator": "ghg_emissions_per_kilogram__poore__and__nemecek__2018",
+      "unit": "kg CO2eq per kg of food",
+      "categories": [
+        "Beef (beef herd)",
+        "Lamb & Mutton",
+        "Cheese",
+        "Poultry Meat",
+        "Rice",
+        "Tofu",
+        "Peas",
+        "Bananas"
+      ],
+      "series": [
+        {
+          "name": "Total emissions",
+          "values": [
+            99.48,
+            39.72,
+            23.88,
+            9.87,
+            4.45,
+            3.16,
+            0.98,
+            0.86
+          ]
+        }
+      ],
+      "note": "OWID grapher CSV values (2 decimals)"
+    },
+    {
+      "id": "d2",
+      "source_id": "s2",
+      "title": "Food: greenhouse gas emissions across the supply chain — transport stage",
+      "indicator": "food_emissions_transport",
+      "unit": "kg CO2eq per kg of food",
+      "categories": [
+        "Beef (beef herd)",
+        "Lamb & Mutton",
+        "Cheese",
+        "Poultry Meat",
+        "Rice",
+        "Tofu",
+        "Peas",
+        "Bananas"
+      ],
+      "series": [
+        {
+          "name": "Transport",
+          "values": [
+            0.4941,
+            0.6789,
+            0.1386,
+            0.3811,
+            0.0956,
+            0.1769,
+            0.0951,
+            0.2958
+          ]
+        }
+      ],
+      "note": "OWID grapher CSV values rounded to 4 decimals"
+    }
+  ],
+  "notes": null
+}

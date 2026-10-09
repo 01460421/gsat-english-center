@@ -1,0 +1,751 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.1ed6ff",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "advanced",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "許多台灣年輕人認為，出國打工度假不再只是賺錢的機會。",
+        "options": null,
+        "answer": "Many young Taiwanese think that going on a working holiday abroad is no longer just an opportunity to make money.",
+        "accepted_answers": [
+          "Many young people in Taiwan believe that a working holiday abroad is no longer only a chance to earn money.",
+          "Lots of young Taiwanese feel that working holidays overseas are no longer simply opportunities to make money."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "不再",
+            "that 名詞子句"
+          ],
+          "topic": "打工度假"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "這段經驗不但讓他們更有自信，也讓他們想清楚自己要做什麼工作。",
+        "options": null,
+        "answer": "This experience not only gives them more confidence but also helps them figure out what career they want.",
+        "accepted_answers": [
+          "This experience not only makes them more confident but also helps them think clearly about what job they want to do.",
+          "The experience not only builds up their confidence but also lets them figure out what kind of work they want to do."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "not only … but also",
+            "間接問句"
+          ],
+          "topic": "打工度假"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "打工度假"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「認為…」後面接 that 子句；子句的主詞「出國打工度假」是動詞片語，英文改成動名詞 going on a working holiday abroad（或名詞片語 a working holiday abroad），動詞用單數 is。「不再」用 no longer，放在 be 動詞後面；「賺錢的機會」修飾語放後面：an opportunity to make money。",
+          "evidence": [
+            "認為",
+            "不再",
+            "出國打工度假"
+          ],
+          "strategy_zh": "that 子句也要有完整的主詞和動詞；主詞是動作時一樣改成 V-ing。",
+          "hints": [
+            "切成四段：許多台灣年輕人認為／出國打工度假／不再只是／賺錢的機會",
+            "標的詞彙：young（年輕的，L1）、think（認為，L1）、abroad（在國外，L1）、holiday（假期，L1）、no longer（不再，L1）、opportunity（機會，L3）、money（錢，L1）",
+            "句型框架：S + think that + V-ing … + is no longer just + N + to VR"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「不但…也…」用 not only … but also …，兩邊接同樣的形式（gives … / helps …），主詞 This experience 是單數，動詞加 s。「更有自信」可說 gives them more confidence 或 makes them more confident（make + O + 形容詞）。「自己要做什麼工作」是間接問句，用直述句語序 what career they want，不寫 what career do they want。",
+          "evidence": [
+            "不但",
+            "也讓他們想清楚",
+            "自己要做什麼工作"
+          ],
+          "strategy_zh": "間接問句放在動詞後面當受詞時，疑問詞後面用「主詞＋動詞」的直述句語序。",
+          "hints": [
+            "切成四段：這段經驗不但／讓他們更有自信／也讓他們想清楚／自己要做什麼工作",
+            "標的詞彙：experience（經驗，L1）、confidence（自信，L4）、figure out（想清楚，L2）、career（工作、職業，L3）",
+            "句型框架：S + not only + V1 … but also + V2 + O + wh- + S + V"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "Many young Taiwanese think that going on a working holiday abroad is no longer just an opportunity to make money.",
+            "Many young people in Taiwan believe that a working holiday abroad is no longer only a chance to earn money.",
+            "Lots of young Taiwanese feel that working holidays overseas are no longer simply opportunities to make money."
+          ],
+          "target_words": [
+            {
+              "word": "young",
+              "zh": "年輕的"
+            },
+            {
+              "word": "think",
+              "zh": "認為",
+              "alternatives": [
+                "believe",
+                "feel"
+              ]
+            },
+            {
+              "word": "abroad",
+              "zh": "在國外",
+              "alternatives": [
+                "overseas"
+              ]
+            },
+            {
+              "word": "holiday",
+              "zh": "假期",
+              "alternatives": [
+                "vacation"
+              ]
+            },
+            {
+              "word": "no longer",
+              "zh": "不再",
+              "alternatives": [
+                "not ... anymore",
+                "not ... any longer"
+              ]
+            },
+            {
+              "word": "opportunity",
+              "zh": "機會",
+              "alternatives": [
+                "chance"
+              ]
+            },
+            {
+              "word": "money",
+              "zh": "錢"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "BASIC",
+              "grammar_id": "gp-no-longer",
+              "label_zh": "不再（no longer）",
+              "frame": "S + be + no longer + N …",
+              "zh_trigger": "不再"
+            },
+            {
+              "code": "NCL",
+              "grammar_id": "gp-that-clause",
+              "label_zh": "that 名詞子句（think that …）",
+              "frame": "S + think/believe + (that) + S + V …",
+              "zh_trigger": "認為"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "許多台灣年輕人認為",
+              "accepted": [
+                "Many young Taiwanese think that",
+                "Many young people in Taiwan believe that",
+                "Lots of young Taiwanese feel that",
+                "Many young Taiwanese believe that",
+                "Many young people in Taiwan think that",
+                "Many Taiwanese young people think that",
+                "A lot of young Taiwanese think that"
+              ],
+              "targets": [
+                "young",
+                "think",
+                "NCL"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Many young Taiwanese thinks that",
+                  "right": "Many young Taiwanese think that",
+                  "explanation_zh": "主詞是複數，動詞不加 s。"
+                },
+                {
+                  "wrong": "Many young Taiwanese are think that",
+                  "right": "Many young Taiwanese think that",
+                  "explanation_zh": "think 是一般動詞，前面不加 be 動詞。"
+                }
+              ]
+            },
+            {
+              "zh": "出國打工度假",
+              "accepted": [
+                "going on a working holiday abroad",
+                "a working holiday abroad",
+                "working holidays overseas",
+                "going abroad on a working holiday",
+                "going overseas for a working holiday",
+                "taking a working holiday abroad",
+                "working holidays abroad"
+              ],
+              "targets": [
+                "abroad",
+                "holiday"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "go abroad working holiday",
+                  "right": "going abroad on a working holiday",
+                  "explanation_zh": "這裡是 that 子句的主詞，動詞片語要改成動名詞 going …；working holiday 前面要有 on a。"
+                },
+                {
+                  "wrong": "going to abroad on a working holiday",
+                  "right": "going abroad on a working holiday",
+                  "explanation_zh": "abroad 是副詞，前面不加 to。"
+                }
+              ]
+            },
+            {
+              "zh": "不再只是",
+              "accepted": [
+                "is no longer just",
+                "is no longer only",
+                "are no longer simply",
+                "is no longer simply",
+                "are no longer just",
+                "is no longer merely"
+              ],
+              "targets": [
+                "no longer",
+                "BASIC"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "is not longer just",
+                  "right": "is no longer just",
+                  "explanation_zh": "「不再」是 no longer（或 not … anymore），不寫 not longer。"
+                },
+                {
+                  "wrong": "is no long just",
+                  "right": "is no longer just",
+                  "explanation_zh": "「不再」用比較級 longer：no longer。"
+                }
+              ]
+            },
+            {
+              "zh": "賺錢的機會",
+              "accepted": [
+                "an opportunity to make money",
+                "a chance to earn money",
+                "opportunities to make money",
+                "an opportunity to earn money",
+                "a chance to make money",
+                "a way to make money"
+              ],
+              "targets": [
+                "opportunity",
+                "money"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "a make money opportunity",
+                  "right": "an opportunity to make money",
+                  "explanation_zh": "「賺錢的機會」修飾語要放在後面：an opportunity to make money。"
+                },
+                {
+                  "wrong": "an opportunity to earn moneys",
+                  "right": "an opportunity to earn money",
+                  "explanation_zh": "money 不可數，不加 s。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "verbal_subject",
+              "zh": "出國打工度假",
+              "literal_error": "Many young Taiwanese think that go abroad working holiday is no longer just an opportunity to make money.",
+              "part": 2,
+              "explanation_zh": "that 子句的主詞是動作「出國打工度假」，要改成動名詞 going on a working holiday abroad。"
+            },
+            {
+              "type": "collocation",
+              "zh": "不再",
+              "literal_error": "Many young Taiwanese think that going on a working holiday abroad is not longer just an opportunity to make money.",
+              "part": 3,
+              "explanation_zh": "「不再」的固定說法是 no longer，不是 not longer。"
+            }
+          ],
+          "bonus": [],
+          "restructuring_zh": "「出國打工度假」是動詞片語當 that 子句的主詞，英文要改成動名詞 going on a working holiday abroad（或名詞片語 a working holiday abroad）；「賺錢的機會」把修飾語移到後面：an opportunity to make money。"
+        },
+        "2": {
+          "references": [
+            "This experience not only gives them more confidence but also helps them figure out what career they want.",
+            "This experience not only makes them more confident but also helps them think clearly about what job they want to do.",
+            "The experience not only builds up their confidence but also lets them figure out what kind of work they want to do."
+          ],
+          "target_words": [
+            {
+              "word": "experience",
+              "zh": "經驗"
+            },
+            {
+              "word": "confidence",
+              "zh": "自信",
+              "alternatives": [
+                "confident"
+              ]
+            },
+            {
+              "word": "figure out",
+              "zh": "想清楚",
+              "alternatives": [
+                "think",
+                "decide",
+                "understand"
+              ]
+            },
+            {
+              "word": "career",
+              "zh": "工作、職業",
+              "alternatives": [
+                "job",
+                "work"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "CORR",
+              "grammar_id": "gp-not-only-but-also",
+              "label_zh": "不但…而且…（not only … but also）",
+              "frame": "S + not only + V1 … but also + V2 …",
+              "zh_trigger": "不但"
+            },
+            {
+              "code": "NCL",
+              "grammar_id": "gp-wh-clause",
+              "label_zh": "間接問句（what + N + S + V）",
+              "frame": "figure out + what + (N) + S + V …",
+              "zh_trigger": "自己要做什麼工作"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "這段經驗不但",
+              "accepted": [
+                "This experience not only",
+                "The experience not only",
+                "Such an experience not only"
+              ],
+              "targets": [
+                "experience",
+                "CORR"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "This experience is not only",
+                  "right": "This experience not only",
+                  "explanation_zh": "not only 後面直接接動詞 gives，前面不加 be 動詞。"
+                },
+                {
+                  "wrong": "This experiences not only",
+                  "right": "This experience not only",
+                  "explanation_zh": "this 後面接單數名詞 experience。"
+                }
+              ]
+            },
+            {
+              "zh": "讓他們更有自信",
+              "accepted": [
+                "gives them more confidence",
+                "makes them more confident",
+                "builds up their confidence",
+                "makes them feel more confident",
+                "helps them become more confident",
+                "boosts their confidence",
+                "builds their confidence"
+              ],
+              "targets": [
+                "confidence"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "makes them more confidence",
+                  "right": "makes them more confident",
+                  "explanation_zh": "make + 受詞後面接形容詞 confident；confidence 是名詞，要說 give them more confidence。"
+                },
+                {
+                  "wrong": "lets them more confident",
+                  "right": "makes them more confident",
+                  "explanation_zh": "let 後面接原形動詞，不接形容詞。"
+                }
+              ]
+            },
+            {
+              "zh": "也讓他們想清楚",
+              "accepted": [
+                "but also helps them figure out",
+                "but also helps them think clearly about",
+                "but also lets them figure out",
+                "but also helps them decide",
+                "but also helps them understand",
+                "but also allows them to figure out",
+                "but also makes them think about"
+              ],
+              "targets": [
+                "figure out"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "and also helps them figure out",
+                  "right": "but also helps them figure out",
+                  "explanation_zh": "not only 要和 but (also) 配對，不和 and also 配對。"
+                },
+                {
+                  "wrong": "but also help them figure out",
+                  "right": "but also helps them figure out",
+                  "explanation_zh": "主詞 This experience 是單數，helps 要加 s。"
+                }
+              ]
+            },
+            {
+              "zh": "自己要做什麼工作",
+              "accepted": [
+                "what career they want",
+                "what job they want to do",
+                "what kind of work they want to do",
+                "what kind of job they want",
+                "what career they want to pursue",
+                "what they want to do for a living"
+              ],
+              "targets": [
+                "career",
+                "NCL"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "what career do they want",
+                  "right": "what career they want",
+                  "explanation_zh": "間接問句用直述句語序：what career they want，不用 do 倒裝。"
+                },
+                {
+                  "wrong": "what job they want do",
+                  "right": "what job they want to do",
+                  "explanation_zh": "want 後面接 to + 原形動詞。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "word_form",
+              "zh": "更有自信",
+              "literal_error": "This experience not only makes them more confidence but also helps them figure out what career they want.",
+              "part": 2,
+              "explanation_zh": "make + 受詞後面接形容詞 confident；名詞 confidence 要搭配 give／build。"
+            },
+            {
+              "type": "collocation",
+              "zh": "也讓他們想清楚",
+              "literal_error": "This experience not only gives them more confidence and also helps them figure out what career they want.",
+              "part": 3,
+              "explanation_zh": "「不但…也…」要用 not only … but also …，不寫 not only … and also …。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "Not only does this experience give them more confidence, but it also helps them figure out what career they want.",
+              "grammar_id": "gp-not-only-inversion",
+              "explanation_zh": "Not only 放句首時，後面要倒裝（does this experience give），後半句寫 but it also …；這是倒裝句，只當加分寫法。"
+            }
+          ]
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "C-V-3",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-advanced-03",
+    "lot": "translation-advanced-03",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "02c0a28073619c0bc20ca233498a317fe41127b7ed24b485e5a25ef485b7d3c2",
+    "spec_id": "translation-advanced@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T13:03:06Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T08:05:03Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Many young people in Taiwan believe that going abroad on a working holiday is no longer just a chance to make money.",
+            "confidence": "high",
+            "explanation_zh": "「認為」接 that 名詞子句；「出國打工度假」用動名詞片語 going abroad on a working holiday 當子句主詞；「不再只是」譯 is no longer just；「賺錢的機會」譯 a chance to make money（opportunity to earn money 亦可）。"
+          },
+          "2": {
+            "translation": "This experience not only makes them more confident but also helps them figure out what kind of job they want to do.",
+            "confidence": "high",
+            "explanation_zh": "「不但…也…」用 not only…but also 連接兩個動詞片語；「讓他們更有自信」用 make + O + 比較級形容詞；「想清楚自己要做什麼工作」用 help + O + 原形動詞 figure out，後接 what kind of job 名詞子句（間接問句用直述句語序）。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "BASIC",
+              "NCL"
+            ],
+            "used_target_words": [
+              "young",
+              "think",
+              "abroad",
+              "holiday",
+              "no longer",
+              "opportunity",
+              "money"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "CORR",
+              "NCL"
+            ],
+            "used_target_words": [
+              "experience",
+              "confidence",
+              "figure out",
+              "career"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "young",
+              "think",
+              "abroad",
+              "holiday",
+              "no longer",
+              "opportunity",
+              "money"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "BASIC": null,
+              "NCL": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "experience",
+              "confidence",
+              "figure out",
+              "career"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "CORR": true,
+              "NCL": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T00:00:00Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Many young people in Taiwan think that going abroad on a working holiday is no longer just an opportunity to make money.",
+            "confidence": "high",
+            "explanation_zh": "「認為」後接 that 名詞子句；「出國打工度假」用動名詞片語當主詞；「不再只是」用 no longer just；「賺錢的機會」用 an opportunity to make money。"
+          },
+          "2": {
+            "translation": "This experience not only makes them more confident but also helps them figure out what kind of work they want to do.",
+            "confidence": "high",
+            "explanation_zh": "「不但……也……」用 not only…but also… 連接兩個動詞片語，維持平行；「想清楚自己要做什麼工作」用 figure out 加名詞子句 what kind of work they want to do。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "BASIC",
+              "NCL"
+            ],
+            "used_target_words": [
+              "young",
+              "think",
+              "abroad",
+              "holiday",
+              "no longer",
+              "opportunity",
+              "money"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "CORR",
+              "NCL"
+            ],
+            "used_target_words": [
+              "experience",
+              "confidence",
+              "figure out",
+              "career"
+            ],
+            "within_accepted": true,
+            "closest_reference": 2,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "young",
+              "think",
+              "abroad",
+              "holiday",
+              "no longer",
+              "opportunity",
+              "money"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "BASIC": null,
+              "NCL": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "experience",
+              "confidence",
+              "figure out",
+              "career"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "CORR": true,
+              "NCL": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

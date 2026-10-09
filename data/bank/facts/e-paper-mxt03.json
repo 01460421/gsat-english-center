@@ -1,0 +1,104 @@
+{
+  "schema": "gsat-bank-facts/v1",
+  "id": "e-paper-mxt03",
+  "title": "How electronic paper (electronic ink) displays imitate ink on paper",
+  "created_on": "2026-10-09",
+  "created_by": "claude-opus-5-5",
+  "sources": [
+    {
+      "id": "s1",
+      "publisher": "University of Southern California (Illumin)",
+      "title": "Books of the Future: the Engineering Behind Electronic Ink Displays",
+      "url": "https://illumin.usc.edu/books-of-the-future-the-engineering-behind-electronic-ink-displays/",
+      "accessed": "2026-10-09",
+      "license": "USC terms of use",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s2",
+      "publisher": "MDPI Micromachines",
+      "title": "Driving Waveform Design of Electrophoretic Display Based on Optimized Particle Activation for a Rapid Response Speed",
+      "url": "https://www.mdpi.com/2072-666X/11/5/498",
+      "accessed": "2026-10-09",
+      "license": "CC BY 4.0",
+      "use": "fact_only",
+      "note": "只取事實（重新整理畫面時把整個畫面驅動成全黑、全白以消除殘影）"
+    }
+  ],
+  "facts": [
+    {
+      "id": "f1",
+      "text": "Electronic paper is a reflective display: like a printed page, it shows images with the light around it and has no backlight.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "definition"
+    },
+    {
+      "id": "f2",
+      "text": "Electronic ink is made of tiny capsules filled with a clear liquid in which white and black particles float.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "definition"
+    },
+    {
+      "id": "f3",
+      "text": "The white particles carry a positive charge and the black ones a negative charge; a voltage pulls one color to the visible surface.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f4",
+      "text": "The particles stay where they were last moved, so a page stays on screen without power; energy is used only to change the image.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f5",
+      "text": "Many e-readers can run for weeks on a single charge.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f6",
+      "text": "Electronic ink screens respond and refresh more slowly than LCD screens, so they are poor at video.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f7",
+      "text": "Color electronic paper exists but has been limited; most devices show black, white and gray.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f8",
+      "text": "Because they reflect surrounding light, e-paper screens are easy to read in well-lit places.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f9",
+      "text": "To clear faint traces of earlier images, e-paper is driven fully to black and white, which appears as a brief flash.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "cause_effect"
+    }
+  ],
+  "notes": "混合題 mixed-top-03 第 1 組（電子紙）用。2026-10-09 線上查證，只取事實、不取原句。選文不寫年代、廠牌與數字；「翻頁時偶爾閃黑」對應 f9（全畫面驅動成黑白以消除殘影）。"
+}

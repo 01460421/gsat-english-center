@@ -1,0 +1,766 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.963b92",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "advanced",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "當網紅已被許多青少年視為快速成名致富的方法。",
+        "options": null,
+        "answer": "Becoming an Internet celebrity has been regarded by many teenagers as a quick way to fame and fortune.",
+        "accepted_answers": [
+          "Being an online celebrity has been seen by many teenagers as a fast way to become rich and famous.",
+          "Becoming an influencer has been viewed by many teens as a quick way to get famous and rich."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "把 A 視為 B",
+            "完成式被動"
+          ],
+          "topic": "網紅"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "不過，他們應該先想清楚要拍什麼內容，以及如何面對負面留言。",
+        "options": null,
+        "answer": "However, they should first think carefully about what videos to make and how to deal with negative comments.",
+        "accepted_answers": [
+          "However, they should first figure out what kind of videos to make and how to handle negative comments.",
+          "But they should first think clearly about what to film and how to face negative comments."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "should 表建議",
+            "疑問詞＋不定詞"
+          ],
+          "topic": "網紅"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "網紅"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "主詞「當網紅」是動詞片語，英文改成動名詞 Becoming an Internet celebrity（網紅也可說 influencer）。「已被…視為…」用完成式被動加 regard A as B：has been regarded by many teenagers as …（regarded 也可換成 seen／viewed，as 不能省）。「成名致富」可以用名詞 fame and fortune，或寫成 to become rich and famous；不要寫成 to famous and rich。",
+          "evidence": [
+            "當網紅",
+            "已被",
+            "視為"
+          ],
+          "strategy_zh": "「A 被 B 視為 C」→ A + be regarded/seen/viewed + by B + as C；先確認主詞是不是動作，是動作就改成 V-ing。",
+          "hints": [
+            "切成四段：當網紅／已被許多青少年視為／快速／成名致富",
+            "標的詞彙：celebrity（名人、網紅，L5）、regard（視為，L2）、teenager（青少年，L1）、quick（快速的，L1）、fame（名聲，L4）、fortune（財富，L3）",
+            "句型框架：V-ing … + has been regarded by + N + as + N"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「應該」用 should + 原形動詞；「先」是 first，放在 should 後面。「要拍什麼內容」「如何面對」都是「疑問詞＋不定詞」：what videos to make、how to deal with …，兩個用 and 連接；think 後面要接 about。「面對」負面留言可以用 deal with／handle／face（face 後面不加 with）。",
+          "evidence": [
+            "應該",
+            "要拍什麼內容",
+            "如何面對"
+          ],
+          "strategy_zh": "「該做什麼／如何做」當受詞時，想 what to VR、how to VR；兩個並列時都用同樣的形式。",
+          "hints": [
+            "切成四段：不過，他們應該先／想清楚要拍什麼內容／以及如何面對／負面留言",
+            "標的詞彙：should（應該，L1）、think（想，L1）、video（影片、內容，L1）、deal with（面對、處理，L1）、negative（負面的，L2）、comment（留言，L4）",
+            "句型框架：S + should first + think about + what + N + to VR … and how to VR …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "Becoming an Internet celebrity has been regarded by many teenagers as a quick way to fame and fortune.",
+            "Being an online celebrity has been seen by many teenagers as a fast way to become rich and famous.",
+            "Becoming an influencer has been viewed by many teens as a quick way to get famous and rich."
+          ],
+          "target_words": [
+            {
+              "word": "celebrity",
+              "zh": "名人、網紅",
+              "alternatives": [
+                "influencer",
+                "star"
+              ]
+            },
+            {
+              "word": "regard",
+              "zh": "視為",
+              "alternatives": [
+                "see",
+                "view",
+                "consider"
+              ]
+            },
+            {
+              "word": "teenager",
+              "zh": "青少年",
+              "alternatives": [
+                "teen",
+                "teens"
+              ]
+            },
+            {
+              "word": "quick",
+              "zh": "快速的",
+              "alternatives": [
+                "fast"
+              ]
+            },
+            {
+              "word": "fame",
+              "zh": "名聲",
+              "alternatives": [
+                "famous"
+              ]
+            },
+            {
+              "word": "fortune",
+              "zh": "財富",
+              "alternatives": [
+                "rich",
+                "wealth"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "VOC",
+              "grammar_id": "gp-regard-as",
+              "label_zh": "把 A 視為 B（被動：be regarded as）",
+              "frame": "A + be regarded/seen/viewed + as + B",
+              "zh_trigger": "視為"
+            },
+            {
+              "code": "PASS",
+              "grammar_id": "gp-perfect-passive",
+              "label_zh": "完成式被動（has been + p.p.）",
+              "frame": "S + has/have been + p.p. (+ by …)",
+              "zh_trigger": "已被"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "當網紅",
+              "accepted": [
+                "Becoming an Internet celebrity",
+                "Being an online celebrity",
+                "Becoming an influencer",
+                "Being an Internet celebrity",
+                "Becoming an online celebrity",
+                "Being an influencer",
+                "To become an Internet celebrity"
+              ],
+              "targets": [
+                "celebrity"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Become an Internet celebrity",
+                  "right": "Becoming an Internet celebrity",
+                  "explanation_zh": "動詞片語當主詞要改成動名詞 Becoming …（或 To become …）。"
+                },
+                {
+                  "wrong": "Becoming Internet celebrity",
+                  "right": "Becoming an Internet celebrity",
+                  "explanation_zh": "celebrity 是可數名詞，單數前面要加 an。"
+                }
+              ]
+            },
+            {
+              "zh": "已被許多青少年視為",
+              "accepted": [
+                "has been regarded by many teenagers as",
+                "has been seen by many teenagers as",
+                "has been viewed by many teens as",
+                "has been viewed by many teenagers as",
+                "has been seen by many teens as",
+                "has been regarded by many teens as"
+              ],
+              "targets": [
+                "regard",
+                "teenager",
+                "VOC",
+                "PASS"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "has regarded by many teenagers as",
+                  "right": "has been regarded by many teenagers as",
+                  "explanation_zh": "完成式被動要有 been：has been regarded。"
+                },
+                {
+                  "wrong": "is regarded by many teenagers to",
+                  "right": "has been regarded by many teenagers as",
+                  "explanation_zh": "regard A as B 的 as 不能換成 to；「已被」用現在完成式被動。"
+                }
+              ]
+            },
+            {
+              "zh": "快速",
+              "accepted": [
+                "a quick way",
+                "a fast way",
+                "a quick path",
+                "an easy and quick way",
+                "a shortcut"
+              ],
+              "targets": [
+                "quick"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "a quickly way",
+                  "right": "a quick way",
+                  "explanation_zh": "修飾名詞 way 要用形容詞 quick。"
+                }
+              ]
+            },
+            {
+              "zh": "成名致富",
+              "accepted": [
+                "to fame and fortune",
+                "to become rich and famous",
+                "to get famous and rich",
+                "to become famous and rich",
+                "to get rich and famous",
+                "to fame and wealth"
+              ],
+              "targets": [
+                "fame",
+                "fortune"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "to famous and rich",
+                  "right": "to fame and fortune",
+                  "explanation_zh": "way to 的 to 後面接名詞（fame and fortune）或原形動詞（become famous and rich），不能直接接形容詞。"
+                },
+                {
+                  "wrong": "to become fame and fortune",
+                  "right": "to become famous and rich",
+                  "explanation_zh": "become 後面接形容詞 famous、rich；fame、fortune 是名詞。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "verbal_subject",
+              "zh": "當網紅",
+              "literal_error": "Become an Internet celebrity has been regarded by many teenagers as a quick way to fame and fortune.",
+              "part": 1,
+              "explanation_zh": "中文主詞是動詞片語「當網紅」，照字面寫 Become … 不合文法；要改成動名詞 Becoming …。"
+            },
+            {
+              "type": "word_form",
+              "zh": "成名致富",
+              "literal_error": "Becoming an Internet celebrity has been regarded by many teenagers as a quick way to famous and rich.",
+              "part": 4,
+              "explanation_zh": "a way to 後面要接名詞或原形動詞；famous、rich 是形容詞，要寫 fame and fortune 或 to become rich and famous。"
+            }
+          ],
+          "bonus": [],
+          "restructuring_zh": "「當網紅」是動詞片語當主詞，英文要寫成動名詞 Becoming an Internet celebrity；「已被許多青少年視為…」改成完成式被動 has been regarded by many teenagers as …。"
+        },
+        "2": {
+          "references": [
+            "However, they should first think carefully about what videos to make and how to deal with negative comments.",
+            "However, they should first figure out what kind of videos to make and how to handle negative comments.",
+            "But they should first think clearly about what to film and how to face negative comments."
+          ],
+          "target_words": [
+            {
+              "word": "should",
+              "zh": "應該",
+              "alternatives": [
+                "ought to",
+                "need to"
+              ]
+            },
+            {
+              "word": "think",
+              "zh": "想",
+              "alternatives": [
+                "figure out",
+                "consider",
+                "decide"
+              ]
+            },
+            {
+              "word": "video",
+              "zh": "影片、內容",
+              "alternatives": [
+                "content",
+                "film"
+              ]
+            },
+            {
+              "word": "deal with",
+              "zh": "面對、處理",
+              "alternatives": [
+                "handle",
+                "face",
+                "cope with"
+              ]
+            },
+            {
+              "word": "negative",
+              "zh": "負面的"
+            },
+            {
+              "word": "comment",
+              "zh": "留言",
+              "alternatives": [
+                "message",
+                "criticism"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "BASIC",
+              "grammar_id": "gp-should-advice",
+              "label_zh": "應該（should + 原形動詞）",
+              "frame": "S + should (+ first) + VR …",
+              "zh_trigger": "應該"
+            },
+            {
+              "code": "NCL",
+              "grammar_id": "gp-wh-to",
+              "label_zh": "疑問詞＋不定詞（what to VR／how to VR）",
+              "frame": "S + V + what + (N) + to VR … and how to VR …",
+              "zh_trigger": "要拍什麼內容，以及如何面對"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "不過，他們應該先",
+              "accepted": [
+                "However, they should first",
+                "But they should first",
+                "However, they should",
+                "However, they ought to first",
+                "Still, they should first",
+                "However, they need to first"
+              ],
+              "targets": [
+                "should",
+                "BASIC"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "However, they should to first think",
+                  "right": "However, they should first think",
+                  "explanation_zh": "should 是助動詞，後面直接接原形動詞，不加 to。"
+                },
+                {
+                  "wrong": "However, they should first thinking",
+                  "right": "However, they should first think",
+                  "explanation_zh": "should 後面接原形動詞 think。"
+                }
+              ]
+            },
+            {
+              "zh": "想清楚要拍什麼內容",
+              "accepted": [
+                "think carefully about what videos to make",
+                "figure out what kind of videos to make",
+                "think clearly about what to film",
+                "think carefully about what to film",
+                "decide what content to create",
+                "figure out what content to make",
+                "think about what kind of content to make",
+                "think carefully about what content to make"
+              ],
+              "targets": [
+                "think",
+                "video",
+                "NCL"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "think clearly what videos to make",
+                  "right": "think clearly about what videos to make",
+                  "explanation_zh": "think 是不及物動詞，後面要加 about 再接受詞。"
+                },
+                {
+                  "wrong": "think about what videos should make",
+                  "right": "think about what videos to make",
+                  "explanation_zh": "疑問詞後面要嘛接不定詞（what videos to make），要嘛接完整子句（what videos they should make），不能沒有主詞。"
+                }
+              ]
+            },
+            {
+              "zh": "以及如何面對",
+              "accepted": [
+                "and how to deal with",
+                "and how to handle",
+                "and how to face",
+                "and how to cope with",
+                "as well as how to deal with",
+                "and how they should deal with"
+              ],
+              "targets": [
+                "deal with"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "and how to face with",
+                  "right": "and how to face",
+                  "explanation_zh": "face 是及物動詞，後面直接接受詞，不加 with。"
+                },
+                {
+                  "wrong": "and how dealing with",
+                  "right": "and how to deal with",
+                  "explanation_zh": "how 後面接 to + 原形動詞。"
+                }
+              ]
+            },
+            {
+              "zh": "負面留言",
+              "accepted": [
+                "negative comments",
+                "negative messages",
+                "mean comments",
+                "bad comments",
+                "online criticism"
+              ],
+              "targets": [
+                "negative",
+                "comment"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "negative comment",
+                  "right": "negative comments",
+                  "explanation_zh": "留言不只一則，comment 可數，要用複數 comments。"
+                },
+                {
+                  "wrong": "negatively comments",
+                  "right": "negative comments",
+                  "explanation_zh": "修飾名詞要用形容詞 negative。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "subjectless",
+              "zh": "要拍什麼內容",
+              "literal_error": "However, they should first think about what videos should make and how to deal with negative comments.",
+              "part": 2,
+              "explanation_zh": "「要拍什麼」中文沒寫主詞，照字面寫 what … should make 少了主詞；用 what videos to make（或 what videos they should make）。"
+            },
+            {
+              "type": "collocation",
+              "zh": "面對",
+              "literal_error": "However, they should first think carefully about what videos to make and how to face with negative comments.",
+              "part": 3,
+              "explanation_zh": "「面對」照字面寫 face with 是錯的搭配；用 deal with、handle，或直接 face + 受詞。"
+            }
+          ],
+          "bonus": []
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-advanced-03",
+    "lot": "translation-advanced-03",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "02c0a28073619c0bc20ca233498a317fe41127b7ed24b485e5a25ef485b7d3c2",
+    "spec_id": "translation-advanced@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "warn",
+      "created_at": "2026-10-09T13:03:05Z",
+      "details": {
+        "errors": [],
+        "warnings": [
+          "annotations.rubric.items.1.patterns[1]: gp-perfect-passive 通常對應句構 PERF（目前 code=PASS）"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "fail",
+      "created_at": "2026-10-09T08:05:03Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Becoming an Internet celebrity has been regarded by many teenagers as a way to get rich and famous quickly.",
+            "confidence": "high",
+            "explanation_zh": "「當網紅」用動名詞 Becoming… 當主詞；「已被…視為」用現在完成被動 has been regarded as（be seen as 亦可）；「快速成名致富的方法」譯 a way to get rich and famous quickly。「網紅」譯 Internet celebrity（influencer 亦可）。"
+          },
+          "2": {
+            "translation": "However, they should first think carefully about what content to film and how to deal with negative comments.",
+            "confidence": "high",
+            "explanation_zh": "「想清楚要拍什麼內容，以及如何面對…」用兩個 wh- + to V（what content to film、how to deal with）當 about 的受詞，等於名詞子句的減化；「面對負面留言」譯 deal with negative comments（handle 亦可）。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "VOC",
+              "PASS"
+            ],
+            "used_target_words": [
+              "celebrity",
+              "regard",
+              "teenager",
+              "fame",
+              "fortune"
+            ],
+            "within_accepted": false,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "「快速成名致富的方法」的「快速」是修飾「成名致富」的副詞，我自然譯成 a way to get rich and famous quickly；P3「快速」只收 a quick way 這類形容詞寫法，P3／P4 的切法預設了 quick way 的語序，副詞寫法會把「快速」併進 P4，P3 無從給分。",
+              "建議 P3 accepted 補 a way to … quickly／a way to quickly become … 的寫法（或把 P3、P4 合併後重切），標的詞 quick 的 alternatives 補 quickly（目前程式比對不到 quickly，所以我沒有把 quick 列進 used_target_words）。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "BASIC",
+              "NCL"
+            ],
+            "used_target_words": [
+              "should",
+              "think",
+              "video",
+              "deal with",
+              "negative",
+              "comment"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "celebrity",
+              "regard",
+              "teenager",
+              "fame",
+              "fortune"
+            ],
+            "target_hit_rate": 0.833,
+            "patterns_detected": {
+              "VOC": null,
+              "PASS": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "should",
+              "think",
+              "video",
+              "deal with",
+              "negative",
+              "comment"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "BASIC": null,
+              "NCL": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 1 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義",
+          "第 1 題驗證者對4 部分切分有意見（warn）：「快速成名致富的方法」的「快速」是修飾「成名致富」的副詞，我自然譯成 a way to get rich and famous quickly；P3「快速」只收 a quick way 這類形容詞寫法，P3／P4 的切法預設了 quick "
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T00:00:00Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Becoming an influencer has been regarded by many teenagers as a quick way to get famous and rich.",
+            "confidence": "high",
+            "explanation_zh": "「當網紅」是動作，用動名詞 Becoming an influencer 當主詞；「已被……視為」用現在完成被動 has been regarded…as；「快速成名致富的方法」用 a quick way to get famous and rich。"
+          },
+          "2": {
+            "translation": "However, they should first figure out what content to film and how to deal with negative comments.",
+            "confidence": "high",
+            "explanation_zh": "「不過」用 However；「應該先想清楚」用 should first figure out；「要拍什麼內容，以及如何面對負面留言」用疑問詞加不定詞並列 what content to film and how to deal with…。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "VOC",
+              "PASS"
+            ],
+            "used_target_words": [
+              "celebrity",
+              "regard",
+              "teenager",
+              "quick",
+              "fame",
+              "fortune"
+            ],
+            "within_accepted": true,
+            "closest_reference": 2,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "BASIC",
+              "NCL"
+            ],
+            "used_target_words": [
+              "should",
+              "think",
+              "video",
+              "deal with",
+              "negative",
+              "comment"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "celebrity",
+              "regard",
+              "teenager",
+              "quick",
+              "fame",
+              "fortune"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "VOC": null,
+              "PASS": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "should",
+              "think",
+              "video",
+              "deal with",
+              "negative",
+              "comment"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "BASIC": null,
+              "NCL": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "rejected",
+  "status_reason": "blind_solver:A 未通過：第 1 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義；第 1 題驗證者對4 部分切分有意見（warn）：「快速成名致富的方法」的「快速」是修飾「成名致富」的副詞，我自然譯成 a way to get rich and famous quickly；P3「快速」只收 a quick way 這類形容詞寫法，P3／P4 的切法預設了 quick 。判定者（第 1 輪）人工確認：第 1 題 4 部分切分不公平。P3 只有「快速」兩個字，accepted 只收 a quick way／a fast way 等形容詞寫法；「快速成名致富」照中文語序很自然寫成 a way to get rich and famous quickly 或 a way to quickly become famous，這時「快速」落在 P4 後面，P3 拿不到分，標的詞 quick 的 alternatives 也沒有 quickly。修正方向：把 P3、P4 合併後重切（例如「已被許多青少年」「視為…的方法」分開），或 P3 補副詞寫法、quick 補 quickly。第 2 題沒有問題。"
+}

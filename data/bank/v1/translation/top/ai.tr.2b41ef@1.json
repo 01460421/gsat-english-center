@@ -1,0 +1,819 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.2b41ef",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "top",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "遠距醫療（telemedicine）讓醫生能在線上看診，這對必須長途跋涉才能就醫的人特別有幫助。",
+        "options": null,
+        "answer": "Telemedicine enables doctors to see patients online, which is especially helpful for people who have to make long journeys to get medical care.",
+        "accepted_answers": [
+          "Telemedicine enables doctors to examine patients over the Internet, which is particularly helpful to those who must travel a long way to see a doctor.",
+          "Telemedicine allows doctors to treat patients online, which is especially helpful for people who need to travel long distances to get medical treatment."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "非限定關係子句（which 指前面整件事：…, which is especially helpful …）",
+            "關係代名詞引導的限定形容詞子句（必須長途跋涉才能就醫的人＝people who have to …）"
+          ],
+          "topic": "遠距醫療"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "在年輕人大多已搬走的鄉村，這項服務已被用來照顧獨居的長者。",
+        "options": null,
+        "answer": "In rural villages where most young people have moved away, this service has been used to care for elderly residents who live alone.",
+        "accepted_answers": [
+          "In rural areas where most of the young people have left, this service has been used to take care of old people living alone.",
+          "In villages from which most young people have moved away, this service has been used to look after elderly people who live by themselves."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "關係副詞 where（年輕人已搬走的鄉村＝villages where …）",
+            "完成式被動（已被用來…）"
+          ],
+          "topic": "遠距醫療"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "遠距醫療"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「讓醫生能…」用 allow／enable sb to VR（或 let sb VR）。「這對…特別有幫助」的「這」指的是前面整件事，用逗號加 which：…, which is especially helpful for …（which 代替前面整個子句，動詞用單數 is）。「必須長途跋涉才能就醫的人」是限定的修飾語，用關係代名詞 who 子句放在 people 後面；子句裡有 have to／must，保留完整的 who 子句最自然。「才能就醫」表目的，用 to get medical care（或 to see a doctor）。",
+          "evidence": [
+            "這對必須長途跋涉才能就醫的人特別有幫助",
+            "必須長途跋涉才能就醫的人"
+          ],
+          "strategy_zh": "先寫主幹 Telemedicine allows doctors to see patients online，逗號後用 which 補充評論，最後用 who 子句說明是哪些人。",
+          "hints": [
+            "切成四段：遠距醫療讓醫生能／在線上看診／必須長途跋涉才能就醫的人／（這對…）特別有幫助",
+            "標的詞彙：allow（讓…能）、doctor（醫生）、online（線上）、helpful（有幫助的）、travel（長途跋涉）",
+            "句型框架：S + allows + O + to VR …, which is especially helpful for people who + have to + VR …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「年輕人大多已搬走的鄉村」修飾語是完整子句，缺的是地點，用關係副詞 where：rural villages where most young people have moved away（move away 不及物，不能用 which）。「這項服務已被用來照顧」用完成式被動 has been used to care for；注意 be used to VR（被用來）和 be used to V-ing（習慣於）不同。「獨居的長者」是 elderly people who live alone，不是 lonely old people。",
+          "evidence": [
+            "年輕人大多已搬走的鄉村",
+            "這項服務已被用來照顧獨居的長者"
+          ],
+          "strategy_zh": "句首地點片語 In rural villages 後面接 where 子句；主要子句 this service has been used to VR；最後寫「獨居的長者」。",
+          "hints": [
+            "切成四段：年輕人大多已搬走／的鄉村（在…的鄉村）／這項服務已被用來／照顧獨居的長者",
+            "標的詞彙：rural（鄉村的）、move away（搬走）、service（服務）、care for（照顧）、elderly（年長的）",
+            "句型框架：In + N(地方) + where + S + have p.p., S + has been used to VR …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "Telemedicine enables doctors to see patients online, which is especially helpful for people who have to make long journeys to get medical care.",
+            "Telemedicine enables doctors to examine patients over the Internet, which is particularly helpful to those who must travel a long way to see a doctor.",
+            "Telemedicine allows doctors to treat patients online, which is especially helpful for people who need to travel long distances to get medical treatment."
+          ],
+          "target_words": [
+            {
+              "word": "allow",
+              "zh": "讓…能",
+              "alternatives": [
+                "enable",
+                "let",
+                "permit",
+                "make it possible"
+              ]
+            },
+            {
+              "word": "doctor",
+              "zh": "醫生",
+              "alternatives": [
+                "physician",
+                "physicians"
+              ]
+            },
+            {
+              "word": "online",
+              "zh": "線上",
+              "alternatives": [
+                "Internet",
+                "remotely",
+                "video",
+                "virtually",
+                "web"
+              ]
+            },
+            {
+              "word": "helpful",
+              "zh": "有幫助的",
+              "alternatives": [
+                "help",
+                "useful",
+                "beneficial",
+                "benefit",
+                "valuable"
+              ]
+            },
+            {
+              "word": "travel",
+              "zh": "長途跋涉",
+              "alternatives": [
+                "journey",
+                "journeys",
+                "trip",
+                "trips",
+                "distance",
+                "distances"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "NRREL",
+              "grammar_id": "gp-nonrestrictive",
+              "label_zh": "非限定關係子句（which 指前面整件事：…, which is especially helpful …）",
+              "frame": "S + V …, which + V …",
+              "zh_trigger": "這對必須長途跋涉才能就醫的人特別有幫助"
+            },
+            {
+              "code": "REL",
+              "grammar_id": "gp-relative-pronoun",
+              "label_zh": "關係代名詞引導的限定形容詞子句（必須長途跋涉才能就醫的人＝people who have to …）",
+              "frame": "people + who + have to / must + VR …",
+              "zh_trigger": "必須長途跋涉才能就醫的人"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "遠距醫療（telemedicine）讓醫生能",
+              "accepted": [
+                "Telemedicine enables doctors to",
+                "Telemedicine allows doctors to",
+                "Telemedicine lets doctors",
+                "Telemedicine makes it possible for doctors to",
+                "Telemedicine allows doctors"
+              ],
+              "targets": [
+                "allow",
+                "doctor"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Telemedicine lets doctors to see patients online",
+                  "right": "Telemedicine lets doctors see patients online",
+                  "explanation_zh": "let sb＋原形動詞，不加 to（allow／enable sb to VR 才有 to）。"
+                },
+                {
+                  "wrong": "Telemedicine allows doctors see patients online",
+                  "right": "Telemedicine allows doctors to see patients online",
+                  "explanation_zh": "allow sb to VR，to 不能省。"
+                }
+              ]
+            },
+            {
+              "zh": "在線上看診",
+              "accepted": [
+                "see patients online",
+                "examine patients over the Internet",
+                "treat patients online",
+                "see patients over the Internet",
+                "see patients via the Internet",
+                "examine patients online",
+                "see patients remotely",
+                "treat patients remotely",
+                "consult with patients online",
+                "see patients through video calls",
+                "see patients through the Internet",
+                "give medical consultations online",
+                "diagnose patients online",
+                "provide medical consultations online",
+                "hold consultations online",
+                "treat patients over the Internet",
+                "see patients on the Internet"
+              ],
+              "targets": [
+                "online"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "see patients through Internet",
+                  "right": "see patients through the Internet",
+                  "explanation_zh": "Internet 前面要加 the（也可以直接寫 online）。"
+                },
+                {
+                  "wrong": "see patients on online",
+                  "right": "see patients online",
+                  "explanation_zh": "online 本身是副詞「在線上」，前面不加 on。"
+                }
+              ]
+            },
+            {
+              "zh": "必須長途跋涉才能就醫的人",
+              "accepted": [
+                "people who have to make long journeys to get medical care",
+                "those who must travel a long way to see a doctor",
+                "people who need to travel long distances to get medical treatment",
+                "people who have to travel long distances to get medical care",
+                "people who need to make long journeys to get medical treatment",
+                "people who must travel long distances to see a doctor",
+                "people who have to travel far to see a doctor",
+                "those who have to travel a long way to get medical treatment",
+                "people who have to travel a long distance to get to a hospital",
+                "people who must travel a long way to get medical care",
+                "people who have to travel for hours to see a doctor",
+                "those who have to travel long distances to see a doctor",
+                "people who have to travel a long way to see a doctor",
+                "people who must travel a long way to see a doctor",
+                "people who have to travel long distances to see a doctor",
+                "people who must travel far to get medical care",
+                "people who have to travel long distances for medical care",
+                "people who have to travel a long way for medical treatment",
+                "those who must travel long distances to receive medical care",
+                "people who have to make a long trip to see a doctor"
+              ],
+              "targets": [
+                "REL",
+                "travel"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "people must travel long distances to see a doctor",
+                  "right": "people who must travel long distances to see a doctor",
+                  "explanation_zh": "「必須長途跋涉才能就醫的」修飾「人」，要用 who 引導關係子句；少了 who，句子就有兩個主要動詞。"
+                },
+                {
+                  "wrong": "people who has to travel long distances",
+                  "right": "people who have to travel long distances",
+                  "explanation_zh": "先行詞 people 是複數，關係子句的動詞用 have to。"
+                }
+              ]
+            },
+            {
+              "zh": "特別有幫助",
+              "accepted": [
+                "which is especially helpful for",
+                "which is particularly helpful to",
+                "which is especially helpful to",
+                "which is particularly helpful for",
+                "which is especially useful for",
+                "which is of great help to",
+                "which is a great help to",
+                "which especially benefits",
+                "which is especially beneficial to",
+                "which is particularly beneficial for",
+                "which is especially beneficial for",
+                "which is extremely helpful for",
+                "which is particularly useful for"
+              ],
+              "targets": [
+                "NRREL",
+                "helpful"
+              ],
+              "common_errors": [
+                {
+                  "wrong": ", this is especially helpful for people",
+                  "right": ", which is especially helpful for people",
+                  "explanation_zh": "逗號不能連接兩個完整句子；「這」指前面整件事，用 which 引導非限定子句。"
+                },
+                {
+                  "wrong": ", which is especially help for people",
+                  "right": ", which is especially helpful for people",
+                  "explanation_zh": "「有幫助的」是形容詞 helpful（或 of great help）；help 是動詞或名詞。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "prenominal_modifier",
+              "zh": "必須長途跋涉才能就醫的人",
+              "literal_error": "which is especially helpful for people must travel long distances to see a doctor",
+              "part": 3,
+              "explanation_zh": "中文把「必須長途跋涉才能就醫的」放在「人」前面；英文要改成名詞後面的關係子句 people who must travel …，不能直接把動詞接在 people 後面。"
+            },
+            {
+              "type": "word_form",
+              "zh": "有幫助",
+              "literal_error": "Telemedicine allows doctors to see patients online, which is especially help for people who must travel far.",
+              "part": 4,
+              "explanation_zh": "「有幫助」是形容詞 helpful（或 of great help）；help 是動詞或名詞，不能直接接在 is especially 後面。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "Telemedicine allows doctors to see patients online, a great benefit for those who would otherwise have to travel for hours to see a doctor.",
+              "explanation_zh": "用同位語 a great benefit for … 取代 which 子句，並用 would otherwise（否則就得…）點出遠距醫療省下的路程。"
+            }
+          ],
+          "restructuring_zh": "「這對…特別有幫助」的「這」指前面整件事（醫生能在線上看診），英文用逗號加 which 的非限定子句；「必須長途跋涉才能就醫的人」修飾語放在 people 後面，寫成 who have to travel long distances to get medical care，「才能就醫」用不定詞 to 表目的。"
+        },
+        "2": {
+          "references": [
+            "In rural villages where most young people have moved away, this service has been used to care for elderly residents who live alone.",
+            "In rural areas where most of the young people have left, this service has been used to take care of old people living alone.",
+            "In villages from which most young people have moved away, this service has been used to look after elderly people who live by themselves."
+          ],
+          "target_words": [
+            {
+              "word": "rural",
+              "zh": "鄉村的",
+              "alternatives": [
+                "countryside",
+                "village",
+                "villages"
+              ]
+            },
+            {
+              "word": "move away",
+              "zh": "搬走",
+              "alternatives": [
+                "leave",
+                "move out",
+                "move to"
+              ]
+            },
+            {
+              "word": "service",
+              "zh": "服務",
+              "alternatives": [
+                "telemedicine",
+                "technology"
+              ]
+            },
+            {
+              "word": "care for",
+              "zh": "照顧",
+              "alternatives": [
+                "take care of",
+                "look after",
+                "care"
+              ]
+            },
+            {
+              "word": "elderly",
+              "zh": "年長的",
+              "alternatives": [
+                "old",
+                "senior",
+                "seniors",
+                "aged"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "REL",
+              "grammar_id": "gp-relative-adverb",
+              "label_zh": "關係副詞 where（年輕人已搬走的鄉村＝villages where …）",
+              "frame": "N(地方) + where + S + V …",
+              "zh_trigger": "年輕人大多已搬走的鄉村"
+            },
+            {
+              "code": "PASS",
+              "grammar_id": "gp-perfect-passive",
+              "label_zh": "完成式被動（已被用來…）",
+              "frame": "S + have/has + been + p.p. + to VR …",
+              "zh_trigger": "已被用來"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "年輕人大多已搬走",
+              "accepted": [
+                "most young people have moved away",
+                "most of the young people have left",
+                "most young people have left",
+                "most of the young people have moved away",
+                "most young people have already moved away",
+                "most young people have already left",
+                "most of the young have moved away",
+                "most young people have moved out"
+              ],
+              "targets": [
+                "move away"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "most of young people have moved away",
+                  "right": "most of the young people have moved away",
+                  "explanation_zh": "most of 後面要接有限定詞的名詞（most of the young people），或直接寫 most young people。"
+                },
+                {
+                  "wrong": "most young people have move away",
+                  "right": "most young people have moved away",
+                  "explanation_zh": "have 後面接過去分詞 moved。"
+                }
+              ]
+            },
+            {
+              "zh": "的鄉村",
+              "accepted": [
+                "In rural villages where",
+                "In rural areas where",
+                "In villages from which",
+                "In villages where",
+                "In rural areas from which",
+                "In rural communities where",
+                "In country villages where"
+              ],
+              "targets": [
+                "REL",
+                "rural"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "In rural villages which most young people have moved away",
+                  "right": "In rural villages where most young people have moved away",
+                  "explanation_zh": "move away 是不及物動詞，關係子句缺的是地點，要用 where（＝from which）。"
+                },
+                {
+                  "wrong": "In rural village where most young people have moved away",
+                  "right": "In rural villages where most young people have moved away",
+                  "explanation_zh": "village 是可數名詞，泛指鄉村用複數 villages。"
+                }
+              ]
+            },
+            {
+              "zh": "這項服務已被用來",
+              "accepted": [
+                "this service has been used to",
+                "this service has already been used to",
+                "the service has been used to"
+              ],
+              "targets": [
+                "PASS",
+                "service"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "this service has used to care for",
+                  "right": "this service has been used to care for",
+                  "explanation_zh": "服務是「被用來」照顧人，要用完成式被動 has been used to VR。"
+                },
+                {
+                  "wrong": "this service has been used to caring for",
+                  "right": "this service has been used to care for",
+                  "explanation_zh": "be used to VR 是「被用來做…」；be used to V-ing 是「習慣於…」，意思不同。"
+                }
+              ]
+            },
+            {
+              "zh": "照顧獨居的長者",
+              "accepted": [
+                "care for elderly residents who live alone",
+                "take care of old people living alone",
+                "look after elderly people who live by themselves",
+                "care for elderly people who live alone",
+                "take care of elderly people who live alone",
+                "look after seniors who live alone",
+                "care for older people living alone",
+                "take care of elderly people living alone",
+                "look after elderly people living on their own",
+                "care for the elderly who live alone",
+                "care for seniors living alone",
+                "take care of elderly people who live by themselves"
+              ],
+              "targets": [
+                "care for",
+                "elderly"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "care for lonely old people",
+                  "right": "care for elderly people who live alone",
+                  "explanation_zh": "「獨居」是 live alone（一個人住）；lonely 是「寂寞的」，意思不同。"
+                },
+                {
+                  "wrong": "care for elderly residents who lives alone",
+                  "right": "care for elderly residents who live alone",
+                  "explanation_zh": "先行詞 residents 是複數，動詞不加 s。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "abstract_nominal",
+              "zh": "獨居的長者",
+              "literal_error": "to care for lonely elders",
+              "part": 4,
+              "explanation_zh": "「獨居」是「一個人住」的複合概念，英文說 who live alone／living alone；寫成 lonely（寂寞的）就把意思改掉了。"
+            },
+            {
+              "type": "prenominal_modifier",
+              "zh": "年輕人大多已搬走的鄉村",
+              "literal_error": "In rural villages which most young people have moved away",
+              "part": 2,
+              "explanation_zh": "中文用子句修飾「鄉村」；英文要放在名詞後面，而且子句缺的是地點，要用關係副詞 where，不能用 which。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "In rural villages largely abandoned by the young, this service has been used to look after elderly people living on their own.",
+              "explanation_zh": "用過去分詞片語 largely abandoned by the young（大多被年輕人拋下的）後位修飾 villages，並用 the young 表示「年輕人」。"
+            }
+          ],
+          "restructuring_zh": "「年輕人大多已搬走的鄉村」是帶主詞的子句修飾地點，英文改成名詞後面的關係副詞子句 villages where most young people have moved away；「已被用來」改用完成式被動 has been used to。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ac-V-3",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-top-02-regen",
+    "lot": "translation-top-02",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "fea97c14fa3e45cbc507a5a9130c0ea2bc91f32008c7fde55fb98b627572675d",
+    "spec_id": "translation-top@2026-10-09",
+    "regenerated_from": "ai.tr.1c6a4e"
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 1,
+    "sentences": 1,
+    "avg_sentence_length": 1.0,
+    "denominator": 1,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 1.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {
+      "off": 1
+    },
+    "offlist_words": [
+      "telemedicine"
+    ],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "warn",
+      "created_at": "2026-10-09T14:57:42Z",
+      "details": {
+        "errors": [],
+        "warnings": [
+          "annotations.rubric.items.2.patterns[1]: gp-perfect-passive 通常對應句構 PERF（目前 code=PASS）"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "warn",
+      "created_at": "2026-10-09T14:30:00Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Telemedicine allows doctors to see patients online, which is especially helpful for people who have to travel long distances to get medical treatment.",
+            "confidence": "high",
+            "explanation_zh": "「讓醫生能…」用 allow sb to V；「這對…特別有幫助」的「這」指前面整件事，用非限定關係子句 , which is especially helpful；「必須長途跋涉才能就醫的人」用限定關係子句 people who have to travel long distances to get medical treatment（就醫避免和前面 see patients 重複，寫 get medical treatment）。"
+          },
+          "2": {
+            "translation": "In rural areas where most young people have moved away, this service has been used to take care of elderly people who live alone.",
+            "confidence": "high",
+            "explanation_zh": "「年輕人大多已搬走的鄉村」用 where 關係子句加現在完成式 have moved away；「已被用來照顧」用現在完成式被動 has been used to take care of；「獨居的長者」用 elderly people who live alone。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "NRREL",
+              "REL"
+            ],
+            "used_target_words": [
+              "allow",
+              "doctor",
+              "online",
+              "helpful",
+              "travel"
+            ],
+            "within_accepted": true,
+            "closest_reference": 2,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "第 3 部分把整個限定子句（have to／need to／must＋長途跋涉＋to get medical care／treatment／see a doctor）綁成一段，可接受寫法只能逐一列組合。本譯文的 people who have to travel long distances to get medical treatment 意思和文法都對，卻沒有逐字出現在清單裡（清單只有 need to … medical treatment 和 have to … medical care）。建議把第 3 部分拆小，或在評分說明註明各成分可以自由組合，並補上這個寫法。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "REL",
+              "PASS"
+            ],
+            "used_target_words": [
+              "rural",
+              "move away",
+              "service",
+              "care for",
+              "elderly"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "allow",
+              "doctor",
+              "online",
+              "helpful",
+              "travel"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NRREL": true,
+              "REL": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "rural",
+              "move away",
+              "service",
+              "care for",
+              "elderly"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "REL": true,
+              "PASS": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 1 題驗證者對4 部分切分有意見（warn）：第 3 部分把整個限定子句（have to／need to／must＋長途跋涉＋to get medical care／treatment／see a doctor）綁成一段，可接受寫法只能逐一列組合。本譯文的 people who hav"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T14:31:33Z",
+      "details": {
+        "solver": "B",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Telemedicine allows doctors to see patients online, which is especially helpful to people who have to travel long distances to get medical care.",
+            "confidence": "high",
+            "explanation_zh": "「讓醫生能在線上看診」用 allow sb to V；「這對……特別有幫助」用非限定關係子句 which is especially helpful 指前面整件事；「必須長途跋涉才能就醫」用 people who have to travel long distances to get medical care。"
+          },
+          "2": {
+            "translation": "In rural villages where most young people have moved away, this service has been used to take care of elderly people living alone.",
+            "confidence": "high",
+            "explanation_zh": "「在……的鄉村」用 In rural villages where ... 的關係副詞子句；「大多已搬走」用現在完成式 have moved away；「這項服務已被用來……」用現在完成式被動加不定詞表用途；「獨居的長者」用 elderly people living alone。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "NRREL",
+              "REL"
+            ],
+            "used_target_words": [
+              "allow",
+              "doctor",
+              "online",
+              "helpful",
+              "travel"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "REL",
+              "PASS"
+            ],
+            "used_target_words": [
+              "rural",
+              "move away",
+              "service",
+              "care for",
+              "elderly"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "allow",
+              "doctor",
+              "online",
+              "helpful",
+              "travel"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NRREL": true,
+              "REL": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "rural",
+              "move away",
+              "service",
+              "care for",
+              "elderly"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "REL": true,
+              "PASS": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

@@ -1,0 +1,210 @@
+{
+  "schema": "gsat-bank-facts/v1",
+  "id": "heart-rate-ra04",
+  "title": "Heart rate, body size and lifespan in mammals (Garger et al. 2023 supplementary data; Zhang & Zhang 2009; Levine 1997)",
+  "sdgs": [],
+  "created_on": "2026-10-09",
+  "created_by": "claude-opus-5-5",
+  "sources": [
+    {
+      "id": "s1",
+      "publisher": "Aging Cell (via PubMed Central, U.S. National Library of Medicine)",
+      "title": "Garger D. et al. (2023) The impact of the cardiovascular component and somatic mutations on ageing. Aging Cell 22(10): e13957",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10577550/",
+      "accessed": "2026-10-09",
+      "license": "CC-BY-4.0",
+      "use": "fact_only",
+      "note": "動物數值取自 Supplementary Table 1（1a Lifespan、1c Resting heart rate、1e Adult mass；附件 ACEL-22-e13957-s002.xlsx，經 Europe PMC 的補充檔下載）。lifespan＝人類照顧下 80% 個體死亡時的年齡（Cagan et al. 2022）；adult mass 取自 AnAge"
+    },
+    {
+      "id": "s2",
+      "publisher": "University of Illinois (course reading copy of Ageing Research Reviews 8: 52–60)",
+      "title": "Zhang G.Q. & Zhang W. (2009) Heart rate, lifespan, and mortality risk",
+      "url": "https://jontalle.web.engr.illinois.edu/uploads/410-NS.F22/HeartRateLifespanMortality.08.pdf",
+      "accessed": "2026-10-09",
+      "license": "Elsevier copyright (facts only)",
+      "use": "fact_only"
+    },
+    {
+      "id": "s3",
+      "publisher": "PubMed (U.S. National Library of Medicine)",
+      "title": "Levine H.J. (1997) Rest heart rate and life expectancy. J Am Coll Cardiol 30(4): 1104–1106 (abstract)",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/9316546/",
+      "accessed": "2026-10-09",
+      "license": "Abstract (facts only)",
+      "use": "fact_only"
+    }
+  ],
+  "facts": [
+    {
+      "id": "f1",
+      "text": "Mouse: adult mass 20.5 g, resting heart rate about 664 beats per minute (663.88), lifespan 3.7 years (3.68).",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f2",
+      "text": "Naked mole-rat: adult mass 35 g, resting heart rate about 227 beats per minute (227.39), lifespan 25.3 years (25.35).",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f3",
+      "text": "Rat: adult mass 300 g, resting heart rate about 345 beats per minute (345.2), lifespan 2.7 years (2.75).",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f4",
+      "text": "Rabbit: adult mass 1,800 g (1.8 kg), resting heart rate about 240 beats per minute (240.01), lifespan 9.1 years (9.13).",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f5",
+      "text": "Dog: adult mass 40,000 g (40 kg), resting heart rate about 103 beats per minute (103.26), lifespan 15.3 years (15.26).",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f6",
+      "text": "Human: adult mass 62,035 g (about 62 kg), resting heart rate 73 beats per minute (adults aged 20 to 39), lifespan 83.7 years (83.67).",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f7",
+      "text": "Lion: adult mass 175,000 g (175 kg), resting heart rate 59.5 beats per minute (about 60), lifespan 20.6 years (20.64).",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f8",
+      "text": "Horse: adult mass 300,000 g (300 kg), resting heart rate about 40 beats per minute (40.15), lifespan 31.5 years (31.53).",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f9",
+      "text": "In this 2023 dataset, lifespan means the age by which 80 percent of animals kept by people had died; adult mass comes from the AnAge database.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "definition"
+    },
+    {
+      "id": "f10",
+      "text": "Resting heart rate in mammals runs from about 30 to 35 beats per minute in whales and elephants up to 600 to 700 in mice.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f11",
+      "text": "Very small mammals such as mice and rats have the fastest hearts and shortest lives; large mammals such as elephants and whales have the slowest hearts and longest lives.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f12",
+      "text": "A faster resting heart rate goes with a faster basal metabolic rate.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f13",
+      "text": "Small mammals have more body surface for their weight, so they need a higher metabolic rate to keep their body temperature steady.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f14",
+      "text": "For each kilogram of body weight, small animals use oxygen much faster than large ones.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f15",
+      "text": "Multiplying heart rate by life span gives a lifetime total that stays roughly the same across most warm-blooded mammals, around one billion (1 x 10^9) beats.",
+      "source_ids": [
+        "s2",
+        "s3"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f16",
+      "text": "Judging by heart rate alone, humans would be expected to live about as long as tigers and giraffes (roughly 20 years), yet human hearts make about three billion beats in a lifetime.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f17",
+      "text": "For most of human history the average life span was under 30 years; today’s long lives owe much to medical knowledge and to disease control and prevention.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f18",
+      "text": "The naked mole-rat lives about five times longer than expected for its body mass.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f19",
+      "text": "Levine (1997) concluded that heart rate is a marker of metabolic rate and that the link between heart rate and life span is a side effect rather than a direct cause.",
+      "source_ids": [
+        "s3"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f20",
+      "text": "In a mouse study (Gent et al.), the drug ivabradine lowered heart rate by 14 percent and raised median lifespan by 6.2 percent.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f21",
+      "text": "The 2023 study (Garger et al.) gathered these values for 15 mammal species to study ageing.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "number"
+    }
+  ],
+  "notes": "表格用 s1 Supplementary Table 1 的 8 種動物（依體重排序），數字四捨五入：心跳取整數、壽命取一位小數、體重 g／kg 依大小換算。"
+}

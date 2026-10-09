@@ -1,0 +1,701 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.638c1e",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "advanced",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "布袋戲團（glove puppet troupes）除了在廟口表演之外，也常被邀請到學校演出。",
+        "options": null,
+        "answer": "Besides performing in front of temples, glove puppet troupes are also frequently invited to perform at schools.",
+        "accepted_answers": [
+          "In addition to performing in front of temples, glove puppet troupes are often invited to put on shows at schools.",
+          "Apart from performing outside temples, glove puppet troupes are also often invited to give performances at schools."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "介系詞＋動名詞",
+            "被動語態"
+          ],
+          "topic": "布袋戲"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "藉由走進電視和電玩的世界，布袋戲（glove puppetry）已經被賦予了新的生命。",
+        "options": null,
+        "answer": "By entering the world of TV and video games, glove puppetry has been given a new life.",
+        "accepted_answers": [
+          "By appearing on TV and in video games, glove puppetry has been given new life.",
+          "By making its way into TV shows and video games, glove puppetry has been given a new life."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "介系詞＋動名詞",
+            "完成式被動"
+          ],
+          "topic": "布袋戲"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "布袋戲"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「除了…之外」用介系詞 besides、in addition to 或 apart from，後面接動名詞 performing。「常被邀請」用被動 are (also) often invited；invite 的句型是 invite sb to VR，被動時寫 be invited to VR，所以是 to perform at schools。",
+          "evidence": [
+            "除了在廟口表演之外",
+            "也常被邀請"
+          ],
+          "strategy_zh": "介系詞後面一律接名詞或 V-ing；中文有「被」時，先確認英文是不是也要用被動。",
+          "hints": [
+            "切成四段：除了在廟口表演之外／也常被邀請／到學校／演出",
+            "標的詞彙：perform（表演，L3）、temple（廟，L1）、invite（邀請，L1）、school（學校，L1）；frequently（經常，L3）可替換 often",
+            "句型框架：Besides + V-ing …, S + are (also) often invited + to VR …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「藉由…」用 by + 動名詞：By entering the world of TV and video games；主要子句的主詞 glove puppetry 就是「走進」電視與電玩世界的那一方。「已經被賦予了新的生命」用完成式被動 has been given a new life，give 的過去分詞是 given。",
+          "evidence": [
+            "藉由走進電視和電玩的世界",
+            "已經被賦予了新的生命"
+          ],
+          "strategy_zh": "「藉由／透過做某事」想到 by + V-ing；「已經被…」想到 has/have been + p.p.。",
+          "hints": [
+            "切成四段：藉由走進／電視和電玩的世界／（布袋戲）已經被賦予了／新的生命",
+            "標的詞彙：enter（進入，L1）、TV（電視，L1）、video game（電玩，L1）、give（賦予，L1）、life（生命，L1）",
+            "句型框架：By + V-ing …, S + has been + p.p. + O …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "Besides performing in front of temples, glove puppet troupes are also frequently invited to perform at schools.",
+            "In addition to performing in front of temples, glove puppet troupes are often invited to put on shows at schools.",
+            "Apart from performing outside temples, glove puppet troupes are also often invited to give performances at schools."
+          ],
+          "target_words": [
+            {
+              "word": "perform",
+              "zh": "表演、演出",
+              "alternatives": [
+                "performance",
+                "show"
+              ]
+            },
+            {
+              "word": "temple",
+              "zh": "廟"
+            },
+            {
+              "word": "invite",
+              "zh": "邀請",
+              "alternatives": [
+                "ask"
+              ]
+            },
+            {
+              "word": "school",
+              "zh": "學校"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PREPVING",
+              "grammar_id": "gp-prep-gerund",
+              "label_zh": "介系詞＋動名詞（除了…之外）",
+              "frame": "Besides/In addition to/Apart from + V-ing …, S + V …",
+              "zh_trigger": "除了在廟口表演之外"
+            },
+            {
+              "code": "PASS",
+              "grammar_id": "gp-passive",
+              "label_zh": "被動語態（be + p.p.）",
+              "frame": "S + are (also) often invited + to VR …",
+              "zh_trigger": "常被邀請"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "除了在廟口表演之外",
+              "accepted": [
+                "Besides performing in front of temples",
+                "In addition to performing in front of temples",
+                "Apart from performing outside temples",
+                "Besides performing at temples",
+                "Apart from performing in front of temples",
+                "Aside from performing at temples"
+              ],
+              "targets": [
+                "perform",
+                "temple",
+                "PREPVING"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Besides perform in front of temples",
+                  "right": "Besides performing in front of temples",
+                  "explanation_zh": "besides 是介系詞，後面接動名詞 performing。"
+                },
+                {
+                  "wrong": "In addition to perform in front of temples",
+                  "right": "In addition to performing in front of temples",
+                  "explanation_zh": "in addition to 的 to 是介系詞，後面接 V-ing。"
+                }
+              ]
+            },
+            {
+              "zh": "也常被邀請",
+              "accepted": [
+                "are also frequently invited",
+                "are often invited",
+                "are also often invited",
+                "are frequently invited",
+                "are also often asked"
+              ],
+              "targets": [
+                "invite",
+                "PASS"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "are also frequently inviting",
+                  "right": "are also frequently invited",
+                  "explanation_zh": "戲團是「被」邀請，用被動 be + p.p.（invited）。"
+                },
+                {
+                  "wrong": "also frequently invited",
+                  "right": "are also frequently invited",
+                  "explanation_zh": "被動語態不能漏掉 be 動詞 are。"
+                }
+              ]
+            },
+            {
+              "zh": "到學校",
+              "accepted": [
+                "at schools",
+                "in schools",
+                "at different schools",
+                "at local schools"
+              ],
+              "targets": [
+                "school"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "at school",
+                  "right": "at schools",
+                  "explanation_zh": "到各個學校演出用複數 schools；at school 通常指「在上學、在校內」。"
+                }
+              ]
+            },
+            {
+              "zh": "演出",
+              "accepted": [
+                "to perform",
+                "to put on shows",
+                "to give performances",
+                "to give shows",
+                "to put on performances"
+              ],
+              "targets": [
+                "perform"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "to performing",
+                  "right": "to perform",
+                  "explanation_zh": "be invited to 的 to 是不定詞，後面接原形動詞。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "word_form",
+              "zh": "除了在廟口表演之外",
+              "literal_error": "Besides perform in front of temples, glove puppet troupes are often invited to perform at schools.",
+              "part": 1,
+              "explanation_zh": "介系詞（besides、in addition to）後面要接動名詞。"
+            },
+            {
+              "type": "word_form",
+              "zh": "常被邀請",
+              "literal_error": "glove puppet troupes also often invite to perform at schools",
+              "part": 2,
+              "explanation_zh": "中文「被邀請」英文要用被動 are invited；寫成主動 invite，意思變成戲團去邀請別人。"
+            }
+          ],
+          "bonus": [],
+          "restructuring_zh": "「除了在廟口表演之外」英文要改成「介系詞＋動名詞」Besides performing …，放在句首；主詞「布袋戲團」移到逗號後的主要子句，並用被動 are often invited。"
+        },
+        "2": {
+          "references": [
+            "By entering the world of TV and video games, glove puppetry has been given a new life.",
+            "By appearing on TV and in video games, glove puppetry has been given new life.",
+            "By making its way into TV shows and video games, glove puppetry has been given a new life."
+          ],
+          "target_words": [
+            {
+              "word": "enter",
+              "zh": "走進、進入",
+              "alternatives": [
+                "appear",
+                "make its way into",
+                "step into",
+                "move into",
+                "go into"
+              ]
+            },
+            {
+              "word": "TV",
+              "zh": "電視",
+              "alternatives": [
+                "television"
+              ]
+            },
+            {
+              "word": "video game",
+              "zh": "電玩"
+            },
+            {
+              "word": "give",
+              "zh": "賦予（給）"
+            },
+            {
+              "word": "life",
+              "zh": "生命"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PREPVING",
+              "grammar_id": "gp-prep-gerund",
+              "label_zh": "介系詞＋動名詞（藉由…）",
+              "frame": "By + V-ing …, S + V …",
+              "zh_trigger": "藉由"
+            },
+            {
+              "code": "PASS",
+              "grammar_id": "gp-perfect-passive",
+              "label_zh": "完成式被動（已經被…）",
+              "frame": "S + has been + p.p. …（has been given）",
+              "zh_trigger": "已經被賦予了"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "藉由走進",
+              "accepted": [
+                "By entering",
+                "By appearing on",
+                "By making its way into",
+                "By stepping into",
+                "By moving into",
+                "By going into"
+              ],
+              "targets": [
+                "enter",
+                "PREPVING"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "By enter",
+                  "right": "By entering",
+                  "explanation_zh": "by 是介系詞，後面接動名詞。"
+                },
+                {
+                  "wrong": "Through entering into",
+                  "right": "By entering",
+                  "explanation_zh": "enter 是及物動詞，後面直接接地方，不加 into；「藉由」常用 by + V-ing。"
+                }
+              ]
+            },
+            {
+              "zh": "電視和電玩的世界",
+              "accepted": [
+                "the world of TV and video games",
+                "TV and in video games",
+                "TV shows and video games",
+                "the world of television and video games",
+                "TV and video games"
+              ],
+              "targets": [
+                "TV",
+                "video game"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "the TV and video games' world",
+                  "right": "the world of TV and video games",
+                  "explanation_zh": "「…的世界」寫成 the world of …，比用所有格自然。"
+                }
+              ]
+            },
+            {
+              "zh": "已經被賦予了",
+              "accepted": [
+                "glove puppetry has been given",
+                "has been given",
+                "it has been given"
+              ],
+              "targets": [
+                "give",
+                "PASS"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "glove puppetry has given",
+                  "right": "glove puppetry has been given",
+                  "explanation_zh": "布袋戲是「被」賦予生命，完成式被動要有 been。"
+                },
+                {
+                  "wrong": "glove puppetry was given",
+                  "right": "glove puppetry has been given",
+                  "explanation_zh": "「已經被…了」強調到現在的結果，用現在完成式被動。"
+                }
+              ]
+            },
+            {
+              "zh": "新的生命",
+              "accepted": [
+                "a new life",
+                "new life",
+                "a second life",
+                "fresh life"
+              ],
+              "targets": [
+                "life"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "a new live",
+                  "right": "a new life",
+                  "explanation_zh": "life 是名詞「生命」，live 是動詞（名詞↔動詞）。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "word_form",
+              "zh": "藉由走進",
+              "literal_error": "By enter the world of TV and video games, glove puppetry has been given a new life.",
+              "part": 1,
+              "explanation_zh": "by 後面接動名詞 entering。"
+            },
+            {
+              "type": "tense_trigger",
+              "zh": "已經被賦予了",
+              "literal_error": "By entering the world of TV and video games, glove puppetry has given a new life.",
+              "part": 3,
+              "explanation_zh": "「已經被…」是完成式被動 has been + p.p.；少了 been 變成主動，意思變成布袋戲去給別人生命。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "Having made its way into TV shows and video games, glove puppetry has been given a new life.",
+              "explanation_zh": "用完成式分詞構句 Having made its way into … 表示先發生的動作，是較進階的寫法。",
+              "grammar_id": "gp-participle-clause"
+            }
+          ],
+          "restructuring_zh": "「藉由走進…的世界」英文要寫成 By + V-ing 片語放句首，它的邏輯主詞就是後面的 glove puppetry；「被賦予了新的生命」用完成式被動 has been given a new life。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "8-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-advanced-02",
+    "lot": "translation-advanced-02",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "dab2f301b2dd4cfd48bfd913df11ca683b0620cee3b8b044ef9794bc46049e02",
+    "spec_id": "translation-advanced@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 5,
+    "sentences": 2,
+    "avg_sentence_length": 2.5,
+    "denominator": 5,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.6,
+    "coverage_l1_6": 0.6,
+    "offlist_ratio": 0.4,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {
+      "1": 2,
+      "3": 1,
+      "off": 2
+    },
+    "offlist_words": [
+      "puppetry",
+      "troupes"
+    ],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "warn",
+      "created_at": "2026-10-09T12:57:16Z",
+      "details": {
+        "errors": [],
+        "warnings": [
+          "annotations.rubric.items.2.patterns[1]: gp-perfect-passive 通常對應句構 PERF（目前 code=PASS）"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T07:52:07Z",
+      "details": {
+        "solver": "A",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "In addition to performing in front of temples, glove puppet troupes are also often invited to perform at schools.",
+            "confidence": "high",
+            "explanation_zh": "「除了……之外，也……」用 In addition to + V-ing（也可 Besides）；「常被邀請」用被動 are often invited to V；「廟口」譯 in front of temples；「演出」譯 perform。"
+          },
+          "2": {
+            "translation": "By entering the worlds of television and video games, glove puppetry has been given new life.",
+            "confidence": "high",
+            "explanation_zh": "「藉由走進……」用 By + V-ing；「已經被賦予了新的生命」用現在完成式被動 has been given new life；「電玩」譯 video games。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PREPVING",
+              "PASS"
+            ],
+            "used_target_words": [
+              "perform",
+              "temple",
+              "invite",
+              "school"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PREPVING",
+              "PASS"
+            ],
+            "used_target_words": [
+              "enter",
+              "TV",
+              "video game",
+              "give",
+              "life"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "（不影響判定）我寫 the worlds of television and video games（複數 worlds），accepted 是單數 the world of …；兩者都可，屬小差異。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "perform",
+              "temple",
+              "invite",
+              "school"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PREPVING": true,
+              "PASS": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "enter",
+              "TV",
+              "video game",
+              "give",
+              "life"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PREPVING": true,
+              "PASS": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T12:57:16Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Besides performing in temple courtyards, glove puppet troupes are often invited to perform at schools.",
+            "confidence": "high",
+            "explanation_zh": "「除了……之外，也……」用介系詞 Besides + 動名詞；「被邀請」用被動 are invited to；「廟口」譯為 temple courtyards，指廟前的廣場。"
+          },
+          "2": {
+            "translation": "By entering the world of television and video games, glove puppetry has been given new life.",
+            "confidence": "high",
+            "explanation_zh": "「藉由」用 By + 動名詞表方法；「已經被賦予了新的生命」用現在完成式被動 has been given new life；glove puppetry 是不可數名詞，搭配單數動詞。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PREPVING",
+              "PASS"
+            ],
+            "used_target_words": [
+              "perform",
+              "temple",
+              "invite",
+              "school"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PREPVING",
+              "PASS"
+            ],
+            "used_target_words": [
+              "enter",
+              "TV",
+              "video game",
+              "give",
+              "life"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "perform",
+              "temple",
+              "invite",
+              "school"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PREPVING": true,
+              "PASS": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "enter",
+              "TV",
+              "video game",
+              "give",
+              "life"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PREPVING": true,
+              "PASS": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

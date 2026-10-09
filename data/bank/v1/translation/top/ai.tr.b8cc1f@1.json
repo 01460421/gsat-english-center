@@ -1,0 +1,719 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.b8cc1f",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "top",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "無論你住在哪個城市，都能在政府的網站上查到每小時更新的空氣品質資料。",
+        "options": null,
+        "answer": "No matter which city you live in, you can access air quality data updated every hour on the government's website.",
+        "accepted_answers": [
+          "No matter which city you live in, you are able to find air quality data updated every hour on the government website.",
+          "No matter which city you live in, you can check air quality information updated every hour on the government website."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "讓步：無論…（no matter which：無論你住在哪個城市）",
+            "分詞片語後位修飾名詞（每小時更新的空氣品質資料＝air quality data updated every hour）"
+          ],
+          "topic": "政府開放資料"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "利用這些開放資料，有些工程師開發出可以提醒民眾空氣品質不佳的應用程式。",
+        "options": null,
+        "answer": "Using this open data, some engineers have developed applications that can warn the public when the air quality is poor.",
+        "accepted_answers": [
+          "Making use of this open data, some engineers have created apps which can alert people when the air quality is bad.",
+          "Taking advantage of these open data, some engineers have designed applications that can remind people that the air quality is poor."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "分詞構句（利用這些開放資料，…＝Using this open data, …）",
+            "關係代名詞子句（可以提醒民眾…的應用程式＝applications that can warn …）"
+          ],
+          "topic": "政府開放資料"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "政府開放資料"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「無論你住在哪個城市」用 No matter which city you live in（直述句語序，live in 的 in 不能省）。「每小時更新的空氣品質資料」：資料是「被更新」的，用過去分詞片語 updated every hour 放在 air quality data 後面修飾（等於 that is updated every hour）。「在政府的網站上」用介系詞 on：on the government's website；「查到」可以用 access、find 或 check。",
+          "evidence": [
+            "無論你住在哪個城市",
+            "每小時更新的空氣品質資料"
+          ],
+          "strategy_zh": "先寫 No matter … 子句，再寫主要子句 you can access + 名詞；名詞前的長修飾語一律搬到名詞後面。",
+          "hints": [
+            "切成四段：無論你住在哪個城市／在政府的網站上／每小時更新的／空氣品質資料",
+            "標的詞彙：government（政府）、website（網站）、update（更新）、data（資料）",
+            "句型框架：No matter which + N + S + V, S + can access + N + p.p. … + on …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「利用這些開放資料」和後面「有些工程師開發出…」的主詞相同，用分詞構句 Using this open data, …（也可寫 Making use of …）。「開發出」用現在完成式 have developed。「可以提醒民眾空氣品質不佳的應用程式」修飾語較長，用關係子句放在 applications（apps）後面：applications that can warn the public when the air quality is poor；remind 若接子句要寫 remind people that …。",
+          "evidence": [
+            "利用這些開放資料",
+            "可以提醒民眾空氣品質不佳的應用程式"
+          ],
+          "strategy_zh": "前半句用 V-ing 分詞構句，主要子句只留一個動詞 have developed；名詞後面用 that 子句補充功能。",
+          "hints": [
+            "切成四段：利用這些開放資料／有些工程師開發出／可以提醒民眾／空氣品質不佳",
+            "標的詞彙：data（資料）、engineer（工程師）、develop（開發）、application／app（應用程式）、warn（提醒）、quality（品質）",
+            "句型框架：V-ing …, S + have p.p. + N + that + can + VR …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "No matter which city you live in, you can access air quality data updated every hour on the government's website.",
+            "No matter which city you live in, you are able to find air quality data updated every hour on the government website.",
+            "No matter which city you live in, you can check air quality information updated every hour on the government website."
+          ],
+          "target_words": [
+            {
+              "word": "government",
+              "zh": "政府",
+              "alternatives": [
+                "government's"
+              ]
+            },
+            {
+              "word": "website",
+              "zh": "網站",
+              "alternatives": [
+                "site"
+              ]
+            },
+            {
+              "word": "update",
+              "zh": "更新"
+            },
+            {
+              "word": "data",
+              "zh": "資料",
+              "alternatives": [
+                "information"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "ADVCL",
+              "grammar_id": "gp-no-matter",
+              "label_zh": "讓步：無論…（no matter which：無論你住在哪個城市）",
+              "frame": "No matter which + N + S + V, S + V …",
+              "zh_trigger": "無論你住在哪個城市"
+            },
+            {
+              "code": "PART",
+              "grammar_id": "gp-participle-modifier",
+              "label_zh": "分詞片語後位修飾名詞（每小時更新的空氣品質資料＝air quality data updated every hour）",
+              "frame": "N + p.p. …（被動）",
+              "zh_trigger": "每小時更新的"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "無論你住在哪個城市",
+              "accepted": [
+                "No matter which city you live in",
+                "No matter what city you live in",
+                "No matter where you live",
+                "No matter which city you are in",
+                "Wherever you live"
+              ],
+              "targets": [
+                "ADVCL"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "No matter which city do you live in",
+                  "right": "No matter which city you live in",
+                  "explanation_zh": "no matter which 後面用直述句語序，不加助動詞 do。"
+                },
+                {
+                  "wrong": "No matter which city you live",
+                  "right": "No matter which city you live in",
+                  "explanation_zh": "live in a city，介系詞 in 不能省。"
+                }
+              ]
+            },
+            {
+              "zh": "在政府的網站上",
+              "accepted": [
+                "on the government's website",
+                "on the government website",
+                "on government websites",
+                "on the website of the government",
+                "on the government's official website"
+              ],
+              "targets": [
+                "government",
+                "website"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "in the government's website",
+                  "right": "on the government's website",
+                  "explanation_zh": "在網站「上」用介系詞 on。"
+                }
+              ]
+            },
+            {
+              "zh": "每小時更新的",
+              "accepted": [
+                "updated every hour",
+                "updated hourly",
+                "that is updated every hour",
+                "which is updated every hour",
+                "that are updated every hour"
+              ],
+              "targets": [
+                "PART",
+                "update"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "updating every hour",
+                  "right": "updated every hour",
+                  "explanation_zh": "資料是「被更新」的，用過去分詞 updated。"
+                },
+                {
+                  "wrong": "every hour updated air quality data",
+                  "right": "air quality data updated every hour",
+                  "explanation_zh": "較長的修飾語要放在名詞後面。"
+                }
+              ]
+            },
+            {
+              "zh": "空氣品質資料",
+              "accepted": [
+                "air quality data",
+                "air quality information",
+                "data on air quality",
+                "information about air quality"
+              ],
+              "targets": [
+                "data"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "air quality datas",
+                  "right": "air quality data",
+                  "explanation_zh": "data 本身就是複數形（也常當不可數名詞），不加 s。"
+                },
+                {
+                  "wrong": "air quality informations",
+                  "right": "air quality information",
+                  "explanation_zh": "information 是不可數名詞，不加 s。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "prenominal_modifier",
+              "zh": "每小時更新的空氣品質資料",
+              "literal_error": "you can find every hour updated air quality data on the government's website",
+              "part": 3,
+              "explanation_zh": "中文把「每小時更新的」放在名詞前；英文的分詞片語要放在名詞後面：air quality data updated every hour。"
+            },
+            {
+              "type": "plural_countable",
+              "zh": "空氣品質資料",
+              "literal_error": "you can find air quality datas updated every hour",
+              "part": 4,
+              "explanation_zh": "「資料」譯成 data 或 information 都不加 s；information 不可數，data 本身已是複數形。"
+            }
+          ],
+          "bonus": [],
+          "restructuring_zh": "「每小時更新的空氣品質資料」中文把修飾語放在名詞前，英文要把分詞片語 updated every hour 移到 data 後面。"
+        },
+        "2": {
+          "references": [
+            "Using this open data, some engineers have developed applications that can warn the public when the air quality is poor.",
+            "Making use of this open data, some engineers have created apps which can alert people when the air quality is bad.",
+            "Taking advantage of these open data, some engineers have designed applications that can remind people that the air quality is poor."
+          ],
+          "target_words": [
+            {
+              "word": "data",
+              "zh": "資料",
+              "alternatives": [
+                "information"
+              ]
+            },
+            {
+              "word": "engineer",
+              "zh": "工程師"
+            },
+            {
+              "word": "develop",
+              "zh": "開發",
+              "alternatives": [
+                "create",
+                "design",
+                "build",
+                "invent"
+              ]
+            },
+            {
+              "word": "application",
+              "zh": "應用程式",
+              "alternatives": [
+                "app",
+                "apps"
+              ]
+            },
+            {
+              "word": "warn",
+              "zh": "提醒、警告",
+              "alternatives": [
+                "alert",
+                "remind",
+                "notify",
+                "inform"
+              ]
+            },
+            {
+              "word": "quality",
+              "zh": "品質"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PART",
+              "grammar_id": "gp-participle-clause",
+              "label_zh": "分詞構句（利用這些開放資料，…＝Using this open data, …）",
+              "frame": "V-ing …, S + V …（分詞的主詞＝主要子句的主詞）",
+              "zh_trigger": "利用這些開放資料"
+            },
+            {
+              "code": "REL",
+              "grammar_id": "gp-relative-pronoun",
+              "label_zh": "關係代名詞子句（可以提醒民眾…的應用程式＝applications that can warn …）",
+              "frame": "N + that/which + can + VR …",
+              "zh_trigger": "可以提醒民眾空氣品質不佳的"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "利用這些開放資料",
+              "accepted": [
+                "Using this open data",
+                "Making use of this open data",
+                "Taking advantage of these open data",
+                "Using these open data",
+                "By using this open data"
+              ],
+              "targets": [
+                "PART",
+                "data"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Use this open data, some engineers have developed",
+                  "right": "Using this open data, some engineers have developed",
+                  "explanation_zh": "前後兩個動詞之間沒有連接詞；前半句改成分詞構句 Using …。"
+                },
+                {
+                  "wrong": "Using this open datas",
+                  "right": "Using this open data",
+                  "explanation_zh": "data 不加 s。"
+                }
+              ]
+            },
+            {
+              "zh": "有些工程師開發出",
+              "accepted": [
+                "some engineers have developed applications",
+                "some engineers have created apps",
+                "some engineers have designed applications",
+                "some engineers have developed apps",
+                "some engineers developed applications",
+                "some engineers have come up with apps"
+              ],
+              "targets": [
+                "engineer",
+                "develop",
+                "application"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "some engineers have develop applications",
+                  "right": "some engineers have developed applications",
+                  "explanation_zh": "完成式 have 後面接過去分詞 developed。"
+                },
+                {
+                  "wrong": "some engineer have developed an application",
+                  "right": "some engineers have developed applications",
+                  "explanation_zh": "some 接可數名詞要用複數 engineers；應用程式不只一個，用複數 applications／apps。"
+                }
+              ]
+            },
+            {
+              "zh": "可以提醒民眾",
+              "accepted": [
+                "that can warn the public",
+                "which can alert people",
+                "that can remind people",
+                "that can warn people",
+                "that can alert users"
+              ],
+              "targets": [
+                "REL",
+                "warn"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "applications can warn the public",
+                  "right": "applications that can warn the public",
+                  "explanation_zh": "一句已經有主要動詞 have developed；修飾 applications 的部分要用關係代名詞 that／which 引導。"
+                },
+                {
+                  "wrong": "that can remind people of the air quality is poor",
+                  "right": "that can remind people that the air quality is poor",
+                  "explanation_zh": "remind sb of + 名詞；後面接子句要用 remind sb that …。"
+                }
+              ]
+            },
+            {
+              "zh": "空氣品質不佳",
+              "accepted": [
+                "when the air quality is poor",
+                "when the air quality is bad",
+                "that the air quality is poor",
+                "when air quality is poor",
+                "of poor air quality"
+              ],
+              "targets": [
+                "quality"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "when the air's quality is bad",
+                  "right": "when the air quality is bad",
+                  "explanation_zh": "「空氣品質」是複合名詞 air quality，不用所有格。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "word_form",
+              "zh": "利用這些開放資料",
+              "literal_error": "Use this open data, some engineers have developed apps …",
+              "part": 1,
+              "explanation_zh": "兩個子句之間沒有連接詞，前面的動詞要改成分詞 Using（分詞構句），它的邏輯主詞就是後面的 some engineers。"
+            },
+            {
+              "type": "prenominal_modifier",
+              "zh": "可以提醒民眾空氣品質不佳的應用程式",
+              "literal_error": "some engineers have developed can warn the public poor air quality applications",
+              "part": 3,
+              "explanation_zh": "中文把「可以提醒民眾…的」放在「應用程式」前面；英文要用關係子句 applications that can warn the public … 放在名詞後面。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "Thanks to this open data, some engineers have developed applications that send an alert whenever the air quality becomes unhealthy.",
+              "explanation_zh": "用 thanks to（多虧）點出資料的功勞，whenever（每當）讓提醒的時機更精確。"
+            }
+          ]
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ac-V-3",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-top-03",
+    "lot": "translation-top-03",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "31117a6d4ea07290a38612cba619cca8744c8f0cc9141fe199063ce8d6f7050e",
+    "spec_id": "translation-top@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T13:17:18Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T12:52:43Z",
+      "details": {
+        "solver": "A",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "No matter which city you live in, you can find air quality data updated every hour on the government's website.",
+            "confidence": "high",
+            "explanation_zh": "「無論…哪個城市」用 no matter which＋名詞；「每小時更新的」用過去分詞片語 updated every hour 後位修飾 data（也可用 that is updated every hour）；「查到」用 find（也可 look up）。"
+          },
+          "2": {
+            "translation": "Using this open data, some engineers have developed apps that can alert people when the air quality is poor.",
+            "confidence": "high",
+            "explanation_zh": "「利用這些開放資料」用分詞構句 Using…（主詞是工程師，不會懸垂）；「開發出」用現在完成式；「可以提醒民眾…的應用程式」用 that 關係子句；「提醒民眾空氣品質不佳」用 alert people when…（也可 warn people about poor air quality）。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "ADVCL",
+              "PART"
+            ],
+            "used_target_words": [
+              "government",
+              "website",
+              "update",
+              "data"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PART",
+              "REL"
+            ],
+            "used_target_words": [
+              "data",
+              "engineer",
+              "develop",
+              "application",
+              "warn",
+              "quality"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "government",
+              "website",
+              "update",
+              "data"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "ADVCL": true,
+              "PART": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "data",
+              "engineer",
+              "develop",
+              "application",
+              "warn",
+              "quality"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PART": true,
+              "REL": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T12:59:49Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "No matter which city you live in, you can find air quality data updated every hour on the government's website.",
+            "confidence": "high",
+            "explanation_zh": "「無論你住在哪個城市」用 no matter which city 引導讓步副詞子句（介系詞 in 放句尾）；「每小時更新的空氣品質資料」用過去分詞 updated every hour 後置修飾 data。"
+          },
+          "2": {
+            "translation": "Using this open data, some engineers have developed apps that can warn people when the air quality is poor.",
+            "confidence": "high",
+            "explanation_zh": "「利用這些開放資料」用現在分詞片語 using … 表方式，主詞 engineers 一致；「開發出」用現在完成式 have developed；「可以提醒民眾空氣品質不佳」用關係子句 that can warn people when …。data 此處當不可數用 this open data，口語與書面皆可。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "ADVCL",
+              "PART"
+            ],
+            "used_target_words": [
+              "government",
+              "website",
+              "update",
+              "data"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PART",
+              "REL"
+            ],
+            "used_target_words": [
+              "data",
+              "engineer",
+              "develop",
+              "application",
+              "warn",
+              "quality"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "government",
+              "website",
+              "update",
+              "data"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "ADVCL": true,
+              "PART": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "data",
+              "engineer",
+              "develop",
+              "application",
+              "warn",
+              "quality"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PART": true,
+              "REL": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}
