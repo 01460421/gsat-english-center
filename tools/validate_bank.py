@@ -573,8 +573,11 @@ def check_annotations(r, d):
             r.err('annotations.elimination', '只用在文意選填、篇章結構')
         elif ve.check_keys(r, 'annotations.elimination', el, ELIMINATION_KEYS) and isinstance(el.get('feasible'), dict):
             total, matches, problems, _ = matching_report(d, el['feasible'])
+            # rejected 的題組常常正是因為唯一解不成立才被退件（README §2 只增不減，檔案照樣保留、不上架），
+            # 所以唯一性問題對 rejected 只列 warning，不擋 CI；perfect_matchings 和實際算出的不一致仍是 error。
+            report = r.warn if d.get('status') == 'rejected' else r.err
             for p in problems:
-                r.err('annotations.elimination', p)
+                report('annotations.elimination', p)
             if el.get('perfect_matchings') != total:
                 r.err('annotations.elimination', f'perfect_matchings 寫 {el.get("perfect_matchings")!r}，實際算出 {total}')
         else:

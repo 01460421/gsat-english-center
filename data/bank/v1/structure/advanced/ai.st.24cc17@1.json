@@ -1,0 +1,612 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.st.24cc17",
+  "version": 1,
+  "section_type": "structure",
+  "format_version": "structure-4x5",
+  "tier": "advanced",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": "Few foods are as easy to recognize as the doughnut, a golden ring of sweet fried dough. Yet most people never stop to wonder why such a popular treat has a hole in the middle. The answer has less to do with looks than with what happens to dough in hot oil.\nWhen a thick, round cake of dough is dropped into hot oil, its surface browns within minutes. Heat, however, moves through dough quite slowly. [[1]] Leaving it in the oil longer is no solution, either, since the outside would then turn dark and hard. Removing the middle solves the problem by letting the oil reach more of the dough, so that the whole ring cooks evenly.\n[[2]] One popular story, however, gives the credit to an American sailor named Hanson Gregory. As he told it many years later, he had grown tired of doughnuts that were raw in the center. So, he said, he simply punched a hole through the middle of the dough before frying it.\n[[3]] For one thing, a ring has more surface than a solid cake of the same size, so more of each bite is pleasantly crisp. It also cooks faster, which matters to bakers who must fry large numbers of doughnuts every morning.\nToday, the ring is so familiar that most people picture it whenever they hear the word “doughnut.” Not even the small pieces of dough cut from the middle go to waste. [[4]] For many bakers, what began as a cooking trick has become a second product.",
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": {
+      "A": "Fried separately, these pieces are often sold as “doughnut holes.”",
+      "B": "As a result, the center can still be raw by the time the outside is done.",
+      "C": "Whatever the truth of his story, the hole caught on for practical reasons.",
+      "D": "The hole in the middle, then, was mainly meant to make the treat look pretty.",
+      "E": "No one knows for sure who first came up with the idea of cutting a hole in a doughnut."
+    },
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "B",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "transition_word",
+          "clue_raw": "SP|CN|BF|L",
+          "key_phrase": "As a result ← Heat, however, moves through dough quite slowly；the center can still be raw → Leaving it in the oil longer is no solution, either"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "E",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "topic_sentence",
+          "clue_raw": "TS|LX|F|L",
+          "key_phrase": "who first came up with the idea → One popular story, however, gives the credit to an American sailor"
+        }
+      },
+      {
+        "no": 3,
+        "label": "3",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "C",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "pronoun_reference",
+          "clue_raw": "BR|PR|BF|P",
+          "key_phrase": "his story ← 第三段整段（Gregory 的故事）；practical reasons → For one thing … It also …"
+        }
+      },
+      {
+        "no": 4,
+        "label": "4",
+        "mode": "bank_choice",
+        "stem": null,
+        "options": null,
+        "answer": "A",
+        "accepted_answers": null,
+        "points": 2,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "clue": "lexical_cohesion",
+          "clue_raw": "SP|LX|B|L",
+          "key_phrase": "these pieces ← the small pieces of dough cut from the middle；“doughnut holes” → a second product"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "甜甜圈為什麼有洞",
+      "genre": "expository",
+      "sdgs": [],
+      "text_format": "continuous"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "前兩句說：麵團表面幾分鐘就炸成褐色，熱卻在麵團裡傳得很慢。(B)「因此，等到外層炸好時，中心可能還是生的」用 As a result 接出這個結果。後一句 Leaving it in the oil longer is no solution, either 的 either（也不是辦法）表示前面已經提出一個問題，正是 (B) 的「中心沒熟」；後一句又說多炸一會兒會讓外層焦黑變硬，兩句一起說明厚麵團為什麼很難炸。選 (B)。",
+          "evidence": [
+            "Heat, however, moves through dough quite slowly.",
+            "As a result, the center can still be raw by the time the outside is done.",
+            "Leaving it in the oil longer is no solution, either, since the outside would then turn dark and hard."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "cause_effect",
+          "option_notes_zh": {
+            "A": "(A) 說這些小塊另外炸成「甜甜圈洞」，但這時還沒有挖洞，these pieces 找不到可指的東西，後一句的 either 也接不上。(A) 屬於第 4 格。",
+            "C": "(C) 說「不論他的故事是真是假」，但這時還沒有任何人物或故事出現，his story 沒有先行詞。(C) 屬於第 3 格。",
+            "D": "多餘句：(D) 用 then 下結論說洞是為了好看，但第二段正在講熱怎麼傳進麵團，和外觀無關；第一段也已經說答案 less to do with looks。後一句的 either 也找不到前面的問題。",
+            "E": "(E) 說沒有人知道是誰最先想到挖洞，這是引出格雷戈里故事的句子；放在這裡，後一句 Leaving it in the oil longer…either 找不到前面提出的問題。(E) 屬於第 2 格。"
+          },
+          "strategy_zh": "前一句說原因（熱傳得慢）時，空格常是結果（As a result、So）；再用後一句的 either、too、also 確認：前面必須已經有一個「問題」或「做法」，後一句才能說「這樣也不行」。",
+          "hints": [
+            "熱在麵團裡傳得很慢，會造成什麼結果？",
+            "後一句的 either（也不是辦法）表示前面已經提過一個問題——是什麼問題？",
+            "答案用 As a result 開頭，說外層炸好時，中心可能還是生的。"
+          ]
+        },
+        "2": {
+          "explanation_zh": "第三段開頭的空格要放本段主題句。後一句 One popular story, however, gives the credit to an American sailor 用 however 和「把功勞歸給某人」回應前一句，所以空格應先說「不確定是誰發明的」。(E)「沒有人確切知道是誰最先想到在甜甜圈上挖洞」正好提出這個問題，後一句的 credit（功勞）回答 who first came up with the idea。這一格的線索都在後一句，選 (E)。",
+          "evidence": [
+            "No one knows for sure who first came up with the idea of cutting a hole in a doughnut.",
+            "One popular story, however, gives the credit to an American sailor named Hanson Gregory."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "topic_sentence",
+          "option_notes_zh": {
+            "A": "(A) 說這些小塊被當成「甜甜圈洞」販售，these pieces 在這裡沒有先行詞，也引不出後一句「功勞歸給一位水手」。(A) 屬於第 4 格。",
+            "B": "(B) 說中心可能還沒熟，屬於第二段的原因說明；放在第三段開頭，後一句的 however 和 credit 都接不上。(B) 屬於第 1 格。",
+            "C": "(C) 和後一句共用 story，是本格最強的誘答；但 his story 的 his 指格雷戈里，他要到後一句才出現，而且應該先講故事、再評論「不論真假」。(C) 屬於第四段開頭的第 3 格。",
+            "D": "多餘句：(D) 說洞主要是為了好看，和前一段「讓油接觸更多麵團、均勻熟透」矛盾，then 的結論不成立；後一句的 credit（功勞）也找不到「是誰發明」的問題。"
+          },
+          "strategy_zh": "段首格如果後一句是 One story, however, gives the credit to…，空格多半要先提出「來源不確定」；選項裡的 his、this story 這類指涉，要確認它指的人或故事已經出現過。",
+          "hints": [
+            "後一句把「功勞」歸給一位水手——空格要先提出什麼問題？",
+            "後一句的 however 和前面形成什麼對比？",
+            "答案說沒有人確切知道是誰最先想到在甜甜圈上挖洞。"
+          ]
+        },
+        "3": {
+          "explanation_zh": "第四段開頭的空格要承接第三段整段的格雷戈里故事，再引出本段內容。(C)「不論他的故事是真是假，這個洞因為實際的理由而流行起來」的 his story 指前一段的故事，practical reasons 則由後一句 For one thing（首先）和再下一句 It also 逐一說明：酥脆的部分更多、熟得更快。選 (C)。",
+          "evidence": [
+            "So, he said, he simply punched a hole through the middle of the dough before frying it.",
+            "Whatever the truth of his story, the hole caught on for practical reasons.",
+            "For one thing, a ring has more surface than a solid cake of the same size, so more of each bite is pleasantly crisp."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "pronoun_reference",
+          "option_notes_zh": {
+            "A": "(A) 和前一句共用 fry、hole，容易誤選；但 these pieces 要指「從中間挖下的小塊」，前一句只說戳了一個洞，沒有提到挖下來的麵團；後一句的 For one thing 也需要前面先說「有幾個理由」。(A) 屬於第 4 格。",
+            "B": "(B) 說中心可能還沒熟，屬於第二段；放在這裡重複前文，也引不出後一句 For one thing 列舉的理由。(B) 屬於第 1 格。",
+            "D": "多餘句：(D) 和前一句共用 hole、middle，是本格最強的誘答；但 then 的結論（洞是為了好看）和格雷戈里「受不了中心沒熟」的動機矛盾，也違反第一段 less to do with looks；後一句的 For one thing 講的是口感與熟得快，不是外觀。",
+            "E": "(E) 說沒有人知道是誰最先想到挖洞，但前一段已經講完格雷戈里的故事，順序顛倒；後一句 For one thing 要列舉的理由，(E) 也沒有提出。(E) 屬於第 2 格。"
+          },
+          "strategy_zh": "後一句是 For one thing、First of all 時，空格要先提出一個「有好幾點」的概括（reasons、advantages）；段首句如果有 his story、this idea，回到前一段確認它指的是整段內容。",
+          "hints": [
+            "後一句的 For one thing（首先）是在列舉什麼？",
+            "前一段講了誰的故事？哪個選項同時回應這個故事、又提出「理由」？",
+            "答案說不論他的故事真假，這個洞因為實際的理由而流行起來。"
+          ]
+        },
+        "4": {
+          "explanation_zh": "前一句說「就連從中間挖下來的小塊麵團也不會浪費」。(A)「這些小塊另外油炸後，常被當成『甜甜圈洞』販售」的 these pieces 重述 the small pieces of dough，說明它們怎麼沒被浪費。後一句說原本的烹飪小技巧成了「第二種產品」，指的就是甜甜圈洞。選 (A)。",
+          "evidence": [
+            "Not even the small pieces of dough cut from the middle go to waste.",
+            "Fried separately, these pieces are often sold as “doughnut holes.”",
+            "For many bakers, what began as a cooking trick has become a second product."
+          ],
+          "blank_pos": "sentence",
+          "clue_type": "lexical_cohesion",
+          "option_notes_zh": {
+            "B": "(B) 說中心可能還沒熟，是第二段的問題；放在講「不浪費」與「第二種產品」的段落，前後都接不上。(B) 屬於第 1 格。",
+            "C": "(C) 說洞因為實際的理由而流行，但 his story 離格雷戈里的故事太遠，後一句也沒有說明任何理由，只說小技巧成了第二種產品。(C) 屬於第 3 格。",
+            "D": "多餘句：(D) 說洞是為了好看，和後一句 what began as a cooking trick（原本是烹飪技巧）矛盾，也沒有交代挖下來的小塊怎麼不浪費。",
+            "E": "(E) 說沒有人知道是誰發明了挖洞，但這一段講的是現在怎麼利用挖下來的麵團，(E) 接不上前一句，也說明不了後一句的 a second product。(E) 屬於第 2 格。"
+          },
+          "strategy_zh": "前一句提到某樣東西（the small pieces）卻還沒說完時，找用 these／those＋同一個名詞接下去的選項；再看後一句的概括（a second product）是不是正好總結了這個選項。",
+          "hints": [
+            "前一句說挖下來的小塊麵團「沒有浪費」——它們被拿去做什麼？",
+            "後一句的 a second product 指的是什麼產品？",
+            "答案說這些小塊另外炸過後，常被當成「甜甜圈洞」販售。"
+          ]
+        }
+      }
+    },
+    "translation_zh": {
+      "text": "很少有食物像甜甜圈那樣容易辨認——一圈金黃色的甜味油炸麵團。然而大多數人從沒想過，這麼受歡迎的點心為什麼中間有個洞。答案和外觀的關係不大，而和麵團在熱油裡發生的變化比較有關。\n一塊厚厚的圓形麵團丟進熱油裡，表面在幾分鐘內就會變成褐色。然而，熱在麵團裡傳得相當慢。【1】因此，等到外層炸好時，中心可能還是生的。把它留在油裡久一點也不是辦法，因為外層會因此變得焦黑又硬。把中間挖掉就能解決這個問題：熱油可以接觸到更多麵團，整個圓圈就會均勻熟透。\n【2】沒有人確切知道是誰最先想到在甜甜圈上挖洞。不過，有一個流傳很廣的故事把功勞歸給一位名叫漢森‧格雷戈里的美國水手。據他多年後的說法，他吃膩了中心沒熟的甜甜圈。他說，於是他乾脆在油炸前，在麵團中間戳了一個洞。\n【3】不論他的故事是真是假，這個洞因為實際的理由而流行起來。首先，圓圈比同樣大小的實心麵團表面積更大，所以每一口都有更多酥脆的部分。它也熟得比較快，這對每天早上要炸大量甜甜圈的烘焙師傅很重要。\n如今，圓圈形狀已經熟悉到大多數人一聽到「甜甜圈」就會想到它。就連從中間挖下來的小塊麵團也不會浪費。【4】這些小塊另外油炸後，常被當成「甜甜圈洞」販售。對許多烘焙師傅來說，原本只是烹飪上的小技巧，如今成了第二種產品。\n（多餘句 (D)：那麼，中間的洞主要是為了讓這種點心看起來漂亮。）"
+    },
+    "elimination": {
+      "feasible": {
+        "1": [
+          "B"
+        ],
+        "2": [
+          "E"
+        ],
+        "3": [
+          "C"
+        ],
+        "4": [
+          "A"
+        ]
+      },
+      "perfect_matchings": 1
+    },
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": null,
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "3-V-7",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "7-V-5",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "B-V-8",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "9-V-2",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": "本文由 AI 撰寫"
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-08-structure-advanced-05",
+    "lot": "structure-advanced-05",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/structure",
+    "prompt_sha256": "5d4b0f027e4de517eda68aa80f1a4672f189d384dafcbe90baf62851a6804390",
+    "spec_id": "structure-advanced@2026-10-08",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 253,
+    "sentences": 15,
+    "avg_sentence_length": 16.87,
+    "denominator": 248,
+    "proper_nouns": [
+      "American",
+      "Gregory",
+      "Hanson"
+    ],
+    "numbers": 2,
+    "coverage_l1_4": 0.9597,
+    "coverage_l1_6": 0.9879,
+    "offlist_ratio": 0.0121,
+    "beyond_l4_ratio": 0.0282,
+    "level_counts": {
+      "1": 206,
+      "2": 21,
+      "3": 11,
+      "5": 7,
+      "off": 3
+    },
+    "offlist_words": [
+      "bakers",
+      "crisp"
+    ],
+    "band": {
+      "tier": "advanced",
+      "basis": "lot structure-advanced-05（SPEC §3.4＋出題規格書 passage_overrides（words、coverage_L1_4_min（取代 SPEC 的區間）、coverage_L1_6_min、offlist_max、beyond_l4_ratio_max））",
+      "ok": true,
+      "checks": {
+        "word_count": {
+          "value": 253,
+          "min": 220,
+          "max": 310,
+          "ok": true
+        },
+        "coverage_l1_4": {
+          "value": 0.9597,
+          "min": 0.9,
+          "max": null,
+          "ok": true
+        },
+        "coverage_l1_6": {
+          "value": 0.9879,
+          "min": 0.94,
+          "max": null,
+          "ok": true
+        },
+        "offlist_ratio": {
+          "value": 0.0121,
+          "min": null,
+          "max": 0.06,
+          "ok": true
+        },
+        "avg_sentence_length": {
+          "value": 16.87,
+          "min": 15,
+          "max": 21,
+          "ok": true
+        },
+        "beyond_l4_ratio": {
+          "value": 0.0282,
+          "min": null,
+          "max": 0.06,
+          "ok": true
+        }
+      }
+    }
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T12:38:13Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T12:26:02Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "answers": {
+          "1": {
+            "answer": "B",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Heat, however, moves through dough quite slowly.",
+              "Leaving it in the oil longer is no solution, either, since the outside would then turn dark and hard."
+            ],
+            "explanation_zh": "熱傳得慢的結果是外熟內生（B），下一句再說多炸也不行。",
+            "feasible": [
+              "B"
+            ]
+          },
+          "2": {
+            "answer": "E",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "One popular story, however, gives the credit to an American sailor named Hanson Gregory."
+            ],
+            "explanation_zh": "先說沒人確定是誰發明的，however 再帶出一個流行說法。",
+            "feasible": [
+              "E"
+            ]
+          },
+          "3": {
+            "answer": "C",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "For one thing, a ring has more surface than a solid cake of the same size, so more of each bite is pleasantly crisp.",
+              "It also cooks faster, which matters to bakers who must fry large numbers of doughnuts every morning."
+            ],
+            "explanation_zh": "C 的 his story 承接前段 Gregory 的說法，practical reasons 由 For one thing／also 展開。",
+            "feasible": [
+              "C"
+            ]
+          },
+          "4": {
+            "answer": "A",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Not even the small pieces of dough cut from the middle go to waste.",
+              "For many bakers, what began as a cooking trick has become a second product."
+            ],
+            "explanation_zh": "these pieces 指挖出的麵團，單獨炸成 doughnut holes，即後句的 second product。",
+            "feasible": [
+              "A"
+            ]
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T12:38:13Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "answers": {
+          "1": {
+            "answer": "B",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Heat, however, moves through dough quite slowly.",
+              "Leaving it in the oil longer is no solution, either, since the outside would then turn dark and hard."
+            ],
+            "explanation_zh": "熱傳進麵團很慢，所以外面煎好時中間仍是生的（B 的 As a result）；後句 Leaving it in the oil longer ... either 接續這個問題。",
+            "feasible": [
+              "B"
+            ]
+          },
+          "2": {
+            "answer": "E",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "One popular story, however, gives the credit to an American sailor named Hanson Gregory.",
+              "Removing the middle solves the problem by letting the oil reach more of the dough, so that the whole ring cooks evenly."
+            ],
+            "explanation_zh": "後句 One popular story, however 轉折說有一個流行說法歸功於水手，前面應是「沒人確切知道是誰發明」的 E。",
+            "feasible": [
+              "E"
+            ]
+          },
+          "3": {
+            "answer": "C",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "For one thing, a ring has more surface than a solid cake of the same size, so more of each bite is pleasantly crisp.",
+              "As he told it many years later, he had grown tired of doughnuts that were raw in the center."
+            ],
+            "explanation_zh": "C 說不論故事真假，洞能流行是出於實際原因，後句 For one thing 開始列舉實際好處（表面積大、較快煎熟）。",
+            "feasible": [
+              "C"
+            ]
+          },
+          "4": {
+            "answer": "A",
+            "confidence": "high",
+            "also_plausible": [],
+            "evidence": [
+              "Not even the small pieces of dough cut from the middle go to waste.",
+              "For many bakers, what began as a cooking trick has become a second product."
+            ],
+            "explanation_zh": "中間挖出的麵團也不浪費，A 說另外油炸後當作 doughnut holes 賣，後句說變成第二種產品。",
+            "feasible": [
+              "A"
+            ]
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "distractor_audit",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T12:40:00Z",
+      "details": {
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "items": {
+          "1": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "When a thick, round cake of dough is dropped into hot oil, its surface browns within minutes.",
+              "explanation_zh": "本段講的是一整塊實心麵團，還沒有挖洞，(A) 的 these pieces 找不到可指的小塊麵團；下一句的 either（也不是辦法）需要前面先提出問題，(A) 沒有。"
+            },
+            "C": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Leaving it in the oil longer is no solution, either, since the outside would then turn dark and hard.",
+              "explanation_zh": "(C) 的 his story 沒有先行詞（格雷戈里要到第三段才出現），也還沒講任何故事；下一句的 either 需要前面先提出「外熟內生」的問題，(C) 沒有。"
+            },
+            "D": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "The answer has less to do with looks than with what happens to dough in hot oil.",
+              "explanation_zh": "多餘句 (D) 用 then 下結論說洞是為了好看，和第一段「答案和外觀關係不大」直接矛盾；本段講的是熱怎麼傳進麵團，下一句的 either 也找不到前面的問題。"
+            },
+            "E": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Leaving it in the oil longer is no solution, either, since the outside would then turn dark and hard.",
+              "explanation_zh": "(E) 說沒有人知道是誰最先想到挖洞，是引出發明者故事的句子，和前一句「熱傳得慢」無關；下一句「多炸一會兒也不是辦法」需要前面先講出「中心沒熟」的問題。"
+            }
+          },
+          "2": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "One popular story, however, gives the credit to an American sailor named Hanson Gregory.",
+              "explanation_zh": "(A) 說挖下的小塊被當成「甜甜圈洞」販售，前一句只說「把中間挖掉」，these pieces 沒有交代；下一句把「功勞」歸給一位水手，需要前面先提出「是誰發明的」，(A) 沒有。"
+            },
+            "B": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "Removing the middle solves the problem by letting the oil reach more of the dough, so that the whole ring cooks evenly.",
+              "explanation_zh": "(B) 說中心可能還是生的，但前一句剛說挖掉中間後整個圓圈會均勻熟透，前後矛盾；下一句的 however 和 credit 也接不上。"
+            },
+            "C": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "One popular story, however, gives the credit to an American sailor named Hanson Gregory.",
+              "explanation_zh": "(C) 的 his story 指格雷戈里的故事，但這個人和故事要到下一句才出現，「不論真假」的評論不能放在故事之前；下一句的 however 也沒有可轉折的「來源不確定」。"
+            },
+            "D": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "Removing the middle solves the problem by letting the oil reach more of the dough, so that the whole ring cooks evenly.",
+              "explanation_zh": "多餘句 (D) 說洞主要是為了好看，和前一句「挖洞讓整個圓圈均勻熟透」矛盾；下一句的 credit（功勞）也找不到「是誰發明」的問題。"
+            }
+          },
+          "3": {
+            "A": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "So, he said, he simply punched a hole through the middle of the dough before frying it.",
+              "explanation_zh": "前一句只說戳了一個洞，沒有提到挖下來的麵團，(A) 的 these pieces 無從指起；下一句 For one thing 要列舉理由，(A) 沒有提出「有幾個理由」的概括。"
+            },
+            "B": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "So, he said, he simply punched a hole through the middle of the dough before frying it.",
+              "explanation_zh": "(B) 用 As a result 說中心可能還沒熟，但前一句剛說他在中間戳洞，正是為了避免中心沒熟，因果矛盾；下一句 For one thing 列舉的好處也接不上。"
+            },
+            "D": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "As he told it many years later, he had grown tired of doughnuts that were raw in the center.",
+              "explanation_zh": "多餘句 (D) 說洞主要是為了好看，和格雷戈里「受不了中心沒熟」的動機矛盾，也違反第一段 less to do with looks；下一句 For one thing 列的是口感和熟得快，不是外觀。"
+            },
+            "E": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "For one thing, a ring has more surface than a solid cake of the same size, so more of each bite is pleasantly crisp.",
+              "explanation_zh": "(E) 說沒有人知道是誰發明挖洞，但上一段已經講完格雷戈里的故事，順序顛倒；下一句 For one thing 要列舉理由，(E) 沒有提出任何概括。"
+            }
+          },
+          "4": {
+            "B": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Not even the small pieces of dough cut from the middle go to waste.",
+              "explanation_zh": "(B) 說中心可能還沒熟，是第二段的問題；前一句講挖下的小塊不浪費，(B) 沒有交代它們的去處，也說明不了下一句的 a second product。"
+            },
+            "C": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Not even the small pieces of dough cut from the middle go to waste.",
+              "explanation_zh": "(C) 的 his story 離格雷戈里的故事已隔一整段，「洞因實際理由而流行」也沒有說明前一句挖下的小塊怎麼不浪費；下一句的 a second product 無從接起。"
+            },
+            "D": {
+              "verdict": "clearly_wrong",
+              "error_type": "logic",
+              "evidence": "For many bakers, what began as a cooking trick has become a second product.",
+              "explanation_zh": "多餘句 (D) 說洞是為了好看，和下一句 what began as a cooking trick（原本是烹飪技巧）矛盾，也沒有交代挖下的小塊怎麼不浪費。"
+            },
+            "E": {
+              "verdict": "clearly_wrong",
+              "error_type": "cohesion",
+              "evidence": "Not even the small pieces of dough cut from the middle go to waste.",
+              "explanation_zh": "(E) 說沒有人知道是誰發明挖洞，和本段「挖下的小塊怎麼利用」無關，接不上前一句，也說明不了下一句的 a second product。"
+            }
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "unique_solution",
+      "reviewer": "record_verification.py",
+      "result": "pass",
+      "created_at": "2026-10-09T12:38:13Z",
+      "details": {
+        "method": "injective_assignment",
+        "perfect_matchings": 1,
+        "matches_key": true,
+        "feasible": {
+          "1": [
+            "B"
+          ],
+          "2": [
+            "E"
+          ],
+          "3": [
+            "C"
+          ],
+          "4": [
+            "A"
+          ]
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}
