@@ -1,0 +1,818 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.c23452",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "advanced",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "從高一就一直在整理學習歷程檔案（learning portfolio）的人，申請大學時更有優勢。",
+        "options": null,
+        "answer": "Those who have been organizing their learning portfolios since tenth grade have an advantage when applying to college.",
+        "accepted_answers": [
+          "Students who have been working on their learning portfolios since their first year of high school have an advantage when they apply to college.",
+          "Those who have been preparing their learning portfolios since the tenth grade are at an advantage when they apply to universities."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "凡是…的人（Those who …）",
+            "現在完成進行式（從…起一直在…）"
+          ],
+          "topic": "學習歷程檔案"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "翻閱這些檔案，教授們發現，相較於分數，學生的作品更能展現實力。",
+        "options": null,
+        "answer": "Looking through these portfolios, professors find that compared with grades, students' work better shows their abilities.",
+        "accepted_answers": [
+          "Reading these portfolios, professors discover that compared to test scores, students' projects show their abilities better.",
+          "Going through these portfolios, professors have found that in comparison with grades, students' works can better demonstrate their real abilities."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "分詞構句（翻閱…：Looking through …）",
+            "相較於…（Compared with ＋ N）"
+          ],
+          "topic": "學習歷程檔案"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "學習歷程檔案"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「…的人」改成 Those who …，把修飾語放到後面。「從高一就一直在整理」是從過去持續到現在的動作，用 have been organizing … since tenth grade（since 帶出起點）。主詞 Those 是複數，主要動詞用 have an advantage；「申請大學時」寫 when applying to college（apply to 某校）。",
+          "evidence": [
+            "從高一就一直在整理",
+            "的人",
+            "更有優勢"
+          ],
+          "strategy_zh": "主詞很長時，先找出核心名詞（人），用 Those who … 把修飾語放後面，最後再接主要動詞，注意單複數一致。",
+          "hints": [
+            "切成四段：從高一就一直在整理學習歷程檔案／的人／申請大學時／更有優勢",
+            "標的詞彙：organize（整理，L3）、advantage（優勢，L3）、apply（申請，L2）、college（大學，L2）",
+            "句型框架：Those who + have been V-ing … since … + have an advantage + when V-ing …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "前半句「翻閱這些檔案」沒有寫主詞，做這個動作的就是後面的教授們，用分詞構句 Looking through these portfolios,（教授主動翻閱，用現在分詞）。「教授們發現」後面接 that 子句；子句裡「相較於分數」寫成 Compared with grades（或 Compared to／In comparison with），放在子句開頭，後面再接比較級。「學生的作品更能展現實力」：work 指作品、成果時不可數，動詞用單數 shows；「更能展現」寫 better shows 或 shows … better，不能寫 more show。",
+          "evidence": [
+            "翻閱這些檔案",
+            "教授們發現",
+            "相較於分數",
+            "學生的作品更能展現實力"
+          ],
+          "strategy_zh": "句首的動作沒有主詞、而且和後面的主詞相同時，改成 V-ing 分詞構句；「相較於＋名詞」寫 Compared with＋名詞，後面的子句用比較級。",
+          "hints": [
+            "切成四段：翻閱這些檔案／教授們發現／相較於分數／學生的作品更能展現實力",
+            "標的詞彙：professor（教授，L3）、grade（分數、成績，L1）、student（學生，L1）、work（作品，L1）、show（展現，L1）、ability（實力、能力，L1）",
+            "句型框架：V-ing …, S + find that + Compared with + N, S + better + V …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "Those who have been organizing their learning portfolios since tenth grade have an advantage when applying to college.",
+            "Students who have been working on their learning portfolios since their first year of high school have an advantage when they apply to college.",
+            "Those who have been preparing their learning portfolios since the tenth grade are at an advantage when they apply to universities."
+          ],
+          "target_words": [
+            {
+              "word": "organize",
+              "zh": "整理",
+              "alternatives": [
+                "work on",
+                "prepare",
+                "put together",
+                "build",
+                "keep",
+                "update"
+              ]
+            },
+            {
+              "word": "advantage",
+              "zh": "優勢",
+              "alternatives": [
+                "edge",
+                "competitive"
+              ]
+            },
+            {
+              "word": "apply",
+              "zh": "申請",
+              "alternatives": [
+                "application"
+              ]
+            },
+            {
+              "word": "college",
+              "zh": "大學",
+              "alternatives": [
+                "university"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "REL",
+              "grammar_id": "gp-for-those-who",
+              "label_zh": "凡是…的人（Those who …）",
+              "frame": "Those who + V … + V …",
+              "zh_trigger": "的人"
+            },
+            {
+              "code": "PERF",
+              "grammar_id": "gp-present-perfect-progressive",
+              "label_zh": "現在完成進行式（從…起一直在…）",
+              "frame": "S + have been + V-ing + since …",
+              "zh_trigger": "從高一就一直在"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "從高一就一直在整理學習歷程檔案",
+              "accepted": [
+                "have been organizing their learning portfolios since tenth grade",
+                "have been working on their learning portfolios since their first year of high school",
+                "have been preparing their learning portfolios since the tenth grade",
+                "have been organizing their learning portfolios since their first year of senior high school",
+                "have been putting together their learning portfolios since tenth grade",
+                "have been working on their learning portfolios since tenth grade",
+                "have been organizing their learning portfolios since the first year of senior high school",
+                "have been keeping their learning portfolios since tenth grade",
+                "have been building their learning portfolios since tenth grade"
+              ],
+              "targets": [
+                "organize",
+                "PERF"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "have organized their learning portfolios from tenth grade",
+                  "right": "have been organizing their learning portfolios since tenth grade",
+                  "explanation_zh": "「從…起一直」用 since 搭配完成（進行）式；from 只說起點，帶不出持續到現在。"
+                },
+                {
+                  "wrong": "are organizing their learning portfolios since tenth grade",
+                  "right": "have been organizing their learning portfolios since tenth grade",
+                  "explanation_zh": "有 since 表示從過去持續到現在，要用現在完成進行式，不能用現在進行式。"
+                }
+              ]
+            },
+            {
+              "zh": "的人",
+              "accepted": [
+                "Those who",
+                "Students who",
+                "People who",
+                "Those students who"
+              ],
+              "targets": [
+                "REL"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Those who has been organizing",
+                  "right": "Those who have been organizing",
+                  "explanation_zh": "those 是複數，who 子句的動詞用 have。"
+                },
+                {
+                  "wrong": "The people which",
+                  "right": "The people who",
+                  "explanation_zh": "先行詞是人，關係代名詞用 who。"
+                }
+              ]
+            },
+            {
+              "zh": "申請大學時",
+              "accepted": [
+                "when applying to college",
+                "when they apply to college",
+                "when they apply to universities",
+                "when applying to universities",
+                "when applying for college",
+                "when they apply for college",
+                "when applying to university",
+                "when they apply to university"
+              ],
+              "targets": [
+                "apply",
+                "college"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "when apply to college",
+                  "right": "when applying to college",
+                  "explanation_zh": "when 後面要接子句（when they apply）或分詞（when applying），不能直接接原形動詞。"
+                },
+                {
+                  "wrong": "when applying college",
+                  "right": "when applying to college",
+                  "explanation_zh": "申請進入某校是 apply to（申請某樣東西才用 apply for）。"
+                }
+              ]
+            },
+            {
+              "zh": "更有優勢",
+              "accepted": [
+                "have an advantage",
+                "are at an advantage",
+                "have a greater advantage",
+                "have more of an advantage",
+                "have an edge",
+                "will have an advantage",
+                "have a bigger advantage",
+                "are more competitive",
+                "have an advantage over others"
+              ],
+              "targets": [
+                "advantage"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "are more advantage",
+                  "right": "have an advantage",
+                  "explanation_zh": "advantage 是名詞，不能放在 be 動詞後面當形容詞；說 have an advantage 或 are at an advantage。"
+                },
+                {
+                  "wrong": "has an advantage",
+                  "right": "have an advantage",
+                  "explanation_zh": "主詞 Those (who …) 是複數，動詞用 have。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "prenominal_modifier",
+              "zh": "的人",
+              "literal_error": "From tenth grade always organizing learning portfolios people have more advantage when apply college.",
+              "part": 2,
+              "explanation_zh": "「…的人」前面的修飾語很長，英文要先寫 Those，再用 who 子句補充。"
+            },
+            {
+              "type": "word_form",
+              "zh": "更有優勢",
+              "literal_error": "Those who have been organizing their learning portfolios are more advantage.",
+              "part": 4,
+              "explanation_zh": "advantage 是名詞，不能當形容詞用（名詞↔形容詞的詞性誘錯）。"
+            }
+          ],
+          "bonus": [],
+          "restructuring_zh": "主詞「從高一就一直在整理學習歷程檔案的人」是很長的前置修飾，英文改成 Those who have been organizing …（後位修飾），主要動詞 have 要和 Those 一致。"
+        },
+        "2": {
+          "references": [
+            "Looking through these portfolios, professors find that compared with grades, students' work better shows their abilities.",
+            "Reading these portfolios, professors discover that compared to test scores, students' projects show their abilities better.",
+            "Going through these portfolios, professors have found that in comparison with grades, students' works can better demonstrate their real abilities."
+          ],
+          "target_words": [
+            {
+              "word": "professor",
+              "zh": "教授"
+            },
+            {
+              "word": "grade",
+              "zh": "分數、成績",
+              "alternatives": [
+                "score",
+                "mark",
+                "result"
+              ]
+            },
+            {
+              "word": "student",
+              "zh": "學生",
+              "alternatives": [
+                "applicant"
+              ]
+            },
+            {
+              "word": "work",
+              "zh": "作品",
+              "alternatives": [
+                "project",
+                "piece",
+                "creation",
+                "product",
+                "achievement"
+              ]
+            },
+            {
+              "word": "show",
+              "zh": "展現",
+              "alternatives": [
+                "reveal",
+                "display",
+                "demonstrate",
+                "present",
+                "reflect",
+                "prove"
+              ]
+            },
+            {
+              "word": "ability",
+              "zh": "實力、能力",
+              "alternatives": [
+                "skill",
+                "talent",
+                "capability",
+                "capable",
+                "strength",
+                "potential",
+                "can do"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PART",
+              "grammar_id": "gp-participle-clause",
+              "label_zh": "分詞構句（翻閱…：Looking through …）",
+              "frame": "V-ing …, S + V …（分詞的意義主詞＝主要子句的主詞）",
+              "zh_trigger": "翻閱這些檔案"
+            },
+            {
+              "code": "COMP",
+              "grammar_id": "gp-compared-with",
+              "label_zh": "相較於…（Compared with ＋ N）",
+              "frame": "Compared with/to + N, S + V + 比較級 … ; In comparison with + N, …",
+              "zh_trigger": "相較於分數"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "翻閱這些檔案",
+              "accepted": [
+                "Looking through these portfolios",
+                "Reading these portfolios",
+                "Going through these portfolios",
+                "Looking through these learning portfolios",
+                "Reading through these portfolios",
+                "Flipping through these portfolios",
+                "Reviewing these portfolios",
+                "Browsing through these portfolios",
+                "Looking at these portfolios",
+                "Having looked through these portfolios",
+                "Looking through these files",
+                "When looking through these portfolios",
+                "While reading these portfolios",
+                "When professors look through these portfolios",
+                "When professors read these portfolios"
+              ],
+              "targets": [
+                "PART"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Look through these portfolios",
+                  "right": "Looking through these portfolios",
+                  "explanation_zh": "句首用原形動詞會變成祈使句；前半句沒有主詞，做動作的就是後面的教授們，用分詞構句 Looking through …。"
+                },
+                {
+                  "wrong": "Looked through these portfolios",
+                  "right": "Looking through these portfolios",
+                  "explanation_zh": "教授是主動翻閱，用現在分詞 Looking；過去分詞表示被動（檔案被翻閱）。"
+                }
+              ]
+            },
+            {
+              "zh": "教授們發現",
+              "accepted": [
+                "professors find that",
+                "professors discover that",
+                "professors have found that",
+                "professors often find that",
+                "professors realize that",
+                "professors notice that",
+                "professors see that",
+                "the professors find that",
+                "university professors find that",
+                "professors found that",
+                "they find that"
+              ],
+              "targets": [
+                "professor"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "professor find that",
+                  "right": "professors find that",
+                  "explanation_zh": "「教授們」是複數，professor 要加 s；動詞 find 不加 s。"
+                },
+                {
+                  "wrong": "professors are found that",
+                  "right": "professors find that",
+                  "explanation_zh": "「發現」是教授主動做的事，用 find／discover；are found 是被動「被發現」。"
+                }
+              ]
+            },
+            {
+              "zh": "相較於分數",
+              "accepted": [
+                "compared with grades",
+                "compared to test scores",
+                "in comparison with grades",
+                "compared with scores",
+                "compared to grades",
+                "compared with test scores",
+                "compared to scores",
+                "in comparison with scores",
+                "when compared with grades",
+                "than grades",
+                "than grades do",
+                "than test scores",
+                "than scores"
+              ],
+              "targets": [
+                "COMP",
+                "grade"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "compare with grades",
+                  "right": "compared with grades",
+                  "explanation_zh": "「相較於」用過去分詞片語 compared with／to，原形 compare 不能這樣用。"
+                },
+                {
+                  "wrong": "comparing with grades",
+                  "right": "compared with grades",
+                  "explanation_zh": "被拿來比較的一方用過去分詞 compared，不用 comparing。"
+                }
+              ]
+            },
+            {
+              "zh": "學生的作品更能展現實力",
+              "accepted": [
+                "students' work better shows their abilities",
+                "students' projects show their abilities better",
+                "students' works can better demonstrate their real abilities",
+                "students' work shows their abilities better",
+                "students' works show their abilities better",
+                "students' works better show their abilities",
+                "students' work can better show their abilities",
+                "students' work can show their real abilities better",
+                "students' work better shows their real abilities",
+                "students' work better shows their true abilities",
+                "students' work better shows what they can do",
+                "students' work shows what they can really do",
+                "students' work reveals their abilities better",
+                "students' work better reflects their abilities",
+                "students' work better demonstrates their abilities",
+                "students' work shows more about their abilities",
+                "students' own work better shows their abilities",
+                "students' works can better show their real abilities",
+                "students' works better demonstrate their true abilities",
+                "students' works better demonstrate their abilities",
+                "students' work better shows their real ability",
+                "students' work shows their real ability better",
+                "students' work can better reveal their abilities",
+                "students' projects better show their abilities",
+                "students' projects can better show their abilities"
+              ],
+              "targets": [
+                "student",
+                "work",
+                "show",
+                "ability",
+                "COMP"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "students' work more shows their abilities",
+                  "right": "students' work better shows their abilities",
+                  "explanation_zh": "「更能展現」是「展現得更好」：better shows 或 shows … better；more 不能直接修飾動詞 show。"
+                },
+                {
+                  "wrong": "students' work better show their abilities",
+                  "right": "students' work better shows their abilities",
+                  "explanation_zh": "work 指作品、成果時是不可數名詞，當主詞時動詞用單數 shows；寫成複數 works 時才用 show。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "subjectless",
+              "zh": "翻閱這些檔案",
+              "literal_error": "Look through these portfolios, professors find that compared with grades, students' work better shows their abilities.",
+              "part": 1,
+              "explanation_zh": "「翻閱這些檔案」中文沒有寫主詞（做動作的是後面的教授們），英文不能直接用原形動詞開頭；主詞相同時用分詞構句 Looking through these portfolios,。"
+            },
+            {
+              "type": "word_form",
+              "zh": "相較於分數",
+              "literal_error": "Looking through these portfolios, professors find that compare with grades, students' work better shows their abilities.",
+              "part": 3,
+              "explanation_zh": "「相較於…」要用過去分詞片語 Compared with／to；寫成原形 compare 會變成另一個動詞，句子接不起來。"
+            }
+          ],
+          "bonus": [],
+          "restructuring_zh": "前半句「翻閱這些檔案」中文沒有主詞，英文改成分詞構句 Looking through these portfolios，意義主詞就是後面的 professors；「相較於分數」放在 that 子句開頭，寫成 Compared with grades，後面的主要子句再用比較級 better shows。",
+          "notes_zh": "本題練的是句首分詞構句與 Compared with N。寫成完整子句（When professors look through these portfolios, they find …）或用 than 比較（… show their abilities better than grades）文法也正確，列在可接受寫法、不扣分，但沒有練到本題的句型；參考譯文只用分詞構句與 Compared with／to／In comparison with。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-advanced-02-regen",
+    "lot": "translation-advanced-02",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "4031d7ac79dd41942f55728548fbcb1dda87166e462c753f4a48bee20d63e240",
+    "spec_id": "translation-advanced@2026-10-09",
+    "regenerated_from": "ai.tr.7cbeb0"
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 2,
+    "sentences": 1,
+    "avg_sentence_length": 2.0,
+    "denominator": 2,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.5,
+    "coverage_l1_6": 1.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.5,
+    "level_counts": {
+      "1": 1,
+      "5": 1
+    },
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T14:16:59Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "fail",
+      "created_at": "2026-10-09T14:03:24Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Those who have been organizing their learning portfolios since their first year of senior high school have a greater advantage when applying to universities.",
+            "confidence": "high",
+            "explanation_zh": "「從高一就一直在整理」是從過去持續到現在的動作，用現在完成進行式 have been organizing＋since；「……的人」用 Those who 引導的關係子句當主詞；「申請大學時」用 when＋V-ing 的分詞構句（主詞相同可省略）；「更有優勢」譯成 have a greater advantage（和沒整理的人相比，用比較級）。高一譯成 their first year of senior high school，也可寫 tenth grade。"
+          },
+          "2": {
+            "translation": "Looking through these portfolios, professors found that students' work showed their real abilities better than their grades did.",
+            "confidence": "high",
+            "explanation_zh": "「翻閱這些檔案」和主要子句同一個主詞（教授們），用現在分詞構句 Looking through…；「發現」後接 that 名詞子句；「相較於分數……更能展現」用比較級 better than their grades did 表達，比逐字寫 compared with grades 自然；主要動詞用過去式 found，子句時態一致用 showed。「實力」譯為 real abilities。「檔案」承上一句指學習歷程檔案，所以譯成 portfolios。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "REL",
+              "PERF"
+            ],
+            "used_target_words": [
+              "organize",
+              "advantage",
+              "apply",
+              "college"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "（建議，不影響判定）四個部分的份量不太平均：第 1 部分「從高一就一直在整理學習歷程檔案」同時考時態（have been V-ing）、動詞（整理）和時間（since 高一）三件事，第 2 部分「的人」只考 Those who。因為後位修飾是本句的改寫重點，這樣切還說得過去；不過第 1 部分的 accepted 是整串列舉，組合不齊，例如 have been organizing their learning portfolios since their first year of high school、have organized their learning portfolios since tenth grade、… since they entered senior high school 都沒列到。建議補幾個組合，或在評分說明寫明時間片語可以自由替換。",
+              "（建議）三個參考譯文都寫 have an advantage，沒有把「更」譯出來；have an advantage 本身就含「比別人有利」的意思，所以可以接受。我的 have a greater advantage 在第 4 部分的 accepted 裡。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "PART"
+            ],
+            "used_target_words": [
+              "professor",
+              "grade",
+              "student",
+              "work",
+              "show",
+              "ability"
+            ],
+            "within_accepted": false,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "標的句型 COMP（gp-compared-with：Compared with + N）沒有被中文自然引出。盲譯時我很自然地把「相較於分數，…更能展現」寫成比較級 … show their real abilities better than their grades did（屬於 gp-comparative-superlative，同樣歸在 COMP 大類，但不是本題指定的 Compared with 片語）。rubric 的 notes_zh 也說用 than 比較「沒有練到本題的句型」，所以我不把 COMP 列進 used_patterns。在英文裡，「A 比 B 更能…」用 better than 才是最自然的說法；Compared with grades, students' work better shows … 正確但比較生硬。建議二選一：把本句標的句型改成比較級（gp-comparative-superlative），或改寫中文讓「相較於…」更像獨立的比較框架。",
+              "within_accepted 填 false：我的譯文是正確的，但第 3、4 部分逐字對不到。第 2 部分接受 professors found that（過去式），第 4 部分卻只列現在式（shows／show／can better show），沒有時態一致的 showed、could better show；第 3 部分只有 than grades／than grades do，沒有 than their grades do／did。我的 students' work showed their real abilities better than their grades did 因此落在列舉範圍外。parts_check 填 warn 也是這個原因：第 2 部分接受過去式，第 4 部分要補對應的過去式；第 3 部分要補 than their grades (do/did)。",
+              "（參考譯文小建議，不列 fail）ref0、ref1、ref2 的 that 後面直接接 compared with …，比較好的標點是 that, compared with grades, students' work …；work 當「作品」時 rubric 說是不可數（第 4 部分的常見錯誤），ref2 卻用 students' works，兩邊說法不一致，建議在說明裡統一。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "organize",
+              "advantage",
+              "apply",
+              "college"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "REL": true,
+              "PERF": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "professor",
+              "grade",
+              "student",
+              "work",
+              "show",
+              "ability"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PART": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 2 題盲譯沒有用到標的句型 ['COMP']：中文題目沒有自然引出這個句型（SPEC §5.7）",
+          "第 2 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義",
+          "第 2 題驗證者對4 部分切分有意見（warn）：標的句型 COMP（gp-compared-with：Compared with + N）沒有被中文自然引出。盲譯時我很自然地把「相較於分數，…更能展現」寫成比較級 … show their real abilities better th"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "fail",
+      "created_at": "2026-10-09T14:05:00Z",
+      "details": {
+        "solver": "B",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Students who have been compiling a learning portfolio since their first year of senior high school have a greater advantage when they apply to universities.",
+            "confidence": "high",
+            "explanation_zh": "「從高一就一直在整理」表示從過去持續到現在的動作，所以用現在完成進行式 have been compiling，並搭配 since 引導的起點。中文主詞是「人」，我選 students who 讓句子更自然（也可用 those who）。「更有優勢」是和沒有整理的人相比，用 have a greater advantage；「申請大學時」用 when they apply to universities，時間副詞子句用現在式。"
+          },
+          "2": {
+            "translation": "Going through these portfolios, the professors found that students' work shows their real abilities better than their grades do.",
+            "confidence": "high",
+            "explanation_zh": "「翻閱這些檔案」是和主要子句同一主詞（教授們）的伴隨動作，用現在分詞片語 Going through 放在句首。「發現」用過去式 found，後面的 that 子句是一般性的看法，用現在式 shows。「相較於分數，作品更能展現實力」改成比較級 better than their grades do，比直接寫 compared with 更簡潔自然。「檔案」在上一句已是 learning portfolio，這裡用 portfolios 銜接；單看這一句時譯成 files 也可。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "REL",
+              "PERF"
+            ],
+            "used_target_words": [
+              "advantage",
+              "apply",
+              "college"
+            ],
+            "within_accepted": false,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "標的詞彙 organize 沒有用到：中文「整理」範圍很廣，我自然想到 compile（彙整），但 organize 的 alternatives（work on、prepare、put together、build、keep、update）沒有收 compile，所以這句標的詞彙只命中 3/4（75%），低於 80% 門檻。建議把 compile、assemble、maintain 補進 alternatives，或在中文加上限定語（例如「分類整理」）讓 organize 更容易被引出。",
+              "part 0 的 accepted 沒有 compiling，也只有複數的 their learning portfolios；我寫的 have been compiling a learning portfolio since their first year of senior high school 文法與語意都正確，卻不在列表內，within_accepted 只能誠實標 false。建議補 compiling 與單數 a learning portfolio 的寫法。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "PART"
+            ],
+            "used_target_words": [
+              "professor",
+              "grade",
+              "student",
+              "work",
+              "show",
+              "ability"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "句型 COMP（Compared with／to + N）沒有被中文題目引出：「相較於分數，……更能展現實力」我很自然地譯成 shows their real abilities better than their grades do（than 比較級），沒有用 Compared with。這個寫法在 part 2、part 3 的 accepted 內，所以 within_accepted 為 true，但 used_patterns 缺 COMP，依規則這句會判 fail。建議把 COMP 的 frame 放寬成「比較級（含 than 與 compared with／to）」，或改寫中文讓 Compared with 成為最自然的譯法。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "advantage",
+              "apply",
+              "college"
+            ],
+            "target_hit_rate": 0.75,
+            "patterns_detected": {
+              "REL": true,
+              "PERF": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "professor",
+              "grade",
+              "student",
+              "work",
+              "show",
+              "ability"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PART": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 1 題盲譯只用到 3/4 個標的詞彙（沒用到 ['organize']；至少 80%）：中文題目可能沒有自然引出標的詞彙，或要在 alternatives 補可接受的換字",
+          "第 1 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義",
+          "第 2 題盲譯沒有用到標的句型 ['COMP']：中文題目沒有自然引出這個句型（SPEC §5.7）"
+        ]
+      }
+    }
+  ],
+  "status": "rejected",
+  "status_reason": "blind_solver:A 未通過：第 2 題盲譯沒有用到標的句型 ['COMP']：中文題目沒有自然引出這個句型（SPEC §5.7）；第 2 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義；第 2 題驗證者對4 部分切分有意見（warn）：標的句型 COMP（gp-compared-with：Compared with + N）沒有被中文自然引出。盲譯時我很自然地把「相較於分數，…更能展現」寫成比較級 … show their real abilities better th；blind_solver:B 未通過：第 1 題盲譯只用到 3/4 個標的詞彙（沒用到 ['organize']；至少 80%）：中文題目可能沒有自然引出標的詞彙，或要在 alternatives 補可接受的換字；第 1 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義；第 2 題盲譯沒有用到標的句型 ['COMP']：中文題目沒有自然引出這個句型（SPEC §5.7）；判定者（第 2 輪）補充：①第 2 題「相較於分數，學生的作品更能展現實力」最自然的英文是 better than grades（兩位驗證者都這樣寫），Compared with grades 再接比較級 better shows 語意重複、偏生硬；要嘛把標的句型改成比較級 than，要嘛改寫中文讓 Compared with 成為最自然的譯法；②第 2 題 ref2 用 students' works，和第 4 部分常見錯誤說 work（作品）不可數互相矛盾，要統一；③第 2 題第 2 部分接受過去式 professors found that，第 3、4 部分卻沒有 than their grades do／did、showed 等對應寫法；④第 1 題 organize 的 alternatives 沒收 compile、maintain，第 1 部分的可接受寫法組合不齊（例：organizing … since their first year of high school、單數 a learning portfolio）。"
+}

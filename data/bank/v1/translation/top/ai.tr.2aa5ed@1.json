@@ -1,0 +1,765 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.2aa5ed",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "top",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "讓自動駕駛車取代人類駕駛可以避免人為疏失，而人為疏失是多數車禍的元兇。",
+        "options": null,
+        "answer": "Letting self-driving cars take over from human drivers can prevent human error, which is responsible for the majority of traffic accidents.",
+        "accepted_answers": [
+          "Replacing human drivers with self-driving cars can help avoid human error, which is the main cause of most car accidents.",
+          "Allowing self-driving cars to take the place of human drivers can prevent human errors, which are to blame for most traffic accidents."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "非限定關係子句",
+            "動名詞片語當主詞"
+          ],
+          "topic": "自動駕駛車"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "然而，已有數起致命車禍被歸咎於自駕車，使許多人懷疑這項技術是否真的可靠。",
+        "options": null,
+        "answer": "However, several deadly crashes have been blamed on self-driving cars, making many people question whether this technology is really reliable.",
+        "accepted_answers": [
+          "However, a number of fatal accidents have been blamed on driverless cars, causing many people to doubt whether the technology is truly reliable.",
+          "However, self-driving cars have been blamed for several deadly crashes, leaving many people wondering if this technology can really be trusted."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "句尾分詞表結果",
+            "完成式被動"
+          ],
+          "topic": "自動駕駛車"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "自動駕駛車"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "句首「讓…取代…」是整個動作當主詞，英文用動名詞片語 Letting self-driving cars take over from human drivers（或 Replacing human drivers with self-driving cars），動詞視為單數。「而人為疏失是…」補充說明 human error，用非限定關係子句 , which is responsible for …（which 前加逗號、不用 that）。「元兇」是比喻，用 be responsible for／be the main cause of；「多數車禍」是 most car accidents（不加 the）或 the majority of traffic accidents。",
+          "evidence": [
+            "讓自動駕駛車取代人類駕駛",
+            "而人為疏失是多數車禍的元兇"
+          ],
+          "strategy_zh": "中文主詞是一串動作時，英文改成 V-ing 開頭；後半句重複前面的名詞時，改用 , which … 接上。",
+          "hints": [
+            "切成四段：讓自動駕駛車取代人類駕駛／可以避免人為疏失／而人為疏失是…的元兇／多數車禍",
+            "標的詞彙：self-driving（自動駕駛的）、replace（取代）、human（人類的）、prevent（避免）、error（疏失）、accident（事故）",
+            "句型框架：V-ing … + can + V + N, which is responsible for …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「已有…被歸咎於」是到目前為止累積的事件，用完成式被動 have been blamed on（blame A on B ＝ blame B for A）。「使許多人懷疑…」是前一件事造成的結果，用句尾分詞 making many people question whether …／causing many people to doubt whether …（make 接原形動詞、cause 接 to V）。「懷疑是否」用 doubt／question／wonder whether，不是 suspect；whether 子句用直述句語序。",
+          "evidence": [
+            "已有數起致命車禍被歸咎於自駕車",
+            "使許多人懷疑這項技術是否真的可靠"
+          ],
+          "strategy_zh": "「被歸咎於」先想 blame A on B；「使…懷疑是否…」用 making sb question whether + 直述句。",
+          "hints": [
+            "切成四段：已有數起致命車禍／被歸咎於自駕車／使許多人懷疑／這項技術是否真的可靠",
+            "標的詞彙：deadly（致命的）、crash（車禍）、blame（歸咎）、doubt（懷疑）、technology（技術）、reliable（可靠的）",
+            "句型框架：However, S + have been p.p. + on …, making + O + V + whether + S + V"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "Letting self-driving cars take over from human drivers can prevent human error, which is responsible for the majority of traffic accidents.",
+            "Replacing human drivers with self-driving cars can help avoid human error, which is the main cause of most car accidents.",
+            "Allowing self-driving cars to take the place of human drivers can prevent human errors, which are to blame for most traffic accidents."
+          ],
+          "target_words": [
+            {
+              "word": "self-driving",
+              "zh": "自動駕駛的",
+              "alternatives": [
+                "driverless",
+                "autonomous"
+              ]
+            },
+            {
+              "word": "replace",
+              "zh": "取代",
+              "alternatives": [
+                "take over",
+                "take the place of"
+              ]
+            },
+            {
+              "word": "human",
+              "zh": "人類的"
+            },
+            {
+              "word": "prevent",
+              "zh": "避免",
+              "alternatives": [
+                "avoid",
+                "reduce"
+              ]
+            },
+            {
+              "word": "error",
+              "zh": "疏失",
+              "alternatives": [
+                "mistake"
+              ]
+            },
+            {
+              "word": "accident",
+              "zh": "事故、車禍",
+              "alternatives": [
+                "crash",
+                "collision"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "NRREL",
+              "grammar_id": "gp-nonrestrictive",
+              "label_zh": "非限定關係子句（補充說明前面的名詞）",
+              "frame": "S + V + N, which + is responsible for …",
+              "zh_trigger": "而人為疏失"
+            },
+            {
+              "code": "NFSUBJ",
+              "grammar_id": "gp-gerund-subject",
+              "label_zh": "動名詞片語當主詞",
+              "frame": "V-ing … + can + V …",
+              "zh_trigger": "讓自動駕駛車取代人類駕駛"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "讓自動駕駛車取代人類駕駛",
+              "accepted": [
+                "Letting self-driving cars take over from human drivers",
+                "Replacing human drivers with self-driving cars",
+                "Allowing self-driving cars to take the place of human drivers",
+                "Allowing self-driving cars to replace human drivers",
+                "Letting self-driving cars replace human drivers"
+              ],
+              "targets": [
+                "NFSUBJ",
+                "self-driving",
+                "replace",
+                "human"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Let self-driving cars replace human drivers can",
+                  "right": "Letting self-driving cars replace human drivers can",
+                  "explanation_zh": "原形動詞片語不能當主詞，要改成動名詞 Letting …（或 To let …）。"
+                },
+                {
+                  "wrong": "Replacing self-driving cars with human drivers",
+                  "right": "Replacing human drivers with self-driving cars",
+                  "explanation_zh": "replace A with B 是「用 B 取代 A」，A、B 不要放反。"
+                }
+              ]
+            },
+            {
+              "zh": "可以避免人為疏失",
+              "accepted": [
+                "can prevent human error",
+                "can help avoid human error",
+                "can prevent human errors",
+                "can reduce human error",
+                "can help prevent human error"
+              ],
+              "targets": [
+                "prevent",
+                "error"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "can avoid man-made mistakes",
+                  "right": "can avoid human error",
+                  "explanation_zh": "man-made 指「人造的（東西）」，「人為疏失」是 human error。"
+                },
+                {
+                  "wrong": "can prevent human from making error",
+                  "right": "can prevent humans from making errors",
+                  "explanation_zh": "prevent sb from V-ing 的 sb 要用複數 humans／people，error 可數時也要用複數。"
+                }
+              ]
+            },
+            {
+              "zh": "而人為疏失是",
+              "accepted": [
+                "which is responsible for",
+                "which is the main cause of",
+                "which are to blame for",
+                "which causes",
+                "which is the leading cause of"
+              ],
+              "targets": [
+                "NRREL"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "which is responsible to",
+                  "right": "which is responsible for",
+                  "explanation_zh": "「是…的元兇」用 be responsible for（造成、要負責），介系詞是 for。"
+                },
+                {
+                  "wrong": "human error, that is the main cause of",
+                  "right": "human error, which is the main cause of",
+                  "explanation_zh": "非限定關係子句不能用 that。"
+                }
+              ]
+            },
+            {
+              "zh": "多數車禍的元兇",
+              "accepted": [
+                "the majority of traffic accidents",
+                "most car accidents",
+                "most traffic accidents",
+                "the majority of car accidents"
+              ],
+              "targets": [
+                "accident"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "the most car accidents",
+                  "right": "most car accidents",
+                  "explanation_zh": "「多數的」是 most（不加 the）；the most 是最高級「最多」。"
+                },
+                {
+                  "wrong": "the majority of traffic accident",
+                  "right": "the majority of traffic accidents",
+                  "explanation_zh": "the majority of 後面接複數名詞。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "verbal_subject",
+              "zh": "讓自動駕駛車取代人類駕駛",
+              "literal_error": "Let self-driving cars replace human drivers can prevent human error …",
+              "part": 1,
+              "explanation_zh": "中文以整個動作當主詞；英文原形動詞不能當主詞，要用動名詞 Letting …／Replacing …（或 To let …）。"
+            },
+            {
+              "type": "abstract_nominal",
+              "zh": "元兇",
+              "literal_error": "… which is the chief criminal of most car accidents.",
+              "part": 3,
+              "explanation_zh": "「元兇」是比喻，不要譯成 criminal／murderer；用 be responsible for／be the main cause of／be to blame for。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "Were self-driving cars to take over from human drivers, human error, which is responsible for the majority of traffic accidents, could be avoided.",
+              "grammar_id": "gp-inverted-if",
+              "explanation_zh": "用省略 if 的倒裝假設 Were + S + to V …（假如真的讓…）；屬於假設語氣的加分寫法，不設為唯一正解。"
+            }
+          ],
+          "restructuring_zh": "中文主詞「讓自動駕駛車取代人類駕駛」是一個動作，英文改成動名詞主詞 Letting …／Replacing …；後半「而人為疏失是…」不重複主詞，用 , which is responsible for … 接在 human error 後面。"
+        },
+        "2": {
+          "references": [
+            "However, several deadly crashes have been blamed on self-driving cars, making many people question whether this technology is really reliable.",
+            "However, a number of fatal accidents have been blamed on driverless cars, causing many people to doubt whether the technology is truly reliable.",
+            "However, self-driving cars have been blamed for several deadly crashes, leaving many people wondering if this technology can really be trusted."
+          ],
+          "target_words": [
+            {
+              "word": "deadly",
+              "zh": "致命的",
+              "alternatives": [
+                "fatal"
+              ]
+            },
+            {
+              "word": "crash",
+              "zh": "車禍",
+              "alternatives": [
+                "accident",
+                "collision"
+              ]
+            },
+            {
+              "word": "blame",
+              "zh": "歸咎"
+            },
+            {
+              "word": "doubt",
+              "zh": "懷疑",
+              "alternatives": [
+                "question",
+                "wonder"
+              ]
+            },
+            {
+              "word": "technology",
+              "zh": "技術"
+            },
+            {
+              "word": "reliable",
+              "zh": "可靠的",
+              "alternatives": [
+                "trust",
+                "dependable",
+                "safe"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PART",
+              "grammar_id": "gp-participle-result",
+              "label_zh": "句尾分詞片語表結果（…，使…）",
+              "frame": "S + V …, making + O + V ／ causing + O + to V",
+              "zh_trigger": "使許多人"
+            },
+            {
+              "code": "PASS",
+              "grammar_id": "gp-perfect-passive",
+              "label_zh": "完成式被動（已…被…）",
+              "frame": "S + have/has been + p.p. + on …",
+              "zh_trigger": "已有數起致命車禍被歸咎於"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "已有數起致命車禍",
+              "accepted": [
+                "several deadly crashes",
+                "a number of fatal accidents",
+                "several fatal crashes",
+                "a few deadly accidents"
+              ],
+              "targets": [
+                "deadly",
+                "crash"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "several deadly crash",
+                  "right": "several deadly crashes",
+                  "explanation_zh": "several 後面接複數名詞。"
+                },
+                {
+                  "wrong": "several dead crashes",
+                  "right": "several deadly crashes",
+                  "explanation_zh": "「致命的」是 deadly／fatal；dead 是「死的」，不能修飾車禍。"
+                }
+              ]
+            },
+            {
+              "zh": "被歸咎於自駕車",
+              "accepted": [
+                "have been blamed on self-driving cars",
+                "have been blamed on driverless cars",
+                "self-driving cars have been blamed for",
+                "have been blamed on autonomous cars",
+                "have been attributed to self-driving cars"
+              ],
+              "targets": [
+                "PASS",
+                "blame"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "have been blamed to self-driving cars",
+                  "right": "have been blamed on self-driving cars",
+                  "explanation_zh": "blame A on B（把 A 歸咎於 B）或 blame B for A；介系詞是 on／for，不是 to。"
+                },
+                {
+                  "wrong": "were blamed on self-driving cars",
+                  "right": "have been blamed on self-driving cars",
+                  "explanation_zh": "「已有」表示到目前為止累積的事件，用現在完成式被動 have been blamed。"
+                }
+              ]
+            },
+            {
+              "zh": "使許多人懷疑",
+              "accepted": [
+                "making many people question whether",
+                "causing many people to doubt whether",
+                "leaving many people wondering if",
+                "making many people doubt whether",
+                "leaving many people wondering whether"
+              ],
+              "targets": [
+                "PART",
+                "doubt"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "making many people suspect whether",
+                  "right": "making many people doubt whether",
+                  "explanation_zh": "suspect 是「懷疑（某事可能是真的）」，後面接 that 子句；「懷疑是否…」用 doubt／question／wonder whether。"
+                },
+                {
+                  "wrong": "makes many people doubt whether",
+                  "right": "making many people doubt whether",
+                  "explanation_zh": "逗號後表結果用分詞 making；makes 會變成兩個動詞沒有連接詞。"
+                }
+              ]
+            },
+            {
+              "zh": "這項技術是否真的可靠",
+              "accepted": [
+                "this technology is really reliable",
+                "the technology is truly reliable",
+                "this technology can really be trusted",
+                "this technology is truly safe",
+                "the technology is really dependable"
+              ],
+              "targets": [
+                "technology",
+                "reliable"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "is this technology really reliable",
+                  "right": "this technology is really reliable",
+                  "explanation_zh": "whether 引導的名詞子句用直述句語序，不要倒裝成問句。"
+                },
+                {
+                  "wrong": "this technique is really reliable",
+                  "right": "this technology is really reliable",
+                  "explanation_zh": "「這項技術」指自駕車的科技，用 technology；technique 是「技巧、手法」。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "collocation",
+              "zh": "懷疑",
+              "literal_error": "… making many people suspect whether this technology is really reliable.",
+              "part": 3,
+              "explanation_zh": "「懷疑是否」是 doubt／question／wonder whether；suspect 是「懷疑某事可能是真的」（suspect that …），意思相反。"
+            },
+            {
+              "type": "tense_trigger",
+              "zh": "已有",
+              "literal_error": "However, several deadly crashes were blamed on self-driving cars …",
+              "part": 2,
+              "explanation_zh": "「已有」是到目前為止累積的事件，用現在完成式被動 have been blamed on。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "However, several deadly crashes have been blamed on self-driving cars, casting doubt on whether this technology is really reliable.",
+              "explanation_zh": "cast doubt on …（使人對…產生懷疑）是很道地的句尾分詞搭配。"
+            }
+          ],
+          "restructuring_zh": "中文「已有數起致命車禍被歸咎於自駕車」可照原順序寫成 Several deadly crashes have been blamed on …，也可以把自駕車當主詞 Self-driving cars have been blamed for …；「使許多人懷疑…」用句尾分詞 making many people question whether … 接在後面。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ac-V-3",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-top-01",
+    "lot": "translation-top-01",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "a1384b01f87b0f8fded3505d9aeb991591fcc72147d3fc44a0f533a9db995000",
+    "spec_id": "translation-top@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "warn",
+      "created_at": "2026-10-09T13:10:32Z",
+      "details": {
+        "errors": [],
+        "warnings": [
+          "annotations.rubric.items.2.patterns[1]: gp-perfect-passive 通常對應句構 PERF（目前 code=PASS）"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T00:00:00Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Letting self-driving cars replace human drivers can help avoid human error, which is the main culprit behind most car accidents.",
+            "confidence": "high",
+            "explanation_zh": "「讓自動駕駛車取代人類駕駛」用動名詞片語 Letting ... replace 當主詞（也可寫 Replacing human drivers with self-driving cars）；「而人為疏失是…元兇」用非限定關係子句 which 修飾 human error；「元兇」譯為 the main culprit behind（也可用 the main cause of）。"
+          },
+          "2": {
+            "translation": "However, several fatal accidents have been blamed on self-driving cars, leading many people to question whether this technology is really reliable.",
+            "confidence": "high",
+            "explanation_zh": "「已有數起…被歸咎於」用現在完成式被動 have been blamed on；「使許多人懷疑…是否」用分詞構句 leading many people to question whether（也可用 making many people doubt whether）。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "NRREL",
+              "NFSUBJ"
+            ],
+            "used_target_words": [
+              "self-driving",
+              "replace",
+              "human",
+              "prevent",
+              "error",
+              "accident"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "（建議補 accepted）我用 which is the main culprit behind 譯「是…的元兇」，語意和第 3 部分 accepted（which is the main cause of、which is responsible for 等）相同，但不在清單裡，建議補上 which is the main culprit behind。R1 的 the main cause of most car accidents 中 main 與 most 語意略重複，可接受。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "PART",
+              "PASS"
+            ],
+            "used_target_words": [
+              "deadly",
+              "crash",
+              "blame",
+              "doubt",
+              "technology",
+              "reliable"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "（建議補 accepted）我用分詞構句 leading many people to question whether，結構和 causing many people to doubt whether 相同，但不在第 3 部分 accepted，建議補上。句首「然而」沒有分到任何部分。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "self-driving",
+              "replace",
+              "human",
+              "prevent",
+              "error",
+              "accident"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NRREL": true,
+              "NFSUBJ": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "deadly",
+              "crash",
+              "blame",
+              "doubt",
+              "technology",
+              "reliable"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PART": true,
+              "PASS": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T07:56:17Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Letting self-driving cars replace human drivers can avoid human error, which is the main cause of most car accidents.",
+            "confidence": "medium",
+            "explanation_zh": "主詞「讓自動駕駛車取代人類駕駛」用動名詞片語 Letting ... replace ...；「而人為疏失是……元兇」用 which 引導補充說明。中文主詞也可用 Replacing human drivers with self-driving cars 表達，措辭有彈性所以信心中等。"
+          },
+          "2": {
+            "translation": "However, several fatal accidents have been blamed on self-driving cars, making many people doubt whether this technology is truly reliable.",
+            "confidence": "high",
+            "explanation_zh": "「已有數起……被歸咎於」用現在完成式被動 have been blamed on；「使許多人懷疑」用分詞片語 making ... doubt whether ...。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "NRREL",
+              "NFSUBJ"
+            ],
+            "used_target_words": [
+              "self-driving",
+              "replace",
+              "human",
+              "prevent",
+              "error",
+              "accident"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PART",
+              "PASS"
+            ],
+            "used_target_words": [
+              "deadly",
+              "crash",
+              "blame",
+              "doubt",
+              "technology",
+              "reliable"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "self-driving",
+              "replace",
+              "human",
+              "prevent",
+              "error",
+              "accident"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NRREL": true,
+              "NFSUBJ": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "deadly",
+              "crash",
+              "blame",
+              "doubt",
+              "technology",
+              "reliable"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PART": true,
+              "PASS": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

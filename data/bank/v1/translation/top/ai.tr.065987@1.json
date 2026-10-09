@@ -1,0 +1,734 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.065987",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "top",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "近年來，大片森林已被野火（wildfires）燒毀，而野火在炎熱乾燥的天氣裡特別容易發生。",
+        "options": null,
+        "answer": "In recent years, vast areas of forest have been destroyed by wildfires, which are especially likely to start in hot and dry weather.",
+        "accepted_answers": [
+          "Recently, large areas of forest have been burned down by wildfires, which tend to break out especially in hot, dry weather.",
+          "In recent years, many large forests have been destroyed by wildfires, which occur most easily in hot and dry weather."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "非限定關係子句（補充說明野火：…, which …）",
+            "完成式被動（已被野火燒毀）"
+          ],
+          "topic": "野火"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "因此，定期清除林地上的枯枝落葉，普遍被認為是預防野火（wildfires）最有效的方法之一。",
+        "options": null,
+        "answer": "Therefore, clearing dead branches and leaves from forests regularly is widely recognized as one of the most effective strategies for preventing wildfires.",
+        "accepted_answers": [
+          "Therefore, removing dead branches and fallen leaves from the forest floor regularly is generally believed to be one of the best ways to prevent wildfires.",
+          "Therefore, clearing away dead branches and leaves in forests on a regular basis is widely regarded as one of the most effective ways to prevent wildfires."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "被動語態（普遍被認為是…）",
+            "動名詞片語當主詞（定期清除林地上的枯枝落葉）"
+          ],
+          "topic": "野火"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "野火"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「近年來…已被野火燒毀」是到現在為止的結果，用現在完成式被動 have been destroyed by wildfires；「大片森林」是 vast／large areas of forest。後半句補充說明野火，用非限定關係子句 , which are especially likely to start in hot and dry weather；「容易發生」是可能性，用 be likely to／tend to，不說 easy to happen。weather 不可數，不加 a。",
+          "evidence": [
+            "大片森林已被野火（wildfires）燒毀",
+            "而野火在炎熱乾燥的天氣裡特別容易發生"
+          ],
+          "strategy_zh": "看到「近年來」「已被」先想到 have been p.p.；「而野火…」是對野火的補充，用逗號＋which。",
+          "hints": [
+            "切成四段：大片森林／已被野火燒毀／在炎熱乾燥的天氣裡／特別容易發生",
+            "標的詞彙：forest（森林）、destroy（摧毀）、especially（特別）、weather（天氣）",
+            "句型框架：In recent years, S + have been p.p. + by N, which + be especially likely to VR …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "主詞是「定期清除林地上的枯枝落葉」這個動作，寫成動名詞片語 clearing dead branches and leaves from forests regularly，動名詞主詞視為單數，所以用 is。「普遍被認為是」是被動 is widely recognized／regarded as。「最有效的方法之一」是 one of the most effective strategies／ways（one of the + 最高級 + 複數名詞），「預防野火」用 for preventing wildfires 或 to prevent wildfires 修飾前面的名詞。",
+          "evidence": [
+            "定期清除林地上的枯枝落葉",
+            "普遍被認為是預防野火（wildfires）最有效的方法之一"
+          ],
+          "strategy_zh": "主詞先寫成 V-ing 片語並確認單數動詞；再套 be widely recognized as one of the most … strategies for V-ing。",
+          "hints": [
+            "切成四段：定期清除林地上的枯枝落葉／普遍被認為是／預防野火／最有效的方法之一",
+            "標的詞彙：clear（清除）、regularly（定期地）、branch（樹枝）、prevent（預防）、effective（有效的）、strategy（方法、策略）",
+            "句型框架：V-ing … + is widely recognized as + one of the most + adj. + N(複數) + for V-ing …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "In recent years, vast areas of forest have been destroyed by wildfires, which are especially likely to start in hot and dry weather.",
+            "Recently, large areas of forest have been burned down by wildfires, which tend to break out especially in hot, dry weather.",
+            "In recent years, many large forests have been destroyed by wildfires, which occur most easily in hot and dry weather."
+          ],
+          "target_words": [
+            {
+              "word": "forest",
+              "zh": "森林"
+            },
+            {
+              "word": "destroy",
+              "zh": "燒毀、摧毀",
+              "alternatives": [
+                "burn",
+                "ruin"
+              ]
+            },
+            {
+              "word": "especially",
+              "zh": "特別",
+              "alternatives": [
+                "particularly",
+                "most",
+                "more likely"
+              ]
+            },
+            {
+              "word": "weather",
+              "zh": "天氣"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "NRREL",
+              "grammar_id": "gp-nonrestrictive",
+              "label_zh": "非限定關係子句（補充說明野火：…, which …）",
+              "frame": "…, which + be + adv. + likely to VR …",
+              "zh_trigger": "而野火"
+            },
+            {
+              "code": "PASS",
+              "grammar_id": "gp-perfect-passive",
+              "label_zh": "完成式被動（已被野火燒毀）",
+              "frame": "S + have been + p.p. + by …",
+              "zh_trigger": "已被野火（wildfires）燒毀"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "大片森林",
+              "accepted": [
+                "vast areas of forest",
+                "large areas of forest",
+                "many large forests",
+                "huge areas of forest",
+                "large forests"
+              ],
+              "targets": [
+                "forest"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "big pieces of forest",
+                  "right": "vast areas of forest",
+                  "explanation_zh": "「大片」指面積，用 vast／large areas of forest；piece 是「一塊、一片」小東西。"
+                },
+                {
+                  "wrong": "vast area of forests",
+                  "right": "vast areas of forest",
+                  "explanation_zh": "很多區域，areas 要用複數。"
+                }
+              ]
+            },
+            {
+              "zh": "已被野火（wildfires）燒毀",
+              "accepted": [
+                "have been destroyed by wildfires",
+                "have been burned down by wildfires",
+                "have been burnt down by wildfires",
+                "have been destroyed by wildfire"
+              ],
+              "targets": [
+                "PASS",
+                "destroy"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "have destroyed by wildfires",
+                  "right": "have been destroyed by wildfires",
+                  "explanation_zh": "完成式被動是 have been + p.p.，been 不能省。"
+                },
+                {
+                  "wrong": "were destroyed by wildfires in recent years",
+                  "right": "have been destroyed by wildfires in recent years",
+                  "explanation_zh": "「近年來…已被」表示到現在為止的結果，用現在完成式被動。"
+                }
+              ]
+            },
+            {
+              "zh": "在炎熱乾燥的天氣裡",
+              "accepted": [
+                "in hot and dry weather",
+                "in hot, dry weather",
+                "during hot and dry weather",
+                "when the weather is hot and dry"
+              ],
+              "targets": [
+                "weather"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "in a hot and dry weather",
+                  "right": "in hot and dry weather",
+                  "explanation_zh": "weather 是不可數名詞，不加 a。"
+                }
+              ]
+            },
+            {
+              "zh": "特別容易發生",
+              "accepted": [
+                "which are especially likely to start",
+                "which tend to break out especially",
+                "which occur most easily",
+                "which are particularly likely to break out",
+                "which are especially likely to happen"
+              ],
+              "targets": [
+                "NRREL",
+                "especially"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "which are especially easy to happen",
+                  "right": "which are especially likely to happen",
+                  "explanation_zh": "「容易發生」是可能性高，用 be likely to happen；easy to happen 不是英文的說法。"
+                },
+                {
+                  "wrong": "that are especially likely to start",
+                  "right": "which are especially likely to start",
+                  "explanation_zh": "逗號後的非限定關係子句不能用 that。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "collocation",
+              "zh": "特別容易發生",
+              "literal_error": "wildfires, which are especially easy to happen in hot and dry weather",
+              "part": 4,
+              "explanation_zh": "「容易發生」不是 easy to happen（easy 指做起來容易）；表示可能性高要用 be likely to happen、tend to break out 或 occur easily。"
+            },
+            {
+              "type": "tense_trigger",
+              "zh": "已被",
+              "literal_error": "In recent years, vast areas of forest were destroyed by wildfires.",
+              "part": 2,
+              "explanation_zh": "「近年來…已被」說的是一直延續到現在的結果，要用現在完成式被動 have been destroyed，不用過去式。"
+            }
+          ],
+          "bonus": [],
+          "restructuring_zh": "「而野火在…特別容易發生」不另起一句，用非限定關係子句補充說明 wildfires；「容易發生」改用 be likely to happen／tend to break out。"
+        },
+        "2": {
+          "references": [
+            "Therefore, clearing dead branches and leaves from forests regularly is widely recognized as one of the most effective strategies for preventing wildfires.",
+            "Therefore, removing dead branches and fallen leaves from the forest floor regularly is generally believed to be one of the best ways to prevent wildfires.",
+            "Therefore, clearing away dead branches and leaves in forests on a regular basis is widely regarded as one of the most effective ways to prevent wildfires."
+          ],
+          "target_words": [
+            {
+              "word": "clear",
+              "zh": "清除",
+              "alternatives": [
+                "remove",
+                "clean up",
+                "get rid of"
+              ]
+            },
+            {
+              "word": "regularly",
+              "zh": "定期地",
+              "alternatives": [
+                "regular",
+                "periodically",
+                "routinely"
+              ]
+            },
+            {
+              "word": "branch",
+              "zh": "樹枝"
+            },
+            {
+              "word": "prevent",
+              "zh": "預防"
+            },
+            {
+              "word": "effective",
+              "zh": "有效的",
+              "alternatives": [
+                "best"
+              ]
+            },
+            {
+              "word": "strategy",
+              "zh": "方法、策略",
+              "alternatives": [
+                "way",
+                "method",
+                "measure",
+                "approach"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PASS",
+              "grammar_id": "gp-passive",
+              "label_zh": "被動語態（普遍被認為是…）",
+              "frame": "S + is widely recognized/regarded as + N",
+              "zh_trigger": "普遍被認為是"
+            },
+            {
+              "code": "NFSUBJ",
+              "grammar_id": "gp-gerund-subject",
+              "label_zh": "動名詞片語當主詞（定期清除林地上的枯枝落葉）",
+              "frame": "V-ing … + is + p.p. + (as) …",
+              "zh_trigger": "定期清除林地上的枯枝落葉"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "定期清除林地上的枯枝落葉",
+              "accepted": [
+                "clearing dead branches and leaves from forests regularly",
+                "removing dead branches and fallen leaves from the forest floor regularly",
+                "clearing away dead branches and leaves in forests on a regular basis",
+                "regularly clearing dead branches and leaves from forests",
+                "regularly removing dead branches and leaves from the forest floor"
+              ],
+              "targets": [
+                "NFSUBJ",
+                "clear",
+                "regularly",
+                "branch"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Therefore, regularly clear dead branches and leaves from forests is",
+                  "right": "Therefore, regularly clearing dead branches and leaves from forests is",
+                  "explanation_zh": "動詞片語當主詞要改成動名詞 clearing。"
+                },
+                {
+                  "wrong": "dry branches and falling leaves",
+                  "right": "dead branches and fallen leaves",
+                  "explanation_zh": "「枯枝」是 dead branches；「落葉」是已經掉下的葉子 fallen leaves（falling 是正在掉落）。"
+                }
+              ]
+            },
+            {
+              "zh": "普遍被認為是",
+              "accepted": [
+                "is widely recognized as",
+                "is generally believed to be",
+                "is widely regarded as",
+                "is widely considered",
+                "is commonly considered to be",
+                "is widely seen as"
+              ],
+              "targets": [
+                "PASS"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "are widely recognized as",
+                  "right": "is widely recognized as",
+                  "explanation_zh": "動名詞片語當主詞視為單數，用 is。"
+                },
+                {
+                  "wrong": "is widely regarded one of",
+                  "right": "is widely regarded as one of",
+                  "explanation_zh": "be regarded as，as 不能省。"
+                }
+              ]
+            },
+            {
+              "zh": "預防野火（wildfires）",
+              "accepted": [
+                "for preventing wildfires",
+                "to prevent wildfires",
+                "of preventing wildfires",
+                "to prevent forest fires"
+              ],
+              "targets": [
+                "prevent"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "for preventing from wildfires",
+                  "right": "for preventing wildfires",
+                  "explanation_zh": "prevent 直接接受詞；prevent sb from V-ing 才有 from。"
+                },
+                {
+                  "wrong": "for prevent wildfires",
+                  "right": "for preventing wildfires",
+                  "explanation_zh": "介系詞 for 後面接動名詞 preventing（或改用 to prevent）。"
+                }
+              ]
+            },
+            {
+              "zh": "最有效的方法之一",
+              "accepted": [
+                "one of the most effective strategies",
+                "one of the best ways",
+                "one of the most effective ways",
+                "one of the most effective methods"
+              ],
+              "targets": [
+                "effective",
+                "strategy"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "one of the most effective strategy",
+                  "right": "one of the most effective strategies",
+                  "explanation_zh": "one of the + 最高級 + 複數名詞。"
+                },
+                {
+                  "wrong": "one of the effectivest strategies",
+                  "right": "one of the most effective strategies",
+                  "explanation_zh": "effective 是多音節形容詞，最高級是 most effective。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "verbal_subject",
+              "zh": "定期清除林地上的枯枝落葉",
+              "literal_error": "Therefore, regularly clear dead branches and leaves from forests is widely recognized as …",
+              "part": 1,
+              "explanation_zh": "中文直接拿「定期清除…」這個動作當主詞；英文要改成動名詞片語 clearing … regularly，動詞原形不能當主詞。"
+            },
+            {
+              "type": "abstract_nominal",
+              "zh": "枯枝落葉",
+              "literal_error": "removing dry branches and falling leaves",
+              "part": 1,
+              "explanation_zh": "「枯枝落葉」是複合概念：枯掉的樹枝是 dead branches，掉在地上的葉子是 fallen leaves；照字面寫 dry、falling 意思不精確。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "Nothing is more effective in preventing wildfires than regularly clearing dead branches and fallen leaves from forests.",
+              "grammar_id": "gp-comparative-superlative",
+              "explanation_zh": "用「否定詞＋比較級」Nothing is more effective … than … 表達最高級的意思，語氣更強烈。"
+            }
+          ],
+          "restructuring_zh": "「定期清除林地上的枯枝落葉」這個動作當主詞，英文改成動名詞片語（視為單數）；「普遍被認為是」用被動 is widely recognized as／is widely considered (to be)。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ac-V-3",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "C-V-4",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-top-03",
+    "lot": "translation-top-03",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "31117a6d4ea07290a38612cba619cca8744c8f0cc9141fe199063ce8d6f7050e",
+    "spec_id": "translation-top@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 2,
+    "sentences": 2,
+    "avg_sentence_length": 1.0,
+    "denominator": 2,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 1.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {
+      "off": 2
+    },
+    "offlist_words": [
+      "wildfires"
+    ],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "warn",
+      "created_at": "2026-10-09T13:17:22Z",
+      "details": {
+        "errors": [],
+        "warnings": [
+          "annotations.rubric.items.1.patterns[1]: gp-perfect-passive 通常對應句構 PERF（目前 code=PASS）"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T12:52:43Z",
+      "details": {
+        "solver": "A",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "In recent years, large areas of forest have been destroyed by wildfires, which are especially likely to occur in hot and dry weather.",
+            "confidence": "high",
+            "explanation_zh": "「近年來」配現在完成式；「已被燒毀」用現在完成被動 have been destroyed（也可 burned）；「而野火…特別容易發生」補充說明 wildfires，用非限定關係子句 which are especially likely to occur。"
+          },
+          "2": {
+            "translation": "Therefore, regularly clearing dead branches and fallen leaves from the forest floor is widely regarded as one of the most effective ways to prevent wildfires.",
+            "confidence": "high",
+            "explanation_zh": "動名詞片語當主詞（單數動詞 is）；「普遍被認為是」用 is widely regarded as（也可 considered）；「最有效的方法之一」用 one of the most effective ways to…（最高級＋複數名詞）。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "NRREL",
+              "PASS"
+            ],
+            "used_target_words": [
+              "forest",
+              "destroy",
+              "especially",
+              "weather"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PASS",
+              "NFSUBJ"
+            ],
+            "used_target_words": [
+              "clear",
+              "regularly",
+              "branch",
+              "prevent",
+              "effective",
+              "strategy"
+            ],
+            "within_accepted": true,
+            "closest_reference": 2,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "forest",
+              "destroy",
+              "especially",
+              "weather"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NRREL": true,
+              "PASS": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "clear",
+              "regularly",
+              "branch",
+              "prevent",
+              "effective",
+              "strategy"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PASS": true,
+              "NFSUBJ": false
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T12:59:49Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "In recent years, large areas of forest have been destroyed by wildfires, which are especially likely to occur in hot, dry weather.",
+            "confidence": "high",
+            "explanation_zh": "「近年來」搭配現在完成式被動 have been destroyed；「大片森林」譯為 large areas of forest；「野火在炎熱乾燥的天氣裡特別容易發生」用非限定關係子句 which are especially likely to occur。"
+          },
+          "2": {
+            "translation": "Therefore, regularly clearing dead branches and leaves from the forest floor is widely considered one of the most effective ways to prevent wildfires.",
+            "confidence": "high",
+            "explanation_zh": "「定期清除林地上的枯枝落葉」用動名詞片語當主詞（動名詞當主詞，動詞用單數 is）；「普遍被認為是」用 is widely considered；「最有效的方法之一」用 one of the most effective ways to V。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "NRREL",
+              "PASS"
+            ],
+            "used_target_words": [
+              "forest",
+              "destroy",
+              "especially",
+              "weather"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PASS",
+              "NFSUBJ"
+            ],
+            "used_target_words": [
+              "clear",
+              "regularly",
+              "branch",
+              "prevent",
+              "effective",
+              "strategy"
+            ],
+            "within_accepted": true,
+            "closest_reference": 2,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "forest",
+              "destroy",
+              "especially",
+              "weather"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NRREL": true,
+              "PASS": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "clear",
+              "regularly",
+              "branch",
+              "prevent",
+              "effective",
+              "strategy"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PASS": true,
+              "NFSUBJ": false
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

@@ -1,0 +1,729 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.7bf557",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "top",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "鼓勵人們修理和回收產品而非直接丟棄的循環經濟（circular economy），已被許多國家採用。",
+        "options": null,
+        "answer": "The circular economy, which encourages people to repair and recycle products instead of simply throwing them away, has been adopted by many countries.",
+        "accepted_answers": [
+          "The circular economy, which encourages people to repair and recycle products rather than just throw them away, has been adopted by many nations.",
+          "The circular economy, which urges people to fix and recycle products instead of throwing them away, has been accepted by many countries."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "非限定關係子句（補充說明循環經濟：The circular economy, which …,）",
+            "完成式被動（已被採用）"
+          ],
+          "topic": "循環經濟"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "然而，買新產品往往比修理舊產品便宜，造成資源的大量浪費。",
+        "options": null,
+        "answer": "However, it is often cheaper to buy new products than to repair old ones, resulting in an enormous waste of resources.",
+        "accepted_answers": [
+          "However, it is usually cheaper to buy new products than to fix old ones, causing a huge waste of resources.",
+          "However, it is often less expensive to buy new products than to repair old ones, leading to a great waste of resources."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "句尾分詞片語表結果（…，造成…）",
+            "虛主詞 It ＋形容詞＋不定詞（買新的比修舊的便宜）"
+          ],
+          "topic": "循環經濟"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "循環經濟"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「循環經濟」是一個特定的概念，前面的長修飾語只是補充說明，所以用逗號加 which 的非限定關係子句；which 指單數名詞，動詞用 encourages。「鼓勵某人做某事」是 encourage sb to VR；「而非直接丟棄」用 instead of＋V-ing 或 rather than＋原形。「已被許多國家採用」用現在完成式被動 has been adopted，主詞單數用 has。",
+          "evidence": [
+            "鼓勵人們修理和回收產品而非直接丟棄的循環經濟（circular economy）",
+            "已被許多國家採用"
+          ],
+          "strategy_zh": "先寫骨幹 The circular economy has been adopted by many countries，再把修飾語變成 which 子句插在主詞後面，兩個逗號把它包起來。",
+          "hints": [
+            "切成四段：鼓勵人們修理和回收產品／而非直接丟棄／的循環經濟／已被許多國家採用",
+            "標的詞彙：encourage（鼓勵）、repair（修理）、recycle（回收）、throw sth away（丟棄）、adopt（採用）",
+            "句型框架：N, which + V …, + has been + p.p. + by …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「買新產品…比修理舊產品便宜」主詞是一件事，英文通常用虛主詞 It is cheaper to buy … than to repair …；than 後面也用 to＋原形，兩邊對稱。「，造成…」用句尾分詞 resulting in／causing／leading to，邏輯主詞是前面「買新比修舊便宜」這個現象。「大量浪費」寫成名詞片語 an enormous waste of resources，resources 用複數。",
+          "evidence": [
+            "買新產品往往比修理舊產品便宜",
+            "造成資源的大量浪費"
+          ],
+          "strategy_zh": "句首「然而」用 However,；主要子句用 It is＋比較級＋to … than to …，再用逗號加 resulting in 交代結果。",
+          "hints": [
+            "切成四段：買新產品往往／比修理舊產品便宜／造成／資源的大量浪費",
+            "標的詞彙：cheap（便宜的）、product（產品）、repair（修理）、waste（浪費）、resource（資源）",
+            "句型框架：It is + 比較級 + to VR … than to VR …, resulting in + N"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "The circular economy, which encourages people to repair and recycle products instead of simply throwing them away, has been adopted by many countries.",
+            "The circular economy, which encourages people to repair and recycle products rather than just throw them away, has been adopted by many nations.",
+            "The circular economy, which urges people to fix and recycle products instead of throwing them away, has been accepted by many countries."
+          ],
+          "target_words": [
+            {
+              "word": "encourage",
+              "zh": "鼓勵",
+              "alternatives": [
+                "urge",
+                "promote"
+              ]
+            },
+            {
+              "word": "repair",
+              "zh": "修理",
+              "alternatives": [
+                "fix"
+              ]
+            },
+            {
+              "word": "recycle",
+              "zh": "回收"
+            },
+            {
+              "word": "throw sth away",
+              "zh": "丟棄",
+              "alternatives": [
+                "throw away",
+                "discard",
+                "get rid of"
+              ]
+            },
+            {
+              "word": "adopt",
+              "zh": "採用",
+              "alternatives": [
+                "accept",
+                "embrace"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "NRREL",
+              "grammar_id": "gp-nonrestrictive",
+              "label_zh": "非限定關係子句（補充說明循環經濟：The circular economy, which …,）",
+              "frame": "N, which + V …, + has been + p.p. …",
+              "zh_trigger": "鼓勵人們修理和回收產品而非直接丟棄的循環經濟"
+            },
+            {
+              "code": "PASS",
+              "grammar_id": "gp-perfect-passive",
+              "label_zh": "完成式被動（已被採用）",
+              "frame": "S + have/has + been + p.p. + by …",
+              "zh_trigger": "已被許多國家採用"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "鼓勵人們修理和回收產品",
+              "accepted": [
+                "which encourages people to repair and recycle products",
+                "which urges people to fix and recycle products",
+                "which encourages people to fix and recycle products",
+                "which urges people to repair and recycle products"
+              ],
+              "targets": [
+                "encourage",
+                "repair",
+                "recycle"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "which encourage people to repair and recycle products",
+                  "right": "which encourages people to repair and recycle products",
+                  "explanation_zh": "which 指單數的 the circular economy，動詞要加 s。"
+                },
+                {
+                  "wrong": "which encourages people repair and recycle products",
+                  "right": "which encourages people to repair and recycle products",
+                  "explanation_zh": "encourage sb to VR，to 不能省。"
+                }
+              ]
+            },
+            {
+              "zh": "而非直接丟棄",
+              "accepted": [
+                "instead of simply throwing them away",
+                "rather than just throw them away",
+                "instead of throwing them away",
+                "rather than throwing them away",
+                "instead of just throwing them away",
+                "rather than simply throw them away"
+              ],
+              "targets": [
+                "throw sth away"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "instead of simply throw them away",
+                  "right": "instead of simply throwing them away",
+                  "explanation_zh": "instead of 的 of 是介系詞，後面接 V-ing。"
+                },
+                {
+                  "wrong": "rather than directly discard them",
+                  "right": "rather than just throw them away",
+                  "explanation_zh": "「直接丟棄」的「直接」是「不多想就丟」，用 simply／just；directly 是「不經中間、直接地」，搭配不自然。"
+                }
+              ]
+            },
+            {
+              "zh": "的循環經濟（circular economy）",
+              "accepted": [
+                "The circular economy, which"
+              ],
+              "targets": [
+                "NRREL"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "The circular economy that encourages people to repair and recycle products",
+                  "right": "The circular economy, which encourages people to repair and recycle products",
+                  "explanation_zh": "循環經濟是一個特定的概念，修飾語只是補充說明，要用逗號加 which，不用 that。"
+                },
+                {
+                  "wrong": "Encouraging people to repair and recycle products circular economy",
+                  "right": "The circular economy, which encourages people to repair and recycle products",
+                  "explanation_zh": "中文的前置修飾語太長，英文要改成放在名詞後面的關係子句。"
+                }
+              ]
+            },
+            {
+              "zh": "已被許多國家採用",
+              "accepted": [
+                "has been adopted by many countries",
+                "has been adopted by many nations",
+                "has been accepted by many countries"
+              ],
+              "targets": [
+                "adopt",
+                "PASS"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "has adopted by many countries",
+                  "right": "has been adopted by many countries",
+                  "explanation_zh": "循環經濟是「被」採用，要用完成式被動 has been＋p.p.。"
+                },
+                {
+                  "wrong": "have been adopted by many countries",
+                  "right": "has been adopted by many countries",
+                  "explanation_zh": "主詞 the circular economy 是單數，用 has。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "prenominal_modifier",
+              "zh": "鼓勵人們修理和回收產品而非直接丟棄的循環經濟",
+              "literal_error": "Encouraging people to repair and recycle products instead of throwing them away circular economy has been adopted by many countries.",
+              "part": 3,
+              "explanation_zh": "中文把整串修飾語放在「循環經濟」前面；英文名詞前放不下這麼長的修飾語，要改成名詞後面的 which 子句，並用兩個逗號包起來。"
+            },
+            {
+              "type": "collocation",
+              "zh": "直接丟棄",
+              "literal_error": "instead of directly discarding them",
+              "part": 2,
+              "explanation_zh": "「直接丟棄」的「直接」是「想都不想就」的意思，英文用 simply／just throw away；directly 是「直接地、不經中間」，和 discard 搭配不自然。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "Many countries have embraced the circular economy, an approach that encourages people to repair and recycle products rather than throw them away.",
+              "explanation_zh": "改用主動語態，並用同位語 an approach that … 補充說明循環經濟，是寫作常用的進階句構。"
+            }
+          ],
+          "restructuring_zh": "中文把「鼓勵…而非直接丟棄」整串放在「循環經濟」前面，英文要把修飾語移到名詞後面，寫成 The circular economy, which …,；「已被許多國家採用」改成完成式被動 has been adopted by many countries。"
+        },
+        "2": {
+          "references": [
+            "However, it is often cheaper to buy new products than to repair old ones, resulting in an enormous waste of resources.",
+            "However, it is usually cheaper to buy new products than to fix old ones, causing a huge waste of resources.",
+            "However, it is often less expensive to buy new products than to repair old ones, leading to a great waste of resources."
+          ],
+          "target_words": [
+            {
+              "word": "cheap",
+              "zh": "便宜的",
+              "alternatives": [
+                "expensive",
+                "cost"
+              ]
+            },
+            {
+              "word": "product",
+              "zh": "產品"
+            },
+            {
+              "word": "repair",
+              "zh": "修理",
+              "alternatives": [
+                "fix"
+              ]
+            },
+            {
+              "word": "waste",
+              "zh": "浪費"
+            },
+            {
+              "word": "resource",
+              "zh": "資源"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PART",
+              "grammar_id": "gp-participle-result",
+              "label_zh": "句尾分詞片語表結果（…，造成…）",
+              "frame": "S + V …, resulting in / causing / leading to + N",
+              "zh_trigger": "造成"
+            },
+            {
+              "code": "NFSUBJ",
+              "grammar_id": "gp-it-adj-to",
+              "label_zh": "虛主詞 It ＋形容詞＋不定詞（買新的比修舊的便宜）",
+              "frame": "It is + 比較級 adj. + to VR … than to VR …",
+              "zh_trigger": "買新產品往往比修理舊產品便宜"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "買新產品往往",
+              "accepted": [
+                "it is often cheaper to buy new products",
+                "it is usually cheaper to buy new products",
+                "it is often less expensive to buy new products",
+                "buying new products is often cheaper"
+              ],
+              "targets": [
+                "NFSUBJ",
+                "cheap",
+                "product"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Buy new products is often cheaper",
+                  "right": "It is often cheaper to buy new products",
+                  "explanation_zh": "動詞片語不能直接當主詞；用虛主詞 It is … to VR，或動名詞 Buying new products is …。"
+                },
+                {
+                  "wrong": "it is often more cheap to buy new products",
+                  "right": "it is often cheaper to buy new products",
+                  "explanation_zh": "cheap 的比較級是 cheaper。"
+                }
+              ]
+            },
+            {
+              "zh": "比修理舊產品便宜",
+              "accepted": [
+                "than to repair old ones",
+                "than to fix old ones",
+                "than repairing old ones",
+                "than to repair old products"
+              ],
+              "targets": [
+                "repair"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "than repair old ones",
+                  "right": "than to repair old ones",
+                  "explanation_zh": "比較的兩邊要對稱：to buy 對 to repair（或 buying 對 repairing）。"
+                },
+                {
+                  "wrong": "than to repair the old one",
+                  "right": "than to repair old ones",
+                  "explanation_zh": "泛指舊產品用複數 old ones。"
+                }
+              ]
+            },
+            {
+              "zh": "造成",
+              "accepted": [
+                "resulting in",
+                "causing",
+                "leading to"
+              ],
+              "targets": [
+                "PART"
+              ],
+              "common_errors": [
+                {
+                  "wrong": ", results in an enormous waste of resources",
+                  "right": ", resulting in an enormous waste of resources",
+                  "explanation_zh": "逗號後直接接動詞 results，句子就有兩個主要動詞；表結果用分詞 resulting in。"
+                },
+                {
+                  "wrong": ", resulting an enormous waste of resources",
+                  "right": ", resulting in an enormous waste of resources",
+                  "explanation_zh": "result 表「導致」要接 in。"
+                }
+              ]
+            },
+            {
+              "zh": "資源的大量浪費",
+              "accepted": [
+                "an enormous waste of resources",
+                "a huge waste of resources",
+                "a great waste of resources"
+              ],
+              "targets": [
+                "waste",
+                "resource"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "resources' big waste",
+                  "right": "an enormous waste of resources",
+                  "explanation_zh": "「資源的大量浪費」寫成 a(n)＋形容詞＋waste of＋名詞，不要用所有格逐字翻。"
+                },
+                {
+                  "wrong": "an enormous waste of resource",
+                  "right": "an enormous waste of resources",
+                  "explanation_zh": "這裡泛指各種資源，用複數 resources。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "verbal_subject",
+              "zh": "買新產品往往比修理舊產品便宜",
+              "literal_error": "However, buy new products is often cheaper than repair old products.",
+              "part": 1,
+              "explanation_zh": "中文直接拿動詞片語「買新產品」當主詞；英文要改成虛主詞 It is cheaper to buy …（或動名詞 Buying …），than 後面也要用相同形式。"
+            },
+            {
+              "type": "abstract_nominal",
+              "zh": "資源的大量浪費",
+              "literal_error": "causing resources' big amount of waste",
+              "part": 4,
+              "explanation_zh": "「浪費」在這裡是抽象名詞，英文寫成 an enormous waste of resources；照字面加所有格、把「大量」譯成 big amount 都不自然。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "However, replacing a product often costs less than repairing it, a habit that wastes a great deal of resources.",
+              "explanation_zh": "用動名詞主詞 replacing … 對 repairing …，句尾再用同位語 a habit that … 評論這個現象，比單純的分詞片語更有層次。"
+            }
+          ],
+          "restructuring_zh": "「買新產品往往比修理舊產品便宜」中文用動詞片語當主詞，英文改用虛主詞 It is cheaper to … than to …（或動名詞 Buying … is cheaper than repairing …），比較的兩邊形式要一致；「造成資源的大量浪費」名詞化寫成 resulting in an enormous waste of resources。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ac-V-3",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-top-02",
+    "lot": "translation-top-02",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "6c20f5a14ca426db5ab42249ce1bc261a4855dfb4f5732045980d8afdca92905",
+    "spec_id": "translation-top@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 2,
+    "sentences": 1,
+    "avg_sentence_length": 2.0,
+    "denominator": 2,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 1.0,
+    "coverage_l1_6": 1.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {
+      "4": 2
+    },
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "warn",
+      "created_at": "2026-10-09T13:14:30Z",
+      "details": {
+        "errors": [],
+        "warnings": [
+          "annotations.rubric.items.1.patterns[1]: gp-perfect-passive 通常對應句構 PERF（目前 code=PASS）"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "fail",
+      "created_at": "2026-10-09T08:03:54Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "The circular economy, which encourages people to repair and recycle products instead of simply throwing them away, has been adopted by many countries.",
+            "confidence": "high",
+            "explanation_zh": "前面的長修飾語用非限定關係子句補述循環經濟；encourage sb. to V；「而非直接丟棄」用 instead of + V-ing；「已被…採用」用現在完成式被動 has been adopted by。"
+          },
+          "2": {
+            "translation": "However, buying new products is often cheaper than repairing old ones, which results in a huge waste of resources.",
+            "confidence": "high",
+            "explanation_zh": "動名詞當主詞做比較（buying… is cheaper than repairing…），比較的兩邊詞性對稱；「造成資源的大量浪費」用 which 補述前面整句，results in a huge waste of resources。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "NRREL",
+              "PASS"
+            ],
+            "used_target_words": [
+              "encourage",
+              "repair",
+              "recycle",
+              "throw sth away",
+              "adopt"
+            ],
+            "within_accepted": true,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [],
+            "closest_reference": 0
+          },
+          "2": {
+            "used_patterns": [
+              "NFSUBJ"
+            ],
+            "used_target_words": [
+              "cheap",
+              "product",
+              "repair",
+              "waste",
+              "resource"
+            ],
+            "within_accepted": false,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "「，造成資源的大量浪費」我用非限定關係子句 which results in a huge waste of resources，沒有用句尾分詞片語 resulting in／causing／leading to，所以 PART 沒用到，第 3 部分也不在 accepted 內。中文的「，造成…」譯成 which results in／which leads to 同樣自然，題目沒有唯一引出分詞片語；建議第 3 部分 accepted 補 which results in／which leads to／which causes，或接受這個句型不是中文唯一引出的寫法。",
+              "NFSUBJ 的 label 與 frame 寫的是虛主詞 It is + 比較級 + to VR，我用的是動名詞主詞 buying new products is often cheaper than repairing old ones；因為第 1 部分 accepted 明列這個寫法且 targets 含 NFSUBJ，所以算有用到。但 label／frame 只寫 It…to，程式的句構比對可能比對不到，建議 label 改成「非限定子句當主詞（It…to VR 或 V-ing 主詞）」。"
+            ],
+            "closest_reference": 0
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "encourage",
+              "repair",
+              "recycle",
+              "throw sth away",
+              "adopt"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NRREL": true,
+              "PASS": true
+            },
+            "program_match": true
+          },
+          "2": {
+            "target_words_found": [
+              "cheap",
+              "product",
+              "repair",
+              "waste",
+              "resource"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NFSUBJ": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 2 題盲譯沒有用到標的句型 ['PART']：中文題目沒有自然引出這個句型（SPEC §5.7）",
+          "第 2 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "fail",
+      "created_at": "2026-10-09T12:46:22Z",
+      "details": {
+        "solver": "B",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "The circular economy, which encourages people to repair and recycle products instead of simply throwing them away, has been adopted by many countries.",
+            "confidence": "high",
+            "explanation_zh": "長修飾語改用 which 非限定關係子句；「而非直接丟棄」用 instead of + V-ing；「已被……採用」用現在完成式被動。"
+          },
+          "2": {
+            "translation": "However, buying new products is often cheaper than repairing old ones, resulting in a huge waste of resources.",
+            "confidence": "high",
+            "explanation_zh": "「買新產品」用動名詞當主詞，與 repairing old ones 平行比較；「造成……」用分詞構句 resulting in 表結果；「大量浪費」譯成 a huge waste of resources。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "NRREL",
+              "PASS"
+            ],
+            "used_target_words": [
+              "encourage",
+              "repair",
+              "recycle",
+              "throw sth away",
+              "adopt"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PART"
+            ],
+            "used_target_words": [
+              "cheap",
+              "product",
+              "repair",
+              "waste",
+              "resource"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "NFSUBJ 的 label_zh 與 frame 寫的是虛主詞 It is + 比較級 adj. + to VR … than to VR …，但第 1 部分的 accepted 又收了動名詞主詞 buying new products is often cheaper，restructuring_zh 也說動名詞可以。我自然寫成動名詞主詞（Buying … is often cheaper than repairing …），所以依 frame 的字面，我沒有用到虛主詞句型；中文「買新產品往往比修理舊產品便宜」同時引得出虛主詞與動名詞，句型標的與 accepted 不一致。建議把 NFSUBJ 的 label／frame 改成「虛主詞或動名詞當主詞」，或把動名詞寫法從 accepted 移除。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "encourage",
+              "repair",
+              "recycle",
+              "throw sth away",
+              "adopt"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NRREL": true,
+              "PASS": true
+            },
+            "program_match": true
+          },
+          "2": {
+            "target_words_found": [
+              "cheap",
+              "product",
+              "repair",
+              "waste",
+              "resource"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PART": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 2 題盲譯沒有用到標的句型 ['NFSUBJ']：中文題目沒有自然引出這個句型（SPEC §5.7）",
+          "第 2 題驗證者對4 部分切分有意見（warn）：NFSUBJ 的 label_zh 與 frame 寫的是虛主詞 It is + 比較級 adj. + to VR … than to VR …，但第 1 部分的 accepted 又收了動名詞主詞 buying new products "
+        ]
+      }
+    }
+  ],
+  "status": "rejected",
+  "status_reason": "blind_solver:A 未通過：第 2 題盲譯沒有用到標的句型 ['PART']：中文題目沒有自然引出這個句型（SPEC §5.7）；第 2 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義；blind_solver:B 未通過：第 2 題盲譯沒有用到標的句型 ['NFSUBJ']：中文題目沒有自然引出這個句型（SPEC §5.7）；第 2 題驗證者對4 部分切分有意見（warn）：NFSUBJ 的 label_zh 與 frame 寫的是虛主詞 It is + 比較級 adj. + to VR … than to VR …，但第 1 部分的 accepted 又收了動名詞主詞 buying new products ；人工審核：第 2 句「，造成…」寫成 , which results in … 一樣自然，PART 沒有被唯一引出；NFSUBJ 的 label／frame 只寫虛主詞 It is … to VR，第 1 部分 accepted 卻收動名詞主詞 buying …，句型定義和評分規準不一致。"
+}

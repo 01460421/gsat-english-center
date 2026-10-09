@@ -1,0 +1,720 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.6a81e2",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "advanced",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "考試前，許多學生犧牲睡眠、放棄運動，好讓自己能多讀一點書。",
+        "options": null,
+        "answer": "Before exams, many students sacrifice sleep and give up exercise so that they can study a little more.",
+        "accepted_answers": [
+          "Before exams, many students sacrifice their sleep and stop exercising so that they can spend more time studying.",
+          "Before an exam, many students give up sleep and exercise so that they are able to study more."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "so that 表目的",
+            "平行結構"
+          ],
+          "topic": "考試壓力"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "為了減輕壓力，規律運動、睡眠充足和找朋友聊聊都很有幫助。",
+        "options": null,
+        "answer": "To relieve stress, exercising regularly, getting enough sleep, and chatting with friends are all helpful.",
+        "accepted_answers": [
+          "In order to reduce stress, it is helpful to exercise regularly, get enough sleep, and chat with friends.",
+          "To ease stress, regular exercise, enough sleep, and chats with friends are all very helpful."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "不定詞表目的",
+            "平行結構"
+          ],
+          "topic": "考試壓力"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "考試壓力"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「犧牲睡眠、放棄運動」是兩個並列的動作，用 and 連接、形式一致：sacrifice sleep and give up exercise。「好讓自己能…」表目的，用 so that they can + 原形動詞，主詞換成 they。「多讀一點書」寫 study a little more（或 spend more time studying）。",
+          "evidence": [
+            "犧牲睡眠、放棄運動",
+            "好讓自己能"
+          ],
+          "strategy_zh": "中文用頓號並列的動作，英文要用 and 連接並維持相同形式；「好讓…能…」先想 so that + S + can。",
+          "hints": [
+            "切成四段：考試前／許多學生犧牲睡眠、放棄運動／好讓自己能／多讀一點書",
+            "標的詞彙：exam（考試，L2）、sacrifice（犧牲，L4）、sleep（睡眠，L1）、exercise（運動，L1）、study（讀書，L1）",
+            "句型框架：S + V1 + O1 and V2 + O2 + so that + S + can + VR …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「為了減輕壓力」放句首，用不定詞 To relieve stress（或 In order to reduce stress）。主詞是三個動作，英文改成平行的動名詞片語：exercising regularly, getting enough sleep, and chatting with friends；三者用 and 連接是複數，所以用 are all helpful。也可以改成 It is helpful to exercise …, get …, and chat …，三個原形動詞保持平行。",
+          "evidence": [
+            "為了減輕壓力",
+            "規律運動、睡眠充足和找朋友聊聊"
+          ],
+          "strategy_zh": "列舉三件事時，先決定一種形式（都用 V-ing 或都用 to VR），再排成「A, B, and C」；並列的主詞動詞用複數。",
+          "hints": [
+            "切成四段：為了減輕壓力／規律運動、睡眠充足／和找朋友聊聊／都很有幫助",
+            "標的詞彙：relieve（減輕，L4）、stress（壓力，L2）、exercise（運動，L1）、sleep（睡眠，L1）、friend（朋友，L1）、helpful（有幫助的，L1）；chat（聊天，L3）可替換 talk",
+            "句型框架：To + VR …, V-ing …, V-ing …, and V-ing … + are all helpful."
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "Before exams, many students sacrifice sleep and give up exercise so that they can study a little more.",
+            "Before exams, many students sacrifice their sleep and stop exercising so that they can spend more time studying.",
+            "Before an exam, many students give up sleep and exercise so that they are able to study more."
+          ],
+          "target_words": [
+            {
+              "word": "exam",
+              "zh": "考試",
+              "alternatives": [
+                "test"
+              ]
+            },
+            {
+              "word": "sacrifice",
+              "zh": "犧牲",
+              "alternatives": [
+                "give up",
+                "lose",
+                "cut down on"
+              ]
+            },
+            {
+              "word": "sleep",
+              "zh": "睡眠"
+            },
+            {
+              "word": "exercise",
+              "zh": "運動",
+              "alternatives": [
+                "work out",
+                "sport"
+              ]
+            },
+            {
+              "word": "study",
+              "zh": "讀書"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PURP",
+              "grammar_id": "gp-so-that-purpose",
+              "label_zh": "目的：so that + S + can",
+              "frame": "S + V … so that + S + can + VR",
+              "zh_trigger": "好讓自己能"
+            },
+            {
+              "code": "PARA",
+              "grammar_id": "gp-parallelism",
+              "label_zh": "平行結構（兩個動詞片語）",
+              "frame": "S + V1 + O1 and V2 + O2",
+              "zh_trigger": "犧牲睡眠、放棄運動"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "考試前",
+              "accepted": [
+                "Before exams",
+                "Before an exam",
+                "Before tests",
+                "Before the exam",
+                "Before taking exams"
+              ],
+              "targets": [
+                "exam"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Before exam",
+                  "right": "Before exams",
+                  "explanation_zh": "exam 是可數名詞，單數前要加冠詞（before an exam），泛指用複數 exams。"
+                }
+              ]
+            },
+            {
+              "zh": "許多學生犧牲睡眠、放棄運動",
+              "accepted": [
+                "many students sacrifice sleep and give up exercise",
+                "many students sacrifice their sleep and stop exercising",
+                "many students give up sleep and exercise",
+                "many students sacrifice sleep and give up exercising",
+                "many students sleep less and stop exercising"
+              ],
+              "targets": [
+                "sacrifice",
+                "sleep",
+                "exercise",
+                "PARA"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "many students sacrifice sleep and giving up exercise",
+                  "right": "many students sacrifice sleep and give up exercise",
+                  "explanation_zh": "and 連接的兩個動詞要同樣形式（平行結構），都用現在式。"
+                },
+                {
+                  "wrong": "many students sacrifice sleep, give up exercise",
+                  "right": "many students sacrifice sleep and give up exercise",
+                  "explanation_zh": "英文兩個並列的動詞片語之間要有 and。"
+                }
+              ]
+            },
+            {
+              "zh": "好讓自己能",
+              "accepted": [
+                "so that they can",
+                "so that they are able to",
+                "in order that they can",
+                "so they can"
+              ],
+              "targets": [
+                "PURP"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "to let themselves can",
+                  "right": "so that they can",
+                  "explanation_zh": "「好讓自己能…」表目的，用 so that + 主詞 + can；let 後面接原形動詞，不能再接 can。"
+                },
+                {
+                  "wrong": "so that themselves can",
+                  "right": "so that they can",
+                  "explanation_zh": "so that 後面要接完整子句，主詞用主格 they。"
+                }
+              ]
+            },
+            {
+              "zh": "多讀一點書",
+              "accepted": [
+                "study a little more",
+                "spend more time studying",
+                "study more",
+                "have more time to study",
+                "study for more hours"
+              ],
+              "targets": [
+                "study"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "read more a little book",
+                  "right": "study a little more",
+                  "explanation_zh": "「讀書」指用功念書，用 study；「多…一點」是 a little more，放在動詞後面。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "collocation",
+              "zh": "好讓自己能",
+              "literal_error": "Before exams, many students sacrifice sleep to let themselves can study a little more.",
+              "part": 3,
+              "explanation_zh": "照字面翻「讓」會寫成 let themselves can；英文表目的要用 so that they can。"
+            },
+            {
+              "type": "word_form",
+              "zh": "犧牲睡眠、放棄運動",
+              "literal_error": "Before exams, many students sacrificing sleep and give up exercise.",
+              "part": 2,
+              "explanation_zh": "並列的兩個動詞要同樣形式，而且句子需要一個有時態的主要動詞。"
+            }
+          ],
+          "bonus": []
+        },
+        "2": {
+          "references": [
+            "To relieve stress, exercising regularly, getting enough sleep, and chatting with friends are all helpful.",
+            "In order to reduce stress, it is helpful to exercise regularly, get enough sleep, and chat with friends.",
+            "To ease stress, regular exercise, enough sleep, and chats with friends are all very helpful."
+          ],
+          "target_words": [
+            {
+              "word": "relieve",
+              "zh": "減輕",
+              "alternatives": [
+                "reduce",
+                "ease",
+                "lower"
+              ]
+            },
+            {
+              "word": "stress",
+              "zh": "壓力",
+              "alternatives": [
+                "pressure"
+              ]
+            },
+            {
+              "word": "exercise",
+              "zh": "運動",
+              "alternatives": [
+                "work out"
+              ]
+            },
+            {
+              "word": "sleep",
+              "zh": "睡眠"
+            },
+            {
+              "word": "friend",
+              "zh": "朋友"
+            },
+            {
+              "word": "helpful",
+              "zh": "有幫助的",
+              "alternatives": [
+                "help",
+                "useful"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PURP",
+              "grammar_id": "gp-infinitive-purpose",
+              "label_zh": "不定詞表目的（為了…）",
+              "frame": "To/In order to + VR …, S + V …",
+              "zh_trigger": "為了減輕壓力"
+            },
+            {
+              "code": "PARA",
+              "grammar_id": "gp-parallelism",
+              "label_zh": "平行結構（三個動名詞片語當主詞）",
+              "frame": "V-ing …, V-ing …, and V-ing … + are …",
+              "zh_trigger": "規律運動、睡眠充足和找朋友聊聊"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "為了減輕壓力",
+              "accepted": [
+                "To relieve stress",
+                "In order to reduce stress",
+                "To ease stress",
+                "To reduce stress",
+                "In order to relieve stress",
+                "To relieve pressure"
+              ],
+              "targets": [
+                "relieve",
+                "stress",
+                "PURP"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "For relieving stress",
+                  "right": "To relieve stress",
+                  "explanation_zh": "句首表目的用不定詞 To + 原形動詞（或 In order to）。"
+                },
+                {
+                  "wrong": "To relief stress",
+                  "right": "To relieve stress",
+                  "explanation_zh": "relief 是名詞，to 後面要用動詞 relieve（名詞↔動詞）。"
+                }
+              ]
+            },
+            {
+              "zh": "規律運動、睡眠充足",
+              "accepted": [
+                "exercising regularly, getting enough sleep",
+                "to exercise regularly, get enough sleep",
+                "regular exercise, enough sleep",
+                "working out regularly, getting enough sleep",
+                "exercising regularly, sleeping enough"
+              ],
+              "targets": [
+                "exercise",
+                "sleep",
+                "PARA"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "exercise regularly, getting enough sleep",
+                  "right": "exercising regularly, getting enough sleep",
+                  "explanation_zh": "並列的主詞要同樣形式，而且動詞片語當主詞要用動名詞（V-ing）。"
+                },
+                {
+                  "wrong": "regular exercise, sleep enough",
+                  "right": "regular exercise, enough sleep",
+                  "explanation_zh": "名詞片語和動詞片語混在一起不平行；要嘛都用名詞（enough sleep），要嘛都用 V-ing。"
+                }
+              ]
+            },
+            {
+              "zh": "和找朋友聊聊",
+              "accepted": [
+                "and chatting with friends",
+                "and chat with friends",
+                "and chats with friends",
+                "and talking with friends",
+                "and talking to friends",
+                "and talking with their friends"
+              ],
+              "targets": [
+                "friend",
+                "PARA"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "and finding friends to chat",
+                  "right": "and chatting with friends",
+                  "explanation_zh": "「找朋友聊聊」重點是聊天，用 talk／chat with friends，不要照字面翻成 find。"
+                }
+              ]
+            },
+            {
+              "zh": "都很有幫助",
+              "accepted": [
+                "are all helpful",
+                "it is helpful",
+                "are all very helpful",
+                "all help",
+                "are all useful",
+                "are very helpful"
+              ],
+              "targets": [
+                "helpful"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "is all helpful",
+                  "right": "are all helpful",
+                  "explanation_zh": "三個動名詞片語用 and 連接是複數主詞，動詞用 are。"
+                },
+                {
+                  "wrong": "are all help",
+                  "right": "are all helpful",
+                  "explanation_zh": "be 動詞後面要用形容詞 helpful；help 是動詞或名詞。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "verbal_subject",
+              "zh": "規律運動、睡眠充足和找朋友聊聊",
+              "literal_error": "To relieve stress, exercise regularly, sleep enough and chat with friends are all helpful.",
+              "part": 2,
+              "explanation_zh": "中文用動詞片語當主詞，英文要改成動名詞（Exercising regularly, getting …），或用 It is helpful to …。"
+            },
+            {
+              "type": "collocation",
+              "zh": "找朋友聊聊",
+              "literal_error": "and finding friends to chat are all helpful",
+              "part": 3,
+              "explanation_zh": "「找朋友聊聊」不是去「找」朋友，英文用 talk／chat with friends。"
+            }
+          ],
+          "bonus": [],
+          "restructuring_zh": "中文主詞是三個動詞片語「規律運動、睡眠充足和找朋友聊聊」，英文要改成平行的動名詞片語 exercising regularly, getting enough sleep, and chatting with friends（複數，配 are），或改用虛主詞 It is helpful to …。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-advanced-02",
+    "lot": "translation-advanced-02",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "dab2f301b2dd4cfd48bfd913df11ca683b0620cee3b8b044ef9794bc46049e02",
+    "spec_id": "translation-advanced@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T12:57:13Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T07:52:07Z",
+      "details": {
+        "solver": "A",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Before exams, many students sacrifice sleep and give up exercise so that they can study more.",
+            "confidence": "high",
+            "explanation_zh": "「犧牲睡眠、放棄運動」兩個並列動詞 sacrifice … and give up …；「好讓自己能多讀一點書」用 so that + can 表目的；「多讀一點書」譯 study more（也可 spend more time studying）。"
+          },
+          "2": {
+            "translation": "To relieve stress, exercising regularly, getting enough sleep, and talking with friends are all very helpful.",
+            "confidence": "medium",
+            "explanation_zh": "「為了減輕壓力」用不定詞片語 To relieve stress 表目的；三個動名詞片語並列當主詞，動詞用複數 are；「都很有幫助」用 are all very helpful。句首不定詞與非人主詞搭配在口語、考試中常見，但較嚴格的寫法會改成 When it comes to relieving stress，故信心 medium。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PURP",
+              "PARA"
+            ],
+            "used_target_words": [
+              "exam",
+              "sacrifice",
+              "sleep",
+              "exercise",
+              "study"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "（不影響判定）REF2 與第 2 部分 accepted 的 many students give up sleep and exercise 只有一個動詞接兩個受詞，不是本句 PARA 說明的「兩個動詞片語」（V1 + O1 and V2 + O2）；寫法本身正確，但若當示範譯文，學生看不到標的句型。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "PURP",
+              "PARA"
+            ],
+            "used_target_words": [
+              "relieve",
+              "stress",
+              "exercise",
+              "sleep",
+              "friend",
+              "helpful"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "（不影響判定）REF0、REF2 句首 To relieve/ease stress 的邏輯主詞是「人」，主要子句主詞卻是活動（exercising …／regular exercise …），嚴格的文法書會視為懸垂不定詞；考試中普遍接受，REF1（it is helpful to …）最穩妥，詳解可提醒。",
+              "（不影響判定）REF2 的 chats with friends 略不自然，chatting with friends／talks with friends 較常見。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "exam",
+              "sacrifice",
+              "sleep",
+              "exercise",
+              "study"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PURP": true,
+              "PARA": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "relieve",
+              "stress",
+              "exercise",
+              "sleep",
+              "friend",
+              "helpful"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PURP": true,
+              "PARA": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T12:57:13Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Before exams, many students sacrifice sleep and give up exercise so that they can study a little more.",
+            "confidence": "high",
+            "explanation_zh": "「好讓自己能多讀一點書」是目的，用 so that + can；「犧牲睡眠、放棄運動」兩個動詞片語用 and 連接；整句描述普遍現象，用現在簡單式。"
+          },
+          "2": {
+            "translation": "To reduce stress, exercising regularly, getting enough sleep, and talking to friends are all helpful.",
+            "confidence": "high",
+            "explanation_zh": "「為了減輕壓力」用不定詞 To reduce stress 表目的；三個並列動作用動名詞當主詞，動詞用複數 are；all 強調三者皆有幫助。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PURP",
+              "PARA"
+            ],
+            "used_target_words": [
+              "exam",
+              "sacrifice",
+              "sleep",
+              "exercise",
+              "study"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PURP",
+              "PARA"
+            ],
+            "used_target_words": [
+              "relieve",
+              "stress",
+              "exercise",
+              "sleep",
+              "friend",
+              "helpful"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "exam",
+              "sacrifice",
+              "sleep",
+              "exercise",
+              "study"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PURP": true,
+              "PARA": true
+            },
+            "program_match": true
+          },
+          "2": {
+            "target_words_found": [
+              "relieve",
+              "stress",
+              "exercise",
+              "sleep",
+              "friend",
+              "helpful"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PURP": true,
+              "PARA": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

@@ -1,0 +1,743 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.12604a",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "advanced",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "我以前很怕說英文，後來才發現在語言交換應用程式（app）上聊天很有趣。",
+        "options": null,
+        "answer": "I used to be afraid of speaking English, but later found that chatting on a language exchange app was fun.",
+        "accepted_answers": [
+          "I used to be scared of speaking English, but I later realized that chatting on language exchange apps was interesting.",
+          "I used to be afraid to speak English, but later I discovered that it was fun to chat on language exchange apps."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "used to＋原形動詞（以前…）",
+            "that 名詞子句"
+          ],
+          "topic": "語言交換 App"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "每天十分鐘的視訊聊天，讓我更了解母語人士怎麼表達想法。",
+        "options": null,
+        "answer": "A ten-minute video chat every day helps me understand better how native speakers express their ideas.",
+        "accepted_answers": [
+          "A daily ten-minute video chat helps me better understand how native speakers express their thoughts.",
+          "Thanks to a ten-minute video chat every day, I now understand better how native speakers express themselves."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "複合形容詞（數字-名詞單數）",
+            "間接問句（how + S + V）"
+          ],
+          "topic": "語言交換 App"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "語言交換 App"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「以前很怕…（現在不怕了）」是過去的狀態，用 used to + 原形動詞：I used to be afraid of speaking English（afraid 是形容詞，前面要有 be）；不要和 be used to + V-ing（習慣於）混淆。「後來才發現…」接名詞子句：later I found (that) …。that 子句的主詞是「在語言交換 app 上聊天」這個動作，用動名詞 chatting on language exchange apps，或改用虛主詞 it was fun to chat …；「有趣」用 fun／interesting，不是 funny。",
+          "evidence": [
+            "我以前很怕說英文",
+            "後來才發現"
+          ],
+          "strategy_zh": "「以前…（現在不再）」先想 used to + VR；「發現／認為／相信＋一件事」後面接 that 子句。",
+          "hints": [
+            "切成四段：我以前很怕說英文／後來才發現／在語言交換應用程式（app）上聊天／很有趣",
+            "標的詞彙：afraid（害怕的）、speak（說）、find（發現；過去式 found）、chat（聊天）、exchange（交換）、fun（有趣的事）",
+            "句型框架：S + used to + be + adj. …, but later S + found (that) + V-ing … + was + adj."
+          ]
+        },
+        "2": {
+          "explanation_zh": "「十分鐘的視訊聊天」用複合形容詞 a ten-minute video chat：數字和名詞用連字號連起來，名詞用單數 minute，前面加冠詞 a；「每天」every day 放在名詞後面（或寫 a daily ten-minute video chat）。「讓我更了解…」是 help me understand better（也可 better understand）。「母語人士怎麼表達想法」是間接問句，要用直述句語序 how native speakers express their ideas，不能寫成 how do native speakers express …。",
+          "evidence": [
+            "每天十分鐘的視訊聊天",
+            "母語人士怎麼表達想法"
+          ],
+          "strategy_zh": "「數字＋單位＋的＋名詞」先想 a + 數字-名詞（單數）+ N；間接問句裡的疑問詞後面一律接「主詞＋動詞」。",
+          "hints": [
+            "切成四段：每天／十分鐘的視訊聊天／讓我更了解／母語人士怎麼表達想法",
+            "標的詞彙：day（天；every day）、minute（分鐘）、video（視訊）、chat（聊天）、understand（了解）、native（母語的；native speaker）、express（表達）",
+            "句型框架：A + 數字-名詞 + N … helps me understand better + how + S + V …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "I used to be afraid of speaking English, but later found that chatting on a language exchange app was fun.",
+            "I used to be scared of speaking English, but I later realized that chatting on language exchange apps was interesting.",
+            "I used to be afraid to speak English, but later I discovered that it was fun to chat on language exchange apps."
+          ],
+          "target_words": [
+            {
+              "word": "afraid",
+              "zh": "害怕的",
+              "alternatives": [
+                "scared"
+              ]
+            },
+            {
+              "word": "speak",
+              "zh": "說"
+            },
+            {
+              "word": "find",
+              "zh": "發現",
+              "alternatives": [
+                "realize",
+                "discover",
+                "learn"
+              ]
+            },
+            {
+              "word": "chat",
+              "zh": "聊天",
+              "alternatives": [
+                "talk"
+              ]
+            },
+            {
+              "word": "exchange",
+              "zh": "交換"
+            },
+            {
+              "word": "fun",
+              "zh": "有趣（的事）",
+              "alternatives": [
+                "interesting",
+                "enjoyable"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "BASIC",
+              "grammar_id": "gp-used-to",
+              "label_zh": "used to＋原形動詞（以前…，現在不再）",
+              "frame": "S + used to + VR（以前…）",
+              "zh_trigger": "以前"
+            },
+            {
+              "code": "NCL",
+              "grammar_id": "gp-that-clause",
+              "label_zh": "that 名詞子句（當 found 的受詞）",
+              "frame": "S + find/realize + (that) + S + V",
+              "zh_trigger": "後來才發現"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "我以前很怕說英文",
+              "accepted": [
+                "I used to be afraid of speaking English",
+                "I used to be scared of speaking English",
+                "I used to be afraid to speak English",
+                "I used to be afraid of speaking in English",
+                "I used to fear speaking English",
+                "I was afraid of speaking English before"
+              ],
+              "targets": [
+                "BASIC",
+                "afraid",
+                "speak"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "I used to afraid of speaking English",
+                  "right": "I used to be afraid of speaking English",
+                  "explanation_zh": "afraid 是形容詞，used to 後面要先接原形 be。"
+                },
+                {
+                  "wrong": "I was used to be afraid of speaking English",
+                  "right": "I used to be afraid of speaking English",
+                  "explanation_zh": "「以前…」是 used to + 原形動詞；be used to + V-ing 是「習慣於」。"
+                },
+                {
+                  "wrong": "I used to be afraid of speak English",
+                  "right": "I used to be afraid of speaking English",
+                  "explanation_zh": "介系詞 of 後面接動名詞 speaking。"
+                }
+              ]
+            },
+            {
+              "zh": "後來才發現",
+              "accepted": [
+                "but later found that",
+                "but later I found that",
+                "but I later realized that",
+                "but later I discovered that",
+                "but later I found",
+                "but then I realized that",
+                "but later I learned that"
+              ],
+              "targets": [
+                "NCL",
+                "find"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "but after I found that",
+                  "right": "but later I found that",
+                  "explanation_zh": "「後來」是副詞 later／then；after 是連接詞或介系詞，後面要接子句或名詞。"
+                },
+                {
+                  "wrong": "but later I find that",
+                  "right": "but later I found that",
+                  "explanation_zh": "「後來才發現」是過去的事，用過去式 found。"
+                }
+              ]
+            },
+            {
+              "zh": "在語言交換應用程式（app）上聊天",
+              "accepted": [
+                "chatting on a language exchange app",
+                "chatting on language exchange apps",
+                "to chat on language exchange apps",
+                "chatting with people on language exchange apps",
+                "talking to people on language exchange apps",
+                "using language exchange apps to chat"
+              ],
+              "targets": [
+                "chat",
+                "exchange"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "chat on language exchange apps was",
+                  "right": "chatting on language exchange apps was",
+                  "explanation_zh": "動作當主詞要用動名詞 chatting（或用 it was fun to chat …）。"
+                },
+                {
+                  "wrong": "chatting on language exchanging apps",
+                  "right": "chatting on language exchange apps",
+                  "explanation_zh": "「語言交換」是名詞修飾名詞 language exchange，不寫 exchanging。"
+                }
+              ]
+            },
+            {
+              "zh": "很有趣",
+              "accepted": [
+                "was fun",
+                "was interesting",
+                "is fun",
+                "was a lot of fun",
+                "was really fun",
+                "was enjoyable"
+              ],
+              "targets": [
+                "fun"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "was very funny",
+                  "right": "was fun",
+                  "explanation_zh": "funny 是「好笑的」；「有趣、好玩」用 fun 或 interesting。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "word_form",
+              "zh": "我以前很怕說英文",
+              "literal_error": "I used to afraid speak English, but later I found that …",
+              "part": 1,
+              "explanation_zh": "afraid 是形容詞，used to 後面要先接 be；「怕做某事」是 afraid of + V-ing 或 afraid to + VR。"
+            },
+            {
+              "type": "verbal_subject",
+              "zh": "在語言交換應用程式（app）上聊天很有趣",
+              "literal_error": "I used to be afraid of speaking English, but later I found on language exchange apps chat was very funny.",
+              "part": 3,
+              "explanation_zh": "that 子句的主詞是「在 app 上聊天」這個動作，要用動名詞 chatting on language exchange apps，不能照中文先寫地點再接原形動詞。"
+            }
+          ],
+          "bonus": [],
+          "restructuring_zh": "that 子句的主詞是「在語言交換 app 上聊天」這個動作，英文用動名詞 chatting on language exchange apps 當主詞，或用虛主詞 it was fun to chat …。"
+        },
+        "2": {
+          "references": [
+            "A ten-minute video chat every day helps me understand better how native speakers express their ideas.",
+            "A daily ten-minute video chat helps me better understand how native speakers express their thoughts.",
+            "Thanks to a ten-minute video chat every day, I now understand better how native speakers express themselves."
+          ],
+          "target_words": [
+            {
+              "word": "day",
+              "zh": "天（每天 every day）",
+              "alternatives": [
+                "daily"
+              ]
+            },
+            {
+              "word": "minute",
+              "zh": "分鐘"
+            },
+            {
+              "word": "video",
+              "zh": "視訊"
+            },
+            {
+              "word": "chat",
+              "zh": "聊天"
+            },
+            {
+              "word": "understand",
+              "zh": "了解"
+            },
+            {
+              "word": "native",
+              "zh": "母語的；本地的"
+            },
+            {
+              "word": "express",
+              "zh": "表達"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "BASIC",
+              "grammar_id": "gp-compound-adj",
+              "label_zh": "複合形容詞（數字-名詞單數：ten-minute）",
+              "frame": "a + 數字-名詞（單數）+ N（a ten-minute video chat）",
+              "zh_trigger": "十分鐘的視訊聊天"
+            },
+            {
+              "code": "NCL",
+              "grammar_id": "gp-wh-clause",
+              "label_zh": "間接問句（how + S + V）",
+              "frame": "S + V + how + S + V（直述句語序）",
+              "zh_trigger": "怎麼表達想法"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "每天",
+              "accepted": [
+                "every day",
+                "daily",
+                "each day"
+              ],
+              "targets": [
+                "day"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "everyday",
+                  "right": "every day",
+                  "explanation_zh": "副詞「每天」要分開寫 every day；連在一起的 everyday 是形容詞（日常的）。"
+                }
+              ]
+            },
+            {
+              "zh": "十分鐘的視訊聊天",
+              "accepted": [
+                "a ten-minute video chat",
+                "ten-minute video chat",
+                "a 10-minute video chat",
+                "a ten-minute video call",
+                "ten minutes of video chatting"
+              ],
+              "targets": [
+                "BASIC",
+                "minute",
+                "video",
+                "chat"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "a ten-minutes video chat",
+                  "right": "a ten-minute video chat",
+                  "explanation_zh": "「數字－名詞」當形容詞時名詞用單數，中間加連字號：ten-minute。"
+                },
+                {
+                  "wrong": "a ten minutes video chat",
+                  "right": "a ten-minute video chat",
+                  "explanation_zh": "ten minutes 不能直接放在名詞前面當形容詞；寫成 a ten-minute video chat 或 ten minutes of video chatting。"
+                }
+              ]
+            },
+            {
+              "zh": "讓我更了解",
+              "accepted": [
+                "helps me understand better",
+                "helps me better understand",
+                "I now understand better",
+                "has helped me understand better",
+                "lets me understand better",
+                "makes me understand better"
+              ],
+              "targets": [
+                "understand"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "lets me more understand",
+                  "right": "helps me understand better",
+                  "explanation_zh": "「更了解」是 understand better 或 better understand，不說 more understand。"
+                },
+                {
+                  "wrong": "makes me to understand",
+                  "right": "makes me understand",
+                  "explanation_zh": "使役動詞 make 後面接原形動詞，不加 to。"
+                }
+              ]
+            },
+            {
+              "zh": "母語人士怎麼表達想法",
+              "accepted": [
+                "how native speakers express their ideas",
+                "how native speakers express their thoughts",
+                "how native speakers express themselves",
+                "how native English speakers express their ideas",
+                "the way native speakers express their ideas"
+              ],
+              "targets": [
+                "NCL",
+                "native",
+                "express"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "how do native speakers express their ideas",
+                  "right": "how native speakers express their ideas",
+                  "explanation_zh": "間接問句用直述句語序（how + 主詞 + 動詞），不加助動詞 do。"
+                },
+                {
+                  "wrong": "how mother language people express their ideas",
+                  "right": "how native speakers express their ideas",
+                  "explanation_zh": "「母語人士」是 native speakers，不逐字翻成 mother language people。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "prenominal_modifier",
+              "zh": "每天十分鐘的視訊聊天",
+              "literal_error": "Every day ten minutes video chat lets me more understand native speakers how to express ideas.",
+              "part": 2,
+              "explanation_zh": "中文把「每天」「十分鐘的」都放在名詞前面；英文用複合形容詞 a ten-minute video chat（minute 用單數），every day 放在後面。"
+            },
+            {
+              "type": "collocation",
+              "zh": "讓我更了解",
+              "literal_error": "A ten-minute video chat every day lets me more understand how native speakers express their ideas.",
+              "part": 3,
+              "explanation_zh": "「更了解」是 understand better／better understand，more 不能直接放在動詞前面。"
+            }
+          ],
+          "bonus": []
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-advanced-04",
+    "lot": "translation-advanced-04",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "4c825c0a94fac9dc54e263ee5e16ad1f93b574fa99d23ce45a0c738ed355d865",
+    "spec_id": "translation-advanced@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 1,
+    "sentences": 1,
+    "avg_sentence_length": 1.0,
+    "denominator": 1,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 1.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {
+      "off": 1
+    },
+    "offlist_words": [
+      "app"
+    ],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "warn",
+      "created_at": "2026-10-09T13:07:05Z",
+      "details": {
+        "errors": [],
+        "warnings": [
+          "annotations.rubric.items.2: 首選參考譯文有詞彙表外的字 ['ten-minute']（表外專有名詞請在題目括號附英文）"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T13:07:05Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "I used to be afraid of speaking English, but later I found that chatting on a language exchange app was a lot of fun.",
+            "confidence": "high",
+            "explanation_zh": "「以前很怕」用 used to 表過去習慣狀態；「後來才發現」用 but later I found that；「在 app 上聊天」是動作當主詞，用動名詞 chatting；「很有趣」此處是好玩之意，用 a lot of fun。"
+          },
+          "2": {
+            "translation": "A ten-minute video chat every day has helped me better understand how native speakers express their ideas.",
+            "confidence": "high",
+            "explanation_zh": "「每天十分鐘的視訊聊天」當主詞，用 a ten-minute video chat every day（複合形容詞 ten-minute 不加 s）；「讓我更了解」用 help me (to) understand；「怎麼表達想法」用間接問句 how native speakers express their ideas（直述語序）。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "BASIC",
+              "NCL"
+            ],
+            "used_target_words": [
+              "afraid",
+              "speak",
+              "find",
+              "chat",
+              "exchange",
+              "fun"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "BASIC",
+              "NCL"
+            ],
+            "used_target_words": [
+              "day",
+              "minute",
+              "video",
+              "chat",
+              "understand",
+              "native",
+              "express"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "afraid",
+              "speak",
+              "find",
+              "chat",
+              "exchange",
+              "fun"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "BASIC": null,
+              "NCL": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "day",
+              "minute",
+              "video",
+              "chat",
+              "understand",
+              "native",
+              "express"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "BASIC": null,
+              "NCL": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "fail",
+      "created_at": "2026-10-09T12:50:33Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "I used to be afraid of speaking English, but later I found out that chatting on a language exchange app was a lot of fun.",
+            "confidence": "high",
+            "explanation_zh": "「以前很怕」用 used to be afraid of + V-ing；「後來才發現」用 later I found out that，從屬子句與過去時間一致用過去式；「語言交換應用程式」用 language exchange app。"
+          },
+          "2": {
+            "translation": "Chatting by video for ten minutes every day helps me better understand how native speakers express their ideas.",
+            "confidence": "medium",
+            "explanation_zh": "「視訊聊天」用 chatting by video 當動名詞主詞；「讓我更了解」用 help me better understand；「怎麼表達想法」用 how native speakers express their ideas。時態用現在簡單式表習慣，也可以用現在完成式。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "BASIC",
+              "NCL"
+            ],
+            "used_target_words": [
+              "afraid",
+              "speak",
+              "find",
+              "chat",
+              "exchange",
+              "fun"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "NCL"
+            ],
+            "used_target_words": [
+              "day",
+              "minute",
+              "video",
+              "chat",
+              "understand",
+              "native",
+              "express"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "標的句型 BASIC（gp-compound-adj：a ten-minute video chat）沒有被中文自然引出：「每天十分鐘的視訊聊天」我自然譯成 Chatting by video for ten minutes every day，沒有用數字加單數名詞的複合形容詞；第 2 部分 accepted 自己也收了 ten minutes of video chatting，表示中文並不要求複合形容詞。建議把中文改成更強的提示（例如「一場十分鐘的視訊通話」），或把 BASIC 從這一句的標的句型拿掉。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "afraid",
+              "speak",
+              "find",
+              "chat",
+              "exchange",
+              "fun"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "BASIC": null,
+              "NCL": false
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "day",
+              "minute",
+              "video",
+              "chat",
+              "understand",
+              "native",
+              "express"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NCL": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 2 題盲譯沒有用到標的句型 ['BASIC']：中文題目沒有自然引出這個句型（SPEC §5.7）"
+        ]
+      }
+    }
+  ],
+  "status": "rejected",
+  "status_reason": "blind_solver:B 未通過：第 2 題盲譯沒有用到標的句型 ['BASIC']：中文題目沒有自然引出這個句型（SPEC §5.7）；判定者人工審查（第 1 輪）：同意退回。第 2 題標的句型 BASIC（複合形容詞 a ten-minute video chat）沒有被中文唯一引出：「每天十分鐘的視訊聊天」當主詞同樣自然譯成動名詞片語 Chatting by video for ten minutes every day（驗證者 B）或 Video chatting for ten minutes every day，第 2 部分 accepted 本身也收了不是複合形容詞的 ten minutes of video chatting，標的句型和評分規準互相矛盾；B 的動名詞主詞寫法又不在第 2 部分 accepted 內，規準也偏窄。重生時改寫中文讓「數字－名詞」複合形容詞成為唯一自然的寫法（例如讓「一場十分鐘的視訊通話」當受詞），或把這一句的標的句型換成中文確實會逼出來的句構，並補齊動名詞主詞的可接受寫法。第 1 題沒有問題。"
+}

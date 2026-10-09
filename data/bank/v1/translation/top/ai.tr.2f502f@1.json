@@ -1,0 +1,729 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.2f502f",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "top",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "對於有錯失恐懼症（fear of missing out, FOMO）的人而言，錯過任何訊息都令人焦慮，這讓他們手機不離手。",
+        "options": null,
+        "answer": "For those who suffer from FOMO, missing any message causes anxiety, which is why they never let their phones out of their hands.",
+        "accepted_answers": [
+          "For those who have a fear of missing out, missing any message makes them anxious, which is why they never put down their phones.",
+          "For those who suffer from FOMO, missing any message is worrying, which is why their phones never leave their hands."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "非限定關係子句（which 指前面整句：這讓他們…）",
+            "對於…的人而言（For those who …）"
+          ],
+          "topic": "錯失恐懼症"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "不斷推送訊息吸引使用者的應用程式，已被許多專家批評是在利用人們的焦慮。",
+        "options": null,
+        "answer": "Applications that keep sending messages to attract users have been criticized by many experts for taking advantage of people's anxiety.",
+        "accepted_answers": [
+          "Apps which constantly push messages to draw users in have been criticized by many experts for making use of people's anxiety.",
+          "Applications that send out messages all the time to keep users coming back have been criticized by many experts for exploiting people's anxiety."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "關係代名詞子句（不斷推送訊息…的應用程式＝applications that keep sending …）",
+            "完成式被動（已被許多專家批評）"
+          ],
+          "topic": "錯失恐懼症"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "錯失恐懼症"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「對於…的人而言」用 For those who suffer from FOMO（those 是複數，動詞 suffer 不加 s）。「錯過任何訊息」是動作當主詞，寫成動名詞 missing any message；「令人焦慮」可寫 causes anxiety 或 makes them anxious（不能說 is anxious）。「這讓他們手機不離手」的「這」指前面整件事，用 , which is why they never let their phones out of their hands；「手機不離手」也可以寫 never put down their phones。",
+          "evidence": [
+            "對於有錯失恐懼症（fear of missing out, FOMO）的人而言",
+            "錯過任何訊息都令人焦慮",
+            "這讓他們手機不離手"
+          ],
+          "strategy_zh": "三段各有一個重點：For those who …、動名詞主詞 missing …、句尾 , which is why …。",
+          "hints": [
+            "切成四段：對於有錯失恐懼症的人而言／錯過任何訊息／都令人焦慮／這讓他們手機不離手",
+            "標的詞彙：message（訊息）、anxiety（焦慮）、phone（手機）",
+            "句型框架：For those who + V …, V-ing … + causes + N, which is why + S + V …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "主詞是「不斷推送訊息吸引使用者的應用程式」，修飾語很長，用關係子句放在 applications（apps）後面：Applications that keep sending messages to attract users（keep 後接動名詞，to attract 表目的）。「已被許多專家批評」用完成式被動 have been criticized by many experts；批評的理由用 for + V-ing：for taking advantage of people's anxiety（「利用」別人的焦慮是 take advantage of／exploit）。",
+          "evidence": [
+            "不斷推送訊息吸引使用者的應用程式",
+            "已被許多專家批評是在利用人們的焦慮"
+          ],
+          "strategy_zh": "先找主要動詞（已被批評→have been criticized），其他的動作都放進關係子句或 for + V-ing。",
+          "hints": [
+            "切成四段：不斷推送訊息／吸引使用者／已被許多專家批評／是在利用人們的焦慮",
+            "標的詞彙：message（訊息）、application／app（應用程式）、user（使用者）、criticize（批評）、expert（專家）、anxiety（焦慮）",
+            "句型框架：N + that + V … + have been p.p. + by … + for + V-ing …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "For those who suffer from FOMO, missing any message causes anxiety, which is why they never let their phones out of their hands.",
+            "For those who have a fear of missing out, missing any message makes them anxious, which is why they never put down their phones.",
+            "For those who suffer from FOMO, missing any message is worrying, which is why their phones never leave their hands."
+          ],
+          "target_words": [
+            {
+              "word": "message",
+              "zh": "訊息"
+            },
+            {
+              "word": "anxiety",
+              "zh": "焦慮",
+              "alternatives": [
+                "anxious",
+                "worry",
+                "nervous",
+                "uneasy",
+                "stress"
+              ]
+            },
+            {
+              "word": "phone",
+              "zh": "手機"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "NRREL",
+              "grammar_id": "gp-nonrestrictive",
+              "label_zh": "非限定關係子句（which 指前面整句：這讓他們…）",
+              "frame": "S + V …, which is why + S + V …",
+              "zh_trigger": "這讓他們"
+            },
+            {
+              "code": "REL",
+              "grammar_id": "gp-for-those-who",
+              "label_zh": "對於…的人而言（For those who …）",
+              "frame": "For those who + V …, S + V …",
+              "zh_trigger": "對於有錯失恐懼症（fear of missing out, FOMO）的人而言"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "對於有錯失恐懼症（fear of missing out, FOMO）的人而言",
+              "accepted": [
+                "For those who suffer from FOMO",
+                "For those who have a fear of missing out",
+                "For those who have FOMO",
+                "For people who suffer from the fear of missing out",
+                "For those who suffer from the fear of missing out"
+              ],
+              "targets": [
+                "REL"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "For those who suffers from FOMO",
+                  "right": "For those who suffer from FOMO",
+                  "explanation_zh": "those 是複數，關係子句的動詞不加 s。"
+                },
+                {
+                  "wrong": "For those people suffer from FOMO",
+                  "right": "For those who suffer from FOMO",
+                  "explanation_zh": "「有…的人」要用關係代名詞 who 引導子句修飾 those。"
+                }
+              ]
+            },
+            {
+              "zh": "錯過任何訊息",
+              "accepted": [
+                "missing any message",
+                "missing any messages",
+                "missing even one message",
+                "missing a single message",
+                "missing even a single message"
+              ],
+              "targets": [
+                "message"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "miss any message causes anxiety",
+                  "right": "missing any message causes anxiety",
+                  "explanation_zh": "動作當主詞要用動名詞 missing。"
+                },
+                {
+                  "wrong": "losing any message",
+                  "right": "missing any message",
+                  "explanation_zh": "「錯過」是 miss；lose 是「遺失」。"
+                }
+              ]
+            },
+            {
+              "zh": "都令人焦慮",
+              "accepted": [
+                "causes anxiety",
+                "makes them anxious",
+                "is worrying",
+                "makes them worried",
+                "causes them anxiety"
+              ],
+              "targets": [
+                "anxiety"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "makes them anxiety",
+                  "right": "makes them anxious",
+                  "explanation_zh": "make + 受詞 + 形容詞；anxiety 是名詞，要改成形容詞 anxious。"
+                },
+                {
+                  "wrong": "missing any message is anxious",
+                  "right": "missing any message makes them anxious",
+                  "explanation_zh": "anxious 形容人「感到焦慮」，事情本身不能說 is anxious。"
+                }
+              ]
+            },
+            {
+              "zh": "這讓他們手機不離手",
+              "accepted": [
+                "which is why they never let their phones out of their hands",
+                "which is why they never put down their phones",
+                "which is why their phones never leave their hands",
+                "which is why they always keep their phones in their hands",
+                "which makes them hold on to their phones all the time"
+              ],
+              "targets": [
+                "NRREL",
+                "phone"
+              ],
+              "common_errors": [
+                {
+                  "wrong": ", this is why they never let their phones out of their hands",
+                  "right": ", which is why they never let their phones out of their hands",
+                  "explanation_zh": "逗號不能直接連接兩個子句；用 which 指前面整句。"
+                },
+                {
+                  "wrong": "which makes phone not leave hand",
+                  "right": "which is why they never put down their phones",
+                  "explanation_zh": "「手機不離手」要寫成完整的英文說法，例如 never put down their phones。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "abstract_nominal",
+              "zh": "令人焦慮",
+              "literal_error": "missing any message is anxious",
+              "part": 3,
+              "explanation_zh": "「焦慮」可以是名詞 anxiety（causes anxiety）或形容人的 anxious（makes them anxious）；說事情本身 is anxious 是詞性和主詞都用錯。"
+            },
+            {
+              "type": "verbal_subject",
+              "zh": "錯過任何訊息",
+              "literal_error": "For those who suffer from FOMO, miss any message causes anxiety.",
+              "part": 2,
+              "explanation_zh": "中文直接拿「錯過任何一則訊息」這個動作當主詞；英文要改成動名詞 missing any message。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "So afraid of missing a single message are people with FOMO that they hardly ever let their phones out of their sight.",
+              "grammar_id": "gp-so-adj-inversion",
+              "explanation_zh": "So + adj. + be + S + that … 的倒裝強調焦慮的程度；let … out of one's sight 表「手機不離身」。只當加分寫法。"
+            }
+          ],
+          "restructuring_zh": "「錯過任何訊息都令人焦慮」以動作當主詞，英文用動名詞 missing any message；「這讓他們…」的「這」指前面整件事，改成非限定關係子句 , which is why …。"
+        },
+        "2": {
+          "references": [
+            "Applications that keep sending messages to attract users have been criticized by many experts for taking advantage of people's anxiety.",
+            "Apps which constantly push messages to draw users in have been criticized by many experts for making use of people's anxiety.",
+            "Applications that send out messages all the time to keep users coming back have been criticized by many experts for exploiting people's anxiety."
+          ],
+          "target_words": [
+            {
+              "word": "message",
+              "zh": "訊息",
+              "alternatives": [
+                "notification",
+                "alert"
+              ]
+            },
+            {
+              "word": "application",
+              "zh": "應用程式",
+              "alternatives": [
+                "app",
+                "apps"
+              ]
+            },
+            {
+              "word": "user",
+              "zh": "使用者"
+            },
+            {
+              "word": "criticize",
+              "zh": "批評"
+            },
+            {
+              "word": "expert",
+              "zh": "專家"
+            },
+            {
+              "word": "anxiety",
+              "zh": "焦慮"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "REL",
+              "grammar_id": "gp-relative-pronoun",
+              "label_zh": "關係代名詞子句（不斷推送訊息…的應用程式＝applications that keep sending …）",
+              "frame": "N + that/which + V … + have been p.p. …",
+              "zh_trigger": "不斷推送訊息吸引使用者的"
+            },
+            {
+              "code": "PASS",
+              "grammar_id": "gp-perfect-passive",
+              "label_zh": "完成式被動（已被許多專家批評）",
+              "frame": "S + have been + p.p. + by … + for + V-ing",
+              "zh_trigger": "已被許多專家批評"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "不斷推送訊息",
+              "accepted": [
+                "Applications that keep sending messages",
+                "Apps which constantly push messages",
+                "Applications that send out messages all the time",
+                "Apps that keep sending messages",
+                "Apps that keep sending out messages",
+                "Apps that constantly send messages"
+              ],
+              "targets": [
+                "REL",
+                "application",
+                "message"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Applications keep sending messages to attract users have been criticized",
+                  "right": "Applications that keep sending messages to attract users have been criticized",
+                  "explanation_zh": "一句只能有一個主要動詞（have been criticized）；修飾 applications 的部分要用關係子句 that …。"
+                },
+                {
+                  "wrong": "that keep send messages",
+                  "right": "that keep sending messages",
+                  "explanation_zh": "keep 後面接動名詞 sending。"
+                }
+              ]
+            },
+            {
+              "zh": "吸引使用者",
+              "accepted": [
+                "to attract users",
+                "to draw users in",
+                "to keep users coming back",
+                "to attract more users"
+              ],
+              "targets": [
+                "user"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "to attract user",
+                  "right": "to attract users",
+                  "explanation_zh": "泛指使用者用複數 users。"
+                },
+                {
+                  "wrong": "to absorb users",
+                  "right": "to attract users",
+                  "explanation_zh": "「吸引」人用 attract／draw in；absorb 是「吸收」。"
+                }
+              ]
+            },
+            {
+              "zh": "已被許多專家批評",
+              "accepted": [
+                "have been criticized by many experts",
+                "have been criticized by a lot of experts",
+                "have been widely criticized by experts",
+                "have been criticised by many experts"
+              ],
+              "targets": [
+                "PASS",
+                "criticize",
+                "expert"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "have criticized by many experts",
+                  "right": "have been criticized by many experts",
+                  "explanation_zh": "「已被…批評」是完成式被動，have 後面要有 been。"
+                },
+                {
+                  "wrong": "have been criticize by many experts",
+                  "right": "have been criticized by many experts",
+                  "explanation_zh": "被動語態要用過去分詞 criticized。"
+                }
+              ]
+            },
+            {
+              "zh": "是在利用人們的焦慮",
+              "accepted": [
+                "for taking advantage of people's anxiety",
+                "for making use of people's anxiety",
+                "for exploiting people's anxiety",
+                "for profiting from people's anxiety"
+              ],
+              "targets": [
+                "anxiety"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "that they are using people's anxiety",
+                  "right": "for taking advantage of people's anxiety",
+                  "explanation_zh": "criticize sb for + V-ing 表示批評的理由，不接 that 子句。"
+                },
+                {
+                  "wrong": "for taking advantage people's anxiety",
+                  "right": "for taking advantage of people's anxiety",
+                  "explanation_zh": "take advantage of 的 of 不能省。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "prenominal_modifier",
+              "zh": "不斷推送訊息吸引使用者的應用程式",
+              "literal_error": "Keep sending messages to attract users applications have been criticized by many experts …",
+              "part": 1,
+              "explanation_zh": "中文把很長的修飾語放在「應用程式」前面；英文要用關係子句 applications that keep sending messages … 放在名詞後面。"
+            },
+            {
+              "type": "collocation",
+              "zh": "批評是在利用",
+              "literal_error": "have been criticized by many experts that they use people's anxiety",
+              "part": 4,
+              "explanation_zh": "「批評…是在做某事」英文用 criticize sb for + V-ing（被動 be criticized for V-ing）；「利用」別人的弱點是 take advantage of／exploit，不是單純的 use。"
+            }
+          ],
+          "bonus": [],
+          "restructuring_zh": "「被…批評是在…」不譯成 that 子句，英文用 be criticized for + V-ing 表示批評的理由。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ac-V-3",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-top-03",
+    "lot": "translation-top-03",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "31117a6d4ea07290a38612cba619cca8744c8f0cc9141fe199063ce8d6f7050e",
+    "spec_id": "translation-top@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 5,
+    "sentences": 1,
+    "avg_sentence_length": 5.0,
+    "denominator": 4,
+    "proper_nouns": [
+      "FOMO"
+    ],
+    "numbers": 0,
+    "coverage_l1_4": 1.0,
+    "coverage_l1_6": 1.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {
+      "1": 3,
+      "2": 1
+    },
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "warn",
+      "created_at": "2026-10-09T13:17:20Z",
+      "details": {
+        "errors": [],
+        "warnings": [
+          "annotations.rubric.items.2.patterns[1]: gp-perfect-passive 通常對應句構 PERF（目前 code=PASS）"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "fail",
+      "created_at": "2026-10-09T12:52:43Z",
+      "details": {
+        "solver": "A",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "For people with the fear of missing out (FOMO), missing any message makes them anxious, which is why they never put their phones down.",
+            "confidence": "medium",
+            "explanation_zh": "「對於…而言」用 For people with…；「錯過任何訊息」用動名詞片語當主詞；「這讓他們手機不離手」指前一整件事，用 which is why…；「手機不離手」意譯為 never put their phones down（也可 keeps them glued to their phones）。前半句 For people…, missing… makes them anxious 的 them 和 people 重複指涉，可接受但略冗。"
+          },
+          "2": {
+            "translation": "Apps that constantly send notifications to attract users have been criticized by many experts for taking advantage of people's anxiety.",
+            "confidence": "high",
+            "explanation_zh": "「不斷推送訊息吸引使用者的應用程式」用 that 關係子句修飾 Apps；「已被許多專家批評」用現在完成被動式；「批評是在利用」用 criticize sb for V-ing；「利用」譯 take advantage of（也可 exploit）。「推送訊息」譯 send notifications，比 push messages 自然。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "NRREL"
+            ],
+            "used_target_words": [
+              "message",
+              "anxiety",
+              "phone"
+            ],
+            "within_accepted": false,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "我的盲譯開頭是 For people with the fear of missing out (FOMO)，沒有用到標的句型 REL（For those who …）。「有錯失恐懼症的人」是「有＋名詞」，英文最自然的說法是 people with FOMO，中文題目沒有引出關係子句；對照 871748 第 1 句「凡事都追求完美的人」有動詞「追求」，才自然引出 those who pursue …。",
+              "第 1 部分的 accepted 只收 those/people who suffer from/have …，正確又自然的 For people with FOMO 會被扣分，評分規準太窄。建議：第 1 部分補 For people with FOMO／For those with FOMO，並把這一句的 REL 換成別的標的句型；或改寫中文讓「…的人」帶動詞（例如「對於總是擔心錯過最新消息的人而言」），才會自然引出 who 子句。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "REL",
+              "PASS"
+            ],
+            "used_target_words": [
+              "message",
+              "application",
+              "user",
+              "criticize",
+              "expert",
+              "anxiety"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "第 1 部分「不斷推送訊息」的 accepted 只有 messages，沒有 notifications；「推送」在 app 的語境最自然的英文是 send (push) notifications（我的盲譯用 Apps that constantly send notifications）。target_words 已把 notification 列為 message 的 alternatives，accepted 也應補 Apps that constantly send notifications／that keep sending notifications 等寫法。",
+              "程式比對標的詞彙時，alternatives 的 notification 不會自動對到複數 notifications（詞形表沒有這個字），所以我說用了 message（換字 notifications），程式卻找不到；建議 alternatives 直接加上 notifications（比照 application 已列 apps）。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "message",
+              "anxiety",
+              "phone"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NRREL": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "application",
+              "user",
+              "criticize",
+              "expert",
+              "anxiety"
+            ],
+            "target_hit_rate": 0.833,
+            "patterns_detected": {
+              "REL": false,
+              "PASS": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 1 題盲譯沒有用到標的句型 ['REL']：中文題目沒有自然引出這個句型（SPEC §5.7）",
+          "第 1 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義",
+          "第 1 題驗證者對4 部分切分有意見（warn）：我的盲譯開頭是 For people with the fear of missing out (FOMO)，沒有用到標的句型 REL（For those who …）。「有錯失恐懼症的人」是「有＋名詞」，英文最自然的說法是 people ",
+          "第 2 題驗證者說用了 ['message']，程式在譯文裡找不到",
+          "第 2 題驗證者對4 部分切分有意見（warn）：第 1 部分「不斷推送訊息」的 accepted 只有 messages，沒有 notifications；「推送」在 app 的語境最自然的英文是 send (push) notifications（我的盲譯用 Apps that con"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "fail",
+      "created_at": "2026-10-09T12:59:49Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "For people with the fear of missing out (FOMO), missing any message makes them anxious, which keeps them glued to their phones.",
+            "confidence": "medium",
+            "explanation_zh": "「對於…的人而言」用 for people with …；「錯過任何訊息都令人焦慮」用動名詞當主詞 missing any message makes them anxious；『這讓他們手機不離手』的『這』指整個焦慮狀況，用 which 引導補充說明，keep sb glued to sth 表示手機不離手。『手機不離手』有多種譯法，所以信心給 medium。"
+          },
+          "2": {
+            "translation": "Apps that constantly send notifications to attract users have been criticized by many experts for taking advantage of people's anxiety.",
+            "confidence": "high",
+            "explanation_zh": "「不斷推送訊息吸引使用者的應用程式」用關係子句 that constantly send notifications；「已被許多專家批評」用現在完成式被動 have been criticized by；「利用人們的焦慮」用 for taking advantage of。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "NRREL"
+            ],
+            "used_target_words": [
+              "message",
+              "anxiety",
+              "phone"
+            ],
+            "within_accepted": false,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "「有錯失恐懼症的人」最自然的譯法是 people with the fear of missing out（with 介系詞片語），我就是這樣寫的，所以 REL（For those who + V …）沒被引出；中文不會逼人用 who 子句。",
+              "第 1 部分的 accepted 全是 who 子句（suffer from／have），沒收 For people with FOMO 這種寫法；第 4 部分也沒收 which keeps them glued to their phones。我的譯文文法正確、意思對，卻對不上，評分規準偏窄。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "REL",
+              "PASS"
+            ],
+            "used_target_words": [
+              "message",
+              "application",
+              "user",
+              "criticize",
+              "expert",
+              "anxiety"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "message",
+              "anxiety",
+              "phone"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NRREL": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "application",
+              "user",
+              "criticize",
+              "expert",
+              "anxiety"
+            ],
+            "target_hit_rate": 0.833,
+            "patterns_detected": {
+              "REL": false,
+              "PASS": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 1 題盲譯沒有用到標的句型 ['REL']：中文題目沒有自然引出這個句型（SPEC §5.7）",
+          "第 1 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義",
+          "第 1 題驗證者對4 部分切分有意見（warn）：「有錯失恐懼症的人」最自然的譯法是 people with the fear of missing out（with 介系詞片語），我就是這樣寫的，所以 REL（For those who + V …）沒被引出；中文不會逼人用 who 子句",
+          "第 2 題驗證者說用了 ['message']，程式在譯文裡找不到"
+        ]
+      }
+    }
+  ],
+  "status": "rejected",
+  "status_reason": "blind_solver:A 未通過：第 1 題盲譯沒有用到標的句型 ['REL']：中文題目沒有自然引出這個句型（SPEC §5.7）；第 1 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義；第 1 題驗證者對4 部分切分有意見（warn）：我的盲譯開頭是 For people with the fear of missing out (FOMO)，沒有用到標的句型 REL（For those who …）。「有錯失恐懼症的人」是「有＋名詞」，英文最自然的說法是 people …；blind_solver:B 未通過：第 1 題盲譯沒有用到標的句型 ['REL']：中文題目沒有自然引出這個句型（SPEC §5.7）；第 1 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義；第 1 題驗證者對4 部分切分有意見（warn）：「有錯失恐懼症的人」最自然的譯法是 people with the fear of missing out（with 介系詞片語），我就是這樣寫的，所以 REL（For those who + V …）沒被引出；中文不會逼人用 who 子句…"
+}

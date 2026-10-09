@@ -1,0 +1,764 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.7c566b",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "advanced",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "和傳統手錶相比，智慧手錶多了許多專為監測心跳而設計的功能。",
+        "options": null,
+        "answer": "Compared with traditional watches, smart watches have many more functions designed to monitor heart rates.",
+        "accepted_answers": [
+          "Compared to traditional watches, smart watches offer many more functions designed for monitoring heart rates.",
+          "Compared with ordinary watches, smart watches come with many more features designed to monitor users' heart rates."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "相較於",
+            "分詞片語後位修飾"
+          ],
+          "topic": "智慧手錶"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "每天看著手錶上的數據，許多使用者發現運動得愈多，就愈有活力。",
+        "options": null,
+        "answer": "Looking at their watch data every day, many users find that the more they exercise, the more energetic they feel.",
+        "accepted_answers": [
+          "Looking at the data on their watches daily, lots of users find that the more they work out, the more energetic they become.",
+          "Checking the data on their watches every day, many users discover that the more they exercise, the more energetic they are."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "分詞構句",
+            "愈…愈…"
+          ],
+          "topic": "智慧手錶"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "智慧手錶"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「和…相比」用 Compared with/to + N，放句首後面加逗號；compared 是過去分詞，不寫 compare。「專為監測心跳而設計的功能」是前置修飾，英文先寫 functions，再用過去分詞片語 designed to monitor heart rates 放在後面（功能是被設計的，所以用 designed）。functions 可數，「多了許多」用 many more。",
+          "evidence": [
+            "和傳統手錶相比",
+            "專為監測心跳而設計的功能"
+          ],
+          "strategy_zh": "「被…的＋名詞」先寫名詞，再用過去分詞片語（designed／made／used …）接在後面；比較的對象放在 Compared with 後面。",
+          "hints": [
+            "切成四段：和傳統手錶相比／智慧手錶多了許多／專為監測心跳／而設計的功能",
+            "標的詞彙：compare（比較，L2）、traditional（傳統的，L2）、smart（智慧的，L1）、function（功能，L2）、design（設計，L2）、monitor（監測，L4）、heart rate（心跳，L3）",
+            "句型框架：Compared with + N, S + have many more + N + p.p. + to VR …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "前半句「每天看著手錶上的數據」沒有寫出主詞，主詞就是後面的「使用者」，英文用分詞構句 Looking at …, many users find …（不能用原形 Look 開頭）。「愈…就愈…」用 the + 比較級 + S + V, the + 比較級 + S + V；「有活力」是形容詞 energetic，接在 feel／become 後面。",
+          "evidence": [
+            "每天看著手錶上的數據",
+            "運動得愈多，就愈有活力"
+          ],
+          "strategy_zh": "中文前半句沒主詞、而且和後半句主詞相同時，想分詞構句：主動用 V-ing、被動用 p.p.。",
+          "hints": [
+            "切成四段：每天看著手錶上的數據／許多使用者發現／運動得愈多／就愈有活力",
+            "標的詞彙：look at（看著，L1）、data（數據，L2）、watch（手錶，L1）、user（使用者，L2）、exercise（運動，L1）、energetic（有活力的，L3）",
+            "句型框架：V-ing …, S + find that + the + 比較級 + S + V, the + 比較級 + S + V"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "Compared with traditional watches, smart watches have many more functions designed to monitor heart rates.",
+            "Compared to traditional watches, smart watches offer many more functions designed for monitoring heart rates.",
+            "Compared with ordinary watches, smart watches come with many more features designed to monitor users' heart rates."
+          ],
+          "target_words": [
+            {
+              "word": "compare",
+              "zh": "比較"
+            },
+            {
+              "word": "traditional",
+              "zh": "傳統的",
+              "alternatives": [
+                "ordinary",
+                "regular"
+              ]
+            },
+            {
+              "word": "smart",
+              "zh": "智慧的"
+            },
+            {
+              "word": "function",
+              "zh": "功能",
+              "alternatives": [
+                "feature"
+              ]
+            },
+            {
+              "word": "design",
+              "zh": "設計"
+            },
+            {
+              "word": "monitor",
+              "zh": "監測",
+              "alternatives": [
+                "track",
+                "check"
+              ]
+            },
+            {
+              "word": "heart rate",
+              "zh": "心跳",
+              "alternatives": [
+                "heartbeat"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "COMP",
+              "grammar_id": "gp-compared-with",
+              "label_zh": "相較於…（Compared with/to + N）",
+              "frame": "Compared with/to + N, S + V + 比較級 …",
+              "zh_trigger": "和傳統手錶相比"
+            },
+            {
+              "code": "PART",
+              "grammar_id": "gp-participle-modifier",
+              "label_zh": "過去分詞片語後位修飾名詞",
+              "frame": "N + p.p. + to VR／for V-ing …",
+              "zh_trigger": "專為監測心跳而設計的功能"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "和傳統手錶相比",
+              "accepted": [
+                "Compared with traditional watches",
+                "Compared to traditional watches",
+                "Compared with ordinary watches",
+                "Compared to ordinary watches",
+                "Compared with regular watches",
+                "In comparison with traditional watches",
+                "When compared with traditional watches"
+              ],
+              "targets": [
+                "compare",
+                "traditional",
+                "COMP"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Compare with traditional watches",
+                  "right": "Compared with traditional watches",
+                  "explanation_zh": "句首表「和…相比」用過去分詞 Compared，不用原形 compare。"
+                },
+                {
+                  "wrong": "Comparing with traditional watches",
+                  "right": "Compared with traditional watches",
+                  "explanation_zh": "智慧手錶是「被拿來比較」的，用 Compared with，不用 Comparing。"
+                }
+              ]
+            },
+            {
+              "zh": "智慧手錶多了許多",
+              "accepted": [
+                "smart watches have many more",
+                "smart watches offer many more",
+                "smart watches come with many more",
+                "smart watches have a lot more",
+                "smart watches have far more",
+                "smart watches provide many more"
+              ],
+              "targets": [
+                "smart"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "smart watches have much more functions",
+                  "right": "smart watches have many more functions",
+                  "explanation_zh": "functions 是可數名詞，「多出許多」用 many more，不用 much more。"
+                },
+                {
+                  "wrong": "smart watches are more many functions",
+                  "right": "smart watches have many more functions",
+                  "explanation_zh": "「多了」是「擁有更多」，用 have many more，不用 be 動詞。"
+                }
+              ]
+            },
+            {
+              "zh": "專為監測心跳",
+              "accepted": [
+                "to monitor heart rates",
+                "for monitoring heart rates",
+                "to monitor users' heart rates",
+                "to track heart rates",
+                "to monitor the heart rate",
+                "to keep track of heart rates",
+                "to check heart rates",
+                "to monitor heartbeats"
+              ],
+              "targets": [
+                "monitor",
+                "heart rate"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "for monitor heart rates",
+                  "right": "for monitoring heart rates",
+                  "explanation_zh": "for 是介系詞，後面接動名詞 monitoring；或改用不定詞 to monitor。"
+                },
+                {
+                  "wrong": "to monitoring heart rates",
+                  "right": "to monitor heart rates",
+                  "explanation_zh": "表目的的 to 是不定詞，後面接原形動詞。"
+                }
+              ]
+            },
+            {
+              "zh": "而設計的功能",
+              "accepted": [
+                "functions designed",
+                "features designed",
+                "functions specially designed",
+                "functions that are designed",
+                "features that are designed"
+              ],
+              "targets": [
+                "function",
+                "design",
+                "PART"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "functions design",
+                  "right": "functions designed",
+                  "explanation_zh": "功能是「被設計」的，要用過去分詞 designed 放在名詞後面修飾。"
+                },
+                {
+                  "wrong": "designed functions to monitor heart rates",
+                  "right": "functions designed to monitor heart rates",
+                  "explanation_zh": "修飾語 designed to … 很長，要放在名詞 functions 後面。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "plural_countable",
+              "zh": "多了許多",
+              "literal_error": "Compared with traditional watches, smart watches have much more function designed to monitor heart rates.",
+              "part": 2,
+              "explanation_zh": "function 可數：複數要加 s，「多出許多」用 many more。"
+            },
+            {
+              "type": "prenominal_modifier",
+              "zh": "專為監測心跳而設計的功能",
+              "literal_error": "Compared with traditional watches, smart watches have many more specially designed to monitor heart rates functions.",
+              "part": 4,
+              "explanation_zh": "長的修飾語照中文放在名詞前面，英文不通；要寫 functions designed to monitor heart rates。"
+            }
+          ],
+          "bonus": [],
+          "restructuring_zh": "「專為監測心跳而設計的功能」修飾語在名詞前面，英文要先寫 functions，再用過去分詞片語 designed to monitor heart rates 後位修飾。"
+        },
+        "2": {
+          "references": [
+            "Looking at their watch data every day, many users find that the more they exercise, the more energetic they feel.",
+            "Looking at the data on their watches daily, lots of users find that the more they work out, the more energetic they become.",
+            "Checking the data on their watches every day, many users discover that the more they exercise, the more energetic they are."
+          ],
+          "target_words": [
+            {
+              "word": "look at",
+              "zh": "看著",
+              "alternatives": [
+                "check"
+              ]
+            },
+            {
+              "word": "data",
+              "zh": "數據",
+              "alternatives": [
+                "number",
+                "record"
+              ]
+            },
+            {
+              "word": "watch",
+              "zh": "手錶"
+            },
+            {
+              "word": "user",
+              "zh": "使用者",
+              "alternatives": [
+                "people",
+                "wearer"
+              ]
+            },
+            {
+              "word": "exercise",
+              "zh": "運動",
+              "alternatives": [
+                "work out"
+              ]
+            },
+            {
+              "word": "energetic",
+              "zh": "有活力的",
+              "alternatives": [
+                "energy"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PART",
+              "grammar_id": "gp-participle-clause",
+              "label_zh": "分詞構句（V-ing 開頭，和主要子句同一主詞）",
+              "frame": "V-ing …, S + V …",
+              "zh_trigger": "每天看著手錶上的數據"
+            },
+            {
+              "code": "COMP",
+              "grammar_id": "gp-the-more",
+              "label_zh": "愈…愈…",
+              "frame": "the + 比較級 + S + V, the + 比較級 + S + V",
+              "zh_trigger": "運動得愈多，就愈有活力"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "每天看著手錶上的數據",
+              "accepted": [
+                "Looking at their watch data every day",
+                "Looking at the data on their watches daily",
+                "Looking at the data on their watches every day",
+                "Checking the data on their watches every day",
+                "Checking their watch data every day",
+                "Watching the numbers on their watches every day",
+                "When looking at the data on their watches every day"
+              ],
+              "targets": [
+                "look at",
+                "data",
+                "watch",
+                "PART"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Look at their watch data every day, many users find",
+                  "right": "Looking at their watch data every day, many users find",
+                  "explanation_zh": "前半句沒有主詞，不能用原形動詞開頭，要改成分詞構句 Looking at …（或補主詞：When they look at …）。"
+                },
+                {
+                  "wrong": "Looked at their watch data every day",
+                  "right": "Looking at their watch data every day",
+                  "explanation_zh": "使用者是「主動」看數據，用現在分詞 Looking。"
+                }
+              ]
+            },
+            {
+              "zh": "許多使用者發現",
+              "accepted": [
+                "many users find that",
+                "lots of users find that",
+                "many users discover that",
+                "many users find",
+                "a lot of users find that",
+                "many users realize that",
+                "many people find that"
+              ],
+              "targets": [
+                "user"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "many user find that",
+                  "right": "many users find that",
+                  "explanation_zh": "many 後面接複數名詞 users。"
+                },
+                {
+                  "wrong": "many users finds that",
+                  "right": "many users find that",
+                  "explanation_zh": "主詞 users 是複數，動詞不加 s。"
+                }
+              ]
+            },
+            {
+              "zh": "運動得愈多",
+              "accepted": [
+                "the more they exercise",
+                "the more they work out",
+                "the more exercise they get",
+                "the more they move"
+              ],
+              "targets": [
+                "exercise",
+                "COMP"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "more they exercise",
+                  "right": "the more they exercise",
+                  "explanation_zh": "「愈…愈…」兩半句都要用 the + 比較級 開頭。"
+                },
+                {
+                  "wrong": "the more they exercise more",
+                  "right": "the more they exercise",
+                  "explanation_zh": "比較級已經移到前面，句尾不再重複 more。"
+                }
+              ]
+            },
+            {
+              "zh": "就愈有活力",
+              "accepted": [
+                "the more energetic they feel",
+                "the more energetic they become",
+                "the more energetic they are",
+                "the more energy they have",
+                "the more energetic they get"
+              ],
+              "targets": [
+                "energetic"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "the more energy they feel",
+                  "right": "the more energetic they feel",
+                  "explanation_zh": "feel 後面接形容詞 energetic；用名詞 energy 要說 the more energy they have。"
+                },
+                {
+                  "wrong": "they feel more energetic",
+                  "right": "the more energetic they feel",
+                  "explanation_zh": "後半句也要用 the + 比較級 開頭，形成 the more …, the more … 的對稱結構。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "subjectless",
+              "zh": "每天看著手錶上的數據",
+              "literal_error": "Look at their watch data every day, many users find that the more they exercise, the more energetic they feel.",
+              "part": 1,
+              "explanation_zh": "中文前半句沒寫主詞，照字面用原形動詞開頭會變成兩個子句沒有連接；改成分詞構句 Looking at …。"
+            },
+            {
+              "type": "word_form",
+              "zh": "有活力",
+              "literal_error": "Looking at their watch data every day, many users find that the more they exercise, the more energy they feel.",
+              "part": 4,
+              "explanation_zh": "「有活力」是形容詞 energetic，接在 feel 後面；名詞 energy 不能直接接在 feel 後面。"
+            }
+          ],
+          "bonus": []
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-advanced-03",
+    "lot": "translation-advanced-03",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "02c0a28073619c0bc20ca233498a317fe41127b7ed24b485e5a25ef485b7d3c2",
+    "spec_id": "translation-advanced@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T13:03:00Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "warn",
+      "created_at": "2026-10-09T08:05:03Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Compared with traditional watches, smartwatches have many more functions that are specially designed to monitor heart rates.",
+            "confidence": "high",
+            "explanation_zh": "「和…相比」用過去分詞片語 Compared with 開頭（主詞 smartwatches 是被比較的一方）；「多了許多」譯 have many more functions；「專為監測心跳而設計的功能」用 that are specially designed to 的關係子句（被動）。"
+          },
+          "2": {
+            "translation": "Looking at the data on their watches every day, many users find that the more they exercise, the more energetic they become.",
+            "confidence": "high",
+            "explanation_zh": "「每天看著…」和主詞 many users 主動關係，用現在分詞構句 Looking at…；「運動得愈多，就愈有活力」用 the + 比較級…, the + 比較級…；「發現」接 that 名詞子句。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "COMP",
+              "PART"
+            ],
+            "used_target_words": [
+              "compare",
+              "traditional",
+              "function",
+              "design",
+              "monitor",
+              "heart rate"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "「智慧手錶」我寫成一個字 smartwatches（主要字典的標準拼法），但 references 和 P2 accepted 只有 smart watches，程式也比對不到標的詞 smart；建議 P2 accepted 補 smartwatches、smart 的 alternatives 補 smartwatch。",
+              "句型 PART：我用的是未減化的關係子句 functions that are specially designed to monitor…，不是 N + p.p. 的減化分詞；因為 P4 accepted 本來就收 functions that are designed，程式也判定有 PART，所以列入 used_patterns。如果出題者要嚴格要求減化分詞，這一句要視為中文沒有自然引出 PART。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "PART",
+              "COMP"
+            ],
+            "used_target_words": [
+              "look at",
+              "data",
+              "watch",
+              "user",
+              "exercise",
+              "energetic"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "compare",
+              "traditional",
+              "function",
+              "design",
+              "monitor",
+              "heart rate"
+            ],
+            "target_hit_rate": 0.857,
+            "patterns_detected": {
+              "COMP": true,
+              "PART": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "look at",
+              "data",
+              "watch",
+              "user",
+              "exercise",
+              "energetic"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PART": true,
+              "COMP": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 1 題驗證者對4 部分切分有意見（warn）：「智慧手錶」我寫成一個字 smartwatches（主要字典的標準拼法），但 references 和 P2 accepted 只有 smart watches，程式也比對不到標的詞 smart；建議 P2 accepted 補 smart"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "warn",
+      "created_at": "2026-10-09T00:00:00Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Compared with traditional watches, smartwatches have many extra features designed specifically to monitor heart rate.",
+            "confidence": "high",
+            "explanation_zh": "「和……相比」用 Compared with 開頭的分詞片語，主詞 smartwatches 邏輯上正確；「專為……而設計」用過去分詞 designed specifically to 修飾 features。「心跳」我自然會寫 heart rate。"
+          },
+          "2": {
+            "translation": "Looking at the data on their watches every day, many users have found that the more they exercise, the more energetic they feel.",
+            "confidence": "high",
+            "explanation_zh": "「每天看著……」用現在分詞片語，主詞 many users 就是看數據的人；「運動得愈多，就愈有活力」用 the more…, the more… 句型。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "COMP",
+              "PART"
+            ],
+            "used_target_words": [
+              "compare",
+              "traditional",
+              "function",
+              "design",
+              "monitor",
+              "heart rate"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "（建議，不影響判定）句型 COMP 的 frame 寫「Compared with/to + N, S + V + 比較級」，但「多了許多」不一定要用比較級；我用 many extra features 自然表達，所以只用到 Compared with 的部分，沒有比較級，程式因此看不出 COMP。建議放寬 frame，或在第 2 部分 accepted 補 have many extra。",
+              "（建議，不影響判定）目標詞彙 smart 只比對得到分開寫的 smart watch(es)；現在通用的單字寫法 smartwatch(es) 比對不到，建議在 smart 的 alternatives 補 smartwatch。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "PART",
+              "COMP"
+            ],
+            "used_target_words": [
+              "look at",
+              "data",
+              "watch",
+              "user",
+              "exercise",
+              "energetic"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "compare",
+              "traditional",
+              "function",
+              "design",
+              "monitor",
+              "heart rate"
+            ],
+            "target_hit_rate": 0.857,
+            "patterns_detected": {
+              "COMP": false,
+              "PART": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "look at",
+              "data",
+              "watch",
+              "user",
+              "exercise",
+              "energetic"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PART": true,
+              "COMP": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 1 題驗證者說用了句型 COMP，程式在譯文裡看不出來"
+        ]
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

@@ -1,0 +1,736 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.86b362",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "top",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "用動物測試新藥一直備受爭議，因為對實驗鼠有效的未必對人類也有效。",
+        "options": null,
+        "answer": "Testing new drugs on animals has long been controversial, because what works on laboratory mice does not necessarily work on humans.",
+        "accepted_answers": [
+          "Using animals to test new drugs has always been a controversial issue, since what works for lab mice may not work for humans.",
+          "Testing new medicines on animals has been widely debated, because what is effective for laboratory mice is not always effective for humans."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "what 引導的名詞子句（對實驗鼠有效的＝what works on laboratory mice）",
+            "動名詞片語當主詞（用動物測試新藥）"
+          ],
+          "topic": "動物實驗"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "要完全停止動物實驗不容易，但電腦模型已取代部分實驗，使許多動物免於受苦。",
+        "options": null,
+        "answer": "It is not easy to stop animal testing completely, but computer models have replaced some experiments, sparing many animals from suffering.",
+        "accepted_answers": [
+          "It is difficult to end animal testing entirely, but computer models have taken the place of some experiments, sparing many animals from pain.",
+          "It is hard to stop testing on animals completely, but some experiments have been replaced by computer models, sparing many animals from pain."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "句尾分詞片語表結果（…，使許多動物免於受苦）",
+            "虛主詞 It ＋形容詞＋不定詞（要完全停止…不容易）"
+          ],
+          "topic": "動物實驗"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "動物實驗"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「用動物測試新藥」是一個動作，當主詞時用動名詞片語 Testing new drugs on animals（視為單數，助動詞用 has）。「一直備受爭議」從過去延續到現在，用現在完成式 has long been controversial 或 has been widely debated。「對實驗鼠有效的」省略了中心名詞，英文用 what works on laboratory mice（＝the things that work on laboratory mice）當子句主詞，what 子句視為單數，所以後面是 does not necessarily work。「實驗鼠」是 laboratory mice（lab mice），mouse 的複數是 mice。「未必」用 not necessarily，也可以寫 may not。",
+          "evidence": [
+            "用動物測試新藥一直備受爭議",
+            "對實驗鼠有效的未必對人類也有效"
+          ],
+          "strategy_zh": "先找出兩個主詞：句首的動作（寫成動名詞）和 because 子句裡沒有中心名詞的「…的」（寫成 what 子句）。",
+          "hints": [
+            "切成四段：用動物測試新藥／一直備受爭議／因為對實驗鼠有效的／未必對人類也有效",
+            "標的詞彙：test（測試）、drug（藥物）、controversial（有爭議的）、laboratory（實驗室的）、mouse（老鼠，複數 mice）、human（人類）",
+            "句型框架：V-ing … + has long been + adj., because what + V … + does not necessarily + V …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「要…不容易」用虛主詞 It is not easy to VR，把長的不定詞片語移到後面。「已取代部分實驗」用現在完成式 have replaced some experiments，也可以改用被動 some experiments have been replaced by computer models。「，使許多動物免於受苦」是前一件事帶來的結果，用句尾分詞 sparing／saving many animals from suffering（spare sb from N：使某人免於…）；from 後面要接名詞 suffering 或 pain。",
+          "evidence": [
+            "要完全停止動物實驗不容易",
+            "使許多動物免於受苦"
+          ],
+          "strategy_zh": "主幹用 It is not easy to …, but …；結果放在句尾，用 V-ing 分詞片語接上，不要再多寫一個動詞。",
+          "hints": [
+            "切成四段：要完全停止動物實驗不容易／但電腦模型已取代部分實驗／使許多動物／免於受苦",
+            "標的詞彙：completely（完全地）、replace（取代）、experiment（實驗）、suffering（痛苦、受苦）",
+            "句型框架：It is not easy to VR …, but S + have p.p. …, sparing + O + from + N"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "Testing new drugs on animals has long been controversial, because what works on laboratory mice does not necessarily work on humans.",
+            "Using animals to test new drugs has always been a controversial issue, since what works for lab mice may not work for humans.",
+            "Testing new medicines on animals has been widely debated, because what is effective for laboratory mice is not always effective for humans."
+          ],
+          "target_words": [
+            {
+              "word": "test",
+              "zh": "測試"
+            },
+            {
+              "word": "drug",
+              "zh": "藥物",
+              "alternatives": [
+                "medicine"
+              ]
+            },
+            {
+              "word": "controversial",
+              "zh": "有爭議的",
+              "alternatives": [
+                "controversy",
+                "debate"
+              ]
+            },
+            {
+              "word": "laboratory",
+              "zh": "實驗室（的）",
+              "alternatives": [
+                "lab"
+              ]
+            },
+            {
+              "word": "mouse",
+              "zh": "老鼠（複數 mice）"
+            },
+            {
+              "word": "human",
+              "zh": "人類"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "NCL",
+              "grammar_id": "gp-what-clause",
+              "label_zh": "what 引導的名詞子句（對實驗鼠有效的＝what works on laboratory mice）",
+              "frame": "because + what + V … + does not necessarily + V …",
+              "zh_trigger": "對實驗鼠有效的"
+            },
+            {
+              "code": "NFSUBJ",
+              "grammar_id": "gp-gerund-subject",
+              "label_zh": "動名詞片語當主詞（用動物測試新藥）",
+              "frame": "V-ing … + has (long) been + adj. …",
+              "zh_trigger": "用動物測試新藥"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "用動物測試新藥",
+              "accepted": [
+                "Testing new drugs on animals",
+                "Using animals to test new drugs",
+                "Testing new medicines on animals",
+                "Using animals to test new medicines",
+                "To test new drugs on animals"
+              ],
+              "targets": [
+                "NFSUBJ",
+                "test",
+                "drug"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Test new drugs on animals has long been controversial",
+                  "right": "Testing new drugs on animals has long been controversial",
+                  "explanation_zh": "動詞片語當主詞要改成動名詞 Testing …（或不定詞 To test …），原形動詞不能當主詞。"
+                },
+                {
+                  "wrong": "Testing new drugs on animals have long been controversial",
+                  "right": "Testing new drugs on animals has long been controversial",
+                  "explanation_zh": "動名詞片語當主詞視為單數，助動詞用 has。"
+                }
+              ]
+            },
+            {
+              "zh": "一直備受爭議",
+              "accepted": [
+                "has long been controversial",
+                "has always been a controversial issue",
+                "has been widely debated",
+                "has always been controversial",
+                "has long been a subject of debate",
+                "has been debated for a long time"
+              ],
+              "targets": [
+                "controversial"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "has long been controversy",
+                  "right": "has long been controversial",
+                  "explanation_zh": "be 動詞後面要接形容詞 controversial；controversy 是名詞「爭議」。"
+                },
+                {
+                  "wrong": "has received many arguments",
+                  "right": "has been widely debated",
+                  "explanation_zh": "「備受爭議」不能逐字翻成 receive many arguments；用 be controversial 或 be widely debated。"
+                }
+              ]
+            },
+            {
+              "zh": "因為對實驗鼠有效的",
+              "accepted": [
+                "because what works on laboratory mice",
+                "since what works for lab mice",
+                "because what is effective for laboratory mice",
+                "because what works on lab mice",
+                "because what works for laboratory mice"
+              ],
+              "targets": [
+                "NCL",
+                "laboratory",
+                "mouse"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "because works on laboratory mice",
+                  "right": "because what works on laboratory mice",
+                  "explanation_zh": "「對實驗鼠有效的」省略了中心名詞，英文要用 what 子句當主詞，不能只寫動詞。"
+                },
+                {
+                  "wrong": "because which works on laboratory mice",
+                  "right": "because what works on laboratory mice",
+                  "explanation_zh": "which 前面要有先行詞；沒有被修飾的名詞時用 what（＝the thing that）。"
+                },
+                {
+                  "wrong": "because what works on laboratory mouses",
+                  "right": "because what works on laboratory mice",
+                  "explanation_zh": "mouse 的複數是不規則的 mice。"
+                }
+              ]
+            },
+            {
+              "zh": "未必對人類也有效",
+              "accepted": [
+                "does not necessarily work on humans",
+                "may not work for humans",
+                "is not always effective for humans",
+                "does not necessarily work for humans",
+                "may not work on humans",
+                "might not work on humans"
+              ],
+              "targets": [
+                "human"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "do not necessarily work on humans",
+                  "right": "does not necessarily work on humans",
+                  "explanation_zh": "what 子句當主詞視為單數，助動詞用 does。"
+                },
+                {
+                  "wrong": "does not necessary work on humans",
+                  "right": "does not necessarily work on humans",
+                  "explanation_zh": "修飾動詞 work 要用副詞 necessarily。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "abstract_nominal",
+              "zh": "備受爭議",
+              "literal_error": "Testing new drugs on animals has received many arguments.",
+              "part": 2,
+              "explanation_zh": "「備受爭議」是抽象概念，英文用形容詞 controversial 或 be widely debated；逐字翻成 receive many arguments 不是英文的說法。"
+            },
+            {
+              "type": "subjectless",
+              "zh": "對實驗鼠有效的",
+              "literal_error": "because works on laboratory mice does not necessarily work on humans",
+              "part": 3,
+              "explanation_zh": "中文「對實驗鼠有效的」省略了中心名詞直接當主詞；英文要補 what，形成名詞子句 what works on laboratory mice，後面的 does 才有主詞。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "Testing new drugs on animals has long been controversial, for there is no guarantee that what works on laboratory mice will also work on humans.",
+              "explanation_zh": "用 there is no guarantee that …（不能保證…）改寫「未必」，再以 for 引導理由，語氣較正式。"
+            }
+          ],
+          "restructuring_zh": "「用動物測試新藥」這個動作當主詞，英文改成動名詞片語 Testing new drugs on animals；「對實驗鼠有效的」沒有中心名詞，要改寫成 what 名詞子句 what works on laboratory mice，當 because 子句的主詞。"
+        },
+        "2": {
+          "references": [
+            "It is not easy to stop animal testing completely, but computer models have replaced some experiments, sparing many animals from suffering.",
+            "It is difficult to end animal testing entirely, but computer models have taken the place of some experiments, sparing many animals from pain.",
+            "It is hard to stop testing on animals completely, but some experiments have been replaced by computer models, sparing many animals from pain."
+          ],
+          "target_words": [
+            {
+              "word": "completely",
+              "zh": "完全地",
+              "alternatives": [
+                "entirely",
+                "totally",
+                "fully",
+                "altogether"
+              ]
+            },
+            {
+              "word": "replace",
+              "zh": "取代",
+              "alternatives": [
+                "take the place of",
+                "substitute"
+              ]
+            },
+            {
+              "word": "experiment",
+              "zh": "實驗",
+              "alternatives": [
+                "test"
+              ]
+            },
+            {
+              "word": "suffering",
+              "zh": "痛苦、受苦",
+              "alternatives": [
+                "pain",
+                "suffer",
+                "harm",
+                "hurt"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PART",
+              "grammar_id": "gp-participle-result",
+              "label_zh": "句尾分詞片語表結果（…，使許多動物免於受苦）",
+              "frame": "S + have p.p. …, sparing/saving + O + from + N",
+              "zh_trigger": "使許多動物免於受苦"
+            },
+            {
+              "code": "NFSUBJ",
+              "grammar_id": "gp-it-adj-to",
+              "label_zh": "虛主詞 It ＋形容詞＋不定詞（要完全停止…不容易）",
+              "frame": "It is not + adj. + to VR …",
+              "zh_trigger": "不容易"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "要完全停止動物實驗不容易",
+              "accepted": [
+                "It is not easy to stop animal testing completely",
+                "It is difficult to end animal testing entirely",
+                "It is hard to stop testing on animals completely",
+                "It is not easy to completely stop animal testing",
+                "It is not easy to stop animal experiments completely"
+              ],
+              "targets": [
+                "NFSUBJ",
+                "completely"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Completely stop animal testing is not easy",
+                  "right": "It is not easy to stop animal testing completely",
+                  "explanation_zh": "動詞片語不能直接當主詞；用虛主詞 It is not easy to VR …（或 To stop … is not easy）。"
+                },
+                {
+                  "wrong": "It is not easy to stopping animal testing completely",
+                  "right": "It is not easy to stop animal testing completely",
+                  "explanation_zh": "It is … to 後面接原形動詞。"
+                }
+              ]
+            },
+            {
+              "zh": "但電腦模型已取代部分實驗",
+              "accepted": [
+                "but computer models have replaced some experiments",
+                "but computer models have taken the place of some experiments",
+                "but some experiments have been replaced by computer models",
+                "but computer models have already replaced some experiments",
+                "but computer models have replaced some of the experiments"
+              ],
+              "targets": [
+                "replace",
+                "experiment"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "but computer models have replaced by some experiments",
+                  "right": "but computer models have replaced some experiments",
+                  "explanation_zh": "電腦模型是「取代者」，主動的 replace 直接接受詞；若以實驗當主詞，才用被動 have been replaced by。"
+                },
+                {
+                  "wrong": "but computer models replace some experiment",
+                  "right": "but computer models have replaced some experiments",
+                  "explanation_zh": "「已取代」用現在完成式；some 後面接可數名詞的複數 experiments。"
+                }
+              ]
+            },
+            {
+              "zh": "使許多動物",
+              "accepted": [
+                "sparing many animals",
+                "saving many animals",
+                "allowing many animals"
+              ],
+              "targets": [
+                "PART"
+              ],
+              "common_errors": [
+                {
+                  "wrong": ", spare many animals",
+                  "right": ", sparing many animals",
+                  "explanation_zh": "逗號後面直接接原形動詞會變成第二個沒有連接詞的動詞；表結果用分詞 sparing。"
+                },
+                {
+                  "wrong": ", making many animals not suffer",
+                  "right": ", sparing many animals from suffering",
+                  "explanation_zh": "「使…免於」用 save／spare sb from N；make sb not VR 不自然。"
+                }
+              ]
+            },
+            {
+              "zh": "免於受苦",
+              "accepted": [
+                "from suffering",
+                "from pain",
+                "to avoid suffering",
+                "from great pain"
+              ],
+              "targets": [
+                "suffering"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "from suffer",
+                  "right": "from suffering",
+                  "explanation_zh": "介系詞 from 後面接名詞或動名詞 suffering，不能接原形動詞。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "verbal_subject",
+              "zh": "要完全停止動物實驗不容易",
+              "literal_error": "Completely stop animal testing is not easy, but computer models have replaced some experiments.",
+              "part": 1,
+              "explanation_zh": "中文直接拿「完全停止動物實驗」這個動作當主詞；英文要用虛主詞 It is not easy to VR，或改成動名詞／不定詞主詞。"
+            },
+            {
+              "type": "abstract_nominal",
+              "zh": "受苦",
+              "literal_error": "sparing many animals from suffer",
+              "part": 4,
+              "explanation_zh": "「受苦」在中文是動詞，放在 from 後面要變成抽象名詞 suffering 或 pain，不能用原形動詞。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "Difficult as it is to end animal testing completely, computer models have already replaced some experiments, sparing countless animals unnecessary pain.",
+              "grammar_id": "gp-as-concession",
+              "explanation_zh": "用讓步倒裝 Adj. + as + it is to VR 代替 It is … but …；spare sb sth（使某人免受…）是雙受詞用法。只當加分寫法。"
+            }
+          ],
+          "restructuring_zh": "「要完全停止動物實驗不容易」以動作當主詞，英文改用虛主詞 It is not easy to …；「，使許多動物免於受苦」不另起一句，用句尾分詞 sparing many animals from suffering 表示前面整件事帶來的結果。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ac-V-3",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-top-03",
+    "lot": "translation-top-03",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "31117a6d4ea07290a38612cba619cca8744c8f0cc9141fe199063ce8d6f7050e",
+    "spec_id": "translation-top@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T13:17:14Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T12:52:43Z",
+      "details": {
+        "solver": "A",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Testing new drugs on animals has long been controversial, because what works on lab mice does not necessarily work on humans.",
+            "confidence": "high",
+            "explanation_zh": "「一直備受爭議」從過去延續到現在，用現在完成式 has long been controversial；動名詞片語 Testing new drugs on animals 當主詞；「對實驗鼠有效的」沒有先行詞，用 what 名詞子句當 because 子句的主詞；「未必」譯 not necessarily。"
+          },
+          "2": {
+            "translation": "It is not easy to stop animal testing completely, but computer models have already replaced some of the experiments, saving many animals from suffering.",
+            "confidence": "high",
+            "explanation_zh": "「要…不容易」用虛主詞 It is not easy to…；「已取代」用現在完成式；「使許多動物免於受苦」是前一句的結果，用句尾分詞 saving … from suffering 表結果，避免 and make 的鬆散寫法。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "NCL",
+              "NFSUBJ"
+            ],
+            "used_target_words": [
+              "test",
+              "drug",
+              "controversial",
+              "laboratory",
+              "mouse",
+              "human"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PART",
+              "NFSUBJ"
+            ],
+            "used_target_words": [
+              "completely",
+              "replace",
+              "experiment",
+              "suffering"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "test",
+              "drug",
+              "controversial",
+              "laboratory",
+              "mouse",
+              "human"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NCL": true,
+              "NFSUBJ": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "completely",
+              "replace",
+              "experiment",
+              "suffering"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PART": true,
+              "NFSUBJ": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T12:59:49Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Testing new drugs on animals has always been controversial because what works for laboratory mice does not necessarily work for humans.",
+            "confidence": "high",
+            "explanation_zh": "「一直備受爭議」用現在完成式 has always been controversial；「用動物測試新藥」用動名詞片語當主詞；「對實驗鼠有效的未必對人類也有效」用名詞子句 what works … 加部分否定 does not necessarily。"
+          },
+          "2": {
+            "translation": "It is not easy to stop animal testing completely, but computer models have replaced some experiments, saving many animals from suffering.",
+            "confidence": "high",
+            "explanation_zh": "「要完全停止動物實驗不容易」用虛主詞 It is not easy to …；「已取代部分實驗」用現在完成式；「使許多動物免於受苦」用現在分詞片語 saving … from suffering 表結果。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "NCL",
+              "NFSUBJ"
+            ],
+            "used_target_words": [
+              "test",
+              "drug",
+              "controversial",
+              "laboratory",
+              "mouse",
+              "human"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PART",
+              "NFSUBJ"
+            ],
+            "used_target_words": [
+              "completely",
+              "replace",
+              "experiment",
+              "suffering"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "test",
+              "drug",
+              "controversial",
+              "laboratory",
+              "mouse",
+              "human"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NCL": true,
+              "NFSUBJ": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "completely",
+              "replace",
+              "experiment",
+              "suffering"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PART": true,
+              "NFSUBJ": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

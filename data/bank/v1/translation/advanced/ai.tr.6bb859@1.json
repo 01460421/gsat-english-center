@@ -1,0 +1,752 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.6bb859",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "advanced",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "近年來，許多學校已邀請會說原住民族語的部落長輩到校教課。",
+        "options": null,
+        "answer": "In recent years, many schools have invited tribal elders who speak indigenous languages to teach classes.",
+        "accepted_answers": [
+          "Recently, many schools have invited tribal elders who can speak indigenous languages to teach at school.",
+          "Over the past few years, many schools have asked tribal elders that speak indigenous languages to teach lessons."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "關係代名詞",
+            "現在完成式"
+          ],
+          "topic": "原住民族語"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "多年來，這些長輩一直期待孩子們能流利說族語的那一天。",
+        "options": null,
+        "answer": "For years, these elders have been looking forward to the day when children can speak their language fluently.",
+        "accepted_answers": [
+          "For many years, these elders have been waiting for the day when children can speak the indigenous language fluently.",
+          "These elders have long been looking forward to the day when the children can speak their native language fluently."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "現在完成進行式",
+            "關係副詞 when"
+          ],
+          "topic": "原住民族語"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "原住民族語"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「近年來…已」說的是從過去延續到現在的變化，用現在完成式 have invited；in recent years 的 years 用複數。「會說原住民族語的部落長輩」修飾語很長，英文先寫 tribal elders，再用 who 子句 who speak indigenous languages 放在後面（who 指人，動詞配合複數 elders）。「邀請某人做某事」是 invite + 人 + to + 原形動詞。",
+          "evidence": [
+            "近年來",
+            "已邀請",
+            "會說原住民族語的部落長輩"
+          ],
+          "strategy_zh": "先抓主幹「學校邀請長輩」，再把「會說原住民族語的」改成 who 子句接在 elders 後面；看到「近年來」「已」就用 have/has + p.p.。",
+          "hints": [
+            "切成四段：近年來／許多學校已邀請／會說原住民族語的部落長輩／到校教課",
+            "標的詞彙：recent（近來的，L2）、invite（邀請，L1）、tribal（部落的，L4）、elder（長輩，L2）、indigenous（原住民族的，L5）、teach（教，L1）",
+            "句型框架：In recent years, S + have/has + p.p. + 人 + who + V … + to + VR"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「多年來…一直」表示從過去持續到現在而且還在進行，用現在完成進行式 have been looking forward to（也可寫 have long looked forward to）。「期待」用 look forward to，to 是介系詞，後面接名詞 the day。「孩子們能流利說族語的那一天」整串修飾「那一天」，英文先寫 the day，再用關係副詞 when 帶出子句；修飾動詞 speak 要用副詞 fluently。",
+          "evidence": [
+            "多年來",
+            "一直",
+            "的那一天"
+          ],
+          "strategy_zh": "「…的那一天／…的地方／…的原因」先寫名詞，再看子句缺什麼：缺時間用 when、缺地點用 where、缺原因用 why。",
+          "hints": [
+            "切成四段：多年來，這些長輩一直／期待／孩子們能流利說族語／的那一天",
+            "標的詞彙：elder（長輩，L2）、look forward to（期待，L2）、day（日子，L1）、child（孩子，L1）、fluently（流利地，L4）、language（語言，L1）",
+            "句型框架：For years, S + have been + V-ing … the day + when + S + can + VR …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "In recent years, many schools have invited tribal elders who speak indigenous languages to teach classes.",
+            "Recently, many schools have invited tribal elders who can speak indigenous languages to teach at school.",
+            "Over the past few years, many schools have asked tribal elders that speak indigenous languages to teach lessons."
+          ],
+          "target_words": [
+            {
+              "word": "recent",
+              "zh": "近來的",
+              "alternatives": [
+                "recently",
+                "past few years"
+              ]
+            },
+            {
+              "word": "invite",
+              "zh": "邀請",
+              "alternatives": [
+                "ask"
+              ]
+            },
+            {
+              "word": "tribal",
+              "zh": "部落的",
+              "alternatives": [
+                "tribe"
+              ]
+            },
+            {
+              "word": "elder",
+              "zh": "長輩"
+            },
+            {
+              "word": "indigenous",
+              "zh": "原住民族的",
+              "alternatives": [
+                "aboriginal",
+                "native"
+              ]
+            },
+            {
+              "word": "teach",
+              "zh": "教"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "REL",
+              "grammar_id": "gp-relative-pronoun",
+              "label_zh": "關係代名詞 who 引導的形容詞子句",
+              "frame": "N（人）+ who/that + V …",
+              "zh_trigger": "會說原住民族語的部落長輩"
+            },
+            {
+              "code": "PERF",
+              "grammar_id": "gp-present-perfect",
+              "label_zh": "現在完成式（近年來＋已…）",
+              "frame": "In recent years, S + have/has + p.p. …",
+              "zh_trigger": "已邀請"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "近年來",
+              "accepted": [
+                "In recent years",
+                "Recently",
+                "Over the past few years",
+                "In the past few years",
+                "In the last few years"
+              ],
+              "targets": [
+                "recent"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "In recent year",
+                  "right": "In recent years",
+                  "explanation_zh": "years 要用複數。"
+                },
+                {
+                  "wrong": "In the recent years",
+                  "right": "In recent years",
+                  "explanation_zh": "in recent years 是固定說法，中間不加 the。"
+                }
+              ]
+            },
+            {
+              "zh": "許多學校已邀請",
+              "accepted": [
+                "many schools have invited",
+                "many schools have asked",
+                "a lot of schools have asked",
+                "a lot of schools have invited",
+                "lots of schools have invited",
+                "many schools have already invited"
+              ],
+              "targets": [
+                "invite",
+                "PERF"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "many schools invite",
+                  "right": "many schools have invited",
+                  "explanation_zh": "「近年來…已」說的是延續到現在的結果，要用現在完成式 have invited。"
+                },
+                {
+                  "wrong": "many schools have invite",
+                  "right": "many schools have invited",
+                  "explanation_zh": "完成式要接過去分詞 invited。"
+                }
+              ]
+            },
+            {
+              "zh": "會說原住民族語的部落長輩",
+              "accepted": [
+                "tribal elders who speak indigenous languages",
+                "tribal elders who can speak indigenous languages",
+                "tribal elders that speak indigenous languages",
+                "tribal elders who speak their indigenous languages",
+                "elders from the tribes who speak indigenous languages",
+                "tribal elders who speak aboriginal languages",
+                "tribal elders who speak native languages"
+              ],
+              "targets": [
+                "tribal",
+                "elder",
+                "indigenous",
+                "REL"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "tribal elders who speaks indigenous languages",
+                  "right": "tribal elders who speak indigenous languages",
+                  "explanation_zh": "who 指的是複數的 elders，動詞不加 s。"
+                },
+                {
+                  "wrong": "can speak indigenous languages tribal elders",
+                  "right": "tribal elders who can speak indigenous languages",
+                  "explanation_zh": "中文「…的長輩」修飾語在前，英文要先寫 elders，再用 who 子句放在後面。"
+                }
+              ]
+            },
+            {
+              "zh": "到校教課",
+              "accepted": [
+                "to teach classes",
+                "to teach at school",
+                "to teach lessons",
+                "to come and teach",
+                "to come to school to teach",
+                "to teach students"
+              ],
+              "targets": [
+                "teach"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "to teaching classes",
+                  "right": "to teach classes",
+                  "explanation_zh": "invite sb to + 原形動詞，這裡的 to 是不定詞，不接 V-ing。"
+                },
+                {
+                  "wrong": "teach classes",
+                  "right": "to teach classes",
+                  "explanation_zh": "invite 的句型是 invite + 人 + to + 原形動詞，不能省略 to。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "prenominal_modifier",
+              "zh": "會說原住民族語的部落長輩",
+              "literal_error": "In recent years, many schools have invited can speak indigenous languages tribal elders to teach classes.",
+              "part": 3,
+              "explanation_zh": "照中文語序把「會說原住民族語的」放在名詞前面，英文不通；要改成 tribal elders who speak indigenous languages。"
+            },
+            {
+              "type": "tense_trigger",
+              "zh": "已邀請",
+              "literal_error": "In recent years, many schools invite tribal elders who speak indigenous languages to teach classes.",
+              "part": 2,
+              "explanation_zh": "有「近年來」「已」就不用現在簡單式，要用現在完成式 have invited。"
+            }
+          ],
+          "bonus": [],
+          "restructuring_zh": "「會說原住民族語的部落長輩」是長的前置修飾，英文要先寫 tribal elders，再用 who 子句補在後面；「邀請…到校教課」改成 invite + 人 + to teach classes。"
+        },
+        "2": {
+          "references": [
+            "For years, these elders have been looking forward to the day when children can speak their language fluently.",
+            "For many years, these elders have been waiting for the day when children can speak the indigenous language fluently.",
+            "These elders have long been looking forward to the day when the children can speak their native language fluently."
+          ],
+          "target_words": [
+            {
+              "word": "elder",
+              "zh": "長輩"
+            },
+            {
+              "word": "look forward to",
+              "zh": "期待",
+              "alternatives": [
+                "wait for",
+                "hope for"
+              ]
+            },
+            {
+              "word": "day",
+              "zh": "日子"
+            },
+            {
+              "word": "child",
+              "zh": "孩子",
+              "alternatives": [
+                "kid"
+              ]
+            },
+            {
+              "word": "fluently",
+              "zh": "流利地",
+              "alternatives": [
+                "fluent",
+                "well"
+              ]
+            },
+            {
+              "word": "language",
+              "zh": "語言",
+              "alternatives": [
+                "tongue"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PERF",
+              "grammar_id": "gp-present-perfect-progressive",
+              "label_zh": "現在完成進行式（多年來一直…）",
+              "frame": "For + 一段時間, S + have/has been + V-ing …",
+              "zh_trigger": "一直"
+            },
+            {
+              "code": "REL",
+              "grammar_id": "gp-relative-adverb",
+              "label_zh": "關係副詞 when（…的那一天）",
+              "frame": "the day + when + S + V …",
+              "zh_trigger": "的那一天"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "多年來，這些長輩一直",
+              "accepted": [
+                "For years, these elders have been",
+                "For many years, these elders have been",
+                "These elders have long been",
+                "Over the years, these elders have been",
+                "For years, the elders have been",
+                "For a long time, these elders have been"
+              ],
+              "targets": [
+                "elder",
+                "PERF"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "For years, these elders are",
+                  "right": "For years, these elders have been",
+                  "explanation_zh": "「多年來一直」是從過去持續到現在還在進行，用現在完成進行式 have been + V-ing。"
+                },
+                {
+                  "wrong": "For years, these elder have been",
+                  "right": "For years, these elders have been",
+                  "explanation_zh": "these 後面接複數名詞 elders。"
+                }
+              ]
+            },
+            {
+              "zh": "期待",
+              "accepted": [
+                "looking forward to",
+                "waiting for",
+                "hoping for",
+                "looking forward to seeing"
+              ],
+              "targets": [
+                "look forward to"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "looking forward the day",
+                  "right": "looking forward to the day",
+                  "explanation_zh": "look forward 後面要有介系詞 to。"
+                },
+                {
+                  "wrong": "looking forward to see the day",
+                  "right": "looking forward to seeing the day",
+                  "explanation_zh": "look forward to 的 to 是介系詞，後面接名詞或 V-ing。"
+                }
+              ]
+            },
+            {
+              "zh": "孩子們能流利說族語",
+              "accepted": [
+                "children can speak their language fluently",
+                "children can speak the indigenous language fluently",
+                "the children can speak their native language fluently",
+                "children can speak their mother tongue fluently",
+                "children can fluently speak their language",
+                "children can speak the language fluently",
+                "kids can speak their language fluently"
+              ],
+              "targets": [
+                "child",
+                "fluently",
+                "language"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "children can speak their language fluent",
+                  "right": "children can speak their language fluently",
+                  "explanation_zh": "修飾動詞 speak 要用副詞 fluently，fluent 是形容詞。"
+                },
+                {
+                  "wrong": "children can fluent speak their language",
+                  "right": "children can speak their language fluently",
+                  "explanation_zh": "fluent 是形容詞，不能修飾動詞；改用副詞 fluently，通常放在句尾。"
+                }
+              ]
+            },
+            {
+              "zh": "的那一天",
+              "accepted": [
+                "the day when",
+                "the day",
+                "the day on which",
+                "a day when"
+              ],
+              "targets": [
+                "day",
+                "REL"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "the day which children can speak",
+                  "right": "the day when children can speak",
+                  "explanation_zh": "子句裡主詞、受詞都有了，缺的是時間，要用關係副詞 when（= on which）。"
+                },
+                {
+                  "wrong": "children can speak their language fluently that day",
+                  "right": "the day when children can speak their language fluently",
+                  "explanation_zh": "「…的那一天」是前置修飾，英文要先寫 the day，再用 when 子句接在後面。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "prenominal_modifier",
+              "zh": "能流利說族語的那一天",
+              "literal_error": "For years, these elders have been looking forward to children can speak their language fluently day.",
+              "part": 4,
+              "explanation_zh": "整串修飾語照中文放在 day 前面，英文不通；要寫 the day when + 子句。"
+            },
+            {
+              "type": "word_form",
+              "zh": "流利",
+              "literal_error": "For years, these elders have been looking forward to the day when children can speak their language fluent.",
+              "part": 3,
+              "explanation_zh": "「流利地說」修飾動詞，要用副詞 fluently。"
+            }
+          ],
+          "bonus": [],
+          "restructuring_zh": "「孩子們能流利說族語的那一天」整串修飾「那一天」，英文要先寫 the day，再用關係副詞 when 帶出子句補在後面。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "C-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-advanced-03",
+    "lot": "translation-advanced-03",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "02c0a28073619c0bc20ca233498a317fe41127b7ed24b485e5a25ef485b7d3c2",
+    "spec_id": "translation-advanced@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T13:02:59Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T08:05:03Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "In recent years, many schools have invited tribal elders who can speak indigenous languages to come and teach classes.",
+            "confidence": "high",
+            "explanation_zh": "「近年來…已邀請」用現在完成式 have invited；「會說原住民族語的部落長輩」用 who 引導的關係子句修飾 elders；「到校教課」用 invite + O + to V，譯成 to come and teach classes。"
+          },
+          "2": {
+            "translation": "For many years, these elders have been looking forward to the day when the children can speak their native languages fluently.",
+            "confidence": "high",
+            "explanation_zh": "「多年來…一直期待」是從過去持續到現在的動作，用現在完成進行式 have been looking forward to（to 是介系詞，後接名詞）；「孩子們能流利說族語的那一天」用 the day when 關係副詞子句；「族語」譯 their native languages。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "REL",
+              "PERF"
+            ],
+            "used_target_words": [
+              "recent",
+              "invite",
+              "tribal",
+              "elder",
+              "indigenous",
+              "teach"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PERF",
+              "REL"
+            ],
+            "used_target_words": [
+              "elder",
+              "look forward to",
+              "day",
+              "child",
+              "fluently",
+              "language"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "recent",
+              "invite",
+              "tribal",
+              "elder",
+              "indigenous",
+              "teach"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "REL": true,
+              "PERF": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "elder",
+              "look forward to",
+              "day",
+              "child",
+              "fluently",
+              "language"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PERF": true,
+              "REL": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T00:00:00Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "In recent years, many schools have invited tribal elders who can speak Indigenous languages to teach classes at school.",
+            "confidence": "high",
+            "explanation_zh": "「近年來……已邀請」表示到現在仍有影響，用現在完成式 have invited；「會說原住民族語的部落長輩」用關係代名詞 who 子句修飾 tribal elders。"
+          },
+          "2": {
+            "translation": "For years, these elders have been looking forward to the day when the children can speak their tribal language fluently.",
+            "confidence": "high",
+            "explanation_zh": "「多年來……一直期待」用現在完成進行式 have been looking forward to；「……的那一天」用 the day when 子句，流利用 fluently 修飾 speak。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "REL",
+              "PERF"
+            ],
+            "used_target_words": [
+              "recent",
+              "invite",
+              "tribal",
+              "elder",
+              "indigenous",
+              "teach"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PERF",
+              "REL"
+            ],
+            "used_target_words": [
+              "elder",
+              "look forward to",
+              "day",
+              "child",
+              "fluently",
+              "language"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "（建議，不影響判定）「族語」最直譯是 tribal language，第 3 部分 accepted 只收 their language／native language／indigenous language／mother tongue，可補 tribal language。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "recent",
+              "invite",
+              "tribal",
+              "elder",
+              "indigenous",
+              "teach"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "REL": true,
+              "PERF": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "elder",
+              "look forward to",
+              "day",
+              "child",
+              "fluently",
+              "language"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PERF": true,
+              "REL": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

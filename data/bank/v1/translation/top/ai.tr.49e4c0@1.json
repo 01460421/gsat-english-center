@@ -1,0 +1,758 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.49e4c0",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "top",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "手機訊息不斷跳出，打斷我們的思緒，因此要專心讀完一篇長文章已經不容易了。",
+        "options": null,
+        "answer": "Messages on our phones pop up constantly, interrupting our thoughts, so it is no longer easy to concentrate on finishing a long article.",
+        "accepted_answers": [
+          "Phone messages keep popping up, interrupting our train of thought, so it is no longer easy to focus on reading a long article to the end.",
+          "Messages keep popping up on our phones, interrupting our thinking, so it is now difficult to concentrate long enough to finish a long article."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "句尾分詞表結果（, interrupting …）",
+            "虛主詞 It is + adj. + to V"
+          ],
+          "topic": "專注力下降"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "定期閱讀紙本書是增強專注力的有效方法，因為我們讀得愈多，就能專心愈久。",
+        "options": null,
+        "answer": "Reading printed books regularly is an effective way to strengthen our concentration, because the more we read, the longer we can focus.",
+        "accepted_answers": [
+          "Reading paper books on a regular basis is a useful way to improve our concentration, since the more we read, the longer we can concentrate.",
+          "Reading books on paper regularly is an effective method of building our ability to focus, because the more we read, the longer we can stay focused."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "動名詞片語當主詞",
+            "愈…愈…（the more …, the longer …）"
+          ],
+          "topic": "專注力下降"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "專注力下降"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「手機訊息不斷跳出」用 keep popping up 或 pop up constantly；「打斷我們的思緒」是訊息跳出造成的結果，不另寫主詞，用句尾分詞 , interrupting our thoughts。「要專心讀完一篇長文章已經不容易了」真正的主詞是「專心讀完長文章」這件事，用虛主詞 it is no longer easy to concentrate on …（「已經不…了」用 no longer）。",
+          "evidence": [
+            "打斷我們的思緒",
+            "已經不容易了"
+          ],
+          "strategy_zh": "兩個動作共用主詞、中間沒有連接詞 → 後一個改成分詞；「做某事很難／不容易」→ it is + adj. + to V。",
+          "hints": [
+            "切成四段：手機訊息不斷跳出／打斷我們的思緒／（因此要）專心讀完一篇長文章／已經不容易了",
+            "標的詞彙：message（訊息）、phone（手機）、constantly（不斷地）、interrupt（打斷）、thought（思緒）、concentrate（專心）、article（文章）",
+            "句型框架：S + V …, V-ing + O, so it is no longer + adj. + to + V …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「定期閱讀紙本書」是動作當主詞，用動名詞 Reading printed books regularly（單數，動詞用 is）。「增強專注力的有效方法」用 an effective way to strengthen our concentration。「讀得愈多，就能專心愈久」是「愈…愈…」：the more we read, the longer we can focus（兩個子句都以 the + 比較級開頭，long 的比較級是 longer）。",
+          "evidence": [
+            "定期閱讀紙本書",
+            "我們讀得愈多，就能專心愈久"
+          ],
+          "strategy_zh": "「愈 A 愈 B」→ the + 比較級 + S + V, the + 比較級 + S + V；動作當主詞 → V-ing …（單數）。",
+          "hints": [
+            "切成四段：定期閱讀紙本書／是增強專注力的有效方法／因為我們讀得愈多／就能專心愈久",
+            "標的詞彙：read（閱讀）、printed（印刷的、紙本的）、regularly（定期地）、effective（有效的）、strengthen（增強）、concentration（專注力）",
+            "句型框架：V-ing … + is + an effective way to + V …, because the + 比較級 + S + V, the + 比較級 + S + V"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "Messages on our phones pop up constantly, interrupting our thoughts, so it is no longer easy to concentrate on finishing a long article.",
+            "Phone messages keep popping up, interrupting our train of thought, so it is no longer easy to focus on reading a long article to the end.",
+            "Messages keep popping up on our phones, interrupting our thinking, so it is now difficult to concentrate long enough to finish a long article."
+          ],
+          "target_words": [
+            {
+              "word": "message",
+              "zh": "訊息"
+            },
+            {
+              "word": "phone",
+              "zh": "手機"
+            },
+            {
+              "word": "constantly",
+              "zh": "不斷地",
+              "alternatives": [
+                "keep"
+              ]
+            },
+            {
+              "word": "interrupt",
+              "zh": "打斷"
+            },
+            {
+              "word": "thought",
+              "zh": "思緒",
+              "alternatives": [
+                "thinking"
+              ]
+            },
+            {
+              "word": "concentrate",
+              "zh": "專心",
+              "alternatives": [
+                "focus"
+              ]
+            },
+            {
+              "word": "article",
+              "zh": "文章"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PART",
+              "grammar_id": "gp-participle-result",
+              "label_zh": "句尾分詞片語表結果（打斷…）",
+              "frame": "S + V …, V-ing + O, …",
+              "zh_trigger": "打斷我們的思緒"
+            },
+            {
+              "code": "NFSUBJ",
+              "grammar_id": "gp-it-adj-to",
+              "label_zh": "虛主詞 It ＋形容詞＋不定詞",
+              "frame": "so it is no longer + adj. + to + V …",
+              "zh_trigger": "已經不容易了"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "手機訊息不斷跳出",
+              "accepted": [
+                "Messages on our phones pop up constantly",
+                "Phone messages keep popping up",
+                "Messages keep popping up on our phones",
+                "Phone notifications keep popping up"
+              ],
+              "targets": [
+                "message",
+                "phone",
+                "constantly"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Phone messages keep pop up",
+                  "right": "Phone messages keep popping up",
+                  "explanation_zh": "keep 後面接 V-ing：keep popping up。"
+                },
+                {
+                  "wrong": "Phone's messages jump out constantly",
+                  "right": "Messages on our phones pop up constantly",
+                  "explanation_zh": "訊息「跳出」是 pop up；jump out 是人或動物跳出來。「手機訊息」寫 phone messages 或 messages on our phones。"
+                }
+              ]
+            },
+            {
+              "zh": "打斷我們的思緒",
+              "accepted": [
+                "interrupting our thoughts",
+                "interrupting our train of thought",
+                "interrupting our thinking",
+                "breaking our train of thought"
+              ],
+              "targets": [
+                "PART",
+                "interrupt",
+                "thought"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "interrupted our thoughts",
+                  "right": "interrupting our thoughts",
+                  "explanation_zh": "逗號後補充結果要用分詞 interrupting；再放一個過去式動詞，句子就有兩個動詞沒有連接（主要子句還是現在式）。"
+                },
+                {
+                  "wrong": "interrupting our thought line",
+                  "right": "interrupting our train of thought",
+                  "explanation_zh": "「思緒」用 thoughts 或固定說法 train of thought；thought line 是字面直譯。"
+                }
+              ]
+            },
+            {
+              "zh": "專心讀完一篇長文章",
+              "accepted": [
+                "to concentrate on finishing a long article",
+                "to focus on reading a long article to the end",
+                "to concentrate long enough to finish a long article",
+                "to focus on finishing a long article"
+              ],
+              "targets": [
+                "concentrate",
+                "article"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "to concentrate to finish a long article",
+                  "right": "to concentrate on finishing a long article",
+                  "explanation_zh": "concentrate on 後面接名詞或 V-ing。"
+                },
+                {
+                  "wrong": "to focus finishing a long article",
+                  "right": "to focus on finishing a long article",
+                  "explanation_zh": "focus 後面要接介系詞 on。"
+                }
+              ]
+            },
+            {
+              "zh": "已經不容易了",
+              "accepted": [
+                "so it is no longer easy",
+                "so it is now difficult",
+                "so it is now hard"
+              ],
+              "targets": [
+                "NFSUBJ"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "so concentrate on finishing a long article is no longer easy",
+                  "right": "so it is no longer easy to concentrate on finishing a long article",
+                  "explanation_zh": "原形動詞不能當主詞；用虛主詞 it is … to V，把真正的主詞移到後面。"
+                },
+                {
+                  "wrong": "so it is already not easy",
+                  "right": "so it is no longer easy",
+                  "explanation_zh": "「已經不…了」表示情況改變，用 no longer／not … anymore；already not 不自然。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "abstract_nominal",
+              "zh": "思緒",
+              "literal_error": "Phone messages keep popping up, interrupting our mind lines, …",
+              "part": 2,
+              "explanation_zh": "「思緒」是抽象名詞，用 thoughts 或 train of thought；不要逐字拼成 mind lines。"
+            },
+            {
+              "type": "verbal_subject",
+              "zh": "已經不容易了",
+              "literal_error": "…, so concentrate on finishing a long article is no longer easy.",
+              "part": 4,
+              "explanation_zh": "中文「要專心讀完…已經不容易」的主詞是一個動作；英文用虛主詞 it is no longer easy to …，原形動詞不能當主詞。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "With messages constantly popping up on our phones, it is no longer easy to stay focused long enough to finish a long article.",
+              "grammar_id": "gp-with-o-c",
+              "explanation_zh": "with + 受詞 + V-ing 表附帶狀況，把「訊息不斷跳出」濃縮成片語；stay focused long enough to …（專心到足以…）更精準。"
+            }
+          ],
+          "restructuring_zh": "「因此要專心讀完…已經不容易了」主詞是一個動作，英文改用虛主詞 it 開頭，把 to concentrate on … 放到後面；「打斷我們的思緒」不加主詞，改成句尾分詞 interrupting our thoughts。"
+        },
+        "2": {
+          "references": [
+            "Reading printed books regularly is an effective way to strengthen our concentration, because the more we read, the longer we can focus.",
+            "Reading paper books on a regular basis is a useful way to improve our concentration, since the more we read, the longer we can concentrate.",
+            "Reading books on paper regularly is an effective method of building our ability to focus, because the more we read, the longer we can stay focused."
+          ],
+          "target_words": [
+            {
+              "word": "read",
+              "zh": "閱讀"
+            },
+            {
+              "word": "printed",
+              "zh": "紙本的、印刷的",
+              "alternatives": [
+                "paper"
+              ]
+            },
+            {
+              "word": "regularly",
+              "zh": "定期地",
+              "alternatives": [
+                "regular"
+              ]
+            },
+            {
+              "word": "effective",
+              "zh": "有效的",
+              "alternatives": [
+                "useful"
+              ]
+            },
+            {
+              "word": "strengthen",
+              "zh": "增強",
+              "alternatives": [
+                "improve",
+                "build"
+              ]
+            },
+            {
+              "word": "concentration",
+              "zh": "專注力",
+              "alternatives": [
+                "focus",
+                "attention"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "NFSUBJ",
+              "grammar_id": "gp-gerund-subject",
+              "label_zh": "動名詞片語當主詞（動詞用單數）",
+              "frame": "V-ing … + is + N …",
+              "zh_trigger": "定期閱讀紙本書"
+            },
+            {
+              "code": "COMP",
+              "grammar_id": "gp-the-more",
+              "label_zh": "愈…愈…",
+              "frame": "the + 比較級 + S + V, the + 比較級 + S + V",
+              "zh_trigger": "我們讀得愈多，就能專心愈久"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "定期閱讀紙本書",
+              "accepted": [
+                "Reading printed books regularly",
+                "Reading paper books on a regular basis",
+                "Reading books on paper regularly",
+                "Regularly reading printed books"
+              ],
+              "targets": [
+                "NFSUBJ",
+                "read",
+                "printed",
+                "regularly"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Read printed books regularly",
+                  "right": "Reading printed books regularly",
+                  "explanation_zh": "動作當主詞要用動名詞 Reading（或 To read），原形動詞不能當主詞。"
+                },
+                {
+                  "wrong": "Reading printed books regularly are",
+                  "right": "Reading printed books regularly is",
+                  "explanation_zh": "動名詞片語當主詞視為單數，動詞用 is（不是看 books）。"
+                }
+              ]
+            },
+            {
+              "zh": "是增強專注力的有效方法",
+              "accepted": [
+                "is an effective way to strengthen our concentration",
+                "is a useful way to improve our concentration",
+                "is an effective method of building our ability to focus",
+                "is an effective way to improve our concentration"
+              ],
+              "targets": [
+                "effective",
+                "strengthen",
+                "concentration"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "is an effective way to strengthen our focus power",
+                  "right": "is an effective way to strengthen our concentration",
+                  "explanation_zh": "「專注力」是 concentration／attention／the ability to focus，不要逐字寫成 focus power。"
+                },
+                {
+                  "wrong": "is an effective way of strengthen our concentration",
+                  "right": "is an effective way to strengthen our concentration",
+                  "explanation_zh": "way 後面接 to V 或 of V-ing（of strengthening）。"
+                }
+              ]
+            },
+            {
+              "zh": "因為我們讀得愈多",
+              "accepted": [
+                "because the more we read",
+                "since the more we read",
+                "as the more we read"
+              ],
+              "targets": [
+                "COMP"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "because we read the more",
+                  "right": "because the more we read",
+                  "explanation_zh": "「愈…愈…」要把 the + 比較級放在子句最前面：the more we read。"
+                },
+                {
+                  "wrong": "because the much we read",
+                  "right": "because the more we read",
+                  "explanation_zh": "the 後面要接比較級 more。"
+                }
+              ]
+            },
+            {
+              "zh": "就能專心愈久",
+              "accepted": [
+                "the longer we can focus",
+                "the longer we can concentrate",
+                "the longer we can stay focused",
+                "the longer we are able to focus"
+              ],
+              "targets": [
+                "COMP"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "the more longer we can focus",
+                  "right": "the longer we can focus",
+                  "explanation_zh": "long 的比較級是 longer，不可再加 more。"
+                },
+                {
+                  "wrong": "we can focus the longer",
+                  "right": "the longer we can focus",
+                  "explanation_zh": "後半句一樣要把 the + 比較級放在子句前面。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "abstract_nominal",
+              "zh": "專注力",
+              "literal_error": "Reading printed books regularly is an effective way to strengthen our focus power, …",
+              "part": 2,
+              "explanation_zh": "「專注力」是抽象名詞，用 concentration／attention／the ability to focus；不要逐字拼成 focus power。"
+            },
+            {
+              "type": "verbal_subject",
+              "zh": "定期閱讀紙本書",
+              "literal_error": "Read printed books regularly is an effective way to strengthen our concentration, …",
+              "part": 1,
+              "explanation_zh": "中文直接拿動作當主詞，英文要改成動名詞 Reading …（或 To read …），動詞用單數 is。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "The more we immerse ourselves in printed books, the longer we are able to stay focused, which makes regular reading an effective way to sharpen our concentration.",
+              "grammar_id": "gp-the-more",
+              "explanation_zh": "immerse oneself in（沉浸於）、sharpen（使敏銳）讓句子更有文采；把「愈…愈…」放在句首再用 which 收尾，是另一種組織方式。"
+            }
+          ],
+          "restructuring_zh": "「讀得愈多，就能專心愈久」要把比較級移到子句最前面：the more we read, the longer we can focus；「專注力」是名詞 concentration，不要寫成 focus power。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ac-V-3",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-top-04",
+    "lot": "translation-top-04",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "6a9df5361ca910602b338b273c04042b40d0d8c92f6dc2609abebceddbfdb2f7",
+    "spec_id": "translation-top@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T13:27:27Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T13:05:21Z",
+      "details": {
+        "solver": "A",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Messages keep popping up on our phones, interrupting our thoughts, so it is no longer easy to concentrate on reading a long article to the end.",
+            "confidence": "medium",
+            "explanation_zh": "「不斷跳出」譯 keep popping up；「打斷我們的思緒」是伴隨結果，用分詞 interrupting；「已經不容易了」譯 it is no longer easy to（虛主詞 + 不定詞）；「專心讀完」譯 concentrate on reading... to the end，「讀完」較難自然地直譯，也可寫 finish reading。"
+          },
+          "2": {
+            "translation": "Reading printed books regularly is an effective way to strengthen our concentration, because the more we read, the longer we can stay focused.",
+            "confidence": "high",
+            "explanation_zh": "「定期閱讀紙本書」用動名詞當主詞；「有效方法」譯 an effective way to；「讀得愈多，就能專心愈久」用 the more..., the longer... 比較句型。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PART",
+              "NFSUBJ"
+            ],
+            "used_target_words": [
+              "message",
+              "phone",
+              "constantly",
+              "interrupt",
+              "thought",
+              "concentrate",
+              "article"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "建議（不影響判定）：第 3 部分可補「to concentrate on reading a long article to the end」。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "NFSUBJ",
+              "COMP"
+            ],
+            "used_target_words": [
+              "read",
+              "printed",
+              "regularly",
+              "effective",
+              "strengthen",
+              "concentration"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "message",
+              "phone",
+              "constantly",
+              "interrupt",
+              "thought",
+              "concentrate",
+              "article"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PART": true,
+              "NFSUBJ": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "read",
+              "printed",
+              "regularly",
+              "effective",
+              "strengthen",
+              "concentration"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NFSUBJ": true,
+              "COMP": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "fail",
+      "created_at": "2026-10-09T13:09:20Z",
+      "details": {
+        "solver": "B",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Phone messages keep popping up and interrupting our thoughts, so it is already difficult to concentrate on reading a long article through to the end.",
+            "confidence": "medium",
+            "explanation_zh": "「不斷跳出」用 keep + V-ing；「打斷我們的思緒」用 interrupt our thoughts；「因此」用 so 連接結果；「要……已經不容易了」用虛主詞 it is already difficult to …；「專心讀完」譯成 concentrate on reading … through to the end，「讀完」有兩種合理譯法，所以信心 medium。"
+          },
+          "2": {
+            "translation": "Regularly reading printed books is an effective way to strengthen our concentration, because the more we read, the longer we can stay focused.",
+            "confidence": "high",
+            "explanation_zh": "「定期閱讀紙本書」用動名詞做主詞（Regularly reading）；「增強專注力」用 strengthen concentration；「我們讀得愈多，就能專心愈久」是 the more …, the longer … 的比較級平行句型；「因為」引導原因副詞子句。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "NFSUBJ"
+            ],
+            "used_target_words": [
+              "message",
+              "phone",
+              "constantly",
+              "interrupt",
+              "thought",
+              "concentrate",
+              "article"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "我把「不斷跳出，打斷我們的思緒」譯成 keep popping up and interrupting our thoughts（兩個動作並列、同受 keep 支配），沒有句尾分詞片語（, interrupting …），所以 PART 沒有自然用到；中文是兩個動作並列，用 and interrupt 同樣自然，PART 沒被引出。",
+              "另外 NFSUBJ 那一部分的 accepted 都以 so 開頭，但中文「因此」不在任何一個部分的 zh 文字裡，改用 therefore／as a result 的學生會被判不符。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "NFSUBJ",
+              "COMP"
+            ],
+            "used_target_words": [
+              "read",
+              "printed",
+              "regularly",
+              "effective",
+              "strengthen",
+              "concentration"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "message",
+              "phone",
+              "constantly",
+              "interrupt",
+              "thought",
+              "concentrate",
+              "article"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NFSUBJ": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "read",
+              "printed",
+              "regularly",
+              "effective",
+              "strengthen",
+              "concentration"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NFSUBJ": false,
+              "COMP": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 1 題盲譯沒有用到標的句型 ['PART']：中文題目沒有自然引出這個句型（SPEC §5.7）"
+        ]
+      }
+    }
+  ],
+  "status": "rejected",
+  "status_reason": "blind_solver:B 未通過：第 1 題盲譯沒有用到標的句型 ['PART']：中文題目沒有自然引出這個句型（SPEC §5.7）"
+}

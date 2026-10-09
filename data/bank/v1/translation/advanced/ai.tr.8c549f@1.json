@@ -1,0 +1,720 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.8c549f",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "advanced",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "學習藍染（indigo dyeing）需要很多耐心，當布接觸到空氣時，顏色會慢慢變藍。",
+        "options": null,
+        "answer": "Learning indigo dyeing takes great patience; when the cloth is exposed to air, its color slowly turns blue.",
+        "accepted_answers": [
+          "Learning indigo dyeing takes much patience; when the cloth comes into contact with the air, its color gradually changes to blue.",
+          "Learning indigo dyeing needs a lot of patience, and the cloth slowly turns blue when it touches the air."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "動名詞片語當主詞",
+            "時間副詞子句"
+          ],
+          "topic": "藍染工藝"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "對年輕人來說，學會這門手藝並不難，只要他們花時間練習。",
+        "options": null,
+        "answer": "It is not hard for young people to learn this craft as long as they spend time practicing.",
+        "accepted_answers": [
+          "It is not difficult for young people to learn this skill if they spend time practicing.",
+          "It is not hard for young people to master this craft as long as they take the time to practice."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "虛主詞 It ＋形容詞＋不定詞",
+            "條件子句"
+          ],
+          "topic": "藍染工藝"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "藍染工藝"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "主詞「學習藍染」改成動名詞 Learning indigo dyeing，動名詞片語是單數，動詞用 takes 或 requires。「當布接觸到空氣時」是時間副詞子句 when the cloth is exposed to air（或 touches the air），布是「被」暴露在空氣中，所以用被動；子句放前面時後面加逗號。「顏色會慢慢變藍」寫 its color slowly turns blue，turn 後面直接接形容詞。",
+          "evidence": [
+            "學習藍染",
+            "需要很多耐心",
+            "當布接觸到空氣時"
+          ],
+          "strategy_zh": "主詞是一件事時先改成 V-ing；when 子句表示「…的時候」，主要子句和 when 子句要各有自己的主詞與動詞。",
+          "hints": [
+            "切成四段：學習藍染／需要很多耐心／當布接觸到空氣時／顏色會慢慢變藍",
+            "標的詞彙：learn（學習，L1）、patience（耐心，L3）、cloth（布，L2）、air（空氣，L1）、blue（藍色的，L1）；expose（使暴露，L4）可替換 touch",
+            "句型框架：V-ing … + takes …; when + S + V, S + V …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「對年輕人來說，學會…並不難」用虛主詞 It is not hard for young people to learn this craft；「難不難」說的是這件事，不能寫成 Young people are not hard。「只要」用 as long as 或 if，條件子句用現在式；「花時間練習」是 spend time practicing（spend + 時間 + V-ing）。",
+          "evidence": [
+            "對年輕人來說",
+            "學會這門手藝並不難",
+            "只要"
+          ],
+          "strategy_zh": "「對某人來說，做某事很＋形容詞」想到 It is + adj. + for 人 + to VR；條件、時間子句裡用現在式表示未來。",
+          "hints": [
+            "切成四段：對年輕人來說／學會這門手藝（並不難）／只要／他們花時間練習",
+            "標的詞彙：hard（困難的，L1）、young（年輕的，L1）、learn（學會，L1）、craft（手藝，L4）、spend（花費，L1）、practice（練習，L1）",
+            "句型框架：It is not + adj. + for + 人 + to VR …, as long as + S + V（現在式）…"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "Learning indigo dyeing takes great patience; when the cloth is exposed to air, its color slowly turns blue.",
+            "Learning indigo dyeing takes much patience; when the cloth comes into contact with the air, its color gradually changes to blue.",
+            "Learning indigo dyeing needs a lot of patience, and the cloth slowly turns blue when it touches the air."
+          ],
+          "target_words": [
+            {
+              "word": "learn",
+              "zh": "學習"
+            },
+            {
+              "word": "patience",
+              "zh": "耐心"
+            },
+            {
+              "word": "cloth",
+              "zh": "布",
+              "alternatives": [
+                "fabric"
+              ]
+            },
+            {
+              "word": "air",
+              "zh": "空氣"
+            },
+            {
+              "word": "blue",
+              "zh": "藍色的"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "NFSUBJ",
+              "grammar_id": "gp-gerund-subject",
+              "label_zh": "動名詞片語當主詞",
+              "frame": "V-ing … + V（單數）…",
+              "zh_trigger": "學習藍染"
+            },
+            {
+              "code": "ADVCL",
+              "grammar_id": "gp-time-clause",
+              "label_zh": "時間副詞子句（when）",
+              "frame": "when + S + V, S + V …",
+              "zh_trigger": "當布接觸到空氣時"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "學習藍染",
+              "accepted": [
+                "Learning indigo dyeing",
+                "To learn indigo dyeing"
+              ],
+              "targets": [
+                "learn",
+                "NFSUBJ"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Learn indigo dyeing",
+                  "right": "Learning indigo dyeing",
+                  "explanation_zh": "動詞片語當主詞要用動名詞 Learning …（或 To learn …），原形動詞開頭會變成祈使句。"
+                }
+              ]
+            },
+            {
+              "zh": "需要很多耐心",
+              "accepted": [
+                "takes great patience",
+                "takes much patience",
+                "needs a lot of patience",
+                "requires a lot of patience",
+                "takes a lot of patience",
+                "requires great patience"
+              ],
+              "targets": [
+                "patience"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "takes great patient",
+                  "right": "takes great patience",
+                  "explanation_zh": "「耐心」是名詞 patience；patient 是形容詞「有耐心的」（名詞↔形容詞）。"
+                },
+                {
+                  "wrong": "take great patience",
+                  "right": "takes great patience",
+                  "explanation_zh": "動名詞片語當主詞視為單數，動詞要加 s。"
+                }
+              ]
+            },
+            {
+              "zh": "當布接觸到空氣時",
+              "accepted": [
+                "when the cloth is exposed to air",
+                "when the cloth comes into contact with the air",
+                "when it touches the air",
+                "when the cloth touches the air",
+                "when the cloth is exposed to the air",
+                "once the cloth touches the air"
+              ],
+              "targets": [
+                "cloth",
+                "air",
+                "ADVCL"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "when the cloth exposes to air",
+                  "right": "when the cloth is exposed to air",
+                  "explanation_zh": "expose 是「使…暴露」；布是「被」暴露在空氣中，要用被動 is exposed to，或改寫成 touches the air。"
+                },
+                {
+                  "wrong": "when the cloth contacts with the air",
+                  "right": "when the cloth comes into contact with the air",
+                  "explanation_zh": "contact 當動詞直接接受詞，不加 with；或用 come into contact with。"
+                }
+              ]
+            },
+            {
+              "zh": "顏色會慢慢變藍",
+              "accepted": [
+                "its color slowly turns blue",
+                "its color gradually changes to blue",
+                "the cloth slowly turns blue",
+                "its color slowly changes to blue",
+                "it slowly turns blue",
+                "its color turns blue slowly"
+              ],
+              "targets": [
+                "blue"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "its color slowly becomes to blue",
+                  "right": "its color slowly turns blue",
+                  "explanation_zh": "become／turn 後面直接接形容詞 blue，不加 to（change to blue 才有 to）。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "verbal_subject",
+              "zh": "學習藍染",
+              "literal_error": "Learn indigo dyeing needs a lot of patience.",
+              "part": 1,
+              "explanation_zh": "主詞是「學習」這個動作，要用動名詞 Learning …。"
+            },
+            {
+              "type": "word_form",
+              "zh": "耐心",
+              "literal_error": "Learning indigo dyeing takes great patient.",
+              "part": 2,
+              "explanation_zh": "patient（形容詞）和 patience（名詞）容易混用；a lot of 後面要接名詞。"
+            }
+          ],
+          "bonus": [],
+          "restructuring_zh": "「學習藍染需要很多耐心」是動詞片語當主詞，英文要改成動名詞 Learning indigo dyeing（單數，配 takes／requires）；後半句是另一個完整句子（含 when 子句），要用分號或 and 和前半句連接，不能只用逗號相接。"
+        },
+        "2": {
+          "references": [
+            "It is not hard for young people to learn this craft as long as they spend time practicing.",
+            "It is not difficult for young people to learn this skill if they spend time practicing.",
+            "It is not hard for young people to master this craft as long as they take the time to practice."
+          ],
+          "target_words": [
+            {
+              "word": "hard",
+              "zh": "困難的",
+              "alternatives": [
+                "difficult"
+              ]
+            },
+            {
+              "word": "young",
+              "zh": "年輕的"
+            },
+            {
+              "word": "learn",
+              "zh": "學會",
+              "alternatives": [
+                "master"
+              ]
+            },
+            {
+              "word": "craft",
+              "zh": "手藝",
+              "alternatives": [
+                "skill",
+                "art"
+              ]
+            },
+            {
+              "word": "spend",
+              "zh": "花（時間）",
+              "alternatives": [
+                "take"
+              ]
+            },
+            {
+              "word": "practice",
+              "zh": "練習"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "NFSUBJ",
+              "grammar_id": "gp-it-adj-to",
+              "label_zh": "虛主詞 It ＋形容詞＋ for 人 ＋不定詞",
+              "frame": "It is not + adj. + for + 人 + to VR …",
+              "zh_trigger": "學會這門手藝並不難"
+            },
+            {
+              "code": "ADVCL",
+              "grammar_id": "gp-condition-real",
+              "label_zh": "條件子句（as long as／if）",
+              "frame": "…, as long as + S + V（現在式）",
+              "zh_trigger": "只要"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "對年輕人來說",
+              "accepted": [
+                "It is not hard for young people",
+                "It is not difficult for young people",
+                "It isn't hard for young people",
+                "For young people, it is not hard"
+              ],
+              "targets": [
+                "hard",
+                "young",
+                "NFSUBJ"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "It is not hard to young people",
+                  "right": "It is not hard for young people",
+                  "explanation_zh": "「對某人來說很難／不難」用 It is + adj. + for + 人 + to VR。"
+                },
+                {
+                  "wrong": "Young people are not hard to learn this craft",
+                  "right": "It is not hard for young people to learn this craft",
+                  "explanation_zh": "hard 說的是「這件事」不難，不是人「難」；主詞要用虛主詞 It。"
+                }
+              ]
+            },
+            {
+              "zh": "學會這門手藝",
+              "accepted": [
+                "to learn this craft",
+                "to learn this skill",
+                "to master this craft",
+                "to master this skill",
+                "to learn this art"
+              ],
+              "targets": [
+                "learn",
+                "craft",
+                "NFSUBJ"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "learning this craft",
+                  "right": "to learn this craft",
+                  "explanation_zh": "It is … for 人 後面接不定詞 to VR，不接 V-ing。"
+                }
+              ]
+            },
+            {
+              "zh": "只要",
+              "accepted": [
+                "as long as",
+                "if",
+                "so long as",
+                "provided that"
+              ],
+              "targets": [
+                "ADVCL"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "only",
+                  "right": "as long as",
+                  "explanation_zh": "「只要」是 as long as 或 if，不能只寫 only。"
+                }
+              ]
+            },
+            {
+              "zh": "他們花時間練習",
+              "accepted": [
+                "they spend time practicing",
+                "they take the time to practice",
+                "they spend time practising",
+                "they put time into practicing",
+                "they spend time on practice"
+              ],
+              "targets": [
+                "spend",
+                "practice"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "they spend time to practice",
+                  "right": "they spend time practicing",
+                  "explanation_zh": "spend + 時間 + V-ing；take the time 才接 to VR。"
+                },
+                {
+                  "wrong": "they will spend time practicing",
+                  "right": "they spend time practicing",
+                  "explanation_zh": "條件子句用現在式代替未來式。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "verbal_subject",
+              "zh": "學會這門手藝並不難",
+              "literal_error": "Learn this craft is not hard for young people.",
+              "part": 2,
+              "explanation_zh": "動詞片語不能當主詞；用虛主詞 It is not hard for … to learn …。"
+            },
+            {
+              "type": "collocation",
+              "zh": "花時間練習",
+              "literal_error": "as long as they spend time to practice",
+              "part": 4,
+              "explanation_zh": "spend 的搭配是 spend + 時間 + V-ing。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "No matter how difficult this craft may seem, young people can learn it as long as they spend time practicing.",
+              "explanation_zh": "用 no matter how … 的讓步子句先承認看似困難，再帶出條件，是較進階的寫法。",
+              "grammar_id": "gp-no-matter"
+            }
+          ],
+          "restructuring_zh": "「學會這門手藝並不難」是動詞片語當主詞，英文改成虛主詞句型 It is not hard for young people to learn this craft，把「對年輕人來說」放進 for young people。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "8-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-advanced-02",
+    "lot": "translation-advanced-02",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "dab2f301b2dd4cfd48bfd913df11ca683b0620cee3b8b044ef9794bc46049e02",
+    "spec_id": "translation-advanced@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 2,
+    "sentences": 1,
+    "avg_sentence_length": 2.0,
+    "denominator": 2,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.5,
+    "coverage_l1_6": 0.5,
+    "offlist_ratio": 0.5,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {
+      "4": 1,
+      "off": 1
+    },
+    "offlist_words": [
+      "indigo"
+    ],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T12:57:15Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T07:52:07Z",
+      "details": {
+        "solver": "A",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Learning indigo dyeing requires a lot of patience, and when the cloth comes into contact with the air, its color slowly turns blue.",
+            "confidence": "high",
+            "explanation_zh": "「學習藍染」用動名詞主詞；「需要很多耐心」用 require a lot of patience；後半用 when 子句「當布接觸到空氣時」come into contact with the air；「慢慢變藍」用 slowly turns blue；兩個分句用 and 連接成一句，避免逗號連接。"
+          },
+          "2": {
+            "translation": "It is not difficult for young people to learn this craft as long as they spend time practicing.",
+            "confidence": "high",
+            "explanation_zh": "「對年輕人來說……並不難」用 It is not difficult for sb to V；「只要」用 as long as；「花時間練習」用 spend time V-ing。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "NFSUBJ",
+              "ADVCL"
+            ],
+            "used_target_words": [
+              "learn",
+              "patience",
+              "cloth",
+              "air",
+              "blue"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "NFSUBJ",
+              "ADVCL"
+            ],
+            "used_target_words": [
+              "hard",
+              "young",
+              "learn",
+              "craft",
+              "spend",
+              "practice"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "learn",
+              "patience",
+              "cloth",
+              "air",
+              "blue"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NFSUBJ": true,
+              "ADVCL": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "hard",
+              "young",
+              "learn",
+              "craft",
+              "spend",
+              "practice"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NFSUBJ": true,
+              "ADVCL": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "fail",
+      "created_at": "2026-10-09T12:57:15Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Learning indigo dyeing requires a lot of patience, since the color slowly turns blue when the cloth comes into contact with the air.",
+            "confidence": "medium",
+            "explanation_zh": "「學習藍染」用動名詞當主詞；「需要很多耐心」用 requires a lot of patience；中文第二個分句沒有明講因果，我補上 since 讓句子連貫，但也可以用分號分開，所以信心 medium。"
+          },
+          "2": {
+            "translation": "For young people, learning this craft is not difficult as long as they spend time practicing.",
+            "confidence": "high",
+            "explanation_zh": "「只要他們花時間練習」用 as long as 表條件；「花時間做某事」用 spend time + V-ing；「對年輕人來說」用 For young people。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "NFSUBJ",
+              "ADVCL"
+            ],
+            "used_target_words": [
+              "learn",
+              "patience",
+              "cloth",
+              "air",
+              "blue"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "ADVCL"
+            ],
+            "used_target_words": [
+              "hard",
+              "young",
+              "learn",
+              "craft",
+              "spend",
+              "practice"
+            ],
+            "within_accepted": false,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "「學會這門手藝並不難」我自然譯成動名詞主詞（For young people, learning this craft is not difficult），沒有用標的句型 NFSUBJ（gp-it-adj-to，It is not hard for 人 to VR），所以 used_patterns 不含 NFSUBJ；中文沒有強制引出虛主詞。",
+              "參考譯文與各部分 accepted 全是 It is not hard for … to … 的寫法（第二部分的 common_errors 還把 learning this craft 列為錯誤），漏了動名詞主詞這種自然寫法，所以 within_accepted 判 false；建議補進 accepted。",
+              "「並不難」不在任何一個部分的 zh 裡，但第一部分的 accepted 與 targets（hard）卻含 is not hard；「只要」單獨成一部分，accepted 只有 as long as／if，份量偏輕，切法不太平均。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "learn",
+              "patience",
+              "cloth",
+              "air",
+              "blue"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NFSUBJ": true,
+              "ADVCL": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "hard",
+              "young",
+              "learn",
+              "craft",
+              "spend",
+              "practice"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "ADVCL": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 2 題盲譯沒有用到標的句型 ['NFSUBJ']：中文題目沒有自然引出這個句型（SPEC §5.7）",
+          "第 2 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義",
+          "第 2 題驗證者對4 部分切分有意見（warn）：「學會這門手藝並不難」我自然譯成動名詞主詞（For young people, learning this craft is not difficult），沒有用標的句型 NFSUBJ（gp-it-adj-to，It is not hard"
+        ]
+      }
+    }
+  ],
+  "status": "rejected",
+  "status_reason": "blind_solver:B 未通過：第 2 題盲譯沒有用到標的句型 ['NFSUBJ']：中文題目沒有自然引出這個句型（SPEC §5.7）；第 2 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義；第 2 題驗證者對4 部分切分有意見（warn）：「學會這門手藝並不難」我自然譯成動名詞主詞（For young people, learning this craft is not difficult），沒有用標的句型 NFSUBJ（gp-it-adj-to，It is not hard…）；人工判定：第 2 題第 2 部分 common_errors 把 learning this craft 列為錯誤，但 For young people, learning this craft is not difficult as long as … 是正確自然的譯法（第 1 題本身就在教動名詞主詞），評分規準會誤扣分；「並不難」不在任何一個部分的 zh 裡，第 1 部分 zh「對年輕人來說」卻要求寫出 It is not hard；第 1 題「需要很多耐心」和「顏色會慢慢變藍」兩個分句的關係中文沒有交代（盲譯 B 自行補 since）"
+}

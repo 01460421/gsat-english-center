@@ -1,0 +1,747 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.577ee5",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "advanced",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "在家工作時，許多父母發現自己的時間安排比以前更有彈性。",
+        "options": null,
+        "answer": "When working from home, many parents find that their schedules are more flexible than before.",
+        "accepted_answers": [
+          "While working from home, many parents discover that their schedules have become more flexible than before.",
+          "When working at home, a lot of parents find that they can arrange their time more flexibly than before."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "連接詞＋分詞",
+            "比較級"
+          ],
+          "topic": "遠距工作"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "為了兼顧工作和家庭，他們必須學會有效率地分配時間、分擔家事。",
+        "options": null,
+        "answer": "To balance work and family, they must learn to manage their time efficiently and share the housework.",
+        "accepted_answers": [
+          "In order to balance work and family, they have to learn to use their time efficiently and share housework.",
+          "To balance their work and family life, they need to learn to plan their time efficiently and divide the housework."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "不定詞表目的",
+            "平行結構"
+          ],
+          "topic": "遠距工作"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "遠距工作"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「在家工作時」中文沒寫主詞，主詞就是後面的「父母」，英文可以用「連接詞＋分詞」When working from home（不能寫 When work）。「時間安排比以前更有彈性」是比較級：are more flexible than before；be 動詞後面接形容詞 flexible，不是名詞 flexibility。",
+          "evidence": [
+            "在家工作時",
+            "比以前更有彈性"
+          ],
+          "strategy_zh": "連接詞＋分詞的主詞必須和主要子句相同；看到「比…更」先確認後面要接形容詞還是副詞。",
+          "hints": [
+            "切成四段：在家工作時／許多父母發現／自己的時間安排／比以前更有彈性",
+            "標的詞彙：work（工作，L1）、home（家，L1）、parent（父母，L1）、schedule（時間安排，L2）、flexible（有彈性的，L4）",
+            "句型框架：When + V-ing …, S + find that + S + be + more + adj. + than before"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「為了…」表目的，用 To + 原形動詞（或 In order to）放句首，後面加逗號再接主要子句。「學會有效率地分配時間、分擔家事」兩個動作用 and 連接，形式要一致：learn to manage … and share …；「有效率地」修飾動詞，用副詞 efficiently；housework 不可數。",
+          "evidence": [
+            "為了兼顧工作和家庭",
+            "分配時間、分擔家事"
+          ],
+          "strategy_zh": "中文用頓號列出的動作，英文用 and 串起來時，先確認每一項都是同一種形式（都用原形、或都用 V-ing）。",
+          "hints": [
+            "切成四段：為了兼顧工作和家庭／他們必須學會／有效率地分配時間／分擔家事",
+            "標的詞彙：balance（兼顧，L2）、family（家庭，L1）、learn（學會，L1）、manage（分配、管理，L2）、efficiently（有效率地，L3）、share（分擔，L1）、housework（家事，L4）",
+            "句型框架：To + VR …, S + must learn to + V1 … and + V2 …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "When working from home, many parents find that their schedules are more flexible than before.",
+            "While working from home, many parents discover that their schedules have become more flexible than before.",
+            "When working at home, a lot of parents find that they can arrange their time more flexibly than before."
+          ],
+          "target_words": [
+            {
+              "word": "work",
+              "zh": "工作"
+            },
+            {
+              "word": "home",
+              "zh": "家"
+            },
+            {
+              "word": "parent",
+              "zh": "父母"
+            },
+            {
+              "word": "schedule",
+              "zh": "時間安排",
+              "alternatives": [
+                "time"
+              ]
+            },
+            {
+              "word": "flexible",
+              "zh": "有彈性的",
+              "alternatives": [
+                "flexibly"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PART",
+              "grammar_id": "gp-conj-participle",
+              "label_zh": "連接詞＋分詞（When/While + V-ing）",
+              "frame": "When/While + V-ing …, S + V …",
+              "zh_trigger": "在家工作時"
+            },
+            {
+              "code": "COMP",
+              "grammar_id": "gp-comparative-superlative",
+              "label_zh": "比較級（more + 形容詞 + than）",
+              "frame": "S + be + more + adj. + than + …",
+              "zh_trigger": "比以前更有彈性"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "在家工作時",
+              "accepted": [
+                "When working from home",
+                "While working from home",
+                "When working at home",
+                "While working at home",
+                "When they work from home",
+                "When they work at home"
+              ],
+              "targets": [
+                "work",
+                "home",
+                "PART"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "When work from home",
+                  "right": "When working from home",
+                  "explanation_zh": "連接詞後面省略主詞時，動詞要改成分詞 working；不然就補上主詞 When they work …。"
+                },
+                {
+                  "wrong": "When worked from home",
+                  "right": "When working from home",
+                  "explanation_zh": "父母是主動在家工作，用現在分詞 working。"
+                }
+              ]
+            },
+            {
+              "zh": "許多父母發現",
+              "accepted": [
+                "many parents find that",
+                "many parents discover that",
+                "a lot of parents find that",
+                "lots of parents find that",
+                "many parents realize that",
+                "many parents find"
+              ],
+              "targets": [
+                "parent"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "many parent find that",
+                  "right": "many parents find that",
+                  "explanation_zh": "many 後面接複數名詞 parents。"
+                },
+                {
+                  "wrong": "many parents finds that",
+                  "right": "many parents find that",
+                  "explanation_zh": "主詞是複數 parents，動詞不加 s。"
+                }
+              ]
+            },
+            {
+              "zh": "自己的時間安排",
+              "accepted": [
+                "their schedules",
+                "their schedule",
+                "they can arrange their time",
+                "their time",
+                "their timetables",
+                "their daily schedules"
+              ],
+              "targets": [
+                "schedule"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "their time arrangement",
+                  "right": "their schedules",
+                  "explanation_zh": "「時間安排」英文通常說 schedule，time arrangement 不自然。"
+                },
+                {
+                  "wrong": "themselves' schedules",
+                  "right": "their schedules",
+                  "explanation_zh": "「自己的」用所有格 their，沒有 themselves' 這種寫法。"
+                }
+              ]
+            },
+            {
+              "zh": "比以前更有彈性",
+              "accepted": [
+                "are more flexible than before",
+                "have become more flexible than before",
+                "more flexibly than before",
+                "are more flexible than they used to be",
+                "are more flexible than in the past",
+                "are much more flexible than before"
+              ],
+              "targets": [
+                "flexible",
+                "COMP"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "are more flexibility than before",
+                  "right": "are more flexible than before",
+                  "explanation_zh": "be 動詞後面要接形容詞 flexible，flexibility 是名詞。"
+                },
+                {
+                  "wrong": "are flexibler than before",
+                  "right": "are more flexible than before",
+                  "explanation_zh": "flexible 是多音節形容詞，比較級用 more flexible。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "subjectless",
+              "zh": "在家工作時",
+              "literal_error": "When work from home, many parents find that their schedules are more flexible than before.",
+              "part": 1,
+              "explanation_zh": "中文省略主詞，照字面寫 When work … 不合文法；用 When working …，或補主詞 When they work …。"
+            },
+            {
+              "type": "word_form",
+              "zh": "更有彈性",
+              "literal_error": "When working from home, many parents find that their schedules are more flexibility than before.",
+              "part": 4,
+              "explanation_zh": "「有彈性」是形容詞 flexible；flexibility 是名詞，不能接在 are more 後面。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "What many parents find when working from home is that their schedules are more flexible than before.",
+              "grammar_id": "gp-what-cleft",
+              "explanation_zh": "用準分裂句 What … is that … 把「發現的內容」放到句尾強調；這是強調句型，只當加分寫法。"
+            }
+          ],
+          "restructuring_zh": "「在家工作時」中文省略主詞，英文要嘛補主詞（When they work from home），要嘛用連接詞＋分詞 When working from home，而且分詞的主詞要和後面的 many parents 相同。"
+        },
+        "2": {
+          "references": [
+            "To balance work and family, they must learn to manage their time efficiently and share the housework.",
+            "In order to balance work and family, they have to learn to use their time efficiently and share housework.",
+            "To balance their work and family life, they need to learn to plan their time efficiently and divide the housework."
+          ],
+          "target_words": [
+            {
+              "word": "balance",
+              "zh": "兼顧"
+            },
+            {
+              "word": "family",
+              "zh": "家庭"
+            },
+            {
+              "word": "learn",
+              "zh": "學會"
+            },
+            {
+              "word": "manage",
+              "zh": "分配、管理",
+              "alternatives": [
+                "use",
+                "plan",
+                "arrange",
+                "organize"
+              ]
+            },
+            {
+              "word": "efficiently",
+              "zh": "有效率地",
+              "alternatives": [
+                "efficient"
+              ]
+            },
+            {
+              "word": "share",
+              "zh": "分擔",
+              "alternatives": [
+                "divide",
+                "split"
+              ]
+            },
+            {
+              "word": "housework",
+              "zh": "家事",
+              "alternatives": [
+                "chores"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PURP",
+              "grammar_id": "gp-infinitive-purpose",
+              "label_zh": "不定詞表目的（To + VR 放句首）",
+              "frame": "To／In order to + VR …, S + V …",
+              "zh_trigger": "為了兼顧工作和家庭"
+            },
+            {
+              "code": "PARA",
+              "grammar_id": "gp-parallelism",
+              "label_zh": "平行結構（learn to V1 … and V2 …）",
+              "frame": "S + learn to + V1 … and (to) + V2 …",
+              "zh_trigger": "分配時間、分擔家事"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "為了兼顧工作和家庭",
+              "accepted": [
+                "To balance work and family",
+                "In order to balance work and family",
+                "To balance their work and family life",
+                "To balance work and family life",
+                "So as to balance work and family",
+                "To take care of both work and family"
+              ],
+              "targets": [
+                "balance",
+                "family",
+                "PURP"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "For balancing work and family",
+                  "right": "To balance work and family",
+                  "explanation_zh": "表目的用不定詞 To + 原形動詞（或 In order to）。"
+                },
+                {
+                  "wrong": "To balance work and family, so they must learn",
+                  "right": "To balance work and family, they must learn",
+                  "explanation_zh": "不定詞片語後面直接接主要子句，不要再加 so。"
+                }
+              ]
+            },
+            {
+              "zh": "他們必須學會",
+              "accepted": [
+                "they must learn to",
+                "they have to learn to",
+                "they need to learn to",
+                "they must learn how to",
+                "they have to learn how to",
+                "they need to learn how to"
+              ],
+              "targets": [
+                "learn"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "they must to learn",
+                  "right": "they must learn",
+                  "explanation_zh": "must 是助動詞，後面直接接原形動詞，不加 to。"
+                },
+                {
+                  "wrong": "they must learning to",
+                  "right": "they must learn to",
+                  "explanation_zh": "助動詞 must 後面接原形動詞 learn。"
+                }
+              ]
+            },
+            {
+              "zh": "有效率地分配時間",
+              "accepted": [
+                "manage their time efficiently",
+                "use their time efficiently",
+                "plan their time efficiently",
+                "arrange their time efficiently",
+                "organize their time efficiently",
+                "manage time efficiently",
+                "efficiently manage their time"
+              ],
+              "targets": [
+                "manage",
+                "efficiently"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "manage their time efficient",
+                  "right": "manage their time efficiently",
+                  "explanation_zh": "修飾動詞 manage 要用副詞 efficiently。"
+                },
+                {
+                  "wrong": "manage their times efficiently",
+                  "right": "manage their time efficiently",
+                  "explanation_zh": "這裡的 time 指「時間」，不可數，不加 s。"
+                }
+              ]
+            },
+            {
+              "zh": "分擔家事",
+              "accepted": [
+                "and share the housework",
+                "and share housework",
+                "and divide the housework",
+                "and share the household chores",
+                "and share the chores",
+                "and split the housework",
+                "and to share the housework"
+              ],
+              "targets": [
+                "share",
+                "housework",
+                "PARA"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "and sharing the housework",
+                  "right": "and share the housework",
+                  "explanation_zh": "and 前後要對稱：learn to manage … and (to) share …，兩個都用原形動詞。"
+                },
+                {
+                  "wrong": "and share the houseworks",
+                  "right": "and share the housework",
+                  "explanation_zh": "housework 不可數，不加 s。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "word_form",
+              "zh": "有效率地",
+              "literal_error": "To balance work and family, they must learn to manage their time efficient and share the housework.",
+              "part": 3,
+              "explanation_zh": "「有效率地」修飾動詞，要用副詞 efficiently。"
+            },
+            {
+              "type": "plural_countable",
+              "zh": "家事",
+              "literal_error": "To balance work and family, they must learn to manage their time efficiently and share the houseworks.",
+              "part": 4,
+              "explanation_zh": "housework 是不可數名詞，不加 s；要強調件數可以說 household chores。"
+            }
+          ],
+          "bonus": []
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-advanced-03",
+    "lot": "translation-advanced-03",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "02c0a28073619c0bc20ca233498a317fe41127b7ed24b485e5a25ef485b7d3c2",
+    "spec_id": "translation-advanced@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T13:03:01Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T08:05:03Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "While working from home, many parents find that their schedules are more flexible than before.",
+            "confidence": "high",
+            "explanation_zh": "「在家工作時」主詞與主要子句相同，用 While + V-ing 的減化副詞子句；「時間安排比以前更有彈性」用比較級 more flexible than before；「發現」接 that 子句。時態可用 find 或 have found，這裡用一般現在式描述現況。"
+          },
+          "2": {
+            "translation": "In order to balance work and family, they have to learn to manage their time efficiently and share the housework.",
+            "confidence": "medium",
+            "explanation_zh": "「為了兼顧…」用 In order to 表目的；「兼顧工作和家庭」譯 balance work and family；「有效率地分配時間」譯 manage their time efficiently（也可用 divide/allocate their time）；「分擔家事」譯 share the housework。「分配」英文最自然的對應不只一種，信心給 medium。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PART",
+              "COMP"
+            ],
+            "used_target_words": [
+              "work",
+              "home",
+              "parent",
+              "schedule",
+              "flexible"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PURP",
+              "PARA"
+            ],
+            "used_target_words": [
+              "balance",
+              "family",
+              "learn",
+              "manage",
+              "efficiently",
+              "share",
+              "housework"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "work",
+              "home",
+              "parent",
+              "schedule",
+              "flexible"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PART": true,
+              "COMP": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "balance",
+              "family",
+              "learn",
+              "manage",
+              "efficiently",
+              "share",
+              "housework"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PURP": true,
+              "PARA": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T00:00:00Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "When working from home, many parents find that their schedules are more flexible than before.",
+            "confidence": "high",
+            "explanation_zh": "「在家工作時」保留 When 加分詞，主詞 many parents 與 working 一致；「發現……」後接 that 名詞子句；「比以前更有彈性」用比較級 more flexible than before。"
+          },
+          "2": {
+            "translation": "To balance work and family, they must learn to allocate their time efficiently and share the housework.",
+            "confidence": "high",
+            "explanation_zh": "「為了兼顧」用不定詞 To balance 表目的；「學會……」用 learn to 後接兩個並列動詞片語 allocate…and share…，時間分配用 allocate their time。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PART",
+              "COMP"
+            ],
+            "used_target_words": [
+              "work",
+              "home",
+              "parent",
+              "schedule",
+              "flexible"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PURP",
+              "PARA"
+            ],
+            "used_target_words": [
+              "balance",
+              "family",
+              "learn",
+              "efficiently",
+              "share",
+              "housework"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "（建議，不影響判定）「分配時間」最直譯是 allocate／distribute their time，但 manage 的 alternatives 與第 3 部分 accepted 都沒收 allocate，建議補上。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "work",
+              "home",
+              "parent",
+              "schedule",
+              "flexible"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PART": true,
+              "COMP": true
+            },
+            "program_match": true
+          },
+          "2": {
+            "target_words_found": [
+              "balance",
+              "family",
+              "learn",
+              "efficiently",
+              "share",
+              "housework"
+            ],
+            "target_hit_rate": 0.857,
+            "patterns_detected": {
+              "PURP": true,
+              "PARA": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

@@ -439,6 +439,10 @@ class Lots(Case):
         self.assertFalse(mw.generated_from('agent-2026-10-09-translation-basic-01', 'translation-basic-1'))
         self.assertFalse(mw.generated_from('', 'composition-basic-01'))
         self.assertFalse(mw.generated_from('agent-2026-10-09-composition-basic-01', None))
+        # 退件重出的題組（run_id 多了 -regen）也是依同一個批次的主題出的
+        self.assertTrue(mw.generated_from('agent-2026-10-09-translation-advanced-04-regen', 'translation-advanced-04'))
+        self.assertFalse(mw.generated_from('agent-2026-10-09-translation-advanced-04-regen', 'translation-advanced-05'))
+        self.assertFalse(mw.generated_from('agent-2026-10-09-translation-advanced-04-regenx', 'translation-advanced-04'))
 
     def test_topic_plan_is_clean_and_lots_exist(self):
         plan = load(mw.PLAN)

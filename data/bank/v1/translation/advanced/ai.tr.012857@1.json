@@ -1,0 +1,716 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.012857",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "advanced",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "日夜和長輩住在一起，外籍看護往往比任何人都了解他們的需要。",
+        "options": null,
+        "answer": "Living with the elderly day and night, foreign care workers often understand their needs better than anyone else.",
+        "accepted_answers": [
+          "Living with elderly people day and night, foreign care workers often know what they need better than anyone else.",
+          "Staying with older people day and night, foreign caregivers usually understand their needs better than anyone else does."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "分詞構句（以 V-ing 片語取代副詞子句）",
+            "比較級（比任何人都…）"
+          ],
+          "topic": "外籍移工"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "這些由台灣家庭聘請的看護，中文也說得越來越流利。",
+        "options": null,
+        "answer": "These care workers hired by Taiwanese families are also speaking Chinese more and more fluently.",
+        "accepted_answers": [
+          "These care workers hired by Taiwanese families are also becoming more and more fluent in Chinese.",
+          "The care workers employed by Taiwanese families also speak Chinese more and more fluently."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "分詞片語後位修飾名詞（hired by …）",
+            "越來越…（more and more＋形容詞／副詞）"
+          ],
+          "topic": "外籍移工"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "外籍移工"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "前半句沒有主詞，主詞和後半句相同（外籍看護），用分詞構句 Living with the elderly day and night。「外籍看護」是 foreign care workers（或 caregivers）。「比任何人都了解」是比較級：understand their needs better than anyone else；better 已是比較級，不加 more。",
+          "evidence": [
+            "日夜和長輩住在一起",
+            "比任何人都了解他們的需要"
+          ],
+          "strategy_zh": "兩個子句主詞相同時，可以把前面的子句改成分詞構句：主動用 V-ing，被動用 p.p.。",
+          "hints": [
+            "切成四段：日夜和長輩住在一起／外籍看護／（往往）比任何人都／了解他們的需要",
+            "標的詞彙：elderly（年長的）、foreign（外國的）、care worker（看護）、understand（了解）、need（需要）",
+            "句型框架：V-ing …, S + V + better than anyone else"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「由台灣家庭聘請的看護」是前置修飾，英文用過去分詞片語放在名詞後面：these care workers hired by Taiwanese families（看護是被聘請的，用 hired）。「中文也說得越來越流利」的主詞是看護，中文是 speak 的受詞；「越來越流利」用 more and more fluently（修飾動詞用副詞），或 become more and more fluent in Chinese。",
+          "evidence": [
+            "由台灣家庭聘請的看護",
+            "中文也說得越來越流利"
+          ],
+          "strategy_zh": "分詞片語修飾名詞時放在名詞後面：主動用 V-ing（people living alone），被動用 p.p.（workers hired by families）。",
+          "hints": [
+            "切成四段：由台灣家庭聘請的／（這些）看護／中文也說得／越來越流利",
+            "標的詞彙：hire（聘請）、family（家庭）、care worker（看護）、speak（說）、fluent（流利的）",
+            "句型框架：N + p.p. + by … + be + V-ing + more and more + adv."
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "Living with the elderly day and night, foreign care workers often understand their needs better than anyone else.",
+            "Living with elderly people day and night, foreign care workers often know what they need better than anyone else.",
+            "Staying with older people day and night, foreign caregivers usually understand their needs better than anyone else does."
+          ],
+          "target_words": [
+            {
+              "word": "elderly",
+              "zh": "長輩（年長的）",
+              "alternatives": [
+                "old",
+                "older",
+                "senior",
+                "seniors"
+              ]
+            },
+            {
+              "word": "foreign",
+              "zh": "外籍的"
+            },
+            {
+              "word": "care worker",
+              "zh": "看護",
+              "alternatives": [
+                "caregiver",
+                "caregivers",
+                "caretaker",
+                "caretakers"
+              ]
+            },
+            {
+              "word": "understand",
+              "zh": "了解",
+              "alternatives": [
+                "know"
+              ]
+            },
+            {
+              "word": "need",
+              "zh": "需要"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PART",
+              "grammar_id": "gp-participle-clause",
+              "label_zh": "分詞構句（以 V-ing 片語取代副詞子句）",
+              "frame": "V-ing …, S + V …",
+              "zh_trigger": "日夜和長輩住在一起"
+            },
+            {
+              "code": "COMP",
+              "grammar_id": "gp-comparative-superlative",
+              "label_zh": "比較級（比任何人都…）",
+              "frame": "S + V + better than anyone else",
+              "zh_trigger": "比任何人都"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "日夜和長輩住在一起",
+              "accepted": [
+                "Living with the elderly day and night",
+                "Living with elderly people day and night",
+                "Staying with older people day and night",
+                "Living with old people day and night",
+                "Staying with the elderly day and night",
+                "Living with the elderly all day and night"
+              ],
+              "targets": [
+                "PART",
+                "elderly"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Live with the elderly day and night",
+                  "right": "Living with the elderly day and night",
+                  "explanation_zh": "前半句沒有主詞，要用分詞構句 Living …（或補成 Because they live …）。"
+                },
+                {
+                  "wrong": "Lived with the elderly day and night",
+                  "right": "Living with the elderly day and night",
+                  "explanation_zh": "看護是主動「住在一起」，用現在分詞 living；過去分詞表示被動。"
+                }
+              ]
+            },
+            {
+              "zh": "外籍看護",
+              "accepted": [
+                "foreign care workers",
+                "foreign caregivers",
+                "foreign caretakers",
+                "care workers from other countries",
+                "foreign helpers"
+              ],
+              "targets": [
+                "foreign",
+                "care worker"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "foreign nursing",
+                  "right": "foreign care workers",
+                  "explanation_zh": "「看護」指人，用 care workers／caregivers；nursing 是「護理工作」。"
+                }
+              ]
+            },
+            {
+              "zh": "比任何人都",
+              "accepted": [
+                "better than anyone else",
+                "better than anyone else does",
+                "better than anybody else",
+                "better than anyone",
+                "better than any other person"
+              ],
+              "targets": [
+                "COMP"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "more better than anyone else",
+                  "right": "better than anyone else",
+                  "explanation_zh": "better 已經是比較級，前面不加 more。"
+                },
+                {
+                  "wrong": "better than any people",
+                  "right": "better than anyone else",
+                  "explanation_zh": "「比任何人都…」說 than anyone else 或 than any other person（單數）。"
+                }
+              ]
+            },
+            {
+              "zh": "了解他們的需要",
+              "accepted": [
+                "understand their needs",
+                "know what they need",
+                "know their needs",
+                "understand what they need"
+              ],
+              "targets": [
+                "understand",
+                "need"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "understand their need",
+                  "right": "understand their needs",
+                  "explanation_zh": "長輩的需要不只一項，needs 用複數。"
+                },
+                {
+                  "wrong": "know what do they need",
+                  "right": "know what they need",
+                  "explanation_zh": "間接問句用直述句語序。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "subjectless",
+              "zh": "日夜和長輩住在一起",
+              "literal_error": "Live with the elderly day and night, foreign care workers often …",
+              "part": 1,
+              "explanation_zh": "前半句中文沒有主詞，英文不能直接放原形動詞；主詞和後半句相同時用分詞構句 Living …。"
+            },
+            {
+              "type": "word_form",
+              "zh": "比任何人都",
+              "literal_error": "foreign care workers often understand their needs more better than anyone",
+              "part": 3,
+              "explanation_zh": "well 的比較級是 better，不能再加 more。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "No one understands the needs of the elderly better than the foreign care workers who live with them day and night.",
+              "explanation_zh": "用 No one … better than … 的否定比較表示「最了解」，再用關係子句說明看護的身分；句構不同但語意相同，屬加分寫法。"
+            }
+          ],
+          "restructuring_zh": "前半句「日夜和長輩住在一起」中文沒有主詞，英文要用分詞構句 Living with the elderly day and night，邏輯主詞就是後面的 foreign care workers。"
+        },
+        "2": {
+          "references": [
+            "These care workers hired by Taiwanese families are also speaking Chinese more and more fluently.",
+            "These care workers hired by Taiwanese families are also becoming more and more fluent in Chinese.",
+            "The care workers employed by Taiwanese families also speak Chinese more and more fluently."
+          ],
+          "target_words": [
+            {
+              "word": "hire",
+              "zh": "聘請",
+              "alternatives": [
+                "employ"
+              ]
+            },
+            {
+              "word": "family",
+              "zh": "家庭"
+            },
+            {
+              "word": "care worker",
+              "zh": "看護",
+              "alternatives": [
+                "caregiver",
+                "caregivers",
+                "caretaker",
+                "caretakers"
+              ]
+            },
+            {
+              "word": "speak",
+              "zh": "說",
+              "alternatives": [
+                "become"
+              ]
+            },
+            {
+              "word": "fluent",
+              "zh": "流利的",
+              "alternatives": [
+                "fluently"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PART",
+              "grammar_id": "gp-participle-modifier",
+              "label_zh": "分詞片語後位修飾名詞（hired by …）",
+              "frame": "N + p.p. + by …",
+              "zh_trigger": "由台灣家庭聘請的"
+            },
+            {
+              "code": "COMP",
+              "grammar_id": "gp-more-and-more",
+              "label_zh": "越來越…（more and more＋形容詞／副詞）",
+              "frame": "S + V + more and more + adv. ／ become + more and more + adj.",
+              "zh_trigger": "越來越"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "由台灣家庭聘請的",
+              "accepted": [
+                "hired by Taiwanese families",
+                "employed by Taiwanese families",
+                "who are hired by Taiwanese families",
+                "that are hired by Taiwanese families",
+                "working for Taiwanese families"
+              ],
+              "targets": [
+                "PART",
+                "hire",
+                "family"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "by Taiwanese families hired",
+                  "right": "hired by Taiwanese families",
+                  "explanation_zh": "分詞片語放在名詞後面：care workers hired by …。"
+                },
+                {
+                  "wrong": "hiring by Taiwanese families",
+                  "right": "hired by Taiwanese families",
+                  "explanation_zh": "看護是「被聘請」，用過去分詞 hired。"
+                }
+              ]
+            },
+            {
+              "zh": "看護",
+              "accepted": [
+                "These care workers",
+                "These caregivers",
+                "The care workers",
+                "These caretakers"
+              ],
+              "targets": [
+                "care worker"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "These care worker",
+                  "right": "These care workers",
+                  "explanation_zh": "these 後面接複數名詞。"
+                }
+              ]
+            },
+            {
+              "zh": "中文也說得",
+              "accepted": [
+                "are also speaking Chinese",
+                "are also becoming",
+                "also speak Chinese",
+                "are speaking Chinese",
+                "are also getting"
+              ],
+              "targets": [
+                "speak"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "their Chinese also speaks",
+                  "right": "they also speak Chinese",
+                  "explanation_zh": "中文「中文也說得…」是主題句，英文主詞是看護（they），中文（Chinese）是 speak 的受詞。"
+                }
+              ]
+            },
+            {
+              "zh": "越來越流利",
+              "accepted": [
+                "more and more fluently",
+                "more and more fluent in Chinese",
+                "more and more fluent",
+                "better and better"
+              ],
+              "targets": [
+                "COMP",
+                "fluent"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "speak Chinese more and more fluent",
+                  "right": "speak Chinese more and more fluently",
+                  "explanation_zh": "修飾動詞 speak 要用副詞 fluently。"
+                },
+                {
+                  "wrong": "more fluently and more fluently",
+                  "right": "more and more fluently",
+                  "explanation_zh": "「越來越…」是 more and more＋形容詞／副詞。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "prenominal_modifier",
+              "zh": "由台灣家庭聘請的看護",
+              "literal_error": "These by Taiwanese families hired care workers …",
+              "part": 1,
+              "explanation_zh": "「由…聘請的看護」要改成分詞片語後位修飾：care workers hired by Taiwanese families。"
+            },
+            {
+              "type": "word_form",
+              "zh": "流利",
+              "literal_error": "are also speaking Chinese more and more fluent",
+              "part": 4,
+              "explanation_zh": "修飾動詞 speak 要用副詞 fluently；用形容詞 fluent 時要搭配 become／be fluent in Chinese。"
+            }
+          ],
+          "bonus": [],
+          "restructuring_zh": "「這些由台灣家庭聘請的看護」是前置修飾，英文改成分詞片語後位修飾 these care workers hired by Taiwanese families；「中文也說得越來越流利」以看護為主詞，寫成 are speaking Chinese more and more fluently 或 are becoming more and more fluent in Chinese。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-advanced-01",
+    "lot": "translation-advanced-01",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "aabb674c20baad2f5310b8b4d808a265893e2edf0c2a598bf8b873bfdfb38f0f",
+    "spec_id": "translation-advanced@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T12:42:30Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T07:45:00Z",
+      "details": {
+        "solver": "A",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Living with the elderly day and night, foreign caregivers often understand their needs better than anyone else.",
+            "confidence": "high",
+            "explanation_zh": "前半句主詞與後半句相同（外籍看護），用分詞構句 Living with … 表原因；「比任何人都了解」用比較級 better than anyone else；「長輩」譯 the elderly；「日夜」譯 day and night。"
+          },
+          "2": {
+            "translation": "These caregivers hired by Taiwanese families are also speaking Chinese more and more fluently.",
+            "confidence": "medium",
+            "explanation_zh": "「由台灣家庭聘請的看護」用過去分詞片語 hired by Taiwanese families 修飾 caregivers（省略關係子句）；「越來越流利」用 more and more fluently，搭配進行式表示變化中；也可寫 have become more and more fluent in Chinese。信心 medium 是因為時態可用進行式或完成式。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PART",
+              "COMP"
+            ],
+            "used_target_words": [
+              "elderly",
+              "foreign",
+              "care worker",
+              "understand",
+              "need"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "（小建議，不影響判定）R0／R1 和本譯文的 understand their needs 中，their 緊跟在主詞 foreign care workers 之後，字面上可能被讀成看護自己的需要；語境下仍清楚，但可在 P4 accepted 補 understand the needs of the elderly／what the elderly need（加分寫法已用這種寫法）。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "PART",
+              "COMP"
+            ],
+            "used_target_words": [
+              "hire",
+              "family",
+              "care worker",
+              "speak",
+              "fluent"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "elderly",
+              "foreign",
+              "care worker",
+              "understand",
+              "need"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PART": true,
+              "COMP": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "hire",
+              "family",
+              "care worker",
+              "speak",
+              "fluent"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PART": false,
+              "COMP": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "fail",
+      "created_at": "2026-10-09T07:46:21Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Living with the elderly day and night, foreign caregivers often understand their needs better than anyone else.",
+            "confidence": "high",
+            "explanation_zh": "「日夜和長輩住在一起」是伴隨的原因，用現在分詞片語 Living with ... 作句首修飾，主詞 foreign caregivers 與分詞動作一致；「比任何人都了解」用比較級 better than anyone else。"
+          },
+          "2": {
+            "translation": "These caregivers, who are hired by Taiwanese families, also speak Chinese more and more fluently.",
+            "confidence": "high",
+            "explanation_zh": "「由台灣家庭聘請的」用非限定關係子句（被動）補充說明；「越來越流利」用 more and more fluently；「也」放在動詞前。中文沒有時間副詞，用現在簡單式描述持續趨勢。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PART",
+              "COMP"
+            ],
+            "used_target_words": [
+              "elderly",
+              "foreign",
+              "care worker",
+              "understand",
+              "need"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "備註：「往往」沒有放進任何一個部分，漏譯 often 不會被扣分（不影響通過）。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "COMP"
+            ],
+            "used_target_words": [
+              "hire",
+              "family",
+              "care worker",
+              "speak",
+              "fluent"
+            ],
+            "within_accepted": true,
+            "closest_reference": 2,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "備註：我自然寫出的是完整關係子句 who are hired by Taiwanese families，而不是縮減的過去分詞片語 hired by …；中文「由…聘請的」沒有強制縮減成分詞，所以標的句型 PART 在盲譯裡不一定被引出（part 1 的 accepted 本身也收了 who are hired by），因此我沒有勾 PART。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "elderly",
+              "foreign",
+              "care worker",
+              "understand",
+              "need"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PART": true,
+              "COMP": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "hire",
+              "family",
+              "care worker",
+              "speak",
+              "fluent"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "COMP": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 2 題盲譯沒有用到標的句型 ['PART']：中文題目沒有自然引出這個句型（SPEC §5.7）"
+        ]
+      }
+    }
+  ],
+  "status": "rejected",
+  "status_reason": "blind_solver:B 未通過：第 2 題盲譯沒有用到標的句型 ['PART']：中文題目沒有自然引出這個句型（SPEC §5.7）；判定者人工審查（第 1 輪）：同意退回。第 2 題「由台灣家庭聘請的看護」同樣自然引出完整的關係子句（驗證者 B 的盲譯 These caregivers, who are hired by Taiwanese families, …），第 1 部分 accepted 本身也收了 who are／that are hired by，標的句型 PART（過去分詞片語後位修飾）沒有被中文唯一引出，標的句型和評分規準互相矛盾。重生時改寫中文讓它自然引出分詞片語，或把這一句的標的句型改為關係子句（REL）。第 1 題沒有問題（「往往」沒有放進任何一個部分，可順便調整）。"
+}

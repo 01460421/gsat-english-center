@@ -1,0 +1,749 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.d186a2",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "top",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "和身體上的傷相比，我們內心所承受的往往比較難被別人看見，但它一樣真實。",
+        "options": null,
+        "answer": "Compared with physical injuries, what we suffer inside is often less visible to others, but it is just as real.",
+        "accepted_answers": [
+          "Compared to physical wounds, what we go through emotionally is often harder for others to see, but it is equally real.",
+          "In comparison with injuries to the body, what we endure in our hearts is usually less visible to other people, yet it is just as real."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "what 名詞子句",
+            "相較於…（Compared with）"
+          ],
+          "topic": "心理健康與求助"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "今年到學校輔導室尋求協助的學生人數是去年的兩倍。",
+        "options": null,
+        "answer": "This year, the number of students seeking help from the school's counseling office is twice as high as it was last year.",
+        "accepted_answers": [
+          "The number of students seeking help at the school counseling office this year is twice as high as last year's.",
+          "The number of students seeking help from the school's counseling office this year is two times as large as last year's."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "倍數比較",
+            "分詞片語後位修飾"
+          ],
+          "topic": "心理健康與求助"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "心理健康與求助"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "句首「和…相比」用 Compared with／to + 名詞（過去分詞片語，不用 Compare／Comparing）。「我們內心所承受的」沒有被修飾的名詞，用 what 名詞子句當主詞 what we suffer inside，動詞用單數 is。「比較難被別人看見」可寫 less visible to others 或 harder for others to see（hard to V 用主動不定詞）。「一樣真實」是 just as real／equally real。",
+          "evidence": [
+            "和身體上的傷相比",
+            "我們內心所承受的"
+          ],
+          "strategy_zh": "句首「和…相比」直接用 Compared with …,；主詞是「…所…的」時改成 what 子句。",
+          "hints": [
+            "切成四段：和身體上的傷相比／我們內心所承受的／往往比較難被別人看見／但它一樣真實",
+            "標的詞彙：physical（身體的）、injury（傷）、suffer（承受、受苦）、visible（看得見的）、real（真實的）",
+            "句型框架：Compared with + N, what + S + V + is + 比較級 …, but it is just as + adj."
+          ]
+        },
+        "2": {
+          "explanation_zh": "「到學校輔導室尋求協助的學生」中文修飾語在前，英文用現在分詞片語後位修飾：students seeking help from the school's counseling office（＝students who seek help …）。「人數」是 the number of + 複數名詞，動詞跟著 number 用單數 is。「是去年的兩倍」用倍數比較 twice as high as it was last year／two times as large as last year's，比較的是人數和去年的人數。",
+          "evidence": [
+            "到學校輔導室尋求協助的學生",
+            "是去年的兩倍"
+          ],
+          "strategy_zh": "「…的人數是…的 X 倍」：主詞用 the number of + N + 分詞片語，再接 is X times as + 形容詞 + as …。",
+          "hints": [
+            "切成四段：（今年到）學校輔導室／尋求協助的學生／人數／是去年的兩倍",
+            "標的詞彙：number（數目）、student（學生）、seek（尋求）、help（協助）、counsel（輔導）、twice（兩倍）",
+            "句型框架：This year, the number of + N + V-ing … is twice as + adj. + as it was last year"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "Compared with physical injuries, what we suffer inside is often less visible to others, but it is just as real.",
+            "Compared to physical wounds, what we go through emotionally is often harder for others to see, but it is equally real.",
+            "In comparison with injuries to the body, what we endure in our hearts is usually less visible to other people, yet it is just as real."
+          ],
+          "target_words": [
+            {
+              "word": "physical",
+              "zh": "身體的",
+              "alternatives": [
+                "body"
+              ]
+            },
+            {
+              "word": "injury",
+              "zh": "傷",
+              "alternatives": [
+                "wound",
+                "hurt"
+              ]
+            },
+            {
+              "word": "suffer",
+              "zh": "承受、受苦",
+              "alternatives": [
+                "go through",
+                "endure",
+                "experience",
+                "bear"
+              ]
+            },
+            {
+              "word": "visible",
+              "zh": "看得見的",
+              "alternatives": [
+                "see",
+                "notice"
+              ]
+            },
+            {
+              "word": "real",
+              "zh": "真實的"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "NCL",
+              "grammar_id": "gp-what-clause",
+              "label_zh": "what 名詞子句當主詞（所…的）",
+              "frame": "What + S + V + is …",
+              "zh_trigger": "我們內心所承受的"
+            },
+            {
+              "code": "COMP",
+              "grammar_id": "gp-compared-with",
+              "label_zh": "相較於…（Compared with + N）",
+              "frame": "Compared with/to + N, S + V + 比較級 …",
+              "zh_trigger": "和身體上的傷相比"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "和身體上的傷相比",
+              "accepted": [
+                "Compared with physical injuries",
+                "Compared to physical wounds",
+                "In comparison with injuries to the body",
+                "Compared with physical pain",
+                "Compared with injuries to the body"
+              ],
+              "targets": [
+                "COMP",
+                "physical",
+                "injury"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Compare with physical injuries",
+                  "right": "Compared with physical injuries",
+                  "explanation_zh": "句首的「和…相比」用過去分詞 Compared with／to；Compare 是原形動詞，會變成祈使句。"
+                },
+                {
+                  "wrong": "Comparing with physical injuries",
+                  "right": "Compared with physical injuries",
+                  "explanation_zh": "被比較的是後面的主詞，用被動意味的 Compared with，不用 Comparing。"
+                }
+              ]
+            },
+            {
+              "zh": "我們內心所承受的",
+              "accepted": [
+                "what we suffer inside",
+                "what we go through emotionally",
+                "what we endure in our hearts",
+                "what we suffer emotionally",
+                "what we go through inside"
+              ],
+              "targets": [
+                "NCL",
+                "suffer"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "we suffer inside is",
+                  "right": "what we suffer inside is",
+                  "explanation_zh": "「所承受的（東西）」沒有名詞，要用 what 子句當主詞。"
+                },
+                {
+                  "wrong": "what we suffer in heart",
+                  "right": "what we suffer in our hearts",
+                  "explanation_zh": "「內心」寫 inside、emotionally 或 in our hearts；heart 前要有所有格。"
+                }
+              ]
+            },
+            {
+              "zh": "往往比較難被別人看見",
+              "accepted": [
+                "is often less visible to others",
+                "is often harder for others to see",
+                "is usually less visible to other people",
+                "is often harder for other people to see",
+                "is often less noticeable to others"
+              ],
+              "targets": [
+                "COMP",
+                "visible"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "is often more difficult to be seen by others",
+                  "right": "is often harder for others to see",
+                  "explanation_zh": "hard／difficult to V 的不定詞用主動（harder for others to see），不寫 to be seen。"
+                },
+                {
+                  "wrong": "is often less visible than others",
+                  "right": "is often less visible to others",
+                  "explanation_zh": "這裡是「對別人來說比較不明顯」，用 to others；than others 會變成和別人比較。"
+                }
+              ]
+            },
+            {
+              "zh": "但它一樣真實",
+              "accepted": [
+                "but it is just as real",
+                "but it is equally real",
+                "yet it is just as real",
+                "but it is no less real"
+              ],
+              "targets": [
+                "real"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "but it is same real",
+                  "right": "but it is just as real",
+                  "explanation_zh": "「一樣…」用 just as＋形容詞或 equally＋形容詞；same 不能修飾形容詞。"
+                },
+                {
+                  "wrong": "but it is really",
+                  "right": "but it is just as real",
+                  "explanation_zh": "be 動詞後面要用形容詞 real（真實的）；really 是副詞。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "abstract_nominal",
+              "zh": "我們內心所承受的",
+              "literal_error": "Compared with physical injuries, our inside bearing is often less visible …",
+              "part": 2,
+              "explanation_zh": "「內心所承受的」是抽象的心理痛苦，不要逐字湊名詞；用 what we suffer inside 或 emotional pain。"
+            },
+            {
+              "type": "word_form",
+              "zh": "比較難被別人看見",
+              "literal_error": "… is often more difficult to be seen by others …",
+              "part": 3,
+              "explanation_zh": "hard／difficult to V 的句型裡不定詞用主動：harder for others to see；或直接用形容詞 less visible to others。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "Unlike physical injuries, what we suffer inside often goes unnoticed by others, though it is every bit as real.",
+              "explanation_zh": "unlike（不像）、go unnoticed（沒被注意到）、every bit as + 形容詞（完全一樣…）是更道地的寫法。"
+            }
+          ],
+          "restructuring_zh": "「我們內心所承受的」沒有名詞中心語，英文改用 what 子句當主詞；「比較難被別人看見」不必照中文用被動，改寫成 less visible to others 或 harder for others to see。"
+        },
+        "2": {
+          "references": [
+            "This year, the number of students seeking help from the school's counseling office is twice as high as it was last year.",
+            "The number of students seeking help at the school counseling office this year is twice as high as last year's.",
+            "The number of students seeking help from the school's counseling office this year is two times as large as last year's."
+          ],
+          "target_words": [
+            {
+              "word": "number",
+              "zh": "數目",
+              "alternatives": [
+                "many"
+              ]
+            },
+            {
+              "word": "student",
+              "zh": "學生"
+            },
+            {
+              "word": "seek",
+              "zh": "尋求",
+              "alternatives": [
+                "ask for",
+                "look for"
+              ]
+            },
+            {
+              "word": "help",
+              "zh": "協助",
+              "alternatives": [
+                "assistance",
+                "support"
+              ]
+            },
+            {
+              "word": "counsel",
+              "zh": "輔導",
+              "alternatives": [
+                "guidance"
+              ]
+            },
+            {
+              "word": "twice",
+              "zh": "兩倍",
+              "alternatives": [
+                "two times",
+                "double"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "COMP",
+              "grammar_id": "gp-times",
+              "label_zh": "倍數比較（twice／two times as … as）",
+              "frame": "S + is + twice as + adj. + as + it was … ／ two times as + adj. + as …",
+              "zh_trigger": "是去年的兩倍"
+            },
+            {
+              "code": "PART",
+              "grammar_id": "gp-participle-modifier",
+              "label_zh": "分詞片語後位修飾名詞（N + V-ing …）",
+              "frame": "the number of + N + V-ing …",
+              "zh_trigger": "尋求協助的學生"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "學校輔導室",
+              "accepted": [
+                "the school's counseling office",
+                "the school counseling office",
+                "the school's guidance office",
+                "the counseling office at school"
+              ],
+              "targets": [
+                "counsel"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "the school's consulting room",
+                  "right": "the school's counseling office",
+                  "explanation_zh": "學校「輔導室」是 counseling office（或 guidance office）；consulting room 是診間。"
+                }
+              ]
+            },
+            {
+              "zh": "尋求協助的學生",
+              "accepted": [
+                "students seeking help",
+                "students who seek help",
+                "students looking for help",
+                "students asking for help"
+              ],
+              "targets": [
+                "PART",
+                "seek",
+                "help",
+                "student"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "seeking help students",
+                  "right": "students seeking help",
+                  "explanation_zh": "帶受詞的分詞片語要放在名詞後面修飾。"
+                },
+                {
+                  "wrong": "students sought help",
+                  "right": "students seeking help",
+                  "explanation_zh": "學生是主動去尋求協助，用現在分詞 seeking；sought 會變成另一個動詞。"
+                }
+              ]
+            },
+            {
+              "zh": "人數",
+              "accepted": [
+                "the number of",
+                "the total number of"
+              ],
+              "targets": [
+                "number"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "the amount of students",
+                  "right": "the number of students",
+                  "explanation_zh": "可數名詞的「數目」用 the number of；amount 用於不可數名詞。"
+                },
+                {
+                  "wrong": "the numbers of students",
+                  "right": "the number of students",
+                  "explanation_zh": "the number of（…的數目）的 number 用單數，動詞也用單數 is。"
+                }
+              ]
+            },
+            {
+              "zh": "是去年的兩倍",
+              "accepted": [
+                "is twice as high as it was last year",
+                "is twice as high as last year's",
+                "is two times as large as last year's",
+                "is twice that of last year",
+                "has doubled since last year"
+              ],
+              "targets": [
+                "COMP",
+                "twice"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "is two times than last year",
+                  "right": "is twice as high as last year's",
+                  "explanation_zh": "倍數比較寫 twice／X times as + 形容詞 + as，或 X times + 比較級 + than；two times than 少了形容詞。"
+                },
+                {
+                  "wrong": "is twice as high as last year",
+                  "right": "is twice as high as last year's",
+                  "explanation_zh": "比較的是「人數」和「去年的人數」，要寫 last year's（number）或 it was last year，不能拿人數和年份比。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "prenominal_modifier",
+              "zh": "到學校輔導室尋求協助的學生",
+              "literal_error": "the number of seeking help from the school counseling office students …",
+              "part": 2,
+              "explanation_zh": "中文修飾語放在「學生」前面；英文要把分詞片語放在名詞後面：students seeking help from …。"
+            },
+            {
+              "type": "collocation",
+              "zh": "是去年的兩倍",
+              "literal_error": "… is two times than last year.",
+              "part": 4,
+              "explanation_zh": "倍數要和比較結構一起用：twice as high as …／two times higher than …；也要拿人數和去年的人數比。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "This year, the school's counseling office has seen twice as many students seeking help as last year.",
+              "explanation_zh": "用「地點＋see＋人數」（某處迎來了…）是很道地的英文；twice as many + 複數名詞 + as 也是倍數比較。"
+            }
+          ]
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ac-V-3",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-top-01",
+    "lot": "translation-top-01",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "a1384b01f87b0f8fded3505d9aeb991591fcc72147d3fc44a0f533a9db995000",
+    "spec_id": "translation-top@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T13:10:35Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "warn",
+      "created_at": "2026-10-09T00:00:00Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Compared with physical injuries, what we suffer inside is often harder for others to see, but it is just as real.",
+            "confidence": "high",
+            "explanation_zh": "「和…相比」用 Compared with；「我們內心所承受的」用 what 名詞子句當主詞；「比較難被別人看見」用 harder for others to see（主動不定詞表被動意）；「一樣真實」用 just as real。"
+          },
+          "2": {
+            "translation": "The number of students seeking help at the school counseling office this year is twice that of last year.",
+            "confidence": "medium",
+            "explanation_zh": "「…的學生人數」用 The number of students，動詞配單數 is；「尋求協助」用現在分詞片語 seeking help 修飾 students，避開「今年仍在進行」造成的時態判斷；「是去年的兩倍」用 twice that of last year，that 代替 the number（也可寫 Twice as many students ... this year as last year）。中文沒說是哪一所學校，用 the school 泛指學生所屬學校。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "NCL",
+              "COMP"
+            ],
+            "used_target_words": [
+              "physical",
+              "injury",
+              "suffer",
+              "visible",
+              "real"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "COMP",
+              "PART"
+            ],
+            "used_target_words": [
+              "number",
+              "student",
+              "seek",
+              "help",
+              "counsel",
+              "twice"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "「今年」沒有分到任何部分，第 4 部分 accepted（is twice as high as last year's 等）也不含 this year；學生漏譯「今年」時，依 4 部分評不到扣分。建議把「今年」併進第 2 或第 4 部分。另外第 1 部分「學校輔導室」、第 3 部分「人數」都很輕，主要難點集中在第 4 部分，輕重不太平均。",
+              "（說明）我用 twice that of last year（倍數＋that of），屬倍數比較且在第 4 部分 accepted 內，所以算 COMP；但 COMP 的 frame 只寫 twice／two times as … as，程式比對可能找不到。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "physical",
+              "injury",
+              "suffer",
+              "visible",
+              "real"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NCL": true,
+              "COMP": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "number",
+              "student",
+              "seek",
+              "help",
+              "counsel",
+              "twice"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "COMP": false,
+              "PART": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 2 題驗證者說用了句型 COMP，程式在譯文裡看不出來",
+          "第 2 題驗證者對4 部分切分有意見（warn）：「今年」沒有分到任何部分，第 4 部分 accepted（is twice as high as last year's 等）也不含 this year；學生漏譯「今年」時，依 4 部分評不到扣分。建議把「今年」併進第 2 或第 4 部分。"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "fail",
+      "created_at": "2026-10-09T07:56:17Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Compared with physical injuries, what we endure inside is often harder for others to see, but it is just as real.",
+            "confidence": "medium",
+            "explanation_zh": "「和……相比」用 Compared with；「我們內心所承受的」用名詞子句 what we endure inside，但這句的主詞也可以譯成 the pain we suffer emotionally，所以信心中等；「一樣真實」用 just as real。"
+          },
+          "2": {
+            "translation": "The number of students seeking help at the school counseling office this year is twice that of last year.",
+            "confidence": "high",
+            "explanation_zh": "「人數」用 The number of students ... is，主詞單數；「是去年的兩倍」用倍數表達 twice that of last year；尋求協助用現在分詞片語 seeking help 修飾 students。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "NCL",
+              "COMP"
+            ],
+            "used_target_words": [
+              "physical",
+              "injury",
+              "suffer",
+              "visible",
+              "real"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PART"
+            ],
+            "used_target_words": [
+              "number",
+              "student",
+              "seek",
+              "help",
+              "counsel",
+              "twice"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "盲譯者把「是去年的兩倍」譯成 is twice that of last year（倍數表達，但不是 twice as … as 的框架），程式也不把它認成 COMP；中文沒有逼出 twice as … as 的倍數比較。part 4 的 accepted 收了 is twice that of last year 和 has doubled since last year，等於承認不用 COMP 框架也算對，和標的句型 COMP 互相矛盾。建議把 COMP 的 frame 放寬到包含 twice that of，或從 accepted 移除不含 as … as 的寫法並讓中文引出 as many as／as high as。另外「今年」沒有被任何一個部分涵蓋（四個部分是學校輔導室、尋求協助的學生、人數、是去年的兩倍），但所有參考譯文都有 this year，少寫也能拿滿分。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "physical",
+              "injury",
+              "suffer",
+              "visible",
+              "real"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NCL": true,
+              "COMP": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "number",
+              "student",
+              "seek",
+              "help",
+              "counsel",
+              "twice"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PART": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 2 題盲譯沒有用到標的句型 ['COMP']：中文題目沒有自然引出這個句型（SPEC §5.7）",
+          "第 2 題驗證者對4 部分切分有意見（warn）：盲譯者把「是去年的兩倍」譯成 is twice that of last year（倍數表達，但不是 twice as … as 的框架），程式也不把它認成 COMP；中文沒有逼出 twice as … as 的倍數比較。part 4 的 "
+        ]
+      }
+    }
+  ],
+  "status": "rejected",
+  "status_reason": "blind_solver:B 未通過：第 2 題盲譯沒有用到標的句型 ['COMP']：中文題目沒有自然引出這個句型（SPEC §5.7）；第 2 題驗證者對4 部分切分有意見（warn）：盲譯者把「是去年的兩倍」譯成 is twice that of last year（倍數表達，但不是 twice as … as 的框架），程式也不把它認成 COMP；中文沒有逼出 twice as … as 的倍數比較。part 4 的 ；判定者（第 1 輪）人工檢查：第 2 題「是去年的兩倍」兩位盲譯都寫 is twice that of last year，中文沒有引出 twice as … as 的 COMP 框架；第 4 部分 accepted 收 is twice that of last year、has doubled since last year，和 targets 的 COMP 互相矛盾。另「今年」沒有分到任何部分（漏譯也不扣分），第 3 部分「人數」（the number of）太輕，4 部分輕重不均，要重新切分。"
+}

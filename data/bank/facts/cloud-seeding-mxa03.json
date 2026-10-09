@@ -1,0 +1,200 @@
+{
+  "schema": "gsat-bank-facts/v1",
+  "id": "cloud-seeding-mxa03",
+  "title": "Cloud seeding: how it works, its limits, and its use during Taiwan's 2021 drought",
+  "sdgs": [
+    6
+  ],
+  "created_on": "2026-10-09",
+  "created_by": "claude-opus-5-5",
+  "sources": [
+    {
+      "id": "s1",
+      "publisher": "National Geographic",
+      "title": "What is cloud seeding? Here's what it can—and can't—do to the weather",
+      "url": "https://www.nationalgeographic.com/environment/article/cloud-seeding-texas-floods-weather-science",
+      "accessed": "2026-10-09",
+      "license": "all-rights-reserved (National Geographic website)",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s2",
+      "publisher": "UCAR (University Corporation for Atmospheric Research)",
+      "title": "Weather Modification and Cloud Seeding Fact Sheet",
+      "url": "https://news.ucar.edu/1012/weather-modification-and-cloud-seeding-fact-sheet",
+      "accessed": "2026-10-09",
+      "license": "all-rights-reserved (UCAR website)",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s3",
+      "publisher": "Smithsonian Magazine (Air & Space)",
+      "title": "Climate Control",
+      "url": "https://www.smithsonianmag.com/air-space-magazine/climate-control-181122/",
+      "accessed": "2026-10-09",
+      "license": "all-rights-reserved (Smithsonian website)",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s4",
+      "publisher": "Scientific American",
+      "title": "Eight States Are Seeding Clouds to Overcome Megadrought",
+      "url": "https://www.scientificamerican.com/article/eight-states-are-seeding-clouds-to-overcome-megadrought/",
+      "accessed": "2026-10-09",
+      "license": "all-rights-reserved (Scientific American website)",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s5",
+      "publisher": "Focus Taiwan (CNA)",
+      "title": "Cloud seeding (photo, 2021-04-29)",
+      "url": "https://focustaiwan.tw/photos/20210429ENP0001m",
+      "accessed": "2026-10-09",
+      "license": "all-rights-reserved (CNA website)",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s6",
+      "publisher": "Focus Taiwan (CNA)",
+      "title": "Irrigation in Hsinchu, Miaoli, Taichung stopped for 2021 spring harvest",
+      "url": "https://focustaiwan.tw/society/202012290016",
+      "accessed": "2026-10-09",
+      "license": "all-rights-reserved (CNA website)",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s7",
+      "publisher": "Taipei Times",
+      "title": "Taiwan facing ‘difficult’ dry season: minister",
+      "url": "https://www.taipeitimes.com/News/front/archives/2020/10/15/2003745181",
+      "accessed": "2026-10-09",
+      "license": "all-rights-reserved (Taipei Times website)",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s8",
+      "publisher": "Taipei Times",
+      "title": "Taiwan’s worst drought in decades deepens chip shortage jitters",
+      "url": "https://www.taipeitimes.com/News/feat/archives/2021/04/22/2003756133",
+      "accessed": "2026-10-09",
+      "license": "all-rights-reserved (Taipei Times website)",
+      "use": "fact_only",
+      "note": null
+    }
+  ],
+  "facts": [
+    {
+      "id": "f1",
+      "text": "Many clouds contain supercooled water droplets that stay liquid below freezing but are too small to fall.",
+      "source_ids": [
+        "s2",
+        "s4"
+      ],
+      "kind": "definition"
+    },
+    {
+      "id": "f2",
+      "text": "Seeding releases particles such as silver iodide or dry ice into clouds from aircraft or ground generators, helping ice crystals form.",
+      "source_ids": [
+        "s1",
+        "s2",
+        "s4"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f3",
+      "text": "Ice crystals grow as water freezes onto them and fall as snow or rain once heavy enough.",
+      "source_ids": [
+        "s2",
+        "s4"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f4",
+      "text": "In 1946 General Electric scientist Vincent Schaefer dropped dry ice from a plane into a cloud and snow fell from it.",
+      "source_ids": [
+        "s3",
+        "s4"
+      ],
+      "kind": "event"
+    },
+    {
+      "id": "f5",
+      "text": "Cloud seeding cannot create clouds; it only works when suitable clouds are already present.",
+      "source_ids": [
+        "s1",
+        "s2"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f6",
+      "text": "Measuring the effect of seeding is hard because no one knows how much rain would have fallen without it.",
+      "source_ids": [
+        "s2",
+        "s4"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f7",
+      "text": "Under the right conditions, seeding may increase precipitation modestly (roughly 5 to 15 percent, if it works).",
+      "source_ids": [
+        "s1",
+        "s4"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f8",
+      "text": "Cloud seeding cannot end a drought on its own.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f9",
+      "text": "Taiwan suffered its worst drought in decades in 2021, and reservoir levels fell very low.",
+      "source_ids": [
+        "s8"
+      ],
+      "kind": "event"
+    },
+    {
+      "id": "f10",
+      "text": "Irrigation water to rice fields in Hsinchu, Miaoli and Taichung was stopped for the 2021 spring crop to save water for homes and industry.",
+      "source_ids": [
+        "s6"
+      ],
+      "kind": "event"
+    },
+    {
+      "id": "f11",
+      "text": "Officials said farmers whose crops were affected by cuts in irrigation would be compensated.",
+      "source_ids": [
+        "s7"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f12",
+      "text": "In April 2021, Taiwan's air force used a C-130 transport plane to seed clouds above Miaoli County and Taichung during the drought.",
+      "source_ids": [
+        "s5"
+      ],
+      "kind": "event"
+    }
+  ],
+  "datasets": [],
+  "notes": "混合題 mixed-advanced-03 第 3 組用（2026-10-09 線上查證）。Text B 的稻農是虛構人物（中部、種稻三十年、2021 年停灌、領補償、看到空軍飛機人工增雨）；「下了一點雨但遠遠不夠、沒人說得出多少是人工增雨帶來的」是他的個人經驗與感想。選文只寫 1946、2021 兩個數字。"
+}

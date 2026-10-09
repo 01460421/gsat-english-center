@@ -1,0 +1,765 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.35b8fb",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "advanced",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "學生會常舉辦園遊會和球賽，好讓同學能放鬆心情、展現才華。",
+        "options": null,
+        "answer": "The student council often holds fairs and ball games so that students can relax and show their talents.",
+        "accepted_answers": [
+          "The student council often organizes school fairs and ball games so that students can relax and show their talents.",
+          "The student council often holds fairs and sports games so that classmates can relax and display their talents."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "目的（so that）",
+            "平行結構"
+          ],
+          "topic": "學生會"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "為了了解同學的需求，他們也設置意見箱，並定期與各班代表開會。",
+        "options": null,
+        "answer": "To understand students' needs, they also set up a suggestion box and hold regular meetings with class leaders.",
+        "accepted_answers": [
+          "In order to understand what students need, they also set up a suggestion box and regularly meet with class representatives.",
+          "To learn about students' needs, they also put up a suggestion box and meet regularly with class representatives."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "不定詞表目的",
+            "平行結構"
+          ],
+          "topic": "學生會"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "學生會"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「好讓同學能…」說明舉辦活動的目的，而且目的子句有自己的主詞（同學），用 so that + students + can + 原形動詞。「園遊會和球賽」「放鬆心情、展現才華」都是兩個對等的項目，用 and 連接，形式要一致：fairs and ball games；relax and show …。「放鬆心情」直接寫 relax；「才華」是名詞 talents。",
+          "evidence": [
+            "好讓同學能放鬆心情、展現才華",
+            "園遊會和球賽"
+          ],
+          "strategy_zh": "目的子句的主詞和主要子句不同時，用 so that + S + can（could）+ VR；主詞相同才用 to + VR。",
+          "hints": [
+            "切成四段：學生會常舉辦／園遊會和球賽／好讓同學能放鬆心情／展現才華",
+            "標的詞彙：student council（學生會，L4）、hold（舉辦，L1）、fair（園遊會，L2）、game（比賽，L1）、relax（放鬆，L3）、show（展現，L1）、talent（才華，L3）",
+            "句型框架：S + V + N1 and N2 so that + S + can + V1 and V2 …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「為了了解同學的需求」表目的，主詞和主要子句相同（他們），用 To + 原形動詞放句首。「設置意見箱，並定期與各班代表開會」是兩個並列的動作：set up … and hold …（或 meet …），形式要一致。「意見箱」是 suggestion box；「定期開會」寫 hold regular meetings 或 meet regularly，形容詞、副詞要看修飾名詞還是動詞。",
+          "evidence": [
+            "為了了解同學的需求",
+            "設置意見箱，並定期與各班代表開會"
+          ],
+          "strategy_zh": "同一個「定期」在英文可以是 regular（修飾名詞）或 regularly（修飾動詞），先決定用 meetings 還是 meet。",
+          "hints": [
+            "切成四段：為了了解同學的需求／他們也設置意見箱／並定期（開會）／與各班代表",
+            "標的詞彙：understand（了解，L1）、need（需求，L1）、set up（設置，L1）、suggestion box（意見箱，L4）、regular（定期的，L2）、meet（開會，L1）、leader（代表、幹部，L1）",
+            "句型框架：To + VR …, S + V1 … and V2 …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "The student council often holds fairs and ball games so that students can relax and show their talents.",
+            "The student council often organizes school fairs and ball games so that students can relax and show their talents.",
+            "The student council often holds fairs and sports games so that classmates can relax and display their talents."
+          ],
+          "target_words": [
+            {
+              "word": "student council",
+              "zh": "學生會"
+            },
+            {
+              "word": "hold",
+              "zh": "舉辦",
+              "alternatives": [
+                "organize",
+                "host",
+                "have"
+              ]
+            },
+            {
+              "word": "fair",
+              "zh": "園遊會",
+              "alternatives": [
+                "carnival",
+                "festival"
+              ]
+            },
+            {
+              "word": "game",
+              "zh": "球賽",
+              "alternatives": [
+                "match",
+                "competition"
+              ]
+            },
+            {
+              "word": "relax",
+              "zh": "放鬆",
+              "alternatives": [
+                "unwind"
+              ]
+            },
+            {
+              "word": "show",
+              "zh": "展現",
+              "alternatives": [
+                "display",
+                "present"
+              ]
+            },
+            {
+              "word": "talent",
+              "zh": "才華"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PURP",
+              "grammar_id": "gp-so-that-purpose",
+              "label_zh": "目的：so that + S + can",
+              "frame": "S + V … so that + S + can + VR …",
+              "zh_trigger": "好讓"
+            },
+            {
+              "code": "PARA",
+              "grammar_id": "gp-parallelism",
+              "label_zh": "平行結構（N1 and N2；V1 and V2）",
+              "frame": "holds N1 and N2 … can V1 and V2 …",
+              "zh_trigger": "放鬆心情、展現才華"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "學生會常舉辦",
+              "accepted": [
+                "The student council often holds",
+                "The student council often organizes",
+                "The student council often hosts",
+                "The student council frequently holds",
+                "The student council usually holds"
+              ],
+              "targets": [
+                "student council",
+                "hold"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "The student council often hold",
+                  "right": "The student council often holds",
+                  "explanation_zh": "主詞 the student council 是單數，動詞要加 s。"
+                },
+                {
+                  "wrong": "The student meeting often holds",
+                  "right": "The student council often holds",
+                  "explanation_zh": "「學生會」是組織，叫 student council；meeting 是「會議」。"
+                }
+              ]
+            },
+            {
+              "zh": "園遊會和球賽",
+              "accepted": [
+                "fairs and ball games",
+                "school fairs and ball games",
+                "fairs and sports games",
+                "carnivals and ball games",
+                "school fairs and sports competitions",
+                "fun fairs and ball games"
+              ],
+              "targets": [
+                "fair",
+                "game",
+                "PARA"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "garden party and ball game",
+                  "right": "fairs and ball games",
+                  "explanation_zh": "學校的「園遊會」是 fair（school fair）；常常舉辦，用複數。"
+                }
+              ]
+            },
+            {
+              "zh": "好讓同學能放鬆心情",
+              "accepted": [
+                "so that students can relax",
+                "so that classmates can relax",
+                "so that the students can relax",
+                "in order that students can relax",
+                "so that students can unwind",
+                "so students can relax"
+              ],
+              "targets": [
+                "PURP",
+                "relax"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "so that students can relax their mood",
+                  "right": "so that students can relax",
+                  "explanation_zh": "「放鬆心情」英文用 relax 就夠了；relax their mood 是逐字翻譯。"
+                },
+                {
+                  "wrong": "to let students can relax",
+                  "right": "so that students can relax",
+                  "explanation_zh": "let 後面直接接原形動詞，不能再加 can；要用 can 就寫 so that + 主詞 + can。"
+                }
+              ]
+            },
+            {
+              "zh": "展現才華",
+              "accepted": [
+                "and show their talents",
+                "and display their talents",
+                "and show off their talents",
+                "and present their talents",
+                "and show their talent"
+              ],
+              "targets": [
+                "show",
+                "talent",
+                "PARA"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "and showing their talents",
+                  "right": "and show their talents",
+                  "explanation_zh": "can 後面的兩個動詞要對稱，都用原形：relax and show。"
+                },
+                {
+                  "wrong": "and show their talented",
+                  "right": "and show their talents",
+                  "explanation_zh": "show 後面要接名詞 talents；talented 是形容詞「有才華的」。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "collocation",
+              "zh": "放鬆心情",
+              "literal_error": "The student council often holds fairs and ball games so that students can relax their mood and show their talents.",
+              "part": 3,
+              "explanation_zh": "「放鬆心情」英文直接用 relax；relax their mood 是照字面翻譯的搭配錯誤。"
+            },
+            {
+              "type": "word_form",
+              "zh": "才華",
+              "literal_error": "The student council often holds fairs and ball games so that students can relax and show their talented.",
+              "part": 4,
+              "explanation_zh": "「才華」是名詞 talent(s)；talented 是形容詞，不能當 show 的受詞。"
+            }
+          ],
+          "bonus": []
+        },
+        "2": {
+          "references": [
+            "To understand students' needs, they also set up a suggestion box and hold regular meetings with class leaders.",
+            "In order to understand what students need, they also set up a suggestion box and regularly meet with class representatives.",
+            "To learn about students' needs, they also put up a suggestion box and meet regularly with class representatives."
+          ],
+          "target_words": [
+            {
+              "word": "understand",
+              "zh": "了解",
+              "alternatives": [
+                "learn about",
+                "know"
+              ]
+            },
+            {
+              "word": "need",
+              "zh": "需求"
+            },
+            {
+              "word": "set up",
+              "zh": "設置",
+              "alternatives": [
+                "put up",
+                "place"
+              ]
+            },
+            {
+              "word": "suggestion box",
+              "zh": "意見箱"
+            },
+            {
+              "word": "regular",
+              "zh": "定期的",
+              "alternatives": [
+                "regularly"
+              ]
+            },
+            {
+              "word": "meet",
+              "zh": "開會",
+              "alternatives": [
+                "meeting"
+              ]
+            },
+            {
+              "word": "leader",
+              "zh": "代表、幹部",
+              "alternatives": [
+                "representative"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PURP",
+              "grammar_id": "gp-infinitive-purpose",
+              "label_zh": "不定詞表目的（To + VR …,）",
+              "frame": "To / In order to + VR …, S + V …",
+              "zh_trigger": "為了"
+            },
+            {
+              "code": "PARA",
+              "grammar_id": "gp-parallelism",
+              "label_zh": "平行結構（V1 … and V2 …）",
+              "frame": "S + V1 … and V2 …",
+              "zh_trigger": "設置意見箱，並定期與各班代表開會"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "為了了解同學的需求",
+              "accepted": [
+                "To understand students' needs",
+                "In order to understand what students need",
+                "To learn about students' needs",
+                "To understand the needs of students",
+                "In order to understand students' needs",
+                "To know what students need",
+                "To find out what students need"
+              ],
+              "targets": [
+                "PURP",
+                "understand",
+                "need"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "For understanding students' needs",
+                  "right": "To understand students' needs",
+                  "explanation_zh": "表目的用 To + 原形動詞。"
+                },
+                {
+                  "wrong": "To understand students' need",
+                  "right": "To understand students' needs",
+                  "explanation_zh": "很多同學有各種需求，need 當名詞用複數 needs。"
+                }
+              ]
+            },
+            {
+              "zh": "他們也設置意見箱",
+              "accepted": [
+                "they also set up a suggestion box",
+                "they also put up a suggestion box",
+                "they also set up suggestion boxes",
+                "they also place a suggestion box",
+                "they have also set up a suggestion box"
+              ],
+              "targets": [
+                "set up",
+                "suggestion box"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "they also set a suggestion box",
+                  "right": "they also set up a suggestion box",
+                  "explanation_zh": "「設置」是 set up（或 put up），up 不能漏。"
+                },
+                {
+                  "wrong": "they also set up a suggestion boxes",
+                  "right": "they also set up a suggestion box",
+                  "explanation_zh": "a 後面接單數名詞。"
+                }
+              ]
+            },
+            {
+              "zh": "並定期",
+              "accepted": [
+                "and hold regular meetings",
+                "and regularly meet",
+                "and meet regularly",
+                "and have regular meetings",
+                "and hold meetings regularly"
+              ],
+              "targets": [
+                "PARA",
+                "regular",
+                "meet"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "and hold regularly meetings",
+                  "right": "and hold regular meetings",
+                  "explanation_zh": "修飾名詞 meetings 要用形容詞 regular；修飾動詞 meet 才用副詞 regularly。"
+                },
+                {
+                  "wrong": "and holding regular meetings",
+                  "right": "and hold regular meetings",
+                  "explanation_zh": "and 前後的動詞要對稱：set up … and hold …。"
+                }
+              ]
+            },
+            {
+              "zh": "與各班代表",
+              "accepted": [
+                "with class leaders",
+                "with class representatives",
+                "with the leaders of each class",
+                "with representatives from each class",
+                "with the class leaders"
+              ],
+              "targets": [
+                "leader"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "with every class representatives",
+                  "right": "with class representatives",
+                  "explanation_zh": "every 後面接單數名詞；各班的代表可寫 class representatives 或 representatives from each class。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "plural_countable",
+              "zh": "各班代表",
+              "literal_error": "To understand students' needs, they also set up a suggestion box and hold regular meetings with every class representatives.",
+              "part": 4,
+              "explanation_zh": "every、each 後面接單數名詞；各班的代表寫成 class representatives 或 representatives from each class。"
+            },
+            {
+              "type": "word_form",
+              "zh": "定期",
+              "literal_error": "To understand students' needs, they also set up a suggestion box and hold regularly meetings with class leaders.",
+              "part": 3,
+              "explanation_zh": "「定期的會議」修飾名詞 meetings，用形容詞 regular；如果寫 meet，才用副詞 regularly。"
+            }
+          ],
+          "bonus": [],
+          "restructuring_zh": "「並定期與各班代表開會」英文可以改成名詞片語 hold regular meetings with class leaders，或動詞 meet regularly with …；「定期」跟著變成形容詞 regular 或副詞 regularly。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-advanced-05",
+    "lot": "translation-advanced-05",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "e5c4baeec359d5ac42e4e899ef49b7db98863cbe7bb8568d933d20cee46dbcaf",
+    "spec_id": "translation-advanced@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T13:12:54Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T12:52:38Z",
+      "details": {
+        "solver": "A",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "The student council often holds school fairs and ball games so that students can relax and show their talents.",
+            "confidence": "high",
+            "explanation_zh": "「學生會」用 the student council；「舉辦」用 hold；「好讓……能……」用 so that + 主詞 + can；「園遊會」用 school fairs，「球賽」用 ball games；「放鬆心情」譯成 relax 即可。"
+          },
+          "2": {
+            "translation": "In order to understand students' needs, they also set up suggestion boxes and regularly hold meetings with the representatives of each class.",
+            "confidence": "medium",
+            "explanation_zh": "「為了」用 In order to；「設置意見箱」用 set up suggestion boxes；「定期與各班代表開會」用 regularly hold meetings with the representatives of each class（或 class representatives）；時態用現在簡單式表經常性作法，也可能有人用 have set up，信心 medium。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PURP",
+              "PARA"
+            ],
+            "used_target_words": [
+              "student council",
+              "hold",
+              "fair",
+              "game",
+              "relax",
+              "show",
+              "talent"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PURP",
+              "PARA"
+            ],
+            "used_target_words": [
+              "understand",
+              "need",
+              "set up",
+              "suggestion box",
+              "regular",
+              "meet",
+              "leader"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "（不影響判定）第 3 部分可補 and regularly hold meetings，第 4 部分可補 with the representatives of each class（本盲譯寫法）。「各班代表」首選譯文用 class leaders 可以接受，但 class representatives 更貼近「代表」；標的詞彙主詞目若改成 representative 會更直覺。第 3 部分標籤「並定期」實際也涵蓋「開會」，同樣是 zh 須逐字在題目的限制。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "student council",
+              "hold",
+              "fair",
+              "game",
+              "relax",
+              "show",
+              "talent"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PURP": true,
+              "PARA": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "understand",
+              "need",
+              "set up",
+              "suggestion box",
+              "regular",
+              "meet",
+              "leader"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PURP": true,
+              "PARA": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "warn",
+      "created_at": "2026-10-09T12:54:59Z",
+      "details": {
+        "solver": "B",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "The student council often holds school fairs and ball games so that students can relax and show their talents.",
+            "confidence": "high",
+            "explanation_zh": "「學生會」譯為 the student council；「常舉辦」用頻率副詞 often 加現在簡單式 holds；「園遊會」譯成 school fairs，「球賽」譯成 ball games；「好讓……能……」用 so that + 主詞 + can 表示目的。"
+          },
+          "2": {
+            "translation": "In order to understand students' needs, they also set up suggestion boxes and regularly meet with class representatives.",
+            "confidence": "high",
+            "explanation_zh": "「為了了解……」用 In order to + 原形動詞；「設置意見箱」用 set up suggestion boxes；「並定期與各班代表開會」用 regularly meet with class representatives，與前一個動詞 set up 並列，主詞為 they（指學生會）。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PURP",
+              "PARA"
+            ],
+            "used_target_words": [
+              "student council",
+              "hold",
+              "fair",
+              "game",
+              "relax",
+              "show",
+              "talent"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PURP",
+              "PARA"
+            ],
+            "used_target_words": [
+              "understand",
+              "need",
+              "set up",
+              "suggestion box",
+              "regular",
+              "meet",
+              "leader"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "『開會』沒有出現在任何一個部分的中文裡：第 3 部分標示『並定期』，卻要求 and hold regular meetings／and regularly meet，標的詞彙 meet 也掛在第 3 部分；第 4 部分『與各班代表』只有 with 片語。學生看部分標示無法得知動詞『開會』算在哪一部分。建議第 3 部分中文改成『並定期……開會』或把『開會』併入第 4 部分，讓四個部分的中文能完整拼回原句。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "student council",
+              "hold",
+              "fair",
+              "game",
+              "relax",
+              "show",
+              "talent"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PURP": true,
+              "PARA": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "understand",
+              "need",
+              "set up",
+              "suggestion box",
+              "regular",
+              "meet",
+              "leader"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PURP": true,
+              "PARA": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 2 題驗證者對4 部分切分有意見（warn）：『開會』沒有出現在任何一個部分的中文裡：第 3 部分標示『並定期』，卻要求 and hold regular meetings／and regularly meet，標的詞彙 meet 也掛在第 3 部分；第 4 部分『與各班代表』只有 w"
+        ]
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

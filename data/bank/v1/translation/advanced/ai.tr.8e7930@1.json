@@ -1,0 +1,710 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.8e7930",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "advanced",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "許多青少年已被短影音吸引，這些影片常讓他們到半夜還不想睡。",
+        "options": null,
+        "answer": "Many teenagers have been attracted by short videos, and these videos often keep them awake until midnight.",
+        "accepted_answers": [
+          "Many teenagers have been attracted to short videos, which often keep them up until midnight.",
+          "A lot of teenagers have been drawn to short videos, and these videos often keep them awake till midnight."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "完成式被動（已被…吸引）",
+            "S＋V＋O＋OC（keep＋受詞＋形容詞）"
+          ],
+          "topic": "短影音"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "專家提醒，青少年應該限制自己每天看短影音的時間。",
+        "options": null,
+        "answer": "Experts warn that teenagers should limit the time they spend watching short videos every day.",
+        "accepted_answers": [
+          "Experts remind teenagers that they should limit how much time they spend on short videos each day.",
+          "Experts remind us that teenagers should limit the amount of time they spend watching short videos every day."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "that 引導的名詞子句（當 warn 的受詞）",
+            "應該（should＋原形動詞）"
+          ],
+          "topic": "短影音"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "短影音"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「已被…吸引」是完成式被動：have been attracted by／to short videos（青少年是被吸引的一方）。後半句「這些影片常讓他們到半夜還不想睡」用 S＋keep＋O＋形容詞：these videos often keep them awake until midnight；awake 是形容詞，當受詞補語。也可以用關係代名詞 which 連接兩個子句。",
+          "evidence": [
+            "已被短影音吸引",
+            "這些影片常讓他們到半夜還不想睡"
+          ],
+          "strategy_zh": "「讓某人保持某種狀態」用 keep／make＋受詞＋形容詞；受詞補語是形容詞，不是動詞或名詞。",
+          "hints": [
+            "切成四段：許多青少年／已被短影音吸引／這些影片常讓他們／到半夜還不想睡",
+            "標的詞彙：teenager（青少年）、attract（吸引）、video（影片）、awake（醒著的）、midnight（半夜）",
+            "句型框架：S + have been + p.p. …, and S + keep + O + adj. …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「專家提醒」後面接一整句話，用 that 引導名詞子句當受詞：Experts warn that …（用 remind 時要先接人：remind teenagers that …）。「應該」用 should＋原形動詞。「每天看短影音的時間」是前置修飾，英文改成後位修飾：the time they spend watching short videos every day，spend＋時間＋V-ing。",
+          "evidence": [
+            "專家提醒",
+            "應該限制自己每天看短影音的時間"
+          ],
+          "strategy_zh": "中文「…的＋名詞」修飾語很長時，英文把名詞放前面，修飾語用子句或片語放在後面。",
+          "hints": [
+            "切成四段：專家提醒／青少年應該／限制自己／每天看短影音的時間",
+            "標的詞彙：expert（專家）、warn（提醒）、limit（限制）、time（時間）、video（影片）",
+            "句型框架：S + warn + that + S + should + VR + the time (that) S + spend + V-ing"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "Many teenagers have been attracted by short videos, and these videos often keep them awake until midnight.",
+            "Many teenagers have been attracted to short videos, which often keep them up until midnight.",
+            "A lot of teenagers have been drawn to short videos, and these videos often keep them awake till midnight."
+          ],
+          "target_words": [
+            {
+              "word": "teenager",
+              "zh": "青少年",
+              "alternatives": [
+                "teen",
+                "teens",
+                "adolescent",
+                "young people"
+              ]
+            },
+            {
+              "word": "attract",
+              "zh": "吸引",
+              "alternatives": [
+                "draw",
+                "hook"
+              ]
+            },
+            {
+              "word": "video",
+              "zh": "影片"
+            },
+            {
+              "word": "awake",
+              "zh": "醒著的（不想睡）",
+              "alternatives": [
+                "up",
+                "sleep"
+              ]
+            },
+            {
+              "word": "midnight",
+              "zh": "半夜",
+              "alternatives": [
+                "late at night"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PASS",
+              "grammar_id": "gp-perfect-passive",
+              "label_zh": "完成式被動（已被…吸引）",
+              "frame": "S + have/has been + p.p. (+ by/to …)",
+              "zh_trigger": "已被短影音吸引"
+            },
+            {
+              "code": "VOC",
+              "grammar_id": "gp-svoc",
+              "label_zh": "S＋V＋O＋OC（keep＋受詞＋形容詞）",
+              "frame": "S + keep/make + O + adj.",
+              "zh_trigger": "讓他們"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "許多青少年",
+              "accepted": [
+                "Many teenagers",
+                "A lot of teenagers",
+                "Many teens",
+                "Lots of teenagers",
+                "Many young people"
+              ],
+              "targets": [
+                "teenager"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Many teenager",
+                  "right": "Many teenagers",
+                  "explanation_zh": "many 後面接複數名詞。"
+                }
+              ]
+            },
+            {
+              "zh": "已被短影音吸引",
+              "accepted": [
+                "have been attracted by short videos",
+                "have been attracted to short videos",
+                "have been drawn to short videos",
+                "have been hooked on short videos",
+                "have been strongly attracted to short videos"
+              ],
+              "targets": [
+                "PASS",
+                "attract",
+                "video"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "have attracted by short videos",
+                  "right": "have been attracted by short videos",
+                  "explanation_zh": "「已被吸引」是完成式被動 have been＋p.p.，不能漏掉 been。"
+                },
+                {
+                  "wrong": "are attracted by short video",
+                  "right": "have been attracted by short videos",
+                  "explanation_zh": "「已」要用完成式；泛指短影音用複數 videos。"
+                }
+              ]
+            },
+            {
+              "zh": "這些影片常讓他們",
+              "accepted": [
+                "and these videos often keep them",
+                "which often keep them",
+                "and they often keep them",
+                "and these videos often make them",
+                "and the videos often keep them"
+              ],
+              "targets": [
+                "VOC"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "and these videos often let them",
+                  "right": "and these videos often keep them",
+                  "explanation_zh": "「讓他們一直醒著」用 keep sb awake；let 是「允許」，後面接原形動詞。"
+                }
+              ]
+            },
+            {
+              "zh": "到半夜還不想睡",
+              "accepted": [
+                "awake until midnight",
+                "up until midnight",
+                "awake till midnight",
+                "stay up until midnight",
+                "awake until late at night",
+                "not want to sleep until midnight",
+                "unwilling to go to bed until midnight"
+              ],
+              "targets": [
+                "awake",
+                "midnight"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "keep them wake until midnight",
+                  "right": "keep them awake until midnight",
+                  "explanation_zh": "keep＋受詞＋形容詞：受詞補語用形容詞 awake，wake 是動詞。"
+                },
+                {
+                  "wrong": "awake until the midnight",
+                  "right": "awake until midnight",
+                  "explanation_zh": "midnight 前面不加 the。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "tense_trigger",
+              "zh": "已被",
+              "literal_error": "Many teenagers are attracted by short videos.",
+              "part": 2,
+              "explanation_zh": "「已被…吸引」強調到現在的結果，用完成式被動 have been attracted。"
+            },
+            {
+              "type": "word_form",
+              "zh": "不想睡",
+              "literal_error": "these videos often keep them wake until midnight",
+              "part": 4,
+              "explanation_zh": "keep 後面的受詞補語用形容詞 awake，不用動詞 wake。"
+            }
+          ],
+          "bonus": []
+        },
+        "2": {
+          "references": [
+            "Experts warn that teenagers should limit the time they spend watching short videos every day.",
+            "Experts remind teenagers that they should limit how much time they spend on short videos each day.",
+            "Experts remind us that teenagers should limit the amount of time they spend watching short videos every day."
+          ],
+          "target_words": [
+            {
+              "word": "expert",
+              "zh": "專家",
+              "alternatives": [
+                "specialist"
+              ]
+            },
+            {
+              "word": "warn",
+              "zh": "提醒",
+              "alternatives": [
+                "remind",
+                "advise",
+                "suggest",
+                "point out",
+                "say"
+              ]
+            },
+            {
+              "word": "limit",
+              "zh": "限制",
+              "alternatives": [
+                "control",
+                "cut down",
+                "reduce"
+              ]
+            },
+            {
+              "word": "time",
+              "zh": "時間"
+            },
+            {
+              "word": "video",
+              "zh": "影片"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "NCL",
+              "grammar_id": "gp-that-clause",
+              "label_zh": "that 引導的名詞子句（當 warn 的受詞）",
+              "frame": "S + warn / remind sb + that + S + V",
+              "zh_trigger": "專家提醒"
+            },
+            {
+              "code": "BASIC",
+              "grammar_id": "gp-should-advice",
+              "label_zh": "應該（should＋原形動詞）",
+              "frame": "S + should + VR",
+              "zh_trigger": "應該"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "專家提醒",
+              "accepted": [
+                "Experts warn that",
+                "Experts remind teenagers that",
+                "Experts remind us that",
+                "Experts point out that",
+                "Experts advise that",
+                "Experts suggest that"
+              ],
+              "targets": [
+                "NCL",
+                "expert",
+                "warn"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Experts remind that teenagers should",
+                  "right": "Experts remind teenagers that they should",
+                  "explanation_zh": "remind 後面要先接人（受詞）再接 that 子句；不接人時可用 warn that 或 point out that。"
+                },
+                {
+                  "wrong": "Expert warns that",
+                  "right": "Experts warn that",
+                  "explanation_zh": "泛指專家用複數 experts，動詞 warn 不加 s。"
+                }
+              ]
+            },
+            {
+              "zh": "青少年應該",
+              "accepted": [
+                "teenagers should",
+                "they should",
+                "teens should",
+                "young people should",
+                "teenagers ought to"
+              ],
+              "targets": [
+                "BASIC"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "teenagers should to limit",
+                  "right": "teenagers should limit",
+                  "explanation_zh": "should 後面直接接原形動詞，不加 to。"
+                }
+              ]
+            },
+            {
+              "zh": "限制自己",
+              "accepted": [
+                "limit",
+                "control",
+                "cut down on",
+                "reduce"
+              ],
+              "targets": [
+                "limit"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "limit themselves the time",
+                  "right": "limit the time",
+                  "explanation_zh": "「限制自己…的時間」英文直接說 limit the time they spend …，不必把「自己」譯成 themselves。"
+                }
+              ]
+            },
+            {
+              "zh": "每天看短影音的時間",
+              "accepted": [
+                "the time they spend watching short videos every day",
+                "how much time they spend on short videos each day",
+                "the amount of time they spend watching short videos every day",
+                "the time they spend on short videos every day",
+                "their daily time watching short videos",
+                "the time they spend watching short videos each day"
+              ],
+              "targets": [
+                "time",
+                "video"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "every day watching short videos time",
+                  "right": "the time they spend watching short videos every day",
+                  "explanation_zh": "中文「…的時間」是前置修飾，英文要把修飾語放在 time 後面（the time they spend …）。"
+                },
+                {
+                  "wrong": "the time they spend to watch short videos",
+                  "right": "the time they spend watching short videos",
+                  "explanation_zh": "spend＋時間＋V-ing，不接不定詞。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "prenominal_modifier",
+              "zh": "每天看短影音的時間",
+              "literal_error": "teenagers should limit their every day watching short videos time",
+              "part": 4,
+              "explanation_zh": "「每天看短影音的時間」修飾語很長，英文要改成後位修飾：the time they spend watching short videos every day。"
+            },
+            {
+              "type": "collocation",
+              "zh": "專家提醒",
+              "literal_error": "Experts remind that teenagers should limit …",
+              "part": 1,
+              "explanation_zh": "remind 要先接人：remind sb that …；只接 that 子句時用 warn／point out。"
+            }
+          ],
+          "bonus": [],
+          "restructuring_zh": "「每天看短影音的時間」是很長的前置修飾，英文要改成「名詞＋後位修飾」：the time they spend watching short videos every day（省略關係代名詞的形容詞子句＋spend 時間 V-ing）。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-advanced-01",
+    "lot": "translation-advanced-01",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "aabb674c20baad2f5310b8b4d808a265893e2edf0c2a598bf8b873bfdfb38f0f",
+    "spec_id": "translation-advanced@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "warn",
+      "created_at": "2026-10-09T12:42:27Z",
+      "details": {
+        "errors": [],
+        "warnings": [
+          "annotations.rubric.items.1.patterns[0]: gp-perfect-passive 通常對應句構 PERF（目前 code=PASS）"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "warn",
+      "created_at": "2026-10-09T07:45:00Z",
+      "details": {
+        "solver": "A",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Many teenagers have been attracted by short videos, which often make them unwilling to go to bed even at midnight.",
+            "confidence": "medium",
+            "explanation_zh": "「已被……吸引」用現在完成式被動 have been attracted by；「這些影片常讓他們……」以非限定關係子句 , which 接續，避免兩個獨立子句用逗號相連；「到半夜還不想睡」譯 unwilling to go to bed even at midnight（也可 keep them up until midnight，但會失去「不想」的語意）。信心 medium 是因為後半句寫法很多。"
+          },
+          "2": {
+            "translation": "Experts remind teenagers that they should limit the time they spend watching short videos every day.",
+            "confidence": "high",
+            "explanation_zh": "「專家提醒」用 remind + 人 + that 子句（remind 後面要有受詞，或改用 warn that）；「每天看短影音的時間」用 the time (that) they spend watching …（spend + 時間 + V-ing）。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PASS",
+              "VOC"
+            ],
+            "used_target_words": [
+              "teenager",
+              "attract",
+              "video",
+              "midnight"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "標的詞彙 awake 的 alternatives（up／sleep）沒有收 bed；但 P4 已把 unwilling to go to bed until midnight 列為可接受寫法，這個寫法本身就命中不到 awake，學生用規準認可的寫法反而少一個標的詞。本譯文 unwilling to go to bed even at midnight 因此只命中 4/5（80%，剛好在門檻）。建議 awake 的 alternatives 補 bed（go to bed），P4 也可補 even at midnight 的寫法。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "NCL",
+              "BASIC"
+            ],
+            "used_target_words": [
+              "expert",
+              "warn",
+              "limit",
+              "time",
+              "video"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "teenager",
+              "attract",
+              "video",
+              "midnight"
+            ],
+            "target_hit_rate": 0.8,
+            "patterns_detected": {
+              "PASS": true,
+              "VOC": null
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "expert",
+              "warn",
+              "limit",
+              "time",
+              "video"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NCL": false,
+              "BASIC": null
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 1 題驗證者對4 部分切分有意見（warn）：標的詞彙 awake 的 alternatives（up／sleep）沒有收 bed；但 P4 已把 unwilling to go to bed until midnight 列為可接受寫法，這個寫法本身就命中不到 awake，學生用規準"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T07:46:21Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Many teenagers have been attracted to short videos, which often make them unwilling to go to sleep even in the middle of the night.",
+            "confidence": "medium",
+            "explanation_zh": "「已被…吸引」用現在完成被動 have been attracted to，強調目前的狀態；「這些影片常讓他們…」用非限定關係子句 which often make them ...；「到半夜還不想睡」可有多種譯法，我取 unwilling to go to sleep even in the middle of the night，信心稍低。"
+          },
+          "2": {
+            "translation": "Experts warn that teenagers should limit the amount of time they spend watching short videos every day.",
+            "confidence": "high",
+            "explanation_zh": "「專家提醒」用 Experts warn that；「應該」用 should；「限制自己每天看短影音的時間」用 limit the amount of time they spend (in) watching ...，反身意義由主詞 teenagers 與 they 對應即可。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PASS",
+              "VOC"
+            ],
+            "used_target_words": [
+              "teenager",
+              "attract",
+              "video",
+              "awake"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "備註：「半夜」最直接的英文是 in the middle of the night，我就是這樣寫的；但 midnight 的 alternatives 只有 late at night，所以我的譯文只命中 4/5 個標的詞彙（awake 是靠 alternatives 的 sleep 命中），剛好卡在 80%。建議把 the middle of the night 補進 midnight 的 alternatives，part 4 accepted 也補 even in the middle of the night。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "NCL",
+              "BASIC"
+            ],
+            "used_target_words": [
+              "expert",
+              "warn",
+              "limit",
+              "time",
+              "video"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "teenager",
+              "attract",
+              "video",
+              "awake"
+            ],
+            "target_hit_rate": 0.8,
+            "patterns_detected": {
+              "PASS": true,
+              "VOC": null
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "expert",
+              "warn",
+              "limit",
+              "time",
+              "video"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NCL": true,
+              "BASIC": null
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

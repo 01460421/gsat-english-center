@@ -1,0 +1,710 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.9bc117",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "advanced",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "雖然只是匆匆經過，在車站看見公共藝術仍能讓旅客放鬆心情。",
+        "options": null,
+        "answer": "Although travelers are just passing by, seeing public art at the station can still help them relax.",
+        "accepted_answers": [
+          "Even though travelers only pass by in a hurry, seeing public art in the station can still help them relax.",
+          "Though travelers are only hurrying past, seeing public art at the station can still make them feel relaxed."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "讓步子句（although／though／even though）",
+            "動名詞片語當主詞"
+          ],
+          "topic": "公共藝術"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "這些作品如此有創意，要在等車時感到無聊其實很難。",
+        "options": null,
+        "answer": "These works are so creative that it is actually hard to feel bored while waiting for the train.",
+        "accepted_answers": [
+          "These works of art are so creative that it is difficult to feel bored while waiting for a train.",
+          "They are such creative works that it is hard to get bored while waiting for trains."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "結果：so … that",
+            "虛主詞 It ＋形容詞＋不定詞"
+          ],
+          "topic": "公共藝術"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "公共藝術"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「雖然…仍…」英文只用一個連接詞 although／though／even though，主要子句不再加 but，「仍」用 still 表達。中文第一個子句省略了主詞，英文要補上 travelers，後面再用 them 指回旅客。「在車站看見公共藝術」是動作當主詞，用動名詞片語 seeing public art at the station，後面接 can still help them relax（help＋人＋原形動詞）；public art 是不可數名詞，不加 s。",
+          "evidence": [
+            "雖然只是匆匆經過",
+            "在車站看見公共藝術"
+          ],
+          "strategy_zh": "中文「雖然…（但）仍…」在英文只能留 although；先找出真正的主詞——這一句是「看見公共藝術」這個動作。",
+          "hints": [
+            "切成四段：雖然只是匆匆經過／在車站看見公共藝術／仍能讓旅客／放鬆心情",
+            "標的詞彙：traveler（旅客）、public（公共的）、art（藝術）、station（車站）、still（仍然）、relax（放鬆）",
+            "句型框架：Although + S + V, V-ing … + can still help + O + VR"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「如此有創意，（以至於）…」是結果句型 so + 形容詞 + that + 子句；後面若接名詞就用 such creative works that …。that 子句裡「要在等車時感到無聊其實很難」的主詞是「感到無聊」這個動作，英文用虛主詞 it is hard to feel bored。「等車時」可以寫 while waiting for the train（連接詞＋分詞）；「感到無聊」是人的感受，用 bored。",
+          "evidence": [
+            "這些作品如此有創意",
+            "要在等車時感到無聊其實很難"
+          ],
+          "strategy_zh": "「如此…（以至於）…」先想 so … that；「要…很難／很容易」先想 It is + adj. + to VR。",
+          "hints": [
+            "切成四段：這些作品如此有創意／等車時／感到無聊／其實很難",
+            "標的詞彙：work（作品）、creative（有創意的）、bored（感到無聊的）、wait（等待；wait for）、train（火車）",
+            "句型框架：S + be + so + adj. + that + it is + adj. + to VR … while V-ing …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "Although travelers are just passing by, seeing public art at the station can still help them relax.",
+            "Even though travelers only pass by in a hurry, seeing public art in the station can still help them relax.",
+            "Though travelers are only hurrying past, seeing public art at the station can still make them feel relaxed."
+          ],
+          "target_words": [
+            {
+              "word": "traveler",
+              "zh": "旅客",
+              "alternatives": [
+                "passenger",
+                "commuter"
+              ]
+            },
+            {
+              "word": "public",
+              "zh": "公共的"
+            },
+            {
+              "word": "art",
+              "zh": "藝術"
+            },
+            {
+              "word": "station",
+              "zh": "車站"
+            },
+            {
+              "word": "still",
+              "zh": "仍然"
+            },
+            {
+              "word": "relax",
+              "zh": "放鬆"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "ADVCL",
+              "grammar_id": "gp-concession-clause",
+              "label_zh": "讓步子句（雖然…：although／though／even though）",
+              "frame": "Although/Though/Even though + S + V, S + V（不再加 but）",
+              "zh_trigger": "雖然"
+            },
+            {
+              "code": "NFSUBJ",
+              "grammar_id": "gp-gerund-subject",
+              "label_zh": "動名詞片語當主詞",
+              "frame": "V-ing … + can still + VR …",
+              "zh_trigger": "在車站看見公共藝術"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "雖然只是匆匆經過",
+              "accepted": [
+                "Although travelers are just passing by",
+                "Even though travelers only pass by in a hurry",
+                "Though travelers are only hurrying past",
+                "Although travelers are only passing through",
+                "Although travelers just pass by quickly",
+                "Even though passengers are just passing by",
+                "Even if travelers are only passing by"
+              ],
+              "targets": [
+                "ADVCL",
+                "traveler"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Although are just passing by",
+                  "right": "Although travelers are just passing by",
+                  "explanation_zh": "中文省略主詞，英文的讓步子句要補上主詞（旅客 travelers）。"
+                },
+                {
+                  "wrong": "Although travelers are just passing by, but",
+                  "right": "Although travelers are just passing by,",
+                  "explanation_zh": "although 和 but 不能同時用，英文只留一個連接詞。"
+                }
+              ]
+            },
+            {
+              "zh": "在車站看見公共藝術",
+              "accepted": [
+                "seeing public art at the station",
+                "seeing public art in the station",
+                "seeing public art at train stations",
+                "looking at public art in the station",
+                "seeing the public art at the station"
+              ],
+              "targets": [
+                "NFSUBJ",
+                "public",
+                "art",
+                "station"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "see public art at the station can",
+                  "right": "seeing public art at the station can",
+                  "explanation_zh": "動作當主詞要用動名詞 seeing，不能用原形動詞。"
+                },
+                {
+                  "wrong": "seeing public arts at the station",
+                  "right": "seeing public art at the station",
+                  "explanation_zh": "art 指藝術作品的總稱時是不可數名詞，不加 s。"
+                }
+              ]
+            },
+            {
+              "zh": "仍能讓旅客",
+              "accepted": [
+                "can still help them",
+                "can still make them",
+                "can still help travelers",
+                "still helps them",
+                "can still allow them to"
+              ],
+              "targets": [
+                "still"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "can still let them to",
+                  "right": "can still let them",
+                  "explanation_zh": "let 後面直接接原形動詞，不加 to；也可以寫 help them relax。"
+                }
+              ]
+            },
+            {
+              "zh": "放鬆心情",
+              "accepted": [
+                "relax",
+                "feel relaxed",
+                "feel more relaxed",
+                "relax a little",
+                "relax their minds"
+              ],
+              "targets": [
+                "relax"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "relax their mood",
+                  "right": "relax",
+                  "explanation_zh": "「放鬆心情」英文直接用 relax 或 feel relaxed，不說 relax their mood。"
+                },
+                {
+                  "wrong": "feel relaxing",
+                  "right": "feel relaxed",
+                  "explanation_zh": "人「感到放鬆」用 relaxed；relaxing 是「令人放鬆的」。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "subjectless",
+              "zh": "雖然只是匆匆經過",
+              "literal_error": "Although just passing by in a hurry, but seeing public art at the station can still let travelers relax.",
+              "part": 1,
+              "explanation_zh": "讓步子句沒有主詞，又把「雖然…仍…」譯成 although … but，兩處都會扣分；英文要補主詞 travelers，而且只用 although。"
+            },
+            {
+              "type": "verbal_subject",
+              "zh": "在車站看見公共藝術",
+              "literal_error": "At the station see public art can still let travelers relax their mood.",
+              "part": 2,
+              "explanation_zh": "「在車站看見公共藝術」是動作當主詞，英文要用動名詞片語 seeing public art at the station，不能用原形動詞或介系詞片語開頭。"
+            }
+          ],
+          "bonus": [],
+          "restructuring_zh": "「在車站看見公共藝術」是動作當主詞，英文用動名詞片語 seeing public art at the station 當主詞；「雖然只是匆匆經過」沒有主詞，要補上 travelers，主要子句再用 them 指回旅客。"
+        },
+        "2": {
+          "references": [
+            "These works are so creative that it is actually hard to feel bored while waiting for the train.",
+            "These works of art are so creative that it is difficult to feel bored while waiting for a train.",
+            "They are such creative works that it is hard to get bored while waiting for trains."
+          ],
+          "target_words": [
+            {
+              "word": "work",
+              "zh": "作品",
+              "alternatives": [
+                "piece",
+                "artwork"
+              ]
+            },
+            {
+              "word": "creative",
+              "zh": "有創意的"
+            },
+            {
+              "word": "bored",
+              "zh": "感到無聊的"
+            },
+            {
+              "word": "wait",
+              "zh": "等待"
+            },
+            {
+              "word": "train",
+              "zh": "火車",
+              "alternatives": [
+                "bus"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "ADVCL",
+              "grammar_id": "gp-so-such-that",
+              "label_zh": "結果：so … that（如此…以至於）",
+              "frame": "S + be + so + adj. + that … ／ such + adj. + N + that …",
+              "zh_trigger": "如此有創意"
+            },
+            {
+              "code": "NFSUBJ",
+              "grammar_id": "gp-it-adj-to",
+              "label_zh": "虛主詞 It ＋形容詞＋不定詞",
+              "frame": "it is + adj. + to VR …",
+              "zh_trigger": "要在等車時感到無聊其實很難"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "這些作品如此有創意",
+              "accepted": [
+                "These works are so creative that",
+                "These works of art are so creative that",
+                "They are such creative works that",
+                "These artworks are so creative that",
+                "These pieces are so creative that"
+              ],
+              "targets": [
+                "ADVCL",
+                "work",
+                "creative"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "These works are very creative that",
+                  "right": "These works are so creative that",
+                  "explanation_zh": "「如此…以至於」用 so + 形容詞 + that，不用 very。"
+                },
+                {
+                  "wrong": "These works are so creation that",
+                  "right": "These works are so creative that",
+                  "explanation_zh": "creation 是名詞；so 後面接形容詞 creative。"
+                },
+                {
+                  "wrong": "They are so creative works that",
+                  "right": "They are such creative works that",
+                  "explanation_zh": "後面有名詞時用 such + 形容詞 + 名詞 + that；so 後面只接形容詞或副詞。"
+                }
+              ]
+            },
+            {
+              "zh": "等車時",
+              "accepted": [
+                "while waiting for the train",
+                "while waiting for a train",
+                "while waiting for trains",
+                "when waiting for the train",
+                "while they are waiting for the train",
+                "while they wait for the train"
+              ],
+              "targets": [
+                "wait",
+                "train"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "while waiting the train",
+                  "right": "while waiting for the train",
+                  "explanation_zh": "「等…」是 wait for。"
+                },
+                {
+                  "wrong": "while wait for the train",
+                  "right": "while waiting for the train",
+                  "explanation_zh": "while 後面省略主詞時用 V-ing（while waiting），不然要寫完整子句 while they wait …。"
+                }
+              ]
+            },
+            {
+              "zh": "感到無聊",
+              "accepted": [
+                "to feel bored",
+                "to get bored",
+                "to be bored"
+              ],
+              "targets": [
+                "bored"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "to feel boring",
+                  "right": "to feel bored",
+                  "explanation_zh": "人「感到無聊」用 bored；boring 是「令人覺得無聊的」。"
+                }
+              ]
+            },
+            {
+              "zh": "其實很難",
+              "accepted": [
+                "it is actually hard",
+                "it is difficult",
+                "it is hard",
+                "it is actually difficult",
+                "it is really hard",
+                "it is not easy"
+              ],
+              "targets": [
+                "NFSUBJ"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "is actually hard to feel bored",
+                  "right": "it is actually hard to feel bored",
+                  "explanation_zh": "中文「要…很難」沒有主詞，英文用虛主詞 it 開頭：it is hard to VR。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "word_form",
+              "zh": "感到無聊",
+              "literal_error": "These works are so creative that it is hard to feel boring while waiting for the train.",
+              "part": 3,
+              "explanation_zh": "「感到無聊」描述人的感受，要用 bored；寫成 boring 意思變成「讓人覺得無聊」。"
+            },
+            {
+              "type": "verbal_subject",
+              "zh": "要在等車時感到無聊其實很難",
+              "literal_error": "These works are so creative that want to feel bored when waiting the train is actually hard.",
+              "part": 4,
+              "explanation_zh": "「要…很難」的「要」不是 want；整個動作是主詞，英文用虛主詞 it is hard to feel bored …。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "So creative are these works that it is actually hard to feel bored while waiting for the train.",
+              "grammar_id": "gp-so-adj-inversion",
+              "explanation_zh": "把 so + 形容詞移到句首，後面的 be 動詞與主詞倒裝，語氣更強，屬加分寫法；一般寫 These works are so creative that … 就能拿滿分。"
+            }
+          ],
+          "restructuring_zh": "「要在等車時感到無聊其實很難」是動作當主詞，英文以虛主詞 it 開頭：it is actually hard to feel bored while waiting for the train。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-advanced-04",
+    "lot": "translation-advanced-04",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "4c825c0a94fac9dc54e263ee5e16ad1f93b574fa99d23ce45a0c738ed355d865",
+    "spec_id": "translation-advanced@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T13:07:02Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T13:07:02Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Although travelers are only passing through in a hurry, seeing public art at the station can still help them relax.",
+            "confidence": "high",
+            "explanation_zh": "「雖然…仍…」用 Although 引導讓步子句，主要子句用 still；「在車站看見公共藝術」是動作當主詞，用動名詞 seeing；「放鬆心情」譯 help them relax。"
+          },
+          "2": {
+            "translation": "These works are so creative that it is actually hard to feel bored while waiting for a train.",
+            "confidence": "high",
+            "explanation_zh": "「如此…，要…很難」用 so…that 結構，that 子句內再用 it is hard to V；「等車」在車站情境下譯 waiting for a train（也可能是公車，略有歧義）。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "ADVCL",
+              "NFSUBJ"
+            ],
+            "used_target_words": [
+              "traveler",
+              "public",
+              "art",
+              "station",
+              "still",
+              "relax"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "ADVCL",
+              "NFSUBJ"
+            ],
+            "used_target_words": [
+              "work",
+              "creative",
+              "bored",
+              "wait",
+              "train"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "traveler",
+              "public",
+              "art",
+              "station",
+              "still",
+              "relax"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "ADVCL": true,
+              "NFSUBJ": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "work",
+              "creative",
+              "bored",
+              "wait",
+              "train"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "ADVCL": true,
+              "NFSUBJ": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T12:50:33Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Although travelers are only passing through in a hurry, seeing public art at the station can still help them relax.",
+            "confidence": "high",
+            "explanation_zh": "「雖然……仍」用 although 讓步子句，主句用動名詞 seeing 當主詞，「仍能」用 can still；「放鬆心情」用 help them relax。"
+          },
+          "2": {
+            "translation": "These works are so creative that it is actually hard to feel bored while waiting for a train.",
+            "confidence": "high",
+            "explanation_zh": "「如此……要……」用 so ... that 結果子句；「要在等車時感到無聊其實很難」用虛主詞 it is hard to feel bored，while waiting 表同時。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "ADVCL",
+              "NFSUBJ"
+            ],
+            "used_target_words": [
+              "traveler",
+              "public",
+              "art",
+              "station",
+              "still",
+              "relax"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "ADVCL",
+              "NFSUBJ"
+            ],
+            "used_target_words": [
+              "work",
+              "creative",
+              "bored",
+              "wait",
+              "train"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "traveler",
+              "public",
+              "art",
+              "station",
+              "still",
+              "relax"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "ADVCL": true,
+              "NFSUBJ": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "work",
+              "creative",
+              "bored",
+              "wait",
+              "train"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "ADVCL": true,
+              "NFSUBJ": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

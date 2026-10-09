@@ -1,0 +1,843 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.7d5251",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "advanced",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "已經有許多長輩在電話中被騙，這讓他們不敢接陌生的來電。",
+        "options": null,
+        "answer": "Many elderly people have been cheated over the phone, and this has made them afraid to answer calls from strangers.",
+        "accepted_answers": [
+          "Many seniors have already been tricked on the phone, which has made them afraid to answer calls from strangers.",
+          "Many older people have been cheated on the phone, which makes them scared to pick up calls from strangers."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "完成式被動",
+            "S + V + O + OC（make + 受詞 + 形容詞）"
+          ],
+          "topic": "電話詐騙"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "警方呼籲長輩，若被要求轉帳，要先和家人確認。",
+        "options": null,
+        "answer": "The police urge elderly people to check with their families first if they are asked to transfer money.",
+        "accepted_answers": [
+          "The police advise older people to check with their family first if they are told to transfer money.",
+          "The police call on the elderly to confirm with their family members first if they are asked to send money."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "動詞＋受詞＋不定詞（urge sb to V）",
+            "被動語態"
+          ],
+          "topic": "電話詐騙"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "電話詐騙"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「已經有許多長輩…被騙」的重點是長輩「已經被騙」：以 many elderly people 當主詞，用完成式被動 have been cheated，「已經」也可以明寫成 have already been cheated；「被騙」除了 cheated，也可以用電話詐騙最常說的 scammed，或 tricked、deceived。「在電話中」是 over the phone／on the phone。後半句「這讓他們不敢…」是 make + 受詞 + 形容詞（受詞補語）：this has made them afraid to answer …（或 which makes them scared to …）；「不敢」用形容詞 afraid（to VR），不要寫 don't dare。「陌生的來電」是陌生人打來的電話：calls from strangers 或 calls from unknown numbers。",
+          "evidence": [
+            "已經有許多長輩在電話中被騙",
+            "這讓他們不敢接陌生的來電"
+          ],
+          "strategy_zh": "中文「已經有…被…」先找出真正的主詞，再用完成式被動；「讓＋人＋（感覺）」常用 make + O + adj.。",
+          "hints": [
+            "切成四段：已經有許多長輩／在電話中被騙／這讓他們不敢／接陌生的來電",
+            "標的詞彙：elderly（年長的）、cheat（欺騙，也可用 scam、trick）、phone（電話）、afraid（害怕的）、answer（接〔電話〕）、stranger（陌生人）",
+            "句型框架：S + have (already) been + p.p. …, and this has made + O + adj. + to VR …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「呼籲／提醒＋人＋做某事」是 urge（或 remind、advise、call on）+ 受詞 + to + 原形動詞：The police urge elderly people to check with their families first；the police 恆用複數動詞，不加 s。「若被要求轉帳」是長輩「被」要求，用被動 if they are asked to transfer money；中文沒有主詞，英文要補 they。「和家人確認」是 check with their families（family 當集合名詞寫 their family，或寫 family members 都可以），「先」要譯出 first。",
+          "evidence": [
+            "警方呼籲長輩",
+            "若被要求轉帳",
+            "要先和家人確認"
+          ],
+          "strategy_zh": "「呼籲／提醒／鼓勵／警告＋人＋做…」先想 V + O + to VR；中文的「被要求」「被告知」用 be asked／be told。",
+          "hints": [
+            "切成四段：警方呼籲長輩／若被要求／轉帳／要先和家人確認",
+            "標的詞彙：police（警方）、urge（呼籲，也可用 remind、advise）、elderly（年長的）、transfer（轉帳）、check（確認；check with）、family（家人）",
+            "句型框架：S + urge + O + to VR … first + if + S + be + asked + to VR"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "Many elderly people have been cheated over the phone, and this has made them afraid to answer calls from strangers.",
+            "Many seniors have already been tricked on the phone, which has made them afraid to answer calls from strangers.",
+            "Many older people have been cheated on the phone, which makes them scared to pick up calls from strangers."
+          ],
+          "target_words": [
+            {
+              "word": "elderly",
+              "zh": "年長的（長輩）",
+              "alternatives": [
+                "senior",
+                "seniors",
+                "old",
+                "older",
+                "elder",
+                "elders"
+              ]
+            },
+            {
+              "word": "cheat",
+              "zh": "欺騙",
+              "alternatives": [
+                "scam",
+                "scammed",
+                "trick",
+                "fool",
+                "deceive",
+                "defraud",
+                "defrauded",
+                "con",
+                "conned"
+              ]
+            },
+            {
+              "word": "phone",
+              "zh": "電話",
+              "alternatives": [
+                "telephone"
+              ]
+            },
+            {
+              "word": "afraid",
+              "zh": "害怕的（不敢）",
+              "alternatives": [
+                "scared",
+                "reluctant",
+                "hesitant",
+                "unwilling",
+                "fear",
+                "frightened"
+              ]
+            },
+            {
+              "word": "answer",
+              "zh": "接（電話）",
+              "alternatives": [
+                "pick up"
+              ]
+            },
+            {
+              "word": "stranger",
+              "zh": "陌生人",
+              "alternatives": [
+                "unknown",
+                "unfamiliar"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "VOC",
+              "grammar_id": "gp-svoc",
+              "label_zh": "S + V + O + OC（make + 受詞 + 形容詞）",
+              "frame": "S + make + O + adj. (+ to VR)",
+              "zh_trigger": "這讓他們不敢"
+            },
+            {
+              "code": "PASS",
+              "grammar_id": "gp-perfect-passive",
+              "label_zh": "完成式被動（已經被騙）",
+              "frame": "S + have/has (+ already) + been + p.p. …",
+              "zh_trigger": "被騙"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "已經有許多長輩",
+              "accepted": [
+                "Many elderly people",
+                "Many seniors",
+                "Many older people",
+                "A lot of elderly people",
+                "Lots of elderly people",
+                "Many old people",
+                "Many senior citizens",
+                "Many of the elderly",
+                "Quite a few elderly people",
+                "A large number of elderly people"
+              ],
+              "targets": [
+                "elderly"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "There are many elderly people have",
+                  "right": "Many elderly people have",
+                  "explanation_zh": "「已經有許多長輩被騙」的「有」不必譯出；英文一個子句只能有一個主要動詞，直接用 many elderly people 當主詞。"
+                },
+                {
+                  "wrong": "Many old men",
+                  "right": "Many elderly people",
+                  "explanation_zh": "「長輩」泛指年紀大的人（男女都有），用 elderly people／seniors；old men 只指男性。"
+                }
+              ]
+            },
+            {
+              "zh": "在電話中被騙",
+              "accepted": [
+                "have been cheated over the phone",
+                "have already been cheated over the phone",
+                "have been scammed over the phone",
+                "have already been scammed over the phone",
+                "have been tricked on the phone",
+                "have already been tricked on the phone",
+                "have been deceived over the phone",
+                "have already been deceived over the phone",
+                "have been cheated on the phone",
+                "have been scammed on the phone",
+                "have been tricked over the phone",
+                "have been defrauded over the phone",
+                "have been fooled over the phone",
+                "have been cheated by phone",
+                "have been scammed by phone"
+              ],
+              "targets": [
+                "PASS",
+                "cheat",
+                "phone"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "have cheated over the phone",
+                  "right": "have been cheated over the phone",
+                  "explanation_zh": "長輩是「被」騙，要用完成式被動 have been + 過去分詞；have cheated 是「已經騙了別人」。"
+                },
+                {
+                  "wrong": "were cheated in the phone",
+                  "right": "have been cheated over the phone",
+                  "explanation_zh": "「已經」用現在完成式（have been cheated，也可以寫 have already been cheated）；「在電話中」是 over the phone 或 on the phone。"
+                },
+                {
+                  "wrong": "have been cheat over the phone",
+                  "right": "have been cheated over the phone",
+                  "explanation_zh": "被動語態的動詞要用過去分詞 cheated（scammed、tricked）。"
+                }
+              ]
+            },
+            {
+              "zh": "這讓他們不敢",
+              "accepted": [
+                "and this has made them afraid",
+                "which makes them afraid",
+                "made them afraid",
+                "makes them afraid",
+                "making them afraid",
+                "made them scared",
+                "makes them scared",
+                "making them scared",
+                "made them reluctant",
+                "makes them reluctant",
+                "made them hesitant",
+                "makes them hesitant",
+                "left them afraid",
+                "leaves them afraid"
+              ],
+              "targets": [
+                "VOC",
+                "afraid"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "this let them afraid",
+                  "right": "this has made them afraid",
+                  "explanation_zh": "「讓＋人＋形容詞」用 make + 受詞 + 形容詞；let 後面要接原形動詞。"
+                },
+                {
+                  "wrong": "this makes them don't dare",
+                  "right": "this makes them afraid",
+                  "explanation_zh": "make 的受詞補語用形容詞 afraid（不敢＝afraid to）；don't dare 不能接在受詞後面。"
+                }
+              ]
+            },
+            {
+              "zh": "接陌生的來電",
+              "accepted": [
+                "to answer calls from strangers",
+                "to answer unknown calls",
+                "to answer calls from unknown numbers",
+                "to pick up calls from strangers",
+                "to pick up calls from unknown numbers",
+                "to pick up unknown calls",
+                "to answer phone calls from strangers",
+                "to answer calls from people they don't know",
+                "to answer calls from unfamiliar numbers",
+                "of answering calls from strangers",
+                "of answering calls from unknown numbers",
+                "of picking up calls from strangers"
+              ],
+              "targets": [
+                "answer",
+                "stranger"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "to receive strange calls",
+                  "right": "to answer calls from strangers",
+                  "explanation_zh": "「陌生的來電」是陌生人打來的電話；strange calls 是「奇怪的電話」。「接電話」用 answer 或 pick up。"
+                },
+                {
+                  "wrong": "to answer calls from stranger",
+                  "right": "to answer calls from strangers",
+                  "explanation_zh": "stranger 是可數名詞，泛指時用複數。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "redundancy",
+              "zh": "已經有許多長輩",
+              "literal_error": "There are already many elderly people have been cheated over the phone.",
+              "part": 1,
+              "explanation_zh": "「已經有…被騙」的「有」是存在句，照字面譯成 There are … have been … 會出現兩個主要動詞；直接以 many elderly people 當主詞。"
+            },
+            {
+              "type": "collocation",
+              "zh": "接陌生的來電",
+              "literal_error": "Many elderly people have been cheated over the phone, and this let them don't dare to receive strange calls.",
+              "part": 4,
+              "explanation_zh": "「陌生的來電」是陌生人打來的電話（calls from strangers／unknown numbers），strange calls 意思是「奇怪的電話」；「接電話」用 answer 或 pick up。"
+            }
+          ],
+          "bonus": [],
+          "restructuring_zh": "「已經有許多長輩在電話中被騙」不要譯成 There are …，改以 many elderly people 當主詞，用完成式被動 have been cheated（補主詞或改被動）；「這讓他們不敢…」用 this has made them afraid to …。"
+        },
+        "2": {
+          "references": [
+            "The police urge elderly people to check with their families first if they are asked to transfer money.",
+            "The police advise older people to check with their family first if they are told to transfer money.",
+            "The police call on the elderly to confirm with their family members first if they are asked to send money."
+          ],
+          "target_words": [
+            {
+              "word": "police",
+              "zh": "警方"
+            },
+            {
+              "word": "urge",
+              "zh": "呼籲",
+              "alternatives": [
+                "remind",
+                "advise",
+                "warn",
+                "call on",
+                "ask",
+                "encourage",
+                "tell"
+              ]
+            },
+            {
+              "word": "elderly",
+              "zh": "年長的（長輩）",
+              "alternatives": [
+                "senior",
+                "seniors",
+                "old",
+                "older",
+                "elder",
+                "elders"
+              ]
+            },
+            {
+              "word": "transfer",
+              "zh": "轉（帳）",
+              "alternatives": [
+                "send",
+                "wire"
+              ]
+            },
+            {
+              "word": "check",
+              "zh": "確認",
+              "alternatives": [
+                "confirm",
+                "consult",
+                "talk",
+                "discuss",
+                "ask",
+                "verify"
+              ]
+            },
+            {
+              "word": "family",
+              "zh": "家人"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "VOC",
+              "grammar_id": "gp-v-o-to-v",
+              "label_zh": "動詞＋受詞＋不定詞（urge sb to V）",
+              "frame": "S + urge/remind/advise + O + to VR",
+              "zh_trigger": "呼籲長輩"
+            },
+            {
+              "code": "PASS",
+              "grammar_id": "gp-passive",
+              "label_zh": "被動語態（被要求…：be asked to VR）",
+              "frame": "S + be + p.p. + to VR",
+              "zh_trigger": "被要求"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "警方呼籲長輩",
+              "accepted": [
+                "The police urge elderly people",
+                "The police urge the elderly",
+                "The police urge older people",
+                "The police urge seniors",
+                "The police advise older people",
+                "The police advise elderly people",
+                "The police call on the elderly",
+                "The police call on elderly people",
+                "The police remind elderly people",
+                "The police remind the elderly",
+                "The police warn elderly people",
+                "The police are urging elderly people"
+              ],
+              "targets": [
+                "VOC",
+                "police",
+                "urge",
+                "elderly"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "The police urges elderly people",
+                  "right": "The police urge elderly people",
+                  "explanation_zh": "police 是複數名詞，動詞不加 s。"
+                },
+                {
+                  "wrong": "The police urge elderly people that",
+                  "right": "The police urge elderly people to",
+                  "explanation_zh": "urge／advise／call on + 受詞後面接 to + 原形動詞，不接 that 子句。"
+                }
+              ]
+            },
+            {
+              "zh": "若被要求",
+              "accepted": [
+                "if they are asked",
+                "if they are told",
+                "when they are asked",
+                "if they are requested",
+                "if they are ever asked",
+                "whenever they are asked",
+                "if asked"
+              ],
+              "targets": [
+                "PASS"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "if they ask",
+                  "right": "if they are asked",
+                  "explanation_zh": "長輩是「被」要求，用被動 be asked；if they ask 變成長輩去要求別人。"
+                },
+                {
+                  "wrong": "if are asked",
+                  "right": "if they are asked",
+                  "explanation_zh": "「若被要求」沒有主詞，英文子句要補上 they（或省略成 if asked）。"
+                }
+              ]
+            },
+            {
+              "zh": "轉帳",
+              "accepted": [
+                "to transfer money",
+                "to send money",
+                "to wire money",
+                "to make a transfer",
+                "to make a money transfer",
+                "to transfer funds",
+                "to transfer money to someone"
+              ],
+              "targets": [
+                "transfer"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "to transfer account",
+                  "right": "to transfer money",
+                  "explanation_zh": "「轉帳」是把錢轉出去：transfer money；account 是帳戶。"
+                }
+              ]
+            },
+            {
+              "zh": "要先和家人確認",
+              "accepted": [
+                "to check with their families first",
+                "to check with their family first",
+                "to check with their family members first",
+                "to confirm with their families first",
+                "to confirm with their family first",
+                "to confirm with their family members first",
+                "to first check with their families",
+                "to first check with their family",
+                "to talk to their families first",
+                "to talk with their family first",
+                "to ask their families first",
+                "to ask their family first",
+                "to consult their families first",
+                "to discuss it with their families first",
+                "to verify with their families first",
+                "to check with their families before doing so",
+                "to check with their family before doing so"
+              ],
+              "targets": [
+                "check",
+                "family"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "must check with their families first",
+                  "right": "to check with their families first",
+                  "explanation_zh": "urge／advise + 受詞後面接 to + 原形動詞，不能直接接助動詞 must。"
+                },
+                {
+                  "wrong": "to check their families first",
+                  "right": "to check with their families first",
+                  "explanation_zh": "「和家人確認」是 check with sb；check sb 是「檢查某人」。"
+                },
+                {
+                  "wrong": "to check with their families",
+                  "right": "to check with their families first",
+                  "explanation_zh": "「要先…」的「先」要譯出 first，表示轉帳之前先確認。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "subjectless",
+              "zh": "若被要求轉帳",
+              "literal_error": "The police urge elderly people if be asked to transfer money, must check with family first.",
+              "part": 2,
+              "explanation_zh": "「若被要求轉帳」「要先和家人確認」都沒有主詞，英文條件子句要補 they；後半用 urge + 受詞 + to VR 最簡潔。"
+            },
+            {
+              "type": "collocation",
+              "zh": "轉帳",
+              "literal_error": "The police urge elderly people to check with their families first if they are asked to transfer account.",
+              "part": 3,
+              "explanation_zh": "「轉帳」是把錢轉出去，英文是 transfer money；transfer account 意思不對。"
+            }
+          ],
+          "bonus": [],
+          "restructuring_zh": "「若被要求轉帳，要先和家人確認」兩個子句都沒有主詞：改用 urge + 長輩 + to check …，條件子句補上主詞 they 並用被動 are asked。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-advanced-04-regen",
+    "lot": "translation-advanced-04",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "5341afc25d344c7e86c5f6768889faff79ec168d1da075e82edf61baf41c0b1f",
+    "spec_id": "translation-advanced@2026-10-09",
+    "regenerated_from": "ai.tr.3d02fd"
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "warn",
+      "created_at": "2026-10-09T14:18:25Z",
+      "details": {
+        "errors": [],
+        "warnings": [
+          "annotations.rubric.items.1.patterns[1]: gp-perfect-passive 通常對應句構 PERF（目前 code=PASS）"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T14:12:13Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Many elderly people have already been cheated over the phone, which makes them afraid to answer calls from strangers.",
+            "confidence": "high",
+            "explanation_zh": "「已經……被騙」是到現在為止的經驗，用現在完成式被動 have already been cheated；「這讓他們……」指前面整件事，用逗號加 which 的非限定關係子句；「不敢」譯 be afraid to V；「陌生的來電」譯 calls from strangers（也可說 calls from unknown numbers）。"
+          },
+          "2": {
+            "translation": "The police urge elderly people to check with their family members first if they are asked to transfer money.",
+            "confidence": "high",
+            "explanation_zh": "「呼籲某人做某事」用 urge sb to V；the police 當複數；「若被要求轉帳」是條件副詞子句，用 if 加被動 are asked to transfer money；「先和家人確認」譯 check with their family members first。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "VOC",
+              "PASS"
+            ],
+            "used_target_words": [
+              "elderly",
+              "cheat",
+              "phone",
+              "afraid",
+              "answer",
+              "stranger"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "（小建議，不影響判定）第 3 部分可接受寫法有不帶連接詞的片段（made them afraid、makes them afraid 等），逐段比對時「…over the phone, this made them afraid…」這種逗號連接兩個子句的寫法也會過關；另外 reluctant／hesitant 和第 4 部分的 of answering 拼起來會變成錯誤搭配（reluctant of answering），批改時要看整句。",
+              "（小建議）第 1 部分中文寫「已經有許多長輩」，但「已經」對應的 already 在第 2 部分的可接受寫法裡，切分標示可以把「已經」移到第 2 部分。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "VOC",
+              "PASS"
+            ],
+            "used_target_words": [
+              "police",
+              "urge",
+              "elderly",
+              "transfer",
+              "check",
+              "family"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "elderly",
+              "cheat",
+              "phone",
+              "afraid",
+              "answer",
+              "stranger"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "VOC": null,
+              "PASS": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "police",
+              "urge",
+              "elderly",
+              "transfer",
+              "check",
+              "family"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "VOC": null,
+              "PASS": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "warn",
+      "created_at": "2026-10-09T14:13:00Z",
+      "details": {
+        "solver": "B",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Many elderly people have already been scammed over the phone, which makes them afraid to answer calls from strangers.",
+            "confidence": "high",
+            "explanation_zh": "「已經有許多長輩被騙」是到現在為止的結果，所以用現在完成式被動（have already been scammed）；「這讓他們不敢……」指前面整件事造成的結果，用非限定關係子句 which makes them afraid to ...。「不敢接電話」譯成 afraid to answer calls；「陌生的來電」用 calls from strangers，簡單自然。"
+          },
+          "2": {
+            "translation": "The police urge elderly people to check with their families first if they are asked to transfer money.",
+            "confidence": "high",
+            "explanation_zh": "「呼籲長輩……」用 urge ... to V；「和家人確認」是 check with their families；「若被要求轉帳」是被動語態，用 if they are asked to transfer money，並放在句尾，讓主要訊息先出現。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "VOC",
+              "PASS"
+            ],
+            "used_target_words": [
+              "elderly",
+              "cheat",
+              "phone",
+              "afraid",
+              "answer",
+              "stranger"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "VOC",
+              "PASS"
+            ],
+            "used_target_words": [
+              "police",
+              "urge",
+              "elderly",
+              "transfer",
+              "check",
+              "family"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "elderly",
+              "cheat",
+              "phone",
+              "afraid",
+              "answer",
+              "stranger"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "VOC": null,
+              "PASS": false
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "police",
+              "urge",
+              "elderly",
+              "transfer",
+              "check",
+              "family"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "VOC": null,
+              "PASS": true
+            },
+            "program_match": true
+          }
+        },
+        "problems": [
+          "第 1 題驗證者說用了句型 PASS，程式在譯文裡看不出來"
+        ]
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

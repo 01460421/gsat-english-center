@@ -1,0 +1,718 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.7333e1",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "top",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "要保護珊瑚礁（coral reefs）並不容易，因為現在珊瑚白化（coral bleaching）發生的次數是幾十年前的五倍。",
+        "options": null,
+        "answer": "It is not easy to protect coral reefs, because nowadays coral bleaching happens five times as frequently as it did decades ago.",
+        "accepted_answers": [
+          "It is difficult to protect coral reefs, since coral bleaching now occurs five times more often than it did several decades ago.",
+          "It is hard to protect coral reefs, because coral bleaching now takes place five times as often as it did a few decades ago."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "虛主詞 It ＋形容詞＋不定詞（要保護珊瑚礁並不容易）",
+            "倍數比較（發生的次數是幾十年前的五倍）"
+          ],
+          "topic": "珊瑚白化"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "許多珊瑚礁（coral reefs）已因為海水變暖而嚴重受損，使原本住在那裡的魚類失去棲息地。",
+        "options": null,
+        "answer": "Many coral reefs have been severely damaged by warming oceans, causing the fish that once lived there to lose their habitats.",
+        "accepted_answers": [
+          "Because the sea has become warmer, many coral reefs have been seriously damaged, leaving the fish that used to live there without homes.",
+          "Many coral reefs have already been badly harmed by warmer seas, making the fish that once lived there lose their habitats."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "句尾分詞片語表結果（…，使…失去棲息地）",
+            "完成式被動（已經…嚴重受損）"
+          ],
+          "topic": "珊瑚白化"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "珊瑚白化"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「要保護珊瑚礁並不容易」用虛主詞 It is not easy to protect coral reefs。後半句的「發生的次數是幾十年前的五倍」是倍數比較，英文把「次數」化成頻率：nowadays coral bleaching happens five times as frequently as it did decades ago（或 five times more often than …）；「現在」可寫 nowadays／now；比較對象用 it did（代替 happened）＋ decades ago。",
+          "evidence": [
+            "要保護珊瑚礁（coral reefs）並不容易",
+            "發生的次數是幾十年前的五倍"
+          ],
+          "strategy_zh": "倍數放在比較結構前面：five times + as frequently as／more often than；比較的兩邊要對稱（nowadays … happens ↔ it did decades ago）。",
+          "hints": [
+            "切成四段：要保護珊瑚礁並不容易／珊瑚白化發生的次數／幾十年前／的五倍",
+            "標的詞彙：protect（保護）、happen（發生）、frequently（頻繁地）、decade（十年）",
+            "句型框架：It is not easy to VR …, because S + V + five times as frequently as + S + did + 時間"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「已…嚴重受損」用完成式被動 have been severely damaged；原因「海水變暖」可名詞化成 by warming oceans，也可以寫成子句 because the sea has become warmer。「使…失去棲息地」是結果，用句尾分詞 causing the fish … to lose their habitats（cause + O + to VR；habitat 也可寫 home）。「原本住在那裡的魚類」用關係子句 the fish that once lived there。",
+          "evidence": [
+            "已因為海水變暖而嚴重受損",
+            "使原本住在那裡的魚類失去棲息地"
+          ],
+          "strategy_zh": "主幹 Many coral reefs have been damaged；原因用 by + 名詞片語；結果用 , causing + O + to VR，O 後面再接 that 子句。",
+          "hints": [
+            "切成四段：因為海水變暖／而嚴重受損／使原本住在那裡的魚類／失去棲息地",
+            "標的詞彙：damage（損害）、warm（溫暖、變暖）、fish（魚）、habitat（棲息地）",
+            "句型框架：S + have been + adv. + p.p. + by N, causing + O + that … + to VR …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "It is not easy to protect coral reefs, because nowadays coral bleaching happens five times as frequently as it did decades ago.",
+            "It is difficult to protect coral reefs, since coral bleaching now occurs five times more often than it did several decades ago.",
+            "It is hard to protect coral reefs, because coral bleaching now takes place five times as often as it did a few decades ago."
+          ],
+          "target_words": [
+            {
+              "word": "protect",
+              "zh": "保護",
+              "alternatives": [
+                "save"
+              ]
+            },
+            {
+              "word": "happen",
+              "zh": "發生",
+              "alternatives": [
+                "occur",
+                "take place"
+              ]
+            },
+            {
+              "word": "frequently",
+              "zh": "經常、頻繁地",
+              "alternatives": [
+                "often"
+              ]
+            },
+            {
+              "word": "decade",
+              "zh": "十年"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "NFSUBJ",
+              "grammar_id": "gp-it-adj-to",
+              "label_zh": "虛主詞 It ＋形容詞＋不定詞（要保護珊瑚礁並不容易）",
+              "frame": "It is not + adj. + to VR …",
+              "zh_trigger": "並不容易"
+            },
+            {
+              "code": "COMP",
+              "grammar_id": "gp-times",
+              "label_zh": "倍數比較（發生的次數是幾十年前的五倍）",
+              "frame": "S + V + five times as often as … / five times more often than …",
+              "zh_trigger": "是幾十年前的五倍"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "要保護珊瑚礁（coral reefs）並不容易",
+              "accepted": [
+                "It is not easy to protect coral reefs",
+                "It is difficult to protect coral reefs",
+                "It is hard to protect coral reefs",
+                "It is not easy to save coral reefs",
+                "Protecting coral reefs is not easy"
+              ],
+              "targets": [
+                "NFSUBJ",
+                "protect"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Protect coral reefs is not easy",
+                  "right": "It is not easy to protect coral reefs",
+                  "explanation_zh": "動詞片語不能直接當主詞；用虛主詞 It is not easy to VR（或 Protecting … is not easy）。"
+                },
+                {
+                  "wrong": "It is not easy for protecting coral reefs",
+                  "right": "It is not easy to protect coral reefs",
+                  "explanation_zh": "It is + adj. 後面接 to + 原形動詞。"
+                }
+              ]
+            },
+            {
+              "zh": "珊瑚白化（coral bleaching）發生的次數",
+              "accepted": [
+                "coral bleaching happens",
+                "coral bleaching now occurs",
+                "coral bleaching now takes place",
+                "coral bleaching now happens",
+                "coral bleaching occurs"
+              ],
+              "targets": [
+                "happen"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "the times of coral bleaching happening",
+                  "right": "coral bleaching now happens",
+                  "explanation_zh": "「發生的次數是…的五倍」不必把「次數」譯成 times 當主詞；直接用動詞 happen 加上 five times as often as。"
+                },
+                {
+                  "wrong": "coral bleaching is happened",
+                  "right": "coral bleaching happens",
+                  "explanation_zh": "happen 是不及物動詞，沒有被動。"
+                }
+              ]
+            },
+            {
+              "zh": "幾十年前",
+              "accepted": [
+                "it did decades ago",
+                "it did several decades ago",
+                "it did a few decades ago",
+                "decades ago",
+                "a few decades ago"
+              ],
+              "targets": [
+                "decade"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "it was decades ago",
+                  "right": "it did decades ago",
+                  "explanation_zh": "代替前面的一般動詞 happens 要用助動詞 did，不用 was。"
+                },
+                {
+                  "wrong": "several ten years ago",
+                  "right": "several decades ago",
+                  "explanation_zh": "「幾十年」是 decades，不說 several ten years。"
+                }
+              ]
+            },
+            {
+              "zh": "的五倍",
+              "accepted": [
+                "five times as frequently as",
+                "five times more often than",
+                "five times as often as",
+                "five times more frequently than"
+              ],
+              "targets": [
+                "COMP",
+                "frequently"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "five times than",
+                  "right": "five times more often than",
+                  "explanation_zh": "倍數比較要有比較級或 as … as：five times as frequently as／five times more often than。"
+                },
+                {
+                  "wrong": "five time as frequently as",
+                  "right": "five times as frequently as",
+                  "explanation_zh": "「倍」用 times（複數）。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "abstract_nominal",
+              "zh": "發生的次數",
+              "literal_error": "because the times of coral bleaching happening is five times of decades ago",
+              "part": 2,
+              "explanation_zh": "「次數」是抽象名詞；英文較自然的說法是把它化成頻率副詞，用 happen … five times as often as …；硬譯成 the times of … 會寫出不合文法的句子。"
+            },
+            {
+              "type": "verbal_subject",
+              "zh": "要保護珊瑚礁（coral reefs）並不容易",
+              "literal_error": "Protect coral reefs is not easy, because …",
+              "part": 1,
+              "explanation_zh": "中文直接拿「保護珊瑚礁」這個動作當主詞；英文用虛主詞 It is not easy to VR，或改成動名詞 Protecting …。"
+            }
+          ],
+          "bonus": [],
+          "restructuring_zh": "「要保護…並不容易」改用虛主詞 It is not easy to …；「發生的次數是幾十年前的五倍」不把「次數」當主詞，改寫成 happens five times as frequently as it did decades ago。"
+        },
+        "2": {
+          "references": [
+            "Many coral reefs have been severely damaged by warming oceans, causing the fish that once lived there to lose their habitats.",
+            "Because the sea has become warmer, many coral reefs have been seriously damaged, leaving the fish that used to live there without homes.",
+            "Many coral reefs have already been badly harmed by warmer seas, making the fish that once lived there lose their habitats."
+          ],
+          "target_words": [
+            {
+              "word": "damage",
+              "zh": "損害",
+              "alternatives": [
+                "harm"
+              ]
+            },
+            {
+              "word": "warm",
+              "zh": "溫暖的（變暖）",
+              "alternatives": [
+                "warming",
+                "warmer"
+              ]
+            },
+            {
+              "word": "fish",
+              "zh": "魚"
+            },
+            {
+              "word": "habitat",
+              "zh": "棲息地",
+              "alternatives": [
+                "home"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PART",
+              "grammar_id": "gp-participle-result",
+              "label_zh": "句尾分詞片語表結果（…，使…失去棲息地）",
+              "frame": "S + V …, causing/leaving/making + O + …",
+              "zh_trigger": "使原本住在那裡的魚類失去棲息地"
+            },
+            {
+              "code": "PASS",
+              "grammar_id": "gp-perfect-passive",
+              "label_zh": "完成式被動（已經…嚴重受損）",
+              "frame": "S + have been + adv. + p.p. + by …",
+              "zh_trigger": "已因為海水變暖而嚴重受損"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "因為海水變暖",
+              "accepted": [
+                "by warming oceans",
+                "Because the sea has become warmer",
+                "by warmer seas",
+                "because the oceans have become warmer",
+                "due to warmer seas",
+                "because of rising ocean temperatures"
+              ],
+              "targets": [
+                "warm"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "because sea water becomes warm",
+                  "right": "because the sea has become warmer",
+                  "explanation_zh": "「海水變暖」是持續的變化，用現在完成式或比較級 warmer；也可以名詞化成 warming oceans。"
+                },
+                {
+                  "wrong": "by the ocean warm",
+                  "right": "by warming oceans",
+                  "explanation_zh": "by 後面要接名詞片語；warm 是形容詞，改成 warming oceans 或 warmer seas。"
+                }
+              ]
+            },
+            {
+              "zh": "而嚴重受損",
+              "accepted": [
+                "have been severely damaged",
+                "have been seriously damaged",
+                "have already been badly harmed",
+                "have been badly damaged",
+                "have been severely harmed"
+              ],
+              "targets": [
+                "PASS",
+                "damage"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "have seriously damaged",
+                  "right": "have been seriously damaged",
+                  "explanation_zh": "珊瑚礁是「受損」，要用被動 have been damaged。"
+                },
+                {
+                  "wrong": "have been serious damaged",
+                  "right": "have been seriously damaged",
+                  "explanation_zh": "修飾過去分詞用副詞 seriously。"
+                }
+              ]
+            },
+            {
+              "zh": "使原本住在那裡的魚類",
+              "accepted": [
+                "causing the fish that once lived there",
+                "leaving the fish that used to live there",
+                "making the fish that once lived there",
+                "causing the fish that used to live there",
+                "forcing the fish that once lived there"
+              ],
+              "targets": [
+                "PART",
+                "fish"
+              ],
+              "common_errors": [
+                {
+                  "wrong": ", makes the fish",
+                  "right": ", making the fish",
+                  "explanation_zh": "逗號後表結果用分詞 making／causing，不能再加一個主要動詞。"
+                },
+                {
+                  "wrong": "causing the originally living there fish",
+                  "right": "causing the fish that once lived there",
+                  "explanation_zh": "「原本住在那裡的」要放在 fish 後面，用關係子句。"
+                }
+              ]
+            },
+            {
+              "zh": "失去棲息地",
+              "accepted": [
+                "to lose their habitats",
+                "without homes",
+                "lose their habitats",
+                "to lose their homes",
+                "lose their homes",
+                "without a home"
+              ],
+              "targets": [
+                "habitat"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "lost their habitats",
+                  "right": "to lose their habitats",
+                  "explanation_zh": "cause + 受詞 + to + 原形動詞。"
+                },
+                {
+                  "wrong": "to lose their living places",
+                  "right": "to lose their habitats",
+                  "explanation_zh": "「棲息地」是 habitat（也可說 home）；living place 不是自然的英文說法。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "abstract_nominal",
+              "zh": "海水變暖",
+              "literal_error": "Many coral reefs have been badly damaged because sea water become warm.",
+              "part": 1,
+              "explanation_zh": "「海水變暖」是一個持續的變化，英文可名詞化成 warming oceans／warmer seas 放在 by 後面，或寫成完整子句 because the sea has become warmer；直譯 sea water become warm 少了時態與冠詞。"
+            },
+            {
+              "type": "prenominal_modifier",
+              "zh": "原本住在那裡的魚類",
+              "literal_error": "causing the originally living there fish to lose their homes",
+              "part": 3,
+              "explanation_zh": "中文把「原本住在那裡的」放在「魚類」前面；英文要用關係子句 the fish that once lived there 放在名詞後面。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "Many coral reefs have been severely damaged by warming oceans, leaving the fish that once depended on them with nowhere to live.",
+              "explanation_zh": "用 leave sb with nowhere to live（使…無處可住）加強語氣，depend on them 點出魚類和珊瑚礁的依存關係。"
+            }
+          ],
+          "restructuring_zh": "「因為海水變暖而嚴重受損」可以把原因名詞化成 by warming oceans 放在被動句的 by 後面；「使原本住在那裡的魚類…」用句尾分詞 causing … 表結果，並把「原本住在那裡的」改成關係子句放到 fish 後面。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ac-V-3",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "C-V-4",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-top-03",
+    "lot": "translation-top-03",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "31117a6d4ea07290a38612cba619cca8744c8f0cc9141fe199063ce8d6f7050e",
+    "spec_id": "translation-top@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 6,
+    "sentences": 2,
+    "avg_sentence_length": 3.0,
+    "denominator": 6,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 1.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 1.0,
+    "level_counts": {
+      "6": 6
+    },
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "warn",
+      "created_at": "2026-10-09T13:17:22Z",
+      "details": {
+        "errors": [],
+        "warnings": [
+          "annotations.rubric.items.2.patterns[1]: gp-perfect-passive 通常對應句構 PERF（目前 code=PASS）"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T12:52:43Z",
+      "details": {
+        "solver": "A",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "It is not easy to protect coral reefs, because coral bleaching now happens five times as often as it did a few decades ago.",
+            "confidence": "high",
+            "explanation_zh": "「要…並不容易」用虛主詞 It is not easy to…；「發生的次數是…的五倍」用倍數＋as often as；比較對象是幾十年前的情況，用 it did a few decades ago 補足。"
+          },
+          "2": {
+            "translation": "Many coral reefs have been seriously damaged because of warming oceans, causing the fish that used to live there to lose their habitats.",
+            "confidence": "high",
+            "explanation_zh": "「已…嚴重受損」用現在完成被動；「因為海水變暖」用 because of warming oceans（也可 because the ocean has become warmer）；「使…失去棲息地」是結果，用句尾分詞 causing … to lose；「原本住在那裡的魚類」用 that used to live there 關係子句。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "NFSUBJ",
+              "COMP"
+            ],
+            "used_target_words": [
+              "protect",
+              "happen",
+              "frequently",
+              "decade"
+            ],
+            "within_accepted": true,
+            "closest_reference": 2,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PART",
+              "PASS"
+            ],
+            "used_target_words": [
+              "damage",
+              "warm",
+              "fish",
+              "habitat"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "protect",
+              "happen",
+              "frequently",
+              "decade"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NFSUBJ": true,
+              "COMP": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "damage",
+              "warm",
+              "fish",
+              "habitat"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PART": true,
+              "PASS": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "warn",
+      "created_at": "2026-10-09T12:59:49Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "It is not easy to protect coral reefs, because coral bleaching now happens five times as often as it did several decades ago.",
+            "confidence": "high",
+            "explanation_zh": "「要保護珊瑚礁並不容易」用虛主詞 It is not easy to …；「發生的次數是幾十年前的五倍」用倍數比較 five times as often as it did …，比直接講『次數』更自然。"
+          },
+          "2": {
+            "translation": "Many coral reefs have been seriously damaged by warming seawater, leaving the fish that used to live there without a habitat.",
+            "confidence": "high",
+            "explanation_zh": "「已因為海水變暖而嚴重受損」用現在完成式被動 have been seriously damaged by；「使原本住在那裡的魚類失去棲息地」用現在分詞 leaving … without a habitat 表結果，used to live 對應『原本住在』。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "NFSUBJ",
+              "COMP"
+            ],
+            "used_target_words": [
+              "protect",
+              "happen",
+              "frequently",
+              "decade"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "「發生的次數是幾十年前的五倍」很容易直譯成名詞式倍數比較 the number of times coral bleaching occurs is five times that of several decades ago；第 2、3、4 部分的 accepted 只收副詞式 five times as often as，名詞式寫法在三個部分都對不上，切法對這種合文法的寫法不公平。建議補上名詞式的 accepted。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "PART",
+              "PASS"
+            ],
+            "used_target_words": [
+              "damage",
+              "warm",
+              "fish",
+              "habitat"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "protect",
+              "happen",
+              "frequently",
+              "decade"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NFSUBJ": true,
+              "COMP": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "damage",
+              "warm",
+              "fish",
+              "habitat"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PART": true,
+              "PASS": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 1 題驗證者對4 部分切分有意見（warn）：「發生的次數是幾十年前的五倍」很容易直譯成名詞式倍數比較 the number of times coral bleaching occurs is five times that of several decades ago；第 2、3、"
+        ]
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

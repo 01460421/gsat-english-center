@@ -1,0 +1,735 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.5dde0f",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "advanced",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "許多青少年正在自學寫程式，他們相信這是未來必備的技能。",
+        "options": null,
+        "answer": "Many teenagers are teaching themselves to code, and they believe that it is an essential skill for the future.",
+        "accepted_answers": [
+          "Many teenagers are learning to code on their own because they believe that coding is a necessary skill for the future.",
+          "Many teenagers are teaching themselves programming, believing that it will be an essential skill in the future."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "現在進行式（描述趨勢）",
+            "that 名詞子句"
+          ],
+          "topic": "自學程式設計"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "寫程式最重要的不是記住所有指令，而是知道如何解決問題。",
+        "options": null,
+        "answer": "The most important thing about coding is not memorizing all the commands but knowing how to solve problems.",
+        "accepted_answers": [
+          "The most important part of coding is not remembering every command but knowing how to solve problems.",
+          "The most important thing about coding is knowing how to solve problems rather than memorizing all the commands."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "不是 A 而是 B",
+            "疑問詞＋不定詞（how to V）"
+          ],
+          "topic": "自學程式設計"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "自學程式設計"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「正在自學寫程式」描述目前的趨勢，用現在進行式 are teaching themselves to code（或 are learning to code on their own）；「自學」不要寫 self-study。「他們相信…」後面接 that 引導的名詞子句當受詞，that 可以省略；兩個子句之間要用 and／because 連接，或改成分詞 believing that …。「未來必備的技能」改成 an essential skill for the future（essential 前面用 an）。",
+          "evidence": [
+            "正在自學寫程式",
+            "他們相信這是未來必備的技能"
+          ],
+          "strategy_zh": "「正在、越來越多人在…」描述趨勢先想現在進行式；「相信／認為／發現＋一件事」接 that 子句。",
+          "hints": [
+            "切成四段：許多青少年／正在自學寫程式／他們相信／這是未來必備的技能",
+            "標的詞彙：teenager（青少年）、code（寫程式）、believe（相信）、essential（必要的）、skill（技能）、future（未來）",
+            "句型框架：S + are + V-ing …, and they believe (that) + S + V …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「不是 A，而是 B」用 not A but B，A、B 要形式對稱：is not memorizing all the commands but knowing how to solve problems（也可以寫 is knowing … rather than memorizing …）。「最重要的」後面沒有名詞，英文要補成 the most important thing about coding。「如何解決問題」是疑問詞＋不定詞 how to solve problems，等於間接問句 how they can solve problems 的簡化。",
+          "evidence": [
+            "不是記住所有指令，而是知道",
+            "如何解決問題"
+          ],
+          "strategy_zh": "「不是…而是…」先想 not A but B，A、B 用相同詞性與形式；「如何／該做什麼」想 how／what + to VR。",
+          "hints": [
+            "切成四段：寫程式最重要的／不是記住所有指令／而是知道／如何解決問題",
+            "標的詞彙：important（重要的）、code（寫程式）、memorize（記住）、command（指令）、solve（解決）、problem（問題）",
+            "句型框架：The most important thing … is not V-ing … but V-ing + how to VR …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "Many teenagers are teaching themselves to code, and they believe that it is an essential skill for the future.",
+            "Many teenagers are learning to code on their own because they believe that coding is a necessary skill for the future.",
+            "Many teenagers are teaching themselves programming, believing that it will be an essential skill in the future."
+          ],
+          "target_words": [
+            {
+              "word": "teenager",
+              "zh": "青少年",
+              "alternatives": [
+                "teen",
+                "young"
+              ]
+            },
+            {
+              "word": "code",
+              "zh": "寫程式",
+              "alternatives": [
+                "program"
+              ]
+            },
+            {
+              "word": "believe",
+              "zh": "相信",
+              "alternatives": [
+                "think"
+              ]
+            },
+            {
+              "word": "essential",
+              "zh": "必要的（必備的）",
+              "alternatives": [
+                "necessary"
+              ]
+            },
+            {
+              "word": "skill",
+              "zh": "技能"
+            },
+            {
+              "word": "future",
+              "zh": "未來"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PROG",
+              "grammar_id": "gp-progressive-trend",
+              "label_zh": "現在進行式（正在…：描述趨勢）",
+              "frame": "S + am/is/are + V-ing …",
+              "zh_trigger": "正在"
+            },
+            {
+              "code": "NCL",
+              "grammar_id": "gp-that-clause",
+              "label_zh": "that 名詞子句（當 believe 的受詞）",
+              "frame": "S + believe/think + (that) + S + V",
+              "zh_trigger": "他們相信"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "許多青少年",
+              "accepted": [
+                "Many teenagers",
+                "A lot of teenagers",
+                "Many teens",
+                "Lots of teenagers",
+                "Many young people"
+              ],
+              "targets": [
+                "teenager"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Many teenager",
+                  "right": "Many teenagers",
+                  "explanation_zh": "many 後面接複數名詞。"
+                }
+              ]
+            },
+            {
+              "zh": "正在自學寫程式",
+              "accepted": [
+                "are teaching themselves to code",
+                "are learning to code on their own",
+                "are teaching themselves programming",
+                "are learning to code by themselves",
+                "are learning programming on their own",
+                "are teaching themselves how to code"
+              ],
+              "targets": [
+                "PROG",
+                "code"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "are self-study coding",
+                  "right": "are teaching themselves to code",
+                  "explanation_zh": "「自學」是 teach oneself 或 learn … on one's own；self-study 不能這樣當動詞用。"
+                },
+                {
+                  "wrong": "teach themselves to code",
+                  "right": "are teaching themselves to code",
+                  "explanation_zh": "「正在」描述目前的趨勢，用現在進行式 are + V-ing。"
+                }
+              ]
+            },
+            {
+              "zh": "他們相信",
+              "accepted": [
+                "and they believe that",
+                "because they believe that",
+                "believing that",
+                "and they believe",
+                "since they believe that",
+                "and they think that"
+              ],
+              "targets": [
+                "NCL",
+                "believe"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "they believe that",
+                  "right": "and they believe that",
+                  "explanation_zh": "兩個完整子句之間只用逗號會變成 comma splice，要加 and／because，或改成分詞 believing。"
+                },
+                {
+                  "wrong": "and they are believing that",
+                  "right": "and they believe that",
+                  "explanation_zh": "believe 是表示想法的動詞，通常不用進行式。"
+                }
+              ]
+            },
+            {
+              "zh": "這是未來必備的技能",
+              "accepted": [
+                "it is an essential skill for the future",
+                "coding is a necessary skill for the future",
+                "it will be an essential skill in the future",
+                "it is a must-have skill for the future",
+                "it is a necessary skill for the future",
+                "this is an essential skill for the future"
+              ],
+              "targets": [
+                "essential",
+                "skill",
+                "future"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "it is a future essential skill",
+                  "right": "it is an essential skill for the future",
+                  "explanation_zh": "「未來必備的技能」不要照中文語序把 future 放在前面；寫成 an essential skill for the future。"
+                },
+                {
+                  "wrong": "it is a essential skill",
+                  "right": "it is an essential skill",
+                  "explanation_zh": "essential 以母音開頭，冠詞用 an。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "tense_trigger",
+              "zh": "正在",
+              "literal_error": "Many teenagers teach themselves to code, they believe that it is an essential skill for the future.",
+              "part": 2,
+              "explanation_zh": "「正在」描述目前的趨勢，要用現在進行式 are teaching；寫成現在簡單式會扣分。"
+            },
+            {
+              "type": "prenominal_modifier",
+              "zh": "未來必備的技能",
+              "literal_error": "Many teenagers are teaching themselves to code, and they believe this is future must have skill.",
+              "part": 4,
+              "explanation_zh": "「未來必備的技能」照中文語序堆在名詞前面不通順，英文寫成 an essential skill for the future。"
+            }
+          ],
+          "bonus": []
+        },
+        "2": {
+          "references": [
+            "The most important thing about coding is not memorizing all the commands but knowing how to solve problems.",
+            "The most important part of coding is not remembering every command but knowing how to solve problems.",
+            "The most important thing about coding is knowing how to solve problems rather than memorizing all the commands."
+          ],
+          "target_words": [
+            {
+              "word": "important",
+              "zh": "重要的"
+            },
+            {
+              "word": "code",
+              "zh": "寫程式",
+              "alternatives": [
+                "program"
+              ]
+            },
+            {
+              "word": "memorize",
+              "zh": "記住",
+              "alternatives": [
+                "remember"
+              ]
+            },
+            {
+              "word": "command",
+              "zh": "指令",
+              "alternatives": [
+                "instruction"
+              ]
+            },
+            {
+              "word": "solve",
+              "zh": "解決",
+              "alternatives": [
+                "deal with",
+                "fix"
+              ]
+            },
+            {
+              "word": "problem",
+              "zh": "問題"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "CORR",
+              "grammar_id": "gp-not-but",
+              "label_zh": "不是 A 而是 B（not A but B）",
+              "frame": "S + be + not + A + but + B（A、B 形式對稱）",
+              "zh_trigger": "不是記住所有指令，而是"
+            },
+            {
+              "code": "NCL",
+              "grammar_id": "gp-wh-to",
+              "label_zh": "疑問詞＋不定詞（how to＋原形動詞）",
+              "frame": "know + how/what/where + to VR",
+              "zh_trigger": "如何解決問題"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "寫程式最重要的",
+              "accepted": [
+                "The most important thing about coding",
+                "The most important part of coding",
+                "The most important thing in coding",
+                "The most important thing when coding",
+                "The key to coding",
+                "The most important thing about programming"
+              ],
+              "targets": [
+                "important",
+                "code"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Coding most important is",
+                  "right": "The most important thing about coding is",
+                  "explanation_zh": "「寫程式最重要的」不能照中文語序排；要補出名詞，用 the most important thing about coding 當主詞。"
+                },
+                {
+                  "wrong": "Write programs the most important is",
+                  "right": "The most important thing about coding is",
+                  "explanation_zh": "原形動詞片語不能當主詞，「最重要的」後面也要補上名詞 thing。"
+                }
+              ]
+            },
+            {
+              "zh": "不是記住所有指令",
+              "accepted": [
+                "is not memorizing all the commands",
+                "is not remembering every command",
+                "rather than memorizing all the commands",
+                "is not memorizing every command",
+                "is not remembering all the instructions",
+                "is not to memorize all the commands"
+              ],
+              "targets": [
+                "CORR",
+                "memorize",
+                "command"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "is not memorize all the commands",
+                  "right": "is not memorizing all the commands",
+                  "explanation_zh": "not A but B 放在 is 後面當補語，A 用動名詞 memorizing（或不定詞 to memorize）。"
+                },
+                {
+                  "wrong": "is not memorizing all the command",
+                  "right": "is not memorizing all the commands",
+                  "explanation_zh": "all the 後面接複數名詞 commands。"
+                }
+              ]
+            },
+            {
+              "zh": "而是知道",
+              "accepted": [
+                "but knowing",
+                "is knowing",
+                "but to know"
+              ],
+              "targets": [
+                "CORR"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "but know",
+                  "right": "but knowing",
+                  "explanation_zh": "not A but B 的 A、B 形式要一致：memorizing … but knowing …。"
+                }
+              ]
+            },
+            {
+              "zh": "如何解決問題",
+              "accepted": [
+                "how to solve problems",
+                "how to solve the problems",
+                "how to deal with problems",
+                "the way to solve problems",
+                "how to fix problems"
+              ],
+              "targets": [
+                "NCL",
+                "solve",
+                "problem"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "how solve problems",
+                  "right": "how to solve problems",
+                  "explanation_zh": "疑問詞＋不定詞：how to + 原形動詞。"
+                },
+                {
+                  "wrong": "how to solve problem",
+                  "right": "how to solve problems",
+                  "explanation_zh": "problem 是可數名詞，泛指時用複數。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "abstract_nominal",
+              "zh": "寫程式最重要的",
+              "literal_error": "Write programs most important is not remember all the commands.",
+              "part": 1,
+              "explanation_zh": "「最重要的」是名詞化的「最重要的事」，英文要補出名詞 the most important thing (about coding)。"
+            },
+            {
+              "type": "word_form",
+              "zh": "不是記住所有指令，而是知道",
+              "literal_error": "The most important thing about coding is not remember all the commands but know how to solve problems.",
+              "part": 2,
+              "explanation_zh": "not A but B 的 A、B 要用相同形式，放在 is 後面用動名詞 memorizing … but knowing …。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "What matters most in coding is not memorizing all the commands but knowing how to solve problems.",
+              "grammar_id": "gp-what-cleft",
+              "explanation_zh": "用 what 引導的準分裂句 What matters most … is … 強調重點，屬加分寫法；一般寫 the most important thing about coding is … 就能拿滿分。"
+            }
+          ],
+          "restructuring_zh": "「寫程式最重要的」沒有名詞，英文要補成 the most important thing about coding 當主詞；「不是…而是…」的兩個動作用相同形式（memorizing … but knowing …）。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-advanced-04",
+    "lot": "translation-advanced-04",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "4c825c0a94fac9dc54e263ee5e16ad1f93b574fa99d23ce45a0c738ed355d865",
+    "spec_id": "translation-advanced@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T13:07:06Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T13:07:06Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Many teenagers are teaching themselves to code, believing that it is an essential skill for the future.",
+            "confidence": "high",
+            "explanation_zh": "「正在自學」用現在進行式 are teaching themselves；「他們相信…」用分詞構句 believing that 表伴隨的理由（也可用 , who believe）；「必備的技能」譯 an essential skill。"
+          },
+          "2": {
+            "translation": "The most important thing about coding is not memorizing all the commands but knowing how to solve problems.",
+            "confidence": "high",
+            "explanation_zh": "「最重要的不是 A，而是 B」用 not A but B，A、B 都用動名詞保持平行；「如何解決問題」用 how to V。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PROG",
+              "NCL"
+            ],
+            "used_target_words": [
+              "teenager",
+              "code",
+              "believe",
+              "essential",
+              "skill",
+              "future"
+            ],
+            "within_accepted": true,
+            "closest_reference": 2,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "CORR",
+              "NCL"
+            ],
+            "used_target_words": [
+              "important",
+              "code",
+              "memorize",
+              "command",
+              "solve",
+              "problem"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "teenager",
+              "code",
+              "believe",
+              "essential",
+              "skill",
+              "future"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PROG": true,
+              "NCL": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "important",
+              "code",
+              "memorize",
+              "command",
+              "solve",
+              "problem"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "CORR": true,
+              "NCL": true
+            },
+            "program_match": true
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T12:50:33Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Many teenagers are teaching themselves how to write code, and they believe it is an essential skill for the future.",
+            "confidence": "high",
+            "explanation_zh": "「正在自學」用現在進行式 are teaching themselves；「他們相信」另起 and they believe 子句；「必備的技能」用 an essential skill for the future。"
+          },
+          "2": {
+            "translation": "What is most important in programming is not memorizing all the commands but knowing how to solve problems.",
+            "confidence": "high",
+            "explanation_zh": "「最重要的不是……而是……」用 what is most important ... is not A but B，A、B 都用動名詞，維持平行結構。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PROG",
+              "NCL"
+            ],
+            "used_target_words": [
+              "teenager",
+              "code",
+              "believe",
+              "essential",
+              "skill",
+              "future"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "CORR",
+              "NCL"
+            ],
+            "used_target_words": [
+              "important",
+              "code",
+              "memorize",
+              "command",
+              "solve",
+              "problem"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "teenager",
+              "code",
+              "believe",
+              "essential",
+              "skill",
+              "future"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PROG": true,
+              "NCL": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "important",
+              "code",
+              "memorize",
+              "command",
+              "solve",
+              "problem"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "CORR": true,
+              "NCL": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

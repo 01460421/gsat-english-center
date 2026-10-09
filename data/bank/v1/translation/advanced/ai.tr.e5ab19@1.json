@@ -1,0 +1,740 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.e5ab19",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "advanced",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "許多年輕人不再只是看卡通，還會學習如何親手縫製角色的服裝。",
+        "options": null,
+        "answer": "Many young people no longer just watch cartoons; they also learn how to sew character costumes by hand.",
+        "accepted_answers": [
+          "Many young people no longer only watch cartoons; they also learn how to sew the characters' costumes by hand.",
+          "A lot of young people no longer just watch cartoons but also learn how to make costumes of the characters by hand."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "不再（no longer）",
+            "疑問詞＋不定詞（how to）"
+          ],
+          "topic": "動漫角色扮演"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "在角色扮演（cosplay）活動中，他們不但交到朋友，也發現原來自己很有創意。",
+        "options": null,
+        "answer": "At cosplay events, they not only make new friends but also discover that they are actually very creative.",
+        "accepted_answers": [
+          "At cosplay events, they not only make friends but also realize that they are actually quite creative.",
+          "In cosplay activities, they not only make some new friends but also discover that they are really creative."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "不但…而且…（not only … but also）",
+            "that 名詞子句"
+          ],
+          "topic": "動漫角色扮演"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "動漫角色扮演"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「不再」用 no longer（放在一般動詞前），也可以寫 don't … anymore；「只是」是 just 或 only。「如何＋動作」是疑問詞＋不定詞 how to + 原形動詞，當 learn 的受詞。後半句省略主詞，英文要補 they，或用 but also 連接兩個動詞。「角色的服裝」可以寫 character costumes 或 the characters' costumes；「親手」是 by hand。",
+          "evidence": [
+            "不再只是看卡通",
+            "還會學習如何",
+            "親手縫製角色的服裝"
+          ],
+          "strategy_zh": "看到「如何、怎麼＋動作」當受詞，先想 how to + 原形動詞；看到「不再」先想 no longer，位置在一般動詞前、be 動詞後。",
+          "hints": [
+            "切成四段：許多年輕人／不再只是看卡通／還會學習如何／親手縫製角色的服裝",
+            "標的詞彙：young（年輕的，L1）、no longer（不再）、cartoon（卡通，L2）、learn（學習，L1）、sew（縫製，L4）、character（角色，L2）、costume（服裝，L4）",
+            "句型框架：S + no longer just + V …; they also learn how to + VR …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「不但…也…」連接兩個動作，用 not only + V1 … but also + V2 …，兩個動詞形式要一致（make、discover），but 不能省略。「交朋友」是 make friends。「發現原來…」後面是完整的子句，用 that 名詞子句當 discover 或 realize 的受詞；子句的主詞是 they，不能寫 themselves。「很有創意」用形容詞 creative。cosplay 是題目附的英文，直接用。",
+          "evidence": [
+            "不但交到朋友",
+            "也發現原來自己很有創意"
+          ],
+          "strategy_zh": "「發現、知道、認為＋一件事」時，後面接 that + 主詞 + 動詞；先找出子句的主詞，再決定動詞。",
+          "hints": [
+            "切成四段：在角色扮演（cosplay）活動中／他們不但交到朋友／也發現／原來自己很有創意",
+            "標的詞彙：event（活動，L2）、friend（朋友，L1）、discover（發現，L2）、creative（有創意的，L3）",
+            "句型框架：At …, S + not only + V1 … but also + V2 + that + S + V …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "Many young people no longer just watch cartoons; they also learn how to sew character costumes by hand.",
+            "Many young people no longer only watch cartoons; they also learn how to sew the characters' costumes by hand.",
+            "A lot of young people no longer just watch cartoons but also learn how to make costumes of the characters by hand."
+          ],
+          "target_words": [
+            {
+              "word": "young",
+              "zh": "年輕的",
+              "alternatives": [
+                "teenager",
+                "youth",
+                "youngster"
+              ]
+            },
+            {
+              "word": "no longer",
+              "zh": "不再",
+              "alternatives": [
+                "anymore",
+                "any longer"
+              ]
+            },
+            {
+              "word": "cartoon",
+              "zh": "卡通",
+              "alternatives": [
+                "animation",
+                "anime"
+              ]
+            },
+            {
+              "word": "learn",
+              "zh": "學習"
+            },
+            {
+              "word": "sew",
+              "zh": "縫製",
+              "alternatives": [
+                "make"
+              ]
+            },
+            {
+              "word": "character",
+              "zh": "角色"
+            },
+            {
+              "word": "costume",
+              "zh": "服裝",
+              "alternatives": [
+                "clothes",
+                "outfit"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "BASIC",
+              "grammar_id": "gp-no-longer",
+              "label_zh": "不再（no longer）",
+              "frame": "S + no longer + V …",
+              "zh_trigger": "不再"
+            },
+            {
+              "code": "NCL",
+              "grammar_id": "gp-wh-to",
+              "label_zh": "疑問詞＋不定詞（how to）",
+              "frame": "S + learn + how + to VR …",
+              "zh_trigger": "如何"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "許多年輕人",
+              "accepted": [
+                "Many young people",
+                "A lot of young people",
+                "Lots of young people",
+                "Many teenagers",
+                "Many youngsters"
+              ],
+              "targets": [
+                "young"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Many young peoples",
+                  "right": "Many young people",
+                  "explanation_zh": "people 本身就是複數，不加 s。"
+                }
+              ]
+            },
+            {
+              "zh": "不再只是看卡通",
+              "accepted": [
+                "no longer just watch cartoons",
+                "no longer only watch cartoons",
+                "no longer simply watch cartoons",
+                "no longer just watch animations",
+                "don't just watch cartoons anymore",
+                "no longer just watch anime"
+              ],
+              "targets": [
+                "no longer",
+                "cartoon",
+                "BASIC"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "don't only watch cartoons again",
+                  "right": "no longer just watch cartoons",
+                  "explanation_zh": "「不再」是 no longer 或 not … anymore；not … again 是「不會再一次」。"
+                },
+                {
+                  "wrong": "no longer just watch cartoon",
+                  "right": "no longer just watch cartoons",
+                  "explanation_zh": "泛指卡通，可數名詞用複數 cartoons。"
+                }
+              ]
+            },
+            {
+              "zh": "還會學習如何",
+              "accepted": [
+                "they also learn how to",
+                "but also learn how to",
+                "and also learn how to",
+                "they even learn how to",
+                "they also try to learn how to"
+              ],
+              "targets": [
+                "learn",
+                "NCL"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "they also learn how sew",
+                  "right": "they also learn how to sew",
+                  "explanation_zh": "「如何＋動作」用 how to + 原形動詞，to 不能漏。"
+                },
+                {
+                  "wrong": "they also learn how can they sew",
+                  "right": "they also learn how to sew",
+                  "explanation_zh": "「如何做…」用 how to + 原形動詞；要寫成子句就用直述句語序 how they can sew。"
+                }
+              ]
+            },
+            {
+              "zh": "親手縫製角色的服裝",
+              "accepted": [
+                "sew character costumes by hand",
+                "sew the characters' costumes by hand",
+                "make costumes of the characters by hand",
+                "sew the characters' costumes themselves",
+                "make character costumes by hand",
+                "make the characters' costumes themselves",
+                "sew character costumes themselves",
+                "make their own character costumes"
+              ],
+              "targets": [
+                "sew",
+                "character",
+                "costume"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "sew character costumes by hands",
+                  "right": "sew character costumes by hand",
+                  "explanation_zh": "「親手」是固定說法 by hand，hand 不加 s。"
+                },
+                {
+                  "wrong": "sew character's costumes by hand",
+                  "right": "sew the characters' costumes by hand",
+                  "explanation_zh": "單數所有格前面要有冠詞；角色不只一個就寫 the characters' costumes，或直接用 character costumes。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "collocation",
+              "zh": "不再",
+              "literal_error": "Many young people don't only watch cartoons again; they also learn how to sew character costumes by hand.",
+              "part": 2,
+              "explanation_zh": "「不再」要用 no longer 或 not … anymore；照字面寫成 not … again，意思會變成「不會再一次」。"
+            },
+            {
+              "type": "subjectless",
+              "zh": "還會學習如何",
+              "literal_error": "Many young people no longer just watch cartoons, also learn how to sew character costumes by hand.",
+              "part": 3,
+              "explanation_zh": "中文後半句省略主詞；英文用逗號直接接另一個動詞會缺主詞，要補上 they（用分號或 and 連接），或用 but also 連接兩個動詞。"
+            }
+          ],
+          "bonus": [],
+          "restructuring_zh": "後半句「還會學習…」省略了主詞，英文要補上 they 另起子句（用分號或 and 連接），或改成 … but also learn …，讓兩個動詞共用主詞；「如何縫製」要寫成 how to + 原形動詞。"
+        },
+        "2": {
+          "references": [
+            "At cosplay events, they not only make new friends but also discover that they are actually very creative.",
+            "At cosplay events, they not only make friends but also realize that they are actually quite creative.",
+            "In cosplay activities, they not only make some new friends but also discover that they are really creative."
+          ],
+          "target_words": [
+            {
+              "word": "event",
+              "zh": "活動",
+              "alternatives": [
+                "activity",
+                "convention"
+              ]
+            },
+            {
+              "word": "friend",
+              "zh": "朋友"
+            },
+            {
+              "word": "discover",
+              "zh": "發現",
+              "alternatives": [
+                "realize",
+                "find",
+                "learn"
+              ]
+            },
+            {
+              "word": "creative",
+              "zh": "有創意的",
+              "alternatives": [
+                "creativity"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "CORR",
+              "grammar_id": "gp-not-only-but-also",
+              "label_zh": "不但…而且…（not only … but also）",
+              "frame": "S + not only + V1 … but also + V2 …",
+              "zh_trigger": "不但"
+            },
+            {
+              "code": "NCL",
+              "grammar_id": "gp-that-clause",
+              "label_zh": "that 名詞子句當受詞",
+              "frame": "S + discover/realize + that + S + V",
+              "zh_trigger": "發現原來"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "在角色扮演（cosplay）活動中",
+              "accepted": [
+                "At cosplay events",
+                "In cosplay activities",
+                "At cosplay activities",
+                "During cosplay events",
+                "At cosplay conventions",
+                "In cosplay events"
+              ],
+              "targets": [
+                "event"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "In cosplay activity",
+                  "right": "In cosplay activities",
+                  "explanation_zh": "活動不只一場，用複數 events 或 activities。"
+                }
+              ]
+            },
+            {
+              "zh": "他們不但交到朋友",
+              "accepted": [
+                "they not only make new friends",
+                "they not only make friends",
+                "they not only make some new friends",
+                "they not only get to make new friends"
+              ],
+              "targets": [
+                "CORR",
+                "friend"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "they not only make friend",
+                  "right": "they not only make friends",
+                  "explanation_zh": "「交朋友」是固定說法 make friends，friends 用複數。"
+                },
+                {
+                  "wrong": "they not only get friends",
+                  "right": "they not only make friends",
+                  "explanation_zh": "「交朋友」的動詞用 make，不用 get。"
+                }
+              ]
+            },
+            {
+              "zh": "也發現",
+              "accepted": [
+                "but also discover that",
+                "but also realize that",
+                "but also find out that",
+                "but also find that",
+                "but also learn that",
+                "but also discover",
+                "but also realize"
+              ],
+              "targets": [
+                "CORR",
+                "discover",
+                "NCL"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "also discover that",
+                  "right": "but also discover that",
+                  "explanation_zh": "「不但…也…」要寫成 not only … but also …，but 不能漏。"
+                },
+                {
+                  "wrong": "but also discovering that",
+                  "right": "but also discover that",
+                  "explanation_zh": "not only 和 but also 後面的動詞要對稱：make … discover …，都用原形。"
+                }
+              ]
+            },
+            {
+              "zh": "原來自己很有創意",
+              "accepted": [
+                "they are actually very creative",
+                "they are actually quite creative",
+                "they are really creative",
+                "they are actually creative",
+                "they are in fact very creative",
+                "they are more creative than they thought"
+              ],
+              "targets": [
+                "creative"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "they are actually very creativity",
+                  "right": "they are actually very creative",
+                  "explanation_zh": "be 動詞後面接形容詞 creative；creativity 是名詞「創意」。"
+                },
+                {
+                  "wrong": "themselves are actually very creative",
+                  "right": "they are actually very creative",
+                  "explanation_zh": "that 子句要有主格主詞 they；themselves 是反身代名詞，不能當主詞。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "collocation",
+              "zh": "不但交到朋友，也",
+              "literal_error": "At cosplay events, they not only make new friends, also discover that they are actually very creative.",
+              "part": 3,
+              "explanation_zh": "中文「不但…也…」照字面翻會漏掉 but；英文要寫完整的 not only … but also …。"
+            },
+            {
+              "type": "word_form",
+              "zh": "很有創意",
+              "literal_error": "At cosplay events, they not only make new friends but also discover that they are actually very creativity.",
+              "part": 4,
+              "explanation_zh": "「很有創意」用形容詞 creative；creativity 是名詞，不能接在 be very 後面（名詞要寫成 have a lot of creativity）。"
+            }
+          ],
+          "bonus": []
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "C-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-advanced-05",
+    "lot": "translation-advanced-05",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "e5c4baeec359d5ac42e4e899ef49b7db98863cbe7bb8568d933d20cee46dbcaf",
+    "spec_id": "translation-advanced@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 1,
+    "sentences": 1,
+    "avg_sentence_length": 1.0,
+    "denominator": 1,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 1.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {
+      "off": 1
+    },
+    "offlist_words": [
+      "cosplay"
+    ],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T13:12:49Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T12:52:38Z",
+      "details": {
+        "solver": "A",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Many young people no longer just watch cartoons but also learn how to sew the characters' costumes by hand.",
+            "confidence": "high",
+            "explanation_zh": "「不再只是……還會……」用 no longer just ... but also ...；「如何縫製」用 how to + V；「親手」用 by hand；「角色的服裝」用 costumes（扮裝服）比 clothes 精準。"
+          },
+          "2": {
+            "translation": "At cosplay events, they not only make friends but also discover that they are actually very creative.",
+            "confidence": "high",
+            "explanation_zh": "「不但……也……」用 not only ... but also ...；「發現原來自己」用 discover that + 子句，「原來」以 actually 表達意外發現；活動用 events。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "BASIC",
+              "NCL"
+            ],
+            "used_target_words": [
+              "young",
+              "no longer",
+              "cartoon",
+              "learn",
+              "sew",
+              "character",
+              "costume"
+            ],
+            "within_accepted": true,
+            "closest_reference": 2,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "CORR",
+              "NCL"
+            ],
+            "used_target_words": [
+              "event",
+              "friend",
+              "discover",
+              "creative"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "young",
+              "no longer",
+              "cartoon",
+              "learn",
+              "sew",
+              "character",
+              "costume"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "BASIC": null,
+              "NCL": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "event",
+              "friend",
+              "discover",
+              "creative"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "CORR": true,
+              "NCL": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T12:54:59Z",
+      "details": {
+        "solver": "B",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Many young people no longer just watch cartoons but also learn how to sew the characters' costumes by hand.",
+            "confidence": "high",
+            "explanation_zh": "「不再只是……還會……」用 no longer just ... but also ...，兩個動詞 watch／learn 並列。「學習如何」用 learn how to + 原形動詞；「親手」譯成 by hand；「角色的服裝」用所有格 the characters' costumes。"
+          },
+          "2": {
+            "translation": "At cosplay events, they not only make friends but also discover that they are actually very creative.",
+            "confidence": "high",
+            "explanation_zh": "「不但……也……」用 not only ... but also ...，動詞 make／discover 對稱並列。「原來自己很有創意」用名詞子句 discover that they are actually very creative，actually 表達「原來」的意外發現語氣。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "BASIC",
+              "NCL"
+            ],
+            "used_target_words": [
+              "young",
+              "no longer",
+              "cartoon",
+              "learn",
+              "sew",
+              "character",
+              "costume"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "CORR",
+              "NCL"
+            ],
+            "used_target_words": [
+              "event",
+              "friend",
+              "discover",
+              "creative"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "young",
+              "no longer",
+              "cartoon",
+              "learn",
+              "sew",
+              "character",
+              "costume"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "BASIC": null,
+              "NCL": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "event",
+              "friend",
+              "discover",
+              "creative"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "CORR": true,
+              "NCL": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

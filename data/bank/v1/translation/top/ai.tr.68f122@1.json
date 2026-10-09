@@ -1,0 +1,739 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.68f122",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "top",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "應用程式（app）常要求取得使用者的個人資料，這些資料可能被拿來推銷商品給他們。",
+        "options": null,
+        "answer": "Apps often ask for access to their users' personal data, which may then be used to sell products to them.",
+        "accepted_answers": [
+          "Apps often require access to the personal data of their users, which could later be used to advertise products to them.",
+          "Apps often ask users to give them access to their personal data, which may be used to sell them products."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "非限定關係子句",
+            "被動語態（情態助動詞）"
+          ],
+          "topic": "個人資料保護"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "近年來，已有數百萬人的個人資料遭到外洩，使他們很容易成為網路罪犯的目標。",
+        "options": null,
+        "answer": "In recent years, the personal information of millions of people has been leaked, making them easy targets for online criminals.",
+        "accepted_answers": [
+          "Over the past few years, the personal data of millions of people has been leaked, making them easy targets for cybercriminals.",
+          "In recent years, millions of people's personal information has been exposed, causing them to become easy targets for criminals online."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "句尾分詞表結果",
+            "完成式被動"
+          ],
+          "topic": "個人資料保護"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "個人資料保護"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「這些資料」指前面的個人資料，用非限定關係子句 , which …，which 前要有逗號、不能用 that。資料是「被」拿來使用，用情態助動詞被動 may be used to V。「要求取得」最自然的說法是 ask for access to；data 不加 s，information 不可數。「推銷商品給他們」是 sell products to them 或 sell them products。",
+          "evidence": [
+            "這些資料可能被拿來",
+            "要求取得"
+          ],
+          "strategy_zh": "中文後半句用「這些＋前面的名詞」重提時，英文常改成 , which … 接在那個名詞後面，一句就能寫完。",
+          "hints": [
+            "切成四段：應用程式常要求取得／使用者的個人資料／這些資料可能被拿來／推銷商品給他們",
+            "標的詞彙：access（取得、使用權）、personal（個人的）、data（資料）、sell（推銷、販售）、product（商品）",
+            "句型框架：S + V + N, which + may (then) be p.p. + to V …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「近年來、已有」表示到現在為止已經發生的結果；主詞「個人資料」是被外洩的一方，用現在完成式被動 has been leaked。「使他們很容易成為…的目標」是前一件事造成的結果，用句尾分詞 , making them easy targets for …（也可寫 causing them to become …）；make 後面不接 to V。「數百萬人」是 millions of people；information 不可數。",
+          "evidence": [
+            "已有數百萬人的個人資料遭到外洩",
+            "使他們很容易成為"
+          ],
+          "strategy_zh": "看到「…，使（得）…」表示前面整件事的結果，先想句尾分詞 , making／causing／leaving …。",
+          "hints": [
+            "切成四段：近年來／已有數百萬人的個人資料遭到外洩／使他們很容易成為／網路罪犯的目標",
+            "標的詞彙：recent（最近的）、personal（個人的）、leak（洩漏）、target（目標）、criminal（罪犯）",
+            "句型框架：In recent years, S + has/have been p.p., making + O + 名詞補語 …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "Apps often ask for access to their users' personal data, which may then be used to sell products to them.",
+            "Apps often require access to the personal data of their users, which could later be used to advertise products to them.",
+            "Apps often ask users to give them access to their personal data, which may be used to sell them products."
+          ],
+          "target_words": [
+            {
+              "word": "access",
+              "zh": "取得、使用權",
+              "alternatives": [
+                "obtain",
+                "collect"
+              ]
+            },
+            {
+              "word": "personal",
+              "zh": "個人的"
+            },
+            {
+              "word": "data",
+              "zh": "資料",
+              "alternatives": [
+                "information"
+              ]
+            },
+            {
+              "word": "sell",
+              "zh": "推銷、販售",
+              "alternatives": [
+                "market",
+                "advertise",
+                "promote"
+              ]
+            },
+            {
+              "word": "product",
+              "zh": "商品",
+              "alternatives": [
+                "goods"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "NRREL",
+              "grammar_id": "gp-nonrestrictive",
+              "label_zh": "非限定關係子句（which 補充說明前面的名詞）",
+              "frame": "N, which + may (then) be p.p. …",
+              "zh_trigger": "這些資料"
+            },
+            {
+              "code": "PASS",
+              "grammar_id": "gp-passive",
+              "label_zh": "情態助動詞被動（may be + p.p.）",
+              "frame": "S + may/can + be + p.p. + to V …",
+              "zh_trigger": "被拿來"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "應用程式（app）常要求取得",
+              "accepted": [
+                "Apps often ask for access to",
+                "Apps often require access to",
+                "Apps often ask users to give them access to",
+                "Many apps ask for access to",
+                "Apps often request access to"
+              ],
+              "targets": [
+                "access"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Apps often require to get",
+                  "right": "Apps often ask for access to",
+                  "explanation_zh": "require 不接 to V（要寫 require sb to V 或 require sth）；「要求取得」用 ask for access to 最自然。"
+                },
+                {
+                  "wrong": "App often asks for access to",
+                  "right": "Apps often ask for access to",
+                  "explanation_zh": "泛指應用程式用複數 apps（或 an app）。"
+                }
+              ]
+            },
+            {
+              "zh": "使用者的個人資料",
+              "accepted": [
+                "their users' personal data",
+                "the personal data of their users",
+                "their personal data",
+                "users' personal information",
+                "users' personal data"
+              ],
+              "targets": [
+                "personal",
+                "data"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "users' personal datas",
+                  "right": "users' personal data",
+                  "explanation_zh": "data 本身就是複數形（單數是 datum），不加 s。"
+                },
+                {
+                  "wrong": "users' personal informations",
+                  "right": "users' personal information",
+                  "explanation_zh": "information 是不可數名詞，不加 s。"
+                }
+              ]
+            },
+            {
+              "zh": "這些資料可能被拿來",
+              "accepted": [
+                "which may then be used",
+                "which could later be used",
+                "which may be used",
+                "which might be used",
+                "which may later be used"
+              ],
+              "targets": [
+                "NRREL",
+                "PASS"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "which may use to",
+                  "right": "which may be used to",
+                  "explanation_zh": "資料是「被」拿來用，要用被動 may be used to V。"
+                },
+                {
+                  "wrong": "data, that may be used",
+                  "right": "data, which may be used",
+                  "explanation_zh": "逗號後的非限定關係子句不能用 that。"
+                }
+              ]
+            },
+            {
+              "zh": "推銷商品給他們",
+              "accepted": [
+                "to sell products to them",
+                "to advertise products to them",
+                "to sell them products",
+                "to market products to them",
+                "to promote products to them"
+              ],
+              "targets": [
+                "sell",
+                "product"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "to sell them to products",
+                  "right": "to sell products to them",
+                  "explanation_zh": "sell sth to sb 或 sell sb sth，介系詞的位置不要放錯。"
+                },
+                {
+                  "wrong": "to promote products for them",
+                  "right": "to promote products to them",
+                  "explanation_zh": "向某人推銷是 promote／sell sth to sb；for them 會變成「替他們推銷」。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "collocation",
+              "zh": "要求取得",
+              "literal_error": "Apps often require to get their users' personal data …",
+              "part": 1,
+              "explanation_zh": "「要求取得」照字面寫成 require to get 不合文法；英文說 ask for access to／request access to（要求使用權）。"
+            },
+            {
+              "type": "plural_countable",
+              "zh": "個人資料",
+              "literal_error": "… their users' personal informations, which …",
+              "part": 2,
+              "explanation_zh": "information 是不可數名詞不加 s；data 本身已是複數形，也不加 s。"
+            }
+          ],
+          "bonus": [],
+          "restructuring_zh": "後半「這些資料可能被拿來…」不必重複主詞「這些資料」，用 , which may be used to … 接在 personal data 後面；「推銷商品給他們」用不定詞 to sell products to them 表目的。"
+        },
+        "2": {
+          "references": [
+            "In recent years, the personal information of millions of people has been leaked, making them easy targets for online criminals.",
+            "Over the past few years, the personal data of millions of people has been leaked, making them easy targets for cybercriminals.",
+            "In recent years, millions of people's personal information has been exposed, causing them to become easy targets for criminals online."
+          ],
+          "target_words": [
+            {
+              "word": "recent",
+              "zh": "最近的",
+              "alternatives": [
+                "past few years"
+              ]
+            },
+            {
+              "word": "personal",
+              "zh": "個人的"
+            },
+            {
+              "word": "leak",
+              "zh": "洩漏",
+              "alternatives": [
+                "expose"
+              ]
+            },
+            {
+              "word": "target",
+              "zh": "目標"
+            },
+            {
+              "word": "criminal",
+              "zh": "罪犯",
+              "alternatives": [
+                "cybercriminals",
+                "hackers",
+                "scammers"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PART",
+              "grammar_id": "gp-participle-result",
+              "label_zh": "句尾分詞片語表結果（…，使得…）",
+              "frame": "S + V …, making + O + 名詞補語 ／ causing + O + to V",
+              "zh_trigger": "使他們"
+            },
+            {
+              "code": "PASS",
+              "grammar_id": "gp-perfect-passive",
+              "label_zh": "完成式被動（已經遭到…）",
+              "frame": "S + has/have been + p.p. …",
+              "zh_trigger": "已有數百萬人的個人資料遭到外洩"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "近年來",
+              "accepted": [
+                "In recent years",
+                "Over the past few years",
+                "In the past few years",
+                "Recently"
+              ],
+              "targets": [
+                "recent"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "In recent year",
+                  "right": "In recent years",
+                  "explanation_zh": "in recent years 的 years 要用複數。"
+                },
+                {
+                  "wrong": "Near years",
+                  "right": "In recent years",
+                  "explanation_zh": "「近年來」不能逐字譯成 near years。"
+                }
+              ]
+            },
+            {
+              "zh": "已有數百萬人的個人資料遭到外洩",
+              "accepted": [
+                "the personal information of millions of people has been leaked",
+                "the personal data of millions of people has been leaked",
+                "millions of people's personal information has been exposed",
+                "millions of people's personal data has been leaked",
+                "the personal data of millions of people have been leaked"
+              ],
+              "targets": [
+                "PASS",
+                "personal",
+                "leak"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "millions of people's personal information was leaked",
+                  "right": "millions of people's personal information has been leaked",
+                  "explanation_zh": "「近年來、已有」表示到現在為止的累積結果，用現在完成式被動 has been leaked。"
+                },
+                {
+                  "wrong": "millions people's personal information",
+                  "right": "millions of people's personal information",
+                  "explanation_zh": "「數百萬」是 millions of；確切數字才寫 two million people（million 不加 s）。"
+                }
+              ]
+            },
+            {
+              "zh": "使他們很容易成為",
+              "accepted": [
+                "making them easy targets",
+                "causing them to become easy targets",
+                "making them easy prey",
+                "leaving them easy targets",
+                "making them vulnerable"
+              ],
+              "targets": [
+                "PART",
+                "target"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "makes them easy targets",
+                  "right": "making them easy targets",
+                  "explanation_zh": "逗號後直接接 makes 會變成兩個動詞沒有連接詞；表結果用分詞 making，或改成 , which makes …。"
+                },
+                {
+                  "wrong": "making them to become easy targets",
+                  "right": "making them easy targets",
+                  "explanation_zh": "make 是使役動詞，後面不接 to V；要用 to V 就改用 cause（causing them to become）。"
+                }
+              ]
+            },
+            {
+              "zh": "網路罪犯的目標",
+              "accepted": [
+                "for online criminals",
+                "for cybercriminals",
+                "for criminals online",
+                "of online criminals",
+                "for online fraudsters"
+              ],
+              "targets": [
+                "criminal"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "for online criminal",
+                  "right": "for online criminals",
+                  "explanation_zh": "罪犯泛指一群人，用複數 criminals。"
+                },
+                {
+                  "wrong": "for network criminals",
+                  "right": "for online criminals",
+                  "explanation_zh": "「網路的」用 online（或 cyber-），network 指實體網路架構。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "tense_trigger",
+              "zh": "已有",
+              "literal_error": "In recent years, the personal information of millions of people was leaked …",
+              "part": 2,
+              "explanation_zh": "「近年來…已有」是到現在為止的結果，要用現在完成式被動 has／have been leaked。"
+            },
+            {
+              "type": "word_form",
+              "zh": "使他們很容易成為",
+              "literal_error": "… making them to become easy targets …",
+              "part": 3,
+              "explanation_zh": "make 是使役動詞，後面接受詞＋原形動詞或名詞補語（making them easy targets），不能接 to V；cause 才接 to V。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "So much personal information has been leaked in recent years that millions of people have become easy targets for online criminals.",
+              "explanation_zh": "用 so … that 把「外洩」和「成為目標」寫成因果，語氣更強；基本分仍看完成式被動與句尾分詞。"
+            }
+          ],
+          "restructuring_zh": "「使他們很容易成為網路罪犯的目標」不必另起「這使得…」的句子，用句尾分詞 making them easy targets for … 表結果；「很容易成為目標」直接用名詞片語 easy targets。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ac-V-3",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-top-01",
+    "lot": "translation-top-01",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "a1384b01f87b0f8fded3505d9aeb991591fcc72147d3fc44a0f533a9db995000",
+    "spec_id": "translation-top@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 1,
+    "sentences": 1,
+    "avg_sentence_length": 1.0,
+    "denominator": 1,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 1.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {
+      "off": 1
+    },
+    "offlist_words": [
+      "app"
+    ],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "warn",
+      "created_at": "2026-10-09T13:10:31Z",
+      "details": {
+        "errors": [],
+        "warnings": [
+          "annotations.rubric.items.1: 首選參考譯文有詞彙表外的字 ['Apps']（表外專有名詞請在題目括號附英文）",
+          "annotations.rubric.items.2.patterns[1]: gp-perfect-passive 通常對應句構 PERF（目前 code=PASS）"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T00:00:00Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Apps often ask for access to users' personal information, which may be used to market products to them.",
+            "confidence": "high",
+            "explanation_zh": "「這些資料」用非限定關係子句 which 指 personal information；「可能被拿來」用 may be used to；「推銷商品給他們」譯為 market products to them（也可用 sell/promote products to them）。"
+          },
+          "2": {
+            "translation": "In recent years, the personal information of millions of people has been leaked, making them easy targets for cybercriminals.",
+            "confidence": "high",
+            "explanation_zh": "「近年來，已有…」用 In recent years 配現在完成式被動 has been leaked；「使他們很容易成為…的目標」用分詞構句 making them easy targets for；「網路罪犯」譯為 cybercriminals。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "NRREL",
+              "PASS"
+            ],
+            "used_target_words": [
+              "access",
+              "personal",
+              "data",
+              "sell",
+              "product"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PART",
+              "PASS"
+            ],
+            "used_target_words": [
+              "recent",
+              "personal",
+              "leak",
+              "target",
+              "criminal"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "（小問題，不影響公平）第 3 部分英文 making them easy targets 已含「目標」，但「目標」的中文標在第 4 部分「網路罪犯的目標」，中英切分略有錯位。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "access",
+              "personal",
+              "data",
+              "sell",
+              "product"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NRREL": true,
+              "PASS": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "recent",
+              "personal",
+              "leak",
+              "target",
+              "criminal"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PART": true,
+              "PASS": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "fail",
+      "created_at": "2026-10-09T07:56:17Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Apps often ask for users' personal information, which may be used to market products to them.",
+            "confidence": "high",
+            "explanation_zh": "「這些資料」指前句整體，用非限定關係子句 which 接續；「被拿來」用被動 may be used to 加不定詞；推銷商品譯成 market products to them。"
+          },
+          "2": {
+            "translation": "In recent years, the personal information of millions of people has been leaked, making them easy targets for cybercriminals.",
+            "confidence": "high",
+            "explanation_zh": "「近年來」搭配現在完成式被動 has been leaked；「使他們……」用分詞片語 making them easy targets 表結果；網路罪犯用 cybercriminals。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "NRREL",
+              "PASS"
+            ],
+            "used_target_words": [
+              "personal",
+              "data",
+              "sell",
+              "product"
+            ],
+            "within_accepted": false,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "part 1 的 accepted 每一項都含 access（ask for access to／require access to／request access to），但「要求取得使用者的個人資料」自然可譯成 ask for users' personal information（取得＝要求提供資料），不一定要出現 access；盲譯者這樣寫自然正確卻不在可接受寫法內，標的詞彙 access 也沒被中文逼出來（只命中 4/5）。建議 part 1 補 Apps often ask for／Apps often request（後接資料），並在 access 的 alternatives 補 get／obtain 一類換字，或把 access 換成中文較能逼出的詞。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "PART",
+              "PASS"
+            ],
+            "used_target_words": [
+              "recent",
+              "personal",
+              "leak",
+              "target",
+              "criminal"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "personal",
+              "data",
+              "sell",
+              "product"
+            ],
+            "target_hit_rate": 0.8,
+            "patterns_detected": {
+              "NRREL": true,
+              "PASS": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "recent",
+              "personal",
+              "leak",
+              "target",
+              "criminal"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PART": true,
+              "PASS": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 1 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義",
+          "第 1 題驗證者對4 部分切分有意見（warn）：part 1 的 accepted 每一項都含 access（ask for access to／require access to／request access to），但「要求取得使用者的個人資料」自然可譯成 ask for users"
+        ]
+      }
+    }
+  ],
+  "status": "rejected",
+  "status_reason": "blind_solver:B 未通過：第 1 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義；第 1 題驗證者對4 部分切分有意見（warn）：part 1 的 accepted 每一項都含 access（ask for access to／require access to／request access to），但「要求取得使用者的個人資料」自然可譯成 ask for users；判定者（第 1 輪）人工檢查：第 1 題「要求取得使用者的個人資料」最自然的譯法是 ask for users' personal information，不必出現 access；但第 1 部分 accepted 每一項都含 access to，標的詞彙 access 不是中文逼出來的（盲譯 B 寫法自然正確卻不在可接受範圍）。要改中文（例如明寫「要求存取」）或放寬第 1 部分 accepted 與 access 的 alternatives。另：第 2 題第 3 部分 accepted（making them easy targets）已含第 4 部分中文的「目標」，中英切分略錯位。"
+}

@@ -1,0 +1,777 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.f5a800",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "top",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "無論紙本文件保存得多麼小心，終究會損壞，這就是我們需要數位典藏（digital archives）的原因。",
+        "options": null,
+        "answer": "No matter how carefully paper documents are stored, they will eventually be damaged, which is the reason why we need digital archives.",
+        "accepted_answers": [
+          "No matter how carefully paper documents are kept, they will be damaged sooner or later, which is exactly why we need digital archives.",
+          "No matter how carefully we store paper documents, they will eventually get damaged, which is why we need digital archives."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "讓步：無論多麼（no matter how + 副詞）",
+            "關係副詞 why（…的原因）"
+          ],
+          "topic": "數位典藏"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "它們保存了許多可能永遠遺失的老照片，這讓年輕一代能看見祖先當年的生活。",
+        "options": null,
+        "answer": "They have preserved many old photos that could have been lost forever, which allows the younger generation to see how their ancestors lived.",
+        "accepted_answers": [
+          "They have saved many old photos that might otherwise be lost forever, which lets young people see what their ancestors' lives were like.",
+          "They keep many old photos that would otherwise be lost forever, which allows young people to see what life was like for their ancestors."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "關係代名詞 that 引導的形容詞子句",
+            "非限定關係子句（, which allows …）"
+          ],
+          "topic": "數位典藏"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "數位典藏"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「無論…多麼小心」用 No matter how + 副詞 carefully + 主詞 + 動詞（直述句語序）；文件是「被」保存，用被動 are stored，也可以改成主動 we store paper documents。「終究會損壞」文件是承受者，用被動 will eventually be damaged（或 get damaged）。「這就是…的原因」用 the reason why …（關係副詞 why 修飾 reason），接在句尾時寫成 , which is the reason why …（which 指前面整句），也可以簡化成 which is why …。",
+          "evidence": [
+            "無論紙本文件保存得多麼小心",
+            "這就是我們需要數位典藏（digital archives）的原因"
+          ],
+          "strategy_zh": "「無論多麼＋形容詞／副詞」→ No matter how + adj./adv. + S + V；「這就是…的原因」→ which is (the reason) why + S + V。",
+          "hints": [
+            "切成四段：無論紙本文件保存得多麼小心／終究會損壞／這就是…的原因／我們需要數位典藏",
+            "標的詞彙：carefully（小心地）、paper（紙本）、document（文件）、store（保存）、eventually（終究）、damage（損壞）、need（需要）",
+            "句型框架：No matter how + adv. + S + be p.p., S + will eventually be p.p., which is the reason why + S + V"
+          ]
+        },
+        "2": {
+          "explanation_zh": "主詞「它們」指上一句的數位典藏，「保存了」用現在完成式 have preserved。「可能永遠遺失的老照片」修飾語很長，英文用關係代名詞 that 往後修飾；照片是被遺失，用被動 could have been lost（加 otherwise＝「要不是被保存」語意更清楚）。「這讓…」指前面整件事，用 , which allows … to V。「祖先當年的生活」用名詞子句 how their ancestors lived 最自然。",
+          "evidence": [
+            "可能永遠遺失的老照片",
+            "這讓年輕一代能看見祖先當年的生活"
+          ],
+          "strategy_zh": "名詞前面有很長的「…的」→ 關係子句後位修飾；「…，這讓＋人＋V」→ , which allows + 人 + to V。",
+          "hints": [
+            "切成四段：它們保存了／許多可能永遠遺失的老照片／這讓年輕一代／能看見祖先當年的生活",
+            "標的詞彙：preserve（保存）、photo（照片）、lose（遺失）、forever（永遠）、generation（一代）、see（看見）、ancestor（祖先）、live（生活）",
+            "句型框架：S + have p.p. + N + that could have been p.p. …, which allows + O + to see how + S + V"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "No matter how carefully paper documents are stored, they will eventually be damaged, which is the reason why we need digital archives.",
+            "No matter how carefully paper documents are kept, they will be damaged sooner or later, which is exactly why we need digital archives.",
+            "No matter how carefully we store paper documents, they will eventually get damaged, which is why we need digital archives."
+          ],
+          "target_words": [
+            {
+              "word": "carefully",
+              "zh": "小心地"
+            },
+            {
+              "word": "paper",
+              "zh": "紙本"
+            },
+            {
+              "word": "document",
+              "zh": "文件"
+            },
+            {
+              "word": "store",
+              "zh": "保存",
+              "alternatives": [
+                "keep"
+              ]
+            },
+            {
+              "word": "eventually",
+              "zh": "終究",
+              "alternatives": [
+                "sooner or later"
+              ]
+            },
+            {
+              "word": "damage",
+              "zh": "損壞"
+            },
+            {
+              "word": "need",
+              "zh": "需要"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "ADVCL",
+              "grammar_id": "gp-no-matter",
+              "label_zh": "讓步：無論多麼…（no matter how + 副詞）",
+              "frame": "No matter how + adv. + S + V, S + V …",
+              "zh_trigger": "無論紙本文件保存得多麼小心"
+            },
+            {
+              "code": "REL",
+              "grammar_id": "gp-relative-adverb",
+              "label_zh": "關係副詞 why（…的原因）",
+              "frame": "…, which is the reason why + S + V",
+              "zh_trigger": "的原因"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "無論紙本文件保存得多麼小心",
+              "accepted": [
+                "No matter how carefully paper documents are stored",
+                "No matter how carefully paper documents are kept",
+                "No matter how carefully we store paper documents",
+                "No matter how carefully we keep paper documents",
+                "However carefully paper documents are stored"
+              ],
+              "targets": [
+                "ADVCL",
+                "carefully",
+                "paper",
+                "document",
+                "store"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "No matter how careful paper documents are stored",
+                  "right": "No matter how carefully paper documents are stored",
+                  "explanation_zh": "「保存得多麼小心」修飾動詞 store，要用副詞 carefully。"
+                },
+                {
+                  "wrong": "No matter how carefully are paper documents stored",
+                  "right": "No matter how carefully paper documents are stored",
+                  "explanation_zh": "no matter how 後面用直述句語序（主詞＋動詞），不倒裝。"
+                }
+              ]
+            },
+            {
+              "zh": "終究會損壞",
+              "accepted": [
+                "they will eventually be damaged",
+                "they will be damaged sooner or later",
+                "they will eventually get damaged",
+                "they will be damaged in the end"
+              ],
+              "targets": [
+                "eventually",
+                "damage"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "they will eventually damage",
+                  "right": "they will eventually be damaged",
+                  "explanation_zh": "文件是「被」損壞，要用被動 be damaged（或 get damaged）；will damage 是「會去損壞別的東西」。"
+                },
+                {
+                  "wrong": "it will eventually be damaged",
+                  "right": "they will eventually be damaged",
+                  "explanation_zh": "paper documents 是複數，代名詞用 they。"
+                }
+              ]
+            },
+            {
+              "zh": "這就是",
+              "accepted": [
+                "which is the reason why",
+                "which is exactly why",
+                "which is why",
+                "and that is why",
+                "and this is the reason why"
+              ],
+              "targets": [
+                "REL"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "damaged, this is the reason why",
+                  "right": "damaged, which is the reason why",
+                  "explanation_zh": "前面已經是完整句子，用逗號接 this is … 會變成逗號連接句；改用 , which is the reason why …，或另起一句 This is why …。"
+                },
+                {
+                  "wrong": "the reason why we need digital archives is because",
+                  "right": "the reason why we need digital archives",
+                  "explanation_zh": "the reason why 和 because 意思重複，只能二選一。"
+                }
+              ]
+            },
+            {
+              "zh": "我們需要數位典藏",
+              "accepted": [
+                "we need digital archives",
+                "we need a digital archive",
+                "digital archives are needed"
+              ],
+              "targets": [
+                "need"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "we need digital archive",
+                  "right": "we need digital archives",
+                  "explanation_zh": "archive 是可數名詞，泛指時用複數 archives 或加 a。"
+                },
+                {
+                  "wrong": "we are need digital archives",
+                  "right": "we need digital archives",
+                  "explanation_zh": "need 是一般動詞，前面不加 be 動詞。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "word_form",
+              "zh": "保存得多麼小心",
+              "literal_error": "No matter how careful paper documents are stored",
+              "part": 1,
+              "explanation_zh": "「保存得多麼小心」的「小心」修飾動詞「保存」，英文用副詞 how carefully；careful 是形容詞。"
+            },
+            {
+              "type": "redundancy",
+              "zh": "這就是我們需要數位典藏（digital archives）的原因",
+              "literal_error": "The reason why we need digital archives is because they will be damaged.",
+              "part": 3,
+              "explanation_zh": "「這就是…的原因」英文用 which is (the reason) why …；不要寫成 the reason … is because …，reason 和 because 意思重複。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "However carefully paper documents are stored, time will eventually take its toll on them, which is precisely why digital archives matter.",
+              "grammar_id": "gp-no-matter",
+              "explanation_zh": "However carefully … 等於 No matter how carefully …；take its toll on（對…造成損害）、matter（很重要）都是道地寫法。這是加分寫法。"
+            }
+          ],
+          "restructuring_zh": "「這就是我們需要數位典藏的原因」中文另起一句，英文可以用 , which is the reason why … 接在前一句後面，which 指前面整件事。"
+        },
+        "2": {
+          "references": [
+            "They have preserved many old photos that could have been lost forever, which allows the younger generation to see how their ancestors lived.",
+            "They have saved many old photos that might otherwise be lost forever, which lets young people see what their ancestors' lives were like.",
+            "They keep many old photos that would otherwise be lost forever, which allows young people to see what life was like for their ancestors."
+          ],
+          "target_words": [
+            {
+              "word": "preserve",
+              "zh": "保存",
+              "alternatives": [
+                "save",
+                "keep"
+              ]
+            },
+            {
+              "word": "photo",
+              "zh": "照片",
+              "alternatives": [
+                "picture"
+              ]
+            },
+            {
+              "word": "lose",
+              "zh": "遺失"
+            },
+            {
+              "word": "forever",
+              "zh": "永遠"
+            },
+            {
+              "word": "generation",
+              "zh": "一代",
+              "alternatives": [
+                "young people"
+              ]
+            },
+            {
+              "word": "see",
+              "zh": "看見"
+            },
+            {
+              "word": "ancestor",
+              "zh": "祖先"
+            },
+            {
+              "word": "live",
+              "zh": "生活",
+              "alternatives": [
+                "life"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "REL",
+              "grammar_id": "gp-relative-pronoun",
+              "label_zh": "關係代名詞 that 引導的限定子句（可能永遠遺失的老照片）",
+              "frame": "N + that + could/might + be + p.p. …",
+              "zh_trigger": "可能永遠遺失的老照片"
+            },
+            {
+              "code": "NRREL",
+              "grammar_id": "gp-nonrestrictive",
+              "label_zh": "非限定關係子句：which 指前面整句（這讓…）",
+              "frame": "S + V …, which allows + O + to V …",
+              "zh_trigger": "這讓年輕一代"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "它們保存了",
+              "accepted": [
+                "They have preserved",
+                "They have saved",
+                "They keep",
+                "They preserve"
+              ],
+              "targets": [
+                "preserve"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "They have preserve",
+                  "right": "They have preserved",
+                  "explanation_zh": "現在完成式是 have + 過去分詞 preserved。"
+                },
+                {
+                  "wrong": "They are preserved many old photos",
+                  "right": "They have preserved many old photos",
+                  "explanation_zh": "主詞 They（數位典藏）主動保存照片，不用被動 are preserved。"
+                }
+              ]
+            },
+            {
+              "zh": "許多可能永遠遺失的老照片",
+              "accepted": [
+                "many old photos that could have been lost forever",
+                "many old photos that might otherwise be lost forever",
+                "many old photos that would otherwise be lost forever",
+                "many old photos that might be lost forever"
+              ],
+              "targets": [
+                "REL",
+                "photo",
+                "lose",
+                "forever"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "many old photos that could lose forever",
+                  "right": "many old photos that could be lost forever",
+                  "explanation_zh": "照片是「被」遺失，要用被動 be lost；主動 lose 是「弄丟（別的東西）」。"
+                },
+                {
+                  "wrong": "many may be lost forever old photos",
+                  "right": "many old photos that might be lost forever",
+                  "explanation_zh": "中文修飾語「可能永遠遺失的」在名詞前，英文要用關係子句放在 photos 後面。"
+                }
+              ]
+            },
+            {
+              "zh": "這讓年輕一代",
+              "accepted": [
+                "which allows the younger generation to",
+                "which lets young people",
+                "which allows young people to",
+                "which enables the younger generation to"
+              ],
+              "targets": [
+                "NRREL",
+                "generation"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "which allows the younger generation see",
+                  "right": "which allows the younger generation to see",
+                  "explanation_zh": "allow + 受詞 + to V；let 才接原形動詞。"
+                },
+                {
+                  "wrong": "forever, that allows the younger generation to",
+                  "right": "forever, which allows the younger generation to",
+                  "explanation_zh": "逗號後面補充說明整件事，用 which，不用 that。"
+                }
+              ]
+            },
+            {
+              "zh": "能看見祖先當年的生活",
+              "accepted": [
+                "see how their ancestors lived",
+                "see what their ancestors' lives were like",
+                "see what life was like for their ancestors",
+                "see their ancestors' lives back then"
+              ],
+              "targets": [
+                "see",
+                "ancestor",
+                "live"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "see their ancestors that year life",
+                  "right": "see how their ancestors lived",
+                  "explanation_zh": "「祖先當年的生活」不要逐字疊成 that year life；用 how their ancestors lived 或 what life was like for their ancestors。"
+                },
+                {
+                  "wrong": "see what was life like for their ancestors",
+                  "right": "see what life was like for their ancestors",
+                  "explanation_zh": "間接問句用直述句語序：what + life + was like。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "prenominal_modifier",
+              "zh": "可能永遠遺失的老照片",
+              "literal_error": "many may lose forever old photos",
+              "part": 2,
+              "explanation_zh": "中文「可能永遠遺失的」放在「老照片」前面，英文要先寫 photos，再用 that 子句往後修飾；照片是被遺失，要用被動 be lost。"
+            },
+            {
+              "type": "abstract_nominal",
+              "zh": "祖先當年的生活",
+              "literal_error": "see their ancestors' that year life",
+              "part": 4,
+              "explanation_zh": "「當年的生活」是抽象概念，不要逐字翻成 that year life；改成名詞子句 how their ancestors lived 或 what life was like for their ancestors。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "Thanks to them, countless old photos that might otherwise have been lost are kept safe, giving younger generations a window into their ancestors' lives.",
+              "grammar_id": "gp-participle-result",
+              "explanation_zh": "Thanks to them（多虧它們）承接上一句；句尾分詞 giving … a window into …（讓…一窺…）表結果，是比喻性的進階寫法。這是加分寫法。"
+            }
+          ],
+          "restructuring_zh": "「可能永遠遺失的老照片」中文修飾語在前，英文改成 photos that could have been lost forever；「看見祖先當年的生活」改寫成名詞子句 how their ancestors lived。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ac-V-3",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-top-05",
+    "lot": "translation-top-05",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "1423e68b58216cafb46e710ae1065ce2ef47f637e82f416d8ddb06bd091160ba",
+    "spec_id": "translation-top@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 2,
+    "sentences": 1,
+    "avg_sentence_length": 2.0,
+    "denominator": 2,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.5,
+    "coverage_l1_6": 1.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.5,
+    "level_counts": {
+      "4": 1,
+      "6": 1
+    },
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T14:05:35Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "fail",
+      "created_at": "2026-10-09T13:22:48Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "No matter how carefully paper documents are preserved, they will eventually be damaged, which is why we need digital archives.",
+            "confidence": "high",
+            "explanation_zh": "「無論…多麼小心」用 no matter how carefully＋被動 are preserved；「終究會損壞」用 will eventually be damaged（也可 deteriorate）；「這就是…的原因」指前面整件事，用 which is why…，維持一句。"
+          },
+          "2": {
+            "translation": "They have preserved many old photos that might otherwise have been lost forever, which allows the younger generation to see how their ancestors lived back then.",
+            "confidence": "medium",
+            "explanation_zh": "「保存了」用現在完成式；「可能永遠遺失的老照片」用關係子句，因為實際上被保存下來，用 might otherwise have been lost 表示「要不是有它們就會遺失」（也可寫 could be lost forever）；「這讓…能看見」用 which allows…to see；「祖先當年的生活」用 how their ancestors lived back then。信心中等是因為「可能永遠遺失」的時態有兩種合理寫法。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "ADVCL",
+              "REL"
+            ],
+            "used_target_words": [
+              "carefully",
+              "paper",
+              "document",
+              "eventually",
+              "damage",
+              "need"
+            ],
+            "within_accepted": false,
+            "closest_reference": 2,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "盲譯把「保存」譯成 preserved（No matter how carefully paper documents are preserved），是「保存（文件）」最貼切的字，但第 1 部分 accepted 只收 stored／kept，標的詞彙 store 的 alternatives 只有 keep；同一組第 2 句的「保存」反而以 preserve 為標的詞彙，前後不一致。建議 store 補 preserve、save，第 1 部分 accepted 補 are preserved。",
+              "標的句型標成 REL（關係副詞 why），但三個參考譯文實際上都是 , which is (the reason／exactly) why …，關鍵結構是指前面整句的 which（非限定關係子句）；第 3 部分 accepted 又收 and that is why（沒有關係詞），句型代碼與可接受寫法對不太上，建議改標 NRREL 或在說明寫清楚。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "REL",
+              "NRREL"
+            ],
+            "used_target_words": [
+              "preserve",
+              "photo",
+              "lose",
+              "forever",
+              "generation",
+              "see",
+              "ancestor",
+              "live"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "carefully",
+              "paper",
+              "document",
+              "eventually",
+              "damage",
+              "need"
+            ],
+            "target_hit_rate": 0.857,
+            "patterns_detected": {
+              "ADVCL": true,
+              "REL": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "preserve",
+              "photo",
+              "lose",
+              "forever",
+              "generation",
+              "see",
+              "ancestor",
+              "live"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "REL": true,
+              "NRREL": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 1 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義",
+          "第 1 題驗證者對4 部分切分有意見（warn）：盲譯把「保存」譯成 preserved（No matter how carefully paper documents are preserved），是「保存（文件）」最貼切的字，但第 1 部分 accepted 只收 stored／kep"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "fail",
+      "created_at": "2026-10-09T13:30:00Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "No matter how carefully paper documents are preserved, they will eventually be damaged, which is why we need digital archives.",
+            "confidence": "high",
+            "explanation_zh": "「無論……多麼小心」用 no matter how carefully 加被動 are preserved；「終究會損壞」用 will eventually be damaged；「這就是……的原因」用 which is why 接整句。"
+          },
+          "2": {
+            "translation": "They preserve many old photos that might otherwise be lost forever, which allows the younger generation to see how their ancestors lived back then.",
+            "confidence": "high",
+            "explanation_zh": "「可能永遠遺失的老照片」用關係子句 that might otherwise be lost forever，otherwise 帶出「若沒有數位典藏」的假設；「這讓……能看見」用 which allows ... to see；「當年的生活」用間接問句 how their ancestors lived back then。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "ADVCL",
+              "REL"
+            ],
+            "used_target_words": [
+              "carefully",
+              "paper",
+              "document",
+              "eventually",
+              "damage",
+              "need"
+            ],
+            "within_accepted": false,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "「保存」我譯成 preserved，是這個語境最自然的搭配，但第 1 部分 accepted 只有 stored／kept；同組第 2 句反而把 preserve 列為標的詞，兩句對「保存」的處理不一致，建議第 1 句 accepted 補 preserved。",
+              "第 3 部分 accepted 的 and that is why、and this is the reason why 不是 which 引導的關係子句，和標的句型 REL（…, which is the reason why …）的寫法不同；學生這樣寫正確，但沒有用到標的句型。"
+            ],
+            "closest_reference": 0
+          },
+          "2": {
+            "used_patterns": [
+              "REL",
+              "NRREL"
+            ],
+            "used_target_words": [
+              "preserve",
+              "photo",
+              "lose",
+              "forever",
+              "generation",
+              "see",
+              "ancestor",
+              "live"
+            ],
+            "within_accepted": true,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [],
+            "closest_reference": 1
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "carefully",
+              "paper",
+              "document",
+              "eventually",
+              "damage",
+              "need"
+            ],
+            "target_hit_rate": 0.857,
+            "patterns_detected": {
+              "ADVCL": true,
+              "REL": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "preserve",
+              "photo",
+              "lose",
+              "forever",
+              "generation",
+              "see",
+              "ancestor",
+              "live"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "REL": true,
+              "NRREL": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 1 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義",
+          "第 1 題驗證者對4 部分切分有意見（warn）：「保存」我譯成 preserved，是這個語境最自然的搭配，但第 1 部分 accepted 只有 stored／kept；同組第 2 句反而把 preserve 列為標的詞，兩句對「保存」的處理不一致，建議第 1 句 accepted 補"
+        ]
+      }
+    }
+  ],
+  "status": "rejected",
+  "status_reason": "blind_solver:A 未通過：第 1 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義；第 1 題驗證者對4 部分切分有意見（warn）：盲譯把「保存」譯成 preserved（No matter how carefully paper documents are preserved），是「保存（文件）」最貼切的字，但第 1 部分 accepted 只收 stored／kep；blind_solver:B 未通過：第 1 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義；第 1 題驗證者對4 部分切分有意見（warn）：「保存」我譯成 preserved，是這個語境最自然的搭配，但第 1 部分 accepted 只有 stored／kept；同組第 2 句反而把 preserve 列為標的詞，兩句對「保存」的處理不一致，建議第 1 句 accepted 補；判定者補充：第 1 句「（紙本文件）保存」最自然的 preserve 不在第 1 部分 accepted，標的詞 store 也沒有 preserve 的 alternatives，兩位盲譯都寫 are preserved 而失分；同組第 2 句卻以 preserve 為標的詞，兩句對「保存」的處理不一致。第 1 句標的句型標 REL（關係副詞 why），但參考譯文的關鍵結構是指前面整句的 , which is (the reason) why（NRREL），第 3 部分又收沒有關係詞的 and that is why，句型代碼和可接受寫法對不上。"
+}

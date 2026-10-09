@@ -1,0 +1,766 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.1142dc",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "top",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "在點頭不一定代表同意的文化中，旅客常難以解讀當地人到底是什麼意思。",
+        "options": null,
+        "answer": "In cultures where nodding does not necessarily signal agreement, travelers often find it hard to interpret what the locals actually mean.",
+        "accepted_answers": [
+          "In a culture where a nod does not always mean agreement, travelers often have difficulty understanding what local people really mean.",
+          "In cultures in which nodding doesn't necessarily mean agreement, visitors often struggle to figure out what the locals actually mean."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "關係副詞 where",
+            "間接問句（what + S + V）"
+          ],
+          "topic": "跨文化溝通"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "事先了解當地習俗的旅客較能避免誤會，這也讓他們的旅程更加愉快。",
+        "options": null,
+        "answer": "Travelers who learn about local customs in advance can avoid misunderstanding more easily, which also makes their trips more enjoyable.",
+        "accepted_answers": [
+          "Travelers who get to know local customs beforehand are more likely to avoid misunderstandings, which also makes their journeys more pleasant.",
+          "Travelers who study the local customs ahead of time are better able to avoid misunderstandings, which also makes their trips more enjoyable."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "關係代名詞 who",
+            "非限定關係子句（, which 指前面整件事）"
+          ],
+          "topic": "跨文化溝通"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "跨文化溝通"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「在…的文化中」修飾地點（文化），子句「點頭不一定代表同意」主詞、動詞齊全，用關係副詞 where（＝in which）：In cultures where nodding does not necessarily signal agreement。「當地人到底是什麼意思」是間接問句當受詞：what the locals actually mean（直述句語序，不加 do）。「難以」用 find it hard to V 或 have difficulty V-ing。",
+          "evidence": [
+            "點頭不一定代表同意的文化中",
+            "到底是什麼意思"
+          ],
+          "strategy_zh": "修飾地點、時間的長子句先想關係副詞 where／when；「到底是什麼／為什麼」當受詞時用 wh- + S + V。",
+          "hints": [
+            "切成四段：（在）點頭不一定代表同意／的文化中／旅客常難以解讀／當地人到底是什麼意思（英文先寫 In cultures，再接 where 子句）",
+            "標的詞彙：culture（文化）、nod（點頭）、mean／signal（表示）、agreement（同意）、traveler（旅客）、interpret（解讀）、local（當地人）",
+            "句型框架：In + N + where + S + V …, S + find it hard to + V + what + S + V"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「事先了解當地習俗的旅客」修飾語在前，英文用 travelers who learn about local customs in advance（先行詞是人，用 who）。「較能避免誤會」用 can avoid misunderstanding more easily 或 be more likely to avoid misunderstandings。句尾「這也讓…」的「這」指前面整件事，用非限定關係子句 , which also makes their trips more enjoyable（make + 受詞 + 形容詞）。",
+          "evidence": [
+            "事先了解當地習俗的旅客",
+            "這也讓他們的旅程更加愉快"
+          ],
+          "strategy_zh": "「…的人」當主詞時先寫 N(人) + who …；「這讓…」指前面整件事，用 , which + V（單數）。",
+          "hints": [
+            "切成四段：事先了解當地習俗的旅客／較能避免誤會／這也讓／他們的旅程更加愉快",
+            "標的詞彙：custom（習俗）、local（當地的）、in advance（事先）、avoid（避免）、misunderstanding（誤會）、trip（旅程）、enjoyable（愉快的）",
+            "句型框架：N(人) + who + V … + can + V … more easily, which also makes + O + more + adj."
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "In cultures where nodding does not necessarily signal agreement, travelers often find it hard to interpret what the locals actually mean.",
+            "In a culture where a nod does not always mean agreement, travelers often have difficulty understanding what local people really mean.",
+            "In cultures in which nodding doesn't necessarily mean agreement, visitors often struggle to figure out what the locals actually mean."
+          ],
+          "target_words": [
+            {
+              "word": "culture",
+              "zh": "文化"
+            },
+            {
+              "word": "nod",
+              "zh": "點頭"
+            },
+            {
+              "word": "agreement",
+              "zh": "同意",
+              "alternatives": [
+                "agree"
+              ]
+            },
+            {
+              "word": "mean",
+              "zh": "代表、表示",
+              "alternatives": [
+                "signal",
+                "indicate"
+              ]
+            },
+            {
+              "word": "traveler",
+              "zh": "旅客",
+              "alternatives": [
+                "visitor",
+                "tourist"
+              ]
+            },
+            {
+              "word": "interpret",
+              "zh": "解讀",
+              "alternatives": [
+                "understand",
+                "figure out",
+                "tell"
+              ]
+            },
+            {
+              "word": "local",
+              "zh": "當地人"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "NCL",
+              "grammar_id": "gp-wh-clause",
+              "label_zh": "間接問句：what 名詞子句當受詞（到底是什麼意思）",
+              "frame": "S + V + what + S + V（直述句語序）",
+              "zh_trigger": "到底是什麼意思"
+            },
+            {
+              "code": "REL",
+              "grammar_id": "gp-relative-adverb",
+              "label_zh": "關係副詞 where（在…的文化中）",
+              "frame": "In + N + where + S + V …",
+              "zh_trigger": "點頭不一定代表同意的文化中"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "點頭不一定代表同意",
+              "accepted": [
+                "nodding does not necessarily signal agreement",
+                "a nod does not always mean agreement",
+                "nodding doesn't necessarily mean agreement",
+                "nodding does not always mean agreement"
+              ],
+              "targets": [
+                "nod",
+                "mean",
+                "agreement"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "nod not necessarily represents agreement",
+                  "right": "nodding does not necessarily signal agreement",
+                  "explanation_zh": "動作當主詞要用動名詞 nodding（或 a nod）；否定要有助動詞 does not。"
+                },
+                {
+                  "wrong": "nodding does not necessarily mean agree",
+                  "right": "nodding does not necessarily mean agreement",
+                  "explanation_zh": "mean 後面接名詞 agreement（或 that 子句）；agree 是動詞。"
+                }
+              ]
+            },
+            {
+              "zh": "的文化中",
+              "accepted": [
+                "In cultures where",
+                "In a culture where",
+                "In cultures in which",
+                "In a culture in which"
+              ],
+              "targets": [
+                "REL",
+                "culture"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "In cultures which",
+                  "right": "In cultures where",
+                  "explanation_zh": "子句「點頭不一定代表同意」主詞、受詞都齊全，缺的是地點，用關係副詞 where（＝in which），不能只用 which。"
+                },
+                {
+                  "wrong": "In the culture of nodding does not necessarily mean agreement",
+                  "right": "In cultures where nodding does not necessarily mean agreement",
+                  "explanation_zh": "介系詞 of 後面不能接完整子句，要用 where 引導形容詞子句。"
+                }
+              ]
+            },
+            {
+              "zh": "旅客常難以解讀",
+              "accepted": [
+                "travelers often find it hard to interpret",
+                "travelers often have difficulty understanding",
+                "visitors often struggle to figure out",
+                "travelers often find it difficult to interpret"
+              ],
+              "targets": [
+                "traveler",
+                "interpret"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "travelers often hard to interpret",
+                  "right": "travelers often find it hard to interpret",
+                  "explanation_zh": "hard 是形容詞，不能直接當動詞；用 find it hard to V 或 have difficulty V-ing。"
+                },
+                {
+                  "wrong": "travelers often have difficulty to understand",
+                  "right": "travelers often have difficulty understanding",
+                  "explanation_zh": "have difficulty 後面接 V-ing。"
+                }
+              ]
+            },
+            {
+              "zh": "當地人到底是什麼意思",
+              "accepted": [
+                "what the locals actually mean",
+                "what local people really mean",
+                "what the locals really mean"
+              ],
+              "targets": [
+                "NCL",
+                "local"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "what do the locals actually mean",
+                  "right": "what the locals actually mean",
+                  "explanation_zh": "間接問句用直述句語序，不加助動詞 do。"
+                },
+                {
+                  "wrong": "the locals actually mean what",
+                  "right": "what the locals actually mean",
+                  "explanation_zh": "疑問詞 what 要放在名詞子句最前面，不能照中文語序放在句尾。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "collocation",
+              "zh": "代表",
+              "literal_error": "In cultures where nodding does not necessarily represent agreement, …",
+              "part": 1,
+              "explanation_zh": "「代表」在這裡是「表示…的意思」，用 mean／signal／indicate；represent 多指代表某人、某團體或象徵。"
+            },
+            {
+              "type": "prenominal_modifier",
+              "zh": "點頭不一定代表同意的文化",
+              "literal_error": "In nodding does not necessarily mean agreement cultures, travelers …",
+              "part": 2,
+              "explanation_zh": "修飾「文化」的是一整個子句，英文要先寫 cultures，再用關係副詞 where 引導子句放在後面。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "In cultures where a nod is no guarantee of agreement, travelers often struggle to work out what their hosts truly mean.",
+              "grammar_id": "gp-relative-adverb",
+              "explanation_zh": "be no guarantee of（不保證）、work out（弄清楚）、hosts（接待的當地人）讓句子更道地。"
+            }
+          ],
+          "restructuring_zh": "中文「在點頭不一定代表同意的文化中」修飾語在前，英文先寫 In cultures，再用 where 子句補充；「當地人到底是什麼意思」不要寫成名詞 the meaning of the locals，改成名詞子句 what the locals actually mean。"
+        },
+        "2": {
+          "references": [
+            "Travelers who learn about local customs in advance can avoid misunderstanding more easily, which also makes their trips more enjoyable.",
+            "Travelers who get to know local customs beforehand are more likely to avoid misunderstandings, which also makes their journeys more pleasant.",
+            "Travelers who study the local customs ahead of time are better able to avoid misunderstandings, which also makes their trips more enjoyable."
+          ],
+          "target_words": [
+            {
+              "word": "custom",
+              "zh": "習俗"
+            },
+            {
+              "word": "local",
+              "zh": "當地的"
+            },
+            {
+              "word": "in advance",
+              "zh": "事先",
+              "alternatives": [
+                "beforehand",
+                "ahead of time"
+              ]
+            },
+            {
+              "word": "avoid",
+              "zh": "避免"
+            },
+            {
+              "word": "misunderstanding",
+              "zh": "誤會",
+              "alternatives": [
+                "misunderstandings",
+                "misunderstand"
+              ]
+            },
+            {
+              "word": "trip",
+              "zh": "旅程",
+              "alternatives": [
+                "journey"
+              ]
+            },
+            {
+              "word": "enjoyable",
+              "zh": "愉快的",
+              "alternatives": [
+                "pleasant",
+                "enjoy"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "NRREL",
+              "grammar_id": "gp-nonrestrictive",
+              "label_zh": "非限定關係子句（which 指前面整件事）",
+              "frame": "S + V …, which also makes + O + adj.",
+              "zh_trigger": "這也讓他們的旅程更加愉快"
+            },
+            {
+              "code": "REL",
+              "grammar_id": "gp-relative-pronoun",
+              "label_zh": "關係代名詞 who 引導的形容詞子句",
+              "frame": "N(人) + who + V …",
+              "zh_trigger": "事先了解當地習俗的旅客"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "事先了解當地習俗的旅客",
+              "accepted": [
+                "Travelers who learn about local customs in advance",
+                "Travelers who get to know local customs beforehand",
+                "Travelers who study the local customs ahead of time",
+                "Travelers who learn about the local customs in advance"
+              ],
+              "targets": [
+                "REL",
+                "custom",
+                "local",
+                "in advance"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Travelers which learn about local customs in advance",
+                  "right": "Travelers who learn about local customs in advance",
+                  "explanation_zh": "先行詞是人（travelers），關係代名詞用 who（或 that），不用 which。"
+                },
+                {
+                  "wrong": "In advance learn local customs travelers",
+                  "right": "Travelers who learn about local customs in advance",
+                  "explanation_zh": "「…的旅客」修飾語很長，英文要先寫 travelers，再接 who 子句。"
+                }
+              ]
+            },
+            {
+              "zh": "較能避免誤會",
+              "accepted": [
+                "can avoid misunderstanding more easily",
+                "are more likely to avoid misunderstandings",
+                "are better able to avoid misunderstandings",
+                "can more easily avoid misunderstandings"
+              ],
+              "targets": [
+                "avoid",
+                "misunderstanding"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "can more avoid misunderstanding",
+                  "right": "can avoid misunderstanding more easily",
+                  "explanation_zh": "「較能」是「比較容易做到」，用 more easily 或 be more likely to，不能把 more 直接放在助動詞後面。"
+                },
+                {
+                  "wrong": "are more likely to avoid misunderstand",
+                  "right": "are more likely to avoid misunderstandings",
+                  "explanation_zh": "avoid 後面接名詞 misunderstanding(s)；misunderstand 是動詞。"
+                }
+              ]
+            },
+            {
+              "zh": "這也讓",
+              "accepted": [
+                "which also makes",
+                "which also helps make"
+              ],
+              "targets": [
+                "NRREL"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "and this also make",
+                  "right": "which also makes",
+                  "explanation_zh": "「這」指前面整件事，用 , which also makes …；which 代表一件事，動詞加 s。"
+                },
+                {
+                  "wrong": "which also let",
+                  "right": "which also makes",
+                  "explanation_zh": "「讓…更愉快」是使役＋形容詞，用 make + 受詞 + 形容詞；let 後面要接原形動詞。"
+                }
+              ]
+            },
+            {
+              "zh": "他們的旅程更加愉快",
+              "accepted": [
+                "their trips more enjoyable",
+                "their journeys more pleasant",
+                "their trips more pleasant"
+              ],
+              "targets": [
+                "trip",
+                "enjoyable"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "their trips more enjoy",
+                  "right": "their trips more enjoyable",
+                  "explanation_zh": "make + 受詞後面接形容詞 enjoyable；enjoy 是動詞。"
+                },
+                {
+                  "wrong": "their trips more happy",
+                  "right": "their trips more enjoyable",
+                  "explanation_zh": "happy 多用來形容人；旅程「愉快」用 enjoyable／pleasant。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "abstract_nominal",
+              "zh": "誤會",
+              "literal_error": "Travelers who learn about local customs in advance can more easily avoid misunderstand, …",
+              "part": 2,
+              "explanation_zh": "「誤會」在這裡是名詞，avoid 後面要接 misunderstanding(s)；寫成動詞 misunderstand 是詞性錯誤。"
+            },
+            {
+              "type": "prenominal_modifier",
+              "zh": "事先了解當地習俗的旅客",
+              "literal_error": "In advance knowing local customs travelers can avoid …",
+              "part": 1,
+              "explanation_zh": "中文把長修飾語放在「旅客」前面；英文要先寫 travelers，再接 who learn about local customs in advance。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "Travelers who familiarize themselves with local customs beforehand are less prone to misunderstandings, which in turn makes their journeys all the more enjoyable.",
+              "grammar_id": "gp-nonrestrictive",
+              "explanation_zh": "familiarize oneself with（使自己熟悉）、be less prone to（比較不容易…）、in turn（進而）、all the more（更加）讓句子更精煉。"
+            }
+          ],
+          "restructuring_zh": "主詞「事先了解當地習俗的旅客」要改成名詞＋who 子句；「這也讓…」不另起一句，用 , which … 接在後面指前面整件事。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ac-V-3",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-top-04",
+    "lot": "translation-top-04",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "6a9df5361ca910602b338b273c04042b40d0d8c92f6dc2609abebceddbfdb2f7",
+    "spec_id": "translation-top@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T13:27:23Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T13:05:21Z",
+      "details": {
+        "solver": "A",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "In cultures where nodding does not necessarily mean agreement, travelers often find it difficult to interpret what local people really mean.",
+            "confidence": "high",
+            "explanation_zh": "「在……的文化中」用 where 關係副詞子句修飾 cultures；「不一定」譯 not necessarily；「難以」用 find it difficult to；「當地人到底是什麼意思」用 what 名詞子句當受詞，「到底」以 really 表示。"
+          },
+          "2": {
+            "translation": "Travelers who learn about local customs in advance are better able to avoid misunderstandings, which also makes their trips more enjoyable.",
+            "confidence": "high",
+            "explanation_zh": "「事先了解當地習俗的旅客」用關係子句；「較能」譯 are better able to；「這也讓……」指前面整件事，用非限定關係子句 which also makes...；「更加愉快」用比較級 more enjoyable。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "NCL",
+              "REL"
+            ],
+            "used_target_words": [
+              "culture",
+              "nod",
+              "agreement",
+              "mean",
+              "traveler",
+              "interpret",
+              "local"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "建議（不影響判定）：第 1 部分只收縮寫的 doesn't necessarily mean，可補不縮寫的「nodding does not necessarily mean agreement」。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "NRREL",
+              "REL"
+            ],
+            "used_target_words": [
+              "custom",
+              "local",
+              "in advance",
+              "avoid",
+              "misunderstanding",
+              "trip",
+              "enjoyable"
+            ],
+            "within_accepted": true,
+            "closest_reference": 2,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "culture",
+              "nod",
+              "agreement",
+              "mean",
+              "traveler",
+              "interpret",
+              "local"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NCL": true,
+              "REL": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "custom",
+              "local",
+              "in advance",
+              "avoid",
+              "misunderstanding",
+              "trip",
+              "enjoyable"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NRREL": true,
+              "REL": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T13:09:20Z",
+      "details": {
+        "solver": "B",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "In cultures where nodding does not necessarily mean agreement, travelers often find it difficult to interpret what locals really mean.",
+            "confidence": "high",
+            "explanation_zh": "「在……的文化中」用 in cultures where …；「不一定代表」是部分否定 does not necessarily mean；「難以解讀」用 find it difficult to 的形式主詞句型；「到底是什麼意思」用 what locals really mean。"
+          },
+          "2": {
+            "translation": "Travelers who learn about local customs in advance are better able to avoid misunderstandings, which also makes their trips more enjoyable.",
+            "confidence": "high",
+            "explanation_zh": "「事先了解當地習俗的旅客」用關係子句修飾 travelers；「較能避免」用 be better able to；「這也讓……更加愉快」用 which 非限定關係子句加 make + 受詞 + 形容詞比較級。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "NCL",
+              "REL"
+            ],
+            "used_target_words": [
+              "culture",
+              "nod",
+              "agreement",
+              "mean",
+              "traveler",
+              "interpret",
+              "local"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "NRREL",
+              "REL"
+            ],
+            "used_target_words": [
+              "custom",
+              "local",
+              "in advance",
+              "avoid",
+              "misunderstanding",
+              "trip",
+              "enjoyable"
+            ],
+            "within_accepted": true,
+            "closest_reference": 2,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "culture",
+              "nod",
+              "agreement",
+              "mean",
+              "traveler",
+              "interpret",
+              "local"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NCL": true,
+              "REL": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "custom",
+              "local",
+              "in advance",
+              "avoid",
+              "misunderstanding",
+              "trip",
+              "enjoyable"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NRREL": true,
+              "REL": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

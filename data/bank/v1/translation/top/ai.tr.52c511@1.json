@@ -1,0 +1,726 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.52c511",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "top",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "在贊助群眾募資（crowdfunding）的計畫之前，許多人會先上網查看發起人過去做過的事。",
+        "options": null,
+        "answer": "Before supporting a crowdfunding project, many people first go online to check what its creators have done in the past.",
+        "accepted_answers": [
+          "Before backing a crowdfunding project, many people will first search online to find out what the creators have done in the past.",
+          "Before giving money to a crowdfunding project, many people first look online to see what its creators have done in the past."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "連接詞＋分詞（Before + V-ing：在贊助…之前）",
+            "what 名詞子句（發起人過去做過的事＝what its creators have done）"
+          ],
+          "topic": "群眾募資"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "相較於向銀行借錢，群眾募資（crowdfunding）讓更多人有機會實現夢想，不論他們的背景為何。",
+        "options": null,
+        "answer": "Compared with taking out bank loans, crowdfunding offers more people the opportunity to fulfill their dreams, no matter what their backgrounds are.",
+        "accepted_answers": [
+          "Compared with borrowing money from banks, crowdfunding gives more people a chance to realize their dreams, no matter what their backgrounds are.",
+          "In comparison with borrowing from a bank, crowdfunding allows more people to make their dreams come true, no matter what their background is."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "讓步：無論…（no matter what：不論他們的背景為何）",
+            "相較於…（比較片語＋比較級 more people）"
+          ],
+          "topic": "群眾募資"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "群眾募資"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「在贊助…之前」和主要子句的主詞都是「許多人」，可以用連接詞＋分詞 Before supporting a crowdfunding project, …；before 在這裡當介系詞，後面接動名詞。「上網查看」是 go online to check（online 是副詞，不加 to）。「發起人過去做過的事」沒有必要譯出「事」，用 what 名詞子句 what its creators have done in the past 當 check 的受詞，子句內用直述句語序。",
+          "evidence": [
+            "在贊助群眾募資（crowdfunding）的計畫之前",
+            "發起人過去做過的事"
+          ],
+          "strategy_zh": "先確認「贊助」和「查看」是同一群人做的，才能用 Before + V-ing；受詞「…做過的事」用 what 子句。",
+          "hints": [
+            "切成四段：在贊助／群眾募資的計畫／許多人會先上網查看／發起人過去做過的事",
+            "標的詞彙：support（贊助）、project（計畫、案子）、online（在網路上）、creator（發起人）、past（過去）",
+            "句型框架：Before + V-ing …, S + V + to VR + what + S + have p.p. …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「相較於向銀行借錢」用 Compared with taking out bank loans 或 Compared with borrowing money from banks（with 後接動名詞；「向…借」是 borrow from）。主要子句要帶出比較：crowdfunding offers more people the opportunity to fulfill their dreams（或 gives more people a chance to realize their dreams）。句尾「不論他們的背景為何」是讓步，用 no matter what their backgrounds are，no matter what 後面是直述句語序。",
+          "evidence": [
+            "相較於向銀行借錢",
+            "讓更多人有機會實現夢想",
+            "不論他們的背景為何"
+          ],
+          "strategy_zh": "句首比較片語、中間主要子句（記得有 more）、句尾 no matter 子句，三段各自檢查語序。",
+          "hints": [
+            "切成四段：相較於向銀行借錢／群眾募資讓更多人有機會／實現夢想／不論他們的背景為何",
+            "標的詞彙：compare（比較）、bank（銀行）、dream（夢想）、background（背景）",
+            "句型框架：Compared with + V-ing …, S + give + more + N + a chance to VR …, no matter what + S + V"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "Before supporting a crowdfunding project, many people first go online to check what its creators have done in the past.",
+            "Before backing a crowdfunding project, many people will first search online to find out what the creators have done in the past.",
+            "Before giving money to a crowdfunding project, many people first look online to see what its creators have done in the past."
+          ],
+          "target_words": [
+            {
+              "word": "support",
+              "zh": "贊助、支持",
+              "alternatives": [
+                "back",
+                "give money to",
+                "sponsor",
+                "fund"
+              ]
+            },
+            {
+              "word": "project",
+              "zh": "計畫、案子",
+              "alternatives": [
+                "campaign"
+              ]
+            },
+            {
+              "word": "online",
+              "zh": "在網路上",
+              "alternatives": [
+                "Internet"
+              ]
+            },
+            {
+              "word": "creator",
+              "zh": "發起人、創作者",
+              "alternatives": [
+                "founder",
+                "organizer",
+                "initiator",
+                "starter"
+              ]
+            },
+            {
+              "word": "past",
+              "zh": "過去"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PART",
+              "grammar_id": "gp-conj-participle",
+              "label_zh": "連接詞＋分詞（Before + V-ing：在贊助…之前）",
+              "frame": "Before + V-ing …, S + V …（分詞的主詞＝主要子句的主詞）",
+              "zh_trigger": "在贊助群眾募資（crowdfunding）的計畫之前"
+            },
+            {
+              "code": "NCL",
+              "grammar_id": "gp-what-clause",
+              "label_zh": "what 名詞子句（發起人過去做過的事＝what its creators have done）",
+              "frame": "S + V + what + S + have p.p. …",
+              "zh_trigger": "發起人過去做過的事"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "在贊助",
+              "accepted": [
+                "Before supporting",
+                "Before backing",
+                "Before giving money to",
+                "Before sponsoring",
+                "Before funding"
+              ],
+              "targets": [
+                "PART",
+                "support"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Before support",
+                  "right": "Before supporting",
+                  "explanation_zh": "before 在這裡是介系詞，後面接動名詞 supporting。"
+                },
+                {
+                  "wrong": "Before supported",
+                  "right": "Before supporting",
+                  "explanation_zh": "「贊助」的是主要子句的主詞（many people），主動用現在分詞 supporting。"
+                }
+              ]
+            },
+            {
+              "zh": "群眾募資（crowdfunding）的計畫",
+              "accepted": [
+                "a crowdfunding project",
+                "a crowdfunding campaign",
+                "crowdfunding projects",
+                "a project on a crowdfunding website"
+              ],
+              "targets": [
+                "project"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "a crowdfunding plan",
+                  "right": "a crowdfunding project",
+                  "explanation_zh": "這裡的「計畫」是需要資金的案子，用 project；plan 是「打算、規劃」。"
+                }
+              ]
+            },
+            {
+              "zh": "許多人會先上網查看",
+              "accepted": [
+                "many people first go online to check",
+                "many people will first search online to find out",
+                "many people first look online to see",
+                "many people will first go online to check",
+                "many people first check online",
+                "many people will first check on the Internet"
+              ],
+              "targets": [
+                "online"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "many people will first go to online to check",
+                  "right": "many people will first go online to check",
+                  "explanation_zh": "online 在這裡是副詞，go online 中間不加 to。"
+                },
+                {
+                  "wrong": "many people first go online check",
+                  "right": "many people first go online to check",
+                  "explanation_zh": "兩個動作之間要用不定詞 to 連接（表目的）。"
+                }
+              ]
+            },
+            {
+              "zh": "發起人過去做過的事",
+              "accepted": [
+                "what its creators have done in the past",
+                "what the creators have done in the past",
+                "what its creators did in the past",
+                "what the people behind it have done in the past",
+                "what its founders have done in the past",
+                "the things its creators have done in the past"
+              ],
+              "targets": [
+                "NCL",
+                "creator",
+                "past"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "its creators' past done things",
+                  "right": "what its creators have done in the past",
+                  "explanation_zh": "中文「…做過的事」是前置修飾；英文改用 what 名詞子句（＝the things that …）。"
+                },
+                {
+                  "wrong": "what have its creators done in the past",
+                  "right": "what its creators have done in the past",
+                  "explanation_zh": "what 子句當受詞，用直述句語序。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "collocation",
+              "zh": "計畫",
+              "literal_error": "Before supporting a crowdfunding plan, many people first go online to check …",
+              "part": 2,
+              "explanation_zh": "「群眾募資的計畫」是正在募款的案子，英文用 project／campaign；plan 指「打算、規劃」，搭配不對。"
+            },
+            {
+              "type": "prenominal_modifier",
+              "zh": "發起人過去做過的事",
+              "literal_error": "many people first go online to check its creators' past done things",
+              "part": 4,
+              "explanation_zh": "中文把「發起人過去做過的」放在「事」前面；英文要改成 what 名詞子句 what its creators have done in the past。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "Only after checking what the creators have achieved in the past do many people decide to back a crowdfunding project.",
+              "grammar_id": "gp-only-inversion",
+              "explanation_zh": "用 Only after + V-ing + 助動詞 + S + V 的倒裝，強調「先查過才贊助」；只當加分寫法。"
+            }
+          ],
+          "restructuring_zh": "「發起人過去做過的事」中文把修飾語放在「事」前面，英文改寫成 what 名詞子句 what its creators have done in the past；「在贊助…之前」的主詞和主要子句相同（許多人），可簡化成 Before + V-ing。"
+        },
+        "2": {
+          "references": [
+            "Compared with taking out bank loans, crowdfunding offers more people the opportunity to fulfill their dreams, no matter what their backgrounds are.",
+            "Compared with borrowing money from banks, crowdfunding gives more people a chance to realize their dreams, no matter what their backgrounds are.",
+            "In comparison with borrowing from a bank, crowdfunding allows more people to make their dreams come true, no matter what their background is."
+          ],
+          "target_words": [
+            {
+              "word": "compare",
+              "zh": "比較",
+              "alternatives": [
+                "comparison"
+              ]
+            },
+            {
+              "word": "bank",
+              "zh": "銀行"
+            },
+            {
+              "word": "dream",
+              "zh": "夢想"
+            },
+            {
+              "word": "background",
+              "zh": "背景"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "ADVCL",
+              "grammar_id": "gp-no-matter",
+              "label_zh": "讓步：無論…（no matter what：不論他們的背景為何）",
+              "frame": "S + V …, no matter what + S + V（直述句語序）",
+              "zh_trigger": "不論他們的背景為何"
+            },
+            {
+              "code": "COMP",
+              "grammar_id": "gp-compared-with",
+              "label_zh": "相較於…（比較片語＋比較級 more people）",
+              "frame": "Compared with + V-ing/N, S + V + more + N …",
+              "zh_trigger": "相較於向銀行借錢"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "相較於向銀行借錢",
+              "accepted": [
+                "Compared with taking out bank loans",
+                "Compared with borrowing money from banks",
+                "In comparison with borrowing from a bank",
+                "Compared with borrowing from banks",
+                "Compared with getting loans from banks",
+                "Compared to borrowing money from a bank"
+              ],
+              "targets": [
+                "compare",
+                "bank"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Compared with borrowing money to banks",
+                  "right": "Compared with borrowing money from banks",
+                  "explanation_zh": "「向…借」是 borrow from；lend to 才是「借給」。"
+                },
+                {
+                  "wrong": "Compared with borrow money from banks",
+                  "right": "Compared with borrowing money from banks",
+                  "explanation_zh": "with 是介系詞，後面接動名詞 borrowing。"
+                }
+              ]
+            },
+            {
+              "zh": "群眾募資（crowdfunding）讓更多人有機會",
+              "accepted": [
+                "crowdfunding offers more people the opportunity",
+                "crowdfunding gives more people a chance",
+                "crowdfunding allows more people",
+                "crowdfunding gives more people the chance",
+                "crowdfunding gives more people an opportunity",
+                "crowdfunding makes it possible for more people"
+              ],
+              "targets": [
+                "COMP"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "crowdfunding lets more people have chance",
+                  "right": "crowdfunding gives more people a chance",
+                  "explanation_zh": "chance 是可數名詞，要加 a；「讓…有機會」用 give sb a chance 或 allow sb to VR 較自然。"
+                },
+                {
+                  "wrong": "crowdfunding makes more people can",
+                  "right": "crowdfunding allows more people to",
+                  "explanation_zh": "make 後面不能接 can；改用 allow sb to VR。"
+                }
+              ]
+            },
+            {
+              "zh": "實現夢想",
+              "accepted": [
+                "to fulfill their dreams",
+                "to realize their dreams",
+                "to make their dreams come true",
+                "to achieve their dreams"
+              ],
+              "targets": [
+                "dream"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "to realize dream",
+                  "right": "to realize their dreams",
+                  "explanation_zh": "每個人各有夢想，用 their dreams（可數名詞複數）。"
+                },
+                {
+                  "wrong": "to make their dreams to come true",
+                  "right": "to make their dreams come true",
+                  "explanation_zh": "使役動詞 make 後面接原形 come。"
+                }
+              ]
+            },
+            {
+              "zh": "不論他們的背景為何",
+              "accepted": [
+                "no matter what their backgrounds are",
+                "no matter what background they come from",
+                "no matter what their background is",
+                "whatever their backgrounds are",
+                "whatever their background is",
+                "regardless of their backgrounds"
+              ],
+              "targets": [
+                "ADVCL",
+                "background"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "no matter what are their backgrounds",
+                  "right": "no matter what their backgrounds are",
+                  "explanation_zh": "no matter what 後面用直述句語序：主詞＋動詞。"
+                },
+                {
+                  "wrong": "no matter their backgrounds are what",
+                  "right": "no matter what their backgrounds are",
+                  "explanation_zh": "疑問詞 what 要緊接在 no matter 後面。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "collocation",
+              "zh": "向銀行借錢",
+              "literal_error": "Compared with borrowing money to banks, crowdfunding gives more people a chance …",
+              "part": 1,
+              "explanation_zh": "「向銀行借錢」是 borrow money from a bank；照中文「向」寫成 to 會變成 lend to 的方向，意思相反。"
+            },
+            {
+              "type": "plural_countable",
+              "zh": "實現夢想",
+              "literal_error": "crowdfunding gives more people a chance to realize dream",
+              "part": 3,
+              "explanation_zh": "中文「夢想」沒有單複數；英文 dream 是可數名詞，更多人的夢想要寫 their dreams。"
+            }
+          ],
+          "bonus": []
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ac-V-3",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-top-03",
+    "lot": "translation-top-03",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "31117a6d4ea07290a38612cba619cca8744c8f0cc9141fe199063ce8d6f7050e",
+    "spec_id": "translation-top@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 2,
+    "sentences": 2,
+    "avg_sentence_length": 1.0,
+    "denominator": 2,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 1.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {
+      "off": 2
+    },
+    "offlist_words": [
+      "crowdfunding"
+    ],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T13:17:17Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "warn",
+      "created_at": "2026-10-09T12:52:43Z",
+      "details": {
+        "solver": "A",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Before supporting a crowdfunding project, many people will first go online to check what its organizer has done in the past.",
+            "confidence": "high",
+            "explanation_zh": "「在…之前」用介系詞＋V-ing（Before supporting）；「發起人過去做過的事」用 what 名詞子句當 check 的受詞；「贊助」用 support（也可用 fund、back）；「發起人」譯 organizer（也可 creator、founder）。"
+          },
+          "2": {
+            "translation": "Compared with borrowing money from banks, crowdfunding gives more people a chance to make their dreams come true, no matter what their backgrounds are.",
+            "confidence": "high",
+            "explanation_zh": "「相較於向銀行借錢」用 Compared with＋V-ing；「讓更多人有機會」用 give sb a chance to；「不論他們的背景為何」用 no matter what 讓步子句（也可 regardless of their backgrounds）。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PART",
+              "NCL"
+            ],
+            "used_target_words": [
+              "support",
+              "project",
+              "online",
+              "creator",
+              "past"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "第 4 部分「發起人過去做過的事」的 accepted 都是複數（creators、founders、the people behind it），沒有單數的 what its creator/organizer has done in the past；中文「發起人」不分單複數，單數一樣正確（我的盲譯用 its organizer has done）。target_words 已把 organizer、founder 列為 alternatives，accepted 也應補單數寫法。",
+              "標的句型標成 PART（gp-conj-participle，「連接詞＋分詞」），但第 1 部分常見錯誤的說明寫「before 在這裡是介系詞，後面接動名詞 supporting」，兩處對 Before + V-ing 的分析不一致；建議統一說法（或改用 PREPVING）。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "ADVCL",
+              "COMP"
+            ],
+            "used_target_words": [
+              "compare",
+              "bank",
+              "dream",
+              "background"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "support",
+              "project",
+              "online",
+              "creator",
+              "past"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PART": true,
+              "NCL": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "compare",
+              "bank",
+              "dream",
+              "background"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "ADVCL": true,
+              "COMP": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 1 題驗證者對4 部分切分有意見（warn）：第 4 部分「發起人過去做過的事」的 accepted 都是複數（creators、founders、the people behind it），沒有單數的 what its creator/organizer has done in th"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "fail",
+      "created_at": "2026-10-09T12:59:49Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Before backing a crowdfunding project, many people go online to check what its creator has done in the past.",
+            "confidence": "high",
+            "explanation_zh": "「在…之前」用 before + 動名詞；「贊助」譯為 back／support；「發起人過去做過的事」用 what 子句加現在完成式 has done，呼應「過去做過」。"
+          },
+          "2": {
+            "translation": "Compared with borrowing money from banks, crowdfunding gives more people the chance to realize their dreams, regardless of their backgrounds.",
+            "confidence": "high",
+            "explanation_zh": "「相較於向銀行借錢」用 compared with + 動名詞片語；「讓更多人有機會實現夢想」用 give … the chance to V；「不論他們的背景為何」用 regardless of。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PART",
+              "NCL"
+            ],
+            "used_target_words": [
+              "support",
+              "project",
+              "online",
+              "creator",
+              "past"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "COMP"
+            ],
+            "used_target_words": [
+              "compare",
+              "bank",
+              "dream",
+              "background"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "「不論他們的背景為何」我譯成 regardless of their backgrounds（介系詞片語，accepted 有收），沒有用 no matter what 子句，所以 ADVCL（S + V …, no matter what + S + V）沒被引出；中文不限定要用子句。",
+              "第 4 部分的 accepted 同時收了 regardless of their backgrounds，目標卻標 ADVCL（副詞子句），標記不一致。建議把 regardless of 從該部分 accepted 拿掉，或把 ADVCL 的句型說明放寬到「讓步結構」。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "support",
+              "project",
+              "online",
+              "creator",
+              "past"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PART": true,
+              "NCL": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "compare",
+              "bank",
+              "dream",
+              "background"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "COMP": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 2 題盲譯沒有用到標的句型 ['ADVCL']：中文題目沒有自然引出這個句型（SPEC §5.7）",
+          "第 2 題驗證者對4 部分切分有意見（warn）：「不論他們的背景為何」我譯成 regardless of their backgrounds（介系詞片語，accepted 有收），沒有用 no matter what 子句，所以 ADVCL（S + V …, no matter what"
+        ]
+      }
+    }
+  ],
+  "status": "rejected",
+  "status_reason": "blind_solver:B 未通過：第 2 題盲譯沒有用到標的句型 ['ADVCL']：中文題目沒有自然引出這個句型（SPEC §5.7）；第 2 題驗證者對4 部分切分有意見（warn）：「不論他們的背景為何」我譯成 regardless of their backgrounds（介系詞片語，accepted 有收），沒有用 no matter what 子句，所以 ADVCL（S + V …, no matter what"
+}

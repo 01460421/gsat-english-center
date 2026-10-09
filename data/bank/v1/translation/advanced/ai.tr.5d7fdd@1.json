@@ -1,0 +1,727 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.5d7fdd",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "advanced",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "因羨慕網路上別人的完美生活，許多年輕人不再確定自己是否快樂。",
+        "options": null,
+        "answer": "Because they envy the perfect lives of others online, many young people are no longer sure whether they are happy.",
+        "accepted_answers": [
+          "Envying other people's perfect lives online, many young people no longer know if they are happy.",
+          "Since they are jealous of the perfect lives others show online, many young people no longer feel sure whether they are happy."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "間接問句（whether 名詞子句）",
+            "不再（no longer）"
+          ],
+          "topic": "社群媒體上的比較"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "因此，他們不但要學習如何建立自信，也該減少使用社群媒體的時間。",
+        "options": null,
+        "answer": "Therefore, they should not only learn how to build confidence but also reduce the time they spend on social media.",
+        "accepted_answers": [
+          "Therefore, they should not only learn how to be more confident but also spend less time on social media.",
+          "As a result, they should not only learn how to build their self-confidence but also cut down on their time on social media."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "疑問詞＋不定詞（how to…）",
+            "不但…而且…（not only … but also）"
+          ],
+          "topic": "社群媒體上的比較"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "社群媒體上的比較"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「因羨慕…」中文省略主詞，英文要寫成 Because they envy …（或分詞構句 Envying …）；envy 是動詞，「羨慕的」形容詞要用 jealous／envious。「網路上別人的完美生活」改成後位修飾：the perfect lives of others online。「不再」用 no longer（放在 be 動詞後或一般動詞前）。「是否快樂」是間接問句，用 whether／if＋主詞＋動詞：whether they are happy。",
+          "evidence": [
+            "因羨慕網路上別人的完美生活",
+            "不再確定自己是否快樂"
+          ],
+          "strategy_zh": "「是否」→ whether／if 間接問句，語序是主詞在前、動詞在後；「不再」→ no longer，不要寫成 not … again。",
+          "hints": [
+            "切成四段：因羨慕／網路上別人的完美生活／許多年輕人不再／確定自己是否快樂",
+            "標的詞彙：envy（羨慕）、perfect（完美的）、online（在網路上）、sure（確定的）、happy（快樂的）",
+            "句型框架：Because + S + V …, S + be + no longer sure + whether + S + V"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「不但…也…」用 not only … but also，兩邊接同形式的原形動詞：should not only learn … but also reduce …。「如何建立自信」用疑問詞＋不定詞 how to build confidence（confidence 是名詞）。「使用社群媒體的時間」是前置修飾，改成 the time they spend on social media。",
+          "evidence": [
+            "不但要學習如何建立自信",
+            "也該減少使用社群媒體的時間"
+          ],
+          "strategy_zh": "not only … but also 前後要對稱：先找出中文「不但」「也」後面各是什麼詞性，再用同樣的形式翻譯。",
+          "hints": [
+            "切成四段：因此，他們不但要／學習如何建立自信／也該減少／使用社群媒體的時間",
+            "標的詞彙：learn（學習）、confidence（自信）、reduce（減少）、social media（社群媒體）、time（時間）",
+            "句型框架：S + should not only + VR1 + how to VR … but also + VR2 …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "Because they envy the perfect lives of others online, many young people are no longer sure whether they are happy.",
+            "Envying other people's perfect lives online, many young people no longer know if they are happy.",
+            "Since they are jealous of the perfect lives others show online, many young people no longer feel sure whether they are happy."
+          ],
+          "target_words": [
+            {
+              "word": "envy",
+              "zh": "羨慕",
+              "alternatives": [
+                "jealous",
+                "envious"
+              ]
+            },
+            {
+              "word": "perfect",
+              "zh": "完美的"
+            },
+            {
+              "word": "online",
+              "zh": "在網路上",
+              "alternatives": [
+                "on the Internet",
+                "internet",
+                "social media"
+              ]
+            },
+            {
+              "word": "sure",
+              "zh": "確定的",
+              "alternatives": [
+                "know",
+                "certain"
+              ]
+            },
+            {
+              "word": "happy",
+              "zh": "快樂的"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "NCL",
+              "grammar_id": "gp-wh-clause",
+              "label_zh": "間接問句（whether 名詞子句）",
+              "frame": "S + be sure / know + whether / if + S + V（直述句語序）",
+              "zh_trigger": "是否"
+            },
+            {
+              "code": "BASIC",
+              "grammar_id": "gp-no-longer",
+              "label_zh": "不再（no longer）",
+              "frame": "S + no longer + V ／ S + be + no longer + adj.",
+              "zh_trigger": "不再"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "因羨慕",
+              "accepted": [
+                "Because they envy",
+                "Envying",
+                "Since they are jealous of",
+                "Because they are jealous of",
+                "Since they envy",
+                "Being jealous of"
+              ],
+              "targets": [
+                "envy"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Because they are envy",
+                  "right": "Because they envy",
+                  "explanation_zh": "envy 是動詞（或名詞），不能放在 be 動詞後當形容詞；形容詞要用 jealous／envious。"
+                },
+                {
+                  "wrong": "Because envy",
+                  "right": "Because they envy",
+                  "explanation_zh": "because 引導子句，要補上主詞 they（中文省略了）。"
+                }
+              ]
+            },
+            {
+              "zh": "網路上別人的完美生活",
+              "accepted": [
+                "the perfect lives of others online",
+                "other people's perfect lives online",
+                "the perfect lives others show online",
+                "others' perfect lives on the Internet",
+                "the perfect lives of other people online",
+                "other people's perfect lives on social media"
+              ],
+              "targets": [
+                "perfect",
+                "online"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "online others' perfect life",
+                  "right": "the perfect lives of others online",
+                  "explanation_zh": "地點修飾語 online 放在名詞後面；「別人的生活」是很多人的生活，用複數 lives。"
+                },
+                {
+                  "wrong": "the perfect lifes of others",
+                  "right": "the perfect lives of others",
+                  "explanation_zh": "life 的複數是 lives。"
+                }
+              ]
+            },
+            {
+              "zh": "許多年輕人不再",
+              "accepted": [
+                "many young people are no longer",
+                "many young people no longer",
+                "a lot of young people are no longer",
+                "lots of young people are no longer",
+                "many young people now no longer"
+              ],
+              "targets": [
+                "BASIC"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "many young people don't again",
+                  "right": "many young people no longer",
+                  "explanation_zh": "「不再」是 no longer 或 not … anymore，不是 not … again（不會再一次）。"
+                },
+                {
+                  "wrong": "many young people are no longer to be sure",
+                  "right": "many young people are no longer sure",
+                  "explanation_zh": "no longer 放在 be 動詞後面，直接接形容詞 sure。"
+                }
+              ]
+            },
+            {
+              "zh": "確定自己是否快樂",
+              "accepted": [
+                "sure whether they are happy",
+                "know if they are happy",
+                "feel sure whether they are happy",
+                "sure if they are happy",
+                "know whether they are happy",
+                "certain whether they are happy"
+              ],
+              "targets": [
+                "NCL",
+                "sure",
+                "happy"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "sure whether are they happy",
+                  "right": "sure whether they are happy",
+                  "explanation_zh": "間接問句用直述句語序：whether＋主詞＋動詞。"
+                },
+                {
+                  "wrong": "sure whether themselves are happy",
+                  "right": "sure whether they are happy",
+                  "explanation_zh": "子句主詞用主格 they。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "subjectless",
+              "zh": "因羨慕",
+              "literal_error": "Because envy other people's perfect lives online, many young people …",
+              "part": 1,
+              "explanation_zh": "中文前半句省略主詞，英文 because 子句要補 they，或改成分詞 Envying …。"
+            },
+            {
+              "type": "prenominal_modifier",
+              "zh": "網路上別人的完美生活",
+              "literal_error": "online others' perfect life",
+              "part": 2,
+              "explanation_zh": "「網路上」放在名詞前是中文語序，英文要放到後面：the perfect lives of others online。"
+            }
+          ],
+          "bonus": [],
+          "restructuring_zh": "前半句「因羨慕…」中文沒有主詞，英文要補成 Because they envy …（或用分詞 Envying …）；「網路上別人的完美生活」要把地點修飾語移到名詞後面：the perfect lives of others online。"
+        },
+        "2": {
+          "references": [
+            "Therefore, they should not only learn how to build confidence but also reduce the time they spend on social media.",
+            "Therefore, they should not only learn how to be more confident but also spend less time on social media.",
+            "As a result, they should not only learn how to build their self-confidence but also cut down on their time on social media."
+          ],
+          "target_words": [
+            {
+              "word": "learn",
+              "zh": "學習"
+            },
+            {
+              "word": "confidence",
+              "zh": "自信",
+              "alternatives": [
+                "confident",
+                "self-confidence"
+              ]
+            },
+            {
+              "word": "reduce",
+              "zh": "減少",
+              "alternatives": [
+                "less",
+                "cut down",
+                "limit"
+              ]
+            },
+            {
+              "word": "social media",
+              "zh": "社群媒體"
+            },
+            {
+              "word": "time",
+              "zh": "時間"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "NCL",
+              "grammar_id": "gp-wh-to",
+              "label_zh": "疑問詞＋不定詞（how to…）",
+              "frame": "learn + how + to VR",
+              "zh_trigger": "如何"
+            },
+            {
+              "code": "CORR",
+              "grammar_id": "gp-not-only-but-also",
+              "label_zh": "不但…而且…（not only … but also）",
+              "frame": "S + should + not only + VR1 … but also + VR2 …（前後同詞性）",
+              "zh_trigger": "不但"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "因此，他們不但要",
+              "accepted": [
+                "Therefore, they should not only",
+                "As a result, they should not only",
+                "So they should not only",
+                "Thus, they should not only",
+                "Therefore, they need not only to",
+                "Therefore, they must not only"
+              ],
+              "targets": [
+                "CORR"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Therefore, they should not only to learn",
+                  "right": "Therefore, they should not only learn",
+                  "explanation_zh": "should 後面接原形動詞，not only 不改變這個規則。"
+                }
+              ]
+            },
+            {
+              "zh": "學習如何建立自信",
+              "accepted": [
+                "learn how to build confidence",
+                "learn how to be more confident",
+                "learn how to build their self-confidence",
+                "learn how to build up their confidence",
+                "learn how to become more confident",
+                "learn how to build self-confidence"
+              ],
+              "targets": [
+                "NCL",
+                "learn",
+                "confidence"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "learn how to build confident",
+                  "right": "learn how to build confidence",
+                  "explanation_zh": "build 後面接名詞 confidence；confident 是形容詞（be confident）。"
+                },
+                {
+                  "wrong": "learn how building confidence",
+                  "right": "learn how to build confidence",
+                  "explanation_zh": "疑問詞後面接不定詞：how to＋原形動詞。"
+                }
+              ]
+            },
+            {
+              "zh": "也該減少",
+              "accepted": [
+                "but also reduce",
+                "but also spend less",
+                "but also cut down on",
+                "but also limit",
+                "but should also reduce",
+                "but also decrease"
+              ],
+              "targets": [
+                "CORR",
+                "reduce"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "but also reducing",
+                  "right": "but also reduce",
+                  "explanation_zh": "not only … but also 連接的兩個動詞要同形式：learn … reduce …。"
+                },
+                {
+                  "wrong": "and also reduce",
+                  "right": "but also reduce",
+                  "explanation_zh": "not only 要和 but (also) 搭配。"
+                }
+              ]
+            },
+            {
+              "zh": "使用社群媒體的時間",
+              "accepted": [
+                "the time they spend on social media",
+                "time on social media",
+                "their time on social media",
+                "the time spent on social media",
+                "the amount of time they spend on social media",
+                "how much time they spend on social media"
+              ],
+              "targets": [
+                "social media",
+                "time"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "using social media's time",
+                  "right": "the time they spend on social media",
+                  "explanation_zh": "「使用社群媒體的時間」要把 time 放前面，修飾語放後面：the time (that) they spend on social media。"
+                },
+                {
+                  "wrong": "the time they spend on social medias",
+                  "right": "the time they spend on social media",
+                  "explanation_zh": "media 本身就是複數形，不加 s。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "word_form",
+              "zh": "建立自信",
+              "literal_error": "learn how to build confident",
+              "part": 2,
+              "explanation_zh": "「自信」是名詞 confidence；confident 是形容詞，要用 be／become confident。"
+            },
+            {
+              "type": "prenominal_modifier",
+              "zh": "使用社群媒體的時間",
+              "literal_error": "reduce using social media time",
+              "part": 4,
+              "explanation_zh": "「使用社群媒體的時間」要改成後位修飾：the time they spend on social media。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "Therefore, not only should they learn how to build confidence, but they should also reduce the time they spend on social media.",
+              "grammar_id": "gp-not-only-inversion",
+              "explanation_zh": "Not only 放句首時，後面的子句要倒裝（should they learn）。這是加分寫法，一般的 not only … but also 就能拿滿分。"
+            }
+          ],
+          "restructuring_zh": "「使用社群媒體的時間」是前置修飾，英文要改成 the time they spend on social media（time 後面接省略 that 的形容詞子句）；「不但…也…」要讓 not only 和 but also 後面接同樣形式的原形動詞。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-advanced-01",
+    "lot": "translation-advanced-01",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "aabb674c20baad2f5310b8b4d808a265893e2edf0c2a598bf8b873bfdfb38f0f",
+    "spec_id": "translation-advanced@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T12:42:28Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T07:45:00Z",
+      "details": {
+        "solver": "A",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Envying other people's perfect lives on the Internet, many young people are no longer sure whether they are happy.",
+            "confidence": "medium",
+            "explanation_zh": "「因羨慕……」與主要子句同主詞，用分詞構句 Envying … 表原因（也可寫 Because they envy …）；「不再確定自己是否快樂」用 no longer sure whether 名詞子句；「網路上別人的完美生活」譯 other people's perfect lives on the Internet，lives 用複數。信心 medium 是因為原因部分可用分詞構句或 because 子句。"
+          },
+          "2": {
+            "translation": "Therefore, they should not only learn how to build self-confidence but also reduce the time they spend on social media.",
+            "confidence": "high",
+            "explanation_zh": "「不但……也……」用 not only … but also，前後都接原形動詞保持對稱；「如何建立自信」用 how to build self-confidence；「減少使用社群媒體的時間」譯 reduce the time they spend on social media。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "NCL",
+              "BASIC"
+            ],
+            "used_target_words": [
+              "envy",
+              "perfect",
+              "online",
+              "sure",
+              "happy"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "（小建議，不影響判定）R2 用 be jealous of，語氣偏「嫉妒」，比「羨慕」強；可接受，但 envy／be envious of 較貼切。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "NCL",
+              "CORR"
+            ],
+            "used_target_words": [
+              "learn",
+              "confidence",
+              "reduce",
+              "social media",
+              "time"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "（小建議，不影響判定）標的句型代碼 NCL 對應的是 how to＋VR（gp-wh-to，疑問詞＋不定詞），嚴格說是名詞片語而不是名詞子句；不影響題目品質，但程式若用 NCL 粗略比對子句可能出 warning。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "envy",
+              "perfect",
+              "online",
+              "sure",
+              "happy"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NCL": true,
+              "BASIC": null
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "learn",
+              "confidence",
+              "reduce",
+              "social media",
+              "time"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NCL": true,
+              "CORR": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T07:46:21Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Because they envy other people's perfect lives online, many young people are no longer sure whether they are happy.",
+            "confidence": "high",
+            "explanation_zh": "「因羨慕…」改成 Because they envy 的副詞子句（也可用 Envious of ...）；「不再確定」是 are no longer sure；「是否」用 whether 引導名詞子句。"
+          },
+          "2": {
+            "translation": "Therefore, they should not only learn how to build self-confidence but also reduce the time they spend on social media.",
+            "confidence": "high",
+            "explanation_zh": "「不但…也…」用 not only ... but also ... 且兩邊結構平行（learn / reduce）；「該」用 should；「減少使用社群媒體的時間」用 reduce the time they spend on social media，以關係子句修飾 time。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "NCL",
+              "BASIC"
+            ],
+            "used_target_words": [
+              "envy",
+              "perfect",
+              "online",
+              "sure",
+              "happy"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "NCL",
+              "CORR"
+            ],
+            "used_target_words": [
+              "learn",
+              "confidence",
+              "reduce",
+              "social media",
+              "time"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "envy",
+              "perfect",
+              "online",
+              "sure",
+              "happy"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NCL": true,
+              "BASIC": null
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "learn",
+              "confidence",
+              "reduce",
+              "social media",
+              "time"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NCL": true,
+              "CORR": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

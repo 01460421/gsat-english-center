@@ -1,0 +1,706 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.dd6f3c",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "advanced",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "為了節省紙張、保護森林，政府鼓勵民眾用電子發票取代紙本收據。",
+        "options": null,
+        "answer": "To save paper and protect forests, the government encourages people to replace paper receipts with electronic ones.",
+        "accepted_answers": [
+          "In order to save paper and protect forests, the government encourages the public to use e-invoices instead of paper receipts.",
+          "The government encourages people to replace paper receipts with e-invoices in order to save paper and protect forests."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "不定詞表目的",
+            "平行結構"
+          ],
+          "topic": "電子發票"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "這些發票會存在手機裡，好讓民眾隨時查看，也不必擔心弄丟。",
+        "options": null,
+        "answer": "They are stored in phones so that people can check them anytime and never have to worry about losing them.",
+        "accepted_answers": [
+          "These invoices are kept in phones so that people can check them at any time and do not have to worry about losing them.",
+          "They are stored in mobile phones so that people can look at them anytime and won't need to worry about losing them."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "目的：so that",
+            "平行結構"
+          ],
+          "topic": "電子發票"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "電子發票"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「為了…」表目的，句首用不定詞 To + 原形動詞（或 In order to），後面加逗號再接主要子句。「節省紙張、保護森林」是兩個並列的目的，to save paper and (to) protect forests 形式要一致（平行結構）；paper 指紙張時不可數。「鼓勵民眾…」是 encourage + 受詞 + to VR。「用 A 取代 B」是 replace B with A，或 use A instead of B；電子發票可以寫 e-invoices 或 electronic receipts（electronic ones）。",
+          "evidence": [
+            "為了節省紙張、保護森林",
+            "用電子發票取代紙本收據"
+          ],
+          "strategy_zh": "目的放句首時想 To VR …, S + V；並列的動作用 and 連接、形式一致。",
+          "hints": [
+            "切成四段：為了節省紙張／保護森林／政府鼓勵民眾／用電子發票取代紙本收據",
+            "標的詞彙：save（節省）、protect（保護）、forest（森林）、encourage（鼓勵）、replace（取代）、receipt（收據）",
+            "句型框架：To VR₁ … and VR₂ …, S + encourage + O + to replace B with A"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「好讓…」表目的，後面的主詞換成民眾，用 so that + people + can …。「隨時查看」和「不必擔心弄丟」是 can 後面並列的兩個動作：can check them anytime and never have to worry about losing them，形式要一致（平行結構）。發票是「被」存進手機，用被動 are stored；worry about 後面接動名詞 losing。這一句的 They 指上一句的電子發票。",
+          "evidence": [
+            "好讓民眾隨時查看",
+            "也不必擔心弄丟"
+          ],
+          "strategy_zh": "目的子句的主詞和主要子句不同時，用 so that + S + can …；兩個並列的動作要用同樣的形式。",
+          "hints": [
+            "切成四段：這些發票會存在手機裡／好讓民眾／隨時查看／也不必擔心弄丟",
+            "標的詞彙：store（儲存）、phone（手機）、check（查看）、anytime（隨時）、worry（擔心）、lose（弄丟）",
+            "句型框架：S + be + p.p. … so that + S + can + VR₁ … and never have to VR₂ …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "To save paper and protect forests, the government encourages people to replace paper receipts with electronic ones.",
+            "In order to save paper and protect forests, the government encourages the public to use e-invoices instead of paper receipts.",
+            "The government encourages people to replace paper receipts with e-invoices in order to save paper and protect forests."
+          ],
+          "target_words": [
+            {
+              "word": "save",
+              "zh": "節省"
+            },
+            {
+              "word": "protect",
+              "zh": "保護"
+            },
+            {
+              "word": "forest",
+              "zh": "森林"
+            },
+            {
+              "word": "encourage",
+              "zh": "鼓勵"
+            },
+            {
+              "word": "replace",
+              "zh": "取代",
+              "alternatives": [
+                "instead of"
+              ]
+            },
+            {
+              "word": "receipt",
+              "zh": "收據"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PURP",
+              "grammar_id": "gp-infinitive-purpose",
+              "label_zh": "不定詞表目的（為了…）",
+              "frame": "To / In order to + VR …, S + V …",
+              "zh_trigger": "為了"
+            },
+            {
+              "code": "PARA",
+              "grammar_id": "gp-parallelism",
+              "label_zh": "平行結構（to save … and (to) protect …）",
+              "frame": "to VR₁ … and (to) VR₂ …",
+              "zh_trigger": "節省紙張、保護森林"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "為了節省紙張",
+              "accepted": [
+                "To save paper",
+                "In order to save paper",
+                "So as to save paper",
+                "To reduce paper use"
+              ],
+              "targets": [
+                "PURP",
+                "save"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "For saving paper",
+                  "right": "To save paper",
+                  "explanation_zh": "表目的用不定詞 to + 原形動詞（或 in order to）。"
+                },
+                {
+                  "wrong": "To save papers",
+                  "right": "To save paper",
+                  "explanation_zh": "paper 指紙張時是不可數名詞，不加 s。"
+                }
+              ]
+            },
+            {
+              "zh": "保護森林",
+              "accepted": [
+                "and protect forests",
+                "and to protect forests",
+                "and protect the forests",
+                "and protect trees"
+              ],
+              "targets": [
+                "PARA",
+                "protect",
+                "forest"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "and protecting forests",
+                  "right": "and protect forests",
+                  "explanation_zh": "平行結構：to save … and (to) protect …，兩個動作的形式要一致。"
+                }
+              ]
+            },
+            {
+              "zh": "政府鼓勵民眾",
+              "accepted": [
+                "the government encourages people",
+                "the government encourages the public",
+                "the government encourages citizens",
+                "the government is encouraging people"
+              ],
+              "targets": [
+                "encourage"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "the government encourage people",
+                  "right": "the government encourages people",
+                  "explanation_zh": "the government 是單數，動詞加 s。"
+                },
+                {
+                  "wrong": "the government encourages people use",
+                  "right": "the government encourages people to use",
+                  "explanation_zh": "encourage + 受詞 + to + 原形動詞。"
+                }
+              ]
+            },
+            {
+              "zh": "用電子發票取代紙本收據",
+              "accepted": [
+                "to replace paper receipts with electronic ones",
+                "to use e-invoices instead of paper receipts",
+                "to replace paper receipts with e-invoices",
+                "to replace paper receipts with electronic invoices",
+                "to use electronic receipts instead of paper ones",
+                "to switch from paper receipts to e-invoices"
+              ],
+              "targets": [
+                "replace",
+                "receipt"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "to use e-invoices replace paper receipts",
+                  "right": "to replace paper receipts with e-invoices",
+                  "explanation_zh": "「用 A 取代 B」是 replace B with A 或 use A instead of B，兩個動詞不能直接並排。"
+                },
+                {
+                  "wrong": "to replace e-invoices with paper receipts",
+                  "right": "to replace paper receipts with e-invoices",
+                  "explanation_zh": "replace B with A 是「用 A 換掉 B」，被換掉的紙本收據放在 replace 後面。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "word_form",
+              "zh": "保護森林",
+              "literal_error": "To save paper and protecting forests, the government encourages people to replace paper receipts with electronic ones.",
+              "part": 2,
+              "explanation_zh": "平行結構：to save … and (to) protect …，第二個動作也用原形，不要寫成 protecting。"
+            },
+            {
+              "type": "collocation",
+              "zh": "用電子發票取代紙本收據",
+              "literal_error": "To save paper and protect forests, the government encourages people use e-invoices replace paper receipts.",
+              "part": 4,
+              "explanation_zh": "照中文語序把「用」「取代」兩個動詞並排不合英文；要寫 replace paper receipts with e-invoices 或 use e-invoices instead of paper receipts。"
+            }
+          ],
+          "bonus": []
+        },
+        "2": {
+          "references": [
+            "They are stored in phones so that people can check them anytime and never have to worry about losing them.",
+            "These invoices are kept in phones so that people can check them at any time and do not have to worry about losing them.",
+            "They are stored in mobile phones so that people can look at them anytime and won't need to worry about losing them."
+          ],
+          "target_words": [
+            {
+              "word": "store",
+              "zh": "儲存",
+              "alternatives": [
+                "keep",
+                "save"
+              ]
+            },
+            {
+              "word": "phone",
+              "zh": "手機"
+            },
+            {
+              "word": "check",
+              "zh": "查看",
+              "alternatives": [
+                "look at",
+                "see"
+              ]
+            },
+            {
+              "word": "anytime",
+              "zh": "隨時",
+              "alternatives": [
+                "any time",
+                "whenever"
+              ]
+            },
+            {
+              "word": "worry",
+              "zh": "擔心"
+            },
+            {
+              "word": "lose",
+              "zh": "弄丟"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PURP",
+              "grammar_id": "gp-so-that-purpose",
+              "label_zh": "目的：so that（好讓…）",
+              "frame": "S + V … so that + S + can + VR …",
+              "zh_trigger": "好讓"
+            },
+            {
+              "code": "PARA",
+              "grammar_id": "gp-parallelism",
+              "label_zh": "平行結構（can check … and never have to worry …）",
+              "frame": "S + can + VR₁ … and (never) + VR₂ …",
+              "zh_trigger": "隨時查看，也不必擔心弄丟"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "這些發票會存在手機裡",
+              "accepted": [
+                "They are stored in phones",
+                "These invoices are kept in phones",
+                "They are stored in mobile phones",
+                "They are saved in phones",
+                "These e-invoices are stored in phones",
+                "They are stored on phones"
+              ],
+              "targets": [
+                "store",
+                "phone"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "They will store in phones",
+                  "right": "They are stored in phones",
+                  "explanation_zh": "發票是「被」存進手機，要用被動 are stored（或 will be stored）。"
+                }
+              ]
+            },
+            {
+              "zh": "好讓民眾",
+              "accepted": [
+                "so that people",
+                "so that the public",
+                "so people",
+                "in order that people"
+              ],
+              "targets": [
+                "PURP"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "let people",
+                  "right": "so that people",
+                  "explanation_zh": "「好讓…」表目的，用 so that + 子句；let 是使役動詞，不能用來連接兩個子句。"
+                }
+              ]
+            },
+            {
+              "zh": "隨時查看",
+              "accepted": [
+                "can check them anytime",
+                "can check them at any time",
+                "can look at them anytime",
+                "can check them whenever they want",
+                "can see them anytime"
+              ],
+              "targets": [
+                "check",
+                "anytime"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "can check them every time",
+                  "right": "can check them anytime",
+                  "explanation_zh": "「隨時」是 anytime／at any time；every time 是「每一次」。"
+                }
+              ]
+            },
+            {
+              "zh": "也不必擔心弄丟",
+              "accepted": [
+                "and never have to worry about losing them",
+                "and do not have to worry about losing them",
+                "and won't need to worry about losing them",
+                "and don't have to worry about losing them",
+                "and need not worry about losing them",
+                "and never need to worry about losing them"
+              ],
+              "targets": [
+                "PARA",
+                "worry",
+                "lose"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "and never have to worry about lose them",
+                  "right": "and never have to worry about losing them",
+                  "explanation_zh": "about 是介系詞，後面接動名詞 losing。"
+                },
+                {
+                  "wrong": "and don't have to worry to lose them",
+                  "right": "and don't have to worry about losing them",
+                  "explanation_zh": "「擔心…」是 worry about + V-ing。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "collocation",
+              "zh": "好讓民眾",
+              "literal_error": "These invoices will save in phones, let people check them anytime and not worry about losing them.",
+              "part": 2,
+              "explanation_zh": "「好讓」照字面譯成 let 會把兩個子句硬接在一起；表目的要用 so that + people + can …。"
+            },
+            {
+              "type": "word_form",
+              "zh": "也不必擔心弄丟",
+              "literal_error": "They are stored in phones so that people can check them anytime and never have to worry about lose them.",
+              "part": 4,
+              "explanation_zh": "worry about 的 about 是介系詞，後面要接動名詞 losing。"
+            }
+          ],
+          "bonus": [],
+          "restructuring_zh": "「這些發票會存在手機裡」表面是主動，實際上發票是「被」存起來，英文改成被動 they are stored in phones（改被動）；「好讓…」的主詞換成民眾，用 so that people can …。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-advanced-04",
+    "lot": "translation-advanced-04",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "4c825c0a94fac9dc54e263ee5e16ad1f93b574fa99d23ce45a0c738ed355d865",
+    "spec_id": "translation-advanced@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T13:07:09Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T13:07:09Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "In order to save paper and protect forests, the government encourages people to replace paper receipts with electronic invoices.",
+            "confidence": "high",
+            "explanation_zh": "「為了…」用 In order to；「鼓勵民眾…」用 encourage sb to V；「用 B 取代 A」用 replace A with B（受詞是被取代的紙本收據）。"
+          },
+          "2": {
+            "translation": "These invoices will be stored on people's phones so that they can check them at any time and won't have to worry about losing them.",
+            "confidence": "high",
+            "explanation_zh": "「會存在手機裡」用未來式被動 will be stored；「好讓民眾…」用 so that 表目的；「隨時」譯 at any time；「不必擔心弄丟」用 won't have to worry about losing them。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PURP",
+              "PARA"
+            ],
+            "used_target_words": [
+              "save",
+              "protect",
+              "forest",
+              "encourage",
+              "replace",
+              "receipt"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PURP",
+              "PARA"
+            ],
+            "used_target_words": [
+              "store",
+              "phone",
+              "check",
+              "anytime",
+              "worry",
+              "lose"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "save",
+              "protect",
+              "forest",
+              "encourage",
+              "replace",
+              "receipt"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PURP": true,
+              "PARA": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "store",
+              "phone",
+              "check",
+              "anytime",
+              "worry",
+              "lose"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PURP": true,
+              "PARA": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "fail",
+      "created_at": "2026-10-09T12:50:33Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "In order to save paper and protect forests, the government encourages people to use electronic invoices instead of paper receipts.",
+            "confidence": "high",
+            "explanation_zh": "「為了……」用 in order to V；「鼓勵民眾……」用 encourage sb. to V；「取代」譯成 instead of paper receipts。"
+          },
+          "2": {
+            "translation": "These invoices are stored on people's phones so that they can check them at any time without worrying about losing them.",
+            "confidence": "high",
+            "explanation_zh": "「會存在手機裡」用被動 are stored on；「好讓」用 so that 加 can；「不必擔心弄丟」用 without worrying about losing them。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PURP",
+              "PARA"
+            ],
+            "used_target_words": [
+              "save",
+              "protect",
+              "forest",
+              "encourage",
+              "replace",
+              "receipt"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PURP"
+            ],
+            "used_target_words": [
+              "store",
+              "phone",
+              "check",
+              "anytime",
+              "worry",
+              "lose"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "標的句型 PARA（並列 can check … and never have to worry …）沒有被中文自然引出：「隨時查看，也不必擔心弄丟」我自然譯成 can check them at any time without worrying about losing them（without + V-ing），沒有用 and 並列兩個動詞片語。第 4 部分 accepted 全是 and (never) have to worry 的並列寫法，沒有收 without worrying／without having to worry 這種常見而且語意正確的譯法。建議補進 accepted，或把 PARA 從這一句的標的句型拿掉。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "save",
+              "protect",
+              "forest",
+              "encourage",
+              "replace",
+              "receipt"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PURP": true,
+              "PARA": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "store",
+              "phone",
+              "check",
+              "anytime",
+              "worry",
+              "lose"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PURP": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 2 題盲譯沒有用到標的句型 ['PARA']：中文題目沒有自然引出這個句型（SPEC §5.7）",
+          "第 2 題驗證者對4 部分切分有意見（warn）：標的句型 PARA（並列 can check … and never have to worry …）沒有被中文自然引出：「隨時查看，也不必擔心弄丟」我自然譯成 can check them at any time without worr"
+        ]
+      }
+    }
+  ],
+  "status": "rejected",
+  "status_reason": "blind_solver:B 未通過：第 2 題盲譯沒有用到標的句型 ['PARA']：中文題目沒有自然引出這個句型（SPEC §5.7）；第 2 題驗證者對4 部分切分有意見（warn）：標的句型 PARA（並列 can check … and never have to worry …）沒有被中文自然引出：「隨時查看，也不必擔心弄丟」我自然譯成 can check them at any time without worr；判定者人工審查（第 1 輪）：同意退回。第 2 題標的句型 PARA（can check … and never have to worry …）沒有被中文唯一引出：「隨時查看，也不必擔心弄丟」同樣自然譯成 can check them at any time without worrying about losing them（驗證者 B），第 4 部分 accepted 卻只收 and (never／don't) have to worry 的並列寫法，沒有 without worrying／without having to worry，正確的譯文會被扣分。另外題目「會存在手機裡」的「會」，第 1 部分 accepted 沒有 will be stored（common_errors 的說明自己寫了「或 will be stored」，驗證者 A 也寫 will be stored），也沒有 on people's phones（兩位驗證者都這樣寫），規準偏窄而且自相矛盾。重生時改寫中文讓並列結構成為唯一自然的寫法，或把 PARA 換掉並補 without worrying 的寫法；第 1 部分補 will be stored／on people's phones。第 1 題沒有問題。"
+}

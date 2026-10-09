@@ -1,0 +1,715 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.f3dbde",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "top",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "對於那些一味追求流行的人來說，手機和衣服往往還能用就被丟掉了。",
+        "options": null,
+        "answer": "For those who blindly pursue trends, mobile phones and clothes are often thrown away even though they can still be used.",
+        "accepted_answers": [
+          "For people who always chase the latest fashions, phones and clothes are often thrown away even though they can still be used.",
+          "For those who blindly follow fashion trends, mobile phones and clothes often get thrown away while they are still usable."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "對於…的人而言（For those who …）",
+            "被動語態（被丟掉、還能被使用）"
+          ],
+          "topic": "消費主義"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "他們生活在一個廣告無所不在的社會，因此無論擁有多少，總覺得還不夠。",
+        "options": null,
+        "answer": "They live in a society where advertisements are all around, so no matter how much they possess, they never feel they have enough.",
+        "accepted_answers": [
+          "They live in a society where advertising is everywhere, so no matter how much they own, they always feel it is not enough.",
+          "They live in a society in which ads can be seen everywhere, so no matter how much they have, it never seems enough."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "讓步：無論…（no matter how much）",
+            "關係副詞 where（廣告無所不在的社會＝a society where …）"
+          ],
+          "topic": "消費主義"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "消費主義"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「對於那些…的人來說」用 For those who＋V …；those 已經是「那些人」，後面不加 people。「流行」在這裡是名詞「潮流」，寫 trends／fashion。手機和衣服是「被丟掉」的，用被動 are thrown away；「還能用」也要用被動 can still be used（或 still work），用 even though 連接表讓步。",
+          "evidence": [
+            "對於那些一味追求流行的人來說",
+            "還能用就被丟掉了"
+          ],
+          "strategy_zh": "句首 For those who … 交代對象，主要子句以「手機和衣服」為主詞寫成被動，最後用 even though 補上「還能用」。",
+          "hints": [
+            "切成四段：對於那些一味追求流行的人來說／手機和衣服／還能用／就被丟掉了",
+            "標的詞彙：pursue（追求）、trend（流行）、phone（手機）、use（使用）、throw away（丟掉）",
+            "句型框架：For those who + V …, S + be + often + p.p. + even though …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「廣告無所不在的社會」的修飾語是完整子句（廣告無所不在），缺的是「在那裡」，用關係副詞 where（＝in which）：a society where advertisements are all around。「無論擁有多少」用 no matter how much＋S＋V，指總量用 much。「總覺得還不夠」補上主詞：they never feel they have enough。",
+          "evidence": [
+            "廣告無所不在的社會",
+            "無論擁有多少"
+          ],
+          "strategy_zh": "主幹 They live in a society，後面接 where 子句；再用 so 接結果，結果句前面放 no matter how much 的讓步子句。",
+          "hints": [
+            "切成四段：廣告無所不在／的社會／無論擁有多少／總覺得還不夠",
+            "標的詞彙：advertisement（廣告）、society（社會）、possess（擁有）、enough（足夠的）",
+            "句型框架：S + live in a society where + S + V, so no matter how much + S + V, S + V …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "For those who blindly pursue trends, mobile phones and clothes are often thrown away even though they can still be used.",
+            "For people who always chase the latest fashions, phones and clothes are often thrown away even though they can still be used.",
+            "For those who blindly follow fashion trends, mobile phones and clothes often get thrown away while they are still usable."
+          ],
+          "target_words": [
+            {
+              "word": "pursue",
+              "zh": "追求",
+              "alternatives": [
+                "follow",
+                "chase"
+              ]
+            },
+            {
+              "word": "trend",
+              "zh": "流行",
+              "alternatives": [
+                "fashion"
+              ]
+            },
+            {
+              "word": "phone",
+              "zh": "手機",
+              "alternatives": [
+                "cellphone"
+              ]
+            },
+            {
+              "word": "use",
+              "zh": "使用",
+              "alternatives": [
+                "usable",
+                "work"
+              ]
+            },
+            {
+              "word": "throw away",
+              "zh": "丟掉",
+              "alternatives": [
+                "discard",
+                "get rid of"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "REL",
+              "grammar_id": "gp-for-those-who",
+              "label_zh": "對於…的人而言（For those who …）",
+              "frame": "For those who + V …, S + V …",
+              "zh_trigger": "對於那些一味追求流行的人來說"
+            },
+            {
+              "code": "PASS",
+              "grammar_id": "gp-passive",
+              "label_zh": "被動語態（被丟掉、還能被使用）",
+              "frame": "S + be / get + p.p. (+ away)",
+              "zh_trigger": "被丟掉"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "對於那些一味追求流行的人來說",
+              "accepted": [
+                "For those who blindly pursue trends",
+                "For people who always chase the latest fashions",
+                "For those who blindly follow fashion trends",
+                "For those who blindly follow trends",
+                "For people who blindly follow trends"
+              ],
+              "targets": [
+                "REL",
+                "pursue",
+                "trend"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "For those people who blindly pursue trends",
+                  "right": "For those who blindly pursue trends",
+                  "explanation_zh": "those 本身就是「那些人」，後面不再加 people。"
+                },
+                {
+                  "wrong": "For those who blindly pursue popular",
+                  "right": "For those who blindly pursue trends",
+                  "explanation_zh": "「流行」在這裡是名詞（潮流），用 trends／fashion；popular 是形容詞。"
+                }
+              ]
+            },
+            {
+              "zh": "手機和衣服",
+              "accepted": [
+                "mobile phones and clothes",
+                "phones and clothes",
+                "cell phones and clothes"
+              ],
+              "targets": [
+                "phone"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "hand phones and clothes",
+                  "right": "mobile phones and clothes",
+                  "explanation_zh": "「手機」是 mobile phone／cell phone，hand phone 是中式英文。"
+                },
+                {
+                  "wrong": "mobile phones and clothings",
+                  "right": "mobile phones and clothes",
+                  "explanation_zh": "clothing 是不可數名詞，不加 s；或用 clothes。"
+                }
+              ]
+            },
+            {
+              "zh": "還能用",
+              "accepted": [
+                "even though they can still be used",
+                "while they are still usable",
+                "even though they still work",
+                "while they can still be used"
+              ],
+              "targets": [
+                "use"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "even though they can still use",
+                  "right": "even though they can still be used",
+                  "explanation_zh": "手機和衣服是「被使用」的，要用被動 can be used（或 still work）。"
+                },
+                {
+                  "wrong": "even they can still be used",
+                  "right": "even though they can still be used",
+                  "explanation_zh": "連接子句要用 even though；even 單獨不能當連接詞。"
+                }
+              ]
+            },
+            {
+              "zh": "就被丟掉了",
+              "accepted": [
+                "are often thrown away",
+                "often get thrown away",
+                "are usually thrown away",
+                "are often discarded"
+              ],
+              "targets": [
+                "PASS",
+                "throw away"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "often throw away",
+                  "right": "are often thrown away",
+                  "explanation_zh": "手機和衣服是「被丟掉」的，要用 be＋p.p.。"
+                },
+                {
+                  "wrong": "are often threw away",
+                  "right": "are often thrown away",
+                  "explanation_zh": "throw 的過去分詞是 thrown。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "abstract_nominal",
+              "zh": "流行",
+              "literal_error": "For those who blindly pursue popular,",
+              "part": 1,
+              "explanation_zh": "「追求流行」的「流行」是名詞「潮流」，英文用 trends／fashion；popular 是形容詞，不能當 pursue 的受詞。"
+            },
+            {
+              "type": "subjectless",
+              "zh": "還能用",
+              "literal_error": "mobile phones and clothes are often thrown away even though they can still use",
+              "part": 3,
+              "explanation_zh": "中文「還能用」沒有說出「誰用」；照字面寫 they can still use，they 指手機和衣服，就變成手機自己在使用東西，要改成被動 can still be used。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "Those who blindly follow trends tend to throw away mobile phones and clothes that are still perfectly usable.",
+              "grammar_id": "gp-for-those-who",
+              "explanation_zh": "改用 Those who … 當主詞的主動句，加上 tend to（往往）與 perfectly usable（完全堪用），語意更清楚。"
+            }
+          ],
+          "restructuring_zh": "「手機和衣服往往還能用就被丟掉了」中文先說「還能用」再說「被丟掉」，英文主要子句放前面 are often thrown away，再用 even though they can still be used 補充讓步。"
+        },
+        "2": {
+          "references": [
+            "They live in a society where advertisements are all around, so no matter how much they possess, they never feel they have enough.",
+            "They live in a society where advertising is everywhere, so no matter how much they own, they always feel it is not enough.",
+            "They live in a society in which ads can be seen everywhere, so no matter how much they have, it never seems enough."
+          ],
+          "target_words": [
+            {
+              "word": "society",
+              "zh": "社會"
+            },
+            {
+              "word": "advertisement",
+              "zh": "廣告",
+              "alternatives": [
+                "advertising",
+                "ad",
+                "ads"
+              ]
+            },
+            {
+              "word": "possess",
+              "zh": "擁有",
+              "alternatives": [
+                "own",
+                "have"
+              ]
+            },
+            {
+              "word": "enough",
+              "zh": "足夠的"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "ADVCL",
+              "grammar_id": "gp-no-matter",
+              "label_zh": "讓步：無論…（no matter how much）",
+              "frame": "No matter how much + S + V, S + V …",
+              "zh_trigger": "無論擁有多少"
+            },
+            {
+              "code": "REL",
+              "grammar_id": "gp-relative-adverb",
+              "label_zh": "關係副詞 where（廣告無所不在的社會＝a society where …）",
+              "frame": "a society where + S + V …",
+              "zh_trigger": "廣告無所不在的社會"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "廣告無所不在",
+              "accepted": [
+                "advertisements are all around",
+                "advertising is everywhere",
+                "ads can be seen everywhere",
+                "advertisements are everywhere"
+              ],
+              "targets": [
+                "advertisement"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "advertisements are in everywhere",
+                  "right": "advertisements are everywhere",
+                  "explanation_zh": "everywhere 是副詞，前面不加 in。"
+                },
+                {
+                  "wrong": "advertisement is all around",
+                  "right": "advertisements are all around",
+                  "explanation_zh": "可數名詞 advertisement 泛指時用複數；不可數的寫法是 advertising。"
+                }
+              ]
+            },
+            {
+              "zh": "的社會",
+              "accepted": [
+                "a society where",
+                "a society in which"
+              ],
+              "targets": [
+                "REL",
+                "society"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "a society which advertisements are all around",
+                  "right": "a society where advertisements are all around",
+                  "explanation_zh": "關係子句裡主詞、動詞齊全，缺的是地點，要用關係副詞 where（＝in which）。"
+                },
+                {
+                  "wrong": "a society that advertisements are all around",
+                  "right": "a society where advertisements are all around",
+                  "explanation_zh": "that／which 在子句裡要當主詞或受詞，這裡缺的是「在那裡」，用 where。"
+                }
+              ]
+            },
+            {
+              "zh": "無論擁有多少",
+              "accepted": [
+                "no matter how much they possess",
+                "no matter how much they own",
+                "no matter how much they have"
+              ],
+              "targets": [
+                "ADVCL",
+                "possess"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "no matter how many they possess",
+                  "right": "no matter how much they possess",
+                  "explanation_zh": "這裡指擁有的東西總量，用 how much。"
+                },
+                {
+                  "wrong": "no matter they possess how much",
+                  "right": "no matter how much they possess",
+                  "explanation_zh": "no matter 後面先接 how much，再接主詞動詞。"
+                }
+              ]
+            },
+            {
+              "zh": "總覺得還不夠",
+              "accepted": [
+                "they never feel they have enough",
+                "they always feel it is not enough",
+                "it never seems enough",
+                "they never feel it is enough"
+              ],
+              "targets": [
+                "enough"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "always feel not enough",
+                  "right": "they always feel it is not enough",
+                  "explanation_zh": "feel 後面要有完整的主詞與補語；中文省略的主詞要補上。"
+                },
+                {
+                  "wrong": "they never feel enough",
+                  "right": "they never feel they have enough",
+                  "explanation_zh": "「覺得不夠」是覺得「擁有的不夠」，要寫 they have enough。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "abstract_nominal",
+              "zh": "無所不在",
+              "literal_error": "advertisements exist in everywhere",
+              "part": 1,
+              "explanation_zh": "「無所不在」是四字成語，英文說 are all around／are everywhere 即可；逐字翻成 exist in everywhere 會多出介系詞。"
+            },
+            {
+              "type": "plural_countable",
+              "zh": "無論擁有多少",
+              "literal_error": "no matter how many they possess",
+              "part": 3,
+              "explanation_zh": "「擁有多少」指的是東西的總量，用 how much；how many 後面通常要接可數名詞複數。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "Surrounded by advertisements, they never feel they have enough, however much they own.",
+              "explanation_zh": "用過去分詞構句 Surrounded by advertisements 交代背景，讓步改用 however much they own 放句尾，句構更緊湊。"
+            }
+          ],
+          "restructuring_zh": "「廣告無所不在的社會」是有主詞、動詞的子句修飾名詞，英文改成放在名詞後面的關係副詞子句 a society where advertisements are all around。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ac-V-3",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-top-02",
+    "lot": "translation-top-02",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "6c20f5a14ca426db5ab42249ce1bc261a4855dfb4f5732045980d8afdca92905",
+    "spec_id": "translation-top@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T13:14:37Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T08:03:54Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "For those who blindly follow fashion trends, cell phones and clothes are often thrown away even though they can still be used.",
+            "confidence": "medium",
+            "explanation_zh": "「對於那些…的人來說」用 For those who…；「一味追求流行」blindly follow fashion trends；「還能用就被丟掉了」以被動 are often thrown away 加讓步子句 even though they can still be used 表達；中文的「就」也可理解成 before they wear out，所以信心給 medium。"
+          },
+          "2": {
+            "translation": "They live in a society where advertisements are everywhere, so no matter how much they own, they always feel it is not enough.",
+            "confidence": "high",
+            "explanation_zh": "「廣告無所不在的社會」用關係副詞 where 引導的子句修飾 society；「無論擁有多少」用 no matter how much they own；「總覺得還不夠」they always feel it is not enough。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "REL",
+              "PASS"
+            ],
+            "used_target_words": [
+              "pursue",
+              "trend",
+              "phone",
+              "use",
+              "throw away"
+            ],
+            "within_accepted": true,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [],
+            "closest_reference": 0
+          },
+          "2": {
+            "used_patterns": [
+              "ADVCL",
+              "REL"
+            ],
+            "used_target_words": [
+              "society",
+              "advertisement",
+              "possess",
+              "enough"
+            ],
+            "within_accepted": true,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [],
+            "closest_reference": 1
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "pursue",
+              "trend",
+              "phone",
+              "use",
+              "throw away"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "REL": true,
+              "PASS": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "society",
+              "advertisement",
+              "possess",
+              "enough"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "ADVCL": true,
+              "REL": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T12:46:22Z",
+      "details": {
+        "solver": "B",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "For people who blindly chase after trends, phones and clothes are often thrown away while they are still usable.",
+            "confidence": "high",
+            "explanation_zh": "「對於那些……的人來說」譯成 For people who...；「一味追求流行」譯成 blindly chase after trends；「還能用就被丟掉了」用被動式加 while they are still usable（表示仍能使用時即被丟棄）。"
+          },
+          "2": {
+            "translation": "They live in a society where advertisements are everywhere, so no matter how much they have, they always feel that it is not enough.",
+            "confidence": "high",
+            "explanation_zh": "「廣告無所不在的社會」用 a society where advertisements are everywhere；「因此」用 so 連接；「無論擁有多少」用 no matter how much they have；「總覺得還不夠」譯成 always feel that it is not enough。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "REL",
+              "PASS"
+            ],
+            "used_target_words": [
+              "pursue",
+              "trend",
+              "phone",
+              "use",
+              "throw away"
+            ],
+            "within_accepted": true,
+            "closest_reference": 2,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "ADVCL",
+              "REL"
+            ],
+            "used_target_words": [
+              "society",
+              "advertisement",
+              "possess",
+              "enough"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "pursue",
+              "trend",
+              "phone",
+              "use",
+              "throw away"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "REL": true,
+              "PASS": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "society",
+              "advertisement",
+              "possess",
+              "enough"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "ADVCL": true,
+              "REL": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "rejected",
+  "status_reason": "人工審核（兩位盲譯都通過，判定者改判退回）：第 1 句評分規準第 1 部分把文法正確的 For those people who blindly pursue trends 列為常見錯誤，說明寫「those 本身就是『那些人』，後面不再加 people」，explanations 第 1 句也寫同一條規則。those people who … 是正確英文（學測 109 選文本身就有 For those people who were born without …），而且正是「那些…的人」最直接的譯法；照這份規準會誤扣學生分數並教錯文法。要刪除這個常見錯誤、修正解析，並把 For those people who … 補進第 1 部分 accepted。"
+}

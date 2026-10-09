@@ -1,0 +1,713 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.1090bd",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "advanced",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "十年來，這家餐廳一直向附近種植有機蔬菜的農夫購買食材。",
+        "options": null,
+        "answer": "For ten years, this restaurant has been buying ingredients from nearby farmers who grow organic vegetables.",
+        "accepted_answers": [
+          "Over the past ten years, this restaurant has been buying its ingredients from local farmers who grow organic vegetables.",
+          "For a decade, the restaurant has been getting its ingredients from nearby farmers that grow organic vegetables."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "現在完成進行式",
+            "關係代名詞"
+          ],
+          "topic": "在地食材"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "如今，它已成為許多遊客週末品嚐在地新鮮食物的地方。",
+        "options": null,
+        "answer": "It has now become a place where many tourists taste fresh local food on weekends.",
+        "accepted_answers": [
+          "Today, it has become a place where many visitors enjoy fresh local food on weekends.",
+          "Nowadays, the restaurant has become a place where lots of tourists go to taste fresh local food on weekends."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "現在完成式",
+            "關係副詞 where"
+          ],
+          "topic": "在地食材"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "在地食材"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「十年來…一直」表示從過去持續到現在而且還在做，用現在完成進行式 has been buying，時間寫 for ten years 或 over the past ten years。「向…買」是 buy … from …。「種植有機蔬菜的農夫」改成後位修飾 farmers who grow organic vegetables，who 指人，動詞配合複數 farmers。",
+          "evidence": [
+            "十年來",
+            "一直",
+            "種植有機蔬菜的農夫"
+          ],
+          "strategy_zh": "看到「…來一直」先想 has/have been + V-ing；「…的＋人」先寫人，再用 who 子句補充說明。",
+          "hints": [
+            "切成四段：十年來／這家餐廳一直／向附近種植有機蔬菜的農夫／購買食材",
+            "標的詞彙：year（年，L1）、buy（購買，L1）、ingredient（食材，L4）、farmer（農夫，L1）、grow（種植，L1）、organic（有機的，L3）",
+            "句型框架：For ten years, S + has been + V-ing … from + N + who + V …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「如今已成為」用現在完成式 has become，表示到現在為止的變化結果。「…的地方」改成後位修飾：a place where many tourists taste fresh local food；子句裡受詞 food 已經有了，缺的是地點，所以用 where（不是 which）。「週末」是 on weekends。",
+          "evidence": [
+            "已成為",
+            "的地方"
+          ],
+          "strategy_zh": "「…的地方／…的時候／…的原因」分別想到 where／when／why；先判斷子句裡缺的是地點還是受詞。",
+          "hints": [
+            "切成四段：如今，它已成為／許多遊客／週末品嚐在地新鮮食物／的地方",
+            "標的詞彙：become（成為，L1）、tourist（遊客，L3）、taste（品嚐，L1）、fresh（新鮮的，L1）、local（在地的，L2）",
+            "句型框架：S + has (now) become + a place + where + S + V …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "For ten years, this restaurant has been buying ingredients from nearby farmers who grow organic vegetables.",
+            "Over the past ten years, this restaurant has been buying its ingredients from local farmers who grow organic vegetables.",
+            "For a decade, the restaurant has been getting its ingredients from nearby farmers that grow organic vegetables."
+          ],
+          "target_words": [
+            {
+              "word": "year",
+              "zh": "年",
+              "alternatives": [
+                "decade"
+              ]
+            },
+            {
+              "word": "buy",
+              "zh": "購買",
+              "alternatives": [
+                "purchase",
+                "get"
+              ]
+            },
+            {
+              "word": "ingredient",
+              "zh": "食材"
+            },
+            {
+              "word": "farmer",
+              "zh": "農夫"
+            },
+            {
+              "word": "grow",
+              "zh": "種植",
+              "alternatives": [
+                "raise",
+                "plant"
+              ]
+            },
+            {
+              "word": "organic",
+              "zh": "有機的"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PERF",
+              "grammar_id": "gp-present-perfect-progressive",
+              "label_zh": "現在完成進行式（從過去持續到現在）",
+              "frame": "For + 一段時間, S + has been + V-ing …",
+              "zh_trigger": "一直"
+            },
+            {
+              "code": "REL",
+              "grammar_id": "gp-relative-pronoun",
+              "label_zh": "關係代名詞 who 引導的形容詞子句",
+              "frame": "N（人）+ who + V …",
+              "zh_trigger": "種植有機蔬菜的農夫"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "十年來",
+              "accepted": [
+                "For ten years",
+                "Over the past ten years",
+                "For the past ten years",
+                "For a decade",
+                "For the last ten years",
+                "In the past ten years"
+              ],
+              "targets": [
+                "year"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Ten years ago",
+                  "right": "For ten years",
+                  "explanation_zh": "「十年來」是持續了十年（for ten years）；ten years ago 是「十年前」某個時間點。"
+                }
+              ]
+            },
+            {
+              "zh": "這家餐廳一直",
+              "accepted": [
+                "this restaurant has been",
+                "the restaurant has been"
+              ],
+              "targets": [
+                "PERF"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "this restaurant is",
+                  "right": "this restaurant has been",
+                  "explanation_zh": "「十年來一直」是從過去持續到現在還在進行，用現在完成進行式 has been + V-ing。"
+                },
+                {
+                  "wrong": "this restaurant have been",
+                  "right": "this restaurant has been",
+                  "explanation_zh": "主詞 restaurant 是單數，用 has。"
+                }
+              ]
+            },
+            {
+              "zh": "向附近種植有機蔬菜的農夫",
+              "accepted": [
+                "from nearby farmers who grow organic vegetables",
+                "from local farmers who grow organic vegetables",
+                "from nearby farmers that grow organic vegetables",
+                "from farmers nearby who grow organic vegetables",
+                "from farmers who grow organic vegetables nearby"
+              ],
+              "targets": [
+                "farmer",
+                "grow",
+                "organic",
+                "REL"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "from nearby grow organic vegetables farmers",
+                  "right": "from nearby farmers who grow organic vegetables",
+                  "explanation_zh": "中文「…的農夫」修飾語在前，英文要把修飾語放到名詞後面，用關係代名詞 who 引導。"
+                },
+                {
+                  "wrong": "from nearby farmers who grows organic vegetables",
+                  "right": "from nearby farmers who grow organic vegetables",
+                  "explanation_zh": "who 指的是複數的 farmers，動詞不加 s。"
+                },
+                {
+                  "wrong": "to nearby farmers who grow organic vegetables",
+                  "right": "from nearby farmers who grow organic vegetables",
+                  "explanation_zh": "「向某人買」是 buy … from sb，不是 to。"
+                }
+              ]
+            },
+            {
+              "zh": "購買食材",
+              "accepted": [
+                "buying ingredients",
+                "buying its ingredients",
+                "getting its ingredients",
+                "purchasing ingredients",
+                "buying food ingredients"
+              ],
+              "targets": [
+                "buy",
+                "ingredient"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "buying materials",
+                  "right": "buying ingredients",
+                  "explanation_zh": "做菜用的「食材」是 ingredients；materials 是一般的材料。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "prenominal_modifier",
+              "zh": "種植有機蔬菜的農夫",
+              "literal_error": "This restaurant has been buying ingredients from nearby grow organic vegetables farmers.",
+              "part": 3,
+              "explanation_zh": "中文修飾語放在名詞前面，英文要改成 farmers who grow …（後位修飾）。"
+            },
+            {
+              "type": "tense_trigger",
+              "zh": "十年來",
+              "literal_error": "For ten years, this restaurant buys ingredients from nearby farmers.",
+              "part": 2,
+              "explanation_zh": "有「十年來、一直」就不能用現在簡單式，要用 has been buying。"
+            }
+          ],
+          "bonus": [],
+          "restructuring_zh": "「附近種植有機蔬菜的農夫」是很長的前置修飾，英文要把修飾語移到名詞後面，寫成 nearby farmers who grow organic vegetables；「向…購買食材」的語序也要改成 buy ingredients from …。"
+        },
+        "2": {
+          "references": [
+            "It has now become a place where many tourists taste fresh local food on weekends.",
+            "Today, it has become a place where many visitors enjoy fresh local food on weekends.",
+            "Nowadays, the restaurant has become a place where lots of tourists go to taste fresh local food on weekends."
+          ],
+          "target_words": [
+            {
+              "word": "become",
+              "zh": "成為",
+              "alternatives": [
+                "turn into"
+              ]
+            },
+            {
+              "word": "tourist",
+              "zh": "遊客",
+              "alternatives": [
+                "visitor",
+                "traveler"
+              ]
+            },
+            {
+              "word": "taste",
+              "zh": "品嚐",
+              "alternatives": [
+                "enjoy",
+                "try",
+                "eat"
+              ]
+            },
+            {
+              "word": "fresh",
+              "zh": "新鮮的"
+            },
+            {
+              "word": "local",
+              "zh": "在地的"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PERF",
+              "grammar_id": "gp-present-perfect",
+              "label_zh": "現在完成式（已經成為）",
+              "frame": "S + has (now) become + N",
+              "zh_trigger": "已成為"
+            },
+            {
+              "code": "REL",
+              "grammar_id": "gp-relative-adverb",
+              "label_zh": "關係副詞 where",
+              "frame": "a place + where + S + V …",
+              "zh_trigger": "的地方"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "如今，它已成為",
+              "accepted": [
+                "It has now become",
+                "Today, it has become",
+                "Nowadays, the restaurant has become",
+                "Now it has become",
+                "Today, the restaurant has become",
+                "Nowadays, it has become"
+              ],
+              "targets": [
+                "become",
+                "PERF"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Now it became",
+                  "right": "Now it has become",
+                  "explanation_zh": "「如今已成為」強調到現在的結果，用現在完成式 has become。"
+                },
+                {
+                  "wrong": "Now it has became",
+                  "right": "Now it has become",
+                  "explanation_zh": "become 的過去分詞還是 become。"
+                }
+              ]
+            },
+            {
+              "zh": "許多遊客",
+              "accepted": [
+                "many tourists",
+                "many visitors",
+                "lots of tourists",
+                "a lot of tourists",
+                "many travelers"
+              ],
+              "targets": [
+                "tourist"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "many tourist",
+                  "right": "many tourists",
+                  "explanation_zh": "many 後面接複數名詞。"
+                }
+              ]
+            },
+            {
+              "zh": "週末品嚐在地新鮮食物",
+              "accepted": [
+                "taste fresh local food on weekends",
+                "enjoy fresh local food on weekends",
+                "go to taste fresh local food on weekends",
+                "try fresh local food on weekends",
+                "taste fresh local food on the weekend"
+              ],
+              "targets": [
+                "taste",
+                "fresh",
+                "local"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "taste local fresh foods in weekends",
+                  "right": "taste fresh local food on weekends",
+                  "explanation_zh": "「週末」用 on weekends；food 泛指食物時通常不加 s。"
+                }
+              ]
+            },
+            {
+              "zh": "的地方",
+              "accepted": [
+                "a place where",
+                "the place where",
+                "a spot where",
+                "a place in which"
+              ],
+              "targets": [
+                "REL"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "a place which many tourists taste",
+                  "right": "a place where many tourists taste",
+                  "explanation_zh": "子句裡已經有受詞（fresh local food），缺的是地點，要用關係副詞 where（= in which）。"
+                },
+                {
+                  "wrong": "many tourists taste fresh local food's place",
+                  "right": "a place where many tourists taste fresh local food",
+                  "explanation_zh": "中文「…的地方」修飾語在前，英文要寫 a place where + 子句。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "prenominal_modifier",
+              "zh": "的地方",
+              "literal_error": "It has now become many tourists taste fresh local food on weekends place.",
+              "part": 4,
+              "explanation_zh": "長的前置修飾要改成 a place where + 子句。"
+            },
+            {
+              "type": "tense_trigger",
+              "zh": "已成為",
+              "literal_error": "Now it became a place where many tourists taste fresh local food.",
+              "part": 1,
+              "explanation_zh": "「已成為」用現在完成式 has become，表示到現在的結果。"
+            }
+          ],
+          "bonus": [],
+          "restructuring_zh": "「許多遊客週末品嚐在地新鮮食物的地方」整串修飾語在「地方」前面，英文要先寫 a place，再用關係副詞 where 帶出子句。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "C-V-5",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-advanced-02",
+    "lot": "translation-advanced-02",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "dab2f301b2dd4cfd48bfd913df11ca683b0620cee3b8b044ef9794bc46049e02",
+    "spec_id": "translation-advanced@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T12:57:10Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T07:52:07Z",
+      "details": {
+        "solver": "A",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "For ten years, this restaurant has been buying its ingredients from nearby farmers who grow organic vegetables.",
+            "confidence": "high",
+            "explanation_zh": "「十年來……一直」用現在完成進行式 has been buying，搭配 for ten years；「種植有機蔬菜的農夫」用關係子句 who grow organic vegetables；「向……購買」用 buy … from …。"
+          },
+          "2": {
+            "translation": "Today, it has become a place where many tourists enjoy fresh local food on weekends.",
+            "confidence": "high",
+            "explanation_zh": "「如今已成為」用現在完成式 has become；「……的地方」用關係副詞 where 引導的子句修飾 a place；「品嚐」譯 enjoy（也可 taste）；「週末」譯 on weekends。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PERF",
+              "REL"
+            ],
+            "used_target_words": [
+              "year",
+              "buy",
+              "ingredient",
+              "farmer",
+              "grow",
+              "organic"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PERF",
+              "REL"
+            ],
+            "used_target_words": [
+              "become",
+              "tourist",
+              "taste",
+              "fresh",
+              "local"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "year",
+              "buy",
+              "ingredient",
+              "farmer",
+              "grow",
+              "organic"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PERF": true,
+              "REL": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "become",
+              "tourist",
+              "taste",
+              "fresh",
+              "local"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PERF": true,
+              "REL": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T12:57:10Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "For ten years, this restaurant has been buying its ingredients from nearby farmers who grow organic vegetables.",
+            "confidence": "high",
+            "explanation_zh": "「十年來……一直」是持續到現在的動作，用現在完成進行式；「種植有機蔬菜的農夫」用關係代名詞 who 修飾 farmers。"
+          },
+          "2": {
+            "translation": "Today, it has become a place where many tourists can enjoy fresh local food on weekends.",
+            "confidence": "high",
+            "explanation_zh": "「如今……已成為」用現在完成式；「……的地方」用關係副詞 where；「品嚐」譯為 enjoy，以 can 帶出『能夠』的意味。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PERF",
+              "REL"
+            ],
+            "used_target_words": [
+              "year",
+              "buy",
+              "ingredient",
+              "farmer",
+              "grow",
+              "organic"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PERF",
+              "REL"
+            ],
+            "used_target_words": [
+              "become",
+              "tourist",
+              "taste",
+              "fresh",
+              "local"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "year",
+              "buy",
+              "ingredient",
+              "farmer",
+              "grow",
+              "organic"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PERF": true,
+              "REL": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "become",
+              "tourist",
+              "taste",
+              "fresh",
+              "local"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PERF": true,
+              "REL": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

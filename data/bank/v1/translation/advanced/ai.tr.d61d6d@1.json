@@ -1,0 +1,714 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.d61d6d",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "advanced",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "自從人工智慧（AI）工具普及後，已經有不少學生被懷疑用它們寫作業。",
+        "options": null,
+        "answer": "Since AI tools became popular, many students have been suspected of using them to do their homework.",
+        "accepted_answers": [
+          "Since AI tools became common, quite a few students have been suspected of using them for their homework.",
+          "Ever since artificial intelligence tools became popular, many students have been suspected of using them to finish their homework."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "完成式被動（已經被…）",
+            "介系詞＋動名詞（be suspected of＋V-ing）"
+          ],
+          "topic": "用 AI 寫作業"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "因此，有些老師提醒學生別依賴這些工具，否則作業會被退回。",
+        "options": null,
+        "answer": "Therefore, some teachers remind students not to rely on these tools, or their homework will be returned.",
+        "accepted_answers": [
+          "As a result, some teachers warn students not to depend on these tools; otherwise, their homework will be rejected.",
+          "So some teachers remind their students not to rely on such tools, or their homework will be sent back."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "被動語態（will be＋p.p.）",
+            "動詞＋受詞＋不定詞（remind／warn sb not to VR）"
+          ],
+          "topic": "用 AI 寫作業"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "用 AI 寫作業"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「自從…後」用 since＋過去式（Since AI tools became popular），主要子句因為「已經」延續到現在，用現在完成式；學生是「被懷疑」，所以是完成式被動 have been suspected。「被懷疑做某事」的搭配是 be suspected of＋V-ing（of 是介系詞，後面接 using）。「寫作業」說 do their homework，homework 不可數。",
+          "evidence": [
+            "自從人工智慧（AI）工具普及後",
+            "已經有不少學生被懷疑用它們寫作業"
+          ],
+          "strategy_zh": "看到「自從」先想 since＋現在完成式；記住常用的「動詞／形容詞＋介系詞＋V-ing」搭配，例如 be suspected of、be accused of、be banned from。",
+          "hints": [
+            "切成四段：自從人工智慧（AI）工具普及後／已經有不少學生被懷疑／用它們／寫作業",
+            "標的詞彙：tool（工具）、popular（普及的）、suspect（懷疑）、use（使用）、homework（作業）",
+            "句型框架：Since + S + V(過去式), S + have/has been + p.p. + of + V-ing …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「提醒某人不要做某事」是 remind sb not to VR（warn sb not to VR 也可以），受詞 students 後面接否定不定詞 not to rely on …；rely 要搭配 on。「否則」可用連接詞 or 連接兩個子句（用 otherwise 時前面要用分號或句號）。作業是「被退回」，用被動 will be returned／rejected。",
+          "evidence": [
+            "提醒學生別依賴這些工具",
+            "否則作業會被退回"
+          ],
+          "strategy_zh": "看到「提醒／鼓勵／要求某人做某事」，先想 V＋O＋to VR；否定時把 not 放在 to 前面。",
+          "hints": [
+            "切成四段：因此，有些老師提醒學生／別依賴這些工具／否則作業／會被退回",
+            "標的詞彙：remind（提醒）、rely（依賴）、tool（工具）、homework（作業）、return（退回）",
+            "句型框架：S + remind + O + not to VR …, or + S + will be + p.p."
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "Since AI tools became popular, many students have been suspected of using them to do their homework.",
+            "Since AI tools became common, quite a few students have been suspected of using them for their homework.",
+            "Ever since artificial intelligence tools became popular, many students have been suspected of using them to finish their homework."
+          ],
+          "target_words": [
+            {
+              "word": "tool",
+              "zh": "工具"
+            },
+            {
+              "word": "popular",
+              "zh": "普及的",
+              "alternatives": [
+                "common",
+                "widespread",
+                "widely used"
+              ]
+            },
+            {
+              "word": "suspect",
+              "zh": "懷疑",
+              "alternatives": [
+                "accuse"
+              ]
+            },
+            {
+              "word": "use",
+              "zh": "使用",
+              "alternatives": [
+                "rely on"
+              ]
+            },
+            {
+              "word": "homework",
+              "zh": "作業",
+              "alternatives": [
+                "assignment"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PASS",
+              "grammar_id": "gp-perfect-passive",
+              "label_zh": "完成式被動（已經被…）",
+              "frame": "S + have/has been + p.p. …",
+              "zh_trigger": "已經有不少學生被懷疑"
+            },
+            {
+              "code": "PREPVING",
+              "grammar_id": "gp-prep-gerund",
+              "label_zh": "介系詞＋動名詞（be suspected of＋V-ing）",
+              "frame": "be suspected of + V-ing …",
+              "zh_trigger": "被懷疑用它們"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "自從人工智慧（AI）工具普及後",
+              "accepted": [
+                "Since AI tools became popular",
+                "Since AI tools became common",
+                "Ever since artificial intelligence tools became popular",
+                "Since artificial intelligence tools became popular",
+                "Ever since AI tools became popular",
+                "Since AI tools became widespread"
+              ],
+              "targets": [
+                "tool",
+                "popular"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Since AI tools became popularity",
+                  "right": "Since AI tools became popular",
+                  "explanation_zh": "become 後面接形容詞 popular；popularity 是名詞。"
+                },
+                {
+                  "wrong": "After AI tools were popular",
+                  "right": "Since AI tools became popular",
+                  "explanation_zh": "「自從…之後（一直到現在）」用 since，主要子句配完成式。"
+                }
+              ]
+            },
+            {
+              "zh": "已經有不少學生被懷疑",
+              "accepted": [
+                "many students have been suspected",
+                "quite a few students have been suspected",
+                "a lot of students have been suspected",
+                "lots of students have been suspected",
+                "a number of students have been suspected"
+              ],
+              "targets": [
+                "PASS",
+                "suspect"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "there are many students were suspected",
+                  "right": "many students have been suspected",
+                  "explanation_zh": "中文的「有不少學生…」不要譯成 there are … were …（一句兩個動詞）；直接用 many students 當主詞。"
+                },
+                {
+                  "wrong": "many students are suspected",
+                  "right": "many students have been suspected",
+                  "explanation_zh": "「自從…已經…」是從過去延續到現在，要用現在完成式被動 have been suspected。"
+                }
+              ]
+            },
+            {
+              "zh": "用它們",
+              "accepted": [
+                "of using them",
+                "of using these tools",
+                "of using AI",
+                "of using such tools",
+                "of relying on them"
+              ],
+              "targets": [
+                "PREPVING",
+                "use"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "to use them",
+                  "right": "of using them",
+                  "explanation_zh": "「被懷疑做某事」是 be suspected of＋V-ing，不接不定詞。"
+                },
+                {
+                  "wrong": "of use them",
+                  "right": "of using them",
+                  "explanation_zh": "介系詞 of 後面要接動名詞。"
+                }
+              ]
+            },
+            {
+              "zh": "寫作業",
+              "accepted": [
+                "to do their homework",
+                "for their homework",
+                "to finish their homework",
+                "to do homework",
+                "for homework",
+                "to write their assignments"
+              ],
+              "targets": [
+                "homework"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "to do their homeworks",
+                  "right": "to do their homework",
+                  "explanation_zh": "homework 是不可數名詞，不加 s。"
+                },
+                {
+                  "wrong": "to write their homework",
+                  "right": "to do their homework",
+                  "explanation_zh": "「寫作業」英文習慣說 do (one's) homework。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "tense_trigger",
+              "zh": "已經",
+              "literal_error": "Since AI tools became popular, many students are suspected of using them.",
+              "part": 2,
+              "explanation_zh": "「自從…」「已經」表示從過去持續到現在，主要子句要用現在完成式（被動：have been suspected）。"
+            },
+            {
+              "type": "subjectless",
+              "zh": "已經有不少學生",
+              "literal_error": "There are already many students were suspected of using them to do homework.",
+              "part": 2,
+              "explanation_zh": "中文「有不少學生被懷疑…」的「有」不是真正的動詞，句子沒有明確主詞；英文要以 many students 當主詞，不要寫成 There are … were …。"
+            }
+          ],
+          "bonus": [],
+          "restructuring_zh": "中文「已經有不少學生被懷疑…」是「有」字句，英文要改以 many students 當主詞，寫成現在完成式被動 many students have been suspected of using them …，不要寫成 There are many students were suspected …。"
+        },
+        "2": {
+          "references": [
+            "Therefore, some teachers remind students not to rely on these tools, or their homework will be returned.",
+            "As a result, some teachers warn students not to depend on these tools; otherwise, their homework will be rejected.",
+            "So some teachers remind their students not to rely on such tools, or their homework will be sent back."
+          ],
+          "target_words": [
+            {
+              "word": "remind",
+              "zh": "提醒",
+              "alternatives": [
+                "warn",
+                "tell"
+              ]
+            },
+            {
+              "word": "rely",
+              "zh": "依賴",
+              "alternatives": [
+                "depend",
+                "count on"
+              ]
+            },
+            {
+              "word": "tool",
+              "zh": "工具"
+            },
+            {
+              "word": "homework",
+              "zh": "作業",
+              "alternatives": [
+                "assignment",
+                "work"
+              ]
+            },
+            {
+              "word": "return",
+              "zh": "退回",
+              "alternatives": [
+                "reject",
+                "send back",
+                "give back"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PASS",
+              "grammar_id": "gp-passive",
+              "label_zh": "被動語態（will be＋p.p.）",
+              "frame": "S + will be + p.p.",
+              "zh_trigger": "被退回"
+            },
+            {
+              "code": "VOC",
+              "grammar_id": "gp-v-o-to-v",
+              "label_zh": "動詞＋受詞＋不定詞（remind／warn sb not to VR）",
+              "frame": "S + remind/warn + O + (not) to VR",
+              "zh_trigger": "提醒學生別依賴"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "因此，有些老師提醒學生",
+              "accepted": [
+                "Therefore, some teachers remind students",
+                "As a result, some teachers warn students",
+                "So some teachers remind their students",
+                "Therefore, some teachers warn students",
+                "Thus, some teachers remind students",
+                "Therefore, some teachers tell students"
+              ],
+              "targets": [
+                "remind"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Therefore, some teachers remind that students",
+                  "right": "Therefore, some teachers remind students",
+                  "explanation_zh": "remind 後面先接人（受詞），再接 to VR 或 that 子句。"
+                }
+              ]
+            },
+            {
+              "zh": "別依賴這些工具",
+              "accepted": [
+                "not to rely on these tools",
+                "not to depend on these tools",
+                "not to rely on such tools",
+                "not to rely too much on these tools",
+                "not to depend too much on these tools"
+              ],
+              "targets": [
+                "VOC",
+                "rely",
+                "tool"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "don't rely on these tools",
+                  "right": "not to rely on these tools",
+                  "explanation_zh": "remind／warn sb 後面接 not to VR，不能直接接祈使句。"
+                },
+                {
+                  "wrong": "to not relying on these tools",
+                  "right": "not to rely on these tools",
+                  "explanation_zh": "否定不定詞是 not to＋原形動詞。"
+                }
+              ]
+            },
+            {
+              "zh": "否則作業",
+              "accepted": [
+                "or their homework",
+                "otherwise, their homework",
+                "or else their homework",
+                "or their assignments",
+                "otherwise their work"
+              ],
+              "targets": [
+                "homework"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "or their homeworks",
+                  "right": "or their homework",
+                  "explanation_zh": "homework 不可數，不加 s。"
+                }
+              ]
+            },
+            {
+              "zh": "會被退回",
+              "accepted": [
+                "will be returned",
+                "will be rejected",
+                "will be sent back",
+                "will be given back",
+                "will be returned to them"
+              ],
+              "targets": [
+                "PASS",
+                "return"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "will return",
+                  "right": "will be returned",
+                  "explanation_zh": "作業是「被退回」，要用被動 will be returned。"
+                },
+                {
+                  "wrong": "will be return",
+                  "right": "will be returned",
+                  "explanation_zh": "被動語態是 be＋過去分詞。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "collocation",
+              "zh": "提醒學生別依賴",
+              "literal_error": "some teachers remind students don't rely on these tools",
+              "part": 2,
+              "explanation_zh": "remind／warn sb not to VR；不能在受詞後面直接接 don't。"
+            }
+          ],
+          "bonus": []
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-advanced-01",
+    "lot": "translation-advanced-01",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "aabb674c20baad2f5310b8b4d808a265893e2edf0c2a598bf8b873bfdfb38f0f",
+    "spec_id": "translation-advanced@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 1,
+    "sentences": 1,
+    "avg_sentence_length": 1.0,
+    "denominator": 0,
+    "proper_nouns": [
+      "AI"
+    ],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "warn",
+      "created_at": "2026-10-09T12:42:26Z",
+      "details": {
+        "errors": [],
+        "warnings": [
+          "annotations.rubric.items.1.patterns[0]: gp-perfect-passive 通常對應句構 PERF（目前 code=PASS）"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T07:45:00Z",
+      "details": {
+        "solver": "A",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Since artificial intelligence (AI) tools became popular, quite a few students have been suspected of using them to do their homework.",
+            "confidence": "high",
+            "explanation_zh": "「自從……後，已經……」用 Since + 過去式子句、主要子句用現在完成式；「被懷疑用它們寫作業」用完成式被動 have been suspected of + V-ing；「不少學生」譯 quite a few students；「普及」譯 became popular（也可 widespread）。"
+          },
+          "2": {
+            "translation": "Therefore, some teachers remind students not to rely on these tools, or their assignments will be sent back.",
+            "confidence": "medium",
+            "explanation_zh": "「提醒學生別……」用 remind sb not to V；「否則」用 or（也可 otherwise）；「作業會被退回」用被動 will be sent back，避免用 returned（英文 returned 常指批改後發還，意思會不清楚）。信心 medium 是因為「退回」有 returned／sent back／rejected 多種寫法。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PASS",
+              "PREPVING"
+            ],
+            "used_target_words": [
+              "tool",
+              "popular",
+              "suspect",
+              "use",
+              "homework"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PASS",
+              "VOC"
+            ],
+            "used_target_words": [
+              "remind",
+              "rely",
+              "tool",
+              "homework",
+              "return"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "（小建議，不影響判定）首選譯文 will be returned 與 P4 的 will be given back 在英文常被理解成「批改後發還」，「退回不收」的意思較弱；句中有 or 表後果所以仍看得懂，但首選可考慮改 sent back 或 rejected，或在解析說明。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "tool",
+              "popular",
+              "suspect",
+              "use",
+              "homework"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PASS": true,
+              "PREPVING": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "remind",
+              "rely",
+              "tool",
+              "homework",
+              "return"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PASS": true,
+              "VOC": null
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T07:46:21Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Since artificial intelligence (AI) tools became popular, quite a few students have been suspected of using them to do their homework.",
+            "confidence": "high",
+            "explanation_zh": "「自從…後」用 Since + 過去式子句，主要子句用現在完成式；「被懷疑」用被動 have been suspected of + 動名詞；「不少」是 quite a few，「寫作業」是 do their homework。"
+          },
+          "2": {
+            "translation": "Therefore, some teachers remind students not to rely on these tools; otherwise, their assignments will be sent back.",
+            "confidence": "high",
+            "explanation_zh": "「提醒學生別…」用 remind + 受詞 + not to V；「依賴」是 rely on；「否則」用 otherwise，前面用分號連接兩個完整子句；「作業會被退回」用被動 will be sent back。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PASS",
+              "PREPVING"
+            ],
+            "used_target_words": [
+              "tool",
+              "popular",
+              "suspect",
+              "use",
+              "homework"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PASS",
+              "VOC"
+            ],
+            "used_target_words": [
+              "remind",
+              "rely",
+              "tool",
+              "homework",
+              "return"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "tool",
+              "popular",
+              "suspect",
+              "use",
+              "homework"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PASS": true,
+              "PREPVING": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "remind",
+              "rely",
+              "tool",
+              "homework",
+              "return"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PASS": true,
+              "VOC": null
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

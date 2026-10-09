@@ -1,0 +1,726 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.ffbe20",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "top",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "垂直農場（vertical farms）在城市大樓裡種植蔬菜，但這種方式是否比傳統農業更環保仍有爭議。",
+        "options": null,
+        "answer": "Vertical farms grow vegetables inside urban buildings, but whether this method is more environmentally friendly than traditional agriculture remains controversial.",
+        "accepted_answers": [
+          "Vertical farms grow vegetables in city buildings, but people still disagree about whether this way of farming is better for the environment than traditional agriculture.",
+          "Vertical farms grow vegetables inside buildings in cities, but it is still debated whether this approach is greener than traditional farming."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "間接問句（whether 名詞子句：這種方式是否…）",
+            "比較級（比傳統農業更環保）"
+          ],
+          "topic": "垂直農場"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "城市人口愈多，就愈需要在地生產的蔬菜，促使許多城市投資興建垂直農場。",
+        "options": null,
+        "answer": "The more people a city has, the more it needs locally grown vegetables, prompting many cities to invest in building vertical farms.",
+        "accepted_answers": [
+          "The larger a city's population is, the more locally grown vegetables it needs, leading many cities to invest in vertical farms.",
+          "The bigger the population of a city, the greater its need for locally produced vegetables, encouraging many cities to invest in building vertical farms."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "句尾分詞片語表結果（…，促使許多城市…）",
+            "愈…愈…（城市人口愈多，就愈需要…）"
+          ],
+          "topic": "垂直農場"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "垂直農場"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "前半句是簡單的主動句 Vertical farms grow vegetables inside urban buildings（「城市大樓」是 urban／city buildings，複數）。後半句「這種方式是否比傳統農業更環保」是名詞子句，用 whether 引導、直述句語序，可以直接當主詞：whether this method is … remains controversial；也可以寫成 it is still debated whether …。「更環保」的「環保」是形容詞概念，寫 more environmentally friendly、greener 或 better for the environment，再接 than traditional agriculture／farming。「仍有爭議」是 remains controversial。",
+          "evidence": [
+            "垂直農場（vertical farms）在城市大樓裡種植蔬菜",
+            "這種方式是否比傳統農業更環保仍有爭議"
+          ],
+          "strategy_zh": "後半句先決定外框（whether … remains controversial 或 it is still debated whether …），再把比較級 more … than … 放進 whether 子句。",
+          "hints": [
+            "切成四段：在城市大樓裡種植蔬菜／這種方式是否／比傳統農業更環保／仍有爭議",
+            "標的詞彙：vegetable（蔬菜）、building（大樓）、environmentally friendly（環保的）、traditional（傳統的）、debate／controversial（爭議）",
+            "句型框架：S + V …, but whether + S + be + more + adj. + than + N + remains controversial"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「愈…愈…」用 The + 比較級 + S + V, the + 比較級 + S + V：The more people a city has, the more it needs …；兩個子句都要有主詞與動詞，後半句的主詞「城市」中文省略了，英文要補 it。「在地生產的蔬菜」是 locally grown／locally produced vegetables（副詞修飾過去分詞）。「促使許多城市投資…」是結果，用句尾分詞 prompting／leading many cities to invest in …，invest 後面接 in。",
+          "evidence": [
+            "城市人口愈多，就愈需要在地生產的蔬菜",
+            "促使許多城市投資興建垂直農場"
+          ],
+          "strategy_zh": "先寫出 The more …, the more … 的骨架，確認兩邊都有主詞動詞；再用 V-ing 片語接上結果。",
+          "hints": [
+            "切成四段：城市人口愈多／就愈需要在地生產的蔬菜／促使許多城市／投資興建垂直農場",
+            "標的詞彙：population（人口）、local（在地的）、vegetable（蔬菜）、invest（投資）",
+            "句型框架：The more + N + S + V, the more + S + V …, prompting + O + to VR …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "Vertical farms grow vegetables inside urban buildings, but whether this method is more environmentally friendly than traditional agriculture remains controversial.",
+            "Vertical farms grow vegetables in city buildings, but people still disagree about whether this way of farming is better for the environment than traditional agriculture.",
+            "Vertical farms grow vegetables inside buildings in cities, but it is still debated whether this approach is greener than traditional farming."
+          ],
+          "target_words": [
+            {
+              "word": "vegetable",
+              "zh": "蔬菜"
+            },
+            {
+              "word": "building",
+              "zh": "大樓"
+            },
+            {
+              "word": "environment",
+              "zh": "環境（環保）",
+              "alternatives": [
+                "environmentally",
+                "green"
+              ]
+            },
+            {
+              "word": "traditional",
+              "zh": "傳統的"
+            },
+            {
+              "word": "debate",
+              "zh": "爭論",
+              "alternatives": [
+                "disagree",
+                "controversial",
+                "controversy",
+                "argue",
+                "dispute"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "NCL",
+              "grammar_id": "gp-wh-clause",
+              "label_zh": "間接問句（whether 名詞子句：這種方式是否…）",
+              "frame": "whether + S + V … + remains controversial ／ it is still debated + whether + S + V …（直述句語序）",
+              "zh_trigger": "這種方式是否"
+            },
+            {
+              "code": "COMP",
+              "grammar_id": "gp-comparative-superlative",
+              "label_zh": "比較級（比傳統農業更環保）",
+              "frame": "S + be + more + adj. + than + N",
+              "zh_trigger": "比傳統農業更環保"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "在城市大樓裡種植蔬菜",
+              "accepted": [
+                "grow vegetables inside urban buildings",
+                "grow vegetables in city buildings",
+                "grow vegetables inside buildings in cities",
+                "grow vegetables inside city buildings",
+                "grow vegetables in urban buildings"
+              ],
+              "targets": [
+                "vegetable",
+                "building"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "grow vegetable inside urban buildings",
+                  "right": "grow vegetables inside urban buildings",
+                  "explanation_zh": "泛指蔬菜用複數 vegetables。"
+                },
+                {
+                  "wrong": "grows vegetables inside urban buildings",
+                  "right": "grow vegetables inside urban buildings",
+                  "explanation_zh": "主詞 vertical farms 是複數，動詞不加 s。"
+                }
+              ]
+            },
+            {
+              "zh": "這種方式是否",
+              "accepted": [
+                "whether this method is",
+                "whether this way of farming is",
+                "whether this approach is",
+                "whether this way is",
+                "if this method is"
+              ],
+              "targets": [
+                "NCL"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "whether is this method",
+                  "right": "whether this method is",
+                  "explanation_zh": "名詞子句用直述句語序：whether + 主詞 + 動詞。"
+                },
+                {
+                  "wrong": "this method whether is",
+                  "right": "whether this method is",
+                  "explanation_zh": "whether 要放在子句開頭。"
+                }
+              ]
+            },
+            {
+              "zh": "比傳統農業更環保",
+              "accepted": [
+                "more environmentally friendly than traditional agriculture",
+                "better for the environment than traditional agriculture",
+                "greener than traditional farming",
+                "better for the environment than traditional farming",
+                "more environmentally friendly than traditional farming"
+              ],
+              "targets": [
+                "COMP",
+                "environment",
+                "traditional"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "more environmental protection than traditional farming",
+                  "right": "more environmentally friendly than traditional farming",
+                  "explanation_zh": "「環保」在這裡是形容詞（對環境友善），不是名詞 environmental protection。"
+                },
+                {
+                  "wrong": "more greener than traditional farming",
+                  "right": "greener than traditional farming",
+                  "explanation_zh": "greener 已經是比較級，不能再加 more。"
+                }
+              ]
+            },
+            {
+              "zh": "仍有爭議",
+              "accepted": [
+                "remains controversial",
+                "people still disagree about",
+                "it is still debated",
+                "is still a matter of debate",
+                "is still controversial"
+              ],
+              "targets": [
+                "debate"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "still has controversy",
+                  "right": "is still controversial",
+                  "explanation_zh": "「有爭議」用形容詞 controversial 或 be debated，不說 have controversy。"
+                },
+                {
+                  "wrong": "it is still debating",
+                  "right": "it is still debated",
+                  "explanation_zh": "「被爭論」要用被動 it is still debated。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "abstract_nominal",
+              "zh": "更環保",
+              "literal_error": "this method is more environmental protection than traditional farming",
+              "part": 3,
+              "explanation_zh": "「環保」在這裡當形容詞用（對環境友善），英文用 environmentally friendly、green 或 better for the environment；直譯成名詞 environmental protection 會變成「這種方式是環境保護」。"
+            },
+            {
+              "type": "verbal_subject",
+              "zh": "這種方式是否比傳統農業更環保仍有爭議",
+              "literal_error": "this method whether is more environmentally friendly than traditional farming still has controversy",
+              "part": 2,
+              "explanation_zh": "中文拿整個「是否…」問句當主詞；英文要先用 whether 把問句變成名詞子句（直述句語序），才能當主詞，或放在 it is still debated 後面。"
+            }
+          ],
+          "bonus": [],
+          "restructuring_zh": "「這種方式是否…仍有爭議」以問句當主詞，英文要改成 whether 名詞子句（直述句語序）當主詞，或改用 it is still debated whether … 把子句移到句尾；「更環保」的「環保」要改成形容詞 environmentally friendly。"
+        },
+        "2": {
+          "references": [
+            "The more people a city has, the more it needs locally grown vegetables, prompting many cities to invest in building vertical farms.",
+            "The larger a city's population is, the more locally grown vegetables it needs, leading many cities to invest in vertical farms.",
+            "The bigger the population of a city, the greater its need for locally produced vegetables, encouraging many cities to invest in building vertical farms."
+          ],
+          "target_words": [
+            {
+              "word": "population",
+              "zh": "人口",
+              "alternatives": [
+                "people"
+              ]
+            },
+            {
+              "word": "local",
+              "zh": "在地的",
+              "alternatives": [
+                "locally"
+              ]
+            },
+            {
+              "word": "vegetable",
+              "zh": "蔬菜"
+            },
+            {
+              "word": "invest",
+              "zh": "投資"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PART",
+              "grammar_id": "gp-participle-result",
+              "label_zh": "句尾分詞片語表結果（…，促使許多城市…）",
+              "frame": "…, prompting/leading/encouraging + O + to VR …",
+              "zh_trigger": "促使許多城市"
+            },
+            {
+              "code": "COMP",
+              "grammar_id": "gp-the-more",
+              "label_zh": "愈…愈…（城市人口愈多，就愈需要…）",
+              "frame": "The + 比較級 + S + V, the + 比較級 + S + V",
+              "zh_trigger": "愈多，就愈需要"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "城市人口愈多",
+              "accepted": [
+                "The more people a city has",
+                "The larger a city's population is",
+                "The bigger the population of a city",
+                "The larger the population of a city is",
+                "The more people live in a city"
+              ],
+              "targets": [
+                "COMP",
+                "population"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "The city population is more",
+                  "right": "The more people a city has",
+                  "explanation_zh": "「愈…愈…」要用 The + 比較級 …, the + 比較級 … 的句型，比較級移到句首。"
+                },
+                {
+                  "wrong": "More people a city has",
+                  "right": "The more people a city has",
+                  "explanation_zh": "這個句型兩個比較級前面都要有 the。"
+                }
+              ]
+            },
+            {
+              "zh": "就愈需要在地生產的蔬菜",
+              "accepted": [
+                "the more it needs locally grown vegetables",
+                "the more locally grown vegetables it needs",
+                "the greater its need for locally produced vegetables",
+                "the more it needs locally produced vegetables",
+                "the more local vegetables it needs"
+              ],
+              "targets": [
+                "local",
+                "vegetable"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "the more it needs local produced vegetables",
+                  "right": "the more it needs locally produced vegetables",
+                  "explanation_zh": "修飾過去分詞 produced 要用副詞 locally。"
+                },
+                {
+                  "wrong": "the more need locally grown vegetables",
+                  "right": "the more it needs locally grown vegetables",
+                  "explanation_zh": "後半句也要有主詞和動詞（it needs）。"
+                }
+              ]
+            },
+            {
+              "zh": "促使許多城市",
+              "accepted": [
+                "prompting many cities",
+                "leading many cities",
+                "encouraging many cities",
+                "causing many cities"
+              ],
+              "targets": [
+                "PART"
+              ],
+              "common_errors": [
+                {
+                  "wrong": ", prompts many cities",
+                  "right": ", prompting many cities",
+                  "explanation_zh": "逗號後面表結果用分詞 prompting，不再加一個主要動詞。"
+                },
+                {
+                  "wrong": "making many cities to invest",
+                  "right": "prompting many cities to invest",
+                  "explanation_zh": "make 後面接原形動詞，不接 to；「促使」用 prompt／lead／encourage sb to VR。"
+                }
+              ]
+            },
+            {
+              "zh": "投資興建垂直農場",
+              "accepted": [
+                "to invest in building vertical farms",
+                "to invest in vertical farms",
+                "to put money into building vertical farms",
+                "to invest in setting up vertical farms"
+              ],
+              "targets": [
+                "invest"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "to invest building vertical farms",
+                  "right": "to invest in building vertical farms",
+                  "explanation_zh": "invest 後面要接介系詞 in。"
+                },
+                {
+                  "wrong": "to invest in build vertical farms",
+                  "right": "to invest in building vertical farms",
+                  "explanation_zh": "介系詞 in 後面接動名詞 building。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "abstract_nominal",
+              "zh": "在地生產的蔬菜",
+              "literal_error": "the more it needs local production vegetables",
+              "part": 2,
+              "explanation_zh": "「在地生產的」是複合概念，英文用 locally grown／locally produced（副詞＋過去分詞）修飾 vegetables，或直接說 local vegetables；production 不能當形容詞放在名詞前。"
+            },
+            {
+              "type": "subjectless",
+              "zh": "就愈需要",
+              "literal_error": "The more people a city has, the more need locally grown vegetables.",
+              "part": 2,
+              "explanation_zh": "中文後半句省略了主詞（城市）；英文「愈…愈…」兩個子句都要有主詞和動詞：the more it needs …。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "So great is the demand for locally grown vegetables in crowded cities that many of them have begun investing in vertical farms.",
+              "grammar_id": "gp-so-adj-inversion",
+              "explanation_zh": "So + adj. + be + S + that … 的倒裝句強調需求之大；只當加分寫法。"
+            }
+          ],
+          "restructuring_zh": "「城市人口愈多，就愈需要…」後半句省略主詞，英文要補上 it（＝the city），並把兩個比較級移到句首形成 The more …, the more …；「促使…」改成句尾分詞 prompting many cities to …。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ac-V-3",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "C-V-5",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-top-03",
+    "lot": "translation-top-03",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "31117a6d4ea07290a38612cba619cca8744c8f0cc9141fe199063ce8d6f7050e",
+    "spec_id": "translation-top@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 2,
+    "sentences": 1,
+    "avg_sentence_length": 2.0,
+    "denominator": 2,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.5,
+    "coverage_l1_6": 1.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.5,
+    "level_counts": {
+      "1": 1,
+      "5": 1
+    },
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T13:17:16Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "warn",
+      "created_at": "2026-10-09T12:52:43Z",
+      "details": {
+        "solver": "A",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Vertical farms grow vegetables inside city buildings, but whether this method is more environmentally friendly than traditional farming is still under debate.",
+            "confidence": "high",
+            "explanation_zh": "「是否…仍有爭議」用 whether 名詞子句當主詞（也可用 it is still debated whether…）；「更環保」用比較級 more environmentally friendly than。"
+          },
+          "2": {
+            "translation": "The larger a city's population is, the more locally produced vegetables it needs, prompting many cities to invest in building vertical farms.",
+            "confidence": "medium",
+            "explanation_zh": "「愈…就愈…」用 the 比較級…, the 比較級…；「促使」是整句的結果，用句尾分詞 prompting … to invest in。中文第二個分句沒有明說主詞（城市需要），我補 it 指城市；也可寫成 the greater the need for…。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "NCL",
+              "COMP"
+            ],
+            "used_target_words": [
+              "vegetable",
+              "building",
+              "environment",
+              "traditional",
+              "debate"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "第 4 部分「仍有爭議」的 accepted 沒有 is still under debate／is still being debated／is still debatable；這些和 is still a matter of debate、it is still debated 同義而且很常見，我的盲譯就用了 is still under debate，建議補進 accepted，免得 AI 批改照清單扣分。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "PART",
+              "COMP"
+            ],
+            "used_target_words": [
+              "population",
+              "local",
+              "vegetable",
+              "invest"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "vegetable",
+              "building",
+              "environment",
+              "traditional",
+              "debate"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NCL": true,
+              "COMP": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "population",
+              "local",
+              "vegetable",
+              "invest"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PART": true,
+              "COMP": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 1 題驗證者對4 部分切分有意見（warn）：第 4 部分「仍有爭議」的 accepted 沒有 is still under debate／is still being debated／is still debatable；這些和 is still a matter of debat"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "fail",
+      "created_at": "2026-10-09T12:59:49Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Vertical farms grow vegetables in city buildings, but whether this method is more environmentally friendly than traditional agriculture is still debated.",
+            "confidence": "high",
+            "explanation_zh": "「是否比傳統農業更環保」用 whether 引導名詞子句當主詞，比較級 more environmentally friendly than；「仍有爭議」用 is still debated（也可寫 remains controversial）。"
+          },
+          "2": {
+            "translation": "The more people live in cities, the more locally grown vegetables are needed, which has prompted many cities to invest in building vertical farms.",
+            "confidence": "medium",
+            "explanation_zh": "「城市人口愈多，就愈需要…」對應 the more …, the more … 的雙重比較；「促使許多城市投資興建」用關係代名詞 which 補充說明並接 prompt … to V。『城市人口愈多』可寫成 the larger the urban population 或 the more people live in cities，兩種都通，所以信心給 medium。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "NCL",
+              "COMP"
+            ],
+            "used_target_words": [
+              "vegetable",
+              "building",
+              "environment",
+              "traditional",
+              "debate"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "COMP"
+            ],
+            "used_target_words": [
+              "population",
+              "local",
+              "vegetable",
+              "invest"
+            ],
+            "within_accepted": false,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "「促使許多城市…」我用非限定關係子句 which has prompted many cities to invest …，沒有用句尾分詞（PART），所以 PART 沒被引出；中文的「促使」並不限定要用分詞片語。",
+              "第 3 部分的 accepted 只收 prompting／leading／encouraging／causing 分詞寫法，沒收 which has prompted／led 這種合文法的寫法；第 2 部分也沒收被動 the more locally grown vegetables are needed。評分規準偏窄，我的譯文文法正確卻對不上。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "vegetable",
+              "building",
+              "environment",
+              "traditional",
+              "debate"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NCL": true,
+              "COMP": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "population",
+              "local",
+              "vegetable",
+              "invest"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "COMP": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 2 題盲譯沒有用到標的句型 ['PART']：中文題目沒有自然引出這個句型（SPEC §5.7）",
+          "第 2 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義",
+          "第 2 題驗證者對4 部分切分有意見（warn）：「促使許多城市…」我用非限定關係子句 which has prompted many cities to invest …，沒有用句尾分詞（PART），所以 PART 沒被引出；中文的「促使」並不限定要用分詞片語。；第 3 部分的 acce"
+        ]
+      }
+    }
+  ],
+  "status": "rejected",
+  "status_reason": "blind_solver:B 未通過：第 2 題盲譯沒有用到標的句型 ['PART']：中文題目沒有自然引出這個句型（SPEC §5.7）；第 2 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義；第 2 題驗證者對4 部分切分有意見（warn）：「促使許多城市…」我用非限定關係子句 which has prompted many cities to invest …，沒有用句尾分詞（PART），所以 PART 沒被引出；中文的「促使」並不限定要用分詞片語。；第 3 部分的 acce"
+}

@@ -1,0 +1,777 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.048822",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "advanced",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "許多學校收集雨水，好讓學生能用來澆花、拖地和沖馬桶。",
+        "options": null,
+        "answer": "Many schools collect rainwater so that students can use it to water plants, mop floors, and flush toilets.",
+        "accepted_answers": [
+          "Many schools collect rain so that their students can use it to water flowers, mop the floors, and flush the toilets.",
+          "A lot of schools collect rainwater so that the students can use it to water the plants, mop the floors and flush the toilets."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "so that 表目的",
+            "平行結構"
+          ],
+          "topic": "雨水回收"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "為了確保水質乾淨，學生會定期清洗水桶並記錄雨量。",
+        "options": null,
+        "answer": "To make sure the water is clean, students regularly wash the tanks and record the rainfall.",
+        "accepted_answers": [
+          "In order to keep the water clean, students clean the tanks regularly and record how much it rains.",
+          "To ensure that the water is clean, the students wash the water tanks regularly and keep a record of the rainfall."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "不定詞表目的",
+            "平行結構"
+          ],
+          "topic": "雨水回收"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "雨水回收"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「好讓學生能…」說明收集雨水的目的，而且目的子句有自己的主詞「學生」，用 so that + students + can + 原形動詞。「用來」要寫出受詞：use it（it 指雨水）to …。「澆花、拖地和沖馬桶」三個動作平行，都用原形動詞：water plants, mop floors, and flush toilets；「沖馬桶」的動詞是 flush。",
+          "evidence": [
+            "好讓學生能",
+            "澆花、拖地和沖馬桶"
+          ],
+          "strategy_zh": "目的子句主詞和主要子句不同時，用 so that + S + can/could + VR；三個以上並列時，前面用逗號、最後一個前面加 and。",
+          "hints": [
+            "切成四段：許多學校收集雨水／好讓學生能／用來澆花／拖地和沖馬桶",
+            "標的詞彙：collect（收集，L1）、rain（雨水，L1）、water（澆水，L1）、plant（植物，L1）、mop（拖地，L2）、flush（沖水，L4）、toilet（馬桶，L1）",
+            "句型框架：S + V … so that + S + can + use it to + V1 …, V2 …, and V3 …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「為了…」表目的，用 To + 原形動詞放句首。「確保水質乾淨」不要逐字寫 water quality clean，make sure 後面要接完整子句 the water is clean（或 keep the water clean）。「清洗水桶並記錄雨量」兩個動作用 and 連接，主詞 students 是複數，兩個動詞都用現在式原形；「定期」修飾動詞，用副詞 regularly；「雨量」是 rainfall。",
+          "evidence": [
+            "為了確保水質乾淨",
+            "清洗水桶並記錄雨量"
+          ],
+          "strategy_zh": "中文「名詞＋形容詞」（水質乾淨）在英文常要補 be 動詞，或改用 keep + O + adj.；並列的動作要同一種形式。",
+          "hints": [
+            "切成四段：為了確保水質乾淨／學生會定期清洗水桶／並記錄／雨量",
+            "標的詞彙：make sure（確保，L1）、clean（乾淨的，L1）、regularly（定期地，L2）、wash（清洗，L2）、tank（水桶、儲水槽，L3）、record（記錄，L2）、rainfall（雨量，L4）",
+            "句型框架：To + VR …, S + V1 … and V2 …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "Many schools collect rainwater so that students can use it to water plants, mop floors, and flush toilets.",
+            "Many schools collect rain so that their students can use it to water flowers, mop the floors, and flush the toilets.",
+            "A lot of schools collect rainwater so that the students can use it to water the plants, mop the floors and flush the toilets."
+          ],
+          "target_words": [
+            {
+              "word": "collect",
+              "zh": "收集",
+              "alternatives": [
+                "gather",
+                "save"
+              ]
+            },
+            {
+              "word": "rain",
+              "zh": "雨水",
+              "alternatives": [
+                "rainwater"
+              ]
+            },
+            {
+              "word": "water",
+              "zh": "澆水"
+            },
+            {
+              "word": "plant",
+              "zh": "植物",
+              "alternatives": [
+                "flower"
+              ]
+            },
+            {
+              "word": "mop",
+              "zh": "拖地",
+              "alternatives": [
+                "clean"
+              ]
+            },
+            {
+              "word": "flush",
+              "zh": "沖水"
+            },
+            {
+              "word": "toilet",
+              "zh": "馬桶"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PURP",
+              "grammar_id": "gp-so-that-purpose",
+              "label_zh": "目的：so that + S + can + VR",
+              "frame": "S + V … so that + S + can + VR …",
+              "zh_trigger": "好讓"
+            },
+            {
+              "code": "PARA",
+              "grammar_id": "gp-parallelism",
+              "label_zh": "平行結構（V1 …, V2 …, and V3 …）",
+              "frame": "use it to + V1 …, V2 …, and V3 …",
+              "zh_trigger": "澆花、拖地和沖馬桶"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "許多學校收集雨水",
+              "accepted": [
+                "Many schools collect rainwater",
+                "Many schools collect rain",
+                "A lot of schools collect rainwater",
+                "Lots of schools collect rainwater",
+                "Many schools gather rainwater",
+                "Many schools save rainwater"
+              ],
+              "targets": [
+                "collect",
+                "rain"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Many school collect rainwater",
+                  "right": "Many schools collect rainwater",
+                  "explanation_zh": "many 後面接複數名詞 schools。"
+                },
+                {
+                  "wrong": "Many schools collect rainwaters",
+                  "right": "Many schools collect rainwater",
+                  "explanation_zh": "rainwater 不可數，不加 s。"
+                }
+              ]
+            },
+            {
+              "zh": "好讓學生能",
+              "accepted": [
+                "so that students can",
+                "so that their students can",
+                "so that the students can",
+                "in order that students can",
+                "so students can"
+              ],
+              "targets": [
+                "PURP"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "to let students can",
+                  "right": "so that students can",
+                  "explanation_zh": "let 後面直接接原形動詞，不能再加 can；要用 can 就改成 so that + 主詞 + can。"
+                },
+                {
+                  "wrong": "so that students can to use",
+                  "right": "so that students can use",
+                  "explanation_zh": "can 後面接原形動詞，不加 to。"
+                }
+              ]
+            },
+            {
+              "zh": "用來澆花",
+              "accepted": [
+                "use it to water plants",
+                "use it to water flowers",
+                "use it to water the plants",
+                "use it to water the flowers",
+                "use the water to water plants",
+                "use the rainwater to water plants"
+              ],
+              "targets": [
+                "water",
+                "plant"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "use to water plants",
+                  "right": "use it to water plants",
+                  "explanation_zh": "use 是及物動詞，要寫出受詞 it（指雨水）。"
+                },
+                {
+                  "wrong": "use it to pour flowers",
+                  "right": "use it to water plants",
+                  "explanation_zh": "「澆花」是 water plants／flowers，water 在這裡當動詞。"
+                }
+              ]
+            },
+            {
+              "zh": "拖地和沖馬桶",
+              "accepted": [
+                "mop floors, and flush toilets",
+                "mop the floors, and flush the toilets",
+                "clean the floors, and flush the toilets",
+                "mop the floor, and flush the toilet",
+                "clean floors, and flush toilets"
+              ],
+              "targets": [
+                "mop",
+                "flush",
+                "toilet",
+                "PARA"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "mopping floors, and flushing toilets",
+                  "right": "mop floors, and flush toilets",
+                  "explanation_zh": "和前面的 water 對稱，三個動作都用原形動詞。"
+                },
+                {
+                  "wrong": "mop floors, and wash toilets",
+                  "right": "mop floors, and flush toilets",
+                  "explanation_zh": "「沖馬桶」是 flush the toilet；wash the toilet 是「刷洗馬桶」。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "collocation",
+              "zh": "好讓",
+              "literal_error": "Many schools collect rainwater to let students can use it to water plants, mop floors, and flush toilets.",
+              "part": 2,
+              "explanation_zh": "let 和 can 不能連用；目的子句有自己的主詞時，用 so that + students + can。"
+            },
+            {
+              "type": "collocation",
+              "zh": "沖馬桶",
+              "literal_error": "Many schools collect rainwater so that students can use it to water plants, mop floors, and wash toilets.",
+              "part": 4,
+              "explanation_zh": "「沖」馬桶的動詞是 flush，不是 wash。"
+            }
+          ],
+          "bonus": [],
+          "restructuring_zh": "「好讓學生能用來…」中文省略了「用」的受詞，英文要補上 it（指雨水），並把「好讓」寫成 so that + 主詞 + can。"
+        },
+        "2": {
+          "references": [
+            "To make sure the water is clean, students regularly wash the tanks and record the rainfall.",
+            "In order to keep the water clean, students clean the tanks regularly and record how much it rains.",
+            "To ensure that the water is clean, the students wash the water tanks regularly and keep a record of the rainfall."
+          ],
+          "target_words": [
+            {
+              "word": "make sure",
+              "zh": "確保",
+              "alternatives": [
+                "ensure",
+                "keep"
+              ]
+            },
+            {
+              "word": "clean",
+              "zh": "乾淨的"
+            },
+            {
+              "word": "regularly",
+              "zh": "定期地",
+              "alternatives": [
+                "regular"
+              ]
+            },
+            {
+              "word": "wash",
+              "zh": "清洗",
+              "alternatives": [
+                "clean"
+              ]
+            },
+            {
+              "word": "tank",
+              "zh": "水桶、儲水槽",
+              "alternatives": [
+                "bucket",
+                "barrel"
+              ]
+            },
+            {
+              "word": "record",
+              "zh": "記錄"
+            },
+            {
+              "word": "rainfall",
+              "zh": "雨量",
+              "alternatives": [
+                "rain"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PURP",
+              "grammar_id": "gp-infinitive-purpose",
+              "label_zh": "不定詞表目的（To + VR 放句首）",
+              "frame": "To／In order to + VR …, S + V …",
+              "zh_trigger": "為了確保水質乾淨"
+            },
+            {
+              "code": "PARA",
+              "grammar_id": "gp-parallelism",
+              "label_zh": "平行結構（V1 … and V2 …）",
+              "frame": "S + V1 … and V2 …",
+              "zh_trigger": "清洗水桶並記錄雨量"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "為了確保水質乾淨",
+              "accepted": [
+                "To make sure the water is clean",
+                "In order to keep the water clean",
+                "To ensure that the water is clean",
+                "To keep the water clean",
+                "To make sure that the water is clean",
+                "To ensure the water is clean",
+                "In order to make sure the water is clean"
+              ],
+              "targets": [
+                "make sure",
+                "clean",
+                "PURP"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "To make sure the water quality clean",
+                  "right": "To make sure the water is clean",
+                  "explanation_zh": "make sure 後面接完整子句，要有動詞 is：the water is clean。"
+                },
+                {
+                  "wrong": "For making sure the water is clean",
+                  "right": "To make sure the water is clean",
+                  "explanation_zh": "表目的用不定詞 To + 原形動詞。"
+                }
+              ]
+            },
+            {
+              "zh": "學生會定期清洗水桶",
+              "accepted": [
+                "students regularly wash the tanks",
+                "students clean the tanks regularly",
+                "the students wash the water tanks regularly",
+                "students wash the tanks regularly",
+                "students regularly clean the tanks",
+                "students regularly wash the buckets",
+                "students wash the barrels regularly"
+              ],
+              "targets": [
+                "regularly",
+                "wash",
+                "tank"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "students regular wash the tanks",
+                  "right": "students regularly wash the tanks",
+                  "explanation_zh": "修飾動詞 wash 要用副詞 regularly。"
+                },
+                {
+                  "wrong": "students regularly washes the tanks",
+                  "right": "students regularly wash the tanks",
+                  "explanation_zh": "主詞 students 是複數，動詞不加 s。"
+                }
+              ]
+            },
+            {
+              "zh": "並記錄",
+              "accepted": [
+                "and record",
+                "and keep a record of",
+                "and write down"
+              ],
+              "targets": [
+                "record",
+                "PARA"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "and recording",
+                  "right": "and record",
+                  "explanation_zh": "and 前後對稱：wash … and record …，兩個動詞都用現在式。"
+                },
+                {
+                  "wrong": "and records",
+                  "right": "and record",
+                  "explanation_zh": "主詞 students 是複數，record 不加 s。"
+                }
+              ]
+            },
+            {
+              "zh": "雨量",
+              "accepted": [
+                "the rainfall",
+                "how much it rains",
+                "the amount of rain",
+                "how much rain falls",
+                "the amount of rainfall",
+                "the amount of rainwater"
+              ],
+              "targets": [
+                "rainfall"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "the rain quantity",
+                  "right": "the rainfall",
+                  "explanation_zh": "「雨量」是 rainfall 或 the amount of rain，不要逐字翻成 rain quantity。"
+                },
+                {
+                  "wrong": "how much does it rain",
+                  "right": "how much it rains",
+                  "explanation_zh": "當受詞的間接問句用直述句語序 how much it rains。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "abstract_nominal",
+              "zh": "水質乾淨",
+              "literal_error": "To make sure the water quality clean, students regularly wash the tanks and record the rainfall.",
+              "part": 1,
+              "explanation_zh": "「水質乾淨」照字面寫成 water quality clean 少了動詞；要寫 the water is clean（或 keep the water clean）。"
+            },
+            {
+              "type": "word_form",
+              "zh": "定期",
+              "literal_error": "To make sure the water is clean, students regular wash the tanks and record the rainfall.",
+              "part": 2,
+              "explanation_zh": "「定期地」修飾動詞，要用副詞 regularly。"
+            }
+          ],
+          "bonus": [],
+          "restructuring_zh": "「確保水質乾淨」中文是「名詞＋形容詞」，英文要補動詞：make sure the water is clean，或改成 keep the water clean。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "C-V-5",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-advanced-03",
+    "lot": "translation-advanced-03",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "02c0a28073619c0bc20ca233498a317fe41127b7ed24b485e5a25ef485b7d3c2",
+    "spec_id": "translation-advanced@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "warn",
+      "created_at": "2026-10-09T13:03:02Z",
+      "details": {
+        "errors": [],
+        "warnings": [
+          "annotations.rubric.items.1: 首選參考譯文有詞彙表外的字 ['rainwater']（表外專有名詞請在題目括號附英文）"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "warn",
+      "created_at": "2026-10-09T08:05:03Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Many schools collect rainwater so that students can use it to water plants, mop the floors, and flush the toilets.",
+            "confidence": "high",
+            "explanation_zh": "「好讓學生能…」表目的，用 so that + S + can；「用來澆花、拖地和沖馬桶」用 use it to V，三個動詞片語平行；「澆花」譯 water plants（water the flowers 亦可）。"
+          },
+          "2": {
+            "translation": "To make sure that the water stays clean, students regularly wash the buckets and record the amount of rainfall.",
+            "confidence": "high",
+            "explanation_zh": "「為了確保」用不定詞 To make sure that… 表目的；「水質乾淨」譯 the water stays clean；「定期清洗水桶並記錄雨量」兩個動詞平行，regularly 放在動詞前；「雨量」譯 the amount of rainfall。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PURP",
+              "PARA"
+            ],
+            "used_target_words": [
+              "collect",
+              "rain",
+              "water",
+              "plant",
+              "mop",
+              "flush",
+              "toilet"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PURP",
+              "PARA"
+            ],
+            "used_target_words": [
+              "make sure",
+              "clean",
+              "regularly",
+              "wash",
+              "tank",
+              "record",
+              "rainfall"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "warn",
+            "parts_check": "pass",
+            "issues_zh": [
+              "「水桶」字面是 bucket／pail（集雨用的可說 barrel），三個參考譯文卻都譯成 tank(s)，比較接近「水塔、儲水槽」，學生會誤以為「水桶＝tank」；建議至少一句參考譯文改用 buckets 或 barrels（tank 已有 bucket/barrel 替代，評分不受影響）。",
+              "R1 前面 keep the water clean、後面又 clean the tanks，clean 重複出現，語感稍弱（不算錯）。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "collect",
+              "rain",
+              "water",
+              "plant",
+              "mop",
+              "flush",
+              "toilet"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PURP": true,
+              "PARA": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "make sure",
+              "clean",
+              "regularly",
+              "wash",
+              "tank",
+              "record",
+              "rainfall"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PURP": true,
+              "PARA": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 2 題驗證者對參考譯文有意見（warn）：「水桶」字面是 bucket／pail（集雨用的可說 barrel），三個參考譯文卻都譯成 tank(s)，比較接近「水塔、儲水槽」，學生會誤以為「水桶＝tank」；建議至少一句參考譯文改用 buckets 或 barrels（tank 已"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T00:00:00Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Many schools collect rainwater so that students can use it to water plants, mop the floors, and flush the toilets.",
+            "confidence": "high",
+            "explanation_zh": "「好讓」用 so that 引導目的子句；「澆花、拖地和沖馬桶」三個動詞片語並列，保持平行結構。"
+          },
+          "2": {
+            "translation": "To make sure the water stays clean, students regularly clean the buckets and record the amount of rainfall.",
+            "confidence": "high",
+            "explanation_zh": "「為了確保水質乾淨」用不定詞表目的，make sure 後接子句；「定期」用 regularly；「記錄雨量」用 record the amount of rainfall。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PURP",
+              "PARA"
+            ],
+            "used_target_words": [
+              "collect",
+              "rain",
+              "water",
+              "plant",
+              "mop",
+              "flush",
+              "toilet"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PURP",
+              "PARA"
+            ],
+            "used_target_words": [
+              "make sure",
+              "clean",
+              "regularly",
+              "wash",
+              "tank",
+              "record",
+              "rainfall"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "（建議，不影響判定）「水桶」直譯是 bucket，三句參考譯文都用 tank（較大的儲水槽）；bucket 雖在 alternatives 與第 2 部分 accepted 內，建議參考譯文至少一句改用 bucket 或 barrel，和中文字面更一致。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "collect",
+              "rain",
+              "water",
+              "plant",
+              "mop",
+              "flush",
+              "toilet"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PURP": true,
+              "PARA": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "make sure",
+              "clean",
+              "regularly",
+              "wash",
+              "tank",
+              "record",
+              "rainfall"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PURP": true,
+              "PARA": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

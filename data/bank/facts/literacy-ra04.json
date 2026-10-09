@@ -1,0 +1,277 @@
+{
+  "schema": "gsat-bank-facts/v1",
+  "id": "literacy-ra04",
+  "title": "World literacy since 1820 (OWID literacy rate) and SDG target 4.6",
+  "sdgs": [
+    4
+  ],
+  "created_on": "2026-10-09",
+  "created_by": "claude-opus-5-5",
+  "sources": [
+    {
+      "id": "s1",
+      "publisher": "Our World in Data",
+      "title": "Literacy rate (cross-country-literacy-rates)",
+      "url": "https://ourworldindata.org/grapher/cross-country-literacy-rates",
+      "accessed": "2026-10-09",
+      "license": "CC-BY-4.0",
+      "use": "dataset",
+      "note": "數值取自 grapher CSV（csvType=full）與 metadata.json，2026-10-09 下載。原始資料：OECD How Was Life?（1820–1970 全球估計）、UNESCO（1957, 1953）、Buringh & van Zanden（2009）、UNESCO Institute for Statistics（1970 起）。定義：15 歲以上能讀寫一句關於日常生活的簡單句子；1950 年的國家數值是 UNESCO 以 5 個百分點區間報告，OWID 取區間中點"
+    },
+    {
+      "id": "s2",
+      "publisher": "Our World in Data",
+      "title": "Literacy (topic page)",
+      "url": "https://ourworldindata.org/literacy",
+      "accessed": "2026-10-09",
+      "license": "CC-BY-4.0",
+      "use": "fact_only",
+      "note": "OWID 文章只取事實（白名單 deny：OWID 文章不改寫）"
+    },
+    {
+      "id": "s3",
+      "publisher": "United Nations, Department of Economic and Social Affairs",
+      "title": "Goal 4: Ensure inclusive and equitable quality education",
+      "url": "https://sdgs.un.org/goals/goal4",
+      "accessed": "2026-10-09",
+      "license": "UN terms of use",
+      "use": "fact_only"
+    }
+  ],
+  "facts": [
+    {
+      "id": "f1",
+      "text": "In 1820, an estimated 12 percent of the world’s adults could read and write (OWID series: 12.0).",
+      "source_ids": [
+        "s1",
+        "s2"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f2",
+      "text": "Two centuries ago roughly one person in ten could read; today roughly one in ten cannot.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f3",
+      "text": "Between 1451 and 1800 there were no direct surveys of literacy, so historians rely on indirect signs.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f4",
+      "text": "Older estimates often count people who could sign documents such as marriage registers; this is only a lower bound, because more people could read than write.",
+      "source_ids": [
+        "s1",
+        "s2"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f5",
+      "text": "Many recent literacy figures come from a simple yes-or-no census or survey question asking whether a person can read and write.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f6",
+      "text": "Countries set different standards: Greece counts people as literate after six years of primary school, while Paraguay uses two years.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f7",
+      "text": "Because definitions and coverage changed over time, historical and modern literacy figures should be compared with caution.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f8",
+      "text": "Around 1870, only about one in four people attended school and about one in five could read.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f9",
+      "text": "The OWID world literacy rate was 21.4 percent in 1900.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f10",
+      "text": "Global literacy grew faster after the mid-20th century, when expanding basic education became a priority around the world.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f11",
+      "text": "In many countries, younger people are much more literate than older people.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f12",
+      "text": "In many poorer countries, young men have higher literacy rates than young women.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f13",
+      "text": "In some countries in sub-Saharan Africa (south of the Sahara), fewer than one in three adults can read and write.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f14",
+      "text": "SDG target 4.6: by 2030, all young people and a substantial share of adults, both men and women, should achieve literacy and numeracy.",
+      "source_ids": [
+        "s3"
+      ],
+      "kind": "date"
+    },
+    {
+      "id": "f15",
+      "text": "The OWID world literacy rate was 87.7 percent in 2024, about 88 percent.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f16",
+      "text": "Derived from the OWID world series: the rate rose about 15 points from 1900 to 1950 (21.4 to 36.0) and about 32 points from 1950 to 1980 (36.0 to 67.8), so it nearly doubled in those three decades.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f17",
+      "text": "The 1950 country figures come from a UNESCO mid-century survey that reported ranges; OWID shows the middle of each range (for example 60 to 65 percent becomes 62.5).",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f18",
+      "text": "Today a person counts as literate if they can read and write a short, simple sentence about everyday life; rates cover people aged 15 and older.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "definition"
+    }
+  ],
+  "datasets": [
+    {
+      "id": "d1",
+      "source_id": "s1",
+      "title": "Literacy rate, World (long run)",
+      "indicator": "cross-country-literacy-rates",
+      "unit": "%",
+      "categories": [
+        "1820",
+        "1870",
+        "1900",
+        "1950",
+        "1980",
+        "2000",
+        "2020",
+        "2024"
+      ],
+      "series": [
+        {
+          "name": "World",
+          "values": [
+            12.046689,
+            18.740555,
+            21.404259,
+            35.959377,
+            67.76,
+            81.12,
+            86.98,
+            87.74
+          ]
+        }
+      ],
+      "note": "OWID_WRL 列，原始值"
+    },
+    {
+      "id": "d2",
+      "source_id": "s1",
+      "title": "Literacy rate, World and three countries, 1950–2020",
+      "indicator": "cross-country-literacy-rates",
+      "unit": "%",
+      "categories": [
+        "1950",
+        "1980",
+        "2000",
+        "2020"
+      ],
+      "series": [
+        {
+          "name": "World",
+          "values": [
+            35.959377,
+            67.76,
+            81.12,
+            86.98
+          ]
+        },
+        {
+          "name": "Brazil",
+          "values": [
+            47.5,
+            74.59,
+            86.37,
+            94.74441
+          ]
+        },
+        {
+          "name": "Mexico",
+          "values": [
+            62.5,
+            82.99,
+            90.54,
+            95.25
+          ]
+        },
+        {
+          "name": "Philippines",
+          "values": [
+            62.5,
+            83.32,
+            92.6,
+            98.47
+          ]
+        }
+      ],
+      "note": "這四個年份是 World 與三國都有資料的年份（CSV 中同時有 1900、1950、1980、2000、2020 的只有 Brazil、Mexico；1950 起加上 Philippines、Singapore）。1950 的國家數值是區間中點"
+    }
+  ],
+  "notes": null
+}

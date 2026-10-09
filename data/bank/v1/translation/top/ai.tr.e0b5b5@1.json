@@ -1,0 +1,795 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.e0b5b5",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "top",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "鼓勵人們修理和回收產品而非直接丟棄的循環經濟（circular economy），已被許多國家採用。",
+        "options": null,
+        "answer": "The circular economy, which encourages people to repair and recycle products instead of simply throwing them away, has been adopted by many countries.",
+        "accepted_answers": [
+          "The circular economy, which encourages people to repair and recycle products rather than just throw them away, has been adopted by many nations.",
+          "The circular economy, which urges people to fix and recycle products instead of throwing them away, has been accepted by many countries."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "非限定關係子句（補充說明循環經濟：The circular economy, which …,）",
+            "完成式被動（已被採用）"
+          ],
+          "topic": "循環經濟"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "要改變消費習慣並不容易，但有些品牌提供免費維修，使許多舊手機免於被丟棄。",
+        "options": null,
+        "answer": "It is not easy to change consumer habits, but some brands now offer free repairs, preventing many old phones from being thrown away.",
+        "accepted_answers": [
+          "It is difficult to change people's shopping habits, but some brands have started offering free repair services, keeping many old phones from being discarded.",
+          "It is hard to change consumption habits, but some brands provide free repairs, saving many old phones from being thrown away."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "虛主詞 It ＋形容詞＋不定詞（要改變消費習慣並不容易）",
+            "句尾分詞片語表結果（…，使許多舊手機免於被丟棄）"
+          ],
+          "topic": "循環經濟"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "循環經濟"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「循環經濟」是一個特定的概念，前面的長修飾語只是補充說明，所以用逗號加 which 的非限定關係子句；which 指單數名詞，動詞用 encourages。「鼓勵某人做某事」是 encourage sb to VR；「而非直接丟棄」用 instead of＋V-ing 或 rather than＋原形，代名詞 them 放在 throw 和 away 中間。「已被許多國家採用」用現在完成式被動 has been adopted，主詞單數用 has。",
+          "evidence": [
+            "鼓勵人們修理和回收產品而非直接丟棄的循環經濟（circular economy）",
+            "已被許多國家採用"
+          ],
+          "strategy_zh": "先寫骨幹 The circular economy has been adopted by many countries，再把修飾語變成 which 子句插在主詞後面，兩個逗號把它包起來。",
+          "hints": [
+            "切成四段：鼓勵人們修理和回收產品／而非直接丟棄／的循環經濟／已被許多國家採用",
+            "標的詞彙：encourage（鼓勵）、repair（修理）、recycle（回收）、throw sth away（丟棄）、adopt（採用）",
+            "句型框架：N, which + V …, + has been + p.p. + by …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「要…並不容易」用虛主詞 It is not easy to VR，把真正的主詞（改變消費習慣）放到後面。「消費習慣」是複合名詞 consumer／consumption habits。「但有些品牌提供免費維修」用 but 接第二個子句，現在的情況用現在式（可加 now）。「使許多舊手機免於被丟棄」是提供維修帶來的結果，用句尾分詞 preventing／saving＋O＋from＋V-ing；手機是被丟的，from 後面用被動的動名詞 being thrown away。",
+          "evidence": [
+            "要改變消費習慣並不容易",
+            "使許多舊手機免於被丟棄"
+          ],
+          "strategy_zh": "先用虛主詞寫 It is not easy to change consumer habits，再用 but 接「品牌提供免費維修」，最後在逗號後用 preventing … from being thrown away 帶出結果。",
+          "hints": [
+            "切成四段：要改變消費習慣並不容易／但有些品牌提供免費維修／使許多舊手機／免於被丟棄",
+            "標的詞彙：habit（習慣）、brand（品牌）、repair（維修）、phone（手機）、throw away（丟棄）",
+            "句型框架：It is not + adj. + to VR …, but S + V …, preventing + O + from + being p.p."
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "The circular economy, which encourages people to repair and recycle products instead of simply throwing them away, has been adopted by many countries.",
+            "The circular economy, which encourages people to repair and recycle products rather than just throw them away, has been adopted by many nations.",
+            "The circular economy, which urges people to fix and recycle products instead of throwing them away, has been accepted by many countries."
+          ],
+          "target_words": [
+            {
+              "word": "encourage",
+              "zh": "鼓勵",
+              "alternatives": [
+                "urge",
+                "promote",
+                "motivate",
+                "push"
+              ]
+            },
+            {
+              "word": "repair",
+              "zh": "修理",
+              "alternatives": [
+                "fix",
+                "mend"
+              ]
+            },
+            {
+              "word": "recycle",
+              "zh": "回收"
+            },
+            {
+              "word": "throw sth away",
+              "zh": "丟棄",
+              "alternatives": [
+                "throw away",
+                "discard",
+                "get rid of",
+                "throw out"
+              ]
+            },
+            {
+              "word": "adopt",
+              "zh": "採用",
+              "alternatives": [
+                "accept",
+                "embrace",
+                "implement",
+                "introduce"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "NRREL",
+              "grammar_id": "gp-nonrestrictive",
+              "label_zh": "非限定關係子句（補充說明循環經濟：The circular economy, which …,）",
+              "frame": "N, which + V …, + has been + p.p. …",
+              "zh_trigger": "鼓勵人們修理和回收產品而非直接丟棄的循環經濟"
+            },
+            {
+              "code": "PASS",
+              "grammar_id": "gp-perfect-passive",
+              "label_zh": "完成式被動（已被採用）",
+              "frame": "S + have/has + been + p.p. + by …",
+              "zh_trigger": "已被許多國家採用"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "鼓勵人們修理和回收產品",
+              "accepted": [
+                "which encourages people to repair and recycle products",
+                "which urges people to fix and recycle products",
+                "which encourages people to fix and recycle products",
+                "which urges people to repair and recycle products",
+                "which promotes repairing and recycling products"
+              ],
+              "targets": [
+                "encourage",
+                "repair",
+                "recycle"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "which encourage people to repair and recycle products",
+                  "right": "which encourages people to repair and recycle products",
+                  "explanation_zh": "which 指單數的 the circular economy，動詞要加 s。"
+                },
+                {
+                  "wrong": "which encourages people repair and recycle products",
+                  "right": "which encourages people to repair and recycle products",
+                  "explanation_zh": "encourage sb to VR，to 不能省。"
+                }
+              ]
+            },
+            {
+              "zh": "而非直接丟棄",
+              "accepted": [
+                "instead of simply throwing them away",
+                "rather than just throw them away",
+                "instead of throwing them away",
+                "rather than throwing them away",
+                "instead of just throwing them away",
+                "rather than simply throw them away",
+                "instead of simply discarding them",
+                "rather than just discarding them",
+                "instead of throwing them out"
+              ],
+              "targets": [
+                "throw sth away"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "instead of simply throw them away",
+                  "right": "instead of simply throwing them away",
+                  "explanation_zh": "instead of 的 of 是介系詞，後面接 V-ing。"
+                },
+                {
+                  "wrong": "rather than throwing away them",
+                  "right": "rather than throwing them away",
+                  "explanation_zh": "代名詞 them 當片語動詞 throw away 的受詞時，要放在 throw 和 away 中間。"
+                }
+              ]
+            },
+            {
+              "zh": "的循環經濟（circular economy）",
+              "accepted": [
+                "The circular economy, which",
+                "A circular economy, which"
+              ],
+              "targets": [
+                "NRREL"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "The circular economy that encourages people to repair and recycle products",
+                  "right": "The circular economy, which encourages people to repair and recycle products",
+                  "explanation_zh": "循環經濟是一個特定的概念，修飾語只是補充說明，要用逗號加 which（非限定用法），不用 that。"
+                },
+                {
+                  "wrong": "Encouraging people to repair and recycle products circular economy",
+                  "right": "The circular economy, which encourages people to repair and recycle products",
+                  "explanation_zh": "中文的前置修飾語太長，英文要改成放在名詞後面的關係子句。"
+                }
+              ]
+            },
+            {
+              "zh": "已被許多國家採用",
+              "accepted": [
+                "has been adopted by many countries",
+                "has been adopted by many nations",
+                "has been accepted by many countries",
+                "has been embraced by many countries",
+                "has already been adopted by many countries"
+              ],
+              "targets": [
+                "adopt",
+                "PASS"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "has adopted by many countries",
+                  "right": "has been adopted by many countries",
+                  "explanation_zh": "循環經濟是「被」採用，要用完成式被動 has been＋p.p.。"
+                },
+                {
+                  "wrong": "have been adopted by many countries",
+                  "right": "has been adopted by many countries",
+                  "explanation_zh": "主詞 the circular economy 是單數，用 has。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "prenominal_modifier",
+              "zh": "鼓勵人們修理和回收產品而非直接丟棄的循環經濟",
+              "literal_error": "Encouraging people to repair and recycle products instead of throwing them away circular economy has been adopted by many countries.",
+              "part": 3,
+              "explanation_zh": "中文把整串修飾語放在「循環經濟」前面；英文名詞前放不下這麼長的修飾語，要改成名詞後面的 which 子句，並用兩個逗號包起來。"
+            },
+            {
+              "type": "plural_countable",
+              "zh": "回收產品",
+              "literal_error": "which encourages people to repair and recycle product instead of throwing it away",
+              "part": 1,
+              "explanation_zh": "「產品」在這裡泛指各種產品，可數名詞要用複數 products，後面的代名詞也跟著用 them。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "Many countries have embraced the circular economy, an approach that encourages people to repair and recycle products rather than throw them away.",
+              "explanation_zh": "改用主動語態，並用同位語 an approach that … 補充說明循環經濟，是寫作常用的進階句構。"
+            }
+          ],
+          "restructuring_zh": "中文把「鼓勵…而非直接丟棄」整串放在「循環經濟」前面，英文要把修飾語移到名詞後面，寫成 The circular economy, which …,；「已被許多國家採用」改成完成式被動 has been adopted by many countries。"
+        },
+        "2": {
+          "references": [
+            "It is not easy to change consumer habits, but some brands now offer free repairs, preventing many old phones from being thrown away.",
+            "It is difficult to change people's shopping habits, but some brands have started offering free repair services, keeping many old phones from being discarded.",
+            "It is hard to change consumption habits, but some brands provide free repairs, saving many old phones from being thrown away."
+          ],
+          "target_words": [
+            {
+              "word": "habit",
+              "zh": "習慣",
+              "alternatives": [
+                "habits"
+              ]
+            },
+            {
+              "word": "brand",
+              "zh": "品牌",
+              "alternatives": [
+                "company",
+                "companies",
+                "manufacturer",
+                "manufacturers",
+                "maker",
+                "makers"
+              ]
+            },
+            {
+              "word": "repair",
+              "zh": "維修",
+              "alternatives": [
+                "fix",
+                "fixing"
+              ]
+            },
+            {
+              "word": "phone",
+              "zh": "手機",
+              "alternatives": [
+                "cellphone",
+                "smartphone",
+                "mobile"
+              ]
+            },
+            {
+              "word": "throw away",
+              "zh": "丟棄",
+              "alternatives": [
+                "throw sth away",
+                "discard",
+                "throw out",
+                "get rid of",
+                "dump",
+                "landfill",
+                "landfills",
+                "trash"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "NFSUBJ",
+              "grammar_id": "gp-it-adj-to",
+              "label_zh": "虛主詞 It ＋形容詞＋不定詞（要改變消費習慣並不容易）",
+              "frame": "It is not + adj. + to VR …, but …",
+              "zh_trigger": "並不容易"
+            },
+            {
+              "code": "PART",
+              "grammar_id": "gp-participle-result",
+              "label_zh": "句尾分詞片語表結果（…，使許多舊手機免於被丟棄）",
+              "frame": "S + V …, saving/keeping/preventing + O + from + being p.p.",
+              "zh_trigger": "使許多舊手機免於被丟棄"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "要改變消費習慣並不容易",
+              "accepted": [
+                "It is not easy to change consumer habits",
+                "It is difficult to change people's shopping habits",
+                "It is hard to change consumption habits",
+                "It is not easy to change people's consumption habits",
+                "It is not easy to change people's spending habits",
+                "It is not easy to change people's buying habits",
+                "It is hard to change consumer habits",
+                "It is not easy to change consumers' habits",
+                "It is not easy to change shopping habits",
+                "It is not easy to change consumption habits",
+                "It is not easy to change our consumption habits",
+                "It is not easy to change our consumer habits",
+                "It is difficult to change consumer habits",
+                "It is difficult to change consumption habits",
+                "It is hard to change people's spending habits"
+              ],
+              "targets": [
+                "NFSUBJ",
+                "habit"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Change consumer habits is not easy",
+                  "right": "It is not easy to change consumer habits",
+                  "explanation_zh": "動詞原形不能當主詞；「要…並不容易」用虛主詞 It is not easy to VR，把真正的主詞放到後面。"
+                },
+                {
+                  "wrong": "It is not easy to changing consumer habits",
+                  "right": "It is not easy to change consumer habits",
+                  "explanation_zh": "It is … to 後面接原形動詞。"
+                }
+              ]
+            },
+            {
+              "zh": "但有些品牌提供免費維修",
+              "accepted": [
+                "but some brands now offer free repairs",
+                "but some brands have started offering free repair services",
+                "but some brands provide free repairs",
+                "but some brands offer free repairs",
+                "but some brands already provide free repairs",
+                "but some brands have begun to offer free repairs",
+                "but some brands have started to offer free repairs",
+                "but some brands now provide free repair services",
+                "but some brands already offer free repair services",
+                "but some companies now offer free repairs",
+                "but some brands have already started offering free repairs",
+                "but some brands offer free repair services",
+                "but some brands provide free repair services",
+                "but some brands offer free repair",
+                "but some companies offer free repair services",
+                "but some brands now provide free repairs",
+                "but some brands are offering free repairs"
+              ],
+              "targets": [
+                "brand",
+                "repair"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "but some brands have already provide free repairs",
+                  "right": "but some brands have already provided free repairs",
+                  "explanation_zh": "have 後面接過去分詞 provided；或改用現在式 some brands now provide free repairs。"
+                },
+                {
+                  "wrong": "but some brand now offer free repairs",
+                  "right": "but some brands now offer free repairs",
+                  "explanation_zh": "some 指好幾個品牌，可數名詞用複數 brands。"
+                }
+              ]
+            },
+            {
+              "zh": "使許多舊手機",
+              "accepted": [
+                "preventing many old phones",
+                "keeping many old phones",
+                "saving many old phones",
+                "sparing many old phones",
+                "saving many used phones",
+                "stopping many old phones",
+                "saving a lot of old phones"
+              ],
+              "targets": [
+                "PART",
+                "phone"
+              ],
+              "common_errors": [
+                {
+                  "wrong": ", prevents many old phones from being thrown away",
+                  "right": ", preventing many old phones from being thrown away",
+                  "explanation_zh": "逗號後面不能再接一個主要動詞 prevents；表示前面「提供免費維修」帶來的結果，用分詞 preventing／saving。"
+                },
+                {
+                  "wrong": ", preventing many old phone from being thrown away",
+                  "right": ", preventing many old phones from being thrown away",
+                  "explanation_zh": "many 後面接可數名詞的複數 phones。"
+                }
+              ]
+            },
+            {
+              "zh": "免於被丟棄",
+              "accepted": [
+                "from being thrown away",
+                "from being discarded",
+                "from being thrown out",
+                "from ending up in the trash",
+                "from ending up in landfills",
+                "out of the trash",
+                "out of landfills",
+                "from being dumped"
+              ],
+              "targets": [
+                "throw away"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "preventing many old phones from throwing away",
+                  "right": "preventing many old phones from being thrown away",
+                  "explanation_zh": "手機是「被」丟掉的，介系詞 from 後面要用被動的動名詞 being thrown away。"
+                },
+                {
+                  "wrong": "preventing many old phones from be thrown away",
+                  "right": "preventing many old phones from being thrown away",
+                  "explanation_zh": "介系詞 from 後面接動名詞 being，不接原形 be。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "abstract_nominal",
+              "zh": "消費習慣",
+              "literal_error": "It is not easy to change consume habits.",
+              "part": 1,
+              "explanation_zh": "「消費習慣」是抽象的複合名詞，英文說 consumer habits／consumption habits／spending habits；consume 是動詞，不能直接放在名詞前面。"
+            },
+            {
+              "type": "word_form",
+              "zh": "免於被丟棄",
+              "literal_error": "…, preventing many old phones from throw away.",
+              "part": 4,
+              "explanation_zh": "from 是介系詞，後面接動名詞；手機是被丟的，要用被動的動名詞 being thrown away，不能照中文直接放原形動詞。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "Changing consumer habits is no easy task, but some brands now offer free repairs, sparing many old phones a trip to the landfill.",
+              "explanation_zh": "用動名詞主詞加 no easy task（絕非易事）改寫「並不容易」；spare sth a trip to the landfill（免去被送進掩埋場）是雙受詞用法，比喻生動。"
+            }
+          ],
+          "restructuring_zh": "「要改變消費習慣並不容易」以動作當主詞，英文用虛主詞 It is not easy to change …，把真正的主詞移到後面；「，使許多舊手機免於被丟棄」不另起一句，用句尾分詞 preventing／saving many old phones from being thrown away 表示前一個子句（品牌提供免費維修）帶來的結果。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ac-V-3",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-top-02-regen",
+    "lot": "translation-top-02",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "fea97c14fa3e45cbc507a5a9130c0ea2bc91f32008c7fde55fb98b627572675d",
+    "spec_id": "translation-top@2026-10-09",
+    "regenerated_from": "ai.tr.7bf557"
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 2,
+    "sentences": 1,
+    "avg_sentence_length": 2.0,
+    "denominator": 2,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 1.0,
+    "coverage_l1_6": 1.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {
+      "4": 2
+    },
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "warn",
+      "created_at": "2026-10-09T14:57:35Z",
+      "details": {
+        "errors": [],
+        "warnings": [
+          "annotations.rubric.items.1.patterns[1]: gp-perfect-passive 通常對應句構 PERF（目前 code=PASS）"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "warn",
+      "created_at": "2026-10-09T14:30:00Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "The circular economy, which encourages people to repair and recycle products instead of simply throwing them away, has been adopted by many countries.",
+            "confidence": "high",
+            "explanation_zh": "循環經濟是特定概念，前面的長修飾語用非限定關係子句 which encourages ... 處理；「而非直接丟棄」用 instead of + V-ing；「已被許多國家採用」用現在完成式被動 has been adopted by。"
+          },
+          "2": {
+            "translation": "It is not easy to change consumer habits, but some brands offer free repair services, saving many old phones from being thrown away.",
+            "confidence": "high",
+            "explanation_zh": "「要改變…並不容易」用 It is not easy to V 的虛主詞句型；「使許多舊手機免於被丟棄」是提供免費維修的結果，用句尾分詞 saving ... from being thrown away（save A from + 被動動名詞）。消費習慣也可寫 consumption habits。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "NRREL",
+              "PASS"
+            ],
+            "used_target_words": [
+              "encourage",
+              "repair",
+              "recycle",
+              "throw sth away",
+              "adopt"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "NFSUBJ",
+              "PART"
+            ],
+            "used_target_words": [
+              "habit",
+              "brand",
+              "repair",
+              "phone",
+              "throw away"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "第 1 部分（要改變消費習慣並不容易）只收 It is … to change … 的虛主詞寫法。動名詞當主詞的 Changing consumer habits is not easy 文法正確又自然（本題加分寫法 Changing consumer habits is no easy task 就是這個結構，這一批的 NFSUBJ 也包含動名詞主詞），卻會被扣 1 分。建議第 1 部分補 Changing consumer habits is not easy／Changing people's consumption habits is not easy 等寫法。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "encourage",
+              "repair",
+              "recycle",
+              "throw sth away",
+              "adopt"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NRREL": true,
+              "PASS": true
+            },
+            "program_match": true
+          },
+          "2": {
+            "target_words_found": [
+              "habit",
+              "brand",
+              "repair",
+              "phone",
+              "throw away"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NFSUBJ": true,
+              "PART": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 2 題驗證者對4 部分切分有意見（warn）：第 1 部分（要改變消費習慣並不容易）只收 It is … to change … 的虛主詞寫法。動名詞當主詞的 Changing consumer habits is not easy 文法正確又自然（本題加分寫法 Changing co"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T14:31:33Z",
+      "details": {
+        "solver": "B",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "The circular economy, which encourages people to repair and recycle products instead of simply throwing them away, has been adopted by many countries.",
+            "confidence": "high",
+            "explanation_zh": "主詞是很長的修飾語加 circular economy，用關係子句 which encourages ... 修飾；「而非直接丟棄」用 instead of + V-ing；「已被採用」用現在完成式被動。"
+          },
+          "2": {
+            "translation": "It is not easy to change consumption habits, but some brands offer free repairs, keeping many old phones from being thrown away.",
+            "confidence": "high",
+            "explanation_zh": "「要改變……並不容易」用虛主詞 It is not easy to ...；「使……免於被丟棄」用分詞構句 keeping ... from being thrown away（keep sb/sth from + V-ing）。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "NRREL",
+              "PASS"
+            ],
+            "used_target_words": [
+              "encourage",
+              "repair",
+              "recycle",
+              "throw sth away",
+              "adopt"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "NFSUBJ",
+              "PART"
+            ],
+            "used_target_words": [
+              "habit",
+              "brand",
+              "repair",
+              "phone",
+              "throw away"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "encourage",
+              "repair",
+              "recycle",
+              "throw sth away",
+              "adopt"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NRREL": true,
+              "PASS": true
+            },
+            "program_match": true
+          },
+          "2": {
+            "target_words_found": [
+              "habit",
+              "brand",
+              "repair",
+              "phone",
+              "throw away"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NFSUBJ": true,
+              "PART": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

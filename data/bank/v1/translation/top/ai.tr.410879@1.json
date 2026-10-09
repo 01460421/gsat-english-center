@@ -1,0 +1,776 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.410879",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "top",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "很難想像，數百萬人每天使用的水，是由高山上正在融化的冰川（glaciers）提供的。",
+        "options": null,
+        "answer": "It is hard to imagine that the water millions of people use every day is provided by melting glaciers high in the mountains.",
+        "accepted_answers": [
+          "It is difficult to imagine that the water used by millions of people every day is supplied by melting glaciers in high mountains.",
+          "It is hard to imagine that the water which millions of people use daily is provided by glaciers melting high up in the mountains."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "虛主詞 It ＋形容詞＋不定詞",
+            "被動語態（是由…提供的）"
+          ],
+          "topic": "冰川消融"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "然而，它們已經受到全球暖化的嚴重影響，使得數百萬人未來可能面臨缺水危機。",
+        "options": null,
+        "answer": "However, they have been severely affected by global warming, putting millions of people at risk of water shortages in the future.",
+        "accepted_answers": [
+          "However, they have been seriously affected by global warming, leaving millions of people likely to face a water crisis in the future.",
+          "However, these glaciers have been seriously affected by global warming, meaning that millions of people may face water shortages in the future."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "完成式被動（已經受到…影響）",
+            "句尾分詞片語表結果（, putting …）"
+          ],
+          "topic": "冰川消融"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "冰川消融"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「很難想像」沒有主詞，用虛主詞 It is hard to imagine that …（真正的主詞是後面的 to imagine …）。「數百萬人每天使用的水」用省略 that 的關係子句 the water (that) millions of people use every day，或過去分詞片語 the water used by …。「是由…提供的」用被動 is provided／supplied by …；「高山上正在融化的冰川」寫成 melting glaciers high in the mountains（melting 表進行中）。",
+          "evidence": [
+            "很難想像",
+            "是由高山上正在融化的冰川（glaciers）提供的"
+          ],
+          "strategy_zh": "中文沒有主詞的「很難…」→ It is hard to V；「是由…＋V＋的」→ be + p.p. + by …。",
+          "hints": [
+            "切成四段：很難想像／數百萬人每天使用的水／高山上正在融化的冰川／是由…提供的",
+            "標的詞彙：hard（困難的）、imagine（想像）、water（水）、use（使用）、day（每天）、melt（融化）、mountain（山）、provide（提供）",
+            "句型框架：It is hard to imagine that + the N (that) + S + V + is provided by …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「然而」用 However 承接上一句。「它們已經受到…的嚴重影響」：冰川是受影響的一方，用現在完成式被動 have been severely affected by …（「嚴重」用副詞 severely／seriously 放在 been 和過去分詞之間）。「使得…」是前面整件事的結果，用句尾分詞 , putting／leaving + 受詞 + …；「可能面臨…」可寫 at risk of + 名詞，或 likely to face …。「缺水危機」用 water shortages 或 a water crisis。",
+          "evidence": [
+            "已經受到全球暖化的嚴重影響",
+            "使得數百萬人未來可能面臨缺水危機"
+          ],
+          "strategy_zh": "「已經受到…影響」→ have been affected by …；「…，使得…」→ , putting/leaving + O + …。",
+          "hints": [
+            "切成四段：它們已經受到全球暖化的嚴重影響／使得數百萬人／未來可能面臨／缺水危機",
+            "標的詞彙：affect（影響）、global（全球的）、severely（嚴重地）、face（面臨）、risk（風險）、future（未來）、water（水）、shortage（短缺）",
+            "句型框架：However, S + have been severely affected by …, putting + O + at risk of + N + in the future"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "It is hard to imagine that the water millions of people use every day is provided by melting glaciers high in the mountains.",
+            "It is difficult to imagine that the water used by millions of people every day is supplied by melting glaciers in high mountains.",
+            "It is hard to imagine that the water which millions of people use daily is provided by glaciers melting high up in the mountains."
+          ],
+          "target_words": [
+            {
+              "word": "hard",
+              "zh": "困難的",
+              "alternatives": [
+                "difficult"
+              ]
+            },
+            {
+              "word": "imagine",
+              "zh": "想像"
+            },
+            {
+              "word": "water",
+              "zh": "水"
+            },
+            {
+              "word": "use",
+              "zh": "使用"
+            },
+            {
+              "word": "day",
+              "zh": "每天",
+              "alternatives": [
+                "daily"
+              ]
+            },
+            {
+              "word": "melt",
+              "zh": "融化"
+            },
+            {
+              "word": "mountain",
+              "zh": "高山"
+            },
+            {
+              "word": "provide",
+              "zh": "提供",
+              "alternatives": [
+                "supply"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "NFSUBJ",
+              "grammar_id": "gp-it-adj-to",
+              "label_zh": "虛主詞 It ＋形容詞＋不定詞（很難想像）",
+              "frame": "It is + hard/difficult + to imagine that …",
+              "zh_trigger": "很難想像"
+            },
+            {
+              "code": "PASS",
+              "grammar_id": "gp-passive",
+              "label_zh": "被動語態（是由…提供的）",
+              "frame": "S + is provided/supplied + by …",
+              "zh_trigger": "是由高山上正在融化的冰川（glaciers）提供的"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "很難想像",
+              "accepted": [
+                "It is hard to imagine",
+                "It is difficult to imagine"
+              ],
+              "targets": [
+                "NFSUBJ",
+                "hard",
+                "imagine"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Hard to imagine that",
+                  "right": "It is hard to imagine that",
+                  "explanation_zh": "中文「很難想像」沒有主詞，英文要補上虛主詞 It：It is hard to imagine …。"
+                },
+                {
+                  "wrong": "It is hard to imagining",
+                  "right": "It is hard to imagine",
+                  "explanation_zh": "It is + 形容詞 + to 後面接原形動詞。"
+                }
+              ]
+            },
+            {
+              "zh": "數百萬人每天使用的水",
+              "accepted": [
+                "the water millions of people use every day",
+                "the water used by millions of people every day",
+                "the water which millions of people use daily",
+                "the water that millions of people use every day"
+              ],
+              "targets": [
+                "water",
+                "use",
+                "day"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "the water millions of people use it every day",
+                  "right": "the water millions of people use every day",
+                  "explanation_zh": "關係子句的受詞就是前面的 the water，子句裡不可再寫 it。"
+                },
+                {
+                  "wrong": "the millions of people use every day water",
+                  "right": "the water millions of people use every day",
+                  "explanation_zh": "中文修飾語「數百萬人每天使用的」在前，英文要先寫 the water，再用（省略 that 的）關係子句修飾。"
+                }
+              ]
+            },
+            {
+              "zh": "高山上正在融化的冰川",
+              "accepted": [
+                "melting glaciers high in the mountains",
+                "melting glaciers in high mountains",
+                "glaciers melting high up in the mountains",
+                "glaciers melting high in the mountains"
+              ],
+              "targets": [
+                "melt",
+                "mountain"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "melted glaciers high in the mountains",
+                  "right": "melting glaciers high in the mountains",
+                  "explanation_zh": "「正在融化」表示進行中，用現在分詞 melting；melted 是「已經融化的」。"
+                },
+                {
+                  "wrong": "glaciers which melting high in the mountains",
+                  "right": "glaciers melting high in the mountains",
+                  "explanation_zh": "which 子句要有完整動詞（which are melting）；不然就直接用分詞片語 glaciers melting …。"
+                }
+              ]
+            },
+            {
+              "zh": "提供的",
+              "accepted": [
+                "is provided by",
+                "is supplied by"
+              ],
+              "targets": [
+                "PASS",
+                "provide"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "is provide by",
+                  "right": "is provided by",
+                  "explanation_zh": "被動是 be + 過去分詞 provided。"
+                },
+                {
+                  "wrong": "is provided from",
+                  "right": "is provided by",
+                  "explanation_zh": "被動語態的動作者用 by 引出（provided by glaciers）。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "subjectless",
+              "zh": "很難想像",
+              "literal_error": "Hard to imagine that the water …",
+              "part": 1,
+              "explanation_zh": "「很難想像」沒有主詞，英文要用虛主詞 It is hard to imagine …，不能直接用 Hard 開頭。"
+            },
+            {
+              "type": "prenominal_modifier",
+              "zh": "數百萬人每天使用的水",
+              "literal_error": "the millions of people every day use water",
+              "part": 2,
+              "explanation_zh": "中文修飾語「數百萬人每天使用的」在名詞前，英文要先寫 the water，再用關係子句（可省略 that）或過去分詞片語 used by … 往後修飾。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "Hard as it is to imagine, the water millions of people rely on every day comes from glaciers slowly melting high in the mountains.",
+              "grammar_id": "gp-as-concession",
+              "explanation_zh": "Hard as it is to imagine（雖然難以想像）是 as 引導的讓步倒裝；rely on（仰賴）比 use 更貼切。倒裝只是加分寫法，不是唯一正解。"
+            }
+          ],
+          "restructuring_zh": "「數百萬人每天使用的水」中文修飾語在前，英文改成 the water (that) millions of people use every day；「是由…提供的」改成被動 is provided by …；「很難想像」補上虛主詞 It。"
+        },
+        "2": {
+          "references": [
+            "However, they have been severely affected by global warming, putting millions of people at risk of water shortages in the future.",
+            "However, they have been seriously affected by global warming, leaving millions of people likely to face a water crisis in the future.",
+            "However, these glaciers have been seriously affected by global warming, meaning that millions of people may face water shortages in the future."
+          ],
+          "target_words": [
+            {
+              "word": "affect",
+              "zh": "影響"
+            },
+            {
+              "word": "global",
+              "zh": "全球的"
+            },
+            {
+              "word": "severely",
+              "zh": "嚴重地",
+              "alternatives": [
+                "seriously"
+              ]
+            },
+            {
+              "word": "face",
+              "zh": "面臨",
+              "alternatives": [
+                "risk"
+              ]
+            },
+            {
+              "word": "water",
+              "zh": "水"
+            },
+            {
+              "word": "shortage",
+              "zh": "短缺",
+              "alternatives": [
+                "crisis"
+              ]
+            },
+            {
+              "word": "future",
+              "zh": "未來"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PASS",
+              "grammar_id": "gp-perfect-passive",
+              "label_zh": "完成式被動（已經受到…影響）",
+              "frame": "S + have/has + been + (adv.) + p.p. + by …",
+              "zh_trigger": "已經受到全球暖化的嚴重影響"
+            },
+            {
+              "code": "PART",
+              "grammar_id": "gp-participle-result",
+              "label_zh": "句尾分詞片語表結果（使得…）",
+              "frame": "S + V …, putting/leaving + O + …",
+              "zh_trigger": "使得數百萬人"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "它們已經受到全球暖化的嚴重影響",
+              "accepted": [
+                "they have been severely affected by global warming",
+                "they have been seriously affected by global warming",
+                "these glaciers have been seriously affected by global warming",
+                "these glaciers have been severely affected by global warming"
+              ],
+              "targets": [
+                "PASS",
+                "affect",
+                "global",
+                "severely"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "they have affected seriously by global warming",
+                  "right": "they have been seriously affected by global warming",
+                  "explanation_zh": "「受到…影響」是被動，現在完成式被動要寫 have been affected；少了 been 就變成主動。"
+                },
+                {
+                  "wrong": "they have been seriously effected by global warming",
+                  "right": "they have been seriously affected by global warming",
+                  "explanation_zh": "「影響」的動詞是 affect；effect 多當名詞（an effect on …）。"
+                }
+              ]
+            },
+            {
+              "zh": "使得數百萬人",
+              "accepted": [
+                "putting millions of people",
+                "leaving millions of people",
+                "meaning that millions of people",
+                "causing millions of people to"
+              ],
+              "targets": [
+                "PART"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "global warming, makes millions of people",
+                  "right": "global warming, putting millions of people",
+                  "explanation_zh": "前面已有完整句子，表結果要用句尾分詞（putting／leaving／causing），不能再接另一個現在式動詞 makes。"
+                },
+                {
+                  "wrong": "which putting millions of people",
+                  "right": "putting millions of people",
+                  "explanation_zh": "用 which 就要接完整動詞（which puts …）；用分詞就不要 which。"
+                }
+              ]
+            },
+            {
+              "zh": "未來可能面臨",
+              "accepted": [
+                "at risk of",
+                "likely to face",
+                "may face",
+                "could face"
+              ],
+              "targets": [
+                "face",
+                "future"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "may facing",
+                  "right": "may face",
+                  "explanation_zh": "情態助動詞 may 後面接原形動詞 face。"
+                },
+                {
+                  "wrong": "at the risk to",
+                  "right": "at risk of",
+                  "explanation_zh": "「有…的風險」是 at risk of + 名詞／V-ing，介系詞用 of。"
+                }
+              ]
+            },
+            {
+              "zh": "缺水危機",
+              "accepted": [
+                "water shortages in the future",
+                "a water crisis in the future",
+                "water shortages",
+                "a water crisis"
+              ],
+              "targets": [
+                "water",
+                "shortage"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "lack water crisis",
+                  "right": "a water crisis",
+                  "explanation_zh": "「缺水危機」不要逐字寫 lack water crisis；用 water shortages 或 a water crisis。"
+                },
+                {
+                  "wrong": "water shortage in the future",
+                  "right": "water shortages in the future",
+                  "explanation_zh": "泛指未來可能多次發生的缺水，用複數 shortages（或 a water shortage）。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "tense_trigger",
+              "zh": "已經受到全球暖化的嚴重影響",
+              "literal_error": "However, they are seriously affected by global warming already",
+              "part": 1,
+              "explanation_zh": "「已經受到…」表示到現在已經造成的結果，用現在完成式被動 have been (severely) affected by …。"
+            },
+            {
+              "type": "abstract_nominal",
+              "zh": "缺水危機",
+              "literal_error": "… face lack water crisis",
+              "part": 4,
+              "explanation_zh": "「缺水危機」是複合概念，不能逐字疊成 lack water crisis；英文說 water shortages 或 a water crisis。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "However, global warming has already taken a heavy toll on them, leaving millions of people facing possible water shortages in the years ahead.",
+              "grammar_id": "gp-participle-result",
+              "explanation_zh": "改用主動 global warming has taken a heavy toll on them（對它們造成重大損害），再以句尾分詞 leaving … facing … 表結果；in the years ahead 比 in the future 更有文采。這是加分寫法。"
+            }
+          ],
+          "restructuring_zh": "「使得數百萬人…」承接前面整件事，英文用句尾分詞 putting millions of people at risk of …；「可能面臨缺水危機」可以名詞化成 at risk of water shortages。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ac-V-3",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-top-05",
+    "lot": "translation-top-05",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "1423e68b58216cafb46e710ae1065ce2ef47f637e82f416d8ddb06bd091160ba",
+    "spec_id": "translation-top@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 1,
+    "sentences": 1,
+    "avg_sentence_length": 1.0,
+    "denominator": 1,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 1.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 1.0,
+    "level_counts": {
+      "6": 1
+    },
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "warn",
+      "created_at": "2026-10-09T14:05:38Z",
+      "details": {
+        "errors": [],
+        "warnings": [
+          "annotations.rubric.items.2.patterns[0]: gp-perfect-passive 通常對應句構 PERF（目前 code=PASS）"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "fail",
+      "created_at": "2026-10-09T13:22:48Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "It is hard to imagine that the water millions of people use every day is provided by glaciers that are melting high in the mountains.",
+            "confidence": "high",
+            "explanation_zh": "「很難想像」用虛主詞 It is hard to imagine that；「數百萬人每天使用的水」用省略關係代名詞的子句修飾 water；「是由…提供的」用被動 is provided by；「正在融化的冰川」用關係子句 that are melting（也可 melting glaciers）；「高山上」用 high in the mountains。"
+          },
+          "2": {
+            "translation": "However, they have already been seriously affected by global warming, which means that millions of people may face a water shortage crisis in the future.",
+            "confidence": "high",
+            "explanation_zh": "「已經受到…嚴重影響」用現在完成被動 have already been seriously affected by；「使得…」是結果，用 which means that（也可 which may leave millions of people facing…）；「可能面臨缺水危機」用 may face a water shortage crisis（water crisis 也可）。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "NFSUBJ",
+              "PASS"
+            ],
+            "used_target_words": [
+              "hard",
+              "imagine",
+              "water",
+              "use",
+              "day",
+              "melt",
+              "mountain",
+              "provide"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PASS"
+            ],
+            "used_target_words": [
+              "affect",
+              "global",
+              "severely",
+              "face",
+              "water",
+              "shortage",
+              "future"
+            ],
+            "within_accepted": false,
+            "closest_reference": 2,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "盲譯用 , which means that millions of people may face …（非限定關係子句）表示「使得…」，沒有用到標的句型 PART；「使得」同樣自然引出 which 子句（本批其他題的「這讓／這意味著」都以 NRREL 為標的），中文並沒有唯一引出句尾分詞。建議第 2 部分 accepted 補 which means (that)／which may leave／which puts，或改寫中文、調整標的句型。",
+              "第 3 部分 zh 是「未來可能面臨」、targets 有 future，但 accepted（at risk of／likely to face／may face／could face）都沒有 future；in the future 卻放在第 4 部分「缺水危機」的 accepted 裡，「未來」的歸屬切得不一致。",
+              "題目有「已經」，但三個參考譯文和第 1 部分 accepted 都沒有 already；盲譯寫 have already been seriously affected 不在清單內，建議補上含 already 的寫法。盲譯的 a water shortage crisis 也不在第 4 部分 accepted 內（可考慮補，或在常見錯誤說明 shortage crisis 略重複）。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "hard",
+              "imagine",
+              "water",
+              "use",
+              "day",
+              "melt",
+              "mountain",
+              "provide"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NFSUBJ": true,
+              "PASS": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "affect",
+              "global",
+              "severely",
+              "face",
+              "water",
+              "shortage",
+              "future"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PASS": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 2 題盲譯沒有用到標的句型 ['PART']：中文題目沒有自然引出這個句型（SPEC §5.7）",
+          "第 2 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義",
+          "第 2 題驗證者對4 部分切分有意見（warn）：盲譯用 , which means that millions of people may face …（非限定關係子句）表示「使得…」，沒有用到標的句型 PART；「使得」同樣自然引出 which 子句（本批其他題的「這讓／這意味著」都以"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "fail",
+      "created_at": "2026-10-09T13:30:00Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "It is hard to imagine that the water millions of people use every day is supplied by melting glaciers high in the mountains.",
+            "confidence": "high",
+            "explanation_zh": "「很難想像」用虛主詞 It is hard to imagine that ...；「數百萬人每天使用的水」用省略關係代名詞的子句 the water millions of people use every day；「由……提供」用被動 is supplied by；「正在融化的冰川」用 melting glaciers，「高山上」用 high in the mountains。"
+          },
+          "2": {
+            "translation": "However, they have already been seriously affected by global warming, which may cause millions of people to face a water shortage crisis in the future.",
+            "confidence": "medium",
+            "explanation_zh": "「它們」指冰川，用 they；「已經受到……嚴重影響」用現在完成被動 have already been seriously affected；「使得……可能面臨」用 which may cause ... to face。「缺水危機」譯成 water shortage crisis。信心 medium 是因為「使得」也可以用 so 或 leaving 分詞構句，我不確定出題者預期哪一種接法。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "NFSUBJ",
+              "PASS"
+            ],
+            "used_target_words": [
+              "hard",
+              "imagine",
+              "water",
+              "use",
+              "day",
+              "melt",
+              "mountain",
+              "provide"
+            ],
+            "within_accepted": true,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [],
+            "closest_reference": 0
+          },
+          "2": {
+            "used_patterns": [
+              "PASS"
+            ],
+            "used_target_words": [
+              "affect",
+              "global",
+              "severely",
+              "face",
+              "water",
+              "shortage",
+              "future"
+            ],
+            "within_accepted": false,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "「使得…」我自然寫成 which may cause millions of people to face …（非限定 which 子句），沒有用句尾分詞；中文沒有強迫分詞片語，標的句型 PART 在這句引不出來。",
+              "第 2 部分 accepted 全是分詞（putting、leaving、meaning that、causing…to），沒有 which 子句、so、As a result 等同樣正確的寫法。",
+              "部分切分和中文對不上：第 3 部分中文含「未來」（targets 也標 future），但 accepted 的 in the future 卻寫在第 4 部分。"
+            ],
+            "closest_reference": 2
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "hard",
+              "imagine",
+              "water",
+              "use",
+              "day",
+              "melt",
+              "mountain",
+              "provide"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NFSUBJ": true,
+              "PASS": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "affect",
+              "global",
+              "severely",
+              "face",
+              "water",
+              "shortage",
+              "future"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PASS": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 2 題盲譯沒有用到標的句型 ['PART']：中文題目沒有自然引出這個句型（SPEC §5.7）",
+          "第 2 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義",
+          "第 2 題驗證者對4 部分切分有意見（warn）：「使得…」我自然寫成 which may cause millions of people to face …（非限定 which 子句），沒有用句尾分詞；中文沒有強迫分詞片語，標的句型 PART 在這句引不出來。；第 2 部分 accep"
+        ]
+      }
+    }
+  ],
+  "status": "rejected",
+  "status_reason": "blind_solver:A 未通過：第 2 題盲譯沒有用到標的句型 ['PART']：中文題目沒有自然引出這個句型（SPEC §5.7）；第 2 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義；第 2 題驗證者對4 部分切分有意見（warn）：盲譯用 , which means that millions of people may face …（非限定關係子句）表示「使得…」，沒有用到標的句型 PART；「使得」同樣自然引出 which 子句（本批其他題的「這讓／這意味著」都以；blind_solver:B 未通過：第 2 題盲譯沒有用到標的句型 ['PART']：中文題目沒有自然引出這個句型（SPEC §5.7）；第 2 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義；第 2 題驗證者對4 部分切分有意見（warn）：「使得…」我自然寫成 which may cause millions of people to face …（非限定 which 子句），沒有用句尾分詞；中文沒有強迫分詞片語，標的句型 PART 在這句引不出來。；第 2 部分 accep；判定者補充：第 2 句「使得…」兩位盲譯都自然寫成 , which means／which may cause …（非限定 which 子句），沒有用到標的句型 PART，中文沒有引出句尾分詞，第 2 部分 accepted 也沒有 which 子句；題目有「已經」，參考譯文與第 1 部分 accepted 卻都沒有含 already 的寫法；第 3 部分 zh「未來可能面臨」含「未來」，in the future 卻放在第 4 部分 accepted，切分不一致。"
+}

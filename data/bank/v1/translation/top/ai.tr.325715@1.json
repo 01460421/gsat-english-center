@@ -1,0 +1,765 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.325715",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "top",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "對一般人來說，要負擔太空旅遊的高昂費用並不容易，使它成為有錢人的特權。",
+        "options": null,
+        "answer": "It is not easy for ordinary people to afford the high cost of space tourism, making it a privilege of the rich.",
+        "accepted_answers": [
+          "It is difficult for average people to afford the enormous cost of space tourism, turning it into a privilege for the wealthy.",
+          "For ordinary people, it is hard to afford the high price of space trips, making them a privilege enjoyed only by the rich."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "句尾分詞表結果",
+            "虛主詞 It ＋形容詞＋不定詞"
+          ],
+          "topic": "太空旅遊"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "送少數富人上太空玩幾分鐘，可能會對地球造成比我們想像中更大的傷害。",
+        "options": null,
+        "answer": "Sending a few wealthy people into space for a few minutes of fun may do more harm to the earth than we imagine.",
+        "accepted_answers": [
+          "Sending a handful of rich people to space for a few minutes of fun may cause greater damage to the earth than we expect.",
+          "Taking a small number of rich people into space for just a few minutes could harm the planet more seriously than we think."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "動名詞片語當主詞",
+            "比較級"
+          ],
+          "topic": "太空旅遊"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "太空旅遊"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「對一般人來說，要負擔…並不容易」的主詞是「負擔費用」這件事，英文用虛主詞 It is not easy for ordinary people to afford …（for sb 放在形容詞後面），不能寫 Ordinary people are not easy to …。「高昂費用」是 high cost／high price（不說 expensive cost）。「使它成為有錢人的特權」是前面這件事的結果，用句尾分詞 , making it a privilege of the rich；the rich＝有錢人（複數意義）。",
+          "evidence": [
+            "要負擔太空旅遊的高昂費用並不容易",
+            "使它成為有錢人的特權"
+          ],
+          "strategy_zh": "中文「對某人來說，做某事很難／不容易」幾乎都要改成 It is + 形容詞 + for sb + to V。",
+          "hints": [
+            "切成四段：對一般人來說／要負擔太空旅遊的高昂費用／並不容易／使它成為有錢人的特權",
+            "標的詞彙：ordinary（一般的）、afford（負擔得起）、cost（費用）、tourism（旅遊）、privilege（特權）、rich（有錢的）",
+            "句型框架：It is not + adj. + for sb + to V …, making it + N"
+          ]
+        },
+        "2": {
+          "explanation_zh": "主詞「送少數富人上太空玩幾分鐘」是一個動作，用動名詞片語 Sending a few wealthy people into space …。「比我們想像中更大的傷害」用比較級 more harm … than we imagine：harm 不可數，「造成傷害」用 do／cause harm to。「幾分鐘」是 a few minutes（few 是「幾乎沒有」）；space 不加 the。",
+          "evidence": [
+            "送少數富人上太空玩幾分鐘",
+            "比我們想像中更大的傷害"
+          ],
+          "strategy_zh": "中文「比我們想像中更…」直接寫 more … than we imagine／think，比較級放在名詞前，than 子句放句尾。",
+          "hints": [
+            "切成四段：送少數富人上太空／玩幾分鐘／可能會對地球造成／比我們想像中更大的傷害",
+            "標的詞彙：wealthy（富有的）、space（太空）、minute（分鐘）、harm（傷害）、earth（地球）、imagine（想像）",
+            "句型框架：V-ing … + may + do more harm to + N + than + S + V"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "It is not easy for ordinary people to afford the high cost of space tourism, making it a privilege of the rich.",
+            "It is difficult for average people to afford the enormous cost of space tourism, turning it into a privilege for the wealthy.",
+            "For ordinary people, it is hard to afford the high price of space trips, making them a privilege enjoyed only by the rich."
+          ],
+          "target_words": [
+            {
+              "word": "ordinary",
+              "zh": "一般的",
+              "alternatives": [
+                "average",
+                "common"
+              ]
+            },
+            {
+              "word": "afford",
+              "zh": "負擔得起"
+            },
+            {
+              "word": "cost",
+              "zh": "費用",
+              "alternatives": [
+                "price",
+                "expense"
+              ]
+            },
+            {
+              "word": "tourism",
+              "zh": "旅遊",
+              "alternatives": [
+                "travel",
+                "trip"
+              ]
+            },
+            {
+              "word": "privilege",
+              "zh": "特權"
+            },
+            {
+              "word": "rich",
+              "zh": "有錢的",
+              "alternatives": [
+                "wealthy"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PART",
+              "grammar_id": "gp-participle-result",
+              "label_zh": "句尾分詞片語表結果（…，使它成為…）",
+              "frame": "S + V …, making + O + N ／ turning + O + into + N",
+              "zh_trigger": "使它成為"
+            },
+            {
+              "code": "NFSUBJ",
+              "grammar_id": "gp-it-adj-to",
+              "label_zh": "虛主詞 It ＋形容詞＋for sb＋不定詞",
+              "frame": "It is (not) + adj. + for sb + to V …",
+              "zh_trigger": "要負擔太空旅遊的高昂費用並不容易"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "對一般人來說",
+              "accepted": [
+                "for ordinary people",
+                "for average people",
+                "for most people",
+                "for common people"
+              ],
+              "targets": [
+                "ordinary"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "For general people",
+                  "right": "For ordinary people",
+                  "explanation_zh": "「一般人」是 ordinary／average people；general 是「整體的、概括的」，不用來修飾人。"
+                },
+                {
+                  "wrong": "For ordinary person",
+                  "right": "For ordinary people",
+                  "explanation_zh": "泛指一般人用複數 people；person 是可數單數，不能沒有冠詞。"
+                }
+              ]
+            },
+            {
+              "zh": "要負擔太空旅遊的高昂費用",
+              "accepted": [
+                "to afford the high cost of space tourism",
+                "to afford the enormous cost of space tourism",
+                "to afford the high price of space trips",
+                "to afford the high cost of space travel",
+                "to pay for expensive space trips"
+              ],
+              "targets": [
+                "afford",
+                "cost",
+                "tourism"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "to afford the expensive cost of space tourism",
+                  "right": "to afford the high cost of space tourism",
+                  "explanation_zh": "cost／price 搭配 high，不說 expensive cost（expensive 是指東西貴）。"
+                },
+                {
+                  "wrong": "to burden the high cost of space tourism",
+                  "right": "to afford the high cost of space tourism",
+                  "explanation_zh": "「負擔得起（費用）」用 afford；burden 是「使負重擔」。"
+                }
+              ]
+            },
+            {
+              "zh": "並不容易",
+              "accepted": [
+                "It is not easy",
+                "It is difficult",
+                "it is hard",
+                "It is not simple"
+              ],
+              "targets": [
+                "NFSUBJ"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Ordinary people are not easy to afford",
+                  "right": "It is not easy for ordinary people to afford",
+                  "explanation_zh": "easy／hard 不能說「人是容易的」；用虛主詞 It is not easy for sb to V。"
+                },
+                {
+                  "wrong": "It is not easy of ordinary people to afford",
+                  "right": "It is not easy for ordinary people to afford",
+                  "explanation_zh": "描述事情難易用 for sb；of sb 用在描述人的特質（kind、careless）。"
+                }
+              ]
+            },
+            {
+              "zh": "使它成為有錢人的特權",
+              "accepted": [
+                "making it a privilege of the rich",
+                "turning it into a privilege for the wealthy",
+                "making them a privilege enjoyed only by the rich",
+                "which makes it a privilege of the rich",
+                "making it a privilege for rich people"
+              ],
+              "targets": [
+                "PART",
+                "privilege",
+                "rich"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "makes it become a privilege of the rich",
+                  "right": "making it a privilege of the rich",
+                  "explanation_zh": "逗號後直接接 makes 會變成兩個動詞沒有連接詞；表結果用 making it + 名詞，不必加 become。"
+                },
+                {
+                  "wrong": "making it a privilege of rich",
+                  "right": "making it a privilege of the rich",
+                  "explanation_zh": "「有錢人」是 the rich（the＋形容詞＝一群人），不能只寫 rich。"
+                },
+                {
+                  "wrong": "making it a special right of the rich",
+                  "right": "making it a privilege of the rich",
+                  "explanation_zh": "「特權」是 privilege；special right 是逐字直譯。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "collocation",
+              "zh": "高昂費用",
+              "literal_error": "It is not easy for ordinary people to afford the expensive cost of space tourism …",
+              "part": 2,
+              "explanation_zh": "「高昂的費用」是 high cost／high price；expensive 用來形容東西貴，不和 cost、price 連用。"
+            },
+            {
+              "type": "verbal_subject",
+              "zh": "要負擔太空旅遊的高昂費用並不容易",
+              "literal_error": "Ordinary people are not easy to afford the high cost of space tourism …",
+              "part": 3,
+              "explanation_zh": "「不容易」的是「負擔費用」這件事，不是人；英文用虛主詞 It is not easy for ordinary people to afford …。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "So high is the cost of space tourism that few ordinary people can afford it, which turns space travel into a privilege of the rich.",
+              "grammar_id": "gp-so-adj-inversion",
+              "explanation_zh": "So + 形容詞 + be + 主詞 + that … 的倒裝強調費用之高；屬於加分寫法，基本句型仍是 It is not easy for sb to V。"
+            }
+          ],
+          "restructuring_zh": "中文「對一般人來說，要負擔…並不容易」的主詞是「負擔費用」這個動作；英文把動作移到句尾，用虛主詞 It is not easy for ordinary people to afford …；「使它成為…」用句尾分詞 making it … 表結果，不要另起「這使得」的句子。"
+        },
+        "2": {
+          "references": [
+            "Sending a few wealthy people into space for a few minutes of fun may do more harm to the earth than we imagine.",
+            "Sending a handful of rich people to space for a few minutes of fun may cause greater damage to the earth than we expect.",
+            "Taking a small number of rich people into space for just a few minutes could harm the planet more seriously than we think."
+          ],
+          "target_words": [
+            {
+              "word": "wealthy",
+              "zh": "富有的",
+              "alternatives": [
+                "rich"
+              ]
+            },
+            {
+              "word": "space",
+              "zh": "太空"
+            },
+            {
+              "word": "minute",
+              "zh": "分鐘"
+            },
+            {
+              "word": "harm",
+              "zh": "傷害",
+              "alternatives": [
+                "damage"
+              ]
+            },
+            {
+              "word": "earth",
+              "zh": "地球",
+              "alternatives": [
+                "planet"
+              ]
+            },
+            {
+              "word": "imagine",
+              "zh": "想像",
+              "alternatives": [
+                "think",
+                "expect",
+                "realize"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "NFSUBJ",
+              "grammar_id": "gp-gerund-subject",
+              "label_zh": "動名詞片語當主詞",
+              "frame": "V-ing … + may + V …",
+              "zh_trigger": "送少數富人上太空玩幾分鐘"
+            },
+            {
+              "code": "COMP",
+              "grammar_id": "gp-comparative-superlative",
+              "label_zh": "比較級（more … than + S + V）",
+              "frame": "S + V + more + N + to … + than + S + V",
+              "zh_trigger": "比我們想像中更大"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "送少數富人上太空",
+              "accepted": [
+                "Sending a few wealthy people into space",
+                "Sending a handful of rich people to space",
+                "Taking a small number of rich people into space",
+                "Sending a few rich people into space",
+                "Flying a few wealthy people into space"
+              ],
+              "targets": [
+                "NFSUBJ",
+                "wealthy",
+                "space"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Send a few rich people into space may",
+                  "right": "Sending a few rich people into space may",
+                  "explanation_zh": "動作當主詞要用動名詞（或 To V），原形動詞不能當主詞。"
+                },
+                {
+                  "wrong": "Sending a few rich people into the space",
+                  "right": "Sending a few rich people into space",
+                  "explanation_zh": "「太空」space 不加 the。"
+                }
+              ]
+            },
+            {
+              "zh": "玩幾分鐘",
+              "accepted": [
+                "for a few minutes of fun",
+                "for just a few minutes",
+                "for a few minutes",
+                "to have fun for a few minutes"
+              ],
+              "targets": [
+                "minute"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "for few minutes",
+                  "right": "for a few minutes",
+                  "explanation_zh": "few 是「幾乎沒有」；「幾分鐘」要用 a few minutes。"
+                },
+                {
+                  "wrong": "to play for a few minutes",
+                  "right": "for a few minutes of fun",
+                  "explanation_zh": "這裡的「玩」是遊玩、體驗，用 for fun／for a few minutes of fun，不要譯成 play（像小孩玩耍）。"
+                }
+              ]
+            },
+            {
+              "zh": "可能會對地球造成",
+              "accepted": [
+                "may do more harm to the earth",
+                "may cause greater damage to the earth",
+                "could harm the planet more seriously",
+                "may do more damage to the planet",
+                "might cause more harm to the earth"
+              ],
+              "targets": [
+                "harm",
+                "earth",
+                "COMP"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "may make more harm to the earth",
+                  "right": "may do more harm to the earth",
+                  "explanation_zh": "「造成傷害」是 do harm to／cause harm to，不用 make。"
+                },
+                {
+                  "wrong": "may do more harms to the earth",
+                  "right": "may do more harm to the earth",
+                  "explanation_zh": "harm 當「傷害」是不可數名詞，不加 s。"
+                }
+              ]
+            },
+            {
+              "zh": "比我們想像中更大的傷害",
+              "accepted": [
+                "than we imagine",
+                "than we expect",
+                "than we think",
+                "than we might imagine",
+                "than we can imagine"
+              ],
+              "targets": [
+                "imagine",
+                "COMP"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "than our imagination",
+                  "right": "than we imagine",
+                  "explanation_zh": "比較的對象要對等：傷害的程度和「我們想像的程度」比，用 than we imagine（子句），不寫 than our imagination。"
+                },
+                {
+                  "wrong": "than we imagined it",
+                  "right": "than we imagined",
+                  "explanation_zh": "than 後面的子句省略受詞，不要再加 it。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "verbal_subject",
+              "zh": "送少數富人上太空玩幾分鐘",
+              "literal_error": "Send a few rich people into space for a few minutes may do more harm …",
+              "part": 1,
+              "explanation_zh": "中文以整個動作當主詞；英文要用動名詞 Sending …（或 To send …），原形動詞不能當主詞。"
+            },
+            {
+              "type": "collocation",
+              "zh": "造成",
+              "literal_error": "… may make more harm to the earth than we imagine.",
+              "part": 3,
+              "explanation_zh": "「造成傷害」是 do／cause harm to；harm 不可數，不加 s，也不和 make 連用。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "Little do we realize how much harm sending a few wealthy people into space for a few minutes of fun may do to the earth.",
+              "grammar_id": "gp-negative-inversion",
+              "explanation_zh": "Little do we realize … 的否定倒裝強調「我們根本沒想到」；屬於加分寫法，不設為唯一正解。"
+            }
+          ]
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ac-V-3",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-top-01",
+    "lot": "translation-top-01",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "a1384b01f87b0f8fded3505d9aeb991591fcc72147d3fc44a0f533a9db995000",
+    "spec_id": "translation-top@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T13:10:33Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "fail",
+      "created_at": "2026-10-09T00:00:00Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "It is not easy for ordinary people to afford the high cost of space tourism, which makes it a privilege of the rich.",
+            "confidence": "high",
+            "explanation_zh": "「對一般人來說，要…並不容易」用虛主詞句型 It is not easy for sb to V；「負擔…費用」用 afford；「使它成為…特權」用 which makes it 承接前句，it 指 space tourism；「有錢人」用 the rich（也可用 the wealthy）。"
+          },
+          "2": {
+            "translation": "Sending a handful of wealthy people into space for a few minutes of fun may do more harm to the Earth than we imagine.",
+            "confidence": "high",
+            "explanation_zh": "「送少數富人上太空玩幾分鐘」用動名詞片語當主詞；「對地球造成…傷害」用 do harm to；「比我們想像中更大的」用比較級 more harm ... than we imagine（也可寫 cause greater damage to the Earth than we think）。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "NFSUBJ"
+            ],
+            "used_target_words": [
+              "ordinary",
+              "afford",
+              "cost",
+              "tourism",
+              "privilege",
+              "rich"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "「使它成為有錢人的特權」我自然寫成 , which makes it a privilege of the rich（非限定關係子句），沒有用分詞構句，所以 used_patterns 不含 PART：中文「使它成為」沒有唯一引出 PART。",
+              "第 4 部分 targets 標 PART，accepted 卻收 which makes it a privilege of the rich（關係子句，不是分詞構句），句型標註和可接受寫法不一致。建議把 PART 放寬成「句尾補述結果（分詞構句或 which 子句皆可）」，或刪掉 which makes it 那一條並在中文加強提示。",
+              "（小問題）R2 的 a privilege enjoyed only by the rich 多了「只有」，屬可接受的引申。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "NFSUBJ",
+              "COMP"
+            ],
+            "used_target_words": [
+              "wealthy",
+              "space",
+              "minute",
+              "harm",
+              "earth",
+              "imagine"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "（小問題）R2 與第 2 部分 accepted 的 for (just) a few minutes 沒譯出「玩」，語意略有流失（just 稍可補償），可接受。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "ordinary",
+              "afford",
+              "cost",
+              "tourism",
+              "privilege",
+              "rich"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NFSUBJ": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "wealthy",
+              "space",
+              "minute",
+              "harm",
+              "earth",
+              "imagine"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NFSUBJ": true,
+              "COMP": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 1 題盲譯沒有用到標的句型 ['PART']：中文題目沒有自然引出這個句型（SPEC §5.7）",
+          "第 1 題驗證者對4 部分切分有意見（warn）：「使它成為有錢人的特權」我自然寫成 , which makes it a privilege of the rich（非限定關係子句），沒有用分詞構句，所以 used_patterns 不含 PART：中文「使它成為」沒有唯一引出 PART"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T07:56:17Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "It is not easy for ordinary people to afford the high cost of space tourism, making it a privilege of the wealthy.",
+            "confidence": "high",
+            "explanation_zh": "「要……並不容易」用虛主詞 It is not easy for ... to ...；負擔費用用 afford the high cost；「使它成為……」用分詞片語 making it a privilege。"
+          },
+          "2": {
+            "translation": "Sending a few wealthy people into space for a few minutes of fun may do more harm to the Earth than we imagine.",
+            "confidence": "high",
+            "explanation_zh": "主詞用動名詞片語 Sending ... into space；「比我們想像中更大的傷害」用比較級 more harm ... than we imagine；可能用 may。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PART",
+              "NFSUBJ"
+            ],
+            "used_target_words": [
+              "ordinary",
+              "afford",
+              "cost",
+              "tourism",
+              "privilege",
+              "rich"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "NFSUBJ",
+              "COMP"
+            ],
+            "used_target_words": [
+              "wealthy",
+              "space",
+              "minute",
+              "harm",
+              "earth",
+              "imagine"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "ordinary",
+              "afford",
+              "cost",
+              "tourism",
+              "privilege",
+              "rich"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PART": true,
+              "NFSUBJ": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "wealthy",
+              "space",
+              "minute",
+              "harm",
+              "earth",
+              "imagine"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NFSUBJ": true,
+              "COMP": true
+            },
+            "program_match": true
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "rejected",
+  "status_reason": "blind_solver:A 未通過：第 1 題盲譯沒有用到標的句型 ['PART']：中文題目沒有自然引出這個句型（SPEC §5.7）；第 1 題驗證者對4 部分切分有意見（warn）：「使它成為有錢人的特權」我自然寫成 , which makes it a privilege of the rich（非限定關係子句），沒有用分詞構句，所以 used_patterns 不含 PART：中文「使它成為」沒有唯一引出 PART；判定者（第 1 輪）人工檢查：第 1 題「使它成為有錢人的特權」同樣自然引出 , which makes it …（非限定關係子句，盲譯 A），不能唯一引出標的句型 PART；而且第 4 部分 accepted 本身就收 which makes it a privilege of the rich，和 targets 的 PART 互相矛盾。要改中文或改標的句型。另：第 2 題第 4 部分中文「比我們想像中更大的傷害」的 more harm 放在第 3 部分 accepted，中英切分錯位；REF2 與第 2 部分的 for (just) a few minutes 沒譯出「玩」。"
+}

@@ -1,0 +1,724 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.21931b",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "advanced",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "學生跟著醫師、設計師或律師工作一天，好讓自己能更了解這些職業。",
+        "options": null,
+        "answer": "Students spend a day working with doctors, designers, or lawyers so that they can understand these careers better.",
+        "accepted_answers": [
+          "Students follow doctors, designers, or lawyers at work for a day so that they can learn more about these jobs.",
+          "Students work with doctors, designers, or lawyers for a day so that they are able to know these professions better."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "so that 表目的",
+            "平行結構"
+          ],
+          "topic": "職業探索"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "親身體驗工作很重要，有些學生一天下來就累到改變心意。",
+        "options": null,
+        "answer": "It is important to personally experience work; some students get so exhausted that they change their minds after one day.",
+        "accepted_answers": [
+          "It is important to experience a job in person, and after just one day, some students are so tired that they change their minds.",
+          "It is very important to experience work for yourself; after a day, some students feel so worn out that they change their minds."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "虛主詞 It ＋形容詞＋不定詞",
+            "so … that 表結果"
+          ],
+          "topic": "職業探索"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "職業探索"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「醫師、設計師或律師」三個名詞並列，形式一致都用複數，最後一項前面加 or。「跟著…工作一天」可寫 spend a day working with …（spend + 時間 + V-ing）或 follow … at work for a day。「好讓自己能更了解」表目的，用 so that they can understand … better。",
+          "evidence": [
+            "醫師、設計師或律師",
+            "好讓自己能"
+          ],
+          "strategy_zh": "列舉時注意每一項的詞性、單複數要一致；「好讓…能…」想到 so that + S + can。",
+          "hints": [
+            "切成四段：學生跟著醫師、設計師或律師／工作一天／好讓自己能／更了解這些職業",
+            "標的詞彙：doctor（醫師，L1）、designer（設計師，L3）、lawyer（律師，L1）、day（一天，L1）、understand（了解，L1）、career（職業，L3）",
+            "句型框架：S + spend a day V-ing with A, B, or C + so that + S + can + VR …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「親身體驗工作很重要」主詞是一個動作，英文常用虛主詞 It is important to personally experience work。「一天下來」是 after one day。「累到改變心意」表示程度造成的結果，用 so exhausted (tired) that they change their minds；人覺得累用 tired／exhausted，不用 tiring。",
+          "evidence": [
+            "親身體驗工作很重要",
+            "一天下來",
+            "累到改變心意"
+          ],
+          "strategy_zh": "中文「做某事很＋形容詞」先想 It is + adj. + to VR；「…到（結果）」想 so … that …。",
+          "hints": [
+            "切成四段：親身體驗工作／很重要／有些學生一天下來／就累到改變心意",
+            "標的詞彙：important（重要的，L1）、experience（體驗，L1）、day（一天，L1）、tired／exhausted（累的，L1／L4）、change（改變，L1）、mind（心意，L1）",
+            "句型框架：It is important to VR …; S + get + so + adj. + that + S + V …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "Students spend a day working with doctors, designers, or lawyers so that they can understand these careers better.",
+            "Students follow doctors, designers, or lawyers at work for a day so that they can learn more about these jobs.",
+            "Students work with doctors, designers, or lawyers for a day so that they are able to know these professions better."
+          ],
+          "target_words": [
+            {
+              "word": "doctor",
+              "zh": "醫師"
+            },
+            {
+              "word": "designer",
+              "zh": "設計師"
+            },
+            {
+              "word": "lawyer",
+              "zh": "律師"
+            },
+            {
+              "word": "day",
+              "zh": "一天"
+            },
+            {
+              "word": "understand",
+              "zh": "了解",
+              "alternatives": [
+                "learn",
+                "know"
+              ]
+            },
+            {
+              "word": "career",
+              "zh": "職業",
+              "alternatives": [
+                "job",
+                "profession",
+                "occupation"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PURP",
+              "grammar_id": "gp-so-that-purpose",
+              "label_zh": "目的：so that + S + can",
+              "frame": "S + V … so that + S + can + VR …",
+              "zh_trigger": "好讓自己能"
+            },
+            {
+              "code": "PARA",
+              "grammar_id": "gp-parallelism",
+              "label_zh": "平行結構（A, B, or C）",
+              "frame": "N1, N2, or N3（同詞性、同為複數）",
+              "zh_trigger": "醫師、設計師或律師"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "學生跟著醫師、設計師或律師",
+              "accepted": [
+                "Students spend a day working with doctors, designers, or lawyers",
+                "Students follow doctors, designers, or lawyers",
+                "Students work with doctors, designers, or lawyers",
+                "Students shadow doctors, designers, or lawyers",
+                "Students work alongside doctors, designers, or lawyers"
+              ],
+              "targets": [
+                "doctor",
+                "designer",
+                "lawyer",
+                "PARA"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Students follow doctors, designers, or lawyer",
+                  "right": "Students follow doctors, designers, or lawyers",
+                  "explanation_zh": "並列的三個名詞要形式一致，都用複數。"
+                },
+                {
+                  "wrong": "Students follow doctor, designer, or lawyer",
+                  "right": "Students follow doctors, designers, or lawyers",
+                  "explanation_zh": "可數名詞的單數不能單獨使用；泛指某種職業的人用複數。"
+                }
+              ]
+            },
+            {
+              "zh": "工作一天",
+              "accepted": [
+                "spend a day",
+                "for a day",
+                "for one day",
+                "spend one day",
+                "at work for a day"
+              ],
+              "targets": [
+                "day"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "work one day",
+                  "right": "work for a day",
+                  "explanation_zh": "「工作一天」是持續一天，用 for a day；work one day 容易被理解成「有一天去工作」。"
+                }
+              ]
+            },
+            {
+              "zh": "好讓自己能",
+              "accepted": [
+                "so that they can",
+                "so that they are able to",
+                "in order that they can",
+                "so they can"
+              ],
+              "targets": [
+                "PURP"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "to let themselves can",
+                  "right": "so that they can",
+                  "explanation_zh": "「好讓自己能…」表目的，用 so that they can，不能寫 let … can。"
+                }
+              ]
+            },
+            {
+              "zh": "更了解這些職業",
+              "accepted": [
+                "understand these careers better",
+                "learn more about these jobs",
+                "know these professions better",
+                "better understand these careers",
+                "have a better understanding of these jobs",
+                "understand these jobs better"
+              ],
+              "targets": [
+                "understand",
+                "career"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "more understand these careers",
+                  "right": "understand these careers better",
+                  "explanation_zh": "「更了解」寫 understand … better 或 better understand …，不能把 more 放在動詞前面。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "collocation",
+              "zh": "好讓自己能",
+              "literal_error": "Students follow doctors for a day to let themselves can understand these careers better.",
+              "part": 3,
+              "explanation_zh": "照字面翻「讓自己能」會出現 let … can 的錯誤；表目的用 so that they can。"
+            },
+            {
+              "type": "plural_countable",
+              "zh": "醫師、設計師或律師",
+              "literal_error": "Students follow doctor, designer, or lawyer for a day.",
+              "part": 1,
+              "explanation_zh": "泛指某種職業的人用複數，三個名詞形式要一致。"
+            }
+          ],
+          "bonus": []
+        },
+        "2": {
+          "references": [
+            "It is important to personally experience work; some students get so exhausted that they change their minds after one day.",
+            "It is important to experience a job in person, and after just one day, some students are so tired that they change their minds.",
+            "It is very important to experience work for yourself; after a day, some students feel so worn out that they change their minds."
+          ],
+          "target_words": [
+            {
+              "word": "important",
+              "zh": "重要的"
+            },
+            {
+              "word": "experience",
+              "zh": "體驗",
+              "alternatives": [
+                "try"
+              ]
+            },
+            {
+              "word": "day",
+              "zh": "一天"
+            },
+            {
+              "word": "tired",
+              "zh": "累的",
+              "alternatives": [
+                "exhausted",
+                "worn out"
+              ]
+            },
+            {
+              "word": "change",
+              "zh": "改變"
+            },
+            {
+              "word": "mind",
+              "zh": "心意",
+              "alternatives": [
+                "plan",
+                "decision"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "NFSUBJ",
+              "grammar_id": "gp-it-adj-to",
+              "label_zh": "虛主詞 It ＋形容詞＋不定詞",
+              "frame": "It is + adj. + to VR …",
+              "zh_trigger": "親身體驗工作很重要"
+            },
+            {
+              "code": "ADVCL",
+              "grammar_id": "gp-so-such-that",
+              "label_zh": "結果：so … that",
+              "frame": "S + be/get + so + adj. + that + S + V",
+              "zh_trigger": "累到"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "親身體驗工作",
+              "accepted": [
+                "to personally experience work",
+                "to experience a job in person",
+                "to experience work for yourself",
+                "to experience work personally",
+                "to experience work in person",
+                "to try a job yourself",
+                "to experience real work"
+              ],
+              "targets": [
+                "experience",
+                "NFSUBJ"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Experience work personally is important",
+                  "right": "It is important to personally experience work",
+                  "explanation_zh": "動詞片語不能直接當主詞；用虛主詞 It is important to …，或改成動名詞 Experiencing …。"
+                }
+              ]
+            },
+            {
+              "zh": "很重要",
+              "accepted": [
+                "It is important",
+                "It is very important",
+                "It's important"
+              ],
+              "targets": [
+                "important",
+                "NFSUBJ"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "It is importance",
+                  "right": "It is important",
+                  "explanation_zh": "be 動詞後面用形容詞 important；importance 是名詞（名詞↔形容詞）。"
+                }
+              ]
+            },
+            {
+              "zh": "有些學生一天下來",
+              "accepted": [
+                "after one day",
+                "after just one day",
+                "after a day",
+                "after only one day",
+                "after a single day"
+              ],
+              "targets": [
+                "day"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "a day down",
+                  "right": "after a day",
+                  "explanation_zh": "「一天下來」是「經過一天之後」，用 after a day，不要照字面翻 down。"
+                }
+              ]
+            },
+            {
+              "zh": "就累到改變心意",
+              "accepted": [
+                "so exhausted that they change their minds",
+                "so tired that they change their minds",
+                "so worn out that they change their minds",
+                "so tired that they change their mind",
+                "so tired that they give up the idea"
+              ],
+              "targets": [
+                "tired",
+                "change",
+                "mind",
+                "ADVCL"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "tired to change their minds",
+                  "right": "so tired that they change their minds",
+                  "explanation_zh": "「累到…」表結果，用 so + 形容詞 + that + 子句，不能用 to 直接接。"
+                },
+                {
+                  "wrong": "so tiring that they change their minds",
+                  "right": "so tired that they change their minds",
+                  "explanation_zh": "人感到累用 tired 或 exhausted；tiring 是「令人疲累的」，用來形容工作。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "verbal_subject",
+              "zh": "親身體驗工作很重要",
+              "literal_error": "Experience work personally is important.",
+              "part": 1,
+              "explanation_zh": "中文拿動詞片語當主詞，英文要用虛主詞 It is important to … 或動名詞 Experiencing …。"
+            },
+            {
+              "type": "collocation",
+              "zh": "累到",
+              "literal_error": "some students get tired to change their minds after one day",
+              "part": 4,
+              "explanation_zh": "「…到（結果）」用 so … that …，不能用不定詞 to。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "Only after experiencing work in person can students know whether a career really suits them.",
+              "explanation_zh": "Only + 副詞片語放句首要倒裝（can students know）；倒裝只當加分寫法，不是本題要求的句型。",
+              "grammar_id": "gp-only-inversion"
+            }
+          ],
+          "restructuring_zh": "「親身體驗工作很重要」是動詞片語當主詞，英文改成虛主詞句型 It is important to personally experience work；「累到改變心意」要改成 so exhausted／tired that … 的結果子句。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-advanced-02",
+    "lot": "translation-advanced-02",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "dab2f301b2dd4cfd48bfd913df11ca683b0620cee3b8b044ef9794bc46049e02",
+    "spec_id": "translation-advanced@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T12:57:14Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "fail",
+      "created_at": "2026-10-09T07:52:07Z",
+      "details": {
+        "solver": "A",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Students work with doctors, designers, or lawyers for a day so that they can understand these professions better.",
+            "confidence": "high",
+            "explanation_zh": "「跟著……工作一天」譯 work with … for a day（也可 shadow）；「好讓自己能更了解」用 so that + can + 比較級 better；「職業」譯 professions（也可 jobs／occupations）。"
+          },
+          "2": {
+            "translation": "Experiencing a job firsthand is important because some students become so tired after just one day that they change their minds.",
+            "confidence": "medium",
+            "explanation_zh": "「親身體驗工作很重要」用動名詞主詞 Experiencing a job firsthand（也可 It is important to experience …）；兩個分句的關係中文沒寫，判斷為因果，用 because 連接成一句；「累到改變心意」用 so … that；「一天下來」譯 after just one day。連接詞是自己補的，故信心 medium。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PURP",
+              "PARA"
+            ],
+            "used_target_words": [
+              "doctor",
+              "designer",
+              "lawyer",
+              "day",
+              "understand",
+              "career"
+            ],
+            "within_accepted": true,
+            "closest_reference": 2,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "（不影響判定）REF2 的 know these professions better 稍不自然，get to know these professions better 或 understand these professions better 較道地。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "NFSUBJ",
+              "ADVCL"
+            ],
+            "used_target_words": [
+              "important",
+              "experience",
+              "day",
+              "tired",
+              "change",
+              "mind"
+            ],
+            "within_accepted": false,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "我的譯文用動名詞主詞 Experiencing a job firsthand is important（gp-gerund-subject，同屬 NFSUBJ 代碼，程式也偵測得到），不是本句指定的虛主詞 It is important to …（gp-it-adj-to）。",
+              "第 1 部分 accepted 全是 to … 不定詞寫法、第 2 部分只收 It is (very) important，沒有動名詞主詞的寫法；但本句 common_errors 與 traps 自己都寫「或改成動名詞 Experiencing …」，評分規準前後不一致，所以判 within_accepted=false。",
+              "建議：第 1 部分 accepted 補 Experiencing work in person／Experiencing a job firsthand／Personally experiencing work 等，第 2 部分補 is important／is very important，並在 references 加一句動名詞主詞的版本。",
+              "（不影響判定）中文兩個分句之間沒有連接詞；我判斷是因果，用 because 連成一句。參考譯文用分號或 and，都可接受。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "doctor",
+              "designer",
+              "lawyer",
+              "day",
+              "understand",
+              "career"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PURP": true,
+              "PARA": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "important",
+              "experience",
+              "day",
+              "tired",
+              "change",
+              "mind"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NFSUBJ": true,
+              "ADVCL": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 2 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "fail",
+      "created_at": "2026-10-09T12:57:14Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Students spend a day working with a doctor, a designer, or a lawyer so that they can understand these professions better.",
+            "confidence": "high",
+            "explanation_zh": "「花一天跟著……工作」用 spend a day + V-ing；「好讓自己能更了解」用 so that + can + 比較級 better；「這些職業」用 these professions。"
+          },
+          "2": {
+            "translation": "Experiencing a job in person is important, and some students are so exhausted by the end of the day that they change their minds.",
+            "confidence": "medium",
+            "explanation_zh": "兩個分句用 and 連接；「累到改變心意」用 so + 形容詞 + that 子句表結果；「一天下來」譯成 by the end of the day。原文兩個分句之間的因果關係不明顯，所以信心 medium。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PURP",
+              "PARA"
+            ],
+            "used_target_words": [
+              "doctor",
+              "designer",
+              "lawyer",
+              "day",
+              "understand",
+              "career"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "ADVCL"
+            ],
+            "used_target_words": [
+              "important",
+              "experience",
+              "day",
+              "tired",
+              "change",
+              "mind"
+            ],
+            "within_accepted": false,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "「親身體驗工作很重要」我自然譯成動名詞主詞（Experiencing a job in person is important），沒有用標的句型 NFSUBJ（gp-it-adj-to，虛主詞 It is important to …），所以 used_patterns 不含 NFSUBJ；中文「…很重要」並沒有強制引出虛主詞，題目的 traps 也承認動名詞 Experiencing … 是可行寫法。",
+              "參考譯文與各部分 accepted 都只有 It is important to … 的寫法，漏了動名詞主詞，所以 within_accepted 判 false；建議把動名詞主詞補進 accepted，或在中文裡加線索讓虛主詞成為唯一自然選擇。",
+              "「一天下來」我譯成 by the end of the day，accepted 只有 after one day／after a day，建議補上 by the end of the day。",
+              "第三部分 zh 含「有些學生」，但它的 accepted 只涵蓋「一天下來」，沒有 some students，部分切割與 accepted 對不齊。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "doctor",
+              "designer",
+              "lawyer",
+              "day",
+              "understand",
+              "career"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PURP": true,
+              "PARA": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "important",
+              "experience",
+              "day",
+              "tired",
+              "change",
+              "mind"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "ADVCL": false
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 2 題盲譯沒有用到標的句型 ['NFSUBJ']：中文題目沒有自然引出這個句型（SPEC §5.7）",
+          "第 2 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義",
+          "第 2 題驗證者說用了句型 ADVCL，程式在譯文裡看不出來",
+          "第 2 題驗證者對4 部分切分有意見（warn）：「親身體驗工作很重要」我自然譯成動名詞主詞（Experiencing a job in person is important），沒有用標的句型 NFSUBJ（gp-it-adj-to，虛主詞 It is important to …），所"
+        ]
+      }
+    }
+  ],
+  "status": "rejected",
+  "status_reason": "blind_solver:A 未通過：第 2 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義；blind_solver:B 未通過：第 2 題盲譯沒有用到標的句型 ['NFSUBJ']：中文題目沒有自然引出這個句型（SPEC §5.7）；第 2 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義；第 2 題驗證者說用了句型 ADVCL，程式在譯文裡看不出來…；人工判定：第 2 題「親身體驗工作很重要」和「有些學生一天下來就累到改變心意」之間的邏輯關係中文沒有交代（兩位盲譯者都只給 medium，各自補 because／and）；動名詞主詞 Experiencing … is important 是正確寫法，traps 與 common_errors 也說可用，references 與第 1、2 部分 accepted 卻都沒收，評分規準前後矛盾；第 3 部分 zh「有些學生一天下來」的 accepted 只有 after one day 等，沒涵蓋 some students，也漏了 by the end of the day"
+}

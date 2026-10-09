@@ -1,0 +1,798 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.2d417b",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "advanced",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "手機裡的照片常被視為珍貴的回憶，但很少人會定期備份。",
+        "options": null,
+        "answer": "The photos on our phones are often regarded as precious memories, but few people back them up regularly.",
+        "accepted_answers": [
+          "Photos on our cell phones are often seen as precious memories, but few people regularly back them up.",
+          "The pictures on our phones are usually viewed as valuable memories, but not many people back them up regularly."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "把 A 視為 B",
+            "被動語態"
+          ],
+          "topic": "雲端備份"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "因此，應該開啟自動上傳功能，並檢查雲端空間是否足夠。",
+        "options": null,
+        "answer": "Therefore, we should turn on the automatic upload function and check whether there is enough cloud storage.",
+        "accepted_answers": [
+          "Therefore, people should switch on automatic uploading and check whether there is enough space in the cloud.",
+          "So we should enable the auto-upload feature and check whether we have enough storage space in the cloud."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "應該（should）",
+            "間接問句（whether）"
+          ],
+          "topic": "雲端備份"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "雲端備份"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「被視為」同時考兩個句型：regard A as B（把 A 視為 B）改成被動就是 A is regarded as B，主詞 photos 是複數，用 are；see、view 也要搭配 as，consider 可以省略 as。「手機裡的照片」要把地點修飾放到名詞後面：the photos on our phones。「很少人」是 few people（不是 a few）；「備份」用片語動詞 back up，受詞 them 放在中間；「定期」用副詞 regularly。",
+          "evidence": [
+            "手機裡的照片",
+            "常被視為珍貴的回憶",
+            "很少人會定期備份"
+          ],
+          "strategy_zh": "中文的「被…」先想被動 be + p.p.；遇到「A 被視為 B」直接套 A + be + regarded/seen/viewed + as + B。",
+          "hints": [
+            "切成四段：手機裡的照片／常被視為／珍貴的回憶／但很少人會定期備份",
+            "標的詞彙：photo（照片，L1）、phone（手機，L1）、regard（視為，L2）、precious（珍貴的，L3）、memory（回憶，L2）、back up（備份，L1）、regularly（定期地，L2）",
+            "句型框架：S + are (often) regarded/seen as + N, but few people + V …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「應該」表示建議，用 should + 原形動詞；中文省略主詞，英文要補 we 或 people。「開啟功能」用 turn on、switch on 或 enable，不用 open；「自動」修飾名詞，要用形容詞 automatic。「是否」引導間接問句當 check 的受詞，寫成 whether（或 if）+ there is enough …，語序和直述句相同，不能寫成 whether is there。",
+          "evidence": [
+            "因此，應該",
+            "開啟自動上傳功能",
+            "雲端空間是否足夠"
+          ],
+          "strategy_zh": "「是否…」放在動詞後面當受詞時，就是 whether 或 if 名詞子句；子句一律用「主詞＋動詞」的直述句語序。",
+          "hints": [
+            "切成四段：因此，應該／開啟自動上傳功能／並檢查／雲端空間是否足夠",
+            "標的詞彙：turn on（開啟，L1）、automatic（自動的，L3）、upload（上傳，L2）、check（檢查，L1）、enough（足夠的，L1）、space（空間，L1）、cloud（雲端，L1）",
+            "句型框架：Therefore, we should + VR … and check whether + S + V …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "The photos on our phones are often regarded as precious memories, but few people back them up regularly.",
+            "Photos on our cell phones are often seen as precious memories, but few people regularly back them up.",
+            "The pictures on our phones are usually viewed as valuable memories, but not many people back them up regularly."
+          ],
+          "target_words": [
+            {
+              "word": "photo",
+              "zh": "照片",
+              "alternatives": [
+                "picture"
+              ]
+            },
+            {
+              "word": "phone",
+              "zh": "手機",
+              "alternatives": [
+                "cellphone",
+                "smartphone"
+              ]
+            },
+            {
+              "word": "regard",
+              "zh": "視為",
+              "alternatives": [
+                "see",
+                "view",
+                "consider",
+                "think of",
+                "treat"
+              ]
+            },
+            {
+              "word": "precious",
+              "zh": "珍貴的",
+              "alternatives": [
+                "valuable",
+                "treasured"
+              ]
+            },
+            {
+              "word": "memory",
+              "zh": "回憶"
+            },
+            {
+              "word": "back sth up",
+              "zh": "備份",
+              "alternatives": [
+                "backup",
+                "save",
+                "copy"
+              ]
+            },
+            {
+              "word": "regularly",
+              "zh": "定期地",
+              "alternatives": [
+                "regular"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "VOC",
+              "grammar_id": "gp-regard-as",
+              "label_zh": "把 A 視為 B（被動：A be regarded as B）",
+              "frame": "A + be + regarded/seen/viewed + as + B",
+              "zh_trigger": "視為"
+            },
+            {
+              "code": "PASS",
+              "grammar_id": "gp-passive",
+              "label_zh": "被動語態",
+              "frame": "S + be (+ often) + p.p. …",
+              "zh_trigger": "被視為"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "手機裡的照片",
+              "accepted": [
+                "The photos on our phones",
+                "Photos on our cell phones",
+                "The pictures on our phones",
+                "Photos on our phones",
+                "The photos on people's phones",
+                "The photos in our phones",
+                "Photos stored on our phones",
+                "The photos on their phones",
+                "Photos on phones"
+              ],
+              "targets": [
+                "photo",
+                "phone"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "The phone inside photos",
+                  "right": "The photos on our phones",
+                  "explanation_zh": "「手機裡的」是地點修飾語，英文要放在名詞後面，用介系詞片語 on our phones。"
+                },
+                {
+                  "wrong": "The photo on our phones",
+                  "right": "The photos on our phones",
+                  "explanation_zh": "手機裡的照片不只一張，用複數 photos，後面的動詞也要用 are。"
+                }
+              ]
+            },
+            {
+              "zh": "常被視為",
+              "accepted": [
+                "are often regarded as",
+                "are often seen as",
+                "are usually viewed as",
+                "are often viewed as",
+                "are usually regarded as",
+                "are usually seen as",
+                "are often considered",
+                "are often considered as",
+                "are often thought of as",
+                "are often treated as"
+              ],
+              "targets": [
+                "regard",
+                "VOC",
+                "PASS"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "often regarded as",
+                  "right": "are often regarded as",
+                  "explanation_zh": "被動語態要有 be 動詞：主詞 photos 是複數，用 are regarded。"
+                },
+                {
+                  "wrong": "are often regarded precious memories",
+                  "right": "are often regarded as precious memories",
+                  "explanation_zh": "regard A as B 的 as 不能省略；改成被動也一樣是 A is regarded as B。"
+                }
+              ]
+            },
+            {
+              "zh": "珍貴的回憶",
+              "accepted": [
+                "precious memories",
+                "valuable memories",
+                "treasured memories"
+              ],
+              "targets": [
+                "precious",
+                "memory"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "precious memory",
+                  "right": "precious memories",
+                  "explanation_zh": "這些照片代表很多段回憶，memory 當「一段回憶」是可數名詞，要用複數。"
+                },
+                {
+                  "wrong": "price memories",
+                  "right": "precious memories",
+                  "explanation_zh": "「珍貴的」是形容詞 precious 或 valuable；price 是名詞「價格」。"
+                }
+              ]
+            },
+            {
+              "zh": "但很少人會定期備份",
+              "accepted": [
+                "but few people back them up regularly",
+                "but few people regularly back them up",
+                "but not many people back them up regularly",
+                "but very few people back them up regularly",
+                "yet few people back them up regularly",
+                "but few people back them up on a regular basis",
+                "but few people make regular backups of them"
+              ],
+              "targets": [
+                "back sth up",
+                "regularly"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "but a few people back them up regularly",
+                  "right": "but few people back them up regularly",
+                  "explanation_zh": "a few 是「有一些」，few 才是「很少」，意思相反。"
+                },
+                {
+                  "wrong": "but few people back up them regularly",
+                  "right": "but few people back them up regularly",
+                  "explanation_zh": "back up 的受詞是代名詞 them 時，要放在 back 和 up 中間。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "prenominal_modifier",
+              "zh": "手機裡的照片",
+              "literal_error": "The phone inside photos are often regarded as precious memories, but few people back them up regularly.",
+              "part": 1,
+              "explanation_zh": "照中文語序把「手機裡的」放在名詞前面；英文的地點修飾要放在名詞後面：the photos on our phones。"
+            },
+            {
+              "type": "collocation",
+              "zh": "被視為",
+              "literal_error": "The photos on our phones are often regarded precious memories, but few people back them up regularly.",
+              "part": 2,
+              "explanation_zh": "regard A as B 的 as 不能漏；換成 see、view 也一樣要有 as。"
+            }
+          ],
+          "bonus": [],
+          "restructuring_zh": "「手機裡的照片」是前置修飾，英文要改成名詞在前、介系詞片語在後：the photos on our phones；「很少人會定期備份」中文省略了受詞，英文 back up 要補上 them（指照片），寫成 back them up。"
+        },
+        "2": {
+          "references": [
+            "Therefore, we should turn on the automatic upload function and check whether there is enough cloud storage.",
+            "Therefore, people should switch on automatic uploading and check whether there is enough space in the cloud.",
+            "So we should enable the auto-upload feature and check whether we have enough storage space in the cloud."
+          ],
+          "target_words": [
+            {
+              "word": "turn on",
+              "zh": "開啟",
+              "alternatives": [
+                "switch on",
+                "enable",
+                "activate"
+              ]
+            },
+            {
+              "word": "automatic",
+              "zh": "自動的",
+              "alternatives": [
+                "automatically",
+                "auto"
+              ]
+            },
+            {
+              "word": "upload",
+              "zh": "上傳"
+            },
+            {
+              "word": "check",
+              "zh": "檢查",
+              "alternatives": [
+                "make sure",
+                "see",
+                "find out",
+                "confirm"
+              ]
+            },
+            {
+              "word": "enough",
+              "zh": "足夠的",
+              "alternatives": [
+                "sufficient"
+              ]
+            },
+            {
+              "word": "space",
+              "zh": "空間",
+              "alternatives": [
+                "storage",
+                "room"
+              ]
+            },
+            {
+              "word": "cloud",
+              "zh": "雲端"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "BASIC",
+              "grammar_id": "gp-should-advice",
+              "label_zh": "應該（should 表建議）",
+              "frame": "S + should + VR …",
+              "zh_trigger": "應該"
+            },
+            {
+              "code": "NCL",
+              "grammar_id": "gp-wh-clause",
+              "label_zh": "間接問句（whether 名詞子句）",
+              "frame": "check + whether + S + V（直述句語序）",
+              "zh_trigger": "是否"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "因此，應該",
+              "accepted": [
+                "Therefore, we should",
+                "Therefore, people should",
+                "So we should",
+                "Therefore, you should",
+                "Thus, we should",
+                "Therefore, everyone should",
+                "As a result, we should",
+                "That is why we should"
+              ],
+              "targets": [
+                "BASIC"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Therefore, should",
+                  "right": "Therefore, we should",
+                  "explanation_zh": "中文省略了主詞，英文一定要補上主詞 we（或 people、you）。"
+                },
+                {
+                  "wrong": "Therefore, we should to",
+                  "right": "Therefore, we should",
+                  "explanation_zh": "should 是助動詞，後面直接接原形動詞，不加 to。"
+                }
+              ]
+            },
+            {
+              "zh": "開啟自動上傳功能",
+              "accepted": [
+                "turn on the automatic upload function",
+                "switch on automatic uploading",
+                "enable the auto-upload feature",
+                "turn on automatic uploading",
+                "turn on the auto-upload function",
+                "turn on the automatic upload feature",
+                "switch on the automatic upload function",
+                "enable automatic uploading",
+                "turn on the auto-upload feature",
+                "activate the automatic upload function"
+              ],
+              "targets": [
+                "turn on",
+                "automatic",
+                "upload"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "open the automatic upload function",
+                  "right": "turn on the automatic upload function",
+                  "explanation_zh": "「開啟」功能或開關用 turn on、switch on 或 enable；open 是打開門、盒子或檔案。"
+                },
+                {
+                  "wrong": "turn on the automatically upload function",
+                  "right": "turn on the automatic upload function",
+                  "explanation_zh": "修飾名詞 function 要用形容詞 automatic；automatically 是副詞，修飾動詞。"
+                }
+              ]
+            },
+            {
+              "zh": "並檢查",
+              "accepted": [
+                "and check",
+                "and also check",
+                "and find out",
+                "and see"
+              ],
+              "targets": [
+                "check"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "and checking",
+                  "right": "and check",
+                  "explanation_zh": "and 連接兩個動作，和前面的 turn on 一樣接在 should 後面，用原形動詞。"
+                }
+              ]
+            },
+            {
+              "zh": "雲端空間是否足夠",
+              "accepted": [
+                "whether there is enough cloud storage",
+                "whether there is enough space in the cloud",
+                "whether we have enough storage space in the cloud",
+                "whether there is enough storage space in the cloud",
+                "if there is enough space in the cloud",
+                "if there is enough cloud storage",
+                "whether we have enough cloud storage",
+                "whether the cloud has enough space",
+                "whether there is enough room in the cloud",
+                "whether our cloud storage is big enough"
+              ],
+              "targets": [
+                "NCL",
+                "enough",
+                "space",
+                "cloud"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "whether is there enough cloud storage",
+                  "right": "whether there is enough cloud storage",
+                  "explanation_zh": "間接問句要用直述句語序：whether + there is …，is 不提到前面。"
+                },
+                {
+                  "wrong": "whether the cloud space is enough or not enough",
+                  "right": "whether there is enough cloud storage",
+                  "explanation_zh": "whether 本身就是「是否」，不必再加 or not enough；「足夠的空間」寫成 enough space 或 enough storage。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "subjectless",
+              "zh": "因此，應該",
+              "literal_error": "Therefore, should turn on the automatic upload function and check whether there is enough cloud storage.",
+              "part": 1,
+              "explanation_zh": "中文的建議句常省略主詞，英文要補上 we 或 people，或改成被動 automatic uploading should be turned on。"
+            },
+            {
+              "type": "word_form",
+              "zh": "自動上傳功能",
+              "literal_error": "Therefore, we should turn on the automatically upload function and check whether there is enough cloud storage.",
+              "part": 2,
+              "explanation_zh": "「自動」修飾名詞 function，要用形容詞 automatic，不是副詞 automatically。"
+            }
+          ],
+          "bonus": [],
+          "restructuring_zh": "「因此，應該…」中文沒有主詞，英文要補上主詞 we（或 people、you），寫成 Therefore, we should …；「雲端空間是否足夠」要改成 whether 引導的名詞子句，並用直述句語序 there is enough …。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-advanced-05",
+    "lot": "translation-advanced-05",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "e5c4baeec359d5ac42e4e899ef49b7db98863cbe7bb8568d933d20cee46dbcaf",
+    "spec_id": "translation-advanced@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T13:12:49Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T12:52:38Z",
+      "details": {
+        "solver": "A",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Photos on cell phones are often regarded as precious memories, but few people back them up regularly.",
+            "confidence": "high",
+            "explanation_zh": "「常被視為」用被動 be regarded as；「很少人」用 few people 表否定語氣；「備份」用片語動詞 back up，受詞是代名詞所以放中間（back them up）。"
+          },
+          "2": {
+            "translation": "Therefore, people should turn on the automatic upload function and check whether there is enough cloud storage space.",
+            "confidence": "medium",
+            "explanation_zh": "中文省略主詞，延續上一句補成 people；「開啟」用 turn on；「是否足夠」用 whether 引導的名詞子句當 check 的受詞。也可以寫成被動 the function should be turned on，但兩個動作共用主詞較順。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "VOC",
+              "PASS"
+            ],
+            "used_target_words": [
+              "photo",
+              "phone",
+              "regard",
+              "precious",
+              "memory",
+              "back sth up",
+              "regularly"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "（不影響判定）第 1 部分 accepted 有 Photos on our cell phones、Photos on phones，但沒有本盲譯的 Photos on cell phones；建議補進去，免得自動比對誤判。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "BASIC",
+              "NCL"
+            ],
+            "used_target_words": [
+              "turn on",
+              "automatic",
+              "upload",
+              "check",
+              "enough",
+              "space",
+              "cloud"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "（不影響判定）第 4 部分可補 whether there is enough cloud storage space（本盲譯寫法，介於 enough cloud storage 與 enough storage space in the cloud 之間）。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "photo",
+              "phone",
+              "regard",
+              "precious",
+              "memory",
+              "back sth up",
+              "regularly"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "VOC": null,
+              "PASS": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "turn on",
+              "automatic",
+              "upload",
+              "check",
+              "enough",
+              "space",
+              "cloud"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "BASIC": null,
+              "NCL": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T12:54:59Z",
+      "details": {
+        "solver": "B",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Photos on our phones are often regarded as precious memories, but few people back them up regularly.",
+            "confidence": "high",
+            "explanation_zh": "「被視為」用 be regarded as 的被動；「很少人」用 few people（否定意味）；「定期備份」是 back up ... regularly，back up 作動詞片語，代名詞 them 放在中間。「常」用頻率副詞 often 放在 be 動詞之後。"
+          },
+          "2": {
+            "translation": "Therefore, you should turn on the automatic upload function and check whether there is enough cloud storage space.",
+            "confidence": "medium",
+            "explanation_zh": "中文沒有主詞，可用泛指的 you 加 should，也可以用被動（the function should be turned on）；我選主動式較自然。「是否足夠」用 check whether there is enough ...。「因此」放句首加逗號。信心 medium 是因為主詞與語態有多種合理寫法。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "VOC",
+              "PASS"
+            ],
+            "used_target_words": [
+              "photo",
+              "phone",
+              "regard",
+              "precious",
+              "memory",
+              "back sth up",
+              "regularly"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "BASIC",
+              "NCL"
+            ],
+            "used_target_words": [
+              "turn on",
+              "automatic",
+              "upload",
+              "check",
+              "enough",
+              "space",
+              "cloud"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "photo",
+              "phone",
+              "regard",
+              "precious",
+              "memory",
+              "back sth up",
+              "regularly"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "VOC": null,
+              "PASS": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "turn on",
+              "automatic",
+              "upload",
+              "check",
+              "enough",
+              "space",
+              "cloud"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "BASIC": null,
+              "NCL": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

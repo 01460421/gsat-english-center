@@ -1,0 +1,785 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.7a8c97",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "top",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "登記成為器官捐贈者，意味著你的器官在你過世後可被用來拯救多達八條生命。",
+        "options": null,
+        "answer": "Registering as an organ donor means that after you die, your organs can be used to save up to eight lives.",
+        "accepted_answers": [
+          "Signing up to become an organ donor means that after your death, your organs can be used to save as many as eight lives.",
+          "Becoming a registered organ donor means your organs may be used to save as many as eight people's lives after you pass away."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "動名詞（或不定詞）片語當主詞（登記成為器官捐贈者＋意味著…）",
+            "被動語態（情態助動詞被動：可被用來）"
+          ],
+          "topic": "器官捐贈"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "對於那些苦等新器官的人來說，捐贈者的大愛帶來重生，這是金錢買不到的。",
+        "options": null,
+        "answer": "For those who are desperately waiting for new organs, a donor's generosity brings them a new life, which money can never buy.",
+        "accepted_answers": [
+          "For those people who are desperately waiting for new organs, a donor's great love brings them a second life, which is something money cannot buy.",
+          "For those who have been waiting anxiously for new organs, a donor's generosity gives them a new lease on life, which no money can buy."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "非限定關係子句（補充說明：…, which money can never buy）",
+            "對於…的人而言（For those (people) who …）"
+          ],
+          "topic": "器官捐贈"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "器官捐贈"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「登記成為器官捐贈者」是動作當主詞，用動名詞 Registering as an organ donor（或 Signing up to become an organ donor），後面接單數動詞 means。「意味著…」接 that 子句；「在你過世後」寫 after you die／after your death。器官是「被」用來救人的，用情態助動詞被動 can be used to save；「多達八條生命」用 up to／as many as eight lives，life 的複數是 lives。",
+          "evidence": [
+            "登記成為器官捐贈者，意味著",
+            "可被用來拯救多達八條生命"
+          ],
+          "strategy_zh": "先寫動名詞主詞 Registering as an organ donor＋means that，that 子句裡以 your organs 當主詞寫被動 can be used to save。",
+          "hints": [
+            "切成四段：登記成為器官捐贈者／意味著你的器官在你過世後／可被用來拯救／多達八條生命",
+            "標的詞彙：register（登記）、organ（器官）、donor（捐贈者）、save（拯救）、life（生命）",
+            "句型框架：V-ing … + means that + S + can be + p.p. + to VR …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「對於那些…的人來說」用 For those who＋V …（寫成 For those people who … 也正確）；「苦等」寫 are desperately waiting for（wait 要接 for）。「大愛」是抽象名詞，寫 generosity／great love。「帶來重生」寫 brings them a new life（或 a second chance at life、a new lease on life）。「這是金錢買不到的」補充說明前面的「重生」，用逗號加 which：which money can never buy，which 是 buy 的受詞，後面不再加 it。",
+          "evidence": [
+            "對於那些苦等新器官的人來說",
+            "這是金錢買不到的"
+          ],
+          "strategy_zh": "句首 For those who … 交代對象，主要子句「捐贈者的大愛帶來重生」，最後用 which 子句補充評論。",
+          "hints": [
+            "切成四段：對於那些苦等新器官的人來說／捐贈者的大愛／帶來重生／這是金錢買不到的",
+            "標的詞彙：wait（等待）、organ（器官）、donor（捐贈者）、generosity（慷慨、大愛）、life（生命）",
+            "句型框架：For those (people) who + V …, S + V + N, which + S + can never + V"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "Registering as an organ donor means that after you die, your organs can be used to save up to eight lives.",
+            "Signing up to become an organ donor means that after your death, your organs can be used to save as many as eight lives.",
+            "Becoming a registered organ donor means your organs may be used to save as many as eight people's lives after you pass away."
+          ],
+          "target_words": [
+            {
+              "word": "register",
+              "zh": "登記",
+              "alternatives": [
+                "sign up",
+                "enroll",
+                "enrol"
+              ]
+            },
+            {
+              "word": "organ",
+              "zh": "器官"
+            },
+            {
+              "word": "donor",
+              "zh": "捐贈者",
+              "alternatives": [
+                "donate",
+                "donation"
+              ]
+            },
+            {
+              "word": "save",
+              "zh": "拯救",
+              "alternatives": [
+                "rescue"
+              ]
+            },
+            {
+              "word": "life",
+              "zh": "生命",
+              "alternatives": [
+                "lives",
+                "people",
+                "patients"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "NFSUBJ",
+              "grammar_id": "gp-gerund-subject",
+              "label_zh": "動名詞（或不定詞）片語當主詞（登記成為器官捐贈者＋意味著…）",
+              "frame": "V-ing … + means (that) …",
+              "zh_trigger": "登記成為器官捐贈者"
+            },
+            {
+              "code": "PASS",
+              "grammar_id": "gp-passive",
+              "label_zh": "被動語態（情態助動詞被動：可被用來）",
+              "frame": "S + can/may + be + p.p. + to VR …",
+              "zh_trigger": "可被用來"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "登記成為器官捐贈者",
+              "accepted": [
+                "Registering as an organ donor",
+                "Signing up to become an organ donor",
+                "Becoming a registered organ donor",
+                "Signing up as an organ donor",
+                "Registering to become an organ donor",
+                "Registering to be an organ donor",
+                "Signing up to be an organ donor",
+                "To register as an organ donor",
+                "Registering to donate your organs",
+                "Becoming an organ donor",
+                "Signing up for organ donation",
+                "Registering for organ donation"
+              ],
+              "targets": [
+                "NFSUBJ",
+                "register",
+                "donor"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Register as an organ donor means",
+                  "right": "Registering as an organ donor means",
+                  "explanation_zh": "動詞原形不能當主詞；「登記成為器官捐贈者」這個動作當主詞，要用動名詞 Registering …（或不定詞 To register …）。"
+                },
+                {
+                  "wrong": "Registering as a organ donor",
+                  "right": "Registering as an organ donor",
+                  "explanation_zh": "organ 以母音開頭，冠詞用 an。"
+                }
+              ]
+            },
+            {
+              "zh": "意味著你的器官在你過世後",
+              "accepted": [
+                "means that after you die, your organs",
+                "means that after your death, your organs",
+                "means your organs",
+                "means that your organs",
+                "means that after you pass away, your organs",
+                "means that when you die, your organs",
+                "means that once you die, your organs"
+              ],
+              "targets": [
+                "organ"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "mean that after you die, your organs",
+                  "right": "means that after you die, your organs",
+                  "explanation_zh": "動名詞主詞視為單數，動詞要加 s：means。"
+                },
+                {
+                  "wrong": "means that after you dead, your organs",
+                  "right": "means that after you die, your organs",
+                  "explanation_zh": "dead 是形容詞；after 後面接子句要用動詞 die（或名詞 after your death）。"
+                }
+              ]
+            },
+            {
+              "zh": "可被用來拯救",
+              "accepted": [
+                "can be used to save",
+                "may be used to save",
+                "could be used to save",
+                "can be used to help save",
+                "might be used to save",
+                "could be used to help save",
+                "can be used to rescue"
+              ],
+              "targets": [
+                "PASS",
+                "save"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "can use to save",
+                  "right": "can be used to save",
+                  "explanation_zh": "器官是「被」用來救人的，要用被動 can be used to VR。"
+                },
+                {
+                  "wrong": "can be used to saving",
+                  "right": "can be used to save",
+                  "explanation_zh": "be used to VR 是「被用來做…」；後面接原形動詞 save。"
+                }
+              ]
+            },
+            {
+              "zh": "多達八條生命",
+              "accepted": [
+                "up to eight lives",
+                "as many as eight lives",
+                "as many as eight people's lives",
+                "the lives of up to eight people",
+                "up to eight people",
+                "as many as eight people",
+                "a maximum of eight lives",
+                "up to eight people's lives"
+              ],
+              "targets": [
+                "life"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "up to eight life",
+                  "right": "up to eight lives",
+                  "explanation_zh": "life 是可數名詞，八條生命要用複數 lives。"
+                },
+                {
+                  "wrong": "as many as eight lifes",
+                  "right": "as many as eight lives",
+                  "explanation_zh": "life 的複數是 lives（f 改 v 加 es）。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "verbal_subject",
+              "zh": "登記成為器官捐贈者",
+              "literal_error": "Register as an organ donor means that your organs can be used to save up to eight lives.",
+              "part": 1,
+              "explanation_zh": "中文動詞片語直接當主詞；英文動詞原形不能當主詞，要改成動名詞 Registering …，動詞用單數 means。"
+            },
+            {
+              "type": "plural_countable",
+              "zh": "八條生命",
+              "literal_error": "your organs can be used to save up to eight life",
+              "part": 4,
+              "explanation_zh": "中文「八條生命」沒有複數標記；英文 life 是可數名詞，八條要用複數 lives。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "Should you register as an organ donor, your organs could one day save as many as eight lives.",
+              "explanation_zh": "用省略 if 的倒裝條件句 Should you …（萬一、如果你…）改寫，語氣正式；倒裝只當加分寫法，不是唯一正解。"
+            }
+          ],
+          "restructuring_zh": "「登記成為器官捐贈者，意味著…」中文以動作當主詞，英文用動名詞主詞 Registering as an organ donor means that …（動名詞主詞視為單數，動詞用 means）；「在你過世後」可放在 that 子句開頭或句尾；「可被用來拯救」用情態助動詞被動 can be used to save。"
+        },
+        "2": {
+          "references": [
+            "For those who are desperately waiting for new organs, a donor's generosity brings them a new life, which money can never buy.",
+            "For those people who are desperately waiting for new organs, a donor's great love brings them a second life, which is something money cannot buy.",
+            "For those who have been waiting anxiously for new organs, a donor's generosity gives them a new lease on life, which no money can buy."
+          ],
+          "target_words": [
+            {
+              "word": "wait",
+              "zh": "等待",
+              "alternatives": [
+                "await"
+              ]
+            },
+            {
+              "word": "organ",
+              "zh": "器官"
+            },
+            {
+              "word": "donor",
+              "zh": "捐贈者",
+              "alternatives": [
+                "donor's",
+                "donors"
+              ]
+            },
+            {
+              "word": "generosity",
+              "zh": "慷慨；大愛",
+              "alternatives": [
+                "love",
+                "kindness",
+                "selflessness",
+                "compassion",
+                "generous",
+                "gift"
+              ]
+            },
+            {
+              "word": "life",
+              "zh": "生命",
+              "alternatives": [
+                "lives",
+                "rebirth",
+                "reborn"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "NRREL",
+              "grammar_id": "gp-nonrestrictive",
+              "label_zh": "非限定關係子句（補充說明：…, which money can never buy）",
+              "frame": "…, which + S + can never + V",
+              "zh_trigger": "這是金錢買不到的"
+            },
+            {
+              "code": "REL",
+              "grammar_id": "gp-for-those-who",
+              "label_zh": "對於…的人而言（For those (people) who …）",
+              "frame": "For those (people) who + V …, S + V …",
+              "zh_trigger": "對於那些苦等新器官的人來說"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "對於那些苦等新器官的人來說",
+              "accepted": [
+                "For those who are desperately waiting for new organs",
+                "For those people who are desperately waiting for new organs",
+                "For those who have been waiting anxiously for new organs",
+                "For those who are waiting for new organs",
+                "For those who have long been waiting for new organs",
+                "For those people who are waiting for new organs",
+                "For people who are desperately waiting for new organs",
+                "For those who have been waiting desperately for new organs",
+                "For those who are anxiously waiting for new organs",
+                "For patients who are desperately waiting for new organs"
+              ],
+              "targets": [
+                "REL",
+                "wait",
+                "organ"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "For those who are desperately waiting new organs",
+                  "right": "For those who are desperately waiting for new organs",
+                  "explanation_zh": "wait 是不及物動詞，「等待某物」要用 wait for。"
+                },
+                {
+                  "wrong": "For those who is desperately waiting for new organs",
+                  "right": "For those who are desperately waiting for new organs",
+                  "explanation_zh": "those（那些人）是複數，關係子句的 be 動詞用 are。"
+                }
+              ]
+            },
+            {
+              "zh": "捐贈者的大愛",
+              "accepted": [
+                "a donor's generosity",
+                "a donor's great love",
+                "the generosity of a donor",
+                "a donor's selfless love",
+                "a donor's great generosity",
+                "a donor's kindness",
+                "the donor's generosity",
+                "a donor's love"
+              ],
+              "targets": [
+                "donor",
+                "generosity"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "a donors' generosity",
+                  "right": "a donor's generosity",
+                  "explanation_zh": "不定冠詞 a 後面接單數，所有格寫 a donor’s（或寫 donors’ generosity，不加 a）。"
+                },
+                {
+                  "wrong": "a donate's generosity",
+                  "right": "a donor's generosity",
+                  "explanation_zh": "「捐贈者」是名詞 donor；donate 是動詞「捐贈」。"
+                }
+              ]
+            },
+            {
+              "zh": "帶來重生",
+              "accepted": [
+                "brings them a new life",
+                "brings them a second life",
+                "gives them a new lease on life",
+                "means a second chance at life",
+                "gives them a new life",
+                "offers them a second chance at life",
+                "brings them a new lease on life",
+                "brings a new lease on life",
+                "gives them a second chance at life",
+                "brings them a second chance at life",
+                "gives them a second life",
+                "brings them a rebirth"
+              ],
+              "targets": [
+                "life"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "brings them reborn",
+                  "right": "brings them a new life",
+                  "explanation_zh": "reborn 是形容詞／過去分詞，不能當 bring 的受詞；用名詞片語 a new life。"
+                },
+                {
+                  "wrong": "brings them a new lives",
+                  "right": "brings them a new life",
+                  "explanation_zh": "a 後面接單數 life。"
+                }
+              ]
+            },
+            {
+              "zh": "這是金錢買不到的",
+              "accepted": [
+                "which money can never buy",
+                "which is something money cannot buy",
+                "which no money can buy",
+                "which money cannot buy",
+                "which is something that money cannot buy",
+                "which no amount of money can buy",
+                "which money can't buy"
+              ],
+              "targets": [
+                "NRREL"
+              ],
+              "common_errors": [
+                {
+                  "wrong": ", this is money can't buy",
+                  "right": ", which money can never buy",
+                  "explanation_zh": "逗號不能連接兩個完整句子，而且 this is 後面還缺名詞；補充說明用 which 子句。"
+                },
+                {
+                  "wrong": ", which money can never buy it",
+                  "right": ", which money can never buy",
+                  "explanation_zh": "which 已經是 buy 的受詞，後面不能再加 it。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "abstract_nominal",
+              "zh": "大愛",
+              "literal_error": "a donor's big love brings them reborn",
+              "part": 2,
+              "explanation_zh": "「大愛」是台灣常用的抽象說法，英文用 generosity／great love；逐字翻成 big love 不自然，「帶來重生」也要用名詞片語 a new life。"
+            },
+            {
+              "type": "collocation",
+              "zh": "苦等新器官",
+              "literal_error": "For those who are bitterly waiting new organs",
+              "part": 1,
+              "explanation_zh": "「苦等」是焦急地等，英文用 desperately／anxiously waiting for；wait 一定要接 for，bitterly 和 wait 也不搭配。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "To those awaiting new organs, a donor's generosity is nothing less than a second life, a gift that no amount of money can buy.",
+              "explanation_zh": "用 nothing less than（簡直就是）加強語氣，句尾用同位語 a gift that … 取代 which 子句，層次更豐富。"
+            }
+          ],
+          "restructuring_zh": "「這是金錢買不到的」的「這」指前面的「重生」，英文用 which 引導非限定子句接在逗號後面：…, which money can never buy；「對於那些苦等…的人來說」用 For those who …，把等待的對象 new organs 接在 wait for 後面。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ac-V-3",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-top-02-regen",
+    "lot": "translation-top-02",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "fea97c14fa3e45cbc507a5a9130c0ea2bc91f32008c7fde55fb98b627572675d",
+    "spec_id": "translation-top@2026-10-09",
+    "regenerated_from": "ai.tr.3c55c3"
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "warn",
+      "created_at": "2026-10-09T14:57:43Z",
+      "details": {
+        "errors": [],
+        "warnings": [
+          "group: 兩句合計 L3 以上詞目數 4，出題規格書建議 5–7"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "warn",
+      "created_at": "2026-10-09T14:30:00Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Registering as an organ donor means that your organs can be used to save up to eight lives after you pass away.",
+            "confidence": "high",
+            "explanation_zh": "「登記成為器官捐贈者」用動名詞片語當主詞 Registering as an organ donor；「意味著」用 means that；「可被用來拯救」用被動 can be used to save；「多達八條生命」用 up to eight lives（也可 as many as）；「過世後」用 after you pass away（die 也可）。"
+          },
+          "2": {
+            "translation": "For those who are anxiously waiting for new organs, a donor's selfless love gives them a second chance at life, which is something money cannot buy.",
+            "confidence": "medium",
+            "explanation_zh": "「那些苦等新器官的人」用 those who are anxiously waiting for；「大愛」譯 selfless love（也可 generosity）；「帶來重生」用 gives them a second chance at life（也可 a new life）；「這是金錢買不到的」用非限定關係子句 , which is something money cannot buy。「大愛」「重生」的英文說法彈性大，信心給 medium。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "NFSUBJ",
+              "PASS"
+            ],
+            "used_target_words": [
+              "register",
+              "organ",
+              "donor",
+              "save",
+              "life"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "第 2 部分的中文含「在你過世後」，但可接受寫法 means your organs／means that your organs 不含 after you die（為了讓 after you pass away 可以放句尾），而句尾的 after you die 又不屬於任何部分，所以整句漏譯「過世後」仍可拿滿 4 分。這個時間條件是句意重點，建議讓 after you die／after your death 獨立計分，或明訂可放句首或句尾但一定要出現。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "NRREL",
+              "REL"
+            ],
+            "used_target_words": [
+              "wait",
+              "organ",
+              "donor",
+              "generosity",
+              "life"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "register",
+              "organ",
+              "donor",
+              "save",
+              "life"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NFSUBJ": true,
+              "PASS": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "wait",
+              "organ",
+              "donor",
+              "generosity",
+              "life"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NRREL": true,
+              "REL": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 1 題驗證者對4 部分切分有意見（warn）：第 2 部分的中文含「在你過世後」，但可接受寫法 means your organs／means that your organs 不含 after you die（為了讓 after you pass away 可以放句尾），而句尾的 a"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "fail",
+      "created_at": "2026-10-09T14:31:33Z",
+      "details": {
+        "solver": "B",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Registering as an organ donor means that your organs can be used to save as many as eight lives after you pass away.",
+            "confidence": "high",
+            "explanation_zh": "動名詞 Registering 當主詞；「意味著」用 means that；「多達八條生命」用 as many as eight lives；「過世」用 pass away 較委婉。"
+          },
+          "2": {
+            "translation": "For people who are desperately waiting for a new organ, the great love of donors gives them a new life, something money cannot buy.",
+            "confidence": "medium",
+            "explanation_zh": "「苦等」用 desperately waiting for；「捐贈者的大愛帶來重生」可用 gives them a new life 或 a second chance at life；「這是金錢買不到的」用同位語 something money cannot buy。「重生」的英文說法有多種，信心略保留。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "NFSUBJ",
+              "PASS"
+            ],
+            "used_target_words": [
+              "register",
+              "organ",
+              "donor",
+              "save",
+              "life"
+            ],
+            "within_accepted": true,
+            "closest_reference": 2,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "REL"
+            ],
+            "used_target_words": [
+              "wait",
+              "organ",
+              "donor",
+              "generosity",
+              "life"
+            ],
+            "within_accepted": false,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "NRREL 沒有被中文引出：「…帶來重生，這是金錢買不到的」我自然譯成同位語「…gives them a new life, something money cannot buy」，沒有用「, which money can never buy」的非限定關係子句；兩種寫法都自然、正確。",
+              "第 4 部分的 accepted 全部以「which …」開頭，不收同位語寫法，我這個正確的譯法因此落在可接受寫法之外。建議在 accepted 補同位語寫法並把 NRREL 視為加分句型，或把中文改成必須用關係子句才通順的寫法。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "register",
+              "organ",
+              "donor",
+              "save",
+              "life"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NFSUBJ": true,
+              "PASS": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "wait",
+              "organ",
+              "donor",
+              "generosity",
+              "life"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "REL": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 2 題盲譯沒有用到標的句型 ['NRREL']：中文題目沒有自然引出這個句型（SPEC §5.7）",
+          "第 2 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義"
+        ]
+      }
+    }
+  ],
+  "status": "rejected",
+  "status_reason": "blind_solver:B 未通過：第 2 題盲譯沒有用到標的句型 ['NRREL']：中文題目沒有自然引出這個句型（SPEC §5.7）；第 2 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義"
+}

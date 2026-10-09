@@ -1,0 +1,763 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.4d3d60",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "top",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "對於熱衷追星的人來說，偶像代言的商品長久以來一直被視為品質的保證。",
+        "options": null,
+        "answer": "For those who are big fans of pop stars, the products their idols endorse have long been seen as a guarantee of quality.",
+        "accepted_answers": [
+          "For those who love following celebrities, products endorsed by their idols have long been regarded as a guarantee of good quality.",
+          "For those who are crazy about stars, the products that their idols promote have always been considered a guarantee of quality."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "For those who …",
+            "完成式被動（have long been p.p.）"
+          ],
+          "topic": "名人代言"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "在人人都能上網推銷商品的時代，青少年更容易衝動購物，這讓許多父母擔憂。",
+        "options": null,
+        "answer": "In an age when anyone can promote products online, teenagers are more likely to buy things on impulse, which worries many parents.",
+        "accepted_answers": [
+          "In an era where everyone can sell products on the Internet, teenagers are more inclined to buy things on impulse, which makes many parents worried.",
+          "In an age in which anyone can advertise products online, teenagers are more likely to shop on impulse, which worries a lot of parents."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "關係副詞 when",
+            "非限定關係子句（, which 指前面整件事）"
+          ],
+          "topic": "名人代言"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "名人代言"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「對於…的人來說」用 For those who + V …；「追星」可寫 be big fans of pop stars／follow celebrities。「偶像代言的商品」是名詞＋修飾語，英文寫 the products (that) their idols endorse 或 products endorsed by their idols。「長久以來一直被視為」用完成式被動 have long been seen/regarded as（主詞 products 是複數，用 have）；「品質的保證」是 a guarantee of quality。",
+          "evidence": [
+            "對於熱衷追星的人來說",
+            "長久以來一直被視為"
+          ],
+          "strategy_zh": "「長久以來一直被…」→ have/has long been + p.p.；先確定主詞單複數再選 have 或 has。",
+          "hints": [
+            "切成四段：對於熱衷追星的人來說／偶像代言的商品／長久以來一直被視為／品質的保證",
+            "標的詞彙：star（明星）、idol（偶像）、endorse（代言）、product（商品）、guarantee（保證）、quality（品質）",
+            "句型框架：For those who + V …, S + have long been seen as + a + N + of + N"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「在…的時代」修飾時間名詞 age／era，子句「人人都能上網推銷商品」結構完整，用關係副詞 when（或 where、in which）：In an age when anyone can promote products online。「更容易」是可能性高，用 be more likely to V；「衝動購物」用 buy things on impulse。「這讓許多父母擔憂」指前面整件事，用非限定關係子句 , which worries many parents（which 後面的動詞用單數）。",
+          "evidence": [
+            "在人人都能上網推銷商品的時代",
+            "這讓許多父母擔憂"
+          ],
+          "strategy_zh": "「在…的時代／那天」→ N(時間) + when + S + V；「更容易…」→ be more likely to V。",
+          "hints": [
+            "切成四段：在人人都能上網推銷商品的時代／青少年更容易／衝動購物／這讓許多父母擔憂",
+            "標的詞彙：age（時代）、promote（推銷）、product（商品）、online（在網路上）、teenager（青少年）、impulse（衝動）、worry（使擔憂）、parent（父母）",
+            "句型框架：In an age when + S + V …, S + be more likely to + V …, which + V + O"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "For those who are big fans of pop stars, the products their idols endorse have long been seen as a guarantee of quality.",
+            "For those who love following celebrities, products endorsed by their idols have long been regarded as a guarantee of good quality.",
+            "For those who are crazy about stars, the products that their idols promote have always been considered a guarantee of quality."
+          ],
+          "target_words": [
+            {
+              "word": "star",
+              "zh": "明星",
+              "alternatives": [
+                "celebrity"
+              ]
+            },
+            {
+              "word": "idol",
+              "zh": "偶像"
+            },
+            {
+              "word": "endorse",
+              "zh": "代言",
+              "alternatives": [
+                "promote",
+                "advertise"
+              ]
+            },
+            {
+              "word": "product",
+              "zh": "商品"
+            },
+            {
+              "word": "guarantee",
+              "zh": "保證"
+            },
+            {
+              "word": "quality",
+              "zh": "品質"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "REL",
+              "grammar_id": "gp-for-those-who",
+              "label_zh": "對於…的人而言（For those who）",
+              "frame": "For those who + V …, S + V …",
+              "zh_trigger": "對於熱衷追星的人來說"
+            },
+            {
+              "code": "PASS",
+              "grammar_id": "gp-perfect-passive",
+              "label_zh": "完成式被動（長久以來一直被…）",
+              "frame": "S + have (long) been + p.p. + as …",
+              "zh_trigger": "長久以來一直被視為"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "對於熱衷追星的人來說",
+              "accepted": [
+                "For those who are big fans of pop stars",
+                "For those who love following celebrities",
+                "For those who are crazy about stars",
+                "For those who are big fans of celebrities"
+              ],
+              "targets": [
+                "REL",
+                "star"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "For those who chase stars",
+                  "right": "For those who are big fans of pop stars",
+                  "explanation_zh": "「追星」是熱衷支持明星，不是字面上「追逐星星」；用 be big fans of pop stars／follow celebrities。"
+                },
+                {
+                  "wrong": "For those who is a big fan of pop stars",
+                  "right": "For those who are big fans of pop stars",
+                  "explanation_zh": "those 是複數，who 子句的動詞用 are，名詞也用複數 fans。"
+                }
+              ]
+            },
+            {
+              "zh": "偶像代言的商品",
+              "accepted": [
+                "the products their idols endorse",
+                "products endorsed by their idols",
+                "the products that their idols promote",
+                "the products endorsed by their idols"
+              ],
+              "targets": [
+                "idol",
+                "endorse",
+                "product"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "their idols endorse products",
+                  "right": "the products their idols endorse",
+                  "explanation_zh": "這裡的主詞是「商品」，要寫 the products (that) their idols endorse；寫成 their idols endorse products 會多出一組主詞＋動詞。"
+                },
+                {
+                  "wrong": "products endorsing by their idols",
+                  "right": "products endorsed by their idols",
+                  "explanation_zh": "商品是「被」代言，用過去分詞 endorsed。"
+                }
+              ]
+            },
+            {
+              "zh": "長久以來一直被視為",
+              "accepted": [
+                "have long been seen as",
+                "have long been regarded as",
+                "have always been considered"
+              ],
+              "targets": [
+                "PASS"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "have long seen as",
+                  "right": "have long been seen as",
+                  "explanation_zh": "「被視為」是被動，完成式被動要有 been：have been seen as。"
+                },
+                {
+                  "wrong": "has long been seen as",
+                  "right": "have long been seen as",
+                  "explanation_zh": "主詞 products 是複數，助動詞用 have。"
+                }
+              ]
+            },
+            {
+              "zh": "品質的保證",
+              "accepted": [
+                "a guarantee of quality",
+                "a guarantee of good quality"
+              ],
+              "targets": [
+                "guarantee",
+                "quality"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "the quality's guarantee",
+                  "right": "a guarantee of quality",
+                  "explanation_zh": "「品質的保證」用 a guarantee of quality；用所有格 the quality's 意思變成「品質所擁有的保證」。"
+                },
+                {
+                  "wrong": "guarantee quality",
+                  "right": "a guarantee of quality",
+                  "explanation_zh": "as 後面接名詞片語；「保證」在這裡是名詞，要加冠詞 a，再用 of 連接 quality。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "collocation",
+              "zh": "追星",
+              "literal_error": "For those who chase stars, the products their idols endorse …",
+              "part": 1,
+              "explanation_zh": "「追星」是熱衷支持明星，用 be big fans of pop stars／follow celebrities；chase stars 是字面直譯。"
+            },
+            {
+              "type": "tense_trigger",
+              "zh": "長久以來一直被視為",
+              "literal_error": "… the products their idols endorse have long seen as a guarantee of quality.",
+              "part": 3,
+              "explanation_zh": "「長久以來一直被」同時要表現完成式與被動：have long been seen as，been 不能漏。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "For devoted fans, a product endorsed by their idol has long been taken as proof of its quality.",
+              "grammar_id": "gp-perfect-passive",
+              "explanation_zh": "devoted fans（死忠粉絲）、be taken as proof of（被當成…的證明）比 be seen as a guarantee 更道地。"
+            }
+          ],
+          "restructuring_zh": "主詞「偶像代言的商品」要改成名詞在前：the products (that) their idols endorse；「長久以來一直被視為」不必逐字譯「一直」，用 have long been seen as 一次表達。"
+        },
+        "2": {
+          "references": [
+            "In an age when anyone can promote products online, teenagers are more likely to buy things on impulse, which worries many parents.",
+            "In an era where everyone can sell products on the Internet, teenagers are more inclined to buy things on impulse, which makes many parents worried.",
+            "In an age in which anyone can advertise products online, teenagers are more likely to shop on impulse, which worries a lot of parents."
+          ],
+          "target_words": [
+            {
+              "word": "age",
+              "zh": "時代",
+              "alternatives": [
+                "era"
+              ]
+            },
+            {
+              "word": "promote",
+              "zh": "推銷",
+              "alternatives": [
+                "sell",
+                "market",
+                "advertise"
+              ]
+            },
+            {
+              "word": "product",
+              "zh": "商品"
+            },
+            {
+              "word": "online",
+              "zh": "在網路上",
+              "alternatives": [
+                "Internet"
+              ]
+            },
+            {
+              "word": "teenager",
+              "zh": "青少年",
+              "alternatives": [
+                "teen"
+              ]
+            },
+            {
+              "word": "impulse",
+              "zh": "衝動"
+            },
+            {
+              "word": "worry",
+              "zh": "使擔憂",
+              "alternatives": [
+                "concern"
+              ]
+            },
+            {
+              "word": "parent",
+              "zh": "父母"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "REL",
+              "grammar_id": "gp-relative-adverb",
+              "label_zh": "關係副詞 when（在…的時代）",
+              "frame": "In an age when + S + V …, S + V …",
+              "zh_trigger": "在人人都能上網推銷商品的時代"
+            },
+            {
+              "code": "NRREL",
+              "grammar_id": "gp-nonrestrictive",
+              "label_zh": "非限定關係子句（which 指前面整件事）",
+              "frame": "S + V …, which + V + O",
+              "zh_trigger": "這讓許多父母擔憂"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "在人人都能上網推銷商品的時代",
+              "accepted": [
+                "In an age when anyone can promote products online",
+                "In an era where everyone can sell products on the Internet",
+                "In an age in which anyone can advertise products online",
+                "In an age when everyone can promote products online"
+              ],
+              "targets": [
+                "REL",
+                "age",
+                "promote",
+                "product",
+                "online"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "In an age which anyone can promote products online",
+                  "right": "In an age when anyone can promote products online",
+                  "explanation_zh": "子句「人人都能上網推銷商品」結構完整，缺的是時間，用關係副詞 when（＝in which），不能只用 which。"
+                },
+                {
+                  "wrong": "In the age of everyone can promote products online",
+                  "right": "In an age when everyone can promote products online",
+                  "explanation_zh": "介系詞 of 後面不能接完整子句；要用 when 引導形容詞子句修飾 age。"
+                }
+              ]
+            },
+            {
+              "zh": "青少年更容易",
+              "accepted": [
+                "teenagers are more likely to",
+                "teenagers are more inclined to",
+                "teens are more likely to"
+              ],
+              "targets": [
+                "teenager"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "teenagers are easier to",
+                  "right": "teenagers are more likely to",
+                  "explanation_zh": "「更容易（做某事）」指可能性，用 be more likely to V；teenagers are easier to … 的意思變成「青少年比較容易被…」。"
+                },
+                {
+                  "wrong": "teenager are more likely to",
+                  "right": "teenagers are more likely to",
+                  "explanation_zh": "泛指青少年用複數 teenagers。"
+                }
+              ]
+            },
+            {
+              "zh": "衝動購物",
+              "accepted": [
+                "buy things on impulse",
+                "shop on impulse",
+                "make impulse purchases",
+                "buy things impulsively"
+              ],
+              "targets": [
+                "impulse"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "impulsive buy",
+                  "right": "buy things on impulse",
+                  "explanation_zh": "be more likely to 後面要接動詞片語：buy things on impulse／shop on impulse；impulsive buy 詞性不對。"
+                },
+                {
+                  "wrong": "buy things by impulse",
+                  "right": "buy things on impulse",
+                  "explanation_zh": "「一時衝動」的固定搭配是 on impulse。"
+                }
+              ]
+            },
+            {
+              "zh": "這讓許多父母擔憂",
+              "accepted": [
+                "which worries many parents",
+                "which makes many parents worried",
+                "which worries a lot of parents",
+                "which concerns many parents"
+              ],
+              "targets": [
+                "NRREL",
+                "worry",
+                "parent"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "this makes many parents worry about",
+                  "right": "which makes many parents worried",
+                  "explanation_zh": "逗號後要用 which 指前面整件事；worry about 後面還缺受詞。"
+                },
+                {
+                  "wrong": "which make many parents worried",
+                  "right": "which makes many parents worried",
+                  "explanation_zh": "which 指前面整件事（單數），動詞用 makes。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "collocation",
+              "zh": "衝動購物",
+              "literal_error": "… teenagers are more likely to impulse shopping, …",
+              "part": 3,
+              "explanation_zh": "「衝動購物」在 be more likely to 後面要用動詞片語 buy things on impulse；impulse shopping 是名詞，不能接在 to 後面。"
+            },
+            {
+              "type": "prenominal_modifier",
+              "zh": "在人人都能上網推銷商品的時代",
+              "literal_error": "In everyone can promote products online age, teenagers …",
+              "part": 1,
+              "explanation_zh": "修飾「時代」的是一整個子句，英文先寫 In an age，再用 when 引導子句放在後面。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "In an age when anyone can peddle products online, teenagers are increasingly prone to impulse buying, a trend that has left many parents uneasy.",
+              "grammar_id": "gp-relative-adverb",
+              "explanation_zh": "用同位語 a trend that … 取代 which，peddle（兜售）、be prone to（容易…）、uneasy（不安的）讓句子更精準。"
+            }
+          ],
+          "restructuring_zh": "「在…的時代」要先寫 In an age，再用 when 子句修飾；句尾「這讓…擔憂」用 , which worries … 接在後面，不另起一句。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ac-V-3",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-top-04",
+    "lot": "translation-top-04",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "6a9df5361ca910602b338b273c04042b40d0d8c92f6dc2609abebceddbfdb2f7",
+    "spec_id": "translation-top@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "warn",
+      "created_at": "2026-10-09T13:27:25Z",
+      "details": {
+        "errors": [],
+        "warnings": [
+          "annotations.rubric.items.1.patterns[1]: gp-perfect-passive 通常對應句構 PERF（目前 code=PASS）"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T13:05:21Z",
+      "details": {
+        "solver": "A",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "For those who are enthusiastic about following celebrities, products endorsed by their idols have long been regarded as a guarantee of quality.",
+            "confidence": "high",
+            "explanation_zh": "「熱衷追星的人」用 those who are enthusiastic about following celebrities；「偶像代言的商品」用過去分詞 endorsed by 後位修飾；「長久以來一直被視為」用現在完成式被動 have long been regarded as。"
+          },
+          "2": {
+            "translation": "In an age when anyone can promote products online, teenagers are more likely to make impulse purchases, which worries many parents.",
+            "confidence": "high",
+            "explanation_zh": "「在……的時代」用 an age when 關係副詞子句；「更容易」譯 are more likely to；「衝動購物」譯 make impulse purchases；「這讓許多父母擔憂」指前面整件事，用非限定關係子句 which worries many parents。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "REL",
+              "PASS"
+            ],
+            "used_target_words": [
+              "star",
+              "idol",
+              "endorse",
+              "product",
+              "guarantee",
+              "quality"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "建議（不影響判定）：第 1 部分可補「For those who are enthusiastic about following celebrities／stars」；參考譯文 0 的 pop stars 比「追星」窄一點，但可接受。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "REL",
+              "NRREL"
+            ],
+            "used_target_words": [
+              "age",
+              "promote",
+              "product",
+              "online",
+              "teenager",
+              "impulse",
+              "worry",
+              "parent"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "star",
+              "idol",
+              "endorse",
+              "product",
+              "guarantee",
+              "quality"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "REL": true,
+              "PASS": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "age",
+              "promote",
+              "product",
+              "online",
+              "teenager",
+              "impulse",
+              "worry",
+              "parent"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "REL": true,
+              "NRREL": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T13:09:20Z",
+      "details": {
+        "solver": "B",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "For those who are passionate about following celebrities, products endorsed by idols have long been regarded as a guarantee of quality.",
+            "confidence": "high",
+            "explanation_zh": "「熱衷追星的人」譯成 those who are passionate about following celebrities；「偶像代言的商品」用過去分詞後置修飾 products endorsed by idols；「長久以來一直被視為」用現在完成式被動 have long been regarded as；「品質的保證」是 a guarantee of quality。"
+          },
+          "2": {
+            "translation": "In an era when everyone can promote products online, teenagers are more likely to buy things on impulse, which worries many parents.",
+            "confidence": "high",
+            "explanation_zh": "「在……的時代」用 in an era when …；「推銷商品」用 promote products；「更容易」用 be more likely to；「衝動購物」用 buy on impulse；「這讓許多父母擔憂」用 which 非限定關係子句。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "REL",
+              "PASS"
+            ],
+            "used_target_words": [
+              "star",
+              "idol",
+              "endorse",
+              "product",
+              "guarantee",
+              "quality"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "輕微：「熱衷追星」我譯成 are passionate about following celebrities，句型與語意都對，但第 1 部分 accepted 只列 big fans of／love following／crazy about，沒有 passionate about 這種最貼近字面的寫法；products endorsed by idols 也少了 their。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "REL",
+              "NRREL"
+            ],
+            "used_target_words": [
+              "age",
+              "promote",
+              "product",
+              "online",
+              "teenager",
+              "impulse",
+              "worry",
+              "parent"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "star",
+              "idol",
+              "endorse",
+              "product",
+              "guarantee",
+              "quality"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "REL": true,
+              "PASS": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "age",
+              "promote",
+              "product",
+              "online",
+              "teenager",
+              "impulse",
+              "worry",
+              "parent"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "REL": true,
+              "NRREL": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

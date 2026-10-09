@@ -1,0 +1,736 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.08626b",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "advanced",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "近年來，許多老屋被改造成書店和小型工作室，而不是被拆除。",
+        "options": null,
+        "answer": "In recent years, many old houses have been turned into bookstores and small studios instead of being torn down.",
+        "accepted_answers": [
+          "In recent years, instead of being torn down, many old houses have been turned into bookstores and small studios.",
+          "Rather than being torn down, many old houses have been made into bookstores and small studios in recent years."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "完成式被動",
+            "介系詞＋動名詞（instead of being p.p.）"
+          ],
+          "topic": "老屋改造"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "除了賣書和咖啡，這些書店也常被用來舉辦小型展覽和音樂會。",
+        "options": null,
+        "answer": "Besides selling books and coffee, these bookstores are also often used to hold small exhibitions and concerts.",
+        "accepted_answers": [
+          "In addition to selling books and coffee, these bookstores are often used to hold small exhibitions and concerts as well.",
+          "Apart from selling books and coffee, these bookstores are also often used to host small exhibitions and concerts."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "介系詞＋動名詞（除了…）",
+            "被動語態（be used to VR）"
+          ],
+          "topic": "老屋改造"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "老屋改造"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「近年來」是現在完成式的訊號；老屋是「被」改造，用完成式被動 have been turned into（也可用 made into、transformed into）。「而不是被拆除」可以濃縮成介系詞片語 instead of being torn down 或 rather than being torn down：介系詞後面接動名詞，而且房子是被拆，所以用被動的 being + 過去分詞（tear-tore-torn）；這個片語也可以移到句首。「書店和小型工作室」都是可數名詞，用複數 bookstores and small studios。",
+          "evidence": [
+            "近年來",
+            "被改造成書店和小型工作室，而不是被拆除"
+          ],
+          "strategy_zh": "「A，而不是 B」可以先想 A instead of／rather than + V-ing；主詞是「被」處置的東西時，介系詞後面用 being + p.p.。",
+          "hints": [
+            "切成四段：近年來／許多老屋／被改造成書店和小型工作室／而不是被拆除",
+            "標的詞彙：recent（最近的）、house（房屋）、turn into（使變成）、bookstore（書店）、studio（工作室）、tear down（拆除）",
+            "句型框架：In recent years, S + have been + p.p. … instead of being + p.p."
+          ]
+        },
+        "2": {
+          "explanation_zh": "「除了…（也）…」是「另外加上」，用 besides／in addition to／apart from，這些都是介系詞，後面的動詞用動名詞 selling。書店是「被」拿來使用，用被動語態 are used to + 原形動詞（被用來做…），注意不要和「習慣於」的 be used to + V-ing 混淆。「也常」放在 be 動詞後面：are also often used。展覽、音樂會泛指時用複數 exhibitions and concerts。",
+          "evidence": [
+            "除了賣書和咖啡",
+            "也常被用來舉辦"
+          ],
+          "strategy_zh": "介系詞（besides、in addition to、apart from、instead of、by、without）後面的動詞一律用 V-ing；主詞是被使用的東西時想被動 be + p.p.。",
+          "hints": [
+            "切成四段：除了賣書和咖啡／這些書店／也常被用來／舉辦小型展覽和音樂會",
+            "標的詞彙：besides（除了…之外還）、sell（賣）、bookstore（書店）、hold（舉辦）、exhibition（展覽）、concert（音樂會）",
+            "句型框架：Besides + V-ing …, S + be + also often + used to VR …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "In recent years, many old houses have been turned into bookstores and small studios instead of being torn down.",
+            "In recent years, instead of being torn down, many old houses have been turned into bookstores and small studios.",
+            "Rather than being torn down, many old houses have been made into bookstores and small studios in recent years."
+          ],
+          "target_words": [
+            {
+              "word": "recent",
+              "zh": "最近的"
+            },
+            {
+              "word": "house",
+              "zh": "房屋",
+              "alternatives": [
+                "building",
+                "home"
+              ]
+            },
+            {
+              "word": "turn into",
+              "zh": "使變成（改造成）",
+              "alternatives": [
+                "make into",
+                "transform",
+                "change into",
+                "convert"
+              ]
+            },
+            {
+              "word": "bookstore",
+              "zh": "書店",
+              "alternatives": [
+                "bookshop",
+                "shop"
+              ]
+            },
+            {
+              "word": "studio",
+              "zh": "工作室"
+            },
+            {
+              "word": "tear down",
+              "zh": "拆除",
+              "alternatives": [
+                "pull down",
+                "knock down",
+                "destroy"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PASS",
+              "grammar_id": "gp-perfect-passive",
+              "label_zh": "完成式被動（近年來已被改造成…）",
+              "frame": "S + have/has + been + p.p. …",
+              "zh_trigger": "被改造成"
+            },
+            {
+              "code": "PREPVING",
+              "grammar_id": "gp-prep-gerund",
+              "label_zh": "介系詞＋動名詞（instead of／rather than + being p.p.）",
+              "frame": "S + V …, instead of / rather than + being + p.p.",
+              "zh_trigger": "而不是被拆除"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "近年來",
+              "accepted": [
+                "In recent years",
+                "Recently",
+                "Over the past few years",
+                "In the past few years"
+              ],
+              "targets": [
+                "recent"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "In recent year",
+                  "right": "In recent years",
+                  "explanation_zh": "「近年來」是 in recent years，years 要用複數。"
+                }
+              ]
+            },
+            {
+              "zh": "許多老屋",
+              "accepted": [
+                "many old houses",
+                "a lot of old houses",
+                "lots of old houses",
+                "many old buildings",
+                "many old homes"
+              ],
+              "targets": [
+                "house"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "many old house",
+                  "right": "many old houses",
+                  "explanation_zh": "many 後面接複數名詞。"
+                }
+              ]
+            },
+            {
+              "zh": "被改造成書店和小型工作室",
+              "accepted": [
+                "have been turned into bookstores and small studios",
+                "have been made into bookstores and small studios",
+                "have been transformed into bookstores and small studios",
+                "have been changed into bookstores and small studios",
+                "have been turned into bookshops and small studios",
+                "have been converted into bookstores and small studios"
+              ],
+              "targets": [
+                "PASS",
+                "turn into",
+                "bookstore",
+                "studio"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "have turned into bookstores and small studios",
+                  "right": "have been turned into bookstores and small studios",
+                  "explanation_zh": "中文是「被」改造，要用完成式被動 have been + p.p.；have turned into 是「自己變成」，少了「被改造」的意思。"
+                },
+                {
+                  "wrong": "were turned into bookstores and small studios",
+                  "right": "have been turned into bookstores and small studios",
+                  "explanation_zh": "有「近年來」表示從過去到現在的改變，用現在完成式 have been turned。"
+                }
+              ]
+            },
+            {
+              "zh": "而不是被拆除",
+              "accepted": [
+                "instead of being torn down",
+                "rather than being torn down",
+                "instead of being pulled down",
+                "instead of being knocked down",
+                "rather than being pulled down",
+                "instead of being destroyed"
+              ],
+              "targets": [
+                "PREPVING",
+                "tear down"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "instead of tearing down",
+                  "right": "instead of being torn down",
+                  "explanation_zh": "房子是「被」拆除，介系詞後面要用被動的動名詞 being + 過去分詞。"
+                },
+                {
+                  "wrong": "instead of be torn down",
+                  "right": "instead of being torn down",
+                  "explanation_zh": "instead of 是介系詞片語，後面接動名詞 being。"
+                },
+                {
+                  "wrong": "instead of being teared down",
+                  "right": "instead of being torn down",
+                  "explanation_zh": "tear 的過去分詞是 torn。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "tense_trigger",
+              "zh": "近年來",
+              "literal_error": "In recent years, many old houses were turned into bookstores and small studios instead of being torn down.",
+              "part": 3,
+              "explanation_zh": "「近年來」是從過去持續到現在的改變，要用現在完成式被動 have been turned；寫成過去式 were turned 會扣分。"
+            },
+            {
+              "type": "word_form",
+              "zh": "而不是被拆除",
+              "literal_error": "In recent years, many old houses have been turned into bookstores and small studios, not be torn down.",
+              "part": 4,
+              "explanation_zh": "「而不是被拆除」照字面寫成 not be torn down 會讓句子多出一個動詞；改成介系詞片語 instead of／rather than + being torn down（介系詞後面用被動的動名詞）。"
+            }
+          ],
+          "bonus": [],
+          "restructuring_zh": "「…，而不是被拆除」不必譯成另一個子句，改成介系詞片語 instead of／rather than + being torn down（介系詞＋被動動名詞）；主要子句用完成式被動 have been turned into。"
+        },
+        "2": {
+          "references": [
+            "Besides selling books and coffee, these bookstores are also often used to hold small exhibitions and concerts.",
+            "In addition to selling books and coffee, these bookstores are often used to hold small exhibitions and concerts as well.",
+            "Apart from selling books and coffee, these bookstores are also often used to host small exhibitions and concerts."
+          ],
+          "target_words": [
+            {
+              "word": "besides",
+              "zh": "除了…之外（還）",
+              "alternatives": [
+                "in addition to",
+                "apart from",
+                "aside from"
+              ]
+            },
+            {
+              "word": "sell",
+              "zh": "賣"
+            },
+            {
+              "word": "bookstore",
+              "zh": "書店",
+              "alternatives": [
+                "bookshop",
+                "shop"
+              ]
+            },
+            {
+              "word": "hold",
+              "zh": "舉辦",
+              "alternatives": [
+                "host",
+                "have"
+              ]
+            },
+            {
+              "word": "exhibition",
+              "zh": "展覽",
+              "alternatives": [
+                "show"
+              ]
+            },
+            {
+              "word": "concert",
+              "zh": "音樂會"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PREPVING",
+              "grammar_id": "gp-prep-gerund",
+              "label_zh": "介系詞＋動名詞（除了…）",
+              "frame": "Besides / In addition to / Apart from + V-ing …, S + V",
+              "zh_trigger": "除了"
+            },
+            {
+              "code": "PASS",
+              "grammar_id": "gp-passive",
+              "label_zh": "被動語態（被用來…：be used to VR）",
+              "frame": "S + be + p.p. (+ to VR)",
+              "zh_trigger": "被用來"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "除了賣書和咖啡",
+              "accepted": [
+                "Besides selling books and coffee",
+                "In addition to selling books and coffee",
+                "Apart from selling books and coffee",
+                "Aside from selling books and coffee",
+                "Besides selling coffee and books"
+              ],
+              "targets": [
+                "PREPVING",
+                "besides",
+                "sell"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Besides sell books and coffee",
+                  "right": "Besides selling books and coffee",
+                  "explanation_zh": "besides 是介系詞，後面的動詞用動名詞 selling。"
+                },
+                {
+                  "wrong": "Except selling books and coffee",
+                  "right": "Besides selling books and coffee",
+                  "explanation_zh": "except 是「除…之外（都不）」，表示排除；「除了…還…」是加上，用 besides／in addition to。"
+                }
+              ]
+            },
+            {
+              "zh": "這些書店",
+              "accepted": [
+                "these bookstores",
+                "these bookshops",
+                "these shops",
+                "the bookstores"
+              ],
+              "targets": [
+                "bookstore"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "these bookstore",
+                  "right": "these bookstores",
+                  "explanation_zh": "these 後面接複數名詞。"
+                }
+              ]
+            },
+            {
+              "zh": "也常被用來",
+              "accepted": [
+                "are also often used to",
+                "are often used to",
+                "are also often used for",
+                "are also used to",
+                "are also frequently used to",
+                "are often used as places to"
+              ],
+              "targets": [
+                "PASS"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "are also often use to",
+                  "right": "are also often used to",
+                  "explanation_zh": "被動語態是 be + 過去分詞 used。"
+                },
+                {
+                  "wrong": "are also often used to holding",
+                  "right": "are also often used to hold",
+                  "explanation_zh": "「被用來做…」是 be used to + 原形動詞；be used to + V-ing 是「習慣於…」。"
+                }
+              ]
+            },
+            {
+              "zh": "舉辦小型展覽和音樂會",
+              "accepted": [
+                "hold small exhibitions and concerts",
+                "host small exhibitions and concerts",
+                "hold small exhibitions and music shows",
+                "hold small art shows and concerts",
+                "have small exhibitions and concerts"
+              ],
+              "targets": [
+                "hold",
+                "exhibition",
+                "concert"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "hold small exhibition and concert",
+                  "right": "hold small exhibitions and concerts",
+                  "explanation_zh": "展覽、音樂會是可數名詞，泛指時用複數。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "word_form",
+              "zh": "除了賣書和咖啡",
+              "literal_error": "Besides sell books and coffee, these bookstores are also often used to hold small exhibitions and concerts.",
+              "part": 1,
+              "explanation_zh": "besides 是介系詞，後面的動詞要用動名詞 selling。"
+            },
+            {
+              "type": "collocation",
+              "zh": "也常被用來",
+              "literal_error": "Besides selling books and coffee, these bookstores are also often used to holding small exhibitions and concerts.",
+              "part": 3,
+              "explanation_zh": "「被用來做…」是 be used to + 原形動詞，和「習慣於」的 be used to + V-ing 不同。"
+            }
+          ],
+          "bonus": []
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-advanced-04",
+    "lot": "translation-advanced-04",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "4c825c0a94fac9dc54e263ee5e16ad1f93b574fa99d23ce45a0c738ed355d865",
+    "spec_id": "translation-advanced@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "warn",
+      "created_at": "2026-10-09T13:07:03Z",
+      "details": {
+        "errors": [],
+        "warnings": [
+          "annotations.rubric.items.1.patterns[0]: gp-perfect-passive 通常對應句構 PERF（目前 code=PASS）"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "warn",
+      "created_at": "2026-10-09T13:07:03Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "In recent years, many old houses have been converted into bookstores and small studios instead of being torn down.",
+            "confidence": "high",
+            "explanation_zh": "「近年來」配現在完成式；「被改造成」用被動 have been converted into；「而不是被拆除」用 instead of 加被動動名詞 being torn down。"
+          },
+          "2": {
+            "translation": "Besides selling books and coffee, these bookstores are also often used to hold small exhibitions and concerts.",
+            "confidence": "high",
+            "explanation_zh": "「除了…也…」用 Besides + V-ing；「常被用來舉辦」用被動 be used to V（不是 be used to V-ing 的習慣用法）；主詞是書店，與 selling 的邏輯主詞一致。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PASS",
+              "PREPVING"
+            ],
+            "used_target_words": [
+              "recent",
+              "house",
+              "turn into",
+              "bookstore",
+              "studio",
+              "tear down"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PREPVING",
+              "PASS"
+            ],
+            "used_target_words": [
+              "besides",
+              "sell",
+              "bookstore",
+              "hold",
+              "exhibition",
+              "concert"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "第 3 部分（也常被用來）accepted 收了 are also often used for，但第 4 部分（舉辦…）只收原形動詞 hold/host/have，兩者組合會變成不合文法的 used for hold；建議把這一條改成 are also often used for holding（或刪掉），避免評分時把 used for hold 當成可接受。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "recent",
+              "house",
+              "turn into",
+              "bookstore",
+              "studio",
+              "tear down"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PASS": true,
+              "PREPVING": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "besides",
+              "sell",
+              "bookstore",
+              "hold",
+              "exhibition",
+              "concert"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PREPVING": true,
+              "PASS": true
+            },
+            "program_match": true
+          }
+        },
+        "problems": [
+          "第 2 題驗證者對4 部分切分有意見（warn）：第 3 部分（也常被用來）accepted 收了 are also often used for，但第 4 部分（舉辦…）只收原形動詞 hold/host/have，兩者組合會變成不合文法的 used for hold；建議把這一條改成 a"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T12:50:33Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "In recent years, many old houses have been turned into bookstores and small studios instead of being torn down.",
+            "confidence": "high",
+            "explanation_zh": "「近年來」搭配現在完成式；「被改造成」用被動 have been turned into；「而不是被拆除」用 instead of being torn down。"
+          },
+          "2": {
+            "translation": "In addition to selling books and coffee, these bookstores are often used to hold small exhibitions and concerts.",
+            "confidence": "high",
+            "explanation_zh": "「除了……」用 in addition to + V-ing；「被用來」用被動 are used to hold；頻率副詞 often 放在 be 動詞之後。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PASS",
+              "PREPVING"
+            ],
+            "used_target_words": [
+              "recent",
+              "house",
+              "turn into",
+              "bookstore",
+              "studio",
+              "tear down"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PREPVING",
+              "PASS"
+            ],
+            "used_target_words": [
+              "besides",
+              "sell",
+              "bookstore",
+              "hold",
+              "exhibition",
+              "concert"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "recent",
+              "house",
+              "turn into",
+              "bookstore",
+              "studio",
+              "tear down"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PASS": true,
+              "PREPVING": true
+            },
+            "program_match": true
+          },
+          "2": {
+            "target_words_found": [
+              "besides",
+              "sell",
+              "bookstore",
+              "hold",
+              "exhibition",
+              "concert"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PREPVING": true,
+              "PASS": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

@@ -1,0 +1,741 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.8b6dcb",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "top",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "相較於新建築，古蹟的維護費用比較高，因此許多人質疑它們是否應該被保存。",
+        "options": null,
+        "answer": "Compared with new buildings, historic sites are more expensive to maintain, so many people question whether they should be preserved.",
+        "accepted_answers": [
+          "Compared to new buildings, historic sites cost more to maintain, and therefore many people question whether they should be preserved.",
+          "In comparison with new buildings, historic sites have higher maintenance costs, so many people wonder whether or not they should be kept."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "間接問句（是否應該被保存：whether …）",
+            "相較於…（Compared with ＋比較級）"
+          ],
+          "topic": "文化資產保存"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "面對建商的壓力，市政府現在拆除老建築的速度是十年前的兩倍。",
+        "options": null,
+        "answer": "Facing pressure from construction companies, the city authorities now tear down old buildings twice as fast as they did ten years ago.",
+        "accepted_answers": [
+          "Faced with pressure from construction companies, the city government is now tearing down old buildings two times faster than a decade ago.",
+          "Facing pressure from construction companies, the city government is now knocking down old buildings twice as quickly as it did ten years ago."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "倍數比較（速度是十年前的兩倍）",
+            "分詞構句（面對…：Facing / Faced with …）"
+          ],
+          "topic": "文化資產保存"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "文化資產保存"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「相較於…」用過去分詞片語 Compared with／to＋名詞，後面主要子句要有比較級（more expensive）。「古蹟的維護費用比較高」可改寫成 historic sites are more expensive to maintain／cost more to maintain，比逐字寫 maintenance fee 自然。「是否應該被保存」是間接問句，用 whether＋直述句語序；古蹟是被保存的，用被動 should be preserved。",
+          "evidence": [
+            "相較於新建築",
+            "它們是否應該被保存"
+          ],
+          "strategy_zh": "句首用 Compared with … 交代比較對象，主要子句用比較級；後半用 so 接結果，受詞是 whether 子句。",
+          "hints": [
+            "切成四段：相較於新建築／古蹟的維護費用比較高／因此許多人質疑／它們是否應該被保存",
+            "標的詞彙：compare（比較）、historic（歷史性的）、maintain（維護）、question（質疑）、preserve（保存）",
+            "句型框架：Compared with + N, S + be + more + adj. + to VR, so S + question + whether + S + should be + p.p."
+          ]
+        },
+        "2": {
+          "explanation_zh": "「面對…」放在句首當背景，用分詞構句 Facing pressure from …／Faced with pressure from …，邏輯主詞就是後面的市政府。「速度是十年前的兩倍」不要寫 the speed is two times of …，改成 tear down old buildings twice as fast as they did ten years ago（或 two times faster than …）。「建商」可寫 construction companies；「市政府」是 the city government／the city authorities。",
+          "evidence": [
+            "面對建商的壓力",
+            "速度是十年前的兩倍"
+          ],
+          "strategy_zh": "先把「市政府拆除老建築」寫成主要子句，再把「速度…兩倍」變成修飾動詞的 twice as fast as …，最後補上句首的分詞構句。",
+          "hints": [
+            "切成四段：面對建商的壓力／市政府現在／拆除老建築／的速度是十年前的兩倍",
+            "標的詞彙：pressure（壓力）、construction（營建）、government（政府）、tear down（拆除）、twice（兩倍）",
+            "句型框架：Facing + N, S + V … twice as + adv. + as + S + did …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "Compared with new buildings, historic sites are more expensive to maintain, so many people question whether they should be preserved.",
+            "Compared to new buildings, historic sites cost more to maintain, and therefore many people question whether they should be preserved.",
+            "In comparison with new buildings, historic sites have higher maintenance costs, so many people wonder whether or not they should be kept."
+          ],
+          "target_words": [
+            {
+              "word": "compare",
+              "zh": "比較",
+              "alternatives": [
+                "comparison"
+              ]
+            },
+            {
+              "word": "historic",
+              "zh": "歷史性的（古蹟）",
+              "alternatives": [
+                "historical"
+              ]
+            },
+            {
+              "word": "maintain",
+              "zh": "維護",
+              "alternatives": [
+                "maintenance"
+              ]
+            },
+            {
+              "word": "question",
+              "zh": "質疑",
+              "alternatives": [
+                "doubt",
+                "wonder"
+              ]
+            },
+            {
+              "word": "preserve",
+              "zh": "保存",
+              "alternatives": [
+                "keep",
+                "protect"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "NCL",
+              "grammar_id": "gp-wh-clause",
+              "label_zh": "間接問句（是否應該被保存：whether …）",
+              "frame": "S + question / wonder + whether + S + V（直述句語序）",
+              "zh_trigger": "是否"
+            },
+            {
+              "code": "COMP",
+              "grammar_id": "gp-compared-with",
+              "label_zh": "相較於…（Compared with ＋比較級）",
+              "frame": "Compared with / to + N, S + be + more + adj. …",
+              "zh_trigger": "相較於新建築"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "相較於新建築",
+              "accepted": [
+                "Compared with new buildings",
+                "Compared to new buildings",
+                "In comparison with new buildings",
+                "Compared with modern buildings",
+                "Compared to modern buildings"
+              ],
+              "targets": [
+                "compare",
+                "COMP"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Compare with new buildings",
+                  "right": "Compared with new buildings",
+                  "explanation_zh": "「相較於」用過去分詞片語 Compared with／to；原形 Compare 會變成祈使句。"
+                },
+                {
+                  "wrong": "Comparing with new buildings",
+                  "right": "Compared with new buildings",
+                  "explanation_zh": "古蹟是「被拿來比較」的一方，用過去分詞 Compared。"
+                }
+              ]
+            },
+            {
+              "zh": "古蹟的維護費用比較高",
+              "accepted": [
+                "historic sites are more expensive to maintain",
+                "historic sites cost more to maintain",
+                "historic sites have higher maintenance costs",
+                "it costs more to maintain historic sites",
+                "historical sites are more expensive to maintain",
+                "historic buildings are more expensive to maintain"
+              ],
+              "targets": [
+                "historic",
+                "maintain",
+                "COMP"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "the maintain fee of historic sites is higher",
+                  "right": "historic sites are more expensive to maintain",
+                  "explanation_zh": "「維護費用」不要逐字翻；可改寫成 historic sites are more expensive to maintain，或用 maintenance costs。"
+                },
+                {
+                  "wrong": "historic sites are more expensiver to maintain",
+                  "right": "historic sites are more expensive to maintain",
+                  "explanation_zh": "expensive 的比較級是 more expensive，不加 -er。"
+                }
+              ]
+            },
+            {
+              "zh": "因此許多人質疑",
+              "accepted": [
+                "so many people question",
+                "and therefore many people question",
+                "so many people wonder",
+                "so many people doubt",
+                "therefore many people question"
+              ],
+              "targets": [
+                "question"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "so many people question that",
+                  "right": "so many people question whether",
+                  "explanation_zh": "質疑「是否」用 whether，不用 that。"
+                },
+                {
+                  "wrong": "so that many people question",
+                  "right": "so many people question",
+                  "explanation_zh": "so that 是「以便、為了」，這裡表「因此」，用 so 或 therefore。"
+                }
+              ]
+            },
+            {
+              "zh": "它們是否應該被保存",
+              "accepted": [
+                "whether they should be preserved",
+                "whether or not they should be kept",
+                "whether they should be kept",
+                "whether they should be protected",
+                "if they should be preserved"
+              ],
+              "targets": [
+                "NCL",
+                "preserve"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "whether should they be preserved",
+                  "right": "whether they should be preserved",
+                  "explanation_zh": "名詞子句用直述句語序：whether＋主詞＋動詞。"
+                },
+                {
+                  "wrong": "whether they should preserve",
+                  "right": "whether they should be preserved",
+                  "explanation_zh": "古蹟是被保存的，要用被動 be preserved。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "abstract_nominal",
+              "zh": "維護費用",
+              "literal_error": "the maintain fee of historic sites is higher",
+              "part": 2,
+              "explanation_zh": "「維護費用」是名詞片語，逐字翻常寫出 maintain fee 這種錯誤；改寫成以古蹟為主詞的 historic sites are more expensive to maintain 最自然。"
+            },
+            {
+              "type": "word_form",
+              "zh": "相較於",
+              "literal_error": "Compare with new buildings, historic sites are more expensive to maintain.",
+              "part": 1,
+              "explanation_zh": "「相較於」要用過去分詞片語 Compared with／to；寫成原形 Compare 會變成命令句，和後面的主要子句接不起來。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "Since historic sites cost far more to maintain than new buildings do, many people question whether they are worth preserving at all.",
+              "explanation_zh": "用 cost far more … than … do 直接比較，再用 be worth V-ing（值得被…）和 at all 加強語氣。"
+            }
+          ],
+          "restructuring_zh": "「古蹟的維護費用比較高」不必逐字翻成名詞片語，可改寫成以古蹟為主詞的 historic sites are more expensive to maintain。"
+        },
+        "2": {
+          "references": [
+            "Facing pressure from construction companies, the city authorities now tear down old buildings twice as fast as they did ten years ago.",
+            "Faced with pressure from construction companies, the city government is now tearing down old buildings two times faster than a decade ago.",
+            "Facing pressure from construction companies, the city government is now knocking down old buildings twice as quickly as it did ten years ago."
+          ],
+          "target_words": [
+            {
+              "word": "pressure",
+              "zh": "壓力"
+            },
+            {
+              "word": "construction",
+              "zh": "建築；營建（建商）"
+            },
+            {
+              "word": "government",
+              "zh": "政府",
+              "alternatives": [
+                "authority"
+              ]
+            },
+            {
+              "word": "tear down",
+              "zh": "拆除",
+              "alternatives": [
+                "knock down",
+                "pull down",
+                "destroy"
+              ]
+            },
+            {
+              "word": "twice",
+              "zh": "兩倍",
+              "alternatives": [
+                "two times"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "COMP",
+              "grammar_id": "gp-times",
+              "label_zh": "倍數比較（速度是十年前的兩倍）",
+              "frame": "S + V + twice as + adv. + as … ; X times + 比較級 + than …",
+              "zh_trigger": "兩倍"
+            },
+            {
+              "code": "PART",
+              "grammar_id": "gp-participle-clause",
+              "label_zh": "分詞構句（面對…：Facing / Faced with …）",
+              "frame": "Facing / Faced with + N, S + V …",
+              "zh_trigger": "面對建商的壓力"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "面對建商的壓力",
+              "accepted": [
+                "Facing pressure from construction companies",
+                "Faced with pressure from construction companies",
+                "Facing pressure from builders",
+                "Faced with pressure from developers",
+                "Facing pressure from developers"
+              ],
+              "targets": [
+                "PART",
+                "pressure",
+                "construction"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Face pressure from construction companies,",
+                  "right": "Facing pressure from construction companies,",
+                  "explanation_zh": "句首用分詞構句：主動 Facing，或被動 Faced with；原形 Face 會變成祈使句。"
+                },
+                {
+                  "wrong": "Facing with pressure from construction companies,",
+                  "right": "Faced with pressure from construction companies,",
+                  "explanation_zh": "face 是及物動詞，Facing 後面直接接受詞；要用 with 就寫 Faced with。"
+                }
+              ]
+            },
+            {
+              "zh": "市政府現在",
+              "accepted": [
+                "the city authorities now",
+                "the city government is now",
+                "the city government now"
+              ],
+              "targets": [
+                "government"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "the city authorities now tears down",
+                  "right": "the city authorities now tear down",
+                  "explanation_zh": "authorities 是複數，動詞不加 s。"
+                },
+                {
+                  "wrong": "the city government is now tears down",
+                  "right": "the city government now tears down",
+                  "explanation_zh": "be 動詞和一般動詞不能同時當主要動詞；用 now tears down 或 is now tearing down。"
+                }
+              ]
+            },
+            {
+              "zh": "拆除老建築",
+              "accepted": [
+                "tear down old buildings",
+                "tearing down old buildings",
+                "knocking down old buildings",
+                "pulling down old buildings",
+                "tears down old buildings"
+              ],
+              "targets": [
+                "tear down"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "tear old buildings",
+                  "right": "tear down old buildings",
+                  "explanation_zh": "「拆除」是 tear down／knock down；只寫 tear 是「撕」。"
+                },
+                {
+                  "wrong": "tear down old building",
+                  "right": "tear down old buildings",
+                  "explanation_zh": "泛指老建築用複數 buildings。"
+                }
+              ]
+            },
+            {
+              "zh": "的速度是十年前的兩倍",
+              "accepted": [
+                "twice as fast as they did ten years ago",
+                "two times faster than a decade ago",
+                "twice as quickly as it did ten years ago",
+                "twice as fast as it did ten years ago",
+                "twice as fast as ten years ago",
+                "two times faster than it did ten years ago"
+              ],
+              "targets": [
+                "COMP",
+                "twice"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "the speed is two times of ten years ago",
+                  "right": "twice as fast as they did ten years ago",
+                  "explanation_zh": "倍數比較不能寫 two times of；用 twice as＋副詞＋as，或 two times＋比較級＋than。"
+                },
+                {
+                  "wrong": "twice faster than ten years ago",
+                  "right": "twice as fast as ten years ago",
+                  "explanation_zh": "twice 通常不和比較級連用；寫 twice as fast as，或 two times faster than。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "abstract_nominal",
+              "zh": "速度",
+              "literal_error": "the speed of tearing down old buildings is two times of ten years ago",
+              "part": 4,
+              "explanation_zh": "中文用抽象名詞「速度」當主詞；英文改成動作 tear down old buildings，再用倍數副詞片語 twice as fast as … 修飾，不要寫 the speed is two times of …。"
+            },
+            {
+              "type": "word_form",
+              "zh": "面對建商的壓力",
+              "literal_error": "Face the pressure of construction companies, the city government tears down old buildings.",
+              "part": 1,
+              "explanation_zh": "「面對…」放在句首當背景，要用分詞構句 Facing／Faced with；寫原形 Face 會變成祈使句，和後面的主要子句接不起來。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "Under growing pressure from construction companies, the city government is now tearing down old buildings at double the rate of a decade ago.",
+              "explanation_zh": "用 under pressure from …（在…的壓力下）開頭，倍數改用 at double the rate of …（以…兩倍的速率），是較正式的寫法。"
+            }
+          ],
+          "restructuring_zh": "「拆除老建築的速度是十年前的兩倍」中文用名詞「速度」當主詞，英文改成動作 tear down old buildings 加倍數副詞片語 twice as fast as they did ten years ago；「面對建商的壓力」用分詞構句 Facing／Faced with … 放句首。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ac-V-3",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-top-02",
+    "lot": "translation-top-02",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "6c20f5a14ca426db5ab42249ce1bc261a4855dfb4f5732045980d8afdca92905",
+    "spec_id": "translation-top@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T13:14:33Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "warn",
+      "created_at": "2026-10-09T08:03:54Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Compared with new buildings, historic sites cost more to maintain, so many people question whether they should be preserved.",
+            "confidence": "high",
+            "explanation_zh": "「相較於」用 Compared with 開頭的分詞片語；「維護費用比較高」譯成 cost more to maintain；「質疑是否應該被保存」用 question whether + 被動 should be preserved。"
+          },
+          "2": {
+            "translation": "Faced with pressure from developers, the city government is now tearing down old buildings twice as fast as it did ten years ago.",
+            "confidence": "high",
+            "explanation_zh": "「面對壓力」用過去分詞構句 Faced with pressure from developers；「現在」用現在進行式表目前的趨勢；「速度是十年前的兩倍」用倍數比較 twice as fast as it did ten years ago。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "NCL",
+              "COMP"
+            ],
+            "used_target_words": [
+              "compare",
+              "historic",
+              "maintain",
+              "question",
+              "preserve"
+            ],
+            "within_accepted": true,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [],
+            "closest_reference": 0
+          },
+          "2": {
+            "used_patterns": [
+              "COMP",
+              "PART"
+            ],
+            "used_target_words": [
+              "pressure",
+              "government",
+              "tear down",
+              "twice"
+            ],
+            "within_accepted": true,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "第 1 部分 accepted 收了 Facing pressure from builders／Faced with pressure from developers（我就是用 developers），但同一部分的標的詞 construction 沒有 alternatives，用 accepted 寫法的考生反而會被程式判成少一個標的詞。我用到 4/5（80%），剛好踩線。建議 construction 的 alternatives 補 builder／developer（「建商」譯 developers 很常見）。",
+              "小意見：參考譯文 1 的 two times faster than a decade ago 可接受，但 twice as fast as 較標準，倍數 2 一般用 twice。"
+            ],
+            "closest_reference": 1
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "compare",
+              "historic",
+              "maintain",
+              "question",
+              "preserve"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NCL": true,
+              "COMP": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "pressure",
+              "government",
+              "tear down",
+              "twice"
+            ],
+            "target_hit_rate": 0.8,
+            "patterns_detected": {
+              "COMP": true,
+              "PART": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 2 題驗證者對4 部分切分有意見（warn）：第 1 部分 accepted 收了 Facing pressure from builders／Faced with pressure from developers（我就是用 developers），但同一部分的標的詞 construc"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "warn",
+      "created_at": "2026-10-09T12:46:22Z",
+      "details": {
+        "solver": "B",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Compared with new buildings, historic buildings are more expensive to maintain, so many people doubt whether they should be preserved.",
+            "confidence": "high",
+            "explanation_zh": "「相較於」用 Compared with 開頭的分詞片語，主詞 historic buildings 與 new buildings 對比；「維護費用比較高」改成 be more expensive to maintain；「質疑……是否……」用 doubt whether...；「古蹟」譯成 historic buildings（也可用 historic sites）。"
+          },
+          "2": {
+            "translation": "Facing pressure from developers, the city government is now tearing down old buildings twice as fast as it did ten years ago.",
+            "confidence": "medium",
+            "explanation_zh": "「面對……壓力」用分詞片語 Facing pressure from developers（Under pressure from 亦可）；「是十年前的兩倍」用 twice as fast as it did ten years ago 倍數比較；「現在」用現在進行式表目前趨勢。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "NCL",
+              "COMP"
+            ],
+            "used_target_words": [
+              "compare",
+              "historic",
+              "maintain",
+              "question",
+              "preserve"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "COMP",
+              "PART"
+            ],
+            "used_target_words": [
+              "pressure",
+              "government",
+              "tear down",
+              "twice"
+            ],
+            "within_accepted": true,
+            "closest_reference": 2,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "第 1 部分 accepted 收了 builders／developers（建商的另一種自然譯法），但 target_words 的 construction 沒有 alternatives，也沒有 builder／developer；我自然寫 Facing pressure from developers，雖然在 accepted 內，卻沒命中 construction，部分與標的詞彙不一致。建議替 construction 補 alternatives（builder、developer），或把 accepted 中沒有 construction 的寫法拿掉。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "compare",
+              "historic",
+              "maintain",
+              "question",
+              "preserve"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NCL": true,
+              "COMP": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "pressure",
+              "government",
+              "tear down",
+              "twice"
+            ],
+            "target_hit_rate": 0.8,
+            "patterns_detected": {
+              "COMP": true,
+              "PART": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 2 題驗證者對4 部分切分有意見（warn）：第 1 部分 accepted 收了 builders／developers（建商的另一種自然譯法），但 target_words 的 construction 沒有 alternatives，也沒有 builder／developer；我"
+        ]
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

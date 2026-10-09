@@ -1,0 +1,164 @@
+{
+  "schema": "gsat-bank-facts/v1",
+  "id": "life-expectancy-rb04",
+  "title": "Why people live much longer today: life expectancy at birth, 1900–2023 (world, Japan, United Kingdom, Brazil)",
+  "sdgs": [
+    3
+  ],
+  "created_on": "2026-10-09",
+  "created_by": "claude-opus-5-5",
+  "sources": [
+    {
+      "id": "s1",
+      "publisher": "Our World in Data",
+      "title": "Life expectancy (grapher data: Riley 2005; Zijdeman et al. 2015; HMD 2025; UN WPP 2024 – long-run data)",
+      "url": "https://ourworldindata.org/grapher/life-expectancy",
+      "accessed": "2026-10-09",
+      "license": "CC-BY-4.0",
+      "use": "dataset",
+      "note": "數值取自 https://ourworldindata.org/grapher/life-expectancy.csv（Period life expectancy at birth）與同一圖表的 metadata.json"
+    },
+    {
+      "id": "s2",
+      "publisher": "Our World in Data",
+      "title": "Life Expectancy (topic page)",
+      "url": "https://ourworldindata.org/life-expectancy",
+      "accessed": "2026-10-09",
+      "license": "CC-BY-4.0",
+      "use": "fact_only",
+      "note": "OWID 文章只取事實、不改寫"
+    },
+    {
+      "id": "s3",
+      "publisher": "Our World in Data",
+      "title": "It's not just about child mortality, life expectancy improved at all ages",
+      "url": "https://ourworldindata.org/its-not-just-about-child-mortality-life-expectancy-improved-at-all-ages",
+      "accessed": "2026-10-09",
+      "license": "CC-BY-4.0",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s4",
+      "publisher": "U.S. Centers for Disease Control and Prevention (MMWR)",
+      "title": "Achievements in Public Health, 1900–1999: Control of Infectious Diseases",
+      "url": "https://www.cdc.gov/mmwr/preview/mmwrhtml/mm4829a1.htm",
+      "accessed": "2026-10-09",
+      "license": "Public domain (U.S. government work)",
+      "use": "fact_only",
+      "note": null
+    }
+  ],
+  "facts": [
+    {
+      "id": "f1",
+      "text": "Life expectancy at birth is the average number of years a newborn would live if the death rates at each age stayed the same as in the year the baby was born.",
+      "source_ids": ["s1", "s2"],
+      "kind": "definition"
+    },
+    {
+      "id": "f2",
+      "text": "In 1900, the average life expectancy at birth for the whole world was about 32 years.",
+      "source_ids": ["s1", "s2"],
+      "kind": "number"
+    },
+    {
+      "id": "f3",
+      "text": "By 2023, world life expectancy had more than doubled, to about 73 years.",
+      "source_ids": ["s1"],
+      "kind": "number"
+    },
+    {
+      "id": "f4",
+      "text": "Life expectancy more than doubled in every world region over this period.",
+      "source_ids": ["s1", "s2"],
+      "kind": "other"
+    },
+    {
+      "id": "f5",
+      "text": "Before modern times, about one in four babies died before their first birthday, and almost half of all children died before the end of childhood.",
+      "source_ids": ["s3"],
+      "kind": "number"
+    },
+    {
+      "id": "f6",
+      "text": "The very high number of child deaths in the past was a big reason why average life expectancy was so low; the fall in child deaths has been an important driver of the rise.",
+      "source_ids": ["s2", "s3"],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f7",
+      "text": "A low average life expectancy in the past did not mean that most adults died young: in England and Wales in 1841, a child who had reached age five could expect to live to about 55.",
+      "source_ids": ["s3"],
+      "kind": "number"
+    },
+    {
+      "id": "f8",
+      "text": "The rise was not only due to fewer child deaths; people began living longer at all ages.",
+      "source_ids": ["s1", "s3"],
+      "kind": "other"
+    },
+    {
+      "id": "f9",
+      "text": "Causes of the rise include better food, clean water, sanitation such as sewers, care for newborn babies, vaccines, antibiotics, economic growth, and less poverty.",
+      "source_ids": ["s2"],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f10",
+      "text": "Penicillin was discovered in 1928 and became widely available in the 1940s.",
+      "source_ids": ["s4"],
+      "kind": "date"
+    },
+    {
+      "id": "f11",
+      "text": "In the United States, adding chlorine to drinking water to make it safe began in the early 1900s.",
+      "source_ids": ["s4"],
+      "kind": "date"
+    },
+    {
+      "id": "f12",
+      "text": "In the United States, children under five made up 30.4 percent of all deaths in 1900 but only 1.4 percent in 1997.",
+      "source_ids": ["s4"],
+      "kind": "number"
+    },
+    {
+      "id": "f13",
+      "text": "The rise was not smooth: events such as wars, the 1918 flu pandemic, and the COVID-19 pandemic caused clear drops in life expectancy.",
+      "source_ids": ["s1", "s2"],
+      "kind": "event"
+    },
+    {
+      "id": "f14",
+      "text": "In the chart data, Japan's life expectancy at birth was lower than the United Kingdom's in 1900 (38.6 vs 45.6 years) but higher in 2000 and 2023; in 2023 Japan's figure (84.7) was the highest of the four lines.",
+      "source_ids": ["s1"],
+      "kind": "number",
+      "note": "由 d1 讀出的比較"
+    },
+    {
+      "id": "f15",
+      "text": "In the chart data, Brazil's life expectancy at birth was below the world average in 1900 (29.0 vs 32.0 years) but above it in 2023 (75.8 vs 73.2 years).",
+      "source_ids": ["s1"],
+      "kind": "number",
+      "note": "由 d1 讀出的比較"
+    }
+  ],
+  "datasets": [
+    {
+      "id": "d1",
+      "source_id": "s1",
+      "title": "Period life expectancy at birth (years), selected years",
+      "indicator": "life-expectancy (Period life expectancy at birth)",
+      "unit": "years",
+      "categories": ["1900", "1950", "2000", "2023"],
+      "series": [
+        { "name": "World", "values": [32, 46.3944, 66.4333, 73.1694] },
+        { "name": "Japan", "values": [38.6, 59.2548, 81.1788, 84.7123] },
+        { "name": "United Kingdom", "values": [45.62, 68.631, 77.8491, 81.3015] },
+        { "name": "Brazil", "values": [29, 48.5286, 69.5842, 75.8482] }
+      ],
+      "note": "OWID life-expectancy.csv 的原始值（1950 年起為 UN WPP 2024；1950 年以前國家資料為 HMD 與 Zijdeman et al.，世界為 Riley 2005）。2023 是資料中最新的年份。"
+    }
+  ],
+  "notes": "圖表只取 4 個年份（間隔不相等：1900、1950、2000、2023），圖下註明。"
+}

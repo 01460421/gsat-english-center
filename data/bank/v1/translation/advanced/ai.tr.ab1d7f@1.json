@@ -1,0 +1,758 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.ab1d7f",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "advanced",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "購物時，越了解環保標章（eco-labels），就越容易選出環保產品。",
+        "options": null,
+        "answer": "When shopping, the more we know about eco-labels, the more easily we can choose green products.",
+        "accepted_answers": [
+          "When shopping, the more we understand eco-labels, the easier it is for us to choose eco-friendly products.",
+          "While shopping, the better we understand eco-labels, the more easily we can pick environmentally friendly products."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "愈…愈…（the more … the more）",
+            "連接詞＋分詞（When shopping）"
+          ],
+          "topic": "環保標章"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "為了減少對環境的傷害，我們也會仔細閱讀標籤並比較不同的產品。",
+        "options": null,
+        "answer": "To reduce harm to the environment, we also read the labels carefully and compare different products.",
+        "accepted_answers": [
+          "In order to reduce damage to the environment, we also read labels carefully and compare different products.",
+          "To do less harm to the environment, we also carefully read the labels and compare different products."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "不定詞表目的",
+            "平行結構"
+          ],
+          "topic": "環保標章"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "環保標章"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "這一句中文沒有主詞，英文要補上 we（或 you）。「購物時」可以用連接詞＋分詞 When shopping（省略的主詞要和主要子句的 we 相同），也可以寫成 When we shop。「越…就越…」用 The + 比較級 + S + V, the + 比較級 + S + V，兩個比較級都放在子句開頭；修飾動詞 choose 要用副詞 easily，寫成 the more easily，或改成 the easier it is for us to choose。「環保產品」是 green 或 eco-friendly products。",
+          "evidence": [
+            "購物時",
+            "越了解環保標章（eco-labels），就越容易選出環保產品"
+          ],
+          "strategy_zh": "「越…越…」先找出兩個會變化的形容詞或副詞，各自改成比較級，再分別移到 the 後面、子句最前面。",
+          "hints": [
+            "切成四段：購物時／越了解環保標章（eco-labels）／就越容易／選出環保產品",
+            "標的詞彙：shop（購物，L1）、know／understand（了解，L1）、easily（容易地，L1）、choose（選擇，L1）、green（環保的，L1）、product（產品，L3）",
+            "句型框架：When + V-ing, the + 比較級 + S + V, the + 比較級 + S + V …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「為了…」表目的，用 To（或 In order to）+ 原形動詞放句首，後面加逗號。「對環境的傷害」用 harm 或 damage to the environment。「仔細閱讀標籤並比較不同的產品」兩個動作用 and 連接，形式要一致：read … and compare …；「仔細」修飾動詞，用副詞 carefully。",
+          "evidence": [
+            "為了減少對環境的傷害",
+            "仔細閱讀標籤並比較不同的產品"
+          ],
+          "strategy_zh": "對等連接詞 and、or 前後要放同一種形式：動詞配動詞、V-ing 配 V-ing、to V 配 to V。",
+          "hints": [
+            "切成四段：為了減少對環境的傷害／我們也會仔細閱讀標籤／並比較／不同的產品",
+            "標的詞彙：reduce（減少，L3）、harm（傷害，L3）、environment（環境，L2）、carefully（仔細地，L1）、label（標籤，L3）、compare（比較，L2）、product（產品，L3）",
+            "句型框架：To + VR …, S + V1 … and V2 …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "When shopping, the more we know about eco-labels, the more easily we can choose green products.",
+            "When shopping, the more we understand eco-labels, the easier it is for us to choose eco-friendly products.",
+            "While shopping, the better we understand eco-labels, the more easily we can pick environmentally friendly products."
+          ],
+          "target_words": [
+            {
+              "word": "shop",
+              "zh": "購物"
+            },
+            {
+              "word": "know",
+              "zh": "了解",
+              "alternatives": [
+                "understand"
+              ]
+            },
+            {
+              "word": "easily",
+              "zh": "容易地",
+              "alternatives": [
+                "easy"
+              ]
+            },
+            {
+              "word": "choose",
+              "zh": "選出",
+              "alternatives": [
+                "pick",
+                "select"
+              ]
+            },
+            {
+              "word": "green",
+              "zh": "環保的",
+              "alternatives": [
+                "eco-friendly",
+                "environmentally friendly"
+              ]
+            },
+            {
+              "word": "product",
+              "zh": "產品",
+              "alternatives": [
+                "goods",
+                "item"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "COMP",
+              "grammar_id": "gp-the-more",
+              "label_zh": "愈…愈…（the + 比較級, the + 比較級）",
+              "frame": "The more + S + V, the more + 副詞 + S + V",
+              "zh_trigger": "越了解環保標章（eco-labels），就越容易"
+            },
+            {
+              "code": "PART",
+              "grammar_id": "gp-conj-participle",
+              "label_zh": "連接詞＋分詞（When shopping）",
+              "frame": "When/While + V-ing …, S + V …",
+              "zh_trigger": "購物時"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "購物時",
+              "accepted": [
+                "When shopping",
+                "While shopping",
+                "When we shop",
+                "When we are shopping",
+                "When going shopping",
+                "When you shop"
+              ],
+              "targets": [
+                "PART",
+                "shop"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "When shop",
+                  "right": "When shopping",
+                  "explanation_zh": "連接詞後面省略主詞時，要用分詞 shopping；不然就補主詞寫成 When we shop。"
+                },
+                {
+                  "wrong": "When we shopping",
+                  "right": "When we are shopping",
+                  "explanation_zh": "有主詞就要有完整動詞：When we shop 或 When we are shopping。"
+                }
+              ]
+            },
+            {
+              "zh": "越了解環保標章（eco-labels）",
+              "accepted": [
+                "the more we know about eco-labels",
+                "the more we understand eco-labels",
+                "the better we understand eco-labels",
+                "the more we learn about eco-labels",
+                "the better we know eco-labels",
+                "the more you know about eco-labels",
+                "the more you understand eco-labels"
+              ],
+              "targets": [
+                "COMP",
+                "know"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "we more understand eco-labels",
+                  "right": "the more we understand eco-labels",
+                  "explanation_zh": "「越…越…」要把 the + 比較級放在子句最前面：the more we understand …。"
+                },
+                {
+                  "wrong": "the more we know eco-labels more",
+                  "right": "the more we know about eco-labels",
+                  "explanation_zh": "比較級已經移到子句開頭，後面不要再重複 more。"
+                }
+              ]
+            },
+            {
+              "zh": "就越容易",
+              "accepted": [
+                "the more easily we can",
+                "the easier it is for us to",
+                "the more easily we",
+                "the easier it is to",
+                "the more easily you can",
+                "the easier it is for you to"
+              ],
+              "targets": [
+                "COMP",
+                "easily"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "the more easy we can",
+                  "right": "the more easily we can",
+                  "explanation_zh": "修飾動詞 choose 用副詞 easily；或寫成 the easier it is for us to choose。"
+                },
+                {
+                  "wrong": "the more easier it is",
+                  "right": "the easier it is",
+                  "explanation_zh": "easy 的比較級是 easier，前面不能再加 more。"
+                }
+              ]
+            },
+            {
+              "zh": "選出環保產品",
+              "accepted": [
+                "choose green products",
+                "choose eco-friendly products",
+                "pick environmentally friendly products",
+                "choose environmentally friendly products",
+                "pick green products",
+                "select green products",
+                "choose products that are good for the environment"
+              ],
+              "targets": [
+                "choose",
+                "green",
+                "product"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "choose environment protection products",
+                  "right": "choose green products",
+                  "explanation_zh": "「環保產品」是 green 或 eco-friendly products，不要逐字翻成 environment protection。"
+                },
+                {
+                  "wrong": "choose green product",
+                  "right": "choose green products",
+                  "explanation_zh": "泛指一類產品，可數名詞用複數。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "subjectless",
+              "zh": "購物時",
+              "literal_error": "When shop, the more we know about eco-labels, the more easily we can choose green products.",
+              "part": 1,
+              "explanation_zh": "「購物時」沒有主詞；英文要用連接詞＋分詞 When shopping，或補上主詞 When we shop。"
+            },
+            {
+              "type": "word_form",
+              "zh": "越容易",
+              "literal_error": "When shopping, the more we know about eco-labels, the more easy we can choose green products.",
+              "part": 3,
+              "explanation_zh": "修飾動詞要用副詞 easily（the more easily we can choose）；用形容詞就要改成 the easier it is to choose。"
+            }
+          ],
+          "bonus": [],
+          "restructuring_zh": "整句中文都沒有主詞：「購物時」用連接詞＋分詞 When shopping，「越了解…，就越容易…」要補上主詞 we（或 you），並把 the + 比較級移到兩個子句的最前面：the more we know …, the more easily we can …。"
+        },
+        "2": {
+          "references": [
+            "To reduce harm to the environment, we also read the labels carefully and compare different products.",
+            "In order to reduce damage to the environment, we also read labels carefully and compare different products.",
+            "To do less harm to the environment, we also carefully read the labels and compare different products."
+          ],
+          "target_words": [
+            {
+              "word": "reduce",
+              "zh": "減少",
+              "alternatives": [
+                "lessen",
+                "less",
+                "cut down"
+              ]
+            },
+            {
+              "word": "harm",
+              "zh": "傷害",
+              "alternatives": [
+                "damage"
+              ]
+            },
+            {
+              "word": "environment",
+              "zh": "環境"
+            },
+            {
+              "word": "carefully",
+              "zh": "仔細地",
+              "alternatives": [
+                "careful",
+                "closely"
+              ]
+            },
+            {
+              "word": "label",
+              "zh": "標籤"
+            },
+            {
+              "word": "compare",
+              "zh": "比較"
+            },
+            {
+              "word": "product",
+              "zh": "產品"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PURP",
+              "grammar_id": "gp-infinitive-purpose",
+              "label_zh": "不定詞表目的（To + VR …,）",
+              "frame": "To / In order to + VR …, S + V …",
+              "zh_trigger": "為了"
+            },
+            {
+              "code": "PARA",
+              "grammar_id": "gp-parallelism",
+              "label_zh": "平行結構（V1 … and V2 …）",
+              "frame": "S + V1 … and V2 …",
+              "zh_trigger": "閱讀標籤並比較不同的產品"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "為了減少對環境的傷害",
+              "accepted": [
+                "To reduce harm to the environment",
+                "In order to reduce damage to the environment",
+                "To do less harm to the environment",
+                "To reduce damage to the environment",
+                "In order to reduce harm to the environment",
+                "To reduce the harm to the environment",
+                "To cause less harm to the environment"
+              ],
+              "targets": [
+                "PURP",
+                "reduce",
+                "harm",
+                "environment"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "For reducing harm to the environment",
+                  "right": "To reduce harm to the environment",
+                  "explanation_zh": "表目的用不定詞 To + 原形動詞。"
+                },
+                {
+                  "wrong": "To reduce the environment's harm",
+                  "right": "To reduce harm to the environment",
+                  "explanation_zh": "「對環境的傷害」是環境受到傷害，用 harm to the environment；the environment's harm 意思變成「環境造成的傷害」。"
+                }
+              ]
+            },
+            {
+              "zh": "我們也會仔細閱讀標籤",
+              "accepted": [
+                "we also read the labels carefully",
+                "we also read labels carefully",
+                "we also carefully read the labels",
+                "we also read the labels closely",
+                "we also read the labels with care"
+              ],
+              "targets": [
+                "carefully",
+                "label"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "we also read the labels careful",
+                  "right": "we also read the labels carefully",
+                  "explanation_zh": "修飾動詞 read 要用副詞 carefully。"
+                },
+                {
+                  "wrong": "we also careful read the labels",
+                  "right": "we also carefully read the labels",
+                  "explanation_zh": "放在動詞前面修飾動詞，同樣要用副詞 carefully。"
+                }
+              ]
+            },
+            {
+              "zh": "並比較",
+              "accepted": [
+                "and compare",
+                "and also compare"
+              ],
+              "targets": [
+                "PARA",
+                "compare"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "and comparing",
+                  "right": "and compare",
+                  "explanation_zh": "and 連接兩個動作，要和前面的 read 同樣用原形動詞（平行結構）。"
+                },
+                {
+                  "wrong": "and compare with",
+                  "right": "and compare",
+                  "explanation_zh": "比較兩樣以上的東西直接寫 compare different products，不加 with。"
+                }
+              ]
+            },
+            {
+              "zh": "不同的產品",
+              "accepted": [
+                "different products",
+                "various products",
+                "different kinds of products",
+                "different brands of products"
+              ],
+              "targets": [
+                "product"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "different product",
+                  "right": "different products",
+                  "explanation_zh": "different 表示「各種不同的」時，後面接複數名詞。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "prenominal_modifier",
+              "zh": "對環境的傷害",
+              "literal_error": "To reduce the environment's harm, we also read the labels carefully and compare different products.",
+              "part": 1,
+              "explanation_zh": "「對環境的傷害」不是「環境的傷害」；英文要用 harm to the environment（或 damage to the environment），介系詞片語放在後面。"
+            },
+            {
+              "type": "word_form",
+              "zh": "仔細",
+              "literal_error": "To reduce harm to the environment, we also read the labels careful and compare different products.",
+              "part": 2,
+              "explanation_zh": "「仔細（地）閱讀」修飾動詞，要用副詞 carefully。"
+            }
+          ],
+          "bonus": [],
+          "restructuring_zh": "「對環境的傷害」中文是前置修飾，英文改成 harm to the environment，用介系詞 to 表示傷害的對象。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "C-V-5",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-advanced-05",
+    "lot": "translation-advanced-05",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "e5c4baeec359d5ac42e4e899ef49b7db98863cbe7bb8568d933d20cee46dbcaf",
+    "spec_id": "translation-advanced@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 1,
+    "sentences": 1,
+    "avg_sentence_length": 1.0,
+    "denominator": 1,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 1.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {
+      "off": 1
+    },
+    "offlist_words": [
+      "eco-labels"
+    ],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T13:12:53Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T12:52:38Z",
+      "details": {
+        "solver": "A",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "When shopping, the more we know about eco-labels, the easier it is to choose eco-friendly products.",
+            "confidence": "high",
+            "explanation_zh": "「越……就越……」用 the + 比較級 ..., the + 比較級 ...；「越容易選出」用 the easier it is to + V；主詞依第二句的「我們」補成 we；「購物時」用 When shopping。"
+          },
+          "2": {
+            "translation": "In order to reduce harm to the environment, we also read the labels carefully and compare different products.",
+            "confidence": "high",
+            "explanation_zh": "「為了」用 In order to + V；「對環境的傷害」用 harm to the environment；兩個動作「仔細閱讀標籤」「比較產品」用 and 連接，現在簡單式表習慣。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "COMP",
+              "PART"
+            ],
+            "used_target_words": [
+              "shop",
+              "know",
+              "easily",
+              "choose",
+              "green",
+              "product"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PURP",
+              "PARA"
+            ],
+            "used_target_words": [
+              "reduce",
+              "harm",
+              "environment",
+              "carefully",
+              "label",
+              "compare",
+              "product"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "shop",
+              "know",
+              "easily",
+              "choose",
+              "green",
+              "product"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "COMP": true,
+              "PART": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "reduce",
+              "harm",
+              "environment",
+              "carefully",
+              "label",
+              "compare",
+              "product"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PURP": true,
+              "PARA": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T12:54:59Z",
+      "details": {
+        "solver": "B",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "When shopping, the more you know about eco-labels, the easier it is to choose eco-friendly products.",
+            "confidence": "high",
+            "explanation_zh": "「越……就越……」用 the more ..., the easier ... 的雙重比較級結構；「選出環保產品」用虛主詞 it 加不定詞 to choose；「購物時」用 When shopping 省略主詞的分詞構句（主詞與 you 一致）；eco-labels 題目已給。"
+          },
+          "2": {
+            "translation": "In order to reduce the harm to the environment, we also read labels carefully and compare different products.",
+            "confidence": "medium",
+            "explanation_zh": "「為了減少……」用 In order to + 原形動詞；「仔細閱讀標籤並比較不同的產品」用 read ... carefully and compare ... 並列動詞，與 we also 連接。「會」可譯成現在簡單式或 will，我採現在簡單式表示習慣。信心 medium：harm 與 damage 皆可，語氣上也可加 will。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "COMP",
+              "PART"
+            ],
+            "used_target_words": [
+              "shop",
+              "know",
+              "easily",
+              "choose",
+              "green",
+              "product"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PURP",
+              "PARA"
+            ],
+            "used_target_words": [
+              "reduce",
+              "harm",
+              "environment",
+              "carefully",
+              "label",
+              "compare",
+              "product"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "shop",
+              "know",
+              "easily",
+              "choose",
+              "green",
+              "product"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "COMP": true,
+              "PART": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "reduce",
+              "harm",
+              "environment",
+              "carefully",
+              "label",
+              "compare",
+              "product"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PURP": true,
+              "PARA": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

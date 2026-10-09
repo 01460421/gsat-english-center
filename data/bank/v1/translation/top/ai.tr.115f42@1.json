@@ -1,0 +1,767 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.115f42",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "top",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "相較於真相，假新聞在社群媒體上傳得快多了，往往幾小時內就傳到成千上萬人。",
+        "options": null,
+        "answer": "Compared with the truth, fake news spreads much faster on social media, often reaching thousands of people within a few hours.",
+        "accepted_answers": [
+          "Compared to the truth, fake news travels far more quickly on social media, often reaching tens of thousands of people within hours.",
+          "Compared with the truth, false news spreads much faster on social media, often reaching thousands of people in just a few hours."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "相較於…（Compared with）",
+            "分詞構句（, often V-ing …）"
+          ],
+          "topic": "批判性思考"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "轉傳資訊前先用批判性思考是很重要的，因為假新聞很容易誤導大眾，引發恐慌。",
+        "options": null,
+        "answer": "It is important to use critical thinking before forwarding any information, because fake news can easily mislead the public, causing panic.",
+        "accepted_answers": [
+          "It is important to think critically before passing on any information, since fake news can easily mislead the public, causing panic.",
+          "It is essential to apply critical thinking before sharing information, because fake news can easily mislead the public, leading to panic."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "虛主詞 It is + adj. + to V",
+            "句尾分詞表結果（, causing …）"
+          ],
+          "topic": "批判性思考"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "批判性思考"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「相較於真相」用 Compared with／to the truth（過去分詞片語；被比較的是後面主要子句的主詞 fake news）；主要子句用比較級 spreads much faster（much／far 加強比較級）。後半句「往往…就傳到成千上萬人」主詞同樣是假新聞，不另寫主詞與連接詞，用分詞構句 , often reaching thousands of people within a few hours。",
+          "evidence": [
+            "相較於真相",
+            "往往幾小時內就傳到成千上萬人"
+          ],
+          "strategy_zh": "「相較於…」→ Compared with + N，主要子句記得用比較級；後半句同主詞、沒有連接詞 → 改成分詞。",
+          "hints": [
+            "切成四段：相較於真相／假新聞在社群媒體上傳得快多了／幾小時內／（往往）就傳到成千上萬人",
+            "標的詞彙：compare（比較）、truth（真相）、fake（假的）、spread（傳播）、social media（社群媒體）、hour（小時）、reach（傳到）、thousand（千）",
+            "句型框架：Compared with + N, S + V + much + 比較級 …, often V-ing + O + within …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「轉傳資訊前先用批判性思考是很重要的」主詞是一整個動作，用虛主詞 It is important to use critical thinking before forwarding any information（before 後面接動名詞）。「因為…」用 because／since 子句；「誤導大眾」是 mislead the public。「引發恐慌」是假新聞誤導大眾造成的結果，用句尾分詞 , causing panic。",
+          "evidence": [
+            "是很重要的",
+            "引發恐慌"
+          ],
+          "strategy_zh": "「做某事是很重要的」→ It is important to V；「…，引發／造成…」→ , causing + N。",
+          "hints": [
+            "切成四段：轉傳資訊前先用批判性思考／是很重要的／因為假新聞很容易誤導大眾／引發恐慌",
+            "標的詞彙：critical（批判性的）、forward（轉傳）、information（資訊）、fake（假的）、mislead（誤導）、public（大眾）、panic（恐慌）",
+            "句型框架：It is important to + V … before + V-ing …, because S + can + V …, causing + N"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "Compared with the truth, fake news spreads much faster on social media, often reaching thousands of people within a few hours.",
+            "Compared to the truth, fake news travels far more quickly on social media, often reaching tens of thousands of people within hours.",
+            "Compared with the truth, false news spreads much faster on social media, often reaching thousands of people in just a few hours."
+          ],
+          "target_words": [
+            {
+              "word": "compare",
+              "zh": "相較"
+            },
+            {
+              "word": "truth",
+              "zh": "真相"
+            },
+            {
+              "word": "fake",
+              "zh": "假的",
+              "alternatives": [
+                "false"
+              ]
+            },
+            {
+              "word": "spread",
+              "zh": "傳播",
+              "alternatives": [
+                "travel"
+              ]
+            },
+            {
+              "word": "social media",
+              "zh": "社群媒體"
+            },
+            {
+              "word": "hour",
+              "zh": "小時"
+            },
+            {
+              "word": "reach",
+              "zh": "傳到、到達",
+              "alternatives": [
+                "spread"
+              ]
+            },
+            {
+              "word": "thousand",
+              "zh": "千（成千上萬）"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "COMP",
+              "grammar_id": "gp-compared-with",
+              "label_zh": "相較於…（Compared with + N, S + V + 比較級）",
+              "frame": "Compared with + N, S + V + much + 比較級 …",
+              "zh_trigger": "相較於真相"
+            },
+            {
+              "code": "PART",
+              "grammar_id": "gp-participle-clause",
+              "label_zh": "分詞構句（句尾分詞片語補充同一主詞的動作）",
+              "frame": "S + V …, often V-ing + O …",
+              "zh_trigger": "往往幾小時內就傳到成千上萬人"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "相較於真相",
+              "accepted": [
+                "Compared with the truth",
+                "Compared to the truth",
+                "In comparison with the truth"
+              ],
+              "targets": [
+                "COMP",
+                "compare",
+                "truth"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Compare with the truth",
+                  "right": "Compared with the truth",
+                  "explanation_zh": "「相較於」用過去分詞 Compared with／to（＝When it is compared with …），不用原形 Compare。"
+                },
+                {
+                  "wrong": "Comparing with the truth",
+                  "right": "Compared with the truth",
+                  "explanation_zh": "假新聞是「被拿來比較」的一方，用 compared；comparing 表示主詞主動去比較。"
+                }
+              ]
+            },
+            {
+              "zh": "假新聞在社群媒體上傳得快多了",
+              "accepted": [
+                "fake news spreads much faster on social media",
+                "fake news travels far more quickly on social media",
+                "false news spreads much faster on social media"
+              ],
+              "targets": [
+                "fake",
+                "spread",
+                "social media"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "fake news spreads more faster on social media",
+                  "right": "fake news spreads much faster on social media",
+                  "explanation_zh": "faster 已經是比較級，不可再加 more；加強語氣用 much／far。"
+                },
+                {
+                  "wrong": "fake news spread much faster on social media",
+                  "right": "fake news spreads much faster on social media",
+                  "explanation_zh": "news 是不可數名詞，視為單數，動詞加 s。"
+                }
+              ]
+            },
+            {
+              "zh": "幾小時內",
+              "accepted": [
+                "within a few hours",
+                "within hours",
+                "in just a few hours",
+                "in a few hours"
+              ],
+              "targets": [
+                "hour"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "within few hours",
+                  "right": "within a few hours",
+                  "explanation_zh": "a few 是「幾個」，few 是「幾乎沒有」，意思不同。"
+                }
+              ]
+            },
+            {
+              "zh": "就傳到成千上萬人",
+              "accepted": [
+                "often reaching thousands of people",
+                "often reaching tens of thousands of people",
+                "often spreading to thousands of people"
+              ],
+              "targets": [
+                "PART",
+                "reach",
+                "thousand"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "often reaches thousands of people",
+                  "right": "often reaching thousands of people",
+                  "explanation_zh": "逗號後補充同一主詞的另一個動作要用分詞 reaching；寫 reaches 會變成兩個動詞沒有連接（要用 and）。"
+                },
+                {
+                  "wrong": "often reaching thousand of people",
+                  "right": "often reaching thousands of people",
+                  "explanation_zh": "「成千上萬」是 thousands of，thousand 要加 s。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "collocation",
+              "zh": "成千上萬人",
+              "literal_error": "…, often reaching thousand and ten thousand people within a few hours.",
+              "part": 4,
+              "explanation_zh": "「成千上萬」是慣用說法，英文用 thousands (of people) 或 tens of thousands；不要逐字寫 thousand and ten thousand。"
+            },
+            {
+              "type": "word_form",
+              "zh": "相較於真相",
+              "literal_error": "Compare with the truth, fake news spreads much faster …",
+              "part": 1,
+              "explanation_zh": "「相較於…」英文用過去分詞片語 Compared with／to …；寫成原形 Compare 會變成祈使句。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "Compared with the truth, fake news spreads like wildfire on social media, often going viral within hours of being posted.",
+              "grammar_id": "gp-participle-clause",
+              "explanation_zh": "spread like wildfire（像野火般蔓延）、go viral（瘋傳）、within hours of being posted（發布後幾小時內）更生動。"
+            }
+          ],
+          "restructuring_zh": "後半句「往往幾小時內就傳到…」中文沒有主詞，英文不要再寫 it reaches，改成分詞構句 often reaching thousands of people，並把「幾小時內」移到句尾 within a few hours。"
+        },
+        "2": {
+          "references": [
+            "It is important to use critical thinking before forwarding any information, because fake news can easily mislead the public, causing panic.",
+            "It is important to think critically before passing on any information, since fake news can easily mislead the public, causing panic.",
+            "It is essential to apply critical thinking before sharing information, because fake news can easily mislead the public, leading to panic."
+          ],
+          "target_words": [
+            {
+              "word": "critical",
+              "zh": "批判性的",
+              "alternatives": [
+                "critically"
+              ]
+            },
+            {
+              "word": "forward",
+              "zh": "轉傳",
+              "alternatives": [
+                "pass on",
+                "share"
+              ]
+            },
+            {
+              "word": "information",
+              "zh": "資訊"
+            },
+            {
+              "word": "fake",
+              "zh": "假的",
+              "alternatives": [
+                "false"
+              ]
+            },
+            {
+              "word": "mislead",
+              "zh": "誤導"
+            },
+            {
+              "word": "public",
+              "zh": "大眾"
+            },
+            {
+              "word": "panic",
+              "zh": "恐慌"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "NFSUBJ",
+              "grammar_id": "gp-it-adj-to",
+              "label_zh": "虛主詞 It ＋形容詞＋不定詞",
+              "frame": "It is + adj. + to + V … before + V-ing …",
+              "zh_trigger": "是很重要的"
+            },
+            {
+              "code": "PART",
+              "grammar_id": "gp-participle-result",
+              "label_zh": "句尾分詞片語表結果（引發…）",
+              "frame": "S + V …, causing + N",
+              "zh_trigger": "引發恐慌"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "轉傳資訊前先用批判性思考",
+              "accepted": [
+                "to use critical thinking before forwarding any information",
+                "to think critically before passing on any information",
+                "to apply critical thinking before sharing information",
+                "to use critical thinking before sharing any information"
+              ],
+              "targets": [
+                "critical",
+                "forward",
+                "information"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "to use critical thinking before forward any information",
+                  "right": "to use critical thinking before forwarding any information",
+                  "explanation_zh": "介系詞 before 後面接動名詞 forwarding。"
+                },
+                {
+                  "wrong": "to use criticize thinking",
+                  "right": "to use critical thinking",
+                  "explanation_zh": "「批判性的」是形容詞 critical；criticize 是動詞「批評」。"
+                }
+              ]
+            },
+            {
+              "zh": "是很重要的",
+              "accepted": [
+                "It is important",
+                "It is essential",
+                "It is very important"
+              ],
+              "targets": [
+                "NFSUBJ"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Use critical thinking before forwarding any information is important",
+                  "right": "It is important to use critical thinking before forwarding any information",
+                  "explanation_zh": "原形動詞片語不能當主詞；用虛主詞 It is important to …（或動名詞 Using … is important）。"
+                },
+                {
+                  "wrong": "It is important that use critical thinking",
+                  "right": "It is important to use critical thinking",
+                  "explanation_zh": "It is + 形容詞後面接 to V；that 後面要接完整子句。"
+                }
+              ]
+            },
+            {
+              "zh": "因為假新聞很容易誤導大眾",
+              "accepted": [
+                "because fake news can easily mislead the public",
+                "since fake news can easily mislead the public",
+                "as fake news can easily mislead the public",
+                "because fake news easily misleads the public"
+              ],
+              "targets": [
+                "fake",
+                "mislead",
+                "public"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "because fake news can easily misleading the public",
+                  "right": "because fake news can easily mislead the public",
+                  "explanation_zh": "助動詞 can 後面接原形動詞 mislead。"
+                },
+                {
+                  "wrong": "because fake news can easily mislead the mass",
+                  "right": "because fake news can easily mislead the public",
+                  "explanation_zh": "「大眾」用 the public；mass 是「大量、團塊」，指群眾要用 the masses。"
+                }
+              ]
+            },
+            {
+              "zh": "引發恐慌",
+              "accepted": [
+                "causing panic",
+                "leading to panic",
+                "triggering panic",
+                "creating panic"
+              ],
+              "targets": [
+                "PART",
+                "panic"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "caused panic",
+                  "right": "causing panic",
+                  "explanation_zh": "逗號後表結果用現在分詞 causing；caused 會變成另一個過去式動詞，和前面接不起來。"
+                },
+                {
+                  "wrong": "causing panics",
+                  "right": "causing panic",
+                  "explanation_zh": "panic 指恐慌的情緒時是不可數名詞，不加 s。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "abstract_nominal",
+              "zh": "批判性思考",
+              "literal_error": "It is important to use critical think before forwarding any information, …",
+              "part": 1,
+              "explanation_zh": "「批判性思考」是名詞片語 critical thinking（或副詞寫法 think critically）；think 是動詞，不能接在 use critical 後面。"
+            },
+            {
+              "type": "verbal_subject",
+              "zh": "轉傳資訊前先用批判性思考是很重要的",
+              "literal_error": "Use critical thinking before forwarding any information is very important, because …",
+              "part": 2,
+              "explanation_zh": "中文直接拿動作當主詞；英文用虛主詞 It is important to …，把動作移到後面。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "It cannot be stressed enough how important it is to think critically before passing anything on, as fake news can easily mislead the public, sparking widespread panic.",
+              "grammar_id": "gp-cannot-too",
+              "explanation_zh": "It cannot be stressed enough …（再怎麼強調也不為過）加強語氣，spark widespread panic（引發大規模恐慌）更生動。"
+            }
+          ],
+          "restructuring_zh": "中文主詞「轉傳資訊前先用批判性思考」很長，英文用虛主詞 It is important to … 開頭，把動作移到後面；句尾「引發恐慌」不另起子句，用分詞 causing panic。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ac-V-3",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-top-04",
+    "lot": "translation-top-04",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "6a9df5361ca910602b338b273c04042b40d0d8c92f6dc2609abebceddbfdb2f7",
+    "spec_id": "translation-top@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T13:27:28Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "fail",
+      "created_at": "2026-10-09T13:05:21Z",
+      "details": {
+        "solver": "A",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Fake news spreads much faster than the truth on social media, often reaching thousands of people within just a few hours.",
+            "confidence": "high",
+            "explanation_zh": "「相較於真相，……快多了」英文最自然是比較級 much faster than the truth（也可寫 Compared with the truth, ... much faster）；「往往幾小時內就傳到……」是附帶結果，用句尾分詞 often reaching；「成千上萬人」譯 thousands of people。"
+          },
+          "2": {
+            "translation": "It is important to use critical thinking before forwarding information, because fake news can easily mislead the public and cause panic.",
+            "confidence": "high",
+            "explanation_zh": "「轉傳資訊前先用批判性思考是很重要的」用虛主詞 It is important to；「轉傳前」用 before + V-ing；「因為」用 because 子句；「誤導大眾，引發恐慌」用對等動詞 mislead the public and cause panic。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "COMP",
+              "PART"
+            ],
+            "used_target_words": [
+              "truth",
+              "fake",
+              "spread",
+              "social media",
+              "hour",
+              "reach",
+              "thousand"
+            ],
+            "within_accepted": false,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "盲譯時「相較於真相，……快多了」自然寫成比較級 much faster than the truth，沒有用 Compared with + N（所以沒用到標的詞彙 compare）；我列 COMP 是因為譯文仍是比較句構，但不是 gp-compared-with 的框架。句尾分詞 often reaching thousands of people 有自然用到（PART）。",
+              "第 1 部分「相較於真相」單獨占 1 分，accepted 只收 Compared with/to／In comparison with；寫成更道地的 than the truth 的學生第 1 部分會被扣分，建議第 1 部分補「than the truth」，或把「相較於真相」與「快多了」併成同一部分。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "NFSUBJ"
+            ],
+            "used_target_words": [
+              "critical",
+              "forward",
+              "information",
+              "fake",
+              "mislead",
+              "public",
+              "panic"
+            ],
+            "within_accepted": false,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "盲譯時「誤導大眾，引發恐慌」自然寫成對等動詞 mislead the public and cause panic，沒有用句尾分詞 causing panic（PART）：中文的逗號並列同樣引出對等動詞。",
+              "第 4 部分 accepted 只收分詞 causing／leading to／triggering／creating panic，沒收同樣正確的「and cause panic」「and lead to panic」，應補進。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "truth",
+              "fake",
+              "spread",
+              "social media",
+              "hour",
+              "reach",
+              "thousand"
+            ],
+            "target_hit_rate": 0.875,
+            "patterns_detected": {
+              "COMP": true,
+              "PART": false
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "critical",
+              "forward",
+              "information",
+              "fake",
+              "mislead",
+              "public",
+              "panic"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NFSUBJ": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 1 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義",
+          "第 2 題盲譯沒有用到標的句型 ['PART']：中文題目沒有自然引出這個句型（SPEC §5.7）",
+          "第 2 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義",
+          "第 1 題驗證者對4 部分切分有意見（warn）：盲譯時「相較於真相，……快多了」自然寫成比較級 much faster than the truth，沒有用 Compared with + N（所以沒用到標的詞彙 compare）；我列 COMP 是因為譯文仍是比較句構，但不是 gp-c",
+          "第 2 題驗證者對4 部分切分有意見（warn）：盲譯時「誤導大眾，引發恐慌」自然寫成對等動詞 mislead the public and cause panic，沒有用句尾分詞 causing panic（PART）：中文的逗號並列同樣引出對等動詞。；第 4 部分 accepted 只"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "fail",
+      "created_at": "2026-10-09T13:09:20Z",
+      "details": {
+        "solver": "B",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Compared with the truth, fake news spreads much faster on social media, often reaching thousands of people within a few hours.",
+            "confidence": "high",
+            "explanation_zh": "「相較於」用 compared with；「快多了」用 much faster 表示差距；「往往幾小時內就傳到成千上萬人」用現在分詞片語 often reaching … 表示伴隨結果，時間用 within a few hours。"
+          },
+          "2": {
+            "translation": "It is important to think critically before forwarding information, because fake news can easily mislead the public and cause panic.",
+            "confidence": "high",
+            "explanation_zh": "「……是很重要的」用虛主詞 it is important to；「批判性思考」用 think critically；「轉傳資訊前」用 before + V-ing；「很容易誤導大眾，引發恐慌」用 can easily mislead the public and cause panic。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "COMP",
+              "PART"
+            ],
+            "used_target_words": [
+              "compare",
+              "truth",
+              "fake",
+              "spread",
+              "social media",
+              "hour",
+              "reach",
+              "thousand"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "NFSUBJ"
+            ],
+            "used_target_words": [
+              "critical",
+              "forward",
+              "information",
+              "fake",
+              "mislead",
+              "public",
+              "panic"
+            ],
+            "within_accepted": false,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "我把「誤導大眾，引發恐慌」譯成並列動詞 mislead the public and cause panic，自然又正確；但第 4 部分只收 causing／leading to／triggering／creating 的分詞片語，中文是兩個動作並列、沒有強制分詞構句，標的句型 PART 沒有被引出。建議 accepted 補上 and cause／and lead to panic，或移除 PART 標的。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "compare",
+              "truth",
+              "fake",
+              "spread",
+              "social media",
+              "hour",
+              "reach",
+              "thousand"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "COMP": true,
+              "PART": true
+            },
+            "program_match": true
+          },
+          "2": {
+            "target_words_found": [
+              "critical",
+              "forward",
+              "information",
+              "fake",
+              "mislead",
+              "public",
+              "panic"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NFSUBJ": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 2 題盲譯沒有用到標的句型 ['PART']：中文題目沒有自然引出這個句型（SPEC §5.7）",
+          "第 2 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義"
+        ]
+      }
+    }
+  ],
+  "status": "rejected",
+  "status_reason": "blind_solver:A 未通過：第 1 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義；第 2 題盲譯沒有用到標的句型 ['PART']：中文題目沒有自然引出這個句型（SPEC §5.7）；第 2 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義…；blind_solver:B 未通過：第 2 題盲譯沒有用到標的句型 ['PART']：中文題目沒有自然引出這個句型（SPEC §5.7）；第 2 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義"
+}

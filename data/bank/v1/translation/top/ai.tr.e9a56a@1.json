@@ -1,0 +1,753 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.e9a56a",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "top",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "在許多居民世代居住的漁村，房屋和農田正逐漸被上升的海水淹沒。",
+        "options": null,
+        "answer": "In many fishing villages where residents have lived for generations, houses and fields are gradually being flooded by the rising sea.",
+        "accepted_answers": [
+          "In many fishing villages in which people have lived for generations, homes and farmland are slowly being swallowed up by rising seawater.",
+          "Houses and farms are gradually being covered by the rising sea in many fishing villages where families have lived for generations."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "關係副詞 where",
+            "被動語態（進行式）"
+          ],
+          "topic": "海平面上升"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "無論海堤蓋得多高，都無法永遠保護那些受到海水威脅的城鎮。",
+        "options": null,
+        "answer": "No matter how high the sea walls are built, they can't permanently protect the towns that are threatened by the sea.",
+        "accepted_answers": [
+          "No matter how tall the sea walls are, they cannot protect the towns that are under threat from the sea forever.",
+          "No matter how high sea walls are made, they will not permanently protect the towns that are threatened by seawater."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "無論多…（no matter how）",
+            "關係代名詞 that"
+          ],
+          "topic": "海平面上升"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "海平面上升"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「居民世代居住的漁村」是地點＋修飾子句，子句裡缺的是地點，用關係副詞 where（＝in which）：fishing villages where residents have lived for generations；「世代居住」延續到現在，用現在完成式。「正逐漸被…淹沒」同時是進行與被動：are gradually being flooded by …。「上升的海水」是 the rising sea（rise 不及物，不要寫 raising）。",
+          "evidence": [
+            "居民世代居住的漁村",
+            "正逐漸被上升的海水淹沒"
+          ],
+          "strategy_zh": "修飾地點的「…的＋地方」，子句裡若主詞、受詞都齊全，用 where；「正在被…」用 be being p.p.。",
+          "hints": [
+            "切成四段：在許多居民世代居住的漁村／房屋和農田正逐漸被／上升的海水／淹沒",
+            "標的詞彙：village（村莊）、resident（居民）、generation（世代）、gradually（逐漸地）、flood（淹沒）、rise（上升）",
+            "句型框架：In + N(地點) + where + S + have p.p. …, S + are (gradually) being p.p. + by …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「無論…多高」用 no matter how + 形容詞 + 主詞 + 動詞（＝however high …），how high 不可拆開，子句用直述句語序。「都無法」的「都」是語氣，不必譯 all；「永遠」可用 permanently（放動詞前）或 forever（放句尾）。「那些受到海水威脅的城鎮」用關係代名詞子句 the towns that are threatened by the sea；城鎮是被威脅的一方，用被動。",
+          "evidence": [
+            "無論海堤蓋得多高",
+            "受到海水威脅的城鎮"
+          ],
+          "strategy_zh": "「無論多＋形容詞」→ No matter how + 形容詞 + S + V；長的「…的＋名詞」改成名詞 + that 子句。",
+          "hints": [
+            "切成四段：無論海堤蓋得多高／都無法永遠保護／那些受到海水威脅的／城鎮",
+            "標的詞彙：sea wall（海堤）、protect（保護）、permanently（永久地）、threaten（威脅）、town（城鎮）",
+            "句型框架：No matter how + adj. + S + V, S + can't + V + N + that + be p.p. …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "In many fishing villages where residents have lived for generations, houses and fields are gradually being flooded by the rising sea.",
+            "In many fishing villages in which people have lived for generations, homes and farmland are slowly being swallowed up by rising seawater.",
+            "Houses and farms are gradually being covered by the rising sea in many fishing villages where families have lived for generations."
+          ],
+          "target_words": [
+            {
+              "word": "village",
+              "zh": "村莊",
+              "alternatives": [
+                "town"
+              ]
+            },
+            {
+              "word": "resident",
+              "zh": "居民",
+              "alternatives": [
+                "people",
+                "families",
+                "locals"
+              ]
+            },
+            {
+              "word": "generation",
+              "zh": "世代"
+            },
+            {
+              "word": "gradually",
+              "zh": "逐漸地",
+              "alternatives": [
+                "slowly",
+                "little by little"
+              ]
+            },
+            {
+              "word": "flood",
+              "zh": "淹沒",
+              "alternatives": [
+                "swallow",
+                "cover",
+                "submerge"
+              ]
+            },
+            {
+              "word": "rise",
+              "zh": "上升"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "REL",
+              "grammar_id": "gp-relative-adverb",
+              "label_zh": "關係副詞 where（地點＋where）",
+              "frame": "N(地點) + where + S + V …",
+              "zh_trigger": "居民世代居住的漁村"
+            },
+            {
+              "code": "PASS",
+              "grammar_id": "gp-passive",
+              "label_zh": "被動語態（進行式被動 be being p.p.）",
+              "frame": "S + be (being) + p.p. + by …",
+              "zh_trigger": "正逐漸被"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "在許多居民世代居住的漁村",
+              "accepted": [
+                "In many fishing villages where residents have lived for generations",
+                "In many fishing villages in which people have lived for generations",
+                "in many fishing villages where families have lived for generations",
+                "In many fishing villages where people have lived for generations"
+              ],
+              "targets": [
+                "REL",
+                "village",
+                "resident",
+                "generation"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "In many fishing villages which residents have lived for generations",
+                  "right": "In many fishing villages where residents have lived for generations",
+                  "explanation_zh": "live 是不及物動詞，子句缺的是地點，要用 where（＝in which），不能只用 which。"
+                },
+                {
+                  "wrong": "where residents lived for generations",
+                  "right": "where residents have lived for generations",
+                  "explanation_zh": "「世代居住」一直延續到現在，用現在完成式 have lived。"
+                }
+              ]
+            },
+            {
+              "zh": "房屋和農田正逐漸被",
+              "accepted": [
+                "houses and fields are gradually being",
+                "homes and farmland are slowly being",
+                "Houses and farms are gradually being",
+                "houses and farmland are gradually being",
+                "houses and fields are slowly being"
+              ],
+              "targets": [
+                "PASS",
+                "gradually"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "houses and field is gradually being",
+                  "right": "houses and fields are gradually being",
+                  "explanation_zh": "兩個名詞以 and 連接是複數主詞，動詞用 are；field 可數，用複數。"
+                },
+                {
+                  "wrong": "houses and fields gradually flood",
+                  "right": "houses and fields are gradually being flooded",
+                  "explanation_zh": "房屋和農田是「被」淹沒，而且「正」在發生，用進行式被動 are being flooded。"
+                }
+              ]
+            },
+            {
+              "zh": "上升的海水",
+              "accepted": [
+                "by the rising sea",
+                "by rising seawater",
+                "by rising sea levels",
+                "by the rising sea level",
+                "by the rising seawater"
+              ],
+              "targets": [
+                "rise"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "by the raising sea",
+                  "right": "by the rising sea",
+                  "explanation_zh": "海水自己「上升」用不及物動詞 rise（rising）；raise 是及物動詞「舉起、提高」。"
+                },
+                {
+                  "wrong": "by the rose sea",
+                  "right": "by the rising sea",
+                  "explanation_zh": "表示正在上升，用現在分詞 rising 修飾名詞。"
+                }
+              ]
+            },
+            {
+              "zh": "淹沒",
+              "accepted": [
+                "flooded",
+                "swallowed up",
+                "covered",
+                "submerged",
+                "swallowed"
+              ],
+              "targets": [
+                "flood"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "being flood",
+                  "right": "being flooded",
+                  "explanation_zh": "被動式要用過去分詞 flooded。"
+                },
+                {
+                  "wrong": "drowning",
+                  "right": "being flooded",
+                  "explanation_zh": "drown 多指人或動物溺水；房屋、農田被水淹沒用 flood／submerge／swallow up，而且要用被動。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "tense_trigger",
+              "zh": "正逐漸被",
+              "literal_error": "In many fishing villages …, houses and fields gradually flood by the rising sea.",
+              "part": 2,
+              "explanation_zh": "「正…被…」要同時表現進行和被動：are (gradually) being flooded。"
+            },
+            {
+              "type": "prenominal_modifier",
+              "zh": "居民世代居住的漁村",
+              "literal_error": "In many residents living for generations fishing villages, …",
+              "part": 1,
+              "explanation_zh": "修飾地點的子句要放在名詞後面，用關係副詞 where：fishing villages where residents have lived for generations。"
+            }
+          ],
+          "bonus": [],
+          "restructuring_zh": "中文「在…的漁村，房屋和農田正被…淹沒」以地點開頭；英文可保留 In many fishing villages where …, 也可把主詞 Houses and farms 提前、地點放句尾；「正逐漸被淹沒」用進行式被動 are gradually being flooded。"
+        },
+        "2": {
+          "references": [
+            "No matter how high the sea walls are built, they can't permanently protect the towns that are threatened by the sea.",
+            "No matter how tall the sea walls are, they cannot protect the towns that are under threat from the sea forever.",
+            "No matter how high sea walls are made, they will not permanently protect the towns that are threatened by seawater."
+          ],
+          "target_words": [
+            {
+              "word": "sea wall",
+              "zh": "海堤",
+              "alternatives": [
+                "seawall",
+                "seawalls",
+                "dike"
+              ]
+            },
+            {
+              "word": "protect",
+              "zh": "保護",
+              "alternatives": [
+                "defend",
+                "save"
+              ]
+            },
+            {
+              "word": "permanently",
+              "zh": "永久地",
+              "alternatives": [
+                "forever",
+                "permanent"
+              ]
+            },
+            {
+              "word": "threaten",
+              "zh": "威脅",
+              "alternatives": [
+                "threat"
+              ]
+            },
+            {
+              "word": "town",
+              "zh": "城鎮"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "ADVCL",
+              "grammar_id": "gp-no-matter",
+              "label_zh": "讓步：無論多…（no matter how + adj.）",
+              "frame": "No matter how + adj. + S + V, S + V …",
+              "zh_trigger": "無論海堤蓋得多高"
+            },
+            {
+              "code": "REL",
+              "grammar_id": "gp-relative-pronoun",
+              "label_zh": "關係代名詞 that／which 引導的形容詞子句",
+              "frame": "N + that/which + be + p.p. …",
+              "zh_trigger": "受到海水威脅的城鎮"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "無論海堤蓋得多高",
+              "accepted": [
+                "No matter how high the sea walls are built",
+                "No matter how tall the sea walls are",
+                "No matter how high sea walls are made",
+                "However high the sea walls are",
+                "No matter how high we build sea walls"
+              ],
+              "targets": [
+                "ADVCL",
+                "sea wall"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "No matter how the sea walls are built high",
+                  "right": "No matter how high the sea walls are built",
+                  "explanation_zh": "no matter how 後面要緊接形容詞或副詞（how high），再接主詞與動詞。"
+                },
+                {
+                  "wrong": "No matter how high are the sea walls",
+                  "right": "No matter how high the sea walls are",
+                  "explanation_zh": "no matter how 子句用直述句語序，不要倒裝成問句。"
+                }
+              ]
+            },
+            {
+              "zh": "都無法永遠保護",
+              "accepted": [
+                "they can't permanently protect",
+                "they cannot protect",
+                "they will not permanently protect",
+                "they can never permanently protect",
+                "they cannot permanently protect"
+              ],
+              "targets": [
+                "protect",
+                "permanently"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "they all cannot protect",
+                  "right": "they cannot protect",
+                  "explanation_zh": "這裡的「都」是配合「無論」的語氣，不必譯成 all。"
+                },
+                {
+                  "wrong": "they cannot forever protect",
+                  "right": "they cannot permanently protect",
+                  "explanation_zh": "forever 通常放在句尾；要放在動詞前面改用 permanently。"
+                }
+              ]
+            },
+            {
+              "zh": "受到海水威脅的",
+              "accepted": [
+                "that are threatened by the sea",
+                "that are under threat from the sea",
+                "that are threatened by seawater",
+                "which are threatened by the sea",
+                "threatened by the sea"
+              ],
+              "targets": [
+                "REL",
+                "threaten"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "that threatened by the sea",
+                  "right": "that are threatened by the sea",
+                  "explanation_zh": "城鎮是「受到」威脅，關係子句要用被動 are threatened。"
+                },
+                {
+                  "wrong": "that are threatening by the sea",
+                  "right": "that are threatened by the sea",
+                  "explanation_zh": "「受到威脅」是被動，用過去分詞 threatened，不用 threatening。"
+                }
+              ]
+            },
+            {
+              "zh": "城鎮",
+              "accepted": [
+                "the towns",
+                "those towns"
+              ],
+              "targets": [
+                "town"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "the town that are threatened",
+                  "right": "the towns that are threatened",
+                  "explanation_zh": "「那些城鎮」是複數 towns，關係子句的動詞 are 也要和複數先行詞一致。"
+                },
+                {
+                  "wrong": "that towns",
+                  "right": "those towns",
+                  "explanation_zh": "「那些」是複數，用 those（或 the）；that 是單數。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "collocation",
+              "zh": "無論海堤蓋得多高",
+              "literal_error": "No matter how the sea walls are built high, …",
+              "part": 1,
+              "explanation_zh": "how high 是一個整體，要一起放在 no matter 後面：No matter how high the sea walls are built。"
+            },
+            {
+              "type": "prenominal_modifier",
+              "zh": "受到海水威脅的",
+              "literal_error": "… they can't permanently protect those threatened by the sea towns.",
+              "part": 3,
+              "explanation_zh": "修飾語「受到海水威脅的」要放在名詞後面，用關係子句 the towns that are threatened by the sea。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "However high the sea walls may be built, they cannot shield the towns that are threatened by the sea forever.",
+              "grammar_id": "gp-no-matter",
+              "explanation_zh": "However + 形容詞 + S + may + V 是 no matter how 的正式寫法；shield（遮擋保護）比 protect 更生動。"
+            }
+          ],
+          "restructuring_zh": "「無論…多高」英文要把 how high 放在一起：No matter how high the sea walls are built；「都」不必譯出；「受到海水威脅的城鎮」改成後位關係子句 the towns that are threatened by the sea。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ac-V-3",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-top-01",
+    "lot": "translation-top-01",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "a1384b01f87b0f8fded3505d9aeb991591fcc72147d3fc44a0f533a9db995000",
+    "spec_id": "translation-top@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T13:10:37Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "fail",
+      "created_at": "2026-10-09T00:00:00Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "In many fishing villages where residents have lived for generations, houses and farmland are gradually being submerged by rising seawater.",
+            "confidence": "medium",
+            "explanation_zh": "「許多」我讀成修飾「漁村」（許多〔居民世代居住的〕漁村），因為「許多居民世代居住」語意不自然；關係副詞 where 引導形容詞子句，「世代居住」用現在完成式 have lived for generations；「正逐漸被…淹沒」用現在進行式被動 are gradually being submerged。"
+          },
+          "2": {
+            "translation": "No matter how high seawalls are built, they cannot protect the towns threatened by the sea forever.",
+            "confidence": "high",
+            "explanation_zh": "「無論…多高」用 No matter how + adj（也可用 However high）；「受到海水威脅的城鎮」用過去分詞片語 threatened by the sea 後位修飾；「永遠」放句尾 forever。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "REL",
+              "PASS"
+            ],
+            "used_target_words": [
+              "village",
+              "resident",
+              "generation",
+              "gradually",
+              "flood",
+              "rise"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "（輕微歧義）「在許多居民世代居住的漁村」的「許多」可以讀成修飾「漁村」或「居民」；我讀成「許多漁村」，和參考譯文一致。若學生讀成 fishing villages where many residents have lived，第 1 部分會被判錯；建議中文改成「在居民世代居住的許多漁村」。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "ADVCL"
+            ],
+            "used_target_words": [
+              "sea wall",
+              "protect",
+              "permanently",
+              "threaten",
+              "town"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "warn",
+            "parts_check": "warn",
+            "issues_zh": [
+              "「受到海水威脅的城鎮」我自然寫成過去分詞片語 the towns threatened by the sea（沒有 that are），所以 used_patterns 不含 REL：REL 定義是「關係代名詞 that／which 引導的形容詞子句」，中文沒有唯一引出它；第 3 部分 accepted 也收 threatened by the sea，和 REL 的定義不一致。建議把 REL 放寬成「後位修飾（that 子句或分詞片語皆可）」。",
+              "R1 把 forever 放在句尾（… the towns that are under threat from the sea forever），可被讀成修飾 are under threat（永遠受威脅），語意有歧義；建議把「永遠」移到動詞旁，例如 they cannot permanently protect the towns that are under threat from the sea。我的譯文 forever 放句尾也有輕微同樣問題。",
+              "第 2 部分 accepted 有 they cannot protect（沒有「永遠」），R1 的 forever 又不在任何部分，學生漏譯「永遠」時依 4 部分扣不到分；建議第 2 部分 accepted 刪掉 they cannot protect，或註明須搭配句尾 forever 才算完整。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "village",
+              "resident",
+              "generation",
+              "gradually",
+              "rise"
+            ],
+            "target_hit_rate": 0.833,
+            "patterns_detected": {
+              "REL": true,
+              "PASS": false
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "sea wall",
+              "protect",
+              "permanently",
+              "threaten",
+              "town"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "ADVCL": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 2 題盲譯沒有用到標的句型 ['REL']：中文題目沒有自然引出這個句型（SPEC §5.7）",
+          "第 1 題驗證者說用了 ['flood']，程式在譯文裡找不到",
+          "第 1 題驗證者說用了句型 PASS，程式在譯文裡看不出來",
+          "第 2 題驗證者對參考譯文有意見（warn）：「受到海水威脅的城鎮」我自然寫成過去分詞片語 the towns threatened by the sea（沒有 that are），所以 used_patterns 不含 REL：REL 定義是「關係代名詞 that／which 引導的",
+          "第 2 題驗證者對4 部分切分有意見（warn）：「受到海水威脅的城鎮」我自然寫成過去分詞片語 the towns threatened by the sea（沒有 that are），所以 used_patterns 不含 REL：REL 定義是「關係代名詞 that／which 引導的"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "fail",
+      "created_at": "2026-10-09T07:56:17Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "In many fishing villages where residents have lived for generations, houses and farmland are gradually being swallowed up by the rising sea.",
+            "confidence": "medium",
+            "explanation_zh": "「許多居民世代居住的漁村」用 where 引導關係子句搭配 have lived for generations；「正逐漸被……淹沒」用現在進行式被動 are gradually being swallowed up；淹沒也可用 flooded 或 submerged，所以信心中等。"
+          },
+          "2": {
+            "translation": "No matter how high a sea wall is built, it cannot protect the towns threatened by the sea forever.",
+            "confidence": "high",
+            "explanation_zh": "「無論……多高」用 No matter how high ...；「那些受到海水威脅的城鎮」用過去分詞片語 threatened by the sea 修飾 towns；「無法永遠保護」用 cannot protect ... forever。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "REL",
+              "PASS"
+            ],
+            "used_target_words": [
+              "village",
+              "resident",
+              "generation",
+              "gradually",
+              "flood",
+              "rise"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "ADVCL"
+            ],
+            "used_target_words": [
+              "sea wall",
+              "protect",
+              "permanently",
+              "threaten",
+              "town"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "盲譯者把「受到海水威脅的城鎮」譯成 the towns threatened by the sea（過去分詞後位修飾，簡化的關係子句，系統內算 PART），沒有用 that／which 引導的 REL；中文沒有逼出完整關係子句。part 3 的 accepted 也收了不帶 that 的 threatened by the sea，卻把 targets 標成 REL，兩者不一致。建議改中文逼出關係子句（例如加入需要 whose／in which 的結構），或把這一句的標的句型改成 PART。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "village",
+              "resident",
+              "generation",
+              "gradually",
+              "flood",
+              "rise"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "REL": true,
+              "PASS": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "sea wall",
+              "protect",
+              "permanently",
+              "threaten",
+              "town"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "ADVCL": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 2 題盲譯沒有用到標的句型 ['REL']：中文題目沒有自然引出這個句型（SPEC §5.7）",
+          "第 2 題驗證者對4 部分切分有意見（warn）：盲譯者把「受到海水威脅的城鎮」譯成 the towns threatened by the sea（過去分詞後位修飾，簡化的關係子句，系統內算 PART），沒有用 that／which 引導的 REL；中文沒有逼出完整關係子句。part 3"
+        ]
+      }
+    }
+  ],
+  "status": "rejected",
+  "status_reason": "blind_solver:A 未通過：第 2 題盲譯沒有用到標的句型 ['REL']：中文題目沒有自然引出這個句型（SPEC §5.7）；第 1 題驗證者說用了 ['flood']，程式在譯文裡找不到；第 1 題驗證者說用了句型 PASS，程式在譯文裡看不出來…；blind_solver:B 未通過：第 2 題盲譯沒有用到標的句型 ['REL']：中文題目沒有自然引出這個句型（SPEC §5.7）；第 2 題驗證者對4 部分切分有意見（warn）：盲譯者把「受到海水威脅的城鎮」譯成 the towns threatened by the sea（過去分詞後位修飾，簡化的關係子句，系統內算 PART），沒有用 that／which 引導的 REL；中文沒有逼出完整關係子句。part 3；判定者（第 1 輪）人工檢查：第 2 題「受到海水威脅的城鎮」兩位盲譯都寫 the towns threatened by the sea（分詞後位修飾），中文沒有引出 that／which 關係子句；第 3 部分 accepted 收 threatened by the sea，和 targets 的 REL 互相矛盾。第 2 部分 accepted 收 they cannot protect（沒譯「永遠」也給分）；REF1 句尾的 forever 可能被讀成修飾 under threat，有歧義。第 1 題「在許多居民世代居住的漁村」的「許多」可修飾「居民」或「漁村」，有輕微歧義（可改成「在居民世代居住的許多漁村」）。"
+}

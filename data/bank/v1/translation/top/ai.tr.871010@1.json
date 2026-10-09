@@ -1,0 +1,734 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.871010",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "top",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "社會企業（social enterprise）賺的錢越多，就越有能力幫助弱勢族群，進而形成良性循環。",
+        "options": null,
+        "answer": "The more profit a social enterprise makes, the more able it is to assist disadvantaged groups, creating a positive cycle.",
+        "accepted_answers": [
+          "The more money a social enterprise earns, the better able it is to help disadvantaged groups, leading to a positive cycle.",
+          "The more money a social enterprise makes, the more people from disadvantaged groups it can help, forming a positive cycle."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "句尾分詞片語表結果（…，進而形成…）",
+            "愈…愈…（賺得越多，越有能力）"
+          ],
+          "topic": "社會企業"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "然而，要找出這些人真正需要的並不容易，因為造成貧窮的原因往往不只一個。",
+        "options": null,
+        "answer": "However, it is not easy to identify what these people really need, because poverty often has more than one cause.",
+        "accepted_answers": [
+          "However, it is not easy to figure out what these people truly need, since poverty usually has more than one cause.",
+          "However, it is difficult to find out what these people actually need, as there is often more than one cause of poverty."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "what 名詞子句（這些人真正需要的＝what these people really need）",
+            "虛主詞 It ＋形容詞＋不定詞（要找出…並不容易）"
+          ],
+          "topic": "社會企業"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "社會企業"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「越…越…」用 The＋比較級＋S＋V, the＋比較級＋S＋V；被比較的名詞（profit）或形容詞（able）要跟著比較級一起移到子句開頭。「越有能力幫助」寫 the more able it is to help（或 the better able …）。「進而形成…」用句尾分詞 creating／leading to，主詞是前面整個「越…越…」的關係。「良性循環」是 a positive cycle／a virtuous circle，「弱勢族群」是 disadvantaged groups。",
+          "evidence": [
+            "賺的錢越多，就越有能力幫助弱勢族群",
+            "進而形成良性循環"
+          ],
+          "strategy_zh": "先寫兩個 the＋比較級的子句，再用逗號加分詞片語交代整體結果。",
+          "hints": [
+            "切成四段：社會企業賺的錢越多／就越有能力幫助弱勢族群／進而形成／良性循環",
+            "標的詞彙：profit（利潤）、help（幫助）、disadvantaged（弱勢的）、positive（正面的）、cycle（循環）",
+            "句型框架：The + 比較級 + S + V, the + 比較級 + S + V, creating + N"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「要找出…並不容易」用虛主詞 It is not easy to …；「這些人真正需要的」沒有中心名詞，用 what 名詞子句 what these people really need 當 identify／find out 的受詞，語序是直述句。「因為造成貧窮的原因往往不只一個」把抽象名詞 poverty 當主詞改寫成 poverty often has more than one cause；more than one 後接單數名詞。",
+          "evidence": [
+            "要找出這些人真正需要的並不容易",
+            "造成貧窮的原因往往不只一個"
+          ],
+          "strategy_zh": "句首 However, 接虛主詞句；受詞是一個 what 子句；最後用 because 帶出原因，並把「原因不只一個」改寫成 has more than one cause。",
+          "hints": [
+            "切成四段：要找出／這些人真正需要的／並不容易／因為造成貧窮的原因往往不只一個",
+            "標的詞彙：identify（找出）、need（需要）、poverty（貧窮）、cause（原因）",
+            "句型框架：It is not easy to identify + what + S + V, because …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "The more profit a social enterprise makes, the more able it is to assist disadvantaged groups, creating a positive cycle.",
+            "The more money a social enterprise earns, the better able it is to help disadvantaged groups, leading to a positive cycle.",
+            "The more money a social enterprise makes, the more people from disadvantaged groups it can help, forming a positive cycle."
+          ],
+          "target_words": [
+            {
+              "word": "profit",
+              "zh": "利潤（賺的錢）",
+              "alternatives": [
+                "money"
+              ]
+            },
+            {
+              "word": "help",
+              "zh": "幫助",
+              "alternatives": [
+                "assist",
+                "support"
+              ]
+            },
+            {
+              "word": "disadvantaged",
+              "zh": "弱勢的",
+              "alternatives": [
+                "vulnerable",
+                "underprivileged",
+                "poor",
+                "in need"
+              ]
+            },
+            {
+              "word": "positive",
+              "zh": "良性的",
+              "alternatives": [
+                "virtuous",
+                "good"
+              ]
+            },
+            {
+              "word": "cycle",
+              "zh": "循環",
+              "alternatives": [
+                "circle"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PART",
+              "grammar_id": "gp-participle-result",
+              "label_zh": "句尾分詞片語表結果（…，進而形成…）",
+              "frame": "…, creating / leading to / forming + N",
+              "zh_trigger": "進而形成"
+            },
+            {
+              "code": "COMP",
+              "grammar_id": "gp-the-more",
+              "label_zh": "愈…愈…（賺得越多，越有能力）",
+              "frame": "The + 比較級 (+ N) + S + V, the + 比較級 + S + V",
+              "zh_trigger": "越多，就越有能力"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "社會企業（social enterprise）賺的錢越多",
+              "accepted": [
+                "The more profit a social enterprise makes",
+                "The more money a social enterprise earns",
+                "The more money a social enterprise makes",
+                "The more profit a social enterprise earns"
+              ],
+              "targets": [
+                "COMP",
+                "profit"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "More profit a social enterprise makes",
+                  "right": "The more profit a social enterprise makes",
+                  "explanation_zh": "「越…越…」兩個子句開頭都要有 the：The＋比較級 …, the＋比較級 …。"
+                },
+                {
+                  "wrong": "The more a social enterprise makes profit",
+                  "right": "The more profit a social enterprise makes",
+                  "explanation_zh": "被比較的名詞 profit 要緊跟在 the more 後面一起放到句首。"
+                }
+              ]
+            },
+            {
+              "zh": "就越有能力幫助弱勢族群",
+              "accepted": [
+                "the more able it is to assist disadvantaged groups",
+                "the better able it is to help disadvantaged groups",
+                "the more people from disadvantaged groups it can help",
+                "the more able it is to help disadvantaged groups",
+                "the more disadvantaged people it can help"
+              ],
+              "targets": [
+                "COMP",
+                "help",
+                "disadvantaged"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "the more it is able to help disadvantaged groups",
+                  "right": "the more able it is to help disadvantaged groups",
+                  "explanation_zh": "比較級 more able 要一起移到子句開頭，後面才接 it is。"
+                },
+                {
+                  "wrong": "the more able it is to help the weak groups",
+                  "right": "the more able it is to help disadvantaged groups",
+                  "explanation_zh": "「弱勢族群」是 disadvantaged groups，不是 weak groups。"
+                }
+              ]
+            },
+            {
+              "zh": "進而形成",
+              "accepted": [
+                "creating",
+                "leading to",
+                "forming",
+                "resulting in"
+              ],
+              "targets": [
+                "PART"
+              ],
+              "common_errors": [
+                {
+                  "wrong": ", creates a positive cycle",
+                  "right": ", creating a positive cycle",
+                  "explanation_zh": "逗號後接動詞 creates 會變成兩個主要動詞；表結果用分詞 creating。"
+                },
+                {
+                  "wrong": ", and form a positive cycle",
+                  "right": ", forming a positive cycle",
+                  "explanation_zh": "and form 沒有合適的主詞，動詞形式也不一致；表結果直接用分詞 forming。"
+                }
+              ]
+            },
+            {
+              "zh": "良性循環",
+              "accepted": [
+                "a positive cycle",
+                "a virtuous cycle",
+                "a virtuous circle"
+              ],
+              "targets": [
+                "positive",
+                "cycle"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "a good nature circle",
+                  "right": "a positive cycle",
+                  "explanation_zh": "「良性循環」不要逐字翻；英文說 a positive cycle 或 a virtuous circle。"
+                },
+                {
+                  "wrong": "a positive circulation",
+                  "right": "a positive cycle",
+                  "explanation_zh": "circulation 是血液、貨幣的「流通」，不是這裡的「循環」。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "abstract_nominal",
+              "zh": "良性循環",
+              "literal_error": "forming a good-natured circulation",
+              "part": 4,
+              "explanation_zh": "「良性循環」是抽象概念，英文固定說 a positive cycle／a virtuous circle；把「良性」「循環」逐字翻成 good-natured circulation 意思不通。"
+            },
+            {
+              "type": "word_form",
+              "zh": "越多，就越有能力",
+              "literal_error": "More profit a social enterprise makes, more able it is to assist disadvantaged groups.",
+              "part": 1,
+              "explanation_zh": "「越…越…」是 The＋比較級 …, the＋比較級 … 的固定句型，兩個 the 都不能省，比較級也要和名詞、形容詞一起移到子句開頭。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "The more profit a social enterprise makes, the more disadvantaged people it can support, which in turn creates a virtuous circle.",
+              "explanation_zh": "句尾改用 which in turn（進而）帶出非限定子句，並用 virtuous circle 這個道地的說法表達「良性循環」。"
+            }
+          ],
+          "restructuring_zh": "「越…越…」英文要把兩個比較級都移到子句開頭：The more profit …, the more able it is to …；「進而形成良性循環」改成句尾分詞 creating a positive cycle。"
+        },
+        "2": {
+          "references": [
+            "However, it is not easy to identify what these people really need, because poverty often has more than one cause.",
+            "However, it is not easy to figure out what these people truly need, since poverty usually has more than one cause.",
+            "However, it is difficult to find out what these people actually need, as there is often more than one cause of poverty."
+          ],
+          "target_words": [
+            {
+              "word": "identify",
+              "zh": "找出",
+              "alternatives": [
+                "find out",
+                "figure out",
+                "discover"
+              ]
+            },
+            {
+              "word": "need",
+              "zh": "需要"
+            },
+            {
+              "word": "poverty",
+              "zh": "貧窮"
+            },
+            {
+              "word": "cause",
+              "zh": "原因",
+              "alternatives": [
+                "reason"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "NCL",
+              "grammar_id": "gp-what-clause",
+              "label_zh": "what 名詞子句（這些人真正需要的＝what these people really need）",
+              "frame": "identify / find out + what + S + V",
+              "zh_trigger": "這些人真正需要的"
+            },
+            {
+              "code": "NFSUBJ",
+              "grammar_id": "gp-it-adj-to",
+              "label_zh": "虛主詞 It ＋形容詞＋不定詞（要找出…並不容易）",
+              "frame": "It is not + adj. + to VR …",
+              "zh_trigger": "並不容易"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "要找出",
+              "accepted": [
+                "to identify",
+                "to figure out",
+                "to find out",
+                "to discover"
+              ],
+              "targets": [
+                "identify"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "to identify out",
+                  "right": "to identify",
+                  "explanation_zh": "identify 本身就是「找出、辨認」，不加 out；find out／figure out 才有 out。"
+                },
+                {
+                  "wrong": "to finding out",
+                  "right": "to find out",
+                  "explanation_zh": "It is … to 後面接原形動詞。"
+                }
+              ]
+            },
+            {
+              "zh": "這些人真正需要的",
+              "accepted": [
+                "what these people really need",
+                "what these people truly need",
+                "what these people actually need",
+                "what they really need"
+              ],
+              "targets": [
+                "NCL",
+                "need"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "to identify these people really need",
+                  "right": "to identify what these people really need",
+                  "explanation_zh": "「這些人真正需要的」沒有中心名詞，要用 what 引導名詞子句當受詞。"
+                },
+                {
+                  "wrong": "what do these people really need",
+                  "right": "what these people really need",
+                  "explanation_zh": "名詞子句用直述句語序，不用疑問句的 do。"
+                }
+              ]
+            },
+            {
+              "zh": "並不容易",
+              "accepted": [
+                "it is not easy",
+                "it is difficult",
+                "it is hard",
+                "it is never easy"
+              ],
+              "targets": [
+                "NFSUBJ"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Find out what these people really need is not easy",
+                  "right": "It is not easy to find out what these people really need",
+                  "explanation_zh": "中文的動詞片語主詞，英文改用虛主詞 It is … to VR。"
+                },
+                {
+                  "wrong": "it is not easily to find out",
+                  "right": "it is not easy to find out",
+                  "explanation_zh": "be 動詞後面接形容詞 easy，不是副詞 easily。"
+                }
+              ]
+            },
+            {
+              "zh": "因為造成貧窮的原因往往不只一個",
+              "accepted": [
+                "because poverty often has more than one cause",
+                "since poverty usually has more than one cause",
+                "as there is often more than one cause of poverty",
+                "because there is often more than one cause of poverty",
+                "because poverty often has many causes"
+              ],
+              "targets": [
+                "poverty",
+                "cause"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "because the reasons that cause poor are not only one",
+                  "right": "because poverty often has more than one cause",
+                  "explanation_zh": "「貧窮」是名詞 poverty；「不只一個」寫成 more than one。"
+                },
+                {
+                  "wrong": "because poverty often has more than one causes",
+                  "right": "because poverty often has more than one cause",
+                  "explanation_zh": "more than one 後面接單數名詞。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "abstract_nominal",
+              "zh": "造成貧窮的原因",
+              "literal_error": "because the reasons causing poor are often not only one",
+              "part": 4,
+              "explanation_zh": "「貧窮」要用抽象名詞 poverty，不是形容詞 poor；整句也不要逐字翻，改寫成以 poverty 為主詞的 poverty often has more than one cause。"
+            },
+            {
+              "type": "verbal_subject",
+              "zh": "要找出",
+              "literal_error": "However, find out what these people really need is not easy.",
+              "part": 3,
+              "explanation_zh": "中文「要找出…」直接當主詞；英文動詞原形不能當主詞，改用虛主詞 It is not easy to find out …。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "However, finding out what these people really need is no easy task, for poverty seldom has a single cause.",
+              "explanation_zh": "用動名詞主詞加 no easy task（絕非易事），後半用 for（因為）和 seldom has a single cause（很少只有單一原因）的否定說法，語氣更精鍊。"
+            }
+          ],
+          "restructuring_zh": "「要找出…並不容易」改成虛主詞 It is not easy to …；「造成貧窮的原因往往不只一個」不要逐字翻，改寫成以 poverty 當主詞的 poverty often has more than one cause。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ac-V-3",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-top-02",
+    "lot": "translation-top-02",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "6c20f5a14ca426db5ab42249ce1bc261a4855dfb4f5732045980d8afdca92905",
+    "spec_id": "translation-top@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 2,
+    "sentences": 1,
+    "avg_sentence_length": 2.0,
+    "denominator": 2,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.5,
+    "coverage_l1_6": 1.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.5,
+    "level_counts": {
+      "2": 1,
+      "5": 1
+    },
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T13:14:32Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "fail",
+      "created_at": "2026-10-09T08:03:54Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "The more money a social enterprise makes, the more able it is to help disadvantaged groups, which in turn creates a virtuous cycle.",
+            "confidence": "high",
+            "explanation_zh": "「越…就越…」用 the + 比較級…, the + 比較級…；「越有能力幫助」譯成 the more able it is to help；「進而形成良性循環」用 which in turn creates a virtuous cycle 補述前句。"
+          },
+          "2": {
+            "translation": "However, it is not easy to find out what these people really need, because there is often more than one cause of poverty.",
+            "confidence": "high",
+            "explanation_zh": "虛主詞 it is not easy to find out…；「這些人真正需要的」用名詞子句 what these people really need；「造成貧窮的原因往往不只一個」改寫成 there is often more than one cause of poverty，比直譯自然。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "COMP"
+            ],
+            "used_target_words": [
+              "profit",
+              "help",
+              "disadvantaged",
+              "positive",
+              "cycle"
+            ],
+            "within_accepted": false,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "「，進而形成良性循環」我用 which in turn creates a virtuous cycle（關係子句），沒有用句尾分詞片語 creating／leading to／forming，所以 PART 沒用到，第 3 部分也不在 accepted 內。規準自己的 bonus 句就是 which in turn creates a virtuous circle，可見這是同樣自然的寫法；「進而」的 in turn 也很貼切。建議第 3 部分 accepted 補 which (in turn) creates／which (in turn) leads to，或承認 PART 不是中文唯一引出的句型。",
+              "小意見：參考譯文 0、1 用 a positive cycle，英文慣用說法是 a virtuous cycle／circle；不算錯，accepted 已列 virtuous，可接受。"
+            ],
+            "closest_reference": 0
+          },
+          "2": {
+            "used_patterns": [
+              "NCL",
+              "NFSUBJ"
+            ],
+            "used_target_words": [
+              "identify",
+              "need",
+              "poverty",
+              "cause"
+            ],
+            "within_accepted": true,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [],
+            "closest_reference": 2
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "profit",
+              "help",
+              "disadvantaged",
+              "positive",
+              "cycle"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "COMP": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "identify",
+              "need",
+              "poverty",
+              "cause"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NCL": true,
+              "NFSUBJ": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 1 題盲譯沒有用到標的句型 ['PART']：中文題目沒有自然引出這個句型（SPEC §5.7）",
+          "第 1 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "fail",
+      "created_at": "2026-10-09T12:46:22Z",
+      "details": {
+        "solver": "B",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "The more money a social enterprise earns, the more capable it becomes of helping disadvantaged groups, which in turn creates a virtuous cycle.",
+            "confidence": "high",
+            "explanation_zh": "「越……就越……」用 the more..., the more... 比較級對應句型；「弱勢族群」譯成 disadvantaged groups；「進而形成良性循環」用 which in turn creates a virtuous cycle。"
+          },
+          "2": {
+            "translation": "However, it is not easy to find out what these people really need, because poverty is often caused by more than one factor.",
+            "confidence": "high",
+            "explanation_zh": "用虛主詞 it is not easy to find out...；「這些人真正需要的」用名詞子句 what these people really need；「原因往往不只一個」譯成 poverty is often caused by more than one factor（也可說 there is often more than one cause of poverty）。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "COMP"
+            ],
+            "used_target_words": [
+              "profit",
+              "help",
+              "disadvantaged",
+              "positive",
+              "cycle"
+            ],
+            "within_accepted": false,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "我寫 the more capable it becomes of helping disadvantaged groups，第 2 部分 accepted 只有 the more able it is to help／the better able it is to help 等；capable of ＋V-ing 是自然的同義寫法，卻不在 accepted 內，建議補 the more capable it is of helping。",
+              "「進而形成」我用非限定關係子句 which in turn creates a virtuous cycle（「進而」恰好對應 in turn），而不是 PART 要求的句尾分詞；accepted 只收 creating／leading to／forming／resulting in。中文「進而」並未強制分詞構句，PART 沒被引出，建議把 which in turn creates／leads to 納入 accepted。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "NCL",
+              "NFSUBJ"
+            ],
+            "used_target_words": [
+              "identify",
+              "need",
+              "poverty",
+              "cause"
+            ],
+            "within_accepted": false,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "第 4 部分「造成貧窮的原因往往不只一個」我照中文結構譯成 because poverty is often caused by more than one factor（被動式＋factor），不在 accepted 內（accepted 都以 poverty has more than one cause 或 there is more than one cause of poverty 為主）。這個譯法正確且貼近中文「造成……」，建議補入 poverty is often caused by more than one factor，並補 factor 為 cause 的 alternative。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "profit",
+              "help",
+              "disadvantaged",
+              "positive",
+              "cycle"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "COMP": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "identify",
+              "need",
+              "poverty",
+              "cause"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NCL": true,
+              "NFSUBJ": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 1 題盲譯沒有用到標的句型 ['PART']：中文題目沒有自然引出這個句型（SPEC §5.7）",
+          "第 1 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義",
+          "第 2 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義"
+        ]
+      }
+    }
+  ],
+  "status": "rejected",
+  "status_reason": "blind_solver:A 未通過：第 1 題盲譯沒有用到標的句型 ['PART']：中文題目沒有自然引出這個句型（SPEC §5.7）；第 1 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義；blind_solver:B 未通過：第 1 題盲譯沒有用到標的句型 ['PART']：中文題目沒有自然引出這個句型（SPEC §5.7）；第 1 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義；第 2 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義；人工審核：第 1 句兩位盲譯都寫 , which in turn creates a virtuous cycle（就是本組 bonus 的寫法，也最貼合「進而」），第 3 部分卻只收句尾分詞，PART 沒被引出；第 2 部分沒收 the more capable it is of helping；第 2 句第 4 部分沒收 poverty is often caused by more than one factor（factor 也不在 cause 的 alternatives）。"
+}

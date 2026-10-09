@@ -1,0 +1,742 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.fdc00c",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "advanced",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "社區裡的樂齡大學，是我祖父這兩年來一直在學畫畫的地方。",
+        "options": null,
+        "answer": "The senior university in our community is the place where my grandfather has been learning to paint for two years.",
+        "accepted_answers": [
+          "The senior university in our neighborhood is the place where my grandfather has been learning to draw for the past two years.",
+          "The community senior university is the place where my grandfather has been taking painting classes for two years."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "關係副詞 where（…的地方）",
+            "現在完成進行式（這兩年來一直在…）"
+          ],
+          "topic": "樂齡大學"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "對那些熱愛學習的退休人士來說，這些課程已經帶來許多樂趣。",
+        "options": null,
+        "answer": "For those retired people who love learning, these courses have brought them a lot of joy.",
+        "accepted_answers": [
+          "For those retired people who enjoy learning, these classes have already brought a lot of fun.",
+          "These courses have already brought a lot of joy to those retired people who love learning."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "對於…的人而言（for those who …）",
+            "現在完成式（已經帶來）"
+          ],
+          "topic": "樂齡大學"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "樂齡大學"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "主詞「社區裡的樂齡大學」譯成 The senior university in our community（地點片語放在名詞後）。「…的地方」要改成名詞＋關係副詞子句：the place where …，子句中「在那裡」的意思由 where 表達，所以不能用 which。「這兩年來一直在學畫畫」從過去持續到現在而且還在進行，用現在完成進行式 has been learning to paint for two years（for 接一段時間）。",
+          "evidence": [
+            "社區裡的樂齡大學",
+            "我祖父這兩年來一直在學畫畫的地方"
+          ],
+          "strategy_zh": "看到「…來一直在…」想到 have/has been＋V-ing；看到「…的地方／…的時候／…的原因」想到 where／when／why 子句。",
+          "hints": [
+            "切成四段：社區裡的樂齡大學／（是我祖父）這兩年來／一直在學畫畫／的地方",
+            "標的詞彙：community（社區）、senior（年長的）、university（大學）、grandfather（祖父）、paint（畫畫）、place（地方）",
+            "句型框架：S + is the place where + S + has been + V-ing + for …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「對那些…的人來說」用 For those (people) who …：For those retired people who love learning；關係子句的動詞要和複數先行詞一致（love，不加 s）。「已經帶來許多樂趣」用現在完成式 have brought them a lot of joy／fun；joy、fun 都是不可數名詞，用 a lot of 或 much。",
+          "evidence": [
+            "對那些熱愛學習的退休人士來說",
+            "已經帶來許多樂趣"
+          ],
+          "strategy_zh": "中文「對…的人來說」常可譯成 For those who …；先確認 those 指的是誰，再讓關係子句的動詞跟著單複數變化。",
+          "hints": [
+            "切成四段：（對那些）熱愛學習的／退休人士（來說）／這些課程／已經帶來許多樂趣",
+            "標的詞彙：retire（退休）、love（熱愛）、learn（學習）、course（課程）、bring（帶來）、joy（樂趣）",
+            "句型框架：For those + N + who + V …, S + have + p.p. …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "The senior university in our community is the place where my grandfather has been learning to paint for two years.",
+            "The senior university in our neighborhood is the place where my grandfather has been learning to draw for the past two years.",
+            "The community senior university is the place where my grandfather has been taking painting classes for two years."
+          ],
+          "target_words": [
+            {
+              "word": "community",
+              "zh": "社區",
+              "alternatives": [
+                "neighborhood",
+                "local"
+              ]
+            },
+            {
+              "word": "senior",
+              "zh": "樂齡（年長的）",
+              "alternatives": [
+                "elderly",
+                "older",
+                "old",
+                "aged"
+              ]
+            },
+            {
+              "word": "university",
+              "zh": "大學",
+              "alternatives": [
+                "college"
+              ]
+            },
+            {
+              "word": "grandfather",
+              "zh": "祖父",
+              "alternatives": [
+                "grandpa"
+              ]
+            },
+            {
+              "word": "paint",
+              "zh": "畫畫",
+              "alternatives": [
+                "draw",
+                "painting",
+                "drawing"
+              ]
+            },
+            {
+              "word": "place",
+              "zh": "地方"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "REL",
+              "grammar_id": "gp-relative-adverb",
+              "label_zh": "關係副詞 where（…的地方）",
+              "frame": "the place where + S + V",
+              "zh_trigger": "的地方"
+            },
+            {
+              "code": "PERF",
+              "grammar_id": "gp-present-perfect-progressive",
+              "label_zh": "現在完成進行式（這兩年來一直在…）",
+              "frame": "S + have/has been + V-ing + for …",
+              "zh_trigger": "這兩年來一直在"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "社區裡的樂齡大學",
+              "accepted": [
+                "The senior university in our community",
+                "The senior university in our neighborhood",
+                "The community senior university",
+                "The senior university in the community",
+                "The university for seniors in our community",
+                "Our community's senior university"
+              ],
+              "targets": [
+                "community",
+                "senior",
+                "university"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "The happy-age university",
+                  "right": "The senior university",
+                  "explanation_zh": "「樂齡」不要逐字翻，指的是給年長者上課的大學，說 senior university 或 university for seniors。"
+                }
+              ]
+            },
+            {
+              "zh": "這兩年來",
+              "accepted": [
+                "for two years",
+                "for the past two years",
+                "over the past two years",
+                "for the last two years"
+              ],
+              "targets": [
+                "PERF"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "since two years",
+                  "right": "for two years",
+                  "explanation_zh": "接一段時間用 for；since 後面接時間的起點（since 2024）。"
+                }
+              ]
+            },
+            {
+              "zh": "一直在學畫畫",
+              "accepted": [
+                "has been learning to paint",
+                "has been learning to draw",
+                "has been taking painting classes",
+                "has been learning painting",
+                "has been studying painting"
+              ],
+              "targets": [
+                "PERF",
+                "grandfather",
+                "paint"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "is learning to paint",
+                  "right": "has been learning to paint",
+                  "explanation_zh": "「這兩年來一直在學」是從過去持續到現在而且還在進行，要用現在完成進行式 has been＋V-ing。"
+                },
+                {
+                  "wrong": "has been learn to paint",
+                  "right": "has been learning to paint",
+                  "explanation_zh": "完成進行式是 have/has been＋V-ing。"
+                }
+              ]
+            },
+            {
+              "zh": "的地方",
+              "accepted": [
+                "is the place where",
+                "is where",
+                "is the place in which"
+              ],
+              "targets": [
+                "REL",
+                "place"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "is the place which my grandfather has been learning to paint",
+                  "right": "is the place where my grandfather has been learning to paint",
+                  "explanation_zh": "子句裡已經有完整的主詞和動詞，缺的是「在那裡」，要用關係副詞 where（＝in which），不能用 which。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "tense_trigger",
+              "zh": "這兩年來一直在",
+              "literal_error": "my grandfather is learning to paint for two years",
+              "part": 3,
+              "explanation_zh": "「…來一直在…」要用現在完成進行式 has been learning，配 for two years。"
+            },
+            {
+              "type": "prenominal_modifier",
+              "zh": "我祖父這兩年來一直在學畫畫的地方",
+              "literal_error": "is my grandfather has been learning to paint place",
+              "part": 4,
+              "explanation_zh": "「…的地方」修飾語很長，英文要寫成 the place where＋子句。"
+            }
+          ],
+          "bonus": [],
+          "restructuring_zh": "「是我祖父這兩年來一直在學畫畫的地方」是很長的前置修飾，英文要先寫 the place，再用關係副詞 where 引導子句 where my grandfather has been learning to paint for two years。"
+        },
+        "2": {
+          "references": [
+            "For those retired people who love learning, these courses have brought them a lot of joy.",
+            "For those retired people who enjoy learning, these classes have already brought a lot of fun.",
+            "These courses have already brought a lot of joy to those retired people who love learning."
+          ],
+          "target_words": [
+            {
+              "word": "retire",
+              "zh": "退休",
+              "alternatives": [
+                "retiree",
+                "retirees"
+              ]
+            },
+            {
+              "word": "love",
+              "zh": "熱愛",
+              "alternatives": [
+                "enjoy",
+                "like"
+              ]
+            },
+            {
+              "word": "learn",
+              "zh": "學習"
+            },
+            {
+              "word": "course",
+              "zh": "課程",
+              "alternatives": [
+                "class"
+              ]
+            },
+            {
+              "word": "bring",
+              "zh": "帶來",
+              "alternatives": [
+                "give"
+              ]
+            },
+            {
+              "word": "joy",
+              "zh": "樂趣",
+              "alternatives": [
+                "fun",
+                "pleasure"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "REL",
+              "grammar_id": "gp-for-those-who",
+              "label_zh": "對於…的人而言（for those who …）",
+              "frame": "For those (+ N) who + V …, S + V",
+              "zh_trigger": "對那些"
+            },
+            {
+              "code": "PERF",
+              "grammar_id": "gp-present-perfect",
+              "label_zh": "現在完成式（已經帶來）",
+              "frame": "S + have/has (+ already) + p.p.",
+              "zh_trigger": "已經帶來"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "熱愛學習的",
+              "accepted": [
+                "who love learning",
+                "who enjoy learning",
+                "who love to learn",
+                "who are fond of learning",
+                "who really enjoy learning",
+                "who like learning very much"
+              ],
+              "targets": [
+                "REL",
+                "love",
+                "learn"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "who loves learning",
+                  "right": "who love learning",
+                  "explanation_zh": "先行詞 those retired people 是複數，關係子句動詞不加 s。"
+                },
+                {
+                  "wrong": "those love learning retired people",
+                  "right": "those retired people who love learning",
+                  "explanation_zh": "「熱愛學習的」要改成關係子句放在名詞後面。"
+                }
+              ]
+            },
+            {
+              "zh": "退休人士",
+              "accepted": [
+                "For those retired people",
+                "to those retired people",
+                "For retired people",
+                "For retirees",
+                "For those retirees"
+              ],
+              "targets": [
+                "retire"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "For those retire people",
+                  "right": "For those retired people",
+                  "explanation_zh": "「退休的」用形容詞 retired 修飾 people。"
+                }
+              ]
+            },
+            {
+              "zh": "這些課程",
+              "accepted": [
+                "these courses",
+                "these classes",
+                "such courses",
+                "the courses"
+              ],
+              "targets": [
+                "course"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "this courses",
+                  "right": "these courses",
+                  "explanation_zh": "複數名詞前用 these。"
+                }
+              ]
+            },
+            {
+              "zh": "已經帶來許多樂趣",
+              "accepted": [
+                "have brought them a lot of joy",
+                "have already brought a lot of fun",
+                "have already brought a lot of joy",
+                "have brought them great joy",
+                "have brought them much joy",
+                "have given them a lot of fun"
+              ],
+              "targets": [
+                "PERF",
+                "bring",
+                "joy"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "have brought them many funs",
+                  "right": "have brought them a lot of fun",
+                  "explanation_zh": "fun、joy 是不可數名詞，用 a lot of／much，不加 s。"
+                },
+                {
+                  "wrong": "have bring them a lot of joy",
+                  "right": "have brought them a lot of joy",
+                  "explanation_zh": "現在完成式用過去分詞 brought。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "prenominal_modifier",
+              "zh": "熱愛學習的退休人士",
+              "literal_error": "For those love learning retired people, …",
+              "part": 1,
+              "explanation_zh": "「熱愛學習的退休人士」要改成 those retired people who love learning，用關係子句後位修飾。"
+            },
+            {
+              "type": "plural_countable",
+              "zh": "許多樂趣",
+              "literal_error": "have brought them many funs",
+              "part": 4,
+              "explanation_zh": "fun、joy 不可數，「許多」用 a lot of／much。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "What these courses have brought those retired people who love learning is a great deal of joy.",
+              "grammar_id": "gp-what-cleft",
+              "explanation_zh": "用 What … is … 的準分裂句強調「帶來的是樂趣」，屬於加分寫法；一般的現在完成式句子就能拿滿分。"
+            }
+          ],
+          "restructuring_zh": "「對那些熱愛學習的退休人士來說」要改寫成 For those retired people who love learning，前置修飾改成 who 引導的關係子句。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-advanced-01",
+    "lot": "translation-advanced-01",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "aabb674c20baad2f5310b8b4d808a265893e2edf0c2a598bf8b873bfdfb38f0f",
+    "spec_id": "translation-advanced@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T12:42:29Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "warn",
+      "created_at": "2026-10-09T07:45:00Z",
+      "details": {
+        "solver": "A",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "The university for seniors in our community is the place where my grandfather has been learning to paint for the past two years.",
+            "confidence": "medium",
+            "explanation_zh": "「……是……的地方」用 the place where 關係副詞子句；「這兩年來一直在學」用現在完成進行式 has been learning … for the past two years；「樂齡大學」沒有固定英文，譯為 the university for seniors（也可 senior citizens' college）。信心 medium 主要因為「樂齡大學」的譯名不固定，題目也沒附英文。"
+          },
+          "2": {
+            "translation": "For those retired people who love learning, these courses have already brought them a lot of joy.",
+            "confidence": "high",
+            "explanation_zh": "「對……來說」用 For …；「熱愛學習的退休人士」用限定關係子句 retired people who love learning；「已經帶來許多樂趣」用現在完成式 have already brought … a lot of joy（joy、pleasure、fun 皆可）。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "REL",
+              "PERF"
+            ],
+            "used_target_words": [
+              "community",
+              "senior",
+              "university",
+              "grandfather",
+              "paint",
+              "place"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "（小建議，不影響判定）「樂齡大學」是台灣特有的名稱，沒有固定英文，題目也沒有在括號附英文；P1 的 accepted 與 senior／university 的 alternatives 已放得夠寬（elderly、older、college 都算），但學生可能寫成 learning center for seniors 之類，建議批改時從寬或在 accepted 再補。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "REL",
+              "PERF"
+            ],
+            "used_target_words": [
+              "retire",
+              "love",
+              "learn",
+              "course",
+              "bring",
+              "joy"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "warn",
+            "parts_check": "pass",
+            "issues_zh": [
+              "R1 these classes have already brought a lot of fun 少了受詞對象（brought … fun 不接 to them 讀起來不完整），且 bring fun 不是最自然的搭配；建議改成 have already brought them a lot of pleasure／joy。",
+              "P4 可接受寫法 have given them a lot of fun 不是道地英文（give sb fun 不自然），建議改成 have given them a lot of pleasure；common_errors 的訂正 have brought them a lot of fun 也建議改用 joy 或 pleasure。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "community",
+              "senior",
+              "university",
+              "grandfather",
+              "paint",
+              "place"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "REL": true,
+              "PERF": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "retire",
+              "love",
+              "learn",
+              "course",
+              "bring",
+              "joy"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "REL": true,
+              "PERF": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 2 題驗證者對參考譯文有意見（warn）：R1 these classes have already brought a lot of fun 少了受詞對象（brought … fun 不接 to them 讀起來不完整），且 bring fun 不是最自然的搭配；建議改成 hav"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "warn",
+      "created_at": "2026-10-09T07:46:21Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "The senior university in the community is the place where my grandfather has been learning to paint for the past two years.",
+            "confidence": "high",
+            "explanation_zh": "中文是「A 是 B 一直在學畫畫的地方」，用 the place where 關係副詞子句；「這兩年來一直在學」用現在完成進行式 has been learning ... for the past two years；「樂齡大學」譯為 senior university。"
+          },
+          "2": {
+            "translation": "For retirees who love learning, these courses have already brought a great deal of joy.",
+            "confidence": "high",
+            "explanation_zh": "「對那些…來說」用 For retirees who love learning；「已經帶來」用現在完成式 have already brought；「許多樂趣」用 a great deal of joy（joy 不可數）。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "REL",
+              "PERF"
+            ],
+            "used_target_words": [
+              "community",
+              "senior",
+              "university",
+              "grandfather",
+              "paint",
+              "place"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "部分切分有漏洞：「是我祖父」沒有放進任何一個部分，而標的詞彙 grandfather 卻被掛在第 3 部分「一直在學畫畫」底下，該部分的 accepted 全都沒有 my grandfather，學生把祖父譯錯（例如 grandmother）也不會被扣分。建議把「我祖父」併入第 3 部分，accepted 改成 my grandfather has been learning to paint 這類寫法，「是」併入第 4 部分。",
+              "備註：參考譯文的 senior university 是直譯，英文讀者可能把 senior 想成「四年級」；university for seniors 較清楚（第 1 部分 accepted 已收）。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "REL",
+              "PERF"
+            ],
+            "used_target_words": [
+              "retire",
+              "love",
+              "learn",
+              "course",
+              "bring",
+              "joy"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "community",
+              "senior",
+              "university",
+              "grandfather",
+              "paint",
+              "place"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "REL": true,
+              "PERF": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "retire",
+              "love",
+              "learn",
+              "course",
+              "bring",
+              "joy"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "REL": true,
+              "PERF": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 1 題驗證者對4 部分切分有意見（warn）：部分切分有漏洞：「是我祖父」沒有放進任何一個部分，而標的詞彙 grandfather 卻被掛在第 3 部分「一直在學畫畫」底下，該部分的 accepted 全都沒有 my grandfather，學生把祖父譯錯（例如 grandmother"
+        ]
+      }
+    }
+  ],
+  "status": "rejected",
+  "status_reason": "判定者人工審查（第 1 輪）：評分規準有實質問題。①第 1 題 4 部分切分不一致：「是我祖父」沒有放進任何一個部分，標的詞彙 grandfather 卻掛在第 3 部分「一直在學畫畫」底下，該部分的 accepted 全都沒有 my grandfather（祖父漏譯或譯錯都不會被扣分）；hints 的切分又把「（是我祖父）」放在第 2 部分「這兩年來」，學生看到的鷹架和評分規準對不上（驗證者 B 判 warn）。②第 2 題第 4 部分 accepted 收了 have given them a lot of fun，give sb fun 是常見的中式英文，不該列為可接受寫法；參考譯文 R1 these classes have already brought a lot of fun 沒有受惠對象，bring fun 的搭配也不自然（驗證者 A 判 warn）。另：「樂齡大學」是台灣特有名稱，題目沒有在括號附英文（README §3.5）。重生時把「我祖父」併入第 3 部分（my grandfather has been learning to paint）、「是」併入第 4 部分並同步修改 hints；第 2 題改用 joy／pleasure（have brought them a lot of joy、have given them a lot of pleasure），刪掉 give … fun 與不接對象的 brought a lot of fun；「樂齡大學」在括號附英文或改寫題目。"
+}

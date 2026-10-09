@@ -1,0 +1,800 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.89688d",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "top",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "由於氣候變遷，要確保農民所種的足以養活全國人民並不容易。",
+        "options": null,
+        "answer": "Because of climate change, it is not easy to ensure that what farmers grow is sufficient to feed the whole population.",
+        "accepted_answers": [
+          "Due to climate change, it is not easy to make sure that what farmers grow is enough to feed the entire nation.",
+          "As a result of climate change, it is hard to ensure that what farmers grow is enough to feed everyone in the country."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "what 名詞子句（農民所種的＝what farmers grow，當 that 子句的主詞）",
+            "虛主詞 It ＋形容詞＋不定詞（要確保…並不容易）"
+          ],
+          "topic": "糧食安全"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "因此，種植耐旱作物可以提高糧食產量，使農民在少雨的年份也免於重大損失。",
+        "options": null,
+        "answer": "Therefore, growing crops that can survive droughts can increase food production, protecting farmers from heavy losses even in years of low rainfall.",
+        "accepted_answers": [
+          "Therefore, planting drought-resistant crops can help raise food production, saving farmers from serious losses even in years with little rain.",
+          "Therefore, growing crops that can resist drought can boost food production, sparing farmers heavy losses even in years when it rarely rains."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "動名詞（或不定詞）片語當主詞（種植耐旱作物：Growing … can …）",
+            "句尾分詞片語表結果（…，使農民…免於重大損失）"
+          ],
+          "topic": "糧食安全"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "糧食安全"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「要確保…並不容易」用虛主詞 It is not easy to ensure that …，比把長長的不定詞放在句首自然。「農民所種的」後面沒有名詞，英文用 what farmers grow（＝the things that farmers grow）當 that 子句的主詞，what 子句視為單數，動詞用 is。「足以…」是 be sufficient／enough to VR；「全國人民」寫 the whole population 或 everyone in the country。",
+          "evidence": [
+            "要確保農民所種的足以養活全國人民並不容易",
+            "農民所種的"
+          ],
+          "strategy_zh": "先決定主幹 It is not easy to ensure that＋子句；再把子句的主詞「農民所種的」寫成 what farmers grow。",
+          "hints": [
+            "切成四段：由於氣候變遷／要確保（…並不容易）／農民所種的／足以養活全國人民",
+            "標的詞彙：climate（氣候）、ensure（確保）、farmer（農民）、grow（種植）、feed（養活）",
+            "句型框架：It is not easy to ensure that + what + S + V + is sufficient to VR …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「因此」承接第 1 句，用 Therefore,。「種植耐旱作物」是動詞片語當主詞，英文用動名詞 Growing（或 Planting）…，後面接 can increase；「耐旱的作物」可寫 drought-resistant crops 或 crops that can survive droughts。「，使農民…免於重大損失」是前面這件事帶來的結果，用句尾分詞片語 protecting／saving farmers from heavy losses；「在少雨的年份也…」放在句尾，寫 even in years of low rainfall（或 even in years with little rain、even in dry years）。",
+          "evidence": [
+            "種植耐旱作物可以提高糧食產量",
+            "使農民在少雨的年份也免於重大損失"
+          ],
+          "strategy_zh": "先寫動名詞主詞 Growing drought-resistant crops，再接 can increase food production；最後在逗號後用 protecting farmers from … 帶出結果，時間放句尾。",
+          "hints": [
+            "切成四段：種植耐旱作物／可以提高糧食產量／使農民／在少雨的年份也免於重大損失",
+            "標的詞彙：grow（種植）、crop（作物）、drought（乾旱）、production（產量）、loss（損失）",
+            "句型框架：Therefore, V-ing … + can + V …, protecting + O + from + N + even in …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "Because of climate change, it is not easy to ensure that what farmers grow is sufficient to feed the whole population.",
+            "Due to climate change, it is not easy to make sure that what farmers grow is enough to feed the entire nation.",
+            "As a result of climate change, it is hard to ensure that what farmers grow is enough to feed everyone in the country."
+          ],
+          "target_words": [
+            {
+              "word": "climate",
+              "zh": "氣候"
+            },
+            {
+              "word": "ensure",
+              "zh": "確保",
+              "alternatives": [
+                "make sure",
+                "guarantee"
+              ]
+            },
+            {
+              "word": "farmer",
+              "zh": "農民",
+              "alternatives": [
+                "farmers"
+              ]
+            },
+            {
+              "word": "grow",
+              "zh": "種植",
+              "alternatives": [
+                "produce",
+                "raise",
+                "plant",
+                "harvest"
+              ]
+            },
+            {
+              "word": "feed",
+              "zh": "養活",
+              "alternatives": [
+                "support",
+                "nourish"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "NCL",
+              "grammar_id": "gp-what-clause",
+              "label_zh": "what 名詞子句（農民所種的＝what farmers grow，當 that 子句的主詞）",
+              "frame": "… that + what + S + V + is …",
+              "zh_trigger": "農民所種的"
+            },
+            {
+              "code": "NFSUBJ",
+              "grammar_id": "gp-it-adj-to",
+              "label_zh": "虛主詞 It ＋形容詞＋不定詞（要確保…並不容易）",
+              "frame": "It is not + adj. + to VR …",
+              "zh_trigger": "並不容易"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "由於氣候變遷",
+              "accepted": [
+                "Because of climate change",
+                "Due to climate change",
+                "As a result of climate change",
+                "Owing to climate change",
+                "Because the climate is changing",
+                "With climate change"
+              ],
+              "targets": [
+                "climate"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Because climate change,",
+                  "right": "Because of climate change,",
+                  "explanation_zh": "because 後面接子句；接名詞要用 because of 或 due to。"
+                },
+                {
+                  "wrong": "Due to climate changing,",
+                  "right": "Due to climate change,",
+                  "explanation_zh": "「氣候變遷」是固定名詞 climate change。"
+                }
+              ]
+            },
+            {
+              "zh": "要確保",
+              "accepted": [
+                "it is not easy to ensure that",
+                "it is not easy to make sure that",
+                "it is hard to ensure that",
+                "it is difficult to ensure that",
+                "it is not easy to ensure",
+                "it is not easy to guarantee that",
+                "it is difficult to make sure that",
+                "it is hard to make sure that"
+              ],
+              "targets": [
+                "NFSUBJ",
+                "ensure"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Ensure that what farmers grow is sufficient to feed the whole population is not easy",
+                  "right": "It is not easy to ensure that what farmers grow is sufficient to feed the whole population",
+                  "explanation_zh": "動詞原形不能當主詞；「要確保…並不容易」用虛主詞 It is not easy to ensure that …。"
+                },
+                {
+                  "wrong": "it is not easy to ensuring",
+                  "right": "it is not easy to ensure",
+                  "explanation_zh": "It is … to 後面接原形動詞。"
+                }
+              ]
+            },
+            {
+              "zh": "農民所種的",
+              "accepted": [
+                "what farmers grow",
+                "what farmers produce",
+                "what the farmers grow",
+                "what farmers can grow",
+                "what farmers plant"
+              ],
+              "targets": [
+                "NCL",
+                "farmer",
+                "grow"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "that farmers grow is sufficient",
+                  "right": "that what farmers grow is sufficient",
+                  "explanation_zh": "「農民所種的」沒有被修飾的名詞，要用 what 引導名詞子句當主詞；漏掉 what，that 子句就沒有主詞。"
+                },
+                {
+                  "wrong": "that the things what farmers grow are sufficient",
+                  "right": "that what farmers grow is sufficient",
+                  "explanation_zh": "what 本身就等於 the things that，前面不能再加先行詞；要用 the things 就寫 the things (that) farmers grow。"
+                }
+              ]
+            },
+            {
+              "zh": "足以養活全國人民",
+              "accepted": [
+                "is sufficient to feed the whole population",
+                "is enough to feed the entire nation",
+                "is enough to feed everyone in the country",
+                "is enough to feed the whole population",
+                "can feed the whole population",
+                "is sufficient to feed the entire nation",
+                "is enough to feed the whole country",
+                "is enough to feed the entire population",
+                "is enough to feed the whole nation"
+              ],
+              "targets": [
+                "feed"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "is sufficient to feed all the country people",
+                  "right": "is sufficient to feed the whole population",
+                  "explanation_zh": "country people 是「鄉下人」；「全國人民」寫 the whole population 或 everyone in the country。"
+                },
+                {
+                  "wrong": "is enough to feeding the whole population",
+                  "right": "is enough to feed the whole population",
+                  "explanation_zh": "enough to 的 to 是不定詞，後面接原形動詞 feed。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "abstract_nominal",
+              "zh": "氣候變遷",
+              "literal_error": "Because the weather changes,",
+              "part": 1,
+              "explanation_zh": "「氣候變遷」是固定的抽象名詞 climate change，指長期的氣候改變，不是每天的天氣變化 weather changes。"
+            },
+            {
+              "type": "subjectless",
+              "zh": "農民所種的",
+              "literal_error": "it is not easy to ensure that farmers grow is sufficient to feed the whole population",
+              "part": 3,
+              "explanation_zh": "中文「農民所種的」省略了中心名詞，直接當主詞；英文要補 what 形成名詞子句，否則 that 子句裡的 is 沒有主詞。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "Because of climate change, there is no guarantee that what farmers grow will be sufficient to feed the whole population.",
+              "grammar_id": "gp-appositive-that",
+              "explanation_zh": "用 there is no guarantee that …（不能保證…）改寫「要確保…並不容易」，搭配同位語 that 子句，語氣更正式。"
+            }
+          ],
+          "restructuring_zh": "「要確保…並不容易」中文以動詞片語當主詞，英文用虛主詞 It is not easy to ensure that …；「農民所種的」省略了中心名詞，要改成 what 名詞子句 what farmers grow，當 that 子句的主詞。"
+        },
+        "2": {
+          "references": [
+            "Therefore, growing crops that can survive droughts can increase food production, protecting farmers from heavy losses even in years of low rainfall.",
+            "Therefore, planting drought-resistant crops can help raise food production, saving farmers from serious losses even in years with little rain.",
+            "Therefore, growing crops that can resist drought can boost food production, sparing farmers heavy losses even in years when it rarely rains."
+          ],
+          "target_words": [
+            {
+              "word": "grow",
+              "zh": "種植",
+              "alternatives": [
+                "plant",
+                "cultivate",
+                "develop",
+                "breed",
+                "raise"
+              ]
+            },
+            {
+              "word": "crop",
+              "zh": "作物",
+              "alternatives": [
+                "plant",
+                "plants"
+              ]
+            },
+            {
+              "word": "drought",
+              "zh": "旱（耐旱）",
+              "alternatives": [
+                "dry"
+              ]
+            },
+            {
+              "word": "production",
+              "zh": "產量",
+              "alternatives": [
+                "output",
+                "yield",
+                "yields",
+                "harvest",
+                "harvests",
+                "supply"
+              ]
+            },
+            {
+              "word": "loss",
+              "zh": "損失",
+              "alternatives": [
+                "lose",
+                "losing",
+                "damage"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "NFSUBJ",
+              "grammar_id": "gp-gerund-subject",
+              "label_zh": "動名詞（或不定詞）片語當主詞（種植耐旱作物：Growing … can …）",
+              "frame": "V-ing … + can + V …",
+              "zh_trigger": "種植耐旱作物"
+            },
+            {
+              "code": "PART",
+              "grammar_id": "gp-participle-result",
+              "label_zh": "句尾分詞片語表結果（…，使農民…免於重大損失）",
+              "frame": "S + V …, protecting/saving + O + from + N …",
+              "zh_trigger": "使農民"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "種植耐旱作物",
+              "accepted": [
+                "growing crops that can survive droughts",
+                "planting drought-resistant crops",
+                "growing crops that can resist drought",
+                "growing drought-resistant crops",
+                "planting crops that can survive drought",
+                "growing drought-tolerant crops",
+                "cultivating drought-resistant crops",
+                "developing drought-resistant crops",
+                "planting drought-tolerant crops",
+                "growing crops that can survive drought",
+                "growing crops that are drought-resistant",
+                "planting crops that can withstand drought",
+                "growing crops that can withstand drought",
+                "growing crops that can tolerate drought",
+                "planting crops that are resistant to drought",
+                "growing crops resistant to drought"
+              ],
+              "targets": [
+                "NFSUBJ",
+                "grow",
+                "crop",
+                "drought"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Plant drought-resistant crops can increase food production",
+                  "right": "Planting drought-resistant crops can increase food production",
+                  "explanation_zh": "動詞原形不能當主詞；「種植耐旱作物」這個動作當主詞，要改成動名詞 Planting／Growing …。"
+                },
+                {
+                  "wrong": "Growing crops can survive droughts can increase food production",
+                  "right": "Growing crops that can survive droughts can increase food production",
+                  "explanation_zh": "「耐旱的」改寫成關係子句時要有關係代名詞 that；少了 that，句子會出現兩個「can＋動詞」。"
+                }
+              ]
+            },
+            {
+              "zh": "可以提高糧食產量",
+              "accepted": [
+                "can increase food production",
+                "can help raise food production",
+                "can boost food production",
+                "can raise food production",
+                "can increase food output",
+                "can increase crop yields",
+                "can improve food production",
+                "can help increase food production",
+                "can increase grain production",
+                "can raise food output",
+                "can boost food output",
+                "can improve food output",
+                "can increase food yields",
+                "can increase the food supply"
+              ],
+              "targets": [
+                "production"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "can increases food production",
+                  "right": "can increase food production",
+                  "explanation_zh": "情態助動詞 can 後面接原形動詞。"
+                },
+                {
+                  "wrong": "can increase food productions",
+                  "right": "can increase food production",
+                  "explanation_zh": "「產量」的 production 是不可數名詞，不加 s（productions 是「作品、演出」）。"
+                }
+              ]
+            },
+            {
+              "zh": "使農民",
+              "accepted": [
+                "protecting farmers",
+                "saving farmers",
+                "sparing farmers",
+                "keeping farmers",
+                "shielding farmers",
+                "helping farmers",
+                "preventing farmers"
+              ],
+              "targets": [
+                "PART"
+              ],
+              "common_errors": [
+                {
+                  "wrong": ", protects farmers from heavy losses",
+                  "right": ", protecting farmers from heavy losses",
+                  "explanation_zh": "逗號後面不能再接一個主要動詞 protects；表示前面整件事帶來的結果，用分詞 protecting。"
+                },
+                {
+                  "wrong": ", protect farmers from heavy losses",
+                  "right": ", protecting farmers from heavy losses",
+                  "explanation_zh": "原形動詞不能直接接在逗號後面表結果，要用分詞 protecting／saving。"
+                }
+              ]
+            },
+            {
+              "zh": "在少雨的年份也免於重大損失",
+              "accepted": [
+                "from heavy losses even in years of low rainfall",
+                "from serious losses even in years with little rain",
+                "from heavy losses even in years with little rain",
+                "from serious losses even in years of low rainfall",
+                "heavy losses even in years when it rarely rains",
+                "from heavy losses even in dry years",
+                "from serious losses even in dry years",
+                "from big losses even in years with little rain",
+                "avoid heavy losses even in dry years",
+                "from heavy losses even in years of drought",
+                "from suffering heavy losses even in dry years",
+                "from huge losses even in dry years",
+                "avoid serious losses even in years with little rain",
+                "from suffering heavy losses even in years with little rain",
+                "from suffering serious losses even in dry years",
+                "from major losses even in years with little rain",
+                "from heavy losses even when there is little rain",
+                "from heavy losses even in years when rainfall is low",
+                "from great losses even in years of low rainfall"
+              ],
+              "targets": [
+                "loss"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "from heavy losing even in dry years",
+                  "right": "from heavy losses even in dry years",
+                  "explanation_zh": "「損失」是名詞 losses（形容詞 heavy 修飾名詞）；losing 是動名詞，不能用 heavy 修飾。"
+                },
+                {
+                  "wrong": "from heavy losses even in years of few rain",
+                  "right": "from heavy losses even in years of little rain",
+                  "explanation_zh": "rain 是不可數名詞，「很少」用 little，不用 few。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "verbal_subject",
+              "zh": "種植耐旱作物",
+              "literal_error": "Therefore, plant drought-resistant crops can increase food production.",
+              "part": 1,
+              "explanation_zh": "中文動詞片語直接當主詞；英文動詞原形不能當主詞，要改成動名詞 Growing／Planting …（動名詞主詞視為單數）。"
+            },
+            {
+              "type": "word_form",
+              "zh": "使農民",
+              "literal_error": "Therefore, growing drought-resistant crops can increase food production, makes farmers avoid heavy losses.",
+              "part": 3,
+              "explanation_zh": "中文用逗號接「使農民…」；英文逗號後面不能再接一個主要動詞 makes，要改用句尾分詞 protecting／saving farmers from … 表示結果。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "Therefore, growing drought-resistant crops can boost food production, shielding farmers from devastating losses even when the rains fail.",
+              "explanation_zh": "shield … from（保護…免於）與 devastating losses（慘重的損失）用字更精準；when the rains fail 是「久旱不雨、雨季沒來」的道地說法。"
+            }
+          ],
+          "restructuring_zh": "「種植耐旱作物可以提高糧食產量」以動作當主詞，英文改用動名詞主詞 Growing …；「耐旱作物」可以寫成關係子句 crops that can survive droughts；「，使農民…免於重大損失」不另起一句，用句尾分詞 protecting farmers from heavy losses 表結果，「在少雨的年份」移到句尾。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ac-V-3",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-top-02-regen",
+    "lot": "translation-top-02",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "fea97c14fa3e45cbc507a5a9130c0ea2bc91f32008c7fde55fb98b627572675d",
+    "spec_id": "translation-top@2026-10-09",
+    "regenerated_from": "ai.tr.1053ce"
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T14:57:36Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T14:30:00Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Because of climate change, it is not easy to ensure that what farmers grow is enough to feed the whole country.",
+            "confidence": "high",
+            "explanation_zh": "「由於」用 Because of 接名詞；「要確保…並不容易」用 it is not easy to ensure that ...；「農民所種的」用 what 名詞子句 what farmers grow 當主詞；「足以養活全國人民」用 be enough to feed（全國人民寫 the whole country／everyone in the country 都可）。"
+          },
+          "2": {
+            "translation": "Therefore, growing drought-resistant crops can increase food production, protecting farmers from serious losses even in years with little rain.",
+            "confidence": "high",
+            "explanation_zh": "「種植耐旱作物」用動名詞片語當主詞 growing drought-resistant crops；「使農民…免於重大損失」是提高產量帶來的結果，用句尾分詞 protecting farmers from ...；「在少雨的年份也」用 even in years with little rain。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "NCL",
+              "NFSUBJ"
+            ],
+            "used_target_words": [
+              "climate",
+              "ensure",
+              "farmer",
+              "grow",
+              "feed"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "NFSUBJ",
+              "PART"
+            ],
+            "used_target_words": [
+              "grow",
+              "crop",
+              "drought",
+              "production",
+              "loss"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "climate",
+              "ensure",
+              "farmer",
+              "grow",
+              "feed"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NCL": true,
+              "NFSUBJ": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "grow",
+              "crop",
+              "drought",
+              "production",
+              "loss"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NFSUBJ": true,
+              "PART": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "fail",
+      "created_at": "2026-10-09T14:31:33Z",
+      "details": {
+        "solver": "B",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Because of climate change, it is not easy to ensure that what farmers grow is enough to feed the whole nation.",
+            "confidence": "high",
+            "explanation_zh": "「由於」用 Because of；「確保」用 ensure that；「農民所種的」用名詞子句 what farmers grow 當主詞；「足以養活」用 be enough to feed。"
+          },
+          "2": {
+            "translation": "Therefore, growing drought-resistant crops can increase food production and keep farmers from suffering major losses even in years with little rain.",
+            "confidence": "high",
+            "explanation_zh": "動名詞 growing 當主詞；「耐旱作物」用複合形容詞 drought-resistant；「使農民免於重大損失」用 keep farmers from suffering；「少雨的年份」用 years with little rain。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "NCL",
+              "NFSUBJ"
+            ],
+            "used_target_words": [
+              "climate",
+              "ensure",
+              "farmer",
+              "grow",
+              "feed"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "NFSUBJ"
+            ],
+            "used_target_words": [
+              "grow",
+              "crop",
+              "drought",
+              "production",
+              "loss"
+            ],
+            "within_accepted": false,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "PART 沒有被中文引出：「…可以提高糧食產量，使農民…免於重大損失」我自然譯成「can increase food production and keep farmers from suffering major losses…」（兩個動詞並列），沒有用句尾分詞片語；並列寫法同樣自然、正確，中文並沒有迫使人用分詞。",
+              "第 3、4 部分的 accepted 只收分詞寫法（protecting／saving／sparing／keeping farmers…），不收「and keep／protect farmers from…」或「so that farmers…」，我這個正確的譯法因此落在可接受寫法之外。建議在 accepted 補並列寫法並把 PART 視為加分句型，或把中文改成較能引出分詞片語的寫法。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "climate",
+              "ensure",
+              "farmer",
+              "grow",
+              "feed"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NCL": true,
+              "NFSUBJ": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "grow",
+              "crop",
+              "drought",
+              "production",
+              "loss"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NFSUBJ": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 2 題盲譯沒有用到標的句型 ['PART']：中文題目沒有自然引出這個句型（SPEC §5.7）",
+          "第 2 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義"
+        ]
+      }
+    }
+  ],
+  "status": "rejected",
+  "status_reason": "blind_solver:B 未通過：第 2 題盲譯沒有用到標的句型 ['PART']：中文題目沒有自然引出這個句型（SPEC §5.7）；第 2 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義"
+}

@@ -1,0 +1,774 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.721b89",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "top",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "對在老社區住了一輩子的人來說，無論都市更新（urban renewal）提供多少補償，搬家都很痛苦。",
+        "options": null,
+        "answer": "For those who have lived in old neighborhoods all their lives, moving is painful no matter how much compensation urban renewal offers.",
+        "accepted_answers": [
+          "For those who have spent their whole lives in old communities, no matter how much compensation urban renewal provides, moving is still painful.",
+          "For those who have lived in old neighborhoods all their lives, moving out is always painful, no matter how much money urban renewal offers them."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "對…的人來說（For those who …）",
+            "讓步：無論多少（no matter how much）"
+          ],
+          "topic": "都市更新"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "他們的老家將被改建成高樓，這意味著他們從小長大的那條街也將永遠消失。",
+        "options": null,
+        "answer": "Their old homes will be replaced by tall buildings, which means the street where they grew up will also vanish forever.",
+        "accepted_answers": [
+          "Their old houses will be turned into high-rise buildings, which means that the street where they grew up will also disappear forever.",
+          "Their old homes will be rebuilt as tall buildings, which means the street where they spent their childhood will also be gone forever."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "非限定關係子句（, which means）",
+            "關係副詞 where"
+          ],
+          "topic": "都市更新"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "都市更新"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「對在老社區住了一輩子的人來說」用 For those who …（對於…的人），those 後面用 who 子句修飾；「住了一輩子」到現在仍持續，用現在完成式 have lived … all their lives。「無論…多少補償」用 no matter how much + 不可數名詞 compensation + 主詞 + 動詞（直述句語序），放句首或句尾都可以。「搬家」當主詞用動名詞 moving，動詞用單數 is。",
+          "evidence": [
+            "對在老社區住了一輩子的人來說",
+            "無論都市更新（urban renewal）提供多少補償"
+          ],
+          "strategy_zh": "「對…的人來說」→ For those who …；「無論多少＋名詞」→ no matter how much／many + N + S + V。",
+          "hints": [
+            "切成四段：對在老社區住了一輩子的人來說／無論都市更新提供多少補償／搬家／都很痛苦",
+            "標的詞彙：live（住）、neighborhood（社區）、life（一輩子 all their lives）、compensation（補償）、offer（提供）、move（搬家）、painful（痛苦的）",
+            "句型框架：For those who have + p.p. …, V-ing + is + adj. + no matter how much + N + S + V"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「他們的老家將被改建成高樓」是被動，用 will be replaced by／turned into …。「這意味著…」的「這」指前面整件事，用非限定關係子句 , which means (that) …，which 前面要有逗號。「他們從小長大的那條街」修飾語在前，英文用關係副詞 where 往後修飾：the street where they grew up（＝the street on which they grew up）。「消失」disappear／vanish 是不及物動詞，不用被動。",
+          "evidence": [
+            "這意味著",
+            "他們從小長大的那條街"
+          ],
+          "strategy_zh": "「…，這意味著…」→ , which means …；「…的地方／那條街」→ the place/street where + S + V。",
+          "hints": [
+            "切成四段：他們的老家將被改建成高樓／這意味著／他們從小長大的那條街／也將永遠消失",
+            "標的詞彙：home（家）、replace（取代、改建）、building（大樓）、mean（意味著）、street（街）、grow up（長大）、vanish（消失）、forever（永遠）",
+            "句型框架：S + will be p.p. …, which means + the + N + where + S + V + will also V"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "For those who have lived in old neighborhoods all their lives, moving is painful no matter how much compensation urban renewal offers.",
+            "For those who have spent their whole lives in old communities, no matter how much compensation urban renewal provides, moving is still painful.",
+            "For those who have lived in old neighborhoods all their lives, moving out is always painful, no matter how much money urban renewal offers them."
+          ],
+          "target_words": [
+            {
+              "word": "live",
+              "zh": "住",
+              "alternatives": [
+                "spend"
+              ]
+            },
+            {
+              "word": "neighborhood",
+              "zh": "社區",
+              "alternatives": [
+                "community"
+              ]
+            },
+            {
+              "word": "life",
+              "zh": "一輩子"
+            },
+            {
+              "word": "compensation",
+              "zh": "補償",
+              "alternatives": [
+                "money"
+              ]
+            },
+            {
+              "word": "offer",
+              "zh": "提供",
+              "alternatives": [
+                "provide"
+              ]
+            },
+            {
+              "word": "move",
+              "zh": "搬家"
+            },
+            {
+              "word": "painful",
+              "zh": "痛苦的"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "REL",
+              "grammar_id": "gp-for-those-who",
+              "label_zh": "對於…的人而言（For those who …）",
+              "frame": "For those who + have p.p. …, S + V …",
+              "zh_trigger": "對在老社區住了一輩子的人來說"
+            },
+            {
+              "code": "ADVCL",
+              "grammar_id": "gp-no-matter",
+              "label_zh": "讓步：無論多少（no matter how much + N）",
+              "frame": "… no matter how much + N + S + V",
+              "zh_trigger": "無論都市更新（urban renewal）提供多少補償"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "對在老社區住了一輩子的人來說",
+              "accepted": [
+                "For those who have lived in old neighborhoods all their lives",
+                "For those who have spent their whole lives in old communities",
+                "For those who have lived in old communities all their lives",
+                "For people who have lived in old neighborhoods all their lives",
+                "For those who have spent their whole lives in old neighborhoods"
+              ],
+              "targets": [
+                "REL",
+                "live",
+                "neighborhood",
+                "life"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "For those who lived in old neighborhoods all their lives",
+                  "right": "For those who have lived in old neighborhoods all their lives",
+                  "explanation_zh": "「住了一輩子」到現在還住在那裡，用現在完成式 have lived。"
+                },
+                {
+                  "wrong": "For the people live in old neighborhoods all their lives",
+                  "right": "For those who have lived in old neighborhoods all their lives",
+                  "explanation_zh": "people 後面直接接動詞 live 會變成兩個動詞，要用關係代名詞 who 引導形容詞子句。"
+                }
+              ]
+            },
+            {
+              "zh": "無論都市更新（urban renewal）提供多少補償",
+              "accepted": [
+                "no matter how much compensation urban renewal offers",
+                "no matter how much compensation urban renewal provides",
+                "no matter how much money urban renewal offers them",
+                "however much compensation urban renewal offers"
+              ],
+              "targets": [
+                "ADVCL",
+                "compensation",
+                "offer"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "no matter how many compensation urban renewal offers",
+                  "right": "no matter how much compensation urban renewal offers",
+                  "explanation_zh": "compensation（補償金）不可數，用 how much。"
+                },
+                {
+                  "wrong": "no matter how much compensation does urban renewal offer",
+                  "right": "no matter how much compensation urban renewal offers",
+                  "explanation_zh": "no matter how much 後面用直述句語序，不加 does。"
+                }
+              ]
+            },
+            {
+              "zh": "搬家",
+              "accepted": [
+                "moving",
+                "moving out",
+                "leaving home"
+              ],
+              "targets": [
+                "move"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "move is painful",
+                  "right": "moving is painful",
+                  "explanation_zh": "「搬家」當主詞要用動名詞 moving（或 To move），原形動詞 move 不能當主詞。"
+                },
+                {
+                  "wrong": "moving are painful",
+                  "right": "moving is painful",
+                  "explanation_zh": "動名詞當主詞視為單數，動詞用 is。"
+                }
+              ]
+            },
+            {
+              "zh": "都很痛苦",
+              "accepted": [
+                "is painful",
+                "is still painful",
+                "is always painful",
+                "remains painful",
+                "feels painful"
+              ],
+              "targets": [
+                "painful"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "is pain",
+                  "right": "is painful",
+                  "explanation_zh": "「痛苦的」是形容詞 painful；pain 是名詞。"
+                },
+                {
+                  "wrong": "feels painfully",
+                  "right": "feels painful",
+                  "explanation_zh": "feel 是連綴動詞，後面接形容詞 painful，不接副詞。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "prenominal_modifier",
+              "zh": "在老社區住了一輩子的人",
+              "literal_error": "For in old neighborhoods all their lives lived people, …",
+              "part": 1,
+              "explanation_zh": "中文把很長的修飾語放在「人」前面，英文要先寫 those（那些人），再用 who 子句往後修飾：For those who have lived …。"
+            },
+            {
+              "type": "abstract_nominal",
+              "zh": "補償",
+              "literal_error": "no matter how much urban renewal makes up for them",
+              "part": 2,
+              "explanation_zh": "「補償」在這裡是名詞「補償金」，用不可數名詞 compensation（或 money）；寫成動詞 make up for，how much 就沒有名詞可修飾。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "No amount of compensation from urban renewal can ease the pain of leaving a neighborhood that has been home for a lifetime.",
+              "explanation_zh": "把「無論多少補償…都」改寫成 No amount of compensation can …（再多補償也無法…），句構精簡有力；ease the pain of …（減輕…的痛苦）是好用搭配。這是加分寫法。"
+            }
+          ],
+          "restructuring_zh": "「對…的人來說」修飾語很長，英文改成 For those who + 子句；「搬家都很痛苦」以動作當主詞，英文用動名詞 moving 當主詞，「無論…」子句可以移到句尾。"
+        },
+        "2": {
+          "references": [
+            "Their old homes will be replaced by tall buildings, which means the street where they grew up will also vanish forever.",
+            "Their old houses will be turned into high-rise buildings, which means that the street where they grew up will also disappear forever.",
+            "Their old homes will be rebuilt as tall buildings, which means the street where they spent their childhood will also be gone forever."
+          ],
+          "target_words": [
+            {
+              "word": "home",
+              "zh": "家",
+              "alternatives": [
+                "house"
+              ]
+            },
+            {
+              "word": "replace",
+              "zh": "改建、取代",
+              "alternatives": [
+                "turn",
+                "rebuild",
+                "rebuilt"
+              ]
+            },
+            {
+              "word": "building",
+              "zh": "大樓"
+            },
+            {
+              "word": "mean",
+              "zh": "意味著"
+            },
+            {
+              "word": "street",
+              "zh": "街"
+            },
+            {
+              "word": "grow",
+              "zh": "長大",
+              "alternatives": [
+                "childhood"
+              ]
+            },
+            {
+              "word": "vanish",
+              "zh": "消失",
+              "alternatives": [
+                "disappear",
+                "gone"
+              ]
+            },
+            {
+              "word": "forever",
+              "zh": "永遠"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "NRREL",
+              "grammar_id": "gp-nonrestrictive",
+              "label_zh": "非限定關係子句：which 指前面整句（這意味著…）",
+              "frame": "S + V …, which means (that) + S + V",
+              "zh_trigger": "這意味著"
+            },
+            {
+              "code": "REL",
+              "grammar_id": "gp-relative-adverb",
+              "label_zh": "關係副詞 where（…長大的那條街）",
+              "frame": "the + 地點名詞 + where + S + V",
+              "zh_trigger": "他們從小長大的那條街"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "他們的老家將被改建成高樓",
+              "accepted": [
+                "Their old homes will be replaced by tall buildings",
+                "Their old houses will be turned into high-rise buildings",
+                "Their old homes will be rebuilt as tall buildings",
+                "Their old homes will be torn down and replaced by tall buildings",
+                "Their old houses will be rebuilt into high-rise buildings"
+              ],
+              "targets": [
+                "home",
+                "replace",
+                "building"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Their old homes will replace by tall buildings",
+                  "right": "Their old homes will be replaced by tall buildings",
+                  "explanation_zh": "老家是「被」改建，用被動 will be + p.p.；少了 be 就變成主動，文法也不對。"
+                },
+                {
+                  "wrong": "Their old homes will be changed to build tall buildings",
+                  "right": "Their old homes will be replaced by tall buildings",
+                  "explanation_zh": "「改建成」不要拆成 change + build；英文說 be replaced by／be turned into／be rebuilt as。"
+                }
+              ]
+            },
+            {
+              "zh": "這意味著",
+              "accepted": [
+                "which means",
+                "which means that"
+              ],
+              "targets": [
+                "NRREL",
+                "mean"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "tall buildings, this means",
+                  "right": "tall buildings, which means",
+                  "explanation_zh": "「這意味著」的「這」指前面整件事，用 which 引導非限定關係子句；寫成 this means 會讓兩個子句只用逗號連接。"
+                },
+                {
+                  "wrong": "which mean",
+                  "right": "which means",
+                  "explanation_zh": "which 指前面整件事，視為單數，動詞用 means。"
+                }
+              ]
+            },
+            {
+              "zh": "他們從小長大的那條街",
+              "accepted": [
+                "the street where they grew up",
+                "the street where they spent their childhood",
+                "the street on which they grew up",
+                "the street they grew up on"
+              ],
+              "targets": [
+                "REL",
+                "street",
+                "grow"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "the street where they grew up in",
+                  "right": "the street where they grew up",
+                  "explanation_zh": "where 已經等於 in／on which，句尾不可再加介系詞。"
+                },
+                {
+                  "wrong": "the street which they grew up",
+                  "right": "the street where they grew up",
+                  "explanation_zh": "grow up 是不及物動詞，不能直接以 which 當受詞；表示地點用 where（或 on which）。"
+                }
+              ]
+            },
+            {
+              "zh": "也將永遠消失",
+              "accepted": [
+                "will also vanish forever",
+                "will also disappear forever",
+                "will also be gone forever"
+              ],
+              "targets": [
+                "vanish",
+                "forever"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "will also be disappeared forever",
+                  "right": "will also disappear forever",
+                  "explanation_zh": "disappear／vanish 是不及物動詞，沒有被動式，不加 be。"
+                },
+                {
+                  "wrong": "will also disappeared forever",
+                  "right": "will also disappear forever",
+                  "explanation_zh": "助動詞 will 後面接原形動詞。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "collocation",
+              "zh": "改建成高樓",
+              "literal_error": "Their old homes will be changed to build tall buildings",
+              "part": 1,
+              "explanation_zh": "「改建成」照字面拆成 change + build 不通；英文說 be replaced by／be turned into／be rebuilt as。"
+            },
+            {
+              "type": "prenominal_modifier",
+              "zh": "他們從小長大的那條街",
+              "literal_error": "they grew up street will also disappear forever",
+              "part": 3,
+              "explanation_zh": "中文修飾語「他們從小長大的」在名詞前，英文要先寫 the street，再用關係副詞 where 引導子句：the street where they grew up。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "Their old homes will make way for high-rises, taking with them the very street where they grew up.",
+              "grammar_id": "gp-participle-result",
+              "explanation_zh": "make way for（讓位給…）點出「被取代」；句尾分詞 taking with them …（連帶帶走…）表結果，the very street 強調「就是那條街」，比 which means 更生動。這是加分寫法。"
+            }
+          ],
+          "restructuring_zh": "「他們從小長大的那條街」中文修飾語在前，英文改成 the street where they grew up；「這意味著…」不另起一句，用 , which means … 接在前一句後面。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ac-V-3",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-top-05",
+    "lot": "translation-top-05",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "1423e68b58216cafb46e710ae1065ce2ef47f637e82f416d8ddb06bd091160ba",
+    "spec_id": "translation-top@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 2,
+    "sentences": 1,
+    "avg_sentence_length": 2.0,
+    "denominator": 2,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.5,
+    "coverage_l1_6": 0.5,
+    "offlist_ratio": 0.5,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {
+      "3": 1,
+      "off": 1
+    },
+    "offlist_words": [
+      "renewal"
+    ],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T14:05:34Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T13:22:48Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "For people who have lived in old neighborhoods all their lives, moving is painful no matter how much compensation urban renewal offers.",
+            "confidence": "high",
+            "explanation_zh": "「在老社區住了一輩子的人」用關係子句 who have lived…，住到現在用現在完成式；「無論…多少補償」用 no matter how much compensation…，放句尾讓主要子句 moving is painful 先出現較自然（也可放前面）；「都」不必另外譯。"
+          },
+          "2": {
+            "translation": "Their old homes will be turned into high-rise buildings, which means that the street where they grew up will also disappear forever.",
+            "confidence": "high",
+            "explanation_zh": "「將被改建成」用未來被動 will be turned into（也可 rebuilt as）；「這意味著」指前一件事，用非限定關係子句 which means that；「他們從小長大的那條街」用關係副詞 where they grew up 修飾 street。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "REL",
+              "ADVCL"
+            ],
+            "used_target_words": [
+              "live",
+              "neighborhood",
+              "life",
+              "compensation",
+              "offer",
+              "move",
+              "painful"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "NRREL",
+              "REL"
+            ],
+            "used_target_words": [
+              "home",
+              "replace",
+              "building",
+              "mean",
+              "street",
+              "grow",
+              "vanish",
+              "forever"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "live",
+              "neighborhood",
+              "life",
+              "compensation",
+              "offer",
+              "move",
+              "painful"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "REL": true,
+              "ADVCL": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "home",
+              "replace",
+              "building",
+              "mean",
+              "street",
+              "grow",
+              "vanish",
+              "forever"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NRREL": true,
+              "REL": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T13:30:00Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "For people who have lived in an old neighborhood all their lives, moving out is painful no matter how much compensation urban renewal offers.",
+            "confidence": "high",
+            "explanation_zh": "「住了一輩子」用現在完成式 have lived ... all their lives；「無論……多少」用 no matter how much compensation ... 副詞子句；「搬家」用動名詞 moving out 當主詞。"
+          },
+          "2": {
+            "translation": "Their old house will be rebuilt as a high-rise, which means that the street where they grew up will disappear forever, too.",
+            "confidence": "high",
+            "explanation_zh": "「將被改建成高樓」用被動未來式 will be rebuilt as a high-rise；「這意味著」用非限定 which means that；「他們從小長大的那條街」用關係副詞 where they grew up；「也將永遠消失」用 will disappear forever, too。「老家」我譯成 old house，語意可再有 home 的情感，但不影響意思。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "REL",
+              "ADVCL"
+            ],
+            "used_target_words": [
+              "live",
+              "neighborhood",
+              "life",
+              "compensation",
+              "offer",
+              "move",
+              "painful"
+            ],
+            "within_accepted": true,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [],
+            "closest_reference": 0
+          },
+          "2": {
+            "used_patterns": [
+              "NRREL",
+              "REL"
+            ],
+            "used_target_words": [
+              "home",
+              "replace",
+              "mean",
+              "street",
+              "grow",
+              "vanish",
+              "forever"
+            ],
+            "within_accepted": true,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [],
+            "closest_reference": 1
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "live",
+              "neighborhood",
+              "life",
+              "compensation",
+              "offer",
+              "move",
+              "painful"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "REL": true,
+              "ADVCL": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "home",
+              "replace",
+              "mean",
+              "street",
+              "grow",
+              "vanish",
+              "forever"
+            ],
+            "target_hit_rate": 0.875,
+            "patterns_detected": {
+              "NRREL": true,
+              "REL": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

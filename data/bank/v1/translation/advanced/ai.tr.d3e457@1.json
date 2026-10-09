@@ -1,0 +1,779 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.d3e457",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "advanced",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "學生跟著醫師、設計師或律師工作一天，好讓自己能更了解這些職業。",
+        "options": null,
+        "answer": "Students spend a day working with doctors, designers, or lawyers so that they can understand these careers better.",
+        "accepted_answers": [
+          "Students follow doctors, designers, or lawyers at work for a day so that they can learn more about these jobs.",
+          "Students work with doctors, designers, or lawyers for a day so that they can get to know these professions better."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "目的：so that + S + can",
+            "平行結構（A, B, or C）"
+          ],
+          "topic": "職業探索"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "這些工作如此複雜，除非親身體驗，否則要真正了解它們並不容易。",
+        "options": null,
+        "answer": "These jobs are so complicated that it is not easy to truly understand them unless you experience them yourself.",
+        "accepted_answers": [
+          "These careers are so complex that it is not easy to really understand them unless students experience them in person.",
+          "These professions are so complicated that it is not easy to understand them completely unless you experience them for yourself."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "結果：so … that（如此…以至於）",
+            "虛主詞 It ＋形容詞＋不定詞（要…並不容易）"
+          ],
+          "topic": "職業探索"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "職業探索"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「醫師、設計師或律師」三個名詞並列，形式要一致（都用複數，或都寫 a doctor, a designer, or a lawyer），最後一項前面加 or。「跟著…工作一天」可寫 spend a day working with …（spend + 時間 + V-ing）或 work with … for a day。「好讓自己能更了解」表目的，用 so that they can understand … better。",
+          "evidence": [
+            "醫師、設計師或律師",
+            "好讓自己能"
+          ],
+          "strategy_zh": "列舉時注意每一項的詞性、單複數要一致；「好讓…能…」想到 so that + S + can。",
+          "hints": [
+            "切成四段：學生跟著醫師、設計師或律師／工作一天／好讓自己能／更了解這些職業",
+            "標的詞彙：doctor（醫師，L1）、designer（設計師，L3）、lawyer（律師，L1）、day（一天，L1）、understand（了解，L1）、career（職業，L3）",
+            "句型框架：S + spend a day V-ing with A, B, or C + so that + S + can + VR …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「如此複雜」帶出後面的結果，用 so + 形容詞 + that 連成一句：These jobs are so complicated that …（complicated／complex 是形容詞，不寫動詞 complicate）。結果子句裡「要真正了解它們並不容易」是動作當主詞，英文用虛主詞 it is not easy to truly understand them（修飾動詞用副詞 truly）。「除非親身體驗」是條件，用 unless you experience them yourself；unless 已經有否定的意思，後面不再加 not；中文省略主詞，英文補泛指的 you 或 students。",
+          "evidence": [
+            "這些工作如此複雜",
+            "除非親身體驗",
+            "要真正了解它們並不容易"
+          ],
+          "strategy_zh": "「如此＋形容詞，（結果）」想到 so … that；「要＋動作＋（並不）容易／難」想到 It is (not) + adj. + to VR；「除非…否則」用 unless，否則不必另外翻成 otherwise。",
+          "hints": [
+            "切成四段：這些工作如此複雜／除非親身體驗／要真正了解它們／並不容易",
+            "標的詞彙：job（工作，L1）、complicated（複雜的，L4；也可用 complex）、experience（體驗，L1）、understand（了解，L1）、easy（容易的，L1）",
+            "句型框架：S + be + so + adj. + that + it is not easy to VR … + unless + S + V …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "Students spend a day working with doctors, designers, or lawyers so that they can understand these careers better.",
+            "Students follow doctors, designers, or lawyers at work for a day so that they can learn more about these jobs.",
+            "Students work with doctors, designers, or lawyers for a day so that they can get to know these professions better."
+          ],
+          "target_words": [
+            {
+              "word": "doctor",
+              "zh": "醫師"
+            },
+            {
+              "word": "designer",
+              "zh": "設計師"
+            },
+            {
+              "word": "lawyer",
+              "zh": "律師"
+            },
+            {
+              "word": "day",
+              "zh": "一天"
+            },
+            {
+              "word": "understand",
+              "zh": "了解",
+              "alternatives": [
+                "learn",
+                "know"
+              ]
+            },
+            {
+              "word": "career",
+              "zh": "職業",
+              "alternatives": [
+                "job",
+                "profession",
+                "occupation"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PURP",
+              "grammar_id": "gp-so-that-purpose",
+              "label_zh": "目的：so that + S + can",
+              "frame": "S + V … so that + S + can + VR …",
+              "zh_trigger": "好讓自己能"
+            },
+            {
+              "code": "PARA",
+              "grammar_id": "gp-parallelism",
+              "label_zh": "平行結構（A, B, or C）",
+              "frame": "N1, N2, or N3（同詞性、同為複數）",
+              "zh_trigger": "醫師、設計師或律師"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "學生跟著醫師、設計師或律師",
+              "accepted": [
+                "Students spend a day working with doctors, designers, or lawyers",
+                "Students follow doctors, designers, or lawyers",
+                "Students work with doctors, designers, or lawyers",
+                "Students shadow doctors, designers, or lawyers",
+                "Students work alongside doctors, designers, or lawyers",
+                "Students spend a day working with a doctor, a designer, or a lawyer",
+                "Students work with a doctor, a designer, or a lawyer",
+                "Students follow a doctor, a designer, or a lawyer",
+                "Students spend one day working with doctors, designers, or lawyers"
+              ],
+              "targets": [
+                "doctor",
+                "designer",
+                "lawyer",
+                "PARA"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Students follow doctors, designers, or lawyer",
+                  "right": "Students follow doctors, designers, or lawyers",
+                  "explanation_zh": "並列的三個名詞要形式一致，都用複數（或都寫 a doctor, a designer, or a lawyer）。"
+                },
+                {
+                  "wrong": "Students follow doctor, designer, or lawyer",
+                  "right": "Students follow doctors, designers, or lawyers",
+                  "explanation_zh": "可數名詞的單數不能單獨使用；泛指某種職業的人用複數，或在每個名詞前加 a。"
+                }
+              ]
+            },
+            {
+              "zh": "工作一天",
+              "accepted": [
+                "spend a day",
+                "for a day",
+                "for one day",
+                "spend one day",
+                "at work for a day",
+                "for a whole day",
+                "for a full day"
+              ],
+              "targets": [
+                "day"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "work one day",
+                  "right": "work for a day",
+                  "explanation_zh": "「工作一天」是持續一天，用 for a day；work one day 容易被理解成「有一天去工作」。"
+                }
+              ]
+            },
+            {
+              "zh": "好讓自己能",
+              "accepted": [
+                "so that they can",
+                "so that they are able to",
+                "in order that they can",
+                "so they can",
+                "so that students can"
+              ],
+              "targets": [
+                "PURP"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "to let themselves can",
+                  "right": "so that they can",
+                  "explanation_zh": "「好讓自己能…」表目的，用 so that they can，不能寫 let … can。"
+                }
+              ]
+            },
+            {
+              "zh": "更了解這些職業",
+              "accepted": [
+                "understand these careers better",
+                "learn more about these jobs",
+                "get to know these professions better",
+                "better understand these careers",
+                "have a better understanding of these jobs",
+                "understand these jobs better",
+                "understand these professions better",
+                "learn more about these careers",
+                "know more about these careers",
+                "get to know these jobs better",
+                "better understand these jobs"
+              ],
+              "targets": [
+                "understand",
+                "career"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "more understand these careers",
+                  "right": "understand these careers better",
+                  "explanation_zh": "「更了解」寫 understand … better 或 better understand …，不能把 more 放在動詞前面。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "collocation",
+              "zh": "好讓自己能",
+              "literal_error": "Students follow doctors for a day to let themselves can understand these careers better.",
+              "part": 3,
+              "explanation_zh": "照字面翻「讓自己能」會出現 let … can 的錯誤；表目的用 so that they can。"
+            },
+            {
+              "type": "plural_countable",
+              "zh": "醫師、設計師或律師",
+              "literal_error": "Students follow doctor, designer, or lawyer for a day.",
+              "part": 1,
+              "explanation_zh": "泛指某種職業的人用複數，三個名詞形式要一致。"
+            }
+          ],
+          "bonus": []
+        },
+        "2": {
+          "references": [
+            "These jobs are so complicated that it is not easy to truly understand them unless you experience them yourself.",
+            "These careers are so complex that it is not easy to really understand them unless students experience them in person.",
+            "These professions are so complicated that it is not easy to understand them completely unless you experience them for yourself."
+          ],
+          "target_words": [
+            {
+              "word": "job",
+              "zh": "工作",
+              "alternatives": [
+                "career",
+                "profession",
+                "occupation",
+                "work"
+              ]
+            },
+            {
+              "word": "complicated",
+              "zh": "複雜的",
+              "alternatives": [
+                "complex"
+              ]
+            },
+            {
+              "word": "experience",
+              "zh": "體驗",
+              "alternatives": [
+                "try"
+              ]
+            },
+            {
+              "word": "understand",
+              "zh": "了解",
+              "alternatives": [
+                "know",
+                "grasp"
+              ]
+            },
+            {
+              "word": "easy",
+              "zh": "容易的",
+              "alternatives": [
+                "hard",
+                "difficult"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "ADVCL",
+              "grammar_id": "gp-so-such-that",
+              "label_zh": "結果：so … that（如此…以至於）",
+              "frame": "S + be + so + adj. + that + S + V …",
+              "zh_trigger": "如此複雜"
+            },
+            {
+              "code": "NFSUBJ",
+              "grammar_id": "gp-it-adj-to",
+              "label_zh": "虛主詞 It ＋形容詞＋不定詞（要…並不容易）",
+              "frame": "it is not + adj. + to VR …",
+              "zh_trigger": "要真正了解它們並不容易"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "這些工作如此複雜",
+              "accepted": [
+                "These jobs are so complicated that",
+                "These careers are so complex that",
+                "These professions are so complicated that",
+                "These jobs are so complex that",
+                "These careers are so complicated that",
+                "These professions are so complex that",
+                "These occupations are so complicated that",
+                "These occupations are so complex that",
+                "These kinds of work are so complex that",
+                "The work is so complicated that"
+              ],
+              "targets": [
+                "job",
+                "complicated",
+                "ADVCL"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "These jobs are very complicated that",
+                  "right": "These jobs are so complicated that",
+                  "explanation_zh": "「如此…（以至於）」用 so + 形容詞 + that；very 後面不能接表結果的 that 子句。"
+                },
+                {
+                  "wrong": "These jobs are so complicate that",
+                  "right": "These jobs are so complicated that",
+                  "explanation_zh": "complicate 是動詞「使複雜」；be 動詞後面要用形容詞 complicated（或 complex）。"
+                },
+                {
+                  "wrong": "These works are so complicated that",
+                  "right": "These jobs are so complicated that",
+                  "explanation_zh": "「工作、職業」是可數的 job；work 當「工作」時不可數，加 s 的 works 是「作品」。"
+                }
+              ]
+            },
+            {
+              "zh": "除非親身體驗",
+              "accepted": [
+                "unless you experience them yourself",
+                "unless students experience them in person",
+                "unless you experience them for yourself",
+                "unless you experience them in person",
+                "unless you experience them personally",
+                "unless you experience them firsthand",
+                "unless they experience them in person",
+                "unless students experience them firsthand",
+                "unless students experience them personally",
+                "unless you try them yourself",
+                "unless you try them out yourself",
+                "unless you actually experience them",
+                "unless one experiences them personally",
+                "without experiencing them yourself",
+                "without experiencing them firsthand",
+                "without experiencing them in person",
+                "if you do not experience them yourself",
+                "if you don't experience them in person"
+              ],
+              "targets": [
+                "experience"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "unless you don't experience them yourself",
+                  "right": "unless you experience them yourself",
+                  "explanation_zh": "unless 本身就是「除非…（否則）」，已經有否定的意思，後面不再加 not。"
+                },
+                {
+                  "wrong": "unless experience them yourself",
+                  "right": "unless you experience them yourself",
+                  "explanation_zh": "中文省略了主詞，英文的 unless 子句要補主詞（泛指的 you，或 students）。"
+                }
+              ]
+            },
+            {
+              "zh": "要真正了解它們",
+              "accepted": [
+                "to truly understand them",
+                "to really understand them",
+                "to understand them completely",
+                "to fully understand them",
+                "to understand them well",
+                "to truly know them",
+                "to really get to know them",
+                "to truly understand these jobs",
+                "to understand them truly",
+                "to really know what they are like",
+                "for students to truly understand them",
+                "for students to really understand them",
+                "for them to truly understand them",
+                "for them to really understand them",
+                "truly understanding them",
+                "really understanding them",
+                "fully understanding them"
+              ],
+              "targets": [
+                "understand",
+                "NFSUBJ"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "to true understand them",
+                  "right": "to truly understand them",
+                  "explanation_zh": "true 是形容詞，修飾動詞 understand 要用副詞 truly（或 really）。"
+                },
+                {
+                  "wrong": "to truly understand it",
+                  "right": "to truly understand them",
+                  "explanation_zh": "「它們」指前面的 these jobs（複數），代名詞用 them。"
+                }
+              ]
+            },
+            {
+              "zh": "並不容易",
+              "accepted": [
+                "it is not easy",
+                "it isn't easy",
+                "it's not easy",
+                "it is not that easy",
+                "it is difficult",
+                "it is hard",
+                "is not easy",
+                "isn't easy",
+                "is difficult"
+              ],
+              "targets": [
+                "easy",
+                "NFSUBJ"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "want to truly understand them is not easy",
+                  "right": "it is not easy to truly understand them",
+                  "explanation_zh": "「要…並不容易」的「要」不是 want；整個動作當主詞時，英文用虛主詞 it is not easy to VR（動名詞 truly understanding them is not easy 也正確）。"
+                },
+                {
+                  "wrong": "it is not easily",
+                  "right": "it is not easy",
+                  "explanation_zh": "be 動詞後面用形容詞 easy，不用副詞 easily。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "verbal_subject",
+              "zh": "要真正了解它們",
+              "literal_error": "These jobs are so complicated that want to truly understand them is not easy unless you experience them.",
+              "part": 3,
+              "explanation_zh": "「要…並不容易」的「要」不是 want，整個動作是主詞；英文用虛主詞 it is not easy to truly understand them。"
+            },
+            {
+              "type": "word_form",
+              "zh": "如此複雜",
+              "literal_error": "These jobs are so complicate that it is not easy to truly understand them.",
+              "part": 1,
+              "explanation_zh": "complicate 是動詞，so 後面要接形容詞 complicated（或 complex）。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "Only by experiencing these jobs in person can students truly understand them.",
+              "grammar_id": "gp-only-inversion",
+              "explanation_zh": "Only + by V-ing 放句首要倒裝（can students understand）；倒裝只當加分寫法，不是本題要求的句型。"
+            }
+          ],
+          "restructuring_zh": "「要真正了解它們並不容易」是動作當主詞，英文改成虛主詞句型 it is not easy to truly understand them；「如此複雜」帶出結果，用 so complicated that 把兩個分句連成一句；「除非親身體驗」中文省略主詞，英文補泛指的 you（或 students）。",
+          "notes_zh": "本題練的是虛主詞 It is not easy to …。寫成動名詞主詞（… so complicated that truly understanding them is not easy unless …）文法也正確，列在第 3、4 部分的可接受寫法、不扣分；「除非親身體驗」也可以寫 without experiencing them yourself。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-advanced-02-regen",
+    "lot": "translation-advanced-02",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "4031d7ac79dd41942f55728548fbcb1dda87166e462c753f4a48bee20d63e240",
+    "spec_id": "translation-advanced@2026-10-09",
+    "regenerated_from": "ai.tr.21931b"
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T14:17:00Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "warn",
+      "created_at": "2026-10-09T14:03:24Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Students spend a day working with doctors, designers, or lawyers so that they can understand these professions better.",
+            "confidence": "high",
+            "explanation_zh": "「好讓自己能更了解」表目的，用 so that＋S＋can；「跟著……工作一天」用 spend a day working with…（spend＋時間＋V-ing），比 follow doctors to work 自然；沒有時間標記，當一般活動描述用現在簡單式。「職業」用 professions，也可用 careers／jobs。"
+          },
+          "2": {
+            "translation": "These jobs are so complex that it is not easy to truly understand them unless you experience them yourself.",
+            "confidence": "high",
+            "explanation_zh": "「如此複雜，……並不容易」是因果，用 so＋adj.＋that 子句；「要真正了解它們並不容易」用虛主詞 it is not easy to V；「除非親身體驗，否則」用 unless 子句（不再加 otherwise，避免重複）；中文省略的主詞補成泛指的 you，「親身」譯成 yourself。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PURP",
+              "PARA"
+            ],
+            "used_target_words": [
+              "doctor",
+              "designer",
+              "lawyer",
+              "day",
+              "understand",
+              "career"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "第 1、2 部分的範圍重疊：第 1 部分的 zh 是「學生跟著醫師、設計師或律師」，但 accepted 第一個寫法 Students spend a day working with doctors, designers, or lawyers 已經包含第 2 部分「工作一天」的 spend a day（也包含「工作」的 working）。同一段文字同時拿兩個部分的分數，寫錯也可能兩個部分一起扣，邊界不清楚。建議第 1 部分的 accepted 只寫 (Students) … working with doctors, designers, or lawyers／Students follow doctors, designers, or lawyers，把 spend a day／for a day 全部留給第 2 部分；第 2 部分可以補 spend a whole day、spend the day。",
+              "標的句型 PURP（so that … can）和 PARA（A, B, or C）盲譯時都自然用到了；我的 professions 是 career 的 alternatives。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "ADVCL",
+              "NFSUBJ"
+            ],
+            "used_target_words": [
+              "job",
+              "complicated",
+              "experience",
+              "understand",
+              "easy"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "doctor",
+              "designer",
+              "lawyer",
+              "day",
+              "understand",
+              "career"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PURP": true,
+              "PARA": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "job",
+              "complicated",
+              "experience",
+              "understand",
+              "easy"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "ADVCL": true,
+              "NFSUBJ": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 1 題驗證者對4 部分切分有意見（warn）：第 1、2 部分的範圍重疊：第 1 部分的 zh 是「學生跟著醫師、設計師或律師」，但 accepted 第一個寫法 Students spend a day working with doctors, designers, or lawy"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T14:05:00Z",
+      "details": {
+        "solver": "B",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Students spend a day working alongside a doctor, a designer, or a lawyer so that they can understand these professions better.",
+            "confidence": "high",
+            "explanation_zh": "「跟著……工作一天」譯成 spend a day working alongside（也可以用 shadow）。「好讓自己能更了解」是目的，用 so that they can understand ... better。中文沒有時間線索，視為一般性的做法，用現在式。「醫師、設計師或律師」三個並列各加冠詞，以 or 連接。"
+          },
+          "2": {
+            "translation": "These jobs are so complex that it is not easy to truly understand them unless you experience them firsthand.",
+            "confidence": "high",
+            "explanation_zh": "「如此複雜，……並不容易」是結果關係，用 so + 形容詞 + that 子句。「要真正了解它們並不容易」用虛主詞 it is not easy to truly understand them；「除非親身體驗」用 unless you experience them firsthand（unless 子句用現在式，不能再加 not）。主詞用泛稱的 you，也可以改用 one。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PURP",
+              "PARA"
+            ],
+            "used_target_words": [
+              "doctor",
+              "designer",
+              "lawyer",
+              "day",
+              "understand",
+              "career"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "ADVCL",
+              "NFSUBJ"
+            ],
+            "used_target_words": [
+              "job",
+              "complicated",
+              "experience",
+              "understand",
+              "easy"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "doctor",
+              "designer",
+              "lawyer",
+              "day",
+              "understand",
+              "career"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PURP": true,
+              "PARA": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "job",
+              "complicated",
+              "experience",
+              "understand",
+              "easy"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "ADVCL": true,
+              "NFSUBJ": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

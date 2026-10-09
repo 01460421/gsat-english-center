@@ -1,0 +1,823 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.10cf74",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "top",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "許多試著戒菸的人很快就發現，由尼古丁（nicotine）引起的強烈渴望極難抗拒。",
+        "options": null,
+        "answer": "Many people who try to quit smoking soon find that the strong desire caused by nicotine is extremely hard to resist.",
+        "accepted_answers": [
+          "Many smokers who are trying to quit soon find out that the strong urges caused by nicotine are extremely difficult to resist.",
+          "Many people trying to give up smoking quickly find that the strong urge that nicotine causes is extremely hard to resist."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "關係代名詞 who 引導的形容詞子句",
+            "分詞片語後位修飾（N + p.p.）"
+          ],
+          "topic": "戒菸"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "許多專家認為，決定一個人能否成功戒菸最重要的因素，是家人和朋友的支持。",
+        "options": null,
+        "answer": "Many experts believe that the most important factor that determines whether a person can successfully quit smoking is support from family and friends.",
+        "accepted_answers": [
+          "Many experts think that the most important factor in deciding whether someone can quit smoking successfully is the support of family and friends.",
+          "Many experts believe that the biggest factor deciding whether people can quit smoking successfully is the support they get from family and friends."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "間接問句（whether 名詞子句）",
+            "最高級（the most important）"
+          ],
+          "topic": "戒菸"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "戒菸"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「試著戒菸的人」用關係子句 people who try to quit smoking（或分詞片語 people trying to quit）；quit 後面接動名詞 smoking。「由尼古丁引起的強烈渴望」用過去分詞片語後位修飾 the strong desire caused by nicotine（渴望是被引起的，所以用 caused）。「極難抗拒」用 is extremely hard to resist（主詞就是 resist 的受詞，句尾不再加 it）。",
+          "evidence": [
+            "試著戒菸的人",
+            "由尼古丁（nicotine）引起的強烈渴望"
+          ],
+          "strategy_zh": "名詞前的「…的」：主動用 N + V-ing，被動用 N + p.p.，較長或有時態就用 who／that 子句。",
+          "hints": [
+            "切成四段：許多試著戒菸的人／很快就發現／由尼古丁引起的強烈渴望／極難抗拒",
+            "標的詞彙：try（試著）、quit（戒除）、smoke（抽菸）、find（發現）、strong（強烈的）、desire（渴望）、cause（引起）、extremely（極度地）、hard（困難的）、resist（抗拒）",
+            "句型框架：Many people who + V … soon find that + the N + p.p. by … + is extremely hard to V"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「許多專家認為」用 Many experts believe／think that …。「決定一個人能否成功戒菸最重要的因素」修飾語很長，英文先寫核心 the most important factor（最高級），再用關係子句 that determines whether … 或 in deciding whether … 往後修飾；「能否…」用 whether 名詞子句，直述句語序 whether a person can successfully quit smoking。主詞核心是 factor（單數），動詞用 is。",
+          "evidence": [
+            "能否成功戒菸",
+            "最重要的因素"
+          ],
+          "strategy_zh": "「是否／能否…」→ whether + S + (can) + V；「最＋形容詞＋的＋N」→ the most + adj. + N（後面的修飾語用子句往後放）。",
+          "hints": [
+            "切成四段：許多專家認為／決定一個人能否成功戒菸／最重要的因素／是家人和朋友的支持",
+            "標的詞彙：expert（專家）、believe（認為）、determine（決定）、successfully（成功地）、quit（戒除）、important（重要的）、factor（因素）、support（支持）、family（家人）、friend（朋友）",
+            "句型框架：Many experts believe that the most important factor that determines whether + S + can + V … is + N"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "Many people who try to quit smoking soon find that the strong desire caused by nicotine is extremely hard to resist.",
+            "Many smokers who are trying to quit soon find out that the strong urges caused by nicotine are extremely difficult to resist.",
+            "Many people trying to give up smoking quickly find that the strong urge that nicotine causes is extremely hard to resist."
+          ],
+          "target_words": [
+            {
+              "word": "try",
+              "zh": "試著"
+            },
+            {
+              "word": "quit",
+              "zh": "戒除",
+              "alternatives": [
+                "give up"
+              ]
+            },
+            {
+              "word": "smoke",
+              "zh": "抽菸",
+              "alternatives": [
+                "smoker",
+                "smokers"
+              ]
+            },
+            {
+              "word": "find",
+              "zh": "發現"
+            },
+            {
+              "word": "strong",
+              "zh": "強烈的"
+            },
+            {
+              "word": "desire",
+              "zh": "渴望",
+              "alternatives": [
+                "craving",
+                "cravings",
+                "urge"
+              ]
+            },
+            {
+              "word": "cause",
+              "zh": "引起"
+            },
+            {
+              "word": "extremely",
+              "zh": "極度地"
+            },
+            {
+              "word": "hard",
+              "zh": "困難的",
+              "alternatives": [
+                "difficult"
+              ]
+            },
+            {
+              "word": "resist",
+              "zh": "抗拒"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "REL",
+              "grammar_id": "gp-relative-pronoun",
+              "label_zh": "關係代名詞 who 引導的限定子句（試著戒菸的人）",
+              "frame": "N + who + V …",
+              "zh_trigger": "試著戒菸的人"
+            },
+            {
+              "code": "PART",
+              "grammar_id": "gp-participle-modifier",
+              "label_zh": "分詞片語後位修飾名詞（由尼古丁引起的…）",
+              "frame": "N + p.p. + by …（被動）／ N + V-ing …（主動）",
+              "zh_trigger": "由尼古丁（nicotine）引起的強烈渴望"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "許多試著戒菸的人",
+              "accepted": [
+                "Many people who try to quit smoking",
+                "Many smokers who are trying to quit",
+                "Many people trying to give up smoking",
+                "Many people who are trying to quit smoking",
+                "Many smokers trying to quit"
+              ],
+              "targets": [
+                "REL",
+                "try",
+                "quit",
+                "smoke"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Many people who try to quit smoke",
+                  "right": "Many people who try to quit smoking",
+                  "explanation_zh": "quit 後面接動名詞 smoking（戒掉…）；quit smoke 文法不對。"
+                },
+                {
+                  "wrong": "Many people try to quit smoking soon find",
+                  "right": "Many people who try to quit smoking soon find",
+                  "explanation_zh": "一句不能有兩個主要動詞（try、find）；「試著戒菸的」要用 who 子句或分詞片語 trying to quit 修飾 people。"
+                }
+              ]
+            },
+            {
+              "zh": "很快就發現",
+              "accepted": [
+                "soon find that",
+                "soon find out that",
+                "quickly find that",
+                "soon discover that"
+              ],
+              "targets": [
+                "find"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "soon finds that",
+                  "right": "soon find that",
+                  "explanation_zh": "主詞 many people 是複數，動詞 find 不加 s。"
+                },
+                {
+                  "wrong": "find soon that",
+                  "right": "soon find that",
+                  "explanation_zh": "時間副詞 soon 放在一般動詞前面：soon find。"
+                }
+              ]
+            },
+            {
+              "zh": "由尼古丁（nicotine）引起的強烈渴望",
+              "accepted": [
+                "the strong desire caused by nicotine",
+                "the strong urges caused by nicotine",
+                "the strong cravings caused by nicotine",
+                "the strong urge that nicotine causes",
+                "the strong desire that nicotine causes",
+                "the strong craving caused by nicotine"
+              ],
+              "targets": [
+                "PART",
+                "strong",
+                "desire",
+                "cause"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "the strong desire causing by nicotine",
+                  "right": "the strong desire caused by nicotine",
+                  "explanation_zh": "渴望是「被」尼古丁引起的，用過去分詞 caused by；causing 表主動。"
+                },
+                {
+                  "wrong": "the by nicotine caused strong desire",
+                  "right": "the strong desire caused by nicotine",
+                  "explanation_zh": "中文「由尼古丁引起的」在名詞前，英文要用分詞片語放在名詞後面修飾。"
+                }
+              ]
+            },
+            {
+              "zh": "極難抗拒",
+              "accepted": [
+                "is extremely hard to resist",
+                "are extremely difficult to resist",
+                "is extremely difficult to resist"
+              ],
+              "targets": [
+                "extremely",
+                "hard",
+                "resist"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "is extremely hard to resist it",
+                  "right": "is extremely hard to resist",
+                  "explanation_zh": "主詞 the strong desire 就是 resist 的受詞，句尾不可再加 it。"
+                },
+                {
+                  "wrong": "is extremely hard to be resisted",
+                  "right": "is extremely hard to resist",
+                  "explanation_zh": "hard to V 的句型用主動不定詞 to resist，不用被動。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "prenominal_modifier",
+              "zh": "許多試著戒菸的人",
+              "literal_error": "Many try to quit smoking people soon find …",
+              "part": 1,
+              "explanation_zh": "中文「試著戒菸的」放在「人」前面，英文要先寫 people，再用 who 子句或分詞片語往後修飾：people who try to quit smoking／people trying to quit。"
+            },
+            {
+              "type": "abstract_nominal",
+              "zh": "強烈渴望",
+              "literal_error": "… nicotine makes people strongly want, which is very hard to resist",
+              "part": 3,
+              "explanation_zh": "「渴望」在這裡是名詞（想抽菸的慾望），用 desire／craving／urge；寫成動詞 want，句子就接不上「極難抗拒」的主詞。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "Many would-be quitters soon learn that the cravings nicotine triggers are almost impossible to fight off.",
+              "explanation_zh": "would-be quitters（想戒的人）、trigger（引發）、fight off（擊退）都是生動用法；the cravings nicotine triggers 是省略關代的形容詞子句。這是加分寫法。"
+            }
+          ],
+          "restructuring_zh": "「由尼古丁引起的強烈渴望」中文修飾語在前，英文改成分詞片語後位修飾 the strong desire caused by nicotine；「試著戒菸的人」改成 people who try to quit smoking。"
+        },
+        "2": {
+          "references": [
+            "Many experts believe that the most important factor that determines whether a person can successfully quit smoking is support from family and friends.",
+            "Many experts think that the most important factor in deciding whether someone can quit smoking successfully is the support of family and friends.",
+            "Many experts believe that the biggest factor deciding whether people can quit smoking successfully is the support they get from family and friends."
+          ],
+          "target_words": [
+            {
+              "word": "expert",
+              "zh": "專家"
+            },
+            {
+              "word": "believe",
+              "zh": "認為",
+              "alternatives": [
+                "think"
+              ]
+            },
+            {
+              "word": "important",
+              "zh": "重要的",
+              "alternatives": [
+                "big"
+              ]
+            },
+            {
+              "word": "factor",
+              "zh": "因素"
+            },
+            {
+              "word": "determine",
+              "zh": "決定",
+              "alternatives": [
+                "decide"
+              ]
+            },
+            {
+              "word": "successfully",
+              "zh": "成功地"
+            },
+            {
+              "word": "quit",
+              "zh": "戒除"
+            },
+            {
+              "word": "support",
+              "zh": "支持"
+            },
+            {
+              "word": "family",
+              "zh": "家人"
+            },
+            {
+              "word": "friend",
+              "zh": "朋友"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "NCL",
+              "grammar_id": "gp-wh-clause",
+              "label_zh": "間接問句：whether 名詞子句（能否…）",
+              "frame": "… determine + whether + S + can + V …",
+              "zh_trigger": "能否成功戒菸"
+            },
+            {
+              "code": "COMP",
+              "grammar_id": "gp-comparative-superlative",
+              "label_zh": "最高級（最重要的因素）",
+              "frame": "the most + adj. + N",
+              "zh_trigger": "最重要的因素"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "許多專家認為",
+              "accepted": [
+                "Many experts believe that",
+                "Many experts think that",
+                "Many experts hold that"
+              ],
+              "targets": [
+                "expert",
+                "believe"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Many expert believe that",
+                  "right": "Many experts believe that",
+                  "explanation_zh": "many 後面接複數名詞 experts。"
+                },
+                {
+                  "wrong": "Many experts are believe that",
+                  "right": "Many experts believe that",
+                  "explanation_zh": "believe 是一般動詞，前面不加 be 動詞。"
+                }
+              ]
+            },
+            {
+              "zh": "決定一個人能否成功戒菸",
+              "accepted": [
+                "determines whether a person can successfully quit smoking",
+                "in deciding whether someone can quit smoking successfully",
+                "deciding whether people can quit smoking successfully",
+                "determines whether someone can quit smoking successfully"
+              ],
+              "targets": [
+                "NCL",
+                "determine",
+                "successfully",
+                "quit"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "determines whether can a person quit smoking",
+                  "right": "determines whether a person can quit smoking",
+                  "explanation_zh": "whether 名詞子句用直述句語序：whether + 主詞 + can + V。"
+                },
+                {
+                  "wrong": "determines whether a person can successfully quit smoke",
+                  "right": "determines whether a person can successfully quit smoking",
+                  "explanation_zh": "quit 後面接動名詞 smoking。"
+                }
+              ]
+            },
+            {
+              "zh": "最重要的因素",
+              "accepted": [
+                "the most important factor",
+                "the biggest factor",
+                "the key factor"
+              ],
+              "targets": [
+                "COMP",
+                "important",
+                "factor"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "the most importance factor",
+                  "right": "the most important factor",
+                  "explanation_zh": "修飾名詞 factor 要用形容詞 important；importance 是名詞。"
+                },
+                {
+                  "wrong": "the more important factor",
+                  "right": "the most important factor",
+                  "explanation_zh": "「最重要的」是最高級 the most important，不是比較級。"
+                }
+              ]
+            },
+            {
+              "zh": "是家人和朋友的支持",
+              "accepted": [
+                "is support from family and friends",
+                "is the support of family and friends",
+                "is the support they get from family and friends",
+                "is the support from family and friends"
+              ],
+              "targets": [
+                "support",
+                "family",
+                "friend"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "is the support from family and friend",
+                  "right": "is the support from family and friends",
+                  "explanation_zh": "朋友不只一位，用複數 friends。"
+                },
+                {
+                  "wrong": "are support from family and friends",
+                  "right": "is support from family and friends",
+                  "explanation_zh": "主詞核心是 the most important factor（單數），動詞用 is。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "word_form",
+              "zh": "能否成功戒菸",
+              "literal_error": "… whether can a person successfully quit smoke …",
+              "part": 2,
+              "explanation_zh": "「能否…」要寫成 whether 名詞子句，語序是 whether + 主詞 + can + V（不倒裝）；「戒菸」是 quit smoking。"
+            },
+            {
+              "type": "prenominal_modifier",
+              "zh": "決定一個人能否成功戒菸最重要的因素",
+              "literal_error": "the determine a person can quit smoking most important factor",
+              "part": 3,
+              "explanation_zh": "中文修飾語「決定…的」放在「因素」前面，英文要先寫 the most important factor，再用 that determines whether … 或 in deciding whether … 往後修飾。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "Many experts believe that nothing determines whether a smoker can kick the habit more than the support of family and friends.",
+              "explanation_zh": "nothing … more than …（沒有什麼比…更…）用否定加比較級表達最高級；kick the habit（戒除習慣）是道地說法。這是加分寫法。"
+            }
+          ]
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ac-V-3",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-top-05",
+    "lot": "translation-top-05",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "1423e68b58216cafb46e710ae1065ce2ef47f637e82f416d8ddb06bd091160ba",
+    "spec_id": "translation-top@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 1,
+    "sentences": 1,
+    "avg_sentence_length": 1.0,
+    "denominator": 1,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 1.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {
+      "off": 1
+    },
+    "offlist_words": [
+      "nicotine"
+    ],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T14:05:41Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T13:22:48Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Many people who try to quit smoking soon find that the strong cravings caused by nicotine are extremely hard to resist.",
+            "confidence": "high",
+            "explanation_zh": "「許多試著戒菸的人」用關係子句 who try to quit smoking；「很快就發現」用 soon find that；「由尼古丁引起的強烈渴望」用過去分詞片語 caused by nicotine 後位修飾；「渴望」用 cravings（學測程度也可用 desire）；「極難抗拒」用 extremely hard to resist。"
+          },
+          "2": {
+            "translation": "Many experts believe that the most important factor that determines whether a person can quit smoking successfully is support from family and friends.",
+            "confidence": "high",
+            "explanation_zh": "「許多專家認為」用 believe that；「決定一個人能否成功戒菸」用關係子句 that determines＋whether 名詞子句；「最重要的因素」用最高級 the most important factor；「家人和朋友的支持」用 support from family and friends。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "REL",
+              "PART"
+            ],
+            "used_target_words": [
+              "try",
+              "quit",
+              "smoke",
+              "find",
+              "strong",
+              "desire",
+              "cause",
+              "extremely",
+              "hard",
+              "resist"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "NCL",
+              "COMP"
+            ],
+            "used_target_words": [
+              "expert",
+              "believe",
+              "important",
+              "factor",
+              "determine",
+              "successfully",
+              "quit",
+              "support",
+              "family",
+              "friend"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "try",
+              "quit",
+              "smoke",
+              "find",
+              "strong",
+              "desire",
+              "cause",
+              "extremely",
+              "hard",
+              "resist"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "REL": true,
+              "PART": false
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "expert",
+              "believe",
+              "important",
+              "factor",
+              "determine",
+              "successfully",
+              "quit",
+              "support",
+              "family",
+              "friend"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NCL": true,
+              "COMP": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "warn",
+      "created_at": "2026-10-09T13:30:00Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Many people who try to quit smoking soon find that the strong cravings caused by nicotine are extremely hard to resist.",
+            "confidence": "high",
+            "explanation_zh": "「許多試著戒菸的人」用關係子句 who try to quit smoking；「很快就發現」用 soon find that ...；「由尼古丁引起的強烈渴望」用 cravings caused by nicotine（過去分詞後飾）；「極難抗拒」用 extremely hard to resist。"
+          },
+          "2": {
+            "translation": "Many experts believe that the most important factor in determining whether a person can quit smoking successfully is support from family and friends.",
+            "confidence": "high",
+            "explanation_zh": "「許多專家認為」用 Many experts believe that ...；「決定一個人能否成功戒菸最重要的因素」用 the most important factor in determining whether ...；「家人和朋友的支持」用 support from family and friends。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "REL",
+              "PART"
+            ],
+            "used_target_words": [
+              "try",
+              "quit",
+              "smoke",
+              "find",
+              "strong",
+              "desire",
+              "cause",
+              "extremely",
+              "hard",
+              "resist"
+            ],
+            "within_accepted": true,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "第 3 部分 targets 標 PART（分詞片語後位修飾），但 accepted 與 REF2 的 the strong urge(s)／desire that nicotine causes 是關係子句、不是分詞；學生這樣寫正確，但沒有用到標的句型。"
+            ],
+            "closest_reference": 0
+          },
+          "2": {
+            "used_patterns": [
+              "NCL",
+              "COMP"
+            ],
+            "used_target_words": [
+              "expert",
+              "believe",
+              "important",
+              "factor",
+              "determine",
+              "successfully",
+              "quit",
+              "support",
+              "family",
+              "friend"
+            ],
+            "within_accepted": true,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "第 3 部分 targets 標 COMP（最高級），但 accepted 的 the key factor 不是最高級，也沒有 important；學生寫 key factor 會被接受，卻沒有用到標的句型。"
+            ],
+            "closest_reference": 0
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "try",
+              "quit",
+              "smoke",
+              "find",
+              "strong",
+              "desire",
+              "cause",
+              "extremely",
+              "hard",
+              "resist"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "REL": true,
+              "PART": false
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "expert",
+              "believe",
+              "important",
+              "factor",
+              "determine",
+              "successfully",
+              "quit",
+              "support",
+              "family",
+              "friend"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NCL": true,
+              "COMP": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 1 題驗證者對4 部分切分有意見（warn）：第 3 部分 targets 標 PART（分詞片語後位修飾），但 accepted 與 REF2 的 the strong urge(s)／desire that nicotine causes 是關係子句、不是分詞；學生這樣寫正確，但沒",
+          "第 2 題驗證者對4 部分切分有意見（warn）：第 3 部分 targets 標 COMP（最高級），但 accepted 的 the key factor 不是最高級，也沒有 important；學生寫 key factor 會被接受，卻沒有用到標的句型。"
+        ]
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

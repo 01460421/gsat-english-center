@@ -1,0 +1,741 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.391683",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "advanced",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "為了節省時間，許多上班族會用外送平台訂午餐，再和同事一起吃。",
+        "options": null,
+        "answer": "To save time, many office workers order lunch through food delivery platforms and eat it with their colleagues.",
+        "accepted_answers": [
+          "In order to save time, many office workers order lunch from food delivery platforms and then eat it with their colleagues.",
+          "Many office workers order lunch on food delivery platforms and eat it together with their coworkers to save time."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "平行結構（and 連接兩個動詞片語）",
+            "不定詞表目的（為了…）"
+          ],
+          "topic": "外送平台"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "有些父母也靠這些平台解決晚餐，好讓自己能休息並陪伴孩子。",
+        "options": null,
+        "answer": "Some parents also rely on these platforms for dinner so that they can relax and spend time with their kids.",
+        "accepted_answers": [
+          "Some parents also depend on these platforms for dinner so that they can get some rest and be with their children.",
+          "Some parents also count on these platforms for dinner so that they can rest and keep their children company."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "平行結構（so that 子句裡的兩個動詞片語）",
+            "目的：so that（好讓…）"
+          ],
+          "topic": "外送平台"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "外送平台"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「為了節省時間」表目的，句首用 To save time（或 In order to save time），後面加逗號再接主要子句。「上班族」譯為 office workers 或 employees，「外送平台」是 food delivery platforms（也可說 apps），「透過平台訂餐」用 order … through／on／from …。「再和同事一起吃」和前面的「訂午餐」是同一個主詞的兩個動作，用 and 連接成平行結構：order lunch … and eat it with their colleagues，兩個動詞都用現在簡單式。",
+          "evidence": [
+            "為了節省時間",
+            "再和同事一起吃"
+          ],
+          "strategy_zh": "同一個主詞做兩個動作時，用 and 連接、動詞形式一致；then 是副詞，不能單獨連接兩個動詞。",
+          "hints": [
+            "切成四段：為了節省時間／許多上班族／會用外送平台訂午餐／再和同事一起吃",
+            "標的詞彙：save（節省）、worker（上班族）、order（訂）、delivery（外送）、platform（平台）、colleague（同事）",
+            "句型框架：To VR …, S + V1 … and V2 …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「靠…解決晚餐」意思是晚餐依賴外送，用 rely on／depend on these platforms for dinner；「好讓…」表目的，用 so that＋主詞＋can＋原形動詞，中文省略的主詞要補成 they（指父母）。so that 子句裡「休息」和「陪伴孩子」用 and 連成平行結構：can relax and spend time with their kids。",
+          "evidence": [
+            "靠這些平台解決晚餐",
+            "好讓自己能休息並陪伴孩子"
+          ],
+          "strategy_zh": "看到「好讓／以便」先想 so that，再檢查子句有沒有主詞和助動詞 can／could。",
+          "hints": [
+            "切成四段：有些父母也靠這些平台／解決晚餐／好讓自己能休息／並陪伴孩子",
+            "標的詞彙：parent（父母）、rely（依靠）、dinner（晚餐）、relax（休息）、child（孩子）",
+            "句型框架：S + rely on … for … so that + S + can + VR1 and VR2"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "To save time, many office workers order lunch through food delivery platforms and eat it with their colleagues.",
+            "In order to save time, many office workers order lunch from food delivery platforms and then eat it with their colleagues.",
+            "Many office workers order lunch on food delivery platforms and eat it together with their coworkers to save time."
+          ],
+          "target_words": [
+            {
+              "word": "save",
+              "zh": "節省"
+            },
+            {
+              "word": "worker",
+              "zh": "上班族（工作者）",
+              "alternatives": [
+                "employee"
+              ]
+            },
+            {
+              "word": "order",
+              "zh": "訂（餐）",
+              "alternatives": [
+                "get",
+                "buy"
+              ]
+            },
+            {
+              "word": "delivery",
+              "zh": "外送",
+              "alternatives": [
+                "deliver"
+              ]
+            },
+            {
+              "word": "platform",
+              "zh": "平台",
+              "alternatives": [
+                "app",
+                "apps",
+                "service"
+              ]
+            },
+            {
+              "word": "colleague",
+              "zh": "同事",
+              "alternatives": [
+                "coworker",
+                "coworkers",
+                "co-worker",
+                "co-workers"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PARA",
+              "grammar_id": "gp-parallelism",
+              "label_zh": "平行結構（and 連接兩個動詞片語）",
+              "frame": "S + V1 … and (then) V2 …（兩個動詞同時態、同形式）",
+              "zh_trigger": "再"
+            },
+            {
+              "code": "PURP",
+              "grammar_id": "gp-infinitive-purpose",
+              "label_zh": "不定詞表目的（為了…）",
+              "frame": "To VR …, S + V … ／ S + V … (in order) to VR",
+              "zh_trigger": "為了"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "為了節省時間",
+              "accepted": [
+                "To save time",
+                "In order to save time",
+                "So as to save time",
+                "To save some time"
+              ],
+              "targets": [
+                "PURP",
+                "save"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "For saving time",
+                  "right": "To save time",
+                  "explanation_zh": "表目的用不定詞 to＋原形動詞；for＋V-ing 多半表示用途，放句首表目的不自然。"
+                },
+                {
+                  "wrong": "To saving time",
+                  "right": "To save time",
+                  "explanation_zh": "不定詞 to 後面接原形動詞。"
+                }
+              ]
+            },
+            {
+              "zh": "許多上班族",
+              "accepted": [
+                "many office workers",
+                "a lot of office workers",
+                "many employees",
+                "lots of office workers",
+                "many people who work in offices"
+              ],
+              "targets": [
+                "worker"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "many office worker",
+                  "right": "many office workers",
+                  "explanation_zh": "many 後面接複數名詞。"
+                },
+                {
+                  "wrong": "many go-to-work people",
+                  "right": "many office workers",
+                  "explanation_zh": "「上班族」不要逐字翻，英文說 office workers 或 employees。"
+                }
+              ]
+            },
+            {
+              "zh": "會用外送平台訂午餐",
+              "accepted": [
+                "order lunch through food delivery platforms",
+                "order lunch from food delivery platforms",
+                "order lunch on food delivery platforms",
+                "use food delivery platforms to order lunch",
+                "order lunch through food delivery apps",
+                "order lunch via food delivery platforms"
+              ],
+              "targets": [
+                "order",
+                "delivery",
+                "platform"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "order lunch by food delivery platforms",
+                  "right": "order lunch through food delivery platforms",
+                  "explanation_zh": "「透過某個平台」用 through、on、from 或 via；by 後面多接交通工具或方法的動名詞。"
+                },
+                {
+                  "wrong": "use food delivery platform to order lunch",
+                  "right": "use food delivery platforms to order lunch",
+                  "explanation_zh": "可數名詞單數前面要有冠詞；這裡泛指各種外送平台，用複數 platforms。"
+                }
+              ]
+            },
+            {
+              "zh": "再和同事一起吃",
+              "accepted": [
+                "and eat it with their colleagues",
+                "and then eat it with their colleagues",
+                "and eat it together with their coworkers",
+                "and eat it with their coworkers",
+                "and eat together with their colleagues",
+                "and then have it with their colleagues"
+              ],
+              "targets": [
+                "PARA",
+                "colleague"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "and eating it with their colleagues",
+                  "right": "and eat it with their colleagues",
+                  "explanation_zh": "and 連接的兩個動作要同形式：order … and eat …，不要一個原形、一個 V-ing。"
+                },
+                {
+                  "wrong": "then eat it with their colleagues",
+                  "right": "and then eat it with their colleagues",
+                  "explanation_zh": "then 是副詞，不能單獨連接兩個動詞片語，前面要加 and。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "word_form",
+              "zh": "為了節省時間",
+              "literal_error": "For saving time, many office workers order lunch through food delivery platforms.",
+              "part": 1,
+              "explanation_zh": "「為了…」表目的，用 to＋原形動詞；寫成 for＋V-ing 是常見的字形錯誤。"
+            },
+            {
+              "type": "collocation",
+              "zh": "上班族",
+              "literal_error": "many go-to-work people",
+              "part": 2,
+              "explanation_zh": "「上班族」是固定說法，英文用 office workers 或 employees，逐字翻會變成中式英文。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "Many office workers save time by ordering lunch through food delivery platforms and eating it with their colleagues.",
+              "grammar_id": "gp-prep-gerund",
+              "explanation_zh": "把「為了節省時間」改寫成主要動詞 save time，再用 by＋兩個平行的動名詞（ordering … and eating …）說明方法；兩個 V-ing 形式一致，是平行結構的進階用法。"
+            }
+          ]
+        },
+        "2": {
+          "references": [
+            "Some parents also rely on these platforms for dinner so that they can relax and spend time with their kids.",
+            "Some parents also depend on these platforms for dinner so that they can get some rest and be with their children.",
+            "Some parents also count on these platforms for dinner so that they can rest and keep their children company."
+          ],
+          "target_words": [
+            {
+              "word": "parent",
+              "zh": "父母"
+            },
+            {
+              "word": "rely",
+              "zh": "依靠",
+              "alternatives": [
+                "depend",
+                "count on",
+                "turn to"
+              ]
+            },
+            {
+              "word": "dinner",
+              "zh": "晚餐",
+              "alternatives": [
+                "supper"
+              ]
+            },
+            {
+              "word": "relax",
+              "zh": "休息",
+              "alternatives": [
+                "rest"
+              ]
+            },
+            {
+              "word": "child",
+              "zh": "孩子",
+              "alternatives": [
+                "kid"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PARA",
+              "grammar_id": "gp-parallelism",
+              "label_zh": "平行結構（so that 子句裡的兩個動詞片語）",
+              "frame": "… can + VR1 … and VR2 …（兩個動詞都用原形）",
+              "zh_trigger": "並"
+            },
+            {
+              "code": "PURP",
+              "grammar_id": "gp-so-that-purpose",
+              "label_zh": "目的：so that（好讓…）",
+              "frame": "S + V … so that + S + can + VR",
+              "zh_trigger": "好讓"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "有些父母也靠這些平台",
+              "accepted": [
+                "Some parents also rely on these platforms",
+                "Some parents also depend on these platforms",
+                "Some parents also count on these platforms",
+                "Some parents also turn to these platforms",
+                "Some parents also rely on them"
+              ],
+              "targets": [
+                "parent",
+                "rely"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Some parents also rely these platforms",
+                  "right": "Some parents also rely on these platforms",
+                  "explanation_zh": "rely 是不及物動詞，要說 rely on sth。"
+                },
+                {
+                  "wrong": "Some parents also rely on this platforms",
+                  "right": "Some parents also rely on these platforms",
+                  "explanation_zh": "複數名詞前用 these，不用 this。"
+                }
+              ]
+            },
+            {
+              "zh": "解決晚餐",
+              "accepted": [
+                "for dinner",
+                "for their dinner",
+                "for dinners",
+                "to get dinner",
+                "to take care of dinner"
+              ],
+              "targets": [
+                "dinner"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "to solve dinner",
+                  "right": "for dinner",
+                  "explanation_zh": "「解決晚餐」是口語，意思是「打理晚餐」，不能直譯成 solve（解決問題）。"
+                }
+              ]
+            },
+            {
+              "zh": "好讓自己能休息",
+              "accepted": [
+                "so that they can relax",
+                "so that they can get some rest",
+                "so that they can rest",
+                "so they can relax",
+                "so that they can take a rest",
+                "so that they can have a rest"
+              ],
+              "targets": [
+                "PURP",
+                "relax"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "so that themselves can rest",
+                  "right": "so that they can rest",
+                  "explanation_zh": "so that 後面要接完整子句，主詞用主格 they，不用反身代名詞。"
+                },
+                {
+                  "wrong": "so that can rest",
+                  "right": "so that they can rest",
+                  "explanation_zh": "中文省略了主詞，英文的 so that 子句一定要有主詞。"
+                }
+              ]
+            },
+            {
+              "zh": "並陪伴孩子",
+              "accepted": [
+                "and spend time with their kids",
+                "and be with their children",
+                "and keep their children company",
+                "and spend time with their children",
+                "and spend more time with their kids",
+                "and stay with their children"
+              ],
+              "targets": [
+                "PARA",
+                "child"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "and accompanying their kids",
+                  "right": "and spend time with their kids",
+                  "explanation_zh": "and 連接 can 後面的兩個動詞，都要用原形：can relax and spend …。"
+                },
+                {
+                  "wrong": "and company their children",
+                  "right": "and keep their children company",
+                  "explanation_zh": "company 是名詞，「陪伴某人」說 keep sb company 或 spend time with sb。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "subjectless",
+              "zh": "好讓自己能休息",
+              "literal_error": "Some parents also rely on these platforms for dinner so that can rest and accompany kids.",
+              "part": 3,
+              "explanation_zh": "中文「好讓自己能…」沒有主詞，英文 so that 引導的是子句，要補上主詞 they。"
+            },
+            {
+              "type": "collocation",
+              "zh": "解決晚餐",
+              "literal_error": "Some parents also use these platforms to solve dinner.",
+              "part": 2,
+              "explanation_zh": "「解決晚餐」不是解決問題，不能用 solve；說 rely on … for dinner 或 order dinner …。"
+            }
+          ],
+          "bonus": [],
+          "restructuring_zh": "「好讓自己能休息並陪伴孩子」中文省略主詞，英文要寫成完整的 so that 子句（so that they can …），兩個動作再用 and 平行連接；「靠這些平台解決晚餐」也要改寫成 rely on these platforms for dinner，不能逐字翻。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-advanced-01",
+    "lot": "translation-advanced-01",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "aabb674c20baad2f5310b8b4d808a265893e2edf0c2a598bf8b873bfdfb38f0f",
+    "spec_id": "translation-advanced@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-09T12:42:23Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T07:45:00Z",
+      "details": {
+        "solver": "A",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "To save time, many office workers order lunch through food delivery platforms and then eat it together with their colleagues.",
+            "confidence": "high",
+            "explanation_zh": "「為了節省時間」譯成句首不定詞 To save time 表目的；「訂午餐，再和同事一起吃」是同一主詞的兩個動作，用 order … and then eat 對等連接；「上班族」用 office workers；「外送平台」用 food delivery platforms，介系詞用 through。"
+          },
+          "2": {
+            "translation": "Some parents also rely on these platforms for dinner so that they can rest and spend time with their children.",
+            "confidence": "high",
+            "explanation_zh": "「靠……解決晚餐」用 rely on these platforms for dinner，比直譯 solve dinner 自然；「好讓自己能……」用 so that they can 表目的；「休息並陪伴孩子」以 rest and spend time with 對等連接。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PURP",
+              "PARA"
+            ],
+            "used_target_words": [
+              "save",
+              "worker",
+              "order",
+              "delivery",
+              "platform",
+              "colleague"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "（小建議，不影響判定）P1 可接受寫法 So as to save time 放在句首不太自然（so as to 通常不放句首），建議拿掉或只保留句尾用法。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "PURP",
+              "PARA"
+            ],
+            "used_target_words": [
+              "parent",
+              "rely",
+              "dinner",
+              "relax",
+              "child"
+            ],
+            "within_accepted": true,
+            "closest_reference": 2,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "save",
+              "worker",
+              "order",
+              "delivery",
+              "platform",
+              "colleague"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PURP": true,
+              "PARA": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "parent",
+              "rely",
+              "dinner",
+              "relax",
+              "child"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PURP": true,
+              "PARA": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-09T07:46:21Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "To save time, many office workers use food-delivery platforms to order lunch and then eat it together with their colleagues.",
+            "confidence": "high",
+            "explanation_zh": "「為了節省時間」用不定詞片語 To save time 放句首；「用外送平台訂午餐」譯成 use ... platforms to order lunch；「再和同事一起吃」用 and then eat it together with 帶出先後順序。"
+          },
+          "2": {
+            "translation": "Some parents also rely on these platforms to take care of dinner so that they can rest and spend time with their children.",
+            "confidence": "high",
+            "explanation_zh": "「靠…解決晚餐」用 rely on ... to take care of dinner；「好讓自己能…」用 so that they can 表目的；「陪伴孩子」譯為 spend time with their children。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PARA",
+              "PURP"
+            ],
+            "used_target_words": [
+              "save",
+              "worker",
+              "order",
+              "delivery",
+              "platform",
+              "colleague"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PARA",
+              "PURP"
+            ],
+            "used_target_words": [
+              "parent",
+              "rely",
+              "dinner",
+              "relax",
+              "child"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "save",
+              "worker",
+              "order",
+              "delivery",
+              "platform",
+              "colleague"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PARA": true,
+              "PURP": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "parent",
+              "rely",
+              "dinner",
+              "relax",
+              "child"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PARA": true,
+              "PURP": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}
