@@ -18,6 +18,7 @@ import { buildScoreScales } from './score-scales.mjs';
 
 const WEB_DIR = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
 const GOLDEN = path.join(WEB_DIR, 'tests', 'fixtures', 'bank-public');
+const WRITING_GOLDEN = path.join(WEB_DIR, 'tests', 'fixtures', 'bank-writing-public');
 const SRC = path.join(WEB_DIR, 'src', 'data');
 
 const cleanup: string[] = [];
@@ -124,5 +125,40 @@ describe('級分對照（exams/score-scales.json）的型別契約', () => {
     expect(result.ok).toBe(false);
     expect(result.output).toMatch(/"高標"/);
     expect(result.output).toMatch(/"math"/);
+  }, 60_000);
+});
+
+describe('本站仿真寫作題（writing/bank/）的型別契約', () => {
+  it('範例輸出（tests/fixtures/bank-writing-public）符合 src/features/writing/bank/data.ts', () => {
+    const result = check(WRITING_GOLDEN, 'writing-ok', ['writingBank']);
+    expect(result.output).toBe('');
+    expect(result.ok).toBe(true);
+    expect(result.summary).toEqual(['本站仿真寫作題的索引', '6 個難度列表', '2 個題目檔', '2 個參考內容檔']);
+  }, 60_000);
+
+  it('不合型別的值、作答前的檔案多了答案欄位、中譯英檔帶作文欄位都會讓 tsc 失敗', () => {
+    const dir = mkdtempSync(path.join(tmpdir(), 'gsat-contract-'));
+    cleanup.push(dir);
+    cpSync(WRITING_GOLDEN, dir, { recursive: true });
+    const bank = path.join(dir, 'writing', 'bank');
+    editJson(path.join(bank, 'index.json'), (index) => {
+      const groups = index['groups'] as Record<string, unknown>[];
+      if (groups[0]) groups[0]['tier'] = 'expert';
+    });
+    editJson(path.join(bank, 'prompts', 'ai.tr.0b1c2d@1.json'), (p) => {
+      ((p['items'] as Record<string, unknown>[])[0] as Record<string, unknown>)['references'] = ['leak'];
+    });
+    editJson(path.join(bank, 'list', 'translation-basic.json'), (l) => {
+      ((l['groups'] as Record<string, unknown>[])[0] as Record<string, unknown>)['figure_count'] = 1;
+    });
+    editJson(path.join(bank, 'answers', 'ai.cp.0e1f2a@1.json'), (a) => {
+      a['verification'] = [];
+    });
+    const result = check(dir, 'writing-bad', ['writingBank']);
+    expect(result.ok).toBe(false);
+    expect(result.output).toMatch(/"expert"/);
+    expect(result.output).toMatch(/references/);
+    expect(result.output).toMatch(/figure_count/);
+    expect(result.output).toMatch(/verification/);
   }, 60_000);
 });

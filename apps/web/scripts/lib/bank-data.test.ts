@@ -184,6 +184,27 @@ describe('挑選規則', () => {
     expect(result.warnings).toEqual(['ai.wb.0a1b2c 有較新的 @3（draft，驗證中），仍發布 @2（新版沒有改答案）']);
   });
 
+  it('登記在 data/unpublish.jsonl 的版本不發布（unpublished）；下架的新版改了答案時舊版也撤下', () => {
+    const dir = tmpBank();
+    const root = path.dirname(dir);
+    // 下架清單的鍵是 repo 相對路徑：暫存目錄當成 repo 根目錄、題庫放在它底下的 v1。
+    const keyOf = (rel: string) => path.relative(root, path.join(dir, rel));
+    const only = buildBankData(dir, { repoRoot: root, unpublished: new Map([[keyOf(WB), { date: '2026-10-09', reason: '人工審核退回' }]]) });
+    expect(only.entries.map((e) => e.uid)).not.toContain('ai.wb.0a1b2c');
+    expect(only.skipped).toContainEqual({ file: path.join(dir, WB), reason: 'unpublished' });
+
+    writeVariant(dir, 'word_bank/advanced/ai.wb.0a1b2c@2.json', (d) => {
+      d['version'] = 2;
+      const q = ((d['group'] as Json)['questions'] as Json[])[0] as Json;
+      q['answer'] = q['answer'] === 'A' ? 'B' : 'A';
+    });
+    const unpublishV2 = new Map([[keyOf('word_bank/advanced/ai.wb.0a1b2c@2.json'), { date: '2026-10-09', reason: '人工審核退回' }]]);
+    const withdrawn = buildBankData(dir, { repoRoot: root, unpublished: unpublishV2 });
+    expect(withdrawn.entries.map((e) => e.uid)).not.toContain('ai.wb.0a1b2c');
+    expect(withdrawn.skipped).toContainEqual({ file: path.join(dir, WB), reason: 'withdrawn' });
+    expect(withdrawn.warnings[0]).toMatch(/^ai\.wb\.0a1b2c 有較新的 @2（人工審核後下架），其中 @2 改了答案：撤下 @1/);
+  });
+
   it('較新的版本還沒通過驗證且改了答案（draft 或 rejected）：撤下舊版並警告', () => {
     for (const status of ['draft', 'rejected']) {
       const dir = tmpBank();

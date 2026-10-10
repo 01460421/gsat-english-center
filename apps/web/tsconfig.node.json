@@ -9,5 +9,8 @@
     "allowJs": true,
     "checkJs": true
   },
-  "include": ["vite.config.ts", "playwright.config.ts", "tests", "scripts"]
+  "include": ["vite.config.ts", "playwright.config.ts", "tests", "scripts"],
+  // scripts/lib/*.d.mts 是給其他套件（packages/shared 的資料測試）匯入用的型別宣告；同名的 .d.mts 被列進 include 時
+  // tsc 會把 .mjs 當成它的輸出而不檢查，所以不列（匯入時仍會解析到它，一樣在程式裡）。
+  "exclude": ["scripts/**/*.d.mts"]
 }

@@ -1,5 +1,5 @@
 /** 寫作頁共用的顯示小工具：分數、狀態、日期、題目名稱。 */
-import { ESSAY_BANDS, type EssayBand, type SubmissionKind, type SubmissionStatus } from '@gsat/shared';
+import { ESSAY_BANDS, parseBankGroupId, type EssayBand, type SubmissionKind, type SubmissionStatus } from '@gsat/shared';
 import { examShortName, type EssayType } from '../../../data/exams';
 import { examIdLabel, wordCountLabel } from '../../exams/labels';
 import { parseGroupId, type EssayPrompt, type WritingExamRef } from '../data';
@@ -51,14 +51,24 @@ export function examRefLabel(ref: Pick<WritingExamRef, 'exam' | 'year' | 'sessio
   return examShortName(ref);
 }
 
-/** 由 group_id（'gsat-115.s7g1@1'）推出題目名稱；格式不對就原樣顯示。 */
+/** 本站仿真題（AI 出題）在標題、紀錄裡的名稱：「本站仿真 中譯英」。 */
+export const BANK_GROUP_LABEL = '本站仿真';
+
+/** 由 group_id 推出題目名稱：歷屆題（'gsat-115.s7g1@1'）→「115 學測」；本站仿真題（'ai.tr.1b2c4e@1'）→「本站仿真」；格式不對就原樣顯示。 */
 export function groupLabel(groupId: string): string {
+  if (parseBankGroupId(groupId)) return BANK_GROUP_LABEL;
   const parsed = parseGroupId(groupId);
   return parsed ? examIdLabel(parsed.examId) : groupId;
 }
 
-/** 提交對應的作答頁（草稿要回去繼續寫）。 */
+/**
+ * 提交對應的作答頁（草稿要回去繼續寫、「回到題目再練一次」）。
+ * 本站仿真題只看 uid（/writing/translation/ai/1b2c4e），永遠指向目前的版本。
+ * （路徑在這裡直接組，不匯入 bank/data.ts：寫作紀錄在 /writing 首頁，首頁的程式要保持小。）
+ */
 export function attemptPathOf(kind: SubmissionKind, groupId: string): string | null {
+  const bank = parseBankGroupId(groupId);
+  if (bank) return `/writing/${bank.section_type === 'translation' ? 'translation' : 'essay'}/ai/${bank.uid.slice(-6)}`;
   const parsed = parseGroupId(groupId);
   if (!parsed) return null;
   return `/writing/${kind === 'translation' ? 'translation' : 'essay'}/${encodeURIComponent(parsed.examId)}`;

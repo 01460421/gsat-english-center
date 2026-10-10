@@ -15,7 +15,7 @@ import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync
 import { createRequire } from 'node:module';
 import path from 'node:path';
 
-export const CONTRACT_PARTS = /** @type {const} */ (['meta', 'vocab', 'exams', 'bank', 'writing']);
+export const CONTRACT_PARTS = /** @type {const} */ (['meta', 'vocab', 'exams', 'bank', 'writing', 'writingBank']);
 /** @typedef {(typeof CONTRACT_PARTS)[number]} ContractPart */
 
 /** exams/ 底下不是單份考卷的檔案（和 build-data.mjs 的同名常數一致）。 */
@@ -94,6 +94,44 @@ export function contractSource({ dataDir, srcDir, parts = CONTRACT_PARTS }) {
     lines.push(`export const writingTranslation: TranslationIndex = ${JSON.stringify(read('writing/translation.json'))};`);
     lines.push(`export const writingEssay: EssayIndex = ${JSON.stringify(read('writing/essay.json'))};`);
     summary.push('寫作練習的 2 個索引');
+  }
+  if (parts.includes('writingBank')) {
+    // 本站仿真中譯英與作文（scripts/lib/writing-bank.mjs）：index、6 個難度列表、每組的 prompts 與 answers。
+    // 中譯英（ai.tr.*）與作文（ai.cp.*）各自用自己的型別檢查（比聯集型別嚴：作文的欄位不能出現在中譯英檔）。
+    const bankTypes = path.join(srcDir, '..', 'features', 'writing', 'bank', 'data');
+    const listDir = (/** @type {string} */ sub) => {
+      const dir = path.join(dataDir, 'writing', 'bank', sub);
+      return existsSync(dir) ? readdirSync(dir).filter((f) => f.endsWith('.json')).sort() : [];
+    };
+    const prompts = listDir('prompts');
+    const answers = listDir('answers');
+    const lists = listDir('list');
+    /** @type {Set<string>} */
+    const used = new Set(['WritingBankIndex']);
+    /** @param {string} f */
+    const isTr = (f) => f.startsWith('ai.tr.');
+    /** @type {string[]} */
+    const body = [];
+    body.push(`export const writingBankIndex: WritingBankIndex = ${JSON.stringify(read('writing/bank/index.json'))};`);
+    for (const f of lists) {
+      const type = f.startsWith('translation-') ? 'BankTranslationTierList' : 'BankEssayTierList';
+      used.add(type);
+      body.push(`export const writingBankList_${ident(f)}: ${type} = ${JSON.stringify(read(`writing/bank/list/${f}`))};`);
+    }
+    for (const f of prompts) {
+      const type = isTr(f) ? 'BankTranslationPromptFile' : 'BankEssayPromptFile';
+      used.add(type);
+      body.push(`export const writingBankPrompt_${ident(f)}: ${type} = ${JSON.stringify(read(`writing/bank/prompts/${f}`))};`);
+    }
+    for (const f of answers) {
+      const type = isTr(f) ? 'BankTranslationAnswersFile' : 'BankEssayAnswersFile';
+      used.add(type);
+      body.push(`export const writingBankAnswers_${ident(f)}: ${type} = ${JSON.stringify(read(`writing/bank/answers/${f}`))};`);
+    }
+    // 沒有檔案的型別不匯入（noUnusedLocals，同 bank 的做法）。
+    lines.push(`import type { ${[...used].sort().join(', ')} } from ${JSON.stringify(bankTypes)};`);
+    lines.push(...body);
+    summary.push('本站仿真寫作題的索引', `${lists.length} 個難度列表`, `${prompts.length} 個題目檔`, `${answers.length} 個參考內容檔`);
   }
   return { source: lines.join('\n'), summary };
 }

@@ -5,7 +5,7 @@ import { ApiRequestError } from '../../../lib/api';
 import { isAiGradableTranslation, parseGroupId, translationItemId } from '../data';
 import { FEATURES_OFF, FEATURES_ON, QUOTA, SET_115, meWith } from '../testing/fixtures';
 import { aiAccessOf } from './access';
-import { listOriginBack } from './listOrigin';
+import { listOriginBack, listOriginState } from './listOrigin';
 import {
   clearDraft,
   clearLocalWritingData,
@@ -20,7 +20,7 @@ import {
   selfDraftKey,
 } from './drafts';
 import { AI_PAUSED_MESSAGE, describeError, formatResetTime, refundReasonMessage } from './errors';
-import { formatScore, groupLabel } from './format';
+import { attemptPathOf, formatScore, groupLabel } from './format';
 import { locateSpan, segmentText } from './highlight';
 import { countUnresolved, markPositions, matchMarks, ocrMarks, replaceMarkAt, splitOcrLines } from './ocr';
 
@@ -254,6 +254,20 @@ describe('資料小工具', () => {
     expect(groupLabel('weird')).toBe('weird');
   });
 
+  it('本站仿真題（ai.tr／ai.cp）：標「本站仿真」，作答頁只看 uid 的後 6 碼；歷屆題的路徑不變', () => {
+    expect(groupLabel('ai.tr.0b1c2d@1')).toBe('本站仿真');
+    expect(groupLabel('ai.cp.0e1f2a@3')).toBe('本站仿真');
+    expect(attemptPathOf('translation', 'ai.tr.0b1c2d@1')).toBe('/writing/translation/ai/0b1c2d');
+    expect(attemptPathOf('essay', 'ai.cp.0e1f2a@3')).toBe('/writing/essay/ai/0e1f2a');
+    // 歷屆題
+    expect(attemptPathOf('translation', 'gsat-115.s7g1@1')).toBe('/writing/translation/gsat-115');
+    expect(attemptPathOf('essay', 'ast-109-makeup.s8g1@1')).toBe('/writing/essay/ast-109-makeup');
+    // 不合格式的 id：不當成本站題
+    expect(groupLabel('ai.tr.0b1c2d@0')).toBe('ai.tr.0b1c2d@0');
+    expect(groupLabel('ai.vo.0b1c2d@1')).toBe('ai.vo.0b1c2d@1');
+    expect(attemptPathOf('translation', 'ai.tr.XYZ@1')).toBeNull();
+  });
+
   it('只有現制「兩句一組、每句 4 分」可以送 AI 批改', () => {
     expect(isAiGradableTranslation(SET_115)).toBe(true);
     const item = SET_115.items[0] ?? { no: 1, label: '1', stem: '', points: 4, patterns: [] };
@@ -281,5 +295,16 @@ describe('listOriginBack（作答頁的返回連結）', () => {
     expect(listOriginBack('/translation', fallback)).toBe(fallback);
     expect(listOriginBack({ from: 'https://example.com/' }, fallback)).toBe(fallback);
     expect(listOriginBack({ from: 'toString' }, fallback)).toBe(fallback);
+  });
+  it('本站仿真題：回到題型頁時接上難度（?tier=）；不是從題型頁來的照樣用預設', () => {
+    const bankFallback = { to: '/writing/translation/ai?tier=basic', label: '本站仿真中譯英（穩定基礎）' };
+    expect(listOriginBack({ from: '/translation' }, bankFallback, '?tier=basic')).toEqual({ to: '/translation?tier=basic', label: '中譯英' });
+    expect(listOriginBack(null, bankFallback, '?tier=basic')).toBe(bankFallback);
+    expect(listOriginBack({ from: '/writing/translation/ai' }, bankFallback, '?tier=basic')).toBe(bankFallback);
+  });
+  it('listOriginState（「下一組」照樣帶下去的 state）：只轉交認得的題型頁', () => {
+    expect(listOriginState({ from: '/composition', extra: 1 })).toEqual({ from: '/composition' });
+    expect(listOriginState({ from: 'https://example.com/' })).toBeUndefined();
+    expect(listOriginState(undefined)).toBeUndefined();
   });
 });

@@ -7,7 +7,8 @@
  *   3. 六個題型頁：標題旁沒有「開發中」、沒有「規劃中的功能」；頁首下面就是練習（三種難度的切換＋抽到的題組），
  *      下面有題庫練習與歷屆試題的連結、學測怎麼考、收合的「題庫練習有什麼」；閱讀、混合題直接看得到題組，
  *      從題庫練習選同一格也接著做同一組。
- *   4. 中譯英、英文作文題型頁（後端功能全開）：頁首下面就是題目列表，說明 AI 批改與實際的拍照流程，沒有「即將開放」。
+ *   4. 中譯英、英文作文題型頁（後端功能全開）：頁首下面就是題目列表（本站仿真題、歷屆試題兩區），說明 AI 批改與實際的拍照流程，
+ *      沒有「即將開放」。
  * 每個測試都檢查沒有 console error、未捕捉的例外與水平捲動（手機另外縮到 320px 再檢查一次）。
  *
  * localStorage 的鍵與格式照抄各模組（vocab/lib/srs.ts、vocab/lib/mistakes.ts、practice/history.ts）：
@@ -319,6 +320,8 @@ test.describe('中譯英、英文作文題型頁（後端功能全開）', () =>
     const errors = collectErrors(page);
     await mockBackend(page, FEATURES_ON);
     await page.goto('/translation');
+    await expect(page.getByRole('region', { name: '本站仿真題' }).locator('a[href^="/writing/translation/ai/"]').first()).toBeVisible();
+    await expect(page.getByRole('region', { name: '本站仿真題' })).toContainText('登入並通過申請後，也能送 AI 批改');
     await expect(page.getByRole('region', { name: /^學測\s*\d+ 組$/ }).getByRole('link').first()).toHaveAttribute('href', /^\/writing\/translation\//);
     await expect(page.getByText(/登入並通過申請後，由兩位 AI 評分者依大考評分原則逐句給分/)).toBeVisible();
     await expect(page.getByRole('region', { name: '作答與批改方式' }).getByRole('link', { name: '寫作練習' })).toHaveAttribute('href', '/writing');
@@ -333,6 +336,7 @@ test.describe('中譯英、英文作文題型頁（後端功能全開）', () =>
     const errors = collectErrors(page);
     await mockBackend(page, FEATURES_ON);
     await page.goto('/composition');
+    await expect(page.getByRole('region', { name: '本站仿真題' }).locator('a[href^="/writing/essay/ai/"]').first()).toBeVisible();
     await expect(page.getByRole('region', { name: /^學測\s*\d+ 題$/ }).getByRole('link').first()).toHaveAttribute('href', /^\/writing\/essay\//);
     const photo = page.getByRole('region', { name: '拍照上傳手寫作文' });
     await expect(photo.getByRole('listitem').first()).toContainText('拍照上傳手寫稿');

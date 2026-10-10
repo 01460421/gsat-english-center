@@ -6,7 +6,21 @@ import { afterEach, describe, expect, it } from 'vitest';
 import { selfDraftKey } from './lib/drafts';
 import { clearDataCache } from '../../data/client';
 import SubmissionResultPage from './SubmissionResultPage';
-import { FEATURES_OFF, FEATURES_ON, apiError, baseRoutes, essaySubmission, jsonResponse, meWith, translationSubmission } from './testing/fixtures';
+import { AI_GROUP_LABEL } from '../practice/labels';
+import {
+  BANK_CP_GROUP,
+  BANK_INDEX,
+  BANK_TR_GROUP,
+  FEATURES_OFF,
+  FEATURES_ON,
+  apiError,
+  baseRoutes,
+  bankRoutes,
+  essaySubmission,
+  jsonResponse,
+  meWith,
+  translationSubmission,
+} from './testing/fixtures';
 import { apiCallsExceptSession, renderPage } from './testing/render';
 
 afterEach(() => {
@@ -369,5 +383,89 @@ describe('SubmissionResultPage', () => {
     const { fetch } = renderPage('/writing/submissions/nope', baseRoutes(FEATURES_ON, meWith()), pages);
     expect(await screen.findByRole('alert')).toHaveTextContent('找不到這份作答');
     expect(fetch.calls.filter((c) => c.path === '/api/submissions/nope')).toHaveLength(1);
+  });
+});
+
+describe('SubmissionResultPage：本站仿真題（docs/design/bank-writing.md §2.6）', () => {
+  const bankData = (calls: Array<{ path: string }>, kind: 'prompts' | 'answers') => calls.filter((c) => c.path.startsWith(`/data/writing/bank/${kind}/`)).map((c) => c.path);
+  const graded = () => translationSubmission({ id: 'bank-t', group_id: BANK_TR_GROUP, op_id: null });
+
+  it('中譯英已批改：標題有主題、AI 出題標示、中文題目、回到作答頁；參考內容展開時才下載 answers 檔', async () => {
+    const user = userEvent.setup();
+    const { fetch } = renderPage('/writing/submissions/bank-t', { ...baseRoutes(FEATURES_ON, meWith()), 'GET /api/submissions/bank-t': () => jsonResponse(graded()) }, pages);
+    expect(await screen.findByRole('heading', { level: 1, name: '本站仿真 中譯英：自備水壺上學' })).toBeInTheDocument();
+    expect(screen.getByText(AI_GROUP_LABEL)).toBeInTheDocument();
+    expect(await screen.findByText('近年來，許多學生已經開始自己帶水壺到學校。')).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: '回到題目再練一次' })).toHaveAttribute('href', '/writing/translation/ai/0b1c2d');
+    // 歷屆題的寫作索引不用下載。
+    expect(fetch.calls.some((c) => c.path === '/data/writing/translation.json')).toBe(false);
+    expect(bankData(fetch.calls, 'answers')).toEqual([]);
+    await user.click(screen.getByRole('button', { name: '看本站參考譯文與評分規準' }));
+    expect(await screen.findByText('In recent years, many students have started to bring their own water bottles to school.')).toBeInTheDocument();
+    expect(bankData(fetch.calls, 'answers')).toEqual([`/data/writing/bank/answers/${BANK_TR_GROUP}.json`]);
+    // 參考內容區有自己的 h2：裡面的「第 1 句」「第 2 句」（h3）不會掛在 AI 結果最後一個 h2「第 2 句」底下。
+    const panel = screen.getByRole('region', { name: '本站參考譯文與評分規準' });
+    expect(within(panel).getByRole('heading', { level: 2, name: '本站參考譯文與評分規準' })).toBeInTheDocument();
+    expect(within(panel).getAllByRole('heading', { level: 3 }).map((h) => h.textContent)).toEqual(['第 1 句', '第 2 句']);
+  });
+
+  it('作文已批改：題目（收合）用 prompts 檔的提示；參考內容是評分規準與範文', async () => {
+    const user = userEvent.setup();
+    renderPage(
+      '/writing/submissions/bank-e',
+      { ...baseRoutes(FEATURES_ON, meWith()), 'GET /api/submissions/bank-e': () => jsonResponse(essaySubmission({ id: 'bank-e', group_id: BANK_CP_GROUP, op_id: null })) },
+      pages,
+    );
+    expect(await screen.findByRole('heading', { level: 1, name: '本站仿真 英文作文：打掃時間的分工' })).toBeInTheDocument();
+    expect(await screen.findByText(/^提示：在臺灣，許多學校每天都有打掃時間/)).toBeInTheDocument();
+    await user.click(screen.getByRole('button', { name: '看本站評分規準與範文' }));
+    expect(await screen.findByRole('heading', { name: '內容（0–5 分）' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: '看範文（穩健版、頂標版）' })).toBeInTheDocument();
+    const panel = screen.getByRole('region', { name: '本站評分規準與範文' });
+    expect(within(panel).getByRole('heading', { level: 2, name: '本站評分規準與範文' })).toBeInTheDocument();
+    expect(within(panel).getByRole('heading', { level: 3, name: '範文' })).toBeInTheDocument();
+  });
+
+  it('題目已更新成新版（index 是 @2、提交是 @1）：不請求 @1 的 prompts／answers，說明已更新並連到新版題目', async () => {
+    const index = { ...BANK_INDEX, groups: BANK_INDEX.groups.map((g) => (g.uid === 'ai.tr.0b1c2d' ? { ...g, version: 2 } : g)) };
+    const { fetch } = renderPage(
+      '/writing/submissions/bank-t',
+      { ...baseRoutes(FEATURES_ON, meWith()), ...bankRoutes(index), 'GET /api/submissions/bank-t': () => jsonResponse(graded()) },
+      pages,
+    );
+    expect(await screen.findByText('這題已更新成新版本，參考內容改看新版。')).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: '看新版題目' })).toHaveAttribute('href', '/writing/translation/ai/0b1c2d');
+    expect(screen.getByRole('heading', { level: 1, name: '本站仿真 中譯英：自備水壺上學' })).toBeInTheDocument();
+    expect(screen.getByRole('region', { name: '總分' })).toHaveTextContent('5.75');
+    expect(screen.queryByRole('button', { name: '看本站參考譯文與評分規準' })).not.toBeInTheDocument();
+    expect(bankData(fetch.calls, 'prompts')).toEqual([]);
+    expect(bankData(fetch.calls, 'answers')).toEqual([]);
+  });
+
+  it('題目已下架（index 沒有這個 uid）：說明不再提供參考內容，也沒有回到作答頁的連結', async () => {
+    const index = { ...BANK_INDEX, count: 1, groups: BANK_INDEX.groups.filter((g) => g.uid !== 'ai.tr.0b1c2d') };
+    const { fetch } = renderPage(
+      '/writing/submissions/bank-t',
+      { ...baseRoutes(FEATURES_ON, meWith()), ...bankRoutes(index), 'GET /api/submissions/bank-t': () => jsonResponse(graded()) },
+      pages,
+    );
+    expect(await screen.findByText('這題已下架，本站參考內容不再提供。')).toBeInTheDocument();
+    expect(screen.getByRole('heading', { level: 1, name: '本站仿真 中譯英' })).toBeInTheDocument();
+    expect(screen.queryByRole('link', { name: '回到題目再練一次' })).not.toBeInTheDocument();
+    expect(bankData(fetch.calls, 'prompts')).toEqual([]);
+  });
+
+  it('prompts 檔 404（index 還沒更新、檔案已換版）：當成已更新，不顯示參考內容', async () => {
+    renderPage(
+      '/writing/submissions/bank-t',
+      {
+        ...baseRoutes(FEATURES_ON, meWith()),
+        [`GET /data/writing/bank/prompts/${BANK_TR_GROUP}.json`]: () => apiError(404, 'not_found'),
+        'GET /api/submissions/bank-t': () => jsonResponse(graded()),
+      },
+      pages,
+    );
+    expect(await screen.findByText('這題已更新成新版本，參考內容改看新版。')).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: '看本站參考譯文與評分規準' })).not.toBeInTheDocument();
   });
 });

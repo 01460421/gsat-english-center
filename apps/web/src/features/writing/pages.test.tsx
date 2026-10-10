@@ -3,6 +3,10 @@ import { screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { afterEach, describe, expect, it } from 'vitest';
 import { clearDataCache } from '../../data/client';
+import { AI_GROUP_LABEL } from '../practice/labels';
+import BankEssayAttemptPage from './bank/BankEssayAttemptPage';
+import { BankTranslationListPage } from './bank/BankListPage';
+import BankTranslationAttemptPage from './bank/BankTranslationAttemptPage';
 import EssayAttemptPage from './EssayAttemptPage';
 import EssayListPage from './EssayListPage';
 import TranslationAttemptPage from './TranslationAttemptPage';
@@ -10,18 +14,30 @@ import TranslationListPage from './TranslationListPage';
 import WritingHomePage from './WritingHomePage';
 import CompositionPage from '../../pages/CompositionPage';
 import TranslationPage from '../../pages/TranslationPage';
-import { FEATURES_OFF, FEATURES_ON, apiError, baseRoutes, jsonResponse, meWith, translationSubmission } from './testing/fixtures';
+import { draftKey } from './lib/drafts';
+import { BANK_CP_PROMPT, BANK_TR_PROMPT, FEATURES_OFF, FEATURES_ON, apiError, baseRoutes, jsonResponse, meWith, translationSubmission } from './testing/fixtures';
 import { apiCallsExceptSession, renderPage } from './testing/render';
 
-afterEach(() => clearDataCache());
+afterEach(() => {
+  clearDataCache();
+  // 本站仿真題的作答頁會讀寫這台裝置的草稿（列表卡片的「已完成」也是從這裡算的）。
+  window.localStorage.clear();
+});
 
 describe('WritingHomePage', () => {
   it('兩個入口與兩種模式；後端未開放時只說「即將開放」，不打其他 API', async () => {
     const { fetch } = renderPage('/writing', baseRoutes(FEATURES_OFF), { '/writing': <WritingHomePage /> });
     expect(screen.getByRole('heading', { level: 1, name: '寫作練習' })).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: /中譯英/ })).toHaveAttribute('href', '/writing/translation');
-    expect(screen.getByRole('link', { name: /英文作文/ })).toHaveAttribute('href', '/writing/essay');
+    expect(screen.getByRole('link', { name: /^中譯英/ })).toHaveAttribute('href', '/writing/translation');
+    expect(screen.getByRole('link', { name: /^英文作文/ })).toHaveAttribute('href', '/writing/essay');
     expect(screen.getByRole('region', { name: '兩種批改方式' })).toHaveTextContent('自我檢核');
+    // 本站仿真題（AI 出題）的兩個入口：說明寫死在首頁，不載入題庫資料。
+    const bank = screen.getByRole('region', { name: '本站仿真題（AI 出題）' });
+    expect(within(bank).getByRole('link', { name: /^本站仿真中譯英/ })).toHaveAttribute('href', '/writing/translation/ai');
+    expect(within(bank).getByRole('link', { name: /^本站仿真作文/ })).toHaveAttribute('href', '/writing/essay/ai');
+    expect(bank).toHaveTextContent('不是大考中心的試題');
+    expect(screen.getByRole('region', { name: '兩種批改方式' })).toHaveTextContent('本站仿真題附本站撰寫的參考譯文、評分規準與範文，寫完才顯示。');
+    expect(fetch.calls.some((c) => c.path.startsWith('/data/writing/bank/'))).toBe(false);
     expect(await screen.findByText('AI 批改即將開放。')).toBeInTheDocument();
     expect(screen.queryByRole('region', { name: '我的寫作紀錄' })).not.toBeInTheDocument();
     expect(apiCallsExceptSession(fetch)).toEqual([]);
@@ -193,8 +209,233 @@ describe('中譯英、英文作文題型頁', () => {
     expect(screen.getByText(/AI 批改每組扣 3 點/)).toBeInTheDocument();
     expect(screen.queryByText(/即將開放/)).not.toBeInTheDocument();
     expect(screen.queryByText(/規劃/)).not.toBeInTheDocument();
-    expect(screen.getByRole('region', { name: '陸續加入' })).toHaveTextContent('仿真中譯英題組');
+    // 「陸續加入」換成頁首的「本站仿真題」列表（已經上線），說明寫在列表上方。
+    const bank = screen.getByRole('region', { name: '本站仿真題' });
+    expect(bank).toHaveTextContent('登入並通過申請後，也能送 AI 批改');
+    expect(screen.queryByText(/陸續加入/)).not.toBeInTheDocument();
     expect(within(screen.getByRole('region', { name: '作答與批改方式' })).getByRole('link', { name: '寫作練習' })).toHaveAttribute('href', '/writing');
+    // 作答與批改方式要對得上兩種題目：本站仿真題的參考譯文是本站撰寫的、兩種都能送 AI 批改。
+    expect(screen.getByRole('region', { name: '作答與批改方式' })).toHaveTextContent('本站仿真題兩句都寫完後，可以對照本站撰寫的參考譯文');
+    expect(screen.getByText(/歷屆試題與本站仿真題都可以送/)).toBeInTheDocument();
+  });
+
+  it('中譯英：頁首下面先是本站仿真題（AI 出題標示、難度切換、出題中），再是歷屆試題；兩區各有標題', async () => {
+    const { fetch } = renderPage('/translation', baseRoutes(FEATURES_OFF), pages);
+    const bank = screen.getByRole('region', { name: '本站仿真題' });
+    const exam = screen.getByRole('region', { name: '歷屆試題' });
+    const how = screen.getByRole('region', { name: '作答與批改方式' });
+    expect(bank.compareDocumentPosition(exam) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(exam.compareDocumentPosition(how) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(screen.getByRole('heading', { level: 2, name: '本站仿真題' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { level: 2, name: '歷屆試題' })).toBeInTheDocument();
+    // 本站仿真題的標題旁有「跳到歷屆試題」：第一份列表很長時，第二份在第一個畫面裡也找得到。
+    expect(within(bank).getByRole('link', { name: '跳到歷屆試題' })).toHaveAttribute('href', '#exam-questions');
+    expect(exam).toHaveAttribute('id', 'exam-questions');
+    // 本站仿真題：AI 出題標示、三種難度（沒有題組的顯示出題中）、選中難度的卡片連到本站作答頁。
+    // 只有一組時不出現「顯示全部」。
+    expect(within(bank).getByText(AI_GROUP_LABEL)).toBeInTheDocument();
+    const picker = await within(bank).findByRole('group', { name: '難度' });
+    expect(within(picker).getByRole('radio', { name: /^穩定基礎\s*1 組$/ })).toBeChecked();
+    expect(within(picker).getByRole('radio', { name: /^進階練習\s*出題中$/ })).not.toBeChecked();
+    expect(within(picker).getByRole('radio', { name: /^超越頂標\s*出題中$/ })).toBeInTheDocument();
+    const card = await within(bank).findByRole('link', { name: /自備水壺上學/ });
+    expect(card).toHaveAttribute('href', '/writing/translation/ai/0b1c2d');
+    expect(within(bank).getByRole('heading', { level: 3, name: /^穩定基礎/ })).toBeInTheDocument();
+    expect(within(bank).queryByRole('button', { name: /^顯示全部/ })).not.toBeInTheDocument();
+    expect(bank).toHaveTextContent('不是大考中心的試題');
+    // 歷屆試題：各考試的標題在「歷屆試題」底下（<h3>），題目來源寫在這一區。
+    const gsat = await within(exam).findByRole('region', { name: /^學測\s*\d+ 組$/ });
+    expect(within(gsat).getByRole('heading', { level: 3 })).toBeInTheDocument();
+    expect(exam).toHaveTextContent('題目來源：大學入學考試中心歷屆試題');
+    expect(bank).not.toHaveTextContent('題目來源：大學入學考試中心');
+    // 只下載中譯英、選中難度的列表；作答前的檔案（prompts、answers）都不會先下載。
+    const bankCalls = fetch.calls.filter((c) => c.path.startsWith('/data/writing/bank/')).map((c) => c.path);
+    expect(bankCalls).toEqual(['/data/writing/bank/index.json', '/data/writing/bank/list/translation-basic.json']);
+    expect(screen.getAllByRole('heading', { level: 1 })).toHaveLength(1);
+  });
+
+  it('切換本站仿真題的難度：?tier= 和歷屆的 ?kind= 各記各的；出題中的難度連回題型頁的其他難度', async () => {
+    const user = userEvent.setup();
+    renderPage('/translation', baseRoutes(FEATURES_OFF), pages);
+    const bank = screen.getByRole('region', { name: '本站仿真題' });
+    await user.click(await within(bank).findByRole('radio', { name: /超越頂標/ }));
+    expect(screen.getByTestId('location')).toHaveTextContent(/^\/translation\?tier=top$/);
+    const status = (await within(bank).findByText(/這個難度還在出題中/)).closest('[role="status"]') as HTMLElement;
+    expect(within(status).getByRole('link', { name: '穩定基礎（1）' })).toHaveAttribute('href', '/translation?tier=basic');
+    await user.click(within(screen.getByRole('region', { name: '歷屆試題' })).getByRole('radio', { name: /指考/ }));
+    expect(screen.getByTestId('location')).toHaveTextContent(/^\/translation\?tier=top&kind=ast$/);
+    expect(within(bank).getByRole('radio', { name: /超越頂標/ })).toBeChecked();
+    expect(within(bank).getByRole('link', { name: '穩定基礎（1）' })).toHaveAttribute('href', '/translation?tier=basic&kind=ast');
+  });
+
+  it('本站仿真題（作文）：難度切換、卡片連到本站作答頁、說明有兩篇範文', async () => {
+    renderPage('/composition', baseRoutes(FEATURES_ON), pages);
+    const bank = await screen.findByRole('region', { name: '本站仿真題' });
+    expect(within(bank).getByText(AI_GROUP_LABEL)).toBeInTheDocument();
+    const card = await within(bank).findByRole('link', { name: /打掃時間的分工/ });
+    expect(card).toHaveAttribute('href', '/writing/essay/ai/0e1f2a');
+    expect(within(bank).getByRole('radio', { name: /^穩定基礎\s*1 題$/ })).toBeChecked();
+    expect(bank).toHaveTextContent('兩篇範文（穩健版、頂標版）');
+    expect(bank).toHaveTextContent('登入並通過申請後，也能送 AI 批改或拍照上傳手寫稿');
+    const exam = screen.getByRole('region', { name: '歷屆試題' });
+    expect(await within(exam).findByRole('link', { name: /115 學測/ })).toHaveAttribute('href', '/writing/essay/gsat-115');
+    expect(bank.compareDocumentPosition(exam) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(screen.getByRole('region', { name: '作答與批改方式' })).toHaveTextContent('本站仿真題附寫作鷹架');
+    expect(screen.queryByText(/陸續加入/)).not.toBeInTheDocument();
+  });
+
+  it('本站仿真題題組多時：題型頁只先列 6 組（這台裝置還沒完成的排前面），「顯示全部」在原地展開、焦點移到第一張新卡片；列表頁全部列出', async () => {
+    const user = userEvent.setup();
+    const uids = Array.from({ length: 8 }, (_, i) => `ai.tr.00000${i}`);
+    const index = { version: 'test', count: uids.length, groups: uids.map((uid, i) => ({ uid, version: 1, section_type: 'translation', tier: 'basic', topic: `主題${i + 1}` })) };
+    const list = {
+      version: 'test',
+      section_type: 'translation',
+      tier: 'basic',
+      count: uids.length,
+      groups: uids.map((uid, i) => ({ uid, version: 1, topic: `主題${i + 1}`, stems: [`第${i + 1}組第一句。`, `第${i + 1}組第二句。`] })),
+    };
+    const routes = {
+      ...baseRoutes(FEATURES_OFF),
+      'GET /data/writing/bank/index.json': () => jsonResponse(index),
+      'GET /data/writing/bank/list/translation-basic.json': () => jsonResponse(list),
+    };
+    // 第 1 組在這台裝置已經對照過（已完成）：題型頁把它排到後面。
+    window.localStorage.setItem(draftKey('translation', `${uids[0]}@1`), JSON.stringify({ texts: ['A.', 'B.'], revealedAt: 1, aiSubmittedAt: null }));
+    const first = renderPage('/translation', routes, { ...pages, '/writing/translation/ai': <BankTranslationListPage /> });
+    const bank = screen.getByRole('region', { name: '本站仿真題' });
+    expect(await within(bank).findByRole('radio', { name: /^穩定基礎\s*8 組\s*・已完成 1$/ })).toBeChecked();
+    const shown = await within(bank).findAllByRole('link', { name: /^主題/ });
+    expect(shown.map((a) => a.getAttribute('href'))).toEqual(['/writing/translation/ai/000001', '/writing/translation/ai/000002', '/writing/translation/ai/000003', '/writing/translation/ai/000004', '/writing/translation/ai/000005', '/writing/translation/ai/000006']);
+    await user.click(within(bank).getByRole('button', { name: '顯示全部 8 組' }));
+    const all = within(bank).getAllByRole('link', { name: /^主題/ });
+    expect(all).toHaveLength(8);
+    expect(all[6]).toHaveAttribute('href', '/writing/translation/ai/000007');
+    expect(all[6]).toHaveFocus();
+    expect(all[7]).toHaveAttribute('href', '/writing/translation/ai/000000');
+    expect(all[7]).toHaveTextContent('已完成');
+    expect(within(bank).queryByRole('button', { name: /^顯示全部/ })).not.toBeInTheDocument();
+    first.unmount();
+    clearDataCache();
+    // 列表頁（/writing/translation/ai）沒有其他列表，照列表檔的順序全部列出。
+    renderPage('/writing/translation/ai', routes, { '/writing/translation/ai': <BankTranslationListPage /> });
+    const listed = await screen.findAllByRole('link', { name: /^主題/ });
+    expect(listed.map((a) => a.getAttribute('href'))).toEqual(uids.map((u) => `/writing/translation/ai/${u.slice(-6)}`));
+    expect(screen.queryByRole('button', { name: /^顯示全部/ })).not.toBeInTheDocument();
+  });
+
+  it('從題型頁點本站仿真題進作答頁：返回連結回到題型頁、停在同一個難度；從本站列表頁點進去則回到列表頁', async () => {
+    const user = userEvent.setup();
+    const all = {
+      ...pages,
+      '/writing/translation/ai': <BankTranslationListPage />,
+      '/writing/translation/ai/:code': <BankTranslationAttemptPage />,
+      '/writing/essay/ai/:code': <BankEssayAttemptPage />,
+    };
+    const first = renderPage('/translation', baseRoutes(FEATURES_OFF), all);
+    await user.click(await within(screen.getByRole('region', { name: '本站仿真題' })).findByRole('link', { name: /自備水壺上學/ }));
+    expect(screen.getByTestId('location')).toHaveTextContent('/writing/translation/ai/0b1c2d');
+    expect(await screen.findByRole('heading', { level: 1, name: '中譯英：自備水壺上學' })).toBeInTheDocument();
+    const back = screen.getByRole('link', { name: '中譯英' });
+    expect(back).toHaveAttribute('href', '/translation?tier=basic');
+    await user.click(back);
+    expect(screen.getByTestId('location')).toHaveTextContent(/^\/translation\?tier=basic$/);
+    first.unmount();
+
+    const second = renderPage('/writing/translation/ai', baseRoutes(FEATURES_OFF), all);
+    await user.click(await screen.findByRole('link', { name: /自備水壺上學/ }));
+    expect(await screen.findByRole('heading', { level: 1, name: '中譯英：自備水壺上學' })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: '本站仿真中譯英（穩定基礎）' })).toHaveAttribute('href', '/writing/translation/ai?tier=basic');
+    second.unmount();
+
+    renderPage('/composition', baseRoutes(FEATURES_OFF), all);
+    await user.click(await within(screen.getByRole('region', { name: '本站仿真題' })).findByRole('link', { name: /打掃時間的分工/ }));
+    expect(screen.getByTestId('location')).toHaveTextContent('/writing/essay/ai/0e1f2a');
+    expect(await screen.findByRole('link', { name: '英文作文' })).toHaveAttribute('href', '/composition?tier=basic');
+  });
+
+  it('作答頁的「下一組／下一題」：連到同難度的下一組，帶著題型頁的來源（換題後返回連結仍回題型頁、同一個難度）', async () => {
+    const user = userEvent.setup();
+    const trUids = ['ai.tr.000000', 'ai.tr.000001', 'ai.tr.000002'];
+    const cpUids = ['ai.cp.000000', 'ai.cp.000001'];
+    const index = {
+      version: 'test',
+      count: trUids.length + cpUids.length,
+      groups: [
+        ...trUids.map((uid, i) => ({ uid, version: 1, section_type: 'translation', tier: 'basic', topic: `中譯英主題${i + 1}` })),
+        ...cpUids.map((uid, i) => ({ uid, version: 1, section_type: 'composition', tier: 'basic', topic: `作文主題${i + 1}` })),
+      ],
+    };
+    const trList = {
+      version: 'test',
+      section_type: 'translation',
+      tier: 'basic',
+      count: trUids.length,
+      groups: trUids.map((uid, i) => ({ uid, version: 1, topic: `中譯英主題${i + 1}`, stems: [`第${i + 1}組第一句。`, `第${i + 1}組第二句。`] })),
+    };
+    const cpList = {
+      version: 'test',
+      section_type: 'composition',
+      tier: 'basic',
+      count: cpUids.length,
+      groups: cpUids.map((uid, i) => ({ uid, version: 1, topic: `作文主題${i + 1}`, essay_type: 'picture', prompt_excerpt: `第${i + 1}題的提示。`, figure_count: 1 })),
+    };
+    const trPrompt = (uid: string, i: number) => ({
+      ...BANK_TR_PROMPT,
+      uid,
+      group_id: `${uid}@1`,
+      topic: `中譯英主題${i + 1}`,
+      items: BANK_TR_PROMPT.items.map((it) => ({ ...it, item_id: `${uid}@1#${it.label}` })),
+    });
+    const cpPrompt = (uid: string, i: number) => ({ ...BANK_CP_PROMPT, uid, group_id: `${uid}@1`, item_id: `${uid}@1#1`, topic: `作文主題${i + 1}` });
+    const routes = {
+      ...baseRoutes(FEATURES_OFF),
+      'GET /data/writing/bank/index.json': () => jsonResponse(index),
+      'GET /data/writing/bank/list/translation-basic.json': () => jsonResponse(trList),
+      'GET /data/writing/bank/list/composition-basic.json': () => jsonResponse(cpList),
+      ...Object.fromEntries(trUids.map((uid, i) => [`GET /data/writing/bank/prompts/${uid}@1.json`, () => jsonResponse(trPrompt(uid, i))])),
+      ...Object.fromEntries(cpUids.map((uid, i) => [`GET /data/writing/bank/prompts/${uid}@1.json`, () => jsonResponse(cpPrompt(uid, i))])),
+    };
+    const all = { ...pages, '/writing/translation/ai/:code': <BankTranslationAttemptPage />, '/writing/essay/ai/:code': <BankEssayAttemptPage /> };
+
+    const first = renderPage('/translation', routes, all);
+    await user.click(await within(screen.getByRole('region', { name: '本站仿真題' })).findByRole('link', { name: /中譯英主題1/ }));
+    expect(await screen.findByRole('heading', { level: 1, name: '中譯英：中譯英主題1' })).toBeInTheDocument();
+    const next = screen.getByRole('link', { name: '下一組' });
+    expect(next).toHaveAttribute('href', '/writing/translation/ai/000001');
+    await user.click(next);
+    expect(screen.getByTestId('location')).toHaveTextContent('/writing/translation/ai/000001');
+    expect(await screen.findByRole('heading', { level: 1, name: '中譯英：中譯英主題2' })).toBeInTheDocument();
+    // 換題後仍帶著題型頁的來源：返回連結回到 /translation（同一個難度），不是本站列表頁。
+    expect(screen.getByRole('link', { name: '中譯英' })).toHaveAttribute('href', '/translation?tier=basic');
+    expect(screen.getByRole('link', { name: '下一組' })).toHaveAttribute('href', '/writing/translation/ai/000002');
+    first.unmount();
+    clearDataCache();
+
+    renderPage('/composition', routes, all);
+    await user.click(await within(screen.getByRole('region', { name: '本站仿真題' })).findByRole('link', { name: /作文主題1/ }));
+    expect(await screen.findByRole('heading', { level: 1, name: '作文：作文主題1' })).toBeInTheDocument();
+    await user.click(screen.getByRole('link', { name: '下一題' }));
+    expect(screen.getByTestId('location')).toHaveTextContent('/writing/essay/ai/000001');
+    expect(await screen.findByRole('heading', { level: 1, name: '作文：作文主題2' })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: '英文作文' })).toHaveAttribute('href', '/composition?tier=basic');
+    // 繞回第一題。
+    expect(screen.getByRole('link', { name: '下一題' })).toHaveAttribute('href', '/writing/essay/ai/000000');
+  });
+
+  it('本站仿真題載入失敗：只有那一區就地「再試一次」，歷屆試題照常', async () => {
+    renderPage('/translation', { ...baseRoutes(FEATURES_OFF), 'GET /data/writing/bank/index.json': () => new Response('x', { status: 500 }) }, pages);
+    const bank = screen.getByRole('region', { name: '本站仿真題' });
+    expect(await within(bank).findByRole('button', { name: '再試一次' })).toBeInTheDocument();
+    expect(await within(screen.getByRole('region', { name: '歷屆試題' })).findByRole('region', { name: /^學測\s*\d+ 組$/ })).toBeInTheDocument();
+    expect(screen.getAllByRole('button', { name: '再試一次' })).toHaveLength(1);
+  });
+
+  it('後端沒部署：本站仿真題區塊照樣在，但不叫學生登入申請', async () => {
+    renderPage('/translation', baseRoutes(FEATURES_OFF), pages);
+    const bank = screen.getByRole('region', { name: '本站仿真題' });
+    expect(await within(bank).findByRole('link', { name: /自備水壺上學/ })).toHaveAttribute('href', '/writing/translation/ai/0b1c2d');
+    expect(bank).not.toHaveTextContent('登入並通過申請');
   });
 
   it('AI 與辨識開著（作文）：說明 AI 批改、實際的拍照流程與照片保存規則', async () => {
@@ -211,7 +452,8 @@ describe('中譯英、英文作文題型頁', () => {
     expect(photo).toHaveTextContent('最長也只保留 24 小時');
     expect(within(photo).getByRole('link', { name: '隱私權說明' })).toHaveAttribute('href', '/privacy');
     expect(screen.queryByText(/即將開放/)).not.toBeInTheDocument();
-    expect(screen.queryByText(/規劃/)).not.toBeInTheDocument();
+    // 「規劃中」的功能都上線了；本站仿真題的「規劃檢核表」（超越頂標的鷹架）是實際的功能名稱，不算。
+    expect(screen.queryByText(/規劃中/)).not.toBeInTheDocument();
   });
 });
 

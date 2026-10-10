@@ -13,7 +13,8 @@ export default defineConfig({
     projects: [
       {
         extends: true,
-        test: { name: 'unit', include: ['src/**/*.test.ts'], exclude: ['src/**/*.data.test.ts'] },
+        // scripts/**：零依賴的 Node 工具（選題、SVG 清理）的測試，同樣只看程式碼（在暫存目錄造題庫）。
+        test: { name: 'unit', include: ['src/**/*.test.ts', 'scripts/**/*.test.ts'], exclude: ['src/**/*.data.test.ts'] },
       },
       {
         extends: true,

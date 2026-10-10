@@ -58,6 +58,14 @@ const TranslationAttemptPage = lazy(() => import('./features/writing/Translation
 const EssayListPage = lazy(() => import('./features/writing/EssayListPage'));
 const EssayAttemptPage = lazy(() => import('./features/writing/EssayAttemptPage'));
 const SubmissionResultPage = lazy(() => import('./features/writing/SubmissionResultPage'));
+/**
+ * 本站仿真中譯英與作文（docs/design/bank-writing.md §3.1）：列表 /writing/{translation|essay}/ai、作答頁 …/ai/:code（uid 的 6 位碼）。
+ * 靜態段 ai 的排序優先於歷屆題的 :examId（歷屆考卷的 id 不可能是 ai），不會撞到歷屆作答頁。
+ */
+const BankTranslationListPage = lazy(() => import('./features/writing/bank/BankListPage').then((m) => ({ default: m.BankTranslationListPage })));
+const BankEssayListPage = lazy(() => import('./features/writing/bank/BankListPage').then((m) => ({ default: m.BankEssayListPage })));
+const BankTranslationAttemptPage = lazy(() => import('./features/writing/bank/BankTranslationAttemptPage'));
+const BankEssayAttemptPage = lazy(() => import('./features/writing/bank/BankEssayAttemptPage'));
 
 export function App() {
   return (
@@ -81,8 +89,12 @@ export function App() {
         <Route path="terms" element={<TermsPage />} />
         <Route path="admin" element={<AdminPage />} />
         <Route path="writing/translation" element={<TranslationListPage />} />
+        <Route path="writing/translation/ai" element={<BankTranslationListPage />} />
+        <Route path="writing/translation/ai/:code" element={<BankTranslationAttemptPage />} />
         <Route path="writing/translation/:examId" element={<TranslationAttemptPage />} />
         <Route path="writing/essay" element={<EssayListPage />} />
+        <Route path="writing/essay/ai" element={<BankEssayListPage />} />
+        <Route path="writing/essay/ai/:code" element={<BankEssayAttemptPage />} />
         <Route path="writing/essay/:examId" element={<EssayAttemptPage />} />
         <Route path="writing/submissions/:id" element={<SubmissionResultPage />} />
         <Route path="practice/:section/:tier" element={<PracticeSessionPage />} />

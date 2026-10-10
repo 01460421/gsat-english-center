@@ -1,7 +1,8 @@
 # 把後端（apps/api）部署到 Cloudflare Workers，並準備好它需要的雲端資源與機密（沿用 Sekai Center 的 worker-deploy 做法）。
 # 站主的逐步說明（每個金鑰去哪裡拿、怎麼觸發、怎麼確認成功、出錯看哪裡）：docs/SETUP-KEYS.md。
 #
-# 觸發：main 上 apps/api、packages/shared、data/exams/parsed（Worker 會打包中譯英與作文的題目文字）、
+# 觸發：main 上 apps/api、packages/shared、data/exams/parsed、data/bank/v1/translation、data/bank/v1/composition、
+#       data/unpublish.jsonl（Worker 會打包歷屆與本站仿真的中譯英、作文題目文字；docs/design/bank-writing.md §5.7）、
 #       package-lock.json 或本檔有變動時自動跑；也可以在 Actions 頁手動按「Run workflow」。
 #
 # 流程（整支可以重跑：已經存在的資源不會重建，已經有的 SESSION_SECRET／LEDGER_SALT 不會覆蓋）：
@@ -38,6 +39,10 @@ on:
       - 'apps/api/**'
       - 'packages/shared/**'
       - 'data/exams/parsed/**'
+      # 本站仿真中譯英與作文（docs/design/bank-writing.md §5.7）：題目庫會收錄 verified 的寫作題，下架清單也會改變題目庫。
+      - 'data/bank/v1/translation/**'
+      - 'data/bank/v1/composition/**'
+      - 'data/unpublish.jsonl'
       - 'package-lock.json'
       - '.github/workflows/worker-deploy.yml'
 
@@ -211,7 +216,8 @@ jobs:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           SUBDOMAIN: ${{ steps.account.outputs.subdomain }}
         run: |
-          # 中譯英與作文的題目文字（src/generated/writing-prompts.json）由 data/exams/parsed 產生後打包進 Worker；
+          # 中譯英與作文的題目文字（src/generated/writing-prompts.json）由 data/exams/parsed 與 data/bank/v1
+          # （verified 的本站仿真題，扣掉 data/unpublish.jsonl）產生後打包進 Worker；
           # 部署前檢查已經產生過，這裡再跑一次，確保打包的就是這個 commit 的題目。
           node scripts/build-writing-prompts.mjs
           npx wrangler deploy --message "GitHub Actions ${GITHUB_SHA:0:7}" 2>&1 | tee "$RUNNER_TEMP/deploy.log"

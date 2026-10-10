@@ -71,7 +71,9 @@ export function taskConfig(task: AiTask, config: AppConfig): TaskConfig {
         submissionKind: 'translation',
         timeoutMs: TASK_TIMEOUT_MS[task],
         maxRetries: SDK_MAX_RETRIES,
-        inputTokensEstimate: 3_000,
+        // 3,500：本站仿真題的 user 訊息多了本站參考（guidance 上限 2,600 bytes），最壞情況約 3.0k tokens
+        // （docs/design/bank-writing.md §5.5；test/ai.bank-writing.test.ts 檢查）。這是預扣上限，結算照實際用量。
+        inputTokensEstimate: 3_500,
         calls: [
           { role: 'primary', model: models.default, effort: effort.grade, maxTokens: 6_000, framework: 'analytic' },
           { role: 'second', model: models.secondRater, effort: effort.grade, maxTokens: 3_000, framework: 'holistic' },

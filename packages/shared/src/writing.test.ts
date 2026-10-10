@@ -2,7 +2,9 @@
  * writing.ts 的常數與小工具。分數範圍、0.5 進位、滿分加總這些規則前端（自評、結果頁）與
  * Worker（程式計分、驗證模型輸出）都會用，寫錯就是學生看到錯的分數，所以把 SPEC §4.6、§6.8、§6.9 寫死在這裡。
  */
+import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
+import * as shared from './index';
 import { API_ERROR_CODES } from './api';
 import {
   AI_ERROR_MESSAGES,
@@ -26,6 +28,7 @@ import {
   TRANSLATION_PARTS_PER_SENTENCE,
   TRANSLATION_POINTS_PER_PART,
   TRANSLATION_SENTENCE_MAX,
+  WRITING_UNKNOWN_GROUP_MESSAGE,
   countEnglishWords,
   countParagraphs,
   essayBandOf,
@@ -34,6 +37,7 @@ import {
   writingGroupId,
   writingItemId,
 } from './writing';
+import { checkMechanics, normalizeStudentText } from './writing-mechanics';
 
 describe('作文四項（SPEC §4.6：各 0–5，加總 20）', () => {
   it('四項滿分加總＝20', () => {
@@ -146,4 +150,60 @@ describe('AI 錯誤代碼', () => {
   it('每個代碼都有中文文案', () => {
     for (const code of AI_GATE_ERROR_CODES) expect(AI_ERROR_MESSAGES[code].length).toBeGreaterThan(0);
   });
+});
+
+describe('normalizeStudentText（原 Worker 的 sanitizeStudentText）', () => {
+  it('NFKC 正規化、統一換行、移除不可見字元並計數', () => {
+    const s = normalizeStudentText('Ｈｅｌｌｏ\u200b wor\u202eld\u00ad!\r\n');
+    expect(s.text).toBe('Hello world!\n');
+    expect(s.invisibleRemoved).toBe(3);
+    expect(s.nfkcChanged).toBe(true);
+    expect(normalizeStudentText('plain text').nfkcChanged).toBe(false);
+  });
+
+  it('全形標點會變成半形：Worker 依正規化後的文字判斷標點', () => {
+    expect(normalizeStudentText('Is it？').text).toBe('Is it?');
+    expect(normalizeStudentText('It is true。').text).toBe('It is true。');
+  });
+});
+
+describe('checkMechanics（句首大寫、句尾標點；Worker 計分與本站題自評共用）', () => {
+  it('沿用 Worker 原本的案例', () => {
+    expect(checkMechanics('He said, "Yes."').punctuation).toBeNull();
+    expect(checkMechanics('Is it true?').punctuation).toBeNull();
+    expect(checkMechanics('It is true。').punctuation).not.toBeNull();
+    expect(checkMechanics('It is true').punctuation).not.toBeNull();
+    expect(checkMechanics('"it is true."').capitalization).not.toBeNull();
+  });
+
+  // 對照表：前端的 bankTranslationSelfScore（apps/web/src/features/writing/bank/selfScore.test.ts 用同一張表）
+  // 與 Worker 的 scoreTranslationRater 都是 checkMechanics(normalizeStudentText(s))，大寫與標點的扣分一定相同。
+  const table: Array<[string, { cap: boolean; punct: boolean }]> = [
+    ['Is it？', { cap: false, punct: false }],
+    ['It is true。', { cap: false, punct: true }],
+    ['He said, "Yes."', { cap: false, punct: false }],
+    ['He said, "Yes."”', { cap: false, punct: false }],
+    ['It is true]', { cap: false, punct: true }],
+    ['it is true.', { cap: true, punct: false }],
+    ['  It is true.  ', { cap: false, punct: false }],
+    ['\u200bit is\u200b true', { cap: true, punct: true }],
+  ];
+  for (const [input, want] of table) {
+    it(`正規化後判斷：${JSON.stringify(input)}`, () => {
+      const m = checkMechanics(normalizeStudentText(input).text);
+      expect(m.capitalization !== null).toBe(want.cap);
+      expect(m.punctuation !== null).toBe(want.punct);
+    });
+  }
+});
+
+it('找不到題組的訊息（前後端共用，內容不能改）', () => {
+  expect(WRITING_UNKNOWN_GROUP_MESSAGE).toBe('沒有這個題組');
+});
+
+it('checkMechanics、normalizeStudentText 由 index.ts 轉匯出，不經 writing.ts（經 writing.ts 會讓網站首頁的主程式被拆成好幾個小檔）', () => {
+  const src = readFileSync(new URL('./writing.ts', import.meta.url), 'utf8');
+  expect(src).not.toMatch(/from '\.\/writing-mechanics'/);
+  expect(shared.checkMechanics).toBe(checkMechanics);
+  expect(shared.normalizeStudentText).toBe(normalizeStudentText);
 });

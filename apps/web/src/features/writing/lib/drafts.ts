@@ -96,7 +96,7 @@ function isObject(v: unknown): v is Record<string, unknown> {
 const isStringArray = (v: unknown): v is string[] => Array.isArray(v) && v.every((x) => typeof x === 'string');
 const isNumberArray = (v: unknown): v is number[] => Array.isArray(v) && v.every((x) => typeof x === 'number' && Number.isFinite(x));
 
-function isPartialEssayScores(v: unknown): v is PartialEssayScores {
+export function isPartialEssayScores(v: unknown): v is PartialEssayScores {
   return isObject(v) && ESSAY_CRITERIA.every((c) => v[c] === undefined || (typeof v[c] === 'number' && Number.isFinite(v[c])));
 }
 

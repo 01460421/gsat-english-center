@@ -13,7 +13,6 @@ import {
   type TranslationError,
   type TranslationGradingResult,
 } from '@gsat/shared';
-import type { TranslationSet } from '../data';
 import { formatScore } from '../lib/format';
 import { ERROR_CATEGORY_LABELS, HighlightedText, categoryClass, type MarkedError } from './HighlightedText';
 import { AiBadge, card } from './ui';
@@ -70,7 +69,8 @@ export function TranslationResult({
 }: {
   grading: TranslationGradingResult;
   body: TranslationBody | null;
-  set: TranslationSet | null;
+  /** 中文題目（歷屆題傳 TranslationSet，本站仿真題傳 prompts 檔的 items；載不到是 null）。 */
+  set: { items: ReadonlyArray<{ stem: string }> } | null;
   /** 送出前的自評（看分數前），結果頁對照用。 */
   selfAssess?: SelfAssessment | null;
 }) {

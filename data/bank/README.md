@@ -25,6 +25,10 @@ TypeScript 型別在 `packages/shared/src/bank.ts`，難度規格資料在 `pack
 - **merge 之前**（還在 PR 裡）的檔案可以改：工具會把 metrics、verification、status 寫回同一個檔案。
 - `rejected` 的檔案也要保留並 merge（`status_reason` 記錄淘汰原因）。依 SPEC §5.2 步驟 9「附意見重生一次」：重生的題組用**新的 uid**，在 `generation.regenerated_from` 填被退回的 uid；重生後仍不過，就停在 rejected。
 - 批次規格開始生成後不再修改（裡面的數字就是那一批的依據）；規格改了就開下一批（`--seq 02`）。
+- **已經 merge 的題目被人工審核退回時，不要原地改 `status`**：新增一個內容不變、`status: "rejected"` 的 `@{version+1}`，
+  `status_reason` 寫明是哪一版的最終判定（寫作題的選題會因此撤下舊版，見 §10）。要在那個版本合併前就讓網站與 Worker 生效，
+  在 `data/unpublish.jsonl` 加一行（`{"path": "data/bank/v1/…/{uid}@{v}.json", "date": "YYYY-MM-DD", "reason": "…"}`；檔案保留，
+  只是不發布）。`data/unpublish.jsonl` 放在 `data/bank/` 之外，可以增刪行，不是刪改檔案的豁免清單；`data/takedowns.jsonl` 只用於授權撤回。
 
 ## 3. 檔案格式
 
@@ -295,6 +299,11 @@ TypeScript 型別在 `packages/shared/src/bank.ts`，難度規格資料在 `pack
 - `provenance`：`sources` []、`license: "original-ai"`、`derivation: "original"`、`attribution_text` null；圖表題的數字是題目設定的假設調查，不引真實資料。
 - **D8**（ROADMAP §11）：本站參考譯文、評分規準、範文全部自己寫，不重製大考中心的官方參考譯文、評分原則原文或官方範文、佳作（佳作只連結不重製）。
   程式比對的範圍是 `data/exams/parsed` 全部考卷（§3.5、§3.6 的 D8 檢查）。
+- **發布時另有一道比對**（§10）：網站與 Worker 發布寫作題時，題組的所有字串（不含 SVG）和官方譯文有**連續 7 個英文字**相同、
+  和官方評分原則有連續 8 個漢字相同、或含有官方答案整句與評分原則片段，那一組就不發布。7 字比 `validate_bank.py` 的 8 字嚴，
+  所以 verified 的題目仍可能在發布時被略過；`npm run test:data` 把這種情形當成失敗，是 7 字的關卡，合併前跑一次就知道。
+- 送進 AI 評分者的字串（題目、主題、圖的文字描述與資料表、`moves`、`focus_zh`、參考譯文、各部分的 `zh` 與 `accepted`）**不能含 `<` 或 `>`**：
+  它們會放進提示的結構標籤裡，含這兩個字元的題組在發布時整組略過。
 
 ## 4. 流程與工具
 
@@ -759,3 +768,26 @@ python3 tools/make_lots.py --seq 02,03 --sections cloze --topics data/bank/topic
 | basic 誘答（GN-BASIC-CONTEXT，文意選填、篇章結構） | — | verified 之後 `elimination.feasible` 不只正解的格數 < 2 |
 
 測試在 `tools/tests/test_lots_seq02.py`。
+
+## 10. 發布到網站與 Worker（中譯英、作文）
+
+設計文件：`docs/design/bank-writing.md`。網站建置（`apps/web/scripts/lib/writing-bank.mjs`）與 Worker 的題目庫產生器
+（`apps/api/scripts/build-writing-prompts.mjs`）都呼叫 `packages/shared/scripts/bank-select.mjs` 的 `selectWritingGroups()`，兩邊的題組集合一定相同。
+
+- **發布條件**：`status: "verified"`、`schema: "gsat-bank/v1"`、`pool: "practice"`、每個 uid 最大的 verified 版本、授權 `original-ai`／`original`、
+  沒有登記在 `data/unpublish.jsonl`、形狀檢查通過（含上面「不能含 `<`、`>`」）、D8 比對沒有命中（§3.7）。
+- **撤下**：(1) 更新的版本還沒通過（draft、rejected、無法解析、下架），內容鍵（中譯英：兩句中文、參考譯文、各部分的可接受寫法；
+  作文：提示、圖、`moves`、兩篇範文）和目前版本不同時，撤下舊版；(2) 更新的版本是 rejected（或下架）、內容鍵**相同**時，也撤下舊版（§2 的「最終判定」寫法）。
+  更新的 draft 內容相同時照舊發布。
+- **網站**（`/data/writing/bank/`）：`index.json`、6 個難度列表 `list/{translation|composition}-{tier}.json`、每組的 `prompts/{uid}@{v}.json`
+  （作答時下載：中文題目、提示、清理過的 SVG、鷹架）與 `answers/{uid}@{v}.json`（按「對照」後才下載：參考譯文、4 部分評分規準、誤譯陷阱、
+  解析、作文評分規準與兩篇範文）。`generation`、`verification`、`metrics`、`status` 都不輸出。
+- **SVG**：建置時依白名單解析後重新序列化（`packages/shared/scripts/svg-sanitize.mjs`），不合格的圖不發布、只留文字描述；
+  畫面一律用 `<img src="data:image/svg+xml,…">` 顯示。之後 `vercel.json` 加 CSP 時，`img-src` 要含 `data:`（ARCHITECTURE §7 的規劃已經包含）。
+- **Worker**：題組 id 是 `{uid}@{version}`（例如 `ai.tr.1b2c4e@1`），小題 id 是 `{uid}@{version}#{label}`；SVG 不送 Worker。
+  評分者另外拿到本站參考（中譯英：參考譯文與 4 部分的 `zh`、`accepted`；作文：`moves` 與四項的 `focus_zh`），寫明「是範例，不是標準答案」。
+  D1 的最小列是 `origin 'agent'`、`license 'original-ai'`、`derivation 'original'`、`status 'draft'`。
+- **部署**：`data/bank/v1/translation/**`、`data/bank/v1/composition/**`、`data/unpublish.jsonl` 會觸發 Worker 部署（`.github/workflows/worker-deploy.yml`）；
+  網站看 `data/bank/v1` 與 `data/unpublish.jsonl`（`vercel.json` 的 ignoreCommand）。
+- **發布前比對**：`node packages/shared/scripts/bank-status-diff.mjs --against <另一個工作樹>` 列出本 repo 會發布、另一邊不會發布的題組，
+  並印出建議加進 `data/unpublish.jsonl` 的行。

@@ -13,6 +13,7 @@
  *   data/exams/gsat-spec.json               學測英文官方規格：111–115 的原得總分與級分對照表、五標、級分人數（模擬考換算級分用）
  *   data/bank/v1/{題型}/{難度}/*.json      AI 題庫（gsat-bank/v1，見 data/bank/README.md）；可以不存在
  *   data/bank/facts/{id}.json              題組引用的事實單（閱讀、混合題的「參考資料」從這裡來）
+ *   data/unpublish.jsonl                   人工審核下架清單（題庫練習與本站仿真寫作題都不發布登記的版本；可以不存在）
  *   （新增輸入路徑時，根目錄 vercel.json 的 ignoreCommand 要一起加，否則只改那個路徑的提交不會重新建置）
  *
  * 輸出（apps/web/public/data/，不進版控；Vite 會原樣複製到 dist/data/）：
@@ -29,8 +30,12 @@
  *                        挑選與輸出規則在 scripts/lib/bank-data.mjs
  *   writing/translation.json  寫作練習：每個中譯英題組的中文題目（不含官方譯文）
  *   writing/essay.json        寫作練習：每個作文題的說明、提示、圖的文字描述、字數要求與官方題本連結
+ *   writing/bank/…            本站仿真中譯英與作文（AI 題庫的 translation、composition）：index、6 個難度列表、
+ *                        每組的 prompts（作答前）與 answers（交出作答後才下載）。挑選與輸出規則在 scripts/lib/writing-bank.mjs，
+ *                        選題規則和 Worker 的題目庫共用 packages/shared/scripts/bank-select.mjs
  *
- * 前端對應的型別在 apps/web/src/data/vocab.ts、exams.ts、scoreScales.ts、bank.ts、src/features/writing/data.ts；
+ * 前端對應的型別在 apps/web/src/data/vocab.ts、exams.ts、scoreScales.ts、bank.ts、src/features/writing/data.ts、
+ * src/features/writing/bank/data.ts；
  * 這裡改了輸出格式，那邊要一起改（npm run check:data -w @gsat/web 會用 tsc 比對）。
  *
  * 另外檢查 PDF 字型（scripts/font-coverage.mjs）：試題裡的每個字元都要在 src/features/pdf/fonts/ 的字型子集裡有字形，
@@ -53,8 +58,21 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { gzipSync } from 'node:zlib';
 import { checkFontCoverage } from './font-coverage.mjs';
+import { BANK_SELECT_SCRIPT, BankSelectError, OFFICIAL_RUN_WORDS, readUnpublish, wordRuns } from '../../../packages/shared/scripts/bank-select.mjs';
 import { BANK_DATA_SCRIPT, BankDataError, SKIP_REASON_LABELS, buildBankData, practiceGroupPath } from './lib/bank-data.mjs';
 import { SCORE_SCALES_SCRIPT, ScoreScalesError, buildScoreScales } from './lib/score-scales.mjs';
+import {
+  WRITING_BANK_INDEX_PATH,
+  WRITING_BANK_LISTS,
+  WRITING_BANK_SCRIPT,
+  WRITING_SKIP_REASON_LABELS,
+  WritingBankError,
+  assertWritingBankOutputs,
+  buildWritingBank,
+  writingBankAnswersPath,
+  writingBankListPath,
+  writingBankPromptPath,
+} from './lib/writing-bank.mjs';
 
 // ---------------------------------------------------------------------------
 // 路徑：一律從這個檔案的位置推算，不依賴目前工作目錄。
@@ -80,6 +98,10 @@ const INPUTS = {
  * 環境變數 GSAT_BANK_DIR 可以改指到別的目錄（例如本機用 apps/web/tests/fixtures/bank/v1 的範例題組預覽練習頁）。
  */
 const BANK_DIR = process.env.GSAT_BANK_DIR ? path.resolve(process.env.GSAT_BANK_DIR) : path.join(DATA_DIR, 'bank', 'v1');
+/** 人工審核下架清單（docs/design/bank-writing.md §4.2）：格式錯或路徑不存在時建置失敗（fail closed）。 */
+const UNPUBLISH_FILE = path.join(DATA_DIR, 'unpublish.jsonl');
+/** 寫作題庫的 SVG 清理（版本雜湊用：清理規則改了，輸出就可能改變）。 */
+const SVG_SANITIZE_SCRIPT = path.join(REPO_ROOT, 'packages', 'shared', 'scripts', 'svg-sanitize.mjs');
 
 /** 精簡索引 gzip 後的上限。索引在第一次進單字頁就要下載，超過就讓建置失敗，逼自己先想辦法瘦身。 */
 const VOCAB_INDEX_GZIP_BUDGET = 300 * 1024;
@@ -135,7 +157,7 @@ const TRANSLATION_STRIPPED_TAGS = ['topic'];
  * 輸出的任何字串和官方譯文有這麼多個連續單字相同就算轉載（D8）。整句比對抓不到「改寫一兩個字、其餘照抄」的情況；
  * 太短（4、5 個字）又會誤判 "it is important for us" 這類常見片語。
  */
-const OFFICIAL_TRANSLATION_RUN_WORDS = 7;
+const OFFICIAL_TRANSLATION_RUN_WORDS = OFFICIAL_RUN_WORDS;
 
 /** manifest 的 subkind → 畫面上的檔案名稱（manifest 的 label 各年寫法不一，參考試卷甚至只寫「英文」）。 */
 const OFFICIAL_FILE_LABELS = {
@@ -656,19 +678,7 @@ function officialTranslationTexts(raw) {
   return texts;
 }
 
-/** 英文單字（小寫；彎引號換直引號）。 @param {string} text */
-function englishWords(text) {
-  return text.toLowerCase().replace(/[’‘]/g, "'").match(/[a-z0-9]+(?:'[a-z]+)?/g) ?? [];
-}
-
-/** 連續 n 個單字的片段。 @param {string} text @param {number} n */
-function wordRuns(text, n = OFFICIAL_TRANSLATION_RUN_WORDS) {
-  const words = englishWords(text);
-  /** @type {string[]} */
-  const out = [];
-  for (let i = 0; i + n <= words.length; i += 1) out.push(words.slice(i, i + n).join(' '));
-  return out;
-}
+// 連續 n 字的片段（wordRuns）與切字規則在 packages/shared/scripts/bank-select.mjs：寫作題庫的選題用同一套，兩邊判斷才會一致。
 
 /** JSON 裡所有的字串值（不含鍵）。 @param {unknown} value @param {string[]} [out] */
 function stringValues(value, out = []) {
@@ -810,11 +820,14 @@ function buildExams() {
 
   /** @type {Map<string, string[]>} */
   const officialTextsById = new Map();
+  /** 原始考卷（含官方答案與評分原則）：只給寫作題庫的 D8 比對用，不輸出。 @type {JsonObject[]} */
+  const raws = [];
   const details = files.map((file) => {
     const raw = readJson(file);
     check(isObject(raw), `${relative(file)} 的最上層應該是物件`);
     checkExamContract(raw, file);
     officialTextsById.set(String(raw.id), officialTranslationTexts(raw));
+    raws.push(raw);
     return examDetail(raw, manifestByPath, file);
   });
   const summaries = details.map(examSummary).sort(
@@ -825,7 +838,7 @@ function buildExams() {
       (a.session === b.session ? 0 : a.session === 'regular' ? -1 : 1) ||
       String(a.id).localeCompare(String(b.id)),
   );
-  return { files, details, summaries, officialTextsById };
+  return { files, details, summaries, officialTextsById, raws };
 }
 
 // ---------------------------------------------------------------------------
@@ -954,17 +967,24 @@ function main() {
   const exams = buildExams();
   // 級分對照（模擬考成績單）：轉換與檢查規則在 scripts/lib/score-scales.mjs。
   const scoreScales = buildScoreScales(readJson(INPUTS.gsatSpec), { label: relative(INPUTS.gsatSpec) });
-  const bank = buildBankData(BANK_DIR, { relative });
+  const unpublished = readUnpublish(UNPUBLISH_FILE, { repoRoot: REPO_ROOT });
+  const bank = buildBankData(BANK_DIR, { relative, unpublished, repoRoot: REPO_ROOT });
+  const writingBank = buildWritingBank({ bankDir: BANK_DIR, exams: exams.raws, unpublishFile: UNPUBLISH_FILE, repoRoot: REPO_ROOT, relative });
   const version = contentVersion([
     SCRIPT_PATH,
     BANK_DATA_SCRIPT,
+    BANK_SELECT_SCRIPT,
+    WRITING_BANK_SCRIPT,
+    SVG_SANITIZE_SCRIPT,
     SCORE_SCALES_SCRIPT,
     INPUTS.lexicon,
     INPUTS.wordFrequency,
     INPUTS.manifest,
     INPUTS.gsatSpec,
+    ...(existsSync(UNPUBLISH_FILE) ? [UNPUBLISH_FILE] : []),
     ...exams.files,
     ...bank.inputs,
+    ...writingBank.inputs,
   ]);
 
   emit('vocab/index.json', { version, count: vocab.index.length, entries: vocab.index });
@@ -977,7 +997,16 @@ function main() {
   const writing = buildWriting(exams.details, exams.summaries);
   emit('writing/translation.json', { version, count: writing.translationSets.length, sets: writing.translationSets });
   emit('writing/essay.json', { version, count: writing.essayPrompts.length, prompts: writing.essayPrompts });
+  emit(WRITING_BANK_INDEX_PATH, { version, count: writingBank.index.length, groups: writingBank.index });
+  for (const [section, tier] of WRITING_BANK_LISTS) {
+    const groups = writingBank.lists[section][tier] ?? [];
+    emit(writingBankListPath(section, tier), { version, section_type: section, tier, count: groups.length, groups });
+  }
+  for (const f of writingBank.prompts) emit(writingBankPromptPath(f), f);
+  for (const f of writingBank.answers) emit(writingBankAnswersPath(f), f);
   assertNoOfficialTranslations(outputs, exams.officialTextsById);
+  // D8 第 4 道（docs/design/bank-writing.md §6）：寫作檔的禁止鍵、答案提前外流、官方文字（和選題同一支比對函式）、未清理的 SVG。
+  assertWritingBankOutputs(outputs, writingBank.corpus);
   const fontStats = assertFontCoverage(exams.details);
 
   /** @type {Record<string, { bytes: number, gzip_bytes: number }>} */
@@ -1005,6 +1034,7 @@ function main() {
       exams: exams.summaries.length,
       questions: questionCount,
       bank_groups: bank.entries.length,
+      writing_bank_groups: writingBank.index.length,
     },
     files: fileSizes,
   });
@@ -1030,15 +1060,23 @@ function main() {
     ['bank/index.json', fileSizes['bank/index.json']],
     ['writing/translation.json', fileSizes['writing/translation.json']],
     ['writing/essay.json', fileSizes['writing/essay.json']],
+    [WRITING_BANK_INDEX_PATH, fileSizes[WRITING_BANK_INDEX_PATH]],
+    ...WRITING_BANK_LISTS.map(([section, tier]) => [writingBankListPath(section, tier), fileSizes[writingBankListPath(section, tier)]]),
   ];
   const examFiles = sum(isExamFile);
   console.log(`[build-data] 版本 ${version}：單字 ${vocab.index.length} 筆、試題 ${exams.summaries.length} 份（${questionCount} 題），輸出到 ${relative(OUT_DIR)}/`);
   console.log(`[build-data] PDF 字型檢查通過：${fontStats.chars} 種字元都有字形；級分對照 ${scoreScales.years.map((y) => y.year).join('、')} 學年度`);
   for (const [rel, s] of rows) {
-    if (typeof rel === 'string' && s && typeof s === 'object') console.log(`  ${rel.padEnd(24)} ${formatBytes(s.bytes).padStart(10)}  gzip ${formatBytes(s.gzip_bytes).padStart(9)}`);
+    if (typeof rel === 'string' && s && typeof s === 'object') console.log(`  ${rel.padEnd(44)} ${formatBytes(s.bytes).padStart(10)}  gzip ${formatBytes(s.gzip_bytes).padStart(9)}`);
   }
-  console.log(`  ${'exams/{id}.json'.padEnd(24)} ${formatBytes(examFiles.bytes).padStart(10)}  gzip ${formatBytes(examFiles.gzip).padStart(9)}（${exams.details.length} 個檔案合計）`);
+  console.log(`  ${'exams/{id}.json'.padEnd(44)} ${formatBytes(examFiles.bytes).padStart(10)}  gzip ${formatBytes(examFiles.gzip).padStart(9)}（${exams.details.length} 個檔案合計）`);
+  for (const [label, prefix] of [['writing/bank/prompts/*', 'writing/bank/prompts/'], ['writing/bank/answers/*', 'writing/bank/answers/']]) {
+    const t = sum((rel) => rel.startsWith(/** @type {string} */ (prefix)));
+    const n = Object.keys(fileSizes).filter((rel) => rel.startsWith(/** @type {string} */ (prefix))).length;
+    console.log(`  ${String(label).padEnd(44)} ${formatBytes(t.bytes).padStart(10)}  gzip ${formatBytes(t.gzip).padStart(9)}（${n} 個檔案合計）`);
+  }
   logBank(bank);
+  logWritingBank(writingBank);
   console.log(`[build-data] 完成，用時 ${((Date.now() - started) / 1000).toFixed(1)} 秒`);
 }
 
@@ -1058,10 +1096,33 @@ function logBank(bank) {
   for (const w of bank.warnings) console.warn(`[build-data] 警告：${w}`);
 }
 
+/**
+ * 本站仿真寫作題的建置紀錄（格式同 logBank）：收了幾組、略過了哪些（依原因統計）與警告。
+ * @param {ReturnType<typeof buildWritingBank>} wb
+ */
+function logWritingBank(wb) {
+  /** @type {Map<string, number>} */
+  const byReason = new Map();
+  // 題庫練習的題型（選擇題）對寫作選題是 unsupported_section，不必列出。
+  for (const s of wb.skipped) if (s.reason !== 'unsupported_section') byReason.set(s.reason, (byReason.get(s.reason) ?? 0) + 1);
+  const skipped = [...byReason].map(([reason, n]) => `${WRITING_SKIP_REASON_LABELS[/** @type {keyof typeof WRITING_SKIP_REASON_LABELS} */ (reason)] ?? reason} ${n}`);
+  const bySection = (/** @type {string} */ s) => wb.index.filter((e) => e.section_type === s).length;
+  console.log(
+    `[build-data] 本站仿真寫作題：中譯英 ${bySection('translation')} 組、作文 ${bySection('composition')} 題${skipped.length > 0 ? `；略過：${skipped.join('、')}` : ''}`,
+  );
+  for (const w of wb.warnings) console.warn(`[build-data] 警告：${w}`);
+}
+
 try {
   main();
 } catch (err) {
-  if (err instanceof BuildDataError || err instanceof BankDataError || err instanceof ScoreScalesError) {
+  if (
+    err instanceof BuildDataError ||
+    err instanceof BankDataError ||
+    err instanceof ScoreScalesError ||
+    err instanceof BankSelectError ||
+    err instanceof WritingBankError
+  ) {
     console.error(`[build-data] 錯誤：${err.message}`);
     process.exit(1);
   }
