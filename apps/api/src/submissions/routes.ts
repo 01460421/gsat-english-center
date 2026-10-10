@@ -24,6 +24,7 @@ import {
   PHOTO_MAX_BYTES,
   PHOTO_MIMES,
   SUBMISSION_KINDS,
+  WRITING_UNKNOWN_GROUP_MESSAGE,
   countEnglishWords,
   countParagraphs,
   type EssayBody,
@@ -112,7 +113,8 @@ submissionRoutes.post('/', requireUser(), async (c) => {
   if (typeof kind !== 'string' || !(SUBMISSION_KINDS as readonly string[]).includes(kind)) throw new ApiError(400, 'bad_request', 'kind 必須是 translation 或 essay');
   const groupId = input['group_id'];
   const group = typeof groupId === 'string' ? getWritingGroup(groupId) : null;
-  if (!group) throw new ApiError(400, 'bad_request', '沒有這個題組');
+  // 訊息是共用常數（前端據此顯示「這題的 AI 批改還在準備中」）；內容和改版前相同。
+  if (!group) throw new ApiError(400, 'bad_request', WRITING_UNKNOWN_GROUP_MESSAGE);
   if (group.kind !== kind) throw new ApiError(400, 'bad_request', '題組和提交種類不符');
   const inputMode = input['input_mode'] ?? 'typed';
   if (inputMode !== 'typed' && inputMode !== 'photo') throw new ApiError(400, 'bad_request', 'input_mode 必須是 typed 或 photo');

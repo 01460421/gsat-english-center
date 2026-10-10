@@ -8,21 +8,14 @@
  *     表格照原樣用了它的數值，CC BY 的標示要寫授權）；
  *     交卷後在同一個位置放「全文中譯」（展開才看得到，作答中不顯示，免得直接看中文作答）。
  */
-import { BadgeCheck, Bot, ExternalLink, Languages } from 'lucide-react';
+import { Bot, ExternalLink, Languages } from 'lucide-react';
 import { useId } from 'react';
 import type { PracticeGroupFile, PracticeReference } from '../../../data/bank';
-import { AI_GROUP_LABEL, AI_ITEMS_NOTICE, AI_PASSAGE_NOTICE, AI_REFERENCES_NOTICE } from '../labels';
+import { AI_ITEMS_NOTICE, AI_PASSAGE_NOTICE, AI_REFERENCES_NOTICE } from '../labels';
 import { LicenseLink } from './LicenseLink';
 
-export function AiGroupBadge() {
-  return (
-    <p className="inline-flex flex-wrap items-center gap-1.5 rounded-full bg-badge-bg px-3 py-1 text-sm font-semibold text-badge-fg">
-      <Bot aria-hidden="true" className="size-4 shrink-0" />
-      <span>{AI_GROUP_LABEL}</span>
-      <BadgeCheck aria-hidden="true" className="size-4 shrink-0" />
-    </p>
-  );
-}
+// 寫作頁只用得到這個標示，所以放在自己的檔案（見 AiGroupBadge.tsx）；這裡轉匯出，題庫練習的匯入不用改。
+export { AiGroupBadge } from './AiGroupBadge';
 
 const ROLE_LABELS: Record<PracticeGroupFile['provenance']['sources'][number]['role'], string> = {
   fact: '事實來源',

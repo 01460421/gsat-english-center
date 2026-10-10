@@ -1,0 +1,15 @@
+{
+  // scripts/ 底下零依賴的 Node 工具（bank-select.mjs、svg-sanitize.mjs、bank-status-diff.mjs）與它們的測試。
+  // 工具寫成 JS＋JSDoc（網站建置與 Worker 產生器都直接用 node 執行），由 checkJs 用同一套嚴格設定檢查。
+  // 旁邊的 .d.mts 是給 TypeScript 匯入的型別宣告：測試（*.test.ts）與其他套件匯入 './x.mjs' 時解析到它。
+  // include 刻意不列 *.d.mts：同名的 .d.mts 被列進來時 tsc 會把 .mjs 當成它的輸出而不檢查；
+  // .d.mts 和 .mjs 的匯出名稱是否一致由 scripts/*.test.ts 檢查。
+  // tsconfig.json 只含 src，所以 scripts 的測試一定要列在這裡，否則沒有任何 tsc 檢查它們。
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "types": ["node"],
+    "allowJs": true,
+    "checkJs": true
+  },
+  "include": ["scripts/*.mjs", "scripts/*.test.ts"]
+}

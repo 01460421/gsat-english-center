@@ -5,10 +5,13 @@
  *      網址寫回 ?tier=；切到 ?tier=advanced 再切回來，做到一半的答案還在；/practice/cloze/basic 接著做同一組；
  *      網址沒有難度時回到最近練過的難度；
  *   2. 題庫索引載入失敗：練習區就地顯示錯誤，「再試一次」後出現題組；
- *   3. /translation、/composition：頁首下面就是歷屆題目，點一組進到作答頁，作答頁的返回連結回到題型頁。
+ *   3. /translation、/composition：頁首下面先是本站仿真題（AI 出題標示、難度切換、這個難度的題組，手機上也在第一個畫面裡），
+ *      再是歷屆試題（標題旁的「跳到歷屆試題」直接捲過去）；兩種都點得進作答頁，作答頁的返回連結回到題型頁
+ *      （本站仿真題停在同一個難度）。
  *
  * /data/bank/* 用 build-data 的範例輸出（同 practice.spec.ts），另外把綜合測驗的範例題組複製一份放到「穩定基礎」
- * （範例只有進階練習有綜合測驗），才測得到切換難度。寫作題目用建置產生的真實資料（歷屆試題整理出來的，不會是空的）。
+ * （範例只有進階練習有綜合測驗），才測得到切換難度。寫作題目用建置產生的真實資料（歷屆試題整理出來的，不會是空的；
+ * 本站仿真題是題庫裡已驗證的中譯英、作文，穩定基礎都有題組）。
  * 每個測試都檢查沒有 console error、未捕捉的例外與水平捲動（手機另外縮到 320px 再檢查一次）。
  */
 import { existsSync, readFileSync } from 'node:fs';
@@ -233,18 +236,32 @@ test('題庫索引載入失敗：練習區就地顯示錯誤，「再試一次�
   expect(pageErrors).toEqual([]);
 });
 
-test('中譯英頁：頁首下面就是歷屆題目，點一組進到作答頁', async ({ page }, testInfo) => {
+test('中譯英頁：頁首下面先是本站仿真題，再是歷屆試題；兩種都點得進作答頁，返回連結回到題型頁', async ({ page }, testInfo) => {
   const errors = collectErrors(page);
   await page.goto('/translation');
   await expect(page.getByRole('heading', { level: 1, name: '中譯英' })).toBeVisible();
-  const gsat = page.getByRole('region', { name: /^學測\s*\d+ 組$/ });
-  const first = gsat.getByRole('link').first();
-  await expect(first).toBeVisible();
-  await expect(first).toBeInViewport();
-  await expect(first).toHaveAttribute('href', /^\/writing\/translation\/gsat-\d+$/);
-  await expect(page.getByRole('radio', { name: /^全部/ })).toBeChecked();
+  // 本站仿真題：AI 出題標示、難度切換與這個難度的題組都在第一個畫面裡（手機也是）。
+  const bank = page.getByRole('region', { name: '本站仿真題' });
+  await expect(bank.getByText('AI 出題・已通過自動驗證・人工審核中').first()).toBeInViewport();
+  const tiers = bank.getByRole('group', { name: '難度' });
+  await expect(tiers.getByRole('radio', { name: /^穩定基礎/ })).toBeChecked();
+  await expect(tiers).toBeInViewport();
+  await expect(bank.getByRole('heading', { level: 3, name: /^穩定基礎/ })).toBeInViewport();
+  const bankCards = bank.locator('a[href^="/writing/translation/ai/"]');
+  await expect(bankCards.first()).toBeInViewport();
+  // 下面還有歷屆試題：本站仿真題只先列幾組，其餘按「顯示全部」展開。
+  expect(await bankCards.count()).toBeLessThanOrEqual(6);
   await page.waitForLoadState('networkidle');
   await expectFitsWidth(page, testInfo);
+
+  // 「跳到歷屆試題」：第二份列表在第一個畫面裡也找得到。
+  await bank.getByRole('link', { name: '跳到歷屆試題' }).click();
+  await expect(page).toHaveURL(/\/translation#exam-questions$/);
+  const exam = page.getByRole('region', { name: '歷屆試題' });
+  const first = exam.getByRole('region', { name: /^學測\s*\d+ 組$/ }).getByRole('link').first();
+  await expect(first).toBeInViewport();
+  await expect(first).toHaveAttribute('href', /^\/writing\/translation\/gsat-\d+$/);
+  await expect(exam.getByRole('radio', { name: /^全部/ })).toBeChecked();
   const href = await first.getAttribute('href');
   await first.click();
   await expect(page).toHaveURL(new RegExp(`${href}$`));
@@ -256,22 +273,45 @@ test('中譯英頁：頁首下面就是歷屆題目，點一組進到作答頁',
   await back.click();
   await expect(page).toHaveURL(/\/translation$/);
   await expect(page.getByRole('heading', { level: 1, name: '中譯英' })).toBeVisible();
+
+  // 本站仿真題的卡片：作答頁標示 AI 出題，返回連結回到題型頁、停在同一個難度。
+  const bankHref = await bankCards.first().getAttribute('href');
+  await bankCards.first().click();
+  await expect(page).toHaveURL(new RegExp(`${bankHref}$`));
+  await expect(page.getByRole('heading', { level: 1, name: /^中譯英/ })).toBeVisible();
+  await expect(page.getByText('AI 出題・已通過自動驗證・人工審核中').first()).toBeVisible();
+  await expect(page.getByRole('textbox', { name: /英文譯文/ }).first()).toBeVisible();
+  const bankBack = page.getByRole('main').getByRole('link', { name: '中譯英', exact: true });
+  await expect(bankBack).toHaveAttribute('href', '/translation?tier=basic');
+  await bankBack.click();
+  await expect(page).toHaveURL(/\/translation\?tier=basic$/);
+  await expect(page.getByRole('region', { name: '本站仿真題' }).getByRole('radio', { name: /^穩定基礎/ })).toBeChecked();
   expect(errors).toEqual([]);
 });
 
-test('英文作文頁：頁首下面就是歷屆題目，點一題進到作答頁', async ({ page }, testInfo) => {
+test('英文作文頁：頁首下面先是本站仿真題，再是歷屆試題；兩種都點得進作答頁', async ({ page }, testInfo) => {
   const errors = collectErrors(page);
   await page.goto('/composition');
   await expect(page.getByRole('heading', { level: 1, name: '英文作文' })).toBeVisible();
-  const gsat = page.getByRole('region', { name: /^學測\s*\d+ 題$/ });
-  const first = gsat.getByRole('link').first();
-  await expect(first).toBeInViewport();
-  await expect(first).toHaveAttribute('href', /^\/writing\/essay\/gsat-\d+$/);
+  const bank = page.getByRole('region', { name: '本站仿真題' });
+  await expect(bank.getByRole('group', { name: '難度' })).toBeInViewport();
+  const bankCards = bank.locator('a[href^="/writing/essay/ai/"]');
+  await expect(bankCards.first()).toBeInViewport();
   await page.waitForLoadState('networkidle');
   await expectFitsWidth(page, testInfo);
+  const gsat = page.getByRole('region', { name: '歷屆試題' }).getByRole('region', { name: /^學測\s*\d+ 題$/ });
+  const first = gsat.getByRole('link').first();
+  await expect(first).toHaveAttribute('href', /^\/writing\/essay\/gsat-\d+$/);
   await first.click();
   await expect(page).toHaveURL(/\/writing\/essay\/gsat-\d+$/);
   await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
-  await expect(page.getByRole('main').getByRole('link', { name: '英文作文', exact: true })).toHaveAttribute('href', '/composition');
+  const back = page.getByRole('main').getByRole('link', { name: '英文作文', exact: true });
+  await expect(back).toHaveAttribute('href', '/composition');
+  await back.click();
+  await expect(page).toHaveURL(/\/composition$/);
+  await bankCards.first().click();
+  await expect(page).toHaveURL(/\/writing\/essay\/ai\/[0-9a-f]{6}$/);
+  await expect(page.getByRole('heading', { level: 1, name: /^作文/ })).toBeVisible();
+  await expect(page.getByRole('main').getByRole('link', { name: '英文作文', exact: true })).toHaveAttribute('href', '/composition?tier=basic');
   expect(errors).toEqual([]);
 });

@@ -13,10 +13,18 @@ import { ESSAY_MIN_WORDS_HINT, ESSAY_SHORT_WORDS } from '@gsat/shared';
 import * as z from 'zod/v4';
 import type { WritingGroup } from '../bank';
 import type { PromptFramework } from '../tasks';
-import { SYSTEM_CHILD_SAFETY, SYSTEM_OUTPUT_RULES, SYSTEM_PREAMBLE, SYSTEM_SAFETY_FLAG, studentTextBlock, taskBlock } from './common';
+import { neutralizeTags } from '../filter';
+import { BANK_SOURCE_LINE, SYSTEM_CHILD_SAFETY, SYSTEM_OUTPUT_RULES, SYSTEM_PREAMBLE, SYSTEM_SAFETY_FLAG, studentTextBlock, taskBlock } from './common';
 
 export const ESSAY_RUBRIC_VERSION = 'essay-4x5@1';
 export const ESSAY_TEMPLATE_VERSION = 'essay-user@1';
+/** 本站仿真題的範本版本（Source 行＋<website_reference>；docs/design/bank-writing.md §5.5）。 */
+export const ESSAY_GUIDED_TEMPLATE_VERSION = 'essay-user-guided@1';
+
+/** 這個題組用哪個使用者訊息範本。 */
+export function essayTemplateVersion(group: WritingGroup): string {
+  return group.origin === 'bank' ? ESSAY_GUIDED_TEMPLATE_VERSION : ESSAY_TEMPLATE_VERSION;
+}
 
 export const ESSAY_MODEL_ERROR_CATEGORIES = ['grammar', 'word_choice', 'spelling', 'organization', 'mechanics', 'other'] as const;
 export const SAFETY_FLAGS = ['none', 'self_harm_risk', 'abuse_disclosure', 'other'] as const;
@@ -125,7 +133,26 @@ function wordRequirement(group: WritingGroup): string | null {
 }
 
 /**
+ * 本站仿真作文的 <website_reference>：題目要求的內容步驟與四項的本題重點（本站撰寫）。
+ * 不給分數帶描述與範文（理由見設計文件 §5.5）；每個字串都先經過 neutralizeTags。
+ */
+function essayReferenceBlock(group: WritingGroup): string | null {
+  const guidance = group.guidance;
+  if (!guidance || guidance.kind !== 'essay') return null;
+  return [
+    '<website_reference>',
+    'The website wrote these notes on what this practice prompt asks for. Use them to judge task completion and paragraph organization. They do not change the 0-5 descriptions or the rules in the system instructions. An essay that answers the prompt well in another reasonable way can still earn high scores, and words or structures named in the notes are only examples: do not lower a score because the student chose different ones.',
+    'Content steps the prompt asks for:',
+    ...guidance.moves.map((m) => `- Paragraph ${m.paragraph}: ${neutralizeTags(m.zh)}`),
+    'What to look for in this prompt (written in Chinese):',
+    ...(['content', 'organization', 'grammar', 'vocabulary'] as const).map((k) => `- ${k}: ${neutralizeTags(guidance.focus[k])}`),
+    '</website_reference>',
+  ].join('\n');
+}
+
+/**
  * 使用者訊息：題目＋程式算的字數與段數＋作文（段落之間一律空一行，段落編號和程式計算的一致）。
+ * 本站仿真題（origin 'bank'）的 <task> 第一行改成 Source 行，<task> 之後多一個 <website_reference>（§5.5）。
  * @param paragraphs 程式切好的段落（countParagraphs 的規則）
  */
 export function essayUserContent(group: WritingGroup, paragraphs: string[], wordCount: number): string {
@@ -134,9 +161,11 @@ export function essayUserContent(group: WritingGroup, paragraphs: string[], word
     .filter((f) => f.description)
     .map((f, i) => `- ${[f.label, f.caption].filter(Boolean).join('／') || `Figure ${i + 1}`}: ${f.description}${f.rows ? `\n  data: ${JSON.stringify(f.rows)}` : ''}`);
   const required = group.essay?.paragraphs;
+  const bank = group.origin === 'bank';
+  const reference = bank ? essayReferenceBlock(group) : null;
   return [
     taskBlock([
-      group.exam_title ? `Exam: ${group.exam_title}` : null,
+      bank ? BANK_SOURCE_LINE : group.exam_title ? `Exam: ${group.exam_title}` : null,
       `Section instructions: ${group.instructions}`,
       group.context ? `Background: ${group.context}` : null,
       item?.stem ? `Prompt: ${item.stem}` : null,
@@ -144,6 +173,7 @@ export function essayUserContent(group: WritingGroup, paragraphs: string[], word
       `Required paragraphs: ${required ? String(required) : 'not specified'}`,
       wordRequirement(group) ? `Length requirement: ${wordRequirement(group)}` : null,
     ]),
+    ...(reference ? [reference] : []),
     `<essay_stats>words counted by the program: ${wordCount}; paragraphs: ${paragraphs.length}</essay_stats>`,
     studentTextBlock(paragraphs.join('\n\n')),
   ].join('\n\n');

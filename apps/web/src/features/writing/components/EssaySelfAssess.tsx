@@ -1,8 +1,10 @@
 /**
  * 作文的自我檢核與看分數前自評（不用 AI）：檢核清單＋四項（內容、組織、文法句構、字彙拼字）各 0–5 分。
  * 自評會隨 AI 批改一起送出（UpdateSubmissionBody.self_assess），結果頁對照「你的自評」。
+ * 本站仿真題（features/writing/bank）傳入本題的 criteria：每一項改顯示本題的評分重點（focus_zh），不顯示通用提示；
+ * 沒傳 onToggle 時不顯示檢核清單（本站題對照的是本題的評分規準）。
  */
-import { ESSAY_CRITERIA, ESSAY_CRITERION_LABELS, ESSAY_CRITERION_MAX, essayBandOf } from '@gsat/shared';
+import { ESSAY_CRITERIA, ESSAY_CRITERION_LABELS, ESSAY_CRITERION_MAX, essayBandOf, type EssayCriterion } from '@gsat/shared';
 import { useId } from 'react';
 import { ESSAY_CHECKLIST } from '../lib/checklists';
 import { completeEssayScores, type PartialEssayScores } from '../lib/drafts';
@@ -19,15 +21,24 @@ const CRITERION_HINTS: Record<(typeof ESSAY_CRITERIA)[number], string> = {
 
 export function EssaySelfAssess({
   scores,
-  checked,
+  checked = [],
   onScores,
   onToggle,
+  criteria,
+  headingLevel = 2,
 }: {
   scores: PartialEssayScores | null;
-  checked: readonly string[];
+  checked?: readonly string[];
   onScores: (scores: PartialEssayScores | null) => void;
-  onToggle: (id: string) => void;
+  /** 檢核清單的勾選；不傳就不顯示檢核清單。 */
+  onToggle?: (id: string) => void;
+  /** 本題的評分重點（本站仿真題）；有傳就取代通用提示。 */
+  criteria?: Partial<Record<EssayCriterion, { focus_zh: string }>>;
+  /** 標題層級：歷屆題的作答頁與結果頁是 h2（預設）；放在本站題「評分規準與範文」（h2）底下時傳 3。 */
+  headingLevel?: 2 | 3;
 }) {
+  const Title = headingLevel === 3 ? 'h3' : 'h2';
+  const Sub = headingLevel === 3 ? 'h4' : 'h3';
   const baseId = useId();
   const complete = completeEssayScores(scores);
   const total = complete ? ESSAY_CRITERIA.reduce((n, c) => n + complete[c], 0) : null;
@@ -36,39 +47,45 @@ export function EssaySelfAssess({
   return (
     <section aria-labelledby={`${baseId}-h`} className={`space-y-4 ${card}`}>
       <div>
-        <h2 id={`${baseId}-h`} className="text-lg font-semibold">
-          自我檢核與自評
-        </h2>
-        <p className="mt-1 text-sm text-muted">送出前先自己檢查一遍，再依四項評分面向給自己打分數（不用 AI、不花點數）。送 AI 批改時會一起附上，結果頁可以對照。</p>
+        <Title id={`${baseId}-h`} className="text-lg font-semibold">
+          {onToggle ? '自我檢核與自評' : '自評四項'}
+        </Title>
+        <p className="mt-1 text-sm text-muted">
+          {criteria
+            ? '對照本題的評分重點，依四項評分面向給自己打分數（不用 AI、不花點數）。送 AI 批改時會一起附上，結果頁可以對照。'
+            : '送出前先自己檢查一遍，再依四項評分面向給自己打分數（不用 AI、不花點數）。送 AI 批改時會一起附上，結果頁可以對照。'}
+        </p>
       </div>
 
-      <fieldset className="space-y-2">
-        <legend className="font-semibold">檢核清單（{checked.length}／{ESSAY_CHECKLIST.length}）</legend>
-        <ul className="space-y-2">
-          {ESSAY_CHECKLIST.map((item) => {
-            const id = `${baseId}-${item.id}`;
-            return (
-              <li key={item.id} className="rounded-xl border border-line p-3">
-                <label htmlFor={id} className="flex cursor-pointer items-start gap-3">
-                  <input id={id} type="checkbox" checked={checked.includes(item.id)} onChange={() => onToggle(item.id)} className="mt-1 size-5 shrink-0 accent-primary" />
-                  <span className="min-w-0">
-                    <span className="font-medium">{item.title}</span>
-                    <span className="block text-[0.95rem]">{item.detail}</span>
-                  </span>
-                </label>
-              </li>
-            );
-          })}
-        </ul>
-      </fieldset>
+      {onToggle && (
+        <fieldset className="space-y-2">
+          <legend className="font-semibold">檢核清單（{checked.length}／{ESSAY_CHECKLIST.length}）</legend>
+          <ul className="space-y-2">
+            {ESSAY_CHECKLIST.map((item) => {
+              const id = `${baseId}-${item.id}`;
+              return (
+                <li key={item.id} className="rounded-xl border border-line p-3">
+                  <label htmlFor={id} className="flex cursor-pointer items-start gap-3">
+                    <input id={id} type="checkbox" checked={checked.includes(item.id)} onChange={() => onToggle(item.id)} className="mt-1 size-5 shrink-0 accent-primary" />
+                    <span className="min-w-0">
+                      <span className="font-medium">{item.title}</span>
+                      <span className="block text-[0.95rem]">{item.detail}</span>
+                    </span>
+                  </label>
+                </li>
+              );
+            })}
+          </ul>
+        </fieldset>
+      )}
 
       <div className="space-y-3">
-        <h3 className="font-semibold">自評分數（各 0–5 分）</h3>
+        <Sub className="font-semibold">自評分數（各 0–5 分）</Sub>
         {ESSAY_CRITERIA.map((c) => (
           <fieldset key={c}>
             <legend className="text-[0.95rem]">
               <span className="font-medium">{ESSAY_CRITERION_LABELS[c]}</span>
-              <span className="ml-2 text-sm text-muted">{CRITERION_HINTS[c]}</span>
+              <span className="ml-2 text-sm text-muted">{criteria?.[c] ? `本題重點：${criteria[c].focus_zh}` : CRITERION_HINTS[c]}</span>
             </legend>
             <div className="mt-1 flex flex-wrap gap-1.5">
               {Array.from({ length: ESSAY_CRITERION_MAX[c] + 1 }, (_, v) => (

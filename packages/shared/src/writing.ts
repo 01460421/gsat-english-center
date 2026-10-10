@@ -118,6 +118,13 @@ export function countParagraphs(text: string, photoMode = false): number {
   return blocks.filter((b) => b.trim() !== '').length;
 }
 
+/**
+ * POST /api/submissions 找不到題組時的訊息（400 bad_request）。前端看到這句話就知道是「Worker 還不認得這個題組」
+ * （例如網站剛部署、Worker 晚幾分鐘才更新），顯示「這題的 AI 批改還在準備中」（docs/design/bank-writing.md §2.7）。
+ * 前後端共用同一個常數，回應的內容一個字都不變。
+ */
+export const WRITING_UNKNOWN_GROUP_MESSAGE = '沒有這個題組';
+
 /** 中譯英作答內容（submissions.body_json）：item_id 是題目 JSON 的小題 id。 */
 export interface TranslationBody {
   items: Array<{ item_id: string; text: string }>;

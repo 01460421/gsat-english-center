@@ -128,7 +128,7 @@ Settings → Billing：先儲值（API 是預付制，餘額不足時 AI 批改�
 
 1. 這個 workflow 要先在 main 分支上（含這份文件的變更合併進 main 之後），Actions 頁才會出現手動執行的按鈕。
 2. GitHub repo → **Actions** → 左側「部署後端（Cloudflare Worker）」→ 右側 **Run workflow** → Branch 選 `main` → Run workflow。
-3. 之後 main 上 `apps/api`、`packages/shared`、`data/exams/parsed`、`package-lock.json` 或 workflow 本身有變動時，會自動部署。
+3. 之後 main 上 `apps/api`、`packages/shared`、`data/exams/parsed`、`data/bank/v1/translation`、`data/bank/v1/composition`、`data/unpublish.jsonl`、`package-lock.json` 或 workflow 本身有變動時，會自動部署（Worker 會打包歷屆與本站仿真的中譯英、作文題目文字，所以題庫的寫作題上架或下架也會重新部署）。
 
 workflow 會依序：型別檢查與測試 → 檢查 token 與 workers.dev 子網域 → 建立（或找到）D1 `gsat-english` → 建立（或找到）Queue `ai-tasks-dlq`、`ai-tasks` → 套用資料庫遷移 → 部署 → 同步機密（第一次會產生 `SESSION_SECRET`、`LEDGER_SALT`）→ 部署後確認。整支可以重跑，已經存在的東西不會重建，已經有的 `SESSION_SECRET` 不會被換掉（換掉的話所有人都會被登出）。大約 3–5 分鐘。
 

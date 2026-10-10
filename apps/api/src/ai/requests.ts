@@ -9,9 +9,9 @@ import type { BetaContentBlockParam } from '@anthropic-ai/sdk/resources/beta/mes
 import type { PhotoMime } from '@gsat/shared';
 import type { WritingGroup } from './bank';
 import type { ClaudeCallInput } from './client';
-import { essaySchema, essaySystemText, essayUserContent, ESSAY_TEMPLATE_VERSION } from './prompts/essay';
+import { essaySchema, essaySystemText, essayTemplateVersion, essayUserContent } from './prompts/essay';
 import { ocrSchema, ocrSystemText, ocrUserText, OCR_TEMPLATE_VERSION } from './prompts/ocr';
-import { translationSchema, translationSystemText, translationUserContent, TRANSLATION_TEMPLATE_VERSION } from './prompts/translation';
+import { translationSchema, translationSystemText, translationTemplateVersion, translationUserContent } from './prompts/translation';
 import { toBase64 } from '../submissions/images';
 import { callSpec, type CallRole, type TaskConfig } from './tasks';
 
@@ -27,7 +27,8 @@ export function translationCallInput(tc: TaskConfig, role: CallRole, group: Writ
     system: translationSystemText(b.spec.framework),
     schema: translationSchema(b.spec.framework),
     content: translationUserContent(group, sentences),
-    templateVersion: TRANSLATION_TEMPLATE_VERSION,
+    // 本站仿真題用 translation-user-guided@1（系統提示不變；prompt_version 和歷屆題分開）。
+    templateVersion: translationTemplateVersion(group),
   };
 }
 
@@ -39,7 +40,7 @@ export function essayCallInput(tc: TaskConfig, role: CallRole, group: WritingGro
     system: essaySystemText(b.spec.framework),
     schema: essaySchema(b.spec.framework),
     content: essayUserContent(group, paragraphs, wordCount),
-    templateVersion: ESSAY_TEMPLATE_VERSION,
+    templateVersion: essayTemplateVersion(group),
   };
 }
 

@@ -157,6 +157,8 @@ export interface DataMeta {
     questions: number;
     /** 題庫練習的 AI 題組數（/data/bank/index.json）；題庫還沒有通過驗證的題組時是 0。 */
     bank_groups: number;
+    /** 本站仿真中譯英與作文的題組數（/data/writing/bank/index.json）。 */
+    writing_bank_groups: number;
   };
   /** 每個輸出檔（相對 /data/）的大小；gzip_bytes 是 gzip -9 的估計值，實際傳輸由 Vercel 壓縮。 */
   files: Record<string, { bytes: number; gzip_bytes: number }>;

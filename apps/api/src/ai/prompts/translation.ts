@@ -13,11 +13,22 @@
 import * as z from 'zod/v4';
 import type { WritingGroup } from '../bank';
 import type { PromptFramework } from '../tasks';
-import { SYSTEM_CHILD_SAFETY, SYSTEM_OUTPUT_RULES, SYSTEM_PREAMBLE, studentTextBlock, taskBlock } from './common';
+import { neutralizeTags } from '../filter';
+import { BANK_SOURCE_LINE, SYSTEM_CHILD_SAFETY, SYSTEM_OUTPUT_RULES, SYSTEM_PREAMBLE, studentTextBlock, taskBlock } from './common';
 
 export const TRANSLATION_RUBRIC_VERSION = 'translation-4part@1';
 /** 使用者訊息範本的版本（改了 translationUserContent 的格式就遞增，會反映在 prompt_version）。 */
 export const TRANSLATION_TEMPLATE_VERSION = 'translation-user@1';
+/**
+ * 本站仿真題的範本版本（Source 行＋<website_reference> 本站參考；docs/design/bank-writing.md §5.5）。
+ * 和歷屆題分開，prompt_version 不同，校準資料不會混在一起；歷屆題的請求與 prompt_version 都不變。
+ */
+export const TRANSLATION_GUIDED_TEMPLATE_VERSION = 'translation-user-guided@1';
+
+/** 這個題組用哪個使用者訊息範本。 */
+export function translationTemplateVersion(group: WritingGroup): string {
+  return group.origin === 'bank' ? TRANSLATION_GUIDED_TEMPLATE_VERSION : TRANSLATION_TEMPLATE_VERSION;
+}
 
 /** 模型可以用的錯誤類別（capitalization、punctuation 由程式判定，不讓模型輸出）。 */
 export const TRANSLATION_MODEL_CATEGORIES = ['spelling', 'grammar', 'word_choice', 'omission', 'meaning', 'other'] as const;
@@ -91,17 +102,57 @@ export function translationSystemText(framework: PromptFramework): string {
   return [SYSTEM_PREAMBLE, TRANSLATION_RUBRIC, framework === 'holistic' ? HOLISTIC_METHOD : ANALYTIC_METHOD, SYSTEM_CHILD_SAFETY, SYSTEM_OUTPUT_RULES].join('\n\n');
 }
 
-/** 使用者訊息：題目（伺服器端）＋每句的中文與學生譯文（包在 <student_text>）。 */
+/**
+ * 本站仿真題的 <website_reference>：本站參考譯文與 4 部分的切法（本站撰寫，是範例不是標準答案）。
+ * 每個字串都先經過 neutralizeTags；選題時也已經把含 < 或 > 的題組略過（兩道保護，§5.5）。
+ */
+function translationReferenceBlock(group: WritingGroup): string | null {
+  const guidance = group.guidance;
+  if (!guidance || guidance.kind !== 'translation') return null;
+  const sentences = group.items.flatMap((item, i) => {
+    const ref = guidance.sentences.find((s) => s.label === item.label);
+    if (!ref) return [];
+    return [
+      [
+        `<sentence_reference index="${i}">`,
+        'Sample translations:',
+        ...ref.references.map((r) => `- ${neutralizeTags(r)}`),
+        'Suggested parts:',
+        ...ref.parts.map((p, j) => `${j + 1}. ${neutralizeTags(p.zh)} | accepted examples: ${p.accepted.map(neutralizeTags).join(' ; ')}`),
+        '</sentence_reference>',
+      ].join('\n'),
+    ];
+  });
+  if (sentences.length === 0) return null;
+  return [
+    '<website_reference>',
+    'The website wrote this reference material for this practice item. Use it as guidance only.',
+    '- Sample translations show acceptable ways to translate each sentence. They are not an answer key: any other correct and natural translation earns full credit, and differences from the samples are never errors by themselves.',
+    "- Suggested parts are the website's division of each Chinese sentence into the 4 scored meaning units. Use this division when it fits the student's translation; if it does not fit, divide the sentence yourself as the scoring rules describe.",
+    '- Accepted examples under each part are a few acceptable wordings, not a complete list.',
+    ...sentences,
+    '</website_reference>',
+  ].join('\n');
+}
+
+/**
+ * 使用者訊息：題目（伺服器端）＋每句的中文與學生譯文（包在 <student_text>）。
+ * 本站仿真題（origin 'bank'）的 <task> 第一行改成 Source 行，<task> 之後多一個 <website_reference>（§5.5）。
+ * 題目文字一律經過 neutralizeTags；歷屆題的文字沒有結構標籤，輸出逐位元不變（test/fixtures/past-exam-prompts.json）。
+ */
 export function translationUserContent(group: WritingGroup, sentences: string[]): string {
   const blocks = group.items.map((item, i) =>
-    [`<sentence index="${i}">`, `<source_zh>${item.stem}</source_zh>`, studentTextBlock(sentences[i] ?? '', { sentence: i }), `</sentence>`].join('\n'),
+    [`<sentence index="${i}">`, `<source_zh>${neutralizeTags(item.stem)}</source_zh>`, studentTextBlock(sentences[i] ?? '', { sentence: i }), `</sentence>`].join('\n'),
   );
+  const bank = group.origin === 'bank';
+  const reference = bank ? translationReferenceBlock(group) : null;
   return [
     taskBlock([
-      group.exam_title ? `Exam: ${group.exam_title}` : null,
+      bank ? BANK_SOURCE_LINE : group.exam_title ? `Exam: ${group.exam_title}` : null,
       `Section instructions: ${group.instructions}`,
       group.context ? `Context passage (the parts to translate are marked with 【】):\n${group.context}` : null,
     ]),
+    ...(reference ? [reference] : []),
     ...blocks,
     `Return one entry in "sentences" for each sentence above (sentence_index ${group.items.map((_, i) => i).join(', ')}), each with exactly 4 parts numbered 1-4, and list all errors in "errors".`,
   ].join('\n\n');

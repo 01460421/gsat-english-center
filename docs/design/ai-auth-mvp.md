@@ -306,7 +306,7 @@ A1＝後端登入／帳號／後台；A2＝後端 AI（提交、額度、Queue c
 
 | 任務 | 點數 | 評分者（max_tokens） | effort | 輸入估計 | 預扣（最壞，含第三位） | 逾時／SDK 重試 |
 |---|---|---|---|---|---|---|
-| `translation_grade` | 3 | primary 6,000、second 3,000、third 3,000 | medium | 3,000 tokens／次 | 312,000 微美元（US$0.312） | 120 秒／2 |
+| `translation_grade` | 3 | primary 6,000、second 3,000、third 3,000 | medium | 3,500 tokens／次（本站仿真題多了本站參考，docs/design/bank-writing.md §5.5） | 324,000 微美元（US$0.324） | 120 秒／2 |
 | `essay_grade` | 7 | primary 12,000、second 4,000、third 4,000 | medium | 6,000 | 544,000（US$0.544） | 240 秒／2 |
 | `essay_ocr` | 2 | ocr 3,000 | low | 6,000（兩張 1600 px） | 108,000（US$0.108） | 90 秒／2 |
 

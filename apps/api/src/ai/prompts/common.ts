@@ -44,10 +44,19 @@ export function studentTextBlock(text: string, attrs: Record<string, string | nu
   return `<student_text${attrText}>\n${neutralizeTags(text)}\n</student_text>`;
 }
 
-/** 題目區塊（伺服器端的題目文字；考卷名稱、說明、選文、圖的文字描述）。 */
+/**
+ * 題目區塊（伺服器端的題目文字；考卷名稱、說明、選文、圖的文字描述）。每一行都先經過 neutralizeTags：
+ * 本站仿真題的題目與圖的描述是代理寫的資料，不能提早結束 <task> 或偽造其他區塊（歷屆題的文字沒有這些標籤，不受影響）。
+ */
 export function taskBlock(lines: Array<string | null | undefined | false>): string {
-  return `<task>\n${lines.filter((l): l is string => typeof l === 'string' && l.trim() !== '').join('\n')}\n</task>`;
+  return `<task>\n${lines
+    .filter((l): l is string => typeof l === 'string' && l.trim() !== '')
+    .map(neutralizeTags)
+    .join('\n')}\n</task>`;
 }
+
+/** 本站仿真題 <task> 的第一行（取代歷屆題的「Exam: …」）：說明這是本站依學測題型寫的練習題，不是官方試題。 */
+export const BANK_SOURCE_LINE = 'Source: a practice item written by this website in the style of the GSAT. It is not an official exam question.';
 
 const promptVersionCache = new Map<string, Promise<string>>();
 

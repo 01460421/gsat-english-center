@@ -21,6 +21,7 @@ import {
   TRANSLATION_PARTS_PER_SENTENCE,
   TRANSLATION_POINTS_PER_PART,
   TRANSLATION_RATER_GAP_THRESHOLD,
+  checkMechanics,
   essayBandOf,
   type EssayCriterion,
   type EssayCriterionResult,
@@ -92,26 +93,11 @@ function round6(n: number): number {
 
 // ───────────────────────── 中譯英 ─────────────────────────
 
-/** 句首大寫與句尾標點（程式判定，SPEC §4.6）。 */
-export interface MechanicsCheck {
-  capitalization: { start: number; end: number } | null;
-  punctuation: { start: number; end: number } | null;
-}
-
-const CJK_PUNCT = /[。、「」『』《》〈〉【】〔〕…‥]/;
-
-export function checkMechanics(sentence: string): MechanicsCheck {
-  const firstLetter = sentence.search(/[A-Za-z]/);
-  const capitalization = firstLetter >= 0 && /[a-z]/.test(sentence[firstLetter]!) ? { start: firstLetter, end: firstLetter + 1 } : null;
-  let punctuation: MechanicsCheck['punctuation'] = null;
-  const cjk = sentence.search(CJK_PUNCT);
-  const trimmedEnd = sentence.replace(/\s+$/, '').length;
-  // 句尾可以有收尾的引號或括號：He said, "Yes."
-  const core = sentence.slice(0, trimmedEnd).replace(/["'”’)\]]+$/, '');
-  if (cjk >= 0) punctuation = { start: cjk, end: cjk + 1 };
-  else if (trimmedEnd > 0 && !/[.!?]$/.test(core)) punctuation = { start: trimmedEnd - 1, end: trimmedEnd };
-  return { capitalization, punctuation };
-}
+/**
+ * 句首大寫與句尾標點（程式判定，SPEC §4.6）：搬到 @gsat/shared，前端的本站題自評用同一支（docs/design/bank-writing.md §2.3）。
+ * 這裡轉匯出，test/ai.scoring.test.ts 與其他呼叫端不用改。
+ */
+export { checkMechanics, type MechanicsCheck } from '@gsat/shared';
 
 /** 模型輸出的語意檢查（zod 只管型別）：句數、句序、每句剛好 4 個部分。不通過＝輸出無效（重試一次）。 */
 export function translationOutputProblem(output: TranslationModelOutput, sentenceCount: number): string | null {

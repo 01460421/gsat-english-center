@@ -12,14 +12,23 @@
  *   failed       失敗原因（點數已全額退還）與重送
  * 所有 AI 產生的內容都標「AI 批改，僅供參考」。後端未開放（features.auth 為 false）時不打 API，只顯示說明；
  * 登入了但還沒完成首次同意（或條款改版）時先導到 /account/welcome，同意後回到這一頁。
+ *
+ * 本站仿真題（group_id 'ai.tr.xxxxxx@v'；docs/design/bank-writing.md §2.6）：標題是「本站仿真 中譯英」加主題，頂端放 AI 出題標示；
+ * 題目先看 index.json 的版本：和提交相同才讀 prompts 檔（中文題目、段數要求），graded 後另有「本站參考」收合區（展開才讀 answers 檔）；
+ * 新版已上架或已下架時不請求舊版的檔案（已經不存在），顯示說明，批改結果照常顯示。
  */
-import type { EssayBody, SubmissionDetail, TranslationBody } from '@gsat/shared';
+import { parseBankGroupId, type EssayBody, type SubmissionDetail, type TranslationBody } from '@gsat/shared';
 import { CirclePause, Loader2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { Link, Navigate, useLocation, useNavigate, useParams } from 'react-router';
+import { DataLoadError } from '../../data/client';
 import { loginHref, needsOnboarding, useFeatures, useMe } from '../../lib/api';
 import { welcomeHref } from '../account/ui';
 import { APP_NAME } from '../../modules';
+import { AiGroupBadge } from '../practice/components/AiGroupBadge';
+import { displayTopic } from '../practice/labels';
+import { BankAnswersPanel } from './bank/components/BankAnswersPanel';
+import { bankVersionStatus, findBankEntry, loadBankPrompt, loadWritingBankIndex, type BankPromptFile, type WritingBankEntry } from './bank/data';
 import { AiAccessNotice, QuotaSummary, taskPoints } from './components/AiAccessPanel';
 import { EssayResult } from './components/EssayResult';
 import { EssaySelfAssess } from './components/EssaySelfAssess';
@@ -90,6 +99,49 @@ function isTranslationBody(body: SubmissionDetail['body']): body is TranslationB
 
 function isEssayBody(body: SubmissionDetail['body']): body is EssayBody {
   return body !== null && 'text' in body && typeof body.text === 'string';
+}
+
+/**
+ * 本站仿真題的題目狀態：current＝版本是最新的（有 prompts 檔）；outdated＝新版已上架（或檔案剛好不存在：網站在這幾秒內更新）；
+ * removed＝已下架；unavailable＝其他載入錯誤（不顯示題目，照常顯示結果）。
+ */
+type BankPromptState =
+  | { status: 'loading' }
+  | { status: 'current'; prompt: BankPromptFile; entry: WritingBankEntry }
+  | { status: 'outdated'; entry: WritingBankEntry | null }
+  | { status: 'removed' }
+  | { status: 'unavailable' };
+
+/** 本站仿真題：先讀 index 確認版本，版本相同才讀 prompts 檔（新版上架後舊版的檔案已不存在，請求只會得到 404）。 */
+function useBankPromptFor(groupId: string | null): BankPromptState | null {
+  const bank = groupId ? parseBankGroupId(groupId) : null;
+  const key = bank ? `${bank.uid}@${bank.version}` : null;
+  const [state, setState] = useState<{ key: string; value: BankPromptState } | null>(null);
+  useEffect(() => {
+    if (!key || !bank) return;
+    let disposed = false;
+    const done = (value: BankPromptState) => {
+      if (!disposed) setState({ key, value });
+    };
+    const fail = (err: unknown, entry: WritingBankEntry | null) =>
+      done(err instanceof DataLoadError && err.kind === 'not_found' ? { status: 'outdated', entry } : { status: 'unavailable' });
+    loadWritingBankIndex().then((index) => {
+      const status = bankVersionStatus(index, bank.uid, bank.version);
+      const entry = findBankEntry(index, bank.uid);
+      if (status === 'removed') return done({ status: 'removed' });
+      if (status === 'outdated' || !entry) return done({ status: 'outdated', entry });
+      return loadBankPrompt(bank.uid, bank.version).then(
+        (prompt) => done({ status: 'current', prompt, entry }),
+        (err: unknown) => fail(err, entry),
+      );
+    }, (err: unknown) => fail(err, null));
+    return () => {
+      disposed = true;
+    };
+    // bank 由 key 決定（同一個 key 就是同一個 uid＠version），所以只依 key 重跑。
+  }, [key]);
+  if (!key) return null;
+  return state && state.key === key ? state.value : { status: 'loading' };
 }
 
 /** 依提交的題組載入題目（顯示中文題目用；失敗就不顯示，不影響結果）。 */
@@ -180,6 +232,7 @@ function SubmissionView({ id }: { id: string }) {
   const access = useAiAccess();
   const { quota, refresh: refreshQuota } = useQuota(access.state === 'ready');
   const prompt = usePromptFor(detail);
+  const bankPrompt = useBankPromptFor(detail?.group_id ?? null);
   const charged = useChargedPoints(detail?.op_id ?? null, detail?.status === 'graded');
   const errorContext = useDescribeContext();
   const errorView = useErrorView();
@@ -257,8 +310,16 @@ function SubmissionView({ id }: { id: string }) {
   };
 
   const essayText = isEssayBody(detail.body) ? detail.body.text : '';
-  const attemptPath = attemptPathOf(detail.kind, detail.group_id);
-  const heading = `${groupLabel(detail.group_id)} ${KIND_LABELS[detail.kind]}`;
+  const isBank = bankPrompt !== null;
+  // 已下架的本站題沒有作答頁可以回去。
+  const attemptPath = bankPrompt?.status === 'removed' ? null : attemptPathOf(detail.kind, detail.group_id);
+  const bankCurrent = bankPrompt?.status === 'current' ? bankPrompt.prompt : null;
+  const bankTopic = displayTopic(bankPrompt?.status === 'current' || bankPrompt?.status === 'outdated' ? (bankPrompt.entry?.topic ?? null) : null);
+  const heading = `${groupLabel(detail.group_id)} ${KIND_LABELS[detail.kind]}${bankTopic ? `：${bankTopic}` : ''}`;
+  // 中文題目：歷屆題用寫作索引，本站題用 prompts 檔（版本是最新的才有）。
+  const translationStems = prompt.translation ?? (bankCurrent?.section_type === 'translation' ? bankCurrent : null);
+  const essayStem = prompt.essay?.stem ?? (bankCurrent?.section_type === 'composition' ? bankCurrent.stem : null);
+  const requiredParagraphs = prompt.essay?.paragraphs ?? (bankCurrent?.section_type === 'composition' ? bankCurrent.paragraphs : null);
   const isAiPage = detail.status !== 'draft' && detail.status !== 'self_graded';
   const stopped = phase === 'error';
   // 辨識或批改進行中不能刪（後端回 409）；看提交本身的狀態，不看輪詢有沒有在跑（輪詢可能因錯誤停了）。
@@ -275,13 +336,33 @@ function SubmissionView({ id }: { id: string }) {
           {formatUnixTime(detail.created_at)}・{detail.input_mode === 'photo' ? '手寫拍照' : '打字'}・{STATUS_LABELS[detail.status]}
         </p>
         <h1 className="mt-1 text-2xl font-bold tracking-tight lg:text-3xl">{heading}</h1>
+        {isBank && (
+          <div className="mt-2">
+            <AiGroupBadge />
+          </div>
+        )}
       </header>
 
       {isAiPage && <AiNotice />}
-      {prompt.essay?.stem && (
+      {bankPrompt?.status === 'outdated' && (
+        <Notice>
+          <p>這題已更新成新版本，參考內容改看新版。</p>
+          {attemptPath && (
+            <Link to={attemptPath} className="mt-1 inline-flex min-h-11 items-center font-medium text-primary underline underline-offset-2">
+              看新版題目
+            </Link>
+          )}
+        </Notice>
+      )}
+      {bankPrompt?.status === 'removed' && (
+        <Notice>
+          <p>這題已下架，本站參考內容不再提供。</p>
+        </Notice>
+      )}
+      {essayStem && (
         <details className={card}>
           <summary className="cursor-pointer font-semibold">題目</summary>
-          <p className="mt-2 whitespace-pre-line text-[0.95rem]">{prompt.essay.stem}</p>
+          <p className="mt-2 whitespace-pre-line text-[0.95rem]">{essayStem}</p>
         </details>
       )}
       {error !== null && phase === 'polling' && (
@@ -326,7 +407,7 @@ function SubmissionView({ id }: { id: string }) {
           submission={detail}
           ocr={detail.ocr}
           onConfirmed={accept}
-          requiredParagraphs={prompt.essay?.paragraphs ?? null}
+          requiredParagraphs={requiredParagraphs}
           errorContext={errorContext}
         />
       )}
@@ -418,13 +499,14 @@ function SubmissionView({ id }: { id: string }) {
             <TranslationResult
               grading={detail.grading}
               body={isTranslationBody(detail.body) ? detail.body : null}
-              set={prompt.translation}
+              set={translationStems}
               selfAssess={detail.self_assess}
             />
           ) : (
             <EssayResult grading={detail.grading} text={essayText} selfAssess={detail.self_assess} />
           )}
           <ReportAiContent />
+          {bankCurrent && <BankAnswersPanel uid={bankCurrent.uid} version={bankCurrent.version} kind={detail.kind} />}
           <div className="flex flex-wrap gap-2">
             {attemptPath && (
               <Link to={attemptPath} className={secondaryButton}>

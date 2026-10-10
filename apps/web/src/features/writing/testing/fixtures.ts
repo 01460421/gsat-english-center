@@ -11,6 +11,20 @@ import type {
   TranslationGradingResult,
 } from '@gsat/shared';
 import type { EssayIndex, EssayPrompt, TranslationIndex, TranslationSet } from '../data';
+import type { BankAnswersFile, BankPromptFile, BankTierList, WritingBankIndex } from '../bank/data';
+// 本站仿真題：直接用建置的範例輸出（scripts/lib/writing-bank.test.ts 確認它和建置產生的一致，
+// data-contract.test.ts 確認它符合 bank/data.ts 的型別），所以這裡的轉型是安全的。
+import bankIndexJson from '../../../../tests/fixtures/bank-writing-public/writing/bank/index.json';
+import bankTrBasicJson from '../../../../tests/fixtures/bank-writing-public/writing/bank/list/translation-basic.json';
+import bankTrAdvancedJson from '../../../../tests/fixtures/bank-writing-public/writing/bank/list/translation-advanced.json';
+import bankTrTopJson from '../../../../tests/fixtures/bank-writing-public/writing/bank/list/translation-top.json';
+import bankCpBasicJson from '../../../../tests/fixtures/bank-writing-public/writing/bank/list/composition-basic.json';
+import bankCpAdvancedJson from '../../../../tests/fixtures/bank-writing-public/writing/bank/list/composition-advanced.json';
+import bankCpTopJson from '../../../../tests/fixtures/bank-writing-public/writing/bank/list/composition-top.json';
+import bankTrPromptJson from '../../../../tests/fixtures/bank-writing-public/writing/bank/prompts/ai.tr.0b1c2d@1.json';
+import bankCpPromptJson from '../../../../tests/fixtures/bank-writing-public/writing/bank/prompts/ai.cp.0e1f2a@1.json';
+import bankTrAnswersJson from '../../../../tests/fixtures/bank-writing-public/writing/bank/answers/ai.tr.0b1c2d@1.json';
+import bankCpAnswersJson from '../../../../tests/fixtures/bank-writing-public/writing/bank/answers/ai.cp.0e1f2a@1.json';
 
 export const jsonResponse = (body: unknown, status = 200) =>
   new Response(JSON.stringify(body), { status, headers: { 'Content-Type': 'application/json' } });
@@ -232,6 +246,38 @@ export function essaySubmission(patch: Partial<SubmissionDetail> = {}): Submissi
   };
 }
 
+// ───────────────────────── 本站仿真題（tests/fixtures/bank-writing-public） ─────────────────────────
+
+export const BANK_INDEX = bankIndexJson as unknown as WritingBankIndex;
+export const BANK_TR_UID = 'ai.tr.0b1c2d';
+export const BANK_CP_UID = 'ai.cp.0e1f2a';
+export const BANK_TR_GROUP = 'ai.tr.0b1c2d@1';
+export const BANK_CP_GROUP = 'ai.cp.0e1f2a@1';
+export const BANK_TR_PROMPT = bankTrPromptJson as unknown as BankPromptFile & { section_type: 'translation' };
+export const BANK_CP_PROMPT = bankCpPromptJson as unknown as BankPromptFile & { section_type: 'composition' };
+export const BANK_TR_ANSWERS = bankTrAnswersJson as unknown as BankAnswersFile & { section_type: 'translation' };
+export const BANK_CP_ANSWERS = bankCpAnswersJson as unknown as BankAnswersFile & { section_type: 'composition' };
+const BANK_LISTS: Record<string, BankTierList> = {
+  'translation-basic': bankTrBasicJson as unknown as BankTierList,
+  'translation-advanced': bankTrAdvancedJson as unknown as BankTierList,
+  'translation-top': bankTrTopJson as unknown as BankTierList,
+  'composition-basic': bankCpBasicJson as unknown as BankTierList,
+  'composition-advanced': bankCpAdvancedJson as unknown as BankTierList,
+  'composition-top': bankCpTopJson as unknown as BankTierList,
+};
+
+/** 本站仿真題的靜態資料（/data/writing/bank/*）；index 可以換成別的（測試新版上架、下架）。 */
+export function bankRoutes(index: WritingBankIndex = BANK_INDEX): Record<string, Handler> {
+  return {
+    'GET /data/writing/bank/index.json': () => jsonResponse(index),
+    ...Object.fromEntries(Object.entries(BANK_LISTS).map(([k, v]) => [`GET /data/writing/bank/list/${k}.json`, () => jsonResponse(v)])),
+    [`GET /data/writing/bank/prompts/${BANK_TR_GROUP}.json`]: () => jsonResponse(BANK_TR_PROMPT),
+    [`GET /data/writing/bank/prompts/${BANK_CP_GROUP}.json`]: () => jsonResponse(BANK_CP_PROMPT),
+    [`GET /data/writing/bank/answers/${BANK_TR_GROUP}.json`]: () => jsonResponse(BANK_TR_ANSWERS),
+    [`GET /data/writing/bank/answers/${BANK_CP_GROUP}.json`]: () => jsonResponse(BANK_CP_ANSWERS),
+  };
+}
+
 /** 依「方法＋路徑」回應的假 fetch；沒有對應的一律 404（統一錯誤格式）。呼叫紀錄在 calls。 */
 export type Handler = (init: RequestInit | undefined, url: URL) => Response | Promise<Response>;
 
@@ -266,6 +312,7 @@ export function baseRoutes(features: FeaturesResponse, me: MeResponse = { user: 
   return {
     'GET /data/writing/translation.json': () => jsonResponse(TRANSLATION_INDEX),
     'GET /data/writing/essay.json': () => jsonResponse(ESSAY_INDEX),
+    ...bankRoutes(),
     'GET /api/features': () => jsonResponse(features),
     'GET /api/me': () => jsonResponse(me),
     'GET /api/ai/quota': () => jsonResponse(QUOTA),

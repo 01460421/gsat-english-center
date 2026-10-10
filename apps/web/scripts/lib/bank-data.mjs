@@ -15,8 +15,11 @@
  *     或解析裡影響計分的 partial_credit_forms、interchangeable_with 不同；見 answerKey）時撤下整組：
  *     出新版多半是因為舊版有錯（SPEC §4.7：答案有誤先隔離，再出 version+1 走審核），新版通過驗證前不讓學生練到可能錯的答案。
  *     新版沒有改答案（例如只修錯字）時照舊發布 verified 的舊版。
+ *   - 登記在 data/unpublish.jsonl（人工審核下架清單）的版本不發布，也算「較新的未通過版本」參與撤下判斷。
  *   data/bank/v1 不存在、沒有任何檔案或沒有 verified 題組時回傳空的結果，不讓建置失敗。
  *   無法解析的 JSON（例如出題流程寫到一半）只印警告、略過：它不可能是 verified，CI 的 validate_bank.py 會擋。
+ *   這段選題迴圈在 packages/shared/scripts/bank-select.mjs 的 selectBankGroups（本站仿真中譯英、作文與 Worker 的題目庫
+ *   用同一份程式；這裡傳 contentKey: answerKey、withdrawOnRejectedSameKey: false，行為和搬過去之前相同）。
  *
  * 輸出什麼（前端型別在 src/data/bank.ts）：
  *   bank/index.json                 每組的摘要（uid、version、題型、難度、主題、題數、課綱）
@@ -45,9 +48,10 @@
  * 只檢查最後選中要發布的版本：被新版取代（或被撤下）的舊檔依只增不減的規則不能再改，
  * 日後前端契約變嚴時，不能讓這些不會發布的舊檔讓建置永遠失敗。
  */
-import { existsSync, readFileSync, readdirSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { BankSelectError, selectBankGroups } from '../../../../packages/shared/scripts/bank-select.mjs';
 
 /** 這個檔案的路徑：build-data.mjs 把它算進資料版本雜湊（輸出格式改了，版本才會跟著變）。 */
 export const BANK_DATA_SCRIPT = fileURLToPath(import.meta.url);
@@ -77,8 +81,6 @@ const UID_CODES = /** @type {Record<string, string>} */ ({
   composition: 'cp',
 });
 
-/** 檔名 {uid}@{version}.json（packages/shared/src/bank.ts 的 BANK_FILENAME_PATTERN）。 */
-const FILENAME_PATTERN = /^(ai\.(?:vo|cz|wb|st|rd|mx|tr|cp)\.[0-9a-f]{6})@([1-9]\d*)\.json$/;
 const LETTER = /^[A-O]$/;
 
 /** 解析卡的列舉值（packages/shared/src/bank.ts；tools/validate_bank.py 用同一份清單檢查）。 */
@@ -132,10 +134,8 @@ const READING_EXPLANATION_KEYS = [
 
 /**
  * @typedef {Record<string, unknown>} JsonObject
- * @typedef {'not_verified' | 'checkpoint' | 'unsupported_section' | 'older_version' | 'withdrawn' | 'bad_filename' | 'other_schema'} SkipReason
+ * @typedef {'not_verified' | 'checkpoint' | 'unsupported_section' | 'older_version' | 'withdrawn' | 'bad_filename' | 'other_schema' | 'unpublished'} SkipReason
  * @typedef {{ file: string, reason: SkipReason }} SkippedFile
- * @typedef {{ file: string, version: number, status: string, raw: JsonObject | null }} VersionRecord
- *   一個 uid 的某一個版本（不論 status）。status 是檔案裡的 status；無法解析的 JSON 是 'unparseable'。
  * @typedef {{
  *   uid: string, version: number, section_type: string, format_version: string, tier: string,
  *   topic: string | null, question_count: number, curriculum: { code: string, weight: string }[]
@@ -174,23 +174,6 @@ function pick(obj, keys) {
   const out = {};
   for (const k of keys) if (Object.hasOwn(obj, k)) out[k] = obj[k];
   return out;
-}
-
-/**
- * dir 底下所有 .json（遞迴、依路徑排序）。以「.」開頭的檔案與目錄略過：編輯器與寫檔工具的暫存檔常用這種名字。
- * @param {string} dir
- * @returns {string[]}
- */
-function listJsonFiles(dir) {
-  /** @type {string[]} */
-  const out = [];
-  for (const ent of readdirSync(dir, { withFileTypes: true })) {
-    if (ent.name.startsWith('.')) continue;
-    const full = path.join(dir, ent.name);
-    if (ent.isDirectory()) out.push(...listJsonFiles(full));
-    else if (ent.isFile() && ent.name.endsWith('.json')) out.push(full);
-  }
-  return out.sort();
 }
 
 /** @param {unknown} v @returns {v is Record<string, string>} */
@@ -589,14 +572,6 @@ function indexEntry(f) {
   };
 }
 
-/** 警告訊息裡的檔案狀態。 @type {Record<string, string>} */
-const STATUS_LABELS = {
-  draft: 'draft，驗證中',
-  rejected: 'rejected，未通過驗證',
-  verified: 'verified，但不在練習池或格式不支援',
-  unparseable: '無法解析',
-};
-
 /** 字串陣列排序後的副本（順序不影響計分的清單）；不是陣列時原樣回傳（形狀不對也照樣比對，只是一定算「不同」）。 */
 const sortedList = (/** @type {unknown} */ v) => (Array.isArray(v) ? [...v].map(String).sort() : (v ?? null));
 
@@ -643,8 +618,12 @@ function answerKey(raw) {
 /**
  * 掃描 bankDir（data/bank/v1），挑出要公開的題組。
  * @param {string} bankDir
- * @param {{ relative?: (file: string) => string, factsDir?: string }} [options]
- *   relative：錯誤訊息裡顯示的路徑（預設原樣）；factsDir：事實單目錄（預設 bankDir 旁邊的 facts，即 data/bank/facts）
+ * @param {{
+ *   relative?: (file: string) => string, factsDir?: string,
+ *   unpublished?: Map<string, { date: string, reason: string }>, repoRoot?: string,
+ * }} [options]
+ *   relative：錯誤訊息裡顯示的路徑（預設原樣）；factsDir：事實單目錄（預設 bankDir 旁邊的 facts，即 data/bank/facts）；
+ *   unpublished：data/unpublish.jsonl 的內容（bank-select.mjs 的 readUnpublish；鍵是 repo 相對路徑，用 repoRoot 算）
  * @returns {BankBuildResult}
  */
 export function buildBankData(bankDir, options = {}) {
@@ -654,84 +633,27 @@ export function buildBankData(bankDir, options = {}) {
   const result = { entries: [], groups: [], inputs: [], skipped: [], warnings: [], scanned: 0 };
   if (!existsSync(bankDir)) return result;
 
-  /** 每個 uid 的所有版本（不論 status、能不能解析）：判斷「有沒有比要發布的更新的版本」。 @type {Map<string, VersionRecord[]>} */
-  const allVersions = new Map();
-  /** 可以發布的版本（verified、practice、前端支援的題型）。 @type {Map<string, VersionRecord[]>} */
-  const publishable = new Map();
-  /** @param {Map<string, VersionRecord[]>} map @param {string} uid @param {VersionRecord} rec */
-  const add = (map, uid, rec) => map.set(uid, [...(map.get(uid) ?? []), rec]);
-
-  for (const file of listJsonFiles(bankDir)) {
-    result.scanned += 1;
-    const m = FILENAME_PATTERN.exec(path.basename(file));
-    if (!m) {
-      result.skipped.push({ file: rel(file), reason: 'bad_filename' });
-      continue;
-    }
-    const uid = m[1] ?? '';
-    const version = Number(m[2]);
-    /** @type {unknown} */
-    let raw;
-    try {
-      raw = JSON.parse(readFileSync(file, 'utf8'));
-    } catch (err) {
-      result.warnings.push(`${rel(file)} 不是合法的 JSON，略過（${err instanceof Error ? err.message : String(err)}）`);
-      add(allVersions, uid, { file, version, status: 'unparseable', raw: null });
-      continue;
-    }
-    const rec = { file, version, status: isObject(raw) ? String(raw.status) : 'unparseable', raw: isObject(raw) ? raw : null };
-    add(allVersions, uid, rec);
-    if (!isObject(raw) || raw.status !== 'verified') {
-      result.skipped.push({ file: rel(file), reason: 'not_verified' });
-      continue;
-    }
-    if (raw.schema !== BANK_SCHEMA) {
-      result.warnings.push(`${rel(file)} 的 schema 是 ${String(raw.schema)}，前端只支援 ${BANK_SCHEMA}，略過`);
-      result.skipped.push({ file: rel(file), reason: 'other_schema' });
-      continue;
-    }
-    if (raw.pool !== 'practice') {
-      result.skipped.push({ file: rel(file), reason: 'checkpoint' });
-      continue;
-    }
-    if (!PRACTICE_SECTION_TYPES.includes(/** @type {never} */ (raw.section_type))) {
-      result.skipped.push({ file: rel(file), reason: 'unsupported_section' });
-      continue;
-    }
-    add(publishable, uid, rec);
+  /** @type {ReturnType<typeof selectBankGroups>} */
+  let sel;
+  try {
+    sel = selectBankGroups(bankDir, {
+      sections: PRACTICE_SECTION_TYPES,
+      contentKey: answerKey,
+      withdrawOnRejectedSameKey: false,
+      unpublished: options.unpublished,
+      repoRoot: options.repoRoot,
+      relative: rel,
+      changeLabel: '答案',
+    });
+  } catch (err) {
+    if (err instanceof BankSelectError) throw new BankDataError(err.message);
+    throw err;
   }
-
-  /** 每個 uid 要發布的版本（契約檢查在選定之後才做，理由見檔頭）。 @type {{ uid: string, version: number, file: string, raw: JsonObject }[]} */
-  const latest = [];
-  for (const [uid, list] of publishable) {
-    const [top, ...older] = [...list].sort((a, b) => b.version - a.version);
-    if (!top?.raw) continue;
-    const dup = older.find((r) => r.version === top.version);
-    check(dup === undefined, `${rel(dup?.file ?? '')} 和 ${rel(top.file)} 是同一個 uid＠version`);
-    for (const r of older) result.skipped.push({ file: rel(r.file), reason: 'older_version' });
-
-    const newer = (allVersions.get(uid) ?? []).filter((r) => r.version > top.version).sort((a, b) => a.version - b.version);
-    if (newer.length > 0) {
-      const names = newer.map((r) => `@${r.version}（${STATUS_LABELS[r.status] ?? r.status}）`).join('、');
-      const topKey = answerKey(top.raw);
-      const changed = newer.filter((r) => {
-        const key = r.raw ? answerKey(r.raw) : null;
-        return key !== null && key !== topKey;
-      });
-      if (changed.length > 0) {
-        result.skipped.push({ file: rel(top.file), reason: 'withdrawn' });
-        result.warnings.push(
-          `${uid} 有較新的 ${names}，其中 ${changed.map((r) => `@${r.version}`).join('、')} 改了答案：撤下 @${top.version}，等新版通過驗證再上架（SPEC §4.7）`,
-        );
-        continue;
-      }
-      const comparable = newer.every((r) => r.raw !== null && answerKey(r.raw) !== null);
-      result.warnings.push(
-        `${uid} 有較新的 ${names}，仍發布 @${top.version}（${comparable ? '新版沒有改答案' : '新版無法比對答案'}）`,
-      );
-    }
-    latest.push({ uid, version: top.version, file: top.file, raw: top.raw });
-  }
+  result.scanned = sel.scanned;
+  result.skipped.push(.../** @type {SkippedFile[]} */ (sel.skipped));
+  result.warnings.push(...sel.warnings);
+  /** 每個 uid 要發布的版本（契約檢查在選定之後才做，理由見檔頭）。 */
+  const latest = sel.chosen;
   for (const { uid, version, file, raw } of latest) checkPracticeFile(raw, rel(file), { uid, version, file });
 
   const sectionOrder = (/** @type {string} */ s) => PRACTICE_SECTION_TYPES.indexOf(/** @type {never} */ (s));
@@ -770,4 +692,5 @@ export const SKIP_REASON_LABELS = {
   withdrawn: '較新的版本改了答案、還沒通過驗證（暫時撤下）',
   bad_filename: '檔名不符合 {uid}@{version}.json',
   other_schema: '格式版本不支援',
+  unpublished: '人工審核後下架（data/unpublish.jsonl）',
 };

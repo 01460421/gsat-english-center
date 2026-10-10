@@ -174,8 +174,55 @@ describe('題目庫（src/generated/writing-prompts.json）', () => {
     expect(e.essay).toMatchObject({ paragraphs: 2, min_words: 120 });
     expect(e.figures.length).toBeGreaterThan(0);
     expect(Object.keys(e).sort()).toEqual(
-      ['ai_gradable', 'content_hash', 'context', 'essay', 'exam_id', 'exam_title', 'figures', 'group_id', 'instructions', 'items', 'kind', 'section_type', 'source_group', 'uid', 'version'].sort(),
+      [
+        'ai_gradable',
+        'content_hash',
+        'context',
+        'essay',
+        'exam_id',
+        'exam_title',
+        'figures',
+        'group_id',
+        'guidance',
+        'instructions',
+        'item_group',
+        'items',
+        'kind',
+        'origin',
+        'section_type',
+        'source_group',
+        'tier',
+        'uid',
+        'version',
+      ].sort(),
     );
+  });
+
+  it('歷屆題：origin exam、沒有本站參考、D1 最小列的值和改版前寫死的相同', () => {
+    const t = getWritingGroup(TRANSLATION_GROUP)!;
+    expect(t).toMatchObject({ origin: 'exam', tier: null, guidance: null, exam_id: 'gsat-115' });
+    expect(t.item_group).toEqual({ origin: 'ceec', license: 'CEEC-exam', derivation: 'verbatim', format_version: 'translation-2' });
+    expect(getWritingGroup(ESSAY_GROUP)!.item_group).toEqual({ origin: 'ceec', license: 'CEEC-exam', derivation: 'verbatim', format_version: 'composition-1' });
+    const groups = Object.values((bankJson as unknown as { groups: Record<string, WritingGroup> }).groups);
+    for (const g of groups.filter((x) => x.origin === 'exam')) expect(g.guidance, g.group_id).toBeNull();
+  });
+
+  it('歷屆題的 content_hash 和改版前逐位元相同（雜湊只算原本的欄位集合；D1 的 face_hash 也是它）', () => {
+    // 改動前的產生器算出的值（docs/design/bank-writing.md §5.2；test/fixtures/past-exam-prompts.json 同時錄下）。
+    expect(getWritingGroup(TRANSLATION_GROUP)!.content_hash).toBe('9e5682483923f301e97538ee9b4a2cd8cace443681e724553d606a3dbe30843d');
+    expect(getWritingGroup(ESSAY_GROUP)!.content_hash).toBe('2470432c08a9bbce771cb188fa44061271e211e21e65e41fe8bb5ead5d197cc9');
+  });
+
+  it('本站仿真題也在題目庫裡：id 是 {uid}@{version}，沒有 svg 與答案欄位', () => {
+    const groups = Object.values((bankJson as unknown as { groups: Record<string, WritingGroup> }).groups).filter((g) => g.origin === 'bank');
+    expect(groups.length).toBeGreaterThan(0);
+    for (const g of groups) {
+      expect(g.group_id).toMatch(/^ai\.(tr|cp)\.[0-9a-f]{6}@[1-9]\d*$/);
+      expect(g.group_id).toBe(`${g.uid}@${g.version}`);
+      expect(g.item_group).toMatchObject({ license: 'original-ai', derivation: 'original' });
+      const raw = JSON.stringify(g);
+      for (const k of ['"svg"', '"answer"', '"accepted_answers"', '"scoring_notes"', '"model_texts"', '"verification"']) expect(raw).not.toContain(k);
+    }
   });
 
   it('中譯英的 ai_gradable 和 shared 的 isAiGradableTranslation 同一條規則（前端據此顯示「AI 批改」按鈕）', () => {

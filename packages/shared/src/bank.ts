@@ -43,6 +43,20 @@ export function sectionTypeOfUid(uid: string): BankSectionType | null {
   return found ? found[0] : null;
 }
 
+/**
+ * 本站仿真中譯英、作文的題組 id（submissions.group_id ＝ item_groups.id ＝ Worker 題目庫的鍵）：'{uid}@{version}'，
+ * 例如 'ai.tr.1b2c4e@1'（DB_SCHEMA §3.3 的 AI 題 uid；docs/design/bank-writing.md §5.3）。
+ * 第 1 組是 uid，第 2 組是題型縮寫（tr／cp），第 3 組是版本。歷屆題的 id（gsat-115.s7g1@1）不符合。
+ */
+export const BANK_WRITING_GROUP_ID_PATTERN = /^(ai\.(tr|cp)\.[0-9a-f]{6})@([1-9]\d*)$/;
+
+/** 本站仿真寫作題的題組 id → uid、版本與題型；不是本站寫作題（例如歷屆題的 id）回傳 null。 */
+export function parseBankGroupId(groupId: string): { uid: string; version: number; section_type: 'translation' | 'composition' } | null {
+  const m = BANK_WRITING_GROUP_ID_PATTERN.exec(groupId);
+  if (!m) return null;
+  return { uid: m[1]!, version: Number(m[3]), section_type: m[2] === 'tr' ? 'translation' : 'composition' };
+}
+
 /** pool：practice＝練習池；checkpoint＝檢核卷專用（不進練習、不公開，答案不送前端）。 */
 export const BANK_POOLS = ['practice', 'checkpoint'] as const;
 export type BankPool = (typeof BANK_POOLS)[number];

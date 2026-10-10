@@ -1,14 +1,15 @@
 /**
  * /writing：寫作練習首頁。負責：前端寫作 W2。
  *
- *   - 兩個入口：中譯英（/writing/translation）、英文作文（/writing/essay）；
+ *   - 兩個入口：中譯英（/writing/translation）、英文作文（/writing/essay）；下面另有「本站仿真題（AI 出題）」兩個入口
+ *     （/writing/translation/ai、/writing/essay/ai）。說明文字寫死在這裡：不載入題庫資料、不匯入 practice 模組，首頁的程式不會變大；
  *   - 說明兩種模式：AI 批改（登入＋核准，扣點數）與自我檢核（任何人、不用 AI）；
  *   - 未登入或未核准時告訴學生怎麼開通（登入 → /ai/apply）；後端沒部署時只顯示「即將開放」；
  *   - 已登入：剩餘點數與我的寫作紀錄（GET /api/submissions?kind=）。
  * 後端沒部署（features 全關）時這一頁不打任何 API。
  */
 import { AI_TASK_POINTS } from '@gsat/shared';
-import { ChevronRight, FileText, Languages } from 'lucide-react';
+import { Bot, ChevronRight, FileText, Languages } from 'lucide-react';
 import type { ReactNode } from 'react';
 import { Link } from 'react-router';
 import { PageHeader } from '../../components/ModulePage';
@@ -54,6 +55,27 @@ export default function WritingHomePage() {
           </li>
         </ul>
 
+        <section aria-labelledby="bank-heading" className="space-y-3">
+          <h2 id="bank-heading" className="text-lg font-semibold">
+            本站仿真題（AI 出題）
+          </h2>
+          <p className="text-sm text-muted">
+            AI 依學測題型出題，已通過本站自動驗證、人工審核中，不是大考中心的試題。分穩定基礎、進階練習、超越頂標三種難度，寫完可以對照本站撰寫的參考內容。
+          </p>
+          <ul className="grid gap-3 sm:grid-cols-2">
+            <li className="min-w-0">
+              <EntryCard to="/writing/translation/ai" icon={<Bot aria-hidden="true" className="size-6" />} title="本站仿真中譯英">
+                兩句一組、同一主題；寫完對照本站參考譯文與 4 部分評分規準。
+              </EntryCard>
+            </li>
+            <li className="min-w-0">
+              <EntryCard to="/writing/essay/ai" icon={<Bot aria-hidden="true" className="size-6" />} title="本站仿真作文">
+                看圖、圖表寫作，依難度附構思圖、大綱或規劃檢核表；寫完對照評分重點與兩篇範文。
+              </EntryCard>
+            </li>
+          </ul>
+        </section>
+
         <section aria-labelledby="modes-heading" className={card}>
           <h2 id="modes-heading" className="text-lg font-semibold">
             兩種批改方式
@@ -75,7 +97,9 @@ export default function WritingHomePage() {
               <dt className="font-semibold">自我檢核</dt>
               <dd className="mt-1 space-y-1 text-[0.95rem]">
                 <p>不用登入、不花點數：依本站整理的檢核清單（時態、主詞動詞一致、冠詞與單複數、詞性、拼字與大小寫、標點、漏譯）逐項檢查，再替自己打分數。</p>
-                <p className="text-sm text-muted">本站不提供大考中心的官方參考譯文與範文；需要時請看各題附的官方檔案連結。</p>
+                <p className="text-sm text-muted">
+                  本站不提供大考中心的官方參考譯文與範文；需要時請看各題附的官方檔案連結。本站仿真題附本站撰寫的參考譯文、評分規準與範文，寫完才顯示。
+                </p>
               </dd>
             </div>
           </dl>

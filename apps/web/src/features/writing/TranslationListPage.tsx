@@ -10,6 +10,7 @@ import { dataErrorMessage } from '../../data/client';
 import { EXAM_KIND_LABELS } from '../../data/exams';
 import { APP_NAME } from '../../modules';
 import { KindFilter, WRITING_KINDS, useKindFilter, type WritingKindFilter } from './components/KindFilter';
+import { SourceTabs } from './components/SourceTabs';
 import { BackLink, DataError, Loading } from './components/ui';
 import { isAiGradableTranslation, loadTranslationIndex, type TranslationSet } from './data';
 import { examRefLabel } from './lib/format';
@@ -50,6 +51,7 @@ export default function TranslationListPage() {
       <title>{`中譯英題目｜${APP_NAME}`}</title>
       <BackLink to="/writing">寫作練習</BackLink>
       <h1 className="text-2xl font-bold tracking-tight lg:text-3xl">中譯英題目</h1>
+      <SourceTabs kind="translation" current="exam" />
       <p className="mt-3 text-muted">
         歷屆學測、指考與參考試卷的中譯英。點選一組開始作答：可以用自我檢核清單自己檢查，或（登入並通過申請後）請 AI 批改。
       </p>
@@ -58,23 +60,37 @@ export default function TranslationListPage() {
   );
 }
 
-/** 題目列表本體（篩選、各考試的題組卡片、題目來源）：這一頁與中譯英題型頁（pages/TranslationPage.tsx）共用。 */
-export function TranslationPromptList({ className = '' }: { className?: string }) {
+/**
+ * 題目列表本體（篩選、各考試的題組卡片、題目來源）：這一頁與中譯英題型頁（pages/TranslationPage.tsx）共用。
+ * 各考試的標題預設是 <h2>；題型頁把列表放在「歷屆試題」<h2> 底下，傳 headingLevel={3}。
+ */
+export function TranslationPromptList({ className = '', headingLevel = 2 }: { className?: string; headingLevel?: 2 | 3 }) {
   const data = useStaticData(loadTranslationIndex);
   const [kind, setKind] = useKindFilter();
   return (
-      <div className={`space-y-6 ${className}`}>
-        {data.status === 'loading' && <Loading>題目載入中…</Loading>}
-        {data.status === 'error' && <DataError message={dataErrorMessage(data.error)} onRetry={data.retry} />}
-        {data.status === 'ready' && <TranslationLists sets={data.value.sets} kind={kind} onKind={setKind} />}
-        <footer className="rounded-2xl border border-line bg-surface p-4 text-sm text-muted">
-          題目來源：大學入學考試中心歷屆試題。本站只整理中文題目，不轉載官方參考譯文；各題作答頁附有官方題本與評分原則的連結。
-        </footer>
-      </div>
+    <div className={`space-y-6 ${className}`}>
+      {data.status === 'loading' && <Loading>題目載入中…</Loading>}
+      {data.status === 'error' && <DataError message={dataErrorMessage(data.error)} onRetry={data.retry} />}
+      {data.status === 'ready' && <TranslationLists sets={data.value.sets} kind={kind} onKind={setKind} headingLevel={headingLevel} />}
+      <footer className="rounded-2xl border border-line bg-surface p-4 text-sm text-muted">
+        題目來源：大學入學考試中心歷屆試題。本站只整理中文題目，不轉載官方參考譯文；各題作答頁附有官方題本與評分原則的連結。
+      </footer>
+    </div>
   );
 }
 
-function TranslationLists({ sets, kind, onKind }: { sets: TranslationSet[]; kind: WritingKindFilter; onKind: (k: WritingKindFilter) => void }) {
+function TranslationLists({
+  sets,
+  kind,
+  onKind,
+  headingLevel,
+}: {
+  sets: TranslationSet[];
+  kind: WritingKindFilter;
+  onKind: (k: WritingKindFilter) => void;
+  headingLevel: 2 | 3;
+}) {
+  const Heading = headingLevel === 3 ? 'h3' : 'h2';
   const counts = {
     all: sets.length,
     gsat: sets.filter((s) => s.exam === 'gsat').length,
@@ -90,10 +106,10 @@ function TranslationLists({ sets, kind, onKind }: { sets: TranslationSet[]; kind
         if (list.length === 0) return null;
         return (
           <section key={k} aria-labelledby={`tl-${k}`}>
-            <h2 id={`tl-${k}`} className="mb-3 text-lg font-semibold">
+            <Heading id={`tl-${k}`} className="mb-3 text-lg font-semibold">
               {EXAM_KIND_LABELS[k]}
               <span className="ml-2 text-sm font-normal text-muted">{list.length} 組</span>
-            </h2>
+            </Heading>
             <ul className="grid gap-3 md:grid-cols-2">
               {list.map((s) => (
                 <li key={s.exam_id} className="min-w-0">

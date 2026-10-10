@@ -98,6 +98,16 @@ function PracticeMenu({ indexPromise }: { indexPromise: Promise<BankIndex> }) {
           </li>
         ))}
       </ul>
+      <p className="text-sm text-muted">
+        中譯英、英文作文的仿真題在寫作練習：
+        <Link to="/writing/translation/ai" className="mx-1 font-medium text-primary underline underline-offset-2">
+          本站仿真中譯英
+        </Link>
+        、
+        <Link to="/writing/essay/ai" className="mx-1 font-medium text-primary underline underline-offset-2">
+          本站仿真作文
+        </Link>
+      </p>
     </section>
   );
 }

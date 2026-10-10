@@ -10,6 +10,7 @@ import { dataErrorMessage } from '../../data/client';
 import { EXAM_KIND_LABELS } from '../../data/exams';
 import { APP_NAME } from '../../modules';
 import { KindFilter, WRITING_KINDS, useKindFilter, type WritingKindFilter } from './components/KindFilter';
+import { SourceTabs } from './components/SourceTabs';
 import { BackLink, DataError, Loading } from './components/ui';
 import { loadEssayIndex, type EssayPrompt } from './data';
 import { ESSAY_TYPE_LABELS, essayRequirement, examRefLabel } from './lib/format';
@@ -43,6 +44,7 @@ export default function EssayListPage() {
       <title>{`英文作文題目｜${APP_NAME}`}</title>
       <BackLink to="/writing">寫作練習</BackLink>
       <h1 className="text-2xl font-bold tracking-tight lg:text-3xl">英文作文題目</h1>
+      <SourceTabs kind="essay" current="exam" />
       <p className="mt-3 text-muted">
         歷屆學測、指考與參考試卷的作文題。可以在網頁上打字，也可以（通過 AI 申請後）拍照上傳手寫稿，由 AI 辨識文字再批改。
       </p>
@@ -51,23 +53,37 @@ export default function EssayListPage() {
   );
 }
 
-/** 題目列表本體（篩選、各考試的題目卡片、題目來源）：這一頁與英文作文題型頁（pages/CompositionPage.tsx）共用。 */
-export function EssayPromptList({ className = '' }: { className?: string }) {
+/**
+ * 題目列表本體（篩選、各考試的題目卡片、題目來源）：這一頁與英文作文題型頁（pages/CompositionPage.tsx）共用。
+ * 各考試的標題預設是 <h2>；題型頁把列表放在「歷屆試題」<h2> 底下，傳 headingLevel={3}。
+ */
+export function EssayPromptList({ className = '', headingLevel = 2 }: { className?: string; headingLevel?: 2 | 3 }) {
   const data = useStaticData(loadEssayIndex);
   const [kind, setKind] = useKindFilter();
   return (
-      <div className={`space-y-6 ${className}`}>
-        {data.status === 'loading' && <Loading>題目載入中…</Loading>}
-        {data.status === 'error' && <DataError message={dataErrorMessage(data.error)} onRetry={data.retry} />}
-        {data.status === 'ready' && <EssayLists prompts={data.value.prompts} kind={kind} onKind={setKind} />}
-        <footer className="rounded-2xl border border-line bg-surface p-4 text-sm text-muted">
-          題目來源：大學入學考試中心歷屆試題。圖片改以文字描述（原圖請看作答頁的官方題本 PDF）；本站不轉載官方評分原則原文與範文。
-        </footer>
-      </div>
+    <div className={`space-y-6 ${className}`}>
+      {data.status === 'loading' && <Loading>題目載入中…</Loading>}
+      {data.status === 'error' && <DataError message={dataErrorMessage(data.error)} onRetry={data.retry} />}
+      {data.status === 'ready' && <EssayLists prompts={data.value.prompts} kind={kind} onKind={setKind} headingLevel={headingLevel} />}
+      <footer className="rounded-2xl border border-line bg-surface p-4 text-sm text-muted">
+        題目來源：大學入學考試中心歷屆試題。圖片改以文字描述（原圖請看作答頁的官方題本 PDF）；本站不轉載官方評分原則原文與範文。
+      </footer>
+    </div>
   );
 }
 
-function EssayLists({ prompts, kind, onKind }: { prompts: EssayPrompt[]; kind: WritingKindFilter; onKind: (k: WritingKindFilter) => void }) {
+function EssayLists({
+  prompts,
+  kind,
+  onKind,
+  headingLevel,
+}: {
+  prompts: EssayPrompt[];
+  kind: WritingKindFilter;
+  onKind: (k: WritingKindFilter) => void;
+  headingLevel: 2 | 3;
+}) {
+  const Heading = headingLevel === 3 ? 'h3' : 'h2';
   const counts = {
     all: prompts.length,
     gsat: prompts.filter((p) => p.exam === 'gsat').length,
@@ -83,10 +99,10 @@ function EssayLists({ prompts, kind, onKind }: { prompts: EssayPrompt[]; kind: W
         if (list.length === 0) return null;
         return (
           <section key={k} aria-labelledby={`el-${k}`}>
-            <h2 id={`el-${k}`} className="mb-3 text-lg font-semibold">
+            <Heading id={`el-${k}`} className="mb-3 text-lg font-semibold">
               {EXAM_KIND_LABELS[k]}
               <span className="ml-2 text-sm font-normal text-muted">{list.length} 題</span>
-            </h2>
+            </Heading>
             <ul className="grid gap-3 md:grid-cols-2">
               {list.map((p) => (
                 <li key={p.exam_id} className="min-w-0">
