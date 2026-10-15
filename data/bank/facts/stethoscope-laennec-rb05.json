@@ -1,0 +1,242 @@
+{
+  "schema": "gsat-bank-facts/v1",
+  "id": "stethoscope-laennec-rb05",
+  "title": "René Laennec and the invention of the stethoscope (1816)",
+  "sdgs": [
+    3
+  ],
+  "created_on": "2026-10-10",
+  "created_by": "claude-opus-5-5",
+  "sources": [
+    {
+      "id": "s1",
+      "publisher": "Clinical Medicine & Research（PubMed Central 全文，美國國家醫學圖書館）",
+      "title": "Rene Theophile Hyacinthe Laënnec (1781–1826): The Man Behind the Stethoscope",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC1570491/",
+      "accessed": "2026-10-10",
+      "license": "all-rights-reserved",
+      "use": "fact_only",
+      "note": "Roguin A., Clin Med Res 2006;4(3):230–235。只取事實"
+    },
+    {
+      "id": "s2",
+      "publisher": "University of Iowa Libraries (Hardin Library blog)",
+      "title": "The invention of the stethoscope and a featured book from the John Martin Rare Book Room",
+      "url": "https://blog.lib.uiowa.edu/needtoknow/2025/06/18/the-invention-of-the-stethoscope-and-a-featured-book-from-the-john-martin-rare-book-room/",
+      "accessed": "2026-10-10",
+      "license": "all-rights-reserved",
+      "use": "fact_only",
+      "note": "2025 年 6 月的文章；這篇把「孩童以木頭傳聲的遊戲」標為可能是附會的說法，所以選文只寫「木頭傳聲」這個聲學事實，不寫孩童的故事"
+    },
+    {
+      "id": "s3",
+      "publisher": "Cureus（PubMed Central 全文）",
+      "title": "The History and Evolution of the Stethoscope",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9482790/",
+      "accessed": "2026-10-10",
+      "license": "CC-BY-4.0",
+      "use": "fact_only",
+      "note": "Choudry M. et al., Cureus 2022;14(8):e28171。PMC 不在可改作白名單，只取事實"
+    },
+    {
+      "id": "s4",
+      "publisher": "World Health Organization",
+      "title": "Tuberculosis (fact sheet)",
+      "url": "https://www.who.int/news-room/fact-sheets/detail/tuberculosis",
+      "accessed": "2026-10-10",
+      "license": "WHO terms of use",
+      "use": "fact_only",
+      "note": "WHO 出版品只取事實、不改寫"
+    }
+  ],
+  "facts": [
+    {
+      "id": "f1",
+      "text": "René Laennec was a French doctor, born in 1781 in Quimper, Brittany.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "person"
+    },
+    {
+      "id": "f2",
+      "text": "In 1816 Laennec took up a post as a physician at the Necker Hospital in Paris.",
+      "source_ids": [
+        "s1",
+        "s2"
+      ],
+      "kind": "date",
+      "note": "s1：1816 年王朝復辟後獲聘為 Necker 醫院醫師；s2：1816 年回到巴黎擔任 Necker 醫院主任，聽診器就是在那裡發明的"
+    },
+    {
+      "id": "f3",
+      "text": "Before the stethoscope, the usual way for a doctor to listen to a patient's heart and lungs was to press an ear directly against the chest.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f4",
+      "text": "Listening with an ear on the chest made both doctor and patient uncomfortable or embarrassed, and it worked poorly in some cases, such as faint sounds or overweight patients.",
+      "source_ids": [
+        "s1",
+        "s2"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f5",
+      "text": "In 1816 a young woman with signs of heart disease came to Laennec. Because of her age, her sex and her build, he felt it was not proper to put his ear on her chest.",
+      "source_ids": [
+        "s1",
+        "s3"
+      ],
+      "kind": "event"
+    },
+    {
+      "id": "f6",
+      "text": "Laennec recalled that sound travels well through solid material: a pin scratching one end of a long piece of wood can be heard clearly by someone listening at the other end.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "cause_effect",
+      "note": "s1 說他在 1816 年 9 月看過孩童用針在長木頭一端傳訊號；s2 認為孩童的故事可能是附會。選文只寫這個聲學事實"
+    },
+    {
+      "id": "f7",
+      "text": "He rolled a sheet of paper into a tight tube, put one end on the woman's chest and placed his ear at the other end.",
+      "source_ids": [
+        "s1",
+        "s3"
+      ],
+      "kind": "event",
+      "note": "有些來源說是一疊紙（約 24、25 張），s1、s3 說是一張紙；選文寫 a sheet of paper"
+    },
+    {
+      "id": "f8",
+      "text": "Through the paper tube he heard her heartbeat far more clearly than he ever had by putting his ear directly on a chest.",
+      "source_ids": [
+        "s1",
+        "s3"
+      ],
+      "kind": "event"
+    },
+    {
+      "id": "f9",
+      "text": "Laennec played the flute in his spare time.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "person",
+      "note": "原本寫「吹長笛，也在閒暇時雕刻木製樂器」並標 s1、s2；s1 只說閒暇時吹長笛、寫詩，雕刻只有 s2 支持，所以拆成 f9（s1）與 f19（s2）"
+    },
+    {
+      "id": "f10",
+      "text": "He later made a hollow wooden tube about 25 cm long and 3.5 cm across. It was built in parts that could be taken apart, so it was easy to carry.",
+      "source_ids": [
+        "s1",
+        "s2"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f11",
+      "text": "He named the instrument the stethoscope, from Greek words meaning chest and to explore or examine.",
+      "source_ids": [
+        "s1",
+        "s2"
+      ],
+      "kind": "definition"
+    },
+    {
+      "id": "f12",
+      "text": "In 1819 Laennec published a two-volume book in Paris about listening to the chest; it described the sounds of the lungs and heart and the diseases they point to.",
+      "source_ids": [
+        "s1",
+        "s2"
+      ],
+      "kind": "date"
+    },
+    {
+      "id": "f13",
+      "text": "When the stethoscope was new, some doctors opposed it.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "event",
+      "note": "原本和「歐洲各地醫生到巴黎學」合寫並標 s1、s2；s1 沒有談反對，只有 s2（some early opposition）支持，所以拆成 f13（s2）與 f20（s1）"
+    },
+    {
+      "id": "f14",
+      "text": "By the 1820s stethoscopes were readily available across Europe.",
+      "source_ids": [
+        "s3"
+      ],
+      "kind": "date"
+    },
+    {
+      "id": "f15",
+      "text": "Listening to the body through an instrument, the method Laennec introduced, greatly changed the way doctors examined patients.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f16",
+      "text": "Laennec himself suffered from tuberculosis, and by 1826 he was dying of it.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "event",
+      "note": "2026-10-10 更正：原本寫「1824 年姪子用聽診器聽他的胸腔、發現這個病」並標 s1、s2，但 s1 把姪子聽診寫在 1826 年最後幾個月（見 f21），Scherer 2007（Cardiology Journal 14(5):518–519）也寫 1826 年診斷；只有 s2 寫 1824。題組 ai.rd.2f370b 因此被 fact_check 退回"
+    },
+    {
+      "id": "f17",
+      "text": "Laennec died on August 13, 1826, at the age of 45.",
+      "source_ids": [
+        "s1",
+        "s2"
+      ],
+      "kind": "date",
+      "note": "2026-10-10 更正：拿掉原本的「姪子發現病情兩年後」（建立在 1824 年上，s1 沒有這個說法）。去世日期 s1、s2 一致，45 歲見 s1"
+    },
+    {
+      "id": "f18",
+      "text": "Tuberculosis is a bacterial infection, and the lungs are the part of the body it attacks most often.",
+      "source_ids": [
+        "s4"
+      ],
+      "kind": "definition"
+    },
+    {
+      "id": "f19",
+      "text": "As a young man, Laennec studied music and carved wooden instruments.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "person",
+      "note": "s2：在 Nantes 求學時學音樂、雕刻木製樂器、寫詩"
+    },
+    {
+      "id": "f20",
+      "text": "Doctors from across Europe soon traveled to Paris to learn Laennec's new method firsthand.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "event"
+    },
+    {
+      "id": "f21",
+      "text": "In the last months of his life, in 1826, Laennec asked his nephew Mériadec to listen to his chest and describe what he heard.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "event",
+      "note": "s2 把這件事寫在 1824 年，並說是姪子診斷出結核病；依 s1（與 Scherer 2007）採 1826 年。另有資料稱 Mériadec 是他的表親（cousin），選文最好避開親屬稱謂與年份"
+    }
+  ],
+  "datasets": [],
+  "notes": "選文不寫雷奈克「害羞」：查到的來源都沒有這樣形容他（只說當時把耳朵貼在年輕女病人胸口不妥當、讓醫病雙方都尷尬）。雙耳聽診器的發明者與年份各來源說法不一，選文不寫。 2026-10-10 依 ai.rd.2f370b 的 fact_check 修正：f16、f17 拿掉「1824 年」「兩年後」（s1 把姪子聽診寫在 1826 年最後幾個月，見 f21）；f9、f13 原本把只有 s2 支持的說法也標成 s1，拆出 f19、f20。重生的題組不寫姪子聽診這件事。"
+}

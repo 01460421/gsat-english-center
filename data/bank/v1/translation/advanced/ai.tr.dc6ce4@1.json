@@ -1,0 +1,990 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.dc6ce4",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "advanced",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "如果傷人的留言被分享到班級群組，受害者往往會非常難過。",
+        "options": null,
+        "answer": "If mean comments are shared in class group chats, the victims often feel very upset.",
+        "accepted_answers": [
+          "If hurtful comments are posted in the class group chat, the victim usually feels very sad.",
+          "If cruel messages are forwarded to class chat groups, victims often become extremely upset."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "條件子句（if）",
+            "被動語態"
+          ],
+          "topic": "網路霸凌"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "看到這類留言越來越多，許多學校鼓勵學生勇敢檢舉。",
+        "options": null,
+        "answer": "Seeing that such comments are increasing, many schools encourage students to report them bravely.",
+        "accepted_answers": [
+          "Seeing more and more comments like these, many schools encourage their students to report them bravely.",
+          "Noticing that such comments are becoming more and more common, many schools encourage students to bravely report them."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "分詞構句",
+            "動詞＋受詞＋不定詞（encourage + O + to VR）"
+          ],
+          "topic": "網路霸凌"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "網路霸凌"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「如果…」是條件子句，用 If + 現在式。留言是「被」分享的，要用被動語態 are shared（be + 過去分詞），不能寫成 share。「傷人的」用形容詞 hurtful、mean 或 cruel，不要寫成 hurt。「受害者往往會非常難過」：victim 是受害者，「難過」是形容詞 upset／sad，前面要有連綴動詞 feel 或 be；主詞是單數 the victim 時動詞要加 s（feels）。",
+          "evidence": [
+            "如果傷人的留言被分享到班級群組",
+            "受害者往往會非常難過"
+          ],
+          "strategy_zh": "看到「被…」先確認主詞是動作的接受者，寫成 be + p.p.；中文形容詞當述語（很難過）時，英文要補 feel 或 be。",
+          "hints": [
+            "切成四段：如果傷人的留言／被分享到班級群組／受害者往往會／非常難過",
+            "標的詞彙：comment（留言，L4）、share（分享，L1）、group（群組，L1）、victim（受害者，L3）、upset（難過的，L2）",
+            "句型框架：If + S + are + p.p. + in …, S + often feel + adj."
+          ]
+        },
+        "2": {
+          "explanation_zh": "句首「看到…」沒有主詞，看到的就是後面的「許多學校」，英文用分詞構句 Seeing that …（分詞的主詞＝主要子句的主詞）。「越來越多」可寫 are increasing 或 more and more + 複數名詞。「鼓勵學生勇敢檢舉」是 encourage + 受詞 + to VR：encourage students to report them bravely；修飾動詞要用副詞 bravely。",
+          "evidence": [
+            "看到這類留言越來越多",
+            "鼓勵學生勇敢檢舉"
+          ],
+          "strategy_zh": "句首動詞片語沒有主詞、做這個動作的就是主要子句的主詞時，改成分詞構句 V-ing …,；encourage、ask、allow 後面先接受詞，再接 to VR。",
+          "hints": [
+            "切成四段：看到／這類留言越來越多／許多學校鼓勵學生／勇敢檢舉",
+            "標的詞彙：see（看到，L1）、comment（留言，L4）、school（學校，L1）、encourage（鼓勵，L2）、student（學生，L1）、report（檢舉，L1）、brave（勇敢的，L1）",
+            "句型框架：Seeing that + S + V …, S + encourage + O + to VR …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "If mean comments are shared in class group chats, the victims often feel very upset.",
+            "If hurtful comments are posted in the class group chat, the victim usually feels very sad.",
+            "If cruel messages are forwarded to class chat groups, victims often become extremely upset."
+          ],
+          "target_words": [
+            {
+              "word": "comment",
+              "zh": "留言",
+              "alternatives": [
+                "message",
+                "post",
+                "remark"
+              ]
+            },
+            {
+              "word": "share",
+              "zh": "分享",
+              "alternatives": [
+                "post",
+                "forward",
+                "spread",
+                "send"
+              ]
+            },
+            {
+              "word": "group",
+              "zh": "群組"
+            },
+            {
+              "word": "victim",
+              "zh": "受害者"
+            },
+            {
+              "word": "upset",
+              "zh": "難過的",
+              "alternatives": [
+                "sad",
+                "hurt",
+                "unhappy"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "ADVCL",
+              "grammar_id": "gp-condition-real",
+              "label_zh": "條件子句（If + S + V 現在式）",
+              "frame": "If + S + am/is/are + p.p. …, S + V …",
+              "zh_trigger": "如果"
+            },
+            {
+              "code": "PASS",
+              "grammar_id": "gp-passive",
+              "label_zh": "被動語態（be + p.p.）",
+              "frame": "S + am/is/are + p.p. + in/to …",
+              "zh_trigger": "被分享"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "如果傷人的留言",
+              "accepted": [
+                "If mean comments",
+                "If hurtful comments",
+                "If cruel messages",
+                "If cruel comments",
+                "If hurtful messages",
+                "If mean messages",
+                "If unkind comments",
+                "If nasty comments",
+                "If harmful comments",
+                "If hurtful posts",
+                "If mean posts",
+                "If offensive comments",
+                "If hurtful remarks",
+                "If comments that hurt others",
+                "If comments that hurt people"
+              ],
+              "targets": [
+                "ADVCL",
+                "comment"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "If hurt comments",
+                  "right": "If hurtful comments",
+                  "explanation_zh": "「傷人的」要用形容詞 hurtful（或 mean、cruel）；hurt 當形容詞是「受傷的」。"
+                }
+              ]
+            },
+            {
+              "zh": "被分享到班級群組",
+              "accepted": [
+                "are shared in class group chats",
+                "are posted in the class group chat",
+                "are forwarded to class chat groups",
+                "are shared in the class group chat",
+                "are shared to the class group chat",
+                "are shared in class chat groups",
+                "are shared in the class chat group",
+                "are posted in class group chats",
+                "are posted in the class chat group",
+                "are forwarded to the class group chat",
+                "are forwarded to class group chats",
+                "are spread in the class group chat",
+                "get shared in the class group chat",
+                "get forwarded to the class group chat",
+                "are shared on the class group chat",
+                "are shared in the class group",
+                "are posted in the class group",
+                "are shared to the class group",
+                "are sent to the class group chat",
+                "are shared to class group chats",
+                "are shared on class group chats",
+                "are shared to the class chat group",
+                "are shared on the class chat group",
+                "are shared to class chat groups",
+                "are shared on class chat groups",
+                "are shared on the class group",
+                "are posted on the class group chat",
+                "are posted to the class group chat",
+                "are posted on class group chats",
+                "are posted to class group chats",
+                "are posted on the class chat group",
+                "are posted to the class chat group",
+                "are posted in class chat groups",
+                "are posted on class chat groups",
+                "are posted to class chat groups",
+                "are posted on the class group",
+                "are posted to the class group",
+                "are forwarded to the class chat group",
+                "are forwarded to the class group",
+                "are sent to class group chats",
+                "are sent to the class chat group",
+                "are sent to class chat groups",
+                "are sent to the class group",
+                "are spread to the class group chat",
+                "are spread in class group chats",
+                "are spread to class group chats",
+                "are spread in the class chat group",
+                "are spread to the class chat group",
+                "are spread in class chat groups",
+                "are spread to class chat groups",
+                "are spread in the class group",
+                "are spread to the class group",
+                "get shared to the class group chat",
+                "get shared on the class group chat",
+                "get shared in class group chats",
+                "get shared to class group chats",
+                "get shared on class group chats",
+                "get shared in the class chat group",
+                "get shared to the class chat group",
+                "get shared on the class chat group",
+                "get shared in class chat groups",
+                "get shared to class chat groups",
+                "get shared on class chat groups",
+                "get shared in the class group",
+                "get shared to the class group",
+                "get shared on the class group",
+                "get posted in the class group chat",
+                "get posted on the class group chat",
+                "get posted to the class group chat",
+                "get posted in class group chats",
+                "get posted on class group chats",
+                "get posted to class group chats",
+                "get posted in the class chat group",
+                "get posted on the class chat group",
+                "get posted to the class chat group",
+                "get posted in class chat groups",
+                "get posted on class chat groups",
+                "get posted to class chat groups",
+                "get posted in the class group",
+                "get posted on the class group",
+                "get posted to the class group",
+                "get forwarded to class group chats",
+                "get forwarded to the class chat group",
+                "get forwarded to class chat groups",
+                "get forwarded to the class group",
+                "get sent to the class group chat",
+                "get sent to class group chats",
+                "get sent to the class chat group",
+                "get sent to class chat groups",
+                "get sent to the class group",
+                "get spread in the class group chat",
+                "get spread to the class group chat",
+                "get spread in class group chats",
+                "get spread to class group chats",
+                "get spread in the class chat group",
+                "get spread to the class chat group",
+                "get spread in class chat groups",
+                "get spread to class chat groups",
+                "get spread in the class group",
+                "get spread to the class group",
+                "are shared in the class LINE group",
+                "are posted in the class LINE group",
+                "are forwarded to the class LINE group",
+                "get shared in the class LINE group",
+                "are shared in the class's group chat",
+                "are posted in class LINE groups",
+                "get posted in the class LINE group",
+                "get forwarded to the class LINE group",
+                "are sent to the class LINE group",
+                "are spread in the class LINE group"
+              ],
+              "targets": [
+                "PASS",
+                "share",
+                "group"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "share in the class group chat",
+                  "right": "are shared in the class group chat",
+                  "explanation_zh": "留言是「被」分享，要用被動 be + p.p.。"
+                },
+                {
+                  "wrong": "are share in the class group chat",
+                  "right": "are shared in the class group chat",
+                  "explanation_zh": "被動語態的動詞要用過去分詞 shared。"
+                }
+              ]
+            },
+            {
+              "zh": "受害者往往會",
+              "accepted": [
+                "the victims often",
+                "the victim usually",
+                "victims often",
+                "the victim often",
+                "the victims usually",
+                "victims usually",
+                "the victims tend to",
+                "victims tend to",
+                "the victim tends to",
+                "the victims will often",
+                "the victim will often",
+                "the victims are often",
+                "victims are often",
+                "the victim is often"
+              ],
+              "targets": [
+                "victim"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "the victims always",
+                  "right": "the victims often",
+                  "explanation_zh": "「往往」是 often、usually 或 tend to；always（總是）語氣太絕對，意思不同。"
+                }
+              ]
+            },
+            {
+              "zh": "非常難過",
+              "accepted": [
+                "feel very upset",
+                "feels very sad",
+                "become extremely upset",
+                "feel very sad",
+                "feels very upset",
+                "feel extremely upset",
+                "feel very hurt",
+                "feels very hurt",
+                "feel really upset",
+                "feel deeply hurt",
+                "get very upset",
+                "become very upset",
+                "very upset",
+                "very sad",
+                "extremely upset",
+                "feel terrible",
+                "feel very bad",
+                "feel extremely sad",
+                "feel extremely hurt",
+                "feel really sad",
+                "feel really hurt",
+                "feel so upset",
+                "feel so sad",
+                "feel so hurt",
+                "feels extremely upset",
+                "feels extremely sad",
+                "feels extremely hurt",
+                "feels really upset",
+                "feels really sad",
+                "feels really hurt",
+                "feels so upset",
+                "feels so sad",
+                "feels so hurt",
+                "become very sad",
+                "become very hurt",
+                "become extremely sad",
+                "become extremely hurt",
+                "become really upset",
+                "become really sad",
+                "become really hurt",
+                "become so upset",
+                "become so sad",
+                "become so hurt",
+                "becomes very upset",
+                "becomes very sad",
+                "becomes very hurt",
+                "becomes extremely upset",
+                "becomes extremely sad",
+                "becomes extremely hurt",
+                "becomes really upset",
+                "becomes really sad",
+                "becomes really hurt",
+                "becomes so upset",
+                "becomes so sad",
+                "becomes so hurt",
+                "get very sad",
+                "get very hurt",
+                "get extremely upset",
+                "get extremely sad",
+                "get extremely hurt",
+                "get really upset",
+                "get really sad",
+                "get really hurt",
+                "get so upset",
+                "get so sad",
+                "get so hurt",
+                "gets very upset",
+                "gets very sad",
+                "gets very hurt",
+                "gets extremely upset",
+                "gets extremely sad",
+                "gets extremely hurt",
+                "gets really upset",
+                "gets really sad",
+                "gets really hurt",
+                "gets so upset",
+                "gets so sad",
+                "gets so hurt",
+                "very hurt",
+                "extremely sad",
+                "extremely hurt",
+                "really upset",
+                "really sad",
+                "really hurt"
+              ],
+              "targets": [
+                "upset"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "feel very upsetting",
+                  "right": "feel very upset",
+                  "explanation_zh": "人的感受用 upset（或 sad）；upsetting 是「令人難過的」。"
+                },
+                {
+                  "wrong": "feel very upseted",
+                  "right": "feel very upset",
+                  "explanation_zh": "upset 的過去式、過去分詞都是 upset，沒有 upseted 這個字。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "word_form",
+              "zh": "傷人的",
+              "literal_error": "If hurt comments are shared in class group chats, the victims often feel very upset.",
+              "part": 1,
+              "explanation_zh": "「傷人的」是 hurtful／mean／cruel；hurt 當形容詞是「受傷的」，詞性與意思都不對。"
+            },
+            {
+              "type": "word_form",
+              "zh": "被分享",
+              "literal_error": "If mean comments share in class group chats, the victims often feel very upset.",
+              "part": 2,
+              "explanation_zh": "留言是被分享的一方，少了 be 動詞與過去分詞就變成主動「留言去分享」。"
+            }
+          ],
+          "bonus": [],
+          "notes_zh": "「傷人的留言」hurtful／mean／cruel／unkind comments 都給分，comments 也可以是 messages、posts；「被分享」are shared／posted／forwarded／sent，也可用 get shared；「班級群組」class group chat(s)、class chat group(s)、the class group 都可以，介系詞依動詞用 in、to 或 on；「受害者」單數 the victim 或複數 (the) victims 都給分，動詞要和主詞一致；「往往」often、usually、tend to 都可以；「非常難過」feel／be／become／get very upset、very sad、very hurt 都可以。"
+        },
+        "2": {
+          "references": [
+            "Seeing that such comments are increasing, many schools encourage students to report them bravely.",
+            "Seeing more and more comments like these, many schools encourage their students to report them bravely.",
+            "Noticing that such comments are becoming more and more common, many schools encourage students to bravely report them."
+          ],
+          "target_words": [
+            {
+              "word": "see",
+              "zh": "看到",
+              "alternatives": [
+                "notice",
+                "realize",
+                "find"
+              ]
+            },
+            {
+              "word": "comment",
+              "zh": "留言",
+              "alternatives": [
+                "message",
+                "post"
+              ]
+            },
+            {
+              "word": "school",
+              "zh": "學校"
+            },
+            {
+              "word": "encourage",
+              "zh": "鼓勵"
+            },
+            {
+              "word": "student",
+              "zh": "學生"
+            },
+            {
+              "word": "report",
+              "zh": "檢舉"
+            },
+            {
+              "word": "brave",
+              "zh": "勇敢的",
+              "alternatives": [
+                "bravely",
+                "courage",
+                "courageously"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PART",
+              "grammar_id": "gp-participle-clause",
+              "label_zh": "分詞構句（Seeing …, S + V）",
+              "frame": "V-ing …, S + V …（分詞的主詞就是主要子句的主詞）",
+              "zh_trigger": "看到這類留言越來越多"
+            },
+            {
+              "code": "VOC",
+              "grammar_id": "gp-v-o-to-v",
+              "label_zh": "動詞＋受詞＋不定詞（encourage + O + to VR）",
+              "frame": "S + encourage + O + to VR …",
+              "zh_trigger": "鼓勵學生勇敢檢舉"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "看到",
+              "accepted": [
+                "Seeing that",
+                "Seeing",
+                "Noticing that",
+                "Noticing",
+                "Realizing that"
+              ],
+              "targets": [
+                "PART",
+                "see"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "See",
+                  "right": "Seeing",
+                  "explanation_zh": "「看到…」沒有寫出主詞，看到的就是後面的學校；照字面寫成原形 See 會變成祈使句，要用分詞構句 Seeing。"
+                },
+                {
+                  "wrong": "Saw",
+                  "right": "Seeing",
+                  "explanation_zh": "句首的「看到」不是主要動詞；過去式 Saw 沒有主詞，句子不完整，要用分詞 Seeing。"
+                }
+              ]
+            },
+            {
+              "zh": "這類留言越來越多",
+              "accepted": [
+                "such comments are increasing",
+                "more and more comments like these",
+                "such comments are becoming more and more common",
+                "such comments are becoming more common",
+                "this kind of comment is increasing",
+                "these comments are increasing",
+                "comments like these are increasing",
+                "more and more such comments",
+                "there are more and more such comments",
+                "the number of such comments is increasing",
+                "the number of such comments is growing",
+                "such comments are growing",
+                "such messages are increasing",
+                "more and more comments like this",
+                "this kind of comment is becoming more and more common",
+                "these kinds of comments are increasing",
+                "that there are more and more comments like these",
+                "that there are more and more such comments",
+                "more and more of these comments",
+                "more and more of such comments",
+                "the increasing number of such comments",
+                "the growing number of such comments",
+                "the increasing number of these comments",
+                "the growing number of these comments",
+                "that comments like these are increasing",
+                "that this kind of comment is increasing",
+                "that these comments are increasing",
+                "that such comments are becoming more and more common",
+                "that such comments are becoming more common",
+                "that comments like these are becoming more and more common",
+                "such comments becoming more and more common",
+                "that the number of such comments is increasing",
+                "that such messages are increasing",
+                "more and more messages like these",
+                "such comments increase",
+                "such comments increasing",
+                "these comments increasing",
+                "comments like these increasing",
+                "more and more comments like that"
+              ],
+              "targets": [
+                "comment"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "such comments are more and more",
+                  "right": "such comments are increasing",
+                  "explanation_zh": "「越來越多」說的是數量增加，用 are increasing 或 more and more such comments；are more and more 句子不完整。"
+                },
+                {
+                  "wrong": "more and more such comment",
+                  "right": "more and more such comments",
+                  "explanation_zh": "more and more 後面接複數名詞。"
+                }
+              ]
+            },
+            {
+              "zh": "許多學校鼓勵學生",
+              "accepted": [
+                "many schools encourage students",
+                "many schools encourage their students",
+                "many schools have encouraged students",
+                "many schools have encouraged their students",
+                "many schools are encouraging students",
+                "a lot of schools encourage students",
+                "many schools now encourage students"
+              ],
+              "targets": [
+                "VOC",
+                "school",
+                "encourage",
+                "student"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "many schools encourage to students",
+                  "right": "many schools encourage students",
+                  "explanation_zh": "encourage 直接接受詞 students，中間不加 to。"
+                },
+                {
+                  "wrong": "many school encourage students",
+                  "right": "many schools encourage students",
+                  "explanation_zh": "many 後面接複數名詞 schools。"
+                }
+              ]
+            },
+            {
+              "zh": "勇敢檢舉",
+              "accepted": [
+                "to report them bravely",
+                "to bravely report them",
+                "to report them courageously",
+                "to be brave and report them",
+                "to have the courage to report them",
+                "to report such comments bravely",
+                "to bravely report such comments",
+                "to report it bravely",
+                "to bravely report it",
+                "to speak up and report them",
+                "to report them without fear",
+                "to be brave enough to report them",
+                "to report these comments bravely",
+                "to bravely report these comments",
+                "to bravely report the comments",
+                "to report the comments bravely",
+                "to report such cases bravely",
+                "to report the bullying bravely",
+                "to courageously report them",
+                "to be brave and report such comments"
+              ],
+              "targets": [
+                "report",
+                "brave"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "reporting them bravely",
+                  "right": "to report them bravely",
+                  "explanation_zh": "encourage + 受詞後面要接不定詞 to + 原形動詞，不接 V-ing。"
+                },
+                {
+                  "wrong": "to report them brave",
+                  "right": "to report them bravely",
+                  "explanation_zh": "修飾動詞 report 要用副詞 bravely。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "subjectless",
+              "zh": "看到",
+              "literal_error": "See that such comments are increasing, many schools encourage students to report them bravely.",
+              "part": 1,
+              "explanation_zh": "中文「看到…」省略主詞；照字面寫成 See 會變成祈使句，句子結構錯誤。看到的就是 many schools，要用分詞構句 Seeing that …。"
+            },
+            {
+              "type": "word_form",
+              "zh": "勇敢檢舉",
+              "literal_error": "Seeing that such comments are increasing, many schools encourage students to report them brave.",
+              "part": 4,
+              "explanation_zh": "「勇敢地」修飾動詞，要用副詞 bravely，不能用形容詞 brave。"
+            }
+          ],
+          "bonus": [],
+          "restructuring_zh": "「看到這類留言越來越多」沒有寫出主詞，看到的就是後面的「許多學校」；英文改用分詞構句 Seeing that such comments are increasing，主要子句再寫 many schools encourage students to …。",
+          "notes_zh": "「看到」寫 Seeing（或 Noticing、Realizing）都給分，that 可省略；「這類留言越來越多」可寫 such comments are increasing、more and more comments like these、such comments are becoming more (and more) common，comments 也可以是 messages；「鼓勵」用現在式或現在完成式都可以，students 可加 their；「勇敢檢舉」to report them bravely、to bravely report them、to have the courage to report them 都可以，them 也可寫成 such comments。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-advanced-06",
+    "lot": "translation-advanced-06",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "3f8dc9d60c8a2f9f0e258e68e094820e19a8a5f1c5e0001a05ad2370e79443f3",
+    "spec_id": "translation-advanced@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-10T02:32:13Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "fail",
+      "created_at": "2026-10-10T02:17:22Z",
+      "details": {
+        "solver": "A",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "If hurtful comments are shared in a class group chat, the victims often feel very upset.",
+            "confidence": "high",
+            "explanation_zh": "「如果…」用 if 條件子句，一般情況用現在簡單式；「留言被分享到」是被動，用 are shared in；「班級群組」指通訊軟體的群組，寫 class group chat；「往往會非常難過」用 often feel very upset。"
+          },
+          "2": {
+            "translation": "Seeing more and more comments like these, many schools encourage students to report them bravely.",
+            "confidence": "medium",
+            "explanation_zh": "「看到…」的主詞和主要子句相同（學校），用現在分詞構句 Seeing … 開頭；「越來越多」用 more and more；「鼓勵學生勇敢檢舉」用 encourage + 受詞 + to V，「檢舉」譯 report，受詞 them 指這類留言。也可以寫成 Seeing that such comments are increasing。信心 medium 是因為「勇敢檢舉」也可譯成 be brave enough to report / have the courage to report，不確定題目要哪一種。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "ADVCL",
+              "PASS"
+            ],
+            "used_target_words": [
+              "comment",
+              "share",
+              "group",
+              "victim",
+              "upset"
+            ],
+            "within_accepted": false,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "我的譯文是 If hurtful comments are shared in a class group chat, …；第 1、3、4 部分都在 accepted 內，只有第 2 部分「被分享到班級群組」寫成 are shared in a class group chat（不定冠詞 a）。accepted 列了 the class group chat、class group chats、the class chat group 等一百多種，卻沒有任何 a class group chat 的寫法；泛指「某個班級群組」用 a 完全正確，學生也很常這樣寫。建議補上 are shared in／to／on a class group chat、are posted in a class group chat、are forwarded to a class group chat、get shared in a class group chat 等不定冠詞版本（a class chat group、a class group 也一併補）。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "PART",
+              "VOC"
+            ],
+            "used_target_words": [
+              "see",
+              "comment",
+              "school",
+              "encourage",
+              "student",
+              "report",
+              "brave"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "comment",
+              "share",
+              "group",
+              "victim",
+              "upset"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "ADVCL": true,
+              "PASS": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "see",
+              "comment",
+              "school",
+              "encourage",
+              "student",
+              "report",
+              "brave"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PART": true,
+              "VOC": null
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 1 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義",
+          "第 1 題驗證者對4 部分切分有意見（warn）：我的譯文是 If hurtful comments are shared in a class group chat, …；第 1、3、4 部分都在 accepted 內，只有第 2 部分「被分享到班級群組」寫成 are shared in"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-10T02:22:17Z",
+      "details": {
+        "solver": "B",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "If hurtful comments are shared in a class group chat, the victims are often extremely upset.",
+            "confidence": "high",
+            "explanation_zh": "「如果…被分享」用 If 條件句加被動語態 are shared（現在式表一般情況）；「傷人的」用 hurtful；「往往」用 often；「非常難過」用 extremely upset。班級群組譯為 class group chat。"
+          },
+          "2": {
+            "translation": "Seeing more and more comments of this kind, many schools encourage students to have the courage to report them.",
+            "confidence": "medium",
+            "explanation_zh": "「看到…」用現在分詞片語表原因，主詞與主要子句相同（many schools）；「這類留言」用 comments of this kind；「鼓勵學生勇敢檢舉」用 encourage students to have the courage to report them。also_plausible 的寫法：Because more and more such comments are appearing，改用 because 子句。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "ADVCL",
+              "PASS"
+            ],
+            "used_target_words": [
+              "comment",
+              "share",
+              "group",
+              "victim",
+              "upset"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PART",
+              "VOC"
+            ],
+            "used_target_words": [
+              "see",
+              "comment",
+              "school",
+              "encourage",
+              "student",
+              "report",
+              "brave"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "comment",
+              "share",
+              "group",
+              "victim",
+              "upset"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "ADVCL": true,
+              "PASS": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "see",
+              "comment",
+              "school",
+              "encourage",
+              "student",
+              "report",
+              "brave"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PART": true,
+              "VOC": null
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "rejected",
+  "status_reason": "blind_solver:A 未通過：第 1 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義；第 1 題驗證者對4 部分切分有意見（warn）：我的譯文是 If hurtful comments are shared in a class group chat, …；第 1、3、4 部分都在 accepted 內，只有第 2 部分「被分享到班級群組」寫成 are shared in；判定者人工審查（第 1 輪）：同意退回，評分規準太窄。第 1 題兩位驗證者都獨立譯成 If hurtful comments are shared in a class group chat（泛指「某個班級群組」用不定冠詞 a，正確自然），但第 2 部分 accepted 的 110 種寫法只收 the class group chat、class group chats、the class chat group 等，沒有任何 a class group chat／a class chat group／a class group 的寫法，學生照這種常見寫法會在第 2 部分被扣分（驗證者 B 判 within_accepted 為 true 是誤判）。第 2 題第 2 部分也沒收驗證者 B 的 more and more comments of this kind（「這類留言」最直接的寫法之一，B 同樣誤判在可接受寫法內）。中文題目、參考譯文、標的詞彙與句型都沒有問題，重生時保留題意，補齊不定冠詞與 comments of this kind 等寫法即可。"
+}

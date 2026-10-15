@@ -1,0 +1,1268 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.c5afa0",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "top",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "在刺青（tattoo）之前，許多人會花數個月挑選圖案，這顯示刺青不再只是叛逆的象徵。",
+        "options": null,
+        "answer": "Before getting a tattoo, many people spend months choosing the design, which shows that tattoos are no longer merely a symbol of rebellion.",
+        "accepted_answers": [
+          "Before getting tattooed, many people spend several months picking a design, which shows that tattoos are no longer only a sign of rebellion.",
+          "Before having a tattoo done, many people spend a few months selecting the pattern, which indicates that tattoos are no longer simply a symbol of rebellion."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "連接詞＋分詞（Before getting …）",
+            "非限定關係子句（, which shows that …）"
+          ],
+          "topic": "刺青文化"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "相較於上一代，現在的年輕人更在乎刺青（tattoo）代表什麼，而不是別人怎麼看待它。",
+        "options": null,
+        "answer": "Compared with the previous generation, young people today care more about what a tattoo represents than about how others see it.",
+        "accepted_answers": [
+          "Compared to the older generation, today's young people care more about what their tattoos represent than how other people view them.",
+          "Compared with their parents' generation, young people nowadays care more about what tattoos stand for than about what others think of them."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "相較於…（Compared with …）",
+            "間接問句（what a tattoo means）"
+          ],
+          "topic": "刺青文化"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "刺青文化"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「在刺青之前」主詞和後面的「許多人」相同，用 Before getting a tattoo（before 後接動名詞）。「花數個月挑選圖案」是 spend months choosing the design（spend + 時間 + V-ing）。「這顯示…」的「這」指前面整件事，用非限定關係子句 , which shows that …。「不再只是叛逆的象徵」寫 are no longer just a symbol of rebellion，「叛逆」用抽象名詞 rebellion。",
+          "evidence": [
+            "在刺青（tattoo）之前",
+            "這顯示刺青不再只是叛逆的象徵"
+          ],
+          "strategy_zh": "「在…之前／時／之後」主詞相同時，用 Before／When／After + V-ing；「…，這顯示…」用 , which shows that …。",
+          "hints": [
+            "切成四段：在刺青（tattoo）之前／許多人會花數個月挑選圖案／這顯示／刺青不再只是叛逆的象徵",
+            "標的詞彙：spend（花時間）、month（月）、choose（挑選）、design（圖案）、show（顯示）、no longer（不再）、symbol（象徵）、rebellion（叛逆）",
+            "句型框架：Before + V-ing …, S + spend + 時間 + V-ing …, which shows that + S + are no longer …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「相較於上一代」用 Compared with the previous generation（過去分詞片語，不寫 Compare／Comparing）。「更在乎…而不是…」用比較結構 care more about A than (about) B。A、B 都是放在句子裡的問句：「刺青代表什麼」what a tattoo means、「別人怎麼看待它」how others see it，間接問句一律用直述句語序，不用 does 倒裝；「別人」是 others。",
+          "evidence": [
+            "相較於上一代",
+            "刺青（tattoo）代表什麼"
+          ],
+          "strategy_zh": "句子裡出現「什麼、怎麼、是否」的問句當受詞時，改成間接問句（wh- + 主詞 + 動詞）；「相較於…」用 Compared with + N。",
+          "hints": [
+            "切成四段：相較於上一代／現在的年輕人更在乎／刺青（tattoo）代表什麼／而不是別人怎麼看待它",
+            "標的詞彙：compare（相較）、generation（世代）、young（年輕的）、care（在乎）、mean（代表）、other（別人）、see（看待）",
+            "句型框架：Compared with + N, S + care more about + what + S + V + than (about) + how + S + V."
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "Before getting a tattoo, many people spend months choosing the design, which shows that tattoos are no longer merely a symbol of rebellion.",
+            "Before getting tattooed, many people spend several months picking a design, which shows that tattoos are no longer only a sign of rebellion.",
+            "Before having a tattoo done, many people spend a few months selecting the pattern, which indicates that tattoos are no longer simply a symbol of rebellion."
+          ],
+          "target_words": [
+            {
+              "word": "spend",
+              "zh": "花（時間）",
+              "alternatives": [
+                "take"
+              ]
+            },
+            {
+              "word": "month",
+              "zh": "月"
+            },
+            {
+              "word": "choose",
+              "zh": "挑選",
+              "alternatives": [
+                "pick",
+                "select",
+                "decide"
+              ]
+            },
+            {
+              "word": "design",
+              "zh": "圖案",
+              "alternatives": [
+                "pattern",
+                "image",
+                "picture"
+              ]
+            },
+            {
+              "word": "show",
+              "zh": "顯示",
+              "alternatives": [
+                "indicate",
+                "suggest",
+                "reveal",
+                "prove"
+              ]
+            },
+            {
+              "word": "no longer",
+              "zh": "不再",
+              "alternatives": [
+                "anymore",
+                "any longer"
+              ]
+            },
+            {
+              "word": "symbol",
+              "zh": "象徵",
+              "alternatives": [
+                "sign",
+                "mark",
+                "emblem"
+              ]
+            },
+            {
+              "word": "rebellion",
+              "zh": "叛逆",
+              "alternatives": [
+                "rebel",
+                "rebellious",
+                "defiance"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "NRREL",
+              "grammar_id": "gp-nonrestrictive",
+              "label_zh": "非限定關係子句（which 指前面整件事：這顯示…）",
+              "frame": "S + V …, which shows that + S + V …",
+              "zh_trigger": "這顯示"
+            },
+            {
+              "code": "PART",
+              "grammar_id": "gp-conj-participle",
+              "label_zh": "連接詞＋分詞（在刺青之前：Before getting a tattoo）",
+              "frame": "Before + V-ing …, S + V …",
+              "zh_trigger": "在刺青（tattoo）之前"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "在刺青（tattoo）之前",
+              "accepted": [
+                "Before getting a tattoo",
+                "Before getting tattooed",
+                "Before getting tattoos",
+                "Before having a tattoo done",
+                "Before getting inked",
+                "Before having a tattoo",
+                "Before they get a tattoo",
+                "Before they get tattoos",
+                "Before people get a tattoo",
+                "Before people get tattoos",
+                "Before they get tattooed",
+                "Before they have a tattoo done"
+              ],
+              "targets": [
+                "PART"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Before get a tattoo",
+                  "right": "Before getting a tattoo",
+                  "explanation_zh": "before 後面接動名詞 getting（或完整子句 before they get …），不接原形動詞。"
+                },
+                {
+                  "wrong": "Before tattoo,",
+                  "right": "Before getting a tattoo,",
+                  "explanation_zh": "這裡要表達「去刺青」這個動作：getting a tattoo；tattoo 單獨放在 before 後面意思不完整。"
+                }
+              ]
+            },
+            {
+              "zh": "許多人會花數個月挑選圖案",
+              "accepted": [
+                "many people spend months choosing the design",
+                "many people spend months choosing a design",
+                "many people spend months choosing the pattern",
+                "many people spend months choosing their designs",
+                "many people spend months picking the design",
+                "many people spend months picking a design",
+                "many people spend months picking the pattern",
+                "many people spend months picking their designs",
+                "many people spend months selecting the design",
+                "many people spend months selecting a design",
+                "many people spend months selecting the pattern",
+                "many people spend months selecting their designs",
+                "many people spend several months choosing the design",
+                "many people spend several months choosing a design",
+                "many people spend several months choosing the pattern",
+                "many people spend several months choosing their designs",
+                "many people spend several months picking the design",
+                "many people spend several months picking a design",
+                "many people spend several months picking the pattern",
+                "many people spend several months picking their designs",
+                "many people spend several months selecting the design",
+                "many people spend several months selecting a design",
+                "many people spend several months selecting the pattern",
+                "many people spend several months selecting their designs",
+                "many people spend a few months choosing the design",
+                "many people spend a few months choosing a design",
+                "many people spend a few months choosing the pattern",
+                "many people spend a few months choosing their designs",
+                "many people spend a few months picking the design",
+                "many people spend a few months picking a design",
+                "many people spend a few months picking the pattern",
+                "many people spend a few months picking their designs",
+                "many people spend a few months selecting the design",
+                "many people spend a few months selecting a design",
+                "many people spend a few months selecting the pattern",
+                "many people spend a few months selecting their designs",
+                "many people take months to choose the design",
+                "many people take several months to choose a design",
+                "many people would spend months choosing the design",
+                "many people will spend months choosing the design",
+                "many people spend many months choosing the design",
+                "many people spend months deciding on the design",
+                "a lot of people spend months choosing the design",
+                "many people spend months deciding on a design",
+                "many people spend months deciding on the pattern",
+                "many people spend months deciding on their designs",
+                "many people spend several months deciding on the design",
+                "many people spend several months deciding on a design",
+                "many people spend several months deciding on the pattern",
+                "many people spend several months deciding on their designs",
+                "many people spend a few months deciding on the design",
+                "many people spend a few months deciding on a design",
+                "many people spend a few months deciding on the pattern",
+                "many people spend a few months deciding on their designs",
+                "many people will spend months choosing a design",
+                "many people will spend months choosing the pattern",
+                "many people will spend months choosing their designs",
+                "many people will spend months picking the design",
+                "many people will spend months picking a design",
+                "many people will spend months picking the pattern",
+                "many people will spend months picking their designs",
+                "many people will spend months selecting the design",
+                "many people will spend months selecting a design",
+                "many people will spend months selecting the pattern",
+                "many people will spend months selecting their designs",
+                "many people will spend months deciding on the design",
+                "many people will spend months deciding on a design",
+                "many people will spend months deciding on the pattern",
+                "many people will spend months deciding on their designs",
+                "many people will spend several months choosing the design",
+                "many people will spend several months choosing a design",
+                "many people will spend several months choosing the pattern",
+                "many people will spend several months choosing their designs",
+                "many people will spend several months picking the design",
+                "many people will spend several months picking a design",
+                "many people will spend several months picking the pattern",
+                "many people will spend several months picking their designs",
+                "many people will spend several months selecting the design",
+                "many people will spend several months selecting a design",
+                "many people will spend several months selecting the pattern",
+                "many people will spend several months selecting their designs",
+                "many people will spend several months deciding on the design",
+                "many people will spend several months deciding on a design",
+                "many people will spend several months deciding on the pattern",
+                "many people will spend several months deciding on their designs",
+                "many people will spend a few months choosing the design",
+                "many people will spend a few months choosing a design",
+                "many people will spend a few months choosing the pattern",
+                "many people will spend a few months choosing their designs",
+                "many people will spend a few months picking the design",
+                "many people will spend a few months picking a design",
+                "many people will spend a few months picking the pattern",
+                "many people will spend a few months picking their designs",
+                "many people will spend a few months selecting the design",
+                "many people will spend a few months selecting a design",
+                "many people will spend a few months selecting the pattern",
+                "many people will spend a few months selecting their designs",
+                "many people will spend a few months deciding on the design",
+                "many people will spend a few months deciding on a design",
+                "many people will spend a few months deciding on the pattern",
+                "many people will spend a few months deciding on their designs",
+                "many people would spend months choosing a design",
+                "many people would spend months choosing the pattern",
+                "many people would spend months choosing their designs",
+                "many people would spend months picking the design",
+                "many people would spend months picking a design",
+                "many people would spend months picking the pattern",
+                "many people would spend months picking their designs",
+                "many people would spend months selecting the design",
+                "many people would spend months selecting a design",
+                "many people would spend months selecting the pattern",
+                "many people would spend months selecting their designs",
+                "many people would spend months deciding on the design",
+                "many people would spend months deciding on a design",
+                "many people would spend months deciding on the pattern",
+                "many people would spend months deciding on their designs",
+                "many people would spend several months choosing the design",
+                "many people would spend several months choosing a design",
+                "many people would spend several months choosing the pattern",
+                "many people would spend several months choosing their designs",
+                "many people would spend several months picking the design",
+                "many people would spend several months picking a design",
+                "many people would spend several months picking the pattern",
+                "many people would spend several months picking their designs",
+                "many people would spend several months selecting the design",
+                "many people would spend several months selecting a design",
+                "many people would spend several months selecting the pattern",
+                "many people would spend several months selecting their designs",
+                "many people would spend several months deciding on the design",
+                "many people would spend several months deciding on a design",
+                "many people would spend several months deciding on the pattern",
+                "many people would spend several months deciding on their designs",
+                "many people would spend a few months choosing the design",
+                "many people would spend a few months choosing a design",
+                "many people would spend a few months choosing the pattern",
+                "many people would spend a few months choosing their designs",
+                "many people would spend a few months picking the design",
+                "many people would spend a few months picking a design",
+                "many people would spend a few months picking the pattern",
+                "many people would spend a few months picking their designs",
+                "many people would spend a few months selecting the design",
+                "many people would spend a few months selecting a design",
+                "many people would spend a few months selecting the pattern",
+                "many people would spend a few months selecting their designs",
+                "many people would spend a few months deciding on the design",
+                "many people would spend a few months deciding on a design",
+                "many people would spend a few months deciding on the pattern",
+                "many people would spend a few months deciding on their designs",
+                "many people take months to choose a design",
+                "many people take months to choose the pattern",
+                "many people take months to pick the design",
+                "many people take months to pick a design",
+                "many people take months to pick the pattern",
+                "many people take months to select the design",
+                "many people take months to select a design",
+                "many people take months to select the pattern",
+                "many people take several months to choose the design",
+                "many people take several months to choose the pattern",
+                "many people take several months to pick the design",
+                "many people take several months to pick a design",
+                "many people take several months to pick the pattern",
+                "many people take several months to select the design",
+                "many people take several months to select a design",
+                "many people take several months to select the pattern",
+                "many people take a few months to choose the design",
+                "many people take a few months to choose a design",
+                "many people take a few months to choose the pattern",
+                "many people take a few months to pick the design",
+                "many people take a few months to pick a design",
+                "many people take a few months to pick the pattern",
+                "many people take a few months to select the design",
+                "many people take a few months to select a design",
+                "many people take a few months to select the pattern",
+                "many people will take months to choose the design",
+                "many people will take months to choose a design",
+                "many people will take months to choose the pattern",
+                "many people will take months to pick the design",
+                "many people will take months to pick a design",
+                "many people will take months to pick the pattern",
+                "many people will take months to select the design",
+                "many people will take months to select a design",
+                "many people will take months to select the pattern",
+                "many people will take several months to choose the design",
+                "many people will take several months to choose a design",
+                "many people will take several months to choose the pattern",
+                "many people will take several months to pick the design",
+                "many people will take several months to pick a design",
+                "many people will take several months to pick the pattern",
+                "many people will take several months to select the design",
+                "many people will take several months to select a design",
+                "many people will take several months to select the pattern",
+                "many people will take a few months to choose the design",
+                "many people will take a few months to choose a design",
+                "many people will take a few months to choose the pattern",
+                "many people will take a few months to pick the design",
+                "many people will take a few months to pick a design",
+                "many people will take a few months to pick the pattern",
+                "many people will take a few months to select the design",
+                "many people will take a few months to select a design",
+                "many people will take a few months to select the pattern",
+                "many people would take months to choose the design",
+                "many people would take months to choose a design",
+                "many people would take months to choose the pattern",
+                "many people would take months to pick the design",
+                "many people would take months to pick a design",
+                "many people would take months to pick the pattern",
+                "many people would take months to select the design",
+                "many people would take months to select a design",
+                "many people would take months to select the pattern",
+                "many people would take several months to choose the design",
+                "many people would take several months to choose a design",
+                "many people would take several months to choose the pattern",
+                "many people would take several months to pick the design",
+                "many people would take several months to pick a design",
+                "many people would take several months to pick the pattern",
+                "many people would take several months to select the design",
+                "many people would take several months to select a design",
+                "many people would take several months to select the pattern",
+                "many people would take a few months to choose the design",
+                "many people would take a few months to choose a design",
+                "many people would take a few months to choose the pattern",
+                "many people would take a few months to pick the design",
+                "many people would take a few months to pick a design",
+                "many people would take a few months to pick the pattern",
+                "many people would take a few months to select the design",
+                "many people would take a few months to select a design",
+                "many people would take a few months to select the pattern",
+                "many people spend months picking out the design",
+                "many people spend months picking out a design",
+                "many people spend months picking out the pattern",
+                "many people spend months carefully choosing the design",
+                "many people spend months carefully choosing a design",
+                "many people spend months carefully choosing the pattern",
+                "many people spend several months picking out the design",
+                "many people spend several months picking out a design",
+                "many people spend several months picking out the pattern",
+                "many people spend several months carefully choosing the design",
+                "many people spend several months carefully choosing a design",
+                "many people spend several months carefully choosing the pattern",
+                "many people spend a few months picking out the design",
+                "many people spend a few months picking out a design",
+                "many people spend a few months picking out the pattern",
+                "many people spend a few months carefully choosing the design",
+                "many people spend a few months carefully choosing a design",
+                "many people spend a few months carefully choosing the pattern"
+              ],
+              "targets": [
+                "spend",
+                "month",
+                "choose",
+                "design"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "many people spend months to choose the design",
+                  "right": "many people spend months choosing the design",
+                  "explanation_zh": "spend + 時間 + V-ing（花時間做某事），不接不定詞。"
+                },
+                {
+                  "wrong": "many people cost months choosing the design",
+                  "right": "many people spend months choosing the design",
+                  "explanation_zh": "人「花」時間用 spend；cost 的主詞是事物（It costs …）。"
+                }
+              ]
+            },
+            {
+              "zh": "這顯示",
+              "accepted": [
+                "which shows that",
+                "which shows",
+                "which indicates that",
+                "which indicates",
+                "which suggests that",
+                "which suggests",
+                "which reveals that",
+                "showing that",
+                "indicating that",
+                "suggesting that"
+              ],
+              "targets": [
+                "NRREL",
+                "show"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "it shows that",
+                  "right": "which shows that",
+                  "explanation_zh": "前面已是完整句子，逗號後再接 it shows … 會變成兩個句子硬接；用 which 指前面整件事。"
+                },
+                {
+                  "wrong": "that shows that",
+                  "right": "which shows that",
+                  "explanation_zh": "逗號後補充說明的非限定關係子句不能用 that。"
+                }
+              ]
+            },
+            {
+              "zh": "刺青不再只是叛逆的象徵",
+              "accepted": [
+                "tattoos are no longer merely a symbol of rebellion",
+                "tattoos are no longer just a symbol of rebellion",
+                "tattoos are no longer just a sign of rebellion",
+                "tattoos are no longer just a mark of rebellion",
+                "tattoos are no longer only a symbol of rebellion",
+                "tattoos are no longer only a sign of rebellion",
+                "tattoos are no longer only a mark of rebellion",
+                "tattoos are no longer simply a symbol of rebellion",
+                "tattoos are no longer simply a sign of rebellion",
+                "tattoos are no longer simply a mark of rebellion",
+                "tattoos are no longer merely a sign of rebellion",
+                "tattoos are no longer merely a mark of rebellion",
+                "a tattoo is no longer just a symbol of rebellion",
+                "a tattoo is no longer just a sign of rebellion",
+                "a tattoo is no longer just a mark of rebellion",
+                "a tattoo is no longer only a symbol of rebellion",
+                "a tattoo is no longer only a sign of rebellion",
+                "a tattoo is no longer only a mark of rebellion",
+                "a tattoo is no longer simply a symbol of rebellion",
+                "a tattoo is no longer simply a sign of rebellion",
+                "a tattoo is no longer simply a mark of rebellion",
+                "a tattoo is no longer merely a symbol of rebellion",
+                "a tattoo is no longer merely a sign of rebellion",
+                "a tattoo is no longer merely a mark of rebellion",
+                "getting a tattoo is no longer just a symbol of rebellion",
+                "getting a tattoo is no longer just a sign of rebellion",
+                "getting a tattoo is no longer just a mark of rebellion",
+                "getting a tattoo is no longer only a symbol of rebellion",
+                "getting a tattoo is no longer only a sign of rebellion",
+                "getting a tattoo is no longer only a mark of rebellion",
+                "getting a tattoo is no longer simply a symbol of rebellion",
+                "getting a tattoo is no longer simply a sign of rebellion",
+                "getting a tattoo is no longer simply a mark of rebellion",
+                "getting a tattoo is no longer merely a symbol of rebellion",
+                "getting a tattoo is no longer merely a sign of rebellion",
+                "getting a tattoo is no longer merely a mark of rebellion",
+                "tattoos are not just a symbol of rebellion anymore",
+                "tattoos are not simply a sign of rebellion anymore",
+                "tattoos are not only a symbol of rebellion anymore",
+                "tattoos are no longer just symbols of rebellion",
+                "tattoos no longer simply symbolize rebellion",
+                "tattoos are no longer just a symbol of being rebellious"
+              ],
+              "targets": [
+                "no longer",
+                "symbol",
+                "rebellion"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "tattoos are not longer just a symbol of rebellion",
+                  "right": "tattoos are no longer just a symbol of rebellion",
+                  "explanation_zh": "「不再」是 no longer（或 not … anymore），沒有 not longer 的說法。"
+                },
+                {
+                  "wrong": "tattoos are no longer just a symbol of rebel",
+                  "right": "tattoos are no longer just a symbol of rebellion",
+                  "explanation_zh": "「叛逆」當抽象名詞用 rebellion；rebel 是「叛逆者」。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "word_form",
+              "zh": "花數個月挑選圖案",
+              "literal_error": "…many people spend months to choose the design, …",
+              "part": 2,
+              "explanation_zh": "「花時間做某事」是 spend + 時間 + V-ing；照中文順序寫成 spend months to choose 是常見錯誤。"
+            },
+            {
+              "type": "abstract_nominal",
+              "zh": "叛逆的象徵",
+              "literal_error": "…tattoos are no longer just a symbol of rebel.",
+              "part": 4,
+              "explanation_zh": "「叛逆」在這裡是抽象名詞 rebellion；rebel 指「叛逆的人」，a symbol of rebel 意思不對。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "Before getting inked, many people now spend months choosing a design, proof that tattoos have outgrown their image as a symbol of rebellion.",
+              "explanation_zh": "get inked（刺青，口語）、句尾同位語 proof that …（證明…）、outgrow（擺脫、超越原本的形象）是進階寫法；這是加分寫法，不是唯一正解。"
+            }
+          ],
+          "restructuring_zh": "「在刺青之前」主詞和後面的「許多人」相同，用連接詞＋分詞 Before getting a tattoo；「這顯示…」指前面整件事，用 , which shows that …，不能用逗號直接接 it shows。",
+          "notes_zh": "評分說明：「在刺青之前」Before getting a tattoo（getting tattooed、having a tattoo done 也可以），寫成完整子句 Before they get a tattoo 也算達成本句 PART 標的（連接詞＋分詞就是省略主詞的副詞子句）；「花數個月挑選圖案」spend (several／a few) months choosing／picking／selecting the (a) design（pattern），take months to choose … 也可以；「這顯示」, which shows／indicates／suggests (that) …，寫成句尾分詞 , showing that … 也算達成本句 NRREL 標的；「刺青不再只是叛逆的象徵」tattoos are no longer just／only／simply／merely a symbol／sign of rebellion（not … anymore 也可以）。另外也給分：many people will／would spend …、many people take (several) months to choose (pick／select) the design。"
+        },
+        "2": {
+          "references": [
+            "Compared with the previous generation, young people today care more about what a tattoo represents than about how others see it.",
+            "Compared to the older generation, today's young people care more about what their tattoos represent than how other people view them.",
+            "Compared with their parents' generation, young people nowadays care more about what tattoos stand for than about what others think of them."
+          ],
+          "target_words": [
+            {
+              "word": "compare",
+              "zh": "相較",
+              "alternatives": [
+                "comparison",
+                "unlike"
+              ]
+            },
+            {
+              "word": "generation",
+              "zh": "世代、一代"
+            },
+            {
+              "word": "young",
+              "zh": "年輕的",
+              "alternatives": [
+                "youth"
+              ]
+            },
+            {
+              "word": "care",
+              "zh": "在乎",
+              "alternatives": [
+                "concern",
+                "mind",
+                "value",
+                "attention",
+                "focus"
+              ]
+            },
+            {
+              "word": "mean",
+              "zh": "代表",
+              "alternatives": [
+                "represent",
+                "stand for",
+                "symbolize",
+                "meaning"
+              ]
+            },
+            {
+              "word": "other",
+              "zh": "別人",
+              "alternatives": [
+                "others"
+              ]
+            },
+            {
+              "word": "see",
+              "zh": "看待",
+              "alternatives": [
+                "view",
+                "think",
+                "regard",
+                "look",
+                "judge",
+                "perceive"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "NCL",
+              "grammar_id": "gp-wh-clause",
+              "label_zh": "間接問句（刺青代表什麼、別人怎麼看待它：直述句語序）",
+              "frame": "care about + what + S + V … than + how + S + V …",
+              "zh_trigger": "刺青（tattoo）代表什麼"
+            },
+            {
+              "code": "COMP",
+              "grammar_id": "gp-compared-with",
+              "label_zh": "相較於…（Compared with + N，主要子句用比較級 more … than）",
+              "frame": "Compared with + N, S + V + more … than …",
+              "zh_trigger": "相較於上一代"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "相較於上一代",
+              "accepted": [
+                "Compared with the previous generation",
+                "Compared with the older generation",
+                "Compared with their parents' generation",
+                "Compared with the last generation",
+                "Compared with older generations",
+                "Compared with the generation before them",
+                "Compared to the previous generation",
+                "Compared to the older generation",
+                "Compared to their parents' generation",
+                "Compared to the last generation",
+                "Compared to older generations",
+                "Compared to the generation before them",
+                "In comparison with the previous generation",
+                "In comparison with the older generation",
+                "In comparison with their parents' generation",
+                "In comparison with the last generation",
+                "In comparison with older generations",
+                "In comparison with the generation before them",
+                "Unlike the previous generation",
+                "Unlike the older generation",
+                "Unlike their parents' generation",
+                "Unlike the last generation",
+                "Unlike older generations",
+                "Unlike the generation before them"
+              ],
+              "targets": [
+                "COMP",
+                "compare",
+                "generation"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Compare with the previous generation",
+                  "right": "Compared with the previous generation",
+                  "explanation_zh": "「相較於…」用過去分詞片語 Compared with／to …；Compare 開頭會變成祈使句。"
+                },
+                {
+                  "wrong": "Comparing with the previous generation",
+                  "right": "Compared with the previous generation",
+                  "explanation_zh": "年輕人是「被拿來比較」的一方，用 Compared with。"
+                }
+              ]
+            },
+            {
+              "zh": "現在的年輕人更在乎",
+              "accepted": [
+                "young people today care more about",
+                "young people today are more concerned about",
+                "young people today are more concerned with",
+                "young people today pay more attention to",
+                "young people today focus more on",
+                "today's young people care more about",
+                "today's young people are more concerned about",
+                "today's young people are more concerned with",
+                "today's young people pay more attention to",
+                "today's young people focus more on",
+                "young people nowadays care more about",
+                "young people nowadays are more concerned about",
+                "young people nowadays are more concerned with",
+                "young people nowadays pay more attention to",
+                "young people nowadays focus more on",
+                "young people now care more about",
+                "young people now are more concerned about",
+                "young people now are more concerned with",
+                "young people now pay more attention to",
+                "young people now focus more on",
+                "the young people of today care more about",
+                "the young people of today are more concerned about",
+                "the young people of today are more concerned with",
+                "the young people of today pay more attention to",
+                "the young people of today focus more on"
+              ],
+              "targets": [
+                "young",
+                "care"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "now young people care more about",
+                  "right": "young people today care more about",
+                  "explanation_zh": "「現在的年輕人」是 young people today／today's young people；now 是副詞，不能放在名詞前修飾。"
+                },
+                {
+                  "wrong": "young people today more care about",
+                  "right": "young people today care more about",
+                  "explanation_zh": "「更在乎」是 care more about，more 放在 care 後面。"
+                }
+              ]
+            },
+            {
+              "zh": "刺青（tattoo）代表什麼",
+              "accepted": [
+                "what a tattoo represents",
+                "what a tattoo means",
+                "what tattoos mean",
+                "what their tattoos mean",
+                "what tattoos represent",
+                "what their tattoos represent",
+                "what a tattoo stands for",
+                "what tattoos stand for",
+                "what their tattoos stand for",
+                "what a tattoo symbolizes",
+                "what their tattoos symbolize",
+                "what the tattoo means",
+                "what their tattoo means",
+                "what a tattoo really means",
+                "what a tattoo means to them",
+                "what their tattoo represents",
+                "what their tattoo stands for",
+                "what their tattoo symbolizes",
+                "what their tattoo really means",
+                "what their tattoo means to them",
+                "what the tattoo represents",
+                "what the tattoo stands for",
+                "what the tattoo symbolizes",
+                "what the tattoo really means",
+                "what the tattoo means to them",
+                "what tattoos symbolize",
+                "what tattoos really mean",
+                "what tattoos mean to them",
+                "what their tattoos really mean",
+                "what their tattoos mean to them"
+              ],
+              "targets": [
+                "NCL",
+                "mean"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "what does a tattoo mean",
+                  "right": "what a tattoo means",
+                  "explanation_zh": "間接問句用直述句語序：what + 主詞 + 動詞，不能倒裝成 what does … mean。"
+                },
+                {
+                  "wrong": "what a tattoo represent",
+                  "right": "what a tattoo represents",
+                  "explanation_zh": "主詞 a tattoo 是單數，動詞加 s。"
+                }
+              ]
+            },
+            {
+              "zh": "而不是別人怎麼看待它",
+              "accepted": [
+                "than about how others see it",
+                "than how others see it",
+                "than how other people see it",
+                "than how others view it",
+                "than how other people view it",
+                "than what others think of it",
+                "than what other people think of it",
+                "than how others see them",
+                "than how other people view them",
+                "than what others think of them",
+                "than what other people think about it",
+                "than how others look at it",
+                "than about how other people see it",
+                "than about how others view it",
+                "than about how other people view it",
+                "than about what others think of it",
+                "than about what other people think of it",
+                "than about how others see them",
+                "than about how other people view them",
+                "than about what others think of them",
+                "than about what other people think about it",
+                "than about how others look at it",
+                "rather than how others see it",
+                "rather than how other people see it",
+                "rather than how others view it",
+                "rather than how other people view it",
+                "rather than what others think of it",
+                "rather than what other people think of it",
+                "rather than how others see them",
+                "rather than how other people view them",
+                "rather than what others think of them",
+                "rather than what other people think about it",
+                "rather than how others look at it",
+                "instead of how others see it",
+                "instead of how other people see it",
+                "instead of how others view it",
+                "instead of how other people view it",
+                "instead of what others think of it",
+                "instead of what other people think of it",
+                "instead of how others see them",
+                "instead of how other people view them",
+                "instead of what others think of them",
+                "instead of what other people think about it",
+                "instead of how others look at it",
+                "than how others view them",
+                "than how others look at them",
+                "than how others judge it",
+                "than how others judge them",
+                "than how other people see them",
+                "than how other people look at it",
+                "than how other people look at them",
+                "than how other people judge it",
+                "than how other people judge them",
+                "than about how others view them",
+                "than about how others look at them",
+                "than about how others judge it",
+                "than about how others judge them",
+                "than about how other people see them",
+                "than about how other people look at it",
+                "than about how other people look at them",
+                "than about how other people judge it",
+                "than about how other people judge them",
+                "rather than how others view them",
+                "rather than how others look at them",
+                "rather than how others judge it",
+                "rather than how others judge them",
+                "rather than how other people see them",
+                "rather than how other people look at it",
+                "rather than how other people look at them",
+                "rather than how other people judge it",
+                "rather than how other people judge them",
+                "instead of how others view them",
+                "instead of how others look at them",
+                "instead of how others judge it",
+                "instead of how others judge them",
+                "instead of how other people see them",
+                "instead of how other people look at it",
+                "instead of how other people look at them",
+                "instead of how other people judge it",
+                "instead of how other people judge them",
+                "than what others think about it",
+                "than what others think about them",
+                "than what other people think of them",
+                "than what other people think about them",
+                "than about what others think about it",
+                "than about what others think about them",
+                "than about what other people think of them",
+                "than about what other people think about them",
+                "rather than what others think about it",
+                "rather than what others think about them",
+                "rather than what other people think of them",
+                "rather than what other people think about them",
+                "instead of what others think about it",
+                "instead of what others think about them",
+                "instead of what other people think of them",
+                "instead of what other people think about them"
+              ],
+              "targets": [
+                "other",
+                "see"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "than how other see it",
+                  "right": "than how others see it",
+                  "explanation_zh": "「別人」是 others（或 other people）；other 是形容詞，不能單獨當主詞。"
+                },
+                {
+                  "wrong": "rather than what others think it",
+                  "right": "rather than what others think of it",
+                  "explanation_zh": "「怎麼看待它」是 think of it（或 how others see it），think 後面少了 of。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "word_form",
+              "zh": "刺青（tattoo）代表什麼",
+              "literal_error": "…young people today care more about what does a tattoo mean than …",
+              "part": 3,
+              "explanation_zh": "中文的問句放進句子裡當受詞，英文要改成間接問句，用直述句語序 what a tattoo means，不用 does 倒裝。"
+            },
+            {
+              "type": "prenominal_modifier",
+              "zh": "現在的年輕人",
+              "literal_error": "Compared with the previous generation, now young people care more about …",
+              "part": 2,
+              "explanation_zh": "「現在的」修飾「年輕人」，英文寫 young people today 或 today's young people；副詞 now 不能直接放在名詞前。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "Unlike their parents' generation, young people today are far more interested in what a tattoo says about them than in how others might judge it.",
+              "explanation_zh": "what a tattoo says about them（刺青透露了自己什麼）、how others might judge it（別人可能怎麼評斷）讓語意更細緻；這是加分寫法，不是唯一正解。"
+            }
+          ],
+          "restructuring_zh": "「刺青代表什麼」「別人怎麼看待它」都是放在句子裡的問句，英文改成間接問句 what a tattoo means／how others see it（直述句語序）；「相較於上一代」用 Compared with …，比較結果寫 care more about … than …。",
+          "notes_zh": "評分說明：「相較於上一代」Compared with／to (In comparison with) the previous (older) generation、their parents' generation、older generations，寫 Unlike the previous generation 也可以（比較的意思由 care more … than … 表達，仍算達成本句 COMP 標的）；「現在的年輕人更在乎」young people today／today's young people／young people nowadays + care more about（are more concerned about／with、pay more attention to、focus more on）；「刺青代表什麼」what a tattoo (their tattoos) means／represents／stands for／symbolizes；「而不是別人怎麼看待它」than (about)／rather than／instead of + how others (other people) see／view it (them)、what others think of it (them)。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ac-V-3",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-top-06",
+    "lot": "translation-top-06",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "c6f44f933a9c31819117ac3657fbba0cbac38d8892d1379b9e2ce94107722abf",
+    "spec_id": "translation-top@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 2,
+    "sentences": 2,
+    "avg_sentence_length": 1.0,
+    "denominator": 2,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 1.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {
+      "off": 2
+    },
+    "offlist_words": [
+      "tattoo"
+    ],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "warn",
+      "created_at": "2026-10-10T02:38:56Z",
+      "details": {
+        "errors": [],
+        "warnings": [
+          "annotations.rubric.items.1: 首選參考譯文有詞彙表外的字 ['tattoos']（表外專有名詞請在題目括號附英文）"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-10T02:30:00Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Before getting a tattoo, many people spend several months choosing a design, which shows that tattoos are no longer just a symbol of rebellion.",
+            "confidence": "high",
+            "explanation_zh": "「在刺青之前」用 Before getting a tattoo；「花數個月挑選」用 spend + 時間 + V-ing；「這顯示」用非限定關係子句 , which shows that；「不再只是」用 no longer just。"
+          },
+          "2": {
+            "translation": "Compared with the previous generation, young people today care more about what a tattoo represents than about how other people view it.",
+            "confidence": "medium",
+            "explanation_zh": "「相較於上一代」用 Compared with；「更在乎 A 而不是 B」用 care more about A than about B；A、B 都是間接問句 what a tattoo represents／how other people view it。中文同時有兩組比較（上一代 vs. 現在；代表什麼 vs. 別人看法），英文照順序排列，語意仍清楚，但結構略重，信心給 medium。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "NRREL",
+              "PART"
+            ],
+            "used_target_words": [
+              "spend",
+              "month",
+              "choose",
+              "design",
+              "show",
+              "no longer",
+              "symbol",
+              "rebellion"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "NCL",
+              "COMP"
+            ],
+            "used_target_words": [
+              "compare",
+              "generation",
+              "young",
+              "care",
+              "mean",
+              "other",
+              "see"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "spend",
+              "month",
+              "choose",
+              "design",
+              "show",
+              "no longer",
+              "symbol",
+              "rebellion"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NRREL": true,
+              "PART": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "compare",
+              "generation",
+              "young",
+              "care",
+              "mean",
+              "other",
+              "see"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NCL": true,
+              "COMP": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-10T02:28:18Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Before getting a tattoo, many people spend months choosing a design, which shows that tattoos are no longer just a symbol of rebellion.",
+            "confidence": "high",
+            "explanation_zh": "「在刺青之前」用 Before getting a tattoo（before 後接動名詞）；「花數個月挑選圖案」用 spend months choosing a design；「這顯示……」用非限定關係子句 which shows that ...；「不再只是」為 no longer just。"
+          },
+          "2": {
+            "translation": "Compared with the previous generation, young people today care more about what a tattoo stands for than about what others think of it.",
+            "confidence": "high",
+            "explanation_zh": "「相較於上一代」用 Compared with the previous generation；「更在乎……而不是……」用 care more about A than about B，A 是名詞子句 what a tattoo stands for，B 是 what others think of it（「別人怎麼看待它」）。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "NRREL",
+              "PART"
+            ],
+            "used_target_words": [
+              "spend",
+              "month",
+              "choose",
+              "design",
+              "show",
+              "no longer",
+              "symbol",
+              "rebellion"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "NCL",
+              "COMP"
+            ],
+            "used_target_words": [
+              "compare",
+              "generation",
+              "young",
+              "care",
+              "mean",
+              "other",
+              "see"
+            ],
+            "within_accepted": true,
+            "closest_reference": 2,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "spend",
+              "month",
+              "choose",
+              "design",
+              "show",
+              "no longer",
+              "symbol",
+              "rebellion"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NRREL": true,
+              "PART": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "compare",
+              "generation",
+              "young",
+              "care",
+              "mean",
+              "other",
+              "see"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NCL": true,
+              "COMP": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

@@ -1,0 +1,1290 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.7bd628",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "top",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "非洲國家打算種下的數百萬棵樹，將被用來築成一道橫跨非洲大陸的綠色長城（Great Green Wall）。",
+        "options": null,
+        "answer": "The millions of trees that African countries intend to plant will be used to form a Great Green Wall across the African continent.",
+        "accepted_answers": [
+          "The millions of trees which African countries plan to plant will be used to build a Great Green Wall stretching across Africa.",
+          "Millions of trees that African nations are planning to plant will be used to create a Great Green Wall that spans the African continent."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "被動語態",
+            "關係代名詞（受格）"
+          ],
+          "topic": "沙漠化"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "然而，科學家仍不確定這道綠色長城能否擋住由氣候變遷造成的沙漠擴張。",
+        "options": null,
+        "answer": "However, scientists are still not sure whether the Great Green Wall can halt the expansion of deserts caused by climate change.",
+        "accepted_answers": [
+          "However, scientists are still uncertain whether this Great Green Wall can stop the spread of deserts caused by climate change.",
+          "However, scientists still do not know if the green wall will be able to hold back the desert expansion brought about by climate change."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "間接問句（whether）",
+            "分詞片語後位修飾"
+          ],
+          "topic": "沙漠化"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "沙漠化"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「非洲國家打算種下的數百萬棵樹」的修飾語有自己的主詞（非洲國家），英文用受格關係子句放在名詞後面：the millions of trees (that) African countries intend to plant；「數百萬棵樹」是 millions of trees（不確定的數量用 millions of）。「將被用來築成」用被動 will be used to form／build（be used to VR 表示「被用來…」，不要和 be used to V-ing「習慣於」混淆）。「橫跨非洲大陸的」寫成 across the African continent，放在 Great Green Wall 後面。",
+          "evidence": [
+            "非洲國家打算種下的數百萬棵樹",
+            "將被用來築成"
+          ],
+          "strategy_zh": "長的中文前置修飾語先拆成「名詞＋關係子句」；看到「被用來」就是 be used to VR。",
+          "hints": [
+            "切成四段：非洲國家打算種下的／數百萬棵樹／將被用來築成／一道橫跨非洲大陸的綠色長城",
+            "標的詞彙：country（國家）、intend（打算）、plant（種植）、millions of（數百萬）、tree（樹）、use（使用）、form（形成、築成）、wall（牆）、across（橫跨）、continent（大陸）",
+            "句型框架：The + N + (that) + S + intend to VR + will be used to VR + N + across …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「仍不確定…能否…」是間接問句：scientists are still not sure whether …，whether 後面用直述句語序 the Great Green Wall can halt …（不是 can the wall halt）。「由氣候變遷造成的沙漠擴張」修飾語在前，英文把分詞片語放到名詞後面：the expansion of deserts caused by climate change，沙漠擴張是「被」造成的，用過去分詞 caused；「擴張」在這裡是名詞 expansion／spread。",
+          "evidence": [
+            "仍不確定這道綠色長城能否擋住",
+            "由氣候變遷造成的沙漠擴張"
+          ],
+          "strategy_zh": "「是否／能否」→ whether＋直述句；「由…造成的 N」→ N + caused by …。",
+          "hints": [
+            "切成四段：然而，科學家仍不確定／這道綠色長城能否擋住／由氣候變遷造成的／沙漠擴張",
+            "標的詞彙：scientist（科學家）、sure（確定的）、wall（牆）、stop（擋住，也可用 halt）、cause（造成）、climate change（氣候變遷）、desert（沙漠）、expansion（擴張）",
+            "句型框架：However, S + are still not sure whether + S + can + V + N + p.p. + by …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "The millions of trees that African countries intend to plant will be used to form a Great Green Wall across the African continent.",
+            "The millions of trees which African countries plan to plant will be used to build a Great Green Wall stretching across Africa.",
+            "Millions of trees that African nations are planning to plant will be used to create a Great Green Wall that spans the African continent."
+          ],
+          "target_words": [
+            {
+              "word": "country",
+              "zh": "國家",
+              "alternatives": [
+                "nation"
+              ]
+            },
+            {
+              "word": "intend",
+              "zh": "打算",
+              "alternatives": [
+                "plan",
+                "going to"
+              ]
+            },
+            {
+              "word": "plant",
+              "zh": "種植",
+              "alternatives": [
+                "grow"
+              ]
+            },
+            {
+              "word": "million",
+              "zh": "數百萬"
+            },
+            {
+              "word": "tree",
+              "zh": "樹"
+            },
+            {
+              "word": "use",
+              "zh": "用來"
+            },
+            {
+              "word": "form",
+              "zh": "築成",
+              "alternatives": [
+                "build",
+                "create",
+                "construct",
+                "make",
+                "establish"
+              ]
+            },
+            {
+              "word": "wall",
+              "zh": "牆（長城）"
+            },
+            {
+              "word": "across",
+              "zh": "橫跨",
+              "alternatives": [
+                "span",
+                "stretch",
+                "cross",
+                "run",
+                "extend"
+              ]
+            },
+            {
+              "word": "continent",
+              "zh": "大陸",
+              "alternatives": [
+                "Africa"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PASS",
+              "grammar_id": "gp-passive",
+              "label_zh": "被動語態（將被用來：will be used to VR）",
+              "frame": "S + will be + p.p. + to VR …",
+              "zh_trigger": "將被用來築成"
+            },
+            {
+              "code": "REL",
+              "grammar_id": "gp-relative-pronoun",
+              "label_zh": "關係代名詞引導的形容詞子句（受格，可省略：the millions of trees (that) African countries intend to plant）",
+              "frame": "N + (that/which) + S + V …",
+              "zh_trigger": "非洲國家打算種下的"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "非洲國家打算種下的",
+              "accepted": [
+                "that African countries intend to plant",
+                "that African countries plan to plant",
+                "that African countries are planning to plant",
+                "that African countries are going to plant",
+                "that African countries plan on planting",
+                "that African countries intend to grow",
+                "that African countries plan to grow",
+                "that African nations intend to plant",
+                "that African nations plan to plant",
+                "that African nations are planning to plant",
+                "that African nations are going to plant",
+                "that African nations plan on planting",
+                "that African nations intend to grow",
+                "that African nations plan to grow",
+                "that countries in Africa intend to plant",
+                "that countries in Africa plan to plant",
+                "that countries in Africa are planning to plant",
+                "that countries in Africa are going to plant",
+                "that countries in Africa plan on planting",
+                "that countries in Africa intend to grow",
+                "that countries in Africa plan to grow",
+                "that nations in Africa intend to plant",
+                "that nations in Africa plan to plant",
+                "that nations in Africa are planning to plant",
+                "that nations in Africa are going to plant",
+                "that nations in Africa plan on planting",
+                "that nations in Africa intend to grow",
+                "that nations in Africa plan to grow",
+                "which African countries intend to plant",
+                "which African countries plan to plant",
+                "which African countries are planning to plant",
+                "which African countries are going to plant",
+                "which African countries plan on planting",
+                "which African countries intend to grow",
+                "which African countries plan to grow",
+                "which African nations intend to plant",
+                "which African nations plan to plant",
+                "which African nations are planning to plant",
+                "which African nations are going to plant",
+                "which African nations plan on planting",
+                "which African nations intend to grow",
+                "which African nations plan to grow",
+                "which countries in Africa intend to plant",
+                "which countries in Africa plan to plant",
+                "which countries in Africa are planning to plant",
+                "which countries in Africa are going to plant",
+                "which countries in Africa plan on planting",
+                "which countries in Africa intend to grow",
+                "which countries in Africa plan to grow",
+                "which nations in Africa intend to plant",
+                "which nations in Africa plan to plant",
+                "which nations in Africa are planning to plant",
+                "which nations in Africa are going to plant",
+                "which nations in Africa plan on planting",
+                "which nations in Africa intend to grow",
+                "which nations in Africa plan to grow",
+                "African countries intend to plant",
+                "African countries plan to plant",
+                "African countries are planning to plant",
+                "African countries are going to plant",
+                "African countries plan on planting",
+                "African countries intend to grow",
+                "African countries plan to grow",
+                "African nations intend to plant",
+                "African nations plan to plant",
+                "African nations are planning to plant",
+                "African nations are going to plant",
+                "African nations plan on planting",
+                "African nations intend to grow",
+                "African nations plan to grow",
+                "countries in Africa intend to plant",
+                "countries in Africa plan to plant",
+                "countries in Africa are planning to plant",
+                "countries in Africa are going to plant",
+                "countries in Africa plan on planting",
+                "countries in Africa intend to grow",
+                "countries in Africa plan to grow",
+                "nations in Africa intend to plant",
+                "nations in Africa plan to plant",
+                "nations in Africa are planning to plant",
+                "nations in Africa are going to plant",
+                "nations in Africa plan on planting",
+                "nations in Africa intend to grow",
+                "nations in Africa plan to grow"
+              ],
+              "targets": [
+                "REL",
+                "country",
+                "intend",
+                "plant"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "African countries intend to plant the millions of trees will be used",
+                  "right": "The millions of trees that African countries intend to plant will be used",
+                  "explanation_zh": "中文修飾語「非洲國家打算種下的」在名詞前面，英文要改成關係子句放在名詞後面：the millions of trees (that) African countries intend to plant。"
+                },
+                {
+                  "wrong": "that African countries intend to plant them",
+                  "right": "that African countries intend to plant",
+                  "explanation_zh": "關係代名詞 that 已經是 plant 的受詞，後面不要再加 them。"
+                }
+              ]
+            },
+            {
+              "zh": "數百萬棵樹",
+              "accepted": [
+                "The millions of trees",
+                "Millions of trees",
+                "The several million trees"
+              ],
+              "targets": [
+                "million",
+                "tree"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "The millions trees",
+                  "right": "The millions of trees",
+                  "explanation_zh": "millions 後面要接 of：millions of trees。"
+                },
+                {
+                  "wrong": "The several millions of trees",
+                  "right": "The several million trees",
+                  "explanation_zh": "有明確數字（several、three）時 million 不加 s、不接 of：several million trees；不確定數量才用 millions of。"
+                }
+              ]
+            },
+            {
+              "zh": "將被用來築成",
+              "accepted": [
+                "will be used to form",
+                "will be used to build",
+                "will be used to create",
+                "will be used to construct",
+                "will be used to make",
+                "will be used to make up",
+                "will be used to establish",
+                "are to be used to form",
+                "are to be used to build",
+                "are to be used to create"
+              ],
+              "targets": [
+                "PASS",
+                "use",
+                "form"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "will use to form",
+                  "right": "will be used to form",
+                  "explanation_zh": "樹是「被」用來築成長城，要用被動 will be used to VR。"
+                },
+                {
+                  "wrong": "will be used to forming",
+                  "right": "will be used to form",
+                  "explanation_zh": "be used to VR 是「被用來…」，後面接原形動詞；be used to V-ing 是「習慣於…」。"
+                }
+              ]
+            },
+            {
+              "zh": "一道橫跨非洲大陸的綠色長城（Great Green Wall）",
+              "accepted": [
+                "a Great Green Wall across the African continent",
+                "a Great Green Wall across Africa",
+                "a Great Green Wall across the continent of Africa",
+                "a Great Green Wall across the continent",
+                "a Great Green Wall stretching across Africa",
+                "a Great Green Wall stretching across the African continent",
+                "a Great Green Wall that stretches across Africa",
+                "a Great Green Wall that stretches across the African continent",
+                "a Great Green Wall which stretches across Africa",
+                "a Great Green Wall spanning Africa",
+                "a Great Green Wall spanning the African continent",
+                "a Great Green Wall that spans Africa",
+                "a Great Green Wall that spans the African continent",
+                "a Great Green Wall running across Africa",
+                "a Great Green Wall running across the African continent",
+                "a Great Green Wall that runs across Africa",
+                "a Great Green Wall that runs across the African continent",
+                "a Great Green Wall extending across Africa",
+                "a Great Green Wall extending across the African continent",
+                "a Great Green Wall spanning the entire African continent",
+                "a Great Green Wall across the entire African continent",
+                "a Great Green Wall stretching across the entire African continent",
+                "a Great Green Wall that crosses Africa",
+                "a Great Green Wall that crosses the African continent",
+                "a Great Green Wall crossing Africa",
+                "a Great Green Wall crossing the African continent",
+                "the Great Green Wall across the African continent",
+                "the Great Green Wall across Africa",
+                "the Great Green Wall across the continent of Africa",
+                "the Great Green Wall across the continent",
+                "the Great Green Wall stretching across Africa",
+                "the Great Green Wall stretching across the African continent",
+                "the Great Green Wall that stretches across Africa",
+                "the Great Green Wall that stretches across the African continent",
+                "the Great Green Wall which stretches across Africa",
+                "the Great Green Wall spanning Africa",
+                "the Great Green Wall spanning the African continent",
+                "the Great Green Wall that spans Africa",
+                "the Great Green Wall that spans the African continent",
+                "the Great Green Wall running across Africa",
+                "the Great Green Wall running across the African continent",
+                "the Great Green Wall that runs across Africa",
+                "the Great Green Wall that runs across the African continent",
+                "the Great Green Wall extending across Africa",
+                "the Great Green Wall extending across the African continent",
+                "the Great Green Wall spanning the entire African continent",
+                "the Great Green Wall across the entire African continent",
+                "the Great Green Wall stretching across the entire African continent",
+                "the Great Green Wall that crosses Africa",
+                "the Great Green Wall that crosses the African continent",
+                "the Great Green Wall crossing Africa",
+                "the Great Green Wall crossing the African continent"
+              ],
+              "targets": [
+                "wall",
+                "across",
+                "continent"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "a Great Green Wall cross the African continent",
+                  "right": "a Great Green Wall across the African continent",
+                  "explanation_zh": "cross 是動詞；「橫跨…的」放在名詞後面要用介系詞 across（或 stretching across）。"
+                },
+                {
+                  "wrong": "a across the African continent Great Green Wall",
+                  "right": "a Great Green Wall across the African continent",
+                  "explanation_zh": "修飾語「橫跨非洲大陸的」很長，英文要放在名詞後面。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "prenominal_modifier",
+              "zh": "非洲國家打算種下的",
+              "literal_error": "African countries intend to plant millions of trees will be used to form a Great Green Wall …",
+              "part": 1,
+              "explanation_zh": "中文的修飾語「非洲國家打算種下的」在名詞前面，照字面直譯會變成一句兩個主要動詞；英文要寫成 the millions of trees (that) African countries intend to plant。"
+            },
+            {
+              "type": "plural_countable",
+              "zh": "數百萬棵樹",
+              "literal_error": "The several millions of trees …",
+              "part": 2,
+              "explanation_zh": "「數百萬」是不確定的數量，用 millions of trees；有明確數字時才寫 several／three million trees（million 不加 s）。"
+            }
+          ],
+          "bonus": [],
+          "restructuring_zh": "「非洲國家打算種下的數百萬棵樹」修飾語在前，英文改成 The millions of trees (that) African countries intend to plant；「將被用來築成」用被動 will be used to form；「橫跨非洲大陸的」放在名詞後面 across the African continent。",
+          "notes_zh": "第 1 部分 that／which 可省略。第 4 部分寫 stretching across Africa（分詞）或 that stretches across Africa（關係子句）也可以。寫成 African countries plan to plant millions of trees, which will be used to … 改變了句子的主幹，沒有用到標的受格關係子句，不在可接受寫法內。"
+        },
+        "2": {
+          "references": [
+            "However, scientists are still not sure whether the Great Green Wall can halt the expansion of deserts caused by climate change.",
+            "However, scientists are still uncertain whether this Great Green Wall can stop the spread of deserts caused by climate change.",
+            "However, scientists still do not know if the green wall will be able to hold back the desert expansion brought about by climate change."
+          ],
+          "target_words": [
+            {
+              "word": "scientist",
+              "zh": "科學家",
+              "alternatives": [
+                "scientists",
+                "expert",
+                "researcher"
+              ]
+            },
+            {
+              "word": "sure",
+              "zh": "確定的",
+              "alternatives": [
+                "unsure",
+                "certain",
+                "uncertain",
+                "know",
+                "clear",
+                "unclear"
+              ]
+            },
+            {
+              "word": "wall",
+              "zh": "牆（長城）"
+            },
+            {
+              "word": "stop",
+              "zh": "擋住",
+              "alternatives": [
+                "halt",
+                "block",
+                "hold back",
+                "prevent",
+                "keep back",
+                "slow",
+                "curb"
+              ]
+            },
+            {
+              "word": "cause",
+              "zh": "造成",
+              "alternatives": [
+                "bring about",
+                "result",
+                "trigger",
+                "drive"
+              ]
+            },
+            {
+              "word": "climate",
+              "zh": "氣候"
+            },
+            {
+              "word": "change",
+              "zh": "變遷"
+            },
+            {
+              "word": "desert",
+              "zh": "沙漠",
+              "alternatives": [
+                "desertification"
+              ]
+            },
+            {
+              "word": "expansion",
+              "zh": "擴張",
+              "alternatives": [
+                "expand",
+                "spread",
+                "spreading",
+                "advance",
+                "growth",
+                "desertification"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "NCL",
+              "grammar_id": "gp-wh-clause",
+              "label_zh": "間接問句（能否擋住：whether + S + can + V，直述句語序）",
+              "frame": "S + be not sure + whether + S + can + V …",
+              "zh_trigger": "能否擋住"
+            },
+            {
+              "code": "PART",
+              "grammar_id": "gp-participle-modifier",
+              "label_zh": "分詞片語後位修飾名詞（由氣候變遷造成的：caused by climate change；寫成 that is caused by … 也算）",
+              "frame": "N + p.p. + by …",
+              "zh_trigger": "由氣候變遷造成的"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "然而，科學家仍不確定",
+              "accepted": [
+                "However, scientists are still not sure",
+                "However, scientists are still unsure",
+                "However, scientists are still uncertain",
+                "However, scientists still do not know",
+                "However, scientists still don't know",
+                "However, scientists are not yet sure",
+                "However, scientists remain unsure",
+                "However, scientists remain uncertain",
+                "However, scientists are still not certain",
+                "However, scientists still aren't sure",
+                "However, scientists still cannot be sure",
+                "Yet, scientists are still not sure",
+                "Yet, scientists are still unsure",
+                "Yet, scientists are still uncertain",
+                "Yet, scientists still do not know",
+                "Yet, scientists still don't know",
+                "Yet, scientists are not yet sure",
+                "Yet, scientists remain unsure",
+                "Yet, scientists remain uncertain",
+                "Yet, scientists are still not certain",
+                "Yet, scientists still aren't sure",
+                "Yet, scientists still cannot be sure",
+                "But scientists are still not sure",
+                "But scientists are still unsure",
+                "But scientists are still uncertain",
+                "But scientists still do not know",
+                "But scientists still don't know",
+                "But scientists are not yet sure",
+                "But scientists remain unsure",
+                "But scientists remain uncertain",
+                "But scientists are still not certain",
+                "But scientists still aren't sure",
+                "But scientists still cannot be sure"
+              ],
+              "targets": [
+                "scientist",
+                "sure"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "However, scientists still not sure",
+                  "right": "However, scientists are still not sure",
+                  "explanation_zh": "「不確定」是 be not sure，be 動詞不能省略。"
+                },
+                {
+                  "wrong": "However, scientist are still not sure",
+                  "right": "However, scientists are still not sure",
+                  "explanation_zh": "泛指「科學家」用複數 scientists，動詞 are 才一致。"
+                }
+              ]
+            },
+            {
+              "zh": "這道綠色長城能否擋住",
+              "accepted": [
+                "whether the Great Green Wall can halt",
+                "whether the Great Green Wall can stop",
+                "whether the Great Green Wall will stop",
+                "whether the Great Green Wall will halt",
+                "whether the Great Green Wall can block",
+                "whether the Great Green Wall can hold back",
+                "whether the Great Green Wall will be able to stop",
+                "whether the Great Green Wall is able to stop",
+                "whether the Great Green Wall can prevent",
+                "whether the Great Green Wall can slow",
+                "whether the Great Green Wall will be able to hold back",
+                "whether the Great Green Wall can keep back",
+                "whether the Great Green Wall will be able to halt",
+                "whether the Great Green Wall can really stop",
+                "whether the Great Green Wall can actually stop",
+                "whether the Great Green Wall could stop",
+                "whether the Great Green Wall can curb",
+                "whether the Great Green Wall is capable of stopping",
+                "whether the Great Green Wall is capable of halting",
+                "whether the Great Green Wall can effectively stop",
+                "whether the Great Green Wall can effectively halt",
+                "whether the Great Green Wall will be able to prevent",
+                "whether this Great Green Wall can halt",
+                "whether this Great Green Wall can stop",
+                "whether this Great Green Wall will stop",
+                "whether this Great Green Wall will halt",
+                "whether this Great Green Wall can block",
+                "whether this Great Green Wall can hold back",
+                "whether this Great Green Wall will be able to stop",
+                "whether this Great Green Wall is able to stop",
+                "whether this Great Green Wall can prevent",
+                "whether this Great Green Wall can slow",
+                "whether this Great Green Wall will be able to hold back",
+                "whether this Great Green Wall can keep back",
+                "whether this Great Green Wall will be able to halt",
+                "whether this Great Green Wall can really stop",
+                "whether this Great Green Wall can actually stop",
+                "whether this Great Green Wall could stop",
+                "whether this Great Green Wall can curb",
+                "whether this Great Green Wall is capable of stopping",
+                "whether this Great Green Wall is capable of halting",
+                "whether this Great Green Wall can effectively stop",
+                "whether this Great Green Wall can effectively halt",
+                "whether this Great Green Wall will be able to prevent",
+                "whether this green wall can halt",
+                "whether this green wall can stop",
+                "whether this green wall will stop",
+                "whether this green wall will halt",
+                "whether this green wall can block",
+                "whether this green wall can hold back",
+                "whether this green wall will be able to stop",
+                "whether this green wall is able to stop",
+                "whether this green wall can prevent",
+                "whether this green wall can slow",
+                "whether this green wall will be able to hold back",
+                "whether this green wall can keep back",
+                "whether this green wall will be able to halt",
+                "whether this green wall can really stop",
+                "whether this green wall can actually stop",
+                "whether this green wall could stop",
+                "whether this green wall can curb",
+                "whether this green wall is capable of stopping",
+                "whether this green wall is capable of halting",
+                "whether this green wall can effectively stop",
+                "whether this green wall can effectively halt",
+                "whether this green wall will be able to prevent",
+                "whether the green wall can halt",
+                "whether the green wall can stop",
+                "whether the green wall will stop",
+                "whether the green wall will halt",
+                "whether the green wall can block",
+                "whether the green wall can hold back",
+                "whether the green wall will be able to stop",
+                "whether the green wall is able to stop",
+                "whether the green wall can prevent",
+                "whether the green wall can slow",
+                "whether the green wall will be able to hold back",
+                "whether the green wall can keep back",
+                "whether the green wall will be able to halt",
+                "whether the green wall can really stop",
+                "whether the green wall can actually stop",
+                "whether the green wall could stop",
+                "whether the green wall can curb",
+                "whether the green wall is capable of stopping",
+                "whether the green wall is capable of halting",
+                "whether the green wall can effectively stop",
+                "whether the green wall can effectively halt",
+                "whether the green wall will be able to prevent",
+                "whether this wall can halt",
+                "whether this wall can stop",
+                "whether this wall will stop",
+                "whether this wall will halt",
+                "whether this wall can block",
+                "whether this wall can hold back",
+                "whether this wall will be able to stop",
+                "whether this wall is able to stop",
+                "whether this wall can prevent",
+                "whether this wall can slow",
+                "whether this wall will be able to hold back",
+                "whether this wall can keep back",
+                "whether this wall will be able to halt",
+                "whether this wall can really stop",
+                "whether this wall can actually stop",
+                "whether this wall could stop",
+                "whether this wall can curb",
+                "whether this wall is capable of stopping",
+                "whether this wall is capable of halting",
+                "whether this wall can effectively stop",
+                "whether this wall can effectively halt",
+                "whether this wall will be able to prevent",
+                "whether the wall can halt",
+                "whether the wall can stop",
+                "whether the wall will stop",
+                "whether the wall will halt",
+                "whether the wall can block",
+                "whether the wall can hold back",
+                "whether the wall will be able to stop",
+                "whether the wall is able to stop",
+                "whether the wall can prevent",
+                "whether the wall can slow",
+                "whether the wall will be able to hold back",
+                "whether the wall can keep back",
+                "whether the wall will be able to halt",
+                "whether the wall can really stop",
+                "whether the wall can actually stop",
+                "whether the wall could stop",
+                "whether the wall can curb",
+                "whether the wall is capable of stopping",
+                "whether the wall is capable of halting",
+                "whether the wall can effectively stop",
+                "whether the wall can effectively halt",
+                "whether the wall will be able to prevent",
+                "if the Great Green Wall can halt",
+                "if the Great Green Wall can stop",
+                "if the Great Green Wall will stop",
+                "if the Great Green Wall will halt",
+                "if the Great Green Wall can block",
+                "if the Great Green Wall can hold back",
+                "if the Great Green Wall will be able to stop",
+                "if the Great Green Wall is able to stop",
+                "if the Great Green Wall can prevent",
+                "if the Great Green Wall can slow",
+                "if the Great Green Wall will be able to hold back",
+                "if the Great Green Wall can keep back",
+                "if the Great Green Wall will be able to halt",
+                "if the Great Green Wall can really stop",
+                "if the Great Green Wall can actually stop",
+                "if the Great Green Wall could stop",
+                "if the Great Green Wall can curb",
+                "if the Great Green Wall is capable of stopping",
+                "if the Great Green Wall is capable of halting",
+                "if the Great Green Wall can effectively stop",
+                "if the Great Green Wall can effectively halt",
+                "if the Great Green Wall will be able to prevent",
+                "if this Great Green Wall can halt",
+                "if this Great Green Wall can stop",
+                "if this Great Green Wall will stop",
+                "if this Great Green Wall will halt",
+                "if this Great Green Wall can block",
+                "if this Great Green Wall can hold back",
+                "if this Great Green Wall will be able to stop",
+                "if this Great Green Wall is able to stop",
+                "if this Great Green Wall can prevent",
+                "if this Great Green Wall can slow",
+                "if this Great Green Wall will be able to hold back",
+                "if this Great Green Wall can keep back",
+                "if this Great Green Wall will be able to halt",
+                "if this Great Green Wall can really stop",
+                "if this Great Green Wall can actually stop",
+                "if this Great Green Wall could stop",
+                "if this Great Green Wall can curb",
+                "if this Great Green Wall is capable of stopping",
+                "if this Great Green Wall is capable of halting",
+                "if this Great Green Wall can effectively stop",
+                "if this Great Green Wall can effectively halt",
+                "if this Great Green Wall will be able to prevent",
+                "if this green wall can halt",
+                "if this green wall can stop",
+                "if this green wall will stop",
+                "if this green wall will halt",
+                "if this green wall can block",
+                "if this green wall can hold back",
+                "if this green wall will be able to stop",
+                "if this green wall is able to stop",
+                "if this green wall can prevent",
+                "if this green wall can slow",
+                "if this green wall will be able to hold back",
+                "if this green wall can keep back",
+                "if this green wall will be able to halt",
+                "if this green wall can really stop",
+                "if this green wall can actually stop",
+                "if this green wall could stop",
+                "if this green wall can curb",
+                "if this green wall is capable of stopping",
+                "if this green wall is capable of halting",
+                "if this green wall can effectively stop",
+                "if this green wall can effectively halt",
+                "if this green wall will be able to prevent",
+                "if the green wall can halt",
+                "if the green wall can stop",
+                "if the green wall will stop",
+                "if the green wall will halt",
+                "if the green wall can block",
+                "if the green wall can hold back",
+                "if the green wall will be able to stop",
+                "if the green wall is able to stop",
+                "if the green wall can prevent",
+                "if the green wall can slow",
+                "if the green wall will be able to hold back",
+                "if the green wall can keep back",
+                "if the green wall will be able to halt",
+                "if the green wall can really stop",
+                "if the green wall can actually stop",
+                "if the green wall could stop",
+                "if the green wall can curb",
+                "if the green wall is capable of stopping",
+                "if the green wall is capable of halting",
+                "if the green wall can effectively stop",
+                "if the green wall can effectively halt",
+                "if the green wall will be able to prevent",
+                "if this wall can halt",
+                "if this wall can stop",
+                "if this wall will stop",
+                "if this wall will halt",
+                "if this wall can block",
+                "if this wall can hold back",
+                "if this wall will be able to stop",
+                "if this wall is able to stop",
+                "if this wall can prevent",
+                "if this wall can slow",
+                "if this wall will be able to hold back",
+                "if this wall can keep back",
+                "if this wall will be able to halt",
+                "if this wall can really stop",
+                "if this wall can actually stop",
+                "if this wall could stop",
+                "if this wall can curb",
+                "if this wall is capable of stopping",
+                "if this wall is capable of halting",
+                "if this wall can effectively stop",
+                "if this wall can effectively halt",
+                "if this wall will be able to prevent",
+                "if the wall can halt",
+                "if the wall can stop",
+                "if the wall will stop",
+                "if the wall will halt",
+                "if the wall can block",
+                "if the wall can hold back",
+                "if the wall will be able to stop",
+                "if the wall is able to stop",
+                "if the wall can prevent",
+                "if the wall can slow",
+                "if the wall will be able to hold back",
+                "if the wall can keep back",
+                "if the wall will be able to halt",
+                "if the wall can really stop",
+                "if the wall can actually stop",
+                "if the wall could stop",
+                "if the wall can curb",
+                "if the wall is capable of stopping",
+                "if the wall is capable of halting",
+                "if the wall can effectively stop",
+                "if the wall can effectively halt",
+                "if the wall will be able to prevent"
+              ],
+              "targets": [
+                "NCL",
+                "wall",
+                "stop"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "whether can the Great Green Wall stop",
+                  "right": "whether the Great Green Wall can stop",
+                  "explanation_zh": "間接問句用直述句語序：whether + 主詞 + can + 動詞。"
+                },
+                {
+                  "wrong": "whether the Great Green Wall can stops",
+                  "right": "whether the Great Green Wall can stop",
+                  "explanation_zh": "情態助動詞 can 後面接原形動詞 stop。"
+                }
+              ]
+            },
+            {
+              "zh": "由氣候變遷造成的",
+              "accepted": [
+                "caused by climate change",
+                "brought about by climate change",
+                "resulting from climate change",
+                "triggered by climate change",
+                "driven by climate change",
+                "that is caused by climate change",
+                "which is caused by climate change",
+                "that has been caused by climate change",
+                "that climate change has caused",
+                "that climate change causes",
+                "which climate change has caused"
+              ],
+              "targets": [
+                "PART",
+                "cause",
+                "climate",
+                "change"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "causing by climate change",
+                  "right": "caused by climate change",
+                  "explanation_zh": "沙漠擴張是「被」氣候變遷造成的，用過去分詞 caused。"
+                },
+                {
+                  "wrong": "caused by climate changing",
+                  "right": "caused by climate change",
+                  "explanation_zh": "「氣候變遷」是名詞 climate change。"
+                }
+              ]
+            },
+            {
+              "zh": "沙漠擴張",
+              "accepted": [
+                "the expansion of deserts",
+                "the expansion of the desert",
+                "the expansion of the deserts",
+                "the spread of deserts",
+                "the spread of the desert",
+                "the spread of the deserts",
+                "the spreading of deserts",
+                "desert expansion",
+                "the desert expansion",
+                "the advance of the desert",
+                "the advance of deserts",
+                "the growth of deserts",
+                "the expanding deserts",
+                "the spreading deserts",
+                "expanding deserts",
+                "spreading deserts",
+                "desertification",
+                "the desertification",
+                "the advancing desert"
+              ],
+              "targets": [
+                "desert",
+                "expansion"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "the desert expand",
+                  "right": "the expansion of deserts",
+                  "explanation_zh": "「擴張」在這裡是名詞（被擋住的東西），用 expansion 或 spread。"
+                },
+                {
+                  "wrong": "the expand of deserts",
+                  "right": "the expansion of deserts",
+                  "explanation_zh": "expand 是動詞；名詞是 expansion。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "word_form",
+              "zh": "能否擋住",
+              "literal_error": "… scientists are still not sure whether can this Great Green Wall stop …",
+              "part": 2,
+              "explanation_zh": "「能否」照疑問句語序寫成 whether can the wall stop 是錯的；間接問句要用直述句語序 whether the wall can stop。"
+            },
+            {
+              "type": "abstract_nominal",
+              "zh": "沙漠擴張",
+              "literal_error": "… can stop the desert expand caused by climate change.",
+              "part": 4,
+              "explanation_zh": "「沙漠擴張」在句中是名詞片語，要寫成 the expansion／spread of deserts；照字面寫 desert expand 會變成主詞＋動詞。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "However, whether this Great Green Wall can hold back deserts spreading as a result of climate change remains an open question.",
+              "grammar_id": "gp-wh-clause",
+              "explanation_zh": "把 whether 子句整個當主詞，後面接 remains an open question（仍是未解的問題），句構更緊湊。屬加分寫法，不是唯一正解。"
+            }
+          ],
+          "restructuring_zh": "「…能否擋住…」英文把「能否」移到子句開頭寫成 whether …，後面用直述句語序 the Great Green Wall can halt …；「由氣候變遷造成的沙漠擴張」修飾語在前，英文改成 the expansion of deserts caused by climate change，分詞片語放在名詞後面。",
+          "notes_zh": "第 3 部分寫成關係子句 that／which is caused by climate change 也表達同樣的後位修飾，算作 PART 這一格的可接受寫法（已列入 accepted）。whether 也可用 if。第 4 部分寫 the spread of deserts、desert expansion、the advancing desert 都可以；第 2 部分「擋住」寫 stop、halt、hold back、block 都可以。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ac-V-3",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-top-07",
+    "lot": "translation-top-07",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "727f3c696b5eb6e7923442d5861775b3b6c73b73c5d622f70692eba105fc5008",
+    "spec_id": "translation-top@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 3,
+    "sentences": 1,
+    "avg_sentence_length": 3.0,
+    "denominator": 3,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 1.0,
+    "coverage_l1_6": 1.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {
+      "1": 3
+    },
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-10T02:47:50Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-10T00:00:00Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "The millions of trees that African countries plan to plant will be used to build a Great Green Wall that stretches across the African continent.",
+            "confidence": "high",
+            "explanation_zh": "「非洲國家打算種下的數百萬棵樹」用關係子句修飾 trees；「將被用來築成」用 will be used to build；「橫跨非洲大陸的」用關係子句 that stretches across the African continent。"
+          },
+          "2": {
+            "translation": "However, scientists are still not sure whether this Great Green Wall can stop the expansion of deserts caused by climate change.",
+            "confidence": "high",
+            "explanation_zh": "「仍不確定…能否」用 are still not sure whether；「由氣候變遷造成的」用過去分詞片語 caused by climate change 修飾 the expansion of deserts。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PASS",
+              "REL"
+            ],
+            "used_target_words": [
+              "country",
+              "intend",
+              "plant",
+              "million",
+              "tree",
+              "use",
+              "form",
+              "wall",
+              "across",
+              "continent"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "NCL",
+              "PART"
+            ],
+            "used_target_words": [
+              "scientist",
+              "sure",
+              "wall",
+              "stop",
+              "cause",
+              "climate",
+              "change",
+              "desert",
+              "expansion"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "country",
+              "intend",
+              "plant",
+              "million",
+              "tree",
+              "use",
+              "form",
+              "wall",
+              "across",
+              "continent"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PASS": true,
+              "REL": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "scientist",
+              "sure",
+              "wall",
+              "stop",
+              "cause",
+              "climate",
+              "change",
+              "desert",
+              "expansion"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NCL": true,
+              "PART": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-10T02:37:45Z",
+      "details": {
+        "solver": "B",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "The millions of trees that African countries plan to plant will be used to build a Great Green Wall that stretches across the African continent.",
+            "confidence": "high",
+            "explanation_zh": "「打算種下的數百萬棵樹」用 The millions of trees that ... plan to plant；「將被用來築成」用 will be used to build（被動加不定詞表目的）；「橫跨非洲大陸」用 that stretches across the African continent。"
+          },
+          "2": {
+            "translation": "However, scientists are still not sure whether the Great Green Wall can stop the expansion of deserts caused by climate change.",
+            "confidence": "high",
+            "explanation_zh": "「仍不確定……能否」用 are still not sure whether ...；「擋住沙漠擴張」用 stop the expansion of deserts；「由氣候變遷造成的」用過去分詞片語 caused by climate change 修飾 deserts' expansion。這裡 caused by 的修飾對象略有歧義（沙漠或擴張），但意思不影響。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PASS",
+              "REL"
+            ],
+            "used_target_words": [
+              "country",
+              "intend",
+              "plant",
+              "million",
+              "tree",
+              "use",
+              "form",
+              "wall",
+              "across",
+              "continent"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "NCL",
+              "PART"
+            ],
+            "used_target_words": [
+              "scientist",
+              "sure",
+              "wall",
+              "stop",
+              "cause",
+              "climate",
+              "change",
+              "desert",
+              "expansion"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "country",
+              "intend",
+              "plant",
+              "million",
+              "tree",
+              "use",
+              "form",
+              "wall",
+              "across",
+              "continent"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PASS": true,
+              "REL": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "scientist",
+              "sure",
+              "wall",
+              "stop",
+              "cause",
+              "climate",
+              "change",
+              "desert",
+              "expansion"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NCL": true,
+              "PART": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

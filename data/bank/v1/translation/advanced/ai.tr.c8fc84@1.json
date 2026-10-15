@@ -1,0 +1,775 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.c8fc84",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "advanced",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "我發現，許多同事都把團購視為省錢的好方法。",
+        "options": null,
+        "answer": "I have found that many of my colleagues regard group buying as a good way to save money.",
+        "accepted_answers": [
+          "I found that many of my coworkers see group buying as a good way to save money.",
+          "I have noticed that many colleagues view group buying as a good method of saving money."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "that 名詞子句當受詞",
+            "把 A 視為 B"
+          ],
+          "topic": "團購"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "除了省錢，越來越多鄰居也透過團購群組成為好朋友。",
+        "options": null,
+        "answer": "Besides saving money, more and more neighbors have also become good friends through group-buying chats.",
+        "accepted_answers": [
+          "In addition to saving money, more and more neighbors have also made friends through group-buying chat groups.",
+          "Apart from saving money, more and more neighbors are also becoming good friends through their group-buying chats."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "介系詞＋動名詞",
+            "越來越多（more and more）"
+          ],
+          "topic": "團購"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "團購"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「我發現，…」後面是完整的句子，用 I have found (that) + 子句（that 名詞子句當 find 的受詞）。「把團購視為…」用 regard group buying as …（或 see／view … as），as 不能漏。「省錢的好方法」中文修飾語在前，英文寫 a good way to save money（不定詞後位修飾），或 a good way of saving money。主詞 many of my colleagues 是複數，動詞用 regard。",
+          "evidence": [
+            "我發現",
+            "把團購視為省錢的好方法"
+          ],
+          "strategy_zh": "「把 A 視為 B」直接套 regard A as B；「…的方法」寫 a way to VR 或 a way of V-ing。",
+          "hints": [
+            "切成四段：我發現／許多同事都／把團購視為／省錢的好方法",
+            "標的詞彙：find（發現，L1）、colleague（同事，L4）、regard（視為，L2）、group buying（團購）、save（節省，L1）、money（錢，L1）、way（方法，L1）",
+            "句型框架：I have found (that) + S + regard + A + as + a good way to VR"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「除了省錢」的「除了」是「除了…之外還有」，用介系詞 Besides（In addition to、Apart from），後面接動名詞 saving money。「越來越多鄰居」用 more and more + 複數名詞 neighbors；「也」寫 also，放在助動詞後面（have also become）。「透過團購群組」寫 through group-buying chats；「成為好朋友」主詞是複數，用 become good friends。",
+          "evidence": [
+            "除了省錢",
+            "越來越多鄰居也透過團購群組成為好朋友"
+          ],
+          "strategy_zh": "介系詞（besides、by、without、instead of）後面的動作一律用 V-ing；「越來越多＋名詞」寫 more and more + 複數名詞。",
+          "hints": [
+            "切成四段：除了省錢／越來越多鄰居也／透過團購群組／成為好朋友",
+            "標的詞彙：save（節省，L1）、money（錢，L1）、neighbor（鄰居，L2）、chat（聊天，群組 chat，L3）、friend（朋友，L1）",
+            "句型框架：Besides + V-ing …, more and more + 複數名詞 + have also + p.p. …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "I have found that many of my colleagues regard group buying as a good way to save money.",
+            "I found that many of my coworkers see group buying as a good way to save money.",
+            "I have noticed that many colleagues view group buying as a good method of saving money."
+          ],
+          "target_words": [
+            {
+              "word": "find",
+              "zh": "發現",
+              "alternatives": [
+                "notice",
+                "realize",
+                "discover"
+              ]
+            },
+            {
+              "word": "colleague",
+              "zh": "同事",
+              "alternatives": [
+                "coworker",
+                "coworkers",
+                "co-worker",
+                "co-workers"
+              ]
+            },
+            {
+              "word": "regard",
+              "zh": "視為",
+              "alternatives": [
+                "see",
+                "view",
+                "consider",
+                "think of",
+                "look on"
+              ]
+            },
+            {
+              "word": "group buying",
+              "zh": "團購",
+              "alternatives": [
+                "group-buying",
+                "group purchasing"
+              ]
+            },
+            {
+              "word": "save",
+              "zh": "節省"
+            },
+            {
+              "word": "money",
+              "zh": "錢"
+            },
+            {
+              "word": "way",
+              "zh": "方法",
+              "alternatives": [
+                "method",
+                "means"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "NCL",
+              "grammar_id": "gp-that-clause",
+              "label_zh": "that 名詞子句當受詞（find that …）",
+              "frame": "S + have found / found + (that) + S + V …",
+              "zh_trigger": "我發現"
+            },
+            {
+              "code": "VOC",
+              "grammar_id": "gp-regard-as",
+              "label_zh": "把 A 視為 B（regard／see／view A as B）",
+              "frame": "S + regard / see / view / consider + A + as + B",
+              "zh_trigger": "把團購視為"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "我發現",
+              "accepted": [
+                "I have found that",
+                "I found that",
+                "I have noticed that",
+                "I noticed that",
+                "I have realized that",
+                "I realized that",
+                "I have discovered that",
+                "I discovered that",
+                "I find that",
+                "I have found",
+                "I found",
+                "I noticed",
+                "I have noticed",
+                "I realized",
+                "I've found that",
+                "I've noticed that",
+                "I've realized that",
+                "I've discovered that",
+                "I've found"
+              ],
+              "targets": [
+                "NCL",
+                "find"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "I have find that",
+                  "right": "I have found that",
+                  "explanation_zh": "現在完成式 have 後面接過去分詞 found。"
+                }
+              ]
+            },
+            {
+              "zh": "許多同事都",
+              "accepted": [
+                "many of my colleagues",
+                "many of my coworkers",
+                "many colleagues",
+                "many coworkers",
+                "a lot of my colleagues",
+                "a lot of my coworkers",
+                "many of my co-workers",
+                "lots of my colleagues"
+              ],
+              "targets": [
+                "colleague"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "many my colleagues",
+                  "right": "many of my colleagues",
+                  "explanation_zh": "many 後面要先接 of，才能接 my colleagues。"
+                }
+              ]
+            },
+            {
+              "zh": "把團購視為",
+              "accepted": [
+                "regard group buying as",
+                "see group buying as",
+                "view group buying as",
+                "consider group buying as",
+                "consider group buying to be",
+                "consider group buying",
+                "think of group buying as",
+                "look on group buying as",
+                "regard group purchasing as",
+                "regard buying in groups as"
+              ],
+              "targets": [
+                "VOC",
+                "regard",
+                "group buying"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "regard group buying a good way",
+                  "right": "regard group buying as a good way",
+                  "explanation_zh": "regard／see／view A as B 的 as 不能省略（只有 consider 可以省略 as）。"
+                },
+                {
+                  "wrong": "regards group buying as",
+                  "right": "regard group buying as",
+                  "explanation_zh": "主詞 many of my colleagues 是複數，動詞不加 s。"
+                }
+              ]
+            },
+            {
+              "zh": "省錢的好方法",
+              "accepted": [
+                "a good way to save money",
+                "a good method of saving money",
+                "a good way of saving money",
+                "a great way to save money",
+                "a good method to save money",
+                "a good means of saving money",
+                "a smart way to save money",
+                "an excellent way to save money",
+                "a good way to save some money",
+                "an effective way to save money",
+                "a useful way to save money",
+                "a good way to cut costs",
+                "a great way of saving money",
+                "an effective way of saving money",
+                "a practical way to save money"
+              ],
+              "targets": [
+                "save",
+                "money",
+                "way"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "a good way to saving money",
+                  "right": "a good way to save money",
+                  "explanation_zh": "way to 後面接原形動詞；要用動名詞時寫 way of saving money。"
+                },
+                {
+                  "wrong": "a good save money way",
+                  "right": "a good way to save money",
+                  "explanation_zh": "「省錢的」修飾「方法」，英文要用不定詞 to save money 放在 way 後面。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "prenominal_modifier",
+              "zh": "省錢的好方法",
+              "literal_error": "I have found that many of my colleagues regard group buying as a good save money way.",
+              "part": 4,
+              "explanation_zh": "「省錢的好方法」照中文語序把「省錢」放在名詞前面是錯的；英文寫 a good way to save money。"
+            },
+            {
+              "type": "collocation",
+              "zh": "視為",
+              "literal_error": "I have found that many of my colleagues regard group buying a good way to save money.",
+              "part": 3,
+              "explanation_zh": "「把 A 視為 B」是 regard A as B，as 不能漏掉。"
+            }
+          ],
+          "bonus": [],
+          "restructuring_zh": "「省錢的好方法」中文修飾語在名詞前面；英文寫成 a good way to save money，用不定詞 to save money 放在 way 後面修飾（或 a good way of saving money）。",
+          "notes_zh": "「我發現」I have found／I found／I have noticed／I realized 都可以，that 可省略；「同事」colleagues、coworkers 都給分，「都」不必另外譯出；「把…視為」regard／see／view／think of … as 都可以，consider 後面的 as 可加可不加（consider group buying (as／to be) …）；「團購」group buying、group-buying、group purchasing 都可以；「省錢的好方法」a good／great way to save money、a good way／method of saving money 都給分。"
+        },
+        "2": {
+          "references": [
+            "Besides saving money, more and more neighbors have also become good friends through group-buying chats.",
+            "In addition to saving money, more and more neighbors have also made friends through group-buying chat groups.",
+            "Apart from saving money, more and more neighbors are also becoming good friends through their group-buying chats."
+          ],
+          "target_words": [
+            {
+              "word": "save",
+              "zh": "節省"
+            },
+            {
+              "word": "money",
+              "zh": "錢"
+            },
+            {
+              "word": "neighbor",
+              "zh": "鄰居",
+              "alternatives": [
+                "neighbour",
+                "neighbours"
+              ]
+            },
+            {
+              "word": "chat",
+              "zh": "聊天（群組）"
+            },
+            {
+              "word": "friend",
+              "zh": "朋友"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PREPVING",
+              "grammar_id": "gp-prep-gerund",
+              "label_zh": "介系詞＋動名詞（Besides + V-ing）",
+              "frame": "Besides / In addition to / Apart from + V-ing …, S + V …",
+              "zh_trigger": "除了省錢"
+            },
+            {
+              "code": "COMP",
+              "grammar_id": "gp-more-and-more",
+              "label_zh": "越來越多（more and more + 複數名詞）",
+              "frame": "more and more + 複數名詞 + V …",
+              "zh_trigger": "越來越多鄰居"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "除了省錢",
+              "accepted": [
+                "Besides saving money",
+                "In addition to saving money",
+                "Apart from saving money",
+                "Aside from saving money",
+                "Besides saving some money",
+                "In addition to saving some money"
+              ],
+              "targets": [
+                "PREPVING",
+                "save",
+                "money"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Besides save money",
+                  "right": "Besides saving money",
+                  "explanation_zh": "besides 是介系詞，後面的動詞要用動名詞 saving。"
+                },
+                {
+                  "wrong": "Except saving money",
+                  "right": "Besides saving money",
+                  "explanation_zh": "這裡的「除了」是「除了…之外還有」，用 besides、in addition to；except 是把某項排除在外。"
+                }
+              ]
+            },
+            {
+              "zh": "越來越多鄰居也",
+              "accepted": [
+                "more and more neighbors have also",
+                "more and more neighbors are also",
+                "more and more neighbors also",
+                "more and more neighbours have also",
+                "more and more neighbours also",
+                "more and more neighbors have",
+                "more and more neighbors are",
+                "more and more neighbours are also",
+                "more and more neighbours have",
+                "more and more neighbours are"
+              ],
+              "targets": [
+                "COMP",
+                "neighbor"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "more and more neighbor have also",
+                  "right": "more and more neighbors have also",
+                  "explanation_zh": "more and more 後面接複數名詞 neighbors。"
+                },
+                {
+                  "wrong": "more and more many neighbors also",
+                  "right": "more and more neighbors also",
+                  "explanation_zh": "more 已經是 many 的比較級，不能再加 many。"
+                }
+              ]
+            },
+            {
+              "zh": "透過團購群組",
+              "accepted": [
+                "through group-buying chats",
+                "through group-buying chat groups",
+                "through their group-buying chats",
+                "through group-buying groups",
+                "through group chats for group buying",
+                "through group-buying chat rooms",
+                "via group-buying chats",
+                "through the group-buying chats",
+                "by joining group-buying chats",
+                "in group-buying chats",
+                "in group-buying chat groups",
+                "in their group-buying chats",
+                "through group-buying LINE groups",
+                "through online group-buying groups"
+              ],
+              "targets": [
+                "chat"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "though group-buying chats",
+                  "right": "through group-buying chats",
+                  "explanation_zh": "「透過」是 through；though 是「雖然」，拼字要分清楚。"
+                }
+              ]
+            },
+            {
+              "zh": "成為好朋友",
+              "accepted": [
+                "become good friends",
+                "made friends",
+                "becoming good friends",
+                "become close friends",
+                "made good friends",
+                "become friends",
+                "made friends with each other",
+                "become good friends with each other",
+                "becoming close friends",
+                "becoming friends",
+                "make friends"
+              ],
+              "targets": [
+                "friend"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "become good friend",
+                  "right": "become good friends",
+                  "explanation_zh": "鄰居不只一位，彼此成為朋友，friends 要用複數。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "word_form",
+              "zh": "除了省錢",
+              "literal_error": "Besides save money, more and more neighbors have also become good friends through group-buying chats.",
+              "part": 1,
+              "explanation_zh": "besides 是介系詞，後面的動作要改成動名詞 saving；照中文直接寫原形 save 是錯的。"
+            },
+            {
+              "type": "plural_countable",
+              "zh": "成為好朋友",
+              "literal_error": "Besides saving money, more and more neighbors have also become good friend through group-buying chats.",
+              "part": 4,
+              "explanation_zh": "主詞是很多位鄰居，「成為好朋友」的 friend 要用複數 friends。"
+            }
+          ],
+          "bonus": [],
+          "restructuring_zh": "「除了省錢」沒有主詞，省錢的就是後面的「鄰居」；英文用介系詞＋動名詞 Besides saving money 放句首，主要子句再寫 more and more neighbors have also become …。",
+          "notes_zh": "「除了」Besides、In addition to、Apart from 都可以，後面一定接 V-ing；「越來越多鄰居也」more and more neighbors 後面可接 have also become（現在完成式）、are also becoming（進行式）或 also become；「團購群組」group-buying chats、group-buying chat groups、group-buying groups 都給分（group buying 可不加連字號）；「成為好朋友」become (good／close) friends、make friends 都可以。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-advanced-06",
+    "lot": "translation-advanced-06",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "3f8dc9d60c8a2f9f0e258e68e094820e19a8a5f1c5e0001a05ad2370e79443f3",
+    "spec_id": "translation-advanced@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-10T02:32:14Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-10T02:17:22Z",
+      "details": {
+        "solver": "A",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "I have found that many of my colleagues regard group buying as a good way to save money.",
+            "confidence": "high",
+            "explanation_zh": "「我發現」接 that 名詞子句；「把…視為…」用 regard A as B（也可 see / view A as B）；「團購」譯 group buying；「省錢的好方法」用 a good way to save money。「發現」用現在完成式 have found 表示到目前為止觀察到的情形，用過去式 found 也可以。"
+          },
+          "2": {
+            "translation": "In addition to saving money, more and more neighbors have also become good friends through group-buying chat groups.",
+            "confidence": "high",
+            "explanation_zh": "「除了省錢」用介系詞 In addition to + 動名詞 saving；「越來越多鄰居」用 more and more neighbors；「成為好朋友」是到現在為止的結果，用現在完成式 have become；「透過團購群組」用 through group-buying chat groups。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "NCL",
+              "VOC"
+            ],
+            "used_target_words": [
+              "find",
+              "colleague",
+              "regard",
+              "group buying",
+              "save",
+              "money",
+              "way"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PREPVING",
+              "COMP"
+            ],
+            "used_target_words": [
+              "save",
+              "money",
+              "neighbor",
+              "chat",
+              "friend"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "find",
+              "colleague",
+              "regard",
+              "group buying",
+              "save",
+              "money",
+              "way"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NCL": true,
+              "VOC": null
+            },
+            "program_match": true
+          },
+          "2": {
+            "target_words_found": [
+              "save",
+              "money",
+              "neighbor",
+              "chat",
+              "friend"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PREPVING": true,
+              "COMP": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-10T02:22:17Z",
+      "details": {
+        "solver": "B",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "I have found that many of my colleagues regard group buying as a good way to save money.",
+            "confidence": "high",
+            "explanation_zh": "「我發現」用 I have found that 引導名詞子句（也可用 I find）；「把…視為」用 regard A as B；「省錢的好方法」用 a good way to save money。"
+          },
+          "2": {
+            "translation": "Besides saving money, more and more neighbors are also becoming good friends through group-buying chat groups.",
+            "confidence": "high",
+            "explanation_zh": "「除了省錢」用介系詞 Besides + 動名詞；「越來越多」用 more and more；「成為好朋友」用 become good friends，用現在進行式 are becoming 表示正在發生的趨勢；「透過」用 through。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "NCL",
+              "VOC"
+            ],
+            "used_target_words": [
+              "find",
+              "colleague",
+              "regard",
+              "group buying",
+              "save",
+              "money",
+              "way"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PREPVING",
+              "COMP"
+            ],
+            "used_target_words": [
+              "save",
+              "money",
+              "neighbor",
+              "chat",
+              "friend"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "find",
+              "colleague",
+              "regard",
+              "group buying",
+              "save",
+              "money",
+              "way"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NCL": true,
+              "VOC": null
+            },
+            "program_match": true
+          },
+          "2": {
+            "target_words_found": [
+              "save",
+              "money",
+              "neighbor",
+              "chat",
+              "friend"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PREPVING": true,
+              "COMP": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

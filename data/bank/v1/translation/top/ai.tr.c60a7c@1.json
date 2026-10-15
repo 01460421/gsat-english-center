@@ -1,0 +1,1254 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.c60a7c",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "top",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "近年來，許多大學的學費漲得比物價還快，迫使不少學生申請助學貸款。",
+        "options": null,
+        "answer": "In recent years, tuition fees at many universities have risen faster than inflation, forcing many students to apply for student loans.",
+        "accepted_answers": [
+          "In recent years, the tuition of many universities has gone up faster than prices, forcing quite a few students to take out student loans.",
+          "Over the past few years, tuition fees at many universities have increased faster than the cost of living, forcing many students to take out student loans."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "句尾分詞片語表結果（, forcing …）",
+            "比較級（faster than）"
+          ],
+          "topic": "學費調漲"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "然而，背負大筆學貸畢業，常被視為年輕人延後結婚的主要原因之一。",
+        "options": null,
+        "answer": "However, graduating with heavy student loans is often seen as one of the main reasons why young people postpone marriage.",
+        "accepted_answers": [
+          "However, graduating with large student loans is often regarded as one of the major reasons why young people put off getting married.",
+          "However, graduating with a huge amount of student debt is often considered one of the main reasons for young people postponing marriage."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "動名詞片語當主詞",
+            "被動語態（is often seen as）"
+          ],
+          "topic": "學費調漲"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "學費調漲"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「近年來」用 In recent years，搭配現在完成式。「許多大學的學費漲得比物價還快」：主詞 tuition fees at many universities，「漲」是不及物的 rise（have risen），「比物價還快」用比較級副詞 faster than inflation（物價上漲就是 inflation；than prices、than the cost of living 也可以）。「迫使不少學生申請助學貸款」是前面情況造成的結果，中文沒有主詞，英文用句尾分詞 , forcing many students to apply for student loans；「申請」要寫 apply for（或 take out a loan）。",
+          "evidence": [
+            "漲得比物價還快",
+            "迫使不少學生申請助學貸款"
+          ],
+          "strategy_zh": "「近年來」先想現在完成式；「A 比 B 還快」用 faster than；句尾「迫使…」用 , forcing + O + to VR。",
+          "hints": [
+            "切成四段：近年來，許多大學的學費／漲得比物價還快／迫使不少學生／申請助學貸款",
+            "標的詞彙：recent（近來的）、university（大學）、tuition（學費）、rise（上漲）、price（物價）、force（迫使）、student（學生）、apply（申請）、loan（貸款）",
+            "句型框架：In recent years, S + have risen faster than + N, forcing + O + to VR …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "主詞是動作「背負大筆學貸畢業」，英文用動名詞片語 Graduating with heavy student loans（loans 用複數），動詞用單數 is。「常被視為」用被動 is often seen as／regarded as，as 不能省。「…主要原因之一」是 one of the main reasons，reasons 一定用複數；「年輕人延後結婚的（原因）」寫 why young people postpone marriage（或 delay getting married，delay／postpone 後面接名詞或動名詞）。",
+          "evidence": [
+            "背負大筆學貸畢業",
+            "常被視為"
+          ],
+          "strategy_zh": "主詞是一件事（動作）時，用動名詞片語當主詞、動詞用單數；「被視為…之一」先寫 be seen as one of the + 複數名詞。",
+          "hints": [
+            "切成四段：然而，背負大筆學貸畢業／常被視為／年輕人延後結婚的／主要原因之一",
+            "標的詞彙：graduate（畢業）、heavy（大筆的）、student（學生）、loan（貸款）、regard（視為）、young（年輕的）、delay（延後）、marry（結婚）、main（主要的）、reason（原因）",
+            "句型框架：However, V-ing … + is often seen as one of the main reasons why + S + V …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "In recent years, tuition fees at many universities have risen faster than inflation, forcing many students to apply for student loans.",
+            "In recent years, the tuition of many universities has gone up faster than prices, forcing quite a few students to take out student loans.",
+            "Over the past few years, tuition fees at many universities have increased faster than the cost of living, forcing many students to take out student loans."
+          ],
+          "target_words": [
+            {
+              "word": "recent",
+              "zh": "近來的",
+              "alternatives": [
+                "past",
+                "recently"
+              ]
+            },
+            {
+              "word": "university",
+              "zh": "大學",
+              "alternatives": [
+                "college"
+              ]
+            },
+            {
+              "word": "tuition",
+              "zh": "學費",
+              "alternatives": [
+                "fee"
+              ]
+            },
+            {
+              "word": "rise",
+              "zh": "上漲",
+              "alternatives": [
+                "increase",
+                "go up",
+                "climb",
+                "grow"
+              ]
+            },
+            {
+              "word": "price",
+              "zh": "物價",
+              "alternatives": [
+                "cost",
+                "inflation"
+              ]
+            },
+            {
+              "word": "force",
+              "zh": "迫使",
+              "alternatives": [
+                "compel",
+                "push",
+                "drive"
+              ]
+            },
+            {
+              "word": "student",
+              "zh": "學生"
+            },
+            {
+              "word": "apply",
+              "zh": "申請",
+              "alternatives": [
+                "take out"
+              ]
+            },
+            {
+              "word": "loan",
+              "zh": "貸款"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PART",
+              "grammar_id": "gp-participle-result",
+              "label_zh": "句尾分詞片語表結果（迫使…：, forcing …）",
+              "frame": "S + V …, forcing + O + to VR …",
+              "zh_trigger": "迫使不少學生"
+            },
+            {
+              "code": "COMP",
+              "grammar_id": "gp-comparative-superlative",
+              "label_zh": "比較級（漲得比物價還快：have risen faster than）",
+              "frame": "S + have risen + 比較級副詞 + than + N",
+              "zh_trigger": "漲得比物價還快"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "近年來，許多大學的學費",
+              "accepted": [
+                "In recent years, tuition fees at many universities",
+                "In recent years, the tuition fees of many universities",
+                "In recent years, tuition at many universities",
+                "In recent years, the tuition of many universities",
+                "In recent years, many universities' tuition fees",
+                "In recent years, tuition fees at many colleges",
+                "Over the past few years, tuition fees at many universities",
+                "Over the past few years, the tuition fees of many universities",
+                "Over the past few years, tuition at many universities",
+                "Over the past few years, the tuition of many universities",
+                "Over the past few years, many universities' tuition fees",
+                "Over the past few years, tuition fees at many colleges",
+                "In the past few years, tuition fees at many universities",
+                "In the past few years, the tuition fees of many universities",
+                "In the past few years, tuition at many universities",
+                "In the past few years, the tuition of many universities",
+                "In the past few years, many universities' tuition fees",
+                "In the past few years, tuition fees at many colleges",
+                "Recently, tuition fees at many universities",
+                "In recent years, the tuition fees at many universities"
+              ],
+              "targets": [
+                "recent",
+                "university",
+                "tuition"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "In recent year, tuition fees at many universities",
+                  "right": "In recent years, tuition fees at many universities",
+                  "explanation_zh": "「近年來」是 in recent years，years 用複數。"
+                },
+                {
+                  "wrong": "In recent years, the tuition fee of many university",
+                  "right": "In recent years, the tuition fees of many universities",
+                  "explanation_zh": "many 後面接複數名詞 universities。"
+                }
+              ]
+            },
+            {
+              "zh": "漲得比物價還快",
+              "accepted": [
+                "have risen faster than inflation",
+                "have risen faster than prices",
+                "have risen faster than the cost of living",
+                "have risen faster than consumer prices",
+                "have risen more quickly than prices",
+                "have risen more quickly than inflation",
+                "have risen more quickly than the cost of living",
+                "have risen more quickly than consumer prices",
+                "has risen faster than prices",
+                "has risen faster than inflation",
+                "has risen faster than the cost of living",
+                "has risen faster than consumer prices",
+                "has risen more quickly than prices",
+                "has risen more quickly than inflation",
+                "has risen more quickly than the cost of living",
+                "has risen more quickly than consumer prices",
+                "have gone up faster than prices",
+                "have gone up faster than inflation",
+                "have gone up faster than the cost of living",
+                "have gone up faster than consumer prices",
+                "have gone up more quickly than prices",
+                "have gone up more quickly than inflation",
+                "have gone up more quickly than the cost of living",
+                "have gone up more quickly than consumer prices",
+                "has gone up faster than prices",
+                "has gone up faster than inflation",
+                "has gone up faster than the cost of living",
+                "has gone up faster than consumer prices",
+                "has gone up more quickly than prices",
+                "has gone up more quickly than inflation",
+                "has gone up more quickly than the cost of living",
+                "has gone up more quickly than consumer prices",
+                "have increased faster than prices",
+                "have increased faster than inflation",
+                "have increased faster than the cost of living",
+                "have increased faster than consumer prices",
+                "have increased more quickly than prices",
+                "have increased more quickly than inflation",
+                "have increased more quickly than the cost of living",
+                "have increased more quickly than consumer prices",
+                "has increased faster than prices",
+                "has increased faster than inflation",
+                "has increased faster than the cost of living",
+                "has increased faster than consumer prices",
+                "has increased more quickly than prices",
+                "has increased more quickly than inflation",
+                "has increased more quickly than the cost of living",
+                "has increased more quickly than consumer prices",
+                "have been rising faster than prices",
+                "has been rising faster than prices",
+                "have risen faster than other prices",
+                "have grown faster than prices",
+                "have risen more rapidly than prices",
+                "have risen faster than commodity prices",
+                "have risen faster than the prices of goods",
+                "have risen faster than general prices",
+                "have risen more quickly than commodity prices",
+                "have risen more quickly than the prices of goods",
+                "have risen more quickly than general prices",
+                "have risen more quickly than other prices",
+                "has risen faster than commodity prices",
+                "has risen faster than the prices of goods",
+                "has risen faster than general prices",
+                "has risen faster than other prices",
+                "has risen more quickly than commodity prices",
+                "has risen more quickly than the prices of goods",
+                "has risen more quickly than general prices",
+                "has risen more quickly than other prices",
+                "have gone up faster than commodity prices",
+                "have gone up faster than the prices of goods",
+                "have gone up faster than general prices",
+                "have gone up faster than other prices",
+                "have gone up more quickly than commodity prices",
+                "have gone up more quickly than the prices of goods",
+                "have gone up more quickly than general prices",
+                "have gone up more quickly than other prices",
+                "has gone up faster than commodity prices",
+                "has gone up faster than the prices of goods",
+                "has gone up faster than general prices",
+                "has gone up faster than other prices",
+                "has gone up more quickly than commodity prices",
+                "has gone up more quickly than the prices of goods",
+                "has gone up more quickly than general prices",
+                "has gone up more quickly than other prices",
+                "have increased faster than commodity prices",
+                "have increased faster than the prices of goods",
+                "have increased faster than general prices",
+                "have increased faster than other prices",
+                "have increased more quickly than commodity prices",
+                "have increased more quickly than the prices of goods",
+                "have increased more quickly than general prices",
+                "have increased more quickly than other prices",
+                "has increased faster than commodity prices",
+                "has increased faster than the prices of goods",
+                "has increased faster than general prices",
+                "has increased faster than other prices",
+                "has increased more quickly than commodity prices",
+                "has increased more quickly than the prices of goods",
+                "has increased more quickly than general prices",
+                "has increased more quickly than other prices",
+                "have been rising faster than inflation",
+                "have been rising faster than the cost of living",
+                "have been rising faster than consumer prices",
+                "have been rising faster than commodity prices",
+                "have been rising faster than the prices of goods",
+                "have been rising faster than general prices",
+                "have been rising faster than other prices",
+                "have been rising more quickly than prices",
+                "have been rising more quickly than inflation",
+                "have been rising more quickly than the cost of living",
+                "have been rising more quickly than consumer prices",
+                "have been rising more quickly than commodity prices",
+                "have been rising more quickly than the prices of goods",
+                "have been rising more quickly than general prices",
+                "have been rising more quickly than other prices",
+                "has been rising faster than inflation",
+                "has been rising faster than the cost of living",
+                "has been rising faster than consumer prices",
+                "has been rising faster than commodity prices",
+                "has been rising faster than the prices of goods",
+                "has been rising faster than general prices",
+                "has been rising faster than other prices",
+                "has been rising more quickly than prices",
+                "has been rising more quickly than inflation",
+                "has been rising more quickly than the cost of living",
+                "has been rising more quickly than consumer prices",
+                "has been rising more quickly than commodity prices",
+                "has been rising more quickly than the prices of goods",
+                "has been rising more quickly than general prices",
+                "has been rising more quickly than other prices",
+                "have climbed faster than prices",
+                "have climbed faster than inflation",
+                "have climbed faster than the cost of living",
+                "have grown faster than inflation",
+                "have grown faster than the cost of living",
+                "has climbed faster than prices",
+                "has climbed faster than inflation",
+                "has climbed faster than the cost of living",
+                "has grown faster than prices",
+                "has grown faster than inflation",
+                "has grown faster than the cost of living",
+                "have risen more rapidly than inflation",
+                "have risen more sharply than prices",
+                "have risen more sharply than inflation",
+                "have increased more rapidly than prices",
+                "have increased more rapidly than inflation",
+                "have increased more sharply than prices",
+                "have increased more sharply than inflation",
+                "has risen more rapidly than prices",
+                "has risen more rapidly than inflation",
+                "has risen more sharply than prices",
+                "has risen more sharply than inflation",
+                "has increased more rapidly than prices",
+                "has increased more rapidly than inflation",
+                "has increased more sharply than prices",
+                "has increased more sharply than inflation"
+              ],
+              "targets": [
+                "COMP",
+                "rise",
+                "price"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "have raised faster than prices",
+                  "right": "have risen faster than prices",
+                  "explanation_zh": "「上漲」是不及物的 rise（rise-rose-risen）；raise 是及物動詞「提高」，後面要接受詞。"
+                },
+                {
+                  "wrong": "have risen more fast than prices",
+                  "right": "have risen faster than prices",
+                  "explanation_zh": "fast 的比較級是 faster。"
+                },
+                {
+                  "wrong": "rise faster than prices",
+                  "right": "have risen faster than prices",
+                  "explanation_zh": "「近年來」表示一直到現在的變化，用現在完成式 have risen。"
+                }
+              ]
+            },
+            {
+              "zh": "迫使不少學生",
+              "accepted": [
+                "forcing many students",
+                "forcing quite a few students",
+                "forcing a lot of students",
+                "forcing lots of students",
+                "forcing numerous students",
+                "compelling many students",
+                "compelling quite a few students",
+                "compelling a lot of students",
+                "compelling lots of students",
+                "compelling numerous students",
+                "pushing many students",
+                "pushing quite a few students",
+                "pushing a lot of students",
+                "pushing lots of students",
+                "pushing numerous students",
+                "driving many students",
+                "driving quite a few students",
+                "driving a lot of students",
+                "driving lots of students",
+                "driving numerous students",
+                "which has forced many students",
+                "which has forced quite a few students",
+                "which has forced a lot of students",
+                "which forces many students",
+                "which forces quite a few students",
+                "which forces a lot of students",
+                "which is forcing many students",
+                "which is forcing quite a few students",
+                "which is forcing a lot of students",
+                "which has compelled many students",
+                "which has compelled quite a few students",
+                "which has compelled a lot of students"
+              ],
+              "targets": [
+                "PART",
+                "force",
+                "student"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "forced many students",
+                  "right": "forcing many students",
+                  "explanation_zh": "前面已是完整句子，「迫使…」要用句尾分詞 forcing（或 , which forces …）表結果；直接接過去式 forced 會變成兩個主要動詞卻沒有連接詞。"
+                },
+                {
+                  "wrong": "forcing many student",
+                  "right": "forcing many students",
+                  "explanation_zh": "many 後面接複數名詞 students。"
+                }
+              ]
+            },
+            {
+              "zh": "申請助學貸款",
+              "accepted": [
+                "to apply for student loans",
+                "to apply for a student loan",
+                "to take out student loans",
+                "to take out a student loan",
+                "to apply for loans",
+                "to take out loans",
+                "to apply for education loans",
+                "to apply for school loans",
+                "to apply for student aid loans",
+                "to apply for government student loans"
+              ],
+              "targets": [
+                "apply",
+                "loan"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "to apply student loans",
+                  "right": "to apply for student loans",
+                  "explanation_zh": "「申請」某物是 apply for + N；少了 for 意思變成「應用、塗抹」。"
+                },
+                {
+                  "wrong": "to borrow student loans",
+                  "right": "to take out student loans",
+                  "explanation_zh": "loan 本身就是「借款」，搭配動詞用 take out／apply for，不說 borrow a loan。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "tense_trigger",
+              "zh": "近年來",
+              "literal_error": "In recent years, tuition fees at many universities rise faster than inflation, forcing many students to apply for student loans.",
+              "part": 2,
+              "explanation_zh": "「近年來」說的是一直延續到現在的變化，要用現在完成式 have risen；現在簡單式 rise 看不出這段期間的變化。"
+            },
+            {
+              "type": "collocation",
+              "zh": "申請助學貸款",
+              "literal_error": "…forcing many students to apply student loans.",
+              "part": 4,
+              "explanation_zh": "「申請」是 apply for + 名詞；apply 直接接受詞是「應用、塗抹」，意思不對。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "In recent years, tuition fees at many universities have outpaced inflation, leaving many students with no choice but to take out student loans.",
+              "explanation_zh": "outpace（比…成長得快）一個字就表達「漲得比…還快」，leave sb with no choice but to VR（讓某人不得不…）是進階搭配；這是加分寫法，不是唯一正解。"
+            }
+          ],
+          "restructuring_zh": "「迫使不少學生…」接在逗號後、沒有主詞，英文用句尾分詞 , forcing many students to …；「漲得比物價還快」用比較級副詞 faster than，「漲」是不及物的 rise。",
+          "notes_zh": "評分說明：「近年來」In recent years／Over (In) the past few years，配現在完成式；「許多大學的學費」tuition (fees) at many universities、the tuition (fees) of many universities、many universities' tuition fees；「漲得比物價還快」have／has risen（gone up、increased、been rising）faster／more quickly than prices（inflation、the cost of living、consumer prices 都可以），主詞 tuition 用 has、tuition fees 用 have；「迫使」forcing／compelling／pushing／driving，寫成 , which has forced／forces many students to …（which 指前面整件事）也算達成本句 PART 標的；「不少學生」many／quite a few／a lot of students；「申請助學貸款」apply for／take out (a) student loan(s)。另外也給分：commodity prices、the prices of goods、general prices、have climbed／grown faster than prices、have risen more sharply than inflation。"
+        },
+        "2": {
+          "references": [
+            "However, graduating with heavy student loans is often seen as one of the main reasons why young people postpone marriage.",
+            "However, graduating with large student loans is often regarded as one of the major reasons why young people put off getting married.",
+            "However, graduating with a huge amount of student debt is often considered one of the main reasons for young people postponing marriage."
+          ],
+          "target_words": [
+            {
+              "word": "graduate",
+              "zh": "畢業",
+              "alternatives": [
+                "graduation"
+              ]
+            },
+            {
+              "word": "heavy",
+              "zh": "大筆的、沉重的",
+              "alternatives": [
+                "large",
+                "huge",
+                "big",
+                "massive",
+                "great",
+                "lot"
+              ]
+            },
+            {
+              "word": "student",
+              "zh": "學生"
+            },
+            {
+              "word": "loan",
+              "zh": "貸款",
+              "alternatives": [
+                "debt"
+              ]
+            },
+            {
+              "word": "regard",
+              "zh": "視為",
+              "alternatives": [
+                "see",
+                "consider",
+                "view",
+                "think"
+              ]
+            },
+            {
+              "word": "young",
+              "zh": "年輕的",
+              "alternatives": [
+                "youth"
+              ]
+            },
+            {
+              "word": "delay",
+              "zh": "延後",
+              "alternatives": [
+                "postpone",
+                "put off"
+              ]
+            },
+            {
+              "word": "marry",
+              "zh": "結婚",
+              "alternatives": [
+                "marriage"
+              ]
+            },
+            {
+              "word": "main",
+              "zh": "主要的",
+              "alternatives": [
+                "major",
+                "primary",
+                "chief",
+                "key",
+                "big",
+                "important"
+              ]
+            },
+            {
+              "word": "reason",
+              "zh": "原因",
+              "alternatives": [
+                "cause",
+                "factor"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "NFSUBJ",
+              "grammar_id": "gp-gerund-subject",
+              "label_zh": "動名詞片語當主詞（背負大筆學貸畢業：graduating with …）",
+              "frame": "V-ing … + is (often) seen as + N",
+              "zh_trigger": "背負大筆學貸畢業"
+            },
+            {
+              "code": "PASS",
+              "grammar_id": "gp-passive",
+              "label_zh": "被動語態（常被視為：is often seen as）",
+              "frame": "S + is (often) seen／regarded as + N",
+              "zh_trigger": "常被視為"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "然而，背負大筆學貸畢業",
+              "accepted": [
+                "However, graduating with heavy student loans",
+                "However, graduating with large student loans",
+                "However, graduating with huge student loans",
+                "However, graduating with big student loans",
+                "However, graduating with a large student loan",
+                "However, graduating with a heavy student loan",
+                "However, graduating with a lot of student debt",
+                "However, graduating with heavy student debt",
+                "However, graduating with huge student debts",
+                "However, graduating with a huge amount of student debt",
+                "However, graduating with a large amount of student debt",
+                "However, graduating with massive student loans",
+                "However, graduating with a heavy burden of student loans",
+                "However, graduating from college with heavy student loans",
+                "However, graduating from university with heavy student loans",
+                "However, having to graduate with heavy student loans",
+                "However, carrying heavy student loans after graduation",
+                "However, having heavy student loans upon graduation",
+                "However, graduating while carrying heavy student loans",
+                "However, graduating while burdened with heavy student loans",
+                "However, graduating while burdened with large student loans",
+                "However, graduating while burdened with huge student loans",
+                "However, graduating while burdened with a large amount of student debt",
+                "However, graduating while burdened with heavy student debt",
+                "However, graduating burdened with heavy student loans",
+                "However, graduating burdened with large student loans",
+                "However, graduating burdened with huge student loans",
+                "However, graduating burdened with a large amount of student debt",
+                "However, graduating burdened with heavy student debt",
+                "However, graduating while carrying large student loans",
+                "However, graduating while carrying huge student loans",
+                "However, graduating while carrying a large amount of student debt",
+                "However, graduating while carrying heavy student debt",
+                "However, graduating with the burden of heavy student loans",
+                "However, graduating with the burden of large student loans",
+                "However, graduating with the burden of huge student loans",
+                "However, graduating with the burden of a large amount of student debt",
+                "However, graduating with the burden of heavy student debt",
+                "However, being burdened with heavy student loans upon graduation",
+                "However, being burdened with heavy student loans after graduation",
+                "However, being burdened with heavy student loans when graduating",
+                "However, being burdened with heavy student loans at graduation",
+                "However, being burdened with large student loans upon graduation",
+                "However, being burdened with large student loans after graduation",
+                "However, being burdened with large student loans when graduating",
+                "However, being burdened with large student loans at graduation",
+                "However, being burdened with huge student loans upon graduation",
+                "However, being burdened with huge student loans after graduation",
+                "However, being burdened with huge student loans when graduating",
+                "However, being burdened with huge student loans at graduation",
+                "However, being burdened with a large amount of student debt upon graduation",
+                "However, being burdened with a large amount of student debt after graduation",
+                "However, being burdened with a large amount of student debt when graduating",
+                "However, being burdened with a large amount of student debt at graduation",
+                "However, being burdened with heavy student debt upon graduation",
+                "However, being burdened with heavy student debt after graduation",
+                "However, being burdened with heavy student debt when graduating",
+                "However, being burdened with heavy student debt at graduation",
+                "However, having heavy student loans after graduation",
+                "However, having heavy student loans when graduating",
+                "However, having heavy student loans at graduation",
+                "However, having large student loans upon graduation",
+                "However, having large student loans after graduation",
+                "However, having large student loans when graduating",
+                "However, having large student loans at graduation",
+                "However, having huge student loans upon graduation",
+                "However, having huge student loans after graduation",
+                "However, having huge student loans when graduating",
+                "However, having huge student loans at graduation",
+                "However, having a large amount of student debt upon graduation",
+                "However, having a large amount of student debt after graduation",
+                "However, having a large amount of student debt when graduating",
+                "However, having a large amount of student debt at graduation",
+                "However, having heavy student debt upon graduation",
+                "However, having heavy student debt after graduation",
+                "However, having heavy student debt when graduating",
+                "However, having heavy student debt at graduation",
+                "However, carrying heavy student loans upon graduation",
+                "However, carrying heavy student loans when graduating",
+                "However, carrying heavy student loans at graduation",
+                "However, carrying large student loans upon graduation",
+                "However, carrying large student loans after graduation",
+                "However, carrying large student loans when graduating",
+                "However, carrying large student loans at graduation",
+                "However, carrying huge student loans upon graduation",
+                "However, carrying huge student loans after graduation",
+                "However, carrying huge student loans when graduating",
+                "However, carrying huge student loans at graduation",
+                "However, carrying a large amount of student debt upon graduation",
+                "However, carrying a large amount of student debt after graduation",
+                "However, carrying a large amount of student debt when graduating",
+                "However, carrying a large amount of student debt at graduation",
+                "However, carrying heavy student debt upon graduation",
+                "However, carrying heavy student debt after graduation",
+                "However, carrying heavy student debt when graduating",
+                "However, carrying heavy student debt at graduation",
+                "However, shouldering heavy student loans upon graduation",
+                "However, shouldering heavy student loans after graduation",
+                "However, shouldering heavy student loans when graduating",
+                "However, shouldering heavy student loans at graduation",
+                "However, shouldering large student loans upon graduation",
+                "However, shouldering large student loans after graduation",
+                "However, shouldering large student loans when graduating",
+                "However, shouldering large student loans at graduation",
+                "However, shouldering huge student loans upon graduation",
+                "However, shouldering huge student loans after graduation",
+                "However, shouldering huge student loans when graduating",
+                "However, shouldering huge student loans at graduation",
+                "However, shouldering a large amount of student debt upon graduation",
+                "However, shouldering a large amount of student debt after graduation",
+                "However, shouldering a large amount of student debt when graduating",
+                "However, shouldering a large amount of student debt at graduation",
+                "However, shouldering heavy student debt upon graduation",
+                "However, shouldering heavy student debt after graduation",
+                "However, shouldering heavy student debt when graduating",
+                "However, shouldering heavy student debt at graduation",
+                "However, leaving school with heavy student loans",
+                "However, finishing college with heavy student loans",
+                "However, graduating from college with large student loans",
+                "However, graduating with a mountain of student debt",
+                "However, graduating with a heavy student loan burden",
+                "However, graduating with a heavy burden of student debt",
+                "However, graduating with heavy student loan debt",
+                "However, graduating with massive student debt",
+                "However, graduating with large student debts",
+                "However, graduating with a large student loan debt"
+              ],
+              "targets": [
+                "NFSUBJ",
+                "graduate",
+                "heavy",
+                "student",
+                "loan"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "However, graduate with heavy student loans",
+                  "right": "However, graduating with heavy student loans",
+                  "explanation_zh": "動作「背負學貸畢業」當主詞要用動名詞 graduating；原形動詞 graduate 不能當主詞。"
+                },
+                {
+                  "wrong": "However, graduating with heavy student loan",
+                  "right": "However, graduating with heavy student loans",
+                  "explanation_zh": "loan 是可數名詞，「大筆學貸」用複數 loans（或 a heavy student loan）。"
+                }
+              ]
+            },
+            {
+              "zh": "常被視為",
+              "accepted": [
+                "is often seen as",
+                "is often regarded as",
+                "is often considered",
+                "is often considered to be",
+                "is often viewed as",
+                "is often thought of as",
+                "is often believed to be",
+                "is usually seen as",
+                "is usually regarded as",
+                "is usually considered",
+                "is usually considered to be",
+                "is usually viewed as",
+                "is usually thought of as",
+                "is usually believed to be",
+                "is commonly seen as",
+                "is commonly regarded as",
+                "is commonly considered",
+                "is commonly considered to be",
+                "is commonly viewed as",
+                "is commonly thought of as",
+                "is commonly believed to be",
+                "is widely seen as",
+                "is widely regarded as",
+                "is widely considered",
+                "is widely considered to be",
+                "is widely viewed as",
+                "is widely thought of as",
+                "is widely believed to be",
+                "is frequently seen as",
+                "is frequently regarded as",
+                "is frequently considered",
+                "is frequently considered to be",
+                "is frequently viewed as",
+                "is frequently thought of as",
+                "is frequently believed to be",
+                "is generally seen as",
+                "is generally regarded as",
+                "is generally considered",
+                "is generally considered to be",
+                "is generally viewed as",
+                "is generally thought of as",
+                "is generally believed to be"
+              ],
+              "targets": [
+                "PASS",
+                "regard"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "is often seen one of",
+                  "right": "is often seen as one of",
+                  "explanation_zh": "「被視為…」是 be seen as／be regarded as，as 不能省略（considered 後面才可以直接接名詞）。"
+                },
+                {
+                  "wrong": "are often seen as",
+                  "right": "is often seen as",
+                  "explanation_zh": "動名詞片語當主詞視為單數，動詞用 is。"
+                },
+                {
+                  "wrong": "often regards as",
+                  "right": "is often regarded as",
+                  "explanation_zh": "「被視為」要用被動 be regarded as。"
+                }
+              ]
+            },
+            {
+              "zh": "年輕人延後結婚的",
+              "accepted": [
+                "why young people postpone marriage",
+                "why young people delay getting married",
+                "why young people put off getting married",
+                "why young people postpone getting married",
+                "why young people delay marriage",
+                "why young people put off marriage",
+                "why young people delay marrying",
+                "that young people delay getting married",
+                "that young people put off getting married",
+                "that young people postpone getting married",
+                "that young people delay marriage",
+                "that young people postpone marriage",
+                "that young people put off marriage",
+                "that young people delay marrying",
+                "for young people postponing marriage",
+                "for young people delaying marriage",
+                "for young people putting off marriage",
+                "for young people delaying getting married",
+                "for young people putting off getting married",
+                "young people delay getting married",
+                "young people put off getting married",
+                "young people postpone marriage",
+                "why young people get married later",
+                "why young people marry later",
+                "behind young people delaying marriage"
+              ],
+              "targets": [
+                "young",
+                "delay",
+                "marry"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "why young people delay to get married",
+                  "right": "why young people delay getting married",
+                  "explanation_zh": "delay（延後）後面接動名詞 getting married，不接不定詞。"
+                },
+                {
+                  "wrong": "why young people delay to marry",
+                  "right": "why young people delay marrying",
+                  "explanation_zh": "delay 後面接動名詞：delay marrying／delay getting married。"
+                }
+              ]
+            },
+            {
+              "zh": "主要原因之一",
+              "accepted": [
+                "one of the main reasons",
+                "one of the major reasons",
+                "one of the primary reasons",
+                "one of the chief reasons",
+                "one of the key reasons",
+                "one of the biggest reasons",
+                "one of the most important reasons",
+                "one of the leading reasons",
+                "among the main reasons"
+              ],
+              "targets": [
+                "main",
+                "reason"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "one of the main reason",
+                  "right": "one of the main reasons",
+                  "explanation_zh": "「…之一」是 one of the + 複數名詞：reasons。"
+                },
+                {
+                  "wrong": "one of the most main reasons",
+                  "right": "one of the main reasons",
+                  "explanation_zh": "main 本身就是「主要的」，沒有比較級、最高級，不能再加 most。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "verbal_subject",
+              "zh": "背負大筆學貸畢業",
+              "literal_error": "However, graduate with heavy student loans is often seen as one of the main reasons why young people postpone marriage.",
+              "part": 1,
+              "explanation_zh": "中文以動作「背負學貸畢業」當主詞，英文要改成動名詞 graduating with …，不能用原形動詞開頭。"
+            },
+            {
+              "type": "plural_countable",
+              "zh": "主要原因之一",
+              "literal_error": "…is often seen as one of the main reason why young people postpone marriage.",
+              "part": 4,
+              "explanation_zh": "「…之一」one of the + 複數名詞，reason 要加 s。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "However, among the main reasons why young people put off getting married is graduating with heavy student loans.",
+              "explanation_zh": "把 among the main reasons … 移到句首、主詞放到句尾（倒裝），可以把重點放在「背負學貸畢業」上；這是加分寫法，不是唯一正解。"
+            }
+          ],
+          "restructuring_zh": "中文以動作「背負大筆學貸畢業」當主詞，英文改成動名詞片語 Graduating with heavy student loans，動詞用單數 is；「被視為…之一」用被動 is seen as one of the + 複數名詞。",
+          "notes_zh": "評分說明：「然而」However；「背負大筆學貸畢業」graduating with heavy／large／huge student loans（a lot of／a large amount of student debt 也可以），也可寫 graduating from college with …；「常被視為」is often／usually／commonly／widely + seen as／regarded as／considered (to be)／viewed as；「年輕人延後結婚的」why（that）young people delay／put off／postpone getting married (marriage)，或 for young people delaying／postponing marriage；「主要原因之一」one of the main／major／primary／key／biggest reasons。另外也給分：graduating while burdened with／carrying heavy student loans、being burdened with (having) heavy student loans upon (after) graduation，這些都仍以動名詞片語當主詞。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ac-V-3",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-top-06",
+    "lot": "translation-top-06",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "c6f44f933a9c31819117ac3657fbba0cbac38d8892d1379b9e2ce94107722abf",
+    "spec_id": "translation-top@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-10T02:38:53Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-10T02:30:00Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "In recent years, tuition fees at many universities have risen faster than prices in general, forcing many students to apply for student loans.",
+            "confidence": "high",
+            "explanation_zh": "「近年來」配現在完成式 have risen；「物價」譯 prices in general（也可 the cost of living）；「迫使」用分詞構句 forcing … to apply for；「不少學生」譯 many students。"
+          },
+          "2": {
+            "translation": "However, graduating with large student loans is often regarded as one of the main reasons why young people delay getting married.",
+            "confidence": "high",
+            "explanation_zh": "「背負大筆學貸畢業」當主詞用動名詞 graduating with large student loans；「被視為…之一」用 be regarded as one of the main reasons why；「延後結婚」用 delay + V-ing。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PART",
+              "COMP"
+            ],
+            "used_target_words": [
+              "recent",
+              "university",
+              "tuition",
+              "rise",
+              "price",
+              "force",
+              "student",
+              "apply",
+              "loan"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "NFSUBJ",
+              "PASS"
+            ],
+            "used_target_words": [
+              "graduate",
+              "heavy",
+              "student",
+              "loan",
+              "regard",
+              "young",
+              "delay",
+              "marry",
+              "main",
+              "reason"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "recent",
+              "university",
+              "tuition",
+              "rise",
+              "price",
+              "force",
+              "student",
+              "apply",
+              "loan"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PART": true,
+              "COMP": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "graduate",
+              "heavy",
+              "student",
+              "loan",
+              "regard",
+              "young",
+              "delay",
+              "marry",
+              "main",
+              "reason"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NFSUBJ": true,
+              "PASS": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "fail",
+      "created_at": "2026-10-10T02:28:18Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "In recent years, tuition at many universities has risen faster than prices, forcing quite a few students to apply for student loans.",
+            "confidence": "high",
+            "explanation_zh": "「近年來」搭配現在完成式 has risen；「漲得比物價還快」用 risen faster than prices；「迫使不少學生申請助學貸款」用分詞構句 forcing quite a few students to apply for student loans。"
+          },
+          "2": {
+            "translation": "However, graduating with a large student debt is often regarded as one of the main reasons why young people put off getting married.",
+            "confidence": "high",
+            "explanation_zh": "「背負大筆學貸畢業」用動名詞片語 graduating with a large student debt 當主詞；「被視為……主要原因之一」用 is regarded as one of the main reasons；「延後結婚」用 put off getting married（也可用 delay getting married），reasons why 引導關係子句。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PART",
+              "COMP"
+            ],
+            "used_target_words": [
+              "recent",
+              "university",
+              "tuition",
+              "rise",
+              "price",
+              "force",
+              "student",
+              "apply",
+              "loan"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "NFSUBJ",
+              "PASS"
+            ],
+            "used_target_words": [
+              "graduate",
+              "heavy",
+              "student",
+              "loan",
+              "regard",
+              "young",
+              "delay",
+              "marry",
+              "main",
+              "reason"
+            ],
+            "within_accepted": false,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": [
+              "盲譯寫 graduating with a large student debt（單數可數的 debt 加冠詞），文法可行，但第 1 部分的 accepted 只收到 a large student loan、heavy／huge student debt(s)、a large amount of student debt 等，沒有 a large student debt、a heavy student debt、large student debts 這類寫法；建議補進 accepted，或由出題者決定這種寫法是否算不夠道地。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "recent",
+              "university",
+              "tuition",
+              "rise",
+              "price",
+              "force",
+              "student",
+              "apply",
+              "loan"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PART": true,
+              "COMP": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "graduate",
+              "heavy",
+              "student",
+              "loan",
+              "regard",
+              "young",
+              "delay",
+              "marry",
+              "main",
+              "reason"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NFSUBJ": true,
+              "PASS": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 2 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義"
+        ]
+      }
+    }
+  ],
+  "status": "rejected",
+  "status_reason": "blind_solver:B 未通過：第 2 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義；判定者人工審查（第 1 輪）：同意退回。驗證者 B 的盲譯 graduating with a large student debt 文法正確、語意忠實（debt 可當可數名詞，a large debt 是常見搭配），但第 2 題第 1 部分 accepted 只收 a large student loan debt、large student debts、heavy／a lot of student debt 等，漏了 a large student debt、large student debt、a heavy student debt；評分規準太窄。重生時第 1 部分補上 debt 的單數可數與不可數寫法。第 1 題沒有問題。"
+}

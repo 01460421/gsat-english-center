@@ -1,0 +1,1514 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.064bf9",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "top",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "人工智慧（AI）工具畫圖的速度比任何畫家都快得多，迫使許多國家檢討著作權法。",
+        "options": null,
+        "answer": "Artificial intelligence tools can draw pictures much faster than any painter can, forcing many countries to review their copyright laws.",
+        "accepted_answers": [
+          "AI tools can draw pictures far more quickly than any human artist, forcing many countries to re-examine their copyright laws.",
+          "The speed at which AI tools draw pictures is much faster than that of any painter, compelling many countries to reconsider their copyright laws."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "句尾分詞片語表結果（, forcing …）",
+            "比較級（much faster than any painter）"
+          ],
+          "topic": "AI 生成內容的著作權"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "然而，單純用人工智慧（AI）工具產生圖片或文章，在法律上通常不被視為創作行為。",
+        "options": null,
+        "answer": "However, merely using AI tools to generate pictures or articles is usually not regarded as a creative act under the law.",
+        "accepted_answers": [
+          "However, simply using AI tools to produce pictures or articles is not usually considered a creative act in the eyes of the law.",
+          "However, generating images or texts simply with AI tools is generally not seen as an act of creation in legal terms."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "動名詞片語當主詞",
+            "被動語態（is not regarded as）"
+          ],
+          "topic": "AI 生成內容的著作權"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "AI 生成內容的著作權"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「AI 工具畫圖的速度比任何畫家都快得多」最自然的英文是以工具當主詞：Artificial intelligence (AI) tools can draw pictures much faster than any painter (can)，加強比較級用 much／far，不用 very；如果堅持用「速度」當主詞，比較對象要對等：The speed at which AI tools draw pictures is much faster than that of any painter。「迫使許多國家檢討著作權法」是前面整件事造成的結果，中文接在逗號後沒有主詞，英文用句尾分詞 , forcing many countries to review their copyright laws（force + 受詞 + to VR）；也可以用 , which forces … 指前面整件事。",
+          "evidence": [
+            "比任何畫家都快得多",
+            "迫使許多國家檢討著作權法"
+          ],
+          "strategy_zh": "「A 做某事的速度比 B 快」改成 A + V + faster than B；看到「…，迫使／造成…」這種沒有主詞的結果句，先想句尾分詞 , forcing／causing …。",
+          "hints": [
+            "切成四段：人工智慧（AI）工具畫圖的速度／比任何畫家都快得多／迫使許多國家／檢討著作權法",
+            "標的詞彙：tool（工具）、draw（畫）、picture（圖畫）、fast（快的）、painter（畫家）、force（迫使）、country（國家）、review（檢討）、copyright（著作權）、law（法律）",
+            "句型框架：S + can V + much faster than any + N (can), forcing + O + to VR …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "主詞是動作「單純用 AI 工具產生圖片或文章」，英文用動名詞片語 Simply using AI tools to generate pictures or articles（use + 工具 + to VR），動名詞片語視為單數，動詞用 is。「在法律上通常不被視為」用被動 is usually not regarded as（considered、seen as 也可以），「在法律上」可寫 under the law／legally／in the eyes of the law，放句首或句尾都可以。「創作行為」譯成 a creative act 或 an act of creation，不要逐字寫成 creating behavior。",
+          "evidence": [
+            "單純用人工智慧（AI）工具產生圖片或文章",
+            "通常不被視為"
+          ],
+          "strategy_zh": "中文主詞是一個動作時，先想動名詞片語當主詞（動詞用單數）；看到「被視為」用 be regarded as／be considered。",
+          "hints": [
+            "切成四段：然而，單純用人工智慧（AI）工具產生圖片或文章／在法律上／通常不被視為／創作行為",
+            "標的詞彙：tool（工具）、generate（產生）、picture（圖片）、article（文章）、law（法律）、usually（通常）、regard（視為）、creative（創作的）",
+            "句型框架：However, (simply) V-ing … + is usually not regarded as + N + under the law."
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "Artificial intelligence tools can draw pictures much faster than any painter can, forcing many countries to review their copyright laws.",
+            "AI tools can draw pictures far more quickly than any human artist, forcing many countries to re-examine their copyright laws.",
+            "The speed at which AI tools draw pictures is much faster than that of any painter, compelling many countries to reconsider their copyright laws."
+          ],
+          "target_words": [
+            {
+              "word": "tool",
+              "zh": "工具"
+            },
+            {
+              "word": "draw",
+              "zh": "畫",
+              "alternatives": [
+                "paint",
+                "create",
+                "produce",
+                "make",
+                "generate"
+              ]
+            },
+            {
+              "word": "picture",
+              "zh": "圖畫",
+              "alternatives": [
+                "image",
+                "painting",
+                "drawing",
+                "artwork",
+                "art"
+              ]
+            },
+            {
+              "word": "fast",
+              "zh": "快的",
+              "alternatives": [
+                "quickly",
+                "quick",
+                "speed",
+                "rapidly"
+              ]
+            },
+            {
+              "word": "painter",
+              "zh": "畫家",
+              "alternatives": [
+                "artist",
+                "illustrator"
+              ]
+            },
+            {
+              "word": "force",
+              "zh": "迫使",
+              "alternatives": [
+                "compel",
+                "push",
+                "drive",
+                "prompt"
+              ]
+            },
+            {
+              "word": "country",
+              "zh": "國家",
+              "alternatives": [
+                "nation",
+                "government"
+              ]
+            },
+            {
+              "word": "review",
+              "zh": "檢討、重新檢視",
+              "alternatives": [
+                "reexamine",
+                "re-examine",
+                "examine",
+                "reconsider",
+                "rethink",
+                "revisit",
+                "re-evaluate",
+                "reassess"
+              ]
+            },
+            {
+              "word": "copyright",
+              "zh": "著作權"
+            },
+            {
+              "word": "law",
+              "zh": "法律",
+              "alternatives": [
+                "legislation"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PART",
+              "grammar_id": "gp-participle-result",
+              "label_zh": "句尾分詞片語表結果（迫使…：, forcing …）",
+              "frame": "S + V …, forcing + O + to VR …",
+              "zh_trigger": "迫使許多國家"
+            },
+            {
+              "code": "COMP",
+              "grammar_id": "gp-comparative-superlative",
+              "label_zh": "比較級（比任何畫家都快得多：much faster than any painter）",
+              "frame": "S + V + much／far + 比較級 + than any + N",
+              "zh_trigger": "比任何畫家都快得多"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "人工智慧（AI）工具畫圖的速度",
+              "accepted": [
+                "Artificial intelligence tools can draw pictures",
+                "AI tools can draw pictures",
+                "AI tools draw pictures",
+                "AI tools can create pictures",
+                "AI tools can produce pictures",
+                "AI tools can paint pictures",
+                "AI tools can create images",
+                "AI tools can generate images",
+                "AI tools can produce images",
+                "AI tools can draw",
+                "AI tools can create artwork",
+                "Artificial intelligence tools draw pictures",
+                "Artificial intelligence tools can create pictures",
+                "Artificial intelligence tools can produce pictures",
+                "Artificial intelligence tools can paint pictures",
+                "Artificial intelligence tools can create images",
+                "Artificial intelligence tools can generate images",
+                "Artificial intelligence tools can produce images",
+                "Artificial intelligence tools can draw",
+                "Artificial intelligence tools can create artwork",
+                "Today's AI tools can draw pictures",
+                "Today's AI tools draw pictures",
+                "Today's AI tools can create pictures",
+                "Today's AI tools can produce pictures",
+                "Today's AI tools can paint pictures",
+                "Today's AI tools can create images",
+                "Today's AI tools can generate images",
+                "Today's AI tools can produce images",
+                "Today's AI tools can draw",
+                "Today's AI tools can create artwork",
+                "Artificial intelligence (AI) tools can draw pictures",
+                "Artificial intelligence (AI) tools draw pictures",
+                "Artificial intelligence (AI) tools can create pictures",
+                "Artificial intelligence (AI) tools can produce pictures",
+                "Artificial intelligence (AI) tools can paint pictures",
+                "Artificial intelligence (AI) tools can create images",
+                "Artificial intelligence (AI) tools can generate images",
+                "Artificial intelligence (AI) tools can produce images",
+                "Artificial intelligence (AI) tools can draw",
+                "Artificial intelligence (AI) tools can create artwork",
+                "The speed at which AI tools draw pictures",
+                "The speed at which AI tools can draw pictures",
+                "The speed at which AI tools create pictures",
+                "The speed at which AI tools produce images",
+                "The speed at which AI tools draw",
+                "The speed at which artificial intelligence tools draw pictures",
+                "The speed at which artificial intelligence tools can draw pictures",
+                "The speed at which artificial intelligence tools create pictures",
+                "The speed at which artificial intelligence tools produce images",
+                "The speed at which artificial intelligence tools draw",
+                "The speed of AI tools in drawing pictures",
+                "The drawing speed of AI tools",
+                "AI tools' drawing speed",
+                "The speed of AI drawing tools",
+                "AI tools draw",
+                "AI tools are able to draw pictures",
+                "AI tools are able to draw",
+                "AI tools can draw images",
+                "AI tools draw images",
+                "Artificial intelligence tools draw",
+                "Artificial intelligence tools are able to draw pictures",
+                "Artificial intelligence tools are able to draw",
+                "Artificial intelligence tools can draw images",
+                "Artificial intelligence tools draw images",
+                "Artificial intelligence (AI) tools draw",
+                "Artificial intelligence (AI) tools are able to draw pictures",
+                "Artificial intelligence (AI) tools are able to draw",
+                "Artificial intelligence (AI) tools can draw images",
+                "Artificial intelligence (AI) tools draw images"
+              ],
+              "targets": [
+                "tool",
+                "draw",
+                "picture"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "AI tools can drew pictures",
+                  "right": "AI tools can draw pictures",
+                  "explanation_zh": "情態助動詞 can 後面接原形動詞 draw。"
+                },
+                {
+                  "wrong": "AI tools painting picture",
+                  "right": "AI tools can paint pictures",
+                  "explanation_zh": "句子要有主要動詞（can paint）；泛指「畫圖」用複數 pictures。"
+                }
+              ]
+            },
+            {
+              "zh": "比任何畫家都快得多",
+              "accepted": [
+                "much faster than any painter can",
+                "much faster than any painter",
+                "much faster than any artist",
+                "much faster than any human painter",
+                "much faster than any human artist",
+                "much faster than any artist can",
+                "much faster than any human painter can",
+                "much faster than any human artist can",
+                "much faster than any painter does",
+                "much faster than any artist does",
+                "much more quickly than any painter",
+                "much more quickly than any artist",
+                "much more quickly than any human painter",
+                "much more quickly than any human artist",
+                "much more quickly than any painter can",
+                "much more quickly than any artist can",
+                "much more quickly than any human painter can",
+                "much more quickly than any human artist can",
+                "much more quickly than any painter does",
+                "much more quickly than any artist does",
+                "far faster than any painter",
+                "far faster than any artist",
+                "far faster than any human painter",
+                "far faster than any human artist",
+                "far faster than any painter can",
+                "far faster than any artist can",
+                "far faster than any human painter can",
+                "far faster than any human artist can",
+                "far faster than any painter does",
+                "far faster than any artist does",
+                "far more quickly than any painter",
+                "far more quickly than any artist",
+                "far more quickly than any human painter",
+                "far more quickly than any human artist",
+                "far more quickly than any painter can",
+                "far more quickly than any artist can",
+                "far more quickly than any human painter can",
+                "far more quickly than any human artist can",
+                "far more quickly than any painter does",
+                "far more quickly than any artist does",
+                "a lot faster than any painter",
+                "a lot faster than any artist",
+                "a lot faster than any human painter",
+                "a lot faster than any human artist",
+                "a lot faster than any painter can",
+                "a lot faster than any artist can",
+                "a lot faster than any human painter can",
+                "a lot faster than any human artist can",
+                "a lot faster than any painter does",
+                "a lot faster than any artist does",
+                "a lot more quickly than any painter",
+                "a lot more quickly than any artist",
+                "a lot more quickly than any human painter",
+                "a lot more quickly than any human artist",
+                "a lot more quickly than any painter can",
+                "a lot more quickly than any artist can",
+                "a lot more quickly than any human painter can",
+                "a lot more quickly than any human artist can",
+                "a lot more quickly than any painter does",
+                "a lot more quickly than any artist does",
+                "is much faster than that of any painter",
+                "is much faster than that of any artist",
+                "is much faster than any painter's",
+                "is much faster than any artist's",
+                "is much faster than that of any human painter",
+                "is much faster than that of any human artist",
+                "is far faster than that of any painter",
+                "is far faster than that of any artist",
+                "is far faster than any painter's",
+                "is far faster than any artist's",
+                "is far faster than that of any human painter",
+                "is far faster than that of any human artist",
+                "is a lot faster than that of any painter",
+                "is a lot faster than that of any artist",
+                "is a lot faster than any painter's",
+                "is a lot faster than any artist's",
+                "is a lot faster than that of any human painter",
+                "is a lot faster than that of any human artist"
+              ],
+              "targets": [
+                "COMP",
+                "fast",
+                "painter"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "very faster than any painter",
+                  "right": "much faster than any painter",
+                  "explanation_zh": "加強比較級用 much／far／a lot，不能用 very。"
+                },
+                {
+                  "wrong": "much more faster than any painter",
+                  "right": "much faster than any painter",
+                  "explanation_zh": "faster 已經是比較級，前面不能再加 more。"
+                },
+                {
+                  "wrong": "The drawing speed of AI tools is much faster than any painter",
+                  "right": "The drawing speed of AI tools is much faster than that of any painter",
+                  "explanation_zh": "以「速度」當主詞時，比較的對象也要是速度：than that of any painter；不能拿速度和畫家比。"
+                }
+              ]
+            },
+            {
+              "zh": "迫使許多國家",
+              "accepted": [
+                "forcing many countries",
+                "forcing a lot of countries",
+                "forcing many nations",
+                "forcing many governments",
+                "compelling many countries",
+                "compelling a lot of countries",
+                "compelling many nations",
+                "compelling many governments",
+                "pushing many countries",
+                "pushing a lot of countries",
+                "pushing many nations",
+                "pushing many governments",
+                "driving many countries",
+                "driving a lot of countries",
+                "driving many nations",
+                "driving many governments",
+                "prompting many countries",
+                "prompting a lot of countries",
+                "prompting many nations",
+                "prompting many governments",
+                "which forces many countries",
+                "which forces many nations",
+                "which has forced many countries",
+                "which has forced many nations",
+                "which is forcing many countries",
+                "which is forcing many nations",
+                "which compels many countries",
+                "which compels many nations",
+                "which has compelled many countries",
+                "which has compelled many nations",
+                "which has pushed many countries",
+                "which has pushed many nations"
+              ],
+              "targets": [
+                "PART",
+                "force",
+                "country"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "forced many countries",
+                  "right": "forcing many countries",
+                  "explanation_zh": "前面已是完整句子，「迫使…」要用句尾分詞 forcing（或 , which forces …）表結果；直接接過去式 forced 會變成兩個主要動詞卻沒有連接詞。"
+                },
+                {
+                  "wrong": "forcing many country",
+                  "right": "forcing many countries",
+                  "explanation_zh": "many 後面接複數名詞 countries。"
+                },
+                {
+                  "wrong": "it forces many countries",
+                  "right": "forcing many countries",
+                  "explanation_zh": "逗號後面不能直接接另一個完整句子 it forces …（逗號連接兩個句子）；用句尾分詞 forcing 或 , which forces …。"
+                }
+              ]
+            },
+            {
+              "zh": "檢討著作權法",
+              "accepted": [
+                "to review their copyright laws",
+                "to review their copyright law",
+                "to review copyright laws",
+                "to review copyright law",
+                "to review the copyright law",
+                "to re-examine their copyright laws",
+                "to re-examine their copyright law",
+                "to re-examine copyright laws",
+                "to re-examine copyright law",
+                "to re-examine the copyright law",
+                "to reconsider their copyright laws",
+                "to reconsider their copyright law",
+                "to reconsider copyright laws",
+                "to reconsider copyright law",
+                "to reconsider the copyright law",
+                "to rethink their copyright laws",
+                "to rethink their copyright law",
+                "to rethink copyright laws",
+                "to rethink copyright law",
+                "to rethink the copyright law",
+                "to revisit their copyright laws",
+                "to revisit their copyright law",
+                "to revisit copyright laws",
+                "to revisit copyright law",
+                "to revisit the copyright law",
+                "to re-evaluate their copyright laws",
+                "to re-evaluate their copyright law",
+                "to re-evaluate copyright laws",
+                "to re-evaluate copyright law",
+                "to re-evaluate the copyright law",
+                "to reassess their copyright laws",
+                "to reassess their copyright law",
+                "to reassess copyright laws",
+                "to reassess copyright law",
+                "to reassess the copyright law",
+                "to reexamine their copyright laws",
+                "to reexamine their copyright law",
+                "to reexamine copyright laws",
+                "to reexamine copyright law",
+                "to reexamine the copyright law",
+                "to reexamine their laws on copyright",
+                "to reexamine their copyright legislation",
+                "to reexamine the copyright laws",
+                "to re-examine their laws on copyright",
+                "to re-examine their copyright legislation",
+                "to re-examine the copyright laws",
+                "to review their laws on copyright",
+                "to review their copyright legislation",
+                "to review the copyright laws",
+                "to reconsider their laws on copyright",
+                "to reconsider their copyright legislation",
+                "to reconsider the copyright laws",
+                "to rethink their laws on copyright",
+                "to rethink their copyright legislation",
+                "to rethink the copyright laws",
+                "to revisit their laws on copyright",
+                "to revisit their copyright legislation",
+                "to revisit the copyright laws",
+                "to re-evaluate their laws on copyright",
+                "to re-evaluate their copyright legislation",
+                "to re-evaluate the copyright laws",
+                "to reassess their laws on copyright",
+                "to reassess their copyright legislation",
+                "to reassess the copyright laws",
+                "to take another look at their copyright laws",
+                "to take another look at their copyright law",
+                "to take another look at copyright laws",
+                "to take another look at copyright law",
+                "to take another look at the copyright law",
+                "to take another look at their laws on copyright",
+                "to take another look at their copyright legislation",
+                "to take another look at the copyright laws",
+                "to take a fresh look at their copyright laws",
+                "to take a fresh look at their copyright law",
+                "to take a fresh look at copyright laws",
+                "to take a fresh look at copyright law",
+                "to take a fresh look at the copyright law",
+                "to take a fresh look at their laws on copyright",
+                "to take a fresh look at their copyright legislation",
+                "to take a fresh look at the copyright laws",
+                "to look again at their copyright laws",
+                "to look again at their copyright law",
+                "to look again at copyright laws",
+                "to look again at copyright law",
+                "to look again at the copyright law",
+                "to look again at their laws on copyright",
+                "to look again at their copyright legislation",
+                "to look again at the copyright laws"
+              ],
+              "targets": [
+                "review",
+                "copyright",
+                "law"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "to reviewing their copyright laws",
+                  "right": "to review their copyright laws",
+                  "explanation_zh": "force + 受詞 + to 後面接原形動詞 review。"
+                },
+                {
+                  "wrong": "to review their copyrights law",
+                  "right": "to review their copyright laws",
+                  "explanation_zh": "「著作權法」是複合名詞 copyright law；前面修飾用的 copyright 不加 s。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "abstract_nominal",
+              "zh": "畫圖的速度",
+              "literal_error": "AI tools' drawing speed is much faster than any painter, forcing many countries to review their copyright laws.",
+              "part": 2,
+              "explanation_zh": "照字面以「速度」當主詞，就要和畫家的「速度」比（than that of any painter）；最自然的寫法是改用工具當主詞：AI tools can draw pictures much faster than any painter (can)。"
+            },
+            {
+              "type": "subjectless",
+              "zh": "迫使許多國家",
+              "literal_error": "AI tools can draw pictures much faster than any painter, forced many countries to review their copyright laws.",
+              "part": 3,
+              "explanation_zh": "「迫使…」前面沒有主詞，英文不能直接再接一個過去式動詞；改用句尾分詞 forcing …（或 , which forces …）表示前面整件事造成的結果。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "So fast can AI tools turn out pictures that no painter can keep up, which has driven many countries to rethink their copyright laws.",
+              "grammar_id": "gp-so-adj-inversion",
+              "explanation_zh": "So + adv. + can + S + V … that … 是倒裝的「如此…以致於…」；turn out（產出）、keep up（跟上）、drive sb to VR（驅使某人去做）是進階搭配。這是加分寫法，不是唯一正解。"
+            }
+          ],
+          "restructuring_zh": "「AI 工具畫圖的速度比任何畫家都快」照字面以「速度」當主詞，比較對象容易不對等；改以工具當主詞 AI tools can draw pictures much faster than any painter (can)。「迫使許多國家…」接在逗號後、沒有主詞，用句尾分詞 , forcing many countries to review … 表示結果。",
+          "notes_zh": "評分說明：「人工智慧（AI）工具畫圖的速度」最自然的寫法是以工具當主詞：AI tools／Artificial intelligence tools + can draw (create／produce／paint) pictures (images)；若以「速度」當主詞（The speed at which AI tools draw pictures …），後面的比較對象也要是速度：is much faster than that of any painter（any painter's）；「比任何畫家都快得多」much／far／a lot + faster／more quickly + than any (human) painter／artist (can)；「迫使」forcing／compelling／pushing／driving／prompting 都給分，寫成 , which forces／has forced／is forcing many countries to …（which 指前面整件事）也算達成本句 PART（句尾結果）標的；「許多國家」many countries／nations；「檢討」review／re-examine（reexamine）／reconsider／rethink／revisit／re-evaluate／reassess；「著作權法」(their／the) copyright law(s)。主要子句後不可直接接 forced 或 it forces（兩個主要動詞沒有連接詞）。另外也給分：Today's AI tools、AI tools can create artwork；reexamine（不加連字號）、take another look at their copyright laws。"
+        },
+        "2": {
+          "references": [
+            "However, merely using AI tools to generate pictures or articles is usually not regarded as a creative act under the law.",
+            "However, simply using AI tools to produce pictures or articles is not usually considered a creative act in the eyes of the law.",
+            "However, generating images or texts simply with AI tools is generally not seen as an act of creation in legal terms."
+          ],
+          "target_words": [
+            {
+              "word": "tool",
+              "zh": "工具"
+            },
+            {
+              "word": "generate",
+              "zh": "產生",
+              "alternatives": [
+                "produce",
+                "create",
+                "make"
+              ]
+            },
+            {
+              "word": "picture",
+              "zh": "圖片",
+              "alternatives": [
+                "image",
+                "painting",
+                "drawing"
+              ]
+            },
+            {
+              "word": "article",
+              "zh": "文章",
+              "alternatives": [
+                "text",
+                "essay",
+                "writing",
+                "story"
+              ]
+            },
+            {
+              "word": "law",
+              "zh": "法律",
+              "alternatives": [
+                "legal",
+                "legally"
+              ]
+            },
+            {
+              "word": "usually",
+              "zh": "通常",
+              "alternatives": [
+                "generally",
+                "normally",
+                "typically",
+                "often",
+                "commonly"
+              ]
+            },
+            {
+              "word": "regard",
+              "zh": "視為",
+              "alternatives": [
+                "consider",
+                "see",
+                "view",
+                "recognize",
+                "count",
+                "treat"
+              ]
+            },
+            {
+              "word": "creative",
+              "zh": "創作的",
+              "alternatives": [
+                "creation",
+                "create",
+                "creativity"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "NFSUBJ",
+              "grammar_id": "gp-gerund-subject",
+              "label_zh": "動名詞片語當主詞（單純用 AI 工具產生圖片或文章）",
+              "frame": "(Simply) V-ing … + is (usually) not + p.p. …",
+              "zh_trigger": "單純用人工智慧（AI）工具產生圖片或文章"
+            },
+            {
+              "code": "PASS",
+              "grammar_id": "gp-passive",
+              "label_zh": "被動語態（通常不被視為：is usually not regarded as）",
+              "frame": "S + is (usually) not + regarded as／considered + N",
+              "zh_trigger": "通常不被視為"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "然而，單純用人工智慧（AI）工具產生圖片或文章",
+              "accepted": [
+                "However, merely using AI tools to generate pictures or articles",
+                "However, simply using AI tools to generate pictures or articles",
+                "However, simply using AI tools to generate images or articles",
+                "However, simply using AI tools to generate images or texts",
+                "However, simply using AI tools to produce pictures or articles",
+                "However, simply using AI tools to produce images or articles",
+                "However, simply using AI tools to produce images or texts",
+                "However, simply using AI tools to create pictures or articles",
+                "However, simply using AI tools to create images or articles",
+                "However, simply using AI tools to create images or texts",
+                "However, merely using AI tools to generate images or articles",
+                "However, merely using AI tools to generate images or texts",
+                "However, merely using AI tools to produce pictures or articles",
+                "However, merely using AI tools to produce images or articles",
+                "However, merely using AI tools to produce images or texts",
+                "However, merely using AI tools to create pictures or articles",
+                "However, merely using AI tools to create images or articles",
+                "However, merely using AI tools to create images or texts",
+                "However, just using AI tools to generate pictures or articles",
+                "However, just using AI tools to generate images or articles",
+                "However, just using AI tools to generate images or texts",
+                "However, just using AI tools to produce pictures or articles",
+                "However, just using AI tools to produce images or articles",
+                "However, just using AI tools to produce images or texts",
+                "However, just using AI tools to create pictures or articles",
+                "However, just using AI tools to create images or articles",
+                "However, just using AI tools to create images or texts",
+                "However, generating images or texts simply with AI tools",
+                "However, generating pictures or articles simply with AI tools",
+                "However, simply generating pictures or articles with AI tools",
+                "However, generating pictures or articles merely by using AI tools",
+                "However, using AI tools alone to generate pictures or articles",
+                "However, to simply use AI tools to generate pictures or articles",
+                "However, simply using artificial intelligence tools to generate pictures or articles",
+                "However, simply using AI tools to produce pictures or texts",
+                "However, only using AI tools to generate pictures or articles",
+                "However, simply using AI tools to make pictures or articles",
+                "However, simply using AI tools to generate pictures or texts",
+                "However, simply using AI tools to create pictures or texts",
+                "However, merely using AI tools to generate pictures or texts",
+                "However, merely using AI tools to produce pictures or texts",
+                "However, merely using AI tools to create pictures or texts",
+                "However, just using AI tools to generate pictures or texts",
+                "However, just using AI tools to produce pictures or texts",
+                "However, just using AI tools to create pictures or texts",
+                "However, legally, simply using AI tools to generate pictures or articles",
+                "However, legally, simply using AI tools to generate images or articles",
+                "However, legally, simply using AI tools to generate images or texts",
+                "However, legally, simply using AI tools to generate pictures or texts",
+                "However, legally, simply using AI tools to produce pictures or articles",
+                "However, legally, simply using AI tools to produce images or articles",
+                "However, legally, simply using AI tools to produce images or texts",
+                "However, legally, simply using AI tools to produce pictures or texts",
+                "However, legally, simply using AI tools to create pictures or articles",
+                "However, legally, simply using AI tools to create images or articles",
+                "However, legally, simply using AI tools to create images or texts",
+                "However, legally, simply using AI tools to create pictures or texts",
+                "However, legally, merely using AI tools to generate pictures or articles",
+                "However, legally, merely using AI tools to generate images or articles",
+                "However, legally, merely using AI tools to generate images or texts",
+                "However, legally, merely using AI tools to generate pictures or texts",
+                "However, legally, merely using AI tools to produce pictures or articles",
+                "However, legally, merely using AI tools to produce images or articles",
+                "However, legally, merely using AI tools to produce images or texts",
+                "However, legally, merely using AI tools to produce pictures or texts",
+                "However, legally, merely using AI tools to create pictures or articles",
+                "However, legally, merely using AI tools to create images or articles",
+                "However, legally, merely using AI tools to create images or texts",
+                "However, legally, merely using AI tools to create pictures or texts",
+                "However, legally, just using AI tools to generate pictures or articles",
+                "However, legally, just using AI tools to generate images or articles",
+                "However, legally, just using AI tools to generate images or texts",
+                "However, legally, just using AI tools to generate pictures or texts",
+                "However, legally, just using AI tools to produce pictures or articles",
+                "However, legally, just using AI tools to produce images or articles",
+                "However, legally, just using AI tools to produce images or texts",
+                "However, legally, just using AI tools to produce pictures or texts",
+                "However, legally, just using AI tools to create pictures or articles",
+                "However, legally, just using AI tools to create images or articles",
+                "However, legally, just using AI tools to create images or texts",
+                "However, legally, just using AI tools to create pictures or texts",
+                "However, legally speaking, simply using AI tools to generate pictures or articles",
+                "However, legally speaking, simply using AI tools to generate images or articles",
+                "However, legally speaking, simply using AI tools to generate images or texts",
+                "However, legally speaking, simply using AI tools to generate pictures or texts",
+                "However, legally speaking, simply using AI tools to produce pictures or articles",
+                "However, legally speaking, simply using AI tools to produce images or articles",
+                "However, legally speaking, simply using AI tools to produce images or texts",
+                "However, legally speaking, simply using AI tools to produce pictures or texts",
+                "However, legally speaking, simply using AI tools to create pictures or articles",
+                "However, legally speaking, simply using AI tools to create images or articles",
+                "However, legally speaking, simply using AI tools to create images or texts",
+                "However, legally speaking, simply using AI tools to create pictures or texts",
+                "However, legally speaking, merely using AI tools to generate pictures or articles",
+                "However, legally speaking, merely using AI tools to generate images or articles",
+                "However, legally speaking, merely using AI tools to generate images or texts",
+                "However, legally speaking, merely using AI tools to generate pictures or texts",
+                "However, legally speaking, merely using AI tools to produce pictures or articles",
+                "However, legally speaking, merely using AI tools to produce images or articles",
+                "However, legally speaking, merely using AI tools to produce images or texts",
+                "However, legally speaking, merely using AI tools to produce pictures or texts",
+                "However, legally speaking, merely using AI tools to create pictures or articles",
+                "However, legally speaking, merely using AI tools to create images or articles",
+                "However, legally speaking, merely using AI tools to create images or texts",
+                "However, legally speaking, merely using AI tools to create pictures or texts",
+                "However, legally speaking, just using AI tools to generate pictures or articles",
+                "However, legally speaking, just using AI tools to generate images or articles",
+                "However, legally speaking, just using AI tools to generate images or texts",
+                "However, legally speaking, just using AI tools to generate pictures or texts",
+                "However, legally speaking, just using AI tools to produce pictures or articles",
+                "However, legally speaking, just using AI tools to produce images or articles",
+                "However, legally speaking, just using AI tools to produce images or texts",
+                "However, legally speaking, just using AI tools to produce pictures or texts",
+                "However, legally speaking, just using AI tools to create pictures or articles",
+                "However, legally speaking, just using AI tools to create images or articles",
+                "However, legally speaking, just using AI tools to create images or texts",
+                "However, legally speaking, just using AI tools to create pictures or texts",
+                "However, under the law, simply using AI tools to generate pictures or articles",
+                "However, under the law, simply using AI tools to generate images or articles",
+                "However, under the law, simply using AI tools to generate images or texts",
+                "However, under the law, simply using AI tools to generate pictures or texts",
+                "However, under the law, simply using AI tools to produce pictures or articles",
+                "However, under the law, simply using AI tools to produce images or articles",
+                "However, under the law, simply using AI tools to produce images or texts",
+                "However, under the law, simply using AI tools to produce pictures or texts",
+                "However, under the law, simply using AI tools to create pictures or articles",
+                "However, under the law, simply using AI tools to create images or articles",
+                "However, under the law, simply using AI tools to create images or texts",
+                "However, under the law, simply using AI tools to create pictures or texts",
+                "However, under the law, merely using AI tools to generate pictures or articles",
+                "However, under the law, merely using AI tools to generate images or articles",
+                "However, under the law, merely using AI tools to generate images or texts",
+                "However, under the law, merely using AI tools to generate pictures or texts",
+                "However, under the law, merely using AI tools to produce pictures or articles",
+                "However, under the law, merely using AI tools to produce images or articles",
+                "However, under the law, merely using AI tools to produce images or texts",
+                "However, under the law, merely using AI tools to produce pictures or texts",
+                "However, under the law, merely using AI tools to create pictures or articles",
+                "However, under the law, merely using AI tools to create images or articles",
+                "However, under the law, merely using AI tools to create images or texts",
+                "However, under the law, merely using AI tools to create pictures or texts",
+                "However, under the law, just using AI tools to generate pictures or articles",
+                "However, under the law, just using AI tools to generate images or articles",
+                "However, under the law, just using AI tools to generate images or texts",
+                "However, under the law, just using AI tools to generate pictures or texts",
+                "However, under the law, just using AI tools to produce pictures or articles",
+                "However, under the law, just using AI tools to produce images or articles",
+                "However, under the law, just using AI tools to produce images or texts",
+                "However, under the law, just using AI tools to produce pictures or texts",
+                "However, under the law, just using AI tools to create pictures or articles",
+                "However, under the law, just using AI tools to create images or articles",
+                "However, under the law, just using AI tools to create images or texts",
+                "However, under the law, just using AI tools to create pictures or texts",
+                "However, from a legal standpoint, simply using AI tools to generate pictures or articles",
+                "However, from a legal standpoint, simply using AI tools to generate images or articles",
+                "However, from a legal standpoint, simply using AI tools to generate images or texts",
+                "However, from a legal standpoint, simply using AI tools to generate pictures or texts",
+                "However, from a legal standpoint, simply using AI tools to produce pictures or articles",
+                "However, from a legal standpoint, simply using AI tools to produce images or articles",
+                "However, from a legal standpoint, simply using AI tools to produce images or texts",
+                "However, from a legal standpoint, simply using AI tools to produce pictures or texts",
+                "However, from a legal standpoint, simply using AI tools to create pictures or articles",
+                "However, from a legal standpoint, simply using AI tools to create images or articles",
+                "However, from a legal standpoint, simply using AI tools to create images or texts",
+                "However, from a legal standpoint, simply using AI tools to create pictures or texts",
+                "However, from a legal standpoint, merely using AI tools to generate pictures or articles",
+                "However, from a legal standpoint, merely using AI tools to generate images or articles",
+                "However, from a legal standpoint, merely using AI tools to generate images or texts",
+                "However, from a legal standpoint, merely using AI tools to generate pictures or texts",
+                "However, from a legal standpoint, merely using AI tools to produce pictures or articles",
+                "However, from a legal standpoint, merely using AI tools to produce images or articles",
+                "However, from a legal standpoint, merely using AI tools to produce images or texts",
+                "However, from a legal standpoint, merely using AI tools to produce pictures or texts",
+                "However, from a legal standpoint, merely using AI tools to create pictures or articles",
+                "However, from a legal standpoint, merely using AI tools to create images or articles",
+                "However, from a legal standpoint, merely using AI tools to create images or texts",
+                "However, from a legal standpoint, merely using AI tools to create pictures or texts",
+                "However, from a legal standpoint, just using AI tools to generate pictures or articles",
+                "However, from a legal standpoint, just using AI tools to generate images or articles",
+                "However, from a legal standpoint, just using AI tools to generate images or texts",
+                "However, from a legal standpoint, just using AI tools to generate pictures or texts",
+                "However, from a legal standpoint, just using AI tools to produce pictures or articles",
+                "However, from a legal standpoint, just using AI tools to produce images or articles",
+                "However, from a legal standpoint, just using AI tools to produce images or texts",
+                "However, from a legal standpoint, just using AI tools to produce pictures or texts",
+                "However, from a legal standpoint, just using AI tools to create pictures or articles",
+                "However, from a legal standpoint, just using AI tools to create images or articles",
+                "However, from a legal standpoint, just using AI tools to create images or texts",
+                "However, from a legal standpoint, just using AI tools to create pictures or texts",
+                "However, generating pictures or articles simply by using AI tools",
+                "However, generating pictures or articles just by using AI tools",
+                "However, generating pictures or articles with AI tools alone",
+                "However, generating pictures or articles merely with AI tools",
+                "However, generating images or texts simply by using AI tools",
+                "However, generating images or texts merely by using AI tools",
+                "However, generating images or texts just by using AI tools",
+                "However, generating images or texts with AI tools alone",
+                "However, generating images or texts merely with AI tools",
+                "However, generating images or articles simply with AI tools",
+                "However, generating images or articles simply by using AI tools",
+                "However, generating images or articles merely by using AI tools",
+                "However, generating images or articles just by using AI tools",
+                "However, generating images or articles with AI tools alone",
+                "However, generating images or articles merely with AI tools",
+                "However, generating pictures or texts simply with AI tools",
+                "However, generating pictures or texts simply by using AI tools",
+                "However, generating pictures or texts merely by using AI tools",
+                "However, generating pictures or texts just by using AI tools",
+                "However, generating pictures or texts with AI tools alone",
+                "However, generating pictures or texts merely with AI tools",
+                "However, producing pictures or articles simply with AI tools",
+                "However, producing pictures or articles simply by using AI tools",
+                "However, producing pictures or articles merely by using AI tools",
+                "However, producing pictures or articles just by using AI tools",
+                "However, producing pictures or articles with AI tools alone",
+                "However, producing pictures or articles merely with AI tools",
+                "However, producing images or texts simply with AI tools",
+                "However, producing images or texts simply by using AI tools",
+                "However, producing images or texts merely by using AI tools",
+                "However, producing images or texts just by using AI tools",
+                "However, producing images or texts with AI tools alone",
+                "However, producing images or texts merely with AI tools",
+                "However, producing images or articles simply with AI tools",
+                "However, producing images or articles simply by using AI tools",
+                "However, producing images or articles merely by using AI tools",
+                "However, producing images or articles just by using AI tools",
+                "However, producing images or articles with AI tools alone",
+                "However, producing images or articles merely with AI tools",
+                "However, producing pictures or texts simply with AI tools",
+                "However, producing pictures or texts simply by using AI tools",
+                "However, producing pictures or texts merely by using AI tools",
+                "However, producing pictures or texts just by using AI tools",
+                "However, producing pictures or texts with AI tools alone",
+                "However, producing pictures or texts merely with AI tools",
+                "However, creating pictures or articles simply with AI tools",
+                "However, creating pictures or articles simply by using AI tools",
+                "However, creating pictures or articles merely by using AI tools",
+                "However, creating pictures or articles just by using AI tools",
+                "However, creating pictures or articles with AI tools alone",
+                "However, creating pictures or articles merely with AI tools",
+                "However, creating images or texts simply with AI tools",
+                "However, creating images or texts simply by using AI tools",
+                "However, creating images or texts merely by using AI tools",
+                "However, creating images or texts just by using AI tools",
+                "However, creating images or texts with AI tools alone",
+                "However, creating images or texts merely with AI tools",
+                "However, creating images or articles simply with AI tools",
+                "However, creating images or articles simply by using AI tools",
+                "However, creating images or articles merely by using AI tools",
+                "However, creating images or articles just by using AI tools",
+                "However, creating images or articles with AI tools alone",
+                "However, creating images or articles merely with AI tools",
+                "However, creating pictures or texts simply with AI tools",
+                "However, creating pictures or texts simply by using AI tools",
+                "However, creating pictures or texts merely by using AI tools",
+                "However, creating pictures or texts just by using AI tools",
+                "However, creating pictures or texts with AI tools alone",
+                "However, creating pictures or texts merely with AI tools",
+                "However, simply generating images or texts with AI tools",
+                "However, simply producing pictures or articles with AI tools",
+                "However, simply producing images or texts with AI tools",
+                "However, simply creating pictures or articles with AI tools",
+                "However, simply creating images or texts with AI tools",
+                "However, merely generating pictures or articles with AI tools",
+                "However, merely generating images or texts with AI tools",
+                "However, merely producing pictures or articles with AI tools",
+                "However, merely producing images or texts with AI tools",
+                "However, merely creating pictures or articles with AI tools",
+                "However, merely creating images or texts with AI tools",
+                "However, just generating pictures or articles with AI tools",
+                "However, just generating images or texts with AI tools",
+                "However, just producing pictures or articles with AI tools",
+                "However, just producing images or texts with AI tools",
+                "However, just creating pictures or articles with AI tools",
+                "However, just creating images or texts with AI tools",
+                "However, only using AI tools to generate images or texts",
+                "However, only using AI tools to produce pictures or articles",
+                "However, only using AI tools to produce images or texts",
+                "However, only using AI tools to make pictures or articles",
+                "However, only using AI tools to make images or texts",
+                "However, simply using AI tools to make images or texts",
+                "However, using AI tools alone to produce pictures or articles",
+                "However, using AI tools only to generate pictures or articles"
+              ],
+              "targets": [
+                "NFSUBJ",
+                "tool",
+                "generate",
+                "picture",
+                "article"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "However, simply use AI tools to generate pictures or articles",
+                  "right": "However, simply using AI tools to generate pictures or articles",
+                  "explanation_zh": "動作「用 AI 工具產生…」當主詞要用動名詞 using（或不定詞 To use …）；原形動詞 use 不能當主詞。"
+                },
+                {
+                  "wrong": "However, simply using AI tools generating pictures or articles",
+                  "right": "However, simply using AI tools to generate pictures or articles",
+                  "explanation_zh": "「用工具做某事」是 use + 工具 + to VR，不能再接 V-ing。"
+                }
+              ]
+            },
+            {
+              "zh": "在法律上",
+              "accepted": [
+                "under the law",
+                "legally",
+                "in the eyes of the law",
+                "in legal terms",
+                "from a legal point of view",
+                "from a legal perspective",
+                "legally speaking",
+                "by law",
+                "in law",
+                "under law"
+              ],
+              "targets": [
+                "law"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "on the law",
+                  "right": "under the law",
+                  "explanation_zh": "「在法律上」是 under the law／legally／in the eyes of the law；on the law 是「關於法律」。"
+                }
+              ]
+            },
+            {
+              "zh": "通常不被視為",
+              "accepted": [
+                "is usually not regarded as",
+                "is usually not considered",
+                "is usually not considered to be",
+                "is usually not seen as",
+                "is usually not viewed as",
+                "is usually not recognized as",
+                "is not usually regarded as",
+                "is not usually considered",
+                "is not usually considered to be",
+                "is not usually seen as",
+                "is not usually viewed as",
+                "is not usually recognized as",
+                "is generally not regarded as",
+                "is generally not considered",
+                "is generally not considered to be",
+                "is generally not seen as",
+                "is generally not viewed as",
+                "is generally not recognized as",
+                "is not generally regarded as",
+                "is not generally considered",
+                "is not generally considered to be",
+                "is not generally seen as",
+                "is not generally viewed as",
+                "is not generally recognized as",
+                "is normally not regarded as",
+                "is normally not considered",
+                "is normally not considered to be",
+                "is normally not seen as",
+                "is normally not viewed as",
+                "is normally not recognized as",
+                "is often not regarded as",
+                "is often not considered",
+                "is often not considered to be",
+                "is often not seen as",
+                "is often not viewed as",
+                "is often not recognized as",
+                "isn't usually regarded as",
+                "isn't usually considered",
+                "is usually not counted as",
+                "is not usually treated as",
+                "is usually not treated as",
+                "is usually not thought of as",
+                "is not usually counted as",
+                "is not usually thought of as",
+                "is generally not counted as",
+                "is generally not treated as",
+                "is generally not thought of as",
+                "is not generally counted as",
+                "is not generally treated as",
+                "is not generally thought of as",
+                "is normally not counted as",
+                "is normally not treated as",
+                "is normally not thought of as",
+                "is often not counted as",
+                "is often not treated as",
+                "is often not thought of as",
+                "is typically not regarded as",
+                "is typically not considered",
+                "is typically not considered to be",
+                "is typically not seen as",
+                "is typically not viewed as",
+                "is typically not recognized as",
+                "is typically not counted as",
+                "is typically not treated as",
+                "is typically not thought of as",
+                "is usually not legally regarded as",
+                "is usually not legally considered",
+                "is usually not legally considered to be",
+                "is usually not legally seen as",
+                "is usually not legally recognized as",
+                "is usually not legally viewed as",
+                "is not usually legally regarded as",
+                "is not usually legally considered",
+                "is not usually legally considered to be",
+                "is not usually legally seen as",
+                "is not usually legally recognized as",
+                "is not usually legally viewed as",
+                "is generally not legally regarded as",
+                "is generally not legally considered",
+                "is generally not legally considered to be",
+                "is generally not legally seen as",
+                "is generally not legally recognized as",
+                "is generally not legally viewed as",
+                "is not legally regarded as",
+                "is not legally considered",
+                "is not legally considered to be",
+                "is not legally seen as",
+                "is not legally recognized as",
+                "is not legally viewed as",
+                "is often not legally regarded as",
+                "is often not legally considered",
+                "is often not legally considered to be",
+                "is often not legally seen as",
+                "is often not legally recognized as",
+                "is often not legally viewed as"
+              ],
+              "targets": [
+                "PASS",
+                "usually",
+                "regard"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "is usually not regard as",
+                  "right": "is usually not regarded as",
+                  "explanation_zh": "被動語態是 be + 過去分詞：regarded。"
+                },
+                {
+                  "wrong": "are usually not regarded as",
+                  "right": "is usually not regarded as",
+                  "explanation_zh": "主詞是動名詞片語（視為單數），be 動詞用 is。"
+                },
+                {
+                  "wrong": "usually does not regard as",
+                  "right": "is usually not regarded as",
+                  "explanation_zh": "「被視為」要用被動 be regarded as；does not regard as 變成主動，也少了受詞。"
+                }
+              ]
+            },
+            {
+              "zh": "創作行為",
+              "accepted": [
+                "a creative act",
+                "an act of creation",
+                "an act of creativity",
+                "a creative activity",
+                "creative work",
+                "a form of creation",
+                "an act of creative work",
+                "a creative process",
+                "an act of creating",
+                "a form of creative work",
+                "a creative work"
+              ],
+              "targets": [
+                "creative"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "a creating behavior",
+                  "right": "a creative act",
+                  "explanation_zh": "「創作行為」不要逐字翻成 creating behavior；behavior 指人的舉止、表現，這裡用 a creative act／an act of creation。"
+                },
+                {
+                  "wrong": "a create act",
+                  "right": "a creative act",
+                  "explanation_zh": "修飾名詞 act 要用形容詞 creative。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "verbal_subject",
+              "zh": "單純用人工智慧（AI）工具產生圖片或文章",
+              "literal_error": "However, simply use AI tools to generate pictures or articles is usually not regarded as a creative act.",
+              "part": 1,
+              "explanation_zh": "中文以動作當主詞，英文不能用原形動詞 use 開頭當主詞，要改成動名詞 using（或 To use …），動詞用單數 is。"
+            },
+            {
+              "type": "abstract_nominal",
+              "zh": "創作行為",
+              "literal_error": "…is usually not regarded as a creating behavior under the law.",
+              "part": 4,
+              "explanation_zh": "「創作行為」是抽象名詞，英文說 a creative act／an act of creation；逐字翻成 creating behavior 不自然。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "In the eyes of the law, merely prompting an AI tool to churn out pictures or articles hardly counts as an act of creation.",
+              "explanation_zh": "prompt（對 AI 下指令）、churn out（大量產出）、hardly counts as（幾乎算不上）是進階用字；這是加分寫法，不是唯一正解。"
+            }
+          ],
+          "restructuring_zh": "中文主詞是動作「單純用 AI 工具產生圖片或文章」，英文改成動名詞片語 Simply using AI tools to generate … 當主詞，動詞用單數 is；「不被視為」用被動 is not regarded as。",
+          "notes_zh": "評分說明：「然而」However 放句首；「單純」simply／merely／just／only 都可以，也可以放在 with AI tools 前（generating … simply with AI tools）或寫 using AI tools alone；「產生」generate／produce／create／make；「圖片或文章」pictures／images 配 articles／texts；「在法律上」under the law、legally、in the eyes of the law、in legal terms、from a legal point of view、legally speaking，放在 However 之後或句尾都可以；「通常不被視為」is usually not／not usually／generally not + regarded as／considered (to be)／seen as／viewed as；「創作行為」a creative act、an act of creation、a creative activity、creative work 都給分。主詞要是動名詞片語（或 To use …），動詞用單數 is。另外也給分：However, legally (speaking), simply using AI tools to …（「在法律上」放在 However 之後）、However, generating pictures or articles simply (merely) by using AI tools / with AI tools alone …、is typically not counted as …、a creative process。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ac-V-3",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-top-06",
+    "lot": "translation-top-06",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "c6f44f933a9c31819117ac3657fbba0cbac38d8892d1379b9e2ce94107722abf",
+    "spec_id": "translation-top@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 2,
+    "sentences": 2,
+    "avg_sentence_length": 1.0,
+    "denominator": 0,
+    "proper_nouns": [
+      "AI"
+    ],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "warn",
+      "created_at": "2026-10-10T02:38:52Z",
+      "details": {
+        "errors": [],
+        "warnings": [
+          "annotations.rubric.items.2.patterns[0]: references[0] 看不出用了句構 NFSUBJ（動名詞片語當主詞（單純用 AI 工具產生圖片或文章））（程式只能粗略比對，請人工確認）",
+          "annotations.rubric.items.2.patterns[0]: references[1] 看不出用了句構 NFSUBJ（動名詞片語當主詞（單純用 AI 工具產生圖片或文章））（程式只能粗略比對，請人工確認）"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "warn",
+      "created_at": "2026-10-10T02:30:00Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Artificial intelligence (AI) tools can draw pictures much faster than any painter, forcing many countries to review their copyright laws.",
+            "confidence": "high",
+            "explanation_zh": "「快得多」用 much faster than any painter；「迫使」用分詞構句 forcing … to V 接在主要子句後，避開時態選擇；「檢討」譯為 review。"
+          },
+          "2": {
+            "translation": "However, simply using AI tools to produce pictures or articles is usually not legally regarded as an act of creation.",
+            "confidence": "high",
+            "explanation_zh": "「單純用 AI 工具產生…」整段當主詞，用動名詞片語 simply using … to produce；「被視為」用被動 be regarded as；「在法律上」用副詞 legally。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PART",
+              "COMP"
+            ],
+            "used_target_words": [
+              "tool",
+              "draw",
+              "picture",
+              "fast",
+              "painter",
+              "force",
+              "country",
+              "review",
+              "copyright",
+              "law"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "warn",
+            "parts_check": "pass",
+            "issues_zh": [
+              "references[2]「The speed at which AI tools draw pictures is much faster than that of any painter」：speed 是名詞，習慣用 high／great 形容，「speed is (much) faster」是教學上常被糾正的搭配；本站範文會被學生模仿，建議改成 is much higher than that of any painter 或 far exceeds that of any painter，notes_zh 對應的說明（is much faster than that of any painter）也一併改。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "NFSUBJ",
+              "PASS"
+            ],
+            "used_target_words": [
+              "tool",
+              "generate",
+              "picture",
+              "article",
+              "law",
+              "usually",
+              "regard",
+              "creative"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "tool",
+              "draw",
+              "picture",
+              "fast",
+              "painter",
+              "force",
+              "country",
+              "review",
+              "copyright",
+              "law"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PART": true,
+              "COMP": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "tool",
+              "generate",
+              "picture",
+              "article",
+              "law",
+              "usually",
+              "regard",
+              "creative"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NFSUBJ": false,
+              "PASS": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 1 題驗證者對參考譯文有意見（warn）：references[2]「The speed at which AI tools draw pictures is much faster than that of any painter」：speed 是名詞，習慣用 high／grea"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-10T02:28:18Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Artificial intelligence (AI) tools can draw pictures much faster than any painter, forcing many countries to review their copyright laws.",
+            "confidence": "high",
+            "explanation_zh": "「速度比任何畫家都快得多」用 much faster than any painter（比較級加 much 強調，any 後接單數名詞）；「迫使……檢討」用分詞構句 forcing many countries to review，主詞 AI tools 與前半句的因果關係自然銜接；著作權法用複數 copyright laws。"
+          },
+          "2": {
+            "translation": "However, simply using AI tools to generate images or articles is usually not regarded as a creative act in the eyes of the law.",
+            "confidence": "high",
+            "explanation_zh": "「單純用……產生」以動名詞片語 simply using ... 當主詞，動詞用單數 is；「被視為」用 be regarded as；「在法律上」譯為 in the eyes of the law（亦可用 legally），「創作行為」用 a creative act。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PART",
+              "COMP"
+            ],
+            "used_target_words": [
+              "tool",
+              "draw",
+              "picture",
+              "fast",
+              "painter",
+              "force",
+              "country",
+              "review",
+              "copyright",
+              "law"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "NFSUBJ",
+              "PASS"
+            ],
+            "used_target_words": [
+              "tool",
+              "generate",
+              "picture",
+              "article",
+              "law",
+              "usually",
+              "regard",
+              "creative"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "tool",
+              "draw",
+              "picture",
+              "fast",
+              "painter",
+              "force",
+              "country",
+              "review",
+              "copyright",
+              "law"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PART": true,
+              "COMP": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "tool",
+              "generate",
+              "picture",
+              "article",
+              "law",
+              "usually",
+              "regard",
+              "creative"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NFSUBJ": false,
+              "PASS": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

@@ -1,0 +1,1598 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.702c03",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "top",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "今年的最低工資比去年高出百分之五，迫使許多小店家調漲商品的價格。",
+        "options": null,
+        "answer": "This year's minimum wage is five percent higher than last year's, forcing many small shops to raise the prices of their products.",
+        "accepted_answers": [
+          "The minimum wage this year is 5 percent higher than it was last year, forcing many small businesses to raise their prices.",
+          "This year, the minimum wage is 5% higher than that of last year, forcing many small stores to increase the prices of their goods."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "句尾分詞片語表結果",
+            "比較級"
+          ],
+          "topic": "最低工資"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "對這些店家的老闆來說，每個月付給員工更高的薪水，常被視為沉重的經濟負擔。",
+        "options": null,
+        "answer": "For the owners of these shops, paying their employees higher wages every month is often seen as a heavy financial burden.",
+        "accepted_answers": [
+          "For these shop owners, paying higher salaries to their workers every month is often regarded as a heavy economic burden.",
+          "To the owners of these stores, paying their staff higher wages each month is often viewed as a great financial burden."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "動名詞片語當主詞",
+            "被動語態"
+          ],
+          "topic": "最低工資"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "最低工資"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「比去年高出百分之五」用比較級：This year's minimum wage is five percent higher than last year's，數量 five percent 放在 higher 前面；比較的是兩年的最低工資，所以寫 last year's（＝last year's minimum wage）或 that of last year。「迫使許多小店家調漲…」是前面整件事的結果，用句尾分詞 forcing many small shops to raise …（force + 人 + to VR）。「調漲價格」是 raise prices，不要寫成不及物的 rise。",
+          "evidence": [
+            "比去年高出百分之五",
+            "迫使許多小店家調漲商品的價格"
+          ],
+          "strategy_zh": "比較句先確認比較的兩樣東西是否對等（今年的工資 vs. 去年的工資）；句尾「迫使…」用逗號＋forcing。",
+          "hints": [
+            "切成四段：今年的最低工資／比去年高出百分之五／迫使許多小店家／調漲商品的價格",
+            "標的詞彙：minimum wage（最低工資）、year（年）、higher（較高的）、last year（去年）、force（迫使）、small shop（小店家）、raise（調漲）、price（價格）、product（商品）",
+            "句型框架：This year's + N + is five percent higher than last year's, forcing + O + to VR …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「每個月付給員工更高的薪水」是一個動作，當主詞用動名詞 Paying their employees higher wages every month（或 paying higher wages to their employees），後面動詞用單數 is。「常被視為」用被動 is often seen／regarded as。「經濟負擔」是 financial／economic burden，economy 是名詞，不能直接修飾 burden。",
+          "evidence": [
+            "每個月付給員工更高的薪水",
+            "常被視為沉重的經濟負擔"
+          ],
+          "strategy_zh": "「對…來說」先放句首；真正的主詞是一件事時用動名詞，再接 be seen as。",
+          "hints": [
+            "切成四段：對這些店家的老闆來說／每個月付給員工更高的薪水／常被視為／沉重的經濟負擔",
+            "標的詞彙：owner（老闆）、shop（店家）、pay（付）、employee（員工）、wage（薪水）、month（月）、regard（視為）、heavy（沉重的）、financial（經濟的）、burden（負擔）",
+            "句型框架：For + N, V-ing … + is often seen as + a heavy financial burden"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "This year's minimum wage is five percent higher than last year's, forcing many small shops to raise the prices of their products.",
+            "The minimum wage this year is 5 percent higher than it was last year, forcing many small businesses to raise their prices.",
+            "This year, the minimum wage is 5% higher than that of last year, forcing many small stores to increase the prices of their goods."
+          ],
+          "target_words": [
+            {
+              "word": "year",
+              "zh": "年",
+              "alternatives": [
+                "year's",
+                "annual"
+              ]
+            },
+            {
+              "word": "minimum",
+              "zh": "最低的"
+            },
+            {
+              "word": "wage",
+              "zh": "工資",
+              "alternatives": [
+                "pay",
+                "salary"
+              ]
+            },
+            {
+              "word": "high",
+              "zh": "高出",
+              "alternatives": [
+                "higher",
+                "rise",
+                "more"
+              ]
+            },
+            {
+              "word": "last",
+              "zh": "去年的",
+              "alternatives": [
+                "previous"
+              ]
+            },
+            {
+              "word": "force",
+              "zh": "迫使",
+              "alternatives": [
+                "push",
+                "compel",
+                "lead",
+                "cause",
+                "drive",
+                "make"
+              ]
+            },
+            {
+              "word": "small",
+              "zh": "小的"
+            },
+            {
+              "word": "shop",
+              "zh": "店家",
+              "alternatives": [
+                "store",
+                "business",
+                "retailer",
+                "owner"
+              ]
+            },
+            {
+              "word": "raise",
+              "zh": "調漲",
+              "alternatives": [
+                "increase",
+                "put up",
+                "hike",
+                "charge"
+              ]
+            },
+            {
+              "word": "price",
+              "zh": "價格"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PART",
+              "grammar_id": "gp-participle-result",
+              "label_zh": "句尾分詞片語表結果（…，迫使許多小店家調漲…：, forcing + O + to VR；寫成 , which forces／has forced … 也算同一個「結果」句型）",
+              "frame": "S + be + …, forcing + O + to VR …",
+              "zh_trigger": "迫使許多小店家調漲"
+            },
+            {
+              "code": "COMP",
+              "grammar_id": "gp-comparative-superlative",
+              "label_zh": "比較級（比去年高出百分之五：five percent higher than last year's）",
+              "frame": "A + be + 數量 + 比較級 + than + B",
+              "zh_trigger": "比去年高出百分之五"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "今年的最低工資",
+              "accepted": [
+                "This year's minimum wage",
+                "The minimum wage this year",
+                "This year, the minimum wage",
+                "The minimum wage for this year",
+                "This year's minimum hourly wage"
+              ],
+              "targets": [
+                "year",
+                "minimum",
+                "wage"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "This year's lowest salary",
+                  "right": "This year's minimum wage",
+                  "explanation_zh": "「最低工資」是固定說法 minimum wage，不要逐字譯成 lowest salary。"
+                },
+                {
+                  "wrong": "This year minimum wage",
+                  "right": "This year's minimum wage",
+                  "explanation_zh": "「今年的」要用所有格 this year's（或寫 the minimum wage this year）。"
+                }
+              ]
+            },
+            {
+              "zh": "比去年高出百分之五",
+              "accepted": [
+                "is five percent higher than last year's",
+                "is five percent higher than last year",
+                "is five percent higher than that of last year",
+                "is five percent higher than it was last year",
+                "is five percent higher than last year's minimum wage",
+                "is 5 percent higher than last year's",
+                "is 5 percent higher than last year",
+                "is 5 percent higher than that of last year",
+                "is 5 percent higher than it was last year",
+                "is 5 percent higher than last year's minimum wage",
+                "is 5% higher than last year's",
+                "is 5% higher than last year",
+                "is 5% higher than that of last year",
+                "is 5% higher than it was last year",
+                "is 5% higher than last year's minimum wage",
+                "is five per cent higher than last year's",
+                "is five per cent higher than last year",
+                "is five per cent higher than that of last year",
+                "is five per cent higher than it was last year",
+                "is five per cent higher than last year's minimum wage",
+                "is 5 per cent higher than last year's",
+                "is 5 per cent higher than last year",
+                "is 5 per cent higher than that of last year",
+                "is 5 per cent higher than it was last year",
+                "is 5 per cent higher than last year's minimum wage",
+                "is higher than last year's by five percent",
+                "is higher than last year's by 5 percent",
+                "is higher than last year's by 5%",
+                "is higher than last year's by five per cent",
+                "is higher than last year's by 5 per cent",
+                "is higher than last year by five percent",
+                "is higher than last year by 5 percent",
+                "is higher than last year by 5%",
+                "is higher than last year by five per cent",
+                "is higher than last year by 5 per cent",
+                "is higher than that of last year by five percent",
+                "is higher than that of last year by 5 percent",
+                "is higher than that of last year by 5%",
+                "is higher than that of last year by five per cent",
+                "is higher than that of last year by 5 per cent",
+                "is higher than it was last year by five percent",
+                "is higher than it was last year by 5 percent",
+                "is higher than it was last year by 5%",
+                "is higher than it was last year by five per cent",
+                "is higher than it was last year by 5 per cent",
+                "is higher than last year's minimum wage by five percent",
+                "is higher than last year's minimum wage by 5 percent",
+                "is higher than last year's minimum wage by 5%",
+                "is higher than last year's minimum wage by five per cent",
+                "is higher than last year's minimum wage by 5 per cent"
+              ],
+              "targets": [
+                "COMP",
+                "high",
+                "last"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "is higher five percent than last year's",
+                  "right": "is five percent higher than last year's",
+                  "explanation_zh": "數量（five percent）要放在比較級 higher 前面：five percent higher than …。"
+                },
+                {
+                  "wrong": "is five percent more high than last year's",
+                  "right": "is five percent higher than last year's",
+                  "explanation_zh": "high 的比較級是 higher，不用 more high。"
+                }
+              ]
+            },
+            {
+              "zh": "迫使許多小店家",
+              "accepted": [
+                "forcing many small shops",
+                "forcing many small stores",
+                "forcing many small businesses",
+                "forcing a lot of small shops",
+                "forcing many small shop owners",
+                "forcing many small store owners",
+                "forcing many small business owners",
+                "forcing many small retailers",
+                "which forces many small shops",
+                "which forces many small stores",
+                "which forces many small businesses",
+                "which forces a lot of small shops",
+                "which forces many small shop owners",
+                "which forces many small store owners",
+                "which forces many small business owners",
+                "which forces many small retailers",
+                "which has forced many small shops",
+                "which has forced many small stores",
+                "which has forced many small businesses",
+                "which has forced a lot of small shops",
+                "which has forced many small shop owners",
+                "which has forced many small store owners",
+                "which has forced many small business owners",
+                "which has forced many small retailers",
+                "which is forcing many small shops",
+                "which is forcing many small stores",
+                "which is forcing many small businesses",
+                "which is forcing a lot of small shops",
+                "which is forcing many small shop owners",
+                "which is forcing many small store owners",
+                "which is forcing many small business owners",
+                "which is forcing many small retailers",
+                "pushing many small shops",
+                "pushing many small stores",
+                "pushing many small businesses",
+                "pushing a lot of small shops",
+                "pushing many small shop owners",
+                "pushing many small store owners",
+                "pushing many small business owners",
+                "pushing many small retailers",
+                "compelling many small shops",
+                "compelling many small stores",
+                "compelling many small businesses",
+                "compelling a lot of small shops",
+                "compelling many small shop owners",
+                "compelling many small store owners",
+                "compelling many small business owners",
+                "compelling many small retailers",
+                "leading many small shops",
+                "leading many small stores",
+                "leading many small businesses",
+                "leading a lot of small shops",
+                "leading many small shop owners",
+                "leading many small store owners",
+                "leading many small business owners",
+                "leading many small retailers",
+                "causing many small shops",
+                "causing many small stores",
+                "causing many small businesses",
+                "causing a lot of small shops",
+                "causing many small shop owners",
+                "causing many small store owners",
+                "causing many small business owners",
+                "causing many small retailers",
+                "driving many small shops",
+                "driving many small stores",
+                "driving many small businesses",
+                "driving a lot of small shops",
+                "driving many small shop owners",
+                "driving many small store owners",
+                "driving many small business owners",
+                "driving many small retailers",
+                "which has led many small shops",
+                "which has led many small stores",
+                "which has led many small businesses",
+                "which has led a lot of small shops",
+                "which has led many small shop owners",
+                "which has led many small store owners",
+                "which has led many small business owners",
+                "which has led many small retailers",
+                "which causes many small shops",
+                "which causes many small stores",
+                "which causes many small businesses",
+                "which causes a lot of small shops",
+                "which causes many small shop owners",
+                "which causes many small store owners",
+                "which causes many small business owners",
+                "which causes many small retailers"
+              ],
+              "targets": [
+                "PART",
+                "force",
+                "small",
+                "shop"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "forced many small shops",
+                  "right": "forcing many small shops",
+                  "explanation_zh": "表示前面整件事的結果，句尾用分詞 forcing；寫成過去式 forced 會變成第二個主要動詞。"
+                },
+                {
+                  "wrong": "forces many small shops",
+                  "right": "forcing many small shops",
+                  "explanation_zh": "逗號後面直接接 forces 會變成兩個子句沒有連接詞；表結果用分詞 forcing（或 which forces）。"
+                }
+              ]
+            },
+            {
+              "zh": "調漲商品的價格",
+              "accepted": [
+                "to raise the prices of their products",
+                "to raise their prices",
+                "to raise the prices of their goods",
+                "to raise prices",
+                "to raise their product prices",
+                "to raise the prices of products",
+                "to raise the prices of goods",
+                "to raise the prices of the products they sell",
+                "to raise the prices of their merchandise",
+                "to raise the prices of their items",
+                "to raise prices on their products",
+                "to raise prices on their goods",
+                "to raise the prices on their products",
+                "to raise the prices on their goods",
+                "to increase the prices of their products",
+                "to increase their prices",
+                "to increase the prices of their goods",
+                "to increase prices",
+                "to increase their product prices",
+                "to increase the prices of products",
+                "to increase the prices of goods",
+                "to increase the prices of the products they sell",
+                "to increase the prices of their merchandise",
+                "to increase the prices of their items",
+                "to increase prices on their products",
+                "to increase prices on their goods",
+                "to increase the prices on their products",
+                "to increase the prices on their goods",
+                "to put up the prices of their products",
+                "to put up their prices",
+                "to put up the prices of their goods",
+                "to put up prices",
+                "to put up their product prices",
+                "to put up the prices of products",
+                "to put up the prices of goods",
+                "to put up the prices of the products they sell",
+                "to put up the prices of their merchandise",
+                "to put up the prices of their items",
+                "to put up prices on their products",
+                "to put up prices on their goods",
+                "to put up the prices on their products",
+                "to put up the prices on their goods",
+                "to hike the prices of their products",
+                "to hike their prices",
+                "to hike the prices of their goods",
+                "to hike prices",
+                "to hike their product prices",
+                "to hike the prices of products",
+                "to hike the prices of goods",
+                "to hike the prices of the products they sell",
+                "to hike the prices of their merchandise",
+                "to hike the prices of their items",
+                "to hike prices on their products",
+                "to hike prices on their goods",
+                "to hike the prices on their products",
+                "to hike the prices on their goods",
+                "to charge more for their products",
+                "to charge more for their goods"
+              ],
+              "targets": [
+                "raise",
+                "price"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "forcing many small shops raise their prices",
+                  "right": "forcing many small shops to raise their prices",
+                  "explanation_zh": "force + 人 + to VR，to 不能省略。"
+                },
+                {
+                  "wrong": "to rise the prices of their products",
+                  "right": "to raise the prices of their products",
+                  "explanation_zh": "rise 是不及物動詞（價格上漲）；「調漲價格」要用及物動詞 raise。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "abstract_nominal",
+              "zh": "最低工資",
+              "literal_error": "This year's lowest salary is five percent higher than last year's, …",
+              "part": 1,
+              "explanation_zh": "「最低工資」是法定名詞 minimum wage；照字面寫 lowest salary 意思不對。"
+            },
+            {
+              "type": "word_form",
+              "zh": "調漲商品的價格",
+              "literal_error": "…, forcing many small shops rise the prices of their products.",
+              "part": 4,
+              "explanation_zh": "force + 人 + to VR，「調漲」要用及物動詞 raise；寫成 rise（不及物）或漏掉 to 都會扣分。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "With this year's minimum wage five percent higher than last year's, many small shops have had no choice but to raise their prices.",
+              "grammar_id": "gp-with-o-c",
+              "explanation_zh": "用 with + 受詞 + 補語（附帶狀況）交代背景，再用 have no choice but to VR（不得不）強調「迫使」。屬加分寫法，不是唯一正解。"
+            }
+          ],
+          "restructuring_zh": "「今年的最低工資比去年高出百分之五」比較的是兩年的最低工資，英文寫 than last year's（或 than that of last year），百分比 five percent 放在比較級 higher 前面；「迫使…」承接前面整件事，用句尾分詞 forcing … to VR，不另起一句。",
+          "notes_zh": "第 3 部分寫成非限定關係子句 , which forces／has forced many small shops to … 也表達同一個「前面整件事造成的結果」，算作 PART 的可接受寫法（已列入 accepted）。比較對象寫 than last year 雖不如 last year's 精確，屬常見寫法，一併接受。寫成 has risen by five percent from last year 沒有用到比較級，不在可接受寫法內；寫成 so many small shops have to … 是對等子句，也不在可接受寫法內。"
+        },
+        "2": {
+          "references": [
+            "For the owners of these shops, paying their employees higher wages every month is often seen as a heavy financial burden.",
+            "For these shop owners, paying higher salaries to their workers every month is often regarded as a heavy economic burden.",
+            "To the owners of these stores, paying their staff higher wages each month is often viewed as a great financial burden."
+          ],
+          "target_words": [
+            {
+              "word": "owner",
+              "zh": "老闆",
+              "alternatives": [
+                "boss"
+              ]
+            },
+            {
+              "word": "shop",
+              "zh": "店家",
+              "alternatives": [
+                "store",
+                "business"
+              ]
+            },
+            {
+              "word": "pay",
+              "zh": "付"
+            },
+            {
+              "word": "employee",
+              "zh": "員工",
+              "alternatives": [
+                "worker",
+                "staff"
+              ]
+            },
+            {
+              "word": "wage",
+              "zh": "薪水",
+              "alternatives": [
+                "salary"
+              ]
+            },
+            {
+              "word": "month",
+              "zh": "每個月",
+              "alternatives": [
+                "monthly"
+              ]
+            },
+            {
+              "word": "regard",
+              "zh": "視為",
+              "alternatives": [
+                "see",
+                "consider",
+                "view",
+                "think of",
+                "treat"
+              ]
+            },
+            {
+              "word": "heavy",
+              "zh": "沉重的",
+              "alternatives": [
+                "great",
+                "huge",
+                "serious",
+                "big",
+                "considerable",
+                "large",
+                "major"
+              ]
+            },
+            {
+              "word": "financial",
+              "zh": "經濟的",
+              "alternatives": [
+                "economic",
+                "money"
+              ]
+            },
+            {
+              "word": "burden",
+              "zh": "負擔",
+              "alternatives": [
+                "load",
+                "strain"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "NFSUBJ",
+              "grammar_id": "gp-gerund-subject",
+              "label_zh": "動名詞片語當主詞（每個月付給員工更高的薪水：Paying …；寫成 it is … to pay … 也算）",
+              "frame": "V-ing … + is (often) seen as + N",
+              "zh_trigger": "每個月付給員工更高的薪水"
+            },
+            {
+              "code": "PASS",
+              "grammar_id": "gp-passive",
+              "label_zh": "被動語態（常被視為：is often seen as）",
+              "frame": "S + is (often) + p.p. + as …",
+              "zh_trigger": "常被視為"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "對這些店家的老闆來說",
+              "accepted": [
+                "For the owners of these shops",
+                "For the owners of these stores",
+                "For the owners of these businesses",
+                "For these shop owners",
+                "For these store owners",
+                "For these business owners",
+                "For the owners of such shops",
+                "For owners of these shops",
+                "For the shop owners",
+                "For the bosses of these shops",
+                "To the owners of these shops",
+                "To the owners of these stores",
+                "To the owners of these businesses",
+                "To these shop owners",
+                "To these store owners",
+                "To these business owners",
+                "To the owners of such shops",
+                "To owners of these shops",
+                "To the shop owners",
+                "To the bosses of these shops"
+              ],
+              "targets": [
+                "owner",
+                "shop"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "For these shop's owners",
+                  "right": "For the owners of these shops",
+                  "explanation_zh": "「這些店家的老闆」寫成 the owners of these shops 或 these shop owners；shop's 是單數所有格，和 these 不一致。"
+                },
+                {
+                  "wrong": "For these shops owners",
+                  "right": "For these shop owners",
+                  "explanation_zh": "名詞當形容詞修飾另一個名詞時用單數：these shop owners。"
+                }
+              ]
+            },
+            {
+              "zh": "每個月付給員工更高的薪水",
+              "accepted": [
+                "paying their employees higher wages every month",
+                "paying their employees higher wages each month",
+                "paying their employees higher wages monthly",
+                "paying their employees higher salaries every month",
+                "paying their employees higher salaries each month",
+                "paying their employees higher salaries monthly",
+                "paying their employees higher pay every month",
+                "paying their employees higher pay each month",
+                "paying their employees higher pay monthly",
+                "paying their workers higher wages every month",
+                "paying their workers higher wages each month",
+                "paying their workers higher wages monthly",
+                "paying their workers higher salaries every month",
+                "paying their workers higher salaries each month",
+                "paying their workers higher salaries monthly",
+                "paying their workers higher pay every month",
+                "paying their workers higher pay each month",
+                "paying their workers higher pay monthly",
+                "paying their staff higher wages every month",
+                "paying their staff higher wages each month",
+                "paying their staff higher wages monthly",
+                "paying their staff higher salaries every month",
+                "paying their staff higher salaries each month",
+                "paying their staff higher salaries monthly",
+                "paying their staff higher pay every month",
+                "paying their staff higher pay each month",
+                "paying their staff higher pay monthly",
+                "paying employees higher wages every month",
+                "paying employees higher wages each month",
+                "paying employees higher wages monthly",
+                "paying employees higher salaries every month",
+                "paying employees higher salaries each month",
+                "paying employees higher salaries monthly",
+                "paying employees higher pay every month",
+                "paying employees higher pay each month",
+                "paying employees higher pay monthly",
+                "paying workers higher wages every month",
+                "paying workers higher wages each month",
+                "paying workers higher wages monthly",
+                "paying workers higher salaries every month",
+                "paying workers higher salaries each month",
+                "paying workers higher salaries monthly",
+                "paying workers higher pay every month",
+                "paying workers higher pay each month",
+                "paying workers higher pay monthly",
+                "paying their staff members higher wages every month",
+                "paying their staff members higher wages each month",
+                "paying their staff members higher wages monthly",
+                "paying their staff members higher salaries every month",
+                "paying their staff members higher salaries each month",
+                "paying their staff members higher salaries monthly",
+                "paying their staff members higher pay every month",
+                "paying their staff members higher pay each month",
+                "paying their staff members higher pay monthly",
+                "having to pay their employees higher wages every month",
+                "having to pay their employees higher wages each month",
+                "having to pay their employees higher wages monthly",
+                "having to pay their employees higher salaries every month",
+                "having to pay their employees higher salaries each month",
+                "having to pay their employees higher salaries monthly",
+                "having to pay their employees higher pay every month",
+                "having to pay their employees higher pay each month",
+                "having to pay their employees higher pay monthly",
+                "having to pay their workers higher wages every month",
+                "having to pay their workers higher wages each month",
+                "having to pay their workers higher wages monthly",
+                "having to pay their workers higher salaries every month",
+                "having to pay their workers higher salaries each month",
+                "having to pay their workers higher salaries monthly",
+                "having to pay their workers higher pay every month",
+                "having to pay their workers higher pay each month",
+                "having to pay their workers higher pay monthly",
+                "having to pay their staff higher wages every month",
+                "having to pay their staff higher wages each month",
+                "having to pay their staff higher wages monthly",
+                "having to pay their staff higher salaries every month",
+                "having to pay their staff higher salaries each month",
+                "having to pay their staff higher salaries monthly",
+                "having to pay their staff higher pay every month",
+                "having to pay their staff higher pay each month",
+                "having to pay their staff higher pay monthly",
+                "having to pay employees higher wages every month",
+                "having to pay employees higher wages each month",
+                "having to pay employees higher wages monthly",
+                "having to pay employees higher salaries every month",
+                "having to pay employees higher salaries each month",
+                "having to pay employees higher salaries monthly",
+                "having to pay employees higher pay every month",
+                "having to pay employees higher pay each month",
+                "having to pay employees higher pay monthly",
+                "having to pay workers higher wages every month",
+                "having to pay workers higher wages each month",
+                "having to pay workers higher wages monthly",
+                "having to pay workers higher salaries every month",
+                "having to pay workers higher salaries each month",
+                "having to pay workers higher salaries monthly",
+                "having to pay workers higher pay every month",
+                "having to pay workers higher pay each month",
+                "having to pay workers higher pay monthly",
+                "having to pay their staff members higher wages every month",
+                "having to pay their staff members higher wages each month",
+                "having to pay their staff members higher wages monthly",
+                "having to pay their staff members higher salaries every month",
+                "having to pay their staff members higher salaries each month",
+                "having to pay their staff members higher salaries monthly",
+                "having to pay their staff members higher pay every month",
+                "having to pay their staff members higher pay each month",
+                "having to pay their staff members higher pay monthly",
+                "to pay their employees higher wages every month",
+                "to pay their employees higher wages each month",
+                "to pay their employees higher wages monthly",
+                "to pay their employees higher salaries every month",
+                "to pay their employees higher salaries each month",
+                "to pay their employees higher salaries monthly",
+                "to pay their employees higher pay every month",
+                "to pay their employees higher pay each month",
+                "to pay their employees higher pay monthly",
+                "to pay their workers higher wages every month",
+                "to pay their workers higher wages each month",
+                "to pay their workers higher wages monthly",
+                "to pay their workers higher salaries every month",
+                "to pay their workers higher salaries each month",
+                "to pay their workers higher salaries monthly",
+                "to pay their workers higher pay every month",
+                "to pay their workers higher pay each month",
+                "to pay their workers higher pay monthly",
+                "to pay their staff higher wages every month",
+                "to pay their staff higher wages each month",
+                "to pay their staff higher wages monthly",
+                "to pay their staff higher salaries every month",
+                "to pay their staff higher salaries each month",
+                "to pay their staff higher salaries monthly",
+                "to pay their staff higher pay every month",
+                "to pay their staff higher pay each month",
+                "to pay their staff higher pay monthly",
+                "to pay employees higher wages every month",
+                "to pay employees higher wages each month",
+                "to pay employees higher wages monthly",
+                "to pay employees higher salaries every month",
+                "to pay employees higher salaries each month",
+                "to pay employees higher salaries monthly",
+                "to pay employees higher pay every month",
+                "to pay employees higher pay each month",
+                "to pay employees higher pay monthly",
+                "to pay workers higher wages every month",
+                "to pay workers higher wages each month",
+                "to pay workers higher wages monthly",
+                "to pay workers higher salaries every month",
+                "to pay workers higher salaries each month",
+                "to pay workers higher salaries monthly",
+                "to pay workers higher pay every month",
+                "to pay workers higher pay each month",
+                "to pay workers higher pay monthly",
+                "to pay their staff members higher wages every month",
+                "to pay their staff members higher wages each month",
+                "to pay their staff members higher wages monthly",
+                "to pay their staff members higher salaries every month",
+                "to pay their staff members higher salaries each month",
+                "to pay their staff members higher salaries monthly",
+                "to pay their staff members higher pay every month",
+                "to pay their staff members higher pay each month",
+                "to pay their staff members higher pay monthly",
+                "paying higher wages to their employees every month",
+                "paying higher wages to their employees each month",
+                "paying higher wages to their employees monthly",
+                "paying higher wages to their workers every month",
+                "paying higher wages to their workers each month",
+                "paying higher wages to their workers monthly",
+                "paying higher wages to their staff every month",
+                "paying higher wages to their staff each month",
+                "paying higher wages to their staff monthly",
+                "paying higher wages to employees every month",
+                "paying higher wages to employees each month",
+                "paying higher wages to employees monthly",
+                "paying higher wages to workers every month",
+                "paying higher wages to workers each month",
+                "paying higher wages to workers monthly",
+                "paying higher wages to their staff members every month",
+                "paying higher wages to their staff members each month",
+                "paying higher wages to their staff members monthly",
+                "paying higher salaries to their employees every month",
+                "paying higher salaries to their employees each month",
+                "paying higher salaries to their employees monthly",
+                "paying higher salaries to their workers every month",
+                "paying higher salaries to their workers each month",
+                "paying higher salaries to their workers monthly",
+                "paying higher salaries to their staff every month",
+                "paying higher salaries to their staff each month",
+                "paying higher salaries to their staff monthly",
+                "paying higher salaries to employees every month",
+                "paying higher salaries to employees each month",
+                "paying higher salaries to employees monthly",
+                "paying higher salaries to workers every month",
+                "paying higher salaries to workers each month",
+                "paying higher salaries to workers monthly",
+                "paying higher salaries to their staff members every month",
+                "paying higher salaries to their staff members each month",
+                "paying higher salaries to their staff members monthly",
+                "paying higher pay to their employees every month",
+                "paying higher pay to their employees each month",
+                "paying higher pay to their employees monthly",
+                "paying higher pay to their workers every month",
+                "paying higher pay to their workers each month",
+                "paying higher pay to their workers monthly",
+                "paying higher pay to their staff every month",
+                "paying higher pay to their staff each month",
+                "paying higher pay to their staff monthly",
+                "paying higher pay to employees every month",
+                "paying higher pay to employees each month",
+                "paying higher pay to employees monthly",
+                "paying higher pay to workers every month",
+                "paying higher pay to workers each month",
+                "paying higher pay to workers monthly",
+                "paying higher pay to their staff members every month",
+                "paying higher pay to their staff members each month",
+                "paying higher pay to their staff members monthly",
+                "having to pay higher wages to their employees every month",
+                "having to pay higher wages to their employees each month",
+                "having to pay higher wages to their employees monthly",
+                "having to pay higher wages to their workers every month",
+                "having to pay higher wages to their workers each month",
+                "having to pay higher wages to their workers monthly",
+                "having to pay higher wages to their staff every month",
+                "having to pay higher wages to their staff each month",
+                "having to pay higher wages to their staff monthly",
+                "having to pay higher wages to employees every month",
+                "having to pay higher wages to employees each month",
+                "having to pay higher wages to employees monthly",
+                "having to pay higher wages to workers every month",
+                "having to pay higher wages to workers each month",
+                "having to pay higher wages to workers monthly",
+                "having to pay higher wages to their staff members every month",
+                "having to pay higher wages to their staff members each month",
+                "having to pay higher wages to their staff members monthly",
+                "having to pay higher salaries to their employees every month",
+                "having to pay higher salaries to their employees each month",
+                "having to pay higher salaries to their employees monthly",
+                "having to pay higher salaries to their workers every month",
+                "having to pay higher salaries to their workers each month",
+                "having to pay higher salaries to their workers monthly",
+                "having to pay higher salaries to their staff every month",
+                "having to pay higher salaries to their staff each month",
+                "having to pay higher salaries to their staff monthly",
+                "having to pay higher salaries to employees every month",
+                "having to pay higher salaries to employees each month",
+                "having to pay higher salaries to employees monthly",
+                "having to pay higher salaries to workers every month",
+                "having to pay higher salaries to workers each month",
+                "having to pay higher salaries to workers monthly",
+                "having to pay higher salaries to their staff members every month",
+                "having to pay higher salaries to their staff members each month",
+                "having to pay higher salaries to their staff members monthly",
+                "having to pay higher pay to their employees every month",
+                "having to pay higher pay to their employees each month",
+                "having to pay higher pay to their employees monthly",
+                "having to pay higher pay to their workers every month",
+                "having to pay higher pay to their workers each month",
+                "having to pay higher pay to their workers monthly",
+                "having to pay higher pay to their staff every month",
+                "having to pay higher pay to their staff each month",
+                "having to pay higher pay to their staff monthly",
+                "having to pay higher pay to employees every month",
+                "having to pay higher pay to employees each month",
+                "having to pay higher pay to employees monthly",
+                "having to pay higher pay to workers every month",
+                "having to pay higher pay to workers each month",
+                "having to pay higher pay to workers monthly",
+                "having to pay higher pay to their staff members every month",
+                "having to pay higher pay to their staff members each month",
+                "having to pay higher pay to their staff members monthly",
+                "to pay higher wages to their employees every month",
+                "to pay higher wages to their employees each month",
+                "to pay higher wages to their employees monthly",
+                "to pay higher wages to their workers every month",
+                "to pay higher wages to their workers each month",
+                "to pay higher wages to their workers monthly",
+                "to pay higher wages to their staff every month",
+                "to pay higher wages to their staff each month",
+                "to pay higher wages to their staff monthly",
+                "to pay higher wages to employees every month",
+                "to pay higher wages to employees each month",
+                "to pay higher wages to employees monthly",
+                "to pay higher wages to workers every month",
+                "to pay higher wages to workers each month",
+                "to pay higher wages to workers monthly",
+                "to pay higher wages to their staff members every month",
+                "to pay higher wages to their staff members each month",
+                "to pay higher wages to their staff members monthly",
+                "to pay higher salaries to their employees every month",
+                "to pay higher salaries to their employees each month",
+                "to pay higher salaries to their employees monthly",
+                "to pay higher salaries to their workers every month",
+                "to pay higher salaries to their workers each month",
+                "to pay higher salaries to their workers monthly",
+                "to pay higher salaries to their staff every month",
+                "to pay higher salaries to their staff each month",
+                "to pay higher salaries to their staff monthly",
+                "to pay higher salaries to employees every month",
+                "to pay higher salaries to employees each month",
+                "to pay higher salaries to employees monthly",
+                "to pay higher salaries to workers every month",
+                "to pay higher salaries to workers each month",
+                "to pay higher salaries to workers monthly",
+                "to pay higher salaries to their staff members every month",
+                "to pay higher salaries to their staff members each month",
+                "to pay higher salaries to their staff members monthly",
+                "to pay higher pay to their employees every month",
+                "to pay higher pay to their employees each month",
+                "to pay higher pay to their employees monthly",
+                "to pay higher pay to their workers every month",
+                "to pay higher pay to their workers each month",
+                "to pay higher pay to their workers monthly",
+                "to pay higher pay to their staff every month",
+                "to pay higher pay to their staff each month",
+                "to pay higher pay to their staff monthly",
+                "to pay higher pay to employees every month",
+                "to pay higher pay to employees each month",
+                "to pay higher pay to employees monthly",
+                "to pay higher pay to workers every month",
+                "to pay higher pay to workers each month",
+                "to pay higher pay to workers monthly",
+                "to pay higher pay to their staff members every month",
+                "to pay higher pay to their staff members each month",
+                "to pay higher pay to their staff members monthly",
+                "paying their employees more every month",
+                "paying their employees more each month",
+                "paying their employees more monthly",
+                "paying their workers more every month",
+                "paying their workers more each month",
+                "paying their workers more monthly",
+                "paying their staff more every month",
+                "paying their staff more each month",
+                "paying their staff more monthly",
+                "paying employees more every month",
+                "paying employees more each month",
+                "paying employees more monthly",
+                "paying workers more every month",
+                "paying workers more each month",
+                "paying workers more monthly",
+                "paying their staff members more every month",
+                "paying their staff members more each month",
+                "paying their staff members more monthly",
+                "having to pay their employees more every month",
+                "having to pay their employees more each month",
+                "having to pay their employees more monthly",
+                "having to pay their workers more every month",
+                "having to pay their workers more each month",
+                "having to pay their workers more monthly",
+                "having to pay their staff more every month",
+                "having to pay their staff more each month",
+                "having to pay their staff more monthly",
+                "having to pay employees more every month",
+                "having to pay employees more each month",
+                "having to pay employees more monthly",
+                "having to pay workers more every month",
+                "having to pay workers more each month",
+                "having to pay workers more monthly",
+                "having to pay their staff members more every month",
+                "having to pay their staff members more each month",
+                "having to pay their staff members more monthly",
+                "to pay their employees more every month",
+                "to pay their employees more each month",
+                "to pay their employees more monthly",
+                "to pay their workers more every month",
+                "to pay their workers more each month",
+                "to pay their workers more monthly",
+                "to pay their staff more every month",
+                "to pay their staff more each month",
+                "to pay their staff more monthly",
+                "to pay employees more every month",
+                "to pay employees more each month",
+                "to pay employees more monthly",
+                "to pay workers more every month",
+                "to pay workers more each month",
+                "to pay workers more monthly",
+                "to pay their staff members more every month",
+                "to pay their staff members more each month",
+                "to pay their staff members more monthly",
+                "paying their employees higher monthly wages",
+                "paying their employees higher monthly salaries",
+                "paying their employees higher monthly pay",
+                "paying their workers higher monthly wages",
+                "paying their workers higher monthly salaries",
+                "paying their workers higher monthly pay",
+                "paying their staff higher monthly wages",
+                "paying their staff higher monthly salaries",
+                "paying their staff higher monthly pay",
+                "paying employees higher monthly wages",
+                "paying employees higher monthly salaries",
+                "paying employees higher monthly pay",
+                "paying workers higher monthly wages",
+                "paying workers higher monthly salaries",
+                "paying workers higher monthly pay",
+                "paying their staff members higher monthly wages",
+                "paying their staff members higher monthly salaries",
+                "paying their staff members higher monthly pay",
+                "having to pay their employees higher monthly wages",
+                "having to pay their employees higher monthly salaries",
+                "having to pay their employees higher monthly pay",
+                "having to pay their workers higher monthly wages",
+                "having to pay their workers higher monthly salaries",
+                "having to pay their workers higher monthly pay",
+                "having to pay their staff higher monthly wages",
+                "having to pay their staff higher monthly salaries",
+                "having to pay their staff higher monthly pay",
+                "having to pay employees higher monthly wages",
+                "having to pay employees higher monthly salaries",
+                "having to pay employees higher monthly pay",
+                "having to pay workers higher monthly wages",
+                "having to pay workers higher monthly salaries",
+                "having to pay workers higher monthly pay",
+                "having to pay their staff members higher monthly wages",
+                "having to pay their staff members higher monthly salaries",
+                "having to pay their staff members higher monthly pay",
+                "to pay their employees higher monthly wages",
+                "to pay their employees higher monthly salaries",
+                "to pay their employees higher monthly pay",
+                "to pay their workers higher monthly wages",
+                "to pay their workers higher monthly salaries",
+                "to pay their workers higher monthly pay",
+                "to pay their staff higher monthly wages",
+                "to pay their staff higher monthly salaries",
+                "to pay their staff higher monthly pay",
+                "to pay employees higher monthly wages",
+                "to pay employees higher monthly salaries",
+                "to pay employees higher monthly pay",
+                "to pay workers higher monthly wages",
+                "to pay workers higher monthly salaries",
+                "to pay workers higher monthly pay",
+                "to pay their staff members higher monthly wages",
+                "to pay their staff members higher monthly salaries",
+                "to pay their staff members higher monthly pay",
+                "paying higher monthly wages to their employees",
+                "paying higher monthly wages to their workers",
+                "paying higher monthly wages to their staff",
+                "paying higher monthly wages to employees",
+                "paying higher monthly wages to workers",
+                "paying higher monthly wages to their staff members",
+                "paying higher monthly salaries to their employees",
+                "paying higher monthly salaries to their workers",
+                "paying higher monthly salaries to their staff",
+                "paying higher monthly salaries to employees",
+                "paying higher monthly salaries to workers",
+                "paying higher monthly salaries to their staff members",
+                "having to pay higher monthly wages to their employees",
+                "having to pay higher monthly wages to their workers",
+                "having to pay higher monthly wages to their staff",
+                "having to pay higher monthly wages to employees",
+                "having to pay higher monthly wages to workers",
+                "having to pay higher monthly wages to their staff members",
+                "having to pay higher monthly salaries to their employees",
+                "having to pay higher monthly salaries to their workers",
+                "having to pay higher monthly salaries to their staff",
+                "having to pay higher monthly salaries to employees",
+                "having to pay higher monthly salaries to workers",
+                "having to pay higher monthly salaries to their staff members",
+                "to pay higher monthly wages to their employees",
+                "to pay higher monthly wages to their workers",
+                "to pay higher monthly wages to their staff",
+                "to pay higher monthly wages to employees",
+                "to pay higher monthly wages to workers",
+                "to pay higher monthly wages to their staff members",
+                "to pay higher monthly salaries to their employees",
+                "to pay higher monthly salaries to their workers",
+                "to pay higher monthly salaries to their staff",
+                "to pay higher monthly salaries to employees",
+                "to pay higher monthly salaries to workers",
+                "to pay higher monthly salaries to their staff members"
+              ],
+              "targets": [
+                "NFSUBJ",
+                "pay",
+                "employee",
+                "wage",
+                "month"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "pay their employees higher wages every month is",
+                  "right": "paying their employees higher wages every month is",
+                  "explanation_zh": "這一段是整句的主詞，動作當主詞要用動名詞 paying（或改成 it is … to pay …）。"
+                },
+                {
+                  "wrong": "paying their employees more higher wages every month",
+                  "right": "paying their employees higher wages every month",
+                  "explanation_zh": "higher 已經是比較級，前面不再加 more。"
+                }
+              ]
+            },
+            {
+              "zh": "常被視為",
+              "accepted": [
+                "is often seen as",
+                "is often regarded as",
+                "is often considered",
+                "is often considered as",
+                "is often viewed as",
+                "is often thought of as",
+                "is often treated as",
+                "is usually seen as",
+                "is usually regarded as",
+                "is usually considered",
+                "is usually considered as",
+                "is usually viewed as",
+                "is usually thought of as",
+                "is usually treated as",
+                "is frequently seen as",
+                "is frequently regarded as",
+                "is frequently considered",
+                "is frequently considered as",
+                "is frequently viewed as",
+                "is frequently thought of as",
+                "is frequently treated as",
+                "is commonly seen as",
+                "is commonly regarded as",
+                "is commonly considered",
+                "is commonly considered as",
+                "is commonly viewed as",
+                "is commonly thought of as",
+                "is commonly treated as"
+              ],
+              "targets": [
+                "PASS",
+                "regard"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "are often seen as",
+                  "right": "is often seen as",
+                  "explanation_zh": "動名詞片語當主詞視為單數，動詞用 is。"
+                },
+                {
+                  "wrong": "is often seeing as",
+                  "right": "is often seen as",
+                  "explanation_zh": "主詞（付薪水這件事）是「被」視為，用被動 is seen as。"
+                }
+              ]
+            },
+            {
+              "zh": "沉重的經濟負擔",
+              "accepted": [
+                "a heavy financial burden",
+                "a heavy financial load",
+                "a heavy financial strain",
+                "a heavy economic burden",
+                "a heavy economic load",
+                "a heavy economic strain",
+                "a great financial burden",
+                "a great financial load",
+                "a great financial strain",
+                "a great economic burden",
+                "a great economic load",
+                "a great economic strain",
+                "a huge financial burden",
+                "a huge financial load",
+                "a huge financial strain",
+                "a huge economic burden",
+                "a huge economic load",
+                "a huge economic strain",
+                "a serious financial burden",
+                "a serious financial load",
+                "a serious financial strain",
+                "a serious economic burden",
+                "a serious economic load",
+                "a serious economic strain",
+                "a big financial burden",
+                "a big financial load",
+                "a big financial strain",
+                "a big economic burden",
+                "a big economic load",
+                "a big economic strain",
+                "a considerable financial burden",
+                "a considerable financial load",
+                "a considerable financial strain",
+                "a considerable economic burden",
+                "a considerable economic load",
+                "a considerable economic strain",
+                "a large financial burden",
+                "a large financial load",
+                "a large financial strain",
+                "a large economic burden",
+                "a large economic load",
+                "a large economic strain",
+                "a major financial burden",
+                "a major financial load",
+                "a major financial strain",
+                "a major economic burden",
+                "a major economic load",
+                "a major economic strain",
+                "a heavy burden financially"
+              ],
+              "targets": [
+                "heavy",
+                "financial",
+                "burden"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "a heavy economy burden",
+                  "right": "a heavy financial burden",
+                  "explanation_zh": "economy 是名詞「經濟」；修飾 burden 要用形容詞 financial／economic。"
+                },
+                {
+                  "wrong": "heavy financial burden",
+                  "right": "a heavy financial burden",
+                  "explanation_zh": "burden 是可數名詞，單數前面要加 a。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "verbal_subject",
+              "zh": "每個月付給員工更高的薪水",
+              "literal_error": "For the owners of these shops, pay their employees higher wages every month is often seen as a heavy financial burden.",
+              "part": 2,
+              "explanation_zh": "中文直接用「付給員工更高的薪水」這件事當主詞，英文要改成動名詞 Paying …，動詞用單數 is。"
+            },
+            {
+              "type": "abstract_nominal",
+              "zh": "經濟負擔",
+              "literal_error": "… is often seen as a heavy economy burden.",
+              "part": 4,
+              "explanation_zh": "「經濟負擔」是複合概念，英文用形容詞 financial／economic 修飾 burden；economy 是名詞。"
+            }
+          ],
+          "bonus": [],
+          "restructuring_zh": "中文以「每個月付給員工更高的薪水」這件事當主題，英文用動名詞主詞 Paying their employees higher wages every month，動詞用單數 is；「常被視為」是 is often seen／regarded as；「對…來說」放句首寫成 For the owners of these shops,。",
+          "notes_zh": "第 2 部分寫成虛主詞句 it is often seen as a heavy financial burden to pay … 也算 NFSUBJ（不定詞主詞後移），第 3 部分這時是 is often seen as。寫成 These shop owners often regard paying … as … 是主動句，沒有用到被動，不在可接受寫法內。「經濟負擔」寫 financial burden 或 economic burden 都可以；「薪水」寫 wages、salaries、pay 都可以。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ac-V-3",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-top-07",
+    "lot": "translation-top-07",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "727f3c696b5eb6e7923442d5861775b3b6c73b73c5d622f70692eba105fc5008",
+    "spec_id": "translation-top@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-10T02:47:47Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-10T00:00:00Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "This year's minimum wage is five percent higher than last year's, forcing many small shops to raise the prices of their goods.",
+            "confidence": "high",
+            "explanation_zh": "「比去年高出百分之五」用 five percent higher than last year's（比較對象是去年的最低工資，所以用所有格）；「迫使」用分詞構句 forcing … to raise。"
+          },
+          "2": {
+            "translation": "For the owners of these shops, paying their employees higher wages every month is often regarded as a heavy financial burden.",
+            "confidence": "high",
+            "explanation_zh": "動名詞片語 paying … higher wages 當主詞；「常被視為」用 is often regarded as；「沉重的經濟負擔」譯 a heavy financial burden。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PART",
+              "COMP"
+            ],
+            "used_target_words": [
+              "year",
+              "minimum",
+              "wage",
+              "high",
+              "last",
+              "force",
+              "small",
+              "shop",
+              "raise",
+              "price"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "NFSUBJ",
+              "PASS"
+            ],
+            "used_target_words": [
+              "owner",
+              "shop",
+              "pay",
+              "employee",
+              "wage",
+              "month",
+              "regard",
+              "heavy",
+              "financial",
+              "burden"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "year",
+              "minimum",
+              "wage",
+              "high",
+              "last",
+              "force",
+              "small",
+              "shop",
+              "raise",
+              "price"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PART": true,
+              "COMP": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "owner",
+              "shop",
+              "pay",
+              "employee",
+              "wage",
+              "month",
+              "regard",
+              "heavy",
+              "financial",
+              "burden"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NFSUBJ": true,
+              "PASS": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-10T02:37:45Z",
+      "details": {
+        "solver": "B",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "This year's minimum wage is five percent higher than last year's, forcing many small shops to raise the prices of their goods.",
+            "confidence": "high",
+            "explanation_zh": "「比去年高出百分之五」用 five percent higher than last year's（避免重複 minimum wage）；後半「迫使……調漲」用分詞構句 forcing ... to raise。"
+          },
+          "2": {
+            "translation": "For the owners of these shops, paying their employees higher salaries every month is often regarded as a heavy financial burden.",
+            "confidence": "high",
+            "explanation_zh": "「對……老闆來說」用 For ...；「每個月付給員工更高的薪水」用動名詞片語當主詞；「被視為」be regarded as，「沉重的經濟負擔」a heavy financial burden。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PART",
+              "COMP"
+            ],
+            "used_target_words": [
+              "year",
+              "minimum",
+              "wage",
+              "high",
+              "last",
+              "force",
+              "small",
+              "shop",
+              "raise",
+              "price"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "NFSUBJ",
+              "PASS"
+            ],
+            "used_target_words": [
+              "owner",
+              "shop",
+              "pay",
+              "employee",
+              "wage",
+              "month",
+              "regard",
+              "heavy",
+              "financial",
+              "burden"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "year",
+              "minimum",
+              "wage",
+              "high",
+              "last",
+              "force",
+              "small",
+              "shop",
+              "raise",
+              "price"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PART": true,
+              "COMP": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "owner",
+              "shop",
+              "pay",
+              "employee",
+              "wage",
+              "month",
+              "regard",
+              "heavy",
+              "financial",
+              "burden"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NFSUBJ": true,
+              "PASS": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

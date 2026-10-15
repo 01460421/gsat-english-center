@@ -1,0 +1,321 @@
+{
+  "schema": "gsat-bank-facts/v1",
+  "id": "taiwan-dengue-rb05",
+  "title": "Dengue fever in Taiwan: local cases per year 2010–2025, mosquito vectors, weather and breeding-site removal",
+  "sdgs": [
+    3
+  ],
+  "created_on": "2026-10-10",
+  "created_by": "claude-opus-5-5",
+  "sources": [
+    {
+      "id": "s1",
+      "publisher": "政府資料開放平臺 data.gov.tw（提供機關：衛生福利部疾病管制署）",
+      "title": "登革熱1998年起每日確定病例統計",
+      "url": "https://data.gov.tw/dataset/21025",
+      "accessed": "2026-10-10",
+      "license": "OGDL-Taiwan-1.0",
+      "use": "dataset",
+      "note": "欄位含發病日、是否境外移入、確定病例數等（逐日、逐村里的確定病例）。2026-10-10 開資料集頁時，平臺標示「資料集已下架，此為歷史資料留存」，頁面沒有列出資源檔；原資源檔 od.cdc.gov.tw/eic/Dengue_Daily.csv 從本工作環境連線被拒（connection reset／HTTP 503），無法逐列加總。d1 的年度數值改以同一套通報資料的疾管署傳染病統計資料查詢系統（s2）依相同條件查得：登革熱、確定病例、本土病例、依發病日、以「年」為統計單位、全國；並與 s3 衛福部年報圖表印出的數值比對一致（2010 年 1,592、2011 年 1,545、2012 年 1,271、2013 年 596、2014 年 15,492、2015 年 43,419、2023 年 26,429）"
+    },
+    {
+      "id": "s2",
+      "publisher": "衛生福利部疾病管制署 傳染病統計資料查詢系統（NIDSS）",
+      "title": "登革熱 本土病例 趨勢圖（全國／台南市／高雄市；依發病日、以年或年月統計）",
+      "url": "https://nidss.cdc.gov.tw/nndss/disease?id=061",
+      "accessed": "2026-10-10",
+      "license": "Taiwan CDC 政府網站資料開放宣告（無償、非專屬授權，須註明出處；NIDSS 子網站未另行確認）",
+      "use": "fact_only",
+      "note": "查詢條件：確定病例、本土病例（另查境外移入病例）、發病日、2010–2025 年；縣市別依病例居住縣市。資料更新時間 2026/10/10 07:27"
+    },
+    {
+      "id": "s3",
+      "publisher": "衛生福利部",
+      "title": "2024 Taiwan Health and Welfare Report, p. 85（Figure 6-3 Number of Confirmed Dengue Fever Cases, by Year, domestic cases）",
+      "url": "https://service.mohw.gov.tw/ebook/dopl/113/02/files/basic-html/page85.html",
+      "accessed": "2026-10-10",
+      "license": "all-rights-reserved",
+      "use": "fact_only",
+      "note": "只用來比對 s2 的年度數值"
+    },
+    {
+      "id": "s4",
+      "publisher": "Biomedical Journal（Chang Gung University research portal）",
+      "title": "Dengue outbreaks and the geographic distribution of dengue vectors in Taiwan: A 20-year epidemiological analysis",
+      "url": "https://pure.lib.cgu.edu.tw/en/publications/dengue-outbreaks-and-the-geographic-distribution-of-dengue-vector-3/",
+      "accessed": "2026-10-10",
+      "license": "all-rights-reserved",
+      "use": "fact_only",
+      "note": "Chen W. J., Biomed J 2018;41(5):283–289, doi:10.1016/j.bj.2018.06.002（摘要）"
+    },
+    {
+      "id": "s5",
+      "publisher": "Taiwan Centers for Disease Control",
+      "title": "Public once again urged to remove vector breeding sites in and around residence as dengue activity likely to increase one week after Typhoon Soudelor swept across Taiwan",
+      "url": "https://www.cdc.gov.tw/En/Bulletin/Detail/zbzivUqCoxfyUEtH8kaeKg?typeid=158",
+      "accessed": "2026-10-10",
+      "license": "Taiwan CDC 政府網站資料開放宣告（無償、非專屬授權，須註明出處）",
+      "use": "fact_only",
+      "note": "2015-08-11 新聞稿（當時的情形）"
+    },
+    {
+      "id": "s6",
+      "publisher": "Taiwan Centers for Disease Control",
+      "title": "Public urged to remove and clean dengue vector breeding sites and take precautions against mosquito bites as dengue outbreaks remain rampant",
+      "url": "https://www.cdc.gov.tw/En/Bulletin/Detail/VdKaVv3R7z3GRL13FChPUA?typeid=158",
+      "accessed": "2026-10-10",
+      "license": "Taiwan CDC 政府網站資料開放宣告（無償、非專屬授權，須註明出處）",
+      "use": "fact_only",
+      "note": "2015-09-09 新聞稿，引述病媒專家陳正成教授"
+    },
+    {
+      "id": "s7",
+      "publisher": "World Health Organization",
+      "title": "Dengue and severe dengue (fact sheet)",
+      "url": "https://www.who.int/news-room/fact-sheets/detail/dengue-and-severe-dengue",
+      "accessed": "2026-10-10",
+      "license": "WHO terms of use",
+      "use": "fact_only",
+      "note": "WHO 出版品只取事實、不改寫"
+    },
+    {
+      "id": "s8",
+      "publisher": "U.S. Centers for Disease Control and Prevention",
+      "title": "Life Cycle of Aedes Mosquitoes",
+      "url": "https://www.cdc.gov/mosquitoes/about/life-cycle-of-aedes-mosquitoes.html",
+      "accessed": "2026-10-10",
+      "license": "public domain (U.S. federal government work)",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s9",
+      "publisher": "U.S. Centers for Disease Control and Prevention",
+      "title": "Mosquito Control at Home",
+      "url": "https://www.cdc.gov/mosquitoes/mosquito-control/mosquito-control-at-home.html",
+      "accessed": "2026-10-10",
+      "license": "public domain (U.S. federal government work)",
+      "use": "fact_only",
+      "note": null
+    }
+  ],
+  "facts": [
+    {
+      "id": "f1",
+      "text": "Dengue is caused by a virus that Aedes mosquitoes pass to people: a mosquito that bites an infected person can later infect others when it bites them. Aedes aegypti is the main carrier; Aedes albopictus can also spread it.",
+      "source_ids": [
+        "s7"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f2",
+      "text": "Most people who catch dengue have mild symptoms or none at all, but some develop severe dengue.",
+      "source_ids": [
+        "s7"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f3",
+      "text": "There is no specific medicine that treats dengue.",
+      "source_ids": [
+        "s7"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f4",
+      "text": "A 2018 review of about 20 years of Taiwan CDC data found that more than 98% of local dengue cases in outbreaks were reported in southern Taiwan, mainly Tainan, Kaohsiung and Pingtung.",
+      "source_ids": [
+        "s4"
+      ],
+      "kind": "number",
+      "note": "原文數字是 98.62%"
+    },
+    {
+      "id": "f5",
+      "text": "Aedes aegypti is found in southern Taiwan but appears to be absent from the north, while Aedes albopictus lives across the island. The author suggests Aedes aegypti cannot survive the cold, wet winters of northern Taiwan.",
+      "source_ids": [
+        "s4"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f6",
+      "text": "Aedes aegypti prefers to stay indoors and mainly bites humans, while Aedes albopictus prefers to stay outdoors and mainly bites animals; this is why Aedes aegypti is the main dengue carrier in Taiwan.",
+      "source_ids": [
+        "s6"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f7",
+      "text": "Female Aedes mosquitoes lay their eggs on the inner walls of containers that hold water, just above the waterline, for example buckets, vases, flowerpot saucers, barrels and tires.",
+      "source_ids": [
+        "s8",
+        "s9"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f8",
+      "text": "The eggs hatch when water, such as rain, rises and covers them; the young (larvae) live in the water.",
+      "source_ids": [
+        "s8"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f9",
+      "text": "An Aedes mosquito takes 7 to 10 days to develop from an egg into an adult.",
+      "source_ids": [
+        "s8"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f10",
+      "text": "Aedes eggs can survive drying out for up to 8 months.",
+      "source_ids": [
+        "s8"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f11",
+      "text": "WHO links the spread of dengue to rising temperatures, heavy rainfall and high humidity; temperature also affects how quickly the virus develops inside the mosquito.",
+      "source_ids": [
+        "s7"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f12",
+      "text": "In early August 2015, heavy rain from Typhoon Soudelor increased the number of places where water collected in Taiwan, at a time when dengue cases were rising quickly in southern Taiwan.",
+      "source_ids": [
+        "s5"
+      ],
+      "kind": "event"
+    },
+    {
+      "id": "f13",
+      "text": "Local cases are people who caught dengue inside Taiwan; cases caught abroad are counted separately as imported cases.",
+      "source_ids": [
+        "s1",
+        "s2"
+      ],
+      "kind": "definition"
+    },
+    {
+      "id": "f14",
+      "text": "Taiwan had 43,419 local dengue cases in 2015 (by date of illness), the highest yearly total from 2010 to 2025. The 2014 total was 15,492 and the 2023 total was 26,429.",
+      "source_ids": [
+        "s2",
+        "s3"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f15",
+      "text": "Of the 43,419 local cases in 2015, 22,760 were people living in Tainan and 19,723 were people living in Kaohsiung, together 42,483 cases, or about 98% of the total.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "number",
+      "note": "衍生數字：22,760＋19,723＝42,483；42,483 ÷ 43,419 ≈ 97.8%"
+    },
+    {
+      "id": "f16",
+      "text": "In 2016 local cases fell to 381, a few hundred, after the 43,419 cases of 2015. In 2021 there were no local cases at all.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f17",
+      "text": "Of the 26,429 local cases in 2023, 21,513 were people living in Tainan.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f18",
+      "text": "A vector expert told Taiwan CDC in 2015 that removing mosquito breeding sites is the single most effective way to control a dengue outbreak.",
+      "source_ids": [
+        "s6"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f19",
+      "text": "Health officials advise checking once a week and emptying and scrubbing, turning over, covering or throwing out anything that holds water; emptying and scrubbing removes mosquito eggs and larvae.",
+      "source_ids": [
+        "s9"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f20",
+      "text": "In 2015, local cases (by month of illness) rose from 335 in July to 4,461 in August and 15,166 in September.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "number"
+    }
+  ],
+  "datasets": [
+    {
+      "id": "d1",
+      "source_id": "s1",
+      "title": "Local (indigenous) confirmed dengue cases in Taiwan per year, by date of illness onset",
+      "indicator": "確定病例數（本土病例、依發病日、全國、年合計）",
+      "unit": "cases",
+      "categories": [
+        "2010",
+        "2011",
+        "2012",
+        "2013",
+        "2014",
+        "2015",
+        "2016",
+        "2017",
+        "2018",
+        "2019",
+        "2020",
+        "2021",
+        "2022",
+        "2023",
+        "2024",
+        "2025"
+      ],
+      "series": [
+        {
+          "name": "Local cases",
+          "values": [
+            1592,
+            1545,
+            1271,
+            596,
+            15492,
+            43419,
+            381,
+            10,
+            183,
+            100,
+            73,
+            0,
+            20,
+            26429,
+            255,
+            29
+          ]
+        }
+      ],
+      "note": "年度值的取得方式見 s1 的 note（資源檔無法下載，以同一套通報資料的 NIDSS 依相同條件查得，並與 s3 比對）。境外移入病例另計，不在本數列"
+    }
+  ],
+  "notes": "2010–2025 每一年都列入圖表，沒有省略年份（2015 年最高、2021 年為 0）。"
+}

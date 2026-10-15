@@ -1,0 +1,762 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.b3e652",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "basic",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "有一個大熱天，媽媽放在桌上的炒飯讓我吃壞了肚子。",
+        "options": null,
+        "answer": "One hot day, the fried rice that Mom left on the table gave me a stomachache.",
+        "accepted_answers": [
+          "On a hot day, the fried rice that my mother left on the table upset my stomach.",
+          "On one hot day, the fried rice which my mom had left on the table made me sick."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "關係代名詞子句"
+          ],
+          "topic": "夏天吃壞肚子"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "為了止住我的肚子痛，診所的醫生開了一些藥給我。",
+        "options": null,
+        "answer": "To stop my stomachache, the doctor at the clinic gave me some medicine.",
+        "accepted_answers": [
+          "In order to stop my stomachache, the doctor at the clinic prescribed some medicine for me.",
+          "The clinic doctor gave me some medicine to ease my stomach pain."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "不定詞表目的"
+          ],
+          "topic": "夏天吃壞肚子"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "夏天吃壞肚子"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「媽媽放在桌上的炒飯」是很長的名詞片語：中文的修飾語放在「炒飯」前面，英文要把修飾語改成關係子句放在名詞後面：the fried rice (that／which) Mom left on the table。that 是 left 的受詞，可以省略，但後面不能再加 it。「放在桌上（沒收）」用 leave，過去式 left；「炒飯」是 fried rice，rice 不可數。「讓我吃壞了肚子」的「讓」是造成，用 gave me a stomachache 或 made me sick，不是 let。「有一個大熱天」寫 One hot day 或 On a hot day。",
+          "evidence": [
+            "媽媽放在桌上的炒飯",
+            "讓我吃壞了肚子"
+          ],
+          "strategy_zh": "看到「主詞＋動詞＋的＋名詞」這種修飾語，先寫名詞，再用 that／which 接子句，子句裡不要重複受詞。",
+          "hints": [
+            "切成四段：有一個大熱天／媽媽放在桌上的／炒飯／讓我吃壞了肚子",
+            "標的詞彙：hot（熱的）、leave（留置，過去式 left）、table（桌子）、fried rice（炒飯）、stomachache（肚子痛）",
+            "句型框架：One hot day, the + N + (that) + S + V-ed … + gave me …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「為了止住…」表目的，用不定詞 To + 原形動詞（或 In order to），放句首時後面加逗號再接主要子句；也可以放句尾：… gave me some medicine to stop my stomachache。stop 後面接名詞 my stomachache，不能接子句 my stomach hurts。「診所的醫生」英文把地點放在後面：the doctor at the clinic。「開藥」不是 open，用 gave（或 prescribed）；看醫生是過去的事，用過去式。「吃藥」英文是 take medicine。",
+          "evidence": [
+            "為了止住我的肚子痛",
+            "開了一些藥給我"
+          ],
+          "strategy_zh": "「為了＋動作」直接想 to + 原形動詞；放句首就用逗號隔開主要子句。",
+          "hints": [
+            "切成四段：為了止住我的肚子痛／診所的醫生／開了／一些藥給我",
+            "標的詞彙：stop（止住）、stomachache（肚子痛）、doctor（醫生）、clinic（診所）、give（給；開藥）、medicine（藥）",
+            "句型框架：To + 原形動詞 …, S + gave + 人 + 物"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "One hot day, the fried rice that Mom left on the table gave me a stomachache.",
+            "On a hot day, the fried rice that my mother left on the table upset my stomach.",
+            "On one hot day, the fried rice which my mom had left on the table made me sick."
+          ],
+          "target_words": [
+            {
+              "word": "hot",
+              "zh": "熱的"
+            },
+            {
+              "word": "leave",
+              "zh": "放著（留在某處）",
+              "alternatives": [
+                "put"
+              ]
+            },
+            {
+              "word": "table",
+              "zh": "桌子"
+            },
+            {
+              "word": "fried rice",
+              "zh": "炒飯"
+            },
+            {
+              "word": "stomachache",
+              "zh": "肚子痛（吃壞肚子）",
+              "alternatives": [
+                "stomach",
+                "sick",
+                "ill",
+                "food poisoning"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "REL",
+              "grammar_id": "gp-relative-pronoun",
+              "label_zh": "關係代名詞引導的形容詞子句（受格 that／which 可省略）",
+              "frame": "the + N + (that／which) + S + V-ed … + V …",
+              "zh_trigger": "媽媽放在桌上的炒飯"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "有一個大熱天",
+              "accepted": [
+                "One hot day",
+                "On a hot day",
+                "On one hot day",
+                "One very hot day",
+                "On a very hot day",
+                "One really hot day",
+                "On a really hot day",
+                "One hot summer day",
+                "On a hot summer day",
+                "One day when it was very hot",
+                "One day when it was really hot",
+                "One scorching day",
+                "On a scorching day",
+                "One scorching hot day",
+                "On a scorching hot day",
+                "One sweltering day",
+                "On a sweltering day",
+                "On a boiling hot day"
+              ],
+              "targets": [
+                "hot"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "In a hot day",
+                  "right": "On a hot day",
+                  "explanation_zh": "某一天前面用介系詞 on，或直接用 one hot day 當副詞，不用 in。"
+                }
+              ]
+            },
+            {
+              "zh": "媽媽放在桌上的",
+              "accepted": [
+                "that Mom left on the table",
+                "Mom left on the table",
+                "which Mom left on the table",
+                "that my mom left on the table",
+                "my mom left on the table",
+                "which my mom left on the table",
+                "that my mother left on the table",
+                "my mother left on the table",
+                "which my mother left on the table",
+                "that Mom had left on the table",
+                "Mom had left on the table",
+                "that my mom had left on the table",
+                "my mom had left on the table",
+                "which my mom had left on the table",
+                "that my mother had left on the table",
+                "my mother had left on the table",
+                "that Mom put on the table",
+                "that my mom put on the table",
+                "my mom put on the table",
+                "that my mother put on the table",
+                "that Mom left out on the table",
+                "my mom left out on the table",
+                "that Mom had left out on the table",
+                "Mom had left out on the table",
+                "that my mom had left out on the table",
+                "that Mum left on the table",
+                "my mum left on the table"
+              ],
+              "targets": [
+                "REL",
+                "leave",
+                "table"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "that Mom left it on the table",
+                  "right": "that Mom left on the table",
+                  "explanation_zh": "關係代名詞 that 已經代替 the fried rice 當 left 的受詞，後面不能再加 it。"
+                },
+                {
+                  "wrong": "Mom's on the table fried rice",
+                  "right": "the fried rice that Mom left on the table",
+                  "explanation_zh": "中文把修飾語放在名詞前面，英文要把它改成關係子句放在名詞後面：the fried rice (that) Mom left on the table。"
+                },
+                {
+                  "wrong": "that Mom leaves on the table",
+                  "right": "that Mom left on the table",
+                  "explanation_zh": "這是那一天已經發生的事，leave 要用過去式 left。"
+                }
+              ]
+            },
+            {
+              "zh": "炒飯",
+              "accepted": [
+                "the fried rice",
+                "the plate of fried rice",
+                "the bowl of fried rice",
+                "the box of fried rice"
+              ],
+              "targets": [
+                "fried rice"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "the fry rice",
+                  "right": "the fried rice",
+                  "explanation_zh": "「炒過的」飯用過去分詞 fried 當形容詞，不用原形 fry。"
+                },
+                {
+                  "wrong": "the fried rices",
+                  "right": "the fried rice",
+                  "explanation_zh": "rice 是不可數名詞，不加 s。"
+                }
+              ]
+            },
+            {
+              "zh": "讓我吃壞了肚子",
+              "accepted": [
+                "gave me a stomachache",
+                "gave me a stomach ache",
+                "gave me a bad stomachache",
+                "gave me an upset stomach",
+                "upset my stomach",
+                "made my stomach upset",
+                "made me sick",
+                "made me ill",
+                "made me get sick",
+                "made me feel sick",
+                "gave me food poisoning",
+                "made my stomach hurt",
+                "made me have a stomachache",
+                "made me get a stomachache",
+                "made me have an upset stomach",
+                "caused my stomachache",
+                "caused me to have a stomachache",
+                "caused me to get sick",
+                "gave me diarrhea",
+                "gave me a stomach upset",
+                "made me sick to my stomach",
+                "I got a stomachache from",
+                "I got an upset stomach from",
+                "I got sick from",
+                "I got food poisoning from"
+              ],
+              "targets": [
+                "stomachache"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "let me have a stomachache",
+                  "right": "gave me a stomachache",
+                  "explanation_zh": "這裡的「讓」是「造成」，用 give sb a stomachache 或 make sb sick；let 是「允許」，意思不對。"
+                },
+                {
+                  "wrong": "made me stomachache",
+                  "right": "gave me a stomachache",
+                  "explanation_zh": "stomachache 是名詞，不能直接放在 made me 後面；用 give sb a stomachache，或 make sb + 形容詞 sick。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "collocation",
+              "zh": "讓我吃壞了肚子",
+              "literal_error": "One hot day, the fried rice that Mom left on the table let me have a stomachache.",
+              "part": 4,
+              "explanation_zh": "「讓」很容易直譯成 let，但 let 是「允許」；這裡是「造成」，要用 give sb a stomachache 或 make sb sick，這一部分扣分。"
+            }
+          ],
+          "bonus": [],
+          "notes_zh": "標的句型是限定關係子句：the fried rice (that／which) Mom left on the table，受格關係代名詞可以省略；媽媽寫 Mom、my mom、my mother 都可以，left 或 had left 都對，放在桌上寫 left（沒收好）或 put 都可以。「有一個大熱天」寫 One hot day 或 On a hot day 都給分。「讓我吃壞了肚子」寫 gave me a stomachache、upset my stomach、made me sick、gave me food poisoning 都可以，但不可用 let。"
+        },
+        "2": {
+          "references": [
+            "To stop my stomachache, the doctor at the clinic gave me some medicine.",
+            "In order to stop my stomachache, the doctor at the clinic prescribed some medicine for me.",
+            "The clinic doctor gave me some medicine to ease my stomach pain."
+          ],
+          "target_words": [
+            {
+              "word": "stop",
+              "zh": "止住",
+              "alternatives": [
+                "ease",
+                "relieve",
+                "cure",
+                "treat"
+              ]
+            },
+            {
+              "word": "stomachache",
+              "zh": "肚子痛",
+              "alternatives": [
+                "stomach"
+              ]
+            },
+            {
+              "word": "doctor",
+              "zh": "醫生"
+            },
+            {
+              "word": "clinic",
+              "zh": "診所"
+            },
+            {
+              "word": "give",
+              "zh": "給（開藥）",
+              "alternatives": [
+                "prescribe"
+              ]
+            },
+            {
+              "word": "medicine",
+              "zh": "藥",
+              "alternatives": [
+                "pill",
+                "medication"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PURP",
+              "grammar_id": "gp-infinitive-purpose",
+              "label_zh": "不定詞表目的（為了…）",
+              "frame": "To／In order to + 原形動詞 …, S + V … ／ S + V … + to + 原形動詞",
+              "zh_trigger": "為了止住"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "為了止住我的肚子痛",
+              "accepted": [
+                "To stop my stomachache",
+                "In order to stop my stomachache",
+                "So as to stop my stomachache",
+                "To stop my stomach ache",
+                "To stop my stomach pain",
+                "To stop the pain in my stomach",
+                "To stop my stomach from hurting",
+                "To make my stomach stop hurting",
+                "To help stop my stomachache",
+                "To ease my stomachache",
+                "To ease my stomach pain",
+                "In order to ease my stomachache",
+                "To relieve my stomachache",
+                "To relieve my stomach pain",
+                "In order to relieve my stomachache",
+                "To cure my stomachache",
+                "To treat my stomachache"
+              ],
+              "targets": [
+                "PURP",
+                "stop",
+                "stomachache"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "For stopping my stomachache",
+                  "right": "To stop my stomachache",
+                  "explanation_zh": "表目的「為了…」用不定詞 to + 原形動詞（或 in order to）。"
+                },
+                {
+                  "wrong": "To stop my stomach hurts",
+                  "right": "To stop my stomachache",
+                  "explanation_zh": "stop 後面要接名詞當受詞；my stomach hurts 是完整子句，要改成名詞 my stomachache，或寫 to stop my stomach from hurting。"
+                },
+                {
+                  "wrong": "In order to stopping my stomachache",
+                  "right": "In order to stop my stomachache",
+                  "explanation_zh": "in order to 的 to 是不定詞，後面接原形動詞。"
+                }
+              ]
+            },
+            {
+              "zh": "診所的醫生",
+              "accepted": [
+                "the doctor at the clinic",
+                "the doctor in the clinic",
+                "the clinic doctor",
+                "a doctor at the clinic",
+                "a doctor in the clinic",
+                "the doctor at a clinic",
+                "the doctor of the clinic",
+                "the clinic's doctor"
+              ],
+              "targets": [
+                "doctor",
+                "clinic"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "the doctor of clinic",
+                  "right": "the doctor at the clinic",
+                  "explanation_zh": "clinic 是可數名詞，前面要有冠詞 the 或 a；「診所的醫生」最自然的說法是 the doctor at the clinic。"
+                },
+                {
+                  "wrong": "the clinic of doctor",
+                  "right": "the doctor at the clinic",
+                  "explanation_zh": "中心名詞是「醫生」，要放前面：the doctor at the clinic；the clinic of … 意思變成「…的診所」。"
+                }
+              ]
+            },
+            {
+              "zh": "開了",
+              "accepted": [
+                "gave",
+                "prescribed"
+              ],
+              "targets": [
+                "give"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "opened",
+                  "right": "gave／prescribed",
+                  "explanation_zh": "「開藥」不能逐字翻成 open；醫生給藥用 give sb medicine，正式一點用 prescribe。"
+                },
+                {
+                  "wrong": "gives",
+                  "right": "gave",
+                  "explanation_zh": "看醫生是已經發生的事，要用過去式 gave（give 是不規則動詞）。"
+                }
+              ]
+            },
+            {
+              "zh": "一些藥給我",
+              "accepted": [
+                "me some medicine",
+                "some medicine to me",
+                "some medicine for me",
+                "me some medicines",
+                "me some pills",
+                "some pills for me",
+                "me some medication",
+                "some medication for me",
+                "me some medicine to take",
+                "some medicine for me to take"
+              ],
+              "targets": [
+                "medicine"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "me some medicine to eat",
+                  "right": "me some medicine (to take)",
+                  "explanation_zh": "「吃藥」英文說 take medicine，不說 eat medicine。"
+                },
+                {
+                  "wrong": "some medicine me",
+                  "right": "me some medicine",
+                  "explanation_zh": "give 的雙受詞順序是 give + 人 + 物，或 give + 物 + to + 人。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "collocation",
+              "zh": "開了",
+              "literal_error": "To stop my stomachache, the doctor at the clinic opened some medicine for me.",
+              "part": 3,
+              "explanation_zh": "「開藥」的「開」不是打開，照字面寫成 opened 意思不通；醫生開藥用 gave（或 prescribed），這一部分扣分。"
+            }
+          ],
+          "bonus": [],
+          "notes_zh": "表目的用不定詞 To stop …、In order to stop …，放句首或句尾（… gave me some medicine to stop my stomachache）都給分。「止住」可寫 stop、ease、relieve；「肚子痛」寫 stomachache、stomach pain 都可以。「開了」寫 gave 或 prescribed；「一些藥給我」寫 me some medicine 或 some medicine for／to me。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-basic-06",
+    "lot": "translation-basic-06",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "74610382a1bd05ddcaec0c8ea0cac0b6d7492107d98401c668fa0d6e9642273c",
+    "spec_id": "translation-basic@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-10T02:30:56Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-10T02:15:00Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "One very hot day, the fried rice that my mother had left on the table gave me an upset stomach.",
+            "confidence": "medium",
+            "explanation_zh": "「媽媽放在桌上的炒飯」用關係子句 the fried rice that my mother had left on the table 修飾；放在桌上發生在吃壞肚子之前，所以用過去完成式 had left（用 left 也可接受）。「吃壞了肚子」譯成 gave me an upset stomach，也可寫 upset my stomach 或 made me sick。「有一個大熱天」用 One very hot day 當時間副詞。信心給 medium 是因為「吃壞肚子」的說法有好幾種，不確定規準收哪些。"
+          },
+          "2": {
+            "translation": "In order to stop my stomachache, the doctor at the clinic prescribed some medicine for me.",
+            "confidence": "medium",
+            "explanation_zh": "「為了止住……」表目的，用 In order to＋原形動詞放句首（To stop 也可）；邏輯主詞是醫生，不會懸垂。「診所的醫生」用 the doctor at the clinic；「開藥」用 prescribe some medicine for me（也可 prescribed me some medicine、gave me some medicine）。過去式敘事。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "REL"
+            ],
+            "used_target_words": [
+              "hot",
+              "leave",
+              "table",
+              "fried rice",
+              "stomachache"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PURP"
+            ],
+            "used_target_words": [
+              "stop",
+              "stomachache",
+              "doctor",
+              "clinic",
+              "give",
+              "medicine"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "hot",
+              "leave",
+              "table",
+              "fried rice",
+              "stomachache"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "REL": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "stop",
+              "stomachache",
+              "doctor",
+              "clinic",
+              "give",
+              "medicine"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PURP": true
+            },
+            "program_match": true
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-10T02:14:07Z",
+      "details": {
+        "solver": "B",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "One very hot day, the fried rice that Mom had left on the table gave me an upset stomach.",
+            "confidence": "medium",
+            "explanation_zh": "「有一個大熱天」用 One (very) hot day；「媽媽放在桌上的炒飯」是關係子句修飾 the fried rice，而且放置動作發生在吃壞肚子之前，所以用過去完成式 had left（用 that Mom left 亦可接受）；「讓我吃壞了肚子」譯為 gave me an upset stomach／made my stomach upset。信心 medium：中文沒有明說是「我吃了」，但「吃壞肚子」隱含吃了；另外過去完成式與簡單過去式都有人會用。"
+          },
+          "2": {
+            "translation": "To stop my stomachache, the doctor at the clinic prescribed some medicine for me.",
+            "confidence": "high",
+            "explanation_zh": "「為了止住…」用不定詞片語 To stop... 表目的（亦可 In order to）；「肚子痛」譯為 stomachache；「診所的醫生」是 the doctor at the clinic；「開藥」用 prescribe some medicine，也可說 gave me some medicine。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "REL"
+            ],
+            "used_target_words": [
+              "hot",
+              "leave",
+              "table",
+              "fried rice",
+              "stomachache"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PURP"
+            ],
+            "used_target_words": [
+              "stop",
+              "stomachache",
+              "doctor",
+              "clinic",
+              "give",
+              "medicine"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "hot",
+              "leave",
+              "table",
+              "fried rice",
+              "stomachache"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "REL": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "stop",
+              "stomachache",
+              "doctor",
+              "clinic",
+              "give",
+              "medicine"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PURP": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

@@ -1,0 +1,751 @@
+{
+  "schema": "gsat-bank-lot/v1",
+  "lot": "reading-basic-05",
+  "section_type": "reading",
+  "tier": "basic",
+  "label_zh": "閱讀測驗‧穩定基礎（第 5 批）",
+  "created_on": "2026-10-09",
+  "count": 2,
+  "questions_per_group": 4,
+  "format_version": "reading-4",
+  "uid_prefix": "ai.rd.",
+  "path": "data/bank/v1/reading/basic/",
+  "spec_id": "reading-basic@2026-10-08",
+  "spec_file": "data/exams/generation-spec/reading.json",
+  "spec_tier_key": "foundation",
+  "spec_status": "draft：由 670 題有官方統計的閱讀題（現制 60、舊制學測 317、指考 293）推得；圖表、表格、多文本是產品延伸，難度未校準；上線後依站內作答資料校正（SPEC §3.6、本檔 RD-CAL-*）",
+  "form_quota": {
+    "continuous": 1,
+    "chart": 1,
+    "table": 0,
+    "multi_text": 0,
+    "basis": "data/bank/topic-plan.json 的分配（第 2 批起；連同第一批，每個難度的整體比例照 ROADMAP §9.2 長文 4：圖表 2：表格 1：多文本 1）",
+    "how_counted_zh": "依題組判定（validate_bank.reading_form）：figures 有 chart 物件＝chart；有 kind=table 的表格＝table；passage_parts 兩篇以上＝multi_text；其他＝continuous（看文選圖的配圖不改變分類）。圖表題與表格題也要有選文，所以 tags.text_format 依 v1.1 規則是 mixed",
+    "note_zh": "出題規格書 passage_overrides.text_format_allowed 只列歷屆出現過的形式；圖表、表格、多文本是產品延伸（05-reading.md §2.4，難度未校準），第一批依 ROADMAP 的配額出題",
+    "chart_types": [
+      "bar",
+      "line",
+      "stacked_bar",
+      "pie"
+    ]
+  },
+  "topic_quota": {
+    "origins_evolution": 1,
+    "science_health": 1,
+    "culture_history": 0,
+    "society_issues": 0,
+    "labels_zh": {
+      "origins_evolution": "起源與演變",
+      "science_health": "科普與健康",
+      "culture_history": "文化與歷史",
+      "society_issues": "社會與議題"
+    },
+    "basis": "08 §6.1（每 8 組：起源與演變 3、科普與健康 2–3、文化與歷史 2、社會與議題 1），依組數等比例取整；取材一律從 SDGs 的具體事件或物件切入（SPEC §6.6）；第 2 批起每組的主題見 assigned_topics（data/bank/topic-plan.json）"
+  },
+  "assigned_topics": [
+    {
+      "slot": 1,
+      "id": "rd-b05-1",
+      "category": "origins_evolution",
+      "category_zh": "起源與演變",
+      "domain_zh": "健康",
+      "topic_zh": "聽診器的發明",
+      "angle_en": "how a shy French doctor invented the stethoscope with a rolled-up sheet of paper",
+      "keywords": [
+        "stethoscope",
+        "laennec"
+      ],
+      "sdgs": [
+        3
+      ],
+      "form": "continuous",
+      "form_hint_zh": null,
+      "note_zh": "取自 reserve_topics rsv-01（原 wb-a03-1，word_bank-advanced-03 撤掉後保留的備用主題）；具體事件：1816 年雷奈克用捲起的紙筒聽診"
+    },
+    {
+      "slot": 2,
+      "id": "rd-b05-2",
+      "category": "science_health",
+      "category_zh": "科普與健康",
+      "domain_zh": "健康",
+      "topic_zh": "台灣的登革熱",
+      "angle_en": "why dengue fever breaks out in southern Taiwan in hot, rainy years, and how emptying standing water stops mosquitoes from breeding",
+      "keywords": [
+        "dengue"
+      ],
+      "sdgs": [
+        3
+      ],
+      "form": "chart",
+      "form_hint_zh": "長條圖：政府資料開放平臺 data.gov.tw 疾病管制署的登革熱確定病例資料，彙整成每年的本土病例數（約 2010–2024）；具體事件：2015 年台南、高雄的大流行。圖表數字以事實單的資料集為準",
+      "note_zh": "重點是病媒蚊、氣候與「清除積水」的防治；不寫成瘧疾（題庫已有「斯里蘭卡如何趕走瘧疾」）"
+    }
+  ],
+  "topic_plan": {
+    "file": "data/bank/topic-plan.json",
+    "rule_zh": "每組一個指定主題（slot＝第幾組）：group.tags.topic 逐字照抄 topic_zh（繁體中文主題名）；angle_en 是英文切入角度；keywords 是撞題比對用的英文關鍵字；主題總表的主題彼此不重複，也避開 data/bank/v1 第一批與歷屆試題用過的主題（make_lots.py --check-topics）"
+  },
+  "sdg_quota": {
+    "focus_sdgs": [
+      3,
+      12,
+      14,
+      15
+    ],
+    "min_groups_with_focus_sdg": 1,
+    "min_share_with_any_sdg": 0.5,
+    "tag": "group.tags.sdgs（SDG 編號陣列）",
+    "rule_zh": "第 2 批起閱讀與混合題每批都至少 1 篇 SDG 3／12／14／15 的具體事件切入（站主擴充題庫的要求；SPEC §5.2 原本只規定閱讀）；一批中 ≥50% 的篇有 SDG（出題規格書 RD-SDG-01）；寫成具體事件或物件，不寫成政策宣導；assigned_topics 的 sdgs 是指定的 SDG，group.tags.sdgs 要包含它"
+  },
+  "answer_letter_share": [
+    0.2,
+    0.3
+  ],
+  "avoid": {
+    "basis": "data/exams/parsed 的 gsat-111、gsat-112、gsat-113、gsat-114、gsat-115、ref-115 同一大題（reading）的正解選項句（避免改寫成同義的正解）與主題",
+    "answer_words": [],
+    "answer_sentences": [
+      "［圖］一名站立的男子，身上披裹一整塊布（在腰間繫住），頸戴串珠項圈、頭戴飾帶、腳踝有串珠環並穿涼鞋；右手持一支長矛，左手持一面繪有幾何圖案的橢圓形大盾牌。",
+      "They have been urged by governments to leave behind their traditions.",
+      "Colorful glass jewelry became popular after the 19th century.",
+      "To emphasize that weapons are an inseparable part of a Maasai warrior’s outfit.",
+      "Their limitations.",
+      "dcab",
+      "The inspiration came from the inventor’s wartime experience.",
+      "a, c, d, f",
+      "What they may offer in medical advancements.",
+      "Lowering GABA levels in the brain can stimulate retina regrowth.",
+      "Reproduced.",
+      "Understanding regeneration in zebrafish may allow humans to regrow their organs.",
+      "How was the word “hula-hooping” derived?",
+      "Ancient Greeks used it as a tool for workout.",
+      "Kicking.",
+      "reed, grapevine, plastic, metal",
+      "To protect tea trees.",
+      "They have difficulties moving around the uneven fields.",
+      "Elephants are unwilling to leave their injured members behind in the tea gardens.",
+      "To create a win-win situation for elephants and tea farms.",
+      "Asian merchants arrived centuries before the African settlers.",
+      "［圖］地圖上圓圈 B 的位置：非洲東岸中段的印度洋沿岸，馬達加斯加島西北方",
+      "Cloves, vanilla, and cinnamon are common spices in Zanzibar.",
+      "archipelago, islands, jewels, destination",
+      "［圖］一隻手的手指把兩片粗糙的布面扣帶撕開（魔鬼氈／黏扣帶）；左下附布面上密集小鉤的特寫小圖。",
+      "A sudden inspiration.",
+      "Cotton was not durable enough to be used as its materials.",
+      "Civil engineering.",
+      "Why Moran started painting Yellowstone.",
+      "The place was severely polluted.",
+      "Americans knew little about its beauty before the 1870s.",
+      "Color photos were not common when Moran started painting Yellowstone.",
+      "To make the most of marine resources.",
+      "Oddsson’s skin transplant.",
+      "Cross-field collaboration has proved to be very fruitful for 100% Fish.",
+      "Paragraph 3.",
+      "The evolution of traffic control systems.",
+      "［圖］裝飾華麗的柱子頂端有一個哥德式尖頂燈罩（燈罩上有一顆圓形燈），燈罩下方左右各伸出一支末端展開的臂板，兩支臂板分別向左下、右下方斜伸。",
+      "Future vehicles may not need traffic lights to cross an intersection.",
+      "Psychology.",
+      "Gaining knowledge through observation.",
+      "Watching horror movies may have a long-term effect on personality.",
+      "By showing opposing views of an issue.",
+      "To argue against the assumption that Russians are born drinkers.",
+      "Vodka production in Russia started in the 15th century.",
+      "The state monopoly.",
+      "By providing further facts.",
+      "A challenging voyage to Antarctica.",
+      "Added fuel to the fire.",
+      "His journey lasted more than two years.",
+      "［圖］地圖航線：由 South Georgia 沿威德爾海東側南下，沿南極洲海岸向西，再北上，終止於威德爾海西北部、南極半島東側的一點；航線未到達 Elephant Island。",
+      "Why is the spiral staircase popular in modern times?",
+      "Stairs.",
+      "stone → iron → steel → glass",
+      "The clockwise design favored right-handed castle defenders.",
+      "How map orientation evolved over time.",
+      "East-orientation of maps.",
+      "A temporary state.",
+      "Old Islamic maps put south at the top for religious purposes.",
+      "Roman.",
+      "Because of the noise it makes.",
+      "The sandals American soldiers brought home from Japan later became modern flip-flops.",
+      "Poor quality.",
+      "A special profession.",
+      "The weather conditions.",
+      "When a ship is waiting to enter the port.",
+      "By summarizing the main points."
+    ],
+    "topics": [
+      "Iceland’s 100% Fish project and full utilization of cod",
+      "Shackleton’s Endurance expedition and the 2022 discovery of the shipwreck",
+      "Thomas Moran’s paintings and the establishment of Yellowstone National Park",
+      "Zanzibar’s history as a trading hub on the Spice Route",
+      "benefits and risks of horror movies",
+      "history and design of spiral staircases",
+      "history of the flip-flop",
+      "marine pilots",
+      "tea plantations in Assam endangering Asian elephants and elephant-friendly tea certification",
+      "the Maasai people: warriors, clothing, and beadwork",
+      "the history of alcohol consumption in Russia",
+      "the history of the hula hoop",
+      "the history of traffic lights",
+      "the invention and development of the hard hat",
+      "the invention of Velcro",
+      "why north is at the top of maps: history of map orientation",
+      "zebrafish retina regeneration and the GABA research",
+      "zebrafish retina regeneration research and possible cures for blindness"
+    ]
+  },
+  "avoid_bank_answers": {
+    "basis": "data/bank/v1 現有題組（含 draft，不含 rejected）已用過的正解；單字取詞彙表主形（功能詞與 L1 字不列），片語整串列出。用意是避免同一個字在題庫裡反覆當正解；這是產生本批規格當下的快照，validate_bank --lot 另外會比對當時的題庫",
+    "scanned_on": "2026-10-09",
+    "scanned_groups": {
+      "vocabulary": 30,
+      "cloze": 60,
+      "word_bank": 30,
+      "structure": 75,
+      "reading": 74,
+      "mixed": 74
+    },
+    "answer_sentences": [
+      "A famous team’s rise, its impact, and doubts about its story.",
+      "Public support allowed the team to compete in Taipei.",
+      "The claim that Hongye had defeated Japan’s champion team.",
+      "The school was short of money for sports.",
+      "How fireworks gained their wide range of colors.",
+      "The narrow choice of colors early fireworks offered.",
+      "Rich colors appeared centuries after fireworks first reached Europe.",
+      "Getting a good color from copper is harder than from strontium.",
+      "Individual whales can be identified by their tail markings.",
+      "Whale killing peaked in the decade humpbacks first gained protection.",
+      "The effort to stop people from hunting whales.",
+      "Today they roughly equal the number hunters took there early last century.",
+      "How public forecasting began and why its goal still matters.",
+      "They relied on daily reports gathered from many places.",
+      "Offering weather predictions to ordinary newspaper readers.",
+      "He did not live to see the return of his warnings.",
+      "How lighthouse lights grew stronger and keepers became unnecessary.",
+      "It made lights both brighter and easier to identify.",
+      "The many tasks keepers did to keep the lights working.",
+      "Automation took keepers out of nearly all U.S. lighthouses within decades.",
+      "Its body must burn energy quickly to stay warm.",
+      "The rat has a slower heart than the mouse but a shorter life.",
+      "The billion or so heartbeats in a lifetime.",
+      "Without modern medicine, people might not live much longer than their heart rate predicts.",
+      "How the flying fish shapes life on Lanyu, even for visitors.",
+      "Leaving the reef fish alone for part of the year.",
+      "Being told to return in summer to fish near the reefs.",
+      "The writer respected a local custom without fully understanding it.",
+      "To illustrate the price swings that fair trade tries to soften.",
+      "Members of a group decide together how it is used.",
+      "Sudden drops in the price farmers get for coffee.",
+      "A certified farmer’s income still depends partly on ordinary coffee prices.",
+      "How one woman tied caring for nature to rights and peace.",
+      "She won a seat in parliament before receiving the Nobel Prize.",
+      "Her refusal to abandon her peaceful work.",
+      "Healthy land eases competition for limited resources.",
+      "Two views on making day visitors pay to enter Venice.",
+      "Making people who come just for the day pay to enter.",
+      "€10, since the ticket was booked two days ahead.",
+      "Both doubt that the charge has eased the crowding so far.",
+      "How drones speed up blood deliveries in Rwanda, and their limits.",
+      "Waiting for blood to arrive by road from far away.",
+      "They are flung up by a launcher and drop boxes by parachute.",
+      "Remote clinics with bad roads likely benefit most from the service.",
+      "From Birkenhead to Manhattan: Green Space for All",
+      "A park that the public owned and anyone could enter free.",
+      "It was paid for with borrowed money and the sale of nearby land.",
+      "Olmsted’s trip abroad influenced his later design work.",
+      "To explain why a fire-safety mascot was created.",
+      "The idea that all fires in nature are harmful.",
+      "He was hurt in a fire before moving to the nation’s capital.",
+      "It reflected the idea that some fires can benefit the land.",
+      "How a hungry sea animal helps protect forests of seaweed.",
+      "The way losing otters can lead to losing kelp forests.",
+      "Having no fatty layer, they need large daily meals to stay alive.",
+      "The northern coast lacked a natural check on the purple urchins.",
+      "To explain how Norway turned electric cars into the normal choice.",
+      "In 2025, China’s share was more than twice the world’s.",
+      "No tolls, cheaper parking and ferries, and use of bus lanes.",
+      "Electric cars in Norway may soon cost buyers more.",
+      "Why the banana we eat now may face an old danger.",
+      "A similar disaster may be happening once again.",
+      "The limited success of Taiwan’s new plants.",
+      "Resisting one form of a disease has not kept it safe.",
+      "The return of a once-fading way to travel and the hurdles it still faces.",
+      "A coach produces less than national rail.",
+      "A drop in the number of people flying in Sweden.",
+      "Being kinder to the environment may not be enough on its own to win back riders for sleeper trains.",
+      "The Rise and Hidden Price of a Handy Bag",
+      "It was more than ten times as large.",
+      "A country’s decision to outlaw thin plastic bags.",
+      "Over thirty years separated the patenting of Thulin’s design from the first nationwide ban on thin bags.",
+      "How reading went from rare to common, and the gaps that remain.",
+      "The world rate nearly doubled between 1950 and 1980.",
+      "Counting the people who could sign their names.",
+      "Literacy rose more from 1950 to 1980 than from 1900 to 1950.",
+      "Whether the mammoth project is realistic and worth the money.",
+      "The work of giving elephants mammoth traits through gene editing.",
+      "Text A sees it as progress; Text B notes a missing test.",
+      "Helping species at risk now is a better use of funds.",
+      "They usually remain close to the flames for long periods.",
+      "2023.",
+      "The slow progress of Sub-Saharan Africa.",
+      "In 2023, Sub-Saharan Africa was still below the 2000 world level.",
+      "The Mystery of the Robin’s Magnetic Sense",
+      "By checking the tracks its feet make on a paper lining.",
+      "The birds’ quick recovery once the noise was blocked.",
+      "The protein may be especially sensitive in birds that travel far.",
+      "How home lighting moved toward bulbs that waste far less energy.",
+      "The CFL matches the incandescent bulb’s brightness with a quarter of its power.",
+      "Most of a bulb’s energy being lost as heat.",
+      "The idea behind today’s LED bulbs is older than the CFL.",
+      "To show how Taiwan has used outdoor time to protect children’s eyesight.",
+      "The two school levels were closer together in 2025 than in 2019.",
+      "The link between outdoor time and a lower risk of myopia.",
+      "The first school’s rate of new myopia was under half the second’s.",
+      "A remarkable farming landscape and the effort to keep it alive.",
+      "They belong to families and help keep the fields supplied with water.",
+      "The archaeologists.",
+      "Better pay from farming might keep more young people home.",
+      "A long religious walk and one walker’s experience.",
+      "Wooden blocks are thrown to ask the goddess.",
+      "Letting the palanquin pass overhead.",
+      "Mazu’s birthday is celebrated there.",
+      "The making, history, and future of a temple roof art.",
+      "Broken pieces of pottery were easy to find there.",
+      "Very hard to do.",
+      "steel wire frame → rice-and-lime paste → pieces of bowls",
+      "How quickly internet use has spread around the world.",
+      "Anyone who went online in the last three months.",
+      "North America.",
+      "16.2 percent.",
+      "How London built the world's first underground railway.",
+      "Its streets were too crowded with traffic.",
+      "Building a railway in an open trench and then roofing it over.",
+      "They could not eat or drink on board.",
+      "Why people today live much longer than in the past.",
+      "A great many children died very young.",
+      "Made lower.",
+      "Brazil.",
+      "How trash is collected in Taiwan.",
+      "Too much trash was being produced.",
+      "Leave it on the ground for workers.",
+      "Something with good and bad sides.",
+      "How cartoons grew out of the simple idea of the flip book.",
+      "It was short but used hundreds of drawings.",
+      "The way our eyes see fast pictures as one movement.",
+      "Films were still new to people at that time.",
+      "The growth of solar power through history.",
+      "It could power common electrical machines.",
+      "Solar cells.",
+      "1.1 percent.",
+      "How owls can turn their heads so far safely.",
+      "Their eyes cannot move inside their sockets.",
+      "Places where extra blood is kept.",
+      "They are much wider than the vessels inside them.",
+      "How loud sounds can harm hearing and how to stay safe.",
+      "Forever.",
+      "You need to speak loudly for a person nearby to hear you.",
+      "1 hour 15 minutes.",
+      "How a simple idea at home became an everyday product.",
+      "He wanted to help his wife take care of cuts.",
+      "Sold poorly at first.",
+      "made by hand → made by machine → fully sterilized",
+      "How the bicycle developed and changed people's lives.",
+      "It cost a lot of money.",
+      "Came to an end.",
+      "James Starley.",
+      "How a shop owner's problem led to a new way of serving sushi.",
+      "He could not keep enough people working for him.",
+      "A great success.",
+      "Other companies became free to use Shiraishi's idea.",
+      "How drinking straws have changed over time.",
+      "To avoid the solid pieces on top of the beer.",
+      "Having clear problems.",
+      "It let patients drink without sitting up.",
+      "An island where many people help protect sea turtles.",
+      "Fishing nets are no longer allowed there.",
+      "Move from the sea onto land.",
+      "The pattern of scales on its face.",
+      "A library that used camels to bring books to children.",
+      "Trucks could not easily reach the herders' homes.",
+      "The Kenya National Library Service.",
+      "They rested, ate, and got health checks.",
+      "How tooth decay develops and how it can be prevented.",
+      "It takes minerals away from the enamel.",
+      "Takes time to develop.",
+      "It kills the bacteria in plaque.",
+      "A doctor's early fight for handwashing.",
+      "It got rid of a bad smell.",
+      "Was not listened to.",
+      "He called for clean hands and tools.",
+      "How school lunches differ from country to country.",
+      "Most of their schools have no cafeteria.",
+      "Seeing school lunch as a part of learning.",
+      "France.",
+      "Whether students should have to wear school uniforms.",
+      "Teachers can quickly find their students in a crowd.",
+      "The time teachers spend checking students' clothes.",
+      "Uniforms do not have to be given up completely.",
+      "Places where people get help fixing things.",
+      "To keep things in use for longer.",
+      "The desk lamp.",
+      "Visitors can give money if they want to.",
+      "The history and uses of a Japanese cloth.",
+      "Something useful for many jobs.",
+      "To avoid confusing their things with others'.",
+      "It was made from used plastic bottles.",
+      "How many people have ridden the high-speed rail since 2007.",
+      "Not as many people were traveling at that time.",
+      "Went up again.",
+      "It was higher than in 2021 but lower than in 2019.",
+      "Measles, its vaccine, and recent changes in vaccination.",
+      "When an ill person coughs or sneezes nearby.",
+      "Start to recover.",
+      "2021.",
+      "Other regions closed their own electricity gaps much more quickly.",
+      "Kenya’s access rate overtook Nigeria’s at some point between 2013 and 2018.",
+      "Both make power more affordable by spreading the cost over time.",
+      "To point out that progress across the region has been uneven.",
+      "How a color lost its link to wealth and power.",
+      "A color's value once depended on how hard it was to make.",
+      "To show that his famous discovery was not planned.",
+      "The craze for the color was spreading like a disease.",
+      "To show how badly a better way of moving plants was needed.",
+      "A vine carried to America in the cases later ran wild.",
+      "They protected whatever lived inside, not just the plants.",
+      "By tracing an invention from a lucky accident to its later costs.",
+      "An invention can cause new trouble until the systems around it catch up.",
+      "It shifted the city's waste problem from homes into the river.",
+      "What finally pushed Parliament to act on the sewage problem?",
+      "In 2024, the majority of people in Sub-Saharan Africa had no basic toilet of their own.",
+      "Each made getting help simpler by offering a single, easy number.",
+      "Where could it be used when it first came into service?",
+      "A Swede could call for help with the same number anywhere in the EU.",
+      "More than 30 years separate the start of 999 and the start of 911.",
+      "To explain how data centers use water and why cutting that use is not simple.",
+      "It would use less water on site but more electricity.",
+      "U.S. data centers’ direct water use grew by over 11 billion gallons from 2014 to 2023.",
+      "The training of AI models.",
+      "To contrast a familiar picture of Nightingale with a less familiar side of her work.",
+      "What did the Sanitary Commission do to improve conditions?",
+      "A blue wedge in the circle beginning in April 1854.",
+      "The blue wedges.",
+      "How Costa Rica won back its forests, and what that still depends on.",
+      "Farmers leaving pastures that no longer earned them money.",
+      "Costa Rica began below two of the others but ended with the highest share.",
+      "There could be less money to pay the landowners.",
+      "Resistance can spread from one bacterium to another, not just from parent to offspring.",
+      "The drug clears away the bacteria it can kill, giving resistant ones a better chance.",
+      "Each needless use of antibiotics helps resistant bacteria take over.",
+      "To show that the danger Fleming predicted is already causing serious harm.",
+      "Both writers use the history of the old spire to support their views.",
+      "Accurate.",
+      "Disapproving.",
+      "The spire destroyed in 2019 dated from the nineteenth century.",
+      "How a discovery changed what it meant to have diabetes.",
+      "Symbolic.",
+      "She weighed more than 90 pounds when she went back home.",
+      "To contrast Banting’s hopes with the situation in recent years.",
+      "They were stable enough to reach the upper air and release chlorine.",
+      "It eventually won the support of every nation in the world.",
+      "Rowland and Molina.",
+      "To point out that a solution can create a new problem.",
+      "How healthy the world’s fish stocks are, and why one figure can mislead.",
+      "Healthy populations tend to supply more fish than overfished ones.",
+      "By 2021, the overfished share was more than three times its 1974 level.",
+      "To show that even a badly overfished region can improve when fishing is reduced.",
+      "How a new rice raised harvests, and why its gains had limits.",
+      "It let farmers add more fertilizer without the plants falling over.",
+      "To show that IR8’s 1966 trial result was better than usual.",
+      "In 2020, the Philippines still averaged under half of IR8’s 1966 trial yield.",
+      "To question a popular tip by showing where food emissions really come from.",
+      "Bananas.",
+      "Replacing some of the beef they eat with tofu, even imported tofu.",
+      "For most foods, the bulk of emissions are produced before food leaves the farm.",
+      "Her added notes took up more than half of its pages.",
+      "The instructions it followed were separate from the things it worked on.",
+      "She saw wide possibilities in it but was honest about its limits.",
+      "A modern event leads into the history and ideas behind it.",
+      "How long must a country go without local cases to be certified?",
+      "Its success depends on keeping cases from abroad from spreading.",
+      "To point out a risk created by the country's own success.",
+      "South Asia's rate in 2024 was less than one-tenth of its 2000 rate.",
+      "The popular rule gives too simple a picture of how experts develop.",
+      "About 4,000 hours.",
+      "To show that hours of practice did not separate the best from the good.",
+      "Practice matters more than talent in deciding how far a person goes.",
+      "How Sweden plans its roads around human error.",
+      "The barriers make deaths less likely, even if crashes become more frequent.",
+      "Limiting traffic near the school to under 30 km/h.",
+      "South Korea's rate in 2019 was less than half its rate in 2000.",
+      "How the origins of its stones support a new idea about its purpose.",
+      "It was once thought to share a source with the bluestones.",
+      "Many other British stone circles prove to be built only of stones from far away.",
+      "To show that the new idea is still open to question.",
+      "Text A doubts that escapes prove much, while Text B treats them as signs of cleverness.",
+      "Octopus intelligence evolved apart from that of animals with backbones.",
+      "To give a second example of an octopus solving a practical task.",
+      "It may tell us about Inky’s flexible body, not just its mind.",
+      "Why did Laurer give up on the round design?",
+      "Free use of the code would boost sales of its scanners.",
+      "About twenty times as many.",
+      "To show that its success went far beyond expectations.",
+      "How a deadly disease was wiped out, and why that was possible.",
+      "Why did the 1959 effort to end smallpox make slow progress?",
+      "One that also lives in animals and often shows no clear signs.",
+      "To point out that one later case came from a laboratory, not nature.",
+      "Each plot is built up from the lake bed and held to it.",
+      "So that moisture from the canals can reach the center of the plot.",
+      "Its sides would be more likely to break down and wash away.",
+      "It explains how a farming method began and works, then what became of it.",
+      "How calm weather made ocean warming deadly for one reef.",
+      "The tiny algae.",
+      "To rule out other causes and point to the calm weather.",
+      "A June storm passing near the atoll."
+    ],
+    "rule_zh": "正解句不可和 answer_sentences 相同，也不要改寫成同義句（--lot：篇章結構相同是 error、閱讀是 warning）"
+  },
+  "generation_notes": {
+    "basis": "第一批（seq 01）審查意見，2026-10-09 協調者轉達；第 2 批起每批都要遵守",
+    "items": [
+      {
+        "id": "GN-TOPIC",
+        "rule_zh": "group.tags.topic 一律逐字照抄 assigned_topics 該組的 topic_zh（繁體中文主題名）；angle_en 是英文切入角度，只給出題者參考。每組只用自己的主題，不換題、不合併；主題不可行（例如找不到白名單內的事實來源）時先回報，不要自行換題",
+        "checked_by": "validate_bank --lot：tags.topic 對不到 topic_zh 列 warning；同一個主題被兩組用是 error；其他批次已用掉同一個主題列 warning"
+      },
+      {
+        "id": "GN-AVOID",
+        "rule_zh": "正解除了 avoid（近期學測）之外，也要避開 avoid_bank_answers（題庫已用過的正解字、正解句）",
+        "checked_by": "validate_bank --lot（嚴重度見 avoid_bank_answers.rule_zh）"
+      },
+      {
+        "id": "GN-BASIC-CONTEXT",
+        "rule_zh": "第一批的穩定基礎普遍偏易（盲解者全部 high、每格只有正解可行）：basic 仍要有「只讀本句說得通、看上下文才排除」的誘答。每組至少 2 題有一個干擾選項「和文中某一句字面相符、要讀前後文才排除」",
+        "checked_by": "人工審核（程式無法判斷）"
+      }
+    ]
+  },
+  "passage_band": {
+    "basis": "SPEC §3.4＋出題規格書 passage_overrides（words、cov_L1_4（取代 SPEC 的區間）、cov_L1_6（取代 SPEC 的區間）、offlist（取代 SPEC 的區間）、beyond_l4_ratio、mean_sent_len（取代 SPEC 的區間））",
+    "spec_3_4": {
+      "word_count": {
+        "min": 250,
+        "max": 300
+      },
+      "coverage_l1_4": {
+        "min": 0.93,
+        "max": null
+      },
+      "coverage_l1_6": {
+        "min": 0.97,
+        "max": null
+      },
+      "offlist_ratio": {
+        "min": null,
+        "max": 0.03
+      },
+      "avg_sentence_length": {
+        "min": null,
+        "max": 17
+      }
+    },
+    "overrides_note": "字數與用字不是難度槓桿（§3.3）；穩定基礎刻意減輕閱讀負荷，屬產品選擇，方向同 SPEC §3.4（現制 2/15 篇全項符合）",
+    "word_count": {
+      "min": 280,
+      "max": 345
+    },
+    "coverage_l1_4": {
+      "min": 0.91,
+      "max": 1
+    },
+    "coverage_l1_6": {
+      "min": 0.95,
+      "max": 1
+    },
+    "offlist_ratio": {
+      "min": 0,
+      "max": 0.05
+    },
+    "avg_sentence_length": {
+      "min": 14.0,
+      "max": 20.0
+    },
+    "beyond_l4_ratio": {
+      "min": 0,
+      "max": 0.04
+    },
+    "advisory": {
+      "paragraphs": {
+        "min": 3,
+        "max": 5
+      },
+      "sentences": {
+        "min": 14,
+        "max": 21
+      },
+      "max_sent_len": {
+        "min": 0,
+        "max": 36
+      },
+      "fk_grade": {
+        "min": 7.0,
+        "max": 11.0
+      },
+      "long_word_ratio": {
+        "min": 0.18,
+        "max": 0.27
+      },
+      "distinct_L5_6": {
+        "min": 0,
+        "max": 11
+      },
+      "note_zh": "出題規格書 warning 級的篇章指標（RD-PAS-02／03），text_metrics 不檢查，生成時參考"
+    },
+    "genre_allowed": [
+      "expository",
+      "biography",
+      "narrative"
+    ],
+    "text_format_allowed": [
+      "continuous",
+      "mixed(picture_match)",
+      "ad_notice_form"
+    ]
+  },
+  "item_rules": {
+    "summary_zh": "細節 ≥2、主旨 1、上下文詞義或指代 1；依據都在單一句子",
+    "item_types": {
+      "detail": {
+        "min": 2,
+        "max": null
+      },
+      "main_idea": {
+        "min": 1,
+        "max": 1
+      },
+      "vocab_in_context_or_reference": {
+        "min": 1,
+        "max": 1
+      }
+    },
+    "multi_sentence_items_min": 0,
+    "whole_text_items_min": 0,
+    "evidence_single_sentence": true
+  },
+  "targets": {
+    "question_types_per_4": {
+      "detail_targeted": [
+        2,
+        3
+      ],
+      "list_sequence_or_NOT": [
+        0,
+        1
+      ],
+      "main_idea": [
+        0,
+        1
+      ],
+      "vocab_in_context_or_reference": [
+        1,
+        1
+      ],
+      "picture_match_chart": [
+        0,
+        1
+      ],
+      "sentence_placement": [
+        0,
+        1
+      ],
+      "inference_one_step": [
+        0,
+        1
+      ]
+    },
+    "evidence_rule": "正解依據在 1–2 句內，正解是該句的改寫（keyrel L／P）；題幹指向特定訊息（targeted），scan 型題幹最多 1 題",
+    "key_rules": {
+      "verbatim_ngram_max": 5,
+      "paraphrase_required": false,
+      "key_not_uniquely_longest": true
+    },
+    "distractor_rules": {
+      "codes_preferred": [
+        "DS",
+        "NM",
+        "OP",
+        "MT（NOT 題）",
+        "VS（只差 1 個特徵）"
+      ],
+      "codes_avoid": [
+        "TN／TI 的局部真話（主旨題可有 1 個明顯只講一段的選項）",
+        "同數、同類的近距離先行詞（NA）",
+        "以背景知識支撐卻與原文矛盾的 OP"
+      ],
+      "each_distractor_refuted_by_one_sentence": true,
+      "max_strong_distractors": 0,
+      "upper_pull_target_max": 0.08
+    },
+    "item_recipes_by_type": {
+      "main_idea": "主題在第一段明說、末段再呼應；誘答是各段的局部細節（TN）與沒提到的主題（NM）。例 115-43（P .72）、111-43（P .60）",
+      "detail": "targeted wh- 題幹＋一句可定位的證據；或清單、排序、NOT 題（現制 NOT 與排序題 5/5 為穩定基礎，P .55–.74）",
+      "inference": "由一句明說的事實推一步（114-41：兒童看恐怖片→成年後焦慮→長期影響；114-39 研究領域）",
+      "vocab_in_context": "比喻或片語，下一個子句直接解釋（113-40 P .70、113-36 P .77）；選項具體且互不相近",
+      "reference": "先行詞在前一句，附近的名詞數或類不同（112-42 P .68、115-44 P .72）",
+      "purpose_tone": "問引述或舉例的用意，用意在前後句已明說（111-38 P .68）",
+      "structure": "給一句話問放哪一段結尾，句中有與該段呼應的關鍵詞（113-46 P .69、114-38 P .75）",
+      "chart_reading": "看文選圖：正解符合文中寫明的 2–3 個特徵，每個誘答恰缺 1 個（111-35 P .78、113-35 P .81）",
+      "cross_text": "在多則資料中查一個屬性（gsat-93-53 P .83）"
+    },
+    "recipe": [
+      "選一個具體物件或事件（起源、發明、地方文化），每段一個重點，段首就交代該段主題",
+      "2 題 targeted 細節題：題幹的關鍵詞在文中只出現一次，正解改寫那一句；三個誘答各自被某一句明確否定（DS 換掉主詞、時間或因果；NM 是文中沒有的合理說法）",
+      "1 題詞義或指涉：比喻或片語的意思由下一個子句直接解釋（113-40、113-36），或代名詞的先行詞就在前一句、附近沒有同數同類名詞（112-42、115-44）",
+      "第 4 題從「主旨（第 1 題位置）／清單、排序、NOT 題／插入句放哪段／看文選圖」擇一：主旨題的誘答是各段的局部細節；看文選圖的正解符合文中寫明的 2–3 個特徵，每個誘答缺 1 個"
+    ],
+    "pitfalls": [
+      "把 scan 型「Which of the following is true?」當簡單題：現制 detail＋inference 的 scan 題 P 中位數 .52，targeted .66",
+      "正解剛好是唯一照抄原句的選項：正解與選文的最長相同字串 ≤5 字（現制 38/38 題）",
+      "誘答寫成部分正確：只涵蓋一段的主旨選項在高分組可吸到 .15（114-35 B 全體 .43），會把題目推到進階",
+      "刻意壓低用字級別：選文用字與 P 無關（學測 91–115 篇平均 P 與 beyond-L4 ρ = −.18，p = .08；與 L1–4 覆蓋率 +.09）"
+    ]
+  },
+  "set_composition": {
+    "basic": [
+      3,
+      4
+    ],
+    "advanced": [
+      0,
+      1
+    ],
+    "top": [
+      0,
+      0
+    ],
+    "default": {
+      "basic": 3,
+      "advanced": 1
+    }
+  },
+  "materials": {
+    "derivation": "ai-original-from-facts（SPEC §5.3：生成者只拿到事實單與難度規格，不提供來源原文）",
+    "facts": "data/bank/facts/{id}.json（README §8）；provenance.sources[].source_id 寫 fact:{id}，圖表資料用 role=dataset",
+    "sources_whitelist": "data/bank/sources-whitelist.json",
+    "chart_format": "data/bank/README.md §3.2（figure.chart：type、title、x、y、categories、series、note、source）",
+    "chart_types": [
+      "bar",
+      "line",
+      "stacked_bar",
+      "pie"
+    ],
+    "attribution_text": "本文由 AI 參考下列資料撰寫，非原文轉載"
+  },
+  "verification": {
+    "blind_solvers": 2,
+    "blind_b_different_model": true,
+    "distractor_audit": true,
+    "unique_solution": false,
+    "human_review": "100%（校準期：每個題型 × 提示詞版本的前 30 組全審，SPEC §5.8）"
+  }
+}

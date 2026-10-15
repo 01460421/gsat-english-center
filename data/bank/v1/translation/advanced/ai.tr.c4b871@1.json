@@ -1,0 +1,1008 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.c4b871",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "advanced",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "當手機沒電時，有些人甚至會在自己走了好幾年的路線上迷路。",
+        "options": null,
+        "answer": "When their phones run out of battery, some people even get lost on the routes they have taken for years.",
+        "accepted_answers": [
+          "When their phone batteries die, some people may even get lost on a route that they have used for years.",
+          "When the batteries of their phones run out, some people can even get lost on routes they have taken for many years."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "時間副詞子句（when）",
+            "形容詞子句（省略受格關係代名詞）"
+          ],
+          "topic": "GPS 與方向感"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "為了找回方向感，許多上班族開始嘗試名為定向越野（orienteering）的戶外運動。",
+        "options": null,
+        "answer": "To get back their sense of direction, many office workers have started trying an outdoor sport called orienteering.",
+        "accepted_answers": [
+          "In order to regain their sense of direction, many office workers have begun to try an outdoor sport called orienteering.",
+          "To recover their sense of direction, many office workers have started to try an outdoor sport known as orienteering."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "不定詞表目的",
+            "分詞片語後位修飾"
+          ],
+          "topic": "GPS 與方向感"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "GPS 與方向感"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「當手機沒電時」是時間副詞子句 When their phones run out of battery，子句用現在式（不加 will）；手機「沒電」是 run out of battery 或 die。「甚至會迷路」寫 even get lost，even 放在動詞前面（有助動詞時放在助動詞後面）。「自己走了好幾年的路線」中文修飾語在前，英文改成 the routes (that) they have taken for years：先寫名詞，再接形容詞子句；「走了好幾年」從過去持續到現在，用現在完成式。",
+          "evidence": [
+            "當手機沒電時",
+            "自己走了好幾年的路線",
+            "迷路"
+          ],
+          "strategy_zh": "「…的＋名詞」修飾語很長時，英文先寫名詞，再用 that／which 子句放在後面；受格關係代名詞可以省略。",
+          "hints": [
+            "切成四段：當手機沒電時／有些人甚至會／在自己走了好幾年的路線上／迷路",
+            "標的詞彙：phone（手機，L1）、battery（電池，L4）、even（甚至，L1）、lost（迷路的，L1）、route（路線，L4）",
+            "句型框架：When + S + V(現在式), S + even get lost on + the N + (that) S + have + p.p. …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「為了找回方向感」表目的，用不定詞 To get back（或 In order to regain）their sense of direction 放句首；「方向感」是 sense of direction。「開始嘗試」用現在完成式 have started trying（start 後面接 V-ing 或 to VR）。「名為定向越野的戶外運動」中文修飾語在前，英文用過去分詞片語後位修飾：an outdoor sport called orienteering；outdoor 以母音開頭，冠詞用 an。",
+          "evidence": [
+            "為了找回方向感",
+            "開始嘗試",
+            "名為定向越野（orienteering）的戶外運動"
+          ],
+          "strategy_zh": "「名為／叫做…的 N」直接套 N + called …；「為了…」放句首時寫 To + 原形動詞，後面加逗號。",
+          "hints": [
+            "切成四段：為了找回方向感／許多上班族／開始嘗試／名為定向越野（orienteering）的戶外運動",
+            "標的詞彙：get back（找回）、sense of direction（方向感，L2）、office worker（上班族，L1）、start（開始，L1）、outdoor（戶外的，L3）、sport（運動，L2）、call（稱為，L1）",
+            "句型框架：To + VR …, S + have started + V-ing + a/an + N + called + 名稱"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "When their phones run out of battery, some people even get lost on the routes they have taken for years.",
+            "When their phone batteries die, some people may even get lost on a route that they have used for years.",
+            "When the batteries of their phones run out, some people can even get lost on routes they have taken for many years."
+          ],
+          "target_words": [
+            {
+              "word": "phone",
+              "zh": "手機",
+              "alternatives": [
+                "cellphone",
+                "smartphone"
+              ]
+            },
+            {
+              "word": "battery",
+              "zh": "電池（沒電）",
+              "alternatives": [
+                "power",
+                "charge",
+                "die",
+                "dead"
+              ]
+            },
+            {
+              "word": "even",
+              "zh": "甚至"
+            },
+            {
+              "word": "lost",
+              "zh": "迷路的",
+              "alternatives": [
+                "lose"
+              ]
+            },
+            {
+              "word": "route",
+              "zh": "路線",
+              "alternatives": [
+                "road",
+                "way",
+                "path",
+                "street"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "ADVCL",
+              "grammar_id": "gp-time-clause",
+              "label_zh": "時間副詞子句（When + S + V，用現在式）",
+              "frame": "When + S + V(現在式) …, S + V …",
+              "zh_trigger": "當手機沒電時"
+            },
+            {
+              "code": "REL",
+              "grammar_id": "gp-relative-pronoun",
+              "label_zh": "形容詞子句（受格關係代名詞 that／which 可省略）",
+              "frame": "the + N + (that/which) + S + have + p.p. …",
+              "zh_trigger": "自己走了好幾年的路線"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "當手機沒電時",
+              "accepted": [
+                "When their phones run out of battery",
+                "When their phone batteries die",
+                "When the batteries of their phones run out",
+                "When their phones die",
+                "When their phones run out of power",
+                "When their phone batteries run out",
+                "When their phones are out of battery",
+                "When their phones have no battery left",
+                "When their phones are dead",
+                "When their phone runs out of battery",
+                "When their cell phones run out of battery",
+                "When the phone battery dies",
+                "When the phone runs out of battery",
+                "Once their phones run out of battery",
+                "Whenever their phones run out of battery",
+                "When their phone battery dies",
+                "When their phones have run out of battery",
+                "When their cellphones run out of battery",
+                "When their smartphones run out of battery",
+                "When their cell phones die",
+                "When the battery of their phone runs out",
+                "When their phone dies",
+                "When their phone is dead",
+                "When the phone battery runs out",
+                "Once their phones run out of power",
+                "Once their phones die",
+                "Once their phones are dead",
+                "Once their phones are out of battery",
+                "Once their cell phones run out of battery",
+                "Once their cellphones run out of battery",
+                "Once their smartphones run out of battery",
+                "Once their cell phones die",
+                "Once their phone batteries die",
+                "Once their phone batteries run out",
+                "Once the batteries of their phones run out",
+                "Once the battery of their phone runs out",
+                "Once their phone runs out of battery",
+                "Once their phone dies",
+                "Once their phone is dead",
+                "Once the phone runs out of battery",
+                "Once the phone battery dies",
+                "Once the phone battery runs out",
+                "Once their phones have run out of battery",
+                "Whenever their phones run out of power",
+                "Whenever their phones die",
+                "Whenever their phones are dead",
+                "Whenever their phones are out of battery",
+                "Whenever their cell phones run out of battery",
+                "Whenever their cellphones run out of battery",
+                "Whenever their smartphones run out of battery",
+                "Whenever their cell phones die",
+                "Whenever their phone batteries die",
+                "Whenever their phone batteries run out",
+                "Whenever the batteries of their phones run out",
+                "Whenever the battery of their phone runs out",
+                "Whenever their phone runs out of battery",
+                "Whenever their phone dies",
+                "Whenever their phone is dead",
+                "Whenever the phone runs out of battery",
+                "Whenever the phone battery dies",
+                "Whenever the phone battery runs out",
+                "Whenever their phones have run out of battery",
+                "When their cell phones are dead",
+                "When their cellphones are dead",
+                "When their smartphones are dead",
+                "When their smartphones die",
+                "When their cellphones die",
+                "When their phones have died",
+                "When their phones are out of power",
+                "When their phones have no power",
+                "Once their cell phones are dead",
+                "Once their cellphones are dead",
+                "Once their smartphones are dead",
+                "Once their smartphones die",
+                "Once their cellphones die",
+                "Once their phones have died",
+                "Once their phones are out of power",
+                "Once their phones have no power",
+                "Whenever their cell phones are dead",
+                "Whenever their cellphones are dead",
+                "Whenever their smartphones are dead",
+                "Whenever their smartphones die",
+                "Whenever their cellphones die",
+                "Whenever their phones have died",
+                "Whenever their phones are out of power",
+                "Whenever their phones have no power"
+              ],
+              "targets": [
+                "ADVCL",
+                "phone",
+                "battery"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "When their phones have no electricity",
+                  "right": "When their phones run out of battery",
+                  "explanation_zh": "手機「沒電」是電池用完，用 run out of battery 或 die；no electricity 是「沒有電力供應（停電）」。"
+                },
+                {
+                  "wrong": "When their phones will run out of battery",
+                  "right": "When their phones run out of battery",
+                  "explanation_zh": "時間副詞子句用現在式表示未來，不加 will。"
+                }
+              ]
+            },
+            {
+              "zh": "有些人甚至會",
+              "accepted": [
+                "some people even",
+                "some people may even",
+                "some people can even",
+                "some people will even",
+                "some people might even",
+                "some people could even",
+                "some even",
+                "some people would even",
+                "some people may actually even"
+              ],
+              "targets": [
+                "even"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "some of people even",
+                  "right": "some people even",
+                  "explanation_zh": "「有些人」直接寫 some people；some of 後面要先接 the、their 等限定詞。"
+                }
+              ]
+            },
+            {
+              "zh": "在自己走了好幾年的路線上",
+              "accepted": [
+                "on the routes they have taken for years",
+                "on a route that they have used for years",
+                "on routes they have taken for many years",
+                "on the route they have taken for years",
+                "on the routes that they have taken for years",
+                "on the routes which they have taken for years",
+                "on the route that they have used for years",
+                "on the routes they have used for years",
+                "on the roads they have taken for years",
+                "on the roads they have walked for years",
+                "on the way they have taken for years",
+                "on the routes they have been taking for years",
+                "on the route they have traveled for years",
+                "on routes they have used for several years",
+                "on the routes they have walked for many years",
+                "on the streets they have walked for years",
+                "on the paths they have taken for years",
+                "on the same route they have taken for years",
+                "on the routes they have taken for many years",
+                "on the routes they have walked for years",
+                "on the routes they have used for many years",
+                "on the routes they have been taking for many years",
+                "on the routes that they have taken for many years",
+                "on the routes that they have walked for years",
+                "on the routes that they have walked for many years",
+                "on the routes that they have used for years",
+                "on the routes that they have used for many years",
+                "on the routes that they have been taking for years",
+                "on the routes that they have been taking for many years",
+                "on the route they have taken for many years",
+                "on the route they have walked for years",
+                "on the route they have walked for many years",
+                "on the route they have used for years",
+                "on the route they have used for many years",
+                "on the route they have been taking for years",
+                "on the route they have been taking for many years",
+                "on the route that they have taken for years",
+                "on the route that they have taken for many years",
+                "on the route that they have walked for years",
+                "on the route that they have walked for many years",
+                "on the route that they have used for many years",
+                "on the route that they have been taking for years",
+                "on the route that they have been taking for many years",
+                "on the roads they have taken for many years",
+                "on the roads they have walked for many years",
+                "on the roads they have used for years",
+                "on the roads they have used for many years",
+                "on the roads they have been taking for years",
+                "on the roads they have been taking for many years",
+                "on the roads that they have taken for years",
+                "on the roads that they have taken for many years",
+                "on the roads that they have walked for years",
+                "on the roads that they have walked for many years",
+                "on the roads that they have used for years",
+                "on the roads that they have used for many years",
+                "on the roads that they have been taking for years",
+                "on the roads that they have been taking for many years",
+                "on the road they have taken for years",
+                "on the road they have taken for many years",
+                "on the road they have walked for years",
+                "on the road they have walked for many years",
+                "on the road they have used for years",
+                "on the road they have used for many years",
+                "on the road they have been taking for years",
+                "on the road they have been taking for many years",
+                "on the road that they have taken for years",
+                "on the road that they have taken for many years",
+                "on the road that they have walked for years",
+                "on the road that they have walked for many years",
+                "on the road that they have used for years",
+                "on the road that they have used for many years",
+                "on the road that they have been taking for years",
+                "on the road that they have been taking for many years",
+                "on routes they have taken for years",
+                "on routes they have walked for years",
+                "on routes they have walked for many years",
+                "on routes they have used for years",
+                "on routes they have used for many years",
+                "on routes they have been taking for years",
+                "on routes they have been taking for many years",
+                "on routes that they have taken for years",
+                "on routes that they have taken for many years",
+                "on routes that they have walked for years",
+                "on routes that they have walked for many years",
+                "on routes that they have used for years",
+                "on routes that they have used for many years",
+                "on routes that they have been taking for years",
+                "on routes that they have been taking for many years",
+                "on roads they have taken for years",
+                "on roads they have taken for many years",
+                "on roads they have walked for years",
+                "on roads they have walked for many years",
+                "on roads they have used for years",
+                "on roads they have used for many years",
+                "on roads they have been taking for years",
+                "on roads they have been taking for many years",
+                "on roads that they have taken for years",
+                "on roads that they have taken for many years",
+                "on roads that they have walked for years",
+                "on roads that they have walked for many years",
+                "on roads that they have used for years",
+                "on roads that they have used for many years",
+                "on roads that they have been taking for years",
+                "on roads that they have been taking for many years",
+                "on the way they have walked for years",
+                "on the way that they have taken for years",
+                "on the way that they have walked for years",
+                "on the paths they have walked for years",
+                "on the paths that they have taken for years",
+                "on the paths that they have walked for years",
+                "on the streets they have taken for years",
+                "on the streets that they have taken for years",
+                "on the streets that they have walked for years"
+              ],
+              "targets": [
+                "REL",
+                "route"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "on the they have taken for years routes",
+                  "right": "on the routes they have taken for years",
+                  "explanation_zh": "中文「走了好幾年的路線」修飾語在前；英文要先寫名詞 routes，形容詞子句放在後面。"
+                },
+                {
+                  "wrong": "on the routes they have taken them for years",
+                  "right": "on the routes they have taken for years",
+                  "explanation_zh": "形容詞子句裡 taken 的受詞就是先行詞 routes，不能再加 them。"
+                }
+              ]
+            },
+            {
+              "zh": "迷路",
+              "accepted": [
+                "get lost",
+                "lose their way",
+                "become lost",
+                "be lost"
+              ],
+              "targets": [
+                "lost"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "even lost",
+                  "right": "even get lost",
+                  "explanation_zh": "「迷路」是 get lost（lost 當形容詞）；只寫 lost 會變成動詞 lose 的過去式「失去、輸掉」。"
+                },
+                {
+                  "wrong": "get lose",
+                  "right": "get lost",
+                  "explanation_zh": "get 後面接形容詞 lost，不是動詞原形 lose。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "prenominal_modifier",
+              "zh": "自己走了好幾年的路線",
+              "literal_error": "When their phones run out of battery, some people even get lost on the walked-for-years routes.",
+              "part": 3,
+              "explanation_zh": "「自己走了好幾年的路線」照中文語序把修飾語放在名詞前面是錯的；英文要寫 the routes (that) they have taken for years。"
+            },
+            {
+              "type": "collocation",
+              "zh": "沒電",
+              "literal_error": "When their phones have no electricity, some people even get lost on the routes they have taken for years.",
+              "part": 1,
+              "explanation_zh": "手機「沒電」的搭配是 run out of battery 或 die；no electricity 是停電、沒有電力供應。"
+            }
+          ],
+          "bonus": [],
+          "restructuring_zh": "「自己走了好幾年的路線」是放在名詞前面的長修飾語；英文要先寫名詞 the routes，後面接形容詞子句 (that) they have taken for years，關係代名詞當受詞時可以省略。",
+          "notes_zh": "「手機沒電」run out of battery／power、the batteries die、die、be dead 都給分，phone 單數或複數都可以；「會」可寫 may、can、will 或不寫；「路線」routes／route、roads、way、path 都可以，關係代名詞 that／which 可省略；「走了好幾年」have taken／used／walked／traveled … for (many／several) years，也可以寫 have been taking；「迷路」get lost、lose their way 都可以。"
+        },
+        "2": {
+          "references": [
+            "To get back their sense of direction, many office workers have started trying an outdoor sport called orienteering.",
+            "In order to regain their sense of direction, many office workers have begun to try an outdoor sport called orienteering.",
+            "To recover their sense of direction, many office workers have started to try an outdoor sport known as orienteering."
+          ],
+          "target_words": [
+            {
+              "word": "get back",
+              "zh": "找回",
+              "alternatives": [
+                "regain",
+                "recover",
+                "find",
+                "rebuild"
+              ]
+            },
+            {
+              "word": "sense of direction",
+              "zh": "方向感"
+            },
+            {
+              "word": "office worker",
+              "zh": "上班族",
+              "alternatives": [
+                "employee",
+                "white-collar worker"
+              ]
+            },
+            {
+              "word": "start",
+              "zh": "開始",
+              "alternatives": [
+                "begin",
+                "take up"
+              ]
+            },
+            {
+              "word": "outdoor",
+              "zh": "戶外的",
+              "alternatives": [
+                "outdoors"
+              ]
+            },
+            {
+              "word": "sport",
+              "zh": "運動",
+              "alternatives": [
+                "activity"
+              ]
+            },
+            {
+              "word": "call",
+              "zh": "稱為",
+              "alternatives": [
+                "name",
+                "know"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PURP",
+              "grammar_id": "gp-infinitive-purpose",
+              "label_zh": "不定詞表目的（To／In order to + VR）",
+              "frame": "To / In order to + VR …, S + V …",
+              "zh_trigger": "為了找回方向感"
+            },
+            {
+              "code": "PART",
+              "grammar_id": "gp-participle-modifier",
+              "label_zh": "分詞片語後位修飾名詞（N + called …）",
+              "frame": "a/an + N + called / named / known as + 名稱",
+              "zh_trigger": "名為定向越野（orienteering）的戶外運動"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "為了找回方向感",
+              "accepted": [
+                "To get back their sense of direction",
+                "In order to regain their sense of direction",
+                "To recover their sense of direction",
+                "To regain their sense of direction",
+                "In order to get back their sense of direction",
+                "To get their sense of direction back",
+                "So as to regain their sense of direction",
+                "To find their sense of direction again",
+                "In order to recover their sense of direction",
+                "To rebuild their sense of direction",
+                "To regain a sense of direction",
+                "To get back a sense of direction",
+                "In order to find their sense of direction again"
+              ],
+              "targets": [
+                "PURP",
+                "get back",
+                "sense of direction"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "For getting back their sense of direction",
+                  "right": "To get back their sense of direction",
+                  "explanation_zh": "表目的用不定詞 To／In order to + 原形動詞。"
+                },
+                {
+                  "wrong": "To get back their direction sense",
+                  "right": "To get back their sense of direction",
+                  "explanation_zh": "「方向感」是 sense of direction，不照中文語序寫成 direction sense。"
+                }
+              ]
+            },
+            {
+              "zh": "許多上班族",
+              "accepted": [
+                "many office workers",
+                "a lot of office workers",
+                "lots of office workers",
+                "many white-collar workers",
+                "many office employees",
+                "many working people"
+              ],
+              "targets": [
+                "office worker"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "many office worker",
+                  "right": "many office workers",
+                  "explanation_zh": "many 後面接複數名詞。"
+                },
+                {
+                  "wrong": "much office workers",
+                  "right": "many office workers",
+                  "explanation_zh": "可數名詞用 many；much 修飾不可數名詞。"
+                }
+              ]
+            },
+            {
+              "zh": "開始嘗試",
+              "accepted": [
+                "have started trying",
+                "have begun to try",
+                "have started to try",
+                "have begun trying",
+                "started trying",
+                "started to try",
+                "began to try",
+                "began trying",
+                "are starting to try",
+                "have started doing",
+                "have taken up",
+                "have started taking up",
+                "have started to take up",
+                "have started practicing",
+                "have started taking part in",
+                "have started to take part in",
+                "have started participating in",
+                "have started to participate in",
+                "have started to do",
+                "have started to practice",
+                "have begun taking part in",
+                "have begun to take part in",
+                "have begun participating in",
+                "have begun to participate in",
+                "have begun doing",
+                "have begun to do",
+                "have begun taking up",
+                "have begun to take up",
+                "have begun practicing",
+                "have begun to practice",
+                "started taking part in",
+                "started to take part in",
+                "started participating in",
+                "started to participate in",
+                "started doing",
+                "started to do",
+                "started taking up",
+                "started to take up",
+                "started practicing",
+                "started to practice",
+                "began taking part in",
+                "began to take part in",
+                "began participating in",
+                "began to participate in",
+                "began doing",
+                "began to do",
+                "began taking up",
+                "began to take up",
+                "began practicing",
+                "began to practice"
+              ],
+              "targets": [
+                "start"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "have started try",
+                  "right": "have started trying",
+                  "explanation_zh": "start 後面接 to VR 或 V-ing，不能直接接原形動詞。"
+                },
+                {
+                  "wrong": "have start to try",
+                  "right": "have started to try",
+                  "explanation_zh": "完成式 have 後面接過去分詞 started。"
+                }
+              ]
+            },
+            {
+              "zh": "名為定向越野（orienteering）的戶外運動",
+              "accepted": [
+                "an outdoor sport called orienteering",
+                "an outdoor sport known as orienteering",
+                "an outdoor sport named orienteering",
+                "an outdoor activity called orienteering",
+                "an outdoor activity known as orienteering",
+                "an outdoor activity named orienteering"
+              ],
+              "targets": [
+                "PART",
+                "outdoor",
+                "sport",
+                "call"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "a called orienteering outdoor sport",
+                  "right": "an outdoor sport called orienteering",
+                  "explanation_zh": "分詞片語 called orienteering 要放在名詞後面修飾。"
+                },
+                {
+                  "wrong": "an outdoor sport calling orienteering",
+                  "right": "an outdoor sport called orienteering",
+                  "explanation_zh": "運動是「被叫做」orienteering，用過去分詞 called。"
+                },
+                {
+                  "wrong": "a outdoor sport called orienteering",
+                  "right": "an outdoor sport called orienteering",
+                  "explanation_zh": "outdoor 以母音開頭，冠詞用 an。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "prenominal_modifier",
+              "zh": "名為定向越野（orienteering）的戶外運動",
+              "literal_error": "To get back their sense of direction, many office workers have started trying a called orienteering outdoor sport.",
+              "part": 4,
+              "explanation_zh": "「名為…的戶外運動」中文修飾語在前；英文要先寫 an outdoor sport，再用 called orienteering 放在後面。"
+            },
+            {
+              "type": "word_form",
+              "zh": "為了找回方向感",
+              "literal_error": "For getting back their sense of direction, many office workers have started trying an outdoor sport called orienteering.",
+              "part": 1,
+              "explanation_zh": "「為了…」表目的要用不定詞 To／In order to + 原形動詞；for + V-ing 不表示目的。"
+            }
+          ],
+          "bonus": [],
+          "restructuring_zh": "「名為定向越野的戶外運動」中文修飾語在前；英文要先寫名詞 an outdoor sport，再用過去分詞片語 called orienteering 放在後面修飾。",
+          "notes_zh": "「為了」To 或 In order to 都可以；「找回」get back、regain、recover 都給分，their／a sense of direction 都可以；「上班族」office workers，也可寫 white-collar workers、office employees；「開始嘗試」have started／begun trying 或 to try 都可以，也可用過去式 started、began，或 have taken up；「名為」called、named、known as 都給分，「運動」寫 sport 或 activity 都可以。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-advanced-06",
+    "lot": "translation-advanced-06",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "3f8dc9d60c8a2f9f0e258e68e094820e19a8a5f1c5e0001a05ad2370e79443f3",
+    "spec_id": "translation-advanced@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 1,
+    "sentences": 1,
+    "avg_sentence_length": 1.0,
+    "denominator": 1,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 1.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {
+      "off": 1
+    },
+    "offlist_words": [
+      "orienteering"
+    ],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-10T02:32:13Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-10T02:17:22Z",
+      "details": {
+        "solver": "A",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "When their phones run out of battery, some people even get lost on routes that they have walked for years.",
+            "confidence": "high",
+            "explanation_zh": "「當…時」用 when 副詞子句，描述一般情況用現在簡單式；「沒電」用 run out of battery（也可 die、run out of power）；「自己走了好幾年的路線」用 that 關係子句修飾 routes，子句內「走了好幾年」是延續到現在，用現在完成式 have walked for years。"
+          },
+          "2": {
+            "translation": "In order to regain their sense of direction, many office workers have started to try an outdoor sport called orienteering.",
+            "confidence": "high",
+            "explanation_zh": "「為了找回」表目的，用 In order to regain；「方向感」是 sense of direction；「開始嘗試」是近來開始且仍持續，用 have started to try；「名為定向越野的戶外運動」用過去分詞片語 called orienteering 後位修飾 sport。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "ADVCL",
+              "REL"
+            ],
+            "used_target_words": [
+              "phone",
+              "battery",
+              "even",
+              "lost",
+              "route"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PURP",
+              "PART"
+            ],
+            "used_target_words": [
+              "get back",
+              "sense of direction",
+              "office worker",
+              "start",
+              "outdoor",
+              "sport",
+              "call"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "phone",
+              "battery",
+              "even",
+              "lost",
+              "route"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "ADVCL": true,
+              "REL": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "get back",
+              "sense of direction",
+              "office worker",
+              "start",
+              "outdoor",
+              "sport",
+              "call"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PURP": true,
+              "PART": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-10T02:22:17Z",
+      "details": {
+        "solver": "B",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "When their phones run out of battery, some people even get lost on routes that they have walked for several years.",
+            "confidence": "medium",
+            "explanation_zh": "「手機沒電」用 run out of battery；「甚至」用 even；「走了好幾年的路線」用關係子句加現在完成式 have walked for several years，表示持續到現在的經驗。也可改成 have been walking，但此處用完成式較自然。"
+          },
+          "2": {
+            "translation": "To regain their sense of direction, many office workers have started to try an outdoor sport called orienteering.",
+            "confidence": "high",
+            "explanation_zh": "「為了找回方向感」用不定詞片語 To regain their sense of direction 表目的；「開始嘗試」用現在完成式 have started to try（近來的趨勢）；「名為…的」用過去分詞 called。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "ADVCL",
+              "REL"
+            ],
+            "used_target_words": [
+              "phone",
+              "battery",
+              "even",
+              "lost",
+              "route"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PURP",
+              "PART"
+            ],
+            "used_target_words": [
+              "get back",
+              "sense of direction",
+              "office worker",
+              "start",
+              "outdoor",
+              "sport",
+              "call"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "phone",
+              "battery",
+              "even",
+              "lost",
+              "route"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "ADVCL": true,
+              "REL": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "get back",
+              "sense of direction",
+              "office worker",
+              "start",
+              "outdoor",
+              "sport",
+              "call"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PURP": true,
+              "PART": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

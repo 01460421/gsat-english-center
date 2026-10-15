@@ -1,0 +1,1193 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.f6bee6",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "top",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "把二氧化碳（carbon dioxide）排放到空氣中愈來愈昂貴，迫使許多工廠投資碳捕捉技術。",
+        "options": null,
+        "answer": "Releasing carbon dioxide into the air is becoming more and more expensive, forcing many factories to invest in carbon capture technology.",
+        "accepted_answers": [
+          "It is becoming increasingly expensive to release carbon dioxide into the air, forcing many factories to invest in carbon capture technology.",
+          "Emitting carbon dioxide into the atmosphere has become more and more costly, compelling many factories to invest in carbon capture technologies."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "句尾分詞片語表結果（, forcing …）",
+            "動名詞片語當主詞"
+          ],
+          "topic": "碳捕捉"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "捕捉到的二氧化碳（carbon dioxide）會被送往地底深處，存放在曾經蘊藏石油或天然氣的岩層中。",
+        "options": null,
+        "answer": "The captured carbon dioxide is sent deep underground and stored in rock layers that once contained oil or natural gas.",
+        "accepted_answers": [
+          "The carbon dioxide that is captured will be pumped deep underground and stored in rock layers which once held oil or natural gas.",
+          "The captured carbon dioxide is transported deep underground and stored in layers of rock that used to contain oil or natural gas."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "被動語態（is sent … and stored in）",
+            "關係代名詞 that／which 引導的形容詞子句"
+          ],
+          "topic": "碳捕捉"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "碳捕捉"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "主詞是「把二氧化碳排放到空氣中」這個動作，英文用動名詞片語 Releasing carbon dioxide into the air，或虛主詞 It is becoming increasingly expensive to release …；「愈來愈昂貴」寫 is becoming more and more expensive。「迫使許多工廠投資碳捕捉技術」是結果，中文沒有主詞，英文用句尾分詞 , forcing many factories to invest in carbon capture technology；「投資」要寫 invest in。",
+          "evidence": [
+            "把二氧化碳（carbon dioxide）排放到空氣中",
+            "迫使許多工廠投資碳捕捉技術"
+          ],
+          "strategy_zh": "「把…＋動詞」放在句首當主詞時，用動名詞片語；結果放句尾用 , forcing + O + to VR。",
+          "hints": [
+            "切成四段：把二氧化碳（carbon dioxide）排放到空氣中／愈來愈昂貴／迫使許多工廠／投資碳捕捉技術",
+            "標的詞彙：release（排放）、air（空氣）、expensive（昂貴的）、force（迫使）、factory（工廠）、invest（投資）、capture（捕捉）、technology（技術）",
+            "句型框架：V-ing … + is becoming more and more + adj., forcing + O + to VR …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「捕捉到的二氧化碳」是被捕捉的，用過去分詞 The captured carbon dioxide。「會被送往地底深處」用被動 is sent deep underground（underground 是副詞，前面不加 to），「存放在…」和它並列，同樣是被動 and stored in …。「曾經蘊藏石油或天然氣的岩層」修飾語很長，英文改成關係子句放在名詞後面：rock layers that once contained oil or natural gas，「曾經」用過去式 contained 或 used to contain。",
+          "evidence": [
+            "會被送往地底深處",
+            "曾經蘊藏石油或天然氣的岩層"
+          ],
+          "strategy_zh": "東西「被」怎麼處理時用被動 be + p.p.，兩個被動動作並列可省略第二個 be；名詞前很長的「…的」修飾語改成後位的 that／which 子句。",
+          "hints": [
+            "切成四段：捕捉到的二氧化碳（carbon dioxide）／會被送往地底深處／存放在／曾經蘊藏石油或天然氣的岩層中",
+            "標的詞彙：capture（捕捉）、send（送往）、deep（深處）、underground（地底）、store（存放）、rock（岩石）、layer（層）、once（曾經）、oil（石油）、natural（天然的）、gas（氣體）",
+            "句型框架：The p.p. + N + is sent deep underground and stored in + N + that once + V-ed …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "Releasing carbon dioxide into the air is becoming more and more expensive, forcing many factories to invest in carbon capture technology.",
+            "It is becoming increasingly expensive to release carbon dioxide into the air, forcing many factories to invest in carbon capture technology.",
+            "Emitting carbon dioxide into the atmosphere has become more and more costly, compelling many factories to invest in carbon capture technologies."
+          ],
+          "target_words": [
+            {
+              "word": "release",
+              "zh": "排放",
+              "alternatives": [
+                "emit",
+                "emitting",
+                "emits",
+                "emitted",
+                "discharge",
+                "discharging",
+                "pump",
+                "put",
+                "send"
+              ]
+            },
+            {
+              "word": "air",
+              "zh": "空氣",
+              "alternatives": [
+                "atmosphere"
+              ]
+            },
+            {
+              "word": "expensive",
+              "zh": "昂貴的",
+              "alternatives": [
+                "costly",
+                "cost"
+              ]
+            },
+            {
+              "word": "force",
+              "zh": "迫使",
+              "alternatives": [
+                "compel",
+                "push",
+                "drive"
+              ]
+            },
+            {
+              "word": "factory",
+              "zh": "工廠",
+              "alternatives": [
+                "plant",
+                "manufacturer"
+              ]
+            },
+            {
+              "word": "invest",
+              "zh": "投資"
+            },
+            {
+              "word": "capture",
+              "zh": "捕捉"
+            },
+            {
+              "word": "technology",
+              "zh": "技術"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PART",
+              "grammar_id": "gp-participle-result",
+              "label_zh": "句尾分詞片語表結果（迫使…：, forcing …）",
+              "frame": "S + V …, forcing + O + to VR …",
+              "zh_trigger": "迫使許多工廠"
+            },
+            {
+              "code": "NFSUBJ",
+              "grammar_id": "gp-gerund-subject",
+              "label_zh": "動名詞片語當主詞（把二氧化碳排放到空氣中）",
+              "frame": "V-ing … + is becoming + adj. ／ It is becoming + adj. + to VR …",
+              "zh_trigger": "把二氧化碳（carbon dioxide）排放到空氣中"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "把二氧化碳（carbon dioxide）排放到空氣中",
+              "accepted": [
+                "Releasing carbon dioxide into the air",
+                "Releasing carbon dioxide into the atmosphere",
+                "Emitting carbon dioxide into the air",
+                "Emitting carbon dioxide into the atmosphere",
+                "Discharging carbon dioxide into the air",
+                "Discharging carbon dioxide into the atmosphere",
+                "Pumping carbon dioxide into the air",
+                "Pumping carbon dioxide into the atmosphere",
+                "Putting carbon dioxide into the air",
+                "Putting carbon dioxide into the atmosphere",
+                "to release carbon dioxide into the air",
+                "to release carbon dioxide into the atmosphere",
+                "to emit carbon dioxide into the air",
+                "to emit carbon dioxide into the atmosphere",
+                "to discharge carbon dioxide into the air",
+                "to discharge carbon dioxide into the atmosphere",
+                "to pump carbon dioxide into the air",
+                "to pump carbon dioxide into the atmosphere"
+              ],
+              "targets": [
+                "NFSUBJ",
+                "release",
+                "air"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Release carbon dioxide into the air",
+                  "right": "Releasing carbon dioxide into the air",
+                  "explanation_zh": "動作當主詞要用動名詞 Releasing（或虛主詞 It is … to release …）；原形動詞不能當主詞。"
+                },
+                {
+                  "wrong": "Released carbon dioxide into the air",
+                  "right": "Releasing carbon dioxide into the air",
+                  "explanation_zh": "這裡是「排放」這個動作當主詞，用動名詞 Releasing；released 是過去式／過去分詞。"
+                }
+              ]
+            },
+            {
+              "zh": "愈來愈昂貴",
+              "accepted": [
+                "is becoming more and more expensive",
+                "is becoming increasingly expensive",
+                "is becoming more and more costly",
+                "is becoming increasingly costly",
+                "is becoming more expensive",
+                "has become more and more expensive",
+                "has become increasingly expensive",
+                "has become more and more costly",
+                "has become increasingly costly",
+                "has become more expensive",
+                "is getting more and more expensive",
+                "is getting increasingly expensive",
+                "is getting more and more costly",
+                "is getting increasingly costly",
+                "is getting more expensive",
+                "it is becoming more and more expensive",
+                "it is becoming increasingly expensive",
+                "it is becoming more and more costly",
+                "it is becoming increasingly costly",
+                "it is becoming more expensive",
+                "it has become more and more expensive",
+                "it has become increasingly expensive",
+                "it has become more and more costly",
+                "it has become increasingly costly",
+                "it has become more expensive",
+                "it is getting more and more expensive",
+                "it is getting increasingly expensive",
+                "it is getting more and more costly",
+                "it is getting increasingly costly",
+                "it is getting more expensive",
+                "is costing more and more",
+                "costs more and more",
+                "is growing more and more expensive",
+                "has become much more expensive",
+                "is becoming ever more expensive",
+                "has grown increasingly costly",
+                "is becoming more costly",
+                "it is growing more and more expensive"
+              ],
+              "targets": [
+                "expensive"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "is becoming more and more expensively",
+                  "right": "is becoming more and more expensive",
+                  "explanation_zh": "become 後面接形容詞 expensive，不用副詞。"
+                },
+                {
+                  "wrong": "are becoming more and more expensive",
+                  "right": "is becoming more and more expensive",
+                  "explanation_zh": "動名詞片語當主詞視為單數，動詞用 is。"
+                }
+              ]
+            },
+            {
+              "zh": "迫使許多工廠",
+              "accepted": [
+                "forcing many factories",
+                "forcing a lot of factories",
+                "forcing many plants",
+                "forcing lots of factories",
+                "compelling many factories",
+                "compelling a lot of factories",
+                "compelling many plants",
+                "compelling lots of factories",
+                "pushing many factories",
+                "pushing a lot of factories",
+                "pushing many plants",
+                "pushing lots of factories",
+                "driving many factories",
+                "driving a lot of factories",
+                "driving many plants",
+                "driving lots of factories",
+                "which is forcing many factories",
+                "which is forcing a lot of factories",
+                "which is forcing many plants",
+                "which is forcing lots of factories",
+                "which forces many factories",
+                "which forces a lot of factories",
+                "which forces many plants",
+                "which forces lots of factories",
+                "which has forced many factories",
+                "which has forced a lot of factories",
+                "which has forced many plants",
+                "which has forced lots of factories"
+              ],
+              "targets": [
+                "PART",
+                "force",
+                "factory"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "forced many factories",
+                  "right": "forcing many factories",
+                  "explanation_zh": "前面已是完整句子，「迫使…」要用句尾分詞 forcing（或 , which forces …）表結果；直接接過去式 forced 會變成兩個主要動詞卻沒有連接詞。"
+                },
+                {
+                  "wrong": "forcing many factory",
+                  "right": "forcing many factories",
+                  "explanation_zh": "many 後面接複數名詞 factories。"
+                }
+              ]
+            },
+            {
+              "zh": "投資碳捕捉技術",
+              "accepted": [
+                "to invest in carbon capture technology",
+                "to invest in carbon capture technologies",
+                "to invest in technology for capturing carbon",
+                "to invest in technologies for capturing carbon",
+                "to invest in technology to capture carbon",
+                "to invest in technology that captures carbon",
+                "to invest in carbon capture",
+                "to invest in the technology of carbon capture"
+              ],
+              "targets": [
+                "invest",
+                "capture",
+                "technology"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "to invest carbon capture technology",
+                  "right": "to invest in carbon capture technology",
+                  "explanation_zh": "「投資某物」是 invest in + N，少了 in。"
+                },
+                {
+                  "wrong": "to investing in carbon capture technology",
+                  "right": "to invest in carbon capture technology",
+                  "explanation_zh": "force + 受詞 + to 後面接原形動詞 invest。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "verbal_subject",
+              "zh": "把二氧化碳（carbon dioxide）排放到空氣中",
+              "literal_error": "Release carbon dioxide into the air is becoming more and more expensive, …",
+              "part": 1,
+              "explanation_zh": "中文以「把…排放到空氣中」這個動作當主詞，英文要用動名詞 Releasing …（或虛主詞 It is … to release …）。"
+            },
+            {
+              "type": "collocation",
+              "zh": "投資碳捕捉技術",
+              "literal_error": "…forcing many factories to invest carbon capture technology.",
+              "part": 4,
+              "explanation_zh": "「投資某物」是 invest in + N；invest 直接接受詞是「投入（金錢、時間）」，意思不同。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "With emitting carbon dioxide growing ever costlier, many factories have little choice but to put money into carbon capture technology.",
+              "explanation_zh": "with + N + V-ing 表附帶情況（隨著…）、ever costlier（愈來愈貴）、have little choice but to VR（不得不）是進階寫法；這是加分寫法，不是唯一正解。"
+            }
+          ],
+          "restructuring_zh": "中文以動作「把二氧化碳排放到空氣中」當主詞，英文用動名詞 Releasing …（或虛主詞 It is becoming … to release …）；「迫使許多工廠…」接在逗號後，用句尾分詞 , forcing many factories to …。",
+          "notes_zh": "評分說明：「把二氧化碳排放到空氣中」releasing／emitting／discharging carbon dioxide into the air（atmosphere），或用虛主詞 It is becoming … to release …（也算達成本句 NFSUBJ 標的）；「愈來愈昂貴」is becoming／has become／is getting more and more (increasingly) expensive（costly）；「迫使」forcing／compelling／pushing／driving，寫成 , which is forcing／forces many factories to …（which 指前面整件事）也算達成本句 PART 標的；「投資碳捕捉技術」invest in carbon capture technology（technologies、technology for capturing carbon 也可以）。另外也給分：is costing more and more、costs more and more、is growing more and more expensive、is becoming ever more expensive。"
+        },
+        "2": {
+          "references": [
+            "The captured carbon dioxide is sent deep underground and stored in rock layers that once contained oil or natural gas.",
+            "The carbon dioxide that is captured will be pumped deep underground and stored in rock layers which once held oil or natural gas.",
+            "The captured carbon dioxide is transported deep underground and stored in layers of rock that used to contain oil or natural gas."
+          ],
+          "target_words": [
+            {
+              "word": "capture",
+              "zh": "捕捉",
+              "alternatives": [
+                "collect",
+                "catch",
+                "trap"
+              ]
+            },
+            {
+              "word": "send",
+              "zh": "送往",
+              "alternatives": [
+                "pump",
+                "transport",
+                "inject",
+                "carry",
+                "move",
+                "pipe",
+                "ship"
+              ]
+            },
+            {
+              "word": "deep",
+              "zh": "深處"
+            },
+            {
+              "word": "underground",
+              "zh": "地底",
+              "alternatives": [
+                "ground",
+                "below"
+              ]
+            },
+            {
+              "word": "store",
+              "zh": "存放",
+              "alternatives": [
+                "keep",
+                "place",
+                "put",
+                "lock",
+                "seal"
+              ]
+            },
+            {
+              "word": "rock",
+              "zh": "岩石"
+            },
+            {
+              "word": "layer",
+              "zh": "層",
+              "alternatives": [
+                "formation",
+                "strata",
+                "stratum"
+              ]
+            },
+            {
+              "word": "once",
+              "zh": "曾經",
+              "alternatives": [
+                "used",
+                "previously",
+                "formerly"
+              ]
+            },
+            {
+              "word": "oil",
+              "zh": "石油",
+              "alternatives": [
+                "petroleum"
+              ]
+            },
+            {
+              "word": "natural",
+              "zh": "天然的"
+            },
+            {
+              "word": "gas",
+              "zh": "氣體"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PASS",
+              "grammar_id": "gp-passive",
+              "label_zh": "被動語態（會被送往…、存放在…）",
+              "frame": "S + is (will be) + p.p. … and (is) + p.p. …",
+              "zh_trigger": "會被送往地底深處"
+            },
+            {
+              "code": "REL",
+              "grammar_id": "gp-relative-pronoun",
+              "label_zh": "關係代名詞 that／which 引導的形容詞子句（曾經蘊藏石油或天然氣的岩層）",
+              "frame": "N + that／which + once + V-ed …",
+              "zh_trigger": "曾經蘊藏石油或天然氣的岩層"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "捕捉到的二氧化碳（carbon dioxide）",
+              "accepted": [
+                "The captured carbon dioxide",
+                "The carbon dioxide captured",
+                "The carbon dioxide that is captured",
+                "The carbon dioxide that has been captured",
+                "The carbon dioxide which is captured",
+                "The carbon dioxide which has been captured",
+                "The collected carbon dioxide",
+                "The carbon dioxide collected",
+                "Captured carbon dioxide",
+                "The trapped carbon dioxide",
+                "This captured carbon dioxide",
+                "The carbon dioxide they capture",
+                "The carbon dioxide that factories capture"
+              ],
+              "targets": [
+                "capture"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "The capturing carbon dioxide",
+                  "right": "The captured carbon dioxide",
+                  "explanation_zh": "二氧化碳是「被」捕捉的，用過去分詞 captured；capturing 表主動。"
+                },
+                {
+                  "wrong": "The carbon dioxide captures",
+                  "right": "The captured carbon dioxide",
+                  "explanation_zh": "「捕捉到的」是修飾語，不是主要動詞；句子的動詞是後面的 is sent。"
+                }
+              ]
+            },
+            {
+              "zh": "會被送往地底深處",
+              "accepted": [
+                "is sent deep underground",
+                "is sent deep under the ground",
+                "is sent deep into the ground",
+                "is pumped deep underground",
+                "is pumped deep under the ground",
+                "is pumped deep into the ground",
+                "is transported deep underground",
+                "is transported deep under the ground",
+                "is transported deep into the ground",
+                "is injected deep underground",
+                "is injected deep under the ground",
+                "is injected deep into the ground",
+                "will be sent deep underground",
+                "will be sent deep under the ground",
+                "will be sent deep into the ground",
+                "will be pumped deep underground",
+                "will be pumped deep under the ground",
+                "will be pumped deep into the ground",
+                "will be transported deep underground",
+                "will be transported deep under the ground",
+                "will be transported deep into the ground",
+                "will be injected deep underground",
+                "will be injected deep under the ground",
+                "will be injected deep into the ground",
+                "is then sent deep underground",
+                "is then sent deep under the ground",
+                "is then sent deep into the ground",
+                "is then pumped deep underground",
+                "is then pumped deep under the ground",
+                "is then pumped deep into the ground",
+                "is then transported deep underground",
+                "is then transported deep under the ground",
+                "is then transported deep into the ground",
+                "is then injected deep underground",
+                "is then injected deep under the ground",
+                "is then injected deep into the ground",
+                "will then be sent deep underground",
+                "will then be sent deep under the ground",
+                "will then be sent deep into the ground",
+                "will then be pumped deep underground",
+                "will then be pumped deep under the ground",
+                "will then be pumped deep into the ground",
+                "will then be transported deep underground",
+                "will then be transported deep under the ground",
+                "will then be transported deep into the ground",
+                "will then be injected deep underground",
+                "will then be injected deep under the ground",
+                "will then be injected deep into the ground",
+                "is carried deep underground",
+                "is piped deep underground",
+                "is moved deep underground",
+                "can be sent deep underground"
+              ],
+              "targets": [
+                "PASS",
+                "send",
+                "deep",
+                "underground"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "is sent to deep underground",
+                  "right": "is sent deep underground",
+                  "explanation_zh": "underground 在這裡是副詞（到地底），前面不加 to。"
+                },
+                {
+                  "wrong": "will send deep underground",
+                  "right": "will be sent deep underground",
+                  "explanation_zh": "二氧化碳是「被」送往，要用被動 will be sent。"
+                }
+              ]
+            },
+            {
+              "zh": "存放在",
+              "accepted": [
+                "and stored in",
+                "and kept in",
+                "and is stored in",
+                "and will be stored in",
+                "and then stored in",
+                "where it is stored in",
+                "where it will be stored in",
+                "to be stored in",
+                "and placed in",
+                "and locked away in",
+                "and sealed in",
+                "and stored inside"
+              ],
+              "targets": [
+                "store"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "and store in",
+                  "right": "and stored in",
+                  "explanation_zh": "「存放」和前面的 is sent 一樣是被動，並列時寫 and (is) stored in；store in 變成主動，也少了受詞。"
+                },
+                {
+                  "wrong": "and storing in",
+                  "right": "and stored in",
+                  "explanation_zh": "和 is sent 並列的是被動的過去分詞 stored，不是 V-ing。"
+                }
+              ]
+            },
+            {
+              "zh": "曾經蘊藏石油或天然氣的岩層中",
+              "accepted": [
+                "rock layers that once contained oil or natural gas",
+                "rock layers that once contained oil or gas",
+                "rock layers that once held oil or natural gas",
+                "rock layers that once held oil or gas",
+                "rock layers that used to contain oil or natural gas",
+                "rock layers that used to contain oil or gas",
+                "rock layers that used to hold oil or natural gas",
+                "rock layers that used to hold oil or gas",
+                "rock layers which once contained oil or natural gas",
+                "rock layers which once contained oil or gas",
+                "rock layers which once held oil or natural gas",
+                "rock layers which once held oil or gas",
+                "rock layers which used to contain oil or natural gas",
+                "rock layers which used to contain oil or gas",
+                "rock layers which used to hold oil or natural gas",
+                "rock layers which used to hold oil or gas",
+                "layers of rock that once contained oil or natural gas",
+                "layers of rock that once contained oil or gas",
+                "layers of rock that once held oil or natural gas",
+                "layers of rock that once held oil or gas",
+                "layers of rock that used to contain oil or natural gas",
+                "layers of rock that used to contain oil or gas",
+                "layers of rock that used to hold oil or natural gas",
+                "layers of rock that used to hold oil or gas",
+                "layers of rock which once contained oil or natural gas",
+                "layers of rock which once contained oil or gas",
+                "layers of rock which once held oil or natural gas",
+                "layers of rock which once held oil or gas",
+                "layers of rock which used to contain oil or natural gas",
+                "layers of rock which used to contain oil or gas",
+                "layers of rock which used to hold oil or natural gas",
+                "layers of rock which used to hold oil or gas",
+                "rock formations that once contained oil or natural gas",
+                "rock formations that once contained oil or gas",
+                "rock formations that once held oil or natural gas",
+                "rock formations that once held oil or gas",
+                "rock formations that used to contain oil or natural gas",
+                "rock formations that used to contain oil or gas",
+                "rock formations that used to hold oil or natural gas",
+                "rock formations that used to hold oil or gas",
+                "rock formations which once contained oil or natural gas",
+                "rock formations which once contained oil or gas",
+                "rock formations which once held oil or natural gas",
+                "rock formations which once held oil or gas",
+                "rock formations which used to contain oil or natural gas",
+                "rock formations which used to contain oil or gas",
+                "rock formations which used to hold oil or natural gas",
+                "rock formations which used to hold oil or gas",
+                "the rock layers that once contained oil or natural gas",
+                "the rock layers which once held oil or natural gas",
+                "rock layers that once stored oil or natural gas",
+                "rock layers that used to store oil or natural gas",
+                "rock layers that were once filled with oil or natural gas",
+                "rock layers that had once contained oil or natural gas",
+                "underground rock layers that once contained oil or natural gas",
+                "rock strata that once contained petroleum or natural gas",
+                "rock strata that once contained oil or natural gas",
+                "rock strata that once contained oil or gas",
+                "rock strata that once held petroleum or natural gas",
+                "rock strata that once held oil or natural gas",
+                "rock strata that once held oil or gas",
+                "rock strata that used to contain petroleum or natural gas",
+                "rock strata that used to contain oil or natural gas",
+                "rock strata that used to contain oil or gas",
+                "rock strata that used to hold petroleum or natural gas",
+                "rock strata that used to hold oil or natural gas",
+                "rock strata that used to hold oil or gas",
+                "rock strata which once contained petroleum or natural gas",
+                "rock strata which once contained oil or natural gas",
+                "rock strata which once contained oil or gas",
+                "rock strata which once held petroleum or natural gas",
+                "rock strata which once held oil or natural gas",
+                "rock strata which once held oil or gas",
+                "rock strata which used to contain petroleum or natural gas",
+                "rock strata which used to contain oil or natural gas",
+                "rock strata which used to contain oil or gas",
+                "rock strata which used to hold petroleum or natural gas",
+                "rock strata which used to hold oil or natural gas",
+                "rock strata which used to hold oil or gas",
+                "strata of rock that once contained petroleum or natural gas",
+                "strata of rock that once contained oil or natural gas",
+                "strata of rock that once contained oil or gas",
+                "strata of rock that once held petroleum or natural gas",
+                "strata of rock that once held oil or natural gas",
+                "strata of rock that once held oil or gas",
+                "strata of rock that used to contain petroleum or natural gas",
+                "strata of rock that used to contain oil or natural gas",
+                "strata of rock that used to contain oil or gas",
+                "strata of rock that used to hold petroleum or natural gas",
+                "strata of rock that used to hold oil or natural gas",
+                "strata of rock that used to hold oil or gas",
+                "strata of rock which once contained petroleum or natural gas",
+                "strata of rock which once contained oil or natural gas",
+                "strata of rock which once contained oil or gas",
+                "strata of rock which once held petroleum or natural gas",
+                "strata of rock which once held oil or natural gas",
+                "strata of rock which once held oil or gas",
+                "strata of rock which used to contain petroleum or natural gas",
+                "strata of rock which used to contain oil or natural gas",
+                "strata of rock which used to contain oil or gas",
+                "strata of rock which used to hold petroleum or natural gas",
+                "strata of rock which used to hold oil or natural gas",
+                "strata of rock which used to hold oil or gas",
+                "rock layers that once contained petroleum or natural gas",
+                "rock layers that once held petroleum or natural gas",
+                "rock layers that used to contain petroleum or natural gas",
+                "rock layers that used to hold petroleum or natural gas",
+                "rock layers which once contained petroleum or natural gas",
+                "rock layers which once held petroleum or natural gas",
+                "rock layers which used to contain petroleum or natural gas",
+                "rock layers which used to hold petroleum or natural gas",
+                "layers of rock that once contained petroleum or natural gas",
+                "layers of rock that once held petroleum or natural gas",
+                "layers of rock that used to contain petroleum or natural gas",
+                "layers of rock that used to hold petroleum or natural gas",
+                "layers of rock which once contained petroleum or natural gas",
+                "layers of rock which once held petroleum or natural gas",
+                "layers of rock which used to contain petroleum or natural gas",
+                "layers of rock which used to hold petroleum or natural gas",
+                "rock formations that once contained petroleum or natural gas",
+                "rock formations that once held petroleum or natural gas",
+                "rock formations that used to contain petroleum or natural gas",
+                "rock formations that used to hold petroleum or natural gas",
+                "rock formations which once contained petroleum or natural gas",
+                "rock formations which once held petroleum or natural gas",
+                "rock formations which used to contain petroleum or natural gas",
+                "rock formations which used to hold petroleum or natural gas",
+                "underground rock layers that once contained petroleum or natural gas",
+                "underground rock layers that once contained oil or gas",
+                "underground rock layers that once held petroleum or natural gas",
+                "underground rock layers that once held oil or natural gas",
+                "underground rock layers that once held oil or gas",
+                "underground rock layers that used to contain petroleum or natural gas",
+                "underground rock layers that used to contain oil or natural gas",
+                "underground rock layers that used to contain oil or gas",
+                "underground rock layers that used to hold petroleum or natural gas",
+                "underground rock layers that used to hold oil or natural gas",
+                "underground rock layers that used to hold oil or gas",
+                "underground rock layers which once contained petroleum or natural gas",
+                "underground rock layers which once contained oil or natural gas",
+                "underground rock layers which once contained oil or gas",
+                "underground rock layers which once held petroleum or natural gas",
+                "underground rock layers which once held oil or natural gas",
+                "underground rock layers which once held oil or gas",
+                "underground rock layers which used to contain petroleum or natural gas",
+                "underground rock layers which used to contain oil or natural gas",
+                "underground rock layers which used to contain oil or gas",
+                "underground rock layers which used to hold petroleum or natural gas",
+                "underground rock layers which used to hold oil or natural gas",
+                "underground rock layers which used to hold oil or gas",
+                "geological formations that once contained petroleum or natural gas",
+                "geological formations that once contained oil or natural gas",
+                "geological formations that once contained oil or gas",
+                "geological formations that once held petroleum or natural gas",
+                "geological formations that once held oil or natural gas",
+                "geological formations that once held oil or gas",
+                "geological formations that used to contain petroleum or natural gas",
+                "geological formations that used to contain oil or natural gas",
+                "geological formations that used to contain oil or gas",
+                "geological formations that used to hold petroleum or natural gas",
+                "geological formations that used to hold oil or natural gas",
+                "geological formations that used to hold oil or gas",
+                "geological formations which once contained petroleum or natural gas",
+                "geological formations which once contained oil or natural gas",
+                "geological formations which once contained oil or gas",
+                "geological formations which once held petroleum or natural gas",
+                "geological formations which once held oil or natural gas",
+                "geological formations which once held oil or gas",
+                "geological formations which used to contain petroleum or natural gas",
+                "geological formations which used to contain oil or natural gas",
+                "geological formations which used to contain oil or gas",
+                "geological formations which used to hold petroleum or natural gas",
+                "geological formations which used to hold oil or natural gas",
+                "geological formations which used to hold oil or gas",
+                "the rock layers that once held oil or natural gas",
+                "the rock layers that used to contain oil or natural gas",
+                "the rock layers that used to hold oil or natural gas",
+                "the rock layers which once contained oil or natural gas",
+                "the rock layers which used to contain oil or natural gas",
+                "the rock layers which used to hold oil or natural gas",
+                "the layers of rock that once contained oil or natural gas",
+                "the layers of rock that once held oil or natural gas",
+                "the layers of rock that used to contain oil or natural gas",
+                "the layers of rock that used to hold oil or natural gas",
+                "the layers of rock which once contained oil or natural gas",
+                "the layers of rock which once held oil or natural gas",
+                "the layers of rock which used to contain oil or natural gas",
+                "the layers of rock which used to hold oil or natural gas",
+                "the rock formations that once contained oil or natural gas",
+                "the rock formations that once held oil or natural gas",
+                "the rock formations that used to contain oil or natural gas",
+                "the rock formations that used to hold oil or natural gas",
+                "the rock formations which once contained oil or natural gas",
+                "the rock formations which once held oil or natural gas",
+                "the rock formations which used to contain oil or natural gas",
+                "the rock formations which used to hold oil or natural gas"
+              ],
+              "targets": [
+                "REL",
+                "rock",
+                "layer",
+                "once",
+                "oil",
+                "natural",
+                "gas"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "rock layers that once contain oil or natural gas",
+                  "right": "rock layers that once contained oil or natural gas",
+                  "explanation_zh": "「曾經」蘊藏是過去的事，用過去式 contained（或 used to contain）。"
+                },
+                {
+                  "wrong": "rock layers that used to containing oil or natural gas",
+                  "right": "rock layers that used to contain oil or natural gas",
+                  "explanation_zh": "used to（過去曾經）後面接原形動詞 contain。"
+                },
+                {
+                  "wrong": "rock layers where once contained oil or natural gas",
+                  "right": "rock layers that once contained oil or natural gas",
+                  "explanation_zh": "關係子句少了主詞時要用關代 that／which 當主詞；where 是關係副詞，後面要接完整子句。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "word_form",
+              "zh": "捕捉到的",
+              "literal_error": "The capturing carbon dioxide is sent deep underground …",
+              "part": 1,
+              "explanation_zh": "「捕捉到的」表示被動、已完成，用過去分詞 captured；capturing 表示主動在捕捉。"
+            },
+            {
+              "type": "prenominal_modifier",
+              "zh": "曾經蘊藏石油或天然氣的岩層",
+              "literal_error": "…and stored in the once-containing-oil-or-natural-gas rock layers.",
+              "part": 4,
+              "explanation_zh": "中文很長的修飾語放在「岩層」前面，英文要改成後位的關係子句 rock layers that once contained oil or natural gas。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "Once captured, the carbon dioxide is pumped deep underground into rock layers that used to hold oil or natural gas.",
+              "grammar_id": "gp-conj-participle",
+              "explanation_zh": "Once captured（一旦被捕捉）用連接詞＋過去分詞，把「捕捉到的」改成時間順序；pump … into …（打入）更具體。這是加分寫法，不是唯一正解。"
+            }
+          ],
+          "restructuring_zh": "「曾經蘊藏石油或天然氣的岩層」是很長的前置修飾，英文改成後位的關係子句 rock layers that once contained oil or natural gas；「存放在」和「被送往」並列，都用被動：is sent … and stored in …。",
+          "notes_zh": "評分說明：「捕捉到的二氧化碳」The captured carbon dioxide、The carbon dioxide (that is／has been) captured、The collected carbon dioxide；「會被送往地底深處」is／will be (then) sent／pumped／transported／injected deep underground（deep under the ground、deep into the ground）；「存放在」and (is) stored／kept in，where it is stored in 也可以；「曾經蘊藏石油或天然氣的岩層」(the) rock layers／layers of rock／rock formations + that／which + once contained／once held／used to contain／used to hold + oil or (natural) gas。另外也給分：rock strata／geological formations、petroleum or natural gas、oil or gas。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ac-V-3",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-top-06",
+    "lot": "translation-top-06",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "c6f44f933a9c31819117ac3657fbba0cbac38d8892d1379b9e2ce94107722abf",
+    "spec_id": "translation-top@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 4,
+    "sentences": 2,
+    "avg_sentence_length": 2.0,
+    "denominator": 4,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.5,
+    "offlist_ratio": 0.5,
+    "beyond_l4_ratio": 0.5,
+    "level_counts": {
+      "5": 2,
+      "off": 2
+    },
+    "offlist_words": [
+      "dioxide"
+    ],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-10T02:38:55Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "warn",
+      "created_at": "2026-10-10T02:30:00Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Releasing carbon dioxide into the air is becoming more and more expensive, forcing many factories to invest in carbon capture technology.",
+            "confidence": "high",
+            "explanation_zh": "「把二氧化碳排放到空氣中」當主詞用動名詞 Releasing …（emitting 亦可）；「愈來愈昂貴」用 is becoming more and more expensive；「迫使」用分詞構句；「投資」用 invest in。"
+          },
+          "2": {
+            "translation": "The captured carbon dioxide is then sent deep underground and stored in rock layers that once held oil or natural gas.",
+            "confidence": "high",
+            "explanation_zh": "「會被送往…存放在…」描述一般流程，用現在式被動 is sent … and stored；「曾經蘊藏石油或天然氣的岩層」用 that 關係子句 that once held …；「地底深處」譯 deep underground。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PART",
+              "NFSUBJ"
+            ],
+            "used_target_words": [
+              "release",
+              "air",
+              "expensive",
+              "force",
+              "factory",
+              "invest",
+              "capture",
+              "technology"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PASS",
+              "REL"
+            ],
+            "used_target_words": [
+              "capture",
+              "send",
+              "deep",
+              "underground",
+              "store",
+              "rock",
+              "layer",
+              "once",
+              "oil",
+              "natural",
+              "gas"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "release",
+              "air",
+              "expensive",
+              "force",
+              "factory",
+              "invest",
+              "capture",
+              "technology"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PART": true,
+              "NFSUBJ": true
+            },
+            "program_match": true
+          },
+          "2": {
+            "target_words_found": [
+              "capture",
+              "send",
+              "deep",
+              "underground",
+              "store",
+              "rock",
+              "layer",
+              "once",
+              "oil",
+              "natural",
+              "gas"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PASS": false,
+              "REL": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 2 題驗證者說用了句型 PASS，程式在譯文裡看不出來"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-10T02:28:18Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Releasing carbon dioxide into the air is becoming more and more expensive, forcing many factories to invest in carbon capture technology.",
+            "confidence": "high",
+            "explanation_zh": "「把二氧化碳排放到空氣中」是主詞，用動名詞片語 Releasing carbon dioxide into the air；「愈來愈昂貴」用 more and more expensive，搭配進行式 is becoming；「迫使許多工廠投資碳捕捉技術」用 forcing many factories to invest in carbon capture technology。"
+          },
+          "2": {
+            "translation": "The captured carbon dioxide is sent deep underground and stored in rock layers that used to contain oil or natural gas.",
+            "confidence": "high",
+            "explanation_zh": "「捕捉到的二氧化碳」用過去分詞 captured 當前位修飾語；「會被送往……存放在……」用被動語態 is sent ... and stored，兩個動詞共用 is；「曾經蘊藏石油或天然氣的岩層」用 rock layers that used to contain oil or natural gas，used to 表示過去曾經如此、現在已非。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PART",
+              "NFSUBJ"
+            ],
+            "used_target_words": [
+              "release",
+              "air",
+              "expensive",
+              "force",
+              "factory",
+              "invest",
+              "capture",
+              "technology"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PASS",
+              "REL"
+            ],
+            "used_target_words": [
+              "capture",
+              "send",
+              "deep",
+              "underground",
+              "store",
+              "rock",
+              "layer",
+              "once",
+              "oil",
+              "natural",
+              "gas"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "release",
+              "air",
+              "expensive",
+              "force",
+              "factory",
+              "invest",
+              "capture",
+              "technology"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PART": true,
+              "NFSUBJ": true
+            },
+            "program_match": true
+          },
+          "2": {
+            "target_words_found": [
+              "capture",
+              "send",
+              "deep",
+              "underground",
+              "store",
+              "rock",
+              "layer",
+              "once",
+              "oil",
+              "natural",
+              "gas"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PASS": true,
+              "REL": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}
