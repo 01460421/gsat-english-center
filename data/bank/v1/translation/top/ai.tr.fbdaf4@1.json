@@ -1,0 +1,1036 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.fbdaf4",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "top",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "無論頭痛或喉嚨痛多麼輕微，許多人都習慣服用含有止痛成分（painkillers）的成藥。",
+        "options": null,
+        "answer": "No matter how mild their headaches or sore throats are, many people are used to taking over-the-counter pills containing painkillers.",
+        "accepted_answers": [
+          "No matter how slight their headaches or sore throats may be, many people are in the habit of taking over-the-counter medicines containing painkillers.",
+          "No matter how minor their headaches or sore throats are, many people are accustomed to taking over-the-counter drugs containing painkillers."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "讓步（no matter how）",
+            "分詞片語後位修飾"
+          ],
+          "topic": "成藥濫用"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "然而，對於依賴止痛藥（painkillers）的人來說，長期下來，吃得越多，頭痛就越頻繁。",
+        "options": null,
+        "answer": "However, for those who rely on painkillers, in the long run, the more they take, the more frequent their headaches become.",
+        "accepted_answers": [
+          "However, for people who depend on painkillers, over time, the more pills they take, the more often they get headaches.",
+          "However, for those who are dependent on painkillers, in the long term, the more painkillers they take, the more frequently their headaches occur."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "愈…愈…",
+            "對於…的人（For those who）"
+          ],
+          "topic": "成藥濫用"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "成藥濫用"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「無論…多麼輕微」是讓步子句：No matter how mild their headaches or sore throats are,，how 後面緊接形容詞 mild，再接主詞與 be 動詞。「習慣服用」是 be used to taking（to 是介系詞，後面接動名詞）。「含有止痛成分的成藥」修飾語在前，英文用分詞片語後位修飾：over-the-counter pills containing painkillers，成藥「含有」成分是主動，用現在分詞 containing；「成藥」是不需處方的 over-the-counter drugs。",
+          "evidence": [
+            "無論頭痛或喉嚨痛多麼輕微",
+            "含有止痛成分（painkillers）的成藥"
+          ],
+          "strategy_zh": "「無論多麼＋形容詞」→ No matter how + adj. + S + V；「含有…的 N」→ N + containing …。",
+          "hints": [
+            "切成四段：無論頭痛或喉嚨痛多麼輕微／許多人都習慣服用／含有止痛成分的／成藥",
+            "標的詞彙：no matter（無論）、mild（輕微的）、headache（頭痛）、sore throat（喉嚨痛）、be used to（習慣於）、take（服用）、contain（含有）、over-the-counter（成藥的、免處方的）、pill（藥丸）",
+            "句型框架：No matter how + adj. + S + are, S + are used to V-ing + N + containing …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「對於依賴止痛藥的人來說」用 For those who rely on painkillers,，those who 指「那些…的人」，動詞用複數 rely。「長期下來」是 in the long run／over time。「吃得越多，頭痛就越頻繁」用 the + 比較級 …, the + 比較級 …：the more they take, the more frequent their headaches become，前後兩半的 the 都不能省；吃藥用 take，不用 eat。",
+          "evidence": [
+            "對於依賴止痛藥（painkillers）的人來說",
+            "吃得越多，頭痛就越頻繁"
+          ],
+          "strategy_zh": "「越…越…」先寫兩個 the + 比較級，再補主詞與動詞；「對…的人來說」→ For those who + V。",
+          "hints": [
+            "切成四段：然而，對於依賴止痛藥的人來說／長期下來／吃得越多／頭痛就越頻繁",
+            "標的詞彙：however（然而）、rely on（依賴）、in the long run（長期下來）、more（更多）、take（服用）、frequent（頻繁的）、headache（頭痛）",
+            "句型框架：However, for those who + V …, in the long run, the more + S + V, the more + adj. + S + become"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "No matter how mild their headaches or sore throats are, many people are used to taking over-the-counter pills containing painkillers.",
+            "No matter how slight their headaches or sore throats may be, many people are in the habit of taking over-the-counter medicines containing painkillers.",
+            "No matter how minor their headaches or sore throats are, many people are accustomed to taking over-the-counter drugs containing painkillers."
+          ],
+          "target_words": [
+            {
+              "word": "matter",
+              "zh": "無論（no matter）",
+              "alternatives": [
+                "however"
+              ]
+            },
+            {
+              "word": "mild",
+              "zh": "輕微的",
+              "alternatives": [
+                "slight",
+                "minor"
+              ]
+            },
+            {
+              "word": "headache",
+              "zh": "頭痛"
+            },
+            {
+              "word": "sore",
+              "zh": "痛的（喉嚨痛）"
+            },
+            {
+              "word": "throat",
+              "zh": "喉嚨"
+            },
+            {
+              "word": "habit",
+              "zh": "習慣",
+              "alternatives": [
+                "used to",
+                "accustomed",
+                "tend",
+                "habitually",
+                "usually",
+                "routinely",
+                "often"
+              ]
+            },
+            {
+              "word": "take",
+              "zh": "服用",
+              "alternatives": [
+                "use",
+                "swallow"
+              ]
+            },
+            {
+              "word": "contain",
+              "zh": "含有",
+              "alternatives": [
+                "include",
+                "with"
+              ]
+            },
+            {
+              "word": "counter",
+              "zh": "成藥（over-the-counter）",
+              "alternatives": [
+                "prescription",
+                "OTC"
+              ]
+            },
+            {
+              "word": "pill",
+              "zh": "藥",
+              "alternatives": [
+                "drug",
+                "medicine",
+                "medication",
+                "tablet"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "ADVCL",
+              "grammar_id": "gp-no-matter",
+              "label_zh": "讓步：無論…多麼…（No matter how + adj. + S + be；也可寫 However + adj. …）",
+              "frame": "No matter how + adj. + S + be, S + V …",
+              "zh_trigger": "無論頭痛或喉嚨痛多麼輕微"
+            },
+            {
+              "code": "PART",
+              "grammar_id": "gp-participle-modifier",
+              "label_zh": "分詞片語後位修飾名詞（含有止痛成分的成藥：over-the-counter pills containing painkillers；寫成 that contain … 也算）",
+              "frame": "N + V-ing …",
+              "zh_trigger": "含有止痛成分（painkillers）的"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "無論頭痛或喉嚨痛多麼輕微",
+              "accepted": [
+                "No matter how mild their headaches or sore throats are",
+                "No matter how mild their headaches or sore throats may be",
+                "No matter how mild their headaches or sore throats might be",
+                "No matter how mild their headaches or sore throats seem",
+                "No matter how slight their headaches or sore throats are",
+                "No matter how slight their headaches or sore throats may be",
+                "No matter how slight their headaches or sore throats might be",
+                "No matter how slight their headaches or sore throats seem",
+                "No matter how minor their headaches or sore throats are",
+                "No matter how minor their headaches or sore throats may be",
+                "No matter how minor their headaches or sore throats might be",
+                "No matter how minor their headaches or sore throats seem",
+                "However mild their headaches or sore throats are",
+                "However mild their headaches or sore throats may be",
+                "However mild their headaches or sore throats might be",
+                "However mild their headaches or sore throats seem",
+                "However slight their headaches or sore throats are",
+                "However slight their headaches or sore throats may be",
+                "However slight their headaches or sore throats might be",
+                "However slight their headaches or sore throats seem",
+                "However minor their headaches or sore throats are",
+                "However minor their headaches or sore throats may be",
+                "However minor their headaches or sore throats might be",
+                "However minor their headaches or sore throats seem",
+                "No matter how mild a headache or sore throat is",
+                "No matter how mild a headache or sore throat may be",
+                "No matter how mild a headache or sore throat might be",
+                "No matter how slight a headache or sore throat is",
+                "No matter how slight a headache or sore throat may be",
+                "No matter how slight a headache or sore throat might be",
+                "No matter how minor a headache or sore throat is",
+                "No matter how minor a headache or sore throat may be",
+                "No matter how minor a headache or sore throat might be",
+                "However mild a headache or sore throat is",
+                "However mild a headache or sore throat may be",
+                "However mild a headache or sore throat might be",
+                "However slight a headache or sore throat is",
+                "However slight a headache or sore throat may be",
+                "However slight a headache or sore throat might be",
+                "However minor a headache or sore throat is",
+                "However minor a headache or sore throat may be",
+                "However minor a headache or sore throat might be",
+                "No matter how mild the headaches or sore throats are",
+                "No matter how mild the headaches or sore throats may be",
+                "No matter how slight the headaches or sore throats are",
+                "No matter how slight the headaches or sore throats may be",
+                "No matter how minor the headaches or sore throats are",
+                "No matter how minor the headaches or sore throats may be",
+                "However mild the headaches or sore throats are",
+                "However mild the headaches or sore throats may be",
+                "However slight the headaches or sore throats are",
+                "However slight the headaches or sore throats may be",
+                "However minor the headaches or sore throats are",
+                "However minor the headaches or sore throats may be",
+                "No matter how mild their headache or sore throat is",
+                "No matter how mild their headache or sore throat may be",
+                "No matter how slight their headache or sore throat is",
+                "No matter how slight their headache or sore throat may be",
+                "No matter how minor their headache or sore throat is",
+                "No matter how minor their headache or sore throat may be",
+                "However mild their headache or sore throat is",
+                "However mild their headache or sore throat may be",
+                "However slight their headache or sore throat is",
+                "However slight their headache or sore throat may be",
+                "However minor their headache or sore throat is",
+                "However minor their headache or sore throat may be",
+                "No matter how mild a headache or a sore throat is",
+                "No matter how mild a headache or a sore throat may be",
+                "No matter how slight a headache or a sore throat is",
+                "No matter how slight a headache or a sore throat may be",
+                "No matter how minor a headache or a sore throat is",
+                "No matter how minor a headache or a sore throat may be",
+                "However mild a headache or a sore throat is",
+                "However mild a headache or a sore throat may be",
+                "However slight a headache or a sore throat is",
+                "However slight a headache or a sore throat may be",
+                "However minor a headache or a sore throat is",
+                "However minor a headache or a sore throat may be",
+                "No matter how mild the headache or sore throat is",
+                "No matter how mild the headache or sore throat may be",
+                "No matter how slight the headache or sore throat is",
+                "No matter how slight the headache or sore throat may be",
+                "No matter how minor the headache or sore throat is",
+                "No matter how minor the headache or sore throat may be",
+                "However mild the headache or sore throat is",
+                "However mild the headache or sore throat may be",
+                "However slight the headache or sore throat is",
+                "However slight the headache or sore throat may be",
+                "However minor the headache or sore throat is",
+                "However minor the headache or sore throat may be"
+              ],
+              "targets": [
+                "ADVCL",
+                "matter",
+                "mild",
+                "headache",
+                "sore",
+                "throat"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "No matter how their headaches or sore throats are mild",
+                  "right": "No matter how mild their headaches or sore throats are",
+                  "explanation_zh": "how 後面要緊接形容詞：No matter how mild + 主詞 + be。"
+                },
+                {
+                  "wrong": "No matter their headaches or sore throats are mild",
+                  "right": "No matter how mild their headaches or sore throats are",
+                  "explanation_zh": "no matter 後面要接疑問詞 how（無論多麼…）。"
+                }
+              ]
+            },
+            {
+              "zh": "許多人都習慣服用",
+              "accepted": [
+                "many people are used to taking",
+                "many people are accustomed to taking",
+                "many people are in the habit of taking",
+                "many people have the habit of taking",
+                "many people tend to take",
+                "many people habitually take",
+                "many people usually take",
+                "many people have gotten used to taking",
+                "many people have become used to taking",
+                "many people have got used to taking",
+                "many people routinely take",
+                "many people often take"
+              ],
+              "targets": [
+                "habit",
+                "take"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "many people are used to take",
+                  "right": "many people are used to taking",
+                  "explanation_zh": "be used to（習慣於）的 to 是介系詞，後面接動名詞 taking。"
+                },
+                {
+                  "wrong": "many people used to taking",
+                  "right": "many people are used to taking",
+                  "explanation_zh": "「習慣於」是 be used to + V-ing，be 動詞不能省；used to + VR 是「過去常常」。"
+                }
+              ]
+            },
+            {
+              "zh": "含有止痛成分（painkillers）的",
+              "accepted": [
+                "containing painkillers",
+                "containing painkilling ingredients",
+                "containing pain relievers",
+                "containing pain-relieving ingredients",
+                "that contain painkillers",
+                "that contain painkilling ingredients",
+                "that contain pain relievers",
+                "that contain pain-relieving ingredients",
+                "which contain painkillers",
+                "which contain painkilling ingredients",
+                "which contain pain relievers",
+                "which contain pain-relieving ingredients",
+                "that contains painkillers",
+                "that contains painkilling ingredients",
+                "that contains pain relievers",
+                "that contains pain-relieving ingredients",
+                "which contains painkillers",
+                "which contains painkilling ingredients",
+                "which contains pain relievers",
+                "which contains pain-relieving ingredients"
+              ],
+              "targets": [
+                "PART",
+                "contain"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "contained painkillers",
+                  "right": "containing painkillers",
+                  "explanation_zh": "成藥「含有」止痛成分是主動關係，用現在分詞 containing。"
+                },
+                {
+                  "wrong": "are containing painkillers",
+                  "right": "containing painkillers",
+                  "explanation_zh": "後位修飾名詞直接用分詞片語 containing …，不要加 are。"
+                }
+              ]
+            },
+            {
+              "zh": "成藥",
+              "accepted": [
+                "over-the-counter pills",
+                "over-the-counter drugs",
+                "over-the-counter medicines",
+                "over-the-counter medicine",
+                "over-the-counter medication",
+                "over-the-counter medications",
+                "over-the-counter tablets",
+                "over-the-counter cold medicine",
+                "over-the-counter cold medicines",
+                "non-prescription pills",
+                "non-prescription drugs",
+                "non-prescription medicines",
+                "non-prescription medicine",
+                "non-prescription medication",
+                "non-prescription medications",
+                "non-prescription tablets",
+                "non-prescription cold medicine",
+                "non-prescription cold medicines",
+                "OTC pills",
+                "OTC drugs",
+                "OTC medicines",
+                "OTC medicine",
+                "OTC medication",
+                "OTC medications",
+                "OTC tablets",
+                "OTC cold medicine",
+                "OTC cold medicines"
+              ],
+              "targets": [
+                "counter",
+                "pill"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "finished medicine",
+                  "right": "over-the-counter medicine",
+                  "explanation_zh": "「成藥」指不需醫師處方就能買到的藥，是 over-the-counter drugs，不要逐字譯成 finished／ready-made medicine。"
+                },
+                {
+                  "wrong": "over-the-counter pill",
+                  "right": "over-the-counter pills",
+                  "explanation_zh": "泛指成藥時用複數 pills（或不可數的 medicine）。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "word_form",
+              "zh": "習慣服用",
+              "literal_error": "… many people are used to take over-the-counter pills …",
+              "part": 2,
+              "explanation_zh": "「習慣於」是 be used to + V-ing，to 是介系詞；照中文寫成 are used to take 會扣分。"
+            },
+            {
+              "type": "abstract_nominal",
+              "zh": "成藥",
+              "literal_error": "… taking finished medicine containing painkillers.",
+              "part": 4,
+              "explanation_zh": "「成藥」是複合概念，指不需處方就能買到的藥 over-the-counter drugs；照字面寫 finished／ready-made medicine 意思不對。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "However mild their headaches or sore throats may be, many people reach for over-the-counter pills containing painkillers without a second thought.",
+              "explanation_zh": "reach for（伸手去拿）和 without a second thought（想都不想）把「習慣」寫得更生動；However + adj. 等於 No matter how + adj.。屬加分寫法，不是唯一正解。"
+            }
+          ],
+          "restructuring_zh": "「無論…多麼輕微」用 No matter how mild + S + be，how 後面緊接形容詞；「含有止痛成分的成藥」修飾語在前，英文改成 over-the-counter pills containing painkillers，分詞片語放在名詞後面；「習慣服用」是 be used to taking。",
+          "notes_zh": "第 1 部分也可以寫 However mild …（＝No matter how mild）。第 3 部分寫成 that／which contain painkillers 也表達同樣的後位修飾，算作 PART 這一格的可接受寫法（已列入 accepted）。「成藥」寫 over-the-counter drugs／medicines、non-prescription drugs 都可以；「習慣」寫 be used to、be accustomed to、be in the habit of、tend to 都可以。"
+        },
+        "2": {
+          "references": [
+            "However, for those who rely on painkillers, in the long run, the more they take, the more frequent their headaches become.",
+            "However, for people who depend on painkillers, over time, the more pills they take, the more often they get headaches.",
+            "However, for those who are dependent on painkillers, in the long term, the more painkillers they take, the more frequently their headaches occur."
+          ],
+          "target_words": [
+            {
+              "word": "however",
+              "zh": "然而",
+              "alternatives": [
+                "but",
+                "yet"
+              ]
+            },
+            {
+              "word": "rely",
+              "zh": "依賴",
+              "alternatives": [
+                "depend",
+                "dependent",
+                "reliant"
+              ]
+            },
+            {
+              "word": "long",
+              "zh": "長期",
+              "alternatives": [
+                "time",
+                "term"
+              ]
+            },
+            {
+              "word": "more",
+              "zh": "越多"
+            },
+            {
+              "word": "take",
+              "zh": "吃（服用）",
+              "alternatives": [
+                "use",
+                "swallow",
+                "consume"
+              ]
+            },
+            {
+              "word": "frequent",
+              "zh": "頻繁的",
+              "alternatives": [
+                "frequently",
+                "often"
+              ]
+            },
+            {
+              "word": "headache",
+              "zh": "頭痛"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "COMP",
+              "grammar_id": "gp-the-more",
+              "label_zh": "愈…愈…（吃得越多，頭痛就越頻繁：the more …, the more frequent …）",
+              "frame": "The + 比較級 + S + V, the + 比較級 + S + V",
+              "zh_trigger": "吃得越多，頭痛就越頻繁"
+            },
+            {
+              "code": "REL",
+              "grammar_id": "gp-for-those-who",
+              "label_zh": "對於…的人而言（For those who + V …；寫成 For people who … 也可以）",
+              "frame": "For those who + V …, S + V",
+              "zh_trigger": "對於依賴止痛藥（painkillers）的人來說"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "然而，對於依賴止痛藥（painkillers）的人來說",
+              "accepted": [
+                "However, for those who rely on painkillers",
+                "However, for those who depend on painkillers",
+                "However, for those who are dependent on painkillers",
+                "However, for those who have come to rely on painkillers",
+                "However, for those who have become dependent on painkillers",
+                "However, for those who are reliant on painkillers",
+                "However, for those who have relied on painkillers",
+                "Yet, for those who rely on painkillers",
+                "Yet, for those who depend on painkillers",
+                "Yet, for those who are dependent on painkillers",
+                "Yet, for those who have come to rely on painkillers",
+                "Yet, for those who have become dependent on painkillers",
+                "Yet, for those who are reliant on painkillers",
+                "Yet, for those who have relied on painkillers",
+                "But for those who rely on painkillers",
+                "But for those who depend on painkillers",
+                "But for those who are dependent on painkillers",
+                "But for those who have come to rely on painkillers",
+                "But for those who have become dependent on painkillers",
+                "But for those who are reliant on painkillers",
+                "But for those who have relied on painkillers",
+                "However, for people who rely on painkillers",
+                "However, for people who depend on painkillers",
+                "However, for people who are dependent on painkillers",
+                "However, for people who have come to rely on painkillers",
+                "However, for people who have become dependent on painkillers",
+                "However, for people who have relied on painkillers",
+                "Yet, for people who rely on painkillers",
+                "Yet, for people who depend on painkillers",
+                "Yet, for people who are dependent on painkillers",
+                "Yet, for people who have come to rely on painkillers",
+                "Yet, for people who have become dependent on painkillers",
+                "Yet, for people who have relied on painkillers",
+                "But for people who rely on painkillers",
+                "But for people who depend on painkillers",
+                "But for people who are dependent on painkillers",
+                "But for people who have come to rely on painkillers",
+                "But for people who have become dependent on painkillers",
+                "But for people who have relied on painkillers",
+                "However, for those people who rely on painkillers",
+                "However, for those people who depend on painkillers",
+                "Yet, for those people who rely on painkillers",
+                "Yet, for those people who depend on painkillers",
+                "But for those people who rely on painkillers",
+                "But for those people who depend on painkillers",
+                "However, for anyone who relies on painkillers",
+                "However, for anyone who depends on painkillers",
+                "However, for anyone who is dependent on painkillers",
+                "Yet, for anyone who relies on painkillers",
+                "Yet, for anyone who depends on painkillers",
+                "Yet, for anyone who is dependent on painkillers",
+                "But for anyone who relies on painkillers",
+                "But for anyone who depends on painkillers",
+                "But for anyone who is dependent on painkillers"
+              ],
+              "targets": [
+                "REL",
+                "however",
+                "rely"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "However, for those people rely on painkillers",
+                  "right": "However, for those who rely on painkillers",
+                  "explanation_zh": "「依賴止痛藥的人」要用關係子句 those who rely on …，少了 who 一句會有兩個動詞。"
+                },
+                {
+                  "wrong": "However, for those who relies on painkillers",
+                  "right": "However, for those who rely on painkillers",
+                  "explanation_zh": "those 是複數，關係子句的動詞用 rely。"
+                }
+              ]
+            },
+            {
+              "zh": "長期下來",
+              "accepted": [
+                "in the long run",
+                "in the long term",
+                "over time",
+                "over the long term",
+                "over a long period of time",
+                "over a long period"
+              ],
+              "targets": [
+                "long"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "long-term down",
+                  "right": "in the long run",
+                  "explanation_zh": "「長期下來」是 in the long run／over time，「下來」不要逐字翻。"
+                },
+                {
+                  "wrong": "in the long time",
+                  "right": "in the long run",
+                  "explanation_zh": "固定說法是 in the long run／in the long term，或 over time。"
+                }
+              ]
+            },
+            {
+              "zh": "吃得越多",
+              "accepted": [
+                "the more they take",
+                "the more pills they take",
+                "the more painkillers they take",
+                "the more they take them",
+                "the more of them they take",
+                "the more they use them",
+                "the more medicine they take",
+                "the more painkillers they use",
+                "the more pills they swallow",
+                "the more they rely on them"
+              ],
+              "targets": [
+                "COMP",
+                "more",
+                "take"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "the more they eat",
+                  "right": "the more they take",
+                  "explanation_zh": "「吃藥」的動詞用 take，不用 eat。"
+                },
+                {
+                  "wrong": "more they take",
+                  "right": "the more they take",
+                  "explanation_zh": "「越…越…」的句型是 the + 比較級 …, the + 比較級 …，the 不能省略。"
+                }
+              ]
+            },
+            {
+              "zh": "頭痛就越頻繁",
+              "accepted": [
+                "the more frequent their headaches become",
+                "the more frequent their headaches get",
+                "the more frequent their headaches are",
+                "the more frequent their headaches will be",
+                "the more frequent their headaches will become",
+                "the more frequent the headaches become",
+                "the more frequent headaches become",
+                "the more frequently their headaches occur",
+                "the more frequently they get headaches",
+                "the more frequently they have headaches",
+                "the more frequently they suffer from headaches",
+                "the more frequently headaches occur",
+                "the more frequently their headaches come",
+                "the more frequently they suffer headaches",
+                "the more frequently their headaches come back",
+                "the more frequently headaches return",
+                "the more frequently their headaches return",
+                "the more often their headaches occur",
+                "the more often they get headaches",
+                "the more often they have headaches",
+                "the more often they suffer from headaches",
+                "the more often headaches occur",
+                "the more often their headaches come",
+                "the more often they suffer headaches",
+                "the more often their headaches come back",
+                "the more often headaches return",
+                "the more often their headaches return",
+                "the more headaches they get",
+                "the more headaches they have",
+                "the more headaches they suffer from"
+              ],
+              "targets": [
+                "frequent",
+                "headache"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "their headaches become more frequent",
+                  "right": "the more frequent their headaches become",
+                  "explanation_zh": "「越…越…」的後半也要以 the + 比較級開頭：the more frequent their headaches become。"
+                },
+                {
+                  "wrong": "the more frequently their headaches become",
+                  "right": "the more frequent their headaches become",
+                  "explanation_zh": "become 後面接形容詞補語，比較級用 more frequent；用副詞時要配 occur。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "collocation",
+              "zh": "長期下來",
+              "literal_error": "However, for those who rely on painkillers, long-term down, …",
+              "part": 2,
+              "explanation_zh": "「長期下來」要譯出意思 in the long run／over time，照字面拆成 long-term down 不成英文。"
+            },
+            {
+              "type": "word_form",
+              "zh": "頭痛就越頻繁",
+              "literal_error": "…, the more they take, their headaches become more frequent.",
+              "part": 4,
+              "explanation_zh": "「越…越…」前後兩半都要用 the + 比較級；後半照中文語序寫成 their headaches become more frequent 句構就錯了。"
+            }
+          ],
+          "bonus": [],
+          "restructuring_zh": "「對於…的人來說」用 For those who + V …；「吃得越多，頭痛就越頻繁」用 the more …, the more frequent …，兩半都以 the + 比較級開頭；「長期下來」譯出意思 in the long run。",
+          "notes_zh": "第 1 部分寫 For people who …、For anyone who relies on … 也可以（都是關係子句）；寫成 For those dependent on painkillers 沒有用到關係子句，不在可接受寫法內。第 4 部分寫 the more often they get headaches 也可以。「長期下來」放在句首或放在 the more they take 之後都可以（例如 the more they take in the long run, …）。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ac-V-3",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-top-07",
+    "lot": "translation-top-07",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "727f3c696b5eb6e7923442d5861775b3b6c73b73c5d622f70692eba105fc5008",
+    "spec_id": "translation-top@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 2,
+    "sentences": 2,
+    "avg_sentence_length": 1.0,
+    "denominator": 2,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 1.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {
+      "off": 2
+    },
+    "offlist_words": [
+      "painkillers"
+    ],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-10T02:47:52Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-10T00:00:00Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "No matter how mild their headaches or sore throats are, many people are used to taking over-the-counter medicines that contain painkillers.",
+            "confidence": "medium",
+            "explanation_zh": "「無論多麼輕微」用 No matter how mild …；「習慣服用」用 be used to + V-ing；「成藥」用 over-the-counter medicines；「含有止痛成分」照括號提示寫 contain painkillers。止痛成分與 painkillers（止痛藥）語意略不對應，所以信心給 medium。"
+          },
+          "2": {
+            "translation": "However, for people who rely on painkillers, the more they take over time, the more frequent their headaches become.",
+            "confidence": "high",
+            "explanation_zh": "「依賴止痛藥的人」用關係子句 people who rely on painkillers；「吃得越多，頭痛就越頻繁」用 the more …, the more … 比較級句型；「長期下來」用 over time。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "ADVCL",
+              "PART"
+            ],
+            "used_target_words": [
+              "matter",
+              "mild",
+              "headache",
+              "sore",
+              "throat",
+              "habit",
+              "take",
+              "contain",
+              "counter",
+              "pill"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "COMP",
+              "REL"
+            ],
+            "used_target_words": [
+              "however",
+              "rely",
+              "long",
+              "more",
+              "take",
+              "frequent",
+              "headache"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "matter",
+              "mild",
+              "headache",
+              "sore",
+              "throat",
+              "habit",
+              "take",
+              "contain",
+              "counter",
+              "pill"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "ADVCL": true,
+              "PART": false
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "however",
+              "rely",
+              "long",
+              "more",
+              "take",
+              "frequent",
+              "headache"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "COMP": true,
+              "REL": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-10T02:37:45Z",
+      "details": {
+        "solver": "B",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "No matter how mild a headache or a sore throat is, many people are in the habit of taking over-the-counter drugs that contain painkillers.",
+            "confidence": "high",
+            "explanation_zh": "「無論……多麼輕微」用 No matter how mild ... is；「習慣服用」用 be in the habit of taking；「成藥」用 over-the-counter drugs；「含有止痛成分」用 that contain painkillers。"
+          },
+          "2": {
+            "translation": "However, for people who rely on painkillers, the more they take over time, the more frequent their headaches become.",
+            "confidence": "high",
+            "explanation_zh": "「吃得越多，頭痛就越頻繁」用 the more ..., the more ... 的比較級對稱句型；「依賴」rely on；「長期下來」over time。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "ADVCL",
+              "PART"
+            ],
+            "used_target_words": [
+              "matter",
+              "mild",
+              "headache",
+              "sore",
+              "throat",
+              "habit",
+              "take",
+              "contain",
+              "counter",
+              "pill"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "COMP",
+              "REL"
+            ],
+            "used_target_words": [
+              "however",
+              "rely",
+              "long",
+              "more",
+              "take",
+              "frequent",
+              "headache"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "matter",
+              "mild",
+              "headache",
+              "sore",
+              "throat",
+              "habit",
+              "take",
+              "contain",
+              "counter",
+              "pill"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "ADVCL": true,
+              "PART": false
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "however",
+              "rely",
+              "long",
+              "more",
+              "take",
+              "frequent",
+              "headache"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "COMP": true,
+              "REL": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

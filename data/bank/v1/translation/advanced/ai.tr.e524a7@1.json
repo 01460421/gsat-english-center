@@ -1,0 +1,858 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.e524a7",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "advanced",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "以前我只會坐在看台上，因為不知道該如何跟著應援團喊口號。",
+        "options": null,
+        "answer": "I used to just sit in the stands because I didn't know how to shout slogans with the cheer squad.",
+        "accepted_answers": [
+          "I used to only sit in the stands because I did not know how to shout slogans along with the cheering squad.",
+          "I used to just sit in the bleachers, since I had no idea how to shout slogans together with the cheer squad."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "used to（過去習慣）",
+            "疑問詞＋不定詞（how to）"
+          ],
+          "topic": "棒球場的應援文化"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "自從學會了應援歌之後，我已經成為全場最大聲的球迷之一。",
+        "options": null,
+        "answer": "Since I learned the cheering songs, I have become one of the loudest fans in the stadium.",
+        "accepted_answers": [
+          "Ever since I learned the team's cheering songs, I have become one of the loudest fans in the whole stadium.",
+          "Since learning the cheer songs, I have become one of the loudest fans in the entire stadium."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "現在完成式（since）",
+            "最高級（one of the + 最高級 + 複數名詞）"
+          ],
+          "topic": "棒球場的應援文化"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "棒球場的應援文化"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「以前我只會…」說的是過去常有、現在已經不是這樣的習慣，用 used to + 原形動詞：I used to just sit …。「因為不知道該如何…」中文省略主詞，英文要補 I，時態用過去式；「該如何喊口號」用疑問詞＋不定詞 how to shout slogans。「跟著應援團」寫 with／along with the cheer squad；口號不只一句，用複數 slogans。",
+          "evidence": [
+            "以前我只會坐在看台上",
+            "不知道該如何跟著應援團喊口號"
+          ],
+          "strategy_zh": "「以前常…（現在不會了）」用 used to + VR；「不知道該怎麼／什麼時候／去哪裡…」用 how／when／where + to VR。",
+          "hints": [
+            "切成四段：以前我／只會坐在看台上／因為不知道該如何／跟著應援團喊口號",
+            "標的詞彙：sit（坐，L1）、stand（看台，the stands，L1）、know（知道，L1）、shout（喊，L1）、slogan（口號，L4）、squad（隊、團，L5）",
+            "句型框架：I used to + VR … because I didn't know how to + VR …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「自從…之後，我已經成為…」：since 子句用過去式（learned），主要子句用現在完成式 I have become。「全場最大聲的球迷之一」用 one of the + 最高級 + 複數名詞：one of the loudest fans in the stadium；loud 是單音節形容詞，最高級是 loudest，範圍用 in the stadium。",
+          "evidence": [
+            "自從學會了應援歌之後",
+            "已經成為",
+            "最大聲的球迷之一"
+          ],
+          "strategy_zh": "「自從…」用 since + 過去式，主要子句用現在完成式；「…之一」用 one of the + 最高級 + 複數名詞。",
+          "hints": [
+            "切成四段：自從學會了應援歌之後／我已經成為／全場／最大聲的球迷之一",
+            "標的詞彙：learn（學會，L1）、song（歌，L1）、become（成為，L1）、loud（大聲的，L1）、fan（球迷，L1）、stadium（球場，L3）",
+            "句型框架：Since + S + V-ed …, S + have become + one of the + adj-est + 複數名詞 + in …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "I used to just sit in the stands because I didn't know how to shout slogans with the cheer squad.",
+            "I used to only sit in the stands because I did not know how to shout slogans along with the cheering squad.",
+            "I used to just sit in the bleachers, since I had no idea how to shout slogans together with the cheer squad."
+          ],
+          "target_words": [
+            {
+              "word": "sit",
+              "zh": "坐"
+            },
+            {
+              "word": "stand",
+              "zh": "看台（the stands）",
+              "alternatives": [
+                "seat",
+                "bleacher",
+                "bleachers"
+              ]
+            },
+            {
+              "word": "know",
+              "zh": "知道",
+              "alternatives": [
+                "idea"
+              ]
+            },
+            {
+              "word": "shout",
+              "zh": "喊",
+              "alternatives": [
+                "chant",
+                "yell",
+                "cheer"
+              ]
+            },
+            {
+              "word": "slogan",
+              "zh": "口號",
+              "alternatives": [
+                "cheer",
+                "chant"
+              ]
+            },
+            {
+              "word": "squad",
+              "zh": "隊、團",
+              "alternatives": [
+                "team",
+                "group",
+                "cheerleader"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "BASIC",
+              "grammar_id": "gp-used-to",
+              "label_zh": "used to + 原形動詞（以前常…，現在不再）",
+              "frame": "S + used to + VR …",
+              "zh_trigger": "以前我只會"
+            },
+            {
+              "code": "NCL",
+              "grammar_id": "gp-wh-to",
+              "label_zh": "疑問詞＋不定詞（how to + VR）",
+              "frame": "S + didn't know + how to + VR …",
+              "zh_trigger": "不知道該如何"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "以前我",
+              "accepted": [
+                "I used to",
+                "In the past, I used to",
+                "I always used to",
+                "Before, I used to"
+              ],
+              "targets": [
+                "BASIC"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "I was used to",
+                  "right": "I used to",
+                  "explanation_zh": "「以前常…」是 used to + 原形動詞；be used to + V-ing 是「習慣於…」，意思不同。"
+                },
+                {
+                  "wrong": "I use to",
+                  "right": "I used to",
+                  "explanation_zh": "表示過去習慣的是 used to，used 不能寫成 use。"
+                }
+              ]
+            },
+            {
+              "zh": "只會坐在看台上",
+              "accepted": [
+                "just sit in the stands",
+                "only sit in the stands",
+                "just sit in my seat",
+                "only sit in my seat",
+                "just sit in the bleachers",
+                "only sit in the bleachers",
+                "just sit there in the stands",
+                "simply sit in the stands",
+                "just sit quietly in the stands",
+                "only sit quietly in the stands",
+                "sit in the stands"
+              ],
+              "targets": [
+                "sit",
+                "stand"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "just sat in the stands",
+                  "right": "just sit in the stands",
+                  "explanation_zh": "used to 後面接原形動詞 sit，不用過去式。"
+                },
+                {
+                  "wrong": "just sitting in the stands",
+                  "right": "just sit in the stands",
+                  "explanation_zh": "used to 後面接原形動詞；used to + V-ing 不是正確的寫法（be used to + V-ing 才是「習慣於」）。"
+                }
+              ]
+            },
+            {
+              "zh": "因為不知道該如何",
+              "accepted": [
+                "because I didn't know how to",
+                "because I did not know how to",
+                "since I had no idea how to",
+                "because I had no idea how to",
+                "since I didn't know how to",
+                "as I didn't know how to",
+                "since I did not know how to",
+                "because I never knew how to",
+                "because I didn't really know how to"
+              ],
+              "targets": [
+                "NCL",
+                "know"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "because didn't know how to",
+                  "right": "because I didn't know how to",
+                  "explanation_zh": "中文省略主詞，英文 because 子句要補上主詞 I。"
+                },
+                {
+                  "wrong": "because I don't know how to",
+                  "right": "because I didn't know how to",
+                  "explanation_zh": "說的是以前的情形，時態用過去式 didn't know。"
+                }
+              ]
+            },
+            {
+              "zh": "跟著應援團喊口號",
+              "accepted": [
+                "shout slogans with the cheer squad",
+                "shout slogans along with the cheering squad",
+                "shout slogans together with the cheer squad",
+                "shout slogans with the cheering squad",
+                "shout slogans along with the cheer squad",
+                "chant slogans with the cheer squad",
+                "chant slogans with the cheering squad",
+                "shout cheers with the cheer squad",
+                "cheer with the cheer squad",
+                "follow the cheer squad and shout slogans",
+                "join the cheer squad in shouting slogans",
+                "shout slogans with the cheerleaders",
+                "shout slogans with the cheering group",
+                "shout the slogans with the cheer squad",
+                "yell slogans with the cheer squad",
+                "shout slogans with the cheerleading squad",
+                "shout slogans with the cheering team",
+                "shout slogans with the cheer team",
+                "shout slogans along with the cheerleading squad",
+                "shout slogans along with the cheering team",
+                "shout slogans along with the cheerleaders",
+                "shout slogans along with the cheer team",
+                "shout slogans together with the cheering squad",
+                "shout slogans together with the cheerleading squad",
+                "shout slogans together with the cheering team",
+                "shout slogans together with the cheerleaders",
+                "shout slogans together with the cheer team",
+                "chant slogans with the cheerleading squad",
+                "chant slogans with the cheering team",
+                "chant slogans with the cheerleaders",
+                "chant slogans with the cheer team",
+                "chant slogans along with the cheer squad",
+                "chant slogans along with the cheering squad",
+                "chant slogans along with the cheerleading squad",
+                "chant slogans along with the cheering team",
+                "chant slogans along with the cheerleaders",
+                "chant slogans along with the cheer team",
+                "chant slogans together with the cheer squad",
+                "chant slogans together with the cheering squad",
+                "chant slogans together with the cheerleading squad",
+                "chant slogans together with the cheering team",
+                "chant slogans together with the cheerleaders",
+                "chant slogans together with the cheer team",
+                "yell slogans with the cheering squad",
+                "yell slogans with the cheerleading squad",
+                "yell slogans with the cheering team",
+                "yell slogans with the cheerleaders",
+                "yell slogans with the cheer team",
+                "yell slogans along with the cheer squad",
+                "yell slogans along with the cheering squad",
+                "yell slogans along with the cheerleading squad",
+                "yell slogans along with the cheering team",
+                "yell slogans along with the cheerleaders",
+                "yell slogans along with the cheer team",
+                "yell slogans together with the cheer squad",
+                "yell slogans together with the cheering squad",
+                "yell slogans together with the cheerleading squad",
+                "yell slogans together with the cheering team",
+                "yell slogans together with the cheerleaders",
+                "yell slogans together with the cheer team",
+                "follow the cheer squad in shouting slogans",
+                "follow the cheering squad and shout slogans",
+                "cheer along with the cheer squad",
+                "join the cheering squad in shouting slogans"
+              ],
+              "targets": [
+                "shout",
+                "slogan",
+                "squad"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "shout slogan with the cheer squad",
+                  "right": "shout slogans with the cheer squad",
+                  "explanation_zh": "口號不只一句，slogan 是可數名詞，用複數 slogans。"
+                },
+                {
+                  "wrong": "follow the cheer squad to shout slogans",
+                  "right": "shout slogans with the cheer squad",
+                  "explanation_zh": "「跟著…一起喊」是 with／along with；follow … to shout 會變成「跟著應援團走，目的是去喊口號」。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "word_form",
+              "zh": "以前我",
+              "literal_error": "I use to just sit in the stands because I didn't know how to shout slogans with the cheer squad.",
+              "part": 1,
+              "explanation_zh": "表示「以前常常…（現在不會了）」的是 used to + 原形動詞；use 少了 -d 就不是這個句型。"
+            },
+            {
+              "type": "subjectless",
+              "zh": "因為不知道",
+              "literal_error": "I used to just sit in the stands because didn't know how to shout slogans with the cheer squad.",
+              "part": 3,
+              "explanation_zh": "中文「因為不知道…」省略了主詞；英文 because 子句一定要有主詞 I。"
+            }
+          ],
+          "bonus": [],
+          "restructuring_zh": "「因為不知道該如何…」中文省略主詞，英文 because 子句要補上主詞 I；「該如何喊口號」用疑問詞＋不定詞 how to shout slogans。",
+          "notes_zh": "「以前我只會…」寫 I used to (just／only) + 原形動詞；「坐在看台上」sit in the stands、in the bleachers 或 in my seat 都可以；「因為」because、since、as 都可以，「不知道該如何」didn't know how to 或 had no idea how to 都給分；「跟著應援團喊口號」shout／chant slogans (along／together) with the cheer(ing) squad，也可寫 follow the cheer squad and shout slogans。"
+        },
+        "2": {
+          "references": [
+            "Since I learned the cheering songs, I have become one of the loudest fans in the stadium.",
+            "Ever since I learned the team's cheering songs, I have become one of the loudest fans in the whole stadium.",
+            "Since learning the cheer songs, I have become one of the loudest fans in the entire stadium."
+          ],
+          "target_words": [
+            {
+              "word": "learn",
+              "zh": "學會"
+            },
+            {
+              "word": "song",
+              "zh": "歌"
+            },
+            {
+              "word": "become",
+              "zh": "成為"
+            },
+            {
+              "word": "loud",
+              "zh": "大聲的",
+              "alternatives": [
+                "noisy"
+              ]
+            },
+            {
+              "word": "fan",
+              "zh": "球迷",
+              "alternatives": [
+                "supporter"
+              ]
+            },
+            {
+              "word": "stadium",
+              "zh": "球場",
+              "alternatives": [
+                "ballpark",
+                "crowd"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PERF",
+              "grammar_id": "gp-present-perfect",
+              "label_zh": "現在完成式（自從…以來＋已經）",
+              "frame": "Since + S + V-ed …, S + have/has + p.p. …",
+              "zh_trigger": "已經成為"
+            },
+            {
+              "code": "COMP",
+              "grammar_id": "gp-comparative-superlative",
+              "label_zh": "最高級：one of the + 最高級 + 複數名詞",
+              "frame": "one of the + adj-est + 複數名詞 + in + 範圍",
+              "zh_trigger": "最大聲的球迷之一"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "自從學會了應援歌之後",
+              "accepted": [
+                "Since I learned the cheering songs",
+                "Ever since I learned the team's cheering songs",
+                "Since learning the cheer songs",
+                "Since I learned the cheer songs",
+                "Since I learned the team songs",
+                "Ever since I learned the cheering songs",
+                "Since learning the cheering songs",
+                "Since I learned the fight songs",
+                "Since I learned the team's songs",
+                "Since I learned the cheering songs for the team",
+                "Since I have learned the cheering songs",
+                "Ever since I learned the cheer songs",
+                "Since I learned the team's cheer songs",
+                "Since I learned the team's cheering songs",
+                "Since I learned the cheering chants",
+                "Ever since I learned the team songs",
+                "Ever since I learned the team's songs",
+                "Ever since I learned the fight songs",
+                "Ever since I learned the cheering chants",
+                "Ever since I learned the team's cheer songs",
+                "Since learning the team songs",
+                "Since learning the team's cheering songs",
+                "Since learning the team's songs",
+                "Since learning the fight songs",
+                "Since learning the cheering chants",
+                "Since learning the team's cheer songs",
+                "Ever since learning the cheering songs",
+                "Ever since learning the cheer songs",
+                "Ever since learning the team songs",
+                "Ever since learning the team's cheering songs",
+                "Ever since learning the team's songs",
+                "Ever since learning the fight songs",
+                "Ever since learning the cheering chants",
+                "Ever since learning the team's cheer songs",
+                "Since I have learned the cheer songs",
+                "Since I have learned the team songs",
+                "Since I have learned the team's cheering songs",
+                "Since I have learned the team's songs",
+                "Since I have learned the fight songs",
+                "Since I have learned the cheering chants",
+                "Since I have learned the team's cheer songs",
+                "Since I've learned the cheering songs",
+                "Since I've learned the cheer songs",
+                "Since I've learned the team songs",
+                "Since I've learned the team's cheering songs",
+                "Since I've learned the team's songs",
+                "Since I've learned the fight songs",
+                "Since I've learned the cheering chants",
+                "Since I've learned the team's cheer songs"
+              ],
+              "targets": [
+                "learn",
+                "song"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Since I learn the cheering songs",
+                  "right": "Since I learned the cheering songs",
+                  "explanation_zh": "since 子句說的是過去的起點，用過去式 learned。"
+                }
+              ]
+            },
+            {
+              "zh": "我已經成為",
+              "accepted": [
+                "I have become",
+                "I have already become",
+                "I've become",
+                "I've already become"
+              ],
+              "targets": [
+                "PERF",
+                "become"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "I already became",
+                  "right": "I have become",
+                  "explanation_zh": "since 帶出的是從過去到現在的時間，主要子句用現在完成式 have become。"
+                },
+                {
+                  "wrong": "I have became",
+                  "right": "I have become",
+                  "explanation_zh": "become 的過去分詞是 become，不是 became。"
+                }
+              ]
+            },
+            {
+              "zh": "全場",
+              "accepted": [
+                "in the stadium",
+                "in the whole stadium",
+                "in the entire stadium",
+                "at the ballpark",
+                "in the ballpark",
+                "at the stadium",
+                "in the whole ballpark",
+                "in the crowd",
+                "in the whole crowd"
+              ],
+              "targets": [
+                "stadium"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "in all the stadium",
+                  "right": "in the whole stadium",
+                  "explanation_zh": "「全場」是 the whole／entire stadium，whole 放在 the 後面；all the stadium 不是自然的說法。"
+                }
+              ]
+            },
+            {
+              "zh": "最大聲的球迷之一",
+              "accepted": [
+                "one of the loudest fans",
+                "one of the loudest supporters",
+                "one of the noisiest fans",
+                "one of the loudest baseball fans",
+                "one of the loudest cheering fans"
+              ],
+              "targets": [
+                "COMP",
+                "loud",
+                "fan"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "one of the loudest fan",
+                  "right": "one of the loudest fans",
+                  "explanation_zh": "one of the + 最高級後面接複數名詞。"
+                },
+                {
+                  "wrong": "one of the most loud fans",
+                  "right": "one of the loudest fans",
+                  "explanation_zh": "loud 是單音節形容詞，最高級寫 loudest。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "tense_trigger",
+              "zh": "已經成為",
+              "literal_error": "Since I learned the cheering songs, I became one of the loudest fans in the stadium.",
+              "part": 2,
+              "explanation_zh": "「自從…已經成為」是從過去延續到現在的結果，主要子句要用現在完成式 have become。"
+            },
+            {
+              "type": "plural_countable",
+              "zh": "最大聲的球迷之一",
+              "literal_error": "Since I learned the cheering songs, I have become one of the loudest fan in the stadium.",
+              "part": 4,
+              "explanation_zh": "「…之一」要用 one of the + 最高級 + 複數名詞，fan 要加 s。"
+            }
+          ],
+          "bonus": [],
+          "notes_zh": "「自從…之後」寫 Since／Ever since + 過去式子句，或 Since learning …；「應援歌」cheering songs、cheer songs、the team's songs、fight songs 都可以；「已經成為」一定要用現在完成式 have become；「全場」in the (whole／entire) stadium、at the ballpark 都給分；「最大聲的球迷之一」one of the loudest fans（supporters 也可以），名詞要用複數。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-advanced-06",
+    "lot": "translation-advanced-06",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "3f8dc9d60c8a2f9f0e258e68e094820e19a8a5f1c5e0001a05ad2370e79443f3",
+    "spec_id": "translation-advanced@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-10T02:32:16Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "warn",
+      "created_at": "2026-10-10T02:17:22Z",
+      "details": {
+        "solver": "A",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "I used to just sit in the stands because I didn't know how to chant slogans along with the cheering squad.",
+            "confidence": "high",
+            "explanation_zh": "「以前我只會坐在…」是過去的習慣，用 used to + 原形動詞；「看台」是 the stands；「因為不知道該如何…」用 because 子句 + how to V；「跟著應援團喊口號」用 chant slogans along with the cheering squad。"
+          },
+          "2": {
+            "translation": "Since I learned the cheering songs, I have become one of the loudest fans in the whole stadium.",
+            "confidence": "high",
+            "explanation_zh": "「自從…之後」用 since 子句（子句內過去式），主要子句用現在完成式 have become；「全場最大聲的球迷之一」用 one of the loudest + 複數 fans，「全場」寫 in the whole stadium。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "BASIC",
+              "NCL"
+            ],
+            "used_target_words": [
+              "sit",
+              "stand",
+              "know",
+              "shout",
+              "slogan",
+              "squad"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "第 1、2 部分「以前我」「只會坐在看台上」只收 used to＋原形（I used to just sit…）。「以前我只會坐在看台上」用簡單過去式 In the past, I only sat in the stands… 或 I would just sit in the stands… 也完全正確、達意，現在的 accepted 會讓這種正確譯文在第 1（甚至第 2）部分被扣分。建議補 In the past, I／Before, I＋just／only sat in the stands 等寫法；若刻意只收 used to，也該在說明裡交代。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "PERF",
+              "COMP"
+            ],
+            "used_target_words": [
+              "learn",
+              "song",
+              "become",
+              "loud",
+              "fan",
+              "stadium"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "sit",
+              "stand",
+              "know",
+              "shout",
+              "slogan",
+              "squad"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "BASIC": null,
+              "NCL": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "learn",
+              "song",
+              "become",
+              "loud",
+              "fan",
+              "stadium"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PERF": true,
+              "COMP": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 1 題驗證者對4 部分切分有意見（warn）：第 1、2 部分「以前我」「只會坐在看台上」只收 used to＋原形（I used to just sit…）。「以前我只會坐在看台上」用簡單過去式 In the past, I only sat in the stands… 或 I w"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "fail",
+      "created_at": "2026-10-10T02:22:17Z",
+      "details": {
+        "solver": "B",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "In the past, I would only sit in the stands because I did not know how to chant slogans along with the cheer squad.",
+            "confidence": "medium",
+            "explanation_zh": "「以前我只會…」是過去習慣，用 would only sit 或 used to；「看台」用 the stands；「不知道該如何…」用 did not know how to + 動詞；「應援團」譯為 cheer squad；「喊口號」用 chant slogans。"
+          },
+          "2": {
+            "translation": "Ever since I learned the cheer songs, I have become one of the loudest fans in the stadium.",
+            "confidence": "high",
+            "explanation_zh": "「自從…之後」用 Ever since + 過去式，主要子句用現在完成式 have become；「最大聲的…之一」用 one of the loudest + 複數名詞；「全場」用 in the stadium。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "NCL"
+            ],
+            "used_target_words": [
+              "sit",
+              "stand",
+              "know",
+              "shout",
+              "slogan",
+              "squad"
+            ],
+            "within_accepted": false,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "盲譯者把「以前我只會坐在看台上」譯成 In the past, I would only sit in the stands，用 would 表過去習慣，沒有用 used to；中文「以前」並沒有強制 used to（would、一般過去式 only sat 都自然正確），所以標的句型 BASIC（used to + VR）沒有被中文自然引出。",
+              "第 1 部分「以前我」的 accepted 只收 I used to／In the past, I used to／I always used to／Before, I used to 四種，沒有 would 或 In the past, I only sat 這類同樣正確的寫法，對寫 would 的考生不公平；建議放寬 accepted，或把中文改成更能引出 used to 的語境（例如強調「以前常常…，現在不再」）。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "PERF",
+              "COMP"
+            ],
+            "used_target_words": [
+              "learn",
+              "song",
+              "become",
+              "loud",
+              "fan",
+              "stadium"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "sit",
+              "stand",
+              "know",
+              "shout",
+              "slogan",
+              "squad"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NCL": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "learn",
+              "song",
+              "become",
+              "loud",
+              "fan",
+              "stadium"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PERF": true,
+              "COMP": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 1 題盲譯沒有用到標的句型 ['BASIC']：中文題目沒有自然引出這個句型（SPEC §5.7）",
+          "第 1 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義",
+          "第 1 題驗證者對4 部分切分有意見（warn）：盲譯者把「以前我只會坐在看台上」譯成 In the past, I would only sit in the stands，用 would 表過去習慣，沒有用 used to；中文「以前」並沒有強制 used to（would、一般過去式"
+        ]
+      }
+    }
+  ],
+  "status": "rejected",
+  "status_reason": "blind_solver:B 未通過：第 1 題盲譯沒有用到標的句型 ['BASIC']：中文題目沒有自然引出這個句型（SPEC §5.7）；第 1 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義；第 1 題驗證者對4 部分切分有意見（warn）：盲譯者把「以前我只會坐在看台上」譯成 In the past, I would only sit in the stands，用 would 表過去習慣，沒有用 used to；中文「以前」並沒有強制 used to（would、一般過去式；判定者人工審查（第 1 輪）：同意退回。第 1 題標的句型 BASIC（used to + 原形動詞）沒有被中文唯一引出：「以前我只會坐在看台上」用 would（驗證者 B：In the past, I would only sit in the stands）或簡單過去式（In the past, I only sat in the stands）都自然正確，兩位驗證者都以 parts_check warn 指出；但第 1 部分 accepted 只收 I used to 等 4 種寫法、第 2 部分只收原形 sit，這些正確譯文會在第 1、2 部分被扣分，標的句型和評分規準都太窄。重生時改寫中文讓 used to 成為唯一自然的寫法（例如明確交代「以前常…，現在已經不會了」的對比），或改換標的句型並放寬 accepted。第 2 題沒有問題。"
+}

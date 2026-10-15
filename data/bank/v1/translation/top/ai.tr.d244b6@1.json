@@ -1,0 +1,1395 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.d244b6",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "top",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "相較於一般藥物，罕病藥物貴得多，因此那些終身需要用藥的人往往負擔不起。",
+        "options": null,
+        "answer": "Compared with conventional drugs, medications for rare diseases are far more costly, so those who need them for life often cannot afford them.",
+        "accepted_answers": [
+          "Compared to common medicines, drugs for rare diseases are far more expensive, so those who need them for the rest of their lives often can't afford them.",
+          "Compared with regular medicines, rare disease drugs are much more costly, so those who must take them for life are often unable to afford them."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "相較於…（Compared with …）",
+            "凡是…的人（those who …）"
+          ],
+          "topic": "罕見疾病"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "然而，無論價格訂得多高，專為少數病人開發的新藥往往都無法回收研發成本。",
+        "options": null,
+        "answer": "However, no matter how high their prices are, new drugs developed specifically for a few patients often fail to recover their development costs.",
+        "accepted_answers": [
+          "However, no matter how high the prices are, new medicines developed for a small number of patients often fail to cover the cost of research and development.",
+          "However, no matter how high the prices may be, new drugs developed specifically for a few patients often cannot make back their development costs."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "讓步：無論…（no matter how high …）",
+            "分詞片語後位修飾名詞（developed for …）"
+          ],
+          "topic": "罕見疾病"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "罕見疾病"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「相較於一般藥物」用過去分詞片語 Compared with ordinary drugs，主要子句「罕病藥物貴得多」用比較級 medicines for rare diseases are much more expensive（加強用 much／far，不用 very）。「那些終身需要用藥的人」是 those who need them for life（those who + 複數動詞）。「負擔不起」是 cannot afford，不是 burden。",
+          "evidence": [
+            "相較於一般藥物",
+            "那些終身需要用藥的人"
+          ],
+          "strategy_zh": "「相較於 A，B 更…」用 Compared with A, B is more …；「那些…的人」用 those who + V。",
+          "hints": [
+            "切成四段：相較於一般藥物／罕病藥物貴得多／因此那些終身需要用藥的人／往往負擔不起",
+            "標的詞彙：compare（相較）、ordinary（一般的）、drug（藥物）、rare（罕見的）、disease（疾病）、expensive（昂貴的）、need（需要）、life（一生）、afford（負擔得起）",
+            "句型框架：Compared with + N, S + are much more + adj., so those who + V … often cannot afford them."
+          ]
+        },
+        "2": {
+          "explanation_zh": "「無論價格訂得多高」是讓步子句 no matter how high their prices are set，how high 要連在一起，後面用直述句語序。「專為少數病人開發的新藥」修飾語在前，英文用過去分詞片語後位修飾 new drugs developed for only a few patients（新藥是被開發的）。「無法回收研發成本」寫 cannot recover their development costs，「研發成本」用名詞 development，不用動詞 develop。",
+          "evidence": [
+            "無論價格訂得多高",
+            "專為少數病人開發的新藥"
+          ],
+          "strategy_zh": "「無論多＋形容詞」用 no matter how + adj. + S + V；「為…開發的＋名詞」用「名詞 + developed for …」。",
+          "hints": [
+            "切成四段：然而，無論價格訂得多高／專為少數病人開發的新藥／往往都無法回收／研發成本",
+            "標的詞彙：high（高的）、price（價格）、develop（開發）、patient（病人）、new（新的）、recover（回收）、development（研發）、cost（成本）",
+            "句型框架：However, no matter how high + S + are set, N + p.p. + for … + often cannot recover + N."
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "Compared with conventional drugs, medications for rare diseases are far more costly, so those who need them for life often cannot afford them.",
+            "Compared to common medicines, drugs for rare diseases are far more expensive, so those who need them for the rest of their lives often can't afford them.",
+            "Compared with regular medicines, rare disease drugs are much more costly, so those who must take them for life are often unable to afford them."
+          ],
+          "target_words": [
+            {
+              "word": "compare",
+              "zh": "相較",
+              "alternatives": [
+                "comparison",
+                "unlike"
+              ]
+            },
+            {
+              "word": "ordinary",
+              "zh": "一般的",
+              "alternatives": [
+                "conventional",
+                "common",
+                "regular",
+                "normal",
+                "general",
+                "other",
+                "everyday"
+              ]
+            },
+            {
+              "word": "drug",
+              "zh": "藥物",
+              "alternatives": [
+                "medicine",
+                "medication"
+              ]
+            },
+            {
+              "word": "rare",
+              "zh": "罕見的"
+            },
+            {
+              "word": "disease",
+              "zh": "疾病",
+              "alternatives": [
+                "illness"
+              ]
+            },
+            {
+              "word": "expensive",
+              "zh": "昂貴的",
+              "alternatives": [
+                "costly",
+                "cost",
+                "pricey"
+              ]
+            },
+            {
+              "word": "need",
+              "zh": "需要",
+              "alternatives": [
+                "require",
+                "take",
+                "depend",
+                "rely"
+              ]
+            },
+            {
+              "word": "life",
+              "zh": "一生",
+              "alternatives": [
+                "lifelong",
+                "lives"
+              ]
+            },
+            {
+              "word": "afford",
+              "zh": "負擔得起"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "COMP",
+              "grammar_id": "gp-compared-with",
+              "label_zh": "相較於…（Compared with + N，主要子句用比較級 much more expensive）",
+              "frame": "Compared with + N, S + be + much more + adj. …",
+              "zh_trigger": "相較於一般藥物"
+            },
+            {
+              "code": "REL",
+              "grammar_id": "gp-for-those-who",
+              "label_zh": "凡是…的人（those who + V …）",
+              "frame": "those who + V … + V …",
+              "zh_trigger": "那些終身需要用藥的人"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "相較於一般藥物",
+              "accepted": [
+                "Compared with conventional drugs",
+                "Compared with ordinary drugs",
+                "Compared with conventional medicines",
+                "Compared with ordinary medicines",
+                "Compared with common drugs",
+                "Compared with common medicines",
+                "Compared with regular drugs",
+                "Compared with regular medicines",
+                "Compared with other drugs",
+                "Compared with other medicines",
+                "Compared with general drugs",
+                "Compared to ordinary drugs",
+                "Compared to conventional drugs",
+                "Compared to conventional medicines",
+                "Compared to ordinary medicines",
+                "Compared to common drugs",
+                "Compared to common medicines",
+                "Compared to regular drugs",
+                "Compared to regular medicines",
+                "Compared to other drugs",
+                "Compared to other medicines",
+                "Compared to general drugs",
+                "In comparison with ordinary drugs",
+                "In comparison with conventional drugs",
+                "In comparison with conventional medicines",
+                "In comparison with ordinary medicines",
+                "In comparison with common drugs",
+                "In comparison with common medicines",
+                "In comparison with regular drugs",
+                "In comparison with regular medicines",
+                "In comparison with other drugs",
+                "In comparison with other medicines",
+                "In comparison with general drugs",
+                "Unlike ordinary drugs",
+                "Unlike common medicines",
+                "than ordinary drugs",
+                "than ordinary medicines",
+                "than common drugs",
+                "than common medicines",
+                "than regular medicines",
+                "than other drugs",
+                "Compared with regular medicine",
+                "Compared with ordinary medicine",
+                "Compared with common medicine",
+                "Compared with general medicines",
+                "Compared with general medicine",
+                "Compared with normal drugs",
+                "Compared with normal medicines",
+                "Compared with most drugs",
+                "Compared with most medicines",
+                "Compared with other medications",
+                "Compared with ordinary medications",
+                "Compared with common medications",
+                "Compared with conventional medicine",
+                "Compared with conventional medications",
+                "Compared to regular medicine",
+                "Compared to ordinary medicine",
+                "Compared to common medicine",
+                "Compared to general medicines",
+                "Compared to general medicine",
+                "Compared to normal drugs",
+                "Compared to normal medicines",
+                "Compared to most drugs",
+                "Compared to most medicines",
+                "Compared to other medications",
+                "Compared to ordinary medications",
+                "Compared to common medications",
+                "Compared to conventional medicine",
+                "Compared to conventional medications",
+                "In comparison with regular medicine",
+                "In comparison with ordinary medicine",
+                "In comparison with common medicine",
+                "In comparison with general medicines",
+                "In comparison with general medicine",
+                "In comparison with normal drugs",
+                "In comparison with normal medicines",
+                "In comparison with most drugs",
+                "In comparison with most medicines",
+                "In comparison with other medications",
+                "In comparison with ordinary medications",
+                "In comparison with common medications",
+                "In comparison with conventional medicine",
+                "In comparison with conventional medications",
+                "than ordinary medicine",
+                "than regular medicine",
+                "than conventional drugs",
+                "than most drugs",
+                "than other medicines"
+              ],
+              "targets": [
+                "COMP",
+                "compare",
+                "ordinary"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Compare with ordinary drugs",
+                  "right": "Compared with ordinary drugs",
+                  "explanation_zh": "「相較於…」用過去分詞片語 Compared with／to …；Compare 開頭會變成祈使句。"
+                },
+                {
+                  "wrong": "Comparing with ordinary drugs",
+                  "right": "Compared with ordinary drugs",
+                  "explanation_zh": "罕病藥物是「被拿來比較」的一方，用 Compared with。"
+                }
+              ]
+            },
+            {
+              "zh": "罕病藥物貴得多",
+              "accepted": [
+                "medications for rare diseases are far more costly",
+                "medicines for rare diseases are much more expensive",
+                "medicines for rare diseases are far more expensive",
+                "medicines for rare diseases are a lot more expensive",
+                "medicines for rare diseases are much more costly",
+                "medicines for rare diseases are far more costly",
+                "medicines for rare diseases cost much more",
+                "medicines for rare diseases cost far more",
+                "drugs for rare diseases are much more expensive",
+                "drugs for rare diseases are far more expensive",
+                "drugs for rare diseases are a lot more expensive",
+                "drugs for rare diseases are much more costly",
+                "drugs for rare diseases are far more costly",
+                "drugs for rare diseases cost much more",
+                "drugs for rare diseases cost far more",
+                "rare disease drugs are much more expensive",
+                "rare disease drugs are far more expensive",
+                "rare disease drugs are a lot more expensive",
+                "rare disease drugs are much more costly",
+                "rare disease drugs are far more costly",
+                "rare disease drugs cost much more",
+                "rare disease drugs cost far more",
+                "rare disease medicines are much more expensive",
+                "rare disease medicines are far more expensive",
+                "rare disease medicines are a lot more expensive",
+                "rare disease medicines are much more costly",
+                "rare disease medicines are far more costly",
+                "rare disease medicines cost much more",
+                "rare disease medicines cost far more",
+                "medications for rare diseases are much more expensive",
+                "medications for rare diseases are far more expensive",
+                "medications for rare diseases are a lot more expensive",
+                "medications for rare diseases are much more costly",
+                "medications for rare diseases cost much more",
+                "medications for rare diseases cost far more",
+                "medicine for rare diseases is much more expensive",
+                "medicine for rare diseases is far more expensive",
+                "medicine for rare diseases is a lot more expensive",
+                "medicine for rare diseases is much more costly",
+                "medicine for rare diseases costs much more",
+                "medicine for rare diseases costs far more",
+                "medication for rare diseases is much more expensive",
+                "medication for rare diseases is far more expensive",
+                "medication for rare diseases is a lot more expensive",
+                "medication for rare diseases is much more costly",
+                "medication for rare diseases costs much more",
+                "medication for rare diseases costs far more",
+                "rare-disease medicine is much more expensive",
+                "rare-disease medicine is far more expensive",
+                "rare-disease medicine is a lot more expensive",
+                "rare-disease medicine is much more costly",
+                "rare-disease medicine costs much more",
+                "rare-disease medicine costs far more",
+                "the medicine for rare diseases is much more expensive",
+                "the medicine for rare diseases is far more expensive",
+                "the medicine for rare diseases is a lot more expensive",
+                "the medicine for rare diseases is much more costly",
+                "the medicine for rare diseases costs much more",
+                "the medicine for rare diseases costs far more",
+                "medicines for rare diseases are significantly more expensive",
+                "medicines for rare diseases are many times more expensive",
+                "drugs for rare diseases are significantly more expensive",
+                "drugs for rare diseases are many times more expensive",
+                "rare disease drugs are significantly more expensive",
+                "rare disease drugs are many times more expensive",
+                "rare disease medicines are significantly more expensive",
+                "rare disease medicines are many times more expensive",
+                "medications for rare diseases are significantly more expensive",
+                "medications for rare diseases are many times more expensive",
+                "orphan drugs are much more expensive",
+                "orphan drugs are far more expensive",
+                "orphan drugs are a lot more expensive",
+                "orphan drugs are much more costly",
+                "orphan drugs are far more costly",
+                "orphan drugs cost much more",
+                "orphan drugs cost far more",
+                "orphan drugs are significantly more expensive",
+                "orphan drugs are many times more expensive",
+                "drugs for treating rare diseases are much more expensive",
+                "drugs for treating rare diseases are far more expensive",
+                "drugs for treating rare diseases are a lot more expensive",
+                "drugs for treating rare diseases are much more costly",
+                "drugs for treating rare diseases are far more costly",
+                "drugs for treating rare diseases cost much more",
+                "drugs for treating rare diseases cost far more",
+                "drugs for treating rare diseases are significantly more expensive",
+                "drugs for treating rare diseases are many times more expensive",
+                "medicines that treat rare diseases are much more expensive",
+                "medicines that treat rare diseases are far more expensive",
+                "medicines that treat rare diseases are a lot more expensive",
+                "medicines that treat rare diseases are much more costly",
+                "medicines that treat rare diseases are far more costly",
+                "medicines that treat rare diseases cost much more",
+                "medicines that treat rare diseases cost far more",
+                "medicines that treat rare diseases are significantly more expensive",
+                "medicines that treat rare diseases are many times more expensive"
+              ],
+              "targets": [
+                "drug",
+                "rare",
+                "disease",
+                "expensive"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "medicines for rare diseases are very more expensive",
+                  "right": "medicines for rare diseases are much more expensive",
+                  "explanation_zh": "加強比較級用 much／far／a lot，不能用 very。"
+                },
+                {
+                  "wrong": "medicines for rare diseases are much expensive",
+                  "right": "medicines for rare diseases are much more expensive",
+                  "explanation_zh": "「貴得多」是比較級 much more expensive；少了 more 就不是比較，much 也不能直接修飾原級 expensive。"
+                }
+              ]
+            },
+            {
+              "zh": "因此那些終身需要用藥的人",
+              "accepted": [
+                "so those who need them for life",
+                "so those who need them for the rest of their lives",
+                "so those who need to take them for life",
+                "so those who must take them for life",
+                "so those who have to take them for life",
+                "so those who need medication for life",
+                "so those who need lifelong medication",
+                "so people who need them for life",
+                "so those who need them all their lives",
+                "so those who must take them for the rest of their lives",
+                "as a result those who need them for life",
+                "as a result those who need them for the rest of their lives",
+                "as a result those who need to take them for life",
+                "as a result those who must take them for life",
+                "as a result those who have to take them for life",
+                "as a result those who need medication for life",
+                "as a result those who need lifelong medication",
+                "as a result people who need them for life",
+                "as a result those who need them all their lives",
+                "as a result those who must take them for the rest of their lives",
+                "therefore those who need them for life",
+                "therefore those who need them for the rest of their lives",
+                "therefore those who need to take them for life",
+                "therefore those who must take them for life",
+                "therefore those who have to take them for life",
+                "therefore those who need medication for life",
+                "therefore those who need lifelong medication",
+                "therefore people who need them for life",
+                "therefore those who need them all their lives",
+                "therefore those who must take them for the rest of their lives",
+                "thus those who need them for life",
+                "so patients who need them for life",
+                "so those who need to take them for the rest of their lives",
+                "so those who have to take them for the rest of their lives",
+                "so those who need medication for the rest of their lives",
+                "so those who need to take medicine for life",
+                "so those who have to take medicine for life",
+                "so those who need it for life",
+                "so people who need them for the rest of their lives",
+                "so people who need to take them for life",
+                "so people who need to take them for the rest of their lives",
+                "so people who must take them for life",
+                "so people who have to take them for life",
+                "so people who have to take them for the rest of their lives",
+                "so people who need medication for life",
+                "so people who need medication for the rest of their lives",
+                "so people who need lifelong medication",
+                "so people who need to take medicine for life",
+                "so people who have to take medicine for life",
+                "so people who need it for life",
+                "so people who need them all their lives",
+                "so people who must take them for the rest of their lives",
+                "so patients who need them for the rest of their lives",
+                "so patients who need to take them for life",
+                "so patients who need to take them for the rest of their lives",
+                "so patients who must take them for life",
+                "so patients who have to take them for life",
+                "so patients who have to take them for the rest of their lives",
+                "so patients who need medication for life",
+                "so patients who need medication for the rest of their lives",
+                "so patients who need lifelong medication",
+                "so patients who need to take medicine for life",
+                "so patients who have to take medicine for life",
+                "so patients who need it for life",
+                "so patients who need them all their lives",
+                "so patients who must take them for the rest of their lives",
+                "as a result, those who need to take them for the rest of their lives",
+                "as a result, those who have to take them for the rest of their lives",
+                "as a result, those who need medication for the rest of their lives",
+                "as a result, those who need to take medicine for life",
+                "as a result, those who have to take medicine for life",
+                "as a result, those who need it for life",
+                "as a result, people who need them for the rest of their lives",
+                "as a result, people who need to take them for life",
+                "as a result, people who need to take them for the rest of their lives",
+                "as a result, people who must take them for life",
+                "as a result, people who have to take them for life",
+                "as a result, people who have to take them for the rest of their lives",
+                "as a result, people who need medication for life",
+                "as a result, people who need medication for the rest of their lives",
+                "as a result, people who need lifelong medication",
+                "as a result, people who need to take medicine for life",
+                "as a result, people who have to take medicine for life",
+                "as a result, people who need it for life",
+                "as a result, people who need them all their lives",
+                "as a result, people who must take them for the rest of their lives",
+                "as a result, patients who need them for life",
+                "as a result, patients who need them for the rest of their lives",
+                "as a result, patients who need to take them for life",
+                "as a result, patients who need to take them for the rest of their lives",
+                "as a result, patients who must take them for life",
+                "as a result, patients who have to take them for life",
+                "as a result, patients who have to take them for the rest of their lives",
+                "as a result, patients who need medication for life",
+                "as a result, patients who need medication for the rest of their lives",
+                "as a result, patients who need lifelong medication",
+                "as a result, patients who need to take medicine for life",
+                "as a result, patients who have to take medicine for life",
+                "as a result, patients who need it for life",
+                "as a result, patients who need them all their lives",
+                "as a result, patients who must take them for the rest of their lives",
+                "and so those who need them for life",
+                "and so those who need them for the rest of their lives",
+                "and so those who need to take them for life",
+                "and so those who need to take them for the rest of their lives",
+                "and so those who must take them for life",
+                "and so those who have to take them for life",
+                "and so those who have to take them for the rest of their lives",
+                "and so those who need medication for life",
+                "and so those who need medication for the rest of their lives",
+                "and so those who need lifelong medication",
+                "and so those who need to take medicine for life",
+                "and so those who have to take medicine for life",
+                "and so those who need it for life",
+                "and so those who need them all their lives",
+                "and so those who must take them for the rest of their lives",
+                "and so people who need them for life",
+                "and so people who need them for the rest of their lives",
+                "and so people who need to take them for life",
+                "and so people who need to take them for the rest of their lives",
+                "and so people who must take them for life",
+                "and so people who have to take them for life",
+                "and so people who have to take them for the rest of their lives",
+                "and so people who need medication for life",
+                "and so people who need medication for the rest of their lives",
+                "and so people who need lifelong medication",
+                "and so people who need to take medicine for life",
+                "and so people who have to take medicine for life",
+                "and so people who need it for life",
+                "and so people who need them all their lives",
+                "and so people who must take them for the rest of their lives",
+                "and so patients who need them for life",
+                "and so patients who need them for the rest of their lives",
+                "and so patients who need to take them for life",
+                "and so patients who need to take them for the rest of their lives",
+                "and so patients who must take them for life",
+                "and so patients who have to take them for life",
+                "and so patients who have to take them for the rest of their lives",
+                "and so patients who need medication for life",
+                "and so patients who need medication for the rest of their lives",
+                "and so patients who need lifelong medication",
+                "and so patients who need to take medicine for life",
+                "and so patients who have to take medicine for life",
+                "and so patients who need it for life",
+                "and so patients who need them all their lives",
+                "and so patients who must take them for the rest of their lives",
+                "therefore, those who need to take them for the rest of their lives",
+                "thus, those who need them for the rest of their lives",
+                "thus, those who need to take them for life",
+                "thus, those who need to take them for the rest of their lives",
+                "thus, those who must take them for life",
+                "thus, those who have to take them for life"
+              ],
+              "targets": [
+                "REL",
+                "need",
+                "life"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "so those need them for life",
+                  "right": "so those who need them for life",
+                  "explanation_zh": "those 後面要接關代 who 引導的子句，不能直接接動詞。"
+                },
+                {
+                  "wrong": "and those who need them for life",
+                  "right": "so those who need them for life",
+                  "explanation_zh": "「因此」表示因果，要用 so／as a result／therefore；只用 and 連接沒有譯出「因此」。"
+                },
+                {
+                  "wrong": "so those who needs them for life",
+                  "right": "so those who need them for life",
+                  "explanation_zh": "those 是複數，關係子句動詞用 need。"
+                }
+              ]
+            },
+            {
+              "zh": "往往負擔不起",
+              "accepted": [
+                "often cannot afford them",
+                "often can't afford them",
+                "are often unable to afford them",
+                "often find them unaffordable",
+                "usually cannot afford them",
+                "frequently cannot afford them",
+                "often cannot afford to buy them",
+                "often cannot afford the medicines",
+                "often can't afford it",
+                "often cannot afford it",
+                "are often unable to afford it",
+                "often cannot afford to pay for them",
+                "often cannot afford the cost",
+                "often cannot pay for them",
+                "often cannot afford such medicines"
+              ],
+              "targets": [
+                "afford"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "often cannot burden them",
+                  "right": "often cannot afford them",
+                  "explanation_zh": "「負擔不起（費用）」是 cannot afford；burden 是「使負重、加重負擔」，意思不同。"
+                },
+                {
+                  "wrong": "often are not affordable",
+                  "right": "often cannot afford them",
+                  "explanation_zh": "主詞是「人」，人負擔不起用 cannot afford；affordable 是形容東西「買得起的」。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "word_form",
+              "zh": "相較於",
+              "literal_error": "Compare with ordinary drugs, medicines for rare diseases are much more expensive, …",
+              "part": 1,
+              "explanation_zh": "「相較於…」用過去分詞片語 Compared with …；用原形 Compare 開頭會變成祈使句。"
+            },
+            {
+              "type": "collocation",
+              "zh": "負擔不起",
+              "literal_error": "…so those who need them for life often cannot burden them.",
+              "part": 4,
+              "explanation_zh": "「負擔不起」是 cannot afford；逐字翻成 burden 意思變成「加重負擔」。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "Far pricier than ordinary drugs, medicines for rare diseases often lie beyond the reach of those who need them for life.",
+              "explanation_zh": "句首形容詞片語 Far pricier than …（比…貴得多）補充說明主詞，beyond the reach of …（…負擔不起、拿不到）是進階搭配；這是加分寫法，不是唯一正解。"
+            }
+          ],
+          "restructuring_zh": "「相較於一般藥物」用 Compared with ordinary drugs，主要子句再用比較級 much more expensive；「那些終身需要用藥的人」改成 those who need them for life，關係子句放在 those 後面。",
+          "notes_zh": "評分說明：「相較於一般藥物」Compared with／to (In comparison with) ordinary／common／regular／other drugs (medicines)；把比較對象改放句中寫成 … much more expensive than ordinary drugs、或寫 Unlike ordinary drugs 也可以（比較由 much more expensive 表達，仍算達成本句 COMP 標的）；「罕病藥物」medicines／drugs／medications for rare diseases、rare disease drugs；「貴得多」are much／far／a lot more expensive (costly)、cost much more；「因此」so／as a result／therefore（只用 and 連接沒有譯出因果，這一部分扣分）；「那些終身需要用藥的人」those who need them for life (for the rest of their lives)、those who must／have to take them for life、those who need lifelong medication；「往往負擔不起」often cannot (can't) afford them、are often unable to afford them。另外也給分：藥物寫不可數的單數 medicine (medication) for rare diseases is much more expensive、afford it；people／patients who …；orphan drugs；are many times more expensive。"
+        },
+        "2": {
+          "references": [
+            "However, no matter how high their prices are, new drugs developed specifically for a few patients often fail to recover their development costs.",
+            "However, no matter how high the prices are, new medicines developed for a small number of patients often fail to cover the cost of research and development.",
+            "However, no matter how high the prices may be, new drugs developed specifically for a few patients often cannot make back their development costs."
+          ],
+          "target_words": [
+            {
+              "word": "high",
+              "zh": "高的",
+              "alternatives": [
+                "expensive"
+              ]
+            },
+            {
+              "word": "price",
+              "zh": "價格",
+              "alternatives": [
+                "cost"
+              ]
+            },
+            {
+              "word": "develop",
+              "zh": "開發",
+              "alternatives": [
+                "design",
+                "make",
+                "create"
+              ]
+            },
+            {
+              "word": "patient",
+              "zh": "病人"
+            },
+            {
+              "word": "new",
+              "zh": "新的"
+            },
+            {
+              "word": "recover",
+              "zh": "回收",
+              "alternatives": [
+                "recoup",
+                "cover",
+                "earn",
+                "make",
+                "get",
+                "pay"
+              ]
+            },
+            {
+              "word": "development",
+              "zh": "研發",
+              "alternatives": [
+                "research",
+                "develop",
+                "R&D"
+              ]
+            },
+            {
+              "word": "cost",
+              "zh": "成本",
+              "alternatives": [
+                "expense",
+                "money"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "ADVCL",
+              "grammar_id": "gp-no-matter",
+              "label_zh": "讓步：無論…（no matter how + adj. + S + V）",
+              "frame": "No matter how high + S + V, S + V …",
+              "zh_trigger": "無論價格訂得多高"
+            },
+            {
+              "code": "PART",
+              "grammar_id": "gp-participle-modifier",
+              "label_zh": "分詞片語後位修飾名詞（專為少數病人開發的新藥）",
+              "frame": "N + p.p. + for …",
+              "zh_trigger": "專為少數病人開發的新藥"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "然而，無論價格訂得多高",
+              "accepted": [
+                "However, no matter how high their prices are",
+                "However, no matter how high their prices are set",
+                "However, no matter how high the prices are set",
+                "However, no matter how high the prices are",
+                "However, no matter how high the price is set",
+                "However, no matter how high the price is",
+                "However, no matter how high their prices may be",
+                "However, no matter how high the prices may be",
+                "However, no matter how high they are priced",
+                "However, however high their prices are set",
+                "However, however high the prices are set",
+                "However, however high their prices are",
+                "However, however high the prices are",
+                "However, however high the price is set",
+                "However, however high the price is",
+                "However, however high their prices may be",
+                "However, however high the prices may be",
+                "However, however high they are priced",
+                "However, regardless of how high their prices are set",
+                "However, regardless of how high the prices are set",
+                "However, regardless of how high their prices are",
+                "However, regardless of how high the prices are",
+                "However, regardless of how high the price is set",
+                "However, regardless of how high the price is",
+                "However, regardless of how high their prices may be",
+                "However, regardless of how high the prices may be",
+                "However, regardless of how high they are priced",
+                "However, no matter how high their price is",
+                "However, no matter how high their price is set",
+                "However, no matter how high the price may be",
+                "However, however high their price is",
+                "However, however high their price is set",
+                "However, however high the price may be",
+                "However, regardless of how high their price is",
+                "However, regardless of how high their price is set",
+                "However, regardless of how high the price may be",
+                "However, no matter how expensive they are",
+                "However, no matter how expensive the drugs are",
+                "However, no matter how expensive these drugs are",
+                "However, no matter how expensive the medicines are",
+                "However, no matter how expensive they may be",
+                "However, however expensive they are",
+                "However, however expensive the drugs are",
+                "However, however expensive these drugs are",
+                "However, however expensive the medicines are",
+                "However, however expensive they may be",
+                "However, regardless of how expensive they are",
+                "However, regardless of how expensive the drugs are",
+                "However, regardless of how expensive these drugs are",
+                "However, regardless of how expensive the medicines are",
+                "However, regardless of how expensive they may be"
+              ],
+              "targets": [
+                "ADVCL",
+                "high",
+                "price"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "However, no matter how the prices are set high",
+                  "right": "However, no matter how high the prices are set",
+                  "explanation_zh": "「多高」how high 要連在一起放在子句開頭。"
+                },
+                {
+                  "wrong": "However, no matter how high are the prices",
+                  "right": "However, no matter how high the prices are",
+                  "explanation_zh": "no matter how 後面用直述句語序，不倒裝。"
+                }
+              ]
+            },
+            {
+              "zh": "專為少數病人開發的新藥",
+              "accepted": [
+                "new drugs developed specifically for a few patients",
+                "new drugs developed for only a few patients",
+                "new drugs developed for a small number of patients",
+                "new drugs developed specially for a few patients",
+                "new drugs developed for just a few patients",
+                "new drugs developed for so few patients",
+                "new drugs developed for very few patients",
+                "new drugs developed specially for a small number of patients",
+                "new drugs developed specifically for a small number of patients",
+                "new drugs developed specially for only a few patients",
+                "new medicines developed for only a few patients",
+                "new medicines developed for a small number of patients",
+                "new medicines developed specially for a few patients",
+                "new medicines developed specifically for a few patients",
+                "new medicines developed for just a few patients",
+                "new medicines developed for so few patients",
+                "new medicines developed for very few patients",
+                "new medicines developed specially for a small number of patients",
+                "new medicines developed specifically for a small number of patients",
+                "new medicines developed specially for only a few patients",
+                "new drugs that are developed for only a few patients",
+                "new drugs which are developed for a small number of patients",
+                "new medicines made for only a few patients",
+                "new drugs designed for only a few patients",
+                "new drugs created for only a few patients",
+                "new drugs developed especially for a few patients",
+                "new drugs developed for a small group of patients",
+                "new drugs developed exclusively for a few patients",
+                "new drugs developed only for a few patients",
+                "new drugs developed solely for a small number of patients",
+                "new drugs designed for a small number of patients",
+                "new drugs designed specifically for a few patients",
+                "new drugs designed specially for a few patients",
+                "new drugs designed especially for a few patients",
+                "new drugs designed for a small group of patients",
+                "new drugs designed for very few patients",
+                "new drugs designed for just a few patients",
+                "new drugs designed specifically for a small number of patients",
+                "new drugs designed for so few patients",
+                "new drugs designed exclusively for a few patients",
+                "new drugs designed only for a few patients",
+                "new drugs designed solely for a small number of patients",
+                "new drugs made for only a few patients",
+                "new drugs made for a small number of patients",
+                "new drugs made specifically for a few patients",
+                "new drugs made specially for a few patients",
+                "new drugs made especially for a few patients",
+                "new drugs made for a small group of patients",
+                "new drugs made for very few patients",
+                "new drugs made for just a few patients",
+                "new drugs made specifically for a small number of patients",
+                "new drugs made for so few patients",
+                "new drugs made exclusively for a few patients",
+                "new drugs made only for a few patients",
+                "new drugs made solely for a small number of patients",
+                "new medicines developed especially for a few patients",
+                "new medicines developed for a small group of patients",
+                "new medicines developed exclusively for a few patients",
+                "new medicines developed only for a few patients",
+                "new medicines developed solely for a small number of patients",
+                "new medicines designed for only a few patients",
+                "new medicines designed for a small number of patients",
+                "new medicines designed specifically for a few patients",
+                "new medicines designed specially for a few patients",
+                "new medicines designed especially for a few patients",
+                "new medicines designed for a small group of patients",
+                "new medicines designed for very few patients",
+                "new medicines designed for just a few patients",
+                "new medicines designed specifically for a small number of patients",
+                "new medicines designed for so few patients",
+                "new medicines designed exclusively for a few patients",
+                "new medicines designed only for a few patients",
+                "new medicines designed solely for a small number of patients",
+                "new medicines made for a small number of patients",
+                "new medicines made specifically for a few patients",
+                "new medicines made specially for a few patients",
+                "new medicines made especially for a few patients",
+                "new medicines made for a small group of patients",
+                "new medicines made for very few patients",
+                "new medicines made for just a few patients",
+                "new medicines made specifically for a small number of patients",
+                "new medicines made for so few patients",
+                "new medicines made exclusively for a few patients",
+                "new medicines made only for a few patients",
+                "new medicines made solely for a small number of patients",
+                "new medications developed for only a few patients",
+                "new medications developed for a small number of patients",
+                "new medications developed specifically for a few patients",
+                "new medications developed specially for a few patients",
+                "new medications developed especially for a few patients",
+                "new medications developed for a small group of patients",
+                "new medications developed for very few patients",
+                "new medications developed for just a few patients",
+                "new medications developed specifically for a small number of patients",
+                "new medications developed for so few patients",
+                "new medications developed exclusively for a few patients",
+                "new medications developed only for a few patients",
+                "new medications developed solely for a small number of patients",
+                "new medications designed for only a few patients",
+                "new medications designed for a small number of patients",
+                "new medications designed specifically for a few patients",
+                "new medications designed specially for a few patients",
+                "new medications designed especially for a few patients",
+                "new medications designed for a small group of patients",
+                "new medications designed for very few patients",
+                "new medications designed for just a few patients",
+                "new medications designed specifically for a small number of patients",
+                "new medications designed for so few patients",
+                "new medications designed exclusively for a few patients",
+                "new medications designed only for a few patients",
+                "new medications designed solely for a small number of patients",
+                "new medications made for only a few patients",
+                "new medications made for a small number of patients",
+                "new medications made specifically for a few patients",
+                "new medications made specially for a few patients",
+                "new medications made especially for a few patients",
+                "new medications made for a small group of patients",
+                "new medications made for very few patients",
+                "new medications made for just a few patients",
+                "new medications made specifically for a small number of patients",
+                "new medications made for so few patients",
+                "new medications made exclusively for a few patients",
+                "new medications made only for a few patients",
+                "new medications made solely for a small number of patients"
+              ],
+              "targets": [
+                "PART",
+                "new",
+                "develop",
+                "patient"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "new drugs developing for only a few patients",
+                  "right": "new drugs developed for only a few patients",
+                  "explanation_zh": "新藥是「被」開發的，用過去分詞 developed 後位修飾。"
+                },
+                {
+                  "wrong": "new drugs which developed for only a few patients",
+                  "right": "new drugs developed for only a few patients",
+                  "explanation_zh": "關係子句少了 be 動詞；直接用分詞 developed（或寫完整的 which are developed …）。"
+                }
+              ]
+            },
+            {
+              "zh": "往往都無法回收",
+              "accepted": [
+                "often fail to recover",
+                "often cannot recover",
+                "often can't recover",
+                "often cannot cover",
+                "often fail to cover",
+                "often cannot earn back",
+                "often cannot make back",
+                "often cannot get back",
+                "often fail to earn back",
+                "often fail to make back",
+                "are often unable to recover",
+                "are often unable to cover",
+                "are often unable to earn back",
+                "are often unable to make back",
+                "usually cannot recover",
+                "often cannot recoup",
+                "often fail to recoup",
+                "usually fail to recover",
+                "usually cannot recoup",
+                "usually fail to recoup",
+                "usually cannot cover",
+                "usually fail to cover",
+                "usually cannot earn back",
+                "usually cannot make back",
+                "usually fail to earn back",
+                "usually cannot get back",
+                "frequently cannot recover",
+                "frequently fail to recover",
+                "frequently cannot recoup",
+                "frequently fail to recoup",
+                "frequently cannot cover",
+                "frequently fail to cover",
+                "frequently cannot earn back",
+                "frequently cannot make back",
+                "frequently fail to earn back",
+                "frequently cannot get back",
+                "can rarely recover",
+                "can hardly recover",
+                "rarely recover",
+                "seldom recover",
+                "can seldom recover",
+                "can rarely recoup",
+                "are often unable to recoup"
+              ],
+              "targets": [
+                "recover"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "often cannot return",
+                  "right": "often cannot recover",
+                  "explanation_zh": "「回收成本」是 recover／cover the costs；return 是「歸還、回來」。"
+                },
+                {
+                  "wrong": "often cannot recovered",
+                  "right": "often cannot recover",
+                  "explanation_zh": "情態助動詞 cannot 後面接原形動詞 recover。"
+                }
+              ]
+            },
+            {
+              "zh": "研發成本",
+              "accepted": [
+                "their development costs",
+                "the development costs",
+                "the cost of development",
+                "the costs of development",
+                "the cost of research and development",
+                "the costs of research and development",
+                "their research and development costs",
+                "the research and development costs",
+                "the cost of developing them",
+                "the costs of developing them",
+                "the money spent on developing them",
+                "the money spent developing them",
+                "their development cost",
+                "the money spent on research and development",
+                "their R&D costs",
+                "the R&D costs",
+                "the cost of R&D",
+                "their research and development expenses",
+                "the development expenses",
+                "their development expenses",
+                "the money invested in research and development",
+                "the money invested in developing them",
+                "the research costs",
+                "their research costs"
+              ],
+              "targets": [
+                "development",
+                "cost"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "their research develop costs",
+                  "right": "their research and development costs",
+                  "explanation_zh": "「研發」是名詞 research and development；develop 是動詞，不能直接修飾 costs。"
+                },
+                {
+                  "wrong": "their develop cost",
+                  "right": "their development costs",
+                  "explanation_zh": "名詞修飾名詞要用 development；成本泛指多項費用，用複數 costs。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "word_form",
+              "zh": "無論價格訂得多高",
+              "literal_error": "However, no matter how the prices are set high, new drugs …",
+              "part": 1,
+              "explanation_zh": "「多高」是 how high，要連在一起放在 no matter 後面；照中文語序把 high 放到句尾，意思就變成「無論怎麼訂價」。"
+            },
+            {
+              "type": "abstract_nominal",
+              "zh": "研發成本",
+              "literal_error": "…often cannot recover their research develop costs.",
+              "part": 4,
+              "explanation_zh": "「研發成本」是抽象的複合名詞：development costs 或 the cost of research and development；把「研發」逐字寫成動詞 develop 不能修飾名詞。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "However high their prices are set, new drugs developed for only a handful of patients seldom earn back what it cost to develop them.",
+              "explanation_zh": "However high = No matter how high；a handful of（少數幾個）、earn back what it cost to develop them（賺回開發所花的錢）是進階寫法。這是加分寫法，不是唯一正解。"
+            }
+          ],
+          "restructuring_zh": "「無論價格訂得多高」用 no matter how high their prices are set（how high 放在一起）；「專為少數病人開發的新藥」改成分詞片語後位修飾 new drugs developed for only a few patients；「研發成本」是名詞片語 development costs。",
+          "notes_zh": "評分說明：「然而」However；「無論價格訂得多高」no matter how high（however high）their／the prices are (set)、the price is (set)、they are priced；regardless of how high … 也算達成本句 ADVCL 標的；「專為少數病人開發的新藥」new drugs (medicines) developed (specially／specifically) for only a few／a small number of／very few patients，寫成 new drugs that are developed for … 也算達成本句 PART 標的；「往往都無法回收」often cannot／fail to + recover／cover／earn back／make back，are often unable to recover；「研發成本」(their／the) development costs、the cost(s) of (research and) development、the cost of developing them。另外也給分：no matter how expensive they are、regardless of how high the price is；new drugs designed／made for a small group of patients；recoup、can rarely (hardly) recover；R&D costs、research costs。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ac-V-3",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-top-06",
+    "lot": "translation-top-06",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "c6f44f933a9c31819117ac3657fbba0cbac38d8892d1379b9e2ce94107722abf",
+    "spec_id": "translation-top@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "warn",
+      "created_at": "2026-10-10T02:38:59Z",
+      "details": {
+        "errors": [],
+        "warnings": [
+          "annotations.rubric.items.1: 首選參考譯文有詞彙表外的字 ['cannot']（表外專有名詞請在題目括號附英文）"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-10T02:30:00Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Compared with ordinary medicines, drugs for rare diseases are much more expensive, so those who need to take them for life often cannot afford them.",
+            "confidence": "high",
+            "explanation_zh": "「相較於」用 Compared with；「貴得多」用 much more expensive；「那些終身需要用藥的人」用 those who need to take them for life；「負擔不起」用 cannot afford。"
+          },
+          "2": {
+            "translation": "However, no matter how high their prices are set, new drugs developed specifically for a small number of patients often cannot recover their research and development costs.",
+            "confidence": "high",
+            "explanation_zh": "「無論價格訂得多高」用 no matter how high their prices are set；「專為少數病人開發的新藥」用過去分詞 developed specifically for 後位修飾；「回收研發成本」用 recover research and development costs。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "COMP",
+              "REL"
+            ],
+            "used_target_words": [
+              "compare",
+              "ordinary",
+              "drug",
+              "rare",
+              "disease",
+              "expensive",
+              "need",
+              "life",
+              "afford"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "ADVCL",
+              "PART"
+            ],
+            "used_target_words": [
+              "high",
+              "price",
+              "develop",
+              "patient",
+              "new",
+              "recover",
+              "development",
+              "cost"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "compare",
+              "ordinary",
+              "drug",
+              "rare",
+              "disease",
+              "expensive",
+              "need",
+              "life",
+              "afford"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "COMP": true,
+              "REL": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "high",
+              "price",
+              "develop",
+              "patient",
+              "new",
+              "recover",
+              "development",
+              "cost"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "ADVCL": true,
+              "PART": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-10T02:28:18Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Compared with ordinary drugs, rare-disease drugs are much more expensive, so those who need medication for life often cannot afford them.",
+            "confidence": "high",
+            "explanation_zh": "「相較於一般藥物」用 Compared with ordinary drugs；「貴得多」用 much more expensive；「因此」以 so 連接兩個子句；「那些終身需要用藥的人」用 those who need medication for life；「負擔不起」用 cannot afford them。"
+          },
+          "2": {
+            "translation": "However, no matter how high the price is set, new drugs developed for a small number of patients often cannot make back their research and development costs.",
+            "confidence": "high",
+            "explanation_zh": "「無論價格訂得多高」用 no matter how high the price is set（被動語態）；「專為少數病人開發的新藥」用過去分詞片語 developed for a small number of patients 修飾 new drugs；「無法回收研發成本」用 cannot make back their research and development costs（也可用 recover）。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "COMP",
+              "REL"
+            ],
+            "used_target_words": [
+              "compare",
+              "ordinary",
+              "drug",
+              "rare",
+              "disease",
+              "expensive",
+              "need",
+              "life",
+              "afford"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "ADVCL",
+              "PART"
+            ],
+            "used_target_words": [
+              "high",
+              "price",
+              "develop",
+              "patient",
+              "new",
+              "recover",
+              "development",
+              "cost"
+            ],
+            "within_accepted": true,
+            "closest_reference": 2,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "compare",
+              "ordinary",
+              "drug",
+              "rare",
+              "disease",
+              "expensive",
+              "need",
+              "life",
+              "afford"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "COMP": true,
+              "REL": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "high",
+              "price",
+              "develop",
+              "patient",
+              "new",
+              "recover",
+              "development",
+              "cost"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "ADVCL": true,
+              "PART": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

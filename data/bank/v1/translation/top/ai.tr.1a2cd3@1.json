@@ -1,0 +1,1756 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.1a2cd3",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "top",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "在每位護理師得照顧十多位病人的醫院，對護理師來說，要準時下班非常困難。",
+        "options": null,
+        "answer": "In hospitals where each nurse must look after over ten patients, it is very difficult for nurses to finish their shifts on time.",
+        "accepted_answers": [
+          "In hospitals where every nurse has to take care of more than ten patients, it is extremely hard for nurses to get off work on time.",
+          "In hospitals where one nurse has to care for over ten patients, it is very hard for the nurses to leave work on time."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "關係副詞（where）",
+            "虛主詞 It＋形容詞＋不定詞"
+          ],
+          "topic": "護理人力短缺"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "面對嚴重的人力短缺，許多醫院開始思考，低薪是否為護理師離職的主要原因。",
+        "options": null,
+        "answer": "Facing a severe shortage of staff, many hospitals have begun to consider whether low pay is the main reason why nurses quit.",
+        "accepted_answers": [
+          "Faced with a serious staff shortage, many hospitals have started to wonder whether low salaries are the main reason nurses leave their jobs.",
+          "Facing a severe shortage of nurses, many hospitals are beginning to ask whether low wages are the major cause of nurses quitting."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "間接問句（whether）",
+            "分詞構句"
+          ],
+          "topic": "護理人力短缺"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "護理人力短缺"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「在每位護理師得照顧十多位病人的醫院」修飾「醫院」的子句很長，英文用關係副詞 where 後位修飾：In hospitals where each nurse must look after over ten patients,（where 後面是完整子句）。「對護理師來說，要準時下班非常困難」用虛主詞 it：it is very difficult for nurses to finish their shifts on time，「對…來說」寫成 for + 人，放在 to VR 前面。「準時下班」是 leave work／finish their shifts on time，「準時」是 on time。",
+          "evidence": [
+            "在每位護理師得照顧十多位病人的醫院",
+            "要準時下班非常困難"
+          ],
+          "strategy_zh": "「在…的地方」→ the place where + 完整子句；「要…很困難」→ It is difficult for + 人 + to VR。",
+          "hints": [
+            "切成四段：在每位護理師得照顧十多位病人的醫院／對護理師來說／要準時下班／非常困難",
+            "標的詞彙：hospital（醫院）、nurse（護理師）、look after（照顧）、patient（病人）、difficult（困難的）、finish（結束）、shift（班）、on time（準時）",
+            "句型框架：In + N + where + S + V …, it is very difficult for + N + to VR …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「面對嚴重的人力短缺」省略的主詞是後面的「許多醫院」，用分詞構句 Facing a severe shortage of staff,（或 Faced with …）；「人力」是 staff／manpower，不要寫 human power。「開始思考…是否為…」是間接問句：have begun to consider whether …，whether 後面用直述句語序 low pay is …，pay 不可數，動詞用 is。「護理師離職的主要原因」是 the main reason (why) nurses quit，reason 後面接 why 子句或 for + N。",
+          "evidence": [
+            "面對嚴重的人力短缺",
+            "低薪是否為護理師離職的主要原因"
+          ],
+          "strategy_zh": "句首「面對…」且主詞在後→分詞構句；「是否」→ whether + 直述句。",
+          "hints": [
+            "切成四段：面對嚴重的人力短缺／許多醫院開始思考／低薪是否為／護理師離職的主要原因",
+            "標的詞彙：face（面對）、severe（嚴重的）、shortage（短缺）、staff（人力）、hospital（醫院）、begin（開始）、consider（思考）、low（低的）、pay（薪資）、main（主要的）、reason（原因）、nurse（護理師）、quit（離職）",
+            "句型框架：V-ing + N, S + have begun to consider whether + S + is + the main reason (why) + S + V"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "In hospitals where each nurse must look after over ten patients, it is very difficult for nurses to finish their shifts on time.",
+            "In hospitals where every nurse has to take care of more than ten patients, it is extremely hard for nurses to get off work on time.",
+            "In hospitals where one nurse has to care for over ten patients, it is very hard for the nurses to leave work on time."
+          ],
+          "target_words": [
+            {
+              "word": "hospital",
+              "zh": "醫院"
+            },
+            {
+              "word": "nurse",
+              "zh": "護理師"
+            },
+            {
+              "word": "care",
+              "zh": "照顧",
+              "alternatives": [
+                "look after",
+                "take care of",
+                "attend to"
+              ]
+            },
+            {
+              "word": "patient",
+              "zh": "病人"
+            },
+            {
+              "word": "difficult",
+              "zh": "困難的",
+              "alternatives": [
+                "hard",
+                "tough"
+              ]
+            },
+            {
+              "word": "finish",
+              "zh": "下班",
+              "alternatives": [
+                "leave",
+                "get off",
+                "go home",
+                "end",
+                "clock out",
+                "go off"
+              ]
+            },
+            {
+              "word": "shift",
+              "zh": "班",
+              "alternatives": [
+                "work",
+                "duty"
+              ]
+            },
+            {
+              "word": "time",
+              "zh": "準時（on time）",
+              "alternatives": [
+                "punctually"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "REL",
+              "grammar_id": "gp-relative-adverb",
+              "label_zh": "關係副詞（在…的醫院：In hospitals where …；寫 in which 也可以）",
+              "frame": "In + N(地方) + where + S + V …, …",
+              "zh_trigger": "在每位護理師得照顧十多位病人的醫院"
+            },
+            {
+              "code": "NFSUBJ",
+              "grammar_id": "gp-it-adj-to",
+              "label_zh": "虛主詞 It ＋形容詞＋不定詞（要準時下班非常困難：it is very difficult for nurses to …）",
+              "frame": "It is + adj. + for + 人 + to VR …",
+              "zh_trigger": "要準時下班非常困難"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "在每位護理師得照顧十多位病人的醫院",
+              "accepted": [
+                "In hospitals where each nurse must look after over ten patients",
+                "In hospitals where each nurse must look after more than ten patients",
+                "In hospitals where each nurse must look after over 10 patients",
+                "In hospitals where each nurse must look after more than 10 patients",
+                "In hospitals where each nurse must look after ten or more patients",
+                "In hospitals where each nurse must look after more than a dozen patients",
+                "In hospitals where each nurse must look after over a dozen patients",
+                "In hospitals where each nurse must look after a dozen or more patients",
+                "In hospitals where each nurse must care for over ten patients",
+                "In hospitals where each nurse must care for more than ten patients",
+                "In hospitals where each nurse must care for over 10 patients",
+                "In hospitals where each nurse must care for more than 10 patients",
+                "In hospitals where each nurse must care for ten or more patients",
+                "In hospitals where each nurse must care for more than a dozen patients",
+                "In hospitals where each nurse must care for over a dozen patients",
+                "In hospitals where each nurse must care for a dozen or more patients",
+                "In hospitals where each nurse must take care of over ten patients",
+                "In hospitals where each nurse must take care of more than ten patients",
+                "In hospitals where each nurse must take care of over 10 patients",
+                "In hospitals where each nurse must take care of more than 10 patients",
+                "In hospitals where each nurse must take care of ten or more patients",
+                "In hospitals where each nurse must take care of more than a dozen patients",
+                "In hospitals where each nurse must take care of over a dozen patients",
+                "In hospitals where each nurse must take care of a dozen or more patients",
+                "In hospitals where each nurse must attend to over ten patients",
+                "In hospitals where each nurse must attend to more than ten patients",
+                "In hospitals where each nurse must attend to over 10 patients",
+                "In hospitals where each nurse must attend to more than 10 patients",
+                "In hospitals where each nurse must attend to ten or more patients",
+                "In hospitals where each nurse must attend to more than a dozen patients",
+                "In hospitals where each nurse must attend to over a dozen patients",
+                "In hospitals where each nurse must attend to a dozen or more patients",
+                "In hospitals where each nurse has to look after over ten patients",
+                "In hospitals where each nurse has to look after more than ten patients",
+                "In hospitals where each nurse has to look after over 10 patients",
+                "In hospitals where each nurse has to look after more than 10 patients",
+                "In hospitals where each nurse has to look after ten or more patients",
+                "In hospitals where each nurse has to look after more than a dozen patients",
+                "In hospitals where each nurse has to look after over a dozen patients",
+                "In hospitals where each nurse has to look after a dozen or more patients",
+                "In hospitals where each nurse has to care for over ten patients",
+                "In hospitals where each nurse has to care for more than ten patients",
+                "In hospitals where each nurse has to care for over 10 patients",
+                "In hospitals where each nurse has to care for more than 10 patients",
+                "In hospitals where each nurse has to care for ten or more patients",
+                "In hospitals where each nurse has to care for more than a dozen patients",
+                "In hospitals where each nurse has to care for over a dozen patients",
+                "In hospitals where each nurse has to care for a dozen or more patients",
+                "In hospitals where each nurse has to take care of over ten patients",
+                "In hospitals where each nurse has to take care of more than ten patients",
+                "In hospitals where each nurse has to take care of over 10 patients",
+                "In hospitals where each nurse has to take care of more than 10 patients",
+                "In hospitals where each nurse has to take care of ten or more patients",
+                "In hospitals where each nurse has to take care of more than a dozen patients",
+                "In hospitals where each nurse has to take care of over a dozen patients",
+                "In hospitals where each nurse has to take care of a dozen or more patients",
+                "In hospitals where each nurse has to attend to over ten patients",
+                "In hospitals where each nurse has to attend to more than ten patients",
+                "In hospitals where each nurse has to attend to over 10 patients",
+                "In hospitals where each nurse has to attend to more than 10 patients",
+                "In hospitals where each nurse has to attend to ten or more patients",
+                "In hospitals where each nurse has to attend to more than a dozen patients",
+                "In hospitals where each nurse has to attend to over a dozen patients",
+                "In hospitals where each nurse has to attend to a dozen or more patients",
+                "In hospitals where every nurse must look after over ten patients",
+                "In hospitals where every nurse must look after more than ten patients",
+                "In hospitals where every nurse must look after over 10 patients",
+                "In hospitals where every nurse must look after more than 10 patients",
+                "In hospitals where every nurse must look after ten or more patients",
+                "In hospitals where every nurse must look after more than a dozen patients",
+                "In hospitals where every nurse must look after over a dozen patients",
+                "In hospitals where every nurse must look after a dozen or more patients",
+                "In hospitals where every nurse must care for over ten patients",
+                "In hospitals where every nurse must care for more than ten patients",
+                "In hospitals where every nurse must care for over 10 patients",
+                "In hospitals where every nurse must care for more than 10 patients",
+                "In hospitals where every nurse must care for ten or more patients",
+                "In hospitals where every nurse must care for more than a dozen patients",
+                "In hospitals where every nurse must care for over a dozen patients",
+                "In hospitals where every nurse must care for a dozen or more patients",
+                "In hospitals where every nurse must take care of over ten patients",
+                "In hospitals where every nurse must take care of more than ten patients",
+                "In hospitals where every nurse must take care of over 10 patients",
+                "In hospitals where every nurse must take care of more than 10 patients",
+                "In hospitals where every nurse must take care of ten or more patients",
+                "In hospitals where every nurse must take care of more than a dozen patients",
+                "In hospitals where every nurse must take care of over a dozen patients",
+                "In hospitals where every nurse must take care of a dozen or more patients",
+                "In hospitals where every nurse must attend to over ten patients",
+                "In hospitals where every nurse must attend to more than ten patients",
+                "In hospitals where every nurse must attend to over 10 patients",
+                "In hospitals where every nurse must attend to more than 10 patients",
+                "In hospitals where every nurse must attend to ten or more patients",
+                "In hospitals where every nurse must attend to more than a dozen patients",
+                "In hospitals where every nurse must attend to over a dozen patients",
+                "In hospitals where every nurse must attend to a dozen or more patients",
+                "In hospitals where every nurse has to look after over ten patients",
+                "In hospitals where every nurse has to look after more than ten patients",
+                "In hospitals where every nurse has to look after over 10 patients",
+                "In hospitals where every nurse has to look after more than 10 patients",
+                "In hospitals where every nurse has to look after ten or more patients",
+                "In hospitals where every nurse has to look after more than a dozen patients",
+                "In hospitals where every nurse has to look after over a dozen patients",
+                "In hospitals where every nurse has to look after a dozen or more patients",
+                "In hospitals where every nurse has to care for over ten patients",
+                "In hospitals where every nurse has to care for more than ten patients",
+                "In hospitals where every nurse has to care for over 10 patients",
+                "In hospitals where every nurse has to care for more than 10 patients",
+                "In hospitals where every nurse has to care for ten or more patients",
+                "In hospitals where every nurse has to care for more than a dozen patients",
+                "In hospitals where every nurse has to care for over a dozen patients",
+                "In hospitals where every nurse has to care for a dozen or more patients",
+                "In hospitals where every nurse has to take care of over ten patients",
+                "In hospitals where every nurse has to take care of more than ten patients",
+                "In hospitals where every nurse has to take care of over 10 patients",
+                "In hospitals where every nurse has to take care of more than 10 patients",
+                "In hospitals where every nurse has to take care of ten or more patients",
+                "In hospitals where every nurse has to take care of more than a dozen patients",
+                "In hospitals where every nurse has to take care of over a dozen patients",
+                "In hospitals where every nurse has to take care of a dozen or more patients",
+                "In hospitals where every nurse has to attend to over ten patients",
+                "In hospitals where every nurse has to attend to more than ten patients",
+                "In hospitals where every nurse has to attend to over 10 patients",
+                "In hospitals where every nurse has to attend to more than 10 patients",
+                "In hospitals where every nurse has to attend to ten or more patients",
+                "In hospitals where every nurse has to attend to more than a dozen patients",
+                "In hospitals where every nurse has to attend to over a dozen patients",
+                "In hospitals where every nurse has to attend to a dozen or more patients",
+                "In hospitals where one nurse must look after over ten patients",
+                "In hospitals where one nurse must look after more than ten patients",
+                "In hospitals where one nurse must look after over 10 patients",
+                "In hospitals where one nurse must look after more than 10 patients",
+                "In hospitals where one nurse must look after ten or more patients",
+                "In hospitals where one nurse must look after more than a dozen patients",
+                "In hospitals where one nurse must look after over a dozen patients",
+                "In hospitals where one nurse must look after a dozen or more patients",
+                "In hospitals where one nurse must care for over ten patients",
+                "In hospitals where one nurse must care for more than ten patients",
+                "In hospitals where one nurse must care for over 10 patients",
+                "In hospitals where one nurse must care for more than 10 patients",
+                "In hospitals where one nurse must care for ten or more patients",
+                "In hospitals where one nurse must care for more than a dozen patients",
+                "In hospitals where one nurse must care for over a dozen patients",
+                "In hospitals where one nurse must care for a dozen or more patients",
+                "In hospitals where one nurse must take care of over ten patients",
+                "In hospitals where one nurse must take care of more than ten patients",
+                "In hospitals where one nurse must take care of over 10 patients",
+                "In hospitals where one nurse must take care of more than 10 patients",
+                "In hospitals where one nurse must take care of ten or more patients",
+                "In hospitals where one nurse must take care of more than a dozen patients",
+                "In hospitals where one nurse must take care of over a dozen patients",
+                "In hospitals where one nurse must take care of a dozen or more patients",
+                "In hospitals where one nurse must attend to over ten patients",
+                "In hospitals where one nurse must attend to more than ten patients",
+                "In hospitals where one nurse must attend to over 10 patients",
+                "In hospitals where one nurse must attend to more than 10 patients",
+                "In hospitals where one nurse must attend to ten or more patients",
+                "In hospitals where one nurse must attend to more than a dozen patients",
+                "In hospitals where one nurse must attend to over a dozen patients",
+                "In hospitals where one nurse must attend to a dozen or more patients",
+                "In hospitals where one nurse has to look after over ten patients",
+                "In hospitals where one nurse has to look after more than ten patients",
+                "In hospitals where one nurse has to look after over 10 patients",
+                "In hospitals where one nurse has to look after more than 10 patients",
+                "In hospitals where one nurse has to look after ten or more patients",
+                "In hospitals where one nurse has to look after more than a dozen patients",
+                "In hospitals where one nurse has to look after over a dozen patients",
+                "In hospitals where one nurse has to look after a dozen or more patients",
+                "In hospitals where one nurse has to care for over ten patients",
+                "In hospitals where one nurse has to care for more than ten patients",
+                "In hospitals where one nurse has to care for over 10 patients",
+                "In hospitals where one nurse has to care for more than 10 patients",
+                "In hospitals where one nurse has to care for ten or more patients",
+                "In hospitals where one nurse has to care for more than a dozen patients",
+                "In hospitals where one nurse has to care for over a dozen patients",
+                "In hospitals where one nurse has to care for a dozen or more patients",
+                "In hospitals where one nurse has to take care of over ten patients",
+                "In hospitals where one nurse has to take care of more than ten patients",
+                "In hospitals where one nurse has to take care of over 10 patients",
+                "In hospitals where one nurse has to take care of more than 10 patients",
+                "In hospitals where one nurse has to take care of ten or more patients",
+                "In hospitals where one nurse has to take care of more than a dozen patients",
+                "In hospitals where one nurse has to take care of over a dozen patients",
+                "In hospitals where one nurse has to take care of a dozen or more patients",
+                "In hospitals where one nurse has to attend to over ten patients",
+                "In hospitals where one nurse has to attend to more than ten patients",
+                "In hospitals where one nurse has to attend to over 10 patients",
+                "In hospitals where one nurse has to attend to more than 10 patients",
+                "In hospitals where one nurse has to attend to ten or more patients",
+                "In hospitals where one nurse has to attend to more than a dozen patients",
+                "In hospitals where one nurse has to attend to over a dozen patients",
+                "In hospitals where one nurse has to attend to a dozen or more patients",
+                "In a hospital where each nurse must look after over ten patients",
+                "In a hospital where each nurse must look after more than ten patients",
+                "In a hospital where each nurse must look after over 10 patients",
+                "In a hospital where each nurse must look after more than 10 patients",
+                "In a hospital where each nurse must look after ten or more patients",
+                "In a hospital where each nurse must look after more than a dozen patients",
+                "In a hospital where each nurse must look after over a dozen patients",
+                "In a hospital where each nurse must look after a dozen or more patients",
+                "In a hospital where each nurse must care for over ten patients",
+                "In a hospital where each nurse must care for more than ten patients",
+                "In a hospital where each nurse must care for over 10 patients",
+                "In a hospital where each nurse must care for more than 10 patients",
+                "In a hospital where each nurse must care for ten or more patients",
+                "In a hospital where each nurse must care for more than a dozen patients",
+                "In a hospital where each nurse must care for over a dozen patients",
+                "In a hospital where each nurse must care for a dozen or more patients",
+                "In a hospital where each nurse must take care of over ten patients",
+                "In a hospital where each nurse must take care of more than ten patients",
+                "In a hospital where each nurse must take care of over 10 patients",
+                "In a hospital where each nurse must take care of more than 10 patients",
+                "In a hospital where each nurse must take care of ten or more patients",
+                "In a hospital where each nurse must take care of more than a dozen patients",
+                "In a hospital where each nurse must take care of over a dozen patients",
+                "In a hospital where each nurse must take care of a dozen or more patients",
+                "In a hospital where each nurse must attend to over ten patients",
+                "In a hospital where each nurse must attend to more than ten patients",
+                "In a hospital where each nurse must attend to over 10 patients",
+                "In a hospital where each nurse must attend to more than 10 patients",
+                "In a hospital where each nurse must attend to ten or more patients",
+                "In a hospital where each nurse must attend to more than a dozen patients",
+                "In a hospital where each nurse must attend to over a dozen patients",
+                "In a hospital where each nurse must attend to a dozen or more patients",
+                "In a hospital where each nurse has to look after over ten patients",
+                "In a hospital where each nurse has to look after more than ten patients",
+                "In a hospital where each nurse has to look after over 10 patients",
+                "In a hospital where each nurse has to look after more than 10 patients",
+                "In a hospital where each nurse has to look after ten or more patients",
+                "In a hospital where each nurse has to look after more than a dozen patients",
+                "In a hospital where each nurse has to look after over a dozen patients",
+                "In a hospital where each nurse has to look after a dozen or more patients",
+                "In a hospital where each nurse has to care for over ten patients",
+                "In a hospital where each nurse has to care for more than ten patients",
+                "In a hospital where each nurse has to care for over 10 patients",
+                "In a hospital where each nurse has to care for more than 10 patients",
+                "In a hospital where each nurse has to care for ten or more patients",
+                "In a hospital where each nurse has to care for more than a dozen patients",
+                "In a hospital where each nurse has to care for over a dozen patients",
+                "In a hospital where each nurse has to care for a dozen or more patients",
+                "In a hospital where each nurse has to take care of over ten patients",
+                "In a hospital where each nurse has to take care of more than ten patients",
+                "In a hospital where each nurse has to take care of over 10 patients",
+                "In a hospital where each nurse has to take care of more than 10 patients",
+                "In a hospital where each nurse has to take care of ten or more patients",
+                "In a hospital where each nurse has to take care of more than a dozen patients",
+                "In a hospital where each nurse has to take care of over a dozen patients",
+                "In a hospital where each nurse has to take care of a dozen or more patients",
+                "In a hospital where each nurse has to attend to over ten patients",
+                "In a hospital where each nurse has to attend to more than ten patients",
+                "In a hospital where each nurse has to attend to over 10 patients",
+                "In a hospital where each nurse has to attend to more than 10 patients",
+                "In a hospital where each nurse has to attend to ten or more patients",
+                "In a hospital where each nurse has to attend to more than a dozen patients",
+                "In a hospital where each nurse has to attend to over a dozen patients",
+                "In a hospital where each nurse has to attend to a dozen or more patients",
+                "In a hospital where every nurse must look after over ten patients",
+                "In a hospital where every nurse must look after more than ten patients",
+                "In a hospital where every nurse must look after over 10 patients",
+                "In a hospital where every nurse must look after more than 10 patients",
+                "In a hospital where every nurse must look after ten or more patients",
+                "In a hospital where every nurse must look after more than a dozen patients",
+                "In a hospital where every nurse must look after over a dozen patients",
+                "In a hospital where every nurse must look after a dozen or more patients",
+                "In a hospital where every nurse must care for over ten patients",
+                "In a hospital where every nurse must care for more than ten patients",
+                "In a hospital where every nurse must care for over 10 patients",
+                "In a hospital where every nurse must care for more than 10 patients",
+                "In a hospital where every nurse must care for ten or more patients",
+                "In a hospital where every nurse must care for more than a dozen patients",
+                "In a hospital where every nurse must care for over a dozen patients",
+                "In a hospital where every nurse must care for a dozen or more patients",
+                "In a hospital where every nurse must take care of over ten patients",
+                "In a hospital where every nurse must take care of more than ten patients",
+                "In a hospital where every nurse must take care of over 10 patients",
+                "In a hospital where every nurse must take care of more than 10 patients",
+                "In a hospital where every nurse must take care of ten or more patients",
+                "In a hospital where every nurse must take care of more than a dozen patients",
+                "In a hospital where every nurse must take care of over a dozen patients",
+                "In a hospital where every nurse must take care of a dozen or more patients",
+                "In a hospital where every nurse must attend to over ten patients",
+                "In a hospital where every nurse must attend to more than ten patients",
+                "In a hospital where every nurse must attend to over 10 patients",
+                "In a hospital where every nurse must attend to more than 10 patients",
+                "In a hospital where every nurse must attend to ten or more patients",
+                "In a hospital where every nurse must attend to more than a dozen patients",
+                "In a hospital where every nurse must attend to over a dozen patients",
+                "In a hospital where every nurse must attend to a dozen or more patients",
+                "In a hospital where every nurse has to look after over ten patients",
+                "In a hospital where every nurse has to look after more than ten patients",
+                "In a hospital where every nurse has to look after over 10 patients",
+                "In a hospital where every nurse has to look after more than 10 patients",
+                "In a hospital where every nurse has to look after ten or more patients",
+                "In a hospital where every nurse has to look after more than a dozen patients",
+                "In a hospital where every nurse has to look after over a dozen patients",
+                "In a hospital where every nurse has to look after a dozen or more patients",
+                "In a hospital where every nurse has to care for over ten patients",
+                "In a hospital where every nurse has to care for more than ten patients",
+                "In a hospital where every nurse has to care for over 10 patients",
+                "In a hospital where every nurse has to care for more than 10 patients",
+                "In a hospital where every nurse has to care for ten or more patients",
+                "In a hospital where every nurse has to care for more than a dozen patients",
+                "In a hospital where every nurse has to care for over a dozen patients",
+                "In a hospital where every nurse has to care for a dozen or more patients",
+                "In a hospital where every nurse has to take care of over ten patients",
+                "In a hospital where every nurse has to take care of more than ten patients",
+                "In a hospital where every nurse has to take care of over 10 patients",
+                "In a hospital where every nurse has to take care of more than 10 patients",
+                "In a hospital where every nurse has to take care of ten or more patients",
+                "In a hospital where every nurse has to take care of more than a dozen patients",
+                "In a hospital where every nurse has to take care of over a dozen patients",
+                "In a hospital where every nurse has to take care of a dozen or more patients",
+                "In a hospital where every nurse has to attend to over ten patients",
+                "In a hospital where every nurse has to attend to more than ten patients",
+                "In a hospital where every nurse has to attend to over 10 patients",
+                "In a hospital where every nurse has to attend to more than 10 patients",
+                "In a hospital where every nurse has to attend to ten or more patients",
+                "In a hospital where every nurse has to attend to more than a dozen patients",
+                "In a hospital where every nurse has to attend to over a dozen patients",
+                "In a hospital where every nurse has to attend to a dozen or more patients",
+                "In a hospital where one nurse must look after over ten patients",
+                "In a hospital where one nurse must look after more than ten patients",
+                "In a hospital where one nurse must look after over 10 patients",
+                "In a hospital where one nurse must look after more than 10 patients",
+                "In a hospital where one nurse must look after ten or more patients",
+                "In a hospital where one nurse must look after more than a dozen patients",
+                "In a hospital where one nurse must look after over a dozen patients",
+                "In a hospital where one nurse must look after a dozen or more patients",
+                "In a hospital where one nurse must care for over ten patients",
+                "In a hospital where one nurse must care for more than ten patients",
+                "In a hospital where one nurse must care for over 10 patients",
+                "In a hospital where one nurse must care for more than 10 patients",
+                "In a hospital where one nurse must care for ten or more patients",
+                "In a hospital where one nurse must care for more than a dozen patients",
+                "In a hospital where one nurse must care for over a dozen patients",
+                "In a hospital where one nurse must care for a dozen or more patients",
+                "In a hospital where one nurse must take care of over ten patients",
+                "In a hospital where one nurse must take care of more than ten patients",
+                "In a hospital where one nurse must take care of over 10 patients",
+                "In a hospital where one nurse must take care of more than 10 patients",
+                "In a hospital where one nurse must take care of ten or more patients",
+                "In a hospital where one nurse must take care of more than a dozen patients",
+                "In a hospital where one nurse must take care of over a dozen patients",
+                "In a hospital where one nurse must take care of a dozen or more patients",
+                "In a hospital where one nurse must attend to over ten patients",
+                "In a hospital where one nurse must attend to more than ten patients",
+                "In a hospital where one nurse must attend to over 10 patients",
+                "In a hospital where one nurse must attend to more than 10 patients",
+                "In a hospital where one nurse must attend to ten or more patients",
+                "In a hospital where one nurse must attend to more than a dozen patients",
+                "In a hospital where one nurse must attend to over a dozen patients",
+                "In a hospital where one nurse must attend to a dozen or more patients",
+                "In a hospital where one nurse has to look after over ten patients",
+                "In a hospital where one nurse has to look after more than ten patients",
+                "In a hospital where one nurse has to look after over 10 patients",
+                "In a hospital where one nurse has to look after more than 10 patients",
+                "In a hospital where one nurse has to look after ten or more patients",
+                "In a hospital where one nurse has to look after more than a dozen patients",
+                "In a hospital where one nurse has to look after over a dozen patients",
+                "In a hospital where one nurse has to look after a dozen or more patients",
+                "In a hospital where one nurse has to care for over ten patients",
+                "In a hospital where one nurse has to care for more than ten patients",
+                "In a hospital where one nurse has to care for over 10 patients",
+                "In a hospital where one nurse has to care for more than 10 patients",
+                "In a hospital where one nurse has to care for ten or more patients",
+                "In a hospital where one nurse has to care for more than a dozen patients",
+                "In a hospital where one nurse has to care for over a dozen patients",
+                "In a hospital where one nurse has to care for a dozen or more patients",
+                "In a hospital where one nurse has to take care of over ten patients",
+                "In a hospital where one nurse has to take care of more than ten patients",
+                "In a hospital where one nurse has to take care of over 10 patients",
+                "In a hospital where one nurse has to take care of more than 10 patients",
+                "In a hospital where one nurse has to take care of ten or more patients",
+                "In a hospital where one nurse has to take care of more than a dozen patients",
+                "In a hospital where one nurse has to take care of over a dozen patients",
+                "In a hospital where one nurse has to take care of a dozen or more patients",
+                "In a hospital where one nurse has to attend to over ten patients",
+                "In a hospital where one nurse has to attend to more than ten patients",
+                "In a hospital where one nurse has to attend to over 10 patients",
+                "In a hospital where one nurse has to attend to more than 10 patients",
+                "In a hospital where one nurse has to attend to ten or more patients",
+                "In a hospital where one nurse has to attend to more than a dozen patients",
+                "In a hospital where one nurse has to attend to over a dozen patients",
+                "In a hospital where one nurse has to attend to a dozen or more patients",
+                "In hospitals where each nurse is responsible for over ten patients",
+                "In hospitals where each nurse is responsible for more than ten patients",
+                "In hospitals where each nurse is responsible for over 10 patients",
+                "In hospitals where each nurse is responsible for more than 10 patients",
+                "In hospitals where each nurse is responsible for ten or more patients",
+                "In hospitals where each nurse is responsible for more than a dozen patients",
+                "In hospitals where each nurse is responsible for over a dozen patients",
+                "In hospitals where each nurse is responsible for a dozen or more patients",
+                "In hospitals where every nurse is responsible for over ten patients",
+                "In hospitals where every nurse is responsible for more than ten patients",
+                "In hospitals where every nurse is responsible for over 10 patients",
+                "In hospitals where every nurse is responsible for more than 10 patients",
+                "In hospitals where every nurse is responsible for ten or more patients",
+                "In hospitals where every nurse is responsible for more than a dozen patients",
+                "In hospitals where every nurse is responsible for over a dozen patients",
+                "In hospitals where every nurse is responsible for a dozen or more patients",
+                "In hospitals where one nurse is responsible for over ten patients",
+                "In hospitals where one nurse is responsible for more than ten patients",
+                "In hospitals where one nurse is responsible for over 10 patients",
+                "In hospitals where one nurse is responsible for more than 10 patients",
+                "In hospitals where one nurse is responsible for ten or more patients",
+                "In hospitals where one nurse is responsible for more than a dozen patients",
+                "In hospitals where one nurse is responsible for over a dozen patients",
+                "In hospitals where one nurse is responsible for a dozen or more patients",
+                "In a hospital where each nurse is responsible for over ten patients",
+                "In a hospital where each nurse is responsible for more than ten patients",
+                "In a hospital where each nurse is responsible for over 10 patients",
+                "In a hospital where each nurse is responsible for more than 10 patients",
+                "In a hospital where each nurse is responsible for ten or more patients",
+                "In a hospital where each nurse is responsible for more than a dozen patients",
+                "In a hospital where each nurse is responsible for over a dozen patients",
+                "In a hospital where each nurse is responsible for a dozen or more patients",
+                "In a hospital where every nurse is responsible for over ten patients",
+                "In a hospital where every nurse is responsible for more than ten patients",
+                "In a hospital where every nurse is responsible for over 10 patients",
+                "In a hospital where every nurse is responsible for more than 10 patients",
+                "In a hospital where every nurse is responsible for ten or more patients",
+                "In a hospital where every nurse is responsible for more than a dozen patients",
+                "In a hospital where every nurse is responsible for over a dozen patients",
+                "In a hospital where every nurse is responsible for a dozen or more patients",
+                "In a hospital where one nurse is responsible for over ten patients",
+                "In a hospital where one nurse is responsible for more than ten patients",
+                "In a hospital where one nurse is responsible for over 10 patients",
+                "In a hospital where one nurse is responsible for more than 10 patients",
+                "In a hospital where one nurse is responsible for ten or more patients",
+                "In a hospital where one nurse is responsible for more than a dozen patients",
+                "In a hospital where one nurse is responsible for over a dozen patients",
+                "In a hospital where one nurse is responsible for a dozen or more patients",
+                "In hospitals in which each nurse must look after over ten patients",
+                "In hospitals in which each nurse must look after more than ten patients",
+                "In hospitals in which each nurse must look after over 10 patients",
+                "In hospitals in which each nurse must look after more than 10 patients",
+                "In hospitals in which each nurse must look after ten or more patients",
+                "In hospitals in which each nurse must look after more than a dozen patients",
+                "In hospitals in which each nurse must look after over a dozen patients",
+                "In hospitals in which each nurse must look after a dozen or more patients",
+                "In hospitals in which each nurse must care for over ten patients",
+                "In hospitals in which each nurse must care for more than ten patients",
+                "In hospitals in which each nurse must care for over 10 patients",
+                "In hospitals in which each nurse must care for more than 10 patients",
+                "In hospitals in which each nurse must care for ten or more patients",
+                "In hospitals in which each nurse must care for more than a dozen patients",
+                "In hospitals in which each nurse must care for over a dozen patients",
+                "In hospitals in which each nurse must care for a dozen or more patients",
+                "In hospitals in which each nurse must take care of over ten patients",
+                "In hospitals in which each nurse must take care of more than ten patients",
+                "In hospitals in which each nurse must take care of over 10 patients",
+                "In hospitals in which each nurse must take care of more than 10 patients",
+                "In hospitals in which each nurse must take care of ten or more patients",
+                "In hospitals in which each nurse must take care of more than a dozen patients",
+                "In hospitals in which each nurse must take care of over a dozen patients",
+                "In hospitals in which each nurse must take care of a dozen or more patients",
+                "In hospitals in which each nurse has to look after over ten patients",
+                "In hospitals in which each nurse has to look after more than ten patients",
+                "In hospitals in which each nurse has to look after over 10 patients",
+                "In hospitals in which each nurse has to look after more than 10 patients",
+                "In hospitals in which each nurse has to look after ten or more patients",
+                "In hospitals in which each nurse has to look after more than a dozen patients",
+                "In hospitals in which each nurse has to look after over a dozen patients",
+                "In hospitals in which each nurse has to look after a dozen or more patients",
+                "In hospitals in which each nurse has to care for over ten patients",
+                "In hospitals in which each nurse has to care for more than ten patients",
+                "In hospitals in which each nurse has to care for over 10 patients",
+                "In hospitals in which each nurse has to care for more than 10 patients",
+                "In hospitals in which each nurse has to care for ten or more patients",
+                "In hospitals in which each nurse has to care for more than a dozen patients",
+                "In hospitals in which each nurse has to care for over a dozen patients",
+                "In hospitals in which each nurse has to care for a dozen or more patients",
+                "In hospitals in which each nurse has to take care of over ten patients",
+                "In hospitals in which each nurse has to take care of more than ten patients",
+                "In hospitals in which each nurse has to take care of over 10 patients",
+                "In hospitals in which each nurse has to take care of more than 10 patients",
+                "In hospitals in which each nurse has to take care of ten or more patients",
+                "In hospitals in which each nurse has to take care of more than a dozen patients",
+                "In hospitals in which each nurse has to take care of over a dozen patients",
+                "In hospitals in which each nurse has to take care of a dozen or more patients"
+              ],
+              "targets": [
+                "REL",
+                "hospital",
+                "nurse",
+                "care",
+                "patient"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "In hospitals which each nurse must look after over ten patients",
+                  "right": "In hospitals where each nurse must look after over ten patients",
+                  "explanation_zh": "先行詞是地方，後面的子句不缺受詞，要用關係副詞 where（或 in which）。"
+                },
+                {
+                  "wrong": "In hospitals where each nurse must look after over ten patient",
+                  "right": "In hospitals where each nurse must look after over ten patients",
+                  "explanation_zh": "ten 以上的病人用複數 patients。"
+                }
+              ]
+            },
+            {
+              "zh": "對護理師來說",
+              "accepted": [
+                "for nurses",
+                "for the nurses",
+                "for these nurses",
+                "for nursing staff",
+                "for them"
+              ],
+              "targets": [
+                "nurse"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "to nurses",
+                  "right": "for nurses",
+                  "explanation_zh": "虛主詞句 it is + 形容詞 + for + 人 + to VR，「對…來說」用 for。"
+                },
+                {
+                  "wrong": "of nurses",
+                  "right": "for nurses",
+                  "explanation_zh": "difficult 說的是事情的難易，人用 for 帶出；of 用在 kind、careless 這類評論人的形容詞。"
+                }
+              ]
+            },
+            {
+              "zh": "要準時下班",
+              "accepted": [
+                "to finish their shifts on time",
+                "to leave work on time",
+                "to get off work on time",
+                "to finish work on time",
+                "to go home on time",
+                "to end their shifts on time",
+                "to leave on time",
+                "to get off duty on time",
+                "to leave work punctually",
+                "to finish their work on time",
+                "to clock out on time",
+                "to go off duty on time",
+                "to finish their shift on time",
+                "to get off on time",
+                "to get off work punctually",
+                "to finish work punctually"
+              ],
+              "targets": [
+                "finish",
+                "shift",
+                "time"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "to off work on time",
+                  "right": "to leave work on time",
+                  "explanation_zh": "off 不是動詞；「下班」是 leave work／get off work／finish their shifts。"
+                },
+                {
+                  "wrong": "to leave work in time",
+                  "right": "to leave work on time",
+                  "explanation_zh": "「準時」是 on time；in time 是「及時、來得及」。"
+                }
+              ]
+            },
+            {
+              "zh": "非常困難",
+              "accepted": [
+                "it is very difficult",
+                "it is very hard",
+                "it is very tough",
+                "it is extremely difficult",
+                "it is extremely hard",
+                "it is extremely tough",
+                "it is really difficult",
+                "it is really hard",
+                "it is really tough",
+                "it is so difficult",
+                "it is so hard",
+                "it is so tough",
+                "it is incredibly difficult",
+                "it is incredibly hard",
+                "it is incredibly tough"
+              ],
+              "targets": [
+                "NFSUBJ",
+                "difficult"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "nurses are very difficult to finish their shifts on time",
+                  "right": "it is very difficult for nurses to finish their shifts on time",
+                  "explanation_zh": "difficult 的主詞不能是人；要用虛主詞 it is very difficult for nurses to …。"
+                },
+                {
+                  "wrong": "it is very difficultly",
+                  "right": "it is very difficult",
+                  "explanation_zh": "be 動詞後面用形容詞 difficult，不用副詞。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "prenominal_modifier",
+              "zh": "在每位護理師得照顧十多位病人的醫院",
+              "literal_error": "In each nurse must look after over ten patients' hospitals, …",
+              "part": 1,
+              "explanation_zh": "中文把很長的修飾語放在「醫院」前面；英文要寫成 In hospitals where + 子句，關係副詞 where 引導的子句放在名詞後面。"
+            },
+            {
+              "type": "verbal_subject",
+              "zh": "要準時下班非常困難",
+              "literal_error": "Nurses are very difficult to finish their shifts on time.",
+              "part": 4,
+              "explanation_zh": "中文以「要準時下班」這件事為主題，英文要用虛主詞 it is very difficult for nurses to …；寫成 nurses are very difficult 意思變成「護理師很難相處」。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "So heavy is the workload in hospitals where each nurse must look after over ten patients that finishing a shift on time is almost unheard of.",
+              "grammar_id": "gp-so-adj-inversion",
+              "explanation_zh": "So + 形容詞置首倒裝（So heavy is the workload … that …）強調工作量之重，unheard of（前所未聞）誇飾「幾乎不可能準時下班」。屬加分寫法，不是唯一正解。"
+            }
+          ],
+          "restructuring_zh": "「在…的醫院」修飾語很長，英文用關係副詞 where 放在 hospitals 後面：In hospitals where each nurse must look after …；「對護理師來說，要準時下班非常困難」用虛主詞句 it is very difficult for nurses to …，不要讓 nurses 當 difficult 的主詞。",
+          "notes_zh": "第 1 部分寫 in which 也可以（＝where）；「十多位」寫 over ten、more than ten 都可以。第 2 部分寫 for them 也可以（them 指護理師）。第 4 部分 very difficult、very hard、extremely difficult 都可以；「準時下班」寫 leave work／get off work／finish their shifts on time 都可以。寫成 nurses find it very hard to … 是虛受詞句，沒有用到虛主詞 It is … to VR，不在可接受寫法內。"
+        },
+        "2": {
+          "references": [
+            "Facing a severe shortage of staff, many hospitals have begun to consider whether low pay is the main reason why nurses quit.",
+            "Faced with a serious staff shortage, many hospitals have started to wonder whether low salaries are the main reason nurses leave their jobs.",
+            "Facing a severe shortage of nurses, many hospitals are beginning to ask whether low wages are the major cause of nurses quitting."
+          ],
+          "target_words": [
+            {
+              "word": "face",
+              "zh": "面對",
+              "alternatives": [
+                "confront"
+              ]
+            },
+            {
+              "word": "severe",
+              "zh": "嚴重的",
+              "alternatives": [
+                "serious"
+              ]
+            },
+            {
+              "word": "shortage",
+              "zh": "短缺",
+              "alternatives": [
+                "lack"
+              ]
+            },
+            {
+              "word": "staff",
+              "zh": "人力",
+              "alternatives": [
+                "manpower",
+                "nurse",
+                "worker",
+                "labor",
+                "personnel"
+              ]
+            },
+            {
+              "word": "hospital",
+              "zh": "醫院"
+            },
+            {
+              "word": "begin",
+              "zh": "開始",
+              "alternatives": [
+                "start"
+              ]
+            },
+            {
+              "word": "consider",
+              "zh": "思考",
+              "alternatives": [
+                "think",
+                "wonder",
+                "ask",
+                "question",
+                "reflect",
+                "examine",
+                "look into"
+              ]
+            },
+            {
+              "word": "low",
+              "zh": "低的",
+              "alternatives": [
+                "poor"
+              ]
+            },
+            {
+              "word": "pay",
+              "zh": "薪資",
+              "alternatives": [
+                "wage",
+                "salary"
+              ]
+            },
+            {
+              "word": "main",
+              "zh": "主要的",
+              "alternatives": [
+                "major",
+                "primary",
+                "chief",
+                "biggest"
+              ]
+            },
+            {
+              "word": "reason",
+              "zh": "原因",
+              "alternatives": [
+                "cause",
+                "why"
+              ]
+            },
+            {
+              "word": "nurse",
+              "zh": "護理師"
+            },
+            {
+              "word": "quit",
+              "zh": "離職",
+              "alternatives": [
+                "leave",
+                "resign",
+                "resignation"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "NCL",
+              "grammar_id": "gp-wh-clause",
+              "label_zh": "間接問句（是否為：whether + S + V，直述句語序）",
+              "frame": "S + consider + whether + S + be …",
+              "zh_trigger": "是否為"
+            },
+            {
+              "code": "PART",
+              "grammar_id": "gp-participle-clause",
+              "label_zh": "分詞構句（面對嚴重的人力短缺：Facing/Faced with …, S + V；意義主詞是後面的 many hospitals）",
+              "frame": "V-ing/p.p. + …, S + V …",
+              "zh_trigger": "面對嚴重的人力短缺"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "面對嚴重的人力短缺",
+              "accepted": [
+                "Facing a severe shortage of staff",
+                "Facing a severe staff shortage",
+                "Facing a severe shortage of nurses",
+                "Facing a severe nursing shortage",
+                "Facing a severe nurse shortage",
+                "Facing a severe shortage of manpower",
+                "Facing a severe manpower shortage",
+                "Facing a severe labor shortage",
+                "Facing a severe shortage of workers",
+                "Facing a severe lack of staff",
+                "Facing a severe lack of manpower",
+                "Facing a severe shortage of personnel",
+                "Facing a severe personnel shortage",
+                "Facing a severe shortage of nursing staff",
+                "Facing a serious shortage of staff",
+                "Facing a serious staff shortage",
+                "Facing a serious shortage of nurses",
+                "Facing a serious nursing shortage",
+                "Facing a serious nurse shortage",
+                "Facing a serious shortage of manpower",
+                "Facing a serious manpower shortage",
+                "Facing a serious labor shortage",
+                "Facing a serious shortage of workers",
+                "Facing a serious lack of staff",
+                "Facing a serious lack of manpower",
+                "Facing a serious shortage of personnel",
+                "Facing a serious personnel shortage",
+                "Facing a serious shortage of nursing staff",
+                "Faced with a severe shortage of staff",
+                "Faced with a severe staff shortage",
+                "Faced with a severe shortage of nurses",
+                "Faced with a severe nursing shortage",
+                "Faced with a severe nurse shortage",
+                "Faced with a severe shortage of manpower",
+                "Faced with a severe manpower shortage",
+                "Faced with a severe labor shortage",
+                "Faced with a severe shortage of workers",
+                "Faced with a severe lack of staff",
+                "Faced with a severe lack of manpower",
+                "Faced with a severe shortage of personnel",
+                "Faced with a severe personnel shortage",
+                "Faced with a severe shortage of nursing staff",
+                "Faced with a serious shortage of staff",
+                "Faced with a serious staff shortage",
+                "Faced with a serious shortage of nurses",
+                "Faced with a serious nursing shortage",
+                "Faced with a serious nurse shortage",
+                "Faced with a serious shortage of manpower",
+                "Faced with a serious manpower shortage",
+                "Faced with a serious labor shortage",
+                "Faced with a serious shortage of workers",
+                "Faced with a serious lack of staff",
+                "Faced with a serious lack of manpower",
+                "Faced with a serious shortage of personnel",
+                "Faced with a serious personnel shortage",
+                "Faced with a serious shortage of nursing staff",
+                "Confronted with a severe shortage of staff",
+                "Confronted with a severe staff shortage",
+                "Confronted with a severe shortage of nurses",
+                "Confronted with a severe nursing shortage",
+                "Confronted with a severe nurse shortage",
+                "Confronted with a severe shortage of manpower",
+                "Confronted with a severe manpower shortage",
+                "Confronted with a severe labor shortage",
+                "Confronted with a severe shortage of workers",
+                "Confronted with a severe lack of staff",
+                "Confronted with a severe lack of manpower",
+                "Confronted with a severe shortage of personnel",
+                "Confronted with a severe personnel shortage",
+                "Confronted with a severe shortage of nursing staff",
+                "Confronted with a serious shortage of staff",
+                "Confronted with a serious staff shortage",
+                "Confronted with a serious shortage of nurses",
+                "Confronted with a serious nursing shortage",
+                "Confronted with a serious nurse shortage",
+                "Confronted with a serious shortage of manpower",
+                "Confronted with a serious manpower shortage",
+                "Confronted with a serious labor shortage",
+                "Confronted with a serious shortage of workers",
+                "Confronted with a serious lack of staff",
+                "Confronted with a serious lack of manpower",
+                "Confronted with a serious shortage of personnel",
+                "Confronted with a serious personnel shortage",
+                "Confronted with a serious shortage of nursing staff",
+                "Confronting a severe shortage of staff",
+                "Confronting a severe staff shortage",
+                "Confronting a severe shortage of nurses",
+                "Confronting a severe nursing shortage",
+                "Confronting a severe nurse shortage",
+                "Confronting a severe shortage of manpower",
+                "Confronting a severe manpower shortage",
+                "Confronting a severe labor shortage",
+                "Confronting a severe shortage of workers",
+                "Confronting a severe lack of staff",
+                "Confronting a severe lack of manpower",
+                "Confronting a severe shortage of personnel",
+                "Confronting a severe personnel shortage",
+                "Confronting a severe shortage of nursing staff",
+                "Confronting a serious shortage of staff",
+                "Confronting a serious staff shortage",
+                "Confronting a serious shortage of nurses",
+                "Confronting a serious nursing shortage",
+                "Confronting a serious nurse shortage",
+                "Confronting a serious shortage of manpower",
+                "Confronting a serious manpower shortage",
+                "Confronting a serious labor shortage",
+                "Confronting a serious shortage of workers",
+                "Confronting a serious lack of staff",
+                "Confronting a serious lack of manpower",
+                "Confronting a serious shortage of personnel",
+                "Confronting a serious personnel shortage",
+                "Confronting a serious shortage of nursing staff",
+                "Facing severe staff shortages",
+                "Facing severe shortages of staff",
+                "Facing severe manpower shortages",
+                "Facing severe nursing shortages",
+                "Facing severe shortages of nurses",
+                "Facing severe understaffing",
+                "Facing serious staff shortages",
+                "Facing serious shortages of staff",
+                "Facing serious manpower shortages",
+                "Facing serious nursing shortages",
+                "Facing serious shortages of nurses",
+                "Facing serious understaffing",
+                "Faced with severe staff shortages",
+                "Faced with severe shortages of staff",
+                "Faced with severe manpower shortages",
+                "Faced with severe nursing shortages",
+                "Faced with severe shortages of nurses",
+                "Faced with severe understaffing",
+                "Faced with serious staff shortages",
+                "Faced with serious shortages of staff",
+                "Faced with serious manpower shortages",
+                "Faced with serious nursing shortages",
+                "Faced with serious shortages of nurses",
+                "Faced with serious understaffing",
+                "Confronted with severe staff shortages",
+                "Confronted with severe shortages of staff",
+                "Confronted with severe manpower shortages",
+                "Confronted with severe nursing shortages",
+                "Confronted with severe shortages of nurses",
+                "Confronted with severe understaffing",
+                "Confronted with serious staff shortages",
+                "Confronted with serious shortages of staff",
+                "Confronted with serious manpower shortages",
+                "Confronted with serious nursing shortages",
+                "Confronted with serious shortages of nurses",
+                "Confronted with serious understaffing"
+              ],
+              "targets": [
+                "PART",
+                "face",
+                "severe",
+                "shortage",
+                "staff"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Face a severe shortage of staff",
+                  "right": "Facing a severe shortage of staff",
+                  "explanation_zh": "分詞構句要用分詞 Facing（或 Faced with）；原形 Face 開頭會變成祈使句。"
+                },
+                {
+                  "wrong": "Facing a severe human power shortage",
+                  "right": "Facing a severe shortage of staff",
+                  "explanation_zh": "「人力」是 staff／manpower，不要逐字譯成 human power。"
+                }
+              ]
+            },
+            {
+              "zh": "許多醫院開始思考",
+              "accepted": [
+                "many hospitals have begun to consider",
+                "many hospitals have begun to think about",
+                "many hospitals have begun to wonder",
+                "many hospitals have begun to ask",
+                "many hospitals have begun to ask themselves",
+                "many hospitals have begun to question",
+                "many hospitals have begun to reflect on",
+                "many hospitals have begun to examine",
+                "many hospitals have begun to look into",
+                "many hospitals have started to consider",
+                "many hospitals have started to think about",
+                "many hospitals have started to wonder",
+                "many hospitals have started to ask",
+                "many hospitals have started to ask themselves",
+                "many hospitals have started to question",
+                "many hospitals have started to reflect on",
+                "many hospitals have started to examine",
+                "many hospitals have started to look into",
+                "many hospitals are beginning to consider",
+                "many hospitals are beginning to think about",
+                "many hospitals are beginning to wonder",
+                "many hospitals are beginning to ask",
+                "many hospitals are beginning to ask themselves",
+                "many hospitals are beginning to question",
+                "many hospitals are beginning to reflect on",
+                "many hospitals are beginning to examine",
+                "many hospitals are beginning to look into",
+                "many hospitals are starting to consider",
+                "many hospitals are starting to think about",
+                "many hospitals are starting to wonder",
+                "many hospitals are starting to ask",
+                "many hospitals are starting to ask themselves",
+                "many hospitals are starting to question",
+                "many hospitals are starting to reflect on",
+                "many hospitals are starting to examine",
+                "many hospitals are starting to look into",
+                "many hospitals began to consider",
+                "many hospitals began to think about",
+                "many hospitals began to wonder",
+                "many hospitals began to ask",
+                "many hospitals began to ask themselves",
+                "many hospitals began to question",
+                "many hospitals began to reflect on",
+                "many hospitals began to examine",
+                "many hospitals began to look into",
+                "many hospitals started to consider",
+                "many hospitals started to think about",
+                "many hospitals started to wonder",
+                "many hospitals started to ask",
+                "many hospitals started to ask themselves",
+                "many hospitals started to question",
+                "many hospitals started to reflect on",
+                "many hospitals started to examine",
+                "many hospitals started to look into",
+                "many hospitals have begun considering",
+                "many hospitals have begun thinking about",
+                "many hospitals have begun wondering",
+                "many hospitals have begun asking",
+                "many hospitals have begun asking themselves",
+                "many hospitals have begun questioning",
+                "many hospitals have started considering",
+                "many hospitals have started thinking about",
+                "many hospitals have started wondering",
+                "many hospitals have started asking",
+                "many hospitals have started asking themselves",
+                "many hospitals have started questioning",
+                "many hospitals began considering",
+                "many hospitals began thinking about",
+                "many hospitals began wondering",
+                "many hospitals began asking",
+                "many hospitals began asking themselves",
+                "many hospitals began questioning",
+                "many hospitals started considering",
+                "many hospitals started thinking about",
+                "many hospitals started wondering",
+                "many hospitals started asking",
+                "many hospitals started asking themselves",
+                "many hospitals started questioning"
+              ],
+              "targets": [
+                "hospital",
+                "begin",
+                "consider"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "many hospitals have begun to consider about",
+                  "right": "many hospitals have begun to consider",
+                  "explanation_zh": "consider 是及物動詞，後面直接接 whether 子句，不加 about。"
+                },
+                {
+                  "wrong": "many hospitals have began to consider",
+                  "right": "many hospitals have begun to consider",
+                  "explanation_zh": "begin 的過去分詞是 begun：have begun。"
+                }
+              ]
+            },
+            {
+              "zh": "低薪是否為",
+              "accepted": [
+                "whether low pay is",
+                "whether low wages are",
+                "whether low salaries are",
+                "whether low pay might be",
+                "whether low wages might be",
+                "whether low salaries might be",
+                "whether poor pay is",
+                "whether low pay may be",
+                "whether low wages may be",
+                "whether the low pay is",
+                "whether the low wages are",
+                "whether low pay is really",
+                "if low pay is",
+                "if low wages are",
+                "if low salaries are",
+                "if low pay might be",
+                "if low wages might be",
+                "if low salaries might be",
+                "if poor pay is",
+                "if low pay may be",
+                "if low wages may be",
+                "if the low pay is",
+                "if the low wages are",
+                "if low pay is really"
+              ],
+              "targets": [
+                "NCL",
+                "low",
+                "pay"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "whether is low pay",
+                  "right": "whether low pay is",
+                  "explanation_zh": "間接問句用直述句語序：whether + 主詞 + 動詞（whether low pay is …）。"
+                },
+                {
+                  "wrong": "whether low pay are",
+                  "right": "whether low pay is",
+                  "explanation_zh": "pay（薪資）是不可數名詞，動詞用 is。"
+                }
+              ]
+            },
+            {
+              "zh": "護理師離職的主要原因",
+              "accepted": [
+                "the main reason why nurses quit",
+                "the main reason nurses quit",
+                "the main reason that nurses quit",
+                "the main reason why nurses leave their jobs",
+                "the main reason nurses leave their jobs",
+                "the main reason why nurses resign",
+                "the main reason nurses resign",
+                "the main reason why nurses are quitting",
+                "the main reason nurses are quitting",
+                "the main reason why nurses are leaving",
+                "the main reason for nurses quitting",
+                "the main reason for nurses leaving their jobs",
+                "the main reason for nurses' resignations",
+                "the main cause of nurses quitting",
+                "the main cause of nurses leaving their jobs",
+                "the main cause of nurses' resignations",
+                "the main reason why nurses quit their jobs",
+                "the main reason nurses quit their jobs",
+                "the main reason why nurses leave",
+                "the main reason nurses leave",
+                "the main reason that nurses leave",
+                "the main reason that nurses leave their jobs",
+                "the main reason that nurses resign",
+                "the main reason for nurses resigning",
+                "the main reason for nurses leaving",
+                "the main reason why nurses leave the profession",
+                "the main reason nurses leave the profession",
+                "the main reason for nurses quitting their jobs",
+                "the main cause of nurses resigning",
+                "the major reason why nurses quit",
+                "the major reason nurses quit",
+                "the major reason that nurses quit",
+                "the major reason why nurses leave their jobs",
+                "the major reason nurses leave their jobs",
+                "the major reason why nurses resign",
+                "the major reason nurses resign",
+                "the major reason why nurses are quitting",
+                "the major reason nurses are quitting",
+                "the major reason why nurses are leaving",
+                "the major reason for nurses quitting",
+                "the major reason for nurses leaving their jobs",
+                "the major reason for nurses' resignations",
+                "the major cause of nurses quitting",
+                "the major cause of nurses leaving their jobs",
+                "the major cause of nurses' resignations",
+                "the major reason why nurses quit their jobs",
+                "the major reason nurses quit their jobs",
+                "the major reason why nurses leave",
+                "the major reason nurses leave",
+                "the major reason that nurses leave",
+                "the major reason that nurses leave their jobs",
+                "the major reason that nurses resign",
+                "the major reason for nurses resigning",
+                "the major reason for nurses leaving",
+                "the major reason why nurses leave the profession",
+                "the major reason nurses leave the profession",
+                "the major reason for nurses quitting their jobs",
+                "the major cause of nurses resigning",
+                "the primary reason why nurses quit",
+                "the primary reason nurses quit",
+                "the primary reason that nurses quit",
+                "the primary reason why nurses leave their jobs",
+                "the primary reason nurses leave their jobs",
+                "the primary reason why nurses resign",
+                "the primary reason nurses resign",
+                "the primary reason why nurses are quitting",
+                "the primary reason nurses are quitting",
+                "the primary reason why nurses are leaving",
+                "the primary reason for nurses quitting",
+                "the primary reason for nurses leaving their jobs",
+                "the primary reason for nurses' resignations",
+                "the primary cause of nurses quitting",
+                "the primary cause of nurses leaving their jobs",
+                "the primary cause of nurses' resignations",
+                "the primary reason why nurses quit their jobs",
+                "the primary reason nurses quit their jobs",
+                "the primary reason why nurses leave",
+                "the primary reason nurses leave",
+                "the primary reason that nurses leave",
+                "the primary reason that nurses leave their jobs",
+                "the primary reason that nurses resign",
+                "the primary reason for nurses resigning",
+                "the primary reason for nurses leaving",
+                "the primary reason why nurses leave the profession",
+                "the primary reason nurses leave the profession",
+                "the primary reason for nurses quitting their jobs",
+                "the primary cause of nurses resigning",
+                "the chief reason why nurses quit",
+                "the chief reason nurses quit",
+                "the chief reason that nurses quit",
+                "the chief reason why nurses leave their jobs",
+                "the chief reason nurses leave their jobs",
+                "the chief reason why nurses resign",
+                "the chief reason nurses resign",
+                "the chief reason why nurses are quitting",
+                "the chief reason nurses are quitting",
+                "the chief reason why nurses are leaving",
+                "the chief reason for nurses quitting",
+                "the chief reason for nurses leaving their jobs",
+                "the chief reason for nurses' resignations",
+                "the chief cause of nurses quitting",
+                "the chief cause of nurses leaving their jobs",
+                "the chief cause of nurses' resignations",
+                "the chief reason why nurses quit their jobs",
+                "the chief reason nurses quit their jobs",
+                "the chief reason why nurses leave",
+                "the chief reason nurses leave",
+                "the chief reason that nurses leave",
+                "the chief reason that nurses leave their jobs",
+                "the chief reason that nurses resign",
+                "the chief reason for nurses resigning",
+                "the chief reason for nurses leaving",
+                "the chief reason why nurses leave the profession",
+                "the chief reason nurses leave the profession",
+                "the chief reason for nurses quitting their jobs",
+                "the chief cause of nurses resigning",
+                "the biggest reason why nurses quit",
+                "the biggest reason nurses quit",
+                "the biggest reason that nurses quit",
+                "the biggest reason why nurses leave their jobs",
+                "the biggest reason nurses leave their jobs",
+                "the biggest reason why nurses resign",
+                "the biggest reason nurses resign",
+                "the biggest reason why nurses are quitting",
+                "the biggest reason nurses are quitting",
+                "the biggest reason why nurses are leaving",
+                "the biggest reason for nurses quitting",
+                "the biggest reason for nurses leaving their jobs",
+                "the biggest reason for nurses' resignations",
+                "the biggest cause of nurses quitting",
+                "the biggest cause of nurses leaving their jobs",
+                "the biggest cause of nurses' resignations",
+                "the biggest reason why nurses quit their jobs",
+                "the biggest reason nurses quit their jobs",
+                "the biggest reason why nurses leave",
+                "the biggest reason nurses leave",
+                "the biggest reason that nurses leave",
+                "the biggest reason that nurses leave their jobs",
+                "the biggest reason that nurses resign",
+                "the biggest reason for nurses resigning",
+                "the biggest reason for nurses leaving",
+                "the biggest reason why nurses leave the profession",
+                "the biggest reason nurses leave the profession",
+                "the biggest reason for nurses quitting their jobs",
+                "the biggest cause of nurses resigning"
+              ],
+              "targets": [
+                "main",
+                "reason",
+                "nurse",
+                "quit"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "the main reason of nurses quitting",
+                  "right": "the main reason for nurses quitting",
+                  "explanation_zh": "reason 搭配 for 或 why：the main reason for nurses quitting／the main reason why nurses quit。"
+                },
+                {
+                  "wrong": "the main reason why do nurses quit",
+                  "right": "the main reason why nurses quit",
+                  "explanation_zh": "why 引導的關係子句用直述句語序：the main reason why nurses quit。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "abstract_nominal",
+              "zh": "人力短缺",
+              "literal_error": "Facing a severe human power shortage, …",
+              "part": 1,
+              "explanation_zh": "「人力短缺」是複合概念，英文是 a shortage of staff／manpower；照字面把「人力」譯成 human power 意思不對。"
+            },
+            {
+              "type": "word_form",
+              "zh": "是否為",
+              "literal_error": "… many hospitals have begun to consider whether is low pay the main reason …",
+              "part": 3,
+              "explanation_zh": "「是否為…」照疑問句語序寫成 whether is low pay … 是錯的；間接問句要用直述句語序 whether low pay is …。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "Faced with a severe shortage of staff, many hospitals are asking themselves whether it is low pay that drives nurses away.",
+              "grammar_id": "gp-cleft",
+              "explanation_zh": "用強調句 it is low pay that … 聚焦「低薪」這個可能的主因，drive … away（把人逼走）比 quit 更生動。屬加分寫法，不是唯一正解。"
+            }
+          ],
+          "restructuring_zh": "「面對…」省略的主詞就是後面的「許多醫院」，用分詞構句 Facing a severe shortage of staff,；「思考…是否…」是間接問句，whether 後面用直述句語序 low pay is …；「護理師離職的主要原因」寫成 the main reason (why) nurses quit。",
+          "notes_zh": "第 1 部分 Facing 和 Faced with 都可以；「人力短缺」寫 a shortage of staff／manpower／nurses 都可以。第 3 部分 whether 也可用 if。第 4 部分寫 the main reason why nurses quit、the main reason for nurses leaving their jobs、the main cause of nurses quitting 都可以。寫成 Because of a severe shortage of staff, … 沒有用到分詞構句，不在可接受寫法內。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ac-V-3",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-top-07",
+    "lot": "translation-top-07",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "727f3c696b5eb6e7923442d5861775b3b6c73b73c5d622f70692eba105fc5008",
+    "spec_id": "translation-top@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-10T02:47:53Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-10T00:00:00Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "In hospitals where each nurse has to take care of more than ten patients, it is very difficult for nurses to leave work on time.",
+            "confidence": "high",
+            "explanation_zh": "「在每位護理師得照顧…的醫院」用關係副詞 where 修飾 hospitals；「對護理師來說，要準時下班非常困難」用 it is very difficult for … to …；「準時下班」用 leave work on time。"
+          },
+          "2": {
+            "translation": "Faced with a serious staff shortage, many hospitals have begun to consider whether low pay is the main reason why nurses quit their jobs.",
+            "confidence": "high",
+            "explanation_zh": "「面對」用 Faced with；「開始思考是否」用 have begun to consider whether；「護理師離職的主要原因」用 the main reason why nurses quit their jobs。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "REL",
+              "NFSUBJ"
+            ],
+            "used_target_words": [
+              "hospital",
+              "nurse",
+              "care",
+              "patient",
+              "difficult",
+              "finish",
+              "shift",
+              "time"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "NCL",
+              "PART"
+            ],
+            "used_target_words": [
+              "face",
+              "severe",
+              "shortage",
+              "staff",
+              "hospital",
+              "begin",
+              "consider",
+              "low",
+              "pay",
+              "main",
+              "reason",
+              "nurse",
+              "quit"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "hospital",
+              "nurse",
+              "care",
+              "patient",
+              "difficult",
+              "finish",
+              "shift",
+              "time"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "REL": true,
+              "NFSUBJ": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "face",
+              "severe",
+              "shortage",
+              "staff",
+              "hospital",
+              "begin",
+              "consider",
+              "low",
+              "pay",
+              "main",
+              "reason",
+              "nurse",
+              "quit"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NCL": true,
+              "PART": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-10T02:37:45Z",
+      "details": {
+        "solver": "B",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "In hospitals where each nurse has to take care of more than ten patients, it is very difficult for nurses to get off work on time.",
+            "confidence": "high",
+            "explanation_zh": "「在……的醫院」用 In hospitals where ...；「得照顧十多位病人」用 has to take care of more than ten patients；「對護理師來說，要……非常困難」用虛主詞 it is very difficult for nurses to ...；「準時下班」get off work on time。"
+          },
+          "2": {
+            "translation": "Faced with a serious shortage of staff, many hospitals have begun to wonder whether low pay is the main reason why nurses quit their jobs.",
+            "confidence": "high",
+            "explanation_zh": "「面對嚴重的人力短缺」用過去分詞構句 Faced with ...；「開始思考……是否」用 have begun to wonder whether ...；「離職的主要原因」用 the main reason why nurses quit their jobs。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "REL",
+              "NFSUBJ"
+            ],
+            "used_target_words": [
+              "hospital",
+              "nurse",
+              "care",
+              "patient",
+              "difficult",
+              "finish",
+              "shift",
+              "time"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "NCL",
+              "PART"
+            ],
+            "used_target_words": [
+              "face",
+              "severe",
+              "shortage",
+              "staff",
+              "hospital",
+              "begin",
+              "consider",
+              "low",
+              "pay",
+              "main",
+              "reason",
+              "nurse",
+              "quit"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "hospital",
+              "nurse",
+              "care",
+              "patient",
+              "difficult",
+              "finish",
+              "shift",
+              "time"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "REL": true,
+              "NFSUBJ": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "face",
+              "severe",
+              "shortage",
+              "staff",
+              "hospital",
+              "begin",
+              "consider",
+              "low",
+              "pay",
+              "main",
+              "reason",
+              "nurse",
+              "quit"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NCL": true,
+              "PART": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

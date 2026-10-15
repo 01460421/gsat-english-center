@@ -1,0 +1,765 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.01f74d",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "basic",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "在過年前打掃整個家，可以幫助我們把壞運氣掃走。",
+        "options": null,
+        "answer": "Cleaning the whole house before Chinese New Year can help us sweep away bad luck.",
+        "accepted_answers": [
+          "Cleaning the entire house before the Lunar New Year helps us get rid of bad luck.",
+          "Cleaning our whole home before the Lunar New Year can help us drive bad luck away."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "動名詞片語當主詞"
+          ],
+          "topic": "年前大掃除"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "大掃除之後，我們家的客廳看起來比以前更明亮。",
+        "options": null,
+        "answer": "After the big cleaning, our living room looks brighter than before.",
+        "accepted_answers": [
+          "After we cleaned the whole house, our living room looked brighter than before.",
+          "After the year-end cleaning, the living room in our house looks brighter than it did before."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "比較級"
+          ],
+          "topic": "年前大掃除"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "年前大掃除"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「打掃整個家」是一件事，在句中當主詞，英文要用動名詞 Cleaning the whole house（或不定詞 To clean …），不能直接用原形動詞 Clean 開頭；動名詞片語當主詞視為單數，動詞用 can help 或 helps；動名詞片語後面也不能再補一個 it 當主詞。「過年前」是 before Chinese New Year 或 before the Lunar New Year，節日名稱字首大寫。「幫助我們把壞運氣掃走」用 help us + 原形動詞（或 to + 原形動詞）：help us sweep away bad luck；luck 是不可數名詞，不加 s。",
+          "evidence": [
+            "打掃整個家",
+            "可以幫助我們"
+          ],
+          "strategy_zh": "中文主詞是一個動作（打掃、運動、學…）時，英文先想動名詞 V-ing 開頭，後面的動詞用單數。",
+          "hints": [
+            "切成四段：在過年前／打掃整個家／可以幫助我們／把壞運氣掃走",
+            "標的詞彙：clean（打掃）、house（房子）、New Year（新年）、help（幫助）、sweep away（掃走）、luck（運氣）",
+            "句型框架：V-ing … + can help／helps + us + 原形動詞 …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「比以前更明亮」是比較級：單音節形容詞 bright 加 -er 變成 brighter，後面接 than before；「更」已經包含在比較級裡，不能再加 more（× more brighter）。「看起來」是連綴動詞 look，後面直接接形容詞（looks brighter），不要寫成 looks like brighter；主詞 our living room 是單數，現在式用 looks，敘述當時也可以用 looked。「客廳」是 living room，「大掃除之後」可寫 After the big cleaning 或 After we cleaned the whole house。",
+          "evidence": [
+            "比以前更明亮",
+            "看起來"
+          ],
+          "strategy_zh": "看到「比…更＋形容詞」先判斷音節：短的加 -er，長的用 more，兩者不能同時用。",
+          "hints": [
+            "切成四段：大掃除之後／我們家的客廳／看起來／比以前更明亮",
+            "標的詞彙：clean（打掃）、living room（客廳）、look（看起來）、bright（明亮的）",
+            "句型框架：After …, S + looks + 形容詞-er + than before"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "Cleaning the whole house before Chinese New Year can help us sweep away bad luck.",
+            "Cleaning the entire house before the Lunar New Year helps us get rid of bad luck.",
+            "Cleaning our whole home before the Lunar New Year can help us drive bad luck away."
+          ],
+          "target_words": [
+            {
+              "word": "clean",
+              "zh": "打掃"
+            },
+            {
+              "word": "house",
+              "zh": "家（房子）",
+              "alternatives": [
+                "home"
+              ]
+            },
+            {
+              "word": "New Year",
+              "zh": "（農曆）新年",
+              "alternatives": [
+                "Spring Festival"
+              ]
+            },
+            {
+              "word": "help",
+              "zh": "幫助"
+            },
+            {
+              "word": "sweep",
+              "zh": "掃（走）",
+              "alternatives": [
+                "get rid of",
+                "drive",
+                "chase",
+                "clear",
+                "remove"
+              ]
+            },
+            {
+              "word": "luck",
+              "zh": "運氣"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "NFSUBJ",
+              "grammar_id": "gp-gerund-subject",
+              "label_zh": "動名詞片語當主詞（不定詞 To clean … 當主詞也屬同一句型）",
+              "frame": "V-ing … + can help／helps + 人 + 原形動詞 …",
+              "zh_trigger": "打掃整個家，可以幫助"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "在過年前",
+              "accepted": [
+                "before Chinese New Year",
+                "before the Lunar New Year",
+                "before the Chinese New Year",
+                "before Lunar New Year",
+                "before the Spring Festival",
+                "before the New Year",
+                "before New Year",
+                "before Chinese New Year comes",
+                "before the Lunar New Year comes",
+                "before the Chinese New Year holiday",
+                "before the New Year holiday"
+              ],
+              "targets": [
+                "New Year"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "before the Chinese New Years",
+                  "right": "before Chinese New Year",
+                  "explanation_zh": "Chinese New Year 是一個節日的名稱，Year 不加 s；節日名稱每個字的字首都要大寫。"
+                },
+                {
+                  "wrong": "before pass the New Year",
+                  "right": "before Chinese New Year",
+                  "explanation_zh": "「過年」指農曆新年這個節日，直接寫 Chinese New Year 或 the Lunar New Year，不要逐字翻成 pass；before 後面接名詞。"
+                }
+              ]
+            },
+            {
+              "zh": "打掃整個家",
+              "accepted": [
+                "Cleaning the whole house",
+                "Cleaning the entire house",
+                "Cleaning our whole home",
+                "Cleaning our whole house",
+                "Cleaning the whole home",
+                "Cleaning our entire house",
+                "Cleaning up the whole house",
+                "Cleaning the house",
+                "Cleaning our house",
+                "Cleaning our home",
+                "Cleaning every corner of the house",
+                "Doing a thorough cleaning of the whole house",
+                "Giving the whole house a thorough cleaning",
+                "To clean the whole house",
+                "To clean the entire house"
+              ],
+              "targets": [
+                "clean",
+                "house",
+                "NFSUBJ"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Clean the whole house",
+                  "right": "Cleaning the whole house",
+                  "explanation_zh": "原形動詞不能當主詞；「打掃整個家」當主詞要改成動名詞 Cleaning …（或不定詞 To clean …）。"
+                },
+                {
+                  "wrong": "Cleaning the whole family",
+                  "right": "Cleaning the whole house",
+                  "explanation_zh": "這裡的「家」是房子，用 house 或 home；family 是家人。"
+                },
+                {
+                  "wrong": "Cleaning the all house",
+                  "right": "Cleaning the whole house",
+                  "explanation_zh": "「整個」修飾單數名詞用 the whole 或 the entire，all 不放在 the 後面。"
+                }
+              ]
+            },
+            {
+              "zh": "可以幫助我們",
+              "accepted": [
+                "can help us",
+                "helps us",
+                "will help us",
+                "could help us",
+                "may help us",
+                "can help",
+                "helps"
+              ],
+              "targets": [
+                "help"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Cleaning the whole house … help us",
+                  "right": "Cleaning the whole house … helps us",
+                  "explanation_zh": "動名詞片語當主詞視為單數，現在式動詞要加 s；或用助動詞寫成 can help us。"
+                },
+                {
+                  "wrong": "can helps us",
+                  "right": "can help us",
+                  "explanation_zh": "助動詞 can 後面接原形動詞。"
+                },
+                {
+                  "wrong": "Cleaning the whole house before Chinese New Year, it can help us",
+                  "right": "Cleaning the whole house before Chinese New Year can help us",
+                  "explanation_zh": "動名詞片語已經是主詞，後面不能再加 it 當第二個主詞。"
+                }
+              ]
+            },
+            {
+              "zh": "把壞運氣掃走",
+              "accepted": [
+                "sweep away bad luck",
+                "sweep bad luck away",
+                "to sweep away bad luck",
+                "to sweep bad luck away",
+                "sweep away the bad luck",
+                "sweep the bad luck away",
+                "sweep out bad luck",
+                "sweep bad luck out of the house",
+                "get rid of bad luck",
+                "to get rid of bad luck",
+                "get rid of the bad luck",
+                "drive away bad luck",
+                "drive bad luck away",
+                "to drive away bad luck",
+                "chase away bad luck",
+                "chase bad luck away",
+                "clear away bad luck",
+                "remove bad luck"
+              ],
+              "targets": [
+                "sweep",
+                "luck"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "sweep away bad lucks",
+                  "right": "sweep away bad luck",
+                  "explanation_zh": "luck 是不可數名詞，不加 s。"
+                },
+                {
+                  "wrong": "sweeping away bad luck",
+                  "right": "sweep away bad luck",
+                  "explanation_zh": "help 後面接原形動詞或 to + 原形動詞，不接 V-ing。"
+                },
+                {
+                  "wrong": "sweep away bad lucky",
+                  "right": "sweep away bad luck",
+                  "explanation_zh": "lucky 是形容詞；「運氣」是名詞 luck。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "verbal_subject",
+              "zh": "打掃整個家",
+              "literal_error": "Clean the whole house before Chinese New Year can help us sweep away bad luck.",
+              "part": 2,
+              "explanation_zh": "中文可以直接拿動詞片語「打掃整個家」當主詞，照字面寫成原形動詞 Clean … 當主詞是錯的，要改成動名詞 Cleaning …，這一部分扣分。"
+            }
+          ],
+          "bonus": [],
+          "notes_zh": "動名詞 Cleaning … 當主詞是首選；不定詞 To clean the whole house … 當主詞同屬本題句型（非限定動詞片語當主詞），也給分。主詞視為單數，所以寫 helps us 或 can help us。「過年」寫 Chinese New Year、the Lunar New Year、the Spring Festival 都可以；「家」用 house 或 home；「掃走」寫 sweep away、get rid of、drive away 都可以；help 後面接原形動詞或 to + 原形動詞都對。"
+        },
+        "2": {
+          "references": [
+            "After the big cleaning, our living room looks brighter than before.",
+            "After we cleaned the whole house, our living room looked brighter than before.",
+            "After the year-end cleaning, the living room in our house looks brighter than it did before."
+          ],
+          "target_words": [
+            {
+              "word": "clean",
+              "zh": "打掃（大掃除）",
+              "alternatives": [
+                "cleanup"
+              ]
+            },
+            {
+              "word": "living room",
+              "zh": "客廳"
+            },
+            {
+              "word": "look",
+              "zh": "看起來",
+              "alternatives": [
+                "seem",
+                "appear"
+              ]
+            },
+            {
+              "word": "bright",
+              "zh": "明亮的",
+              "alternatives": [
+                "light"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "COMP",
+              "grammar_id": "gp-comparative-superlative",
+              "label_zh": "比較級（形容詞-er + than）",
+              "frame": "S + look(s) + 形容詞-er + than before",
+              "zh_trigger": "比以前更明亮"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "大掃除之後",
+              "accepted": [
+                "After the big cleaning",
+                "After the cleaning",
+                "After the big clean-up",
+                "After the big cleanup",
+                "After the cleanup",
+                "After the clean-up",
+                "After the year-end cleaning",
+                "After the thorough cleaning",
+                "After a thorough cleaning",
+                "After our big cleaning",
+                "After the spring cleaning",
+                "After the general cleaning",
+                "After the house cleaning",
+                "After cleaning the whole house",
+                "After cleaning the house",
+                "After we cleaned the whole house",
+                "After we cleaned the house",
+                "After we did the big cleaning",
+                "After we finished the big cleaning",
+                "After we finished cleaning",
+                "After we had cleaned the whole house",
+                "After the big cleaning was done"
+              ],
+              "targets": [
+                "clean"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "After clean the house",
+                  "right": "After cleaning the house",
+                  "explanation_zh": "after 當介系詞時後面接名詞或動名詞，不接原形動詞（或寫成子句 After we cleaned the house）。"
+                },
+                {
+                  "wrong": "After cleaned the house",
+                  "right": "After cleaning the house",
+                  "explanation_zh": "after 後面要接名詞、動名詞，或有主詞的子句（After we cleaned the house）；不能直接接過去式動詞。"
+                }
+              ]
+            },
+            {
+              "zh": "我們家的客廳",
+              "accepted": [
+                "our living room",
+                "the living room in our house",
+                "the living room of our house",
+                "the living room in our home",
+                "the living room at our house",
+                "the living room in my house",
+                "the living room of our home",
+                "the living room at home",
+                "my family's living room",
+                "our family's living room",
+                "the living room"
+              ],
+              "targets": [
+                "living room"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "our leaving room",
+                  "right": "our living room",
+                  "explanation_zh": "客廳是 living room，living 不要拼成 leaving（離開）。"
+                },
+                {
+                  "wrong": "the living room in our family",
+                  "right": "the living room in our house",
+                  "explanation_zh": "這裡的「家」是房子，用 house 或 home；family 指家人。"
+                },
+                {
+                  "wrong": "our guest room",
+                  "right": "our living room",
+                  "explanation_zh": "guest room 是「客房」（給客人住的房間）；「客廳」是 living room。"
+                }
+              ]
+            },
+            {
+              "zh": "看起來",
+              "accepted": [
+                "looks",
+                "looked",
+                "seems",
+                "seemed",
+                "appears",
+                "appeared"
+              ],
+              "targets": [
+                "look"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "looks like brighter",
+                  "right": "looks brighter",
+                  "explanation_zh": "look 後面直接接形容詞；look like 後面才接名詞。"
+                },
+                {
+                  "wrong": "our living room look brighter",
+                  "right": "our living room looks brighter",
+                  "explanation_zh": "主詞 our living room 是單數，現在式動詞要加 s（也可以用過去式 looked）。"
+                }
+              ]
+            },
+            {
+              "zh": "比以前更明亮",
+              "accepted": [
+                "brighter than before",
+                "even brighter than before",
+                "much brighter than before",
+                "a lot brighter than before",
+                "far brighter than before",
+                "brighter than it did before",
+                "brighter than it was before",
+                "brighter than it used to",
+                "brighter than it used to be",
+                "brighter than in the past",
+                "brighter than it did in the past",
+                "lighter than before",
+                "much lighter than before",
+                "brighter than ever",
+                "brighter than ever before"
+              ],
+              "targets": [
+                "bright",
+                "COMP"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "more brighter than before",
+                  "right": "brighter than before",
+                  "explanation_zh": "brighter 已經是比較級，前面不能再加 more。"
+                },
+                {
+                  "wrong": "more bright than before",
+                  "right": "brighter than before",
+                  "explanation_zh": "bright 是單音節形容詞，比較級直接加 -er：brighter。"
+                },
+                {
+                  "wrong": "brighter than past",
+                  "right": "brighter than before",
+                  "explanation_zh": "「以前」用 before，或寫 than in the past；past 不能直接接在 than 後面。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "word_form",
+              "zh": "更明亮",
+              "literal_error": "After the big cleaning, our living room looks more brighter than before.",
+              "part": 4,
+              "explanation_zh": "「更」很容易被照字面翻成 more，和比較級 brighter 疊在一起變成 more brighter（雙重比較級），這一部分扣分。"
+            }
+          ],
+          "bonus": [],
+          "notes_zh": "「看起來」用 looks（說現在的樣子）或 looked（敘述當時）都可以；「大掃除之後」寫成名詞 After the big cleaning、動名詞 After cleaning the house 或子句 After we cleaned the whole house 都給分。「更明亮」寫 brighter、even／much brighter 都可以，重點是 bright 的比較級加 -er，不可寫 more brighter。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-basic-06",
+    "lot": "translation-basic-06",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "74610382a1bd05ddcaec0c8ea0cac0b6d7492107d98401c668fa0d6e9642273c",
+    "spec_id": "translation-basic@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-10T02:30:55Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-10T02:15:00Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Cleaning the whole house before the Lunar New Year can help us sweep away bad luck.",
+            "confidence": "high",
+            "explanation_zh": "「打掃整個家」是整句主詞，用動名詞 Cleaning 當主詞；「過年」譯 the Lunar New Year（也可用 Chinese New Year）；「把壞運氣掃走」用片語動詞 sweep away bad luck，help us 後接原形動詞。一般事實用現在式＋can。"
+          },
+          "2": {
+            "translation": "After the big cleanup, our living room looks brighter than before.",
+            "confidence": "medium",
+            "explanation_zh": "「比以前更明亮」用比較級 brighter than before，「看起來」用連綴動詞 look＋形容詞。時態取現在式（描述大掃除後的現況）；若情境是過去事件，looked brighter than it had before 也合理，中文沒有標時間，這是時態上的小歧義。「大掃除」用 the big cleanup，也可寫 the thorough cleaning。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "NFSUBJ"
+            ],
+            "used_target_words": [
+              "clean",
+              "house",
+              "New Year",
+              "help",
+              "sweep",
+              "luck"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "COMP"
+            ],
+            "used_target_words": [
+              "clean",
+              "living room",
+              "look",
+              "bright"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "clean",
+              "house",
+              "New Year",
+              "help",
+              "sweep",
+              "luck"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NFSUBJ": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "clean",
+              "living room",
+              "look",
+              "bright"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "COMP": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-10T02:14:07Z",
+      "details": {
+        "solver": "B",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Cleaning the whole house before the Lunar New Year can help us sweep away bad luck.",
+            "confidence": "high",
+            "explanation_zh": "主詞是「打掃整個家」，用動名詞片語 Cleaning the whole house 當主詞最自然；「過年」譯成 the Lunar New Year（或 Chinese New Year）；「可以幫助我們把壞運氣掃走」用 can help us (to) sweep away bad luck，sweep away 同時呼應掃地與驅走壞運。"
+          },
+          "2": {
+            "translation": "After the big spring cleaning, the living room in our house looks brighter than before.",
+            "confidence": "high",
+            "explanation_zh": "「大掃除」可譯 the big cleanup／spring cleaning／the thorough cleaning；「看起來」用 look + 形容詞，現在簡單式；「比以前更明亮」用比較級 brighter than before（than it did before 亦可）。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "NFSUBJ"
+            ],
+            "used_target_words": [
+              "clean",
+              "house",
+              "New Year",
+              "help",
+              "sweep",
+              "luck"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "COMP"
+            ],
+            "used_target_words": [
+              "clean",
+              "living room",
+              "look",
+              "bright"
+            ],
+            "within_accepted": true,
+            "closest_reference": 2,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "clean",
+              "house",
+              "New Year",
+              "help",
+              "sweep",
+              "luck"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NFSUBJ": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "clean",
+              "living room",
+              "look",
+              "bright"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "COMP": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

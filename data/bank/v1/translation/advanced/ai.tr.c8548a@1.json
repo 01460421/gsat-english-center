@@ -1,0 +1,874 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.c8548a",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "advanced",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "在為期三天的阿美族（Amis）豐年祭（Ilisin）中，我不但學會了圓圈舞，也交到新朋友。",
+        "options": null,
+        "answer": "During the three-day Amis harvest festival, I not only learned the circle dance but also made new friends.",
+        "accepted_answers": [
+          "At the three-day Amis Ilisin, I not only learned how to do the circle dance but also made some new friends.",
+          "I not only learned the circle dance but also made new friends during the three-day Ilisin festival of the Amis."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "複合形容詞（數字－名詞）",
+            "不但…而且…（not only … but also）"
+          ],
+          "topic": "阿美族豐年祭"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "熱鬧的圓圈舞常讓遊客十分興奮，豐年祭也正成為熱門的觀光活動。",
+        "options": null,
+        "answer": "The lively circle dances often make tourists very excited, and the harvest festival is also becoming a popular tourist attraction.",
+        "accepted_answers": [
+          "The lively circle dance often makes visitors very excited, and Ilisin is also becoming a popular tourist event.",
+          "The festive circle dances often make visitors extremely excited, and the harvest festival is also turning into a popular tourist event."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "S + V + O + OC（make + 受詞 + 形容詞）",
+            "現在進行式描述趨勢"
+          ],
+          "topic": "阿美族豐年祭"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "阿美族豐年祭"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「為期三天的豐年祭」用複合形容詞 three-day：數字和名詞用連字號連起來，名詞用單數，放在 festival 前面。「不但…也…」用 not only … but also …，兩邊連接同樣形式的動詞片語：not only learned … but also made …。說的是過去的經驗，動詞用過去式；「交朋友」的搭配是 make friends。",
+          "evidence": [
+            "為期三天的",
+            "不但學會了圓圈舞，也交到新朋友"
+          ],
+          "strategy_zh": "「為期 N 天／N 歲的」想到「數字-名詞單數」複合形容詞；not only 和 but also 後面要接同樣詞性的字或片語。",
+          "hints": [
+            "切成四段：在為期三天的阿美族（Amis）豐年祭（Ilisin）中／我不但學會了／圓圈舞／也交到新朋友",
+            "標的詞彙：learn（學會，L1）、circle（圓圈，L1）、dance（舞蹈，L1）、new（新的，L1）、friend（朋友，L1）",
+            "句型框架：During the + 數字-名詞單數 + N, S + not only + V-ed … but also + V-ed …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「讓遊客十分興奮」是 S + make + 受詞 + 受詞補語（形容詞）：make tourists very excited；遊客「感到興奮」用 excited，不是 exciting，也不要寫成 let tourists excited。「也正成為」說的是正在發生的趨勢，用現在進行式 is also becoming。「熱門的觀光活動」是 a popular tourist attraction（或 event、activity）。",
+          "evidence": [
+            "讓遊客十分興奮",
+            "也正成為熱門的觀光活動"
+          ],
+          "strategy_zh": "「讓＋人＋感覺」想到 make + O + adj.；看到「正在／正…」描述趨勢，用 be + V-ing。",
+          "hints": [
+            "切成四段：熱鬧的圓圈舞／常讓遊客十分興奮／豐年祭也正成為／熱門的觀光活動",
+            "標的詞彙：lively（熱鬧的，L3）、circle（圓圈，L1）、dance（舞蹈，L1）、tourist（遊客，L3）、excited（興奮的，L1）、popular（熱門的，L1）",
+            "句型框架：S + often make + O + adj., and S + is also becoming + N"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "During the three-day Amis harvest festival, I not only learned the circle dance but also made new friends.",
+            "At the three-day Amis Ilisin, I not only learned how to do the circle dance but also made some new friends.",
+            "I not only learned the circle dance but also made new friends during the three-day Ilisin festival of the Amis."
+          ],
+          "target_words": [
+            {
+              "word": "learn",
+              "zh": "學會"
+            },
+            {
+              "word": "circle",
+              "zh": "圓圈"
+            },
+            {
+              "word": "dance",
+              "zh": "舞蹈"
+            },
+            {
+              "word": "new",
+              "zh": "新的"
+            },
+            {
+              "word": "friend",
+              "zh": "朋友"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "BASIC",
+              "grammar_id": "gp-compound-adj",
+              "label_zh": "複合形容詞（數字－名詞單數：three-day）",
+              "frame": "the / a + 數字-名詞單數 + N（the three-day festival）",
+              "zh_trigger": "為期三天的"
+            },
+            {
+              "code": "CORR",
+              "grammar_id": "gp-not-only-but-also",
+              "label_zh": "不但…而且…（not only … but also …）",
+              "frame": "S + not only + V1 … but also + V2 …",
+              "zh_trigger": "不但"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "在為期三天的阿美族（Amis）豐年祭（Ilisin）中",
+              "accepted": [
+                "During the three-day Amis harvest festival",
+                "At the three-day Amis Ilisin",
+                "during the three-day Ilisin festival of the Amis",
+                "During the three-day Ilisin",
+                "At the three-day Ilisin festival",
+                "During the three-day Amis Ilisin",
+                "At the three-day Amis harvest festival",
+                "During the three-day harvest festival of the Amis",
+                "During the Amis' three-day harvest festival",
+                "At the Amis' three-day Ilisin",
+                "During the three-day Ilisin festival",
+                "At the three-day Ilisin",
+                "During the three-day Amis Ilisin festival",
+                "At the three-day Ilisin harvest festival of the Amis",
+                "During the three-day Ilisin of the Amis",
+                "During the three-day Ilisin harvest festival",
+                "During the 3-day Amis harvest festival",
+                "During the 3-day Amis Ilisin",
+                "During the 3-day Ilisin",
+                "During the 3-day Ilisin festival",
+                "During the 3-day Amis Ilisin festival",
+                "During the 3-day Ilisin of the Amis",
+                "During the 3-day Ilisin festival of the Amis",
+                "During the 3-day harvest festival of the Amis",
+                "During the 3-day Ilisin harvest festival",
+                "At the three-day Amis Ilisin festival",
+                "At the three-day Ilisin of the Amis",
+                "At the three-day Ilisin festival of the Amis",
+                "At the three-day harvest festival of the Amis",
+                "At the three-day Ilisin harvest festival",
+                "At the 3-day Amis harvest festival",
+                "At the 3-day Amis Ilisin",
+                "At the 3-day Ilisin",
+                "At the 3-day Ilisin festival",
+                "At the 3-day Amis Ilisin festival",
+                "At the 3-day Ilisin of the Amis",
+                "At the 3-day Ilisin festival of the Amis",
+                "At the 3-day harvest festival of the Amis",
+                "At the 3-day Ilisin harvest festival",
+                "In the three-day Amis harvest festival",
+                "In the three-day Amis Ilisin",
+                "In the three-day Ilisin",
+                "In the three-day Ilisin festival",
+                "In the three-day Amis Ilisin festival",
+                "In the three-day Ilisin of the Amis",
+                "In the three-day Ilisin festival of the Amis",
+                "In the three-day harvest festival of the Amis",
+                "In the three-day Ilisin harvest festival",
+                "In the 3-day Amis harvest festival",
+                "In the 3-day Amis Ilisin",
+                "In the 3-day Ilisin",
+                "In the 3-day Ilisin festival",
+                "In the 3-day Amis Ilisin festival",
+                "In the 3-day Ilisin of the Amis",
+                "In the 3-day Ilisin festival of the Amis",
+                "In the 3-day harvest festival of the Amis",
+                "In the 3-day Ilisin harvest festival",
+                "During the Amis' three-day Ilisin",
+                "During the Amis' three-day Ilisin festival",
+                "At the Amis' three-day harvest festival",
+                "At the Amis' three-day Ilisin festival"
+              ],
+              "targets": [
+                "BASIC"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "During the three-days Amis harvest festival",
+                  "right": "During the three-day Amis harvest festival",
+                  "explanation_zh": "「數字－名詞」當形容詞時名詞用單數：three-day，不加 s。"
+                },
+                {
+                  "wrong": "During the three days Amis harvest festival",
+                  "right": "During the three-day Amis harvest festival",
+                  "explanation_zh": "three days 是名詞片語，不能直接放在名詞前面當形容詞；要用連字號寫成 three-day。"
+                }
+              ]
+            },
+            {
+              "zh": "我不但學會了",
+              "accepted": [
+                "I not only learned",
+                "I not only learnt"
+              ],
+              "targets": [
+                "CORR",
+                "learn"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "I not only learn",
+                  "right": "I not only learned",
+                  "explanation_zh": "說的是參加豐年祭當時的經驗，用過去式 learned。"
+                },
+                {
+                  "wrong": "not only I learned",
+                  "right": "I not only learned",
+                  "explanation_zh": "not only 放在要強調的動詞前面（I not only learned …）；放在句首要倒裝，一般寫法不要這樣用。"
+                }
+              ]
+            },
+            {
+              "zh": "圓圈舞",
+              "accepted": [
+                "the circle dance",
+                "how to do the circle dance",
+                "circle dances",
+                "the circle dances",
+                "how to dance the circle dance",
+                "to do the circle dance",
+                "the traditional circle dance",
+                "how to do circle dances",
+                "circle dancing",
+                "the round dance",
+                "to dance the circle dance",
+                "how to perform the circle dance",
+                "the Amis circle dance",
+                "the circle dance of the Amis"
+              ],
+              "targets": [
+                "circle",
+                "dance"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "the circle's dance",
+                  "right": "the circle dance",
+                  "explanation_zh": "「圓圈舞」是複合名詞 circle dance，circle 直接修飾 dance，不用所有格。"
+                }
+              ]
+            },
+            {
+              "zh": "也交到新朋友",
+              "accepted": [
+                "but also made new friends",
+                "but also made some new friends",
+                "but also made many new friends",
+                "but also made a new friend",
+                "but made new friends as well",
+                "but also made a few new friends",
+                "but also met new friends",
+                "but also met some new friends",
+                "but also got to know some new friends",
+                "but also made several new friends"
+              ],
+              "targets": [
+                "CORR",
+                "new",
+                "friend"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "and also made new friends",
+                  "right": "but also made new friends",
+                  "explanation_zh": "not only 要和 but also 搭配，不能換成 and also。"
+                },
+                {
+                  "wrong": "but also made new friend",
+                  "right": "but also made new friends",
+                  "explanation_zh": "friend 是可數名詞，單數要加 a（a new friend），交到好幾位就用複數 friends。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "plural_countable",
+              "zh": "為期三天的",
+              "literal_error": "During the three-days Amis harvest festival, I not only learned the circle dance but also made new friends.",
+              "part": 1,
+              "explanation_zh": "數字和名詞組成的複合形容詞，名詞一律用單數：three-day，不能寫成 three-days。"
+            },
+            {
+              "type": "collocation",
+              "zh": "也交到新朋友",
+              "literal_error": "During the three-day Amis harvest festival, I not only learned the circle dance, and also made new friends.",
+              "part": 4,
+              "explanation_zh": "「不但…也…」照字面寫成 not only … and also 是錯的搭配；not only 要配 but also。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "During the three-day Amis harvest festival, not only did I learn the circle dance, but I also made new friends.",
+              "grammar_id": "gp-not-only-inversion",
+              "explanation_zh": "Not only 放句首時要倒裝（not only did I learn …），語氣更強；這是加分寫法，一般寫法 I not only learned … 就能得滿分。"
+            }
+          ],
+          "restructuring_zh": "「為期三天的豐年祭」中文用「為期…的」修飾名詞，英文把「數字－名詞」合成形容詞 three-day 放在名詞前面（名詞 day 用單數、加連字號）。",
+          "notes_zh": "「為期三天的」寫 three-day（名詞 day 用單數、加連字號）；「阿美族豐年祭」可寫 the Amis harvest festival、the (Amis) Ilisin、the Ilisin festival of the Amis；「在…中」During 或 At 都可以，地點片語放句首或句尾都給分；「學會了圓圈舞」learned (how to do) the circle dance、learned circle dances 都可以；「新朋友」複數 new friends 或單數 a new friend 都給分。"
+        },
+        "2": {
+          "references": [
+            "The lively circle dances often make tourists very excited, and the harvest festival is also becoming a popular tourist attraction.",
+            "The lively circle dance often makes visitors very excited, and Ilisin is also becoming a popular tourist event.",
+            "The festive circle dances often make visitors extremely excited, and the harvest festival is also turning into a popular tourist event."
+          ],
+          "target_words": [
+            {
+              "word": "lively",
+              "zh": "熱鬧的",
+              "alternatives": [
+                "festive",
+                "exciting",
+                "energetic"
+              ]
+            },
+            {
+              "word": "circle",
+              "zh": "圓圈"
+            },
+            {
+              "word": "dance",
+              "zh": "舞蹈"
+            },
+            {
+              "word": "tourist",
+              "zh": "遊客",
+              "alternatives": [
+                "visitor"
+              ]
+            },
+            {
+              "word": "excited",
+              "zh": "興奮的"
+            },
+            {
+              "word": "popular",
+              "zh": "熱門的"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "VOC",
+              "grammar_id": "gp-svoc",
+              "label_zh": "S + V + O + OC（make + 受詞 + 形容詞）",
+              "frame": "S + make(s) + O + adj.（make tourists very excited）",
+              "zh_trigger": "讓遊客十分興奮"
+            },
+            {
+              "code": "PROG",
+              "grammar_id": "gp-progressive-trend",
+              "label_zh": "現在進行式描述正在發生的趨勢（is becoming）",
+              "frame": "S + is (also) becoming + N …",
+              "zh_trigger": "正成為"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "熱鬧的圓圈舞",
+              "accepted": [
+                "The lively circle dances",
+                "The lively circle dance",
+                "The festive circle dances",
+                "The energetic circle dances",
+                "The exciting circle dances",
+                "The joyful circle dances",
+                "The cheerful circle dances",
+                "The festive circle dance",
+                "Lively circle dances",
+                "The lively circle dancing",
+                "The bustling circle dances",
+                "Festive circle dances"
+              ],
+              "targets": [
+                "lively",
+                "circle",
+                "dance"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "The hot circle dances",
+                  "right": "The lively circle dances",
+                  "explanation_zh": "「熱鬧的」是 lively 或 festive，不是溫度的 hot。"
+                }
+              ]
+            },
+            {
+              "zh": "常讓遊客十分興奮",
+              "accepted": [
+                "often make tourists very excited",
+                "often makes visitors very excited",
+                "often make visitors extremely excited",
+                "often make tourists really excited",
+                "often make tourists extremely excited",
+                "often makes tourists very excited",
+                "often make visitors very excited",
+                "often make tourists so excited",
+                "usually make tourists very excited",
+                "often get tourists very excited",
+                "often make tourists feel very excited",
+                "often make visitors feel very excited",
+                "often make visitors really excited",
+                "often make visitors so excited",
+                "often makes tourists extremely excited",
+                "often makes tourists really excited",
+                "often makes tourists so excited",
+                "often makes visitors extremely excited",
+                "often makes visitors really excited",
+                "often makes visitors so excited",
+                "usually make tourists extremely excited",
+                "usually make tourists really excited",
+                "usually make tourists so excited",
+                "usually make visitors very excited",
+                "usually make visitors extremely excited",
+                "usually make visitors really excited",
+                "usually make visitors so excited",
+                "usually makes tourists very excited",
+                "usually makes tourists extremely excited",
+                "usually makes tourists really excited",
+                "usually makes tourists so excited",
+                "usually makes visitors very excited",
+                "usually makes visitors extremely excited",
+                "usually makes visitors really excited",
+                "usually makes visitors so excited",
+                "often make tourists feel extremely excited",
+                "often make tourists feel really excited",
+                "often make visitors feel extremely excited",
+                "often make visitors feel really excited",
+                "often makes tourists feel very excited",
+                "often makes tourists feel extremely excited",
+                "often makes tourists feel really excited",
+                "often makes visitors feel very excited",
+                "often makes visitors feel extremely excited",
+                "often makes visitors feel really excited"
+              ],
+              "targets": [
+                "VOC",
+                "tourist",
+                "excited"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "often make tourists very exciting",
+                  "right": "often make tourists very excited",
+                  "explanation_zh": "形容人的感受用 excited；exciting 是「令人興奮的」。"
+                },
+                {
+                  "wrong": "often let tourists very excited",
+                  "right": "often make tourists very excited",
+                  "explanation_zh": "let 後面要接原形動詞；「讓…很興奮」用 make + 受詞 + 形容詞。"
+                }
+              ]
+            },
+            {
+              "zh": "豐年祭也正成為",
+              "accepted": [
+                "and the harvest festival is also becoming",
+                "and Ilisin is also becoming",
+                "and the harvest festival is also turning into",
+                "and the festival is also becoming",
+                "and the Ilisin is also becoming",
+                "and Ilisin is becoming",
+                "and the harvest festival is becoming",
+                "and the Ilisin festival is also becoming",
+                "and Ilisin is also turning into",
+                "and the festival is also turning into",
+                "and the harvest festival is turning into",
+                "and Ilisin is turning into",
+                "and the Ilisin is also turning into",
+                "and the Ilisin is becoming",
+                "and the Ilisin is turning into",
+                "and the festival is becoming",
+                "and the festival is turning into",
+                "and the Ilisin festival is also turning into",
+                "and the Ilisin festival is becoming",
+                "and the Ilisin festival is turning into",
+                "the harvest festival is also becoming",
+                "the harvest festival is also turning into",
+                "the harvest festival is becoming",
+                "the harvest festival is turning into",
+                "Ilisin is also becoming",
+                "Ilisin is also turning into",
+                "Ilisin is becoming",
+                "Ilisin is turning into",
+                "the Ilisin is also becoming",
+                "the Ilisin is also turning into",
+                "the Ilisin is becoming",
+                "the Ilisin is turning into",
+                "the festival is also becoming",
+                "the festival is also turning into",
+                "the festival is becoming",
+                "the festival is turning into",
+                "the Ilisin festival is also becoming",
+                "the Ilisin festival is also turning into",
+                "the Ilisin festival is becoming",
+                "the Ilisin festival is turning into"
+              ],
+              "targets": [
+                "PROG"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "and the harvest festival also becomes",
+                  "right": "and the harvest festival is also becoming",
+                  "explanation_zh": "「正成為」是正在發生的趨勢，用現在進行式 is becoming。"
+                },
+                {
+                  "wrong": "and the harvest festival is also become",
+                  "right": "and the harvest festival is also becoming",
+                  "explanation_zh": "be 動詞後面接 V-ing 才是進行式，不能接原形動詞。"
+                }
+              ]
+            },
+            {
+              "zh": "熱門的觀光活動",
+              "accepted": [
+                "a popular tourist attraction",
+                "a popular tourist event",
+                "a popular tourist activity",
+                "a popular attraction for tourists",
+                "a popular event for tourists",
+                "a popular tourism event",
+                "a popular tourism activity",
+                "a popular sightseeing activity",
+                "a popular sightseeing event",
+                "a popular attraction"
+              ],
+              "targets": [
+                "popular"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "a popular tourists attraction",
+                  "right": "a popular tourist attraction",
+                  "explanation_zh": "名詞當形容詞修飾名詞時用單數：tourist attraction。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "word_form",
+              "zh": "十分興奮",
+              "literal_error": "The lively circle dances often make tourists very exciting, and the harvest festival is also becoming a popular tourist attraction.",
+              "part": 2,
+              "explanation_zh": "遊客「感到興奮」用 excited；exciting 是「令人興奮的」，詞形選錯意思就不對。"
+            },
+            {
+              "type": "tense_trigger",
+              "zh": "正成為",
+              "literal_error": "The lively circle dances often make tourists very excited, and the harvest festival also becomes a popular tourist attraction.",
+              "part": 3,
+              "explanation_zh": "「正成為」表示正在發生的趨勢，要用現在進行式 is becoming，不用現在簡單式。"
+            }
+          ],
+          "bonus": [],
+          "restructuring_zh": "「讓遊客十分興奮」英文不用 let，而是改成 S + make + 受詞 + 形容詞：make tourists very excited。",
+          "notes_zh": "「熱鬧的」lively、festive、energetic 都給分，circle dance 單複數都可以（動詞 make／makes 要一致）；「讓遊客十分興奮」make tourists／visitors very excited 給分，寫成 make tourists feel very excited 也可以；「豐年祭」可寫 the harvest festival、Ilisin、the festival；「正成為」is (also) becoming 或 is turning into；「觀光活動」tourist attraction／event／activity 都可以。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-advanced-06",
+    "lot": "translation-advanced-06",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "3f8dc9d60c8a2f9f0e258e68e094820e19a8a5f1c5e0001a05ad2370e79443f3",
+    "spec_id": "translation-advanced@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 2,
+    "sentences": 1,
+    "avg_sentence_length": 2.0,
+    "denominator": 1,
+    "proper_nouns": [
+      "Ilisin"
+    ],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 1.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {
+      "off": 1
+    },
+    "offlist_words": [
+      "amis"
+    ],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "warn",
+      "created_at": "2026-10-10T02:32:15Z",
+      "details": {
+        "errors": [],
+        "warnings": [
+          "annotations.rubric.items.1: 首選參考譯文有詞彙表外的字 ['three-day']（表外專有名詞請在題目括號附英文）"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "fail",
+      "created_at": "2026-10-10T02:17:22Z",
+      "details": {
+        "solver": "A",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "During the three-day Amis Harvest Festival (Ilisin), I not only learned the circle dance but also made new friends.",
+            "confidence": "medium",
+            "explanation_zh": "「為期三天的」用複合形容詞 three-day（day 不加 s）放在名詞前；「不但…也…」用 not only … but also … 連接兩個過去式動詞 learned、made；「交到新朋友」用 make friends 搭配。專有名詞 Ilisin 依題目括號附在節日名稱後；信心 medium 是因為 Ilisin 與 Harvest Festival 的排列方式（同位語、括號）有好幾種寫法。"
+          },
+          "2": {
+            "translation": "The lively circle dance often makes tourists very excited, and the Harvest Festival is also becoming a popular tourist attraction.",
+            "confidence": "medium",
+            "explanation_zh": "「讓遊客十分興奮」用 make + 受詞 + 形容詞（excited，指人的感受用 -ed）；「也正成為」是正在發生的變化，用現在進行式 is becoming；兩個子句用 and 連接。「熱門的觀光活動」我寫成 a popular tourist attraction（英文較常用的搭配），直譯是 tourist activity / event，信心 medium。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "BASIC",
+              "CORR"
+            ],
+            "used_target_words": [
+              "learn",
+              "circle",
+              "dance",
+              "new",
+              "friend"
+            ],
+            "within_accepted": false,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "我的譯文第 1 部分寫成 During the three-day Amis Harvest Festival (Ilisin)，照題目「豐年祭（Ilisin）」的括號附上專有名詞；第 2–4 部分都在 accepted 內。第 1 部分的 accepted 有 During the three-day Amis harvest festival 和各種 Ilisin 寫法，卻沒有「節日名稱＋括號 Ilisin」或同位語（…harvest festival, Ilisin, …）的寫法。題目本身就用括號附英文，學生照抄括號的機率很高，語意也最完整，建議補上 During／At／In the three-day Amis harvest festival (Ilisin)、the three-day Amis harvest festival, Ilisin, 等括號與同位語版本。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "VOC",
+              "PROG"
+            ],
+            "used_target_words": [
+              "lively",
+              "circle",
+              "dance",
+              "tourist",
+              "excited",
+              "popular"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "第 1 部分 accepted 收了 The bustling circle dances；bustling 多用來形容街道、城市等地方「熙來攘往」，拿來修飾舞蹈不自然，建議刪掉（lively／festive／energetic 已足夠）。",
+              "第 3 部分 accepted 除了 and the harvest festival is also becoming 等，還收了不含 and 的 the harvest festival is also becoming、Ilisin is becoming 等；學生如果前半句後面只加逗號就接這一段，會變成逗號直接連接兩個獨立子句（comma splice），這是文法錯誤，不應該拿到這一分。建議不含 and 的版本拿掉，或在說明裡註明前面必須有 and／分號。"
+            ]
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "learn",
+              "circle",
+              "dance",
+              "new",
+              "friend"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "BASIC": null,
+              "CORR": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "lively",
+              "circle",
+              "dance",
+              "tourist",
+              "excited",
+              "popular"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "VOC": null,
+              "PROG": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 1 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義",
+          "第 1 題驗證者對4 部分切分有意見（warn）：我的譯文第 1 部分寫成 During the three-day Amis Harvest Festival (Ilisin)，照題目「豐年祭（Ilisin）」的括號附上專有名詞；第 2–4 部分都在 accepted 內。第 1 部分的",
+          "第 2 題驗證者對4 部分切分有意見（warn）：第 1 部分 accepted 收了 The bustling circle dances；bustling 多用來形容街道、城市等地方「熙來攘往」，拿來修飾舞蹈不自然，建議刪掉（lively／festive／energetic 已足夠）。"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-10T02:22:17Z",
+      "details": {
+        "solver": "B",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "During the three-day Amis harvest festival, Ilisin, I not only learned the circle dance but also made new friends.",
+            "confidence": "medium",
+            "explanation_zh": "「為期三天的」用複合形容詞 three-day（day 不加 s）；「不但…也…」用 not only ... but also ...，兩個動詞 learned、made 對等；「交到新朋友」用 make new friends；Ilisin 以同位語補充。"
+          },
+          "2": {
+            "translation": "The lively circle dance often makes tourists very excited, and the harvest festival is becoming a popular tourist activity.",
+            "confidence": "medium",
+            "explanation_zh": "「熱鬧的」譯為 lively；「讓遊客十分興奮」用使役動詞 makes tourists very excited；兩個分句用 and 連接，後句用現在進行式 is becoming 表「正成為」；「熱門的觀光活動」用 a popular tourist activity。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "BASIC",
+              "CORR"
+            ],
+            "used_target_words": [
+              "learn",
+              "circle",
+              "dance",
+              "new",
+              "friend"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "VOC",
+              "PROG"
+            ],
+            "used_target_words": [
+              "lively",
+              "circle",
+              "dance",
+              "tourist",
+              "excited",
+              "popular"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "learn",
+              "circle",
+              "dance",
+              "new",
+              "friend"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "BASIC": null,
+              "CORR": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "lively",
+              "circle",
+              "dance",
+              "tourist",
+              "excited",
+              "popular"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "VOC": null,
+              "PROG": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "rejected",
+  "status_reason": "blind_solver:A 未通過：第 1 題盲譯的寫法不在可接受寫法內：參考譯文或評分規準太窄（補進 references／parts.accepted），或中文有歧義；第 1 題驗證者對4 部分切分有意見（warn）：我的譯文第 1 部分寫成 During the three-day Amis Harvest Festival (Ilisin)，照題目「豐年祭（Ilisin）」的括號附上專有名詞；第 2–4 部分都在 accepted 內。第 1 部分的；第 2 題驗證者對4 部分切分有意見（warn）：第 1 部分 accepted 收了 The bustling circle dances；bustling 多用來形容街道、城市等地方「熙來攘往」，拿來修飾舞蹈不自然，建議刪掉（lively／festive／energetic 已足夠）。；判定者人工審查（第 1 輪）：同意退回，評分規準太窄。第 1 題題目寫「豐年祭（Ilisin）」，學生最自然的寫法是照括號把專有名詞附在節日名稱後：the three-day Amis Harvest Festival (Ilisin)（驗證者 A）或同位語 the three-day Amis harvest festival, Ilisin,（驗證者 B），但第 1 部分 accepted 的 61 種寫法沒有任何「harvest festival＋括號或同位語 Ilisin」的版本，兩位驗證者的譯文都會在第 1 部分被扣分（驗證者 B 判 within_accepted 為 true 是誤判）。第 2 題第 1 部分 accepted 收了不自然的 The bustling circle dances（bustling 形容地方熙來攘往，不修飾舞蹈）；第 3 部分收了不含 and 的 the harvest festival is also becoming 等寫法，notes_zh 卻沒註明前面要斷句或用分號，用逗號直接連接兩個子句（comma splice）也會拿到這一分。另外第 2 題「也正成為熱門的觀光活動」和學測 101 年中譯英第 2 題「也成為熱門的觀光景點」有連續 7 個相同漢字（未達 D8 門檻），重生時建議換個說法。"
+}

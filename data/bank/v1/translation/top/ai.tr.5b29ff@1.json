@@ -1,0 +1,1088 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.5b29ff",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "top",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "在台灣海峽（Taiwan Strait），已有許多離岸風機（offshore wind turbines）被蓋在漁民賴以維生的漁場上。",
+        "options": null,
+        "answer": "In the Taiwan Strait, many offshore wind turbines have been constructed on fishing grounds that fishermen rely on for a living.",
+        "accepted_answers": [
+          "In the Taiwan Strait, many offshore wind turbines have been set up in fishing grounds which fishermen rely on to make a living.",
+          "In the Taiwan Strait, a lot of offshore wind turbines have been installed on the fishing grounds that fishermen depend on for a living."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "被動語態（完成式被動 have been built）",
+            "關係代名詞子句（that fishermen depend on）"
+          ],
+          "topic": "離岸風電"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "面對環保團體的批評，風場業者承諾保護白海豚，而白海豚已瀕臨絕種。",
+        "options": null,
+        "answer": "Faced with criticism from environmental groups, wind farm companies have promised to protect white dolphins, which are already nearly extinct.",
+        "accepted_answers": [
+          "Facing criticism from environmental groups, wind farm developers have promised to protect white dolphins, which are already on the verge of extinction.",
+          "Faced with environmental groups' criticism, the wind farm companies promised to protect white dolphins, which are already in danger of dying out."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "分詞構句（Faced with …）",
+            "非限定關係子句（, which are …）"
+          ],
+          "topic": "離岸風電"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "離岸風電"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「在台灣海峽」寫 In the Taiwan Strait，海峽名稱前加 the。「已有許多離岸風機被蓋在…」：風機是被蓋的，「已有」表示到現在已經完成，用完成式被動 many offshore wind turbines have been built on …。「漁民賴以維生的漁場」修飾語很長，英文用關係子句放在名詞後：fishing grounds that fishermen depend on for a living，depend on 的 on 要留在子句裡。「漁場」是 fishing grounds，不是 fish farms（養殖場）。",
+          "evidence": [
+            "已有許多離岸風機（offshore wind turbines）被蓋在",
+            "漁民賴以維生的漁場"
+          ],
+          "strategy_zh": "「已有…被…」先想完成式被動 have been + p.p.；「某人賴以維生的＋名詞」用 N + (that) + S + depend on for a living。",
+          "hints": [
+            "切成四段：在台灣海峽（Taiwan Strait）／已有許多離岸風機（offshore wind turbines）被蓋在／漁民賴以維生的／漁場上",
+            "標的詞彙：strait（海峽）、wind（風）、build（建造）、fishing（捕魚的）、ground（場所）、fisherman（漁民）、depend（依賴）、living（生計）",
+            "句型框架：In the Taiwan Strait, many + N + have been built on + N + (that) + S + depend on for a living."
+          ]
+        },
+        "2": {
+          "explanation_zh": "「面對環保團體的批評」和後面的主詞「業者」是同一個，用分詞構句 Faced with criticism from environmental groups（或 Facing criticism …；不能寫 Facing with）。「承諾保護」是 promise to protect。「而白海豚已瀕臨絕種」是補充說明前面的白海豚，用非限定關係子句 , which are already nearly extinct（on the verge of extinction 也可以）；which 指複數的 dolphins，動詞用 are，逗號後不能用 that。",
+          "evidence": [
+            "面對環保團體的批評",
+            "而白海豚已瀕臨絕種"
+          ],
+          "strategy_zh": "句首「面對／看到…」和主要子句同一個主詞時，用分詞構句；「而＋前面提過的名詞＋…」補充說明時，用 , which …。",
+          "hints": [
+            "切成四段：面對環保團體的批評／風場業者承諾保護白海豚／而白海豚已／瀕臨絕種",
+            "標的詞彙：face（面對）、criticism（批評）、environmental（環保的）、group（團體）、wind（風）、company（業者）、promise（承諾）、protect（保護）、dolphin（海豚）、extinct（絕種的）",
+            "句型框架：Faced with + N, S + have promised to VR + N, which are already + adj."
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "In the Taiwan Strait, many offshore wind turbines have been constructed on fishing grounds that fishermen rely on for a living.",
+            "In the Taiwan Strait, many offshore wind turbines have been set up in fishing grounds which fishermen rely on to make a living.",
+            "In the Taiwan Strait, a lot of offshore wind turbines have been installed on the fishing grounds that fishermen depend on for a living."
+          ],
+          "target_words": [
+            {
+              "word": "strait",
+              "zh": "海峽"
+            },
+            {
+              "word": "wind",
+              "zh": "風"
+            },
+            {
+              "word": "build",
+              "zh": "建造",
+              "alternatives": [
+                "construct",
+                "set",
+                "install",
+                "put",
+                "erect",
+                "place"
+              ]
+            },
+            {
+              "word": "fishing",
+              "zh": "捕魚的",
+              "alternatives": [
+                "fish"
+              ]
+            },
+            {
+              "word": "ground",
+              "zh": "場所（漁場）",
+              "alternatives": [
+                "area",
+                "water",
+                "zone"
+              ]
+            },
+            {
+              "word": "fisherman",
+              "zh": "漁民",
+              "alternatives": [
+                "fisher",
+                "fisherfolk"
+              ]
+            },
+            {
+              "word": "depend",
+              "zh": "依賴",
+              "alternatives": [
+                "rely",
+                "count"
+              ]
+            },
+            {
+              "word": "living",
+              "zh": "生計",
+              "alternatives": [
+                "livelihood",
+                "live",
+                "income",
+                "survive",
+                "survival"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PASS",
+              "grammar_id": "gp-passive",
+              "label_zh": "被動語態（已有許多離岸風機被蓋在…：have been built on）",
+              "frame": "S + have been + p.p. + on／in …",
+              "zh_trigger": "被蓋在"
+            },
+            {
+              "code": "REL",
+              "grammar_id": "gp-relative-pronoun",
+              "label_zh": "關係代名詞子句（漁民賴以維生的漁場：介系詞 on 留在子句尾）",
+              "frame": "N + (that／which) + S + depend on (for a living)",
+              "zh_trigger": "漁民賴以維生的漁場"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "在台灣海峽（Taiwan Strait）",
+              "accepted": [
+                "In the Taiwan Strait",
+                "Across the Taiwan Strait"
+              ],
+              "targets": [
+                "strait"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "In Taiwan Strait",
+                  "right": "In the Taiwan Strait",
+                  "explanation_zh": "海峽名稱前要加定冠詞 the：the Taiwan Strait。"
+                }
+              ]
+            },
+            {
+              "zh": "已有許多離岸風機（offshore wind turbines）被蓋在",
+              "accepted": [
+                "many offshore wind turbines have been constructed on",
+                "many offshore wind turbines have been built on",
+                "many offshore wind turbines have been built in",
+                "many offshore wind turbines have been constructed in",
+                "many offshore wind turbines have been set up on",
+                "many offshore wind turbines have been set up in",
+                "many offshore wind turbines have been installed on",
+                "many offshore wind turbines have been installed in",
+                "many offshore wind turbines have been put up on",
+                "many offshore wind turbines have been put up in",
+                "many offshore wind turbines have been erected on",
+                "many offshore wind turbines have been erected in",
+                "many offshore wind turbines have been placed on",
+                "many offshore wind turbines have been placed in",
+                "a lot of offshore wind turbines have been built on",
+                "a lot of offshore wind turbines have been built in",
+                "a lot of offshore wind turbines have been constructed on",
+                "a lot of offshore wind turbines have been constructed in",
+                "a lot of offshore wind turbines have been set up on",
+                "a lot of offshore wind turbines have been set up in",
+                "a lot of offshore wind turbines have been installed on",
+                "a lot of offshore wind turbines have been installed in",
+                "a lot of offshore wind turbines have been put up on",
+                "a lot of offshore wind turbines have been put up in",
+                "a lot of offshore wind turbines have been erected on",
+                "a lot of offshore wind turbines have been erected in",
+                "a lot of offshore wind turbines have been placed on",
+                "a lot of offshore wind turbines have been placed in",
+                "a large number of offshore wind turbines have been built on",
+                "a large number of offshore wind turbines have been built in",
+                "a large number of offshore wind turbines have been constructed on",
+                "a large number of offshore wind turbines have been constructed in",
+                "a large number of offshore wind turbines have been set up on",
+                "a large number of offshore wind turbines have been set up in",
+                "a large number of offshore wind turbines have been installed on",
+                "a large number of offshore wind turbines have been installed in",
+                "a large number of offshore wind turbines have been put up on",
+                "a large number of offshore wind turbines have been put up in",
+                "a large number of offshore wind turbines have been erected on",
+                "a large number of offshore wind turbines have been erected in",
+                "a large number of offshore wind turbines have been placed on",
+                "a large number of offshore wind turbines have been placed in",
+                "numerous offshore wind turbines have been built on",
+                "lots of offshore wind turbines have been built on"
+              ],
+              "targets": [
+                "PASS",
+                "wind",
+                "build"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "many offshore wind turbines have built on",
+                  "right": "many offshore wind turbines have been built on",
+                  "explanation_zh": "風機是「被」蓋的，完成式被動要有 been：have been built；have built 變成風機自己在蓋東西。"
+                },
+                {
+                  "wrong": "many offshore wind turbines has been built on",
+                  "right": "many offshore wind turbines have been built on",
+                  "explanation_zh": "主詞 turbines 是複數，助動詞用 have。"
+                },
+                {
+                  "wrong": "many offshore wind turbines have been build on",
+                  "right": "many offshore wind turbines have been built on",
+                  "explanation_zh": "have been 後面接過去分詞 built（build-built-built）。"
+                }
+              ]
+            },
+            {
+              "zh": "漁民賴以維生的",
+              "accepted": [
+                "that fishermen rely on for a living",
+                "that fishermen depend on for a living",
+                "that fishermen depend on for their living",
+                "that fishermen depend on to make a living",
+                "that fishermen depend on for their livelihood",
+                "that fishermen depend on to earn a living",
+                "that fishermen depend on to survive",
+                "that fishermen rely on for their living",
+                "that fishermen rely on to make a living",
+                "that fishermen rely on for their livelihood",
+                "that fishermen rely on to earn a living",
+                "that fishermen rely on to survive",
+                "which fishermen depend on for a living",
+                "which fishermen depend on for their living",
+                "which fishermen depend on to make a living",
+                "which fishermen depend on for their livelihood",
+                "which fishermen depend on to earn a living",
+                "which fishermen depend on to survive",
+                "which fishermen rely on for a living",
+                "which fishermen rely on for their living",
+                "which fishermen rely on to make a living",
+                "which fishermen rely on for their livelihood",
+                "which fishermen rely on to earn a living",
+                "which fishermen rely on to survive",
+                "fishermen depend on for a living",
+                "fishermen rely on for a living",
+                "fishermen depend on to make a living",
+                "fishermen rely on to make a living",
+                "on which fishermen depend for a living",
+                "on which fishermen rely for a living",
+                "on which fishermen depend for their livelihood",
+                "that fishers depend on for a living",
+                "that fishermen have depended on for a living",
+                "that fishermen depend on for survival",
+                "where fishermen make a living",
+                "where fishermen make their living",
+                "where fishermen earn a living",
+                "where fishermen earn their living",
+                "where fishermen have made a living",
+                "where fishermen fish for a living",
+                "that fishermen depend on for their livelihoods",
+                "that fishermen rely on for their livelihoods",
+                "that local fishermen depend on for a living",
+                "that fishermen have relied on for a living"
+              ],
+              "targets": [
+                "REL",
+                "fisherman",
+                "depend",
+                "living"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "that fishermen depend for a living",
+                  "right": "that fishermen depend on for a living",
+                  "explanation_zh": "depend on 的 on 不能省略；關代代替的是 on 的受詞，on 留在子句裡（或寫 on which fishermen depend …）。"
+                },
+                {
+                  "wrong": "that fishermen depend on them for a living",
+                  "right": "that fishermen depend on for a living",
+                  "explanation_zh": "關係子句裡的受詞已由 that 代替，不能再寫 them。"
+                }
+              ]
+            },
+            {
+              "zh": "漁場上",
+              "accepted": [
+                "fishing grounds",
+                "the fishing grounds",
+                "fishing areas",
+                "the fishing areas",
+                "fishing waters",
+                "the fishing waters",
+                "fishing zones"
+              ],
+              "targets": [
+                "fishing",
+                "ground"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "fish farms",
+                  "right": "fishing grounds",
+                  "explanation_zh": "fish farm 是「養殖場」；在海上捕魚的「漁場」是 fishing grounds。"
+                },
+                {
+                  "wrong": "fishing fields",
+                  "right": "fishing grounds",
+                  "explanation_zh": "「漁場」的固定說法是 fishing grounds，不是逐字的 fishing fields。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "prenominal_modifier",
+              "zh": "漁民賴以維生的漁場",
+              "literal_error": "…have been built on the fishermen's living fishing grounds.",
+              "part": 3,
+              "explanation_zh": "「漁民賴以維生的漁場」修飾語在前，英文要改成後位的關係子句 fishing grounds (that) fishermen depend on for a living；逐字堆在名詞前意思不清楚。"
+            },
+            {
+              "type": "collocation",
+              "zh": "漁場",
+              "literal_error": "…have been built on fish farms that fishermen depend on for a living.",
+              "part": 4,
+              "explanation_zh": "fish farm 是養殖魚的「養殖場」；海上捕魚的「漁場」要說 fishing grounds。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "Built on fishing grounds that fishermen depend on for a living are many of the offshore wind turbines in the Taiwan Strait.",
+              "explanation_zh": "把過去分詞片語 Built on … 移到句首、主詞放到句尾（倒裝），強調風機蓋在哪裡；這是加分寫法，不是唯一正解。"
+            }
+          ],
+          "restructuring_zh": "「已有許多離岸風機被蓋在…」用完成式被動 have been built on；「漁民賴以維生的漁場」改成後位的關係子句 fishing grounds (that) fishermen depend on for a living，介系詞 on 不能省。",
+          "notes_zh": "評分說明：「在台灣海峽」In the Taiwan Strait（放句首或句尾都可以）；「已有許多離岸風機被蓋在」many／a lot of／a large number of offshore wind turbines have been built／constructed／set up／installed／put up／placed on (in)；「漁民賴以維生的」(that／which) fishermen depend on／rely on + for a living／for their livelihood／to make a living（to earn a living、to survive 也可以），關代可以省略，也可寫 on which fishermen depend …；「漁場」(the) fishing grounds／areas／waters。另外也給分：where fishermen make (earn) a living（關係副詞 where 引導的形容詞子句，也算達成本句 REL 標的）、that fishermen depend on for their livelihoods。"
+        },
+        "2": {
+          "references": [
+            "Faced with criticism from environmental groups, wind farm companies have promised to protect white dolphins, which are already nearly extinct.",
+            "Facing criticism from environmental groups, wind farm developers have promised to protect white dolphins, which are already on the verge of extinction.",
+            "Faced with environmental groups' criticism, the wind farm companies promised to protect white dolphins, which are already in danger of dying out."
+          ],
+          "target_words": [
+            {
+              "word": "face",
+              "zh": "面對"
+            },
+            {
+              "word": "criticism",
+              "zh": "批評",
+              "alternatives": [
+                "criticize",
+                "critic",
+                "complaint"
+              ]
+            },
+            {
+              "word": "environmental",
+              "zh": "環保的",
+              "alternatives": [
+                "environment",
+                "environmentalist",
+                "green"
+              ]
+            },
+            {
+              "word": "group",
+              "zh": "團體",
+              "alternatives": [
+                "organization"
+              ]
+            },
+            {
+              "word": "wind",
+              "zh": "風"
+            },
+            {
+              "word": "company",
+              "zh": "業者",
+              "alternatives": [
+                "developer",
+                "developers",
+                "operator",
+                "operators",
+                "firm",
+                "business"
+              ]
+            },
+            {
+              "word": "promise",
+              "zh": "承諾",
+              "alternatives": [
+                "pledge",
+                "vow",
+                "commit",
+                "agree"
+              ]
+            },
+            {
+              "word": "protect",
+              "zh": "保護",
+              "alternatives": [
+                "save",
+                "preserve"
+              ]
+            },
+            {
+              "word": "dolphin",
+              "zh": "海豚"
+            },
+            {
+              "word": "extinct",
+              "zh": "絕種的",
+              "alternatives": [
+                "extinction",
+                "endangered",
+                "endanger",
+                "die out",
+                "dying",
+                "disappear",
+                "vanish",
+                "threatened"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "NRREL",
+              "grammar_id": "gp-nonrestrictive",
+              "label_zh": "非限定關係子句（補充說明白海豚：而白海豚已…）",
+              "frame": "N, which + are (already) + …",
+              "zh_trigger": "而白海豚已"
+            },
+            {
+              "code": "PART",
+              "grammar_id": "gp-participle-clause",
+              "label_zh": "分詞構句（面對…：Faced with …／Facing …）",
+              "frame": "Faced with／Facing + N, S + V …",
+              "zh_trigger": "面對環保團體的批評"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "面對環保團體的批評",
+              "accepted": [
+                "Faced with criticism from environmental groups",
+                "Faced with environmental groups' criticism",
+                "Faced with criticism by environmental groups",
+                "Faced with the criticism of environmental groups",
+                "Faced with criticism from environmentalists",
+                "Faced with criticism from environmental organizations",
+                "Faced with the criticism from environmental groups",
+                "Facing criticism from environmental groups",
+                "Facing environmental groups' criticism",
+                "Facing criticism by environmental groups",
+                "Facing the criticism of environmental groups",
+                "Facing criticism from environmentalists",
+                "Facing criticism from environmental organizations",
+                "Facing the criticism from environmental groups"
+              ],
+              "targets": [
+                "PART",
+                "face",
+                "criticism",
+                "environmental",
+                "group"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Facing with criticism from environmental groups",
+                  "right": "Faced with criticism from environmental groups",
+                  "explanation_zh": "face 是及物動詞：Facing criticism；用被動要寫 Faced with criticism。Facing with 是常見錯誤。"
+                },
+                {
+                  "wrong": "Face criticism from environmental groups",
+                  "right": "Faced with criticism from environmental groups",
+                  "explanation_zh": "句首表情境的「面對…」用分詞構句；原形動詞 Face 開頭會變成祈使句。"
+                }
+              ]
+            },
+            {
+              "zh": "風場業者承諾保護白海豚",
+              "accepted": [
+                "wind farm companies have promised to protect white dolphins",
+                "wind farm companies have promised to protect the white dolphins",
+                "wind farm companies promised to protect white dolphins",
+                "wind farm companies promised to protect the white dolphins",
+                "wind farm companies have pledged to protect white dolphins",
+                "wind farm companies have pledged to protect the white dolphins",
+                "the wind farm companies have promised to protect white dolphins",
+                "the wind farm companies have promised to protect the white dolphins",
+                "the wind farm companies promised to protect white dolphins",
+                "the wind farm companies promised to protect the white dolphins",
+                "the wind farm companies have pledged to protect white dolphins",
+                "the wind farm companies have pledged to protect the white dolphins",
+                "wind farm developers have promised to protect white dolphins",
+                "wind farm developers have promised to protect the white dolphins",
+                "wind farm developers promised to protect white dolphins",
+                "wind farm developers promised to protect the white dolphins",
+                "wind farm developers have pledged to protect white dolphins",
+                "wind farm developers have pledged to protect the white dolphins",
+                "wind farm operators have promised to protect white dolphins",
+                "wind farm operators have promised to protect the white dolphins",
+                "wind farm operators promised to protect white dolphins",
+                "wind farm operators promised to protect the white dolphins",
+                "wind farm operators have pledged to protect white dolphins",
+                "wind farm operators have pledged to protect the white dolphins",
+                "the wind farm operators have promised to protect white dolphins",
+                "the wind farm operators have promised to protect the white dolphins",
+                "the wind farm operators promised to protect white dolphins",
+                "the wind farm operators promised to protect the white dolphins",
+                "the wind farm operators have pledged to protect white dolphins",
+                "the wind farm operators have pledged to protect the white dolphins",
+                "wind power companies have promised to protect white dolphins",
+                "wind power companies have promised to protect the white dolphins",
+                "wind power companies promised to protect white dolphins",
+                "wind power companies promised to protect the white dolphins",
+                "wind power companies have pledged to protect white dolphins",
+                "wind power companies have pledged to protect the white dolphins",
+                "the developers of the wind farms have promised to protect white dolphins",
+                "the developers of the wind farms have promised to protect the white dolphins",
+                "the developers of the wind farms promised to protect white dolphins",
+                "the developers of the wind farms promised to protect the white dolphins",
+                "the developers of the wind farms have pledged to protect white dolphins",
+                "the developers of the wind farms have pledged to protect the white dolphins",
+                "wind farm companies have vowed to protect white dolphins",
+                "wind farm companies have committed to protecting white dolphins",
+                "wind farm companies have promised to protect Chinese white dolphins",
+                "wind farm companies have promised to protect Taiwanese white dolphins",
+                "wind farm companies have promised to protect the white dolphin",
+                "wind farm companies have promised to protect the Chinese white dolphin",
+                "wind farm companies promised to protect the white dolphin",
+                "wind farm companies promised to protect Chinese white dolphins",
+                "wind farm companies promised to protect the Chinese white dolphin",
+                "wind farm companies have pledged to protect the white dolphin",
+                "wind farm companies have pledged to protect Chinese white dolphins",
+                "wind farm companies have pledged to protect the Chinese white dolphin",
+                "wind farm companies have vowed to protect the white dolphins",
+                "wind farm companies have vowed to protect the white dolphin",
+                "wind farm companies have vowed to protect Chinese white dolphins",
+                "wind farm companies have vowed to protect the Chinese white dolphin",
+                "the wind farm companies have promised to protect the white dolphin",
+                "the wind farm companies have promised to protect Chinese white dolphins",
+                "the wind farm companies have promised to protect the Chinese white dolphin",
+                "the wind farm companies promised to protect the white dolphin",
+                "the wind farm companies promised to protect Chinese white dolphins",
+                "the wind farm companies promised to protect the Chinese white dolphin",
+                "the wind farm companies have pledged to protect the white dolphin",
+                "the wind farm companies have pledged to protect Chinese white dolphins",
+                "the wind farm companies have pledged to protect the Chinese white dolphin",
+                "the wind farm companies have vowed to protect white dolphins",
+                "the wind farm companies have vowed to protect the white dolphins",
+                "the wind farm companies have vowed to protect the white dolphin",
+                "the wind farm companies have vowed to protect Chinese white dolphins",
+                "the wind farm companies have vowed to protect the Chinese white dolphin",
+                "wind farm developers have promised to protect the white dolphin",
+                "wind farm developers have promised to protect Chinese white dolphins",
+                "wind farm developers have promised to protect the Chinese white dolphin",
+                "wind farm developers promised to protect the white dolphin",
+                "wind farm developers promised to protect Chinese white dolphins",
+                "wind farm developers promised to protect the Chinese white dolphin",
+                "wind farm developers have pledged to protect the white dolphin",
+                "wind farm developers have pledged to protect Chinese white dolphins",
+                "wind farm developers have pledged to protect the Chinese white dolphin",
+                "wind farm developers have vowed to protect white dolphins",
+                "wind farm developers have vowed to protect the white dolphins",
+                "wind farm developers have vowed to protect the white dolphin",
+                "wind farm developers have vowed to protect Chinese white dolphins",
+                "wind farm developers have vowed to protect the Chinese white dolphin",
+                "wind farm operators have promised to protect the white dolphin",
+                "wind farm operators have promised to protect Chinese white dolphins",
+                "wind farm operators have promised to protect the Chinese white dolphin",
+                "wind farm operators promised to protect the white dolphin",
+                "wind farm operators promised to protect Chinese white dolphins",
+                "wind farm operators promised to protect the Chinese white dolphin",
+                "wind farm operators have pledged to protect the white dolphin",
+                "wind farm operators have pledged to protect Chinese white dolphins",
+                "wind farm operators have pledged to protect the Chinese white dolphin",
+                "wind farm operators have vowed to protect white dolphins",
+                "wind farm operators have vowed to protect the white dolphins",
+                "wind farm operators have vowed to protect the white dolphin",
+                "wind farm operators have vowed to protect Chinese white dolphins",
+                "wind farm operators have vowed to protect the Chinese white dolphin",
+                "the wind farm operators have promised to protect the white dolphin",
+                "the wind farm operators have promised to protect Chinese white dolphins",
+                "the wind farm operators have promised to protect the Chinese white dolphin",
+                "the wind farm operators promised to protect the white dolphin",
+                "the wind farm operators promised to protect Chinese white dolphins",
+                "the wind farm operators promised to protect the Chinese white dolphin",
+                "the wind farm operators have pledged to protect the white dolphin",
+                "the wind farm operators have pledged to protect Chinese white dolphins",
+                "the wind farm operators have pledged to protect the Chinese white dolphin",
+                "the wind farm operators have vowed to protect white dolphins",
+                "the wind farm operators have vowed to protect the white dolphins",
+                "the wind farm operators have vowed to protect the white dolphin",
+                "the wind farm operators have vowed to protect Chinese white dolphins",
+                "the wind farm operators have vowed to protect the Chinese white dolphin",
+                "wind power companies have promised to protect the white dolphin",
+                "wind power companies have promised to protect Chinese white dolphins",
+                "wind power companies have promised to protect the Chinese white dolphin",
+                "wind power companies promised to protect the white dolphin",
+                "wind power companies promised to protect Chinese white dolphins",
+                "wind power companies promised to protect the Chinese white dolphin",
+                "wind power companies have pledged to protect the white dolphin",
+                "wind power companies have pledged to protect Chinese white dolphins",
+                "wind power companies have pledged to protect the Chinese white dolphin",
+                "wind power companies have vowed to protect white dolphins",
+                "wind power companies have vowed to protect the white dolphins",
+                "wind power companies have vowed to protect the white dolphin",
+                "wind power companies have vowed to protect Chinese white dolphins",
+                "wind power companies have vowed to protect the Chinese white dolphin"
+              ],
+              "targets": [
+                "wind",
+                "company",
+                "promise",
+                "protect",
+                "dolphin"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "wind farm companies have promised protecting white dolphins",
+                  "right": "wind farm companies have promised to protect white dolphins",
+                  "explanation_zh": "promise（承諾）後面接不定詞 to protect。"
+                },
+                {
+                  "wrong": "wind farm company have promised to protect white dolphins",
+                  "right": "wind farm companies have promised to protect white dolphins",
+                  "explanation_zh": "業者不只一家，用複數 companies；單數主詞也不能配 have。"
+                }
+              ]
+            },
+            {
+              "zh": "而白海豚已",
+              "accepted": [
+                "which are already",
+                "which are",
+                "which have already become",
+                "which have become",
+                "which are now",
+                "which is",
+                "which is already",
+                "which has already become"
+              ],
+              "targets": [
+                "NRREL"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "that are already",
+                  "right": "which are already",
+                  "explanation_zh": "逗號後補充說明的非限定關係子句不能用 that。"
+                },
+                {
+                  "wrong": "they are already",
+                  "right": "which are already",
+                  "explanation_zh": "逗號後直接接 they are … 會變成兩個句子硬接；用 which 補充說明白海豚。"
+                }
+              ]
+            },
+            {
+              "zh": "瀕臨絕種",
+              "accepted": [
+                "nearly extinct",
+                "on the verge of extinction",
+                "on the brink of extinction",
+                "in danger of dying out",
+                "in danger of extinction",
+                "close to extinction",
+                "facing extinction",
+                "endangered",
+                "critically endangered",
+                "an endangered species",
+                "endangered species",
+                "at risk of extinction",
+                "threatened with extinction",
+                "almost extinct",
+                "close to dying out",
+                "at risk of dying out",
+                "on the edge of extinction"
+              ],
+              "targets": [
+                "extinct"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "on the verge of extinct",
+                  "right": "on the verge of extinction",
+                  "explanation_zh": "of 後面要接名詞 extinction；extinct 是形容詞（nearly extinct）。"
+                },
+                {
+                  "wrong": "nearly extinction",
+                  "right": "nearly extinct",
+                  "explanation_zh": "be 動詞後面接形容詞 extinct；extinction 是名詞（on the verge of extinction）。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "word_form",
+              "zh": "面對",
+              "literal_error": "Facing with criticism from environmental groups, wind farm companies have promised …",
+              "part": 1,
+              "explanation_zh": "face 是及物動詞，主動寫 Facing criticism，被動寫 Faced with criticism；Facing with 兩種都不是。"
+            },
+            {
+              "type": "abstract_nominal",
+              "zh": "瀕臨絕種",
+              "literal_error": "…white dolphins, which are already on the verge of extinct.",
+              "part": 4,
+              "explanation_zh": "「絕種」在 on the verge of 後面要用名詞 extinction；用形容詞要寫 nearly extinct／endangered。詞性弄錯是常見失分點。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "Under fire from environmental groups, wind farm companies have vowed to protect white dolphins, whose numbers have dwindled to the brink of extinction.",
+              "explanation_zh": "under fire（遭受批評）、vow（誓言）、whose numbers have dwindled（數量已銳減）是進階寫法，whose 一樣是非限定關係子句。這是加分寫法，不是唯一正解。"
+            }
+          ],
+          "restructuring_zh": "「面對…」和主要子句的主詞（業者）相同，改成分詞構句 Faced with …／Facing …；「而白海豚已瀕臨絕種」補充說明前面的白海豚，用非限定關係子句 , which are already nearly extinct，不必重複主詞。",
+          "notes_zh": "評分說明：「面對環保團體的批評」Faced with／Facing + criticism from environmental groups（environmental groups' criticism、criticism from environmentalists 也可以）；「風場業者」(the) wind farm companies／developers／operators、wind power companies；「承諾保護白海豚」have promised／promised／have pledged／have vowed to protect (the) white dolphins（Chinese／Taiwanese white dolphins 也可以）；「而白海豚已」用 , which are (already) …；「瀕臨絕種」nearly extinct、on the verge (brink) of extinction、in danger of dying out、close to extinction、(critically) endangered 都給分。另外也給分：把白海豚當物種寫成單數 the (Chinese) white dolphin，後面接 , which is (already) …；pledged／vowed to protect。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ac-V-3",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-top-06",
+    "lot": "translation-top-06",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "c6f44f933a9c31819117ac3657fbba0cbac38d8892d1379b9e2ce94107722abf",
+    "spec_id": "translation-top@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 5,
+    "sentences": 1,
+    "avg_sentence_length": 5.0,
+    "denominator": 5,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.2,
+    "coverage_l1_6": 0.6,
+    "offlist_ratio": 0.4,
+    "beyond_l4_ratio": 0.4,
+    "level_counts": {
+      "1": 1,
+      "6": 2,
+      "off": 2
+    },
+    "offlist_words": [
+      "taiwan",
+      "turbines"
+    ],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-10T02:38:56Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "warn",
+      "created_at": "2026-10-10T02:30:00Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "In the Taiwan Strait, many offshore wind turbines have been built on fishing grounds that fishermen rely on to make a living.",
+            "confidence": "high",
+            "explanation_zh": "「已有…被蓋在」用現在完成式被動 have been built；「漁民賴以維生的漁場」用關係子句 fishing grounds that fishermen rely on to make a living（也可 depend on for their livelihood）。"
+          },
+          "2": {
+            "translation": "Faced with criticism from environmental groups, wind farm operators have promised to protect white dolphins, which are already on the verge of extinction.",
+            "confidence": "high",
+            "explanation_zh": "「面對批評」用過去分詞構句 Faced with criticism（Facing criticism 亦可）；「承諾保護」用 have promised to protect；「而白海豚已瀕臨絕種」用非限定關係子句 , which are already on the verge of extinction（也可 already endangered）。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PASS",
+              "REL"
+            ],
+            "used_target_words": [
+              "strait",
+              "wind",
+              "build",
+              "fishing",
+              "ground",
+              "fisherman",
+              "depend",
+              "living"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "parts[0]「在台灣海峽（Taiwan Strait）」的英文名稱題目已在括號給出（標的詞 strait 也等於已給），accepted 只有 2 種寫法，實際上只考 In the，等於白送 1 分，4 部分的份量不平均；建議把「在台灣海峽」併入第 2 部分後重新切分（例如讓「被蓋在」的完成式被動、「漁民賴以維生的」關係子句各自成為一部分）。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "NRREL",
+              "PART"
+            ],
+            "used_target_words": [
+              "face",
+              "criticism",
+              "environmental",
+              "group",
+              "wind",
+              "company",
+              "promise",
+              "protect",
+              "dolphin",
+              "extinct"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "strait",
+              "wind",
+              "build",
+              "fishing",
+              "ground",
+              "fisherman",
+              "depend",
+              "living"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PASS": true,
+              "REL": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "face",
+              "criticism",
+              "environmental",
+              "group",
+              "wind",
+              "company",
+              "promise",
+              "protect",
+              "dolphin",
+              "extinct"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NRREL": true,
+              "PART": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 1 題驗證者對4 部分切分有意見（warn）：parts[0]「在台灣海峽（Taiwan Strait）」的英文名稱題目已在括號給出（標的詞 strait 也等於已給），accepted 只有 2 種寫法，實際上只考 In the，等於白送 1 分，4 部分的份量不平均；建議把「在台灣"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-10T02:28:18Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "In the Taiwan Strait, many offshore wind turbines have been built on the fishing grounds that fishermen depend on for a living.",
+            "confidence": "high",
+            "explanation_zh": "「已有許多……被蓋在……」用現在完成式被動 have been built；「漁民賴以維生的漁場」用關係子句 that fishermen depend on for a living（介系詞 on 放在子句尾端，亦可寫 on which fishermen depend for a living）。"
+          },
+          "2": {
+            "translation": "Faced with criticism from environmental groups, wind farm operators promised to protect the white dolphins, which are on the verge of extinction.",
+            "confidence": "medium",
+            "explanation_zh": "「面對……的批評」用過去分詞構句 Faced with ...；「承諾保護」用 promised to protect；「而白海豚已瀕臨絕種」用非限定關係子句 which are on the verge of extinction，on the verge of extinction 即「瀕臨絕種」(亦可用 endangered)。中文沒有時態，承諾用過去式或現在完成式皆合理；white dolphins 前是否加 the 也有彈性，所以信心為 medium。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PASS",
+              "REL"
+            ],
+            "used_target_words": [
+              "strait",
+              "wind",
+              "build",
+              "fishing",
+              "ground",
+              "fisherman",
+              "depend",
+              "living"
+            ],
+            "within_accepted": true,
+            "closest_reference": 2,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "NRREL",
+              "PART"
+            ],
+            "used_target_words": [
+              "face",
+              "criticism",
+              "environmental",
+              "group",
+              "wind",
+              "company",
+              "promise",
+              "protect",
+              "dolphin",
+              "extinct"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "strait",
+              "wind",
+              "build",
+              "fishing",
+              "ground",
+              "fisherman",
+              "depend",
+              "living"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PASS": true,
+              "REL": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "face",
+              "criticism",
+              "environmental",
+              "group",
+              "wind",
+              "company",
+              "promise",
+              "protect",
+              "dolphin",
+              "extinct"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NRREL": true,
+              "PART": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "rejected",
+  "status_reason": "判定者人工審查（第 1 輪）：record_verification 判 verified，但判定改為退回，第 1 題 4 部分切分不公平（驗證者 A 以 parts_check warn 指出，判定者確認）。第 1 部分「在台灣海峽（Taiwan Strait）」的英文名稱題目已在括號給出，accepted 只有 In the Taiwan Strait／Across the Taiwan Strait 兩種，實際只考定冠詞 the，4 分裡等於白送 1 分；標的詞 strait 也是題目直接給的，灌高標的詞彙命中率。第 2 部分的 offshore wind turbines 同樣已給出，第 1 題真正的考點（完成式被動 have been built on、介系詞留在子句尾的關係子句 depend on for a living、fishing grounds 的搭配）全擠在後三部分。重生時請把「在台灣海峽」併入其他部分、讓每一部分都有實際考點（例如把「被蓋在」的完成式被動獨立成一部分），或改用不需要括號附英文的地點。第 2 題沒有問題。"
+}

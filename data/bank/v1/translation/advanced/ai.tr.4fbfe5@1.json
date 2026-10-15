@@ -1,0 +1,950 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.4fbfe5",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "advanced",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "近年來，人臉辨識已經成為解鎖手機最常見的方法之一。",
+        "options": null,
+        "answer": "In recent years, facial recognition has become one of the most common ways to unlock phones.",
+        "accepted_answers": [
+          "Facial recognition has become one of the most common methods of unlocking cell phones in recent years.",
+          "Recently, face recognition has become one of the most popular ways for people to unlock their phones."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "最高級（one of the + 最高級 + 複數名詞）",
+            "現在完成式"
+          ],
+          "topic": "人臉辨識"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "不過，使用者應該了解，上傳臉部照片到網路上可能造成隱私問題。",
+        "options": null,
+        "answer": "However, users should understand that uploading photos of their faces to the Internet may cause privacy problems.",
+        "accepted_answers": [
+          "However, users should know that uploading their face photos online can lead to privacy problems.",
+          "But users should realize that posting photos of their faces on the Internet may cause privacy issues."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "動名詞片語當主詞",
+            "應該（should）"
+          ],
+          "topic": "人臉辨識"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "人臉辨識"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「近年來…已經成為」說的是從過去延續到現在的變化，用現在完成式 has become；「人臉辨識」是名詞 facial recognition（或 face recognition）。「…最常見的方法之一」用 one of the most common ways，ways 一定要用複數。中文「解鎖手機」放在「方法」前面修飾，英文要改成後位修飾：ways to unlock phones（或 ways of unlocking phones）。",
+          "evidence": [
+            "近年來",
+            "已經成為",
+            "解鎖手機最常見的方法之一"
+          ],
+          "strategy_zh": "看到「…之一」先想到 one of the + 最高級 + 複數名詞；修飾名詞的動作（解鎖手機）用 to VR 放在名詞後面。",
+          "hints": [
+            "切成四段：近年來／人臉辨識已經成為／解鎖手機／最常見的方法之一",
+            "標的詞彙：recent（近來的，L2）、facial（臉部的，L4）、recognition（辨識，L4）、unlock（解鎖，L5）、common（常見的，L1）、way（方法，L1）",
+            "句型框架：In recent years, S + has become + one of the most + adj. + 複數名詞 + to VR"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「不過，使用者應該了解」寫 However, users should understand that …；should 後面接原形動詞。that 子句的主詞是「上傳臉部照片到網路上」這個動作，英文要改成動名詞片語 uploading photos of their faces to the Internet（動名詞主詞視為單數）。「到網路上」可寫 to the Internet 或 online（online 前面不加 to）。「隱私問題」是 privacy problems，privacy 是名詞，不要寫成 private。",
+          "evidence": [
+            "使用者應該了解",
+            "上傳臉部照片到網路上",
+            "可能造成隱私問題"
+          ],
+          "strategy_zh": "中文主詞是一個動作時，英文改成 V-ing 開頭的動名詞片語；「應該」用 should + 原形動詞。",
+          "hints": [
+            "切成四段：不過，使用者應該了解／上傳臉部照片／到網路上／可能造成隱私問題",
+            "標的詞彙：understand（了解，L1）、upload（上傳，L2）、photo（照片，L1）、face（臉，L1）、Internet（網路，L2）、privacy（隱私，L4）、problem（問題，L1）",
+            "句型框架：However, S + should understand that + V-ing … + may cause …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "In recent years, facial recognition has become one of the most common ways to unlock phones.",
+            "Facial recognition has become one of the most common methods of unlocking cell phones in recent years.",
+            "Recently, face recognition has become one of the most popular ways for people to unlock their phones."
+          ],
+          "target_words": [
+            {
+              "word": "recent",
+              "zh": "近來的",
+              "alternatives": [
+                "recently"
+              ]
+            },
+            {
+              "word": "facial",
+              "zh": "臉部的",
+              "alternatives": [
+                "face"
+              ]
+            },
+            {
+              "word": "recognition",
+              "zh": "辨識"
+            },
+            {
+              "word": "unlock",
+              "zh": "解鎖"
+            },
+            {
+              "word": "common",
+              "zh": "常見的",
+              "alternatives": [
+                "popular",
+                "widely used"
+              ]
+            },
+            {
+              "word": "way",
+              "zh": "方法",
+              "alternatives": [
+                "method",
+                "means"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "COMP",
+              "grammar_id": "gp-comparative-superlative",
+              "label_zh": "最高級：one of the + 最高級 + 複數名詞",
+              "frame": "one of the most + adj. + 複數名詞 (+ to VR)",
+              "zh_trigger": "最常見的方法之一"
+            },
+            {
+              "code": "PERF",
+              "grammar_id": "gp-present-perfect",
+              "label_zh": "現在完成式（近年來＋已經）",
+              "frame": "In recent years, S + has/have + p.p. …",
+              "zh_trigger": "已經成為"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "近年來",
+              "accepted": [
+                "In recent years",
+                "Recently",
+                "In the past few years",
+                "Over the past few years",
+                "In the last few years",
+                "Over the last few years",
+                "In the past several years"
+              ],
+              "targets": [
+                "recent"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "In recent year",
+                  "right": "In recent years",
+                  "explanation_zh": "「近年來」是 in recent years，years 要用複數。"
+                },
+                {
+                  "wrong": "In near years",
+                  "right": "In recent years",
+                  "explanation_zh": "「近年」不是「接近的年份」；英文說 in recent years 或 recently。"
+                }
+              ]
+            },
+            {
+              "zh": "人臉辨識已經成為",
+              "accepted": [
+                "facial recognition has become",
+                "face recognition has become",
+                "facial recognition has already become",
+                "face recognition has already become",
+                "facial recognition technology has become",
+                "face recognition technology has become",
+                "facial recognition has now become"
+              ],
+              "targets": [
+                "facial",
+                "recognition",
+                "PERF"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "face recognize has become",
+                  "right": "face recognition has become",
+                  "explanation_zh": "「辨識」在這裡是名詞，要用 recognition；recognize 是動詞。"
+                },
+                {
+                  "wrong": "facial recognition becomes",
+                  "right": "facial recognition has become",
+                  "explanation_zh": "「近年來＋已經成為」是從過去延續到現在的變化，要用現在完成式 has become。"
+                }
+              ]
+            },
+            {
+              "zh": "解鎖手機",
+              "accepted": [
+                "to unlock phones",
+                "of unlocking cell phones",
+                "for people to unlock their phones",
+                "to unlock cell phones",
+                "to unlock their phones",
+                "to unlock smartphones",
+                "to unlock mobile phones",
+                "of unlocking phones",
+                "for unlocking phones",
+                "to unlock our phones",
+                "to unlock a phone",
+                "of unlocking smartphones",
+                "for unlocking smartphones",
+                "people unlock their phones",
+                "of unlocking their phones",
+                "to unlock one's phone",
+                "to unlock cellphones",
+                "to unlock their cell phones",
+                "to unlock their smartphones",
+                "to unlock a cellphone",
+                "of unlocking cellphones",
+                "of unlocking mobile phones",
+                "of unlocking their cell phones",
+                "of unlocking their smartphones",
+                "of unlocking our phones",
+                "of unlocking a phone",
+                "of unlocking a cellphone",
+                "for unlocking cell phones",
+                "for unlocking cellphones",
+                "for unlocking mobile phones",
+                "for unlocking their phones",
+                "for unlocking their cell phones",
+                "for unlocking their smartphones",
+                "for unlocking our phones",
+                "for unlocking a phone",
+                "for unlocking a cellphone"
+              ],
+              "targets": [
+                "unlock"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "to unlock phone",
+                  "right": "to unlock phones",
+                  "explanation_zh": "phone 是可數名詞，泛指時用複數 phones（或 their phones）。"
+                },
+                {
+                  "wrong": "to unlocking phones",
+                  "right": "to unlock phones",
+                  "explanation_zh": "ways to 後面接原形動詞；要用動名詞時寫 ways of unlocking phones。"
+                }
+              ]
+            },
+            {
+              "zh": "最常見的方法之一",
+              "accepted": [
+                "one of the most common ways",
+                "one of the most common methods",
+                "one of the most popular ways",
+                "one of the most popular methods",
+                "one of the most widely used ways",
+                "one of the most widely used methods",
+                "one of the most common means"
+              ],
+              "targets": [
+                "COMP",
+                "common",
+                "way"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "one of the most common way",
+                  "right": "one of the most common ways",
+                  "explanation_zh": "one of the + 最高級後面接複數名詞。"
+                },
+                {
+                  "wrong": "the most common way",
+                  "right": "one of the most common ways",
+                  "explanation_zh": "漏譯「之一」，意思變成「最常見的那一種」。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "prenominal_modifier",
+              "zh": "解鎖手機",
+              "literal_error": "In recent years, facial recognition has become one of the most common unlock phone ways.",
+              "part": 3,
+              "explanation_zh": "中文「解鎖手機（的）方法」修飾語在名詞前面；英文要改成 ways to unlock phones 或 ways of unlocking phones，放在名詞後面。"
+            },
+            {
+              "type": "plural_countable",
+              "zh": "最常見的方法之一",
+              "literal_error": "In recent years, facial recognition has become one of the most common way to unlock phones.",
+              "part": 4,
+              "explanation_zh": "「…之一」要用 one of the + 最高級 + 複數名詞，way 要加 s。"
+            }
+          ],
+          "bonus": [],
+          "restructuring_zh": "「解鎖手機最常見的方法之一」中文把修飾語「解鎖手機」放在「方法」前面；英文先寫 one of the most common ways，再用不定詞 to unlock phones（或 of unlocking phones）放在後面修飾。",
+          "notes_zh": "「近年來」In recent years、Recently、In the past few years 都可以，放句首或句尾都給分；「人臉辨識」facial recognition、face recognition 都可以（可加 technology）；「解鎖手機」to unlock phones、of／for unlocking phones 都給分，phones 也可寫 cell phones、mobile phones、smartphones、their phones；「最常見的方法」common／popular／widely used 搭配 ways／methods 都可以，但一定要有 one of the … 與複數名詞。"
+        },
+        "2": {
+          "references": [
+            "However, users should understand that uploading photos of their faces to the Internet may cause privacy problems.",
+            "However, users should know that uploading their face photos online can lead to privacy problems.",
+            "But users should realize that posting photos of their faces on the Internet may cause privacy issues."
+          ],
+          "target_words": [
+            {
+              "word": "understand",
+              "zh": "了解",
+              "alternatives": [
+                "know",
+                "realize",
+                "aware"
+              ]
+            },
+            {
+              "word": "upload",
+              "zh": "上傳",
+              "alternatives": [
+                "post",
+                "share",
+                "put"
+              ]
+            },
+            {
+              "word": "photo",
+              "zh": "照片",
+              "alternatives": [
+                "picture",
+                "image"
+              ]
+            },
+            {
+              "word": "face",
+              "zh": "臉",
+              "alternatives": [
+                "facial"
+              ]
+            },
+            {
+              "word": "Internet",
+              "zh": "網路",
+              "alternatives": [
+                "online",
+                "web"
+              ]
+            },
+            {
+              "word": "privacy",
+              "zh": "隱私"
+            },
+            {
+              "word": "problem",
+              "zh": "問題",
+              "alternatives": [
+                "issue",
+                "risk",
+                "trouble",
+                "concern"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "NFSUBJ",
+              "grammar_id": "gp-gerund-subject",
+              "label_zh": "動名詞片語當主詞（that 子句的主詞）",
+              "frame": "S + should understand that + V-ing … + may + VR …",
+              "zh_trigger": "上傳臉部照片到網路上"
+            },
+            {
+              "code": "BASIC",
+              "grammar_id": "gp-should-advice",
+              "label_zh": "應該（should）",
+              "frame": "S + should + VR …",
+              "zh_trigger": "應該"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "不過，使用者應該了解",
+              "accepted": [
+                "However, users should understand that",
+                "However, users should know that",
+                "But users should realize that",
+                "However, users should realize that",
+                "However, users should be aware that",
+                "But users should understand that",
+                "But users should know that",
+                "However, users should understand",
+                "However, users should know",
+                "However, users ought to understand that",
+                "However, users ought to know that",
+                "However, phone users should understand that",
+                "Nevertheless, users should understand that",
+                "However, users should realize",
+                "However, users ought to understand",
+                "However, users ought to know",
+                "However, users ought to realize that",
+                "However, users ought to realize",
+                "However, users ought to be aware that",
+                "But users should understand",
+                "But users should know",
+                "But users should realize",
+                "But users should be aware that",
+                "But users ought to understand that",
+                "But users ought to understand",
+                "But users ought to know that",
+                "But users ought to know",
+                "But users ought to realize that",
+                "But users ought to realize",
+                "But users ought to be aware that",
+                "Nevertheless, users should understand",
+                "Nevertheless, users should know that",
+                "Nevertheless, users should know",
+                "Nevertheless, users should realize that",
+                "Nevertheless, users should realize",
+                "Nevertheless, users should be aware that",
+                "Nevertheless, users ought to understand that",
+                "Nevertheless, users ought to understand",
+                "Nevertheless, users ought to know that",
+                "Nevertheless, users ought to know",
+                "Nevertheless, users ought to realize that",
+                "Nevertheless, users ought to realize",
+                "Nevertheless, users ought to be aware that"
+              ],
+              "targets": [
+                "BASIC",
+                "understand"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "However, users should understanding that",
+                  "right": "However, users should understand that",
+                  "explanation_zh": "should 後面接原形動詞。"
+                },
+                {
+                  "wrong": "However, user should understand that",
+                  "right": "However, users should understand that",
+                  "explanation_zh": "泛指「使用者」要用複數 users（或 a user）；可數名詞單數不能單獨使用。"
+                }
+              ]
+            },
+            {
+              "zh": "上傳臉部照片",
+              "accepted": [
+                "uploading photos of their faces",
+                "uploading their face photos",
+                "posting photos of their faces",
+                "uploading face photos",
+                "uploading facial photos",
+                "uploading pictures of their faces",
+                "uploading photos of their face",
+                "posting their face photos",
+                "posting face photos",
+                "sharing photos of their faces",
+                "uploading their facial photos",
+                "uploading pictures of their face",
+                "uploading photos of faces",
+                "posting pictures of their faces",
+                "uploading facial images",
+                "uploading their facial images",
+                "uploading images of their faces",
+                "uploading their own face photos",
+                "uploading photos of their own faces",
+                "posting facial photos",
+                "posting their facial photos",
+                "posting facial images",
+                "posting their facial images",
+                "posting images of their faces",
+                "posting photos of their face",
+                "posting their own face photos",
+                "posting photos of their own faces",
+                "sharing pictures of their faces",
+                "sharing their face photos",
+                "sharing face photos",
+                "sharing facial photos",
+                "sharing their facial photos",
+                "sharing facial images",
+                "sharing their facial images",
+                "sharing images of their faces",
+                "sharing photos of their face",
+                "sharing their own face photos",
+                "sharing photos of their own faces"
+              ],
+              "targets": [
+                "NFSUBJ",
+                "upload",
+                "photo",
+                "face"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "upload photos of their faces",
+                  "right": "uploading photos of their faces",
+                  "explanation_zh": "「上傳臉部照片…」是整個動作當主詞，要改成動名詞 uploading（或不定詞 to upload）。"
+                },
+                {
+                  "wrong": "uploading faces photos",
+                  "right": "uploading face photos",
+                  "explanation_zh": "名詞修飾名詞時，前面的名詞用單數：face photos。"
+                }
+              ]
+            },
+            {
+              "zh": "到網路上",
+              "accepted": [
+                "to the Internet",
+                "online",
+                "on the Internet",
+                "onto the Internet",
+                "on the web"
+              ],
+              "targets": [
+                "Internet"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "to online",
+                  "right": "online",
+                  "explanation_zh": "online 本身是副詞（在網路上），前面不加 to；或寫 to the Internet。"
+                },
+                {
+                  "wrong": "to Internet",
+                  "right": "to the Internet",
+                  "explanation_zh": "Internet 前面要加 the。"
+                }
+              ]
+            },
+            {
+              "zh": "可能造成隱私問題",
+              "accepted": [
+                "may cause privacy problems",
+                "can lead to privacy problems",
+                "may cause privacy issues",
+                "might cause privacy problems",
+                "can cause privacy problems",
+                "could cause privacy problems",
+                "may lead to privacy problems",
+                "may lead to privacy issues",
+                "can cause privacy issues",
+                "might cause privacy issues",
+                "may result in privacy problems",
+                "may create privacy problems",
+                "may cause problems with privacy",
+                "may cause privacy concerns",
+                "may put their privacy at risk",
+                "may bring about privacy problems",
+                "may cause privacy risks",
+                "may lead to privacy risks",
+                "may lead to privacy concerns",
+                "may result in privacy issues",
+                "may result in privacy risks",
+                "may result in privacy concerns",
+                "may create privacy issues",
+                "may create privacy risks",
+                "may create privacy concerns",
+                "may bring privacy problems",
+                "may bring privacy issues",
+                "may bring privacy risks",
+                "may bring privacy concerns",
+                "might cause privacy risks",
+                "might cause privacy concerns",
+                "might lead to privacy problems",
+                "might lead to privacy issues",
+                "might lead to privacy risks",
+                "might lead to privacy concerns",
+                "might result in privacy problems",
+                "might result in privacy issues",
+                "might result in privacy risks",
+                "might result in privacy concerns",
+                "might create privacy problems",
+                "might create privacy issues",
+                "might create privacy risks",
+                "might create privacy concerns",
+                "might bring privacy problems",
+                "might bring privacy issues",
+                "might bring privacy risks",
+                "might bring privacy concerns",
+                "can cause privacy risks",
+                "can cause privacy concerns",
+                "can lead to privacy issues",
+                "can lead to privacy risks",
+                "can lead to privacy concerns",
+                "can result in privacy problems",
+                "can result in privacy issues",
+                "can result in privacy risks",
+                "can result in privacy concerns",
+                "can create privacy problems",
+                "can create privacy issues",
+                "can create privacy risks",
+                "can create privacy concerns",
+                "can bring privacy problems",
+                "can bring privacy issues",
+                "can bring privacy risks",
+                "can bring privacy concerns",
+                "could cause privacy issues",
+                "could cause privacy risks",
+                "could cause privacy concerns",
+                "could lead to privacy problems",
+                "could lead to privacy issues",
+                "could lead to privacy risks",
+                "could lead to privacy concerns",
+                "could result in privacy problems",
+                "could result in privacy issues",
+                "could result in privacy risks",
+                "could result in privacy concerns",
+                "could create privacy problems",
+                "could create privacy issues",
+                "could create privacy risks",
+                "could create privacy concerns",
+                "could bring privacy problems",
+                "could bring privacy issues",
+                "could bring privacy risks",
+                "could bring privacy concerns"
+              ],
+              "targets": [
+                "privacy",
+                "problem"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "may cause private problems",
+                  "right": "may cause privacy problems",
+                  "explanation_zh": "「隱私」是名詞 privacy；private problems 是「私人的問題」，意思不同。"
+                },
+                {
+                  "wrong": "may causes privacy problems",
+                  "right": "may cause privacy problems",
+                  "explanation_zh": "助動詞 may 後面接原形動詞。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "verbal_subject",
+              "zh": "上傳臉部照片到網路上",
+              "literal_error": "However, users should understand that upload photos of their faces to the Internet may cause privacy problems.",
+              "part": 2,
+              "explanation_zh": "中文用動詞片語「上傳臉部照片到網路上」當主詞；照字面用原形 upload 開頭是錯的，要改成動名詞 uploading …。"
+            },
+            {
+              "type": "word_form",
+              "zh": "隱私問題",
+              "literal_error": "However, users should understand that uploading photos of their faces to the Internet may cause private problems.",
+              "part": 4,
+              "explanation_zh": "「隱私」是名詞 privacy，名詞修飾名詞寫 privacy problems；寫成形容詞 private 意思會變成「私人問題」。"
+            }
+          ],
+          "bonus": [],
+          "restructuring_zh": "「上傳臉部照片到網路上可能造成隱私問題」中文用動詞片語當主詞，英文要改成動名詞片語 uploading photos of their faces to the Internet，當 that 子句的主詞，後面再接 may cause。",
+          "notes_zh": "「不過」However 或 But 都可以；「了解」understand、know、realize、be aware 都給分，that 可省略；「應該」寫 should 或 ought to；「上傳」upload、post 都可以，「臉部照片」photos／pictures of their faces、(their) face photos、facial photos 都給分；「到網路上」to／onto the Internet、on the Internet、online（前面不加 to）都可以；「問題」problems、issues 都可以，也可寫 may put their privacy at risk。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-advanced-06",
+    "lot": "translation-advanced-06",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "3f8dc9d60c8a2f9f0e258e68e094820e19a8a5f1c5e0001a05ad2370e79443f3",
+    "spec_id": "translation-advanced@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-10T02:32:12Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-10T02:17:22Z",
+      "details": {
+        "solver": "A",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "In recent years, facial recognition has become one of the most common ways to unlock mobile phones.",
+            "confidence": "high",
+            "explanation_zh": "「近年來…已經成為」是從過去延續到現在的變化，用現在完成式 has become；「最常見的方法之一」用 one of the most common + 複數名詞 ways；「解鎖手機」用不定詞 to unlock 修飾 ways。"
+          },
+          "2": {
+            "translation": "However, users should understand that uploading photos of their faces to the Internet may cause privacy problems.",
+            "confidence": "high",
+            "explanation_zh": "「應該了解」後面接 that 名詞子句當受詞；子句主詞「上傳臉部照片到網路上」是動作，用動名詞片語 uploading … 當主詞（單數動詞 may cause）；「可能造成」用 may cause。「臉部照片」寫成 photos of their faces 較自然，也可寫 facial photos。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "COMP",
+              "PERF"
+            ],
+            "used_target_words": [
+              "recent",
+              "facial",
+              "recognition",
+              "unlock",
+              "common",
+              "way"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "NFSUBJ",
+              "BASIC"
+            ],
+            "used_target_words": [
+              "understand",
+              "upload",
+              "photo",
+              "face",
+              "Internet",
+              "privacy",
+              "problem"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "recent",
+              "facial",
+              "recognition",
+              "unlock",
+              "common",
+              "way"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "COMP": true,
+              "PERF": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "understand",
+              "upload",
+              "photo",
+              "face",
+              "Internet",
+              "privacy",
+              "problem"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NFSUBJ": true,
+              "BASIC": null
+            },
+            "program_match": true
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-10T02:22:17Z",
+      "details": {
+        "solver": "B",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "In recent years, facial recognition has become one of the most common ways to unlock a phone.",
+            "confidence": "high",
+            "explanation_zh": "「近年來…已經成為」用現在完成式 has become；「最常見的方法之一」用 one of the most common ways；「解鎖手機」用 unlock a phone，ways 後接不定詞 to unlock。"
+          },
+          "2": {
+            "translation": "However, users should understand that uploading photos of their faces to the Internet may cause privacy problems.",
+            "confidence": "high",
+            "explanation_zh": "「不過」用 However 開頭；「應該了解」用 should understand that + 名詞子句；「上傳…到網路上」當主詞用動名詞 uploading；「可能造成」用 may cause。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "COMP",
+              "PERF"
+            ],
+            "used_target_words": [
+              "recent",
+              "facial",
+              "recognition",
+              "unlock",
+              "common",
+              "way"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "NFSUBJ",
+              "BASIC"
+            ],
+            "used_target_words": [
+              "understand",
+              "upload",
+              "photo",
+              "face",
+              "Internet",
+              "privacy",
+              "problem"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "recent",
+              "facial",
+              "recognition",
+              "unlock",
+              "common",
+              "way"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "COMP": true,
+              "PERF": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "understand",
+              "upload",
+              "photo",
+              "face",
+              "Internet",
+              "privacy",
+              "problem"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NFSUBJ": true,
+              "BASIC": null
+            },
+            "program_match": true
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

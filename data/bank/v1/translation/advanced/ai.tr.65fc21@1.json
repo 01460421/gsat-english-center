@@ -1,0 +1,919 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.65fc21",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "advanced",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "模擬聯合國（Model United Nations）的會議常由大學社團舉辦，許多英文老師鼓勵學生參加。",
+        "options": null,
+        "answer": "Model United Nations conferences are often organized by university clubs, and many English teachers encourage students to take part.",
+        "accepted_answers": [
+          "Model United Nations conferences are often held by college clubs, and many English teachers encourage their students to participate.",
+          "Conferences of Model United Nations are often hosted by university clubs, and many English teachers encourage students to join them."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "被動語態（be + p.p. + by）",
+            "動詞＋受詞＋不定詞（encourage + O + to VR）"
+          ],
+          "topic": "模擬聯合國"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "和一般英文課相比，這類會議對那些想當外交官的人更有幫助。",
+        "options": null,
+        "answer": "Compared with regular English classes, such conferences are more helpful to those who want to become diplomats.",
+        "accepted_answers": [
+          "Compared to ordinary English classes, this kind of conference is more helpful for those who hope to be diplomats.",
+          "Compared with general English lessons, these conferences are more useful to those who want to work as diplomats."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "相較於…（Compared with）",
+            "那些…的人（those who）"
+          ],
+          "topic": "模擬聯合國"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "模擬聯合國"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「會議常由大學社團舉辦」主詞是會議，會議是被舉辦的，用被動語態 are often organized by university clubs（be + p.p. + by）。「鼓勵學生參加」是 encourage + 受詞 + to VR：encourage students to take part（participate 要接 in 才能接受詞）。兩個完整子句用 and 連接。",
+          "evidence": [
+            "會議常由大學社團舉辦",
+            "鼓勵學生參加"
+          ],
+          "strategy_zh": "看到「由…舉辦／製作」先想被動 be + p.p. + by；encourage 後面先接人，再接 to VR。",
+          "hints": [
+            "切成四段：模擬聯合國（Model United Nations）的會議／常由大學社團舉辦／許多英文老師鼓勵學生／參加",
+            "標的詞彙：conference（會議，L4）、organize（舉辦，L3）、university（大學，L2）、club（社團，L1）、teacher（老師，L1）、encourage（鼓勵，L2）、take part（參加）",
+            "句型框架：S + are often + p.p. + by …, and S + encourage + O + to VR"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「和一般英文課相比」用 Compared with regular English classes 放句首（過去分詞 compared）。「那些想當外交官的人」是 those who want to become diplomats，those 後面接 who 子句，動詞用複數 want。「這類會議」寫 such conferences（複數，動詞用 are）；「更有幫助」是比較級 more helpful（helpful 是形容詞，不要寫成 more help），整句：such conferences are more helpful to those who …。",
+          "evidence": [
+            "和一般英文課相比",
+            "對那些想當外交官的人更有幫助"
+          ],
+          "strategy_zh": "「和 A 相比，B 比較…」用 Compared with A, B + be + 比較級；「那些…的人」用 those who + V。",
+          "hints": [
+            "切成四段：和一般英文課相比／這類會議／對那些想當外交官的人／更有幫助",
+            "標的詞彙：compare（比較，L2）、regular（一般的，L2）、class（課，L1）、conference（會議，L4）、helpful（有幫助的，L1）、diplomat（外交官，L4）",
+            "句型框架：Compared with + N, S + be + more + adj. + to + those who + V …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "Model United Nations conferences are often organized by university clubs, and many English teachers encourage students to take part.",
+            "Model United Nations conferences are often held by college clubs, and many English teachers encourage their students to participate.",
+            "Conferences of Model United Nations are often hosted by university clubs, and many English teachers encourage students to join them."
+          ],
+          "target_words": [
+            {
+              "word": "conference",
+              "zh": "會議",
+              "alternatives": [
+                "meeting",
+                "event"
+              ]
+            },
+            {
+              "word": "organize",
+              "zh": "舉辦",
+              "alternatives": [
+                "hold",
+                "host",
+                "run"
+              ]
+            },
+            {
+              "word": "university",
+              "zh": "大學",
+              "alternatives": [
+                "college"
+              ]
+            },
+            {
+              "word": "club",
+              "zh": "社團"
+            },
+            {
+              "word": "teacher",
+              "zh": "老師"
+            },
+            {
+              "word": "encourage",
+              "zh": "鼓勵"
+            },
+            {
+              "word": "take part",
+              "zh": "參加",
+              "alternatives": [
+                "participate",
+                "join",
+                "attend"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PASS",
+              "grammar_id": "gp-passive",
+              "label_zh": "被動語態（be + p.p. + by …）",
+              "frame": "S + am/is/are + p.p. + by …",
+              "zh_trigger": "由大學社團舉辦"
+            },
+            {
+              "code": "VOC",
+              "grammar_id": "gp-v-o-to-v",
+              "label_zh": "動詞＋受詞＋不定詞（encourage + O + to VR）",
+              "frame": "S + encourage + O + to VR",
+              "zh_trigger": "鼓勵學生參加"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "模擬聯合國（Model United Nations）的會議",
+              "accepted": [
+                "Model United Nations conferences",
+                "Conferences of Model United Nations",
+                "Model United Nations meetings",
+                "Model UN conferences",
+                "Model United Nations events",
+                "The conferences of Model United Nations",
+                "MUN conferences",
+                "The Model United Nations conferences"
+              ],
+              "targets": [
+                "conference"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Model United Nations conference",
+                  "right": "Model United Nations conferences",
+                  "explanation_zh": "泛指這類會議用複數 conferences（或 meetings）；可數名詞單數不能單獨使用。"
+                }
+              ]
+            },
+            {
+              "zh": "常由大學社團舉辦",
+              "accepted": [
+                "are often organized by university clubs",
+                "are often held by college clubs",
+                "are often hosted by university clubs",
+                "are often organized by college clubs",
+                "are often held by university clubs",
+                "are usually organized by university clubs",
+                "are often run by university clubs",
+                "are often organized by student clubs at universities",
+                "are often hosted by college clubs",
+                "are frequently organized by university clubs",
+                "are often organized by clubs at universities",
+                "are often organised by university clubs",
+                "are often organized by university student clubs",
+                "are often organized by college student clubs",
+                "are often held by student clubs at universities",
+                "are often held by university student clubs",
+                "are often held by college student clubs",
+                "are often held by clubs at universities",
+                "are often hosted by student clubs at universities",
+                "are often hosted by university student clubs",
+                "are often hosted by college student clubs",
+                "are often hosted by clubs at universities",
+                "are often run by college clubs",
+                "are often run by student clubs at universities",
+                "are often run by university student clubs",
+                "are often run by college student clubs",
+                "are often run by clubs at universities",
+                "are usually organized by college clubs",
+                "are usually organized by student clubs at universities",
+                "are usually organized by university student clubs",
+                "are usually organized by college student clubs",
+                "are usually organized by clubs at universities",
+                "are usually held by university clubs",
+                "are usually held by college clubs",
+                "are usually held by student clubs at universities",
+                "are usually held by university student clubs",
+                "are usually held by college student clubs",
+                "are usually held by clubs at universities",
+                "are usually hosted by university clubs",
+                "are usually hosted by college clubs",
+                "are usually hosted by student clubs at universities",
+                "are usually hosted by university student clubs",
+                "are usually hosted by college student clubs",
+                "are usually hosted by clubs at universities",
+                "are usually run by university clubs",
+                "are usually run by college clubs",
+                "are usually run by student clubs at universities",
+                "are usually run by university student clubs",
+                "are usually run by college student clubs",
+                "are usually run by clubs at universities",
+                "are frequently organized by college clubs",
+                "are frequently organized by student clubs at universities",
+                "are frequently organized by university student clubs",
+                "are frequently organized by college student clubs",
+                "are frequently organized by clubs at universities",
+                "are frequently held by university clubs",
+                "are frequently held by college clubs",
+                "are frequently held by student clubs at universities",
+                "are frequently held by university student clubs",
+                "are frequently held by college student clubs",
+                "are frequently held by clubs at universities",
+                "are frequently hosted by university clubs",
+                "are frequently hosted by college clubs",
+                "are frequently hosted by student clubs at universities",
+                "are frequently hosted by university student clubs",
+                "are frequently hosted by college student clubs",
+                "are frequently hosted by clubs at universities",
+                "are frequently run by university clubs",
+                "are frequently run by college clubs",
+                "are frequently run by student clubs at universities",
+                "are frequently run by university student clubs",
+                "are frequently run by college student clubs",
+                "are frequently run by clubs at universities"
+              ],
+              "targets": [
+                "PASS",
+                "organize",
+                "university",
+                "club"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "often organize by university clubs",
+                  "right": "are often organized by university clubs",
+                  "explanation_zh": "會議是「被」舉辦的，要用被動 be + p.p.。"
+                },
+                {
+                  "wrong": "are often organized from university clubs",
+                  "right": "are often organized by university clubs",
+                  "explanation_zh": "被動語態中做動作的人（單位）用 by 帶出。"
+                }
+              ]
+            },
+            {
+              "zh": "許多英文老師鼓勵學生",
+              "accepted": [
+                "and many English teachers encourage students",
+                "and many English teachers encourage their students",
+                "and many English teachers have encouraged students",
+                "and lots of English teachers encourage students",
+                "and a lot of English teachers encourage students",
+                "many English teachers encourage students",
+                "and many English teachers encourage high school students"
+              ],
+              "targets": [
+                "VOC",
+                "teacher",
+                "encourage"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "and many English teacher encourage students",
+                  "right": "and many English teachers encourage students",
+                  "explanation_zh": "many 後面接複數名詞 teachers。"
+                },
+                {
+                  "wrong": "and many English teachers encourages students",
+                  "right": "and many English teachers encourage students",
+                  "explanation_zh": "主詞 many English teachers 是複數，動詞不加 s。"
+                }
+              ]
+            },
+            {
+              "zh": "參加",
+              "accepted": [
+                "to take part",
+                "to participate",
+                "to join them",
+                "to take part in them",
+                "to attend them",
+                "to participate in them",
+                "to join",
+                "to take part in these conferences",
+                "to join these conferences",
+                "to attend",
+                "to participate in these events",
+                "to attend these conferences",
+                "to join in",
+                "to get involved",
+                "to take part in such conferences",
+                "to attend such conferences"
+              ],
+              "targets": [
+                "take part"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "to participate them",
+                  "right": "to participate in them",
+                  "explanation_zh": "participate 是不及物動詞，接受詞要加 in。"
+                },
+                {
+                  "wrong": "taking part",
+                  "right": "to take part",
+                  "explanation_zh": "encourage + 受詞後面接不定詞 to VR。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "word_form",
+              "zh": "由大學社團舉辦",
+              "literal_error": "Model United Nations conferences often organize by university clubs, and many English teachers encourage students to take part.",
+              "part": 2,
+              "explanation_zh": "會議是被舉辦的一方，少了 be 動詞與過去分詞就變成主動「會議去舉辦」。"
+            },
+            {
+              "type": "collocation",
+              "zh": "參加",
+              "literal_error": "Model United Nations conferences are often organized by university clubs, and many English teachers encourage students to participate them.",
+              "part": 4,
+              "explanation_zh": "「參加」用 participate 時要接 in（participate in them），或改用 take part、join、attend。"
+            }
+          ],
+          "bonus": [],
+          "restructuring_zh": "「會議常由大學社團舉辦」主詞「會議」是被舉辦的一方，英文改成被動語態 are often organized by university clubs。",
+          "notes_zh": "「模擬聯合國的會議」Model United Nations／Model UN conferences（或 meetings、events）都可以；「舉辦」organized、held、hosted、run 都給分，一定要用被動 are … by；「大學社團」university clubs、college clubs、student clubs at universities 都可以；兩個子句之間用 and 連接（或分成兩句）；「鼓勵學生參加」encourage (their) students to take part／participate／join／attend (them)。"
+        },
+        "2": {
+          "references": [
+            "Compared with regular English classes, such conferences are more helpful to those who want to become diplomats.",
+            "Compared to ordinary English classes, this kind of conference is more helpful for those who hope to be diplomats.",
+            "Compared with general English lessons, these conferences are more useful to those who want to work as diplomats."
+          ],
+          "target_words": [
+            {
+              "word": "compare",
+              "zh": "相比"
+            },
+            {
+              "word": "regular",
+              "zh": "一般的",
+              "alternatives": [
+                "ordinary",
+                "general",
+                "normal",
+                "usual",
+                "typical"
+              ]
+            },
+            {
+              "word": "class",
+              "zh": "課",
+              "alternatives": [
+                "lesson",
+                "course"
+              ]
+            },
+            {
+              "word": "conference",
+              "zh": "會議",
+              "alternatives": [
+                "meeting",
+                "event"
+              ]
+            },
+            {
+              "word": "helpful",
+              "zh": "有幫助的",
+              "alternatives": [
+                "useful",
+                "help"
+              ]
+            },
+            {
+              "word": "diplomat",
+              "zh": "外交官"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "COMP",
+              "grammar_id": "gp-compared-with",
+              "label_zh": "相較於…（Compared with + N）",
+              "frame": "Compared with/to + N, S + be + 比較級 …",
+              "zh_trigger": "和一般英文課相比"
+            },
+            {
+              "code": "REL",
+              "grammar_id": "gp-for-those-who",
+              "label_zh": "那些…的人（those who + V）",
+              "frame": "… + to/for + those who + V …",
+              "zh_trigger": "那些想當外交官的人"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "和一般英文課相比",
+              "accepted": [
+                "Compared with regular English classes",
+                "Compared to ordinary English classes",
+                "Compared with general English lessons",
+                "Compared with ordinary English classes",
+                "Compared to regular English classes",
+                "Compared with regular English lessons",
+                "Compared with normal English classes",
+                "Compared with typical English classes",
+                "In comparison with regular English classes",
+                "When compared with regular English classes",
+                "Compared with usual English classes",
+                "Compared with general English classes",
+                "Compared to general English classes",
+                "Compared with ordinary English lessons",
+                "Compared with normal English lessons",
+                "Compared with typical English lessons",
+                "Compared with usual English lessons",
+                "Compared to regular English lessons",
+                "Compared to ordinary English lessons",
+                "Compared to general English lessons",
+                "Compared to normal English classes",
+                "Compared to normal English lessons",
+                "Compared to typical English classes",
+                "Compared to typical English lessons",
+                "Compared to usual English classes",
+                "Compared to usual English lessons",
+                "In comparison with regular English lessons",
+                "In comparison with ordinary English classes",
+                "In comparison with ordinary English lessons",
+                "In comparison with general English classes",
+                "In comparison with general English lessons",
+                "In comparison with normal English classes",
+                "In comparison with normal English lessons",
+                "In comparison with typical English classes",
+                "In comparison with typical English lessons",
+                "In comparison with usual English classes",
+                "In comparison with usual English lessons",
+                "When compared with regular English lessons",
+                "When compared with ordinary English classes",
+                "When compared with ordinary English lessons",
+                "When compared with general English classes",
+                "When compared with general English lessons",
+                "When compared with normal English classes",
+                "When compared with normal English lessons",
+                "When compared with typical English classes",
+                "When compared with typical English lessons",
+                "When compared with usual English classes",
+                "When compared with usual English lessons",
+                "When compared to regular English classes",
+                "When compared to regular English lessons",
+                "When compared to ordinary English classes",
+                "When compared to ordinary English lessons",
+                "When compared to general English classes",
+                "When compared to general English lessons",
+                "When compared to normal English classes",
+                "When compared to normal English lessons",
+                "When compared to typical English classes",
+                "When compared to typical English lessons",
+                "When compared to usual English classes",
+                "When compared to usual English lessons"
+              ],
+              "targets": [
+                "COMP",
+                "compare",
+                "regular",
+                "class"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Compare with regular English classes",
+                  "right": "Compared with regular English classes",
+                  "explanation_zh": "「和…相比」用過去分詞 Compared with／to 開頭；Compare 開頭會變成祈使句。"
+                },
+                {
+                  "wrong": "Comparing with regular English classes",
+                  "right": "Compared with regular English classes",
+                  "explanation_zh": "這種活動是「被拿來比較」的一方，用過去分詞 compared。"
+                }
+              ]
+            },
+            {
+              "zh": "這類會議",
+              "accepted": [
+                "such conferences",
+                "this kind of conference",
+                "these conferences",
+                "conferences like these",
+                "this type of conference",
+                "such meetings",
+                "these meetings",
+                "conferences like this",
+                "this kind of meeting",
+                "such events"
+              ],
+              "targets": [
+                "conference"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "such conference",
+                  "right": "such conferences",
+                  "explanation_zh": "such 修飾可數名詞單數要寫 such a conference；泛指這類會議用複數 such conferences。"
+                },
+                {
+                  "wrong": "this conferences",
+                  "right": "these conferences",
+                  "explanation_zh": "this 後面接單數名詞；複數要用 these conferences。"
+                }
+              ]
+            },
+            {
+              "zh": "對那些想當外交官的人",
+              "accepted": [
+                "to those who want to become diplomats",
+                "for those who hope to be diplomats",
+                "to those who want to work as diplomats",
+                "for those who want to become diplomats",
+                "to those who want to be diplomats",
+                "for those who want to be diplomats",
+                "for those who hope to become diplomats",
+                "to those who hope to become diplomats",
+                "for those who would like to become diplomats",
+                "to those who wish to become diplomats",
+                "for those who dream of becoming diplomats",
+                "for those who want to work as diplomats",
+                "to people who want to become diplomats",
+                "for people who want to become diplomats",
+                "for those who want to become a diplomat"
+              ],
+              "targets": [
+                "REL",
+                "diplomat"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "to those want to become diplomats",
+                  "right": "to those who want to become diplomats",
+                  "explanation_zh": "「那些…的人」用 those who + 動詞；who 不能省略。"
+                },
+                {
+                  "wrong": "to those who wants to become diplomats",
+                  "right": "to those who want to become diplomats",
+                  "explanation_zh": "those 是複數，關係子句的動詞用 want。"
+                }
+              ]
+            },
+            {
+              "zh": "更有幫助",
+              "accepted": [
+                "are more helpful",
+                "is more helpful",
+                "are more useful",
+                "is more useful",
+                "are of more help",
+                "is of more help",
+                "can be more helpful",
+                "are much more helpful",
+                "are even more helpful",
+                "is much more helpful",
+                "are more beneficial",
+                "is more beneficial",
+                "can be more useful",
+                "are much more useful",
+                "are even more useful"
+              ],
+              "targets": [
+                "helpful"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "are more help",
+                  "right": "are more helpful",
+                  "explanation_zh": "「有幫助的」是形容詞 helpful；help 是名詞或動詞。"
+                },
+                {
+                  "wrong": "are helpfuler",
+                  "right": "are more helpful",
+                  "explanation_zh": "helpful 是多音節形容詞，比較級用 more helpful。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "prenominal_modifier",
+              "zh": "那些想當外交官的人",
+              "literal_error": "Compared with regular English classes, such conferences are more helpful to those want to become diplomats people.",
+              "part": 3,
+              "explanation_zh": "「那些想當外交官的人」照中文語序把修飾語放在「人」前面是錯的；英文寫 those who want to become diplomats。"
+            },
+            {
+              "type": "word_form",
+              "zh": "更有幫助",
+              "literal_error": "Compared with regular English classes, such conferences are more help to those who want to become diplomats.",
+              "part": 4,
+              "explanation_zh": "「有幫助的」是形容詞 helpful；寫成名詞 help 詞性不對。"
+            }
+          ],
+          "bonus": [],
+          "restructuring_zh": "「那些想當外交官的人」英文用 those who want to become diplomats：先寫 those，再用 who 子句放在後面說明是哪些人。",
+          "notes_zh": "「和…相比」Compared with／to、In comparison with 都可以，「一般的」regular、ordinary、general、normal 都給分，classes／lessons 都可以；「這類會議」such conferences、these conferences、this kind of conference 都可以（複數主詞動詞用 are，單數 this kind of conference 用 is），conferences 也可寫 meetings；「那些想當外交官的人」本句練的是 those who …（前面用 for 或 to 都可以），寫成 people who … 也是用關係代名詞 who 引導的形容詞子句，同樣給分；「想當」want／hope／wish to become／be、want to work as 都可以；「更有幫助」more helpful／useful。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-advanced-06",
+    "lot": "translation-advanced-06",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "3f8dc9d60c8a2f9f0e258e68e094820e19a8a5f1c5e0001a05ad2370e79443f3",
+    "spec_id": "translation-advanced@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 3,
+    "sentences": 1,
+    "avg_sentence_length": 3.0,
+    "denominator": 3,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 1.0,
+    "coverage_l1_6": 1.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {
+      "2": 2,
+      "3": 1
+    },
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-10T02:32:18Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-10T02:17:22Z",
+      "details": {
+        "solver": "A",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Model United Nations conferences are often held by college clubs, and many English teachers encourage students to take part in them.",
+            "confidence": "high",
+            "explanation_zh": "「會議常由大學社團舉辦」是被動，用 are often held by（也可 organized by）；後半句換主詞，用 and 連接；「鼓勵學生參加」用 encourage + 受詞 + to V，「參加」用 take part in（也可 participate in / attend），them 指這些會議。"
+          },
+          "2": {
+            "translation": "Compared with regular English classes, such conferences are more helpful to those who want to become diplomats.",
+            "confidence": "high",
+            "explanation_zh": "「和…相比」用過去分詞片語 Compared with …；「更有幫助」用比較級 more helpful；「那些想當外交官的人」用 those who want to become diplomats（who 關係子句）。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PASS",
+              "VOC"
+            ],
+            "used_target_words": [
+              "conference",
+              "organize",
+              "university",
+              "club",
+              "teacher",
+              "encourage",
+              "take part"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "COMP",
+              "REL"
+            ],
+            "used_target_words": [
+              "compare",
+              "regular",
+              "class",
+              "conference",
+              "helpful",
+              "diplomat"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "conference",
+              "organize",
+              "university",
+              "club",
+              "teacher",
+              "encourage",
+              "take part"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PASS": true,
+              "VOC": null
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "compare",
+              "regular",
+              "class",
+              "conference",
+              "helpful",
+              "diplomat"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "COMP": true,
+              "REL": true
+            },
+            "program_match": true
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-10T02:22:17Z",
+      "details": {
+        "solver": "B",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "Model United Nations conferences are often organized by university clubs, and many English teachers encourage students to take part in them.",
+            "confidence": "high",
+            "explanation_zh": "「模擬聯合國的會議」用 Model United Nations conferences；「常由大學社團舉辦」用被動語態 are often organized by；「鼓勵學生參加」用 encourage students to take part in them；兩個分句用 and 連接。"
+          },
+          "2": {
+            "translation": "Compared with regular English classes, this kind of conference is more helpful to those who want to become diplomats.",
+            "confidence": "high",
+            "explanation_zh": "「和一般英文課相比」用 Compared with 片語；「這類會議」用 this kind of conference（單數，動詞 is）；「更有幫助」用 more helpful；「那些想當外交官的人」用 those who want to become diplomats。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PASS",
+              "VOC"
+            ],
+            "used_target_words": [
+              "conference",
+              "organize",
+              "university",
+              "club",
+              "teacher",
+              "encourage",
+              "take part"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "COMP",
+              "REL"
+            ],
+            "used_target_words": [
+              "compare",
+              "regular",
+              "class",
+              "conference",
+              "helpful",
+              "diplomat"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "conference",
+              "organize",
+              "university",
+              "club",
+              "teacher",
+              "encourage",
+              "take part"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PASS": true,
+              "VOC": null
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "compare",
+              "regular",
+              "class",
+              "conference",
+              "helpful",
+              "diplomat"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "COMP": true,
+              "REL": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

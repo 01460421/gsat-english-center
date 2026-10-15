@@ -1,0 +1,766 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.0f520b",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "basic",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "越來越多班級為運動會設計自己的班服。",
+        "options": null,
+        "answer": "More and more classes design their own class T-shirts for sports day.",
+        "accepted_answers": [
+          "More and more classes are designing their own T-shirts for Sports Day.",
+          "More and more classes have designed their own class shirts for the school sports day."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "越來越…"
+          ],
+          "topic": "班服"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "除了畫圖案，同學們還會在每件班服背後寫上自己的名字。",
+        "options": null,
+        "answer": "Besides drawing the pattern, my classmates also write their own names on the back of each T-shirt.",
+        "accepted_answers": [
+          "Apart from drawing the design, my classmates will also write their names on the back of each shirt.",
+          "Besides drawing patterns, my classmates also write their names on the backs of their T-shirts."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "介系詞＋動名詞"
+          ],
+          "topic": "班服"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "班服"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「越來越多＋名詞」用 more and more + 複數名詞：班級是可數名詞，要寫 classes，動詞跟著用複數 design（不加 s）。中文沒有時間詞，說的是最近的趨勢，用現在式 design、現在進行式 are designing 或現在完成式 have designed 都可以。「自己的班服」是 their own class T-shirts（their 對應複數的 classes），「為運動會」用 for sports day。",
+          "evidence": [
+            "越來越多班級",
+            "自己的班服"
+          ],
+          "strategy_zh": "看到「越來越多＋名詞」，先寫 more and more，再檢查名詞有沒有加 s、動詞有沒有跟著用複數。",
+          "hints": [
+            "切成四段：越來越多班級／為運動會／設計／自己的班服",
+            "標的詞彙：class（班級）、sports day（運動會）、design（設計）、own（自己的）、T-shirt（T 恤）",
+            "句型框架：More and more + 複數名詞 + 原形動詞 + their own + 名詞 + for …"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「除了做 A，還做 B」用 Besides + V-ing …, S + also + V …：besides 是介系詞，後面的「畫」要用動名詞 drawing（也可以用 In addition to、Apart from + V-ing）；不要用 except（那是排除）。「還會」是 also 或 will also，「還」不是 still。主詞 my classmates 是複數，動詞用原形 write（不加 s），「自己的名字」寫 their (own) names。「在每件班服背後」用 on the back of each T-shirt（each 接單數）。",
+          "evidence": [
+            "除了畫圖案",
+            "同學們還會在每件班服背後寫上自己的名字"
+          ],
+          "strategy_zh": "「除了…還…」先寫 Besides + V-ing，逗號後的主要子句用 also；檢查介系詞後面的動詞有沒有改成 V-ing。",
+          "hints": [
+            "切成四段：除了畫圖案／同學們還會／在每件班服背後／寫上自己的名字",
+            "標的詞彙：draw（畫）、pattern（圖案）、classmate（同學）、back（背面）、write（寫）、name（名字）",
+            "句型框架：Besides + V-ing …, S + (will) also + 原形動詞 …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "More and more classes design their own class T-shirts for sports day.",
+            "More and more classes are designing their own T-shirts for Sports Day.",
+            "More and more classes have designed their own class shirts for the school sports day."
+          ],
+          "target_words": [
+            {
+              "word": "class",
+              "zh": "班級"
+            },
+            {
+              "word": "sports day",
+              "zh": "運動會",
+              "alternatives": [
+                "sports meet",
+                "field day"
+              ]
+            },
+            {
+              "word": "design",
+              "zh": "設計",
+              "alternatives": [
+                "create",
+                "make"
+              ]
+            },
+            {
+              "word": "own",
+              "zh": "自己的"
+            },
+            {
+              "word": "T-shirt",
+              "zh": "T 恤（班服）",
+              "alternatives": [
+                "shirt"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "COMP",
+              "grammar_id": "gp-more-and-more",
+              "label_zh": "越來越多…（more and more + 複數名詞）",
+              "frame": "More and more + 複數名詞 + V …",
+              "zh_trigger": "越來越多"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "越來越多班級",
+              "accepted": [
+                "More and more classes",
+                "More and more school classes"
+              ],
+              "targets": [
+                "COMP",
+                "class"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "More and more class",
+                  "right": "More and more classes",
+                  "explanation_zh": "more and more 後面接可數名詞要用複數 classes。"
+                },
+                {
+                  "wrong": "Many and many classes",
+                  "right": "More and more classes",
+                  "explanation_zh": "「越來越多」要用比較級重複：more and more，不是 many and many。"
+                }
+              ]
+            },
+            {
+              "zh": "為運動會",
+              "accepted": [
+                "for sports day",
+                "for the sports day",
+                "for the school sports day",
+                "for our school's sports day",
+                "for the sports meet",
+                "for the school sports meet",
+                "for field day",
+                "for their sports day",
+                "to wear on sports day",
+                "to wear on the sports day"
+              ],
+              "targets": [
+                "sports day"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "for sport day",
+                  "right": "for sports day",
+                  "explanation_zh": "「運動會」是 sports day，sports 要有 s。"
+                },
+                {
+                  "wrong": "in sports day",
+                  "right": "for sports day",
+                  "explanation_zh": "「為運動會（設計）」是「給運動會用」，介系詞用 for；而且日子前面的介系詞是 on，不是 in。"
+                }
+              ]
+            },
+            {
+              "zh": "設計",
+              "accepted": [
+                "design",
+                "are designing",
+                "have designed",
+                "have started to design",
+                "create",
+                "are creating",
+                "have created",
+                "make",
+                "are making",
+                "have made",
+                "have started designing",
+                "are starting to design"
+              ],
+              "targets": [
+                "design"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "designs",
+                  "right": "design",
+                  "explanation_zh": "主詞 more and more classes 是複數，現在式動詞不加 s。"
+                },
+                {
+                  "wrong": "are design",
+                  "right": "are designing",
+                  "explanation_zh": "be 動詞後面要接 V-ing（進行式）；不用進行式就直接寫 design。"
+                }
+              ]
+            },
+            {
+              "zh": "自己的班服",
+              "accepted": [
+                "their own class T-shirts",
+                "their own T-shirts",
+                "their own class shirts",
+                "their own shirts",
+                "their own class tees",
+                "their own class T-shirt",
+                "their own T-shirt"
+              ],
+              "targets": [
+                "own",
+                "T-shirt"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "its own class T-shirts",
+                  "right": "their own class T-shirts",
+                  "explanation_zh": "主詞 classes 是複數，所有格用 their。"
+                },
+                {
+                  "wrong": "themselves class T-shirts",
+                  "right": "their own class T-shirts",
+                  "explanation_zh": "「自己的」要用 their own + 名詞；themselves 是反身代名詞，不能放在名詞前面。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "plural_countable",
+              "zh": "越來越多班級",
+              "literal_error": "More and more class design their own class T-shirts for sports day.",
+              "part": 1,
+              "explanation_zh": "中文「班級」沒有單複數變化，照字面寫成 more and more class 是最常見的錯誤；more and more 後面的可數名詞要用複數 classes，這一部分扣分。"
+            }
+          ],
+          "bonus": [],
+          "notes_zh": "標的句型是 more and more + 複數名詞（越來越多）。中文沒有時間標記，說的是現在的趨勢，design、are designing、have designed 都給分（create、make 也可以）。「班服」寫 class T-shirts、T-shirts、class shirts 都可以，單數 their own class T-shirt（指一款班服）也不算錯；「為運動會」寫 for sports day、for the sports day、to wear on sports day 都可以。"
+        },
+        "2": {
+          "references": [
+            "Besides drawing the pattern, my classmates also write their own names on the back of each T-shirt.",
+            "Apart from drawing the design, my classmates will also write their names on the back of each shirt.",
+            "Besides drawing patterns, my classmates also write their names on the backs of their T-shirts."
+          ],
+          "target_words": [
+            {
+              "word": "draw",
+              "zh": "畫"
+            },
+            {
+              "word": "pattern",
+              "zh": "圖案",
+              "alternatives": [
+                "design",
+                "picture",
+                "drawing",
+                "logo"
+              ]
+            },
+            {
+              "word": "classmate",
+              "zh": "同學",
+              "alternatives": [
+                "student"
+              ]
+            },
+            {
+              "word": "back",
+              "zh": "背面"
+            },
+            {
+              "word": "write",
+              "zh": "寫上",
+              "alternatives": [
+                "put",
+                "sign",
+                "add"
+              ]
+            },
+            {
+              "word": "name",
+              "zh": "名字"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PREPVING",
+              "grammar_id": "gp-prep-gerund",
+              "label_zh": "介系詞＋動名詞（除了…，還…）",
+              "frame": "Besides／In addition to／Apart from + V-ing …, S + also + V …",
+              "zh_trigger": "除了畫圖案"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "除了畫圖案",
+              "accepted": [
+                "Besides drawing the pattern",
+                "Besides drawing the patterns",
+                "Besides drawing the design",
+                "Besides drawing the designs",
+                "Besides drawing patterns",
+                "Besides drawing a pattern",
+                "Besides drawing pictures",
+                "Besides drawing the pictures",
+                "Besides drawing the logo",
+                "Besides designing the pattern",
+                "Besides painting the pattern",
+                "Besides painting the design",
+                "In addition to drawing the pattern",
+                "In addition to drawing the patterns",
+                "In addition to drawing the design",
+                "In addition to drawing the designs",
+                "In addition to drawing patterns",
+                "In addition to drawing pictures",
+                "Apart from drawing the designs",
+                "Apart from drawing the pattern",
+                "Apart from drawing the design",
+                "Apart from drawing patterns",
+                "Aside from drawing the pattern",
+                "Aside from drawing the design",
+                "On top of drawing the pattern"
+              ],
+              "targets": [
+                "PREPVING",
+                "draw",
+                "pattern"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Besides draw the pattern",
+                  "right": "Besides drawing the pattern",
+                  "explanation_zh": "besides 是介系詞，後面的動詞要改成動名詞 V-ing。"
+                },
+                {
+                  "wrong": "Except drawing the pattern",
+                  "right": "Besides drawing the pattern",
+                  "explanation_zh": "except 是「除了…之外（其他都／都不）」的排除；「除了…，還…」是追加，要用 besides、in addition to 或 apart from。"
+                }
+              ]
+            },
+            {
+              "zh": "同學們還會",
+              "accepted": [
+                "my classmates also",
+                "my classmates will also",
+                "our classmates also",
+                "our classmates will also",
+                "all my classmates also",
+                "all my classmates will also",
+                "the students in my class also",
+                "the students in my class will also",
+                "the students also",
+                "the students will also",
+                "classmates also",
+                "classmates will also",
+                "the classmates also",
+                "the classmates will also",
+                "students also",
+                "students will also"
+              ],
+              "targets": [
+                "classmate"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "my classmate also",
+                  "right": "my classmates also",
+                  "explanation_zh": "「同學們」是複數，要用 classmates。"
+                },
+                {
+                  "wrong": "my classmates still",
+                  "right": "my classmates also",
+                  "explanation_zh": "這裡的「還」是「另外也」，用 also；still 是「仍然」，意思不對。"
+                },
+                {
+                  "wrong": "my classmates will also to",
+                  "right": "my classmates will also",
+                  "explanation_zh": "助動詞 will 後面直接接原形動詞，不加 to。"
+                }
+              ]
+            },
+            {
+              "zh": "在每件班服背後",
+              "accepted": [
+                "on the back of each T-shirt",
+                "on the back of every T-shirt",
+                "on the back of each shirt",
+                "on the back of every shirt",
+                "on the back of each class T-shirt",
+                "on the back of every class T-shirt",
+                "on the back of each class shirt",
+                "on the back of each of the T-shirts",
+                "on the back of each of the shirts",
+                "on the back of their T-shirts",
+                "on the backs of their T-shirts",
+                "on the back of the T-shirts",
+                "on the backs of the T-shirts",
+                "on the back of their class T-shirts",
+                "on the backs of their class T-shirts",
+                "on the back of each of our T-shirts",
+                "on the back of each of our class T-shirts",
+                "on the back of our T-shirts",
+                "on the backs of our T-shirts",
+                "on the back of our class T-shirts",
+                "on the backs of our class T-shirts"
+              ],
+              "targets": [
+                "back"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "on the back of each T-shirts",
+                  "right": "on the back of each T-shirt",
+                  "explanation_zh": "each 後面接單數名詞。"
+                },
+                {
+                  "wrong": "in the back of each T-shirt",
+                  "right": "on the back of each T-shirt",
+                  "explanation_zh": "字寫在衣服背面的表面上，用 on the back of；in the back of 是「在…的後部（裡面）」。"
+                },
+                {
+                  "wrong": "behind each T-shirt",
+                  "right": "on the back of each T-shirt",
+                  "explanation_zh": "behind 是「在…後方（另一個位置）」，寫在衣服背面要用 on the back of。"
+                }
+              ]
+            },
+            {
+              "zh": "寫上自己的名字",
+              "accepted": [
+                "write their own names",
+                "write their names",
+                "write down their own names",
+                "write down their names",
+                "write their own name",
+                "write their name",
+                "put their own names",
+                "put their names",
+                "sign their own names",
+                "sign their names",
+                "add their own names",
+                "add their names"
+              ],
+              "targets": [
+                "write",
+                "name"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "writes their own names",
+                  "right": "write their own names",
+                  "explanation_zh": "主詞 my classmates 是複數，現在式動詞不加 s；will 後面也接原形動詞 write。"
+                },
+                {
+                  "wrong": "write his own name",
+                  "right": "write their own names",
+                  "explanation_zh": "主詞 my classmates 是複數，所有格要用 their。"
+                },
+                {
+                  "wrong": "write themselves names",
+                  "right": "write their own names",
+                  "explanation_zh": "「自己的」是所有格 their own，不是反身代名詞 themselves。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "word_form",
+              "zh": "除了畫圖案",
+              "literal_error": "Besides draw the pattern, my classmates also write their own names on the back of each T-shirt.",
+              "part": 1,
+              "explanation_zh": "中文「除了」後面直接接動詞「畫」，照字面寫成 besides draw 是常見錯誤；besides 是介系詞，後面要接動名詞 drawing，這一部分扣分。"
+            }
+          ],
+          "bonus": [],
+          "notes_zh": "Besides 之外，In addition to、Apart from、Aside from + V-ing 都是本題句型，都給分。「還會」說的是同學們的做法（或接下來的打算），寫 also write 或 will also write 都可以，兩種寫法的動詞都是原形 write。「圖案」寫 pattern、design、pictures 都可以，單複數都可；「每件班服背後」寫 on the back of each／every T-shirt 或 on the backs of their T-shirts 都可以；「自己的名字」寫 their (own) names，指每人寫一個名字時寫 their own name 也不算錯。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-basic-06",
+    "lot": "translation-basic-06",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "74610382a1bd05ddcaec0c8ea0cac0b6d7492107d98401c668fa0d6e9642273c",
+    "spec_id": "translation-basic@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-10T02:30:57Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-10T02:15:00Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "More and more classes are designing their own class T-shirts for the school sports day.",
+            "confidence": "medium",
+            "explanation_zh": "「越來越多」用 More and more＋複數名詞；描述正在發生的趨勢，用現在進行式 are designing（現在簡單式 design 也可）。「班服」譯 class T-shirts（也可 class shirts／class uniforms），「運動會」譯 sports day（也可 sports meet／field day）。信心 medium 是因為「班服」「運動會」的說法不只一種。"
+          },
+          "2": {
+            "translation": "Besides drawing patterns, the students also write their own names on the back of each class T-shirt.",
+            "confidence": "medium",
+            "explanation_zh": "「除了……還……」是追加，用 Besides＋動名詞（In addition to drawing 也可），後面配 also；「每件班服背後」用 on the back of each class T-shirt；「同學們」用 the students（也可 the classmates）。習慣性動作用現在簡單式。「圖案」譯 patterns，也可 designs／pictures。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "COMP"
+            ],
+            "used_target_words": [
+              "class",
+              "sports day",
+              "design",
+              "own",
+              "T-shirt"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PREPVING"
+            ],
+            "used_target_words": [
+              "draw",
+              "pattern",
+              "classmate",
+              "back",
+              "write",
+              "name"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "class",
+              "sports day",
+              "design",
+              "own",
+              "T-shirt"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "COMP": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "draw",
+              "pattern",
+              "classmate",
+              "back",
+              "write",
+              "name"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PREPVING": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-10T02:14:07Z",
+      "details": {
+        "solver": "B",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "More and more classes are designing their own class T-shirts for the school sports day.",
+            "confidence": "high",
+            "explanation_zh": "「越來越多」是 more and more + 複數名詞；描述目前的趨勢，用現在進行式 are designing；「班服」譯為 class T-shirts／class uniforms；「為運動會」用 for the sports day。"
+          },
+          "2": {
+            "translation": "In addition to drawing patterns, the students also write their own names on the back of each class T-shirt.",
+            "confidence": "high",
+            "explanation_zh": "「除了…還…」用 In addition to + V-ing 帶出 also；介系詞後的動詞要用動名詞 drawing；「每件班服背後」是 on the back of each class T-shirt；這是習慣性做法，用現在簡單式。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "COMP"
+            ],
+            "used_target_words": [
+              "class",
+              "sports day",
+              "design",
+              "own",
+              "T-shirt"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "PREPVING"
+            ],
+            "used_target_words": [
+              "draw",
+              "pattern",
+              "classmate",
+              "back",
+              "write",
+              "name"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "class",
+              "sports day",
+              "design",
+              "own",
+              "T-shirt"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "COMP": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "draw",
+              "pattern",
+              "classmate",
+              "back",
+              "write",
+              "name"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PREPVING": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

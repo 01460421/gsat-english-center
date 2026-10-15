@@ -1,0 +1,943 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.2bf9d7",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "advanced",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "為了不留下任何痕跡，我們應該把所有垃圾帶下山。",
+        "options": null,
+        "answer": "To leave no trace behind, we should carry all our trash back down the mountain.",
+        "accepted_answers": [
+          "In order not to leave any trace, we should take all our garbage down the mountain.",
+          "So as not to leave any traces, we should bring all our trash back down from the mountain."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "不定詞表目的（否定）",
+            "應該（should）"
+          ],
+          "topic": "無痕山林"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "如果我們離開專為遊客設計的步道，脆弱的植物就可能被踩壞。",
+        "options": null,
+        "answer": "If we leave the trails designed for visitors, fragile plants may be stepped on and damaged.",
+        "accepted_answers": [
+          "If we step off the trails designed for visitors, fragile plants might be damaged.",
+          "If we walk off the paths made for visitors, the fragile plants could be crushed."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "條件子句（if）",
+            "分詞片語後位修飾"
+          ],
+          "topic": "無痕山林"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "無痕山林"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「為了不…」是否定的目的，可以寫 To leave no trace（用 no 否定名詞），或 In order not to leave any trace（not 放在 to 前面）；no 和 any 不能同時用。「我們應該…」用 should + 原形動詞。「把所有垃圾帶下山」寫 carry all our trash back down the mountain；trash、garbage 是不可數名詞，不加 s。",
+          "evidence": [
+            "為了不留下任何痕跡",
+            "我們應該把所有垃圾帶下山"
+          ],
+          "strategy_zh": "否定的目的用 in order not to／so as not to + VR，或 To + VR + no + N；should 後面接原形動詞。",
+          "hints": [
+            "切成四段：為了不留下任何痕跡／我們應該／把所有垃圾／帶下山",
+            "標的詞彙：leave（留下，L1）、trace（痕跡，L3）、trash（垃圾，L2）、carry（攜帶，L1）、mountain（山，L1）",
+            "句型框架：To + VR + no + N …, we should + VR …（或 In order not to + VR …）"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「如果…」是條件子句，用 If + 現在式。「專為遊客設計的步道」中文修飾語在前，英文用過去分詞片語後位修飾：the trails designed for visitors（步道是被設計的，用 p.p.）。「脆弱的植物」是 fragile plants；植物是被踩的一方，「可能被踩壞」用被動 may be stepped on and damaged。",
+          "evidence": [
+            "如果我們離開",
+            "專為遊客設計的步道",
+            "脆弱的植物就可能被踩壞"
+          ],
+          "strategy_zh": "「專為…設計的 N」直接套 N + designed for …；條件子句用現在式代替未來式。",
+          "hints": [
+            "切成四段：如果我們離開／專為遊客設計的步道／脆弱的植物／就可能被踩壞",
+            "標的詞彙：leave（離開，L1）、trail（步道，L3）、design（設計，L2）、visitor（遊客，L1）、fragile（脆弱的，L4）、plant（植物，L1）、damage（損壞，L2）",
+            "句型框架：If + S + V(現在式) + the + N + p.p. + for …, S + may + be + p.p."
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "To leave no trace behind, we should carry all our trash back down the mountain.",
+            "In order not to leave any trace, we should take all our garbage down the mountain.",
+            "So as not to leave any traces, we should bring all our trash back down from the mountain."
+          ],
+          "target_words": [
+            {
+              "word": "leave",
+              "zh": "留下"
+            },
+            {
+              "word": "trace",
+              "zh": "痕跡"
+            },
+            {
+              "word": "trash",
+              "zh": "垃圾",
+              "alternatives": [
+                "garbage",
+                "rubbish",
+                "waste"
+              ]
+            },
+            {
+              "word": "carry",
+              "zh": "攜帶",
+              "alternatives": [
+                "take",
+                "bring"
+              ]
+            },
+            {
+              "word": "mountain",
+              "zh": "山"
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PURP",
+              "grammar_id": "gp-infinitive-purpose",
+              "label_zh": "不定詞表目的（To／In order not to + VR）",
+              "frame": "To + VR + no + N … ／ In order not to + VR …, S + should + VR …",
+              "zh_trigger": "為了不留下任何痕跡"
+            },
+            {
+              "code": "BASIC",
+              "grammar_id": "gp-should-advice",
+              "label_zh": "應該（should）",
+              "frame": "S + should + VR …",
+              "zh_trigger": "應該"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "為了不留下任何痕跡",
+              "accepted": [
+                "To leave no trace behind",
+                "In order not to leave any trace",
+                "So as not to leave any traces",
+                "To leave no trace",
+                "In order not to leave any traces",
+                "So as not to leave any trace",
+                "In order to leave no trace",
+                "To avoid leaving any trace",
+                "To avoid leaving any traces",
+                "In order to avoid leaving any trace",
+                "In order not to leave any trace behind",
+                "To leave no traces",
+                "In order to not leave any trace",
+                "To leave no trace on the mountain",
+                "In order not to leave any trace on the mountain",
+                "To leave no trace in the mountains",
+                "So as not to leave any trace behind",
+                "In order to leave no trace behind"
+              ],
+              "targets": [
+                "PURP",
+                "leave",
+                "trace"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "For not leaving any trace",
+                  "right": "In order not to leave any trace",
+                  "explanation_zh": "表目的用不定詞；否定的目的寫 in order not to／so as not to + 原形動詞，或 To leave no trace。"
+                },
+                {
+                  "wrong": "To leave no any trace",
+                  "right": "To leave no trace",
+                  "explanation_zh": "no 和 any 不能連用：寫 leave no trace 或 not leave any trace。"
+                },
+                {
+                  "wrong": "To leave any trace",
+                  "right": "To leave no trace",
+                  "explanation_zh": "漏掉否定：「不留下」要寫 leave no trace 或 not leave any trace；To leave any trace 意思相反。"
+                }
+              ]
+            },
+            {
+              "zh": "我們應該",
+              "accepted": [
+                "we should",
+                "we ought to",
+                "we all should",
+                "we must"
+              ],
+              "targets": [
+                "BASIC"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "we should to",
+                  "right": "we should",
+                  "explanation_zh": "should 後面直接接原形動詞，不加 to。"
+                }
+              ]
+            },
+            {
+              "zh": "把所有垃圾",
+              "accepted": [
+                "carry all our trash",
+                "take all our garbage",
+                "bring all our trash",
+                "carry all our garbage",
+                "carry all our rubbish",
+                "carry all our waste",
+                "carry all of our trash",
+                "carry all of our garbage",
+                "carry all of our rubbish",
+                "carry all of our waste",
+                "carry all the trash",
+                "carry all the garbage",
+                "carry all the rubbish",
+                "carry all the waste",
+                "take all our trash",
+                "take all our rubbish",
+                "take all our waste",
+                "take all of our trash",
+                "take all of our garbage",
+                "take all of our rubbish",
+                "take all of our waste",
+                "take all the trash",
+                "take all the garbage",
+                "take all the rubbish",
+                "take all the waste",
+                "bring all our garbage",
+                "bring all our rubbish",
+                "bring all our waste",
+                "bring all of our trash",
+                "bring all of our garbage",
+                "bring all of our rubbish",
+                "bring all of our waste",
+                "bring all the trash",
+                "bring all the garbage",
+                "bring all the rubbish",
+                "bring all the waste"
+              ],
+              "targets": [
+                "carry",
+                "trash"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "carry all our trashes",
+                  "right": "carry all our trash",
+                  "explanation_zh": "trash（garbage）是不可數名詞，不加 s。"
+                },
+                {
+                  "wrong": "carry our all trash",
+                  "right": "carry all our trash",
+                  "explanation_zh": "all 要放在所有格 our 前面：all our trash。"
+                }
+              ]
+            },
+            {
+              "zh": "帶下山",
+              "accepted": [
+                "back down the mountain",
+                "down the mountain",
+                "back down from the mountain",
+                "down from the mountain",
+                "back down with us",
+                "down with us",
+                "off the mountain",
+                "back down"
+              ],
+              "targets": [
+                "mountain"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "down mountain",
+                  "right": "down the mountain",
+                  "explanation_zh": "down the mountain 的 mountain 前面要加 the。"
+                },
+                {
+                  "wrong": "to down the mountain",
+                  "right": "down the mountain",
+                  "explanation_zh": "down 在這裡是介系詞（往山下），前面不加 to。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "plural_countable",
+              "zh": "所有垃圾",
+              "literal_error": "To leave no trace behind, we should carry all our trashes back down the mountain.",
+              "part": 3,
+              "explanation_zh": "「所有垃圾」容易照中文加 s；trash、garbage 是不可數名詞，不能寫成 trashes。"
+            },
+            {
+              "type": "word_form",
+              "zh": "為了不留下",
+              "literal_error": "For not leaving any trace, we should carry all our trash back down the mountain.",
+              "part": 1,
+              "explanation_zh": "「為了不…」表目的要用不定詞：in order not to leave、so as not to leave，或 To leave no trace；for + V-ing 不表示目的。"
+            }
+          ],
+          "bonus": [],
+          "notes_zh": "「為了不留下任何痕跡」可寫 To leave no trace (behind)，或 In order not to／So as not to leave any trace(s)，To avoid leaving any trace 也可以，否定一定要譯出；「應該」should 或 ought to；第 3 部分（把所有垃圾）看「動詞＋受詞」：carry／take／bring all (of) our／all the trash、garbage（不可數，不加 s）；第 4 部分（帶下山）看方向：(back) down the mountain、down from the mountain、back down with us 都給分。"
+        },
+        "2": {
+          "references": [
+            "If we leave the trails designed for visitors, fragile plants may be stepped on and damaged.",
+            "If we step off the trails designed for visitors, fragile plants might be damaged.",
+            "If we walk off the paths made for visitors, the fragile plants could be crushed."
+          ],
+          "target_words": [
+            {
+              "word": "leave",
+              "zh": "離開",
+              "alternatives": [
+                "step off",
+                "walk off",
+                "go off",
+                "wander off"
+              ]
+            },
+            {
+              "word": "trail",
+              "zh": "步道",
+              "alternatives": [
+                "path"
+              ]
+            },
+            {
+              "word": "design",
+              "zh": "設計",
+              "alternatives": [
+                "make",
+                "build",
+                "plan",
+                "create"
+              ]
+            },
+            {
+              "word": "visitor",
+              "zh": "遊客",
+              "alternatives": [
+                "tourist",
+                "hiker"
+              ]
+            },
+            {
+              "word": "fragile",
+              "zh": "脆弱的",
+              "alternatives": [
+                "delicate",
+                "vulnerable"
+              ]
+            },
+            {
+              "word": "plant",
+              "zh": "植物"
+            },
+            {
+              "word": "damage",
+              "zh": "損壞",
+              "alternatives": [
+                "step on",
+                "crush",
+                "trample",
+                "destroy"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "ADVCL",
+              "grammar_id": "gp-condition-real",
+              "label_zh": "條件子句（If + S + V 現在式）",
+              "frame": "If + S + V(現在式) …, S + may + be + p.p. …",
+              "zh_trigger": "如果"
+            },
+            {
+              "code": "PART",
+              "grammar_id": "gp-participle-modifier",
+              "label_zh": "分詞片語後位修飾（N + designed for …）",
+              "frame": "the + N + p.p. + for …（the trails designed for visitors）",
+              "zh_trigger": "專為遊客設計的步道"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "如果我們離開",
+              "accepted": [
+                "If we leave",
+                "If we step off",
+                "If we walk off",
+                "If we go off",
+                "If we wander off",
+                "If we stray from",
+                "If we get off",
+                "If we walk away from",
+                "If we step off of"
+              ],
+              "targets": [
+                "ADVCL",
+                "leave"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "If we will leave",
+                  "right": "If we leave",
+                  "explanation_zh": "條件子句用現在式表示未來，不加 will。"
+                },
+                {
+                  "wrong": "If we leave from",
+                  "right": "If we leave",
+                  "explanation_zh": "leave（離開某處）是及物動詞，直接接受詞，不加 from。"
+                }
+              ]
+            },
+            {
+              "zh": "專為遊客設計的步道",
+              "accepted": [
+                "the trails designed for visitors",
+                "the paths made for visitors",
+                "the trails made for visitors",
+                "the paths designed for visitors",
+                "the trail designed for visitors",
+                "the trails built for visitors",
+                "the trails designed especially for visitors",
+                "the trails specially designed for visitors",
+                "the trails designed specifically for visitors",
+                "the trails designed for tourists",
+                "the trails designed for hikers",
+                "the trails planned for visitors",
+                "the paths built for visitors",
+                "the trails made for tourists",
+                "the trails made for hikers",
+                "the trails built for tourists",
+                "the trails built for hikers",
+                "the trails specially designed for tourists",
+                "the trails specially designed for hikers",
+                "the trails specially made for visitors",
+                "the trails specially made for tourists",
+                "the trails specially made for hikers",
+                "the trails specially built for visitors",
+                "the trails specially built for tourists",
+                "the trails specially built for hikers",
+                "the trails especially designed for visitors",
+                "the trails especially designed for tourists",
+                "the trails especially designed for hikers",
+                "the trails especially made for visitors",
+                "the trails especially made for tourists",
+                "the trails especially made for hikers",
+                "the trails especially built for visitors",
+                "the trails especially built for tourists",
+                "the trails especially built for hikers",
+                "the trail designed for tourists",
+                "the trail designed for hikers",
+                "the trail made for visitors",
+                "the trail made for tourists",
+                "the trail made for hikers",
+                "the trail built for visitors",
+                "the trail built for tourists",
+                "the trail built for hikers",
+                "the trail specially designed for visitors",
+                "the trail specially designed for tourists",
+                "the trail specially designed for hikers",
+                "the trail specially made for visitors",
+                "the trail specially made for tourists",
+                "the trail specially made for hikers",
+                "the trail specially built for visitors",
+                "the trail specially built for tourists",
+                "the trail specially built for hikers",
+                "the trail especially designed for visitors",
+                "the trail especially designed for tourists",
+                "the trail especially designed for hikers",
+                "the trail especially made for visitors",
+                "the trail especially made for tourists",
+                "the trail especially made for hikers",
+                "the trail especially built for visitors",
+                "the trail especially built for tourists",
+                "the trail especially built for hikers",
+                "the paths designed for tourists",
+                "the paths designed for hikers",
+                "the paths made for tourists",
+                "the paths made for hikers",
+                "the paths built for tourists",
+                "the paths built for hikers",
+                "the paths specially designed for visitors",
+                "the paths specially designed for tourists",
+                "the paths specially designed for hikers",
+                "the paths specially made for visitors",
+                "the paths specially made for tourists",
+                "the paths specially made for hikers",
+                "the paths specially built for visitors",
+                "the paths specially built for tourists",
+                "the paths specially built for hikers",
+                "the paths especially designed for visitors",
+                "the paths especially designed for tourists",
+                "the paths especially designed for hikers",
+                "the paths especially made for visitors",
+                "the paths especially made for tourists",
+                "the paths especially made for hikers",
+                "the paths especially built for visitors",
+                "the paths especially built for tourists",
+                "the paths especially built for hikers",
+                "the path designed for visitors",
+                "the path designed for tourists",
+                "the path designed for hikers",
+                "the path made for visitors",
+                "the path made for tourists",
+                "the path made for hikers",
+                "the path built for visitors",
+                "the path built for tourists",
+                "the path built for hikers",
+                "the path specially designed for visitors",
+                "the path specially designed for tourists",
+                "the path specially designed for hikers",
+                "the path specially made for visitors",
+                "the path specially made for tourists",
+                "the path specially made for hikers",
+                "the path specially built for visitors",
+                "the path specially built for tourists",
+                "the path specially built for hikers",
+                "the path especially designed for visitors",
+                "the path especially designed for tourists",
+                "the path especially designed for hikers",
+                "the path especially made for visitors",
+                "the path especially made for tourists",
+                "the path especially made for hikers",
+                "the path especially built for visitors",
+                "the path especially built for tourists",
+                "the path especially built for hikers"
+              ],
+              "targets": [
+                "PART",
+                "trail",
+                "design",
+                "visitor"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "the designed for visitors trails",
+                  "right": "the trails designed for visitors",
+                  "explanation_zh": "「專為遊客設計的步道」修飾語很長，要放在名詞後面：the trails designed for visitors。"
+                },
+                {
+                  "wrong": "the trails designing for visitors",
+                  "right": "the trails designed for visitors",
+                  "explanation_zh": "步道是「被設計」的，用過去分詞 designed。"
+                }
+              ]
+            },
+            {
+              "zh": "脆弱的植物",
+              "accepted": [
+                "fragile plants",
+                "the fragile plants",
+                "delicate plants",
+                "the delicate plants",
+                "fragile plant life",
+                "vulnerable plants"
+              ],
+              "targets": [
+                "fragile",
+                "plant"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "fragile plant",
+                  "right": "fragile plants",
+                  "explanation_zh": "泛指植物要用複數 plants（或加 the 指這些植物）。"
+                }
+              ]
+            },
+            {
+              "zh": "就可能被踩壞",
+              "accepted": [
+                "may be stepped on and damaged",
+                "might be damaged",
+                "could be crushed",
+                "may be damaged",
+                "may be crushed",
+                "might be stepped on",
+                "may be stepped on",
+                "could be damaged",
+                "may be trampled",
+                "may get stepped on",
+                "could be stepped on and damaged",
+                "may be destroyed",
+                "might get damaged",
+                "may be damaged by our feet",
+                "might be stepped on and damaged",
+                "may get damaged",
+                "may get crushed",
+                "may be trampled and damaged",
+                "might be crushed",
+                "might be trampled",
+                "might be destroyed",
+                "might get stepped on",
+                "might get crushed",
+                "might be trampled and damaged",
+                "could be stepped on",
+                "could be trampled",
+                "could be destroyed",
+                "could get damaged",
+                "could get stepped on",
+                "could get crushed",
+                "could be trampled and damaged",
+                "can be damaged",
+                "can be stepped on",
+                "can be crushed",
+                "can be trampled",
+                "can be stepped on and damaged",
+                "can be destroyed",
+                "can get damaged",
+                "can get stepped on",
+                "can get crushed",
+                "can be trampled and damaged"
+              ],
+              "targets": [
+                "damage"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "may damage",
+                  "right": "may be damaged",
+                  "explanation_zh": "植物是「被踩壞」的，要用被動 be + p.p.。"
+                },
+                {
+                  "wrong": "may be step on",
+                  "right": "may be stepped on",
+                  "explanation_zh": "被動語態的動詞要用過去分詞 stepped。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "prenominal_modifier",
+              "zh": "專為遊客設計的步道",
+              "literal_error": "If we leave the designed for visitors trails, fragile plants may be stepped on and damaged.",
+              "part": 2,
+              "explanation_zh": "「專為遊客設計的步道」照中文語序把修飾語放在名詞前面是錯的；英文先寫 the trails，再接 designed for visitors。"
+            },
+            {
+              "type": "word_form",
+              "zh": "被踩壞",
+              "literal_error": "If we leave the trails designed for visitors, fragile plants may step on and damage.",
+              "part": 4,
+              "explanation_zh": "植物是被踩的一方，「被踩壞」要用被動 be stepped on／be damaged，不能寫成主動。"
+            }
+          ],
+          "bonus": [],
+          "restructuring_zh": "「專為遊客設計的步道」中文修飾語在前；英文先寫名詞 the trails，再用過去分詞片語 designed for visitors 放在後面修飾。「被踩壞」要用被動語態 be stepped on／be damaged。",
+          "notes_zh": "「離開」leave、step off、walk off、go off 都可以（leave 不加 from）；「專為…設計的」designed／made／built for visitors 都給分，可加 especially、specially，visitors 也可寫 tourists、hikers；「步道」trails、paths 單複數都可以；「脆弱的植物」fragile／delicate plants，可加 the；「就可能被踩壞」may／might／could be stepped on (and damaged)、be damaged、be crushed 都可以，一定要用被動。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-advanced-06",
+    "lot": "translation-advanced-06",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "3f8dc9d60c8a2f9f0e258e68e094820e19a8a5f1c5e0001a05ad2370e79443f3",
+    "spec_id": "translation-advanced@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 0,
+    "sentences": 0,
+    "avg_sentence_length": 0.0,
+    "denominator": 0,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 0.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {},
+    "offlist_words": [],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-10T02:36:28Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "warn",
+      "created_at": "2026-10-10T02:17:22Z",
+      "details": {
+        "solver": "A",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "In order not to leave any trace, we should carry all of our trash down the mountain.",
+            "confidence": "high",
+            "explanation_zh": "「為了不…」表否定的目的，用 in order not to + V（not 放在 to 前面）；「不留下任何痕跡」用 leave any trace；「把所有垃圾帶下山」用 carry … down the mountain（也可 take / bring）。"
+          },
+          "2": {
+            "translation": "If we leave the trails specially designed for visitors, fragile plants may be stepped on and damaged.",
+            "confidence": "high",
+            "explanation_zh": "「如果…」用 if 條件子句；「專為遊客設計的步道」用過去分詞片語 specially designed for visitors 後位修飾 trails；「植物就可能被踩壞」是被動，用 may be stepped on and damaged（也可 may be trampled，但 trample 較難）。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PURP",
+              "BASIC"
+            ],
+            "used_target_words": [
+              "leave",
+              "trace",
+              "trash",
+              "carry",
+              "mountain"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "warn",
+            "issues_zh": [
+              "誘錯點 plural_countable「所有垃圾」（carry all our trashes）標的是 part 4，但「所有垃圾」和 carry all our trashes 這個常見錯誤都在第 3 部分（zh「把所有垃圾」），part 應改成 3。",
+              "第 3 部分的 zh 是「把所有垃圾」，accepted 卻都含動詞 carry／take／bring（中文的「帶」在第 4 部分「帶下山」），第 4 部分只剩 down the mountain；給分不受影響，但 zh 標籤和英文切分對不齊，建議第 3 部分 zh 改成「把所有垃圾帶」或第 4 部分 zh 改成「下山」，讓學生看得懂每一分在評什麼。"
+            ]
+          },
+          "2": {
+            "used_patterns": [
+              "ADVCL",
+              "PART"
+            ],
+            "used_target_words": [
+              "leave",
+              "trail",
+              "design",
+              "visitor",
+              "fragile",
+              "plant",
+              "damage"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "leave",
+              "trace",
+              "trash",
+              "carry",
+              "mountain"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PURP": true,
+              "BASIC": null
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "leave",
+              "trail",
+              "design",
+              "visitor",
+              "fragile",
+              "plant",
+              "damage"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "ADVCL": true,
+              "PART": false
+            },
+            "program_match": false
+          }
+        },
+        "problems": [
+          "第 1 題驗證者對4 部分切分有意見（warn）：誘錯點 plural_countable「所有垃圾」（carry all our trashes）標的是 part 4，但「所有垃圾」和 carry all our trashes 這個常見錯誤都在第 3 部分（zh「把所有垃圾」），par"
+        ]
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-10T02:22:17Z",
+      "details": {
+        "solver": "B",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "In order to leave no trace, we should carry all of our trash down the mountain.",
+            "confidence": "high",
+            "explanation_zh": "「為了不留下任何痕跡」用 In order to leave no trace（呼應 Leave No Trace 原則）；「應該」用 should；「把所有垃圾帶下山」用 carry all of our trash down the mountain。"
+          },
+          "2": {
+            "translation": "If we leave the trails designed for visitors, fragile plants may be stepped on and damaged.",
+            "confidence": "high",
+            "explanation_zh": "「如果」條件句用現在式；「專為遊客設計的步道」用過去分詞片語 designed for visitors 修飾 trails；「脆弱的植物就可能被踩壞」用被動語態 may be stepped on and damaged。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PURP",
+              "BASIC"
+            ],
+            "used_target_words": [
+              "leave",
+              "trace",
+              "trash",
+              "carry",
+              "mountain"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "ADVCL",
+              "PART"
+            ],
+            "used_target_words": [
+              "leave",
+              "trail",
+              "design",
+              "visitor",
+              "fragile",
+              "plant",
+              "damage"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "leave",
+              "trace",
+              "trash",
+              "carry",
+              "mountain"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PURP": true,
+              "BASIC": null
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "leave",
+              "trail",
+              "design",
+              "visitor",
+              "fragile",
+              "plant",
+              "damage"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "ADVCL": true,
+              "PART": true
+            },
+            "program_match": true
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}

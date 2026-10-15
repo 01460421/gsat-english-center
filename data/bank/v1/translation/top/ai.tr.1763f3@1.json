@@ -1,0 +1,1190 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.1763f3",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "top",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "對於愛追劇（binge-watching）的人來說，無論要多早起床，下一集總是很難抗拒。",
+        "options": null,
+        "answer": "For those who love binge-watching, no matter how early they have to get up, the next episode is always hard to resist.",
+        "accepted_answers": [
+          "For those who love to binge-watch, it is always difficult to resist the next episode, no matter how early they need to wake up.",
+          "For people who love binge-watching, the next episode is always hard to resist, no matter how early they must get up."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "對於…的人而言（For those who …）",
+            "讓步：無論…（no matter how early …）"
+          ],
+          "topic": "追劇文化"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "許多人花整個週末看由串流平台推出的影集，這讓他們幾乎沒時間到戶外走走。",
+        "options": null,
+        "answer": "Many people spend the whole weekend watching series released by streaming platforms, which leaves them almost no time to go outdoors.",
+        "accepted_answers": [
+          "Many people spend the entire weekend watching TV series released by streaming platforms, which gives them hardly any time to go outside.",
+          "Many people spend all weekend watching shows launched by streaming platforms, which means they have almost no time to go out for a walk."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "分詞片語後位修飾名詞（released by …）",
+            "非限定關係子句（, which leaves them …）"
+          ],
+          "topic": "追劇文化"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "追劇文化"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「對於愛追劇的人來說」用 For those who love binge-watching（those who + 複數動詞）。「無論要多早起床」是讓步子句 no matter how early they have to get up，how early 要連在一起，後面用直述句語序。「下一集總是很難抗拒」寫 the next episode is always hard to resist；hard to resist 的不定詞用主動，不寫 to be resisted。",
+          "evidence": [
+            "對於愛追劇（binge-watching）的人來說",
+            "無論要多早起床"
+          ],
+          "strategy_zh": "「對…的人來說」用 For those who …；「無論多＋形容詞」用 no matter how + adj. + S + V。",
+          "hints": [
+            "切成四段：對於愛追劇（binge-watching）的人來說／無論要多早起床／下一集／總是很難抗拒",
+            "標的詞彙：love（熱愛）、early（早）、get up（起床）、next（下一個）、episode（一集）、hard（困難的）、resist（抗拒）",
+            "句型框架：For those who + V …, no matter how early + S + have to V, S + is always hard to resist."
+          ]
+        },
+        "2": {
+          "explanation_zh": "「花整個週末看」是 spend the whole weekend watching（spend + 時間 + V-ing）。「由串流平台推出的影集」修飾語在前，英文改成過去分詞片語後位修飾 series released by streaming platforms（影集是被推出的）。「這讓他們幾乎沒時間到戶外走走」的「這」指前面整件事，用 , which leaves them almost no time to go outdoors；「幾乎沒有」是 almost no／hardly any，outdoors 是副詞，前面不加 to。",
+          "evidence": [
+            "由串流平台推出的影集",
+            "這讓他們幾乎沒時間到戶外走走"
+          ],
+          "strategy_zh": "「由…推出／製作的＋名詞」先想「名詞＋p.p.＋by …」；「…，這讓…」指前面整件事時用 , which …。",
+          "hints": [
+            "切成四段：許多人花整個週末看／由串流平台推出的影集／這讓他們／幾乎沒時間到戶外走走",
+            "標的詞彙：spend（花時間）、weekend（週末）、watch（觀看）、release（推出）、streaming（串流）、platform（平台）、series（影集）、almost（幾乎）、time（時間）、outdoors（到戶外）",
+            "句型框架：S + spend + 時間 + V-ing + N + p.p. + by …, which leaves + O + almost no time to VR."
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "For those who love binge-watching, no matter how early they have to get up, the next episode is always hard to resist.",
+            "For those who love to binge-watch, it is always difficult to resist the next episode, no matter how early they need to wake up.",
+            "For people who love binge-watching, the next episode is always hard to resist, no matter how early they must get up."
+          ],
+          "target_words": [
+            {
+              "word": "love",
+              "zh": "熱愛",
+              "alternatives": [
+                "enjoy",
+                "like",
+                "fond",
+                "addicted"
+              ]
+            },
+            {
+              "word": "early",
+              "zh": "早"
+            },
+            {
+              "word": "get up",
+              "zh": "起床",
+              "alternatives": [
+                "wake up",
+                "wake",
+                "rise"
+              ]
+            },
+            {
+              "word": "next",
+              "zh": "下一個"
+            },
+            {
+              "word": "episode",
+              "zh": "一集"
+            },
+            {
+              "word": "hard",
+              "zh": "困難的",
+              "alternatives": [
+                "difficult",
+                "tough",
+                "impossible",
+                "irresistible"
+              ]
+            },
+            {
+              "word": "resist",
+              "zh": "抗拒",
+              "alternatives": [
+                "stop",
+                "refuse",
+                "say no",
+                "skip",
+                "irresistible"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "REL",
+              "grammar_id": "gp-for-those-who",
+              "label_zh": "對於…的人而言（For those who + V …）",
+              "frame": "For those who + V …, S + V …",
+              "zh_trigger": "對於愛追劇（binge-watching）的人來說"
+            },
+            {
+              "code": "ADVCL",
+              "grammar_id": "gp-no-matter",
+              "label_zh": "讓步：無論…（no matter how + adj. + S + V）",
+              "frame": "No matter how early + S + have to V, S + V …",
+              "zh_trigger": "無論要多早起床"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "對於愛追劇（binge-watching）的人來說",
+              "accepted": [
+                "For those who love binge-watching",
+                "For those who love to binge-watch",
+                "For those who enjoy binge-watching",
+                "For those who like binge-watching",
+                "For those who like to binge-watch",
+                "For those who are fond of binge-watching",
+                "For those who are addicted to binge-watching",
+                "For those who love binge-watching TV series",
+                "For those who love binge-watching TV shows",
+                "For those who love binge-watching dramas",
+                "For people who love binge-watching",
+                "For people who love to binge-watch",
+                "For people who enjoy binge-watching",
+                "For people who like binge-watching",
+                "For people who like to binge-watch",
+                "For people who are fond of binge-watching",
+                "For people who are addicted to binge-watching",
+                "For people who love binge-watching TV series",
+                "For people who love binge-watching TV shows",
+                "For people who love binge-watching dramas",
+                "To those who love binge-watching",
+                "To those who love to binge-watch",
+                "To those who enjoy binge-watching",
+                "To those who like binge-watching",
+                "To those who like to binge-watch",
+                "To those who are fond of binge-watching",
+                "To those who are addicted to binge-watching",
+                "To those who love binge-watching TV series",
+                "To those who love binge-watching TV shows",
+                "To those who love binge-watching dramas",
+                "To people who love binge-watching",
+                "To people who love to binge-watch",
+                "To people who enjoy binge-watching",
+                "To people who like binge-watching",
+                "To people who like to binge-watch",
+                "To people who are fond of binge-watching",
+                "To people who are addicted to binge-watching",
+                "To people who love binge-watching TV series",
+                "To people who love binge-watching TV shows",
+                "To people who love binge-watching dramas"
+              ],
+              "targets": [
+                "REL",
+                "love"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "For those who loves binge-watching",
+                  "right": "For those who love binge-watching",
+                  "explanation_zh": "those 是複數，關係子句動詞用 love。"
+                },
+                {
+                  "wrong": "For those love binge-watching",
+                  "right": "For those who love binge-watching",
+                  "explanation_zh": "少了關代 who，those 後面不能直接接動詞。"
+                },
+                {
+                  "wrong": "For whom love binge-watching",
+                  "right": "For those who love binge-watching",
+                  "explanation_zh": "「…的人」要先有先行詞 those（people），再接 who 子句。"
+                }
+              ]
+            },
+            {
+              "zh": "無論要多早起床",
+              "accepted": [
+                "no matter how early they have to get up",
+                "no matter how early they have to wake up",
+                "no matter how early they must get up",
+                "no matter how early they must wake up",
+                "no matter how early they need to get up",
+                "no matter how early they need to wake up",
+                "no matter how early they will have to get up",
+                "no matter how early they will have to wake up",
+                "however early they have to get up",
+                "however early they have to wake up",
+                "however early they must get up",
+                "however early they must wake up",
+                "however early they need to get up",
+                "however early they need to wake up",
+                "however early they will have to get up",
+                "however early they will have to wake up",
+                "regardless of how early they have to get up",
+                "regardless of how early they have to wake up",
+                "regardless of how early they must get up",
+                "regardless of how early they must wake up",
+                "regardless of how early they need to get up",
+                "regardless of how early they need to wake up",
+                "regardless of how early they will have to get up",
+                "regardless of how early they will have to wake up",
+                "no matter how early they have to get up the next day",
+                "no matter how early they have to get up the next morning",
+                "no matter how early they have to get up in the morning",
+                "no matter how early they should get up"
+              ],
+              "targets": [
+                "ADVCL",
+                "early",
+                "get up"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "no matter how they have to get up early",
+                  "right": "no matter how early they have to get up",
+                  "explanation_zh": "「多早」how early 要連在一起放在子句開頭。"
+                },
+                {
+                  "wrong": "no matter how early do they have to get up",
+                  "right": "no matter how early they have to get up",
+                  "explanation_zh": "no matter how 後面用直述句語序，不倒裝。"
+                }
+              ]
+            },
+            {
+              "zh": "下一集",
+              "accepted": [
+                "the next episode",
+                "the following episode",
+                "one more episode",
+                "another episode"
+              ],
+              "targets": [
+                "next",
+                "episode"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "the next set",
+                  "right": "the next episode",
+                  "explanation_zh": "影集的「一集」是 episode；set 是「一組、一套」。"
+                },
+                {
+                  "wrong": "next episode is always hard to resist",
+                  "right": "the next episode is always hard to resist",
+                  "explanation_zh": "這裡特定的「下一集」前面要加 the。"
+                }
+              ]
+            },
+            {
+              "zh": "總是很難抗拒",
+              "accepted": [
+                "is always hard to resist",
+                "is always difficult to resist",
+                "is always very hard to resist",
+                "is always so hard to resist",
+                "is always tough to resist",
+                "it is always hard to resist",
+                "it is always difficult to resist",
+                "it is always hard for them to resist",
+                "it is always difficult for them to resist",
+                "they always find it hard to resist",
+                "they always find it difficult to resist",
+                "is always irresistible",
+                "is always hard to say no to",
+                "always seems hard to resist",
+                "is always so irresistible",
+                "is simply irresistible",
+                "always proves hard to resist",
+                "is always hard for them to resist",
+                "is always too hard to resist",
+                "is always too tempting to resist",
+                "is always too difficult to resist",
+                "it is always too hard to resist"
+              ],
+              "targets": [
+                "hard",
+                "resist"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "is always hard to be resisted",
+                  "right": "is always hard to resist",
+                  "explanation_zh": "「很難抗拒」是 hard to resist；這種 hard + to VR 的句型，不定詞用主動。"
+                },
+                {
+                  "wrong": "is always hard resisting",
+                  "right": "is always hard to resist",
+                  "explanation_zh": "hard 後面接不定詞 to resist。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "word_form",
+              "zh": "無論要多早起床",
+              "literal_error": "…no matter how they have to get up early, the next episode is always hard to resist.",
+              "part": 2,
+              "explanation_zh": "「多早」是 how early，要連在一起放在 no matter 後面；把 early 移到句尾就變成「無論怎麼起床」。"
+            },
+            {
+              "type": "collocation",
+              "zh": "下一集",
+              "literal_error": "…the next set is always hard to resist.",
+              "part": 3,
+              "explanation_zh": "影集的「集」是 episode；逐字把「集」翻成 set 意思不對。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "However early binge-watchers have to get up, rarely can they resist clicking on the next episode.",
+              "grammar_id": "gp-negative-inversion",
+              "explanation_zh": "Rarely can they resist … 是否定副詞置首的倒裝；However early 等於 No matter how early。這是加分寫法，不是唯一正解。"
+            }
+          ],
+          "restructuring_zh": "「對於愛追劇的人來說」用 For those who love binge-watching；「無論要多早起床」用 no matter how early they have to get up，how early 要放在一起；「下一集總是很難抗拒」可寫 the next episode is always hard to resist（不定詞用主動）。",
+          "notes_zh": "評分說明：「對於愛追劇的人來說」For (To) those／people who love (enjoy, like) binge-watching（to binge-watch、are addicted to binge-watching 也可以）；「無論要多早起床」no matter how early（however early）they have to／must／need to get up (wake up)，放在句中或句尾都可以；regardless of how early they have to get up 也算達成本句 ADVCL 標的；「下一集」the next episode；「總是很難抗拒」is always hard／difficult to resist，或 it is always hard (for them) to resist the next episode、they always find it hard to resist the next episode。另外也給分：the next episode is always irresistible（一個字同時表達「很難」「抗拒」）、always proves hard to resist。"
+        },
+        "2": {
+          "references": [
+            "Many people spend the whole weekend watching series released by streaming platforms, which leaves them almost no time to go outdoors.",
+            "Many people spend the entire weekend watching TV series released by streaming platforms, which gives them hardly any time to go outside.",
+            "Many people spend all weekend watching shows launched by streaming platforms, which means they have almost no time to go out for a walk."
+          ],
+          "target_words": [
+            {
+              "word": "spend",
+              "zh": "花（時間）"
+            },
+            {
+              "word": "weekend",
+              "zh": "週末"
+            },
+            {
+              "word": "watch",
+              "zh": "觀看",
+              "alternatives": [
+                "binge-watch",
+                "view"
+              ]
+            },
+            {
+              "word": "release",
+              "zh": "推出",
+              "alternatives": [
+                "launch",
+                "produce",
+                "offer",
+                "put",
+                "publish",
+                "provide",
+                "make"
+              ]
+            },
+            {
+              "word": "streaming",
+              "zh": "串流"
+            },
+            {
+              "word": "platform",
+              "zh": "平台"
+            },
+            {
+              "word": "series",
+              "zh": "影集",
+              "alternatives": [
+                "show",
+                "drama",
+                "program"
+              ]
+            },
+            {
+              "word": "almost",
+              "zh": "幾乎",
+              "alternatives": [
+                "hardly",
+                "nearly",
+                "barely",
+                "little",
+                "scarcely"
+              ]
+            },
+            {
+              "word": "time",
+              "zh": "時間"
+            },
+            {
+              "word": "outdoors",
+              "zh": "到戶外",
+              "alternatives": [
+                "outdoor",
+                "outside",
+                "out",
+                "walk"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "NRREL",
+              "grammar_id": "gp-nonrestrictive",
+              "label_zh": "非限定關係子句（which 指前面整件事：這讓他們…）",
+              "frame": "S + V …, which leaves + O + almost no time to VR",
+              "zh_trigger": "這讓他們"
+            },
+            {
+              "code": "PART",
+              "grammar_id": "gp-participle-modifier",
+              "label_zh": "分詞片語後位修飾名詞（由串流平台推出的影集）",
+              "frame": "N + p.p. + by …",
+              "zh_trigger": "由串流平台推出的影集"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "許多人花整個週末看",
+              "accepted": [
+                "Many people spend the whole weekend watching",
+                "Many people spend the whole weekend binge-watching",
+                "Many people spend the entire weekend watching",
+                "Many people spend the entire weekend binge-watching",
+                "Many people spend all weekend watching",
+                "Many people spend all weekend binge-watching",
+                "Many people spend their whole weekend watching",
+                "Many people spend their whole weekend binge-watching",
+                "Many people spend their entire weekends watching",
+                "Many people spend their entire weekends binge-watching",
+                "Many people would spend the whole weekend watching",
+                "Many people would spend the whole weekend binge-watching",
+                "Many people would spend the entire weekend watching",
+                "Many people would spend the entire weekend binge-watching",
+                "Many people would spend all weekend watching",
+                "Many people would spend all weekend binge-watching",
+                "Many people would spend their whole weekend watching",
+                "Many people would spend their whole weekend binge-watching",
+                "Many people would spend their entire weekends watching",
+                "Many people would spend their entire weekends binge-watching",
+                "A lot of people spend the whole weekend watching",
+                "A lot of people spend the whole weekend binge-watching",
+                "A lot of people spend the entire weekend watching",
+                "A lot of people spend the entire weekend binge-watching",
+                "A lot of people spend all weekend watching",
+                "A lot of people spend all weekend binge-watching",
+                "A lot of people spend their whole weekend watching",
+                "A lot of people spend their whole weekend binge-watching",
+                "A lot of people spend their entire weekends watching",
+                "A lot of people spend their entire weekends binge-watching",
+                "A lot of people would spend the whole weekend watching",
+                "A lot of people would spend the whole weekend binge-watching",
+                "A lot of people would spend the entire weekend watching",
+                "A lot of people would spend the entire weekend binge-watching",
+                "A lot of people would spend all weekend watching",
+                "A lot of people would spend all weekend binge-watching",
+                "A lot of people would spend their whole weekend watching",
+                "A lot of people would spend their whole weekend binge-watching",
+                "A lot of people would spend their entire weekends watching",
+                "A lot of people would spend their entire weekends binge-watching",
+                "Many people will spend the whole weekend watching",
+                "Many people spend whole weekends watching",
+                "Lots of people spend the whole weekend watching",
+                "Many people spend their entire weekend watching",
+                "Many people spend their entire weekend binge-watching",
+                "Many people spend entire weekends watching",
+                "Many people spend entire weekends binge-watching",
+                "Many people spend whole weekends binge-watching",
+                "Many people spend their weekends watching",
+                "Many people spend their weekends binge-watching",
+                "Many people would spend their entire weekend watching",
+                "Many people would spend their entire weekend binge-watching",
+                "Many people would spend entire weekends watching",
+                "Many people would spend entire weekends binge-watching",
+                "Many people would spend whole weekends watching",
+                "Many people would spend whole weekends binge-watching",
+                "Many people would spend their weekends watching",
+                "Many people would spend their weekends binge-watching",
+                "Many people will spend their entire weekend watching",
+                "Many people will spend their entire weekend binge-watching",
+                "Many people will spend their whole weekend watching",
+                "Many people will spend their whole weekend binge-watching",
+                "Many people will spend the whole weekend binge-watching",
+                "Many people will spend the entire weekend watching",
+                "Many people will spend the entire weekend binge-watching",
+                "Many people will spend all weekend watching",
+                "Many people will spend all weekend binge-watching",
+                "Many people will spend entire weekends watching",
+                "Many people will spend entire weekends binge-watching",
+                "Many people will spend whole weekends watching",
+                "Many people will spend whole weekends binge-watching",
+                "Many people will spend their weekends watching",
+                "Many people will spend their weekends binge-watching",
+                "A lot of people spend their entire weekend watching",
+                "A lot of people spend their entire weekend binge-watching",
+                "A lot of people spend entire weekends watching",
+                "A lot of people spend entire weekends binge-watching",
+                "A lot of people spend whole weekends watching",
+                "A lot of people spend whole weekends binge-watching",
+                "A lot of people spend their weekends watching",
+                "A lot of people spend their weekends binge-watching",
+                "A lot of people would spend their entire weekend watching",
+                "A lot of people would spend their entire weekend binge-watching",
+                "A lot of people would spend entire weekends watching",
+                "A lot of people would spend entire weekends binge-watching",
+                "A lot of people would spend whole weekends watching",
+                "A lot of people would spend whole weekends binge-watching",
+                "A lot of people would spend their weekends watching",
+                "A lot of people would spend their weekends binge-watching",
+                "A lot of people will spend their entire weekend watching",
+                "A lot of people will spend their entire weekend binge-watching",
+                "A lot of people will spend their whole weekend watching",
+                "A lot of people will spend their whole weekend binge-watching",
+                "A lot of people will spend the whole weekend watching",
+                "A lot of people will spend the whole weekend binge-watching",
+                "A lot of people will spend the entire weekend watching",
+                "A lot of people will spend the entire weekend binge-watching",
+                "A lot of people will spend all weekend watching",
+                "A lot of people will spend all weekend binge-watching",
+                "A lot of people will spend entire weekends watching",
+                "A lot of people will spend entire weekends binge-watching",
+                "A lot of people will spend whole weekends watching",
+                "A lot of people will spend whole weekends binge-watching",
+                "A lot of people will spend their weekends watching",
+                "A lot of people will spend their weekends binge-watching"
+              ],
+              "targets": [
+                "spend",
+                "weekend",
+                "watch"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Many people spend the whole weekend to watch",
+                  "right": "Many people spend the whole weekend watching",
+                  "explanation_zh": "spend + 時間 + V-ing（花時間做某事），不接不定詞。"
+                },
+                {
+                  "wrong": "Many people spend whole weekend watching",
+                  "right": "Many people spend the whole weekend watching",
+                  "explanation_zh": "whole 前面要有冠詞 the（the whole weekend），或寫 all weekend。"
+                }
+              ]
+            },
+            {
+              "zh": "由串流平台推出的影集",
+              "accepted": [
+                "series released by streaming platforms",
+                "series released on streaming platforms",
+                "series launched by streaming platforms",
+                "series launched on streaming platforms",
+                "series put out by streaming platforms",
+                "series put out on streaming platforms",
+                "series offered by streaming platforms",
+                "series offered on streaming platforms",
+                "TV series released by streaming platforms",
+                "TV series released on streaming platforms",
+                "TV series launched by streaming platforms",
+                "TV series launched on streaming platforms",
+                "TV series put out by streaming platforms",
+                "TV series put out on streaming platforms",
+                "TV series offered by streaming platforms",
+                "TV series offered on streaming platforms",
+                "shows released by streaming platforms",
+                "shows released on streaming platforms",
+                "shows launched by streaming platforms",
+                "shows launched on streaming platforms",
+                "shows put out by streaming platforms",
+                "shows put out on streaming platforms",
+                "shows offered by streaming platforms",
+                "shows offered on streaming platforms",
+                "TV shows released by streaming platforms",
+                "TV shows released on streaming platforms",
+                "TV shows launched by streaming platforms",
+                "TV shows launched on streaming platforms",
+                "TV shows put out by streaming platforms",
+                "TV shows put out on streaming platforms",
+                "TV shows offered by streaming platforms",
+                "TV shows offered on streaming platforms",
+                "dramas released by streaming platforms",
+                "dramas released on streaming platforms",
+                "dramas launched by streaming platforms",
+                "dramas launched on streaming platforms",
+                "dramas put out by streaming platforms",
+                "dramas put out on streaming platforms",
+                "dramas offered by streaming platforms",
+                "dramas offered on streaming platforms",
+                "the series released by streaming platforms",
+                "the series released on streaming platforms",
+                "the series launched by streaming platforms",
+                "the series launched on streaming platforms",
+                "the series put out by streaming platforms",
+                "the series put out on streaming platforms",
+                "the series offered by streaming platforms",
+                "the series offered on streaming platforms",
+                "series that streaming platforms release",
+                "series that are released by streaming platforms",
+                "shows that streaming platforms put out",
+                "TV series that are released on streaming platforms",
+                "series produced by streaming platforms",
+                "shows produced by streaming platforms",
+                "series released by streaming services"
+              ],
+              "targets": [
+                "PART",
+                "release",
+                "streaming",
+                "platform",
+                "series"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "series releasing by streaming platforms",
+                  "right": "series released by streaming platforms",
+                  "explanation_zh": "影集是「被」推出的，用過去分詞 released 後位修飾。"
+                },
+                {
+                  "wrong": "series which released by streaming platforms",
+                  "right": "series released by streaming platforms",
+                  "explanation_zh": "關係子句少了 be 動詞；直接用分詞 released（或寫完整的 which are released …）。"
+                }
+              ]
+            },
+            {
+              "zh": "這讓他們",
+              "accepted": [
+                "which leaves them",
+                "which gives them",
+                "which means they have",
+                "which means that they have",
+                "which makes them have",
+                "which leaves many of them",
+                "which often leaves them",
+                "leaving them",
+                "which means they",
+                "which means that they",
+                "which makes them",
+                "which leaves them with"
+              ],
+              "targets": [
+                "NRREL"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "it leaves them",
+                  "right": "which leaves them",
+                  "explanation_zh": "前面已是完整句子，逗號後再接 it leaves … 會變成兩個句子硬接；用 which 指前面整件事。"
+                },
+                {
+                  "wrong": "which leave them",
+                  "right": "which leaves them",
+                  "explanation_zh": "which 指前面整件事，視為單數，動詞用 leaves。"
+                }
+              ]
+            },
+            {
+              "zh": "幾乎沒時間到戶外走走",
+              "accepted": [
+                "almost no time to go outdoors",
+                "almost no time to go outside",
+                "almost no time to go out",
+                "almost no time to go out for a walk",
+                "almost no time to take a walk outside",
+                "almost no time to go for a walk outside",
+                "almost no time to walk around outside",
+                "almost no time for outdoor activities",
+                "almost no time to spend time outdoors",
+                "hardly any time to go outdoors",
+                "hardly any time to go outside",
+                "hardly any time to go out",
+                "hardly any time to go out for a walk",
+                "hardly any time to take a walk outside",
+                "hardly any time to go for a walk outside",
+                "hardly any time to walk around outside",
+                "hardly any time for outdoor activities",
+                "hardly any time to spend time outdoors",
+                "barely any time to go outdoors",
+                "barely any time to go outside",
+                "barely any time to go out",
+                "barely any time to go out for a walk",
+                "barely any time to take a walk outside",
+                "barely any time to go for a walk outside",
+                "barely any time to walk around outside",
+                "barely any time for outdoor activities",
+                "barely any time to spend time outdoors",
+                "little time to go outdoors",
+                "little time to go outside",
+                "little time to go out",
+                "little time to go out for a walk",
+                "little time to take a walk outside",
+                "little time to go for a walk outside",
+                "little time to walk around outside",
+                "little time for outdoor activities",
+                "little time to spend time outdoors",
+                "scarcely any time to go outdoors",
+                "scarcely any time to go outside",
+                "scarcely any time to go out",
+                "scarcely any time to go out for a walk",
+                "scarcely any time to take a walk outside",
+                "scarcely any time to go for a walk outside",
+                "scarcely any time to walk around outside",
+                "scarcely any time for outdoor activities",
+                "scarcely any time to spend time outdoors",
+                "almost no free time to go outdoors",
+                "almost no time for a walk outside",
+                "hardly have time to go outdoors",
+                "hardly have time to go outside",
+                "hardly have time to go out",
+                "hardly have time to go out for a walk",
+                "hardly have time to take a walk outside",
+                "hardly have time to take a walk outdoors",
+                "barely have time to go outdoors",
+                "barely have time to go outside",
+                "barely have time to go out",
+                "barely have time to go out for a walk",
+                "barely have time to take a walk outside",
+                "barely have time to take a walk outdoors",
+                "hardly have any time to go outdoors",
+                "hardly have any time to go outside",
+                "hardly have any time to go out",
+                "hardly have any time to go out for a walk",
+                "hardly have any time to take a walk outside",
+                "hardly have any time to take a walk outdoors",
+                "have almost no time to go outdoors",
+                "have almost no time to go outside",
+                "have almost no time to go out",
+                "have almost no time to go out for a walk",
+                "have almost no time to take a walk outside",
+                "have almost no time to take a walk outdoors",
+                "have hardly any time to go outdoors",
+                "have hardly any time to go outside",
+                "have hardly any time to go out",
+                "have hardly any time to go out for a walk",
+                "have hardly any time to take a walk outside",
+                "have hardly any time to take a walk outdoors",
+                "have little time to go outdoors",
+                "have little time to go outside",
+                "have little time to go out",
+                "have little time to go out for a walk",
+                "have little time to take a walk outside",
+                "have little time to take a walk outdoors",
+                "have barely any time to go outdoors",
+                "have barely any time to go outside",
+                "have barely any time to go out",
+                "have barely any time to go out for a walk",
+                "have barely any time to take a walk outside",
+                "have barely any time to take a walk outdoors",
+                "rarely have time to go outdoors",
+                "rarely have time to go outside",
+                "rarely have time to go out",
+                "rarely have time to go out for a walk",
+                "rarely have time to take a walk outside",
+                "rarely have time to take a walk outdoors",
+                "seldom have time to go outdoors",
+                "seldom have time to go outside",
+                "seldom have time to go out",
+                "seldom have time to go out for a walk",
+                "seldom have time to take a walk outside",
+                "seldom have time to take a walk outdoors",
+                "almost no time to take a walk outdoors",
+                "almost no time to get outside",
+                "almost no time to step outside",
+                "almost no time to go out and walk around",
+                "hardly any time to take a walk outdoors",
+                "hardly any time to get outside",
+                "hardly any time to step outside",
+                "hardly any time to go out and walk around",
+                "barely any time to take a walk outdoors",
+                "barely any time to get outside",
+                "barely any time to step outside",
+                "barely any time to go out and walk around",
+                "little time to take a walk outdoors",
+                "little time to get outside",
+                "little time to step outside",
+                "little time to go out and walk around",
+                "scarcely any time to take a walk outdoors",
+                "scarcely any time to get outside",
+                "scarcely any time to step outside",
+                "scarcely any time to go out and walk around"
+              ],
+              "targets": [
+                "almost",
+                "time",
+                "outdoors"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "almost not time to go outdoors",
+                  "right": "almost no time to go outdoors",
+                  "explanation_zh": "「幾乎沒有＋名詞」用 almost no time（或 hardly any time）；not 不能直接修飾名詞 time。"
+                },
+                {
+                  "wrong": "almost no time going outdoors",
+                  "right": "almost no time to go outdoors",
+                  "explanation_zh": "「做某事的時間」用 time to VR（或 time for + N）。"
+                },
+                {
+                  "wrong": "almost no time to go to outdoors",
+                  "right": "almost no time to go outdoors",
+                  "explanation_zh": "outdoors 是副詞（到戶外），前面不加 to。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "word_form",
+              "zh": "由串流平台推出的影集",
+              "literal_error": "…watching series releasing by streaming platforms, …",
+              "part": 2,
+              "explanation_zh": "影集是「被」推出的，後位修飾要用過去分詞 released；releasing 表主動。"
+            },
+            {
+              "type": "collocation",
+              "zh": "幾乎沒時間",
+              "literal_error": "…which leaves them almost not time to go outdoors.",
+              "part": 4,
+              "explanation_zh": "「幾乎沒有時間」是 almost no time／hardly any time；照中文寫成 almost not time 不合英文用法。"
+            }
+          ],
+          "bonus": [
+            {
+              "text": "So hooked are many viewers on series released by streaming platforms that they hardly set foot outdoors all weekend.",
+              "grammar_id": "gp-so-adj-inversion",
+              "explanation_zh": "So + adj. + are + S + that … 是倒裝的「如此…以致於…」；be hooked on（迷上）、set foot outdoors（踏出戶外）是進階搭配。這是加分寫法，不是唯一正解。"
+            }
+          ],
+          "restructuring_zh": "「由串流平台推出的影集」改成分詞片語後位修飾 series released by streaming platforms；「這讓他們…」指前面整件事，用 , which leaves them …。",
+          "notes_zh": "評分說明：「許多人花整個週末看」Many people spend (would spend) the whole／entire weekend（all weekend）watching；「由串流平台推出的影集」(TV) series／shows／dramas + released／launched／put out／offered by (on) streaming platforms，寫成完整的關係子句 series that are released by …／series that streaming platforms release 也算達成本句 PART 標的；「這讓他們」, which leaves (gives) them …、, which means (that) they have …，寫成句尾分詞 , leaving them … 也算達成本句 NRREL 標的；「幾乎沒時間到戶外走走」almost no／hardly any／barely any／little time + to go outdoors／to go outside／to go out (for a walk)／to take a walk outside、for outdoor activities。另外也給分：their entire weekend、whole weekends；, which means (that) they hardly (barely) have time to go outside／go out for a walk。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ac-V-3",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-top-06",
+    "lot": "translation-top-06",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "c6f44f933a9c31819117ac3657fbba0cbac38d8892d1379b9e2ce94107722abf",
+    "spec_id": "translation-top@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 1,
+    "sentences": 1,
+    "avg_sentence_length": 1.0,
+    "denominator": 1,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.0,
+    "coverage_l1_6": 0.0,
+    "offlist_ratio": 1.0,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {
+      "off": 1
+    },
+    "offlist_words": [
+      "binge-watching"
+    ],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-10T02:38:57Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-10T02:30:00Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "For people who love binge-watching, the next episode is always hard to resist, no matter how early they have to get up.",
+            "confidence": "high",
+            "explanation_zh": "「對於…的人來說」用 For people who …；「很難抗拒」用 hard to resist；「無論要多早起床」用 no matter how early they have to get up，放句尾較自然。"
+          },
+          "2": {
+            "translation": "Many people spend their entire weekends watching series released by streaming platforms, which leaves them hardly any time to go outside for a walk.",
+            "confidence": "high",
+            "explanation_zh": "「花整個週末看」用 spend … V-ing；「由串流平台推出的影集」用過去分詞 released by 後位修飾；「這讓他們幾乎沒時間」用 , which leaves them hardly any time to V；「到戶外走走」譯 go outside for a walk。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "REL",
+              "ADVCL"
+            ],
+            "used_target_words": [
+              "love",
+              "early",
+              "get up",
+              "next",
+              "episode",
+              "hard",
+              "resist"
+            ],
+            "within_accepted": true,
+            "closest_reference": 2,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "NRREL",
+              "PART"
+            ],
+            "used_target_words": [
+              "spend",
+              "weekend",
+              "watch",
+              "release",
+              "streaming",
+              "platform",
+              "series",
+              "almost",
+              "time",
+              "outdoors"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "love",
+              "early",
+              "get up",
+              "next",
+              "episode",
+              "hard",
+              "resist"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "REL": true,
+              "ADVCL": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "spend",
+              "weekend",
+              "watch",
+              "release",
+              "streaming",
+              "platform",
+              "series",
+              "almost",
+              "time",
+              "outdoors"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NRREL": true,
+              "PART": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-10T02:28:18Z",
+      "details": {
+        "solver": "B",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "For people who love binge-watching, the next episode is always hard to resist, no matter how early they have to get up.",
+            "confidence": "high",
+            "explanation_zh": "「對於愛追劇的人來說」用 For people who love binge-watching；「下一集總是很難抗拒」用 the next episode is always hard to resist；「無論要多早起床」用 no matter how early they have to get up（也可用 however early）。"
+          },
+          "2": {
+            "translation": "Many people spend the whole weekend watching series released by streaming platforms, which leaves them with almost no time to go out for a walk.",
+            "confidence": "medium",
+            "explanation_zh": "「花整個週末看……」用 spend the whole weekend watching ...；「由串流平台推出的影集」用過去分詞片語 released by streaming platforms 後置修飾 series（series 單複數同形）；「這讓他們幾乎沒時間……」用 which leaves them with almost no time to ...；「到戶外走走」不確定用 go outdoors 或 go out for a walk 哪個較貼近，所以信心為 medium。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "REL",
+              "ADVCL"
+            ],
+            "used_target_words": [
+              "love",
+              "early",
+              "get up",
+              "next",
+              "episode",
+              "hard",
+              "resist"
+            ],
+            "within_accepted": true,
+            "closest_reference": 2,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "NRREL",
+              "PART"
+            ],
+            "used_target_words": [
+              "spend",
+              "weekend",
+              "watch",
+              "release",
+              "streaming",
+              "platform",
+              "series",
+              "almost",
+              "time",
+              "outdoors"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "love",
+              "early",
+              "get up",
+              "next",
+              "episode",
+              "hard",
+              "resist"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "REL": true,
+              "ADVCL": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "spend",
+              "weekend",
+              "watch",
+              "release",
+              "streaming",
+              "platform",
+              "series",
+              "almost",
+              "time",
+              "outdoors"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "NRREL": true,
+              "PART": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}
