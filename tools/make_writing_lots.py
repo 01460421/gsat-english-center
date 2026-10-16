@@ -10,12 +10,15 @@
 
 站主要求：中譯英每個難度 100 句（50 組×2 句，translation-{basic,advanced,top}-{01..05}，每批 10 組），
 作文每個難度 10 題（composition-{basic,advanced,top}-01，每批 10 題，每題附穩健版與頂標版範文）。
+補足批次（seq 06 起，主題總表 lots[] 標 "supplement": true）：01–05 批退件留下的缺口另開批次補，組數 1–10、
+句型依題庫已通過題組的缺口分配（README §7.2）；主題總表沒有補足批次時，輸出與檢查結果和以前完全相同。
 規格來源：SPEC §3.5（難度規則）、§5.2 步驟 1（批次規格）、§5.4、§5.7；出題規格書 data/exams/generation-spec/writing.json；
 句型 data/curriculum/grammar-patterns.json；格式與驗證流程 data/bank/README.md §3.5–3.7、§5.5–5.6。
 tools/make_lots.py（其他六種題型）另有工作線在改，這支只處理中譯英與作文，兩者寫出的檔案名稱不重疊。只用標準函式庫。
 """
 import argparse
 import json
+import math
 import re
 import sys
 from collections import Counter
@@ -207,10 +210,11 @@ def check_topics(plan):
             errs.append(f'{lot}: 主題的 slot {slots} 應為 1–{x.get("count")}')
     for lot in sorted(set(by_lot) - set(lots), key=str):
         errs.append(f'{lot}: 不在 lots 清單')
-    # 站主要求的數量：中譯英每個難度 50 組（100 句）、作文每個難度 10 題
+    # 站主要求的數量：中譯英每個難度 50 組（100 句）、作文每個難度 10 題（補足批次另計，見 check_supplements）
     for sec, want in (('translation', 50), ('composition', 10)):
         for tier in TIERS:
-            n = sum(x.get('count') or 0 for x in lots.values() if x.get('section') == sec and x.get('tier') == tier)
+            n = sum(x.get('count') or 0 for x in lots.values() if x.get('section') == sec and x.get('tier') == tier
+                    and not is_supplement(x))
             if n != want:
                 errs.append(f'{sec}-{tier}: 共 {n} 組，站主要求 {want} 組')
     # 總表內不重複
@@ -253,7 +257,9 @@ def check_topics(plan):
             if hit:
                 msg = f'{t.get("id")}「{t.get("topic_zh")}」和歷屆 {eid} {SECTION_LABELS[sec]}的主題「{et}」撞題（{hit}）'
                 (errs if eid in RECENT_EXAMS else warns).append(msg)
-    return errs, warns
+    # 補足批次（沒有補足批次、也沒有 supplement 說明時不做任何事，結果和以前相同）
+    e2, w2 = check_supplements(plan, topics, lots)
+    return errs + e2, warns + w2
 
 
 def recent_avoid(section):
@@ -517,7 +523,307 @@ def composition_lot(tier, seq, topics, spec, tiers, created):
     return lot
 
 
-def build_all(plan, sections, tiers_sel, created):
+# ---------------------------------------------------------------------------
+# 補足批次（seq 06 起；主題總表 lots[] 標 "supplement": true 的批次；README §7.2）
+# 只加不改：主題總表沒有補足批次時，build_all 不掃題庫、check_topics 不多出任何訊息，01–05 批的輸出逐位元組不變。
+# 站主要求每個難度 ≥100 句，只算「每個 uid 最新版本且 status verified」的題組；01–05 批退件（每組只能重出一次）留下的缺口由補足批次補。
+# 組數寫在主題總表（每批 1–10 組），缺口與通過率的算式寫在主題總表的 supplement；句型配置改成「依缺口補」：
+#   目標分布＝01–05 批句型配置的比例與歷屆中譯英出現次數（grammar-patterns.json exam_translation_refs）的比例各半，
+#   缺口＝目標 ×（已通過的標的句型數＋補足批次的句型格數）− 已通過的標的句型數；
+#   逐格挑：這一批還沒用過、缺口 > 0 的歷屆高頻句型（≥2 次）優先，其次缺口大、歷屆次數多的；同一難度的補足批次依序扣缺口。
+#   句型只從該難度的句構範圍挑（GRAMMAR_BY_CODE；超越頂標另含指定句型 TOP_AST），每句句構數與「超越頂標每組至少 1 個指定句型」照一般批次。
+# ---------------------------------------------------------------------------
+
+SUPPLEMENT_MAX_COUNT = 10       # 每批最多 10 組（同一般批次，一位出題者的負擔）
+HIGH_FREQ_REFS = 2              # 歷屆中譯英出現 ≥2 次＝高頻句型（README §7.1 的涵蓋範圍）
+PATTERNS_PER_SENTENCE = {'basic': 1, 'advanced': 2, 'top': 2}
+SITE_GROUPS = {'translation': 50, 'composition': 10}
+# 中文主題比對（只用在補足批次的主題）：去掉虛詞、框架詞與泛用的前綴詞（網路、數位…），避免假警報
+CJK_RUN = re.compile(r'[㐀-鿿]+')
+ZH_FUNCTION_CHARS = set('的與和及或之其在是了為麼什怎如何從到會讓該不各個一每這那')
+ZH_STOP_BIGRAMS = {'由來', '演變', '演進', '發明', '起源', '誕生', '歷史', '故事', '台灣', '臺灣', '世界', '文化', '秘密', '簡史',
+                   '傳統', '變化', '傳播', '意外', '情境', '多元', '影響', '原因', '關係', '日本', '中國', '美國', '英國', '韓國',
+                   '法國', '德國', '動物', '植物', '人類', '網路', '數位', '科技', '社會', '生活', '時間', '改變', '中心', '保護',
+                   '電子', '機器'}
+
+
+def is_supplement(entry):
+    """主題總表 lots[] 的一筆是不是補足批次。"""
+    return isinstance(entry, dict) and entry.get('supplement') is True
+
+
+def zh_bigrams(text):
+    """中文主題的兩字實詞集合（連續漢字切成相鄰兩字，去掉含虛詞的與框架詞）；沒有漢字回傳空集合。"""
+    out = set()
+    for run in CJK_RUN.findall(str(text or '')):
+        for i in range(len(run) - 1):
+            bg = run[i:i + 2]
+            if not (set(bg) & ZH_FUNCTION_CHARS) and bg not in ZH_STOP_BIGRAMS:
+                out.add(bg)
+    return out
+
+
+def pass_probability(n, q, need):
+    """n 組、每組最終通過機率 q（首輪＋一次重出）時，通過組數 ≥ need 的機率（二項分布）。"""
+    return sum(math.comb(n, i) * q ** i * (1 - q) ** (n - i) for i in range(max(need, 0), n + 1))
+
+
+def supplement_entry(plan, section, tier):
+    return ((plan.get('supplement') or {}).get(section) or {}).get(tier) or {}
+
+
+def check_supplements(plan, topics, lots):
+    """補足批次的檢查：組數 1–10、缺口算式和 lots 一致、中文主題共用兩字實詞（warning）。回傳 (errors, warnings)。"""
+    errs, warns = [], []
+    sup = {k: x for k, x in lots.items() if is_supplement(x)}
+    block = plan.get('supplement')
+    if not sup and block is None:
+        return errs, warns
+    for lot, x in sorted(sup.items(), key=lambda kv: str(kv[0])):
+        n = x.get('count')
+        if x.get('section') != 'translation':
+            errs.append(f'{lot}: 補足批次目前只支援中譯英')
+        if lot != f'{x.get("section")}-{x.get("tier")}-{x.get("seq")}':
+            errs.append(f'{lot}: lot 名稱應為 {{section}}-{{tier}}-{{seq}}')
+        if not isinstance(n, int) or not 1 <= n <= SUPPLEMENT_MAX_COUNT:
+            errs.append(f'{lot}: 補足批次每批 1–{SUPPLEMENT_MAX_COUNT} 組（目前 {n}）')
+    if not isinstance(block, dict):
+        errs.append('有補足批次時要寫 supplement（每個難度的已通過組數、缺口、通過率與批次）')
+        block = {}
+    covered = set()
+    for sec in SECTIONS:
+        for tier, e in sorted((block.get(sec) or {}).items()):
+            if not isinstance(e, dict) or tier not in TIERS:
+                errs.append(f'supplement.{sec}.{tier}: 難度應為 {TIERS} 之一、內容是物件')
+                continue
+            mine = sorted(k for k, x in sup.items() if x.get('section') == sec and x.get('tier') == tier)
+            covered |= set(e.get('lots') or [])
+            if sorted(e.get('lots') or []) != mine:
+                errs.append(f'supplement.{sec}.{tier}.lots {e.get("lots")} 和 lots[] 的補足批次 {mine} 不同')
+            n = sum(sup[k].get('count') or 0 for k in mine)
+            if e.get('new_groups') != n:
+                errs.append(f'supplement.{sec}.{tier}.new_groups={e.get("new_groups")}，補足批次合計 {n} 組')
+            v, need = e.get('verified_groups'), e.get('need_groups')
+            if not (isinstance(v, int) and isinstance(need, int)):
+                errs.append(f'supplement.{sec}.{tier}: verified_groups、need_groups 必須是整數')
+                continue
+            if need != max(SITE_GROUPS[sec] - v, 0):
+                errs.append(f'supplement.{sec}.{tier}.need_groups={need}，應為站主要求 {SITE_GROUPS[sec]} − 已通過 {v}')
+            if n < need:
+                errs.append(f'supplement.{sec}.{tier}: 補足 {n} 組少於缺口 {need} 組')
+            for k in ('pass_rate_first', 'pass_rate_regen'):
+                if not (isinstance(e.get(k), (int, float)) and 0 < e[k] <= 1):
+                    errs.append(f'supplement.{sec}.{tier}.{k} 必須是 0–1 的通過率')
+    for lot in sorted(set(sup) - covered, key=str):
+        errs.append(f'{lot}: 補足批次沒有寫在 supplement（缺口與通過率的算式）')
+    # 中文主題（題庫第一批閱讀、混合題、中譯英起 tags.topic 是中文，英文關鍵字比不到）：共用兩字實詞列 warning
+    reviewed = {(r.get('id'), r.get('against')) for r in plan.get('reviewed_overlaps') or [] if isinstance(r, dict)}
+    names = {}   # 主題原文 → [(出處, run_id)]
+    for uid, bt, run_id in bank_topics():
+        names.setdefault(bt, []).append((f'題庫 {uid}', run_id))
+    if OTHER_PLAN.exists():
+        other = load(OTHER_PLAN)
+        for o in (other.get('topics') or []) + (other.get('reserve_topics') or []):
+            names.setdefault(o.get('topic_zh'), []).append((f'topic-plan.json {o.get("id")}', None))
+        for c in other.get('used_concepts') or []:
+            names.setdefault(c.get('concept_zh'), []).append(('topic-plan.json used_concepts', None))
+    for t in topics:
+        names.setdefault(t.get('topic_zh'), []).append((f'總表 {t.get("id")}', None))
+    for t in topics:
+        if t.get('lot') not in sup:
+            continue
+        mine = zh_bigrams(t.get('topic_zh'))
+        for name, where in names.items():
+            if not name or name == t.get('topic_zh') or (t.get('id'), name) in reviewed:
+                continue
+            src = [w for w, run_id in where if not generated_from(run_id, t.get('lot'))]
+            common = mine & zh_bigrams(name)
+            if src and common:
+                warns.append(f'{t.get("id")}「{t.get("topic_zh")}」和{"、".join(src[:3])}的中文主題「{name}」共用「{"、".join(sorted(common))}」，'
+                             '請確認不是同一主題（確認後記進 reviewed_overlaps）')
+    return errs, warns
+
+
+def tier_pattern_codes(tier):
+    """該難度可當標的句型的 grammar_id → 句構代碼（GRAMMAR_BY_CODE；超越頂標另含指定句型 TOP_AST）。"""
+    out = {}
+    for code, ids in GRAMMAR_BY_CODE[tier].items():
+        for g in ids:
+            out.setdefault(g, code)
+    if tier == 'top':
+        for code, g, _ in TOP_AST:
+            out.setdefault(g, code)
+    return out
+
+
+def verified_pattern_counts(tier, bank_dir=None):
+    """題庫中譯英該難度、每個 uid 最新版本且 status verified 的題組：(組數, Counter(grammar_id))。"""
+    d = (Path(bank_dir) if bank_dir else BANK) / 'translation' / tier
+    latest = {}
+    for p in sorted(d.glob('*.json')) if d.exists() else []:
+        try:
+            x = load(p)
+        except Exception:  # noqa: BLE001
+            continue
+        uid, v = x.get('uid'), x.get('version')
+        if isinstance(uid, str) and isinstance(v, int) and (uid not in latest or v > latest[uid].get('version')):
+            latest[uid] = x
+    groups, gids = 0, Counter()
+    for x in latest.values():
+        if x.get('status') != 'verified' or x.get('section_type') != 'translation' or x.get('tier') != tier:
+            continue
+        groups += 1
+        items = ((x.get('annotations') or {}).get('rubric') or {}).get('items') or {}
+        for it in items.values() if isinstance(items, dict) else []:
+            for pt in (it.get('patterns') or []) if isinstance(it, dict) else []:
+                if isinstance(pt, dict) and isinstance(pt.get('grammar_id'), str):
+                    gids[pt['grammar_id']] += 1
+    return groups, gids
+
+
+def gap_state(tier, planned, new_slots, gp, bank_dir=None):
+    """同一難度補足批次共用的缺口狀態（deficit 會被各批依序扣掉）。planned：01–05 批的句型配置次數。"""
+    elig = tier_pattern_codes(tier)
+    groups, verified = verified_pattern_counts(tier, bank_dir)
+    refs = {g: len((gp.get(g) or {}).get('exam_translation_refs') or []) for g in elig}
+    p_total = sum(planned.get(g, 0) for g in elig)
+    r_total = sum(refs.values())
+    v_total = sum(verified.get(g, 0) for g in elig)
+    total = v_total + new_slots
+    share, target = {}, {}
+    for g in elig:
+        parts = ([planned.get(g, 0) / p_total] if p_total else []) + ([refs[g] / r_total] if r_total else [])
+        share[g] = sum(parts) / len(parts) if parts else 1 / len(elig)
+        target[g] = share[g] * total
+    return {'tier': tier, 'eligible': elig, 'refs': refs, 'planned': Counter({g: planned.get(g, 0) for g in elig}),
+            'verified': verified, 'verified_groups': groups, 'verified_patterns': v_total, 'new_slots': new_slots,
+            'share': share, 'target': target, 'deficit': {g: target[g] - verified.get(g, 0) for g in elig}}
+
+
+def supplement_states(lots_sorted, gp, bank_dir=None):
+    """{難度: 缺口狀態}；主題總表沒有中譯英補足批次時回傳 {}（不掃題庫）。lots_sorted 依 build_all 的順序。"""
+    sup = [x for x in lots_sorted if x['section'] == 'translation' and is_supplement(x)]
+    if not sup:
+        return {}
+    planned = {t: Counter() for t in TIERS}
+    sim = {t: Counter() for t in TIERS}   # 重算 01–05 批的配置（和 build_all 同順序、另一組計數器，不影響實際輸出）
+    for x in lots_sorted:
+        if x['section'] == 'translation' and not is_supplement(x):
+            for p in pattern_plan(x['tier'], int(x['seq']), gp, sim[x['tier']]):
+                for s in p['sentences']:
+                    for q in s['patterns']:
+                        planned[x['tier']][q['grammar_id']] += 1
+    states = {}
+    for tier in TIERS:
+        mine = [x for x in sup if x['tier'] == tier]
+        if mine:
+            slots = sum((x.get('count') or 0) * 2 * PATTERNS_PER_SENTENCE[tier] for x in mine)
+            states[tier] = gap_state(tier, planned[tier], slots, gp, bank_dir)
+    return states
+
+
+def supplement_pattern_plan(tier, n, state, gp):
+    """補足批次 n 組的句型配置（格式同 pattern_plan），依缺口逐格挑句型並扣掉 state 的缺口。回傳 (plan, 這一批開始前的缺口)。"""
+    elig, refs, deficit = state['eligible'], state['refs'], state['deficit']
+    per = PATTERNS_PER_SENTENCE[tier]
+    high = {g for g in elig if refs[g] >= HIGH_FREQ_REFS}
+    cap = -(-(n * 2 * per) // len(elig)) + 1      # 同一批同一句型最多用幾次（讓配置分散）
+    before = dict(deficit)
+    used = Counter()
+    plan = []
+    for k in range(n):
+        in_group, sents = set(), []
+        for j in range(2):
+            pats = []
+            for pos in range(per):
+                avoid = {x['code'] for x in pats}                                      # 同一句不重複句構
+                if tier == 'basic' and sents:
+                    avoid |= {x['code'] for x in sents[0]['patterns']}                 # 穩定基礎：一組兩句不同句構
+                need_ast = tier == 'top' and j == 0 and pos == 0                       # 超越頂標：每組第一格放指定句型
+                base = [g for g in elig if elig[g] not in avoid and (not need_ast or g in TOP_AST_IDS)]
+                in_codes = {x['code'] for s in sents for x in s['patterns']}           # 同一組盡量不重複句構（挑不到才放寬）
+                cands = ([g for g in base if g not in in_group and elig[g] not in in_codes and used[g] < cap]
+                         or [g for g in base if g not in in_group and used[g] < cap]
+                         or [g for g in base if g not in in_group] or base)
+                g = min(cands, key=lambda g: (not (g in high and used[g] == 0 and deficit[g] > 0), -deficit[g], -refs[g], g))
+                deficit[g] -= 1
+                used[g] += 1
+                in_group.add(g)
+                pats.append(pattern_entry(elig[g], g, gp))
+            sents.append({'no': j + 1, 'patterns': pats})
+        if tier == 'top' and k % 2:   # 指定句型不一定都在第 1 句
+            sents = [{'no': 1, 'patterns': sents[1]['patterns']}, {'no': 2, 'patterns': sents[0]['patterns']}]
+        codes = [x['code'] for s in sents for x in s['patterns']]
+        plan.append({'slot': k + 1, 'sentences': sents,
+                     'restructuring_hint': tier != 'basic' and any(c in RESTRUCTURE_CODES for c in codes)})
+    return plan, before
+
+
+def insert_after(d, after, key, value):
+    """在 dict 的 after 鍵後面插入 key（保留其他鍵的順序）。"""
+    out = {}
+    for k, v in d.items():
+        out[k] = v
+        if k == after:
+            out[key] = value
+    if key not in out:
+        out[key] = value
+    return out
+
+
+def supplement_translation_lot(x, topics, spec, tiers, gp, state, plan, created):
+    """中譯英補足批次的批次規格：共同欄位同 translation_lot，count 取主題數，pattern_plan 依缺口配置，另加 supplement、pattern_gap。"""
+    tier, seq = x['tier'], x['seq']
+    lot = translation_lot(tier, seq, topics, spec, tiers, gp, Counter(), created)
+    sp_plan, before = supplement_pattern_plan(tier, len(topics), state, gp)
+    e = supplement_entry(plan, 'translation', tier)
+    block = plan.get('supplement') or {}
+    lot['count'] = len(topics)
+    lot['label_zh'] = f'{SECTION_LABELS["translation"]}‧{TIER_LABELS[tier]}（第 {int(seq)} 批，補足批次）'
+    lot['pattern_plan'] = sp_plan
+    here = Counter(q['grammar_id'] for p in sp_plan for s in p['sentences'] for q in s['patterns'])
+    lot['pattern_coverage'] = {
+        'required_grammar_ids': sorted(here),
+        'counts': dict(sorted(Counter(q['code'] for p in sp_plan for s in p['sentences'] for q in s['patterns']).items())),
+        'basis_zh': '補足批次：依題庫已通過題組的句型缺口配置（pattern_gap）；句型 id 取自 grammar-patterns.json，'
+                    '只從這個難度的句構範圍挑，每句句構數與指定句型的規則同一般批次',
+    }
+    q1, q2 = e.get('pass_rate_first'), e.get('pass_rate_regen')
+    q = q1 + (1 - q1) * q2 if isinstance(q1, (int, float)) and isinstance(q2, (int, float)) else None
+    n_all, need = e.get('new_groups'), e.get('need_groups')
+    lot = insert_after(lot, 'site_target', 'supplement', {
+        'kind': 'supplement',
+        'basis_zh': block.get('basis_zh'),
+        'counting_rule_zh': block.get('counting_rule_zh'),
+        'rule_zh': block.get('rule_zh'),
+        'tier_gap': {k: e.get(k) for k in ('verified_groups', 'need_groups', 'pass_rate_first', 'pass_rate_regen', 'new_groups', 'lots')},
+        'expected_pass_per_group': round(q, 3) if q is not None else None,
+        'expected_pass_groups': round(q * n_all, 2) if q is not None and isinstance(n_all, int) else None,
+        'p_reach_need': (round(pass_probability(n_all, q, need), 3)
+                         if q is not None and isinstance(n_all, int) and isinstance(need, int) else None),
+        'regen_rule_zh': '每組退件可附審查意見重出一次（新 uid，generation.regenerated_from 填原 uid；README §2）；重出仍不過就停在 rejected',
+    })
+    elig, refs = state['eligible'], state['refs']
+    rows = [{'grammar_id': g, 'code': elig[g], 'label_zh': (gp.get(g) or {}).get('name_zh'), 'exam_refs': refs[g],
+             'high_frequency': refs[g] >= HIGH_FREQ_REFS, 'planned_seq01_05': state['planned'][g],
+             'verified': state['verified'].get(g, 0), 'target': round(state['target'][g], 2),
+             'gap_before': round(before[g], 2), 'planned_here': here.get(g, 0)} for g in elig]
+    rows.sort(key=lambda r: (-r['gap_before'], -r['exam_refs'], r['grammar_id']))
+    lot = insert_after(lot, 'pattern_coverage', 'pattern_gap', {
+        'scanned_on': date.today().isoformat(),
+        'bank_zh': f'data/bank/v1/translation/{tier}/ 每個 uid 最新版本、status verified 的題組（rubric.items[].patterns[].grammar_id）',
+        'verified_groups': state['verified_groups'],
+        'verified_patterns': state['verified_patterns'],
+        'supplement_pattern_slots': state['new_slots'],
+        'method_zh': '目標分布＝01–05 批句型配置的比例與歷屆中譯英出現次數（exam_refs）的比例各半；target＝目標分布 ×（verified_patterns＋'
+                     'supplement_pattern_slots）；gap_before＝target − verified（同一難度前一個補足批次已配置的先扣掉）。'
+                     '逐格挑：這一批還沒用過、gap > 0 的高頻句型（exam_refs ≥2）優先，其次 gap 大、exam_refs 多的',
+        'rows': rows,
+    })
+    return lot
+
+
+def build_all(plan, sections, tiers_sel, created, bank_dir=None):
     spec = load(SPEC)
     tiers = load(TIERS_JSON)
     gp = grammar_db()
@@ -526,9 +832,13 @@ def build_all(plan, sections, tiers_sel, created):
         by_lot.setdefault(t['lot'], []).append(t)
     out = []
     counters = {tier: Counter() for tier in TIERS}
-    for x in sorted(plan.get('lots') or [], key=lambda x: (SECTIONS.index(x['section']), TIERS.index(x['tier']), x['seq'])):
+    lots_sorted = sorted(plan.get('lots') or [], key=lambda x: (SECTIONS.index(x['section']), TIERS.index(x['tier']), x['seq']))
+    states = supplement_states(lots_sorted, gp, bank_dir)   # 沒有補足批次時是 {}
+    for x in lots_sorted:
         topics = sorted(by_lot.get(x['lot'], []), key=lambda t: t['slot'])
-        if x['section'] == 'translation':
+        if x['section'] == 'translation' and is_supplement(x):
+            lot = supplement_translation_lot(x, topics, spec, tiers, gp, states[x['tier']], plan, created)
+        elif x['section'] == 'translation':
             lot = translation_lot(x['tier'], x['seq'], topics, spec, tiers, gp, counters[x['tier']], created)
         else:
             lot = composition_lot(x['tier'], x['seq'], topics, spec, tiers, created)

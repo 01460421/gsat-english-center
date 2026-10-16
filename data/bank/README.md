@@ -610,6 +610,27 @@ program 1 筆、blind_solver 2 筆通過。
 - `--lot` 整批檢查（`validate_bank.py`）：組數、每組題數、主題不重複且照批次規格的 `topic_zh`；中譯英另查中文題目重複與 `pattern_coverage`
   （整批齊了以後沒涵蓋是 error）；作文另查題型配額（整批齊了以後不符是 error）與第二段任務組合重複 4 次以上（warning）。答案字母分布不適用。
 
+### 7.2 中譯英補足批次（seq 06 起）
+
+01–05 批的退件（每組只能重出一次）讓部分難度不到 100 句時，另開補足批次；只算**每個 uid 最新版本且 status verified** 的題組。
+
+- **主題總表**：`lots[]` 該批加 `"supplement": true`（組數 1–10，不算進每個難度 50 組的檢查）；頂層 `supplement` 寫算式：`basis_zh`、
+  `counting_rule_zh`、`rule_zh`，以及 `supplement.translation.{tier}` 的 `verified_groups`、`need_groups`（＝50 − 已通過）、`pass_rate_first`、
+  `pass_rate_regen`、`new_groups`（＝該難度補足批次合計）、`lots`。每組最終通過機率 q＝p1＋（1−p1）×p2，組數取「通過組數 ≥ 缺口」的二項分布
+  機率約 95% 以上的最小值（每批 ≤10 組）。
+- **句型配置**（`make_writing_lots.supplement_pattern_plan`）：目標分布＝01–05 批句型配置的比例與歷屆中譯英出現次數
+  （grammar-patterns.json `exam_translation_refs`）的比例各半；缺口＝目標 ×（已通過的標的句型數＋補足批次格數）− 已通過數。逐格挑「這一批還沒用過、
+  缺口 > 0 的高頻句型（≥2 次）」，其次缺口大的；只從該難度的句構範圍挑，每句句構數、超越頂標每組 ≥1 個指定句型照一般批次，同一句、同一組盡量不重複句構；
+  同一難度的補足批次依序扣缺口。
+- **批次規格**另有 `supplement`（缺口、通過率、`expected_pass_groups`、`p_reach_need`、重出規則）與 `pattern_gap`（掃描日、每個句型的歷屆次數、
+  01–05 批配置數、已通過數、目標、配置前缺口與本批配置數）；`count` 取主題數，`label_zh` 標「補足批次」。
+- **`--check-topics`**：補足批次另查組數 1–10、`supplement` 和 `lots[]` 一致、`need_groups` 算式、補足組數 ≥ 缺口；補足批次的中文主題和題庫、
+  topic-plan.json、本總表的中文主題共用兩字實詞列 warning，人工確認後記進 `reviewed_overlaps`（`id`、`against`、`note_zh`）。
+  沒有補足批次的主題總表，輸出與檢查結果和以前完全相同。
+
+2026-10-09 開的補足批次：`translation-basic-06`（4 組）、`translation-advanced-06`（9 組）、`translation-top-06`、`translation-top-07`（各 10 組）；
+算式見 topic-plan-writing.json 的 `supplement`。
+
 ## 8. 事實單與來源白名單
 
 ### 8.1 事實單 `facts/{id}.json`（`gsat-bank-facts/v1`）
@@ -698,6 +719,11 @@ SPEC §5.2 步驟 2：**只有事實、沒有原句**（數字、日期、因果
 每批最多 6 組（一位出題者負擔得了）。既有組數只算 verified＋draft；第一批還沒產生的（閱讀 advanced／top、混合題 top）先以批次規格的組數計
 （`topic-plan.json` 的 `counting_rule_zh`、`targets`）。混合題 advanced 第一批有 1 組 rejected（ai.mx.981e5b），所以 mixed-advanced-05 開 5 組；
 那一組重生通過的話，多的 1 組當緩衝。之後第一批若又有題組 rejected 而不重生，重算 `targets`，從 `reserve_topics` 取主題開新批號（已開始生成的批次規格不改）。
+
+**補足批次（2026-10-09 重算，只算每個 uid 最新版本且 verified）**：閱讀 basic 24 組（缺的是圖表），開 `reading-basic-05` 2 組（長文：備用主題 rsv-01
+聽診器的發明；圖表：台灣的登革熱）；混合題 top 23 組，開 `mixed-top-06` 4 組（雙文本 2、多則短段落 2）。組數依缺口與通過率的二項分布估算，
+算式寫在 `targets.{section}.tiers.{tier}.supplement_zh`；`make_lots.py` 不用改（照一般第 2 批起的流程：`--seq 05 --sections reading`、
+`--seq 06 --sections mixed` 加 `--topics`、`--avoid-existing-bank`）。
 
 ### 9.2 主題總表 `topic-plan.json`（`gsat-bank-topic-plan/v1`）
 
