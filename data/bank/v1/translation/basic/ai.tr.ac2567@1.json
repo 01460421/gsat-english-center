@@ -1,0 +1,735 @@
+{
+  "schema": "gsat-bank/v1",
+  "uid": "ai.tr.ac2567",
+  "version": 1,
+  "section_type": "translation",
+  "format_version": "translation-2",
+  "tier": "basic",
+  "pool": "practice",
+  "group": {
+    "id": "g1",
+    "passage": null,
+    "passage_parts": null,
+    "figures": [],
+    "options_bank": null,
+    "questions": [
+      {
+        "no": 1,
+        "label": "1",
+        "mode": "translation",
+        "stem": "這幾年來，綠島（Green Island）已經成為很受歡迎的浮潛（snorkeling）地點。",
+        "options": null,
+        "answer": "In recent years, Green Island has become a very popular place for snorkeling.",
+        "accepted_answers": [
+          "Over the past few years, Green Island has become a popular snorkeling spot.",
+          "In the last few years, Green Island has turned into a very popular snorkeling destination."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "現在完成式"
+          ],
+          "topic": "綠島浮潛"
+        }
+      },
+      {
+        "no": 2,
+        "label": "2",
+        "mode": "translation",
+        "stem": "上個月我們在那裡浮潛（snorkeling）時，許多彩色的魚在我們身邊游來游去。",
+        "options": null,
+        "answer": "When we went snorkeling there last month, many colorful fish swam around us.",
+        "accepted_answers": [
+          "Last month, while we were snorkeling there, lots of colorful fish swam all around us.",
+          "When we were snorkeling there last month, a lot of colorful fish were swimming around us."
+        ],
+        "points": 4,
+        "stats": null,
+        "scoring_notes": null,
+        "tags": {
+          "patterns": [
+            "時間副詞子句"
+          ],
+          "topic": "綠島浮潛"
+        }
+      }
+    ],
+    "tags": {
+      "topic": "綠島浮潛"
+    }
+  },
+  "annotations": {
+    "explanations": {
+      "items": {
+        "1": {
+          "explanation_zh": "「這幾年來…已經成為」說的是從幾年前開始、一直延續到現在的改變，要用現在完成式：Green Island has become …；主詞是單數，用 has，become 的過去分詞還是 become。「這幾年來」可寫 in recent years 或 in the past few years（years 複數）。「很受歡迎的」用 popular，不是 welcome；place 是可數名詞，前面要加 a。「浮潛地點」寫 a place for snorkeling 或 a snorkeling spot。",
+          "evidence": [
+            "這幾年來",
+            "已經成為"
+          ],
+          "strategy_zh": "「這幾年來、近年來、自從…」配「已經」，先想 have／has + p.p.。",
+          "hints": [
+            "切成四段：這幾年來／綠島已經成為／很受歡迎的／浮潛地點",
+            "標的詞彙：recent（近來的）、year（年）、become（成為）、popular（受歡迎的）、place（地點）",
+            "句型框架：In recent years, S + has become + a + 形容詞 + 名詞"
+          ]
+        },
+        "2": {
+          "explanation_zh": "「我們在那裡浮潛時」是時間副詞子句，用 When／While + 主詞 + 動詞；因為主要子句的主詞換成「魚」，子句的主詞 we 不能省略（× While snorkeling there, many fish …）。「上個月」是過去，兩個子句都用過去式：went／were snorkeling、swam（swim 不規則）。fish 的複數通常不加 s，「許多」用 many 或 a lot of。「在我們身邊游來游去」寫 swam around us。",
+          "evidence": [
+            "我們在那裡浮潛（snorkeling）時",
+            "上個月"
+          ],
+          "strategy_zh": "兩個子句主詞不同時，時間子句一定要寫出自己的主詞；看到「上個月、昨天」，兩個子句的動詞都改成過去式。",
+          "hints": [
+            "切成四段：上個月／我們在那裡浮潛時／許多彩色的魚／在我們身邊游來游去",
+            "標的詞彙：last month（上個月）、colorful（彩色的）、fish（魚）、swim（游，過去式 swam）、around（在…周圍）",
+            "句型框架：When + S + V-ed … last month, S + V-ed …"
+          ]
+        }
+      }
+    },
+    "translation_zh": null,
+    "elimination": null,
+    "guess_targets": [],
+    "open_tasks": [],
+    "rubric": {
+      "kind": "translation",
+      "items": {
+        "1": {
+          "references": [
+            "In recent years, Green Island has become a very popular place for snorkeling.",
+            "Over the past few years, Green Island has become a popular snorkeling spot.",
+            "In the last few years, Green Island has turned into a very popular snorkeling destination."
+          ],
+          "target_words": [
+            {
+              "word": "recent",
+              "zh": "近來的（這幾年來）",
+              "alternatives": [
+                "recently",
+                "past",
+                "last"
+              ]
+            },
+            {
+              "word": "year",
+              "zh": "年"
+            },
+            {
+              "word": "become",
+              "zh": "成為",
+              "alternatives": [
+                "turn into",
+                "grow into"
+              ]
+            },
+            {
+              "word": "popular",
+              "zh": "受歡迎的"
+            },
+            {
+              "word": "place",
+              "zh": "地點",
+              "alternatives": [
+                "spot",
+                "site",
+                "destination",
+                "location",
+                "area"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "PERF",
+              "grammar_id": "gp-present-perfect",
+              "label_zh": "現在完成式（延續到現在的改變；配 in recent years）",
+              "frame": "In recent years, S + has + p.p. …",
+              "zh_trigger": "已經成為"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "這幾年來",
+              "accepted": [
+                "In recent years",
+                "Over the past few years",
+                "In the past few years",
+                "In the last few years",
+                "Over the last few years",
+                "For the past few years",
+                "During the past few years",
+                "These past few years",
+                "Over recent years",
+                "In the past several years",
+                "Recently"
+              ],
+              "targets": [
+                "recent",
+                "year"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "In recent year",
+                  "right": "In recent years",
+                  "explanation_zh": "「這幾年」是好幾年，years 要用複數。"
+                },
+                {
+                  "wrong": "In a few years",
+                  "right": "In the past few years",
+                  "explanation_zh": "in a few years 是「再過幾年」（未來）；「這幾年來」要寫 in the past few years 或 in recent years。"
+                }
+              ]
+            },
+            {
+              "zh": "綠島（Green Island）已經成為",
+              "accepted": [
+                "Green Island has become",
+                "Green Island has already become",
+                "Green Island has now become",
+                "Green Island has turned into",
+                "Green Island has grown into"
+              ],
+              "targets": [
+                "become",
+                "PERF"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "Green Island became",
+                  "right": "Green Island has become",
+                  "explanation_zh": "「這幾年來…已經成為」說的是從過去延續到現在的改變，要用現在完成式 has become。"
+                },
+                {
+                  "wrong": "Green Island has became",
+                  "right": "Green Island has become",
+                  "explanation_zh": "become 的過去分詞還是 become；became 是過去式。"
+                },
+                {
+                  "wrong": "Green Island have become",
+                  "right": "Green Island has become",
+                  "explanation_zh": "主詞 Green Island 是單數，助動詞用 has。"
+                }
+              ]
+            },
+            {
+              "zh": "很受歡迎的",
+              "accepted": [
+                "a very popular",
+                "a popular",
+                "a really popular",
+                "quite a popular",
+                "an extremely popular",
+                "a highly popular",
+                "a hugely popular"
+              ],
+              "targets": [
+                "popular"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "a very welcome",
+                  "right": "a very popular",
+                  "explanation_zh": "「受歡迎的（地方、活動）」用 popular；welcome 是「歡迎」，不用來形容地點。"
+                },
+                {
+                  "wrong": "very popular place",
+                  "right": "a very popular place",
+                  "explanation_zh": "place 是可數名詞，單數前面要有冠詞 a；冠詞算在這一部分。"
+                }
+              ]
+            },
+            {
+              "zh": "浮潛（snorkeling）地點",
+              "accepted": [
+                "place for snorkeling",
+                "snorkeling spot",
+                "snorkeling place",
+                "spot for snorkeling",
+                "place to go snorkeling",
+                "place to snorkel",
+                "spot to go snorkeling",
+                "snorkeling destination",
+                "destination for snorkeling",
+                "snorkeling site",
+                "site for snorkeling",
+                "snorkeling location",
+                "location for snorkeling",
+                "snorkeling area"
+              ],
+              "targets": [
+                "place"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "place for snorkel",
+                  "right": "place for snorkeling",
+                  "explanation_zh": "介系詞 for 後面接名詞或動名詞 snorkeling（題目括號已給 snorkeling）。"
+                },
+                {
+                  "wrong": "place to snorkeling",
+                  "right": "place for snorkeling",
+                  "explanation_zh": "不定詞 to 後面接原形動詞 snorkel（place to snorkel）；要用 snorkeling 就配介系詞 for。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "tense_trigger",
+              "zh": "這幾年來",
+              "literal_error": "In recent years, Green Island became a very popular place for snorkeling.",
+              "part": 2,
+              "explanation_zh": "「這幾年來…已經」表示改變一直延續到現在，照中文寫成過去式 became 會漏掉現在完成式，這一部分扣分。"
+            }
+          ],
+          "bonus": [],
+          "notes_zh": "「這幾年來」寫 in recent years、in the past／last few years、over the past few years、recently 都可以，搭配現在完成式 has become（has turned into、has grown into 也可以）。「浮潛地點」寫 place for snorkeling、snorkeling spot、place to snorkel 都給分；「很受歡迎的」寫 very popular 或 popular 都可以。"
+        },
+        "2": {
+          "references": [
+            "When we went snorkeling there last month, many colorful fish swam around us.",
+            "Last month, while we were snorkeling there, lots of colorful fish swam all around us.",
+            "When we were snorkeling there last month, a lot of colorful fish were swimming around us."
+          ],
+          "target_words": [
+            {
+              "word": "last month",
+              "zh": "上個月",
+              "alternatives": [
+                "month"
+              ]
+            },
+            {
+              "word": "colorful",
+              "zh": "彩色的",
+              "alternatives": [
+                "colourful",
+                "colored",
+                "color"
+              ]
+            },
+            {
+              "word": "fish",
+              "zh": "魚"
+            },
+            {
+              "word": "swim",
+              "zh": "游（泳）"
+            },
+            {
+              "word": "around",
+              "zh": "在…周圍",
+              "alternatives": [
+                "near",
+                "beside",
+                "next to"
+              ]
+            }
+          ],
+          "patterns": [
+            {
+              "code": "ADVCL",
+              "grammar_id": "gp-time-clause",
+              "label_zh": "時間副詞子句（When／While + 主詞 + 動詞）",
+              "frame": "When／While + S + V(過去式) …, S + V(過去式) …",
+              "zh_trigger": "我們在那裡浮潛（snorkeling）時"
+            }
+          ],
+          "parts": [
+            {
+              "zh": "上個月",
+              "accepted": [
+                "last month",
+                "a month ago",
+                "one month ago"
+              ],
+              "targets": [
+                "last month"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "in last month",
+                  "right": "last month",
+                  "explanation_zh": "last month 本身就是時間副詞，前面不加 in。"
+                },
+                {
+                  "wrong": "last mouth",
+                  "right": "last month",
+                  "explanation_zh": "「月」是 month，不要拼成 mouth（嘴巴）。"
+                }
+              ]
+            },
+            {
+              "zh": "我們在那裡浮潛（snorkeling）時",
+              "accepted": [
+                "When we went snorkeling there",
+                "When we were snorkeling there",
+                "While we were snorkeling there",
+                "When we snorkeled there",
+                "As we were snorkeling there",
+                "When we were snorkeling around there",
+                "When we went there to snorkel",
+                "When we went snorkeling on Green Island",
+                "When we were snorkeling on Green Island",
+                "While we were snorkeling on Green Island",
+                "When we went snorkeling at Green Island",
+                "When we went snorkeling around Green Island",
+                "While we were snorkeling around Green Island"
+              ],
+              "targets": [
+                "ADVCL"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "While snorkeling there",
+                  "right": "While we were snorkeling there",
+                  "explanation_zh": "主要子句的主詞是「魚」，時間子句要保留自己的主詞 we；省略主詞會變成「魚在浮潛」。"
+                },
+                {
+                  "wrong": "When we snorkeling there",
+                  "right": "When we were snorkeling there",
+                  "explanation_zh": "子句要有完整的動詞：were snorkeling 或 went snorkeling。"
+                }
+              ]
+            },
+            {
+              "zh": "許多彩色的魚",
+              "accepted": [
+                "many colorful fish",
+                "lots of colorful fish",
+                "a lot of colorful fish",
+                "plenty of colorful fish",
+                "many colourful fish",
+                "lots of colourful fish",
+                "a lot of colourful fish",
+                "many brightly colored fish",
+                "lots of brightly colored fish",
+                "many fish of different colors",
+                "lots of fish of different colors",
+                "a lot of fish of different colors",
+                "schools of colorful fish",
+                "many colorful fishes",
+                "lots of colorful fishes",
+                "a lot of colorful fishes"
+              ],
+              "targets": [
+                "colorful",
+                "fish"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "much colorful fish",
+                  "right": "many colorful fish",
+                  "explanation_zh": "這裡的 fish 是可數名詞複數（複數形和單數一樣），「許多」用 many 或 a lot of，不用 much。"
+                },
+                {
+                  "wrong": "many colorfull fish",
+                  "right": "many colorful fish",
+                  "explanation_zh": "-ful 字尾只有一個 l：colorful。"
+                }
+              ]
+            },
+            {
+              "zh": "在我們身邊游來游去",
+              "accepted": [
+                "swam around us",
+                "swam all around us",
+                "were swimming around us",
+                "were swimming all around us",
+                "swam around near us",
+                "swam back and forth around us",
+                "swam back and forth near us",
+                "swam here and there around us",
+                "kept swimming around us",
+                "swam right around us",
+                "swam near us",
+                "were swimming near us",
+                "swam around beside us",
+                "swam around next to us",
+                "swam around close to us"
+              ],
+              "targets": [
+                "swim",
+                "around"
+              ],
+              "common_errors": [
+                {
+                  "wrong": "swim around us",
+                  "right": "swam around us",
+                  "explanation_zh": "上個月的事，主要子句也要用過去式 swam。"
+                },
+                {
+                  "wrong": "swimmed around us",
+                  "right": "swam around us",
+                  "explanation_zh": "swim 是不規則動詞，過去式是 swam。"
+                }
+              ]
+            }
+          ],
+          "traps": [
+            {
+              "type": "tense_trigger",
+              "zh": "上個月",
+              "literal_error": "When we go snorkeling there last month, many colorful fish swim around us.",
+              "part": 4,
+              "explanation_zh": "「上個月」是過去的事，但中文動詞沒有變化，照字面寫成現在式 swim 是最常見的錯誤；主要子句要用不規則過去式 swam，這一部分扣分。"
+            }
+          ],
+          "bonus": [],
+          "notes_zh": "時間子句一定要有自己的主詞 we（主要子句的主詞是魚），When、While、As 都可以，動詞寫 went snorkeling、were snorkeling、snorkeled 都給分；「那裡」寫 there 或 on Green Island 都可以；「上個月」可放句首或子句尾。「許多」寫 many、lots of、a lot of 都可以；fish 的複數通常和單數同形，指多種魚時寫 fishes 也不算錯。「游來游去」寫 swam around us 或 were swimming around us 都可以。"
+        }
+      }
+    },
+    "model_texts": null
+  },
+  "curriculum": [
+    {
+      "code": "4-V-5",
+      "weight": "primary",
+      "basis": "generator"
+    },
+    {
+      "code": "Ad-V-1",
+      "weight": "secondary",
+      "basis": "generator"
+    }
+  ],
+  "provenance": {
+    "sources": [],
+    "license": "original-ai",
+    "derivation": "original",
+    "share_alike": false,
+    "commercial_ok": true,
+    "attribution_text": null
+  },
+  "generation": {
+    "channel": "agent",
+    "run_id": "agent-2026-10-09-translation-basic-06",
+    "lot": "translation-basic-06",
+    "model": "claude-opus-5-5",
+    "prompt_id": "gen/translation",
+    "prompt_sha256": "74610382a1bd05ddcaec0c8ea0cac0b6d7492107d98401c668fa0d6e9642273c",
+    "spec_id": "translation-basic@2026-10-09",
+    "regenerated_from": null
+  },
+  "metrics": {
+    "tool": "tools/text_metrics.py",
+    "lexicon": "forms-index",
+    "word_count": 4,
+    "sentences": 2,
+    "avg_sentence_length": 2.0,
+    "denominator": 4,
+    "proper_nouns": [],
+    "numbers": 0,
+    "coverage_l1_4": 0.5,
+    "coverage_l1_6": 0.5,
+    "offlist_ratio": 0.5,
+    "beyond_l4_ratio": 0.0,
+    "level_counts": {
+      "1": 2,
+      "off": 2
+    },
+    "offlist_words": [
+      "snorkeling"
+    ],
+    "band": null
+  },
+  "verification": [
+    {
+      "kind": "program",
+      "reviewer": "validate_bank.py",
+      "result": "pass",
+      "created_at": "2026-10-10T02:30:57Z",
+      "details": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-opus-5-5",
+      "result": "pass",
+      "created_at": "2026-10-10T02:15:00Z",
+      "details": {
+        "solver": "A",
+        "session_id": null,
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "In recent years, Green Island has become a very popular snorkeling spot.",
+            "confidence": "high",
+            "explanation_zh": "「這幾年來……已經成為」是從過去延續到現在的變化，用現在完成式 has become 搭配 In recent years；「很受歡迎的浮潛地點」用 a very popular snorkeling spot（也可 destination／place）。"
+          },
+          "2": {
+            "translation": "While we were snorkeling there last month, many colorful fish swam around us.",
+            "confidence": "high",
+            "explanation_zh": "「我們在那裡浮潛時」是進行中的背景動作，用 While＋過去進行式 we were snorkeling；「游來游去」用 swam around us（過去簡單式表示發生的動作）。fish 複數不加 s。也可寫 When we went snorkeling there last month。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PERF"
+            ],
+            "used_target_words": [
+              "recent",
+              "year",
+              "become",
+              "popular",
+              "place"
+            ],
+            "within_accepted": true,
+            "closest_reference": 1,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "ADVCL"
+            ],
+            "used_target_words": [
+              "last month",
+              "colorful",
+              "fish",
+              "swim",
+              "around"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "recent",
+              "year",
+              "become",
+              "popular",
+              "place"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PERF": true
+            },
+            "program_match": false
+          },
+          "2": {
+            "target_words_found": [
+              "last month",
+              "colorful",
+              "fish",
+              "swim",
+              "around"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "ADVCL": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    },
+    {
+      "kind": "blind_solver",
+      "reviewer": "claude-sonnet-5-5",
+      "result": "pass",
+      "created_at": "2026-10-10T02:14:07Z",
+      "details": {
+        "solver": "B",
+        "session_id": "session_01Bf7yLAeBLAsBrrNua3QGvh",
+        "task": "blind_translation",
+        "answers": {
+          "1": {
+            "translation": "In recent years, Green Island has become a very popular place for snorkeling.",
+            "confidence": "high",
+            "explanation_zh": "「這幾年來…已經成為」表示持續到現在的變化，用現在完成式 has become；「這幾年來」用 In recent years 或 Over the past few years；「浮潛地點」譯為 a popular place for snorkeling（或 snorkeling spot）。"
+          },
+          "2": {
+            "translation": "When we went snorkeling there last month, many colorful fish were swimming around us.",
+            "confidence": "medium",
+            "explanation_zh": "「上個月…浮潛時」是過去某個時間點，主要動作「魚游來游去」描述當時的背景畫面，用過去進行式 were swimming；從句用 When we went snorkeling there（亦可用 While we were snorkeling there）；go snorkeling 是慣用說法。「游來游去」用 swim around us。信心 medium 是因為從句的時態（went／were snorkeling）有兩種合理寫法。"
+          }
+        },
+        "review": {
+          "1": {
+            "used_patterns": [
+              "PERF"
+            ],
+            "used_target_words": [
+              "recent",
+              "year",
+              "become",
+              "popular",
+              "place"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          },
+          "2": {
+            "used_patterns": [
+              "ADVCL"
+            ],
+            "used_target_words": [
+              "last month",
+              "colorful",
+              "fish",
+              "swim",
+              "around"
+            ],
+            "within_accepted": true,
+            "closest_reference": 0,
+            "reference_check": "pass",
+            "parts_check": "pass",
+            "issues_zh": []
+          }
+        },
+        "checks": {
+          "1": {
+            "target_words_found": [
+              "recent",
+              "year",
+              "become",
+              "popular",
+              "place"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "PERF": true
+            },
+            "program_match": true
+          },
+          "2": {
+            "target_words_found": [
+              "last month",
+              "colorful",
+              "fish",
+              "swim",
+              "around"
+            ],
+            "target_hit_rate": 1.0,
+            "patterns_detected": {
+              "ADVCL": true
+            },
+            "program_match": false
+          }
+        },
+        "problems": []
+      }
+    }
+  ],
+  "status": "verified",
+  "status_reason": null
+}
