@@ -16,6 +16,7 @@ import shutil
 import sys
 import tempfile
 import unittest
+from collections import Counter
 from pathlib import Path
 
 TOOLS = Path(__file__).resolve().parent.parent
@@ -492,6 +493,156 @@ class Lots(Case):
         self.assertHas(r.errors, '同一批有重複的主題')
         self.assertHas(r.errors, '同一批有重複的中文題目')
         self.assertEqual(r.metrics['letters'], {})
+
+
+class SupplementLots(Case):
+    """補足批次（主題總表 lots[] 標 supplement: true，seq 06 起；README §7.2）。"""
+
+    def plan(self):
+        return load(mw.PLAN)
+
+    def sup_entries(self, plan):
+        return [x for x in plan['lots'] if mw.is_supplement(x)]
+
+    def test_regular_lots_are_unchanged(self):
+        # 01–05 批與作文的輸出和已存在的檔案逐位元組相同；拿掉補足批次後輸出也一樣
+        plan = self.plan()
+        regular = {x['lot'] for x in plan['lots'] if not mw.is_supplement(x)}
+        lots = {lot['lot']: lot for lot in mw.build_all(plan, mw.SECTIONS, mw.TIERS, plan['created_on'])}
+        for lot_id in sorted(regular):
+            text = json.dumps(lots[lot_id], ensure_ascii=False, indent=2) + '\n'
+            self.assertEqual(text, (vb.LOTS_DIR / f'{lot_id}.json').read_text(encoding='utf-8'), lot_id)
+        stripped = copy.deepcopy(plan)
+        stripped['lots'] = [x for x in stripped['lots'] if not mw.is_supplement(x)]
+        stripped['topics'] = [t for t in stripped['topics'] if t['lot'] in regular]
+        del stripped['supplement']
+        built = mw.build_all(stripped, mw.SECTIONS, mw.TIERS, plan['created_on'])
+        self.assertEqual(built, [lots[lot['lot']] for lot in built])
+        self.assertEqual(mw.check_supplements(stripped, stripped['topics'], {x['lot']: x for x in stripped['lots']}), ([], []))
+
+    def test_supplement_lot_files_follow_plan(self):
+        plan = self.plan()
+        entries = self.sup_entries(plan)
+        self.assertTrue(entries)
+        for x in entries:
+            lot = load(vb.LOTS_DIR / f'{x["lot"]}.json')
+            topics = [t for t in plan['topics'] if t['lot'] == x['lot']]
+            self.assertTrue(1 <= x['count'] <= mw.SUPPLEMENT_MAX_COUNT)
+            self.assertEqual((lot['count'], len(lot['topics']), len(lot['pattern_plan'])), (x['count'],) * 3, x['lot'])
+            self.assertEqual([t['topic_zh'] for t in lot['topics']], [t['topic_zh'] for t in sorted(topics, key=lambda t: t['slot'])])
+            self.assertIn('補足批次', lot['label_zh'])
+            self.assertEqual(lot['supplement']['tier_gap']['lots'], plan['supplement']['translation'][x['tier']]['lots'])
+            used = {q['grammar_id'] for p in lot['pattern_plan'] for s in p['sentences'] for q in s['patterns']}
+            self.assertEqual(sorted(used), lot['pattern_coverage']['required_grammar_ids'])
+            self.assertTrue(used <= set(mw.tier_pattern_codes(x['tier'])), x['lot'])
+            for p in lot['pattern_plan']:
+                codes = [[q['code'] for q in s['patterns']] for s in p['sentences']]
+                self.assertTrue(all(len(c) == mw.PATTERNS_PER_SENTENCE[x['tier']] == len(set(c)) for c in codes), x['lot'])
+                if x['tier'] == 'basic':
+                    self.assertNotEqual(codes[0], codes[1], x['lot'])
+                if x['tier'] == 'top':
+                    gids = {q['grammar_id'] for s in p['sentences'] for q in s['patterns']}
+                    self.assertTrue(gids & set(vb.TOP_TRANSLATION_GRAMMAR_IDS), (x['lot'], p['slot']))
+        # 每個難度：已通過＋補足批次的組數 ≥ 50，缺口算式一致
+        for tier, e in plan['supplement']['translation'].items():
+            n = sum(x['count'] for x in entries if x['tier'] == tier)
+            self.assertEqual(n, e['new_groups'])
+            self.assertGreaterEqual(e['verified_groups'] + n, 50)
+            self.assertEqual(e['need_groups'], 50 - e['verified_groups'])
+
+    def test_pass_probability(self):
+        self.assertAlmostEqual(mw.pass_probability(4, 0.85, 2), 0.988, places=3)
+        self.assertAlmostEqual(mw.pass_probability(9, 0.85, 6), 0.966, places=3)
+        self.assertAlmostEqual(mw.pass_probability(20, 0.75, 13), 0.898, places=3)
+        self.assertAlmostEqual(mw.pass_probability(2, 0.9, 1), 0.99, places=6)
+
+    def test_verified_counts_use_latest_version(self):
+        bank = self.tmp / 'bank'
+        d = bank / 'translation' / 'basic'
+        d.mkdir(parents=True)
+        tr = load(TRANSLATION)
+        tr['status'] = 'verified'
+        (d / 'ai.tr.0b1c2d@1.json').write_text(json.dumps(tr, ensure_ascii=False), encoding='utf-8')
+        self.assertEqual(mw.verified_pattern_counts('basic', bank),
+                         (1, {'gp-present-perfect': 1, 'gp-infinitive-purpose': 1}))
+        tr2 = copy.deepcopy(tr)
+        tr2['version'], tr2['status'] = 2, 'rejected'          # 退回另存 @2：@1 不能再算
+        (d / 'ai.tr.0b1c2d@2.json').write_text(json.dumps(tr2, ensure_ascii=False), encoding='utf-8')
+        self.assertEqual(mw.verified_pattern_counts('basic', bank), (0, {}))
+
+    def test_gap_allocation_prefers_missing_high_frequency_patterns(self):
+        bank = self.tmp / 'bank'
+        d = bank / 'translation' / 'basic'
+        d.mkdir(parents=True)
+        tr = load(TRANSLATION)
+        tr['status'] = 'verified'
+        (d / 'ai.tr.0b1c2d@1.json').write_text(json.dumps(tr, ensure_ascii=False), encoding='utf-8')
+        gp = mw.grammar_db()
+        state = mw.gap_state('basic', Counter(), 8, gp, bank)      # 沒有 01–05 批：目標分布只看歷屆次數
+        start = dict(state['deficit'])
+        self.assertLess(start['gp-present-perfect'], start['gp-comparative-superlative'])   # 已通過的句型缺口較小
+        plan, before = mw.supplement_pattern_plan('basic', 4, state, gp)
+        self.assertEqual(before, start)
+        gids = [q['grammar_id'] for p in plan for s in p['sentences'] for q in s['patterns']]
+        self.assertEqual(len(gids), 8)
+        self.assertEqual(len(set(gids)), 8)                                                 # 高頻句型各用一次（涵蓋）
+        self.assertTrue(all(state['refs'][g] >= mw.HIGH_FREQ_REFS for g in gids))
+        self.assertIn('gp-comparative-superlative', gids)
+        self.assertNotIn('gp-as-as', gids)                                                  # 歷屆 0 次、缺口 ≤ 0
+        self.assertAlmostEqual(sum(start.values()) - sum(state['deficit'].values()), 8)     # 依序扣掉缺口
+        # 同一難度的下一個補足批次從扣過的缺口接著算
+        after1 = dict(state['deficit'])
+        _, before2 = mw.supplement_pattern_plan('basic', 1, state, gp)
+        self.assertEqual(before2, after1)
+        self.assertAlmostEqual(before2[gids[0]], start[gids[0]] - 1)
+
+    def test_check_topics_supplement_rules(self):
+        plan = self.plan()
+        errs, warns = mw.check_topics(plan)
+        self.assertEqual((errs, warns), ([], []))
+        sup = self.sup_entries(plan)[0]
+        bad = copy.deepcopy(plan)
+        next(x for x in bad['lots'] if x['lot'] == sup['lot'])['count'] = 11
+        errs, _ = mw.check_topics(bad)
+        self.assertHas(errs, '補足批次每批 1–10 組')
+        self.assertHas(errs, 'new_groups')
+        bad = copy.deepcopy(plan)
+        bad['supplement']['translation'][sup['tier']]['need_groups'] += 1
+        errs, _ = mw.check_topics(bad)
+        self.assertHas(errs, 'need_groups')
+        bad = copy.deepcopy(plan)
+        del bad['supplement']
+        errs, _ = mw.check_topics(bad)
+        self.assertHas(errs, '有補足批次時要寫 supplement')
+        self.assertFalse(any('共 ' in e and '站主要求 50 組' in e for e in errs))       # 補足批次不算進每個難度 50 組
+        # 中文主題共用兩字實詞列 warning；記進 reviewed_overlaps 後不再列
+        bad = copy.deepcopy(plan)
+        t = next(t for t in bad['topics'] if t['lot'] == sup['lot'])
+        t['topic_zh'] = '園遊會前的' + t['topic_zh']
+        _, warns = mw.check_topics(bad)
+        self.assertHas(warns, f'{t["id"]}「{t["topic_zh"]}」')
+        self.assertHas(warns, '校慶園遊會')
+        bad['reviewed_overlaps'].append({'id': t['id'], 'against': '校慶園遊會', 'note_zh': '測試'})
+        _, warns = mw.check_topics(bad)
+        self.assertLacks(warns, '校慶園遊會')
+
+    def test_cli_writes_supplement_lots(self):
+        for name in ('LOTS', 'ROOT'):   # 寫到暫存目錄（ROOT 只用在印出相對路徑）
+            self.addCleanup(setattr, mw, name, getattr(mw, name))
+            setattr(mw, name, self.tmp)
+        code, out = run_quiet(mw.main, ['--sections', 'translation', '--tiers', 'top'])
+        self.assertEqual(code, 0, out)
+        plan = self.plan()
+        for x in self.sup_entries(plan):
+            if x['tier'] != 'top':
+                continue
+            lot = load(self.tmp / f'{x["lot"]}.json')
+            self.assertEqual(lot['count'], x['count'])
+            r = vb.check_lot(self.tmp / f'{x["lot"]}.json', [])
+            self.assertEqual(r.errors, [])
+            self.assertHas(r.warnings, '目前 0 組')
+        code, out = run_quiet(mw.main, ['--sections', 'translation', '--tiers', 'top'])
+        self.assertIn('略過', out)
 
 
 if __name__ == '__main__':

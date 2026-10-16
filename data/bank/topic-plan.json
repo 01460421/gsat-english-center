@@ -217,14 +217,16 @@
           "draft": 8,
           "rejected": 0,
           "counted_existing_groups": 8,
-          "new_groups": 17,
+          "new_groups": 19,
           "new_lots": [
             "reading-basic-02",
             "reading-basic-03",
-            "reading-basic-04"
+            "reading-basic-04",
+            "reading-basic-05"
           ],
-          "projected_groups": 25,
-          "projected_items": 100
+          "projected_groups": 27,
+          "projected_items": 108,
+          "supplement_zh": "2026-10-09 重算（只算每個 uid 最新版本且 verified）：basic 24 組＝96 題，差 1 組；缺的是圖表（reading-basic-03「台灣的空氣品質」重出仍 rejected，01–04 批沒有其他可重出的題組）。開 reading-basic-05 補 2 組（長文 1：備用主題 rsv-01 聽診器的發明；圖表 1：台灣的登革熱；補完後 verified 形式約長文 14：圖表 6：表格 3：多文本 3）：首輪通過率約 0.8、重出取 0.5，每組最終通過機率 0.9，2 組至少 1 組通過的機率 0.99"
         },
         "advanced": {
           "seq01_lot_count": 8,
@@ -300,15 +302,17 @@
           "draft": 0,
           "rejected": 0,
           "counted_existing_groups": 4,
-          "new_groups": 21,
+          "new_groups": 25,
           "new_lots": [
             "mixed-top-02",
             "mixed-top-03",
             "mixed-top-04",
-            "mixed-top-05"
+            "mixed-top-05",
+            "mixed-top-06"
           ],
-          "projected_groups": 25,
-          "projected_items": 100
+          "projected_groups": 29,
+          "projected_items": 116,
+          "supplement_zh": "2026-10-09 重算（只算每個 uid 最新版本且 verified）：top 23 組＝92 題，差 2 組（02–05 批的退件都已用掉唯一一次重出機會；實際首輪 13/25、重出 10/12）。開 mixed-top-06 補 4 組（雙文本 2、多則短段落 2，延續 verified 的 12：11）：首輪約 0.5，重出 0.5／0.8／1.0 時「至少 2 組通過」的機率分別約 0.95／0.996／1.0；3 組在重出 0.5 時只有 0.84，所以開 4 組"
         }
       }
     }
@@ -522,6 +526,19 @@
       }
     },
     {
+      "lot": "reading-basic-05",
+      "section": "reading",
+      "tier": "basic",
+      "seq": "05",
+      "count": 2,
+      "forms": {
+        "continuous": 1,
+        "chart": 1,
+        "table": 0,
+        "multi_text": 0
+      }
+    },
+    {
       "lot": "reading-advanced-02",
       "section": "reading",
       "tier": "advanced",
@@ -725,6 +742,17 @@
       "section": "mixed",
       "tier": "top",
       "seq": "05",
+      "count": 4,
+      "forms": {
+        "two_texts": 2,
+        "entries": 2
+      }
+    },
+    {
+      "lot": "mixed-top-06",
+      "section": "mixed",
+      "tier": "top",
+      "seq": "06",
       "count": 4,
       "forms": {
         "two_texts": 2,
@@ -2806,6 +2834,42 @@
       "form_hint_zh": "表格：四國學校午餐的典型菜色、供餐方式與費用（事實單）"
     },
     {
+      "id": "rd-b05-1",
+      "lot": "reading-basic-05",
+      "slot": 1,
+      "category": "origins_evolution",
+      "domain_zh": "健康",
+      "topic_zh": "聽診器的發明",
+      "angle_en": "how a shy French doctor invented the stethoscope with a rolled-up sheet of paper",
+      "keywords": [
+        "stethoscope",
+        "laennec"
+      ],
+      "sdgs": [
+        3
+      ],
+      "form": "continuous",
+      "note_zh": "取自 reserve_topics rsv-01（原 wb-a03-1，word_bank-advanced-03 撤掉後保留的備用主題）；具體事件：1816 年雷奈克用捲起的紙筒聽診"
+    },
+    {
+      "id": "rd-b05-2",
+      "lot": "reading-basic-05",
+      "slot": 2,
+      "category": "science_health",
+      "domain_zh": "健康",
+      "topic_zh": "台灣的登革熱",
+      "angle_en": "why dengue fever breaks out in southern Taiwan in hot, rainy years, and how emptying standing water stops mosquitoes from breeding",
+      "keywords": [
+        "dengue"
+      ],
+      "sdgs": [
+        3
+      ],
+      "form": "chart",
+      "form_hint_zh": "長條圖：政府資料開放平臺 data.gov.tw 疾病管制署的登革熱確定病例資料，彙整成每年的本土病例數（約 2010–2024）；具體事件：2015 年台南、高雄的大流行。圖表數字以事實單的資料集為準",
+      "note_zh": "重點是病媒蚊、氣候與「清除積水」的防治；不寫成瘧疾（題庫已有「斯里蘭卡如何趕走瘧疾」）"
+    },
+    {
       "id": "rd-a02-1",
       "lot": "reading-advanced-02",
       "slot": 1,
@@ -4471,27 +4535,77 @@
       ],
       "form": "entries",
       "form_hint_zh": "8 則留言"
-    }
-  ],
-  "reserve_topics": [
+    },
     {
-      "id": "rsv-01",
-      "former_id": "wb-a03-1",
-      "former_lot": "word_bank-advanced-03",
-      "former_slot": 1,
+      "id": "mx-t06-1",
+      "lot": "mixed-top-06",
+      "slot": 1,
       "category": "origins_evolution",
       "domain_zh": "健康",
-      "topic_zh": "聽診器的發明",
-      "angle_en": "how a shy French doctor invented the stethoscope with a rolled-up sheet of paper",
+      "topic_zh": "醫學影像的演進",
+      "angle_en": "seven milestones of medical imaging, from Röntgen's first X-ray in 1895 to MRI scans",
       "keywords": [
-        "stethoscope",
-        "laennec"
+        "medical imaging",
+        "x-ray"
       ],
       "sdgs": [
         3
       ],
-      "reserved_reason_zh": "第一批文意選填 advanced 的 3 組 rejected 已重生並通過（verified 5 組），word_bank-advanced-03 不再需要（2026-10-09 第二次掃描）"
+      "form": "entries",
+      "form_hint_zh": "6–8 則時間軸條目（年份、發明者、看得到什麼、限制）；具體事件：1895 年倫琴拍下第一張 X 光片"
     },
+    {
+      "id": "mx-t06-2",
+      "lot": "mixed-top-06",
+      "slot": 2,
+      "category": "science_health",
+      "domain_zh": "飲食",
+      "topic_zh": "第五種味覺：鮮味",
+      "angle_en": "umami, the fifth taste: the chemist who found it in seaweed soup and the scientists who later found its taste receptors",
+      "keywords": [
+        "umami"
+      ],
+      "sdgs": [],
+      "form": "two_texts",
+      "form_hint_zh": "科學史專文（1908 年池田菊苗從昆布湯找到麩胺酸）＋味覺科學家訪談（舌頭上的鮮味受器）"
+    },
+    {
+      "id": "mx-t06-3",
+      "lot": "mixed-top-06",
+      "slot": 3,
+      "category": "culture_history",
+      "domain_zh": "藝術",
+      "topic_zh": "摺紙的新用途",
+      "angle_en": "how origami grew from a Japanese paper craft into a way to fold space telescopes and medical stents",
+      "keywords": [
+        "origami"
+      ],
+      "sdgs": [],
+      "form": "two_texts",
+      "form_hint_zh": "摺紙藝術史專文＋工程師訪談（把大型結構摺小再展開）"
+    },
+    {
+      "id": "mx-t06-4",
+      "lot": "mixed-top-06",
+      "slot": 4,
+      "category": "society_issues",
+      "domain_zh": "環境",
+      "topic_zh": "該不該吃昆蟲",
+      "angle_en": "readers debate eating insects as a greener protein after the EU approved mealworms as food in 2021",
+      "keywords": [
+        "edible insect",
+        "eating insects",
+        "mealworm"
+      ],
+      "sdgs": [
+        12,
+        2
+      ],
+      "form": "entries",
+      "form_hint_zh": "6–8 則讀者留言（營養師、農民、廚師、學生、環保人士的不同立場）；具體事件：2021 年歐盟核准黃粉蟲（麵包蟲）作為食品"
+    }
+  ],
+  "reserve_topics": [
     {
       "id": "rsv-02",
       "former_id": "wb-a03-2",
