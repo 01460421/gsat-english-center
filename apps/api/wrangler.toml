@@ -87,8 +87,8 @@ AI_MODEL_SECOND_RATER = "claude-opus-5-5"
 AI_EFFORT_GRADE = "medium"
 AI_EFFORT_OCR = "low"
 # 英文作文自訂題目的總開關（docs/design/custom-essay.md §5.3、§10）：只有 "on" 才開，其他任何值都當成關。
-# 目前是 "on"：2026-10-18 站主決定上線就打開，真模型的評分對照（§7.8）之後再補跑
-#   （GitHub Actions「自訂作文題目評分對照（真模型）」，docs/SETUP-KEYS.md §8.2）；結論不是「達標」時改回 "off"。
+# 目前是 "on"：2026-10-18 站主決定上線就打開；同一天補跑真模型的評分對照（§7.8），結論是「達標」（設計文件附錄 A）。
+#   改了提示或計分要重跑（GitHub Actions「自訂作文題目評分對照（真模型）」，docs/SETUP-KEYS.md §8.2）；不達標時改回 "off"。
 # 要只關自訂題目（題庫題照常）：改成 "off" 推到 main，等 worker-deploy.yml 跑完（§8.1）。
 # 這一行是例外：src/config.ts 的程式預設固定是 off（[vars] 漏設時偏向關），不用跟著改（test/skeleton.test.ts）。
 # 不要在 Cloudflare 儀表板改成 Text 變數：下一次部署會被這裡的 [vars] 蓋回來。
