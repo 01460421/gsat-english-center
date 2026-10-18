@@ -480,6 +480,10 @@ test('入口：/writing/essay 的第三格連到自訂頁，返回連結回到�
   await page.goto('/writing');
   const own = page.getByRole('region', { name: '自己的題目' });
   await expect(own.getByRole('link', { name: /^自訂題目/ })).toHaveAttribute('href', PATH);
+  // 入口卡不能超出自己的 section、蓋到下面的「兩種批改方式」（曾因 h-full 撐到整個 section 高）。
+  const cardBox = await own.getByRole('link', { name: /^自訂題目/ }).boundingBox();
+  const modesBox = await page.getByRole('region', { name: '兩種批改方式' }).boundingBox();
+  expect(cardBox && modesBox && cardBox.y + cardBox.height <= modesBox.y).toBe(true);
   await page.goto('/writing/essay');
   const tabs = page.getByRole('navigation', { name: '題目來源' });
   await expect(tabs.getByRole('link')).toHaveText(['歷屆試題', '本站仿真', '自訂題目']);
