@@ -41,13 +41,46 @@ export class ApiRequestError extends Error {
    * 後者在功能開關已確認後端有部署之後出現，多半是暫時性的，不該顯示成「尚未開放」。
    */
   readonly nonJson: boolean;
-  constructor(status: number, code: ApiErrorCode | null, message: string, options: { nonJson?: boolean } = {}) {
+  /**
+   * 更細的原因代碼（目前只有 custom_prompt_invalid、essay_not_gradable 會帶；docs/design/custom-essay.md §2.5）。
+   * 錯誤本體沒有就是 null。
+   */
+  readonly reason: string | null;
+  /** 出問題的欄位（CustomPromptField 或 'essay'）；沒有就是 null。 */
+  readonly field: string | null;
+  /** 命中處在學生自己（正規化後）文字裡的位置 [start, end)；沒有就是 null。只是位置，不含任何受保護文字。 */
+  readonly ranges: ReadonlyArray<readonly [number, number]> | null;
+  constructor(
+    status: number,
+    code: ApiErrorCode | null,
+    message: string,
+    options: { nonJson?: boolean; reason?: string | null; field?: string | null; ranges?: ReadonlyArray<readonly [number, number]> | null } = {},
+  ) {
     super(message);
     this.name = 'ApiRequestError';
     this.status = status;
     this.code = code;
     this.nonJson = options.nonJson === true;
+    this.reason = options.reason ?? null;
+    this.field = options.field ?? null;
+    this.ranges = options.ranges ?? null;
   }
+}
+
+/** 錯誤本體裡選填的 reason、field、ranges（形狀不對的一律略過，不讓整個錯誤變成別的代碼）。 */
+function errorDetail(body: unknown): { reason: string | null; field: string | null; ranges: Array<[number, number]> | null } {
+  const err = typeof body === 'object' && body !== null ? (body as { error?: unknown }).error : undefined;
+  const e = typeof err === 'object' && err !== null ? (err as Record<string, unknown>) : {};
+  const reason = typeof e['reason'] === 'string' ? e['reason'] : null;
+  const field = typeof e['field'] === 'string' ? e['field'] : null;
+  const raw = e['ranges'];
+  const ranges = Array.isArray(raw)
+    ? raw.filter(
+        (r): r is [number, number] =>
+          Array.isArray(r) && r.length === 2 && Number.isInteger(r[0]) && Number.isInteger(r[1]) && (r[0] as number) >= 0 && (r[1] as number) >= (r[0] as number),
+      )
+    : null;
+  return { reason, field, ranges: ranges && ranges.length > 0 ? ranges : null };
 }
 
 /** 閘道或代理回的非 JSON 5xx（Vercel 502／504、Cloudflare 1101／1102 錯誤頁）：暫時性錯誤，重試多半就好。 */
@@ -89,7 +122,7 @@ export async function api(path: ApiPath, options: ApiOptions = {}): Promise<unkn
   if (!res.ok) {
     const code = isApiErrorBody(body) ? body.error.code : null;
     const message = isApiErrorBody(body) ? body.error.message : `HTTP ${res.status}`;
-    throw new ApiRequestError(res.status, code, message);
+    throw new ApiRequestError(res.status, code, message, isApiErrorBody(body) ? errorDetail(body) : {});
   }
   return body;
 }

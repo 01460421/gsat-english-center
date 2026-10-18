@@ -67,6 +67,11 @@ export const API_ERROR_CODES = [
   'site_budget',
   /** AI 功能尚未核准（403）。 */
   'not_approved',
+  // ── 自訂作文題目（custom-essay.ts；docs/design/custom-essay.md §2.5）──
+  /** 自訂作文題目不符合規則（400）；error.reason 是 CustomPromptProblem，error.field 是欄位，內容規則另附 error.ranges。 */
+  'custom_prompt_invalid',
+  /** 自訂題的作文還不能送 AI 批改（400）；error.reason 是 EssayNotGradableReason，error.field 是 'essay'。 */
+  'essay_not_gradable',
 ] as const;
 export type ApiErrorCode = (typeof API_ERROR_CODES)[number];
 
@@ -75,6 +80,15 @@ export interface ApiErrorBody {
   error: {
     code: ApiErrorCode;
     message: string;
+    /** 選填：更細的原因代碼（目前只有 custom_prompt_invalid、essay_not_gradable 會帶）。 */
+    reason?: string;
+    /** 選填：出問題的欄位（CustomPromptField 或 'essay'）。 */
+    field?: string;
+    /**
+     * 選填：命中處在學生自己文字裡的位置（正規化後的 UTF-16 索引，[start, end)，最多 5 段）。
+     * 只是位置，不含任何受保護文字（D8）。
+     */
+    ranges?: Array<[number, number]>;
   };
 }
 

@@ -17,6 +17,7 @@
 | `GOOGLE_CLIENT_SECRET` | 登入要 | §2.3 | Google 登入 |
 | `ADMIN_EMAIL` | 建議 | §2.5（你自己的 Gmail） | 第一次登入時自動成為管理員 |
 | `ANTHROPIC_API_KEY` | AI 要 | §3.3 | AI 批改與 OCR |
+| `ANTHROPIC_PARITY_API_KEY` | 打開自訂題目批改前要 | §8.2 | 只給「自訂作文題目評分對照（真模型）」用（dev workspace 的金鑰），不會同步到 Worker |
 
 不需要自己準備的：`SESSION_SECRET`（簽登入 cookie）與 `LEDGER_SALT`（帳本假名）由部署 workflow 第一次執行時自動產生、存在 Cloudflare，之後不會再改。
 
@@ -119,7 +120,7 @@ Settings → Billing：先儲值（API 是預付制，餘額不足時 AI 批改�
 ## 4. 填進 GitHub
 
 1. GitHub repo 頁面 → Settings → Secrets and variables → Actions → **New repository secret**。
-2. Name 照 §0 表格的名稱（全大寫、一字不差），Secret 貼值（不要加引號、前後不要有空白或換行），Add secret。六個都照做。
+2. Name 照 §0 表格的名稱（全大寫、一字不差），Secret 貼值（不要加引號、前後不要有空白或換行），Add secret。上線要用的六個都照做（`ANTHROPIC_PARITY_API_KEY` 等到 §8.2 再加）。
 3. 之後要換值：同一頁點名稱 → Update secret。
 
 **不想把機密放 GitHub 也可以**：`GOOGLE_CLIENT_ID`、`GOOGLE_CLIENT_SECRET`、`ADMIN_EMAIL`、`ANTHROPIC_API_KEY` 可以改在 Cloudflare 儀表板 → Workers & Pages → `gsat-english-api` → Settings → Variables and Secrets → Add 手動設定，**Type 一定要選 Secret**（選 Text 的會在下一次部署時被刪掉）。Worker 要先部署過一次才會出現在列表裡。GitHub 沒設的名稱，workflow 不會刪除或覆蓋 Cloudflare 上的同名機密；兩邊都有時，每次部署以 GitHub 的值為準。
@@ -137,11 +138,12 @@ workflow 會依序：型別檢查與測試 → 檢查 token 與 workers.dev 子�
 1. **Actions 的執行結果**：每一步都是綠勾。點進這次執行，頁面下方的 **Summary** 有一張表：
    - Worker 網址（`https://gsat-english-api.<子網域>.workers.dev`）與 workers.dev 子網域
    - 登入（auth）、AI 批改（ai）、拍照 OCR（ocr）是否啟用、AI 是否暫停
+   - 自訂題目批改（customEssay）是否啟用，以及 `apps/api/wrangler.toml` 的 `AI_CUSTOM_ESSAY` 寫的是什麼。兩者對不起來時有一則「注意」（新版本可能還沒傳到所有節點，幾分鐘後打開 `/api/features` 再確認）；AI 已啟用、自訂題目批改未啟用時有一則「提醒」（評分對照達標、打開之前，或只關自訂題時，這是正常的；§8.1、§8.2）
    - Worker 上有哪些機密（只列名稱）
    - 經 Vercel 代理是否已接上，以及「下一步」
 2. **直接打開 Worker**：
    - `https://gsat-english-api.<子網域>.workers.dev/api/health` → `{"ok":true,"service":"gsat-english-api",…}`
-   - `https://gsat-english-api.<子網域>.workers.dev/api/features` → 六個金鑰都填了的話是 `{"auth":true,"ai":true,"ocr":true,"aiPaused":false}`
+   - `https://gsat-english-api.<子網域>.workers.dev/api/features` → 六個金鑰都填了的話是 `{"auth":true,"ai":true,"ocr":true,"aiPaused":false,"customEssay":true}`（`wrangler.toml` 的 `AI_CUSTOM_ESSAY` 是 `"off"` 時 `customEssay` 是 false，§8.1）
 3. **接上 Vercel**：根目錄 `vercel.json` 的兩個 `REPLACE_WITH_SUBDOMAIN` 要換成 §1.2 的子網域（Summary 的「下一步」會寫出完整網址；這一步由開發者改好推到 main，Vercel 會自動重新部署）。完成後：
    - `https://gsat-english-center.vercel.app/api/health` → 和上面一樣的 JSON
    - 網站側欄出現「登入」按鈕
@@ -207,6 +209,46 @@ workflow 會依序：型別檢查與測試 → 檢查 token 與 workers.dev 子�
 - **拿掉某個功能的金鑰**：先刪 GitHub secret（否則下次部署又會同步回去），再到 Cloudflare 的 Variables and Secrets 刪掉同名機密。
 - **調整 AI 預算與名額**：改 `apps/api/wrangler.toml` 的 `[vars]`（和 `src/config.ts` 的預設值一起改，測試會檢查），推到 main 自動部署；Console 的 workspace 上限也要同步改。
 - **買網域之後**：照 ARCHITECTURE §4.4 的步驟（`[[routes]]`、`ALLOWED_ORIGINS`、`PUBLIC_API_ORIGIN`、`APP_ORIGIN`、Google 的 redirect URI 加新網址）。
+
+### 8.1 只關閉自訂題目批改
+
+英文作文的「自訂題目」（學生自己貼題目送 AI 批改）有自己的總開關 `AI_CUSTOM_ESSAY`（`apps/api/wrangler.toml` 的 `[vars]`；只有 `"on"` 才開，其他任何值都當成關）。程式預設是 `"off"`；2026-10-18 站主決定上線就打開（`wrangler.toml` 寫 `"on"`），評分對照之後照 §8.2 補跑。下面是打開之後，自訂題出問題（例如大量拒答、有人用題目欄做奇怪的事）時的做法：
+
+1. **立即止血**：網站 `/admin` 按「AI 全站暫停」。存在 D1、立刻生效，但歷屆題與本站題的 AI 批改也會一起停；暫停只記在當天，台灣時間隔天 00:00 自動恢復。
+2. **只關自訂題**：把 `apps/api/wrangler.toml` 的 `AI_CUSTOM_ESSAY = "on"` 改成 `"off"`，推到 main，等「部署後端（Cloudflare Worker）」跑完（幾分鐘）。
+   - 打開這次執行的 **Summary**，確認「自訂題目批改（customEssay）」是**未啟用**、`AI_CUSTOM_ESSAY` 是 `"off"`，而且「注意」裡沒有「對不起來」；也可以直接打開 `/api/features` 看 `"customEssay":false`；
+   - 確認之後，再到 `/admin` 解除全站暫停（歷屆題與本站題恢復，自訂題的作答頁只剩自我檢核）；
+   - 已經在排隊的自訂題會照常批改完（點數已經預扣）。
+3. **不要**在 Cloudflare 儀表板的 Variables and Secrets 改 `AI_CUSTOM_ESSAY`：下一次部署（題庫資料更新也會觸發）會被 `wrangler.toml` 的 `[vars]` 蓋回去。
+
+要重新開啟：改回 `"on"` 推到 main，Summary 應該是「啟用」、沒有「提醒」。關掉之後如果改過提示或計分（`apps/api/src/ai/`），要先照 §8.2 重跑一次評分對照，達標再打開。
+
+### 8.2 打開自訂題目批改（先跑評分對照）
+
+原本的設計是先用真模型跑一次評分對照（同一篇作文分別當成題庫題與自訂題批改，比較兩邊的分數，設計見 [design/custom-essay.md](design/custom-essay.md) §7.8），**結論是「達標」才打開**。2026-10-18 站主決定上線就打開（`wrangler.toml` 已經是 `"on"`），評分對照改成之後補跑的檢查：照下面第 1、2 步跑；**達標**就把結果記進附錄 A，開關不用動；**不達標**就照 §8.1 把開關改回 `"off"`，交給開發者調整提示後重跑。之後改了提示或計分，也照這一節重跑。評分對照在 GitHub Actions 上跑，不用在自己的電腦裝任何東西。
+
+1. **建 dev workspace 和金鑰**（只需一次）：
+   - Claude Console → Settings → Workspaces → Create workspace，名稱例如 `dev`（評分對照與開發專用，不要和 Worker 的 `online` 混用）。
+   - 進入 `dev` workspace → Limits → **每月花費上限設 US$50**（等於 `apps/api/wrangler.toml` 的 `ANTHROPIC_DEV_SPEND_LIMIT_USD`；評分對照預設最多花 US$45，Console 的上限是最後一道防線）。
+   - `dev` workspace → API keys → Create key → 名稱例如 `gsat-parity` → 複製（只顯示一次）→ **直接**貼到 GitHub repo 的 Settings → Secrets and variables → Actions → New repository secret，Name 填 `ANTHROPIC_PARITY_API_KEY`。和其他金鑰一樣，不要貼到聊天、issue、PR 或任何文件裡（§0）。這把金鑰只給評分對照用，部署 workflow 不會把它同步到 Worker。
+2. **執行**：GitHub repo → **Actions** → 左側「自訂作文題目評分對照（真模型）」（`.github/workflows/custom-essay-parity.yml` 合併進 main 之後才會出現）→ 右側 **Run workflow** → Branch 選 `main`，三個選項通常不用改：
+   - `budget_usd`：累計花費上限（美元，預設 45，最多 100）。「累計」包含之前中斷的那幾次；
+   - `allow_online_key`：保持不勾（見下面「沒有 dev workspace 時」）；
+   - `resume`：保持勾選，中斷後再按一次會接著跑，已經完成的不會重新花錢。連線錯誤或逾時的那幾篇會重跑；模型拒答、格式不符、截斷的不重跑（它們要算進失敗率，重跑到成功就看不出自訂題比較容易被拒答）。
+   - 約 150 次批改，可能要好幾個小時；一次執行最多約 4.5 小時就會停下來存檔（GitHub 的上限是 6 小時），結論會是「還沒跑完」，再按一次 Run workflow 即可。
+3. **看結果**：點進這次執行，頁面下方的 **Summary** 第一段就是結論，下面是每一項指標（「達標」欄）與 E 組的評語；完整結果也在頁面最下方的 artifact `custom-essay-parity`（保留 30 天）。
+   - **達標**（執行結果是綠勾）：
+     1. E 組的評語看一下：不應該以「120 字」為標準（題目要求的字數不同）。
+     2. 把 Summary 的彙總交給開發者記進 [design/custom-essay.md](design/custom-essay.md) 的附錄 A（日期、版本、花費、各組結果）。
+     3. 開一個 PR 到 main，**只改一行**：`apps/api/wrangler.toml` 的 `AI_CUSTOM_ESSAY = "off"` 改成 `"on"`（`src/config.ts` 不用跟著改）。合併後等「部署後端（Cloudflare Worker）」跑完。
+     4. 確認：這次部署的 Summary 寫「自訂題目批改（customEssay）：啟用」、沒有「提醒」；打開 `https://gsat-english-center.vercel.app/api/features` 看到 `"customEssay":true`。之後照 design/custom-essay.md §10 的「部署後確認」用自己的帳號送一篇自訂題試試。
+   - **不達標**（紅叉，結論寫「不達標」）：`AI_CUSTOM_ESSAY` 維持 `"off"`，網站照常（自訂題目只能自我檢核）。把 Summary 交給開發者，由開發者調整提示後再重跑（改過提示後 resume 不會沿用舊結果）。
+   - **還沒跑完**（紅叉，結論寫「還沒跑完」）：照結論那一段的說明處理——到時間上限、或結論說有幾篇「暫時失敗」，就直接再按一次 Run workflow；到 `budget_usd` 上限就調高一點再按（不要超過 dev workspace 的每月上限）；Console 的上限或餘額不足就先調整 Console；金鑰錯誤就重建金鑰、Update secret。
+   - 第一步就失敗、說沒有金鑰：照第 1 步設好 `ANTHROPIC_PARITY_API_KEY` 再按一次。沒有金鑰時 workflow 一定是紅的，不會被當成通過。
+   - 「準備題目庫、確認達標判定」那一步失敗（還沒花錢）：通常是本站仿真作文被下架太多（少於 20 題），或某一題被自訂題目的輸入規則拒收；把那一步的訊息交給開發者。
+4. **沒有 dev workspace 時**（不建議）：Run workflow 時勾選 `allow_online_key`，會改用正式站的 `ANTHROPIC_API_KEY`（只有沒設 `ANTHROPIC_PARITY_API_KEY` 時才會用）。這筆花費（最多 `budget_usd`）算進 `online` workspace 的每月上限（US$450），但站內預算（月 US$400＋日 US$20）看不到它：同一個月學生用量大時，可能先碰到 Console 的上限，學生的 AI 批改會失敗、全站自動暫停。真的要用，挑月初或用量低的時候，或先把 `budget_usd` 調低。
+5. **公開的紀錄**：這個 repo 是公開的，Actions 的 log、Summary 與 artifact 任何人都看得到。結果只有分數、旗標、計數、花費與本站範文的 AI 評語（作文全是本站自己寫的範文），沒有金鑰、學生資料，也沒有官方的參考譯文、評分原則或佳作；金鑰不會出現在 log 裡（GitHub 也會自動遮罩）。
+6. 跑完之後 `ANTHROPIC_PARITY_API_KEY` 可以留著（之後改提示要重跑），或在 Console 停用那把金鑰、再刪掉 GitHub secret。
 
 ## 9. 已知限制
 

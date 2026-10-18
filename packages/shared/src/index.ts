@@ -11,3 +11,5 @@ export * from './writing';
 // 學生文字的正規化與大小寫、標點檢查。從入口直接轉匯出、不經 writing.ts：writing.ts 首頁就用得到，
 // 由它轉匯出會讓打包工具把主程式拆成好幾個一開始就要載入的小檔（docs/design/bank-writing.md §2.3）。
 export * from './writing-mechanics';
+// 英文作文自訂題目的輸入規則與文案：同樣直接轉匯出、不經 writing.ts（只有自訂題頁用到；docs/design/custom-essay.md §2.2）。
+export * from './custom-essay';

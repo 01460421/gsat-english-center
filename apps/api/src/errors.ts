@@ -10,18 +10,38 @@ import { HTTPException } from 'hono/http-exception';
 import type { ContentfulStatusCode } from 'hono/utils/http-status';
 import type { AppEnv } from './env';
 
-/** 產生錯誤回應。所有錯誤出口都經過這裡，格式才不會走鐘。 */
-export function errorResponse(c: Context<AppEnv>, status: ContentfulStatusCode, code: ApiErrorCode, message: string) {
-  const body: ApiErrorBody = { error: { code, message } };
+/**
+ * 錯誤的選填細節（docs/design/custom-essay.md §2.5）：更細的原因代碼、出問題的欄位、命中處在學生自己文字裡的位置。
+ * 目前只有 custom_prompt_invalid、essay_not_gradable 會帶；其他錯誤的回應一個字都不變。
+ */
+export interface ApiErrorDetail {
+  reason?: string;
+  field?: string;
+  ranges?: Array<[number, number]>;
+}
+
+/** 產生錯誤回應。所有錯誤出口都經過這裡，格式才不會走鐘。detail 有值的欄位才放進本體。 */
+export function errorResponse(c: Context<AppEnv>, status: ContentfulStatusCode, code: ApiErrorCode, message: string, detail: ApiErrorDetail = {}) {
+  const body: ApiErrorBody = {
+    error: {
+      code,
+      message,
+      ...(detail.reason !== undefined ? { reason: detail.reason } : {}),
+      ...(detail.field !== undefined ? { field: detail.field } : {}),
+      ...(detail.ranges !== undefined ? { ranges: detail.ranges } : {}),
+    },
+  };
   return c.json(body, status);
 }
 
-/** 路由裡要中斷並回錯誤時丟這個：`throw new ApiError(403, 'forbidden', '…')`。 */
+/** 路由裡要中斷並回錯誤時丟這個：`throw new ApiError(403, 'forbidden', '…')`；要帶原因或位置時加第 4 個參數。 */
 export class ApiError extends HTTPException {
   readonly code: ApiErrorCode;
-  constructor(status: ContentfulStatusCode, code: ApiErrorCode, message: string) {
+  readonly detail: ApiErrorDetail;
+  constructor(status: ContentfulStatusCode, code: ApiErrorCode, message: string, detail: ApiErrorDetail = {}) {
     super(status, { message });
     this.code = code;
+    this.detail = detail;
   }
 }
 
@@ -50,7 +70,7 @@ function codeForStatus(status: number): ApiErrorCode {
 /** app.onError：預期內的錯誤照實回報；預期外的錯誤只回固定訊息，細節寫進 log，不回顯給使用者。 */
 export function handleError(err: Error, c: Context<AppEnv>) {
   if (err instanceof ApiError) {
-    return errorResponse(c, err.status, err.code, err.message);
+    return errorResponse(c, err.status, err.code, err.message, err.detail);
   }
   if (err instanceof HTTPException) {
     return errorResponse(c, err.status, codeForStatus(err.status), err.message || '請求無法處理');

@@ -2,6 +2,7 @@
  * GET /api/features：公開的功能開關（@gsat/shared 的 FeaturesResponse）。前端依它決定要不要顯示登入與 AI 按鈕。
  *
  * 只回布林：這支不用登入，任何人都讀得到，所以絕不回設定值或金鑰片段。
+ * customEssay＝ai 而且 AI_CUSTOM_ESSAY 是 on（D8 指紋檔壞掉時自訂題的端點另外回 503，這裡不查：公開端點不讀指紋檔）。
  * aiPaused 讀今天（台灣日期）的 ai_budget_daily.paused；查詢失敗（例如遷移還沒套用）時當成暫停，
  * 寧可不顯示 AI 按鈕，也不要讓學生按了才收到錯誤。
  */
@@ -34,6 +35,8 @@ export async function computeFeatures(env: Env): Promise<FeaturesResponse> {
     // MVP 的照片暫存在 D1，不需要另外的綁定：AI 能用，OCR 就能用。
     ocr: ai,
     aiPaused: ai ? await isAiPaused(env) : false,
+    // 英文作文自訂題目：AI 能用而且總開關 AI_CUSTOM_ESSAY 是 on（docs/design/custom-essay.md §5.3）。
+    customEssay: ai && config.ai.customEssay,
   };
 }
 

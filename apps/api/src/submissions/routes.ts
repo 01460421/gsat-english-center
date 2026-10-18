@@ -2,10 +2,11 @@
  * /api/submissions*：中譯英與作文的提交（ARCHITECTURE §10.4；DB_SCHEMA §3.6）。負責：後端 AI A2。
  * 型別在 @gsat/shared 的 writing.ts。所有查詢都帶 `AND user_id = ?`（防 IDOR）：別人的提交一律 404。
  *
- *   POST   /api/submissions                 CreateSubmissionBody → 201 SubmissionDetail（requireUser）
- *   GET    /api/submissions?kind=&cursor=   SubmissionListResponse
- *   GET    /api/submissions/:id             SubmissionDetail（前端輪詢這支）
- *   PUT    /api/submissions/:id             UpdateSubmissionBody → SubmissionDetail（只在 draft／ocr_ready／confirmed／failed）
+ *   POST   /api/submissions                 CreateSubmissionBody → 201 SubmissionDetail（requireUser；自訂作文題目另外要 AI 已核准）
+ *   GET    /api/submissions?kind=&cursor=   SubmissionListResponse（自訂題每一列多 custom_title）
+ *   GET    /api/submissions/:id             SubmissionDetail（前端輪詢這支；自訂題多 custom_prompt）
+ *   PUT    /api/submissions/:id             UpdateSubmissionBody → SubmissionDetail（只在 draft／ocr_ready／confirmed／failed；
+ *                                           帶 custom_prompt 時只限自訂題、要 AI 已核准，題目列的 rev 加 1）
  *   DELETE /api/submissions/:id             204（連同暫存照片與批改；批改進行中 409）
  *   POST   /api/submissions/:id/photos?ord=1|2  multipart，一次一張，欄位 `photo`（JPEG／PNG／WebP、≤1.2 MB、長邊 ≤1600 px）
  *                                           → PhotoUploadResponse（存檔前剝除 EXIF 等中繼資料；結構不認得或讀不到寬高就拒絕）
@@ -14,12 +15,20 @@
  *   DELETE /api/submissions/:id/photos      PhotoUploadResponse（學生自己刪全部照片）
  *   PUT    /api/submissions/:id/confirm     ConfirmOcrBody → SubmissionDetail（ocr_ready → confirmed；記差異量、立即刪照片）
  *
+ * 英文作文自訂題目（docs/design/custom-essay.md §2.6）：POST 的本體帶 custom_prompt、不帶 group_id，伺服器一律寫
+ * CUSTOM_ESSAY_GROUP_ID；題目存在 submission_custom_prompts（custom.ts）。建立與修改題目要 AI 已核准（安全審查 S6），
+ * 只改作文、自評或刪除維持只要登入（被撤銷核准的人仍然要能管理自己的資料）。
+ *
  * 照片上傳是「寫入類 API 只收 JSON」的唯一例外（multipart），同樣經過 Origin 檢查與登入（ARCHITECTURE §7）。
  * 其他寫入一律 Content-Type: application/json，本體邊讀邊數（A1 的 readJsonBody／readBodyBytes），超過上限 413，
  * 不會把超大本體整個讀進記憶體。
  */
 import {
   AI_ERROR_MESSAGES,
+  CUSTOM_ESSAY_GROUP_ID,
+  CUSTOM_PROMPT_LIMITS,
+  CUSTOM_PROMPT_NOT_FOUND_MESSAGE,
+  CUSTOM_PROMPT_PROBLEM_MESSAGES,
   PHOTO_MAX_AGE_HOURS,
   PHOTO_MAX_BYTES,
   PHOTO_MIMES,
@@ -27,6 +36,8 @@ import {
   WRITING_UNKNOWN_GROUP_MESSAGE,
   countEnglishWords,
   countParagraphs,
+  isCustomEssayGroupId,
+  type CustomPromptValue,
   type EssayBody,
   type PhotoMime,
   type PhotoUploadResponse,
@@ -39,13 +50,15 @@ import * as z from 'zod/v4';
 import { readBodyBytes, readJsonBody } from '../account/validate';
 import { getWritingGroup, ensureItemGroupStatement, type WritingGroup } from '../ai/bank';
 import { sanitizeStudentText } from '../ai/filter';
+import { userRefFor } from '../ai/ledger';
 import { wordEditDistance } from '../ai/scoring';
-import { getSessionUser, requireAiApproved, requireUser, type SessionUser } from '../auth/session';
+import { assertAiApproved, getSessionUser, requireAiApproved, requireUser, type SessionUser } from '../auth/session';
 import { base64UrlDecodeText, base64UrlEncode } from '../auth/crypto';
 import { loadConfig } from '../config';
 import type { AppEnv } from '../env';
 import { ApiError } from '../errors';
 import { nowSeconds } from '../time';
+import { groupForSubmission, insertCustomPromptStatement, requireCustomEssayAvailable, updateCustomPromptStatement, validateCustomPrompt } from './custom';
 import { imageDimensions, PHOTO_SERVER_MAX_EDGE_PX, processImageMetadata, sha256Hex, sniffImageType } from './images';
 import { LIST_SUBMISSIONS, listPhotoMeta, parseJson, requireSubmission, toDetail, toSummary, type SubmissionRow } from './repo';
 import { bodyJson, normalizeEssayBody, normalizeSelfAssess, normalizeTranslationBody } from './validate';
@@ -105,12 +118,76 @@ function normalizeBody(group: WritingGroup, value: unknown): TranslationBody | E
   return group.kind === 'translation' ? normalizeTranslationBody(group, value) : normalizeEssayBody(value);
 }
 
+/** 每人 24 小時最多建立 SUBMISSIONS_PER_DAY 份（題庫題與自訂題共用）。 */
+async function assertCreateRate(db: D1Database, userId: number, now: number): Promise<void> {
+  const recent = await db.prepare('SELECT COUNT(*) AS n FROM submissions WHERE user_id = ?1 AND created_at > ?2').bind(userId, now - 86_400).first<{ n: number }>();
+  if ((recent?.n ?? 0) >= SUBMISSIONS_PER_DAY) throw new ApiError(429, 'rate_limited', '今天建立的作答太多了，請明天再試');
+}
+
+/**
+ * custom_prompt 欄位的型別（只擋程式錯誤，回 400 bad_request）：必須是物件，圖片描述是字串、null 或省略。
+ * 原文超過 textRawMaxChars／figureRawMaxChars 時在這裡就回 400 custom_prompt_invalid（text_too_long／figure_too_long），
+ * 不等到核准與每日上限之後（安全審查 security-1；checkCustomPrompt 本身也會先看原文長度）。
+ * 其他內容規則交給 validateCustomPrompt（400 custom_prompt_invalid）。
+ */
+function customPromptObject(value: unknown): Record<string, unknown> {
+  if (typeof value !== 'object' || value === null || Array.isArray(value)) throw new ApiError(400, 'bad_request', 'custom_prompt 必須是物件');
+  const record = value as Record<string, unknown>;
+  const text = record['text'];
+  const figure = record['figure_text'];
+  if (figure !== undefined && figure !== null && typeof figure !== 'string') throw new ApiError(400, 'bad_request', 'custom_prompt.figure_text 必須是字串或 null');
+  const L = CUSTOM_PROMPT_LIMITS;
+  if (typeof text === 'string' && text.length > L.textRawMaxChars) {
+    throw new ApiError(400, 'custom_prompt_invalid', CUSTOM_PROMPT_PROBLEM_MESSAGES.text_too_long, { reason: 'text_too_long', field: 'text' });
+  }
+  if (typeof figure === 'string' && figure.length > L.figureRawMaxChars) {
+    throw new ApiError(400, 'custom_prompt_invalid', CUSTOM_PROMPT_PROBLEM_MESSAGES.figure_too_long, { reason: 'figure_too_long', field: 'figure_text' });
+  }
+  return record;
+}
+
+/**
+ * POST 的自訂作文題目變體（§2.6 的檢查順序）：種類與 group_id → AI 核准 → 總開關與指紋檔 → 輸入方式 → 每日上限 →
+ * 題目規則與 D8 → 作文內容 → 同一個 batch 寫提交與題目列（rev 1）。被擋下的請求不寫任何一列。
+ */
+async function createCustomSubmission(c: Context<AppEnv>, user: SessionUser, input: Record<string, unknown>) {
+  const db = c.env.DB;
+  if (input['kind'] !== 'essay') throw new ApiError(400, 'bad_request', '自訂題目只能用在英文作文');
+  if (input['group_id'] !== undefined) throw new ApiError(400, 'bad_request', '自訂題目不能同時指定 group_id');
+  const promptInput = customPromptObject(input['custom_prompt']);
+  assertAiApproved(user);
+  const config = loadConfig(c.env);
+  const fp = await requireCustomEssayAvailable(db, config);
+  const inputMode = input['input_mode'] ?? 'typed';
+  if (inputMode !== 'typed' && inputMode !== 'photo') throw new ApiError(400, 'bad_request', 'input_mode 必須是 typed 或 photo');
+  const now = nowSeconds();
+  await assertCreateRate(db, user.id, now);
+  const value = validateCustomPrompt(fp, promptInput, await userRefFor(config.auth.ledgerSalt, user.id), 'create');
+  const body: EssayBody = input['body'] === undefined ? { text: '', plan: null } : normalizeEssayBody(input['body']);
+  if (inputMode === 'photo' && body.text !== '') throw new ApiError(400, 'bad_request', '照片模式的文字由辨識結果產生，建立時請留空');
+  const { wordCount, paragraphs } = essayStats(body.text, inputMode === 'photo');
+  const id = crypto.randomUUID();
+  // 佔位題組 custom:essay@1 由遷移 0003 建好（凍結），不呼叫 ensureItemGroupStatement。
+  await db.batch([
+    db
+      .prepare(
+        `INSERT INTO submissions (id, user_id, kind, group_id, input_mode, body_json, word_count, paragraphs, status, created_at, updated_at, expires_at)
+         VALUES (?1, ?2, 'essay', ?3, ?4, ?5, ?6, ?7, 'draft', ?8, ?8, ?9)`,
+      )
+      .bind(id, user.id, CUSTOM_ESSAY_GROUP_ID, inputMode, bodyJson(body), wordCount, paragraphs, now, await expiresAt(db, user.id, now)),
+    insertCustomPromptStatement(db, id, user.id, value, now),
+  ]);
+  return c.json(await toDetail(db, await requireSubmission(db, user.id, id)), 201);
+}
+
 submissionRoutes.post('/', requireUser(), async (c) => {
   const user = await sessionUser(c);
   const db = c.env.DB;
   const input = await readJson(c);
   const kind = input['kind'];
   if (typeof kind !== 'string' || !(SUBMISSION_KINDS as readonly string[]).includes(kind)) throw new ApiError(400, 'bad_request', 'kind 必須是 translation 或 essay');
+  if (input['custom_prompt'] !== undefined) return createCustomSubmission(c, user, input);
+  // 直接用 custom:essay@1 建立（不帶題目）時，題目庫查不到 → 400「沒有這個題組」。
   const groupId = input['group_id'];
   const group = typeof groupId === 'string' ? getWritingGroup(groupId) : null;
   // 訊息是共用常數（前端據此顯示「這題的 AI 批改還在準備中」）；內容和改版前相同。
@@ -121,8 +198,7 @@ submissionRoutes.post('/', requireUser(), async (c) => {
   if (kind === 'translation' && inputMode !== 'typed') throw new ApiError(400, 'bad_request', '中譯英只能打字作答');
 
   const now = nowSeconds();
-  const recent = await db.prepare('SELECT COUNT(*) AS n FROM submissions WHERE user_id = ?1 AND created_at > ?2').bind(user.id, now - 86_400).first<{ n: number }>();
-  if ((recent?.n ?? 0) >= SUBMISSIONS_PER_DAY) throw new ApiError(429, 'rate_limited', '今天建立的作答太多了，請明天再試');
+  await assertCreateRate(db, user.id, now);
 
   const body = input['body'] === undefined ? (kind === 'translation' ? { items: [] } : { text: '', plan: null }) : normalizeBody(group, input['body']);
   let wordCount: number | null = null;
@@ -182,9 +258,20 @@ submissionRoutes.put('/:id', requireUser(), async (c) => {
   const db = c.env.DB;
   const sub = await requireSubmission(db, user.id, c.req.param('id'));
   if (!EDITABLE.has(sub.status)) throw new ApiError(409, 'conflict', '批改進行中或已完成的作答不能修改');
-  const group = getWritingGroup(sub.group_id);
-  if (!group) throw new ApiError(409, 'conflict', '找不到這份提交的題目');
+  const group = await groupForSubmission(db, sub);
+  if (!group) throw new ApiError(409, 'conflict', CUSTOM_PROMPT_NOT_FOUND_MESSAGE);
   const input = await readJson(c);
+
+  // 修改自訂題目（整份取代）：只限自訂題、要 AI 已核准、開關與指紋檔、題目規則與 D8 都重跑一次（§2.6）。
+  let customValue: CustomPromptValue | null = null;
+  if (input['custom_prompt'] !== undefined) {
+    if (!isCustomEssayGroupId(sub.group_id)) throw new ApiError(400, 'bad_request', '只有自訂題目可以修改題目');
+    const promptInput = customPromptObject(input['custom_prompt']);
+    assertAiApproved(user);
+    const config = loadConfig(c.env);
+    const fp = await requireCustomEssayAvailable(db, config);
+    customValue = validateCustomPrompt(fp, promptInput, await userRefFor(config.auth.ledgerSalt, user.id), 'update');
+  }
 
   let newBody: string | null = null;
   let wordCount: number | null = null;
@@ -207,15 +294,19 @@ submissionRoutes.put('/:id', requireUser(), async (c) => {
   const hasSelf = input['self_assess'] !== undefined;
   const selfJson = hasSelf ? JSON.stringify(normalizeSelfAssess(sub.kind, group, input['self_assess'])) : null;
 
-  const res = await db
-    .prepare(
-      `UPDATE submissions SET body_json = COALESCE(?1, body_json), word_count = COALESCE(?2, word_count), paragraphs = COALESCE(?3, paragraphs),
-              self_assess_json = CASE WHEN ?4 = 1 THEN ?5 ELSE self_assess_json END, updated_at = ?6
-        WHERE id = ?7 AND user_id = ?8 AND status = ?9`,
-    )
-    .bind(newBody, wordCount, paragraphs, hasSelf ? 1 : 0, selfJson === 'null' ? null : selfJson, nowSeconds(), sub.id, user.id, sub.status)
-    .run();
-  if (res.meta.changes !== 1) throw new ApiError(409, 'conflict', '這份提交的狀態剛剛改變了，請重新整理');
+  const now = nowSeconds();
+  // 題目列與提交在同一個 batch、同樣以「狀態沒被別的請求改掉」為條件：兩句一起生效或一起不生效。
+  const results = await db.batch([
+    ...(customValue ? [updateCustomPromptStatement(db, sub.id, user.id, customValue, now, sub.status)] : []),
+    db
+      .prepare(
+        `UPDATE submissions SET body_json = COALESCE(?1, body_json), word_count = COALESCE(?2, word_count), paragraphs = COALESCE(?3, paragraphs),
+                self_assess_json = CASE WHEN ?4 = 1 THEN ?5 ELSE self_assess_json END, updated_at = ?6
+          WHERE id = ?7 AND user_id = ?8 AND status = ?9`,
+      )
+      .bind(newBody, wordCount, paragraphs, hasSelf ? 1 : 0, selfJson === 'null' ? null : selfJson, now, sub.id, user.id, sub.status),
+  ]);
+  if (results.some((r) => r.meta.changes !== 1)) throw new ApiError(409, 'conflict', '這份提交的狀態剛剛改變了，請重新整理');
   return c.json(await toDetail(db, await requireSubmission(db, user.id, sub.id)));
 });
 

@@ -2,8 +2,8 @@
  * 錯誤代碼一律有中文文案；AI 額度的文案和共用的 AI_ERROR_MESSAGES 一致；網路錯誤、沒有代碼的 HTTP 錯誤也不會顯示英文。
  */
 import { AI_ERROR_MESSAGES, API_ERROR_CODES } from '@gsat/shared';
-import { describe, expect, it } from 'vitest';
-import { ApiRequestError } from './api';
+import { afterEach, describe, expect, it, vi } from 'vitest';
+import { ApiRequestError, api } from './api';
 import { API_ERROR_MESSAGES, errorCode, errorMessage } from './apiErrors';
 
 const HAS_CJK = /[一-鿿]/;
@@ -40,5 +40,25 @@ describe('errorMessage', () => {
   it('網路錯誤（fetch 丟 TypeError）', () => {
     expect(errorMessage(new TypeError('Failed to fetch'))).toBe('連線失敗，請檢查網路後再試一次');
     expect(errorCode(new TypeError('x'))).toBeNull();
+  });
+});
+
+describe('ApiRequestError 的 reason、field、ranges（docs/design/custom-essay.md §2.5）', () => {
+  afterEach(() => vi.unstubAllGlobals());
+  const reply = (body: unknown, status = 400) => vi.stubGlobal('fetch', vi.fn(async () => new Response(JSON.stringify(body), { status, headers: { 'Content-Type': 'application/json' } })));
+
+  it('從錯誤本體讀出來', async () => {
+    reply({ error: { code: 'custom_prompt_invalid', message: 'x', reason: 'official_material', field: 'text', ranges: [[0, 4], [10, 12]] } });
+    const err = await api('/api/submissions', { method: 'POST', body: {} }).catch((e: unknown) => e);
+    expect(err).toBeInstanceOf(ApiRequestError);
+    expect(err).toMatchObject({ status: 400, code: 'custom_prompt_invalid', reason: 'official_material', field: 'text', ranges: [[0, 4], [10, 12]] });
+    expect(errorMessage(err)).toBe('題目不符合規則，請依畫面上的說明修改。');
+  });
+
+  it('沒有或形狀不對時是 null（不影響代碼）', async () => {
+    reply({ error: { code: 'conflict', message: 'x' } }, 409);
+    expect(await api('/api/x').catch((e: unknown) => e)).toMatchObject({ code: 'conflict', reason: null, field: null, ranges: null });
+    reply({ error: { code: 'essay_not_gradable', message: 'x', reason: 3, field: null, ranges: [[5, 1], ['a', 2], [1]] } });
+    expect(await api('/api/x').catch((e: unknown) => e)).toMatchObject({ code: 'essay_not_gradable', reason: null, field: null, ranges: null });
   });
 });

@@ -76,7 +76,7 @@ ALLOWED_ORIGINS = "https://gsat-english-center.vercel.app"
 APP_ORIGIN = "https://gsat-english-center.vercel.app"
 
 # 條款版本：改版時改這裡，使用者下次使用前會被要求重新同意（ARCHITECTURE §5、§8.2）。
-PRIVACY_POLICY_VERSION = "2026-10-08"
+PRIVACY_POLICY_VERSION = "2026-10-18"
 TERMS_VERSION = "2026-10-08"
 AI_CONSENT_VERSION = "2026-10-08"
 
@@ -86,6 +86,13 @@ AI_MODEL_DEFAULT = "claude-opus-5-5"
 AI_MODEL_SECOND_RATER = "claude-opus-5-5"
 AI_EFFORT_GRADE = "medium"
 AI_EFFORT_OCR = "low"
+# 英文作文自訂題目的總開關（docs/design/custom-essay.md §5.3、§10）：只有 "on" 才開，其他任何值都當成關。
+# 目前是 "on"：2026-10-18 站主決定上線就打開，真模型的評分對照（§7.8）之後再補跑
+#   （GitHub Actions「自訂作文題目評分對照（真模型）」，docs/SETUP-KEYS.md §8.2）；結論不是「達標」時改回 "off"。
+# 要只關自訂題目（題庫題照常）：改成 "off" 推到 main，等 worker-deploy.yml 跑完（§8.1）。
+# 這一行是例外：src/config.ts 的程式預設固定是 off（[vars] 漏設時偏向關），不用跟著改（test/skeleton.test.ts）。
+# 不要在 Cloudflare 儀表板改成 Text 變數：下一次部署會被這裡的 [vars] 蓋回來。
+AI_CUSTOM_ESSAY = "on"
 
 # 每人額度：每天 30 點、每月 300 點（試用 10 點／天）；作文每天 3 篇；同時進行中 2 個任務。
 AI_POINTS_USER_DAY = "30"

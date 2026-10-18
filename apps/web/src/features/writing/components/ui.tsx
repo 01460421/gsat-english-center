@@ -64,12 +64,18 @@ export function ReportAiContent() {
   );
 }
 
-/** AI 頁面頂端固定的告知：正在和 AI 互動、分數不是大考中心的正式評分。 */
-export function AiNotice({ children }: { children?: ReactNode }) {
+/**
+ * AI 頁面頂端固定的告知：正在和 AI 互動、分數不是大考中心的正式評分。
+ * generic：不提考試機構名稱的版本（自訂題目的作答頁與結果頁用；docs/design/custom-essay.md §6.10）。預設輸出不變。
+ */
+export function AiNotice({ children, generic = false }: { children?: ReactNode; generic?: boolean }) {
   return (
     <p className="flex flex-wrap items-center gap-2 rounded-xl border border-badge-fg/30 bg-badge-bg/60 px-4 py-2 text-sm">
       <AiBadge />
-      <span>你正在和 AI 互動：AI 評分僅供參考，不是大考中心的正式評分。{children}</span>
+      <span>
+        {generic ? '你正在和 AI 互動：AI 評分僅供參考，不是正式考試的評分。' : '你正在和 AI 互動：AI 評分僅供參考，不是大考中心的正式評分。'}
+        {children}
+      </span>
     </p>
   );
 }

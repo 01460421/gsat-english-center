@@ -34,13 +34,14 @@ describe('建立與讀取', () => {
       { item_id: `${TRANSLATION_GROUP}#中譯英1`, text: 'A.' },
       { item_id: `${TRANSLATION_GROUP}#中譯英2`, text: 'B.' },
     ]);
-    const group = env.DB.sqlite.prepare('SELECT id, status, origin, license, section_type FROM item_groups').get();
+    // 遷移 0003 的自訂作文佔位題組（custom:essay@1）不算。
+    const group = env.DB.sqlite.prepare("SELECT id, status, origin, license, section_type FROM item_groups WHERE id NOT LIKE 'custom:%'").get();
     expect(group).toEqual({ id: TRANSLATION_GROUP, status: 'draft', origin: 'ceec', license: 'CEEC-exam', section_type: 'translation' });
     // 學生端檢視表看不到這些最小列。
     expect(env.DB.sqlite.prepare('SELECT COUNT(*) AS n FROM v_groups_student').get()).toEqual({ n: 0 });
     // 同一題組再建一次不會重複插入。
     await call(env, user, 'POST', '/api/submissions', { kind: 'translation', group_id: TRANSLATION_GROUP, input_mode: 'typed' });
-    expect(env.DB.sqlite.prepare('SELECT COUNT(*) AS n FROM item_groups').get()).toEqual({ n: 1 });
+    expect(env.DB.sqlite.prepare("SELECT COUNT(*) AS n FROM item_groups WHERE id NOT LIKE 'custom:%'").get()).toEqual({ n: 1 });
   });
 
   it('作文：程式計算字數與段數；保存期限預設 1 年', async () => {

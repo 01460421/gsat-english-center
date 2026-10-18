@@ -1,12 +1,14 @@
 /**
  * GET /api/me/export 的內容（ARCHITECTURE §8.4、SPEC §8.5）。負責：後端登入 A1。
  *
- * 匯出：帳號（含 email）、同意紀錄、寫作提交與各評分者的批改。照片不匯出（暫存、用完即刪）；
+ * 匯出：帳號（含 email）、同意紀錄、寫作提交與各評分者的批改、自訂作文題目（每份提交的 custom_prompt：自訂題是物件、
+ * 顯示時重查 D8 命中就隱藏；其他題目是 null；docs/design/custom-essay.md §3.6）。照片不匯出（暫存、用完即刪）；
  * 內部欄位（租約、重試次數、op_id、注入旗標）不匯出。所有查詢都帶 user_id = ?（防 IDOR）。
  * MVP 還沒有作答、複習、偏好等資料，Phase 2 加上對應的表時在這裡補。
  */
 import type { ConsentKind, ConsentRecord, MeExport } from '@gsat/shared';
 import { USER_COLUMNS, type UserRow } from '../auth/session';
+import { visibleCustomPrompt, type CustomPromptRow } from '../submissions/custom';
 
 /** *_json 欄位轉回物件；壞掉的 JSON 原樣保留成字串（匯出不能因為一列壞資料就整個失敗）。 */
 function parseJson(value: unknown): unknown {
@@ -24,7 +26,7 @@ interface SubmissionExportRow {
 }
 
 export async function buildExport(db: D1Database, userId: number): Promise<MeExport> {
-  const [users, consents, submissions, gradings] = await db.batch([
+  const [users, consents, submissions, gradings, customPrompts] = await db.batch([
     db.prepare(`SELECT ${USER_COLUMNS} FROM users WHERE id = ?`).bind(userId),
     db.prepare('SELECT kind, version, granted, created_at FROM consents WHERE user_id = ? ORDER BY id').bind(userId),
     db
@@ -39,6 +41,12 @@ export async function buildExport(db: D1Database, userId: number): Promise<MeExp
       .prepare(
         `SELECT submission_id, role, model, rubric_version, judgments_json, program_score, deductions_json, feedback_json, created_at
          FROM gradings WHERE user_id = ? ORDER BY created_at, id`,
+      )
+      .bind(userId),
+    db
+      .prepare(
+        `SELECT submission_id, prompt_text, figure_text, paragraphs, min_words, max_words, rev, created_at, updated_at
+         FROM submission_custom_prompts WHERE user_id = ? ORDER BY created_at, submission_id`,
       )
       .bind(userId),
   ]);
@@ -62,6 +70,13 @@ export async function buildExport(db: D1Database, userId: number): Promise<MeExp
     gradingsBySubmission.set(key, list);
   }
 
+  // 自訂作文題目：依 submission_id 併到每份提交（rev 是內部欄位，不匯出）。
+  const promptBySubmission = new Map<string, Record<string, unknown>>();
+  for (const p of (customPrompts?.results ?? []) as Array<CustomPromptRow & { submission_id: string }>) {
+    const { updated_at: _updated, ...visible } = visibleCustomPrompt(p);
+    promptBySubmission.set(p.submission_id, { ...visible, created_at: p.created_at, updated_at: p.updated_at });
+  }
+
   const exportedSubmissions = ((submissions?.results ?? []) as SubmissionExportRow[]).map((s) => {
     const out: Record<string, unknown> = {};
     for (const [column, value] of Object.entries(s)) {
@@ -69,6 +84,7 @@ export async function buildExport(db: D1Database, userId: number): Promise<MeExp
       else out[column] = value;
     }
     out['gradings'] = gradingsBySubmission.get(s.id) ?? [];
+    out['custom_prompt'] = promptBySubmission.get(s.id) ?? null;
     return out;
   });
 

@@ -125,6 +125,50 @@ export function countParagraphs(text: string, photoMode = false): number {
  */
 export const WRITING_UNKNOWN_GROUP_MESSAGE = '沒有這個題組';
 
+// ───────────────────────── 自訂作文題目（docs/design/custom-essay.md §2.2） ─────────────────────────
+// 驗證規則、訊息與建議在 custom-essay.ts（由 index.ts 直接轉匯出，不經這裡：只有自訂題頁用到，
+// 不要跟著 writing.ts 進到首頁的主程式）。這裡只放首頁也可能用到的小常數與型別。
+
+/**
+ * 所有自訂題共用的題組 id（submissions.group_id＝item_groups.id；遷移 0003 的佔位列）。刻意不含「.」：
+ * 前端的歷屆題正規式 ^[a-z0-9-]+\.[A-Za-z0-9_]+@\d+$ 與本站題的 BANK_WRITING_GROUP_ID_PATTERN 都不會誤認它。
+ */
+export const CUSTOM_ESSAY_GROUP_ID = 'custom:essay@1';
+
+/** 這份提交是不是自訂題目。 */
+export function isCustomEssayGroupId(groupId: string): boolean {
+  return groupId === CUSTOM_ESSAY_GROUP_ID;
+}
+
+/** 建立或修改自訂題目時送的內容。數字欄位 null 或省略＝不指定。 */
+export interface CustomEssayPromptInput {
+  /** 題目文字（必填；中文、英文或混合）。 */
+  text: string;
+  /** 圖片或圖表的文字描述（學生自己寫；AI 看不到圖）。 */
+  figure_text?: string | null;
+  /** 段數要求 1–5。 */
+  paragraphs?: number | null;
+  /** 字數要求（英文單詞）20–600。 */
+  min_words?: number | null;
+  max_words?: number | null;
+}
+
+/** 伺服器存下的題目（已正規化、遮掉聯絡方式）。 */
+export interface CustomEssayPrompt {
+  text: string;
+  figure_text: string | null;
+  paragraphs: number | null;
+  min_words: number | null;
+  max_words: number | null;
+  /** Unix 秒。 */
+  updated_at: number;
+  /**
+   * 顯示時重查 D8 指紋命中、或指紋檔暫時壞掉時為 true：text 換成固定說明（custom-essay.ts 的 CUSTOM_PROMPT_HIDDEN_TEXT
+   * 或 CUSTOM_PROMPT_UNAVAILABLE_TEXT），figure_text 是 null。沒有這個欄位＝false。
+   */
+  hidden?: boolean;
+}
+
 /** 中譯英作答內容（submissions.body_json）：item_id 是題目 JSON 的小題 id。 */
 export interface TranslationBody {
   items: Array<{ item_id: string; text: string }>;
@@ -147,7 +191,10 @@ export type SelfAssessment =
   | { kind: 'essay'; scores: Record<EssayCriterion, number> }
   | { kind: 'translation'; sentence_scores: number[] };
 
-/** POST /api/submissions：建立草稿。回 201 SubmissionDetail。 */
+/**
+ * POST /api/submissions：建立草稿。回 201 SubmissionDetail。
+ * 第三種是自訂作文題目：不帶 group_id（伺服器一律寫 CUSTOM_ESSAY_GROUP_ID），要 AI 已核准（docs/design/custom-essay.md §2.6）。
+ */
 export type CreateSubmissionBody =
   | {
       kind: 'translation';
@@ -160,12 +207,20 @@ export type CreateSubmissionBody =
       group_id: string;
       input_mode: InputMode;
       body?: EssayBody;
+    }
+  | {
+      kind: 'essay';
+      custom_prompt: CustomEssayPromptInput;
+      input_mode: InputMode;
+      body?: EssayBody;
     };
 
 /** PUT /api/submissions/{id}：更新草稿與自評（看分數前）。欄位省略＝不改。回 SubmissionDetail。 */
 export interface UpdateSubmissionBody {
   body?: TranslationBody | EssayBody;
   self_assess?: SelfAssessment | null;
+  /** 只有自訂題可以帶（要 AI 已核准）；整份取代，不是逐欄合併。 */
+  custom_prompt?: CustomEssayPromptInput;
 }
 
 /** GET /api/submissions?kind=&cursor= 的一列（不含內文）。 */
@@ -182,6 +237,11 @@ export interface SubmissionSummary {
   created_at: number;
   updated_at: number;
   graded_at: number | null;
+  /**
+   * 自訂題的題目開頭（custom-essay.ts 的 customPromptTitle，最多 30 個字＋「…」；D8 重查命中時是 CUSTOM_TITLE_HIDDEN）；
+   * 其他題目為 null。選填：舊版 Worker 不回這個欄位，前端一律寫 `s.custom_title ?? null`。
+   */
+  custom_title?: string | null;
 }
 
 export interface SubmissionListResponse {
@@ -206,6 +266,8 @@ export interface SubmissionDetail extends SubmissionSummary {
   grading: TranslationGradingResult | EssayGradingResult | null;
   /** 失敗原因（status='failed' 時）；點數已全額退還。 */
   failure: AiRefundReason | null;
+  /** 自訂題的題目；其他題目為 null。選填，理由同 custom_title。 */
+  custom_prompt?: CustomEssayPrompt | null;
 }
 
 // ───────────────────────── 手寫照片（MVP：暫存 D1） ─────────────────────────
@@ -509,6 +571,11 @@ export interface EssayGradingResult {
    * 並改看 raters[].comment_zh。沒有這個欄位＝false。
    */
   explanations_from_excluded_rater?: boolean;
+  /**
+   * 自訂題的參考改寫依程式規則不顯示（rewrite 是 null；docs/design/custom-essay.md §4.8）：'too_long' 超過長度上限、
+   * 'too_different' 和學生原文差太多（另寫一篇，不是修改）。沒有這個欄位＝沒被丟掉（歷屆題與本站題的回應不含這個欄位）。
+   */
+  rewrite_omitted?: 'too_long' | 'too_different';
 }
 
 // ───────────────────────── AI 任務與額度 ─────────────────────────

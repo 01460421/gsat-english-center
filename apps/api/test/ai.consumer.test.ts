@@ -5,8 +5,12 @@
  * 全站暫停時排隊中的任務、OCR 全流程（上傳 → 辨識 → 確認 → 批改，照片用完即丟）。
  */
 import { describe, expect, it } from 'vitest';
-import { createQueueHandler } from '../src/ai/consumer';
+import { CUSTOM_PROMPT_RULES_VERSION } from '@gsat/shared';
+import { CUSTOM_CONTENT_REFUND_MARK, createQueueHandler } from '../src/ai/consumer';
+import { d8Fingerprints } from '../src/ai/d8';
 import { setPausedStatement } from '../src/ai/guard';
+import { essayCustomSystemText } from '../src/ai/prompts/essay';
+import { CUSTOM_ESSAY, CUSTOM_PROMPT_INPUT, createCustom, customEnv, seedCustomSubmission } from './helpers/customEssay';
 import { errorResponse, FakeAnthropic, frameworkOf, type Responder } from './helpers/anthropic';
 import {
   ESSAY_GROUP,
@@ -520,5 +524,182 @@ describe('手寫作文：上傳 → OCR → 確認 → 批改', () => {
     expect((await call(env, user, 'POST', '/api/ai/essay-ocr', { submission_id: typed.body.id })).status).toBe(409);
     // 照片模式在確認文字之前不能直接送批改。
     expect((await call(env, user, 'POST', '/api/ai/essay-grade', { submission_id: photo.body.id })).status).toBe(409);
+  });
+});
+
+describe('英文作文自訂題目（docs/design/custom-essay.md §7.4）', () => {
+  async function queueCustom(env: TestEnv, user: User, prompt: unknown = CUSTOM_PROMPT_INPUT, text = CUSTOM_ESSAY) {
+    const created = await createCustom(env, user, prompt, { input_mode: 'typed', body: { text } });
+    expect(created.status, JSON.stringify(created.body)).toBe(201);
+    const res = await call(env, user, 'POST', '/api/ai/essay-grade', { submission_id: created.body.id });
+    expect(res.status, JSON.stringify(res.body)).toBe(202);
+    return { id: created.body.id as string, opId: res.body.op_id as string };
+  }
+  const essayResponder = (rewrite: string | null = null) => (f: FakeAnthropic) => (req: Parameters<Responder>[0]) =>
+    frameworkOf(req) === 'analytic' ? f.json(essayAnalyticOutput(undefined, { rewrite })) : f.json(essayHolisticOutput());
+
+  it('題目來自 D1：system＝essayCustomSystemText、userText 含 <student_provided_task>；graded；prompt_version 和歷屆題不同；meta 有 filter_version、d8_fp、custom_rules（S16）', async () => {
+    const env = customEnv();
+    const user = seedUser(env.DB);
+    const { id, opId } = await queueCustom(env, user);
+    const fake = newFake(essayResponder());
+    await run(env, fake, opId);
+    expect(fake.requests).toHaveLength(2);
+    for (const req of fake.requests) {
+      const fw = frameworkOf(req);
+      expect(req.system).toBe(essayCustomSystemText(fw === 'holistic' ? 'holistic' : 'analytic'));
+      expect(req.userText).toContain('<student_provided_task>');
+      expect(req.userText).toContain('無手機日');
+      expect(req.userText).toContain('Required paragraphs: 2');
+      expect(req.userText).toContain('Length requirement: at least 120 words');
+    }
+    const detail = await call(env, user, 'GET', `/api/submissions/${id}`);
+    expect(detail.body).toMatchObject({ status: 'graded', grading: { kind: 'essay', final_score: 13 }, custom_prompt: { paragraphs: 2 } });
+    const metas = env.DB.sqlite.prepare('SELECT role, judgments_json FROM gradings WHERE submission_id = ?').all(id) as Array<{ role: string; judgments_json: string }>;
+    expect(metas).toHaveLength(2);
+    for (const r of metas) {
+      const meta = JSON.parse(r.judgments_json).meta;
+      expect(meta).toMatchObject({ filter_version: 'f3', d8_fp: d8Fingerprints()!.version, custom_rules: CUSTOM_PROMPT_RULES_VERSION });
+      // 假模型的錯誤引用「feel lonely after work」不在這篇作文裡：自訂題整則丟掉並計數（只有第一位有錯誤清單）。
+      expect(meta.output_limits.errors_dropped_unlocated, r.role).toBe(r.role === 'primary' ? 1 : 0);
+    }
+    expect(detail.body.grading.errors).toEqual([]);
+
+    // 歷屆題：prompt_version 不同；meta 也有 filter_version，但沒有自訂題的欄位。
+    const exam = await queueEssay(env, user);
+    await run(env, newFake(essayResponder()), exam.opId);
+    const versions = env.DB.sqlite.prepare(`SELECT submission_id, prompt_version FROM gradings WHERE role = 'primary'`).all() as Array<{ submission_id: string; prompt_version: string }>;
+    expect(new Set(versions.map((v) => v.prompt_version)).size).toBe(2);
+    const examMeta = JSON.parse(row(env, `SELECT judgments_json FROM gradings WHERE submission_id = ? AND role = 'primary'`, exam.id).judgments_json).meta;
+    expect(examMeta.filter_version).toBe('f3');
+    expect(examMeta).not.toHaveProperty('d8_fp');
+    expect(examMeta).not.toHaveProperty('output_limits');
+  });
+
+  it('未分段扣分依題目的段數：paragraphs null 時不扣，2 時扣（作文只寫一段）', async () => {
+    const oneParagraph = CUSTOM_ESSAY.replace('\n\n', ' ');
+    for (const [paragraphs, expected] of [
+      [null, []],
+      [2, [{ code: 'no_paragraphs', points: 1 }]],
+    ] as const) {
+      const env = customEnv();
+      const user = seedUser(env.DB);
+      const { id, opId } = await queueCustom(env, user, { ...CUSTOM_PROMPT_INPUT, paragraphs }, oneParagraph);
+      await run(env, newFake(essayResponder()), opId);
+      const detail = await call(env, user, 'GET', `/api/submissions/${id}`);
+      expect(detail.body.grading.deductions, String(paragraphs)).toEqual(expected);
+    }
+  });
+
+  it('參考改寫超過長度上限：rewrite 是 null、結果帶 rewrite_omitted、meta 記 rewrite_dropped', async () => {
+    const env = customEnv();
+    const user = seedUser(env.DB);
+    const { id, opId } = await queueCustom(env, user);
+    await run(env, newFake(essayResponder(Array.from({ length: 400 }, () => 'word').join(' '))), opId);
+    const detail = await call(env, user, 'GET', `/api/submissions/${id}`);
+    expect(detail.body.grading).toMatchObject({ rewrite: null, rewrite_omitted: 'too_long' });
+    const meta = JSON.parse(row(env, `SELECT judgments_json FROM gradings WHERE submission_id = ? AND role = 'primary'`, id).judgments_json).meta;
+    expect(meta.output_limits.rewrite_dropped).toBe('too_long');
+  });
+
+  it('處理途中題目列不見了（提交被刪等）：照既有邏輯退還 internal，不呼叫 Claude', async () => {
+    const env = customEnv();
+    const user = seedUser(env.DB);
+    const { id, opId } = await queueCustom(env, user);
+    env.DB.sqlite.prepare('DELETE FROM submission_custom_prompts WHERE submission_id = ?').run(id);
+    const fake = newFake(essayResponder());
+    const msg = await run(env, fake, opId);
+    expect(msg.acked).toBe(true);
+    expect(fake.requests).toHaveLength(0);
+    expect(row(env, 'SELECT status, refund_reason FROM ai_ops WHERE id = ?', opId)).toEqual({ status: 'refunded', refund_reason: 'internal' });
+    expect(row(env, 'SELECT status FROM submissions WHERE id = ?', id).status).toBe('failed');
+  });
+
+  it('總開關在排隊之後關閉：已經排入 Queue 的照常完成（已預扣；P19）', async () => {
+    const env = customEnv();
+    const user = seedUser(env.DB);
+    const { id, opId } = await queueCustom(env, user);
+    await run({ ...env, AI_CUSTOM_ESSAY: 'off' }, newFake(essayResponder()), opId);
+    expect(row(env, 'SELECT status FROM submissions WHERE id = ?', id).status).toBe('graded');
+  });
+
+  it('failed 之後改題目再送批改（P19）：consumer 送出的 userText 含新題目、不含舊題目', async () => {
+    const env = customEnv();
+    const user = seedUser(env.DB);
+    const { id, opId } = await queueCustom(env, user);
+    await run(env, newFake((f) => (req) => (frameworkOf(req) === 'analytic' ? f.json({}, { stopReason: 'refusal', outputTokens: 5 }) : f.json(essayHolisticOutput()))), opId);
+    expect(row(env, 'SELECT status FROM submissions WHERE id = ?', id).status).toBe('failed');
+    const put = await call(env, user, 'PUT', `/api/submissions/${id}`, { custom_prompt: { text: 'Write a letter to your principal about No-Phone Day, in two paragraphs.', paragraphs: 2 } });
+    expect(put.status).toBe(200);
+    const again = await call(env, user, 'POST', '/api/ai/essay-grade', { submission_id: id });
+    expect(again.status).toBe(202);
+    const fake = newFake(essayResponder());
+    await run(env, fake, again.body.op_id);
+    expect(fake.requests).toHaveLength(2);
+    for (const req of fake.requests) {
+      expect(req.userText).toContain('Write a letter to your principal about No-Phone Day');
+      expect(req.userText).not.toContain('無手機日');
+    }
+    expect(row(env, 'SELECT status FROM submissions WHERE id = ?', id).status).toBe('graded');
+  });
+
+  it('內容造成的退還告警（S12）：同一人 7 天內第 3 次以 refusal 退還自訂題時寫一筆 ops_events，第 4 次同一天不再寫；題庫題的退還不計入', async () => {
+    const env = customEnv();
+    const user = seedUser(env.DB);
+    // 兩天前：一次題庫題、一次自訂題的拒答退還（不算今天的每日退還上限）。
+    const now = Math.floor(Date.now() / 1000);
+    const exam = await call(env, user, 'POST', '/api/submissions', { kind: 'essay', group_id: ESSAY_GROUP, input_mode: 'typed', body: { text: STUDENT_ESSAY } });
+    seedCustomSubmission(env.DB, user.id, 'old-custom');
+    const insertOp = env.DB.sqlite.prepare(
+      `INSERT INTO ai_ops (id, user_id, task, ref_id, status, points_reserved, points_charged, usd_reserved_micros, refund_reason, tw_day, tw_month, created_at, settled_at)
+       VALUES (?, ?, 'essay_grade', ?, 'refunded', 7, 0, 1000, 'refusal', '2000-01-01', '2000-01', ?, ?)`,
+    );
+    insertOp.run('old-exam-op', user.id, exam.body.id, now - 2 * 86_400, now - 2 * 86_400);
+    insertOp.run('old-custom-op', user.id, 'old-custom', now - 2 * 86_400, now - 2 * 86_400);
+    // 8 天前的不算（7 天的窗口外）。
+    seedCustomSubmission(env.DB, user.id, 'older-custom');
+    insertOp.run('older-custom-op', user.id, 'older-custom', now - 8 * 86_400, now - 8 * 86_400);
+    // consumer 每次自訂題的內容退還都寫一筆標記（題庫題不寫）；這裡補上兩筆舊的。
+    const mark = env.DB.sqlite.prepare(`INSERT INTO ops_events (kind, severity, detail_json, created_at, acked_at) VALUES (?, 'info', ?, ?, ?)`);
+    mark.run(CUSTOM_CONTENT_REFUND_MARK, JSON.stringify({ op_id: 'old-custom-op' }), now - 2 * 86_400, now - 2 * 86_400);
+    mark.run(CUSTOM_CONTENT_REFUND_MARK, JSON.stringify({ op_id: 'older-custom-op' }), now - 8 * 86_400, now - 8 * 86_400);
+
+    const refusal = () => newFake((f) => (req) => (frameworkOf(req) === 'analytic' ? f.json({}, { stopReason: 'refusal', outputTokens: 5 }) : f.json(essayHolisticOutput())));
+    const alerts = () => env.DB.sqlite.prepare(`SELECT severity, detail_json FROM ops_events WHERE kind = 'custom_essay_content_refunds'`).all() as Array<{ severity: string; detail_json: string }>;
+    const { id, opId } = await queueCustom(env, user);
+    await run(env, refusal(), opId); // 自訂題第 2 次（題庫題那次不算）
+    expect(alerts()).toEqual([]);
+    const second = await call(env, user, 'POST', '/api/ai/essay-grade', { submission_id: id });
+    await run(env, refusal(), second.body.op_id); // 第 3 次 → 告警
+    expect(alerts()).toHaveLength(1);
+    expect(alerts()[0]!.severity).toBe('warn');
+    const detail = JSON.parse(alerts()[0]!.detail_json);
+    expect(detail.count).toBe(3);
+    expect(detail.user_ref).toMatch(/^[0-9a-f]{64}$/);
+    expect(alerts()[0]!.detail_json).not.toContain(user.email);
+    const third = await call(env, user, 'POST', '/api/ai/essay-grade', { submission_id: id });
+    await run(env, refusal(), third.body.op_id); // 第 4 次，同一天不再寫
+    expect(alerts()).toHaveLength(1);
+    // 標記是已確認的 info，不算進後台的「未處理」。
+    const marks = env.DB.sqlite.prepare(`SELECT severity, acked_at FROM ops_events WHERE kind = ?`).all(CUSTOM_CONTENT_REFUND_MARK) as Array<{ severity: string; acked_at: number | null }>;
+    expect(marks.length).toBe(5);
+    expect(marks.every((m) => m.severity === 'info' && m.acked_at !== null)).toBe(true);
+  });
+
+  it('內容退還告警不會因為學生刪掉失敗的提交而漏算（security-3）：「拒答退還 → 刪除提交」重複 3 次仍然告警', async () => {
+    const env = customEnv();
+    const user = seedUser(env.DB);
+    const refusal = () => newFake((f) => (req) => (frameworkOf(req) === 'analytic' ? f.json({}, { stopReason: 'refusal', outputTokens: 5 }) : f.json(essayHolisticOutput())));
+    const alerts = () => env.DB.sqlite.prepare(`SELECT detail_json FROM ops_events WHERE kind = 'custom_essay_content_refunds'`).all() as Array<{ detail_json: string }>;
+    for (let i = 0; i < 3; i++) {
+      const { id, opId } = await queueCustom(env, user);
+      await run(env, refusal(), opId);
+      expect(row(env, 'SELECT status FROM submissions WHERE id = ?', id).status).toBe('failed');
+      const del = await call(env, user, 'DELETE', `/api/submissions/${id}`);
+      expect(del.status).toBe(204);
+      expect(env.DB.sqlite.prepare('SELECT COUNT(*) AS n FROM submission_custom_prompts WHERE submission_id = ?').get(id)).toEqual({ n: 0 });
+    }
+    expect(alerts()).toHaveLength(1);
+    expect(JSON.parse(alerts()[0]!.detail_json).count).toBe(3);
   });
 });

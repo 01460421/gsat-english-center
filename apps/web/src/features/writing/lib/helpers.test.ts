@@ -254,6 +254,16 @@ describe('資料小工具', () => {
     expect(groupLabel('weird')).toBe('weird');
   });
 
+  it('自訂作文題目（custom:essay@1）：標「自訂題目」，作答頁是 /writing/essay/custom（帶 ?from）；不會被當成歷屆題或本站題', () => {
+    expect(groupLabel('custom:essay@1')).toBe('自訂題目');
+    expect(attemptPathOf('essay', 'custom:essay@1')).toBe('/writing/essay/custom');
+    expect(attemptPathOf('essay', 'custom:essay@1', 'sub 1')).toBe('/writing/essay/custom?from=sub%201');
+    expect(parseGroupId('custom:essay@1')).toBeNull();
+    // 其他題目不受第三個參數影響。
+    expect(attemptPathOf('essay', 'gsat-115.s8g1@1', 'sub-1')).toBe('/writing/essay/gsat-115');
+    expect(attemptPathOf('essay', 'ai.cp.0e1f2a@3', 'sub-1')).toBe('/writing/essay/ai/0e1f2a');
+  });
+
   it('本站仿真題（ai.tr／ai.cp）：標「本站仿真」，作答頁只看 uid 的後 6 碼；歷屆題的路徑不變', () => {
     expect(groupLabel('ai.tr.0b1c2d@1')).toBe('本站仿真');
     expect(groupLabel('ai.cp.0e1f2a@3')).toBe('本站仿真');

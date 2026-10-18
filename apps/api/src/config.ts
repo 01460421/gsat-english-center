@@ -3,7 +3,8 @@
  *
  * 路由與業務邏輯一律呼叫 loadConfig(c.env)，不直接讀 c.env 的設定值。
  * 預設值與 wrangler.toml 的 [vars] 相同（§6.3「正式開放」的值）；wrangler.toml 是給站主看的「實際部署值」，
- * 這裡的預設值是 [vars] 漏設時的保險。兩邊一致由 test/config.test.ts 檢查。
+ * 這裡的預設值是 [vars] 漏設時的保險。兩邊一致由 test/skeleton.test.ts 檢查（例外：AI_CUSTOM_ESSAY 這裡固定是 off，
+ * 實際開關看 wrangler.toml）。
  *
  * 機密只回「有沒有設」與值本身（給需要的模組用），**絕不放進任何回應**；/api/features、/api/admin/health 只回布林。
  */
@@ -15,13 +16,16 @@ export type AiEffort = (typeof AI_EFFORTS)[number];
 
 /** 預設值（字串形式與 wrangler.toml 的 [vars] 對照）。 */
 export const CONFIG_DEFAULTS = {
-  PRIVACY_POLICY_VERSION: '2026-10-08',
+  PRIVACY_POLICY_VERSION: '2026-10-18',
   TERMS_VERSION: '2026-10-08',
   AI_CONSENT_VERSION: '2026-10-08',
   AI_MODEL_DEFAULT: 'claude-opus-5-5',
   AI_MODEL_SECOND_RATER: 'claude-opus-5-5',
   AI_EFFORT_GRADE: 'medium',
   AI_EFFORT_OCR: 'low',
+  // 自訂作文題目的總開關：程式的預設固定是 off（[vars] 漏設時偏向關，S5）。實際開關是 wrangler.toml 的那一行，
+  // 評分對照（docs/design/custom-essay.md §7.8）達標後只改那一行；這裡不跟著改（test/skeleton.test.ts）。
+  AI_CUSTOM_ESSAY: 'off',
   AI_POINTS_USER_DAY: 30,
   AI_POINTS_USER_MONTH: 300,
   AI_POINTS_TRIAL_DAY: 10,
@@ -85,6 +89,11 @@ export interface AppConfig {
     baseUrl: string;
     models: { default: string; secondRater: string };
     effort: { grade: AiEffort; ocr: AiEffort };
+    /**
+     * 英文作文自訂題目的總開關（AI_CUSTOM_ESSAY；fail closed，見 customEssaySwitch）。關閉時新的自訂題建立、修改題目、
+     * 送辨識、送批改都回 503；已經排入 Queue 的照常完成，結果頁照常顯示。
+     */
+    customEssay: boolean;
     limits: {
       pointsUserDay: number;
       pointsUserMonth: number;
@@ -130,6 +139,19 @@ function effort(name: string, value: string | undefined, fallback: AiEffort): Ai
   if ((AI_EFFORTS as readonly string[]).includes(v)) return v as AiEffort;
   console.warn(`設定 ${name}=${JSON.stringify(v)} 不是合法的 effort，改用預設值 ${fallback}`);
   return fallback;
+}
+
+/**
+ * 自訂作文題目的總開關：沒設定（或只有空白）時用預設值；去掉頭尾空白、轉小寫後**等於 on 才開**，其他任何值
+ * （off、false、0、打錯的字）一律當成關，不是 on／off 的另外寫 log。
+ * 和 num()／effort()「不合法就用預設值」不同，是刻意的：這是唯一能「只關自訂題」的開關，打錯字時要偏向關
+ * （docs/design/custom-essay.md §5.3，安全審查 S5）。
+ */
+export function customEssaySwitch(value: string | undefined, fallback: string = CONFIG_DEFAULTS.AI_CUSTOM_ESSAY): boolean {
+  const v = (str(value) ?? fallback).toLowerCase();
+  if (v === 'on') return true;
+  if (v !== 'off') console.warn(`設定 AI_CUSTOM_ESSAY=${JSON.stringify(value)} 不是 on 或 off，當成關閉（off）`);
+  return false;
 }
 
 function origin(value: string | undefined): string | null {
@@ -185,6 +207,7 @@ export function loadConfig(env: Env): AppConfig {
         grade: effort('AI_EFFORT_GRADE', env.AI_EFFORT_GRADE, D.AI_EFFORT_GRADE),
         ocr: effort('AI_EFFORT_OCR', env.AI_EFFORT_OCR, D.AI_EFFORT_OCR),
       },
+      customEssay: customEssaySwitch(env.AI_CUSTOM_ESSAY),
       limits: {
         pointsUserDay: num('AI_POINTS_USER_DAY', env.AI_POINTS_USER_DAY, D.AI_POINTS_USER_DAY),
         pointsUserMonth,

@@ -358,7 +358,7 @@ test('AI 批改：group_id 是 ai.tr.0b1c2d@1、小題 #1／#2 → 結果頁有�
   let body: TranslationBody | null = null;
   let polls = 0;
   backend.on('POST /api/submissions', (call) => {
-    const create = call.json as CreateSubmissionBody;
+    const create = call.json as Extract<CreateSubmissionBody, { group_id: string }>;
     body = (create.body as TranslationBody | undefined) ?? null;
     return ok(detail({ id: 'sub-b1', kind: 'translation', group_id: create.group_id, status: 'draft', body }), 201);
   });
@@ -434,7 +434,7 @@ test('其他錯誤（額度不足）照歷屆題的說明', async ({ page }) => 
   const errors = collectErrors(page, [/\/api\/ai\/translation-grade$/]);
   const backend = await fakeBackend(page, { me: APPROVED });
   await mockWritingBank(page);
-  backend.on('POST /api/submissions', (call) => ok(detail({ id: 'sub-q', kind: 'translation', group_id: (call.json as CreateSubmissionBody).group_id, status: 'draft' }), 201));
+  backend.on('POST /api/submissions', (call) => ok(detail({ id: 'sub-q', kind: 'translation', group_id: (call.json as Extract<CreateSubmissionBody, { group_id: string }>).group_id, status: 'draft' }), 201));
   backend.on('POST /api/ai/translation-grade', () => apiError(429, 'quota_day'));
   await page.goto(TR_PATH);
   await fillTranslation(page);

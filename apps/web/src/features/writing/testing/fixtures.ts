@@ -1,8 +1,10 @@
 /**
  * 寫作頁測試用的假資料與假 fetch。後端還沒完成，所有 API 回應都照 @gsat/shared 的契約手寫。
  */
+import { customPromptTitle, normalizeCustomPromptText } from '@gsat/shared';
 import type {
   AiQuotaResponse,
+  CustomEssayPrompt,
   EssayGradingResult,
   FeaturesResponse,
   MeResponse,
@@ -31,7 +33,7 @@ export const jsonResponse = (body: unknown, status = 200) =>
 
 export const apiError = (status: number, code: string) => jsonResponse({ error: { code, message: code } }, status);
 
-export const FEATURES_ON: FeaturesResponse = { auth: true, ai: true, ocr: true, aiPaused: false };
+export const FEATURES_ON: FeaturesResponse = { auth: true, ai: true, ocr: true, aiPaused: false, customEssay: true };
 export const FEATURES_OFF: FeaturesResponse = { auth: false, ai: false, ocr: false, aiPaused: false };
 
 export function meWith(aiStatus: 'none' | 'pending' | 'approved' = 'approved'): MeResponseSignedIn {
@@ -242,6 +244,45 @@ export function essaySubmission(patch: Partial<SubmissionDetail> = {}): Submissi
     body: { text: ESSAY_TEXT, plan: null },
     self_assess: { kind: 'essay', scores: { content: 4, organization: 4, grammar: 4, vocabulary: 4 } },
     grading: ESSAY_GRADING,
+    ...patch,
+  };
+}
+
+// ───────────────────────── 自訂作文題目（docs/design/custom-essay.md） ─────────────────────────
+
+/** 伺服器存下的自訂題目（正規化後）。 */
+export const CUSTOM_PROMPT: CustomEssayPrompt = {
+  // 伺服器存的是正規化後的文字（NFKC：全形冒號、逗號變成半形）。
+  text: normalizeCustomPromptText('提示：你的學校即將舉辦「無手機日」。請寫一篇英文作文，第一段說明你對這個活動的看法，第二段描述你那天會怎麼安排時間。').text,
+  figure_text: null,
+  paragraphs: 2,
+  min_words: 120,
+  max_words: null,
+  updated_at: 1_791_400_000,
+};
+
+/** 自訂題目的作文（打字作答，130 個單詞以上、兩段）。 */
+export const CUSTOM_ESSAY_TEXT = [
+  'No-Phone Day is a good idea for our school. Many students check their phones during every break, and some of them even use their phones in class. ' +
+    'If we put our phones away for one day, we can talk to our friends face to face and pay more attention to our teachers. I believe this activity will help us notice how much time we usually waste on social media.',
+  'On that day, I will arrive at school early and read a novel in the library. During lunch, I will play basketball with my classmates instead of watching videos. ' +
+    'After school, I will write a short diary about how I felt without my phone. I think it will be a challenging but meaningful experience.',
+].join('\n\n');
+
+/** 自訂題目的提交（預設已批改）；custom_prompt 可以用 patch 換掉或拿掉（舊版 Worker）。 */
+export function customEssaySubmission(patch: Partial<SubmissionDetail> = {}): SubmissionDetail {
+  return {
+    ...BASE,
+    id: 'sub-c',
+    kind: 'essay',
+    group_id: 'custom:essay@1',
+    status: 'graded',
+    final_score: 12.5,
+    final_band: 'fair',
+    custom_title: customPromptTitle(CUSTOM_PROMPT.text),
+    body: { text: CUSTOM_ESSAY_TEXT, plan: null },
+    grading: { ...ESSAY_GRADING, errors: [], rewrite: null },
+    custom_prompt: CUSTOM_PROMPT,
     ...patch,
   };
 }

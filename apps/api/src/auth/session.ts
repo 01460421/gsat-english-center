@@ -282,16 +282,21 @@ export function requireUser(options: { allowPendingConsent?: boolean } = {}): Mi
 }
 
 /**
- * 要求 AI 已核准（含 requireUser 的檢查）。未核准 403 not_approved；
- * AI 資料處理說明改版後尚未重新同意（pendingAiConsents 非空）403 consent_required。
+ * AI 核准的檢查本身（不含 requireUser）：未核准 403 not_approved；AI 資料處理說明改版後尚未重新同意
+ * （pendingAiConsents 非空）403 consent_required。requireAiApproved 中介層與「只有部分請求要 AI 核准」的路由
+ * （建立自訂作文題目、修改題目；docs/design/custom-essay.md §2.6，安全審查 S6）共用這一段。
  */
+export function assertAiApproved(user: SessionUser | null): void {
+  if (user?.aiStatus !== 'approved') throw new ApiError(403, 'not_approved', 'AI 功能尚未核准');
+  if ((user.pendingAiConsents?.length ?? 0) > 0) {
+    throw new ApiError(403, 'consent_required', 'AI 資料處理說明已更新，請到「申請 AI」頁重新同意');
+  }
+}
+
+/** 要求 AI 已核准（含 requireUser 的檢查；細節見 assertAiApproved）。 */
 export const requireAiApproved: MiddlewareHandler<AppEnv> = async (c, next) => {
   await requireUser()(c, async () => {
-    const user = await getSessionUser(c);
-    if (user?.aiStatus !== 'approved') throw new ApiError(403, 'not_approved', 'AI 功能尚未核准');
-    if ((user.pendingAiConsents?.length ?? 0) > 0) {
-      throw new ApiError(403, 'consent_required', 'AI 資料處理說明已更新，請到「申請 AI」頁重新同意');
-    }
+    assertAiApproved(await getSessionUser(c));
     await next();
   });
 };

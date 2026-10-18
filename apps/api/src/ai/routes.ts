@@ -8,6 +8,9 @@
  * 預扣失敗回 429（個人額度）或 503（全站）＋AI_RESERVE_ERROR_CODES 之一，message 是 AI_ERROR_MESSAGES 的中文；
  * 每日退還上限（guard.ts 的 AI_REFUNDS_PER_DAY）回 429 rate_limited，第一次擋下時寫 ops_events。
  * 提示詞、評分基準、schema、模型、effort 都在伺服器端（tasks.ts、prompts/）；前端只送 submission_id。
+ * 英文作文自訂題目（docs/design/custom-essay.md §2.6）同樣走 essay_grade／essay_ocr，預扣之前多做：總開關與 D8 指紋檔、
+ * 對存下來的題目重跑規則與 D8、作文規則（essayGradableProblem，只在批改）、題目的注入旗標（prompt: 開頭的代號）；
+ * 送出的條件式 UPDATE 另外確認題目列的 rev 沒變（S7）。被擋下的請求不扣點數、不佔同時任務名額。
  *
  *   GET  /api/ai/quota                AiQuotaResponse（requireUser）
  *   POST /api/ai/translation-grade    AiTaskRequest → 202 AiTaskAccepted（requireAiApproved；3 點）
@@ -18,12 +21,17 @@
 import {
   AI_ERROR_MESSAGES,
   AI_TASK_POINTS,
+  CUSTOM_PROMPT_CHANGED_MESSAGE,
+  CUSTOM_PROMPT_NOT_FOUND_MESSAGE,
+  ESSAY_NOT_GRADABLE_MESSAGES,
   ESSAY_FAMILY_TASKS,
   ESSAY_MAX_CHARS,
   ESSAY_MAX_WORDS,
   TRANSLATION_SENTENCE_MAX_CHARS,
   countEnglishWords,
   countParagraphs,
+  customPromptFlagCodes,
+  essayGradableProblem,
   type AiOpResponse,
   type AiQuotaResponse,
   type AiReserveErrorCode,
@@ -38,12 +46,13 @@ import * as z from 'zod/v4';
 import { approvalSummary } from '../account/approval';
 import { readJsonBody } from '../account/validate';
 import { getSessionUser, requireAiApproved, requireUser, type SessionUser } from '../auth/session';
-import { loadConfig } from '../config';
+import { loadConfig, type AppConfig } from '../config';
 import type { AppEnv } from '../env';
 import { ApiError } from '../errors';
+import { groupForSubmission, requireCustomEssayAvailable, storedPromptInput, validateCustomPrompt } from '../submissions/custom';
 import { findSubmission, parseJson, requireSubmission, type SubmissionRow } from '../submissions/repo';
 import { nowSeconds } from '../time';
-import { getWritingGroup, type WritingGroup } from './bank';
+import type { WritingGroup } from './bank';
 import { detectInjection, sanitizeStudentText } from './filter';
 import { AI_REFUNDS_PER_DAY, refundOp, reserveOp, siteLimitsMicros, UNLIMITED, usageSnapshot, userLimits, type ReserveFailureCode } from './guard';
 import { reclaimStaleOps } from './housekeeping';
@@ -112,6 +121,8 @@ interface Prepared {
   paragraphs: number | null;
   injection: string[];
   invisibleRemoved: number;
+  /** 作文批改：淨化後的作文（自訂題的作文規則用）。 */
+  essayText?: string;
 }
 
 /** 各任務的狀態與內容檢查；不符合回 409 conflict 或 400。 */
@@ -168,7 +179,39 @@ async function prepare(c: Context<AppEnv>, task: AiTask, sub: SubmissionRow, gro
     paragraphs: countParagraphs(s.text, sub.input_mode === 'photo'),
     injection: detectInjection(s.text),
     invisibleRemoved: s.invisibleRemoved,
+    essayText: s.text,
   };
+}
+
+/**
+ * 自訂作文題目在預扣之前的檢查（§2.6 第 3、4 步；批改另有第 6、7 步）：總開關與指紋檔 → 對存下來的題目重跑規則與 D8
+ * （規則或指紋檔在建立之後更新過時，這一步才會擋下；學生在結果頁或作答頁改題目）。回傳題目列的 rev（送出的 UPDATE 用）。
+ */
+async function checkCustomTask(db: D1Database, config: AppConfig, task: AiTask, group: WritingGroup, ref: string | null): Promise<number> {
+  const custom = group.custom;
+  if (!custom) throw new ApiError(409, 'conflict', CUSTOM_PROMPT_NOT_FOUND_MESSAGE);
+  const fp = await requireCustomEssayAvailable(db, config);
+  validateCustomPrompt(
+    fp,
+    storedPromptInput({ prompt_text: custom.prompt_text, figure_text: custom.figure_text, paragraphs: group.essay?.paragraphs ?? null, min_words: group.essay?.min_words ?? null, max_words: group.essay?.max_words ?? null }),
+    ref,
+    task === 'essay_ocr' ? 'ocr' : 'grade',
+  );
+  return custom.rev;
+}
+
+/**
+ * 自訂題送批改的作文規則與題目的注入旗標（§2.6 第 6、7 步）：作文太短、不是英文、大部分照抄題目 → 400 essay_not_gradable；
+ * 題目＋圖片描述的提醒級樣式（customPromptFlagCodes）加上前綴 prompt: 併進注入代號（角色扮演不設旗標，S8）。
+ */
+function customGradeChecks(group: WritingGroup, prepared: Prepared): Prepared {
+  const custom = group.custom;
+  if (!custom) return prepared;
+  const taskText = [custom.prompt_text, custom.figure_text ?? ''].join('\n');
+  const reason = essayGradableProblem(prepared.essayText ?? '', taskText);
+  if (reason) throw new ApiError(400, 'essay_not_gradable', ESSAY_NOT_GRADABLE_MESSAGES[reason], { reason, field: 'essay' });
+  const flags = customPromptFlagCodes({ text: custom.prompt_text, figure_text: custom.figure_text }).map((code) => `prompt:${code}`);
+  return flags.length > 0 ? { ...prepared, injection: [...prepared.injection, ...flags] } : prepared;
 }
 
 function taskHandler(task: AiTask) {
@@ -178,16 +221,20 @@ function taskHandler(task: AiTask) {
     const user = await sessionUser(c);
     const db = c.env.DB;
     const sub = await requireSubmission(db, user.id, await readSubmissionId(c));
-    const group = getWritingGroup(sub.group_id);
-    if (!group) throw new ApiError(409, 'conflict', '找不到這份提交的題目');
+    // 自訂作文題目的題目在 D1（submission_custom_prompts），其他題目查題目庫。
+    const group = await groupForSubmission(db, sub);
+    if (!group) throw new ApiError(409, 'conflict', CUSTOM_PROMPT_NOT_FOUND_MESSAGE);
     const tc = taskConfig(task, config);
     if (!taskModelsPriced(tc)) {
       // §6.2 第 1 條：模型不在價格表就不預扣、不呼叫（fail closed），並告警。
       await opsEvent(db, 'ai_model_not_priced', 'error', { task, models: tc.calls.map((x) => x.model) });
       throw new ApiError(503, 'not_configured', AI_ERROR_MESSAGES.not_configured);
     }
-    const prepared = await prepare(c, task, sub, group);
     const ref = await userRefFor(config.auth.ledgerSalt, user.id);
+    const isCustom = group.origin === 'custom' && task !== 'translation_grade';
+    const customRev = isCustom ? await checkCustomTask(db, config, task, group, ref) : null;
+    let prepared = await prepare(c, task, sub, group);
+    if (isCustom && task === 'essay_grade') prepared = customGradeChecks(group, prepared);
 
     // 卡住的預扣（排入 Queue 前 isolate 被終止等）先回收，才不會佔住同時任務名額與全站預算（housekeeping.ts）。
     const nowMs = Date.now();
@@ -239,6 +286,7 @@ function taskHandler(task: AiTask) {
 
     // 第 4 步：條件式更新提交（狀態沒被別的請求改掉才成功），同時清掉上一次失敗留下的評分紀錄；
     // 注入事件寫在同一個 batch（交易），只有提交真的改成這個操作時才寫。
+    // 自訂題另外確認題目列的 rev 還是剛才讀到的（題目在檢查之後被 PUT 改過就不成立，照下面的邏輯退還並回 409；S7）。
     const now = nowSeconds(nowMs);
     let update: D1Result | undefined;
     try {
@@ -248,9 +296,22 @@ function taskHandler(task: AiTask) {
             `UPDATE submissions SET status = ?1, op_id = ?2, lease_until = NULL, tries = 0,
                     body_json = COALESCE(?3, body_json), word_count = COALESCE(?4, word_count), paragraphs = COALESCE(?5, paragraphs),
                     injection_flag = CASE WHEN ?6 = 1 THEN 1 ELSE injection_flag END, updated_at = ?7
-              WHERE id = ?8 AND user_id = ?9 AND status = ?10`,
+              WHERE id = ?8 AND user_id = ?9 AND status = ?10
+                AND (?11 IS NULL OR EXISTS (SELECT 1 FROM submission_custom_prompts WHERE submission_id = ?8 AND user_id = ?9 AND rev = ?11))`,
           )
-          .bind(prepared.newStatus, opId, prepared.bodyJson, prepared.wordCount, prepared.paragraphs, prepared.injection.length > 0 ? 1 : 0, now, sub.id, user.id, sub.status),
+          .bind(
+            prepared.newStatus,
+            opId,
+            prepared.bodyJson,
+            prepared.wordCount,
+            prepared.paragraphs,
+            prepared.injection.length > 0 ? 1 : 0,
+            now,
+            sub.id,
+            user.id,
+            sub.status,
+            customRev,
+          ),
         db
           .prepare(
             `DELETE FROM gradings WHERE submission_id = ?1 AND user_id = ?2 AND role <> 'self'
@@ -273,6 +334,10 @@ function taskHandler(task: AiTask) {
     }
     if (update?.meta.changes !== 1) {
       await refundOp(db, { opId, reason: 'internal', nowMs });
+      if (customRev !== null) {
+        const cur = await db.prepare('SELECT rev FROM submission_custom_prompts WHERE submission_id = ?1 AND user_id = ?2').bind(sub.id, user.id).first<{ rev: number }>();
+        if (cur?.rev !== customRev) throw new ApiError(409, 'conflict', CUSTOM_PROMPT_CHANGED_MESSAGE);
+      }
       throw new ApiError(409, 'conflict', '這份提交的狀態剛剛改變了，請重新整理');
     }
     // 只記數量，不記內容（§6.2 第 12 條）。

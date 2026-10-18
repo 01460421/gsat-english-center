@@ -7,7 +7,7 @@ import { isApiErrorBody, isFeaturesResponse } from '@gsat/shared';
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { app } from '../src/app';
-import { autoApprovalCap, CONFIG_DEFAULTS, loadConfig, startupChecks } from '../src/config';
+import { autoApprovalCap, CONFIG_DEFAULTS, customEssaySwitch, loadConfig, startupChecks } from '../src/config';
 import type { AiQueueMessage, Env } from '../src/env';
 import { taiwanDay, taiwanMonth } from '../src/time';
 
@@ -44,17 +44,38 @@ describe('GET /api/features', () => {
   it('只設定登入：auth true、ai false', async () => {
     const { ANTHROPIC_API_KEY: _k, AI_QUEUE: _q, ...authOnly } = configuredEnv;
     const res = await app.request('/api/features', {}, authOnly);
-    expect(await res.json()).toEqual({ auth: true, ai: false, ocr: false, aiPaused: false });
+    expect(await res.json()).toEqual({ auth: true, ai: false, ocr: false, aiPaused: false, customEssay: false });
   });
 
-  it('全部設定：讀全站暫停開關；回應只有四個布林、不含任何設定值', async () => {
-    const res = await app.request('/api/features', {}, { ...configuredEnv, DB: fakeDb(1) });
+  it('全部設定：讀全站暫停開關；回應只有五個布林、不含任何設定值', async () => {
+    const res = await app.request('/api/features', {}, { ...configuredEnv, DB: fakeDb(1), AI_CUSTOM_ESSAY: 'on' });
     const text = await res.text();
     const body: unknown = JSON.parse(text);
     expect(isFeaturesResponse(body)).toBe(true);
-    expect(body).toEqual({ auth: true, ai: true, ocr: true, aiPaused: true });
+    expect(body).toEqual({ auth: true, ai: true, ocr: true, aiPaused: true, customEssay: true });
     expect(text).not.toContain('secret');
     expect(text).not.toContain('sk-ant');
+  });
+
+  it('customEssay：AI 能用而且 AI_CUSTOM_ESSAY 是 on 才是 true；沒設定時用預設值 off；AI 沒設定時一律 false（docs/design/custom-essay.md §5.3）', async () => {
+    const warn = console.warn;
+    console.warn = () => {};
+    try {
+      const on = await app.request('/api/features', {}, { ...configuredEnv, DB: fakeDb(0), AI_CUSTOM_ESSAY: 'on' });
+      expect(await on.json()).toEqual({ auth: true, ai: true, ocr: true, aiPaused: false, customEssay: true });
+      // 評分對照（真模型）通過之前，正式環境的預設是關：[vars] 漏設時也不會開。
+      const unset = await app.request('/api/features', {}, { ...configuredEnv, DB: fakeDb(0) });
+      expect(await unset.json()).toEqual({ auth: true, ai: true, ocr: true, aiPaused: false, customEssay: false });
+      const off = await app.request('/api/features', {}, { ...configuredEnv, DB: fakeDb(0), AI_CUSTOM_ESSAY: 'off' });
+      expect(await off.json()).toMatchObject({ ai: true, customEssay: false });
+      const typo = await app.request('/api/features', {}, { ...configuredEnv, DB: fakeDb(0), AI_CUSTOM_ESSAY: 'onn' });
+      expect(await typo.json()).toMatchObject({ ai: true, customEssay: false });
+      const { ANTHROPIC_API_KEY: _k, ...noAi } = configuredEnv;
+      const res = await app.request('/api/features', {}, { ...noAi, AI_CUSTOM_ESSAY: 'on' });
+      expect(await res.json()).toMatchObject({ ai: false, customEssay: false });
+    } finally {
+      console.warn = warn;
+    }
   });
 
   it('暫停開關查詢失敗（例如遷移未套用）時當成暫停', async () => {
@@ -125,6 +146,26 @@ describe('設定（src/config.ts）', () => {
     }
   });
 
+  it('AI_CUSTOM_ESSAY 的解析是 fail closed：沒設、空字串、只有空白用預設值 off；去頭尾空白、不分大小寫等於 on 才開，其他一律關並寫 log（S5）', () => {
+    const warnings: unknown[] = [];
+    const warn = console.warn;
+    console.warn = (...args: unknown[]) => void warnings.push(args);
+    try {
+      for (const v of ['on', 'ON', ' on ', 'On']) expect(loadConfig({ ...baseEnv, AI_CUSTOM_ESSAY: v }).ai.customEssay, JSON.stringify(v)).toBe(true);
+      expect(warnings).toEqual([]);
+      for (const v of [undefined, '', '   ', 'off', 'Off']) expect(loadConfig({ ...baseEnv, AI_CUSTOM_ESSAY: v }).ai.customEssay, JSON.stringify(v)).toBe(false);
+      expect(warnings).toEqual([]);
+      for (const v of ['false', '0', 'yes', 'onn', 'true', '1']) expect(loadConfig({ ...baseEnv, AI_CUSTOM_ESSAY: v }).ai.customEssay, v).toBe(false);
+      expect(warnings).toHaveLength(6);
+      // 預設值是參數：之後預設改回 on 時，沒設、空白也要跟著開（解析規則本身不變）。
+      for (const v of [undefined, '', '   ']) expect(customEssaySwitch(v, 'on'), JSON.stringify(v)).toBe(true);
+      expect(customEssaySwitch('off', 'on')).toBe(false);
+      expect(customEssaySwitch('onn', 'on')).toBe(false);
+    } finally {
+      console.warn = warn;
+    }
+  });
+
   it('AI_APPROVAL_CAP 有設就用它', () => {
     expect(loadConfig({ ...baseEnv, AI_APPROVAL_CAP: '10' }).ai.approvalCap).toBe(10);
   });
@@ -148,12 +189,22 @@ describe('設定（src/config.ts）', () => {
     expect(bad.find((c) => c.id === 'workspaces_vs_tier')?.ok).toBe(false);
   });
 
-  it('wrangler.toml 的 [vars] 與 CONFIG_DEFAULTS 一致（避免兩邊預設值走鐘）', () => {
+  it('wrangler.toml 的 [vars] 與 CONFIG_DEFAULTS 一致（避免兩邊預設值走鐘；AI_CUSTOM_ESSAY 例外，見下一個測試）', () => {
     const toml = readFileSync(new URL('../wrangler.toml', import.meta.url), 'utf8');
     for (const [name, value] of Object.entries(CONFIG_DEFAULTS)) {
+      if (name === 'AI_CUSTOM_ESSAY') continue;
       const m = toml.match(new RegExp(`^${name}\\s*=\\s*"([^"]*)"`, 'm'));
       expect(m?.[1], `wrangler.toml 缺少或不一致：${name}`).toBe(String(value));
     }
+  });
+
+  it('AI_CUSTOM_ESSAY：程式預設固定是 off（[vars] 漏設時偏向關）；wrangler.toml 明確寫 "on" 或 "off"，站主只改這一行就能開關', () => {
+    // 評分對照（docs/design/custom-essay.md §7.8）通過之前 wrangler.toml 是 "off"；達標後只把那一行改成 "on"
+    // （docs/SETUP-KEYS.md §8.2），出問題時再改回 "off"（§8.1）。兩個方向都只改一行，部署前的測試不會擋。
+    expect(CONFIG_DEFAULTS.AI_CUSTOM_ESSAY).toBe('off');
+    const toml = readFileSync(new URL('../wrangler.toml', import.meta.url), 'utf8');
+    const m = toml.match(/^AI_CUSTOM_ESSAY\s*=\s*"([^"]*)"/m);
+    expect(m?.[1], 'wrangler.toml 的 [vars] 要明確寫 AI_CUSTOM_ESSAY = "on" 或 "off"').toMatch(/^(on|off)$/);
   });
 });
 

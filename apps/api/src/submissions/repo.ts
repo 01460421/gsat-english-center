@@ -14,6 +14,7 @@ import {
   type PhotoMeta,
   type RaterRole,
   RATER_ROLES,
+  isCustomEssayGroupId,
   type SelfAssessment,
   type SubmissionDetail,
   type SubmissionKind,
@@ -24,6 +25,7 @@ import {
 } from '@gsat/shared';
 import { combineEssay, combineTranslation, type EssayRaterRecord, type TranslationRaterRecord } from '../ai/scoring';
 import { ApiError } from '../errors';
+import { loadCustomPrompt, visibleCustomPrompt, visibleCustomTitle } from './custom';
 
 export interface SubmissionRow {
   id: string;
@@ -50,6 +52,8 @@ export interface SubmissionRow {
   updated_at: number;
   graded_at: number | null;
   expires_at: number | null;
+  /** 只有列表查詢有：自訂題的題目前 200 字元（LEFT JOIN submission_custom_prompts；不是自訂題為 NULL）。 */
+  custom_prompt_head?: string | null;
 }
 
 /** 提交的欄位（所有查詢都帶 user_id）。SQL 一律是完整的靜態字串，不用字串相加組 SQL（ARCHITECTURE §7）。 */
@@ -58,14 +62,19 @@ const SELECT_SUBMISSION = `SELECT id, user_id, kind, group_id, input_mode, body_
   created_at, updated_at, graded_at, expires_at
   FROM submissions WHERE id = ?1 AND user_id = ?2`;
 
-/** 列表（新到舊；kind、游標可為 NULL）。 */
-export const LIST_SUBMISSIONS = `SELECT id, user_id, kind, group_id, input_mode, NULL AS body_json, NULL AS self_assess_json, NULL AS ocr_text,
-  NULL AS ocr_uncertain_json, NULL AS ocr_diff_json, word_count, paragraphs, status, lease_until, tries, op_id, final_score, final_band,
-  injection_flag, safety_flag, created_at, updated_at, graded_at, expires_at
-  FROM submissions
-  WHERE user_id = ?1 AND (?2 IS NULL OR kind = ?2)
-    AND (?3 IS NULL OR created_at < ?3 OR (created_at = ?3 AND id < ?4))
-  ORDER BY created_at DESC, id DESC
+/**
+ * 列表（新到舊；kind、游標可為 NULL）。自訂作文題目 LEFT JOIN 題目列取前 200 字元給 custom_title
+ * （主鍵查詢；JOIN 也帶 user_id，防 IDOR；仍走 idx_sub_user）。
+ */
+export const LIST_SUBMISSIONS = `SELECT s.id, s.user_id, s.kind, s.group_id, s.input_mode, NULL AS body_json, NULL AS self_assess_json, NULL AS ocr_text,
+  NULL AS ocr_uncertain_json, NULL AS ocr_diff_json, s.word_count, s.paragraphs, s.status, s.lease_until, s.tries, s.op_id, s.final_score, s.final_band,
+  s.injection_flag, s.safety_flag, s.created_at, s.updated_at, s.graded_at, s.expires_at,
+  substr(cp.prompt_text, 1, 200) AS custom_prompt_head
+  FROM submissions s
+  LEFT JOIN submission_custom_prompts cp ON cp.submission_id = s.id AND cp.user_id = s.user_id
+  WHERE s.user_id = ?1 AND (?2 IS NULL OR s.kind = ?2)
+    AND (?3 IS NULL OR s.created_at < ?3 OR (s.created_at = ?3 AND s.id < ?4))
+  ORDER BY s.created_at DESC, s.id DESC
   LIMIT ?5`;
 
 /** 取自己的提交；不存在或不是自己的回 null。 */
@@ -89,7 +98,12 @@ export function parseJson<T>(text: string | null): T | null {
   }
 }
 
+/**
+ * 列表的一列。custom_title：自訂題是題目開頭（顯示時重查 D8，命中是「（題目已隱藏）」；custom.ts 的 visibleCustomTitle），
+ * 沒有題目列或不是自訂題為 null。
+ */
 export function toSummary(row: SubmissionRow): SubmissionSummary {
+  const head = isCustomEssayGroupId(row.group_id) ? (row.custom_prompt_head ?? null) : null;
   return {
     id: row.id,
     kind: row.kind,
@@ -101,6 +115,7 @@ export function toSummary(row: SubmissionRow): SubmissionSummary {
     created_at: row.created_at,
     updated_at: row.updated_at,
     graded_at: row.graded_at,
+    custom_title: head === null ? null : visibleCustomTitle(head),
   };
 }
 
@@ -165,6 +180,7 @@ export function combineGradingRows(
       paragraph_advice: f?.paragraph_advice ?? [],
       rewrite: f?.rewrite ?? null,
       safety_flag: f?.safety_flag ?? null,
+      ...(f?.rewrite_omitted === 'too_long' || f?.rewrite_omitted === 'too_different' ? { rewrite_omitted: f.rewrite_omitted } : {}),
     } as EssayRaterRecord & { role: RaterRole };
   });
   return combineEssay(records, ctx);
@@ -200,10 +216,20 @@ async function failureOf(db: D1Database, row: SubmissionRow): Promise<AiRefundRe
   return (AI_REFUND_REASONS as readonly string[]).includes(reason) ? (reason as AiRefundReason) : 'internal';
 }
 
+/**
+ * 詳情。自訂題多讀一次題目（和照片、批改平行查），回傳前經過 visibleCustomPrompt（顯示時重查 D8）；
+ * custom_title 用同一份完整題目算（不只前 200 字元）。其他題目的 custom_prompt、custom_title 都是 null。
+ */
 export async function toDetail(db: D1Database, row: SubmissionRow): Promise<SubmissionDetail> {
-  const [photos, grading, failure] = await Promise.all([listPhotoMeta(db, row.user_id, row.id), loadGrading(db, row), failureOf(db, row)]);
+  const custom = isCustomEssayGroupId(row.group_id);
+  const [photos, grading, failure, prompt] = await Promise.all([
+    listPhotoMeta(db, row.user_id, row.id),
+    loadGrading(db, row),
+    failureOf(db, row),
+    custom ? loadCustomPrompt(db, row.user_id, row.id) : Promise.resolve(null),
+  ]);
   return {
-    ...toSummary(row),
+    ...toSummary({ ...row, custom_prompt_head: prompt?.prompt_text ?? null }),
     body: parseJson<TranslationBody | EssayBody>(row.body_json),
     self_assess: parseJson<SelfAssessment>(row.self_assess_json),
     word_count: row.word_count,
@@ -213,5 +239,6 @@ export async function toDetail(db: D1Database, row: SubmissionRow): Promise<Subm
     photos,
     grading,
     failure,
+    custom_prompt: prompt ? visibleCustomPrompt(prompt) : null,
   };
 }

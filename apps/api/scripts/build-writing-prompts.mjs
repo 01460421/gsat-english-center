@@ -22,6 +22,12 @@
  * 本站題的每個字串（含 guidance）再跑一次 d8HitsInStrings（選題已經用同一支函式把命中的題組略過，所以這一步只會因程式錯誤失敗）。
  * 資料問題（格式不對、D8 命中）只略過那一組並印警告；data/unpublish.jsonl 格式錯或路徑不存在也讓產生器失敗（下架是安全機制）；
  * data/exams/parsed 有任何一份不是合法的 JSON 也失敗（考卷是 D8 比對資料，少一份就可能放過和它重疊的本站題）。
+ * 輸出的題組 id 不能以 custom: 開頭（那是自訂作文題目共用的佔位題組，getWritingGroup 必須永遠查不到它）。
+ *
+ * 另外產生 apps/api/src/generated/d8-fingerprints.json（同樣不進版控；docs/design/custom-essay.md §2.4.5）：
+ * 官方評分原則與參考譯文短窗口的雜湊，Worker 用來擋學生貼進自訂作文題目欄的官方文字。正規形式與雜湊在
+ * packages/shared/scripts/d8-fingerprint.mjs；檔案只有雜湊，建置紀錄只印筆數。筆數低於下限（D8_MIN_COUNTS）時失敗：
+ * 題庫資料或比對資料被改壞了，產出的檔案雖然合法卻幾乎沒有內容。
  *
  * 只用 Node 22 內建模組（零依賴）。
  */
@@ -41,6 +47,15 @@ import {
   selectWritingGroups,
   writingShapeProblems,
 } from '../../../packages/shared/scripts/bank-select.mjs';
+import {
+  D8_ENGLISH_RUN,
+  D8_FP_FORMAT,
+  D8_HAN_WINDOW,
+  d8EnglishWindows,
+  d8Hash,
+  d8HanWindows,
+  packFingerprints,
+} from '../../../packages/shared/scripts/d8-fingerprint.mjs';
 
 // 受保護片段的收集搬到 bank-select.mjs（選題的 D8 比對用同一份），這裡轉匯出，既有的匯入不用改。
 export { restrictedFragments };
@@ -52,6 +67,41 @@ export const EXAMS_DIR = path.join(REPO_ROOT, 'data', 'exams', 'parsed');
 export const BANK_DIR = path.join(REPO_ROOT, 'data', 'bank', 'v1');
 export const UNPUBLISH_FILE = path.join(REPO_ROOT, 'data', 'unpublish.jsonl');
 export const OUT_FILE = path.join(API_DIR, 'src', 'generated', 'writing-prompts.json');
+export const D8_OUT_FILE = path.join(API_DIR, 'src', 'generated', 'd8-fingerprints.json');
+
+/**
+ * D8 指紋的筆數下限（設計值，§2.4.5，S3）：實測 66 份考卷約有漢字 4,541（遮掉考試單位與考試名稱之後）、英文 6,372 筆。低於下限代表題庫資料或
+ * officialCorpus 被改壞了；考卷資料增加後，下限跟著調高。
+ */
+export const D8_MIN_COUNTS = { han: 4_000, en: 5_000 };
+
+/**
+ * 考試單位與考試名稱：考卷封面、每頁頁首與老師講義的標題都有的公開字樣。scoring_notes 的出處與沿革句子（「自某學年度學科能力
+ * 測驗與指定科目考試起…」「…英文考科非選擇題…」）也會寫到它們，不先遮掉的話，學生把題目連同講義標題（「113學年度學科能力測驗
+ * 英文作文」）一起貼上，就會被當成官方評分說明拒收（official_material）。
+ */
+export const D8_PUBLIC_HEADER_TERMS = ['財團法人大學入學考試中心基金會', '大學入學考試中心', '學科能力測驗', '指定科目考試', '分科測驗', '大考中心', '英文考科', '學年度'];
+
+/** 長的在前；字和字之間可以有空白或換行（和 d8HanWindows 移除空白的正規形式一致）。 */
+const HEADER_TERMS_RE = new RegExp(
+  [...D8_PUBLIC_HEADER_TERMS]
+    .sort((a, b) => b.length - a.length)
+    .map((t) => [...t].join('\\s*'))
+    .join('|'),
+  'g',
+);
+
+/**
+ * scoring_notes 取窗口之前，把 D8_PUBLIC_HEADER_TERMS 換成分隔符號（NFKC 之後比對）：窗口不會跨過它們，所以含有這些字樣的
+ * 窗口不進指紋；評分原則本身的內容照樣有窗口。
+ * @param {string} text
+ */
+export function maskPublicHeaderTerms(text) {
+  return text.normalize('NFKC').replace(HEADER_TERMS_RE, '|');
+}
+
+/** 自訂作文題目共用的佔位題組 id 前綴（shared 的 CUSTOM_ESSAY_GROUP_ID 是 'custom:essay@1'）。 */
+export const CUSTOM_GROUP_PREFIX = 'custom:';
 
 /** v2：題組多了 origin、tier、item_group、guidance，並收錄本站仿真題。 */
 export const BANK_FORMAT = 'gsat-writing-prompts/v2';
@@ -383,6 +433,73 @@ export function buildBank(exams, bankRaws = [], options = {}) {
   return { bank, warnings, leaks, bankHits };
 }
 
+/** 一個值裡所有的字串（圖的 rows 是巢狀陣列）。 @param {unknown} value @param {string[]} out */
+function stringsOf(value, out) {
+  if (typeof value === 'string') out.push(value);
+  else if (Array.isArray(value)) value.forEach((v) => stringsOf(v, out));
+  else if (isObject(value)) Object.values(/** @type {Json} */ (value)).forEach((v) => stringsOf(v, out));
+  return out;
+}
+
+/**
+ * D8 指紋檔（§2.4.5）：
+ *   han  所有考卷 scoring_notes 的漢字窗口（考試單位與考試名稱先換成分隔符號，maskPublicHeaderTerms）；
+ *   en   官方中譯英參考譯文（officialCorpus 的 translationTexts，＝englishRuns 的來源）與 scoring_notes 的英文窗口；
+ * 兩者都排除也出現在公開文字裡的窗口（同樣的正規形式）：公開文字是每份考卷 restrictedFragments 的 publicTexts，
+ * 加上題目庫裡歷屆題與本站題的圖片文字描述（figures 的 label、caption、description、rows）。
+ * 回傳的檔案只有雜湊與筆數，不含任何窗口的原文。
+ * @param {Json[]} exams
+ * @param {Json} bank  buildBank 回傳的 bank
+ * @param {{ corpus?: import('../../../packages/shared/scripts/bank-select.mjs').OfficialCorpus }} [options]
+ */
+export function buildD8Fingerprints(exams, bank, options = {}) {
+  const corpus = options.corpus ?? officialCorpus(exams);
+  /** @type {string[]} */
+  const notes = [];
+  /** @type {string[]} */
+  const publicTexts = [];
+  for (const exam of exams) {
+    for (const s of Array.isArray(exam.sections) ? exam.sections : []) {
+      for (const g of isObject(s) && Array.isArray(s.groups) ? s.groups : []) {
+        for (const q of isObject(g) && Array.isArray(g.questions) ? g.questions : []) {
+          if (isObject(q) && typeof q.scoring_notes === 'string') notes.push(maskPublicHeaderTerms(q.scoring_notes));
+        }
+      }
+    }
+    publicTexts.push(...restrictedFragments(exam).publicTexts);
+  }
+  for (const g of Object.values(/** @type {Record<string, Json>} */ (bank.groups ?? {}))) {
+    for (const f of Array.isArray(g.figures) ? g.figures : []) stringsOf([f.label, f.caption, f.description, f.rows], publicTexts);
+  }
+  const publicHan = new Set(publicTexts.flatMap((t) => d8HanWindows(t).map((w) => w.window)));
+  const publicEn = new Set(publicTexts.flatMap((t) => d8EnglishWindows(t).map((w) => w.window)));
+  const hanWindows = new Set(notes.flatMap((t) => d8HanWindows(t).map((w) => w.window)).filter((w) => !publicHan.has(w)));
+  const enWindows = new Set(
+    [...corpus.translationTexts, ...notes].flatMap((t) => d8EnglishWindows(t).map((w) => w.window)).filter((w) => !publicEn.has(w)),
+  );
+  const hanHashes = new Set([...hanWindows].map((w) => d8Hash('han', w)));
+  const enHashes = new Set([...enWindows].map((w) => d8Hash('en', w)));
+  const han = packFingerprints(hanHashes);
+  const en = packFingerprints(enHashes);
+  return {
+    format: D8_FP_FORMAT,
+    han_window: D8_HAN_WINDOW,
+    english_run: D8_ENGLISH_RUN,
+    count: { han: hanHashes.size, en: enHashes.size },
+    version: sha256(han + en).slice(0, 12),
+    han,
+    en,
+  };
+}
+
+/** 內容沒變就不寫檔，避免 wrangler dev／vitest 的檔案監看無謂重跑。回傳是否寫了。 @param {string} file @param {string} content */
+function writeIfChanged(file, content) {
+  if (existsSync(file) && readFileSync(file, 'utf8') === content) return false;
+  mkdirSync(path.dirname(file), { recursive: true });
+  writeFileSync(file, content);
+  return true;
+}
+
 function main() {
   const checkOnly = process.argv.includes('--check');
   if (!existsSync(EXAMS_DIR)) {
@@ -422,17 +539,29 @@ function main() {
     console.error('[writing-prompts] 失敗：官方參考譯文或評分原則不能打包進 Worker（D8）');
     process.exit(1);
   }
+  // 自訂作文題目的佔位題組不能出現在題目庫裡（否則自訂題會被當成題庫題，學生的題目就不會被讀到）。
+  const customIds = Object.keys(bank.groups).filter((id) => id.startsWith(CUSTOM_GROUP_PREFIX));
+  if (customIds.length > 0) {
+    console.error(`[writing-prompts] 失敗：題組 id 不能以 ${CUSTOM_GROUP_PREFIX} 開頭（${customIds.slice(0, 3).join('、')}）`);
+    process.exit(1);
+  }
+  const fp = buildD8Fingerprints(exams, bank, { corpus });
+  // 只印筆數（指紋檔本身也只有雜湊，不含官方文字）。
+  console.log(`[writing-prompts] D8 指紋：漢字 ${fp.count.han}、英文 ${fp.count.en}（版本 ${fp.version}）`);
+  if (fp.count.han < D8_MIN_COUNTS.han || fp.count.en < D8_MIN_COUNTS.en) {
+    console.error(`[writing-prompts] 失敗：D8 指紋筆數低於下限（漢字 ≥${D8_MIN_COUNTS.han}、英文 ≥${D8_MIN_COUNTS.en}）；題庫資料或官方比對資料可能被改壞了`);
+    process.exit(1);
+  }
   const json = JSON.stringify(bank);
   const bankCount = Object.values(bank.groups).filter((g) => g.origin === 'bank').length;
   if (checkOnly) {
     console.log(`[writing-prompts] 檢查通過：${bank.count} 個題組（其中本站仿真題 ${bankCount} 組）`);
     return;
   }
-  mkdirSync(path.dirname(OUT_FILE), { recursive: true });
-  // 內容沒變就不寫檔，避免 wrangler dev／vitest 的檔案監看無謂重跑。
-  if (existsSync(OUT_FILE) && readFileSync(OUT_FILE, 'utf8') === json) return;
-  writeFileSync(OUT_FILE, json);
-  console.log(`[writing-prompts] 已產生 ${path.relative(REPO_ROOT, OUT_FILE)}（${bank.count} 個題組，其中本站仿真題 ${bankCount} 組）`);
+  if (writeIfChanged(OUT_FILE, json)) {
+    console.log(`[writing-prompts] 已產生 ${path.relative(REPO_ROOT, OUT_FILE)}（${bank.count} 個題組，其中本站仿真題 ${bankCount} 組）`);
+  }
+  if (writeIfChanged(D8_OUT_FILE, JSON.stringify(fp))) console.log(`[writing-prompts] 已產生 ${path.relative(REPO_ROOT, D8_OUT_FILE)}`);
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) main();

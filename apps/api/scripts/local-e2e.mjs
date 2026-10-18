@@ -20,13 +20,14 @@
  */
 import { spawn, spawnSync } from 'node:child_process';
 import { createHash, randomBytes, randomUUID } from 'node:crypto';
-import { chmodSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs';
+import { chmodSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { createServer } from 'node:http';
 import { createRequire } from 'node:module';
 import { createServer as createNetServer } from 'node:net';
 import { tmpdir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { customEssayExpected, customEssayVarFrom } from '../../../.github/scripts/deploy-summary.mjs';
 
 const API_DIR = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const require = createRequire(import.meta.url);
@@ -829,10 +830,12 @@ async function main() {
     const admin = new CookieJar();
     const student = new CookieJar();
 
-    await step('GET /api/features：登入、AI、OCR 都已啟用', async () => {
+    // 自訂作文題目跟著 wrangler.toml 的 AI_CUSTOM_ESSAY（wrangler dev 讀同一份 [vars]）。
+    const customEssay = customEssayExpected(customEssayVarFrom(readFileSync(join(API_DIR, 'wrangler.toml'), 'utf8')));
+    await step(`GET /api/features：登入、AI、OCR 都已啟用，自訂作文題目${customEssay ? '已啟用' : '未啟用'}（照 wrangler.toml）`, async () => {
       const r = await http(BASE, 'GET', '/api/features');
       expectStatus(r, 200, 'features');
-      same(r.json, { auth: true, ai: true, ocr: true, aiPaused: false }, 'features');
+      same(r.json, { auth: true, ai: true, ocr: true, aiPaused: false, customEssay }, 'features');
     });
 
     await step('GET／POST /auth/probe：多個 Set-Cookie 原樣轉送、1.25 MB 本體、延遲回應（ARCHITECTURE §4.3）', async () => {

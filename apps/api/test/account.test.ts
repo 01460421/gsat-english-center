@@ -9,6 +9,7 @@ import { requireAiApproved } from '../src/auth/session';
 import type { AppEnv } from '../src/env';
 import { handleError } from '../src/errors';
 import { VERSIONS, authEnv, call, cookieFor, insertUser, nowSec, setCookies, type TestEnv } from './helpers/auth';
+import { CUSTOM_TASK, seedCustomSubmission } from './helpers/customEssay';
 
 let env: TestEnv;
 beforeEach(() => {
@@ -237,6 +238,27 @@ describe('匯出與刪除帳號：要 10 分鐘內登入過', () => {
     expect(await (await call(env, 'GET', '/api/me', { cookie })).json()).toEqual({ user: null });
     const next = insertUser(env.DB);
     expect(next.id).toBeGreaterThan(u.id);
+  });
+
+  it('自訂作文題目（docs/design/custom-essay.md §3.6）：匯出的每份提交都有 custom_prompt（自訂題是物件、其他是 null）；刪帳號後題目列消失，刪除證明有列數', async () => {
+    const u = insertUser(env.DB, { aiStatus: 'approved' });
+    seedSubmission(env, u.id, 'sub-exam');
+    seedCustomSubmission(env.DB, u.id, 'sub-custom');
+    const other = insertUser(env.DB);
+    seedCustomSubmission(env.DB, other.id, 'sub-other');
+    const cookie = await cookieFor(u);
+    const data = (await (await call(env, 'GET', '/api/me/export', { cookie })).json()) as MeExport;
+    const byId = new Map((data.submissions as Array<Record<string, unknown>>).map((s) => [s['id'], s]));
+    expect([...byId.keys()].sort()).toEqual(['sub-custom', 'sub-exam']);
+    expect(byId.get('sub-exam')!['custom_prompt']).toBeNull();
+    expect(byId.get('sub-custom')!['custom_prompt']).toMatchObject({ text: CUSTOM_TASK, figure_text: null, paragraphs: 2, min_words: 120, max_words: null });
+    expect(JSON.stringify(data)).not.toContain('sub-other');
+
+    expect((await call(env, 'DELETE', '/api/me', { cookie, json: { confirm: DELETE_ACCOUNT_CONFIRM } })).status).toBe(204);
+    expect(q(env, 'SELECT submission_id FROM submission_custom_prompts')).toEqual([{ submission_id: 'sub-other' }]);
+    const log = q(env, 'SELECT rows_json FROM deletion_log') as Array<Record<string, string>>;
+    expect(JSON.parse(log[0]!['rows_json']!)).toMatchObject({ submissions: 2, submission_custom_prompts: 1 });
+    expect(JSON.stringify(log)).not.toContain('無手機日');
   });
 
   it('同意未完成也可以匯出與刪除（個資權利不受新條款影響）', async () => {

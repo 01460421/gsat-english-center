@@ -40,9 +40,10 @@
 
 ## 2. 表格總覽與關聯
 
-### 2.1 表格總覽（56 張表、4 個檢視表、19 個 trigger）
+### 2.1 表格總覽（57 張表、4 個檢視表、22 個 trigger）
 
-「開始使用」是指哪個階段開始寫入或讀取（ROADMAP）；表在 0001 一次建好。
+「開始使用」是指哪個階段開始寫入或讀取（ROADMAP）；表在 0001 一次建好。之後的遷移另外加的：0003 的 `submission_custom_prompts`
+與 3 個 trigger（英文作文自訂題目，docs/design/custom-essay.md §3；0002 的手寫照片暫存表 `submission_photo_temp` 見遷移檔頭）。
 
 | 群組 | 表 | 開始使用 | 一句話 |
 |---|---|---|---|
@@ -91,6 +92,7 @@
 | 寫作 | `submissions` | Phase 2（自評）／Phase 3（AI） | 中譯英、作文、思考表達的提交 |
 | | `submission_photos` | Phase 4 | 手寫照片的中繼資料 |
 | | `gradings` | Phase 2（自評）／Phase 3（AI） | 批改結果 |
+| | `submission_custom_prompts` | Phase 3 | 英文作文自訂題目（學生自己輸入的題目與段數、字數設定；0003） |
 | AI | `ai_ops` | Phase 3 | 一次 AI 操作（點數與美元預扣） |
 | | `ai_calls` | Phase 3 | 每一次 API 呼叫 |
 | | `ai_budget_daily` | Phase 3 | 全站每日預算 |
@@ -119,9 +121,10 @@ vocab_entries ◄─ vocab_forms、vocab_senses、vocab_relations、vocab_exampl
       └─ items.answer_entry_id、srs_cards（word／spell／usage）
 
 users ◄─ consents、user_prefs、user_notices、practice_sessions、attempts、user_group_seen、srs_cards、srs_reviews、
-         user_skill_daily、score_predictions、user_ability、submissions、submission_photos、gradings、chat_threads（CASCADE）
+         user_skill_daily、score_predictions、user_ability、submissions、submission_photos、gradings、chat_threads、
+         submission_custom_prompts（CASCADE）
 users ◄─ ai_ops、item_reports（SET NULL）
-submissions ◄─ submission_photos、gradings（CASCADE）；submissions.revision_of ─► submissions（SET NULL）
+submissions ◄─ submission_photos、gradings、submission_custom_prompts（CASCADE）；submissions.revision_of ─► submissions（SET NULL）
 ai_ops ◄─ ai_calls（SET NULL）；ai_calls、ai_safety_events、deletion_log 只用 HMAC 假名 user_ref
 admin_audit、ops_events、takedowns：不設外鍵
 ```
@@ -136,7 +139,7 @@ admin_audit、ops_events、takedowns：不設外鍵
 
 #### `licenses`
 
-授權類型做成資料（04 文件 §1 的速查表），Credits 頁與「收費前要清查的資料」直接由 SQL 產生，例如 `SELECT … FROM item_groups g JOIN licenses l ON l.code = g.license WHERE l.commercial_ok = 0`。遷移檔已放入 15 筆種子資料（`INSERT OR IGNORE`），其中 `CEEC-restricted` 標示評分原則與官方參考答案「不可改作、不可商用、不對外顯示全文」。`CC0-1.0`（Tatoeba 有 96 句英文例句是 CC0）、`CEFR-J`（CEFR 參考級別，須標示出處）、`WordNet-Princeton`（OEWN 的上游授權）是 `data/vocab/` 實際用到的授權；少了它們，匯入 `vocab_examples` 時外鍵會失敗（2026-10-08 匯入草稿實測）。新的授權代碼一律先加進這張表再匯入資料。
+授權類型做成資料（04 文件 §1 的速查表），Credits 頁與「收費前要清查的資料」直接由 SQL 產生，例如 `SELECT … FROM item_groups g JOIN licenses l ON l.code = g.license WHERE l.commercial_ok = 0`。遷移檔已放入 15 筆種子資料（`INSERT OR IGNORE`），其中 `CEEC-restricted` 標示評分原則與官方參考答案「不可改作、不可商用、不對外顯示全文」。`CC0-1.0`（Tatoeba 有 96 句英文例句是 CC0）、`CEFR-J`（CEFR 參考級別，須標示出處）、`WordNet-Princeton`（OEWN 的上游授權）是 `data/vocab/` 實際用到的授權；少了它們，匯入 `vocab_examples` 時外鍵會失敗（2026-10-08 匯入草稿實測）。新的授權代碼一律先加進這張表再匯入資料。遷移 0003 另外加了 `user-provided`（使用者自行提供的內容：學生自己輸入或貼上的作文題目，只存在該學生的提交、只顯示給本人、只為批改送 AI；不公開、不進題庫），給自訂作文題目的佔位題組用（§3.3、§3.6）。
 
 | 欄位 | 型別與約束 | 說明 |
 |---|---|---|
@@ -498,6 +501,7 @@ admin_audit、ops_events、takedowns：不設外鍵
 - **`pick_order`**：匯入時給的亂數。抽題用 `pick_order >= 隨機值 ORDER BY pick_order LIMIT n`（不足再從頭補），走 `idx_groups_pick` 索引，讀取列數約等於 n；不用 `ORDER BY random()`，那會整表掃描，而 D1 依讀取列數計費（§7）。
 - **衍生欄位**：`tier`、`tier_basis`、`theta70`、文章指標、`glossary_json`（選文 token → 條目、級別）可以更新，不在 `content_hash` 裡，校正難度或詞彙表更新後不必改版題目。
 - **狀態機**（trigger 強制）：`draft → verifying → needs_review → published`，中途可 `rejected`；`published ⇄ quarantined`（答案疑似有誤時暫時下架）；`published／quarantined → retired`；任何上架過的狀態 → `withdrawn`（授權撤回，墓碑化）。歷屆題匯入時直接 `published`、`approval_mode='official'`。
+- **`custom:essay@1` 佔位列**（遷移 0003；docs/design/custom-essay.md §3.2）：所有英文作文自訂題目共用的題組（`submissions.group_id` 是 NOT NULL 外鍵，一定要指向一列）。`origin 'human'`（CHECK 沒有「使用者」這個值；真正標示來源的是 `license 'user-provided'` 與 id 前綴 `custom:`）、`section_type 'composition'`、`format_version 'composition-custom-1'`、`status 'draft'`（不出現在學生端檢視表、抽題與審核清單），由 `trg_groups_custom_frozen` 凍結（任何 UPDATE 都擋下，匯入工具「更新 draft 列後推進狀態」的流程碰不到它）。**題目本文不在內容表**：學生的題目存在 `submission_custom_prompts`（§3.6），隨提交與帳號刪除。Worker 的題目庫產生器保證題組 id 不會以 `custom:` 開頭。
 - **墓碑化**：表層 CHECK 規定 `withdrawn` 的題組必須清空選文、圖表、選項庫、標註、衍生指標與詞彙對照，保留 id、雜湊與審核紀錄；小題的 trigger 只允許把文字欄位清空。作答紀錄仍指得到這個 id，畫面顯示「本題已依權利人要求下架」。
 
 | 欄位 | 型別與約束 | 說明 |
@@ -1193,6 +1197,31 @@ AI 核准狀態（`ai_status`）和帳號狀態（`status`）分開：不必核�
 
 表層約束：`UNIQUE (submission_id, role)`　選項：`STRICT`
 
+#### `submission_custom_prompts`
+
+英文作文自訂題目（遷移 0003；docs/design/custom-essay.md §3）：學生自己輸入或貼上的題目，一份提交一列。提交的 `group_id` 一律是佔位題組 `custom:essay@1`（§3.3），題目本文只在這裡：使用者資料，要能匯出（`GET /api/me/export` 的每份提交多 `custom_prompt`）、隨提交與帳號一起刪除（兩個外鍵都 `ON DELETE CASCADE`；刪除證明 `deletion_log.rows_json` 計數）。
+
+- 存的是正規化（NFKC、空白、行數）並遮掉 email 與電話（換成「［已隱藏］」）之後的文字；Worker 在建立、修改、送辨識、送批改時都跑同一套輸入規則（`@gsat/shared` 的 `checkCustomPrompt`）與 D8 指紋比對，顯示時再查一次 D8（命中就隱藏）。長度上限比 CHECK 嚴（程式用 UTF-16 長度），CHECK 只是保險。
+- `rev`：修改次數。建立是 1，每次 `PUT` 題目加 1；送批改時條件式 UPDATE 確認 `rev` 沒變（題目在檢查之後被改過就不送出、退還點數）。不用 `updated_at` 判斷：它以秒為單位，同一秒內的兩次修改分不出來。
+- 兩個 owner trigger：`trg_custom_prompts_owner_insert`、`trg_custom_prompts_owner_update`（`submission_id`、`user_id` 被改時）要求題目列的 `user_id` 等於那份提交的 `user_id`，而且那份提交是自訂題（`group_id = 'custom:essay@1'`）。防 IDOR 仍然是每一句 SQL 都帶 `user_id`，trigger 是第二道。
+- **自訂題（`group_id = 'custom:essay@1'`）的分數不進入任何能力估計、分數預測或排行**（`score_predictions`、`user_ability` 等）：題目由學生提供，分數可以被題目寬鬆程度影響。之後寫彙總查詢時加 `group_id <> 'custom:essay@1'`。
+- 後台不讀這張表；日誌、`ops_events`、`ai_safety_events` 都不記題目內容（注入旗標只記 `prompt:zh_score` 這類代號）。保存期限跟著提交（`submissions.expires_at`）。
+
+| 欄位 | 型別與約束 | 說明 |
+|---|---|---|
+| `submission_id` | `TEXT PRIMARY KEY REFERENCES submissions(id) ON DELETE CASCADE` | 提交（一份一列；只有 group_id='custom:essay@1'） |
+| `user_id` | `INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE` | 使用者（每句查詢都帶 user_id，防 IDOR） |
+| `prompt_text` | `TEXT NOT NULL CHECK (length(prompt_text) BETWEEN 1 AND 1000)` | 題目（正規化、遮掉聯絡方式後；程式另外要求不含空白至少 10 字） |
+| `figure_text` | `TEXT CHECK (figure_text IS NULL OR length(figure_text) BETWEEN 1 AND 800)` | 圖片或圖表的文字描述（學生撰寫） |
+| `paragraphs` | `INTEGER CHECK (paragraphs IS NULL OR paragraphs BETWEEN 1 AND 5)` | 段數要求；NULL＝不指定 |
+| `min_words` | `INTEGER CHECK (min_words IS NULL OR min_words BETWEEN 20 AND 600)` | 至少幾個單詞；NULL＝不指定 |
+| `max_words` | `INTEGER CHECK (max_words IS NULL OR max_words BETWEEN 20 AND 600)` | 最多幾個單詞；NULL＝不指定 |
+| `rev` | `INTEGER NOT NULL DEFAULT 1 CHECK (rev >= 1)` | 修改次數：建立是 1，每次 PUT 題目加 1 |
+| `created_at` | `INTEGER NOT NULL DEFAULT (unixepoch())` | 建立時間 |
+| `updated_at` | `INTEGER NOT NULL DEFAULT (unixepoch())` | 最後修改時間 |
+
+表層約束：`CHECK (min_words IS NULL OR max_words IS NULL OR min_words <= max_words)`；`CHECK (length(prompt_text) + COALESCE(length(figure_text), 0) <= 1200)`　索引：`idx_custom_prompts_user (user_id, created_at)`　選項：`STRICT`
+
 ### 3.7 AI 帳本、預算、快取、安全事件、家教對話
 
 #### `ai_ops`
@@ -1418,6 +1447,8 @@ Anthropic 未成年人指引要求的監控與回報（04 文件 §7.5）：AI �
 #### `ops_events`
 
 告警與維運事件（門檻見 ARCHITECTURE §9.3）：今日 AI 花費達日預算 80%、全站暫停、Queue 積壓、對帳差異、Cron 失敗、D1 容量、安全事件。後台首頁顯示未確認的事件。
+
+英文作文自訂題目的內容退還（拒答、格式不符、截斷）每一次都寫一筆 `kind='custom_essay_content_refund'`、`severity='info'`、`detail_json={"op_id":…}`，建立時 `acked_at` 就填上（不算進後台的「未處理」）。它是告警 `custom_essay_content_refunds`（同一人 7 天內 ≥3 次）的計數來源：學生刪掉失敗的提交後，這筆紀錄與 `ai_ops` 都還在，計數不會漏（docs/design/custom-essay.md 的實作備註）。
 
 | 欄位 | 型別與約束 | 說明 |
 |---|---|---|

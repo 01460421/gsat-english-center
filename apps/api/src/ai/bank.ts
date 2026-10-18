@@ -50,8 +50,12 @@ export interface WritingGroup {
   group_id: string;
   uid: string;
   version: number;
-  /** exam＝歷屆試題；bank＝本站仿真題（AI 題庫）。 */
-  origin: 'exam' | 'bank';
+  /**
+   * exam＝歷屆試題；bank＝本站仿真題（AI 題庫）；custom＝學生自己輸入的作文題目（題目在 D1，由
+   * submissions/custom.ts 的 customWritingGroup 組出來；題目庫 JSON 裡不會有）。
+   * 提示詞依它選系統提示與範本（prompts/essay.ts 的 essayPromptParts 用 switch 窮舉，漏寫分支編譯不過）。
+   */
+  origin: 'exam' | 'bank' | 'custom';
   /** 本站仿真題是 null。 */
   exam_id: string | null;
   exam_title: string | null;
@@ -77,13 +81,19 @@ export interface WritingGroup {
   /** D1 最小列要寫的來源與授權（ensureItemGroupStatement）。 */
   item_group: {
     origin: 'ceec' | 'agent' | 'batch' | 'human';
-    license: 'CEEC-exam' | 'original-ai';
+    license: 'CEEC-exam' | 'original-ai' | 'user-provided';
     derivation: 'verbatim' | 'original';
     format_version: string;
   };
   /** 本站仿真題給評分者的參考；歷屆題 null。 */
   guidance: TranslationGuidance | EssayGuidance | null;
   content_hash: string;
+  /**
+   * 自訂作文題目（origin 'custom'）的題目本文與圖片描述、修改次數。學生的題目**只放在這裡**，
+   * items[0].stem 與 instructions 都是空字串（安全審查 S2）：漏判 origin 的呼叫點最多送出「沒有題目」的 <task>。
+   * 題目庫的條目沒有這個欄位。
+   */
+  custom?: { prompt_text: string; figure_text: string | null; rev: number } | null;
 }
 
 interface WritingBank {

@@ -37,6 +37,8 @@ export const CASCADE_TABLES = [
   'chat_threads',
   // 0002：手寫照片暫存（A2）。
   'submission_photo_temp',
+  // 0003：自訂作文題目（docs/design/custom-essay.md §3.6）。
+  'submission_custom_prompts',
 ] as const;
 
 /** user_id 會被設為 NULL（保留但去識別）的表。 */

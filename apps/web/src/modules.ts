@@ -161,7 +161,7 @@ export const PAGES = [
     path: '/composition',
     title: '英文作文',
     navLabel: '英文作文',
-    summary: '歷屆的看圖、信函與主題寫作，加上附範文的本站仿真題；可拍照上傳手寫作文，由 AI 辨識並批改。',
+    summary: '歷屆的看圖、信函與主題寫作，加上附範文的本站仿真題；可拍照上傳手寫作文，由 AI 辨識並批改，也可以貼上自己的題目練習。',
     group: 'open',
     icon: 'composition',
     status: 'ready',

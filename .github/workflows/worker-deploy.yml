@@ -387,50 +387,6 @@ jobs:
           proxy=$(curl -fsS --max-time 10 "$app_url/api/health" 2>/dev/null || true)
           vercel_target=$(grep -oE 'gsat-english-api\.[A-Za-z0-9_-]+\.workers\.dev' vercel.json | head -n 1 || true)
 
-          FEATURES="$features" PROXY="$proxy" VERCEL_TARGET="$vercel_target" APP_URL="$app_url" node -e '
-            const fs = require("fs");
-            const env = process.env;
-            const f = JSON.parse(env.FEATURES);
-            const names = new Set((env.SECRET_NAMES || "").split(/\s+/).filter(Boolean));
-            const missing = (list) => list.filter((n) => !names.has(n));
-            const onOff = (v) => (v ? "啟用" : "未啟用");
-            const authMissing = missing(["GOOGLE_CLIENT_ID", "GOOGLE_CLIENT_SECRET", "SESSION_SECRET"]);
-            const aiMissing = missing(["ANTHROPIC_API_KEY"]);
-            let proxyOk = false;
-            try { proxyOk = JSON.parse(env.PROXY).service === env.WORKER_NAME; } catch {}
-            const workerHost = env.WORKER_NAME + "." + env.SUBDOMAIN + ".workers.dev";
-            const vercelOk = env.VERCEL_TARGET === workerHost;
-
-            const rows = [
-              ["Worker 網址", env.WORKER_URL],
-              ["workers.dev 子網域", env.SUBDOMAIN + ".workers.dev"],
-              ["登入（auth）", onOff(f.auth)],
-              ["AI 批改（ai）", onOff(f.ai)],
-              ["拍照 OCR（ocr）", onOff(f.ocr)],
-              ["AI 全站暫停（aiPaused）", f.aiPaused ? "是" : "否"],
-              ["Worker 上的機密（只列名稱）", [...names].join("、") || "（沒有）"],
-              ["經 Vercel 代理的 " + env.APP_URL + "/api/health", proxyOk ? "已接上" : "還沒接上"],
-            ];
-            for (const [k, v] of rows) console.log(k + "：" + v);
-
-            const warnings = [];
-            if (!f.auth) warnings.push("登入未啟用：Worker 上缺 " + (authMissing.join("、") || "（機密都在，請檢查 wrangler.toml 的 APP_ORIGIN）") + "。");
-            else if (!f.ai) warnings.push("AI 批改未啟用：Worker 上缺 " + (aiMissing.join("、") || "（機密都在，請檢查 wrangler.toml 的 [[queues.producers]]）") + "。");
-            if (f.ai && f.aiPaused) warnings.push("AI 目前是暫停狀態：今天的全站預算用完、管理員在後台按了暫停，或 D1 遷移沒有套用成功。");
-            const expAuth = authMissing.length === 0;
-            const expAi = expAuth && aiMissing.length === 0;
-            if (f.auth !== expAuth || f.ai !== expAi) warnings.push("/api/features 和 Worker 上的機密對不起來（可能是新版本還沒傳到所有節點），幾分鐘後再打開 " + env.WORKER_URL + "/api/features 確認。");
-            for (const w of warnings) console.log("::warning::" + w);
-
-            const next = [];
-            if (!vercelOk) next.push("把根目錄 vercel.json 的 rewrites（/api、/auth 兩條）指向 https://" + workerHost + "（目前是 " + (env.VERCEL_TARGET || "沒有找到") + "），推到 main，Vercel 重新部署後打開 " + env.APP_URL + "/api/health 應該回 ok。");
-            else if (!proxyOk) next.push("vercel.json 已指向這支 Worker，但 " + env.APP_URL + "/api/health 還不通：確認 Vercel 已重新部署（Vercel 儀表板 → Deployments）。");
-            if (f.auth) next.push("Google Cloud Console 的 OAuth 用戶端要有重新導向 URI " + env.APP_URL + "/auth/google/callback；用 ADMIN_EMAIL 的 Google 帳號登入後打開 " + env.APP_URL + "/admin 看健康檢查。");
-            else next.push("設定登入需要的機密（docs/SETUP-KEYS.md），再重跑這個 workflow。");
-            for (const [i, n] of next.entries()) console.log("下一步 " + (i + 1) + "：" + n);
-
-            const md = ["## 後端部署結果", "", "| 項目 | 結果 |", "|---|---|", ...rows.map(([k, v]) => "| " + k + " | " + v + " |"), ""];
-            if (warnings.length) md.push("### 注意", "", ...warnings.map((w) => "- " + w), "");
-            md.push("### 下一步", "", ...next.map((n, i) => (i + 1) + ". " + n), "", "詳細說明見 docs/SETUP-KEYS.md。", "");
-            if (env.GITHUB_STEP_SUMMARY) fs.appendFileSync(env.GITHUB_STEP_SUMMARY, md.join("\n"));
-          '
+          # 4. Summary：表格（含「自訂題目批改（customEssay）」，§10 第 3、5 步看這一列）、::warning::、::notice::、下一步。
+          #    wrangler.toml 的 AI_CUSTOM_ESSAY 和 /api/features 對不起來時警告（.github/scripts/deploy-summary.mjs）。
+          FEATURES="$features" PROXY="$proxy" VERCEL_TARGET="$vercel_target" APP_URL="$app_url" node .github/scripts/deploy-summary.mjs

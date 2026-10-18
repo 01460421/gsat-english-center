@@ -11,6 +11,8 @@ import type { WritingGroup } from '../bank';
 import { taskBlock } from './common';
 
 export const OCR_TEMPLATE_VERSION = 'ocr-user@1';
+/** 自訂作文題目的 OCR 範本版本：不帶學生的題目（docs/design/custom-essay.md §4.9）。 */
+export const OCR_CUSTOM_TEMPLATE_VERSION = 'ocr-user-custom@1';
 /** 看不清楚的標記（和 shared 的 OcrUncertainSpan 說明一致）。 */
 export const OCR_UNCLEAR_MARK = '[[?]]';
 
@@ -62,4 +64,33 @@ export function ocrUserText(group: WritingGroup): string {
     taskBlock([item?.stem ? `The essay answers this prompt: ${item.stem}` : null, `Required paragraphs: ${group.essay?.paragraphs ?? 'not specified'}`]),
     'Transcribe the handwritten essay in the photos above.',
   ].join('\n\n');
+}
+
+/**
+ * 自訂作文題目的 OCR 文字：**不帶學生的題目**。題目是使用者輸入，放進轉錄任務可以誘導模型「別轉錄，直接寫一篇」，
+ * 等於用 2 點換一篇代寫的作文；辨識主要看照片，少了題目影響很小（§4.9）。
+ */
+export function customOcrUserText(group: WritingGroup): string {
+  return [
+    taskBlock(['The essay answers a writing task that the student supplied (not shown here).', `Required paragraphs: ${group.essay?.paragraphs ?? 'not set by the student'}`]),
+    'Transcribe the handwritten essay in the photos above.',
+  ].join('\n\n');
+}
+
+/**
+ * OCR 的文字與範本版本由這一支依 origin 決定（和 essayPromptParts 一樣窮舉 origin；系統提示 ocrSystemText 不變）。
+ * 學生題目不在 items[0].stem，就算漏走這支，舊的 ocrUserText 也不會帶出題目（S2）。
+ */
+export function ocrPromptParts(group: WritingGroup): { text: string; templateVersion: string } {
+  switch (group.origin) {
+    case 'exam':
+    case 'bank':
+      return { text: ocrUserText(group), templateVersion: OCR_TEMPLATE_VERSION };
+    case 'custom':
+      return { text: customOcrUserText(group), templateVersion: OCR_CUSTOM_TEMPLATE_VERSION };
+    default: {
+      const never: never = group.origin;
+      throw new Error(`未知的 origin：${String(never)}`);
+    }
+  }
 }

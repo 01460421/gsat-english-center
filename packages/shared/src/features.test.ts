@@ -18,6 +18,15 @@ describe('isFeaturesResponse', () => {
     expect(isFeaturesResponse(null)).toBe(false);
   });
 
+  it('customEssay 選填：舊版 Worker 沒有這個欄位也接受；有的話必須是布林', () => {
+    const base = { auth: true, ai: true, ocr: true, aiPaused: false };
+    expect(isFeaturesResponse(base)).toBe(true);
+    expect(isFeaturesResponse({ ...base, customEssay: true })).toBe(true);
+    expect(isFeaturesResponse({ ...base, customEssay: false })).toBe(true);
+    expect(isFeaturesResponse({ ...base, customEssay: 'on' })).toBe(false);
+    expect(isFeaturesResponse({ ...base, customEssay: null })).toBe(false);
+  });
+
   it('預設值全部關閉，且不可被修改', () => {
     expect(Object.values(FEATURES_OFF).every((v) => v === false)).toBe(true);
     expect(Object.isFrozen(FEATURES_OFF)).toBe(true);

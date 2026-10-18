@@ -7,6 +7,8 @@
  *   作文：四項各 0–5；離題時內容以外三項為 0；少於 100 個單詞或未分段扣總分 1（同時發生只扣 1）；四項加總。
  *   兩位評分者平均；差距超過門檻（作文 >5、中譯英 >2）才有第三位，取三者中最接近的兩個平均（設計值）。
  * 錯誤的位置一律由程式在原文中搜尋模型引用的片段得出（不採用模型自己算的位移）。
+ * 英文作文自訂題目另有自由文字欄位的程式限制（CUSTOM_OUTPUT_LIMITS；docs/design/custom-essay.md §4.8，安全審查 S1）：
+ * 就算模型被題目誘導，也拿不到一篇完整的作文。歷屆題與本站題（EssayContext.custom 不是 true）的行為完全不變。
  * 這裡全部是純函式，沒有 I/O，方便單元測試（test/ai.scoring.test.ts）。
  */
 import {
@@ -22,6 +24,7 @@ import {
   TRANSLATION_POINTS_PER_PART,
   TRANSLATION_RATER_GAP_THRESHOLD,
   checkMechanics,
+  countEnglishWords,
   essayBandOf,
   type EssayCriterion,
   type EssayCriterionResult,
@@ -291,6 +294,10 @@ export interface EssayRaterRecord {
   errors: EssayError[];
   rewrite: string | null;
   safety_flag: string | null;
+  /** 自訂題的參考改寫超過長度上限、或和原文差太多被丟掉（存進 feedback_json，結果頁據此說明；沒有＝沒被丟掉）。 */
+  rewrite_omitted?: RewriteOmitted;
+  /** 自訂題的程式限制處理了多少（consumer 寫進 judgments.meta，上線後看有沒有誤傷；R14）。歷屆題與本站題沒有這個欄位。 */
+  output_limits?: CustomOutputCounts;
 }
 
 export interface EssayContext {
@@ -299,25 +306,209 @@ export interface EssayContext {
   paragraphs: number;
   requiredParagraphs: number | null;
   photoMode: boolean;
+  /** 英文作文自訂題目：套用 CUSTOM_OUTPUT_LIMITS。沒有這個欄位＝false（歷屆題與本站題）。 */
+  custom?: boolean;
+}
+
+/**
+ * 自訂作文題目的自由文字欄位上限（docs/design/custom-essay.md §4.8，S1；門檻是設計值，§7.8 的評分對照驗證正常作文幾乎不觸發）：
+ *   rewrite                參考改寫的英文單詞 ≤ ceil(n × 1.3) + 10（n＝學生作文的單詞數）；超過就整篇不給（too_long）；
+ *                          和原文的單詞編輯距離 > ceil(n × 0.5) 也整篇不給（too_different：那是另寫一篇，不是修改）
+ *   errors[] 找不到位置     整則丟掉（找不到位置的 excerpt 是模型自己寫的字，可以塞進任意文字）
+ *   errors[] 同一個位置     第二則起丟掉（30 則都引用同一個 "the"，就能把一篇範文拆進 30 則說明）
+ *   errors[].suggestion    每則英文單詞 ≤ max(25, excerpt 的單詞數 × 2 + 10)；所有建議合計 ≤ min(max(60, n + 30), 120)
+ *                          （超過的清成空字串；合計超過時從最後一則往前清；合計上限不隨作文長度一直放大）
+ *   _zh 欄位與 top_improvements  每欄英文單詞 ≤ 40（中文說明裡的英文只能是短引用）；errors[].explanation_zh 每則 ≤ 20；
+ *                          第二、三位的簡短評語 ≤ 20；超過的清成空字串
+ *   _zh 欄位合計            第一位所有中文說明（評語、四項說明、三個優先改進、逐段建議、錯誤說明）的英文單詞合計 ≤ 120，
+ *                          超過時從最後一欄往前清（逐欄上限擋不住「拆成 30 則、每則 26 個單詞」）
+ *   _zh 欄位                「大學入學考試中心」「大考中心」「CEEC」換成「官方」（S17）
+ * suggestion 與 _zh 欄位的英文單詞用 outputEnglishWords 算：NFKC 之後，拉丁、西里爾、希臘字母都算（模型被誘導改用全形、
+ * 數學粗體或形近字母寫英文時，上限照樣算得到）。
+ * 門檻放在這裡，調整時不用改提示。
+ */
+export const CUSTOM_OUTPUT_LIMITS = {
+  rewriteWordsRatio: 1.3,
+  rewriteExtraWords: 10,
+  rewriteMaxEditRatio: 0.5,
+  suggestionMinWords: 25,
+  suggestionWordsPerExcerptWord: 2,
+  suggestionExtraWords: 10,
+  suggestionsTotalMinWords: 60,
+  suggestionsTotalExtraWords: 30,
+  suggestionsTotalMaxWords: 120,
+  zhEnglishWordsMax: 40,
+  errorExplanationEnglishWordsMax: 20,
+  holisticCommentEnglishWordsMax: 20,
+  zhEnglishWordsTotalMax: 120,
+} as const;
+
+/** 參考改寫被丟掉的原因。 */
+export type RewriteOmitted = 'too_long' | 'too_different';
+
+/** 比對參考改寫用的單詞（小寫、去標點）。 */
+function comparableWords(text: string): string[] {
+  return text.toLowerCase().replace(/[’‘]/g, "'").match(/[a-z0-9]+(?:'[a-z]+)?/g) ?? [];
+}
+
+/** 兩串單詞的編輯距離（只用兩列，600 × 790 個單詞約 47 萬格）。 */
+function tokenEditDistance(x: string[], y: string[]): number {
+  let prev = Array.from({ length: y.length + 1 }, (_, j) => j);
+  for (let i = 1; i <= x.length; i++) {
+    const cur = [i];
+    for (let j = 1; j <= y.length; j++) cur[j] = Math.min(prev[j]! + 1, cur[j - 1]! + 1, prev[j - 1]! + (x[i - 1] === y[j - 1] ? 0 : 1));
+    prev = cur;
+  }
+  return prev[y.length]!;
+}
+
+/** 輸出限制用的「英文單詞」：拉丁、西里爾、希臘字母（形近字母）連續的一串，中間可以有一個撇號。 */
+const OUTPUT_WORD_RE = /[\p{Script=Latin}\p{Script=Cyrillic}\p{Script=Greek}]+(?:['’][\p{Script=Latin}\p{Script=Cyrillic}\p{Script=Greek}]+)?/gu;
+
+/**
+ * 自訂題輸出限制的英文單詞數。先 NFKC（全形 Ｍｙ、數學粗體 𝐈、圈起來的字母變回 ASCII），再把西里爾、希臘的形近字母也算進去：
+ * 只算 [A-Za-z] 的話，模型被題目誘導改用這些字母寫英文時每個上限都算到 0 個單詞（ASCII 英文的結果和 @gsat/shared 的
+ * customPromptEnglishWords 相同）。
+ */
+export function outputEnglishWords(text: string): number {
+  return text.normalize('NFKC').match(OUTPUT_WORD_RE)?.length ?? 0;
+}
+
+const EXAM_BOARD_RE = /大學入學考試中心|大考中心|CEEC/gi;
+const EXAM_BOARD_REPLACEMENT = '官方';
+
+/** 自訂題的程式限制處理的數量（寫進 judgments.meta）。 */
+export interface CustomOutputCounts {
+  rewrite_dropped?: RewriteOmitted;
+  errors_dropped_unlocated: number;
+  /** 和前面某一則引用同一個位置的錯誤（丟掉）。 */
+  errors_dropped_duplicate: number;
+  suggestions_cleared: number;
+  /** 單一欄位的英文超過上限而清空。 */
+  zh_fields_cleared: number;
+  /** 中文說明的英文合計超過上限、從最後一欄往前清空的欄數。 */
+  zh_total_cleared: number;
+  exam_board_replaced: number;
+}
+
+/** 收集自訂題限制的處理數量；_zh 欄位都經過 zh()。 */
+class CustomLimiter {
+  readonly counts: CustomOutputCounts = {
+    errors_dropped_unlocated: 0,
+    errors_dropped_duplicate: 0,
+    suggestions_cleared: 0,
+    zh_fields_cleared: 0,
+    zh_total_cleared: 0,
+    exam_board_replaced: 0,
+  };
+
+  /** 中文說明：考試單位名稱換成「官方」，英文超過 max（預設 40）個單詞就清空。 */
+  zh(text: string, max: number = CUSTOM_OUTPUT_LIMITS.zhEnglishWordsMax): string {
+    if (text === '') return text;
+    const replaced = text.replace(EXAM_BOARD_RE, () => {
+      this.counts.exam_board_replaced += 1;
+      return EXAM_BOARD_REPLACEMENT;
+    });
+    if (outputEnglishWords(replaced) > max) {
+      this.counts.zh_fields_cleared += 1;
+      return '';
+    }
+    return replaced;
+  }
+
+  /**
+   * 所有中文說明欄位的英文單詞合計上限：fields 依畫面順序排好（評語、四項說明、優先改進、逐段建議、錯誤說明），
+   * 超過時從最後一欄往前清空，回傳處理後的值（順序不變）。
+   */
+  zhTotal(fields: string[]): string[] {
+    const out = [...fields];
+    let total = out.reduce((a, t) => a + outputEnglishWords(t), 0);
+    for (let i = out.length - 1; i >= 0 && total > CUSTOM_OUTPUT_LIMITS.zhEnglishWordsTotalMax; i -= 1) {
+      const n = outputEnglishWords(out[i]!);
+      if (n === 0) continue;
+      total -= n;
+      out[i] = '';
+      this.counts.zh_total_cleared += 1;
+    }
+    return out;
+  }
+
+  /** 每則建議與合計的英文單詞上限（n＝學生作文的單詞數）。 */
+  suggestions(errors: EssayError[], n: number): EssayError[] {
+    const L = CUSTOM_OUTPUT_LIMITS;
+    const out = errors.map((e) => {
+      const cap = Math.max(L.suggestionMinWords, outputEnglishWords(e.excerpt) * L.suggestionWordsPerExcerptWord + L.suggestionExtraWords);
+      if (e.suggestion !== '' && outputEnglishWords(e.suggestion) > cap) {
+        this.counts.suggestions_cleared += 1;
+        return { ...e, suggestion: '' };
+      }
+      return e;
+    });
+    const totalCap = Math.min(L.suggestionsTotalMaxWords, Math.max(L.suggestionsTotalMinWords, n + L.suggestionsTotalExtraWords));
+    let total = out.reduce((a, e) => a + outputEnglishWords(e.suggestion), 0);
+    for (let i = out.length - 1; i >= 0 && total > totalCap; i -= 1) {
+      const e = out[i]!;
+      if (e.suggestion === '') continue;
+      total -= outputEnglishWords(e.suggestion);
+      out[i] = { ...e, suggestion: '' };
+      this.counts.suggestions_cleared += 1;
+    }
+    return out;
+  }
+
+  /**
+   * 參考改寫：英文單詞 ≤ ceil(n × 1.3) + 10，而且和學生原文的單詞編輯距離 ≤ ceil(n × 0.5)（提示要求的是「保留原本想法、
+   * 順序、段落的輕度修改」；差太多就是另寫一篇）。不符合回 null 並記下原因。
+   */
+  rewrite(rewrite: string | null, original: string, n: number): string | null {
+    if (rewrite === null || rewrite === '') return rewrite;
+    const L = CUSTOM_OUTPUT_LIMITS;
+    if (countEnglishWords(rewrite) > Math.ceil(n * L.rewriteWordsRatio) + L.rewriteExtraWords) {
+      this.counts.rewrite_dropped = 'too_long';
+      return null;
+    }
+    if (tokenEditDistance(comparableWords(original), comparableWords(rewrite)) > Math.ceil(n * L.rewriteMaxEditRatio)) {
+      this.counts.rewrite_dropped = 'too_different';
+      return null;
+    }
+    return rewrite;
+  }
 }
 
 function safetyOf(flag: string): string | null {
   return flag === 'none' ? null : flag;
 }
 
-/** 第一位（完整批改）。 */
+/** 第一位（完整批改）。自訂題（ctx.custom）在既有的輸出過濾之後再套用 CUSTOM_OUTPUT_LIMITS，處理數量放在 output_limits。 */
 export function scoreEssayAnalytic(role: RaterRole, ctx: EssayContext, output: EssayAnalyticOutput, filter: OutputFilter): EssayRaterRecord {
   const deductions = essayDeductions(ctx.wordCount, ctx.paragraphs, ctx.requiredParagraphs);
   const deductionPoints = deductions.reduce((a, d) => a + d.points, 0);
   const raw = Object.fromEntries(ESSAY_CRITERIA.map((c) => [c, output.criteria[c].score])) as Record<EssayCriterion, number>;
   const { scores, total } = essayRaterTotal(raw, output.off_topic, deductionPoints);
   const ranges = paragraphRanges(ctx.text, ctx.photoMode);
+  const limiter = ctx.custom === true ? new CustomLimiter() : null;
   let cursor = 0;
-  const errors: EssayError[] = output.errors.slice(0, 30).map((e) => {
+  const errors: EssayError[] = [];
+  const usedSpans = new Set<string>();
+  for (const e of output.errors.slice(0, 30)) {
     const loc = locate(ctx.text, e.excerpt, cursor);
+    if (!loc && limiter) {
+      // 自訂題：在原文找不到位置的錯誤整則丟掉。
+      limiter.counts.errors_dropped_unlocated += 1;
+      continue;
+    }
+    if (loc && limiter) {
+      // 自訂題：和前面某一則引用同一個位置的錯誤丟掉（locate 從頭找回同一個字時）。
+      const span = `${loc.start}:${loc.end}`;
+      if (usedSpans.has(span)) {
+        limiter.counts.errors_dropped_duplicate += 1;
+        continue;
+      }
+      usedSpans.add(span);
+    }
     if (loc) cursor = loc.end;
     const para = loc ? ranges.findIndex((r) => loc.start >= r.start && loc.start <= r.end) : -1;
-    return {
+    errors.push({
       paragraph_index: para >= 0 ? para : Math.max(0, Math.min(ranges.length - 1, e.paragraph_index)),
       category: e.category,
       start: loc?.start ?? 0,
@@ -325,9 +516,9 @@ export function scoreEssayAnalytic(role: RaterRole, ctx: EssayContext, output: E
       excerpt: loc ? ctx.text.slice(loc.start, loc.end) : filter.text(e.excerpt, 300),
       explanation_zh: filter.text(e.explanation_zh, 600),
       suggestion: filter.text(e.suggestion, 600),
-    };
-  });
-  return {
+    });
+  }
+  const record: EssayRaterRecord = {
     result: { role, scores, off_topic: output.off_topic, total, comment_zh: filter.text(output.comment_zh, 1_000) },
     deductions,
     criteria_explanations: Object.fromEntries(ESSAY_CRITERIA.map((c) => [c, filter.text(output.criteria[c].explanation_zh, 1_000)])) as Record<EssayCriterion, string>,
@@ -343,15 +534,52 @@ export function scoreEssayAnalytic(role: RaterRole, ctx: EssayContext, output: E
     rewrite: output.rewrite ? filter.text(output.rewrite, 5_000) : null,
     safety_flag: safetyOf(output.safety_flag),
   };
+  if (!limiter) return record;
+  const zh = (t: string) => limiter.zh(t);
+  const rewrite = limiter.rewrite(record.rewrite, ctx.text, ctx.wordCount);
+  // 先套每欄的上限，再套全部中文說明的合計上限（依畫面順序；從最後一欄往前清）。
+  const comment = zh(record.result.comment_zh);
+  const criteria = ESSAY_CRITERIA.map((c) => zh(record.criteria_explanations?.[c] ?? ''));
+  const top = record.top_improvements.map(zh);
+  const advice = record.paragraph_advice.map((p) => zh(p.advice_zh));
+  const explanations = record.errors.map((e) => limiter.zh(e.explanation_zh, CUSTOM_OUTPUT_LIMITS.errorExplanationEnglishWordsMax));
+  const limited = limiter.zhTotal([comment, ...criteria, ...top, ...advice, ...explanations]);
+  let at = 0;
+  const take = (n: number) => {
+    const part = limited.slice(at, at + n);
+    at += n;
+    return part;
+  };
+  const [commentOut] = take(1);
+  const criteriaOut = take(criteria.length);
+  const topOut = take(top.length);
+  const adviceOut = take(advice.length);
+  const explanationsOut = take(explanations.length);
+  return {
+    ...record,
+    result: { ...record.result, comment_zh: commentOut ?? '' },
+    criteria_explanations: Object.fromEntries(ESSAY_CRITERIA.map((c, i) => [c, criteriaOut[i] ?? ''])) as Record<EssayCriterion, string>,
+    top_improvements: topOut.filter((t) => t !== ''),
+    paragraph_advice: record.paragraph_advice.map((p, i) => ({ ...p, advice_zh: adviceOut[i] ?? '' })).filter((p) => p.advice_zh !== ''),
+    errors: limiter.suggestions(
+      record.errors.map((e, i) => ({ ...e, explanation_zh: explanationsOut[i] ?? '' })),
+      ctx.wordCount,
+    ),
+    rewrite,
+    ...(limiter.counts.rewrite_dropped ? { rewrite_omitted: limiter.counts.rewrite_dropped } : {}),
+    output_limits: limiter.counts,
+  };
 }
 
-/** 第二、三位（只有分數與簡短評語）。 */
+/** 第二、三位（只有分數與簡短評語）。自訂題的 comment_zh 套用 _zh 規則（簡短評語的英文上限是 20 個單詞）。 */
 export function scoreEssayHolistic(role: RaterRole, ctx: EssayContext, output: EssayHolisticOutput, filter: OutputFilter): EssayRaterRecord {
   const deductions = essayDeductions(ctx.wordCount, ctx.paragraphs, ctx.requiredParagraphs);
   const deductionPoints = deductions.reduce((a, d) => a + d.points, 0);
   const { scores, total } = essayRaterTotal(output.scores, output.off_topic, deductionPoints);
+  const limiter = ctx.custom === true ? new CustomLimiter() : null;
+  const comment = filter.text(output.comment_zh, 1_000);
   return {
-    result: { role, scores, off_topic: output.off_topic, total, comment_zh: filter.text(output.comment_zh, 1_000) },
+    result: { role, scores, off_topic: output.off_topic, total, comment_zh: limiter ? limiter.zh(comment, CUSTOM_OUTPUT_LIMITS.holisticCommentEnglishWordsMax) : comment },
     deductions,
     criteria_explanations: null,
     top_improvements: [],
@@ -359,6 +587,7 @@ export function scoreEssayHolistic(role: RaterRole, ctx: EssayContext, output: E
     errors: [],
     rewrite: null,
     safety_flag: safetyOf(output.safety_flag),
+    ...(limiter ? { output_limits: limiter.counts } : {}),
   };
 }
 
@@ -397,6 +626,8 @@ export function combineEssay(records: Array<EssayRaterRecord & { role: RaterRole
     rewrite: primary.rewrite,
     safety_flag: sorted.map((r) => r.safety_flag).find((f) => f !== null) ?? null,
     ...(primaryExcluded ? { explanations_from_excluded_rater: true } : {}),
+    // 自訂題的參考改寫被程式限制丟掉時讓結果頁知道（沒有這個欄位＝沒被丟掉；題庫題的回應逐字不變）。
+    ...(primary.rewrite_omitted ? { rewrite_omitted: primary.rewrite_omitted } : {}),
   };
 }
 

@@ -236,6 +236,16 @@ describe('題目庫（src/generated/writing-prompts.json）', () => {
     );
   });
 
+  it('沒有任何 custom: 開頭的題組 id；getWritingGroup(\'custom:essay@1\') 是 null（自訂題一律從 D1 讀，docs/design/custom-essay.md §3.3）', () => {
+    const ids = Object.keys((bankJson as unknown as { groups: Record<string, WritingGroup> }).groups);
+    expect(ids.filter((id) => id.startsWith('custom:'))).toEqual([]);
+    expect(getWritingGroup('custom:essay@1')).toBeNull();
+    for (const g of Object.values((bankJson as unknown as { groups: Record<string, WritingGroup> }).groups)) {
+      expect(g.origin, g.group_id).not.toBe('custom');
+      expect(g, g.group_id).not.toHaveProperty('custom');
+    }
+  });
+
   it('item_id 接受完整格式、label 或題號字串', () => {
     const t = getWritingGroup(TRANSLATION_GROUP)!;
     expect(resolveItemId(t, '2')?.label).toBe('中譯英2');

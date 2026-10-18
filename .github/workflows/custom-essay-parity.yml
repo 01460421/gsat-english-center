@@ -1,0 +1,215 @@
+# 英文作文自訂題目的評分對照（真模型）：站主在 Actions 頁按「Run workflow」就能跑，不用在自己的電腦裝任何東西。
+# 設計：docs/design/custom-essay.md §7.8（評分對照）、§10（上線步驟）；站主的步驟：docs/SETUP-KEYS.md §8.2「打開自訂題目批改」。
+#
+# 為什麼要跑：自訂題目批改（AI_CUSTOM_ESSAY）上線時是關的。這支 workflow 用真模型把同一篇作文、同一個題目分別走
+# 「題庫題路徑」與「自訂題路徑」批改，比較兩邊的分數（apps/api/test/parity/custom-essay.parity.ts）；
+# Summary 的結論是「達標」才把 apps/api/wrangler.toml 的 AI_CUSTOM_ESSAY 改成 "on"。
+#
+# 只能手動執行（workflow_dispatch）。輸入：
+#   budget_usd        累計花費上限（美元，大於 0、不超過 100；含之前中斷的那幾次），到了就停、寫彙總。預設 45。
+#   allow_online_key  沒有 ANTHROPIC_PARITY_API_KEY 時，才允許改用正式站的 ANTHROPIC_API_KEY。預設不允許。
+#   resume            接著上次中斷的結果跑（已完成的案例不重新花錢）。預設是。
+#
+# 金鑰（GitHub repo secrets）：
+#   ANTHROPIC_PARITY_API_KEY  建議。Claude Console 另建 dev workspace（自己的每月上限，例如 US$50）裡的金鑰。
+#   ANTHROPIC_API_KEY         正式站（online workspace）的金鑰。只有上面那個沒設、而且勾了 allow_online_key 才會用；
+#                             花費會算進 online workspace 的每月上限，和學生的 AI 批改共用。
+#   兩個都不能用時，第一步就失敗並說明怎麼設定：評分對照的測試在沒有金鑰時會「略過」，略過不能被當成通過。
+#   金鑰只放在「跑評分對照」那一步的環境變數：npm ci（套件的安裝腳本）、產生題目庫和其他步驟都看不到；log 不印金鑰。
+#
+# 結果：
+#   - 執行結果：結論是「達標」才是綠的；「不達標」或「還沒跑完」（預算、時間、Console 上限、金鑰錯誤）都是紅的。
+#   - Summary：彙總（開頭一行是結論）、每一項指標、E 組的評語。
+#   - artifact「custom-essay-parity」（保留 30 天）：custom-essay.json（每一篇的分數、旗標、計數、花費）與 custom-essay.md。
+#   - 快取：結果目錄每次都存起來（key 含程式與題目資料的雜湊＋這次的執行編號），resume 時取回同一版程式最新的那一份，
+#     中斷（逾時、預算用完）後再執行會接著跑。改了提示、計分或題目資料，雜湊就變，不會沿用舊版本的結果。
+# 這個 repo 是公開的，log、Summary、artifact 和快取任何人都可能看到：結果只有分數、旗標、輸出限制的計數、花費，
+# 以及 E 組六篇本站範文的 AI 評語；不存作文全文（素材是 data/bank/v1/composition 的本站範文，不是學生的作文），
+# 沒有學生資料、金鑰，也沒有官方的參考譯文、評分原則或佳作（D8）。
+#
+# 時間：GitHub 代管的 runner 一個 job 最多 6 小時。批改約 152 次，可能跑不完：開始下一篇之前超過 270 分鐘就停下來
+# 寫彙總（PARITY_TIME_LIMIT_MINUTES），留時間存快取與 artifact；結論會是「還沒跑完」，resume 勾著再執行一次即可。
+name: 自訂作文題目評分對照（真模型）
+run-name: 自訂作文題目評分對照（累計上限 US$${{ inputs.budget_usd }}${{ inputs.resume && '，接續上次' || '，從頭開始' }}）
+
+on:
+  workflow_dispatch:
+    inputs:
+      budget_usd:
+        description: 累計花費上限（美元，大於 0、不超過 100；含之前中斷的那幾次）
+        type: string
+        required: true
+        default: '45'
+      allow_online_key:
+        description: 沒有 ANTHROPIC_PARITY_API_KEY 時，改用正式站的 ANTHROPIC_API_KEY（花費算進 online workspace 的每月上限）
+        type: boolean
+        default: false
+      resume:
+        description: 接著上次中斷的結果跑（已完成的不重新花錢）
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+
+# 同一時間只跑一次：兩次同時跑會重複花錢，結果也會互相蓋掉。後到的排隊，不取消正在跑的（已經花的錢不浪費）。
+concurrency:
+  group: custom-essay-parity
+  cancel-in-progress: false
+
+jobs:
+  parity:
+    name: 評分對照
+    runs-on: ubuntu-latest
+    # GitHub 代管的 runner 上限是 360 分鐘；評分對照那一步最多 330 分鐘，前後的安裝、存檔留餘裕。
+    timeout-minutes: 355
+    defaults:
+      run:
+        # 明確寫 bash，GitHub 才會加上 -o pipefail。
+        shell: bash
+    env:
+      RESULTS_DIR: apps/api/test/parity/.results
+    steps:
+      # 只看「有沒有設」（布林），不碰金鑰的值。用哪一把的規則和「跑評分對照」那一步的 ANTHROPIC_API_KEY 相同。
+      - name: 檢查輸入與金鑰
+        id: preflight
+        env:
+          HAS_PARITY_KEY: ${{ secrets.ANTHROPIC_PARITY_API_KEY != '' }}
+          HAS_ONLINE_KEY: ${{ secrets.ANTHROPIC_API_KEY != '' }}
+          ALLOW_ONLINE_KEY: ${{ inputs.allow_online_key }}
+          BUDGET_USD: ${{ inputs.budget_usd }}
+        run: |
+          budget="${BUDGET_USD//[[:space:]]/}"
+          if ! [[ "$budget" =~ ^[0-9]+([.][0-9]+)?$ ]] || ! awk -v b="$budget" 'BEGIN { exit !(b > 0 && b <= 100) }'; then
+            echo "::error::budget_usd 要是大於 0、不超過 100 的數字（美元，例如 45），這次沒有執行。"
+            exit 1
+          fi
+          if [ "$HAS_PARITY_KEY" = "true" ]; then
+            source="ANTHROPIC_PARITY_API_KEY（dev workspace）"
+          elif [ "$ALLOW_ONLINE_KEY" = "true" ] && [ "$HAS_ONLINE_KEY" = "true" ]; then
+            source="ANTHROPIC_API_KEY（正式站的 online workspace）"
+            echo "::warning::沒有 ANTHROPIC_PARITY_API_KEY，這次用正式站的 ANTHROPIC_API_KEY：花費（最多 US\$$budget）算進 online workspace 的每月上限，和學生的 AI 批改共用同一個上限。"
+          elif [ "$ALLOW_ONLINE_KEY" = "true" ]; then
+            echo "::error::勾了 allow_online_key，但 ANTHROPIC_PARITY_API_KEY 和 ANTHROPIC_API_KEY 都沒有設定，評分對照沒有執行。請照 docs/SETUP-KEYS.md §8.2 在 Claude Console 建 dev workspace 的金鑰，存成 GitHub secret ANTHROPIC_PARITY_API_KEY。"
+            exit 1
+          else
+            echo "::error::沒有 ANTHROPIC_PARITY_API_KEY，評分對照沒有執行（沒有金鑰時測試會略過，不能當成通過）。二選一：(1) 建議：在 Claude Console 另建 dev workspace（每月上限例如 US\$50）和它的金鑰，存成 GitHub secret ANTHROPIC_PARITY_API_KEY，再按一次 Run workflow；(2) 用正式站的 ANTHROPIC_API_KEY：Run workflow 時勾選 allow_online_key（花費算進 online workspace 的每月上限）。步驟見 docs/SETUP-KEYS.md §8.2。"
+            exit 1
+          fi
+          echo "金鑰：$source；累計花費上限：US\$$budget"
+          {
+            echo "budget=$budget"
+            echo "source=$source"
+          } >> "$GITHUB_OUTPUT"
+
+      - uses: actions/checkout@v7
+
+      # 快取的 key：會影響批改結果的程式與題目資料（提示、計分、呼叫、設定預設值、題目庫產生器、案例、輸入規則、本站作文題）。
+      # 在產生題目庫之前算（src/generated 不進版控，產生後再算雜湊會不一樣）。
+      - name: 決定快取的 key
+        id: key
+        run: echo "prefix=custom-essay-parity-${{ hashFiles('apps/api/src/**', '!apps/api/src/generated/**', 'apps/api/scripts/build-writing-prompts.mjs', 'apps/api/test/parity/**', '!apps/api/test/parity/.results/**', 'packages/shared/src/**', '!packages/shared/src/**/*.test.ts', 'data/bank/v1/composition/**') }}" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: 安裝套件（依 package-lock.json）
+        run: npm ci
+
+      - name: 取回上次的結果
+        id: restore
+        if: inputs.resume
+        uses: actions/cache/restore@v6
+        with:
+          path: apps/api/test/parity/.results
+          key: ${{ steps.key.outputs.prefix }}-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: |
+            ${{ steps.key.outputs.prefix }}-
+
+      # 不需要金鑰：產生題目庫與 D8 指紋檔（src/generated，不進版控），再跑達標判定的單元測試，以及用真實資料檢查案例
+      # （custom-essay.precheck：可用的作文夠多、沒有被輸入規則拒收的案例），壞了就在花錢之前停下來。
+      # 上次留下的彙總先刪掉，Summary 只顯示這次寫出來的。
+      - name: 準備題目庫、確認達標判定（不需要金鑰）
+        env:
+          MATCHED: ${{ steps.restore.outputs.cache-matched-key }}
+        run: |
+          rm -f "$RESULTS_DIR/custom-essay.md"
+          if [ -f "$RESULTS_DIR/custom-essay.json" ]; then echo "接著上次的結果跑（快取：$MATCHED）"; else echo "從頭開始"; fi
+          npm run prompts -w @gsat/api
+          cd apps/api
+          npx vitest run test/custom-essay.parity-summary.test.ts
+          npx vitest run --config vitest.parity.config.ts custom-essay.precheck
+
+      # 金鑰只在這一步。規則和「檢查輸入與金鑰」相同：ANTHROPIC_PARITY_API_KEY 優先；沒有它而且勾了 allow_online_key 才用 ANTHROPIC_API_KEY。
+      # CI=true（GitHub 預設就有）時，沒有金鑰的評分對照會失敗而不是略過；結論不是「達標」時這一步失敗。
+      - name: 跑評分對照（真模型）
+        id: parity
+        timeout-minutes: 330
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_PARITY_API_KEY || (inputs.allow_online_key && secrets.ANTHROPIC_API_KEY) || '' }}
+          PARITY_BUDGET_USD: ${{ steps.preflight.outputs.budget }}
+          PARITY_TIME_LIMIT_MINUTES: '270'
+        run: |
+          if [ -z "$ANTHROPIC_API_KEY" ]; then
+            echo "::error::這一步拿不到金鑰（見「檢查輸入與金鑰」與 docs/SETUP-KEYS.md §8.2），不執行。"
+            exit 1
+          fi
+          npm run parity:custom-essay -w @gsat/api
+
+      - name: 寫 Summary
+        id: results
+        if: always()
+        env:
+          PREFLIGHT: ${{ steps.preflight.outcome }}
+          PARITY: ${{ steps.parity.outcome }}
+          KEY_SOURCE: ${{ steps.preflight.outputs.source }}
+          BUDGET: ${{ steps.preflight.outputs.budget }}
+          RESUME: ${{ inputs.resume }}
+          MATCHED: ${{ steps.restore.outputs.cache-matched-key }}
+        run: |
+          {
+            if [ -f "$RESULTS_DIR/custom-essay.md" ]; then
+              cat "$RESULTS_DIR/custom-essay.md"
+            else
+              echo "# 自訂作文題目評分對照"
+              echo
+              if [ "$PREFLIGHT" != "success" ]; then
+                echo "**沒有執行**：輸入或金鑰有問題（見上方的錯誤訊息），沒有花費。設定方式見 docs/SETUP-KEYS.md §8.2。"
+              elif [ "$PARITY" = "skipped" ]; then
+                echo "**沒有開始批改**：前面的步驟失敗（見失敗的那一步），沒有花費。"
+              else
+                echo "**中途停止**（逾時、被取消或程式錯誤），沒有產生彙總。已完成的案例有存起來：resume 保持勾選，再按一次 Run workflow 會接著跑。"
+              fi
+            fi
+            echo
+            echo "---"
+            echo
+            echo "- 金鑰：${KEY_SOURCE:-（沒有）}；累計花費上限：US\$${BUDGET:-（無效）}"
+            if [ "$RESUME" = "true" ]; then echo "- 接續上次的結果：${MATCHED:-沒有找到，從頭開始}"; else echo "- 從頭開始（沒有勾 resume）"; fi
+            echo "- 結論是「達標」之後的步驟：docs/SETUP-KEYS.md §8.2（把 apps/api/wrangler.toml 的 AI_CUSTOM_ESSAY 改成 \"on\"）。"
+          } >> "$GITHUB_STEP_SUMMARY"
+          if [ -f "$RESULTS_DIR/custom-essay.json" ]; then echo "json=true" >> "$GITHUB_OUTPUT"; else echo "json=false" >> "$GITHUB_OUTPUT"; fi
+
+      # 每次都存（key 每次不同），下一次 resume 取回同一版程式最新的那一份。
+      - name: 存結果給下一次接著跑
+        if: always() && steps.results.outputs.json == 'true'
+        uses: actions/cache/save@v6
+        with:
+          path: apps/api/test/parity/.results
+          key: ${{ steps.key.outputs.prefix }}-${{ github.run_id }}-${{ github.run_attempt }}
+
+      # 只上傳這兩個檔案（內容見檔頭「結果」：沒有作文全文、學生資料、金鑰與 D8 素材）。.results 是隱藏目錄，所以要 include-hidden-files。
+      - name: 上傳結果（artifact）
+        if: always() && steps.results.outputs.json == 'true'
+        uses: actions/upload-artifact@v7
+        with:
+          name: custom-essay-parity
+          path: |
+            apps/api/test/parity/.results/custom-essay.json
+            apps/api/test/parity/.results/custom-essay.md
+          include-hidden-files: true
+          if-no-files-found: warn
+          overwrite: true
+          retention-days: 30

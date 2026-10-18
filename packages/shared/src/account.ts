@@ -183,6 +183,8 @@ export interface MeExport {
   /**
    * 寫作提交與批改結果；MVP 只有中譯英與作文。每一筆是 submissions 表的欄位（*_json 已解析成物件）
    * 加上 gradings（各評分者的分項判斷、程式分數、回饋）。照片與內部欄位（租約、op_id）不匯出。
+   * 每一筆另有 custom_prompt：自訂作文題目是物件（CustomEssayPrompt 的欄位加 created_at；顯示時重查 D8 命中就隱藏），
+   * 其他題目是 null（docs/design/custom-essay.md §3.6；格式 gsat-export/v1 只加欄位、不改既有欄位）。
    */
   submissions: unknown[];
 }

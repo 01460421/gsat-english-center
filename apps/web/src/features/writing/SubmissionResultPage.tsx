@@ -16,10 +16,31 @@
  * 本站仿真題（group_id 'ai.tr.xxxxxx@v'；docs/design/bank-writing.md §2.6）：標題是「本站仿真 中譯英」加主題，頂端放 AI 出題標示；
  * 題目先看 index.json 的版本：和提交相同才讀 prompts 檔（中文題目、段數要求），graded 後另有「本站參考」收合區（展開才讀 answers 檔）；
  * 新版已上架或已下架時不請求舊版的檔案（已經不存在），顯示說明，批改結果照常顯示。
+ *
+ * 自訂作文題目（group_id 'custom:essay@1'；docs/design/custom-essay.md §6.8）：標題「自訂題目 英文作文」，<title> 不含題目文字；
+ * 題目來自 API 的 custom_prompt（不下載任何靜態檔），收在「你提供的題目」，可修改的狀態（draft／ocr_ready／confirmed／failed）
+ * 可以就地修改題目（PUT { custom_prompt }）；AI 標示用不提考試機構名稱的版本；送批改前先用 essayGradableProblem 檢查作文；
+ * 已批改時提醒題目由學生提供、離題時指向「修改題目後重新批改這篇」、參考改寫因長度上限被拿掉時說明。
+ * 就地修改題目時：表單開著（還沒儲存）不能送批改；存檔失敗的原因顯示在「儲存題目」下方；還沒儲存的題目暫存在這台裝置
+ * （切到別的 App、分頁被回收回來還在）。題目在顯示時被隱藏（D8 重查命中）的可修改提交：送批改停用，改提供「重新輸入題目」
+ * （空白表單，PUT 整份取代；審查 correctness-2、ux-1、ux-9、ux-10、ux-13）。自訂題目批改關著（features.customEssay 不是 true）時，
+ * 送批改、送辨識與修改題目都停用並說明「目前沒有開放」（按了也只會得到 503）。
  */
-import { parseBankGroupId, type EssayBody, type SubmissionDetail, type TranslationBody } from '@gsat/shared';
+import {
+  CUSTOM_ESSAY_NOT_CONFIGURED_MESSAGE,
+  CUSTOM_PROMPT_UNAVAILABLE_TEXT,
+  checkCustomPrompt,
+  essayGradableProblem,
+  isCustomEssayGroupId,
+  parseBankGroupId,
+  type CustomEssayPrompt,
+  type EssayBody,
+  type SubmissionDetail,
+  type SubmissionStatus,
+  type TranslationBody,
+} from '@gsat/shared';
 import { CirclePause, Loader2 } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, Navigate, useLocation, useNavigate, useParams } from 'react-router';
 import { DataLoadError } from '../../data/client';
 import { loginHref, needsOnboarding, useFeatures, useMe } from '../../lib/api';
@@ -28,6 +49,18 @@ import { APP_NAME } from '../../modules';
 import { AiGroupBadge } from '../practice/components/AiGroupBadge';
 import { displayTopic } from '../practice/labels';
 import { BankAnswersPanel } from './bank/components/BankAnswersPanel';
+import { CustomPromptForm, PROMPT_FIELD_INPUT } from './custom/CustomPromptForm';
+import { CustomPromptView } from './custom/CustomPromptView';
+import {
+  customTaskText,
+  emptyCustomPromptDraft,
+  forgetCustomSubmission,
+  promptDraftFrom,
+  toCustomPromptDraft,
+  toCustomPromptInput,
+  type CustomPromptDraft,
+} from './custom/drafts';
+import { customErrorView, gradableMessage, isCustomTaskConflict, withSnapshot, type PromptFieldError } from './custom/errors';
 import { bankVersionStatus, findBankEntry, loadBankPrompt, loadWritingBankIndex, type BankPromptFile, type WritingBankEntry } from './bank/data';
 import { AiAccessNotice, QuotaSummary, taskPoints } from './components/AiAccessPanel';
 import { EssayResult } from './components/EssayResult';
@@ -37,7 +70,7 @@ import { TranslationResult } from './components/TranslationResult';
 import { AiNotice, BackLink, ConfirmButton, ErrorMessage, Loading, Notice, ReportAiContent, card, primaryButton, secondaryButton } from './components/ui';
 import { findEssayPrompt, findTranslationSet, loadEssayIndex, loadTranslationIndex, parseGroupId, type EssayPrompt, type TranslationSet } from './data';
 import { useAiAccess } from './lib/access';
-import { clearDraft, completeEssayScores, isSelfDraft, loadDraft, ocrDraftKey, selfDraftKey, type SelfDraft } from './lib/drafts';
+import { clearDraft, completeEssayScores, isSelfDraft, loadDraft, ocrDraftKey, promptEditDraftKey, selfDraftKey, type SelfDraft } from './lib/drafts';
 import { describeError, isQuotaError, refundReasonMessage, type ErrorView } from './lib/errors';
 import { KIND_LABELS, STATUS_LABELS, attemptPathOf, formatUnixTime, groupLabel } from './lib/format';
 import { useAutosave, useQuota, useSubmissionPoller } from './lib/hooks';
@@ -45,7 +78,7 @@ import { isPendingStatus } from './lib/polling';
 import { saveSelfAssessment, startTask } from './lib/submit';
 import { countEnglishWords, countParagraphs } from './lib/text';
 import { useDescribeContext, useErrorView, useRefreshMeOnConsentError } from './lib/useErrorView';
-import { deleteSubmission, getAiOp, type AiTaskPath } from './lib/writingApi';
+import { deleteSubmission, getAiOp, updateSubmission, type AiTaskPath } from './lib/writingApi';
 
 export default function SubmissionResultPage() {
   const { id = '' } = useParams();
@@ -225,10 +258,108 @@ function Pending({ label, slow, stopped }: { label: string; slow: boolean; stopp
   );
 }
 
+/** 自訂題目可以修改題目的狀態（和 Worker 的 EDITABLE 相同；已批改的另建一份）。 */
+const CUSTOM_EDITABLE: readonly SubmissionStatus[] = ['draft', 'ocr_ready', 'confirmed', 'failed'];
+
+export const CUSTOM_RESULT_NOTICE = '這是你提供的題目：AI 依你貼的題目判斷內容與切題，題目不完整時可能判斷不準。';
+export const CUSTOM_OFF_TOPIC_NOTICE = '如果題目貼得不完整，AI 可能誤判離題。可以按「修改題目後重新批改這篇」補上完整題目再送一次';
+export const CUSTOM_REWRITE_OMITTED = '這次的參考改寫超過長度上限，依本站規則不顯示。';
+export const CUSTOM_REWRITE_TOO_DIFFERENT = '這次的參考改寫和你的作文差太多（比較像另寫一篇，不是修改），依本站規則不顯示。';
+export const CUSTOM_PROMPT_MISSING = '找不到這份作答的題目。';
+/** 題目表單開著（還沒儲存）時送批改按鈕停用的原因（審查 ux-1）。 */
+export const CUSTOM_EDITING_BLOCKS_GRADE = '請先按「儲存題目」或「取消修改」再送出。';
+/** 題目被隱藏（D8 重查命中）時送批改停用的原因（審查 correctness-2、ux-10）。 */
+export const CUSTOM_HIDDEN_BLOCKS_GRADE = '這份作答的題目含有和官方評分說明相同的文字，已隱藏，不能用它批改。請在上方「你提供的題目」按「重新輸入題目」，儲存後再送出。';
+/** 指紋檔暫時壞掉、題目暫時無法顯示時。 */
+export const CUSTOM_UNAVAILABLE_BLOCKS_GRADE = '題目暫時無法顯示，請稍後重新整理頁面再送出。';
+
+/**
+ * 「你提供的題目」：唯讀顯示，可修改的狀態另有「修改題目」（就地修改，不離開結果頁、不丟辨識文字）。
+ * 題目讀不到（舊版 Worker、資料異常）時說明，批改結果照常顯示。
+ */
+function CustomPromptSection({
+  prompt,
+  open,
+  onToggle,
+  editing,
+  canEdit,
+  canReenter,
+  draft,
+  onDraft,
+  serverError,
+  saveError,
+  saving,
+  onEdit,
+  onSave,
+  onCancel,
+}: {
+  prompt: CustomEssayPrompt | null | undefined;
+  open: boolean;
+  onToggle: (open: boolean) => void;
+  editing: boolean;
+  canEdit: boolean;
+  /** 題目被隱藏（D8 重查命中）的可修改提交：可以重新輸入整份題目。 */
+  canReenter: boolean;
+  draft: CustomPromptDraft;
+  onDraft: (d: CustomPromptDraft) => void;
+  serverError: PromptFieldError | null;
+  /** 存檔失敗（網路、409、503…）：顯示在「儲存題目」下方，不放到頁面最底下（審查 ux-9）。 */
+  saveError: ErrorView | null;
+  saving: boolean;
+  onEdit: () => void;
+  onSave: () => void;
+  onCancel: () => void;
+}) {
+  const check = useMemo(() => checkCustomPrompt(toCustomPromptInput(draft)), [draft]);
+  if (!prompt) {
+    return (
+      <Notice>
+        <p>{CUSTOM_PROMPT_MISSING}</p>
+      </Notice>
+    );
+  }
+  return (
+    <details className={card} open={open} onToggle={(e) => onToggle(e.currentTarget.open)}>
+      <summary className="min-h-11 cursor-pointer py-2 font-semibold">你提供的題目</summary>
+      <div className="mt-2 space-y-3">
+        {editing ? (
+          <CustomPromptForm value={draft} onChange={onDraft} check={check} serverError={serverError} confirmed={null} idPrefix="custom">
+            {prompt.hidden && <p className="text-sm text-muted">原本的題目已隱藏，請重新輸入整份題目（只貼題目本身）。</p>}
+            <div className="flex flex-wrap gap-2">
+              <button type="button" className={primaryButton} disabled={saving || !check.ok} onClick={onSave}>
+                {saving ? '儲存中…' : '儲存題目'}
+              </button>
+              <button type="button" className={secondaryButton} disabled={saving} onClick={onCancel}>
+                取消修改
+              </button>
+            </div>
+            {saveError && <ErrorMessage view={saveError} />}
+          </CustomPromptForm>
+        ) : (
+          <>
+            <CustomPromptView prompt={prompt} />
+            {canEdit && !prompt.hidden && (
+              <button type="button" className={secondaryButton} onClick={onEdit}>
+                修改題目
+              </button>
+            )}
+            {canReenter && (
+              <button type="button" className={secondaryButton} onClick={onEdit}>
+                重新輸入題目
+              </button>
+            )}
+          </>
+        )}
+      </div>
+    </details>
+  );
+}
+
 function SubmissionView({ id }: { id: string }) {
   const navigate = useNavigate();
   const { snapshot, restart, accept } = useSubmissionPoller(id);
   const { detail, phase, speed, error } = snapshot;
+  const features = useFeatures();
   const access = useAiAccess();
   const { quota, refresh: refreshQuota } = useQuota(access.state === 'ready');
   const prompt = usePromptFor(detail);
@@ -244,6 +375,49 @@ function SubmissionView({ id }: { id: string }) {
   const { discard: discardSelf } = useAutosave(selfKey, self);
   // 輪詢拿到 consent_required：重新讀 /api/me（需要同意時這一頁會自己導到歡迎頁）。
   useRefreshMeOnConsentError(error);
+  // 自訂題目：「你提供的題目」收合區、就地修改題目的表單與伺服器回的題目錯誤（§6.8）。
+  const location = useLocation();
+  const [promptOpen, setPromptOpen] = useState(false);
+  const [editingPrompt, setEditingPrompt] = useState(false);
+  const [promptDraft, setPromptDraft] = useState<CustomPromptDraft>(emptyCustomPromptDraft);
+  const [promptError, setPromptError] = useState<PromptFieldError | null>(null);
+  const [savingPrompt, setSavingPrompt] = useState(false);
+  const [saveError, setSaveError] = useState<ErrorView | null>(null);
+  const [promptNote, setPromptNote] = useState<string | null>(null);
+  // 就地修改題目、還沒儲存的草稿：存在這台裝置（照表單的「拍照小技巧」切到相機 App、分頁被回收回來還在；審查 ux-13）。
+  // 只在表單開著時存；儲存成功、取消、送出批改、刪除時清掉。
+  const promptKey = promptEditDraftKey(id);
+  const [restoredPrompt] = useState(() => toCustomPromptDraft(loadDraft(promptKey, (v: unknown): v is unknown => v !== null)));
+  const { discard: discardPromptDraft } = useAutosave(promptKey, promptDraft, editingPrompt);
+  const forgetPromptDraft = () => {
+    discardPromptDraft();
+    clearDraft(promptKey);
+  };
+  const restoreHandled = useRef(false);
+  useEffect(() => {
+    if (restoreHandled.current || !detail) return;
+    restoreHandled.current = true;
+    if (!restoredPrompt) return;
+    const cp = isCustomEssayGroupId(detail.group_id) ? detail.custom_prompt : null;
+    // 已經不能改（送出批改、已批改）或題目暫時無法顯示：這份暫存用不到了。
+    if (!cp || (cp.hidden && cp.text === CUSTOM_PROMPT_UNAVAILABLE_TEXT) || !CUSTOM_EDITABLE.includes(detail.status)) {
+      clearDraft(promptKey);
+      return;
+    }
+    setPromptDraft(restoredPrompt);
+    setEditingPrompt(true);
+    setPromptOpen(true);
+    // 只在第一次拿到這份提交時決定一次。
+  }, [detail]);
+  /** 展開「修改題目」後把焦點移到出問題的欄位（等表單畫出來）。 */
+  const [promptFocus, setPromptFocus] = useState<{ id: string; n: number } | null>(null);
+  useEffect(() => {
+    if (!promptFocus) return;
+    const el = document.getElementById(promptFocus.id);
+    if (!el) return;
+    el.focus({ preventScroll: true });
+    if (typeof el.scrollIntoView === 'function') el.scrollIntoView({ block: 'center' });
+  }, [promptFocus]);
 
   // 剛批改完：更新剩餘點數。
   const status = detail?.status;
@@ -271,12 +445,32 @@ function SubmissionView({ id }: { id: string }) {
     setActionError(null);
     try {
       if (before) await before();
-      await startTask(task, detail.id);
+      // 自訂題目：題目剛被改過（rev 不符）或讀不到的 409 是「沒有送出」，交給 customErrorView 說明（審查 correctness-3）。
+      await startTask(task, detail.id, isCustom ? { isFailure: isCustomTaskConflict } : {});
       after?.();
+      if (isCustom) {
+        setEditingPrompt(false);
+        forgetPromptDraft();
+      }
       restart();
     } catch (err) {
-      const q = isQuotaError(err) ? await refreshQuota() : quota;
-      setActionError(await errorView(err, { quota: q }));
+      const custom = isCustom ? customErrorView(err, { place: 'result', reloadHref: location.pathname }) : null;
+      if (custom?.kind === 'prompt') {
+        // 題目被擋下（規則或 D8 指紋更新過）：說明＋自動展開「修改題目」並標出位置（手寫稿不用重拍，P5）。
+        openPromptEditor(custom.prompt);
+        setActionError({ message: `${custom.view.message}請在上方「你提供的題目」修改後再送出。` });
+      } else if (custom?.kind === 'essay') {
+        setActionError(
+          attemptPath
+            ? { message: custom.view.message, action: { label: '回到作答頁修改作文', to: detail.input_mode === 'photo' ? `${attemptPath}&reuse=essay` : attemptPath } }
+            : custom.view,
+        );
+      } else if (custom) {
+        setActionError(custom.view);
+      } else {
+        const q = isQuotaError(err) ? await refreshQuota() : quota;
+        setActionError(await errorView(err, { quota: q }));
+      }
     } finally {
       setBusy(false);
     }
@@ -302,6 +496,10 @@ function SubmissionView({ id }: { id: string }) {
       discardSelf();
       clearDraft(selfKey);
       clearDraft(ocrDraftKey(detail.id));
+      forgetPromptDraft();
+      // 自訂題目：這台裝置的作答頁草稿若是這一份（或題目就是這一份的題目），連題目一起清掉（安全審查 S15）；
+      // 草稿已經換成別的題目時不動那個題目（審查 ux-2）。
+      if (isCustom) forgetCustomSubmission(detail.id, detail.custom_prompt);
       navigate('/writing', { replace: true });
     } catch (err) {
       setActionError(await errorView(err));
@@ -311,15 +509,86 @@ function SubmissionView({ id }: { id: string }) {
 
   const essayText = isEssayBody(detail.body) ? detail.body.text : '';
   const isBank = bankPrompt !== null;
-  // 已下架的本站題沒有作答頁可以回去。
-  const attemptPath = bankPrompt?.status === 'removed' ? null : attemptPathOf(detail.kind, detail.group_id);
+  const isCustom = isCustomEssayGroupId(detail.group_id);
+  // 已下架的本站題沒有作答頁可以回去。自訂題目帶 ?from={id}（作答頁從這一份帶回題目）。
+  const attemptPath = bankPrompt?.status === 'removed' ? null : attemptPathOf(detail.kind, detail.group_id, detail.id);
+  const customPrompt = isCustom ? detail.custom_prompt : null;
+  // 自訂題目批改關著（評分對照達標之前，或只關自訂題，SETUP-KEYS §8.1）：送批改、送辨識、修改題目都會回 503，
+  // 先停用並說明；結果與紀錄照常顯示（§5.3）。
+  const customClosed = isCustom && features.customEssay !== true;
+  const promptEditable =
+    isCustom && !customClosed && CUSTOM_EDITABLE.includes(detail.status) && access.state === 'ready' && customPrompt !== null && customPrompt !== undefined;
+  // 題目被隱藏：D8 重查命中（官方文字）或指紋檔暫時壞掉（暫時無法顯示）。前者可以重新輸入題目，後者只能稍後再試。
+  const promptUnavailable = customPrompt?.hidden === true && customPrompt.text === CUSTOM_PROMPT_UNAVAILABLE_TEXT;
+  const promptHiddenOfficial = customPrompt?.hidden === true && !promptUnavailable;
+  const canEditPrompt = promptEditable && customPrompt?.hidden !== true;
+  const canReenterPrompt = promptEditable && promptHiddenOfficial;
+  /** 送批改（與送辨識）停用的原因：自訂題目批改關著、題目表單開著、題目被隱藏或暫時無法顯示。 */
+  const promptBlocksGrade = !isCustom
+    ? null
+    : customClosed
+      ? CUSTOM_ESSAY_NOT_CONFIGURED_MESSAGE
+      : editingPrompt
+      ? CUSTOM_EDITING_BLOCKS_GRADE
+      : promptHiddenOfficial
+        ? CUSTOM_HIDDEN_BLOCKS_GRADE
+        : promptUnavailable
+          ? CUSTOM_UNAVAILABLE_BLOCKS_GRADE
+          : null;
+  // 自訂題目的作文規則（送批改前先檢查；Worker 也會再查一次）。
+  const customTask = customPrompt && !customPrompt.hidden ? customTaskText(customPrompt.text, customPrompt.figure_text) : '';
+  const gradableHint = (text: string): string | null => {
+    const reason = essayGradableProblem(text, customTask);
+    return reason ? gradableMessage(reason, countEnglishWords(text)) : null;
+  };
+  const confirmedProblem = isCustom && detail.status === 'confirmed' ? gradableHint(essayText) : null;
+
+  /**
+   * 打開題目表單：一般是帶入目前的題目；題目被隱藏（D8 重查命中）時是空白表單，存檔時整份取代（伺服器照樣重查規則與 D8）。
+   * 伺服器回的錯誤記下表單當時那一欄的內容（那一欄改了才不顯示）。
+   */
+  const openPromptEditor = (serverError: PromptFieldError | null = null) => {
+    if (!customPrompt || promptUnavailable) return;
+    const draft = editingPrompt ? promptDraft : customPrompt.hidden ? emptyCustomPromptDraft() : promptDraftFrom(customPrompt);
+    if (!editingPrompt) setPromptDraft(draft);
+    // 隱藏的題目看不到原文，標位置沒有意義：只說明原因。
+    setPromptError(serverError && !customPrompt.hidden ? withSnapshot(serverError, draft) : null);
+    setSaveError(null);
+    setPromptNote(null);
+    setEditingPrompt(true);
+    setPromptOpen(true);
+    const id = PROMPT_FIELD_INPUT[serverError?.field ?? 'text'];
+    setPromptFocus((f) => ({ id, n: (f?.n ?? 0) + 1 }));
+  };
+
+  const savePrompt = async () => {
+    setSavingPrompt(true);
+    setSaveError(null);
+    try {
+      const updated = await updateSubmission(detail.id, { custom_prompt: toCustomPromptInput(promptDraft) });
+      accept(updated);
+      setEditingPrompt(false);
+      forgetPromptDraft();
+      setPromptError(null);
+      setPromptNote('已更新題目，可以再送出批改。');
+    } catch (err) {
+      // 規則不符：在那一欄下方說明並標出位置；其他原因（網路、409、503…）顯示在「儲存題目」下方（審查 ux-9）。
+      const custom = customErrorView(err, { place: 'result', reloadHref: location.pathname });
+      if (custom?.kind === 'prompt') setPromptError(withSnapshot(custom.prompt, promptDraft));
+      else setSaveError(custom?.view ?? (await errorView(err)));
+    } finally {
+      setSavingPrompt(false);
+    }
+  };
   const bankCurrent = bankPrompt?.status === 'current' ? bankPrompt.prompt : null;
   const bankTopic = displayTopic(bankPrompt?.status === 'current' || bankPrompt?.status === 'outdated' ? (bankPrompt.entry?.topic ?? null) : null);
   const heading = `${groupLabel(detail.group_id)} ${KIND_LABELS[detail.kind]}${bankTopic ? `：${bankTopic}` : ''}`;
   // 中文題目：歷屆題用寫作索引，本站題用 prompts 檔（版本是最新的才有）。
   const translationStems = prompt.translation ?? (bankCurrent?.section_type === 'translation' ? bankCurrent : null);
   const essayStem = prompt.essay?.stem ?? (bankCurrent?.section_type === 'composition' ? bankCurrent.stem : null);
-  const requiredParagraphs = prompt.essay?.paragraphs ?? (bankCurrent?.section_type === 'composition' ? bankCurrent.paragraphs : null);
+  const requiredParagraphs = isCustom
+    ? (customPrompt?.paragraphs ?? null)
+    : (prompt.essay?.paragraphs ?? (bankCurrent?.section_type === 'composition' ? bankCurrent.paragraphs : null));
   const isAiPage = detail.status !== 'draft' && detail.status !== 'self_graded';
   const stopped = phase === 'error';
   // 辨識或批改進行中不能刪（後端回 409）；看提交本身的狀態，不看輪詢有沒有在跑（輪詢可能因錯誤停了）。
@@ -343,7 +612,7 @@ function SubmissionView({ id }: { id: string }) {
         )}
       </header>
 
-      {isAiPage && <AiNotice />}
+      {isAiPage && <AiNotice generic={isCustom} />}
       {bankPrompt?.status === 'outdated' && (
         <Notice>
           <p>這題已更新成新版本，參考內容改看新版。</p>
@@ -357,6 +626,34 @@ function SubmissionView({ id }: { id: string }) {
       {bankPrompt?.status === 'removed' && (
         <Notice>
           <p>這題已下架，本站參考內容不再提供。</p>
+        </Notice>
+      )}
+      {isCustom && (
+        <CustomPromptSection
+          prompt={customPrompt}
+          open={promptOpen}
+          onToggle={setPromptOpen}
+          editing={editingPrompt}
+          canEdit={canEditPrompt}
+          canReenter={canReenterPrompt}
+          draft={promptDraft}
+          onDraft={setPromptDraft}
+          serverError={promptError}
+          saveError={saveError}
+          saving={savingPrompt}
+          onEdit={() => openPromptEditor()}
+          onSave={() => void savePrompt()}
+          onCancel={() => {
+            setEditingPrompt(false);
+            setPromptError(null);
+            setSaveError(null);
+            forgetPromptDraft();
+          }}
+        />
+      )}
+      {promptNote && (
+        <Notice role="status">
+          <p>{promptNote}</p>
         </Notice>
       )}
       {essayStem && (
@@ -384,9 +681,12 @@ function SubmissionView({ id }: { id: string }) {
         <section className={`space-y-3 ${card}`}>
           <p>這份作答還沒有送出批改。</p>
           {detail.input_mode === 'photo' && detail.photos.length > 0 && access.state === 'ready' ? (
-            <button type="button" className={primaryButton} disabled={busy} onClick={() => void runTask('essay-ocr')}>
-              送出辨識（{taskPoints(quota, 'essay_ocr')} 點）
-            </button>
+            <>
+              <button type="button" className={primaryButton} disabled={busy || promptBlocksGrade !== null} onClick={() => void runTask('essay-ocr')}>
+                送出辨識（{taskPoints(quota, 'essay_ocr')} 點）
+              </button>
+              {promptBlocksGrade && <p className="text-sm text-muted">{promptBlocksGrade}</p>}
+            </>
           ) : (
             attemptPath && (
               <Link to={attemptPath} className={primaryButton}>
@@ -409,6 +709,7 @@ function SubmissionView({ id }: { id: string }) {
           onConfirmed={accept}
           requiredParagraphs={requiredParagraphs}
           errorContext={errorContext}
+          {...(isCustom ? { gradableHint } : {})}
         />
       )}
       {detail.status === 'ocr_ready' && !detail.ocr && (
@@ -442,11 +743,13 @@ function SubmissionView({ id }: { id: string }) {
                 <button
                   type="button"
                   className={primaryButton}
-                  disabled={busy}
+                  disabled={busy || confirmedProblem !== null || promptBlocksGrade !== null}
                   onClick={submitEssayGrade}
                 >
                   {busy ? '送出中…' : `送出 AI 批改（${gradePoints} 點）`}
                 </button>
+                {promptBlocksGrade && <p className="text-sm text-muted">{promptBlocksGrade}</p>}
+                {confirmedProblem && <p className="text-sm text-muted">{confirmedProblem}</p>}
                 <QuotaSummary quota={quota} />
               </>
             ) : (
@@ -471,9 +774,29 @@ function SubmissionView({ id }: { id: string }) {
               )}
             </>
           ) : access.state === 'ready' ? (
-            <button type="button" className={primaryButton} disabled={busy} onClick={() => void runTask(gradeTask)}>
-              {busy ? '送出中…' : `重新送出批改（${gradePoints} 點）`}
-            </button>
+            <div className="space-y-2">
+              <div className="flex flex-wrap gap-2">
+                <button type="button" className={primaryButton} disabled={busy || promptBlocksGrade !== null} onClick={() => void runTask(gradeTask)}>
+                  {busy ? '送出中…' : `重新送出批改（${gradePoints} 點）`}
+                </button>
+                {canEditPrompt && !editingPrompt && (
+                  <button type="button" className={secondaryButton} disabled={busy} onClick={() => openPromptEditor()}>
+                    修改題目
+                  </button>
+                )}
+                {canReenterPrompt && !editingPrompt && (
+                  <button type="button" className={secondaryButton} disabled={busy} onClick={() => openPromptEditor()}>
+                    重新輸入題目
+                  </button>
+                )}
+                {isCustom && attemptPath && (
+                  <Link to={attemptPath} className={secondaryButton}>
+                    回到作答頁
+                  </Link>
+                )}
+              </div>
+              {promptBlocksGrade && <p className="text-sm text-muted">{promptBlocksGrade}</p>}
+            </div>
           ) : (
             <AiAccessNotice access={access} compact />
           )}
@@ -503,14 +826,43 @@ function SubmissionView({ id }: { id: string }) {
               selfAssess={detail.self_assess}
             />
           ) : (
-            <EssayResult grading={detail.grading} text={essayText} selfAssess={detail.self_assess} />
+            <>
+              {isCustom && (
+                <Notice>
+                  <p>{CUSTOM_RESULT_NOTICE}</p>
+                </Notice>
+              )}
+              {isCustom && detail.grading.off_topic && (
+                <Notice tone="warn">
+                  <p>
+                    {CUSTOM_OFF_TOPIC_NOTICE}（{gradePoints} 點）。
+                  </p>
+                  {attemptPath && (
+                    <Link to={`${attemptPath}&reuse=essay`} className="mt-1 inline-flex min-h-11 items-center font-medium text-primary underline underline-offset-2">
+                      修改題目後重新批改這篇
+                    </Link>
+                  )}
+                </Notice>
+              )}
+              <EssayResult grading={detail.grading} text={essayText} selfAssess={detail.self_assess} />
+              {isCustom && detail.grading.rewrite_omitted && (
+                <Notice>
+                  <p>{detail.grading.rewrite_omitted === 'too_different' ? CUSTOM_REWRITE_TOO_DIFFERENT : CUSTOM_REWRITE_OMITTED}</p>
+                </Notice>
+              )}
+            </>
           )}
           <ReportAiContent />
           {bankCurrent && <BankAnswersPanel uid={bankCurrent.uid} version={bankCurrent.version} kind={detail.kind} />}
           <div className="flex flex-wrap gap-2">
             {attemptPath && (
               <Link to={attemptPath} className={secondaryButton}>
-                回到題目再練一次
+                {isCustom ? '用同一個題目再寫一次' : '回到題目再練一次'}
+              </Link>
+            )}
+            {isCustom && attemptPath && (
+              <Link to={`${attemptPath}&reuse=essay`} className={secondaryButton}>
+                修改題目後重新批改這篇（{gradePoints} 點）
               </Link>
             )}
           </div>

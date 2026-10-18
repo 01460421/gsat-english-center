@@ -25,6 +25,14 @@ export function selfDraftKey(submissionId: string): string {
 }
 
 /**
+ * 結果頁就地修改自訂題目、還沒儲存的題目草稿（每份提交一筆）。沿用作答草稿的前綴：登出、刪帳號時
+ * clearLocalWritingData() 一起清掉（題目可能有學校、老師名字）。
+ */
+export function promptEditDraftKey(submissionId: string): string {
+  return `${PREFIX}custom-prompt-edit:${submissionId}`;
+}
+
+/**
  * 清掉這台裝置上所有寫作暫存（作答草稿、辨識文字的修改、自評）。登出與刪除帳號時呼叫：
  * 學校電腦教室的下一位使用者不該看到上一位的作文全文。localStorage 不能用時安靜略過。
  */
