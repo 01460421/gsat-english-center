@@ -7,7 +7,13 @@ import { selfDraftKey } from './lib/drafts';
 import { clearDataCache } from '../../data/client';
 import SubmissionResultPage from './SubmissionResultPage';
 import { AI_GROUP_LABEL } from '../practice/labels';
-import { CUSTOM_PROMPT_CHANGED_MESSAGE, CUSTOM_PROMPT_HIDDEN_TEXT, CUSTOM_PROMPT_PROBLEM_MESSAGES, CUSTOM_PROMPT_UNAVAILABLE_TEXT } from '@gsat/shared';
+import {
+  CUSTOM_ESSAY_NOT_CONFIGURED_MESSAGE,
+  CUSTOM_PROMPT_CHANGED_MESSAGE,
+  CUSTOM_PROMPT_HIDDEN_TEXT,
+  CUSTOM_PROMPT_PROBLEM_MESSAGES,
+  CUSTOM_PROMPT_UNAVAILABLE_TEXT,
+} from '@gsat/shared';
 import { CUSTOM_DRAFT_KEY, emptyCustomEssayDraft, loadCustomEssayDraft } from './custom/drafts';
 import { CUSTOM_PROMPT_CHANGED_VIEW } from './custom/errors';
 import { clearLocalWritingData, promptEditDraftKey } from './lib/drafts';
@@ -612,6 +618,23 @@ describe('SubmissionResultPage：自訂作文題目（docs/design/custom-essay.m
     );
     await user.click(await screen.findByRole('button', { name: '重新送出批改（7 點）' }));
     expect(await screen.findByRole('alert')).toHaveTextContent(/^自訂題目批改目前沒有開放。$/);
+  });
+
+  it('自訂題目批改關著（只關自訂題、或評分對照達標之前）：重新送出、修改題目、送出批改都停用並說明；結果與連結照常', async () => {
+    const off = { 'GET /api/features': () => jsonResponse({ ...FEATURES_ON, customEssay: false }) };
+    const failed = customEssaySubmission({ status: 'failed', grading: null, final_score: null, final_band: null, failure: 'timeout' });
+    const first = renderPage(PATH, { ...routes(() => failed), ...off }, pages);
+    expect(await screen.findByRole('button', { name: '重新送出批改（7 點）' })).toBeDisabled();
+    expect(screen.getByText(CUSTOM_ESSAY_NOT_CONFIGURED_MESSAGE)).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: '修改題目' })).not.toBeInTheDocument();
+    expect(screen.getByRole('link', { name: '回到作答頁' })).toHaveAttribute('href', '/writing/essay/custom?from=sub-c');
+    expect(screen.getByText(CUSTOM_PROMPT.text)).toBeInTheDocument();
+    expect(apiCallsExceptSession(first.fetch).filter((c) => !c.startsWith('GET '))).toEqual([]);
+    first.unmount();
+    const confirmed = customEssaySubmission({ input_mode: 'photo', status: 'confirmed', grading: null, final_score: null, final_band: null, body: { text: CUSTOM_ESSAY_TEXT } });
+    renderPage(PATH, { ...routes(() => confirmed), ...off }, pages);
+    expect(await screen.findByRole('button', { name: '送出 AI 批改（7 點）' })).toBeDisabled();
+    expect(screen.getByText(CUSTOM_ESSAY_NOT_CONFIGURED_MESSAGE)).toBeInTheDocument();
   });
 
   it('刪除：這台裝置的作答頁草稿若是這一份，連題目一起清掉', async () => {

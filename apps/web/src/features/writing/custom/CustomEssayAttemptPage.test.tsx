@@ -25,7 +25,7 @@ import {
   type Handler,
 } from '../testing/fixtures';
 import { apiCallsExceptSession, renderPage } from '../testing/render';
-import CustomEssayAttemptPage, { CUSTOM_NOT_OPEN_PHOTO } from './CustomEssayAttemptPage';
+import CustomEssayAttemptPage, { CUSTOM_INTRO, CUSTOM_INTRO_SELF_ONLY, CUSTOM_NOT_OPEN, CUSTOM_NOT_OPEN_PHOTO } from './CustomEssayAttemptPage';
 import { CUSTOM_DRAFT_KEY, emptyCustomEssayDraft, forgetCustomSubmission, loadCustomEssayDraft, type CustomEssayDraft } from './drafts';
 import { CUSTOM_PROMPT_CHANGED_VIEW } from './errors';
 
@@ -285,6 +285,34 @@ describe('CustomEssayAttemptPage：開通狀態', () => {
     renderPage(PATH, baseRoutes(FEATURES_ON, meWith('none')), pages);
     expect(await screen.findByText(/AI 批改需要先申請/)).toBeInTheDocument();
     expect(screen.queryByRole('button', { name: /送出 AI 批改/ })).not.toBeInTheDocument();
+    expect(screen.getByText(CUSTOM_INTRO)).toBeInTheDocument();
+  });
+
+  it('上線的狀態（AI 開著、自訂題目批改沒開）：沒登入、還沒申請、等待核准都說「即將開放」，不叫學生登入或申請；開頭說明不提送 AI', async () => {
+    const user = userEvent.setup();
+    const off = { ...FEATURES_ON, customEssay: false };
+    for (const [label, me] of [
+      ['沒登入', undefined],
+      ['還沒申請', meWith('none')],
+      ['等待核准', meWith('pending')],
+    ] as const) {
+      const view = renderPage(PATH, baseRoutes(off, me), pages);
+      // 讀到 /api/me 之後才判斷（登入狀態載入前後畫面都一樣）。
+      await waitFor(() => expect(view.fetch.calls.some((c) => c.path === '/api/me')).toBe(true));
+      expect(await screen.findByText(CUSTOM_NOT_OPEN), label).toBeInTheDocument();
+      expect(screen.getByText(CUSTOM_INTRO_SELF_ONLY), label).toBeInTheDocument();
+      expect(screen.queryByText(CUSTOM_INTRO), label).not.toBeInTheDocument();
+      expect(document.body.textContent, label).not.toMatch(/需要先登入|需要先申請|用 Google 登入|申請 AI 批改|等站主核准/);
+      expect(screen.queryByRole('button', { name: /送出 AI 批改/ }), label).not.toBeInTheDocument();
+      // 拍照模式也一樣：說切到打字作答，不說「需要 AI 批改的權限」。
+      await user.click(screen.getByRole('button', { name: '拍照上傳手寫稿' }));
+      const section = screen.getByRole('region', { name: '拍照上傳手寫稿' });
+      expect(section, label).toHaveTextContent(CUSTOM_NOT_OPEN_PHOTO);
+      expect(section, label).not.toHaveTextContent('需要 AI 批改的權限');
+      expect(within(section).getByRole('button', { name: '切到打字作答' })).toBeInTheDocument();
+      view.unmount();
+      window.localStorage.clear();
+    }
   });
 });
 

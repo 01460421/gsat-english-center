@@ -234,7 +234,7 @@ workflow 會依序：型別檢查與測試 → 檢查 token 與 workers.dev 子�
 2. **執行**：GitHub repo → **Actions** → 左側「自訂作文題目評分對照（真模型）」（`.github/workflows/custom-essay-parity.yml` 合併進 main 之後才會出現）→ 右側 **Run workflow** → Branch 選 `main`，三個選項通常不用改：
    - `budget_usd`：累計花費上限（美元，預設 45，最多 100）。「累計」包含之前中斷的那幾次；
    - `allow_online_key`：保持不勾（見下面「沒有 dev workspace 時」）；
-   - `resume`：保持勾選，中斷後再按一次會接著跑，已經完成的不會重新花錢。
+   - `resume`：保持勾選，中斷後再按一次會接著跑，已經完成的不會重新花錢。連線錯誤或逾時的那幾篇會重跑；模型拒答、格式不符、截斷的不重跑（它們要算進失敗率，重跑到成功就看不出自訂題比較容易被拒答）。
    - 約 150 次批改，可能要好幾個小時；一次執行最多約 4.5 小時就會停下來存檔（GitHub 的上限是 6 小時），結論會是「還沒跑完」，再按一次 Run workflow 即可。
 3. **看結果**：點進這次執行，頁面下方的 **Summary** 第一段就是結論，下面是每一項指標（「達標」欄）與 E 組的評語；完整結果也在頁面最下方的 artifact `custom-essay-parity`（保留 30 天）。
    - **達標**（執行結果是綠勾）：
@@ -243,8 +243,9 @@ workflow 會依序：型別檢查與測試 → 檢查 token 與 workers.dev 子�
      3. 開一個 PR 到 main，**只改一行**：`apps/api/wrangler.toml` 的 `AI_CUSTOM_ESSAY = "off"` 改成 `"on"`（`src/config.ts` 不用跟著改）。合併後等「部署後端（Cloudflare Worker）」跑完。
      4. 確認：這次部署的 Summary 寫「自訂題目批改（customEssay）：啟用」、沒有「提醒」；打開 `https://gsat-english-center.vercel.app/api/features` 看到 `"customEssay":true`。之後照 design/custom-essay.md §10 的「部署後確認」用自己的帳號送一篇自訂題試試。
    - **不達標**（紅叉，結論寫「不達標」）：`AI_CUSTOM_ESSAY` 維持 `"off"`，網站照常（自訂題目只能自我檢核）。把 Summary 交給開發者，由開發者調整提示後再重跑（改過提示後 resume 不會沿用舊結果）。
-   - **還沒跑完**（紅叉，結論寫「還沒跑完」）：照結論那一段的說明處理——到時間上限就直接再按一次 Run workflow；到 `budget_usd` 上限就調高一點再按（不要超過 dev workspace 的每月上限）；Console 的上限或餘額不足就先調整 Console；金鑰錯誤就重建金鑰、Update secret。
+   - **還沒跑完**（紅叉，結論寫「還沒跑完」）：照結論那一段的說明處理——到時間上限、或結論說有幾篇「暫時失敗」，就直接再按一次 Run workflow；到 `budget_usd` 上限就調高一點再按（不要超過 dev workspace 的每月上限）；Console 的上限或餘額不足就先調整 Console；金鑰錯誤就重建金鑰、Update secret。
    - 第一步就失敗、說沒有金鑰：照第 1 步設好 `ANTHROPIC_PARITY_API_KEY` 再按一次。沒有金鑰時 workflow 一定是紅的，不會被當成通過。
+   - 「準備題目庫、確認達標判定」那一步失敗（還沒花錢）：通常是本站仿真作文被下架太多（少於 20 題），或某一題被自訂題目的輸入規則拒收；把那一步的訊息交給開發者。
 4. **沒有 dev workspace 時**（不建議）：Run workflow 時勾選 `allow_online_key`，會改用正式站的 `ANTHROPIC_API_KEY`（只有沒設 `ANTHROPIC_PARITY_API_KEY` 時才會用）。這筆花費（最多 `budget_usd`）算進 `online` workspace 的每月上限（US$450），但站內預算（月 US$400＋日 US$20）看不到它：同一個月學生用量大時，可能先碰到 Console 的上限，學生的 AI 批改會失敗、全站自動暫停。真的要用，挑月初或用量低的時候，或先把 `budget_usd` 調低。
 5. **公開的紀錄**：這個 repo 是公開的，Actions 的 log、Summary 與 artifact 任何人都看得到。結果只有分數、旗標、計數、花費與本站範文的 AI 評語（作文全是本站自己寫的範文），沒有金鑰、學生資料，也沒有官方的參考譯文、評分原則或佳作；金鑰不會出現在 log 裡（GitHub 也會自動遮罩）。
 6. 跑完之後 `ANTHROPIC_PARITY_API_KEY` 可以留著（之後改提示要重跑），或在 Console 停用那把金鑰、再刪掉 GitHub secret。

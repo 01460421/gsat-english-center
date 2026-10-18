@@ -21,12 +21,14 @@
  * scoreEssayAnalytic／scoreEssayHolistic → 第三位評分者規則 → combineEssay。截斷或格式不符重試一次（同 consumer）。
  *
  * 費用：dev workspace 的上限是 US$50，所以依實際用量累計，到 PARITY_BUDGET_USD（預設 45；累計值，含之前中斷的那幾次）就停；
- * 每一篇的結果馬上存檔，下次執行從中斷處接著跑（PARITY_OUT 指定結果目錄，預設 test/parity/.results/，不進版控）。
+ * 每一篇的結果馬上存檔，下次執行從中斷處接著跑（PARITY_OUT 指定結果目錄，預設 test/parity/.results/，不進版控）：
+ * 只重跑沒有結果與暫時失敗（連線錯誤、逾時）的案例；拒答、格式不符、截斷記下來就不重跑（needsGrading，算進失敗率）。
  * PARITY_TIME_LIMIT_MINUTES 有設時，開始下一篇之前超過這個分鐘數也停（GitHub Actions 一個 job 最多 6 小時，停下來才來得及
  * 寫彙總、存快取）。Anthropic 回「到花費上限」或「金鑰／權限錯誤」時也停，那一篇不記成失敗（之後重跑）。
  * 結果只存分數、旗標、輸出限制的計數與 E 組的評語（本站範文的 AI 評語），不存作文全文與金鑰；
  * 跑完寫出彙總（Markdown，開頭是結論），貼進設計文件的附錄 A。
  *
+ * 開始之前先檢查案例（casesProblems：可用的作文夠不夠、有沒有被輸入規則拒收的），有問題就在花錢之前失敗。
  * 結論不是「達標」時這支測試會失敗（exit code 非 0）：Actions 的執行結果是紅的，不會被當成通過。
  * 沒有 ANTHROPIC_API_KEY 時：本機略過；CI（環境變數 CI 有值）直接失敗，不會因為「全部略過」而變綠。
  *
@@ -54,7 +56,20 @@ import {
 import { reserveMicros, taskConfig, type CallRole } from '../../src/ai/tasks';
 import { loadConfig } from '../../src/config';
 import type { Env } from '../../src/env';
-import { buildCases, caseKey, fmt, rejectedResult, STOP_FAILURES, summarize, type Case, type CaseResult, type ParityStop, type ResultsFile } from './custom-essay.cases';
+import {
+  buildCases,
+  caseKey,
+  casesProblems,
+  fmt,
+  needsGrading,
+  rejectedResult,
+  STOP_FAILURES,
+  summarize,
+  type Case,
+  type CaseResult,
+  type ParityStop,
+  type ResultsFile,
+} from './custom-essay.cases';
 
 // 通過標準、案例與彙總在 custom-essay.cases.ts（單元測試 test/custom-essay.parity-summary.test.ts 驗證達標判定）。
 export { PARITY_CRITERIA, buildCases, summarize } from './custom-essay.cases';
@@ -170,11 +185,15 @@ describe.skipIf(!API_KEY && !process.env['CI'])('自訂題評分對照（真模�
       : { started_at: new Date().toISOString(), model: config.ai.models.default, cases: {}, spent_micros: 0 };
     const reserve = reserveMicros(taskConfig('essay_grade', config));
     const cases = buildCases();
-    console.log(`[parity] 共 ${cases.length} 次批改，已完成 ${Object.keys(results.cases).length}，已花費 US$${fmt(results.spent_micros / 1e6)}`);
+    const problems = casesProblems(cases);
+    if (problems.length > 0) throw new Error(`案例有問題，評分對照沒有開始（沒有花費）：${problems.join('；')}`);
+    const pending = cases.filter((c) => needsGrading(results.cases[caseKey(c)])).length;
+    console.log(`[parity] 共 ${cases.length} 次批改，這次要跑 ${pending} 次（其餘已有結果），已花費 US$${fmt(results.spent_micros / 1e6)}`);
     let stop: ParityStop | undefined;
     for (const c of cases) {
       const key = caseKey(c);
-      if (results.cases[key]?.ok) continue;
+      // 成功的、拒答／格式不符／截斷的不重跑；沒有結果與暫時失敗（連線錯誤、逾時）的才批改。
+      if (!needsGrading(results.cases[key])) continue;
       if (c.rejected || !c.writing) {
         // 題目被輸入規則拒收、或作文不符合送 AI 的規則：記成失敗（彙總裡算進完成數與「被拒收」那一項）。
         results.cases[key] = rejectedResult(c);

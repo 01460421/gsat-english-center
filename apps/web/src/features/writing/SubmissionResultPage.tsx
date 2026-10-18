@@ -23,9 +23,11 @@
  * 已批改時提醒題目由學生提供、離題時指向「修改題目後重新批改這篇」、參考改寫因長度上限被拿掉時說明。
  * 就地修改題目時：表單開著（還沒儲存）不能送批改；存檔失敗的原因顯示在「儲存題目」下方；還沒儲存的題目暫存在這台裝置
  * （切到別的 App、分頁被回收回來還在）。題目在顯示時被隱藏（D8 重查命中）的可修改提交：送批改停用，改提供「重新輸入題目」
- * （空白表單，PUT 整份取代；審查 correctness-2、ux-1、ux-9、ux-10、ux-13）。
+ * （空白表單，PUT 整份取代；審查 correctness-2、ux-1、ux-9、ux-10、ux-13）。自訂題目批改關著（features.customEssay 不是 true）時，
+ * 送批改、送辨識與修改題目都停用並說明「目前沒有開放」（按了也只會得到 503）。
  */
 import {
+  CUSTOM_ESSAY_NOT_CONFIGURED_MESSAGE,
   CUSTOM_PROMPT_UNAVAILABLE_TEXT,
   checkCustomPrompt,
   essayGradableProblem,
@@ -357,6 +359,7 @@ function SubmissionView({ id }: { id: string }) {
   const navigate = useNavigate();
   const { snapshot, restart, accept } = useSubmissionPoller(id);
   const { detail, phase, speed, error } = snapshot;
+  const features = useFeatures();
   const access = useAiAccess();
   const { quota, refresh: refreshQuota } = useQuota(access.state === 'ready');
   const prompt = usePromptFor(detail);
@@ -510,16 +513,22 @@ function SubmissionView({ id }: { id: string }) {
   // 已下架的本站題沒有作答頁可以回去。自訂題目帶 ?from={id}（作答頁從這一份帶回題目）。
   const attemptPath = bankPrompt?.status === 'removed' ? null : attemptPathOf(detail.kind, detail.group_id, detail.id);
   const customPrompt = isCustom ? detail.custom_prompt : null;
-  const promptEditable = isCustom && CUSTOM_EDITABLE.includes(detail.status) && access.state === 'ready' && customPrompt !== null && customPrompt !== undefined;
+  // 自訂題目批改關著（評分對照達標之前，或只關自訂題，SETUP-KEYS §8.1）：送批改、送辨識、修改題目都會回 503，
+  // 先停用並說明；結果與紀錄照常顯示（§5.3）。
+  const customClosed = isCustom && features.customEssay !== true;
+  const promptEditable =
+    isCustom && !customClosed && CUSTOM_EDITABLE.includes(detail.status) && access.state === 'ready' && customPrompt !== null && customPrompt !== undefined;
   // 題目被隱藏：D8 重查命中（官方文字）或指紋檔暫時壞掉（暫時無法顯示）。前者可以重新輸入題目，後者只能稍後再試。
   const promptUnavailable = customPrompt?.hidden === true && customPrompt.text === CUSTOM_PROMPT_UNAVAILABLE_TEXT;
   const promptHiddenOfficial = customPrompt?.hidden === true && !promptUnavailable;
   const canEditPrompt = promptEditable && customPrompt?.hidden !== true;
   const canReenterPrompt = promptEditable && promptHiddenOfficial;
-  /** 送批改（與送辨識）停用的原因：題目表單開著、題目被隱藏或暫時無法顯示。 */
+  /** 送批改（與送辨識）停用的原因：自訂題目批改關著、題目表單開著、題目被隱藏或暫時無法顯示。 */
   const promptBlocksGrade = !isCustom
     ? null
-    : editingPrompt
+    : customClosed
+      ? CUSTOM_ESSAY_NOT_CONFIGURED_MESSAGE
+      : editingPrompt
       ? CUSTOM_EDITING_BLOCKS_GRADE
       : promptHiddenOfficial
         ? CUSTOM_HIDDEN_BLOCKS_GRADE

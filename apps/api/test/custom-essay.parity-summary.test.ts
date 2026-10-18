@@ -1,25 +1,36 @@
 /**
  * 自訂題評分對照工具的達標判定（test/parity/custom-essay.cases.ts；docs/design/custom-essay.md §7.8，審查 correctness-5）。
- * 真模型的對照不進 CI；這裡用造好的結果檔驗證：失敗的批改、空的組別、沒跑到的案例、被輸入規則拒收的題目都不能算達標。
+ * 真模型的對照不進 CI；這裡用造好的結果檔驗證：失敗的批改、空的組別、沒跑到的案例、被輸入規則拒收的題目都不能算達標；
+ * 接著跑時拒答不會被重跑掉，暫時的失敗不會被判成「不達標」。
+ * 案例的組法用造好的作文驗證（不讀 data/bank：下架一題作文不能讓這支測試、也就是 Worker 部署前的檢查失敗）；
+ * 真實資料的檢查在 test/parity/custom-essay.precheck.parity.ts（評分對照的 workflow 跑，不在 npm test 裡）。
  */
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 import { describe, expect, it } from 'vitest';
 import {
+  A_COUNT,
   PARITY_CRITERIA,
+  PARITY_MIN_ESSAYS,
   buildCases,
   caseKey,
+  caseShape,
+  casesProblems,
   expectedCounts,
+  isTransientFailure,
   makeCase,
+  needsGrading,
   rejectedResult,
   STOP_FAILURES,
   summarize,
+  type BankEssay,
   type CaseKey,
   type CaseResult,
   type ResultsFile,
 } from './parity/custom-essay.cases';
 import { getWritingGroup } from '../src/ai/bank';
 import { ESSAY_GROUP } from './helpers/ai';
+import { CUSTOM_ESSAY } from './helpers/customEssay';
 
 /** 和 buildCases 同樣形狀的案例鍵：A 30 題 × 2 篇 × 2 條路徑、B 10、C 10、D 6、E 6。 */
 function keys(): CaseKey[] {
@@ -173,12 +184,83 @@ describe('summarize：達標判定（correctness-5）', () => {
   });
 });
 
-describe('buildCases／expectedCounts', () => {
-  it('組出 §7.8 的全部案例：A 60 對、B 10、C 10、D 6、E 6，目前沒有被輸入規則拒收的', () => {
-    const cases = buildCases();
+describe('接著跑（resume）：拒答不會被重跑掉，暫時的失敗不會被判成不達標（correctness-2）', () => {
+  const all = keys();
+  const fail = (k: CaseKey, failure: string): CaseResult => ({ group: k.group, case_id: k.id, path: k.path, ok: false, failure, cost_micros: 1 });
+
+  it('needsGrading：沒有結果、暫時失敗（api_error、timeout）才批改；成功、拒答、格式不符、截斷、被拒收的不重跑', () => {
+    const k = all[0]!;
+    expect(needsGrading(undefined)).toBe(true);
+    for (const f of ['api_error', 'timeout', 'internal']) {
+      expect(needsGrading(fail(k, f)), f).toBe(true);
+      expect(isTransientFailure(fail(k, f)), f).toBe(true);
+    }
+    for (const f of ['refusal', 'invalid_output', 'max_tokens', 'custom_prompt_invalid', 'essay_not_gradable:too_few_words']) {
+      expect(needsGrading(fail(k, f)), f).toBe(false);
+      expect(isTransientFailure(fail(k, f)), f).toBe(false);
+    }
+    expect(needsGrading(okResult(k))).toBe(false);
+  });
+
+  it('第一次執行有 6 篇自訂題拒答（10 個百分點）：再執行一次時這 6 篇不重跑，結論維持不達標', () => {
+    const refused = new Set(all.filter((k) => k.group === 'A' && k.path === 'custom').slice(0, 6).map(caseKey));
+    const first = file(all.map((k) => (refused.has(caseKey(k)) ? fail(k, 'refusal') : okResult(k))));
+    expect(summarize(first, all).verdict).toBe('failed');
+    // 下一次執行要批改的案例：沒有（拒答記下來就不重跑），所以不會「重跑到成功」讓失敗率變成 0。
+    expect(all.filter((k) => needsGrading(first.cases[caseKey(k)]))).toEqual([]);
+    expect(summarize(first, all).markdown).toMatch(/A 自訂題路徑的失敗率差.*\| 10 vs 0 \| \*\*否\*\* \|/);
+  });
+
+  it('全部跑過，但暫時失敗（api_error、timeout）讓 B 組完成數不夠 → 結論「還沒跑完」（重跑就好），不是「不達標」', () => {
+    const transient = new Set(all.filter((k) => k.group === 'B').slice(0, 2).map(caseKey));
+    const results = all.map((k, i) => (transient.has(caseKey(k)) ? fail(k, i % 2 === 0 ? 'api_error' : 'timeout') : okResult(k)));
+    const { verdict, markdown } = summarize(file(results), all);
+    expect(verdict).toBe('incomplete');
+    expect(markdown.split('\n')[2]).toMatch(/^\*\*結論：還沒跑完\*\*：0 個案例還沒跑到、2 個案例暫時失敗（連線錯誤或逾時）/);
+    expect(markdown).toContain('暫時失敗的會重跑');
+    expect(markdown).not.toContain('調整提示後重跑');
+    // 同樣的數量換成拒答：沒有可以重跑的，結論是不達標。
+    const refused = all.map((k) => (transient.has(caseKey(k)) ? fail(k, 'refusal') : okResult(k)));
+    expect(summarize(file(refused), all).verdict).toBe('failed');
+  });
+});
+
+describe('buildCases／caseShape／casesProblems（造好的作文；不讀 data/bank）', () => {
+  const base = getWritingGroup(ESSAY_GROUP)!;
+  /** n 題造好的作文：題目沿用一題歷屆作文（換 group_id），範文是本站自己寫的練習作文。 */
+  const essays = (n: number): BankEssay[] =>
+    Array.from({ length: n }, (_, i) => ({
+      group: { ...base, group_id: `test-essay-${i}@1` },
+      raw: { group: { tags: { topic: 'No-Phone Day' } } },
+      texts: [
+        { label: '穩健', text: CUSTOM_ESSAY },
+        { label: '頂標', text: CUSTOM_ESSAY.replace('a good idea', 'a wonderful idea') },
+      ],
+    }));
+
+  it('30 題：A 60 對、B 10、C 10、D 6、E 6，沒有被拒收的、鍵不重複，casesProblems 是空的', () => {
+    const cases = buildCases(essays(30));
     expect(expectedCounts(cases)).toEqual({ A: 60, B: 10, C: 10, D: 6, E: 6 });
-    expect(cases.filter((c) => c.rejected).map((c) => `${caseKey(c)}：${c.rejected}`)).toEqual([]);
-    expect(new Set(cases.map(caseKey)).size).toBe(cases.length);
+    expect(caseShape(30)).toEqual({ A: 60, B: 10, C: 10, D: 6, E: 6 });
+    expect(casesProblems(cases)).toEqual([]);
+  });
+
+  it('可用的作文比較多時只用前 30 題；下架幾題（29、20 題）時案例照比例變少，仍然可以跑', () => {
+    expect(expectedCounts(buildCases(essays(35)))).toEqual(caseShape(A_COUNT));
+    for (const n of [29, PARITY_MIN_ESSAYS]) {
+      const cases = buildCases(essays(n));
+      expect(expectedCounts(cases), String(n)).toEqual(caseShape(n));
+      expect(casesProblems(cases), String(n)).toEqual([]);
+    }
+    expect(caseShape(29)).toEqual({ A: 58, B: 10, C: 10, D: 6, E: 6 });
+    expect(caseShape(12)).toEqual({ A: 24, B: 10, C: 10, D: 6, E: 2 });
+  });
+
+  it('作文太少、有案例被輸入規則拒收：casesProblems 列出來（評分對照在花錢之前停下來）', () => {
+    expect(casesProblems(buildCases(essays(PARITY_MIN_ESSAYS - 1)))).toEqual([`可用的本站仿真作文只有 ${PARITY_MIN_ESSAYS - 1} 題（至少 ${PARITY_MIN_ESSAYS} 題）`]);
+    const cases = buildCases(essays(30));
+    const broken = cases.map((c, i) => (i === 1 ? makeCase({ ...c, writing: null }) : c));
+    expect(casesProblems(broken)).toEqual([`${caseKey(cases[1]!)} 被輸入規則拒收：custom_prompt_invalid`]);
   });
 });
 
@@ -198,6 +280,17 @@ describe('.github/workflows/custom-essay-parity.yml（站主在 Actions 跑評�
     expect(workflow).not.toMatch(/^  (push|pull_request|pull_request_target|schedule|workflow_run):/m);
     expect(workflow).toMatch(/^permissions:\n  contents: read\n\n/m);
     expect(step('跑評分對照（真模型）')).toContain('npm run parity:custom-essay -w @gsat/api');
+  });
+
+  it('花錢之前：跑達標判定的單元測試，並用真實資料檢查案例（precheck 只在評分對照的設定裡，不在 npm test）', () => {
+    const pre = step('準備題目庫、確認達標判定（不需要金鑰）');
+    expect(pre).toContain('npx vitest run test/custom-essay.parity-summary.test.ts');
+    expect(pre).toContain('npx vitest run --config vitest.parity.config.ts custom-essay.precheck');
+    expect(pre).not.toContain('secrets.');
+    const precheck = 'test/parity/custom-essay.precheck.parity.ts';
+    expect(existsSync(path.resolve(import.meta.dirname, '..', precheck))).toBe(true);
+    expect(precheck).toMatch(/\.parity\.ts$/);
+    expect(precheck).not.toMatch(/\.test\.ts$/);
   });
 
   it('金鑰的值只出現在「跑評分對照」那一步（npm ci 與其他步驟看不到）；ANTHROPIC_PARITY_API_KEY 優先，勾了 allow_online_key 才用正式站的', () => {

@@ -7,6 +7,13 @@
  *     都不能算達標；指標的分母是空的時（mean([]) 是 0）不會被當成「差距 0」；
  *   - 自訂題路徑的失敗率（拒答、格式不符、截斷）不比題庫題路徑高超過 5 個百分點：失敗的批改不能只是從指標裡消失；
  *   - 自訂題目被輸入規則拒收（customFrom 回 null）或作文不符合送 AI 的規則時記成失敗（不靜默略過）。
+ *
+ * 接著跑（resume）時只重跑沒有結果與暫時失敗（連線錯誤、逾時）的案例：拒答、格式不符、截斷記下來就不再重跑，
+ * 否則重跑到成功為止，自訂題路徑的失敗率就量不到（needsGrading）。還有暫時失敗沒重跑完時，結論是「還沒跑完」。
+ *
+ * 案例用的本站仿真作文從 data/bank/v1/composition 讀（loadBankEssays）；單元測試（npm test）傳造好的作文給 buildCases，
+ * 不依賴真實資料的題數。真實資料的檢查（casesProblems）在評分對照執行前做：custom-essay.precheck.parity.ts 與
+ * custom-essay.parity.ts（GitHub Actions 的「準備題目庫、確認達標判定」那一步也跑它，不需要金鑰）。
  */
 import { readFileSync, readdirSync } from 'node:fs';
 import path from 'node:path';
@@ -90,18 +97,46 @@ export interface Case extends CaseKey {
 
 export const caseKey = (c: CaseKey): string => `${c.group}:${c.id}:${c.path}`;
 
-/** 這些失敗是模型輸出造成的（S12 擔心自訂題比較容易被拒答）：拿來比兩條路徑的失敗率。 */
-const CONTENT_FAILURES = new Set(['refusal', 'invalid_output', 'max_tokens']);
+/** 這些失敗是模型輸出造成的（S12 擔心自訂題比較容易被拒答）：拿來比兩條路徑的失敗率；記下來就不再重跑。 */
+export const CONTENT_FAILURES: ReadonlySet<string> = new Set(['refusal', 'invalid_output', 'max_tokens']);
+
+/** 被輸入規則拒收（不呼叫模型；同一版程式每次結果都一樣）。 */
+export function isRejectedFailure(failure: string | undefined): boolean {
+  return failure === 'rejected' || failure === 'custom_prompt_invalid' || (failure?.startsWith('essay_not_gradable') ?? false);
+}
+
+/** 暫時的失敗（連線錯誤、逾時、其他 API 錯誤）：和題目、作文無關，下次執行重跑。 */
+export function isTransientFailure(r: CaseResult): boolean {
+  return !r.ok && !CONTENT_FAILURES.has(r.failure ?? '') && !isRejectedFailure(r.failure);
+}
+
+/**
+ * 接著跑時這一篇要不要批改：沒有結果，或上次是暫時的失敗，才批改。成功的不重跑（不重新花錢）；拒答、格式不符、截斷也不重跑：
+ * 重跑到成功為止的話，這些失敗會從「A 自訂題路徑的失敗率差」裡消失（S12 要看的就是它）。被拒收的同一版程式結果相同，也不重跑。
+ */
+export function needsGrading(prev: CaseResult | undefined): boolean {
+  return prev === undefined || isTransientFailure(prev);
+}
 
 const REPO = path.resolve(import.meta.dirname, '..', '..', '..', '..');
 const BANK_DIR = path.join(REPO, 'data', 'bank', 'v1', 'composition');
-const A_COUNT = 30;
+/** A 組最多用幾題（§7.8）；可用的題目比較少時（下架、審查退回）就用全部可用的。 */
+export const A_COUNT = 30;
+/** 可用的本站仿真作文少於這個數就不跑（A 組至少 40 對；B–E 組在 16 題以上就是完整的 10／10／6／6）。 */
+export const PARITY_MIN_ESSAYS = 20;
 
 type Json = Record<string, any>;
 
+/** 一題本站仿真作文：Worker 題目庫裡的題組、原始檔（取主題）與範文。 */
+export interface BankEssay {
+  group: WritingGroup;
+  raw: Json;
+  texts: Array<{ label: string; text: string }>;
+}
+
 /** 本站仿真作文的檔案（verified、在 Worker 題目庫裡、有兩篇範文）。 */
-function loadBankEssays(): Array<{ group: WritingGroup; raw: Json; texts: Array<{ label: string; text: string }> }> {
-  const out: Array<{ group: WritingGroup; raw: Json; texts: Array<{ label: string; text: string }> }> = [];
+export function loadBankEssays(): BankEssay[] {
+  const out: BankEssay[] = [];
   for (const tier of readdirSync(BANK_DIR).sort()) {
     for (const file of readdirSync(path.join(BANK_DIR, tier)).sort()) {
       const raw = JSON.parse(readFileSync(path.join(BANK_DIR, tier, file), 'utf8')) as Json;
@@ -150,9 +185,9 @@ export function makeCase(c: Omit<Case, 'rejected'>): Case {
   return c;
 }
 
-/** 依 §7.8 組出全部的案例（A 120 次、B–E 共 32 次）。 */
-export function buildCases(): Case[] {
-  const essays = loadBankEssays().slice(0, A_COUNT);
+/** 依 §7.8 組出全部的案例（30 題時 A 120 次、B–E 共 32 次；題目比較少時見 caseShape）。essays 省略＝讀真實資料。 */
+export function buildCases(source: readonly BankEssay[] = loadBankEssays()): Case[] {
+  const essays = source.slice(0, A_COUNT);
   const cases: Case[] = [];
   const add = (c: Omit<Case, 'rejected'>) => cases.push(makeCase(c));
   essays.forEach((e, i) => {
@@ -208,12 +243,36 @@ export function expectedCounts(cases: readonly CaseKey[]): Record<ParityGroup, n
   return out;
 }
 
+/** 用 n 題作文時 buildCases 組出的數量（expectedCounts 的形狀；A 組算配對）。 */
+export function caseShape(n: number): Record<ParityGroup, number> {
+  const m = Math.max(0, Math.min(n, A_COUNT));
+  const between = (lo: number, hi: number) => Math.max(0, Math.min(m, hi) - lo);
+  return { A: 2 * m, B: Math.min(m, 10), C: Math.min(m, 10), D: Math.min(m, 6), E: between(10, 13) + between(13, 16) };
+}
+
+/**
+ * 跑評分對照之前的檢查（不花錢）：可用的作文夠不夠、案例的形狀對不對、有沒有被輸入規則拒收的案例、鍵有沒有重複。
+ * 回傳問題清單（空的＝可以跑）。真實資料的題數會因下架或審查而變，所以只檢查不變的關係，不寫死數量。
+ */
+export function casesProblems(cases: readonly Case[]): string[] {
+  const problems: string[] = [];
+  const n = new Set(cases.filter((c) => c.group === 'A' && c.id.endsWith(':model')).map((c) => c.id)).size;
+  if (n < PARITY_MIN_ESSAYS) problems.push(`可用的本站仿真作文只有 ${n} 題（至少 ${PARITY_MIN_ESSAYS} 題）`);
+  const got = expectedCounts(cases);
+  const want = caseShape(n);
+  for (const g of PARITY_GROUPS) if (got[g] !== want[g]) problems.push(`${g} 組有 ${got[g]} 個（${n} 題時應該是 ${want[g]} 個）`);
+  for (const c of cases) if (c.rejected) problems.push(`${caseKey(c)} 被輸入規則拒收：${c.rejected}`);
+  if (new Set(cases.map(caseKey)).size !== cases.length) problems.push('案例的鍵重複');
+  return problems;
+}
+
 const mean = (xs: number[]) => (xs.length === 0 ? 0 : xs.reduce((s, x) => s + x, 0) / xs.length);
 export const fmt = (n: number) => (Math.round(n * 100) / 100).toString();
 
 /**
  * 結論：passed＝程式判定的每一項都達標；incomplete＝還有案例沒跑到（預算、時間、Console 上限、金鑰錯誤或中斷），
- * 再執行一次會接著跑；failed＝全部跑完（或沒跑到的不影響）但有項目未達標。只有 passed 才能把 AI_CUSTOM_ESSAY 打開。
+ * 或有暫時的失敗（連線錯誤、逾時）還沒重跑成功，再執行一次會接著跑；failed＝全部跑完、沒有暫時的失敗，但有項目未達標。
+ * 只有 passed 才能把 AI_CUSTOM_ESSAY 打開。
  */
 export type ParityVerdict = 'passed' | 'incomplete' | 'failed';
 
@@ -273,7 +332,7 @@ export function summarize(results: ResultsFile, cases: readonly CaseKey[], stop?
   const customFail = contentFailRate(attemptedA('custom'));
   const bankFail = contentFailRate(attemptedA('bank'));
   checks.push(['A 自訂題路徑的失敗率差（百分點，拒答／格式不符／截斷）', customFail - bankFail <= C.customFailureRateDiffMax, `${fmt(customFail)} vs ${fmt(bankFail)}`]);
-  const rejected = allResults.filter((r) => !r.ok && (r.failure === 'custom_prompt_invalid' || r.failure?.startsWith('essay_not_gradable')));
+  const rejected = allResults.filter((r) => !r.ok && isRejectedFailure(r.failure));
   checks.push(['題目或作文被輸入規則拒收', rejected.length === 0, String(rejected.length)]);
 
   const diffs = pairs.map(([c, b]) => (c.total ?? 0) - (b.total ?? 0));
@@ -302,9 +361,11 @@ export function summarize(results: ResultsFile, cases: readonly CaseKey[], stop?
   checks.push(['D 段數沒設的組織分差', dGaps.length > 0 && mean(dGaps) <= C.unsetParagraphOrganizationGapMax, `${fmt(mean(dGaps))}（${dGaps.length} 對）`]);
 
   const notRun = cases.filter((c) => !(caseKey(c) in results.cases));
+  // 暫時的失敗下次執行會重跑：還有這種失敗時，未達標的項目還不能算數（不是「不達標」）。
+  const transient = allResults.filter(isTransientFailure);
   const failedChecks = checks.filter(([, ok]) => !ok).length;
   const passed = failedChecks === 0;
-  const verdict: ParityVerdict = passed ? 'passed' : notRun.length > 0 || stop ? 'incomplete' : 'failed';
+  const verdict: ParityVerdict = passed ? 'passed' : notRun.length > 0 || transient.length > 0 || stop ? 'incomplete' : 'failed';
   if (verdict === 'passed') {
     lines.push(
       `**結論：達標**：程式判定的 ${checks.length} 項全部通過${notRun.length > 0 ? `（有 ${notRun.length} 個案例沒跑到，完成數仍在門檻以上）` : ''}。` +
@@ -312,8 +373,9 @@ export function summarize(results: ResultsFile, cases: readonly CaseKey[], stop?
     );
   } else if (verdict === 'incomplete') {
     lines.push(
-      `**結論：還沒跑完**：${notRun.length} 個案例還沒跑到，目前 ${failedChecks} 項未達標（完成數不夠的那幾項要跑完才算數）。${stopText(stop)}` +
-        '保留這次的結果再執行一次，會從中斷處接著跑，已經完成的案例不會重新花錢。AI_CUSTOM_ESSAY 維持 "off"。',
+      `**結論：還沒跑完**：${notRun.length} 個案例還沒跑到${transient.length > 0 ? `、${transient.length} 個案例暫時失敗（連線錯誤或逾時）` : ''}，` +
+        `目前 ${failedChecks} 項未達標（完成數不夠的那幾項要跑完才算數）。${stopText(stop)}` +
+        '保留這次的結果再執行一次，會從中斷處接著跑：已經完成的案例不會重新花錢，暫時失敗的會重跑；拒答、格式不符、截斷的不重跑（算進失敗率）。AI_CUSTOM_ESSAY 維持 "off"。',
     );
   } else {
     lines.push(

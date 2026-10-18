@@ -25,7 +25,6 @@ import {
   TRANSLATION_RATER_GAP_THRESHOLD,
   checkMechanics,
   countEnglishWords,
-  customPromptEnglishWords,
   essayBandOf,
   type EssayCriterion,
   type EssayCriterionResult,
@@ -324,6 +323,8 @@ export interface EssayContext {
  *   _zh 欄位合計            第一位所有中文說明（評語、四項說明、三個優先改進、逐段建議、錯誤說明）的英文單詞合計 ≤ 120，
  *                          超過時從最後一欄往前清（逐欄上限擋不住「拆成 30 則、每則 26 個單詞」）
  *   _zh 欄位                「大學入學考試中心」「大考中心」「CEEC」換成「官方」（S17）
+ * suggestion 與 _zh 欄位的英文單詞用 outputEnglishWords 算：NFKC 之後，拉丁、西里爾、希臘字母都算（模型被誘導改用全形、
+ * 數學粗體或形近字母寫英文時，上限照樣算得到）。
  * 門檻放在這裡，調整時不用改提示。
  */
 export const CUSTOM_OUTPUT_LIMITS = {
@@ -361,6 +362,18 @@ function tokenEditDistance(x: string[], y: string[]): number {
   return prev[y.length]!;
 }
 
+/** 輸出限制用的「英文單詞」：拉丁、西里爾、希臘字母（形近字母）連續的一串，中間可以有一個撇號。 */
+const OUTPUT_WORD_RE = /[\p{Script=Latin}\p{Script=Cyrillic}\p{Script=Greek}]+(?:['’][\p{Script=Latin}\p{Script=Cyrillic}\p{Script=Greek}]+)?/gu;
+
+/**
+ * 自訂題輸出限制的英文單詞數。先 NFKC（全形 Ｍｙ、數學粗體 𝐈、圈起來的字母變回 ASCII），再把西里爾、希臘的形近字母也算進去：
+ * 只算 [A-Za-z] 的話，模型被題目誘導改用這些字母寫英文時每個上限都算到 0 個單詞（ASCII 英文的結果和 @gsat/shared 的
+ * customPromptEnglishWords 相同）。
+ */
+export function outputEnglishWords(text: string): number {
+  return text.normalize('NFKC').match(OUTPUT_WORD_RE)?.length ?? 0;
+}
+
 const EXAM_BOARD_RE = /大學入學考試中心|大考中心|CEEC/gi;
 const EXAM_BOARD_REPLACEMENT = '官方';
 
@@ -396,7 +409,7 @@ class CustomLimiter {
       this.counts.exam_board_replaced += 1;
       return EXAM_BOARD_REPLACEMENT;
     });
-    if (customPromptEnglishWords(replaced) > max) {
+    if (outputEnglishWords(replaced) > max) {
       this.counts.zh_fields_cleared += 1;
       return '';
     }
@@ -409,9 +422,9 @@ class CustomLimiter {
    */
   zhTotal(fields: string[]): string[] {
     const out = [...fields];
-    let total = out.reduce((a, t) => a + customPromptEnglishWords(t), 0);
+    let total = out.reduce((a, t) => a + outputEnglishWords(t), 0);
     for (let i = out.length - 1; i >= 0 && total > CUSTOM_OUTPUT_LIMITS.zhEnglishWordsTotalMax; i -= 1) {
-      const n = customPromptEnglishWords(out[i]!);
+      const n = outputEnglishWords(out[i]!);
       if (n === 0) continue;
       total -= n;
       out[i] = '';
@@ -424,19 +437,19 @@ class CustomLimiter {
   suggestions(errors: EssayError[], n: number): EssayError[] {
     const L = CUSTOM_OUTPUT_LIMITS;
     const out = errors.map((e) => {
-      const cap = Math.max(L.suggestionMinWords, customPromptEnglishWords(e.excerpt) * L.suggestionWordsPerExcerptWord + L.suggestionExtraWords);
-      if (e.suggestion !== '' && customPromptEnglishWords(e.suggestion) > cap) {
+      const cap = Math.max(L.suggestionMinWords, outputEnglishWords(e.excerpt) * L.suggestionWordsPerExcerptWord + L.suggestionExtraWords);
+      if (e.suggestion !== '' && outputEnglishWords(e.suggestion) > cap) {
         this.counts.suggestions_cleared += 1;
         return { ...e, suggestion: '' };
       }
       return e;
     });
     const totalCap = Math.min(L.suggestionsTotalMaxWords, Math.max(L.suggestionsTotalMinWords, n + L.suggestionsTotalExtraWords));
-    let total = out.reduce((a, e) => a + customPromptEnglishWords(e.suggestion), 0);
+    let total = out.reduce((a, e) => a + outputEnglishWords(e.suggestion), 0);
     for (let i = out.length - 1; i >= 0 && total > totalCap; i -= 1) {
       const e = out[i]!;
       if (e.suggestion === '') continue;
-      total -= customPromptEnglishWords(e.suggestion);
+      total -= outputEnglishWords(e.suggestion);
       out[i] = { ...e, suggestion: '' };
       this.counts.suggestions_cleared += 1;
     }

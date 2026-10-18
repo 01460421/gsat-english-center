@@ -3,12 +3,13 @@
  *   - 正規形式、窗口、cyrb53、位置合併和 packages/shared/scripts/d8-fingerprint.mjs（產生器用的那份）對一批字串逐一相同；
  *   - 產生器的編碼（packFingerprints）→ Worker 的解碼（parseFingerprints）來回一致；壞檔一律回 null（fail closed）；
  *   - ranges 換算：移除空白前後的索引對照、中英混合、多段命中合併、最多 5 段；
+ *   - 產生器（buildD8Fingerprints）先遮掉考試單位與考試名稱：講義標題不命中，評分說明本身照樣命中（假考卷）；
  *   - 打包的真指紋檔（pretest 由產生器產生）解得開、筆數在下限以上。
  * 不讀 data/：真實資料的斷言在 packages/shared/src/custom-essay.data.test.ts。
  */
 import { describe, expect, it } from 'vitest';
 import * as mjs from '../../../packages/shared/scripts/d8-fingerprint.mjs';
-import { D8_MIN_COUNTS } from '../scripts/build-writing-prompts.mjs';
+import { buildD8Fingerprints, D8_MIN_COUNTS, D8_PUBLIC_HEADER_TERMS, maskPublicHeaderTerms } from '../scripts/build-writing-prompts.mjs';
 import { cyrb53, d8EnglishWindows, d8Fingerprints, d8Hash, d8HanWindows, d8Ranges, mergeRanges, officialMaterialHits, parseFingerprints } from '../src/ai/d8';
 import { fakeFingerprintFile, FAKE_OFFICIAL_EN, FAKE_OFFICIAL_ZH } from './helpers/customEssay';
 
@@ -93,6 +94,50 @@ describe('命中位置（ranges）', () => {
     expect(officialMaterialHits(fp, '正常的題目文字，請寫一篇英文作文。', `圖：${zh}`)).toEqual({ field: 'figure_text', ranges: [[2, 11]] });
     expect(officialMaterialHits(fp, zh, zh)?.field).toBe('text');
     expect(officialMaterialHits(fp, '正常的題目文字，請寫一篇英文作文。', null)).toBeNull();
+  });
+});
+
+describe('產生器：考試單位與考試名稱不進指紋（學生連同講義標題貼上題目不會被當成官方評分說明）', () => {
+  /** 測試自己編的「出處句」：和真的評分說明一樣會寫到考試單位、考試名稱與學年度。 */
+  const CITATION = '本說明比照財團法人大學入學考試中心基金會一一三學年度學科能力測驗英文考科與一一二學年度指定科目考試英文考科的格式撰寫。';
+  const exam = {
+    id: 'gsat-998',
+    title: '113學年度學科能力測驗英文考科',
+    sections: [
+      {
+        id: 's1',
+        type: 'composition',
+        instructions: '說明：測試。',
+        groups: [{ id: 's1g1', passage: null, figures: [], questions: [{ no: 1, label: '1', mode: 'essay', stem: '請寫一篇英文作文。', points: 20, scoring_notes: `${CITATION}${FAKE_OFFICIAL_ZH}` }] }],
+      },
+    ],
+  };
+  const HEADERS = [
+    '財團法人大學入學考試中心基金會 113學年度學科能力測驗試題 英文考科 二、英文作文',
+    '大學入學考試中心 指定科目考試 英文',
+    '113學年度學科能力測驗英文作文',
+    '仿學科能力測驗英文作文',
+    '112學年度指定科目考試英文作文',
+    '大學入學考試中心\n113學年度\n學科能力測驗\n英文考科',
+  ];
+
+  it('maskPublicHeaderTerms：長的名稱先換、字和字之間有空白或換行也換；其他文字不動', () => {
+    expect(maskPublicHeaderTerms('財團法人大學入學考試中心基金會')).toBe('|');
+    expect(maskPublicHeaderTerms('大學入學考試中心的學科能力測驗')).toBe('|的|');
+    expect(maskPublicHeaderTerms('學科能力\n測驗與指 定 科 目 考 試')).toBe('|與|');
+    expect(maskPublicHeaderTerms(FAKE_OFFICIAL_ZH)).toBe(FAKE_OFFICIAL_ZH);
+    expect(D8_PUBLIC_HEADER_TERMS).toContain('大考中心');
+  });
+
+  it('講義標題不命中；評分說明本身的文字照樣命中（原樣與每個字之間插空白）', () => {
+    const file = buildD8Fingerprints([exam], { groups: {} });
+    const sets = { han: new Set(mjs.unpackFingerprints(file.han)), en: new Set(mjs.unpackFingerprints(file.en)) };
+    // 沒有遮掉時這些標題都會命中（出處句的窗口）：確認這個測試真的測得到。
+    const unmasked = { han: new Set(mjs.d8HanWindows(`${CITATION}${FAKE_OFFICIAL_ZH}`).map((w) => mjs.d8Hash('han', w.window))), en: new Set<number>() };
+    for (const h of HEADERS) expect(mjs.d8Ranges(h, unmasked), h).not.toEqual([]);
+    for (const h of HEADERS) expect(mjs.d8Ranges(h, sets), h).toEqual([]);
+    expect(mjs.d8Ranges(FAKE_OFFICIAL_ZH.slice(0, 12), sets)).not.toEqual([]);
+    expect(mjs.d8Ranges([...FAKE_OFFICIAL_ZH.slice(0, 12)].join(' '), sets)).not.toEqual([]);
   });
 });
 

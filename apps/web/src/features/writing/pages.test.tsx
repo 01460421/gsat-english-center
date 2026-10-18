@@ -1,5 +1,5 @@
 /** 寫作首頁與兩個題目列表。 */
-import { screen, within } from '@testing-library/react';
+import { screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { afterEach, describe, expect, it } from 'vitest';
 import { clearDataCache } from '../../data/client';
@@ -18,6 +18,7 @@ import { draftKey } from './lib/drafts';
 import { BankEssayListPage } from './bank/BankListPage';
 import { BANK_CP_PROMPT, BANK_TR_PROMPT, FEATURES_OFF, FEATURES_ON, apiError, baseRoutes, jsonResponse, meWith, translationSubmission } from './testing/fixtures';
 import { apiCallsExceptSession, renderPage } from './testing/render';
+import { getPage } from '../../modules';
 
 afterEach(() => {
   clearDataCache();
@@ -524,12 +525,28 @@ describe('自訂作文題目的入口（docs/design/custom-essay.md §6.1）', (
     expect(screen.queryByText(/即將開放/)).not.toBeInTheDocument();
   });
 
-  it('/writing：「自己的題目」小區與入口卡（不下載任何題目資料）', () => {
-    const { fetch } = renderPage('/writing', baseRoutes(FEATURES_OFF), { '/writing': <WritingHomePage /> });
+  it('/writing：「自己的題目」小區與入口卡（不下載任何題目資料）；只有自訂題目批改開著才說能送 AI', async () => {
+    const off = renderPage('/writing', baseRoutes(FEATURES_OFF), { '/writing': <WritingHomePage /> });
     const section = screen.getByRole('region', { name: '自己的題目' });
     expect(within(section).getByRole('link', { name: /^自訂題目/ })).toHaveAttribute('href', '/writing/essay/custom');
-    expect(section).toHaveTextContent('貼上老師或補習班的作文題目，寫完可以自我檢核或送 AI 批改。');
-    expect(fetch.calls.some((c) => c.path.startsWith('/data/'))).toBe(false);
+    expect(section).toHaveTextContent('貼上老師或補習班的作文題目，寫完可以用檢核清單自我檢核。');
+    expect(section).not.toHaveTextContent('送 AI');
+    expect(off.fetch.calls.some((c) => c.path.startsWith('/data/'))).toBe(false);
+    off.unmount();
+    // 上線時的狀態：AI 開著、自訂題目批改沒開。
+    const customOff = renderPage('/writing', baseRoutes({ ...FEATURES_ON, customEssay: false }, meWith('approved')), { '/writing': <WritingHomePage /> });
+    // 讀到點數＝功能開關與登入狀態都載入了（AI 開著、已核准）。
+    await waitFor(() => expect(customOff.fetch.calls.some((c) => c.path === '/api/ai/quota')).toBe(true));
+    expect(screen.getByRole('region', { name: '自己的題目' })).toHaveTextContent('寫完可以用檢核清單自我檢核。');
+    expect(screen.getByRole('region', { name: '自己的題目' })).not.toHaveTextContent('送 AI');
+    customOff.unmount();
+    renderPage('/writing', baseRoutes(FEATURES_ON, meWith('approved')), { '/writing': <WritingHomePage /> });
+    await waitFor(() => expect(screen.getByRole('region', { name: '自己的題目' })).toHaveTextContent('貼上老師或補習班的作文題目，寫完可以自我檢核或送 AI 批改。'));
+  });
+
+  it('模組說明（/composition 頁首與首頁的卡片）不說自訂題目能送 AI（開關關著時也成立）', () => {
+    expect(getPage('/composition').summary).toContain('也可以貼上自己的題目練習');
+    expect(getPage('/composition').summary).not.toMatch(/自己的題目送 AI/);
   });
 
   it('作文的「題目來源」有三格（第三格是自訂題目），中譯英仍是兩格', async () => {

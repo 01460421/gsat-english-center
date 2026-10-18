@@ -9,6 +9,8 @@ export declare const UNPUBLISH_FILE: string;
 export declare const OUT_FILE: string;
 export declare const D8_OUT_FILE: string;
 export declare const D8_MIN_COUNTS: { han: number; en: number };
+export declare const D8_PUBLIC_HEADER_TERMS: readonly string[];
+export declare function maskPublicHeaderTerms(text: string): string;
 export declare const CUSTOM_GROUP_PREFIX: 'custom:';
 export declare const BANK_FORMAT: 'gsat-writing-prompts/v2';
 export declare const GUIDANCE_LIMITS: { translation: number; essay: number };

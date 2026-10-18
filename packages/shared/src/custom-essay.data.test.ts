@@ -4,7 +4,8 @@
  *   - Worker 題目庫的 96 題作文（歷屆＋本站；「說明＋選文＋題目＋圖片描述」）當成學生貼上的題目：
  *     拒收的只有 83、84、85 學測（說明裡有一行舊的評分標準與配分，scoring_text），提醒級 0 題；
  *   - D8 指紋（packages/shared/scripts/d8-fingerprint.mjs＋產生器的 buildD8Fingerprints，和 Worker 打包的是同一份）：
- *     310 組公開題目 0 筆命中；作文評分原則的開頭 200 字元，原樣、每 20 字插一個換行、每個字之間插一個空白都抓得到；
+ *     310 組公開題目 0 筆命中；歷屆作文題連同考卷表頭或講義標題（考試單位、學年度、考試名稱）一起貼上 0 筆命中；
+ *     作文評分原則的開頭 200 字元，原樣、每 20 字插一個換行、每個字之間插一個空白都抓得到；
  *     本站公開的圖片描述（gsat-104）不命中；漢字與英文的筆數都在下限以上。
  * 題目庫用 buildBank 產生（不依賴 apps/api/src/generated/ 是否存在）。官方受保護文字只在記憶體裡比對，失敗訊息只印題組 id。
  */
@@ -83,6 +84,26 @@ describe.skipIf(!exists)('自訂作文題目的規則 × 真實資料', () => {
     for (const g of groups) {
       const texts = [promptText(g), figureText(g) ?? '', ...((g['figures'] as Json[]) ?? []).map((f) => JSON.stringify(f['rows'] ?? ''))];
       if (texts.some((t) => d8Ranges(t, sets).length > 0)) hits.push(String(g['group_id']));
+    }
+    expect(hits).toEqual([]);
+  });
+
+  it('D8 指紋：歷屆作文題連同考卷表頭或講義標題一起貼上（考試單位、學年度、考試名稱）0 筆命中', () => {
+    const titles = new Map(exams.map((e) => [String(e['id']), String(e['title'] ?? '')]));
+    const pastEssays = essays.filter((g) => g['origin'] === 'exam' && titles.get(String(g['exam_id'])));
+    expect(pastEssays.length).toBeGreaterThanOrEqual(40);
+    const hits: string[] = [];
+    for (const g of pastEssays) {
+      const title = titles.get(String(g['exam_id']))!;
+      const handout = title.replace(/英文考科$/, '英文作文');
+      const headers = [
+        `財團法人大學入學考試中心基金會\n${title}試題\n二、英文作文`,
+        `大學入學考試中心 ${title} 第貳部分：非選擇題`,
+        handout,
+        `仿${handout.replace(/^\d+學年度/, '')}`,
+        `大考中心公布的${handout}題目`,
+      ];
+      for (const h of headers) if (d8Ranges(`${h}\n${promptText(g)}`, sets).length > 0) hits.push(`${g['group_id']}：${h.split('\n')[0]}`);
     }
     expect(hits).toEqual([]);
   });

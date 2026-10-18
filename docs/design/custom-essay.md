@@ -1133,9 +1133,9 @@ Transcribe the handwritten essay in the photos above.
 
 **總開關**：
 
-- 新環境變數 `AI_CUSTOM_ESSAY`（預設 `on`），照 ai-auth-mvp §2 的規則三處一起改：`env.ts`、`config.ts`（`CONFIG_DEFAULTS` 與 `config.ai.customEssay`）、`wrangler.toml`。`test/skeleton.test.ts` 會檢查預設值一致。
+- 新環境變數 `AI_CUSTOM_ESSAY`（預設 `on`；**實作改成預設 `off`、只改 `wrangler.toml` 一行，見實作備註「上線順序」**），照 ai-auth-mvp §2 的規則三處一起改：`env.ts`、`config.ts`（`CONFIG_DEFAULTS` 與 `config.ai.customEssay`）、`wrangler.toml`。`test/skeleton.test.ts` 會檢查預設值一致。
 - **解析是 fail closed**（S5）：
-  - 沒設定（或只有空白）時用預設值 `on`；
+  - 沒設定（或只有空白）時用預設值 `on`（實作的預設值是 `off`，所以沒設＝關；見實作備註）；
   - 去掉頭尾空白、轉小寫後**等於 `on` 才開**；
   - 其他任何值（`off`、`Off`、`false`、`0`、打錯的字）一律當成關，不合法的值另外 `console.warn`。
   - 這和 `config.ts` 的 `num()`／`effort()`「不合法就用預設值」不同，是刻意的：這是唯一能「只關自訂題」的開關，打錯字時要偏向關。
@@ -1606,7 +1606,7 @@ export function attemptPathOf(kind: SubmissionKind, groupId: string, submissionI
   - 同一段文字每個字之間插空白、或中間插一個換行 → 400（S3）；
   - 同一段文字插一個標點分開 → 通過（說明窗口不跨標點）。
 - 同時帶 `group_id` 與 `custom_prompt` → 400；`kind: 'translation'` 帶 `custom_prompt` → 400；直接用 `group_id: 'custom:essay@1'` 建立 → 400「沒有這個題組」。
-- 開關：`AI_CUSTOM_ESSAY` 是 `off`、`Off`、`false`、`0`、`yes`、`onn` → 503；沒設、空字串或只有空白（照 `config.ts` 的 `str()` 視為沒設，用預設值）、`on`、`ON`、`" on "` → 開（`skeleton.test.ts` 測解析，S5）。
+- 開關：`AI_CUSTOM_ESSAY` 是 `off`、`Off`、`false`、`0`、`yes`、`onn` → 503；沒設、空字串或只有空白（照 `config.ts` 的 `str()` 視為沒設，用預設值）、`on`、`ON`、`" on "` → 開（`skeleton.test.ts` 測解析，S5）。實作的預設值改成 `off`：沒設、空字串或只有空白 → 503，只有 `on`、`ON`、`" on "` 開（見實作備註）。
 - 指紋檔換成壞掉的 base64、筆數和檔頭不符、0 筆 → 503；連續兩個請求只寫一筆 `ops_events`（S3）。
 - 每日 100 份的上限對自訂題同樣有效。
 
@@ -2241,3 +2241,14 @@ npm run test:local-e2e -w @gsat/api
 - **伺服器回的題目錯誤**（ux-8）：`PromptFieldError` 多 `snapshot`（錯誤當時那一欄的內容），表單只在那一欄還是當時的內容時顯示；改段數、圖片描述、字數不會讓題目欄的說明消失。作答頁與結果頁都不再在每次修改時清掉錯誤。
 - **刪除提交**（§6.6，S15，ux-2）：`forgetCustomSubmission(id, deletedPrompt)`：草稿正在沿用那一份時清掉題目；只是「上次送出的那一份」時，草稿的題目和被刪那一份相同才清，否則只清 id（學生已經換了新題目）。
 - **拍照模式、自訂題未開放**（ux-14）：說明檢核清單在打字作答，附「切到打字作答」按鈕。
+
+### 上線前最終審查的修正
+
+- **輸出限制的英文單詞算法**（§4.8，S1）：`CustomLimiter` 的 `_zh` 欄位（逐欄與合計）與 `suggestion` 改用 `scoring.ts` 的 `outputEnglishWords`：先 NFKC，再把拉丁、西里爾、希臘字母連續的一串算一個單詞。原本只算 `[A-Za-z]`，模型被題目誘導改用全形（Ｍｙ）、數學粗體或形近字母寫英文時，每個上限都算成 0 個單詞。ASCII 英文的結果和 `customPromptEnglishWords` 相同，正常回饋不受影響；參考改寫照舊（`comparableWords`＋編輯距離）。
+- **D8 指紋不含考試單位與考試名稱**（§2.4.5）：產生器取 `scoring_notes` 的窗口之前，先把 `D8_PUBLIC_HEADER_TERMS`（考試單位的全名與簡稱、考試名稱、「學年度」「英文考科」；考卷封面、頁首與講義標題都有的公開字樣）換成分隔符號（`maskPublicHeaderTerms`，字和字之間有空白或換行也算）。原本評分說明的出處句會讓「113學年度學科能力測驗英文作文」這類講義標題被當成官方文字拒收（`official_material`），也會被顯示時的重查隱藏。漢字窗口從 4,669 筆降到 4,541 筆（英文不變），§2.4.5 的數字以這裡為準；48 份評分原則開頭 200 字元的三種形式仍全部命中，歷屆作文題連同考卷表頭或講義標題一起貼上 0 筆命中（`custom-essay.data.test.ts`）。Worker 的比對（`d8.ts`）與指紋檔格式不變。
+- **評分對照的案例不在 `npm test` 讀真實資料**（§7.8）：`custom-essay.parity-summary.test.ts`（`npm test`，也是 Worker 部署前的檢查）改用造好的作文測 `buildCases` 的組法；原本讀 `data/bank/v1/composition` 並寫死「A 60 對」，下架一題作文就讓部署失敗。真實資料的檢查（`casesProblems`：可用的本站仿真作文至少 `PARITY_MIN_ESSAYS`＝20 題、各組數量符合 `caseShape`、沒有被輸入規則拒收的案例）移到 `test/parity/custom-essay.precheck.parity.ts`：只在評分對照的設定裡（`vitest.parity.config.ts`），workflow 在花錢之前跑它，`custom-essay.parity.ts` 開始批改前也再檢查一次。A 組用「最多 30 題」：題目因下架變少時照比例少跑，不足 20 題就不跑（和 §7.8 的「30 題」不同）。
+- **接著跑不重跑拒答**（§7.8，S12）：`needsGrading` 只讓沒有結果與暫時失敗（連線錯誤、逾時等 API 錯誤）的案例重跑；拒答、格式不符、截斷記下來就不再重跑。原本每次接著跑都重跑所有失敗的案例，重跑到成功，拒答就從「A 自訂題路徑的失敗率差」裡消失。還有暫時失敗沒重跑成功時，結論是「還沒跑完」（再執行一次即可），不是「不達標」。要整批重新抽樣，Run workflow 時取消勾選 `resume`。
+- **自訂題目批改沒開時的文案**（§6.1、§6.4、§6.8；上線的狀態）：
+  - 作答頁：AI 開著、`customEssay` 不是 true 時，不管登入與核准狀態都只說「自訂題目的 AI 批改即將開放」（拍照區附「切到打字作答」），不顯示登入或申請的說明；§6.4「未核准顯示開通說明」只適用於自訂題目批改開著的時候。開頭的說明在沒開時只說自我檢核（`CUSTOM_INTRO_SELF_ONLY`）。
+  - `/writing` 的入口卡：`customEssay` 是 true 才說「或送 AI 批改」，否則是「寫完可以用檢核清單自我檢核」；`modules.ts` 的 `/composition` 說明改成不分開關的「也可以貼上自己的題目練習」（§6.1 表格與 §6.10 的文案以這裡為準）。打開時仍然只改 `wrangler.toml` 一行。
+  - 結果頁：自訂題目批改關著時（只關自訂題，SETUP-KEYS §8.1），送批改、送辨識、修改題目都停用並說「自訂題目批改目前沒有開放。」；結果、紀錄與「回到作答頁」照常（§5.3）。

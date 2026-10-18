@@ -4,7 +4,7 @@
  *   - 兩個入口：中譯英（/writing/translation）、英文作文（/writing/essay）；下面另有「本站仿真題（AI 出題）」兩個入口
  *     （/writing/translation/ai、/writing/essay/ai），再下面是「自己的題目」：自訂作文題目的入口卡（/writing/essay/custom；
  *     docs/design/custom-essay.md §6.1，不匯入 custom-essay 的規則）。說明文字寫死在這裡：不載入題庫資料、不匯入 practice 模組，
- *     首頁的程式不會變大；
+ *     首頁的程式不會變大。自訂題目的卡片只在 features.customEssay 是 true 時說「送 AI 批改」（評分對照達標之前是關的）；
  *   - 說明兩種模式：AI 批改（登入＋核准，扣點數）與自我檢核（任何人、不用 AI）；
  *   - 未登入或未核准時告訴學生怎麼開通（登入 → /ai/apply）；後端沒部署時只顯示「即將開放」；
  *   - 已登入：剩餘點數與我的寫作紀錄（GET /api/submissions?kind=）。
@@ -15,6 +15,7 @@ import { Bot, ChevronRight, FilePen, FileText, Languages } from 'lucide-react';
 import type { ReactNode } from 'react';
 import { Link } from 'react-router';
 import { PageHeader } from '../../components/ModulePage';
+import { useFeatures } from '../../lib/api';
 import { getPage } from '../../modules';
 import { AiAccessNotice, QuotaSummary } from './components/AiAccessPanel';
 import { SubmissionHistory } from './components/SubmissionHistory';
@@ -37,6 +38,7 @@ function EntryCard({ to, icon, title, children }: { to: string; icon: ReactNode;
 
 export default function WritingHomePage() {
   const page = getPage('/writing');
+  const features = useFeatures();
   const access = useAiAccess();
   const signedIn = useSignedIn();
   const { quota } = useQuota(access.state === 'ready');
@@ -83,7 +85,7 @@ export default function WritingHomePage() {
             自己的題目
           </h2>
           <EntryCard to="/writing/essay/custom" icon={<FilePen aria-hidden="true" className="size-6" />} title="自訂題目">
-            貼上老師或補習班的作文題目，寫完可以自我檢核或送 AI 批改。
+            {features.customEssay === true ? '貼上老師或補習班的作文題目，寫完可以自我檢核或送 AI 批改。' : '貼上老師或補習班的作文題目，寫完可以用檢核清單自我檢核。'}
           </EntryCard>
         </section>
 

@@ -5,6 +5,8 @@
  *      返回連結回到 /composition；
  *   1b. AI 開、自訂題目批改沒開（AI_CUSTOM_ESSAY 預設 off：評分對照達標前的上線狀態）：已核准帳號也只能自我檢核，
  *      沒有送出按鈕、拍照區說明切回打字作答，不建立任何提交；題型頁的說明只提歷屆與本站題可以送 AI；
+ *   1c. 同樣的狀態、沒登入或還沒申請：/composition 的模組說明與 /writing 的入口卡不說能送 AI；作答頁說「即將開放」，
+ *      不出現登入或申請的說明（不讓學生申請、核准之後才發現不能送）；
  *   2–4、6 用 FEATURES_CUSTOM_ON（customEssay: true）測自訂題目送 AI 批改；
  *   2. AI 批改（打字）：已核准帳號，題目含一段很長、沒有空白的字串 → 「設成 2 段」→「題目設定好了」→ 寫作文 → 送出；
  *      POST 本體帶 custom_prompt、不帶 group_id → 輪詢 queued → graded → 題目與四項分數；寫作紀錄有「自訂題目 英文作文」與題目開頭；
@@ -182,6 +184,49 @@ test('AI 開、自訂題目批改沒開（評分對照達標前）：已核准�
   await expect(page.locator('#custom-essay-self').getByRole('heading', { name: '自我檢核與自評' })).toBeVisible();
   await expectNoHorizontalOverflow(page, testInfo.project.name === 'mobile');
   // 只有讀取（features、me、額度），沒有建立提交，也沒有送任何 AI 任務。
+  expect(backend.calls.filter((c) => c.method !== 'GET').map((c) => `${c.method} ${c.path}`)).toEqual([]);
+  expect(errors).toEqual([]);
+});
+
+// ───────────────────────── 1c. 上線時的狀態、沒登入或還沒申請 ─────────────────────────
+
+test('AI 開、自訂題目批改沒開，沒登入或還沒申請：入口不說能送 AI；作答頁說「即將開放」，不叫學生登入或申請', async ({ page }, testInfo) => {
+  const errors = collectErrors(page);
+  // 預設：沒登入、features 是上線時的狀態（customEssay: false）。
+  const backend = await fakeBackend(page);
+  await page.goto('/composition');
+  await expect(page.getByText(/也可以貼上自己的題目練習。/).first()).toBeVisible();
+  await expect(page.getByRole('main')).not.toContainText('貼上自己的題目送 AI 批改');
+
+  await page.goto('/writing');
+  const own = page.getByRole('region', { name: '自己的題目' });
+  await expect(own).toContainText('貼上老師或補習班的作文題目，寫完可以用檢核清單自我檢核。');
+  await expect(own).not.toContainText('送 AI');
+  await own.getByRole('link', { name: /^自訂題目/ }).click();
+  await expect(page).toHaveURL(new RegExp(`${PATH}$`));
+
+  const main = page.getByRole('main');
+  const notOpen = page.getByText('自訂題目的 AI 批改即將開放，現在可以先用檢核清單自我檢核。');
+  const loginOrApply = /需要先登入|用 Google 登入|需要先申請|申請 AI 批改|等站主核准/;
+  await expect(notOpen.first()).toBeVisible();
+  await expect(page.getByText('把作文題目貼在下面（老師、補習班或其他考卷的題目都可以），寫完可以用檢核清單自我檢核。')).toBeVisible();
+  await expect(main).not.toContainText(loginOrApply);
+  await expect(page.getByRole('button', { name: /送出 AI 批改/ })).toHaveCount(0);
+
+  // 拍照區：同樣說即將開放、切回打字作答，不說「需要 AI 批改的權限」。
+  await page.getByRole('button', { name: '拍照上傳手寫稿' }).click();
+  const photo = page.getByRole('region', { name: '拍照上傳手寫稿' });
+  await expect(photo).toContainText('自訂題目的 AI 批改即將開放。現在可以切到「打字作答」，用檢核清單自我檢核。');
+  await expect(photo).not.toContainText('需要 AI 批改的權限');
+  await photo.getByRole('button', { name: '切到打字作答' }).click();
+  await expectNoHorizontalOverflow(page, testInfo.project.name === 'mobile');
+
+  // 登入了、還沒申請 AI：一樣不叫學生去申請（申請、核准之後才發現自訂題目不能送，等於白跑一趟）。
+  backend.me = signedInMe({ ai_status: 'none' });
+  await page.reload();
+  await expect(notOpen.first()).toBeVisible();
+  await expect(main).not.toContainText(loginOrApply);
+  await expect(page.getByRole('button', { name: /送出 AI 批改/ })).toHaveCount(0);
   expect(backend.calls.filter((c) => c.method !== 'GET').map((c) => `${c.method} ${c.path}`)).toEqual([]);
   expect(errors).toEqual([]);
 });

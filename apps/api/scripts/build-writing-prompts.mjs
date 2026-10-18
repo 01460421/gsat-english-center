@@ -70,10 +70,36 @@ export const OUT_FILE = path.join(API_DIR, 'src', 'generated', 'writing-prompts.
 export const D8_OUT_FILE = path.join(API_DIR, 'src', 'generated', 'd8-fingerprints.json');
 
 /**
- * D8 指紋的筆數下限（設計值，§2.4.5，S3）：實測 66 份考卷約有漢字 4,669、英文 6,372 筆。低於下限代表題庫資料或
+ * D8 指紋的筆數下限（設計值，§2.4.5，S3）：實測 66 份考卷約有漢字 4,541（遮掉考試單位與考試名稱之後）、英文 6,372 筆。低於下限代表題庫資料或
  * officialCorpus 被改壞了；考卷資料增加後，下限跟著調高。
  */
 export const D8_MIN_COUNTS = { han: 4_000, en: 5_000 };
+
+/**
+ * 考試單位與考試名稱：考卷封面、每頁頁首與老師講義的標題都有的公開字樣。scoring_notes 的出處與沿革句子（「自某學年度學科能力
+ * 測驗與指定科目考試起…」「…英文考科非選擇題…」）也會寫到它們，不先遮掉的話，學生把題目連同講義標題（「113學年度學科能力測驗
+ * 英文作文」）一起貼上，就會被當成官方評分說明拒收（official_material）。
+ */
+export const D8_PUBLIC_HEADER_TERMS = ['財團法人大學入學考試中心基金會', '大學入學考試中心', '學科能力測驗', '指定科目考試', '分科測驗', '大考中心', '英文考科', '學年度'];
+
+/** 長的在前；字和字之間可以有空白或換行（和 d8HanWindows 移除空白的正規形式一致）。 */
+const HEADER_TERMS_RE = new RegExp(
+  [...D8_PUBLIC_HEADER_TERMS]
+    .sort((a, b) => b.length - a.length)
+    .map((t) => [...t].join('\\s*'))
+    .join('|'),
+  'g',
+);
+
+/**
+ * scoring_notes 取窗口之前，把 D8_PUBLIC_HEADER_TERMS 換成分隔符號（NFKC 之後比對）：窗口不會跨過它們，所以含有這些字樣的
+ * 窗口不進指紋；評分原則本身的內容照樣有窗口。
+ * @param {string} text
+ */
+export function maskPublicHeaderTerms(text) {
+  return text.normalize('NFKC').replace(HEADER_TERMS_RE, '|');
+}
+
 /** 自訂作文題目共用的佔位題組 id 前綴（shared 的 CUSTOM_ESSAY_GROUP_ID 是 'custom:essay@1'）。 */
 export const CUSTOM_GROUP_PREFIX = 'custom:';
 
@@ -417,7 +443,7 @@ function stringsOf(value, out) {
 
 /**
  * D8 指紋檔（§2.4.5）：
- *   han  所有考卷 scoring_notes 的漢字窗口；
+ *   han  所有考卷 scoring_notes 的漢字窗口（考試單位與考試名稱先換成分隔符號，maskPublicHeaderTerms）；
  *   en   官方中譯英參考譯文（officialCorpus 的 translationTexts，＝englishRuns 的來源）與 scoring_notes 的英文窗口；
  * 兩者都排除也出現在公開文字裡的窗口（同樣的正規形式）：公開文字是每份考卷 restrictedFragments 的 publicTexts，
  * 加上題目庫裡歷屆題與本站題的圖片文字描述（figures 的 label、caption、description、rows）。
@@ -436,7 +462,7 @@ export function buildD8Fingerprints(exams, bank, options = {}) {
     for (const s of Array.isArray(exam.sections) ? exam.sections : []) {
       for (const g of isObject(s) && Array.isArray(s.groups) ? s.groups : []) {
         for (const q of isObject(g) && Array.isArray(g.questions) ? g.questions : []) {
-          if (isObject(q) && typeof q.scoring_notes === 'string') notes.push(q.scoring_notes);
+          if (isObject(q) && typeof q.scoring_notes === 'string') notes.push(maskPublicHeaderTerms(q.scoring_notes));
         }
       }
     }

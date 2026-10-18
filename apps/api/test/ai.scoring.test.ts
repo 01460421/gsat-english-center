@@ -2,7 +2,7 @@
  * 程式計分（src/ai/scoring.ts）：SPEC §4.6、§6.8、§6.9 的規則。模型只給判斷，分數全部由這裡算，
  * 寫錯就是學生看到錯的分數，所以每條規則都有案例。
  */
-import { countEnglishWords, countParagraphs, essayBandOf } from '@gsat/shared';
+import { countEnglishWords, countParagraphs, customPromptEnglishWords, essayBandOf } from '@gsat/shared';
 import { describe, expect, it } from 'vitest';
 import { OutputFilter } from '../src/ai/filter';
 import type { TranslationModelOutput } from '../src/ai/prompts/translation';
@@ -18,6 +18,7 @@ import {
   essayScoresProblem,
   locate,
   needsThirdRater,
+  outputEnglishWords,
   paragraphRanges,
   pickRaterPair,
   scoreEssayAnalytic,
@@ -610,6 +611,52 @@ describe('自訂作文題目的輸出限制（CUSTOM_OUTPUT_LIMITS；docs/design
       expect(combineGradingRows('essay', [row('primary', a, { rewrite: null, rewrite_omitted: 'too_different' }), row('second', b, {})], { wordCount: words, paragraphs: 2 })).toMatchObject({
         rewrite_omitted: 'too_different',
       });
+    });
+  });
+
+  describe('全形、數學粗體、形近字母寫的英文也算進上限（模型被誘導改用這些字母時，上限不能算成 0 個單詞）', () => {
+    const plain = (n: number, offset = 0) => Array.from({ length: n }, (_, i) => `essay${String.fromCharCode(97 + ((i + offset) % 26))}`).join(' ');
+    /** ASCII → 全形（字母、數字、標點），空白換成全形空白。 */
+    const fullwidth = (s: string) => s.replace(/[!-~]/g, (c) => String.fromCharCode(c.charCodeAt(0) + 0xfee0)).replace(/ /g, '　');
+    /** 小寫字母 → 數學粗體（𝐚 U+1D41A 起）。 */
+    const mathBold = (s: string) => s.replace(/[a-z]/g, (c) => String.fromCodePoint(0x1d41a + c.charCodeAt(0) - 97));
+    /** 部分拉丁字母換成長得一樣的西里爾字母（а е о р с у х）。 */
+    const cyrillic = (s: string) => s.replace(/[aeopcyx]/g, (c) => ({ a: 'а', e: 'е', o: 'о', p: 'р', c: 'с', y: 'у', x: 'х' })[c]!);
+
+    it('outputEnglishWords：ASCII 英文和 customPromptEnglishWords 相同；全形、數學粗體、西里爾形近字母都算得到', () => {
+      for (const s of ['', '中文說明，沒有英文。', "It's a good idea, but don't forget the 2nd point.", '把 "raising a child" 換成 "bringing up a child"', 'COVID-19 和 e-mail']) {
+        expect(outputEnglishWords(s), s).toBe(customPromptEnglishWords(s));
+      }
+      const sentence = 'my hometown is a quiet place by the sea';
+      expect(customPromptEnglishWords(fullwidth(sentence))).toBe(0);
+      expect(customPromptEnglishWords(mathBold(sentence))).toBe(0);
+      for (const s of [fullwidth(sentence), mathBold(sentence), cyrillic(sentence)]) expect(outputEnglishWords(s), s).toBe(9);
+    });
+
+    it('全形的評語、數學粗體的四項說明、西里爾字母的優先改進、全形的建議：超過上限一樣清空並計數', () => {
+      const output = essayAnalyticOutput(undefined, {
+        comment_zh: `整體不錯：${fullwidth(plain(41))}`,
+        top_improvements: ['加例子', cyrillic(plain(50)), '注意冠詞'],
+        errors: [{ paragraph_index: 0, category: 'other' as const, excerpt: chunks[0]!, explanation_zh: '說明', suggestion: fullwidth(plain(120)) }],
+      });
+      output.criteria.content.explanation_zh = `說明：${mathBold(plain(41))}`;
+      const r = scoreEssayAnalytic('primary', ctx, output, new OutputFilter());
+      expect(r.result.comment_zh).toBe('');
+      expect(r.criteria_explanations?.content).toBe('');
+      expect(r.top_improvements).toEqual(['加例子', '注意冠詞']);
+      expect(r.errors[0]!.suggestion).toBe('');
+      expect(r.output_limits).toMatchObject({ zh_fields_cleared: 3, suggestions_cleared: 1 });
+      const h = scoreEssayHolistic('second', ctx, { ...essayHolisticOutput(), comment_zh: fullwidth(plain(CUSTOM_OUTPUT_LIMITS.holisticCommentEnglishWordsMax + 1)) }, new OutputFilter());
+      expect(h.result.comment_zh).toBe('');
+    });
+
+    it('拆進很多欄位（每欄在上限內）的全形英文：中文說明的合計上限照樣算得到', () => {
+      const distinct = [...new Set(STUDENT_ESSAY.split(/[^A-Za-z]+/).filter((w) => w.length > 3))].slice(0, 30);
+      const errors = distinct.map((excerpt, i) => ({ paragraph_index: 0, category: 'grammar' as const, excerpt, explanation_zh: `說明：${fullwidth(plain(19, i))}`, suggestion: '' }));
+      const r = scoreEssayAnalytic('primary', ctx, essayAnalyticOutput(undefined, { errors }), new OutputFilter());
+      const total = r.errors.reduce((a, e) => a + outputEnglishWords(e.explanation_zh), 0);
+      expect(total).toBeLessThanOrEqual(CUSTOM_OUTPUT_LIMITS.zhEnglishWordsTotalMax);
+      expect(r.output_limits?.zh_total_cleared).toBeGreaterThan(0);
     });
   });
 

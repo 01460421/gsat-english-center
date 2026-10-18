@@ -128,8 +128,9 @@ jobs:
           restore-keys: |
             ${{ steps.key.outputs.prefix }}-
 
-      # 不需要金鑰：產生題目庫與 D8 指紋檔（src/generated，不進版控），再跑達標判定的單元測試（也確認案例都組得出來），
-      # 壞了就在花錢之前停下來。上次留下的彙總先刪掉，Summary 只顯示這次寫出來的。
+      # 不需要金鑰：產生題目庫與 D8 指紋檔（src/generated，不進版控），再跑達標判定的單元測試，以及用真實資料檢查案例
+      # （custom-essay.precheck：可用的作文夠多、沒有被輸入規則拒收的案例），壞了就在花錢之前停下來。
+      # 上次留下的彙總先刪掉，Summary 只顯示這次寫出來的。
       - name: 準備題目庫、確認達標判定（不需要金鑰）
         env:
           MATCHED: ${{ steps.restore.outputs.cache-matched-key }}
@@ -137,7 +138,9 @@ jobs:
           rm -f "$RESULTS_DIR/custom-essay.md"
           if [ -f "$RESULTS_DIR/custom-essay.json" ]; then echo "接著上次的結果跑（快取：$MATCHED）"; else echo "從頭開始"; fi
           npm run prompts -w @gsat/api
-          (cd apps/api && npx vitest run test/custom-essay.parity-summary.test.ts)
+          cd apps/api
+          npx vitest run test/custom-essay.parity-summary.test.ts
+          npx vitest run --config vitest.parity.config.ts custom-essay.precheck
 
       # 金鑰只在這一步。規則和「檢查輸入與金鑰」相同：ANTHROPIC_PARITY_API_KEY 優先；沒有它而且勾了 allow_online_key 才用 ANTHROPIC_API_KEY。
       # CI=true（GitHub 預設就有）時，沒有金鑰的評分對照會失敗而不是略過；結論不是「達標」時這一步失敗。

@@ -11,6 +11,8 @@
  *      &reuse=essay 連作文一起帶回、另建一份（「修改題目後重新批改這篇」）。那一份的題目被隱藏（D8 重查命中）時
  *      只不帶題目，作文照常帶回，請學生重新輸入題目；目前的草稿已經有別的作文或還沒送出的題目時先問。
  *      讀不到時依原因說明：404 才說可能已刪除；登入過期、要重新同意給連結；連線或伺服器錯誤給「再試一次」（參數先留著）。
+ *   5. AI 開著、自訂題目的 AI 批改沒開（features.customEssay 不是 true；評分對照達標之前的上線狀態）：不管登入與核准狀態，
+ *      一律說「即將開放」、只能自我檢核，不叫學生登入或申請（申請、核准之後才發現不能送，等於白跑一趟）；開頭的說明也不提送 AI。
  * 草稿（題目、作文、自評）存在這台裝置（custom/drafts.ts）；照片不存。歷屆與本站作答頁一行都沒改。
  * 畫面與 <title> 都不含「大考中心」，<title> 也不含題目文字（安全審查 S14、產品審查 P17）。
  */
@@ -73,6 +75,8 @@ import { customLengthHints } from './lengthHints';
 import { hasPending, pendingRequirements, type PendingRequirements, type WordsSuggestion } from './requirements';
 
 export const CUSTOM_INTRO = '把作文題目貼在下面（老師、補習班或其他考卷的題目都可以），寫完可以自我檢核，或送 AI 依本站的學測作文評分規準批改。';
+/** 自訂題目的 AI 批改沒開（features.customEssay 不是 true）時的開頭說明：不提送 AI。 */
+export const CUSTOM_INTRO_SELF_ONLY = '把作文題目貼在下面（老師、補習班或其他考卷的題目都可以），寫完可以用檢核清單自我檢核。';
 export const CUSTOM_NOT_OPEN = '自訂題目的 AI 批改即將開放，現在可以先用檢核清單自我檢核。';
 /** 拍照模式下 customEssay 沒開：檢核清單只在打字作答，要說切過去（審查 ux-14）。 */
 export const CUSTOM_NOT_OPEN_PHOTO = '自訂題目的 AI 批改即將開放。現在可以切到「打字作答」，用檢核清單自我檢核。';
@@ -288,6 +292,8 @@ function CustomEssayAttempt() {
   });
   const essayProblem = length.empty ? null : essayGradableProblem(draft.text, customTaskText(draft.prompt.text, draft.prompt.figure));
   const customOpen = features.customEssay === true;
+  /** AI 開著、只有自訂題目沒開：和登入、核准狀態無關，一律說「即將開放」（不叫學生先登入、申請）。 */
+  const customOff = features.auth && features.ai && !customOpen;
 
   // 作文開始有字、題目已經通過：自動收合一次（學生按過「修改題目」後不再自動收合；§6.2）。
   // 題目有講義表頭的提醒（姓名、班級、學校…）時不收：收起來就看不到提醒和「刪掉這幾行」（審查 ux-6）。
@@ -629,7 +635,7 @@ function CustomEssayAttempt() {
         <title>{`自訂題目作文｜寫作練習｜${APP_NAME}`}</title>
         <h1 className="text-2xl font-bold tracking-tight lg:text-3xl">自訂題目作文</h1>
         <SourceTabs kind="essay" current="custom" />
-        <p className="mt-3 text-[0.95rem]">{CUSTOM_INTRO}</p>
+        <p className="mt-3 text-[0.95rem]">{customOpen ? CUSTOM_INTRO : CUSTOM_INTRO_SELF_ONLY}</p>
       </header>
 
       {oldDraftDays > OLD_DRAFT_DAYS && (
@@ -823,17 +829,15 @@ function CustomEssayAttempt() {
             </p>
           )}
           {access.state === 'ready' && customOpen && typedBlockedReason && <p className="text-sm text-muted">{typedBlockedReason}</p>}
-          {access.state === 'ready' ? (
-            customOpen ? (
-              <>
-                <AiNotice generic />
-                <QuotaSummary quota={quota} />
-              </>
-            ) : (
-              <Notice>
-                <p>{CUSTOM_NOT_OPEN}</p>
-              </Notice>
-            )
+          {customOff ? (
+            <Notice>
+              <p>{CUSTOM_NOT_OPEN}</p>
+            </Notice>
+          ) : access.state === 'ready' ? (
+            <>
+              <AiNotice generic />
+              <QuotaSummary quota={quota} />
+            </>
           ) : (
             <AiAccessNotice access={access} compact />
           )}
@@ -915,7 +919,7 @@ function CustomEssayAttempt() {
               {!check.ok && <p className="text-sm text-muted">題目還要修改：{promptProblem}</p>}
               {error && <ErrorMessage view={error} />}
             </>
-          ) : access.state === 'ready' ? (
+          ) : customOff || access.state === 'ready' ? (
             <Notice>
               <p>{customOpen ? <><strong>拍照上傳即將開放。</strong>現在可以先用打字作答。</> : CUSTOM_NOT_OPEN_PHOTO}</p>
               {!customOpen && (

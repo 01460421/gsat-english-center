@@ -64,7 +64,8 @@ export interface Env {
   AI_EFFORT_OCR?: string;
   /**
    * 英文作文自訂題目的總開關（docs/design/custom-essay.md §5.3）。只有值是 on（不分大小寫、去頭尾空白）才開，
-   * 其他任何值都當成關（fail closed）；沒設定時用 config.ts 的預設值 on。
+   * 其他任何值都當成關（fail closed）；沒設定或空白時用 config.ts 的預設值 off（評分對照達標之前是關的；
+   * 要打開是把 wrangler.toml 的 [vars] 改成 "on"，見 docs/SETUP-KEYS.md §8.2）。
    */
   AI_CUSTOM_ESSAY?: string;
 
