@@ -15,6 +15,7 @@ import WritingHomePage from './WritingHomePage';
 import CompositionPage from '../../pages/CompositionPage';
 import TranslationPage from '../../pages/TranslationPage';
 import { draftKey } from './lib/drafts';
+import { BankEssayListPage } from './bank/BankListPage';
 import { BANK_CP_PROMPT, BANK_TR_PROMPT, FEATURES_OFF, FEATURES_ON, apiError, baseRoutes, jsonResponse, meWith, translationSubmission } from './testing/fixtures';
 import { apiCallsExceptSession, renderPage } from './testing/render';
 
@@ -488,5 +489,62 @@ describe('EssayListPage', () => {
     expect(card).toHaveTextContent('看圖寫作');
     expect(card).toHaveTextContent('近年來養寵物的風氣在臺灣日漸普遍');
     expect(card).toHaveTextContent('至少 120 個單詞・2 段・附 1 張圖（文字描述）');
+  });
+});
+
+describe('自訂作文題目的入口（docs/design/custom-essay.md §6.1）', () => {
+  it('/composition：本站仿真題與歷屆試題之間有「自訂題目」區塊，連到 /writing/essay/custom（返回題型頁）；說明對得上三種題目', async () => {
+    const user = userEvent.setup();
+    renderPage('/composition', baseRoutes(FEATURES_ON, meWith()), { '/composition': <CompositionPage />, '/writing/essay/custom': <p>自訂作答頁</p> });
+    const bank = screen.getByRole('region', { name: '本站仿真題' });
+    const custom = screen.getByRole('region', { name: '自訂題目' });
+    const exam = screen.getByRole('region', { name: '歷屆試題' });
+    expect(bank.compareDocumentPosition(custom) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(custom.compareDocumentPosition(exam) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(within(bank).getByRole('link', { name: '跳到自訂題目' })).toHaveAttribute('href', '#custom-prompt');
+    expect(custom).toHaveAttribute('id', 'custom-prompt');
+    expect(await within(custom).findByText(/登入並通過申請後，也能送 AI 批改，評分規準和本站題目相同/)).toBeInTheDocument();
+    expect(screen.queryByText(/即將開放/)).not.toBeInTheDocument();
+    const how = screen.getByRole('region', { name: '作答與批改方式' });
+    expect(how).toHaveTextContent('上面的題目都可以線上作答');
+    expect(how).toHaveTextContent('歷屆試題、本站仿真題與自訂題目都可以送。');
+    expect(how).toHaveTextContent('AI 依本站自己寫的學測作文評分規準批改。');
+    const link = within(custom).getByRole('link', { name: '輸入題目開始寫' });
+    expect(link).toHaveAttribute('href', '/writing/essay/custom');
+    await user.click(link);
+    expect(screen.getByTestId('location')).toHaveTextContent('/writing/essay/custom');
+  });
+
+  it('/composition：自訂題目批改沒開時不說能送 AI，也不出現「即將開放」', async () => {
+    renderPage('/composition', baseRoutes({ ...FEATURES_ON, customEssay: false }, meWith()), { '/composition': <CompositionPage /> });
+    const custom = screen.getByRole('region', { name: '自訂題目' });
+    await screen.findByRole('region', { name: /^學測\s*\d+ 題$/ });
+    expect(custom).not.toHaveTextContent('送 AI 批改');
+    expect(screen.getByRole('region', { name: '作答與批改方式' })).toHaveTextContent('歷屆試題與本站仿真題都可以送。');
+    expect(screen.queryByText(/即將開放/)).not.toBeInTheDocument();
+  });
+
+  it('/writing：「自己的題目」小區與入口卡（不下載任何題目資料）', () => {
+    const { fetch } = renderPage('/writing', baseRoutes(FEATURES_OFF), { '/writing': <WritingHomePage /> });
+    const section = screen.getByRole('region', { name: '自己的題目' });
+    expect(within(section).getByRole('link', { name: /^自訂題目/ })).toHaveAttribute('href', '/writing/essay/custom');
+    expect(section).toHaveTextContent('貼上老師或補習班的作文題目，寫完可以自我檢核或送 AI 批改。');
+    expect(fetch.calls.some((c) => c.path.startsWith('/data/'))).toBe(false);
+  });
+
+  it('作文的「題目來源」有三格（第三格是自訂題目），中譯英仍是兩格', async () => {
+    const first = renderPage('/writing/essay', baseRoutes(FEATURES_OFF), { '/writing/essay': <EssayListPage /> });
+    const essayTabs = screen.getByRole('navigation', { name: '題目來源' });
+    expect(within(essayTabs).getAllByRole('link').map((a) => [a.textContent, a.getAttribute('href')])).toEqual([
+      ['歷屆試題', '/writing/essay'],
+      ['本站仿真', '/writing/essay/ai'],
+      ['自訂題目', '/writing/essay/custom'],
+    ]);
+    first.unmount();
+    const second = renderPage('/writing/essay/ai', baseRoutes(FEATURES_OFF), { '/writing/essay/ai': <BankEssayListPage /> });
+    expect(within(screen.getByRole('navigation', { name: '題目來源' })).getAllByRole('link')).toHaveLength(3);
+    second.unmount();
+    renderPage('/writing/translation', baseRoutes(FEATURES_OFF), { '/writing/translation': <TranslationListPage /> });
+    expect(within(screen.getByRole('navigation', { name: '題目來源' })).getAllByRole('link').map((a) => a.textContent)).toEqual(['歷屆試題', '本站仿真']);
   });
 });

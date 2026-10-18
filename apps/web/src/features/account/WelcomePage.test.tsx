@@ -37,13 +37,14 @@ describe('自動導向', () => {
     const main = screen.getByRole('main');
     expect(within(main).getByRole('heading', { level: 2, name: '隱私權說明' })).toBeInTheDocument();
     expect(within(main).getByRole('heading', { level: 2, name: '服務條款' })).toBeInTheDocument();
-    expect(within(main).getAllByText(/版本 2026-10-08/)).toHaveLength(2);
+    expect(within(main).getByText(new RegExp(`版本 ${VERSIONS.privacy}`))).toBeInTheDocument();
+    expect(within(main).getByText(new RegExp(`版本 ${VERSIONS.terms}`))).toBeInTheDocument();
     expect(within(main).queryByText('不同意新版的內容？')).not.toBeInTheDocument();
 
     const submit = within(main).getByRole('button', { name: '同意並繼續' });
     expect(submit).toBeDisabled();
-    await user.click(within(main).getByRole('checkbox', { name: /同意隱私權說明（2026-10-08 版）/ }));
-    await user.click(within(main).getByRole('checkbox', { name: /同意服務條款（2026-10-08 版）/ }));
+    await user.click(within(main).getByRole('checkbox', { name: new RegExp(`同意隱私權說明（${VERSIONS.privacy} 版）`) }));
+    await user.click(within(main).getByRole('checkbox', { name: new RegExp(`同意服務條款（${VERSIONS.terms} 版）`) }));
     expect(submit).toBeDisabled(); // 還沒選年齡區間
     await user.click(within(main).getByRole('radio', { name: '未滿 18 歲' }));
     const nickname = within(main).getByRole('textbox', { name: '暱稱' });

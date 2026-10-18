@@ -28,15 +28,18 @@ import {
   TRANSLATION_PARTS_PER_SENTENCE,
   TRANSLATION_POINTS_PER_PART,
   TRANSLATION_SENTENCE_MAX,
+  CUSTOM_ESSAY_GROUP_ID,
   WRITING_UNKNOWN_GROUP_MESSAGE,
   countEnglishWords,
   countParagraphs,
   essayBandOf,
   isAiGradableTranslation,
+  isCustomEssayGroupId,
   isScoreOnStep,
   writingGroupId,
   writingItemId,
 } from './writing';
+import { parseBankGroupId } from './bank';
 import { checkMechanics, normalizeStudentText } from './writing-mechanics';
 
 describe('作文四項（SPEC §4.6：各 0–5，加總 20）', () => {
@@ -206,4 +209,30 @@ it('checkMechanics、normalizeStudentText 由 index.ts 轉匯出，不經 writin
   expect(src).not.toMatch(/from '\.\/writing-mechanics'/);
   expect(shared.checkMechanics).toBe(checkMechanics);
   expect(shared.normalizeStudentText).toBe(normalizeStudentText);
+});
+
+describe('自訂作文題目的題組 id（docs/design/custom-essay.md §2.2）', () => {
+  it('所有自訂題共用 custom:essay@1；歷屆題與本站題的 id 都不是自訂題', () => {
+    expect(CUSTOM_ESSAY_GROUP_ID).toBe('custom:essay@1');
+    expect(isCustomEssayGroupId(CUSTOM_ESSAY_GROUP_ID)).toBe(true);
+    for (const other of ['gsat-115.s8g1@1', 'ai.cp.0e89ae@1', 'custom:essay@2', 'custom.essay@1']) expect(isCustomEssayGroupId(other), other).toBe(false);
+  });
+
+  it('不會被誤認成本站題（parseBankGroupId）或歷屆題（前端的 {試卷}.{題組}@{版本} 正規式）', () => {
+    expect(parseBankGroupId(CUSTOM_ESSAY_GROUP_ID)).toBeNull();
+    expect(/^[a-z0-9-]+\.[A-Za-z0-9_]+@\d+$/.test(CUSTOM_ESSAY_GROUP_ID)).toBe(false);
+  });
+
+  it('兩個新的錯誤代碼在 API_ERROR_CODES 裡', () => {
+    expect(API_ERROR_CODES).toContain('custom_prompt_invalid');
+    expect(API_ERROR_CODES).toContain('essay_not_gradable');
+  });
+
+  it('custom-essay.ts 由 index.ts 直接轉匯出，不經 writing.ts；EMAIL_RE、PHONE_RE 在 writing-mechanics.ts（Worker 的輸出過濾共用）', () => {
+    const src = readFileSync(new URL('./writing.ts', import.meta.url), 'utf8');
+    expect(src).not.toMatch(/from '\.\/custom-essay'/);
+    expect(typeof shared.checkCustomPrompt).toBe('function');
+    expect('a b@c.io x'.replace(shared.EMAIL_RE, '#')).toBe('a # x');
+    expect('call 0912-345-678 now'.replace(shared.PHONE_RE, '#')).toBe('call # now');
+  });
 });

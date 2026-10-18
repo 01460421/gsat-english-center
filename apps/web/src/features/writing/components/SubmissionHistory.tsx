@@ -2,6 +2,7 @@
  * 我的寫作紀錄（GET /api/submissions?kind=&cursor=）：中譯英、作文兩個切換按鈕，「載入更多」接續 next_cursor。
  * 只在已登入時顯示（呼叫端判斷）；載入失敗只在這一區顯示訊息（登入過期時附「重新登入」），不影響頁面其他部分。
  * 分數是 AI 給的：旁邊標「AI」（完整的「AI 批改，僅供參考」給讀屏與滑鼠提示）。
+ * 自訂作文題目的列：「自訂題目 英文作文」下面多一行題目開頭（custom_title）；每一列（含草稿）照舊連到結果頁。
  */
 import { SUBMISSION_KINDS, TRANSLATION_GROUP_MAX, ESSAY_MAX_SCORE, type SubmissionKind, type SubmissionSummary } from '@gsat/shared';
 import { ChevronRight } from 'lucide-react';
@@ -25,6 +26,7 @@ const EMPTY: ListState = { items: [], cursor: null, loading: true, error: null, 
 
 function Row({ s }: { s: SubmissionSummary }) {
   const max = s.kind === 'translation' ? TRANSLATION_GROUP_MAX : ESSAY_MAX_SCORE;
+  const customTitle = s.custom_title ?? null;
   return (
     <li>
       <Link to={`/writing/submissions/${encodeURIComponent(s.id)}`} className="group flex items-center gap-3 rounded-xl border border-line p-3 hover:border-primary">
@@ -33,6 +35,8 @@ function Row({ s }: { s: SubmissionSummary }) {
             {groupLabel(s.group_id)} {KIND_LABELS[s.kind]}
             {s.input_mode === 'photo' && <span className="rounded-full bg-surface-2 px-2 py-0.5 text-xs">手寫</span>}
           </span>
+          {/* 自訂題目的題目開頭（舊版 Worker 不回這個欄位；docs/design/custom-essay.md §6.9）。 */}
+          {customTitle && <span className="block min-w-0 truncate text-sm text-muted">「{customTitle}」</span>}
           <span className="block text-sm text-muted">
             {STATUS_LABELS[s.status]}・{formatUnixTime(s.updated_at)}
           </span>

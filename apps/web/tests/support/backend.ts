@@ -20,9 +20,9 @@ import type {
 } from '@gsat/shared';
 
 /** 現行條款版本：要和 src/features/account/policy.ts（以及後端 wrangler.toml）一致，歡迎頁才允許送出。 */
-export const VERSIONS = { privacy: '2026-10-08', terms: '2026-10-08', ai: '2026-10-08' } as const;
+export const VERSIONS = { privacy: '2026-10-18', terms: '2026-10-08', ai: '2026-10-08' } as const;
 
-export const FEATURES_ON: FeaturesResponse = { auth: true, ai: true, ocr: true, aiPaused: false };
+export const FEATURES_ON: FeaturesResponse = { auth: true, ai: true, ocr: true, aiPaused: false, customEssay: true };
 
 /** 已登入的 /api/me（預設：完成首次設定、尚未申請 AI 的學生）。 */
 export function signedInMe(

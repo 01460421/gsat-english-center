@@ -829,10 +829,10 @@ async function main() {
     const admin = new CookieJar();
     const student = new CookieJar();
 
-    await step('GET /api/features：登入、AI、OCR 都已啟用', async () => {
+    await step('GET /api/features：登入、AI、OCR、自訂作文題目都已啟用', async () => {
       const r = await http(BASE, 'GET', '/api/features');
       expectStatus(r, 200, 'features');
-      same(r.json, { auth: true, ai: true, ocr: true, aiPaused: false }, 'features');
+      same(r.json, { auth: true, ai: true, ocr: true, aiPaused: false, customEssay: true }, 'features');
     });
 
     await step('GET／POST /auth/probe：多個 Set-Cookie 原樣轉送、1.25 MB 本體、延遲回應（ARCHITECTURE §4.3）', async () => {

@@ -137,11 +137,12 @@ workflow 會依序：型別檢查與測試 → 檢查 token 與 workers.dev 子�
 1. **Actions 的執行結果**：每一步都是綠勾。點進這次執行，頁面下方的 **Summary** 有一張表：
    - Worker 網址（`https://gsat-english-api.<子網域>.workers.dev`）與 workers.dev 子網域
    - 登入（auth）、AI 批改（ai）、拍照 OCR（ocr）是否啟用、AI 是否暫停
+   - 自訂題目批改（customEssay）是否啟用，以及 `apps/api/wrangler.toml` 的 `AI_CUSTOM_ESSAY` 寫的是什麼。兩者對不起來時有一則「注意」（新版本可能還沒傳到所有節點，幾分鐘後打開 `/api/features` 再確認）；AI 已啟用、自訂題目批改未啟用時有一則「提醒」（只關自訂題時是正常的）
    - Worker 上有哪些機密（只列名稱）
    - 經 Vercel 代理是否已接上，以及「下一步」
 2. **直接打開 Worker**：
    - `https://gsat-english-api.<子網域>.workers.dev/api/health` → `{"ok":true,"service":"gsat-english-api",…}`
-   - `https://gsat-english-api.<子網域>.workers.dev/api/features` → 六個金鑰都填了的話是 `{"auth":true,"ai":true,"ocr":true,"aiPaused":false}`
+   - `https://gsat-english-api.<子網域>.workers.dev/api/features` → 六個金鑰都填了的話是 `{"auth":true,"ai":true,"ocr":true,"aiPaused":false,"customEssay":true}`（`AI_CUSTOM_ESSAY` 是 `"off"` 時 `customEssay` 是 false）
 3. **接上 Vercel**：根目錄 `vercel.json` 的兩個 `REPLACE_WITH_SUBDOMAIN` 要換成 §1.2 的子網域（Summary 的「下一步」會寫出完整網址；這一步由開發者改好推到 main，Vercel 會自動重新部署）。完成後：
    - `https://gsat-english-center.vercel.app/api/health` → 和上面一樣的 JSON
    - 網站側欄出現「登入」按鈕
@@ -207,6 +208,19 @@ workflow 會依序：型別檢查與測試 → 檢查 token 與 workers.dev 子�
 - **拿掉某個功能的金鑰**：先刪 GitHub secret（否則下次部署又會同步回去），再到 Cloudflare 的 Variables and Secrets 刪掉同名機密。
 - **調整 AI 預算與名額**：改 `apps/api/wrangler.toml` 的 `[vars]`（和 `src/config.ts` 的預設值一起改，測試會檢查），推到 main 自動部署；Console 的 workspace 上限也要同步改。
 - **買網域之後**：照 ARCHITECTURE §4.4 的步驟（`[[routes]]`、`ALLOWED_ORIGINS`、`PUBLIC_API_ORIGIN`、`APP_ORIGIN`、Google 的 redirect URI 加新網址）。
+
+### 8.1 只關閉自訂題目批改
+
+英文作文的「自訂題目」（學生自己貼題目送 AI 批改）有自己的總開關 `AI_CUSTOM_ESSAY`（`apps/api/wrangler.toml` 的 `[vars]`；只有 `"on"` 才開，其他任何值都當成關）。自訂題出問題（例如大量拒答、有人用題目欄做奇怪的事）時：
+
+1. **立即止血**：網站 `/admin` 按「AI 全站暫停」。存在 D1、立刻生效，但歷屆題與本站題的 AI 批改也會一起停；暫停只記在當天，台灣時間隔天 00:00 自動恢復。
+2. **只關自訂題**：把 `apps/api/wrangler.toml` 的 `AI_CUSTOM_ESSAY = "on"` 改成 `"off"`，推到 main，等「部署後端（Cloudflare Worker）」跑完（幾分鐘）。
+   - 打開這次執行的 **Summary**，確認「自訂題目批改（customEssay）」是**未啟用**、`AI_CUSTOM_ESSAY` 是 `"off"`，而且「注意」裡沒有「對不起來」；也可以直接打開 `/api/features` 看 `"customEssay":false`；
+   - 確認之後，再到 `/admin` 解除全站暫停（歷屆題與本站題恢復，自訂題的作答頁只剩自我檢核）；
+   - 已經在排隊的自訂題會照常批改完（點數已經預扣）。
+3. **不要**在 Cloudflare 儀表板的 Variables and Secrets 改 `AI_CUSTOM_ESSAY`：下一次部署（題庫資料更新也會觸發）會被 `wrangler.toml` 的 `[vars]` 蓋回去。
+
+要重新開啟：改回 `"on"` 推到 main，Summary 應該是「啟用」、沒有「提醒」。
 
 ## 9. 已知限制
 

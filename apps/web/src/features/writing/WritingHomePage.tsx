@@ -2,14 +2,16 @@
  * /writing：寫作練習首頁。負責：前端寫作 W2。
  *
  *   - 兩個入口：中譯英（/writing/translation）、英文作文（/writing/essay）；下面另有「本站仿真題（AI 出題）」兩個入口
- *     （/writing/translation/ai、/writing/essay/ai）。說明文字寫死在這裡：不載入題庫資料、不匯入 practice 模組，首頁的程式不會變大；
+ *     （/writing/translation/ai、/writing/essay/ai），再下面是「自己的題目」：自訂作文題目的入口卡（/writing/essay/custom；
+ *     docs/design/custom-essay.md §6.1，不匯入 custom-essay 的規則）。說明文字寫死在這裡：不載入題庫資料、不匯入 practice 模組，
+ *     首頁的程式不會變大；
  *   - 說明兩種模式：AI 批改（登入＋核准，扣點數）與自我檢核（任何人、不用 AI）；
  *   - 未登入或未核准時告訴學生怎麼開通（登入 → /ai/apply）；後端沒部署時只顯示「即將開放」；
  *   - 已登入：剩餘點數與我的寫作紀錄（GET /api/submissions?kind=）。
  * 後端沒部署（features 全關）時這一頁不打任何 API。
  */
 import { AI_TASK_POINTS } from '@gsat/shared';
-import { Bot, ChevronRight, FileText, Languages } from 'lucide-react';
+import { Bot, ChevronRight, FilePen, FileText, Languages } from 'lucide-react';
 import type { ReactNode } from 'react';
 import { Link } from 'react-router';
 import { PageHeader } from '../../components/ModulePage';
@@ -74,6 +76,15 @@ export default function WritingHomePage() {
               </EntryCard>
             </li>
           </ul>
+        </section>
+
+        <section aria-labelledby="custom-heading" className="space-y-3">
+          <h2 id="custom-heading" className="text-lg font-semibold">
+            自己的題目
+          </h2>
+          <EntryCard to="/writing/essay/custom" icon={<FilePen aria-hidden="true" className="size-6" />} title="自訂題目">
+            貼上老師或補習班的作文題目，寫完可以自我檢核或送 AI 批改。
+          </EntryCard>
         </section>
 
         <section aria-labelledby="modes-heading" className={card}>

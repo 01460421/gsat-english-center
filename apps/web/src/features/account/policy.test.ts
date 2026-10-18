@@ -33,6 +33,27 @@ describe('條款版本與後端一致', () => {
     expect(formatVersionDate('2026-10-08')).toBe('2026 年 10 月 8 日');
   });
 
+  it('隱私權說明涵蓋自訂作文題目，並寫出這一版改了什麼（docs/design/custom-essay.md §6.10）', () => {
+    const text = JSON.stringify(PRIVACY_POLICY.sections);
+    expect(text).toContain('自己輸入或貼上的作文題目');
+    expect(text).toContain('你自己在作答或自訂題目裡輸入的文字除外');
+    expect(text).toContain('請不要在作答或自訂題目中寫下');
+    expect(PRIVACY_POLICY.changes.length).toBeGreaterThan(0);
+    expect(PRIVACY_POLICY.changes.join('')).toContain('自訂題目');
+  });
+
+  it('自動遮掉聯絡方式的說法和實際範圍一致：只說「常見格式」，其他寫法請自己刪除（security-4）', async () => {
+    const { normalizeCustomPromptText } = await import('@gsat/shared');
+    const text = JSON.stringify(PRIVACY_POLICY);
+    expect(text).not.toContain('題目裡的 email 與電話會自動遮掉');
+    expect(text).toContain('常見格式的 email、手機與市話號碼會自動遮掉');
+    expect(text).toContain('其他寫法的聯絡方式請自己刪除');
+    // 「常見格式」真的會遮：email、手機、加括號、連字號、空白分隔或不分隔的市話。
+    for (const contact of ['amy@example.com', '0912-345-678', '(02)2771-1234', '02-2771-1234', '02 2771 1234', '0227711234']) {
+      expect(normalizeCustomPromptText(`聯絡：${contact}`).masked, contact).toBe(1);
+    }
+  });
+
   it('隱私權說明涵蓋必要事項：非營利、蒐集項目、Anthropic、照片刪除、匯出與刪除', () => {
     const text = JSON.stringify(PRIVACY_POLICY);
     for (const phrase of ['非營利', '不收費', 'Anthropic', '不含你的姓名、email', '立即刪除', '匯出我的資料', '刪除帳號', '個人資料保護法']) {

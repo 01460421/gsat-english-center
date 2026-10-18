@@ -66,6 +66,11 @@ const BankTranslationListPage = lazy(() => import('./features/writing/bank/BankL
 const BankEssayListPage = lazy(() => import('./features/writing/bank/BankListPage').then((m) => ({ default: m.BankEssayListPage })));
 const BankTranslationAttemptPage = lazy(() => import('./features/writing/bank/BankTranslationAttemptPage'));
 const BankEssayAttemptPage = lazy(() => import('./features/writing/bank/BankEssayAttemptPage'));
+/**
+ * 英文作文自訂題目（docs/design/custom-essay.md §6.2）：/writing/essay/custom。靜態段 custom 同樣優先於歷屆題的 :examId
+ * （歷屆考卷的 id 是 gsat-115、ast-110、ref-115 這類，不可能是 custom）。
+ */
+const CustomEssayAttemptPage = lazy(() => import('./features/writing/custom/CustomEssayAttemptPage'));
 
 export function App() {
   return (
@@ -95,6 +100,7 @@ export function App() {
         <Route path="writing/essay" element={<EssayListPage />} />
         <Route path="writing/essay/ai" element={<BankEssayListPage />} />
         <Route path="writing/essay/ai/:code" element={<BankEssayAttemptPage />} />
+        <Route path="writing/essay/custom" element={<CustomEssayAttemptPage />} />
         <Route path="writing/essay/:examId" element={<EssayAttemptPage />} />
         <Route path="writing/submissions/:id" element={<SubmissionResultPage />} />
         <Route path="practice/:section/:tier" element={<PracticeSessionPage />} />

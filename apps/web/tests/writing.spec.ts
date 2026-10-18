@@ -172,7 +172,7 @@ test('中譯英 AI 批改：建立提交、202、輪詢 queued → graded，顯�
   let body: TranslationBody | null = null;
   let polls = 0;
   backend.on('POST /api/submissions', (call) => {
-    const create = call.json as CreateSubmissionBody;
+    const create = call.json as Extract<CreateSubmissionBody, { group_id: string }>;
     body = (create.body as TranslationBody | undefined) ?? null;
     return ok(detail({ id: 'sub-t1', kind: 'translation', group_id: create.group_id, status: 'draft', body }), 201);
   });

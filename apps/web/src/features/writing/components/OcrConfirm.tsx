@@ -70,6 +70,7 @@ export function OcrConfirm({
   onConfirmed,
   requiredParagraphs = null,
   errorContext = {},
+  gradableHint,
 }: {
   submission: SubmissionDetail;
   ocr: OcrResult;
@@ -78,6 +79,11 @@ export function OcrConfirm({
   requiredParagraphs?: number | null;
   /** 錯誤訊息的情境（登入網址、me、回到哪裡）：登入過期時要有「重新登入」連結。 */
   errorContext?: Pick<DescribeContext, 'loginHref' | 'me' | 'returnTo'>;
+  /**
+   * 選填：目前的文字還不能送 AI 批改的原因（自訂題目的作文規則，docs/design/custom-essay.md §6.8、P13）。
+   * 回傳的文案在字數那一行下面即時顯示，只是提醒，不擋「確認文字」。不傳時畫面和原本完全相同。
+   */
+  gradableHint?: (text: string) => string | null;
 }) {
   const baseId = useId();
   const draftKey = ocrDraftKey(submission.id);
@@ -93,6 +99,8 @@ export function OcrConfirm({
   const unresolved = countUnresolved(text);
   // 照片辨識的文字：段落只認空白行（和後端計分一致）。
   const length = checkEssayLength(text, requiredParagraphs, true);
+  // 自訂題目的作文規則（即時提醒，不擋確認）。
+  const hint = gradableHint && !length.empty ? gradableHint(text) : null;
   // 目前文字裡第 k 個 [[?]] 對應原始 OCR 的第幾個（候選字跟著它走）。
   const mapping = useMemo(() => matchMarks(ocr.text, text), [ocr.text, text]);
 
@@ -248,6 +256,11 @@ export function OcrConfirm({
         ) : null}
         {!saved ? <span className="ml-2">（這個瀏覽器無法暫存修改）</span> : null}
       </p>
+      {hint && (
+        <p className="text-sm text-bad" aria-live="polite">
+          {hint}
+        </p>
+      )}
       {length.paragraphDeduction && (
         <p className="text-sm text-muted">
           目前只算到 1 段：手寫稿的段落之間要有一個空行才會分段（題目要求文分 {requiredParagraphs} 段，未分段會扣 1 分）。原稿有分段的話，請到「整篇一起編輯」在段落之間空一行。

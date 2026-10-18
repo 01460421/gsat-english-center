@@ -30,6 +30,9 @@ export const API_ERROR_MESSAGES: Record<ApiErrorCode, string> = {
   ai_paused: AI_ERROR_MESSAGES.ai_paused,
   site_budget: AI_ERROR_MESSAGES.site_budget,
   not_approved: AI_ERROR_MESSAGES.not_approved,
+  // 自訂作文題目（docs/design/custom-essay.md §6.7）：通用文案；寫作頁依 error.reason 顯示更細的說明。
+  custom_prompt_invalid: '題目不符合規則，請依畫面上的說明修改。',
+  essay_not_gradable: '這篇作文還不能送 AI 批改，請依畫面上的說明修改。',
 };
 
 /** 錯誤代碼（不是 ApiRequestError 或後端沒給代碼時為 null）。 */

@@ -19,18 +19,35 @@
  *   逐則處理：其中一則失敗只重送那一則（不讓整批重試、用完次數後整批丟掉）；真的丟掉了由 housekeeping 6 小時後回收。
  * 每一批訊息處理完之後跑 housekeeping（清過期照片、回收卡住的預扣；src/ai/housekeeping.ts）。
  *
+ * 英文作文自訂題目（docs/design/custom-essay.md §2.7、§4.8、§5.3）：題目從 D1 讀（submissions/custom.ts 的 groupForSubmission；
+ * 讀不到照既有邏輯以 internal 退還）；計分套用自訂題的輸出限制（EssayContext.custom）；judgments.meta 多寫 d8_fp、custom_rules
+ * 與限制的處理數量（所有批改都寫 filter_version，S16）；內容造成的退還（拒答、格式不符、截斷）同一人 7 天內第 3 次起寫
+ * ops_events 告警（同一人 24 小時內只寫一次，S12）。總開關 AI_CUSTOM_ESSAY 不在這裡檢查：已經排入 Queue 的照常完成（已預扣）。
+ *
  * 日誌只記 op id、任務、角色、狀態與微美元，不記任何學生文字（ARCHITECTURE §7「紀錄外洩」）。
  * 這支函式由 src/index.ts 的 default export 掛成 queue 入口；不要在 index.ts 加其他具名匯出。
  */
-import { AI_TASKS, countEnglishWords, type AiTask, type EssayBody, type PhotoMime, type RaterRole, type TranslationBody } from '@gsat/shared';
+import {
+  AI_TASKS,
+  CUSTOM_PROMPT_RULES_VERSION,
+  countEnglishWords,
+  isCustomEssayGroupId,
+  type AiTask,
+  type EssayBody,
+  type PhotoMime,
+  type RaterRole,
+  type TranslationBody,
+} from '@gsat/shared';
 import { loadConfig } from '../config';
 import type { AiQueueMessage, Env } from '../env';
+import { groupForSubmission } from '../submissions/custom';
 import { combineGradingRows, findSubmission, loadGradingRows, parseJson, type SubmissionRow } from '../submissions/repo';
 import { blobToBytes } from '../submissions/images';
 import { nowSeconds, taiwanDay } from '../time';
-import { getWritingGroup, type WritingGroup } from './bank';
+import type { WritingGroup } from './bank';
 import { buildClaudeRequest, callDeadlineMs, createAnthropicClient, executeClaudeCall, ModelNotAllowedError, type ClaudeCallInput } from './client';
-import { OutputFilter, sanitizeStudentText } from './filter';
+import { d8Fingerprints } from './d8';
+import { FILTER_VERSION, OutputFilter, sanitizeStudentText } from './filter';
 import { refundWithSubmission, settleOp, setPausedStatement } from './guard';
 import { runHousekeeping } from './housekeeping';
 import { opsEvent, opsEventStatement, recordCall, safetyEventStatement, userRefFor } from './ledger';
@@ -59,6 +76,11 @@ export const CONSUMER_WALL_BUDGET_MS = 14 * 60_000;
 
 export const AI_TASKS_QUEUE = 'ai-tasks';
 export const AI_TASKS_DLQ = 'ai-tasks-dlq';
+
+/** 內容造成的退還（拒答、輸出格式不符、截斷）：點數退還、成本照算；自訂題比較容易誘發（S12）。 */
+const CONTENT_REFUND_REASONS = new Set(['refusal', 'invalid_output', 'max_tokens']);
+/** 自訂題內容退還的告警（設計值，§5.3；上線後依實際數字調整）：同一人 7 天內第幾次起告警。 */
+export const CUSTOM_CONTENT_REFUND_ALERT = { windowSeconds: 7 * 86_400, threshold: 3 } as const;
 
 type FetchLike = (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
 
@@ -193,15 +215,20 @@ async function handleMessage(env: Env, msg: Message<AiQueueMessage>, deps: Consu
     return;
   }
   const config = loadConfig(env);
+  /** 讀到提交之後才知道是不是自訂題（內容退還的告警只算自訂題）。 */
+  let customEssay = false;
   const fail = async (reason: string) => {
-    await refundWithSubmission(db, op, reason, now());
+    const refunded = await refundWithSubmission(db, op, reason, now());
     log('ai_refund', { op_id: op.id, task: op.task, reason });
+    if (refunded && customEssay && CONTENT_REFUND_REASONS.has(reason)) await customContentRefundAlert(db, op, config.auth.ledgerSalt, now());
     msg.ack();
   };
   if (op.user_id === null || op.ref_id === null || !(AI_TASKS as readonly string[]).includes(op.task)) return fail('internal');
   const sub = await findSubmission(db, op.user_id, op.ref_id);
-  const group = sub ? getWritingGroup(sub.group_id) : null;
+  // 自訂題的題目在 D1：處理途中提交被刪（題目列跟著 CASCADE）就讀不到，照既有邏輯退還 internal。
+  const group = sub ? await groupForSubmission(db, sub) : null;
   if (!sub || sub.op_id !== op.id || !group) return fail('internal');
+  customEssay = isCustomEssayGroupId(sub.group_id);
   if (!config.ai.apiKey) {
     await opsEvent(db, 'ai_not_configured', 'error', { op_id: op.id });
     return fail('internal');
@@ -424,7 +451,12 @@ async function writeGrading(
 async function runGrading(ctx: Ctx): Promise<Action> {
   const { sub, group, tc } = ctx;
   const kind = sub.kind === 'translation' ? 'translation' : 'essay';
-  const meta: Record<string, unknown> = {};
+  // 批改紀錄寫下這次用的過濾規則版本；自訂題另寫指紋檔與題目規則的版本（S16：之後調整規則時分得出前後）。
+  const custom = group.origin === 'custom';
+  const meta: Record<string, unknown> = {
+    filter_version: FILTER_VERSION,
+    ...(custom ? { d8_fp: d8Fingerprints()?.version ?? null, custom_rules: CUSTOM_PROMPT_RULES_VERSION } : {}),
+  };
 
   // 再淨化一次（DB 裡的文字在送出批改時已經淨化過，這裡是第二道保險）。
   let rater: (role: RaterRole, data: unknown, filter: OutputFilter) => { judgments: unknown; score: number; deductions: unknown; feedback: unknown } | string;
@@ -459,6 +491,7 @@ async function runGrading(ctx: Ctx): Promise<Action> {
       paragraphs: ranges.length,
       requiredParagraphs: group.essay?.paragraphs ?? null,
       photoMode,
+      ...(custom ? { custom: true } : {}),
     };
     const paragraphs = ranges.map((r) => text.slice(r.start, r.end).trim());
     ctx.callInput = (role) => essayCallInput(tc, role, group, paragraphs, essayCtx.wordCount);
@@ -479,7 +512,8 @@ async function runGrading(ctx: Ctx): Promise<Action> {
             })();
       if (typeof record === 'string') return record;
       return {
-        judgments: { v: 1, kind, result: record.result, errors: record.errors, meta },
+        // 自訂題的輸出限制處理了多少，每位評分者各自記（R14：上線後看有沒有誤傷正常回饋）。
+        judgments: { v: 1, kind, result: record.result, errors: record.errors, meta: record.output_limits ? { ...meta, output_limits: record.output_limits } : meta },
         score: record.result.total,
         deductions: record.deductions,
         feedback: {
@@ -488,6 +522,7 @@ async function runGrading(ctx: Ctx): Promise<Action> {
           paragraph_advice: record.paragraph_advice,
           rewrite: record.rewrite,
           safety_flag: record.safety_flag,
+          ...(record.rewrite_omitted ? { rewrite_omitted: record.rewrite_omitted } : {}),
         },
       };
     };
@@ -575,6 +610,50 @@ async function finalizeGrading(ctx: Ctx, kind: 'translation' | 'essay'): Promise
   });
   log('ai_settled', { op_id: op.id, task: op.task, settled, third: result.third_rater_used });
   return { kind: 'done' };
+}
+
+/** 每一次自訂題內容退還的紀錄（ops_events；計數用，建立時就標成已確認，不算進後台的「未處理」）。 */
+export const CUSTOM_CONTENT_REFUND_MARK = 'custom_essay_content_refund';
+
+/**
+ * 自訂題內容退還的告警（§5.3，S12）：同一個使用者 7 天內自訂題以拒答、格式不符、截斷退還的次數 ≥3 時寫
+ * ops_events(kind='custom_essay_content_refunds', severity='warn', detail={ user_ref, count })；同一人 24 小時內只寫一次。
+ * 後台人工檢視後可以撤銷 AI 核准。題庫題的退還不計入。只記假名與次數，不記內容；失敗只寫 log，不影響退還。
+ *
+ * 計數不能依賴學生刪得掉的列（安全審查 security-3）：failed 的提交可以刪除，題目列也跟著 CASCADE，原本 JOIN submissions
+ * 的計數在「退還 → 刪除」重複幾次之後永遠是 0 或 1。所以每次自訂題的內容退還先寫一筆 ops_events
+ * （kind=CUSTOM_CONTENT_REFUND_MARK、detail={ op_id }、acked_at 等於建立時間），計數時用 op_id 對回 ai_ops 的 user_id：
+ * ops_events 與 ai_ops 都不會隨提交刪除。
+ */
+async function customContentRefundAlert(db: D1Database, op: OpRow, salt: string | null, nowMs: number): Promise<void> {
+  if (op.user_id === null) return;
+  try {
+    const now = nowSeconds(nowMs);
+    await db
+      .prepare(`INSERT INTO ops_events (kind, severity, detail_json, created_at, acked_at) VALUES (?1, 'info', ?2, ?3, ?3)`)
+      .bind(CUSTOM_CONTENT_REFUND_MARK, JSON.stringify({ op_id: op.id }), now)
+      .run();
+    const row = await db
+      .prepare(
+        `SELECT COUNT(DISTINCT o.id) AS n FROM ops_events e JOIN ai_ops o ON o.id = json_extract(e.detail_json, '$.op_id')
+          WHERE e.kind = ?3 AND e.created_at > ?2 AND o.user_id = ?1 AND o.status = 'refunded'
+            AND o.refund_reason IN ('refusal', 'invalid_output', 'max_tokens')`,
+      )
+      .bind(op.user_id, now - CUSTOM_CONTENT_REFUND_ALERT.windowSeconds, CUSTOM_CONTENT_REFUND_MARK)
+      .first<{ n: number }>();
+    const count = row?.n ?? 0;
+    if (count < CUSTOM_CONTENT_REFUND_ALERT.threshold) return;
+    const ref = await userRefFor(salt, op.user_id);
+    const seen = ref
+      ? await db
+          .prepare(`SELECT 1 AS x FROM ops_events WHERE kind = 'custom_essay_content_refunds' AND created_at > ?1 AND json_extract(detail_json, '$.user_ref') = ?2 LIMIT 1`)
+          .bind(now - 86_400, ref)
+          .first<{ x: number }>()
+      : null;
+    if (!seen) await opsEvent(db, 'custom_essay_content_refunds', 'warn', { user_ref: ref, count });
+  } catch (err) {
+    console.error('自訂題內容退還的告警失敗（不影響退還）', op.id, err);
+  }
 }
 
 // ───────────────────────── OCR ─────────────────────────

@@ -6,7 +6,9 @@ import { countEnglishWords, countParagraphs, essayBandOf } from '@gsat/shared';
 import { describe, expect, it } from 'vitest';
 import { OutputFilter } from '../src/ai/filter';
 import type { TranslationModelOutput } from '../src/ai/prompts/translation';
+import { combineGradingRows } from '../src/submissions/repo';
 import {
+  CUSTOM_OUTPUT_LIMITS,
   assembleOcr,
   checkMechanics,
   combineEssay,
@@ -397,5 +399,246 @@ describe('字數、段落、OCR 組裝', () => {
     expect(wordEditDistance('I like dogs', 'I like dogs')).toBe(0);
     expect(wordEditDistance('I like [[?]] very much', 'I like cats very much')).toBe(1);
     expect(wordEditDistance('a b c', 'a c d e')).toBe(3);
+  });
+});
+
+describe('自訂作文題目的輸出限制（CUSTOM_OUTPUT_LIMITS；docs/design/custom-essay.md §4.8，S1）', () => {
+  const words = countEnglishWords(STUDENT_ESSAY);
+  const base = { text: STUDENT_ESSAY, wordCount: words, paragraphs: countParagraphs(STUDENT_ESSAY), requiredParagraphs: 2, photoMode: false };
+  const ctx = { ...base, custom: true };
+  const rewriteCap = Math.ceil(words * CUSTOM_OUTPUT_LIMITS.rewriteWordsRatio) + CUSTOM_OUTPUT_LIMITS.rewriteExtraWords;
+  const englishWords = (n: number, w = 'word') => Array.from({ length: n }, () => w).join(' ');
+  /** 學生原文裡連續 10 個單詞的片段（都在原文裡找得到）。 */
+  const chunks = STUDENT_ESSAY.split('\n\n').flatMap((p) => {
+    const ws = p.split(' ');
+    return Array.from({ length: Math.floor(ws.length / 10) }, (_, i) => ws.slice(i * 10, i * 10 + 10).join(' '));
+  });
+
+  it('custom 不是 true（歷屆題與本站題）：結果和沒有這個欄位時完全相同，也沒有 output_limits', () => {
+    const output = essayAnalyticOutput([4, 3, 3, 4], { rewrite: englishWords(rewriteCap + 50), comment_zh: `大考中心 ${englishWords(60)}` });
+    const plain = scoreEssayAnalytic('primary', base, output, new OutputFilter());
+    expect(scoreEssayAnalytic('primary', { ...base, custom: false }, output, new OutputFilter())).toEqual(plain);
+    expect(plain).not.toHaveProperty('output_limits');
+    expect(plain).not.toHaveProperty('rewrite_omitted');
+    expect(plain.rewrite).not.toBeNull();
+    expect(plain.result.comment_zh).toContain('大考中心');
+    expect(scoreEssayHolistic('second', base, essayHolisticOutput(), new OutputFilter())).not.toHaveProperty('output_limits');
+  });
+
+  it('參考改寫：英文單詞 ≤ ceil(n × 1.3) + 10 保留；超過就是 null，回報 rewrite_dropped／rewrite_omitted', () => {
+    const similar = `${STUDENT_ESSAY} ${englishWords(rewriteCap - words)}`;
+    const ok = scoreEssayAnalytic('primary', ctx, essayAnalyticOutput(undefined, { rewrite: similar }), new OutputFilter());
+    expect(ok.rewrite).not.toBeNull();
+    expect(ok).not.toHaveProperty('rewrite_omitted');
+    expect(ok.output_limits).toEqual({
+      errors_dropped_unlocated: 0,
+      errors_dropped_duplicate: 0,
+      suggestions_cleared: 0,
+      zh_fields_cleared: 0,
+      zh_total_cleared: 0,
+      exam_board_replaced: 0,
+    });
+    const long = scoreEssayAnalytic('primary', ctx, essayAnalyticOutput(undefined, { rewrite: englishWords(rewriteCap + 1) }), new OutputFilter());
+    expect(long.rewrite).toBeNull();
+    expect(long.rewrite_omitted).toBe('too_long');
+    expect(long.output_limits?.rewrite_dropped).toBe('too_long');
+  });
+
+  it('在原文找不到位置的錯誤整則丟掉並計數（非自訂題照舊保留）', () => {
+    const errors = [
+      { paragraph_index: 0, category: 'other' as const, excerpt: 'Here is a complete model essay written by the model', explanation_zh: '說明', suggestion: 'x' },
+      ...essayAnalyticOutput().errors,
+    ];
+    const r = scoreEssayAnalytic('primary', ctx, essayAnalyticOutput(undefined, { errors }), new OutputFilter());
+    expect(r.errors.map((e) => e.excerpt)).toEqual(['feel lonely after work']);
+    expect(r.output_limits?.errors_dropped_unlocated).toBe(1);
+    expect(scoreEssayAnalytic('primary', base, essayAnalyticOutput(undefined, { errors }), new OutputFilter()).errors).toHaveLength(2);
+  });
+
+  it('suggestion 與逐段建議塞進一整段範文：每則超過上限的清空；合計超過時從最後一則往前清；被清空的建議從列表濾掉', () => {
+    expect(chunks.length).toBeGreaterThanOrEqual(7);
+    const perCap = Math.max(CUSTOM_OUTPUT_LIMITS.suggestionMinWords, 10 * CUSTOM_OUTPUT_LIMITS.suggestionWordsPerExcerptWord + CUSTOM_OUTPUT_LIMITS.suggestionExtraWords);
+    const totalCap = Math.min(
+      CUSTOM_OUTPUT_LIMITS.suggestionsTotalMaxWords,
+      Math.max(CUSTOM_OUTPUT_LIMITS.suggestionsTotalMinWords, words + CUSTOM_OUTPUT_LIMITS.suggestionsTotalExtraWords),
+    );
+    const errors = [
+      // 第一則：一整段範文（遠超過每則上限）。
+      { paragraph_index: 0, category: 'other' as const, excerpt: chunks[0]!, explanation_zh: '說明', suggestion: englishWords(120, 'essay') },
+      // 其餘每則剛好在每則上限，加總超過合計上限。
+      ...chunks.slice(1, 8).map((excerpt) => ({ paragraph_index: 0, category: 'grammar' as const, excerpt, explanation_zh: '說明', suggestion: englishWords(perCap) })),
+    ];
+    const r = scoreEssayAnalytic(
+      'primary',
+      ctx,
+      essayAnalyticOutput(undefined, {
+        errors,
+        paragraph_advice: [
+          { paragraph_index: 0, advice_zh: `可以這樣寫：${englishWords(45)}` },
+          { paragraph_index: 1, advice_zh: '第二段可以多一個例子。' },
+        ],
+      }),
+      new OutputFilter(),
+    );
+    const sizes = r.errors.map((e) => (e.suggestion === '' ? 0 : e.suggestion.split(' ').length));
+    expect(sizes[0]).toBe(0);
+    expect(sizes.reduce((a, b) => a + b, 0)).toBeLessThanOrEqual(totalCap);
+    // 從最後一則往前清：留下的是前面的。
+    const kept = sizes.slice(1).map((n) => n > 0);
+    expect(kept).toEqual([...kept].sort((a, b) => Number(b) - Number(a)));
+    expect(kept.some((k) => !k)).toBe(true);
+    expect(r.output_limits?.suggestions_cleared).toBe(1 + kept.filter((k) => !k).length);
+    expect(r.paragraph_advice).toEqual([{ paragraph_index: 1, advice_zh: '第二段可以多一個例子。' }]);
+    expect(r.output_limits?.zh_fields_cleared).toBe(1);
+  });
+
+  it('_zh 欄位：英文 41 個單詞清空、39 個保留（top_improvements 也算，清空的濾掉）', () => {
+    const r41 = scoreEssayAnalytic('primary', ctx, essayAnalyticOutput(undefined, { comment_zh: `整體不錯：${englishWords(41)}` }), new OutputFilter());
+    expect(r41.result.comment_zh).toBe('');
+    expect(r41.output_limits?.zh_fields_cleared).toBe(1);
+    const r39 = scoreEssayAnalytic('primary', ctx, essayAnalyticOutput(undefined, { comment_zh: `整體不錯：${englishWords(39)}` }), new OutputFilter());
+    expect(r39.result.comment_zh).toContain('整體不錯');
+    const top = scoreEssayAnalytic('primary', ctx, essayAnalyticOutput(undefined, { top_improvements: ['加例子', englishWords(50), '注意冠詞'] }), new OutputFilter());
+    expect(top.top_improvements).toEqual(['加例子', '注意冠詞']);
+    const h = scoreEssayHolistic('second', ctx, { ...essayHolisticOutput(), comment_zh: englishWords(41) }, new OutputFilter());
+    expect(h.result.comment_zh).toBe('');
+    expect(h.output_limits?.zh_fields_cleared).toBe(1);
+  });
+
+  describe('security-2：把一篇範文拆進很多欄位也拿不到（跨欄位的合計上限、同一個位置只用一次、參考改寫要像原文）', () => {
+    /** 結果裡所有自由文字欄位（學生看得到的）的英文單詞數。 */
+    const visibleEnglish = (r: ReturnType<typeof scoreEssayAnalytic>) => {
+      const zh = [
+        r.result.comment_zh,
+        ...Object.values(r.criteria_explanations ?? {}),
+        ...r.top_improvements,
+        ...r.paragraph_advice.map((p) => p.advice_zh),
+        ...r.errors.map((e) => e.explanation_zh),
+      ];
+      return { zh: zh.reduce((a, t) => a + countEnglishWords(t.replace(/[^A-Za-z' ]/g, ' ')), 0), suggestions: r.errors.reduce((a, e) => a + countEnglishWords(e.suggestion), 0) };
+    };
+    const model = (n: number, offset = 0) => Array.from({ length: n }, (_, i) => `model${i + offset}`).join(' ');
+
+    it('30 則錯誤都引用同一個 "the"、每則說明放 26 個英文單詞：重複位置的丟掉，中文說明的英文合計 ≤ 120', () => {
+      const errors = Array.from({ length: 30 }, (_, i) => ({ paragraph_index: 0, category: 'grammar' as const, excerpt: 'the', explanation_zh: `說明：${model(26, i * 26)}`, suggestion: 'a' }));
+      const r = scoreEssayAnalytic('primary', ctx, essayAnalyticOutput(undefined, { errors }), new OutputFilter());
+      // locate 找的是子字串（they、their、other 裡的 the 也算），所以最多保留原文裡 the 出現的次數。
+      const thes = STUDENT_ESSAY.toLowerCase().match(/the/g)!.length;
+      expect(r.errors.length).toBeLessThanOrEqual(thes);
+      expect(r.output_limits?.errors_dropped_duplicate).toBe(30 - r.errors.length);
+      expect(new Set(r.errors.map((e) => e.start)).size).toBe(r.errors.length);
+      expect(visibleEnglish(r).zh).toBeLessThanOrEqual(CUSTOM_OUTPUT_LIMITS.zhEnglishWordsTotalMax);
+    });
+
+    it('每則錯誤引用不同的字（位置都找得到）、說明各 19 個單詞，加上每個中文欄位各 26 個單詞：合計 ≤ 120，從最後一欄往前清', () => {
+      const distinct = [...new Set(STUDENT_ESSAY.split(/[^A-Za-z]+/).filter((w) => w.length > 3))].slice(0, 30);
+      expect(distinct.length).toBe(30);
+      const errors = distinct.map((excerpt, i) => ({ paragraph_index: 0, category: 'grammar' as const, excerpt, explanation_zh: `說明：${model(19, i * 19)}`, suggestion: '' }));
+      const fill = (i: number) => `說明：${model(26, 1_000 + i * 26)}`;
+      const output = essayAnalyticOutput(undefined, {
+        errors,
+        comment_zh: fill(0),
+        top_improvements: [fill(1), fill(2), fill(3)],
+        paragraph_advice: [
+          { paragraph_index: 0, advice_zh: fill(4) },
+          { paragraph_index: 1, advice_zh: fill(5) },
+        ],
+      });
+      for (const [i, c] of (['content', 'organization', 'grammar', 'vocabulary'] as const).entries()) output.criteria[c].explanation_zh = fill(6 + i);
+      const r = scoreEssayAnalytic('primary', ctx, output, new OutputFilter());
+      expect(r.errors).toHaveLength(30);
+      expect(visibleEnglish(r).zh).toBeLessThanOrEqual(CUSTOM_OUTPUT_LIMITS.zhEnglishWordsTotalMax);
+      // 前面的欄位保留、後面的清空：評語還在，最後一則錯誤的說明清掉了。
+      expect(r.result.comment_zh).toContain('model1000');
+      expect(r.errors.at(-1)!.explanation_zh).toBe('');
+      expect(r.output_limits?.zh_total_cleared).toBeGreaterThan(0);
+      // 每則錯誤說明的英文上限是 20：21 個單詞清空。
+      const one = scoreEssayAnalytic(
+        'primary',
+        ctx,
+        essayAnalyticOutput(undefined, { errors: [{ ...errors[0]!, explanation_zh: `說明：${model(CUSTOM_OUTPUT_LIMITS.errorExplanationEnglishWordsMax + 1)}` }] }),
+        new OutputFilter(),
+      );
+      expect(one.errors[0]!.explanation_zh).toBe('');
+    });
+
+    it('正常的批改（每個欄位引用幾個英文字）不受合計上限影響', () => {
+      const r = scoreEssayAnalytic('primary', ctx, essayAnalyticOutput(undefined, { comment_zh: '「feel lonely」用得好。', top_improvements: ['把 "raising a child" 換成 "bringing up a child"', '多用轉承詞', '注意冠詞 the'] }), new OutputFilter());
+      expect(r.output_limits).toMatchObject({ zh_fields_cleared: 0, zh_total_cleared: 0, errors_dropped_duplicate: 0 });
+      expect(r.top_improvements).toHaveLength(3);
+    });
+
+    it('填充作文配上內容完全不同、長度在上限內的參考改寫：too_different 丟掉；輕度修改保留', () => {
+      const filler = Array.from({ length: 120 }, (_, i) => `filler${i % 7}`).join(' ');
+      const fctx = { ...ctx, text: filler, wordCount: countEnglishWords(filler), paragraphs: 1 };
+      const cap = Math.ceil(fctx.wordCount * CUSTOM_OUTPUT_LIMITS.rewriteWordsRatio) + CUSTOM_OUTPUT_LIMITS.rewriteExtraWords;
+      const r = scoreEssayAnalytic('primary', fctx, essayAnalyticOutput(undefined, { errors: [], rewrite: model(cap) }), new OutputFilter());
+      expect(r.rewrite).toBeNull();
+      expect(r.rewrite_omitted).toBe('too_different');
+      expect(r.output_limits?.rewrite_dropped).toBe('too_different');
+      // 改了十幾個字、加幾句的修改照常保留。
+      const light = STUDENT_ESSAY.replace('feel lonely after work', 'often feel lonely after work').replace('a lot of money', 'much money').replace(/pictures/g, 'photos');
+      const kept = scoreEssayAnalytic('primary', ctx, essayAnalyticOutput(undefined, { rewrite: `${light} In short, pets are good friends.` }), new OutputFilter());
+      expect(kept.rewrite).not.toBeNull();
+      expect(kept).not.toHaveProperty('rewrite_omitted');
+    });
+
+    it('建議的合計上限不隨作文長度一直放大：600 個單詞的作文，建議合計仍 ≤ suggestionsTotalMaxWords', () => {
+      const long = Array.from({ length: 60 }, (_, i) => `Sentence number word${i} is here for the long essay test.`).join(' ');
+      const lctx = { ...ctx, text: long, wordCount: countEnglishWords(long), paragraphs: 1 };
+      const errors = Array.from({ length: 30 }, (_, i) => ({ paragraph_index: 0, category: 'grammar' as const, excerpt: `word${i}`, explanation_zh: '說明', suggestion: model(20, i * 20) }));
+      const r = scoreEssayAnalytic('primary', lctx, essayAnalyticOutput(undefined, { errors }), new OutputFilter());
+      expect(lctx.wordCount + CUSTOM_OUTPUT_LIMITS.suggestionsTotalExtraWords).toBeGreaterThan(CUSTOM_OUTPUT_LIMITS.suggestionsTotalMaxWords);
+      expect(visibleEnglish(r).suggestions).toBeLessThanOrEqual(CUSTOM_OUTPUT_LIMITS.suggestionsTotalMaxWords);
+    });
+
+    it('第二、三位的簡短評語：英文 21 個單詞清空、20 個保留', () => {
+      const max = CUSTOM_OUTPUT_LIMITS.holisticCommentEnglishWordsMax;
+      expect(scoreEssayHolistic('second', ctx, { ...essayHolisticOutput(), comment_zh: `評語：${model(max + 1)}` }, new OutputFilter()).result.comment_zh).toBe('');
+      expect(scoreEssayHolistic('second', ctx, { ...essayHolisticOutput(), comment_zh: `評語：${model(max)}` }, new OutputFilter()).result.comment_zh).toContain('評語');
+    });
+
+    it('combineGradingRows：too_different 也帶到結果', () => {
+      const a = scoreEssayAnalytic('primary', ctx, essayAnalyticOutput(), new OutputFilter());
+      const b = scoreEssayHolistic('second', ctx, essayHolisticOutput(), new OutputFilter());
+      const row = (role: 'primary' | 'second', rec: typeof a, feedback: Record<string, unknown>) => ({
+        role,
+        judgments_json: JSON.stringify({ v: 1, kind: 'essay', result: rec.result, errors: rec.errors }),
+        deductions_json: JSON.stringify(rec.deductions),
+        feedback_json: JSON.stringify(feedback),
+      });
+      expect(combineGradingRows('essay', [row('primary', a, { rewrite: null, rewrite_omitted: 'too_different' }), row('second', b, {})], { wordCount: words, paragraphs: 2 })).toMatchObject({
+        rewrite_omitted: 'too_different',
+      });
+    });
+  });
+
+  it('_zh 欄位裡的「大學入學考試中心」「大考中心」「CEEC」換成「官方」並計數（S17）', () => {
+    const output = essayAnalyticOutput(undefined, { comment_zh: '這篇符合大考中心的要求，也符合 CEEC 的格式。' });
+    output.criteria.content.explanation_zh = '大學入學考試中心的題目要求兩段。';
+    const r = scoreEssayAnalytic('primary', ctx, output, new OutputFilter());
+    expect(r.result.comment_zh).toBe('這篇符合官方的要求，也符合 官方 的格式。');
+    expect(r.criteria_explanations?.content).toBe('官方的題目要求兩段。');
+    expect(r.output_limits?.exam_board_replaced).toBe(3);
+    const h = scoreEssayHolistic('third', ctx, { ...essayHolisticOutput(), comment_zh: '依大考中心標準' }, new OutputFilter());
+    expect(h.result.comment_zh).toBe('依官方標準');
+  });
+
+  it('combineEssay／combineGradingRows：第一位的 rewrite_omitted 帶到結果；沒有時結果不含這個欄位（題庫題的回應逐字不變）', () => {
+    const a = scoreEssayAnalytic('primary', ctx, essayAnalyticOutput(undefined, { rewrite: englishWords(rewriteCap + 5) }), new OutputFilter());
+    const b = scoreEssayHolistic('second', ctx, essayHolisticOutput(), new OutputFilter());
+    expect(combineEssay([{ role: 'primary', ...a }, { role: 'second', ...b }], { wordCount: words, paragraphs: 2 }).rewrite_omitted).toBe('too_long');
+    const plain = scoreEssayAnalytic('primary', base, essayAnalyticOutput(), new OutputFilter());
+    expect(combineEssay([{ role: 'primary', ...plain }, { role: 'second', ...b }], { wordCount: words, paragraphs: 2 })).not.toHaveProperty('rewrite_omitted');
+    const row = (role: 'primary' | 'second', rec: typeof a, feedback: Record<string, unknown>) => ({
+      role,
+      judgments_json: JSON.stringify({ v: 1, kind: 'essay', result: rec.result, errors: rec.errors }),
+      deductions_json: JSON.stringify(rec.deductions),
+      feedback_json: JSON.stringify(feedback),
+    });
+    const withOmitted = combineGradingRows('essay', [row('primary', a, { rewrite: null, rewrite_omitted: 'too_long' }), row('second', b, {})], { wordCount: words, paragraphs: 2 });
+    expect(withOmitted).toMatchObject({ kind: 'essay', rewrite: null, rewrite_omitted: 'too_long' });
+    const without = combineGradingRows('essay', [row('primary', plain, { rewrite: null }), row('second', b, {})], { wordCount: words, paragraphs: 2 });
+    expect(without).not.toHaveProperty('rewrite_omitted');
   });
 });

@@ -27,6 +27,7 @@ import { OCR_CHILD_SAFETY } from '../src/ai/prompts/ocr';
 import { essayCallInput, ocrCallInput, translationCallInput } from '../src/ai/requests';
 import { reserveMicros, taskConfig, TASK_TIMEOUT_MS, type CallRole } from '../src/ai/tasks';
 import { loadConfig } from '../src/config';
+import { customWritingGroup } from '../src/submissions/custom';
 import Anthropic from '@anthropic-ai/sdk';
 import { FakeAnthropic, frameworkOf, sseResponse } from './helpers/anthropic';
 import {
@@ -36,6 +37,8 @@ import {
   TRANSLATION_GROUP,
   batchOf,
   call,
+  essayAnalyticOutput,
+  essayHolisticOutput,
   makeEnv,
   makeMessage,
   noopCtx,
@@ -48,6 +51,15 @@ import {
 const config = loadConfig(makeEnv());
 const tGroup = getWritingGroup(TRANSLATION_GROUP) as WritingGroup;
 const eGroup = getWritingGroup(ESSAY_GROUP) as WritingGroup;
+/** 英文作文自訂題目（題目在 D1；docs/design/custom-essay.md §7.3：規則掃描同樣涵蓋自訂題的呼叫輸入）。 */
+const cGroup = customWritingGroup({
+  prompt_text: '提示:你的學校即將舉辦「無手機日」。請寫一篇英文作文,文分兩段。',
+  figure_text: '圖:一個鎖起來的手機櫃。',
+  paragraphs: 2,
+  min_words: 120,
+  max_words: null,
+  rev: 1,
+});
 
 /** 所有任務、所有評分者的呼叫輸入。 */
 function allInputs(): Array<[string, ClaudeCallInput]> {
@@ -59,7 +71,9 @@ function allInputs(): Array<[string, ClaudeCallInput]> {
   return [
     ...roles.map((r): [string, ClaudeCallInput] => [`translation_grade/${r}`, translationCallInput(t, r, tGroup, STUDENT_TRANSLATION)]),
     ...roles.map((r): [string, ClaudeCallInput] => [`essay_grade/${r}`, essayCallInput(e, r, eGroup, paragraphs, 130)]),
+    ...roles.map((r): [string, ClaudeCallInput] => [`essay_grade/custom/${r}`, essayCallInput(e, r, cGroup, paragraphs, 130)]),
     ['essay_ocr/ocr', ocrCallInput(o, eGroup, [{ mime: 'image/jpeg', bytes: tinyJpeg() }])],
+    ['essay_ocr/custom/ocr', ocrCallInput(o, cGroup, [{ mime: 'image/jpeg', bytes: tinyJpeg() }])],
   ];
 }
 
@@ -376,6 +390,39 @@ describe('§6.2 其他條目', () => {
       expect(req.headers['x-api-key']).toBe('sk-ant-test-key');
       expect(req.url).toMatch(/^https:\/\/anthropic\.test\/v1\/messages/);
       expect(raw).toContain(STUDENT_TRANSLATION[0]);
+    }
+  });
+});
+
+describe('英文作文自訂題目：送出的 HTTP 本體（docs/design/custom-essay.md §7.3，S4）', () => {
+  it('題目含 email 與手機號碼：存下來的是遮罩後的文字，送給 Anthropic 的本體沒有原值；也沒有 email、暱稱、帳號 id、提交 id', async () => {
+    const env = makeEnv();
+    const user = seedUser(env.DB);
+    const contact = ['wang.teacher@example.edu.tw', '0912-345-678', '(02)2345-6789'];
+    const created = await call(env, user, 'POST', '/api/submissions', {
+      kind: 'essay',
+      input_mode: 'typed',
+      custom_prompt: { text: `提示：你的學校即將舉辦無手機日，請寫一篇英文作文，文分兩段。有問題請洽 ${contact.join('、')}`, paragraphs: 2 },
+      body: { text: STUDENT_ESSAY },
+    });
+    expect(created.status).toBe(201);
+    const stored = env.DB.sqlite.prepare('SELECT prompt_text FROM submission_custom_prompts WHERE submission_id = ?').get(created.body.id) as { prompt_text: string };
+    for (const c of contact) expect(stored.prompt_text).not.toContain(c);
+    expect(stored.prompt_text).toContain('［已隱藏］');
+    expect((await call(env, user, 'POST', '/api/ai/essay-grade', { submission_id: created.body.id })).status).toBe(202);
+    const fake = new FakeAnthropic((req) => (frameworkOf(req) === 'analytic' ? fake.json(essayAnalyticOutput()) : fake.json(essayHolisticOutput())));
+    await createQueueHandler({ fetch: fake.fetch })(batchOf('ai-tasks', [makeMessage(env.AI_QUEUE.sent[0]!)]), env, noopCtx);
+    expect(fake.requests).toHaveLength(2);
+    for (const req of fake.requests) {
+      const raw = JSON.stringify(req.body);
+      for (const c of contact) expect(raw).not.toContain(c);
+      expect(raw).not.toContain(user.email);
+      expect(raw).not.toContain(user.displayName!);
+      expect(raw).not.toContain(user.publicId);
+      expect(raw).not.toContain(created.body.id);
+      expect(req.userText).toContain('<student_provided_task>');
+      expect(req.userText).toContain('［已隱藏］');
+      expect(req.userText).toMatch(/<student_text>\n[\s\S]+\n<\/student_text>/);
     }
   });
 });

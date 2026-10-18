@@ -44,17 +44,33 @@ describe('GET /api/features', () => {
   it('只設定登入：auth true、ai false', async () => {
     const { ANTHROPIC_API_KEY: _k, AI_QUEUE: _q, ...authOnly } = configuredEnv;
     const res = await app.request('/api/features', {}, authOnly);
-    expect(await res.json()).toEqual({ auth: true, ai: false, ocr: false, aiPaused: false });
+    expect(await res.json()).toEqual({ auth: true, ai: false, ocr: false, aiPaused: false, customEssay: false });
   });
 
-  it('全部設定：讀全站暫停開關；回應只有四個布林、不含任何設定值', async () => {
+  it('全部設定：讀全站暫停開關；回應只有五個布林、不含任何設定值', async () => {
     const res = await app.request('/api/features', {}, { ...configuredEnv, DB: fakeDb(1) });
     const text = await res.text();
     const body: unknown = JSON.parse(text);
     expect(isFeaturesResponse(body)).toBe(true);
-    expect(body).toEqual({ auth: true, ai: true, ocr: true, aiPaused: true });
+    expect(body).toEqual({ auth: true, ai: true, ocr: true, aiPaused: true, customEssay: true });
     expect(text).not.toContain('secret');
     expect(text).not.toContain('sk-ant');
+  });
+
+  it('customEssay：AI 能用而且 AI_CUSTOM_ESSAY 是 on 才是 true；AI 沒設定時一律 false（docs/design/custom-essay.md §5.3）', async () => {
+    const warn = console.warn;
+    console.warn = () => {};
+    try {
+      const off = await app.request('/api/features', {}, { ...configuredEnv, DB: fakeDb(0), AI_CUSTOM_ESSAY: 'off' });
+      expect(await off.json()).toMatchObject({ ai: true, customEssay: false });
+      const typo = await app.request('/api/features', {}, { ...configuredEnv, DB: fakeDb(0), AI_CUSTOM_ESSAY: 'onn' });
+      expect(await typo.json()).toMatchObject({ ai: true, customEssay: false });
+      const { ANTHROPIC_API_KEY: _k, ...noAi } = configuredEnv;
+      const res = await app.request('/api/features', {}, { ...noAi, AI_CUSTOM_ESSAY: 'on' });
+      expect(await res.json()).toMatchObject({ ai: false, customEssay: false });
+    } finally {
+      console.warn = warn;
+    }
   });
 
   it('暫停開關查詢失敗（例如遷移未套用）時當成暫停', async () => {
@@ -123,6 +139,24 @@ describe('設定（src/config.ts）', () => {
     } finally {
       console.warn = original;
     }
+  });
+
+  it('AI_CUSTOM_ESSAY 的解析是 fail closed：沒設、空字串、只有空白用預設值 on；去頭尾空白、不分大小寫等於 on 才開，其他一律關並寫 log（S5）', () => {
+    const warnings: unknown[] = [];
+    const warn = console.warn;
+    console.warn = (...args: unknown[]) => void warnings.push(args);
+    try {
+      for (const v of [undefined, '', '   ', 'on', 'ON', ' on ', 'On']) expect(loadConfig({ ...baseEnv, AI_CUSTOM_ESSAY: v }).ai.customEssay, JSON.stringify(v)).toBe(true);
+      expect(warnings).toEqual([]);
+      expect(loadConfig({ ...baseEnv, AI_CUSTOM_ESSAY: 'off' }).ai.customEssay).toBe(false);
+      expect(loadConfig({ ...baseEnv, AI_CUSTOM_ESSAY: 'Off' }).ai.customEssay).toBe(false);
+      expect(warnings).toEqual([]);
+      for (const v of ['false', '0', 'yes', 'onn', 'true', '1']) expect(loadConfig({ ...baseEnv, AI_CUSTOM_ESSAY: v }).ai.customEssay, v).toBe(false);
+      expect(warnings).toHaveLength(6);
+    } finally {
+      console.warn = warn;
+    }
+    expect(CONFIG_DEFAULTS.AI_CUSTOM_ESSAY).toBe('on');
   });
 
   it('AI_APPROVAL_CAP 有設就用它', () => {

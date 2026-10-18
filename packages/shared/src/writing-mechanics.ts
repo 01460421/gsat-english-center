@@ -35,6 +35,16 @@ export function normalizeStudentText(input: string): NormalizedText {
   return { text, invisibleRemoved: removed, nfkcChanged: nfkc !== input };
 }
 
+/**
+ * 聯絡方式：email 與台灣手機號碼。AI 輸出過濾（apps/api/src/ai/filter.ts 的 filterOutputText）與自訂作文題目存檔前的
+ * 遮罩（custom-essay.ts 的 normalizeCustomPromptText）共用同一份樣式（原本在 filter.ts）。
+ * email 的每一段都有長度上限（帳號 64、網域 253、頂級網域 24，和 RFC 5321 的上限相同）：不設上限時，一長串沒有 @ 的
+ * 英文字母會讓每個起點都掃到尾端，6 萬字元要跑好幾秒（安全審查 security-1）。
+ * 帶 g 旗標：只拿來 replace，不要拿來 test（g 的 lastIndex 會讓連續呼叫的結果不同）。
+ */
+export const EMAIL_RE = /[A-Za-z0-9._%+-]{1,64}@[A-Za-z0-9.-]{1,253}\.[A-Za-z]{2,24}/g;
+export const PHONE_RE = /(?:\+?886[-\s]?|0)9\d{2}[-\s]?\d{3}[-\s]?\d{3}\b/g;
+
 /** 句首大寫與句尾標點（程式判定，SPEC §4.6）。位置是 UTF-16 位移，沒問題為 null。 */
 export interface MechanicsCheck {
   capitalization: { start: number; end: number } | null;

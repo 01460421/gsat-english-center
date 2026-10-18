@@ -3,9 +3,11 @@
  *   1. 本站仿真題：難度切換（網址 ?tier=）與那個難度的題目，和 /writing/essay/ai 同一份列表
  *      （features/writing/bank/BankListPage.tsx 的 BankPromptList），標示「AI 出題・已通過自動驗證・人工審核中」，
  *      還沒有題目的難度顯示「出題中」；只先列 BANK_PREVIEW 題，其餘按「顯示全部」展開；
- *   2. 歷屆試題：和 /writing/essay 同一份列表（features/writing/EssayListPage.tsx 的 EssayPromptList，網址 ?kind=）；
+ *   2. 自訂題目（docs/design/custom-essay.md §6.1）：一段說明＋「輸入題目開始寫」→ /writing/essay/custom。放在兩份列表中間：
+ *      本站題列表只先列 6 張，手機上滑幾下就看得到；放到歷屆試題（66 題）後面就太遠了；
+ *   3. 歷屆試題：和 /writing/essay 同一份列表（features/writing/EssayListPage.tsx 的 EssayPromptList，網址 ?kind=）；
  *      那裡加了新的題目，這裡也會跟著出現。
- * 兩份列表都包在 ListOrigin 裡：點一題到作答頁，作答頁的返回連結回到這一頁。下面是作答與批改方式、學測怎麼考、
+ * 都包在 ListOrigin 裡：點一題（或自訂題目）到作答頁，作答頁的返回連結回到這一頁。下面是作答與批改方式、學測怎麼考、
  * 拍照上傳手寫稿的流程與照片隱私。
  * 說明要對得上實際功能：
  *   - 本站仿真題的鷹架、提示與對照：bank/components/BankScaffold.tsx（構思圖、大綱、句型開頭、規劃檢核表）、BankHints.tsx、
@@ -16,13 +18,15 @@
  *   - 照片保存規則：features/account/policy.ts 隱私權說明第五點（改了那裡要一起改這裡）。
  */
 import { AI_TASK_POINTS, PHOTO_MAX_COUNT } from '@gsat/shared';
+import { ChevronRight } from 'lucide-react';
 import { Link } from 'react-router';
 import { JumpLink, ListSection } from '../components/ListSection';
 import { InfoSection, ModulePage } from '../components/ModulePage';
 import { AiGroupBadge } from '../features/practice/components/AiGroupBadge';
 import { BankPromptList } from '../features/writing/bank/BankListPage';
 import { EssayPromptList } from '../features/writing/EssayListPage';
-import { ListOrigin } from '../features/writing/lib/listOrigin';
+import { CUSTOM_ESSAY_PATH } from '../features/writing/lib/format';
+import { ListOrigin, useListOriginState } from '../features/writing/lib/listOrigin';
 import { useFeatures } from '../lib/api';
 import { getPage } from '../modules';
 
@@ -31,16 +35,46 @@ const linkCls = 'font-medium text-primary underline underline-offset-2';
 /** 本站仿真題先列幾題（作文卡片比中譯英矮一點，和中譯英一樣先列 6 張）。 */
 const BANK_PREVIEW = 6;
 
+/** 自訂題目的入口（要在 ListOrigin 裡面才拿得到「從題型頁來」的 state）。 */
+function CustomPromptEntry({ aiOpen }: { aiOpen: boolean }) {
+  const origin = useListOriginState();
+  return (
+    <>
+      <p className="text-[0.95rem] text-muted">
+        手上有老師、補習班或其他考卷的作文題目？把題目貼上來，寫完可以用檢核清單自我檢核
+        {aiOpen ? '；登入並通過申請後，也能送 AI 批改，評分規準和本站題目相同' : ''}。
+      </p>
+      <p>
+        <Link to={CUSTOM_ESSAY_PATH} state={origin} className="inline-flex min-h-11 items-center justify-center gap-1 rounded-full bg-primary px-5 py-2 font-medium text-on-primary">
+          輸入題目開始寫
+          <ChevronRight aria-hidden="true" className="size-4" />
+        </Link>
+      </p>
+    </>
+  );
+}
+
 export default function CompositionPage() {
   // 後端沒部署（或登入、AI 沒開）時沒有登入入口，不能叫學生「登入並通過申請」。
   const features = useFeatures();
   const aiOpen = features.auth && features.ai;
   const photoOpen = aiOpen && features.ocr;
+  // 自訂題目的 AI 批改另有總開關（舊版 Worker 不回這個欄位＝沒開）。
+  const customOpen = aiOpen && features.customEssay === true;
   return (
     <ModulePage page={getPage('/composition')}>
       {/* 從這裡點進作答頁，返回連結回到這一頁（不是 /writing/essay 或 /writing/essay/ai）。 */}
       <ListOrigin value="/composition">
-        <ListSection id="bank-questions" title="本站仿真題" aside={<JumpLink href="#exam-questions">跳到歷屆試題</JumpLink>}>
+        <ListSection
+          id="bank-questions"
+          title="本站仿真題"
+          aside={
+            <span className="flex flex-wrap gap-x-3">
+              <JumpLink href="#custom-prompt">跳到自訂題目</JumpLink>
+              <JumpLink href="#exam-questions">跳到歷屆試題</JumpLink>
+            </span>
+          }
+        >
           <div>
             <AiGroupBadge />
           </div>
@@ -50,21 +84,29 @@ export default function CompositionPage() {
           </p>
           <BankPromptList section="composition" headingLevel={3} limit={BANK_PREVIEW} />
         </ListSection>
+        <ListSection id="custom-prompt" title="自訂題目">
+          <CustomPromptEntry aiOpen={customOpen} />
+        </ListSection>
         <ListSection id="exam-questions" title="歷屆試題">
           <p className="text-[0.95rem] text-muted">歷屆學測、指考與參考試卷的作文題，依考試分開、新到舊排列。</p>
           <EssayPromptList headingLevel={3} />
         </ListSection>
       </ListOrigin>
       <InfoSection title="作答與批改方式">
-        <p>上面兩種題目都可以線上作答：</p>
+        <p>上面的題目都可以線上作答：</p>
         <ul>
           <li>
             打字作答：即時顯示字數與段數，草稿自動存在這台裝置；不用登入也能自我檢核，並依四個評分面向替自己打分數。歷屆試題用檢核清單逐項檢查；本站仿真題寫完後，可以對照本題的評分重點與兩篇範文（穩健版、頂標版）再自評（對照後作答會鎖定，避免看完範文再改）。
           </li>
           <li>本站仿真題附寫作鷹架：穩定基礎有構思圖、兩段大綱與句型開頭，進階練習有兩段大綱，超越頂標有規劃檢核表；三種難度都有一次打開一層的提示。</li>
           <li>
+            {customOpen
+              ? '自訂題目：貼上自己的題目（可以加上圖片的文字描述、段數與字數要求），作答與批改方式和其他題目相同；AI 依本站自己寫的學測作文評分規準批改。'
+              : '自訂題目：貼上自己的題目（可以加上圖片的文字描述、段數與字數要求），作答與自我檢核方式和其他題目相同。'}
+          </li>
+          <li>
             {aiOpen
-              ? `AI 批改：登入並通過申請後，由兩位 AI 評分者依內容、組織、文法句構、字彙拼字四個面向各給 0–5 分（滿分 20），在原文上標出錯誤，列出三個優先改進與逐段建議，也可能附上保留你原意的參考改寫${photoOpen ? '；手寫稿也可以拍照上傳' : ''}。歷屆試題與本站仿真題都可以送。`
+              ? `AI 批改：登入並通過申請後，由兩位 AI 評分者依內容、組織、文法句構、字彙拼字四個面向各給 0–5 分（滿分 20），在原文上標出錯誤，列出三個優先改進與逐段建議，也可能附上保留你原意的參考改寫${photoOpen ? '；手寫稿也可以拍照上傳' : ''}。${customOpen ? '歷屆試題、本站仿真題與自訂題目都可以送。' : '歷屆試題與本站仿真題都可以送。'}`
               : 'AI 批改與拍照上傳手寫稿即將開放。'}
           </li>
         </ul>

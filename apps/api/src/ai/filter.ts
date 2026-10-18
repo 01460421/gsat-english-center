@@ -9,8 +9,14 @@
  *    命中不當內容的樣式就整段換成固定文案，並回報類別（寫 ai_safety_events(kind='output_filtered')）。
  * 這裡的樣式刻意保守（寧可漏掉也不要把正常的批改說明誤擋），上線後依回報調整；改了樣式要遞增 FILTER_VERSION。
  */
+import { EMAIL_RE, PHONE_RE } from '@gsat/shared';
 
-export const FILTER_VERSION = 'f2';
+/**
+ * f3（docs/design/custom-essay.md §4.4，安全審查 S9）：結構標籤多了 student_provided_task；中和與 tag_breakout 允許 `<` 後面
+ * 有空白（`< /task>`、`<\n/task>`）。歷屆題與本站題的文字沒有這些寫法，中和不改變任何字元（快照測試證明）。
+ * 版本寫進每一份批改的 judgments.meta.filter_version（S16）。
+ */
+export const FILTER_VERSION = 'f3';
 
 /** 被擋下時學生看到的文案（SPEC §8.4）。 */
 export const FILTERED_PLACEHOLDER = '這段回饋暫時無法顯示，已通報管理員';
@@ -24,10 +30,21 @@ export { normalizeStudentText as sanitizeStudentText, type NormalizedText as San
 
 /**
  * 提示範本用到的每一個結構標籤（common.ts、prompts/*.ts）。題庫的題目、圖的文字描述與本站參考是代理寫的資料，
- * 學生文字更是使用者輸入：放進提示前一律中和，任何一段文字都不能提早結束或偽造一個區塊。
+ * 學生文字與自訂作文題目更是使用者輸入：放進提示前一律中和，任何一段文字都不能提早結束或偽造一個區塊。
+ * 中和（neutralizeTags）與注入偵測（tag_breakout）用的是同一份清單。
  */
-export const STRUCTURAL_TAGS = ['task', 'source_zh', 'sentence', 'sentence_reference', 'website_reference', 'student_text', 'essay_stats'] as const;
-const TAG_RE = new RegExp(`<(\\/?)\\s*(${STRUCTURAL_TAGS.join('|')})\\b`, 'gi');
+export const STRUCTURAL_TAGS = [
+  'task',
+  'source_zh',
+  'sentence',
+  'sentence_reference',
+  'website_reference',
+  'student_text',
+  'essay_stats',
+  'student_provided_task',
+] as const;
+/** `<` 與 `/`、`/` 與標籤名稱之間都可以有空白（含換行）。 */
+const TAG_RE = new RegExp(`<\\s*(\\/?)\\s*(${STRUCTURAL_TAGS.join('|')})\\b`, 'gi');
 
 /**
  * 放進提示前再處理一次：文字裡如果自己寫了 <student_text>、</task>、<website_reference> 這類結構標籤，
@@ -48,7 +65,7 @@ const INJECTION_PATTERNS: ReadonlyArray<{ id: string; re: RegExp }> = [
   { id: 'zh_ignore', re: /(忽略|無視|忘記|不要理會)[^。\n]{0,10}(之前|先前|以上|前面|上述|所有)?[^。\n]{0,6}(指示|指令|規則|提示)/ },
   { id: 'zh_score', re: /(給|打)(我|這篇|本文)?[^。\n]{0,4}(滿分|高分|最高分|20\s*分)/ },
   { id: 'zh_role', re: /(你是|你現在是|扮演)[^。\n]{0,6}(評分者|閱卷|老師|助理|AI)/ },
-  { id: 'tag_breakout', re: new RegExp(`<\\/?\\s*(${STRUCTURAL_TAGS.join('|')})\\b`, 'i') },
+  { id: 'tag_breakout', re: new RegExp(`<\\s*\\/?\\s*(${STRUCTURAL_TAGS.join('|')})\\b`, 'i') },
 ];
 
 /** 命中的注入樣式代號（空陣列＝沒有）。 */
@@ -66,8 +83,7 @@ const OUTPUT_BLOCK_PATTERNS: ReadonlyArray<{ category: string; re: RegExp }> = [
 
 const URL_RE = /\b(?:https?:\/\/|www\.)[^\s<>()]+/gi;
 const HTML_TAG_RE = /<\/?[a-zA-Z][^<>]*>/g;
-const EMAIL_RE = /[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}/g;
-const PHONE_RE = /(?:\+?886[-\s]?|0)9\d{2}[-\s]?\d{3}[-\s]?\d{3}\b/g;
+// 信箱與電話的樣式搬到 @gsat/shared（writing-mechanics.ts）：自訂作文題目存檔前的遮罩用同一份，這裡的行為不變。
 
 export interface FilteredText {
   text: string;

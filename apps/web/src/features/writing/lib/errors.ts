@@ -3,8 +3,16 @@
  * AI 額度與擋下原因用 @gsat/shared 的 AI_ERROR_MESSAGES；額度不足改用下次重置的時間（GET /api/ai/quota 的 resets_at）組成一句。
  * 閘道回的非 JSON 5xx（Vercel 502／504、Cloudflare 1101／1102）是暫時性的伺服器問題，不顯示成「AI 功能尚未開放」。
  */
-import { AI_ERROR_MESSAGES, AI_REFUND_REASONS, type AiGateErrorCode, type AiQuotaResponse, type AiRefundReason, type MeResponse } from '@gsat/shared';
+import {
+  AI_ERROR_MESSAGES,
+  AI_REFUND_REASONS,
+  type AiGateErrorCode,
+  type AiQuotaResponse,
+  type AiRefundReason,
+  type MeResponse,
+} from '@gsat/shared';
 import { ApiRequestError, isGatewayError, needsOnboarding } from '../../../lib/api';
+import { API_ERROR_MESSAGES } from '../../../lib/apiErrors';
 import { welcomeHref } from '../../account/ui';
 
 export interface ErrorAction {
@@ -134,9 +142,21 @@ export function describeError(error: unknown, ctx: DescribeContext = {}): ErrorV
       return { message: '送出的內容格式不正確，請重新整理頁面再試一次。' };
     case 'forbidden':
       return { message: '你沒有權限使用這個功能。' };
+    // 自訂作文題目（docs/design/custom-essay.md §6.7）：只有自訂題目的作答頁與結果頁會收到，兩頁都先經過
+    // custom/errors.ts 的 customErrorView（依 reason 用共用的細節文案、指出欄位與位置）。這裡是通用的後備文案：
+    // 不匯入 custom-essay 的細節文案，寫作首頁（我的寫作紀錄也用這支）的 chunk 才不會多帶整份題目規則（約 12 kB）。
+    case 'custom_prompt_invalid':
+      return { message: API_ERROR_MESSAGES.custom_prompt_invalid };
+    case 'essay_not_gradable':
+      return { message: API_ERROR_MESSAGES.essay_not_gradable };
     default:
       return { message: error.status >= 500 ? `伺服器暫時有問題，請稍後再試。${hint}` : '發生錯誤，請稍後再試。' };
   }
+}
+
+/** 依原因代碼查文案；代碼不認得（後端比前端新）回 null。 */
+export function messageFor<K extends string>(table: Readonly<Record<K, string>>, reason: string | null): string | null {
+  return reason !== null && Object.hasOwn(table, reason) ? table[reason as K] : null;
 }
 
 /** 是不是「額度不足、要看重置時間」的錯誤（呼叫端可以先去拿 quota 再顯示）。 */
