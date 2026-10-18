@@ -84,9 +84,13 @@ export default function WritingHomePage() {
           <h2 id="custom-heading" className="text-lg font-semibold">
             自己的題目
           </h2>
-          <EntryCard to="/writing/essay/custom" icon={<FilePen aria-hidden="true" className="size-6" />} title="自訂題目">
-            {features.customEssay === true ? '貼上老師或補習班的作文題目，寫完可以自我檢核或送 AI 批改。' : '貼上老師或補習班的作文題目，寫完可以用檢核清單自我檢核。'}
-          </EntryCard>
+          {/* 包一層：EntryCard 是 h-full，直接放在這個 section（外層 grid 的項目，高度確定）裡會撐到整個 section 高，
+              蓋到下面的「兩種批改方式」。其他入口卡在 li 裡，h-full 是為了同列等高。 */}
+          <div>
+            <EntryCard to="/writing/essay/custom" icon={<FilePen aria-hidden="true" className="size-6" />} title="自訂題目">
+              {features.customEssay === true ? '貼上老師或補習班的作文題目，寫完可以自我檢核或送 AI 批改。' : '貼上老師或補習班的作文題目，寫完可以用檢核清單自我檢核。'}
+            </EntryCard>
+          </div>
         </section>
 
         <section aria-labelledby="modes-heading" className={card}>
