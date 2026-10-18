@@ -23,8 +23,8 @@ import type {
 export const VERSIONS = { privacy: '2026-10-18', terms: '2026-10-08', ai: '2026-10-08' } as const;
 
 /**
- * 正式站上線時的狀態（假後端的預設）：登入、AI、OCR 都開；自訂題目批改關閉（AI_CUSTOM_ESSAY 預設 off，
- * 真模型的評分對照達標才打開，docs/SETUP-KEYS.md §8.2）。要測自訂題目送 AI 批改的流程用 FEATURES_CUSTOM_ON。
+ * 假後端的預設：登入、AI、OCR 都開；自訂題目批改關閉（AI_CUSTOM_ESSAY 的程式預設 off，也是只關自訂題時的狀態，
+ * docs/SETUP-KEYS.md §8.1）。要測自訂題目送 AI 批改的流程（正式站目前的狀態）用 FEATURES_CUSTOM_ON。
  */
 export const FEATURES_ON: FeaturesResponse = { auth: true, ai: true, ocr: true, aiPaused: false, customEssay: false };
 

@@ -830,7 +830,7 @@ async function main() {
     const admin = new CookieJar();
     const student = new CookieJar();
 
-    // 自訂作文題目跟著 wrangler.toml 的 AI_CUSTOM_ESSAY（評分對照達標之前是 off；wrangler dev 讀同一份 [vars]）。
+    // 自訂作文題目跟著 wrangler.toml 的 AI_CUSTOM_ESSAY（wrangler dev 讀同一份 [vars]）。
     const customEssay = customEssayExpected(customEssayVarFrom(readFileSync(join(API_DIR, 'wrangler.toml'), 'utf8')));
     await step(`GET /api/features：登入、AI、OCR 都已啟用，自訂作文題目${customEssay ? '已啟用' : '未啟用'}（照 wrangler.toml）`, async () => {
       const r = await http(BASE, 'GET', '/api/features');

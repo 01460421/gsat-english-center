@@ -143,7 +143,7 @@ workflow 會依序：型別檢查與測試 → 檢查 token 與 workers.dev 子�
    - 經 Vercel 代理是否已接上，以及「下一步」
 2. **直接打開 Worker**：
    - `https://gsat-english-api.<子網域>.workers.dev/api/health` → `{"ok":true,"service":"gsat-english-api",…}`
-   - `https://gsat-english-api.<子網域>.workers.dev/api/features` → 六個金鑰都填了的話是 `{"auth":true,"ai":true,"ocr":true,"aiPaused":false,"customEssay":false}`（自訂題目批改上線時是關的：評分對照達標、`AI_CUSTOM_ESSAY` 改成 `"on"` 之後 `customEssay` 才是 true，§8.2）
+   - `https://gsat-english-api.<子網域>.workers.dev/api/features` → 六個金鑰都填了的話是 `{"auth":true,"ai":true,"ocr":true,"aiPaused":false,"customEssay":true}`（`wrangler.toml` 的 `AI_CUSTOM_ESSAY` 是 `"off"` 時 `customEssay` 是 false，§8.1）
 3. **接上 Vercel**：根目錄 `vercel.json` 的兩個 `REPLACE_WITH_SUBDOMAIN` 要換成 §1.2 的子網域（Summary 的「下一步」會寫出完整網址；這一步由開發者改好推到 main，Vercel 會自動重新部署）。完成後：
    - `https://gsat-english-center.vercel.app/api/health` → 和上面一樣的 JSON
    - 網站側欄出現「登入」按鈕
@@ -212,7 +212,7 @@ workflow 會依序：型別檢查與測試 → 檢查 token 與 workers.dev 子�
 
 ### 8.1 只關閉自訂題目批改
 
-英文作文的「自訂題目」（學生自己貼題目送 AI 批改）有自己的總開關 `AI_CUSTOM_ESSAY`（`apps/api/wrangler.toml` 的 `[vars]`；只有 `"on"` 才開，其他任何值都當成關）。上線時它是 `"off"`（自訂題目的作答頁只能自我檢核），評分對照達標後才照 §8.2 打開。下面是打開之後，自訂題出問題（例如大量拒答、有人用題目欄做奇怪的事）時的做法：
+英文作文的「自訂題目」（學生自己貼題目送 AI 批改）有自己的總開關 `AI_CUSTOM_ESSAY`（`apps/api/wrangler.toml` 的 `[vars]`；只有 `"on"` 才開，其他任何值都當成關）。程式預設是 `"off"`；2026-10-18 站主決定上線就打開（`wrangler.toml` 寫 `"on"`），評分對照之後照 §8.2 補跑。下面是打開之後，自訂題出問題（例如大量拒答、有人用題目欄做奇怪的事）時的做法：
 
 1. **立即止血**：網站 `/admin` 按「AI 全站暫停」。存在 D1、立刻生效，但歷屆題與本站題的 AI 批改也會一起停；暫停只記在當天，台灣時間隔天 00:00 自動恢復。
 2. **只關自訂題**：把 `apps/api/wrangler.toml` 的 `AI_CUSTOM_ESSAY = "on"` 改成 `"off"`，推到 main，等「部署後端（Cloudflare Worker）」跑完（幾分鐘）。
@@ -225,7 +225,7 @@ workflow 會依序：型別檢查與測試 → 檢查 token 與 workers.dev 子�
 
 ### 8.2 打開自訂題目批改（先跑評分對照）
 
-自訂題目批改上線時是關的：要先用真模型跑一次評分對照（同一篇作文分別當成題庫題與自訂題批改，比較兩邊的分數，設計見 [design/custom-essay.md](design/custom-essay.md) §7.8），**結論是「達標」才打開**。評分對照在 GitHub Actions 上跑，不用在自己的電腦裝任何東西。
+原本的設計是先用真模型跑一次評分對照（同一篇作文分別當成題庫題與自訂題批改，比較兩邊的分數，設計見 [design/custom-essay.md](design/custom-essay.md) §7.8），**結論是「達標」才打開**。2026-10-18 站主決定上線就打開（`wrangler.toml` 已經是 `"on"`），評分對照改成之後補跑的檢查：照下面第 1、2 步跑；**達標**就把結果記進附錄 A，開關不用動；**不達標**就照 §8.1 把開關改回 `"off"`，交給開發者調整提示後重跑。之後改了提示或計分，也照這一節重跑。評分對照在 GitHub Actions 上跑，不用在自己的電腦裝任何東西。
 
 1. **建 dev workspace 和金鑰**（只需一次）：
    - Claude Console → Settings → Workspaces → Create workspace，名稱例如 `dev`（評分對照與開發專用，不要和 Worker 的 `online` 混用）。
