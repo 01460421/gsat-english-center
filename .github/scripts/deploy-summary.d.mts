@@ -19,6 +19,7 @@ export interface DeploySummary {
   markdown: string;
 }
 
+export declare const CUSTOM_ESSAY_DEFAULT: string;
 export declare function customEssayVarFrom(wranglerToml: string): string | null;
 export declare function customEssayExpected(value: string | null): boolean;
 export declare function buildDeploySummary(input: DeploySummaryInput): DeploySummary;

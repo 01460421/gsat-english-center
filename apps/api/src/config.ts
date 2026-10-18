@@ -3,7 +3,8 @@
  *
  * 路由與業務邏輯一律呼叫 loadConfig(c.env)，不直接讀 c.env 的設定值。
  * 預設值與 wrangler.toml 的 [vars] 相同（§6.3「正式開放」的值）；wrangler.toml 是給站主看的「實際部署值」，
- * 這裡的預設值是 [vars] 漏設時的保險。兩邊一致由 test/config.test.ts 檢查。
+ * 這裡的預設值是 [vars] 漏設時的保險。兩邊一致由 test/skeleton.test.ts 檢查（例外：AI_CUSTOM_ESSAY 這裡固定是 off，
+ * 實際開關看 wrangler.toml）。
  *
  * 機密只回「有沒有設」與值本身（給需要的模組用），**絕不放進任何回應**；/api/features、/api/admin/health 只回布林。
  */
@@ -22,7 +23,9 @@ export const CONFIG_DEFAULTS = {
   AI_MODEL_SECOND_RATER: 'claude-opus-5-5',
   AI_EFFORT_GRADE: 'medium',
   AI_EFFORT_OCR: 'low',
-  AI_CUSTOM_ESSAY: 'on',
+  // 自訂作文題目的總開關：程式的預設固定是 off（[vars] 漏設時偏向關，S5）。實際開關是 wrangler.toml 的那一行，
+  // 評分對照（docs/design/custom-essay.md §7.8）達標後只改那一行；這裡不跟著改（test/skeleton.test.ts）。
+  AI_CUSTOM_ESSAY: 'off',
   AI_POINTS_USER_DAY: 30,
   AI_POINTS_USER_MONTH: 300,
   AI_POINTS_TRIAL_DAY: 10,

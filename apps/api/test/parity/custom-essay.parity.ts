@@ -3,6 +3,9 @@
  *
  *   ANTHROPIC_API_KEY=<dev workspace 的金鑰> npm run parity:custom-essay -w @gsat/api
  *
+ * 站主不用在自己的電腦跑：GitHub Actions 的「自訂作文題目評分對照（真模型）」（.github/workflows/custom-essay-parity.yml）
+ * 用 GitHub secret 的金鑰跑這支工具，Summary 顯示結論，結果目錄存成 artifact 並快取起來給下一次接著跑（docs/SETUP-KEYS.md §8.2）。
+ *
  * 需求的核心是「批改品質和歷屆題、本站仿真作文題一樣」。單元測試全部用假 Anthropic，只驗證請求的形狀；這支工具用真模型，
  * 把同一篇作文、同一個題目分別走「題庫題路徑」與「自訂題路徑」，量出兩條路徑的分數差，達標才把 AI_CUSTOM_ESSAY 打開。
  *
@@ -17,9 +20,15 @@
  * 呼叫、計分和 consumer 是同一套函式：essayCallInput（essayPromptParts）→ buildClaudeRequest → executeClaudeCall →
  * scoreEssayAnalytic／scoreEssayHolistic → 第三位評分者規則 → combineEssay。截斷或格式不符重試一次（同 consumer）。
  *
- * 費用：dev workspace 的上限是 US$50，所以依實際用量累計，到 PARITY_BUDGET_USD（預設 45）就停；每一篇的結果馬上存檔，
- * 下次執行從中斷處接著跑（PARITY_OUT 指定結果目錄，預設 test/parity/.results/，不進版控）。
- * 結果只存分數、旗標、輸出限制的計數與 E 組的評語，不存作文全文；跑完印出彙總（Markdown），貼進設計文件的附錄 A。
+ * 費用：dev workspace 的上限是 US$50，所以依實際用量累計，到 PARITY_BUDGET_USD（預設 45；累計值，含之前中斷的那幾次）就停；
+ * 每一篇的結果馬上存檔，下次執行從中斷處接著跑（PARITY_OUT 指定結果目錄，預設 test/parity/.results/，不進版控）。
+ * PARITY_TIME_LIMIT_MINUTES 有設時，開始下一篇之前超過這個分鐘數也停（GitHub Actions 一個 job 最多 6 小時，停下來才來得及
+ * 寫彙總、存快取）。Anthropic 回「到花費上限」或「金鑰／權限錯誤」時也停，那一篇不記成失敗（之後重跑）。
+ * 結果只存分數、旗標、輸出限制的計數與 E 組的評語（本站範文的 AI 評語），不存作文全文與金鑰；
+ * 跑完寫出彙總（Markdown，開頭是結論），貼進設計文件的附錄 A。
+ *
+ * 結論不是「達標」時這支測試會失敗（exit code 非 0）：Actions 的執行結果是紅的，不會被當成通過。
+ * 沒有 ANTHROPIC_API_KEY 時：本機略過；CI（環境變數 CI 有值）直接失敗，不會因為「全部略過」而變綠。
  *
  * 檔名不符合 test/**\/*.test.ts：npm test 與 CI 都不會跑它（vitest.parity.config.ts 只收 *.parity.ts）。
  */
@@ -45,7 +54,7 @@ import {
 import { reserveMicros, taskConfig, type CallRole } from '../../src/ai/tasks';
 import { loadConfig } from '../../src/config';
 import type { Env } from '../../src/env';
-import { buildCases, caseKey, fmt, rejectedResult, summarize, type Case, type CaseResult, type ResultsFile } from './custom-essay.cases';
+import { buildCases, caseKey, fmt, rejectedResult, STOP_FAILURES, summarize, type Case, type CaseResult, type ParityStop, type ResultsFile } from './custom-essay.cases';
 
 // 通過標準、案例與彙總在 custom-essay.cases.ts（單元測試 test/custom-essay.parity-summary.test.ts 驗證達標判定）。
 export { PARITY_CRITERIA, buildCases, summarize } from './custom-essay.cases';
@@ -53,7 +62,16 @@ export { PARITY_CRITERIA, buildCases, summarize } from './custom-essay.cases';
 const OUT_DIR = process.env['PARITY_OUT'] ?? path.join(import.meta.dirname, '.results');
 const RESULTS_FILE = path.join(OUT_DIR, 'custom-essay.json');
 const SUMMARY_FILE = path.join(OUT_DIR, 'custom-essay.md');
-const BUDGET_MICROS = Math.round(Number(process.env['PARITY_BUDGET_USD'] ?? '45') * 1_000_000);
+const API_KEY = process.env['ANTHROPIC_API_KEY']?.trim() ?? '';
+
+/** 正數的環境變數（沒設回 fallback）；格式不對直接丟錯：預算打錯字時不能變成「沒有上限」。 */
+function positiveEnv(name: string, fallback: number | null): number | null {
+  const raw = process.env[name]?.trim();
+  if (!raw) return fallback;
+  const n = Number(raw);
+  if (!Number.isFinite(n) || n <= 0) throw new Error(`${name}=${JSON.stringify(raw)} 不是正數`);
+  return n;
+}
 
 /** 批改一篇（和 consumer 同一套函式）。 */
 async function grade(env: Env, c: Case & { writing: NonNullable<Case['writing']> }): Promise<CaseResult> {
@@ -96,13 +114,23 @@ async function grade(env: Env, c: Case & { writing: NonNullable<Case['writing']>
         fields += 1;
         return scoreEssayHolistic(role, ctx, o, new OutputFilter());
       }
-      if (outcome.kind !== 'max_tokens' && outcome.kind !== 'invalid') return outcome.kind === 'error' ? outcome.reason : outcome.kind;
+      if (outcome.kind === 'error') {
+        // 花費上限、金鑰或權限錯誤：再跑下去每一篇都一樣，由呼叫端停下來（不記成這一篇的失敗）。
+        if (outcome.spendLimit) return 'spend_limit';
+        if (outcome.configProblem) return 'config_error';
+        return outcome.reason;
+      }
+      if (outcome.kind !== 'max_tokens' && outcome.kind !== 'invalid') return outcome.kind;
     }
     return 'invalid_output';
   };
   const [a, b] = await Promise.all([rate('primary'), rate('second')]);
   const base = { group: c.group, case_id: c.id, path: c.path, cost_micros: cost };
-  if (typeof a === 'string' || typeof b === 'string') return { ...base, ok: false, failure: typeof a === 'string' ? a : String(b), cost_micros: cost };
+  if (typeof a === 'string' || typeof b === 'string') {
+    // 兩位都失敗時，花費上限、金鑰錯誤優先（呼叫端要停下來，不是記成這一篇的失敗）。
+    const failures = [a, b].filter((x): x is string => typeof x === 'string');
+    return { ...base, ok: false, failure: failures.find((f) => STOP_FAILURES.has(f)) ?? failures[0]!, cost_micros: cost };
+  }
   const records: Array<EssayRaterRecord & { role: RaterRole }> = [
     { role: 'primary', ...a },
     { role: 'second', ...b },
@@ -128,8 +156,12 @@ async function grade(env: Env, c: Case & { writing: NonNullable<Case['writing']>
   };
 }
 
-describe.skipIf(!process.env['ANTHROPIC_API_KEY'])('自訂題評分對照（真模型）', () => {
-  it('依 §7.8 跑 A–E 組，結果存檔並印出彙總', async () => {
+describe.skipIf(!API_KEY && !process.env['CI'])('自訂題評分對照（真模型）', () => {
+  it('依 §7.8 跑 A–E 組，結果存檔並印出彙總；結論不是「達標」時失敗', async () => {
+    if (!API_KEY) throw new Error('沒有 ANTHROPIC_API_KEY：在 CI 上不能略過評分對照（略過會被當成通過）。');
+    const budgetMicros = Math.round(positiveEnv('PARITY_BUDGET_USD', 45)! * 1_000_000);
+    const limitMinutes = positiveEnv('PARITY_TIME_LIMIT_MINUTES', null);
+    const deadline = limitMinutes === null ? null : Date.now() + limitMinutes * 60_000;
     const env = { ...process.env, DB: {} as D1Database, ALLOWED_ORIGINS: 'http://localhost' } as unknown as Env;
     const config = loadConfig(env);
     mkdirSync(OUT_DIR, { recursive: true });
@@ -139,6 +171,7 @@ describe.skipIf(!process.env['ANTHROPIC_API_KEY'])('自訂題評分對照（真�
     const reserve = reserveMicros(taskConfig('essay_grade', config));
     const cases = buildCases();
     console.log(`[parity] 共 ${cases.length} 次批改，已完成 ${Object.keys(results.cases).length}，已花費 US$${fmt(results.spent_micros / 1e6)}`);
+    let stop: ParityStop | undefined;
     for (const c of cases) {
       const key = caseKey(c);
       if (results.cases[key]?.ok) continue;
@@ -148,19 +181,33 @@ describe.skipIf(!process.env['ANTHROPIC_API_KEY'])('自訂題評分對照（真�
         writeFileSync(RESULTS_FILE, JSON.stringify(results, null, 2));
         continue;
       }
-      if (results.spent_micros + reserve > BUDGET_MICROS) {
-        console.log(`[parity] 到達預算上限 US$${fmt(BUDGET_MICROS / 1e6)}，停在 ${key}；下次執行會從這裡接著跑`);
+      if (results.spent_micros + reserve > budgetMicros) {
+        stop = { reason: 'budget', budgetUsd: budgetMicros / 1e6 };
+        console.log(`[parity] 到達累計預算上限 US$${fmt(budgetMicros / 1e6)}，停在 ${key}；調高 PARITY_BUDGET_USD 再執行會從這裡接著跑`);
+        break;
+      }
+      if (deadline !== null && Date.now() >= deadline) {
+        stop = { reason: 'time', minutes: limitMinutes! };
+        console.log(`[parity] 到達時間上限 ${limitMinutes} 分鐘，停在 ${key}；下次執行會從這裡接著跑`);
         break;
       }
       const r = await grade(env, { ...c, writing: c.writing });
-      results.cases[key] = r;
       results.spent_micros += r.cost_micros;
+      if (!r.ok && STOP_FAILURES.has(r.failure ?? '')) {
+        stop = { reason: r.failure as 'spend_limit' | 'config_error' };
+        writeFileSync(RESULTS_FILE, JSON.stringify(results, null, 2));
+        console.log(`[parity] Anthropic 回 ${r.failure}，停在 ${key}（這一篇不記成失敗，下次執行重跑）`);
+        break;
+      }
+      results.cases[key] = r;
       writeFileSync(RESULTS_FILE, JSON.stringify(results, null, 2));
     }
-    const { markdown, passed } = summarize(results, cases);
+    // 一篇都還沒跑就停下來時，結果檔也要存在（Actions 依它決定要不要存快取、上傳 artifact）。
+    writeFileSync(RESULTS_FILE, JSON.stringify(results, null, 2));
+    const { markdown, verdict } = summarize(results, cases, stop);
     writeFileSync(SUMMARY_FILE, markdown);
     console.log(markdown);
-    console.log(`[parity] ${passed ? '全部達標' : '有項目未達標'}；結果：${RESULTS_FILE}`);
-    expect(Object.keys(results.cases).length).toBeGreaterThan(0);
+    console.log(`[parity] 結論：${verdict}；結果：${RESULTS_FILE}`);
+    expect(verdict, '評分對照的結論不是「達標」（passed）：見彙總開頭的結論').toBe('passed');
   });
 });

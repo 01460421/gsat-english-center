@@ -212,10 +212,44 @@ const mean = (xs: number[]) => (xs.length === 0 ? 0 : xs.reduce((s, x) => s + x,
 export const fmt = (n: number) => (Math.round(n * 100) / 100).toString();
 
 /**
- * 彙總與是否達標（Markdown，貼進設計文件的附錄 A）。cases 是這次應該跑的全部案例（buildCases 的結果）：
- * 用來算每組的預期數量，並列出還沒跑到的案例。
+ * 結論：passed＝程式判定的每一項都達標；incomplete＝還有案例沒跑到（預算、時間、Console 上限、金鑰錯誤或中斷），
+ * 再執行一次會接著跑；failed＝全部跑完（或沒跑到的不影響）但有項目未達標。只有 passed 才能把 AI_CUSTOM_ESSAY 打開。
  */
-export function summarize(results: ResultsFile, cases: readonly CaseKey[]): { markdown: string; passed: boolean } {
+export type ParityVerdict = 'passed' | 'incomplete' | 'failed';
+
+/** 這次執行為什麼提早停下來（custom-essay.parity.ts 傳進來，寫進結論那一段）。 */
+export type ParityStop =
+  | { reason: 'budget'; budgetUsd: number }
+  | { reason: 'time'; minutes: number }
+  /** Anthropic 端的花費上限或餘額不足（classifyError 的 spendLimit）。 */
+  | { reason: 'spend_limit' }
+  /** 金鑰無效、沒有權限、模型不能用（classifyError 的 configProblem）。 */
+  | { reason: 'config_error' };
+
+/** 案例的失敗原因裡，這兩種代表「這次沒辦法再跑下去」：不記進結果檔（之後重跑），停下來（custom-essay.parity.ts）。 */
+export const STOP_FAILURES = new Set(['spend_limit', 'config_error']);
+
+function stopText(stop: ParityStop | undefined): string {
+  switch (stop?.reason) {
+    case 'budget':
+      return `這次停在累計花費上限 US$${fmt(stop.budgetUsd)}（含之前中斷的那幾次）：要接著跑，執行時把上限調高，但不要超過這把金鑰所屬 workspace 在 Console 設的每月上限。`;
+    case 'time':
+      return `這次停在時間上限（${stop.minutes} 分鐘）。`;
+    case 'spend_limit':
+      return '這次停在 Anthropic Console 的花費上限（workspace 的每月上限或餘額不足）：調高上限或儲值後再跑。';
+    case 'config_error':
+      return '這次停在金鑰或權限錯誤（金鑰無效、被停用，或所屬 workspace 不能用這個模型）：換一把有效的金鑰再跑。';
+    default:
+      return '';
+  }
+}
+
+/**
+ * 彙總與是否達標（Markdown，貼進設計文件的附錄 A）。cases 是這次應該跑的全部案例（buildCases 的結果）：
+ * 用來算每組的預期數量，並列出還沒跑到的案例。stop 是這次提早停下來的原因（有的話寫進結論）。
+ * 開頭一行是結論（達標／還沒跑完／不達標），GitHub Actions 的 Summary 直接顯示這份 Markdown。
+ */
+export function summarize(results: ResultsFile, cases: readonly CaseKey[], stop?: ParityStop): { markdown: string; passed: boolean; verdict: ParityVerdict } {
   const C = PARITY_CRITERIA;
   const allResults = Object.values(results.cases);
   const all = allResults.filter((r) => r.ok);
@@ -267,13 +301,32 @@ export function summarize(results: ResultsFile, cases: readonly CaseKey[]): { ma
   const dGaps = by('D').flatMap((r) => (aDegraded.has(r.case_id) ? [(r.criteria?.organization ?? 0) - (aDegraded.get(r.case_id)!.criteria?.organization ?? 0)] : []));
   checks.push(['D 段數沒設的組織分差', dGaps.length > 0 && mean(dGaps) <= C.unsetParagraphOrganizationGapMax, `${fmt(mean(dGaps))}（${dGaps.length} 對）`]);
 
+  const notRun = cases.filter((c) => !(caseKey(c) in results.cases));
+  const failedChecks = checks.filter(([, ok]) => !ok).length;
+  const passed = failedChecks === 0;
+  const verdict: ParityVerdict = passed ? 'passed' : notRun.length > 0 || stop ? 'incomplete' : 'failed';
+  if (verdict === 'passed') {
+    lines.push(
+      `**結論：達標**：程式判定的 ${checks.length} 項全部通過${notRun.length > 0 ? `（有 ${notRun.length} 個案例沒跑到，完成數仍在門檻以上）` : ''}。` +
+        'E 組的評語請人工看過（下面的表）；沒問題就把結果記進 docs/design/custom-essay.md 的附錄 A，再把 apps/api/wrangler.toml 的 AI_CUSTOM_ESSAY 改成 "on"（docs/SETUP-KEYS.md §8.2）。',
+    );
+  } else if (verdict === 'incomplete') {
+    lines.push(
+      `**結論：還沒跑完**：${notRun.length} 個案例還沒跑到，目前 ${failedChecks} 項未達標（完成數不夠的那幾項要跑完才算數）。${stopText(stop)}` +
+        '保留這次的結果再執行一次，會從中斷處接著跑，已經完成的案例不會重新花錢。AI_CUSTOM_ESSAY 維持 "off"。',
+    );
+  } else {
+    lines.push(
+      `**結論：不達標**：${failedChecks} 項未達標（下表「達標」欄是「否」的項目）。AI_CUSTOM_ESSAY 維持 "off"；照 docs/design/custom-essay.md §7.8 調整提示後重跑，每一次的結果都記進附錄 A。`,
+    );
+  }
+  lines.push('');
   lines.push('| 項目 | 結果 | 達標 |', '|---|---|---|', ...checks.map(([n, ok, v]) => `| ${n} | ${v} | ${ok ? '是' : '**否**'} |`), '');
   lines.push(`prompt_version：${[...new Set(all.map((r) => `${r.path}:${r.prompt_version ?? '?'}`))].join('、')}`, '');
   lines.push('## E 組（內容分與評語，人工看是否以 120 字為準）', '', '| 題目 | 字數 | 內容分 | 評語 |', '|---|---|---|---|');
-  for (const r of by('E')) lines.push(`| ${r.case_id} | ${r.words ?? ''} | ${r.criteria?.content ?? ''} | ${(r.comments ?? []).join(' / ').replace(/\|/g, '｜')} |`);
+  for (const r of by('E')) lines.push(`| ${r.case_id} | ${r.words ?? ''} | ${r.criteria?.content ?? ''} | ${(r.comments ?? []).join(' / ').replace(/\|/g, '｜').replace(/\s*\n\s*/g, ' ')} |`);
   const failed = allResults.filter((r) => !r.ok);
   if (failed.length > 0) lines.push('', `未完成：${failed.map((r) => `${r.group}/${r.case_id}/${r.path}（${r.failure}）`).join('、')}`);
-  const notRun = cases.filter((c) => !(caseKey(c) in results.cases));
   if (notRun.length > 0) lines.push('', `還沒跑到（預算或中斷）：${notRun.length} 個，${notRun.slice(0, 10).map(caseKey).join('、')}${notRun.length > 10 ? '…' : ''}`);
-  return { markdown: lines.join('\n'), passed: checks.every(([, ok]) => ok) };
+  return { markdown: `${lines.join('\n')}\n`, passed, verdict };
 }

@@ -2208,6 +2208,28 @@ npm run test:local-e2e -w @gsat/api
 
 `worker-deploy.yml` 的 Summary 改由 `.github/scripts/deploy-summary.mjs` 產生（`apps/api/test/deploy-summary.test.ts` 測它）：多一列「自訂題目批改（customEssay）」並附上 `wrangler.toml` 的 `AI_CUSTOM_ESSAY` 值；AI 啟用、自訂題未啟用時印 `::notice::`（照設計）；`/api/features` 和 `AI_CUSTOM_ESSAY` 對不起來時另外印 `::warning::`，提醒確認之前不要解除全站暫停。`docs/SETUP-KEYS.md` 新增 §8.1「只關閉自訂題目批改」，§6 的 Summary 說明補上這一列。
 
+### 上線順序：開關關著合併，評分對照在 GitHub Actions 跑（§5.3、§7.8、§10）
+
+§7.8 的評分對照要真模型的金鑰，開發環境沒有，§10「先跑對照、達標才合併」做不到。改成**開關關著合併**：
+
+- 合併進 main 時 `AI_CUSTOM_ESSAY` 是 `off`（`wrangler.toml` 的 `[vars]` 與 `config.ts` 的 `CONFIG_DEFAULTS`）。關著時 `/api/features` 的 `customEssay` 是 false，自訂題目的作答頁顯示「即將開放」、只能自我檢核；建立、修改題目、送辨識、送批改回 503（§5.3）。遷移 0003、網站、隱私權說明升版照常上線。
+- §10 的順序改成：
+  1. 一個 PR 把 `customessay` 合併進 main（§10 第 2 步照舊）；
+  2. 部署後確認：§10 第 3 步和開關無關的項目照做；這時 Summary 是「自訂題目批改（customEssay）：未啟用」加一則提醒，是預期的狀態；
+  3. 站主在 GitHub Actions 跑「自訂作文題目評分對照（真模型）」（`.github/workflows/custom-essay-parity.yml`，步驟見 `docs/SETUP-KEYS.md` §8.2）；
+  4. 結論是「達標」：結果記進附錄 A；
+  5. 一個 PR 只把 `wrangler.toml` 的 `AI_CUSTOM_ESSAY` 改成 `"on"`；部署後做 §10 第 3 步其餘的確認（Summary 是「啟用」、`/api/features` 有 `"customEssay": true`、送一篇自訂題）。
+
+  不達標時維持 `off`，照 §7.8 調提示後重跑。
+- **開關的程式預設固定是 `off`**：`CONFIG_DEFAULTS.AI_CUSTOM_ESSAY` 不再要求和 `wrangler.toml` 相同（`[vars]` 漏設時偏向關）；`skeleton.test.ts` 改成檢查「程式預設是 `off`、`wrangler.toml` 明確寫 `"on"` 或 `"off"`」。原本兩邊一定要相同，只改 `wrangler.toml` 一行時部署前的測試會失敗；現在打開（上面第 5 步）和 §10 第 5 步的緊急關閉都只改那一行。§5.3「三處一起改」與 §8「`config.ts` 的預設值一起改」以這裡為準；解析規則（只有 `on` 才開，沒設或空白用預設值）不變。
+- `deploy-summary.mjs`：預設值改成 `off`（測試和 `customEssaySwitch` 逐值比對）；提醒的文字改成「評分對照達標之前是預期的狀態」，並說明怎麼打開（SETUP-KEYS §8.2）與緊急關閉（§8.1）。
+- **評分對照工具**（`custom-essay.parity.ts`、`custom-essay.cases.ts`）：
+  - 彙總開頭是結論：達標／還沒跑完（還有案例沒跑到，或這次提早停下來）／不達標（`summarize` 回傳 `verdict`）。不是「達標」時 vitest 失敗，Actions 的執行結果是紅的；
+  - 停下來的原因寫進結論：累計預算（`PARITY_BUDGET_USD`，格式不對直接失敗，不會變成沒有上限）、時間上限（`PARITY_TIME_LIMIT_MINUTES`）、Anthropic 的花費上限、金鑰或權限錯誤。後兩種那一篇不記成失敗，結論是「還沒跑完」，不會誤判成不達標；
+  - 沒有 `ANTHROPIC_API_KEY`：本機略過；CI（環境變數 `CI` 有值）直接失敗，不會因為「全部略過」變綠。
+- **workflow**（只能手動執行）：金鑰用 `ANTHROPIC_PARITY_API_KEY`（dev workspace，每月上限 US$50）；沒有它而且勾了 `allow_online_key` 才用正式站的 `ANTHROPIC_API_KEY`，兩個都不能用時第一步就失敗。金鑰只放在跑對照的那一步。結果目錄用 actions/cache 存取，key 含程式與題目資料的雜湊，改了提示就不會沿用舊結果；中斷後 `resume` 接著跑，已完成的不重新花錢。開始下一篇之前超過 270 分鐘就停下來寫彙總（一個 job 最多 6 小時）。Summary 顯示彙總，artifact 保留 30 天。repo 是公開的：結果檔只有分數、旗標、計數、花費與 E 組本站範文的 AI 評語，不存作文全文，沒有學生資料、金鑰與 D8 素材。
+- 測試：API 測試用 `helpers/customEssay.ts` 的 `customEnv()` 明確設 `AI_CUSTOM_ESSAY=on`（測總開關的那一個除外）；e2e 的假後端預設 `customEssay: false`（上線的狀態），新增「AI 開、自訂題目沒開」的案例，送 AI 批改的案例改用 `FEATURES_CUSTOM_ON`；`local-e2e.mjs` 的 `/api/features` 依 `wrangler.toml` 判斷 `customEssay`。
+
 ### 網站（§6）
 
 - **送 AI 任務的 409**（§6.7，correctness-3）：`startTask` 多一個 `isFailure` 選項，自訂題的呼叫端用 `isCustomTaskConflict` 把「題目剛剛改過了」與「找不到這份提交的題目」（新的共用常數 `CUSTOM_PROMPT_NOT_FOUND_MESSAGE`，Worker 兩處都用它）照原樣丟出；作答頁不再把沒送出的提交記成已送出，結果頁顯示 §6.7 的文案與「重新整理」。其他 409 照舊當成已送出。

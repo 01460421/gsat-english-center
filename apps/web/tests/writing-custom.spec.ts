@@ -3,6 +3,9 @@
  *
  *   1. 功能全關：從 /composition 的「自訂題目」區塊進來 → 填題目、寫作文、自評；只打了 /api/features；畫面沒有考試機構名稱；
  *      返回連結回到 /composition；
+ *   1b. AI 開、自訂題目批改沒開（AI_CUSTOM_ESSAY 預設 off：評分對照達標前的上線狀態）：已核准帳號也只能自我檢核，
+ *      沒有送出按鈕、拍照區說明切回打字作答，不建立任何提交；題型頁的說明只提歷屆與本站題可以送 AI；
+ *   2–4、6 用 FEATURES_CUSTOM_ON（customEssay: true）測自訂題目送 AI 批改；
  *   2. AI 批改（打字）：已核准帳號，題目含一段很長、沒有空白的字串 → 「設成 2 段」→「題目設定好了」→ 寫作文 → 送出；
  *      POST 本體帶 custom_prompt、不帶 group_id → 輪詢 queued → graded → 題目與四項分數；寫作紀錄有「自訂題目 英文作文」與題目開頭；
  *      375 與 320 px 都不水平捲動；
@@ -17,7 +20,7 @@ import { mkdirSync } from 'node:fs';
 import path from 'node:path';
 import { expect, test, type Page, type TestInfo } from '@playwright/test';
 import type { CreateSubmissionBody, CustomEssayPrompt, EssayGradingResult, FeaturesResponse, OcrResult, SubmissionDetail, SubmissionSummary } from '@gsat/shared';
-import { collectErrors, expectNoHorizontalOverflow, fakeBackend, ok, signedInMe } from './support/backend';
+import { FEATURES_CUSTOM_ON, collectErrors, expectNoHorizontalOverflow, fakeBackend, ok, signedInMe } from './support/backend';
 
 const APPROVED = signedInMe({ ai_status: 'approved' });
 const FEATURES_OFF: FeaturesResponse = { auth: false, ai: false, ocr: false, aiPaused: false };
@@ -147,11 +150,47 @@ test('功能全關：從題型頁進入、填題目、寫作文與自評；只�
   expect(errors).toEqual([]);
 });
 
+// ───────────────────────── 1b. AI 開、自訂題目批改沒開（上線時的預設） ─────────────────────────
+
+test('AI 開、自訂題目批改沒開（評分對照達標前）：已核准也只能自我檢核，沒有送出按鈕、不建立提交；題型頁只說歷屆與本站題可以送 AI', async ({ page }, testInfo) => {
+  const errors = collectErrors(page);
+  // 假後端的預設 features 就是上線時的狀態（customEssay: false）。
+  const backend = await fakeBackend(page, { me: APPROVED });
+  await page.goto('/composition');
+  const custom = page.getByRole('region', { name: '自訂題目' });
+  await expect(custom).toContainText('寫完可以用檢核清單自我檢核。');
+  await expect(custom).not.toContainText('送 AI 批改');
+  await expect(page.getByText(/歷屆試題與本站仿真題都可以送。/)).toBeVisible();
+  await custom.getByRole('link', { name: '輸入題目開始寫' }).click();
+  await expect(page).toHaveURL(new RegExp(`${PATH}$`));
+
+  await promptBox(page).fill(PROMPT_TEXT);
+  await page.getByRole('button', { name: '設成 2 段' }).click();
+  await page.getByRole('button', { name: '題目設定好了' }).click();
+  await essayBox(page).fill(ESSAY);
+  await expect(page.getByText('自訂題目的 AI 批改即將開放，現在可以先用檢核清單自我檢核。').first()).toBeVisible();
+  await expect(page.getByRole('button', { name: /送出 AI 批改/ })).toHaveCount(0);
+
+  // 拍照區：說明檢核清單在打字作答，按鈕切回去（審查 ux-14）。
+  await page.getByRole('button', { name: '拍照上傳手寫稿' }).click();
+  const photo = page.getByRole('region', { name: '拍照上傳手寫稿' });
+  await expect(photo).toContainText('自訂題目的 AI 批改即將開放。現在可以切到「打字作答」，用檢核清單自我檢核。');
+  await expect(photo.getByRole('button', { name: /上傳並辨識/ })).toHaveCount(0);
+  await photo.getByRole('button', { name: '切到打字作答' }).click();
+
+  await page.getByRole('button', { name: '自我檢核與自評（不用 AI）' }).click();
+  await expect(page.locator('#custom-essay-self').getByRole('heading', { name: '自我檢核與自評' })).toBeVisible();
+  await expectNoHorizontalOverflow(page, testInfo.project.name === 'mobile');
+  // 只有讀取（features、me、額度），沒有建立提交，也沒有送任何 AI 任務。
+  expect(backend.calls.filter((c) => c.method !== 'GET').map((c) => `${c.method} ${c.path}`)).toEqual([]);
+  expect(errors).toEqual([]);
+});
+
 // ───────────────────────── 2. AI 批改（打字） ─────────────────────────
 
 test('AI 批改（打字）：題目設定 → 送出 → 輪詢 → 結果頁顯示題目與四項分數 → 寫作紀錄有題目開頭', async ({ page }, testInfo) => {
   const errors = collectErrors(page);
-  const backend = await fakeBackend(page, { me: APPROVED });
+  const backend = await fakeBackend(page, { me: APPROVED, features: FEATURES_CUSTOM_ON });
   let created: CreateSubmissionBody | null = null;
   let polls = 0;
   const submission = () => {
@@ -254,7 +293,7 @@ test('AI 批改（打字）：題目設定 → 送出 → 輪詢 → 結果頁�
 test('驗證：「幫我寫」本機擋下；後端回 official_material 時在題目欄下方說明並標出位置', async ({ page }, testInfo) => {
   // 這個測試刻意讓建立提交回 400：瀏覽器的網路層紀錄不算程式錯誤。
   const errors = collectErrors(page, [/\/api\/submissions$/]);
-  const backend = await fakeBackend(page, { me: APPROVED });
+  const backend = await fakeBackend(page, { me: APPROVED, features: FEATURES_CUSTOM_ON });
   // 假裝這一行和官方文字的指紋相同（比對只在 Worker 做；這裡只驗證前端怎麼顯示）。
   const pasted = '整篇內容要切合主題並且舉出具體的例子';
   const prompt = `請寫一篇英文作文，描述你最難忘的一次旅行。\n${pasted}`;
@@ -307,7 +346,7 @@ async function handwritingPhoto(page: Page): Promise<Buffer> {
 
 test('手寫拍照：上傳 → 辨識 → 確認 → 送批改被題目規則擋下 → 在結果頁就地修改題目 → 再送 → 已批改', async ({ page }, testInfo) => {
   const errors = collectErrors(page, [/\/api\/ai\/essay-grade$/]);
-  const backend = await fakeBackend(page, { me: APPROVED });
+  const backend = await fakeBackend(page, { me: APPROVED, features: FEATURES_CUSTOM_ON });
   const OCR_TEXT = `${ESSAY_PARAGRAPHS[0]}\n\n${ESSAY_PARAGRAPHS[1]}`;
   const ocr: OcrResult = { text: OCR_TEXT, uncertain: [], confirmed_at: null };
   let stage: 'draft' | 'ocr' | 'confirmed' | 'grading' = 'draft';
@@ -412,7 +451,7 @@ test('入口：/writing/essay 的第三格連到自訂頁，返回連結回到�
 test('深色模式：作答頁與結果頁沒有 console error', async ({ page }, testInfo) => {
   const errors = collectErrors(page);
   await page.emulateMedia({ colorScheme: 'dark' });
-  const backend = await fakeBackend(page, { me: APPROVED });
+  const backend = await fakeBackend(page, { me: APPROVED, features: FEATURES_CUSTOM_ON });
   backend.on('GET /api/submissions/c-d', () =>
     ok(detail({ id: 'c-d', status: 'graded', custom_prompt: stored({ text: PROMPT_TEXT, paragraphs: 2 }), body: { text: ESSAY }, final_score: 15, final_band: 'good', grading: GRADING })),
   );

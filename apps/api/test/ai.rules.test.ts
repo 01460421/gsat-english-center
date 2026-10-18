@@ -47,6 +47,7 @@ import {
   translationAnalyticOutput,
   translationHolisticOutput,
 } from './helpers/ai';
+import { customEnv } from './helpers/customEssay';
 
 const config = loadConfig(makeEnv());
 const tGroup = getWritingGroup(TRANSLATION_GROUP) as WritingGroup;
@@ -396,7 +397,7 @@ describe('§6.2 其他條目', () => {
 
 describe('英文作文自訂題目：送出的 HTTP 本體（docs/design/custom-essay.md §7.3，S4）', () => {
   it('題目含 email 與手機號碼：存下來的是遮罩後的文字，送給 Anthropic 的本體沒有原值；也沒有 email、暱稱、帳號 id、提交 id', async () => {
-    const env = makeEnv();
+    const env = customEnv();
     const user = seedUser(env.DB);
     const contact = ['wang.teacher@example.edu.tw', '0912-345-678', '(02)2345-6789'];
     const created = await call(env, user, 'POST', '/api/submissions', {

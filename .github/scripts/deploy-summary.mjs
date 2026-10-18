@@ -1,9 +1,10 @@
 // worker-deploy.yml 的「部署後確認」最後一段：把 /api/features、Worker 上的機密名稱、Vercel 代理的狀態整理成
 // 這次執行的 Summary（GITHUB_STEP_SUMMARY）與 log 裡的 ::warning::／::notice::。
 //
-// 站主照 docs/design/custom-essay.md §10 第 3、5 步確認「自訂題目批改（customEssay）」是啟用或未啟用，所以這一列一定要有；
+// 站主照 docs/design/custom-essay.md §10 確認「自訂題目批改（customEssay）」是啟用或未啟用，所以這一列一定要有；
 // wrangler.toml 的 AI_CUSTOM_ESSAY 和 /api/features 對不起來時印 ::warning::（新版本還沒傳到所有節點時常見）；
-// AI 已啟用、自訂題目批改未啟用時印 ::notice::（只關自訂題時是預期的狀態，不是錯誤）。
+// AI 已啟用、自訂題目批改未啟用時印 ::notice::：評分對照（真模型）達標、打開之前，或出問題時只關自訂題，都是預期的狀態，
+// 不是錯誤（docs/SETUP-KEYS.md §8.1、§8.2）。
 //
 // 只讀公開端點的布林與機密的「名稱」，不印任何機密值。buildDeploySummary 是純函式（apps/api/test/deploy-summary.test.ts 測它）。
 import { appendFileSync, readFileSync } from 'node:fs';
@@ -11,8 +12,11 @@ import { pathToFileURL } from 'node:url';
 
 const onOff = (v) => (v ? '啟用' : '未啟用');
 
+/** apps/api/src/config.ts 的 CONFIG_DEFAULTS.AI_CUSTOM_ESSAY（wrangler.toml 沒有這一行時 Worker 用它；test/deploy-summary.test.ts 比對兩邊）。 */
+export const CUSTOM_ESSAY_DEFAULT = 'off';
+
 /**
- * wrangler.toml 的 AI_CUSTOM_ESSAY：回傳設定的字串；沒有這一行回 null（Worker 用預設值 on）。
+ * wrangler.toml 的 AI_CUSTOM_ESSAY：回傳設定的字串；沒有這一行回 null（Worker 用預設值 off）。
  * 只認 [vars] 裡 `AI_CUSTOM_ESSAY = "…"` 這種寫法（註解行不算）。
  */
 export function customEssayVarFrom(wranglerToml) {
@@ -20,9 +24,9 @@ export function customEssayVarFrom(wranglerToml) {
   return m ? m[1] : null;
 }
 
-/** 和 apps/api/src/config.ts 的 customEssaySwitch 同一條規則：去掉頭尾空白、轉小寫後等於 on 才開；沒設定或空白用預設 on。 */
+/** 和 apps/api/src/config.ts 的 customEssaySwitch 同一條規則：去掉頭尾空白、轉小寫後等於 on 才開；沒設定或空白用預設值（off）。 */
 export function customEssayExpected(value) {
-  const v = value === null || value.trim() === '' ? 'on' : value.trim().toLowerCase();
+  const v = value === null || value.trim() === '' ? CUSTOM_ESSAY_DEFAULT : value.trim().toLowerCase();
   return v === 'on';
 }
 
@@ -49,7 +53,7 @@ export function buildDeploySummary(input) {
   const vercelOk = input.vercelTarget === workerHost;
   const customOn = f.customEssay === true;
   const expCustom = f.ai === true && customEssayExpected(input.customEssayVar);
-  const varLabel = input.customEssayVar === null ? '沒有設定，預設 on' : JSON.stringify(input.customEssayVar);
+  const varLabel = input.customEssayVar === null ? `沒有設定，預設 ${CUSTOM_ESSAY_DEFAULT}` : JSON.stringify(input.customEssayVar);
 
   const rows = [
     ['Worker 網址', input.workerUrl],
@@ -79,7 +83,11 @@ export function buildDeploySummary(input) {
   }
   const notices = [];
   if (f.ai && !customOn) {
-    notices.push('AI 批改已啟用，但自訂題目批改（customEssay）未啟用：歷屆題與本站題照常，自訂題目的作答頁只能自我檢核。要開啟請把 wrangler.toml 的 AI_CUSTOM_ESSAY 改成 "on"（docs/SETUP-KEYS.md「只關閉自訂題目批改」）。');
+    notices.push(
+      'AI 批改已啟用，自訂題目批改（customEssay）未啟用：自訂作文題目評分對照（真模型）達標之前，這是預期的狀態。歷屆題與本站題照常，自訂題目的作答頁只能自我檢核。' +
+        '要打開：在 Actions 跑「自訂作文題目評分對照（真模型）」，Summary 寫「達標」後，只把 apps/api/wrangler.toml 的 AI_CUSTOM_ESSAY 改成 "on"，用一個 PR 合併進 main（docs/SETUP-KEYS.md §8.2「打開自訂題目批改」）；' +
+        '如果是出問題時刻意關掉的，照 §8.1「只關閉自訂題目批改」處理。',
+    );
   }
 
   const next = [];

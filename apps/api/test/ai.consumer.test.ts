@@ -10,7 +10,7 @@ import { CUSTOM_CONTENT_REFUND_MARK, createQueueHandler } from '../src/ai/consum
 import { d8Fingerprints } from '../src/ai/d8';
 import { setPausedStatement } from '../src/ai/guard';
 import { essayCustomSystemText } from '../src/ai/prompts/essay';
-import { CUSTOM_ESSAY, CUSTOM_PROMPT_INPUT, createCustom, seedCustomSubmission } from './helpers/customEssay';
+import { CUSTOM_ESSAY, CUSTOM_PROMPT_INPUT, createCustom, customEnv, seedCustomSubmission } from './helpers/customEssay';
 import { errorResponse, FakeAnthropic, frameworkOf, type Responder } from './helpers/anthropic';
 import {
   ESSAY_GROUP,
@@ -539,7 +539,7 @@ describe('英文作文自訂題目（docs/design/custom-essay.md §7.4）', () =
     frameworkOf(req) === 'analytic' ? f.json(essayAnalyticOutput(undefined, { rewrite })) : f.json(essayHolisticOutput());
 
   it('題目來自 D1：system＝essayCustomSystemText、userText 含 <student_provided_task>；graded；prompt_version 和歷屆題不同；meta 有 filter_version、d8_fp、custom_rules（S16）', async () => {
-    const env = makeEnv();
+    const env = customEnv();
     const user = seedUser(env.DB);
     const { id, opId } = await queueCustom(env, user);
     const fake = newFake(essayResponder());
@@ -582,7 +582,7 @@ describe('英文作文自訂題目（docs/design/custom-essay.md §7.4）', () =
       [null, []],
       [2, [{ code: 'no_paragraphs', points: 1 }]],
     ] as const) {
-      const env = makeEnv();
+      const env = customEnv();
       const user = seedUser(env.DB);
       const { id, opId } = await queueCustom(env, user, { ...CUSTOM_PROMPT_INPUT, paragraphs }, oneParagraph);
       await run(env, newFake(essayResponder()), opId);
@@ -592,7 +592,7 @@ describe('英文作文自訂題目（docs/design/custom-essay.md §7.4）', () =
   });
 
   it('參考改寫超過長度上限：rewrite 是 null、結果帶 rewrite_omitted、meta 記 rewrite_dropped', async () => {
-    const env = makeEnv();
+    const env = customEnv();
     const user = seedUser(env.DB);
     const { id, opId } = await queueCustom(env, user);
     await run(env, newFake(essayResponder(Array.from({ length: 400 }, () => 'word').join(' '))), opId);
@@ -603,7 +603,7 @@ describe('英文作文自訂題目（docs/design/custom-essay.md §7.4）', () =
   });
 
   it('處理途中題目列不見了（提交被刪等）：照既有邏輯退還 internal，不呼叫 Claude', async () => {
-    const env = makeEnv();
+    const env = customEnv();
     const user = seedUser(env.DB);
     const { id, opId } = await queueCustom(env, user);
     env.DB.sqlite.prepare('DELETE FROM submission_custom_prompts WHERE submission_id = ?').run(id);
@@ -616,7 +616,7 @@ describe('英文作文自訂題目（docs/design/custom-essay.md §7.4）', () =
   });
 
   it('總開關在排隊之後關閉：已經排入 Queue 的照常完成（已預扣；P19）', async () => {
-    const env = makeEnv();
+    const env = customEnv();
     const user = seedUser(env.DB);
     const { id, opId } = await queueCustom(env, user);
     await run({ ...env, AI_CUSTOM_ESSAY: 'off' }, newFake(essayResponder()), opId);
@@ -624,7 +624,7 @@ describe('英文作文自訂題目（docs/design/custom-essay.md §7.4）', () =
   });
 
   it('failed 之後改題目再送批改（P19）：consumer 送出的 userText 含新題目、不含舊題目', async () => {
-    const env = makeEnv();
+    const env = customEnv();
     const user = seedUser(env.DB);
     const { id, opId } = await queueCustom(env, user);
     await run(env, newFake((f) => (req) => (frameworkOf(req) === 'analytic' ? f.json({}, { stopReason: 'refusal', outputTokens: 5 }) : f.json(essayHolisticOutput()))), opId);
@@ -644,7 +644,7 @@ describe('英文作文自訂題目（docs/design/custom-essay.md §7.4）', () =
   });
 
   it('內容造成的退還告警（S12）：同一人 7 天內第 3 次以 refusal 退還自訂題時寫一筆 ops_events，第 4 次同一天不再寫；題庫題的退還不計入', async () => {
-    const env = makeEnv();
+    const env = customEnv();
     const user = seedUser(env.DB);
     // 兩天前：一次題庫題、一次自訂題的拒答退還（不算今天的每日退還上限）。
     const now = Math.floor(Date.now() / 1000);
@@ -687,7 +687,7 @@ describe('英文作文自訂題目（docs/design/custom-essay.md §7.4）', () =
   });
 
   it('內容退還告警不會因為學生刪掉失敗的提交而漏算（security-3）：「拒答退還 → 刪除提交」重複 3 次仍然告警', async () => {
-    const env = makeEnv();
+    const env = customEnv();
     const user = seedUser(env.DB);
     const refusal = () => newFake((f) => (req) => (frameworkOf(req) === 'analytic' ? f.json({}, { stopReason: 'refusal', outputTokens: 5 }) : f.json(essayHolisticOutput())));
     const alerts = () => env.DB.sqlite.prepare(`SELECT detail_json FROM ops_events WHERE kind = 'custom_essay_content_refunds'`).all() as Array<{ detail_json: string }>;

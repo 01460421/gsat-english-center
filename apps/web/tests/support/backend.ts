@@ -22,7 +22,14 @@ import type {
 /** 現行條款版本：要和 src/features/account/policy.ts（以及後端 wrangler.toml）一致，歡迎頁才允許送出。 */
 export const VERSIONS = { privacy: '2026-10-18', terms: '2026-10-08', ai: '2026-10-08' } as const;
 
-export const FEATURES_ON: FeaturesResponse = { auth: true, ai: true, ocr: true, aiPaused: false, customEssay: true };
+/**
+ * 正式站上線時的狀態（假後端的預設）：登入、AI、OCR 都開；自訂題目批改關閉（AI_CUSTOM_ESSAY 預設 off，
+ * 真模型的評分對照達標才打開，docs/SETUP-KEYS.md §8.2）。要測自訂題目送 AI 批改的流程用 FEATURES_CUSTOM_ON。
+ */
+export const FEATURES_ON: FeaturesResponse = { auth: true, ai: true, ocr: true, aiPaused: false, customEssay: false };
+
+/** 自訂題目批改也打開（AI_CUSTOM_ESSAY=on）。 */
+export const FEATURES_CUSTOM_ON: FeaturesResponse = { ...FEATURES_ON, customEssay: true };
 
 /** 已登入的 /api/me（預設：完成首次設定、尚未申請 AI 的學生）。 */
 export function signedInMe(

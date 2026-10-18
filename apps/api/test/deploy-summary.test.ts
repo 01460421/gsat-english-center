@@ -1,14 +1,16 @@
 /**
  * worker-deploy.yml 的部署後 Summary（.github/scripts/deploy-summary.mjs；審查 correctness-7）：
- * docs/design/custom-essay.md §10 第 3 步要確認「自訂題目批改（customEssay）：啟用」、第 5 步的緊急關閉要確認「未啟用」，
- * 所以 Summary 一定要有這一列；和 wrangler.toml 的 AI_CUSTOM_ESSAY 對不起來時要警告，只關自訂題時給提醒。
+ * docs/design/custom-essay.md §10 打開之後要確認「自訂題目批改（customEssay）：啟用」、緊急關閉要確認「未啟用」，
+ * 所以 Summary 一定要有這一列；和 wrangler.toml 的 AI_CUSTOM_ESSAY 對不起來時要警告；
+ * 自訂題沒開時（評分對照達標之前，或只關自訂題）只給提醒，並說明怎麼打開。
  */
 import { execFileSync } from 'node:child_process';
 import { mkdtempSync, readFileSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { describe, expect, it } from 'vitest';
-import { buildDeploySummary, customEssayExpected, customEssayVarFrom, type DeploySummaryInput } from '../../../.github/scripts/deploy-summary.mjs';
+import { buildDeploySummary, CUSTOM_ESSAY_DEFAULT, customEssayExpected, customEssayVarFrom, type DeploySummaryInput } from '../../../.github/scripts/deploy-summary.mjs';
+import { CONFIG_DEFAULTS, customEssaySwitch } from '../src/config';
 
 const REPO = path.resolve(import.meta.dirname, '..', '..', '..');
 const SCRIPT = path.join(REPO, '.github', 'scripts', 'deploy-summary.mjs');
@@ -42,12 +44,22 @@ describe('deploy-summary.mjs', () => {
     expect(disabled.markdown).not.toBe(enabled.markdown);
   });
 
-  it('只關自訂題（ai 啟用、AI_CUSTOM_ESSAY=off）：::notice::，不是警告', () => {
+  it('自訂題沒開（ai 啟用、AI_CUSTOM_ESSAY=off：評分對照達標之前的出貨狀態，或只關自訂題）：::notice::，不是警告，並說明怎麼打開', () => {
     const s = buildDeploySummary(input({ ...on, customEssay: false }, 'off'));
     expect(s.warnings).toEqual([]);
     expect(s.notices).toHaveLength(1);
     expect(s.notices[0]).toContain('自訂題目批改（customEssay）未啟用');
+    expect(s.notices[0]).toContain('預期的狀態');
+    expect(s.notices[0]).toContain('自訂作文題目評分對照（真模型）');
+    expect(s.notices[0]).toContain('AI_CUSTOM_ESSAY 改成 "on"');
+    expect(s.notices[0]).toContain('§8.2');
+    expect(s.notices[0]).toContain('§8.1');
     expect(s.markdown).toContain('### 提醒');
+    // wrangler.toml 沒有這一行：Worker 用程式預設值 off，也是提醒、不是警告。
+    const missing = buildDeploySummary(input({ ...on, customEssay: false }, null));
+    expect(row(missing)).toBe('未啟用（wrangler.toml 的 AI_CUSTOM_ESSAY：沒有設定，預設 off）');
+    expect(missing.warnings).toEqual([]);
+    expect(missing.notices).toHaveLength(1);
   });
 
   it('和 wrangler.toml 對不起來（改成 off 但 Worker 還回啟用，或 on 卻回未啟用）：::warning::，提醒先別解除全站暫停', () => {
@@ -59,12 +71,23 @@ describe('deploy-summary.mjs', () => {
     expect(buildDeploySummary(input({ auth: true, ai: false, ocr: false, aiPaused: false, customEssay: false }, 'on')).warnings.some((w) => w.includes('customEssay'))).toBe(false);
   });
 
-  it('AI_CUSTOM_ESSAY 的判斷和 src/config.ts 的 customEssaySwitch 相同；讀 wrangler.toml 的那一行（註解不算）', () => {
-    expect([null, 'on', 'ON', ' on ', ''].map(customEssayExpected)).toEqual([true, true, true, true, true]);
-    expect(['off', 'false', '0', 'onn'].map(customEssayExpected)).toEqual([false, false, false, false]);
+  it('AI_CUSTOM_ESSAY 的判斷和 src/config.ts 的 customEssaySwitch 相同（含預設值 off）；讀 wrangler.toml 的那一行（註解不算）', () => {
+    expect(CUSTOM_ESSAY_DEFAULT).toBe(CONFIG_DEFAULTS.AI_CUSTOM_ESSAY);
+    expect(['on', 'ON', ' on '].map(customEssayExpected)).toEqual([true, true, true]);
+    expect([null, '', '   ', 'off', 'false', '0', 'onn'].map(customEssayExpected)).toEqual([false, false, false, false, false, false, false]);
+    const warn = console.warn;
+    console.warn = () => {};
+    try {
+      for (const v of [null, '', '   ', 'on', 'ON', ' on ', 'off', 'Off', 'false', '0', 'onn']) {
+        expect(customEssayExpected(v), JSON.stringify(v)).toBe(customEssaySwitch(v ?? undefined));
+      }
+    } finally {
+      console.warn = warn;
+    }
     expect(customEssayVarFrom('# AI_CUSTOM_ESSAY = "off" 的說明\n[vars]\nAI_CUSTOM_ESSAY = "off"\n')).toBe('off');
     expect(customEssayVarFrom('[vars]\nAPP_ORIGIN = "x"\n')).toBeNull();
-    expect(customEssayVarFrom(readFileSync(path.join(REPO, 'apps', 'api', 'wrangler.toml'), 'utf8'))).toBe('on');
+    // 評分對照達標之前是 "off"，之後站主只把那一行改成 "on"：兩種都讀得到（不把值寫死在測試裡，改那一行不用動測試）。
+    expect(customEssayVarFrom(readFileSync(path.join(REPO, 'apps', 'api', 'wrangler.toml'), 'utf8'))).toMatch(/^(on|off)$/);
   });
 
   it('workflow 實際執行的指令（node .github/scripts/deploy-summary.mjs）：log 與 GITHUB_STEP_SUMMARY 都有這一列', () => {

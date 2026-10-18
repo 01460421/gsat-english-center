@@ -7,8 +7,18 @@
 import { CUSTOM_ESSAY_GROUP_ID, type CustomEssayPromptInput } from '@gsat/shared';
 import { D8_ENGLISH_RUN, D8_FP_FORMAT, D8_HAN_WINDOW, d8EnglishWindows, d8Hash, d8HanWindows, packFingerprints } from '../../../../packages/shared/scripts/d8-fingerprint.mjs';
 import type { SessionUser } from '../../src/auth/session';
-import { call, type TestEnv } from './ai';
+import type { Env } from '../../src/env';
+import { call, makeEnv, type TestEnv } from './ai';
 import type { TestD1 } from './d1';
+
+/**
+ * 自訂題目打開的 env：makeEnv＋明確設定 AI_CUSTOM_ESSAY=on。
+ * 正式環境的預設是 off（評分對照通過之前，src/config.ts 的 CONFIG_DEFAULTS 與 wrangler.toml），所以要建立自訂題、
+ * 送批改或跑 consumer 的測試都要用這個；測「沒設時是關的」改用 makeEnv。
+ */
+export function customEnv(overrides: Partial<Env> = {}, db?: TestD1): TestEnv {
+  return makeEnv({ AI_CUSTOM_ESSAY: 'on', ...overrides }, db);
+}
 
 /** 學生貼上的題目（中文說明，兩段、至少 120 字）。 */
 export const CUSTOM_TASK =
