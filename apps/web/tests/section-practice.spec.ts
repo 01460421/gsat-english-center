@@ -254,14 +254,17 @@ test('中譯英頁：頁首下面先是本站仿真題，再是歷屆試題；�
   await page.waitForLoadState('networkidle');
   await expectFitsWidth(page, testInfo);
 
-  // 「跳到歷屆試題」：第二份列表在第一個畫面裡也找得到。
-  await bank.getByRole('link', { name: '跳到歷屆試題' }).click();
+  // 「跳到歷屆試題」：第二份列表在第一個畫面裡也找得到。桌機（≥ lg）的頁內跳轉與歷屆試題的篩選在 sticky 篩選列
+  // （docs/design/desktop-ui.md §5.4：同一組連結、同一份篩選只有一份），手機照舊在標題列右邊與列表上方。
+  const desktop = testInfo.project.name !== 'mobile';
+  const jump = desktop ? page.getByRole('navigation', { name: '頁內跳轉' }).getByRole('link', { name: '歷屆試題' }) : bank.getByRole('link', { name: '跳到歷屆試題' });
+  await jump.click();
   await expect(page).toHaveURL(/\/translation#exam-questions$/);
   const exam = page.getByRole('region', { name: '歷屆試題' });
   const first = exam.getByRole('region', { name: /^學測\s*\d+ 組$/ }).getByRole('link').first();
   await expect(first).toBeInViewport();
   await expect(first).toHaveAttribute('href', /^\/writing\/translation\/gsat-\d+$/);
-  await expect(exam.getByRole('radio', { name: /^全部/ })).toBeChecked();
+  await expect((desktop ? page.locator('[data-sticky-bar]') : exam).getByRole('radio', { name: /^全部/ })).toBeChecked();
   const href = await first.getAttribute('href');
   await first.click();
   await expect(page).toHaveURL(new RegExp(`${href}$`));

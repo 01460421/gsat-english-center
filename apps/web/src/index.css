@@ -122,6 +122,27 @@
   --font-sans:
     -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'PingFang TC', 'Noto Sans TC',
     'Microsoft JhengHei', 'Heiti TC', sans-serif;
+
+  /*
+   * 桌機版面的 container 尺寸（docs/design/desktop-ui.md §2.2）：Layout 的 main 在 ≥ lg 是 @container/main，
+   * 分欄看 main 的內容寬而不是視窗寬（lg:@ws/main:grid-cols-2 這類）。JS 端的同一組門檻在 lib/media.ts 的 MAIN_TIER_PX。
+   *   ws：main ≥ 936px，寫作分欄、首頁儀表板、列表右欄；wide：main ≥ 1280px，三欄網格。
+   * ws 是 58.5rem 而不是設計文件寫的 60rem：≥ lg 一律保留捲軸位置，Windows 的傳統捲軸約 17px，1024 寬、側邊欄收合時
+   * main 只有 1024 − 17 − 64 = 943px；60rem 會讓這種最常見的學校筆電永遠到不了 ws（§16.7）。
+   */
+  --container-ws: 58.5rem;
+  --container-wide: 80rem;
+}
+
+/*
+ * 放寬改版過的區塊（§2.3）：內容預設維持 max-w-5xl（944px），只有加了 lg:bleed 的區塊放寬到 main 的內容寬
+ * （扣掉左右的 --page-px），上限 --bleed-max（預設 82rem；作答與寫作的工作面設成 100cqw，不設上限），並置中在內容區。
+ * 100cqw 是 main（container）的內容寬，所以不會碰到側邊欄。條件：bleed 元素到內容容器之間的祖先不能有左右 padding
+ * 或 margin（置中會偏），也不能隔著另一個 container。
+ */
+@utility bleed {
+  width: min(100cqw - 2 * var(--page-px, 0px), var(--bleed-max, 82rem));
+  margin-inline: calc((100% - min(100cqw - 2 * var(--page-px, 0px), var(--bleed-max, 82rem))) / 2);
 }
 
 @layer base {
@@ -142,5 +163,31 @@
   :focus-visible {
     outline: 2px solid var(--primary);
     outline-offset: 2px;
+  }
+
+  /*
+   * 桌機（≥ lg）：
+   *   - scroll-padding-top：Tab／Shift+Tab、錨點跳轉、scrollIntoView 都留出 sticky 工具列、篩選列與資料表 sticky 表頭的高度，
+   *     焦點不會停在它們底下（WCAG 2.4.11）。三個變數由 sticky 元素自己用 ResizeObserver 寫入（components/desktop/scroll.ts）。
+   *   - scrollbar-gutter: stable：一律保留捲軸的位置，頁面長短不同、對話框鎖住捲動時版面都不會左右跳。
+   *   - 對話框（ShortcutHelp 等原生 <dialog> 的 showModal）開著時鎖住背景捲動。保留的捲軸槽不在 ::backdrop 的範圍裡，
+   *     所以 html 的底色（畫在整個視窗，含捲軸槽）調成和遮罩疊在 --bg 上一樣的顏色，右緣不會留一條沒變暗的亮條；
+   *     遮罩的濃度和對話框的 backdrop:bg-black/40 一致（模擬考的交卷對話框是 /50，另標 data-backdrop-dim）。
+   * 手機與平板（< lg）完全不受影響（docs/design/desktop-ui.md §2.1）。
+   */
+  @media (width >= 64rem) {
+    html {
+      scroll-padding-top: calc(var(--session-bar-h, 0px) + var(--sticky-bar-h, 0px) + var(--table-head-h, 0px) + 1rem);
+      scrollbar-gutter: stable;
+    }
+
+    html:has(dialog:modal) {
+      overflow: hidden;
+      background-color: color-mix(in srgb, black 40%, var(--bg));
+    }
+
+    html:has(dialog[data-backdrop-dim='50']:modal) {
+      background-color: color-mix(in srgb, black 50%, var(--bg));
+    }
   }
 }

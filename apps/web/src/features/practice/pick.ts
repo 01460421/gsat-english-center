@@ -86,6 +86,24 @@ export function defaultTier(
 }
 
 /** 選單上每一格顯示的數字：共幾組、做過幾組。 */
+/** 這一格做完的題組（這台裝置）的總答對題數與題數；一組都還沒做完是 null（桌機矩陣的「答對 72%」）。 */
+export function cellAccuracy(
+  entries: readonly BankIndexEntry[],
+  history: PracticeHistory,
+  section: PracticeSectionType,
+  tier: Tier,
+): { correct: number; total: number } | null {
+  let correct = 0;
+  let total = 0;
+  for (const e of cellEntries(entries, section, tier)) {
+    const record = history.done[e.uid];
+    if (!record) continue;
+    correct += record.correct;
+    total += record.total;
+  }
+  return total > 0 ? { correct, total } : null;
+}
+
 export function cellProgress(
   entries: readonly BankIndexEntry[],
   history: PracticeHistory,

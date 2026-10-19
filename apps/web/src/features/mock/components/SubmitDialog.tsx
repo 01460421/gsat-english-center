@@ -77,6 +77,8 @@ export function SubmitDialog({
       ref={ref}
       aria-labelledby={`${id}-title`}
       aria-describedby={`${id}-desc`}
+      // 桌機鎖住捲動時，保留的捲軸槽用同樣濃度的遮罩色（index.css 的 html:has(dialog:modal)）。
+      data-backdrop-dim="50"
       onCancel={(e) => {
         e.preventDefault();
         close();

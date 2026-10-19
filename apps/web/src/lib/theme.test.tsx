@@ -58,11 +58,14 @@ describe('主題控制項', () => {
       </MemoryRouter>,
     );
     expect(screen.getByRole('radio', { name: /^淺色/ })).toBeChecked();
-    await user.click(screen.getByRole('button', { name: '切換為深色主題' }));
+    // 可存取名稱先說按了會怎樣，再說目前是哪一種（ThemeToggle.tsx）。
+    await user.click(screen.getByRole('button', { name: '切換為深色主題（目前是淺色）' }));
     expect(document.documentElement.dataset['theme']).toBe('dark');
     expect(screen.getByRole('radio', { name: /^深色/ })).toBeChecked();
-    expect(screen.getByRole('button', { name: '切換為淺色主題' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: '切換為淺色主題（目前是深色）' })).toBeInTheDocument();
     await user.click(screen.getByRole('radio', { name: /^跟隨系統/ }));
     expect(document.documentElement.hasAttribute('data-theme')).toBe(false);
+    // 跟隨系統時也說出目前實際是哪一種（測試環境的系統是淺色）。
+    expect(screen.getByRole('button', { name: '切換為深色主題（目前跟隨系統：淺色）' })).toBeInTheDocument();
   });
 });

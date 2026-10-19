@@ -126,7 +126,7 @@ export function ExamToolbar({ exam, modeLabel, waitForFirstAnswer = false }: { e
   };
 
   return (
-    <div className="sticky top-14 z-10 -mx-4 border-b border-line bg-surface/95 px-4 py-2 backdrop-blur lg:top-0 lg:-mx-10 lg:px-10">
+    <div className="sticky top-14 z-10 -mx-4 border-b border-line bg-surface/95 px-4 py-2 backdrop-blur lg:top-0 lg:-mx-(--page-px) lg:px-(--page-px)">
       {/* 手機上收窄間距、模式只寫「考試／練習」：390px 寬時倒數（1:40:00）加交卷鈕原本會擠成兩行，工具列多佔 40px 高。 */}
       <div className="flex flex-wrap items-center gap-x-3 gap-y-1 sm:gap-x-4">
         <span className="rounded-full bg-primary-soft px-2.5 py-0.5 text-xs font-semibold text-primary">

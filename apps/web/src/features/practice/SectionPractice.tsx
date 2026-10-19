@@ -24,7 +24,9 @@
  */
 import { Component, lazy, Suspense, useId, useMemo, type ErrorInfo, type ReactNode } from 'react';
 import { Link, useSearchParams } from 'react-router';
+import { ModulePage } from '../../components/ModulePage';
 import type { PracticeSectionType } from '../../data/bank';
+import type { PageMeta } from '../../modules';
 import type { PracticeEmbed } from './BankPractice';
 import { AI_GROUP_LABEL, PRACTICE_SECTION_LABELS, tierFromParam } from './labels';
 
@@ -194,5 +196,19 @@ export function PracticeOffers({ section }: { section: PracticeSectionType }) {
         ))}
       </ul>
     </details>
+  );
+}
+
+/**
+ * 六個題型頁的外殼（ModulePage）。桌機（≥ lg，docs/design/desktop-ui.md §5.3）頁首壓成兩列：左邊 H1＋一行說明（全文放 title），
+ * 右邊是難度切換（BankPractice.tsx 的 TierSwitcher）；第二列是練習區裡的題組標題・主題・題數・AI 標章。
+ * 難度切換仍在「…題庫練習」區塊裡（DOM 與手機相同，讀屏與 Tab 順序也是頁首 → 難度 → 題組），桌機只用 CSS 把它定位到頁首右邊：
+ * article 是 lg:relative、頁首右邊留出 lg:pr-[27.5rem]，TierSwitcher 是 lg:absolute lg:top-0 lg:right-0（中間的元素都不是定位元素）。
+ */
+export function SectionModulePage({ page, children }: { page: PageMeta; children: ReactNode }) {
+  return (
+    <ModulePage page={page} className="lg:relative" headerClassName="lg:min-h-20 lg:pr-[27.5rem]" clampSummary>
+      {children}
+    </ModulePage>
   );
 }

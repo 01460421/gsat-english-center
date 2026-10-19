@@ -260,7 +260,7 @@ function ProfileForm({ me }: { me: MeResponseSignedIn }) {
       </div>
       <fieldset>
         <legend className={labelCls}>年齡區間</legend>
-        <div className="grid gap-2 sm:grid-cols-2">
+        <div className="grid gap-2 sm:grid-cols-2 lg:max-w-md">
           {AGE_BANDS.map((band) => (
             <label
               key={band}

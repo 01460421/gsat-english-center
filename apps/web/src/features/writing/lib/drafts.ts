@@ -59,6 +59,11 @@ export interface TranslationDraft {
   /** 自評：每句找到幾個錯誤。 */
   errorCounts: number[];
   updatedAt: number;
+  /**
+   * 最近一次送出 AI 批改的時間（選填，舊的草稿沒有）：送出後草稿保留文字，首頁的「繼續學習」靠它分辨「已經交了」
+   * 與「還在寫」（送出之後又改過才算還在寫，features/home/continueItems.ts）。
+   */
+  aiSubmittedAt?: number | null;
 }
 
 export type EssayScores = Record<EssayCriterion, number>;
@@ -85,6 +90,8 @@ export interface EssayDraft {
   selfScores: PartialEssayScores | null;
   checked: string[];
   updatedAt: number;
+  /** 最近一次送出 AI 批改（打字或拍照辨識）的時間；選填，同 TranslationDraft.aiSubmittedAt。 */
+  aiSubmittedAt?: number | null;
 }
 
 /** 手寫作文「已確認」那一步的自評（存在 selfDraftKey）。 */

@@ -3,7 +3,9 @@
  * 「帳號」區塊：後端沒部署時顯示「即將開放」；登入功能開放後連到我的帳號、AI 批改申請與寫作練習。
  */
 import { screen, waitFor, within } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { afterEach, describe, expect, it } from 'vitest';
+import { setDesktopViewport } from '../test/viewport';
 import { resetOnboardingRedirectForTests } from '../features/account/RequireAccount';
 import { FEATURES_OFF_RESPONSE, FEATURES_ON, mockApi, renderApp, signedInMe } from '../features/account/testing';
 
@@ -56,5 +58,53 @@ describe('設定頁的帳號區塊', () => {
     await waitFor(() => expect(section.getByRole('link', { name: '我的帳號' })).toHaveAttribute('href', '/account'));
     expect(section.getByRole('link', { name: 'AI 批改申請' })).toHaveAttribute('href', '/ai/apply');
     expect(section.getByRole('link', { name: '寫作練習' })).toHaveAttribute('href', '/writing');
+  });
+});
+
+describe('設定頁的「電腦版介面」（docs/design/desktop-ui.md §5.10）', () => {
+  it('手機與平板沒有這一區', async () => {
+    mockApi({ 'GET /api/features': FEATURES_OFF_RESPONSE });
+    renderApp('/settings');
+    await screen.findByRole('heading', { level: 1, name: '設定' }, { timeout: 5000 });
+    expect(screen.queryByRole('region', { name: '電腦版介面' })).not.toBeInTheDocument();
+  });
+
+  it('桌機：側邊欄（自動／一律展開／一律收合）、單鍵快捷鍵、歷屆試題列表；改了就存在這台裝置、側邊欄立刻跟著變', async () => {
+    setDesktopViewport();
+    const user = userEvent.setup();
+    mockApi({ 'GET /api/features': FEATURES_OFF_RESPONSE });
+    renderApp('/settings');
+    const section = within(await screen.findByRole('region', { name: '電腦版介面' }, { timeout: 5000 }));
+    const sidebarGroup = within(section.getByRole('group', { name: '側邊欄' }));
+    expect(sidebarGroup.getByRole('radio', { name: /^自動/ })).toBeChecked();
+    await user.click(sidebarGroup.getByRole('radio', { name: /^一律收合/ }));
+    expect(localStorage.getItem('gsat-ui:v1:sidebar')).toBe('collapsed');
+    expect(document.querySelector('aside[data-sidebar]')).toHaveAttribute('data-sidebar', 'collapsed');
+    await user.click(sidebarGroup.getByRole('radio', { name: /^自動/ }));
+    expect(localStorage.getItem('gsat-ui:v1:sidebar')).toBeNull();
+
+    const singleKey = section.getByRole('checkbox', { name: '單鍵快捷鍵' });
+    expect(singleKey).toBeChecked();
+    expect(singleKey).toHaveAccessibleDescription(/使用螢幕閱讀器或語音輸入時建議關閉/);
+    // 照實說明開關管不到的按鍵（單字每日學習與測驗原本的按鍵）。
+    expect(singleKey).toHaveAccessibleDescription(/單字每日學習與測驗原本的按鍵（空白鍵、Enter、1–4）不受這個開關影響/);
+    await user.click(singleKey);
+    expect(localStorage.getItem('gsat-ui:v1:single-key')).toBe('off');
+
+    const listGroup = within(section.getByRole('group', { name: '歷屆試題列表' }));
+    expect(listGroup.getByRole('radio', { name: /^表格/ })).toBeChecked();
+    await user.click(listGroup.getByRole('radio', { name: /^卡片/ }));
+    expect(localStorage.getItem('gsat-ui:v1:list-view:exams')).toBe('cards');
+    expect(section.getByText('這些設定只影響這台裝置的這個瀏覽器。')).toBeInTheDocument();
+  });
+
+  it('「查看全部快捷鍵」打開快捷鍵說明', async () => {
+    setDesktopViewport();
+    const user = userEvent.setup();
+    mockApi({ 'GET /api/features': FEATURES_OFF_RESPONSE });
+    renderApp('/settings');
+    const section = within(await screen.findByRole('region', { name: '電腦版介面' }, { timeout: 5000 }));
+    await user.click(section.getByRole('button', { name: '查看全部快捷鍵' }));
+    expect(await screen.findByRole('dialog', { name: '鍵盤快捷鍵' }, { timeout: 5000 })).toBeInTheDocument();
   });
 });

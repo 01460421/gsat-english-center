@@ -9,6 +9,7 @@
  *      那裡加了新的題目，這裡也會跟著出現。
  * 都包在 ListOrigin 裡：點一題（或自訂題目）到作答頁，作答頁的返回連結回到這一頁。下面是作答與批改方式、學測怎麼考、
  * 拍照上傳手寫稿的流程與照片隱私。
+ * 桌機（≥ lg，docs/design/desktop-ui.md §5.4）：版面同中譯英題型頁（頁首與列表放寬、sticky 篩選列、wide 寬度三欄卡片）。
  * 說明要對得上實際功能：
  *   - 本站仿真題的鷹架、提示與對照：bank/components/BankScaffold.tsx（構思圖、大綱、句型開頭、規劃檢核表）、BankHints.tsx、
  *     EssayReveal.tsx（本題評分重點、自評四項、兩篇範文）；
@@ -20,17 +21,22 @@
 import { AI_TASK_POINTS, PHOTO_MAX_COUNT } from '@gsat/shared';
 import { ChevronRight } from 'lucide-react';
 import { Link } from 'react-router';
-import { JumpLink, ListSection } from '../components/ListSection';
-import { InfoSection, ModulePage } from '../components/ModulePage';
+import { SlotProvider, useSlotTarget } from '../components/desktop/Slot';
+import { JumpLink, ListJumpBar, ListSection, revealListSection } from '../components/ListSection';
+import { InfoSection, ModulePage, PageHeader } from '../components/ModulePage';
 import { AiGroupBadge } from '../features/practice/components/AiGroupBadge';
 import { BankPromptList } from '../features/writing/bank/BankListPage';
 import { EssayPromptList } from '../features/writing/EssayListPage';
 import { CUSTOM_ESSAY_PATH } from '../features/writing/lib/format';
 import { ListOrigin, useListOriginState } from '../features/writing/lib/listOrigin';
 import { useFeatures } from '../lib/api';
+import { useIsDesktop } from '../lib/media';
 import { getPage } from '../modules';
 
 const linkCls = 'font-medium text-primary underline underline-offset-2';
+
+/** 桌機的歷屆試題篩選（在整頁共用的 sticky 篩選列裡，只篩「歷屆試題」區）。 */
+const EXAM_FILTER_DESKTOP = { filterLegend: '歷屆試題的考試', onKindChange: () => revealListSection('exam-questions') };
 
 /** 本站仿真題先列幾題（作文卡片比中譯英矮一點，和中譯英一樣先列 6 張）。 */
 const BANK_PREVIEW = 6;
@@ -61,37 +67,84 @@ export default function CompositionPage() {
   const photoOpen = aiOpen && features.ocr;
   // 自訂題目的 AI 批改另有總開關（舊版 Worker 不回這個欄位＝沒開）。
   const customOpen = aiOpen && features.customEssay === true;
-  return (
-    <ModulePage page={getPage('/composition')}>
-      {/* 從這裡點進作答頁，返回連結回到這一頁（不是 /writing/essay 或 /writing/essay/ai）。 */}
-      <ListOrigin value="/composition">
-        <ListSection
-          id="bank-questions"
-          title="本站仿真題"
-          aside={
+  const isDesktop = useIsDesktop();
+  const [slot, slotRef] = useSlotTarget();
+  const page = getPage('/composition');
+  // 桌機的 sticky 篩選列已經有頁內跳轉，標題列右邊的「跳到…」不再 render。
+  const lists = (
+    <>
+      <ListSection
+        id="bank-questions"
+        title="本站仿真題"
+        aside={
+          isDesktop ? undefined : (
             <span className="flex flex-wrap gap-x-3">
               <JumpLink href="#custom-prompt">跳到自訂題目</JumpLink>
               <JumpLink href="#exam-questions">跳到歷屆試題</JumpLink>
             </span>
-          }
-        >
-          <div>
-            <AiGroupBadge />
+          )
+        }
+      >
+        <div>
+          <AiGroupBadge />
+        </div>
+        <p className="text-[0.95rem] text-muted">
+          AI 依學測題型出的看圖、圖表寫作，不是大考中心的試題；寫完可以對照本站的評分重點與兩篇範文（穩健版、頂標版）自我檢核
+          {aiOpen ? `，登入並通過申請後，也能送 AI 批改${photoOpen ? '或拍照上傳手寫稿' : ''}` : ''}。
+        </p>
+        <BankPromptList section="composition" headingLevel={3} limit={BANK_PREVIEW} />
+      </ListSection>
+      <ListSection id="custom-prompt" title="自訂題目">
+        <CustomPromptEntry aiOpen={customOpen} />
+      </ListSection>
+      <ListSection id="exam-questions" title="歷屆試題">
+        <p className="text-[0.95rem] text-muted">歷屆學測、指考與參考試卷的作文題，依考試分開、新到舊排列。</p>
+        {/* 桌機：篩選在整頁共用的篩選列，legend 寫清楚只篩歷屆試題；改了篩選就把這一區捲進畫面。 */}
+        <EssayPromptList headingLevel={3} {...(isDesktop ? EXAM_FILTER_DESKTOP : {})} />
+      </ListSection>
+    </>
+  );
+  const info = <CompositionInfo aiOpen={aiOpen} photoOpen={photoOpen} customOpen={customOpen} />;
+  if (isDesktop) {
+    return (
+      <article>
+        <PageHeader page={page} className="lg:bleed lg:[&>p]:max-w-3xl" />
+        {/* 整塊放寬；沒放寬的說明區塊（InfoSection）維持 944px，但靠左對齊放寬的欄，和列表、頁尾同一條左緣（§16.7）。 */}
+        <div className="bleed grid grid-cols-1 gap-4 [&>section]:max-w-[59rem]">
+          {/* sticky 篩選列和列表在同一個區塊裡（grid 的項目裡的 sticky 只在自己那一格作用）。 */}
+          <div className="space-y-8 [&_footer]:max-w-3xl [&_p]:max-w-3xl">
+            <ListJumpBar
+              links={[
+                { href: '#bank-questions', label: '本站仿真題' },
+                { href: '#custom-prompt', label: '自訂題目' },
+                { href: '#exam-questions', label: '歷屆試題' },
+              ]}
+              slotRef={slotRef}
+              filterLabel="歷屆試題"
+            />
+            <ListOrigin value="/composition">
+              <SlotProvider name="kind-filter" target={slot}>
+                {lists}
+              </SlotProvider>
+            </ListOrigin>
           </div>
-          <p className="text-[0.95rem] text-muted">
-            AI 依學測題型出的看圖、圖表寫作，不是大考中心的試題；寫完可以對照本站的評分重點與兩篇範文（穩健版、頂標版）自我檢核
-            {aiOpen ? `，登入並通過申請後，也能送 AI 批改${photoOpen ? '或拍照上傳手寫稿' : ''}` : ''}。
-          </p>
-          <BankPromptList section="composition" headingLevel={3} limit={BANK_PREVIEW} />
-        </ListSection>
-        <ListSection id="custom-prompt" title="自訂題目">
-          <CustomPromptEntry aiOpen={customOpen} />
-        </ListSection>
-        <ListSection id="exam-questions" title="歷屆試題">
-          <p className="text-[0.95rem] text-muted">歷屆學測、指考與參考試卷的作文題，依考試分開、新到舊排列。</p>
-          <EssayPromptList headingLevel={3} />
-        </ListSection>
-      </ListOrigin>
+          {info}
+        </div>
+      </article>
+    );
+  }
+  return (
+    <ModulePage page={page}>
+      {/* 從這裡點進作答頁，返回連結回到這一頁（不是 /writing/essay 或 /writing/essay/ai）。 */}
+      <ListOrigin value="/composition">{lists}</ListOrigin>
+      {info}
+    </ModulePage>
+  );
+}
+
+function CompositionInfo({ aiOpen, photoOpen, customOpen }: { aiOpen: boolean; photoOpen: boolean; customOpen: boolean }) {
+  return (
+    <>
       <InfoSection title="作答與批改方式">
         <p>上面的題目都可以線上作答：</p>
         <ul>
@@ -156,6 +209,6 @@ export default function CompositionPage() {
           。
         </p>
       </InfoSection>
-    </ModulePage>
+    </>
   );
 }

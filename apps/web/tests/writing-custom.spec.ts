@@ -480,10 +480,15 @@ test('入口：/writing/essay 的第三格連到自訂頁，返回連結回到�
   await page.goto('/writing');
   const own = page.getByRole('region', { name: '自己的題目' });
   await expect(own.getByRole('link', { name: /^自訂題目/ })).toHaveAttribute('href', PATH);
-  // 入口卡不能超出自己的 section、蓋到下面的「兩種批改方式」（曾因 h-full 撐到整個 section 高）。
+  // 入口卡不能超出自己的 section、蓋到「兩種批改方式」（曾因 h-full 撐到整個 section 高）。手機上「兩種批改方式」在下面；
+  // 桌機（docs/design/desktop-ui.md §5.5）在右欄，兩塊左右並排：檢查的是兩塊不重疊。
   const cardBox = await own.getByRole('link', { name: /^自訂題目/ }).boundingBox();
   const modesBox = await page.getByRole('region', { name: '兩種批改方式' }).boundingBox();
-  expect(cardBox && modesBox && cardBox.y + cardBox.height <= modesBox.y).toBe(true);
+  if (!cardBox || !modesBox) throw new Error('量不到位置');
+  const below = cardBox.y + cardBox.height <= modesBox.y;
+  const beside = cardBox.x + cardBox.width <= modesBox.x;
+  expect(below || beside).toBe(true);
+  if (testInfo.project.name === 'mobile') expect(below).toBe(true);
   await page.goto('/writing/essay');
   const tabs = page.getByRole('navigation', { name: '題目來源' });
   await expect(tabs.getByRole('link')).toHaveText(['歷屆試題', '本站仿真', '自訂題目']);

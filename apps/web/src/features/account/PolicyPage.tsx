@@ -35,7 +35,8 @@ function VersionLine({ doc }: { doc: PolicyDoc }) {
 
 function PolicyPage({ doc, children, related }: { doc: PolicyDoc; children?: ReactNode; related: { to: string; label: string } }) {
   return (
-    <article className="grid grid-cols-1 gap-4">
+    // 桌機（窄版寬度，docs/design/desktop-ui.md §5.11）：段落與條列限 65 字元寬；全文各段標題有 id（s-1、s-2…），可以直接連到某一條。
+    <article className="grid grid-cols-1 gap-4 lg:[&_li]:max-w-prose lg:[&_p]:max-w-prose">
       <title>{`${doc.title}｜${APP_NAME}`}</title>
       <header>
         <h1 className={pageTitleCls}>{doc.title}</h1>
@@ -46,7 +47,7 @@ function PolicyPage({ doc, children, related }: { doc: PolicyDoc; children?: Rea
       <Summary doc={doc} title="重點摘要" />
       <section aria-label="全文" className={cardCls}>
         <h2 className={sectionTitleCls}>全文</h2>
-        <PolicyFullText doc={doc} className="mt-3" />
+        <PolicyFullText doc={doc} className="mt-3" anchors />
       </section>
       {children}
       <p className="text-sm text-muted">

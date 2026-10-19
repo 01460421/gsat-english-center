@@ -118,6 +118,10 @@ describe('TranslationAttemptPage', () => {
       },
     });
     expect(fetch.calls.find((c) => c.path === '/api/ai/translation-grade')?.body).toEqual({ submission_id: 'new-1' });
+    // 草稿保留文字、清掉提交 id，並立刻記下送出時間（首頁的「繼續學習」靠它知道這份已經交了）。
+    const saved = JSON.parse(window.localStorage.getItem(draftKey('translation', 'gsat-115.s7g1@1')) ?? 'null') as Record<string, unknown>;
+    expect(saved).toMatchObject({ texts: [expect.stringContaining('More teachers use English.'), 'They group students.'], submissionId: null, aiSubmittedAt: expect.any(Number) });
+    expect(saved['updatedAt']).toBe(saved['aiSubmittedAt']);
   });
 
   it('額度不足：顯示中文原因與重置時間；重送時沿用同一份草稿（PUT）', async () => {
@@ -344,6 +348,9 @@ describe('EssayAttemptPage', () => {
     expect(fetch.calls.find((c) => c.method === 'PUT' && c.path === '/api/submissions/e-1')?.body).toEqual({
       self_assess: { kind: 'essay', scores: { content: 4, organization: 3, grammar: 3, vocabulary: 2 } },
     });
+    const saved = JSON.parse(window.localStorage.getItem(draftKey('essay', 'gsat-115.s8g1@1')) ?? 'null') as Record<string, unknown>;
+    expect(saved).toMatchObject({ submissionId: null, aiSubmittedAt: expect.any(Number) });
+    expect(saved['text']).not.toBe('');
   });
 
   it('分段提醒和後端計分一致：寫 3 段只提醒段數、不說會扣分；只有 1 段才說會扣 1 分', async () => {

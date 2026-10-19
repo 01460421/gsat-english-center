@@ -22,7 +22,7 @@ import { PromptNotFound, SourceNote } from './components/SourceNote';
 import { AiNotice, BackLink, ConfirmButton, DataError, ErrorMessage, Loading, Notice, card, englishInputProps, primaryButton, secondaryButton, textInput } from './components/ui';
 import { findEssayPrompt, groupIdOf, loadEssayIndex, type EssayPrompt } from './data';
 import { useAiAccess } from './lib/access';
-import { clearDraft, completeEssayScores, draftKey, isEssayDraft, loadDraft, type EssayDraft } from './lib/drafts';
+import { clearDraft, completeEssayScores, draftKey, isEssayDraft, loadDraft, saveDraft, type EssayDraft } from './lib/drafts';
 import { isQuotaError, type ErrorView } from './lib/errors';
 import { examRefLabel } from './lib/format';
 import { useAutosave, useQuota, useRevealOnOpen, useStaticData } from './lib/hooks';
@@ -76,7 +76,22 @@ function EssayAttempt({ prompt }: { prompt: EssayPrompt }) {
   const groupId = groupIdOf(prompt);
   const key = draftKey('essay', groupId);
   const [draft, setDraft] = useState<EssayDraft>(() => loadDraft(key, isEssayDraft) ?? emptyDraft());
-  const { ok: saved } = useAutosave(key, draft);
+  const { ok: saved, discard } = useAutosave(key, draft);
+  const draftRef = useRef(draft);
+  draftRef.current = draft;
+  /**
+   * 送出 AI 批改（打字或拍照辨識）之後：草稿保留文字；記下送出時間（首頁的「繼續學習」不再把它當成寫到一半，
+   * 之後又改過才算）。打字送出另外清掉 submissionId（下次要建立新的提交；拍照模式本來就不用它）。
+   * 立刻寫進這台裝置：接著就換頁，等 600ms 的自動儲存來不及。
+   */
+  const markSubmitted = (patch: Partial<EssayDraft> = {}) => {
+    const now = Date.now();
+    const next = { ...draftRef.current, ...patch, aiSubmittedAt: now, updatedAt: now };
+    draftRef.current = next;
+    discard();
+    saveDraft(key, next);
+    setDraft(next);
+  };
   const access = useAiAccess();
   const errorView = useErrorView();
   const { quota, refresh: refreshQuota } = useQuota(access.state === 'ready');
@@ -103,7 +118,7 @@ function EssayAttempt({ prompt }: { prompt: EssayPrompt }) {
   const fail = async (err: unknown) => {
     if (err instanceof AlreadySubmittedError) {
       // 上一次其實已經送出（回應遺失）：直接看那一份的進度，不再送一次、不再扣點。
-      setDraft((d) => ({ ...d, submissionId: null }));
+      markSubmitted({ submissionId: null });
       setPhotoSubmissionId(null);
       navigate(`/writing/submissions/${encodeURIComponent(err.submission.id)}`);
       return;
@@ -122,7 +137,7 @@ function EssayAttempt({ prompt }: { prompt: EssayPrompt }) {
       setDraft((d) => ({ ...d, submissionId: submission.id }));
       await saveSelfAssessment(submission.id, selfAssess).catch(() => undefined);
       await startTask('essay-grade', submission.id);
-      setDraft((d) => ({ ...d, submissionId: null }));
+      markSubmitted({ submissionId: null });
       navigate(`/writing/submissions/${encodeURIComponent(submission.id)}`);
     } catch (err) {
       await fail(err);
@@ -145,6 +160,7 @@ function EssayAttempt({ prompt }: { prompt: EssayPrompt }) {
       }
       setBusy('送出辨識…');
       await startTask('essay-ocr', submission.id);
+      markSubmitted();
       navigate(`/writing/submissions/${encodeURIComponent(submission.id)}`);
     } catch (err) {
       await fail(err);

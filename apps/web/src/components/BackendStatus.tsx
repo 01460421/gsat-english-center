@@ -13,7 +13,11 @@ const TIMEOUT_MS = 8000;
 
 type State = { status: 'checking' } | { status: 'online'; health: HealthResponse } | { status: 'offline' };
 
-export function BackendStatus() {
+/**
+ * variant：'pill' 是首頁頁首的外框膠囊；'inline' 是桌機首頁儀表板右欄底部的一行小字（docs/design/desktop-ui.md §5.1）。
+ * 兩種的文字與「重新檢查」按鈕都相同（tests/smoke.spec.ts 找的是文字）。
+ */
+export function BackendStatus({ variant = 'pill' }: { variant?: 'pill' | 'inline' }) {
   const [state, setState] = useState<State>({ status: 'checking' });
   const [attempt, setAttempt] = useState(0);
 
@@ -47,7 +51,11 @@ export function BackendStatus() {
     <div
       role="status"
       aria-live="polite"
-      className="inline-flex flex-wrap items-center gap-x-2 gap-y-1 rounded-full border border-line bg-surface px-3 py-1 text-sm"
+      className={
+        variant === 'inline'
+          ? 'flex flex-wrap items-center gap-x-2 gap-y-1 text-sm'
+          : 'inline-flex flex-wrap items-center gap-x-2 gap-y-1 rounded-full border border-line bg-surface px-3 py-1 text-sm'
+      }
     >
       <span
         aria-hidden="true"

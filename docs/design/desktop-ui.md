@@ -6,8 +6,9 @@
 > 基準：分支 desktop-ui＝origin/main **40c46d2**，資料版本 a746569c8866。以下檔名與行號都以 40c46d2 為準。
 > 標記：「（實測）」＝在 40c46d2 的建置產物或 Chromium 141 上量到的數字；「（設計值）」＝實作後用截圖與實機校正；「（估計）」＝審查時從截圖估的數字，實作時要量。
 > 盤點與截圖工具：目前在這次工作階段的 scratchpad；PR A 會把截圖工具搬進 repo，並附從任一 commit 重建基準的腳本（§11.1）。
+> 實作備註（開工後的實測、和本文不同的做法、目前的基準 commit 與指令）見 [§16](#16-實作備註)；兩者不一致時以 §16 為準。
 
-**目錄**：[0. 決策摘要](#0-決策摘要)｜[1. 範圍與限制](#1-範圍與限制)｜[2. 原則與斷點](#2-原則與斷點)｜[3. 殼層](#3-殼層)｜[4. 共用元件與工具](#4-共用元件與工具)｜[5. 首頁、列表與其他頁](#5-首頁列表與其他頁)｜[6. 寫作工作區](#6-寫作工作區)｜[7. 作答頁](#7-作答頁)｜[8. 鍵盤快捷鍵](#8-鍵盤快捷鍵)｜[9. 不做與延後](#9-不做與延後)｜[10. 實作計畫](#10-實作計畫)｜[11. 測試與驗證](#11-測試與驗證)｜[12. 上線步驟](#12-上線步驟)｜[13. 風險](#13-風險)｜[14. 待站主決定](#14-待站主決定)｜[15. 審查回應](#15-審查回應)
+**目錄**：[0. 決策摘要](#0-決策摘要)｜[1. 範圍與限制](#1-範圍與限制)｜[2. 原則與斷點](#2-原則與斷點)｜[3. 殼層](#3-殼層)｜[4. 共用元件與工具](#4-共用元件與工具)｜[5. 首頁、列表與其他頁](#5-首頁列表與其他頁)｜[6. 寫作工作區](#6-寫作工作區)｜[7. 作答頁](#7-作答頁)｜[8. 鍵盤快捷鍵](#8-鍵盤快捷鍵)｜[9. 不做與延後](#9-不做與延後)｜[10. 實作計畫](#10-實作計畫)｜[11. 測試與驗證](#11-測試與驗證)｜[12. 上線步驟](#12-上線步驟)｜[13. 風險](#13-風險)｜[14. 待站主決定](#14-待站主決定)｜[15. 審查回應](#15-審查回應)｜[16. 實作備註](#16-實作備註)
 
 ---
 
@@ -15,7 +16,7 @@
 
 1. **手機與平板一個像素都不動，用截圖比對證明。** 新樣式一律帶 `lg:` 起的前綴（hover 也寫成 `lg:hover:`）；行為上的差異用 `useMediaQuery`／`useMainTier()`，不符合時一律走現在的程式路徑。驗收標準是 320、375、768 三種寬度的截圖和基準 **0 個像素不同**；基準在開工前補截「這次要重構的元件」的展開與互動狀態（§11.1），截圖工具搬進 repo、可以從 40c46d2 重建基準。
 2. **高度以視窗 600 px 為下限。** 看的是視窗內高，不是螢幕解析度：螢幕高 − 工作列 − 瀏覽器介面。1366×768 筆電約 607–635、1920×1080 開 150% 約 559–587（§1.1）。所有「第一個畫面看得到」的設計值用 **1280×600** 與 **1366×640** 計算，截圖與 e2e 都在這兩種尺寸量。
-3. **分欄看 main 的實際寬度，不看視窗寬度。** lg（1024）只分手機與桌機。寫作分欄、首頁儀表板、列表右欄在 main ≥ 60rem（「ws 寬度」，內容約 880–896 px）才啟用，CSS 用 container query `@ws/main`、JS 用 `useMainTier()`，兩邊量同一個寬度。1366 放大 110%、Edge 側邊欄開著、收合側邊欄的 1024 都能分欄。作答頁的選文並排一律從 lg 開始（綜合測驗與閱讀、文意選填對齊）。工作區路由在寬度不夠、使用者也沒自己設定過時，自動收合側邊欄。
+3. **分欄看 main 的實際寬度，不看視窗寬度。** lg（1024）只分手機與桌機。寫作分欄、首頁儀表板、列表右欄在 main ≥ 60rem（「ws 寬度」，內容約 880–896 px；**實作改成 58.5rem／936 px**，有傳統捲軸的 1024 收合也到得了，見 §16.7）才啟用，CSS 用 container query `@ws/main`、JS 用 `useMainTier()`，兩邊量同一個寬度。1366 放大 110%、Edge 側邊欄開著、收合側邊欄的 1024 都能分欄。作答頁的選文並排一律從 lg 開始（綜合測驗與閱讀、文意選填對齊）。工作區路由在寬度不夠、使用者也沒自己設定過時，自動收合側邊欄。
 4. **內容預設維持現在的寬度（`max-w-5xl`）**；只有改版的區塊用 `bleed` 工具類放寬（首頁與列表上限 82rem，作答與寫作的工作面不設上限）。沒改到的區塊與之後新增的區塊不會默默變超寬。
 5. **殼層**：側邊欄改三段（品牌｜可捲動的導覽｜底部一列：帳號或登入、主題、快捷鍵、設定、關於），改密後已登入在 1366×640 不用捲動，放不下時有淡出遮罩。收合成 4rem 圖示欄時，滑鼠移入或鍵盤聚焦都看得到文字提示；觸控為主的裝置不提供收合。頁尾貼底。**不加全站頂端列**。≥ lg 時 `html` 設 `scroll-padding-top`（工具列＋篩選列高度），Tab 的焦點不會停在 sticky 列底下（Chromium 實測）。
 6. **新的共用元件與工具**（只在 ≥ lg 生效）：`lib/media.ts`（`useMediaQuery`、`useMainTier`、跨斷點的焦點保存）、`lib/desktopLayout.ts`、`lib/desktopPrefs.ts`、`lib/hotkeys.ts`、`components/desktop/` 的 `Workspace`／`Pane`、`PaneTabs`、`StickyBar`、`DataTable`、`ShortcutHelp`（原生 `<dialog>`）、`Kbd`、捲動工具。不加任何 npm 套件。
@@ -82,7 +83,7 @@
 
 - **lg（視窗 64rem＝1024）**：分手機與桌機。殼層、側邊欄、作答工具列的題號列、快捷鍵、資料表、作答頁的選文並排都從 lg 開始。
 - **main 的寬度**：`main` 設 `lg:@container/main`，`index.css` 的 `@theme` 加兩個 container 尺寸：
-  - **ws**（`--container-ws: 60rem`，main ≥ 960 px）：寫作分欄、首頁儀表板、列表右欄、單字庫的篩選欄、作答頁較寬的選文欄比例。
+  - **ws**（`--container-ws: 60rem`，main ≥ 960 px；**實作是 58.5rem／936 px**，§16.7）：寫作分欄、首頁儀表板、列表右欄、單字庫的篩選欄、作答頁較寬的選文欄比例。
   - **wide**（`--container-wide: 80rem`，main ≥ 1280 px）：三欄網格、第三欄（P2）。
   - JS 端用 `useMainTier()`（§4.1）取得同樣的判斷；CSS 與 JS 量的是同一個元素的內容寬，不會出現 CSS 已經分欄、JS 卻以為沒分的情況。
 - xl／2xl 這兩個**視窗**斷點不再拿來決定版面（只剩少數純裝飾的地方）。
@@ -99,12 +100,13 @@
 | 1536 | 1280／1472 | 944 | 1200／1312 | 1216／1408 | 是（wide 也成立） |
 | 1920 | 1664／1856 | 944 | 1312 | 1600／1792 | 是 |
 
+- **實作的門檻不同（§16.7）**：上表的 main 沒扣捲軸，但 ≥ lg 一律保留捲軸的位置，有傳統捲軸時 1024 收合的 main 只有 943–945，到不了 960；所以 ws 改成 58.5rem（936），側邊欄展開時的門檻是版面寬（扣掉捲軸）1192。下面兩點是原本以 960 計算的說明。
 - 1216 這一列是側邊欄展開時的 ws 門檻。1366 放大 110%（1242）、1280 開著 Edge 側邊欄（約 1232）都在門檻附近：後者扣掉捲軸只剩 959，所以工作區路由靠自動收合（§3.2）保證分欄。
 - 以前的設計在 1200 寬、側邊欄收合（內容 1,056）時仍是單欄，1280 寬、側邊欄展開（內容 960）卻是雙欄；改成看 main 的寬度之後，這兩種情況都分欄。
 
 ### 2.3 內容寬度：預設維持原寬，改版的區塊才放寬
 
-`desktopWidthMode(pathname)` 回傳下列之一，Layout 把對應的 class 加在內容容器上：
+`desktopWidthMode(pathname)` 回傳下列之一，Layout 把對應的 class 加在內容容器上（實作另有整頁放寬的列表頁用的 `list`，頁尾跟著放寬，見 §16.7）：
 
 | 模式 | ≥ lg 的 class（基底仍是 `max-w-5xl px-4`） | 路由 |
 |---|---|---|
@@ -183,7 +185,7 @@ const sidebar = useSidebarState(location.pathname);         // 'expanded' | 'col
 - **文字提示**：滑鼠移入或鍵盤聚焦（`:focus-visible`）任一項時，在側邊欄右側顯示一個提示泡泡，內容就是該項的文字。整個側邊欄共用一個 `aria-hidden` 的泡泡元素（`position: fixed`，位置用該項的 `getBoundingClientRect()` 算；清單是捲動容器，放在項目裡的 absolute 提示會被裁掉）。不用 `title`：`title` 在鍵盤聚焦時不會出現，觸控也看不到。
 - **只在 `(pointer: fine)` 時提供收合**：觸控為主的裝置（iPad 橫向是 1024，也會進到桌機版）沒有 hover，收合後只剩看不懂的圖示，所以不顯示收合按鈕、`[` 不作用、已存的「收合」也不套用。
 - **切換與記憶**：收合按鈕或 `[` 鍵，存在 localStorage（§4.3）。
-- **工作區路由的自動收合**（§14 第 2 點的新預設）：在工作區路由上，如果使用者從沒自己設定過、`(pointer: fine)`，而且側邊欄展開時 main 會小於 60rem（視窗約 < 1216 px），就先收合（不寫進 localStorage）；離開工作區路由後恢復展開。使用者自己按過收合或展開之後，一律照他的設定。結果：1024–1215 寬的作答與寫作頁內容從 704 變 896 px，寫作可以分欄（§6）。判斷在 Layout render 時同步算出（`document.documentElement.clientWidth`），換頁時不會先展開再收起。
+- **工作區路由的自動收合**（§14 第 2 點的新預設）：在工作區路由上，如果使用者從沒自己設定過、`(pointer: fine)`，而且側邊欄展開時 main 會小於 60rem（視窗約 < 1216 px；實作是 ws＝58.5rem、版面寬 < 1192，§16.7），就先收合（不寫進 localStorage）；離開工作區路由後恢復展開。使用者自己按過收合或展開之後，一律照他的設定。結果：1024–1215 寬的作答與寫作頁內容從 704 變 896 px，寫作可以分欄（§6）。判斷在 Layout render 時同步算出（`document.documentElement.clientWidth`），換頁時不會先展開再收起。
 
 ### 3.3 不加全站頂端列
 
@@ -217,7 +219,7 @@ const sidebar = useSidebarState(location.pathname);         // 'expanded' | 'col
 
 ```ts
 export const MQ = { lg: '(min-width: 64rem)', pointerFine: '(pointer: fine)' } as const;
-export const MAIN_TIER_PX = { ws: 960, wide: 1280 } as const;     // ＝ CSS 的 --container-ws／--container-wide
+export const MAIN_TIER_PX = { ws: 960, wide: 1280 } as const;     // ＝ CSS 的 --container-ws／--container-wide（實作 ws 是 936，§16.7）
 export function useMediaQuery(query: string): boolean;            // useSyncExternalStore＋matchMedia 的 change 事件；getServerSnapshot 回傳 false
 export const useIsDesktop = () => useMediaQuery(MQ.lg);
 export function MainWidthProvider(props: { mainRef: RefObject<HTMLElement | null>; sidebar: 'expanded' | 'collapsed'; children: ReactNode }): ReactNode;
@@ -276,7 +278,7 @@ export function useActiveHotkeys(): readonly HotkeyDef[];   // ShortcutHelp 用
 - **一律略過**：`e.repeat`（按住不放的自動重複，所有快捷鍵都一樣）；`e.defaultPrevented`；有 Alt；`isModalOpen()`（對話框自己處理按鍵；模擬考的 `SubmitDialog` 是原生 `<dialog>`，也偵測得到）；單鍵（沒有 mod）時按著 Ctrl／⌘；單鍵且焦點在文字輸入欄位；單鍵且設定關掉單鍵快捷鍵；單鍵且在暫停中（§4.1）；單鍵且 `e.key === 'Process'` 或 `keyCode === 229`（輸入法正在處理這個鍵）。
 - 帶 mod 的組合在文字輸入欄位裡（`allowInTextEntry`）：`e.isComposing` 時略過——組字中按 Ctrl＋Enter 是在選字，不是送出。**這是唯一靠輸入法狀態做的保護**；單鍵快捷鍵不依賴輸入法（§8 輸入法）。
 - **Enter、空白鍵、方向鍵不註冊成任何快捷鍵**（包括送出確認列）：焦點在按鈕或 radio 上時它們有原生作用（ArrowDown 會把 radio 的答案從 (A) 改成 (B)（實測）；practice e2e 會對提示按鈕按 Enter）。
-- **按鍵比對**（`hotkeyChar`）：`e.key` 是單一個 ASCII 字母或數字時用它（不分大小寫；Dvorak 等配置照字面）；不是的話（例如某些輸入法送出「ㄅ」這類非 ASCII 字）改用 `e.code`（`KeyA`–`KeyZ`、`Digit1`–`Digit9`、`Numpad1`–`Numpad9`）；`?` 用 `e.key === '?'`。
+- **按鍵比對**（`hotkeyChar`）：`e.key` 是單一個 ASCII 字母或數字時用它（不分大小寫；Dvorak 等配置照字面）；不是的話（例如某些輸入法送出「ㄅ」這類非 ASCII 字）改用 `e.code`（`KeyA`–`KeyZ`、`Digit1`–`Digit9`、`Numpad1`–`Numpad9`）；`?` 用 `e.key === '?'`。（實作把 `e.code` 退路限縮到「不是拉丁字母的字」，標點只看 `e.key`，見 §16.7。）
 - `enabled` 的條件一定包含 `useIsDesktop()`（R7）。
 - 舊的監聽（`StudyView.tsx:301–320`、`QuizSession.tsx:520–532` 的 document keydown）不搬進註冊表（行為不變），但在 ≥ lg 時加上 `isModalOpen()` 的檢查：在 /words 打開 `ShortcutHelp` 之後按 1–4 或 Enter，背後的單字卡不會被評分或作答。手機沒有 `ShortcutHelp`，檢查也包在 `useIsDesktop()` 裡（R7）。
 
@@ -303,7 +305,7 @@ export function useActiveHotkeys(): readonly HotkeyDef[];   // ShortcutHelp 用
 - **堆疊時**：Pane 跟著頁面排在一般流裡，不設高度、不自己捲、不加 region 的 `tabIndex`；順序和手機相同（題目在上、作答在下）。
 - `usePaneA11y(label)`：分欄時回傳 `{ role: 'region', 'aria-label', tabIndex: 0, 'data-pane-scroll': '' }`，堆疊與 < lg 回傳空物件。作答頁的選文欄（§7.2）也用它。
 
-| layout | ws（main ≥ 60rem） | wide（main ≥ 80rem） |
+| layout | ws（main ≥ 60rem；實作 58.5rem，§16.7） | wide（main ≥ 80rem） |
 |---|---|---|
 | `prompt-editor`（作文） | `grid-cols-2 gap-6`（1:1）；作答框 `max-w-[72ch]`、題目文字 `max-w-prose` | 有 rail 時 `[minmax(0,1fr)_minmax(0,1fr)_20rem]`（P2） |
 | `sentences-rail`（中譯英） | `[minmax(0,1fr)_22rem] gap-6` | 同左 |
@@ -703,7 +705,7 @@ interface EditorStatusBarProps {
 
 ### 7.2 分割作答
 
-| 題組（`groupLayout`） | 現在（lg） | lg（main < 60rem） | ws（main ≥ 60rem） | wide（main ≥ 80rem） |
+| 題組（`groupLayout`） | 現在（lg） | lg（main < ws） | ws（main ≥ 60rem；實作 58.5rem，§16.7） | wide（main ≥ 80rem） |
 |---|---|---|---|---|
 | standard（閱讀、混合、簡答） | `lg:grid-cols-2` | 不變 | `[minmax(0,1.1fr)_minmax(0,1fr)]`：ws 門檻約 457／415、1280 約 490／446、1366 約 535／487、1440 約 574／522 px（設計值） | `[minmax(0,42rem)_minmax(0,40rem)] justify-center` |
 | cloze（綜合測驗） | 選文在上、題目卡在下 | **左右分割**，和閱讀同一個門檻（lg）：`grid-cols-2` | 同 standard | 同 standard |
@@ -829,7 +831,7 @@ P1：題號列的方格顯示對錯並可跳轉；解析卡（`ExplanationCard`�
 | 檔案 | 改動 | 優先 |
 |---|---|---|
 | `apps/web/vite.config.ts`（`test.environmentOptions`）、`src/test/setup.ts`、`src/test/viewport.ts`（新） | 單元測試的預設視窗 375×667、每個測試後設回（R8）；`setDesktopViewport(width = 1366, height = 640)` helper | P1 |
-| `src/index.css` | `@theme` 加 `--container-ws: 60rem`、`--container-wide: 80rem`；`@utility bleed`（§2.3）；`@media (width >= 64rem)` 裡的 `html` scroll-padding-top、`scrollbar-gutter: stable`、`html:has(dialog:modal) { overflow: hidden }`（§3.4） | P1 |
+| `src/index.css` | `@theme` 加 `--container-ws: 60rem`（實作 58.5rem，§16.7）、`--container-wide: 80rem`；`@utility bleed`（§2.3）；`@media (width >= 64rem)` 裡的 `html` scroll-padding-top、`scrollbar-gutter: stable`、`html:has(dialog:modal) { overflow: hidden }`（§3.4） | P1 |
 | `src/lib/media.ts`（新）＋測試 | §4.1；測試：`useMainTier` 的門檻、第一次 render 的同步估算、跨斷點的焦點保存與還原（含 selection）、找不回焦點時呼叫 `suspendSingleKeys` | P1 |
 | `src/lib/desktopLayout.ts`（新）＋測試 | §4.2；測試：`PAGES` 的每個路徑與 `App.tsx` 裡每個 `path="…"`（讀原始碼比對）都在對照表或確定落到 default、`/writing/translation/ai` 是 default 而 `/writing/translation/ai/1d423d` 是工作區、`isWorkspaceRoute`、`sidebarActivePath` | P1 |
 | `src/lib/desktopPrefs.ts`（新）＋測試 | §4.3；localStorage 丟例外時用預設值；側邊欄沒有設定時是「自動」 | P1 |
@@ -950,7 +952,7 @@ P1：題號列的方格顯示對錯並可跳轉；解析卡（`ExplanationCard`�
 | `ProgressStats`、`SubmissionHistory`、`ExamList`、`MockPaperList`、`PracticeHome` | 有紀錄與沒有紀錄各一張；寫作紀錄「載入更多」之後 | A |
 | 任何會加 `lg:` class 的互動元件 | 鍵盤聚焦（`focus-visible`）各一張：題目卡的 radio、難度分頁、篩選膠囊、送出按鈕 | 各 PR |
 
-每個 PR 結束時（必做；`OUT=${TMPDIR:-/tmp}/gsat-visual`，`$OUT/baseline/` 與 `$OUT/baseline-40c46d2.dist/` 由 `visual-baseline.sh 40c46d2` 產生）：
+每個 PR 結束時（必做；`OUT=${TMPDIR:-/tmp}/gsat-visual`，`$OUT/baseline/` 與 `$OUT/baseline-40c46d2.dist/` 由 `visual-baseline.sh 40c46d2` 產生；實作後的資料夾名稱與目前的基準 commit 見 §16.1）：
 
 ```bash
 apps/web/scripts/visual-run.sh $OUT/after --data-from $OUT/baseline-40c46d2.dist --viewports 320x640,375x812,768x1024
@@ -1130,3 +1132,247 @@ node apps/web/tests/visual/compare.mjs $OUT/baseline $OUT/after-desktop --viewpo
 | test-3 | 採用 | 截圖工具搬進 `apps/web/tests/visual/`，另附用 `git worktree` 從指定 commit 重建基準的腳本；PNG 不進 git，PR 附比對結果、manifest 與重跑指令（§11.1）。 |
 | test-4 | 採用 | desktop、mobile 加 `testIgnore`；手機守門改成獨立的 `mobile-guard.spec.ts`；新增 `desktop-ui`（1366×640）與 `desktop-lg`（1024×600），取消 `desktop-wide`（§11.3）。 |
 | perf-1 | 採用 | 目前題改用外部 store 與 `useIsCurrent(label)`，只重繪兩張卡；§11.6 量連按 N 十次的長任務（§7.3）。 |
+
+## 16. 實作備註
+
+開工後的實測與實際做法；和前面各節不一致時以這裡為準。
+
+### 16.1 截圖工具與目前的基準（PR A 開工前，2026-10-19）
+
+**截圖工具已搬進 repo**（§11.1）：`apps/web/tests/visual/{visual.config.ts, capture.shots.ts, compare.mjs, manifest.mjs, README.md}`、`apps/web/scripts/{visual-baseline.sh, visual-run.sh}`。用法、視窗、情境與確定性的處理都寫在 `apps/web/tests/visual/README.md`；`npm run test:e2e` 與 `npm test` 不會跑到它，`npm run typecheck` 會檢查它。
+
+**目前的基準是 `a479469`**（origin/main，資料版本 a746569c8866，和 40c46d2 相同）。40c46d2 的基準已經過時：main 上的 #31（「自訂題目」入口卡不再蓋到「兩種批改方式」）改了 /writing 在所有寬度的畫面。用新工具比對兩份基準的 7 種舊視窗（640 組同名的圖）：只有 `12-writing__anon`、`12-writing__student` 共 14 張不同，其餘 626 張逐像素相同。
+
+- 建置來源：工作目錄（HEAD c602ad0＝a479469＋本文件；`apps/web/src`、`packages/`、`data/` 與 a479469 完全相同，只多了還沒 commit 的截圖工具）。另外用 `visual-baseline.sh a479469` 從 commit 重建（暫存 worktree），抽 375x812、1366x640 的 6 張（含 /writing）和這份基準逐像素相同；`--npm-ci` 的路徑也實測過一次（npm ci 約 24 秒）。
+- 這次工作階段的檔案（scratchpad，換工作階段就要照 README 用 `visual-baseline.sh a479469` 重建）：
+  - `H=/tmp/claude-0/-home-user/2d144e17-026c-5789-bf1d-ea76d9e0f78e/scratchpad/desktop-ui`
+  - `$H/dist-baseline-a479469/`：建置產物（含 `data/` 與 `.visual-source.json`），保留給 `--data-from` 與補截。
+  - `$H/baseline-a479469/`：12 種視窗共 1,215 張（窄視窗各 102、桌機各 101）＋`manifest.json`；0 筆 console error、0 張不穩定。全部截一次約 15 分鐘（3 個 worker、4 核心）。
+- **確定性**（基準截完之後）：
+  - 手機與平板：**重新建置**工作目錄＋`--data-from` 基準產物，截 320x640、375x812、768x1024 共 306 張 → 和基準逐像素相同（`compare.mjs` exit 0）。第一次驗證抓到 `01-home__records` 的「單字錯題本」數字不固定（詞彙題交卷後要先下載單字索引才非同步收進錯題本，流程太早離開頁面）；已改成等「答錯的正解字已收進…」出現再離開，補截基準後重驗 0 差異。
+  - 桌機：同一份建置產物再截九種桌機視窗 909 張 → 和基準逐像素相同（`compare.mjs --viewports desktop` exit 0）。
+  - 新工具在舊的 40c46d2 建置產物上截 375x812：92 張舊情境和舊基準逐像素相同（搬進 repo 沒有改變截圖結果）。
+
+**指令**（在 repo 根目錄執行；之後每個 PR 照抄）：
+
+```bash
+H=/tmp/claude-0/-home-user/2d144e17-026c-5789-bf1d-ea76d9e0f78e/scratchpad/desktop-ui
+
+# 手機與平板 0 差異（必做；exit 0 才算通過）
+apps/web/scripts/visual-run.sh $H/after --data-from $H/dist-baseline-a479469 --viewports 320x640,375x812,768x1024
+node apps/web/tests/visual/compare.mjs $H/baseline-a479469 $H/after --diff-dir $H/after-diff
+git status --short
+
+# 桌機前後對照（九種；只要 §1.1 的驗收視窗時把 desktop 換成 1024x600,1280x600,1366x640,1440x800,1920x960）
+apps/web/scripts/visual-run.sh $H/after-desktop --data-from $H/dist-baseline-a479469 --viewports desktop
+node apps/web/tests/visual/compare.mjs $H/baseline-a479469 $H/after-desktop --viewports desktop --diff-dir $H/after-desktop-diff
+
+# 換了工作階段（scratchpad 不在了）：從 commit 重建基準，輸出到 ${TMPDIR:-/tmp}/gsat-visual/baseline-a479469{,.dist}/
+apps/web/scripts/visual-baseline.sh a479469
+```
+
+- 剛截過 `$H/after` 時，桌機那一步可以改用 `--dist $H/after.dist`（已經換好 `data/`），省掉再建置一次。
+- 同時有別的截圖或 e2e 在跑時加 `--port <別的連接埠>`、`--workers 2`。
+
+### 16.2 和前面各節不同的做法
+
+1. **基準 commit**：§0 第 1 點、§11.1 寫的 40c46d2 改成 a479469（16.1）。§14 第 1 點（/writing 自訂題目卡片重疊，手機要不要一起修）已由 main 的 #31 在所有寬度修好，不再是「改手機像素」的例外。
+2. **資料夾名稱**：`visual-baseline.sh <commit>` 輸出 `$OUT/baseline-<commit 前 7 碼>/` 與 `$OUT/baseline-<commit 前 7 碼>.dist/`（§11.1 寫的是 `$OUT/baseline/`）：名稱帶 commit，換基準時不會蓋掉舊的。
+3. **`visual-baseline.sh` 不一定跑 `npm ci`**：那個 commit 的 `package-lock.json` 和目前工作目錄相同時，借用目前的 `node_modules`（逐項連結；工作區套件 `@gsat/*` 照原本的相對連結指回檢出的原始碼），不同時才 `npm ci`；`--npm-ci` 強制。建置產物已經存在時直接沿用（`--rebuild` 重建），補截新情境不必再檢出。worktree 建完就移除，失敗或中斷也會移除。
+4. **`visual-run.sh`**：輸出資料夾可以省略（預設 `${VISUAL_OUT:-${TMPDIR:-/tmp}/gsat-visual}/after`）；輸出與建置產物放在 repo 裡時拒絕執行；`--viewports` 另外接受 `narrow`、`desktop`、`all`；`--dist`（截現成的建置產物）不能和 `--data-from` 一起用，避免改到別人的建置產物。Playwright 自己的輸出放在 `<輸出>/_playwright/`，repo 裡不會多出 `test-results/`。
+5. **`compare.mjs`**：`--viewports` 預設 `narrow`，另有 `desktop`；一張都沒比到時 exit 1（路徑打錯不會變成「通過」）。改成 `// @ts-check`＋JSDoc，和 `scripts/*.mjs` 一樣納入 `npm run typecheck`（`tsconfig.node.json` 本來就包含 `tests/`）。
+6. **`manifest.json`**：多了 `dist_source`（建置時寫進建置產物的 `.visual-source.json`：從哪個 commit、當時有哪些沒 commit 的改動、`data/` 換成哪一份），原本的 `repo` 改名 `harness_repo`（截圖工具所在 repo 的狀態）。
+7. **視窗 12 種**：§11.2 的五種驗收視窗（1024x600、1280x600、1366x640、1440x800、1920x960）加上原本的七種；舊視窗的檔名不變，可以和舊截圖逐張對照。
+8. **補截的情境**（§11.1 表中 PR A 的部分；每種視窗各一張）：
+   - `01-home__theme-toggled`（主題切換按下後）；帳號選單展開沿用 `01-home__account-menu`。
+   - 有紀錄：`01-home__records`（學習進度三格都有數字）、`03-practice__menu-records`、`13-exams__list-records`（已交卷＋作答中），由同一個流程（`records__flow`：每日學習評 1 張、詞彙題交卷 1 組、115 學測考試模式交卷、114 學測練習模式作答 2 題）產生；沒有紀錄的是原本的 `01-home__anon`、`03-practice__menu`、`13-exams__list`。模擬考沿用 `14-mock__list`／`14-mock__list-completed`。
+   - 寫作紀錄：`12-writing__student-history-empty`、`-history-essay`（切到英文作文，含自訂題目的列）、`-history-more`（一頁 2 筆，按一次「載入更多」後 4 筆、按鈕仍在）；有紀錄的是原本的 `12-writing__student`。
+   - 鍵盤聚焦：`04-vocabulary__focus-tier`（沒選中的難度）、`13-exams__focus-filter`（篩選膠囊「全部」）、`31-writing-essay-exam__focus-submit`（「送出 AI 批改」）。先用程式聚焦、再按 Shift+Tab、Tab 回來，並斷言 `:focus-visible` 成立。
+   - 「題目卡的 radio」聚焦與 §11.1 表中 PR B、PR C 的情境，留給各自的 PR 開工時補（README「4. 增加截圖情境之後補截基準」）。
+
+### 16.3 §10「每個 PR 開工的第一步」：PR A
+
+- (1) 基準補截：16.1、16.2 第 8 點。
+- (2) 現有 e2e：`npm run build -w @gsat/web` 後在 `apps/web` 跑 `E2E_PORT=4461 npx playwright test --workers 3`（desktop＋mobile）：184 passed、2 skipped（兩個只在 mobile 跑的測試在 desktop 略過），0 失敗。開工前沒有既有的失敗，§10.5 不用補。
+- `npm run typecheck`、`npm test`（api 563、web 1,113、shared 379 個測試）通過。
+
+### 16.4 §14 的決定
+
+站主沒有另外指示，採 §14 的預設值：工作區路由在寬度不夠、使用者也沒自己設定過時自動收合側邊欄；單鍵快捷鍵在桌機預設開（含 §8 的保護，設定頁可關）；輸入法實機測試由站主在 PR C 的預覽網址照 §8 做。第 1 點已由 #31 解決（16.2 第 1 點）。
+
+### 16.5 PR A1：基礎建設與殼層（2026-10-19）
+
+PR A 太大，照 §10 拆成 A1（本節）與 A2（首頁與列表頁）。A1 做了 §10.1 表中基礎建設與殼層的列；頁面各自的桌機版面（首頁儀表板、/practice 矩陣、/exams 表格、/mock 列式卡片、寫作與題目列表的 `StickyBar`、設定頁的「電腦版介面」區塊、§5.11–§5.14）留給 A2。
+
+**做了什麼**
+
+- 單元測試的預設視窗 375×667（`vite.config.ts` 的 `test.environmentOptions.happyDOM`）、`src/test/setup.ts` 每個測試後設回、`src/test/viewport.ts` 的 `setDesktopViewport()`。先只改這一步跑全部單元測試：1,113 個全過，沒有測試依賴 1024 的寬度（R8）。
+- `index.css`：`--container-ws`／`--container-wide`、`@utility bleed`、≥ lg 的 `scroll-padding-top`、`scrollbar-gutter: stable`、`html:has(dialog:modal) { overflow: hidden }`。
+- `lib/media.ts`、`lib/desktopLayout.ts`、`lib/desktopPrefs.ts`、`lib/hotkeys.ts`；`components/desktop/` 的 `Workspace`（含 `Pane`、`usePaneA11y`）、`PaneTabs`、`StickyBar`、`DataTable`、`ShortcutHelp`、`Kbd`、`Tooltip`、`scroll.ts`。各自有單元測試（§10.1 列的情境），另加 `src/desktop-copy.test.ts`（§11.4）與 `Layout.test.tsx`。`Workspace`、`PaneTabs`、`StickyBar`、`DataTable` 這一版還沒有頁面使用（A2、B 才用）。
+- `Layout.tsx`：寬度模式與 `--page-px`、`main` 的 container＋直排 flex＋頁尾貼底、`MainWidthProvider`、頁尾對齊與「鍵盤快捷鍵」、側邊欄三段＋收合（只在 `pointer: fine`）＋提示泡泡＋工作區路由自動收合＋淡出遮罩＋目前位置、全站快捷鍵 `?` 與 `[`、lazy 的 `ShortcutHelp`、`main` 外面的「回到頂端」。`LoginButton` 的 `placement="sidebar"`（外框、選單往上開、收合時只剩頭像）、`ThemeToggle`（可存取名稱、`className`）、`ListSection`（`lg:scroll-mt-2`）、`ModulePage` 的 `PageHeader`（`actions` 插槽）。
+- `playwright.config.ts`：`desktop`（`testIgnore`）、`mobile`、`desktop-ui`（1366×640）、`desktop-lg`（1024×600）；`tests/desktop-shell.spec.ts`、`tests/mobile-guard.spec.ts`。§10.5 列給 PR A 的既有斷言全部照舊通過（名稱與字串都沒改）。
+
+**和前面各節不同的做法**
+
+1. **首次設定期間不把側邊欄設成 `inert`**（§3.2「首次設定期間」作廢）。前提不成立：`OnboardingRedirect` 每次整頁載入只導向一次（`RequireAccount.tsx`），離開歡迎頁之後不會被拉回來，只有需要登入的頁面（/account、/ai/apply、/admin）才每次導回去；而且這是刻意的設計（「學生可以先不同意、繼續看題目」）。把清單設成 `inert` 等於把學生關在歡迎頁，也會擋住已經完成設定（「已完成」狀態）的人。維持現在的行為。
+2. **版面寬度量 `<body>`，不量 `documentElement.clientWidth`**（§3.2、§4.1 的「`clientWidth` 已扣掉捲軸」）。實測：`html` 設了 `scrollbar-gutter: stable`、捲軸被隱藏時（無頭 Chromium），gutter 仍保留 15px，`documentElement.clientWidth` 卻回報 1366（`<body>` 與 `main` 是 1351）。改用 `document.body.clientWidth`，一般瀏覽器兩者相同，無頭瀏覽器也和 `@container/main` 量到的一致；自動收合的門檻（1216）與 `useMainTier` 的估算都用它。
+3. **`MainWidthProvider` 的 ResizeObserver 掛在 `useEffect`，不是 `useLayoutEffect`**：Provider 是 `<main>` 的子元件，layout effect 執行時父元素的 ref 還沒接上（單元測試抓到的錯誤）。量到之前用估算值，觀察器的第一次回呼在下一次繪製前就到。
+4. **「回到頂端」捲過兩個視窗高才出現**（§3.3 寫的是「超過 3 個視窗高的頁面」一律顯示）：文件頂端放 1px 哨兵，`IntersectionObserver` 的 root 往上延伸兩個視窗高，哨兵離開就顯示（等於頁面至少三個視窗高、而且已經往下捲）。不掛 scroll 事件。按下後焦點移到頁面的 `<h1>`（按鈕會消失，焦點不能掉到 `body`）。
+5. **側邊欄的實際尺寸**（§3.2 的設計值改成實測）：品牌列 48；清單每項 28px（`py-0.5 leading-6`）、群組標題 22px（`pt-1 pb-0.5 leading-4`）、清單上下 `py-1`，清單內容 489px；底部工具列已登入一列約 51px、未登入約 104px（外框登入鈕 36＋提示一行＋圖示列 32）。量測（無頭 Chromium）：1366×640 未登入清單 489／可用 489、已登入 489／535，都不用捲；1280×600 已登入 489／495 不用捲，未登入 489／449，出現淡出遮罩、捲到底後消失（e2e 驗）。
+   - 收合（4rem）：品牌列只剩「展開側邊欄」鈕（首頁仍是清單第一項）；文字是 sr-only，所以每項 24px（仍 ≥ 24px，WCAG 2.5.8）；群組標題換成分隔線；底部工具列直排、圖示 28px。1366×640 與 1024×600 都不用捲（實測）。
+   - 底部的圖示鈕（主題、快捷鍵、設定、關於）在展開時也只有圖示，所以展開與收合都用同一個提示泡泡（展開時出現在上方、收合時在右邊）；`ThemeToggle` 在側邊欄用 `tipSide` 取代 `title`。已登入的帳號按鈕在 256px 寬裡只放得下暱稱與截斷的 AI 狀態，全文放 `title`。
+6. **`ThemeToggle` 的可存取名稱**：「切換為深色主題（目前是淺色）」「切換為淺色主題（目前是深色）」「切換為深色主題（目前跟隨系統：淺色）」——先說按了會怎樣，再說目前是哪一種。Playwright 的 `getByRole` 名稱是子字串比對，截圖工具與 e2e 不用改；單元測試 `theme.test.tsx` 改成完整名稱。
+7. **快捷鍵的比對順序看 `group`，不看登記先後**（§4.4「後註冊（頁面）的先比對」）：effect 由子元件往父元件執行，Layout（全站）的登記反而比頁面晚，所以改成「這一頁」一律先於「全站」，同一組裡後登記的先。`?` 與 `[` 也算單鍵快捷鍵，設定關閉時不作用（WCAG 2.1.4），這時用側邊欄或頁尾的按鈕打開說明。帶 mod 的組合同時按著 Shift 時不算（Ctrl＋Shift＋Enter 不是 Ctrl＋Enter）。
+8. **`isModalOpen()` 與單元測試**：happy-dom 不支援 `:modal`（不丟例外、一律不符合），所以 `ShortcutHelp` 的 `<dialog>` 另外標 `aria-modal="true"`；`dialog:modal` 的偵測在 e2e（Chromium）驗：說明開著時按 `[` 側邊欄不變、背景 `overflow: hidden`。
+9. **兩個在 §10 歸給 PR C 的小改動提前到 A1**，因為 A1 的改動會讓它們出錯：
+   - `ExamToolbar.tsx`、`MockToolbar.tsx` 的 `lg:-mx-10 lg:px-10` 改成 `lg:-mx-(--page-px) lg:px-(--page-px)`：工作區路由的 `--page-px` 變成 2rem，寫死 2.5rem 的工具列在 1024 寬會凸出 8px、產生水平捲動。題號列、`useStickyHeightVar` 等仍在 PR C。
+   - `StudyView.tsx`、`QuizSession.tsx` 的 `isTypingTarget` 改用 `lib/hotkeys.ts` 的 `isFormControlTarget`（行為不變），並在 ≥ lg 加 `isModalOpen()` 檢查：A1 加了 `ShortcutHelp`，沒有這個檢查時在說明裡按 1 會替背後的單字卡評分（e2e 驗）。
+10. **`PageHeader` 的 `actions`**：傳了才換成兩列式的結構（多一層包裹元素），只能在 ≥ lg 傳（手機的控制項留在各頁原本的位置）；沒傳時輸出和原本一模一樣。A1 沒有頁面傳它。
+11. **e2e 的分工**：`mobile-guard.spec.ts` 跑在 `mobile` project（§11.3 的表，沒有另外的 project）。`desktop-shell.spec.ts` 裡自己指定視窗的測試只在 `desktop-ui` 跑；每條路由在 1024 寬沒有水平捲動由 `desktop-lg` 的 `smoke.spec.ts` 檢查，`desktop-shell` 檢查 1366 與 1920。§11.3 中屬於頁面的項目（`/privacy` 內文 ≤ 65ch、`/exams` 表格寬、篩選帶進作答頁再返回、`StickyBar` 底下的 Shift+Tab）跟著 A2。
+12. **`PaneTabs` 的 `hidden="until-found"`** 用 ref 設屬性（React 的 `hidden` 是布林屬性），不支援的瀏覽器當成一般的 `hidden`。`DataTable` 的 `aria-sort` 只放在目前排序的那一欄（WAI-ARIA：同一時間只有一個表頭帶 `aria-sort`）；按著修飾鍵點列時不觸發列連結（交給連結本身的中鍵／Ctrl＋點擊）。
+13. **主程式大小超過 §11.6 的預算**：主程式 chunk 309,345 → 327,140 bytes，gzip（-9）97,861 → 103,706（**+5.8 KB**，預算是 +2 KB 的設計值）；CSS 8,967 → 9,954（+1.0 KB，`components/desktop/` 的 class 都在同一份 CSS）。`ShortcutHelp` 是 lazy chunk（3.7 KB，gzip 1.6 KB）。各模組單獨壓縮的大小：`Layout.tsx` 2.4 → 4.5 KB、`media.ts` 1.5、`hotkeys.ts` 1.5、`desktopLayout.ts` 0.8、`Tooltip.tsx` 0.8、`desktopPrefs.ts` 0.6 KB。可行的縮減：把全站快捷鍵的登記、提示泡泡與「回到頂端」移到一個只在 ≥ lg 載入的 lazy chunk（估計主程式少約 2.5 KB），代價是剛載入時 `?`／`[` 要等那個 chunk 到了才有作用、e2e 要等它。A1 沒有做，列為待決定（PR 說明附這段數字）。
+
+**檢查結果**（全部在這個工作目錄、同一個 Chromium）
+
+- `npm run typecheck`（三個 workspace）、`npm test -w @gsat/web`（93 個檔案、1,192 個測試全過；開工前 82 個檔案、1,113 個）、`npm run build`。api 與 shared 沒有改動，沒有另跑它們的測試。
+- e2e（`apps/web` 裡 `E2E_PORT=4492 npx playwright test --workers 3`，四個 project）：227 passed、12 skipped（依 project 略過的測試），0 失敗。新的兩個 spec 另外 `--repeat-each 3` 跑過，沒有不穩定。
+- 手機與平板 0 差異（最後一版程式碼）：`visual-run.sh $H/after-a1 --data-from $H/dist-baseline-a479469 --viewports 320x640,375x812,768x1024` → `compare.mjs $H/baseline-a479469 $H/after-a1 --diff-dir $H/after-a1-diff` 306 組逐像素相同（exit 0），0 筆 console error；`git status` 只有本節列的檔案。
+- 桌機九種視窗 909 張（`$H/after-a1-desktop`），0 筆 console error；看過首頁、/exams、/writing 在 1366×640 與 1920×960，收合的側邊欄（1024×600 的作答頁）、帳號選單、`ShortcutHelp`。
+
+### 16.6 PR A2：首頁與列表頁（2026-10-19）
+
+A2 做了 §10.1 表中頁面的列（§5.1–§5.8、§5.10–§5.12、§5.14 的 P1）。手機與平板逐像素不變（檢查結果在本節最後）。
+
+**做了什麼**
+
+- 共用：`components/desktop/Slot.tsx`（`SlotProvider`／`InSlot`／`useSlotTarget`：桌機把「同一份」篩選元件用 portal 搬進 sticky 篩選列，不 render 兩份，R3；手機不提供位置，元件原地 render、DOM 不變）、`components/desktop/shortcutHelpContext.ts`（頁面打開 Layout 管理的 `ShortcutHelp`）、`ListSection.tsx` 的 `ListJumpBar`、`features/writing/components/WritingListBar.tsx`；`PageHeader`／`ModulePage` 加 `className`、`clampSummary`（只能放 lg: 起的 class）；`SourceTabs`、`BackendStatus`（`variant="inline"`）、`ProgressStats`（`variant="rail"`）各加一個選項，預設輸出不變。
+- §5.1 首頁：`useMainTier().ws` 換樹；`features/home/DesktopDashboard.tsx`（lazy，6.4 KB）＋`continueItems.ts`（繼續學習：作答中的歷屆試題、進行中的模擬考、作答過的題庫練習題組、寫作草稿，依更新時間最多 4 張，只讀 localStorage）；「全部功能」（`columns-2`，wide 一組一欄）留在 `HomePage`；右欄 `aside「我的學習」`：學習進度（region 名稱、三個 `progress-stat`、連結與文字不變）、已核准時的 `QuotaMeters` 與最近 3 筆寫作紀錄、後端狀態（文字與「重新檢查」不變）；登入後問候「小明，今天練什麼？」。
+- §5.2 /practice：lg 起「題型 × 難度」`<table>`（名稱格式一字不改，答對率在 `aria-describedby`，沒有題組的格仍是 `role="group"`）；ws 起兩欄、右欄是精簡的「三種難度給誰」「AI 題目怎麼來的」與寫作仿真題連結（`pick.ts` 加 `cellAccuracy`）。
+- §5.3 題型頁：頁首兩列（左 H1＋一行說明，右難度切換）；難度切換加 `lg:hover:bg-primary-soft/60`。
+- §5.4 /translation、/composition：sticky 篩選列（頁內跳轉＋歷屆試題的篩選）、頁首與列表 `bleed`、卡片 wide 三欄；`KindFilter` 加 hover。
+- §5.5 /writing：整頁 `bleed`，ws 起兩欄（container query，一棵樹）：左邊入口與「我的寫作紀錄」（lg 起 `DataTable`：題目、方式、狀態、更新時間、分數；需要處理的狀態是標章；「再載入 20 筆」），右欄 `aside「AI 批改」`：開通說明或 `QuotaMeters`、收起來的「兩種批改方式」。`QuotaMeters`（今日、本月、今日作文；文字為主、細條 `aria-hidden`）在 `AiAccessPanel.tsx`。
+- §5.6 題目列表：返回連結、H1、來源分頁與篩選（本站仿真是一列的精簡難度切換，說明留在下面）收成 sticky 篩選列；AI 標章和說明併成一行；`bleed`、卡片 wide 三欄。
+- §5.7 /exams：`ExamTable.tsx`（`StickyBar`：考試膠囊、學年度、只看作答中、筆數；`DataTable`：考卷〔可依學年度排序，新制／補考標章在連結裡，題本全名放 `title`〕、題數、全國答對率、題型結構〔「詞10 綜10 …」，全名放 `title`，main 不到 ws 時隱藏〕、我的進度〔進度條＋文字，可排序〕；依「考試・時間」分組）；列連結帶 `state.listSearch`；設定頁可改回卡片（`gsat-ui:v1:list-view:exams`）。
+- §5.8 /mock：列式卡片（仍是 6 個 `article`）；最佳成績＋級分、最近一次日期、沿用題標章（全文放 `title`）只在列式排版顯示；`bleed`。
+- §5.10 設定：「電腦版介面」：側邊欄（自動／一律展開／一律收合；觸控為主的裝置只說明一律展開）、單鍵快捷鍵（附「使用螢幕閱讀器或語音輸入時建議關閉」）、歷屆試題列表（表格／卡片）、「查看全部快捷鍵」。
+- §5.11 /about、/privacy、/terms：段落與條列 `lg:max-w-prose`；公開條款頁的全文各段標題加 id（`s-1`…）。§5.12：`fieldCls` 加 `lg:max-w-md`，年齡區間 radio 加 `lg:max-w-md`。§5.14：頁尾貼底在 A1 已完成。
+- 測試：單元測試新增 `continueItems.test.ts`、`DesktopDashboard.test.tsx`、`ExamTable.test.tsx`、`Slot.test.tsx`、`QuotaMeters.test.tsx`、`MockPaperList.test.tsx`，並在 `PracticePages.test.tsx`、`lib.test.ts`、`SubmissionHistory.test.tsx`、`SettingsPage.test.tsx` 加桌機的情境；`desktop-copy.test.ts` 加掃 A2 的新檔案。e2e 在 `desktop-shell.spec.ts` 加 §11.3 屬於 PR A 的頁面斷言（見下方「檢查結果」）。
+
+**和前面各節不同的做法**
+
+1. **題型頁的難度切換用 CSS 定位到頁首右邊，不搬 DOM**（§5.3「用 useMediaQuery 重組」）：難度切換在按需載入的練習程式裡，而 `overview.spec.ts` 要求它在「…題庫練習」區塊裡。做法：題型頁改用 `SectionModulePage`，`article` 是 `lg:relative`、頁首右邊留 `lg:pr-[27.5rem]`、`TierSwitcher` 是 `lg:absolute lg:top-0 lg:right-0 lg:w-[26rem]`（中間的元素都不是定位元素）。DOM 與讀屏順序仍是「頁首 → 難度 → 題組」。1366×640 時第一個題組標題從 y≈456 移到 < 260（e2e 驗）。
+2. **題型頁的頁首與作答區不放寬（`bleed` 延到 PR C）**：作答區的分割版面（§7.2）在 PR C；只放寬作答區會讓選文一行超過 120 字元，只放寬頁首又會和作答區左右不齊。§5.0 表中這兩項分別標 A、C，這裡一起留給 C。
+3. **首頁儀表板整個是一個 lazy chunk**（含「全部功能」的版面，「全部功能」的內容仍在 `HomePage` 傳進去）：載入前顯示佔位骨架，下面只有頁尾，不會推動已經顯示的內容；載入失敗時只顯示「全部功能」與一行提示。頁首說明改用 `modules.ts` 的首頁 `summary`（較短，不含「大考中心」）。「今天要複習的單字」只在右欄的學習進度，不在「繼續學習」重複；題庫練習「目前的題組」要作答過、還沒交卷才算（只打開題型頁也會記 current）。
+4. **/practice 在 ws 用 `useMainTier` 換樹**（R4 允許：這一頁沒有輸入框）：三種難度的說明只有一份（ws 在右欄、不到 ws 在原位），`practice.spec.ts` 的 `getByText` 不會撞到兩份。
+5. **/mock 的右欄在 wide（main ≥ 80rem）才出現，不是 ws**：ws 門檻時右欄 20rem 之後左欄只剩約 580 px，放不下對齊的列式卡片。卡片用自己的寬度判斷（`li` 是 `lg:@container`，≥ 48rem 才排成一列），三欄寬度固定（`14rem｜1fr｜16.5rem`）而不是 §5.8 的五欄：狀態、最佳成績、最近一次放在同一欄的兩行。main 不到 ws（1024 寬、側邊欄展開，內容 688 px）時維持原本的兩欄卡片（排成一列放不下，一欄卡片又太長）。卷別清單與作答紀錄限寬 60rem（列式卡片是 `li`，§11.3 的「`p`、`li` ≤ 60rem」照樣成立）。
+6. **/writing 保留三組入口的標題**（§5.5「五個入口合成一個網格、加小眉標」沒有做）：`writing-custom.spec.ts` 用 region「自己的題目」找自訂題目的入口；改成眉標就沒有這個區塊。桌機只把入口排緊、移走「兩種批改方式」與點數。同一個 spec 的「入口卡不能蓋到兩種批改方式」原本斷言卡片底部在它上面；桌機兩塊左右並排，改成「不重疊」（手機仍斷言在上面，見下方 e2e 的調整）。
+7. **/translation、/composition 的 sticky 篩選列和列表包在同一個區塊裡**（桌機樹）：`ModulePage` 的內容是 grid，grid 項目裡的 sticky 只能在自己那一格作用，篩選列放在 grid 裡不會黏住。篩選與頁內跳轉在桌機只有一份（標題列右邊的「跳到…」在桌機樹不 render）。
+8. **/exams 依「考試・時間」分組**：66 份裡參考試卷（100／80 分鐘）與補考（學測 100、指考 80）的時間不一，同一個分組標題寫不下一個時間，所以這兩類各分兩組（「參考試卷・100 分鐘」「參考試卷・80 分鐘」）。「只看作答中」（`?progress=active`）只在桌機的表格生效：手機的卡片沒有這個切換，帶著參數也照常列出全部，免得沒有地方取消。學年度沒有獨立的欄位，排序放在「考卷」欄（依學年度）。
+9. **設定頁的「電腦版介面」用 `useIsDesktop()` render，不是 `hidden lg:block`**：裡面有 radio、checkbox 與 id（R3）。設定頁在桌機因此比 960 高，A1 的「短頁頁尾貼底」e2e 改成「頁尾在文件最底部，內容短時就是視窗底部」（404 仍斷言等於視窗高）。
+10. **篩選膠囊的 hover 只套在沒選中的**（`lg:[&:not(:has(:checked))]:hover:…`）：選中的是實心主色，hover 的淺底色會蓋掉、白字看不見。
+11. **條款全文的 id 只在公開的 /privacy、/terms 加**（`PolicyFullText` 的 `anchors`）：歡迎頁同一頁有兩份全文，id 會重複。
+12. **放寬的區塊裡，段落與頁尾說明一律限寬 48rem**（`[&_p]:max-w-3xl` 這類，只在桌機樹）：放寬的是網格與表格，不是文字行長（§2.4），`desktop-shell.spec.ts` 的「`p`、`li` ≤ 60rem」也要成立。
+13. **§5.6「本站仿真卡片右上角的狀態小點」沒有另外加**：卡片上已經有「已完成／草稿」標章（文字＋圖示，所有寬度都顯示），再加小點是重複。
+14. **/exams 表格的進度欄沿用卡片的寫法**（「作答中・30／53」「已交卷・78／100」，前面多一條裝飾用的細條）：截圖工具的 `records__flow` 與讀屏都只認得一種說法。截圖工具 `capture.shots.ts` 的 `12-writing__student-history-more` 改成兩種按鈕名稱都接受（手機「載入更多」、桌機「再載入 20 筆」），手機的截圖不受影響（重截後仍逐像素相同）。
+15. **e2e 的調整**（§10.5 沒列到、桌機版面改了位置的斷言；手機 project 的斷言不變）：`section-practice.spec.ts` 中譯英頁的「跳到歷屆試題」與「全部」篩選，桌機改在 sticky 篩選列找（`navigation「頁內跳轉」`、`[data-sticky-bar]`）；`writing-custom.spec.ts` 的入口卡與「兩種批改方式」改成不重疊（手機仍要求在上面）；`desktop-shell.spec.ts`（A1）的設定頁頁尾見第 9 點。
+
+**主程式大小**：主程式 chunk 327,140 → 331,076 bytes，gzip（-9）103,706 → 104,467（A2 +0.8 KB；和 a479469 的 97,861 比 +6.6 KB，§16.5 第 13 點的縮減仍待決定）。CSS gzip（-9）9,954 → 10,658（+0.7 KB）。新的 lazy chunk：`DesktopDashboard` 6,436 bytes（gzip 2,774；只在 ws 寬度的首頁下載，手機不下載）。
+
+**P2（這一版沒做）**：§5.3 題型頁 wide 寬度的右欄（「學測怎麼考」移過去）；§5.4／§5.6 歷屆題目的表格（`WritingPromptTable`）；§5.8 級分趨勢圖；§5.11 條款頁的 sticky 目錄；§5.12 /account 左欄導覽、/account/welcome 兩欄、/ai/apply 兩欄（含 `QuotaMeters`）；§5.13 /admin 表格；§5.14 404 的常用頁面連結。
+
+**檢查結果**（全部在這個工作目錄、同一個 Chromium；最後一版程式碼）
+
+- `npm run typecheck`（三個 workspace）通過；`npm test`：api 563、web 99 個檔案 1,224 個測試（A1 時 93 個檔案、1,192 個）、shared 379，全過；`npm run build` 通過。
+- e2e（`apps/web` 裡 `E2E_PORT=4477 npx playwright test --workers 3`，四個 project）：241 passed、18 skipped（依 project 略過），0 失敗。`desktop-shell.spec.ts` 新增的頁面測試與 `mobile-guard.spec.ts` 另外 `--repeat-each 3` 跑過（desktop-ui、desktop-lg、mobile），沒有不穩定。
+  - `desktop-shell.spec.ts` 新增：首頁儀表板（1366×640：問候、「全部功能」在第一個畫面、右欄學習進度／AI 點數／後端狀態、右欄不 sticky、不下載 `/data/`）、/practice 矩陣與右欄、題型頁的難度切換在頁首右邊且第一個題組 y < 260、/exams 每列一個連結＋篩選學測 112 → 進入考卷 → 返回後網址與篩選仍在、/exams 從最後一列 Shift+Tab 二十次焦點都不在篩選列與表頭底下、題目列表的 sticky 篩選列（捲動後仍可見、篩選只有一份）、/translation 的頁內跳轉、/mock（1920）列式卡片欄位對齊與右欄、/writing 右欄與寫作紀錄表格、/privacy 內文 ≤ 65ch 與 `#s-1`、/exams 表格在 1440 > 944px 而 `InfoSection` 仍 944px；「`p`、`li` ≤ 60rem、沒有水平捲動」改成 1024／1366／1920 三種寬度，並加上四個題目列表頁與 /privacy、/terms。
+  - `mobile-guard.spec.ts` 新增：手機上沒有儀表板、矩陣、資料表、sticky 篩選列與「電腦版介面」，/mock 的卡片仍是 flex、沒有右欄。
+- 手機與平板 0 差異：`visual-run.sh $H/after-a2 --data-from $H/dist-baseline-a479469 --viewports narrow` → `compare.mjs $H/baseline-a479469 $H/after-a2 --diff-dir $H/after-a2-diff`：306 組逐像素相同（exit 0），0 筆 console error。
+- 桌機九種視窗 909 張（`$H/after-a2-desktop`），0 筆 console error。看過 1024×600、1280×600、1366×640、1920×960 的首頁（未登入、學生、有紀錄、深色）、/practice、題型頁、/exams（有紀錄）、/mock（有成績）、/writing（學生）、題目列表與本站仿真列表、設定、隱私權說明。截圖工具在 worker 剛啟動的第一張偶爾會在右欄的 API 回來之前就判定穩定（1366×640 的 `01-home__student` 有一次截到「正在檢查後端連線…」，重截正常）；只影響給人看的桌機截圖，不影響手機的比對。
+
+### 16.7 審查後的修正（2026-10-19）
+
+PR A（A1＋A2）審查之後的修正。程式碼註解裡寫「§16.7」的地方都對應這一節；和前面各節（含 §16.5、§16.6）不一致時以這裡為準。
+
+**和前面各節不同的做法**
+
+1. **ws 是 58.5rem（936 px），不是 60rem（960）**（§0 第 3 點、§2.2、§3.2、§4.1、§4.5、§7.2、§10.1）。≥ lg 一律 `scrollbar-gutter: stable`，捲軸的位置永遠保留（無頭 Chromium 15 px、Windows 傳統捲軸約 17 px），§2.2 的表沒有扣掉這一段：1024 寬、側邊欄收合時 main 只有 1024 − 17 − 64 = 943（無頭 Chromium 945），用 960 的話 §0、§3.2 說的「收合側邊欄的 1024 都能分欄」不成立，Windows 筆電在 1024 到約 1040 寬都到不了 ws。
+   - `index.css` 的 `--container-ws: 58.5rem` 與 `lib/media.ts` 的 `MAIN_TIER_PX.ws = 936` 一起改，CSS（`lg:@ws/main:`）與 JS（`useMainTier`）仍是同一個門檻。`media.test.tsx` 讀 `index.css` 的原始碼比對兩邊，並檢查 1024 − 17 − 64 ≥ ws；為了讓測試讀得到 CSS 原始碼，`vite.config.ts` 的 `test.css` 從 `false` 改成只讓 `?raw` 匯入回傳原始碼（其他 CSS 照舊不處理）。
+   - **工作區路由的自動收合門檻是版面寬 < 1192**（`SIDEBAR_AUTO_COLLAPSE_BELOW` ＝ 256＋936；§3.2 寫的是視窗約 < 1216）。比的是 `document.body.clientWidth`（已扣掉捲軸，§16.5 第 2 點），有傳統捲軸時約等於視窗 < 1209。
+   - 用 §2.2 的表重算（扣掉 17 px 捲軸）：1024 收合 943 → ws；1216 展開 943 → ws（原本 959、否）；1200 展開 927 → 不到 ws，工作區路由自動收合；1366 放大 110%（1242）展開 969 → ws。
+   - **給 PR B**：ws 門檻時工作區比 §4.5、§7.2 的設計值窄 24 px，作文 1:1 的左欄約 424 px（設計值 436）、中譯英 `[minmax(0,1fr)_22rem]` 的左欄約 496 px。分欄的欄寬照這個寬度設計。
+   - e2e（`desktop-lg`，1024×600）：側邊欄設成收合，main 的內容寬 < 960，首頁仍是儀表板。
+2. **快捷鍵的按鍵比對**（§4.4「按鍵比對」）：`e.key` 是單一個 ASCII 字母、數字、`[` 或 `?` 時用它（不分大小寫，Dvorak 等配置照字面）。
+   - **標點只看 `e.key`**：德文鍵盤的 ü、日文鍵盤的 @、法文鍵盤的 ^ 死鍵都在 `[` 的實體位置（`BracketLeft`），在 `/` 的位置按 Shift 是 `_`；退回 `e.code` 會讓這些人一打字就收合側邊欄或打開說明。
+   - **字母與數字的 `e.code` 退路**（`KeyA`–`KeyZ`、`Digit`／`Numpad` 0–9）**只給「不是拉丁字母的單一個字」**（某些輸入法送出的注音、俄文鍵盤的字母）。é、ü 這類拉丁字母是鍵盤上真的字：法文鍵盤的 é 在 2 的位置，不能當成 2。
+   - e2e：在 `[` 的位置按 ü、在 `/` 的位置按 Shift+-，側邊欄不收合、說明不打開。
+3. **放寬的列表頁另有寬度模式 `list`**（§2.3 的表只有三種）：首頁、/practice、/translation、/composition、/writing、`/writing/translation`、`/writing/essay`、兩個本站仿真列表、/exams、/mock。內容容器和 `default` 一樣；差別在頁尾：`default` 的頁尾是 944 px 置中，1920 寬時和放寬的內容左緣差 184 px，`list` 的頁尾撐滿 main、裡面的 `nav` 用 `bleed`，和放寬的區塊同寬、同一條左緣。首頁與 /practice 不到 ws 時是原本的版面，這時 `bleed` 的寬度就是內容寬，頁尾一樣對齊。
+   - 放寬的頁面裡沒放寬的區塊（/translation、/composition 的 `InfoSection`，/exams 在設定頁改成卡片時的卡片）維持 944 px（`max-w-[59rem]`），但**靠左對齊放寬的欄，不置中**：同一頁的頁首、列表、說明、頁尾是同一條左緣。§2.3「沒加的區塊自動維持 944 px」仍成立，只是位置不同。
+   - e2e：1920 寬七個列表頁的頁尾和頁首左緣相同；/translation 的「學測怎麼考」寬 944 px、左緣和頁首相同。
+4. **寫作題目列表的 sticky 篩選列換成兩行時，只黏篩選那一行**（§5.6「收成一列放進 `StickyBar`」）：1024 寬時返回連結＋標題＋來源分頁一行、篩選一行，共約 115 px，是 600 高視窗的五分之一。`StickyBar` 加 `collapseFirstLine`（`WritingListBar` 用）：sticky 的 `top` 是負的「第一行到最後一行的距離」（`--sticky-bar-hide`），第一行跟著頁面捲走，`--sticky-bar-h` 只算黏住時看得到的高度；鍵盤焦點進到第一行（`[data-bar-head]`）時整條列回到 `top: 0`。一行放得下（1366）時和原本相同。
+   - e2e（1024×600）：/exams、/translation、/composition、`/writing/essay`、兩個本站仿真列表捲動後看得到的篩選列與 `--sticky-bar-h` 都 ≤ 64 px；從難度切換 Shift+Tab 回到來源分頁時，連結在畫面裡。
+5. **高對比模式（forced-colors）的目前頁與選中狀態**（R11、§4.11）：
+   - 側邊欄的目前頁：高對比模式會把透明的框線換成系統色，每一項都會出現同樣的色條。非目前頁的色條指定成 Canvas（和背景同色）、目前頁指定成 Highlight（作者指定的系統色不會被換掉），展開與收合都看得出目前頁。底部工具列的設定、關於是目前頁時，另外有一條 2 px 的 Highlight 底線。
+   - **篩選膠囊與精簡難度切換**（/exams 的 `pillCls`、`KindFilter`、`BankListPage` 的精簡難度切換）：選中的平常只靠實心主色。高對比模式下改用 Highlight 底、HighlightText 字、Highlight 框線，**並設 `forced-color-adjust: none`**。只設 Highlight／HighlightText 不夠：Chromium 在高對比模式會在字後面墊一塊 Canvas 色的底（readability backplate），HighlightText 的白字壓在白底上，選中的膠囊變成一塊空白（審查實測）；設 `none` 才不墊底。`none` 之後焦點框也不會被換成系統色，所以選中的另外指定 `outline-color: CanvasText`（焦點框離開膠囊 2 px，畫在 Canvas 上）。`KindFilter` 與 `pillCls` 的這組 class 都帶 `lg:`，手機在高對比模式下也維持原樣（R1）；`BankListPage` 的精簡版只在桌機 render。
+   - e2e 不只比 computed style（修正前的測試只比底色，底色確實不同，所以沒抓到）：截下選中膠囊裡第一段字的範圍，數和最常見的顏色明顯不同的像素（字的筆畫），沒選中的膠囊同樣量一次當對照組。量 /exams、/translation、`/writing/essay`、`/writing/essay/ai` 四頁；修正前在第一頁（/exams）選中的就是 0 個像素（沒選中的 > 20），測試失敗。
+   - **沒有改的**：`SourceTabs` 的目前分頁（`aria-current`）與「我的寫作紀錄」的種類切換（`aria-pressed`）也只靠底色，高對比模式下看不出目前是哪一個。這兩個元件手機上一樣，樣式不是這次新增的，留待之後處理（§16.8）。
+6. **鍵盤、焦點與載入失敗**：
+   - 跨斷點換樹時找回焦點（§4.1）：沒有 id 的元素（首頁卡片、/practice 矩陣的連結）用「main 裡同樣標籤、同樣 href、同樣可存取名稱」找回；新的樹是按需載入的（首頁儀表板）時每 50 ms 再找一次、最多 1.5 秒；最後仍找不到才把焦點放在頁面的 `<h1>`（不留在 body），並暫停單鍵快捷鍵。e2e：1100×640 焦點在 /practice 矩陣與首頁卡片上按 `[`，換樹後焦點回到同一個連結。
+   - `ShortcutHelp` 的程式載入失敗（網站剛重新部署、舊分頁的 chunk 不見了、離線）：只在說明的位置顯示一個小對話框（「說明暫時載入不了，可能是網站剛更新。請重新整理頁面後再試一次。」），頁面內容與導覽照常。說明開著時視窗縮到 < lg 就關掉，放大回桌機不會自己再跳出來。
+   - `DataTable` 的整列點擊等 250 ms 才換頁：雙擊選字的第一下 click 發生在選取範圍建立之前，當下看不出來；等的期間有第二下 click 就取消，時間到了再確認一次沒有選取文字。直接點連結本身照常立刻換頁。
+   - 提示泡泡（WCAG 1.4.13）：任何時候按 Esc 都收起（焦點在主要內容也一樣）；滑鼠可以從項目移到泡泡上而不消失；用鍵盤按收合鈕之後泡泡換成新的文字（「展開側邊欄（[）」）、跟著按鈕移位。
+   - 篩選膠囊的焦點框在 ≥ lg 離開膠囊 2 px（選中的是實心主色，貼著畫看不出來）。
+   - 側邊欄的目前項：清單之後變矮時（未登入的「使用 Google 登入」在 `/api/me` 回來之後才出現）仍捲進可見範圍（`ResizeObserver`）。
+   - 對話框開著時：保留的捲軸槽不在 `::backdrop` 的範圍裡，`html` 的底色調成和遮罩疊在 `--bg` 上一樣的顏色，右緣不會留一條沒變暗的亮條。
+7. **版面細節**：
+   - /writing 的寫作紀錄表格在 1216–1366 寬（左欄最窄）：表頭一行；狀態與更新時間的每一段（「草稿」「（尚未送出）」「2026/10/18」）不在字中間斷開，每格最多兩行；很長的自訂題目跟著欄寬截斷，表格不比卡片寬。
+   - /practice 矩陣（1242 寬）：每格一樣高，第二行「已做 1・70%」不換行（「答對」是 sr-only，讀屏從 `aria-describedby` 仍聽到「答對 70%」）。
+   - /mock 列式卡片：「級分對照 115 學年度」不拆開。
+   - /translation、/composition：sticky 列的篩選前面有看得到的「歷屆試題」標籤，legend 是「歷屆試題的考試」（只篩下面的歷屆試題，不篩本站仿真題）；改了篩選之後把「歷屆試題」區捲到篩選列下方，焦點留在篩選上。
+
+### 16.8 PR A 的總結：實際交付與計畫的差異
+
+§10.1 表中 P1 的列都已完成（A1：§16.5；A2：§16.6；審查修正：§16.7），下面列的除外。
+
+**和計畫不同、或沒有做的 P1**
+
+| 計畫 | 實際 | 見 |
+|---|---|---|
+| §3.2 首次設定期間側邊欄 `inert` | 不做：離開歡迎頁不會被拉回來，`inert` 會把學生關在歡迎頁 | §16.5 第 1 點 |
+| §5.3 題型頁的頁首與作答區 `bleed` | 延到 PR C，和作答區的分割版面一起做 | §16.6 第 2 點 |
+| §5.5 /writing 五個入口合成一個網格、加眉標 | 保留三組標題（`writing-custom.spec.ts` 用 region「自己的題目」） | §16.6 第 6 點 |
+| §5.6 本站仿真卡片的狀態小點 | 不加：卡片已有「已完成／草稿」標章 | §16.6 第 13 點 |
+| §5.8 /mock 五欄、ws 起右欄 | 三欄；右欄在 wide 才出現 | §16.6 第 5 點 |
+| §5.10「電腦版介面」`hidden lg:block` | `useIsDesktop()` 才 render（裡面有 radio 與 id，R3） | §16.6 第 9 點 |
+| §5.13 /admin 的 `lg:hover`（P1） | 沒做；只有站主用，和 P2 的表格一起做 | — |
+| §2.2 ws＝60rem、§3.2 自動收合門檻視窗 < 1216 | ws＝58.5rem、版面寬 < 1192 | §16.7 第 1 點 |
+| §11.6 主程式 gzip 增加 ≤ 2 KB（設計值） | 和 a479469 比 **+7.7 KB**（97,861 → 105,602 bytes，gzip -9；A1 +5.8、A2 +0.8、審查修正 +1.1）；CSS gzip 8,967 → 11,423。縮減方案（全站快捷鍵、提示泡泡、「回到頂端」移到只在 ≥ lg 載入的 chunk，估計少約 2.5 KB）**待站主決定** | §16.5 第 13 點 |
+
+- 提前做了 PR C 的兩項（工具列的 `--page-px`、`StudyView`／`QuizSession` 改用 `isFormControlTarget` 並在 ≥ lg 檢查 `isModalOpen()`），因為 A1 的改動會讓它們出錯（§16.5 第 9 點）。
+- `Workspace`、`PaneTabs` 已完成、有單元測試，但還沒有頁面使用（PR B 才用）；`StickyBar`、`DataTable`、`Slot` 已用在列表頁。
+
+**延後的 P2（屬於 PR A 的頁面，這一版沒做）**
+
+- §5.3 題型頁 wide 寬度的右欄（「學測怎麼考」「題庫練習有什麼」移過去）。
+- §5.4、§5.6 歷屆題目的表格（`WritingPromptTable`：/translation、/composition、`/writing/translation`、`/writing/essay`）。
+- §5.8 /mock「我的級分趨勢」折線圖。
+- §5.11 /privacy、/terms 的 sticky 頁內目錄（條文的 `s-1`… id 已加，目錄可以直接用）。
+- §5.12 /account 左欄頁內導覽、/account/welcome 兩欄（表單卡 sticky）、/ai/apply 兩欄（含 `QuotaMeters`）。
+- §5.13 /admin 表格化（連同 P1 的 `lg:hover`）。
+- §5.14 404 的常用頁面連結。
+- §9 列的項目（指令面板、`g`＋字母、列表返回時恢復捲動位置…）維持延後。
+
+**之後處理的事**
+
+- 高對比模式下 `SourceTabs` 的目前分頁與寫作紀錄的種類切換看不出差別（§16.7 第 5 點）：兩個元件手機上也有，修的話用和篩選膠囊相同的 `lg:forced-colors:` 寫法（手機維持原樣），或經站主同意連手機一起修（R9）。
+- 輸入法的實機測試（§8、§16.4）由站主在 PR C 的預覽網址做；PR A 的快捷鍵只有 `?` 與 `[`，比對規則見 §16.7 第 2 點。
+- 截圖工具在 worker 剛啟動的第一張偶爾會在 API 回來之前判定穩定（§16.6 最後一點）；只影響給人看的桌機截圖。
+
+**檢查結果**（PR A 最後一版程式碼，含 §16.7；全部在這個工作目錄、同一個 Chromium）
+
+- `npm run typecheck`（三個 workspace）通過；`npm test`：api 563、web 100 個檔案 1,238 個測試、shared 379，全過；`npm run build` 通過。
+- e2e（`E2E_PORT=4473 npm run test:e2e -w @gsat/web -- --workers 2`，四個 project）：261 passed、33 skipped（依 project 略過），0 失敗。同一份建置先用 `--workers 3` 跑過一次：`mobile` 的 `vocab.spec.ts`「單字庫 → 單字卡 → 同義詞 → 返回」逾時 1 次（30 秒內點不到 abandon；單字庫第一次載入 3,006 字），單獨重跑 `--repeat-each 3` 全過，換 2 個 worker 的整套也過；這個測試和桌機改動無關（手機、/words 沒有改）。§16.7 的高對比與 `desktop-lg` 測試另外 `--repeat-each 3`，沒有不穩定。
+- `npm run test:data`（214 個測試）、`python3 tools/validate_bank.py --all`（729 個檔案 0 error；warning 是題庫既有的人工審核提醒）、`python3 -m unittest discover tools/tests`（160 個）通過。
+- 手機與平板 0 差異：`visual-run.sh $H/after-final --data-from $H/dist-baseline-a479469 --viewports narrow` → `compare.mjs $H/baseline-a479469 $H/after-final --diff-dir $H/after-final-diff`：306 組逐像素相同（exit 0），0 筆 console error。
+- 桌機九種視窗 909 張（`visual-run.sh $H/after-final-desktop --dist $H/after-final.dist --viewports desktop`），0 筆 console error。高對比模式另外用 Playwright 的 `emulateMedia({ forcedColors: 'active' })`（淺色與深色）放大看過 /exams、/translation、`/writing/essay/ai` 的 sticky 篩選列：選中的膠囊是 Highlight 底、字看得到，焦點框在膠囊外。
+- `git status`：只有本節與 §16.5、§16.6 列的檔案，沒有截圖、`test-results/` 或截圖工具的暫存檔。
+

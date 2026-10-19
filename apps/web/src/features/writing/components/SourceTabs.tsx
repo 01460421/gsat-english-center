@@ -6,7 +6,8 @@
 import { Link } from 'react-router';
 import { CUSTOM_ESSAY_PATH } from '../lib/format';
 
-export function SourceTabs({ kind, current }: { kind: 'translation' | 'essay'; current: 'exam' | 'bank' | 'custom' }) {
+/** className：取代外框的 mt-3（桌機的 sticky 篩選列把它和標題排在同一列，docs/design/desktop-ui.md §5.6）。 */
+export function SourceTabs({ kind, current, className = 'mt-3' }: { kind: 'translation' | 'essay'; current: 'exam' | 'bank' | 'custom'; className?: string }) {
   const base = kind === 'translation' ? '/writing/translation' : '/writing/essay';
   const tabs = [
     { key: 'exam' as const, to: base, label: '歷屆試題' },
@@ -14,7 +15,7 @@ export function SourceTabs({ kind, current }: { kind: 'translation' | 'essay'; c
     ...(kind === 'essay' ? [{ key: 'custom' as const, to: CUSTOM_ESSAY_PATH, label: '自訂題目' }] : []),
   ];
   return (
-    <nav aria-label="題目來源" className="mt-3">
+    <nav aria-label="題目來源" className={className}>
       <ul className="inline-flex max-w-full flex-wrap rounded-full border border-line p-1">
         {tabs.map((t) => {
           const active = t.key === current;

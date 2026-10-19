@@ -14,8 +14,9 @@ export const btnSecondary =
 export const btnDanger =
   'inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-bad px-4 py-2 font-medium text-bad hover:bg-surface-2 disabled:cursor-not-allowed disabled:opacity-50';
 
+/** 桌機（≥ lg）限寬 28rem：窄版頁面的內容仍有 50rem 寬，暱稱這類短欄位不必拉滿（docs/design/desktop-ui.md §5.12）。 */
 export const fieldCls =
-  'min-h-11 w-full min-w-0 rounded-xl border border-line bg-surface px-3 py-2 text-fg placeholder:text-muted';
+  'min-h-11 w-full min-w-0 rounded-xl border border-line bg-surface px-3 py-2 text-fg placeholder:text-muted lg:max-w-md';
 
 export const labelCls = 'mb-1 block text-sm font-medium';
 

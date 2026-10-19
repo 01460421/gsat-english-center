@@ -2,13 +2,13 @@
  * 題型頁：頁首下面直接是這個題型的題庫練習（難度切換＋抽到的題組，features/practice/SectionPractice.tsx），
  * 下面是學測怎麼考與收合的「題庫練習有什麼」。
  */
-import { InfoSection, ModulePage } from '../components/ModulePage';
-import { PracticeOffers, SectionPractice } from '../features/practice/SectionPractice';
+import { InfoSection } from '../components/ModulePage';
+import { PracticeOffers, SectionModulePage, SectionPractice } from '../features/practice/SectionPractice';
 import { getPage } from '../modules';
 
 export default function ClozePage() {
   return (
-    <ModulePage page={getPage('/cloze')}>
+    <SectionModulePage page={getPage('/cloze')}>
       <SectionPractice section="cloze" />
       <InfoSection title="學測怎麼考">
         <p>
@@ -16,6 +16,6 @@ export default function ClozePage() {
         </p>
       </InfoSection>
       <PracticeOffers section="cloze" />
-    </ModulePage>
+    </SectionModulePage>
   );
 }

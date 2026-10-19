@@ -16,7 +16,7 @@ import {
   type SelfAssessment,
   type TranslationBody,
 } from '@gsat/shared';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router';
 import { dataErrorMessage } from '../../data/client';
 import { APP_NAME } from '../../modules';
@@ -27,7 +27,7 @@ import { TranslationSelfCheck, selfScoreOf } from './components/TranslationSelfC
 import { AiNotice, BackLink, ConfirmButton, DataError, ErrorMessage, Loading, Notice, card, englishInputProps, primaryButton, secondaryButton, textInput } from './components/ui';
 import { findTranslationSet, groupIdOf, isAiGradableTranslation, loadTranslationIndex, translationItemId, type TranslationSet } from './data';
 import { useAiAccess } from './lib/access';
-import { clearDraft, draftKey, isTranslationDraft, loadDraft, type TranslationDraft } from './lib/drafts';
+import { clearDraft, draftKey, isTranslationDraft, loadDraft, saveDraft, type TranslationDraft } from './lib/drafts';
 import { isQuotaError, type ErrorView } from './lib/errors';
 import { examRefLabel } from './lib/format';
 import { useAutosave, useQuota, useRevealOnOpen, useStaticData } from './lib/hooks';
@@ -92,7 +92,21 @@ function TranslationAttempt({ set }: { set: TranslationSet }) {
     const saved = loadDraft(key, isTranslationDraft);
     return saved ? fitDraft(saved, set) : emptyDraft(set);
   });
-  const { ok: saved } = useAutosave(key, draft);
+  const { ok: saved, discard } = useAutosave(key, draft);
+  const draftRef = useRef(draft);
+  draftRef.current = draft;
+  /**
+   * 送出 AI 批改之後：草稿保留文字（想修改再練一次），但下次要建立新的提交；記下送出時間（首頁的「繼續學習」不再把它
+   * 當成寫到一半，之後又改過才算）。立刻寫進這台裝置：接著就換頁，等 600ms 的自動儲存來不及。
+   */
+  const markSubmitted = () => {
+    const now = Date.now();
+    const next = { ...draftRef.current, submissionId: null, aiSubmittedAt: now, updatedAt: now };
+    draftRef.current = next;
+    discard();
+    saveDraft(key, next);
+    setDraft(next);
+  };
   const access = useAiAccess();
   const errorView = useErrorView();
   const { quota, refresh: refreshQuota } = useQuota(access.state === 'ready');
@@ -126,13 +140,12 @@ function TranslationAttempt({ set }: { set: TranslationSet }) {
       // 自評（看分數前）：失敗不影響批改。
       await saveSelfAssessment(submission.id, selfAssess).catch(() => undefined);
       await startTask('translation-grade', submission.id);
-      // 送出後草稿保留文字（想修改再練一次），但下次要建立新的提交。
-      setDraft((d) => ({ ...d, submissionId: null }));
+      markSubmitted();
       navigate(`/writing/submissions/${encodeURIComponent(submission.id)}`);
     } catch (err) {
       if (err instanceof AlreadySubmittedError) {
         // 上一次其實已經送出（回應遺失）：直接看那一份的進度，不再送一次、不再扣點。
-        setDraft((d) => ({ ...d, submissionId: null }));
+        markSubmitted();
         navigate(`/writing/submissions/${encodeURIComponent(err.submission.id)}`);
         return;
       }

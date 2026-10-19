@@ -42,9 +42,14 @@ export default defineConfig({
   },
   test: {
     environment: 'happy-dom',
+    // happy-dom 預設視窗 1024×768，matchMedia('(min-width: 64rem)') 會成立，元件測試就悄悄走桌機路徑。
+    // 預設改成手機 375×667（docs/design/desktop-ui.md §2.1 R8）；要測桌機時用 src/test/viewport.ts 的 setDesktopViewport()。
+    environmentOptions: { happyDOM: { width: 375, height: 667 } },
     // scripts/**：資料管線（build-data 的題庫輸出、資料契約）的測試，檔頭用 @vitest-environment node 在 Node 環境跑。
     include: ['src/**/*.test.{ts,tsx}', 'scripts/**/*.test.ts'],
     setupFiles: ['./src/test/setup.ts'],
-    css: false,
+    // 元件匯入的 CSS 一律不處理（和 css: false 相同）；只有 ?raw 匯入回傳原始碼：lib/media.test.tsx 比對 index.css 的
+    // container 尺寸和 JS 的門檻（docs/design/desktop-ui.md §16.7）。
+    css: { include: [/\.css\?raw$/] },
   },
 });

@@ -50,13 +50,22 @@ export default defineConfig({
     timezoneId: 'Asia/Taipei',
     ...(executablePath ? { launchOptions: { executablePath } } : {}),
   },
+  /*
+   * 桌機介面改版（docs/design/desktop-ui.md §11.3）：
+   *   desktop     1280×900，既有的 spec（不跑 desktop-*、mobile-guard）；
+   *   mobile      375×667，既有的 spec＋mobile-guard.spec.ts（桌機專用的東西在手機上都不存在、不作用）；
+   *   desktop-ui  1366×640（學校筆電的視窗內高），desktop-*.spec.ts；個別測試再用 setViewportSize 切 1280×600、1920×960 等；
+   *   desktop-lg  1024×600（lg 但 main 不到 ws 寬度），smoke.spec.ts＋desktop-shell.spec.ts。
+   */
   projects: [
     {
       name: 'desktop',
+      testIgnore: [/desktop-/, /mobile-guard/],
       use: { browserName: 'chromium', viewport: { width: 1280, height: 900 } },
     },
     {
       name: 'mobile',
+      testIgnore: /desktop-/,
       use: {
         browserName: 'chromium',
         viewport: { width: 375, height: 667 },
@@ -64,6 +73,16 @@ export default defineConfig({
         isMobile: true,
         hasTouch: true,
       },
+    },
+    {
+      name: 'desktop-ui',
+      testMatch: /desktop-.*\.spec\.ts/,
+      use: { browserName: 'chromium', viewport: { width: 1366, height: 640 } },
+    },
+    {
+      name: 'desktop-lg',
+      testMatch: [/smoke\.spec\.ts/, /desktop-shell\.spec\.ts/],
+      use: { browserName: 'chromium', viewport: { width: 1024, height: 600 } },
     },
   ],
   webServer: {

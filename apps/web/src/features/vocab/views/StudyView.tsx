@@ -12,6 +12,8 @@ import { useEffect, useEffectEvent, useId, useMemo, useRef, useState, type React
 import { Rating, type Grade } from 'ts-fsrs';
 import { forgetFailedLoads } from '../../../data/client';
 import { levelFromEntryId, VOCAB_TIERS, type VocabEntry, type VocabLevel } from '../../../data/vocab';
+import { isFormControlTarget, isModalOpen, useHotkeys, type HotkeyDef } from '../../../lib/hotkeys';
+import { useIsDesktop } from '../../../lib/media';
 import { buildFormMap } from '../lib/forms';
 import { feedbackExample } from '../lib/quiz';
 import {
@@ -41,10 +43,12 @@ type Session =
   | { phase: 'running'; queue: string[]; entries: Map<string, VocabEntry>; done: number; revealed: boolean }
   | { phase: 'finished'; done: number };
 
-/** 鍵盤快捷鍵只在焦點不在輸入元件時生效，免得在別的欄位打字時誤觸。 */
-function isTypingTarget(target: EventTarget | null): boolean {
-  return target instanceof HTMLElement && (target.isContentEditable || ['INPUT', 'TEXTAREA', 'SELECT'].includes(target.tagName));
-}
+/** 快捷鍵說明裡列出的每日學習按鍵（只列出，不經全站的登記表處理，lib/hotkeys.ts 的 listOnly）。 */
+const noop = () => {};
+const STUDY_HOTKEYS: HotkeyDef[] = [
+  { keys: ['space', 'enter'], description: '翻卡', group: '這一頁', listOnly: true, run: noop },
+  { keys: SRS_GRADES.map((g) => g.key), description: `評分（${SRS_GRADES.map((g) => `${g.key} ${g.label}`).join('、')}）`, group: '這一頁', listOnly: true, run: noop },
+];
 
 function Stat({ label, value, hint, icon }: { label: string; value: string; hint?: string; icon?: ReactNode }) {
   return (
@@ -298,8 +302,12 @@ export function StudyView({ active }: { active: boolean }) {
     );
   };
 
+  // 鍵盤快捷鍵只在焦點不在輸入元件時生效，免得在別的欄位打字時誤觸。桌機另外在有對話框開著時不作用
+  // （例如鍵盤快捷鍵說明：在說明裡按 1 不能替背後的卡片評分，docs/design/desktop-ui.md §4.4）。
+  const isDesktop = useIsDesktop();
   const onKey = useEffectEvent((e: KeyboardEvent) => {
-    if (session?.phase !== 'running' || e.altKey || e.ctrlKey || e.metaKey || isTypingTarget(e.target)) return;
+    if (session?.phase !== 'running' || e.altKey || e.ctrlKey || e.metaKey || isFormControlTarget(e.target)) return;
+    if (isDesktop && isModalOpen()) return;
     if (!session.revealed && (e.key === ' ' || e.key === 'Enter')) {
       // 焦點在按鈕上時，空白鍵／Enter 本來就會按下按鈕，不要再翻一次。
       if (e.target instanceof HTMLButtonElement || e.target instanceof HTMLAnchorElement) return;
@@ -319,6 +327,8 @@ export function StudyView({ active }: { active: boolean }) {
     document.addEventListener('keydown', handler);
     return () => document.removeEventListener('keydown', handler);
   }, [active, session?.phase]);
+  // 桌機的快捷鍵說明（? 鍵）在「這一頁」列出這兩組按鍵；listOnly：按鍵仍由上面的監聽處理，不受單鍵快捷鍵開關影響。
+  useHotkeys(STUDY_HOTKEYS, { enabled: isDesktop && active && session?.phase === 'running' });
 
   if (session?.phase === 'loading') return <LoadingBlock label="正在準備今天的單字…" />;
   if (session?.phase === 'error') {

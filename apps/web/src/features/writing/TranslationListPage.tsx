@@ -6,11 +6,14 @@
  */
 import { ChevronRight } from 'lucide-react';
 import { Link } from 'react-router';
+import { InSlot, SlotProvider, useSlotTarget } from '../../components/desktop/Slot';
 import { dataErrorMessage } from '../../data/client';
 import { EXAM_KIND_LABELS } from '../../data/exams';
+import { useIsDesktop } from '../../lib/media';
 import { APP_NAME } from '../../modules';
 import { KindFilter, WRITING_KINDS, useKindFilter, type WritingKindFilter } from './components/KindFilter';
 import { SourceTabs } from './components/SourceTabs';
+import { WritingListBar } from './components/WritingListBar';
 import { BackLink, DataError, Loading } from './components/ui';
 import { isAiGradableTranslation, loadTranslationIndex, type TranslationSet } from './data';
 import { examRefLabel } from './lib/format';
@@ -46,6 +49,23 @@ function SetCard({ set }: { set: TranslationSet }) {
 }
 
 export default function TranslationListPage() {
+  const isDesktop = useIsDesktop();
+  const [slot, slotRef] = useSlotTarget();
+  if (isDesktop) {
+    // 桌機（docs/design/desktop-ui.md §5.6）：返回連結、標題、來源分頁與篩選收成一列 sticky 篩選列；整頁放寬，段落限寬。
+    return (
+      <article className="bleed [&_footer]:max-w-3xl [&_p]:max-w-3xl">
+        <title>{`中譯英題目｜${APP_NAME}`}</title>
+        <WritingListBar title="中譯英題目" kind="translation" current="exam" slotRef={slotRef} />
+        <p className="mt-3 text-muted">
+          歷屆學測、指考與參考試卷的中譯英。點選一組開始作答：可以用自我檢核清單自己檢查，或（登入並通過申請後）請 AI 批改。
+        </p>
+        <SlotProvider name="kind-filter" target={slot}>
+          <TranslationPromptList className="mt-6" />
+        </SlotProvider>
+      </article>
+    );
+  }
   return (
     <article>
       <title>{`中譯英題目｜${APP_NAME}`}</title>
@@ -64,14 +84,30 @@ export default function TranslationListPage() {
  * 題目列表本體（篩選、各考試的題組卡片、題目來源）：這一頁與中譯英題型頁（pages/TranslationPage.tsx）共用。
  * 各考試的標題預設是 <h2>；題型頁把列表放在「歷屆試題」<h2> 底下，傳 headingLevel={3}。
  */
-export function TranslationPromptList({ className = '', headingLevel = 2 }: { className?: string; headingLevel?: 2 | 3 }) {
+export function TranslationPromptList({
+  className = '',
+  headingLevel = 2,
+  filterLegend,
+  onKindChange,
+}: {
+  className?: string;
+  headingLevel?: 2 | 3;
+  /** 篩選的 legend（題型頁的桌機版傳「歷屆試題的考試」：篩選在整頁共用的篩選列裡）。 */
+  filterLegend?: string;
+  /** 篩選改變之後（題型頁的桌機版用來把「歷屆試題」區捲進畫面）。 */
+  onKindChange?: (k: WritingKindFilter) => void;
+}) {
   const data = useStaticData(loadTranslationIndex);
-  const [kind, setKind] = useKindFilter();
+  const [kind, setKindParam] = useKindFilter();
+  const setKind = (k: WritingKindFilter) => {
+    setKindParam(k);
+    onKindChange?.(k);
+  };
   return (
     <div className={`space-y-6 ${className}`}>
       {data.status === 'loading' && <Loading>題目載入中…</Loading>}
       {data.status === 'error' && <DataError message={dataErrorMessage(data.error)} onRetry={data.retry} />}
-      {data.status === 'ready' && <TranslationLists sets={data.value.sets} kind={kind} onKind={setKind} headingLevel={headingLevel} />}
+      {data.status === 'ready' && <TranslationLists sets={data.value.sets} kind={kind} onKind={setKind} headingLevel={headingLevel} legend={filterLegend} />}
       <footer className="rounded-2xl border border-line bg-surface p-4 text-sm text-muted">
         題目來源：大學入學考試中心歷屆試題。本站只整理中文題目，不轉載官方參考譯文；各題作答頁附有官方題本與評分原則的連結。
       </footer>
@@ -84,11 +120,13 @@ function TranslationLists({
   kind,
   onKind,
   headingLevel,
+  legend,
 }: {
   sets: TranslationSet[];
   kind: WritingKindFilter;
   onKind: (k: WritingKindFilter) => void;
   headingLevel: 2 | 3;
+  legend: string | undefined;
 }) {
   const Heading = headingLevel === 3 ? 'h3' : 'h2';
   const counts = {
@@ -100,7 +138,9 @@ function TranslationLists({
   const kinds = kind === 'all' ? WRITING_KINDS : [kind];
   return (
     <>
-      <KindFilter value={kind} onChange={onKind} counts={counts} />
+      <InSlot name="kind-filter">
+        <KindFilter value={kind} onChange={onKind} counts={counts} legend={legend} />
+      </InSlot>
       {kinds.map((k) => {
         const list = sets.filter((s) => s.exam === k).sort((a, b) => b.year - a.year || (a.session === b.session ? 0 : a.session === 'regular' ? -1 : 1));
         if (list.length === 0) return null;
@@ -110,7 +150,7 @@ function TranslationLists({
               {EXAM_KIND_LABELS[k]}
               <span className="ml-2 text-sm font-normal text-muted">{list.length} 組</span>
             </Heading>
-            <ul className="grid gap-3 md:grid-cols-2">
+            <ul className="grid gap-3 md:grid-cols-2 lg:@wide/main:grid-cols-3">
               {list.map((s) => (
                 <li key={s.exam_id} className="min-w-0">
                   <SetCard set={s} />

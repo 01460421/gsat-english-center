@@ -143,7 +143,7 @@ export function createAttempt(examId: string, mode: AttemptMode, timeLimitSec: n
 }
 
 /** 空字串、空陣列（或全空的表格）視為清除，不留在紀錄裡，「已答題數」才會正確。 */
-function isEmptyAnswer(value: AnswerValue): boolean {
+export function isEmptyAnswer(value: AnswerValue): boolean {
   if (typeof value === 'string') return value === '';
   return value.every((v) => v === '');
 }
