@@ -135,7 +135,8 @@ const TABLE_COLUMNS: Column<SubmissionSummary>[] = [
     className: 'whitespace-nowrap',
     cell: (s) => (
       <span className="text-sm whitespace-normal text-muted tabular-nums">
-        <Phrases parts={formatUnixTime(s.updated_at).split(' ')} sep=" " />
+        {/* 日期與時間之間的空白依 ICU 版本可能是一般空白、NBSP 或 U+202F，所以用 \s 切。 */}
+        <Phrases parts={formatUnixTime(s.updated_at).split(/\s+/)} sep=" " />
       </span>
     ),
   },
