@@ -9,8 +9,8 @@
  * （等你確認辨識文字、文字已確認尚未批改）在狀態欄標成醒目的標章，不另做第二個連結（目的地相同）。
  * 外層的 region「我的寫作紀錄」與種類切換照舊；「載入更多」在表格底下寫成「再載入 20 筆」。
  * 表格在 /writing 的左欄，寬度從約 460px（main 剛到 ws）到 1,000px 不等：卡片是 container（lg:@container），
- * 卡片不到 40rem 時拿掉「方式」欄（@max-[40rem]:hidden；手寫改成題目旁的小標章）；每一格只在詞與詞之間換行（「草稿／（尚未送出）」「2026/10/18／09:50」），
- * 不會一個字一行。
+ * 卡片不到 40rem 時拿掉「方式」欄（@max-[40rem]:hidden；手寫改成題目旁的小標章）；每一格只在詞與詞之間換行（「草稿／（尚未送出）」），
+ * 不會一個字一行；更新時間整段不換行，今年的紀錄省略年份。
  */
 import { SUBMISSION_KINDS, TRANSLATION_GROUP_MAX, ESSAY_MAX_SCORE, type SubmissionKind, type SubmissionStatus, type SubmissionSummary } from '@gsat/shared';
 import { ChevronRight } from 'lucide-react';
@@ -20,7 +20,7 @@ import { DataTable, type Column } from '../../../components/desktop/DataTable';
 import { useIsDesktop } from '../../../lib/media';
 import type { ErrorView } from '../lib/errors';
 import { useErrorView } from '../lib/useErrorView';
-import { KIND_LABELS, STATUS_LABELS, bandLabel, formatScore, formatUnixTime, groupLabel } from '../lib/format';
+import { KIND_LABELS, STATUS_LABELS, bandLabel, formatScore, formatUnixTime, formatUnixTimeShort, groupLabel } from '../lib/format';
 import { listSubmissions } from '../lib/writingApi';
 import { AiBadge, ErrorMessage, card, secondaryButton } from './ui';
 
@@ -133,11 +133,11 @@ const TABLE_COLUMNS: Column<SubmissionSummary>[] = [
     id: 'updated',
     header: '更新時間',
     className: 'whitespace-nowrap',
+    // 日期和時間整段不換行；今年的紀錄省略年份（1,366 寬時左欄只剩幾 px 餘裕，字型稍寬就會換行），完整時間在滑鼠提示。
     cell: (s) => (
-      <span className="text-sm whitespace-normal text-muted tabular-nums">
-        {/* 日期與時間之間的空白依 ICU 版本可能是一般空白、NBSP 或 U+202F，所以用 \s 切。 */}
-        <Phrases parts={formatUnixTime(s.updated_at).split(/\s+/)} sep=" " />
-      </span>
+      <time dateTime={new Date(s.updated_at * 1000).toISOString()} title={formatUnixTime(s.updated_at)} className="text-sm text-muted tabular-nums">
+        <Phrases parts={[formatUnixTimeShort(s.updated_at)]} />
+      </time>
     ),
   },
   {

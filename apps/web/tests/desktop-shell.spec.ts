@@ -670,6 +670,8 @@ test.describe('審查修正：版面', () => {
         next_cursor: null,
       }),
     );
+    // 更新時間是「10/3 12:01」（和現在同一年時省略年份）：固定「現在」，明年跑也一樣寬。
+    await page.clock.setFixedTime(new Date('2026-10-20T12:00:00+08:00'));
     for (const [width, height] of [
       [1216, 640],
       [1242, 640],
@@ -684,7 +686,7 @@ test.describe('審查修正：版面', () => {
         await expect(table.getByRole('link')).toHaveCount(kind === '中譯英' ? 5 : 3);
         const m = await table.evaluate((t) => ({
           heads: Array.from(t.querySelectorAll('thead th'), (th) => th.getBoundingClientRect().height).filter((h) => h > 0),
-          // 狀態、更新時間兩欄的內容最多兩行（20px 一行）；每一段（「草稿」「（尚未送出）」「2026/10/18」）都不在字中間斷開。
+          // 狀態、更新時間兩欄的內容最多兩行（20px 一行）；每一段（「草稿」「（尚未送出）」「10/3 12:01」）都不在字中間斷開。
           cells: Array.from(t.querySelectorAll('tbody tr'), (tr) => [2, 3].map((i) => (tr.children[i]?.firstElementChild as HTMLElement).getBoundingClientRect().height)).flat(),
           phrases: Array.from(t.querySelectorAll('tbody span.whitespace-nowrap'), (el) => el.getClientRects().length),
           rows: Array.from(t.querySelectorAll('tbody tr'), (tr) => tr.getBoundingClientRect().height),

@@ -87,7 +87,9 @@ describe('SubmissionHistory（桌機：表格）', () => {
     expect(phrases(statusCell(rows[0] as HTMLElement))).toEqual([expect.any(String)]);
     expect(phrases(within(table).getByText('等你確認辨識文字').closest('td') as HTMLElement)).toEqual(['等你確認辨識文字']);
     const timeCell = within(rows[0] as HTMLElement).getAllByRole('cell')[3] as HTMLElement;
-    expect(phrases(timeCell)).toEqual([expect.stringMatching(/^\d{4}\/\d{1,2}\/\d{1,2}$/), expect.stringMatching(/^\d{2}:\d{2}$/)]);
+    // 日期與時間整段不換行；今年的紀錄省略年份（fixture 的年份跟執行測試的年份不一定相同），完整時間在 title。
+    expect(phrases(timeCell)).toEqual([expect.stringMatching(/^(\d{4}\/)?\d{1,2}\/\d{1,2} \d{2}:\d{2}$/)]);
+    expect(within(timeCell).getByTitle(/^\d{4}\/\d{1,2}\/\d{1,2}\s\d{2}:\d{2}$/).tagName).toBe('TIME');
     expect(phrases(links[2] as HTMLElement)).toEqual(['115 學測', '英文作文']);
     expect(within(links[1] as HTMLElement).getByText('手寫')).toHaveClass('hidden', '@max-[40rem]:inline-block');
     expect(within(history).getByRole('button', { name: '再載入 20 筆' })).toBeInTheDocument();
