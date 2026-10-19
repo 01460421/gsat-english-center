@@ -15,6 +15,7 @@ import { attemptStorageKey } from '../exams/attempt';
 import { jsonResponse } from '../exams/testFixtures';
 import { MISTAKES_STORAGE_KEY } from '../vocab/lib/mistakes';
 import { resetVocabStoresForTests } from '../vocab/state';
+import { setDesktopViewport } from '../../test/viewport';
 import { PRACTICE_HISTORY_KEY, resetPracticeHistoryForTests } from './history';
 import { AI_GROUP_LABEL, AI_ITEMS_NOTICE, AI_PASSAGE_NOTICE, AI_REFERENCES_NOTICE } from './labels';
 import PracticeHome from './PracticeHome';
@@ -119,6 +120,54 @@ describe('選單（/practice）', () => {
       screen.getByRole('button', { name: '再試一次' }).click();
     });
     expect(await screen.findByRole('link', { name: /文意選填・進階練習/ })).toBeInTheDocument();
+  });
+});
+
+describe('選單（/practice，桌機：題型 × 難度矩陣）', () => {
+  it('lg 但不到 ws（1024 寬）：矩陣表格，連結與「出題中」的名稱和卡片一樣；三種難度的說明留在上面', async () => {
+    setDesktopViewport(1024, 768);
+    await renderAt('/practice');
+    const table = await screen.findByRole('table', { name: '題型 × 難度' });
+    expect(within(table).getAllByRole('columnheader').map((th) => th.textContent)).toEqual(['題型', '穩定基礎', '進階練習', '超越頂標']);
+    expect(within(table).getAllByRole('rowheader')).toHaveLength(6);
+    expect(within(table).getAllByRole('link', { name: /組，已做/ })).toHaveLength(6);
+    expect(within(table).getAllByRole('group', { name: /：出題中$/ })).toHaveLength(12);
+    expect(within(table).getByRole('link', { name: '文意選填・進階練習：1 組，已做 0 組' })).toHaveAttribute('href', '/practice/word-bank/advanced');
+    expect(screen.getByText('頂標到 15 級分的學生')).toBeInTheDocument();
+    expect(screen.queryByRole('complementary')).not.toBeInTheDocument();
+  });
+
+  it('做過的格子：固定兩行「1 組」「已做 1・80%」（第二行不換行），答對率用 aria-describedby 讀出「答對 80%」，名稱格式不變', async () => {
+    setDesktopViewport(1024, 768);
+    window.localStorage.setItem(
+      PRACTICE_HISTORY_KEY,
+      JSON.stringify({ v: 1, done: { 'ai.wb.0a1b2c': { version: 1, section: 'word_bank', tier: 'advanced', at: '2026-10-08T00:00:00Z', correct: 8, total: 10, hinted: 0 } }, current: {}, hints: {} }),
+    );
+    await renderAt('/practice');
+    const cell = await screen.findByRole('link', { name: '文意選填・進階練習：1 組，已做 1 組' });
+    // 第 1 行是組數（＋箭頭），第 2 行是做過的進度；每一格的第 2 行都在（沒做過寫「還沒做」），所有格一樣高。
+    const [count, progress] = Array.from(cell.children) as HTMLElement[];
+    expect(count).toHaveTextContent(/^1 組$/);
+    expect(progress).toHaveTextContent(/^已做 1・答對 80%$/);
+    expect(progress).toHaveClass('whitespace-nowrap');
+    expect(cell).toHaveAccessibleDescription('答對 80%');
+    const untouched = screen.getByRole('link', { name: '詞彙題・穩定基礎：1 組，已做 0 組' });
+    expect(untouched).not.toHaveAttribute('aria-describedby');
+    expect(untouched.children).toHaveLength(2);
+    expect(untouched.children[1]).toHaveTextContent(/^還沒做$/);
+  });
+
+  it('ws 寬度（1366）：兩欄，右欄是精簡的三種難度說明、AI 題目怎麼來的與寫作仿真題的連結', async () => {
+    setDesktopViewport(1366, 640);
+    await renderAt('/practice');
+    await screen.findByRole('table', { name: '題型 × 難度' });
+    const aside = screen.getByRole('complementary', { name: '難度與題目說明' });
+    expect(within(aside).getByRole('heading', { name: '三種難度給誰' })).toBeInTheDocument();
+    expect(within(aside).getByText('頂標到 15 級分的學生')).toBeInTheDocument();
+    expect(within(aside).getByRole('heading', { name: 'AI 題目怎麼來的' })).toBeInTheDocument();
+    expect(within(aside).getByRole('link', { name: '本站仿真中譯英' })).toHaveAttribute('href', '/writing/translation/ai');
+    expect(screen.getAllByText('頂標到 15 級分的學生')).toHaveLength(1);
+    expect(screen.getAllByRole('link', { name: '本站仿真作文' })).toHaveLength(1);
   });
 });
 

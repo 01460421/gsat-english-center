@@ -4,6 +4,12 @@
  *
  * 狀態都讀 localStorage（gsat-mock:v1:*），不必下載考卷；只有展開「下載 PDF（考試格式）」時才載入那一份考卷。
  * 別的分頁交卷、開考時（storage 事件）重新讀取，列表跟著更新。
+ *
+ * 桌機（≥ lg，docs/design/desktop-ui.md §5.8）：仍是 6 個 article（tests/mock.spec.ts 依賴 region「卷別」裡的 article 與 h3），
+ * main ≥ ws（58.5rem）時一張一列，排成「列式卡片」：卷別｜狀態（＋最佳成績、最近一次、沿用題標章）｜動作，每列欄寬相同，
+ * 看起來就是對齊的表格；不到 ws（1024 寬）維持兩欄卡片。
+ * 用卡片自己的寬度判斷（li 是 lg:@container，≥ 48rem 才排成一列；三欄的寬度固定，每一列的欄位才對齊）。全部只加 lg: 起的 class，
+ * 只在桌機出現的文字是 hidden lg:…（小而無狀態，R3）；手機像素不變。
  */
 import { ChevronRight, CircleAlert, Download, FileText } from 'lucide-react';
 import { Suspense, use, useEffect, useId, useMemo, useState } from 'react';
@@ -65,8 +71,20 @@ function Remaining({ record }: { record: MockAttemptRecord }) {
   );
 }
 
-function StatusLine({ active, done }: { active: MockAttemptRecord | undefined; done: readonly MockHistoryEntry[] }) {
+/** 歷次最高的原始總分（同分取最近的一次）。 */
+export function bestEntry(done: readonly MockHistoryEntry[]): MockHistoryEntry | undefined {
+  return done.reduce<MockHistoryEntry | undefined>((best, e) => (best === undefined || e.raw > best.raw ? e : best), undefined);
+}
+
+/** ISO 時間 → 「10/18」（台灣時間）。 */
+function shortDate(iso: string): string {
+  const d = new Date(iso);
+  return Number.isNaN(d.getTime()) ? '' : d.toLocaleDateString('zh-TW', { timeZone: 'Asia/Taipei', month: 'numeric', day: 'numeric' });
+}
+
+function StatusLine({ active, done, reuseNotice }: { active: MockAttemptRecord | undefined; done: readonly MockHistoryEntry[]; reuseNotice?: string }) {
   const latest = done[0];
+  const best = bestEntry(done);
   return (
     <p className="text-sm">
       {active ? (
@@ -81,6 +99,19 @@ function StatusLine({ active, done }: { active: MockAttemptRecord | undefined; d
       ) : (
         <span className="text-muted">未作答</span>
       )}
+      {/* 桌機的列式卡片：最佳成績與最近一次（每個值自帶短標籤）、沿用題的小標章（全文放 title）。 */}
+      {best && latest && (
+        <span className="hidden text-muted lg:@3xl:block">
+          最佳 <span className="tabular-nums">{formatPoints(best.raw)}</span> 分{levelText(best)}・最近 {shortDate(latest.submittedAt)}
+        </span>
+      )}
+      {reuseNotice && (
+        <span title={reuseNotice} className="mt-1 hidden w-fit items-center gap-1 rounded-full bg-badge-bg px-2 py-0.5 text-xs font-semibold text-badge-fg lg:@3xl:flex">
+          <CircleAlert aria-hidden="true" className="size-3.5" />
+          沿用題提醒
+          <span className="sr-only">：{reuseNotice}</span>
+        </span>
+      )}
     </p>
   );
 }
@@ -94,7 +125,7 @@ function PaperPdf({ paper }: { paper: MockPaper }) {
   const examPromise = useMemo(() => (open ? loadExam(paper.examId) : null), [open, paper.examId, retry]);
   if (!visible) return null;
   return (
-    <div className="border-t border-line pt-3">
+    <div className="border-t border-line pt-3 lg:@3xl:col-span-full">
       <button
         type="button"
         aria-expanded={open}
@@ -141,8 +172,11 @@ function PaperCard({ paper, active, done, order }: { paper: MockPaper; active: M
   const id = useId();
   const latest = done[0];
   return (
-    <li>
-      <article aria-labelledby={`${id}-title`} className="flex h-full flex-col gap-3 rounded-2xl border border-line bg-surface p-4">
+    <li className="lg:@container">
+      <article
+        aria-labelledby={`${id}-title`}
+        className="flex h-full flex-col gap-3 rounded-2xl border border-line bg-surface p-4 lg:@3xl:grid lg:@3xl:grid-cols-[14rem_minmax(0,1fr)_16.5rem] lg:@3xl:items-center lg:@3xl:gap-x-6 lg:@3xl:py-3"
+      >
         <header className="flex items-start gap-3">
           <span aria-hidden="true" className="inline-flex size-8 shrink-0 items-center justify-center rounded-full bg-primary-soft text-sm font-semibold text-primary tabular-nums">
             {order}
@@ -152,13 +186,14 @@ function PaperCard({ paper, active, done, order }: { paper: MockPaper; active: M
               {paper.label}
             </h3>
             <span className="block text-sm text-muted">
-              {MOCK_DURATION_MIN} 分鐘・滿分 100 分・級分對照 {paper.scaleYear} 學年度
+              {/* 桌機的列式卡片欄寬只有 14rem：「級分對照 115 學年度」整段一起換行，不拆成「級／分對照」。 */}
+              {MOCK_DURATION_MIN} 分鐘・滿分 100 分・<span className="lg:whitespace-nowrap">級分對照 {paper.scaleYear} 學年度</span>
             </span>
           </span>
         </header>
-        <StatusLine active={active} done={done} />
+        <StatusLine active={active} done={done} reuseNotice={paper.reuseNotice} />
         {paper.reuseNotice && (
-          <p className="flex gap-2 rounded-xl bg-badge-bg px-3 py-2 text-sm text-badge-fg">
+          <p className="flex gap-2 rounded-xl bg-badge-bg px-3 py-2 text-sm text-badge-fg lg:@3xl:hidden">
             <CircleAlert aria-hidden="true" className="mt-0.5 size-4 shrink-0" />
             <span>
               <strong>沿用題提醒：</strong>
@@ -166,7 +201,7 @@ function PaperCard({ paper, active, done, order }: { paper: MockPaper; active: M
             </span>
           </p>
         )}
-        <div className="mt-auto flex flex-wrap items-center gap-2">
+        <div className="mt-auto flex flex-wrap items-center gap-2 lg:@3xl:mt-0">
           <Link
             to={`/mock/${paper.examId}`}
             className="inline-flex min-h-11 items-center gap-1 rounded-full bg-primary px-5 font-semibold text-on-primary"
@@ -192,7 +227,7 @@ function PaperCard({ paper, active, done, order }: { paper: MockPaper; active: M
 function HistoryList({ history }: { history: readonly MockHistoryEntry[] }) {
   const id = useId();
   return (
-    <section aria-labelledby={`${id}-title`} className="rounded-2xl border border-line bg-surface p-5 lg:p-6">
+    <section aria-labelledby={`${id}-title`} className="rounded-2xl border border-line bg-surface p-5 lg:max-w-[60rem] lg:p-6">
       <h2 id={`${id}-title`} className="text-lg font-semibold">
         作答紀錄
       </h2>
@@ -238,7 +273,7 @@ export function MockPaperList() {
         <h2 id={`${id}-papers`} className="mb-3 text-lg font-semibold">
           卷別
         </h2>
-        <ol className="grid grid-cols-1 gap-3 md:grid-cols-2">
+        <ol className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:max-w-[60rem] lg:@ws/main:grid-cols-1">
           {MOCK_PAPERS.map((paper, i) => (
             <PaperCard
               key={paper.examId}

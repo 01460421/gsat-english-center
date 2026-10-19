@@ -124,8 +124,9 @@ const CREDITS: Credit[] = [
 
 export default function AboutPage() {
   const page = getPage('/about');
+  // 桌機（窄版寬度，docs/design/desktop-ui.md §5.11）：段落與條列限 65 字元寬，中文一行約 36–40 字。
   return (
-    <article>
+    <article className="lg:[&_li]:max-w-prose lg:[&_p]:max-w-prose">
       <PageHeader page={page} />
       <div className="grid grid-cols-1 gap-4">
         <InfoSection title={`關於${APP_NAME}`}>

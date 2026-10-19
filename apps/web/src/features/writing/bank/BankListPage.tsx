@@ -15,12 +15,15 @@ import { TIER_LABELS, TIERS, type Tier } from '@gsat/shared';
 import { ChevronRight, CircleCheck } from 'lucide-react';
 import { useEffect, useId, useRef, useState, type Ref } from 'react';
 import { Link, useLocation, useSearchParams } from 'react-router';
+import { InSlot, SlotProvider, useInSlot, useSlotTarget } from '../../../components/desktop/Slot';
 import { dataErrorMessage } from '../../../data/client';
 import { useFeatures } from '../../../lib/api';
+import { useIsDesktop } from '../../../lib/media';
 import { APP_NAME } from '../../../modules';
 import { AiGroupBadge } from '../../practice/components/AiGroupBadge';
 import { displayTopic } from '../../practice/labels';
 import { SourceTabs } from '../components/SourceTabs';
+import { WritingListBar } from '../components/WritingListBar';
 import { BackLink, DataError, Loading, secondaryButton } from '../components/ui';
 import type { BankProgress } from './drafts';
 import { ESSAY_TYPE_LABELS } from '../lib/format';
@@ -136,7 +139,7 @@ function TierCards({ section, tier, limit }: { section: BankWritingSection; tier
   const refAt = (i: number) => (limit !== undefined && i === limit ? firstNewRef : undefined);
   return (
     <>
-      <ul className="grid gap-3 md:grid-cols-2">
+      <ul className="grid gap-3 md:grid-cols-2 lg:@wide/main:grid-cols-3">
         {list.section_type === 'translation'
           ? shownCards(list.groups, section, limit, expanded).map((c, i) => (
               <li key={c.uid} className="min-w-0">
@@ -179,6 +182,38 @@ function TierPicker({
   onChange: (t: Tier) => void;
 }) {
   const unit = section === 'translation' ? '組' : '題';
+  // 桌機的列表頁把難度切換放進 sticky 篩選列（BankListPage；docs/design/desktop-ui.md §5.6）：一列的精簡版，說明留在原處。
+  // 選中的平常是實心主色；高對比模式會拿掉底色，改用系統的 Highlight／HighlightText（R11），並設 forced-color-adjust: none
+  // （不設的話字後面會墊一塊 Canvas 色的底，白字壓在白底上看不見；設計文件 §16.7）。
+  const slotted = useInSlot('tier-picker');
+  if (slotted) {
+    return (
+      <>
+        <InSlot name="tier-picker">
+          <fieldset className="min-w-0">
+            <legend className="sr-only">難度</legend>
+            <div className="flex flex-wrap gap-2">
+              {TIERS.map((t) => (
+                <label
+                  key={t}
+                  className={`inline-flex min-h-10 cursor-pointer items-center gap-1.5 rounded-full border px-3 text-sm ${
+                    counts[t] > 0 ? 'border-primary/50 bg-primary-soft' : 'border-dashed border-line bg-surface-2 text-muted'
+                  } has-[:checked]:border-primary has-[:checked]:bg-primary has-[:checked]:text-on-primary has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-primary forced-colors:has-[:checked]:border-[color:Highlight] forced-colors:has-[:checked]:bg-[color:Highlight] forced-colors:has-[:checked]:text-[color:HighlightText] forced-colors:has-[:checked]:outline-[color:CanvasText] forced-colors:has-[:checked]:forced-color-adjust-none [&:not(:has(:checked))]:hover:border-primary`}
+                >
+                  <input type="radio" name={`bank-tier-${section}`} value={t} checked={value === t} onChange={() => onChange(t)} className="sr-only" />
+                  <span className="font-semibold">{TIER_LABELS[t]}</span>
+                  <span className="text-xs tabular-nums">
+                    {counts[t] > 0 ? `${counts[t]} ${unit}${done[t] > 0 ? `・已完成 ${done[t]}` : ''}` : '出題中'}
+                  </span>
+                </label>
+              ))}
+            </div>
+          </fieldset>
+        </InSlot>
+        <p className="text-sm text-muted">{WRITING_TIER_HINTS[section][value]}</p>
+      </>
+    );
+  }
   return (
     <fieldset className="min-w-0">
       {/* 三格本身就寫著難度名稱，「難度」只給螢幕閱讀器（同題庫練習的難度切換），手機上題目才早一點出現。 */}
@@ -305,6 +340,31 @@ function BankListPage({ section }: { section: BankWritingSection }) {
   // 後端沒部署（或登入、AI 沒開）時沒有登入入口，不能叫學生「登入並通過申請」。
   const features = useFeatures();
   const aiOpen = features.auth && features.ai;
+  const isDesktop = useIsDesktop();
+  const [slot, slotRef] = useSlotTarget();
+  const description =
+    section === 'translation'
+      ? `AI 依學測題型出的中譯英，不是大考中心的試題。兩句都寫完，可以對照本站撰寫的參考譯文與 4 部分評分規準自我檢核${aiOpen ? '；登入並通過申請後，也能送 AI 批改' : ''}。`
+      : `AI 依學測題型出的看圖、圖表寫作，不是大考中心的試題。寫完可以對照本站的評分重點與兩篇範文自我檢核${aiOpen ? `；登入並通過申請後，也能送 AI 批改${features.ocr ? '或拍照上傳手寫稿' : ''}` : ''}。`;
+  if (isDesktop) {
+    // 桌機（docs/design/desktop-ui.md §5.6）：返回連結、標題、來源分頁與難度切換收成一列 sticky 篩選列，
+    // AI 標章和說明併成一行；整頁放寬，段落限寬。
+    return (
+      <article className="bleed [&_footer]:max-w-3xl [&_p]:max-w-3xl">
+        <title>{`${title}｜${APP_NAME}`}</title>
+        <WritingListBar title={title} kind={section === 'translation' ? 'translation' : 'essay'} current="bank" slotRef={slotRef} />
+        <div className="mt-3 flex items-start gap-3">
+          <div className="shrink-0">
+            <AiGroupBadge />
+          </div>
+          <p className="text-muted">{description}</p>
+        </div>
+        <SlotProvider name="tier-picker" target={slot}>
+          <BankPromptList section={section} className="mt-6" />
+        </SlotProvider>
+      </article>
+    );
+  }
   return (
     <article>
       <title>{`${title}｜${APP_NAME}`}</title>
@@ -314,11 +374,7 @@ function BankListPage({ section }: { section: BankWritingSection }) {
       <div className="mt-3">
         <AiGroupBadge />
       </div>
-      <p className="mt-3 text-muted">
-        {section === 'translation'
-          ? `AI 依學測題型出的中譯英，不是大考中心的試題。兩句都寫完，可以對照本站撰寫的參考譯文與 4 部分評分規準自我檢核${aiOpen ? '；登入並通過申請後，也能送 AI 批改' : ''}。`
-          : `AI 依學測題型出的看圖、圖表寫作，不是大考中心的試題。寫完可以對照本站的評分重點與兩篇範文自我檢核${aiOpen ? `；登入並通過申請後，也能送 AI 批改${features.ocr ? '或拍照上傳手寫稿' : ''}` : ''}。`}
-      </p>
+      <p className="mt-3 text-muted">{description}</p>
       <BankPromptList section={section} className="mt-6" />
     </article>
   );

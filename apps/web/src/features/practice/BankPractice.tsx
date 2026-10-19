@@ -244,7 +244,8 @@ function CellSession({
 function TierSwitcher({ index, section, active, tierLink }: { index: BankIndex; section: PracticeSectionType; active: Tier; tierLink: (tier: Tier) => To }) {
   const history = usePracticeHistory().value;
   return (
-    <nav aria-label={`${PRACTICE_SECTION_LABELS[section]}的難度`} className="space-y-1.5">
+    // 桌機：定位到頁首右邊（SectionPractice.tsx 的 SectionModulePage；只有題型頁會 render 這個元件）。
+    <nav aria-label={`${PRACTICE_SECTION_LABELS[section]}的難度`} className="space-y-1.5 lg:absolute lg:top-0 lg:right-0 lg:w-[26rem]">
       {/* 寬螢幕不撐滿整欄：三顆按鈕像一組切換鈕，不像三張大卡片。 */}
       <ul className="grid grid-cols-3 gap-2 sm:max-w-xl">
         {TIERS.map((t) => {
@@ -253,8 +254,8 @@ function TierSwitcher({ index, section, active, tierLink }: { index: BankIndex; 
           const tone = current
             ? 'border-primary bg-primary text-on-primary'
             : total > 0
-              ? 'border-primary/50 bg-primary-soft hover:border-primary'
-              : 'border-dashed border-line bg-surface-2 text-muted hover:border-primary';
+              ? 'border-primary/50 bg-primary-soft hover:border-primary lg:hover:bg-primary-soft/60'
+              : 'border-dashed border-line bg-surface-2 text-muted hover:border-primary lg:hover:bg-primary-soft/60';
           return (
             <li key={t} className="min-w-0">
               <Link

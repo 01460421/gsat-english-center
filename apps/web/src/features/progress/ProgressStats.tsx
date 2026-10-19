@@ -18,7 +18,29 @@ import { computeLocalStats, isEmptyStats, vocabHint, type LocalStats } from './l
 const STUDY_PATH = `/words${vocabSearch('study')}`;
 const MISTAKES_PATH = `/words${vocabSearch('mistakes')}`;
 
-function StatTile({ to, label, value, unit, hint }: { to: string; label: string; value: number; unit: string; hint: ReactNode }) {
+/**
+ * variant：'grid' 是原本的三格並排（手機與平板、桌機不到 ws 寬度的首頁）；'rail' 是首頁儀表板右欄的直排
+ * （docs/design/desktop-ui.md §5.1）：名稱與數字同一列、說明在下一行。兩種的連結、文字與 data-testid 都相同。
+ */
+export type ProgressVariant = 'grid' | 'rail';
+
+function StatTile({ to, label, value, unit, hint, variant }: { to: string; label: string; value: number; unit: string; hint: ReactNode; variant: ProgressVariant }) {
+  if (variant === 'rail') {
+    return (
+      <li className="min-w-0">
+        <Link to={to} className="block rounded-xl border border-transparent bg-surface-2 px-3 py-2.5 hover:border-primary" data-testid="progress-stat">
+          <span className="flex items-baseline justify-between gap-2">
+            <span className="font-medium">{label}</span>
+            <span className="text-xl font-bold whitespace-nowrap tabular-nums">
+              {value.toLocaleString('zh-TW')}
+              <span className="ml-1 text-sm font-normal text-muted">{unit}</span>
+            </span>
+          </span>
+          <span className="mt-0.5 block text-sm break-words text-muted">{hint}</span>
+        </Link>
+      </li>
+    );
+  }
   return (
     <li className="min-w-0">
       <Link to={to} className="flex h-full flex-col rounded-xl border border-transparent bg-surface-2 p-4 hover:border-primary" data-testid="progress-stat">
@@ -42,7 +64,7 @@ function practiceHint({ groups, correct, total }: LocalStats['practice']): strin
 const btnPrimary = 'inline-flex min-h-11 items-center rounded-full bg-primary px-4 font-medium text-on-primary';
 const btnSecondary = 'inline-flex min-h-11 items-center rounded-full border border-line bg-surface px-4 font-medium hover:border-primary';
 
-export default function ProgressStats() {
+export default function ProgressStats({ variant = 'grid' }: { variant?: ProgressVariant }) {
   const srs = useSrs();
   const mistakes = useMistakes();
   const history = usePracticeHistory();
@@ -59,7 +81,7 @@ export default function ProgressStats() {
         </p>
       )}
       {isEmptyStats(stats) ? (
-        <div className="rounded-xl bg-surface-2 p-4">
+        <div className={`rounded-xl bg-surface-2 ${variant === 'rail' ? 'p-3' : 'p-4'}`}>
           <p className="font-medium">還沒有紀錄，從單字或題庫練習開始吧</p>
           <p className="mt-1 text-sm text-muted">每日學習的單字、做完的題組與錯題本，都會統計在這裡。</p>
           <div className="mt-3 flex flex-wrap gap-2">
@@ -72,10 +94,11 @@ export default function ProgressStats() {
           </div>
         </div>
       ) : (
-        <ul className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-          <StatTile to={STUDY_PATH} label="今日待複習單字" value={vocab.dueToday} unit="個" hint={vocabHint(vocab)} />
-          <StatTile to="/practice" label="題庫練習" value={practice.groups} unit="組" hint={practiceHint(practice)} />
+        <ul className={variant === 'rail' ? 'space-y-2' : 'grid grid-cols-1 gap-3 sm:grid-cols-3'}>
+          <StatTile to={STUDY_PATH} label="今日待複習單字" value={vocab.dueToday} unit="個" hint={vocabHint(vocab)} variant={variant} />
+          <StatTile to="/practice" label="題庫練習" value={practice.groups} unit="組" hint={practiceHint(practice)} variant={variant} />
           <StatTile
+            variant={variant}
             to={MISTAKES_PATH}
             label="單字錯題本"
             value={stats.mistakes}

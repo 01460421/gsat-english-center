@@ -36,13 +36,19 @@ export function PolicyView({ doc }: { doc: PolicyDoc }) {
   );
 }
 
-/** 條款全文（各段標題、段落與條列）。歡迎頁收在 <details> 裡，公開頁面直接展開。 */
-export function PolicyFullText({ doc, className = '' }: { doc: PolicyDoc; className?: string }) {
+/**
+ * 條款全文（各段標題、段落與條列）。歡迎頁收在 <details> 裡，公開頁面直接展開。
+ * anchors：各段標題加 id（s-1、s-2…），可以直接連到某一條（docs/design/desktop-ui.md §5.11）。只有公開的 /privacy、/terms 加：
+ * 歡迎頁同一頁有兩份全文，id 會重複。
+ */
+export function PolicyFullText({ doc, className = '', anchors = false }: { doc: PolicyDoc; className?: string; anchors?: boolean }) {
   return (
     <div className={`space-y-4 text-[0.95rem] ${className}`}>
-      {doc.sections.map((s) => (
+      {doc.sections.map((s, i) => (
         <div key={s.heading}>
-          <h3 className="font-semibold">{s.heading}</h3>
+          <h3 id={anchors ? `s-${i + 1}` : undefined} className="font-semibold">
+            {s.heading}
+          </h3>
           {s.paragraphs?.map((p) => (
             <p key={p} className="mt-1">
               {p}

@@ -14,10 +14,48 @@ export function DevBadge() {
   );
 }
 
-/** 頁面標題列。<title> 由 React 19 自動移到 <head>，每頁各自宣告，不需要額外的套件。 */
-export function PageHeader({ page }: { page: PageMeta }) {
+/**
+ * 頁面標題列。<title> 由 React 19 自動移到 <head>，每頁各自宣告，不需要額外的套件。
+ *
+ * actions：桌機（≥ lg）壓成兩列式頁首時放在右邊的控制項（例如題型頁的難度分頁，docs/design/desktop-ui.md §5.3）：
+ * 左邊 H1＋一行說明（全文放 title）、右邊 actions，底部對齊。只在 ≥ lg 傳入；手機的控制項維持在各頁原本的位置，
+ * 沒傳 actions 時輸出和原本一模一樣（手機像素不變）。
+ */
+export function PageHeader({
+  page,
+  actions,
+  className,
+  clampSummary = false,
+}: {
+  page: PageMeta;
+  actions?: ReactNode;
+  /** 加在 <header> 上的桌機樣式（只能是 lg: 起的 class，手機像素不變）。 */
+  className?: string;
+  /** 桌機（≥ lg）說明只顯示一行，全文放 title（題型頁的兩列式頁首，§5.3）。 */
+  clampSummary?: boolean;
+}) {
+  if (actions) {
+    return (
+      <header className="mb-6 lg:flex lg:items-end lg:justify-between lg:gap-6">
+        <title>{documentTitle(page)}</title>
+        <div className="min-w-0">
+          <div className="flex flex-wrap items-center gap-3">
+            <span className="inline-flex size-11 shrink-0 items-center justify-center rounded-xl bg-primary-soft text-primary">
+              <PageIcon icon={page.icon} className="size-6" />
+            </span>
+            <h1 className="text-2xl font-bold tracking-tight lg:text-3xl">{page.title}</h1>
+            {isDevPage(page) && <DevBadge />}
+          </div>
+          <p className="mt-3 text-muted lg:mt-2 lg:line-clamp-1" title={page.summary}>
+            {page.summary}
+          </p>
+        </div>
+        <div className="lg:shrink-0">{actions}</div>
+      </header>
+    );
+  }
   return (
-    <header className="mb-6">
+    <header className={className ? `mb-6 ${className}` : 'mb-6'}>
       <title>{documentTitle(page)}</title>
       <div className="flex flex-wrap items-center gap-3">
         <span className="inline-flex size-11 shrink-0 items-center justify-center rounded-xl bg-primary-soft text-primary">
@@ -26,7 +64,13 @@ export function PageHeader({ page }: { page: PageMeta }) {
         <h1 className="text-2xl font-bold tracking-tight lg:text-3xl">{page.title}</h1>
         {isDevPage(page) && <DevBadge />}
       </div>
-      <p className="mt-3 text-muted">{page.summary}</p>
+      {clampSummary ? (
+        <p className="mt-3 text-muted lg:mt-2 lg:line-clamp-1" title={page.summary}>
+          {page.summary}
+        </p>
+      ) : (
+        <p className="mt-3 text-muted">{page.summary}</p>
+      )}
     </header>
   );
 }
@@ -47,10 +91,26 @@ export function InfoSection({ title, children }: { title: string; children: Reac
   );
 }
 
-export function ModulePage({ page, children }: { page: PageMeta; children: ReactNode }) {
+/**
+ * className、headerClassName、clampSummary：桌機版面用的選項（只能放 lg: 起的 class，手機像素不變）；
+ * 題型頁（features/practice/SectionPractice.tsx 的 SectionModulePage）把難度切換放到頁首右邊時用。
+ */
+export function ModulePage({
+  page,
+  children,
+  className,
+  headerClassName,
+  clampSummary,
+}: {
+  page: PageMeta;
+  children: ReactNode;
+  className?: string;
+  headerClassName?: string;
+  clampSummary?: boolean;
+}) {
   return (
-    <article>
-      <PageHeader page={page} />
+    <article className={className}>
+      <PageHeader page={page} className={headerClassName} clampSummary={clampSummary} />
       {isDevPage(page) && (
         <p className="mb-6 rounded-xl border border-dashed border-line bg-surface-2 px-4 py-3 text-sm text-muted">
           這個模組還在開發中，目前只有功能說明，練習功能會陸續上線。

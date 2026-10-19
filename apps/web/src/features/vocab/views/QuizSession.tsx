@@ -9,6 +9,8 @@ import { CircleCheck, CircleX, RotateCcw } from 'lucide-react';
 import { useEffect, useEffectEvent, useId, useMemo, useRef, useState } from 'react';
 import { dataErrorMessage, forgetFailedLoads } from '../../../data/client';
 import { levelFromEntryId, type VocabLevel } from '../../../data/vocab';
+import { isFormControlTarget, isModalOpen, useHotkeys, type HotkeyDef } from '../../../lib/hotkeys';
+import { useIsDesktop } from '../../../lib/media';
 import { recordAnswer } from '../lib/mistakes';
 import { buildFormMap } from '../lib/forms';
 import {
@@ -131,13 +133,12 @@ interface AnswerState {
   nearMiss: boolean;
 }
 
-function isTypingTarget(target: EventTarget | null): boolean {
-  return target instanceof HTMLElement && (target.isContentEditable || ['INPUT', 'TEXTAREA', 'SELECT'].includes(target.tagName));
-}
-
 function posLabels(q: QuizQuestion): string {
   return q.pos.map(posLabel).join('、');
 }
+
+/** 快捷鍵說明裡列出的測驗按鍵（只列出，不經全站的登記表處理，lib/hotkeys.ts 的 listOnly）。 */
+const QUIZ_HOTKEYS: HotkeyDef[] = [{ keys: ['1', '2', '3', '4'], description: '選擇題作答（第 1–4 個選項）', group: '這一頁', listOnly: true, run: () => {} }];
 
 function ChoiceList({ q, answer, onChoose }: { q: ChoiceQuestion; answer: AnswerState | undefined; onChoose: (i: number) => void }) {
   return (
@@ -517,8 +518,11 @@ export function QuizSession({
     submit({ correct: result.correct, response: value.trim(), choice: null, nearMiss: result.nearMiss });
   };
 
+  // 桌機有對話框開著時不作用（例如鍵盤快捷鍵說明，docs/design/desktop-ui.md §4.4）。
+  const isDesktop = useIsDesktop();
   const onKey = useEffectEvent((e: KeyboardEvent) => {
-    if (!q || q.mode === 'spelling' || answer || e.altKey || e.ctrlKey || e.metaKey || isTypingTarget(e.target)) return;
+    if (!q || q.mode === 'spelling' || answer || e.altKey || e.ctrlKey || e.metaKey || isFormControlTarget(e.target)) return;
+    if (isDesktop && isModalOpen()) return;
     const n = Number(e.key);
     if (Number.isInteger(n) && n >= 1 && n <= q.options.length) {
       e.preventDefault();
@@ -531,6 +535,8 @@ export function QuizSession({
     document.addEventListener('keydown', handler);
     return () => document.removeEventListener('keydown', handler);
   }, [active]);
+  // 桌機的快捷鍵說明（? 鍵）在「這一頁」列出 1–4；按鍵仍由上面的監聽處理，不受單鍵快捷鍵開關影響。
+  useHotkeys(QUIZ_HOTKEYS, { enabled: isDesktop && active && q !== undefined });
 
   if (!q) {
     return (

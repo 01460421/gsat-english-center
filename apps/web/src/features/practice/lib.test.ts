@@ -22,7 +22,7 @@ import {
 } from './history';
 import { practicePath, sectionFromSlug, tierFromParam } from './labels';
 import { findVocabEntry, wrongVocabularyWords } from './mistakes';
-import { cellProgress, defaultTier, pickGroup } from './pick';
+import { cellAccuracy, cellProgress, defaultTier, pickGroup } from './pick';
 import { BANK_INDEX, MINI_VOCAB_INDEX, group } from './testFixtures';
 
 const entry = (uid: string, version = 1): BankIndexEntry => ({
@@ -84,6 +84,13 @@ describe('pickGroup', () => {
     expect(cellProgress(BANK_INDEX.groups, h, 'word_bank', 'advanced')).toEqual({ total: 1, done: 1 });
     expect(cellProgress(BANK_INDEX.groups, h, 'vocabulary', 'basic')).toEqual({ total: 1, done: 0 });
     expect(cellProgress(BANK_INDEX.groups, h, 'vocabulary', 'top')).toEqual({ total: 0, done: 0 });
+  });
+
+  it('cellAccuracy：這一格做完的題組合計答對幾題（桌機矩陣的答對率）；一組都沒做完是 null', () => {
+    const h: PracticeHistory = { ...emptyHistory(), done: { 'ai.wb.0a1b2c': { ...done('2026-10-01'), correct: 7, total: 10 } } };
+    expect(cellAccuracy(BANK_INDEX.groups, h, 'word_bank', 'advanced')).toEqual({ correct: 7, total: 10 });
+    expect(cellAccuracy(BANK_INDEX.groups, h, 'vocabulary', 'basic')).toBeNull();
+    expect(cellAccuracy(BANK_INDEX.groups, h, 'vocabulary', 'top')).toBeNull();
   });
 });
 

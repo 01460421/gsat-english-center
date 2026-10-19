@@ -46,6 +46,22 @@ export function formatUnixTime(sec: number): string {
   return TW_DATE.format(new Date(sec * 1000));
 }
 
+/**
+ * 桌機紀錄表格用的短格式：和現在同一年（台灣時間）時省略年份「10/8 14:05」，否則同 formatUnixTime。
+ * 空白一律是一般空白（ICU 版本不同時日期與時間之間可能是 NBSP 或 U+202F）。
+ */
+export function formatUnixTimeShort(sec: number, nowMs = Date.now()): string {
+  const parts = TW_DATE.formatToParts(new Date(sec * 1000));
+  const year = parts.findIndex((p) => p.type === 'year');
+  const sameYear = year >= 0 && parts[year]?.value === TW_DATE.formatToParts(new Date(nowMs)).find((p) => p.type === 'year')?.value;
+  // 年份後面接的是「/」，一起拿掉。
+  const kept = sameYear ? parts.filter((_, i) => i !== year && i !== year + 1) : parts;
+  return kept
+    .map((p) => p.value)
+    .join('')
+    .replace(/\s+/g, ' ');
+}
+
 /** 題目的短名稱：「115 學測」「109 指考補考」「111 參考試卷（學測）」。 */
 export function examRefLabel(ref: Pick<WritingExamRef, 'exam' | 'year' | 'session' | 'target'>): string {
   return examShortName(ref);

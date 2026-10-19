@@ -33,11 +33,12 @@ export function AiAccessNotice({ access, compact = false }: { access: AiAccess; 
         <Notice>
           <p>
             AI 批改需要先登入並申請。
-            <a href={loginHref(here)} className={`ml-1 ${linkClass}`}>
+            {/* 桌機的右欄窄：連結文字整段一起換行，不拆成「用 Google 登／入」。 */}
+            <a href={loginHref(here)} className={`ml-1 lg:whitespace-nowrap ${linkClass}`}>
               用 Google 登入
             </a>
             ，登入後到
-            <Link to="/ai/apply" className={`mx-1 ${linkClass}`}>
+            <Link to="/ai/apply" className={`mx-1 lg:whitespace-nowrap ${linkClass}`}>
               申請 AI 批改
             </Link>
             填寫用途，站主核准後就能使用。
@@ -158,6 +159,56 @@ export function QuotaSummary({ quota }: { quota: AiQuotaResponse | null }) {
       {isUnlimited(essays.day_limit) ? ' 篇' : `／${essays.day_limit} 篇`}
       {reset ? `・${reset} 重置` : ''}
     </p>
+  );
+}
+
+/**
+ * 點數量表（docs/design/desktop-ui.md §5.5；首頁與 /writing 在桌機的右欄用）：今日、本月、今日作文三列。
+ * 資訊本體是文字（「今日剩 20／30 點」），旁邊的細條只是裝飾（aria-hidden）：<meter> 各瀏覽器的樣式不一、深色模式不好上色。
+ * 條的長度是「剩下的」比例；不限的一列只寫「不限」、不畫條。
+ */
+export function QuotaMeters({ quota }: { quota: AiQuotaResponse }) {
+  const { points, essays } = quota;
+  const dayReset = formatResetTime(quota.resets_at.day);
+  const monthReset = formatResetTime(quota.resets_at.month);
+  const rows = [
+    { key: 'day', label: '今日', used: points.day_used, limit: points.day_limit, unit: '點', reset: dayReset },
+    { key: 'month', label: '本月', used: points.month_used, limit: points.month_limit, unit: '點', reset: monthReset },
+    { key: 'essays', label: '今日作文', used: essays.day_used, limit: essays.day_limit, unit: '篇', reset: dayReset },
+  ];
+  return (
+    <ul className="space-y-3" data-testid="quota-meters">
+      {rows.map((r) => {
+        const unlimited = isUnlimited(r.limit);
+        const left = Math.max(0, r.limit - r.used);
+        const ratio = r.limit > 0 ? left / r.limit : 0;
+        return (
+          <li key={r.key}>
+            <p className="flex items-baseline justify-between gap-2 text-sm">
+              <span className="font-medium">{r.label}</span>
+              {unlimited ? (
+                <span className="text-muted">
+                  不限（已用 <span className="tabular-nums">{r.used}</span> {r.unit}）
+                </span>
+              ) : (
+                <span>
+                  剩 <strong className="tabular-nums">{left}</strong>
+                  <span className="text-muted tabular-nums">
+                    ／{r.limit} {r.unit}
+                  </span>
+                </span>
+              )}
+            </p>
+            {!unlimited && (
+              <span aria-hidden="true" className="mt-1 block h-1.5 overflow-hidden rounded-full bg-surface-2">
+                <span className={`block h-full rounded-full ${left === 0 ? 'bg-bad' : 'bg-primary'}`} style={{ width: `${Math.round(ratio * 100)}%` }} />
+              </span>
+            )}
+            {r.key !== 'essays' && r.reset && <span className="mt-0.5 block text-xs text-muted">{r.reset} 重置</span>}
+          </li>
+        );
+      })}
+    </ul>
   );
 }
 

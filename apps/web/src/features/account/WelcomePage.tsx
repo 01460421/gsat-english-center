@@ -232,7 +232,7 @@ function WelcomeForm({ me, next, onDeleted }: { me: MeResponseSignedIn; next: st
             <fieldset className="mt-3">
               <legend className={labelCls}>年齡區間（必填）</legend>
               <p className="mb-2 text-sm text-muted">只問區間，不問生日。未滿 18 歲的同學申請 AI 批改時，需要先告知父母或監護人。</p>
-              <div className="grid gap-2 sm:grid-cols-2">
+              <div className="grid gap-2 sm:grid-cols-2 lg:max-w-md">
                 {AGE_BANDS.map((band) => (
                   <label
                     key={band}
