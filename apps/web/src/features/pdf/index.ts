@@ -10,11 +10,11 @@ export type { ExamPdfOptions, MockPdfMeta, PdfErrorKind, PdfProgress, PdfProgres
 export { PdfError };
 
 /**
- * 「下載 PDF」按鈕是否對所有人顯示。docs/design/mock-exam-pdf.md §9.1 的 PDF 驗收清單全部通過前保持 false；
- * 目前只差 P8（iPhone Safari 與 Android Chrome 實機下載），站主實機確認後改成 true（只改這一行）。
- * 在那之前可以用 pdfPreviewEnabled() 的預覽開關在正式站上測試。
+ * 「下載 PDF」按鈕是否對所有人顯示。docs/design/mock-exam-pdf.md §9.1 的 P1–P7、P9 已通過；
+ * P8（iPhone Safari 與 Android Chrome 實機下載）沒有做，2026-10-19 站主決定直接開放。
+ * 要再關掉只改這一行成 false；關掉時仍可用 pdfPreviewEnabled() 的預覽開關在正式站上測試。
  */
-export const PDF_DOWNLOAD_ENABLED = false;
+export const PDF_DOWNLOAD_ENABLED = true;
 
 const PREVIEW_KEY = 'gsat-pdf-preview';
 
