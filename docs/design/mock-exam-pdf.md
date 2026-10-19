@@ -185,7 +185,7 @@ class PdfError extends Error { kind: 'unsupported' | 'network' | 'render' | 'abo
 - 按鈕「下載 PDF」；產生中變成「產生中…」並顯示進度文字（`role="status"`、`aria-live="polite"`）與「取消」；完成顯示「已下載。」；錯誤依 `PdfError.kind` 顯示中文說明與「再試一次」。
 - 第一次下載提示「第一次需要下載約 2 MB 的字型與產生器」。觸控目標 ≥ 44 px；390 px 寬不換行溢出。
 - 放置位置：歷屆試題作答頁的開始畫面（大題結構下方）與交卷結果下方（已接好）；模擬考的開考前畫面與成績單（模擬考開發者放）。
-- `PDF_DOWNLOAD_ENABLED`（`index.ts`）目前是 `false`：§9 的 PDF 驗收全部通過後由 PDF 開發者改成 `true`。
+- `PDF_DOWNLOAD_ENABLED`（`index.ts`）：原訂 §9 的 PDF 驗收全部通過後改成 `true`。2026-10-19 站主決定不等 P8（手機實機下載）直接開放，已改成 `true`；手機上若出現下載問題，把它改回 `false` 即可關閉（預覽開關照樣可用）。
 
 ### 4.6 測試策略
 

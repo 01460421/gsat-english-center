@@ -4,7 +4,7 @@
  *   2. 按下前不載入 PDF 引擎與字型，一般頁面的 JS 不含 pdfmake、字型網址（P5）；
  *   3. 模擬考開考前的「下載 PDF」也能產生；模擬考列表展開「下載 PDF（考試格式）」也能產生（ref-115，封面有沿用題提醒）；
  *   4. 下載區塊在手機 375 與 320 px 沒有水平捲動（P7）。
- * PDF_DOWNLOAD_ENABLED 還是 false（等實機驗收 P8），測試用預覽開關（localStorage gsat-pdf-preview）打開按鈕。
+ * 測試仍先打開預覽開關（localStorage gsat-pdf-preview）：PDF_DOWNLOAD_ENABLED 改回 false 時這些測試照樣能跑。
  * 非 ASCII 檔名：POSIX 語系的無頭 Chromium 會把檔名改成 download（設計文件 §4.4），所以檔名兩種都接受。
  */
 import { readFile } from 'node:fs/promises';

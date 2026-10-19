@@ -466,11 +466,11 @@ describe('模擬考列表', () => {
     expect(c114).toHaveTextContent('已超過作答時間，打開後會以最後存檔的作答交卷');
   });
 
-  it('沒有任何紀錄時不顯示作答紀錄；PDF 下載還沒開放時不顯示下載按鈕', async () => {
+  it('沒有任何紀錄時不顯示作答紀錄；PDF 下載開放時每份卷子都有「下載 PDF（考試格式）」', async () => {
     await renderAt('/mock');
     expect(screen.getAllByText('未作答')).toHaveLength(6);
     expect(screen.queryByRole('region', { name: '作答紀錄' })).not.toBeInTheDocument();
-    expect(screen.queryByRole('button', { name: /下載 PDF/ })).not.toBeInTheDocument();
+    expect(screen.getAllByRole('button', { name: /^下載 PDF（考試格式）/ })).toHaveLength(6);
   });
 });
 
