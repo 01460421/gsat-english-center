@@ -506,6 +506,14 @@ function isExamIndex(body: unknown): body is ExamIndex {
   return isRecord(body) && typeof body.version === 'string' && Array.isArray(body.exams);
 }
 
+/**
+ * 考卷檔的檢查（loadExam 下載後套用）：schema 與 id，避免拿到舊格式的快取，或 id 對不上的檔案。
+ * 本站自組模擬考組出的 Exam 也要通過（scripts/lib/bank-mock.data.test.ts 用真實題庫檢查）。
+ */
+export function isExamFile(body: unknown, id: string): body is Exam {
+  return isRecord(body) && body.schema === 'gsat-exam/v1.1' && body.id === id && Array.isArray(body.sections);
+}
+
 const indexLoader = memoizeAsync((_key: 'index') => fetchDataFile('exams/index.json', isExamIndex));
 const examLoader = memoizeAsync((id: string) => {
   // 格式檢查放在快取裡面：格式不對的 id 也要每次拿到同一個失敗的 Promise，交給 use() 時才不會每次繪製都是新的
@@ -513,12 +521,7 @@ const examLoader = memoizeAsync((id: string) => {
   if (!EXAM_ID_PATTERN.test(id)) {
     return Promise.reject(new DataLoadError('not_found', `${DATA_BASE_URL}exams/${encodeURIComponent(id)}.json`, null));
   }
-  return fetchDataFile(
-    `exams/${id}.json`,
-    // 檢查 id 與 schema：避免拿到舊格式的快取，或 id 對不上的檔案。
-    (body: unknown): body is Exam =>
-      isRecord(body) && body.schema === 'gsat-exam/v1.1' && body.id === id && Array.isArray(body.sections),
-  );
+  return fetchDataFile(`exams/${id}.json`, (body: unknown): body is Exam => isExamFile(body, id));
 });
 
 /** 載入考卷列表（同一頁面內只會下載一次）。 */

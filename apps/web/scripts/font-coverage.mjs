@@ -14,6 +14,9 @@
  *   - metrics.json 記的雜湊與 boldCjk 要和實際字型檔一致（防止換了字型卻忘了重新產生 metrics.json）。
  * 缺字的修法：照 src/features/pdf/fonts/README.md 重跑 subset_fonts.py（需要 Python 與 fonttools，只在開發機上跑一次）。
  *
+ * 題庫（本站自組模擬考的 PDF）另外用 bankPrintableCoverage() 逐組檢查，題本與解析的缺字分開列（docs/design/bank-mock.md §7.6）：
+ * 結果交給 lib/bank-mock-pool.mjs，只警告、不讓建置失敗（題庫每天加題，不能因為一個罕用字擋住整站部署）。
+ *
  * 只用 Node 內建模組（zlib 解 gzip、自己讀 TrueType 的 cmap 表），Vercel 建置不需要額外套件。
  */
 import { createHash } from 'node:crypto';
@@ -253,6 +256,176 @@ export function checkFontCoverage(exams, options = {}) {
   if (dynamicMissing.size > 0) errors.push(`模擬考 PDF 封面文字（${PDF_DYNAMIC_FILES.join('、')}）有 ${dynamicMissing.size} 個字不在中文子集裡：${show(dynamicMissing)}`);
   if (srcMissingBold.size > 0) warnings.push(`PDF 固定文字有 ${srcMissingBold.size} 個字不在粗體子集（用粗體印時會改用一般粗細）：${show(srcMissingBold)}`);
   return { errors, warnings, stats: { chars: seen.size, exams: exams.length } };
+}
+
+// ---------------------------------------------------------------------------
+// 題庫（本站自組模擬考的 PDF，docs/design/bank-mock.md §7.6）
+// ---------------------------------------------------------------------------
+
+/**
+ * @typedef {Record<string, unknown>} JsonObject
+ * @typedef {{ booklet: string[], explanations: string[], sources: string[] }} PrintableStrings
+ * @typedef {{ booklet: string[], explanations: string[], sources: string[] }} MissingGlyphs  缺的字（不重複、依碼位排序）
+ */
+
+/** @param {unknown} v @returns {v is JsonObject} */
+const isObj = (v) => typeof v === 'object' && v !== null && !Array.isArray(v);
+/** @param {unknown} v @returns {unknown[]} */
+const list = (v) => (Array.isArray(v) ? v : []);
+/** 把值裡的字串（遞迴）加進 out。 @param {string[]} out @param {...unknown} values */
+function pushStrings(out, ...values) {
+  for (const v of values) {
+    if (typeof v === 'string') out.push(v);
+    else if (Array.isArray(v)) for (const x of v) pushStrings(out, x);
+    else if (isObj(v)) for (const x of Object.values(v)) pushStrings(out, x);
+  }
+}
+
+/**
+ * 圖會印出來的字串：有 chart 的印表名、軸、類別、數列名稱與附註（資料表，§7.3），表格印 rows；兩者都**不印文字描述**
+ * （閱讀圖表的描述常常直接說出答案）。沒有 chart 也沒有 rows 的圖（作文的圖）印文字描述。
+ * @param {unknown} f @param {string[]} out
+ */
+function figureStrings(f, out) {
+  if (!isObj(f)) return;
+  pushStrings(out, f.label, f.caption);
+  if (isObj(f.chart)) {
+    const c = f.chart;
+    pushStrings(out, c.title, c.x, c.y, c.categories, list(c.series).map((s) => (isObj(s) ? s.name : null)), c.note);
+  } else if (Array.isArray(f.rows)) pushStrings(out, f.rows);
+  else pushStrings(out, f.description);
+}
+
+/**
+ * 出處（資料來源頁，§7.5）：題組的 attribution_text、參考資料、圖表的 chart.source。
+ * 參考資料的標題常是原文（日文網頁），和題目無關，所以另外一類：缺字只警告，不影響題組能不能組新卷。
+ * @param {unknown} provenance @param {unknown[]} figures @param {string[]} out
+ */
+function sourceStrings(provenance, figures, out) {
+  if (isObj(provenance)) {
+    pushStrings(out, provenance.attribution_text);
+    for (const r of list(provenance.references)) if (isObj(r)) pushStrings(out, r.publisher, r.title, r.license);
+  }
+  for (const f of figures) if (isObj(f) && isObj(f.chart) && isObj(f.chart.source)) pushStrings(out, f.chart.source.publisher, f.chart.source.title, f.chart.source.license);
+}
+
+/**
+ * 一個題庫練習的題組檔（bank/groups/{uid}@{v}.json）會印進自組卷 PDF 的字串，分成三類（§7.6 的題本與解析，另加資料來源頁）：
+ *   題本：文章、題幹、選項、圖說、圖表附註與資料表；
+ *   解析：每題的 explanation_zh，以及混合題填充、簡答的答案與可接受答案（答案頁）；
+ *   資料來源：出處說明、參考資料、圖表的資料來源（§7.5）。
+ * 全文中譯（translation_zh）與閱讀圖表的文字描述不印，不算。
+ * @param {unknown} file
+ * @returns {PrintableStrings}
+ */
+export function practicePrintableStrings(file) {
+  /** @type {string[]} */
+  const booklet = [];
+  /** @type {string[]} */
+  const explanations = [];
+  /** @type {string[]} */
+  const sources = [];
+  const f = isObj(file) ? file : {};
+  const g = isObj(f.group) ? f.group : {};
+  pushStrings(booklet, g.passage, g.options_bank);
+  for (const p of list(g.passage_parts)) if (isObj(p)) pushStrings(booklet, p.label, p.title, p.text);
+  for (const fig of list(g.figures)) figureStrings(fig, booklet);
+  for (const q of list(g.questions)) {
+    if (!isObj(q)) continue;
+    pushStrings(booklet, q.stem, q.options);
+    if (q.mode === 'fill_in_blank' || q.mode === 'short_answer') pushStrings(explanations, q.answer, q.accepted_answers);
+  }
+  sourceStrings(f.provenance, list(g.figures), sources);
+  const a = isObj(f.annotations) ? f.annotations : {};
+  const items = isObj(a.explanations) && isObj(a.explanations.items) ? a.explanations.items : {};
+  for (const item of Object.values(items)) if (isObj(item)) pushStrings(explanations, item.explanation_zh);
+  return { booklet, explanations, sources };
+}
+
+/**
+ * 寫作題庫的一組（writing/bank/prompts 與 answers）會印進 PDF 的字串：
+ *   題本：中譯英的中文題目；作文的題目與圖（圖說、文字描述、表格）；
+ *   解析：中譯英的參考譯文與解析，作文的評分重點（四項的重點與級距說明、扣分說明、各段要點）、範文與解析。
+ * @param {unknown} prompt @param {unknown} answers
+ * @returns {PrintableStrings}
+ */
+export function writingPrintableStrings(prompt, answers) {
+  /** @type {string[]} */
+  const booklet = [];
+  /** @type {string[]} */
+  const explanations = [];
+  const p = isObj(prompt) ? prompt : {};
+  const a = isObj(answers) ? answers : {};
+  if (p.section_type === 'translation') {
+    for (const item of list(p.items)) if (isObj(item)) pushStrings(booklet, item.stem);
+    for (const item of list(a.items)) if (isObj(item)) pushStrings(explanations, item.references, item.explanation_zh);
+  } else {
+    pushStrings(booklet, p.stem);
+    for (const fig of list(p.figures)) if (isObj(fig)) pushStrings(booklet, fig.label, fig.caption, fig.description, fig.rows);
+    for (const m of list(p.moves)) if (isObj(m)) pushStrings(explanations, m.zh);
+    if (isObj(a.criteria)) {
+      for (const c of Object.values(a.criteria)) {
+        if (!isObj(c)) continue;
+        pushStrings(explanations, c.focus_zh);
+        for (const b of list(c.bands)) if (isObj(b)) pushStrings(explanations, b.descriptor_zh);
+      }
+    }
+    pushStrings(explanations, a.deductions_zh);
+    for (const t of list(a.model_texts)) if (isObj(t)) pushStrings(explanations, t.text);
+    if (isObj(a.explanation)) pushStrings(explanations, a.explanation.explanation_zh);
+  }
+  // 本站仿真寫作題是原創（original-ai），沒有參考資料。
+  return { booklet, explanations, sources: [] };
+}
+
+/**
+ * 題庫會印進自組卷 PDF 的字串，逐組檢查 PDF 字型子集有沒有字形，題本、解析、資料來源分開找（§7.6）。
+ * 建置時呼叫：題本缺字的題組由 bank-mock-pool.mjs 警告（WP3 補好子集之後改成排除在組卷池外）；
+ * 解析缺字的題組 PDF 改印替代說明、資料來源缺字只列在建置紀錄。這裡不判斷要不要排除，也不讓建置失敗。
+ * @param {{
+ *   practice?: readonly { uid: string, version: number }[],
+ *   writing?: readonly { prompt: { uid: string, version: number }, answers: unknown }[],
+ * }} groups  practice：題庫練習的題組檔；writing：寫作題庫同一組的 prompts 與 answers 檔
+ * @param {{ fontsDir?: string }} [options]
+ * @returns {{ missing: Map<string, MissingGlyphs>, stats: { groups: number, booklet: number, explanations: number, sources: number } }}
+ *   missing 的鍵是 uid@v，只列有缺字的題組；stats.booklet、explanations、sources 是各類缺的不同字數
+ */
+export function bankPrintableCoverage(groups, options = {}) {
+  const { metrics, cmaps } = loadFonts(options.fontsDir);
+  const regular = cmaps['NotoSerifTC-Regular'];
+  const tinos = cmaps['Tinos-Regular'];
+  const emoji = cmaps['NotoEmoji-Regular'];
+  if (!regular || !tinos || !emoji) throw new Error('metrics.json 缺少 NotoSerifTC-Regular／Tinos-Regular／NotoEmoji-Regular');
+  /** @param {number} cp */
+  const fontFor = (cp) => (inRanges(cp, metrics.latinRanges) ? tinos : inRanges(cp, metrics.emojiRanges) ? emoji : regular);
+  /** @param {readonly string[]} strings */
+  const missingIn = (strings) => {
+    /** @type {Set<number>} */
+    const out = new Set();
+    for (const s of strings) {
+      for (const ch of s) {
+        const cp = /** @type {number} */ (ch.codePointAt(0));
+        if (cp < 0x20 || cp === 0x7f) continue;
+        if (!fontFor(cp).has(cp)) out.add(cp);
+      }
+    }
+    return [...out].sort((x, y) => x - y).map((cp) => String.fromCodePoint(cp));
+  };
+  /** @type {Map<string, MissingGlyphs>} */
+  const missing = new Map();
+  /** @type {Record<keyof MissingGlyphs, Set<string>>} */
+  const all = { booklet: new Set(), explanations: new Set(), sources: new Set() };
+  let count = 0;
+  /** @param {string} key @param {PrintableStrings} strings */
+  const check = (key, strings) => {
+    count += 1;
+    const found = { booklet: missingIn(strings.booklet), explanations: missingIn(strings.explanations), sources: missingIn(strings.sources) };
+    for (const k of /** @type {const} */ (['booklet', 'explanations', 'sources'])) for (const ch of found[k]) all[k].add(ch);
+    if (found.booklet.length + found.explanations.length + found.sources.length > 0) missing.set(key, found);
+  };
+  for (const g of groups.practice ?? []) check(`${g.uid}@${g.version}`, practicePrintableStrings(g));
+  for (const w of groups.writing ?? []) check(`${w.prompt.uid}@${w.prompt.version}`, writingPrintableStrings(w.prompt, w.answers));
+  return { missing, stats: { groups: count, booklet: all.booklet.size, explanations: all.explanations.size, sources: all.sources.size } };
 }
 
 // ---------------------------------------------------------------------------
