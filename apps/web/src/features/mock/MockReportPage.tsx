@@ -6,7 +6,7 @@
  * 自評一改就寫回紀錄與歷史（原得總分、級分），列表頁顯示的是最新的分數。
  */
 import { ChevronLeft, ExternalLink } from 'lucide-react';
-import { Suspense, use, useCallback, useEffect, useId, useMemo, useState } from 'react';
+import { Suspense, lazy, use, useCallback, useEffect, useId, useMemo, useState } from 'react';
 import { Link, useLocation, useParams } from 'react-router';
 import { forgetFailedLoads } from '../../data/client';
 import { loadExam, type Exam } from '../../data/exams';
@@ -22,6 +22,8 @@ import { ExamSourceNote } from '../exams/components/SessionPanels';
 import { examIdLabel, formatDuration } from '../exams/labels';
 import { formatPoints } from '../exams/scoring';
 import { ExamPdfDownload } from '../pdf/ExamPdfDownload';
+import { bankPdfVisible } from './bank/flags';
+import { isBankPaperId } from './bank/paperId';
 import { LevelCard } from './components/LevelCard';
 import { MarkedBadge } from './components/MarkToggle';
 import { SectionTable, SectionTableNotes } from './components/SectionTable';
@@ -30,6 +32,9 @@ import { formatDateTime, signedPoints } from './format';
 import { findMockPaper, mockPdfMeta, SCALE_YEARS, type MockPaper } from './papers';
 import { computeReport, historyEntryFor, levelInfo } from './report';
 import { doneExamIds, loadRecord, parseRecord, saveRecord, upsertHistory, type MockAttemptRecord } from './storage';
+
+/** 本站自組卷的成績單（原始分數、依難度的建議，不換算級分；docs/design/bank-mock.md §6.5）。 */
+const BankReport = lazy(() => import('./bank/BankReport'));
 
 const REASON_TEXT: Record<NonNullable<MockAttemptRecord['submitReason']>, string> = {
   manual: '手動交卷',
@@ -347,6 +352,9 @@ function useReportRecord(attemptId: string): { record: MockAttemptRecord | null;
 export default function MockReportPage() {
   const { attemptId = '' } = useParams();
   const { record, unsaved } = useReportRecord(attemptId);
+  const bank = record !== null && isBankPaperId(record.paperId);
+  // 自組卷的 PDF 區塊要等 WP3 接上（bank/flags.ts 的 bankPdfVisible）：在那之前不叫學生去下載不存在的 PDF。
+  const pdfAdvice = bank && !bankPdfVisible() ? '可以把這一頁截圖保存。' : '可以先下載含答案的 PDF，或把這一頁截圖保存。';
   return (
     <article>
       <Link to="/mock" className="mb-1 inline-flex min-h-11 items-center gap-1 text-sm text-muted hover:text-primary">
@@ -355,10 +363,14 @@ export default function MockReportPage() {
       </Link>
       {unsaved && (
         <p role="status" className="mb-4 rounded-xl border border-bad/40 bg-bad/10 px-4 py-2 text-sm text-bad">
-          這個瀏覽器無法儲存成績單（可能是無痕模式、停用了網站資料或空間已滿），離開這一頁之後就找不到了。可以先下載含答案的 PDF，或把這一頁截圖保存。
+          這個瀏覽器無法儲存成績單（可能是無痕模式、停用了網站資料或空間已滿），離開這一頁之後就找不到了。{pdfAdvice}
         </p>
       )}
-      {record ? (
+      {record && bank ? (
+        <Suspense fallback={null}>
+          <BankReport key={record.id} record={record} />
+        </Suspense>
+      ) : record ? (
         <ReportForRecord key={record.id} record={record} />
       ) : (
         <ReportMessage title="找不到這份成績單">

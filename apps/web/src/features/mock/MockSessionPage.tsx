@@ -7,7 +7,7 @@
  * mode 是 'exam'，題目元件就不顯示「看答案」與全國統計（練習輔助全關）。
  */
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { Suspense, use, useCallback, useEffect, useId, useMemo, useRef, useState } from 'react';
+import { Suspense, lazy, use, useCallback, useEffect, useId, useMemo, useRef, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router';
 import { forgetFailedLoads } from '../../data/client';
 import { loadExam, type Exam } from '../../data/exams';
@@ -27,6 +27,7 @@ import { MarkToggle } from './components/MarkToggle';
 import { QuestionPalette, SectionNavigator } from './components/SectionNavigator';
 import { StartScreen, type StartOptions } from './components/StartScreen';
 import { SubmitDialog } from './components/SubmitDialog';
+import { isBankPaperId } from './bank/paperId';
 import { MockSessionContext, useMockConflict, useMockMeta } from './MockSessionContext';
 import { paperIndex } from './paperIndex';
 import { findMockPaper, type MockPaper } from './papers';
@@ -34,6 +35,9 @@ import { computeReport, historyEntryFor } from './report';
 import { MockSession } from './session';
 import { createRecord, loadActiveRecord, loadRecord, saveRecord, setActiveId, upsertHistory, type MockAttemptRecord, type MockSubmitReason } from './storage';
 import { remainingSec } from './timer';
+
+/** 本站自組卷的卷子頁（代號解析、嚴格載入、換題轉址；docs/design/bank-mock.md §2.2）：只有打開 /mock/bk1-… 時才載入。 */
+const BankPaperRoute = lazy(() => import('./bank/BankPaperRoute'));
 
 type Flow =
   | { kind: 'start' }
@@ -300,7 +304,8 @@ function ActiveExamBody({ exam, paper, session, resumed, onSubmitted, onAbandon,
     [session, exam, onSubmitted],
   );
   const onTimeout = useCallback(() => submit('timeout'), [submit]);
-  const extras = useMemo<QuestionExtras>(() => ({ renderHeadingAccessory: (labels) => <MarkToggle labels={labels} /> }), []);
+  // 自組卷另外提供圖表、填充每格限一個單詞等擴充點（MockPaper.bank.extras）。
+  const extras = useMemo<QuestionExtras>(() => ({ ...paper.bank?.extras, renderHeadingAccessory: (labels) => <MarkToggle labels={labels} /> }), [paper]);
 
   return (
     <>
@@ -359,7 +364,7 @@ function ActiveExamBody({ exam, paper, session, resumed, onSubmitted, onAbandon,
             />
           </div>
         )}
-        <ExamSourceNote exam={exam} />
+        {paper.bank ? paper.bank.sourceNote : <ExamSourceNote exam={exam} />}
       </div>
       <SubmitDialog
         open={submitOpen && !readOnly}
@@ -398,11 +403,12 @@ function MockFlow({ paper, exam }: { paper: MockPaper; exam: Exam }) {
   const finish = useCallback(
     (record: MockAttemptRecord) => {
       const scale = scales.current ? scaleForYear(scales.current, record.scaleYear) : null;
-      upsertHistory(historyEntryFor(record, computeReport(exam, record), scale));
+      // 自組卷：混合題的填充、簡答自動判分，不換算級分（level 一律 null）。
+      upsertHistory(paper.bank ? paper.bank.historyEntry(record, exam) : historyEntryFor(record, computeReport(exam, record), scale));
       // 紀錄也放進路由的 state：瀏覽器存不進 localStorage（無痕模式、空間滿）時，成績單還是看得到這次的結果。
       navigate(`/mock/report/${record.id}`, { replace: true, state: { record } });
     },
-    [exam, navigate],
+    [exam, navigate, paper],
   );
 
   useEffect(() => {
@@ -412,10 +418,13 @@ function MockFlow({ paper, exam }: { paper: MockPaper; exam: Exam }) {
   }, [flow, exam, finish]);
 
   const start = (options: StartOptions) => {
+    // 自組卷：作答中的已經有 3 份時不開考（本卷資訊列出那幾份，§2.8）。
+    if (paper.bank && !paper.bank.canStart()) return;
     const first = exam.sections[0]?.id ?? '';
     const record = createRecord(paper, first, options);
     const persisted = saveRecord(record);
     if (persisted) setActiveId(paper.examId, record.id);
+    paper.bank?.onStarted();
     setFlow({ kind: 'active', session: new MockSession(record, persisted), resumed: false });
     window.scrollTo({ top: 0 });
   };
@@ -494,7 +503,7 @@ function PaperNotFound() {
 
 function PaperSession({ paper }: { paper: MockPaper }) {
   const [retry, setRetry] = useState(0);
-  const examPromise = useMemo(() => loadExam(paper.examId), [paper.examId, retry]);
+  const examPromise = useMemo(() => (paper.bank ? paper.bank.load() : loadExam(paper.examId)), [paper, retry]);
   return (
     <DataErrorBoundary
       key={`${paper.examId}:${retry}`}
@@ -519,7 +528,15 @@ export default function MockSessionPage() {
         <ChevronLeft aria-hidden="true" className="size-4" />
         模擬考列表
       </Link>
-      {paper ? <PaperSession key={paper.examId} paper={paper} /> : <PaperNotFound />}
+      {paper ? (
+        <PaperSession key={paper.examId} paper={paper} />
+      ) : isBankPaperId(paperId) ? (
+        <Suspense fallback={<Loading label="本站自組" />}>
+          <BankPaperRoute id={paperId} renderSession={(p) => <PaperSession key={p.examId} paper={p} />} />
+        </Suspense>
+      ) : (
+        <PaperNotFound />
+      )}
     </article>
   );
 }

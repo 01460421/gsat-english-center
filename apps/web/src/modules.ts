@@ -194,7 +194,7 @@ export const PAGES = [
     path: '/mock',
     title: '模擬考',
     navLabel: '模擬考',
-    summary: '111–115 學測與 115 參考試卷整份模考：100 分鐘倒數、級分換算（非官方）與五標對照，也能下載考試格式 PDF。',
+    summary: '111–115 學測與 115 參考試卷整份模考（100 分鐘倒數、級分換算與五標對照，非官方），也能從本站題庫依難度自組新卷，或下載考試格式 PDF。',
     group: 'exam',
     icon: 'mock',
     status: 'ready',

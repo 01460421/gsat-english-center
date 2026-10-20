@@ -17,7 +17,7 @@ import {
   type ScoreLevelRange,
   type YearScale,
 } from '../../data/scoreScales';
-import { isAnswered, isAutoScored, scoreExam, type ExamScore } from '../exams/scoring';
+import { isAnswered, isAutoScored, scoreExam, type ExamScore, type OpenOutcome } from '../exams/scoring';
 import { SUGGESTED_MINUTES } from './papers';
 import { assessOpenGroup, isOpenQuestion, type OpenAssessment } from './scoreOpen';
 import type { MockAttemptRecord, MockHistoryEntry } from './storage';
@@ -37,6 +37,8 @@ export interface OpenItemResult {
   source: OpenScoreSource;
   /** 混合題填充、簡答的評估（建議分數與理由）。 */
   assessment: OpenAssessment | null;
+  /** 呼叫端提供的自動判分（ReportOptions.autoOpen；本站自組卷的混合題）。 */
+  autoOutcome?: OpenOutcome;
 }
 
 export interface SectionReport {
@@ -156,6 +158,11 @@ export function sectionNationalExpected(section: ExamSection): { value: number |
 export interface ReportOptions {
   /** 這台裝置在開考前做過的考卷（ref-115 扣題用）；沒有就不算。 */
   doneExamIds?: ReadonlySet<string>;
+  /**
+   * 填充、簡答的自動判分（本站自組卷：AI 題的可接受答案是完整清單，和題庫練習同一套 scoreOpenAnswer，
+   * docs/design/bank-mock.md §6.3）。回傳結果就當成自動計分、不進自評；回傳 null 照原本的規則（自評、建議分數）。
+   */
+  autoOpen?: (q: Question) => OpenOutcome | null;
 }
 
 export function computeReport(exam: Exam, record: MockAttemptRecord, options: ReportOptions = {}): MockReport {
@@ -179,9 +186,13 @@ export function computeReport(exam: Exam, record: MockAttemptRecord, options: Re
         const kind = openKind(section, q);
         const assessment = assessments.get(q.label) ?? null;
         const self = record.selfScores[q.label];
+        const autoOutcome = options.autoOpen?.(q) ?? null;
         let score: number | null;
         let source: OpenScoreSource;
-        if (assessment?.kind === 'auto') {
+        if (autoOutcome) {
+          score = Math.min(max, Math.max(0, autoOutcome.earned));
+          source = 'auto';
+        } else if (assessment?.kind === 'auto') {
           score = assessment.score;
           source = 'auto';
         } else if (!isAnswered(answers[q.label])) {
@@ -197,7 +208,7 @@ export function computeReport(exam: Exam, record: MockAttemptRecord, options: Re
           score = null;
           source = 'pending';
         }
-        openItems.push({ label: q.label, sectionId: section.id, kind, question: q, max, score, source, assessment });
+        openItems.push({ label: q.label, sectionId: section.id, kind, question: q, max, score, source, assessment, ...(autoOutcome ? { autoOutcome } : {}) });
         openMax += max;
         if (score === null) {
           pendingMax += max;
