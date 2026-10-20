@@ -13,13 +13,13 @@ import type { QuestionExtras } from '../../exams/QuestionExtras';
 import type { MockPdfMeta } from '../../pdf/types';
 import { openAnswerNote } from '../../practice/components/MixedCards';
 import type { MockPaper } from '../papers';
-import { BANK_EXAM_MINUTES } from './blueprint';
 import { bankFigureRenderer } from './bankFigure';
 import { bankHistoryEntry } from './bankScore';
 import { BankSourceNote } from './BankSourceNote';
 import type { BankPaper } from './buildExam';
-import { checkActiveLimit, markPaperPdf, markPaperStarted } from './myPapers';
+import { checkActiveLimit, findMyPaper, markPaperPdf, markPaperStarted } from './myPapers';
 import { ACTIVE_LIMIT_ID, PaperInfo } from './PaperInfo';
+import { bankMockPdfMeta } from './pdfText';
 import { ensureSnapshot } from './snapshots';
 
 /** 紀錄的 scaleYear（不使用，見檔頭）。 */
@@ -34,17 +34,11 @@ export function bankPaperLabel(tier: Tier): string {
 }
 
 /**
- * PDF 封面資訊（§7.1）。
- * TODO(WP3-integrate): 加上 sitePaper（features/pdf/types.ts 的 SitePaperPdfMeta：卷號、難度、組卷日期、資料版本、AI 聲明、
- * 依題號範圍的參考資料、本站答案與解析）；固定文字改用 WP3 的 bank/pdfText.ts。
+ * 「下載 PDF」區塊的卷子資訊（§7.1、§7.9）：pdfText.ts 的 bankMockPdfMeta（封面、卷號、資料版本、AI 聲明、資料來源、
+ * 本站答案與解析），組卷日期取「我組過的卷子」的 createdAt，沒有（別人分享來的卷子）就用今天。卷子頁與成績單共用。
  */
-export function bankPdfMeta(paper: Pick<BankPaper, 'tier' | 'code'>, strict: boolean): MockPdfMeta {
-  return {
-    title: '學測英文中心　本站自組模擬考',
-    paperLabel: `${TIER_LABELS[paper.tier]}卷　卷號 ${paper.code}`,
-    durationMinutes: BANK_EXAM_MINUTES,
-    strict,
-  };
+export function bankPdfMeta(paper: BankPaper, strict: boolean): MockPdfMeta {
+  return bankMockPdfMeta(paper, { strict, assembledAt: findMyPaper(paper.id)?.createdAt ?? null });
 }
 
 /** 有記錄就確認快照已寫入（開考、下載 PDF；組卷當下 IndexedDB 寫入失敗的話這時補寫，§2.3、§4.7 第 (2) 部分）。 */
@@ -52,7 +46,11 @@ function confirmSnapshot(paper: BankPaper): void {
   void ensureSnapshot(paper).catch(() => false);
 }
 
-/** 下載 PDF 成功（§2.5）：記 pdfAt（之後組卷會避開這些題組）、確認快照已寫入。MockPaper.bank.onPdfDownloaded 與成績單共用。 */
+/**
+ * 下載 PDF 成功（§2.5，ExamPdfDownload 的 onDownloaded：存檔或分享完成時各呼叫一次，所以要能重複呼叫）：
+ * 記 pdfAt（之後組卷會避開這些題組；學生卷多半會印出來寫，教師卷也已經看過答案）、確認快照已寫入。
+ * MockPaper.bank.onPdfDownloaded 與成績單共用。
+ */
 export function recordBankPdfDownload(paper: BankPaper): void {
   markPaperPdf(paper.id);
   confirmSnapshot(paper);

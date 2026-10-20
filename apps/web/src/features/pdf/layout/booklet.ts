@@ -4,19 +4,19 @@
  */
 import type { Exam, ExamSection } from '../../../data/exams';
 import type { Block } from './blocks';
-import { groupBlocks } from './groups';
+import { groupBlocks, type GroupOptions } from './groups';
 import { headingBlock, instructionsBlock } from './nodes';
 import { bookletParts } from './parts';
 
-function sectionBlocks(section: ExamSection, breakBefore: boolean): Block[] {
+function sectionBlocks(section: ExamSection, breakBefore: boolean, options: GroupOptions): Block[] {
   const blocks: Block[] = [headingBlock(section.title, { breakBefore, marginTop: breakBefore ? 0 : 6 })];
   if (section.instructions.trim() !== '') blocks.push(instructionsBlock(section.instructions));
-  for (const group of section.groups) blocks.push(...groupBlocks(section, group));
+  for (const group of section.groups) blocks.push(...groupBlocks(section, group, options));
   return blocks;
 }
 
-/** 整份題本的區塊串（交給 flowBlocks 排成內容）。 */
-export function bookletBlocks(exam: Pick<Exam, 'parts' | 'sections'>): Block[] {
+/** 整份題本的區塊串（交給 flowBlocks 排成內容）。options.site：本站自組卷（圖表印成資料表，bank-mock §7.3）。 */
+export function bookletBlocks(exam: Pick<Exam, 'parts' | 'sections'>, options: GroupOptions = {}): Block[] {
   const blocks: Block[] = [];
   bookletParts(exam).forEach((part, i) => {
     const newPage = i > 0;
@@ -31,7 +31,7 @@ export function bookletBlocks(exam: Pick<Exam, 'parts' | 'sections'>): Block[] {
       pendingBreak = false;
     }
     part.sections.forEach((section, j) => {
-      blocks.push(...sectionBlocks(section, pendingBreak && j === 0));
+      blocks.push(...sectionBlocks(section, pendingBreak && j === 0, options));
     });
   });
   return blocks;

@@ -33,6 +33,25 @@ export function fontForCodePoint(cp: number): PdfFontFamily {
   return 'NotoSerifTC';
 }
 
+/** 中文子集（Noto Serif TC Regular）實際有字形的字（拉丁字母與表情符號另外由 latinRanges、emojiRanges 決定）。 */
+const REGULAR_CJK = new Set(Array.from(metrics.regularCjk, (ch) => ch.codePointAt(0) ?? 0));
+
+/** 這個字元在它會用的字型裡有沒有字形（控制字元不畫字形，算有）。 */
+export function hasGlyph(cp: number): boolean {
+  if (cp < 0x20) return true;
+  const font = fontForCodePoint(cp);
+  // latinRanges、emojiRanges 就是 Tinos、Noto Emoji 子集實際涵蓋的範圍（subset_fonts.py 依 cmap 產生）。
+  if (font !== 'NotoSerifTC') return true;
+  return REGULAR_CJK.has(cp);
+}
+
+/** 文字裡 PDF 字型沒有字形的字（不重複；本站自組卷的解析用來決定要不要改印替代說明，bank-mock §7.4）。 */
+export function missingGlyphs(text: string): string[] {
+  const out = new Set<string>();
+  for (const ch of text) if (!hasGlyph(ch.codePointAt(0) ?? 0)) out.add(ch);
+  return [...out];
+}
+
 /** 這個字元有沒有粗體字形（Tinos 全部有；中文看 boldCjk；表情符號沒有粗體）。 */
 export function hasBoldGlyph(cp: number): boolean {
   const font = fontForCodePoint(cp);

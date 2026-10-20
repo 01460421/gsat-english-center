@@ -890,7 +890,7 @@ export interface PdfDownloadInfo { fileName: string; includeBooklet: boolean; in
 | 封面橫條（`coverBand`，粗體） | 依大考中心公開試題重新排版・非官方文件 | 學測英文中心自組模擬試卷・題目由 AI 撰寫・非官方試題 |
 | 作答方式的最後一條（`howOnline`） | 可以到網站輸入答案並對照全國答對率 | 掃封面或答題卷的 QR code 線上作答，選擇題與混合題自動計分 |
 | 圖（`nodes.ts` 的 figureBlock） | 虛線框加描述，再加「原圖請見大考中心官方試題 PDF」 | 見 §7.3 |
-| 答題卷第一頁 | 填寫欄：姓名、日期、得分 | 填寫欄（`sheetFields`）：班級、座號、姓名、日期、得分；右上角印卷號、同一個 QR code（約 80 pt）與網址 |
+| 答題卷第一頁 | 填寫欄：姓名、日期、得分 | 填寫欄（`sheetFields`）：班級、座號、姓名、日期、得分；右上角印卷號、同一個 QR code（大小同封面，§7.9）與網址 |
 | 答題卷說明（`answerSheetNote`） | …不是大考中心的答題卷或答案卡 | 本答題卷為學測英文中心設計的簡化格式，供紙本練習與自行核對 |
 | 答案頁（`answerKey.ts`） | 依大考中心公布之答案、全國答對率；中譯英只印評分原則網址；作文不附範文 | 見 §7.4 |
 | 文件屬性標題（`buildDocDefinition.ts:73` 的 `info.title`） | …（重新排版，非官方） | 學測英文中心自組模擬考 進階練習 A-3KD9W（教師卷加「教師卷」） |
@@ -1053,6 +1053,22 @@ export interface PdfDownloadInfo { fileName: string; includeBooklet: boolean; in
 - 自組卷的頁數和歷屆卷同一個等級，所以目標沿用 P8。教師卷沒有題本，頁數更少。
 
 **進度顯示**：沿用 `PdfProgress` 的三段（「下載 PDF 產生器…」「準備字型…」「排版中…」）與「取消」按鈕。自組卷的題目在打開卷子頁時就已經下載好，按下 PDF 不會多一段等待。
+
+### 7.9 實作備註（WP3）
+
+- **介面**：`features/mock/bank/pdfText.ts` 的 `bankMockPdfMeta(paper, { strict, assembledAt })` 回傳含 `sitePaper` 的 `MockPdfMeta`，`MockPaper.bank.pdfMeta(strict)` 直接用它；組卷日期取「我組過的卷子」的 `createdAt`，沒有就用今天。`ExamPdfDownload` 新增 `onDownloaded`（存檔或分享成功時各呼叫一次）與 `defaultSiteVersion`；沒給 `defaultSiteVersion` 時，`defaultIncludeAnswerKey` 為 true 預設「題本＋答案＋解析」（成績單），否則「學生卷」（卷子頁）。版本與選項的對應在 `features/pdf/index.ts` 的 `sitePdfOptions`。
+- **閱讀圖表**（§7.3）：表名列是「［圖表］折線圖　Chart 1　{chart.title}」，圖說和標題不同時另起一行，接著資料表與「附註：…」，和線上的 `ChartFigure` 顯示的資訊相同。
+- **雙面列印**（§7.7）：段落開頭用該段的第一個節點（標題）登記，不另放空節點（pdfmake 不會詢問沒有內容的節點）。補的空白頁照常印頁首與頁尾出處，頁面中間印「（本頁空白）」，不算進那一段的頁碼。
+- **解析、答案頁缺字**（§7.4、§7.6）：缺字判斷在版面程式裡做（`fontRuns.ts` 的 `missingGlyphs`，讀 `metrics.json` 新增的 `regularCjk`），所以 `answers.explanations` 的 null 只表示沒有解析；兩種情形都印同一句替代說明。答案頁的混合題答案（含可接受答案與部分給分的寫法）、中譯英參考譯文、作文評分重點與解析頁的範文也經過同一個 `printableSiteText`：先套用替代表，仍有缺字的那一題、那一項或整篇範文改印替代說明，不會印出方框。所以字型檢查把這些字串和解析算同一類（替代表的字不算缺字、其他缺字只警告），和 PDF 的行為一致。替代表在 `strings.ts` 的 `GLYPH_SUBSTITUTES`，資料來源頁也套用（參考資料原文標題的日文字形「産」「禄」，Noto Serif TC 沒有）。
+- **資料來源頁**（§7.5）：相鄰、沒有參考資料、出處說明相同的題組併成一個題號範圍（例如「第 1–34 題　本文由 AI 撰寫」）；授權印成「CC BY 4.0（授權條款網址）」。
+- **範文**（§7.4）：超越頂標印頂標版，其他兩級印穩健版。作文的評分重點印四項的重點與扣分說明。
+- **部分給分**（§6.3、§7.4）：`SitePaperPdfMeta.answers` 多一個選填的 `partialCredit`（題號 → 題庫解析的 `partial_credit_forms`，就是線上自動判分給 1 分的同一份清單）。答案頁在混合題答案下方印「部分給分（1 分）：…」，頁末註記印線上自動計分的部分給分規則（列出的字形錯誤寫法；填充拼錯 2 個字母以內；簡答多寫 1–2 個單詞），老師批紙本和學生掃 QR code 線上輸入得到的分數一致。§7.4 原本的「部分給分見解析」不用：已發布的題組有 230 題填充、簡答帶部分給分的寫法，其中 59 題的解析既沒有提到這些寫法、也沒有提到部分給分（實測）。
+- **QR code**（§7.2）：封面與答題卷是同一個 QR code（`cover.ts` 的 `SITE_QR`：fit 100、M 級容錯）。pdfmake 每格的大小是 floor(fit ÷ 每邊格數) pt：118 個字元的網址用一般寫法（byte 模式）是 version 7、每邊 45 格，實際 90 pt、每格 2 pt（約 0.7 mm）；原訂答題卷 fit 80 只剩每格 1 pt（45 pt），所以答題卷也用 fit 100。改成大寫（英數模式，version 5、每邊 37 格）是 74 pt、每格 2 pt。QR code 和下方的卷號、說明之間留 8 pt（4 格）空白。`cover.test.ts` 用 pdfmake 的編碼程式實際量每格的大小。內容先用一般寫法，實機確認大寫網址可以打開後，把 `SITE_QR_UPPERCASE` 改成 true。
+- **字型**（§7.6）：子集補進題庫會印的字（中文多 91 字、粗體多 62 字，合計 1.54 MB gzip），題庫的題本、解析缺字都是 0；`EXCLUDE_BOOKLET_GLYPHS` 改成 true。
+- **`pdf-render-check`**（§10.3）：預設用組卷池加固定種子（每種難度一份）組卷，不寫死代號：題庫改版後寫死的代號會指到已下架的版本；要檢查特定卷子用 `--bank-ids`。描述片段的比對只取含中文的視窗：描述常引用表頭、類別的英文原文，那些本來就印在資料表裡。
+- **接上畫面**（和 WP2 合併時）：卷子頁（`StartScreen`）與成績單（`BankReport`）的 `ExamPdfDownload` 都拿 `bank/bankMockPaper.ts` 的 `bankPdfMeta(paper, strict)`（就是 `bankMockPdfMeta`，組卷日期從「我組過的卷子」讀）；卷子頁預設學生卷，成績單傳 `defaultSiteVersion="full"`。兩處的 `onDownloaded` 都走 `recordBankPdfDownload`：記 `pdfAt`、確認快照，存檔與分享各呼叫一次也沒關係。自組卷的 PDF 沒有自己的開關，WP2 暫時用的 `bankPdfVisible()` 刪掉；/mock 區塊的說明提不提 PDF 直接看 `pdfDownloadVisible()`（§2.8）。
+- **e2e**（§10.4）：`pdf.spec.ts` 在卷子頁下載學生卷與教師卷（雙面），回到 /mock 時「我組過的卷子」標「下載過 PDF」、`pdfAt` 有值；`bank-mock.spec.ts` 的主流程在成績單下載「題本＋答案＋解析」。兩個測試都不再依檔案存不存在而跳過。
+- **歷屆卷不變**：66 份考卷與 6 份模擬考版的文件定義（含頁首頁尾）在改動前後逐位元組相同；`pdf-render-check` 產生的 72 份 PDF 頁數、`pdftotext` 全文與每一頁的點陣圖也都相同。
 
 ## 8. 和桌機介面工作的共存
 

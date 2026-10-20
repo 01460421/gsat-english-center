@@ -1,9 +1,14 @@
-/** 題組 → 區塊（設計文件 §5.4–§5.9）：圖片描述框的位置、題組標示、綜合測驗與選項庫的排法。 */
+/**
+ * 題組 → 區塊（設計文件 §5.4–§5.9）：圖片描述框的位置、題組標示、綜合測驗與選項庫的排法；
+ * 本站自組卷的圖（docs/design/bank-mock.md §7.3）：圖表印成資料表與附註、不印描述。
+ */
 import { describe, expect, it } from 'vitest';
+import type { ChartSpec, ChartType } from '../../../data/bank';
 import type { ExamSection, Figure, Question, QuestionGroup } from '../../../data/exams';
+import { CHART_TYPE_LABELS, chartTableRows } from '../../practice/chart';
 import { groupBlocks, groupLabelText } from './groups';
 import { clusterNumberText, questionNumberText, withoutLeadingNumber } from './questions';
-import { PDF_TEXT } from './strings';
+import { PDF_TEXT, SITE_PAPER_TEXT } from './strings';
 import { allText } from './testUtils';
 
 const q = (no: number, extra: Partial<Question> = {}): Question =>
@@ -144,5 +149,70 @@ describe('題號', () => {
   it('共用題幹的填充題：題號不同印「47-48」，同一題的子題印「47.」', () => {
     expect(clusterNumberText([{ label: '47', no: 47 }, { label: '48', no: 48 }])).toBe('47-48');
     expect(clusterNumberText([{ label: '47A', no: 47 }, { label: '47B', no: 47 }])).toBe('47.');
+  });
+});
+
+describe('本站自組卷的圖（bank-mock §7.3）', () => {
+  const chart = (type: ChartType, note: string | null = 'The years shown are not evenly spaced.'): ChartSpec => ({
+    type,
+    title: 'Access to electricity, 2003–2023',
+    x: { label: 'Year', unit: null },
+    y: { label: 'Share of people', unit: '%' },
+    categories: type === 'pie' ? ['Coal', 'Solar'] : ['2003', '2023'],
+    series: type === 'stacked_bar' ? [{ name: 'Urban', values: [60, 70] }, { name: 'Rural', values: [20, 25] }] : [{ name: 'World', values: [80, 91.4] }],
+    note,
+    source: { publisher: 'World Bank', title: 'WDI', url: 'https://example.org/wdi', license: 'CC-BY-4.0', accessed: '2026-10-01' },
+  });
+  /** 描述帶資料（「1900 年最低的是巴西」這類句子會直接說出答案）。 */
+  const description = '折線圖。橫軸是年份，縱軸是用電人口比例。World 依序是 80、91.4；2003 年最低的是巴西，2023 年最高的是日本。';
+  const chartFigure = (type: ChartType, extra: Partial<Figure> = {}) => ({ kind: 'chart', label: 'Chart 1', caption: 'Share of people with access to electricity (%)', description, rows: null, chart: chart(type), ...extra }) as Figure;
+  const site = (fig: Figure) => blockTexts(groupBlocks(section('reading'), group({ passage: 'A passage.', questions: [q(35)], figures: [fig] }), { site: true })).join('|');
+  /** 描述裡帶資料的片段（§10.3：「依序是」後面的數列，以及排除前 10 個字後任意連續 12 個字的視窗）。 */
+  const fragments = (d: string) => {
+    const chars = [...d.replace(/\s+/g, '')];
+    const windows = Array.from({ length: Math.max(0, chars.length - 22) }, (_, i) => chars.slice(i + 10, i + 22).join(''));
+    return [...windows, /依序是([^。；]+)/.exec(d)?.[1] ?? ''].filter((w) => w.length >= 6);
+  };
+
+  it.each(['bar', 'line', 'stacked_bar', 'pie'] as const)('%s：表名有圖表類型、標示與標題，接著資料表與附註；不印文字描述與「原圖請見」', (type) => {
+    const text = site(chartFigure(type));
+    expect(text).toContain(SITE_PAPER_TEXT.chartMarker);
+    expect(text).toContain(CHART_TYPE_LABELS[type]);
+    expect(text).toContain('Chart 1');
+    expect(text).toContain('Access to electricity, 2003–2023');
+    expect(text).toContain('Share of people with access to electricity (%)');
+    expect(text).toContain(chartTableRows(chart(type)).flat().join(''));
+    expect(text).toContain(SITE_PAPER_TEXT.chartNote('The years shown are not evenly spaced.'));
+    const flat = text.replace(/\s+/g, '');
+    for (const fragment of fragments(description)) expect(flat).not.toContain(fragment);
+    expect(text).not.toContain(PDF_TEXT.figureNote);
+    expect(text).not.toContain(SITE_PAPER_TEXT.figureNote);
+  });
+
+  it('沒有附註時不印「附註」；圖說和標題相同時只印一次', () => {
+    const text = site(chartFigure('bar', { caption: 'Access to electricity, 2003–2023', chart: chart('bar', null) } as Partial<Figure>));
+    expect(text.split('Access to electricity, 2003–2023')).toHaveLength(2);
+    expect(text).not.toContain(SITE_PAPER_TEXT.chartNote(''));
+  });
+
+  it('表格只印表名與 rows（不印描述）；歷屆卷的圖不帶 site 照舊', () => {
+    const table: Figure = { kind: 'table', label: 'Table 1', caption: 'Emergency numbers', description: '表格。119 是日本 1927 年開始的。', rows: [['Number', 'Year'], ['119', '1927']] };
+    const text = site(table);
+    expect(text).toContain(`${PDF_TEXT.tableLabel}Emergency numbers`);
+    expect(text).toContain('NumberYear1191927');
+    expect(text).not.toContain('日本 1927 年');
+    // 沒有 site：圖表照歷屆卷的虛線框印法（描述、原圖請見），即使資料帶了 chart。
+    const past = blockTexts(groupBlocks(section('reading'), group({ passage: 'P.', questions: [q(35)], figures: [chartFigure('line')] }))).join('|');
+    expect(past).toContain(description);
+    expect(past).toContain(PDF_TEXT.figureNote);
+  });
+
+  it('作文的圖印文字描述（虛線框），最後一行是本站的說明，不指向官方試題 PDF', () => {
+    const comp = { ...q(1), label: '英文作文', mode: 'composition', stem: '提示：請寫一篇作文。', options: null, answer: null } as Question;
+    const blocks = groupBlocks(section('composition'), group({ questions: [comp], figures: [figure({ kind: 'illustration', label: '圖', caption: '打掃時間的教室', description: '一間教室在打掃時間的情景。' })] }), { site: true });
+    const text = blockTexts(blocks).join('|');
+    expect(text).toContain('一間教室在打掃時間的情景。');
+    expect(text).toContain(SITE_PAPER_TEXT.figureNote);
+    expect(text).not.toContain(PDF_TEXT.figureNote);
   });
 });

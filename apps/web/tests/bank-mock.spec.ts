@@ -1,12 +1,13 @@
 /**
  * 本站自組模擬考（docs/design/bank-mock.md §10.4；建置後的產物＋建置當下的真實題庫 /data/bank/mock-pool.json）：
  *   /mock 的區塊與跳轉連結 → 組一份穩定基礎卷（預覽模式的固定種子）→ 卷子頁（卷號、AI 標示、本站的規則文字）→ 作答、閱讀的圖表或表格
- *   → 重新整理後接續 → 交卷 → 成績單（原得總分、難度建議、沒有級分）→ /mock 的「我組過的卷子」與作答紀錄 → 再組一份（題組不重複）
- *   → 本卷資訊的「組一份新卷」回到 /mock 時捲到區塊；
+ *   → 重新整理後接續 → 交卷 → 成績單（原得總分、難度建議、沒有級分；下載「題本＋答案＋解析」PDF）→ /mock 的「我組過的卷子」
+ *   （已交卷、下載過 PDF）與作答紀錄 → 再組一份（題組不重複）→ 本卷資訊的「組一份新卷」回到 /mock 時捲到區塊；
  *   分享連結（新的 context 打開同一份；大寫＋.p 的網址轉到標準網址）、格式不對的代號、每個畫面都沒有「大考中心」與 CEEC。
- * 資料是建置當下的題庫，所以斷言不依賴某一組題目（題組的內容從 /data 讀）。PDF 的流程在 WP3（tests/pdf.spec.ts）。
+ * 資料是建置當下的題庫，所以斷言不依賴某一組題目（題組的內容從 /data 讀）。卷子頁的學生卷、教師卷下載在 tests/pdf.spec.ts。
  * 桌機與手機（playwright.config.ts 的兩個 project）各跑一次；手機另外在 320px 檢查沒有水平捲動。
  */
+import { readFile } from 'node:fs/promises';
 import { expect, test, type Page } from '@playwright/test';
 import { collectErrors, expectNoHorizontalOverflow, fakeBackend } from './support/backend';
 
@@ -64,8 +65,8 @@ test('/mock：本站自組模擬考的區塊、頁首的跳轉連結；region「
   expect(errors).toEqual([]);
 });
 
-test('組卷 → 作答 → 重新整理接續 → 交卷 → 成績單 → 我組過的卷子 → 再組一份不重複', async ({ page }, testInfo) => {
-  test.setTimeout(120_000);
+test('組卷 → 作答 → 重新整理接續 → 交卷 → 成績單與 PDF → 我組過的卷子 → 再組一份不重複', async ({ page }, testInfo) => {
+  test.setTimeout(180_000);
   const mobile = testInfo.project.name === 'mobile';
   const errors = collectErrors(page);
 
@@ -84,6 +85,10 @@ test('組卷 → 作答 → 重新整理接續 → 交卷 → 成績單 → 我�
   await expect(info).toContainText('AI 出題・已通過自動驗證・人工審核中');
   await expect(page.getByText('考試中不提供答案與提示；交卷後在成績單看本站的答案與解析。')).toBeVisible();
   await expect(page.locator('main')).not.toContainText('全國答對率');
+  // PDF 區塊是本站自組卷的三種版本，卷子頁預設學生卷（下載在 tests/pdf.spec.ts）。
+  const startPdf = page.getByRole('region', { name: '下載考試格式 PDF' });
+  await expect(startPdf.getByRole('radio')).toHaveCount(3);
+  await expect(startPdf.getByRole('radio', { name: /^學生卷/ })).toBeChecked();
   await expectNoCeec(page, '卷子頁');
   await expectNoHorizontalOverflow(page, mobile);
 
@@ -140,11 +145,26 @@ test('組卷 → 作答 → 重新整理接續 → 交卷 → 成績單 → 我�
   await expectNoCeec(page, '檢討試卷');
   await expectNoHorizontalOverflow(page, mobile);
 
+  // 成績單的 PDF 預設「題本＋答案＋解析」（§2.5）：真的產生一份，檔名是這份卷子的「含答案解析」。
+  const reportPdf = page.getByRole('region', { name: '下載考試格式 PDF' });
+  await expect(reportPdf.getByRole('radio', { name: /^題本＋答案＋解析/ })).toBeChecked();
+  const downloadPromise = page.waitForEvent('download', { timeout: 60_000 });
+  await reportPdf.getByRole('button', { name: '下載 PDF' }).click();
+  const download = await downloadPromise;
+  const fileName = `學測英文中心_自組模擬考_穩定基礎_${code}_含答案解析.pdf`;
+  // POSIX 語系的無頭 Chromium 會把非 ASCII 檔名改成 download；畫面上的「已下載：…」一定是完整檔名。
+  expect([fileName, 'download']).toContain(download.suggestedFilename());
+  await expect(reportPdf.getByRole('status')).toHaveText(`已下載：${fileName}`);
+  const pdfPath = testInfo.outputPath('bank-report-full.pdf');
+  await download.saveAs(pdfPath);
+  expect((await readFile(pdfPath)).subarray(0, 5).toString('latin1')).toBe('%PDF-');
+
   // 回 /mock：我組過的卷子有這一份（已交卷 1 次），作答紀錄的名稱是卷名、不是代號。
   await page.getByRole('link', { name: '回模擬考列表' }).click();
   const mine = page.getByRole('region', { name: '我組過的卷子（這台裝置）' });
   await expect(mine).toContainText(`穩定基礎 ${code}`);
   await expect(mine).toContainText('已交卷 1 次');
+  await expect(mine).toContainText('下載過 PDF');
   const history = page.getByRole('region', { name: '作答紀錄' });
   await expect(history).toContainText(`本站自組（穩定基礎）${code}`);
   await expect(history).not.toContainText('bk1-');

@@ -7,17 +7,23 @@
  *   3. 其他非選擇題（舊制簡答、短詩問答、表格填寫）：每題兩條線；
  *   4. 中譯英：每題三條線；
  *   5. 英文作文：從新的一頁開始，兩頁格線，左側每 5 行印行號，第 12 行右側提示約 120 個單詞。
+ *
+ * 本站自組卷（docs/design/bank-mock.md §7.2）：第一頁的填寫欄多了班級、座號，右上角印卷號與封面同一個 QR code
+ * （大小、容錯都和封面相同，見 cover.ts 的 SITE_QR），下方印完整網址：學生可以掃答題卷的 QR code 線上輸入答案計分。
+ * 說明文字也換成本站的版本。
  */
 import type { Exam, ExamSection, OptionLetter, Question, QuestionGroup } from '../../../data/exams';
 import { isAutoScored } from '../../exams/scoring';
 import type { PdfCanvasElement, PdfContent, PdfNode, PdfTableLayout } from '../engine/docTypes';
+import type { SitePaperPdfMeta } from '../types';
+import { SITE_QR, SITE_QR_COLUMN, siteQrNode } from './cover';
 import { textWidth } from './estimate';
 import { CONTENT_HEIGHT, CONTENT_WIDTH } from './metrics';
 import { fieldRow } from './nodes';
 import { optionCells } from './options';
 import { questionNumberText } from './questions';
-import { plainInline, spacedInline } from './richInline';
-import { PDF_TEXT } from './strings';
+import { plainInline, spacedInline, urlInline } from './richInline';
+import { PDF_TEXT, SITE_PAPER_TEXT } from './strings';
 
 export interface CardItem {
   label: string;
@@ -260,13 +266,58 @@ function estimateAreas(exam: Pick<Exam, 'sections'>): number {
   return height;
 }
 
-export function answerSheetContent(exam: Exam): PdfContent[] {
-  const content: PdfContent[] = [
+/** 答題卷第一頁右上角 QR code 和左邊文字的間距。 */
+const SHEET_QR_GAP = 12;
+
+/**
+ * 本站自組卷的答題卷開頭：標題、說明、填寫欄（班級、座號…）在左，卷號與 QR code 在右，網址在下方。
+ * QR code 和封面完全相同（SITE_QR）：學生收卷後掃的是答題卷這一張，格子不能比封面小。
+ */
+function siteSheetHead(site: SitePaperPdfMeta, onlineUrl: string | null | undefined): PdfContent[] {
+  const leftWidth = onlineUrl ? CONTENT_WIDTH - SITE_QR_COLUMN - SHEET_QR_GAP : CONTENT_WIDTH;
+  const rows = SITE_PAPER_TEXT.sheetFieldRows;
+  const left: PdfContent[] = [
     { text: spacedInline(PDF_TEXT.answerSheetTitle, { bold: true, spacing: 6 }), fontSize: 18, alignment: 'center', margin: [0, 0, 0, 4] },
-    { text: plainInline(PDF_TEXT.answerSheetNote), fontSize: 8.5, color: '#444444', alignment: 'center', margin: [0, 0, 0, 8] },
-    fieldRow(PDF_TEXT.sheetFields, 10, { gap: 20, margin: [0, 0, 0, 12] }),
-    ...choiceCard(choiceCardItems(exam)),
+    { text: plainInline(SITE_PAPER_TEXT.answerSheetNote), fontSize: 8.5, color: '#444444', alignment: 'center', margin: [0, 0, 0, 8] },
+    ...rows.map((row, i) => fieldRow(row, 10, { gap: 14, width: leftWidth, margin: [0, 0, 0, i === rows.length - 1 ? 4 : 8] })),
   ];
+  // 卷號印在 QR code 下方，中間留 QR code 需要的空白（四格）。
+  const code: PdfContent = { text: plainInline(SITE_PAPER_TEXT.codeLabel(site.code)), fontSize: 8.5, alignment: 'center', margin: [0, SITE_QR.quietZone, 0, 0] };
+  if (!onlineUrl) return [...left, { ...code, alignment: 'right', margin: [0, 0, 0, 8] }];
+  return [
+    {
+      columns: [
+        { width: leftWidth, stack: left },
+        { width: SITE_QR_COLUMN, stack: [siteQrNode(onlineUrl), code] },
+      ],
+      columnGap: SHEET_QR_GAP,
+    },
+    {
+      text: [...plainInline(SITE_PAPER_TEXT.onlineLabel), urlInline(onlineUrl, CONTENT_WIDTH - textWidth(SITE_PAPER_TEXT.onlineLabel, 7.5) - 8, 7.5)],
+      fontSize: 7.5,
+      lineHeight: 1.25,
+      color: '#333333',
+      margin: [0, 2, 0, 10],
+    },
+  ];
+}
+
+export interface AnswerSheetOptions {
+  /** 本站自組卷：填寫欄加班級、座號，右上角印卷號與 QR code（bank-mock §7.2）。 */
+  site?: SitePaperPdfMeta | undefined;
+  /** 線上作答的網址（QR code 與印出的網址）；沒有就不印。 */
+  onlineUrl?: string | null | undefined;
+}
+
+export function answerSheetContent(exam: Exam, options: AnswerSheetOptions = {}): PdfContent[] {
+  const head: PdfContent[] = options.site
+    ? siteSheetHead(options.site, options.onlineUrl)
+    : [
+        { text: spacedInline(PDF_TEXT.answerSheetTitle, { bold: true, spacing: 6 }), fontSize: 18, alignment: 'center', margin: [0, 0, 0, 4] },
+        { text: plainInline(PDF_TEXT.answerSheetNote), fontSize: 8.5, color: '#444444', alignment: 'center', margin: [0, 0, 0, 8] },
+        fieldRow(PDF_TEXT.sheetFields, 10, { gap: 20, margin: [0, 0, 0, 12] }),
+      ];
+  const content: PdfContent[] = [...head, ...choiceCard(choiceCardItems(exam))];
 
   // 混合題、其他非選擇題、中譯英依大題順序排；同一頁放不下就整區移到下一頁（同題本答題卷：第 1 頁答案卡，第 2 頁非選擇題）。
   const areaWidth = CONTENT_WIDTH - 60;

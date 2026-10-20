@@ -11,12 +11,17 @@ const FONT_COUNT = Object.keys(FONT_FILES).length;
 
 /**
  * 封面印的「線上作答與自動計分」網址：歷屆試題 /exams/{id}，模擬考 /mock/{id}。
+ * 本站自組卷在代號後面加 `.p`（代表從 PDF 進來，docs/design/bank-mock.md §4.6）：封面與答題卷的 QR code 都用這個網址。
  * origin 是網站本身（Worker 的 self.location 與頁面同源）；拿不到就不印。
  */
 export function onlineUrlFor(exam: Pick<Exam, 'id'>, options: Pick<ExamPdfOptions, 'mockMeta'>, origin: string | undefined): string | null {
   if (!origin || !/^https?:\/\//.test(origin)) return null;
-  return `${origin}/${options.mockMeta ? 'mock' : 'exams'}/${encodeURIComponent(exam.id)}`;
+  const suffix = options.mockMeta?.sitePaper ? SITE_PAPER_URL_SUFFIX : '';
+  return `${origin}/${options.mockMeta ? 'mock' : 'exams'}/${encodeURIComponent(exam.id)}${suffix}`;
 }
+
+/** 自組卷網址的「從 PDF 進來」標記（同 features/mock/bank/code.ts 的 PDF_SUFFIX；PDF 模組不匯入組卷程式）。 */
+export const SITE_PAPER_URL_SUFFIX = '.p';
 
 export async function generateExamPdf(
   exam: Exam,

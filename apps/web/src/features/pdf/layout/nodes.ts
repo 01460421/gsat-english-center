@@ -2,14 +2,16 @@
  * 題本共用的節點：標題、說明框、題組標示、選文段落、圖片描述框、表格（設計文件 §5.1、§5.3、§5.7、§5.8）。
  * 每個函式回傳 Block（節點＋估計高度＋分頁旗標），由 blocks.ts 的 flowBlocks() 排成內容。
  */
+import type { ChartSpec } from '../../../data/bank';
 import type { Figure } from '../../../data/exams';
 import { figureKindLabel } from '../../exams/labels';
+import { CHART_TYPE_LABELS, chartTableRows } from '../../practice/chart';
 import type { PdfContent, PdfInline, PdfNode, PdfTableLayout } from '../engine/docTypes';
 import { maybeUnbreakable, type Block } from './blocks';
 import { estimateLineCount, estimateTextHeight, textWidth } from './estimate';
 import { CONTENT_WIDTH, GAP, LINE, PARAGRAPH_INDENT, SIZE, lineHeightPt } from './metrics';
 import { plainInline, richInline, richParagraphs, spacedInline, type RichOptions } from './richInline';
-import { PDF_TEXT } from './strings';
+import { PDF_TEXT, SITE_PAPER_TEXT } from './strings';
 
 /** 細框線（說明框、選項框、多文本的部分框）。 */
 export function boxLayout(lineWidth = 0.8, padding: { x: number; y: number } = { x: 4, y: 2 }): PdfTableLayout {
@@ -161,11 +163,22 @@ function figureTable(rows: readonly (readonly string[])[], width: number): { nod
   };
 }
 
+/** 版面模式：本站自組卷（bank-mock §7.3）的圖印法不同。 */
+export interface FigureOptions {
+  site?: boolean;
+}
+
 /**
  * 圖片描述框（設計文件 §5.8）：虛線框，第一行粗體標題，接著文字描述、表格（有 rows 時），最後一行灰色小字指向官方 PDF。
  * kind 為 table 的是真的表格：只印標題與表格，不加「原圖請見」。
+ * 本站自組卷（options.site）：圖表印成資料表（siteChartBlock）；表格同樣只印標題與表格；
+ * 其他的圖（作文的圖）印文字描述，最後一行改成本站的說明（不指向官方 PDF）。
  */
-export function figureBlock(fig: Figure): Block {
+export function figureBlock(fig: Figure, options: FigureOptions = {}): Block {
+  if (options.site) {
+    const chart = chartOf(fig);
+    if (chart) return siteChartBlock(fig, chart);
+  }
   const inner = CONTENT_WIDTH - 10 - 1.6;
   const isTable = fig.kind === 'table';
   const rows = fig.rows && fig.rows.length > 0 ? fig.rows : null;
@@ -183,7 +196,8 @@ export function figureBlock(fig: Figure): Block {
     height += table.height;
   }
   if (!isTable) {
-    stack.push({ text: plainInline(PDF_TEXT.figureNote), fontSize: SIZE.figureNote, color: '#555555', lineHeight: LINE.figure, margin: [0, 2, 0, 0] });
+    const note = options.site ? SITE_PAPER_TEXT.figureNote : PDF_TEXT.figureNote;
+    stack.push({ text: plainInline(note), fontSize: SIZE.figureNote, color: '#555555', lineHeight: LINE.figure, margin: [0, 2, 0, 0] });
     height += lineHeightPt(SIZE.figureNote, LINE.figure) * 2 + 2;
   }
   height += 6 + 1.6 + 8;
@@ -192,11 +206,58 @@ export function figureBlock(fig: Figure): Block {
 }
 
 /**
+ * 題庫閱讀圖表的 chart（features/mock/bank/renumber.ts 帶進 Exam 的圖，線上用它畫圖）；不是圖表或形狀不對回傳 null。
+ * Exam 的型別沒有 chart（歷屆試題沒有），所以這裡自己檢查形狀。
+ */
+export function chartOf(fig: Figure): ChartSpec | null {
+  const chart = (fig as Figure & { chart?: unknown }).chart;
+  if (typeof chart !== 'object' || chart === null) return null;
+  const c = chart as Partial<ChartSpec>;
+  if (typeof c.type !== 'string' || typeof c.title !== 'string' || !Array.isArray(c.categories) || !Array.isArray(c.series) || !c.x || !c.y) return null;
+  return chart as ChartSpec;
+}
+
+/** 圖表的表名列：「［圖表］折線圖　Chart 1　Access to electricity, 2003–2023」（類型與標題同線上的圖表）。 */
+export function chartTitleText(fig: Pick<Figure, 'label'>, chart: Pick<ChartSpec, 'type' | 'title'>): string {
+  const type = CHART_TYPE_LABELS[chart.type] ?? figureKindLabel('chart');
+  return [type, fig.label?.trim() || null, chart.title.trim() || null].filter(Boolean).join('　');
+}
+
+/**
+ * 本站自組卷的閱讀圖表（bank-mock §7.3）：依序印表名（圖表類型＋標示＋標題，圖說和標題不同時另起一行）、
+ * 資料表（practice/chart.ts 的 chartTableRows，盲解者與解析引用的同一份資料）與「附註：…」。
+ * **不印文字描述**（描述常常直接說出答案），也不印「原圖請見」；資料來源印在資料來源頁（sources.ts）。
+ */
+function siteChartBlock(fig: Figure, chart: ChartSpec): Block {
+  const inner = CONTENT_WIDTH - 10 - 1.6;
+  const title = chartTitleText(fig, chart);
+  const stack: PdfContent[] = [{ text: [...plainInline(SITE_PAPER_TEXT.chartMarker, { bold: true }), ...plainInline(title)], fontSize: SIZE.figureTitle, lineHeight: LINE.figure }];
+  let height = estimateTextHeight(`${SITE_PAPER_TEXT.chartMarker}${title}`, inner, SIZE.figureTitle, LINE.figure);
+  const caption = fig.caption?.trim() ?? '';
+  if (caption !== '' && caption !== chart.title.trim()) {
+    stack.push({ text: plainInline(caption), fontSize: SIZE.figureBody, lineHeight: LINE.figure });
+    height += estimateTextHeight(caption, inner, SIZE.figureBody, LINE.figure);
+  }
+  const table = figureTable(chartTableRows(chart), inner);
+  stack.push(table.node);
+  height += table.height;
+  const note = chart.note?.trim() ?? '';
+  if (note !== '') {
+    const text = SITE_PAPER_TEXT.chartNote(note);
+    stack.push({ text: plainInline(text), fontSize: SIZE.figureBody, lineHeight: LINE.figure });
+    height += estimateTextHeight(text, inner, SIZE.figureBody, LINE.figure);
+  }
+  height += 6 + 1.6 + 8;
+  const node = boxed({ stack }, boxLayout(0.6, { x: 5, y: 3 }), [0, 3, 0, 5]);
+  return { node: maybeUnbreakable(node, height), height };
+}
+
+/**
  * 填寫欄：「姓名：＿＿＿　日期：＿＿＿」平均分配在一列，底線長度依欄寬與標籤寬計算（canvas 不會自己縮放）。
  */
-export function fieldRow(labels: readonly string[], fontSize: number, options: { gap?: number; margin?: [number, number, number, number] } = {}): PdfNode {
+export function fieldRow(labels: readonly string[], fontSize: number, options: { gap?: number; margin?: [number, number, number, number]; width?: number } = {}): PdfNode {
   const gap = options.gap ?? 10;
-  const fieldWidth = (CONTENT_WIDTH - gap * (labels.length - 1)) / labels.length;
+  const fieldWidth = ((options.width ?? CONTENT_WIDTH) - gap * (labels.length - 1)) / labels.length;
   return {
     columns: labels.map((label) => {
       const text = `${label}${PDF_TEXT.colon}`;

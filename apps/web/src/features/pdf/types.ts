@@ -21,6 +21,41 @@ export interface MockPdfMeta {
   strict?: boolean;
   /** 封面額外提醒（例如 ref-115 的「本卷 49 題沿用歷屆試題」）；每個元素一行。 */
   notices?: readonly string[];
+  /**
+   * 本站自組卷（docs/design/bank-mock.md §7）：有值時封面、頁首頁尾、圖、答題卷、答案頁與文件屬性都換成本站自組卷的文字，
+   * 不寫官方考試機構；另外可以印解析頁、資料來源頁，以及學生卷、教師卷與雙面列印（ExamPdfOptions 的三個選填欄位）。
+   * 內容由 features/mock/bank/pdfText.ts 的 sitePaperPdfMeta() 組出來。
+   */
+  sitePaper?: SitePaperPdfMeta;
+}
+
+/** 本站自組卷的 PDF 資訊（全部是純資料，可以直接 postMessage 給 Worker）。 */
+export interface SitePaperPdfMeta {
+  /** 卷號，例如 B-7Q2MK（只供核對）。 */
+  code: string;
+  /** 難度名稱，例如「進階練習」。 */
+  tierLabel: string;
+  /** 組卷日期 YYYY-MM-DD。 */
+  assembledOn: string;
+  /** 資料版本（bank/index.json、組卷池的 version）。 */
+  dataVersion: string;
+  /** AI 出題聲明（「AI 出題・已通過自動驗證・人工審核中」）。 */
+  aiNotice: string;
+  /** 資料來源頁（§7.5）：依題號範圍（「35–38」）列出出處說明與參考資料；沒有參考資料的題組不列。 */
+  references: { range: string; attribution: string | null; items: { publisher: string; title: string; url: string; license?: string }[] }[];
+  answers: {
+    /** 題號（中譯英1）→ 本站參考譯文；答案頁印第一個寫法。 */
+    translation: Record<string, string[]>;
+    /** 作文：評分重點（每項一行）與一篇 AI 範文（段落以換行分開；沒有範文是 null）。 */
+    composition: { criteria: string[]; modelText: string | null };
+    /** 題號 → 中文解析；null 表示沒有可印的解析（PDF 改印「請到線上檢討試卷查看」）。含 PDF 字型沒有的字時由版面程式改印同一句。 */
+    explanations: Record<string, string | null>;
+    /**
+     * 混合題填充、簡答的題號 → 給部分分數（1 分）的寫法（題庫解析的 partial_credit_forms：選字正確、字形錯誤），
+     * 答案頁印在該題的答案下方，紙本批改和線上自動判分才一致（§6.3）。沒有就不印。
+     */
+    partialCredit?: Record<string, string[]>;
+  };
 }
 
 export interface ExamPdfOptions {
@@ -28,11 +63,28 @@ export interface ExamPdfOptions {
   includeAnswerSheet: boolean;
   /**
    * 附「答案」頁：選擇題答案、混合題官方答案（含可接受答案）；中譯英只印「官方參考譯文見大考中心評分原則」與網址，
-   * 作文不印任何範文（站主決定 D8、docs/research/04 §4.3）。
+   * 作文不印任何範文（站主決定 D8、docs/research/04 §4.3）。本站自組卷改印本站的答案、參考譯文與評分重點（bank-mock §7.4）。
    */
   includeAnswerKey: boolean;
   /** 有值時產生模擬考版封面；沒有就是歷屆試題版。 */
   mockMeta?: MockPdfMeta;
+  /** 附解析頁（只有 mockMeta.sitePaper 有值時有效；需要 includeAnswerKey）。 */
+  includeExplanations?: boolean;
+  /** false：教師卷，不印封面與題本（只有 mockMeta.sitePaper 有值時有效）。預設 true。 */
+  includeBooklet?: boolean;
+  /** 雙面列印：答題卷、答案、解析每一段從單數頁開始（只有 mockMeta.sitePaper 有值時有效）。 */
+  duplex?: boolean;
+}
+
+/** 下載成功（存檔或分享完成）時交給 ExamPdfDownload 的 onDownloaded（bank-mock §2.5：自組卷記為下載過、確認快照）。 */
+export interface PdfDownloadInfo {
+  fileName: string;
+  /** 有沒有題本（教師卷是 false）。 */
+  includeBooklet: boolean;
+  /** 有沒有答案頁。 */
+  includeAnswerKey: boolean;
+  /** save＝已交給瀏覽器存檔（<a download>）；share＝分享面板回報完成。 */
+  via: 'save' | 'share';
 }
 
 /** 產生進度（給按鈕顯示「準備字型…」「排版中…」）。 */

@@ -111,3 +111,124 @@ export const PDF_TEXT = {
   scoringSite: 'https://www.ceec.edu.tw/',
   nationalRate: '全國答對率',
 } as const;
+
+// ---------------------------------------------------------------------------
+// 本站自組模擬考（docs/design/bank-mock.md §7）：MockPdfMeta.sitePaper 有值時，上面歷屆卷的文字全部換成下面這些。
+// 題目是本站的 AI 題，這裡的文字不提官方考試機構，也不印官方網址（bank-mock §1、§7.2；layout/buildDocDefinition.test.ts 檢查）。
+// ---------------------------------------------------------------------------
+
+/**
+ * 自組卷 PDF 用粗體印的字串。字型檢查（scripts/font-coverage.mjs）會讀這個常數裡的字串常值，
+ * 粗體子集沒有其中的字就是錯誤（不只是警告），子集化工具也會把它們收進粗體子集（bank-mock §7.6）。
+ * 這裡只能寫字串常值（檢查工具讀原始碼，不執行程式）。
+ */
+export const SITE_PAPER_BOLD = {
+  /** 封面「英文考科」下方的灰底橫條。 */
+  coverBand: '學測英文中心自組模擬試卷・題目由 AI 撰寫・非官方試題',
+  /** 教師卷第一頁的標題。 */
+  teacherTitle: '教師卷：答案與解析',
+  explanationsTitle: '解析',
+  sourcesTitle: '資料來源',
+  modelTextTitle: '英文作文範文',
+  /** 閱讀圖表的標示（表名列的開頭）。 */
+  chartMarker: '［圖表］',
+} as const;
+
+/** 本站自組卷 PDF 的固定文字（封面、頁首頁尾、答題卷、答案、解析、資料來源、教師卷資訊、文件屬性）。 */
+export const SITE_PAPER_TEXT = {
+  /** 每頁頁尾：「學測英文中心自組模擬考　卷號 A-3KD9W」＋「｜」＋聲明。 */
+  footerSource: (code: string) => `學測英文中心自組模擬考　卷號 ${code}`,
+  footerNotice: '題目由 AI 撰寫，經本站自動驗證，非官方試題',
+  headerCenter: '學測英文中心自組模擬考・非官方',
+  /** 題本頁首的卷別（兩行）。 */
+  examShort: (tierLabel: string) => [`自組模擬考（${tierLabel}）`, '英文考科'] as const,
+  sheetHeader: (tierLabel: string) => `自組模擬考（${tierLabel}）　答題卷`,
+  keyHeader: (tierLabel: string) => `自組模擬考（${tierLabel}）　答案`,
+  explanationsHeader: (tierLabel: string) => `自組模擬考（${tierLabel}）　解析`,
+  sourcesHeader: (tierLabel: string) => `自組模擬考（${tierLabel}）　資料來源`,
+  coverBand: SITE_PAPER_BOLD.coverBand,
+  /** 封面卷別下方的說明。 */
+  coverFormat: '題型與配分同學測，難度依所選等級',
+  /** 封面的填寫欄（兩列）。 */
+  candidateFieldRows: [
+    ['班級', '座號', '姓名'],
+    ['日期', '開始時間', '結束時間'],
+  ],
+  /** 答題卷第一頁的填寫欄（兩列）。 */
+  sheetFieldRows: [
+    ['班級', '座號', '姓名'],
+    ['日期', '得分'],
+  ],
+  /** 作答方式的最後一條。 */
+  howOnline: '掃封面或答題卷的 QR code 線上作答，選擇題與混合題自動計分。',
+  assembledOn: (date: string) => `組卷日期：${date}`,
+  dataVersion: (version: string) => `資料版本：${version}`,
+  coverFigureNote: '閱讀測驗的圖表印成資料表；作文的圖以文字描述代替，線上作答可以看到原圖。',
+  onlineLabel: '線上作答與計分：',
+  codeNote: '卷號只供核對，要用網址或 QR code 才能打開這份卷子。',
+  qrCaption: '線上作答與計分',
+  /** 答題卷右上角 QR code 下方的卷號。 */
+  codeLabel: (code: string) => `卷號 ${code}`,
+  answerSheetNote: '本答題卷為學測英文中心設計的簡化格式，供紙本練習與自行核對。',
+  chartMarker: SITE_PAPER_BOLD.chartMarker,
+  /** 圖表下方的附註（chart.note；線上的圖表也顯示這一行）。 */
+  chartNote: (note: string) => `附註：${note}`,
+  /** 作文的圖（文字描述框）下方的說明，取代歷屆卷的「原圖請見官方試題 PDF」。 */
+  figureNote: '本卷的圖以文字描述代替；線上作答可以看到原圖。',
+  answerKeyChoiceNote: '選擇題答案為本站題庫的答案。',
+  answerKeyMixedNote: '填充、簡答的可接受答案為本站題庫的完整清單（不分大小寫，包住答案的引號與結尾的標點不計）。',
+  /** 填充、簡答的部分給分規則：和線上自動計分（features/exams/scoring.ts 的 scoreOpenAnswer）相同。 */
+  answerKeyPartialNote:
+    '部分給分（每題 1 分）：寫成答案下方列出的「部分給分」寫法；填充題拼錯 2 個字母以內（寫的字至少 5 個字母，而且不是另一個英文單詞）；簡答題寫出答案，但多寫 1–2 個單詞。填充題寫兩個單詞以上、簡答題多寫 3 個單詞以上，0 分。規則同線上自動計分。',
+  /** 混合題答案下方：給 1 分的寫法（選字正確、字形錯誤）。 */
+  partialCredit: (forms: readonly string[]) => `部分給分（1 分）：${forms.join('；')}`,
+  /** 答案頁的答案或參考譯文含 PDF 字型沒有的字（替代之後仍有）時。 */
+  answerMissing: '（這一題的答案含 PDF 無法顯示的字，請到線上檢討試卷查看）',
+  translationAnswerLabel: '本站參考譯文（不是唯一答案）：',
+  compositionCriteriaLabel: '評分重點：',
+  /** 作文評分重點的一項含 PDF 字型沒有的字時。 */
+  criterionMissing: '（這一項評分重點含 PDF 無法顯示的字，請到線上檢討試卷查看）',
+  explanationsTitle: SITE_PAPER_BOLD.explanationsTitle,
+  /** 解析含 PDF 字型沒有的字（替代之後仍有），或沒有解析時。 */
+  explanationMissing: '（這一題的解析含 PDF 無法顯示的字，請到線上檢討試卷查看）',
+  modelTextTitle: SITE_PAPER_BOLD.modelTextTitle,
+  modelTextNote: 'AI 生成範文，僅供參考',
+  /** 範文含 PDF 字型沒有的字時，整篇改印這一句。 */
+  modelTextMissing: '（範文含 PDF 無法顯示的字，請到線上檢討試卷查看）',
+  sourcesTitle: SITE_PAPER_BOLD.sourcesTitle,
+  sourcesIntro: '本卷題目由 AI 參考下列資料撰寫，非原文轉載；AI 撰寫的事實陳述可能有誤，請以參考資料為準。',
+  sourcesRange: (range: string) => `第 ${range} 題`,
+  sourcesLicense: '授權：',
+  sourcesNone: '本卷的題目沒有引用外部資料。',
+  teacherTitle: SITE_PAPER_BOLD.teacherTitle,
+  teacherRows: { code: '卷號', tier: '難度', assembledOn: '組卷日期', dataVersion: '資料版本', online: '線上作答' },
+  /** 雙面列印補的空白頁。 */
+  blankPage: '（本頁空白）',
+  /** 文件屬性（PDF 的 Title、Subject）。 */
+  docTitle: (tierLabel: string, code: string, teacher: boolean) => `學測英文中心自組模擬考 ${tierLabel} ${code}${teacher ? ' 教師卷' : ''}`,
+  docSubject: '學測英文中心自組模擬考　題目由 AI 撰寫，非官方試題',
+} as const;
+
+/**
+ * 自組卷 PDF 的字型可能沒有的字 → 替代寫法（bank-mock §7.4）：解析、答案頁（答案、參考譯文、評分重點）與範文替代之後
+ * 仍有缺字時，那一題（那一項、那一篇）改印 explanationMissing 這類替代說明（layout/explanations.ts 的 printableSiteText）；
+ * 資料來源頁（參考資料的原文標題常是日文網頁）只做替代。只放意思不變的替換。
+ * 鍵寫成 \u 跳脫：字型檢查與子集化工具掃描這個檔案的原始碼，被替換掉的字不會印出來，不該被當成要收進子集的字。
+ */
+export const GLYPH_SUBSTITUTES: Readonly<Record<string, string>> = {
+  /* 不等號、約等號、國字零、置中的刪節號 */
+  '\u2260': '不等於',
+  '\u2248': '約等於',
+  '\u3007': '○',
+  '\u22ef': '…',
+  /* 日文的字形（產、祿）：Noto Serif TC 沒有，換成正體字 */
+  '\u7523': '產',
+  '\u7984': '祿',
+};
+
+/** 套用 GLYPH_SUBSTITUTES。 */
+export function substituteGlyphs(text: string): string {
+  let out = text;
+  for (const [from, to] of Object.entries(GLYPH_SUBSTITUTES)) out = out.split(from).join(to);
+  return out;
+}

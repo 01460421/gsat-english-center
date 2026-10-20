@@ -7,20 +7,53 @@
  *   - LINE、Instagram、Facebook 等 App 內建的瀏覽器常擋下載：先提示改用 Safari／Chrome，完成後也提供「在新分頁開啟 PDF」。
  * PDF_DOWNLOAD_ENABLED 為 false、也沒有打開預覽開關（index.ts 的 pdfDownloadVisible）時，整個區塊不顯示。
  * props 是和頁面之間的約定（歷屆試題作答頁、模擬考），改動要通知模擬考開發者。
+ *
+ * 本站自組卷（mockMeta.sitePaper 有值，docs/design/bank-mock.md §2.5、§7.7）：兩個勾選換成三種版本（單選）加「雙面列印」——
+ *   學生卷（封面＋題本＋資料來源＋答題卷）｜教師卷（卷子資訊＋答案＋解析＋資料來源，不含題本）｜題本＋答案＋解析；
+ * 說明文字也換成本站自組卷的版本。歷屆卷與現有模擬考的區塊完全不變。
+ * onDownloaded：存檔（交給瀏覽器下載）或分享成功時各呼叫一次；失敗、取消不呼叫（自組卷用它記「下載過」、確認快照）。
  */
 import { Download, ExternalLink, Share2 } from 'lucide-react';
 import { useEffect, useId, useRef, useState } from 'react';
 import type { Exam } from '../../data/exams';
-import { PdfError, pdfDownloadVisible, pdfFileName, renderExamPdf, saveBlob, type MockPdfMeta, type PdfErrorKind, type PdfProgress } from './index';
+import {
+  PdfError,
+  pdfDownloadVisible,
+  pdfFileName,
+  renderExamPdf,
+  saveBlob,
+  sitePdfOptions,
+  type ExamPdfOptions,
+  type MockPdfMeta,
+  type PdfDownloadInfo,
+  type PdfErrorKind,
+  type PdfProgress,
+  type SitePdfVersion,
+} from './index';
+
+export type { SitePdfVersion } from './index';
 
 export interface ExamPdfDownloadProps {
   exam: Exam;
-  /** 模擬考版封面；歷屆試題不傳。 */
+  /** 模擬考版封面；歷屆試題不傳。sitePaper 有值時是本站自組卷（三種版本＋雙面列印）。 */
   mockMeta?: MockPdfMeta;
-  /** 「附答案」預設是否勾選（模擬考開考前應為 false，交卷後可以是 true）。 */
+  /**
+   * 「附答案」預設是否勾選（模擬考開考前應為 false，交卷後可以是 true）。
+   * 本站自組卷：沒有給 defaultSiteVersion 時，true 預設「題本＋答案＋解析」（成績單），false 預設「學生卷」（卷子頁）。
+   */
   defaultIncludeAnswerKey?: boolean;
+  /** 本站自組卷預設選哪一種版本（優先於 defaultIncludeAnswerKey）。 */
+  defaultSiteVersion?: SitePdfVersion;
+  /** 下載成功：存檔（via 'save'）或分享（via 'share'）成功時各呼叫一次；失敗或取消不呼叫。 */
+  onDownloaded?: (info: PdfDownloadInfo) => void;
   className?: string;
 }
+
+const SITE_VERSIONS: readonly { value: SitePdfVersion; label: string; hint: string }[] = [
+  { value: 'student', label: '學生卷', hint: '題本＋答題卷' },
+  { value: 'teacher', label: '教師卷', hint: '答案＋解析，不含題本' },
+  { value: 'full', label: '題本＋答案＋解析', hint: '自己練習、對答案用' },
+];
 
 const PHASE_TEXT: Record<PdfProgress['phase'], string> = {
   engine: '載入 PDF 產生器…',
@@ -38,7 +71,7 @@ const ERROR_TEXT: Record<Exclude<PdfErrorKind, 'aborted'>, string> = {
 type Status =
   | { kind: 'idle'; cancelled?: boolean }
   | { kind: 'busy'; progress: PdfProgress }
-  | { kind: 'done'; fileName: string; file: File; url: string }
+  | { kind: 'done'; fileName: string; file: File; url: string; info: Omit<PdfDownloadInfo, 'via'> }
   | { kind: 'error'; message: string };
 
 /** 這個頁面已經成功產生過一次（引擎與字型在記憶體與 HTTP 快取裡），就不再提示「第一次要下載 2 MB」。 */
@@ -69,11 +102,19 @@ function canShareFile(file: File): boolean {
   }
 }
 
-export function ExamPdfDownload({ exam, mockMeta, defaultIncludeAnswerKey = false, className = '' }: ExamPdfDownloadProps) {
+export function ExamPdfDownload({ exam, mockMeta, defaultIncludeAnswerKey = false, defaultSiteVersion, onDownloaded, className = '' }: ExamPdfDownloadProps) {
   const id = useId();
   const [enabled] = useState(pdfDownloadVisible);
   const [includeAnswerSheet, setIncludeAnswerSheet] = useState(true);
   const [includeAnswerKey, setIncludeAnswerKey] = useState(defaultIncludeAnswerKey);
+  const site = mockMeta?.sitePaper;
+  const [siteVersion, setSiteVersion] = useState<SitePdfVersion>(defaultSiteVersion ?? (defaultIncludeAnswerKey ? 'full' : 'student'));
+  const [duplex, setDuplex] = useState(false);
+  // 回呼放在 ref：頁面每次重繪傳進新的函式，不影響進行中的產生。
+  const onDownloadedRef = useRef(onDownloaded);
+  useEffect(() => {
+    onDownloadedRef.current = onDownloaded;
+  });
   const [status, setStatus] = useState<Status>({ kind: 'idle' });
   const [inApp] = useState(() => typeof navigator !== 'undefined' && isInAppBrowser(navigator.userAgent));
   const [ios] = useState(isIOS);
@@ -107,7 +148,9 @@ export function ExamPdfDownload({ exam, mockMeta, defaultIncludeAnswerKey = fals
     const controller = new AbortController();
     abortRef.current = controller;
     setStatus({ kind: 'busy', progress: { phase: 'engine' } });
-    const options = { includeAnswerSheet, includeAnswerKey, ...(mockMeta ? { mockMeta } : {}) };
+    const options: ExamPdfOptions = site
+      ? { ...sitePdfOptions(siteVersion, duplex), ...(mockMeta ? { mockMeta } : {}) }
+      : { includeAnswerSheet, includeAnswerKey, ...(mockMeta ? { mockMeta } : {}) };
     try {
       const blob = await renderExamPdf(exam, {
         ...options,
@@ -122,7 +165,9 @@ export function ExamPdfDownload({ exam, mockMeta, defaultIncludeAnswerKey = fals
       warmed = true;
       const url = URL.createObjectURL(blob);
       urlRef.current = url;
-      setStatus({ kind: 'done', fileName, file: new File([blob], fileName, { type: 'application/pdf' }), url });
+      const info = { fileName, includeBooklet: options.includeBooklet ?? true, includeAnswerKey: options.includeAnswerKey };
+      setStatus({ kind: 'done', fileName, file: new File([blob], fileName, { type: 'application/pdf' }), url, info });
+      onDownloadedRef.current?.({ ...info, via: 'save' });
     } catch (err) {
       if (abortRef.current !== controller) return;
       if (err instanceof PdfError && err.kind === 'aborted') {
@@ -140,12 +185,14 @@ export function ExamPdfDownload({ exam, mockMeta, defaultIncludeAnswerKey = fals
     abortRef.current?.abort();
   };
 
-  const share = async (file: File) => {
+  const share = async (file: File, info: Omit<PdfDownloadInfo, 'via'>) => {
     try {
       await navigator.share({ files: [file], title: file.name });
     } catch {
       // 使用者關掉分享面板，或系統不讓分享：不必提示（檔案已經下載過一次）。
+      return;
     }
+    onDownloadedRef.current?.({ ...info, via: 'share' });
   };
 
   const busy = status.kind === 'busy';
@@ -167,7 +214,9 @@ export function ExamPdfDownload({ exam, mockMeta, defaultIncludeAnswerKey = fals
         下載考試格式 PDF
       </h2>
       <p id={hintId} className="mt-1 text-sm text-muted">
-        A4 題本格式，可以列印後計時作答。本站依大考中心公開試題重新排版，非官方文件；圖片以文字描述代替。
+        {site
+          ? 'A4 題本格式，可以列印後計時作答。本站自組試卷，題目由 AI 撰寫；圖表印成資料表，作文的圖以文字描述代替。'
+          : 'A4 題本格式，可以列印後計時作答。本站依大考中心公開試題重新排版，非官方文件；圖片以文字描述代替。'}
         {!warmed && '第一次需要下載約 2 MB 的字型與產生器。'}
       </p>
       {inApp && (
@@ -175,19 +224,40 @@ export function ExamPdfDownload({ exam, mockMeta, defaultIncludeAnswerKey = fals
           App 內建的瀏覽器（LINE、Instagram、Facebook 等）常常無法下載檔案：請點右上角的選單，選「用 Safari／Chrome 開啟」後再下載。
         </p>
       )}
-      <fieldset className="mt-2" disabled={busy}>
-        <legend className="sr-only">PDF 內容</legend>
-        <div className="flex flex-wrap gap-x-5 text-sm">
-          <label className="inline-flex min-h-11 cursor-pointer items-center gap-2">
-            <input type="checkbox" className="size-4" checked={includeAnswerSheet} onChange={(e) => setIncludeAnswerSheet(e.currentTarget.checked)} />
-            附答題卷
+      {site ? (
+        <fieldset className="mt-2" disabled={busy}>
+          <legend className="text-sm font-medium">PDF 版本</legend>
+          <div className="flex flex-wrap gap-x-5 text-sm">
+            {SITE_VERSIONS.map((v) => (
+              <label key={v.value} className="inline-flex min-h-11 cursor-pointer items-center gap-2">
+                <input type="radio" className="size-4" name={`${id}-version`} value={v.value} checked={siteVersion === v.value} onChange={() => setSiteVersion(v.value)} />
+                <span>
+                  {v.label}
+                  <span className="text-muted">（{v.hint}）</span>
+                </span>
+              </label>
+            ))}
+          </div>
+          <label className="inline-flex min-h-11 cursor-pointer items-center gap-2 text-sm">
+            <input type="checkbox" className="size-4" checked={duplex} onChange={(e) => setDuplex(e.currentTarget.checked)} />
+            雙面列印（每段從單數頁開始）
           </label>
-          <label className="inline-flex min-h-11 cursor-pointer items-center gap-2">
-            <input type="checkbox" className="size-4" checked={includeAnswerKey} onChange={(e) => setIncludeAnswerKey(e.currentTarget.checked)} />
-            附答案（放在最後）
-          </label>
-        </div>
-      </fieldset>
+        </fieldset>
+      ) : (
+        <fieldset className="mt-2" disabled={busy}>
+          <legend className="sr-only">PDF 內容</legend>
+          <div className="flex flex-wrap gap-x-5 text-sm">
+            <label className="inline-flex min-h-11 cursor-pointer items-center gap-2">
+              <input type="checkbox" className="size-4" checked={includeAnswerSheet} onChange={(e) => setIncludeAnswerSheet(e.currentTarget.checked)} />
+              附答題卷
+            </label>
+            <label className="inline-flex min-h-11 cursor-pointer items-center gap-2">
+              <input type="checkbox" className="size-4" checked={includeAnswerKey} onChange={(e) => setIncludeAnswerKey(e.currentTarget.checked)} />
+              附答案（放在最後）
+            </label>
+          </div>
+        </fieldset>
+      )}
       <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-2">
         <button
           type="button"
@@ -218,7 +288,7 @@ export function ExamPdfDownload({ exam, mockMeta, defaultIncludeAnswerKey = fals
           {ios && canShareFile(status.file) && (
             <button
               type="button"
-              onClick={() => void share(status.file)}
+              onClick={() => void share(status.file, status.info)}
               className="inline-flex min-h-11 items-center gap-2 rounded-full border border-line px-4 font-medium hover:border-primary"
             >
               <Share2 aria-hidden="true" className="size-4" />

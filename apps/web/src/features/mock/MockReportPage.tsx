@@ -22,7 +22,6 @@ import { ExamSourceNote } from '../exams/components/SessionPanels';
 import { examIdLabel, formatDuration } from '../exams/labels';
 import { formatPoints } from '../exams/scoring';
 import { ExamPdfDownload } from '../pdf/ExamPdfDownload';
-import { bankPdfVisible } from './bank/flags';
 import { isBankPaperId } from './bank/paperId';
 import { LevelCard } from './components/LevelCard';
 import { MarkedBadge } from './components/MarkToggle';
@@ -353,8 +352,6 @@ export default function MockReportPage() {
   const { attemptId = '' } = useParams();
   const { record, unsaved } = useReportRecord(attemptId);
   const bank = record !== null && isBankPaperId(record.paperId);
-  // 自組卷的 PDF 區塊要等 WP3 接上（bank/flags.ts 的 bankPdfVisible）：在那之前不叫學生去下載不存在的 PDF。
-  const pdfAdvice = bank && !bankPdfVisible() ? '可以把這一頁截圖保存。' : '可以先下載含答案的 PDF，或把這一頁截圖保存。';
   return (
     <article>
       <Link to="/mock" className="mb-1 inline-flex min-h-11 items-center gap-1 text-sm text-muted hover:text-primary">
@@ -363,7 +360,7 @@ export default function MockReportPage() {
       </Link>
       {unsaved && (
         <p role="status" className="mb-4 rounded-xl border border-bad/40 bg-bad/10 px-4 py-2 text-sm text-bad">
-          這個瀏覽器無法儲存成績單（可能是無痕模式、停用了網站資料或空間已滿），離開這一頁之後就找不到了。{pdfAdvice}
+          這個瀏覽器無法儲存成績單（可能是無痕模式、停用了網站資料或空間已滿），離開這一頁之後就找不到了。可以先下載含答案的 PDF，或把這一頁截圖保存。
         </p>
       )}
       {record && bank ? (

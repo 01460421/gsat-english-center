@@ -8,7 +8,6 @@ import { SECTION_TYPE_LABELS, type Exam } from '../../../data/exams';
 import { examIdLabel } from '../../exams/labels';
 import { ExamPdfDownload } from '../../pdf/ExamPdfDownload';
 import { APP_NAME } from '../../../modules';
-import { bankPdfVisible } from '../bank/flags';
 import { MOCK_DURATION_MIN, SUGGESTED_MINUTES, mockPdfMeta, type MockPaper } from '../papers';
 import { canUseStorage, doneExamIds } from '../storage';
 
@@ -205,13 +204,11 @@ export function StartScreen({ paper, exam, onStart }: { paper: MockPaper; exam: 
         <p className="mt-2 text-xs text-muted">建議時間合計 100 分鐘，是本站依題量估計的參考值；成績單會對照你在每個大題實際用的時間。</p>
       </section>
 
-      {/* 考試格式 PDF：想改做紙本的人可以下載題本（PDF_DOWNLOAD_ENABLED 為 false 時不顯示）。 */}
       {/*
-        TODO(WP3-integrate): 自組卷的 PDF（docs/design/bank-mock.md §2.5、§6.1）。WP3 的 ExamPdfDownload 有 onDownloaded 與
-        sitePaper 模式之後，改成 <ExamPdfDownload exam={exam} mockMeta={pdfMeta} onDownloaded={paper.bank?.onPdfDownloaded} />，
-        並把 bank/flags.ts 的 bankPdfVisible() 改成 pdfDownloadVisible()。在那之前自組卷不顯示這個區塊（說明與 PDF 都是寫給歷屆卷的）。
+        考試格式 PDF：想改做紙本的人可以下載題本（PDF_DOWNLOAD_ENABLED 為 false 時不顯示）。
+        自組卷的 mockMeta 帶 sitePaper：學生卷、教師卷、題本＋答案＋解析三種版本，下載成功記為下載過（docs/design/bank-mock.md §2.5）。
       */}
-      {(!paper.bank || bankPdfVisible()) && <ExamPdfDownload exam={exam} mockMeta={pdfMeta} />}
+      <ExamPdfDownload exam={exam} mockMeta={pdfMeta} onDownloaded={paper.bank?.onPdfDownloaded} />
     </div>
   );
 }

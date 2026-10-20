@@ -8,6 +8,7 @@
  *
  * 畫面判斷要不要顯示一律用 bankMockVisible()。開關關著、也沒開預覽時 /mock 一個像素都不變；
  * 已經存在的 /mock/bk1-… 網址照常可以打開（§2.8 最後一列）。
+ * 自組卷的 PDF 沒有自己的開關：跟著全站的 pdfDownloadVisible()（features/pdf/index.ts，§7.8），和歷屆卷的 PDF 一起開放。
  * 這個檔案很小、不匯入組卷程式：/mock 頁與作答紀錄列表都會匯入它。
  */
 
@@ -34,18 +35,6 @@ export function bankMockVisible(): boolean {
   // 先讀預覽參數：開關打開時也要記住 ?bankmock=preview，固定種子（bankMockSeed）才有效。
   const preview = bankMockPreviewEnabled();
   return BANK_MOCK_ENABLED || preview;
-}
-
-/**
- * 自組卷的 PDF 區塊（卷子頁、成績單）與 /mock 區塊說明裡「也可以下載 PDF」要不要顯示。
- *
- * TODO(WP3-integrate): 自組卷的 PDF（ExamPdfDownload 的 sitePaper 模式、三種版本、onDownloaded 回呼）由 WP3 實作。
- * 現有的 ExamPdfDownload 的說明文字與 PDF 的封面、頁尾、文件屬性都是寫給歷屆卷的（官方試題重新排版），
- * 用在 AI 題會把本站的題目標成官方試題，所以接上之前一律不顯示。WP3 合併後改成 `return pdfDownloadVisible();`（從 '../../pdf/index' 匯入，§2.8、§7.8），
- * 並接上 components/StartScreen.tsx 與 bank/BankReport.tsx 兩處標了 TODO(WP3-integrate) 的 <ExamPdfDownload>。
- */
-export function bankPdfVisible(): boolean {
-  return false;
 }
 
 /** 預覽模式下網址的 ?bankmockseed=<n>（只給 e2e 用）；沒有、格式不對或不在預覽模式時是 null。 */

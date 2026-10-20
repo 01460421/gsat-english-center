@@ -1,6 +1,9 @@
 /**
  * 測試用：走訪 pdfmake 文件定義（只給 *.test.ts 用，App 不會匯入）。
  */
+import { buildBankPaper } from '../../mock/bank/buildExam';
+import { bankMockPdfMeta } from '../../mock/bank/pdfText';
+import { paperInput } from '../../mock/bank/testFixtures';
 import type { PdfContent, PdfDocDefinition, PdfInline, PdfSection } from '../engine/docTypes';
 
 type Walkable = PdfContent | PdfInline | PdfSection | null | undefined;
@@ -60,4 +63,21 @@ export function renderChrome(doc: PdfDocDefinition, pages: readonly number[]): {
   const headers = plan.map((s, i) => s.header?.(i + 1, plan.length, size) ?? null);
   const footers = plan.map((s, i) => s.footer?.(i + 1, plan.length, size) ?? null);
   return plan.map((_, i) => ({ header: headers[i] ?? null, footer: footers[i] ?? null }));
+}
+
+/**
+ * 自組卷的 PDF 不能出現的字串（官方考試機構的簡稱、全名、英文縮寫與網域，bank-mock §1、§10.3）。
+ * 寫成 \u 跳脫：新的程式碼裡不寫這些字（網域也含英文縮寫，不分大小寫一起比對）。
+ */
+export const OFFICIAL_NAMES = new RegExp(['\u5927\u8003\u4e2d\u5fc3', '\u5927\u5b78\u5165\u5b78\u8003\u8a66\u4e2d\u5fc3', '\u0063\u0065\u0065\u0063'].join('|'), 'i');
+
+/**
+ * 測試用的自組卷：features/mock/bank 的假題組組成的一份卷子（閱讀第一篇附長條圖），以及它的 PDF 資訊。
+ * 組卷日期固定，網址用 example.org。
+ */
+export function sitePaperFixture() {
+  const paper = buildBankPaper(paperInput());
+  const mockMeta = bankMockPdfMeta(paper, { assembledAt: new Date(2026, 9, 19, 9, 0) });
+  const onlineUrl = `https://example.org/mock/${paper.id}.p`;
+  return { paper, exam: paper.exam, mockMeta, site: mockMeta.sitePaper as NonNullable<typeof mockMeta.sitePaper>, onlineUrl };
 }

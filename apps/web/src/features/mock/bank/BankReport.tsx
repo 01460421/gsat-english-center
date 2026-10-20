@@ -13,7 +13,7 @@
  *   6. 非選擇題自評（SelfAssessment 的 bank 模式；不影響難度建議）
  *   7. 檢討試卷（BankReview）
  *   8. 題組狀態：已下架（可能有錯）、文字有修改、答案已更正（逐題列出題號）；組卷池抓不到時不顯示
- *   9. 下載 PDF（TODO(WP3-integrate)）
+ *   9. 下載 PDF（ExamPdfDownload 的自組卷模式，預設「題本＋答案＋解析」；下載成功記為下載過）
  *  10. 「再做一次」「組一份新卷（同難度）」「回模擬考列表」；頁尾是 AI 出題聲明與參考資料
  *
  * 不顯示級分、五標、贏過多少比例、全國期望得分（§6.4）。自評一改就寫回紀錄與歷史（level 仍是 null）。
@@ -35,7 +35,7 @@ import { SelfAssessment, type SelfChange } from '../components/SelfAssessment';
 import { formatDateTime, signedPoints } from '../format';
 import { computeReport, historyEntryFor } from '../report';
 import { loadHistory, saveRecord, upsertHistory, type MockAttemptRecord } from '../storage';
-import { bankPaperLabel, bankPdfMeta } from './bankMockPaper';
+import { bankPaperLabel, bankPdfMeta, recordBankPdfDownload } from './bankMockPaper';
 import { bankAutoOpen, bankOpenScores } from './bankScore';
 import { BankReview } from './BankReview';
 import { BankSourceNote } from './BankSourceNote';
@@ -43,7 +43,6 @@ import { BLUEPRINT_SLOTS, slotRange } from './blueprint';
 import type { BankPaper } from './buildExam';
 import { decodePaperId, paperNumber, tierOfPaperId } from './code';
 import { bankDeduction, objectiveScore, selfScoredPart } from './deduction';
-import { bankPdfVisible } from './flags';
 import { cleanupOrphanSnapshots, findMyPaper } from './myPapers';
 import { newPaperPath } from './PaperInfo';
 import { loadMockPool } from './pool';
@@ -285,12 +284,8 @@ function ReportBody({ paper, initial }: { paper: BankPaper; initial: MockAttempt
 
       <BankReview paper={paper} record={record} scores={scores} />
 
-      {/*
-        TODO(WP3-integrate): 自組卷的 PDF（§2.5、§6.5 第 9 項）。WP3 的 ExamPdfDownload 有自組卷的三種版本之後：預設選「題本＋答案＋解析」
-        （prop 名稱照 WP3，取代 defaultIncludeAnswerKey），加上 onDownloaded={() => recordBankPdfDownload(paper)}；
-        bankPdfMeta 補上 sitePaper（bankMockPaper.ts）。bank/flags.ts 的 bankPdfVisible() 改成 pdfDownloadVisible() 後才會顯示。
-      */}
-      {bankPdfVisible() && <ExamPdfDownload exam={paper.exam} mockMeta={pdfMeta} defaultIncludeAnswerKey />}
+      {/* 下載 PDF（§2.5、§6.5 第 9 項）：交卷後預設「題本＋答案＋解析」；PDF_DOWNLOAD_ENABLED 為 false 時不顯示。 */}
+      <ExamPdfDownload exam={paper.exam} mockMeta={pdfMeta} defaultSiteVersion="full" onDownloaded={() => recordBankPdfDownload(paper)} />
 
       <nav aria-label="接下來" className="flex flex-wrap gap-2">
         <Link to={`/mock/${paper.id}`} className={primaryLink}>

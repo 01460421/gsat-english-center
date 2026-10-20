@@ -9,3 +9,14 @@ declare module 'pdfmake/build/pdfmake.js' {
   const pdfMake: unknown;
   export default pdfMake;
 }
+
+/**
+ * pdfmake 的 QR code 編碼（js/qrEnc.js，CommonJS）。只有測試用（layout/cover.test.ts 量 QR code 實際的大小與每格的大小），
+ * App 不匯入。measure 回傳的 _canvas 第一個是白底，其餘每個矩形是一格。
+ */
+declare module 'pdfmake/js/qrEnc.js' {
+  const qrEnc: {
+    measure: (node: { qr: string; fit?: number; eccLevel?: string }) => { _width: number; _canvas: { x: number; y: number; w: number; h: number }[] };
+  };
+  export default qrEnc;
+}
