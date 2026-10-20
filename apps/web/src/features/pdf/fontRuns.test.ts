@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { estimateTextWidth, fontForCodePoint, hasBoldGlyph, splitFontRuns } from './fontRuns';
+import { estimateTextWidth, fontForCodePoint, hasBoldGlyph, hasGlyph, missingGlyphs, splitFontRuns } from './fontRuns';
 
 const cp = (ch: string) => ch.codePointAt(0) ?? 0;
 
@@ -60,5 +60,16 @@ describe('estimateTextWidth', () => {
     expect(estimateTextWidth('(A) hasty', 12)).toBeGreaterThan(40);
     expect(estimateTextWidth('(A) hasty', 12)).toBeLessThan(55);
     expect(estimateTextWidth('學測', 12)).toBe(24);
+  });
+});
+
+describe('hasGlyph／missingGlyphs（自組卷的解析，bank-mock §7.4）', () => {
+  it('英文、常用中文、表情符號、換行都有字形；子集沒有的字列出來（不重複）', () => {
+    expect(hasGlyph('A'.codePointAt(0) ?? 0)).toBe(true);
+    expect(hasGlyph('學'.codePointAt(0) ?? 0)).toBe(true);
+    expect(hasGlyph('😄'.codePointAt(0) ?? 0)).toBe(true);
+    expect(hasGlyph(10)).toBe(true);
+    expect(missingGlyphs('解析 OK\n')).toEqual([]);
+    expect(missingGlyphs('𠀀與𠀀和𠀁')).toEqual(['𠀀', '𠀁']);
   });
 });

@@ -4,6 +4,8 @@
  * 不使用大考中心的商標圖形，也不在標題位置印「財團法人大學入學考試中心基金會」，避免被誤認為官方文件。
  */
 import type { Exam } from '../../../data/exams';
+import type { SitePaperPdfMeta } from '../types';
+import { SITE_PAPER_TEXT } from './strings';
 
 export const NON_OFFICIAL_NOTICE = '本 PDF 由學測英文中心依大考中心公開試題重新排版，非官方文件';
 
@@ -23,4 +25,12 @@ export function officialPaperUrl(exam: Pick<Exam, 'official_files'>): string | n
 /** 官方非選擇題評分原則的網址（答案頁的中譯英說明用）。 */
 export function officialScoringUrl(exam: Pick<Exam, 'official_files'>): string | null {
   return exam.official_files.find((f) => f.kind === 'scoring')?.url ?? null;
+}
+
+/**
+ * 本站自組卷的頁尾（docs/design/bank-mock.md §7.2）：「學測英文中心自組模擬考　卷號 A-3KD9W」與「題目由 AI 撰寫…非官方試題」。
+ * 題目是本站的 AI 題，不寫試題來源機構，也沒有官方試題 PDF 可以指。
+ */
+export function siteAttribution(site: Pick<SitePaperPdfMeta, 'code'>): { source: string; notice: string } {
+  return { source: SITE_PAPER_TEXT.footerSource(site.code), notice: SITE_PAPER_TEXT.footerNotice };
 }

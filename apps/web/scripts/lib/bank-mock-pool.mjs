@@ -13,7 +13,7 @@
  *   uid      uid 不符合 ^ai\.(vo|cz|wb|st|rd|mx|tr|cp)\.[0-9a-f]{6}$，或題型代碼和 section_type 不一致（無法編進代號，§4.6）
  *   version  版本超過 63（代號每格 6 個 base32 字元，版本只有 6 位元）
  *   marker   題組裡有指向題組外的 [[n]]，或解析的「第 n 格」不在題組的題號裡（重新編號會改錯，§5.2）
- *   glyph    題本會印的字串有 PDF 字型沒有的字（§7.6；WP3 合併新的字型子集之後才開始排除，現在只警告）
+ *   glyph    題本會印的字串有 PDF 字型沒有的字（§7.6；字型子集補過題庫的字之後開始排除，題庫練習照樣用得到那一組）
  *
  * 輸出格式（前端型別在 src/features/mock/bank/pool.ts 的 MockPool；資料契約見 lib/data-contract.mjs 的 MOCK_POOL_TYPE）：
  *   { version, blueprint: 'gsat-115', tiers: { basic|advanced|top: { vocabulary|cloze|word_bank|structure|reading|mixed|translation|composition: Entry[] } } }
@@ -48,10 +48,11 @@ export const MOCK_UID_PATTERN = /^ai\.(vo|cz|wb|st|rd|mx|tr|cp)\.[0-9a-f]{6}$/;
 /** 代號能編進的最大版本（每格的版本是 6 位元，§4.6）。 */
 export const MAX_MOCK_VERSION = 63;
 /**
- * 題本缺字的題組要不要排除（ex: 'glyph'）。WP1 只警告；WP3 補好字型子集（§7.6）後改成 true，
- * 之後題庫新增罕用字時，只有題本會印的字串缺字才把那一組排除在組卷池外。
+ * 題本缺字的題組要不要排除（ex: 'glyph'）。WP1 只警告；WP3 補好字型子集（§7.6，題庫目前會印的字全部收進子集）後改成 true：
+ * 之後題庫新增罕用字時，只有題本會印的字串缺字才把那一組排除在組卷池外（建置警告，不讓建置失敗）；
+ * 解析、資料來源缺字只警告（PDF 改印替代說明）。重跑 subset_fonts.py 之後那一組就能再用。
  */
-export const EXCLUDE_BOOKLET_GLYPHS = false;
+export const EXCLUDE_BOOKLET_GLYPHS = true;
 
 /** 排除原因的中文（建置紀錄用）。 */
 export const MOCK_EXCLUSION_LABELS = /** @type {const} */ ({
@@ -292,7 +293,7 @@ export function buildMockPool(options) {
     if (stray.length > 0) reasons.push('marker');
     const missing = options.glyphs?.get(key);
     if (missing && missing.booklet.length > 0) {
-      warnings.push(`${key} 的題本有 PDF 字型沒有的字：${missing.booklet.join('')}${excludeGlyphs ? '（不能用來組新卷）' : '（之後會排除在組卷池外）'}`);
+      warnings.push(`${key} 的題本有 PDF 字型沒有的字：${missing.booklet.join('')}${excludeGlyphs ? '（不能用來組新卷；照 fonts/README.md 重跑子集化後就能再用）' : '（之後會排除在組卷池外）'}`);
       if (excludeGlyphs) reasons.push('glyph');
     }
     if (missing && missing.explanations.length > 0) {

@@ -1,6 +1,6 @@
 /**
  * /mock 的「本站自組模擬考」區塊（設計文件 §2.1、§2.8、§10.1），用假的 /data/（testFixtures 的 installFakeServer）：
- *   - 三種難度與「還可以組約 N 份」、出題中的難度停用、網址的 ?tier= 與上次選的難度
+ *   - 三種難度與「還可以組約 N 份」、出題中的難度停用、網址的 ?tier= 與上次選的難度；說明提不提 PDF 跟著 pdfDownloadVisible()
  *   - 組一份新卷 → 轉到卷子頁；網路錯誤與網站剛更新（404）的訊息
  *   - 沒做過的題組不夠一份時的說明
  *   - 我組過的卷子：狀態文字、更多
@@ -22,10 +22,14 @@ import { createMemorySnapshotStore, setSnapshotStoreForTests, snapshotOf } from 
 import { fakePool, fakeTier, installFakeServer, servePool, type FakeServer } from './testFixtures';
 import { fakeBankPaper } from './uiTestFixtures';
 
-const flags = vi.hoisted(() => ({ visible: true }));
+const flags = vi.hoisted(() => ({ visible: true, pdf: true }));
 vi.mock('./flags', async (importOriginal) => {
   const actual = await importOriginal<typeof import('./flags')>();
   return { ...actual, bankMockVisible: () => flags.visible };
+});
+vi.mock('../../pdf/index', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('../../pdf/index')>();
+  return { ...actual, pdfDownloadVisible: () => flags.pdf };
 });
 
 let pool: MockPool;
@@ -53,6 +57,7 @@ async function renderSection(path = '/mock') {
 
 beforeEach(() => {
   flags.visible = true;
+  flags.pdf = true;
   setSnapshotStoreForTests(createMemorySnapshotStore());
   // 穩定基礎、超越頂標各夠組卷；進階練習的閱讀是空的（出題中）。
   pool = fakePool({ basic: fakeTier(), top: fakeTier({}, {}, 'f0') });
@@ -67,12 +72,12 @@ afterEach(() => {
 });
 
 describe('BankMockSection', () => {
-  it('三種難度：還可以組約 N 份；題庫湊不出一份的難度標「出題中」並停用；說明不提 PDF（WP3 接上之前）', async () => {
+  it('三種難度：還可以組約 N 份；題庫湊不出一份的難度標「出題中」並停用；說明提到可以下載 PDF', async () => {
     const section = await renderSection();
     expect(within(section).getByRole('heading', { level: 2, name: '本站自組模擬考' })).toBeInTheDocument();
     expect(section).toHaveTextContent('AI 出題・已通過自動驗證・人工審核中');
     expect(section).toHaveTextContent('題型與配分同學測；難度依你選的等級，不是正式考卷的難易混合，所以不換算級分。');
-    expect(section).not.toHaveTextContent('PDF');
+    expect(section).toHaveTextContent('可以線上計時作答，也可以下載 PDF 印出來寫。');
     const basic = within(section).getByRole('radio', { name: /穩定基礎/ });
     expect(basic).toBeChecked();
     // fakeTier：閱讀 3 篇圖表或表格、6 篇其他（5 篇連續文本）→ 3 份；其他大題 3 組 → 3 份；綜合測驗 4 組、每份 2 組 → 2 份。
@@ -81,6 +86,13 @@ describe('BankMockSection', () => {
     expect(advanced).toBeDisabled();
     expect(advanced.closest('label')).toHaveTextContent('出題中');
     expect(section).toHaveTextContent('避開你在這台裝置做過的題組；同一份卷子可以把網址傳給同學一起做。');
+  });
+
+  it('PDF 下載沒有開放（pdfDownloadVisible() 為假）：說明不提 PDF（§2.8）', async () => {
+    flags.pdf = false;
+    const section = await renderSection();
+    expect(section).toHaveTextContent('線上計時作答，交卷後看本站的答案與解析。');
+    expect(section).not.toHaveTextContent('PDF');
   });
 
   it('網址的 ?tier= 優先；選了之後記在 localStorage，下次預設選它', async () => {

@@ -24,6 +24,7 @@ import { Link, useLocation, useNavigate } from 'react-router';
 import { DataLoadError } from '../../../data/client';
 import { formatClock, formatDuration } from '../../exams/labels';
 import { formatPoints } from '../../exams/scoring';
+import { pdfDownloadVisible } from '../../pdf/index';
 import { AI_GROUP_LABEL, TIER_AUDIENCE } from '../../practice/labels';
 import { MOCK_STORAGE_PREFIX, canUseStorage, notifyMockChanged, type MockAttemptRecord } from '../storage';
 import { isExpired, remainingSec } from '../timer';
@@ -32,7 +33,7 @@ import { insufficientSection, remainingEstimate, type RemainingEstimate } from '
 import { bankHistoryEntry } from './bankScore';
 import { SELECTION_ORDER, slotRange } from './blueprint';
 import { decodePaperId } from './code';
-import { bankMockSeed, bankPdfVisible } from './flags';
+import { bankMockSeed } from './flags';
 import { MY_PAPERS_KEY, listMyPapers, maintainMyPapers, type MyPaperRow } from './myPapers';
 import { loadMockPool, type MockPool } from './pool';
 import { rangeText } from './rangeText';
@@ -224,6 +225,8 @@ export default function BankMockSection() {
   const [rows, setRows] = useState<MyPaperRow[]>(() => listMyPapers());
   const [persistent, setPersistent] = useState(true);
   const [storageOk] = useState(canUseStorage);
+  // 說明提不提 PDF：跟著全站的 PDF 開關（§2.8「PDF 下載還沒開放」那一列）。
+  const [pdfVisible] = useState(pdfDownloadVisible);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -349,7 +352,7 @@ export default function BankMockSection() {
         </h2>
         <p className="text-[0.95rem]">
           從本站題庫依現行學測英文的題型與配分組成一整份試卷：選擇題 46 題、混合題 4 題、中譯英 2 題、英文作文 1 題，100 分鐘、滿分 100 分。
-          {bankPdfVisible() ? '可以線上計時作答，也可以下載 PDF 印出來寫。' : '線上計時作答，交卷後看本站的答案與解析。'}
+          {pdfVisible ? '可以線上計時作答，也可以下載 PDF 印出來寫。' : '線上計時作答，交卷後看本站的答案與解析。'}
         </p>
         <p className="text-sm text-muted">題型與配分同學測；難度依你選的等級，不是正式考卷的難易混合，所以不換算級分。</p>
         <p className="inline-flex rounded-full bg-badge-bg px-2.5 py-0.5 text-xs font-semibold text-badge-fg">{AI_GROUP_LABEL}</p>

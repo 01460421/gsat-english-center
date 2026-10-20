@@ -3,11 +3,11 @@
 PDF 字型子集化（一次性的開發工具；Vercel 建置時不會執行，建置也不需要 Python）。
 
 產生 apps/web/src/features/pdf/fonts/ 底下的：
-  NotoSerifTC-Regular.subset.ttf.gz   中文內文（試題資料出現的每個字＋前端介面文字＋教育部常用國字 4,808 字）
+  NotoSerifTC-Regular.subset.ttf.gz   中文內文（試題資料出現的每個字＋題庫會印進自組卷 PDF 的字＋前端介面文字＋教育部常用國字 4,808 字）
   NotoSerifTC-Bold.subset.ttf.gz      中文標題（大題／部分標題、bold-extra.txt、src/features/pdf/ 原始碼裡的中文）
   Tinos-{Regular,Bold,Italic}.subset.ttf.gz   英文（與 Times New Roman 等寬的襯線字）
   NotoEmoji-Regular.subset.ttf.gz     單色表情符號（112 學測混合題有 😄😠🤣😍）
-  metrics.json                        實際涵蓋的字元範圍、Tinos 字寬表、版本與雜湊（前端與 build-data 的字型檢查讀這個檔）
+  metrics.json                        實際涵蓋的字元範圍、Tinos 字寬表、中文與粗體字集、版本與雜湊（前端與 build-data 的字型檢查讀這個檔）
 
 為什麼是「TrueType＋gzip」而不是 WOFF2：PDF 引擎（pdfmake → pdfkit → fontkit）嵌入字型時要讀原始的 glyf／loca 表；
 WOFF2 會直接出錯，WOFF1 每取一個字就重新解壓整個 glyf 表（整份考卷要兩分鐘）。所以存 TTF，再用 gzip 壓縮傳輸，
@@ -22,7 +22,8 @@ WOFF2 會直接出錯，WOFF1 每取一個字就重新解壓整個 glyf 表（�
   原始字型的網址與 SHA-256 寫死在下方 SOURCES；Google Fonts 改版時要一起更新這裡與 fonts/README.md。
 
 什麼時候要重跑：build-data 的字型檢查（scripts/font-coverage.mjs）報告缺字時——通常是新的試題資料用到常用字以外的罕用字，
-或 src/features/pdf/layout/strings.ts 新增了文字。
+或 src/features/pdf/layout/strings.ts 新增了文字；題庫（本站自組模擬考）的題本缺字時，那一組會被排除在組卷池外，
+重跑之後就能再用（docs/design/bank-mock.md §7.6）。題庫會印的字串由 font-coverage.mjs --print-bank-chars 提供（需要 Node）。
 """
 from __future__ import annotations
 
@@ -31,6 +32,7 @@ import gzip
 import hashlib
 import json
 import re
+import subprocess
 import sys
 import urllib.request
 from pathlib import Path
@@ -45,6 +47,11 @@ EXAMS_DIR = WEB_DIR / 'public' / 'data' / 'exams'
 SRC_DIR = WEB_DIR / 'src'
 # PDF 上的固定文字（封面、答題卷、頁首頁尾）：粗體子集會收這些檔案裡的所有中文字。
 PDF_TEXT_FILES = ('features/pdf/layout/strings.ts', 'features/pdf/layout/attribution.ts')
+# 由其他模組傳進 PDF 的文字（模擬考與本站自組卷的卷名、藍圖、難度名稱…），同 font-coverage.mjs 的 PDF_DYNAMIC_FILES。
+# apps/web/src 底下的檔案本來就整個收進中文子集；這裡列的是 src 以外的 @gsat/shared（只收字串常值）。
+SHARED_PDF_FILES = ('packages/shared/src/tiers.ts', 'packages/shared/src/writing.ts')
+REPO_DIR = WEB_DIR.parent.parent
+FONT_COVERAGE = WEB_DIR / 'scripts' / 'font-coverage.mjs'
 
 # 原始字型：Google Fonts 的固定版本網址（css2 API 以非瀏覽器 User-Agent 取得的 TTF），授權皆為 SIL OFL 1.1。
 SOURCES = {
@@ -138,6 +145,33 @@ def strip_comments(source: str) -> str:
     return re.sub(r'^\s*//.*$', '', re.sub(r'/\*[\s\S]*?\*/', '', source), flags=re.M)
 
 
+def string_literal_chars(source: str) -> set[str]:
+    """原始碼裡字串常值（'…'、"…"、`…`）的字，和 font-coverage.mjs 的 stringLiterals 相同。"""
+    literals = re.findall(r"'(?:[^'\\\n]|\\.)*'|\"(?:[^\"\\\n]|\\.)*\"|`(?:[^`\\]|\\.)*`", strip_comments(source))
+    return set(''.join(literals))
+
+
+def site_paper_bold_chars() -> set[str]:
+    """自組卷 PDF 的粗體字串：strings.ts 的 SITE_PAPER_BOLD 與藍圖的大題標題、部分名稱（同 font-coverage.mjs 的 sitePaperBoldText）。"""
+    strings = strip_comments((SRC_DIR / 'features/pdf/layout/strings.ts').read_text(encoding='utf8'))
+    block = re.search(r'export const SITE_PAPER_BOLD = \{([\s\S]*?)\} as const;', strings)
+    chars = string_literal_chars(block.group(1)) if block else set()
+    blueprint = SRC_DIR / 'features/mock/bank/blueprint.ts'
+    if blueprint.exists():
+        for m in re.finditer(r"\b(?:title|part):\s*'([^'\n]*)'", strip_comments(blueprint.read_text(encoding='utf8'))):
+            chars |= set(m.group(1))
+    return chars
+
+
+def collect_bank_chars() -> dict[str, set[str]]:
+    """題庫會印進自組卷 PDF 的字（題本、解析、資料來源），由 font-coverage.mjs 依同一套規則從 public/data 取出。"""
+    out = subprocess.run(['node', str(FONT_COVERAGE), '--print-bank-chars'], capture_output=True, text=True, encoding='utf8')
+    if out.returncode != 0:
+        sys.exit(f'font-coverage.mjs --print-bank-chars 失敗：{out.stderr.strip()}')
+    data = json.loads(out.stdout)
+    return {k: set(data[k]) for k in ('booklet', 'explanations', 'sources')}
+
+
 def collect_source_chars(root: Path) -> set[str]:
     chars: set[str] = set()
     for p in sorted(root.rglob('*')):
@@ -208,7 +242,13 @@ def main() -> None:
         return {ord(c) for c in chars if ord(c) >= 0x20 and ord(c) not in latin and ord(c) not in emoji}
 
     exam_chars, title_chars = collect_exam_chars()
+    bank = collect_bank_chars()
+    bank_chars = bank['booklet'] | bank['explanations'] | bank['sources']
     ui_chars = collect_source_chars(SRC_DIR)
+    shared_chars: set[str] = set()
+    for rel in SHARED_PDF_FILES:
+        shared_chars |= string_literal_chars((REPO_DIR / rel).read_text(encoding='utf8'))
+    site_bold = site_paper_bold_chars()
     # PDF 固定文字只放在這兩個檔案（見 strings.ts 檔頭）；不掃整個 features/pdf/，註解裡的字不該進粗體子集。
     pdf_ui_chars: set[str] = set()
     for rel in PDF_TEXT_FILES:
@@ -218,13 +258,17 @@ def main() -> None:
         sys.exit('moe-common-4808.txt 應該剛好有 4,808 個字')
     bold_extra = text_file_chars(SCRIPT_DIR / 'bold-extra.txt')
 
-    regular_cps = cjk_side(exam_chars | ui_chars | moe | set(CJK_PUNCT_EXTRA))
-    bold_cps = cjk_side(title_chars | bold_extra | pdf_ui_chars | set(CJK_PUNCT_EXTRA))
+    regular_cps = cjk_side(exam_chars | bank_chars | ui_chars | shared_chars | moe | set(CJK_PUNCT_EXTRA))
+    bold_cps = cjk_side(title_chars | bold_extra | pdf_ui_chars | site_bold | set(CJK_PUNCT_EXTRA))
     # 只對「會印在 PDF 上」的字警告（介面原始碼裡的國際音標等不會進 PDF）。
-    printed = cjk_side(exam_chars | pdf_ui_chars | moe)
+    printed = cjk_side(exam_chars | bank_chars | pdf_ui_chars | moe)
     missing = sorted(cp for cp in printed if cp not in noto_cmap and not chr(cp).isspace())
     if missing:
         print('警告：Noto Serif TC 沒有這些字（PDF 會顯示成方框）：' + ''.join(chr(cp) for cp in missing))
+        for name, chars in bank.items():
+            gone = sorted(cp for cp in cjk_side(chars) if cp not in noto_cmap and not chr(cp).isspace())
+            if gone:
+                print(f'  其中題庫的{ {"booklet": "題本", "explanations": "解析", "sources": "資料來源"}[name] }：' + ''.join(chr(cp) for cp in gone))
 
     plan = [
         ('NotoSerifTC-Regular', regular_cps, ['kern', 'palt']),
@@ -268,6 +312,8 @@ def main() -> None:
         if set(subsets[other].getBestCmap()) != latin_actual:
             sys.exit(f'{other} 的字元集合和 Tinos-Regular 不同')
     bold_cjk = ''.join(chr(cp) for cp in sorted(subsets['NotoSerifTC-Bold'].getBestCmap()) if cp not in latin_actual)
+    # 中文子集實際有字形的字（不含拉丁字母與表情符號）：前端用它判斷解析能不能印（fontRuns.ts 的 missingGlyphs，bank-mock §7.4）。
+    regular_cjk = ''.join(chr(cp) for cp in sorted(subsets['NotoSerifTC-Regular'].getBestCmap()) if cp not in latin_actual and cp >= 0x20)
     metrics = {
         'generated_by': 'apps/web/scripts/fonts/subset_fonts.py',
         'note': '由 subset_fonts.py 產生，請勿手改。latinRanges／emojiRanges 決定每個字元用哪個字型（src/features/pdf/fontRuns.ts）。',
@@ -275,6 +321,7 @@ def main() -> None:
         'latinRanges': to_ranges(latin_actual),
         'emojiRanges': to_ranges(set(subsets['NotoEmoji-Regular'].getBestCmap())),
         'boldCjk': bold_cjk,
+        'regularCjk': regular_cjk,
         'tinosAdvance': advance,
         'fonts': meta_fonts,
     }

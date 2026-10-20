@@ -18,6 +18,7 @@ import { buildBankData } from './bank-data.mjs';
 import { answerFingerprints } from './bank-mock-letters.mjs';
 import {
   BankMockPoolError,
+  EXCLUDE_BOOKLET_GLYPHS,
   MOCK_POOL_PATH,
   MOCK_SECTIONS,
   buildMockPool,
@@ -263,11 +264,15 @@ describe('排除原因（ex）與警告：條目仍在池子裡，只是不能�
     expect(strayMarkers({ ...g, group: { ...g.group, passage: 'A [[1]] B [[3]]' } })).toEqual(['[[3]]']);
   });
 
-  it('題本缺字：WP1 只警告；excludeGlyphs 時帶 ex: glyph。解析與資料來源缺字只警告', () => {
+  it('題本缺字：預設（EXCLUDE_BOOKLET_GLYPHS）帶 ex: glyph；excludeGlyphs: false 時只警告。解析與資料來源缺字只警告', () => {
     const glyphs = new Map([
       ['ai.rd.0c1d2e@1', { booklet: ['鹵'], explanations: ['≠'], sources: ['の'] }],
     ]);
-    const warnOnly = pool([readingFile()], { glyphs });
+    expect(EXCLUDE_BOOKLET_GLYPHS).toBe(true);
+    const byDefault = pool([readingFile()], { glyphs });
+    expect(byDefault.pool.tiers.basic.reading[0]?.ex).toBe('glyph');
+    expect(byDefault.warnings[0]).toBe('ai.rd.0c1d2e@1 的題本有 PDF 字型沒有的字：鹵（不能用來組新卷；照 fonts/README.md 重跑子集化後就能再用）');
+    const warnOnly = pool([readingFile()], { glyphs, excludeGlyphs: false });
     expect(warnOnly.pool.tiers.basic.reading[0]?.ex).toBeUndefined();
     expect(warnOnly.warnings).toEqual([
       'ai.rd.0c1d2e@1 的題本有 PDF 字型沒有的字：鹵（之後會排除在組卷池外）',

@@ -27,10 +27,32 @@ export const UNBREAKABLE_LIMIT = Math.round(CONTENT_HEIGHT * 0.75);
 /** 標題之後至少要放得下的內容：約三行選文。 */
 export const MIN_FOLLOW = Math.ceil(lineHeightPt(SIZE.body, LINE.passage) * 3);
 
-/** 「標題不能落單」的登記表：節點 id → 標題本身＋後面至少要放得下的高度。每份文件各自一份。 */
+/**
+ * 「標題不能落單」的登記表：節點 id → 標題本身＋後面至少要放得下的高度。每份文件各自一份。
+ *
+ * 也登記雙面列印的段落開頭（本站自組卷，docs/design/bank-mock.md §7.7）：答題卷、答案、解析的第一個節點
+ * 落在雙數頁就換頁，前一頁留白，答題卷就不會印在題本最後一頁的背面。pdfmake 依文件順序逐一詢問節點、
+ * 有節點換頁就重排一次，前面的節點不會再移動，所以每個段落開頭只問一次、答案不會變；
+ * 換頁時記下留白的頁碼（blankPages），頁首頁尾（chrome.ts）在那一頁印「（本頁空白）」、不算頁碼。
+ */
 export class KeepRegistry {
   private readonly need = new Map<string, number>();
+  private readonly duplex = new Set<string>();
+  private readonly blank = new Set<number>();
   private next = 1;
+
+  /** 雙面列印留白的頁碼（整份 PDF 的頁碼）。 */
+  get blankPages(): ReadonlySet<number> {
+    return this.blank;
+  }
+
+  /** 登記一個段落開頭：回傳要放在該節點上的 id（節點要有實際內容，pdfmake 才會詢問）。 */
+  duplexStart(): string {
+    const id = `duplex-${this.next}`;
+    this.next += 1;
+    this.duplex.add(id);
+    return id;
+  }
 
   /**
    * follow：標題之後至少要放得下的高度（預設三行選文）。不超過一頁扣掉標題的高度：
@@ -48,6 +70,12 @@ export class KeepRegistry {
    */
   readonly pageBreakBefore: NonNullable<PdfDocDefinition['pageBreakBefore']> = (node) => {
     if (node.id === undefined) return false;
+    if (this.duplex.has(node.id)) {
+      const page = node.startPosition.pageNumber;
+      if (page % 2 === 1) return false;
+      this.blank.add(page);
+      return true;
+    }
     const need = this.need.get(node.id);
     if (need === undefined) return false;
     const top = node.startPosition.top;

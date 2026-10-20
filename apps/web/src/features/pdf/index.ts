@@ -6,7 +6,17 @@ import type { Exam } from '../../data/exams';
 import { examShortName } from '../../data/exams';
 import { PdfError, type ExamPdfOptions, type RenderExamPdf } from './types';
 
-export type { ExamPdfOptions, MockPdfMeta, PdfErrorKind, PdfProgress, PdfProgressPhase, RenderExamPdf, RenderExamPdfOptions } from './types';
+export type {
+  ExamPdfOptions,
+  MockPdfMeta,
+  PdfDownloadInfo,
+  PdfErrorKind,
+  PdfProgress,
+  PdfProgressPhase,
+  RenderExamPdf,
+  RenderExamPdfOptions,
+  SitePaperPdfMeta,
+} from './types';
 export { PdfError };
 
 /**
@@ -54,8 +64,39 @@ export const renderExamPdf: RenderExamPdf = async (exam, options) => {
   return impl(exam, options);
 };
 
-/** 下載檔名：「學測英文中心_115學測英文_題本.pdf」「學測英文中心_模擬考_115學測英文_含答案.pdf」。 */
-export function pdfFileName(exam: Pick<Exam, 'exam' | 'year' | 'session' | 'target'>, options: Pick<ExamPdfOptions, 'includeAnswerKey' | 'mockMeta'>): string {
+/** 本站自組卷的三種版本（docs/design/bank-mock.md §2.5）：學生卷、教師卷、題本＋答案＋解析。 */
+export type SitePdfVersion = 'student' | 'teacher' | 'full';
+
+/** 自組卷的版本 → PDF 選項（bank-mock §7.7 的表）。 */
+export function sitePdfOptions(
+  version: SitePdfVersion,
+  duplex: boolean,
+): Pick<ExamPdfOptions, 'includeAnswerSheet' | 'includeAnswerKey' | 'includeExplanations' | 'includeBooklet' | 'duplex'> {
+  switch (version) {
+    case 'student':
+      return { includeBooklet: true, includeAnswerSheet: true, includeAnswerKey: false, includeExplanations: false, duplex };
+    case 'teacher':
+      return { includeBooklet: false, includeAnswerSheet: false, includeAnswerKey: true, includeExplanations: true, duplex };
+    case 'full':
+      return { includeBooklet: true, includeAnswerSheet: true, includeAnswerKey: true, includeExplanations: true, duplex };
+  }
+}
+
+/**
+ * 下載檔名：「學測英文中心_115學測英文_題本.pdf」「學測英文中心_模擬考_115學測英文_含答案.pdf」。
+ * 本站自組卷（docs/design/bank-mock.md §2.5）：「學測英文中心_自組模擬考_進階練習_A-3KD9W_學生卷.pdf」，
+ * 另外兩種結尾是「_教師卷」「_含答案解析」。
+ */
+export function pdfFileName(
+  exam: Pick<Exam, 'exam' | 'year' | 'session' | 'target'>,
+  options: Pick<ExamPdfOptions, 'includeAnswerKey' | 'mockMeta' | 'includeBooklet'>,
+): string {
+  const site = options.mockMeta?.sitePaper;
+  if (site) {
+    const version = options.includeBooklet === false ? '教師卷' : options.includeAnswerKey ? '含答案解析' : '學生卷';
+    const safe = (s: string) => s.replace(/[\s/\\:*?"<>|]+/g, '');
+    return `學測英文中心_自組模擬考_${safe(site.tierLabel)}_${safe(site.code)}_${version}.pdf`;
+  }
   const name = `${examShortName(exam).replace(/\s+/g, '')}英文`;
   const parts = ['學測英文中心', options.mockMeta ? '模擬考' : null, name, options.mockMeta ? null : '題本', options.includeAnswerKey ? '含答案' : null];
   return `${parts.filter(Boolean).join('_')}.pdf`;

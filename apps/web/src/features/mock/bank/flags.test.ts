@@ -1,9 +1,9 @@
 /**
- * 本站自組模擬考的開關（設計文件 §7.8、§4.1）：功能已上線、預覽開關記在 localStorage、固定種子只在預覽模式有效、
- * 自組卷的 PDF 在 WP3 接上之前不顯示。
+ * 本站自組模擬考的開關（設計文件 §7.8、§4.1）：功能已上線、預覽開關記在 localStorage、固定種子只在預覽模式有效。
+ * 自組卷的 PDF 沒有自己的開關（跟著 pdfDownloadVisible()），畫面上的 PDF 區塊在 BankPdf.test.tsx 測。
  */
 import { afterEach, describe, expect, it } from 'vitest';
-import { BANK_MOCK_ENABLED, bankMockPreviewEnabled, bankMockSeed, bankMockVisible, bankPdfVisible } from './flags';
+import { BANK_MOCK_ENABLED, bankMockPreviewEnabled, bankMockSeed, bankMockVisible } from './flags';
 
 function visit(search: string) {
   window.history.replaceState(null, '', `/mock${search}`);
@@ -65,9 +65,5 @@ describe('flags', () => {
       if (original) Object.defineProperty(window, 'localStorage', original);
       else Reflect.deleteProperty(window, 'localStorage');
     }
-  });
-
-  it('自組卷的 PDF 在 WP3 接上之前不顯示（TODO(WP3-integrate)）', () => {
-    expect(bankPdfVisible()).toBe(false);
   });
 });

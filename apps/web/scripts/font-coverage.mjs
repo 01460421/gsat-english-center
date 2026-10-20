@@ -15,7 +15,10 @@
  * 缺字的修法：照 src/features/pdf/fonts/README.md 重跑 subset_fonts.py（需要 Python 與 fonttools，只在開發機上跑一次）。
  *
  * 題庫（本站自組模擬考的 PDF）另外用 bankPrintableCoverage() 逐組檢查，題本與解析的缺字分開列（docs/design/bank-mock.md §7.6）：
- * 結果交給 lib/bank-mock-pool.mjs，只警告、不讓建置失敗（題庫每天加題，不能因為一個罕用字擋住整站部署）。
+ * 結果交給 lib/bank-mock-pool.mjs：題本缺字的題組不能用來組新卷（ex: 'glyph'，建置警告），解析與資料來源缺字只警告，
+ * 都不讓建置失敗（題庫每天加題，不能因為一個罕用字擋住整站部署）。
+ * 自組卷 PDF 的粗體字串（layout/strings.ts 的 SITE_PAPER_BOLD）與藍圖的大題標題不在粗體子集裡是**錯誤**（§7.6）。
+ * `node apps/web/scripts/font-coverage.mjs --print-bank-chars` 印出題庫會印進 PDF 的所有字元（JSON），給 subset_fonts.py 收進子集。
  *
  * 只用 Node 內建模組（zlib 解 gzip、自己讀 TrueType 的 cmap 表），Vercel 建置不需要額外套件。
  */
@@ -158,8 +161,50 @@ export function stripComments(source) {
 /**
  * 由其他模組傳進 PDF、會印在封面上的文字（模擬考的 MockPdfMeta：卷別名稱、沿用題提醒）。
  * 只看字串常值（註解與程式碼不會印出來），缺字是錯誤；不檢查粗體（封面這些字不用粗體）。
+ * 本站自組卷（bank-mock §7.6）另外有：藍圖的大題標題與說明、pdfText.ts 的卷名與 AI 聲明、AI 出題標示（practice/labels.ts）、
+ * 圖表類型與授權寫法（practice/chart.ts）、難度名稱（@gsat/shared 的 tiers.ts）與作文評分項目名稱（@gsat/shared 的 writing.ts）。
+ * 路徑相對於 src/features/pdf/；subset_fonts.py 的 PDF_DYNAMIC_FILES 要一起改。
  */
-export const PDF_DYNAMIC_FILES = ['../mock/papers.ts'];
+export const PDF_DYNAMIC_FILES = [
+  '../mock/papers.ts',
+  '../mock/bank/blueprint.ts',
+  '../mock/bank/pdfText.ts',
+  '../practice/labels.ts',
+  '../practice/chart.ts',
+  '../../../../../packages/shared/src/tiers.ts',
+  '../../../../../packages/shared/src/writing.ts',
+];
+
+/**
+ * 自組卷 PDF 用粗體印的字串：strings.ts 的 SITE_PAPER_BOLD（只讀那個常數裡的字串常值），
+ * 以及藍圖的大題標題與部分名稱（題本、答案頁、解析頁的標題用粗體）。粗體子集沒有其中的字是錯誤。
+ * @param {string} [stringsSource] @param {string} [blueprintSource]
+ */
+export function sitePaperBoldText(stringsSource, blueprintSource) {
+  const strings = stringsSource ?? readIfExists(path.join(PDF_SRC_DIR, 'layout', 'strings.ts'));
+  const blueprint = blueprintSource ?? readIfExists(path.join(PDF_SRC_DIR, '..', 'mock', 'bank', 'blueprint.ts'));
+  const block = /export const SITE_PAPER_BOLD = \{([\s\S]*?)\} as const;/.exec(stripComments(strings))?.[1] ?? '';
+  const titles = [...stripComments(blueprint).matchAll(/\b(?:title|part):\s*'([^'\n]*)'/g)].map((m) => m[1] ?? '');
+  return [stringLiterals(block), ...titles].join('\n');
+}
+
+/**
+ * strings.ts 的 GLYPH_SUBSTITUTES 的鍵（寫成 \\uXXXX 跳脫）：自組卷 PDF 的解析、答案頁（答案、參考譯文、評分重點）、範文與
+ * 資料來源頁都會先把這些字換成別的寫法（layout/explanations.ts 的 printableSiteText、sources.ts），所以這些字缺字形不算缺字
+ * （題本不替換，照樣算）。
+ * @param {string} [stringsSource]
+ * @returns {Set<number>}
+ */
+export function glyphSubstituteCodePoints(stringsSource) {
+  const source = stringsSource ?? readIfExists(path.join(PDF_SRC_DIR, 'layout', 'strings.ts'));
+  const block = /export const GLYPH_SUBSTITUTES[^=]*= \{([\s\S]*?)\};/.exec(source)?.[1] ?? '';
+  return new Set([...block.matchAll(/'\\u([0-9a-fA-F]{4})'\s*:/g)].map((m) => Number.parseInt(m[1] ?? '0', 16)));
+}
+
+/** @param {string} file */
+function readIfExists(file) {
+  return existsSync(file) ? readFileSync(file, 'utf8') : '';
+}
 
 /** 原始碼裡的字串常值（'…'、"…"、`…`）。 @param {string} source */
 export function stringLiterals(source) {
@@ -182,7 +227,7 @@ function pdfSourceText() {
 
 /**
  * @param {{ id: string, exam: unknown }[]} exams  build-data 輸出的考卷（物件）
- * @param {{ fontsDir?: string, pdfSource?: string, pdfDynamicSource?: string }} [options]
+ * @param {{ fontsDir?: string, pdfSource?: string, pdfDynamicSource?: string, sitePaperBold?: string }} [options]
  * @returns {CoverageResult}
  */
 export function checkFontCoverage(exams, options = {}) {
@@ -254,6 +299,16 @@ export function checkFontCoverage(exams, options = {}) {
     if (!regular.has(cp)) dynamicMissing.add(cp);
   }
   if (dynamicMissing.size > 0) errors.push(`模擬考 PDF 封面文字（${PDF_DYNAMIC_FILES.join('、')}）有 ${dynamicMissing.size} 個字不在中文子集裡：${show(dynamicMissing)}`);
+  // 自組卷的粗體字串：缺粗體字形是錯誤（不只是警告，bank-mock §7.6）。
+  const siteBoldMissing = new Set();
+  for (const ch of options.sitePaperBold ?? sitePaperBoldText()) {
+    const cp = /** @type {number} */ (ch.codePointAt(0));
+    if (cp < 0x2e80 || inRanges(cp, metrics.emojiRanges) || /\s/.test(ch)) continue;
+    if (!bold.has(cp)) siteBoldMissing.add(cp);
+  }
+  if (siteBoldMissing.size > 0) {
+    errors.push(`自組卷 PDF 的粗體字串（strings.ts 的 SITE_PAPER_BOLD、藍圖的大題標題）有 ${siteBoldMissing.size} 個字不在粗體子集裡：${show(siteBoldMissing)}`);
+  }
   if (srcMissingBold.size > 0) warnings.push(`PDF 固定文字有 ${srcMissingBold.size} 個字不在粗體子集（用粗體印時會改用一般粗細）：${show(srcMissingBold)}`);
   return { errors, warnings, stats: { chars: seen.size, exams: exams.length } };
 }
@@ -312,7 +367,7 @@ function sourceStrings(provenance, figures, out) {
 /**
  * 一個題庫練習的題組檔（bank/groups/{uid}@{v}.json）會印進自組卷 PDF 的字串，分成三類（§7.6 的題本與解析，另加資料來源頁）：
  *   題本：文章、題幹、選項、圖說、圖表附註與資料表；
- *   解析：每題的 explanation_zh，以及混合題填充、簡答的答案與可接受答案（答案頁）；
+ *   解析：每題的 explanation_zh，以及混合題填充、簡答的答案、可接受答案與部分給分的寫法（答案頁）；
  *   資料來源：出處說明、參考資料、圖表的資料來源（§7.5）。
  * 全文中譯（translation_zh）與閱讀圖表的文字描述不印，不算。
  * @param {unknown} file
@@ -338,14 +393,14 @@ export function practicePrintableStrings(file) {
   sourceStrings(f.provenance, list(g.figures), sources);
   const a = isObj(f.annotations) ? f.annotations : {};
   const items = isObj(a.explanations) && isObj(a.explanations.items) ? a.explanations.items : {};
-  for (const item of Object.values(items)) if (isObj(item)) pushStrings(explanations, item.explanation_zh);
+  for (const item of Object.values(items)) if (isObj(item)) pushStrings(explanations, item.explanation_zh, item.partial_credit_forms);
   return { booklet, explanations, sources };
 }
 
 /**
  * 寫作題庫的一組（writing/bank/prompts 與 answers）會印進 PDF 的字串：
  *   題本：中譯英的中文題目；作文的題目與圖（圖說、文字描述、表格）；
- *   解析：中譯英的參考譯文與解析，作文的評分重點（四項的重點與級距說明、扣分說明、各段要點）、範文與解析。
+ *   解析（含答案頁）：中譯英的參考譯文與解析，作文的評分重點（四項的重點與級距說明、扣分說明、各段要點）、範文與解析。
  * @param {unknown} prompt @param {unknown} answers
  * @returns {PrintableStrings}
  */
@@ -380,13 +435,14 @@ export function writingPrintableStrings(prompt, answers) {
 
 /**
  * 題庫會印進自組卷 PDF 的字串，逐組檢查 PDF 字型子集有沒有字形，題本、解析、資料來源分開找（§7.6）。
- * 建置時呼叫：題本缺字的題組由 bank-mock-pool.mjs 警告（WP3 補好子集之後改成排除在組卷池外）；
- * 解析缺字的題組 PDF 改印替代說明、資料來源缺字只列在建置紀錄。這裡不判斷要不要排除，也不讓建置失敗。
+ * 建置時呼叫：題本缺字的題組由 bank-mock-pool.mjs 排除在組卷池外（ex: glyph，建置警告）；
+ * 解析與答案頁缺字的題組 PDF 改印替代說明（那一題、那一項或整篇範文）、資料來源缺字只列在建置紀錄。這裡不判斷要不要排除，
+ * 也不讓建置失敗。
  * @param {{
  *   practice?: readonly { uid: string, version: number }[],
  *   writing?: readonly { prompt: { uid: string, version: number }, answers: unknown }[],
  * }} groups  practice：題庫練習的題組檔；writing：寫作題庫同一組的 prompts 與 answers 檔
- * @param {{ fontsDir?: string }} [options]
+ * @param {{ fontsDir?: string, substitutes?: ReadonlySet<number> }} [options]  substitutes：PDF 印解析與資料來源前會換掉的字（預設讀 strings.ts）
  * @returns {{ missing: Map<string, MissingGlyphs>, stats: { groups: number, booklet: number, explanations: number, sources: number } }}
  *   missing 的鍵是 uid@v，只列有缺字的題組；stats.booklet、explanations、sources 是各類缺的不同字數
  */
@@ -398,14 +454,16 @@ export function bankPrintableCoverage(groups, options = {}) {
   if (!regular || !tinos || !emoji) throw new Error('metrics.json 缺少 NotoSerifTC-Regular／Tinos-Regular／NotoEmoji-Regular');
   /** @param {number} cp */
   const fontFor = (cp) => (inRanges(cp, metrics.latinRanges) ? tinos : inRanges(cp, metrics.emojiRanges) ? emoji : regular);
-  /** @param {readonly string[]} strings */
-  const missingIn = (strings) => {
+  const substituted = options.substitutes ?? glyphSubstituteCodePoints();
+  /** @param {readonly string[]} strings @param {boolean} [withSubstitutes] 解析、答案頁與資料來源：PDF 會先換掉 GLYPH_SUBSTITUTES 的字 */
+  const missingIn = (strings, withSubstitutes = false) => {
     /** @type {Set<number>} */
     const out = new Set();
     for (const s of strings) {
       for (const ch of s) {
         const cp = /** @type {number} */ (ch.codePointAt(0));
         if (cp < 0x20 || cp === 0x7f) continue;
+        if (withSubstitutes && substituted.has(cp)) continue;
         if (!fontFor(cp).has(cp)) out.add(cp);
       }
     }
@@ -419,7 +477,7 @@ export function bankPrintableCoverage(groups, options = {}) {
   /** @param {string} key @param {PrintableStrings} strings */
   const check = (key, strings) => {
     count += 1;
-    const found = { booklet: missingIn(strings.booklet), explanations: missingIn(strings.explanations), sources: missingIn(strings.sources) };
+    const found = { booklet: missingIn(strings.booklet), explanations: missingIn(strings.explanations, true), sources: missingIn(strings.sources, true) };
     for (const k of /** @type {const} */ (['booklet', 'explanations', 'sources'])) for (const ch of found[k]) all[k].add(ch);
     if (found.booklet.length + found.explanations.length + found.sources.length > 0) missing.set(key, found);
   };
@@ -431,7 +489,39 @@ export function bankPrintableCoverage(groups, options = {}) {
 // ---------------------------------------------------------------------------
 // 直接執行：檢查 public/data/exams/（build:data 的輸出）
 // ---------------------------------------------------------------------------
-if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+/**
+ * 題庫會印進 PDF 的所有字元（public/data 的題庫練習題組檔與寫作題庫的題目檔、答案檔；同 build-data 傳給 bankPrintableCoverage 的內容）。
+ * subset_fonts.py 呼叫 `--print-bank-chars` 拿這份清單收進中文子集。
+ * @param {string} [dataDir]
+ * @returns {{ booklet: string, explanations: string, sources: string, groups: number }}
+ */
+export function bankPrintableChars(dataDir = path.join(WEB_DIR, 'public', 'data')) {
+  /** @param {string} dir */
+  const jsonFiles = (dir) => (existsSync(dir) ? readdirSync(dir).filter((f) => f.endsWith('.json')).sort().map((f) => JSON.parse(readFileSync(path.join(dir, f), 'utf8'))) : []);
+  /** @type {Record<'booklet' | 'explanations' | 'sources', Set<string>>} */
+  const sets = { booklet: new Set(), explanations: new Set(), sources: new Set() };
+  /** @param {PrintableStrings} strings */
+  const add = (strings) => {
+    for (const k of /** @type {const} */ (['booklet', 'explanations', 'sources'])) for (const s of strings[k]) for (const ch of s) sets[k].add(ch);
+  };
+  const practice = jsonFiles(path.join(dataDir, 'bank', 'groups'));
+  for (const g of practice) add(practicePrintableStrings(g));
+  const answers = new Map(jsonFiles(path.join(dataDir, 'writing', 'bank', 'answers')).map((a) => [`${a.uid}@${a.version}`, a]));
+  const prompts = jsonFiles(path.join(dataDir, 'writing', 'bank', 'prompts'));
+  for (const p of prompts) add(writingPrintableStrings(p, answers.get(`${p.uid}@${p.version}`)));
+  /** @param {Set<string>} set */
+  const join = (set) => [...set].sort().join('');
+  return { booklet: join(sets.booklet), explanations: join(sets.explanations), sources: join(sets.sources), groups: practice.length + prompts.length };
+}
+
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url) && process.argv.includes('--print-bank-chars')) {
+  const chars = bankPrintableChars();
+  if (chars.groups === 0) {
+    console.error('[check-fonts] 找不到 public/data/bank/groups/，請先執行 npm run build:data -w @gsat/web');
+    process.exit(1);
+  }
+  process.stdout.write(`${JSON.stringify(chars)}\n`);
+} else if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   const dir = path.join(WEB_DIR, 'public', 'data', 'exams');
   if (!existsSync(dir)) {
     console.error('[check-fonts] 找不到 public/data/exams/，請先執行 npm run build:data -w @gsat/web');
@@ -448,4 +538,20 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
     process.exit(1);
   }
   console.log(`[check-fonts] 通過：${result.stats.exams} 份考卷、${result.stats.chars} 種字元都有字形`);
+  // 題庫（自組卷 PDF）：只報告，不讓檢查失敗（題本缺字的題組由建置排除在組卷池外，bank-mock §7.6）。
+  const bankDir = path.join(WEB_DIR, 'public', 'data');
+  /** @param {string} dir */
+  const jsonFiles = (dir) => (existsSync(dir) ? readdirSync(dir).filter((f) => f.endsWith('.json')).map((f) => JSON.parse(readFileSync(path.join(dir, f), 'utf8'))) : []);
+  const practice = jsonFiles(path.join(bankDir, 'bank', 'groups'));
+  const answers = new Map(jsonFiles(path.join(bankDir, 'writing', 'bank', 'answers')).map((a) => [`${a.uid}@${a.version}`, a]));
+  const writing = jsonFiles(path.join(bankDir, 'writing', 'bank', 'prompts')).map((prompt) => ({ prompt, answers: answers.get(`${prompt.uid}@${prompt.version}`) }));
+  if (practice.length + writing.length > 0) {
+    const bank = bankPrintableCoverage({ practice, writing });
+    for (const [key, m] of bank.missing) {
+      const parts = [m.booklet.length > 0 ? `題本 ${m.booklet.join('')}` : null, m.explanations.length > 0 ? `解析 ${m.explanations.join('')}` : null, m.sources.length > 0 ? `資料來源 ${m.sources.join('')}` : null];
+      console.warn(`[check-fonts] 注意：題庫 ${key} 缺字：${parts.filter(Boolean).join('；')}`);
+    }
+    const { stats } = bank;
+    console.log(`[check-fonts] 題庫 ${stats.groups} 組：題本缺 ${stats.booklet} 字、解析缺 ${stats.explanations} 字、資料來源缺 ${stats.sources} 字`);
+  }
 }

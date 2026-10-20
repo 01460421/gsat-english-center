@@ -9,7 +9,7 @@ import type { ReactNode } from 'react';
 import { TIER_LABELS } from '@gsat/shared';
 import type { Exam, SectionType } from '../../data/exams';
 import type { QuestionExtras } from '../exams/QuestionExtras';
-import type { MockPdfMeta } from '../pdf/types';
+import type { MockPdfMeta, PdfDownloadInfo } from '../pdf/types';
 import { isBankPaperId, paperNumber, tierOfPaperId } from './bank/paperId';
 import type { MockAttemptRecord, MockHistoryEntry } from './storage';
 
@@ -42,17 +42,17 @@ export interface MockPaperBank {
   startRule: ReactNode;
   /** 作答頁頁尾：AI 出題聲明與參考資料（取代歷屆卷的試題來源）。 */
   sourceNote: ReactNode;
-  /** PDF 封面資訊（§7.1）。 */
+  /** 「下載 PDF」區塊的卷子資訊（§7.1）：含 sitePaper，PDF 用本站自組卷的封面、答案、解析與資料來源。 */
   pdfMeta: (strict: boolean) => MockPdfMeta;
   /** 開考前檢查（§2.8：作答中的自組卷最多 3 份）；回傳 false 就不開考（PaperInfo 會列出那幾份）。 */
   canStart: () => boolean;
   /** 開考：記 startedAt、確認快照已寫入。 */
   onStarted: () => void;
   /**
-   * 下載 PDF 成功：記 pdfAt、確認快照已寫入（§2.5）。不讀參數，所以可以直接交給 ExamPdfDownload 的
-   * onDownloaded（WP3 的 (info: PdfDownloadInfo) => void）。
+   * 下載 PDF 成功（ExamPdfDownload 的 onDownloaded，存檔或分享完成時各呼叫一次）：記 pdfAt、確認快照已寫入（§2.5）。
+   * 不論哪一種版本都算下載過，所以不讀 info。
    */
-  onPdfDownloaded: () => void;
+  onPdfDownloaded: (info: PdfDownloadInfo) => void;
   /** 交卷時寫入歷史的摘要：混合題的填充、簡答自動判分，level 一律 null（§6.3、§6.4）。 */
   historyEntry: (record: MockAttemptRecord, exam: Exam) => MockHistoryEntry;
 }

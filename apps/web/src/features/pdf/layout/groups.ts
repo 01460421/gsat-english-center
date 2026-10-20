@@ -4,6 +4,7 @@
  *   - cloze：選文挖空、每空各自四個選項 → 選文後依題號列出「11. (A) … (B) …」；
  *   - bank：共用選項庫 → 選文後放選項框（文意選填、篇章結構）；空格不在選文裡的句子配合題，選項框放最前面再逐題列出；
  *   - standard：題目各自作答（詞彙、閱讀、混合題、中譯英、作文、簡答）。
+ * 本站自組卷（options.site）只有圖的印法不同（nodes.ts 的 figureBlock：圖表印成資料表，docs/design/bank-mock.md §7.3）。
  */
 import type { ExamSection, Figure, Question, QuestionGroup } from '../../../data/exams';
 import { bankBlanksInPassage, clusterQuestions, groupLayout } from '../../exams/paper';
@@ -11,7 +12,7 @@ import { resolveBlankQuestion } from '../../exams/richText';
 import type { PdfContent } from '../engine/docTypes';
 import { KEEP_LIMIT, keepTogether, maybeUnbreakable, type Block } from './blocks';
 import { CONTENT_WIDTH, GAP, LINE, SIZE, lineHeightPt } from './metrics';
-import { boxLayout, boxed, figureBlock, groupLabelBlock, paragraphBlocks } from './nodes';
+import { boxLayout, boxed, figureBlock, groupLabelBlock, paragraphBlocks, type FigureOptions } from './nodes';
 import { bankBox } from './options';
 import { clusterNumberText, compositionBlock, questionBlock } from './questions';
 import { plainInline, type RichOptions } from './richInline';
@@ -86,25 +87,26 @@ interface GroupContext {
   section: ExamSection;
   group: QuestionGroup;
   rich: RichOptions;
+  figure: FigureOptions;
 }
 
 /** 題目區塊；綁在這一題上的圖片描述框放在題目前面、一起不跨頁（§5.8）。 */
-function questionWithFigures(q: Question, figuresByNo: Map<number, Figure[]>, block: Block): Block {
+function questionWithFigures(q: Question, figuresByNo: Map<number, Figure[]>, block: Block, figure: FigureOptions): Block {
   const figs = figuresByNo.get(q.no);
   if (!figs || figs.length === 0) return block;
   figuresByNo.delete(q.no);
-  return keepTogether([...figs.map(figureBlock), block]);
+  return keepTogether([...figs.map((fig) => figureBlock(fig, figure)), block]);
 }
 
 function standardQuestionBlocks(ctx: GroupContext, figuresByNo: Map<number, Figure[]>): Block[] {
-  const { section, group, rich } = ctx;
+  const { section, group, rich, figure } = ctx;
   const out: Block[] = [];
   for (const item of clusterQuestions(group.questions)) {
     if (item.kind === 'fill_cluster') {
       const first = item.questions[0];
       if (!first) continue;
       const block = questionBlock(first, { rich, numberText: clusterNumberText(item.questions) }, item.stem);
-      out.push(questionWithFigures(first, figuresByNo, block));
+      out.push(questionWithFigures(first, figuresByNo, block, figure));
       continue;
     }
     const q = item.question;
@@ -112,7 +114,7 @@ function standardQuestionBlocks(ctx: GroupContext, figuresByNo: Map<number, Figu
       q.mode === 'composition'
         ? compositionBlock(q, rich)
         : questionBlock(q, { rich, answerLine: section.type === 'mixed' && q.mode === 'short_answer' });
-    out.push(questionWithFigures(q, figuresByNo, block));
+    out.push(questionWithFigures(q, figuresByNo, block, figure));
   }
   return out;
 }
@@ -127,10 +129,16 @@ function questionsNotInPassage(group: QuestionGroup): Question[] {
   });
 }
 
+/** 版面模式：本站自組卷的圖印法不同（bank-mock §7.3）。 */
+export interface GroupOptions {
+  site?: boolean;
+}
+
 /** 一個題組的區塊。 */
-export function groupBlocks(section: ExamSection, group: QuestionGroup): Block[] {
+export function groupBlocks(section: ExamSection, group: QuestionGroup, options: GroupOptions = {}): Block[] {
   const rich: RichOptions = { blankLabel: blankLabelResolver(group) };
-  const ctx: GroupContext = { section, group, rich };
+  const figure: FigureOptions = options.site ? { site: true } : {};
+  const ctx: GroupContext = { section, group, rich, figure };
   const layout = groupLayout(group);
   const labelText = groupLabelText(section, group);
   const label = labelText ? [groupLabelBlock(labelText)] : [];
@@ -145,7 +153,7 @@ export function groupBlocks(section: ExamSection, group: QuestionGroup): Block[]
     if (fig.question_no != null && questionNos.has(fig.question_no)) {
       figuresByNo.set(fig.question_no, [...(figuresByNo.get(fig.question_no) ?? []), fig]);
     } else {
-      looseFigures.push(figureBlock(fig));
+      looseFigures.push(figureBlock(fig, figure));
     }
   }
 
@@ -197,7 +205,7 @@ export function groupBlocks(section: ExamSection, group: QuestionGroup): Block[]
   const questions = section.type === 'translation' ? questionsNotInPassage(group) : group.questions;
   const qBlocks = standardQuestionBlocks({ ...ctx, group: { ...group, questions } }, figuresByNo);
   // 綁在題目上卻對不到題號的圖（資料錯誤），放在選文後面，不要弄丟。
-  for (const figs of figuresByNo.values()) looseFigures.push(...figs.map(figureBlock));
+  for (const figs of figuresByNo.values()) looseFigures.push(...figs.map((fig) => figureBlock(fig, figure)));
   const stimulus = [...label, ...passage, ...looseFigures, ...parts];
   if (stimulus.length === 0) return qBlocks;
   const passageHeight = passage.reduce((s, b) => s + b.height, 0);

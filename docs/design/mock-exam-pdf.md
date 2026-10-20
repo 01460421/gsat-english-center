@@ -155,13 +155,29 @@ interface ExamPdfOptions {
   includeAnswerSheet: boolean;   // 附答題卷
   includeAnswerKey: boolean;     // 附答案頁
   mockMeta?: MockPdfMeta;        // 有值＝模擬考版封面
+  // 以下三個只有 mockMeta.sitePaper 有值時有效（本站自組卷，docs/design/bank-mock.md §7.7）
+  includeExplanations?: boolean; // 附解析頁（需要 includeAnswerKey）
+  includeBooklet?: boolean;      // false＝教師卷（不印封面與題本）；預設 true
+  duplex?: boolean;              // 雙面列印：答題卷、答案、解析每段從單數頁開始
 }
-interface MockPdfMeta { title: string; paperLabel: string; durationMinutes: number; strict?: boolean; notices?: readonly string[] }
+interface MockPdfMeta { title: string; paperLabel: string; durationMinutes: number; strict?: boolean; notices?: readonly string[]; sitePaper?: SitePaperPdfMeta }
+interface SitePaperPdfMeta {     // 本站自組卷（bank-mock §7.1）：封面、頁首頁尾、圖、答題卷、答案、解析、資料來源與文件屬性都換成本站的文字
+  code: string; tierLabel: string; assembledOn: string; dataVersion: string; aiNotice: string;
+  references: { range: string; attribution: string | null; items: { publisher: string; title: string; url: string; license?: string }[] }[];
+  answers: { translation: Record<string, string[]>; composition: { criteria: string[]; modelText: string | null }; explanations: Record<string, string | null>; partialCredit?: Record<string, string[]> };
+}
+interface PdfDownloadInfo { fileName: string; includeBooklet: boolean; includeAnswerKey: boolean; via: 'save' | 'share' }
 type RenderExamPdf = (exam: Exam, options: ExamPdfOptions & { onProgress?; signal? }) => Promise<Blob>;
 class PdfError extends Error { kind: 'unsupported' | 'network' | 'render' | 'aborted' }
 ```
 
-頁面只用 `ExamPdfDownload`（props：`exam`、`mockMeta?`、`defaultIncludeAnswerKey?`、`className?`）。只加選填欄位不算破壞相容；刪改欄位要兩邊一起改並更新本節。
+頁面只用 `ExamPdfDownload`（props：`exam`、`mockMeta?`、`defaultIncludeAnswerKey?`、`defaultSiteVersion?`、`onDownloaded?`、`className?`）。只加選填欄位不算破壞相容；刪改欄位要兩邊一起改並更新本節。
+
+- 2026-10-20（本站自組模擬考 WP3）加了 `sitePaper`、`includeExplanations`、`includeBooklet`、`duplex`、`PdfDownloadInfo`，
+  以及 `ExamPdfDownload` 的 `defaultSiteVersion`、`onDownloaded`（存檔或分享成功時各呼叫一次，失敗、取消不呼叫）。
+  `sitePaper` 由 `features/mock/bank/pdfText.ts` 的 `bankMockPdfMeta(paper, { strict, assembledAt })` 組出來；
+  有 `sitePaper` 時下載區塊改成三種版本（學生卷、教師卷、題本＋答案＋解析）加「雙面列印」，選項對應見 `index.ts` 的 `sitePdfOptions`。
+  歷屆卷與現有模擬考的文件定義完全不變（66 份考卷＋6 份模擬考版的文件定義與頁首頁尾在改動前後逐位元組相同）。
 
 ### 4.3 產生流程
 

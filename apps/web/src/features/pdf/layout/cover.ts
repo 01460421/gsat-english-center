@@ -1,16 +1,20 @@
 /**
  * 封面（設計文件 §5.2）：本站名稱、卷別、「英文考科」、作答注意事項、出處與官方試題 PDF 網址。
  * 不印大考中心的機構名稱標題、標誌與「請於考試開始鈴響起…簽全名」這類只適用於正式考場的指示。
+ *
+ * 本站自組卷（mockMeta.sitePaper，docs/design/bank-mock.md §7.2）另用 siteCoverContent()：本站卷名、卷號、
+ * 「題型與配分同學測，難度依所選等級」、班級與座號欄、組卷日期、資料版本、AI 出題聲明，以及唯一一個「線上作答與計分」
+ * QR code（放大、容錯 M）與完整網址；不印官方網址。
  */
 import type { Exam } from '../../../data/exams';
 import type { PdfContent, PdfNode } from '../engine/docTypes';
-import type { MockPdfMeta } from '../types';
+import type { MockPdfMeta, SitePaperPdfMeta } from '../types';
 import { hasNationalRates } from './answerKey';
 import { NON_OFFICIAL_NOTICE, officialPaperUrl, sourceLine } from './attribution';
 import { CONTENT_WIDTH } from './metrics';
 import { boxLayout, boxed, fieldRow } from './nodes';
 import { plainInline, spacedInline, urlInline } from './richInline';
-import { PDF_TEXT } from './strings';
+import { PDF_TEXT, SITE_PAPER_TEXT } from './strings';
 
 export interface CoverOptions {
   includeAnswerSheet: boolean;
@@ -59,7 +63,7 @@ function bullet(text: string, indent = 14): PdfNode {
   };
 }
 
-function noticeBox(exam: Exam, options: CoverOptions): PdfNode {
+function noticeBox(exam: Exam, options: CoverOptions, site?: SitePaperPdfMeta): PdfNode {
   const minutes = options.mockMeta?.durationMinutes ?? exam.time_minutes;
   const stack: PdfContent[] = [
     { text: plainInline(PDF_TEXT.noticeTitle), fontSize: 14, alignment: 'center', margin: [0, 0, 0, 10] },
@@ -69,7 +73,7 @@ function noticeBox(exam: Exam, options: CoverOptions): PdfNode {
   }
   stack.push({ text: plainInline(PDF_TEXT.howTitle), fontSize: BODY, lineHeight: BODY_LINE });
   for (const line of options.includeAnswerSheet ? PDF_TEXT.howWithSheet : PDF_TEXT.howWithoutSheet) stack.push(bullet(line));
-  stack.push(bullet(PDF_TEXT.howOnline(hasNationalRates(exam))));
+  stack.push(bullet(site ? SITE_PAPER_TEXT.howOnline : PDF_TEXT.howOnline(hasNationalRates(exam))));
   if (hasChoice(exam) || hasMultiSelect(exam)) {
     stack.push({ text: plainInline(PDF_TEXT.scoringTitle), fontSize: BODY, lineHeight: BODY_LINE, margin: [0, 4, 0, 0] });
     if (hasChoice(exam)) stack.push(bullet(hasPenaltyScoring(exam) ? PDF_TEXT.scoringPenaltyNote : PDF_TEXT.scoringSingle));
@@ -139,6 +143,7 @@ function sourceBlock(exam: Exam, options: CoverOptions): PdfNode {
 
 export function coverContent(exam: Exam, options: CoverOptions): PdfContent[] {
   const meta = options.mockMeta;
+  if (meta?.sitePaper) return siteCoverContent(exam, meta, meta.sitePaper, options);
   const kicker = meta ? [meta.title.trim() || PDF_TEXT.mockKicker, meta.paperLabel.trim()].filter(Boolean).join(PDF_TEXT.kickerSeparator) : PDF_TEXT.coverKicker;
   const content: PdfContent[] = [
     { text: spacedInline(kicker, { spacing: 2 }), fontSize: 12, alignment: 'center', color: '#333333', margin: [0, 18, 0, 16] },
@@ -153,5 +158,87 @@ export function coverContent(exam: Exam, options: CoverOptions): PdfContent[] {
   ];
   if (meta) content.push(...mockBlock(meta));
   content.push(sourceBlock(exam, options));
+  return content;
+}
+
+// ---------------------------------------------------------------------------
+// 本站自組卷（bank-mock §7.2）
+// ---------------------------------------------------------------------------
+
+/**
+ * QR code 的內容改成整串大寫：代號解碼不分大小寫、路由比對也不分，pdfmake 會改用英數模式，格子更大（bank-mock §7.2）。
+ * 要等實機測試（§7.8）確認 iPhone 與 Android 的相機都能打開大寫網址才改成 true；在那之前用一般寫法（byte 模式）。
+ */
+export const SITE_QR_UPPERCASE = false;
+
+/**
+ * 封面與答題卷共用的 QR code（§7.2）：自組卷網址約 118 個字元，放大並用 M 級容錯，影印後也掃得到。
+ * pdfmake 每格的大小是 floor(fit ÷ 每邊格數) pt，不夠一格的部分整個捨去：一般寫法（byte 模式）是 version 7（每邊 45 格），
+ * fit 100 → 每格 2 pt、實際 90 pt；fit 80 只剩每格 1 pt、45 pt。大寫網址（英數模式）是 version 5（每邊 37 格），每格 2 pt、74 pt。
+ * cover.test.ts 用 pdfmake 的編碼程式實際量，確定兩種寫法每格都至少 2 pt（約 0.7 mm）。
+ * quietZone：QR code 四周要留至少 4 格空白（4 × 2 pt），下方的說明文字不能貼著 QR code。
+ */
+export const SITE_QR = { fit: 100, eccLevel: 'M', quietZone: 8 } as const;
+
+export function siteQrValue(url: string): string {
+  return SITE_QR_UPPERCASE ? url.toUpperCase() : url;
+}
+
+/** QR code 那一欄的寬度：比 fit 寬一點，QR code 置中，左右各留一點空白。 */
+export const SITE_QR_COLUMN = SITE_QR.fit + 4;
+
+/** 本站自組卷的 QR code 節點（封面、答題卷共用）。 */
+export function siteQrNode(url: string): Extract<PdfNode, { qr: string }> {
+  return { qr: siteQrValue(url), fit: SITE_QR.fit, eccLevel: SITE_QR.eccLevel, alignment: 'center' };
+}
+
+/** 封面底部：組卷日期、資料版本、AI 出題聲明、圖的說明、線上作答網址與「卷號只供核對」；右邊是 QR code。 */
+function siteSourceBlock(site: SitePaperPdfMeta, onlineUrl: string | null | undefined): PdfNode {
+  const textWidth = onlineUrl ? CONTENT_WIDTH - SITE_QR_COLUMN - QR_GAP : CONTENT_WIDTH;
+  const small = { fontSize: 8.5, lineHeight: 1.3, color: '#333333' };
+  const texts: PdfContent[] = [
+    { text: plainInline(`${SITE_PAPER_TEXT.assembledOn(site.assembledOn)}　${SITE_PAPER_TEXT.dataVersion(site.dataVersion)}`), ...small },
+    { text: plainInline(site.aiNotice), ...small },
+    { text: plainInline(SITE_PAPER_TEXT.coverFigureNote), ...small, margin: [0, 0, 0, 4] },
+  ];
+  if (onlineUrl) {
+    texts.push({
+      text: [...plainInline(SITE_PAPER_TEXT.onlineLabel), { text: '\n' }, urlInline(onlineUrl, textWidth - 4, URL_FONT_SIZE)],
+      fontSize: URL_FONT_SIZE,
+      lineHeight: 1.25,
+      color: '#333333',
+    });
+  }
+  texts.push({ text: plainInline(SITE_PAPER_TEXT.codeNote), ...small, margin: [0, 2, 0, 0] });
+  const columns: PdfContent[] = [{ width: textWidth, stack: texts }];
+  if (onlineUrl) {
+    columns.push({
+      width: SITE_QR_COLUMN,
+      stack: [siteQrNode(onlineUrl), { text: plainInline(SITE_PAPER_TEXT.qrCaption), fontSize: 7, alignment: 'center', margin: [0, SITE_QR.quietZone, 0, 0] }],
+    });
+  }
+  return { columns, columnGap: QR_GAP, margin: [0, 6, 0, 0] };
+}
+
+/** 本站自組卷的封面。 */
+export function siteCoverContent(exam: Exam, meta: MockPdfMeta, site: SitePaperPdfMeta, options: CoverOptions): PdfContent[] {
+  const content: PdfContent[] = [
+    { text: spacedInline(meta.title.trim(), { spacing: 2 }), fontSize: 12, alignment: 'center', color: '#333333', margin: [0, 14, 0, 12] },
+    { text: plainInline(meta.paperLabel.trim()), fontSize: 18, alignment: 'center', margin: [0, 0, 0, 4] },
+    { text: plainInline(SITE_PAPER_TEXT.coverFormat), fontSize: 11, alignment: 'center', color: '#333333', margin: [0, 0, 0, 8] },
+    { text: spacedInline(PDF_TEXT.subject, { bold: true, spacing: 8 }), fontSize: 26, alignment: 'center', margin: [0, 0, 0, 12] },
+    {
+      table: { widths: ['*'], body: [[{ text: plainInline(SITE_PAPER_TEXT.coverBand, { bold: true }), fontSize: 12, alignment: 'center', fillColor: '#e3e3e3' }]] },
+      layout: { hLineWidth: () => 0, vLineWidth: () => 0, paddingTop: () => 4, paddingBottom: () => 4, paddingLeft: () => 4, paddingRight: () => 4 },
+      margin: [0, 0, 0, 14],
+    },
+    noticeBox(exam, options, site),
+    ...SITE_PAPER_TEXT.candidateFieldRows.map((row, i) => fieldRow(row, BODY, { margin: [0, 0, 0, i === SITE_PAPER_TEXT.candidateFieldRows.length - 1 ? 10 : 6] })),
+  ];
+  if (meta.strict) content.push({ text: plainInline(PDF_TEXT.strictMode), fontSize: BODY, lineHeight: BODY_LINE, margin: [0, 0, 0, 4] });
+  for (const notice of meta.notices ?? []) {
+    if (notice.trim() !== '') content.push(bullet(notice, 0));
+  }
+  content.push(siteSourceBlock(site, options.onlineUrl));
   return content;
 }

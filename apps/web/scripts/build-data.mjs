@@ -1119,7 +1119,8 @@ function fontVersionInputs() {
 
 /**
  * 本站自組模擬考的組卷池（scripts/lib/bank-mock-pool.mjs）：題庫練習與寫作題庫這一次選題的結果，加上題本與解析的缺字
- * （font-coverage.mjs 的 bankPrintableCoverage；WP1 只警告）。資料版本由呼叫端算完後再填進 pool.version。
+ * （font-coverage.mjs 的 bankPrintableCoverage；題本缺字的題組帶排除原因 glyph，解析與資料來源缺字只警告）。
+ * 資料版本由呼叫端算完後再填進 pool.version。
  * @param {ReturnType<typeof buildBankData>} bank
  * @param {ReturnType<typeof buildWritingBank>} writingBank
  */
