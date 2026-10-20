@@ -704,9 +704,17 @@ test.describe('審查修正：版面', () => {
       }
       await page.getByRole('region', { name: '我的寫作紀錄' }).getByRole('button', { name: '中譯英' }).click();
     }
-    // 1366 寬：每列一行。
-    const tall = await page.getByRole('table', { name: '我的中譯英紀錄' }).evaluate((t) => Array.from(t.querySelectorAll('tbody tr'), (tr) => tr.getBoundingClientRect().height));
-    for (const h of tall) expect(h).toBeLessThan(48);
+    // 1366 寬：內容放得下一行時每列一行（不在有空間時換行）。放不放得下看字型：本機的 Liberation Sans 約剩 45px，
+    // 部分 CI 機器的拉丁字型較寬就放不下，這時只要求每格最多兩行（上面的迴圈已檢查）。
+    const fit = await page.getByRole('table', { name: '我的中譯英紀錄' }).evaluate((t) => {
+      const avail = t.getBoundingClientRect().width;
+      t.style.width = 'max-content';
+      const need = t.getBoundingClientRect().width;
+      t.style.width = '';
+      return { avail, need, rows: Array.from(t.querySelectorAll('tbody tr'), (tr) => tr.getBoundingClientRect().height) };
+    });
+    if (fit.need <= fit.avail) for (const h of fit.rows) expect(h, `1366 寬，內容 ${fit.need}px／表格 ${fit.avail}px`).toBeLessThan(48);
+    else test.info().annotations.push({ type: 'note', description: `1366 寬放不下一行（內容 ${fit.need}px／表格 ${fit.avail}px），字型較寬` });
   });
 
   test('/practice 矩陣（1242 寬）：每一格一樣高、第二行（已做・答對率）不換行', async ({ page }) => {
