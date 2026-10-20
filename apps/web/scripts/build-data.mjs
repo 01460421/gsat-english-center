@@ -15,7 +15,8 @@
  *   data/bank/facts/{id}.json              題組引用的事實單（閱讀、混合題的「參考資料」從這裡來）
  *   data/unpublish.jsonl                   人工審核下架清單（題庫練習與本站仿真寫作題都不發布登記的版本；可以不存在）
  *   data/bank/topic-plan*.json             題庫的主題規劃（自組模擬考的主題鍵；可以不存在）
- *   （新增輸入路徑時，根目錄 vercel.json 的 ignoreCommand 要一起加，否則只改那個路徑的提交不會重新建置）
+ *   （新增輸入路徑時，根目錄 vercel.json 的 ignoreCommand 要一起加，否則只改那個路徑的提交不會重新建置；
+ *    Vercel 限制 ignoreCommand 最多 256 字，超過時部署一建立就失敗，路徑太多就改列上層目錄）
  *
  * 輸出（apps/web/public/data/，不進版控；Vite 會原樣複製到 dist/data/）：
  *   meta.json            資料版本、產生時間、筆數、各檔大小
