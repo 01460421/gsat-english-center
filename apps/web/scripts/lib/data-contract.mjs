@@ -8,15 +8,22 @@
  * 陣列每 100 筆切一段，否則 6,000 筆的陣列字面值會讓 tsc 放棄計算（TS2590）。
  *
  * parts 可以只挑一部分檢查：單元測試只拿題庫的範例輸出（tests/fixtures/bank-public）來檢查 bank 的型別、
- * 拿 data/exams/gsat-spec.json 換算出的級分對照檢查 exams 的 score-scales，不必先跑完整的建置。
+ * 拿 data/exams/gsat-spec.json 換算出的級分對照檢查 exams 的 score-scales、拿範例組卷池（tests/fixtures/bank-mock-public）
+ * 檢查 mockPool，不必先跑完整的建置。
  */
 import { spawnSync } from 'node:child_process';
 import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import path from 'node:path';
 
-export const CONTRACT_PARTS = /** @type {const} */ (['meta', 'vocab', 'exams', 'bank', 'writing', 'writingBank']);
+export const CONTRACT_PARTS = /** @type {const} */ (['meta', 'vocab', 'exams', 'bank', 'writing', 'writingBank', 'mockPool']);
 /** @typedef {(typeof CONTRACT_PARTS)[number]} ContractPart */
+
+/**
+ * 自組模擬考的組卷池（bank/mock-pool.json，scripts/lib/bank-mock-pool.mjs）對應的前端型別：模組（相對 src/）與型別名稱。
+ * 前端改了型別名稱或檔案位置時只要改這裡。
+ */
+export const MOCK_POOL_TYPE = /** @type {const} */ ({ module: 'features/mock/bank/pool', name: 'MockPool' });
 
 /** exams/ 底下不是單份考卷的檔案（和 build-data.mjs 的同名常數一致）。 */
 export const EXAM_DIR_NON_EXAM_FILES = new Set(['index.json', 'score-scales.json']);
@@ -132,6 +139,28 @@ export function contractSource({ dataDir, srcDir, parts = CONTRACT_PARTS }) {
     lines.push(`import type { ${[...used].sort().join(', ')} } from ${JSON.stringify(bankTypes)};`);
     lines.push(...body);
     summary.push('本站仿真寫作題的索引', `${lists.length} 個難度列表`, `${prompts.length} 個題目檔`, `${answers.length} 個參考內容檔`);
+  }
+  if (parts.includes('mockPool')) {
+    // 本站自組模擬考的組卷池（docs/design/bank-mock.md §4.7、§9.1）。build-data 一定會輸出（沒有題組時每個清單是空陣列）；
+    // 缺檔就讓檢查失敗。外層（清單清空）與三種難度 × 八個大題的清單各自宣告（同 chunked 的做法）：
+    // 整份池子寫成一個字面值時，tsc 的錯誤訊息很難對到是哪一組。
+    const poolTypes = path.join(srcDir, '..', MOCK_POOL_TYPE.module);
+    const pool = /** @type {{ tiers?: Record<string, Record<string, unknown[]>> }} */ (read('bank/mock-pool.json'));
+    const emptied = Object.fromEntries(
+      Object.entries(pool.tiers ?? {}).map(([tier, sections]) => [tier, Object.fromEntries(Object.keys(sections).map((s) => [s, []]))]),
+    );
+    lines.push(`import type { ${MOCK_POOL_TYPE.name} } from ${JSON.stringify(poolTypes)};`);
+    lines.push(`export const mockPool: ${MOCK_POOL_TYPE.name} = ${JSON.stringify({ ...pool, tiers: emptied })};`);
+    let entries = 0;
+    for (const [tier, sections] of Object.entries(pool.tiers ?? {})) {
+      for (const [section, list] of Object.entries(sections)) {
+        if (!Array.isArray(list) || list.length === 0) continue;
+        entries += list.length;
+        const type = `${MOCK_POOL_TYPE.name}['tiers'][${JSON.stringify(tier)}][${JSON.stringify(section)}]`;
+        lines.push(`export const mockPool_${ident(tier)}_${ident(section)}: ${type} = ${JSON.stringify(list)};`);
+      }
+    }
+    summary.push(`自組模擬考的組卷池（${entries} 組）`);
   }
   return { source: lines.join('\n'), summary };
 }

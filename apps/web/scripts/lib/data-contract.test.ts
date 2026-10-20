@@ -5,14 +5,16 @@
  *     欄位值不在型別允許的範圍（難度拼錯、還沒有練習介面的題型、圖表類型拼錯、多了型別沒有的欄位）時 tsc 要失敗。
  *   - 級分對照（exams 部分的 exams/score-scales.json）：lib/score-scales.mjs 由測試用的 gsat-spec 產生的輸出要符合
  *     src/data/scoreScales.ts 的型別，而且不能被當成考卷（Exam）檢查。
+ *   - 自組模擬考的組卷池（bank/mock-pool.json）：範例組卷池（tests/fixtures/bank-mock-public，bank-mock-pool.test.ts 的 golden）
+ *     要符合 src/features/mock/bank/pool.ts 的型別。
  * 不必先跑完整的 build:data（單字與歷屆試題本身由 npm run check:data 檢查實際建置結果）。
  */
-import { cpSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { cpSync, existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { afterEach, describe, expect, it } from 'vitest';
-import { contractSource, runContractCheck, type ContractPart } from './data-contract.mjs';
+import { MOCK_POOL_TYPE, contractSource, runContractCheck, type ContractPart } from './data-contract.mjs';
 import { specFixture } from './score-scales.fixture';
 import { buildScoreScales } from './score-scales.mjs';
 
@@ -125,6 +127,48 @@ describe('級分對照（exams/score-scales.json）的型別契約', () => {
     expect(result.ok).toBe(false);
     expect(result.output).toMatch(/"高標"/);
     expect(result.output).toMatch(/"math"/);
+  }, 60_000);
+});
+
+describe('自組模擬考的組卷池（bank/mock-pool.json）的型別契約', () => {
+  // 範例組卷池（bank-mock-pool.test.ts 的 golden）。前端型別在 src/features/mock/bank/pool.ts（MOCK_POOL_TYPE）；
+  // 那個檔案還不存在時（建置端先合併）只檢查產生的原始碼，tsc 的部分略過。
+  const MOCK_GOLDEN = path.join(WEB_DIR, 'tests', 'fixtures', 'bank-mock-public');
+  const poolTypes = path.join(WEB_DIR, 'src', `${MOCK_POOL_TYPE.module}.ts`);
+
+  it('原始碼：匯入前端的型別，外層與每個難度、大題的清單分開宣告', () => {
+    const { source, summary } = contractSource({ dataDir: MOCK_GOLDEN, srcDir: SRC, parts: ['mockPool'] });
+    expect(summary).toEqual(['自組模擬考的組卷池（8 組）']);
+    expect(source).toContain(`import type { ${MOCK_POOL_TYPE.name} } from ${JSON.stringify(path.join(SRC, '..', MOCK_POOL_TYPE.module))};`);
+    expect(source).toContain(`export const mockPool: ${MOCK_POOL_TYPE.name} = {"version":"fixture","blueprint":"gsat-115","tiers":{"basic":{"vocabulary":[],`);
+    expect(source).toContain(`export const mockPool_basic_reading: ${MOCK_POOL_TYPE.name}['tiers']["basic"]["reading"] = [`);
+    expect(source).not.toContain('mockPool_top_reading');
+  });
+
+  it.skipIf(!existsSync(poolTypes))('範例組卷池符合前端的型別', () => {
+    const result = check(MOCK_GOLDEN, 'mock-pool-ok', ['mockPool']);
+    expect(result.output).toBe('');
+    expect(result.ok).toBe(true);
+  }, 60_000);
+
+  it.skipIf(!existsSync(poolTypes))('不合型別的值會讓 tsc 失敗', () => {
+    const dir = mkdtempSync(path.join(tmpdir(), 'gsat-contract-'));
+    cleanup.push(dir);
+    cpSync(MOCK_GOLDEN, dir, { recursive: true });
+    editJson(path.join(dir, 'bank', 'mock-pool.json'), (pool) => {
+      const basic = (pool['tiers'] as Record<string, Record<string, Record<string, unknown>[]>>)['basic'];
+      const rd = basic?.['reading']?.[0];
+      if (rd) rd['fig'] = 'photo';
+      const vo = basic?.['vocabulary']?.[0];
+      if (vo) vo['k'] = [1234];
+      const mx = basic?.['mixed']?.[0];
+      if (mx) mx['generation'] = { model: 'x' };
+    });
+    const result = check(dir, 'mock-pool-bad', ['mockPool']);
+    expect(result.ok).toBe(false);
+    expect(result.output).toMatch(/"photo"/);
+    expect(result.output).toMatch(/'number' is not assignable to type 'string'/);
+    expect(result.output).toMatch(/generation/);
   }, 60_000);
 });
 

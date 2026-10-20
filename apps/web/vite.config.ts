@@ -1,6 +1,6 @@
 import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
-import { defineConfig } from 'vitest/config';
+import { configDefaults, defineConfig } from 'vitest/config';
 
 /**
  * 本機開發時 Worker 由 `wrangler dev` 跑在 127.0.0.1:8787（apps/api/wrangler.toml 的 [dev]）。
@@ -45,11 +45,30 @@ export default defineConfig({
     // happy-dom 預設視窗 1024×768，matchMedia('(min-width: 64rem)') 會成立，元件測試就悄悄走桌機路徑。
     // 預設改成手機 375×667（docs/design/desktop-ui.md §2.1 R8）；要測桌機時用 src/test/viewport.ts 的 setDesktopViewport()。
     environmentOptions: { happyDOM: { width: 375, height: 667 } },
-    // scripts/**：資料管線（build-data 的題庫輸出、資料契約）的測試，檔頭用 @vitest-environment node 在 Node 環境跑。
-    include: ['src/**/*.test.{ts,tsx}', 'scripts/**/*.test.ts'],
     setupFiles: ['./src/test/setup.ts'],
     // 元件匯入的 CSS 一律不處理（和 css: false 相同）；只有 ?raw 匯入回傳原始碼：lib/media.test.tsx 比對 index.css 的
     // container 尺寸和 JS 的門檻（docs/design/desktop-ui.md §16.7）。
     css: { include: [/\.css\?raw$/] },
+    /**
+     * 兩組測試分開跑（寫法同 packages/shared/vitest.config.ts）：
+     *   unit  `npm test`：程式碼的測試，只用固定的測試資料（tests/fixtures 或測試裡造的資料），結果不受 data/ 影響。
+     *   data  `npm run test:data`：讀即時的 data/bank/v1 的真實題庫測試（*.data.test.ts，例如自組模擬考的組卷池）。
+     * 分開的理由：題庫每天加題、下架，資料變動只該讓題庫那條 CI（.github/workflows/ci.yml 的 exams job）失敗，不擋程式的 PR。
+     * scripts/**：資料管線（build-data 的題庫輸出、資料契約）的測試，檔頭用 @vitest-environment node 在 Node 環境跑。
+     */
+    projects: [
+      {
+        extends: true,
+        test: {
+          name: 'unit',
+          include: ['src/**/*.test.{ts,tsx}', 'scripts/**/*.test.ts'],
+          exclude: [...configDefaults.exclude, '**/*.data.test.ts'],
+        },
+      },
+      {
+        extends: true,
+        test: { name: 'data', include: ['src/**/*.data.test.ts', 'scripts/**/*.data.test.ts'] },
+      },
+    ],
   },
 });

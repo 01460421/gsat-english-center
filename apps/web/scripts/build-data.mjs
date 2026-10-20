@@ -14,6 +14,7 @@
  *   data/bank/v1/{題型}/{難度}/*.json      AI 題庫（gsat-bank/v1，見 data/bank/README.md）；可以不存在
  *   data/bank/facts/{id}.json              題組引用的事實單（閱讀、混合題的「參考資料」從這裡來）
  *   data/unpublish.jsonl                   人工審核下架清單（題庫練習與本站仿真寫作題都不發布登記的版本；可以不存在）
+ *   data/bank/topic-plan*.json             題庫的主題規劃（自組模擬考的主題鍵；可以不存在）
  *   （新增輸入路徑時，根目錄 vercel.json 的 ignoreCommand 要一起加，否則只改那個路徑的提交不會重新建置）
  *
  * 輸出（apps/web/public/data/，不進版控；Vite 會原樣複製到 dist/data/）：
@@ -33,9 +34,11 @@
  *   writing/bank/…            本站仿真中譯英與作文（AI 題庫的 translation、composition）：index、6 個難度列表、
  *                        每組的 prompts（作答前）與 answers（交出作答後才下載）。挑選與輸出規則在 scripts/lib/writing-bank.mjs，
  *                        選題規則和 Worker 的題目庫共用 packages/shared/scripts/bank-select.mjs
+ *   bank/mock-pool.json  本站自組模擬考的組卷池：每種難度、每個大題的已發布題組（主題鍵、答案指紋、可交換的閱讀題、排除原因），
+ *                        規則在 scripts/lib/bank-mock-pool.mjs（docs/design/bank-mock.md §4.7、§9.1）
  *
  * 前端對應的型別在 apps/web/src/data/vocab.ts、exams.ts、scoreScales.ts、bank.ts、src/features/writing/data.ts、
- * src/features/writing/bank/data.ts；
+ * src/features/writing/bank/data.ts、src/features/mock/bank/pool.ts；
  * 這裡改了輸出格式，那邊要一起改（npm run check:data -w @gsat/web 會用 tsc 比對）。
  *
  * 另外檢查 PDF 字型（scripts/font-coverage.mjs）：試題裡的每個字元都要在 src/features/pdf/fonts/ 的字型子集裡有字形，
@@ -57,9 +60,12 @@ import { existsSync, mkdirSync, readFileSync, readdirSync, renameSync, rmSync, w
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { gzipSync } from 'node:zlib';
-import { checkFontCoverage } from './font-coverage.mjs';
+import { FONTS_DIR, bankPrintableCoverage, checkFontCoverage } from './font-coverage.mjs';
 import { BANK_SELECT_SCRIPT, BankSelectError, OFFICIAL_RUN_WORDS, readUnpublish, wordRuns } from '../../../packages/shared/scripts/bank-select.mjs';
 import { BANK_DATA_SCRIPT, BankDataError, SKIP_REASON_LABELS, buildBankData, practiceGroupPath } from './lib/bank-data.mjs';
+import { BANK_MOCK_LETTERS_SCRIPT } from './lib/bank-mock-letters.mjs';
+import { BANK_MOCK_POOL_SCRIPT, BankMockPoolError, MOCK_POOL_PATH, buildMockPool, mockPoolLogLines, readTopicPlans } from './lib/bank-mock-pool.mjs';
+import { BANK_MOCK_THEMES_SCRIPT } from './lib/bank-mock-themes.mjs';
 import { SCORE_SCALES_SCRIPT, ScoreScalesError, buildScoreScales } from './lib/score-scales.mjs';
 import {
   WRITING_BANK_INDEX_PATH,
@@ -102,6 +108,13 @@ const BANK_DIR = process.env.GSAT_BANK_DIR ? path.resolve(process.env.GSAT_BANK_
 const UNPUBLISH_FILE = path.join(DATA_DIR, 'unpublish.jsonl');
 /** 寫作題庫的 SVG 清理（版本雜湊用：清理規則改了，輸出就可能改變）。 */
 const SVG_SANITIZE_SCRIPT = path.join(REPO_ROOT, 'packages', 'shared', 'scripts', 'svg-sanitize.mjs');
+/** PDF 字型的缺字檢查（版本雜湊用：自組模擬考的組卷池依它判斷題本缺字的題組）。 */
+const FONT_COVERAGE_SCRIPT = path.join(WEB_DIR, 'scripts', 'font-coverage.mjs');
+/**
+ * 題庫的主題規劃（自組模擬考的主題鍵用其中的 keywords、angle_en，lib/bank-mock-themes.mjs）。可以不存在。
+ * 和 BANK_DIR 一樣跟著 GSAT_BANK_DIR 走：指到別的題庫時，用那個題庫旁邊的規劃檔。
+ */
+const TOPIC_PLAN_FILES = ['topic-plan.json', 'topic-plan-writing.json'].map((f) => path.join(path.dirname(BANK_DIR), f));
 
 /** 精簡索引 gzip 後的上限。索引在第一次進單字頁就要下載，超過就讓建置失敗，逼自己先想辦法瘦身。 */
 const VOCAB_INDEX_GZIP_BUDGET = 300 * 1024;
@@ -970,6 +983,7 @@ function main() {
   const unpublished = readUnpublish(UNPUBLISH_FILE, { repoRoot: REPO_ROOT });
   const bank = buildBankData(BANK_DIR, { relative, unpublished, repoRoot: REPO_ROOT });
   const writingBank = buildWritingBank({ bankDir: BANK_DIR, exams: exams.raws, unpublishFile: UNPUBLISH_FILE, repoRoot: REPO_ROOT, relative });
+  const mockPool = buildMockBankPool(bank, writingBank);
   const version = contentVersion([
     SCRIPT_PATH,
     BANK_DATA_SCRIPT,
@@ -977,14 +991,23 @@ function main() {
     WRITING_BANK_SCRIPT,
     SVG_SANITIZE_SCRIPT,
     SCORE_SCALES_SCRIPT,
+    BANK_MOCK_POOL_SCRIPT,
+    BANK_MOCK_THEMES_SCRIPT,
+    BANK_MOCK_LETTERS_SCRIPT,
+    FONT_COVERAGE_SCRIPT,
+    // 字型子集改變會改變哪些題組因為題本缺字不能組新卷（docs/design/bank-mock.md §7.6），資料版本要跟著變。
+    ...fontVersionInputs(),
     INPUTS.lexicon,
     INPUTS.wordFrequency,
     INPUTS.manifest,
     INPUTS.gsatSpec,
     ...(existsSync(UNPUBLISH_FILE) ? [UNPUBLISH_FILE] : []),
+    ...TOPIC_PLAN_FILES.filter((f) => existsSync(f)),
     ...exams.files,
     ...bank.inputs,
     ...writingBank.inputs,
+    // 組卷池的 prev（舊版本的答案指紋）來自同一個 uid 較舊的 verified 版本檔。
+    ...mockPool.inputs.filter((f) => !bank.inputs.includes(f) && !writingBank.inputs.includes(f)),
   ]);
 
   emit('vocab/index.json', { version, count: vocab.index.length, entries: vocab.index });
@@ -1004,6 +1027,8 @@ function main() {
   }
   for (const f of writingBank.prompts) emit(writingBankPromptPath(f), f);
   for (const f of writingBank.answers) emit(writingBankAnswersPath(f), f);
+  // 組卷池在算資料版本之前就產生了（它讀的舊版本檔要算進版本），版本在這裡填。
+  emit(MOCK_POOL_PATH, { ...mockPool.pool, version });
   assertNoOfficialTranslations(outputs, exams.officialTextsById);
   // D8 第 4 道（docs/design/bank-writing.md §6）：寫作檔的禁止鍵、答案提前外流、官方文字（和選題同一支比對函式）、未清理的 SVG。
   assertWritingBankOutputs(outputs, writingBank.corpus);
@@ -1058,6 +1083,7 @@ function main() {
     ['exams/index.json', fileSizes['exams/index.json']],
     ['exams/score-scales.json', fileSizes['exams/score-scales.json']],
     ['bank/index.json', fileSizes['bank/index.json']],
+    [MOCK_POOL_PATH, fileSizes[MOCK_POOL_PATH]],
     ['writing/translation.json', fileSizes['writing/translation.json']],
     ['writing/essay.json', fileSizes['writing/essay.json']],
     [WRITING_BANK_INDEX_PATH, fileSizes[WRITING_BANK_INDEX_PATH]],
@@ -1077,7 +1103,48 @@ function main() {
   }
   logBank(bank);
   logWritingBank(writingBank);
+  logMockPool(mockPool);
   console.log(`[build-data] 完成，用時 ${((Date.now() - started) / 1000).toFixed(1)} 秒`);
+}
+
+/** 字型子集檔與 metrics.json（資料版本的輸入）；目錄不存在時是空陣列。 */
+function fontVersionInputs() {
+  if (!existsSync(FONTS_DIR)) return [];
+  return readdirSync(FONTS_DIR)
+    .filter((f) => f.endsWith('.ttf.gz') || f === 'metrics.json')
+    .sort()
+    .map((f) => path.join(FONTS_DIR, f));
+}
+
+/**
+ * 本站自組模擬考的組卷池（scripts/lib/bank-mock-pool.mjs）：題庫練習與寫作題庫這一次選題的結果，加上題本與解析的缺字
+ * （font-coverage.mjs 的 bankPrintableCoverage；WP1 只警告）。資料版本由呼叫端算完後再填進 pool.version。
+ * @param {ReturnType<typeof buildBankData>} bank
+ * @param {ReturnType<typeof buildWritingBank>} writingBank
+ */
+function buildMockBankPool(bank, writingBank) {
+  const answersByKey = new Map(writingBank.answers.map((a) => [`${a.uid}@${a.version}`, a]));
+  const glyphs = bankPrintableCoverage({
+    practice: bank.groups,
+    writing: writingBank.prompts.map((prompt) => ({ prompt, answers: answersByKey.get(`${prompt.uid}@${prompt.version}`) })),
+  });
+  // 規劃檔壞掉只警告（主題鍵是盡力而為），不讓網站建置失敗；資料版本照樣算進這些檔案，修好後組卷池會重新產生。
+  const topicPlans = readTopicPlans(TOPIC_PLAN_FILES, relative);
+  const result = buildMockPool({
+    bankDir: BANK_DIR,
+    practice: bank.groups,
+    writing: writingBank.index,
+    topicPlans: topicPlans.plans,
+    glyphs: glyphs.missing,
+    relative,
+  });
+  return { ...result, warnings: [...topicPlans.warnings, ...result.warnings] };
+}
+
+/** 組卷池的建置紀錄：供應表、排除的題組、沒有概念鍵的主題（lib/bank-mock-pool.mjs 的 mockPoolLogLines）與警告。 @param {ReturnType<typeof buildMockPool>} result */
+function logMockPool(result) {
+  for (const line of mockPoolLogLines(result)) console.log(line.startsWith(' ') ? line : `[build-data] ${line}`);
+  for (const w of result.warnings) console.warn(`[build-data] 警告：${w}`);
 }
 
 /** 題庫的建置紀錄：收了幾組、略過了哪些（依原因統計）與警告。 @param {ReturnType<typeof buildBankData>} bank */
@@ -1121,7 +1188,8 @@ try {
     err instanceof BankDataError ||
     err instanceof ScoreScalesError ||
     err instanceof BankSelectError ||
-    err instanceof WritingBankError
+    err instanceof WritingBankError ||
+    err instanceof BankMockPoolError
   ) {
     console.error(`[build-data] 錯誤：${err.message}`);
     process.exit(1);
