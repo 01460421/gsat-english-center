@@ -8,10 +8,15 @@
  * 桌機只有一棵樹、靠 container query 換排法（卷別卡片裡有「下載 PDF」的展開狀態，寬度改變時不能重新掛載，R4）。
  * 例外是右欄裡的配分：20rem 放不下三欄的表格（「第壹部分 選擇題」會斷成三行），wide 時依 useMainTier 換成一部分一段的
  * 清單（名稱＋配分一行、內容下一行）。這一小塊沒有輸入元件，換樹沒有焦點問題（R4）。
+ *
+ * 本站自組模擬考（docs/design/bank-mock.md §2.1）：bankMockVisible() 為真時，在 <MockPaperList /> 之後 lazy 載入
+ * 「本站自組模擬考」區塊（手機、桌機兩棵樹都在「考前節奏建議」之前），Intro 加一句「級分與五標只適用於歷屆卷。」與跳到 #bank-mock 的連結，
+ * 頁尾聲明加一行。為假時這一頁和原本完全相同。
  */
-import { useState, type ReactNode } from 'react';
+import { Suspense, lazy, useState, type ReactNode } from 'react';
 import { InfoSection, ModulePage, PageHeader } from '../components/ModulePage';
 import { MockPaperList } from '../features/mock/MockPaperList';
+import { bankMockVisible } from '../features/mock/bank/flags';
 import { pdfDownloadVisible } from '../features/pdf/index';
 import { useIsDesktop, useMainTier } from '../lib/media';
 import { getPage } from '../modules';
@@ -22,17 +27,37 @@ const PARTS = [
   ['第參部分 非選擇題', '28 分', '中譯英 8、英文作文 20'],
 ] as const;
 
-function Intro({ className }: { className?: string }) {
+/** 本站自組模擬考的區塊（組卷程式只在這個區塊用到，lazy 載入）。 */
+const BankMockSection = lazy(() => import('../features/mock/bank/BankMockSection'));
+
+function Intro({ className, bank = false }: { className?: string; bank?: boolean }) {
   return (
     <p className={className ? `text-[0.95rem] ${className}` : 'text-[0.95rem]'}>
       用大考中心公布的真題整份計時作答：100 分鐘倒數、一次一個大題、不確定的題目可以標記；交卷後看原得總分、各大題得分與用時、
       <strong>級分（非官方）</strong>與五標位置。考試中不提供答案與提示。作答與成績只存在這台裝置的瀏覽器。
+      {bank && (
+        <>
+          級分與五標只適用於歷屆卷。
+          <a href="#bank-mock" className="mt-1 block font-medium text-primary underline underline-offset-2">
+            也可以從本站題庫依難度組一份新卷 ↓
+          </a>
+        </>
+      )}
     </p>
+  );
+}
+
+function BankSection() {
+  return (
+    <Suspense fallback={null}>
+      <BankMockSection />
+    </Suspense>
   );
 }
 
 export default function MockExamPage() {
   const [pdfVisible] = useState(pdfDownloadVisible);
+  const [bankVisible] = useState(bankMockVisible);
   const isDesktop = useIsDesktop();
   const { wide } = useMainTier();
   if (isDesktop) {
@@ -43,9 +68,10 @@ export default function MockExamPage() {
         <PageHeader page={getPage('/mock')} className="[&>p]:max-w-3xl" />
         <div className="grid grid-cols-1 gap-4 @wide/main:grid-cols-[minmax(0,1fr)_20rem] @wide/main:items-start @wide/main:gap-8">
           <div className="grid min-w-0 grid-cols-1 gap-4">
-            <Intro className="max-w-3xl" />
+            <Intro className="max-w-3xl" bank={bankVisible} />
             <MockPaperList />
-            <Disclaimer className="max-w-3xl" />
+            {bankVisible && <BankSection />}
+            <Disclaimer className="max-w-3xl" bank={bankVisible} />
           </div>
           <aside aria-label="考前準備" className="grid max-w-3xl grid-cols-1 gap-4 @wide/main:max-w-none @wide/main:[&_section]:p-4 @wide/main:[&_section_h2]:text-base">
             {rhythm}
@@ -56,20 +82,22 @@ export default function MockExamPage() {
   }
   return (
     <ModulePage page={getPage('/mock')}>
-      <Intro />
+      <Intro bank={bankVisible} />
       <MockPaperList />
+      {bankVisible && <BankSection />}
       <Rhythm pdfVisible={pdfVisible} />
-      <Disclaimer />
+      <Disclaimer bank={bankVisible} />
     </ModulePage>
   );
 }
 
-function Disclaimer({ className }: { className?: string }) {
+function Disclaimer({ className, bank = false }: { className?: string; bank?: boolean }) {
   return (
     <footer className={className ? `space-y-1 rounded-2xl border border-line bg-surface-2 p-4 text-sm text-muted ${className}` : 'space-y-1 rounded-2xl border border-line bg-surface-2 p-4 text-sm text-muted'}>
       <p className="font-semibold text-fg">模擬分數與級分僅供參考，不是官方級分；AI 批改分數不等於正式閱卷結果。</p>
       <p>目前非選擇題（中譯英、英文作文）為自評分數；級分依各學年度大考中心公布的原得總分與級分對照表換算。</p>
       <p>試題來源：大學入學考試中心 111–115 學年度學科能力測驗英文考科、學科能力測驗參考試卷（115 學年度起適用）英文考科。</p>
+      {bank && <p>本站自組模擬考的題目由 AI 撰寫（參考資料列在各卷頁尾），只給原始分數，不換算級分；以上試題來源與級分說明只適用於歷屆卷。</p>}
     </footer>
   );
 }

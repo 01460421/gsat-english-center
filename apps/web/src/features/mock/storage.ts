@@ -21,6 +21,16 @@ export const HISTORY_KEY = `${MOCK_STORAGE_PREFIX}history`;
 /** 歷史最多保留幾筆；超過時連同最舊的完整紀錄一起刪掉。 */
 export const HISTORY_LIMIT = 30;
 
+/**
+ * 同一個分頁裡改了 gsat-mock:v1:*、畫面上的列表要跟著更新時發出的事件（例如 /mock 的自組卷區塊把逾期的作答交卷、
+ * 寫入歷史：docs/design/bank-mock.md §2.1）。storage 事件只會在別的分頁觸發，所以另外用這個事件；MockPaperList 兩種都聽。
+ */
+export const MOCK_CHANGED_EVENT = 'gsat-mock:changed';
+
+export function notifyMockChanged(): void {
+  window.dispatchEvent(new Event(MOCK_CHANGED_EVENT));
+}
+
 export function recordKey(attemptId: string): string {
   return `${MOCK_STORAGE_PREFIX}attempt:${attemptId}`;
 }

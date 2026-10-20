@@ -91,6 +91,8 @@ export interface RemainingEstimate {
   papers: number;
   /** 每個大題：沒做過的題組數，以及只看這個大題能組幾份。 */
   sections: Record<BankSectionType, { unused: number; papers: number }>;
+  /** 閱讀沒做過的篇數依組卷規則拆開（capacity 的三個上限）：圖表或表格、其他、其中的連續文本。不夠一份時說明是哪一種用完了。 */
+  reading: { figure: number; other: number; continuous: number };
 }
 
 /**
@@ -99,14 +101,20 @@ export interface RemainingEstimate {
  */
 export function remainingEstimate(pool: MockPoolTier, used: UsedMap): RemainingEstimate {
   const sections = {} as Record<BankSectionType, { unused: number; papers: number }>;
+  const reading = { figure: 0, other: 0, continuous: 0 };
   let papers = Infinity;
   for (const section of SELECTION_ORDER) {
     const unused = sectionEntries(pool, section).filter((e) => !used.has(e.uid));
     const n = capacity(section, unused);
     sections[section] = { unused: unused.length, papers: n };
     papers = Math.min(papers, n);
+    if (section === 'reading') {
+      reading.figure = unused.filter(hasFigure).length;
+      reading.other = unused.length - reading.figure;
+      reading.continuous = unused.filter(isContinuous).length;
+    }
   }
-  return { papers: Number.isFinite(papers) ? papers : 0, sections };
+  return { papers: Number.isFinite(papers) ? papers : 0, sections, reading };
 }
 
 /** 題庫本身（含做過的）湊不出一份的大題；都夠是 null（§4.2 第 7 步、§2.8「出題中」）。只看數量。 */

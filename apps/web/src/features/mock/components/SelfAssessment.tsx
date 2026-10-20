@@ -5,9 +5,14 @@
  *   - 英文作文：四項各 0–5（本站自己的描述），程式判斷字數與段數。
  * 每次修改立刻存檔，總分、級分與歷史跟著更新。
  * 登入與 AI 批改開放時（/api/features），另外指向寫作練習的同一份考卷，那裡可以把答案送 AI 批改（分數不帶回成績單）。
+ *
+ * 本站自組卷（bank，docs/design/bank-mock.md §6.1、§6.3）：混合題的填充、簡答已經自動判分（不列在這裡）；
+ * 中譯英改成對照本站參考譯文與該句的 4 部分評分重點，作文對照本題的評分重點、扣分說明與收合的 AI 範文；
+ * 這些都是本站撰寫的內容（不受 D8 限制）。AI 批改連到寫作題庫裡同一題的作答頁。自評分數不影響難度建議。
  */
+import { ESSAY_CRITERIA, ESSAY_CRITERION_LABELS } from '@gsat/shared';
 import { ExternalLink, Minus, Plus } from 'lucide-react';
-import { useId } from 'react';
+import { useId, useState } from 'react';
 import { Link } from 'react-router';
 import type { Exam } from '../../../data/exams';
 import { useFeatures } from '../../../lib/api';
@@ -17,6 +22,9 @@ import { RichText } from '../../exams/components/RichText';
 import { wordCountLabel } from '../../exams/labels';
 import { questionTitle } from '../../exams/richText';
 import { formatPoints, type AnswerValue } from '../../exams/scoring';
+import { ModelTextView } from '../../writing/bank/components/ModelTextView';
+import { bankAttemptPath, type BankEssayAnswersFile, type BankTranslationAnswerItem, type BankTranslationAnswersFile } from '../../writing/bank/data';
+import { MODEL_TEXT_NOTICE } from '../../writing/bank/labels';
 import type { OpenItemResult } from '../report';
 import { OPEN_REASON_TEXT, officialAnswers } from '../scoreOpen';
 import {
@@ -32,6 +40,129 @@ import {
 import type { CompositionSelfDetail, SelfDetail, TranslationSelfDetail } from '../storage';
 
 export type SelfChange = (label: string, score: number | null, detail?: SelfDetail) => void;
+
+/** 本站自組卷的中譯英、作文對照資料（BankPaper.writing）。 */
+export interface BankSelfData {
+  /** 本站參考譯文、每句 4 部分評分重點（items 的 label 是題組內的原始標籤）。 */
+  translation: BankTranslationAnswersFile;
+  /** 作文的評分重點、扣分說明、AI 範文。 */
+  composition: BankEssayAnswersFile;
+  /** 卷子的標籤（中譯英1）→ 寫作題庫的 item_id（{uid}@{v}#{原始標籤}）。 */
+  translationItemIds: Readonly<Record<string, string>>;
+  /** 作文的 item_id（{uid}@{v}#…）。 */
+  essayItemId: string;
+}
+
+/** item_id（ai.tr.0b1c2d@1#1）→ uid。 */
+function uidOfItem(itemId: string | undefined): string | null {
+  const uid = itemId?.split('@')[0] ?? '';
+  return uid === '' ? null : uid;
+}
+
+/** 卷子標籤 → 那一句的本站答案（item_id 的 # 後面是原始標籤）。 */
+function bankTranslationItem(bank: BankSelfData, label: string): BankTranslationAnswerItem | undefined {
+  const original = bank.translationItemIds[label]?.split('#')[1];
+  return original === undefined ? undefined : bank.translation.items.find((i) => i.label === original);
+}
+
+const CIRCLED = ['①', '②', '③', '④'];
+
+/** 中譯英：本站參考譯文與 4 部分評分重點（取代官方參考譯文的出處說明）。 */
+function BankTranslationKey({ item }: { item: BankTranslationAnswerItem }) {
+  const [main, ...others] = item.references;
+  return (
+    <div className="mt-3 space-y-2 rounded-lg bg-surface-2 px-3 py-2 text-sm" data-testid="bank-translation-key">
+      <p className="font-medium">本站參考譯文（AI 撰寫，不是唯一答案）</p>
+      {main && (
+        <p lang="en" className="break-words">
+          {main}
+        </p>
+      )}
+      {others.length > 0 && (
+        <p className="text-muted">
+          其他寫法：
+          <span lang="en" className="break-words">
+            {others.join('／')}
+          </span>
+        </p>
+      )}
+      <p className="font-medium">評分重點（4 部分，各 1 分）</p>
+      <ul className="space-y-1">
+        {item.parts.map((part, i) => (
+          <li key={i} className="break-words">
+            <span className="font-semibold">
+              {CIRCLED[i] ?? `${i + 1}.`}
+              {part.zh}
+            </span>
+            ：<span lang="en">{part.accepted.join('／')}</span>
+            {part.common_errors.length > 0 && (
+              <span className="block text-xs text-muted">
+                常見錯誤：
+                {part.common_errors.map((e, k) => (
+                  <span key={k}>
+                    {k > 0 ? '；' : ''}
+                    <span lang="en" className="line-through">
+                      {e.wrong}
+                    </span>
+                    {e.right ? (
+                      <>
+                        {' → '}
+                        <span lang="en">{e.right}</span>
+                      </>
+                    ) : null}
+                    （{e.explanation_zh}）
+                  </span>
+                ))}
+              </span>
+            )}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+/** 作文：本題的評分重點、扣分說明與收合的 AI 範文（取代「不提供範文」的說明）。 */
+function BankEssayKey({ answers }: { answers: BankEssayAnswersFile }) {
+  const [open, setOpen] = useState(false);
+  const panelId = useId();
+  return (
+    <div className="mt-3 space-y-2 rounded-lg bg-surface-2 px-3 py-2 text-sm" data-testid="bank-essay-key">
+      <p className="font-medium">本題評分重點</p>
+      <ul className="space-y-1">
+        {ESSAY_CRITERIA.map((c) => (
+          <li key={c} className="break-words">
+            <span className="font-semibold">{ESSAY_CRITERION_LABELS[c]}</span>：{answers.criteria[c].focus_zh}
+          </li>
+        ))}
+      </ul>
+      <p className="text-muted">扣分：{answers.deductions_zh}</p>
+      {answers.model_texts.length > 0 && (
+        <>
+          <div className="flex flex-wrap items-center gap-2">
+            <button
+              type="button"
+              aria-expanded={open}
+              aria-controls={panelId}
+              onClick={() => setOpen((v) => !v)}
+              className="inline-flex min-h-11 items-center rounded-full border border-line px-4 font-medium hover:border-primary"
+            >
+              {open ? '收起範文' : '看範文'}
+            </button>
+            <span className="rounded-full bg-badge-bg px-2.5 py-0.5 text-xs font-semibold text-badge-fg">{MODEL_TEXT_NOTICE}</span>
+          </div>
+          {open && (
+            <div id={panelId} className="space-y-3">
+              {answers.model_texts.map((m) => (
+                <ModelTextView key={m.label} model={m} />
+              ))}
+            </div>
+          )}
+        </>
+      )}
+    </div>
+  );
+}
 
 function answerText(value: AnswerValue | undefined): string {
   return typeof value === 'string' ? value : '';
@@ -114,12 +245,15 @@ function TranslationItem({
   detail,
   onChange,
   scoringUrl,
+  bankItem,
 }: {
   item: OpenItemResult;
   answer: AnswerValue | undefined;
   detail: TranslationSelfDetail | undefined;
   onChange: SelfChange;
   scoringUrl: string | null;
+  /** 本站自組卷：這一句的本站答案。 */
+  bankItem?: BankTranslationAnswerItem | null;
 }) {
   const id = useId();
   const text = answerText(answer);
@@ -210,19 +344,23 @@ function TranslationItem({
           </label>
         </div>
       )}
-      <p className="mt-3 text-xs text-muted">
-        官方參考譯文受著作權保護，本站不轉載，請見大考中心
-        {scoringUrl ? (
-          <a href={scoringUrl} target="_blank" rel="noopener noreferrer" className="mx-0.5 inline-flex items-center gap-0.5 text-primary underline">
-            〈非選擇題評分原則〉
-            <ExternalLink aria-hidden="true" className="size-3" />
-            <span className="sr-only">（另開新分頁）</span>
-          </a>
-        ) : (
-          '網站'
-        )}
-        。
-      </p>
+      {bankItem !== undefined ? (
+        bankItem && <BankTranslationKey item={bankItem} />
+      ) : (
+        <p className="mt-3 text-xs text-muted">
+          官方參考譯文受著作權保護，本站不轉載，請見大考中心
+          {scoringUrl ? (
+            <a href={scoringUrl} target="_blank" rel="noopener noreferrer" className="mx-0.5 inline-flex items-center gap-0.5 text-primary underline">
+              〈非選擇題評分原則〉
+              <ExternalLink aria-hidden="true" className="size-3" />
+              <span className="sr-only">（另開新分頁）</span>
+            </a>
+          ) : (
+            '網站'
+          )}
+          。
+        </p>
+      )}
     </li>
   );
 }
@@ -232,11 +370,14 @@ function CompositionItem({
   answer,
   detail,
   onChange,
+  bankAnswers,
 }: {
   item: OpenItemResult;
   answer: AnswerValue | undefined;
   detail: CompositionSelfDetail | undefined;
   onChange: SelfChange;
+  /** 本站自組卷：本題的評分重點與 AI 範文。 */
+  bankAnswers?: BankEssayAnswersFile;
 }) {
   const id = useId();
   const text = answerText(answer);
@@ -319,7 +460,11 @@ function CompositionItem({
           )}
         </>
       )}
-      <p className="mt-3 text-xs text-muted">規準是本站自己的描述，僅供自評參考；不提供範文，考生佳作請見大考中心網站。</p>
+      {bankAnswers ? (
+        <BankEssayKey answers={bankAnswers} />
+      ) : (
+        <p className="mt-3 text-xs text-muted">規準是本站自己的描述，僅供自評參考；不提供範文，考生佳作請見大考中心網站。</p>
+      )}
     </li>
   );
 }
@@ -330,25 +475,31 @@ export function SelfAssessment({
   answers,
   details,
   onChange,
+  bank,
 }: {
   exam: Exam;
   items: readonly OpenItemResult[];
   answers: Readonly<Record<string, AnswerValue>>;
   details: Readonly<Record<string, SelfDetail>>;
   onChange: SelfChange;
+  /** 本站自組卷的對照資料（見檔頭）。 */
+  bank?: BankSelfData;
 }) {
   const id = useId();
-  const mixed = items.filter((i) => i.kind === 'mixed' || i.kind === 'other');
+  // 自組卷的混合題填充、簡答已經自動判分（判分理由在檢討試卷），不列在自評裡。
+  const mixed = bank ? [] : items.filter((i) => i.kind === 'mixed' || i.kind === 'other');
   const translation = items.filter((i) => i.kind === 'translation');
   const composition = items.filter((i) => i.kind === 'composition');
   // 登入與 AI 批改都開放時，指向寫作練習的同一份考卷（那裡可以送 AI 批改）；沒開放就不提，免得叫學生去做做不到的事。
   const features = useFeatures();
   const aiOpen = features.auth && features.ai;
   const examPath = encodeURIComponent(exam.id);
-  const aiLinks = [
-    ...(translation.length > 0 ? [{ to: `/writing/translation/${examPath}`, label: '這份考卷的中譯英' }] : []),
-    ...(composition.length > 0 ? [{ to: `/writing/essay/${examPath}`, label: '這份考卷的英文作文' }] : []),
-  ];
+  const aiLinks = bank
+    ? bankAiLinks(bank, translation.length > 0, composition.length > 0)
+    : [
+        ...(translation.length > 0 ? [{ to: `/writing/translation/${examPath}`, label: '這份考卷的中譯英' }] : []),
+        ...(composition.length > 0 ? [{ to: `/writing/essay/${examPath}`, label: '這份考卷的英文作文' }] : []),
+      ];
   const scoring = scoringFile(exam)?.url ?? null;
   const detailOf = <K extends SelfDetail['kind']>(label: string, kind: K) => {
     const d = details[label];
@@ -359,10 +510,16 @@ export function SelfAssessment({
       <h2 id={`${id}-title`} className="text-lg font-semibold">
         非選擇題自評
       </h2>
-      <p className="mt-1 text-sm text-muted">模擬考的非選擇題用自評計分；分數一改，總分與級分立刻更新。</p>
+      {bank ? (
+        <p className="mt-1 text-sm text-muted">
+          中譯英與作文用自評計分，對照本站參考譯文與評分重點；分數一改，總分立刻更新。自評分數另外列，不影響難度建議。混合題的填充、簡答已自動判分，判分理由見檢討試卷。
+        </p>
+      ) : (
+        <p className="mt-1 text-sm text-muted">模擬考的非選擇題用自評計分；分數一改，總分與級分立刻更新。</p>
+      )}
       {aiOpen && aiLinks.length > 0 && (
         <p className="mt-2 rounded-lg bg-primary-soft px-3 py-2 text-sm">
-          想請 AI 批改：到寫作練習的
+          想請 AI 批改：到{bank ? '寫作題庫' : '寫作練習'}的
           {aiLinks.map((link, i) => (
             <span key={link.to}>
               {i > 0 ? '、' : ' '}
@@ -399,6 +556,7 @@ export function SelfAssessment({
                 detail={detailOf(item.label, 'translation')}
                 onChange={onChange}
                 scoringUrl={scoring}
+                {...(bank ? { bankItem: bankTranslationItem(bank, item.label) ?? null } : {})}
               />
             ))}
           </ul>
@@ -409,11 +567,28 @@ export function SelfAssessment({
           <h3 className="mt-5 font-semibold">英文作文</h3>
           <ul className="mt-2 space-y-3">
             {composition.map((item) => (
-              <CompositionItem key={item.label} item={item} answer={answers[item.label]} detail={detailOf(item.label, 'composition')} onChange={onChange} />
+              <CompositionItem
+                key={item.label}
+                item={item}
+                answer={answers[item.label]}
+                detail={detailOf(item.label, 'composition')}
+                onChange={onChange}
+                {...(bank ? { bankAnswers: bank.composition } : {})}
+              />
             ))}
           </ul>
         </>
       )}
     </section>
   );
+}
+
+/** 自組卷的 AI 批改連結：寫作題庫裡同一題的作答頁（只看 uid，永遠指向目前的版本）。 */
+function bankAiLinks(bank: BankSelfData, hasTranslation: boolean, hasComposition: boolean): { to: string; label: string }[] {
+  const out: { to: string; label: string }[] = [];
+  const tr = hasTranslation ? bankAttemptPath(uidOfItem(Object.values(bank.translationItemIds)[0]) ?? '') : null;
+  const cp = hasComposition ? bankAttemptPath(uidOfItem(bank.essayItemId) ?? '') : null;
+  if (tr) out.push({ to: tr, label: '本卷的中譯英' });
+  if (cp) out.push({ to: cp, label: '本卷的英文作文' });
+  return out;
 }

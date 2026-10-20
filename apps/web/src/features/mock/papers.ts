@@ -5,8 +5,13 @@
  * 先做 ref-115 再做 gsat-111 時，gsat-111 才是「沒看過的卷子」。
  * scaleYear：成績單預設用哪一年的官方級分對照表（學生可以在成績單上切換 111–115）。
  */
-import type { SectionType } from '../../data/exams';
+import type { ReactNode } from 'react';
+import { TIER_LABELS } from '@gsat/shared';
+import type { Exam, SectionType } from '../../data/exams';
+import type { QuestionExtras } from '../exams/QuestionExtras';
 import type { MockPdfMeta } from '../pdf/types';
+import { isBankPaperId, paperNumber, tierOfPaperId } from './bank/paperId';
+import type { MockAttemptRecord, MockHistoryEntry } from './storage';
 
 export interface MockPaper {
   examId: string;
@@ -18,6 +23,38 @@ export interface MockPaper {
   reuseNotice?: string;
   /** 印在 PDF 封面的提醒（不提網站功能，紙本也看得懂）。 */
   pdfNotice?: string;
+  /**
+   * 本站自組卷（features/mock/bank，docs/design/bank-mock.md §6.1）才有；歷屆卷不設這個欄位，既有的程式路徑完全不變。
+   * 由 bank/bankMockPaper.ts 組出來。
+   */
+  bank?: MockPaperBank;
+}
+
+/** 自組卷的擴充點（作答頁、開考前、交卷）。 */
+export interface MockPaperBank {
+  /** 這份卷子的 Exam（快照、嚴格載入或解析的結果）；同一份卷子每次回傳同一個 Promise。 */
+  load: () => Promise<Exam>;
+  /** 作答中的題目擴充點（§6.2）：圖表自己畫、不顯示官方統計的說明、填充每格限一個單詞。 */
+  extras: Partial<QuestionExtras>;
+  /** 開考前標題下面的「本卷資訊」（PaperInfo）。 */
+  startIntro: ReactNode;
+  /** 取代規則清單裡「不提供全國答對率」那一條（一個 <li>）。 */
+  startRule: ReactNode;
+  /** 作答頁頁尾：AI 出題聲明與參考資料（取代歷屆卷的試題來源）。 */
+  sourceNote: ReactNode;
+  /** PDF 封面資訊（§7.1）。 */
+  pdfMeta: (strict: boolean) => MockPdfMeta;
+  /** 開考前檢查（§2.8：作答中的自組卷最多 3 份）；回傳 false 就不開考（PaperInfo 會列出那幾份）。 */
+  canStart: () => boolean;
+  /** 開考：記 startedAt、確認快照已寫入。 */
+  onStarted: () => void;
+  /**
+   * 下載 PDF 成功：記 pdfAt、確認快照已寫入（§2.5）。不讀參數，所以可以直接交給 ExamPdfDownload 的
+   * onDownloaded（WP3 的 (info: PdfDownloadInfo) => void）。
+   */
+  onPdfDownloaded: () => void;
+  /** 交卷時寫入歷史的摘要：混合題的填充、簡答自動判分，level 一律 null（§6.3、§6.4）。 */
+  historyEntry: (record: MockAttemptRecord, exam: Exam) => MockHistoryEntry;
 }
 
 export const MOCK_PAPERS: readonly MockPaper[] = [
@@ -37,6 +74,20 @@ export const MOCK_PAPERS: readonly MockPaper[] = [
 
 export function findMockPaper(examId: string): MockPaper | null {
   return MOCK_PAPERS.find((p) => p.examId === examId) ?? null;
+}
+
+/**
+ * 作答紀錄等處顯示的卷名：歷屆卷是 label；本站自組卷直接解代號，得到「本站自組（穩定基礎）B-7Q2MK」，不下載資料
+ * （不然讀屏會念出 72 個字元的代號，§6.1）。都不是時回傳原字串。
+ */
+export function mockPaperLabel(paperId: string): string {
+  const paper = findMockPaper(paperId);
+  if (paper) return paper.label;
+  if (isBankPaperId(paperId)) {
+    const tier = tierOfPaperId(paperId);
+    if (tier) return `本站自組（${TIER_LABELS[tier]}）${paperNumber(paperId)}`;
+  }
+  return paperId;
 }
 
 /** 作答時間：100 分鐘（現行學測英文）。 */
@@ -63,8 +114,9 @@ export const SUGGESTED_MINUTES: Partial<Record<SectionType, number>> = {
 /** 對照年度可以選的範圍（score-scales.json 有的年度）。 */
 export const SCALE_YEARS = [115, 114, 113, 112, 111] as const;
 
-/** 模擬考版 PDF 的封面資訊（features/pdf 的 MockPdfMeta）。 */
+/** 模擬考版 PDF 的封面資訊（features/pdf 的 MockPdfMeta）。自組卷用它自己的（bank.pdfMeta）。 */
 export function mockPdfMeta(paper: MockPaper, strict: boolean): MockPdfMeta {
+  if (paper.bank) return paper.bank.pdfMeta(strict);
   return {
     title: '學測英文中心模擬考',
     paperLabel: paper.examId.startsWith('ref-') ? paper.label : `${paper.label}英文（真題卷）`,

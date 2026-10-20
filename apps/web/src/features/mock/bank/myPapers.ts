@@ -31,6 +31,7 @@ import {
   type MockAttemptRecord,
   type MockHistoryEntry,
 } from '../storage';
+import type { BankPaper } from './buildExam';
 import { isBankPaperId, normalizePaperId, paperNumber, tierOfPaperId } from './code';
 import { getSnapshotStore, paperFromSnapshot, type SnapshotStore } from './snapshots';
 
@@ -294,8 +295,11 @@ export async function prunePapers(store: SnapshotStore = getSnapshotStore()): Pr
   return removable;
 }
 
-/** 交卷寫入歷史的摘要（自組卷：level 一律 null）。WP2 的 bankMockPaper 會傳入含混合題自動判分的版本。 */
-export type BankHistoryEntryFn = (record: MockAttemptRecord, exam: Exam) => MockHistoryEntry;
+/**
+ * 交卷寫入歷史的摘要（自組卷：level 一律 null）。WP2 的 bankScore.ts 傳入含混合題自動判分的版本（bankHistoryEntry）；
+ * 判分要用解析裡的部分給分寫法，所以逾期交卷時也把用快照重建的卷子（paper）一起傳進去。
+ */
+export type BankHistoryEntryFn = (record: MockAttemptRecord, exam: Exam, paper?: BankPaper) => MockHistoryEntry;
 
 /** 預設的歷史摘要：原始分數（computeReport），不換算級分。 */
 export const defaultBankHistoryEntry: BankHistoryEntryFn = (record, exam) => historyEntryFor(record, computeReport(exam, record), null);
@@ -320,20 +324,21 @@ export async function expireStaleAttempts(
   const result: ExpireResult = { submitted: [], discarded: [] };
   for (const { paperId, record } of activeBankAttempts()) {
     if (Date.parse(record.deadlineAt) + EXPIRY_GRACE_MS > now) continue;
-    let exam: Exam | null = null;
+    let paper: BankPaper | null = null;
     try {
       const snapshot = await store.get(paperId);
-      if (snapshot) exam = paperFromSnapshot(snapshot).exam;
+      if (snapshot) paper = paperFromSnapshot(snapshot);
     } catch {
-      exam = null;
+      paper = null;
     }
+    const exam = paper?.exam ?? null;
     // 讀快照的期間別的分頁可能已經交卷或放棄：重新讀一次，確認仍是同一筆作答中的紀錄。
     const current = loadActiveRecord(paperId);
     if (!current || current.id !== record.id) continue;
-    if (exam) {
+    if (exam && paper) {
       const submitted = new MockSession(current).submit(exam, 'expired', now);
       if (submitted) {
-        upsertHistory(historyEntry(submitted, exam));
+        upsertHistory(historyEntry(submitted, exam, paper));
         result.submitted.push(paperId);
         continue;
       }
@@ -363,10 +368,14 @@ export async function cleanupOrphanSnapshots(store: SnapshotStore = getSnapshotS
   return removed;
 }
 
-/** 載入「我組過的卷子」時的例行處理：逾期作答、清單上限（§2.1）。 */
-export async function maintainMyPapers(options: { now?: number; store?: SnapshotStore; historyEntry?: BankHistoryEntryFn } = {}): Promise<void> {
-  await expireStaleAttempts(options);
+/**
+ * 載入「我組過的卷子」時的例行處理：逾期作答、清單上限（§2.1）。回傳逾期作答的處理結果：有交卷或丟棄時，
+ * 呼叫端要通知同一頁的作答紀錄重新讀取（storage 事件只會在別的分頁觸發）。
+ */
+export async function maintainMyPapers(options: { now?: number; store?: SnapshotStore; historyEntry?: BankHistoryEntryFn } = {}): Promise<ExpireResult> {
+  const expired = await expireStaleAttempts(options);
   await prunePapers(options.store);
+  return expired;
 }
 
 export interface MyPaperRow {

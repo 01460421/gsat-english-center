@@ -8,6 +8,7 @@ import { SECTION_TYPE_LABELS, type Exam } from '../../../data/exams';
 import { examIdLabel } from '../../exams/labels';
 import { ExamPdfDownload } from '../../pdf/ExamPdfDownload';
 import { APP_NAME } from '../../../modules';
+import { bankPdfVisible } from '../bank/flags';
 import { MOCK_DURATION_MIN, SUGGESTED_MINUTES, mockPdfMeta, type MockPaper } from '../papers';
 import { canUseStorage, doneExamIds } from '../storage';
 
@@ -127,6 +128,7 @@ export function StartScreen({ paper, exam, onStart }: { paper: MockPaper; exam: 
         </p>
       </header>
 
+      {paper.bank?.startIntro}
       <ReuseNotice paper={paper} exam={exam} />
 
       <section aria-labelledby={`${id}-title`} className="rounded-2xl border border-line bg-surface p-5 lg:p-6">
@@ -180,7 +182,7 @@ export function StartScreen({ paper, exam, onStart }: { paper: MockPaper; exam: 
           <ul className="ml-5 list-disc space-y-1 text-sm text-muted">
             <li>倒數 {MOCK_DURATION_MIN} 分鐘，以開考時間計算期限：關掉分頁或手機休眠時時間照走，時間到自動交卷。</li>
             <li>作答每次修改都會存在這台裝置的瀏覽器，關掉分頁可以回來接著寫；換裝置或清除網站資料就沒有了。</li>
-            <li>考試中不提供答案、提示與全國答對率；交卷後才在成績單與檢討試卷看到。</li>
+            {paper.bank ? paper.bank.startRule : <li>考試中不提供答案、提示與全國答對率；交卷後才在成績單與檢討試卷看到。</li>}
             <li>一次顯示一個大題，可以用大題導覽與題號面板切換；不確定的題目可以「標記」，交卷前會再提醒。</li>
           </ul>
 
@@ -204,7 +206,12 @@ export function StartScreen({ paper, exam, onStart }: { paper: MockPaper; exam: 
       </section>
 
       {/* 考試格式 PDF：想改做紙本的人可以下載題本（PDF_DOWNLOAD_ENABLED 為 false 時不顯示）。 */}
-      <ExamPdfDownload exam={exam} mockMeta={pdfMeta} />
+      {/*
+        TODO(WP3-integrate): 自組卷的 PDF（docs/design/bank-mock.md §2.5、§6.1）。WP3 的 ExamPdfDownload 有 onDownloaded 與
+        sitePaper 模式之後，改成 <ExamPdfDownload exam={exam} mockMeta={pdfMeta} onDownloaded={paper.bank?.onPdfDownloaded} />，
+        並把 bank/flags.ts 的 bankPdfVisible() 改成 pdfDownloadVisible()。在那之前自組卷不顯示這個區塊（說明與 PDF 都是寫給歷屆卷的）。
+      */}
+      {(!paper.bank || bankPdfVisible()) && <ExamPdfDownload exam={exam} mockMeta={pdfMeta} />}
     </div>
   );
 }

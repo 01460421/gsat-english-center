@@ -36,6 +36,7 @@ import type { ExplanationItem, PracticeGroupFile } from '../../src/data/bank';
 import { isExamFile, type OptionLetter, type Question } from '../../src/data/exams';
 import { scoreExam, type AnswerValue } from '../../src/features/exams/scoring';
 import { assembleSelection, remainingEstimate, type AssembleSelectionResult } from '../../src/features/mock/bank/assemble';
+import { bankReport } from '../../src/features/mock/bank/bankScore';
 import { BLUEPRINT_SECTIONS, BLUEPRINT_SLOTS, READING_SLOTS, type BlueprintSlot } from '../../src/features/mock/bank/blueprint';
 import { buildBankPaper, type BankPaper, type BankSlotSource, type SlotFile } from '../../src/features/mock/bank/buildExam';
 import { decodePaperId, encodePaperId, paperNumber } from '../../src/features/mock/bank/code';
@@ -356,7 +357,8 @@ function paperProblems(tier: Tier, a: Assembled): string[] {
     }
   }
 
-  // 計分：全部填正確答案 → scoreExam 66（manualMax 34），computeReport 的 raw 72；全部空白 → 0
+  // 計分：全部填正確答案 → scoreExam 66（manualMax 34），computeReport(…, { autoOpen }) 的 raw 72（bankReport：混合題的填充、
+  // 簡答照題庫練習的規則自動判分，§6.3）；全部空白 → 0
   const answers: Record<string, AnswerValue> = {};
   for (const q of questions) {
     const v = correctAnswer(q);
@@ -365,8 +367,11 @@ function paperProblems(tier: Tier, a: Assembled): string[] {
   const score = scoreExam(exam, answers);
   add(score.earned === 66 && score.autoMax === 66 && score.manualMax === 34, `全對時 scoreExam 是 ${score.earned}／${score.autoMax}，manualMax ${score.manualMax}`);
   const record = createRecord({ examId: paper.id, label: paper.code, scaleYear: 115 }, 's1', { strict: false, predictedScore: null });
-  const full = computeReport(exam, { ...record, attempt: { ...record.attempt, answers } });
-  add(full.raw === 72 && full.pendingMax === 0, `全對時 computeReport 的 raw 是 ${full.raw}（待評 ${full.pendingMax}）`);
+  const full = bankReport(exam, paper.explanations, { ...record, attempt: { ...record.attempt, answers } });
+  add(
+    full.raw === 72 && full.pendingMax === 0 && full.openItems.filter((o) => o.kind === 'mixed').every((o) => o.source === 'auto'),
+    `全對時 computeReport 的 raw 是 ${full.raw}（待評 ${full.pendingMax}）`,
+  );
   add(scoreExam(exam, {}).earned === 0 && computeReport(exam, record).raw === 0, '全部空白不是 0 分');
 
   // 答案位置（§5.3）：只有閱讀換；換過的題目，正確選項的文字和原題相同、中文解析沒有提到交換的兩個字母

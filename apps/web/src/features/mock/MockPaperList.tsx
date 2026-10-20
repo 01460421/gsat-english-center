@@ -21,9 +21,10 @@ import { formatPoints } from '../exams/scoring';
 import { DataErrorBoundary } from '../exams/components/DataErrorBoundary';
 import { ExamPdfDownload } from '../pdf/ExamPdfDownload';
 import { pdfDownloadVisible } from '../pdf/index';
+import { bankMockVisible } from './bank/flags';
 import { formatDateTime, signedPoints } from './format';
-import { MOCK_DURATION_MIN, MOCK_PAPERS, findMockPaper, mockPdfMeta, type MockPaper } from './papers';
-import { HISTORY_LIMIT, MOCK_STORAGE_PREFIX, loadActiveRecord, loadHistory, type MockAttemptRecord, type MockHistoryEntry } from './storage';
+import { MOCK_DURATION_MIN, MOCK_PAPERS, mockPaperLabel, mockPdfMeta, type MockPaper } from './papers';
+import { HISTORY_LIMIT, MOCK_CHANGED_EVENT, MOCK_STORAGE_PREFIX, loadActiveRecord, loadHistory, type MockAttemptRecord, type MockHistoryEntry } from './storage';
 import { isExpired, remainingSec } from './timer';
 import { useNow } from './useNow';
 
@@ -41,15 +42,23 @@ function readSnapshot(): Snapshot {
   return { active, history: loadHistory() };
 }
 
-/** 這台裝置的模擬考狀態；別的分頁寫入 gsat-mock:v1:* 時重新讀取。 */
+/**
+ * 這台裝置的模擬考狀態；別的分頁寫入 gsat-mock:v1:* 時重新讀取。同一頁的自組卷區塊把逾期的作答交卷時
+ * （MOCK_CHANGED_EVENT，docs/design/bank-mock.md §2.1）也重新讀取，作答紀錄才和「我組過的卷子」一致。
+ */
 function useMockSnapshot(): Snapshot {
   const [snapshot, setSnapshot] = useState(readSnapshot);
   useEffect(() => {
     const onStorage = (e: StorageEvent) => {
       if (e.key === null || e.key.startsWith(MOCK_STORAGE_PREFIX)) setSnapshot(readSnapshot());
     };
+    const onChanged = () => setSnapshot(readSnapshot());
     window.addEventListener('storage', onStorage);
-    return () => window.removeEventListener('storage', onStorage);
+    window.addEventListener(MOCK_CHANGED_EVENT, onChanged);
+    return () => {
+      window.removeEventListener('storage', onStorage);
+      window.removeEventListener(MOCK_CHANGED_EVENT, onChanged);
+    };
   }, []);
   return snapshot;
 }
@@ -226,19 +235,25 @@ function PaperCard({ paper, active, done, order }: { paper: MockPaper; active: M
 
 function HistoryList({ history }: { history: readonly MockHistoryEntry[] }) {
   const id = useId();
+  // 本站自組模擬考看得到時（docs/design/bank-mock.md §2.1）：自組卷只記原始分數，說明改寫。
+  const [bankVisible] = useState(bankMockVisible);
   return (
     <section aria-labelledby={`${id}-title`} className="rounded-2xl border border-line bg-surface p-5 lg:max-w-[60rem] lg:p-6">
       <h2 id={`${id}-title`} className="text-lg font-semibold">
         作答紀錄
       </h2>
-      <p className="mt-1 text-sm text-muted">只存在這台裝置的瀏覽器（最多 {HISTORY_LIMIT} 筆）；換裝置或清除網站資料就沒有了。級分是非官方換算。</p>
+      <p className="mt-1 text-sm text-muted">
+        只存在這台裝置的瀏覽器（最多 {HISTORY_LIMIT} 筆）；換裝置或清除網站資料就沒有了。
+        {bankVisible ? '歷屆卷的級分是非官方換算；本站自組卷只記原始分數。' : '級分是非官方換算。'}
+      </p>
       <ol className="mt-3 divide-y divide-line">
         {history.map((entry) => {
-          const paper = findMockPaper(entry.paperId);
+          // 自組卷直接解代號得到「本站自組（穩定基礎）B-7Q2MK」，讀屏不會念出 72 個字元的代號。
+          const label = mockPaperLabel(entry.paperId);
           return (
             <li key={entry.id} className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 py-2">
               <span className="min-w-0">
-                <span className="font-medium">{paper?.label ?? entry.paperId}</span>
+                <span className="font-medium">{label}</span>
                 <span className="ml-2 text-sm text-muted">{formatDateTime(entry.submittedAt)}</span>
                 <span className="block text-sm">
                   <strong className="tabular-nums">{formatPoints(entry.raw)}</strong> 分{levelText(entry)}
@@ -253,7 +268,7 @@ function HistoryList({ history }: { history: readonly MockHistoryEntry[] }) {
               </span>
               <Link to={`/mock/report/${entry.id}`} className="inline-flex min-h-11 items-center gap-1 text-sm text-primary underline-offset-2 hover:underline">
                 成績單
-                <span className="sr-only">：{paper?.label ?? entry.paperId}，{formatDateTime(entry.submittedAt)}</span>
+                <span className="sr-only">：{label}，{formatDateTime(entry.submittedAt)}</span>
                 <ChevronRight aria-hidden="true" className="size-4" />
               </Link>
             </li>

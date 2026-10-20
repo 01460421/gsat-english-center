@@ -271,4 +271,15 @@ describe('remainingEstimate', () => {
     pool.reading.filter((e) => e.fig === 'chart').forEach((e) => (e.ex = 'glyph'));
     expect(remainingEstimate(pool, new Map()).papers).toBe(0);
   });
+
+  it('閱讀沒做過的篇數依種類拆開（不夠一份時說明哪一種用完了）', () => {
+    const big = { vocabulary: 9, cloze: 18, word_bank: 9, structure: 9, mixed: 9, translation: 9, composition: 9 };
+    const pool = fakeTier(big, { chart: 2, table: 1, multi: 2, continuous: 6 });
+    expect(remainingEstimate(pool, new Map()).reading).toEqual({ figure: 3, other: 8, continuous: 6 });
+    // 圖表與表格都做過：閱讀 0 份，其他篇還有很多。
+    const used = new Map(pool.reading.filter((e) => e.fig !== null).map((e) => [e.uid, 0]));
+    const r = remainingEstimate(pool, used);
+    expect(r.reading).toEqual({ figure: 0, other: 8, continuous: 6 });
+    expect(r.sections.reading).toEqual({ unused: 8, papers: 0 });
+  });
 });
