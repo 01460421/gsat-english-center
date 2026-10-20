@@ -1,7 +1,7 @@
 {
  "schema": "gsat-bank-topic-plan-writing/v1",
  "created_on": "2026-10-09",
- "basis_zh": "站主要求：中譯英每個難度 100 句（50 組×2 句，每批 10 組、共 5 批），作文每個難度 10 題（每題附穩健版與頂標版範文）。這份總表指定每一組（lot＋slot）的主題，tools/make_writing_lots.py 依它產生批次規格。主題彼此不重複，也避開 data/bank/topic-plan.json（其他題型第 2 批起的主題與 used_concepts）、data/bank/v1 已用過的主題，以及歷屆學測、指考中譯英與作文的主題（tools/make_writing_lots.py --check-topics）。",
+ "basis_zh": "站主要求：中譯英每個難度 100 句（50 組×2 句，每批 10 組、共 5 批），作文每個難度 10 題（每題附穩健版與頂標版範文）。這份總表指定每一組（lot＋slot）的主題，tools/make_writing_lots.py 依它產生批次規格。主題彼此不重複，也避開 data/bank/topic-plan.json（其他題型第 2 批起的主題與 used_concepts）、data/bank/v1 已用過的主題，以及歷屆學測、指考中譯英與作文的主題（tools/make_writing_lots.py --check-topics）。2026-10-20 站主要求擴充題庫：自組模擬考每個難度至少可連續組 15 份全新卷：作文每個難度加開 composition-{basic,advanced,top}-02（各 5 題），每個難度合計 15 題（見 mock_expansion）；中譯英不變。",
  "rules_zh": [
   "group.tags.topic 一律逐字照抄該組的 topic_zh（繁體中文主題名）；angle_en 是切入角度；keywords 是撞題比對用的英文關鍵字。",
   "中譯英主題依出題規格書 tiers.*.translation.topics：穩定基礎＝校園、家庭、日常生活、台灣在地（節慶、交通、觀光）、健康；進階＝科技、社會現象、文化與節慶、環境、校園與學習；超越頂標＝科技與社會、公共議題、環境與氣候、文化現象、健康與醫療。",
@@ -9,6 +9,30 @@
   "主題不可行時回報站主改這份總表，再用新批號開批次；已開始生成的批次規格不改。改完先跑 python3 tools/make_writing_lots.py --check-topics。",
   "補足批次（seq 06 起，lots[] 標 \"supplement\": true）：01–05 批退件留下的缺口另開批次補，組數與算式寫在 supplement（已通過組數、缺口、通過率、批次），每批 1–10 組；句型由 make_writing_lots.py 依題庫已通過題組的缺口配置（README §7.2）。補足批次的中文主題另和題庫、topic-plan.json、本總表的中文主題比對共用兩字實詞（warning），人工確認不是同一主題後記進 reviewed_overlaps（id、against＝對方的主題原文、note_zh）。"
  ],
+ "mock_expansion": {
+  "created_on": "2026-10-20",
+  "basis_zh": "站主要求擴充題庫：自組模擬考每個難度至少可連續組 15 份全新卷（docs/design/bank-mock.md §3.2；每份卷 1 題作文）。2026-10-20 每個難度 verified 10 題，只夠 10 份；加開 composition-{tier}-02 各 5 題，全部通過時每個難度 15 題。沒有餘裕：任何一題最終 rejected 就只剩 14 份，那時另開新批號補。",
+  "lots": [
+   "composition-basic-02",
+   "composition-advanced-02",
+   "composition-top-02"
+  ],
+  "prompt_type_quota": {
+   "basic": {
+    "picture_scene": 5
+   },
+   "advanced": {
+    "picture_issue": 5
+   },
+   "top": {
+    "chart": 2,
+    "picture_issue_abstract": 2,
+    "social_phenomenon": 1
+   }
+  },
+  "prompt_type_quota_zh": "basic 圖片描述 5；advanced 圖片議題 5；top 圖表 2、多圖比較 2、社會現象 1",
+  "rule_zh": "批次照 make_writing_lots.py 產生（count＝主題數；site_target 是開這一批時的站主要求：01 批每個難度 10 題、02 批 15 題）；lots[] 的 created_on 是這一批規格的建立日（沒寫時用總表的 created_on）"
+ },
  "supplement": {
   "created_on": "2026-10-09",
   "basis_zh": "站主要求中譯英每個難度至少 100 句（50 組×2 句），只算每個 uid 最新版本且 status verified 的題組。2026-10-09 掃描 data/bank/v1：basic 48 組、advanced 44 組、top 37 組 verified（01–05 批的退件都已用掉唯一一次重出機會），缺口 basic 2 組、advanced 6 組、top 13 組。實際通過率（01–05 批）：basic 首輪 32/50、重出 16/18；advanced 首輪 36/50、重出 8/14；top 首輪 21/50、重出 16/29。",
@@ -194,6 +218,15 @@
    "count": 10
   },
   {
+   "lot": "composition-basic-02",
+   "section": "composition",
+   "tier": "basic",
+   "seq": "02",
+   "count": 5,
+   "created_on": "2026-10-20",
+   "mock_expansion": true
+  },
+  {
    "lot": "composition-advanced-01",
    "section": "composition",
    "tier": "advanced",
@@ -201,11 +234,29 @@
    "count": 10
   },
   {
+   "lot": "composition-advanced-02",
+   "section": "composition",
+   "tier": "advanced",
+   "seq": "02",
+   "count": 5,
+   "created_on": "2026-10-20",
+   "mock_expansion": true
+  },
+  {
    "lot": "composition-top-01",
    "section": "composition",
    "tier": "top",
    "seq": "01",
    "count": 10
+  },
+  {
+   "lot": "composition-top-02",
+   "section": "composition",
+   "tier": "top",
+   "seq": "02",
+   "count": 5,
+   "created_on": "2026-10-20",
+   "mock_expansion": true
   }
  ],
  "topics": [
@@ -2521,6 +2572,146 @@
    ]
   },
   {
+   "id": "cp-b02-01",
+   "lot": "composition-basic-02",
+   "slot": 1,
+   "domain_zh": "校園生活",
+   "topic_zh": "打掃時間",
+   "angle_en": "students sweeping floors, wiping windows, and watering plants during cleaning time",
+   "keywords": [
+    "cleaning time"
+   ],
+   "prompt_type": "picture_scene",
+   "essay_type": "picture",
+   "figures_hint_zh": "1 張插圖：教室裡有人掃地、拖地、擦窗戶，走廊上有人幫盆栽澆水",
+   "moves": [
+    {
+     "paragraph": 1,
+     "code": "describe"
+    },
+    {
+     "paragraph": 2,
+     "code": "personal_experience"
+    },
+    {
+     "paragraph": 2,
+     "code": "preference_reasons"
+    }
+   ]
+  },
+  {
+   "id": "cp-b02-02",
+   "lot": "composition-basic-02",
+   "slot": 2,
+   "domain_zh": "校園生活",
+   "topic_zh": "運動會的大隊接力",
+   "angle_en": "classmates cheering for their runners in the relay race at the school sports meet",
+   "keywords": [
+    "sports meet relay"
+   ],
+   "prompt_type": "picture_scene",
+   "essay_type": "picture",
+   "figures_hint_zh": "1 張插圖：跑道上交棒的選手、場邊揮旗吶喊的同學與計時的老師",
+   "moves": [
+    {
+     "paragraph": 1,
+     "code": "describe"
+    },
+    {
+     "paragraph": 2,
+     "code": "personal_experience"
+    },
+    {
+     "paragraph": 2,
+     "code": "preference_reasons"
+    }
+   ]
+  },
+  {
+   "id": "cp-b02-03",
+   "lot": "composition-basic-02",
+   "slot": 3,
+   "domain_zh": "校園生活",
+   "topic_zh": "參觀消防隊",
+   "angle_en": "a class visiting a fire station and learning how firefighters get ready",
+   "keywords": [
+    "fire station visit"
+   ],
+   "prompt_type": "picture_scene",
+   "essay_type": "picture",
+   "figures_hint_zh": "2 張插圖：圖一消防員示範穿上整套裝備、圖二學生輪流練習使用滅火器",
+   "moves": [
+    {
+     "paragraph": 1,
+     "code": "compare"
+    },
+    {
+     "paragraph": 2,
+     "code": "personal_experience"
+    },
+    {
+     "paragraph": 2,
+     "code": "simple_plan"
+    }
+   ]
+  },
+  {
+   "id": "cp-b02-04",
+   "lot": "composition-basic-02",
+   "slot": 4,
+   "domain_zh": "校園生活",
+   "topic_zh": "福利社的下課時間",
+   "angle_en": "students lining up to buy snacks and drinks at the school snack shop during break",
+   "keywords": [
+    "school snack shop"
+   ],
+   "prompt_type": "picture_scene",
+   "essay_type": "picture",
+   "figures_hint_zh": "1 張插圖：福利社前排隊的學生、櫃台後找零的阿姨、拿著麵包邊走邊吃的同學",
+   "moves": [
+    {
+     "paragraph": 1,
+     "code": "describe"
+    },
+    {
+     "paragraph": 2,
+     "code": "personal_experience"
+    },
+    {
+     "paragraph": 2,
+     "code": "preference_reasons"
+    }
+   ]
+  },
+  {
+   "id": "cp-b02-05",
+   "lot": "composition-basic-02",
+   "slot": 5,
+   "domain_zh": "校園生活",
+   "topic_zh": "英文話劇比賽",
+   "angle_en": "a class performing a short English play on stage for a school contest",
+   "keywords": [
+    "english drama contest"
+   ],
+   "prompt_type": "picture_scene",
+   "essay_type": "picture",
+   "figures_hint_zh": "1 張插圖：穿戲服的學生在台上演出、後台有人提詞、台下評審與觀眾",
+   "moves": [
+    {
+     "paragraph": 1,
+     "code": "describe"
+    },
+    {
+     "paragraph": 2,
+     "code": "personal_experience"
+    },
+    {
+     "paragraph": 2,
+     "code": "preference_reasons"
+    }
+   ]
+  },
+  {
    "id": "cp-a01-01",
    "lot": "composition-advanced-01",
    "slot": 1,
@@ -2797,6 +2988,147 @@
     {
      "paragraph": 2,
      "code": "opinion"
+    }
+   ]
+  },
+  {
+   "id": "cp-a02-01",
+   "lot": "composition-advanced-02",
+   "slot": 1,
+   "domain_zh": "生活議題",
+   "topic_zh": "高中生打工",
+   "angle_en": "high school students taking part-time jobs after school",
+   "keywords": [
+    "part-time job"
+   ],
+   "prompt_type": "picture_issue",
+   "essay_type": "picture",
+   "figures_hint_zh": "1 張插圖：晚上的飲料店裡，穿制服的高中生一邊招呼客人，一邊瞄著櫃台下攤開的作業本",
+   "moves": [
+    {
+     "paragraph": 1,
+     "code": "describe"
+    },
+    {
+     "paragraph": 2,
+     "code": "reasons"
+    },
+    {
+     "paragraph": 2,
+     "code": "opinion"
+    }
+   ]
+  },
+  {
+   "id": "cp-a02-02",
+   "lot": "composition-advanced-02",
+   "slot": 2,
+   "domain_zh": "校園議題",
+   "topic_zh": "校園跳蚤市場",
+   "angle_en": "students selling and trading used books, clothes, and toys at a school flea market",
+   "keywords": [
+    "flea market"
+   ],
+   "prompt_type": "picture_issue",
+   "essay_type": "picture",
+   "figures_hint_zh": "1 張插圖：操場上一排攤位，學生在賣舊書、舊衣與玩具，有人在討價還價、有人以物換物",
+   "moves": [
+    {
+     "paragraph": 1,
+     "code": "describe"
+    },
+    {
+     "paragraph": 2,
+     "code": "reasons"
+    },
+    {
+     "paragraph": 2,
+     "code": "effects"
+    }
+   ]
+  },
+  {
+   "id": "cp-a02-03",
+   "lot": "composition-advanced-02",
+   "slot": 3,
+   "domain_zh": "校園議題",
+   "topic_zh": "晚上開放的學校操場",
+   "angle_en": "opening a school's sports field to neighbors in the evening",
+   "keywords": [
+    "school field open at night"
+   ],
+   "prompt_type": "picture_issue",
+   "essay_type": "picture",
+   "figures_hint_zh": "2 張插圖：圖一傍晚居民在操場跑步、帶孩子玩；圖二隔天早上跑道旁留下的飲料杯與被踩壞的草皮",
+   "moves": [
+    {
+     "paragraph": 1,
+     "code": "compare"
+    },
+    {
+     "paragraph": 2,
+     "code": "opinion"
+    },
+    {
+     "paragraph": 2,
+     "code": "reasons"
+    }
+   ]
+  },
+  {
+   "id": "cp-a02-04",
+   "lot": "composition-advanced-02",
+   "slot": 4,
+   "domain_zh": "消費議題",
+   "topic_zh": "節慶禮盒的過度包裝",
+   "angle_en": "festival gift boxes wrapped in layer after layer of packaging",
+   "keywords": [
+    "excessive packaging",
+    "gift box"
+   ],
+   "prompt_type": "picture_issue",
+   "essay_type": "picture",
+   "figures_hint_zh": "1 張插圖：拆開的節慶禮盒，外盒、內盒、托盤與緞帶堆成一座小山，裡面只有四塊點心",
+   "moves": [
+    {
+     "paragraph": 1,
+     "code": "describe"
+    },
+    {
+     "paragraph": 2,
+     "code": "effects"
+    },
+    {
+     "paragraph": 2,
+     "code": "opinion"
+    }
+   ]
+  },
+  {
+   "id": "cp-a02-05",
+   "lot": "composition-advanced-02",
+   "slot": 5,
+   "domain_zh": "生活議題",
+   "topic_zh": "搶購潮",
+   "angle_en": "shoppers rushing to empty store shelves when they fear running out of something",
+   "keywords": [
+    "panic buying"
+   ],
+   "prompt_type": "picture_issue",
+   "essay_type": "picture",
+   "figures_hint_zh": "1 張插圖：賣場貨架上的衛生紙被搶購一空，推車裡堆滿同一種商品的人排成長龍",
+   "moves": [
+    {
+     "paragraph": 1,
+     "code": "describe"
+    },
+    {
+     "paragraph": 2,
+     "code": "reasons"
+    },
+    {
+     "paragraph": 2,
+     "code": "effects"
     }
    ]
   },
@@ -3087,6 +3419,159 @@
    "prompt_type": "social_phenomenon",
    "essay_type": "picture",
    "figures_hint_zh": "2 張插圖：圖一一家評分 4.9 的餐廳大排長龍、圖二隔壁評分很少的老店空無一人",
+   "moves": [
+    {
+     "paragraph": 1,
+     "code": "compare"
+    },
+    {
+     "paragraph": 2,
+     "code": "reasons"
+    },
+    {
+     "paragraph": 2,
+     "code": "evaluate"
+    },
+    {
+     "paragraph": 2,
+     "code": "propose"
+    }
+   ]
+  },
+  {
+   "id": "cp-t02-01",
+   "lot": "composition-top-02",
+   "slot": 1,
+   "domain_zh": "消費與理財",
+   "topic_zh": "高中生的零用錢花在哪裡",
+   "angle_en": "how high school students spend their weekly allowance, and how much of it they save",
+   "keywords": [
+    "weekly allowance"
+   ],
+   "prompt_type": "chart",
+   "essay_type": "chart",
+   "figures_hint_zh": "1 張長條圖（假設調查）：某校高一與高三學生每週零用錢花在飲食、交通、娛樂與儲蓄的平均金額",
+   "moves": [
+    {
+     "paragraph": 1,
+     "code": "describe_data"
+    },
+    {
+     "paragraph": 1,
+     "code": "compare"
+    },
+    {
+     "paragraph": 2,
+     "code": "evaluate"
+    },
+    {
+     "paragraph": 2,
+     "code": "propose"
+    }
+   ]
+  },
+  {
+   "id": "cp-t02-02",
+   "lot": "composition-top-02",
+   "slot": 2,
+   "domain_zh": "升學與生涯",
+   "topic_zh": "高中生想學的生活技能",
+   "angle_en": "which everyday life skills high school students most want schools to teach",
+   "keywords": [
+    "life skills"
+   ],
+   "prompt_type": "chart",
+   "essay_type": "chart",
+   "figures_hint_zh": "1 張長條圖（假設調查）：烹飪、理財、急救、簡單修繕、時間管理五項技能「想學」與「已經會」的人數比例",
+   "moves": [
+    {
+     "paragraph": 1,
+     "code": "describe_data"
+    },
+    {
+     "paragraph": 1,
+     "code": "compare"
+    },
+    {
+     "paragraph": 2,
+     "code": "evaluate"
+    },
+    {
+     "paragraph": 2,
+     "code": "propose"
+    }
+   ]
+  },
+  {
+   "id": "cp-t02-03",
+   "lot": "composition-top-02",
+   "slot": 3,
+   "domain_zh": "學習與教育",
+   "topic_zh": "在家自學與到校上課",
+   "angle_en": "learning at home through homeschooling compared with going to school every day",
+   "keywords": [
+    "homeschooling"
+   ],
+   "prompt_type": "picture_issue_abstract",
+   "essay_type": "picture",
+   "figures_hint_zh": "2 張插圖：圖一學生在家依自己的進度用平板與書本學習，家長在旁陪伴；圖二學生在教室分組討論、在操場上體育課",
+   "moves": [
+    {
+     "paragraph": 1,
+     "code": "compare"
+    },
+    {
+     "paragraph": 2,
+     "code": "evaluate"
+    },
+    {
+     "paragraph": 2,
+     "code": "propose"
+    }
+   ]
+  },
+  {
+   "id": "cp-t02-04",
+   "lot": "composition-top-02",
+   "slot": 4,
+   "domain_zh": "運動與健康",
+   "topic_zh": "團隊運動與獨自運動",
+   "angle_en": "playing team sports compared with exercising alone",
+   "keywords": [
+    "team sports",
+    "solo workout"
+   ],
+   "prompt_type": "picture_issue_abstract",
+   "essay_type": "picture",
+   "figures_hint_zh": "2 張插圖：圖一一群學生在球場上傳球、互相擊掌；圖二一個人戴著耳機在河堤慢跑、在家跟著影片做伸展",
+   "moves": [
+    {
+     "paragraph": 1,
+     "code": "compare"
+    },
+    {
+     "paragraph": 2,
+     "code": "evaluate"
+    },
+    {
+     "paragraph": 2,
+     "code": "propose"
+    }
+   ]
+  },
+  {
+   "id": "cp-t02-05",
+   "lot": "composition-top-02",
+   "slot": 5,
+   "domain_zh": "社會現象",
+   "topic_zh": "一個人吃飯",
+   "angle_en": "more people choosing to eat alone at restaurants designed for solo diners",
+   "keywords": [
+    "solo dining"
+   ],
+   "prompt_type": "social_phenomenon",
+   "essay_type": "picture",
+   "figures_hint_zh": "2 張插圖：圖一拉麵店裡用隔板隔開的單人座位，每人各自用餐；圖二家庭餐廳裡一大家人圍著圓桌吃飯",
    "moves": [
     {
      "paragraph": 1,

@@ -12,6 +12,7 @@ import shutil
 import sys
 import tempfile
 import unittest
+from collections import Counter
 from datetime import date
 from pathlib import Path
 
@@ -142,17 +143,59 @@ class TopicPlanTest(Case):
         self.assertGreaterEqual(len(zh), 240)
 
     def test_reading_forms_follow_seq01_ratio(self):
-        """每個難度連同第一批（長文 4、圖表 2、表格 1、多文本 1）的文本形式比例 ≈ 4:2:1:1（每種差距 ≤1 組）。"""
+        """每個難度連同第一批（長文 4、圖表 2、表格 1、多文本 1）的文本形式比例 ≈ 4:2:1:1（每種差距 ≤1 組）。
+        2026-10-20 的擴充批次（mock_expansion）照自組模擬考的需求分配，不算在這裡（見 test_mock_expansion_supply）。"""
         lots = ml.plan_lots(PLAN)
         for tier in ml.TIERS:
             total = dict(ml.READING_FORM_QUOTA)
             for e, topics in lots.values():
-                if e['section'] == 'reading' and e['tier'] == tier:
+                if e['section'] == 'reading' and e['tier'] == tier and not e.get('mock_expansion'):
                     for t in topics:
                         total[t['form']] += 1
             n = sum(total.values())
             for form, share in {'continuous': 4 / 8, 'chart': 2 / 8, 'table': 1 / 8, 'multi_text': 1 / 8}.items():
                 self.assertLessEqual(abs(total[form] - n * share), 1, f'{tier} {form} {total}')
+
+    def test_mock_expansion_supply(self):
+        """2026-10-20 擴充（站主要求自組模擬考每個難度至少可連續組 15 份全新卷；docs/design/bank-mock.md §3.2）：
+        每份卷要詞彙 1、綜合測驗 2、文意選填 1、閱讀 3（恰好 1 篇圖表或表格、多文本最多 1 篇）。"""
+        papers = PLAN['mock_expansion']['target_papers_per_tier']
+        self.assertEqual(papers, 15)
+        per_paper = PLAN['mock_expansion']['per_paper']
+        lots = ml.plan_lots(PLAN)
+        for tier in ml.TIERS:
+            exp = [(e, ts) for e, ts in lots.values() if e.get('mock_expansion') and e['tier'] == tier]
+            got = Counter(e['section'] for e, _ in exp)
+            self.assertEqual(dict(got), {'vocabulary': 1, 'cloze': 2, 'word_bank': 1, 'reading': 4}, tier)
+            self.assertTrue(all(e['count'] == 5 for e, _ in exp), tier)
+            # 閱讀擴充批次：每個難度合計長文 11、圖表 4、表格 2、多文本 3，每批至少 1 篇圖表或表格
+            forms = Counter()
+            for e, ts in exp:
+                if e['section'] == 'reading':
+                    f = Counter(t['form'] for t in ts)
+                    forms.update(f)
+                    self.assertGreaterEqual(f['chart'] + f['table'], 1, e['lot'])
+                    self.assertEqual(e['forms'], {k: f.get(k, 0) for k in ml.PLAN_FORMS['reading']}, e['lot'])
+            self.assertEqual(dict(forms), {'continuous': 11, 'chart': 4, 'table': 2, 'multi_text': 3}, tier)
+            # 連同第一批與第 2 批起的全部批次：圖表或表格 ≥15 篇、長文＋多文本 ≥30 篇
+            total = Counter(ml.READING_FORM_QUOTA)
+            for e, ts in lots.values():
+                if e['section'] == 'reading' and e['tier'] == tier:
+                    total.update(t['form'] for t in ts)
+            self.assertGreaterEqual(total['chart'] + total['table'], papers, tier)
+            self.assertGreaterEqual(total['continuous'] + total['multi_text'], 2 * papers, tier)
+            # 規劃的組數（第一批＋全部新批次）夠組 15 份
+            for section in ('vocabulary', 'cloze', 'word_bank', 'reading'):
+                t = PLAN['targets'][section]['tiers'][tier]
+                self.assertGreaterEqual((t['counted_existing_groups'] + t['new_groups']) // per_paper[section], papers, f'{section}-{tier}')
+                me = t['mock_expansion']
+                self.assertEqual(me['new_lots'], [e['lot'] for e, _ in sorted(exp, key=lambda x: x[0]['seq']) if e['section'] == section])
+                self.assertGreaterEqual(me['papers_if_all_pass'], papers, f'{section}-{tier}')
+        # 擴充批次的閱讀規格寫明分配依據（不再說照第一批的 4：2：1：1）
+        lot = ml.build_lot('reading', 'basic', '06', plan=PLAN, banks=[])
+        self.assertIn('擴充批次', lot['form_quota']['basis'])
+        self.assertNotIn('ROADMAP §9.2', lot['form_quota']['basis'])
+        self.assertIn('ROADMAP §9.2', ml.build_lot('reading', 'basic', '04', plan=PLAN, banks=[])['form_quota']['basis'])
 
     def test_reading_and_mixed_lots_have_focus_sdg(self):
         for lot_id, (e, topics) in ml.plan_lots(PLAN).items():
@@ -169,7 +212,10 @@ class TopicPlanTest(Case):
             if t['lot'] == 'reading-basic-02':
                 t['sdgs'] = []                                                           # 沒有 SDG
         by_id['st-b02-2']['keywords'] = ['ketchup']                                      # 碰到已用主題
-        plan['reserve_topics'][0]['topic_zh'] = by_id['st-b03-1']['topic_zh']             # 備用主題和已分配的重複
+        # 備用主題和已分配的重複（2026-10-20 擴充後 reserve_topics 用完了，這裡自己放一個）
+        plan['reserve_topics'].append({'id': 'rsv-test', 'category': 'science_health', 'domain_zh': '測試',
+                                       'topic_zh': by_id['st-b03-1']['topic_zh'], 'angle_en': 'a reserve topic used only by this test',
+                                       'keywords': ['reserve test only'], 'sdgs': []})
         errors, _ = ml.check_topic_plan(plan)
         self.assertTrue(has(errors, '備用主題', 'topic_zh 相同'))
         self.assertTrue(has(errors, 'cz-b02-2', 'topic_zh 相同'))

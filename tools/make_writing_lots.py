@@ -9,7 +9,9 @@
     python3 tools/make_writing_lots.py --check-topics       # 檢查主題總表：配額、重複、與其他題型的主題總表、題庫、歷屆試題撞題
 
 站主要求：中譯英每個難度 100 句（50 組×2 句，translation-{basic,advanced,top}-{01..05}，每批 10 組），
-作文每個難度 10 題（composition-{basic,advanced,top}-01，每批 10 題，每題附穩健版與頂標版範文）。
+作文每個難度 15 題（composition-{basic,advanced,top}-01 各 10 題＋2026-10-20 擴充的 -02 各 5 題，每題附穩健版與頂標版範文；
+擴充是為了讓自組模擬考每個難度至少可連續組 15 份全新卷）。作文批次的 count 取主題數，site_target 記開這一批時的站主要求
+（COMPOSITION_TARGETS）；主題總表 lots[] 寫了 created_on 時，那一批的 created_on 用它（沒寫時照舊用總表的 created_on）。
 補足批次（seq 06 起，主題總表 lots[] 標 "supplement": true）：01–05 批退件留下的缺口另開批次補，組數 1–10、
 句型依題庫已通過題組的缺口分配（README §7.2）；主題總表沒有補足批次時，輸出與檢查結果和以前完全相同。
 規格來源：SPEC §3.5（難度規則）、§5.2 步驟 1（批次規格）、§5.4、§5.7；出題規格書 data/exams/generation-spec/writing.json；
@@ -17,6 +19,7 @@
 tools/make_lots.py（其他六種題型）另有工作線在改，這支只處理中譯英與作文，兩者寫出的檔案名稱不重疊。只用標準函式庫。
 """
 import argparse
+import functools
 import json
 import math
 import re
@@ -47,6 +50,22 @@ FORMATS = {'translation': ('translation-2', 2), 'composition': ('composition-1',
 RECENT_EXAMS = ('gsat-111', 'gsat-112', 'gsat-113', 'gsat-114', 'gsat-115', 'ref-110', 'ref-111', 'ref-115')
 TOPIC_REQUIRED = ('id', 'lot', 'slot', 'domain_zh', 'topic_zh', 'angle_en', 'keywords')
 COMPOSITION_REQUIRED = ('prompt_type', 'essay_type', 'figures_hint_zh', 'moves')
+# 作文的站主要求（每個難度的題數）：(開始適用的批號, site_target)。批次規格記下開這一批時的要求，所以已存在的 01 批規格逐位元組不變。
+# 2026-10-20 站主要求擴充題庫：自組模擬考每份卷 1 題作文，每個難度至少可連續組 15 份全新卷 → 每個難度 15 題（02 批 5 題）。
+COMPOSITION_TARGETS = (
+    (1, {'items_per_tier': 10, 'lots_per_tier': 1,
+         'basis_zh': '站主要求作文每個難度 10 題（每題附穩健版與頂標版範文）；ROADMAP §9.2 原訂每個難度 4 題，依站主要求放大'}),
+    (2, {'items_per_tier': 15, 'lots_per_tier': 2,
+         'basis_zh': '站主要求擴充題庫：自組模擬考每個難度至少可連續組 15 份全新卷（每份卷 1 題作文），作文每個難度 15 題'
+                     '（第 1 批 10 題＋第 2 批 5 題，每題附穩健版與頂標版範文）'}),
+)
+# 每個難度的組數（--check-topics 比對；補足批次另計）：中譯英 50 組（100 句），作文取 COMPOSITION_TARGETS 最新的要求
+SITE_GROUPS = {'translation': 50, 'composition': COMPOSITION_TARGETS[-1][1]['items_per_tier']}
+
+
+def composition_site_target(seq):
+    """開這一批（批號 seq）時，作文每個難度的站主要求。"""
+    return dict(next(t for start, t in reversed(COMPOSITION_TARGETS) if int(seq) >= start))
 
 # 句型配置（README §3.5；SPEC §3.5、出題規格書 tiers.*.translation.structure_pool）。
 # 每批 20 句：穩定基礎每句 1 個句構、進階 2 個、超越頂標 2 個（一組至少 1 個指定句型）。
@@ -128,10 +147,17 @@ def load(path):
     return json.loads(Path(path).read_text(encoding='utf-8'))
 
 
+@functools.lru_cache(maxsize=None)
+def _phrase_re(phrase):
+    """phrase_in 用的正規式（快取：兩份主題總表的關鍵字超過 re 模組內建快取的 512 個，每次重編會讓 --check-topics 慢好幾倍）。"""
+    p = re.escape(phrase.lower().strip()).replace(r'\ ', r'\s+')
+    return re.compile(rf'(?<![a-z0-9]){p}(?:s|es)?(?![a-z0-9])') if p else None
+
+
 def phrase_in(phrase, text):
     """phrase 以完整字詞出現在 text（不分大小寫；允許 -s／-es 複數）。"""
-    p = re.escape(phrase.lower().strip()).replace(r'\ ', r'\s+')
-    return bool(p) and re.search(rf'(?<![a-z0-9]){p}(?:s|es)?(?![a-z0-9])', text.lower()) is not None
+    rx = _phrase_re(phrase)
+    return rx is not None and rx.search(text.lower()) is not None
 
 
 def topic_text(t):
@@ -210,8 +236,8 @@ def check_topics(plan):
             errs.append(f'{lot}: 主題的 slot {slots} 應為 1–{x.get("count")}')
     for lot in sorted(set(by_lot) - set(lots), key=str):
         errs.append(f'{lot}: 不在 lots 清單')
-    # 站主要求的數量：中譯英每個難度 50 組（100 句）、作文每個難度 10 題（補足批次另計，見 check_supplements）
-    for sec, want in (('translation', 50), ('composition', 10)):
+    # 站主要求的數量：中譯英每個難度 50 組（100 句）、作文每個難度 15 題（SITE_GROUPS；補足批次另計，見 check_supplements）
+    for sec, want in SITE_GROUPS.items():
         for tier in TIERS:
             n = sum(x.get('count') or 0 for x in lots.values() if x.get('section') == sec and x.get('tier') == tier
                     and not is_supplement(x))
@@ -457,10 +483,10 @@ def composition_lot(tier, seq, topics, spec, tiers, created):
     beyond = (spec.get('tiers') or {}).get('beyond_top') or {}
     found = (spec.get('tiers') or {}).get('foundation') or {}
     lot = base_lot('composition', tier, seq, spec, created)
+    lot['count'] = len(topics)   # 01 批 10 題、02 批 5 題（01 批的輸出不變）
     _, recent_topics = recent_avoid('composition')
     lot.update({
-        'site_target': {'items_per_tier': 10, 'lots_per_tier': 1,
-                        'basis_zh': '站主要求作文每個難度 10 題（每題附穩健版與頂標版範文）；ROADMAP §9.2 原訂每個難度 4 題，依站主要求放大'},
+        'site_target': composition_site_target(seq),
         'topics': [{k: x[k] for k in ('slot', 'id', 'domain_zh', 'topic_zh', 'angle_en', 'keywords', 'prompt_type', 'essay_type',
                                       'figures_hint_zh', 'moves')} for x in topics],
         'topic_rule_zh': 'group.tags.topic 逐字照抄 topic_zh；rubric.prompt_type、question tags.essay_type 照 topics；moves 的 code 照抄，'
@@ -537,7 +563,6 @@ def composition_lot(tier, seq, topics, spec, tiers, created):
 SUPPLEMENT_MAX_COUNT = 10       # 每批最多 10 組（同一般批次，一位出題者的負擔）
 HIGH_FREQ_REFS = 2              # 歷屆中譯英出現 ≥2 次＝高頻句型（README §7.1 的涵蓋範圍）
 PATTERNS_PER_SENTENCE = {'basic': 1, 'advanced': 2, 'top': 2}
-SITE_GROUPS = {'translation': 50, 'composition': 10}
 # 中文主題比對（只用在補足批次的主題）：去掉虛詞、框架詞與泛用的前綴詞（網路、數位…），避免假警報
 CJK_RUN = re.compile(r'[㐀-鿿]+')
 ZH_FUNCTION_CHARS = set('的與和及或之其在是了為麼什怎如何從到會讓該不各個一每這那')
@@ -836,12 +861,13 @@ def build_all(plan, sections, tiers_sel, created, bank_dir=None):
     states = supplement_states(lots_sorted, gp, bank_dir)   # 沒有補足批次時是 {}
     for x in lots_sorted:
         topics = sorted(by_lot.get(x['lot'], []), key=lambda t: t['slot'])
+        made = x.get('created_on') or created   # 主題總表 lots[] 寫了 created_on 的批次（例如 2026-10-20 擴充的作文 02 批）用它
         if x['section'] == 'translation' and is_supplement(x):
-            lot = supplement_translation_lot(x, topics, spec, tiers, gp, states[x['tier']], plan, created)
+            lot = supplement_translation_lot(x, topics, spec, tiers, gp, states[x['tier']], plan, made)
         elif x['section'] == 'translation':
-            lot = translation_lot(x['tier'], x['seq'], topics, spec, tiers, gp, counters[x['tier']], created)
+            lot = translation_lot(x['tier'], x['seq'], topics, spec, tiers, gp, counters[x['tier']], made)
         else:
-            lot = composition_lot(x['tier'], x['seq'], topics, spec, tiers, created)
+            lot = composition_lot(x['tier'], x['seq'], topics, spec, tiers, made)
         if x['section'] in sections and x['tier'] in tiers_sel:
             out.append(lot)
     return out

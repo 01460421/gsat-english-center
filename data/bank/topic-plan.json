@@ -2,7 +2,142 @@
   "schema": "gsat-bank-topic-plan/v1",
   "created_on": "2026-10-09",
   "basis_zh": "站主要求每個題型、每個難度至少 100 小題；第 2 批（seq 02）起的每一組都在這裡指定一個主題（lot＋slot），tools/make_lots.py --topics 依它產生批次規格。主題彼此不重複，也避開 data/bank/v1 第一批（含 draft、rejected）與 data/exams/parsed 歷屆試題用過的主題；配額照 08 §6.1（每批依組數取整：make_lots.topic_quota），閱讀與混合題每批至少 1 篇 SDG 3／12／14／15 的具體事件切入、≥50% 的篇有 SDG。",
-  "counting_rule_zh": "既有組數只算 verified＋draft（rejected 不算）；第一批還沒產生任何檔案的批次（閱讀、混合題）先以批次規格的組數計。第一次規劃時文意選填 advanced 第一批只有 2 組 verified、篇章結構 top 只有 4 組 verified，曾多開 word_bank-advanced-03（3 組）並把 structure-top-02 開到 6 組；2026-10-09 第二次掃描時兩者都已重生到 5 組 verified，所以撤掉這 4 組（主題移到 reserve_topics），批次照站主的表。混合題 advanced 第一批 1 組 rejected（ai.mx.981e5b「主街無車日」，2026-10-09 第二次掃描），所以 mixed-advanced-05 開到 5 組（多一組起源與演變）。",
+  "counting_rule_zh": "既有組數只算 verified＋draft（rejected 不算）；第一批還沒產生任何檔案的批次（閱讀、混合題）先以批次規格的組數計。第一次規劃時文意選填 advanced 第一批只有 2 組 verified、篇章結構 top 只有 4 組 verified，曾多開 word_bank-advanced-03（3 組）並把 structure-top-02 開到 6 組；2026-10-09 第二次掃描時兩者都已重生到 5 組 verified，所以撤掉這 4 組（主題移到 reserve_topics），批次照站主的表。混合題 advanced 第一批 1 組 rejected（ai.mx.981e5b「主街無車日」，2026-10-09 第二次掃描），所以 mixed-advanced-05 開到 5 組（多一組起源與演變）。2026-10-20 擴充（mock_expansion）：站主要求擴充題庫：自組模擬考每個難度至少可連續組 15 份全新卷，改用自組模擬考的算法——只算每個 uid 最新版本且 status verified 的題組（和組卷池一致；draft、rejected 都不算），份數＝各大題「組數 ÷ 每份要的組數」取整後的最小值，閱讀另外受「圖表或表格篇數」與「（長文＋多文本）÷ 2」限制。targets 各題型的 new_groups、new_lots、projected_* 已含擴充批次；擴充前後的組數與份數寫在 targets.{section}.tiers.{tier}.mock_expansion。",
+  "mock_expansion": {
+    "created_on": "2026-10-20",
+    "basis_zh": "站主要求擴充題庫：自組模擬考每個難度至少可連續組 15 份全新卷（docs/design/bank-mock.md §3.2）。2026-10-20 掃描題庫，每個難度只能組 8 份：瓶頸是閱讀（圖表或表格只有 9 篇），其次是詞彙、綜合測驗、文意選填、作文（各夠 10 份）；篇章結構、混合題、中譯英都夠 25 份以上，不加。",
+    "per_paper": {
+      "vocabulary": 1,
+      "cloze": 2,
+      "word_bank": 1,
+      "structure": 1,
+      "reading": 3,
+      "mixed": 1,
+      "translation": 1,
+      "composition": 1
+    },
+    "reading_per_paper_zh": "3 篇：恰好 1 篇圖表或表格、多文本最多 1 篇、其餘長文",
+    "target_papers_per_tier": 15,
+    "counting_rule_zh": "只算每個 uid 最新版本且 status verified 的題組（和組卷池一致）；份數＝各大題「組數 ÷ 每份要的組數」取整後的最小值",
+    "scanned_on": "2026-10-20",
+    "verified_latest": {
+      "vocabulary": {
+        "basic": 10,
+        "advanced": 10,
+        "top": 10
+      },
+      "cloze": {
+        "basic": 20,
+        "advanced": 20,
+        "top": 20
+      },
+      "word_bank": {
+        "basic": 10,
+        "advanced": 10,
+        "top": 10
+      },
+      "structure": {
+        "basic": 25,
+        "advanced": 25,
+        "top": 25
+      },
+      "reading": {
+        "basic": 26,
+        "advanced": 25,
+        "top": 25
+      },
+      "mixed": {
+        "basic": 25,
+        "advanced": 26,
+        "top": 27
+      },
+      "translation": {
+        "basic": 52,
+        "advanced": 52,
+        "top": 55
+      },
+      "composition": {
+        "basic": 10,
+        "advanced": 10,
+        "top": 10
+      }
+    },
+    "reading_forms_verified_latest": {
+      "basic": {
+        "continuous": 14,
+        "chart": 6,
+        "table": 3,
+        "multi_text": 3
+      },
+      "advanced": {
+        "continuous": 13,
+        "chart": 6,
+        "table": 3,
+        "multi_text": 3
+      },
+      "top": {
+        "continuous": 13,
+        "chart": 6,
+        "table": 3,
+        "multi_text": 3
+      }
+    },
+    "papers_now": {
+      "basic": 8,
+      "advanced": 8,
+      "top": 8
+    },
+    "new_groups_per_tier": {
+      "vocabulary": 5,
+      "cloze": 10,
+      "word_bank": 5,
+      "reading": 20,
+      "composition": 5
+    },
+    "reading_forms_new_per_tier": {
+      "continuous": 11,
+      "chart": 4,
+      "table": 2,
+      "multi_text": 3
+    },
+    "papers_if_all_pass": {
+      "basic": 15,
+      "advanced": 15,
+      "top": 15
+    },
+    "lots": [
+      "vocabulary-basic-03",
+      "vocabulary-advanced-03",
+      "vocabulary-top-03",
+      "cloze-basic-04",
+      "cloze-basic-05",
+      "cloze-advanced-04",
+      "cloze-advanced-05",
+      "cloze-top-04",
+      "cloze-top-05",
+      "word_bank-basic-03",
+      "word_bank-advanced-03",
+      "word_bank-top-03",
+      "reading-basic-06",
+      "reading-basic-07",
+      "reading-basic-08",
+      "reading-basic-09",
+      "reading-advanced-05",
+      "reading-advanced-06",
+      "reading-advanced-07",
+      "reading-advanced-08",
+      "reading-top-05",
+      "reading-top-06",
+      "reading-top-07",
+      "reading-top-08",
+      "composition-basic-02",
+      "composition-advanced-02",
+      "composition-top-02"
+    ],
+    "margin_zh": "沒有餘裕：全部通過時剛好每個難度 15 份（閱讀 basic 46 篇、advanced／top 45 篇，圖表或表格各 15 篇）。任何一組最終 rejected（含一次重出也不過）就只剩 14 份；那時照 §9.1 補足批次的作法，依缺口與通過率另開新批號補。",
+    "reserve_used_zh": "reserve_topics 的 rsv-02、rsv-03 放回 word_bank-advanced-03（原本就是這一批撤掉的主題），rsv-04 放進 word_bank-top-03；備用主題用完",
+    "theme_rule_zh": "新主題的 topic_zh、angle_en、keywords 都不含 apps/web/scripts/lib/bank-mock-themes.mjs 的概念別名（不產生 c: 鍵），topic_zh 也和現有題組不同（z: 鍵不同），組卷時不會因主題去重而和現有題組互斥"
+  },
   "rules_zh": [
     "group.tags.topic 一律逐字照抄該組的 topic_zh（繁體中文主題名）；angle_en 是英文切入角度；keywords 是撞題比對用的英文關鍵字（片語的實詞全部出現才算）。",
     "詞彙題沒有選文：每組指定 5 種情境（contexts_en），10 題的題幹情境照它分配（每種 1–3 題，仍要 ≥5 種）。",
@@ -12,7 +147,8 @@
     "replaced_topics 記錄換掉的主題（原主題、換成什麼、原因）；換主題時 id 不變（id＝lot＋slot）。",
     "--check-topics 另比對中文主題（第一批閱讀、混合題起 tags.topic 是中文，英文關鍵字比不到）：共用兩字實詞（去掉虛詞與「由來、演變、台灣、日本」這類框架詞、地名）列 warning；人工確認不是同一主題後記進 reviewed_overlaps（id、against＝對方的主題原文、note_zh）。題庫裡 generation.lot 等於主題所屬批次的題組就是照該主題出的，不算撞題。",
     "第一批還沒產生的題組（閱讀 advanced／top、混合題 top）產生後，或第一批有題組 rejected 而不重生時，重跑 --check-topics 並重算 targets；不足 100 小題就在這裡加批次（新批號），已開始生成的批次規格不改。",
-    "reserve_topics 是備用主題（已檢查不重複、不撞題，還沒分配批次）；主題不可行或要加批次時從這裡取，搬進 topics 時給新的 lot、slot、id。"
+    "reserve_topics 是備用主題（已檢查不重複、不撞題，還沒分配批次）；主題不可行或要加批次時從這裡取，搬進 topics 時給新的 lot、slot、id。",
+    "2026-10-20 擴充批次（lots[] 標 \"mock_expansion\": true）：站主要求擴充題庫：自組模擬考每個難度至少可連續組 15 份全新卷（docs/design/bank-mock.md §3.2）。每批 5 組；閱讀每個難度 4 批，合計圖表 4、表格 2、多文本 3、長文 11（每批至少 1 篇圖表或表格），不再照第一批的 4：2：1：1；詞彙、文意選填各 1 批、綜合測驗 2 批；作文在 topic-plan-writing.json。新主題除了上面的規則，另外避開 apps/web/scripts/lib/bank-mock-themes.mjs 的概念別名（topic_zh、angle_en、keywords 都不含別名表的寫法），組卷的主題去重才不會和現有題組撞在一起。"
   ],
   "targets": {
     "vocabulary": {
@@ -25,12 +161,24 @@
           "draft": 0,
           "rejected": 0,
           "counted_existing_groups": 5,
-          "new_groups": 5,
+          "new_groups": 10,
           "new_lots": [
-            "vocabulary-basic-02"
+            "vocabulary-basic-02",
+            "vocabulary-basic-03"
           ],
-          "projected_groups": 10,
-          "projected_items": 100
+          "projected_groups": 15,
+          "projected_items": 150,
+          "mock_expansion": {
+            "basis_zh": "站主要求擴充題庫：自組模擬考每個難度至少可連續組 15 份全新卷（2026-10-20）",
+            "verified_latest": 10,
+            "papers_now": 10,
+            "new_groups": 5,
+            "new_lots": [
+              "vocabulary-basic-03"
+            ],
+            "projected_verified_groups": 15,
+            "papers_if_all_pass": 15
+          }
         },
         "advanced": {
           "seq01_lot_count": 5,
@@ -38,12 +186,24 @@
           "draft": 0,
           "rejected": 0,
           "counted_existing_groups": 5,
-          "new_groups": 5,
+          "new_groups": 10,
           "new_lots": [
-            "vocabulary-advanced-02"
+            "vocabulary-advanced-02",
+            "vocabulary-advanced-03"
           ],
-          "projected_groups": 10,
-          "projected_items": 100
+          "projected_groups": 15,
+          "projected_items": 150,
+          "mock_expansion": {
+            "basis_zh": "站主要求擴充題庫：自組模擬考每個難度至少可連續組 15 份全新卷（2026-10-20）",
+            "verified_latest": 10,
+            "papers_now": 10,
+            "new_groups": 5,
+            "new_lots": [
+              "vocabulary-advanced-03"
+            ],
+            "projected_verified_groups": 15,
+            "papers_if_all_pass": 15
+          }
         },
         "top": {
           "seq01_lot_count": 5,
@@ -51,12 +211,24 @@
           "draft": 0,
           "rejected": 0,
           "counted_existing_groups": 5,
-          "new_groups": 5,
+          "new_groups": 10,
           "new_lots": [
-            "vocabulary-top-02"
+            "vocabulary-top-02",
+            "vocabulary-top-03"
           ],
-          "projected_groups": 10,
-          "projected_items": 100
+          "projected_groups": 15,
+          "projected_items": 150,
+          "mock_expansion": {
+            "basis_zh": "站主要求擴充題庫：自組模擬考每個難度至少可連續組 15 份全新卷（2026-10-20）",
+            "verified_latest": 10,
+            "papers_now": 10,
+            "new_groups": 5,
+            "new_lots": [
+              "vocabulary-top-03"
+            ],
+            "projected_verified_groups": 15,
+            "papers_if_all_pass": 15
+          }
         }
       }
     },
@@ -70,13 +242,27 @@
           "draft": 0,
           "rejected": 0,
           "counted_existing_groups": 8,
-          "new_groups": 12,
+          "new_groups": 22,
           "new_lots": [
             "cloze-basic-02",
-            "cloze-basic-03"
+            "cloze-basic-03",
+            "cloze-basic-04",
+            "cloze-basic-05"
           ],
-          "projected_groups": 20,
-          "projected_items": 100
+          "projected_groups": 30,
+          "projected_items": 150,
+          "mock_expansion": {
+            "basis_zh": "站主要求擴充題庫：自組模擬考每個難度至少可連續組 15 份全新卷（2026-10-20）",
+            "verified_latest": 20,
+            "papers_now": 10,
+            "new_groups": 10,
+            "new_lots": [
+              "cloze-basic-04",
+              "cloze-basic-05"
+            ],
+            "projected_verified_groups": 30,
+            "papers_if_all_pass": 15
+          }
         },
         "advanced": {
           "seq01_lot_count": 8,
@@ -84,13 +270,27 @@
           "draft": 0,
           "rejected": 2,
           "counted_existing_groups": 8,
-          "new_groups": 12,
+          "new_groups": 22,
           "new_lots": [
             "cloze-advanced-02",
-            "cloze-advanced-03"
+            "cloze-advanced-03",
+            "cloze-advanced-04",
+            "cloze-advanced-05"
           ],
-          "projected_groups": 20,
-          "projected_items": 100
+          "projected_groups": 30,
+          "projected_items": 150,
+          "mock_expansion": {
+            "basis_zh": "站主要求擴充題庫：自組模擬考每個難度至少可連續組 15 份全新卷（2026-10-20）",
+            "verified_latest": 20,
+            "papers_now": 10,
+            "new_groups": 10,
+            "new_lots": [
+              "cloze-advanced-04",
+              "cloze-advanced-05"
+            ],
+            "projected_verified_groups": 30,
+            "papers_if_all_pass": 15
+          }
         },
         "top": {
           "seq01_lot_count": 8,
@@ -98,13 +298,27 @@
           "draft": 0,
           "rejected": 0,
           "counted_existing_groups": 8,
-          "new_groups": 12,
+          "new_groups": 22,
           "new_lots": [
             "cloze-top-02",
-            "cloze-top-03"
+            "cloze-top-03",
+            "cloze-top-04",
+            "cloze-top-05"
           ],
-          "projected_groups": 20,
-          "projected_items": 100
+          "projected_groups": 30,
+          "projected_items": 150,
+          "mock_expansion": {
+            "basis_zh": "站主要求擴充題庫：自組模擬考每個難度至少可連續組 15 份全新卷（2026-10-20）",
+            "verified_latest": 20,
+            "papers_now": 10,
+            "new_groups": 10,
+            "new_lots": [
+              "cloze-top-04",
+              "cloze-top-05"
+            ],
+            "projected_verified_groups": 30,
+            "papers_if_all_pass": 15
+          }
         }
       }
     },
@@ -118,12 +332,24 @@
           "draft": 0,
           "rejected": 0,
           "counted_existing_groups": 5,
-          "new_groups": 5,
+          "new_groups": 10,
           "new_lots": [
-            "word_bank-basic-02"
+            "word_bank-basic-02",
+            "word_bank-basic-03"
           ],
-          "projected_groups": 10,
-          "projected_items": 100
+          "projected_groups": 15,
+          "projected_items": 150,
+          "mock_expansion": {
+            "basis_zh": "站主要求擴充題庫：自組模擬考每個難度至少可連續組 15 份全新卷（2026-10-20）",
+            "verified_latest": 10,
+            "papers_now": 10,
+            "new_groups": 5,
+            "new_lots": [
+              "word_bank-basic-03"
+            ],
+            "projected_verified_groups": 15,
+            "papers_if_all_pass": 15
+          }
         },
         "advanced": {
           "seq01_lot_count": 5,
@@ -131,12 +357,24 @@
           "draft": 0,
           "rejected": 3,
           "counted_existing_groups": 5,
-          "new_groups": 5,
+          "new_groups": 10,
           "new_lots": [
-            "word_bank-advanced-02"
+            "word_bank-advanced-02",
+            "word_bank-advanced-03"
           ],
-          "projected_groups": 10,
-          "projected_items": 100
+          "projected_groups": 15,
+          "projected_items": 150,
+          "mock_expansion": {
+            "basis_zh": "站主要求擴充題庫：自組模擬考每個難度至少可連續組 15 份全新卷（2026-10-20）",
+            "verified_latest": 10,
+            "papers_now": 10,
+            "new_groups": 5,
+            "new_lots": [
+              "word_bank-advanced-03"
+            ],
+            "projected_verified_groups": 15,
+            "papers_if_all_pass": 15
+          }
         },
         "top": {
           "seq01_lot_count": 5,
@@ -144,12 +382,24 @@
           "draft": 0,
           "rejected": 0,
           "counted_existing_groups": 5,
-          "new_groups": 5,
+          "new_groups": 10,
           "new_lots": [
-            "word_bank-top-02"
+            "word_bank-top-02",
+            "word_bank-top-03"
           ],
-          "projected_groups": 10,
-          "projected_items": 100
+          "projected_groups": 15,
+          "projected_items": 150,
+          "mock_expansion": {
+            "basis_zh": "站主要求擴充題庫：自組模擬考每個難度至少可連續組 15 份全新卷（2026-10-20）",
+            "verified_latest": 10,
+            "papers_now": 10,
+            "new_groups": 5,
+            "new_lots": [
+              "word_bank-top-03"
+            ],
+            "projected_verified_groups": 15,
+            "papers_if_all_pass": 15
+          }
         }
       }
     },
@@ -217,16 +467,53 @@
           "draft": 8,
           "rejected": 0,
           "counted_existing_groups": 8,
-          "new_groups": 19,
+          "new_groups": 39,
           "new_lots": [
             "reading-basic-02",
             "reading-basic-03",
             "reading-basic-04",
-            "reading-basic-05"
+            "reading-basic-05",
+            "reading-basic-06",
+            "reading-basic-07",
+            "reading-basic-08",
+            "reading-basic-09"
           ],
-          "projected_groups": 27,
-          "projected_items": 108,
-          "supplement_zh": "2026-10-09 重算（只算每個 uid 最新版本且 verified）：basic 24 組＝96 題，差 1 組；缺的是圖表（reading-basic-03「台灣的空氣品質」重出仍 rejected，01–04 批沒有其他可重出的題組）。開 reading-basic-05 補 2 組（長文 1：備用主題 rsv-01 聽診器的發明；圖表 1：台灣的登革熱；補完後 verified 形式約長文 14：圖表 6：表格 3：多文本 3）：首輪通過率約 0.8、重出取 0.5，每組最終通過機率 0.9，2 組至少 1 組通過的機率 0.99"
+          "projected_groups": 47,
+          "projected_items": 188,
+          "supplement_zh": "2026-10-09 重算（只算每個 uid 最新版本且 verified）：basic 24 組＝96 題，差 1 組；缺的是圖表（reading-basic-03「台灣的空氣品質」重出仍 rejected，01–04 批沒有其他可重出的題組）。開 reading-basic-05 補 2 組（長文 1：備用主題 rsv-01 聽診器的發明；圖表 1：台灣的登革熱；補完後 verified 形式約長文 14：圖表 6：表格 3：多文本 3）：首輪通過率約 0.8、重出取 0.5，每組最終通過機率 0.9，2 組至少 1 組通過的機率 0.99",
+          "mock_expansion": {
+            "basis_zh": "站主要求擴充題庫：自組模擬考每個難度至少可連續組 15 份全新卷（2026-10-20）",
+            "verified_latest": 26,
+            "papers_now": 8,
+            "new_groups": 20,
+            "new_lots": [
+              "reading-basic-06",
+              "reading-basic-07",
+              "reading-basic-08",
+              "reading-basic-09"
+            ],
+            "projected_verified_groups": 46,
+            "papers_if_all_pass": 15,
+            "forms_verified_latest": {
+              "continuous": 14,
+              "chart": 6,
+              "table": 3,
+              "multi_text": 3
+            },
+            "forms_new": {
+              "continuous": 11,
+              "chart": 4,
+              "table": 2,
+              "multi_text": 3
+            },
+            "forms_after": {
+              "continuous": 25,
+              "chart": 10,
+              "table": 5,
+              "multi_text": 6
+            },
+            "rule_zh": "每份卷 3 篇閱讀：恰好 1 篇圖表或表格、多文本最多 1 篇、其餘長文；15 份要圖表或表格 15 篇、長文＋多文本 30 篇（多文本 ≤15）"
+          }
         },
         "advanced": {
           "seq01_lot_count": 8,
@@ -234,14 +521,51 @@
           "draft": 0,
           "rejected": 0,
           "counted_existing_groups": 8,
-          "new_groups": 17,
+          "new_groups": 37,
           "new_lots": [
             "reading-advanced-02",
             "reading-advanced-03",
-            "reading-advanced-04"
+            "reading-advanced-04",
+            "reading-advanced-05",
+            "reading-advanced-06",
+            "reading-advanced-07",
+            "reading-advanced-08"
           ],
-          "projected_groups": 25,
-          "projected_items": 100
+          "projected_groups": 45,
+          "projected_items": 180,
+          "mock_expansion": {
+            "basis_zh": "站主要求擴充題庫：自組模擬考每個難度至少可連續組 15 份全新卷（2026-10-20）",
+            "verified_latest": 25,
+            "papers_now": 8,
+            "new_groups": 20,
+            "new_lots": [
+              "reading-advanced-05",
+              "reading-advanced-06",
+              "reading-advanced-07",
+              "reading-advanced-08"
+            ],
+            "projected_verified_groups": 45,
+            "papers_if_all_pass": 15,
+            "forms_verified_latest": {
+              "continuous": 13,
+              "chart": 6,
+              "table": 3,
+              "multi_text": 3
+            },
+            "forms_new": {
+              "continuous": 11,
+              "chart": 4,
+              "table": 2,
+              "multi_text": 3
+            },
+            "forms_after": {
+              "continuous": 24,
+              "chart": 10,
+              "table": 5,
+              "multi_text": 6
+            },
+            "rule_zh": "每份卷 3 篇閱讀：恰好 1 篇圖表或表格、多文本最多 1 篇、其餘長文；15 份要圖表或表格 15 篇、長文＋多文本 30 篇（多文本 ≤15）"
+          }
         },
         "top": {
           "seq01_lot_count": 8,
@@ -249,14 +573,51 @@
           "draft": 0,
           "rejected": 0,
           "counted_existing_groups": 8,
-          "new_groups": 17,
+          "new_groups": 37,
           "new_lots": [
             "reading-top-02",
             "reading-top-03",
-            "reading-top-04"
+            "reading-top-04",
+            "reading-top-05",
+            "reading-top-06",
+            "reading-top-07",
+            "reading-top-08"
           ],
-          "projected_groups": 25,
-          "projected_items": 100
+          "projected_groups": 45,
+          "projected_items": 180,
+          "mock_expansion": {
+            "basis_zh": "站主要求擴充題庫：自組模擬考每個難度至少可連續組 15 份全新卷（2026-10-20）",
+            "verified_latest": 25,
+            "papers_now": 8,
+            "new_groups": 20,
+            "new_lots": [
+              "reading-top-05",
+              "reading-top-06",
+              "reading-top-07",
+              "reading-top-08"
+            ],
+            "projected_verified_groups": 45,
+            "papers_if_all_pass": 15,
+            "forms_verified_latest": {
+              "continuous": 13,
+              "chart": 6,
+              "table": 3,
+              "multi_text": 3
+            },
+            "forms_new": {
+              "continuous": 11,
+              "chart": 4,
+              "table": 2,
+              "multi_text": 3
+            },
+            "forms_after": {
+              "continuous": 24,
+              "chart": 10,
+              "table": 5,
+              "multi_text": 6
+            },
+            "rule_zh": "每份卷 3 篇閱讀：恰好 1 篇圖表或表格、多文本最多 1 篇、其餘長文；15 份要圖表或表格 15 篇、長文＋多文本 30 篇（多文本 ≤15）"
+          }
         }
       }
     },
@@ -326,6 +687,14 @@
       "count": 5
     },
     {
+      "lot": "vocabulary-basic-03",
+      "section": "vocabulary",
+      "tier": "basic",
+      "seq": "03",
+      "count": 5,
+      "mock_expansion": true
+    },
+    {
       "lot": "vocabulary-advanced-02",
       "section": "vocabulary",
       "tier": "advanced",
@@ -333,11 +702,27 @@
       "count": 5
     },
     {
+      "lot": "vocabulary-advanced-03",
+      "section": "vocabulary",
+      "tier": "advanced",
+      "seq": "03",
+      "count": 5,
+      "mock_expansion": true
+    },
+    {
       "lot": "vocabulary-top-02",
       "section": "vocabulary",
       "tier": "top",
       "seq": "02",
       "count": 5
+    },
+    {
+      "lot": "vocabulary-top-03",
+      "section": "vocabulary",
+      "tier": "top",
+      "seq": "03",
+      "count": 5,
+      "mock_expansion": true
     },
     {
       "lot": "cloze-basic-02",
@@ -354,6 +739,22 @@
       "count": 6
     },
     {
+      "lot": "cloze-basic-04",
+      "section": "cloze",
+      "tier": "basic",
+      "seq": "04",
+      "count": 5,
+      "mock_expansion": true
+    },
+    {
+      "lot": "cloze-basic-05",
+      "section": "cloze",
+      "tier": "basic",
+      "seq": "05",
+      "count": 5,
+      "mock_expansion": true
+    },
+    {
       "lot": "cloze-advanced-02",
       "section": "cloze",
       "tier": "advanced",
@@ -366,6 +767,22 @@
       "tier": "advanced",
       "seq": "03",
       "count": 6
+    },
+    {
+      "lot": "cloze-advanced-04",
+      "section": "cloze",
+      "tier": "advanced",
+      "seq": "04",
+      "count": 5,
+      "mock_expansion": true
+    },
+    {
+      "lot": "cloze-advanced-05",
+      "section": "cloze",
+      "tier": "advanced",
+      "seq": "05",
+      "count": 5,
+      "mock_expansion": true
     },
     {
       "lot": "cloze-top-02",
@@ -382,11 +799,35 @@
       "count": 6
     },
     {
+      "lot": "cloze-top-04",
+      "section": "cloze",
+      "tier": "top",
+      "seq": "04",
+      "count": 5,
+      "mock_expansion": true
+    },
+    {
+      "lot": "cloze-top-05",
+      "section": "cloze",
+      "tier": "top",
+      "seq": "05",
+      "count": 5,
+      "mock_expansion": true
+    },
+    {
       "lot": "word_bank-basic-02",
       "section": "word_bank",
       "tier": "basic",
       "seq": "02",
       "count": 5
+    },
+    {
+      "lot": "word_bank-basic-03",
+      "section": "word_bank",
+      "tier": "basic",
+      "seq": "03",
+      "count": 5,
+      "mock_expansion": true
     },
     {
       "lot": "word_bank-advanced-02",
@@ -396,11 +837,27 @@
       "count": 5
     },
     {
+      "lot": "word_bank-advanced-03",
+      "section": "word_bank",
+      "tier": "advanced",
+      "seq": "03",
+      "count": 5,
+      "mock_expansion": true
+    },
+    {
       "lot": "word_bank-top-02",
       "section": "word_bank",
       "tier": "top",
       "seq": "02",
       "count": 5
+    },
+    {
+      "lot": "word_bank-top-03",
+      "section": "word_bank",
+      "tier": "top",
+      "seq": "03",
+      "count": 5,
+      "mock_expansion": true
     },
     {
       "lot": "structure-basic-02",
@@ -539,6 +996,66 @@
       }
     },
     {
+      "lot": "reading-basic-06",
+      "section": "reading",
+      "tier": "basic",
+      "seq": "06",
+      "count": 5,
+      "forms": {
+        "continuous": 3,
+        "chart": 1,
+        "table": 0,
+        "multi_text": 1
+      },
+      "forms_basis_zh": "2026-10-20 擴充批次：自組模擬考每份卷 3 篇閱讀，恰好 1 篇圖表或表格、多文本最多 1 篇；每個難度 4 批合計長文 11、圖表 4、表格 2、多文本 3，每批至少 1 篇圖表或表格（mock_expansion）",
+      "mock_expansion": true
+    },
+    {
+      "lot": "reading-basic-07",
+      "section": "reading",
+      "tier": "basic",
+      "seq": "07",
+      "count": 5,
+      "forms": {
+        "continuous": 2,
+        "chart": 1,
+        "table": 1,
+        "multi_text": 1
+      },
+      "forms_basis_zh": "2026-10-20 擴充批次：自組模擬考每份卷 3 篇閱讀，恰好 1 篇圖表或表格、多文本最多 1 篇；每個難度 4 批合計長文 11、圖表 4、表格 2、多文本 3，每批至少 1 篇圖表或表格（mock_expansion）",
+      "mock_expansion": true
+    },
+    {
+      "lot": "reading-basic-08",
+      "section": "reading",
+      "tier": "basic",
+      "seq": "08",
+      "count": 5,
+      "forms": {
+        "continuous": 3,
+        "chart": 1,
+        "table": 1,
+        "multi_text": 0
+      },
+      "forms_basis_zh": "2026-10-20 擴充批次：自組模擬考每份卷 3 篇閱讀，恰好 1 篇圖表或表格、多文本最多 1 篇；每個難度 4 批合計長文 11、圖表 4、表格 2、多文本 3，每批至少 1 篇圖表或表格（mock_expansion）",
+      "mock_expansion": true
+    },
+    {
+      "lot": "reading-basic-09",
+      "section": "reading",
+      "tier": "basic",
+      "seq": "09",
+      "count": 5,
+      "forms": {
+        "continuous": 3,
+        "chart": 1,
+        "table": 0,
+        "multi_text": 1
+      },
+      "forms_basis_zh": "2026-10-20 擴充批次：自組模擬考每份卷 3 篇閱讀，恰好 1 篇圖表或表格、多文本最多 1 篇；每個難度 4 批合計長文 11、圖表 4、表格 2、多文本 3，每批至少 1 篇圖表或表格（mock_expansion）",
+      "mock_expansion": true
+    },
+    {
       "lot": "reading-advanced-02",
       "section": "reading",
       "tier": "advanced",
@@ -578,6 +1095,66 @@
       }
     },
     {
+      "lot": "reading-advanced-05",
+      "section": "reading",
+      "tier": "advanced",
+      "seq": "05",
+      "count": 5,
+      "forms": {
+        "continuous": 3,
+        "chart": 1,
+        "table": 0,
+        "multi_text": 1
+      },
+      "forms_basis_zh": "2026-10-20 擴充批次：自組模擬考每份卷 3 篇閱讀，恰好 1 篇圖表或表格、多文本最多 1 篇；每個難度 4 批合計長文 11、圖表 4、表格 2、多文本 3，每批至少 1 篇圖表或表格（mock_expansion）",
+      "mock_expansion": true
+    },
+    {
+      "lot": "reading-advanced-06",
+      "section": "reading",
+      "tier": "advanced",
+      "seq": "06",
+      "count": 5,
+      "forms": {
+        "continuous": 2,
+        "chart": 1,
+        "table": 1,
+        "multi_text": 1
+      },
+      "forms_basis_zh": "2026-10-20 擴充批次：自組模擬考每份卷 3 篇閱讀，恰好 1 篇圖表或表格、多文本最多 1 篇；每個難度 4 批合計長文 11、圖表 4、表格 2、多文本 3，每批至少 1 篇圖表或表格（mock_expansion）",
+      "mock_expansion": true
+    },
+    {
+      "lot": "reading-advanced-07",
+      "section": "reading",
+      "tier": "advanced",
+      "seq": "07",
+      "count": 5,
+      "forms": {
+        "continuous": 3,
+        "chart": 1,
+        "table": 1,
+        "multi_text": 0
+      },
+      "forms_basis_zh": "2026-10-20 擴充批次：自組模擬考每份卷 3 篇閱讀，恰好 1 篇圖表或表格、多文本最多 1 篇；每個難度 4 批合計長文 11、圖表 4、表格 2、多文本 3，每批至少 1 篇圖表或表格（mock_expansion）",
+      "mock_expansion": true
+    },
+    {
+      "lot": "reading-advanced-08",
+      "section": "reading",
+      "tier": "advanced",
+      "seq": "08",
+      "count": 5,
+      "forms": {
+        "continuous": 3,
+        "chart": 1,
+        "table": 0,
+        "multi_text": 1
+      },
+      "forms_basis_zh": "2026-10-20 擴充批次：自組模擬考每份卷 3 篇閱讀，恰好 1 篇圖表或表格、多文本最多 1 篇；每個難度 4 批合計長文 11、圖表 4、表格 2、多文本 3，每批至少 1 篇圖表或表格（mock_expansion）",
+      "mock_expansion": true
+    },
+    {
       "lot": "reading-top-02",
       "section": "reading",
       "tier": "top",
@@ -615,6 +1192,66 @@
         "table": 1,
         "multi_text": 0
       }
+    },
+    {
+      "lot": "reading-top-05",
+      "section": "reading",
+      "tier": "top",
+      "seq": "05",
+      "count": 5,
+      "forms": {
+        "continuous": 3,
+        "chart": 1,
+        "table": 0,
+        "multi_text": 1
+      },
+      "forms_basis_zh": "2026-10-20 擴充批次：自組模擬考每份卷 3 篇閱讀，恰好 1 篇圖表或表格、多文本最多 1 篇；每個難度 4 批合計長文 11、圖表 4、表格 2、多文本 3，每批至少 1 篇圖表或表格（mock_expansion）",
+      "mock_expansion": true
+    },
+    {
+      "lot": "reading-top-06",
+      "section": "reading",
+      "tier": "top",
+      "seq": "06",
+      "count": 5,
+      "forms": {
+        "continuous": 2,
+        "chart": 1,
+        "table": 1,
+        "multi_text": 1
+      },
+      "forms_basis_zh": "2026-10-20 擴充批次：自組模擬考每份卷 3 篇閱讀，恰好 1 篇圖表或表格、多文本最多 1 篇；每個難度 4 批合計長文 11、圖表 4、表格 2、多文本 3，每批至少 1 篇圖表或表格（mock_expansion）",
+      "mock_expansion": true
+    },
+    {
+      "lot": "reading-top-07",
+      "section": "reading",
+      "tier": "top",
+      "seq": "07",
+      "count": 5,
+      "forms": {
+        "continuous": 3,
+        "chart": 1,
+        "table": 1,
+        "multi_text": 0
+      },
+      "forms_basis_zh": "2026-10-20 擴充批次：自組模擬考每份卷 3 篇閱讀，恰好 1 篇圖表或表格、多文本最多 1 篇；每個難度 4 批合計長文 11、圖表 4、表格 2、多文本 3，每批至少 1 篇圖表或表格（mock_expansion）",
+      "mock_expansion": true
+    },
+    {
+      "lot": "reading-top-08",
+      "section": "reading",
+      "tier": "top",
+      "seq": "08",
+      "count": 5,
+      "forms": {
+        "continuous": 3,
+        "chart": 1,
+        "table": 0,
+        "multi_text": 1
+      },
+      "forms_basis_zh": "2026-10-20 擴充批次：自組模擬考每份卷 3 篇閱讀，恰好 1 篇圖表或表格、多文本最多 1 篇；每個難度 4 批合計長文 11、圖表 4、表格 2、多文本 3，每批至少 1 篇圖表或表格（mock_expansion）",
+      "mock_expansion": true
     },
     {
       "lot": "mixed-basic-02",
@@ -842,6 +1479,86 @@
       "sdgs": []
     },
     {
+      "id": "vo-b03-1",
+      "lot": "vocabulary-basic-03",
+      "slot": 1,
+      "domain_zh": "多元情境",
+      "topic_zh": "情境組：早餐店、班級合照日、話劇排練、雨天野餐、帶寵物看獸醫",
+      "angle_en": "mixed contexts: a breakfast shop, class photo day, a school play rehearsal, a rainy-day picnic, a trip to the vet",
+      "contexts_en": [
+        "a breakfast shop",
+        "class photo day",
+        "a school play rehearsal",
+        "a rainy-day picnic",
+        "a trip to the vet"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "vo-b03-2",
+      "lot": "vocabulary-basic-03",
+      "slot": 2,
+      "domain_zh": "多元情境",
+      "topic_zh": "情境組：溜冰場、二手書攤、全家公路旅行、魔術表演、問路",
+      "angle_en": "mixed contexts: an ice-skating rink, a used-book stall, a family road trip, a magic show, asking for directions",
+      "contexts_en": [
+        "an ice-skating rink",
+        "a used-book stall",
+        "a family road trip",
+        "a magic show",
+        "asking for directions"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "vo-b03-3",
+      "lot": "vocabulary-basic-03",
+      "slot": 3,
+      "domain_zh": "多元情境",
+      "topic_zh": "情境組：網購退貨、醫院探病、搬進新家、學校合唱團、防火演練",
+      "angle_en": "mixed contexts: returning an online order, visiting a friend in the hospital, moving into a new home, the school choir, a fire drill",
+      "contexts_en": [
+        "returning an online order",
+        "visiting a friend in the hospital",
+        "moving into a new home",
+        "the school choir",
+        "a fire drill"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "vo-b03-4",
+      "lot": "vocabulary-basic-03",
+      "slot": 4,
+      "domain_zh": "多元情境",
+      "topic_zh": "情境組：冰淇淋店、桌遊社、美髮院、學校菜園、暴風雨前採買",
+      "angle_en": "mixed contexts: an ice-cream shop, a board-game club, a hair salon, the school vegetable garden, shopping before a storm",
+      "contexts_en": [
+        "an ice-cream shop",
+        "a board-game club",
+        "a hair salon",
+        "the school vegetable garden",
+        "shopping before a storm"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "vo-b03-5",
+      "lot": "vocabulary-basic-03",
+      "slot": 5,
+      "domain_zh": "多元情境",
+      "topic_zh": "情境組：麵包店開幕、數學競賽、連假塞車、海邊一日遊、走失的小狗",
+      "angle_en": "mixed contexts: a bakery's grand opening, a math contest, a holiday traffic jam, a day at the beach, a lost puppy",
+      "contexts_en": [
+        "a bakery's grand opening",
+        "a math contest",
+        "a holiday traffic jam",
+        "a day at the beach",
+        "a lost puppy"
+      ],
+      "sdgs": []
+    },
+    {
       "id": "vo-a02-1",
       "lot": "vocabulary-advanced-02",
       "slot": 1,
@@ -922,6 +1639,86 @@
       "sdgs": []
     },
     {
+      "id": "vo-a03-1",
+      "lot": "vocabulary-advanced-03",
+      "slot": 1,
+      "domain_zh": "多元情境",
+      "topic_zh": "情境組：博物館語音導覽、義消訓練、買二手車、食品安全稽查、班代選舉",
+      "angle_en": "mixed contexts: a museum audio guide, volunteer firefighter training, buying a used car, a food-safety inspection, a class representative election",
+      "contexts_en": [
+        "a museum audio guide",
+        "volunteer firefighter training",
+        "buying a used car",
+        "a food-safety inspection",
+        "a class representative election"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "vo-a03-2",
+      "lot": "vocabulary-advanced-03",
+      "slot": 2,
+      "domain_zh": "多元情境",
+      "topic_zh": "情境組：料理比賽、醫院夜班、班機延誤、社區劇場、銀行開戶",
+      "angle_en": "mixed contexts: a cooking competition, a hospital night shift, a delayed flight, a community theater, opening a bank account",
+      "contexts_en": [
+        "a cooking competition",
+        "a hospital night shift",
+        "a delayed flight",
+        "a community theater",
+        "opening a bank account"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "vo-a03-3",
+      "lot": "vocabulary-advanced-03",
+      "slot": 3,
+      "domain_zh": "多元情境",
+      "topic_zh": "情境組：動物救傷中心、記者會、登山意外、科技展、婚禮籌備",
+      "angle_en": "mixed contexts: an animal rescue center, a press conference, a hiking accident, a technology expo, planning a wedding",
+      "contexts_en": [
+        "an animal rescue center",
+        "a press conference",
+        "a hiking accident",
+        "a technology expo",
+        "planning a wedding"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "vo-a03-4",
+      "lot": "vocabulary-advanced-03",
+      "slot": 4,
+      "domain_zh": "多元情境",
+      "topic_zh": "情境組：舞蹈比賽、藥局諮詢、居家裝修、行李遺失櫃台、海外志工",
+      "angle_en": "mixed contexts: a dance competition, asking a pharmacist for advice, a home renovation, a lost-luggage counter, volunteering abroad",
+      "contexts_en": [
+        "a dance competition",
+        "asking a pharmacist for advice",
+        "a home renovation",
+        "a lost-luggage counter",
+        "volunteering abroad"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "vo-a03-5",
+      "lot": "vocabulary-advanced-03",
+      "slot": 5,
+      "domain_zh": "多元情境",
+      "topic_zh": "情境組：咖啡品評、廣播談話節目、圖書館改建、音樂節、車禍報告",
+      "angle_en": "mixed contexts: a coffee tasting, a radio talk show, a library renovation, a music festival, a car accident report",
+      "contexts_en": [
+        "a coffee tasting",
+        "a radio talk show",
+        "a library renovation",
+        "a music festival",
+        "a car accident report"
+      ],
+      "sdgs": []
+    },
+    {
       "id": "vo-t02-1",
       "lot": "vocabulary-top-02",
       "slot": 1,
@@ -998,6 +1795,86 @@
         "the restoration of a historic building",
         "a rocket launch",
         "a diplomatic visit"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "vo-t03-1",
+      "lot": "vocabulary-top-03",
+      "slot": 1,
+      "domain_zh": "多元情境",
+      "topic_zh": "情境組：醫學研討會、企業稽核、自然生態紀錄片、藝術品拍賣、太空總署簡報",
+      "angle_en": "mixed contexts: a medical symposium, a corporate audit, a nature documentary, an art auction, a space-agency briefing",
+      "contexts_en": [
+        "a medical symposium",
+        "a corporate audit",
+        "a nature documentary",
+        "an art auction",
+        "a space-agency briefing"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "vo-t03-2",
+      "lot": "vocabulary-top-03",
+      "slot": 2,
+      "domain_zh": "多元情境",
+      "topic_zh": "情境組：論文同儕審查、博物館典藏、都市計畫聽證會、勞資協商、影展評審",
+      "angle_en": "mixed contexts: the peer review of a research paper, a museum acquisition, an urban-planning hearing, a labor negotiation, a film-festival jury",
+      "contexts_en": [
+        "the peer review of a research paper",
+        "a museum acquisition",
+        "an urban-planning hearing",
+        "a labor negotiation",
+        "a film-festival jury"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "vo-t03-3",
+      "lot": "vocabulary-top-03",
+      "slot": 3,
+      "domain_zh": "多元情境",
+      "topic_zh": "情境組：經濟預測、歷史小說新書發表、災後救援、專利糾紛、南極科學考察",
+      "angle_en": "mixed contexts: an economic forecast, a historical-novel book launch, a disaster-relief operation, a patent dispute, a research expedition to Antarctica",
+      "contexts_en": [
+        "an economic forecast",
+        "a historical-novel book launch",
+        "a disaster-relief operation",
+        "a patent dispute",
+        "a research expedition to Antarctica"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "vo-t03-4",
+      "lot": "vocabulary-top-03",
+      "slot": 4,
+      "domain_zh": "多元情境",
+      "topic_zh": "情境組：環境影響評估、資安事件、運動仲裁、古典音樂大賽、時裝週",
+      "angle_en": "mixed contexts: an environmental impact assessment, a cybersecurity breach, a sports arbitration hearing, a classical-music competition, a fashion week",
+      "contexts_en": [
+        "an environmental impact assessment",
+        "a cybersecurity breach",
+        "a sports arbitration hearing",
+        "a classical-music competition",
+        "a fashion week"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "vo-t03-5",
+      "lot": "vocabulary-top-03",
+      "slot": 5,
+      "domain_zh": "多元情境",
+      "topic_zh": "情境組：央行利率決議、醫療糾紛調解、翻譯研討會、生態旅遊規劃、慈善晚宴",
+      "angle_en": "mixed contexts: a central-bank rate decision, a medical dispute mediation, a translators' conference, planning an eco-tour, a charity gala",
+      "contexts_en": [
+        "a central-bank rate decision",
+        "a medical dispute mediation",
+        "a translators' conference",
+        "planning an eco-tour",
+        "a charity gala"
       ],
       "sdgs": []
     },
@@ -1165,6 +2042,143 @@
       "sdgs": []
     },
     {
+      "id": "cz-b04-1",
+      "lot": "cloze-basic-04",
+      "slot": 1,
+      "category": "origins_evolution",
+      "domain_zh": "生活",
+      "topic_zh": "蠟筆的誕生",
+      "angle_en": "how crayons were made safe and cheap enough for every child in 1903",
+      "keywords": [
+        "crayon"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "cz-b04-2",
+      "lot": "cloze-basic-04",
+      "slot": 2,
+      "category": "origins_evolution",
+      "domain_zh": "生活",
+      "topic_zh": "吸塵器的發明",
+      "angle_en": "how the vacuum cleaner began as a noisy horse-drawn machine parked outside people's houses",
+      "keywords": [
+        "vacuum cleaner"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "cz-b04-3",
+      "lot": "cloze-basic-04",
+      "slot": 3,
+      "category": "science_health",
+      "domain_zh": "健康",
+      "topic_zh": "手指泡水為什麼會皺",
+      "angle_en": "why our fingers wrinkle in the bath, and how the wrinkles may help us hold wet things",
+      "keywords": [
+        "wrinkly fingers",
+        "pruney fingers"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "cz-b04-4",
+      "lot": "cloze-basic-04",
+      "slot": 4,
+      "category": "culture_history",
+      "domain_zh": "台灣文化",
+      "topic_zh": "貼春聯",
+      "angle_en": "why families in Taiwan put up red spring couplets for the Lunar New Year",
+      "keywords": [
+        "spring couplet"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "cz-b04-5",
+      "lot": "cloze-basic-04",
+      "slot": 5,
+      "category": "society_issues",
+      "domain_zh": "社會",
+      "topic_zh": "真人圖書館",
+      "angle_en": "the Human Library, where readers borrow people instead of books to learn about lives unlike their own",
+      "keywords": [
+        "human library"
+      ],
+      "sdgs": [
+        10
+      ]
+    },
+    {
+      "id": "cz-b05-1",
+      "lot": "cloze-basic-05",
+      "slot": 1,
+      "category": "origins_evolution",
+      "domain_zh": "生活",
+      "topic_zh": "魔術方塊的發明",
+      "angle_en": "how a Hungarian teacher invented the Rubik's Cube to help his students understand 3D shapes",
+      "keywords": [
+        "rubik's cube"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "cz-b05-2",
+      "lot": "cloze-basic-05",
+      "slot": 2,
+      "category": "origins_evolution",
+      "domain_zh": "飲食",
+      "topic_zh": "台灣刨冰的演變",
+      "angle_en": "how Taiwanese shaved ice grew from hand-shaved blocks into today's mango and milk-ice desserts",
+      "keywords": [
+        "shaved ice",
+        "taiwanese shaved ice"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "cz-b05-3",
+      "lot": "cloze-basic-05",
+      "slot": 3,
+      "category": "science_health",
+      "domain_zh": "自然",
+      "topic_zh": "貓為什麼會呼嚕",
+      "angle_en": "why cats purr, and why purring is not always a sign that a cat is happy",
+      "keywords": [
+        "purr",
+        "purring"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "cz-b05-4",
+      "lot": "cloze-basic-05",
+      "slot": 4,
+      "category": "culture_history",
+      "domain_zh": "世界文化",
+      "topic_zh": "日本女兒節",
+      "angle_en": "Hinamatsuri, Japan's Girls' Day, and the dolls families display for their daughters",
+      "keywords": [
+        "hinamatsuri",
+        "hina doll"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "cz-b05-5",
+      "lot": "cloze-basic-05",
+      "slot": 5,
+      "category": "society_issues",
+      "domain_zh": "社會",
+      "topic_zh": "群組禮儀",
+      "angle_en": "netiquette: simple manners that make group chats and online classes friendlier",
+      "keywords": [
+        "netiquette",
+        "online manners"
+      ],
+      "sdgs": []
+    },
+    {
       "id": "cz-a02-1",
       "lot": "cloze-advanced-02",
       "slot": 1,
@@ -1326,6 +2340,151 @@
         "tipping"
       ],
       "sdgs": []
+    },
+    {
+      "id": "cz-a04-1",
+      "lot": "cloze-advanced-04",
+      "slot": 1,
+      "category": "origins_evolution",
+      "domain_zh": "職業",
+      "topic_zh": "修正液的發明",
+      "angle_en": "how a typist who painted over her typing mistakes invented correction fluid",
+      "keywords": [
+        "correction fluid",
+        "liquid paper"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "cz-a04-2",
+      "lot": "cloze-advanced-04",
+      "slot": 2,
+      "category": "origins_evolution",
+      "domain_zh": "科技",
+      "topic_zh": "降落傘的發明",
+      "angle_en": "how the parachute went from Leonardo da Vinci's sketch to the first real descents over Paris",
+      "keywords": [
+        "parachute"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "cz-a04-3",
+      "lot": "cloze-advanced-04",
+      "slot": 3,
+      "category": "science_health",
+      "domain_zh": "自然",
+      "topic_zh": "螳螂蝦的眼睛",
+      "angle_en": "how the mantis shrimp sees the world with far more kinds of color receptors than humans",
+      "keywords": [
+        "mantis shrimp"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "cz-a04-4",
+      "lot": "cloze-advanced-04",
+      "slot": 4,
+      "category": "culture_history",
+      "domain_zh": "世界文化",
+      "topic_zh": "土耳其的藍眼睛",
+      "angle_en": "the nazar, the blue eye charm Turkish families hang up to keep bad luck away",
+      "keywords": [
+        "nazar",
+        "evil eye"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "cz-a04-5",
+      "lot": "cloze-advanced-04",
+      "slot": 5,
+      "category": "society_issues",
+      "domain_zh": "交通",
+      "topic_zh": "高齡換照",
+      "angle_en": "should older drivers take tests to keep their licenses? Taiwan's rules for drivers over 75",
+      "keywords": [
+        "older driver",
+        "license renewal"
+      ],
+      "sdgs": [
+        3,
+        11
+      ]
+    },
+    {
+      "id": "cz-a05-1",
+      "lot": "cloze-advanced-05",
+      "slot": 1,
+      "category": "origins_evolution",
+      "domain_zh": "語言",
+      "topic_zh": "數獨的由來",
+      "angle_en": "how sudoku grew from a Swiss mathematician's number squares into a Japanese puzzle craze",
+      "keywords": [
+        "sudoku"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "cz-a05-2",
+      "lot": "cloze-advanced-05",
+      "slot": 2,
+      "category": "origins_evolution",
+      "domain_zh": "運動",
+      "topic_zh": "黃牌與紅牌的由來",
+      "angle_en": "how a football official waiting at a traffic light came up with yellow and red cards in 1966",
+      "keywords": [
+        "yellow card",
+        "red card"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "cz-a05-3",
+      "lot": "cloze-advanced-05",
+      "slot": 3,
+      "category": "science_health",
+      "domain_zh": "自然",
+      "topic_zh": "年輪會說話",
+      "angle_en": "what tree rings tell scientists about droughts and climates hundreds of years ago",
+      "keywords": [
+        "dendrochronology",
+        "tree-ring dating"
+      ],
+      "sdgs": [
+        13,
+        15
+      ]
+    },
+    {
+      "id": "cz-a05-4",
+      "lot": "cloze-advanced-05",
+      "slot": 4,
+      "category": "culture_history",
+      "domain_zh": "世界文化",
+      "topic_zh": "日本的鯉魚旗",
+      "angle_en": "why Japanese families fly carp-shaped streamers on Children's Day",
+      "keywords": [
+        "koinobori",
+        "carp streamer"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "cz-a05-5",
+      "lot": "cloze-advanced-05",
+      "slot": 5,
+      "category": "society_issues",
+      "domain_zh": "健康",
+      "topic_zh": "人人都能用的 AED",
+      "angle_en": "why more public places in Taiwan now have AEDs, and how anyone can use one to save a life",
+      "keywords": [
+        "aed",
+        "defibrillator"
+      ],
+      "sdgs": [
+        3
+      ]
     },
     {
       "id": "cz-t02-1",
@@ -1495,6 +2654,153 @@
       ]
     },
     {
+      "id": "cz-t04-1",
+      "lot": "cloze-top-04",
+      "slot": 1,
+      "category": "origins_evolution",
+      "domain_zh": "建築",
+      "topic_zh": "旋轉門的發明",
+      "angle_en": "why the revolving door was invented to keep out wind, noise, and street dust",
+      "keywords": [
+        "revolving door"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "cz-t04-2",
+      "lot": "cloze-top-04",
+      "slot": 2,
+      "category": "origins_evolution",
+      "domain_zh": "職業",
+      "topic_zh": "履歷表的由來",
+      "angle_en": "how a letter Leonardo da Vinci wrote to a duke came to be called the first résumé",
+      "keywords": [
+        "resume",
+        "curriculum vitae"
+      ],
+      "sdgs": [
+        8
+      ]
+    },
+    {
+      "id": "cz-t04-3",
+      "lot": "cloze-top-04",
+      "slot": 3,
+      "category": "science_health",
+      "domain_zh": "心理",
+      "topic_zh": "旁觀者效應",
+      "angle_en": "the bystander effect: why people are less likely to help when many others are watching",
+      "keywords": [
+        "bystander effect"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "cz-t04-4",
+      "lot": "cloze-top-04",
+      "slot": 4,
+      "category": "culture_history",
+      "domain_zh": "世界文化",
+      "topic_zh": "北歐的「每人通行權」",
+      "angle_en": "the right to roam: why people in Sweden and Finland may walk and camp on private land",
+      "keywords": [
+        "right to roam",
+        "freedom to roam"
+      ],
+      "sdgs": [
+        15
+      ]
+    },
+    {
+      "id": "cz-t04-5",
+      "lot": "cloze-top-04",
+      "slot": 5,
+      "category": "society_issues",
+      "domain_zh": "職業",
+      "topic_zh": "零工經濟",
+      "angle_en": "the gig economy: the freedom and the risks of working job by job through apps",
+      "keywords": [
+        "gig economy",
+        "gig worker"
+      ],
+      "sdgs": [
+        8
+      ]
+    },
+    {
+      "id": "cz-t05-1",
+      "lot": "cloze-top-05",
+      "slot": 1,
+      "category": "origins_evolution",
+      "domain_zh": "歷史",
+      "topic_zh": "第一屆萬國博覽會",
+      "angle_en": "how the Great Exhibition of 1851 showed off the world's inventions in a palace made of iron and glass",
+      "keywords": [
+        "great exhibition",
+        "crystal palace"
+      ],
+      "sdgs": [
+        9
+      ]
+    },
+    {
+      "id": "cz-t05-2",
+      "lot": "cloze-top-05",
+      "slot": 2,
+      "category": "origins_evolution",
+      "domain_zh": "藝術",
+      "topic_zh": "霓虹燈的故事",
+      "angle_en": "how neon signs went from a chemistry discovery to the glowing streets of Hong Kong and Taipei",
+      "keywords": [
+        "neon sign"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "cz-t05-3",
+      "lot": "cloze-top-05",
+      "slot": 3,
+      "category": "science_health",
+      "domain_zh": "科學",
+      "topic_zh": "撞偏小行星",
+      "angle_en": "how NASA's DART spacecraft crashed into an asteroid in 2022 to test planetary defense",
+      "keywords": [
+        "asteroid deflection",
+        "dart mission"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "cz-t05-4",
+      "lot": "cloze-top-05",
+      "slot": 4,
+      "category": "culture_history",
+      "domain_zh": "藝術",
+      "topic_zh": "京劇臉譜",
+      "angle_en": "what the colors of Peking opera face paint tell the audience about each character",
+      "keywords": [
+        "peking opera",
+        "opera face paint"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "cz-t05-5",
+      "lot": "cloze-top-05",
+      "slot": 5,
+      "category": "society_issues",
+      "domain_zh": "社會",
+      "topic_zh": "參與式預算",
+      "angle_en": "participatory budgeting: letting residents vote on how part of a city's budget is spent",
+      "keywords": [
+        "participatory budgeting"
+      ],
+      "sdgs": [
+        11,
+        16
+      ]
+    },
+    {
       "id": "wb-b02-1",
       "lot": "word_bank-basic-02",
       "slot": 1,
@@ -1566,6 +2872,77 @@
       ]
     },
     {
+      "id": "wb-b03-1",
+      "lot": "word_bank-basic-03",
+      "slot": 1,
+      "category": "origins_evolution",
+      "domain_zh": "運動",
+      "topic_zh": "溜冰鞋的發明",
+      "angle_en": "how an inventor rolled into a party on the first roller skates and crashed into a mirror",
+      "keywords": [
+        "roller skate"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "wb-b03-2",
+      "lot": "word_bank-basic-03",
+      "slot": 2,
+      "category": "origins_evolution",
+      "domain_zh": "生活",
+      "topic_zh": "風箏的故事",
+      "angle_en": "how kites were used to send signals and test science long before they became toys",
+      "keywords": [
+        "kite"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "wb-b03-3",
+      "lot": "word_bank-basic-03",
+      "slot": 3,
+      "category": "science_health",
+      "domain_zh": "自然",
+      "topic_zh": "含羞草為什麼會合起來",
+      "angle_en": "why the leaves of the sensitive plant fold up when they are touched",
+      "keywords": [
+        "sensitive plant",
+        "mimosa pudica"
+      ],
+      "sdgs": [
+        15
+      ]
+    },
+    {
+      "id": "wb-b03-4",
+      "lot": "word_bank-basic-03",
+      "slot": 4,
+      "category": "culture_history",
+      "domain_zh": "世界文化",
+      "topic_zh": "法國長棍麵包",
+      "angle_en": "the French baguette: why a simple loaf of bread became world cultural heritage in 2022",
+      "keywords": [
+        "baguette"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "wb-b03-5",
+      "lot": "word_bank-basic-03",
+      "slot": 5,
+      "category": "society_issues",
+      "domain_zh": "健康",
+      "topic_zh": "病房裡的小丑",
+      "angle_en": "how clown doctors bring laughter to children staying in hospitals",
+      "keywords": [
+        "clown doctor",
+        "hospital clown"
+      ],
+      "sdgs": [
+        3
+      ]
+    },
+    {
       "id": "wb-a02-1",
       "lot": "word_bank-advanced-02",
       "slot": 1,
@@ -1631,6 +3008,78 @@
       "keywords": [
         "bottle deposit",
         "deposit return"
+      ],
+      "sdgs": [
+        12
+      ]
+    },
+    {
+      "id": "wb-a03-1",
+      "lot": "word_bank-advanced-03",
+      "slot": 1,
+      "category": "origins_evolution",
+      "domain_zh": "科學",
+      "topic_zh": "望遠鏡的發明",
+      "angle_en": "how a Dutch lens maker's invention let Galileo see the moons of Jupiter",
+      "keywords": [
+        "lipperhey",
+        "galilean telescope"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "wb-a03-2",
+      "lot": "word_bank-advanced-03",
+      "slot": 2,
+      "category": "origins_evolution",
+      "domain_zh": "運動",
+      "topic_zh": "球鞋的演變",
+      "angle_en": "how sneakers went from quiet rubber-soled shoes to collectors' items",
+      "keywords": [
+        "sneaker"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "wb-a03-3",
+      "lot": "word_bank-advanced-03",
+      "slot": 3,
+      "category": "science_health",
+      "domain_zh": "自然",
+      "topic_zh": "向日葵為什麼追著太陽",
+      "angle_en": "why young sunflowers follow the sun across the sky",
+      "keywords": [
+        "sunflower"
+      ],
+      "sdgs": [],
+      "note_zh": "取自 reserve_topics rsv-02（原 wb-a03-2：word_bank-advanced-03 第一次規劃時撤掉的主題，2026-10-20 擴充時放回同一批）"
+    },
+    {
+      "id": "wb-a03-4",
+      "lot": "word_bank-advanced-03",
+      "slot": 4,
+      "category": "culture_history",
+      "domain_zh": "語言",
+      "topic_zh": "加那利群島的口哨語",
+      "angle_en": "Silbo Gomero, the whistled language of the Canary Islands",
+      "keywords": [
+        "silbo",
+        "whistled language",
+        "canary islands"
+      ],
+      "sdgs": [],
+      "note_zh": "取自 reserve_topics rsv-03（原 wb-a03-3：word_bank-advanced-03 第一次規劃時撤掉的主題，2026-10-20 擴充時放回同一批）"
+    },
+    {
+      "id": "wb-a03-5",
+      "lot": "word_bank-advanced-03",
+      "slot": 5,
+      "category": "society_issues",
+      "domain_zh": "經濟生活",
+      "topic_zh": "友善雞蛋",
+      "angle_en": "cage-free eggs: what the labels on egg cartons mean for hens and for shoppers",
+      "keywords": [
+        "cage-free egg"
       ],
       "sdgs": [
         12
@@ -1706,6 +3155,80 @@
       ],
       "sdgs": [
         11
+      ]
+    },
+    {
+      "id": "wb-t03-1",
+      "lot": "word_bank-top-03",
+      "slot": 1,
+      "category": "origins_evolution",
+      "domain_zh": "健康",
+      "topic_zh": "壞血病與水手",
+      "angle_en": "how sailors' scurvy led to the discovery that some foods contain something the body cannot do without",
+      "keywords": [
+        "scurvy"
+      ],
+      "sdgs": [
+        3
+      ]
+    },
+    {
+      "id": "wb-t03-2",
+      "lot": "word_bank-top-03",
+      "slot": 2,
+      "category": "origins_evolution",
+      "domain_zh": "健康",
+      "topic_zh": "紙杯的發明",
+      "angle_en": "how the paper cup was invented to stop people sharing one metal cup at public water barrels",
+      "keywords": [
+        "paper cup"
+      ],
+      "sdgs": [
+        3,
+        6
+      ]
+    },
+    {
+      "id": "wb-t03-3",
+      "lot": "word_bank-top-03",
+      "slot": 3,
+      "category": "science_health",
+      "domain_zh": "心理",
+      "topic_zh": "為什麼年紀越大時間過得越快",
+      "angle_en": "why time seems to speed up as we get older",
+      "keywords": [
+        "perception of time",
+        "time speed up"
+      ],
+      "sdgs": [],
+      "note_zh": "取自 reserve_topics rsv-04（原 st-t02-3：structure-top-02 改回 5 組時撤掉的主題，2026-10-20 擴充時放進文意選填 top）"
+    },
+    {
+      "id": "wb-t03-4",
+      "lot": "word_bank-top-03",
+      "slot": 4,
+      "category": "culture_history",
+      "domain_zh": "藝術",
+      "topic_zh": "馬賽克的故事",
+      "angle_en": "mosaics: how artists from ancient Rome to modern cities build pictures from tiny pieces of stone and glass",
+      "keywords": [
+        "mosaic"
+      ],
+      "sdgs": []
+    },
+    {
+      "id": "wb-t03-5",
+      "lot": "word_bank-top-03",
+      "slot": 5,
+      "category": "society_issues",
+      "domain_zh": "經濟生活",
+      "topic_zh": "訂閱經濟",
+      "angle_en": "the subscription economy: why more people pay monthly for music, software, and even cars instead of owning them",
+      "keywords": [
+        "subscription economy"
+      ],
+      "sdgs": [
+        12
       ]
     },
     {
@@ -2870,6 +4393,356 @@
       "note_zh": "重點是病媒蚊、氣候與「清除積水」的防治；不寫成瘧疾（題庫已有「斯里蘭卡如何趕走瘧疾」）"
     },
     {
+      "id": "rd-b06-1",
+      "lot": "reading-basic-06",
+      "slot": 1,
+      "category": "origins_evolution",
+      "domain_zh": "飲食",
+      "topic_zh": "棉花糖的發明",
+      "angle_en": "how a dentist and a candy maker turned spun sugar into cotton candy and sold it at the 1904 World's Fair",
+      "keywords": [
+        "cotton candy",
+        "fairy floss"
+      ],
+      "sdgs": [
+        3
+      ],
+      "form": "continuous",
+      "form_hint_zh": "長文（具體事件：1897 年牙醫與糖果師傅做出棉花糖機，1904 年聖路易世界博覽會以 fairy floss 之名大賣；結尾可帶到少吃糖保護牙齒，事實單來源如大學或主要新聞媒體）"
+    },
+    {
+      "id": "rd-b06-2",
+      "lot": "reading-basic-06",
+      "slot": 2,
+      "category": "origins_evolution",
+      "domain_zh": "生活",
+      "topic_zh": "拉鍊的發明",
+      "angle_en": "why the zipper took more than twenty years to catch on after it was first shown to the public",
+      "keywords": [
+        "zipper",
+        "slide fastener"
+      ],
+      "sdgs": [],
+      "form": "continuous",
+      "form_hint_zh": "長文（具體事件：1893 年的「扣環鎖」、1913 年桑巴克改良成今天的拉鍊、1920 年代因為雨靴才有 zipper 這個名字；事實單來源如政府專利資料或大學）"
+    },
+    {
+      "id": "rd-b06-3",
+      "lot": "reading-basic-06",
+      "slot": 3,
+      "category": "science_health",
+      "domain_zh": "健康",
+      "topic_zh": "台灣人長高了多少",
+      "angle_en": "how much taller people in Taiwan, Japan, and the Netherlands have grown over the past century",
+      "keywords": [
+        "average height",
+        "adult height"
+      ],
+      "sdgs": [
+        2,
+        3
+      ],
+      "form": "chart",
+      "form_hint_zh": "折線圖：Our World in Data 成年男性（或女性）平均身高，依出生年份（約 1900–1996；台灣、日本、荷蘭與世界）；具體事件：營養與衛生改善讓身高增加。圖表數字以事實單的資料集為準"
+    },
+    {
+      "id": "rd-b06-4",
+      "lot": "reading-basic-06",
+      "slot": 4,
+      "category": "culture_history",
+      "domain_zh": "世界文化",
+      "topic_zh": "西班牙番茄節",
+      "angle_en": "La Tomatina: why a small Spanish town throws tons of tomatoes at each other every August",
+      "keywords": [
+        "la tomatina",
+        "tomato fight"
+      ],
+      "sdgs": [],
+      "form": "continuous",
+      "form_hint_zh": "長文（具體事件：1945 年的一場街頭爭執變成每年八月的節慶、後來限制人數與售票；事實單來源如西班牙政府觀光網站、主要新聞媒體）"
+    },
+    {
+      "id": "rd-b06-5",
+      "lot": "reading-basic-06",
+      "slot": 5,
+      "category": "society_issues",
+      "domain_zh": "社會",
+      "topic_zh": "回家功課該不該取消",
+      "angle_en": "should schools stop giving homework? a teacher and a parent write to the school newspaper",
+      "keywords": [
+        "homework ban",
+        "no-homework policy"
+      ],
+      "sdgs": [
+        4
+      ],
+      "form": "multi_text",
+      "form_hint_zh": "兩篇投書（老師、家長，正反立場），passage_parts 2 篇；具體事件可用某國或某校試行「不出回家作業」的報導（事實單）"
+    },
+    {
+      "id": "rd-b07-1",
+      "lot": "reading-basic-07",
+      "slot": 1,
+      "category": "origins_evolution",
+      "domain_zh": "生活",
+      "topic_zh": "世界各地的插頭",
+      "angle_en": "why plugs and sockets look different around the world: a traveler's table of plug types and voltages",
+      "keywords": [
+        "plug type",
+        "power socket",
+        "travel adapter"
+      ],
+      "sdgs": [],
+      "form": "table",
+      "form_hint_zh": "表格：8–10 個國家或地區的插頭類型、電壓與頻率（事實單，來源如各國政府的能源或旅遊主管機關網站）；選文講各國電力系統各自發展、所以插頭不統一"
+    },
+    {
+      "id": "rd-b07-2",
+      "lot": "reading-basic-07",
+      "slot": 2,
+      "category": "origins_evolution",
+      "domain_zh": "藝術",
+      "topic_zh": "卡拉 OK 的發明",
+      "angle_en": "how a Japanese drummer built the first karaoke machine in 1971 but never patented it",
+      "keywords": [
+        "karaoke"
+      ],
+      "sdgs": [],
+      "form": "continuous",
+      "form_hint_zh": "長文（具體事件：1971 年鼓手井上大佑做出第一台伴唱機、沒有申請專利；事實單來源如主要新聞媒體）"
+    },
+    {
+      "id": "rd-b07-3",
+      "lot": "reading-basic-07",
+      "slot": 3,
+      "category": "science_health",
+      "domain_zh": "自然",
+      "topic_zh": "被誤解的鯊魚",
+      "angle_en": "are sharks really so dangerous? a diver's blog and a fisher's letter about protecting them",
+      "keywords": [
+        "shark",
+        "shark fin"
+      ],
+      "sdgs": [
+        14
+      ],
+      "form": "multi_text",
+      "form_hint_zh": "兩篇（潛水員部落格＋漁民投書），passage_parts 2 篇；具體事件：每年鯊魚咬人的件數和人類每年捕殺的鯊魚數量對比（事實單，來源如 FAO、研究機構）"
+    },
+    {
+      "id": "rd-b07-4",
+      "lot": "reading-basic-07",
+      "slot": 4,
+      "category": "culture_history",
+      "domain_zh": "飲食",
+      "topic_zh": "台灣人吃米變少了",
+      "angle_en": "why people in Taiwan eat less rice than their grandparents did: rice and wheat eaten per person since the 1970s",
+      "keywords": [
+        "rice consumption",
+        "eating less rice"
+      ],
+      "sdgs": [
+        2,
+        12
+      ],
+      "form": "chart",
+      "form_hint_zh": "折線圖：政府資料開放平臺 data.gov.tw 農業部糧食供需年報（每人每年稻米與小麥消費量，約 1970s–2020s）；具體事件：早餐從稀飯變成麵包、外食變多。圖表數字以事實單的資料集為準"
+    },
+    {
+      "id": "rd-b07-5",
+      "lot": "reading-basic-07",
+      "slot": 5,
+      "category": "society_issues",
+      "domain_zh": "社會",
+      "topic_zh": "導盲犬",
+      "angle_en": "how guide dogs are trained in Taiwan and why they are allowed in restaurants and on buses",
+      "keywords": [
+        "guide dog"
+      ],
+      "sdgs": [
+        10,
+        11
+      ],
+      "form": "continuous",
+      "form_hint_zh": "長文（具體事件：一隻導盲犬從寄養家庭、受訓到退休的一生；法律保障導盲犬進入公共場所；事實單來源如衛福部等政府網站）"
+    },
+    {
+      "id": "rd-b08-1",
+      "lot": "reading-basic-08",
+      "slot": 1,
+      "category": "origins_evolution",
+      "domain_zh": "生活",
+      "topic_zh": "洗碗機的發明",
+      "angle_en": "how Josephine Cochrane invented the dishwasher because her best dishes kept getting chipped",
+      "keywords": [
+        "dishwasher"
+      ],
+      "sdgs": [],
+      "form": "continuous",
+      "form_hint_zh": "長文（具體事件：1886 年柯克倫取得洗碗機專利、1893 年在博覽會得獎；事實單來源如政府專利資料、大學）"
+    },
+    {
+      "id": "rd-b08-2",
+      "lot": "reading-basic-08",
+      "slot": 2,
+      "category": "origins_evolution",
+      "domain_zh": "健康",
+      "topic_zh": "火柴的演變",
+      "angle_en": "how matches went from dangerous white phosphorus to the safety match, and how match factory workers fought for safer jobs",
+      "keywords": [
+        "safety match",
+        "matchstick"
+      ],
+      "sdgs": [
+        3,
+        8
+      ],
+      "form": "continuous",
+      "form_hint_zh": "長文（具體事件：早期火柴的白磷讓工人生病、1888 年倫敦火柴女工罷工、後來各國禁用白磷；事實單來源如政府或大學的歷史資料）"
+    },
+    {
+      "id": "rd-b08-3",
+      "lot": "reading-basic-08",
+      "slot": 3,
+      "category": "science_health",
+      "domain_zh": "自然",
+      "topic_zh": "蚯蚓是土壤的好幫手",
+      "angle_en": "how earthworms turn dead leaves into rich soil, and why farmers count them to check their fields",
+      "keywords": [
+        "earthworm"
+      ],
+      "sdgs": [
+        15,
+        2
+      ],
+      "form": "continuous",
+      "form_hint_zh": "長文（具體事件：農民挖一鏟土數蚯蚓來判斷土壤健康；事實單來源如 FAO、大學研究）"
+    },
+    {
+      "id": "rd-b08-4",
+      "lot": "reading-basic-08",
+      "slot": 4,
+      "category": "culture_history",
+      "domain_zh": "世界文化",
+      "topic_zh": "各國暑假長短",
+      "angle_en": "how long summer vacation is in different countries, and what students there do with it",
+      "keywords": [
+        "summer vacation",
+        "summer break"
+      ],
+      "sdgs": [
+        4
+      ],
+      "form": "table",
+      "form_hint_zh": "表格：6–8 個國家或地區中學暑假的起訖月份與週數（事實單，來源如各國教育部網站）；選文比較各地放長假的原因與學生的活動"
+    },
+    {
+      "id": "rd-b08-5",
+      "lot": "reading-basic-08",
+      "slot": 5,
+      "category": "society_issues",
+      "domain_zh": "社會",
+      "topic_zh": "女孩上中學",
+      "angle_en": "how many girls go to secondary school around the world: enrollment since 2000 in four regions",
+      "keywords": [
+        "girls in secondary school",
+        "female enrollment"
+      ],
+      "sdgs": [
+        4,
+        5
+      ],
+      "form": "chart",
+      "form_hint_zh": "折線圖：World Bank SE.SEC.ENRR.FE（女生中學毛入學率；世界、撒哈拉以南非洲、南亞、東亞與太平洋，約 2000–2022）；具體事件：一個地區女孩上學人數的變化。圖表數字以事實單的資料集為準"
+    },
+    {
+      "id": "rd-b09-1",
+      "lot": "reading-basic-09",
+      "slot": 1,
+      "category": "origins_evolution",
+      "domain_zh": "健康",
+      "topic_zh": "救護車的由來",
+      "angle_en": "how ambulances changed from horse-drawn carts into hospitals on wheels",
+      "keywords": [
+        "ambulance"
+      ],
+      "sdgs": [
+        3
+      ],
+      "form": "continuous",
+      "form_hint_zh": "長文（具體事件：十九世紀的馬拉救護車到今天載著緊急救護技術員的救護車；事實單來源如內政部消防署等政府網站、大學）"
+    },
+    {
+      "id": "rd-b09-2",
+      "lot": "reading-basic-09",
+      "slot": 2,
+      "category": "origins_evolution",
+      "domain_zh": "科學",
+      "topic_zh": "保溫瓶的發明",
+      "angle_en": "how a scientist's flask for keeping gases cold became the bottle that keeps soup hot",
+      "keywords": [
+        "vacuum flask",
+        "thermos"
+      ],
+      "sdgs": [],
+      "form": "continuous",
+      "form_hint_zh": "長文（具體事件：1892 年杜瓦為了保存低溫氣體做出雙層真空瓶，後來被做成日用的保溫瓶；事實單來源如大學、研究機構）"
+    },
+    {
+      "id": "rd-b09-3",
+      "lot": "reading-basic-09",
+      "slot": 3,
+      "category": "science_health",
+      "domain_zh": "環境",
+      "topic_zh": "台北的熱天變多了",
+      "angle_en": "how much hotter Taipei's summers have become over the past few decades",
+      "keywords": [
+        "summer heat",
+        "hot days"
+      ],
+      "sdgs": [
+        3,
+        13
+      ],
+      "form": "chart",
+      "form_hint_zh": "長條圖或折線圖：政府資料開放平臺 data.gov.tw 上的中央氣象署氣候統計（臺北測站每年 35°C 以上的日數或夏季平均氣溫，約 1990–2024，以找得到的資料集為準）；具體事件：某一年創下的高溫紀錄。圖表數字以事實單的資料集為準"
+    },
+    {
+      "id": "rd-b09-4",
+      "lot": "reading-basic-09",
+      "slot": 4,
+      "category": "culture_history",
+      "domain_zh": "台灣文化",
+      "topic_zh": "台灣的辦桌",
+      "angle_en": "Taiwan's roadside banquets: a banquet chef's story and a guest's blog",
+      "keywords": [
+        "roadside banquet",
+        "banquet chef"
+      ],
+      "sdgs": [],
+      "form": "multi_text",
+      "form_hint_zh": "兩篇（總鋪師自述＋賓客部落格），passage_parts 2 篇；具體事件：一場在路邊搭棚的喜宴從前一天備料到收桌"
+    },
+    {
+      "id": "rd-b09-5",
+      "lot": "reading-basic-09",
+      "slot": 5,
+      "category": "society_issues",
+      "domain_zh": "社會",
+      "topic_zh": "長者共餐",
+      "angle_en": "how community dining halls in Taiwan help older people eat well and make friends",
+      "keywords": [
+        "community dining",
+        "senior meal"
+      ],
+      "sdgs": [
+        3,
+        11
+      ],
+      "form": "continuous",
+      "form_hint_zh": "長文（具體事件：一個社區關懷據點的共餐時間；事實單來源如衛福部或地方政府網站的據點數與服務內容）"
+    },
+    {
       "id": "rd-a02-1",
       "lot": "reading-advanced-02",
       "slot": 1,
@@ -3157,6 +5030,355 @@
       ],
       "form": "continuous",
       "form_hint_zh": "長文（國際公平貿易組織的事實與數字）"
+    },
+    {
+      "id": "rd-a05-1",
+      "lot": "reading-advanced-05",
+      "slot": 1,
+      "category": "origins_evolution",
+      "domain_zh": "藝術",
+      "topic_zh": "照相術的誕生",
+      "angle_en": "how the first photograph took hours to expose: from the camera obscura to the daguerreotype",
+      "keywords": [
+        "camera obscura",
+        "daguerreotype"
+      ],
+      "sdgs": [],
+      "form": "continuous",
+      "form_hint_zh": "長文（具體事件：1826 年前後尼埃普拍下窗外景色、1839 年銀版攝影法公開；事實單來源如大學、研究機構）"
+    },
+    {
+      "id": "rd-a05-2",
+      "lot": "reading-advanced-05",
+      "slot": 2,
+      "category": "origins_evolution",
+      "domain_zh": "交通",
+      "topic_zh": "搭飛機成為日常",
+      "angle_en": "how flying went from a luxury to an everyday trip: passengers carried by airlines since 1970",
+      "keywords": [
+        "air travel growth",
+        "airline passenger numbers"
+      ],
+      "sdgs": [
+        9
+      ],
+      "form": "chart",
+      "form_hint_zh": "折線圖：World Bank IS.AIR.PSGR（全球航空旅客人次，1970–2023）；具體事件：2020 年疫情時的驟降與之後的恢復。圖表數字以事實單的資料集為準"
+    },
+    {
+      "id": "rd-a05-3",
+      "lot": "reading-advanced-05",
+      "slot": 3,
+      "category": "science_health",
+      "domain_zh": "自然",
+      "topic_zh": "鳥撞玻璃",
+      "angle_en": "why birds crash into glass windows, and how simple dot patterns on glass can save them",
+      "keywords": [
+        "bird collision",
+        "bird-safe glass"
+      ],
+      "sdgs": [
+        15,
+        11
+      ],
+      "form": "continuous",
+      "form_hint_zh": "長文（具體事件：一棟建築改用有點點圖案的防撞玻璃後撞死的鳥變少；事實單來源如研究機構、政府網站）"
+    },
+    {
+      "id": "rd-a05-4",
+      "lot": "reading-advanced-05",
+      "slot": 4,
+      "category": "culture_history",
+      "domain_zh": "世界文化",
+      "topic_zh": "芬蘭的三溫暖",
+      "angle_en": "why Finland has millions of saunas, and what sauna culture means to Finns",
+      "keywords": [
+        "finnish sauna"
+      ],
+      "sdgs": [
+        3
+      ],
+      "form": "continuous",
+      "form_hint_zh": "長文（具體事件：2020 年芬蘭三溫暖文化列入人類非物質文化遺產；事實單來源如芬蘭政府網站、主要新聞媒體）"
+    },
+    {
+      "id": "rd-a05-5",
+      "lot": "reading-advanced-05",
+      "slot": 5,
+      "category": "society_issues",
+      "domain_zh": "藝術",
+      "topic_zh": "塗鴉：創作還是破壞",
+      "angle_en": "is graffiti art or vandalism? a street artist and a shop owner give their views",
+      "keywords": [
+        "graffiti",
+        "street art"
+      ],
+      "sdgs": [
+        11
+      ],
+      "form": "multi_text",
+      "form_hint_zh": "兩篇（街頭藝術家專欄＋店家投書），passage_parts 2 篇；具體事件：某城市開放合法塗鴉牆"
+    },
+    {
+      "id": "rd-a06-1",
+      "lot": "reading-advanced-06",
+      "slot": 1,
+      "category": "origins_evolution",
+      "domain_zh": "科技",
+      "topic_zh": "越洋通訊要多久",
+      "angle_en": "how long a message took to cross the Atlantic, from sailing ships to telegraph cables and satellites",
+      "keywords": [
+        "transatlantic cable",
+        "telegraph"
+      ],
+      "sdgs": [
+        9
+      ],
+      "form": "table",
+      "form_hint_zh": "表格：不同年代把一則訊息從歐洲送到北美所需的時間（帆船、蒸汽船、1858／1866 年海底電報、無線電、通訊衛星；事實單，來源如大學、研究機構）"
+    },
+    {
+      "id": "rd-a06-2",
+      "lot": "reading-advanced-06",
+      "slot": 2,
+      "category": "origins_evolution",
+      "domain_zh": "歷史",
+      "topic_zh": "自由女神像變綠的原因",
+      "angle_en": "why the Statue of Liberty turned from shiny copper brown to green",
+      "keywords": [
+        "statue of liberty"
+      ],
+      "sdgs": [],
+      "form": "continuous",
+      "form_hint_zh": "長文（具體事件：1886 年落成時是銅色，約 30 年內變成綠色，1906 年曾有人想把它漆掉；事實單來源如美國國家公園管理局等政府網站）"
+    },
+    {
+      "id": "rd-a06-3",
+      "lot": "reading-advanced-06",
+      "slot": 3,
+      "category": "science_health",
+      "domain_zh": "環境",
+      "topic_zh": "北極海冰的消退",
+      "angle_en": "how much Arctic sea ice is left at the end of each summer since 1979",
+      "keywords": [
+        "arctic sea ice"
+      ],
+      "sdgs": [
+        13,
+        14
+      ],
+      "form": "chart",
+      "form_hint_zh": "折線圖：Our World in Data Arctic sea ice extent（每年 9 月的最小面積，1979–2024）；具體事件：2012 年的最低紀錄。圖表數字以事實單的資料集為準"
+    },
+    {
+      "id": "rd-a06-4",
+      "lot": "reading-advanced-06",
+      "slot": 4,
+      "category": "culture_history",
+      "domain_zh": "台灣文化",
+      "topic_zh": "老房子的鐵窗花",
+      "angle_en": "iron window grilles: an old craftsman's memories and a young designer who brings the patterns back",
+      "keywords": [
+        "iron window grille"
+      ],
+      "sdgs": [
+        11
+      ],
+      "form": "multi_text",
+      "form_hint_zh": "兩篇（老師傅口述＋年輕設計師專訪），passage_parts 2 篇；具體事件：把拆下的鐵窗花做成文創設計"
+    },
+    {
+      "id": "rd-a06-5",
+      "lot": "reading-advanced-06",
+      "slot": 5,
+      "category": "society_issues",
+      "domain_zh": "社會",
+      "topic_zh": "和長輩當室友",
+      "angle_en": "university students who live in a home for older people and pay part of their rent with their time",
+      "keywords": [
+        "intergenerational living",
+        "intergenerational housing"
+      ],
+      "sdgs": [
+        3,
+        11
+      ],
+      "form": "continuous",
+      "form_hint_zh": "長文（具體事件：荷蘭一間養老院讓大學生每月陪伴長者若干小時換取住宿；事實單來源如主要新聞媒體、研究機構）"
+    },
+    {
+      "id": "rd-a07-1",
+      "lot": "reading-advanced-07",
+      "slot": 1,
+      "category": "origins_evolution",
+      "domain_zh": "藝術",
+      "topic_zh": "鋼琴的誕生",
+      "angle_en": "how the piano got its name: the first keyboard instrument that could play both soft and loud",
+      "keywords": [
+        "pianoforte",
+        "cristofori"
+      ],
+      "sdgs": [],
+      "form": "continuous",
+      "form_hint_zh": "長文（具體事件：1700 年前後克里斯托福里在佛羅倫斯做出能彈出強弱的鍵盤樂器；事實單來源如大學、研究機構）"
+    },
+    {
+      "id": "rd-a07-2",
+      "lot": "reading-advanced-07",
+      "slot": 2,
+      "category": "origins_evolution",
+      "domain_zh": "科學",
+      "topic_zh": "公尺是怎麼來的",
+      "angle_en": "how the metre was defined in the 1790s by measuring a slice of the Earth",
+      "keywords": [
+        "metric system",
+        "metre"
+      ],
+      "sdgs": [],
+      "form": "continuous",
+      "form_hint_zh": "長文（具體事件：1792–1798 年兩位天文學家量測敦克爾克到巴塞隆納的距離來定一公尺；事實單來源如各國標準局等政府網站、大學）"
+    },
+    {
+      "id": "rd-a07-3",
+      "lot": "reading-advanced-07",
+      "slot": 3,
+      "category": "science_health",
+      "domain_zh": "健康",
+      "topic_zh": "水煮、清蒸還是快炒",
+      "angle_en": "how cooking methods change the vitamins in vegetables: boiling, steaming, and stir-frying compared",
+      "keywords": [
+        "vitamin loss",
+        "cooking method"
+      ],
+      "sdgs": [
+        3
+      ],
+      "form": "table",
+      "form_hint_zh": "表格：幾種蔬菜用水煮、蒸、炒之後維生素 C 保留的比例（事實單，來源如大學或期刊研究）；選文說明為什麼水煮流失最多"
+    },
+    {
+      "id": "rd-a07-4",
+      "lot": "reading-advanced-07",
+      "slot": 4,
+      "category": "culture_history",
+      "domain_zh": "地理",
+      "topic_zh": "荷蘭人的圩田",
+      "angle_en": "how the Dutch pumped lakes dry with windmills to create farmland below sea level",
+      "keywords": [
+        "polder",
+        "dutch windmill"
+      ],
+      "sdgs": [
+        2,
+        11
+      ],
+      "form": "continuous",
+      "form_hint_zh": "長文（具體事件：十七世紀用風車抽乾湖泊造出貝姆斯特圩田（世界遺產）；事實單來源如荷蘭政府網站、大學）"
+    },
+    {
+      "id": "rd-a07-5",
+      "lot": "reading-advanced-07",
+      "slot": 5,
+      "category": "society_issues",
+      "domain_zh": "社會",
+      "topic_zh": "城鄉人口的消長",
+      "angle_en": "how the share of people living in cities has grown since 1960 in different parts of the world",
+      "keywords": [
+        "urbanization",
+        "urban population"
+      ],
+      "sdgs": [
+        11
+      ],
+      "form": "chart",
+      "form_hint_zh": "折線圖：World Bank SP.URB.TOTL.IN.ZS（世界、東亞與太平洋、撒哈拉以南非洲、歐洲與中亞，1960–2023）；具體事件：2007 年前後全球都市人口首次超過一半。圖表數字以事實單的資料集為準"
+    },
+    {
+      "id": "rd-a08-1",
+      "lot": "reading-advanced-08",
+      "slot": 1,
+      "category": "origins_evolution",
+      "domain_zh": "藝術",
+      "topic_zh": "Do Re Mi 的由來",
+      "angle_en": "how an Italian monk named the notes do, re, mi to help singers learn new songs faster",
+      "keywords": [
+        "solfege",
+        "guido of arezzo"
+      ],
+      "sdgs": [],
+      "form": "continuous",
+      "form_hint_zh": "長文（具體事件：十一世紀圭多用一首聖歌每句開頭的音節為音命名；事實單來源如大學、研究機構）"
+    },
+    {
+      "id": "rd-a08-2",
+      "lot": "reading-advanced-08",
+      "slot": 2,
+      "category": "origins_evolution",
+      "domain_zh": "科技",
+      "topic_zh": "讓人在水下呼吸的發明",
+      "angle_en": "how the Aqua-Lung let divers breathe underwater and opened the sea to explorers",
+      "keywords": [
+        "aqua-lung",
+        "scuba"
+      ],
+      "sdgs": [
+        14
+      ],
+      "form": "continuous",
+      "form_hint_zh": "長文（具體事件：1943 年庫斯托與工程師加尼昂做出水肺；之後潛水員記錄珊瑚礁與海洋生物；事實單來源如大學、主要新聞媒體）"
+    },
+    {
+      "id": "rd-a08-3",
+      "lot": "reading-advanced-08",
+      "slot": 3,
+      "category": "science_health",
+      "domain_zh": "自然",
+      "topic_zh": "頂樓的蜂箱",
+      "angle_en": "bees in the city: a rooftop beekeeper's blog and a scientist's note on wild bees",
+      "keywords": [
+        "urban beekeeping",
+        "city beehive"
+      ],
+      "sdgs": [
+        15,
+        11
+      ],
+      "form": "multi_text",
+      "form_hint_zh": "兩篇（頂樓養蜂人部落格＋研究者短評：城市蜂箱太多會不會和野生蜂搶花），passage_parts 2 篇；事實單來源如大學、研究機構"
+    },
+    {
+      "id": "rd-a08-4",
+      "lot": "reading-advanced-08",
+      "slot": 4,
+      "category": "culture_history",
+      "domain_zh": "世界文化",
+      "topic_zh": "印度的排燈節",
+      "angle_en": "Diwali, India's festival of lights, and the clay lamps and sweets families share",
+      "keywords": [
+        "diwali"
+      ],
+      "sdgs": [],
+      "form": "continuous",
+      "form_hint_zh": "長文（具體事件：排燈節期間家家點起小陶燈、互送甜點；事實單來源如印度政府觀光網站、主要新聞媒體）"
+    },
+    {
+      "id": "rd-a08-5",
+      "lot": "reading-advanced-08",
+      "slot": 5,
+      "category": "society_issues",
+      "domain_zh": "經濟生活",
+      "topic_zh": "東港的黑鮪魚",
+      "angle_en": "Pacific bluefin tuna in Donggang: how the catch changed and why fishing rules got stricter",
+      "keywords": [
+        "bluefin tuna",
+        "donggang"
+      ],
+      "sdgs": [
+        14,
+        12
+      ],
+      "form": "chart",
+      "form_hint_zh": "折線圖或長條圖：政府資料開放平臺 data.gov.tw 農業部漁業署太平洋黑鮪漁獲量（約 2000–2024）；具體事件：東港黑鮪魚季與漁獲配額。找不到逐年資料集時先回報站主（README §9.2），不要自行換題"
     },
     {
       "id": "rd-t02-1",
@@ -3447,6 +5669,350 @@
       ],
       "form": "chart",
       "form_hint_zh": "折線圖：World Bank EG.ELC.ACCS.ZS（撒哈拉以南非洲、世界與 2 個國家）"
+    },
+    {
+      "id": "rd-t05-1",
+      "lot": "reading-top-05",
+      "slot": 1,
+      "category": "origins_evolution",
+      "domain_zh": "科學",
+      "topic_zh": "「零」的發明",
+      "angle_en": "how the number zero traveled from India to Europe, and why European merchants first distrusted it",
+      "keywords": [
+        "number zero",
+        "brahmagupta"
+      ],
+      "sdgs": [],
+      "form": "continuous",
+      "form_hint_zh": "長文（具體事件：七世紀婆羅摩笈多寫下零的運算規則、1202 年《計算之書》把它帶到歐洲、佛羅倫斯曾禁止商人用阿拉伯數字記帳；事實單來源如大學、研究機構）"
+    },
+    {
+      "id": "rd-t05-2",
+      "lot": "reading-top-05",
+      "slot": 2,
+      "category": "origins_evolution",
+      "domain_zh": "科技",
+      "topic_zh": "摩爾定律",
+      "angle_en": "Moore's law: how the number of transistors on a computer chip has doubled about every two years since 1971",
+      "keywords": [
+        "moore's law",
+        "transistor"
+      ],
+      "sdgs": [
+        9
+      ],
+      "form": "chart",
+      "form_hint_zh": "長條圖或折線圖：Our World in Data transistors per microprocessor（1971–2021；數字跨度很大，挑每十年左右一個年份）；具體事件：1965 年摩爾的預測。圖表數字以事實單的資料集為準"
+    },
+    {
+      "id": "rd-t05-3",
+      "lot": "reading-top-05",
+      "slot": 3,
+      "category": "science_health",
+      "domain_zh": "自然",
+      "topic_zh": "鯨落",
+      "angle_en": "whale falls: how one dead whale can feed life on the deep-sea floor for decades",
+      "keywords": [
+        "whale fall"
+      ],
+      "sdgs": [
+        14
+      ],
+      "form": "continuous",
+      "form_hint_zh": "長文（具體事件：深海探測器拍到的鯨落生態系與只在鯨骨上生活的蠕蟲；事實單來源如大學、研究機構、期刊）"
+    },
+    {
+      "id": "rd-t05-4",
+      "lot": "reading-top-05",
+      "slot": 4,
+      "category": "culture_history",
+      "domain_zh": "運動",
+      "topic_zh": "科技泳衣之爭",
+      "angle_en": "the 2008–2009 'super suits': a coach and a sports scientist debate whether technology made swimming unfair",
+      "keywords": [
+        "super suit",
+        "swimsuit ban"
+      ],
+      "sdgs": [],
+      "form": "multi_text",
+      "form_hint_zh": "兩篇（教練專欄＋運動科學家評論），passage_parts 2 篇；具體事件：2008–2009 年大量世界紀錄被打破、2010 年起禁用全身聚氨酯泳衣"
+    },
+    {
+      "id": "rd-t05-5",
+      "lot": "reading-top-05",
+      "slot": 5,
+      "category": "society_issues",
+      "domain_zh": "經濟生活",
+      "topic_zh": "時間銀行",
+      "angle_en": "time banks: trading an hour of help for an hour of help instead of paying in cash",
+      "keywords": [
+        "time bank",
+        "time banking"
+      ],
+      "sdgs": [
+        10,
+        11
+      ],
+      "form": "continuous",
+      "form_hint_zh": "長文（具體事件：一個社區時間銀行的會員用修電腦換到陪看病的時數；事實單來源如政府網站、研究機構、主要新聞媒體）"
+    },
+    {
+      "id": "rd-t06-1",
+      "lot": "reading-top-06",
+      "slot": 1,
+      "category": "origins_evolution",
+      "domain_zh": "科技",
+      "topic_zh": "A4 紙的比例",
+      "angle_en": "why A4 paper measures 210 by 297 mm: the paper-size system in which half a sheet keeps the same shape",
+      "keywords": [
+        "a4 paper",
+        "paper size"
+      ],
+      "sdgs": [],
+      "form": "table",
+      "form_hint_zh": "表格：A0–A6 的長、寬（公釐）與面積（事實單，來源如各國標準局等政府網站、大學）；選文說明 1:√2 的比例與 1922 年德國的標準"
+    },
+    {
+      "id": "rd-t06-2",
+      "lot": "reading-top-06",
+      "slot": 2,
+      "category": "origins_evolution",
+      "domain_zh": "健康",
+      "topic_zh": "哈維與血液的流向",
+      "angle_en": "how William Harvey showed in 1628 that the heart pumps blood around the body in a loop",
+      "keywords": [
+        "blood circulation",
+        "william harvey"
+      ],
+      "sdgs": [
+        3
+      ],
+      "form": "continuous",
+      "form_hint_zh": "長文（具體事件：哈維計算心臟每次跳動送出的血量，推翻千年來的舊說法；事實單來源如大學、研究機構）"
+    },
+    {
+      "id": "rd-t06-3",
+      "lot": "reading-top-06",
+      "slot": 3,
+      "category": "science_health",
+      "domain_zh": "科學",
+      "topic_zh": "定序一個人的 DNA 要多少錢",
+      "angle_en": "how the cost of reading a whole human genome fell from about 100 million dollars to a few hundred",
+      "keywords": [
+        "genome sequencing"
+      ],
+      "sdgs": [
+        3
+      ],
+      "form": "chart",
+      "form_hint_zh": "折線圖：Our World in Data cost to sequence a human genome（2001–2022，美元）；具體事件：2003 年人類基因體計畫完成。圖表數字以事實單的資料集為準"
+    },
+    {
+      "id": "rd-t06-4",
+      "lot": "reading-top-06",
+      "slot": 4,
+      "category": "culture_history",
+      "domain_zh": "世界文化",
+      "topic_zh": "侘寂之美",
+      "angle_en": "wabi-sabi: the Japanese idea of finding beauty in things that are old, plain, and imperfect",
+      "keywords": [
+        "wabi-sabi"
+      ],
+      "sdgs": [],
+      "form": "continuous",
+      "form_hint_zh": "長文（具體事件：以一件有缺角的手作陶碗或一座長了青苔的庭園說明這種美感；事實單來源如大學、研究機構）"
+    },
+    {
+      "id": "rd-t06-5",
+      "lot": "reading-top-06",
+      "slot": 5,
+      "category": "society_issues",
+      "domain_zh": "環境",
+      "topic_zh": "山上該不該蓋纜車",
+      "angle_en": "should a cable car be built up a mountain? a hotel owner and an ecologist disagree",
+      "keywords": [
+        "mountain cable car"
+      ],
+      "sdgs": [
+        15,
+        8
+      ],
+      "form": "multi_text",
+      "form_hint_zh": "兩篇（旅館業者投書＋生態學者專欄），passage_parts 2 篇；具體事件：某座山規劃纜車引起的爭議（事實單）"
+    },
+    {
+      "id": "rd-t07-1",
+      "lot": "reading-top-07",
+      "slot": 1,
+      "category": "origins_evolution",
+      "domain_zh": "科技",
+      "topic_zh": "打孔卡與人口普查",
+      "angle_en": "how punch cards sped up the 1890 US census and led to modern data processing",
+      "keywords": [
+        "punch card",
+        "hollerith"
+      ],
+      "sdgs": [],
+      "form": "continuous",
+      "form_hint_zh": "長文（具體事件：1880 年的人口普查統計了將近 8 年，1890 年改用何樂禮的打孔卡機器後大幅縮短；確切年數以事實單為準，來源如美國普查局等政府網站、大學）"
+    },
+    {
+      "id": "rd-t07-2",
+      "lot": "reading-top-07",
+      "slot": 2,
+      "category": "origins_evolution",
+      "domain_zh": "經濟生活",
+      "topic_zh": "保險的誕生",
+      "angle_en": "how marine insurance grew out of a London coffee house in the 1680s",
+      "keywords": [
+        "marine insurance",
+        "lloyd's coffee house"
+      ],
+      "sdgs": [
+        8
+      ],
+      "form": "continuous",
+      "form_hint_zh": "長文（具體事件：船東與商人在倫敦一家咖啡館分擔海上風險，後來發展成保險市場；事實單來源如大學、主要新聞媒體）"
+    },
+    {
+      "id": "rd-t07-3",
+      "lot": "reading-top-07",
+      "slot": 3,
+      "category": "science_health",
+      "domain_zh": "環境",
+      "topic_zh": "泥炭地",
+      "angle_en": "peatlands: the waterlogged lands that hold more plant matter than the world's forests, and why draining them is risky",
+      "keywords": [
+        "peatland",
+        "peat bog"
+      ],
+      "sdgs": [
+        15,
+        13
+      ],
+      "form": "continuous",
+      "form_hint_zh": "長文（具體事件：排乾的泥炭地起火延燒數月；事實單來源如 UNEP、IUCN、大學）"
+    },
+    {
+      "id": "rd-t07-4",
+      "lot": "reading-top-07",
+      "slot": 4,
+      "category": "culture_history",
+      "domain_zh": "語言",
+      "topic_zh": "字母、音節與漢字",
+      "angle_en": "alphabets, syllabaries, and characters: how the world's writing systems differ in the number of symbols they use",
+      "keywords": [
+        "writing system",
+        "syllabary"
+      ],
+      "sdgs": [
+        4
+      ],
+      "form": "table",
+      "form_hint_zh": "表格：5–6 種文字系統的類型、符號數量與使用的語言（例如拉丁字母、阿拉伯字母、日文假名、漢字、天城文；事實單，來源如大學、研究機構）"
+    },
+    {
+      "id": "rd-t07-5",
+      "lot": "reading-top-07",
+      "slot": 5,
+      "category": "society_issues",
+      "domain_zh": "社會",
+      "topic_zh": "赤貧人口的變化",
+      "angle_en": "how the share of people living in extreme poverty has changed since 1990 in different regions",
+      "keywords": [
+        "extreme poverty"
+      ],
+      "sdgs": [
+        1,
+        10
+      ],
+      "form": "chart",
+      "form_hint_zh": "折線圖：World Bank SI.POV.DDAY（每日生活費低於國際貧窮線的人口比例；世界、撒哈拉以南非洲、南亞、東亞與太平洋，1990–2022）；寫成具體地區的變化，不寫成政策宣導。圖表數字以事實單的資料集為準"
+    },
+    {
+      "id": "rd-t08-1",
+      "lot": "reading-top-08",
+      "slot": 1,
+      "category": "origins_evolution",
+      "domain_zh": "歷史",
+      "topic_zh": "杜威十進分類法",
+      "angle_en": "how a 21-year-old student invented the Dewey Decimal System to put library books in order",
+      "keywords": [
+        "dewey decimal"
+      ],
+      "sdgs": [
+        4
+      ],
+      "form": "continuous",
+      "form_hint_zh": "長文（具體事件：1876 年杜威發表十進分類法；台灣圖書館用的中文分類法也借用它的架構；事實單來源如大學、圖書館學研究）"
+    },
+    {
+      "id": "rd-t08-2",
+      "lot": "reading-top-08",
+      "slot": 2,
+      "category": "origins_evolution",
+      "domain_zh": "語言",
+      "topic_zh": "世界語的誕生",
+      "angle_en": "why a doctor invented Esperanto in 1887 so that people could talk across languages, and why it never caught on widely",
+      "keywords": [
+        "esperanto"
+      ],
+      "sdgs": [],
+      "form": "continuous",
+      "form_hint_zh": "長文（具體事件：1887 年柴門霍夫出版第一本世界語課本；事實單來源如大學、研究機構）"
+    },
+    {
+      "id": "rd-t08-3",
+      "lot": "reading-top-08",
+      "slot": 3,
+      "category": "science_health",
+      "domain_zh": "環境",
+      "topic_zh": "地球生命力指數",
+      "angle_en": "the Living Planet Index: how much monitored wildlife populations have shrunk since 1970 in different regions",
+      "keywords": [
+        "living planet index",
+        "wildlife population"
+      ],
+      "sdgs": [
+        15,
+        14
+      ],
+      "form": "chart",
+      "form_hint_zh": "長條圖或折線圖：Our World in Data Living Planet Index（1970–2020，全球與 4–5 個地區）；具體事件：某一類動物族群的變化。圖表數字以事實單的資料集為準"
+    },
+    {
+      "id": "rd-t08-4",
+      "lot": "reading-top-08",
+      "slot": 4,
+      "category": "culture_history",
+      "domain_zh": "台灣文化",
+      "topic_zh": "布農族的八部合音",
+      "angle_en": "Pasibutbut, the Bunun people's song praying for a good millet harvest, and how its harmonies surprised music scholars",
+      "keywords": [
+        "pasibutbut",
+        "bunun harmony"
+      ],
+      "sdgs": [],
+      "form": "continuous",
+      "form_hint_zh": "長文（具體事件：1940 年代日本音樂學者黑澤隆朝錄下這首歌，錄音後來寄到國際音樂學界而引起注意；事實單來源如原住民族委員會等政府網站、大學）"
+    },
+    {
+      "id": "rd-t08-5",
+      "lot": "reading-top-08",
+      "slot": 5,
+      "category": "society_issues",
+      "domain_zh": "環境",
+      "topic_zh": "該不該拆掉水壩",
+      "angle_en": "should an old dam be removed to bring a river back to life? a river ecologist and a farmer disagree",
+      "keywords": [
+        "dam removal"
+      ],
+      "sdgs": [
+        15,
+        6
+      ],
+      "form": "multi_text",
+      "form_hint_zh": "兩篇（河川生態學者專欄＋農民投書），passage_parts 2 篇；具體事件：美國艾爾瓦河拆壩後鮭魚回游（事實單）"
     },
     {
       "id": "mx-b02-1",
@@ -4605,56 +7171,7 @@
       "form_hint_zh": "6–8 則讀者留言（營養師、農民、廚師、學生、環保人士的不同立場）；具體事件：2021 年歐盟核准黃粉蟲（麵包蟲）作為食品"
     }
   ],
-  "reserve_topics": [
-    {
-      "id": "rsv-02",
-      "former_id": "wb-a03-2",
-      "former_lot": "word_bank-advanced-03",
-      "former_slot": 2,
-      "category": "science_health",
-      "domain_zh": "自然",
-      "topic_zh": "向日葵為什麼追著太陽",
-      "angle_en": "why young sunflowers follow the sun across the sky",
-      "keywords": [
-        "sunflower"
-      ],
-      "sdgs": [],
-      "reserved_reason_zh": "第一批文意選填 advanced 的 3 組 rejected 已重生並通過（verified 5 組），word_bank-advanced-03 不再需要（2026-10-09 第二次掃描）"
-    },
-    {
-      "id": "rsv-03",
-      "former_id": "wb-a03-3",
-      "former_lot": "word_bank-advanced-03",
-      "former_slot": 3,
-      "category": "culture_history",
-      "domain_zh": "語言",
-      "topic_zh": "加那利群島的口哨語",
-      "angle_en": "Silbo Gomero, the whistled language of the Canary Islands",
-      "keywords": [
-        "silbo",
-        "whistled language",
-        "canary islands"
-      ],
-      "sdgs": [],
-      "reserved_reason_zh": "第一批文意選填 advanced 的 3 組 rejected 已重生並通過（verified 5 組），word_bank-advanced-03 不再需要（2026-10-09 第二次掃描）"
-    },
-    {
-      "id": "rsv-04",
-      "former_id": "st-t02-3",
-      "former_lot": "structure-top-02",
-      "former_slot": 3,
-      "category": "science_health",
-      "domain_zh": "心理",
-      "topic_zh": "為什麼年紀越大時間過得越快",
-      "angle_en": "why time seems to speed up as we get older",
-      "keywords": [
-        "perception of time",
-        "time speed up"
-      ],
-      "sdgs": [],
-      "reserved_reason_zh": "第一批篇章結構 top 已有 5 組 verified，structure-top-02 改回 5 組（照站主的批次表），拿掉一個科普與健康主題（2026-10-09 第二次掃描）"
-    }
-  ],
+  "reserve_topics": [],
   "used_concepts": [
     {
       "concept_zh": "羅塞塔石碑與埃及象形文字",
@@ -5036,9 +7553,9 @@
       "note_zh": "只共用「太陽」：維京人的太陽石（航海）和太陽能發電無關"
     },
     {
-      "id": "rsv-02",
+      "id": "wb-a03-3",
       "against": "太陽能發電的發展",
-      "note_zh": "只共用「太陽」：向日葵追日（植物）和太陽能發電無關"
+      "note_zh": "只共用「太陽」：向日葵追日（植物）和太陽能發電無關（原 rsv-02 的確認紀錄，2026-10-20 主題搬進 word_bank-advanced-03 後改用新 id）"
     },
     {
       "id": "rd-b04-5",
@@ -5059,6 +7576,111 @@
       "id": "st-a04-1",
       "against": "OK 繃的發明",
       "note_zh": "只共用「OK」這個字：英文 OK 一詞的由來（語言史）和 OK 繃這項產品的發明是不同主題"
+    },
+    {
+      "id": "cz-b04-5",
+      "against": "肯亞的駱駝圖書館",
+      "note_zh": "只共用「圖書館」：真人圖書館借的是「人」（和不同背景的人面對面聊天、減少偏見），和駱駝載書到偏遠地區不同"
+    },
+    {
+      "id": "cz-b04-5",
+      "against": "亞歷山大圖書館",
+      "note_zh": "只共用「圖書館」：真人圖書館借的是「人」（和不同背景的人面對面聊天、減少偏見），和古代圖書館的興衰不同"
+    },
+    {
+      "id": "cz-b04-5",
+      "against": "工具圖書館",
+      "note_zh": "只共用「圖書館」：真人圖書館借的是「人」（和不同背景的人面對面聊天、減少偏見），和借工具代替購買不同"
+    },
+    {
+      "id": "cz-b05-1",
+      "against": "俄羅斯方塊",
+      "note_zh": "只共用「方塊」：魔術方塊（立體益智玩具的發明）和俄羅斯方塊（電玩遊戲）是不同主題"
+    },
+    {
+      "id": "cz-t04-1",
+      "against": "旋轉木馬的由來",
+      "note_zh": "只共用「旋轉」：旋轉門（建築入口的發明）和旋轉木馬（遊樂設施）是不同主題"
+    },
+    {
+      "id": "cz-t04-3",
+      "against": "路緣斜坡效應",
+      "note_zh": "只共用「效應」：旁觀者效應（現場的人越多，越少人伸出援手）和路緣斜坡效應（無障礙設計讓所有人受惠）是不同的心理或社會現象"
+    },
+    {
+      "id": "cz-t04-3",
+      "against": "鄧寧—克魯格效應",
+      "note_zh": "只共用「效應」：旁觀者效應（現場的人越多，越少人伸出援手）和鄧寧—克魯格效應（新手高估自己）是不同的心理或社會現象"
+    },
+    {
+      "id": "cz-t04-3",
+      "against": "聚光燈效應",
+      "note_zh": "只共用「效應」：旁觀者效應（現場的人越多，越少人伸出援手）和聚光燈效應（以為別人一直注意自己）是不同的心理或社會現象"
+    },
+    {
+      "id": "cz-t04-3",
+      "against": "誘餌效應",
+      "note_zh": "只共用「效應」：旁觀者效應（現場的人越多，越少人伸出援手）和誘餌效應（多一個選項改變購買決定）是不同的心理或社會現象"
+    },
+    {
+      "id": "cz-t04-5",
+      "against": "循環經濟",
+      "note_zh": "只共用「經濟」：零工經濟（透過 App 按件接案的工作型態）和循環經濟（產品回收、再利用）是不同主題"
+    },
+    {
+      "id": "wb-t03-5",
+      "against": "循環經濟",
+      "note_zh": "只共用「經濟」：訂閱經濟（以月費使用、不再擁有）和循環經濟（產品回收、再利用）是不同主題"
+    },
+    {
+      "id": "cz-t05-5",
+      "against": "情境組：藝廊開幕、防震演練、旅行預算、租車、海洋生物學家的田野調查",
+      "note_zh": "只共用「預算」：參與式預算（居民投票決定一部分市政預算）和詞彙題情境組的旅行預算無關"
+    },
+    {
+      "id": "wb-b03-2",
+      "against": "情境組：借書證、游泳課、花店、風箏節、郵局",
+      "note_zh": "只共用「風箏」：詞彙題情境組只用風箏節當一題的題幹情境，不是選文主題；風箏的故事寫風箏的用途與歷史"
+    },
+    {
+      "id": "wb-a03-3",
+      "against": "維京人的太陽石",
+      "note_zh": "只共用「太陽」：向日葵追日（植物）和維京人的太陽石（航海）無關（原 rsv-02 的 warning，2026-10-20 確認）"
+    },
+    {
+      "id": "wb-t03-3",
+      "against": "午餐時間的學生餐廳",
+      "note_zh": "只共用「時間」：時間感（為什麼年紀越大覺得時間過得越快）和作文題的午餐時間、螢幕使用時數是不同主題"
+    },
+    {
+      "id": "wb-t03-3",
+      "against": "高中生每日螢幕時間",
+      "note_zh": "只共用「時間」：時間感（為什麼年紀越大覺得時間過得越快）和作文題的午餐時間、螢幕使用時數是不同主題"
+    },
+    {
+      "id": "rd-t05-5",
+      "against": "午餐時間的學生餐廳",
+      "note_zh": "只共用「時間」：時間銀行（以服務時數互助交換）和作文題的午餐時間、螢幕使用時數是不同主題"
+    },
+    {
+      "id": "rd-t05-5",
+      "against": "高中生每日螢幕時間",
+      "note_zh": "只共用「時間」：時間銀行（以服務時數互助交換）和作文題的午餐時間、螢幕使用時數是不同主題"
+    },
+    {
+      "id": "rd-a05-2",
+      "against": "飛機黑盒子的發明",
+      "note_zh": "只共用「飛機」：全球航空旅客人次的成長（圖表）和飛行紀錄器的發明是不同主題"
+    },
+    {
+      "id": "rd-a05-2",
+      "against": "第一次搭飛機",
+      "note_zh": "只共用「搭飛機」：全球航空旅客人次的成長（圖表）和中譯英「第一次搭飛機」的個人經驗是不同主題"
+    },
+    {
+      "id": "rd-t07-2",
+      "against": "情境組：臨床試驗、市議會表決、交響樂排練、保險理賠、新創簡報",
+      "note_zh": "只共用「保險」：海上保險的起源和詞彙題情境組的保險理賠無關"
     }
   ],
   "replaced_topics": [
