@@ -27,6 +27,18 @@ describe('isFeaturesResponse', () => {
     expect(isFeaturesResponse({ ...base, customEssay: null })).toBe(false);
   });
 
+  it('assistant、assistantPhoto 選填（開關沒開、或只有管理員預覽時沒有這兩個欄位）；有的話必須是布林（docs/design/learning-assistant.md §4.14）', () => {
+    const base = { auth: true, ai: true, ocr: true, aiPaused: false };
+    expect(isFeaturesResponse({ ...base, assistant: true })).toBe(true);
+    expect(isFeaturesResponse({ ...base, assistant: true, assistantPhoto: true })).toBe(true);
+    expect(isFeaturesResponse({ ...base, assistant: false, assistantPhoto: false })).toBe(true);
+    expect(isFeaturesResponse({ ...base, assistant: 'admin' })).toBe(false);
+    expect(isFeaturesResponse({ ...base, assistant: true, assistantPhoto: 'on' })).toBe(false);
+    expect(isFeaturesResponse({ ...base, assistantPhoto: null })).toBe(false);
+    // 預設值沒有學習助手的欄位（前端當成沒開）。
+    expect('assistant' in FEATURES_OFF).toBe(false);
+  });
+
   it('預設值全部關閉，且不可被修改', () => {
     expect(Object.values(FEATURES_OFF).every((v) => v === false)).toBe(true);
     expect(Object.isFrozen(FEATURES_OFF)).toBe(true);

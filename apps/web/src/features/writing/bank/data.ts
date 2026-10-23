@@ -38,6 +38,8 @@ export interface WritingBankEntry {
   section_type: BankWritingSection;
   tier: Tier;
   topic: string | null;
+  /** 技能代碼（中譯英 ts:、tt:；作文是空陣列；學習助手推薦用）。選填：舊的索引沒有這個欄位。 */
+  skills?: string[];
 }
 export interface WritingBankIndex {
   version: string;

@@ -16,6 +16,8 @@ import { EmptyState, LevelBadge, StorageNotice, WordLink } from '../ui/common';
 import { btnPrimary, btnSecondary, cardCls, fieldCls, iconBtn, labelCls, sectionTitleCls } from '../ui/styles';
 import { useLoad } from '../ui/useLoad';
 import { LaunchStatus, QuizSession, useQuizLauncher } from './QuizSession';
+import { AskAssistantButton } from '../../assistant/components/AskAssistantButton';
+import { AskVocabBatch } from '../../assistant/components/AskVocabBatch';
 
 const dateFormat = new Intl.DateTimeFormat('zh-TW', { month: 'numeric', day: 'numeric' });
 
@@ -111,6 +113,9 @@ export function MistakesView({ active }: { active: boolean }) {
 
       <StorageNotice mode={book.mode} saveFailed={book.saveFailed} />
 
+      {/* 學習助手（開關關著時 render null）：一次解析最多 8 個字（docs/design/learning-assistant.md §2.8）。 */}
+      <AskVocabBatch items={mistakesForPractice(book.value)} />
+
       <section aria-label="錯題清單" className="space-y-2">
         <ul className="grid gap-2">
           {items.map((item) => {
@@ -119,7 +124,7 @@ export function MistakesView({ active }: { active: boolean }) {
               <li key={item.entry_id} className="flex items-center gap-2 rounded-xl border border-line bg-surface py-2 pr-1 pl-4">
                 <div className="min-w-0 flex-1">
                   <p className="flex flex-wrap items-center gap-x-2">
-                    <WordLink id={item.entry_id} className="text-lg font-semibold text-primary underline-offset-2 hover:underline">
+                    <WordLink id={item.entry_id} className="min-w-0 text-lg font-semibold break-words text-primary underline-offset-2 hover:underline">
                       <span lang="en">{item.word}</span>
                     </WordLink>
                     {entry && <LevelBadge level={entry.level} />}
@@ -128,6 +133,8 @@ export function MistakesView({ active }: { active: boolean }) {
                   <p className="text-xs text-muted">
                     錯 {item.wrong_count} 次 · 最近一次 {dateFormat.format(item.last_wrong_at)}（{item.last_source === 'bank_practice' ? '題庫練習' : quizModeLabel(item.last_mode)}）
                   </p>
+                  {/* 學習助手（開關關著時 render null）：放在文字下面一行，320px 時長的字（telecommunications）也不會把整列撐寬。 */}
+                  <AskAssistantButton ask={{ src: 'vocab', entries: [item.entry_id] }} variant="secondary" label="問學習助手" target={item.word} className="mt-1" />
                 </div>
                 <button
                   type="button"

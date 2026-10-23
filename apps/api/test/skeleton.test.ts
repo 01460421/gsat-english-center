@@ -7,7 +7,7 @@ import { isApiErrorBody, isFeaturesResponse } from '@gsat/shared';
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { app } from '../src/app';
-import { autoApprovalCap, CONFIG_DEFAULTS, customEssaySwitch, loadConfig, startupChecks } from '../src/config';
+import { assistantSwitch, autoApprovalCap, CONFIG_DEFAULTS, customEssaySwitch, loadConfig, startupChecks } from '../src/config';
 import type { AiQueueMessage, Env } from '../src/env';
 import { taiwanDay, taiwanMonth } from '../src/time';
 
@@ -189,10 +189,10 @@ describe('設定（src/config.ts）', () => {
     expect(bad.find((c) => c.id === 'workspaces_vs_tier')?.ok).toBe(false);
   });
 
-  it('wrangler.toml 的 [vars] 與 CONFIG_DEFAULTS 一致（避免兩邊預設值走鐘；AI_CUSTOM_ESSAY 例外，見下一個測試）', () => {
+  it('wrangler.toml 的 [vars] 與 CONFIG_DEFAULTS 一致（避免兩邊預設值走鐘；AI_CUSTOM_ESSAY、AI_ASSISTANT、AI_ASSISTANT_PHOTO 例外，見下面的測試）', () => {
     const toml = readFileSync(new URL('../wrangler.toml', import.meta.url), 'utf8');
     for (const [name, value] of Object.entries(CONFIG_DEFAULTS)) {
-      if (name === 'AI_CUSTOM_ESSAY') continue;
+      if (name === 'AI_CUSTOM_ESSAY' || name === 'AI_ASSISTANT' || name === 'AI_ASSISTANT_PHOTO') continue;
       const m = toml.match(new RegExp(`^${name}\\s*=\\s*"([^"]*)"`, 'm'));
       expect(m?.[1], `wrangler.toml 缺少或不一致：${name}`).toBe(String(value));
     }
@@ -205,6 +205,48 @@ describe('設定（src/config.ts）', () => {
     const toml = readFileSync(new URL('../wrangler.toml', import.meta.url), 'utf8');
     const m = toml.match(/^AI_CUSTOM_ESSAY\s*=\s*"([^"]*)"/m);
     expect(m?.[1], 'wrangler.toml 的 [vars] 要明確寫 AI_CUSTOM_ESSAY = "on" 或 "off"').toMatch(/^(on|off)$/);
+  });
+
+  it('AI_ASSISTANT、AI_ASSISTANT_PHOTO：程式預設固定是 off；wrangler.toml 明確寫 "off"、"admin" 或 "on"（docs/design/learning-assistant.md §4.14）', () => {
+    // 目前是 on（2026-10-23 上線）；緊急關閉（off）或只留給管理員（admin）都只改 wrangler.toml 那一行，部署前的測試
+    // 不擋任何一種，所以這裡不把值寫死。漏設時偏向關。SITE_DATA_ORIGIN 選填、不在 [vars]。
+    expect(CONFIG_DEFAULTS.AI_ASSISTANT).toBe('off');
+    expect(CONFIG_DEFAULTS.AI_ASSISTANT_PHOTO).toBe('off');
+    const toml = readFileSync(new URL('../wrangler.toml', import.meta.url), 'utf8');
+    for (const name of ['AI_ASSISTANT', 'AI_ASSISTANT_PHOTO']) {
+      const m = toml.match(new RegExp(`^${name}\\s*=\\s*"([^"]*)"`, 'm'));
+      expect(m?.[1], `wrangler.toml 的 [vars] 要明確寫 ${name} = "off"、"admin" 或 "on"`).toMatch(/^(off|admin|on)$/);
+    }
+    expect(toml).not.toMatch(/^SITE_DATA_ORIGIN\s*=/m);
+    const config = loadConfig(baseEnv);
+    expect(config.ai.assistant).toBe('off');
+    expect(config.ai.assistantPhoto).toBe('off');
+    expect(config.ai.effort).toMatchObject({ assist: 'medium', chat: 'low' });
+  });
+
+  it('學習助手的開關是 fail closed：沒設、空白用預設值 off；去頭尾空白、不分大小寫只認 on、admin，其他一律關並寫 log', () => {
+    const warnings: unknown[] = [];
+    const warn = console.warn;
+    console.warn = (...args: unknown[]) => void warnings.push(args);
+    try {
+      for (const v of ['on', 'ON', ' on ']) expect(loadConfig({ ...baseEnv, AI_ASSISTANT: v }).ai.assistant, v).toBe('on');
+      for (const v of ['admin', 'Admin', ' ADMIN ']) expect(loadConfig({ ...baseEnv, AI_ASSISTANT_PHOTO: v }).ai.assistantPhoto, v).toBe('admin');
+      for (const v of [undefined, '', '   ', 'off', 'OFF']) expect(loadConfig({ ...baseEnv, AI_ASSISTANT: v }).ai.assistant, JSON.stringify(v)).toBe('off');
+      expect(warnings).toEqual([]);
+      for (const v of ['true', '1', 'yes', 'onn', 'admins']) expect(loadConfig({ ...baseEnv, AI_ASSISTANT: v }).ai.assistant, v).toBe('off');
+      expect(warnings).toHaveLength(5);
+      // 預設值是參數：解析規則本身不變。
+      expect(assistantSwitch('AI_ASSISTANT', undefined, 'admin')).toBe('admin');
+      expect(assistantSwitch('AI_ASSISTANT_PHOTO', 'onn', 'on')).toBe('off');
+    } finally {
+      console.warn = warn;
+    }
+  });
+
+  it('SITE_DATA_ORIGIN 選填：沒設等於 APP_ORIGIN（去掉結尾斜線）；有設就用它', () => {
+    expect(loadConfig({ ...baseEnv, APP_ORIGIN: 'https://app.example/' }).urls.siteDataOrigin).toBe('https://app.example');
+    expect(loadConfig({ ...baseEnv, APP_ORIGIN: 'https://app.example', SITE_DATA_ORIGIN: 'http://127.0.0.1:4599/' }).urls.siteDataOrigin).toBe('http://127.0.0.1:4599');
+    expect(loadConfig(baseEnv).urls.siteDataOrigin).toBeNull();
   });
 });
 

@@ -20,10 +20,13 @@ export interface WritingBankIndexEntry {
   section_type: Section;
   tier: string;
   topic: string | null;
+  /** 技能代碼（中譯英 ts:、tt:；作文是空陣列）。 */
+  skills: string[];
 }
 export type WritingBankFile = { uid: string; version: number; section_type: Section } & JsonObject;
 
 export declare function promptExcerpt(stem: string): string;
+export declare function writingSkills(raw: JsonObject): string[];
 export declare function buildWritingBank(options: {
   bankDir: string;
   exams: Record<string, any>[];

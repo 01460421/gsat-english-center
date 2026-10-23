@@ -10,8 +10,12 @@
  * - 價格調整時新增一版 PRICING_VERSION，舊帳不重算（ai_calls.pricing_version）。
  */
 
-/** 價格表版本（2026-10-08 版，06 §1.2）。改價格就改這個字串。 */
-export const PRICING_VERSION = '2026-10-08';
+/**
+ * 價格表版本（2026-10-08 版，06 §1.2）。改價格就改這個字串。
+ * 2026-10-23：加上 server-side fallback 接手模型的單價（FALLBACK_MODEL_PRICING；docs/design/learning-assistant.md §4.16），
+ * 那幾次嘗試從此照實計價，不再記 0。
+ */
+export const PRICING_VERSION = '2026-10-23';
 
 /** 單價（奈美元／token）。 */
 export interface ModelRates {
@@ -61,6 +65,23 @@ export const MODEL_PRICING: Readonly<Record<string, ModelPricing>> = Object.free
   },
 });
 
+/**
+ * server-side fallback 的接手模型（AI_MODEL_DEFAULT 在模型清單上的 allowed_fallback_models；docs/design/learning-assistant.md §4.16）
+ * 的單價，照官方價目（每百萬 tokens 輸入 5、輸出 25、5 分鐘寫入 6.25、1 小時寫入 10、讀取 0.5 美元）。
+ * 只用來計價（usage.iterations 裡的接手嘗試）：不在 MODEL_PRICING 裡，所以不能設成 AI_MODEL_* 直接呼叫（§6.2 第 1 條照舊）。
+ * 換預設模型時要從模型清單重查接手模型、照官方價目更新這裡（test/ai.pricing.test.ts 檢查每一筆都有完整單價）。
+ */
+export const FALLBACK_MODEL_PRICING: Readonly<Record<string, ModelPricing>> = Object.freeze({
+  'claude-opus-5': { base: rates(5, 25, 6.25, 10, 0.5, 2.5, 12.5), serverFallback: true },
+  'claude-opus-4-8': { base: rates(5, 25, 6.25, 10, 0.5, 2.5, 12.5), serverFallback: true },
+});
+
+/** 計價用的單價：價格表，或接手模型的單價；都不認得回 null（那一筆記 price_pending）。 */
+export function usagePricingOf(model: string): ModelPricing | null {
+  if (isPricedModel(model)) return MODEL_PRICING[model] ?? null;
+  return Object.hasOwn(FALLBACK_MODEL_PRICING, model) ? (FALLBACK_MODEL_PRICING[model] ?? null) : null;
+}
+
 /** 模型 ID 是否明列在價格表（完全比對）。 */
 export function isPricedModel(model: string): boolean {
   return Object.hasOwn(MODEL_PRICING, model);
@@ -88,7 +109,10 @@ export interface UsageEntry {
 
 export interface UsageCost {
   costMicros: number;
-  /** 有任何一筆嘗試的模型不在價格表：那一筆成本先記 0、整列標 price_pending，並告警。 */
+  /**
+   * 有任何一筆嘗試的模型不在價格表（也不是已知的接手模型）：那一筆成本先記 0、整列標 price_pending 並告警；
+   * 寫帳本時改用這個操作的預扣額入帳（ledger.ts 的 recordCall），帳本寧可多算。
+   */
   pricePending: boolean;
   totals: Omit<UsageEntry, 'model'>;
   attempts: number;
@@ -105,7 +129,7 @@ export function costOfUsage(entries: UsageEntry[]): UsageCost {
     totals.cacheReadTokens += e.cacheReadTokens;
     totals.cacheWrite5mTokens += e.cacheWrite5mTokens;
     totals.cacheWrite1hTokens += e.cacheWrite1hTokens;
-    const p = pricingOf(e.model);
+    const p = usagePricingOf(e.model);
     if (!p) {
       pricePending = true;
       continue;

@@ -15,7 +15,11 @@ export async function userRefFor(salt: string | null, userId: number | null): Pr
   return userRef(salt, userId);
 }
 
-/** 寫一列 ai_calls，回傳它的 id（gradings.call_id 用）。 */
+/**
+ * 寫一列 ai_calls，回傳它的 id（gradings.call_id 用）。
+ * price_pending（usage 裡有不認得的模型，那一筆嘗試計不出價錢）時，那一筆改用這個操作的預扣額（ai_ops.usd_reserved_micros）
+ * 入帳，加在其他嘗試照實算的成本上：帳本與全站預算寧可多算，不記 0（docs/design/learning-assistant.md §4.16）。
+ */
 export async function recordCall(db: D1Database, opId: string, record: CallRecord, ref: string | null, twDay: string): Promise<number | null> {
   const res = await db
     .prepare(
@@ -23,7 +27,9 @@ export async function recordCall(db: D1Database, opId: string, record: CallRecor
          (op_id, channel, workspace, task, role, model, served_model, effort, prompt_version, pricing_version, request_id,
           stop_reason, refusal_category, iterations, input_tokens, output_tokens, cache_read_tokens, cache_write_5m_tokens,
           cache_write_1h_tokens, images, cost_micros, price_pending, latency_ms, error_code, user_ref, tw_day)
-       VALUES (?1, 'online', 'online', ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12, ?13, ?14, ?15, ?16, ?17, ?18, ?19, ?20, ?21, ?22, ?23, ?24)`,
+       VALUES (?1, 'online', 'online', ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12, ?13, ?14, ?15, ?16, ?17, ?18,
+               CASE WHEN ?20 = 1 THEN ?19 + COALESCE((SELECT usd_reserved_micros FROM ai_ops WHERE id = ?1), 0) ELSE ?19 END,
+               ?20, ?21, ?22, ?23, ?24)`,
     )
     .bind(
       opId,

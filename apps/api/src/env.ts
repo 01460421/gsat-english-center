@@ -29,6 +29,11 @@ export interface Env {
   APP_ORIGIN?: string;
   /** OAuth 回呼與 cookie 檢查的基準；不從請求網址推（經代理時 Worker 看到的是 workers.dev）。未設定時用 APP_ORIGIN。 */
   PUBLIC_API_ORIGIN?: string;
+  /**
+   * 學習助手讀網站公開題目檔（/data/…）的來源（docs/design/learning-assistant.md §4.5.1）。選填：沒設時等於 APP_ORIGIN
+   * （正式站不用設）；只有本機整合測試（scripts/local-e2e.mjs）把它指到假的靜態檔伺服器，APP_ORIGIN 照舊。
+   */
+  SITE_DATA_ORIGIN?: string;
 
   // ── 登入（secret；GOOGLE_CLIENT_ID 不論設成 var 或 secret 都從 env 讀，站主會設成 secret）──
   GOOGLE_CLIENT_ID?: string;
@@ -68,6 +73,18 @@ export interface Env {
    * 要打開是把 wrangler.toml 的 [vars] 改成 "on"，見 docs/SETUP-KEYS.md §8.2）。
    */
   AI_CUSTOM_ESSAY?: string;
+  /**
+   * 學習助手的總開關（docs/design/learning-assistant.md §4.14）：去頭尾空白、轉小寫後只認 on（開放給已核准的學生）、
+   * admin（只有管理員能用，緊急時在正式站查問題），其他任何值都當成關（fail closed）；沒設定時用 config.ts 的預設值 off。
+   * 2026-10-23 上線後 wrangler.toml 是 on（緊急關閉見 docs/SETUP-KEYS.md §8.3）。
+   */
+  AI_ASSISTANT?: string;
+  /** 學習助手的拍照問題目（同樣只認 on、admin；其他一律關）。拍照另外要學習助手本身對這位使用者開放。 */
+  AI_ASSISTANT_PHOTO?: string;
+  /** 學習助手解析與報告的 effort（預設 medium）。 */
+  AI_EFFORT_ASSIST?: string;
+  /** 學習助手追問的 effort（預設 low；ARCHITECTURE §11 預留的名字）。 */
+  AI_EFFORT_CHAT?: string;
 
   // ── AI 上限與預算（ARCHITECTURE §6.3；數字字串，config.ts 解析）──
   AI_POINTS_USER_DAY?: string;
@@ -89,6 +106,11 @@ export interface Env {
 export interface AppVariables {
   /** 目前登入的使用者；未登入為 null。由 getSessionUser() 第一次呼叫時解析並快取。 */
   sessionUser: import('./auth/session').SessionUser | null;
+  /**
+   * 學習助手讀網站公開題目檔的工具（src/assist/siteData.ts）。/api/assist/* 的中介層（app.ts）在沒有設定時建立；
+   * 測試在外層先放假的（注入 fetchImpl），不 stub 全域 fetch。
+   */
+  siteData: import('./assist/siteData').SiteData;
 }
 
 /** Hono 的泛型參數：讓 c.env、c.var 帶上型別。 */

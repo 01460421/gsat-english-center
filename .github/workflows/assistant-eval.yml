@@ -1,0 +1,197 @@
+# 學習助手的真模型評測：站主在 Actions 頁按「Run workflow」就能跑，不用在自己的電腦裝任何東西。
+# 設計：docs/design/learning-assistant.md §6.5（評測與上線門檻）、§6.6（上線步驟）。
+#
+# 為什麼要跑：學習助手（AI_ASSISTANT）2026-10-23 已經上線（站主決定不先跑評測），這支改成上線後的監控，改了提示或 schema
+# 之後也要跑。用真模型跑一遍題目集（apps/api/test/parity/assist.parity.ts）：
+# 題庫題、題組、歷屆題、單字、對抗、D8 誘餌的貼上、學習報告；量 schema 通過率、拒答、截斷、輸出 D8、站內題不和答案矛盾、
+# 陷阱代碼、每點美元、延遲，以及報告的程式檢查。照片、照片的 D8 誘餌、寫作三組要素材，站主另外評測；人工評分也另外做。
+#
+# 只能手動執行（workflow_dispatch）。輸入：
+#   budget_usd        累計花費上限（美元，大於 0、不超過 100；含之前中斷的那幾次），到了就停、寫彙總。預設 40。
+#   allow_online_key  沒有 ANTHROPIC_PARITY_API_KEY 時，才允許改用正式站的 ANTHROPIC_API_KEY。預設不允許。
+#   resume            接著上次中斷的結果跑（已完成的題目不重新花錢）。預設是。
+#
+# 金鑰（GitHub repo secrets，同自訂作文題目評分對照）：
+#   ANTHROPIC_PARITY_API_KEY  建議。Claude Console 的 dev workspace（自己的每月上限）裡的金鑰。
+#   ANTHROPIC_API_KEY         正式站的金鑰。只有上面那個沒設、而且勾了 allow_online_key 才會用。
+#   金鑰只放在「跑評測」那一步的環境變數；log 不印金鑰。
+#
+# 結果：
+#   - 執行結果：結論是「達標」才是綠的；「不達標」或「還沒跑完」都是紅的。
+#   - Summary：彙總（開頭一行是結論）、每一項門檻、各任務的 tokens 與花費、沒過的程式檢查。
+#   - artifact「assistant-eval」（保留 30 天）：assist.json（每一題的計數、旗標、tokens、花費、延遲）與 assist.md。
+#   - 快取：結果目錄每次都存起來（key 含程式與題目資料的雜湊＋這次的執行編號），resume 時取回同一版程式最新的那一份。
+# 這個 repo 是公開的：結果只有計數、旗標與花費，不存模型的輸出全文；題目都是本站題庫、公開的歷屆題與本站為評測寫的句子，
+# 沒有學生資料、金鑰，也沒有官方的參考譯文、評分原則或佳作（D8）。
+name: 學習助手真模型評測
+run-name: 學習助手真模型評測（累計上限 US$${{ inputs.budget_usd }}${{ inputs.resume && '，接續上次' || '，從頭開始' }}）
+
+on:
+  workflow_dispatch:
+    inputs:
+      budget_usd:
+        description: 累計花費上限（美元，大於 0、不超過 100；含之前中斷的那幾次）
+        type: string
+        required: true
+        default: '40'
+      allow_online_key:
+        description: 沒有 ANTHROPIC_PARITY_API_KEY 時，改用正式站的 ANTHROPIC_API_KEY（花費算進 online workspace 的每月上限）
+        type: boolean
+        default: false
+      resume:
+        description: 接著上次中斷的結果跑（已完成的不重新花錢）
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+
+# 同一時間只跑一次（兩次同時跑會重複花錢）。後到的排隊，不取消正在跑的。
+concurrency:
+  group: assistant-eval
+  cancel-in-progress: false
+
+jobs:
+  eval:
+    name: 評測
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    defaults:
+      run:
+        shell: bash
+    env:
+      RESULTS_DIR: apps/api/test/parity/.results
+    steps:
+      - name: 檢查輸入與金鑰
+        id: preflight
+        env:
+          HAS_PARITY_KEY: ${{ secrets.ANTHROPIC_PARITY_API_KEY != '' }}
+          HAS_ONLINE_KEY: ${{ secrets.ANTHROPIC_API_KEY != '' }}
+          ALLOW_ONLINE_KEY: ${{ inputs.allow_online_key }}
+          BUDGET_USD: ${{ inputs.budget_usd }}
+        run: |
+          budget="${BUDGET_USD//[[:space:]]/}"
+          if ! [[ "$budget" =~ ^[0-9]+([.][0-9]+)?$ ]] || ! awk -v b="$budget" 'BEGIN { exit !(b > 0 && b <= 100) }'; then
+            echo "::error::budget_usd 要是大於 0、不超過 100 的數字（美元，例如 40），這次沒有執行。"
+            exit 1
+          fi
+          if [ "$HAS_PARITY_KEY" = "true" ]; then
+            source="ANTHROPIC_PARITY_API_KEY（dev workspace）"
+          elif [ "$ALLOW_ONLINE_KEY" = "true" ] && [ "$HAS_ONLINE_KEY" = "true" ]; then
+            source="ANTHROPIC_API_KEY（正式站的 online workspace）"
+            echo "::warning::沒有 ANTHROPIC_PARITY_API_KEY，這次用正式站的 ANTHROPIC_API_KEY：花費（最多 US\$$budget）算進 online workspace 的每月上限。"
+          else
+            echo "::error::沒有可以用的金鑰，評測沒有執行（沒有金鑰時測試會略過，不能當成通過）。設定方式見 docs/SETUP-KEYS.md §8.2（同自訂作文題目評分對照）。"
+            exit 1
+          fi
+          echo "金鑰：$source；累計花費上限：US\$$budget"
+          {
+            echo "budget=$budget"
+            echo "source=$source"
+          } >> "$GITHUB_OUTPUT"
+
+      - uses: actions/checkout@v7
+
+      # 會影響結果的程式與資料：提示、後處理、呼叫、設定預設值、題目集、題庫與歷屆題、公開檔的建置程式。
+      - name: 決定快取的 key
+        id: key
+        run: echo "prefix=assistant-eval-${{ hashFiles('apps/api/src/**', '!apps/api/src/generated/**', 'apps/api/scripts/**', 'apps/api/test/parity/assist.*', 'apps/api/test/fixtures/assist-golden/**', 'packages/shared/src/**', '!packages/shared/src/**/*.test.ts', 'apps/web/scripts/**', 'data/bank/v1/**', 'data/exams/parsed/**') }}" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: 安裝套件（依 package-lock.json）
+        run: npm ci
+
+      - name: 取回上次的結果
+        id: restore
+        if: inputs.resume
+        uses: actions/cache/restore@v6
+        with:
+          path: apps/api/test/parity/.results
+          key: ${{ steps.key.outputs.prefix }}-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: |
+            ${{ steps.key.outputs.prefix }}-
+
+      # 不需要金鑰：建公開檔（題庫題組、歷屆考卷、單字與索引）、題目庫、D8 指紋與目標資料，再跑達標判定的單元測試。
+      - name: 準備資料、確認達標判定（不需要金鑰）
+        env:
+          MATCHED: ${{ steps.restore.outputs.cache-matched-key }}
+        run: |
+          rm -f "$RESULTS_DIR/assist.md"
+          if [ -f "$RESULTS_DIR/assist.json" ]; then echo "接著上次的結果跑（快取：$MATCHED）"; else echo "從頭開始"; fi
+          npm run build:data -w @gsat/web
+          npm run prompts -w @gsat/api
+          cd apps/api
+          node scripts/build-assist-data.mjs
+          npx vitest run test/assist.parity-summary.test.ts
+
+      - name: 跑評測（真模型）
+        id: eval
+        timeout-minutes: 150
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_PARITY_API_KEY || (inputs.allow_online_key && secrets.ANTHROPIC_API_KEY) || '' }}
+          PARITY_BUDGET_USD: ${{ steps.preflight.outputs.budget }}
+          PARITY_TIME_LIMIT_MINUTES: '130'
+        run: |
+          if [ -z "$ANTHROPIC_API_KEY" ]; then
+            echo "::error::這一步拿不到金鑰（見「檢查輸入與金鑰」），不執行。"
+            exit 1
+          fi
+          npm run parity:assist -w @gsat/api
+
+      - name: 寫 Summary
+        id: results
+        if: always()
+        env:
+          PREFLIGHT: ${{ steps.preflight.outcome }}
+          EVAL: ${{ steps.eval.outcome }}
+          KEY_SOURCE: ${{ steps.preflight.outputs.source }}
+          BUDGET: ${{ steps.preflight.outputs.budget }}
+          RESUME: ${{ inputs.resume }}
+          MATCHED: ${{ steps.restore.outputs.cache-matched-key }}
+        run: |
+          {
+            if [ -f "$RESULTS_DIR/assist.md" ]; then
+              cat "$RESULTS_DIR/assist.md"
+            else
+              echo "# 學習助手真模型評測"
+              echo
+              if [ "$PREFLIGHT" != "success" ]; then
+                echo "**沒有執行**：輸入或金鑰有問題（見上方的錯誤訊息），沒有花費。"
+              elif [ "$EVAL" = "skipped" ]; then
+                echo "**沒有開始評測**：前面的步驟失敗（見失敗的那一步），沒有花費。"
+              else
+                echo "**中途停止**（逾時、被取消或程式錯誤），沒有產生彙總。已完成的題目有存起來：resume 保持勾選，再按一次 Run workflow 會接著跑。"
+              fi
+            fi
+            echo
+            echo "---"
+            echo
+            echo "- 金鑰：${KEY_SOURCE:-（沒有）}；累計花費上限：US\$${BUDGET:-（無效）}"
+            if [ "$RESUME" = "true" ]; then echo "- 接續上次的結果：${MATCHED:-沒有找到，從頭開始}"; else echo "- 從頭開始（沒有勾 resume）"; fi
+            echo "- 學習助手已經上線（2026-10-23）：不達標時把 Summary 交給開發者調整提示、點數或欄位上限；情況嚴重時照 docs/SETUP-KEYS.md §8.3 緊急關閉（AI_ASSISTANT=\"off\"，或只留給管理員 \"admin\"）。人工評分另外做（docs/design/learning-assistant.md §6.5）。"
+          } >> "$GITHUB_STEP_SUMMARY"
+          if [ -f "$RESULTS_DIR/assist.json" ]; then echo "json=true" >> "$GITHUB_OUTPUT"; else echo "json=false" >> "$GITHUB_OUTPUT"; fi
+
+      - name: 存結果給下一次接著跑
+        if: always() && steps.results.outputs.json == 'true'
+        uses: actions/cache/save@v6
+        with:
+          path: apps/api/test/parity/.results
+          key: ${{ steps.key.outputs.prefix }}-${{ github.run_id }}-${{ github.run_attempt }}
+
+      - name: 上傳結果（artifact）
+        if: always() && steps.results.outputs.json == 'true'
+        uses: actions/upload-artifact@v7
+        with:
+          name: assistant-eval
+          path: |
+            apps/api/test/parity/.results/assist.json
+            apps/api/test/parity/.results/assist.md
+          include-hidden-files: true
+          if-no-files-found: warn
+          overwrite: true
+          retention-days: 30

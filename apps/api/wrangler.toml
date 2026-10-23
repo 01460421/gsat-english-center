@@ -76,9 +76,9 @@ ALLOWED_ORIGINS = "https://gsat-english-center.vercel.app"
 APP_ORIGIN = "https://gsat-english-center.vercel.app"
 
 # 條款版本：改版時改這裡，使用者下次使用前會被要求重新同意（ARCHITECTURE §5、§8.2）。
-PRIVACY_POLICY_VERSION = "2026-10-18"
-TERMS_VERSION = "2026-10-08"
-AI_CONSENT_VERSION = "2026-10-08"
+PRIVACY_POLICY_VERSION = "2026-10-23"
+TERMS_VERSION = "2026-10-23"
+AI_CONSENT_VERSION = "2026-10-23"
 
 # ── AI（ARCHITECTURE §6.1、§6.3、§11）。程式的預設值在 src/config.ts 的 CONFIG_DEFAULTS，
 #    兩邊必須一致（test/skeleton.test.ts 會檢查）；要調整就兩邊一起改。
@@ -93,6 +93,24 @@ AI_EFFORT_OCR = "low"
 # 這一行是例外：src/config.ts 的程式預設固定是 off（[vars] 漏設時偏向關），不用跟著改（test/skeleton.test.ts）。
 # 不要在 Cloudflare 儀表板改成 Text 變數：下一次部署會被這裡的 [vars] 蓋回來。
 AI_CUSTOM_ESSAY = "on"
+
+# 學習助手（docs/design/learning-assistant.md §4.14、§6.6；docs/SETUP-KEYS.md §8.3）：拍照或貼上題目、站內錯題解析、追問、學習報告。
+# 兩個開關都只認 "on"、"admin"，其他任何值都當成關（fail closed）：
+#   AI_ASSISTANT        off（關）／admin（只有管理員帳號能用，緊急時查問題用；公開的 /api/features 不透露）／on（開放給已核准的學生）
+#   AI_ASSISTANT_PHOTO  拍照問題目的開關，規則相同；學習助手本身也要對這位使用者開放才有用。佳作沒有指紋、只靠關鍵字與長度擋，
+#                       站主已接受這個殘餘風險（設計文件 §8 第 1 點、§7.1 第 1、2 點）。
+# 目前兩個都是 "on"（已上線）：2026-10-23 站主決定學習助手與拍照都直接開放給已核准的學生，不經管理員預覽，
+#   也不先跑真模型評測（設計文件 §6.5）；評測與用量、拒答率、截斷率的檢查改成上線後的監控（§6.6 第 7 點、§10「上線」）。
+# 緊急關閉（docs/SETUP-KEYS.md §8.3）：先在 /admin 按「AI 全站暫停」止血，再把 AI_ASSISTANT 改成 "off" 推到 main
+#   （只關拍照：AI_ASSISTANT_PHOTO 改成 "off"；只留給管理員查問題：改成 "admin"）。已經排隊的照常完成；學生仍然可以看與刪除之前的紀錄（學習助手首頁、案例與報告頁是唯讀模式）。
+# 這兩行是例外：src/config.ts 的程式預設固定是 off（[vars] 漏設時偏向關），不用跟著改（test/skeleton.test.ts）。
+# 不要在 Cloudflare 儀表板改成 Text 變數：下一次部署會被這裡的 [vars] 蓋回來。
+AI_ASSISTANT = "on"
+AI_ASSISTANT_PHOTO = "on"
+# 學習助手的 effort：解析與報告、追問（模型一律用 AI_MODEL_DEFAULT）。
+AI_EFFORT_ASSIST = "medium"
+AI_EFFORT_CHAT = "low"
+# 學習助手讀網站公開題目檔的來源（SITE_DATA_ORIGIN）：不設＝APP_ORIGIN（正式站不用設；只有 local-e2e 指到假的靜態檔伺服器）。
 
 # 每人額度：每天 30 點、每月 300 點（試用 10 點／天）；作文每天 3 篇；同時進行中 2 個任務。
 AI_POINTS_USER_DAY = "30"

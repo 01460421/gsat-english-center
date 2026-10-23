@@ -40,7 +40,7 @@ import {
   type TranslationGradingResult,
   type TranslationRaterResult,
 } from '@gsat/shared';
-import { FILTERED_PLACEHOLDER, type OutputFilter } from './filter';
+import { FILTERED_PLACEHOLDER, replaceExamBoard, type OutputFilter } from './filter';
 import type { EssayAnalyticOutput, EssayHolisticOutput } from './prompts/essay';
 import { OCR_UNCLEAR_MARK, type OcrModelOutput } from './prompts/ocr';
 import type { TranslationModelOutput } from './prompts/translation';
@@ -374,8 +374,6 @@ export function outputEnglishWords(text: string): number {
   return text.normalize('NFKC').match(OUTPUT_WORD_RE)?.length ?? 0;
 }
 
-const EXAM_BOARD_RE = /大學入學考試中心|大考中心|CEEC/gi;
-const EXAM_BOARD_REPLACEMENT = '官方';
 
 /** 自訂題的程式限制處理的數量（寫進 judgments.meta）。 */
 export interface CustomOutputCounts {
@@ -405,10 +403,9 @@ class CustomLimiter {
   /** 中文說明：考試單位名稱換成「官方」，英文超過 max（預設 40）個單詞就清空。 */
   zh(text: string, max: number = CUSTOM_OUTPUT_LIMITS.zhEnglishWordsMax): string {
     if (text === '') return text;
-    const replaced = text.replace(EXAM_BOARD_RE, () => {
-      this.counts.exam_board_replaced += 1;
-      return EXAM_BOARD_REPLACEMENT;
-    });
+    const board = replaceExamBoard(text);
+    this.counts.exam_board_replaced += board.replaced;
+    const replaced = board.text;
     if (outputEnglishWords(replaced) > max) {
       this.counts.zh_fields_cleared += 1;
       return '';

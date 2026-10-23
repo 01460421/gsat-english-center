@@ -68,6 +68,7 @@ import { EssaySelfAssess } from './components/EssaySelfAssess';
 import { OcrConfirm } from './components/OcrConfirm';
 import { TranslationResult } from './components/TranslationResult';
 import { AiNotice, BackLink, ConfirmButton, ErrorMessage, Loading, Notice, ReportAiContent, card, primaryButton, secondaryButton } from './components/ui';
+import { AskAssistantButton } from '../assistant/components/AskAssistantButton';
 import { findEssayPrompt, findTranslationSet, loadEssayIndex, loadTranslationIndex, parseGroupId, type EssayPrompt, type TranslationSet } from './data';
 import { useAiAccess } from './lib/access';
 import { clearDraft, completeEssayScores, isSelfDraft, loadDraft, ocrDraftKey, promptEditDraftKey, selfDraftKey, type SelfDraft } from './lib/drafts';
@@ -853,6 +854,8 @@ function SubmissionView({ id }: { id: string }) {
             </>
           )}
           <ReportAiContent />
+          {/* 學習助手（開關關著時 render null；docs/design/learning-assistant.md §1.4）：錯誤依類別歸納、逐句拆解、下次怎麼寫。 */}
+          <AskAssistantButton ask={{ src: 'writing', sub: detail.id }} variant="primary" label="請學習助手解析這份批改" className="self-start" />
           {bankCurrent && <BankAnswersPanel uid={bankCurrent.uid} version={bankCurrent.version} kind={detail.kind} />}
           <div className="flex flex-wrap gap-2">
             {attemptPath && (

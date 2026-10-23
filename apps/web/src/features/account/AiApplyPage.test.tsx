@@ -6,7 +6,7 @@ import userEvent from '@testing-library/user-event';
 import type { AiQuotaResponse } from '@gsat/shared';
 import { afterEach, describe, expect, it } from 'vitest';
 import { resetOnboardingRedirectForTests } from './RequireAccount';
-import { FEATURES_AUTH_ONLY, FEATURES_ON, apiError, json, mockApi, renderApp, signedInMe } from './testing';
+import { FEATURES_AUTH_ONLY, FEATURES_ON, VERSIONS, apiError, json, mockApi, renderApp, signedInMe } from './testing';
 
 afterEach(() => resetOnboardingRedirectForTests());
 
@@ -19,7 +19,7 @@ const QUOTA: AiQuotaResponse = {
   site: { paused: false, budget_available: true },
   approval: { cap: 49, approved: 10, full: false },
   resets_at: { day: '2026-10-08T16:00:00Z', month: '2026-10-31T16:00:00Z' },
-  task_points: { translation_grade: 3, essay_grade: 7, essay_ocr: 2 },
+  task_points: { translation_grade: 3, essay_grade: 7, essay_ocr: 2, assist_ocr: 2, assist_analyze: 6, assist_followup: 3, assist_report: 10 },
 };
 
 async function openApply() {
@@ -62,6 +62,50 @@ describe('說明與開關', () => {
     for (const cell of cells) expect(cell.className).toContain('whitespace-nowrap');
   });
 
+  it('學習助手開放時：說明多一段、點數表多學習助手的幾列（拍照也開放時多拍照轉錄）；關著時沒有', async () => {
+    mockApi({
+      'GET /api/features': { ...FEATURES_ON, assistant: true, assistantPhoto: true },
+      'GET /api/me': signedInMe({ user: { ai_status: 'pending' } }),
+    });
+    const main = await openApply();
+    expect(await within(main).findByRole('link', { name: '學習助手' })).toHaveAttribute('href', '/assistant');
+    expect(within(main).getByText(/從錯題或你拍照、貼上的題目請 AI 說明/)).toBeInTheDocument();
+    const table = within(main).getByRole('table');
+    expect(within(table).getByRole('row', { name: /學習助手：解析（同一個題組每多一題加 2 點，最多 14 點）.*6 點起/ })).toBeInTheDocument();
+    expect(within(table).getByRole('row', { name: /學習助手：追問一次.*3 點/ })).toBeInTheDocument();
+    expect(within(table).getByRole('row', { name: /學習助手：學習報告.*10 點/ })).toBeInTheDocument();
+    expect(within(table).getByRole('row', { name: /學習助手：拍照轉錄題目.*2 點/ })).toBeInTheDocument();
+    // 上限與使用須知也涵蓋學習助手（服務條款「三」的每日上限）。
+    expect(within(main).getByText('學習報告每天 2 份、拍照轉錄每天 6 次。')).toBeInTheDocument();
+    expect(within(main).getByText(/學習助手說明題目考什麼、你錯在哪、正確解法與相關觀念/)).toBeInTheDocument();
+    expect(within(main).getByText(/不要在作答、提問、回饋或照片裡寫真實姓名/)).toBeInTheDocument();
+  });
+
+  it('學習助手開放、拍照關著（只關拍照的緊急模式）：解析、追問、報告照列，沒有拍照轉錄與「拍照、」', async () => {
+    mockApi({
+      'GET /api/features': { ...FEATURES_ON, assistant: true },
+      'GET /api/me': signedInMe({ user: { ai_status: 'pending' } }),
+    });
+    const main = await openApply();
+    expect(await within(main).findByRole('link', { name: '學習助手' })).toHaveAttribute('href', '/assistant');
+    const intro = within(main).getByText(/從錯題或你貼上的題目請 AI 說明/);
+    expect(intro.textContent).not.toContain('拍照、');
+    const table = within(main).getByRole('table');
+    expect(within(table).getByRole('row', { name: /學習助手：解析/ })).toBeInTheDocument();
+    expect(within(table).getByRole('row', { name: /學習助手：追問一次/ })).toBeInTheDocument();
+    expect(within(table).getByRole('row', { name: /學習助手：學習報告/ })).toBeInTheDocument();
+    expect(within(table).queryByRole('row', { name: /拍照轉錄題目/ })).not.toBeInTheDocument();
+    expect(within(main).getByText('學習報告每天 2 份。')).toBeInTheDocument();
+    expect(within(main).getByText(/不要在作答、提問或回饋裡寫真實姓名/)).toBeInTheDocument();
+  });
+
+  it('學習助手關著：說明與點數表沒有學習助手', async () => {
+    mockApi({ 'GET /api/features': FEATURES_ON, 'GET /api/me': signedInMe({ user: { ai_status: 'pending' } }) });
+    const main = await openApply();
+    await within(main).findByRole('heading', { name: 'AI 批改是什麼' });
+    expect(within(main).queryByText(/學習助手/)).not.toBeInTheDocument();
+  });
+
   it('全站暫停中：狀態區塊提示 AI 功能暫停中', async () => {
     mockApi({ 'GET /api/features': { ...FEATURES_ON, aiPaused: true }, 'GET /api/me': signedInMe(), 'GET /api/ai/quota': QUOTA });
     const main = await openApply();
@@ -92,7 +136,12 @@ describe('申請', () => {
     expect(submit).toBeDisabled();
     await user.type(within(main).getByRole('textbox', { name: /想用 AI 批改做什麼/ }), '準備學測作文');
     expect(submit).toBeDisabled();
-    await user.click(within(main).getByRole('checkbox', { name: /同意 AI 處理說明（2026-10-08 版）/ }));
+    const consent = within(main).getByRole('checkbox', { name: new RegExp(`同意 AI 處理說明（${VERSIONS.ai} 版）`) });
+    // 勾選文字和 AI 處理說明第一點同一個範圍：學習助手送出的內容也在裡面（docs/design/learning-assistant.md §4.17）。
+    expect(consent).toHaveAccessibleName(
+      /我的翻譯、作文與手寫照片，以及在學習助手送出的題目照片、題目文字、作答、提問，與產生學習報告時的目標、每週讀書時間、考試與段考日期、我寫的回饋與作答紀錄的摘要，會傳給 Anthropic 的 API 處理/,
+    );
+    await user.click(consent);
     expect(submit).toBeEnabled();
     await user.click(submit);
 
@@ -103,7 +152,7 @@ describe('申請', () => {
     expect(within(main).getByRole('link', { name: '先用自我檢核練習寫作' })).toHaveAttribute('href', '/writing');
     expect(api.callsTo('POST', '/api/ai/apply')[0]?.body).toEqual({
       note: '準備學測作文',
-      ai_consent_version: '2026-10-08',
+      ai_consent_version: VERSIONS.ai,
       guardian_ack: false,
     });
   });
@@ -186,6 +235,10 @@ describe('各狀態', () => {
     });
     const main = await openApply();
     expect(await within(main).findByText('請重新確認 AI 處理說明')).toBeInTheDocument();
+    // 改了什麼：AI 處理說明這一版的 changes。
+    expect(within(main).getByText(`${VERSIONS.ai} 版更新的內容：`)).toBeInTheDocument();
+    expect(within(main).getByText(/範圍加上學習助手/)).toBeInTheDocument();
+    expect(within(main).getByRole('checkbox', { name: /同意 AI 處理說明/ })).toHaveAccessibleName(/在學習助手送出的題目照片/);
     const submit = within(main).getByRole('button', { name: '同意並繼續使用' });
     await user.click(within(main).getByRole('checkbox', { name: /同意 AI 處理說明/ }));
     expect(submit).toBeDisabled();
@@ -194,8 +247,8 @@ describe('各狀態', () => {
     await waitFor(() => expect(within(main).queryByText('請重新確認 AI 處理說明')).not.toBeInTheDocument());
     expect(api.callsTo('POST', '/api/me/consents')[0]?.body).toEqual({
       items: [
-        { kind: 'ai_processing', version: '2026-10-08', granted: true },
-        { kind: 'guardian_ack', version: '2026-10-08', granted: true },
+        { kind: 'ai_processing', version: VERSIONS.ai, granted: true },
+        { kind: 'guardian_ack', version: VERSIONS.ai, granted: true },
       ],
     });
   });

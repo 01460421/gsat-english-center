@@ -4,12 +4,17 @@
  */
 import { describe, expect, it } from 'vitest';
 import { refundOp, reserveOp, settleOp, setPausedStatement, siteLimitsMicros, UNLIMITED, userLimits, type ReserveInput } from '../src/ai/guard';
+import { reserveFailure } from '../src/ai/reserveErrors';
+import { ASSIST_ANALYZE_GROUP_TIMEOUT_MS, ASSIST_OCR_FAMILY, ASSIST_REPORT_FAMILY, ESSAY_FAMILY, taskConfig, TASK_TIMEOUT_MS } from '../src/ai/tasks';
 import { loadConfig } from '../src/config';
 import { taiwanDay } from '../src/time';
 import type { TestD1 } from './helpers/d1';
 import { ESSAY_GROUP, STUDENT_ESSAY, call, makeEnv, seedUser } from './helpers/ai';
 
 const NOW = Date.parse('2026-10-08T04:00:00Z');
+
+/** 家族上限：只有作文篇數（學習助手的報告與轉錄不限；那兩個的測試在下面另外寫）。 */
+const caps = (essay: number) => ({ essay, assist_report: 0, assist_ocr: 0 });
 
 function input(db: TestD1, userId: number, over: Partial<ReserveInput> = {}): ReserveInput {
   const config = loadConfig(makeEnv({}, db));
@@ -21,7 +26,7 @@ function input(db: TestD1, userId: number, over: Partial<ReserveInput> = {}): Re
     points: 3,
     usdMicros: 312_000,
     family: null,
-    limits: { capDay: 30, capMonth: 300, familyCap: 3, capConc: 2, unlimited: false },
+    limits: { capDay: 30, capMonth: 300, familyCaps: caps(3), capConc: 2, unlimited: false },
     site: siteLimitsMicros(config),
     nowMs: NOW,
     ...over,
@@ -45,7 +50,7 @@ describe('原子預扣（一句 SQL）', () => {
   it('quota_day：今天的點數不夠', async () => {
     const env = makeEnv();
     const user = seedUser(env.DB);
-    const limits = { capDay: 7, capMonth: 300, familyCap: 0, capConc: 9, unlimited: false };
+    const limits = { capDay: 7, capMonth: 300, familyCaps: caps(0), capConc: 9, unlimited: false };
     expect(await reserveOp(env.DB, input(env.DB, user.id, { limits, points: 3 }))).toEqual({ ok: true });
     expect(await reserveOp(env.DB, input(env.DB, user.id, { limits, points: 3 }))).toEqual({ ok: true });
     expect(await reserveOp(env.DB, input(env.DB, user.id, { limits, points: 3 }))).toEqual({ ok: false, code: 'quota_day' });
@@ -54,7 +59,7 @@ describe('原子預扣（一句 SQL）', () => {
   it('退還的操作不算用掉的點數', async () => {
     const env = makeEnv();
     const user = seedUser(env.DB);
-    const limits = { capDay: 3, capMonth: 300, familyCap: 0, capConc: 9, unlimited: false };
+    const limits = { capDay: 3, capMonth: 300, familyCaps: caps(0), capConc: 9, unlimited: false };
     const first = input(env.DB, user.id, { limits });
     await reserveOp(env.DB, first);
     await refundOp(env.DB, { opId: first.opId, reason: 'refusal', nowMs: NOW });
@@ -64,7 +69,7 @@ describe('原子預扣（一句 SQL）', () => {
   it('quota_month：本月點數不夠（前幾天用掉的也算）', async () => {
     const env = makeEnv();
     const user = seedUser(env.DB);
-    const limits = { capDay: 30, capMonth: 5, familyCap: 0, capConc: 9, unlimited: false };
+    const limits = { capDay: 30, capMonth: 5, familyCaps: caps(0), capConc: 9, unlimited: false };
     await reserveOp(env.DB, input(env.DB, user.id, { limits, nowMs: Date.parse('2026-10-02T04:00:00Z') }));
     finishAll(env.DB);
     expect(await reserveOp(env.DB, input(env.DB, user.id, { limits }))).toEqual({ ok: false, code: 'quota_month' });
@@ -75,8 +80,8 @@ describe('原子預扣（一句 SQL）', () => {
   it('daily_limit：作文家族每天篇數（OCR 不算篇數）', async () => {
     const env = makeEnv();
     const user = seedUser(env.DB);
-    const limits = { capDay: 100, capMonth: 1000, familyCap: 2, capConc: 9, unlimited: false };
-    const essay = { task: 'essay_grade' as const, family: ['essay_grade'] as const, points: 7, limits };
+    const limits = { capDay: 100, capMonth: 1000, familyCaps: caps(2), capConc: 9, unlimited: false };
+    const essay = { task: 'essay_grade' as const, family: ESSAY_FAMILY, points: 7, limits };
     expect(await reserveOp(env.DB, input(env.DB, user.id, essay))).toEqual({ ok: true });
     expect(await reserveOp(env.DB, input(env.DB, user.id, essay))).toEqual({ ok: true });
     finishAll(env.DB);
@@ -121,7 +126,7 @@ describe('原子預扣（一句 SQL）', () => {
   it('並行送 10 個請求也不會超扣（每天 9 點、每次 3 點 → 剛好 3 個成功）', async () => {
     const env = makeEnv();
     const user = seedUser(env.DB);
-    const limits = { capDay: 9, capMonth: 300, familyCap: 0, capConc: 100, unlimited: false };
+    const limits = { capDay: 9, capMonth: 300, familyCaps: caps(0), capConc: 100, unlimited: false };
     const results = await Promise.all(Array.from({ length: 10 }, () => reserveOp(env.DB, input(env.DB, user.id, { limits }))));
     expect(results.filter((r) => r.ok)).toHaveLength(3);
     expect(results.filter((r) => !r.ok).every((r) => !r.ok && r.code === 'quota_day')).toBe(true);
@@ -131,8 +136,82 @@ describe('原子預扣（一句 SQL）', () => {
   it('等級與個別覆寫：試用 10 點／天；管理員不限點數與篇數；users.ai_points_day 覆寫', () => {
     const config = loadConfig(makeEnv());
     expect(userLimits(config, { role: 'student', aiTier: 'trial', aiPointsDay: null, aiPointsMonth: null })).toMatchObject({ capDay: 10, capMonth: 300 });
-    expect(userLimits(config, { role: 'student', aiTier: 'standard', aiPointsDay: 5, aiPointsMonth: null })).toMatchObject({ capDay: 5, familyCap: 3, capConc: 2 });
-    expect(userLimits(config, { role: 'admin', aiTier: 'standard', aiPointsDay: null, aiPointsMonth: null })).toMatchObject({ capDay: UNLIMITED, familyCap: 0, capConc: 2 });
+    expect(userLimits(config, { role: 'student', aiTier: 'standard', aiPointsDay: 5, aiPointsMonth: null })).toMatchObject({ capDay: 5, familyCaps: { essay: 3, assist_report: 2, assist_ocr: 6 }, capConc: 2 });
+    expect(userLimits(config, { role: 'admin', aiTier: 'standard', aiPointsDay: null, aiPointsMonth: null })).toMatchObject({ capDay: UNLIMITED, familyCaps: caps(0), capConc: 2 });
+  });
+});
+
+describe('學習助手的家族上限（報告每天 2 份、拍照轉錄 6 次；RESERVE_SQL 不改）', () => {
+  const limits = { capDay: 1000, capMonth: 10_000, familyCaps: { essay: 3, assist_report: 2, assist_ocr: 6 }, capConc: 9, unlimited: false };
+  const report = { task: 'assist_report' as const, family: ASSIST_REPORT_FAMILY, points: 10, limits };
+  const ocr = { task: 'assist_ocr' as const, family: ASSIST_OCR_FAMILY, points: 2, limits };
+
+  it('報告：第 3 份 daily_limit；拍照轉錄：第 7 次 daily_limit；退還的不算', async () => {
+    const env = makeEnv();
+    const user = seedUser(env.DB);
+    for (let i = 0; i < 2; i += 1) expect(await reserveOp(env.DB, input(env.DB, user.id, report))).toEqual({ ok: true });
+    finishAll(env.DB);
+    expect(await reserveOp(env.DB, input(env.DB, user.id, report))).toEqual({ ok: false, code: 'daily_limit' });
+    for (let i = 0; i < 6; i += 1) {
+      expect(await reserveOp(env.DB, input(env.DB, user.id, ocr))).toEqual({ ok: true });
+      finishAll(env.DB);
+    }
+    const seventh = input(env.DB, user.id, ocr);
+    expect(await reserveOp(env.DB, seventh)).toEqual({ ok: false, code: 'daily_limit' });
+    env.DB.sqlite.prepare(`UPDATE ai_ops SET status = 'refunded', points_charged = 0 WHERE id = (SELECT id FROM ai_ops WHERE task = 'assist_ocr' LIMIT 1)`).run();
+    expect(await reserveOp(env.DB, input(env.DB, user.id, ocr))).toEqual({ ok: true });
+  });
+
+  it('和作文家族互不影響；解析與追問不算任何家族', async () => {
+    const env = makeEnv();
+    const user = seedUser(env.DB);
+    for (let i = 0; i < 2; i += 1) expect(await reserveOp(env.DB, input(env.DB, user.id, report))).toEqual({ ok: true });
+    finishAll(env.DB);
+    // 報告用完了，作文照樣 3 篇。
+    const essay = { task: 'essay_grade' as const, family: ESSAY_FAMILY, points: 7, limits };
+    for (let i = 0; i < 3; i += 1) expect(await reserveOp(env.DB, input(env.DB, user.id, essay))).toEqual({ ok: true });
+    finishAll(env.DB);
+    expect(await reserveOp(env.DB, input(env.DB, user.id, essay))).toEqual({ ok: false, code: 'daily_limit' });
+    // 作文用完了，拍照轉錄照樣可以。
+    expect(await reserveOp(env.DB, input(env.DB, user.id, ocr))).toEqual({ ok: true });
+    for (const task of ['assist_analyze', 'assist_followup'] as const) {
+      expect(taskConfig(task, loadConfig(env)).family).toBeNull();
+      expect(await reserveOp(env.DB, input(env.DB, user.id, { task, family: null, points: 6, limits }))).toEqual({ ok: true });
+    }
+  });
+
+  it('管理員不限：familyCaps 全是 0，報告第 3 份也成功', async () => {
+    const env = makeEnv();
+    const admin = seedUser(env.DB);
+    const adminLimits = userLimits(loadConfig(env), { role: 'admin', aiTier: 'standard', aiPointsDay: null, aiPointsMonth: null });
+    expect(adminLimits.familyCaps).toEqual({ essay: 0, assist_report: 0, assist_ocr: 0 });
+    for (let i = 0; i < 3; i += 1) {
+      expect(await reserveOp(env.DB, input(env.DB, admin.id, { ...report, limits: adminLimits }))).toEqual({ ok: true });
+      finishAll(env.DB);
+    }
+  });
+
+  it('題組的點數與逾時：1 題 6 點，每多一題 +2、最多 14（只有文意選填 5 格會碰到）；2 題以上 240 秒；其他任務的點數與家族', () => {
+    const config = loadConfig(makeEnv());
+    expect([1, 2, 3, 4, 5].map((items) => taskConfig('assist_analyze', config, { items }).points)).toEqual([6, 8, 10, 12, 14]);
+    expect(taskConfig('assist_analyze', config).points).toBe(6);
+    expect(taskConfig('assist_analyze', config, { items: 1 }).timeoutMs).toBe(TASK_TIMEOUT_MS.assist_analyze);
+    expect(taskConfig('assist_analyze', config, { items: 2 }).timeoutMs).toBe(ASSIST_ANALYZE_GROUP_TIMEOUT_MS);
+    expect(['assist_ocr', 'assist_followup', 'assist_report'].map((t) => taskConfig(t as 'assist_ocr', config).points)).toEqual([2, 3, 10]);
+    expect(taskConfig('assist_report', config).family).toBe(ASSIST_REPORT_FAMILY);
+    expect(taskConfig('assist_ocr', config).family).toBe(ASSIST_OCR_FAMILY);
+    expect(taskConfig('essay_grade', config).family).toBe(ESSAY_FAMILY);
+  });
+
+  it('daily_limit 的回應：學習助手帶 error.reason（任務代號）；作文的回應不變（沒有 reason）', async () => {
+    const env = makeEnv();
+    const reportErr = await reserveFailure(env.DB, 'daily_limit', null, 'assist_report', NOW);
+    expect([reportErr.status, reportErr.code, reportErr.detail]).toEqual([429, 'daily_limit', { reason: 'assist_report' }]);
+    expect(reportErr.message).toContain('2 份學習報告');
+    const ocrErr = await reserveFailure(env.DB, 'daily_limit', null, 'assist_ocr', NOW);
+    expect(ocrErr.detail).toEqual({ reason: 'assist_ocr' });
+    const essayErr = await reserveFailure(env.DB, 'daily_limit', null, 'essay_grade', NOW);
+    expect([essayErr.status, essayErr.code, essayErr.detail]).toEqual([429, 'daily_limit', {}]);
   });
 });
 

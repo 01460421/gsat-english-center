@@ -29,6 +29,8 @@ import { photoQualityIssue } from '../lib/photo';
 import { AlreadySubmittedError, saveSelfAssessment, startTask, upsertSubmission } from '../lib/submit';
 import { checkEssayLength } from '../lib/text';
 import { useErrorView } from '../lib/useErrorView';
+import { HandoffApplied, HandoffOffer } from '../../assistant/components/MockWritingHandoff';
+import { useWritingHandoff } from '../../assistant/lib/handoff';
 import { deletePhotos, uploadPhoto } from '../lib/writingApi';
 import { BankFigure } from './components/BankFigure';
 import { BankHints } from './components/BankHints';
@@ -116,6 +118,10 @@ function BankEssayAttempt({ entry, index, prompt }: { entry: WritingBankEntry; i
   const [draft, setDraft] = useState<BankEssayDraft>(() => toBankEssayDraft(loadRawDraft(key)) ?? emptyBankEssayDraft());
   const draftRef = useRef(draft);
   draftRef.current = draft;
+  // 自組卷的作文帶過來（學習助手，docs/design/learning-assistant.md §1.4.1）：沒有草稿就直接填入，有不同的草稿時問要不要換。
+  const handoff = useWritingHandoff({ kind: 'essay', bank_uid: prompt.uid }, [draft.text], (texts) =>
+    setDraft((d) => ({ ...d, text: texts[0] ?? '', mode: 'typed', updatedAt: Date.now() })),
+  );
   const { ok: saved, discard } = useAutosave(key, draft);
   const access = useAiAccess();
   const errorView = useErrorView();
@@ -232,6 +238,9 @@ function BankEssayAttempt({ entry, index, prompt }: { entry: WritingBankEntry; i
         </div>
         <p className="mt-2 text-[0.95rem]">{prompt.instructions}</p>
       </header>
+
+      <HandoffOffer offer={handoff.offer} onAccept={handoff.accept} onDismiss={handoff.dismiss} />
+      <HandoffApplied applied={handoff.applied} />
 
       <EssayPromptSection prompt={prompt} />
 

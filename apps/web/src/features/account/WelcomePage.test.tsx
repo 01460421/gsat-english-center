@@ -37,8 +37,11 @@ describe('自動導向', () => {
     const main = screen.getByRole('main');
     expect(within(main).getByRole('heading', { level: 2, name: '隱私權說明' })).toBeInTheDocument();
     expect(within(main).getByRole('heading', { level: 2, name: '服務條款' })).toBeInTheDocument();
-    expect(within(main).getByText(new RegExp(`版本 ${VERSIONS.privacy}`))).toBeInTheDocument();
-    expect(within(main).getByText(new RegExp(`版本 ${VERSIONS.terms}`))).toBeInTheDocument();
+    // 兩份各自標版本（學習助手上線時兩份同一天改版，版本號可能相同）。
+    const privacyCard = within(main).getByRole('heading', { level: 2, name: '隱私權說明' }).closest('section')!;
+    const termsCard = within(main).getByRole('heading', { level: 2, name: '服務條款' }).closest('section')!;
+    expect(within(privacyCard as HTMLElement).getByText(new RegExp(`版本 ${VERSIONS.privacy}`))).toBeInTheDocument();
+    expect(within(termsCard as HTMLElement).getByText(new RegExp(`版本 ${VERSIONS.terms}`))).toBeInTheDocument();
     expect(within(main).queryByText('不同意新版的內容？')).not.toBeInTheDocument();
 
     const submit = within(main).getByRole('button', { name: '同意並繼續' });

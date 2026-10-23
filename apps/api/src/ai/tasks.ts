@@ -8,16 +8,17 @@
  *   primary  第一位：完整的錯誤清單與回饋
  *   second   第二位：換評分框架（先整體再分項），和第一位平行、互相獨立
  *   third    第三位：只有前兩位差距超過門檻（作文 >5、中譯英 >2）才呼叫，框架同第二位
- *   ocr      手寫照片轉錄（只有一位）
+ *   ocr      手寫照片轉錄（只有一位；學習助手的拍照轉錄也是）
+ *   tutor    學習助手的解析、追問、報告（docs/design/learning-assistant.md §4.7.1）
  */
-import { AI_TASK_POINTS, ESSAY_FAMILY_TASKS, type AiTask, type RaterRole } from '@gsat/shared';
+import { AI_TASK_POINTS, ASSIST_LIMITS, assistAnalyzePoints, ESSAY_FAMILY_TASKS, type AiTask, type RaterRole } from '@gsat/shared';
 import type { AiEffort, AppConfig } from '../config';
 import { isPricedModel, worstCaseMicros } from './pricing';
 
-export type CallRole = RaterRole | 'ocr';
+export type CallRole = RaterRole | 'ocr' | 'tutor';
 
-/** 提示詞框架：第一位的完整批改、第二／三位的「先整體再分項」、OCR。 */
-export type PromptFramework = 'analytic' | 'holistic' | 'ocr';
+/** 提示詞框架：第一位的完整批改、第二／三位的「先整體再分項」、OCR、學習助手。 */
+export type PromptFramework = 'analytic' | 'holistic' | 'ocr' | 'assist';
 
 export interface CallSpec {
   role: CallRole;
@@ -26,12 +27,37 @@ export interface CallSpec {
   /** 含思考的空間（§6.2 第 4 條）。 */
   maxTokens: number;
   framework: PromptFramework;
+  /**
+   * 系統提示的快取時間：沒設＝5 分鐘（既有任務的請求逐位元不變）。學習助手的系統提示所有學生共用、流量斷斷續續，
+   * 用 1 小時（client.ts 依它在 cache_control 加 ttl；1 小時的在前、5 分鐘的上下文 block 在後）。
+   */
+  systemCacheTtl?: '1h';
 }
+
+/**
+ * 操作的對象（ai_ops.ref_id 指向哪一張表）：寫作批改是提交；學習助手的轉錄、解析、追問是 assist_turns 的一列，
+ * 報告是 assist_reports 的一列（consumer 分流、housekeeping 回收、退還都依它）。
+ */
+export type TaskTarget = { kind: 'submission'; submissionKind: 'translation' | 'essay' } | { kind: 'assist_turn' } | { kind: 'assist_report' };
+
+/** 任務家族每日上限的鍵（UserLimits.familyCaps；guard.ts）。 */
+export const FAMILY_CAP_KEYS = ['essay', 'assist_report', 'assist_ocr'] as const;
+export type FamilyCapKey = (typeof FAMILY_CAP_KEYS)[number];
+
+/** 計入同一個每日上限的任務（RESERVE_SQL 的家族任務清單 ?13）與上限的鍵。 */
+export interface TaskFamily {
+  tasks: readonly AiTask[];
+  capKey: FamilyCapKey;
+}
+
+export const ESSAY_FAMILY: TaskFamily = { tasks: ESSAY_FAMILY_TASKS, capKey: 'essay' };
+export const ASSIST_REPORT_FAMILY: TaskFamily = { tasks: ['assist_report'], capKey: 'assist_report' };
+export const ASSIST_OCR_FAMILY: TaskFamily = { tasks: ['assist_ocr'], capKey: 'assist_ocr' };
 
 export interface TaskConfig {
   task: AiTask;
   points: number;
-  submissionKind: 'translation' | 'essay';
+  target: TaskTarget;
   /** SDK 單次請求逾時（毫秒，§6.2 第 16 條）。 */
   timeoutMs: number;
   /** SDK 自動重試次數（§6.2 第 16 條：2，所以最壞牆鐘 ＝ 逾時 × 3）。 */
@@ -41,11 +67,24 @@ export interface TaskConfig {
   /** 這個任務可能呼叫的所有評分者（含可能的第三位），預扣以全部加總計算最壞情況。 */
   calls: CallSpec[];
   /** 計入「每日篇數」的任務家族（null＝不限篇數）。 */
-  family: readonly AiTask[] | null;
+  family: TaskFamily | null;
 }
 
-/** 逾時（毫秒）：OCR 90 秒、中譯英 120 秒、作文 240 秒（§6.2 第 16 條）。 */
-export const TASK_TIMEOUT_MS = { essay_ocr: 90_000, translation_grade: 120_000, essay_grade: 240_000 } as const satisfies Record<AiTask, number>;
+/**
+ * 逾時（毫秒）：OCR 90 秒、中譯英 120 秒、作文 240 秒（§6.2 第 16 條）；學習助手的轉錄與追問 90 秒、解析 180 秒
+ * （題組 2 題以上 240 秒，見 taskConfig）、報告 240 秒（docs/design/learning-assistant.md §4.7.1）。
+ */
+export const TASK_TIMEOUT_MS = {
+  essay_ocr: 90_000,
+  translation_grade: 120_000,
+  essay_grade: 240_000,
+  assist_ocr: 90_000,
+  assist_analyze: 180_000,
+  assist_followup: 90_000,
+  assist_report: 240_000,
+} as const satisfies Record<AiTask, number>;
+/** 學習助手的題組解析（2 題以上）的逾時。 */
+export const ASSIST_ANALYZE_GROUP_TIMEOUT_MS = 240_000;
 export const SDK_MAX_RETRIES = 2;
 
 /**
@@ -61,14 +100,19 @@ export const QUEUE_MAX_DELIVERIES = 4;
  */
 export const LEASE_SECONDS = 900;
 
-export function taskConfig(task: AiTask, config: AppConfig): TaskConfig {
+/**
+ * 任務設定。size 只給 assist_analyze 用（{ items }：這次問了幾題）：點數、max_tokens、輸入估計與逾時依題數算
+ * （單字案例固定用 1 題的值，呼叫端傳 items: 1）。其他任務忽略 size。
+ * 學習助手的 max_tokens 與輸入估計是設計值（§4.7.1），WP-A2／WP-C 用 count_tokens 實測後定案、寫回這裡。
+ */
+export function taskConfig(task: AiTask, config: AppConfig, size?: { items: number }): TaskConfig {
   const { models, effort } = config.ai;
   switch (task) {
     case 'translation_grade':
       return {
         task,
         points: AI_TASK_POINTS[task],
-        submissionKind: 'translation',
+        target: { kind: 'submission', submissionKind: 'translation' },
         timeoutMs: TASK_TIMEOUT_MS[task],
         maxRetries: SDK_MAX_RETRIES,
         // 3,500：本站仿真題的 user 訊息多了本站參考（guidance 上限 2,600 bytes），最壞情況約 3.0k tokens
@@ -85,7 +129,7 @@ export function taskConfig(task: AiTask, config: AppConfig): TaskConfig {
       return {
         task,
         points: AI_TASK_POINTS[task],
-        submissionKind: 'essay',
+        target: { kind: 'submission', submissionKind: 'essay' },
         timeoutMs: TASK_TIMEOUT_MS[task],
         maxRetries: SDK_MAX_RETRIES,
         inputTokensEstimate: 6_000,
@@ -94,13 +138,13 @@ export function taskConfig(task: AiTask, config: AppConfig): TaskConfig {
           { role: 'second', model: models.secondRater, effort: effort.grade, maxTokens: 4_000, framework: 'holistic' },
           { role: 'third', model: models.default, effort: effort.grade, maxTokens: 4_000, framework: 'holistic' },
         ],
-        family: ESSAY_FAMILY_TASKS,
+        family: ESSAY_FAMILY,
       };
     case 'essay_ocr':
       return {
         task,
         points: AI_TASK_POINTS[task],
-        submissionKind: 'essay',
+        target: { kind: 'submission', submissionKind: 'essay' },
         timeoutMs: TASK_TIMEOUT_MS[task],
         maxRetries: SDK_MAX_RETRIES,
         // 兩張長邊 1600 px 的照片各約 2,500 tokens，加上提示詞。
@@ -108,8 +152,61 @@ export function taskConfig(task: AiTask, config: AppConfig): TaskConfig {
         calls: [{ role: 'ocr', model: models.default, effort: effort.ocr, maxTokens: 3_000, framework: 'ocr' }],
         family: null,
       };
+    // ── 學習助手（docs/design/learning-assistant.md §4.7.1）。模型一律 AI_MODEL_DEFAULT；系統提示用 1 小時快取。──
+    case 'assist_ocr':
+      return {
+        task,
+        points: AI_TASK_POINTS[task],
+        target: { kind: 'assist_turn' },
+        timeoutMs: TASK_TIMEOUT_MS[task],
+        maxRetries: SDK_MAX_RETRIES,
+        // 1–2 張照片（各約 2,500 tokens）加上轉錄的系統提示。
+        inputTokensEstimate: 6_500,
+        calls: [{ role: 'ocr', model: models.default, effort: effort.ocr, maxTokens: 6_000, framework: 'ocr', systemCacheTtl: '1h' }],
+        family: ASSIST_OCR_FAMILY,
+      };
+    case 'assist_analyze': {
+      // 題組每多一題：點數 +2（最多 14）、max_tokens +4,000、輸入 +1,000；2 題以上逾時 240 秒。
+      const n = Math.max(1, Math.floor(size?.items ?? 1));
+      return {
+        task,
+        points: assistAnalyzePoints('item', n),
+        target: { kind: 'assist_turn' },
+        timeoutMs: n >= 2 ? ASSIST_ANALYZE_GROUP_TIMEOUT_MS : TASK_TIMEOUT_MS[task],
+        maxRetries: SDK_MAX_RETRIES,
+        inputTokensEstimate: 10_000 + 1_000 * (n - 1),
+        calls: [{ role: 'tutor', model: models.default, effort: effort.assist, maxTokens: 16_000 + 4_000 * (n - 1), framework: 'assist', systemCacheTtl: '1h' }],
+        family: null,
+      };
+    }
+    case 'assist_followup':
+      return {
+        task,
+        points: AI_TASK_POINTS[task],
+        target: { kind: 'assist_turn' },
+        timeoutMs: TASK_TIMEOUT_MS[task],
+        maxRetries: SDK_MAX_RETRIES,
+        // 系統提示＋上下文 block（題目、解析摘要）＋對話（≤ 3,000 字元）＋這一輪的問題。
+        inputTokensEstimate: 14_000,
+        calls: [{ role: 'tutor', model: models.default, effort: effort.chat, maxTokens: 5_000, framework: 'assist', systemCacheTtl: '1h' }],
+        family: null,
+      };
+    case 'assist_report':
+      return {
+        task,
+        points: AI_TASK_POINTS[task],
+        target: { kind: 'assist_report' },
+        timeoutMs: TASK_TIMEOUT_MS[task],
+        maxRetries: SDK_MAX_RETRIES,
+        inputTokensEstimate: 17_000,
+        calls: [{ role: 'tutor', model: models.default, effort: effort.assist, maxTokens: 22_000, framework: 'assist', systemCacheTtl: '1h' }],
+        family: ASSIST_REPORT_FAMILY,
+      };
   }
 }
+
+/** 學習助手家族的每日上限（UserLimits.familyCaps；設計值在 ASSIST_LIMITS）。 */
+export const ASSIST_FAMILY_DAY_CAPS = { assist_report: ASSIST_LIMITS.reportsPerDay, assist_ocr: ASSIST_LIMITS.ocrPerDay } as const;
 
 /** 取得某個角色的呼叫設定。 */
 export function callSpec(tc: TaskConfig, role: CallRole): CallSpec {

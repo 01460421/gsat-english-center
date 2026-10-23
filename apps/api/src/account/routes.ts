@@ -1,7 +1,8 @@
 /**
  * /api/me*：目前使用者、首次同意、個資權利（ARCHITECTURE §5、§8.4、§10.2）。負責：後端登入 A1。
  *
- *   GET    /api/me            永遠 200：未登入 {user:null}，已登入 MeResponseSignedIn（@gsat/shared）
+ *   GET    /api/me            永遠 200：未登入 {user:null}，已登入 MeResponseSignedIn（@gsat/shared；學習助手是 admin 模式時
+ *                             管理員多 assistant_preview，docs/design/learning-assistant.md §4.14）
  *   PATCH  /api/me            MePatchBody → MeResponseSignedIn（requireUser({ allowPendingConsent: true })）
  *   POST   /api/me/consents   ConsentsPostBody → MeResponseSignedIn（同上；version 必須是現行版本）
  *   GET    /api/me/export     MeExport（附 Content-Disposition 下載；10 分鐘內登入過）
@@ -17,12 +18,14 @@ import {
   DISPLAY_NAME_MAX,
   RECENT_LOGIN_MINUTES_SENSITIVE,
   type MeResponse,
+  type MeResponseSignedIn,
 } from '@gsat/shared';
 import { Hono, type Context } from 'hono';
 import { z } from 'zod';
 import { loadConfig } from '../config';
 import type { AppEnv } from '../env';
 import { ApiError } from '../errors';
+import { assistantPreview } from '../features';
 import { nowSeconds, taiwanDay } from '../time';
 import {
   clearSessionCookie,
@@ -96,16 +99,24 @@ function profileUpdate(
   return db.prepare(`UPDATE users SET ${sets.join(', ')} WHERE id = ?`).bind(...params, userId);
 }
 
+/** 已登入者的 /api/me 本體：學習助手的管理員預覽只在有的時候才加欄位（其他人的回應一個字都不變）。 */
+function meBody(c: Context<AppEnv>, user: SessionUser): MeResponseSignedIn {
+  const config = loadConfig(c.env);
+  const body = buildMeResponse(user, config.consentVersions);
+  const preview = assistantPreview(config, user.role);
+  return preview ? { ...body, assistant_preview: preview } : body;
+}
+
 /** 寫入後重新讀取並回傳 MeResponseSignedIn。 */
 async function respondMe(c: Context<AppEnv>, user: SessionUser) {
   const fresh = await reloadSessionUser(c, user.id, user.loginAt);
   if (!fresh) throw new ApiError(401, 'unauthorized', '請先登入');
-  return c.json(buildMeResponse(fresh, loadConfig(c.env).consentVersions));
+  return c.json(meBody(c, fresh));
 }
 
 accountRoutes.get('/', async (c) => {
   const user = await getSessionUser(c);
-  const body: MeResponse = user ? buildMeResponse(user, loadConfig(c.env).consentVersions) : { user: null };
+  const body: MeResponse = user ? meBody(c, user) : { user: null };
   return c.json(body);
 });
 

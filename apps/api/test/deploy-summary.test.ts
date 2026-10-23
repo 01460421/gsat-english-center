@@ -3,14 +3,25 @@
  * docs/design/custom-essay.md §10 打開之後要確認「自訂題目批改（customEssay）：啟用」、緊急關閉要確認「未啟用」，
  * 所以 Summary 一定要有這一列；和 wrangler.toml 的 AI_CUSTOM_ESSAY 對不起來時要警告；
  * 自訂題沒開時（評分對照達標之前，或只關自訂題）只給提醒，並說明怎麼打開。
+ * 學習助手的兩個開關（docs/design/learning-assistant.md §4.14）：Summary 列出 wrangler.toml 的值（off／admin／on），
+ * /api/features 和 on 對不起來時警告，admin 模式（只有管理員能用）給提醒。
  */
 import { execFileSync } from 'node:child_process';
 import { mkdtempSync, readFileSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { describe, expect, it } from 'vitest';
-import { buildDeploySummary, CUSTOM_ESSAY_DEFAULT, customEssayExpected, customEssayVarFrom, type DeploySummaryInput } from '../../../.github/scripts/deploy-summary.mjs';
-import { CONFIG_DEFAULTS, customEssaySwitch } from '../src/config';
+import {
+  ASSISTANT_DEFAULT,
+  assistantMode,
+  assistantVarsFrom,
+  buildDeploySummary,
+  CUSTOM_ESSAY_DEFAULT,
+  customEssayExpected,
+  customEssayVarFrom,
+  type DeploySummaryInput,
+} from '../../../.github/scripts/deploy-summary.mjs';
+import { assistantSwitch, CONFIG_DEFAULTS, customEssaySwitch } from '../src/config';
 
 const REPO = path.resolve(import.meta.dirname, '..', '..', '..');
 const SCRIPT = path.join(REPO, '.github', 'scripts', 'deploy-summary.mjs');
@@ -30,7 +41,13 @@ function input(features: DeploySummaryInput['features'], customEssayVar: string 
   };
 }
 const on = { auth: true, ai: true, ocr: true, aiPaused: false };
-const row = (s: ReturnType<typeof buildDeploySummary>) => s.rows.find(([k]) => k === '自訂題目批改（customEssay）')?.[1];
+const row = (s: ReturnType<typeof buildDeploySummary>, key = '自訂題目批改（customEssay）') => s.rows.find(([k]) => k === key)?.[1];
+const ASSISTANT_ROW = '學習助手（assistant）';
+const PHOTO_ROW = '學習助手拍照（assistantPhoto）';
+/** 自訂題開著、學習助手兩個開關照給的值。 */
+function assistantInput(features: DeploySummaryInput['features'], assistantVar: string | null, assistantPhotoVar: string | null): DeploySummaryInput {
+  return { ...input({ ...on, customEssay: true, ...features }), assistantVar, assistantPhotoVar };
+}
 
 describe('deploy-summary.mjs', () => {
   it('Summary 有「自訂題目批改（customEssay）」這一列：啟用與未啟用分得出來（§10 第 3、5 步）', () => {
@@ -90,12 +107,108 @@ describe('deploy-summary.mjs', () => {
     expect(customEssayVarFrom(readFileSync(path.join(REPO, 'apps', 'api', 'wrangler.toml'), 'utf8'))).toMatch(/^(on|off)$/);
   });
 
+  it('學習助手：兩個開關各一列，寫出 wrangler.toml 的值（off／admin／on）；沒有那兩行時是預設 off、沒有警告與提醒', () => {
+    const off = buildDeploySummary(input({ ...on, customEssay: true }));
+    expect(row(off, ASSISTANT_ROW)).toBe('未啟用（wrangler.toml 的 AI_ASSISTANT：沒有設定，預設 off）');
+    expect(row(off, PHOTO_ROW)).toBe('未啟用（wrangler.toml 的 AI_ASSISTANT_PHOTO：沒有設定，預設 off）');
+    expect(off.warnings).toEqual([]);
+    expect(off.notices).toEqual([]);
+    const admin = buildDeploySummary(assistantInput({}, 'admin', 'admin'));
+    expect(row(admin, ASSISTANT_ROW)).toBe('只有管理員能用（admin）（wrangler.toml 的 AI_ASSISTANT："admin"）');
+    expect(row(admin, PHOTO_ROW)).toBe('只有管理員能用（admin）（wrangler.toml 的 AI_ASSISTANT_PHOTO："admin"）');
+    expect(admin.markdown).toContain('| 學習助手（assistant） | 只有管理員能用（admin）');
+    const opened = buildDeploySummary(assistantInput({ assistant: true, assistantPhoto: true }, 'on', 'on'));
+    expect(row(opened, ASSISTANT_ROW)).toBe('啟用（wrangler.toml 的 AI_ASSISTANT："on"）');
+    expect(row(opened, PHOTO_ROW)).toBe('啟用（wrangler.toml 的 AI_ASSISTANT_PHOTO："on"）');
+    expect(opened.warnings).toEqual([]);
+    expect(opened.notices).toEqual([]);
+    // 學習助手 on、拍照 off（緊急時只關拍照，docs/SETUP-KEYS.md §8.3）：沒有警告與提醒。
+    const noPhoto = buildDeploySummary(assistantInput({ assistant: true }, 'on', 'off'));
+    expect(row(noPhoto, PHOTO_ROW)).toBe('未啟用（wrangler.toml 的 AI_ASSISTANT_PHOTO："off"）');
+    expect(noPhoto.warnings).toEqual([]);
+    expect(noPhoto.notices).toEqual([]);
+  });
+
+  it('學習助手 admin 模式（只有管理員能用，緊急時查問題）：::notice::，說明 /api/features 不會出現、怎麼確認與恢復開放；學習助手關著時拍照的 admin 不算', () => {
+    const admin = buildDeploySummary(assistantInput({}, 'admin', 'off'));
+    expect(admin.warnings).toEqual([]);
+    expect(admin.notices).toHaveLength(1);
+    expect(admin.notices[0]).toContain('學習助手是「只有管理員能用」、拍照是「關閉」');
+    expect(admin.notices[0]).toContain('/api/features 不會出現');
+    expect(admin.notices[0]).toContain('assistant_preview');
+    expect(admin.notices[0]).toContain('§8.3');
+    // on＋拍照 admin：拍照只有管理員能用，也提醒。
+    const photoAdmin = buildDeploySummary(assistantInput({ assistant: true }, 'on', 'admin'));
+    expect(row(photoAdmin, PHOTO_ROW)).toBe('只有管理員能用（admin）（wrangler.toml 的 AI_ASSISTANT_PHOTO："admin"）');
+    expect(photoAdmin.warnings).toEqual([]);
+    expect(photoAdmin.notices).toHaveLength(1);
+    expect(photoAdmin.notices[0]).toContain('學習助手是「對所有人開放」、拍照是「只有管理員能用」');
+    // 學習助手 off：拍照寫什麼都用不到。
+    const offPhotoAdmin = buildDeploySummary(assistantInput({}, 'off', 'admin'));
+    expect(row(offPhotoAdmin, PHOTO_ROW)).toBe('未啟用（wrangler.toml 的 AI_ASSISTANT_PHOTO："admin"）');
+    expect(offPhotoAdmin.notices).toEqual([]);
+    // AI 沒開時不提醒也不比。
+    const noAi = buildDeploySummary({ ...assistantInput({ ai: false, ocr: false, customEssay: false }, 'admin', 'admin') });
+    expect(noAi.notices).toEqual([]);
+    expect(noAi.warnings.some((w) => w.includes('學習助手'))).toBe(false);
+  });
+
+  it('學習助手和 wrangler.toml 對不起來（改成 off 但 Worker 還回 assistant，或 on 卻沒有）：::warning::，提醒先別解除全站暫停', () => {
+    const stillOn = buildDeploySummary(assistantInput({ assistant: true }, 'off', 'off'));
+    expect(stillOn.warnings.some((w) => w.includes('學習助手') && w.includes('對不起來') && w.includes('不要解除全站暫停'))).toBe(true);
+    const missing = buildDeploySummary(assistantInput({}, 'on', 'off'));
+    expect(missing.warnings.some((w) => w.includes('學習助手') && w.includes('對不起來'))).toBe(true);
+    // admin 模式卻在 /api/features 出現（公開端點不該透露預覽）。
+    const leaked = buildDeploySummary(assistantInput({ assistant: true }, 'admin', 'off'));
+    expect(leaked.warnings.some((w) => w.includes('學習助手'))).toBe(true);
+    const photo = buildDeploySummary(assistantInput({ assistant: true, assistantPhoto: true }, 'on', 'admin'));
+    expect(photo.warnings.some((w) => w.includes('學習助手'))).toBe(true);
+  });
+
+  it('AI_ASSISTANT／AI_ASSISTANT_PHOTO 的判斷和 src/config.ts 的 assistantSwitch 相同（含預設值 off）；讀 wrangler.toml 的那兩行（註解不算）', () => {
+    expect(ASSISTANT_DEFAULT).toBe(CONFIG_DEFAULTS.AI_ASSISTANT);
+    expect(ASSISTANT_DEFAULT).toBe(CONFIG_DEFAULTS.AI_ASSISTANT_PHOTO);
+    const warn = console.warn;
+    console.warn = () => {};
+    try {
+      for (const v of [null, '', '   ', 'on', 'ON', ' on ', 'admin', ' Admin ', 'off', 'Off', 'true', 'yes', '0', 'onn', 'admins']) {
+        expect(assistantMode(v), JSON.stringify(v)).toBe(assistantSwitch('AI_ASSISTANT', v ?? undefined));
+        expect(assistantMode(v), JSON.stringify(v)).toBe(assistantSwitch('AI_ASSISTANT_PHOTO', v ?? undefined));
+      }
+    } finally {
+      console.warn = warn;
+    }
+    expect(assistantVarsFrom('# AI_ASSISTANT = "on" 的說明\n[vars]\nAI_ASSISTANT = "admin"\nAI_ASSISTANT_PHOTO = "off"\n')).toEqual({ assistant: 'admin', photo: 'off' });
+    // AI_ASSISTANT 那一行不會被 AI_ASSISTANT_PHOTO 當成自己（反過來也是）。
+    expect(assistantVarsFrom('[vars]\nAI_ASSISTANT_PHOTO = "on"\n')).toEqual({ assistant: null, photo: 'on' });
+    expect(assistantVarsFrom('[vars]\nAPP_ORIGIN = "x"\n')).toEqual({ assistant: null, photo: null });
+    // 上線（on）、緊急關閉（off）、只留給管理員（admin）都只改那兩行：三種值都讀得到（不把值寫死在測試裡，部署前的測試不擋緊急關閉）。
+    const real = assistantVarsFrom(readFileSync(path.join(REPO, 'apps', 'api', 'wrangler.toml'), 'utf8'));
+    expect(real.assistant).toMatch(/^(off|admin|on)$/);
+    expect(real.photo).toMatch(/^(off|admin|on)$/);
+  });
+
+  it('現行 wrangler.toml 的兩個開關（2026-10-23 上線後是 on／on）配上對得起來的 /api/features：沒有學習助手的警告；兩個都是 on 時沒有提醒、兩列都是「啟用」', () => {
+    const real = assistantVarsFrom(readFileSync(path.join(REPO, 'apps', 'api', 'wrangler.toml'), 'utf8'));
+    const modeA = assistantMode(real.assistant);
+    const modeP = assistantMode(real.photo);
+    // /api/features 只在 on 時有欄位；拍照另外要學習助手本身是 on。
+    const features = { ...(modeA === 'on' ? { assistant: true } : {}), ...(modeA === 'on' && modeP === 'on' ? { assistantPhoto: true } : {}) };
+    const s = buildDeploySummary(assistantInput(features, real.assistant, real.photo));
+    expect(s.warnings).toEqual([]);
+    if (modeA === 'on' && modeP === 'on') {
+      expect(s.notices).toEqual([]);
+      expect(row(s, ASSISTANT_ROW)).toBe('啟用（wrangler.toml 的 AI_ASSISTANT："on"）');
+      expect(row(s, PHOTO_ROW)).toBe('啟用（wrangler.toml 的 AI_ASSISTANT_PHOTO："on"）');
+    }
+  });
+
   it('workflow 實際執行的指令（node .github/scripts/deploy-summary.mjs）：log 與 GITHUB_STEP_SUMMARY 都有這一列', () => {
     const dir = mkdtempSync(path.join(tmpdir(), 'deploy-summary-'));
     const summary = path.join(dir, 'summary.md');
     const toml = path.join(dir, 'wrangler.toml');
     writeFileSync(summary, '');
-    writeFileSync(toml, '[vars]\nAI_CUSTOM_ESSAY = "off"\n');
+    writeFileSync(toml, '[vars]\nAI_CUSTOM_ESSAY = "off"\nAI_ASSISTANT = "admin"\nAI_ASSISTANT_PHOTO = "admin"\n');
     const out = execFileSync('node', [SCRIPT], {
       env: {
         ...process.env,
@@ -115,6 +228,11 @@ describe('deploy-summary.mjs', () => {
     expect(out).toContain('自訂題目批改（customEssay）：未啟用');
     expect(out).toContain('::notice::');
     expect(readFileSync(summary, 'utf8')).toContain('| 自訂題目批改（customEssay） | 未啟用');
+    // 學習助手的兩列與 admin 模式的提醒（讀 WRANGLER_TOML 指定的檔）。
+    expect(out).toContain('學習助手（assistant）：只有管理員能用（admin）（wrangler.toml 的 AI_ASSISTANT："admin"）');
+    expect(out).toContain('學習助手拍照（assistantPhoto）：只有管理員能用（admin）');
+    expect(out).toContain('::notice::學習助手是「只有管理員能用」');
+    expect(readFileSync(summary, 'utf8')).toContain('| 學習助手（assistant） | 只有管理員能用（admin）');
   });
 
   it('worker-deploy.yml 的部署後確認呼叫這支腳本', () => {

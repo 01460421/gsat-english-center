@@ -11,6 +11,8 @@
  *   /api/submissions* 中譯英與作文的提交（src/submissions/routes.ts）
  *   /api/ai/apply     申請 AI（src/account/apply.ts）
  *   /api/ai/*         任務型 AI 端點（src/ai/routes.ts）：提示詞與評分基準都寫在伺服器端，前端只送作答內容
+ *   /api/assist/*     學習助手的案例、解析與追問（src/assist/routes.ts；docs/design/learning-assistant.md §4.1）：題目由 Worker 自己讀
+ *                     網站的公開題目檔（c.var.siteData，下面的中介層建立），前端只送「哪一題、學生答什麼」
  *   /api/admin/*      後台（src/admin/routes.ts、src/admin/ai.ts）。不用 /admin/*：過渡期 Vercel 只轉送 /api 與 /auth，
  *                     SPA 的 catch-all 會吞掉 /admin/*（ARCHITECTURE §12）
  *   /auth/*           Google OAuth 與 session cookie（src/auth/routes.ts）
@@ -26,12 +28,15 @@ import type { HealthResponse } from '@gsat/shared';
 import { Hono } from 'hono';
 import pkg from '../package.json';
 import type { AppEnv } from './env';
+import { loadConfig } from './config';
 import { handleError, handleNotFound } from './errors';
 import { accountRoutes } from './account/routes';
 import { aiApplyRoutes } from './account/apply';
 import { adminAiRoutes } from './admin/ai';
 import { adminRoutes } from './admin/routes';
 import { aiRoutes } from './ai/routes';
+import { assistRoutes } from './assist/routes';
+import { createSiteData } from './assist/siteData';
 import { authRoutes } from './auth/routes';
 import { featureRoutes } from './features';
 import { housekeeping } from './ai/housekeeping';
@@ -64,6 +69,12 @@ app.route('/api/submissions', submissionRoutes);
 // /api/ai/apply 要在 /api/ai 之前掛：兩個子應用各自負責，前者屬帳號流程（A1）、後者屬 AI 任務（A2）。
 app.route('/api/ai/apply', aiApplyRoutes);
 app.route('/api/ai', aiRoutes);
+// 學習助手讀公開題目檔的工具：外層（測試）已經放了就用它，否則依 SITE_DATA_ORIGIN（沒設＝APP_ORIGIN）建立。
+app.use('/api/assist/*', async (c, next) => {
+  if (!c.var.siteData) c.set('siteData', createSiteData({ origin: loadConfig(c.env).urls.siteDataOrigin }));
+  await next();
+});
+app.route('/api/assist', assistRoutes);
 app.route('/api/admin', adminRoutes);
 app.route('/api/admin', adminAiRoutes);
 app.route('/auth', authRoutes);

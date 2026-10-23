@@ -22,6 +22,11 @@ import { ExamSourceNote } from '../exams/components/SessionPanels';
 import { examIdLabel, formatDuration } from '../exams/labels';
 import { formatPoints } from '../exams/scoring';
 import { ExamPdfDownload } from '../pdf/ExamPdfDownload';
+import { MockWritingHandoff } from '../assistant/components/MockWritingHandoff';
+import { UpdateReportLink } from '../assistant/components/UpdateReportLink';
+import { officialAskExtras, recordOutcomesOnce } from '../assistant/entries';
+import { examOutcomes } from '../assistant/outcomeBuilders';
+import { useAssistantEnabled } from '../assistant/lib/useAssistantEnabled';
 import { isBankPaperId } from './bank/paperId';
 import { LevelCard } from './components/LevelCard';
 import { MarkedBadge } from './components/MarkToggle';
@@ -68,9 +73,14 @@ function ReviewPaper({ record }: { record: MockAttemptRecord }) {
   // 已交卷的作答：題目元件會顯示答案、全國答對率與選項分布；改不了答案，所以存檔是空操作。
   const store = useMemo(() => new AttemptStore(record.attempt, true, { save: () => true }), [record.attempt]);
   const marked = useMemo(() => new Set(record.marked), [record.marked]);
+  // 學習助手（開關打開時）：每題回饋下方的「問學習助手」（錯、未作答、標記過）／「這題有疑問？」（docs/design/learning-assistant.md §1.4）。
+  const assistant = useAssistantEnabled();
   const extras = useMemo<QuestionExtras>(
-    () => ({ renderHeadingAccessory: (labels) => <MarkedBadge labels={labels} marked={marked} /> }),
-    [marked],
+    () => ({
+      renderHeadingAccessory: (labels) => <MarkedBadge labels={labels} marked={marked} />,
+      ...(assistant ? officialAskExtras((label) => ({ src: 'mock', attempt: record.id, labels: [label] }), { marked, selfScores: record.selfScores }) : {}),
+    }),
+    [marked, assistant, record.id, record.selfScores],
   );
   return (
     <section aria-labelledby={`${id}-title`} className="space-y-4">
@@ -120,6 +130,35 @@ function ReportBody({ exam, paper, initial }: { exam: Exam; paper: MockPaper; in
   useEffect(() => {
     upsertHistory(historyEntryFor(record, report, scale));
   }, [record, report, scale]);
+
+  // 學習助手的本機作答紀錄：成績單第一次顯示這份已交卷的紀錄時寫入（手動交卷、時間到、打開時已逾期都涵蓋；同一份不重複寫）。
+  useEffect(() => {
+    if (!record.submittedAt) return;
+    const at = Date.parse(record.submittedAt);
+    recordOutcomesOnce('mock', { p: record.id }, at, () =>
+      examOutcomes(exam, record.attempt.answers, { s: 'mock', p: record.id, marked: new Set(record.marked), selfScores: record.selfScores, at }),
+    );
+    // 只在打開這份成績單時寫一次（之後改自評不重寫）。
+  }, [exam, record.id]);
+
+  /** 模考的中譯英、作文：先帶進寫作作答頁送 AI 批改，再從批改結果問學習助手（§1.4.1）。 */
+  const writingHandoff = (kind: 'translation' | 'composition') => {
+    const labels = report.openItems.filter((i) => i.kind === kind).map((i) => i.label);
+    const texts = labels.map((l) => {
+      const v = record.attempt.answers[l];
+      return typeof v === 'string' ? v : '';
+    });
+    const route = kind === 'translation' ? 'translation' : 'essay';
+    return (
+      <MockWritingHandoff
+        kind={route}
+        examId={exam.id}
+        attemptPath={`/writing/${route}/${encodeURIComponent(exam.id)}`}
+        texts={texts}
+        attemptId={record.id}
+      />
+    );
+  };
 
   const update = (next: MockAttemptRecord) => {
     saveRecord(next);
@@ -188,6 +227,7 @@ function ReportBody({ exam, paper, initial }: { exam: Exam; paper: MockPaper; in
           </p>
         )}
       </section>
+      <UpdateReportLink />
 
       {info && scale ? (
         <LevelCard
@@ -224,7 +264,14 @@ function ReportBody({ exam, paper, initial }: { exam: Exam; paper: MockPaper; in
         <SectionTableNotes report={report} />
       </section>
 
-      <SelfAssessment exam={exam} items={report.openItems} answers={record.attempt.answers} details={record.selfDetail} onChange={onSelf} />
+      <SelfAssessment
+        exam={exam}
+        items={report.openItems}
+        answers={record.attempt.answers}
+        details={record.selfDetail}
+        onChange={onSelf}
+        writingHandoff={writingHandoff}
+      />
 
       <section aria-label="聲明" className="rounded-2xl border border-line bg-surface-2 p-4 text-sm">
         <p className="font-semibold">模擬分數與級分僅供參考，不是官方級分；AI 批改分數不等於正式閱卷結果。</p>

@@ -100,8 +100,16 @@ describe('提交與 AI 任務', () => {
     expect(writingGroupId('gsat-115', 's8g1', 2)).toBe('gsat-115.s8g1@2');
   });
 
-  it('點數照 ARCHITECTURE §6.1：中譯英 3、作文 7、OCR 2', () => {
-    expect(AI_TASK_POINTS).toEqual({ translation_grade: 3, essay_grade: 7, essay_ocr: 2 });
+  it('點數照 ARCHITECTURE §6.1：中譯英 3、作文 7、OCR 2；學習助手轉錄 2、解析 6 起、追問 3、報告 10（docs/design/learning-assistant.md §4.7）', () => {
+    expect(AI_TASK_POINTS).toEqual({
+      translation_grade: 3,
+      essay_grade: 7,
+      essay_ocr: 2,
+      assist_ocr: 2,
+      assist_analyze: 6,
+      assist_followup: 3,
+      assist_report: 10,
+    });
     expect(Object.keys(AI_TASK_POINTS).sort()).toEqual([...AI_TASKS].sort());
   });
 

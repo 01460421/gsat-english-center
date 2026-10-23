@@ -219,7 +219,9 @@ jobs:
           # 中譯英與作文的題目文字（src/generated/writing-prompts.json）由 data/exams/parsed 與 data/bank/v1
           # （verified 的本站仿真題，扣掉 data/unpublish.jsonl）產生後打包進 Worker；
           # 部署前檢查已經產生過，這裡再跑一次，確保打包的就是這個 commit 的題目。
+          # 學習報告的目標資料（src/generated/assist-targets.json）同理，由 data/exams 的官方統計產生。
           node scripts/build-writing-prompts.mjs
+          node scripts/build-assist-data.mjs
           npx wrangler deploy --message "GitHub Actions ${GITHUB_SHA:0:7}" 2>&1 | tee "$RUNNER_TEMP/deploy.log"
           expected="https://$WORKER_NAME.$SUBDOMAIN.workers.dev"
           url=$(grep -oE "https://$WORKER_NAME\.[a-z0-9-]+\.workers\.dev" "$RUNNER_TEMP/deploy.log" | head -n 1 || true)

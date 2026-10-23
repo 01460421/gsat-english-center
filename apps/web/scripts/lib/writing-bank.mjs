@@ -10,7 +10,7 @@
  * 沒有登記在 data/unpublish.jsonl、形狀檢查與 D8 比對通過；較新的版本還沒通過且改了內容、或較新的 rejected 內容相同，撤下舊版。
  *
  * 輸出（相對 public/data/；前端型別在 src/features/writing/bank/data.ts）：
- *   writing/bank/index.json                       每組 { uid, version, section_type, tier, topic }
+ *   writing/bank/index.json                       每組 { uid, version, section_type, tier, topic, skills }
  *   writing/bank/list/{translation|composition}-{basic|advanced|top}.json  列表卡片（固定 6 個檔，沒題組也輸出空陣列）
  *   writing/bank/prompts/{uid}@{v}.json           作答需要的內容：中文題目、提示、圖（清理過的 SVG）、鷹架
  *   writing/bank/answers/{uid}@{v}.json           交出作答後才下載：本站參考譯文、4 部分評分規準、誤譯陷阱、解析、
@@ -59,7 +59,7 @@ export class WritingBankError extends Error {}
 /**
  * @typedef {Record<string, unknown>} JsonObject
  * @typedef {'translation' | 'composition'} Section
- * @typedef {{ uid: string, version: number, section_type: Section, tier: string, topic: string | null }} IndexEntry
+ * @typedef {{ uid: string, version: number, section_type: Section, tier: string, topic: string | null, skills: string[] }} IndexEntry
  * @typedef {{ uid: string, version: number, topic: string | null, stems: string[] }} TranslationCard
  * @typedef {{ uid: string, version: number, topic: string | null, essay_type: string | null, prompt_excerpt: string, figure_count: number }} EssayCard
  * @typedef {{ uid: string, version: number, section_type: Section } & JsonObject} BankFile
@@ -92,6 +92,29 @@ function arr(v) {
 function topicOf(raw) {
   const g = /** @type {JsonObject} */ (raw.group);
   return isObject(g.tags) ? str(g.tags.topic) : null;
+}
+
+/** 技能代碼的值（中譯英句構是大寫代號、誘錯點是小寫代號）；不像代號的值不輸出。 */
+const SKILL_VALUE = /^[A-Za-z][A-Za-z0-9_]*$/;
+
+/**
+ * 寫作題組的技能代碼（學習助手的推薦，docs/design/learning-assistant.md §5.6）：中譯英各句的本站參考裡的句型（patterns 的
+ * code → ts:）與誘錯點（traps 的 type → tt:）取聯集、排序；作文沒有，是空陣列。只輸出代碼，不輸出參考譯文與說明。
+ * @param {JsonObject} raw
+ * @returns {string[]}
+ */
+export function writingSkills(raw) {
+  if (raw.section_type !== 'translation') return [];
+  const rubric = /** @type {JsonObject} */ (/** @type {JsonObject} */ (raw.annotations).rubric);
+  const items = isObject(rubric) && isObject(rubric.items) ? rubric.items : {};
+  /** @type {Set<string>} */
+  const out = new Set();
+  for (const item of Object.values(items)) {
+    if (!isObject(item)) continue;
+    for (const p of arr(item.patterns)) if (isObject(p) && typeof p.code === 'string' && SKILL_VALUE.test(p.code)) out.add(`ts:${p.code}`);
+    for (const t of arr(item.traps)) if (isObject(t) && typeof t.type === 'string' && SKILL_VALUE.test(t.type)) out.add(`tt:${t.type}`);
+  }
+  return [...out].sort();
 }
 
 /** @param {JsonObject} raw @returns {JsonObject[]} */
@@ -312,7 +335,7 @@ export function buildWritingBank(options) {
   for (const { raw } of sel.chosen) {
     const section = /** @type {Section} */ (raw.section_type);
     const tier = /** @type {string} */ (raw.tier);
-    const entry = { uid: /** @type {string} */ (raw.uid), version: /** @type {number} */ (raw.version), section_type: section, tier, topic: topicOf(raw) };
+    const entry = { uid: /** @type {string} */ (raw.uid), version: /** @type {number} */ (raw.version), section_type: section, tier, topic: topicOf(raw), skills: writingSkills(raw) };
     index.push(entry);
     if (section === 'translation') {
       const prompt = translationPrompt(raw);

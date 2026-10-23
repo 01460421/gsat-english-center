@@ -31,6 +31,8 @@ import { photoQualityIssue } from './lib/photo';
 import { AlreadySubmittedError, saveSelfAssessment, startTask, upsertSubmission } from './lib/submit';
 import { checkEssayLength } from './lib/text';
 import { useErrorView } from './lib/useErrorView';
+import { HandoffApplied, HandoffOffer } from '../assistant/components/MockWritingHandoff';
+import { useWritingHandoff } from '../assistant/lib/handoff';
 import { deletePhotos, uploadPhoto } from './lib/writingApi';
 
 export default function EssayAttemptPage() {
@@ -79,6 +81,10 @@ function EssayAttempt({ prompt }: { prompt: EssayPrompt }) {
   const { ok: saved, discard } = useAutosave(key, draft);
   const draftRef = useRef(draft);
   draftRef.current = draft;
+  // 模考的作文帶過來（學習助手，docs/design/learning-assistant.md §1.4.1）：沒有草稿就直接填入，有不同的草稿時問要不要換。
+  const handoff = useWritingHandoff({ kind: 'essay', exam_id: prompt.exam_id }, [draft.text], (texts) =>
+    setDraft((d) => ({ ...d, text: texts[0] ?? '', mode: 'typed', updatedAt: Date.now() })),
+  );
   /**
    * 送出 AI 批改（打字或拍照辨識）之後：草稿保留文字；記下送出時間（首頁的「繼續學習」不再把它當成寫到一半，
    * 之後又改過才算）。打字送出另外清掉 submissionId（下次要建立新的提交；拍照模式本來就不用它）。
@@ -188,6 +194,9 @@ function EssayAttempt({ prompt }: { prompt: EssayPrompt }) {
         </p>
         <h1 className="mt-1 text-2xl font-bold tracking-tight lg:text-3xl">{title}</h1>
       </header>
+
+      <HandoffOffer offer={handoff.offer} onAccept={handoff.accept} onDismiss={handoff.dismiss} />
+      <HandoffApplied applied={handoff.applied} />
 
       <EssayPromptView prompt={prompt} />
 

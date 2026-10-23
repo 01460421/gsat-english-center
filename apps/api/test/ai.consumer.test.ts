@@ -559,7 +559,7 @@ describe('英文作文自訂題目（docs/design/custom-essay.md §7.4）', () =
     expect(metas).toHaveLength(2);
     for (const r of metas) {
       const meta = JSON.parse(r.judgments_json).meta;
-      expect(meta).toMatchObject({ filter_version: 'f3', d8_fp: d8Fingerprints()!.version, custom_rules: CUSTOM_PROMPT_RULES_VERSION });
+      expect(meta).toMatchObject({ filter_version: 'f4', d8_fp: d8Fingerprints()!.version, custom_rules: CUSTOM_PROMPT_RULES_VERSION });
       // 假模型的錯誤引用「feel lonely after work」不在這篇作文裡：自訂題整則丟掉並計數（只有第一位有錯誤清單）。
       expect(meta.output_limits.errors_dropped_unlocated, r.role).toBe(r.role === 'primary' ? 1 : 0);
     }
@@ -571,7 +571,7 @@ describe('英文作文自訂題目（docs/design/custom-essay.md §7.4）', () =
     const versions = env.DB.sqlite.prepare(`SELECT submission_id, prompt_version FROM gradings WHERE role = 'primary'`).all() as Array<{ submission_id: string; prompt_version: string }>;
     expect(new Set(versions.map((v) => v.prompt_version)).size).toBe(2);
     const examMeta = JSON.parse(row(env, `SELECT judgments_json FROM gradings WHERE submission_id = ? AND role = 'primary'`, exam.id).judgments_json).meta;
-    expect(examMeta.filter_version).toBe('f3');
+    expect(examMeta.filter_version).toBe('f4');
     expect(examMeta).not.toHaveProperty('d8_fp');
     expect(examMeta).not.toHaveProperty('output_limits');
   });

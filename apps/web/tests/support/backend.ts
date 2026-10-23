@@ -13,14 +13,38 @@ import type {
   AdminUsageResponse,
   AdminUserRow,
   AiQuotaResponse,
+  AssistAnalysisView,
+  AssistCaseDetail,
+  AssistCaseKind,
+  AssistCaseListResponse,
+  AssistCaseSummary,
+  AssistFollowupMode,
+  AssistFollowupView,
+  AssistOcrView,
+  AssistQuestionTarget,
+  AssistQuestionView,
+  AssistReportAccepted,
+  AssistReportDetail,
+  AssistReportListResponse,
+  AssistReportSummary,
+  AssistSection,
+  AssistTaskAccepted,
+  AssistTurnView,
+  AssistVerdict,
+  CreateAssistCaseBody,
+  CreateAssistFollowupBody,
+  CreateAssistReportBody,
   FeaturesResponse,
   MeResponse,
   MeResponseSignedIn,
+  PatchAssistCaseBody,
   PublicUser,
+  UpdateAssistQuestionBody,
 } from '@gsat/shared';
+import { reportDetail as reportDetailFixture } from '../../src/features/assistant/testing/report';
 
 /** 現行條款版本：要和 src/features/account/policy.ts（以及後端 wrangler.toml）一致，歡迎頁才允許送出。 */
-export const VERSIONS = { privacy: '2026-10-18', terms: '2026-10-08', ai: '2026-10-08' } as const;
+export const VERSIONS = { privacy: '2026-10-23', terms: '2026-10-23', ai: '2026-10-23' } as const;
 
 /**
  * 假後端的預設：登入、AI、OCR 都開；自訂題目批改關閉（AI_CUSTOM_ESSAY 的程式預設 off，也是只關自訂題時的狀態，
@@ -30,6 +54,12 @@ export const FEATURES_ON: FeaturesResponse = { auth: true, ai: true, ocr: true, 
 
 /** 自訂題目批改也打開（AI_CUSTOM_ESSAY=on）。 */
 export const FEATURES_CUSTOM_ON: FeaturesResponse = { ...FEATURES_ON, customEssay: true };
+
+/** 學習助手打開（AI_ASSISTANT=on；docs/design/learning-assistant.md §4.14）：拍照仍然關著。 */
+export const FEATURES_ASSISTANT_ON: FeaturesResponse = { ...FEATURES_ON, assistant: true };
+
+/** 學習助手與拍照都打開（AI_ASSISTANT_PHOTO=on；WP-A3）。 */
+export const FEATURES_ASSISTANT_PHOTO_ON: FeaturesResponse = { ...FEATURES_ASSISTANT_ON, assistantPhoto: true };
 
 /** 已登入的 /api/me（預設：完成首次設定、尚未申請 AI 的學生）。 */
 export function signedInMe(
@@ -57,6 +87,12 @@ export function signedInMe(
   };
 }
 
+/**
+ * 學習助手開關是 admin 時，管理員的 /api/me（多 assistant_preview；公開的 /api/features 沒有 assistant 欄位）。
+ * 一般學生在 admin 模式下的 /api/me 沒有這個欄位，畫面和開關關著時一樣。
+ */
+export const ME_ASSISTANT_PREVIEW: MeResponseSignedIn = signedInMe({ role: 'admin', ai_status: 'approved' }, { assistant_preview: { photo: false } });
+
 export const QUOTA: AiQuotaResponse = {
   ai_status: 'approved',
   tier: 'standard',
@@ -66,7 +102,7 @@ export const QUOTA: AiQuotaResponse = {
   site: { paused: false, budget_available: true },
   approval: { cap: 49, approved: 12, full: false },
   resets_at: { day: '2026-10-09T16:00:00Z', month: '2026-10-31T16:00:00Z' },
-  task_points: { translation_grade: 3, essay_grade: 7, essay_ocr: 2 },
+  task_points: { translation_grade: 3, essay_grade: 7, essay_ocr: 2, assist_ocr: 2, assist_analyze: 6, assist_followup: 3, assist_report: 10 },
 };
 
 export const ADMIN_HEALTH: AdminHealthResponse = {
@@ -123,6 +159,8 @@ export interface ApiCall {
   method: string;
   /** pathname（不含查詢字串）。 */
   path: string;
+  /** 路徑裡 :name 的值（登記成「GET /api/assist/cases/:id」時有 id）。 */
+  params: Record<string, string>;
   query: URLSearchParams;
   /** JSON 本體（解析失敗或 multipart 時是 undefined；原始內容看 request）。 */
   json: unknown;
@@ -161,7 +199,8 @@ export class FakeBackend {
   /** 目前的登入狀態；測試可以在處理函式裡改它（例如同意之後），之後的 GET /api/me 就回新的值。 */
   me: MeResponse;
   quota: AiQuotaResponse;
-  private readonly features: FeaturesResponse | 'not-deployed';
+  /** 目前的功能開關；測試可以改它（例如學習助手緊急關閉），之後的 GET /api/features 就回新的值。 */
+  features: FeaturesResponse | 'not-deployed';
   private readonly routes: Array<{ key: string; handler: Handler }> = [];
 
   constructor(options: FakeBackendOptions = {}) {
@@ -182,8 +221,8 @@ export class FakeBackend {
   }
 
   /**
-   * 登記「方法 路徑」的處理函式（路徑不含查詢字串）。後登記的優先，所以測試可以覆寫上面的預設值。
-   * 值不是函式時當成固定的 200 JSON。
+   * 登記「方法 路徑」的處理函式（路徑不含查詢字串；一段寫成 :name 時比對任何值，放進 call.params）。
+   * 後登記的優先，所以測試可以覆寫上面的預設值。值不是函式時當成固定的 200 JSON。
    */
   on(key: string, handler: Handler | object): this {
     const fn: Handler = typeof handler === 'function' ? (handler as Handler) : () => ok(handler);
@@ -210,18 +249,47 @@ export class FakeBackend {
             json = undefined;
           }
         }
-        const call: ApiCall = { method, path: url.pathname, query: url.searchParams, json, request };
+        const call: ApiCall = { method, path: url.pathname, params: {}, query: url.searchParams, json, request };
         this.calls.push(call);
         if (this.features === 'not-deployed') {
           await route.fulfill(fulfillOptions(NOT_DEPLOYED));
           return;
         }
-        const found = this.routes.find((r) => r.key === `${method} ${url.pathname}`);
-        const reply = found ? await found.handler(call) : apiError(404, 'not_found');
+        let reply: Reply = apiError(404, 'not_found');
+        for (const r of this.routes) {
+          const params = matchKey(r.key, method, url.pathname);
+          if (!params) continue;
+          call.params = params;
+          reply = await r.handler(call);
+          break;
+        }
         await route.fulfill(fulfillOptions(reply));
       },
     );
   }
+}
+
+/** 「方法 路徑」比對請求；路徑的 :name 段比對任何一段（值解碼後放進 params）。不符回 null。 */
+function matchKey(key: string, method: string, pathname: string): Record<string, string> | null {
+  const space = key.indexOf(' ');
+  if (key.slice(0, space) !== method) return null;
+  const pattern = key.slice(space + 1);
+  if (!pattern.includes('/:')) return pattern === pathname ? {} : null;
+  const want = pattern.split('/');
+  const got = pathname.split('/');
+  if (want.length !== got.length) return null;
+  const params: Record<string, string> = {};
+  for (let i = 0; i < want.length; i += 1) {
+    const w = want[i] as string;
+    const g = got[i] as string;
+    if (w.startsWith(':')) {
+      if (g === '') return null;
+      params[w.slice(1)] = decodeURIComponent(g);
+    } else if (w !== g) {
+      return null;
+    }
+  }
+  return params;
 }
 
 function fulfillOptions(reply: Reply) {
@@ -235,6 +303,581 @@ export async function fakeBackend(page: Page, options: FakeBackendOptions = {}):
   const backend = new FakeBackend(options);
   await backend.install(page);
   return backend;
+}
+
+// ───────────────────────── 學習助手（/api/assist/*） ─────────────────────────
+
+export interface FakeAssistOptions {
+  /** 解析的回應：'queued'（預設：202，輪詢幾次之後完成）或 'cache_hit'（共用快取命中：200、0 點、立刻完成）。 */
+  analyze?: 'queued' | 'cache_hit';
+  /** 進行中的任務被 GET 幾次之後完成（預設 1：第一次看到進行中，下一次完成）。 */
+  pendingPolls?: number;
+  /** 題號 → 正確答案（假後端不讀題目檔；沒有給的題目，有作答就判錯）。 */
+  keys?: Record<string, string>;
+  /** 拍照轉錄的結果（WP-A3）：預設 FAKE_OCR；'not_english' 時退還 invalid_output、案例回到 draft。 */
+  ocr?: AssistOcrView | 'not_english';
+}
+
+/**
+ * 假的拍照轉錄（本站為測試自己寫的句子）：說明、文章、兩題；第 15 題的題幹有一處看不清（候選 children／chicken），
+ * 文章也有一處看不清（不是要問的題就不必處理）；一段被隱藏的佳作樣式。
+ */
+export const FAKE_OCR: AssistOcrView = {
+  status: 'ok',
+  blocks: [
+    { kind: 'instructions', label: null, text: 'Read the passage and choose the best answer.', unclear: [], hidden: null },
+    { kind: 'passage', label: null, text: 'Every spring, the town holds a paper boat race. Children fold [[?]] from old newspapers.', unclear: [{ candidates: ['boats', 'coats'] }], hidden: null },
+    { kind: 'question', label: '14', text: 'What is the passage mainly about?', unclear: [], hidden: null },
+    { kind: 'options', label: '14', text: '(A) A town event\n(B) Candles\n(C) Newspapers\n(D) A job', unclear: [], hidden: null },
+    { kind: 'question', label: '15', text: 'Why do the [[?]] use newspapers?', unclear: [{ candidates: ['children', 'chicken'] }], hidden: null },
+    { kind: 'options', label: '15', text: '(A) They are free\n(B) They float\n(C) They are colorful\n(D) They are heavy', unclear: [], hidden: null },
+    { kind: 'passage', label: null, text: '這段看起來是評分說明、範文或佳作，已隱藏。', unclear: [], hidden: 'official_like' },
+  ],
+  student_answer_seen: '15: B',
+  omitted: ['answer_key'],
+  notices: ['照片裡的解答區沒有轉錄。'],
+};
+
+const SECTION_OF_PREFIX: Record<string, AssistSection> = {
+  vo: 'vocabulary',
+  cz: 'cloze',
+  wb: 'word_bank',
+  st: 'structure',
+  rd: 'reading',
+  mx: 'mixed',
+};
+
+const SECTION_NAMES: Partial<Record<AssistSection, string>> = { vocabulary: '詞彙題', cloze: '綜合測驗', word_bank: '文意選填', structure: '篇章結構', reading: '閱讀測驗', mixed: '混合題' };
+
+/** 解析點數（同 shared 的 assistAnalyzePoints：1 題 6 點，每多一題加 2，上限 14；單字、寫作固定 6）。 */
+function analyzePoints(kind: AssistCaseKind, items: number): number {
+  return kind === 'item' ? Math.min(14, 6 + 2 * (Math.max(1, items) - 1)) : 6;
+}
+
+function summaryOf(c: AssistCaseDetail): AssistCaseSummary {
+  const { id, source, kind, title, section, status, verdict, item_count, wrong_count, understood, error_codes, skill_codes, followups, created_at, updated_at, expires_at } = c;
+  return { id, source, kind, title, section, status, verdict, item_count, wrong_count, understood, error_codes, skill_codes, followups, created_at, updated_at, expires_at };
+}
+
+/**
+ * 有狀態的學習助手假後端（docs/design/learning-assistant.md §4.1–§4.3 的形狀）：建立案例、解析（排入佇列 → 輪詢完成，
+ * 或共用快取命中）、追問、懂了嗎、刪除。題目內容不讀題目檔：題號、作答照前端送來的，對錯依 options.keys。
+ * 測試要模擬錯誤時，在 fakeAssist 之後用 backend.on 覆寫同一個路由（後登記的優先）。
+ */
+export class FakeAssist {
+  readonly cases = new Map<string, AssistCaseDetail>();
+  /**
+   * 登記到假後端的處理函式（鍵同 FakeBackend.on）。測試覆寫某個路由、又想在條件不成立時照常處理時呼叫它
+   * （例如第一次送出解析回 quota_day，之後照常排入佇列）。
+   */
+  readonly handlers: Record<string, Handler>;
+  private readonly pendingLeft = new Map<string, number>();
+  private readonly bySource = new Map<string, string>();
+  /** 拍照的題目：案例 → 暫存照片的 ord。 */
+  readonly photos = new Map<string, number[]>();
+  private seq = 0;
+
+  constructor(
+    backend: FakeBackend,
+    private readonly options: FakeAssistOptions = {},
+  ) {
+    this.handlers = {
+      'GET /api/assist/cases': () =>
+        ok({ cases: [...this.cases.values()].reverse().map(summaryOf), next_cursor: null, error_counts: {} } satisfies AssistCaseListResponse),
+      'POST /api/assist/cases': (call) => this.create(call.json as CreateAssistCaseBody),
+      'GET /api/assist/cases/:id': (call) =>
+        this.withCase(call, (c) => {
+          this.advance(c);
+          return ok(c);
+        }),
+      'PATCH /api/assist/cases/:id': (call) =>
+        this.withCase(call, (c) => {
+          const body = (call.json ?? {}) as PatchAssistCaseBody;
+          if (body.understood !== undefined) c.understood = body.understood;
+          if (body.rating !== undefined) c.rating = body.rating;
+          if (body.note !== undefined) c.note = body.note;
+          c.updated_at = nowSec();
+          return ok(c);
+        }),
+      'DELETE /api/assist/cases/:id': (call) =>
+        this.withCase(call, (c) => {
+          if (c.pending) return apiError(409, 'conflict');
+          this.cases.delete(c.id);
+          return { status: 204, body: '' };
+        }),
+      'PUT /api/assist/cases/:id/question': (call) =>
+        this.withCase(call, (c) => {
+          const body = call.json as UpdateAssistQuestionBody;
+          if (c.pending) return apiError(409, 'conflict');
+          if (c.source === 'photo') this.confirmPhoto(c, body);
+          else if (c.question?.blocks) c.question.blocks = body.question.blocks;
+          c.doubt_kinds = body.doubt_kinds ?? [];
+          c.doubt = body.doubt ?? null;
+          c.hint_first = body.hint_first ?? false;
+          c.status = 'ready';
+          return ok(c);
+        }),
+      'POST /api/assist/cases/:id/analyze': (call) => this.withCase(call, (c) => this.analyze(c)),
+      'POST /api/assist/cases/:id/followups': (call) => this.withCase(call, (c) => this.followup(c, call.json as CreateAssistFollowupBody)),
+      // 拍照（WP-A3）：照片只記張數（不解析 multipart）；轉錄排入佇列 → 輪詢完成。
+      'POST /api/assist/cases/:id/photos': (call) =>
+        this.withCase(call, (c) => {
+          if (c.source !== 'photo' || c.status !== 'draft') return apiError(409, 'conflict');
+          const ord = Number(call.query.get('ord'));
+          if (ord !== 1 && ord !== 2) return apiError(400, 'bad_request');
+          const list = (this.photos.get(c.id) ?? []).filter((p) => p !== ord);
+          this.photos.set(c.id, [...list, ord].sort());
+          return ok({ photos: (this.photos.get(c.id) ?? []).map((o) => ({ id: `p-${o}`, ord: o, bytes: 1000, width: 1200, height: 1600, created_at: nowSec() })) });
+        }),
+      'DELETE /api/assist/cases/:id/photos': (call) =>
+        this.withCase(call, (c) => {
+          if (c.status === 'ocr_queued') return apiError(409, 'conflict');
+          this.photos.delete(c.id);
+          return ok({ photos: [] });
+        }),
+      'POST /api/assist/cases/:id/ocr': (call) => this.withCase(call, (c) => this.ocr(c)),
+    };
+    for (const [key, handler] of Object.entries(this.handlers)) backend.on(key, handler);
+  }
+
+  private withCase(call: ApiCall, fn: (c: AssistCaseDetail) => Reply): Reply {
+    const c = this.cases.get(call.params['id'] ?? '');
+    return c ? fn(c) : apiError(404, 'not_found');
+  }
+
+  private nextId(prefix: string): string {
+    this.seq += 1;
+    return `${prefix}-${this.seq}`;
+  }
+
+  private verdictOf(label: string, answer: unknown): AssistVerdict {
+    if (answer === undefined || answer === null || answer === '') return 'unanswered';
+    const key = this.options.keys?.[label];
+    return key !== undefined && answer === key ? 'correct' : 'wrong';
+  }
+
+  private create(body: CreateAssistCaseBody): Reply {
+    const src = body.source;
+    // 同一組同樣的題號與作答已經有案例：回 200 與那一筆（§4.1）。
+    const dedupe = src.source === 'typed' || src.source === 'photo' ? null : JSON.stringify(src);
+    const existingId = dedupe ? this.bySource.get(dedupe) : undefined;
+    const existing = existingId ? this.cases.get(existingId) : undefined;
+    if (existing) return ok({ ...existing, existing: true });
+
+    const now = nowSec();
+    const id = this.nextId('case');
+    const kind: AssistCaseKind = src.source === 'writing' ? 'writing' : src.source === 'vocab' ? 'vocab' : 'item';
+    let section: AssistSection | null = null;
+    let title = '學習助手的題目';
+    let targets: AssistQuestionTarget[] = [];
+    let question: AssistQuestionView | null = null;
+    if (src.source === 'bank' || src.source === 'bank_mock' || src.source === 'exam') {
+      const prefix = /^ai\.([a-z]{2})\./.exec('ref' in src ? src.ref : '')?.[1];
+      section = src.source === 'exam' ? null : (SECTION_OF_PREFIX[prefix ?? ''] ?? null);
+      const display = (l: string) => (src.source === 'bank_mock' ? (src.label_map[l] ?? l) : l);
+      const unit = section === 'cloze' || section === 'word_bank' || section === 'structure' ? '格' : '題';
+      targets = src.labels.map((l) => {
+        const answer = src.answers[l] ?? null;
+        return {
+          label: l,
+          display_label: display(l),
+          mode: section === 'word_bank' || section === 'structure' ? 'bank_choice' : 'single_choice',
+          stem: null,
+          options: null,
+          accepted: this.options.keys?.[l] ? [this.options.keys[l] as string] : null,
+          student_answer: answer,
+          verdict: this.verdictOf(l, answer),
+          verdict_basis: 'program',
+          explanation: null,
+          stats: null,
+          tags: null,
+        };
+      });
+      const origin = src.source === 'exam' ? src.exam_id.replace(/^gsat-(\d+)$/, '$1 學測') : '本站題庫';
+      title = `${origin}・${section ? (SECTION_NAMES[section] ?? '題目') : '題目'}：第 ${targets.map((t) => t.display_label).join('、')} ${unit}`;
+      question = {
+        kind,
+        trust: 'site',
+        origin_label: origin,
+        section,
+        instructions: null,
+        passage: section === 'word_bank' ? 'Umbrellas are everywhere today. Long ago, people used them to provide protection from the scorching sun.' : null,
+        figure_text: null,
+        targets,
+        siblings: [],
+        shared_options: null,
+        group_answers: null,
+        elimination: null,
+        tier: null,
+      };
+    } else if (src.source === 'typed') {
+      const block = src.question.blocks[0];
+      const label = src.question.target_labels[0] ?? block?.label ?? '1';
+      targets = [
+        {
+          label,
+          display_label: label,
+          mode: 'unknown',
+          stem: null,
+          options: null,
+          accepted: null,
+          student_answer: src.question.student_answer ?? null,
+          verdict: 'unknown',
+          verdict_basis: 'none',
+          explanation: null,
+          stats: null,
+          tags: null,
+        },
+      ];
+      title = `你貼的題目：${(block?.text ?? '').slice(0, 30)}`;
+      question = {
+        kind,
+        trust: 'student',
+        origin_label: '你貼的題目',
+        section: null,
+        instructions: null,
+        passage: null,
+        figure_text: null,
+        targets,
+        siblings: [],
+        shared_options: null,
+        group_answers: null,
+        elimination: null,
+        tier: null,
+        blocks: src.question.blocks,
+      };
+    } else if (src.source === 'photo') {
+      title = '你拍的題目';
+    }
+    const verdicts = targets.map((t) => t.verdict);
+    const detail: AssistCaseDetail = {
+      id,
+      source: src.source,
+      kind,
+      title,
+      section,
+      status: src.source === 'photo' ? 'draft' : 'ready',
+      verdict: verdicts.includes('wrong') ? 'wrong' : verdicts.length > 0 && verdicts.every((v) => v === 'correct') ? 'correct' : verdicts.length > 0 ? 'unknown' : null,
+      item_count: Math.max(1, targets.length),
+      wrong_count: verdicts.filter((v) => v === 'wrong').length,
+      understood: null,
+      error_codes: [],
+      skill_codes: [],
+      followups: 0,
+      created_at: now,
+      updated_at: now,
+      expires_at: now + 180 * 86_400,
+      trust: src.source === 'typed' || src.source === 'photo' ? 'student' : 'site',
+      question,
+      doubt_kinds: body.doubt_kinds ?? [],
+      torn_with: body.torn_with ?? null,
+      doubt: body.doubt ?? null,
+      hint_first: body.hint_first ?? false,
+      note: null,
+      rating: null,
+      turns: [],
+      pending: null,
+      history_line: null,
+      flags: { d8_hidden: false, injection: false, safety: null },
+    };
+    this.cases.set(id, detail);
+    if (dedupe) this.bySource.set(dedupe, id);
+    return ok(detail, 201);
+  }
+
+  private analyze(c: AssistCaseDetail): Reply {
+    if (c.pending) return apiError(409, 'conflict');
+    const turn: AssistTurnView = { id: this.nextId('turn'), seq: c.turns.length + 1, kind: 'analyze', status: 'queued', created_at: nowSec() };
+    c.turns.push(turn);
+    if (this.options.analyze === 'cache_hit') {
+      this.finish(c, turn, true);
+      return ok({ op_id: null, case_id: c.id, turn_id: turn.id, status: 'done', points: 0, cache_hit: true } satisfies AssistTaskAccepted);
+    }
+    const opId = this.nextId('op');
+    c.pending = { turn_id: turn.id, kind: 'analyze', op_id: opId, status: 'queued' };
+    c.status = 'analyzing';
+    this.pendingLeft.set(c.id, this.options.pendingPolls ?? 1);
+    return ok({ op_id: opId, case_id: c.id, turn_id: turn.id, status: 'queued', points: analyzePoints(c.kind, c.item_count) } satisfies AssistTaskAccepted, 202);
+  }
+
+  /** 轉錄（2 點）：要有照片、狀態 draft；排入佇列，輪詢幾次之後完成（或退還）。 */
+  private ocr(c: AssistCaseDetail): Reply {
+    if (c.pending || c.source !== 'photo' || c.status !== 'draft') return apiError(409, 'conflict');
+    if ((this.photos.get(c.id) ?? []).length === 0) return apiError(409, 'conflict');
+    const turn: AssistTurnView = { id: this.nextId('turn'), seq: c.turns.length + 1, kind: 'ocr', status: 'queued', created_at: nowSec() };
+    c.turns.push(turn);
+    const opId = this.nextId('op');
+    c.pending = { turn_id: turn.id, kind: 'ocr', op_id: opId, status: 'queued' };
+    c.status = 'ocr_queued';
+    this.pendingLeft.set(c.id, this.options.pendingPolls ?? 1);
+    return ok({ op_id: opId, case_id: c.id, turn_id: turn.id, status: 'queued', points: 2 } satisfies AssistTaskAccepted, 202);
+  }
+
+  /** 確認轉錄：題目換成學生確認的區塊（非目標區塊的 [[?]] 換成 [unclear]），轉錄只留統計。 */
+  private confirmPhoto(c: AssistCaseDetail, body: UpdateAssistQuestionBody): void {
+    const blocks = body.question.blocks.map((b) => ({ ...b, text: b.text.split('[[?]]').join('[unclear]') }));
+    const labels = body.question.target_labels.length > 0 ? body.question.target_labels : [blocks.find((b) => b.label)?.label ?? ''];
+    const targets: AssistQuestionTarget[] = labels.map((label) => ({
+      label,
+      display_label: label,
+      mode: 'unknown',
+      stem: blocks.find((b) => b.kind === 'question' && b.label === label)?.text ?? null,
+      options: null,
+      accepted: null,
+      student_answer: body.question.student_answer ?? null,
+      verdict: 'unknown',
+      verdict_basis: 'none',
+      explanation: null,
+      stats: null,
+      tags: null,
+    }));
+    const first = targets[0]?.stem ?? blocks[0]?.text ?? '';
+    c.title = `你拍的題目：${first.slice(0, 40)}`;
+    c.item_count = Math.max(1, targets.length);
+    c.verdict = 'unknown';
+    c.question = {
+      kind: 'item',
+      trust: 'student',
+      origin_label: '你拍的題目',
+      section: null,
+      instructions: null,
+      passage: null,
+      figure_text: null,
+      targets,
+      siblings: [],
+      shared_options: null,
+      group_answers: null,
+      elimination: null,
+      tier: null,
+      blocks,
+    };
+    for (const t of c.turns) {
+      if (t.kind === 'ocr' && t.ocr && t.ocr.blocks.length > 0) {
+        t.ocr = { ...t.ocr, blocks: [], student_answer_seen: '', notices: [], stats: { blocks: t.ocr.blocks.length, unresolved: 1, edited: 1, unclear_kept: 1 } };
+      }
+    }
+    this.photos.delete(c.id);
+  }
+
+  private followup(c: AssistCaseDetail, body: CreateAssistFollowupBody): Reply {
+    if (c.pending) return apiError(409, 'conflict');
+    const turn: AssistTurnView = {
+      id: this.nextId('turn'),
+      seq: c.turns.length + 1,
+      kind: 'followup',
+      status: 'queued',
+      question: body.text,
+      label: body.label ?? null,
+      mode: body.mode,
+      created_at: nowSec(),
+    };
+    c.turns.push(turn);
+    const opId = this.nextId('op');
+    c.pending = { turn_id: turn.id, kind: 'followup', op_id: opId, status: 'queued' };
+    this.pendingLeft.set(c.id, this.options.pendingPolls ?? 1);
+    return ok({ op_id: opId, case_id: c.id, turn_id: turn.id, status: 'queued', points: 3 } satisfies AssistTaskAccepted, 202);
+  }
+
+  /** GET 一次：進行中的任務往前推一步（先 running，次數到了就完成）。 */
+  private advance(c: AssistCaseDetail): void {
+    if (!c.pending) return;
+    const turn = c.turns.find((t) => t.id === c.pending?.turn_id);
+    if (!turn) return;
+    const left = this.pendingLeft.get(c.id) ?? 0;
+    if (left > 0) {
+      this.pendingLeft.set(c.id, left - 1);
+      c.pending = { ...c.pending, status: 'running' };
+      turn.status = 'running';
+      return;
+    }
+    this.finish(c, turn, false);
+  }
+
+  private finish(c: AssistCaseDetail, turn: AssistTurnView, cacheHit: boolean): void {
+    turn.status = 'done';
+    if (turn.kind === 'ocr') {
+      const result = this.options.ocr ?? FAKE_OCR;
+      if (result === 'not_english') {
+        // 看不出是英文題目：退還 invalid_output、照片刪掉、案例回到 draft（要重拍）。
+        turn.status = 'failed';
+        turn.failure = 'invalid_output';
+        c.status = 'draft';
+      } else {
+        turn.ocr = result;
+        c.status = 'ocr_ready';
+      }
+      this.photos.delete(c.id);
+    } else if (turn.kind === 'analyze') {
+      turn.analysis = itemAnalysis(c, cacheHit);
+      if (cacheHit) turn.cache_hit = true;
+      c.status = 'analyzed';
+      c.error_codes = c.wrong_count > 0 ? ['word_meaning'] : [];
+    } else {
+      turn.reply = followupReply(turn.mode ?? 'explain');
+      c.followups += 1;
+    }
+    c.pending = null;
+    c.updated_at = nowSec();
+  }
+}
+
+function nowSec(): number {
+  return Math.floor(Date.now() / 1000);
+}
+
+/** 固定的解析內容（item）：題組有全篇結構，逐題各一塊；勾了「在兩個選項之間猶豫」時回覆那個疑問。 */
+function itemAnalysis(c: AssistCaseDetail, cacheHit: boolean): AssistAnalysisView {
+  const targets = c.question?.targets ?? [];
+  const group = targets.length > 1;
+  const first = targets[0];
+  const mine = typeof first?.student_answer === 'string' ? first.student_answer : null;
+  return {
+    kind: 'item',
+    section: c.section,
+    skill_codes: [],
+    tested_zh: group ? '依上下文判斷每一格需要的詞性與語意，再用排除法縮小範圍。' : '依上下文判斷作者的意思。',
+    structure_zh: group ? '第一段介紹雨傘的起源，第二段說明材質的演變；這兩格的線索都在前後句。' : '',
+    items: targets.map((t) => ({
+      label: t.label,
+      display_label: t.display_label,
+      verdict: t.verdict,
+      verdict_basis: t.verdict_basis,
+      answer_key: t.accepted ? { from: 'site', accepted: t.accepted } : { from: 'ai', text: 'B', certainty: 'likely' },
+      student_answer: t.student_answer,
+      stats: null,
+      diagnosis: {
+        error_codes: t.verdict === 'wrong' ? ['word_meaning'] : [],
+        summary_zh: t.verdict === 'correct' ? '這題選對了，判斷的依據是前一句的語意。' : `第 ${t.display_label} 格：詞性對了，但語意和前後文接不起來。`,
+        detail_zh: '空格前後在講「保護、遮擋」，要選能接 from 的字。',
+      },
+      option_contrast_zh: '',
+      hints_zh: ['先看空格前後的字，判斷需要的詞性。', '再看整句在講什麼。'],
+      solution_steps: [
+        { text_zh: '找出空格前後的關鍵字。', quote: 'provide protection from the scorching sun', range: null },
+        { text_zh: '把候選字放回句子裡檢查語意與搭配。', quote: '', range: null },
+      ],
+      traps: [],
+    })),
+    knowledge: [
+      {
+        kind: 'collocation',
+        title_zh: 'provide protection from',
+        explain_zh: '「提供保護、免於…」的固定搭配。',
+        examples: [{ en: 'Trees provide protection from the wind.', zh: '樹木可以擋風。' }],
+      },
+    ],
+    method: { title_zh: '先詞性、再語意', steps_zh: ['先判斷每一格需要的詞性。', '再用語意與搭配縮小範圍。'] },
+    score_tips_zh: ['先做有把握的格子，再用排除法。', '最後把整段讀一次確認。'],
+    doubt_replies:
+      c.doubt_kinds.includes('torn_between') && c.torn_with
+        ? [{ doubt_zh: `在 (${mine ?? '?'}) 和 (${c.torn_with}) 之間猶豫`, reply_zh: `(${c.torn_with}) 只符合前半句；後半句的語氣只有 (${mine ?? '?'}) 接得上。` }]
+        : [],
+    practice_focus: null,
+    followup_chips_zh: ['可以再舉一個例句嗎？'],
+    key_concern_zh: '',
+    off_topic: false,
+    safety_flag: 'none',
+    notices: [],
+    cache_hit: cacheHit,
+  };
+}
+
+function followupReply(mode: AssistFollowupMode): AssistFollowupView {
+  return {
+    reply_zh: 'retain 是「保留、維持」，後面直接接受詞，不接 from。',
+    points: [{ text_zh: 'retain＋受詞', example_en: 'Please retain your ticket.' }],
+    mode_used: mode,
+    new_error_codes: [],
+    understood_check_zh: '用 retain 造一個句子看看。',
+    followup_chips_zh: [],
+    off_topic: false,
+    safety_flag: 'none',
+    notices: [],
+  };
+}
+
+/** 在假後端上登記學習助手的路由（要在 page.goto 之前；回傳的物件可以檢查案例的狀態）。 */
+export function fakeAssist(backend: FakeBackend, options: FakeAssistOptions = {}): FakeAssist {
+  return new FakeAssist(backend, options);
+}
+
+// ───────────────────────── 學習報告（/api/assist/reports；WP-C） ─────────────────────────
+
+/**
+ * 有狀態的學習報告假後端（docs/design/learning-assistant.md §4.1 的四個端點）：POST 排入佇列（10 點）、
+ * GET 詳情第一次看到排隊中、下一次完成（內容用 src/features/assistant/testing/report.ts 的範例，版本與 id 換成這一份的）、
+ * 列表新到舊、DELETE。送出的本體記在 bodies，測試檢查前端送了什麼。
+ */
+export class FakeReports {
+  readonly reports: AssistReportDetail[] = [];
+  readonly bodies: CreateAssistReportBody[] = [];
+  private readonly pendingLeft = new Map<string, number>();
+
+  constructor(backend: FakeBackend) {
+    backend.on('GET /api/assist/reports', () => ok({ reports: [...this.reports].reverse().map(reportSummaryOf) } satisfies AssistReportListResponse));
+    backend.on('POST /api/assist/reports', (call) => this.create(call.json as CreateAssistReportBody));
+    backend.on('GET /api/assist/reports/:id', (call) => {
+      const r = this.reports.find((x) => x.id === call.params['id']);
+      if (!r) return apiError(404, 'not_found');
+      this.advance(r);
+      return ok(r);
+    });
+    backend.on('DELETE /api/assist/reports/:id', (call) => {
+      const i = this.reports.findIndex((x) => x.id === call.params['id']);
+      if (i < 0) return apiError(404, 'not_found');
+      if (this.reports[i]!.status === 'queued' || this.reports[i]!.status === 'running') return apiError(409, 'conflict');
+      this.reports.splice(i, 1);
+      return { status: 204, body: '' };
+    });
+  }
+
+  private create(body: CreateAssistReportBody): Reply {
+    this.bodies.push(body);
+    const version = (this.reports.at(-1)?.version ?? 0) + 1;
+    const id = `00000000-0000-4000-8000-${String(version).padStart(12, '0')}`;
+    const now = nowSec();
+    const detail: AssistReportDetail = {
+      ...reportDetailFixture(),
+      id,
+      version,
+      based_on: body.based_on ?? null,
+      status: 'queued',
+      created_at: now,
+      updated_at: now,
+      settings: { target: body.target, practice_tier: body.practice_tier ?? null, weekly: body.weekly, school_exam_dates: body.school_exam_dates ?? [], exam_date: body.exam_date ?? '2027-01-23' },
+      feedback: body.feedback ?? null,
+      facts: null,
+      report: null,
+    };
+    this.reports.push(detail);
+    this.pendingLeft.set(id, 1);
+    return ok({ op_id: `op-report-${version}`, report_id: id, version, status: 'queued', points: 10 } satisfies AssistReportAccepted, 202);
+  }
+
+  /** 排隊中的報告被 GET 過一次之後完成。 */
+  private advance(r: AssistReportDetail): void {
+    if (r.status !== 'queued' && r.status !== 'running') return;
+    const left = this.pendingLeft.get(r.id) ?? 0;
+    if (left > 0) {
+      this.pendingLeft.set(r.id, left - 1);
+      return;
+    }
+    const done = reportDetailFixture();
+    r.status = 'done';
+    r.facts = done.facts;
+    r.report = r.version > 1 ? { ...done.report!, changes_zh: ['上一版的閱讀題組做了一部分，這一版份量改小一點。'] } : done.report;
+    r.updated_at = nowSec();
+  }
+}
+
+function reportSummaryOf(r: AssistReportDetail): AssistReportSummary {
+  const { id, version, based_on, status, failure, created_at, exam_date, target_level } = r;
+  return { id, version, based_on, status, failure, created_at, exam_date, target_level };
+}
+
+/** 在假後端上登記學習報告的路由（要在 page.goto 之前）。 */
+export function fakeReports(backend: FakeBackend): FakeReports {
+  return new FakeReports(backend);
 }
 
 // ───────────────────────── 檢查工具 ─────────────────────────

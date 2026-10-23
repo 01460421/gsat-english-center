@@ -2,11 +2,13 @@
  * /ai/apply：申請 AI 批改。負責：前端帳號 W1。
  *
  *   - 說明 AI 批改是什麼、點數規則（AI_TASK_POINTS：中譯英 3、作文 7、照片辨識 2）與上限
- *     （登入後讀 GET /api/ai/quota；讀不到就顯示 wrangler.toml 的預設值）。
+ *     （登入後讀 GET /api/ai/quota；讀不到就顯示 wrangler.toml 的預設值）。學習助手對這位使用者開放時
+ *     （useAssistantEnabled）另外說明學習助手，點數表多學習助手的幾列（同一個核准、同一份 AI 處理說明）。
  *   - 使用須知（SPEC §8.4「AI 功能使用說明」：能做什麼、不能做什麼、不要放個資、遇到不當內容怎麼辦）。
  *   - 目前狀態（none／pending／waitlist／approved／rejected／suspended）的中文說明；已核准時顯示今日剩餘點數與用量
  *     （管理員的「不限」上限顯示成文字，不印出 10 億）；名額已滿（approval.full）時申請表先說明會排入候補。
- *   - 申請表：用途說明（≤300 字）、單獨同意「AI 處理說明」、未滿 18 歲勾選「已告知法定代理人」；
+ *   - 申請表：用途說明（≤300 字）、單獨同意「AI 處理說明」（勾選文字 aiConsentLabel，申請表與重新同意共用）、
+ *     未滿 18 歲勾選「已告知法定代理人」；
  *     送 POST /api/ai/apply（AiApplyBody）→ AiApplyResponse。
  *   - features.ai 為 false（後端未部署或 ANTHROPIC_API_KEY 沒設）→ 只有說明＋「即將開放」，不出現申請表與錯誤畫面。
  *   - 版面順序：已登入時「目前狀態」放最上面（從寫作頁「申請 AI 批改」點過來最想知道的就是它，手機上不能埋在
@@ -18,6 +20,9 @@ import {
   AI_APPLY_NOTE_MAX,
   AI_STATUSES,
   AI_TASK_POINTS,
+  AI_TASKS,
+  ASSIST_LIMITS,
+  assistAnalyzePoints,
   type AiApplyBody,
   type AiQuotaResponse,
   type AiStatus,
@@ -32,6 +37,7 @@ import { Link } from 'react-router';
 import { apiPost, needsOnboarding, signedIn, useFeatures, useMe } from '../../lib/api';
 import { errorMessage } from '../../lib/apiErrors';
 import { APP_NAME } from '../../modules';
+import { useAssistantEnabled, useAssistantPhotoEnabled } from '../assistant/lib/useAssistantEnabled';
 import { AI_STATUS_DESCRIPTIONS, AI_TIER_LABELS } from './labels';
 import { AI_CONSENT_VERSION, AI_PROCESSING_NOTICE } from './policy';
 import { PolicyView } from './PolicyView';
@@ -67,6 +73,14 @@ export function isAiQuotaResponse(value: unknown): value is AiQuotaResponse {
     isObject(concurrent) &&
     isNum(concurrent['limit'])
   );
+}
+
+/**
+ * 「同意 AI 處理說明」的勾選文字（申請表與重新同意共用）：和 policy.ts 的 AI 處理說明第一點同一個範圍
+ * （docs/design/learning-assistant.md §4.17）。
+ */
+export function aiConsentLabel(version: string): string {
+  return `我已閱讀並同意 AI 處理說明（${version} 版）：我的翻譯、作文與手寫照片，以及在學習助手送出的題目照片、題目文字、作答、提問，與產生學習報告時的目標、每週讀書時間、考試與段考日期、我寫的回饋與作答紀錄的摘要，會傳給 Anthropic 的 API 處理，處理地點可能在台灣境外`;
 }
 
 function isAiApplyResponse(value: unknown): value is { ai_status: AiStatus } {
@@ -121,11 +135,13 @@ function taskPoints(quota: AiQuotaResponse | null): Record<AiTask, number> {
     const v = isObject(fromServer) ? fromServer[task] : undefined;
     return isNum(v) ? v : AI_TASK_POINTS[task];
   };
-  return { translation_grade: pick('translation_grade'), essay_grade: pick('essay_grade'), essay_ocr: pick('essay_ocr') };
+  return Object.fromEntries(AI_TASKS.map((task) => [task, pick(task)])) as Record<AiTask, number>;
 }
 
 function AboutAi({ quota }: { quota: AiQuotaResponse | null }) {
   const points = taskPoints(quota);
+  const assistant = useAssistantEnabled();
+  const assistantPhoto = useAssistantPhotoEnabled();
   // 管理員（不限點數）的額度不代表一般規則，改顯示預設值。
   const personal = quota !== null && !isUnlimited(quota.points.day_limit) ? quota : null;
   return (
@@ -139,6 +155,15 @@ function AboutAi({ quota }: { quota: AiQuotaResponse | null }) {
           AI 依學測的評分方式批改你的中譯英與英文作文：中譯英逐句標出錯誤、說明扣分原因，並給你保留原意的修正版；
           英文作文給內容、組織、文法句構、字彙拼字四項分數、三個優先改進與逐段建議。手寫作文可以拍照，由 AI 辨識文字，你確認後再批改。
         </p>
+        {assistant && (
+          <p>
+            核准後也可以使用
+            <Link to="/assistant" className="mx-1 font-medium text-primary underline underline-offset-2">
+              學習助手
+            </Link>
+            ：從錯題或你{assistantPhoto ? '拍照、' : ''}貼上的題目請 AI 說明錯在哪、正確解法與相關觀念，可以追問，也可以產生學習報告。
+          </p>
+        )}
         <p className="text-muted">你正在和 AI 互動：{AI_NOTICE}，不是大考中心的正式評分，也可能有錯誤。</p>
       </div>
 
@@ -168,6 +193,31 @@ function AboutAi({ quota }: { quota: AiQuotaResponse | null }) {
               <td className="py-1.5 pr-3">手寫作文照片辨識＊</td>
               <td className="whitespace-nowrap py-1.5 text-right">{points.essay_ocr} 點</td>
             </tr>
+            {assistant && (
+              <>
+                <tr>
+                  <td className="py-1.5 pr-3">
+                    學習助手：解析（同一個題組每多一題加 {assistAnalyzePoints('item', 2) - assistAnalyzePoints('item', 1)} 點，最多{' '}
+                    {assistAnalyzePoints('item', Number.MAX_SAFE_INTEGER)} 點）
+                  </td>
+                  <td className="whitespace-nowrap py-1.5 text-right">{points.assist_analyze} 點起</td>
+                </tr>
+                <tr>
+                  <td className="py-1.5 pr-3">學習助手：追問一次</td>
+                  <td className="whitespace-nowrap py-1.5 text-right">{points.assist_followup} 點</td>
+                </tr>
+                <tr>
+                  <td className="py-1.5 pr-3">學習助手：學習報告</td>
+                  <td className="whitespace-nowrap py-1.5 text-right">{points.assist_report} 點</td>
+                </tr>
+                {assistantPhoto && (
+                  <tr>
+                    <td className="py-1.5 pr-3">學習助手：拍照轉錄題目</td>
+                    <td className="whitespace-nowrap py-1.5 text-right">{points.assist_ocr} 點</td>
+                  </tr>
+                )}
+              </>
+            )}
           </tbody>
         </table>
       </div>
@@ -183,18 +233,28 @@ function AboutAi({ quota }: { quota: AiQuotaResponse | null }) {
           {personal && !isUnlimited(personal.essays.day_limit) ? personal.essays.day_limit : DEFAULT_AI_LIMITS.essaysDay} 篇作文。
         </li>
         <li className="ml-5 list-disc">同時進行中的批改最多 {quota?.concurrent.limit ?? DEFAULT_AI_LIMITS.concurrent} 個。</li>
-        <li className="ml-5 list-disc">台灣時間 00:00 重置；批改失敗會全額退還點數。</li>
+        {assistant && (
+          <li className="ml-5 list-disc">
+            學習報告每天 {ASSIST_LIMITS.reportsPerDay} 份{assistantPhoto ? `、拍照轉錄每天 ${ASSIST_LIMITS.ocrPerDay} 次` : ''}。
+          </li>
+        )}
+        <li className="ml-5 list-disc">台灣時間 00:00 重置；批改{assistant ? '或解析' : ''}失敗會全額退還點數。</li>
       </ul>
       <p className="mt-2 text-sm text-muted">做題、看解析、單字與自評都不花點數。</p>
 
       <details className="mt-4">
         <summary className="cursor-pointer py-2.5 font-semibold">使用須知（能做什麼、不能做什麼、遇到不當內容怎麼辦）</summary>
         <ul className="mt-2 space-y-1 text-[0.95rem]">
-          <li className="ml-5 list-disc">AI 能做的：依學測的評分方式指出錯誤、說明原因、給分數與修改建議。</li>
+          <li className="ml-5 list-disc">
+            AI 能做的：依學測的評分方式指出錯誤、說明原因、給分數與修改建議
+            {assistant ? '；學習助手說明題目考什麼、你錯在哪、正確解法與相關觀念，回答追問，並整理學習報告與讀書計畫' : ''}。
+          </li>
           <li className="ml-5 list-disc">
             AI 不能做的：保證分數準確、代替老師或大考中心評分、替你寫作文。分數和真正的考試可能有落差。
           </li>
-          <li className="ml-5 list-disc">不要在作答裡寫真實姓名、學校、地址或電話；需要人名時用虛構的名字。</li>
+          <li className="ml-5 list-disc">
+            不要在{assistant ? (assistantPhoto ? '作答、提問、回饋或照片' : '作答、提問或回饋') : '作答'}裡寫真實姓名、學校、地址或電話；需要人名時用虛構的名字。
+          </li>
           <li className="ml-5 list-disc">
             AI 的回饋會先經過過濾才顯示。如果仍看到不恰當或讓你不舒服的內容，請不要理會它，可以刪除那份紀錄，並告訴你信任的老師或家人（線上回報即將開放）。
           </li>
@@ -333,7 +393,19 @@ function AiReconsentForm({ me, kinds }: { me: MeResponseSignedIn; kinds: Consent
   return (
     <form onSubmit={onSubmit} className="grid grid-cols-1 gap-4">
       <Notice tone="warn" title="請重新確認 AI 處理說明">
-        <p>AI 處理說明已更新、你撤回了同意，或你的年齡區間改了。重新同意後才能繼續使用 AI 批改；其他功能不受影響。</p>
+        <p>AI 處理說明已更新、你撤回了同意，或你的年齡區間改了。重新同意後才能繼續使用 AI 批改與學習助手；其他功能不受影響。</p>
+        {kinds.includes('ai_processing') && AI_PROCESSING_NOTICE.changes.length > 0 && (
+          <>
+            <p className="pt-1">{AI_PROCESSING_NOTICE.version} 版更新的內容：</p>
+            <ul className="space-y-1">
+              {AI_PROCESSING_NOTICE.changes.map((c) => (
+                <li key={c} className="ml-5 list-disc">
+                  {c}
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
       </Notice>
       {kinds.includes('ai_processing') && <PolicyView doc={AI_PROCESSING_NOTICE} />}
       <section className={cardCls}>
@@ -354,9 +426,7 @@ function AiReconsentForm({ me, kinds }: { me: MeResponseSignedIn; kinds: Consent
                 className={checkboxCls}
               />
               <span>
-                {kind === 'ai_processing'
-                  ? `我已閱讀並同意 AI 處理說明（${me.consent_versions.ai} 版）：我的翻譯、作文與手寫照片會傳給 Anthropic 的 API 處理，處理地點可能在台灣境外`
-                  : '我未滿 18 歲，已告知法定代理人（父母或監護人）並取得同意'}
+                {kind === 'ai_processing' ? aiConsentLabel(me.consent_versions.ai) : '我未滿 18 歲，已告知法定代理人（父母或監護人）並取得同意'}
               </span>
             </label>
           ))}
@@ -465,10 +535,7 @@ function ApplyForm({
         <div className="mt-4 space-y-3">
           <label className="flex cursor-pointer items-start gap-3">
             <input type="checkbox" checked={agreeAi} onChange={(e) => setAgreeAi(e.target.checked)} className={checkboxCls} />
-            <span>
-              我已閱讀並同意 AI 處理說明（{me.consent_versions.ai} 版）：我的翻譯、作文與手寫照片會傳給 Anthropic 的 API
-              處理，處理地點可能在台灣境外
-            </span>
+            <span>{aiConsentLabel(me.consent_versions.ai)}</span>
           </label>
           {under18 && (
             <label className="flex cursor-pointer items-start gap-3">

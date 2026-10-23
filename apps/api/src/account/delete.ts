@@ -39,6 +39,11 @@ export const CASCADE_TABLES = [
   'submission_photo_temp',
   // 0003：自訂作文題目（docs/design/custom-essay.md §3.6）。
   'submission_custom_prompts',
+  // 0004：學習助手（docs/design/learning-assistant.md §4.17）。
+  'assist_cases',
+  'assist_turns',
+  'assist_photos',
+  'assist_reports',
 ] as const;
 
 /** user_id 會被設為 NULL（保留但去識別）的表。 */

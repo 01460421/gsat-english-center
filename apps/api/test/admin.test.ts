@@ -113,6 +113,8 @@ describe('GET /api/admin/health', () => {
 
   it('EXPECTED_MIGRATIONS 和 migrations/*.sql 一致（新增遷移檔時要把檔名加進 src/admin/migrations.ts）', () => {
     expect([...EXPECTED_MIGRATIONS]).toEqual(migrationFileNames());
+    // 學習助手的四張表（docs/design/learning-assistant.md §4.6）：健康檢查要看得到 0004 有沒有套用。
+    expect(EXPECTED_MIGRATIONS).toContain('0004_learning_assistant.sql');
   });
 });
 

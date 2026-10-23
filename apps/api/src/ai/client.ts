@@ -16,7 +16,7 @@
  *   9  成本依 usage.iterations 逐次加總，5 分鐘與 1 小時快取寫入分開計價（pricing.ts）
  *   12 學生文字包在 <student_text>、系統提示寫明標籤內是資料（prompts/common.ts）
  *   13 只送題目、評分基準、學生文字（OCR 另加照片）；不送 metadata.user_id 或任何身分資訊
- *   14 可快取的系統提示放最前面（cache_control）；prompt_version＝內容 sha256 前 12 碼
+ *   14 可快取的系統提示放最前面（cache_control；學習助手的系統提示 1 小時，其他 5 分鐘）；prompt_version＝內容 sha256 前 12 碼
  *   16 逾時依任務、maxRetries 2；串流另設總期限＝逾時 ×（重試＋1）（SDK 的 timeout 只管到回應標頭）；
  *      429 enforced_spend_limit_reached 不重試（fetch 包裝加上 x-should-retry: false）。
  *      SDK 的 maxRetries 只管收到回應標頭之前的錯誤：串流中途的 SSE error 事件（overloaded_error 等）與讀到一半斷線
@@ -89,8 +89,9 @@ export async function buildClaudeRequest(input: ClaudeCallInput): Promise<BuiltR
   const params: BetaMessageStreamParams = {
     model: spec.model,
     max_tokens: spec.maxTokens,
-    // 可快取前綴：系統提示＋評分基準（內容固定，變動的題目與學生文字都在 user 訊息）。
-    system: [{ type: 'text', text: input.system, cache_control: { type: 'ephemeral' } }],
+    // 可快取前綴：系統提示＋評分基準（內容固定，變動的題目與學生文字都在 user 訊息）。學習助手的系統提示用 1 小時快取
+    // （CallSpec.systemCacheTtl）；沒設的任務照舊 5 分鐘，請求逐位元不變。
+    system: [{ type: 'text', text: input.system, cache_control: spec.systemCacheTtl ? { type: 'ephemeral', ttl: spec.systemCacheTtl } : { type: 'ephemeral' } }],
     messages: [{ role: 'user', content: input.content }],
     output_config: { effort: spec.effort, format: { type: 'json_schema', schema: jsonSchema } },
     ...(pricing.serverFallback ? { fallbacks: 'default' as const, betas: [FALLBACK_BETA] } : {}),

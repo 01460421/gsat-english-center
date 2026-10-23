@@ -21,22 +21,26 @@ export const englishInputProps = {
   lang: 'en',
 } as const;
 
-/** 「AI 批改，僅供參考」：每一則 AI 產生的內容旁邊都要有（SPEC §8.4、ARCHITECTURE §8.5）。 */
-export function AiBadge({ compact = false }: { compact?: boolean }) {
+/**
+ * 「AI 批改，僅供參考」：每一則 AI 產生的內容旁邊都要有（SPEC §8.4、ARCHITECTURE §8.5）。
+ * variant="assistant"：學習助手不打分數，改寫「AI 產生，僅供參考」（docs/design/learning-assistant.md §1.11）；沒有 variant 時輸出不變。
+ */
+export function AiBadge({ compact = false, variant }: { compact?: boolean; variant?: 'assistant' }) {
+  const text = variant === 'assistant' ? 'AI 產生，僅供參考' : 'AI 批改，僅供參考';
   if (compact) {
     // 列表裡空間小：只顯示「AI」，完整說明給讀屏與滑鼠提示。
     return (
-      <span title="AI 批改，僅供參考" className="inline-flex shrink-0 items-center gap-0.5 rounded-full bg-badge-bg px-1.5 py-0.5 text-[0.7rem] font-semibold text-badge-fg">
+      <span title={text} className="inline-flex shrink-0 items-center gap-0.5 rounded-full bg-badge-bg px-1.5 py-0.5 text-[0.7rem] font-semibold text-badge-fg">
         <Sparkles aria-hidden="true" className="size-3" />
         <span aria-hidden="true">AI</span>
-        <span className="sr-only">AI 批改，僅供參考</span>
+        <span className="sr-only">{text}</span>
       </span>
     );
   }
   return (
     <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-badge-bg px-2.5 py-0.5 text-xs font-semibold text-badge-fg">
       <Sparkles aria-hidden="true" className="size-3.5" />
-      AI 批改，僅供參考
+      {text}
     </span>
   );
 }
@@ -45,7 +49,9 @@ export function AiBadge({ compact = false }: { compact?: boolean }) {
  * 「回報不當內容」（SPEC §8.4：每則 AI 回饋旁都要有）。回報端點（ARCHITECTURE §10.4 的 POST /api/ai/feedback-report）
  * 不在這次 MVP 的契約裡、後端還沒有，所以先照站內慣例顯示「即將開放」，並告訴學生現在可以怎麼做（設計文件 §10「前端需要」）。
  */
-export function ReportAiContent() {
+export function ReportAiContent({ variant }: { variant?: 'assistant' }) {
+  // 學習助手版（docs/design/learning-assistant.md §1.11、§5.2）：不提分數，刪除的是「這一題」。沒有 variant 時輸出不變。
+  const assistant = variant === 'assistant';
   return (
     <details className="text-sm">
       <summary className="cursor-pointer py-3 text-muted hover:text-primary">
@@ -53,10 +59,14 @@ export function ReportAiContent() {
         <span className="ml-2 rounded-full bg-surface-2 px-2 py-0.5 text-xs">即將開放</span>
       </summary>
       <div className="mt-1 space-y-1 rounded-xl border border-line bg-surface-2 px-4 py-3">
-        <p>線上回報即將開放。在那之前，如果 AI 的回饋內容不恰當、讓你不舒服，或分數明顯不合理：</p>
+        <p>
+          {assistant
+            ? '線上回報即將開放。在那之前，如果 AI 的解析內容不恰當、讓你不舒服，或明顯有錯：'
+            : '線上回報即將開放。在那之前，如果 AI 的回饋內容不恰當、讓你不舒服，或分數明顯不合理：'}
+        </p>
         <ul className="list-disc space-y-0.5 pl-5">
           <li>請不要理會它，AI 的說明只是參考；</li>
-          <li>可以把這份紀錄刪除（頁面最下方的「刪除這份紀錄」）；</li>
+          <li>{assistant ? '可以按「這則解析有錯」，或把這一題刪除（頁面最下方的「刪除這一題」）；' : '可以把這份紀錄刪除（頁面最下方的「刪除這份紀錄」）；'}</li>
           <li>需要的話，告訴你信任的老師或家人。</li>
         </ul>
       </div>
@@ -64,16 +74,25 @@ export function ReportAiContent() {
   );
 }
 
+/** 學習助手各頁頂端與追問串的 AI 聲明（docs/design/learning-assistant.md §1.11；assistant-copy.test.ts 檢查這段文字）。 */
+export const ASSISTANT_AI_NOTICE = '你正在和 AI 互動：解析與建議由 AI 產生，可能有錯；答案以題目頁或官方公布為準。';
+
 /**
  * AI 頁面頂端固定的告知：正在和 AI 互動、分數不是大考中心的正式評分。
  * generic：不提考試機構名稱的版本（自訂題目的作答頁與結果頁用；docs/design/custom-essay.md §6.10）。預設輸出不變。
+ * variant="assistant"：學習助手（不打分數，docs/design/learning-assistant.md §1.11），優先於 generic。
  */
-export function AiNotice({ children, generic = false }: { children?: ReactNode; generic?: boolean }) {
+export function AiNotice({ children, generic = false, variant }: { children?: ReactNode; generic?: boolean; variant?: 'assistant' }) {
+  const assistant = variant === 'assistant';
   return (
     <p className="flex flex-wrap items-center gap-2 rounded-xl border border-badge-fg/30 bg-badge-bg/60 px-4 py-2 text-sm">
-      <AiBadge />
+      {assistant ? <AiBadge variant="assistant" /> : <AiBadge />}
       <span>
-        {generic ? '你正在和 AI 互動：AI 評分僅供參考，不是正式考試的評分。' : '你正在和 AI 互動：AI 評分僅供參考，不是大考中心的正式評分。'}
+        {assistant
+          ? ASSISTANT_AI_NOTICE
+          : generic
+            ? '你正在和 AI 互動：AI 評分僅供參考，不是正式考試的評分。'
+            : '你正在和 AI 互動：AI 評分僅供參考，不是大考中心的正式評分。'}
         {children}
       </span>
     </p>

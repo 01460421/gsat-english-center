@@ -28,6 +28,8 @@ import { listOriginBack, listOriginState } from '../lib/listOrigin';
 import { AlreadySubmittedError, saveSelfAssessment, startTask, upsertSubmission } from '../lib/submit';
 import { checkTranslationSentence, mechanicsMessages } from '../lib/text';
 import { useErrorView } from '../lib/useErrorView';
+import { HandoffApplied, HandoffOffer } from '../../assistant/components/MockWritingHandoff';
+import { useWritingHandoff } from '../../assistant/lib/handoff';
 import { BankHints } from './components/BankHints';
 import { BankNotFound } from './components/BankNotFound';
 import { BankSourceNote } from './components/BankSourceNote';
@@ -93,6 +95,10 @@ function BankTranslationAttempt({ entry, index, prompt }: { entry: WritingBankEn
   const [draft, setDraft] = useState<BankTranslationDraft>(() => toBankTranslationDraft(loadRawDraft(key), n) ?? emptyBankTranslationDraft(n));
   const draftRef = useRef(draft);
   draftRef.current = draft;
+  // 自組卷的中譯英帶過來（學習助手，docs/design/learning-assistant.md §1.4.1）：沒有草稿就直接填入，有不同的草稿時問要不要換。
+  const handoff = useWritingHandoff({ kind: 'translation', bank_uid: prompt.uid }, draft.texts, (texts) =>
+    setDraft((d) => ({ ...d, texts: d.texts.map((_, i) => texts[i] ?? ''), updatedAt: Date.now() })),
+  );
   const { ok: saved, discard } = useAutosave(key, draft);
   const access = useAiAccess();
   const errorView = useErrorView();
@@ -174,6 +180,9 @@ function BankTranslationAttempt({ entry, index, prompt }: { entry: WritingBankEn
         </div>
         <p className="mt-2 text-[0.95rem]">{prompt.instructions}</p>
       </header>
+
+      <HandoffOffer offer={handoff.offer} onAccept={handoff.accept} onDismiss={handoff.dismiss} />
+      <HandoffApplied applied={handoff.applied} />
 
       {prompt.items.map((item, i) => {
         const text = draft.texts[i] ?? '';

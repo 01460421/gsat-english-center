@@ -9,6 +9,7 @@ import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { afterEach, describe, expect, it } from 'vitest';
+import { isAssistSkillCode } from '@gsat/shared';
 import { officialCorpus } from '../../../../packages/shared/scripts/bank-select.mjs';
 import {
   WRITING_BANK_INDEX_PATH,
@@ -113,9 +114,11 @@ describe('範例題庫的輸出與 golden 一致', () => {
 
   it('兩組都發布；沒有警告與略過', () => {
     expect(result.index).toEqual([
-      { uid: 'ai.tr.0b1c2d', version: 1, section_type: 'translation', tier: 'basic', topic: '自備水壺上學' },
-      { uid: 'ai.cp.0e1f2a', version: 1, section_type: 'composition', tier: 'basic', topic: '打掃時間的分工' },
+      { uid: 'ai.tr.0b1c2d', version: 1, section_type: 'translation', tier: 'basic', topic: '自備水壺上學', skills: ['ts:PERF', 'ts:PURP', 'tt:collocation', 'tt:tense_trigger'] },
+      { uid: 'ai.cp.0e1f2a', version: 1, section_type: 'composition', tier: 'basic', topic: '打掃時間的分工', skills: [] },
     ]);
+    // 索引的技能代碼（學習助手推薦用）：中譯英的句型 ts:、誘錯點 tt:，都在封閉清單裡；作文沒有。
+    for (const code of result.index.flatMap((e) => e.skills)) expect(isAssistSkillCode(code), code).toBe(true);
     expect(result.warnings).toEqual([]);
     expect(result.skipped).toEqual([]);
   });

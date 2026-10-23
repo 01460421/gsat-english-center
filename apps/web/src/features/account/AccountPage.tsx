@@ -102,7 +102,7 @@ function AccountContent({ me, onSessionEnded }: { me: MeResponseSignedIn; onSess
             <p className="mt-2 text-[0.95rem]">{AI_STATUS_DESCRIPTIONS[me.user.ai_status]}</p>
             {(me.pending_ai_consents ?? []).length > 0 && AI_CONSENT_STATUSES.includes(me.user.ai_status) && (
               <div className="mt-2">
-                <Notice tone="warn">需要重新同意 AI 處理說明（說明已更新，或你撤回了同意），完成後才能使用 AI 批改。</Notice>
+                <Notice tone="warn">需要重新同意 AI 處理說明（說明已更新，或你撤回了同意），完成後才能使用 AI 批改與學習助手。</Notice>
               </div>
             )}
             {me.user.ai_status === 'approved' && (
@@ -112,6 +112,13 @@ function AccountContent({ me, onSessionEnded }: { me: MeResponseSignedIn; onSess
               {me.user.ai_status === 'none' ? '申請 AI 批改' : '查看申請狀態與點數'}
             </Link>
             <AiConsentControl me={me} />
+            <p className="mt-4 text-sm text-muted">
+              你在學習助手問過的題目、解析與學習報告，可以到
+              <Link to="/assistant" className="mx-1 font-medium text-primary underline underline-offset-2">
+                學習助手
+              </Link>
+              查看與刪除（學習助手暫停使用時也可以）。
+            </p>
           </>
         ) : (
           <p className="mt-2 text-[0.95rem] text-muted">AI 批改中譯英與英文作文的功能即將開放。</p>
@@ -177,7 +184,7 @@ function AiConsentControl({ me }: { me: MeResponseSignedIn }) {
         <div className="mt-4 border-t border-line pt-4">
           <h3 className="font-semibold">撤回 AI 處理同意</h3>
           <p className="mt-1 text-sm text-muted">
-            撤回後就不能使用 AI 批改，已有的批改紀錄會保留；核准狀態不變，想再使用時重新同意即可。
+            撤回後就不能使用 AI 批改與學習助手；已有的批改紀錄、學習助手的題目與報告會保留，仍然可以看與刪除；核准狀態不變，想再使用時重新同意即可。
           </p>
           {!confirming ? (
             <button type="button" onClick={() => setConfirming(true)} className={`${btnSecondary} mt-3`}>

@@ -4,15 +4,19 @@
  * 作答紀錄在 localStorage（attempt.ts）：進來時有紀錄就直接接續，沒有才顯示開始畫面。
  */
 import { ChevronLeft } from 'lucide-react';
-import { Suspense, use, useEffect, useMemo, useRef, useState } from 'react';
+import { Suspense, use, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { Link, useLocation, useParams } from 'react-router';
 import { DataLoadError, forgetFailedLoads } from '../../data/client';
 import { examShortName, loadExam, type Exam } from '../../data/exams';
 import { APP_NAME } from '../../modules';
 import { ExamPdfDownload } from '../pdf/ExamPdfDownload';
+import { officialAskExtras, recordOutcomesOnce } from '../assistant/entries';
+import { examOutcomes, isAssistableQuestion } from '../assistant/outcomeBuilders';
+import { useAssistantEnabled } from '../assistant/lib/useAssistantEnabled';
 import { AttemptContext, useAttemptSelector } from './AttemptContext';
 import { AttemptStore, clearAttempt, loadAttempt, type AttemptMode } from './attempt';
 import { ExamContext } from './ExamContext';
+import { QuestionExtrasContext, type QuestionExtras } from './QuestionExtras';
 import { isNewSystem } from './labels';
 import { DataErrorBoundary } from './components/DataErrorBoundary';
 import { ExamToolbar } from './components/ExamToolbar';
@@ -76,10 +80,47 @@ function ClearControl({ onClear, label = '清除作答紀錄' }: { onClear: () =
   );
 }
 
+/**
+ * 學習助手（docs/design/learning-assistant.md §1.4、§5.4）：
+ *   - 交卷（考試模式）或練習模式每一題都看過答案時，寫一次本機作答紀錄（同一次作答不重複寫）；
+ *   - 開關打開時才提供 QuestionExtrasContext（每題回饋下方的「問學習助手」「這題有疑問？」），關著時 context 仍是 null、畫面不變。
+ */
+function useAssistOutcomes(exam: Exam, store: AttemptStore) {
+  const submittedAt = useAttemptSelector((s) => s.submittedAt);
+  const mode = useAttemptSelector((s) => s.mode);
+  const revealedCount = useAttemptSelector((s) => s.revealed.length);
+  useEffect(() => {
+    const state = store.getState();
+    if (state.submittedAt !== null) {
+      const at = Date.parse(state.submittedAt);
+      recordOutcomesOnce('exam', { r: exam.id }, at, () => examOutcomes(exam, state.answers, { s: 'exam', revealed: new Set(state.revealed), at }));
+      return;
+    }
+    if (state.mode !== 'practice') return;
+    const labels = exam.sections.flatMap((sec) => sec.groups.flatMap((g) => g.questions.filter(isAssistableQuestion).map((q) => q.label)));
+    const revealed = new Set(state.revealed);
+    if (labels.length === 0 || !labels.every((l) => revealed.has(l))) return;
+    const at = Date.parse(state.startedAt);
+    recordOutcomesOnce('exam', { r: exam.id }, at, () => examOutcomes(exam, state.answers, { s: 'exam', revealed, at }));
+  }, [exam, store, submittedAt, mode, revealedCount]);
+}
+
+function AssistExtras({ exam, children }: { exam: Exam; children: ReactNode }) {
+  const enabled = useAssistantEnabled();
+  const extras = useMemo<QuestionExtras | null>(
+    () => (enabled ? officialAskExtras((label) => ({ src: 'exam', exam: exam.id, labels: [label] })) : null),
+    [enabled, exam.id],
+  );
+  // 一律包同一個提供者（關著時 value 是 null，和沒有提供者一樣）：開關要等 /api/features、/api/me 回來才確定，
+  // 換元素類型會讓整份考卷重新掛載，正在作答的學生會丟掉焦點與輸入中的字。
+  return <QuestionExtrasContext value={extras}>{children}</QuestionExtrasContext>;
+}
+
 function ActiveSession({ exam, store, resumed, onClear }: { exam: Exam; store: AttemptStore; resumed: boolean; onClear: () => void }) {
   const submittedAt = useAttemptSelector((s) => s.submittedAt);
   const mode = useAttemptSelector((s) => s.mode);
   const answeredCount = useAttemptSelector((s) => Object.keys(s.answers).length);
+  useAssistOutcomes(exam, store);
   // store.persisted 在每次寫入後更新；放進 selector，寫入失敗時這裡會跟著重繪顯示提示。
   const persisted = useAttemptSelector(() => store.persisted);
   const resultHeadingRef = useRef<HTMLHeadingElement>(null);
@@ -113,7 +154,9 @@ function ActiveSession({ exam, store, resumed, onClear }: { exam: Exam; store: A
       {submittedAt !== null && <ResultSummary exam={exam} headingRef={resultHeadingRef} onRestart={onClear} />}
       {submittedAt !== null && <ExamPdfDownload exam={exam} defaultIncludeAnswerKey />}
       <SectionNav />
-      <ExamPaper />
+      <AssistExtras exam={exam}>
+        <ExamPaper />
+      </AssistExtras>
       <div className="flex justify-end">{submittedAt === null && <ClearControl onClear={onClear} />}</div>
       <ExamSourceNote exam={exam} />
     </div>

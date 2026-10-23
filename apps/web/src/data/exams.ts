@@ -553,11 +553,9 @@ export function examShortName(e: Pick<ExamSummary, 'exam' | 'year' | 'session' |
   return `${e.year} ${EXAM_KIND_LABELS[e.exam]}${makeup}`;
 }
 
-/** 依序列出考卷的所有小題（含所屬大題與題組），練習模式逐題作答時用。 */
-export function* iterateQuestions(exam: Exam): Generator<{ section: ExamSection; group: QuestionGroup; question: Question }> {
-  for (const section of exam.sections) {
-    for (const group of section.groups) {
-      for (const question of group.questions) yield { section, group, question };
-    }
-  }
-}
+/**
+ * 依序列出考卷的所有小題（含所屬大題與題組），練習模式逐題作答時用。搬到 @gsat/shared 的 exam-iterate.ts
+ * （學習助手的 Worker 用同一支找題號與所屬題組，docs/design/learning-assistant.md §4.5.2）；泛型，傳這裡的 Exam
+ * 進去回傳的就是這裡的 ExamSection、QuestionGroup、Question。
+ */
+export { iterateQuestions } from '@gsat/shared';

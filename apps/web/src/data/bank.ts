@@ -14,16 +14,17 @@
  * 作答與計分元件和歷屆試題共用。
  * 解析卡、排除法表的型別直接沿用 @gsat/shared（和出題工具、檢查工具同一份定義）。
  */
-import type {
-  BankDerivation,
-  BankLicense,
-  BankSectionType,
-  ChartSpec,
-  EliminationAnnotation,
-  ExplanationsAnnotation,
-  ProvenanceSource,
-  Tier,
-  TranslationZhAnnotation,
+import {
+  GROUP_KEY_PATTERN,
+  type BankDerivation,
+  type BankLicense,
+  type BankSectionType,
+  type ChartSpec,
+  type EliminationAnnotation,
+  type ExplanationsAnnotation,
+  type ProvenanceSource,
+  type Tier,
+  type TranslationZhAnnotation,
 } from '@gsat/shared';
 import { DataLoadError, DATA_BASE_URL, fetchDataFile, isRecord, memoizeAsync } from './client';
 import type { Figure, QuestionGroup } from './exams';
@@ -59,6 +60,11 @@ export interface BankIndexEntry {
   topic: string | null;
   question_count: number;
   curriculum: BankCurriculumRef[];
+  /**
+   * 技能代碼（tp:、gp:、it:、cl:、ct:、sn:；學習助手推薦練習用）。選填：舊的索引沒有這個欄位時只用大題與難度
+   * （docs/design/learning-assistant.md §5.6）。
+   */
+  skills?: string[];
 }
 
 /** /data/bank/index.json。groups 依題型、難度、uid 排序。 */
@@ -138,7 +144,8 @@ function isBankIndex(body: unknown): body is BankIndex {
 
 const indexLoader = memoizeAsync((_key: 'index') => fetchDataFile('bank/index.json', isBankIndex));
 
-const GROUP_KEY_PATTERN = /^(ai\.(?:vo|cz|wb|st|rd|mx)\.[0-9a-f]{6})@([1-9]\d*)$/;
+// 題組版本代號的格式搬到 @gsat/shared 的 bank-practice-file.ts（學習助手的 Worker 讀同一份題組檔，
+// docs/design/learning-assistant.md §4.5.1）。
 
 const groupLoader = memoizeAsync((key: string) => {
   // 代號格式在快取裡面檢查：格式不對也要每次拿到同一個失敗的 Promise（理由見 client.ts 檔頭）。

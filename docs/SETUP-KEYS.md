@@ -139,11 +139,12 @@ workflow 會依序：型別檢查與測試 → 檢查 token 與 workers.dev 子�
    - Worker 網址（`https://gsat-english-api.<子網域>.workers.dev`）與 workers.dev 子網域
    - 登入（auth）、AI 批改（ai）、拍照 OCR（ocr）是否啟用、AI 是否暫停
    - 自訂題目批改（customEssay）是否啟用，以及 `apps/api/wrangler.toml` 的 `AI_CUSTOM_ESSAY` 寫的是什麼。兩者對不起來時有一則「注意」（新版本可能還沒傳到所有節點，幾分鐘後打開 `/api/features` 再確認）；AI 已啟用、自訂題目批改未啟用時有一則「提醒」（評分對照達標、打開之前，或只關自訂題時，這是正常的；§8.1、§8.2）
+   - 學習助手（assistant）與學習助手拍照（assistantPhoto）是否啟用，以及 `wrangler.toml` 的 `AI_ASSISTANT`、`AI_ASSISTANT_PHOTO` 寫的是什麼（目前兩個都是 `"on"`，兩列都應該是「啟用」；§8.3）
    - Worker 上有哪些機密（只列名稱）
    - 經 Vercel 代理是否已接上，以及「下一步」
 2. **直接打開 Worker**：
    - `https://gsat-english-api.<子網域>.workers.dev/api/health` → `{"ok":true,"service":"gsat-english-api",…}`
-   - `https://gsat-english-api.<子網域>.workers.dev/api/features` → 六個金鑰都填了的話是 `{"auth":true,"ai":true,"ocr":true,"aiPaused":false,"customEssay":true}`（`wrangler.toml` 的 `AI_CUSTOM_ESSAY` 是 `"off"` 時 `customEssay` 是 false，§8.1）
+   - `https://gsat-english-api.<子網域>.workers.dev/api/features` → 六個金鑰都填了的話是 `{"auth":true,"ai":true,"ocr":true,"aiPaused":false,"customEssay":true,"assistant":true,"assistantPhoto":true}`（`wrangler.toml` 的 `AI_CUSTOM_ESSAY` 是 `"off"` 時 `customEssay` 是 false，§8.1；學習助手關掉或只留給管理員時沒有 `assistant`、`assistantPhoto`，§8.3）
 3. **接上 Vercel**：根目錄 `vercel.json` 的兩個 `REPLACE_WITH_SUBDOMAIN` 要換成 §1.2 的子網域（Summary 的「下一步」會寫出完整網址；這一步由開發者改好推到 main，Vercel 會自動重新部署）。完成後：
    - `https://gsat-english-center.vercel.app/api/health` → 和上面一樣的 JSON
    - 網站側欄出現「登入」按鈕
@@ -249,6 +250,33 @@ workflow 會依序：型別檢查與測試 → 檢查 token 與 workers.dev 子�
 4. **沒有 dev workspace 時**（不建議）：Run workflow 時勾選 `allow_online_key`，會改用正式站的 `ANTHROPIC_API_KEY`（只有沒設 `ANTHROPIC_PARITY_API_KEY` 時才會用）。這筆花費（最多 `budget_usd`）算進 `online` workspace 的每月上限（US$450），但站內預算（月 US$400＋日 US$20）看不到它：同一個月學生用量大時，可能先碰到 Console 的上限，學生的 AI 批改會失敗、全站自動暫停。真的要用，挑月初或用量低的時候，或先把 `budget_usd` 調低。
 5. **公開的紀錄**：這個 repo 是公開的，Actions 的 log、Summary 與 artifact 任何人都看得到。結果只有分數、旗標、計數、花費與本站範文的 AI 評語（作文全是本站自己寫的範文），沒有金鑰、學生資料，也沒有官方的參考譯文、評分原則或佳作；金鑰不會出現在 log 裡（GitHub 也會自動遮罩）。
 6. 跑完之後 `ANTHROPIC_PARITY_API_KEY` 可以留著（之後改提示要重跑），或在 Console 停用那把金鑰、再刪掉 GitHub secret。
+
+### 8.3 學習助手的開關（已上線；緊急關閉、只留給管理員）
+
+學習助手（設計見 [design/learning-assistant.md](design/learning-assistant.md) §4.14）有兩個開關，都在 `apps/api/wrangler.toml` 的 `[vars]`：`AI_ASSISTANT`（學習助手本身）與 `AI_ASSISTANT_PHOTO`（拍照轉錄題目；學習助手本身也要開放才有用）。值只認三種（去掉頭尾空白、不分大小寫）：
+
+| 值 | 誰能用 | `/api/features` |
+|---|---|---|
+| `"off"` | 沒有人 | 沒有 `assistant` |
+| `"admin"` | 只有管理員（`ADMIN_EMAIL` 的帳號）；緊急時先不讓學生用、管理員在正式站查問題 | 沒有 `assistant`（公開端點不透露）；管理員登入後 `/api/me` 多 `assistant_preview` |
+| `"on"` | 所有已核准使用 AI 的學生 | `"assistant":true`（拍照也是 `"on"` 時多 `"assistantPhoto":true`） |
+
+其他任何值（打錯字、`true`、`yes`）都當成 `"off"`，Worker 日誌另外寫一行警告；沒有這一行時程式預設也是 `"off"`。
+
+**目前兩個都是 `"on"`（已上線）**：2026-10-23 站主決定學習助手與拍照都直接開放給已核准的學生，不經管理員預覽，也不先跑真模型評測（設計文件 §6.5）；拍照的殘餘風險（佳作沒有指紋，只靠關鍵字與長度擋，設計文件 §8 第 1 點）站主已經接受。真模型評測與用量檢查改成上線後的監控（設計文件 §6.6 第 7 點）：上線後兩週每天到 `/admin` 看用量頁（依任務分組的點數與費用，每點實際美元＝費用 ÷ 點數，這是平均；第 14 天的中位數要由開發者從 `ai_ops` 逐筆算）與健康檢查的「未確認事件」數（學習助手的 `assist_key_concern`〔AI 對題目答案有疑問〕、`assist_official_like`〔擋下疑似佳作或範文〕等事件也算在裡面），拒答率與截斷率交給開發者從帳本查。每次部署的 **Summary** 都有「學習助手（assistant）」「學習助手拍照（assistantPhoto）」兩列，寫出 `wrangler.toml` 的值，應該都是「啟用」；和 `/api/features` 對不起來時「注意」裡會有一則警告，`admin` 模式會多一則「提醒」。
+
+上線時三份說明（隱私權說明、服務條款、AI 處理說明）同一天改版（2026-10-23）：所有人下次登入要重新同意隱私權說明與服務條款，已核准的學生下次使用 AI 前要重新同意 AI 處理說明（這段期間 AI 批改與學習助手都回「請先同意」，同意流程在 `/ai/apply`）。
+
+1. **確認開放**：沒登入打開 `https://gsat-english-center.vercel.app/api/features`，應該有 `"assistant":true` 與 `"assistantPhoto":true`；網站首頁「實戰」群組與側欄出現「學習助手」。
+2. **緊急關閉**（大量拒答、費用異常、有人用學習助手做奇怪的事、疑似官方受保護內容外流）：
+   1. 立即止血：網站 `/admin` 按「AI 全站暫停」（存在 D1、立刻生效，但作文與中譯英的 AI 批改也會一起停；台灣時間隔天 00:00 自動恢復）。
+   2. 只關學習助手：把 `apps/api/wrangler.toml` 的 `AI_ASSISTANT = "on"` 改成 `"off"`，推到 main，等「部署後端（Cloudflare Worker）」跑完（幾分鐘）。只關拍照（貼上題目照常）：把 `AI_ASSISTANT_PHOTO` 改成 `"off"`。想先讓學生用不到、管理員自己在正式站查問題：改成 `"admin"`。部署前的測試不擋這三種值，只改這一行就好；`src/config.ts` 不用跟著改。
+   3. 確認：Summary 的那一列是「未啟用」（`admin` 時是「只有管理員能用（admin）」）、「注意」裡沒有「對不起來」；`/api/features` 沒有 `"assistant"`（只關拍照時仍有 `"assistant":true`，但沒有 `"assistantPhoto"`，Summary 是「學習助手拍照（assistantPhoto）」那一列「未啟用」）。確認之後再到 `/admin` 解除全站暫停（作文與中譯英的 AI 批改恢復）。
+   4. 已經在排隊的照常完成（點數已經預扣）。學生仍然可以看與刪除自己的案例與報告：導覽與首頁的「學習助手」會消失，但已登入的人打開 `/assistant`（「我的帳號」也有連結）會看到「暫停使用中」的說明與之前的題目，案例頁與學習報告頁可以看、改「懂了嗎」、刪除，送出解析、追問、拍照、產生報告都不會出現；錯題清單與貼上題目的頁面只顯示暫停。
+   5. **不要**在 Cloudflare 儀表板的 Variables and Secrets 改這兩個值：下一次部署會被 `wrangler.toml` 的 `[vars]` 蓋回去（同 §8.1 第 3 點）。
+3. **重新開放**：問題處理完，把那一行改回 `"on"` 推到 main，Summary 應該是「啟用」、沒有「提醒」，`/api/features` 有 `"assistant":true`。如果改過學習助手的提示（`apps/api/src/ai/prompts/assist-*.ts`），重新開放前最好先在 Actions 跑一次「學習助手真模型評測」（`.github/workflows/assistant-eval.yml`，金鑰同 §8.2 第 1 步的 `ANTHROPIC_PARITY_API_KEY`）。
+
+另外一個相關設定 `SITE_DATA_ORIGIN`：Worker 讀公開題目檔（站內題目、單字）的來源，沒設定就是 `APP_ORIGIN`（正式站）。**正式站不要設**；只有本機的端對端測試會把它指到假的靜態檔伺服器。
 
 ## 9. 已知限制
 

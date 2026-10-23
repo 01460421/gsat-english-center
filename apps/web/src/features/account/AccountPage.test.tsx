@@ -5,7 +5,7 @@ import { screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { resetOnboardingRedirectForTests } from './RequireAccount';
-import { FEATURES_OFF_RESPONSE, FEATURES_ON, apiError, json, mockApi, noContent, renderApp, signedInMe } from './testing';
+import { FEATURES_OFF_RESPONSE, FEATURES_ON, VERSIONS, apiError, json, mockApi, noContent, renderApp, signedInMe } from './testing';
 
 afterEach(() => resetOnboardingRedirectForTests());
 
@@ -116,6 +116,8 @@ describe('已登入', () => {
     const exportBody = { format: 'gsat-export/v1', exported_at: '2026-10-08T00:00:00Z', user: {}, consents: [], submissions: [] };
     mockApi({ 'GET /api/features': FEATURES_ON, 'GET /api/me': signedInMe(), 'GET /api/me/export': exportBody });
     const main = await openAccount();
+    // 匯出的說明涵蓋學習助手（/api/me/export 的 assist）。
+    expect(await within(main).findByText(/以及學習助手的題目、解析與學習報告。手寫作文與題目照片在辨識後就已刪除/)).toBeInTheDocument();
     await user.click(await within(main).findByRole('button', { name: '匯出我的資料' }));
     expect(await within(main).findByText('已下載匯出檔。')).toBeInTheDocument();
     expect(createUrl).toHaveBeenCalledTimes(1);
@@ -207,14 +209,19 @@ describe('已登入', () => {
       'POST /api/me/consents': () => json(signedInMe({ ...approved, pending_ai_consents: ['ai_processing'] })),
     });
     const main = await openAccount();
+    // AI 處理同意也涵蓋學習助手：撤回的說明寫出學習助手也停，題目與報告保留、可以看與刪除。
+    expect(
+      await within(main).findByText(/撤回後就不能使用 AI 批改與學習助手；已有的批改紀錄、學習助手的題目與報告會保留，仍然可以看與刪除/),
+    ).toBeInTheDocument();
+    expect(within(main).getByRole('link', { name: '學習助手' })).toHaveAttribute('href', '/assistant');
     await user.click(await within(main).findByRole('button', { name: '撤回同意' }));
     expect(api.callsTo('POST', '/api/me/consents')).toHaveLength(0);
     await user.click(within(main).getByRole('button', { name: '確定撤回' }));
     expect(await within(main).findByText(/已撤回 AI 處理同意/)).toBeInTheDocument();
-    expect(within(main).getByText(/需要重新同意 AI 處理說明/)).toBeInTheDocument();
+    expect(within(main).getByText(/需要重新同意 AI 處理說明（說明已更新，或你撤回了同意），完成後才能使用 AI 批改與學習助手。/)).toBeInTheDocument();
     expect(within(main).queryByRole('button', { name: '撤回同意' })).not.toBeInTheDocument();
     expect(api.callsTo('POST', '/api/me/consents')[0]?.body).toEqual({
-      items: [{ kind: 'ai_processing', version: '2026-10-08', granted: false }],
+      items: [{ kind: 'ai_processing', version: VERSIONS.ai, granted: false }],
     });
   });
 

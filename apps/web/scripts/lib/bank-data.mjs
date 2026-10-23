@@ -22,7 +22,7 @@
  *   用同一份程式；這裡傳 contentKey: answerKey、withdrawOnRejectedSameKey: false，行為和搬過去之前相同）。
  *
  * 輸出什麼（前端型別在 src/data/bank.ts）：
- *   bank/index.json                 每組的摘要（uid、version、題型、難度、主題、題數、課綱）
+ *   bank/index.json                 每組的摘要（uid、version、題型、難度、主題、題數、課綱、技能代碼 skills）
  *   bank/groups/{uid}@{version}.json  group（gsat-exam/v1.1 的題組，和歷屆試題共用作答元件；圖表題的 figure 帶 chart 物件）
  *                                   ＋學生需要的 annotations（explanations、translation_zh、elimination）＋課綱＋出處
  *   不輸出 generation（模型、提示詞雜湊）、verification（盲解與稽核的細節）、metrics；
@@ -138,7 +138,7 @@ const READING_EXPLANATION_KEYS = [
  * @typedef {{ file: string, reason: SkipReason }} SkippedFile
  * @typedef {{
  *   uid: string, version: number, section_type: string, format_version: string, tier: string,
- *   topic: string | null, question_count: number, curriculum: { code: string, weight: string }[]
+ *   topic: string | null, question_count: number, curriculum: { code: string, weight: string }[], skills: string[]
  * }} BankIndexEntry
  * @typedef {{ uid: string, version: number, section_type: string, tier: string } & JsonObject} PracticeGroupFile
  * @typedef {{
@@ -556,6 +556,40 @@ function practiceGroupFile(raw, references) {
   };
 }
 
+/** 技能代碼的值（封閉清單的英文代號）；不像代號的值不輸出。 */
+const SKILL_VALUE = /^[a-z][a-z0-9_]*$/;
+
+/**
+ * 題組的技能代碼（學習助手推薦練習用，docs/design/learning-assistant.md §5.6）：各題標註的 test_point、grammar_point、
+ * item_type、clue 與本站解析的 clue_type、sense 加上前綴（tp:、gp:、it:、cl:、ct:、sn:）取聯集、排序。
+ * 規則和 packages/shared/src/assist-codes.ts 的 skillCodesOf 相同（bank-data.test.ts 逐組比對；這裡是 .mjs，不能直接匯入 TS）。
+ * @param {PracticeGroupFile} f
+ * @returns {string[]}
+ */
+export function groupSkills(f) {
+  const group = /** @type {{ questions: JsonObject[] }} */ (f.group);
+  const annotations = /** @type {{ explanations?: { items?: Record<string, unknown> } }} */ (f.annotations ?? {});
+  const items = annotations.explanations?.items ?? {};
+  /** @type {Set<string>} */
+  const out = new Set();
+  const add = (/** @type {string} */ prefix, /** @type {unknown} */ value) => {
+    if (typeof value === 'string' && SKILL_VALUE.test(value)) out.add(`${prefix}:${value}`);
+  };
+  for (const q of group.questions) {
+    const tags = isObject(q.tags) ? q.tags : {};
+    add('tp', tags.test_point);
+    add('gp', tags.grammar_point);
+    add('it', tags.item_type);
+    add('cl', tags.clue);
+    const ex = items[String(q.label ?? q.no)];
+    if (isObject(ex)) {
+      add('ct', ex.clue_type);
+      add('sn', ex.sense);
+    }
+  }
+  return [...out].sort();
+}
+
 /** @param {PracticeGroupFile} f @returns {BankIndexEntry} */
 function indexEntry(f) {
   const group = /** @type {{ questions: unknown[], tags: JsonObject | null }} */ (f.group);
@@ -569,6 +603,7 @@ function indexEntry(f) {
     topic,
     question_count: group.questions.length,
     curriculum: /** @type {{ code: string, weight: string }[]} */ (f.curriculum),
+    skills: groupSkills(f),
   };
 }
 

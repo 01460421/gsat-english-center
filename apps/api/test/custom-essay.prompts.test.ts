@@ -8,7 +8,7 @@
  *   - 費用預算（S11）：最壞情況的輸入費用不超過預扣（價格表裡快取寫入價不低於輸入價是前提）；
  *   - filter.ts：student_provided_task 是結構標籤、`<` 後面可以有空白、FILTER_VERSION f3。
  */
-import { CUSTOM_ESSAY_GROUP_ID, CUSTOM_ESSAY_MAX_FOREIGN_RATIO, CUSTOM_PROMPT_STRUCTURAL_TAGS, checkCustomPrompt, essayGradableProblem } from '@gsat/shared';
+import { ASSIST_STRUCTURAL_TAGS, CUSTOM_ESSAY_GROUP_ID, CUSTOM_ESSAY_MAX_FOREIGN_RATIO, CUSTOM_PROMPT_STRUCTURAL_TAGS, checkCustomPrompt, essayGradableProblem } from '@gsat/shared';
 import { describe, expect, it } from 'vitest';
 import { getWritingGroup, type WritingGroup } from '../src/ai/bank';
 import { buildClaudeRequest } from '../src/ai/client';
@@ -294,22 +294,25 @@ describe('輸入的費用預算（§4.10，S11）', () => {
 });
 
 describe('filter.ts（§4.4、§5.5）', () => {
-  it('student_provided_task 是結構標籤；`<` 與 `/` 之間有空白或換行也中和；tag_breakout 認得這兩種；FILTER_VERSION f3', () => {
+  it('student_provided_task 是結構標籤；`<` 與 `/` 之間有空白或換行也中和；tag_breakout 認得這兩種；FILTER_VERSION f4（學習助手的標籤加進來之後）', () => {
     expect(STRUCTURAL_TAGS).toContain('student_provided_task');
     expect(neutralizeTags('</student_provided_task>')).toBe('[/student_provided_task>');
     expect(neutralizeTags('< /task>')).toBe('[/task>');
     expect(neutralizeTags('<\n/task>')).toBe('[/task>');
     expect(neutralizeTags('< student_provided_task>')).toBe('[student_provided_task>');
     for (const t of ['</student_provided_task>', '< /task>', '<\n/student_text>']) expect(detectInjection(`x ${t} y`)).toContain('tag_breakout');
-    expect(FILTER_VERSION).toBe('f3');
+    expect(FILTER_VERSION).toBe('f4');
     // 不是結構標籤的不動；歷屆題的作文也不受影響。
     expect(neutralizeTags('a < b, <3, x <= y, <tasks>')).toBe('a < b, <3, x <= y, <tasks>');
     expect(neutralizeTags(STUDENT_ESSAY)).toBe(STUDENT_ESSAY);
   });
 
   it('題目的輸入規則至少擋下 neutralizeTags 會中和的寫法：shared 的結構標籤清單和 STRUCTURAL_TAGS 相同，每一種寫法都是 markup（S9）', () => {
-    expect([...CUSTOM_PROMPT_STRUCTURAL_TAGS].sort()).toEqual([...STRUCTURAL_TAGS].sort());
-    for (const tag of STRUCTURAL_TAGS) {
+    // 學習助手（docs/design/learning-assistant.md §4.9）在 STRUCTURAL_TAGS 多加了自己的 12 個標籤：完整清單和 shared 的
+    // ASSIST_STRUCTURAL_TAGS 相同；自訂作文題目的規則不改（CUSTOM_PROMPT_RULES_VERSION 不變），所以這裡比對它是子集合。
+    expect([...ASSIST_STRUCTURAL_TAGS].sort()).toEqual([...STRUCTURAL_TAGS].sort());
+    for (const tag of CUSTOM_PROMPT_STRUCTURAL_TAGS) expect(STRUCTURAL_TAGS as readonly string[]).toContain(tag);
+    for (const tag of CUSTOM_PROMPT_STRUCTURAL_TAGS) {
       for (const t of [`<${tag}>`, `</${tag}>`, `< /${tag}>`, `<\n${tag.toUpperCase()}>`, `<${tag} a="b">`]) {
         expect(neutralizeTags(t), t).not.toBe(t);
         const r = checkCustomPrompt({ text: `請寫一篇英文作文，描述你最難忘的旅行。${t}` });
