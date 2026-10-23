@@ -1,0 +1,272 @@
+{
+  "schema": "gsat-bank-facts/v1",
+  "id": "harvey-blood-rt06",
+  "title": "William Harvey, the 1628 book on the motion of the heart, his blood calculation, and Malpighi’s capillaries",
+  "sdgs": [
+    3
+  ],
+  "created_on": "2026-10-20",
+  "created_by": "ai-agent",
+  "sources": [
+    {
+      "id": "s1",
+      "publisher": "PubMed Central, U.S. National Library of Medicine (Cardiovascular Journal of Africa, 2013)",
+      "title": "Discovery of the function of the heart and circulation of blood",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3721262/",
+      "accessed": "2026-10-20",
+      "license": "CC BY (open-access article); facts only",
+      "use": "fact_only",
+      "note": "只取事實"
+    },
+    {
+      "id": "s2",
+      "publisher": "Fordham University, Internet Modern History Sourcebook",
+      "title": "William Harvey: On the Motion of the Heart and Blood in Animals, 1628 (English translation)",
+      "url": "https://sourcebooks.fordham.edu/mod/1628harvey-blood.asp",
+      "accessed": "2026-10-20",
+      "license": "Public-domain translation; facts only",
+      "use": "fact_only",
+      "note": "只取事實；計算的數字出自第 9 章，卒年出自書前生平"
+    },
+    {
+      "id": "s3",
+      "publisher": "University of Alabama at Birmingham Libraries, Reynolds-Finley Historical Library",
+      "title": "Harvey, William (1578-1657)",
+      "url": "https://library.uab.edu/locations/reynolds/collections/medical-greats/william-harvey",
+      "accessed": "2026-10-20",
+      "license": "UAB Libraries web page; facts only",
+      "use": "fact_only",
+      "note": "只取事實"
+    },
+    {
+      "id": "s4",
+      "publisher": "University of Alabama at Birmingham Libraries, Reynolds-Finley Historical Library",
+      "title": "Malpighi, Marcello (1628-1694)",
+      "url": "https://library.uab.edu/locations/reynolds/collections/medical-greats/marcello-malpighi",
+      "accessed": "2026-10-20",
+      "license": "UAB Libraries web page; facts only",
+      "use": "fact_only",
+      "note": "只取事實"
+    },
+    {
+      "id": "s5",
+      "publisher": "University of Iowa Libraries, Heirs of Hippocrates",
+      "title": "Record No. 569: Marcello Malpighi, De pulmonibus",
+      "url": "https://heirs.lib.uiowa.edu/record.php?id=569",
+      "accessed": "2026-10-20",
+      "license": "University of Iowa web page; facts only",
+      "use": "fact_only",
+      "note": "只取事實"
+    },
+    {
+      "id": "s6",
+      "publisher": "University of Iowa Libraries, Heirs of Hippocrates",
+      "title": "Record No. 416: William Harvey, Exercitatio anatomica de motu cordis",
+      "url": "https://heirs.lib.uiowa.edu/record.php?id=416",
+      "accessed": "2026-10-20",
+      "license": "University of Iowa web page; facts only",
+      "use": "fact_only",
+      "note": "只取事實"
+    },
+    {
+      "id": "s7",
+      "publisher": "Newcastle University, Health and the People",
+      "title": "William Harvey",
+      "url": "https://healthandthepeople.ncl.ac.uk/beginnings-of-change/william-harvey/",
+      "accessed": "2026-10-20",
+      "license": "Newcastle University web page; facts only",
+      "use": "fact_only",
+      "note": "只取事實"
+    }
+  ],
+  "facts": [
+    {
+      "id": "f1",
+      "text": "Galen, a Greek physician born in AD 129, believed that venous blood was made in the liver and sent out to the body, where it was used up.",
+      "source_ids": [
+        "s1",
+        "s3"
+      ],
+      "kind": "person"
+    },
+    {
+      "id": "f2",
+      "text": "In the Galenic tradition, the liver turned food into blood, and the organs absorbed this blood as nourishment.",
+      "source_ids": [
+        "s3"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f3",
+      "text": "Galen’s ideas had been taught and respected for a very long time, and people still followed them in Harvey’s day.",
+      "source_ids": [
+        "s7"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f4",
+      "text": "William Harvey was born on 1 April 1578, studied at Cambridge and then at Padua, where his teacher Fabricius had discovered the valves in veins.",
+      "source_ids": [
+        "s1",
+        "s3"
+      ],
+      "kind": "person"
+    },
+    {
+      "id": "f5",
+      "text": "Harvey died on 3 June 1657.",
+      "source_ids": [
+        "s2",
+        "s6"
+      ],
+      "kind": "date"
+    },
+    {
+      "id": "f6",
+      "text": "In 1628 Harvey published his book on the motion of the heart and blood, De motu cordis, in Frankfurt; the first edition was a short book of 72 pages.",
+      "source_ids": [
+        "s6",
+        "s3"
+      ],
+      "kind": "event"
+    },
+    {
+      "id": "f7",
+      "text": "In the book, Harvey assumed that the left ventricle of the heart holds about two ounces of blood; in a dead body he had found it held a little over two ounces.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f8",
+      "text": "He supposed that each beat pushes out only part of this, perhaps a quarter, or as little as an eighth.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f9",
+      "text": "Harvey noted that the heart beats more than 1,000 times in half an hour, and in some people two, three or even four thousand times.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f10",
+      "text": "Even with these small amounts, he argued, more blood would pass from the heart into the arteries in half an hour than the whole body contains.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f11",
+      "text": "For a sheep, he estimated that about three and a half pounds of blood would leave the heart in half an hour, yet he had found that a sheep’s body holds no more than about four pounds of blood.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f12",
+      "text": "Harvey said that even if this amount took an hour or a whole day rather than half an hour to pass through the heart, more blood would still flow than food could supply or the veins could hold.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f13",
+      "text": "From his figures he concluded that the liver could not make enough new blood from daily food, so the same blood must keep moving around the body in a circle.",
+      "source_ids": [
+        "s3",
+        "s2"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f14",
+      "text": "Harvey tied a band tightly around a person’s upper arm, which made the veins in the forearm swell and showed the valves inside them.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "event"
+    },
+    {
+      "id": "f15",
+      "text": "When he tried to push blood in a vein down the forearm toward the hand it would not move, but pushed up the arm toward the heart it moved easily.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "event"
+    },
+    {
+      "id": "f16",
+      "text": "This showed that blood in the veins flows toward the heart and that the valves keep the flow going one way.",
+      "source_ids": [
+        "s1",
+        "s7"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f17",
+      "text": "Harvey studied cold-blooded animals such as frogs, whose blood moves more slowly, so he could see the blood being pumped more clearly.",
+      "source_ids": [
+        "s7"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f18",
+      "text": "Harvey’s use of measurements and calculations of blood volume has been described as the first application of measurement to the study of living things.",
+      "source_ids": [
+        "s3"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f19",
+      "text": "Harvey’s theory was not accepted at first; it led to public attacks and a decline in his medical practice, but it had gained recognition by the time he died.",
+      "source_ids": [
+        "s3",
+        "s7"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f20",
+      "text": "Using a microscope on the lungs of a living frog, Marcello Malpighi described the capillaries that link the arteries with the veins; his letters about this were first printed in 1661.",
+      "source_ids": [
+        "s4",
+        "s5"
+      ],
+      "kind": "event"
+    },
+    {
+      "id": "f21",
+      "text": "Malpighi’s capillaries showed how blood gets from the arteries to the veins, completing Harvey’s proof and settling the last real argument against it.",
+      "source_ids": [
+        "s4",
+        "s5"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f22",
+      "text": "Malpighi’s capillary findings appeared in 1661, four years after Harvey’s death in 1657.",
+      "source_ids": [
+        "s2",
+        "s5"
+      ],
+      "kind": "number",
+      "note": "由 f5 與 f20 的年份推得"
+    }
+  ],
+  "notes": "白名單內的大學網頁與 PubMed Central（nih.gov）只取事實。Harvey 原書用的是舊藥劑重量單位（盎司、德拉克馬、磅），事實單照原書的單位寫，不換算成公克；f22 是由兩個年份推得的衍生數字。"
+}

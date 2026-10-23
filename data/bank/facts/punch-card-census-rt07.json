@@ -1,0 +1,197 @@
+{
+  "schema": "gsat-bank-facts/v1",
+  "id": "punch-card-census-rt07",
+  "title": "Herman Hollerith's punch-card tabulator and the 1890 US census",
+  "sdgs": [],
+  "created_on": "2026-10-23",
+  "created_by": "ai-agent",
+  "sources": [
+    {
+      "id": "s1",
+      "publisher": "U.S. Census Bureau",
+      "title": "The Hollerith Machine (History: Census Bureau innovations)",
+      "url": "https://www.census.gov/about/history/bureau-history/census-innovations/technology/hollerith-machine.html",
+      "accessed": "2026-10-23",
+      "license": "U.S. government work; facts only",
+      "use": "fact_only",
+      "note": "只取事實（頁面最後修訂 2024-08-14）"
+    },
+    {
+      "id": "s2",
+      "publisher": "U.S. Census Bureau",
+      "title": "Tabulation and Processing (History: Census Bureau innovations)",
+      "url": "https://www.census.gov/about/history/bureau-history/census-innovations/technology/tabulation-and-processing.html",
+      "accessed": "2026-10-23",
+      "license": "U.S. government work; facts only",
+      "use": "fact_only",
+      "note": "只取事實"
+    },
+    {
+      "id": "s3",
+      "publisher": "U.S. Census Bureau",
+      "title": "January 2016: Herman Hollerith and Mechanical Tabulation (History stories)",
+      "url": "https://www.census.gov/about/history/stories/monthly/2016/january-2016.html",
+      "accessed": "2026-10-23",
+      "license": "U.S. government work; facts only",
+      "use": "fact_only",
+      "note": "只取事實"
+    },
+    {
+      "id": "s4",
+      "publisher": "U.S. Census Bureau",
+      "title": "About the 1890 Decennial Census",
+      "url": "https://www.census.gov/programs-surveys/decennial-census/decade/1890/about-1890.html",
+      "accessed": "2026-10-23",
+      "license": "U.S. government work; facts only",
+      "use": "fact_only",
+      "note": "只取事實"
+    },
+    {
+      "id": "s5",
+      "publisher": "Smithsonian Magazine",
+      "title": "Herman Hollerith's Tabulating Machine",
+      "url": "https://www.smithsonianmag.com/smithsonian-institution/herman-holleriths-tabulating-machine-2504989",
+      "accessed": "2026-10-23",
+      "license": "Smithsonian terms of use; facts only",
+      "use": "fact_only",
+      "note": "只取事實"
+    }
+  ],
+  "facts": [
+    {
+      "id": "f1",
+      "text": "The United States takes a census of its whole population every ten years (the decennial census).",
+      "source_ids": ["s4"],
+      "kind": "definition"
+    },
+    {
+      "id": "f2",
+      "text": "Census results are used to divide seats in Congress among the states; officials feared the 1890 count would not be finished by 1900, which would have made this impossible.",
+      "source_ids": ["s5"],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f3",
+      "text": "The 1880 census was tabulated with a tally-sheet machine that could not keep up with the data; final tabulations were not finished until 1887.",
+      "source_ids": ["s2"],
+      "kind": "date"
+    },
+    {
+      "id": "f4",
+      "text": "Tabulating the 1880 census took about 7 years (almost a decade by another Census Bureau page).",
+      "source_ids": ["s4", "s5"],
+      "kind": "number"
+    },
+    {
+      "id": "f5",
+      "text": "Experts estimated that without new machines the 1890 census would have taken 13 years to tabulate.",
+      "source_ids": ["s5"],
+      "kind": "number"
+    },
+    {
+      "id": "f6",
+      "text": "Herman Hollerith was born in Buffalo, New York, in 1860, earned a mining engineering degree from Columbia in 1879, and worked on the 1880 census.",
+      "source_ids": ["s3", "s5"],
+      "kind": "person"
+    },
+    {
+      "id": "f7",
+      "text": "In the early 1880s, while riding a train, Hollerith noticed the conductor's punched tickets, which helped inspire his approach.",
+      "source_ids": ["s5"],
+      "kind": "event"
+    },
+    {
+      "id": "f8",
+      "text": "Hollerith first tried rolls of paper with holes, then chose cards because they lasted longer and fed through a counter more easily.",
+      "source_ids": ["s5"],
+      "kind": "other"
+    },
+    {
+      "id": "f9",
+      "text": "Each card stood for one person, and each hole position stood for one characteristic; for example, one position meant male and another meant female.",
+      "source_ids": ["s2", "s5"],
+      "kind": "definition"
+    },
+    {
+      "id": "f10",
+      "text": "In the reader, metal pins passed through the holes into cups of mercury; each completed electric circuit moved forward the dial for that characteristic.",
+      "source_ids": ["s1", "s2", "s5"],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f11",
+      "text": "The 1890 tabulators had 40 counting dials; clerks punched about 500 cards a day each, and an experienced clerk could process 80 cards a minute.",
+      "source_ids": ["s1"],
+      "kind": "number"
+    },
+    {
+      "id": "f12",
+      "text": "In 1888 the census office held a contest for a faster method, using 1880 census data from four areas of St. Louis; three contestants took part.",
+      "source_ids": ["s1", "s3"],
+      "kind": "event"
+    },
+    {
+      "id": "f13",
+      "text": "In the contest, preparing the data for counting took the two rivals 44.5 and 55.5 hours and took Hollerith 5.5 hours; capturing the data took them 144.5 and 100.5 hours and him 72.5 hours.",
+      "source_ids": ["s1", "s3"],
+      "kind": "number"
+    },
+    {
+      "id": "f14",
+      "text": "Derived: Hollerith's 5.5 hours of preparation was less than one-eighth of the faster rival's 44.5 hours and about one-tenth of the slower rival's 55.5 hours.",
+      "source_ids": ["s1"],
+      "kind": "number",
+      "note": "由 f13 計算：44.5 ÷ 5.5 ≈ 8.1；55.5 ÷ 5.5 ≈ 10.1"
+    },
+    {
+      "id": "f15",
+      "text": "Hollerith won the contract to process and tabulate the 1890 census; his patent for electrical tabulation was granted on 8 January 1889.",
+      "source_ids": ["s1", "s3"],
+      "kind": "event"
+    },
+    {
+      "id": "f16",
+      "text": "The 1890 census was the first to use Hollerith's electric tabulating system; information from the forms was punched onto cards that were run through the machines.",
+      "source_ids": ["s4"],
+      "kind": "event"
+    },
+    {
+      "id": "f17",
+      "text": "The census office leased a fleet of Hollerith machines, and the 1890 count finished months ahead of schedule and far under budget.",
+      "source_ids": ["s2", "s5"],
+      "kind": "event"
+    },
+    {
+      "id": "f18",
+      "text": "In 1890 clerks tabulated data for nearly 63 million people, and the results were published 18 months sooner than those of the 1880 census.",
+      "source_ids": ["s3"],
+      "kind": "number"
+    },
+    {
+      "id": "f19",
+      "text": "Hollerith founded the Tabulating Machine Company in 1896.",
+      "source_ids": ["s2", "s3", "s5"],
+      "kind": "date"
+    },
+    {
+      "id": "f20",
+      "text": "For the 1900 census Hollerith raised his rental prices to a level the government found intolerable, so the Census Bureau began building its own machines.",
+      "source_ids": ["s2"],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f21",
+      "text": "In 1911 Hollerith's company and three others formed the Computing-Tabulating-Recording Company, which was renamed International Business Machines (IBM) in 1924.",
+      "source_ids": ["s3", "s5"],
+      "kind": "date"
+    },
+    {
+      "id": "f22",
+      "text": "Modified versions of Hollerith's machines stayed in use at the Census Bureau until electronic computers replaced them in the 1950s; UNIVAC I was installed in 1951.",
+      "source_ids": ["s1", "s2", "s3"],
+      "kind": "date"
+    }
+  ],
+  "datasets": [],
+  "notes": "1880 年普查的統計時間各來源說法不一（美國普查局一頁寫到 1887 年才完成最後的統計、約 7 年；另一頁寫將近十年；任務提示的「將近 8 年」找不到白名單來源），選文以「到 1887 年才完成、約七年」為準。"
+}

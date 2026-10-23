@@ -1,0 +1,281 @@
+{
+  "schema": "gsat-bank-facts/v1",
+  "id": "dewey-decimal-rt08",
+  "title": "How a college student designed the Dewey Decimal Classification (1873-1876) and how Taiwan's library classification borrowed its structure",
+  "sdgs": [
+    4
+  ],
+  "created_on": "2026-10-23",
+  "created_by": "ai-agent",
+  "sources": [
+    {
+      "id": "s1",
+      "publisher": "Amherst College",
+      "title": "Amherst College Timeline: Melvil Dewey Invents Dewey Decimal System (May 8, 1873)",
+      "url": "https://www.amherst.edu/about/history/amherst-college-timeline",
+      "accessed": "2026-10-23",
+      "license": "Amherst College website terms (facts only)",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s2",
+      "publisher": "Amherst College (Archives & Special Collections blog)",
+      "title": "Irrepressible Reformer (2017-05-26)",
+      "url": "https://consecratedeminence.wordpress.amherst.edu/2017/05/26/irrepressible-reformer/",
+      "accessed": "2026-10-23",
+      "license": "Amherst College website terms (facts only)",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s3",
+      "publisher": "University of Washington Libraries (NASKO, North American Symposium on Knowledge Organization)",
+      "title": "Rebecca Green, Melvil Dewey's Ingenious Notational System",
+      "url": "https://journals.lib.washington.edu/index.php/nasko/article/view/12811/11293",
+      "accessed": "2026-10-23",
+      "license": "journal terms (facts only)",
+      "use": "fact_only",
+      "note": "引用 Dewey 1876、1920 的原話與 Wiegand 1998 的評論，只取事實"
+    },
+    {
+      "id": "s4",
+      "publisher": "Library of Congress",
+      "title": "Of Note: Registering the Dewey Decimal System at the Library of Congress (blog, 2026-04)",
+      "url": "https://blogs.loc.gov/manuscripts/2026/04/of-note-registering-the-dewey-decimal-system-at-the-library-of-congress/",
+      "accessed": "2026-10-23",
+      "license": "public domain / LOC terms (facts only)",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s5",
+      "publisher": "K20 Center, University of Oklahoma",
+      "title": "Melvil Dewey and the Dewey Decimal System - Library 101 (lesson handout)",
+      "url": "https://learn.k20center.ou.edu/lesson/3860/Melvil%20Dewey%20and%20the%20Dewey%20Decimal%20System%E2%80%94Library%20101.pdf?rev=36249&language=English",
+      "accessed": "2026-10-23",
+      "license": "K20 Center terms (facts only)",
+      "use": "fact_only",
+      "note": "只取出生日期與地點；該文寫 1876 年時 25 歲有誤（實為 24 歲），不採用"
+    },
+    {
+      "id": "s6",
+      "publisher": "國家圖書館（National Central Library, Taiwan）",
+      "title": "《中國圖書分類法》增訂八版使用解說（陳友民）",
+      "url": "https://catweb.ncl.edu.tw/datas/2-1-18/chap11_1.pdf",
+      "accessed": "2026-10-23",
+      "license": "國家圖書館網站使用規範（只取事實）",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s7",
+      "publisher": "國家圖書館（National Central Library, Taiwan）",
+      "title": "《中文圖書分類法》2007 年版 編例",
+      "url": "https://catweb.ncl.edu.tw/class2007/b03.pdf",
+      "accessed": "2026-10-23",
+      "license": "國家圖書館網站使用規範（只取事實）",
+      "use": "fact_only",
+      "note": null
+    }
+  ],
+  "facts": [
+    {
+      "id": "f1",
+      "text": "Melvil Dewey was born on December 10, 1851, in Adams Center, New York.",
+      "source_ids": [
+        "s5"
+      ],
+      "kind": "person"
+    },
+    {
+      "id": "f2",
+      "text": "Dewey entered Amherst College in the fall of 1870 and graduated with the class of 1874.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "date"
+    },
+    {
+      "id": "f3",
+      "text": "While a student working in the Amherst College library, Dewey presented the library committee on May 8, 1873, with a plan to rearrange its badly disorganized collection by subject.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "event"
+    },
+    {
+      "id": "f4",
+      "text": "Dewey was 21 years old when he presented his plan in May 1873.",
+      "source_ids": [
+        "s1",
+        "s5"
+      ],
+      "kind": "number",
+      "note": "由出生日期（1851-12-10）與 1873-05-08 換算"
+    },
+    {
+      "id": "f5",
+      "text": "Dewey said he visited over 50 libraries and was shocked by the time and money wasted on constantly recataloguing and renumbering books.",
+      "source_ids": [
+        "s3"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f6",
+      "text": "Most libraries of the time used a fixed system: a book's number showed the room, case or tier, and shelf where it happened to stand, not the subject it was about.",
+      "source_ids": [
+        "s3"
+      ],
+      "kind": "definition"
+    },
+    {
+      "id": "f7",
+      "text": "Other libraries of the 1800s shelved books in the order they arrived, or by size only; at Columbia, books of the same size were shelved together, so a reader might have to scan every book of the right size.",
+      "source_ids": [
+        "s3"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f8",
+      "text": "Under fixed systems, once the space for a subject filled up, books had to be moved and their numbers changed.",
+      "source_ids": [
+        "s3"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f9",
+      "text": "Dewey later wrote that the solution came to him one Sunday during a long sermon by the college president, Stearns, when he almost jumped up and shouted Eureka.",
+      "source_ids": [
+        "s3"
+      ],
+      "kind": "event"
+    },
+    {
+      "id": "f10",
+      "text": "His idea was to number subjects, not shelves, using ordinary Arabic numerals as decimals to classify all printed knowledge.",
+      "source_ids": [
+        "s3"
+      ],
+      "kind": "definition"
+    },
+    {
+      "id": "f11",
+      "text": "In Dewey's system a book's number reflects its subject and shows only where the book stands relative to other books, so new books can be added without renumbering the old ones.",
+      "source_ids": [
+        "s3"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f12",
+      "text": "The first edition, published without the author's name in 1876, had ten main classes, each split into ten divisions and each division into ten sections: 1,000 categories in all.",
+      "source_ids": [
+        "s3",
+        "s4"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f13",
+      "text": "The 1876 first edition ran to fewer than fifty pages.",
+      "source_ids": [
+        "s4"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f14",
+      "text": "Many librarians were at first overwhelmed by the 1,000 categories and called the scheme too detailed for libraries.",
+      "source_ids": [
+        "s3"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f15",
+      "text": "Because the numbers work as decimals, there is no limit to subdivision: no whole number fits between 356 and 357, but endless numbers fit between .356 and .357, so new subjects get longer numbers.",
+      "source_ids": [
+        "s3"
+      ],
+      "kind": "definition"
+    },
+    {
+      "id": "f16",
+      "text": "Because the system uses only Arabic numerals, the same number stands for the same subject in libraries using any language.",
+      "source_ids": [
+        "s3"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f17",
+      "text": "Dewey biographer Wayne Wiegand argues that Dewey joined and adjusted strong points from earlier schemes by others rather than creating something entirely new.",
+      "source_ids": [
+        "s3"
+      ],
+      "kind": "person"
+    },
+    {
+      "id": "f18",
+      "text": "After graduating, Dewey worked as Amherst's assistant librarian until 1876, put his system into use there, sought a copyright for it, and helped found the American Library Association in 1876.",
+      "source_ids": [
+        "s1",
+        "s2"
+      ],
+      "kind": "event"
+    },
+    {
+      "id": "f19",
+      "text": "Dewey was a champion of spelling reform and dropped the extra letters from his first name, Melville.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "person"
+    },
+    {
+      "id": "f20",
+      "text": "Today Dewey's system is more common in public and school libraries, while the Library of Congress Classification is more common in large university and research libraries; the Library of Congress does not shelve its own books by Dewey.",
+      "source_ids": [
+        "s4"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f21",
+      "text": "Liu Guojun's Chinese library classification, first drafted in 1929, drew on old Chinese catalogues and on Dewey's system; it uses only numbers, with ten main classes expanded decimally.",
+      "source_ids": [
+        "s6"
+      ],
+      "kind": "event"
+    },
+    {
+      "id": "f22",
+      "text": "In 1964 Lai Yung-hsiang revised Liu's scheme in Taiwan, keeping its ten main classes and adding categories for Taiwan.",
+      "source_ids": [
+        "s6"
+      ],
+      "kind": "event"
+    },
+    {
+      "id": "f23",
+      "text": "Taiwan's National Central Library finished a revised version of the scheme in 2007 after six years of work, renaming it 中文圖書分類法; the revision consulted the Dewey Decimal Classification among other schemes.",
+      "source_ids": [
+        "s7"
+      ],
+      "kind": "event"
+    },
+    {
+      "id": "f24",
+      "text": "The 23rd edition of the Dewey Decimal Classification was printed in 2011 in four volumes.",
+      "source_ids": [
+        "s4"
+      ],
+      "kind": "number"
+    }
+  ],
+  "notes": "批次 reading-top-08 第 1 組（continuous）。lot 角度寫 21 歲的學生：依 Amherst 年表（1873-05-08 向圖書館委員會提出方案）與出生日期換算（f4）。"
+}

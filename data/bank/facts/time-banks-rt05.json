@@ -1,0 +1,142 @@
+{
+  "schema": "gsat-bank-facts/v1",
+  "id": "time-banks-rt05",
+  "title": "Time banks: trading hours of help in Spain, Canada and England",
+  "sdgs": [10, 11],
+  "created_on": "2026-10-20",
+  "created_by": "ai-agent",
+  "sources": [
+    {
+      "id": "s1",
+      "publisher": "CBC News",
+      "title": "‘Time bank’ in southwestern N.B. helps neighbours exchange skills, build community",
+      "url": "https://www.cbc.ca/news/canada/new-brunswick/time-banks-helping-neighbours-exchange-skills-9.7334310",
+      "accessed": "2026-10-20",
+      "license": "CBC terms of use (facts only)",
+      "use": "fact_only",
+      "note": "只取事實"
+    },
+    {
+      "id": "s2",
+      "publisher": "NPR",
+      "title": "'Time Banks' Help Spaniards Weather Financial Crisis (2012-09-22)",
+      "url": "https://www.npr.org/2012/09/22/161380937/time-banks-help-spaniards-weather-financial-crisis",
+      "accessed": "2026-10-20",
+      "license": "NPR terms of use (facts only)",
+      "use": "fact_only",
+      "note": "只取事實"
+    },
+    {
+      "id": "s3",
+      "publisher": "Smithsonian Magazine",
+      "title": "\"Time Banking\" Is Catching On In the Digital World",
+      "url": "https://www.smithsonianmag.com/innovation/time-banking-is-catching-on-in-digital-world-180969437/",
+      "accessed": "2026-10-20",
+      "license": "Smithsonian terms of use (facts only)",
+      "use": "fact_only",
+      "note": "只取事實"
+    },
+    {
+      "id": "s4",
+      "publisher": "University of York (White Rose eprints); Health & Social Care in the Community",
+      "title": "Naughton-Doe et al. (2021), Timebanking and the co-production of preventive social care with adults: what can we learn from the challenges of implementing person-to-person timebanks in England?",
+      "url": "https://eprints.whiterose.ac.uk/id/eprint/190867/1/Health_Social_Care_Comm_2020_Naughton_Doe_Timebanking_and_the_co_production_of_preventive_social_care_with_adults_.pdf",
+      "accessed": "2026-10-20",
+      "license": "Repository terms (facts only)",
+      "use": "fact_only",
+      "note": "只取事實"
+    },
+    {
+      "id": "s5",
+      "publisher": "PLOS ONE",
+      "title": "Willingness, motivators and barriers to time bank participation: A scoping review (2025)",
+      "url": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0322760",
+      "accessed": "2026-10-20",
+      "license": "CC-BY-4.0",
+      "use": "fact_only",
+      "note": "只取事實"
+    }
+  ],
+  "facts": [
+    {
+      "id": "f1",
+      "text": "In a time bank, members earn one time credit for every hour spent helping another member, and spend credits on help from anyone else in the group; no money changes hands.",
+      "source_ids": ["s1", "s2", "s3"],
+      "kind": "definition"
+    },
+    {
+      "id": "f2",
+      "text": "Time banking follows the principle of equal time, equal value: an hour of a computer specialist’s work counts the same as an hour of cleaning.",
+      "source_ids": ["s2", "s5"],
+      "kind": "definition"
+    },
+    {
+      "id": "f3",
+      "text": "American law professor Edgar Cahn coined the term time banking in 1980; he set it up to build community and meet social needs at a time when social services were being cut.",
+      "source_ids": ["s1", "s3"],
+      "kind": "person"
+    },
+    {
+      "id": "f4",
+      "text": "Similar exchanges of labor for labor had roots in 19th-century labor reform movements in America and Europe, in the 1800s.",
+      "source_ids": ["s2", "s3"],
+      "kind": "date"
+    },
+    {
+      "id": "f5",
+      "text": "With Spanish unemployment near 25 percent around 2012, the number of time banks in Spain doubled in two years to nearly 300; most had between 50 and 400 members.",
+      "source_ids": ["s2"],
+      "kind": "number"
+    },
+    {
+      "id": "f6",
+      "text": "A mother in Madrid whose teenage son uses a wheelchair lost a daily nurse when public spending was cut; time bank members helped lift her son, and she repaid them by driving disabled people in her specially fitted car.",
+      "source_ids": ["s2"],
+      "kind": "event"
+    },
+    {
+      "id": "f7",
+      "text": "In Spain, time bank services had to stay occasional so that they did not compete unfairly with businesses that pay tax.",
+      "source_ids": ["s2"],
+      "kind": "other"
+    },
+    {
+      "id": "f8",
+      "text": "The Charlotte County Time Bank in New Brunswick, Canada, was founded after its founder broke both wrists and needed help with everyday tasks at home.",
+      "source_ids": ["s1"],
+      "kind": "event"
+    },
+    {
+      "id": "f9",
+      "text": "Members of the Charlotte County Time Bank have exchanged rides to medical appointments, baking, gardening, snow clearing and skateboarding lessons.",
+      "source_ids": ["s1"],
+      "kind": "other"
+    },
+    {
+      "id": "f10",
+      "text": "A board member of the Charlotte County Time Bank says that requesting help also helps others, because it lets them earn hours.",
+      "source_ids": ["s1"],
+      "kind": "other"
+    },
+    {
+      "id": "f11",
+      "text": "A study of six timebanks in England found that many members only wanted to offer help and did not request services, which slowed timebank activity.",
+      "source_ids": ["s4"],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f12",
+      "text": "A sociologist says most time banks do not last long, and the most successful ones have official hosts and infrastructure.",
+      "source_ids": ["s3"],
+      "kind": "other"
+    },
+    {
+      "id": "f13",
+      "text": "Reviews of time banks report problems such as members hoarding credits and few places to spend them.",
+      "source_ids": ["s5"],
+      "kind": "other"
+    }
+  ],
+  "datasets": [],
+  "notes": "批次提示的「會員用修電腦換到陪看病的時數」是說明時間銀行如何運作的假設情境（文中以 Suppose 開頭，不當成真實事件）；真實事件用西班牙（NPR 2012）、加拿大新布藍茲維（CBC）與英格蘭六家時間銀行的研究。"
+}

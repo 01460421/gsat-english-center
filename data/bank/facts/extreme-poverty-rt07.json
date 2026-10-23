@@ -1,0 +1,503 @@
+{
+  "schema": "gsat-bank-facts/v1",
+  "id": "extreme-poverty-rt07",
+  "title": "Share of people living in extreme poverty ($3.00 a day, 2021 PPP) by region, 1990–2024",
+  "sdgs": [
+    1,
+    10
+  ],
+  "created_on": "2026-10-23",
+  "created_by": "ai-agent",
+  "sources": [
+    {
+      "id": "s1",
+      "publisher": "World Bank",
+      "title": "World Development Indicators: Poverty headcount ratio at $3.00 a day (2021 PPP) (% of population) (SI.POV.DDAY)",
+      "url": "https://data.worldbank.org/indicator/SI.POV.DDAY",
+      "accessed": "2026-10-23",
+      "license": "CC-BY-4.0",
+      "use": "dataset",
+      "note": "以 World Bank API（api.worldbank.org/v2，lastupdated 2026-10-08）下載 WLD、EAS、SAS、SSF 與 CHN；原始提供者：World Bank Poverty and Inequality Platform；數值照原檔"
+    },
+    {
+      "id": "s2",
+      "publisher": "World Bank",
+      "title": "World Development Indicators: Population, total (SP.POP.TOTL)",
+      "url": "https://data.worldbank.org/indicator/SP.POP.TOTL",
+      "accessed": "2026-10-23",
+      "license": "CC-BY-4.0",
+      "use": "dataset",
+      "note": "以 World Bank API（api.worldbank.org/v2）下載 SSF、WLD；用來換算赤貧人數（比例 × 人口）"
+    },
+    {
+      "id": "s3",
+      "publisher": "World Bank",
+      "title": "June 2025 Update to Global Poverty Lines (factsheet, 2025-06-05)",
+      "url": "https://www.worldbank.org/en/news/factsheet/2025/06/05/june-2025-update-to-global-poverty-lines",
+      "accessed": "2026-10-23",
+      "license": "World Bank terms of use; facts only",
+      "use": "fact_only",
+      "note": "只取事實"
+    },
+    {
+      "id": "s4",
+      "publisher": "World Bank",
+      "title": "Poverty & Inequality Update, October 2025 (One in ten people globally live in extreme poverty)",
+      "url": "https://thedocs.worldbank.org/en/doc/229ff18129687a785f08af7cfb28e5e1-0350012025/original/WBG-Poverty-and-Inequality-Update-Fall-2025.pdf",
+      "accessed": "2026-10-23",
+      "license": "World Bank terms of use; facts only",
+      "use": "fact_only",
+      "note": "只取事實"
+    }
+  ],
+  "facts": [
+    {
+      "id": "f1",
+      "text": "In June 2025 the World Bank raised its international extreme poverty line to $3.00 a person a day in 2021 prices, replacing the $2.15 line based on 2017 prices.",
+      "source_ids": [
+        "s3"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f2",
+      "text": "The line is measured in prices adjusted for purchasing power, so $3.00 stands for the same amount of goods in every country rather than the same sum of local money.",
+      "source_ids": [
+        "s1",
+        "s3"
+      ],
+      "kind": "definition"
+    },
+    {
+      "id": "f3",
+      "text": "Under the new line, about 838 million people lived in extreme poverty in 2022, about 125 million more than the 713 million estimated with the old line.",
+      "source_ids": [
+        "s3"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f4",
+      "text": "Sub-Saharan Africa had the largest upward revision under the new line, 111 million more people, while South Asia had 45 million fewer.",
+      "source_ids": [
+        "s3"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f5",
+      "text": "From 1990 to 2025 the number of people in extreme poverty fell from around 2.3 billion to around 831 million, mainly because of strong economic growth in East Asia and South Asia.",
+      "source_ids": [
+        "s4"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f6",
+      "text": "Poverty reduction has slowed in the last decade, and extreme poverty is increasingly concentrated in Sub-Saharan Africa and in places affected by conflict and fragility.",
+      "source_ids": [
+        "s4"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f7",
+      "text": "Nearly three-quarters of people in extreme poverty live in rural areas; about one in ten people worldwide lived in extreme poverty in 2025.",
+      "source_ids": [
+        "s4"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f8",
+      "text": "The World Bank's goal is to cut extreme poverty to less than 3 percent of the world's people by 2030, but it projects that about 9 percent will still be extremely poor in 2030.",
+      "source_ids": [
+        "s3"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f9",
+      "text": "In 1990 East Asia and the Pacific had the highest extreme poverty rate of the four groups in the chart, 67.0 percent; by 2020 its rate was 2.7 percent.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f10",
+      "text": "China's extreme poverty rate was 83.1 percent in 1990 and is recorded as 0 from 2019 onward.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f11",
+      "text": "Derived: Sub-Saharan Africa's population grew from about 521 million in 1990 to about 1,168 million in 2020, 2.24 times as many people.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "number",
+      "note": "521,029,972 → 1,168,133,785；1,168,133,785 ÷ 521,029,972 ≈ 2.24"
+    },
+    {
+      "id": "f12",
+      "text": "Derived: about 320 million people in Sub-Saharan Africa lived in extreme poverty in 1990 and about 537 million in 2020.",
+      "source_ids": [
+        "s1",
+        "s2"
+      ],
+      "kind": "number",
+      "note": "61.5% × 521,029,972 ≈ 320.4 million；46.0% × 1,168,133,785 ≈ 537.3 million"
+    },
+    {
+      "id": "f13",
+      "text": "Derived: about 2,300 million people worldwide were extremely poor in 1990 and about 895 million in 2020.",
+      "source_ids": [
+        "s1",
+        "s2"
+      ],
+      "kind": "number",
+      "note": "43.4% × 5,298,962,018 ≈ 2,299.7 million；11.4% × 7,853,863,139 ≈ 895.3 million"
+    },
+    {
+      "id": "f14",
+      "text": "Derived: Sub-Saharan Africa's share of the world's extremely poor people rose from about 14 percent in 1990 to about 60 percent in 2020.",
+      "source_ids": [
+        "s1",
+        "s2"
+      ],
+      "kind": "number",
+      "note": "320.4 ÷ 2,299.7 ≈ 0.139；537.3 ÷ 895.3 ≈ 0.600"
+    }
+  ],
+  "datasets": [
+    {
+      "id": "d1",
+      "source_id": "s1",
+      "title": "Poverty headcount ratio at $3.00 a day (2021 PPP), % of population, every six years 1990–2020",
+      "indicator": "SI.POV.DDAY",
+      "unit": "% of population",
+      "categories": [
+        "1990",
+        "1996",
+        "2002",
+        "2008",
+        "2014",
+        "2020"
+      ],
+      "series": [
+        {
+          "name": "World",
+          "values": [
+            43.4,
+            38.1,
+            33.7,
+            24.1,
+            14.5,
+            11.4
+          ]
+        },
+        {
+          "name": "East Asia & Pacific",
+          "values": [
+            67,
+            52,
+            40,
+            23.4,
+            7.8,
+            2.7
+          ]
+        },
+        {
+          "name": "South Asia",
+          "values": [
+            49.7,
+            46.8,
+            46,
+            36.8,
+            20,
+            9.4
+          ]
+        },
+        {
+          "name": "Sub-Saharan Africa",
+          "values": [
+            61.5,
+            63.9,
+            60.8,
+            51.9,
+            45.3,
+            46
+          ]
+        }
+      ],
+      "note": "圖表用的年份（每 6 年一點；South Asia 1997–2001、2015–2019 沒有區域估計，World 沒有 2019）"
+    },
+    {
+      "id": "d2",
+      "source_id": "s1",
+      "title": "Poverty headcount ratio at $3.00 a day (2021 PPP), % of population, every year 1990–2024",
+      "indicator": "SI.POV.DDAY",
+      "unit": "% of population",
+      "categories": [
+        "1990",
+        "1991",
+        "1992",
+        "1993",
+        "1994",
+        "1995",
+        "1996",
+        "1997",
+        "1998",
+        "1999",
+        "2000",
+        "2001",
+        "2002",
+        "2003",
+        "2004",
+        "2005",
+        "2006",
+        "2007",
+        "2008",
+        "2009",
+        "2010",
+        "2011",
+        "2012",
+        "2013",
+        "2014",
+        "2015",
+        "2016",
+        "2017",
+        "2018",
+        "2019",
+        "2020",
+        "2021",
+        "2022",
+        "2023",
+        "2024"
+      ],
+      "series": [
+        {
+          "name": "East Asia & Pacific",
+          "values": [
+            67,
+            66,
+            64.4,
+            62.8,
+            59.2,
+            55.7,
+            52,
+            51.3,
+            51.6,
+            49.1,
+            46.6,
+            44.1,
+            40,
+            36.2,
+            32.9,
+            28.9,
+            27.7,
+            25,
+            23.4,
+            21.4,
+            18.9,
+            15.3,
+            13.2,
+            9,
+            7.8,
+            6.1,
+            5,
+            4.1,
+            3.3,
+            2.6,
+            2.7,
+            2.6,
+            2.4,
+            2.2,
+            2
+          ]
+        },
+        {
+          "name": "Sub-Saharan Africa",
+          "values": [
+            61.5,
+            62.8,
+            63.8,
+            64.5,
+            64.6,
+            64.4,
+            63.9,
+            63.5,
+            63.4,
+            63.1,
+            62.4,
+            61.2,
+            60.8,
+            59.9,
+            56.9,
+            55.4,
+            54.3,
+            53.1,
+            51.9,
+            51.4,
+            49.4,
+            48.4,
+            47.2,
+            46.1,
+            45.3,
+            45.4,
+            45.1,
+            44.6,
+            44.1,
+            43.9,
+            46,
+            46.2,
+            45.6,
+            45.5,
+            45
+          ]
+        }
+      ],
+      "note": "兩個區域每年都有資料"
+    },
+    {
+      "id": "d3",
+      "source_id": "s1",
+      "title": "Poverty headcount ratio at $3.00 a day (2021 PPP), % of population, South Asia (years with a regional estimate)",
+      "indicator": "SI.POV.DDAY",
+      "unit": "% of population",
+      "categories": [
+        "1990",
+        "1991",
+        "1992",
+        "1993",
+        "1994",
+        "1995",
+        "1996",
+        "2002",
+        "2003",
+        "2004",
+        "2005",
+        "2006",
+        "2007",
+        "2008",
+        "2009",
+        "2010",
+        "2011",
+        "2012",
+        "2013",
+        "2014",
+        "2020",
+        "2021",
+        "2022",
+        "2023",
+        "2024"
+      ],
+      "series": [
+        {
+          "name": "South Asia",
+          "values": [
+            49.7,
+            49.6,
+            48.9,
+            48.1,
+            47.4,
+            47.1,
+            46.8,
+            46,
+            45.6,
+            45,
+            43.3,
+            40.7,
+            38.1,
+            36.8,
+            34.6,
+            30.4,
+            27.6,
+            25.2,
+            22.8,
+            20,
+            9.4,
+            7.9,
+            6.1,
+            4.1,
+            2.6
+          ]
+        }
+      ],
+      "note": null
+    },
+    {
+      "id": "d4",
+      "source_id": "s1",
+      "title": "Poverty headcount ratio at $3.00 a day (2021 PPP), % of population, China",
+      "indicator": "SI.POV.DDAY",
+      "unit": "% of population",
+      "categories": [
+        "1990",
+        "1996",
+        "2002",
+        "2008",
+        "2014",
+        "2019"
+      ],
+      "series": [
+        {
+          "name": "China",
+          "values": [
+            83.1,
+            62.6,
+            47.8,
+            26.1,
+            4.6,
+            0
+          ]
+        }
+      ],
+      "note": null
+    },
+    {
+      "id": "d5",
+      "source_id": "s2",
+      "title": "Population, total",
+      "indicator": "SP.POP.TOTL",
+      "unit": "people",
+      "categories": [
+        "1990",
+        "1996",
+        "2002",
+        "2008",
+        "2014",
+        "2020"
+      ],
+      "series": [
+        {
+          "name": "Sub-Saharan Africa",
+          "values": [
+            521029972,
+            612267246,
+            718276009,
+            846224198,
+            997426231,
+            1168133785
+          ]
+        },
+        {
+          "name": "World",
+          "values": [
+            5298962018,
+            5822327903,
+            6327171255,
+            6830080867,
+            7353532223,
+            7853863139
+          ]
+        }
+      ],
+      "note": null
+    }
+  ],
+  "notes": "任務提示的範圍是 1990–2022；API（2026-10-08 更新）已有到 2024 的資料，但 South Asia 2015–2019 沒有區域估計，所以圖表取 1990–2020 每 6 年一點（六個年份四條線都有值）。指標名稱已改為 $3.00 a day (2021 PPP)，2025 年 6 月之前是 $2.15（2017 PPP）。"
+}
