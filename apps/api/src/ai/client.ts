@@ -7,7 +7,7 @@
  *   2  不送 temperature／top_p／top_k、強制 tool_choice、assistant 預填（messages 只有一則 user）
  *   3  不送 thinking（Opus 5.5 一律 adaptive）；每個任務明確設定 output_config.effort
  *   4  max_tokens 含思考空間；stop_reason='max_tokens' 由呼叫端重試一次
- *   5  output_config.format＝SDK 的 betaZodOutputFormat 產生的 JSON schema（剝除不支援的約束）；
+ *   5  output_config.format＝SDK 的 betaZodOutputFormat 產生的 JSON schema（剝除不支援的約束；學習助手另外攤開 $ref，見 inlineJsonSchemaRefs）；
  *      只送 { type, schema }、不帶 SDK 的自動解析：先檢查 stop_reason 再用完整的 zod schema 驗證，
  *      拒答或截斷時才不會在 SDK 裡丟出解析錯誤、拿不到 usage
  *   6  schema 欄位名稱不含 reasoning 類字樣（說明欄位叫 explanation_zh）
@@ -32,7 +32,7 @@ import type {
   BetaMessage,
   BetaMessageStreamParams,
 } from '@anthropic-ai/sdk/resources/beta/messages/messages';
-import type { AiRefundReason, AiTask } from '@gsat/shared';
+import { isAssistTask, type AiRefundReason, type AiTask } from '@gsat/shared';
 import type * as z from 'zod/v4';
 import { promptVersionOf } from './prompts/common';
 import { costOfUsage, PRICING_VERSION, pricingOf, type UsageEntry } from './pricing';
@@ -73,9 +73,37 @@ export class ModelNotAllowedError extends Error {
   }
 }
 
-/** 送出的 JSON schema（SDK 的轉換結果）。 */
-export function outgoingJsonSchema(schema: z.ZodType): Record<string, unknown> {
-  return betaZodOutputFormat(schema).schema as Record<string, unknown>;
+/**
+ * 把 $defs／$ref 全部攤開成直接寫出的子 schema（內容不變；我們的 schema 沒有遞迴）。
+ * Anthropic 編譯 grammar 時 $ref 會讓規模變大：2026-10-23 實測，學習助手解析的 schema 帶 $ref 時被拒
+ * （400「The compiled grammar is too large」），同一份攤開後就通過；拿掉 description 則沒有差別。
+ */
+export function inlineJsonSchemaRefs(schema: Record<string, unknown>): Record<string, unknown> {
+  const defs = (schema['$defs'] ?? {}) as Record<string, unknown>;
+  const walk = (node: unknown, seen: readonly string[]): unknown => {
+    if (Array.isArray(node)) return node.map((n) => walk(n, seen));
+    if (node === null || typeof node !== 'object') return node;
+    const obj = node as Record<string, unknown>;
+    const ref = obj['$ref'];
+    if (typeof ref === 'string') {
+      const name = ref.startsWith('#/$defs/') ? ref.slice('#/$defs/'.length) : null;
+      if (name === null || !(name in defs)) throw new Error(`無法攤開的 $ref：${ref}`);
+      if (seen.includes(name)) throw new Error(`遞迴的 $ref：${ref}`);
+      const { $ref: _ref, ...siblings } = obj;
+      return { ...(walk(defs[name], [...seen, name]) as Record<string, unknown>), ...(walk(siblings, seen) as Record<string, unknown>) };
+    }
+    return Object.fromEntries(Object.entries(obj).filter(([k]) => k !== '$defs').map(([k, v]) => [k, walk(v, seen)]));
+  };
+  return walk(schema, []) as Record<string, unknown>;
+}
+
+/**
+ * 送出的 JSON schema（SDK 的轉換結果）。inlineRefs：學習助手的任務攤開 $ref（見 inlineJsonSchemaRefs）；
+ * 批改任務維持原樣（正式站一直正常，請求逐位元不變）。
+ */
+export function outgoingJsonSchema(schema: z.ZodType, opts: { inlineRefs?: boolean } = {}): Record<string, unknown> {
+  const raw = betaZodOutputFormat(schema).schema as Record<string, unknown>;
+  return opts.inlineRefs ? inlineJsonSchemaRefs(raw) : raw;
 }
 
 /** 建構請求（純函式，除了 prompt_version 的雜湊）。所有 Claude 呼叫都必須經過這裡。 */
@@ -83,7 +111,7 @@ export async function buildClaudeRequest(input: ClaudeCallInput): Promise<BuiltR
   const { spec } = input;
   const pricing = pricingOf(spec.model);
   if (!pricing) throw new ModelNotAllowedError(spec.model);
-  const jsonSchema = outgoingJsonSchema(input.schema);
+  const jsonSchema = outgoingJsonSchema(input.schema, { inlineRefs: isAssistTask(input.task) });
   const promptVersion = await promptVersionOf([input.system, JSON.stringify(jsonSchema), input.templateVersion, spec.framework]);
   const images = Array.isArray(input.content) ? input.content.filter((b) => b.type === 'image').length : 0;
   const params: BetaMessageStreamParams = {
@@ -129,7 +157,7 @@ export type CallOutcome =
   | { kind: 'refusal'; category: string | null; record: CallRecord }
   | { kind: 'max_tokens'; record: CallRecord }
   | { kind: 'invalid'; issue: string; record: CallRecord }
-  | { kind: 'error'; retryable: boolean; reason: AiRefundReason; spendLimit: boolean; configProblem: boolean; record: CallRecord };
+  | { kind: 'error'; retryable: boolean; reason: AiRefundReason; spendLimit: boolean; configProblem: boolean; detail: string | null; record: CallRecord };
 
 type FetchLike = (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
 
@@ -251,6 +279,25 @@ function apiErrorType(err: InstanceType<typeof Anthropic.APIError>): string | nu
   return null;
 }
 
+/** 錯誤說明的長度上限（寫進 log 與 ops 事件；Anthropic 的錯誤訊息只描述請求的欄位與限制，不含提示詞內容）。 */
+export const ERROR_DETAIL_MAX = 300;
+
+/**
+ * 錯誤的簡短說明：HTTP 狀態、錯誤類型與 Anthropic 回的 message（例如 schema 太複雜、參數不支援），
+ * 給 log 與 anthropic_config／anthropic_error 事件用，站主不必看 Cloudflare 的 log 就知道原因。
+ */
+export function errorDetail(err: unknown): string | null {
+  if (err instanceof Anthropic.APIError) {
+    const body = err.error as { error?: { message?: unknown }; message?: unknown } | undefined;
+    const raw = body?.error?.message ?? body?.message;
+    const message = typeof raw === 'string' ? raw : err.message;
+    const head = [typeof err.status === 'number' ? String(err.status) : 'stream', apiErrorType(err)].filter(Boolean).join(' ');
+    return `${head}: ${message}`.replace(/\s+/g, ' ').trim().slice(0, ERROR_DETAIL_MAX);
+  }
+  if (err instanceof Error) return `${err.name}: ${err.message}`.replace(/\s+/g, ' ').trim().slice(0, ERROR_DETAIL_MAX);
+  return null;
+}
+
 /** 錯誤分類：由最具體的 SDK 錯誤類別開始判斷（§6.2 第 16 條）。 */
 export function classifyError(err: unknown): { retryable: boolean; reason: AiRefundReason; spendLimit: boolean; configProblem: boolean; code: string } {
   if (err instanceof Anthropic.APIConnectionTimeoutError) return { retryable: true, reason: 'timeout', spendLimit: false, configProblem: false, code: 'timeout' };
@@ -359,7 +406,7 @@ export async function executeClaudeCall(client: Anthropic, input: ClaudeCallInpu
     if (err instanceof Anthropic.APIError) record.requestId = err.requestID ?? null;
     record.requestId ??= stream?.request_id ?? null;
     applyPartialUsage(record, stream?.currentMessage, input.spec.model);
-    return { kind: 'error', retryable: c.retryable, reason: c.reason, spendLimit: c.spendLimit, configProblem: c.configProblem, record };
+    return { kind: 'error', retryable: c.retryable, reason: c.reason, spendLimit: c.spendLimit, configProblem: c.configProblem, detail: errorDetail(err), record };
   } finally {
     clearTimeout(deadline);
   }

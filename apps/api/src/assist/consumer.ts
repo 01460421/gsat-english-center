@@ -202,10 +202,12 @@ export async function handleAssistMessage(env: Env, msg: Message<AiQueueMessage>
       case 'retry':
         if (msg.attempts < QUEUE_MAX_DELIVERIES) {
           await releaseLease();
-          log('ai_retry', { op_id: op.id, task, reason: action.kind === 'retry' ? action.reason : 'requeue', attempts: msg.attempts });
+          log('ai_retry', { op_id: op.id, task, reason: action.kind === 'retry' ? action.reason : 'requeue', attempts: msg.attempts, ...(action.kind === 'retry' && action.detail ? { detail: action.detail } : {}) });
           msg.retry({ delaySeconds: 30 * msg.attempts });
           return;
         }
+        // 重送用完還是 Anthropic 的錯誤：留一筆事件（含錯誤說明），站主在健康檢查就看得到原因。
+        if (action.kind === 'retry' && action.reason === 'api_error') await opsEvent(db, 'anthropic_error', 'error', { op_id: op.id, task, detail: action.detail ?? null });
         return fail(action.kind === 'retry' ? action.reason : 'internal');
       case 'refund':
         if (action.spendLimit) {
@@ -214,7 +216,7 @@ export async function handleAssistMessage(env: Env, msg: Message<AiQueueMessage>
             opsEventStatement(db, 'anthropic_spend_limit', 'error', { op_id: op.id, task, note: '429 enforced_spend_limit_reached：全站已暫停' }),
           ]);
         } else if (action.configProblem) {
-          await opsEvent(db, 'anthropic_config', 'error', { op_id: op.id, task, reason: action.reason });
+          await opsEvent(db, 'anthropic_config', 'error', { op_id: op.id, task, reason: action.reason, detail: action.detail ?? null });
         }
         return fail(action.reason);
     }

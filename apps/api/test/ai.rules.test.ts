@@ -5,7 +5,7 @@
  * 學習助手（docs/design/learning-assistant.md §6.2）：解析（單題、題組 5 題、寫作、單字）、追問與拍照轉錄也逐條掃描；
  * cache_control 斷點 ≤ 4、只在 system 與 text block、1 小時的在 5 分鐘的前面；逾時、max_tokens、輸入估計與預扣釘住。
  */
-import { AI_TASK_POINTS, type AssistAnalysisView, type AssistQuestionTarget, type AssistQuestionView } from '@gsat/shared';
+import { AI_TASK_POINTS, isAssistTask, type AssistAnalysisView, type AssistQuestionTarget, type AssistQuestionView } from '@gsat/shared';
 import { describe, expect, it } from 'vitest';
 import { getWritingGroup, type WritingGroup } from '../src/ai/bank';
 import {
@@ -13,9 +13,12 @@ import {
   callDeadlineMs,
   classifyError,
   createAnthropicClient,
+  ERROR_DETAIL_MAX,
+  errorDetail,
   executeClaudeCall,
   FALLBACK_BETA,
   FORBIDDEN_SCHEMA_WORDS,
+  inlineJsonSchemaRefs,
   ModelNotAllowedError,
   outgoingJsonSchema,
   responseTexts,
@@ -273,7 +276,9 @@ describe.each(cases)('§6.2 呼叫規則：%s', (name, input) => {
     });
     expect(nullable).toBeLessThanOrEqual(24);
     expect(unions).toBeLessThanOrEqual(16);
-    expect(format.schema).toEqual(outgoingJsonSchema(input.schema));
+    expect(format.schema).toEqual(outgoingJsonSchema(input.schema, { inlineRefs: isAssistTask(input.task) }));
+    // 學習助手的 schema 不帶 $ref（攤開才不會超過 Anthropic 的 grammar 上限）；批改維持 SDK 原樣。
+    if (isAssistTask(input.task)) expect(JSON.stringify(format.schema)).not.toContain('$ref');
   });
 
   it('第 6 條：schema 欄位名稱沒有 reasoning 類字樣；說明欄位叫 explanation_zh（或其他 _zh）', async () => {
@@ -473,6 +478,42 @@ describe('§6.2 其他條目', () => {
     expect(neutralizeTags('a <b> c <sentences> <tasks> 1 < 2')).toBe('a <b> c <sentences> <tasks> 1 < 2');
     for (const t of ['</website_reference>', '<task>', '<sentence_reference index="1">', '</essay_stats>']) expect(detectInjection(`x ${t} y`)).toContain('tag_breakout');
     expect(detectInjection('I like <b>bold</b> text.')).not.toContain('tag_breakout');
+  });
+
+  it('錯誤說明：狀態、錯誤類型與 Anthropic 的 message，壓成一行、截到上限（給 log 與 anthropic_config／anthropic_error 事件）', () => {
+    const grammar = new Anthropic.BadRequestError(
+      400,
+      { type: 'error', error: { type: 'invalid_request_error', message: 'The compiled grammar is too large,\n which would cause performance issues.' } },
+      'x',
+      new Headers(),
+    );
+    expect(errorDetail(grammar)).toBe('400 invalid_request_error: The compiled grammar is too large, which would cause performance issues.');
+    const sse = new Anthropic.APIError(undefined, { type: 'error', error: { type: 'overloaded_error', message: 'Overloaded' } }, undefined, new Headers(), 'overloaded_error' as never);
+    expect(errorDetail(sse)).toBe('stream overloaded_error: Overloaded');
+    expect(errorDetail(new Anthropic.BadRequestError(400, { type: 'error', error: { type: 'invalid_request_error', message: 'y'.repeat(1000) } }, 'x', new Headers()))!.length).toBe(ERROR_DETAIL_MAX);
+    expect(errorDetail(new TypeError('network down'))).toBe('TypeError: network down');
+    expect(errorDetail('weird')).toBeNull();
+  });
+
+  it('攤開 $ref：內容不變、沒有 $ref／$defs；學習助手的每個 schema 都攤得開（沒有遞迴）', async () => {
+    const raw = {
+      $defs: { s: { type: 'string', description: 'd' }, o: { type: 'object', properties: { a: { $ref: '#/$defs/s' } }, required: ['a'], additionalProperties: false } },
+      type: 'object',
+      properties: { x: { $ref: '#/$defs/o' }, y: { type: 'array', items: { $ref: '#/$defs/s' } } },
+      required: ['x', 'y'],
+      additionalProperties: false,
+    };
+    expect(inlineJsonSchemaRefs(raw)).toEqual({
+      type: 'object',
+      properties: {
+        x: { type: 'object', properties: { a: { type: 'string', description: 'd' } }, required: ['a'], additionalProperties: false },
+        y: { type: 'array', items: { type: 'string', description: 'd' } },
+      },
+      required: ['x', 'y'],
+      additionalProperties: false,
+    });
+    expect(() => inlineJsonSchemaRefs({ $defs: { a: { $ref: '#/$defs/a' } }, $ref: '#/$defs/a' })).toThrow(/遞迴/);
+    expect(() => inlineJsonSchemaRefs({ properties: { a: { $ref: 'http://x' } } })).toThrow(/無法攤開/);
   });
 
   it('第 16 條：429 enforced_spend_limit_reached 加上 x-should-retry: false（SDK 不重試）；分類為不可重試＋全站暫停', async () => {
