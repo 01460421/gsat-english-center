@@ -209,6 +209,8 @@ export interface VocabEntry {
   variants: string[];
   /** IPA 音標（ECDICT 舊式英式標音為主）；13 筆沒有音標。 */
   ipa: string | null;
+  /** 音標取自 Open English WordNet（CC BY 4.0，美式標音）時才有這一欄（14 筆）；沒有這一欄的音標來自 ECDICT。 */
+  ipa_source?: 'oewn';
   forms: Partial<Record<FormKey, string>>;
   zh: ZhSense[];
   /** 有 variants 的條目才有。 */

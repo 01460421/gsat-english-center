@@ -3,6 +3,7 @@
  * scripts/font-coverage.mjs 的 bankPrintableCoverage()：題庫會印進自組模擬考 PDF 的字串，題本、解析、資料來源的缺字分開找
  * （docs/design/bank-mock.md §7.6），以及自組卷的粗體字串（SITE_PAPER_BOLD）、替代字表。字型用 src/features/pdf/fonts 的子集；缺字用擴充 B 區的字（子集不會收），
  * 有字形的用常用字，子集重新產生也不影響測試。
+ * 單字講義（docs/design/vocab-handout.md §7.2）：vocabPrintableStrings() 的分類、條目缺字是錯誤、例句缺字只警告、VOCAB_PDF_BOLD 的讀法。
  */
 import { describe, expect, it } from 'vitest';
 import {
@@ -11,6 +12,9 @@ import {
   glyphSubstituteCodePoints,
   practicePrintableStrings,
   sitePaperBoldText,
+  vocabPdfBoldText,
+  vocabPrintableCoverage,
+  vocabPrintableStrings,
   writingPrintableStrings,
 } from './font-coverage.mjs';
 
@@ -145,5 +149,70 @@ describe('自組卷 PDF 的字型檢查（bank-mock §7.6）', () => {
     expect(result.errors).toEqual([expect.stringContaining('SITE_PAPER_BOLD')]);
     expect(result.errors[0]).toContain(RARE[0]);
     expect(checkFontCoverage([]).errors).toEqual([]);
+  });
+});
+
+function vocabEntry(overrides: Record<string, unknown> = {}): Record<string, unknown> {
+  return {
+    id: 'adult|n./adj.|4',
+    word: 'adult',
+    variants: ['grown-up'],
+    ipa: 'ˈædʌlt',
+    zh: [
+      { pos: 'n.', text: '成年人' },
+      { pos: 'n.', text: `專業領域不印${RARE[3]}`, domain: '法' },
+    ],
+    en_def: [`英文定義不印${RARE[3]}`],
+    variant_info: [{ form: 'adulthood', ipa: 'ˈædʌlthʊd', zh: '成年期' }],
+    forms: { plural: 'adults' },
+    family: [{ word: 'adolescent' }],
+    synonyms: [
+      { word: 'grown-up', in_list: true },
+      { word: `notinlist${RARE[3]}`, in_list: false },
+    ],
+    antonyms: [{ word: 'child', in_list: true }],
+    examples: [{ tatoeba_id: 49532, en: 'He is an adult.', zh: '他是成年人。', author: 'CK', zh_author: 'Martha' }],
+    ...overrides,
+  };
+}
+
+describe('單字講義的字型檢查（vocab-handout §7.2）', () => {
+  it('vocabPrintableStrings：條目有字頭、寫法、音標、會印的釋義、衍生字、變化形、同詞族、表內同義反義；例句依 Tatoeba 編號分開', () => {
+    const p = vocabPrintableStrings(vocabEntry());
+    expect(p.entry).toEqual(['adult', 'grown-up', 'ˈædʌlt', '成年人', 'adulthood', 'ˈædʌlthʊd', '成年期', 'adults', 'adolescent', 'grown-up', 'child']);
+    expect(p.entry.join('')).not.toContain(RARE[3]);
+    expect(p.examples).toEqual([{ id: 49532, strings: ['He is an adult.', '他是成年人。', 'CK', 'Martha'] }]);
+    expect(vocabPrintableStrings(null)).toEqual({ entry: [], examples: [] });
+  });
+
+  it('條目缺字是錯誤；例句缺字只警告並列出 Tatoeba 編號；零寬空白與細空白不算缺字；實際的字型與固定文字沒有缺字', () => {
+    const ok = vocabPrintableCoverage([{ entries: [vocabEntry({ examples: [{ tatoeba_id: 1, en: 'A\u200bB\u2009C', zh: '好。' }] })] }]);
+    expect(ok.errors).toEqual([]);
+    expect(ok.warnings).toEqual([]);
+    expect(ok.stats).toEqual({ entries: 1, examples: 1, badExamples: [] });
+
+    const bad = vocabPrintableCoverage([
+      {
+        entries: [
+          vocabEntry({ id: 'x|n.|1', zh: [{ pos: 'n.', text: `缺${RARE[0]}` }] }),
+          vocabEntry({ id: 'y|n.|1', examples: [{ tatoeba_id: 7, en: 'Fine.', zh: `例句${RARE[1]}` }, { tatoeba_id: 3, en: 'OK.', zh: '好。', zh_author: `作者${RARE[2]}` }] }),
+        ],
+      },
+    ]);
+    expect(bad.errors).toHaveLength(1);
+    expect(bad.errors[0]).toContain('x|n.|1');
+    expect(bad.errors[0]).toContain(RARE[0]);
+    expect(bad.warnings).toHaveLength(1);
+    expect(bad.warnings[0]).toContain('Tatoeba #3、#7');
+    expect(bad.stats.badExamples).toEqual([3, 7]);
+  });
+
+  it('vocabPdfBoldText：只讀 VOCAB_PDF_BOLD 的字串常值；實際的檔案含句意填空與答案的標題', () => {
+    const source = `export const VOCAB_PDF_TEXT = { a: '不算' } as const;\nexport const VOCAB_PDF_BOLD = {\n  // 註解不算\n  clozeTitle: '句意填空',\n} as const;`;
+    expect(vocabPdfBoldText(source)).toContain('句意填空');
+    expect(vocabPdfBoldText(source)).not.toContain('不算');
+    expect(vocabPdfBoldText(source)).not.toContain('註解');
+    expect(vocabPdfBoldText()).toContain('句意填空');
+    expect(vocabPdfBoldText()).toContain('資料來源與授權');
   });
 });

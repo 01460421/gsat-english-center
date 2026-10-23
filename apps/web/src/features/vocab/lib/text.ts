@@ -122,6 +122,37 @@ export function zhSenseLabel(sense: Pick<ZhSense, 'pos' | 'domain'>): string | n
   return ECDICT_POS_LABELS[sense.pos] ?? sense.pos;
 }
 
+/**
+ * 講義（PDF）用的短詞性標籤：ECDICT 的詞性寫法 → 一兩個字（「名」「及物」「不及物」「形」）。
+ * 講義每個字只有一兩行釋義，標籤短才放得下；專業領域的行（domain）講義不印，這裡回傳 null。
+ * 表裡沒有的寫法照原文（同 zhSenseLabel，不硬翻成可能錯的中文）。
+ */
+const ECDICT_POS_SHORT_LABELS: Record<string, string> = {
+  'n.': '名',
+  'v.': '動',
+  'vt.': '及物',
+  'vi.': '不及物',
+  'a.': '形',
+  'adj.': '形',
+  'ad.': '副',
+  'adv.': '副',
+  'prep.': '介',
+  'conj.': '連',
+  'pron.': '代',
+  'art.': '冠',
+  'aux.': '助',
+  'num.': '數',
+  'interj.': '感嘆',
+  'int.': '感嘆',
+  'pl.': '複數',
+  'abbr.': '縮寫',
+};
+
+export function zhSenseShortLabel(sense: Pick<ZhSense, 'pos' | 'domain'>): string | null {
+  if (sense.domain || !sense.pos) return null;
+  return ECDICT_POS_SHORT_LABELS[sense.pos] ?? sense.pos;
+}
+
 /** 詞類的中文名稱（「名詞」）。 */
 export function posLabel(pos: VocabPos): string {
   return VOCAB_POS_LABELS[pos];

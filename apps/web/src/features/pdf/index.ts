@@ -1,10 +1,12 @@
 /**
- * 考試格式 PDF 的對外入口（輕量）：頁面只 import 這個檔案與 ExamPdfDownload.tsx。
- * PDF 引擎、Worker 與字型都在 renderExamPdf() 第一次被呼叫時才動態載入（engine/render.ts），不會進到頁面的 JS。
+ * 考試格式 PDF 與單字講義 PDF 的對外入口（輕量）：頁面只 import 這個檔案、ExamPdfDownload.tsx 與 usePdfDownload.ts。
+ * PDF 引擎、Worker 與字型都在 renderExamPdf()／renderVocabHandoutPdf() 第一次被呼叫時才動態載入（engine/render.ts），
+ * 不會進到頁面的 JS。
  */
 import type { Exam } from '../../data/exams';
 import { examShortName } from '../../data/exams';
 import { PdfError, type ExamPdfOptions, type RenderExamPdf } from './types';
+import type { RenderVocabHandoutPdf } from './vocabTypes';
 
 export type {
   ExamPdfOptions,
@@ -17,6 +19,22 @@ export type {
   RenderExamPdfOptions,
   SitePaperPdfMeta,
 } from './types';
+export type {
+  ChoiceItem,
+  ClozeBlank,
+  ClozeItem,
+  HandoutExample,
+  HandoutGroup,
+  HandoutSkipReason,
+  HandoutSkipped,
+  HandoutWord,
+  RenderVocabHandoutPdf,
+  RenderVocabHandoutPdfOptions,
+  SpellingItem,
+  VocabHandoutKind,
+  VocabHandoutLayoutOptions,
+  VocabHandoutPdfData,
+} from './vocabTypes';
 export { PdfError };
 
 /**
@@ -53,15 +71,24 @@ export function pdfDownloadVisible(): boolean {
   return PDF_DOWNLOAD_ENABLED || pdfPreviewEnabled();
 }
 
-export const renderExamPdf: RenderExamPdf = async (exam, options) => {
-  let impl: RenderExamPdf;
+async function loadEngine(): Promise<typeof import('./engine/render')> {
   try {
-    ({ renderExamPdf: impl } = await import('./engine/render'));
+    return await import('./engine/render');
   } catch (err) {
     // 離線，或網站剛更新、這個頁面還在要舊版的檔案（檔名帶雜湊，舊檔已經不在）：重新整理就好。
     throw new PdfError('network', 'PDF 產生器下載失敗，請確認網路連線或重新整理頁面後再試。', { cause: err });
   }
+}
+
+export const renderExamPdf: RenderExamPdf = async (exam, options) => {
+  const { renderExamPdf: impl } = await loadEngine();
   return impl(exam, options);
+};
+
+/** 單字講義 PDF（docs/design/vocab-handout.md §6.1）：資料由單字模組組好，這裡只排版。 */
+export const renderVocabHandoutPdf: RenderVocabHandoutPdf = async (data, options) => {
+  const { renderVocabHandoutPdf: impl } = await loadEngine();
+  return impl(data, options);
 };
 
 /** 本站自組卷的三種版本（docs/design/bank-mock.md §2.5）：學生卷、教師卷、題本＋答案＋解析。 */

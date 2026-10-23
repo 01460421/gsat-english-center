@@ -94,6 +94,50 @@ export function regularInflections(word: string, pos: readonly VocabPos[]): Part
   return out;
 }
 
+/** 判斷「是不是規則變化」時，在 regularInflections 之外也算規則的拼法（只用在 isIrregularForm，不影響例句比對）。 */
+function extraRegularSpellings(w: string, key: FormKey): string[] {
+  const out: string[] = [];
+  const last = w.slice(-1);
+  // 單一母音＋子音結尾就重複字尾（up → upped、quit → quitting、equip → equipped，qu 的 u 當子音）；
+  // 英式母音後的 l 也重複（cruel → crueller、initial → initialled）。endsCvc 不收兩個字母的字與 qu，所以這裡另外放寬。
+  const doubles = /(^|[^aeiou]|qu)[aeiou][b-df-hj-np-tvz]$/.test(w) || /[aeiou]l$/.test(w);
+  const suffixes: Partial<Record<FormKey, readonly string[]>> = {
+    past: ['ed'],
+    past_participle: ['ed'],
+    present_participle: ['ing'],
+    comparative: ['er'],
+    superlative: ['est'],
+  };
+  for (const suffix of suffixes[key] ?? []) {
+    if (doubles) out.push(`${w}${last}${suffix}`);
+    // -c 加 k（picnic → picnicked、panic → panicking）。
+    if (last === 'c' && (suffix === 'ed' || suffix === 'ing')) out.push(`${w}k${suffix}`);
+    // 單音節的 -y 形容詞常保留 y（shy → shyer、shyest）。
+    if (/[^aeiou]y$/.test(w) && (suffix === 'er' || suffix === 'est')) out.push(`${w}${suffix}`);
+  }
+  // -ch 唸 /k/ 時只加 s（stomach → stomachs、monarch → monarchs）。
+  if ((key === 'plural' || key === 'third_person') && w.endsWith('ch')) out.push(`${w}s`);
+  return out;
+}
+
+/**
+ * 這個變化形是不是不規則變化（講義只印不規則變化，docs/design/vocab-handout.md §2.1）：
+ * 規則產生不出來的才算（go → went、child → children）。規則不看條目的詞類（資料有這個形式，就照這個形式的規則判斷：
+ * picnic 的 picnicked），也接受重複字尾子音、-c 加 k、-ch 加 s 這幾種規則拼法（extraRegularSpellings）。
+ * 本身就是複數形的名詞（clothes、jeans、scissors），複數和字頭相同，不算不規則；sheep、cattle 這種單複數同形的照算。
+ * 有空白或連字號的字（T-shirt、look after）用最後一段套規則（T-shirts 是規則變化）。
+ */
+export function isIrregularForm(entry: Pick<VocabEntry, 'word' | 'pos'>, key: FormKey, form: string): boolean {
+  const word = normalizeWord(entry.word);
+  const target = normalizeWord(form);
+  if (key === 'plural' && target === word && word.endsWith('s')) return false;
+  const m = /^(.*?)([a-z]+)$/.exec(word);
+  if (!m) return true;
+  const [, prefix = '', last = ''] = m;
+  const regular = [...(regularInflections(last, ['n.', 'v.', 'adj.'])[key] ?? []), ...extraRegularSpellings(last, key)];
+  return !regular.some((r) => `${prefix}${r}` === target);
+}
+
 /** 形式 → 種類的對照（鍵是 normalizeWord 後的字）。 */
 export type FormMap = ReadonlyMap<string, MatchedFormKey>;
 
@@ -132,6 +176,13 @@ export interface WordMatch {
 
 /** 英文字（含 o’clock、T-shirt 這種內部有撇號或連字號的字）。 */
 const TOKEN_RE = /[\p{L}\p{M}]+(?:['’][\p{L}\p{M}]+)*(?:-[\p{L}\p{M}]+)*/gu;
+
+/** 句子裡的每一個英文字（規則同 findWordInSentence；講義的句意填空用來算句長、檢查洩漏答案的字）。 */
+export function sentenceTokens(sentence: string): { start: number; end: number; text: string }[] {
+  const out: { start: number; end: number; text: string }[] = [];
+  for (const m of sentence.matchAll(TOKEN_RE)) if (m.index !== undefined) out.push({ start: m.index, end: m.index + m[0].length, text: m[0] });
+  return out;
+}
 
 /** 找出句子裡屬於這個條目的所有字。 */
 export function findWordInSentence(sentence: string, forms: FormMap): WordMatch[] {

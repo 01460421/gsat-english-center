@@ -198,6 +198,8 @@ const inListSynonymIds = memoByEntry((entry) => {
 });
 
 const normalizedWord = memoByEntry((entry) => normalizeWord(entry.word));
+const normalizedVariants = memoByEntry((entry) => entry.variants.map(normalizeWord));
+const normalizedSynonymWords = memoByEntry((entry) => entry.synonyms.map((s) => normalizeWord(s.word)));
 
 /**
  * 語意相近程度（約 0–0.8）。沒有詞向量可用，所以用兩個訊號：
@@ -247,9 +249,9 @@ export function pickDistractors(target: VocabEntry, pool: QuizPool, answerText: 
     c.id !== target.id &&
     !targetSyn.has(c.id) &&
     !excludedWords.has(normalizedWord(c)) &&
-    !c.variants.some((v) => excludedWords.has(normalizeWord(v))) &&
+    !normalizedVariants(c).some((v) => excludedWords.has(v)) &&
     // 同義關係在 WordNet 裡不一定雙向都有記錄，兩邊都查。
-    !c.synonyms.some((s) => (s.in_list && s.entry_id === target.id) || normalizeWord(s.word) === targetWord) &&
+    !c.synonyms.some((s, i) => (s.in_list && s.entry_id === target.id) || normalizedSynonymWords(c)[i] === targetWord) &&
     !sharesSense(targetSenses, sensesOf(c));
 
   // 由近到遠的級別：同級 → 差 1 級（低的先）→ 差 2 級…
@@ -258,11 +260,12 @@ export function pickDistractors(target: VocabEntry, pool: QuizPool, answerText: 
   const usedTexts = new Set([optionKey(answerText)]);
   for (const level of levels) {
     if (chosen.length >= opts.count) break;
-    const bucket = (pool.buckets.get(`${level}|${pos}`) ?? []).filter(usable);
+    const raw = pool.buckets.get(`${level}|${pos}`) ?? [];
     let ordered: VocabEntry[];
     if (opts.strategy === 'similar') {
       // 加一點亂數：只看分數的話，同一個字每次都會配到同樣三個干擾選項。
-      ordered = bucket
+      ordered = raw
+        .filter(usable)
         .map((c) => ({
           c,
           score:
@@ -273,10 +276,13 @@ export function pickDistractors(target: VocabEntry, pool: QuizPool, answerText: 
         .sort((a, b) => b.score - a.score)
         .map((x) => x.c);
     } else {
-      ordered = shuffle(bucket, opts.rng);
+      // 隨機：先洗牌，再依序檢查能不能用，湊滿就停。不先把整級幾百個字都檢查一遍：講義的測驗卷一份要出 100 題英選中，
+      // 每題都檢查整級，在手機上「重新出題」會卡住半秒。
+      ordered = shuffle(raw, opts.rng);
     }
     for (const c of ordered) {
       if (chosen.length >= opts.count) break;
+      if (opts.strategy === 'random' && !usable(c)) continue;
       const text = opts.display(c);
       if (!text) continue;
       const key = optionKey(text);

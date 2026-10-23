@@ -5,9 +5,11 @@
  * 捲到接近底部時自動再補一批（IntersectionObserver），旁邊也有「顯示更多」按鈕給鍵盤使用者與不支援的瀏覽器。
  * 每 CHUNK_SIZE 列一段加 content-visibility: auto，畫面外的段不排版，手機上捲動幾千列仍然順（見 WordChunk）。
  */
-import { ChevronDown, Search, SlidersHorizontal, X } from 'lucide-react';
+import { ChevronDown, FileText, Search, SlidersHorizontal, X } from 'lucide-react';
 import { memo, useDeferredValue, useEffect, useEffectEvent, useId, useMemo, useRef, useState } from 'react';
+import { Link } from 'react-router';
 import { VOCAB_LEVELS, type VocabIndexEntry } from '../../../data/vocab';
+import { pdfDownloadVisible } from '../../pdf/index';
 import {
   CEFR_FILTER_OPTIONS,
   DEFAULT_FILTERS,
@@ -19,6 +21,7 @@ import {
 } from '../lib/search';
 import { formatCount, hasHan, posText } from '../lib/text';
 import { fetchIndex, peekIndex } from '../lib/vocabData';
+import { handoutLink } from '../navigation';
 import { EmptyState, ErrorBlock, LevelBadge, LoadingBlock, WordLink } from '../ui/common';
 import { LevelPicker } from '../ui/LevelPicker';
 import { btnSecondary, btnText, cardCls, fieldCls, labelCls } from '../ui/styles';
@@ -173,6 +176,9 @@ export function LibraryView({ active }: { active: boolean }) {
   }, [active, hasMore, limit]);
 
   const update = (patch: Partial<LibraryFilters>) => setFilters((f) => ({ ...f, ...patch }));
+  // 做成講義（docs/design/vocab-handout.md §5.1）：把目前的搜尋與篩選帶進講義頁。
+  const [pdfVisible] = useState(pdfDownloadVisible);
+  const handout = handoutLink('library', { kind: 'filters', filters: deferred });
 
   // 手機上篩選區（級別＋四個下拉選單）佔掉整個畫面，打開單字庫看不到任何一個字；收成一個按鈕，
   // 按鈕上寫目前的級別與另外啟用的篩選數，桌機（sm 以上）照常全部展開。
@@ -251,11 +257,19 @@ export function LibraryView({ active }: { active: boolean }) {
 
       {result && (
         <>
-          <p role="status" className="text-sm text-muted">
-            {result.mode === 'lemma'
-              ? `找不到以「${deferred.query.trim()}」開頭的字，以下是可能的原形（共 ${formatCount(total)} 筆）`
-              : `共 ${formatCount(total)} 筆`}
-          </p>
+          <div className="flex flex-wrap items-center justify-between gap-x-3">
+            <p role="status" className="text-sm text-muted">
+              {result.mode === 'lemma'
+                ? `找不到以「${deferred.query.trim()}」開頭的字，以下是可能的原形（共 ${formatCount(total)} 筆）`
+                : `共 ${formatCount(total)} 筆`}
+            </p>
+            {pdfVisible && total > 0 && (
+              <Link to={handout.to} state={handout.state} className={btnText}>
+                <FileText aria-hidden="true" className="size-4" />
+                做成講義
+              </Link>
+            )}
+          </div>
           {result.otherLevelCount > 0 && (
             <p className="flex flex-wrap items-center gap-x-2 text-sm">
               <span>未勾選的級別還有 {formatCount(result.otherLevelCount)} 筆符合。</span>

@@ -101,7 +101,7 @@ const CREDITS: Credit[] = [
   },
   {
     name: <ExternalLink href="https://github.com/bpampuch/pdfmake">pdfmake</ExternalLink>,
-    usage: '在瀏覽器裡產生考試格式的 PDF（歷屆試題與模擬考的「下載 PDF」）。',
+    usage: '在瀏覽器裡產生考試格式的 PDF（歷屆試題與模擬考的「下載 PDF」）與單字講義。',
     license: 'MIT License，Copyright (c) 2014-2015 bpampuch, 2016-2026 liborm85。',
   },
   {

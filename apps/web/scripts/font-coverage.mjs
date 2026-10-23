@@ -20,6 +20,12 @@
  * 自組卷 PDF 的粗體字串（layout/strings.ts 的 SITE_PAPER_BOLD）與藍圖的大題標題不在粗體子集裡是**錯誤**（§7.6）。
  * `node apps/web/scripts/font-coverage.mjs --print-bank-chars` 印出題庫會印進 PDF 的所有字元（JSON），給 subset_fonts.py 收進子集。
  *
+ * 單字講義 PDF（docs/design/vocab-handout.md §7.2）另外用 vocabPrintableCoverage() 檢查單字資料會印的字串：
+ *   - 「條目」（字頭、其他寫法、音標、會印的釋義行、衍生字、變化形、同詞族、詞彙表內的同義與反義詞）缺字是**錯誤**（建置失敗，同歷屆試題）；
+ *   - 「例句」（英文、中文、兩個作者名）缺字只是**警告**：列出 Tatoeba 編號，講義不採用那一句（features/vocab/handout/printable.ts）。
+ *   - 講義的固定文字（layout/vocab/strings.ts）缺字是錯誤；粗體字串（VOCAB_PDF_BOLD）不在粗體子集裡也是錯誤。
+ * `--print-vocab-chars` 印出單字資料會印的所有字元（JSON），給 subset_fonts.py 收進子集。
+ *
  * 只用 Node 內建模組（zlib 解 gzip、自己讀 TrueType 的 cmap 表），Vercel 建置不需要額外套件。
  */
 import { createHash } from 'node:crypto';
@@ -166,6 +172,14 @@ export function stripComments(source) {
  * 路徑相對於 src/features/pdf/；subset_fonts.py 的 PDF_DYNAMIC_FILES 要一起改。
  */
 export const PDF_DYNAMIC_FILES = [
+  // 單字講義（docs/design/vocab-handout.md §7.2）：出處常數與變化形名稱、詞性短標籤、標題與範圍名稱、單字庫篩選的選項名稱、
+  // 答案頁的形式名稱與條目缺字的替代說明。
+  '../../data/vocab.ts',
+  '../vocab/lib/text.ts',
+  '../vocab/lib/search.ts',
+  '../vocab/handout/labels.ts',
+  '../vocab/handout/cloze.ts',
+  '../vocab/handout/assemble.ts',
   '../mock/papers.ts',
   '../mock/bank/blueprint.ts',
   '../mock/bank/pdfText.ts',
@@ -487,6 +501,174 @@ export function bankPrintableCoverage(groups, options = {}) {
 }
 
 // ---------------------------------------------------------------------------
+// 單字講義（docs/design/vocab-handout.md §7）
+// ---------------------------------------------------------------------------
+
+/** 講義 PDF 的固定文字檔（相對於 src/features/pdf/）：中文缺字是錯誤；粗體只看 VOCAB_PDF_BOLD（其他字不用粗體印）。 */
+export const VOCAB_PDF_TEXT_FILES = ['layout/vocab/strings.ts'];
+
+/**
+ * 講義 PDF 用粗體印的字串：layout/vocab/strings.ts 的 VOCAB_PDF_BOLD（只讀那個常數裡的字串常值）。粗體子集沒有其中的字是錯誤。
+ * @param {string} [stringsSource]
+ */
+export function vocabPdfBoldText(stringsSource) {
+  const source = stringsSource ?? readIfExists(path.join(PDF_SRC_DIR, 'layout', 'vocab', 'strings.ts'));
+  const block = /export const VOCAB_PDF_BOLD = \{([\s\S]*?)\} as const;/.exec(stripComments(source))?.[1] ?? '';
+  return stringLiterals(block);
+}
+
+/**
+ * @typedef {{ entry: string[], examples: { id: number, strings: string[] }[] }} VocabPrintable
+ */
+
+/**
+ * 一筆單字條目（public/data/vocab/L*.json 的一筆）會印在講義上的字串，分兩類（§7.2）：
+ *   條目：字頭、其他寫法、音標、會印的釋義行（不印專業領域的行）、衍生字（variant_info 的寫法、音標、釋義）、變化形、
+ *         同詞族的字、詞彙表內的同義與反義詞；
+ *   例句：英文、中文、英文與中文的作者名（依例句的 Tatoeba 編號分開，缺字時講義不採用那一句）。
+ * 不印 en_def、CEFR、Cambridge 連結、詞彙表外的同義詞。
+ * @param {unknown} raw
+ * @returns {VocabPrintable}
+ */
+export function vocabPrintableStrings(raw) {
+  const e = isObj(raw) ? raw : {};
+  /** @type {string[]} */
+  const entry = [];
+  pushStrings(entry, e.word, e.variants, e.ipa);
+  for (const z of list(e.zh)) if (isObj(z) && !z.domain) pushStrings(entry, z.text);
+  for (const v of list(e.variant_info)) if (isObj(v)) pushStrings(entry, v.form, v.ipa, v.zh);
+  if (isObj(e.forms)) pushStrings(entry, Object.values(e.forms));
+  for (const f of list(e.family)) if (isObj(f)) pushStrings(entry, f.word);
+  for (const r of [...list(e.synonyms), ...list(e.antonyms)]) if (isObj(r) && r.in_list === true) pushStrings(entry, r.word);
+  /** @type {{ id: number, strings: string[] }[]} */
+  const examples = [];
+  for (const x of list(e.examples)) {
+    if (!isObj(x)) continue;
+    /** @type {string[]} */
+    const strings = [];
+    pushStrings(strings, x.en, x.zh, x.author, x.zh_author);
+    examples.push({ id: typeof x.tatoeba_id === 'number' ? x.tatoeba_id : 0, strings });
+  }
+  return { entry, examples };
+}
+
+/** 講義正規化時會刪掉或換成空白的字（handout/printable.ts 的 printableText）：不算缺字。 */
+const VOCAB_NORMALIZED = new Set([0x200b, 0x200c, 0x200d, 0x2060, 0xfeff, 0x2009, 0x202f]);
+
+/**
+ * 單字資料會印在講義上的字串有沒有字形：條目缺字是錯誤，例句缺字是警告（§7.2）。
+ * @param {readonly { entries: unknown[] }[]} levelFiles  public/data/vocab/L1–L6.json（或 build-data 產生的同樣內容）
+ * @param {{ fontsDir?: string }} [options]
+ * @returns {{ errors: string[], warnings: string[], stats: { entries: number, examples: number, badExamples: number[] } }}
+ */
+export function vocabPrintableCoverage(levelFiles, options = {}) {
+  const { metrics, cmaps } = loadFonts(options.fontsDir);
+  const regular = cmaps['NotoSerifTC-Regular'];
+  const tinos = cmaps['Tinos-Regular'];
+  const emoji = cmaps['NotoEmoji-Regular'];
+  if (!regular || !tinos || !emoji) throw new Error('metrics.json 缺少 NotoSerifTC-Regular／Tinos-Regular／NotoEmoji-Regular');
+  /** @param {number} cp */
+  const fontFor = (cp) => (inRanges(cp, metrics.latinRanges) ? tinos : inRanges(cp, metrics.emojiRanges) ? emoji : regular);
+  /** @param {readonly string[]} strings @returns {number[]} */
+  const missingIn = (strings) => {
+    /** @type {Set<number>} */
+    const out = new Set();
+    for (const s of strings) {
+      for (const ch of s) {
+        const cp = /** @type {number} */ (ch.codePointAt(0));
+        if (cp < 0x20 || cp === 0x7f || VOCAB_NORMALIZED.has(cp)) continue;
+        if (!fontFor(cp).has(cp)) out.add(cp);
+      }
+    }
+    return [...out];
+  };
+  /** @type {Map<number, Set<string>>} */
+  const entryMissing = new Map();
+  /** @type {Map<number, Set<number>>} */
+  const exampleMissing = new Map();
+  let entries = 0;
+  let examples = 0;
+  /** @type {Set<number>} */
+  const bad = new Set();
+  for (const file of levelFiles) {
+    for (const raw of file.entries) {
+      entries += 1;
+      const id = isObj(raw) && typeof raw.id === 'string' ? raw.id : '?';
+      const printable = vocabPrintableStrings(raw);
+      for (const cp of missingIn(printable.entry)) (entryMissing.get(cp) ?? entryMissing.set(cp, new Set()).get(cp))?.add(id);
+      for (const ex of printable.examples) {
+        examples += 1;
+        const gone = missingIn(ex.strings);
+        if (gone.length > 0) bad.add(ex.id);
+        for (const cp of gone) (exampleMissing.get(cp) ?? exampleMissing.set(cp, new Set()).get(cp))?.add(ex.id);
+      }
+    }
+  }
+  /** @type {string[]} */
+  const errors = [];
+  /** @type {string[]} */
+  const warnings = [];
+  if (entryMissing.size > 0) {
+    const where = [...entryMissing].map(([cp, ids]) => `  ${show(new Set([cp]))}：${[...ids].slice(0, 5).join('、')}${ids.size > 5 ? ' 等' : ''}`);
+    errors.push(`單字條目有 ${entryMissing.size} 個字元不在 PDF 字型子集裡（講義會印出方框）：\n${where.join('\n')}`);
+  }
+  if (exampleMissing.size > 0) {
+    warnings.push(`單字例句有 ${bad.size} 句含 PDF 字型沒有的字（講義不採用這些句子）：${show(new Set(exampleMissing.keys()))}；Tatoeba #${[...bad].sort((a, b) => a - b).join('、#')}`);
+  }
+  // 講義的固定文字與粗體字串。
+  const bold = cmaps['NotoSerifTC-Bold'];
+  const textMissing = new Set();
+  for (const ch of VOCAB_PDF_TEXT_FILES.map((rel) => stripComments(readIfExists(path.join(PDF_SRC_DIR, rel)))).join('\n')) {
+    const cp = /** @type {number} */ (ch.codePointAt(0));
+    if (cp < 0x2e80 || inRanges(cp, metrics.emojiRanges)) continue;
+    if (!regular.has(cp)) textMissing.add(cp);
+  }
+  if (textMissing.size > 0) errors.push(`講義 PDF 固定文字（${VOCAB_PDF_TEXT_FILES.join('、')}）有 ${textMissing.size} 個字不在中文子集裡：${show(textMissing)}`);
+  const boldMissing = new Set();
+  for (const ch of vocabPdfBoldText()) {
+    const cp = /** @type {number} */ (ch.codePointAt(0));
+    if (cp < 0x2e80 || inRanges(cp, metrics.emojiRanges) || /\s/.test(ch)) continue;
+    if (!bold?.has(cp)) boldMissing.add(cp);
+  }
+  if (boldMissing.size > 0) errors.push(`講義 PDF 的粗體字串（layout/vocab/strings.ts 的 VOCAB_PDF_BOLD）有 ${boldMissing.size} 個字不在粗體子集裡：${show(boldMissing)}`);
+  return { errors, warnings, stats: { entries, examples, badExamples: [...bad].sort((a, b) => a - b) } };
+}
+
+/**
+ * 單字資料會印在講義上的所有字元（同 vocabPrintableCoverage 的範圍）。subset_fonts.py 呼叫 `--print-vocab-chars` 收進子集：
+ * 中文收進 Noto Serif TC，國際音標與其他 Tinos 有字形的字收進 Tinos。
+ * @param {string} [dataDir]
+ * @returns {{ entries: string, examples: string, count: number }}
+ */
+export function vocabPrintableChars(dataDir = path.join(WEB_DIR, 'public', 'data', 'vocab')) {
+  /** @type {Set<string>} */
+  const entries = new Set();
+  /** @type {Set<string>} */
+  const examples = new Set();
+  let count = 0;
+  for (const file of readVocabLevels(dataDir)) {
+    for (const raw of file.entries) {
+      count += 1;
+      const p = vocabPrintableStrings(raw);
+      // 講義正規化時會刪掉或換成空白的字（零寬空白、細空白）不必收進子集。
+      const keep = (/** @type {string} */ ch) => !VOCAB_NORMALIZED.has(/** @type {number} */ (ch.codePointAt(0)));
+      for (const s of p.entry) for (const ch of s) if (keep(ch)) entries.add(ch);
+      for (const ex of p.examples) for (const s of ex.strings) for (const ch of s) if (keep(ch)) examples.add(ch);
+    }
+  }
+  return { entries: [...entries].sort().join(''), examples: [...examples].sort().join(''), count };
+}
+
+/** public/data/vocab/L1–L6.json。 @param {string} dir @returns {{ entries: unknown[] }[]} */
+export function readVocabLevels(dir = path.join(WEB_DIR, 'public', 'data', 'vocab')) {
+  if (!existsSync(dir)) return [];
+  return readdirSync(dir)
+    .filter((f) => /^L[1-6]\.json$/.test(f))
+    .sort()
+    .map((f) => JSON.parse(readFileSync(path.join(dir, f), 'utf8')));
+}
+
+// ---------------------------------------------------------------------------
 // 直接執行：檢查 public/data/exams/（build:data 的輸出）
 // ---------------------------------------------------------------------------
 /**
@@ -514,7 +696,14 @@ export function bankPrintableChars(dataDir = path.join(WEB_DIR, 'public', 'data'
   return { booklet: join(sets.booklet), explanations: join(sets.explanations), sources: join(sets.sources), groups: practice.length + prompts.length };
 }
 
-if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url) && process.argv.includes('--print-bank-chars')) {
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url) && process.argv.includes('--print-vocab-chars')) {
+  const chars = vocabPrintableChars();
+  if (chars.count === 0) {
+    console.error('[check-fonts] 找不到 public/data/vocab/L*.json，請先執行 npm run build:data -w @gsat/web');
+    process.exit(1);
+  }
+  process.stdout.write(`${JSON.stringify(chars)}\n`);
+} else if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url) && process.argv.includes('--print-bank-chars')) {
   const chars = bankPrintableChars();
   if (chars.groups === 0) {
     console.error('[check-fonts] 找不到 public/data/bank/groups/，請先執行 npm run build:data -w @gsat/web');
@@ -553,5 +742,17 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
     }
     const { stats } = bank;
     console.log(`[check-fonts] 題庫 ${stats.groups} 組：題本缺 ${stats.booklet} 字、解析缺 ${stats.explanations} 字、資料來源缺 ${stats.sources} 字`);
+  }
+  // 單字講義（vocab-handout §7.2）：條目缺字是錯誤，例句缺字只警告（講義不採用那一句）。
+  const levels = readVocabLevels();
+  if (levels.length > 0) {
+    const vocab = vocabPrintableCoverage(levels);
+    for (const w of vocab.warnings) console.warn(`[check-fonts] 注意：${w}`);
+    if (vocab.errors.length > 0) {
+      for (const e of vocab.errors) console.error(`[check-fonts] 錯誤：${e}`);
+      console.error('[check-fonts] 修法：照 apps/web/src/features/pdf/fonts/README.md 重跑 subset_fonts.py。');
+      process.exit(1);
+    }
+    console.log(`[check-fonts] 單字 ${vocab.stats.entries.toLocaleString('en')} 筆、例句 ${vocab.stats.examples.toLocaleString('en')} 句：條目沒有缺字，例句缺字 ${vocab.stats.badExamples.length} 句（不採用）`);
   }
 }

@@ -14,24 +14,22 @@
  * onDownloaded：存檔（交給瀏覽器下載）或分享成功時各呼叫一次；失敗、取消不呼叫（自組卷用它記「下載過」、確認快照）。
  */
 import { Download, ExternalLink, Share2 } from 'lucide-react';
-import { useEffect, useId, useRef, useState } from 'react';
+import { useId, useState } from 'react';
 import type { Exam } from '../../data/exams';
 import {
-  PdfError,
   pdfDownloadVisible,
   pdfFileName,
   renderExamPdf,
-  saveBlob,
   sitePdfOptions,
   type ExamPdfOptions,
   type MockPdfMeta,
   type PdfDownloadInfo,
-  type PdfErrorKind,
-  type PdfProgress,
   type SitePdfVersion,
 } from './index';
+import { canShareFile, usePdfDownload, type PdfErrorTextMap } from './usePdfDownload';
 
 export type { SitePdfVersion } from './index';
+export { isInAppBrowser } from './usePdfDownload';
 
 export interface ExamPdfDownloadProps {
   exam: Exam;
@@ -55,52 +53,13 @@ const SITE_VERSIONS: readonly { value: SitePdfVersion; label: string; hint: stri
   { value: 'full', label: '題本＋答案＋解析', hint: '自己練習、對答案用' },
 ];
 
-const PHASE_TEXT: Record<PdfProgress['phase'], string> = {
-  engine: '載入 PDF 產生器…',
-  fonts: '下載字型…',
-  layout: '排版中…',
-  done: '完成',
-};
-
-const ERROR_TEXT: Record<Exclude<PdfErrorKind, 'aborted'>, string> = {
+const ERROR_TEXT: PdfErrorTextMap = {
   unsupported: '這個瀏覽器無法產生 PDF。請更新到最新版的 Safari、Chrome、Edge 或 Firefox 後再試。',
   network: '字型或 PDF 產生器下載失敗，請確認網路連線後再試一次；如果還是不行，請重新整理頁面。',
   render: '產生 PDF 時發生錯誤，請再試一次；如果一直失敗，請告訴我們是哪一份考卷。',
 };
 
-type Status =
-  | { kind: 'idle'; cancelled?: boolean }
-  | { kind: 'busy'; progress: PdfProgress }
-  | { kind: 'done'; fileName: string; file: File; url: string; info: Omit<PdfDownloadInfo, 'via'> }
-  | { kind: 'error'; message: string };
-
-/** 這個頁面已經成功產生過一次（引擎與字型在記憶體與 HTTP 快取裡），就不再提示「第一次要下載 2 MB」。 */
-let warmed = false;
-
-function progressText(p: PdfProgress): string {
-  const ratio = p.phase === 'fonts' && p.ratio !== undefined ? `（${Math.round(p.ratio * 100)}%）` : '';
-  return `${PHASE_TEXT[p.phase]}${ratio}`;
-}
-
-/** iPhone／iPad（iPadOS 的 Safari 自稱 Macintosh，用觸控點數分辨）。 */
-function isIOS(): boolean {
-  if (typeof navigator === 'undefined') return false;
-  const ua = navigator.userAgent;
-  return /iPad|iPhone|iPod/.test(ua) || (ua.includes('Macintosh') && navigator.maxTouchPoints > 1);
-}
-
-/** App 內建的瀏覽器（LINE、Instagram、Facebook、Messenger、微信）：常常不能下載檔案。 */
-export function isInAppBrowser(ua: string): boolean {
-  return /\bLine\/|FBAN|FBAV|FB_IAB|FBIOS|Instagram|MicroMessenger|KAKAOTALK/i.test(ua);
-}
-
-function canShareFile(file: File): boolean {
-  try {
-    return typeof navigator !== 'undefined' && typeof navigator.canShare === 'function' && navigator.canShare({ files: [file] });
-  } catch {
-    return false;
-  }
-}
+type DownloadInfo = Omit<PdfDownloadInfo, 'via'>;
 
 export function ExamPdfDownload({ exam, mockMeta, defaultIncludeAnswerKey = false, defaultSiteVersion, onDownloaded, className = '' }: ExamPdfDownloadProps) {
   const id = useId();
@@ -110,103 +69,28 @@ export function ExamPdfDownload({ exam, mockMeta, defaultIncludeAnswerKey = fals
   const site = mockMeta?.sitePaper;
   const [siteVersion, setSiteVersion] = useState<SitePdfVersion>(defaultSiteVersion ?? (defaultIncludeAnswerKey ? 'full' : 'student'));
   const [duplex, setDuplex] = useState(false);
-  // 回呼放在 ref：頁面每次重繪傳進新的函式，不影響進行中的產生。
-  const onDownloadedRef = useRef(onDownloaded);
-  useEffect(() => {
-    onDownloadedRef.current = onDownloaded;
-  });
-  const [status, setStatus] = useState<Status>({ kind: 'idle' });
-  const [inApp] = useState(() => typeof navigator !== 'undefined' && isInAppBrowser(navigator.userAgent));
-  const [ios] = useState(isIOS);
-  const abortRef = useRef<AbortController | null>(null);
-  const urlRef = useRef<string | null>(null);
-  // 同一個元件換了考卷（不經過卸載的頁面切換）：上一份的結果不能留著，免得「在新分頁開啟」打開別份考卷。
-  const [examId, setExamId] = useState(exam.id);
-  if (examId !== exam.id) {
-    setExamId(exam.id);
-    setStatus({ kind: 'idle' });
-  }
-
-  const releaseUrl = () => {
-    if (urlRef.current) URL.revokeObjectURL(urlRef.current);
-    urlRef.current = null;
-  };
-
-  useEffect(
-    () => () => {
-      abortRef.current?.abort();
-      releaseUrl();
-    },
-    [],
-  );
+  // 同一個元件換了考卷（不經過卸載的頁面切換）：上一份的結果不能留著（resetKey）。
+  const download = usePdfDownload<DownloadInfo>({ errorText: ERROR_TEXT, onDownloaded, resetKey: exam.id });
+  const { status, inApp, ios } = download;
 
   if (!enabled) return null;
 
-  const start = async () => {
-    abortRef.current?.abort();
-    releaseUrl();
-    const controller = new AbortController();
-    abortRef.current = controller;
-    setStatus({ kind: 'busy', progress: { phase: 'engine' } });
-    const options: ExamPdfOptions = site
-      ? { ...sitePdfOptions(siteVersion, duplex), ...(mockMeta ? { mockMeta } : {}) }
-      : { includeAnswerSheet, includeAnswerKey, ...(mockMeta ? { mockMeta } : {}) };
-    try {
-      const blob = await renderExamPdf(exam, {
-        ...options,
-        signal: controller.signal,
-        onProgress: (progress) => {
-          if (!controller.signal.aborted) setStatus({ kind: 'busy', progress });
-        },
-      });
-      if (controller.signal.aborted) return;
+  const start = () =>
+    download.start(async ({ signal, onProgress }) => {
+      const options: ExamPdfOptions = site
+        ? { ...sitePdfOptions(siteVersion, duplex), ...(mockMeta ? { mockMeta } : {}) }
+        : { includeAnswerSheet, includeAnswerKey, ...(mockMeta ? { mockMeta } : {}) };
+      const blob = await renderExamPdf(exam, { ...options, signal, onProgress });
       const fileName = pdfFileName(exam, options);
-      saveBlob(blob, fileName);
-      warmed = true;
-      const url = URL.createObjectURL(blob);
-      urlRef.current = url;
-      const info = { fileName, includeBooklet: options.includeBooklet ?? true, includeAnswerKey: options.includeAnswerKey };
-      setStatus({ kind: 'done', fileName, file: new File([blob], fileName, { type: 'application/pdf' }), url, info });
-      onDownloadedRef.current?.({ ...info, via: 'save' });
-    } catch (err) {
-      if (abortRef.current !== controller) return;
-      if (err instanceof PdfError && err.kind === 'aborted') {
-        setStatus({ kind: 'idle', cancelled: true });
-        return;
-      }
-      const kind = err instanceof PdfError ? err.kind : 'render';
-      setStatus({ kind: 'error', message: kind === 'aborted' ? ERROR_TEXT.render : ERROR_TEXT[kind] });
-    } finally {
-      if (abortRef.current === controller) abortRef.current = null;
-    }
-  };
+      return { blob, fileName, info: { fileName, includeBooklet: options.includeBooklet ?? true, includeAnswerKey: options.includeAnswerKey } };
+    });
 
-  const cancel = () => {
-    abortRef.current?.abort();
-  };
+  const cancel = download.cancel;
+  const share = download.share;
 
-  const share = async (file: File, info: Omit<PdfDownloadInfo, 'via'>) => {
-    try {
-      await navigator.share({ files: [file], title: file.name });
-    } catch {
-      // 使用者關掉分享面板，或系統不讓分享：不必提示（檔案已經下載過一次）。
-      return;
-    }
-    onDownloadedRef.current?.({ ...info, via: 'share' });
-  };
-
-  const busy = status.kind === 'busy';
+  const busy = download.busy;
   const hintId = `${id}-hint`;
-  const statusText =
-    status.kind === 'busy'
-      ? progressText(status.progress)
-      : status.kind === 'done'
-        ? `已下載：${status.fileName}`
-        : status.kind === 'error'
-          ? status.message
-          : status.kind === 'idle' && status.cancelled
-            ? '已取消。'
-            : '';
+  const statusText = download.statusText;
 
   return (
     <section aria-labelledby={`${id}-title`} aria-busy={busy} className={`rounded-2xl border border-line bg-surface p-4 ${className}`}>
@@ -217,7 +101,7 @@ export function ExamPdfDownload({ exam, mockMeta, defaultIncludeAnswerKey = fals
         {site
           ? 'A4 題本格式，可以列印後計時作答。本站自組試卷，題目由 AI 撰寫；圖表印成資料表，作文的圖以文字描述代替。'
           : 'A4 題本格式，可以列印後計時作答。本站依大考中心公開試題重新排版，非官方文件；圖片以文字描述代替。'}
-        {!warmed && '第一次需要下載約 2 MB 的字型與產生器。'}
+        {download.firstTime && '第一次需要下載約 2 MB 的字型與產生器。'}
       </p>
       {inApp && (
         <p className="mt-2 rounded-xl bg-badge-bg px-3 py-2 text-sm text-badge-fg">
@@ -261,7 +145,7 @@ export function ExamPdfDownload({ exam, mockMeta, defaultIncludeAnswerKey = fals
       <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-2">
         <button
           type="button"
-          onClick={start}
+          onClick={() => void start()}
           disabled={busy}
           aria-describedby={hintId}
           className="inline-flex min-h-11 items-center gap-2 rounded-full bg-primary px-5 text-sm font-semibold text-on-primary disabled:opacity-60"
@@ -275,7 +159,7 @@ export function ExamPdfDownload({ exam, mockMeta, defaultIncludeAnswerKey = fals
           </button>
         )}
         {status.kind === 'error' && (
-          <button type="button" onClick={start} className="inline-flex min-h-11 items-center rounded-full border border-line px-4 text-sm font-medium hover:border-primary">
+          <button type="button" onClick={() => void start()} className="inline-flex min-h-11 items-center rounded-full border border-line px-4 text-sm font-medium hover:border-primary">
             再試一次
           </button>
         )}

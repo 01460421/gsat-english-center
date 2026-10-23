@@ -128,24 +128,27 @@
 ```
 apps/web/src/features/pdf/
   types.ts               共用約定（兩位開發者都依賴；改動要同時通知）
-  index.ts               輕量入口：PDF_DOWNLOAD_ENABLED、renderExamPdf（動態載入 engine）、pdfFileName、saveBlob
+  vocabTypes.ts          單字講義的約定（VocabHandoutPdfData；docs/design/vocab-handout.md §6.2）
+  index.ts               輕量入口：PDF_DOWNLOAD_ENABLED、renderExamPdf／renderVocabHandoutPdf（動態載入 engine）、pdfFileName、saveBlob
+  usePdfDownload.ts      「下載 PDF」的狀態機（進度、取消、錯誤、分享），考卷與單字講義共用
   ExamPdfDownload.tsx    「下載 PDF」區塊（勾選附答題卷／答案、進度、錯誤、取消）
   fontRuns.ts            字元 → 字型、文字切段、字寬估計（讀 fonts/metrics.json）
   fonts.ts               字型網址（?url）、下載＋gzip 解壓、pdfmake 字型表
   fonts/                 子集字型、metrics.json、LICENSE-OFL.txt、README.md
   engine/
     render.ts            主執行緒：建立／重用 Worker、傳遞進度、取消（終止 Worker）、無 Worker 時改在主執行緒產生
-    pdf.worker.ts        Worker 入口
-    generate.ts          載入 pdfmake＋字型 → buildExamDocDefinition → Blob
+    pdf.worker.ts        Worker 入口（考卷與單字講義兩種工作，依訊息的 kind 分派）
+    generate.ts          載入 pdfmake＋字型 → buildExamDocDefinition／buildVocabHandoutDocDefinition → Blob
     pdfmakeApi.ts        pdfmake 載入與初始化（字型寫進 virtualfs、禁止 pdfmake 自行連網）
     pdfmake.d.ts         'pdfmake/build/pdfmake.js' 模組宣告
     docTypes.ts          文件定義的型別（本專案用到的子集）
-    protocol.ts          Worker 訊息格式
+    protocol.ts          Worker 訊息格式（kind: 'exam' | 'vocab'）
   layout/
     buildDocDefinition.ts   考卷 → 文件定義（目前是骨架；PDF 開發者依 §5 重寫）
     richInline.ts           [[n]]／<u>／<b> → 行內片段（沿用 features/exams/richText.ts 的解析）
     attribution.ts          出處、非官方聲明、官方 PDF／評分原則網址
     strings.ts              PDF 上所有固定文字（字型檢查會掃描這個檔案）
+    vocab/                  單字講義的版面（講義版、背誦版、句意填空、測驗卷、答案、資料來源；vocab-handout.md §3、§6.4）
 ```
 
 ### 4.2 共用約定（`types.ts`，已完成）

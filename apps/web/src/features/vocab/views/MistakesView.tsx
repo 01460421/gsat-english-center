@@ -2,12 +2,15 @@
  * 錯題本：測驗答錯的字。可以選題型把錯題再練一次（錯最多次的先練，一次最多 10 題），
  * 在這裡練習時答對的字會移出錯題本；也可以手動移除或清空。
  */
-import { Trash2 } from 'lucide-react';
+import { FileText, Trash2 } from 'lucide-react';
 import { useId, useMemo, useState } from 'react';
+import { Link } from 'react-router';
 import type { VocabIndexEntry } from '../../../data/vocab';
+import { pdfDownloadVisible } from '../../pdf/index';
 import { clearMistakes, mistakesByRecency, mistakesForPractice, removeMistake } from '../lib/mistakes';
 import { QUIZ_LENGTH, QUIZ_MODES, quizModeLabel, type QuizMode } from '../lib/quiz';
 import { fetchIndex, peekIndex } from '../lib/vocabData';
+import { handoutLink } from '../navigation';
 import { getMistakeStore, useMistakes } from '../state';
 import { EmptyState, LevelBadge, StorageNotice, WordLink } from '../ui/common';
 import { btnPrimary, btnSecondary, cardCls, fieldCls, iconBtn, labelCls, sectionTitleCls } from '../ui/styles';
@@ -27,6 +30,8 @@ export function MistakesView({ active }: { active: boolean }) {
   const [confirmClear, setConfirmClear] = useState(false);
   const { state, launch, reset } = useQuizLauncher();
   const modeId = useId();
+  const [pdfVisible] = useState(pdfDownloadVisible);
+  const handout = handoutLink('mistakes', { kind: 'mistakes', order: 'recent' });
 
   const practice = (m: QuizMode = mode) => {
     const targets = mistakesForPractice(getMistakeStore().getSnapshot().value).map((i) => i.entry_id);
@@ -94,6 +99,12 @@ export function MistakesView({ active }: { active: boolean }) {
           <button type="button" onClick={() => practice()} disabled={state.phase === 'loading'} className={btnPrimary}>
             開始練習
           </button>
+          {pdfVisible && (
+            <Link to={handout.to} state={handout.state} className={btnSecondary}>
+              <FileText aria-hidden="true" className="size-4" />
+              錯題做成講義
+            </Link>
+          )}
         </div>
         <LaunchStatus state={state} onRetry={() => practice()} />
       </section>

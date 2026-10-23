@@ -24,6 +24,8 @@ WOFF2 會直接出錯，WOFF1 每取一個字就重新解壓整個 glyf 表（�
 什麼時候要重跑：build-data 的字型檢查（scripts/font-coverage.mjs）報告缺字時——通常是新的試題資料用到常用字以外的罕用字，
 或 src/features/pdf/layout/strings.ts 新增了文字；題庫（本站自組模擬考）的題本缺字時，那一組會被排除在組卷池外，
 重跑之後就能再用（docs/design/bank-mock.md §7.6）。題庫會印的字串由 font-coverage.mjs --print-bank-chars 提供（需要 Node）。
+單字講義（docs/design/vocab-handout.md §7.2）會印的單字資料由 font-coverage.mjs --print-vocab-chars 提供：中文收進 Noto Serif TC，
+國際音標與其他 Tinos 有字形的字收進 Tinos；只收目前任何子集都沒有的字，歷屆卷每個字元選到的字型不變。
 """
 from __future__ import annotations
 
@@ -86,6 +88,10 @@ LATIN_WANTED = [
     (0x20, 0x7E), (0xA0, 0x17F),        # ASCII、Latin-1、Latin Extended-A
     (0x2010, 0x2027), (0x2030, 0x203A),  # 連字號、破折號、引號、刪節號、‰、′″
     (0x2044, 0x2044), (0x20AC, 0x20AC), (0x2122, 0x2122), (0x2190, 0x2194), (0x2212, 0x2212),
+    # 單字講義的國際音標（ECDICT 的 IPA，docs/design/vocab-handout.md §7.1）：IPA Extensions、重音符號 ˈ ˌ、長音 ː ˑ、θ。
+    # 歷屆試題與題庫都沒有這些字（原本分給 Noto Serif TC 卻沒有字形），所以改由 Tinos 排不會改變考卷 PDF 的字型分配。
+    # 不收整個 Spacing Modifier Letters：注音的聲調符號 ˊ ˇ ˋ ˙ 在那一區，要留給中文字型。
+    (0x250, 0x2AF), (0x2C8, 0x2C8), (0x2CC, 0x2CC), (0x2D0, 0x2D1), (0x3B8, 0x3B8),
 ]
 # 表情符號：Emoticons 區塊與幾個常見符號（112 學測混合題）。其他表情符號出現時 build-data 的字型檢查會報缺字。
 EMOJI_WANTED = [(0x1F600, 0x1F64F), (0x1F910, 0x1F92F), (0x1F970, 0x1F97A), (0x2764, 0x2764), (0x1F44D, 0x1F44E), (0x1F389, 0x1F389)]
@@ -172,6 +178,24 @@ def collect_bank_chars() -> dict[str, set[str]]:
     return {k: set(data[k]) for k in ('booklet', 'explanations', 'sources')}
 
 
+def vocab_pdf_bold_chars() -> set[str]:
+    """單字講義 PDF 的粗體字串：layout/vocab/strings.ts 的 VOCAB_PDF_BOLD（同 font-coverage.mjs 的 vocabPdfBoldText）。"""
+    path = SRC_DIR / 'features/pdf/layout/vocab/strings.ts'
+    if not path.exists():
+        return set()
+    block = re.search(r'export const VOCAB_PDF_BOLD = \{([\s\S]*?)\} as const;', strip_comments(path.read_text(encoding='utf8')))
+    return string_literal_chars(block.group(1)) if block else set()
+
+
+def collect_vocab_chars() -> set[str]:
+    """單字講義會印的單字資料（條目與例句），由 font-coverage.mjs 依同一套規則從 public/data/vocab 取出。"""
+    out = subprocess.run(['node', str(FONT_COVERAGE), '--print-vocab-chars'], capture_output=True, text=True, encoding='utf8')
+    if out.returncode != 0:
+        sys.exit(f'font-coverage.mjs --print-vocab-chars 失敗：{out.stderr.strip()}')
+    data = json.loads(out.stdout)
+    return set(data['entries']) | set(data['examples'])
+
+
 def collect_source_chars(root: Path) -> set[str]:
     chars: set[str] = set()
     for p in sorted(root.rglob('*')):
@@ -206,7 +230,8 @@ def make_subset(src: Path, name: str, unicodes: set[int], features: list[str]) -
     opts.name_IDs = ['*']          # 保留版權、授權與版本字串
     opts.name_languages = ['*']
     opts.notdef_outline = True
-    font = TTFont(src / f'{name}.ttf')
+    # recalcTimestamp=False：head.modified 沿用原始字型的值，不寫入產生的時間，同樣的輸入每次產生的位元組都相同。
+    font = TTFont(src / f'{name}.ttf', recalcTimestamp=False)
     subsetter = subset.Subsetter(opts)
     subsetter.populate(unicodes=sorted(unicodes))
     subsetter.subset(font)
@@ -232,10 +257,11 @@ def main() -> None:
     args = ap.parse_args()
     ensure_sources(args.src, args.download)
 
-    tinos_cmap = TTFont(args.src / 'Tinos-Regular.ttf').getBestCmap()
+    tinos_cmaps = [TTFont(args.src / f'{name}.ttf').getBestCmap() for name in ('Tinos-Regular', 'Tinos-Bold', 'Tinos-Italic')]
     emoji_cmap = TTFont(args.src / 'NotoEmoji-Regular.ttf').getBestCmap()
     noto_cmap = TTFont(args.src / 'NotoSerifTC-Regular.ttf').getBestCmap()
-    latin = {cp for a, b in LATIN_WANTED for cp in range(a, b + 1) if cp in tinos_cmap}
+    # 三個 Tinos 檔都有字形的才收（fontRuns.ts 假設粗體、斜體和一般粗細涵蓋相同）。
+    latin = {cp for a, b in LATIN_WANTED for cp in range(a, b + 1) if all(cp in cmap for cmap in tinos_cmaps)}
     emoji = {cp for a, b in EMOJI_WANTED for cp in range(a, b + 1) if cp in emoji_cmap}
 
     def cjk_side(chars: set[str]) -> set[int]:
@@ -258,10 +284,22 @@ def main() -> None:
         sys.exit('moe-common-4808.txt 應該剛好有 4,808 個字')
     bold_extra = text_file_chars(SCRIPT_DIR / 'bold-extra.txt')
 
-    regular_cps = cjk_side(exam_chars | bank_chars | ui_chars | shared_chars | moe | set(CJK_PUNCT_EXTRA))
-    bold_cps = cjk_side(title_chars | bold_extra | pdf_ui_chars | site_bold | set(CJK_PUNCT_EXTRA))
+    # 單字講義（vocab-handout §7.2）：非中文、Tinos 有字形、而且目前沒有分給中文字型（或中文字型沒有字形）的字（α β ǎ）收進 Tinos；
+    # 其餘（中文、全形標點）收進 Noto Serif TC。只加目前任何子集都沒有的字，歷屆卷與自組卷每個字元選到的字型不變。
+    vocab_chars = collect_vocab_chars()
+    base_regular = {cp for cp in cjk_side(exam_chars | bank_chars | ui_chars | shared_chars | moe | set(CJK_PUNCT_EXTRA)) if cp in noto_cmap}
+    vocab_latin = {
+        ord(c) for c in vocab_chars
+        if 0x20 <= ord(c) < 0x2E80 and ord(c) not in latin and ord(c) not in emoji and ord(c) not in base_regular
+        and all(ord(c) in cmap for cmap in tinos_cmaps)
+    }
+    latin |= vocab_latin
+    vocab_bold = vocab_pdf_bold_chars()
+
+    regular_cps = cjk_side(exam_chars | bank_chars | ui_chars | shared_chars | moe | vocab_chars | set(CJK_PUNCT_EXTRA))
+    bold_cps = cjk_side(title_chars | bold_extra | pdf_ui_chars | site_bold | vocab_bold | set(CJK_PUNCT_EXTRA))
     # 只對「會印在 PDF 上」的字警告（介面原始碼裡的國際音標等不會進 PDF）。
-    printed = cjk_side(exam_chars | bank_chars | pdf_ui_chars | moe)
+    printed = cjk_side(exam_chars | bank_chars | pdf_ui_chars | moe | vocab_chars)
     missing = sorted(cp for cp in printed if cp not in noto_cmap and not chr(cp).isspace())
     if missing:
         print('警告：Noto Serif TC 沒有這些字（PDF 會顯示成方框）：' + ''.join(chr(cp) for cp in missing))
@@ -269,6 +307,9 @@ def main() -> None:
             gone = sorted(cp for cp in cjk_side(chars) if cp not in noto_cmap and not chr(cp).isspace())
             if gone:
                 print(f'  其中題庫的{ {"booklet": "題本", "explanations": "解析", "sources": "資料來源"}[name] }：' + ''.join(chr(cp) for cp in gone))
+        gone = sorted(cp for cp in cjk_side(vocab_chars) if cp not in noto_cmap and not chr(cp).isspace())
+        if gone:
+            print('  其中單字資料（講義不採用含這些字的例句）：' + ''.join(chr(cp) for cp in gone))
 
     plan = [
         ('NotoSerifTC-Regular', regular_cps, ['kern', 'palt']),

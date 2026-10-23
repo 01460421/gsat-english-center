@@ -7,8 +7,10 @@
  *   - 測驗做到一半去查單字，回來時題目和作答還在；
  *   - 單字庫的篩選條件與已展開的筆數保留，關掉單字卡後回到原本的捲動位置。
  * 鍵盤快捷鍵只在分頁顯示中才啟用（active），藏起來的分頁不會搶按鍵。
+ *
+ * 做成講義（?handout=1，docs/design/vocab-handout.md §5.2）和單字卡一樣蓋過分頁內容，關掉後回到原分頁與原本的捲動位置。
  */
-import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { lazy, Suspense, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { Link } from 'react-router';
 import { PageHeader } from '../../components/ModulePage';
 import { VOCAB_CREDITS } from '../../data/vocab';
@@ -19,8 +21,13 @@ import { MistakesView } from './views/MistakesView';
 import { QuizView } from './views/QuizView';
 import { StudyView } from './views/StudyView';
 import { WordDetailView } from './views/WordDetailView';
+import { LoadingBlock } from './ui/common';
+
+/** 做成講義的頁面（docs/design/vocab-handout.md §5.2）：選項、選句與 PDF 都在這個 lazy chunk 裡，一般的單字頁不必下載。 */
+const HandoutView = lazy(() => import('./views/HandoutView'));
 
 function TabNav({ current, wordOpen }: { current: VocabTab; wordOpen: boolean }) {
+  // wordOpen：單字卡或講義頁蓋過了分頁內容，分頁列就不標示目前頁。
   return (
     <nav aria-label="單字功能" className="mb-5">
       <ul className="grid grid-cols-4 gap-1 rounded-2xl border border-line bg-surface p-1">
@@ -78,7 +85,9 @@ function Credits() {
 }
 
 export function VocabModule() {
-  const { tab, wordId } = useVocabLocation();
+  const { tab, wordId: openWord, handout } = useVocabLocation();
+  // 蓋過分頁內容的畫面：單字卡優先，其次是講義頁。捲動位置的記錄與還原兩者共用。
+  const overlay = openWord ?? (handout ? '#handout' : null);
   // 去過的分頁（保持掛載）。依網址「在繪製時」補進來，不用 effect：第一次切到某分頁就要馬上畫出來。
   const [visited, setVisited] = useState<ReadonlySet<VocabTab>>(() => new Set([tab]));
   if (!visited.has(tab)) setVisited(new Set([...visited, tab]));
@@ -89,25 +98,25 @@ export function VocabModule() {
   const listScroll = useRef(0);
   const restoreTo = useRef(0);
   const lastFocus = useRef<HTMLElement | null>(null);
-  const prevWord = useRef<string | null>(wordId);
+  const prevOverlay = useRef<string | null>(overlay);
   const rootRef = useRef<HTMLDivElement>(null);
 
   useLayoutEffect(() => {
-    const prev = prevWord.current;
-    prevWord.current = wordId;
-    if (prev === wordId) return;
-    if (wordId && !prev) restoreTo.current = listScroll.current;
-    if (wordId) {
+    const prev = prevOverlay.current;
+    prevOverlay.current = overlay;
+    if (prev === overlay) return;
+    if (overlay && !prev) restoreTo.current = listScroll.current;
+    if (overlay) {
       window.scrollTo(0, 0);
     } else {
       window.scrollTo(0, restoreTo.current);
       // 焦點回到打開單字卡的那個連結，鍵盤使用者可以接著往下瀏覽。
       if (lastFocus.current?.isConnected) lastFocus.current.focus({ preventScroll: true });
     }
-  }, [wordId]);
+  }, [overlay]);
 
   useEffect(() => {
-    if (wordId) return;
+    if (overlay) return;
     const onScroll = () => {
       listScroll.current = window.scrollY;
     };
@@ -123,16 +132,21 @@ export function VocabModule() {
       window.removeEventListener('scroll', onScroll);
       root?.removeEventListener('focusin', onFocus);
     };
-  }, [wordId]);
+  }, [overlay]);
 
   return (
     <article>
       <PageHeader page={getPage('/words')} />
-      <TabNav current={tab} wordOpen={wordId !== null} />
-      {wordId && <WordDetailView key="detail" id={wordId} />}
+      <TabNav current={tab} wordOpen={overlay !== null} />
+      {openWord && <WordDetailView key="detail" id={openWord} />}
+      {!openWord && handout && (
+        <Suspense fallback={<LoadingBlock label="正在載入講義設定…" />}>
+          <HandoutView key="handout" />
+        </Suspense>
+      )}
       <div ref={rootRef}>
         {VOCAB_TABS.filter((t) => visited.has(t.id)).map((t) => {
-          const shown = t.id === tab && wordId === null;
+          const shown = t.id === tab && overlay === null;
           return (
             <div key={t.id} hidden={!shown}>
               <TabPanel tab={t.id} active={shown} />
