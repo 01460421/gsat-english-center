@@ -1,0 +1,306 @@
+{
+  "schema": "gsat-bank-facts/v1",
+  "id": "world-plugs-rb07",
+  "title": "Why plugs and sockets differ around the world: voltage, frequency and plug types in eight places, and how separate electric systems grew",
+  "sdgs": [],
+  "created_on": "2026-10-20",
+  "created_by": "ai-agent",
+  "sources": [
+    {
+      "id": "s1",
+      "publisher": "Taitung County Government (Taitung Tourism)",
+      "title": "Electricity (Discover Taitung: travel information)",
+      "url": "https://tour.taitung.gov.tw/en/discover/electricity",
+      "accessed": "2026-10-20",
+      "license": "Taitung County Government website terms (government information)",
+      "use": "fact_only",
+      "note": "只取事實"
+    },
+    {
+      "id": "s2",
+      "publisher": "Statistics Bureau of Japan, Ministry of Internal Affairs and Communications",
+      "title": "25th Meeting of the Wiesbaden Group on Business Registers: Tourist Information",
+      "url": "https://www.stat.go.jp/english/info/meetings/wiesbaden2016/tourist.html",
+      "accessed": "2026-10-20",
+      "license": "Government of Japan Standard Terms of Use",
+      "use": "fact_only",
+      "note": "只取事實（電壓、頻率、插頭型式）"
+    },
+    {
+      "id": "s3",
+      "publisher": "Japan National Tourism Organization",
+      "title": "FAQ: Plug and electricity",
+      "url": "https://faq.japan-travel.jnto.go.jp/en/plan/plug-and-electricity/",
+      "accessed": "2026-10-20",
+      "license": "JNTO website terms of use",
+      "use": "fact_only",
+      "note": "只取事實"
+    },
+    {
+      "id": "s4",
+      "publisher": "U.S. Department of Energy, Office of Electricity",
+      "title": "Electricity 101",
+      "url": "https://www.energy.gov/oe/electricity-101",
+      "accessed": "2026-10-20",
+      "license": "public domain (U.S. federal government work)",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s5",
+      "publisher": "International Trade Administration, U.S. Department of Commerce",
+      "title": "Germany – Business Travel (Country Commercial Guide, last published 2025-08-01)",
+      "url": "https://www.trade.gov/country-commercial-guides/germany-business-travel",
+      "accessed": "2026-10-20",
+      "license": "public domain (U.S. federal government work)",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s6",
+      "publisher": "International Trade Administration, U.S. Department of Commerce",
+      "title": "Switzerland – Business Travel (Country Commercial Guide, last published 2022-08-12)",
+      "url": "https://www.trade.gov/country-commercial-guides/switzerland-business-travel",
+      "accessed": "2026-10-20",
+      "license": "public domain (U.S. federal government work)",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s7",
+      "publisher": "International Trade Administration, U.S. Department of Commerce",
+      "title": "United Kingdom – Business Travel (Country Commercial Guide, last published 2026-02-03)",
+      "url": "https://www.trade.gov/country-commercial-guides/united-kingdom-business-travel",
+      "accessed": "2026-10-20",
+      "license": "public domain (U.S. federal government work)",
+      "use": "fact_only",
+      "note": "用於美國家用電壓 120 V"
+    },
+    {
+      "id": "s8",
+      "publisher": "Green Templeton College, University of Oxford",
+      "title": "Fire Safety (college policy)",
+      "url": "https://www.gtc.ox.ac.uk/about/policies/fire-safety/",
+      "accessed": "2026-10-20",
+      "license": "© University of Oxford (all rights reserved)",
+      "use": "fact_only",
+      "note": "只取事實（英國電壓、頻率、插頭保險絲）"
+    },
+    {
+      "id": "s9",
+      "publisher": "University of the Arts London, Halls Life",
+      "title": "Essential advice on electrical safety",
+      "url": "https://hallslife.arts.ac.uk/story/17505191/essential-advice",
+      "accessed": "2026-10-20",
+      "license": "© University of the Arts London (all rights reserved)",
+      "use": "fact_only",
+      "note": "只取事實"
+    },
+    {
+      "id": "s10",
+      "publisher": "Australian College of Commerce and Information Technology (ACCIT)",
+      "title": "Living in Sydney",
+      "url": "https://accit.nsw.edu.au/living-in-sydney/",
+      "accessed": "2026-10-20",
+      "license": "© ACCIT (all rights reserved)",
+      "use": "fact_only",
+      "note": "只取事實"
+    },
+    {
+      "id": "s11",
+      "publisher": "Gangneung City (Tourism Gangneung)",
+      "title": "Miscellaneous: Essential Information (Electricity)",
+      "url": "https://www.gn.go.kr/entour/sub05_04_08.do",
+      "accessed": "2026-10-20",
+      "license": "Gangneung City website terms (government information)",
+      "use": "fact_only",
+      "note": "只取事實"
+    },
+    {
+      "id": "s12",
+      "publisher": "University of South Dakota, Information Technology Services",
+      "title": "International Outlets Safety (knowledge base article 9716)",
+      "url": "https://td.usd.edu/TDClient/33/Portal/KB/ArticleDet?ID=9716",
+      "accessed": "2026-10-20",
+      "license": "© University of South Dakota (all rights reserved)",
+      "use": "fact_only",
+      "note": "只取事實"
+    },
+    {
+      "id": "s13",
+      "publisher": "Illumin (Viterbi School of Engineering, University of Southern California)",
+      "title": "A Powerful History: The Modern Electrical Outlet",
+      "url": "https://illumin.usc.edu/a-powerful-history-the-modern-electrical-outlet/",
+      "accessed": "2026-10-20",
+      "license": "© University of Southern California (all rights reserved)",
+      "use": "fact_only",
+      "note": "只取事實"
+    },
+    {
+      "id": "s14",
+      "publisher": "Warrington College of Business, University of Florida",
+      "title": "Why do different countries have different electric outlet plugs? (2021-01-04)",
+      "url": "https://warrington.ufl.edu/news/why-do-different-countries-have-different-electric-outlet-plugs/",
+      "accessed": "2026-10-20",
+      "license": "© University of Florida (all rights reserved)",
+      "use": "fact_only",
+      "note": "只取事實"
+    },
+    {
+      "id": "s15",
+      "publisher": "Scientific American",
+      "title": "Japan's two incompatible power grids make disaster recovery harder (Observations blog)",
+      "url": "https://www.scientificamerican.com/blog/observations/japans-two-incompatible-power-grids-make-disaster-recovery-harder/",
+      "accessed": "2026-10-20",
+      "license": "© Scientific American (all rights reserved)",
+      "use": "fact_only",
+      "note": "只取事實"
+    },
+    {
+      "id": "s16",
+      "publisher": "University of Essex, Health and Safety",
+      "title": "Plug adaptors poster (If your plug looks like this…)",
+      "url": "https://www.essex.ac.uk/-/media/documents/directories/health-and-safety/plug-adaptors-poster.pdf",
+      "accessed": "2026-10-20",
+      "license": "© University of Essex (all rights reserved)",
+      "use": "fact_only",
+      "note": "只取事實（轉接頭不會轉換電壓）"
+    }
+  ],
+  "facts": [
+    {
+      "id": "f1",
+      "text": "Taiwan's household power is 110 volts at 60 hertz.",
+      "source_ids": ["s1"],
+      "kind": "number"
+    },
+    {
+      "id": "f2",
+      "text": "Taiwan uses Type A plugs (two flat pins) and Type B plugs (the North American three-pin plug); many buildings also have 220-volt sockets for air conditioners.",
+      "source_ids": ["s1"],
+      "kind": "definition"
+    },
+    {
+      "id": "f3",
+      "text": "Japan's household power is 100 volts everywhere; eastern Japan uses 50 hertz and western Japan, including Nagoya, Kyoto and Osaka, uses 60 hertz.",
+      "source_ids": ["s2", "s3"],
+      "kind": "number"
+    },
+    {
+      "id": "f4",
+      "text": "Japan uses Type A plugs, which have two flat pins, and Japanese sockets usually have no hole for a grounding pin.",
+      "source_ids": ["s2", "s12"],
+      "kind": "definition"
+    },
+    {
+      "id": "f5",
+      "text": "Eastern Japan built its power grid on the German 50-hertz system, while western Japan followed the American 60-hertz system.",
+      "source_ids": ["s15"],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f6",
+      "text": "Homes in the United States get about 120 volts at 60 hertz; many other countries use 220 to 240 volts at 50 hertz.",
+      "source_ids": ["s4", "s7"],
+      "kind": "number"
+    },
+    {
+      "id": "f7",
+      "text": "American plugs with two flat pins fit Japanese sockets; a U.S. three-prong plug with a grounding pin is called Type B.",
+      "source_ids": ["s12", "s1"],
+      "kind": "definition"
+    },
+    {
+      "id": "f8",
+      "text": "South Korea's standard power is 220 volts at 60 hertz, and its sockets are Types C and F, which take plugs with two round pins.",
+      "source_ids": ["s11"],
+      "kind": "number"
+    },
+    {
+      "id": "f9",
+      "text": "Germany's standard power is 230 volts at 50 hertz, and its sockets are Type F (Schuko) and Type C.",
+      "source_ids": ["s5", "s11"],
+      "kind": "number"
+    },
+    {
+      "id": "f10",
+      "text": "Switzerland's standard power is 230 volts at 50 hertz; it uses Type C (two-pin) and Type J (three-pin) sockets.",
+      "source_ids": ["s6"],
+      "kind": "number"
+    },
+    {
+      "id": "f11",
+      "text": "The UK supply is 230 volts at 50 hertz; UK plugs have three pins and must be fitted with a fuse of 13 amps or less.",
+      "source_ids": ["s8", "s9"],
+      "kind": "number"
+    },
+    {
+      "id": "f12",
+      "text": "Australia's mains power is 230 volts at 50 hertz, and it uses Type I plugs with three flat pins.",
+      "source_ids": ["s10"],
+      "kind": "number"
+    },
+    {
+      "id": "f13",
+      "text": "Electrical standards were first set by each country on its own, at a time when there was no international standard.",
+      "source_ids": ["s4", "s13"],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f14",
+      "text": "Early household appliances had to be wired directly into a building's electric system; there was no easy way to plug them in.",
+      "source_ids": ["s13"],
+      "kind": "event"
+    },
+    {
+      "id": "f15",
+      "text": "American inventor Harvey Hubbell designed a separable attachment plug; its patent is dated June 17, 1913. His first plug went into a light socket.",
+      "source_ids": ["s13"],
+      "kind": "person"
+    },
+    {
+      "id": "f16",
+      "text": "In the 1880s, the voltage delivered to American homes was set at 110 volts.",
+      "source_ids": ["s14"],
+      "kind": "date"
+    },
+    {
+      "id": "f17",
+      "text": "European power companies found that supplying power at 220 volts instead of 110 volts was cheaper.",
+      "source_ids": ["s14"],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f18",
+      "text": "In 1899 the Berlin power company BEW raised its voltage from 110 to 220 volts, and this spread across Europe over the following decades.",
+      "source_ids": ["s13"],
+      "kind": "date"
+    },
+    {
+      "id": "f19",
+      "text": "About 15 different types of household plugs are in use around the world; their letter names come from the U.S. Department of Commerce.",
+      "source_ids": ["s14"],
+      "kind": "number"
+    },
+    {
+      "id": "f20",
+      "text": "A plug adaptor only lets a plug fit a different socket; it does not change the voltage.",
+      "source_ids": ["s16", "s4"],
+      "kind": "definition"
+    },
+    {
+      "id": "f21",
+      "text": "Many laptops and phone chargers are dual-voltage, usually marked 100–240 V, so they need only a plug adaptor abroad.",
+      "source_ids": ["s10"],
+      "kind": "definition"
+    },
+    {
+      "id": "f22",
+      "text": "Engineers developed the grounding pin in the 1920s to make plugs safer; it became the U.S. home standard only in 1971.",
+      "source_ids": ["s14"],
+      "kind": "date"
+    }
+  ],
+  "datasets": [],
+  "notes": "旅遊表格（8 個國家或地區的電壓、頻率、插頭型式）依 s1–s12 各國政府觀光／商務頁面與大學給國際學生的說明整理；英國的插頭型式字母（G）在可取得的來源中沒有逐字出現，表格改寫成「三個插腳、插頭內有保險絲」。美國的 Type A 由 s12（美國兩腳插頭可直接插日本插座）與 s2（日本是 Type A）推得。各地電壓為標稱值（英國、澳洲標稱 230 V，實際常接近 240 V）。"
+}

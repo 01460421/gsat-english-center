@@ -955,8 +955,12 @@ def apply_topic_plan(lot, entry, topics, plan_file='data/bank/topic-plan.json'):
         fq = dict(lot['form_quota'])
         for k in PLAN_FORMS[section]:
             fq[k] = forms.get(k, 0)
-        fq['basis'] = (f'{plan_file} 的分配（第 2 批起；連同第一批，每個難度的整體比例照 '
-                       + ('ROADMAP §9.2 長文 4：圖表 2：表格 1：多文本 1' if section == 'reading' else '第一批的雙文本 1：多則短段落 1') + '）')
+        if entry.get('forms_basis_zh'):
+            # 主題總表該批另寫了分配依據（例如 2026-10-20 的擴充批次照自組模擬考的需求分配，不照第一批的比例）
+            fq['basis'] = f'{plan_file} 的分配（{entry["forms_basis_zh"]}）'
+        else:
+            fq['basis'] = (f'{plan_file} 的分配（第 2 批起；連同第一批，每個難度的整體比例照 '
+                           + ('ROADMAP §9.2 長文 4：圖表 2：表格 1：多文本 1' if section == 'reading' else '第一批的雙文本 1：多則短段落 1') + '）')
         lot['form_quota'] = {k: fq[k] for k in PLAN_FORMS[section]} | {k: v for k, v in fq.items() if k not in PLAN_FORMS[section]}
         sq = dict(lot['sdg_quota'])
         sq['min_groups_with_focus_sdg'] = max(1, sq.get('min_groups_with_focus_sdg') or 0)

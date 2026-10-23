@@ -1,0 +1,178 @@
+{
+  "schema": "gsat-bank-facts/v1",
+  "id": "matches-rb08",
+  "title": "From white phosphorus to the safety match: phossy jaw, the 1888 London match workers' strike, and the 1906 Bern convention",
+  "sdgs": [3, 8],
+  "created_on": "2026-10-20",
+  "created_by": "ai-agent",
+  "sources": [
+    {
+      "id": "s1",
+      "publisher": "Smithsonian Magazine",
+      "title": "Friction Matches Were a Boon to Those Lighting Fires–Not So Much to Matchmakers",
+      "url": "https://www.smithsonianmag.com/smart-news/friction-matches-were-boon-those-lighting-firesnot-so-much-matchmakers-180967318/",
+      "accessed": "2026-10-20",
+      "license": "© Smithsonian Institution (all rights reserved)",
+      "use": "fact_only",
+      "note": "只取事實"
+    },
+    {
+      "id": "s2",
+      "publisher": "The National Archives (UK)",
+      "title": "1888 matchgirls strike",
+      "url": "https://www.nationalarchives.gov.uk/explore-the-collection/stories/1888-matchgirls-strike/",
+      "accessed": "2026-10-20",
+      "license": "Open Government Licence v3.0",
+      "use": "fact_only",
+      "note": "只取事實"
+    },
+    {
+      "id": "s3",
+      "publisher": "BMJ (via PubMed Central, U.S. National Library of Medicine)",
+      "title": "Waclawski E. Phossy jaw (BMJ, 2006)",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC1661724/",
+      "accessed": "2026-10-20",
+      "license": "© BMJ (free to read via PMC)",
+      "use": "fact_only",
+      "note": "只取事實"
+    },
+    {
+      "id": "s4",
+      "publisher": "International Labour Organization",
+      "title": "International Labor Conference, First Annual Meeting (1919): conclusions on the use of white phosphorus and text of the 1906 Bern convention",
+      "url": "https://webapps.ilo.org/public/libdoc/ilo/P/09616/09616(1919-1).pdf",
+      "accessed": "2026-10-20",
+      "license": "© International Labour Organization",
+      "use": "fact_only",
+      "note": "只取事實"
+    },
+    {
+      "id": "s5",
+      "publisher": "Northwestern University Libraries",
+      "title": "A Spark of Curiosity: Finding an anti-strike coating for match heads",
+      "url": "https://sites.northwestern.edu/northwesternlibrary/2018/02/20/match/",
+      "accessed": "2026-10-20",
+      "license": "© Northwestern University",
+      "use": "fact_only",
+      "note": "只取事實"
+    }
+  ],
+  "facts": [
+    {
+      "id": "f1",
+      "text": "English pharmacist John Walker made the first friction match by accident in 1826, when a stick coated with a chemical paste caught fire as he scraped it.",
+      "source_ids": ["s1"],
+      "kind": "event"
+    },
+    {
+      "id": "f2",
+      "text": "Walker began selling his friction lights in April 1827 and never patented them.",
+      "source_ids": ["s1"],
+      "kind": "date"
+    },
+    {
+      "id": "f3",
+      "text": "Later experiments produced matches containing white phosphorus, and match-making spread to hundreds of factories in England.",
+      "source_ids": ["s1"],
+      "kind": "event"
+    },
+    {
+      "id": "f4",
+      "text": "Strike-anywhere matches carry phosphorus in the match head itself.",
+      "source_ids": ["s5"],
+      "kind": "definition"
+    },
+    {
+      "id": "f5",
+      "text": "Most match factory workers were women and children, and they often worked 12 to 16 hours a day.",
+      "source_ids": ["s1"],
+      "kind": "number"
+    },
+    {
+      "id": "f6",
+      "text": "Breathing white phosphorus fumes could cause phossy jaw: the jawbone died, the teeth decayed, and some workers lost part of the jaw.",
+      "source_ids": ["s1", "s2", "s3"],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f7",
+      "text": "About 11 percent of workers exposed to phosphorus fumes developed phossy jaw, on average about five years after they were first exposed.",
+      "source_ids": ["s1", "s3"],
+      "kind": "number"
+    },
+    {
+      "id": "f8",
+      "text": "The first case of phossy jaw was described in 1845; about one in five cases ended in death, often from infection.",
+      "source_ids": ["s3"],
+      "kind": "number"
+    },
+    {
+      "id": "f9",
+      "text": "At the Bryant & May match factory in Bow, London, workers as young as 14 were employed, and foremen fined workers for things such as dirty feet, an untidy bench, or talking.",
+      "source_ids": ["s2"],
+      "kind": "other"
+    },
+    {
+      "id": "f10",
+      "text": "In 1888, after a worker was sacked, 1,400 women at Bryant & May walked out on strike, and a few days later the whole factory had stopped.",
+      "source_ids": ["s2"],
+      "kind": "event"
+    },
+    {
+      "id": "f11",
+      "text": "The strike ended when the workers won their immediate demands: the sacked worker was taken back and the company stopped cutting their pay.",
+      "source_ids": ["s2"],
+      "kind": "event"
+    },
+    {
+      "id": "f12",
+      "text": "After the strike the workers formed a union, the Union of Women Match Workers, which later became the Matchmakers' Union.",
+      "source_ids": ["s2"],
+      "kind": "event"
+    },
+    {
+      "id": "f13",
+      "text": "The year after the match strike, London gas workers and dock workers also went on strike; together these strikes became known as New Unionism.",
+      "source_ids": ["s2"],
+      "kind": "event"
+    },
+    {
+      "id": "f14",
+      "text": "In 1901 Bryant & May announced it would stop using white phosphorus, and a government ban in Britain followed a few years later.",
+      "source_ids": ["s2"],
+      "kind": "date"
+    },
+    {
+      "id": "f15",
+      "text": "A convention agreed at Bern in 1906 bound the countries that signed it to ban making, importing, and selling matches that contain white (yellow) phosphorus.",
+      "source_ids": ["s4", "s3"],
+      "kind": "event"
+    },
+    {
+      "id": "f16",
+      "text": "In 1919 the first International Labour Conference recommended that all member states join the 1906 white phosphorus convention.",
+      "source_ids": ["s4"],
+      "kind": "event"
+    },
+    {
+      "id": "f17",
+      "text": "The move away from white phosphorus in matches brought phossy jaw under control; it took about 60 years from the first case to an international convention and laws.",
+      "source_ids": ["s3"],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f18",
+      "text": "Safety matches were invented in the mid-1800s and soon became the norm.",
+      "source_ids": ["s5"],
+      "kind": "date"
+    },
+    {
+      "id": "f19",
+      "text": "In a safety match, the phosphorus (red phosphorus) is in the striking strip on the box, not in the match head, so the match cannot light without touching the strip.",
+      "source_ids": ["s5"],
+      "kind": "definition"
+    }
+  ],
+  "datasets": [],
+  "notes": "安全火柴的發明者與年份各來源說法不一（Pasch 1844、Lundström 1855 等），而且白名單內沒有找到可靠的出處，事實單只寫「19 世紀中期」，選文不寫發明者。"
+}

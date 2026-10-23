@@ -586,24 +586,31 @@ program 1 筆、blind_solver 2 筆通過。
 
 ### 7.1 中譯英、作文（`tools/make_writing_lots.py`）
 
-站主要求**中譯英每個難度 100 句（50 組×2 句）、作文每個難度 10 題**（ROADMAP §9.2 原訂 10 組、4 題，依站主要求放大）。
-`tools/make_writing_lots.py` 依主題總表 `topic-plan-writing.json` 產生 18 個檔案（`make_lots.py` 另有工作線在改，兩支寫的檔名不重疊）：
+站主要求**中譯英每個難度 100 句（50 組×2 句）、作文每個難度 15 題**（ROADMAP §9.2 原訂 10 組、4 題，依站主要求放大；作文原本 10 題，
+2026-10-20 站主要求擴充題庫，讓自組模擬考每個難度至少可連續組 15 份全新卷，每份 1 題作文，所以加開 02 批）。
+`tools/make_writing_lots.py` 依主題總表 `topic-plan-writing.json` 產生 21 個一般批次（另有 §7.2 的補足批次；`make_lots.py` 另有工作線在改，兩支寫的檔名不重疊）：
 
 | 題型 | 批次 | 每批 | 每個難度合計 |
 |---|---|---|---|
 | 中譯英 | `translation-{basic,advanced,top}-{01..05}`（15 批） | 10 組 × 2 句 | 50 組＝100 句 |
-| 作文 | `composition-{basic,advanced,top}-01`（3 批） | 10 題（每題穩健版＋頂標版範文） | 10 題 |
+| 作文 | `composition-{basic,advanced,top}-01`（3 批） | 10 題（每題穩健版＋頂標版範文） | 15 題 |
+| | `composition-{basic,advanced,top}-02`（3 批，2026-10-20 擴充） | 5 題 | |
+
+- **作文的批次規格**：`count` 取該批的主題數；`site_target` 記「開這一批時」的站主要求（`make_writing_lots.COMPOSITION_TARGETS`：01 批
+  每個難度 10 題、1 批，02 批起 15 題、2 批），所以已存在的 01 批規格逐位元組不變。主題總表 `lots[]` 可以寫 `created_on`（該批規格的建立日；
+  02 批是 2026-10-20），沒寫時照舊用總表的 `created_on`。中譯英的輸出完全不變。
 
 - **主題總表** `topic-plan-writing.json`（`gsat-bank-topic-plan-writing/v1`）：`lots`（批次與組數）、`topics`（每組一個主題：`id`、`lot`、`slot`、
   `domain_zh`、`topic_zh`、`angle_en`、`keywords`；作文另有 `prompt_type`、`essay_type`、`figures_hint_zh`、`moves`）。
-  `--check-topics` 檢查：每批的 slot 齊全、每個難度的組數（中譯英 50、作文 10）、主題不重複、關鍵字不和 `topic-plan.json`（其他題型的主題與
+  `--check-topics` 檢查：每批的 slot 齊全、每個難度的組數（中譯英 50、作文 15：`make_writing_lots.SITE_GROUPS`）、主題不重複、關鍵字不和 `topic-plan.json`（其他題型的主題與
   `used_concepts`）、`data/bank/v1` 已用過的主題、歷屆中譯英與作文的主題撞題（近期學測 111–115 與參考試卷是 error，其他歷屆題 warning）。
 - **中譯英批次規格**的欄位（共同欄位同 §7）：`topics`、`pattern_plan`（每組兩句各自的標的句型：code、grammar_id、label_zh、frame；
   穩定基礎每句 1 個、進階 2 個、超越頂標 2 個且每組至少 1 個指定句型；`restructuring_hint` 標出適合改寫句構的組）、`pattern_coverage`
   （這一批要涵蓋的句型 id 與句構次數：依歷屆 119 句的句構次數等比例分配，同一難度各批輪流用不同句型；整體涵蓋 grammar-patterns.json 裡
   歷屆出現 ≥2 次的全部中譯英句型）、`avoid`（近期學測與參考試卷的中文題目與主題；D8 規則）、`item_rules`（SPEC §3.5）、`targets`／`design`
   （出題規格書該難度的參數、誘錯規則、配方、常見錯誤）、`format`（格式重點與範例檔）、`verification`（盲譯 2 位、命中率 0.8、不做干擾稽核）。
-- **作文批次規格**的欄位：`topics`、`prompt_type_quota`（basic 圖片描述 10；advanced 圖片議題 10；top 圖表 4、多圖比較 4、社會現象 2）、
+- **作文批次規格**的欄位：`topics`、`prompt_type_quota`（01 批：basic 圖片描述 10；advanced 圖片議題 10；top 圖表 4、多圖比較 4、社會現象 2。
+  02 批：basic 圖片描述 5；advanced 圖片議題 5；top 圖表 2、多圖比較 2、社會現象 1）、
   `prompt_rules`（提示寫法、圖與 SVG、字數與步驟數、課綱）、`scaffold`（各難度的鷹架規則）、`model_texts`（穩健版 14–17、頂標版 18–20 與
   出題規格書的範文參數）、`rubric_template`（四項分數帶的本站文字，出題者照抄、另寫每題的 focus_zh）、`avoid`（近期作文主題與第二段任務）、
   `item_rules`、`targets`、`verification`（盲評 2 位、兩位差 ≤2）。
@@ -707,14 +714,15 @@ SPEC §5.2 步驟 2：**只有事實、沒有原句**（數字、日期、因果
 
 ### 9.1 批次表
 
-| 題型 | 每組小題 | 第一批（每個難度，不含 rejected） | 第 2 批起（每個難度） | 每個難度合計 |
-|---|---|---|---|---|
-| 詞彙題 | 10 | 5 | 02：5 組 | 10 組＝100 題 |
-| 綜合測驗 | 5 | 8 | 02、03：各 6 組 | 20 組＝100 題 |
-| 文意選填 | 10 | 5 | 02：5 組 | 10 組＝100 題 |
-| 篇章結構 | 4 | 5 | 02–05：各 5 組 | 25 組＝100 題 |
-| 閱讀 | 4 | 8（長文 4、圖表 2、表格 1、多文本 1） | 02、03：各 6 組；04：5 組（合計長文 9、圖表 4、表格 2、多文本 2） | 25 組＝100 題；形式 13：6：3：3 ≈ 4：2：1：1 |
-| 混合題 | 4 | 4（雙文本 2、多則短段落 2）；advanced 目前 3 | 02、03：各 6 組；04：5 組；05：4 組（advanced 5 組）（雙文本與多則短段落約各半） | 25 組＝100 題 |
+| 題型 | 每組小題 | 第一批（每個難度，不含 rejected） | 第 2 批起（每個難度） | 2026-10-20 擴充（每個難度） | 每個難度合計 |
+|---|---|---|---|---|---|
+| 詞彙題 | 10 | 5 | 02：5 組 | 03：5 組 | 15 組＝150 題 |
+| 綜合測驗 | 5 | 8 | 02、03：各 6 組 | 04、05：各 5 組 | 30 組＝150 題 |
+| 文意選填 | 10 | 5 | 02：5 組 | 03：5 組 | 15 組＝150 題 |
+| 篇章結構 | 4 | 5 | 02–05：各 5 組 | — | 25 組＝100 題 |
+| 閱讀 | 4 | 8（長文 4、圖表 2、表格 1、多文本 1） | 02、03：各 6 組；04：5 組（合計長文 9、圖表 4、表格 2、多文本 2） | basic 06–09、advanced／top 05–08：各 5 組（合計長文 11、圖表 4、表格 2、多文本 3） | 45 組＝180 題（basic 另有 05 批 2 組）；圖表或表格 15 篇 |
+| 混合題 | 4 | 4（雙文本 2、多則短段落 2）；advanced 目前 3 | 02、03：各 6 組；04：5 組；05：4 組（advanced 5 組）（雙文本與多則短段落約各半） | — | 25 組＝100 題 |
+| 作文（§7.1） | 1 | 01：10 題 | — | 02：5 題 | 15 題 |
 
 每批最多 6 組（一位出題者負擔得了）。既有組數只算 verified＋draft；第一批還沒產生的（閱讀 advanced／top、混合題 top）先以批次規格的組數計
 （`topic-plan.json` 的 `counting_rule_zh`、`targets`）。混合題 advanced 第一批有 1 組 rejected（ai.mx.981e5b），所以 mixed-advanced-05 開 5 組；
@@ -725,11 +733,31 @@ SPEC §5.2 步驟 2：**只有事實、沒有原句**（數字、日期、因果
 算式寫在 `targets.{section}.tiers.{tier}.supplement_zh`；`make_lots.py` 不用改（照一般第 2 批起的流程：`--seq 05 --sections reading`、
 `--seq 06 --sections mixed` 加 `--topics`、`--avoid-existing-bank`）。
 
+**擴充批次（2026-10-20，站主要求擴充題庫：自組模擬考每個難度至少可連續組 15 份全新卷）**：自組模擬考每份卷每個難度要詞彙 1、綜合測驗 2、
+文意選填 1、篇章結構 1、閱讀 3（恰好 1 篇圖表或表格、多文本最多 1 篇）、混合題 1、中譯英 1、作文 1 組（docs/design/bank-mock.md §3.2）。
+當天每個 uid 最新版本且 verified 的題組只夠每個難度 8 份：閱讀是瓶頸（圖表或表格 9 篇），詞彙、綜合測驗、文意選填、作文各夠 10 份；
+篇章結構、混合題、中譯英都夠 25 份以上，不加。所以每個難度加開詞彙 1 批、綜合測驗 2 批、文意選填 1 批、閱讀 4 批（每批 5 組；閱讀合計
+長文 11、圖表 4、表格 2、多文本 3，每批至少 1 篇圖表或表格，不再照第一批的 4：2：1：1）與作文 02 批（5 題，§7.1）。全部通過時每個難度剛好
+15 份，**沒有餘裕**：任何一組最終 rejected 就只剩 14 份，那時照上面補足批次的作法另開新批號。這些批次在主題總表 `lots[]` 標
+`"mock_expansion": true`，組數與份數的算式寫在頂層 `mock_expansion` 與 `targets.{section}.tiers.{tier}.mock_expansion`。新主題另外避開
+`apps/web/scripts/lib/bank-mock-themes.mjs` 的概念別名（`topic_zh`、`angle_en`、`keywords` 都不含別名表的寫法），組卷的主題去重才不會和現有
+題組互斥；`reserve_topics` 的 3 個備用主題也在這次用掉（rsv-02、rsv-03 放回原本的 `word_bank-advanced-03`，rsv-04 放進 `word_bank-top-03`）。
+產生方式同一般第 2 批起的流程，每種題型分開跑、不加 `--force`（已存在的批次規格一律略過）：
+
+```bash
+python3 tools/make_lots.py --topics data/bank/topic-plan.json --avoid-existing-bank --seq 03 --sections vocabulary
+python3 tools/make_lots.py --topics data/bank/topic-plan.json --avoid-existing-bank --seq 04,05 --sections cloze
+python3 tools/make_lots.py --topics data/bank/topic-plan.json --avoid-existing-bank --seq 03 --sections word_bank
+python3 tools/make_lots.py --topics data/bank/topic-plan.json --avoid-existing-bank --seq 05-09 --sections reading   # reading-basic-05 已存在，略過
+python3 tools/make_writing_lots.py --sections composition                                                       # composition-*-01 已存在，略過
+```
+
 ### 9.2 主題總表 `topic-plan.json`（`gsat-bank-topic-plan/v1`）
 
 | 欄位 | 內容 |
 |---|---|
-| `lots[]` | 每一批：`lot`、`section`、`tier`、`seq`、`count`；閱讀、混合題另有 `forms`（文本形式分配） |
+| `lots[]` | 每一批：`lot`、`section`、`tier`、`seq`、`count`；閱讀、混合題另有 `forms`（文本形式分配）；選填 `forms_basis_zh`（這一批文本形式的分配依據，寫進批次規格 `form_quota.basis`；沒寫時照舊說明照第一批的比例）與 `mock_expansion`（2026-10-20 擴充批次，§9.1） |
+| `mock_expansion` | 2026-10-20 擴充的依據與算式：每份卷要的組數、當天 verified 組數與閱讀形式、每個難度新增的組數、全部通過時的份數、餘裕說明（§9.1） |
 | `topics[]` | 每組一個主題：`id`（例如 `cz-b02-3`＝綜合測驗‧basic‧02 批第 3 組）、`lot`、`slot`（第幾組）、`category`（08 §6.1 四類；詞彙題不設）、`domain_zh`（領域）、`topic_zh`（繁體中文主題名，題組的 `tags.topic` 逐字照抄）、`angle_en`（英文切入角度）、`keywords`（撞題比對用的英文關鍵字片語）、`sdgs`；閱讀、混合題另有 `form`、`form_hint_zh`；詞彙題沒有選文，改給 `contexts_en`（5 種題幹情境）；需要時有 `note_zh` |
 | `reserve_topics[]` | 備用主題（同樣檢查過不重複、不撞題，還沒分配批次；`former_*` 記原本的位置）。搬進 `topics` 時給新的 `lot`、`slot`、`id` |
 | `used_concepts[]` | 題庫已用的主題概念，人工整理成英文關鍵字（第一批閱讀、混合題的 `tags.topic` 是中文，也整理在這裡） |

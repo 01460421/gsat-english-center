@@ -1,0 +1,146 @@
+{
+  "schema": "gsat-bank-facts/v1",
+  "id": "girls-secondary-rb08",
+  "title": "Girls in secondary school: female gross enrollment ratio 2000–2024 (world and three regions) and Bangladesh's female stipend program",
+  "sdgs": [4, 5],
+  "created_on": "2026-10-20",
+  "created_by": "ai-agent",
+  "sources": [
+    {
+      "id": "s1",
+      "publisher": "World Bank",
+      "title": "World Development Indicators: School enrollment, secondary, female (% gross) (SE.SEC.ENRR.FE)",
+      "url": "https://data.worldbank.org/indicator/SE.SEC.ENRR.FE",
+      "accessed": "2026-10-20",
+      "license": "CC-BY-4.0",
+      "use": "dataset",
+      "note": "數值取自 API https://api.worldbank.org/v2/country/WLD;SSF;SAS;EAS/indicator/SE.SEC.ENRR.FE?format=json（lastupdated 2026-10-08），四捨五入到小數 1 位；原始提供者：UNESCO Institute for Statistics"
+    },
+    {
+      "id": "s2",
+      "publisher": "World Bank (enGender Impact: Gender Impact Evaluation Database)",
+      "title": "Subsidy to Promote Girls' Secondary Education: The Female Stipend Program in Bangladesh (Khandker, Pitt and Fuwa)",
+      "url": "https://documents1.worldbank.org/curated/en/183331468013214760/pdf/814640BRI0Subs00Box379821B00PUBLIC0.pdf",
+      "accessed": "2026-10-20",
+      "license": "World Bank Documents & Reports (CC BY 3.0 IGO)",
+      "use": "fact_only",
+      "note": "只取事實"
+    },
+    {
+      "id": "s3",
+      "publisher": "World Bank Blogs (End Poverty in South Asia)",
+      "title": "Girls' education in Bangladesh: A promising journey",
+      "url": "https://blogs.worldbank.org/en/endpovertyinsouthasia/girls-education-bangladesh-promising-journey",
+      "accessed": "2026-10-20",
+      "license": "World Bank terms of use",
+      "use": "fact_only",
+      "note": "只取事實"
+    }
+  ],
+  "facts": [
+    {
+      "id": "f1",
+      "text": "The gross enrollment ratio compares the number of students enrolled in secondary school, whatever their age, with the number of people of official secondary-school age.",
+      "source_ids": ["s1"],
+      "kind": "definition"
+    },
+    {
+      "id": "f2",
+      "text": "For the world, the female secondary gross enrollment ratio rose from 56.9 in 2000 to 77.1 in 2024.",
+      "source_ids": ["s1"],
+      "kind": "number"
+    },
+    {
+      "id": "f3",
+      "text": "In South Asia, the ratio for girls rose from 40.6 in 2000 to 78.2 in 2024, the largest rise of the regions in the chart (37.6 points).",
+      "source_ids": ["s1"],
+      "kind": "number",
+      "note": "78.2 − 40.6 = 37.6；同期世界 +20.2、撒哈拉以南非洲 +21.8、東亞與太平洋 +31.6"
+    },
+    {
+      "id": "f4",
+      "text": "South Asia's ratio for girls was below the world figure in 2015 (73.2 against 74.4) but above it in 2020 (76.7 against 75.9).",
+      "source_ids": ["s1"],
+      "kind": "number"
+    },
+    {
+      "id": "f5",
+      "text": "In Sub-Saharan Africa, the ratio for girls nearly doubled, from 22.7 in 2000 to 44.5 in 2024, but it stayed the lowest of the regions shown in every year.",
+      "source_ids": ["s1"],
+      "kind": "number",
+      "note": "44.5 ÷ 22.7 ≈ 1.96"
+    },
+    {
+      "id": "f6",
+      "text": "In East Asia and the Pacific, the ratio for girls rose from 60.9 in 2000 to 92.5 in 2024, the highest of the regions shown in every year.",
+      "source_ids": ["s1"],
+      "kind": "number"
+    },
+    {
+      "id": "f7",
+      "text": "Starting in 1994, Bangladesh ran a nationwide program that paid a stipend and school fees for girls in grades 6 to 10 in rural areas.",
+      "source_ids": ["s2", "s3"],
+      "kind": "event"
+    },
+    {
+      "id": "f8",
+      "text": "To keep the stipend, a girl had to attend at least 75% of school days, reach a minimum level in her studies, and stay unmarried.",
+      "source_ids": ["s2"],
+      "kind": "other"
+    },
+    {
+      "id": "f9",
+      "text": "The program aimed to get more girls to enroll in and finish secondary school and to raise the age at which girls marry.",
+      "source_ids": ["s2"],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f10",
+      "text": "A World Bank study found that the stipend program greatly increased girls' secondary schooling but had no clear effect on boys' schooling.",
+      "source_ids": ["s2"],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f11",
+      "text": "Each extra year the program ran in an area raised the school enrollment of girls aged 11 to 18 by 12 percentage points.",
+      "source_ids": ["s2"],
+      "kind": "number"
+    },
+    {
+      "id": "f12",
+      "text": "In Bangladesh, girls' secondary school enrollment rose from 39 percent in 1998 to 67 percent in 2017.",
+      "source_ids": ["s3"],
+      "kind": "number"
+    },
+    {
+      "id": "f13",
+      "text": "The stipend program helped Bangladesh reach equal numbers of girls and boys in secondary school.",
+      "source_ids": ["s3"],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f14",
+      "text": "In 2017, 42 percent of girls in Bangladesh dropped out of secondary school before finishing.",
+      "source_ids": ["s3"],
+      "kind": "number"
+    }
+  ],
+  "datasets": [
+    {
+      "id": "d1",
+      "source_id": "s1",
+      "title": "School enrollment, secondary, female (% gross)",
+      "indicator": "SE.SEC.ENRR.FE",
+      "unit": "% gross",
+      "categories": ["2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024"],
+      "series": [
+        { "name": "World", "values": [56.9, 57.7, 59.2, 60.4, 61.5, 62.7, 63.7, 65.3, 67.0, 68.4, 69.8, 70.7, 71.6, 73.4, 74.4, 74.4, 74.7, 74.4, 75.0, 75.5, 75.9, 76.5, 77.0, 76.9, 77.1] },
+        { "name": "Sub-Saharan Africa", "values": [22.7, 23.8, 24.3, 25.4, 26.7, 27.6, 28.5, 29.1, 31.2, 33.0, 34.9, 36.1, 37.7, 40.3, 39.3, 40.0, 39.8, 40.4, 40.9, 41.8, 42.8, 43.5, 43.8, 44.2, 44.5] },
+        { "name": "South Asia", "values": [40.6, 40.9, 43.2, 46.8, 47.7, 50.2, 51.1, 53.8, 57.0, 57.8, 61.4, 63.5, 66.3, 68.2, 73.1, 73.2, 75.0, 73.7, 75.2, 75.3, 76.7, 78.1, 80.0, 78.6, 78.2] },
+        { "name": "East Asia & Pacific", "values": [60.9, 62.9, 63.8, 65.3, 68.2, 70.5, 73.6, 77.3, 80.1, 84.3, 85.3, 86.7, 87.5, 88.4, 88.1, 88.3, 87.8, 87.9, 88.5, 90.1, 90.8, 91.4, 92.1, 92.7, 92.5] }
+      ],
+      "note": "World Bank 區域彙總：Sub-Saharan Africa＝SSF、South Asia＝SAS、East Asia & Pacific＝EAS（含高所得國家）"
+    }
+  ],
+  "notes": "批次規格建議的 SE.SEC.ENRR.FE 存在，資料到 2024 年，圖表取 2000、2005、2010、2015、2020、2024 六個年份。"
+}

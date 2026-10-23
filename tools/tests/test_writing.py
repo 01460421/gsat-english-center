@@ -451,16 +451,39 @@ class Lots(Case):
         self.assertEqual(errs, [])
         want = {f'translation-{t}-{s:02d}': (10, 2) for t in mw.TIERS for s in range(1, 6)}
         want |= {f'composition-{t}-01': (10, 1) for t in mw.TIERS}
-        self.assertEqual(len(want), 18)
+        want |= {f'composition-{t}-02': (5, 1) for t in mw.TIERS}     # 2026-10-20 擴充（自組模擬考每個難度 15 份）
+        self.assertEqual(len(want), 21)
         for lot_id, (count, per) in want.items():
             lot = load(vb.LOTS_DIR / f'{lot_id}.json')
             self.assertEqual((lot['count'], lot['questions_per_group']), (count, per), lot_id)
             self.assertEqual(len(lot['topics']), count)
             if lot_id.startswith('translation-'):
                 self.assertEqual(len(lot['pattern_plan']), count)
-        # 每個難度：中譯英 100 句、作文 10 題
+        # 每個難度：中譯英 100 句、作文 15 題（01 批 10 題＋02 批 5 題）
+        self.assertEqual(mw.SITE_GROUPS, {'translation': 50, 'composition': 15})
         for t in mw.TIERS:
             self.assertEqual(sum(load(vb.LOTS_DIR / f'translation-{t}-{s:02d}.json')['count'] * 2 for s in range(1, 6)), 100)
+            self.assertEqual(sum(load(vb.LOTS_DIR / f'composition-{t}-{s:02d}.json')['count'] for s in (1, 2)), 15)
+
+    def test_composition_targets_by_seq(self):
+        """作文批次的 count 取主題數；site_target 是開這一批時的站主要求（01 批 10 題、02 批 15 題），已存在的 01 批規格不變。"""
+        plan = load(mw.PLAN)
+        lots = {lot['lot']: lot for lot in mw.build_all(plan, ('composition',), mw.TIERS, plan['created_on'])}
+        entries = {x['lot']: x for x in plan['lots']}
+        quota = {'basic': {'picture_scene': 5}, 'advanced': {'picture_issue': 5},
+                 'top': {'chart': 2, 'picture_issue_abstract': 2, 'social_phenomenon': 1}}
+        for t in mw.TIERS:
+            first, second = lots[f'composition-{t}-01'], lots[f'composition-{t}-02']
+            self.assertEqual((first['count'], first['site_target']['items_per_tier'], first['site_target']['lots_per_tier']), (10, 10, 1))
+            self.assertEqual((second['count'], second['site_target']['items_per_tier'], second['site_target']['lots_per_tier']), (5, 15, 2))
+            self.assertEqual(second['prompt_type_quota'], quota[t])
+            self.assertEqual(first['created_on'], plan['created_on'])                       # lots[] 沒寫 created_on：用總表的
+            self.assertEqual(second['created_on'], entries[f'composition-{t}-02']['created_on'])
+        self.assertEqual(mw.composition_site_target('01')['items_per_tier'], 10)
+        self.assertEqual(mw.composition_site_target('05')['items_per_tier'], 15)
+        # 中譯英不受影響：一般批次照舊每批 10 組（逐位元組比對在 SupplementLots.test_regular_lots_are_unchanged）
+        tr = mw.build_all(plan, ('translation',), mw.TIERS, plan['created_on'])
+        self.assertTrue(all(x['count'] == 10 for x in tr if not mw.is_supplement(entries[x['lot']])))
 
     def test_pattern_plan_follows_tier_rules(self):
         plan = load(mw.PLAN)
