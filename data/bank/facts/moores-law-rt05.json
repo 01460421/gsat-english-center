@@ -1,0 +1,191 @@
+{
+  "schema": "gsat-bank-facts/v1",
+  "id": "moores-law-rt05",
+  "title": "Moore’s law: Gordon Moore’s 1965 prediction and transistors per microprocessor, 1971–2021",
+  "sdgs": [9],
+  "created_on": "2026-10-20",
+  "created_by": "ai-agent",
+  "sources": [
+    {
+      "id": "s1",
+      "publisher": "Our World in Data",
+      "title": "Moore's law: The number of transistors per microprocessor (data: Rupp (2022), Microprocessor Trend Data – processed by Our World in Data)",
+      "url": "https://ourworldindata.org/grapher/transistors-per-microprocessor",
+      "accessed": "2026-10-20",
+      "license": "CC-BY-4.0",
+      "use": "dataset",
+      "note": "以 grapher CSV（transistors-per-microprocessor.csv，指標 576780，lastUpdated 2023-03-09）下載 World 數列；1971–2021 間每十年左右取一個年份（1971、1982、1992、2002、2012、2021），數值照原檔，1971 的 2308.2417 四捨五入到整數"
+    },
+    {
+      "id": "s2",
+      "publisher": "NPR (Associated Press)",
+      "title": "Intel co-founder, philanthropist Gordon Moore dies at 94 (2023-03-25)",
+      "url": "https://www.npr.org/2023/03/25/1166050071/intel-gordon-moore-dies-94",
+      "accessed": "2026-10-20",
+      "license": "NPR terms of use (facts only)",
+      "use": "fact_only",
+      "note": "只取事實"
+    },
+    {
+      "id": "s3",
+      "publisher": "NPR (All Tech Considered)",
+      "title": "At 50 years old, the challenge to keep up with Moore's law (2015-04-20, updated 2023)",
+      "url": "https://www.npr.org/sections/alltechconsidered/2015/04/20/400988928/at-50-years-old-the-challenge-to-keep-up-with-moore-s-law",
+      "accessed": "2026-10-20",
+      "license": "NPR terms of use (facts only)",
+      "use": "fact_only",
+      "note": "只取事實"
+    },
+    {
+      "id": "s4",
+      "publisher": "Nature",
+      "title": "Gordon Moore (1929–2023) (obituary by Christophe Lécuyer)",
+      "url": "https://www.nature.com/articles/d41586-023-01978-y",
+      "accessed": "2026-10-20",
+      "license": "Nature terms of use (facts only)",
+      "use": "fact_only",
+      "note": "只取事實"
+    },
+    {
+      "id": "s5",
+      "publisher": "NPR",
+      "title": "In an era of rising prices, computers have gotten cheaper. (And why that may end) (2025-12-04)",
+      "url": "https://www.npr.org/2025/12/04/nx-s1-5609211/cost-of-living-cheaper-computers",
+      "accessed": "2026-10-20",
+      "license": "NPR terms of use (facts only)",
+      "use": "fact_only",
+      "note": "只取事實"
+    }
+  ],
+  "facts": [
+    {
+      "id": "f1",
+      "text": "In 1965 Gordon Moore, who held a PhD in chemistry, wrote an article for Electronics magazine predicting how quickly the number of components on integrated circuits would grow.",
+      "source_ids": ["s2", "s4"],
+      "kind": "event"
+    },
+    {
+      "id": "f2",
+      "text": "Moore’s 1965 plot showed that the number of components per chip had doubled each year since 1959, and he predicted the trend would continue for ten more years.",
+      "source_ids": ["s4"],
+      "kind": "number"
+    },
+    {
+      "id": "f3",
+      "text": "Moore later recalled that he expected chips to go from about 60 components to about 60,000 over those ten years.",
+      "source_ids": ["s3"],
+      "kind": "number"
+    },
+    {
+      "id": "f4",
+      "text": "Three years after the 1965 article, in 1968, Moore and Robert Noyce founded the company that became Intel.",
+      "source_ids": ["s2", "s4"],
+      "kind": "date"
+    },
+    {
+      "id": "f5",
+      "text": "Moore later revised his prediction: instead of doubling every year, the number of transistors on a chip would double about every two years.",
+      "source_ids": ["s3", "s5"],
+      "kind": "other"
+    },
+    {
+      "id": "f6",
+      "text": "Carver Mead, a computer scientist at Caltech, coined the name Moore’s law in the early 1970s; the name became widely used in the late 1970s.",
+      "source_ids": ["s2", "s4"],
+      "kind": "person"
+    },
+    {
+      "id": "f7",
+      "text": "Moore and his colleagues promoted his plot to encourage investment, and it served as a technology road map that guided the chip industry for about a quarter of a century.",
+      "source_ids": ["s4"],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f8",
+      "text": "An Intel scientist described Moore’s law as a relentless boss, because engineers must keep learning to make transistors smaller to stay on schedule.",
+      "source_ids": ["s3"],
+      "kind": "other"
+    },
+    {
+      "id": "f9",
+      "text": "In 2005 Moore described his law as a lucky guess that had received much more publicity than it deserved.",
+      "source_ids": ["s2"],
+      "kind": "other"
+    },
+    {
+      "id": "f10",
+      "text": "Transistors are the tiny switches that control the flow of electricity in a chip and make digital processing possible.",
+      "source_ids": ["s5"],
+      "kind": "definition"
+    },
+    {
+      "id": "f11",
+      "text": "In the Our World in Data series, the leading microprocessor held about 2,300 transistors in 1971 (2,308 in the data) and 58.2 billion in 2021.",
+      "source_ids": ["s1"],
+      "kind": "number"
+    },
+    {
+      "id": "f12",
+      "text": "Derived from the dataset: 58.2 billion divided by 2,308 is about 25.2 million, so the 2021 count was roughly 25 million times the 1971 count.",
+      "source_ids": ["s1"],
+      "kind": "number"
+    },
+    {
+      "id": "f13",
+      "text": "Derived: doubling every two years for 50 years means 25 doublings, which multiplies a number by about 33.5 million, that is, by more than 33 million.",
+      "source_ids": ["s1", "s5"],
+      "kind": "number"
+    },
+    {
+      "id": "f14",
+      "text": "Derived from the dataset: the count grew about 58.8 times from 1971 to 1982, 22.9 times from 1982 to 1992, 71 times from 1992 to 2002, 11.8 times from 2002 to 2012, and 22.4 times from 2012 to 2021.",
+      "source_ids": ["s1"],
+      "kind": "number"
+    },
+    {
+      "id": "f15",
+      "text": "Derived: doubling every two years for the 9 years from 2012 to 2021 would multiply a number by about 22.6, close to the 22.4 times seen in the data.",
+      "source_ids": ["s1"],
+      "kind": "number"
+    },
+    {
+      "id": "f16",
+      "text": "As transistors shrank, the price per transistor and the price of computing fell sharply, which allowed computers to become smaller and more powerful without costing more.",
+      "source_ids": ["s5"],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f17",
+      "text": "The IBM 1401, a mainframe from the early 1960s, filled a room the size of a classroom and had the equivalent of only 16 kilobytes of memory.",
+      "source_ids": ["s5"],
+      "kind": "other"
+    },
+    {
+      "id": "f18",
+      "text": "Experts say Moore’s law may be reaching its limit: tens of billions of transistors now fit on a chip, and further shrinking saves much less power, so packing in more transistors creates heat.",
+      "source_ids": ["s5"],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f19",
+      "text": "An MIT researcher expects the predictability of Moore’s law to fade in the coming decade, with future gains coming from better software and from chip packaging, the ways chips are connected together.",
+      "source_ids": ["s5"],
+      "kind": "other"
+    }
+  ],
+  "datasets": [
+    {
+      "id": "d1",
+      "source_id": "s1",
+      "title": "Transistors per microprocessor (World), selected years",
+      "indicator": "owid-576780 transistors",
+      "unit": "transistors",
+      "categories": ["1971", "1982", "1992", "2002", "2012", "2021"],
+      "series": [
+        { "name": "Transistors per microprocessor", "values": [2308.2417, 135772.72, 3105900.2, 220673400, 2600000000, 58200000000] }
+      ],
+      "note": "Our World in Data grapher CSV, World series (Rupp 2022), downloaded 2026-10-20; years chosen about every ten years"
+    }
+  ],
+  "notes": "批次提示的資料集（Our World in Data transistors per microprocessor，1971–2021）存在，照用。圖用線性刻度，早期數值在圖上幾乎貼近 0，所以題目的數字比較以資料表為準。倍數（f12–f15）是由資料集算出的衍生數字。"
+}

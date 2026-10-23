@@ -1,0 +1,175 @@
+{
+  "schema": "gsat-bank-facts/v1",
+  "id": "peatlands-rt07",
+  "title": "Peatlands: how waterlogged ground stores carbon, and why drained peat burns (Indonesia 2015)",
+  "sdgs": [15, 13],
+  "created_on": "2026-10-23",
+  "created_by": "ai-agent",
+  "sources": [
+    {
+      "id": "s1",
+      "publisher": "IUCN",
+      "title": "Peatlands and climate change (issues brief)",
+      "url": "https://www.iucn.org/resources/issues-brief/peatlands-and-climate-change",
+      "accessed": "2026-10-23",
+      "license": "IUCN terms of use; facts only",
+      "use": "fact_only",
+      "note": "只取事實"
+    },
+    {
+      "id": "s2",
+      "publisher": "World Bank",
+      "title": "The Cost of Fire: An Economic Analysis of Indonesia's 2015 Fire Crisis (Indonesia Sustainable Landscapes Knowledge Note 1, 2016)",
+      "url": "https://documents1.worldbank.org/curated/en/776101467990969768/pdf/103668-BRI-Cost-of-Fires-Knowledge-Note-PUBLIC-ADD-NEW-SERIES-Indonesia-Sustainable-Landscapes-Knowledge-Note.pdf",
+      "accessed": "2026-10-23",
+      "license": "World Bank terms of use; facts only",
+      "use": "fact_only",
+      "note": "只取事實"
+    },
+    {
+      "id": "s3",
+      "publisher": "FAO",
+      "title": "Towards climate-responsible peatlands management (Mitigation of Climate Change in Agriculture Series 9, 2014)",
+      "url": "https://openknowledge.fao.org/server/api/core/bitstreams/ad1f0170-425e-4d85-9116-d2dc1c921e3b/content",
+      "accessed": "2026-10-23",
+      "license": "FAO terms of use; facts only",
+      "use": "fact_only",
+      "note": "只取事實"
+    },
+    {
+      "id": "s4",
+      "publisher": "PubMed Central (U.S. National Library of Medicine); article in PLOS One",
+      "title": "Swindles et al. 2025, Climate and water-table levels regulate peat accumulation rates across Europe, PLOS One 20(7): e0327422",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12286369/",
+      "accessed": "2026-10-23",
+      "license": "CC-BY-4.0 article; facts only",
+      "use": "fact_only",
+      "note": "只取事實"
+    }
+  ],
+  "facts": [
+    {
+      "id": "f1",
+      "text": "Peatlands cover at least 3 percent of the world's land surface and are found in almost every country.",
+      "source_ids": ["s1"],
+      "kind": "number"
+    },
+    {
+      "id": "f2",
+      "text": "Peat forms where the ground stays waterlogged all year: the water slows the decay of dead plants, so they build up as peat.",
+      "source_ids": ["s1", "s3"],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f3",
+      "text": "In water-saturated peat, lack of oxygen limits decay; such peat is more than 95 percent water.",
+      "source_ids": ["s3"],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f4",
+      "text": "European peat is commonly said to build up by about 0.1 cm (1 millimeter) a year; a study of 28 sites found an average of 0.118 cm a year, ranging from 0.005 to 0.448 cm.",
+      "source_ids": ["s4"],
+      "kind": "number"
+    },
+    {
+      "id": "f5",
+      "text": "Peat soils hold more than 600 gigatonnes of carbon, up to 44 percent of all soil carbon, which is more carbon than all other kinds of vegetation combined.",
+      "source_ids": ["s1"],
+      "kind": "number"
+    },
+    {
+      "id": "f6",
+      "text": "When peat is drained, oxygen enters the soil and the peat breaks down, releasing carbon dioxide; drainage also raises the risk of fire.",
+      "source_ids": ["s3"],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f7",
+      "text": "Drained peat sinks: in the tropics by about 1 meter in the first year, then by 3 to 5 centimeters a year (1 to 2 centimeters a year in temperate regions).",
+      "source_ids": ["s3"],
+      "kind": "number"
+    },
+    {
+      "id": "f8",
+      "text": "Peat fires are very hard to put out: they can smolder for weeks or even months at and below the surface, survive days of rain or a cover of snow, and are finally stopped by a rising water table.",
+      "source_ids": ["s3"],
+      "kind": "other"
+    },
+    {
+      "id": "f9",
+      "text": "During Indonesia's 1997–98 drought, most fires were in peatlands disturbed by logging and drainage, while undisturbed peat swamp forest stayed at low risk of fire.",
+      "source_ids": ["s3"],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f10",
+      "text": "Between June and October 2015, about 2.6 million hectares of land burned in Indonesia, four and a half times the size of Bali.",
+      "source_ids": ["s2"],
+      "kind": "number"
+    },
+    {
+      "id": "f11",
+      "text": "Most of the 2015 fires, more than 100,000 of them, were set by people to clear land for farming, and drought linked to El Niño helped them spread.",
+      "source_ids": ["s2"],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f12",
+      "text": "About 33 percent of the land that burned in Indonesia in 2015 was peatland.",
+      "source_ids": ["s2"],
+      "kind": "number"
+    },
+    {
+      "id": "f13",
+      "text": "Derived: about two-thirds (67 percent) of the land that burned in Indonesia in 2015 was not peatland.",
+      "source_ids": ["s2"],
+      "kind": "number",
+      "note": "由 f12 計算：100 − 33 = 67"
+    },
+    {
+      "id": "f14",
+      "text": "Smoke from the 2015 fires disrupted transport and trade, closed schools, and caused more than 500,000 cases of acute respiratory infection.",
+      "source_ids": ["s2"],
+      "kind": "number"
+    },
+    {
+      "id": "f15",
+      "text": "The 2015 fires cost Indonesia an estimated US$16.1 billion, about 1.9 percent of its GDP that year.",
+      "source_ids": ["s2"],
+      "kind": "number"
+    },
+    {
+      "id": "f16",
+      "text": "Carbon released by forest fires is usually taken back up as the forest grows again, but peat fires burn carbon stored over thousands of years that cannot be replaced.",
+      "source_ids": ["s2"],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f17",
+      "text": "Dry peat catches fire quickly and is difficult to put out.",
+      "source_ids": ["s2"],
+      "kind": "other"
+    },
+    {
+      "id": "f18",
+      "text": "Damaged peatlands cover only 0.3 percent of the world's land but produce almost 5 percent of human-caused carbon dioxide emissions.",
+      "source_ids": ["s1"],
+      "kind": "number"
+    },
+    {
+      "id": "f19",
+      "text": "Drained peatlands release an estimated 1.9 gigatonnes of CO2 equivalent a year, about 5 percent of human-caused greenhouse gas emissions.",
+      "source_ids": ["s1"],
+      "kind": "number"
+    },
+    {
+      "id": "f20",
+      "text": "The 2015 fires in Indonesia's peat swamp forests released nearly 16 million tonnes of CO2 a day.",
+      "source_ids": ["s1"],
+      "kind": "number"
+    }
+  ],
+  "datasets": [],
+  "notes": "主題提示的「比全世界森林存的更多」以 IUCN 的說法「比其他所有植被加起來還多的碳」為準（UNEP 頁面在本環境無法讀取，不引用）。"
+}

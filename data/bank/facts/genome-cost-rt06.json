@@ -1,0 +1,296 @@
+{
+  "schema": "gsat-bank-facts/v1",
+  "id": "genome-cost-rt06",
+  "title": "The Human Genome Project and the cost of sequencing a human genome, 2001–2022",
+  "sdgs": [
+    3
+  ],
+  "created_on": "2026-10-20",
+  "created_by": "ai-agent",
+  "sources": [
+    {
+      "id": "s1",
+      "publisher": "Our World in Data",
+      "title": "Cost of sequencing a full human genome (data: National Human Genome Research Institute, 2022)",
+      "url": "https://ourworldindata.org/grapher/cost-of-sequencing-a-full-human-genome",
+      "accessed": "2026-10-20",
+      "license": "CC-BY-4.0",
+      "use": "dataset",
+      "note": "以 grapher CSV（cost-of-sequencing-a-full-human-genome.csv，指標 816712，lastUpdated 2023-11-28）下載 World 數列 2001–2022 全部年份，數值照原檔；單位是當年美元（current US$），未經通膨調整；原始資料：NHGRI DNA Sequencing Costs"
+    },
+    {
+      "id": "s2",
+      "publisher": "National Human Genome Research Institute (NIH)",
+      "title": "The Cost of Sequencing a Human Genome",
+      "url": "https://www.genome.gov/about-genomics/fact-sheets/Sequencing-Human-Genome-cost",
+      "accessed": "2026-10-20",
+      "license": "U.S. government work; facts only",
+      "use": "fact_only",
+      "note": "只取事實"
+    },
+    {
+      "id": "s3",
+      "publisher": "National Human Genome Research Institute (NIH)",
+      "title": "DNA Sequencing Costs: Data",
+      "url": "https://www.genome.gov/about-genomics/fact-sheets/DNA-Sequencing-Costs-Data",
+      "accessed": "2026-10-20",
+      "license": "U.S. government work; facts only",
+      "use": "fact_only",
+      "note": "只取事實"
+    },
+    {
+      "id": "s4",
+      "publisher": "National Human Genome Research Institute (NIH)",
+      "title": "Human Genome Project Fact Sheet",
+      "url": "https://www.genome.gov/about-genomics/educational-resources/fact-sheets/human-genome-project",
+      "accessed": "2026-10-20",
+      "license": "U.S. government work; facts only",
+      "use": "fact_only",
+      "note": "只取事實"
+    },
+    {
+      "id": "s5",
+      "publisher": "National Human Genome Research Institute (NIH)",
+      "title": "Genomics and Medicine",
+      "url": "https://www.genome.gov/health/Genomics-and-Medicine",
+      "accessed": "2026-10-20",
+      "license": "U.S. government work; facts only",
+      "use": "fact_only",
+      "note": "只取事實"
+    }
+  ],
+  "facts": [
+    {
+      "id": "f1",
+      "text": "The Human Genome Project began in October 1990 and was completed in April 2003, two years ahead of its planned 2005 finish.",
+      "source_ids": [
+        "s4"
+      ],
+      "kind": "date"
+    },
+    {
+      "id": "f2",
+      "text": "The project’s central goal was to produce the first sequence of the human genome, a reference of about 3 billion bases, the chemical letters A, C, G and T.",
+      "source_ids": [
+        "s2",
+        "s4"
+      ],
+      "kind": "definition"
+    },
+    {
+      "id": "f3",
+      "text": "The project took about 13 years instead of the planned 15 and involved researchers at 20 universities and research centers in six countries: the United States, the United Kingdom, France, Germany, Japan and China.",
+      "source_ids": [
+        "s2",
+        "s4"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f4",
+      "text": "The project was originally expected to cost $3 billion, and most agree the final cost was close to that; total US funding of about $2.7 billion also paid for technology development, mapping and work on other organisms besides sequencing the human genome.",
+      "source_ids": [
+        "s2",
+        "s4"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f5",
+      "text": "Producing that first human genome sequence alone is estimated to have cost between $500 million and $1 billion.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f6",
+      "text": "The draft sequence announced in June 2000 covered about 90 percent of the genome; the April 2003 sequence covered about 92 percent and still had fewer than 400 gaps.",
+      "source_ids": [
+        "s4"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f7",
+      "text": "On 31 March 2022, the Telomere-to-Telomere consortium filled the remaining gaps and produced the first truly complete human genome sequence.",
+      "source_ids": [
+        "s4"
+      ],
+      "kind": "event"
+    },
+    {
+      "id": "f8",
+      "text": "The reference sequence came from several anonymous volunteers: about 70 percent from one person and the rest from 19 others.",
+      "source_ids": [
+        "s4"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f9",
+      "text": "NHGRI has tracked the cost of DNA sequencing at the centers it funds; its cost per genome assumes a human-sized genome of 3,000 megabases.",
+      "source_ids": [
+        "s3"
+      ],
+      "kind": "definition"
+    },
+    {
+      "id": "f10",
+      "text": "From 2001 to October 2007 the centers used older Sanger-based machines; from January 2008 they switched to next-generation machines, and costs then began falling much faster than before.",
+      "source_ids": [
+        "s3"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f11",
+      "text": "NHGRI’s cost figures include labor, equipment, chemicals and first-step data processing, but not later analysis such as assembling sequences, finding variants and interpreting results.",
+      "source_ids": [
+        "s3"
+      ],
+      "kind": "definition"
+    },
+    {
+      "id": "f12",
+      "text": "A person’s own genome has about 6 billion bases, because people carry two copies of almost all their DNA, one from each parent.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f13",
+      "text": "Researchers, institutions and companies count sequencing costs in different ways, and the price a company charges may be higher or lower than its actual cost.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f14",
+      "text": "Genomic medicine, the use of a person’s genomic information in their medical care, is already affecting cancer care, drug treatment, rare and undiagnosed diseases, and infectious disease.",
+      "source_ids": [
+        "s5"
+      ],
+      "kind": "definition"
+    },
+    {
+      "id": "f15",
+      "text": "It is often estimated that turning a new research finding into routine medical practice takes 17 years on average.",
+      "source_ids": [
+        "s5"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f16",
+      "text": "In the dataset, the cost per genome fell from about $61.4 million in 2002 to about $525 in 2022, more than 100,000 times lower.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "number",
+      "note": "由 d1 推得：61,448,420 ÷ 524.62 ≈ 117,129"
+    },
+    {
+      "id": "f17",
+      "text": "In the dataset, the 2010 cost (about $29,092) was less than one-thousandth of the 2002 cost (about $61.4 million).",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "number",
+      "note": "由 d1 推得：29,091.73 ÷ 61,448,420 ≈ 0.00047"
+    },
+    {
+      "id": "f18",
+      "text": "In two-year steps from 2002 to 2022, the largest drop in dollars came between 2002 and 2004, about $42.9 million.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "number",
+      "note": "由 d1 推得：61,448,420 − 18,519,312 = 42,929,108"
+    },
+    {
+      "id": "f19",
+      "text": "In two-year steps, the cost fell about 31 times between 2006 and 2008 and about 12 times between 2008 and 2010.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "number",
+      "note": "由 d1 推得：10,474,556 ÷ 342,502.06 ≈ 30.6；342,502.06 ÷ 29,091.73 ≈ 11.8"
+    },
+    {
+      "id": "f20",
+      "text": "In the dataset, the cost rose from 2016 to 2018 and again from 2020 to 2022.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "number",
+      "note": "由 d1：1,175.74 → 1,232.28；511.97 → 524.62"
+    }
+  ],
+  "datasets": [
+    {
+      "id": "d1",
+      "source_id": "s1",
+      "title": "Cost of sequencing a full human genome (World)",
+      "indicator": "cost_per_genome",
+      "unit": "current US$ (not adjusted for inflation)",
+      "categories": [
+        "2001",
+        "2002",
+        "2003",
+        "2004",
+        "2005",
+        "2006",
+        "2007",
+        "2008",
+        "2009",
+        "2010",
+        "2011",
+        "2012",
+        "2013",
+        "2014",
+        "2015",
+        "2016",
+        "2017",
+        "2018",
+        "2019",
+        "2020",
+        "2021",
+        "2022"
+      ],
+      "series": [
+        {
+          "name": "Cost per genome",
+          "values": [
+            95263070,
+            61448420,
+            40157556,
+            18519312,
+            13801124,
+            10474556,
+            7147571.5,
+            342502.06,
+            70333.33,
+            29091.73,
+            7743.44,
+            5901.29,
+            5096.08,
+            4008.11,
+            1245.31,
+            1175.74,
+            1015.38,
+            1232.28,
+            606.32,
+            511.97,
+            454.05,
+            524.62
+          ]
+        }
+      ],
+      "note": "Values as in the Our World in Data CSV (original data: NHGRI). 2008 is the year sequencing centers switched to next-generation machines."
+    }
+  ],
+  "notes": "資料集照 lot 建議的 Our World in Data「Cost of sequencing a full human genome」，2001–2022 全部年份。f16–f20 是由 d1 推得的衍生數字。"
+}

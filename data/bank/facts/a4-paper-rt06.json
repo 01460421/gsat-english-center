@@ -1,0 +1,207 @@
+{
+  "schema": "gsat-bank-facts/v1",
+  "id": "a4-paper-rt06",
+  "title": "ISO 216 A-series paper sizes: the square-root-of-two ratio, A0–A6 dimensions and the history of DIN 476",
+  "created_on": "2026-10-20",
+  "created_by": "ai-agent",
+  "sources": [
+    {
+      "id": "s1",
+      "publisher": "University of Cambridge, Department of Computer Science and Technology (Markus Kuhn)",
+      "title": "A4 paper format / International standard paper sizes",
+      "url": "https://www.cl.cam.ac.uk/~mgk25/iso-paper.html",
+      "accessed": "2026-10-20",
+      "license": "University of Cambridge web page; facts only",
+      "use": "fact_only",
+      "note": "只取事實；尺寸表、歷史年份、重量與影印縮放比例都出自這一頁"
+    },
+    {
+      "id": "s2",
+      "publisher": "ERIC, U.S. Department of Education (Australian Mathematics Teacher 63(1), 2007, Neville de Mestre)",
+      "title": "Paper sizes and mathematics",
+      "url": "https://files.eric.ed.gov/fulltext/EJ769970.pdf",
+      "accessed": "2026-10-20",
+      "license": "ERIC full text; facts only",
+      "use": "fact_only",
+      "note": "只取事實；A0 面積與 A0–A5 尺寸表"
+    }
+  ],
+  "facts": [
+    {
+      "id": "f1",
+      "text": "In the ISO A series, the long side of every sheet is the square root of two, about 1.4142 or 1.414, times its short side.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f2",
+      "text": "If a sheet with this ratio is cut into two equal pieces parallel to its shorter side, each piece has the same ratio as the original sheet.",
+      "source_ids": [
+        "s1",
+        "s2"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f3",
+      "text": "Because of the square-root-of-two ratio, width and height cannot both be round metric lengths, so the system fixes the area instead: A0 has an area of one square meter.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "definition"
+    },
+    {
+      "id": "f4",
+      "text": "A0 measures 841 by 1189 millimeters (1,189 mm), which is 0.999949 square meters, or about one square meter.",
+      "source_ids": [
+        "s2",
+        "s1"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f5",
+      "text": "Each A size is half of the one before it: A1 is half of A0, A2 a quarter, A3 an eighth, A4 one sixteenth, A5 1/32 and A6 1/64 of a square meter.",
+      "source_ids": [
+        "s1",
+        "s2"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f6",
+      "text": "Dimensions in millimeters: A0 841 × 1189, A1 594 × 841, A2 420 × 594, A3 297 × 420, A4 210 × 297, A5 148 × 210, A6 105 × 148.",
+      "source_ids": [
+        "s1",
+        "s2"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f7",
+      "text": "The millimeter sizes in the standard were found by halving the larger size again and again, each time rounding down to a whole millimeter, so two sheets of the next size together are never larger than the sheet they came from.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f8",
+      "text": "Halving 1189 gives 594.5, rounded down to 594 for A1; halving 841 gives 420.5, rounded down to 420 for A2; halving 297 gives 148.5, rounded down to 148 for A5.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "number",
+      "note": "由 s1 的尺寸表與「逐次減半、無條件捨去到整數公釐」的規則推得"
+    },
+    {
+      "id": "f9",
+      "text": "The short sides of A3 (297), A4 (210) and A6 (105) are exactly half of the long side of the next larger size (594, 420 and 210 millimeters).",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "number",
+      "note": "由 s1 的尺寸表推得"
+    },
+    {
+      "id": "f10",
+      "text": "Typical office and laser printer paper weighs 80 g per square meter, so one A4 sheet of it weighs 5 g.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f11",
+      "text": "With 80 g per square meter paper, an A0 sheet weighs about 80 g, A1 40 g, A2 20 g, A3 10 g and A4 5 g.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "number",
+      "note": "由 s1 的 80 g/m² 與各尺寸面積推得"
+    },
+    {
+      "id": "f12",
+      "text": "To copy two facing A4 pages of a journal onto one A4 sheet, a copier is set to 71 percent, the square root of one half, and no paper margin is wasted.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f13",
+      "text": "On 25 October 1786, Georg Christoph Lichtenberg, a physics professor at the University of Göttingen, explained the advantages of the square-root-of-two ratio in a letter and noted that paper of that shape was commonly available.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "event"
+    },
+    {
+      "id": "f14",
+      "text": "On 3 November 1798, a French law on taxing paper defined several formats that match modern ISO sizes exactly, but this French series soon fell out of use and was forgotten.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "event"
+    },
+    {
+      "id": "f15",
+      "text": "More than a hundred years later, Dr. Walter Porstmann independently reinvented the A, B and C series in Germany.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "person"
+    },
+    {
+      "id": "f16",
+      "text": "In 1922 Porstmann’s formats became the German standard DIN 476, replacing a wide variety of earlier paper sizes to make stocking paper and copying documents cheaper and more efficient.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "date"
+    },
+    {
+      "id": "f17",
+      "text": "Other countries soon adopted the system as a national standard, including Belgium in 1924, the Netherlands in 1925, Japan in 1951, the United Kingdom in 1959 and Australia in 1974.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "date"
+    },
+    {
+      "id": "f18",
+      "text": "In 1975 the series became the international standard ISO 216 and the official format for United Nations documents.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "date"
+    },
+    {
+      "id": "f19",
+      "text": "Today the A series is used in almost every country except in North America; the United States and Canada mainly use other formats.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "place"
+    },
+    {
+      "id": "f20",
+      "text": "US Letter paper measures 216 by 279 millimeters.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f21",
+      "text": "US paper formats alternate between two ratios, 17/11 (about 1.545) and 22/17 (about 1.294), so reducing or enlarging one US format to the next leaves an empty margin.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "cause_effect"
+    }
+  ],
+  "notes": "白名單內的大學網頁（cl.cam.ac.uk）與 ERIC（ed.gov）只取事實。f8、f9、f11 是由 s1 的尺寸表與規則推得的衍生數字。表格題的表格資料（A0–A6 的寬、高與面積）以 f5、f6 為準。"
+}
