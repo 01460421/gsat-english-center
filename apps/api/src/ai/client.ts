@@ -7,7 +7,7 @@
  *   2  不送 temperature／top_p／top_k、強制 tool_choice、assistant 預填（messages 只有一則 user）
  *   3  不送 thinking（Opus 5.5 一律 adaptive）；每個任務明確設定 output_config.effort
  *   4  max_tokens 含思考空間；stop_reason='max_tokens' 由呼叫端重試一次
- *   5  output_config.format＝SDK 的 betaZodOutputFormat 產生的 JSON schema（剝除不支援的約束）；
+ *   5  output_config.format＝SDK 的 betaZodOutputFormat 產生的 JSON schema（剝除不支援的約束；學習助手另外攤開 $ref，見 inlineJsonSchemaRefs）；
  *      只送 { type, schema }、不帶 SDK 的自動解析：先檢查 stop_reason 再用完整的 zod schema 驗證，
  *      拒答或截斷時才不會在 SDK 裡丟出解析錯誤、拿不到 usage
  *   6  schema 欄位名稱不含 reasoning 類字樣（說明欄位叫 explanation_zh）

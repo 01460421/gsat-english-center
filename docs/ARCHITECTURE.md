@@ -278,7 +278,7 @@ Worker 放一支只在過渡期開啟的 `/auth/probe`：
 | 2 | 不送 `temperature`、`top_p`、`top_k`；不送強制 `tool_choice`（`any`／`tool`）；不放 assistant 預填 | Opus 5.5、Sonnet 5.5 會回 400（06 §1.6 #5–#7） |
 | 3 | 不送 `thinking` 參數（Opus 5.5 一律 adaptive，`disabled`／`budget_tokens` 會 400）；**每個任務明確設定 `output_config.effort`**（Opus 5.5 預設是 medium） | 06 §1.6 #1 |
 | 4 | `max_tokens` 要把思考的空間算進去；`stop_reason='max_tokens'` 視為失敗重試一次 | 06 §1.6 #3 |
-| 5 | JSON 一律用結構化輸出 `output_config.format`。schema 由 zod 定義，用 SDK 的輔助函式送出：它會**剝除不支援的約束**（`minLength`、`maxLength`、`minimum`、`maximum`、`multipleOf`、`minItems` 大於 1），所有物件 `additionalProperties:false`、所有欄位 required；回應再用完整的 zod schema 驗證（數量、長度、範圍由程式檢查）。Batch 請求的 schema 由同一個函式產生。CI 檢查每個任務的「送出 schema」只含支援的子集、可選參數 ≤24、union ≤16 | 06 §1.6 #11；claude-api 技能 |
+| 5 | JSON 一律用結構化輸出 `output_config.format`。schema 由 zod 定義，用 SDK 的輔助函式送出：它會**剝除不支援的約束**（`minLength`、`maxLength`、`minimum`、`maximum`、`multipleOf`、`minItems` 大於 1），所有物件 `additionalProperties:false`、所有欄位 required；回應再用完整的 zod schema 驗證（數量、長度、範圍由程式檢查）。Batch 請求的 schema 由同一個函式產生。CI 檢查每個任務的「送出 schema」只含支援的子集、可選參數 ≤24、union ≤16。學習助手的 schema 送出前攤開 `$ref`：帶 `$ref` 時 Anthropic 編譯的 grammar 超過上限，回 400「compiled grammar is too large」（docs/design/learning-assistant.md §10「上線後修正」） | 06 §1.6 #11；claude-api 技能 |
 | 6 | schema 的欄位名稱不可以要求「推理過程」（禁止 `reasoning`、`chain_of_thought`、`step_by_step`、`thinking` 等字樣），解析欄位叫 `explanation_zh` | 可能被判為 `reasoning_extraction` 而拒答，而且照樣收費（06 §1.6 #9） |
 | 7 | 非 Batch 的呼叫（Opus 5.5、Sonnet 5.5）一律帶 `fallbacks: "default"` 與 beta 標頭 `server-side-fallback-2026-07-01`（走 `client.beta.messages`）；Haiku 5.5 沒有 server-side fallback，自己重送 | 06 §1.6 #8 |
 | 8 | 每次回應都檢查 `stop_reason`；拒答時記 `stop_details.category` 到 `ai_calls.refusal_category`，`served_model` 記實際服務的模型 | 06 §4.5 |

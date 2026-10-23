@@ -2825,3 +2825,14 @@ interface AssistHistorySummary {
   - **說明的範圍補齊**（版本仍是 2026-10-23，還沒部署，不用再重新同意一次）：AI 處理說明第一、二點與勾選文字加上學習報告送出的目標、每週讀書時間、考試與段考日期、學生寫的回饋（`reportRequests.ts` 的 `<task>` 與 `<student_text role="feedback">`）；隱私權說明「二」加回饋、提示與標記的紀錄、摘要裡的單字錯題與複習進度、逐週計畫完成情形，「三」加學習助手的用途，「四」同 AI 處理說明，「十」不再說單字紀錄不會傳到伺服器；服務條款與保存期限的「0 點」改成「已經有共用的解析時」（快取只在第一次的結果合格時寫入，不保證命中）。`AccountPage` 的重新同意與撤回同意、匯出與刪除帳號的說明、`AiApplyPage` 的上限與使用須知都加上學習助手。
   - **解析點數上限 12 → 14**（`assistAnalyzePoints`）：上限只會碰到文意選填 5 格。依 §4.13，5 格約 US$0.35，上限 12 時每點約 0.029，超過名額用的 0.0271；上線前的實測門檻沒有跑，所以先照「每多一題加 2」收。1–4 題的點數不變。站主要維持 12 的話，改 `assistAnalyzePoints` 一行與服務條款、測試即可，監控時要另外看 5 格的每點成本。
 - **還沒做**：開關打開後的視覺基準（`tests/visual`，R9）沒有更新，要另外截圖並附站主同意；律師確認（ROADMAP D6）照舊在公開宣傳前。
+
+### 上線後修正：輸出格式攤開 `$ref`（2026-10-23）
+
+- **症狀**：上線後學習助手的解析一律失敗，畫面顯示「AI 服務暫時發生錯誤，這次的點數已經退還」（`api_error`，點數全額退還）。
+- **原因**：Anthropic 回 400 `invalid_request_error`：「The compiled grammar is too large, which would cause performance issues.」。SDK 的 zod 轉換會把重複用到的子 schema 放進 `$defs`、用 `$ref` 指過去；Anthropic 編譯 grammar 時 `$ref` 讓規模變大，解析（題目）與學習報告的 schema 超過上限。上線前沒有跑真模型評測（站主決定），假模型的測試看不出這一點。
+- **實測**（GitHub Actions 用 repo 的金鑰送最小請求，每次 64 tokens；被拒的請求不產生輸出）：
+  - 帶 `$ref` 的原樣：解析（題目）、學習報告被拒；寫作、單字、追問、轉錄通過。
+  - 攤開 `$ref`：六個全部通過；拿掉 description 但保留 `$ref` 仍被拒（說明文字不是原因）。
+  - 參考：只有字串欄位的扁平物件，60 個欄位通過、90 個被拒；6 個陣列各 5 個欄位通過、10 個被拒。之後加欄位要注意這個量級。
+- **修正**：`client.ts` 的 `inlineJsonSchemaRefs()`；學習助手的四個任務送出攤開後的 schema（內容不變），批改任務維持 SDK 原樣（請求逐位元不變）。`ai.rules.test.ts` 檢查學習助手的 schema 不帶 `$ref`；學習助手各 schema 的快照雜湊更新。
+- **可觀測性**：AI 呼叫失敗時記下 Anthropic 的錯誤說明（HTTP 狀態、錯誤類型與 message，截到 300 字；不含提示詞）：`ai_call` log 的 `error_detail`、`anthropic_config` 事件的 `detail`；重送用完仍是 `api_error` 時另寫 `anthropic_error` 事件。學習助手評測工具失敗時也印出這段說明。
