@@ -129,7 +129,7 @@ export type CallOutcome =
   | { kind: 'refusal'; category: string | null; record: CallRecord }
   | { kind: 'max_tokens'; record: CallRecord }
   | { kind: 'invalid'; issue: string; record: CallRecord }
-  | { kind: 'error'; retryable: boolean; reason: AiRefundReason; spendLimit: boolean; configProblem: boolean; record: CallRecord };
+  | { kind: 'error'; retryable: boolean; reason: AiRefundReason; spendLimit: boolean; configProblem: boolean; detail: string | null; record: CallRecord };
 
 type FetchLike = (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
 
@@ -251,6 +251,25 @@ function apiErrorType(err: InstanceType<typeof Anthropic.APIError>): string | nu
   return null;
 }
 
+/** 錯誤說明的長度上限（寫進 log 與 ops 事件；Anthropic 的錯誤訊息只描述請求的欄位與限制，不含提示詞內容）。 */
+export const ERROR_DETAIL_MAX = 300;
+
+/**
+ * 錯誤的簡短說明：HTTP 狀態、錯誤類型與 Anthropic 回的 message（例如 schema 太複雜、參數不支援），
+ * 給 log 與 anthropic_config／anthropic_error 事件用，站主不必看 Cloudflare 的 log 就知道原因。
+ */
+export function errorDetail(err: unknown): string | null {
+  if (err instanceof Anthropic.APIError) {
+    const body = err.error as { error?: { message?: unknown }; message?: unknown } | undefined;
+    const raw = body?.error?.message ?? body?.message;
+    const message = typeof raw === 'string' ? raw : err.message;
+    const head = [typeof err.status === 'number' ? String(err.status) : 'stream', apiErrorType(err)].filter(Boolean).join(' ');
+    return `${head}: ${message}`.replace(/\s+/g, ' ').trim().slice(0, ERROR_DETAIL_MAX);
+  }
+  if (err instanceof Error) return `${err.name}: ${err.message}`.replace(/\s+/g, ' ').trim().slice(0, ERROR_DETAIL_MAX);
+  return null;
+}
+
 /** 錯誤分類：由最具體的 SDK 錯誤類別開始判斷（§6.2 第 16 條）。 */
 export function classifyError(err: unknown): { retryable: boolean; reason: AiRefundReason; spendLimit: boolean; configProblem: boolean; code: string } {
   if (err instanceof Anthropic.APIConnectionTimeoutError) return { retryable: true, reason: 'timeout', spendLimit: false, configProblem: false, code: 'timeout' };
@@ -359,7 +378,7 @@ export async function executeClaudeCall(client: Anthropic, input: ClaudeCallInpu
     if (err instanceof Anthropic.APIError) record.requestId = err.requestID ?? null;
     record.requestId ??= stream?.request_id ?? null;
     applyPartialUsage(record, stream?.currentMessage, input.spec.model);
-    return { kind: 'error', retryable: c.retryable, reason: c.reason, spendLimit: c.spendLimit, configProblem: c.configProblem, record };
+    return { kind: 'error', retryable: c.retryable, reason: c.reason, spendLimit: c.spendLimit, configProblem: c.configProblem, detail: errorDetail(err), record };
   } finally {
     clearTimeout(deadline);
   }

@@ -67,14 +67,14 @@ export function releaseLeaseStatement(db: D1Database, held: NonNullable<LeaseHel
 /** 一位評分者（或 OCR、學習助手的一次呼叫）的呼叫結果。 */
 export type CallResult =
   | { ok: true }
-  | { ok: false; retryable: boolean; reason: string; spendLimit?: boolean; configProblem?: boolean };
+  | { ok: false; retryable: boolean; reason: string; spendLimit?: boolean; configProblem?: boolean; detail?: string | null };
 
 /** 一則訊息處理完要做什麼。 */
 export type Action =
   | { kind: 'done' }
   | { kind: 'requeue' }
-  | { kind: 'retry'; reason: string }
-  | { kind: 'refund'; reason: string; spendLimit?: boolean; configProblem?: boolean };
+  | { kind: 'retry'; reason: string; detail?: string | null }
+  | { kind: 'refund'; reason: string; spendLimit?: boolean; configProblem?: boolean; detail?: string | null };
 
 /** 呼叫 Claude 需要的東西（不含提交、題目或學習助手的案例）。 */
 export interface CallContext {
@@ -126,6 +126,7 @@ export async function callWithPolicy(
       stop_reason: outcome.record.stopReason,
       cost_micros: outcome.record.costMicros,
       latency_ms: outcome.record.latencyMs,
+      ...(outcome.kind === 'error' ? { error_code: outcome.record.errorCode, error_detail: outcome.detail } : {}),
     });
     if (outcome.record.pricePending) {
       await opsEvent(ctx.db, 'price_pending', 'warn', { op_id: ctx.op.id, served_model: outcome.record.servedModel });
@@ -158,7 +159,7 @@ export async function callWithPolicy(
         await safetyEventStatement(ctx.db, ctx.op.id, 'refusal', outcome.category, ctx.userRef).run();
         return { ok: false, retryable: false, reason: 'refusal' };
       case 'error':
-        return { ok: false, retryable: outcome.retryable, reason: outcome.reason, spendLimit: outcome.spendLimit, configProblem: outcome.configProblem };
+        return { ok: false, retryable: outcome.retryable, reason: outcome.reason, spendLimit: outcome.spendLimit, configProblem: outcome.configProblem, detail: outcome.detail };
     }
   }
   return { ok: false, retryable: false, reason: 'internal' };
@@ -167,8 +168,17 @@ export async function callWithPolicy(
 /** 失敗結果 → 處理動作（不可重試優先：任何一位不可重試就退還）。 */
 export function actionForFailures(failures: Array<Extract<CallResult, { ok: false }>>): Action {
   const fatal = failures.find((f) => !f.retryable);
-  if (fatal) return { kind: 'refund', reason: fatal.reason, ...(fatal.spendLimit ? { spendLimit: true } : {}), ...(fatal.configProblem ? { configProblem: true } : {}) };
-  return { kind: 'retry', reason: failures[0]?.reason ?? 'api_error' };
+  if (fatal) {
+    return {
+      kind: 'refund',
+      reason: fatal.reason,
+      ...(fatal.spendLimit ? { spendLimit: true } : {}),
+      ...(fatal.configProblem ? { configProblem: true } : {}),
+      ...(fatal.detail ? { detail: fatal.detail } : {}),
+    };
+  }
+  const first = failures[0];
+  return { kind: 'retry', reason: first?.reason ?? 'api_error', ...(first?.detail ? { detail: first.detail } : {}) };
 }
 
 /** 輸出過濾擋下的類別寫進安全事件。 */

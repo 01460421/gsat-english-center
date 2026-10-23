@@ -125,7 +125,11 @@ async function call(client: ReturnType<typeof createAnthropicClient>, input: Cla
     const outcome = await executeClaudeCall(client, input, built);
     calls.push(metric(input.task, outcome, attempt === 0 ? points : 0));
     if (outcome.kind === 'ok') return { data: outcome.data, failure: null, calls };
-    if (outcome.kind === 'error') return { data: null, failure: outcome.spendLimit ? 'spend_limit' : outcome.configProblem ? 'config_error' : outcome.reason, calls };
+    if (outcome.kind === 'error') {
+      // 只印錯誤代碼與 Anthropic 的錯誤說明（不含提示詞或輸出），方便從 Actions 的 log 看出原因。
+      console.log(`[assist-eval] ${input.task} 呼叫失敗：${outcome.record.errorCode ?? '?'} ${outcome.detail ?? ''}`);
+      return { data: null, failure: outcome.spendLimit ? 'spend_limit' : outcome.configProblem ? 'config_error' : outcome.reason, calls };
+    }
     if (outcome.kind === 'refusal') return { data: null, failure: 'refusal', calls };
     failure = outcome.kind === 'max_tokens' ? 'max_tokens' : 'invalid_output';
   }
