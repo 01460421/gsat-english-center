@@ -1,0 +1,387 @@
+{
+  "schema": "gsat-bank-facts/v1",
+  "id": "urbanization-ra07",
+  "title": "Share of people living in cities since 1960 (World Bank, UN World Urbanization Prospects) and the urban majority around 2007",
+  "sdgs": [
+    11
+  ],
+  "created_on": "2026-10-23",
+  "created_by": "ai-agent",
+  "sources": [
+    {
+      "id": "s1",
+      "publisher": "World Bank",
+      "title": "World Development Indicators: Urban population (% of total population) (SP.URB.TOTL.IN.ZS)",
+      "url": "https://data.worldbank.org/indicator/SP.URB.TOTL.IN.ZS",
+      "accessed": "2026-10-23",
+      "license": "CC-BY-4.0",
+      "use": "dataset",
+      "note": "數值取自 World Bank API（https://api.worldbank.org/v2/country/WLD;EAS;SSF;ECS/indicator/SP.URB.TOTL.IN.ZS?format=json&date=1960:2024），2026-10-23 下載（lastupdated 2026-10-08）。原始提供者：United Nations Population Division, World Urbanization Prospects；都市的定義依各國統計機關"
+    },
+    {
+      "id": "s2",
+      "publisher": "World Bank",
+      "title": "World Development Indicators: Urban population (SP.URB.TOTL) and Rural population (SP.RUR.TOTL)",
+      "url": "https://data.worldbank.org/indicator/SP.URB.TOTL",
+      "accessed": "2026-10-23",
+      "license": "CC-BY-4.0",
+      "use": "dataset",
+      "note": "World Bank API 下載（同 s1，指標 SP.URB.TOTL、SP.RUR.TOTL）"
+    },
+    {
+      "id": "s3",
+      "publisher": "United Nations, Department of Economic and Social Affairs",
+      "title": "68% of the world population projected to live in urban areas by 2050, says UN (2018 Revision of World Urbanization Prospects)",
+      "url": "https://www.un.org/development/desa/en/news/population/2018-revision-of-world-urbanization-prospects.html",
+      "accessed": "2026-10-23",
+      "license": "UN terms of use",
+      "use": "fact_only"
+    },
+    {
+      "id": "s4",
+      "publisher": "United Nations Population Fund (UNFPA)",
+      "title": "State of World Population 2007: Unleashing the Potential of Urban Growth",
+      "url": "https://www.unfpa.org/publications/state-world-population-2007",
+      "accessed": "2026-10-23",
+      "license": "UN terms of use",
+      "use": "fact_only"
+    },
+    {
+      "id": "s5",
+      "publisher": "United Nations, Department of Economic and Social Affairs",
+      "title": "Goal 11: Make cities and human settlements inclusive, safe, resilient and sustainable",
+      "url": "https://sdgs.un.org/goals/goal11",
+      "accessed": "2026-10-23",
+      "license": "UN terms of use",
+      "use": "fact_only"
+    }
+  ],
+  "facts": [
+    {
+      "id": "f1",
+      "text": "Each country's statistics office decides what counts as an urban area, so definitions differ between countries.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "definition"
+    },
+    {
+      "id": "f2",
+      "text": "The urban shares are collected and smoothed by the UN Population Division for its World Urbanization Prospects.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f3",
+      "text": "In the World Bank series, 34.2 percent of the world's people lived in urban areas in 1960 and 57.6 percent in 2024.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f4",
+      "text": "In the World Bank series, the world's urban share passed 50 percent between 2006 (49.9) and 2007 (50.4).",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "date"
+    },
+    {
+      "id": "f5",
+      "text": "In 2007, about 3.40 billion people lived in urban areas and 3.34 billion in rural areas, the first year the urban total was larger.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f6",
+      "text": "A UN population report published in 2007 announced that in 2008, for the first time, more than half of humanity, about 3.3 billion people, would live in urban areas.",
+      "source_ids": [
+        "s4"
+      ],
+      "kind": "event"
+    },
+    {
+      "id": "f7",
+      "text": "The same report projected that towns and cities would hold almost 5 billion people by 2030.",
+      "source_ids": [
+        "s4"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f8",
+      "text": "The world's urban population rose from about 1.03 billion in 1960 to about 4.69 billion in 2024, more than four times as many.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f9",
+      "text": "According to the UN, the urban population grew from 751 million in 1950 to 4.2 billion in 2018.",
+      "source_ids": [
+        "s3"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f10",
+      "text": "The UN projected in 2018 that 68 percent of the world's people would live in urban areas by 2050.",
+      "source_ids": [
+        "s3"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f11",
+      "text": "The UN expected close to 90 percent of the urban growth up to 2050 to take place in Asia and Africa.",
+      "source_ids": [
+        "s3"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f12",
+      "text": "In 2018 the most urbanized regions were Northern America (82 percent), Latin America and the Caribbean (81 percent) and Europe (74 percent); Africa was 43 percent.",
+      "source_ids": [
+        "s3"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f13",
+      "text": "Close to half of the world's urban dwellers live in towns and cities with fewer than 500,000 people.",
+      "source_ids": [
+        "s3"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f14",
+      "text": "In 2018 there were 33 megacities of over 10 million people, and the UN expected 43 by 2030.",
+      "source_ids": [
+        "s3"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f15",
+      "text": "East Asia and the Pacific stayed at about 24.9 percent urban from 1960 to 1970, then climbed to 62.4 percent in 2020.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f16",
+      "text": "East Asia and the Pacific passed the 50 percent mark in 2008 (50.2), one year after the world as a whole.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "date"
+    },
+    {
+      "id": "f17",
+      "text": "Sub-Saharan Africa's urban share rose from 14.3 percent in 1960 to 42.2 percent in 2020, nearly three times as high.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f18",
+      "text": "In 2024 Sub-Saharan Africa had about 570 million urban and 720 million rural residents, so most people there still lived in the countryside.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f19",
+      "text": "Europe and Central Asia was already 55.0 percent urban in 1960 and reached 73.5 percent in 2020, the highest of the regions shown.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f20",
+      "text": "Derived: from 1960 to 2020 the urban share rose about 37.5 points in East Asia and the Pacific, 27.8 in Sub-Saharan Africa, 22.2 for the world and 18.5 in Europe and Central Asia.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f21",
+      "text": "Derived: Europe and Central Asia rose 12.4 points from 1960 to 1990 but only 6.1 points from 1990 to 2020.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f22",
+      "text": "SDG 11 aims to make cities and human settlements inclusive, safe, resilient and sustainable; target 11.1 calls for adequate, safe and affordable housing for all and upgraded slums by 2030.",
+      "source_ids": [
+        "s5"
+      ],
+      "kind": "definition"
+    },
+    {
+      "id": "f23",
+      "text": "About 1.12 billion people, close to one in four urban residents, lived in slums or informal settlements in 2022.",
+      "source_ids": [
+        "s5"
+      ],
+      "kind": "number"
+    }
+  ],
+  "datasets": [
+    {
+      "id": "d1",
+      "source_id": "s1",
+      "title": "Urban population (% of total population), World and three regions",
+      "indicator": "SP.URB.TOTL.IN.ZS",
+      "unit": "%",
+      "categories": [
+        "1960",
+        "1970",
+        "1980",
+        "1990",
+        "2000",
+        "2006",
+        "2007",
+        "2008",
+        "2010",
+        "2020",
+        "2024"
+      ],
+      "series": [
+        {
+          "name": "World",
+          "values": [
+            34.233571,
+            36.446507,
+            39.479647,
+            42.832127,
+            46.839855,
+            49.872263,
+            50.415466,
+            50.880143,
+            51.759813,
+            56.444176,
+            57.5656
+          ]
+        },
+        {
+          "name": "East Asia & Pacific",
+          "values": [
+            24.851349,
+            24.940173,
+            27.588585,
+            33.24743,
+            41.634341,
+            48.117852,
+            49.304911,
+            50.217868,
+            52.018704,
+            62.374142,
+            64.374399
+          ]
+        },
+        {
+          "name": "Sub-Saharan Africa",
+          "values": [
+            14.34286,
+            18.481658,
+            23.353675,
+            28.433866,
+            32.660364,
+            35.642161,
+            36.101259,
+            36.623397,
+            37.53267,
+            42.167057,
+            44.14951
+          ]
+        },
+        {
+          "name": "Europe & Central Asia",
+          "values": [
+            54.96563,
+            60.626993,
+            64.862956,
+            67.352737,
+            68.656973,
+            69.766132,
+            69.967574,
+            70.164289,
+            70.58314,
+            73.495594,
+            73.969347
+          ]
+        }
+      ],
+      "note": "World Bank API 原始值（四捨五入到小數 6 位），lastupdated 2026-10-08"
+    },
+    {
+      "id": "d2",
+      "source_id": "s2",
+      "title": "Urban and rural population, World and Sub-Saharan Africa (people)",
+      "indicator": "SP.URB.TOTL; SP.RUR.TOTL",
+      "unit": "people",
+      "categories": [
+        "1960",
+        "2006",
+        "2007",
+        "2024"
+      ],
+      "series": [
+        {
+          "name": "World urban",
+          "values": [
+            1034371668,
+            3321261314,
+            3400044011,
+            4686356524
+          ]
+        },
+        {
+          "name": "World rural",
+          "values": [
+            1987140930,
+            3338274707,
+            3344005487,
+            3454540999
+          ]
+        },
+        {
+          "name": "Sub-Saharan Africa urban",
+          "values": [
+            32659645,
+            285432529,
+            297158480,
+            569500550
+          ]
+        },
+        {
+          "name": "Sub-Saharan Africa rural",
+          "values": [
+            195047008,
+            515395835,
+            525966502,
+            720435736
+          ]
+        }
+      ],
+      "note": "World Bank API 原始值，lastupdated 2026-10-08"
+    }
+  ],
+  "notes": "批次規格指定的 World Bank SP.URB.TOTL.IN.ZS（世界、東亞與太平洋、撒哈拉以南非洲、歐洲與中亞）存在且直接使用。World Bank 現行序列中，世界都市人口比例在 2007 年首次過半（50.4）；UNFPA 2007 年報告依當時的推估說是 2008 年，兩者不衝突（前者是後來修訂的數列），選文以圖表資料為準寫「2007 年前後」。"
+}

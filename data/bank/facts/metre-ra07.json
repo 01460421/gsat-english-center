@@ -1,0 +1,210 @@
+{
+  "schema": "gsat-bank-facts/v1",
+  "id": "metre-ra07",
+  "title": "How the metre was defined in the 1790s by measuring the meridian from Dunkirk to Barcelona",
+  "created_on": "2026-10-23",
+  "created_by": "ai-agent",
+  "sources": [
+    {
+      "id": "s1",
+      "publisher": "National Geographic",
+      "title": "How the French Revolution created the metric system (History Magazine)",
+      "url": "https://www.nationalgeographic.com/history/history-magazine/article/french-revolution-toppled-king-forged-metric-system",
+      "accessed": "2026-10-23",
+      "license": "all rights reserved (facts only)",
+      "use": "fact_only"
+    },
+    {
+      "id": "s2",
+      "publisher": "University of St Andrews, MacTutor History of Mathematics",
+      "title": "Pierre Méchain (1744 - 1804) - Biography",
+      "url": "https://mathshistory.st-andrews.ac.uk/Biographies/Mechain/",
+      "accessed": "2026-10-23",
+      "license": "all rights reserved (facts only)",
+      "use": "fact_only"
+    },
+    {
+      "id": "s3",
+      "publisher": "Northwestern University, McCormick School of Engineering",
+      "title": "Ken Alder: The Epic Journey to Create the Meter",
+      "url": "https://www.mccormick.northwestern.edu/news/articles/archive/2009-2012/article_595.html",
+      "accessed": "2026-10-23",
+      "license": "all rights reserved (facts only)",
+      "use": "fact_only"
+    },
+    {
+      "id": "s4",
+      "publisher": "National Institute of Standards and Technology (NIST)",
+      "title": "SP 330 - Appendix 1: Decisions of the CGPM and the CIPM",
+      "url": "https://www.nist.gov/pml/special-publication-330/sp-330-appendix-1",
+      "accessed": "2026-10-23",
+      "license": "U.S. government work (facts only)",
+      "use": "fact_only"
+    }
+  ],
+  "facts": [
+    {
+      "id": "f1",
+      "text": "Before the French Revolution, France used up to about 800 different units of measurement.",
+      "source_ids": ["s1"],
+      "kind": "number"
+    },
+    {
+      "id": "f2",
+      "text": "Counting local variations, one historian puts the number of measures used in France before the revolution at about 250,000.",
+      "source_ids": ["s3"],
+      "kind": "number"
+    },
+    {
+      "id": "f3",
+      "text": "The same unit could differ from town to town: a pinte held 0.93 liters in Paris but 1.46 liters in nearby Saint-Denis.",
+      "source_ids": ["s1"],
+      "kind": "number"
+    },
+    {
+      "id": "f4",
+      "text": "Some old units were vague; a cloth measure depended on the width of local looms.",
+      "source_ids": ["s1"],
+      "kind": "other"
+    },
+    {
+      "id": "f5",
+      "text": "The confusion made cheating easy and got in the way of trade inside France and with other countries.",
+      "source_ids": ["s1"],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f6",
+      "text": "Scientists rejected simply making the measures of Paris the national standard, seeing them as arbitrary.",
+      "source_ids": ["s1"],
+      "kind": "other"
+    },
+    {
+      "id": "f7",
+      "text": "In 1790 the Academy of Sciences set up a commission on weights and measures; in March 1791 it proposed a new unit of length.",
+      "source_ids": ["s1", "s2"],
+      "kind": "date"
+    },
+    {
+      "id": "f8",
+      "text": "The metre was to be one ten-millionth of the distance from the North Pole to the equator, measured along the meridian through Paris.",
+      "source_ids": ["s1", "s2", "s3"],
+      "kind": "definition"
+    },
+    {
+      "id": "f9",
+      "text": "The idea was to base the unit on nature so that it would belong to no single town or country and other nations might accept it.",
+      "source_ids": ["s1"],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f10",
+      "text": "Astronomers Jean-Baptiste Delambre and Pierre Méchain began measuring the meridian in 1792.",
+      "source_ids": ["s1", "s2", "s3"],
+      "kind": "date"
+    },
+    {
+      "id": "f11",
+      "text": "They measured the stretch from Dunkirk on France's north coast through Paris to Barcelona in Spain, then worked out the rest of the pole-to-equator distance.",
+      "source_ids": ["s1", "s3"],
+      "kind": "place"
+    },
+    {
+      "id": "f12",
+      "text": "Delambre took the longer northern part (Dunkirk to Rodez); Méchain took the southern part (Rodez to Barcelona).",
+      "source_ids": ["s2"],
+      "kind": "place"
+    },
+    {
+      "id": "f13",
+      "text": "They used triangulation, measuring the angles between survey stations (some on mountain peaks) with Borda's repeating circle.",
+      "source_ids": ["s1", "s2"],
+      "kind": "definition"
+    },
+    {
+      "id": "f14",
+      "text": "The surveyors worked through disease and revolutionary violence; war between France and Spain in 1793 forced Méchain to stop work in Barcelona.",
+      "source_ids": ["s1", "s2"],
+      "kind": "event"
+    },
+    {
+      "id": "f15",
+      "text": "Méchain found that two sets of his latitude readings for Barcelona did not agree, kept it secret, and later altered some figures.",
+      "source_ids": ["s2", "s3"],
+      "kind": "event"
+    },
+    {
+      "id": "f16",
+      "text": "After Méchain's death, Delambre found the problem but, since the metre was already law, he kept it hidden.",
+      "source_ids": ["s2", "s3"],
+      "kind": "event"
+    },
+    {
+      "id": "f17",
+      "text": "The fieldwork was finished in 1798, roughly six years after it began; the whole task is often described as a seven-year journey.",
+      "source_ids": ["s2", "s3"],
+      "kind": "date"
+    },
+    {
+      "id": "f18",
+      "text": "The resulting metre turned out to be about 0.2 millimeters shorter than one true ten-millionth of the pole-to-equator distance.",
+      "source_ids": ["s3"],
+      "kind": "number"
+    },
+    {
+      "id": "f19",
+      "text": "In 1799 a platinum bar was made as the definitive metre, replacing a provisional standard; France officially adopted the system on December 10, 1799.",
+      "source_ids": ["s1"],
+      "kind": "date"
+    },
+    {
+      "id": "f20",
+      "text": "Many people kept using the old measures, and Napoleon allowed a compromise system with traditional names in 1812.",
+      "source_ids": ["s1"],
+      "kind": "event"
+    },
+    {
+      "id": "f21",
+      "text": "In 1837 France restored the metric system and dropped the old and compromise measures.",
+      "source_ids": ["s1"],
+      "kind": "date"
+    },
+    {
+      "id": "f22",
+      "text": "Full adoption of the metric system around the world took more than 100 years.",
+      "source_ids": ["s3"],
+      "kind": "number"
+    },
+    {
+      "id": "f23",
+      "text": "In 1889 the metre was redefined by an international prototype bar of platinum-iridium.",
+      "source_ids": ["s4"],
+      "kind": "date"
+    },
+    {
+      "id": "f24",
+      "text": "In 1960 the metre was redefined using the wavelength of light given off by krypton-86 atoms.",
+      "source_ids": ["s4"],
+      "kind": "date"
+    },
+    {
+      "id": "f25",
+      "text": "Since 1983 the metre has been the distance light travels in a vacuum in 1/299,792,458 of a second.",
+      "source_ids": ["s4"],
+      "kind": "definition"
+    },
+    {
+      "id": "f26",
+      "text": "Today only the United States, Liberia and Myanmar have not officially switched to the metric system.",
+      "source_ids": ["s1", "s3"],
+      "kind": "place"
+    },
+    {
+      "id": "f27",
+      "text": "Derived: the 1983 definition came 192 years after the 1791 proposal to base the metre on the size of the Earth.",
+      "source_ids": ["s2", "s4"],
+      "kind": "number"
+    }
+  ],
+  "notes": "法國舊制單位數各來源說法不同（National Geographic：最多約 800 種；Northwestern 引 Ken Alder：約 25 萬種地方變體），出題時寫成「數百種」或明說計算方式。"
+}

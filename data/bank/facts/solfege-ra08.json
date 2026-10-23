@@ -1,0 +1,207 @@
+{
+  "schema": "gsat-bank-facts/v1",
+  "id": "solfege-ra08",
+  "title": "How Guido of Arezzo named the notes ut, re, mi from a hymn to Saint John, and how the syllables changed later",
+  "created_on": "2026-10-23",
+  "created_by": "ai-agent",
+  "sources": [
+    {
+      "id": "s1",
+      "publisher": "Library of Congress (In the Muse blog)",
+      "title": "Out of Tune? Need a Hand with Your Singing? Ask a Medieval Theorist for Help! (2021-07)",
+      "url": "https://blogs.loc.gov/music/2021/07/ask-a-medieval-theorist-for-help/",
+      "accessed": "2026-10-23",
+      "license": "U.S. government work (facts only)",
+      "use": "fact_only"
+    },
+    {
+      "id": "s2",
+      "publisher": "Saint Anselm College, The Saint Anselm Journal",
+      "title": "Music in the Time of Saint Anselm (The Saint Anselm Journal 2.1, Fall 2004)",
+      "url": "https://www.anselm.edu/sites/default/files/Documents/Institute%20of%20SA%20Studies/4.5.3.2i_21Cox.pdf",
+      "accessed": "2026-10-23",
+      "license": "all rights reserved (facts only)",
+      "use": "fact_only"
+    },
+    {
+      "id": "s3",
+      "publisher": "Gresham College",
+      "title": "Singers in the Making of Europe (lecture page)",
+      "url": "https://www.gresham.ac.uk/watch-now/singers-making-europe",
+      "accessed": "2026-10-23",
+      "license": "all rights reserved (facts only)",
+      "use": "fact_only"
+    },
+    {
+      "id": "s4",
+      "publisher": "University College London (UCL Discovery)",
+      "title": "Aural education and its pedagogical conceptualisation (doctoral thesis), section 2.3 Solmisation in the Western world: Guido d'Arezzo",
+      "url": "https://discovery.ucl.ac.uk/id/eprint/10043813/1/Aural%20education%20and%20its%20pedagogical%20conceptualisation.pdf",
+      "accessed": "2026-10-23",
+      "license": "all rights reserved (facts only)",
+      "use": "fact_only",
+      "note": "第 2.3 節與註 19、23、24"
+    },
+    {
+      "id": "s5",
+      "publisher": "Johns Hopkins University Press, Project MUSE",
+      "title": "Review of Guido d'Arezzo's Regule rithmice, Prologus in antiphonarium, and Epistola ad michahelem: A Critical Text and Translation",
+      "url": "https://muse.jhu.edu/article/24657",
+      "accessed": "2026-10-23",
+      "license": "all rights reserved (facts only)",
+      "use": "fact_only",
+      "note": "只取事實（書評開頭的摘錄：教宗約翰十九世三度邀請、羅馬示範）"
+    },
+    {
+      "id": "s6",
+      "publisher": "Hamilton College, Department of Music",
+      "title": "Music theory class notes (hexachord and solmization syllables)",
+      "url": "https://academics.hamilton.edu/music/spellman/class_notes/music_theory.htm",
+      "accessed": "2026-10-23",
+      "license": "all rights reserved (facts only)",
+      "use": "fact_only"
+    }
+  ],
+  "facts": [
+    {
+      "id": "f1",
+      "text": "Guido of Arezzo was an eleventh-century Benedictine monk and music theorist, born sometime in the 990s and still alive in 1033.",
+      "source_ids": [
+        "s1",
+        "s2"
+      ],
+      "kind": "person"
+    },
+    {
+      "id": "f2",
+      "text": "Guido lived at the monastery of Pomposa in northern Italy and later moved to Arezzo, where he trained the cathedral's singers.",
+      "source_ids": [
+        "s2",
+        "s3"
+      ],
+      "kind": "place"
+    },
+    {
+      "id": "f3",
+      "text": "Before Guido, church singers learned chants mostly by ear and memory and could spend many years memorizing the chants for the church year.",
+      "source_ids": [
+        "s3",
+        "s4"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f4",
+      "text": "The older written signs, called neumes, showed whether a melody went up or down but not exactly how far.",
+      "source_ids": [
+        "s3"
+      ],
+      "kind": "definition"
+    },
+    {
+      "id": "f5",
+      "text": "Guido is credited with the musical staff: pitches were placed on and between lines, so singers could see the exact pitch of each note.",
+      "source_ids": [
+        "s1",
+        "s2",
+        "s4"
+      ],
+      "kind": "event"
+    },
+    {
+      "id": "f6",
+      "text": "He used a Latin hymn to Saint John the Baptist, Ut queant laxis; each of its first six lines begins one step higher than the line before.",
+      "source_ids": [
+        "s2",
+        "s4"
+      ],
+      "kind": "event"
+    },
+    {
+      "id": "f7",
+      "text": "Taking the first syllable of each of those six lines gave the note names ut, re, mi, fa, sol and la.",
+      "source_ids": [
+        "s1",
+        "s2",
+        "s6"
+      ],
+      "kind": "definition"
+    },
+    {
+      "id": "f8",
+      "text": "With the syllables, a singer could link the notes of a new chant to the pattern of a tune he already knew; mi to fa always marked the half step.",
+      "source_ids": [
+        "s4",
+        "s6"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f9",
+      "text": "The words of the hymn were known long before Guido; it is uncertain whether he wrote its tune or used an existing one.",
+      "source_ids": [
+        "s4"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f10",
+      "text": "Pope John XIX, who led the Church from 1024 to 1033, asked Guido three times to come to Rome and show his teaching method.",
+      "source_ids": [
+        "s5"
+      ],
+      "kind": "event"
+    },
+    {
+      "id": "f11",
+      "text": "In Rome the pope was delighted with the method and did not let Guido leave until he himself could sing a melody he had never heard before.",
+      "source_ids": [
+        "s5"
+      ],
+      "kind": "event"
+    },
+    {
+      "id": "f12",
+      "text": "In the 1600s (the 17th century), the Italian scholar Giovanni Battista Doni proposed replacing ut with do, an open syllable that is easier to sing.",
+      "source_ids": [
+        "s4"
+      ],
+      "kind": "event"
+    },
+    {
+      "id": "f13",
+      "text": "A seventh syllable, si, was added later, probably from the first letters of Sancte Ioannes, the last words of the hymn; it is also sung as ti.",
+      "source_ids": [
+        "s4"
+      ],
+      "kind": "event"
+    },
+    {
+      "id": "f14",
+      "text": "In the 1800s (the 19th century), Sarah Glover suggested replacing si so that each syllable would start with a different letter.",
+      "source_ids": [
+        "s4"
+      ],
+      "kind": "event"
+    },
+    {
+      "id": "f15",
+      "text": "The Guidonian hand, a memory aid that places note syllables on the joints of the hand, bears his name but was probably developed by later teachers.",
+      "source_ids": [
+        "s1",
+        "s4"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f16",
+      "text": "Music students still use these syllables today when they learn to sing scales and read music at sight.",
+      "source_ids": [
+        "s2",
+        "s6"
+      ],
+      "kind": "other"
+    }
+  ],
+  "notes": "Guido 的出生地各來源不同（s2 說可能生於法國，s4 稱義大利理論家）；選文只寫他在義大利的修道院與 Arezzo 工作。教宗的年份 1024–1033 是在位期間"
+}

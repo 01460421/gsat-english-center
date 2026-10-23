@@ -1,0 +1,165 @@
+{
+  "schema": "gsat-bank-facts/v1",
+  "id": "air-travel-ra05",
+  "title": "How flying became everyday: airline passengers carried worldwide and in North America, 1970–2023, the jumbo jet (1970) and the 2020 collapse",
+  "sdgs": [9],
+  "created_on": "2026-10-20",
+  "created_by": "ai-agent",
+  "sources": [
+    {
+      "id": "s1",
+      "publisher": "World Bank",
+      "title": "World Development Indicators: Air transport, passengers carried (IS.AIR.PSGR)",
+      "url": "https://data.worldbank.org/indicator/IS.AIR.PSGR",
+      "accessed": "2026-10-20",
+      "license": "CC-BY-4.0",
+      "use": "dataset",
+      "note": "原始提供者：ICAO, Civil Aviation Statistics of the World 與 ICAO staff estimates。以 World Bank API（https://api.worldbank.org/v2/country/WLD;NAC/indicator/IS.AIR.PSGR?format=json，lastupdated 2026-10-08）下載 WLD（World）與 NAC（North America）1970–2023 的原始人次，除以 1,000,000 換成百萬人次、四捨五入到小數 1 位；資料集只取 1970、1980、1990、2000、2010、2019、2020、2021、2022、2023 年。2024 年以後尚無數值。"
+    },
+    {
+      "id": "s2",
+      "publisher": "UN News (United Nations)",
+      "title": "Air travel down 60 per cent, as airline industry losses top $370 billion: ICAO (2021-01-15)",
+      "url": "https://news.un.org/en/story/2021/01/1082302",
+      "accessed": "2026-10-20",
+      "license": "UN terms of use",
+      "use": "fact_only",
+      "note": "只取事實（ICAO 2020 年航空運輸初步統計）"
+    },
+    {
+      "id": "s3",
+      "publisher": "Northwestern University",
+      "title": "747 Anniversary",
+      "url": "https://sites.northwestern.edu/747anniversary/",
+      "accessed": "2026-10-20",
+      "license": "© Northwestern University (facts only)",
+      "use": "fact_only",
+      "note": "只取事實"
+    }
+  ],
+  "facts": [
+    {
+      "id": "f1",
+      "text": "The World Bank figures count passengers carried by airlines registered in a country or region, wherever the passengers fly from or to.",
+      "source_ids": ["s1"],
+      "kind": "definition"
+    },
+    {
+      "id": "f2",
+      "text": "Airlines worldwide carried about 310 million passengers in 1970.",
+      "source_ids": ["s1"],
+      "kind": "number"
+    },
+    {
+      "id": "f3",
+      "text": "Airlines worldwide carried about 4.46 billion passengers in 2019, more than 14 times the 1970 figure.",
+      "source_ids": ["s1"],
+      "kind": "number",
+      "note": "4,455.7 ÷ 310.4 ≈ 14.4（由 s1 資料計算）"
+    },
+    {
+      "id": "f4",
+      "text": "The world total first passed one billion passengers in 1990, when it reached about 1,025 million.",
+      "source_ids": ["s1"],
+      "kind": "number",
+      "note": "1989 年 983.2 百萬、1990 年 1,025.0 百萬（s1 逐年資料）"
+    },
+    {
+      "id": "f5",
+      "text": "North American airlines carried about 174 million of the 310 million passengers in 1970, or about 56 percent of the world total.",
+      "source_ids": ["s1"],
+      "kind": "number",
+      "note": "173.6 ÷ 310.4 ≈ 55.9%（由 s1 資料計算）"
+    },
+    {
+      "id": "f6",
+      "text": "In 2019 North American airlines carried about 1,020 million passengers, about 23 percent of the world total.",
+      "source_ids": ["s1"],
+      "kind": "number",
+      "note": "1,020.1 ÷ 4,455.7 ≈ 22.9%（由 s1 資料計算）"
+    },
+    {
+      "id": "f7",
+      "text": "In 2020 the world total fell to about 1.77 billion passengers, roughly 60 percent below 2019.",
+      "source_ids": ["s1", "s2"],
+      "kind": "number",
+      "note": "(4,455.7 − 1,771.9) ÷ 4,455.7 ≈ 60.2%"
+    },
+    {
+      "id": "f8",
+      "text": "ICAO said that the 2020 fall brought air travel back to levels last seen in 2003.",
+      "source_ids": ["s2"],
+      "kind": "event"
+    },
+    {
+      "id": "f9",
+      "text": "In April 2020 the number of passengers was 92 percent lower than in April 2019.",
+      "source_ids": ["s2"],
+      "kind": "number"
+    },
+    {
+      "id": "f10",
+      "text": "In 2020 international air traffic fell by 74 percent and domestic traffic by 50 percent.",
+      "source_ids": ["s2"],
+      "kind": "number"
+    },
+    {
+      "id": "f11",
+      "text": "Airlines lost about 370 billion US dollars in 2020.",
+      "source_ids": ["s2"],
+      "kind": "number"
+    },
+    {
+      "id": "f12",
+      "text": "By 2023 North American airlines carried about 1,030 million passengers, slightly more than in 2019.",
+      "source_ids": ["s1"],
+      "kind": "number"
+    },
+    {
+      "id": "f13",
+      "text": "In 2023 the world total, about 4.27 billion, was still below the 2019 level.",
+      "source_ids": ["s1"],
+      "kind": "number"
+    },
+    {
+      "id": "f17",
+      "text": "The sharp fall in air travel in 2020 was caused by the COVID-19 pandemic.",
+      "source_ids": ["s2"],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f14",
+      "text": "The Boeing 747, the first wide-body 'jumbo jet', entered passenger service with Pan Am on January 22, 1970, flying from New York to London.",
+      "source_ids": ["s3"],
+      "kind": "date"
+    },
+    {
+      "id": "f15",
+      "text": "The first 747 passenger flight carried 335 passengers and 20 crew members.",
+      "source_ids": ["s3"],
+      "kind": "number"
+    },
+    {
+      "id": "f16",
+      "text": "The 747 offered more seats at a lower cost, which helped make flying affordable for middle-class travelers.",
+      "source_ids": ["s3"],
+      "kind": "cause_effect"
+    }
+  ],
+  "datasets": [
+    {
+      "id": "d1",
+      "source_id": "s1",
+      "title": "Air transport, passengers carried (millions)",
+      "indicator": "IS.AIR.PSGR",
+      "unit": "million passengers",
+      "categories": ["1970", "1980", "1990", "2000", "2010", "2019", "2020", "2021", "2022", "2023"],
+      "series": [
+        { "name": "World", "values": [310.4, 641.9, 1025.0, 1674.1, 2669.4, 4455.7, 1771.9, 2280.0, 3230.3, 4269.0] },
+        { "name": "North America", "values": [173.6, 317.8, 485.2, 707.1, 783.8, 1020.1, 397.1, 691.1, 919.7, 1030.2] }
+      ],
+      "note": "原始人次 ÷ 1,000,000，小數 1 位；North America 是 World Bank 的區域彙總（NAC：美國、加拿大、百慕達）"
+    }
+  ],
+  "notes": "批次規格建議的資料集 World Bank IS.AIR.PSGR 存在並直接使用（1970–2023）。年份刻意不等距：1970–2010 每十年一點，2019–2023 每年一點，以呈現 2020 年的驟降與恢復；圖表附註要說明。"
+}

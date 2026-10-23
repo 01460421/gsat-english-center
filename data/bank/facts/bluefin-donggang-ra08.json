@@ -1,0 +1,194 @@
+{
+  "schema": "gsat-bank-facts/v1",
+  "id": "bluefin-donggang-ra08",
+  "title": "Pacific bluefin tuna in Donggang: Taiwan's longline catch 2003–2023 (data.gov.tw), the first-tuna auction and the catch limits",
+  "sdgs": [14, 12],
+  "created_on": "2026-10-23",
+  "created_by": "ai-agent",
+  "sources": [
+    {
+      "id": "s1",
+      "publisher": "政府資料開放平臺 data.gov.tw（提供機關：農業部漁業署）",
+      "title": "每年度漁業種類別魚類別生產量統計資料（資料集 80036）",
+      "url": "https://data.gov.tw/dataset/80036",
+      "accessed": "2026-10-23",
+      "license": "OGDL-Taiwan-1.0",
+      "use": "dataset",
+      "note": "資源檔 https://data.moa.gov.tw/Service/OpenData/FaRss.aspx?key=078&FOTT=CSV&IsTransData=1&UnitId=E58（欄位：漁業種類、魚類代碼、資料年月〔民國年〕、生產量_公噸）。data.moa.gov.tw 當天從本環境連不上，改由資料集頁的平臺快取 https://quality.data.gov.tw/dq_download_csv.php?nid=80036&md5_url=c997b852908b4405e86e0fd85a38e594 下載（2026-10-23，CSV 10,000 列；快取在『2053 一支釣』中途截斷，但『1050 鮪延繩釣』『2050 鮪延繩釣』兩類的太平洋黑鮪逐年資料 092–112 年都完整）。取魚類代碼『53304 太平洋黑鮪』、漁業種類『1050 鮪延繩釣』（1 字頭是遠洋漁業：同組有『1099 其他遠洋漁業』）與『2050 鮪延繩釣』（2 字頭是近海漁業），民國 92–112 年換算成西元 2003–2023 年。批次提示寫的『太平洋黑鮪漁獲量（約 2000–2024）』在平臺上沒有只列黑鮪的資料集；這是同一主題最接近的逐年資料（漁業署的魚種別生產量），只到 2023 年，也不含沿岸漁業等其他小量漁法，所以圖表標明是鮪延繩釣漁船的漁獲"
+    },
+    {
+      "id": "s2",
+      "publisher": "Taipei Times",
+      "title": "First bluefin tuna of season sells for record NT$10,600 per kg in Pingtung (2026-04-09)",
+      "url": "https://www.taipeitimes.com/News/taiwan/archives/2026/04/09/2003855298",
+      "accessed": "2026-10-23",
+      "license": "© Taipei Times (all rights reserved)",
+      "use": "fact_only"
+    },
+    {
+      "id": "s3",
+      "publisher": "Taipei Times",
+      "title": "Catching the 'Porsche of the seas' (2003-05-11)",
+      "url": "https://www.taipeitimes.com/News/feat/archives/2003/05/11/205589",
+      "accessed": "2026-10-23",
+      "license": "© Taipei Times (all rights reserved)",
+      "use": "fact_only",
+      "note": "文中的 Tungkang 即東港（Donggang）"
+    },
+    {
+      "id": "s4",
+      "publisher": "Taipei Times",
+      "title": "Last of the season (2024-06-13, p. 3)",
+      "url": "https://www.taipeitimes.com/News/taiwan/archives/2024/06/13/2003819295",
+      "accessed": "2026-10-23",
+      "license": "© Taipei Times (all rights reserved)",
+      "use": "fact_only"
+    },
+    {
+      "id": "s5",
+      "publisher": "NOAA Fisheries",
+      "title": "From Overfished to Sustainable Harvests: Pacific Bluefin Tuna Rebound to New Highs",
+      "url": "https://www.fisheries.noaa.gov/feature-story/overfished-sustainable-harvests-pacific-bluefin-tuna-rebound-new-highs",
+      "accessed": "2026-10-23",
+      "license": "U.S. government work (facts only)",
+      "use": "fact_only"
+    },
+    {
+      "id": "s6",
+      "publisher": "Focus Taiwan (CNA)",
+      "title": "Pingtung celebrates 25 years of tuna fest with sumo wrestlers (2025-06-09)",
+      "url": "https://focustaiwan.tw/society/202506095001",
+      "accessed": "2026-10-23",
+      "license": "© Central News Agency (all rights reserved)",
+      "use": "fact_only"
+    }
+  ],
+  "facts": [
+    {
+      "id": "f1",
+      "text": "A Pacific bluefin tuna can grow to 4 meters long and weigh up to 500 kilograms.",
+      "source_ids": ["s3"],
+      "kind": "number"
+    },
+    {
+      "id": "f2",
+      "text": "Bluefin swim into the waters east of Taiwan to spawn in May and June, and Taiwan's bluefin season usually runs from April to June.",
+      "source_ids": ["s3", "s4"],
+      "kind": "date"
+    },
+    {
+      "id": "f3",
+      "text": "Pacific bluefin spawn in waters between central Japan and the northern Philippines and in the Sea of Japan.",
+      "source_ids": ["s5"],
+      "kind": "place"
+    },
+    {
+      "id": "f4",
+      "text": "To win the title of Pingtung's first bluefin of the season, a Taiwan-registered boat must be the first to bring a bluefin of at least 175 kilograms back to a local port.",
+      "source_ids": ["s2"],
+      "kind": "definition"
+    },
+    {
+      "id": "f5",
+      "text": "In April 2026 the season's first bluefin, a 190-kilogram fish, sold at the Donggang fish market for a record NT$10,600 per kilogram, or about NT$2.014 million in all.",
+      "source_ids": ["s2"],
+      "kind": "number"
+    },
+    {
+      "id": "f6",
+      "text": "The 2026 price per kilogram was NT$300 higher than the price paid for the first bluefin a year earlier.",
+      "source_ids": ["s2"],
+      "kind": "number"
+    },
+    {
+      "id": "f7",
+      "text": "By June 2025, the bluefin tuna festival held each season at Donggang had been running for 25 years.",
+      "source_ids": ["s6"],
+      "kind": "number"
+    },
+    {
+      "id": "f8",
+      "text": "By 9 May 2003, Donggang fishermen had caught 695 bluefin, compared with 1,500 by the same date a year earlier.",
+      "source_ids": ["s3"],
+      "kind": "number"
+    },
+    {
+      "id": "f9",
+      "text": "Overfishing in the late 1990s and the 2000s cut the Pacific bluefin spawning stock to about 2 percent of its unfished level in 2009 to 2012.",
+      "source_ids": ["s5"],
+      "kind": "number"
+    },
+    {
+      "id": "f10",
+      "text": "In 2011, members of the Western and Central Pacific Fisheries Commission agreed to reduce catches of both young and adult bluefin; the eastern Pacific commission followed in 2012.",
+      "source_ids": ["s5"],
+      "kind": "event"
+    },
+    {
+      "id": "f11",
+      "text": "The two commissions set a goal of rebuilding the spawning stock to at least 20 percent of its unfished level by 2034; it reached that goal in 2021.",
+      "source_ids": ["s5"],
+      "kind": "number"
+    },
+    {
+      "id": "f12",
+      "text": "According to the 2024 assessment, the spawning stock had reached 23.2 percent of its unfished level in 2022.",
+      "source_ids": ["s5"],
+      "kind": "number"
+    },
+    {
+      "id": "f13",
+      "text": "In June 2024, more than 90 percent of Taiwan's national bluefin quota had been used by 9 June, so the Fisheries Agency banned bluefin fishing from 12 June.",
+      "source_ids": ["s4"],
+      "kind": "event"
+    },
+    {
+      "id": "f14",
+      "text": "Taiwan's fishery statistics list tuna longline catches under two groups: distant-water fisheries and offshore fisheries.",
+      "source_ids": ["s1"],
+      "kind": "definition"
+    },
+    {
+      "id": "f15",
+      "text": "Taiwan's distant-water tuna longline boats caught 1,482 tonnes of Pacific bluefin in 2003 and 130 tonnes in 2012, a drop of about 91 percent.",
+      "source_ids": ["s1"],
+      "kind": "number",
+      "note": "衍生數字：(1482−130)÷1482≈0.912"
+    },
+    {
+      "id": "f16",
+      "text": "Taiwan's offshore tuna longline boats caught 826 tonnes of Pacific bluefin in 2003 and 80 tonnes in 2012, a drop of about 90 percent.",
+      "source_ids": ["s1"],
+      "kind": "number",
+      "note": "衍生數字：(826−80)÷826≈0.903"
+    },
+    {
+      "id": "f17",
+      "text": "In 2023, Taiwan's offshore longline boats caught 1,003 tonnes of Pacific bluefin, more than they caught in 2003; the distant-water boats caught 1,114 tonnes.",
+      "source_ids": ["s1"],
+      "kind": "number"
+    }
+  ],
+  "datasets": [
+    {
+      "id": "d1",
+      "source_id": "s1",
+      "title": "Pacific bluefin tuna (53304 太平洋黑鮪) caught by Taiwan's tuna longline fisheries, 2003–2023",
+      "indicator": "每年度漁業種類別魚類別生產量（漁業種類 1050、2050 鮪延繩釣 × 魚類代碼 53304）",
+      "unit": "tonnes",
+      "categories": ["2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023"],
+      "series": [
+        {
+          "name": "Distant-water tuna longline (1050 鮪延繩釣)",
+          "values": [1482, 1184, 1184, 912, 921, 622, 570, 228, 192, 130, 182, 248, 247, 210, 155, 211, 238, 662, 948, 901, 1114]
+        },
+        {
+          "name": "Offshore tuna longline (2050 鮪延繩釣)",
+          "values": [826, 578, 444, 356, 490, 357, 307, 145, 100, 80, 149, 235, 305, 244, 260, 153, 228, 487, 530, 596, 1003]
+        }
+      ],
+      "note": "民國 92–112 年換算為西元；單位公噸（metric tonnes），原始值是整數"
+    }
+  ],
+  "notes": "批次提示寫的資料集（漁業署太平洋黑鮪漁獲量，約 2000–2024）在 data.gov.tw 找不到只列黑鮪的逐年資料集（全文搜尋『黑鮪』只有高雄市遠洋漁業的南方黑鮪）；改用漁業署『每年度漁業種類別魚類別生產量統計資料』（資料集 80036）中太平洋黑鮪的鮪延繩釣兩類，涵蓋 2003–2023。主題、具體事件（東港黑鮪魚季、配額）不變"
+}
