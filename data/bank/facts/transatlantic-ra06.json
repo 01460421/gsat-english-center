@@ -1,0 +1,261 @@
+{
+  "schema": "gsat-bank-facts/v1",
+  "id": "transatlantic-ra06",
+  "title": "How long a message took to cross the Atlantic: sailing packets (1818), steamships (1838, 1850), the 1858 and 1866 telegraph cables, wireless (1901–1903) and the Telstar satellite (1962)",
+  "sdgs": [9],
+  "created_on": "2026-10-20",
+  "created_by": "ai-agent",
+  "sources": [
+    {
+      "id": "s1",
+      "publisher": "University of Chicago (LacusCurtius, Bill Thayer) — reproduction of Allan Nevins, Sail On (United States Lines, 1946), chapter 2",
+      "title": "Sail On, Chapter 2: The Young Republic",
+      "url": "https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/America/United_States/_Topics/history/_Texts/NEVSAIL/2*.html",
+      "accessed": "2026-10-20",
+      "license": "all rights reserved (facts only)",
+      "use": "fact_only",
+      "note": "只取事實：帆船定期班（Black Ball Line）與早期蒸汽船的橫渡天數"
+    },
+    {
+      "id": "s2",
+      "publisher": "Florida State University — National High Magnetic Field Laboratory (MagLab)",
+      "title": "Transatlantic Telegraph Cable – 1858 (Magnet Academy)",
+      "url": "https://maglabweb.magnet.fsu.edu/magnet-academy/history-of-electricity-magnetism/museum/transatlantic-telegraph-cable-1858/",
+      "accessed": "2026-10-20",
+      "license": "all rights reserved (facts only)",
+      "use": "fact_only"
+    },
+    {
+      "id": "s3",
+      "publisher": "University of Houston — The Engines of Our Ingenuity (John H. Lienhard)",
+      "title": "No. 1425: A TransAtlantic Cable",
+      "url": "https://engines.egr.uh.edu/episode/1425",
+      "accessed": "2026-10-20",
+      "license": "all rights reserved (facts only)",
+      "use": "fact_only"
+    },
+    {
+      "id": "s4",
+      "publisher": "University of Southern California — Illumin magazine (Menooa Badalian)",
+      "title": "The Original Transatlantic Communication",
+      "url": "https://illumin.usc.edu/assets/submissions/639/IlluminArticleMenooaBadalian.pdf",
+      "accessed": "2026-10-20",
+      "license": "all rights reserved (facts only)",
+      "use": "fact_only",
+      "note": "學生科普文章（大學出版），只取事實"
+    },
+    {
+      "id": "s5",
+      "publisher": "Library of Congress",
+      "title": "First Transatlantic Telegraph Cable Sent (This Month in Business History research guide)",
+      "url": "https://guides.loc.gov/this-month-in-business-history/august/first-transatlantic-telegraph-cable",
+      "accessed": "2026-10-20",
+      "license": "U.S. government work (facts only)",
+      "use": "fact_only"
+    },
+    {
+      "id": "s6",
+      "publisher": "U.S. National Park Service (Cape Cod National Seashore)",
+      "title": "Marconi Station Site",
+      "url": "https://www.nps.gov/places/marconi-station-site.htm",
+      "accessed": "2026-10-20",
+      "license": "U.S. government work (facts only)",
+      "use": "fact_only"
+    },
+    {
+      "id": "s7",
+      "publisher": "NASA",
+      "title": "Telstar Opened Era of Global Satellite Television",
+      "url": "https://www.nasa.gov/history/telstar-opened-era-of-global-satellite-television/",
+      "accessed": "2026-10-20",
+      "license": "U.S. government work (facts only)",
+      "use": "fact_only"
+    }
+  ],
+  "facts": [
+    {
+      "id": "f1",
+      "text": "In 1818 the Black Ball Line started the first regular fleet of sailing packets between New York and Liverpool.",
+      "source_ids": ["s1"],
+      "kind": "date"
+    },
+    {
+      "id": "f2",
+      "text": "The packets left and arrived on a fixed schedule, so travelers could plan their movements with fair certainty.",
+      "source_ids": ["s1"],
+      "kind": "other"
+    },
+    {
+      "id": "f3",
+      "text": "The packets were built for safety, comfort and cargo space rather than speed.",
+      "source_ids": ["s1"],
+      "kind": "other"
+    },
+    {
+      "id": "f4",
+      "text": "For a sailing packet, a crossing of 18 or 20 days counted as a good passage.",
+      "source_ids": ["s1"],
+      "kind": "number"
+    },
+    {
+      "id": "f5",
+      "text": "In 1838 the steamships Sirius and Great Western sailed from Britain to New York; Sirius took 17.5 days and the Great Western 15 days.",
+      "source_ids": ["s1"],
+      "kind": "number"
+    },
+    {
+      "id": "f6",
+      "text": "In 1850 the American steamship Atlantic crossed from New York to Liverpool in 10 days and 16 hours.",
+      "source_ids": ["s1"],
+      "kind": "number"
+    },
+    {
+      "id": "f7",
+      "text": "Before the cable, news crossed the Atlantic only as fast as the fastest ship could sail.",
+      "source_ids": ["s5"],
+      "kind": "other"
+    },
+    {
+      "id": "f8",
+      "text": "Cyrus Field began the transatlantic cable project in 1854.",
+      "source_ids": ["s2", "s5"],
+      "kind": "date"
+    },
+    {
+      "id": "f9",
+      "text": "Cables were lost or broke in earlier attempts before the cable was completed on August 5, 1858.",
+      "source_ids": ["s2", "s3"],
+      "kind": "event"
+    },
+    {
+      "id": "f10",
+      "text": "Queen Victoria's 98-word message to President James Buchanan took 17 hours to send over the 1858 cable.",
+      "source_ids": ["s3"],
+      "kind": "number",
+      "note": "s2 寫 more than 16 hours、不到 100 字；題目採 s3 的 17 小時、98 字"
+    },
+    {
+      "id": "f11",
+      "text": "The first cable was very slow and could carry only a few words per hour.",
+      "source_ids": ["s4"],
+      "kind": "number"
+    },
+    {
+      "id": "f12",
+      "text": "Hoping to make the weak, slow signals travel faster, the chief electrician raised the voltage to 2,000 volts.",
+      "source_ids": ["s3", "s4"],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f13",
+      "text": "After about a month of use, the insulation of the 1858 cable burned through off the coast of Ireland and the cable stopped working.",
+      "source_ids": ["s2", "s3"],
+      "kind": "event"
+    },
+    {
+      "id": "f14",
+      "text": "An 1861 British inquiry blamed the failure on poor manufacture and on raising the voltage to speed up the signals.",
+      "source_ids": ["s4"],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f15",
+      "text": "The American Civil War held up the project; a new cable broke in 1865, and a working cable was laid in 1866.",
+      "source_ids": ["s3"],
+      "kind": "event"
+    },
+    {
+      "id": "f16",
+      "text": "The 1866 cable was laid by the Great Eastern, the largest ship of its day, which had failed as a passenger ship because it burned too much fuel.",
+      "source_ids": ["s3", "s5"],
+      "kind": "other"
+    },
+    {
+      "id": "f17",
+      "text": "The 1865–1866 cable was about one inch thick, twice as thick as the half-inch early cables, and it worked at low voltage.",
+      "source_ids": ["s3"],
+      "kind": "number"
+    },
+    {
+      "id": "f18",
+      "text": "The 1866 cable could carry 6 to 8 words per minute.",
+      "source_ids": ["s4"],
+      "kind": "number"
+    },
+    {
+      "id": "f19",
+      "text": "With the working cable, news that would have taken about 12 days by ship crossed between Europe and North America in minutes.",
+      "source_ids": ["s4"],
+      "kind": "number"
+    },
+    {
+      "id": "f20",
+      "text": "On December 12, 1901, at St. John's, Newfoundland, Marconi picked up a radio signal sent from England, using an antenna held up by a kite.",
+      "source_ids": ["s6"],
+      "kind": "event"
+    },
+    {
+      "id": "f21",
+      "text": "On January 18, 1903, the first public two-way wireless exchange between America and Europe carried messages between President Theodore Roosevelt and King Edward VII.",
+      "source_ids": ["s6"],
+      "kind": "event"
+    },
+    {
+      "id": "f22",
+      "text": "The Cape Cod wireless station sent messages between 10 p.m. and 2 a.m., when conditions in the air were best.",
+      "source_ids": ["s6"],
+      "kind": "number"
+    },
+    {
+      "id": "f23",
+      "text": "Wireless messages from the station cost 50 cents a word, and skilled operators sent about 17 words per minute.",
+      "source_ids": ["s6"],
+      "kind": "number"
+    },
+    {
+      "id": "f24",
+      "text": "Derived: 17 words per minute is more than twice the 1866 cable's top speed of 8 words per minute (2 × 8 = 16).",
+      "source_ids": ["s4", "s6"],
+      "kind": "number"
+    },
+    {
+      "id": "f25",
+      "text": "Derived: the Great Western's 15-day crossing was not even a third shorter than a good 18–20 day packet passage, far from half the time.",
+      "source_ids": ["s1"],
+      "kind": "number"
+    },
+    {
+      "id": "f26",
+      "text": "Telstar 1 was launched on July 10, 1962, and within hours it relayed the first live television pictures across the Atlantic, to France.",
+      "source_ids": ["s7"],
+      "kind": "event"
+    },
+    {
+      "id": "f27",
+      "text": "Telstar could relay broadcasts for only about 18 minutes at a time, while its orbit carried it over the Atlantic.",
+      "source_ids": ["s7"],
+      "kind": "number"
+    },
+    {
+      "id": "f28",
+      "text": "In 1953 film of Queen Elizabeth II's coronation had to be flown to New York, because live television could not yet cross the ocean.",
+      "source_ids": ["s7"],
+      "kind": "event"
+    },
+    {
+      "id": "f29",
+      "text": "Undersea cables now carry about 98 percent of the world's information.",
+      "source_ids": ["s5"],
+      "kind": "number",
+      "note": "LOC 研究指南引 Tabor 的說法"
+    },
+    {
+      "id": "f30",
+      "text": "From the first regular packet line in 1818 to Telstar in 1962 is 144 years, nearly a century and a half.",
+      "source_ids": ["s1", "s7"],
+      "kind": "number"
+    }
+  ],
+  "datasets": [],
+  "notes": "表格是事實單整理的年代、方式與速度（不是外部資料集）。1858 年女王訊息的時間各來源略有出入（16 多小時／17 小時），題目一律採 s3 的 98 字、17 小時。帆船一列用「順利的航程 18–20 天」（s1），不寫方向。"
+}

@@ -1,0 +1,132 @@
+{
+  "schema": "gsat-bank-facts/v1",
+  "id": "graffiti-walls-ra05",
+  "title": "Legal graffiti walls in Taipei: riverside graffiti zones, their rules, fines for graffiti elsewhere, and how artists and officials see them",
+  "sdgs": [11],
+  "created_on": "2026-10-20",
+  "created_by": "ai-agent",
+  "sources": [
+    {
+      "id": "s1",
+      "publisher": "政府資料開放平臺 data.gov.tw（提供機關：臺北市政府工務局水利工程處）",
+      "title": "臺北市河濱公園塗鴉區 (Taipei Riverside Park Graffiti Zone)",
+      "url": "https://data.gov.tw/dataset/122019",
+      "accessed": "2026-10-20",
+      "license": "OGDL-Taiwan-1.0",
+      "use": "fact_only",
+      "note": "資料資源 CSV（河濱公園塗鴉區.csv，https://data.taipei/api/dataset/c63b54ef-941d-4b71-b775-b93ec22af5a1/resource/ca9633bf-3f53-472c-9098-8710db23ae2c/download），2026-10-20 下載：7 處，面積 1310、1450、780、2120、360、200、1410 平方公尺"
+    },
+    {
+      "id": "s2",
+      "publisher": "中央通訊社 CNA",
+      "title": "台北7處免費塗鴉 禁不雅文字圖案與政治語言（2020-09-11）",
+      "url": "https://www.cna.com.tw/news/aloc/202009110089.aspx",
+      "accessed": "2026-10-20",
+      "license": "© 中央通訊社 (facts only)",
+      "use": "fact_only",
+      "note": "只取事實"
+    },
+    {
+      "id": "s3",
+      "publisher": "Taipei Times",
+      "title": "FEATURE: Taipei's graffiti artists strive for greater acceptance (2007-08-13)",
+      "url": "https://www.taipeitimes.com/News/taiwan/archives/2007/08/13/2003373905",
+      "accessed": "2026-10-20",
+      "license": "© Taipei Times (facts only)",
+      "use": "fact_only",
+      "note": "只取事實"
+    },
+    {
+      "id": "s4",
+      "publisher": "Taipei Times (AFP)",
+      "title": "FEATURE: Graffiti artists receive encouragement, not sanctions (2015-10-16)",
+      "url": "https://www.taipeitimes.com/News/taiwan/archives/2015/10/16/2003630205",
+      "accessed": "2026-10-20",
+      "license": "© Taipei Times / AFP (facts only)",
+      "use": "fact_only",
+      "note": "只取事實"
+    }
+  ],
+  "facts": [
+    {
+      "id": "f1",
+      "text": "In 2005 the Taipei City Government first opened three riverside retaining walls at Dajia Yingfeng to graffiti artists.",
+      "source_ids": ["s3"],
+      "kind": "date"
+    },
+    {
+      "id": "f2",
+      "text": "Taipei's riverside parks now have seven official graffiti zones, run by the city's Hydraulic Engineering Office.",
+      "source_ids": ["s1", "s2"],
+      "kind": "number"
+    },
+    {
+      "id": "f3",
+      "text": "The seven riverside graffiti zones cover 7,630 square meters in total; the largest is 2,120 square meters and the smallest, a wall in a tunnel under a bridge, is 200 square meters.",
+      "source_ids": ["s1"],
+      "kind": "number",
+      "note": "1310＋1450＋780＋2120＋360＋200＋1410＝7630（由 s1 CSV 計算）"
+    },
+    {
+      "id": "f4",
+      "text": "Anyone may paint the riverside graffiti zones for free, but rude words or pictures and political slogans are removed at once.",
+      "source_ids": ["s2"],
+      "kind": "other"
+    },
+    {
+      "id": "f5",
+      "text": "Every four months the city paints over the riverside graffiti walls, leaving them blank for new work.",
+      "source_ids": ["s2"],
+      "kind": "number"
+    },
+    {
+      "id": "f6",
+      "text": "One riverside graffiti zone, under Zhongshan Bridge, was closed because it was next to the site of a historic bridge.",
+      "source_ids": ["s2"],
+      "kind": "event"
+    },
+    {
+      "id": "f7",
+      "text": "Painting graffiti outside the official zones breaks the Waste Disposal Act; the painter must clean it off and can be fined NT$1,200 to NT$6,000.",
+      "source_ids": ["s2", "s3"],
+      "kind": "number"
+    },
+    {
+      "id": "f8",
+      "text": "In 2006 Taipei's environmental protection department set up a 24-hour hotline and cash rewards for reporting graffiti.",
+      "source_ids": ["s3"],
+      "kind": "event"
+    },
+    {
+      "id": "f9",
+      "text": "In 2007 graffiti artists complained that the riverside walls were too far from the city center for anyone to find.",
+      "source_ids": ["s3"],
+      "kind": "other"
+    },
+    {
+      "id": "f10",
+      "text": "Near Ximending, a legal graffiti zone is run by a former graffiti artist, who looks at painters' earlier work before letting them paint.",
+      "source_ids": ["s4"],
+      "kind": "place"
+    },
+    {
+      "id": "f11",
+      "text": "On a riverside wall, a piece that took a day to paint can be covered by someone else the next day.",
+      "source_ids": ["s4"],
+      "kind": "other"
+    },
+    {
+      "id": "f12",
+      "text": "A Ministry of Culture official said legal graffiti parks would not end illegal graffiti but made sense for the public and for the city's appearance.",
+      "source_ids": ["s4"],
+      "kind": "other"
+    },
+    {
+      "id": "f13",
+      "text": "In 2015 Taipei had 10 legal graffiti zones and Taichung had seven.",
+      "source_ids": ["s4"],
+      "kind": "number"
+    }
+  ],
+  "notes": "多文本的兩位作者（街頭藝術家、店家）是虛構人物；城市的合法塗鴉牆以臺北市河濱塗鴉區為具體事件。"
+}

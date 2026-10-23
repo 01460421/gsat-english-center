@@ -1,0 +1,185 @@
+{
+  "schema": "gsat-bank-facts/v1",
+  "id": "bird-glass-ra05",
+  "title": "Why birds fly into glass, how patterns on glass prevent it, and the Javits Center retrofit in New York",
+  "sdgs": [15, 11],
+  "created_on": "2026-10-20",
+  "created_by": "ai-agent",
+  "sources": [
+    {
+      "id": "s1",
+      "publisher": "U.S. Fish and Wildlife Service",
+      "title": "Reducing Bird Collisions with Buildings and Building Glass: Best Practices",
+      "url": "https://www.fws.gov/sites/default/files/documents/reducing-bird-collisions-with-buildings.pdf",
+      "accessed": "2026-10-20",
+      "license": "U.S. government work (public domain)",
+      "use": "fact_only",
+      "note": "只取事實（文中引用 Loss et al. 2014、Klem and Saenger 2013、Sheppard and Phillips 2015、Rosenberg et al. 2019）"
+    },
+    {
+      "id": "s2",
+      "publisher": "U.S. Fish and Wildlife Service",
+      "title": "Threats to Birds: Collisions (Buildings & Glass)",
+      "url": "https://www.fws.gov/story/threats-birds-collisions-buildings-glass",
+      "accessed": "2026-10-20",
+      "license": "U.S. government work (public domain)",
+      "use": "fact_only",
+      "note": "只取事實"
+    },
+    {
+      "id": "s3",
+      "publisher": "U.S. Fish and Wildlife Service",
+      "title": "A better city for birds (2022)",
+      "url": "https://www.fws.gov/story/better-city-birds",
+      "accessed": "2026-10-20",
+      "license": "U.S. government work (public domain)",
+      "use": "fact_only",
+      "note": "只取事實（Javits Center 改裝）"
+    },
+    {
+      "id": "s4",
+      "publisher": "Duke University (LEED and bird collisions project blog)",
+      "title": "NYC's Javits Convention Center goes bird friendly! (2015-09-07)",
+      "url": "https://sites.duke.edu/leedcollisions/2015/09/07/nycs-javits-convention-center-goes-bird-friendly/",
+      "accessed": "2026-10-20",
+      "license": "© Duke University (facts only)",
+      "use": "fact_only",
+      "note": "只取事實"
+    }
+  ],
+  "facts": [
+    {
+      "id": "f1",
+      "text": "Birds do not see clear or reflective glass as a solid barrier.",
+      "source_ids": ["s1", "s2"],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f2",
+      "text": "In the daytime, when most collisions happen, birds fly toward reflections of sky, clouds or plants in the glass.",
+      "source_ids": ["s1", "s2"],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f3",
+      "text": "Birds also try to fly through glass to plants or sky they can see on the other side, including potted plants indoors.",
+      "source_ids": ["s1"],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f4",
+      "text": "At night, during spring and fall migration, bright lights on buildings can draw birds in and confuse them.",
+      "source_ids": ["s1", "s2"],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f5",
+      "text": "Most birds migrate at night, and collisions peak during spring and fall migration.",
+      "source_ids": ["s2", "s3"],
+      "kind": "other"
+    },
+    {
+      "id": "f6",
+      "text": "Many birds that hit a window seem fine and fly off, but later die of their injuries.",
+      "source_ids": ["s2"],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f7",
+      "text": "Scientists estimate that window collisions kill between 365 and 988 million birds a year in the United States.",
+      "source_ids": ["s1"],
+      "kind": "number"
+    },
+    {
+      "id": "f8",
+      "text": "About 44 percent of these deaths happen at homes and 56 percent at low-rise buildings of four to eleven stories; high-rise buildings account for less than 1 percent.",
+      "source_ids": ["s1"],
+      "kind": "number"
+    },
+    {
+      "id": "f9",
+      "text": "North America has about three billion fewer birds than in 1970.",
+      "source_ids": ["s1"],
+      "kind": "number"
+    },
+    {
+      "id": "f10",
+      "text": "A pattern on glass works if it breaks up the clear or reflective area so that birds sense they cannot fit through the gaps.",
+      "source_ids": ["s1"],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f11",
+      "text": "Horizontal stripes no more than 2 inches apart and vertical stripes no more than 4 inches apart have stopped most birds from hitting glass.",
+      "source_ids": ["s1"],
+      "kind": "number"
+    },
+    {
+      "id": "f12",
+      "text": "Very small birds such as hummingbirds need patterns spaced even more closely, about 2 inches by 2 inches.",
+      "source_ids": ["s1", "s2"],
+      "kind": "number"
+    },
+    {
+      "id": "f13",
+      "text": "Patterns work best on the outside surface of the glass.",
+      "source_ids": ["s1", "s2"],
+      "kind": "other"
+    },
+    {
+      "id": "f14",
+      "text": "Fritted glass has small ceramic dots or lines baked into it; people can still see through it, and it also cuts heat and glare.",
+      "source_ids": ["s1"],
+      "kind": "definition"
+    },
+    {
+      "id": "f15",
+      "text": "Some birds can see ultraviolet light, so glass with ultraviolet patterns can warn them while looking almost clear to people.",
+      "source_ids": ["s1"],
+      "kind": "other"
+    },
+    {
+      "id": "f16",
+      "text": "Cheap fixes include cords hung outside windows less than 4 inches apart, paint or tape patterns, and screens.",
+      "source_ids": ["s1", "s2"],
+      "kind": "other"
+    },
+    {
+      "id": "f17",
+      "text": "The Javits Center, a large convention center in Manhattan, was the first major building in New York City to be refitted with bird-friendly glass.",
+      "source_ids": ["s3"],
+      "kind": "event"
+    },
+    {
+      "id": "f18",
+      "text": "The Javits Center's renovation took five years, cost about half a billion dollars, and used glass with a dotted pattern.",
+      "source_ids": ["s4"],
+      "kind": "event"
+    },
+    {
+      "id": "f19",
+      "text": "After the renovation, bird collisions at the Javits Center fell by about 90 percent.",
+      "source_ids": ["s3", "s4"],
+      "kind": "number"
+    },
+    {
+      "id": "f20",
+      "text": "The renovated Javits Center also uses about 26 percent less energy, and its new green roof attracts nesting birds.",
+      "source_ids": ["s3", "s4"],
+      "kind": "number"
+    },
+    {
+      "id": "f21",
+      "text": "Since 2019, New York City has required new buildings and major renovations to use bird-friendly design and materials.",
+      "source_ids": ["s3"],
+      "kind": "event"
+    },
+    {
+      "id": "f22",
+      "text": "In fall 2021 more than 200 dead birds were found outside four buildings in Lower Manhattan after bright lights confused them.",
+      "source_ids": ["s3"],
+      "kind": "event"
+    }
+  ],
+  "notes": "Javits Center 碰撞減少的幅度：s3 寫 more than 90 percent，s4 寫 90%；選文寫 about 90 percent。"
+}
