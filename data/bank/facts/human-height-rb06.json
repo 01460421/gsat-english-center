@@ -1,0 +1,179 @@
+{
+  "schema": "gsat-bank-facts/v1",
+  "id": "human-height-rb06",
+  "title": "How much taller people have grown: average height of men at age 18 by year of birth, 1896–1996 (Taiwan, Japan, the Netherlands, world)",
+  "sdgs": [
+    2,
+    3
+  ],
+  "created_on": "2026-10-20",
+  "created_by": "ai-agent",
+  "sources": [
+    {
+      "id": "s1",
+      "publisher": "Our World in Data",
+      "title": "Average adult height by year of birth (NCD Risk Factor Collaboration 2016 – processed by Our World in Data)",
+      "url": "https://ourworldindata.org/grapher/average-height-by-year-of-birth",
+      "accessed": "2026-10-20",
+      "license": "CC-BY-4.0",
+      "use": "dataset",
+      "note": "數值取自 https://ourworldindata.org/grapher/average-height-by-year-of-birth.csv（欄位 Men＝Mean male height (cm)，18 歲時的平均身高，依出生年份）與同一圖表的 metadata.json；原始資料：NCD-RisC (2016), eLife"
+    },
+    {
+      "id": "s2",
+      "publisher": "Our World in Data",
+      "title": "Human Height (topic page)",
+      "url": "https://ourworldindata.org/human-height",
+      "accessed": "2026-10-20",
+      "license": "CC-BY-4.0",
+      "use": "fact_only",
+      "note": "OWID 文章只取事實、不改寫"
+    },
+    {
+      "id": "s3",
+      "publisher": "Imperial College London",
+      "title": "Dutch men and Latvian women tallest in world according to 100-year height study (news release, July 2016)",
+      "url": "https://www.imperial.ac.uk/news/173634/dutch-latvian-women-tallest-world-according/",
+      "accessed": "2026-10-20",
+      "license": "© Imperial College London (all rights reserved)",
+      "use": "fact_only",
+      "note": "只取事實"
+    }
+  ],
+  "facts": [
+    {
+      "id": "f1",
+      "text": "The NCD-RisC study, led by Imperial College London with almost 800 scientists and the World Health Organization, estimated the average height of 18-year-olds born from 1896 to 1996.",
+      "source_ids": ["s3", "s1"],
+      "kind": "event"
+    },
+    {
+      "id": "f2",
+      "text": "The study compares people who turned 18 in 1914 with people who turned 18 in 2014.",
+      "source_ids": ["s3"],
+      "kind": "date"
+    },
+    {
+      "id": "f3",
+      "text": "Men in Taiwan born in 1896 averaged about 161.3 cm at age 18; men born in 1996 averaged about 174.5 cm.",
+      "source_ids": ["s1"],
+      "kind": "number"
+    },
+    {
+      "id": "f4",
+      "text": "Average height of men in Taiwan rose by about 13 cm (13.2 cm) between those born in 1896 and those born in 1996.",
+      "source_ids": ["s1"],
+      "kind": "number",
+      "note": "174.5 − 161.3"
+    },
+    {
+      "id": "f5",
+      "text": "Taiwanese men born in 1896 were a little shorter than the world average (161.3 cm against 162.5 cm); those born in 1996 were taller than the world average (174.5 cm against 171.3 cm).",
+      "source_ids": ["s1"],
+      "kind": "number"
+    },
+    {
+      "id": "f6",
+      "text": "Japanese men born in 1976 averaged 171.4 cm, but those born in 1996 averaged slightly less, 170.8 cm.",
+      "source_ids": ["s1"],
+      "kind": "number"
+    },
+    {
+      "id": "f7",
+      "text": "Among men born in 1996, Taiwanese men (174.5 cm) were taller on average than Japanese men (170.8 cm), although in 1896 Japanese men (156.2 cm) were shorter than Taiwanese men.",
+      "source_ids": ["s1"],
+      "kind": "number"
+    },
+    {
+      "id": "f8",
+      "text": "Between those born in 1896 and those born in 1996, the average height of men rose by about 14.6 cm in Japan, 13.2 cm in Taiwan, 13.1 cm in the Netherlands, and 8.8 cm in the world as a whole.",
+      "source_ids": ["s1"],
+      "kind": "number",
+      "note": "依 d1 相減：日本 170.8−156.2、台灣 174.5−161.3、荷蘭 182.5−169.4、全世界 171.3−162.5"
+    },
+    {
+      "id": "f9",
+      "text": "Dutch men are the tallest men in the world, at an average of about 182.5 cm.",
+      "source_ids": ["s3", "s1"],
+      "kind": "number"
+    },
+    {
+      "id": "f10",
+      "text": "How tall people grow is strongly affected by nutrition and by their surroundings, not only by genes.",
+      "source_ids": ["s3", "s2"],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f11",
+      "text": "Within one population, differences in height between people are mostly explained by genes.",
+      "source_ids": ["s2"],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f12",
+      "text": "Nutrition is one of the strongest factors in how tall a population grows; long-term lack of good food can slow children's growth.",
+      "source_ids": ["s2"],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f13",
+      "text": "Illness in childhood can hold back growth, because a sick body has fewer nutrients left for growing.",
+      "source_ids": ["s2"],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f14",
+      "text": "A mother's health and nutrition during pregnancy may also affect how tall her child becomes.",
+      "source_ids": ["s3"],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f15",
+      "text": "In some countries, including Japan, the United States, the United Kingdom, and Finland, average height has stopped rising over the past 30 to 40 years.",
+      "source_ids": ["s3"],
+      "kind": "other"
+    },
+    {
+      "id": "f16",
+      "text": "In East Asian countries such as South Korea and China, average height is still rising, and their people are now taller on average than people in Japan.",
+      "source_ids": ["s3"],
+      "kind": "other"
+    },
+    {
+      "id": "f17",
+      "text": "Around the world, average adult height rose by roughly 8 to 10 cm over the century covered by the study.",
+      "source_ids": ["s2", "s1"],
+      "kind": "number"
+    },
+    {
+      "id": "f18",
+      "text": "A study found that the long rise in the height of Dutch people has come to an end in recent decades.",
+      "source_ids": ["s2"],
+      "kind": "other"
+    },
+    {
+      "id": "f19",
+      "text": "Dutch men born in 1976 and in 1996 both averaged about 182.5 cm.",
+      "source_ids": ["s1"],
+      "kind": "number"
+    }
+  ],
+  "datasets": [
+    {
+      "id": "d1",
+      "source_id": "s1",
+      "title": "Average height of men at age 18, by year of birth (cm)",
+      "indicator": "Mean male height (cm)",
+      "unit": "cm",
+      "categories": ["1896", "1916", "1936", "1956", "1976", "1996"],
+      "series": [
+        { "name": "Taiwan", "values": [161.3141, 163.8499, 165.64444, 168.00899, 171.18701, 174.52141] },
+        { "name": "Japan", "values": [156.16695, 159.97855, 164.1607, 169.34819, 171.43077, 170.81764] },
+        { "name": "Netherlands", "values": [169.43192, 173.15631, 176.82054, 180.41534, 182.48213, 182.53539] },
+        { "name": "World", "values": [162.48244, 164.94214, 167.66086, 170.27087, 171.74445, 171.28035] }
+      ],
+      "note": "OWID 的 World 是各國估計值合成的世界平均；年份是出生年份，身高是 18 歲時的估計值"
+    }
+  ],
+  "notes": "批次規格建議的資料集（OWID 成年男性平均身高，依出生年份約 1896–1996；台灣、日本、荷蘭與世界）存在：average-height-by-year-of-birth（NCD-RisC 2016），取男性一欄，每 20 年取一點。Imperial College 新聞稿說日本身高近 30–40 年停滯，資料中日本 1976 年 171.4、1996 年 170.8。"
+}

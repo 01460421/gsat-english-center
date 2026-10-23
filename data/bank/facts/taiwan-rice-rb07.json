@@ -1,0 +1,461 @@
+{
+  "schema": "gsat-bank-facts/v1",
+  "id": "taiwan-rice-rb07",
+  "title": "Taiwan eats less rice: rice and wheat supplied for food per person per day, 1984–2025, and why eating habits changed",
+  "sdgs": [
+    2,
+    12
+  ],
+  "created_on": "2026-10-20",
+  "created_by": "ai-agent",
+  "sources": [
+    {
+      "id": "s1",
+      "publisher": "政府資料開放平臺 data.gov.tw（提供機關：農業部）",
+      "title": "每人每日糧食供給量（糧食供需統計）",
+      "url": "https://data.gov.tw/dataset/87833",
+      "accessed": "2026-10-20",
+      "license": "OGDL-Taiwan-1.0",
+      "use": "dataset",
+      "note": "資源檔 https://data.moa.gov.tw/service/opendata/agrstatUnit.aspx?item_code=FA1120&dimension_group_code_1=FA01&IsTransData=1&UnitId=D15（JSON；欄位：糧食別、日期〔民國年〕、數值、單位「克/人日」），2026-10-20 下載；取「米」「小麥」「肉類」「穀類」四列，民國 73–114 年（1984–2025）。數值四捨五入到小數 2 位。批次提示寫的「每人每年稻米與小麥消費量（約 1970s–2020s）」在平臺上沒有涵蓋 1970 年代的資料集：糧食平衡表分類表（歷年稻米、歷年小麥，資料集 96175、96176）只有 2013–2015 三年；改用同一套糧食供需統計中最接近的「每人每日糧食供給量」（單位：公克／人／日），最早是 1984 年"
+    },
+    {
+      "id": "s2",
+      "publisher": "農業部",
+      "title": "多元米食推廣情形（農業部全球資訊網）",
+      "url": "https://www.moa.gov.tw/ws.php?id=2503765",
+      "accessed": "2026-10-20",
+      "license": "政府網站資料開放宣告",
+      "use": "fact_only",
+      "note": "只取事實"
+    },
+    {
+      "id": "s3",
+      "publisher": "農業部",
+      "title": "天天吃米飯、營養有夠讚（農政與農情，2011 年 4 月）",
+      "url": "https://www.moa.gov.tw/ws.php?id=23275",
+      "accessed": "2026-10-20",
+      "license": "政府網站資料開放宣告",
+      "use": "fact_only",
+      "note": "只取事實"
+    },
+    {
+      "id": "s4",
+      "publisher": "農業部",
+      "title": "麵粉袋穿上身（農政與農情第 263 期，2014 年 5 月）",
+      "url": "https://www.moa.gov.tw/ws.php?id=2501254",
+      "accessed": "2026-10-20",
+      "license": "政府網站資料開放宣告",
+      "use": "fact_only",
+      "note": "只取事實"
+    },
+    {
+      "id": "s5",
+      "publisher": "農業部",
+      "title": "創新米食新價值～全米麵包研製成功（農政與農情第 232 期，2011 年 10 月）",
+      "url": "https://www.moa.gov.tw/ws.php?id=24232",
+      "accessed": "2026-10-20",
+      "license": "政府網站資料開放宣告",
+      "use": "fact_only",
+      "note": "只取事實"
+    },
+    {
+      "id": "s6",
+      "publisher": "Taipei Times",
+      "title": "Taiwanese consume more meat than grains for first time (2023-10-18)",
+      "url": "https://taipeitimes.com/News/front/archives/2023/10/18/2003807846",
+      "accessed": "2026-10-20",
+      "license": "© Taipei Times (all rights reserved)",
+      "use": "fact_only",
+      "note": "報導農業部糧食供需年報；「last year」指 2022 年；只取事實"
+    },
+    {
+      "id": "s7",
+      "publisher": "Taipei Times",
+      "title": "Tidbits (2012-10-20, p. 12)",
+      "url": "https://www.taipeitimes.com/News/feat/archives/2012/10/20/2003545618",
+      "accessed": "2026-10-20",
+      "license": "© Taipei Times (all rights reserved)",
+      "use": "fact_only",
+      "note": "只取事實（三明治早餐、美而美）"
+    },
+    {
+      "id": "s8",
+      "publisher": "Taipei Times",
+      "title": "Restaurant: Xiao Lizi 小李子 (2005-09-02)",
+      "url": "https://www.taipeitimes.com/News/feat/archives/2005/09/02/2003270120",
+      "accessed": "2026-10-20",
+      "license": "© Taipei Times (all rights reserved)",
+      "use": "fact_only",
+      "note": "只取事實（稀飯是常見的早餐）"
+    }
+  ],
+  "facts": [
+    {
+      "id": "f1",
+      "text": "In 1984 there were about 231 grams of rice per person per day for food in Taiwan; by 2025 there were about 114 grams.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f2",
+      "text": "Wheat supplied for food rose from about 64 grams per person per day in 1984 to about 106 grams in 2005, and was about 98 grams in 2025.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f3",
+      "text": "Rice eaten per person per year in Taiwan fell from 99.4 kg in 1981 to 45.7 kg in 2014.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f4",
+      "text": "In 2022 the average person in Taiwan ate 42.98 kg of rice, 0.05 kg less than the year before.",
+      "source_ids": [
+        "s6"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f5",
+      "text": "In 2022 people in Taiwan ate more meat than grains for the first time since the statistics began: 87.5 kg of meat and 87.4 kg of grains per person.",
+      "source_ids": [
+        "s6"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f6",
+      "text": "The farm agency says Western-style diets and more people eating out have changed how rice is eaten, and young people prefer noodles and baked goods.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f7",
+      "text": "An agriculture ministry article links falling rice eating to rising incomes, changes in society and Western food culture.",
+      "source_ids": [
+        "s3"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f8",
+      "text": "Over about 30 years before 2011, rice eaten per person per year fell from 98 kg to 48 kg, while flour rose from 23 kg to 36 kg.",
+      "source_ids": [
+        "s5"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f9",
+      "text": "From the 1950s the United States gave wheat and flour to many developing countries, including Taiwan.",
+      "source_ids": [
+        "s4"
+      ],
+      "kind": "event"
+    },
+    {
+      "id": "f10",
+      "text": "In the 1960s a campaign promoted wheat foods; newspapers then claimed Westerners were taller because they ate bread.",
+      "source_ids": [
+        "s4"
+      ],
+      "kind": "event"
+    },
+    {
+      "id": "f11",
+      "text": "Congee made from leftover rice has long appeared on many breakfast tables in Taiwan.",
+      "source_ids": [
+        "s8"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f12",
+      "text": "For people in Taiwan the sandwich is now as typical a breakfast as steamed buns; quick breakfast stands such as the Mei Er Mei chain made it common.",
+      "source_ids": [
+        "s7"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f13",
+      "text": "To help farmers, the government promotes rice flour, made by grinding rice, mixed with wheat flour in foods young people like, such as noodles and bread.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f14",
+      "text": "In the same period that rice eating fell by about half, meat eaten per person per year rose from 43 kg to 72 kg.",
+      "source_ids": [
+        "s3"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f15",
+      "text": "Rice has no gluten, and Western-style baked goods rarely use rice, partly because rice costs more than wheat on world markets.",
+      "source_ids": [
+        "s4",
+        "s5"
+      ],
+      "kind": "other"
+    }
+  ],
+  "datasets": [
+    {
+      "id": "d1",
+      "source_id": "s1",
+      "title": "Rice, wheat and meat supplied for food per person per day in Taiwan, 1984–2025",
+      "indicator": "每人每日糧食供給量（米、小麥、肉類、穀類）",
+      "unit": "grams per person per day",
+      "categories": [
+        "1984",
+        "1985",
+        "1986",
+        "1987",
+        "1988",
+        "1989",
+        "1990",
+        "1991",
+        "1992",
+        "1993",
+        "1994",
+        "1995",
+        "1996",
+        "1997",
+        "1998",
+        "1999",
+        "2000",
+        "2001",
+        "2002",
+        "2003",
+        "2004",
+        "2005",
+        "2006",
+        "2007",
+        "2008",
+        "2009",
+        "2010",
+        "2011",
+        "2012",
+        "2013",
+        "2014",
+        "2015",
+        "2016",
+        "2017",
+        "2018",
+        "2019",
+        "2020",
+        "2021",
+        "2022",
+        "2023",
+        "2024",
+        "2025"
+      ],
+      "series": [
+        {
+          "name": "Rice",
+          "values": [
+            230.59,
+            219.68,
+            209.49,
+            200.91,
+            191.64,
+            187.02,
+            180.66,
+            171.22,
+            170.03,
+            166.29,
+            164.09,
+            161.93,
+            160.75,
+            160.0,
+            155.47,
+            150.41,
+            143.97,
+            137.25,
+            136.88,
+            134.39,
+            132.68,
+            133.16,
+            131.61,
+            130.07,
+            131.24,
+            128.35,
+            125.95,
+            122.9,
+            124.69,
+            123.17,
+            125.2,
+            125.14,
+            121.52,
+            124.46,
+            124.7,
+            124.46,
+            120.6,
+            117.89,
+            117.77,
+            115.29,
+            115.89,
+            114.41
+          ]
+        },
+        {
+          "name": "Wheat",
+          "values": [
+            63.51,
+            68.32,
+            75.28,
+            79.53,
+            86.03,
+            81.31,
+            78.41,
+            77.97,
+            79.15,
+            79.19,
+            86.41,
+            87.27,
+            80.72,
+            82.93,
+            87.39,
+            86.75,
+            89.06,
+            90.91,
+            93.38,
+            101.17,
+            105.33,
+            106.1,
+            87.6,
+            97.32,
+            80.57,
+            96.65,
+            93.64,
+            97.56,
+            98.13,
+            99.91,
+            100.56,
+            101.8,
+            103.61,
+            104.56,
+            103.4,
+            101.62,
+            104.52,
+            106.27,
+            104.84,
+            99.2,
+            101.03,
+            97.81
+          ]
+        },
+        {
+          "name": "Meat",
+          "values": [
+            144.15,
+            152.74,
+            154.7,
+            161.35,
+            161.64,
+            168.07,
+            172.3,
+            176.73,
+            183.56,
+            192.7,
+            198.31,
+            199.32,
+            205.87,
+            211.79,
+            215.81,
+            213.95,
+            215.85,
+            209.77,
+            211.59,
+            210.72,
+            213.6,
+            211.29,
+            216.29,
+            203.78,
+            198.23,
+            201.18,
+            207.36,
+            211.28,
+            205.75,
+            196.24,
+            207.33,
+            214.13,
+            210.6,
+            213.04,
+            228.76,
+            232.72,
+            236.76,
+            230.16,
+            240.05,
+            238.96,
+            236.32,
+            250.89
+          ]
+        },
+        {
+          "name": "All cereals",
+          "values": [
+            311.48,
+            302.65,
+            304.97,
+            302.89,
+            299.32,
+            289.12,
+            280.08,
+            272.64,
+            274.25,
+            272.06,
+            278.68,
+            274.95,
+            265.41,
+            263.56,
+            262.57,
+            257.87,
+            252.68,
+            245.04,
+            246.25,
+            249.08,
+            250.7,
+            252.76,
+            232.56,
+            240.75,
+            224.53,
+            238.0,
+            233.35,
+            233.35,
+            234.44,
+            233.94,
+            236.51,
+            237.64,
+            236.51,
+            241.09,
+            245.93,
+            246.16,
+            245.9,
+            244.75,
+            239.86,
+            230.3,
+            237.07,
+            230.9
+          ]
+        }
+      ],
+      "note": "農業部糧食供需統計的「供給量」是可供食用的量（國內供給扣掉飼料、種子、加工、損耗後，除以人口），不是實際吃進去的量；米是白米。年份由民國年加 1911 換算"
+    }
+  ],
+  "notes": "圖表用 1985–2025 每 5 年一點（整數公克）。資料集是每人每日的供給量（公克），不是每人每年的消費量（公斤）；年資料的公斤數字（f3、f4、f8）是農業部與新聞報導的另一種算法，文中引用時不要和圖上的公克數字混用。"
+}

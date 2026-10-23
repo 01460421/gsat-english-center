@@ -1,0 +1,217 @@
+{
+  "schema": "gsat-bank-facts/v1",
+  "id": "ambulance-history-rb09",
+  "title": "How ambulances developed: Larrey's flying ambulances, city ambulance services after 1865, EMT training after 1966, and ambulance service in Taiwan today",
+  "sdgs": [
+    3
+  ],
+  "created_on": "2026-10-20",
+  "created_by": "ai-agent",
+  "sources": [
+    {
+      "id": "s1",
+      "publisher": "Augusta University, Medical College of Georgia (EMS fellowship reading)",
+      "title": "History of EMS (Robert R. Bass; Chapter 1 of Emergency Medical Services: Clinical Practice and Systems Oversight, 2nd ed., NAEMSP, 2015)",
+      "url": "https://web1.augusta.edu/mcg/em/ed/fellowships/ems/documents/emsreading1.pdf",
+      "accessed": "2026-10-20",
+      "license": "© 2015 NAEMSP / John Wiley & Sons (all rights reserved)",
+      "use": "fact_only",
+      "note": "大學網站提供的教科書章節 PDF；只取事實"
+    },
+    {
+      "id": "s2",
+      "publisher": "PubMed Central (U.S. National Library of Medicine) / Cureus",
+      "title": "Historical Impact of Baron Dominique-Jean Larrey: The Father of Modern Military Surgery (Cureus 18(5): e108744, 2026)",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC13258417/",
+      "accessed": "2026-10-20",
+      "license": "依原刊標示（Cureus 開放取用）",
+      "use": "fact_only",
+      "note": "只取事實；第一次使用飛行救護車的年份與 s1 不同（s1 寫 1797），本事實單的年份只用 s1"
+    },
+    {
+      "id": "s3",
+      "publisher": "行政院（內政部報告）",
+      "title": "提升緊急救護效能（行政院第3603次會議，內政部報告，2018-06-07）",
+      "url": "https://www.ey.gov.tw/File/E548D33A1C78B368?A=C",
+      "accessed": "2026-10-20",
+      "license": "政府網站資料開放宣告",
+      "use": "fact_only",
+      "note": "PDF 簡報；只取事實"
+    },
+    {
+      "id": "s4",
+      "publisher": "全國法規資料庫（衛生福利部）",
+      "title": "救護技術員管理辦法（2024-05-15 修正）",
+      "url": "https://law.moj.gov.tw/LawClass/LawAll.aspx?PCODE=L0020141",
+      "accessed": "2026-10-20",
+      "license": "政府網站資料開放宣告",
+      "use": "fact_only",
+      "note": "只取事實（第2條：初級、中級、高級救護技術員）"
+    },
+    {
+      "id": "s5",
+      "publisher": "全國法規資料庫（內政部）",
+      "title": "直轄市縣市消防機關救護車輛裝備人力配置標準（2023-11-22 修正）",
+      "url": "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=D0120034",
+      "accessed": "2026-10-20",
+      "license": "政府網站資料開放宣告",
+      "use": "fact_only",
+      "note": "只取事實（第2–4條）"
+    }
+  ],
+  "facts": [
+    {
+      "id": "f1",
+      "text": "Dominique Jean Larrey was the chief military doctor of Napoleon's army.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "person"
+    },
+    {
+      "id": "f2",
+      "text": "Before Larrey's system, wounded soldiers were left where they fell and were gathered only after the battle ended, so their treatment was delayed by hours or even days.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f3",
+      "text": "In 1797 Larrey built light horse-drawn carts, called flying ambulances, with two or four wheels to rescue wounded soldiers.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "date"
+    },
+    {
+      "id": "f4",
+      "text": "In Larrey's system the injured were treated on the battlefield and then carried away in horse-drawn wagons to aid stations and hospitals.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "event"
+    },
+    {
+      "id": "f5",
+      "text": "Larrey's flying ambulances cared for soldiers on both sides of a battle.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f6",
+      "text": "Medical experience from the US Civil War led to the first civilian city ambulance services, in cities such as Cincinnati, New York, London and Paris.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f7",
+      "text": "In 1869 Edward Dalton, a former Union Army surgeon working for New York City's Board of Health, set up a city ambulance program.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "date"
+    },
+    {
+      "id": "f8",
+      "text": "Dalton's ambulances carried splints, bandages, a stomach pump and a chest of medicines.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f9",
+      "text": "By around 1900, young hospital doctors (interns) rode with New York's ambulances, but the ambulance drivers had almost no medical training.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f10",
+      "text": "In the years before World War I, carriages powered by electricity, steam and gasoline were used as ambulances.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "event"
+    },
+    {
+      "id": "f11",
+      "text": "After World War II, many US ambulances were poorly equipped hearses, and about half were run by funeral homes whose workers had usually never taken a first-aid course.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f12",
+      "text": "A 1966 US report called Accidental Death and Disability: The Neglected Disease of Modern Society found that emergency care for the injured was badly inadequate.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "event"
+    },
+    {
+      "id": "f13",
+      "text": "The US Highway Safety Act of 1966 paid for the training of emergency medical technicians (EMTs).",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "event"
+    },
+    {
+      "id": "f14",
+      "text": "Taiwan's fire departments sent out ambulances 720,797 times in 2007 and 1,117,523 times in 2016.",
+      "source_ids": [
+        "s3"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f15",
+      "text": "In 2017, ambulances of Taiwan's fire departments took 5.99 minutes on average to reach the scene after a call.",
+      "source_ids": [
+        "s3"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f16",
+      "text": "Taiwan's fire agencies send ambulances through the 119 command and dispatch system.",
+      "source_ids": [
+        "s3"
+      ],
+      "kind": "other"
+    },
+    {
+      "id": "f17",
+      "text": "Taiwan's rules divide emergency medical technicians into three levels: basic, intermediate and advanced.",
+      "source_ids": [
+        "s4"
+      ],
+      "kind": "definition"
+    },
+    {
+      "id": "f18",
+      "text": "Taiwan's fire departments use two kinds of ambulances: general ambulances and advanced life-support ambulances that must carry extra equipment.",
+      "source_ids": [
+        "s5"
+      ],
+      "kind": "definition"
+    },
+    {
+      "id": "f19",
+      "text": "Each ambulance team in a Taiwan fire department must have at least one ambulance and seven emergency workers.",
+      "source_ids": [
+        "s5"
+      ],
+      "kind": "number"
+    }
+  ],
+  "notes": "批次提示建議的內政部消防署網站（nfa.gov.tw）年度統計頁在取得當天回應 404，改用行政院會議中內政部的報告（s3）與全國法規資料庫（s4、s5）；歷史部分用大學網站的教科書章節（s1）與 PubMed Central 的論文（s2）。"
+}

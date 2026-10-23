@@ -1,0 +1,328 @@
+{
+  "schema": "gsat-bank-facts/v1",
+  "id": "taipei-heat-rb09",
+  "title": "Taipei is getting hotter: the 39.7°C record of July 24, 2020, more very hot days since 1990, and Taipei's yearly average temperature 1968–2025",
+  "sdgs": [
+    3,
+    13
+  ],
+  "created_on": "2026-10-20",
+  "created_by": "ai-agent",
+  "sources": [
+    {
+      "id": "s1",
+      "publisher": "政府資料開放平臺 data.gov.tw（提供機關：臺北市政府主計處）",
+      "title": "臺北市氣候（臺北市氣候時間數列統計資料）",
+      "url": "https://data.gov.tw/dataset/136718",
+      "accessed": "2026-10-20",
+      "license": "OGDL-Taiwan-1.0",
+      "use": "dataset",
+      "note": "資料資源 CSV：https://tsis.dbas.gov.taipei/statis/webMain.aspx?sys=220&ymf=5700&kind=21&type=0&funid=a05000201&cycle=4&outmode=12&compmode=0&outkind=1&deflst=2&nzo=1（欄位：統計期〔民國年〕、平均氣溫[0C]、平均相對溼度、日照時數、降水量、降水日數），2026-10-20 下載；取民國 57–114 年（1968–2025）的平均氣溫，數值照原檔（小數 1 位）。"
+    },
+    {
+      "id": "s2",
+      "publisher": "公視新聞網 PNN（公共電視）",
+      "title": "台北飆39.7度高溫 設站以來歷史最高（2020-07-24）",
+      "url": "https://news.pts.org.tw/article/488352",
+      "accessed": "2026-10-20",
+      "license": "© 公共電視 (all rights reserved)",
+      "use": "fact_only",
+      "note": "只取事實"
+    },
+    {
+      "id": "s3",
+      "publisher": "臺灣氣候變遷推估資訊與調適知識平台 TCCIP（國家災害防救科技中心，國家科學及技術委員會）",
+      "title": "2024 臺灣氣候變遷分析系列報告：暖化趨勢下的臺灣極端高溫與衝擊",
+      "url": "https://tccip.ncdr.nat.gov.tw/upload/book/20240714155450.pdf",
+      "accessed": "2026-10-20",
+      "license": "依原站標示（政府出版品）",
+      "use": "fact_only",
+      "note": "只取事實（第 15–16 頁：百年測站的高溫日數）"
+    },
+    {
+      "id": "s4",
+      "publisher": "公視新聞網 PNN（公共電視）",
+      "title": "花蓮富源38度6.今年上高溫 臺北也有38度2（2020-06-24）",
+      "url": "https://news.pts.org.tw/article/484410",
+      "accessed": "2026-10-20",
+      "license": "© 公共電視 (all rights reserved)",
+      "use": "fact_only",
+      "note": "只取事實"
+    }
+  ],
+  "facts": [
+    {
+      "id": "f1",
+      "text": "On July 24, 2020, at 2:19 p.m., the Taipei weather station recorded 39.7°C.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f2",
+      "text": "The 39.7°C reading was the highest at the Taipei weather station since the station was set up in 1896.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f3",
+      "text": "In July 2020 Taipei had 17 days in a row with highs above 36°C, which was also a record.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f4",
+      "text": "Before 2020, Taipei's longest run of days above 36°C was 16 days, from August 5 to 20, 2017.",
+      "source_ids": [
+        "s4"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f5",
+      "text": "The weather agency said the July 2020 heat came from sinking air under a strong Pacific high, warm air from southern China, and the heat island effect in the Taipei Basin.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f6",
+      "text": "In July 2020, Taiwan's health ministry counted about 30% more heat injuries than a year earlier.",
+      "source_ids": [
+        "s2"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f7",
+      "text": "From 1910 to 2020, the number of very hot days rose at all six of Taiwan's century-old weather stations, and it rose the most at the Taipei station.",
+      "source_ids": [
+        "s3"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f8",
+      "text": "The six century-old weather stations are Taipei, Taichung, Tainan, Hengchun, Hualien and Taitung.",
+      "source_ids": [
+        "s3"
+      ],
+      "kind": "place"
+    },
+    {
+      "id": "f9",
+      "text": "At the Taipei station, very hot days rose sharply after 1990 and set new records again and again after 2000.",
+      "source_ids": [
+        "s3"
+      ],
+      "kind": "event"
+    },
+    {
+      "id": "f10",
+      "text": "In 2003, in 2016, 2017 and 2018, and in 2020, Taipei had more than 30 days at or above 36°C.",
+      "source_ids": [
+        "s3"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f11",
+      "text": "Taipei's daily highs are often the highest of the six stations, probably because the station sits in the middle of a basin that traps heat and in a crowded city with a heat island effect.",
+      "source_ids": [
+        "s3"
+      ],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f12",
+      "text": "Taiwan's weather agency defined a high temperature as 35°C before 2018 and changed it to 36°C in 2018.",
+      "source_ids": [
+        "s3"
+      ],
+      "kind": "definition"
+    },
+    {
+      "id": "f13",
+      "text": "Taiwan's yearly average temperature rose by about 1.5°C from 1900 to 2022.",
+      "source_ids": [
+        "s3"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f14",
+      "text": "The summer of 2020 was the hottest season in the records of Taiwan's weather agency.",
+      "source_ids": [
+        "s3"
+      ],
+      "kind": "event"
+    },
+    {
+      "id": "f15",
+      "text": "Taipei's yearly average temperature was 22.1°C in 1970 and 24.2°C in 2020.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "number"
+    },
+    {
+      "id": "f16",
+      "text": "Taipei's yearly average temperature was 2.1°C higher in 2020 than in 1970.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "number",
+      "note": "衍生數字：24.2 − 22.1"
+    },
+    {
+      "id": "f17",
+      "text": "Every yearly average in Taipei from 2016 to 2025 was at least 23.5°C, while 1995 averaged 22.3°C.",
+      "source_ids": [
+        "s1"
+      ],
+      "kind": "number"
+    }
+  ],
+  "datasets": [
+    {
+      "id": "d1",
+      "source_id": "s1",
+      "title": "Yearly average temperature in Taipei City, 1968–2025",
+      "indicator": "臺北市氣候：平均氣溫[0C]",
+      "unit": "°C",
+      "categories": [
+        "1968",
+        "1969",
+        "1970",
+        "1971",
+        "1972",
+        "1973",
+        "1974",
+        "1975",
+        "1976",
+        "1977",
+        "1978",
+        "1979",
+        "1980",
+        "1981",
+        "1982",
+        "1983",
+        "1984",
+        "1985",
+        "1986",
+        "1987",
+        "1988",
+        "1989",
+        "1990",
+        "1991",
+        "1992",
+        "1993",
+        "1994",
+        "1995",
+        "1996",
+        "1997",
+        "1998",
+        "1999",
+        "2000",
+        "2001",
+        "2002",
+        "2003",
+        "2004",
+        "2005",
+        "2006",
+        "2007",
+        "2008",
+        "2009",
+        "2010",
+        "2011",
+        "2012",
+        "2013",
+        "2014",
+        "2015",
+        "2016",
+        "2017",
+        "2018",
+        "2019",
+        "2020",
+        "2021",
+        "2022",
+        "2023",
+        "2024",
+        "2025"
+      ],
+      "series": [
+        {
+          "name": "Average temperature",
+          "values": [
+            21.8,
+            21.8,
+            22.1,
+            22.1,
+            22.1,
+            22.5,
+            22.2,
+            22.3,
+            22.1,
+            23.0,
+            22.4,
+            22.2,
+            22.5,
+            22.4,
+            22.4,
+            22.7,
+            22.0,
+            23.2,
+            22.4,
+            23.0,
+            23.1,
+            23.1,
+            23.5,
+            23.5,
+            22.3,
+            22.7,
+            23.2,
+            22.3,
+            22.5,
+            22.5,
+            23.6,
+            23.0,
+            23.2,
+            23.3,
+            23.8,
+            23.5,
+            23.1,
+            23.3,
+            23.8,
+            23.6,
+            23.2,
+            23.4,
+            23.3,
+            22.7,
+            23.2,
+            23.4,
+            23.5,
+            23.8,
+            24.0,
+            23.9,
+            23.9,
+            24.1,
+            24.2,
+            24.1,
+            23.5,
+            23.9,
+            24.0,
+            24.0
+          ]
+        }
+      ],
+      "note": "Each value is the yearly mean air temperature published by the Taipei City Department of Budget, Accounting and Statistics."
+    }
+  ],
+  "notes": "批次提示建議的「臺北測站每年 35°C 以上日數或夏季平均氣溫」在 data.gov.tw 找不到逐年資料集（中央氣象署的「每月氣象-地面測站資料」只提供最新一個月）；改用同一主題最接近的真實資料集：臺北市政府主計處「臺北市氣候」的逐年平均氣溫（1968–2025）。高溫日數的變化只寫成事實（s3），不放進圖表。"
+}

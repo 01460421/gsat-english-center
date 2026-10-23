@@ -1,0 +1,192 @@
+{
+  "schema": "gsat-bank-facts/v1",
+  "id": "sharks-rb07",
+  "title": "Misunderstood sharks: yearly shark bites on people compared with the tens of millions of sharks people kill, and shark-fin rules in Taiwan",
+  "sdgs": [14],
+  "created_on": "2026-10-20",
+  "created_by": "ai-agent",
+  "sources": [
+    {
+      "id": "s1",
+      "publisher": "Florida Museum of Natural History, University of Florida (International Shark Attack File)",
+      "title": "Yearly Worldwide Shark Attack Summary (2025 report)",
+      "url": "https://www.floridamuseum.ufl.edu/shark-attacks/yearly-worldwide-summary/",
+      "accessed": "2026-10-20",
+      "license": "© Florida Museum of Natural History (all rights reserved)",
+      "use": "fact_only",
+      "note": "只取事實"
+    },
+    {
+      "id": "s2",
+      "publisher": "Florida Museum of Natural History, University of Florida",
+      "title": "Unprovoked shark bites plummeted in 2024",
+      "url": "https://www.floridamuseum.ufl.edu/science/unprovoked-shark-bites-plummeted-in-2024/",
+      "accessed": "2026-10-20",
+      "license": "© Florida Museum of Natural History (all rights reserved)",
+      "use": "fact_only",
+      "note": "只取事實（數字取自搜尋摘要與 s1 一致的部分）"
+    },
+    {
+      "id": "s3",
+      "publisher": "National Geographic",
+      "title": "Sharks are still being killed at high rates—despite bans on finning (2024-01-11)",
+      "url": "https://www.nationalgeographic.com/animals/article/sharks-killed-at-high-rates-despite-bans-on-finning",
+      "accessed": "2026-10-20",
+      "license": "© National Geographic Partners (all rights reserved)",
+      "use": "fact_only",
+      "note": "報導 Worm et al., Science 383:225–230 (2024)；只取事實"
+    },
+    {
+      "id": "s4",
+      "publisher": "Taipei Times",
+      "title": "Environmental Impact Assessment: Cruel delicacy (2024-07-24)",
+      "url": "https://www.taipeitimes.com/News/feat/archives/2024/07/24/2003821232",
+      "accessed": "2026-10-20",
+      "license": "© Taipei Times (all rights reserved)",
+      "use": "fact_only",
+      "note": "只取事實"
+    },
+    {
+      "id": "s5",
+      "publisher": "NOAA Fisheries",
+      "title": "Shark Conservation",
+      "url": "https://www.fisheries.noaa.gov/international-affairs/shark-conservation",
+      "accessed": "2026-10-20",
+      "license": "public domain (U.S. federal government work)",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s6",
+      "publisher": "NOAA Ocean Today",
+      "title": "Cause a Sea Change: Save Sharks",
+      "url": "https://oceantoday.noaa.gov/sharks/savesharks.html",
+      "accessed": "2026-10-20",
+      "license": "public domain (U.S. federal government work)",
+      "use": "fact_only",
+      "note": null
+    },
+    {
+      "id": "s7",
+      "publisher": "Fisheries Agency, Ministry of Agriculture (Taiwan)",
+      "title": "Special Section on Shark's Fins Naturally Attached",
+      "url": "https://en.fa.gov.tw/view.php?theme=SFNAB&subtheme=&id=1",
+      "accessed": "2026-10-20",
+      "license": "政府網站資料開放宣告",
+      "use": "fact_only",
+      "note": "頁面從本工作環境連線被拒（connection reset），內容依搜尋引擎摘要：2012-01-19 公告漁船漁獲鯊魚魚鰭處理規定，2012-04-01 起處罰，國內港口卸售的鯊魚魚鰭須連著魚身（依船型為自然連著或綁在魚身上）"
+    }
+  ],
+  "facts": [
+    {
+      "id": "f1",
+      "text": "In 2025 there were 65 confirmed unprovoked shark bites on people worldwide, and 9 of them were deadly.",
+      "source_ids": ["s1"],
+      "kind": "number"
+    },
+    {
+      "id": "f2",
+      "text": "From 2020 to 2024 there were on average 61 unprovoked shark bites a year worldwide, and 8 unprovoked deaths a year.",
+      "source_ids": ["s1"],
+      "kind": "number"
+    },
+    {
+      "id": "f3",
+      "text": "In 2024 there were 47 unprovoked shark bites worldwide, 4 of them deadly.",
+      "source_ids": ["s2"],
+      "kind": "number"
+    },
+    {
+      "id": "f4",
+      "text": "In 2025 the United States had 25 unprovoked bites and Australia had 21; the yearly total remains extremely low.",
+      "source_ids": ["s1"],
+      "kind": "number"
+    },
+    {
+      "id": "f5",
+      "text": "At least 79 million sharks died in fisheries in 2019, up from about 76 million in 2012.",
+      "source_ids": ["s3"],
+      "kind": "number"
+    },
+    {
+      "id": "f6",
+      "text": "At least 25 million of the sharks killed in fisheries in 2019 belonged to threatened species.",
+      "source_ids": ["s3"],
+      "kind": "number"
+    },
+    {
+      "id": "f7",
+      "text": "People kill an estimated 80 million to 100 million sharks each year.",
+      "source_ids": ["s4"],
+      "kind": "number"
+    },
+    {
+      "id": "f8",
+      "text": "About one third of shark species are threatened with extinction.",
+      "source_ids": ["s3", "s4"],
+      "kind": "number"
+    },
+    {
+      "id": "f9",
+      "text": "Shark finning means cutting off a shark's fins and throwing the rest of its body back into the sea.",
+      "source_ids": ["s3"],
+      "kind": "definition"
+    },
+    {
+      "id": "f10",
+      "text": "About 70 percent of countries and overseas territories have banned finning, but the total number of sharks killed has not gone down.",
+      "source_ids": ["s3"],
+      "kind": "number"
+    },
+    {
+      "id": "f11",
+      "text": "Sharks grow slowly, become adults late and have only a few young at a time, so many species are easily overfished.",
+      "source_ids": ["s5", "s6"],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f12",
+      "text": "Sharks keep the numbers of their prey in check and remove sick and weak animals, which helps keep the ocean healthy.",
+      "source_ids": ["s6", "s5"],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f13",
+      "text": "There are more than 500 species of sharks.",
+      "source_ids": ["s6"],
+      "kind": "number"
+    },
+    {
+      "id": "f14",
+      "text": "Taiwan requires sharks landed at its own ports to keep their fins attached to, or tied to, their bodies; the rule was announced in 2012.",
+      "source_ids": ["s7"],
+      "kind": "date"
+    },
+    {
+      "id": "f15",
+      "text": "Under Taiwan's rules for Pacific fishing, the fins on board may not be more than 5 percent of the total shark catch by weight.",
+      "source_ids": ["s4"],
+      "kind": "number"
+    },
+    {
+      "id": "f16",
+      "text": "At least 700 metric tons of shark fins are eaten in Taiwan each year, possibly from about 250,000 sharks.",
+      "source_ids": ["s4"],
+      "kind": "number"
+    },
+    {
+      "id": "f17",
+      "text": "In 2010 a group of Taiwanese groups asked four convenience store chains to stop selling shark fin dishes for Lunar New Year; the chains stopped in 2011.",
+      "source_ids": ["s4"],
+      "kind": "event"
+    },
+    {
+      "id": "f18",
+      "text": "In 2023 there were 69 confirmed unprovoked shark attacks worldwide.",
+      "source_ids": ["s4"],
+      "kind": "number"
+    }
+  ],
+  "datasets": [],
+  "notes": "具體事件：每年鯊魚咬人的件數（ISAF：2025 年 65 件無故咬人、9 件致死）對比人類每年捕殺的鯊魚數量（至少 7,900 萬隻，2019 年；估計每年 8,000 萬到 1 億隻）。批次提示建議的 FAO 來源沒有逐年捕殺隻數，改用 Science 2024 研究（經 National Geographic 報導）與 Taipei Times 的估計。"
+}

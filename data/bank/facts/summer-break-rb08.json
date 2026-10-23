@@ -1,0 +1,226 @@
+{
+  "schema": "gsat-bank-facts/v1",
+  "id": "summer-break-rb08",
+  "title": "How long the school summer break is in Italy, Spain, Taiwan, France, Germany, and Queensland (Australia), and why it differs",
+  "sdgs": [4],
+  "created_on": "2026-10-20",
+  "created_by": "ai-agent",
+  "sources": [
+    {
+      "id": "s1",
+      "publisher": "Eurydice (European Education and Culture Executive Agency, European Commission)",
+      "title": "School year in Europe: recommended compulsory instruction time and holidays, 2024/2025 (open data: 2024_2025_SchoolYear_OpenData.xlsx, sheets Holidays and YearStart)",
+      "url": "https://eurydice.eacea.ec.europa.eu/data-and-visuals/school-year-eu-time-holidays",
+      "accessed": "2026-10-20",
+      "license": "© European Union, 2026 (reuse authorised, Commission Decision 2011/833/EU)",
+      "use": "fact_only",
+      "note": "數字取自頁面連結的開放資料 https://eurydice.eacea.ec.europa.eu/media/3909/download（2026-01-06 更新），用國中（ISCED 24）那幾列；暑假天數是曆日"
+    },
+    {
+      "id": "s2",
+      "publisher": "European Education and Culture Executive Agency (EACEA) newsroom",
+      "title": "School calendars in Europe – 2025/2026",
+      "url": "https://ec.europa.eu/newsroom/eacea/items/763330/en",
+      "accessed": "2026-10-20",
+      "license": "© European Union (reuse authorised, Commission Decision 2011/833/EU)",
+      "use": "fact_only",
+      "note": "只取事實"
+    },
+    {
+      "id": "s3",
+      "publisher": "全國法規資料庫（法務部）／教育部",
+      "title": "各級學校學生學年學期假期辦法（民國 114 年 7 月 17 日修正）",
+      "url": "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=H0020018",
+      "accessed": "2026-10-20",
+      "license": "政府網站資料開放宣告（政府資料開放授權條款第1版）",
+      "use": "fact_only",
+      "note": "第 2–4、7 條"
+    },
+    {
+      "id": "s4",
+      "publisher": "Queensland Department of Education",
+      "title": "Queensland school holidays",
+      "url": "https://education.qld.gov.au/about-us/calendar/school-holidays",
+      "accessed": "2026-10-20",
+      "license": "© State of Queensland (Department of Education)",
+      "use": "fact_only",
+      "note": "只取事實"
+    },
+    {
+      "id": "s5",
+      "publisher": "Queensland Department of Education",
+      "title": "School holidays and term dates",
+      "url": "https://education.qld.gov.au/about-us/calendar/term-dates",
+      "accessed": "2026-10-20",
+      "license": "© State of Queensland (Department of Education)",
+      "use": "fact_only",
+      "note": "只取事實"
+    },
+    {
+      "id": "s6",
+      "publisher": "France 24 (AFP)",
+      "title": "Too hot to study, say Italian teachers as school (finally) resumes (13 September 2025)",
+      "url": "https://www.france24.com/en/live-news/20250913-too-hot-to-study-say-italian-teachers-as-school-finally-resumes",
+      "accessed": "2026-10-20",
+      "license": "© France 24 / AFP (all rights reserved)",
+      "use": "fact_only",
+      "note": "只取事實；文中引用 Eurydice 的義大利暑假 97 天，和 2024/2025 開放資料的 99 天是不同學年的數字，表格一律用開放資料"
+    },
+    {
+      "id": "s7",
+      "publisher": "Eurydice (Eurypedia)",
+      "title": "Italy: Organisation of general upper secondary education",
+      "url": "https://eurydice.eacea.ec.europa.eu/eurypedia/italy/organisation-general-upper-secondary-education",
+      "accessed": "2026-10-20",
+      "license": "© European Union (reuse authorised, Commission Decision 2011/833/EU)",
+      "use": "fact_only",
+      "note": "只取事實"
+    }
+  ],
+  "facts": [
+    {
+      "id": "f1",
+      "text": "In the 2025/2026 school year in Europe, summer holidays lasted between 6 and 14 weeks depending on the country, 10 weeks on average.",
+      "source_ids": ["s2"],
+      "kind": "number"
+    },
+    {
+      "id": "f2",
+      "text": "In half of the European countries, the school year starts on 1 September.",
+      "source_ids": ["s2"],
+      "kind": "date"
+    },
+    {
+      "id": "f3",
+      "text": "France, Switzerland, and the French Community of Belgium have up to four two-week breaks during the school year.",
+      "source_ids": ["s2"],
+      "kind": "other"
+    },
+    {
+      "id": "f4",
+      "text": "Italy is one of the few European countries with only one longer break during the school year.",
+      "source_ids": ["s2"],
+      "kind": "other"
+    },
+    {
+      "id": "f5",
+      "text": "In 2024/2025, the summer holidays of lower secondary students lasted 99 days in Italy, 78 days in Spain, 56 days in France, and 44 days in Germany.",
+      "source_ids": ["s1"],
+      "kind": "number"
+    },
+    {
+      "id": "f6",
+      "text": "In weeks, these summer holidays were about 14 weeks in Italy, 11 weeks in Spain, 8 weeks in France, and 6 weeks in Germany.",
+      "source_ids": ["s1"],
+      "kind": "number",
+      "note": "天數 ÷ 7 四捨五入：99→14.1、78→11.1、56→8、44→6.3"
+    },
+    {
+      "id": "f7",
+      "text": "In 2024/2025, breaks during the school year (not counting summer) added up to 21 days in Italy, 31 days in Spain, 60 days in France, and 45 days in Germany.",
+      "source_ids": ["s1"],
+      "kind": "number"
+    },
+    {
+      "id": "f8",
+      "text": "In 2024/2025, the German school year started on different dates in different states, from 1 August to 10 September.",
+      "source_ids": ["s1"],
+      "kind": "date"
+    },
+    {
+      "id": "f9",
+      "text": "In 2024/2025, the school year started on 2 September in France and on 10 September for lower secondary students in Spain; in Italy it started between 5 and 16 September, depending on the region.",
+      "source_ids": ["s1"],
+      "kind": "date"
+    },
+    {
+      "id": "f10",
+      "text": "In Italy, teaching takes place between 1 September and 30 June, and each region sets its own school calendar.",
+      "source_ids": ["s7"],
+      "kind": "date"
+    },
+    {
+      "id": "f11",
+      "text": "Italy's summer break lasts about three months; in 2025, lessons started again between 8 and 16 September, depending on the region.",
+      "source_ids": ["s6"],
+      "kind": "date"
+    },
+    {
+      "id": "f12",
+      "text": "According to Italy's education ministry, only 6% of Italian schools have air conditioning.",
+      "source_ids": ["s6"],
+      "kind": "number"
+    },
+    {
+      "id": "f13",
+      "text": "In September 2025, some schools in Sicily planned to end lessons at midday at first because of the heat.",
+      "source_ids": ["s6"],
+      "kind": "event"
+    },
+    {
+      "id": "f14",
+      "text": "An Italian teachers' union argues that the school calendar, set about 50 years ago, should change because the climate has changed.",
+      "source_ids": ["s6"],
+      "kind": "other"
+    },
+    {
+      "id": "f15",
+      "text": "More than 76,000 people signed a petition by the group WeWorld asking Italy to cut its summer holidays by one month.",
+      "source_ids": ["s6"],
+      "kind": "number"
+    },
+    {
+      "id": "f16",
+      "text": "Campaigners say Italy's long summer break is hard on children from working families who cannot afford summer camps or holidays that keep them learning.",
+      "source_ids": ["s6"],
+      "kind": "cause_effect"
+    },
+    {
+      "id": "f17",
+      "text": "In Taiwan, the summer vacation for schools is 60 days, from July 1 to August 29 as a rule, and school starts the day after it ends.",
+      "source_ids": ["s3"],
+      "kind": "date",
+      "note": "60 天約 9 週（60 ÷ 7 ≈ 8.6）"
+    },
+    {
+      "id": "f18",
+      "text": "In Taiwan, the school year runs from August 1 to July 31, and the first semester runs from August 1 to January 31.",
+      "source_ids": ["s3"],
+      "kind": "date"
+    },
+    {
+      "id": "f19",
+      "text": "Queensland state schools in Australia have a summer holiday of 6 weeks over the Christmas period.",
+      "source_ids": ["s4"],
+      "kind": "date"
+    },
+    {
+      "id": "f20",
+      "text": "In Queensland, the 2026 school year runs from 27 January to 11 December, and the summer holidays that follow, from 12 December 2026 to 26 January 2027, last 46 days.",
+      "source_ids": ["s5"],
+      "kind": "date"
+    },
+    {
+      "id": "f21",
+      "text": "Queensland state schools have 40 school weeks each year.",
+      "source_ids": ["s4"],
+      "kind": "number"
+    },
+    {
+      "id": "f22",
+      "text": "Australia lies south of the equator, so its summer falls in December, January, and February.",
+      "source_ids": ["s4"],
+      "kind": "place",
+      "note": "常識性事實；s4 的暑假在聖誕節期間（12–1 月）"
+    },
+    {
+      "id": "f23",
+      "text": "The summer break falls from June to September in Italy and Spain, from July to August in France and Taiwan, from June to September in Germany depending on the state, and from December to January in Queensland.",
+      "source_ids": ["s1", "s3", "s5", "s6", "s7"],
+      "kind": "date",
+      "note": "由暑假天數與開學日推算：義大利 6 月 30 日前停課、9 月 5–16 日開學、暑假 99 天；西班牙 9 月 10 日開學、78 天；法國 9 月 2 日開學、56 天；德國 8 月 1 日到 9 月 10 日開學、44 天；台灣 7 月 1 日到 8 月 29 日；昆士蘭 12 月 12 日到 1 月 26 日"
+    }
+  ],
+  "datasets": [],
+  "notes": "表格題：白名單的資料集來源（Our World in Data、World Bank、data.gov.tw）沒有各國暑假長度的資料集，所以表格依事實單整理（Eurydice 2024/2025 開放資料、台灣法規、昆士蘭教育部），不列 datasets。日本、韓國、美國找不到白名單內可直接讀取的官方日期，不列入。"
+}
