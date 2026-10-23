@@ -4,7 +4,7 @@ name: 學習助手錯誤診斷（臨時）
 on:
   push:
     branches: [claude/lucid-pasteur-0lggvt]
-    paths: ['.github/workflows/tmp-assist-diag.yml']
+    paths: ['.github/workflows/tmp-assist-diag.yml', 'apps/api/scripts/tmp-schema-probe.ts']
 permissions:
   contents: read
 concurrency:
@@ -26,14 +26,9 @@ jobs:
           npm run build:data -w @gsat/web
           npm run prompts -w @gsat/api
           cd apps/api && node scripts/build-assist-data.mjs
-      - name: 跑幾題（真模型，上限 US$1）
+      - name: 探測 schema（真模型，每題 64 tokens）
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_PARITY_API_KEY || secrets.ANTHROPIC_API_KEY }}
-          PARITY_BUDGET_USD: '1'
-          PARITY_TIME_LIMIT_MINUTES: '12'
         run: |
           if [ -z "$ANTHROPIC_API_KEY" ]; then echo "::error::沒有金鑰"; exit 1; fi
-          npm run parity:assist -w @gsat/api > diag.log 2>&1 || true
-          grep -E "\[assist-eval\]" diag.log | head -60
-          echo "----- 彙總 -----"
-          grep -E "^#|^\||結論|失敗|failure" apps/api/test/parity/.results/assist.md 2>/dev/null | head -60 || true
+          cd apps/api && npx tsx scripts/tmp-schema-probe.ts 2>&1 | grep "\[probe\]" || true
